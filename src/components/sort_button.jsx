@@ -1,20 +1,33 @@
 import { useState } from "react";
 
-function SongButton({ text, activeSort, setActiveSort, onClick }) {
+function SortButton({ text, songFiltering, setSongFiltering, onClick }) {
     let checkboxID = () => { return text + "checkbox" }
     function changeState() {
-        if (activeSort == text) {
+        if (isActive()) {
             document.getElementById(checkboxID()).click();
         }
-        setActiveSort(text);
+        setSongFiltering({
+            query: songFiltering.query,
+            list: songFiltering.list,
+            sortType: document.getElementById(checkboxID()).checked ? "ascending" : "descending",
+            sortByField: text,
+        })
     }
     function isActive() {
-        return activeSort == text;
+        return songFiltering.sortByField == text;
+    }
+
+    function startState() {
+        if (!isActive() | songFiltering.sortType == "ascending") {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     return (<>
         <div className={`flex flex-row ${isActive() ? 'bg-primary' : ''}`}>
-            <button onClick={() => { changeState(); onClick() }}>{text}</button >
+            <button onClick={() => { changeState(); onClick() }} checked={startState()}>{text}</button >
             <label className="swap swap-rotate">
                 {/* this hidden checkbox controls the state */}
                 <input type="checkbox" id={checkboxID()} />
@@ -30,4 +43,4 @@ function SongButton({ text, activeSort, setActiveSort, onClick }) {
     )
 }
 
-export default SongButton;
+export default SortButton;
