@@ -1,11 +1,9 @@
-'use client'
 import React, { useState, useEffect } from 'react';
 // import Song from "./song"
 import SongCard from './song_card'
 import SortButton from './sort_button';
 // import { Index, Document, Worker } from "flexsearch";
-
-
+import SongFilter from './song_filter';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
@@ -17,6 +15,8 @@ const SongsList = () => {
     const [error, setError] = useState(null);
 
     const [result, setResult] = useState();
+    const [languages, setLanguages] = useState([]);
+    const [selectedLanguage, setSelectedLanguage] = useState("all")
     const [selectedSong, setSelectedSong] = useState(null); // State for selected song
     const songToKey = (song) => {
         // console.log(song.title+song.artist)
@@ -42,13 +42,14 @@ const SongsList = () => {
     useEffect(
         function updateSongList() {
             const query = songFiltering.query
-            const results = songs.filter(song => {
+            let results = filterLanguage(songs, selectedLanguage)
+            results = results.filter(song => {
                 if (query === "") return songs;
                 return song[songFiltering.sortByField].toLowerCase().includes(query.toLowerCase())
             });
             setSongListData(sortFunc(results, songFiltering));
             // return results;
-        }, [songFiltering, songs])
+        }, [songFiltering, songs, selectedLanguage])
 
 
 
@@ -60,7 +61,7 @@ const SongsList = () => {
             results.sort((a, b) => a[sortField].localeCompare(b[sortField]))
         }
         else if (songFiltering.sortType === "descending") {
-            results.sort((a, b) => b[sortField] .localeCompare( a[sortField]))
+            results.sort((a, b) => b[sortField].localeCompare(a[sortField]))
         }
         // TODO: sort on langauge - take title into account on a draw
         // console.log(results);
@@ -68,6 +69,14 @@ const SongsList = () => {
             console.log(r[sortField])
         })
         return results;
+    }
+
+    function filterLanguage(songs, selectedLanguage) {
+        if (selectedLanguage != "all") {
+            return songs.filter((song) => song.language === selectedLanguage)
+        } else {
+            return songs;
+        }
     }
 
     useEffect(() => {
@@ -81,6 +90,7 @@ const SongsList = () => {
             })
             .then((data) => {
                 setSongs(data);
+                setLanguages(["all", ...new Set(data.map(item => item["language"]))].sort());
             })
             .catch((error) => {
                 setError(error.message);
@@ -93,16 +103,16 @@ const SongsList = () => {
 
     return (
         <div className='w-full'>
-            <h1>Songs List</h1>
-            <div className='flex flex-row'>
+            <div className='flex flex-row justify-center'>
                 <SortButton text="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <SortButton text="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <input
                     type="text"
                     placeholder="Type here"
                     className="input input-bordered input-primary w-full max-w-xs" onChange={handleChange} />
+                <SongFilter choices={languages} setSelection={setSelectedLanguage} />
             </div>
-            <div className='container flex flex-col gap-2'>
+            <div className='w-full flex flex-col gap-2 justify-center'>
                 {songListData.map((song, index) => (
                     <SongCard song={song} key={songToKey(song)} />
                     // <div className='container flex flex-row'  onClick={() => { console.log(song.title) }}>

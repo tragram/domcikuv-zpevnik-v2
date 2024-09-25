@@ -7,7 +7,9 @@ const metadata = files.map(file => {
   const title = content.match(/{title:\s*(.+?)}/i)?.[1] || 'Unknown Title';
   const artist = content.match(/{artist:\s*(.+?)}/i)?.[1] || 'Unknown Artist';
   const key = content.match(/{key:\s*(.+?)}/i)?.[1] || 'Unknown Key';
-  return { title, artist, key, file, content };
+  const date_added = content.match(/{date_added:\s*(.+?)}/i)?.[1] || 'Unknown Date';
+  const language = content.match(/{language:\s*(.+?)}/i)?.[1] || 'Unknown Language';
+  return { title, artist, key, language, date_added, file, content };
 });
 fs.mkdir('public', { recursive: true }, (err) => {
   if (err) throw err;

@@ -3,6 +3,7 @@
 {define: D5 base-frets 1 frets 2 2 x x }
 {define: G5 base-frets 1 frets 0 2 3 x}
 {tempo: 132}
+{language: english}
 {time:}
  
 Verse 1

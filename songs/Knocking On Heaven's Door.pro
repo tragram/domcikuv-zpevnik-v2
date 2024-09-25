@@ -2,6 +2,7 @@
 {artist: Bob Dylan}
 {subtitle: }
 {zoom-ipad: 2.992135}
+{language: english}
 
 Intro:
 [G]    [D]    [Am]   [C]
