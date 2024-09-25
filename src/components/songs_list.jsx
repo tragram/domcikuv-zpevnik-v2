@@ -41,6 +41,10 @@ const SongsList = () => {
             <div className='flex flex-row'>
                 <SongButton text="title" activeSort={activeSort} setActiveSort={setActiveSort} onClick={() => { }} />
                 <SongButton text="artist" activeSort={activeSort} setActiveSort={setActiveSort} onClick={() => { }} />
+                <input
+                    type="text"
+                    placeholder="Type here"
+                    className="input input-bordered input-primary w-full max-w-xs" />
             </div>
             <div className='container flex flex-col gap-2'>
                 {songs.map((song, index) => (
