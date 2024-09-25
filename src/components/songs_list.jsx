@@ -48,21 +48,25 @@ const SongsList = () => {
             });
             setSongListData(sortFunc(results, songFiltering));
             // return results;
-        }, [songFiltering])
+        }, [songFiltering, songs])
 
 
 
     function sortFunc(results, songFiltering) {
         const sortField = songFiltering.sortByField
-        console.log(results, sortField);
+        console.log(results, sortField, songFiltering.sortType);
 
         if (songFiltering.sortType === "ascending") {
-            results.sort((a, b) => { console.log(a, b); a[sortField] < b[sortField] ? -1 : 1 })
+            results.sort((a, b) => a[sortField].localeCompare(b[sortField]))
         }
         else if (songFiltering.sortType === "descending") {
-            results.sort((a, b) => b[sortField] > a[sortField] ? 1 : -1)
+            results.sort((a, b) => b[sortField] .localeCompare( a[sortField]))
         }
-        console.log(results);
+        // TODO: sort on langauge - take title into account on a draw
+        // console.log(results);
+        results.forEach((r) => {
+            console.log(r[sortField])
+        })
         return results;
     }
 

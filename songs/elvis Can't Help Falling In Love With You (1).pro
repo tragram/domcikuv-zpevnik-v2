@@ -1,4 +1,5 @@
-{title:elvis Can't Help Falling In Love With You (1)}  
+{title: Can't Help Falling In Love With You}
+{artist: Elvis Presley}  
 {c: } 
    
 [C] Wise [Em]men [Am]say only [F] fools [C] rush [G] in   

@@ -1,4 +1,5 @@
 {title: Knocking On Heaven's Door}
+{artist: Bob Dylan}
 {subtitle: }
 {zoom-ipad: 2.992135}
 

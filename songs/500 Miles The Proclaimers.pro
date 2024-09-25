@@ -1,4 +1,4 @@
-{title: 500 Miles The Proclaimers}
+{title: 500 Miles}
 {artist: The Proclaimers}
 {define: D5 base-frets 1 frets 2 2 x x }
 {define: G5 base-frets 1 frets 0 2 3 x}

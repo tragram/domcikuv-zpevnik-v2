@@ -8,7 +8,6 @@ function SortButton({ text, songFiltering, setSongFiltering, onClick }) {
         }
         setSongFiltering({
             query: songFiltering.query,
-            list: songFiltering.list,
             sortType: document.getElementById(checkboxID()).checked ? "ascending" : "descending",
             sortByField: text,
         })
