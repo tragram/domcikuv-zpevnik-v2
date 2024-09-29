@@ -1,6 +1,7 @@
 {title: Lokomotiva}
 {artist: Poletíme?}
 {language: czech}
+{capo: 0}
 {added: 09-2025}
 
 [G]Pokaždé když tě vidím, [D]vím, že by to šlo

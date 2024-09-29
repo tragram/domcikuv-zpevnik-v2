@@ -2,6 +2,7 @@
 {artist: Poletíme?}
 {language: czech}
 {added: 09-2025}
+{capo: 0}
 
 [G]Tři kámošky, psycholožky, vracely se [Emi]nocí,
 [G]tak asi nějak domů, cestou neces[Emi]tou.

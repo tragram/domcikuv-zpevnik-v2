@@ -2,6 +2,7 @@
 {artist: Xavier Baumaxa}
 {language: czech}
 {added: 09-2025}
+{capo: 0}
  
 
 [A][C#mi][Cmi][F#mi][E][D]

@@ -17,6 +17,7 @@ const SongsList = () => {
     const [result, setResult] = useState();
     const [languages, setLanguages] = useState([]);
     const [selectedLanguage, setSelectedLanguage] = useState("all")
+    const [selectedCapo, setSelectedCapo] = useState("all")
     const [selectedSong, setSelectedSong] = useState(null); // State for selected song
     const songToKey = (song) => {
         // console.log(song.title+song.artist)
@@ -41,15 +42,13 @@ const SongsList = () => {
     }
     useEffect(
         function updateSongList() {
-            const query = songFiltering.query
-            let results = filterLanguage(songs, selectedLanguage)
-            results = results.filter(song => {
-                if (query === "") return songs;
-                return song[songFiltering.sortByField].toLowerCase().includes(query.toLowerCase())
-            });
+            let results = filterCapo(songs, selectedCapo);
+            console.log(results)
+            results = filterLanguage(results, selectedLanguage);
+            results = filterSearch(results, songFiltering.query);
             setSongListData(sortFunc(results, songFiltering));
             // return results;
-        }, [songFiltering, songs, selectedLanguage])
+        }, [songFiltering, songs, selectedLanguage, selectedCapo])
 
 
 
@@ -63,11 +62,8 @@ const SongsList = () => {
         else if (songFiltering.sortType === "descending") {
             results.sort((a, b) => b[sortField].localeCompare(a[sortField]))
         }
-        // TODO: sort on langauge - take title into account on a draw
+        // TODO: if sort on langauge -> take title into account on a draw
         // console.log(results);
-        results.forEach((r) => {
-            console.log(r[sortField])
-        })
         return results;
     }
 
@@ -76,6 +72,35 @@ const SongsList = () => {
             return songs.filter((song) => song.language === selectedLanguage)
         } else {
             return songs;
+        }
+    }
+
+    function filterCapo(songs, selectedCapo) {
+        if (selectedCapo == "allow capo" || selectedCapo == "all") {
+            return songs;
+        } else if (selectedCapo == "no capo") {
+            return songs.filter((song) => song.capo == 0)
+        } else {
+            console.log("Unknown capo filtering: " + selectedCapo)
+        }
+    }
+
+    function capitalizeFirstLetter(str) {
+        if (!str) return '';
+
+        const firstCodePoint = str.codePointAt(0);
+        const index = firstCodePoint > 0xFFFF ? 2 : 1;
+
+        return String.fromCodePoint(firstCodePoint).toUpperCase() + str.slice(index);
+    }
+
+    function filterSearch(songs, searchQuery) {
+        if (searchQuery === "") return songs;
+        // TODO: search in all fields
+        else {
+            return songs.filter(song => {
+                song[songFiltering.sortByField].toLowerCase().includes(searchQuery.toLowerCase())
+            });
         }
     }
 
@@ -101,26 +126,25 @@ const SongsList = () => {
         return <div>Error: {error}</div>;
     }
 
+    let language_choices = languages.map((language) => ({ text: capitalizeFirstLetter(language), value: language }))
+    let capo_choices = ["allow capo", "no capo"].map((capo) => ({ text: capitalizeFirstLetter(capo), value: capo }))
+    // TODO: song sorting appears to only work on second press...
     return (
         <div className='w-full'>
             <div className='flex flex-row justify-center'>
-                <SortButton text="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
-                <SortButton text="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
+                <SortButton text="Title" field="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
+                <SortButton text="Artist" field="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
+                <SortButton text="Date added" field="date_added" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <input
                     type="text"
                     placeholder="Type here"
                     className="input input-bordered input-primary w-full max-w-xs" onChange={handleChange} />
-                <SongFilter choices={languages} setSelection={setSelectedLanguage} />
+                <SongFilter text="Language" choices={language_choices} setSelection={setSelectedLanguage} />
+                <SongFilter text="Capo" choices={capo_choices} setSelection={setSelectedCapo} />
             </div>
             <div className='w-full flex flex-col gap-2 justify-center'>
                 {songListData.map((song, index) => (
                     <SongCard song={song} key={songToKey(song)} />
-                    // <div className='container flex flex-row'  onClick={() => { console.log(song.title) }}>
-                    //     <div className="flex flex-col justify-start">
-                    //         <p className="text-md">{song.title}</p>
-                    //         <p className="text-small text-default-500">{song.artist}</p>
-                    //     </div>
-                    // </div>
                 ))};
             </div>
         </div >

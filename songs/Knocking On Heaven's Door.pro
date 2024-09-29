@@ -3,6 +3,7 @@
 {subtitle: }
 {zoom-ipad: 2.992135}
 {language: english}
+{capo: 0}
 
 Intro:
 [G]    [D]    [Am]   [C]

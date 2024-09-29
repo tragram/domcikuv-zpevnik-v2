@@ -2,6 +2,7 @@
 {artist: Folk}
 {language: polish}
 {added: 09-2025}
+{capo: 0}
 
 [Verse 1]
 Hej, tamgdzieś znad czarnej wody

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-function SortButton({ text, songFiltering, setSongFiltering, onClick }) {
-    let checkboxID = () => { return text + "checkbox" }
+function SortButton({ text, field, songFiltering, setSongFiltering, onClick }) {
+    let checkboxID = () => { return field + "checkbox" }
     function changeState() {
         if (isActive()) {
             document.getElementById(checkboxID()).click();
@@ -9,11 +9,11 @@ function SortButton({ text, songFiltering, setSongFiltering, onClick }) {
         setSongFiltering({
             query: songFiltering.query,
             sortType: document.getElementById(checkboxID()).checked ? "ascending" : "descending",
-            sortByField: text,
+            sortByField: field,
         })
     }
     function isActive() {
-        return songFiltering.sortByField == text;
+        return songFiltering.sortByField == field;
     }
 
     function startState() {

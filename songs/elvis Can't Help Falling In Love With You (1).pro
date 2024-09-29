@@ -1,6 +1,7 @@
 {title: Can't Help Falling In Love With You}
 {artist: Elvis Presley}  
 {language: english}
+{capo: 2}
 {c: } 
    
 [C] Wise [Em]men [Am]say only [F] fools [C] rush [G] in   

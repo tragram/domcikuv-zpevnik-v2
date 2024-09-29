@@ -2,6 +2,7 @@
 {artist: Harlej}
 {language: czech}
 {added: 09-2025}
+{capo: 0}
 
 Předehra: C H G   riff   A    riff...   C   riff...   G riff...
 1. [G.]Když jsem sám doma, p[Ami]oslouchám Vávra,
