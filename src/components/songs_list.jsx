@@ -5,6 +5,7 @@ import SortButton from './sort_button';
 // import { Index, Document, Worker } from "flexsearch";
 import SongFilter from './song_filter';
 import Search from './search';
+import Randomize from './randomize';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
@@ -42,6 +43,14 @@ const SongsList = () => {
             }
             setSongListData(results);
         }, [songFiltering, songs, selectedLanguage, selectedCapo, searchResults])
+
+    useEffect(
+        function showSong() {
+            if (selectedSong) {
+                console.log(`Selected song: ${selectedSong.artist}: ${selectedSong.title}`)
+            }
+        }, [selectedSong]
+    )
 
 
 
@@ -122,10 +131,11 @@ const SongsList = () => {
                 <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
                 <SongFilter text="Language" choices={language_choices} setSelection={setSelectedLanguage} />
                 <SongFilter text="Capo" choices={capo_choices} setSelection={setSelectedCapo} />
+                <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
             <div className='w-full flex flex-col gap-2 justify-center'>
                 {songListData.map((song, index) => (
-                    <SongCard song={song} key={songToKey(song)} />
+                    <SongCard song={song} setSelectedSong={setSelectedSong} key={songToKey(song)} />
                 ))};
             </div>
         </div >
