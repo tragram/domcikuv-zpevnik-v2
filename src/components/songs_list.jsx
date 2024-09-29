@@ -4,17 +4,17 @@ import SongCard from './song_card'
 import SortButton from './sort_button';
 // import { Index, Document, Worker } from "flexsearch";
 import SongFilter from './song_filter';
+import Search from './search';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
 
 const SongsList = () => {
-
     // Store sortby order i.e. ascending or descending
     const [songs, setSongs] = useState([]);
     const [error, setError] = useState(null);
 
-    const [result, setResult] = useState();
+    const [searchResults, setSearchResults] = useState(songs);
     const [languages, setLanguages] = useState([]);
     const [selectedLanguage, setSelectedLanguage] = useState("all")
     const [selectedCapo, setSelectedCapo] = useState("all")
@@ -32,35 +32,27 @@ const SongsList = () => {
 
     const [songListData, setSongListData] = useState(songs)
 
-    // Filter posts on typing in search input
-    const handleChange = (e) => {
-        setSongFiltering({
-            query: e.target.value,
-            sortType: songFiltering.sortType,
-            sortByField: songFiltering.sortByField
-        });
-    }
     useEffect(
         function updateSongList() {
-            let results = filterCapo(songs, selectedCapo);
-            console.log(results)
+            let results = filterCapo(searchResults, selectedCapo);
             results = filterLanguage(results, selectedLanguage);
-            results = filterSearch(results, songFiltering.query);
-            setSongListData(sortFunc(results, songFiltering));
-            // return results;
-        }, [songFiltering, songs, selectedLanguage, selectedCapo])
+            if (songFiltering.query === "") {
+                // since fuse.js already does sorting based on proximity, only re-sort if no query is present
+                results = sortFunc(results, songFiltering.sortByField, songFiltering.sortType);
+            }
+            setSongListData(results);
+        }, [songFiltering, songs, selectedLanguage, selectedCapo, searchResults])
 
 
 
-    function sortFunc(results, songFiltering) {
-        const sortField = songFiltering.sortByField
-        console.log(results, sortField, songFiltering.sortType);
+    function sortFunc(results, sortByField, sortType) {
+        // console.log(results, sortByField, sortType);
 
-        if (songFiltering.sortType === "ascending") {
-            results.sort((a, b) => a[sortField].localeCompare(b[sortField]))
+        if (sortType === "ascending") {
+            results = results.toSorted((a, b) => a[sortByField].localeCompare(b[sortByField]))
         }
-        else if (songFiltering.sortType === "descending") {
-            results.sort((a, b) => b[sortField].localeCompare(a[sortField]))
+        else if (sortType === "descending") {
+            results = results.toSorted((a, b) => b[sortByField].localeCompare(a[sortByField]))
         }
         // TODO: if sort on langauge -> take title into account on a draw
         // console.log(results);
@@ -94,16 +86,6 @@ const SongsList = () => {
         return String.fromCodePoint(firstCodePoint).toUpperCase() + str.slice(index);
     }
 
-    function filterSearch(songs, searchQuery) {
-        if (searchQuery === "") return songs;
-        // TODO: search in all fields
-        else {
-            return songs.filter(song => {
-                song[songFiltering.sortByField].toLowerCase().includes(searchQuery.toLowerCase())
-            });
-        }
-    }
-
     useEffect(() => {
         // Fetch the songs.json file from the public folder
         fetch('songs.json')
@@ -115,7 +97,9 @@ const SongsList = () => {
             })
             .then((data) => {
                 setSongs(data);
+                setSearchResults(data);
                 setLanguages(["all", ...new Set(data.map(item => item["language"]))].sort());
+                // TODO: languages with less than e.g. 5 songs should be merged into "other"
             })
             .catch((error) => {
                 setError(error.message);
@@ -135,10 +119,7 @@ const SongsList = () => {
                 <SortButton text="Title" field="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <SortButton text="Artist" field="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <SortButton text="Date added" field="date_added" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
-                <input
-                    type="text"
-                    placeholder="Type here"
-                    className="input input-bordered input-primary w-full max-w-xs" onChange={handleChange} />
+                <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
                 <SongFilter text="Language" choices={language_choices} setSelection={setSelectedLanguage} />
                 <SongFilter text="Capo" choices={capo_choices} setSelection={setSelectedCapo} />
             </div>

@@ -1,7 +1,7 @@
 {title: Pažitka}
 {artist: Xavier Baumaxa}
 {language: czech}
-{added: 09-2025}
+{date_added: 09-2025}
 {capo: 0}
  
 

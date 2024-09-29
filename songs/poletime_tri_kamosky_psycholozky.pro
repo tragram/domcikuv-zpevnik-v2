@@ -1,7 +1,7 @@
 {title: Tři kámošky psycholožky}
 {artist: Poletíme?}
 {language: czech}
-{added: 09-2025}
+{date_added: 09-2025}
 {capo: 0}
 
 [G]Tři kámošky, psycholožky, vracely se [Emi]nocí,

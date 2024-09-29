@@ -2,34 +2,39 @@ import { useState } from "react";
 
 function SortButton({ text, field, songFiltering, setSongFiltering, onClick }) {
     let checkboxID = () => { return field + "checkbox" }
+    let sortButtonID = () => { return field + "sortButton" }
     function changeState() {
+        // the setState function is async, so need to get a copy that will track the true value for later
+        // TODO: this is certainly not the best solution
+        let trueCheckboxState = checkboxState;
         if (isActive()) {
-            document.getElementById(checkboxID()).click();
+            setCheckboxState(!checkboxState);
+            trueCheckboxState = !trueCheckboxState;
         }
         setSongFiltering({
-            query: songFiltering.query,
-            sortType: document.getElementById(checkboxID()).checked ? "ascending" : "descending",
+            ...songFiltering,
+            sortType: trueCheckboxState ? "descending" : "ascending",
             sortByField: field,
         })
     }
+
     function isActive() {
+        // console.log("is active: " + songFiltering.sortByField + "-" + field + "->" + String(songFiltering.sortByField == field))
         return songFiltering.sortByField == field;
     }
 
-    function startState() {
-        if (!isActive() | songFiltering.sortType == "ascending") {
-            return true;
-        } else {
-            return false;
-        }
+    function startCheckboxState() {
+        console.log("using start state!")
+        return (songFiltering.sortType == "descending")
     }
 
+    const [checkboxState, setCheckboxState] = useState(startCheckboxState)
     return (<>
         <div className={`flex flex-row ${isActive() ? 'bg-primary' : ''}`}>
-            <button onClick={() => { changeState(); onClick() }} checked={startState()}>{text}</button >
+            <button id={sortButtonID()} onClick={() => { changeState(); onClick() }} >{text}</button >
             <label className="swap swap-rotate">
                 {/* this hidden checkbox controls the state */}
-                <input type="checkbox" id={checkboxID()} />
+                <input type="checkbox" id={checkboxID()} checked={checkboxState} onChange={(e) => { document.getElementById(sortButtonID()).click() }} />
                 <svg className="swap-on h-3 w-3 fill-current" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
                     <path d="m599.09 538.08c-96.793 0-193.6 0.19141-290.39-0.20312-13.309-0.058594-26.879-1.8242-39.863-4.7891-34.871-7.9688-50.184-36.445-36.359-69.613 6.3008-15.098 15.277-29.867 25.992-42.227 87-100.44 174.52-200.43 262.39-300.1 10.895-12.359 23.902-23.375 37.5-32.746 27.203-18.793 56.316-19.512 82.957 0.20312 18.336 13.57 35.062 29.809 50.426 46.727 39.73 43.754 78.445 88.414 117.29 132.97 45.086 51.73 90.109 103.49 134.59 155.75 14.137 16.598 26.605 34.703 27.77 57.863 1.2227 24.406-9.4062 41.711-32.953 48.672-14.605 4.3203-30.203 7.0781-45.383 7.1875-98.004 0.61719-196 0.30469-293.97 0.30469z" />
                 </svg>
