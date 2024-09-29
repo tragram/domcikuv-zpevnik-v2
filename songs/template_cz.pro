@@ -1,6 +1,4 @@
-{title:}
-{artist:}
-{language: czech}
-{date_added: 09-2020}
+{language: english}
+{date_added: 02-2020}
 {capo: 0}
 {key: d}
