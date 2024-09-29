@@ -1,7 +1,7 @@
 {title: Hej sokoły}
 {artist: Folk}
 {language: polish}
-{date_added: 09-2025}
+{date_added: 09-2024}
 {capo: 0}
 
 [Verse 1]

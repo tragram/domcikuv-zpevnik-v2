@@ -2,7 +2,7 @@
 {artist: Poletíme?}
 {language: czech}
 {capo: 0}
-{date_added: 09-2025}
+{date_added: 09-2024}
 
 [G]Pokaždé když tě vidím, [D]vím, že by to šlo
 [Emi]a když jsem přemejšlel, co cítím, [C]tak mě napadlo

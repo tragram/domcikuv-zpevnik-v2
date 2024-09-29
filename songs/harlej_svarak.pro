@@ -1,7 +1,7 @@
 {title: Svařák}
 {artist: Harlej}
 {language: czech}
-{date_added: 09-2025}
+{date_added: 09-2024}
 {capo: 0}
 
 Předehra: C H G   riff   A    riff...   C   riff...   G riff...
