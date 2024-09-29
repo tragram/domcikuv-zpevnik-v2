@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+.chord {
+  color: red;
+  font-weight: bold;
+}
+
+/* .chord-sheet{
+  all: unset;
+} */
+
+.chord-sheet .row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  /* gap: 0.3em; */
+  line-height: 1.2;
+  /* justify-content: center; */
+}
+
+.chord-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+#song_content>h1 {
+  display: none;
+}
+
+.empty-line {
+  height: 1em
+}
+
+.chord:after,
+.lyrics:after {
+  content: '\200b'
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

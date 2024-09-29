@@ -131,6 +131,7 @@ const SongsList = () => {
                 <SortButton text="Date added" field="date_added" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
                 <SongFilter text="Language" choices={language_choices} setSelection={setSelectedLanguage} />
+                {/* this could actually just be a 'chip' with outline when off and filled when on */}
                 <SongFilter text="Capo" choices={capo_choices} setSelection={setSelectedCapo} />
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
