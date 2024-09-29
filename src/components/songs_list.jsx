@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import Song from "./song"
+import Song from "./song"
 import SongCard from './song_card'
 import SortButton from './sort_button';
 // import { Index, Document, Worker } from "flexsearch";
@@ -124,6 +124,7 @@ const SongsList = () => {
     // TODO: song sorting appears to only work on second press...
     return (
         <div className='w-full'>
+            <Song selectedSong={selectedSong} />
             <div className='flex flex-row justify-center'>
                 <SortButton text="Title" field="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <SortButton text="Artist" field="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
