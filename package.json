@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-table": "^8.20.5",
     "flexsearch": "^0.7.43",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -22,6 +23,7 @@
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
     "chordsheetjs": "^10.3.0",
+    "country-flag-icons": "^1.5.13",
     "daisyui": "^4.12.10",
     "eslint": "^9.9.0",
     "eslint-plugin-react": "^7.35.0",

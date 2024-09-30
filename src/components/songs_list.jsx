@@ -6,6 +6,8 @@ import SortButton from './sort_button';
 import SongFilter from './song_filter';
 import Search from './search';
 import Randomize from './randomize';
+import { useReactTable } from '@tanstack/react-table'
+import SongRow from './song_row';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
@@ -51,7 +53,6 @@ const SongsList = () => {
             }
         }, [selectedSong]
     )
-
 
 
     function sortFunc(results, sortByField, sortType) {
@@ -121,7 +122,7 @@ const SongsList = () => {
 
     let language_choices = languages.map((language) => ({ text: capitalizeFirstLetter(language), value: language }))
     let capo_choices = ["allow capo", "no capo"].map((capo) => ({ text: capitalizeFirstLetter(capo), value: capo }))
-    // TODO: song sorting appears to only work on second press...
+
     return (
         <div className='w-full'>
             <Song selectedSong={selectedSong} />
@@ -135,11 +136,28 @@ const SongsList = () => {
                 <SongFilter text="Capo" choices={capo_choices} setSelection={setSelectedCapo} />
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
-            <div className='w-full flex flex-col gap-2 justify-center'>
+            <div className="overflow-x-auto container mx-auto flex justify-center">
+                <table className="table-lg border-spacing-48">
+                    <thead>
+                        <tr>
+                            <th className='text-left'>Song</th>
+                            <th>Date added</th>
+                            <th>Language</th>
+                            <th>Capo</th>
+                        </tr>
+                    </thead>
+                    <tbody className='even:primary'>
+                        {songListData.map((song, index) => (
+                            <SongRow song={song} setSelectedSong={setSelectedSong} key={songToKey(song)} />
+                        ))};
+                    </tbody>
+                </table>
+            </div>
+            {/* <div className='w-full flex flex-col gap-2 justify-center'>
                 {songListData.map((song, index) => (
                     <SongCard song={song} setSelectedSong={setSelectedSong} key={songToKey(song)} />
                 ))};
-            </div>
+            </div>*/}
         </div >
     );
 };
