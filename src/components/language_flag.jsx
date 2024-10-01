@@ -17,6 +17,7 @@ const language2iso = {
 }
 
 function convert2flag(language) {
+    language = language.toLowerCase()
     if (language in language2iso) {
         return "https://flagcdn.com/" + language2iso[language] + ".svg";
     }

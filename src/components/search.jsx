@@ -1,6 +1,7 @@
 import Fuse from "fuse.js"
 import { Input } from "@nextui-org/react";
 import React, { useState, useEffect } from 'react';
+import { SearchIcon } from "./SearchIcon";
 //TODO: select should have a default value
 function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
     const options = {
@@ -28,7 +29,7 @@ function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
 
 
     return (
-            <Input type="text" className="max-w-xs" size="sm" label="Search" onChange={search} />
+            <Input isClearable type="text" className="w-full sm:max-w-[44%]" size="md" placeholder="Search" onChange={search}             startContent={<SearchIcon />}/>
             //  <svg
             //     xmlns="http://www.w3.org/2000/svg"
             //     viewBox="0 0 16 16"

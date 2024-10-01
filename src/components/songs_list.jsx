@@ -3,11 +3,12 @@ import Song from "./song"
 import SongCard from './song_card'
 import SortButton from './sort_button';
 // import { Index, Document, Worker } from "flexsearch";
-import SongFilter from './song_filter';
+import LanguageFilter from './language_filter';
 import Search from './search';
 import Randomize from './randomize';
 import { useReactTable } from '@tanstack/react-table'
 import SongRow from './song_row';
+import { Button } from '@nextui-org/react';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
@@ -20,7 +21,7 @@ const SongsList = () => {
     const [searchResults, setSearchResults] = useState(songs);
     const [languages, setLanguages] = useState([]);
     const [selectedLanguage, setSelectedLanguage] = useState("all")
-    const [selectedCapo, setSelectedCapo] = useState("all")
+    const [allowCapo, setAllowCapo] = useState(true)
     const [selectedSong, setSelectedSong] = useState(null); // State for selected song
     const songToKey = (song) => {
         // console.log(song.title+song.artist)
@@ -37,14 +38,14 @@ const SongsList = () => {
 
     useEffect(
         function updateSongList() {
-            let results = filterCapo(searchResults, selectedCapo);
+            let results = filterCapo(searchResults, allowCapo);
             results = filterLanguage(results, selectedLanguage);
             if (songFiltering.query === "") {
                 // since fuse.js already does sorting based on proximity, only re-sort if no query is present
                 results = sortFunc(results, songFiltering.sortByField, songFiltering.sortType);
             }
             setSongListData(results);
-        }, [songFiltering, songs, selectedLanguage, selectedCapo, searchResults])
+        }, [songFiltering, songs, selectedLanguage, allowCapo, searchResults])
 
     useEffect(
         function showSong() {
@@ -77,13 +78,11 @@ const SongsList = () => {
         }
     }
 
-    function filterCapo(songs, selectedCapo) {
-        if (selectedCapo == "allow capo" || selectedCapo == "all") {
+    function filterCapo(songs, allowCapo) {
+        if (allowCapo) {
             return songs;
-        } else if (selectedCapo == "no capo") {
-            return songs.filter((song) => song.capo == 0)
         } else {
-            console.log("Unknown capo filtering: " + selectedCapo)
+            return songs.filter((song) => song.capo == 0)
         }
     }
 
@@ -121,20 +120,17 @@ const SongsList = () => {
     }
 
     let language_choices = languages.map((language) => ({ text: capitalizeFirstLetter(language), value: language }))
-    let capo_choices = ["allow capo", "no capo"].map((capo) => ({ text: capitalizeFirstLetter(capo), value: capo }))
 
     return (
-        <div className='w-full'>
+        <div className='flex flex-col gap-4'>
             <Song selectedSong={selectedSong} />
-            <div className='flex flex-row justify-center'>
+            <div className='relative flex justify-end items-center gap-2'>
                 <SortButton text="Title" field="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <SortButton text="Artist" field="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
-                <SortButton text="Date added" field="date_added" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
+                <SortButton text="Date" field="date_added" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
                 <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
-                <SongFilter text="Language" choices={language_choices} setSelection={setSelectedLanguage} />
-                {/* this could actually just be a 'chip' with outline when off and filled when on */}
-                <SongFilter text="Capo" choices={capo_choices} setSelection={setSelectedCapo} />
-                <Chip color="warning" variant={selectedCapo == "no capo" ? "solid" : "bordered"}>Capo</Chip>
+                <LanguageFilter text="Language" choices={language_choices} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
+                <Button color="primary" variant={allowCapo ? "solid" : "bordered"} onClick={() => { setAllowCapo(!allowCapo) }}>Capo</Button>
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">
@@ -150,15 +146,10 @@ const SongsList = () => {
                     <tbody className='even:primary'>
                         {songListData.map((song, index) => (
                             <SongRow song={song} setSelectedSong={setSelectedSong} key={songToKey(song)} />
-                        ))};
+                        ))}
                     </tbody>
                 </table>
             </div>
-            {/* <div className='w-full flex flex-col gap-2 justify-center'>
-                {songListData.map((song, index) => (
-                    <SongCard song={song} setSelectedSong={setSelectedSong} key={songToKey(song)} />
-                ))};
-            </div>*/}
         </div >
     );
 };
