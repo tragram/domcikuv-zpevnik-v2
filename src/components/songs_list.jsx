@@ -11,7 +11,7 @@ import SongRow from './song_row';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
-
+import { Chip } from '@nextui-org/react';
 const SongsList = () => {
     // Store sortby order i.e. ascending or descending
     const [songs, setSongs] = useState([]);
@@ -134,6 +134,7 @@ const SongsList = () => {
                 <SongFilter text="Language" choices={language_choices} setSelection={setSelectedLanguage} />
                 {/* this could actually just be a 'chip' with outline when off and filled when on */}
                 <SongFilter text="Capo" choices={capo_choices} setSelection={setSelectedCapo} />
+                <Chip color="warning" variant={selectedCapo == "no capo" ? "solid" : "bordered"}>Capo</Chip>
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">

@@ -1,40 +1,6 @@
-import getUnicodeFlagIcon from 'country-flag-icons/unicode'
-import {
-    CZ,
-    GB,
-    DE,
-    GE,
-    PL,
-    UY,
-    RO,
-    FI,
-    EE,
-    FR,
-    IM,
-} from 'country-flag-icons/react/3x2'
+import LanguageFlag from "./language_flag";
 
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-const language2flag = {
-    "czech": <CZ className='w-5 h-5'/>,
-    "english": <GB className='w-5 h-5'/>,
-    "german": <DE className='w-5 h-5'/>,
-    "slovak": <GE className='w-5 h-5'/>,
-    "polish": <PL className='w-5 h-5'/>,
-    "spanish": <UY className='w-5 h-5'/>,
-    "romanian": <RO className='w-5 h-5'/>,
-    "finnish": <FI className='w-5 h-5'/>,
-    "estonian": <EE className='w-5 h-5'/>,
-    "french": <FR className='w-5 h-5'/>,
-}
-
-function convert2flag(language) {
-    if (language in language2flag) {
-        return language2flag[language];
-    }
-    else {
-        return <p>{getUnicodeFlagIcon('IM')}</p>;
-    }
-}
 function SongRow({ song, setSelectedSong }) {
     return (
         <tr onClick={() => { setSelectedSong(song) }}>
@@ -51,7 +17,7 @@ function SongRow({ song, setSelectedSong }) {
                 </div>
             </td>
             <td>
-                <div className='flex justify-center align-center'>{convert2flag(song.language)}</div>
+                <div className='flex justify-center align-center'><LanguageFlag language={song.language} /></div>
             </td>
             <td>
                 <div>{song.capo}</div>
