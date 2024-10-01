@@ -4,6 +4,7 @@
 {date_added: 09-2020}
 {capo: 0}
 {key: d}
+{range: }
 
 {soc}
 Ô [Em7]sol  

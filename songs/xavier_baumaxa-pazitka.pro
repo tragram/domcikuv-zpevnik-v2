@@ -3,6 +3,7 @@
 {language: czech}
 {date_added: 09-2024}
 {capo: 0}
+{range: }
  
 
 [A][C#mi][Cmi][F#mi][E][D]

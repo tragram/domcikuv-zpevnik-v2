@@ -3,6 +3,7 @@
 {capo: 3}
 {language: czech}
 {date_added: 09-2024}
+{range: }
 
 {comment: Intro}
 [Am]Am [G]G [Am]F A[E]m

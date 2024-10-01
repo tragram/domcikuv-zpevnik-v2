@@ -4,6 +4,7 @@
 {key: e}
 {title: Pumped Up Kicks}
 {artist: Foster the People}
+{range: }
 
 {start_of_verse}
 [Em]Robert's got a quick hand[G]

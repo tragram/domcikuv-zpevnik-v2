@@ -3,6 +3,7 @@
 {capo: 0}
 {language: czech}
 {date_added: 09-2024}
+{range: }
 
 {comment: Intro}
 [E][G#m][E]

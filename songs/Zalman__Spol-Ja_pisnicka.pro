@@ -3,6 +3,7 @@
 {capo: 0}
 {language: czech}
 {date_added: 09-2024}
+{range: }
 
 
 {start_of_verse}

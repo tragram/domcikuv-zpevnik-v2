@@ -5,6 +5,7 @@
 {language: english}
 {time:}
 {key: D}
+{range: }
  
 {sov}
 When I [D]wake up, yeah, I [D]know I'm gonna be,

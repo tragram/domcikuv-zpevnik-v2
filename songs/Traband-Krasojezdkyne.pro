@@ -4,6 +4,7 @@
 {language: czech}
 {date_added: 09-2024}
 {tempo: 110}
+{range: }
 
 {comment: Intro}
 [F#m]F#m     [D]C#7     [E]F#m[C#7]

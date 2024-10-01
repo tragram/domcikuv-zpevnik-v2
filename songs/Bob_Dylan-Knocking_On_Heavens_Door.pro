@@ -4,6 +4,7 @@
 {zoom-ipad: 2.992135}
 {language: english}
 {capo: 0}
+{range: e1-c2}
 
 Intro:
 [G]    [D]    [Am]   [C]

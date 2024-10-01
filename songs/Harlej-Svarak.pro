@@ -3,6 +3,7 @@
 {language: czech}
 {date_added: 09-2024}
 {capo: 0}
+{range: }
 
 Předehra: C H G   riff   A    riff...   C   riff...   G riff...
 1. [G.]Když jsem sám doma, p[Ami]oslouchám Vávra,

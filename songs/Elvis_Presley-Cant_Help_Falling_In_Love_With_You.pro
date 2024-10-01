@@ -2,7 +2,8 @@
 {artist: Elvis Presley}  
 {language: english}
 {capo: 2}
-{c: } 
+{key: c} 
+{range: }
    
 [C] Wise [Em]men [Am]say only [F] fools [C] rush [G] in   
 But [F] I [G] can't [Am] help [F] falling in [C] love [G] with [C] you   

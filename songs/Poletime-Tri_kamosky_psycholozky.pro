@@ -3,6 +3,7 @@
 {language: czech}
 {date_added: 09-2024}
 {capo: 0}
+{range: }
 
 [G]Tři kámošky, psycholožky, vracely se [Emi]nocí,
 [G]tak asi nějak domů, cestou neces[Emi]tou.

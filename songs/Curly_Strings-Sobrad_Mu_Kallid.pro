@@ -4,6 +4,7 @@
 {key: G}
 {title: Sõbrad Mu Kallid}
 {artist: Curly Strings}
+{range: }
 
 {start_of_verse}
 [G]Siis, kui ma üks[Bm]inda jään,

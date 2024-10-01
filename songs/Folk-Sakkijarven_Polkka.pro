@@ -4,6 +4,7 @@
 {date_added: 09-2020}
 {capo: 0}
 {key: d}
+{range: }
 
 {start_of_verse}
 On [Am]kauniina muistona [E7]Karjalan maa

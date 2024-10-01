@@ -122,7 +122,7 @@ const SongsList = () => {
     let language_choices = languages.map((language) => ({ text: capitalizeFirstLetter(language), value: language }))
 
     return (
-        <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 p-5'>
             <Song selectedSong={selectedSong} />
             <div className='relative flex justify-end items-center gap-2'>
                 <SortButton text="Title" field="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
@@ -134,13 +134,15 @@ const SongsList = () => {
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">
-                <table className="table-lg border-spacing-48">
+                <table className="table-lg border-spacing-x-6 border-spacing-y-2 border-separate">
                     <thead>
                         <tr>
+                            <th></th>
                             <th className='text-left'>Song</th>
                             <th>Date added</th>
                             <th>Language</th>
                             <th>Capo</th>
+                            <th>Vocal</th>
                         </tr>
                     </thead>
                     <tbody className='even:primary'>

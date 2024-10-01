@@ -4,7 +4,6 @@ import LanguageFlag from './language_flag';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, RadioGroup, Radio } from "@nextui-org/react";
 //TODO: icon for language in searchbar and possibly avatars https://nextui.org/docs/components/select
 function LanguageFilter({ text, choices, selectedLanguage, setSelectedLanguage }) {
-    console.log(selectedLanguage)
     return (
         <Dropdown >
             <DropdownTrigger>

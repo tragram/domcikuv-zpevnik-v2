@@ -4,6 +4,7 @@
 {tempo: 120}
 {language: czech}
 {date_added: 09-2024}
+{range: }
 
 {start_of_verse}
    [Em]Já snad [G]hned, když jsem se[D] narodil, na [G]bludnej[D] kámen [G]šláp',

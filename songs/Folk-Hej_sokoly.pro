@@ -3,6 +3,7 @@
 {language: polish}
 {date_added: 09-2024}
 {capo: 0}
+{range: }
 
 [Verse 1]
 Hej, tamgdzieś znad czarnej wody

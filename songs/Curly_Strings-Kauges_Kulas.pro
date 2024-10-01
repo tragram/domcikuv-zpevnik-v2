@@ -5,6 +5,7 @@
 {artist: Curly Strings}
 {title: Kauges Külas}
 {capo: 2}
+{range: }
 
 Kauges [C]külas, vanaema [G]juures,
 ela[Am]sin kord, kogu [F]suve.

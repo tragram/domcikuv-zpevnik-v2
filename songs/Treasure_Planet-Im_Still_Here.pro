@@ -5,6 +5,7 @@
 {title: I'm Still Here}
 {artist: Treasure Planet}
 {tempo: 74}
+{range: }
 
 {start_of_verse}
 [G]I am a qu[C]estion to the w[G]orld

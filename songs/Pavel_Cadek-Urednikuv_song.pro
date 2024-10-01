@@ -4,6 +4,7 @@
 {date_added: 09-2020}
 {capo: 0}
 {key: d}
+{range: }
 
 [Dmi]Vážený pane, na ty dveře klepe se.
 Nebojte vtipkuju, jen klidně pojďte sem.

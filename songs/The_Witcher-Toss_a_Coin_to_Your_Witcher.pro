@@ -4,6 +4,7 @@
 {date_added: 09-2020}
 {capo: 0}
 {key: e}
+{range: }
 
 {start_of_verse}
 [Em]   When a humble bard[A]

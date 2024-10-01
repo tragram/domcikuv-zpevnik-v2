@@ -4,6 +4,7 @@
 {key: C}
 {title: Can You Feel The Love Tonight}
 {artist: Elton John}
+{range: }
 
 [C]There's a calm sur[G]render  
 [C]To the rush of [G]day  

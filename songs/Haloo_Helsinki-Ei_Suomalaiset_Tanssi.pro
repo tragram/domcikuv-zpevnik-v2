@@ -4,6 +4,7 @@
 {date_added: 09-2020}
 {capo: 0}
 {key: c#}
+{range: }
 
 {comment: Intro}
 C#m A E B (x4)

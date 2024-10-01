@@ -5,6 +5,7 @@
 {title: Gotta Catch 'em all!}
 {artist: Pokémon}
 {tempo: 145}
+{range: }
 
 {start_of_verse}
 [Am]I wanna be the [G]very best

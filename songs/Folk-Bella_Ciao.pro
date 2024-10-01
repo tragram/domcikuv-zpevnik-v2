@@ -5,6 +5,7 @@
 {title: Bella Ciao}
 {artist: Folk}
 {tempo: 115}
+{range: }
 
 [Am]Una mattina mi son svegliato,
 
