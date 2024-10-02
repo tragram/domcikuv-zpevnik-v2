@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 
 import ChordSheetJS from 'chordsheetjs';
+import { render } from 'react-dom';
 
 
 function Song({ selectedSong }) {
@@ -9,13 +10,21 @@ function Song({ selectedSong }) {
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
     // const formatter = new ChordSheetJS.HtmlTableFormatter();
+
+    function renderSong(key) {
+        let song = parser.parse(selectedSong.content);
+        console.log(key, song)
+        song = song.transposeUp()
+        const renderedSong = formatter.format(song);
+        setParsedContent(renderedSong);
+    }
+
     useEffect(() => {
         if (!selectedSong) {
             return;
         }
-        const song = parser.parse(selectedSong.content);
-        const renderedSong = formatter.format(song);
-        setParsedContent(renderedSong);
+        // TODO: remove the "Es", thats for testing
+        renderSong(selectedSong.key)
         document.getElementById('song_modal').showModal()
     }, [selectedSong]);
 
@@ -24,7 +33,7 @@ function Song({ selectedSong }) {
             <div className="modal-box w-11/12 max-w-5xl">
                 <div className="join full-width">
                     {["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"].map((chord) => (
-                        <input className="join-item btn" type="radio" name="transpose_selection"
+                        <input className="join-item btn" type="radio" name="transpose_selection" onClick={() => { console.log(chord); renderSong(chord) }}
                             defaultChecked={selectedSong && selectedSong.key.toLowerCase() == chord.toLowerCase() ? "defaultChecked" : ""} aria-label={chord} key={`transpose_selection_${chord}`} />
                     ))}
                     {/* TODO: on small screens, just offer transpose +/- */}
