@@ -13,6 +13,7 @@ import { Button } from '@nextui-org/react';
 // const document = new Document(options);
 // const worker = new Worker(options);
 import { Chip } from '@nextui-org/react';
+import SortButtonMobile from './sort_button_mobile';
 const SongsList = () => {
     // Store sortby order i.e. ascending or descending
     const [songs, setSongs] = useState([]);
@@ -132,6 +133,7 @@ const SongsList = () => {
                 <LanguageFilter text="Language" choices={language_choices} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
                 <Button color="primary" variant={allowCapo ? "solid" : "bordered"} onClick={() => { setAllowCapo(!allowCapo) }}>Capo</Button>
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
+                <SortButtonMobile songFiltering={songFiltering} setSongFiltering={setSongFiltering}/>
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">
                 <table className="table-lg border-spacing-x-6 border-spacing-y-2 border-separate">
