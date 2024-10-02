@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Check, AudioLines, MicVocal, CalendarPlus, AArrowUp, AArrowDown } from "lucide-react";
+import { Check, AudioLines, MicVocal, CalendarPlus, AArrowUp, AArrowDown, ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownZA } from "lucide-react";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem, Button, cn } from "@nextui-org/react";
 
 function SortButtonMobile({ songFiltering, setSongFiltering, }) {
@@ -21,6 +21,23 @@ function SortButtonMobile({ songFiltering, setSongFiltering, }) {
             sortType: key
         });
     }
+
+    function sortingIcon(field, type) {
+        if (field === "date_added") {
+            if (type === "descending") {
+                return <ArrowDown10 />
+            } else {
+                return <ArrowDown01 />
+            }
+        } else if ((field === "title" | field === "artist")) {
+            if (type === "descending") {
+                return <ArrowDownZA />
+            } else {
+                return <ArrowDownAZ />
+            }
+        }
+    }
+
     return (<>
         <Dropdown closeOnSelect={false}>
             <DropdownTrigger>
@@ -51,14 +68,14 @@ function SortButtonMobile({ songFiltering, setSongFiltering, }) {
                 <DropdownSection title="Direction" >
                     <DropdownItem
                         key="ascending_sort"
-                        startContent={<AArrowDown />}
+                        startContent={sortingIcon(songFiltering.sortByField, "ascending")}
                         endContent={songFiltering.sortType === "ascending" ? <Check /> : ""}
                     >
                         Ascending
                     </DropdownItem>
                     <DropdownItem
                         key="descending_sort"
-                        startContent={<AArrowUp />}
+                        startContent={sortingIcon(songFiltering.sortByField, "descending")}
                         endContent={songFiltering.sortType === "descending" ? <Check /> : ""}
                     >
                         Descending

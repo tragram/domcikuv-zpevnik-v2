@@ -1,7 +1,7 @@
 import Fuse from "fuse.js"
 import { Input } from "@nextui-org/react";
 import React, { useState, useEffect } from 'react';
-import { SearchIcon } from "./SearchIcon";
+import { Search as SearchIcon} from "lucide-react";
 //TODO: select should have a default value
 function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
     const options = {
@@ -26,7 +26,6 @@ function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
             setSearchResults(songs);
         }
     }
-
 
     return (
             <Input isClearable type="text" className="w-full sm:max-w-[44%]" size="md" placeholder="Search" onChange={search}             startContent={<SearchIcon />}/>

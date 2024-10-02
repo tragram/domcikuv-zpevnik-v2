@@ -23,7 +23,7 @@ function SortButton({ text, field, songFiltering, setSongFiltering, onClick }) {
         return songFiltering.sortByField == field;
     }
 
-    let chevron = songFiltering.sortType == "ascending" ? <ChevronUp /> : <ChevronDown />
+    let chevron = songFiltering.sortType == "ascending" ? <ChevronUp  size={24}/> : <ChevronDown  size={24}/>
 
     return (<>
         <Button color="primary" variant={isActive() ? 'solid' : 'ghost'} size="md" className="max-w-24" onClick={() => { changeState(); onClick() }} endContent={chevron}>{text}</Button>

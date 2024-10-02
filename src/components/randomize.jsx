@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import dieImage from '/src/assets/die.svg'
 import { Dices } from 'lucide-react';
 import { Button } from '@nextui-org/react';
 //TODO: select should have a default value
@@ -9,7 +8,7 @@ function Randomize({ filteredSongs, setSelectedSong }) {
     }
     return (
         <Button isIconOnly color="primary" variant="ghost" onClick={selectSong}>
-            <Dices/>
+            <Dices />
         </Button>
     )
 }

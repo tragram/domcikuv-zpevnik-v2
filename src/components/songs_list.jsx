@@ -8,7 +8,7 @@ import Search from './search';
 import Randomize from './randomize';
 import { useReactTable } from '@tanstack/react-table'
 import SongRow from './song_row';
-import { Button } from '@nextui-org/react';
+import { Button, ButtonGroup } from '@nextui-org/react';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
@@ -126,14 +126,18 @@ const SongsList = () => {
         <div className='flex flex-col gap-4 p-5'>
             <Song selectedSong={selectedSong} />
             <div className='relative flex justify-end items-center gap-2'>
-                <SortButton text="Title" field="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
-                <SortButton text="Artist" field="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
-                <SortButton text="Date" field="date_added" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
+                <ButtonGroup>
+                    <SortButton text="Title" field="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
+                    <SortButton text="Artist" field="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
+                    <SortButton text="Date" field="date_added" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
+                </ButtonGroup>
+                <SortButtonMobile songFiltering={songFiltering} setSongFiltering={setSongFiltering} />
                 <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
-                <LanguageFilter text="Language" choices={language_choices} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
-                <Button color="primary" variant={allowCapo ? "solid" : "bordered"} onClick={() => { setAllowCapo(!allowCapo) }}>Capo</Button>
+                <ButtonGroup>
+                    <LanguageFilter text="Language" choices={language_choices} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
+                    <Button color="primary" variant={allowCapo ? "solid" : "bordered"} onClick={() => { setAllowCapo(!allowCapo) }}>Capo</Button>
+                </ButtonGroup>
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
-                <SortButtonMobile songFiltering={songFiltering} setSongFiltering={setSongFiltering}/>
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">
                 <table className="table-lg border-spacing-x-6 border-spacing-y-2 border-separate">

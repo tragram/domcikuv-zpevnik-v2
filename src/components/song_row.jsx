@@ -1,9 +1,10 @@
 import LanguageFlag from "./language_flag";
 import { Avatar } from "@nextui-org/react";
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-import { CameraIcon } from "./CameraIcon";
 import { CircularProgress } from "@nextui-org/react";
+import { Instagram
 
+ } from "lucide-react";
 function progressColor(range) {
     if (range == "?") {
         return "default";
@@ -67,7 +68,7 @@ function SongRow({ song, setSelectedSong }) {
         <tr onClick={() => { setSelectedSong(song) }} className="p-10 m-10">
             <td>
                 <Avatar showFallback src='https://images.unsplash.com/broken' fallback={
-                    <CameraIcon className="animate-pulse w-6 h-6 text-default-500" fill="currentColor" size={20} />
+                    <Instagram size={24}/>
                 } />
             </td>
             <th>

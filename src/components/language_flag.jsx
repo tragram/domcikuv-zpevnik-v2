@@ -1,6 +1,6 @@
 import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { Avatar } from '@nextui-org/react';
-
+import { FlagOff } from 'lucide-react';
 const language2iso = {
     "czech": "cz",
     "english": "gb",
@@ -22,7 +22,7 @@ function convert2flag(language) {
         return "https://flagcdn.com/" + language2iso[language] + ".svg";
     }
     else {
-        return <p>{getUnicodeFlagIcon('IM')}</p>;
+        return <FlagOff />;
     }
 }
 
