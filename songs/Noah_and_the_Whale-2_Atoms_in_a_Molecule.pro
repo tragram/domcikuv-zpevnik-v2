@@ -27,7 +27,7 @@ But then I woke from the dream
 To realise I was alone  
 A tragic event I must admit  
 But let's not be overblown  
-I’m not trying to write a love song  
+I'm not trying to write a love song  
 Just a sad pathetic moan  
 And maybe I just need change  
 Maybe I just need a new cologne  
@@ -40,4 +40,4 @@ And then one day you part
 Most of the time it's misery  
 But there's some joy at the start  
 And for that I'd say it's worth it  
-Just use a blade that’s short and sharp on me  
+Just use a blade that's short and sharp on me  

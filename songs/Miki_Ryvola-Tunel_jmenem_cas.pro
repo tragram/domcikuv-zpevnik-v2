@@ -5,11 +5,6 @@
 {date_added: 09-2024}
 {range: }
 
-{comment: Intro}
-[E][G#m][E]
-
-[E]Am   [G#m]E    [E7]F/E  [A]E
-
 {start_of_verse}
 Těch [E]strašnejch vlaků, [G#m]co se ženou [E7]kolejí tvejch [A]snů,
 těch [Am]asi už se [E]nezbavíš [F#]do posledních [B7]dnů.
@@ -22,9 +17,6 @@ kdo [Am]nechal roky [E]nejhezčí do [F#]vozů naklá[B7]dat.
 Proč [E]vlaky, co si [G#m]každou noc pod [E7]voknem laděj [A]hlas,
 po[Am]lyká díra [E]kamenná - [Fmaj7]tunel jménem[(E)]čas.
 
-{comment: Interlude}
-[E]Am   [G#m]E    [E7]F/E  [A]E
-
 {start_of_verse}
 Co [E]všechno vlaky [G#m]vodvezly, to [E7]jenom pánbů [A]ví,
 tvý [Am]starý lásky [E]mladej hlas a [F#]slova bláho[B7]vý.
@@ -36,9 +28,6 @@ A [E]zvonky nočních [G#m]nádraží i [E7]vítr na tra[A]tích
 a [Am]honky tonky [E]piáno a [F#]uplakanej [B7]smích
 a [E]písničky a [G#m]šťastný míle [E7]na tuláckej [A]pas
 už [Am]spolkla díra [E]kamenná - [Fmaj7]tunel jménem[(E)]čas.
-
-{comment: Interlude}
-[E]Am   [G#m]E    [E7]F/E  [A]E
 
 {start_of_verse}
 Než [E]poslední vlak [G#m]vodjede a [E7]to už bude [A]zlý,
