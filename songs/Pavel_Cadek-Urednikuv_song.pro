@@ -35,7 +35,7 @@ Tik tak čas běží, tak mi rychlík ujede.
 Je ti jen dvacet pět, co ty víš o životě?
 Proháníš sukně, já jsem sám jako kůl v plotě.
 
-Je to tak...
+{chorus}
 
 Ťuk, ťuk, hrajeme ping pong zleva doprava.
 Panáčkuj jako zajíc, ať je zábava!

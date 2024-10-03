@@ -42,14 +42,6 @@ You must have [A]lost your wits, yeah
 {end_of_verse}
 
 
-{start_of_chorus}
-[Em]All the other kids with the [G]pumped up kicks
-You'd better [D]run, better run, [A]outrun my gun
-[Em]All the other kids with the [G]pumped up kicks
-You'd better [D]run, better run, [A]faster than my bullet
-{end_of_chorus}
+{chorus}
 
-[Em]All the other kids with the [G]pumped up kicks
-You'd better [D]run, better run, [A]outrun my gun
-[Em]All the other kids with the [G]pumped up kicks
-You'd better [D]run, better run, [A]faster than my bullet
+{chorus}

@@ -6,9 +6,6 @@
 {key: c#}
 {range: }
 
-{comment: Intro}
-C#m A E B (x4)
-
 {start_of_verse}
 Kesä[C#m]lauantai [A]nyt
 Oon [E]mökille lähte[B]nyt
@@ -16,8 +13,8 @@ Poltto[C#m]puut tehty [A]jo
 Meni [E]rikki myös radi[B]o
 {end_of_verse}
 
-[C#m] Järvi [A]tyyni on
-[E] Mut minä [B]levoton
+[C#m]Järvi [A]tyyni on
+[E]Mut minä [B]levoton
 Ah [C#m]silloin kuu[A]len sen ää[E]nen[B]
 
 Vanha [C#m]naapuri [A]Jack
@@ -25,8 +22,8 @@ Tuli [E]jenkeistä [B]back
 Nyt hän [C#m]saapuu hake[A]maan
 Mua [E]mukaan tanssi[B]maan
 
-[C#m] On päällä [A]stetsoni
-[E] Ja krokotiili[B]nahkabuutsit
+[C#m]On päällä [A]stetsoni
+[E]Ja krokotiili[B]nahkabuutsit
 Ja [C#m]mietin et [A]miten tässä [E]käy
 
 {start_of_chorus}
@@ -54,8 +51,8 @@ Bändi [C#m]purkaa paku[A]a
 Jengi [E]odottaa haku[B]a
 {end_of_verse}
 
-[C#m] Miehet [A]sivulle
-[E] Ja naiset [B]toiselle
+[C#m]Miehet [A]sivulle
+[E]Ja naiset [B]toiselle
 Ja [C#m]niin homma [A]lähtee käyn[E]tiin[B]
 
 Eka [C#m]sointu kun [A]soi
@@ -63,8 +60,8 @@ Jack [E]katseen muhun [B]loi
 Hän [C#m]näyttää käsil[A]lään
 Kato [E]täällä ele[B]tään
 
-[C#m] Tän tanssi[A]partnerin
-[E] Orkeste[B]rin kuulin
+[C#m]Tän tanssi[A]partnerin
+[E]Orkeste[B]rin kuulin
 Ja [C#m]Ennen tätä [A]päivää luu[E]lin
 
 {start_of_chorus}
@@ -105,4 +102,4 @@ Ja [C#m]tanssii, ja [A]tanssii, ja [E]tanssii, ye[B]ah
 {end_of_chorus}
 
 {comment: Outro}
-[C#m] Ei suomalaiset [C#m]tanssi
+[C#m]Ei suomalaiset [C#m]tanssi
