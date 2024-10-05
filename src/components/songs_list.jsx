@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Song from "./song"
 import SongCard from './song_card'
-import SortButton from './sort_button';
 // import { Index, Document, Worker } from "flexsearch";
 import LanguageFilter from './language_filter';
 import Search from './search';
@@ -13,7 +12,7 @@ import { Button, ButtonGroup } from '@nextui-org/react';
 // const document = new Document(options);
 // const worker = new Worker(options);
 import { Chip } from '@nextui-org/react';
-import SortButtonMobile from './sort_button_mobile';
+import Sorting from './sorting';
 import VocalRangeFilter from './vocalrange_filter';
 
 class SongRange {
@@ -106,16 +105,27 @@ const SongsList = () => {
 
 
     function sortFunc(results, sortByField, sortType) {
-        // console.log(results, sortByField, sortType);
+        function compare(a, b) {
+            if (sortByField === "range") {
+                const a_semi = a.range.semitones;
+                const b_semi = b.range.semitones;
+                if (a_semi === b_semi) {
+                    // if the ranges are the same, just sort by title
+                    return a["title"].localeCompare(b["title"]);
+                } else {
+                    return a_semi < b_semi;
+                }
+            } else {
+                return a[sortByField].localeCompare(b[sortByField]);
+            }
+        }
 
         if (sortType === "ascending") {
-            results = results.toSorted((a, b) => a[sortByField].localeCompare(b[sortByField]))
+            results = results.toSorted((a, b) => compare(a, b))
         }
         else if (sortType === "descending") {
-            results = results.toSorted((a, b) => b[sortByField].localeCompare(a[sortByField]))
-        }
-        // TODO: if sort on langauge -> take title into account on a draw
-        // console.log(results);
+            results = results.toSorted((a, b) => compare(b, a))
+        } else { console.log("Unknown ordering!") }
         return results;
     }
 
@@ -136,12 +146,10 @@ const SongsList = () => {
     }
 
     function filterVocalRange(songs, vocalRange) {
-        console.log(vocalRange)
         function inRange(x, min, max) {
             return ((x - min) * (x - max) <= 0);
         }
         if (vocalRange === "all") {
-            console.log("here")
             return songs;
         } else {
             return songs.filter(song => inRange(song.range.semitones, vocalRange[0], vocalRange[1]));
@@ -176,7 +184,6 @@ const SongsList = () => {
                 setLanguages(["all", ...new Set(data.map(item => item["language"]))].sort());
                 let songRanges = data.map(song => (song.range.semitones)).filter(range => range != "?");
                 setMaxRange(Math.max(songRanges));
-                console.log(songRanges, Math.max(songRanges));
                 // TODO: languages with less than e.g. 5 songs should be merged into "other"
             })
             .catch((error) => {
@@ -194,12 +201,7 @@ const SongsList = () => {
         <div className='flex flex-col gap-4 p-5'>
             <Song selectedSong={selectedSong} />
             <div className='relative flex justify-end items-center gap-2'>
-                <ButtonGroup>
-                    <SortButton text="Title" field="title" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
-                    <SortButton text="Artist" field="artist" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
-                    <SortButton text="Date" field="date_added" songFiltering={songFiltering} setSongFiltering={setSongFiltering} onClick={() => { }} />
-                </ButtonGroup>
-                <SortButtonMobile songFiltering={songFiltering} setSongFiltering={setSongFiltering} />
+                <Sorting songFiltering={songFiltering} setSongFiltering={setSongFiltering} />
                 <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
                 <ButtonGroup>
                     <LanguageFilter text="Language" choices={language_choices} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
