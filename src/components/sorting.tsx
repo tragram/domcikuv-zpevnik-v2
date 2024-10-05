@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect, ReactElement } from 'react';
-import { Check, AudioLines, MicVocal, CalendarPlus, Music, ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownZA } from "lucide-react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem, Button } from "@nextui-org/react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from "@nextui-org/react";
+import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownZA, AudioLines, CalendarPlus, Check, MicVocal, Music } from "lucide-react";
+import React, { ReactElement } from 'react';
 
 import { ButtonGroup } from '@nextui-org/react';
 
@@ -66,7 +66,6 @@ function SortButtonMobile({ sortByField, setSortField, sortType, setSortType }) 
                 <Button
                     variant="ghost"
                     color="primary"
-                    className="lg:hidden"
                 >
                     Sorting
                 </Button>

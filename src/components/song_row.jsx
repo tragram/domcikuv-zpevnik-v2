@@ -1,8 +1,7 @@
-import LanguageFlag from "./language_flag";
-import { Avatar } from "@nextui-org/react";
-const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-import { CircularProgress } from "@nextui-org/react";
+import { Avatar, CircularProgress } from "@nextui-org/react";
 import { Instagram } from "lucide-react";
+import LanguageFlag from "./language_flag";
+const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 function progressColor(range) {
     if (range == "?") {
         return "default";

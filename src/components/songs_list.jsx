@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Song from "./song"
-import SongCard from './song_card'
+import React, { useEffect, useState } from 'react';
+import Song from "./song";
 // import { Index, Document, Worker } from "flexsearch";
-import LanguageFilter from './language_filter';
-import Search from './search';
 import Randomize from './randomize';
-import { useReactTable } from '@tanstack/react-table'
+import Search from './search';
 import SongRow from './song_row';
-import { Button, ButtonGroup } from '@nextui-org/react';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
-import { Chip } from '@nextui-org/react';
 import Sorting from './sorting';
-import VocalRangeFilter from './vocalrange_filter';
 
 class SongRange {
     constructor(song_range_str) {
@@ -203,11 +197,6 @@ const SongsList = () => {
             <div className='relative flex justify-end items-center gap-2'>
                 <Sorting songFiltering={songFiltering} setSongFiltering={setSongFiltering} />
                 <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
-                <ButtonGroup>
-                    <LanguageFilter text="Language" choices={language_choices} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} />
-                    <Button color="primary" variant={allowCapo ? "solid" : "bordered"} onClick={() => { setAllowCapo(!allowCapo) }}>Capo</Button>
-                    <VocalRangeFilter maxRange={maxRange} vocalRange={vocalRange} setVocalRange={setVocalRange} />
-                </ButtonGroup>
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">

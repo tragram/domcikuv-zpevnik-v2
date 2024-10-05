@@ -1,4 +1,3 @@
-import getUnicodeFlagIcon from 'country-flag-icons/unicode'
 import { Avatar } from '@nextui-org/react';
 import { FlagOff } from 'lucide-react';
 const language2iso = {

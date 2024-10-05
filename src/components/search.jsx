@@ -1,7 +1,7 @@
-import Fuse from "fuse.js"
 import { Input } from "@nextui-org/react";
-import React, { useState, useEffect } from 'react';
-import { Search as SearchIcon} from "lucide-react";
+import Fuse from "fuse.js";
+import { Search as SearchIcon } from "lucide-react";
+import React from 'react';
 //TODO: select should have a default value
 function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
     const options = {

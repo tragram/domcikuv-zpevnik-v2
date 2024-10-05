@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Dices } from 'lucide-react';
 import { Button } from '@nextui-org/react';
+import { Dices } from 'lucide-react';
+import React from 'react';
 //TODO: select should have a default value
 function Randomize({ filteredSongs, setSelectedSong }) {
     function selectSong() {
