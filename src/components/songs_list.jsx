@@ -7,8 +7,8 @@ import SongRow from './song_row';
 // const index = new Index(options);
 // const document = new Document(options);
 // const worker = new Worker(options);
+import Filtering from './filters';
 import Sorting from './sorting';
-
 class SongRange {
     constructor(song_range_str) {
         const chromaticScale = {
@@ -150,14 +150,6 @@ const SongsList = () => {
         }
     }
 
-    function capitalizeFirstLetter(str) {
-        if (!str) return '';
-
-        const firstCodePoint = str.codePointAt(0);
-        const index = firstCodePoint > 0xFFFF ? 2 : 1;
-
-        return String.fromCodePoint(firstCodePoint).toUpperCase() + str.slice(index);
-    }
 
     useEffect(() => {
         // Fetch the songs.json file from the public folder
@@ -189,14 +181,13 @@ const SongsList = () => {
         return <div>Error: {error}</div>;
     }
 
-    let language_choices = languages.map((language) => ({ text: capitalizeFirstLetter(language), value: language }))
-
     return (
         <div className='flex flex-col gap-4 p-5'>
             <Song selectedSong={selectedSong} />
             <div className='relative flex justify-end items-center gap-2'>
                 <Sorting songFiltering={songFiltering} setSongFiltering={setSongFiltering} />
                 <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
+                <Filtering languages={languages} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} allowCapo={allowCapo} setAllowCapo={setAllowCapo} maxRange={maxRange} vocalRange={vocalRange} setVocalRange={setVocalRange} />
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">
