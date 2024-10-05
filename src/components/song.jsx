@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 
 import ChordSheetJS from 'chordsheetjs';
-import { render } from 'react-dom';
 
 
 function Song({ selectedSong }) {
