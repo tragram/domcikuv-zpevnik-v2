@@ -14,10 +14,10 @@
 {end_of_verse}
 
 
-{sob}
+{start_of_bridge}
 [F#m]Bolestí [D]jednoho je [E]druhého [C#7]štěstí,
-[F#m]co nelze [D]vyslovit,[E] to voní [C#7]po neřesti.
-{eob}
+[F#m]co nelze [D]vyslovit,[E]to voní [C#7]po neřesti.
+{end_of_bridge}
 
 {start_of_chorus}
 [F#m]Krasojezdky[D]ně, sestro [E]akroba[C#7]tů,

@@ -6,7 +6,7 @@
 {range: }
 
 [Verse 1]
-Hej, tamgdzieś znad czarnej wody
+[Am]Hej, tamgdzieś znad czarnej wody
 [E]Wsiada na koń kozak młody
 [Am]Czule żegna się z dziewczyną
 [E]Jeszcze czulej z [Am]Ukra[G]iną
@@ -23,7 +23,7 @@ Hej, tamgdzieś znad czarnej wody
 {end_of_chorus}
 
 {start_of_verse}
-Ona jedn tam została
+[Am]Ona jedn tam została
 [E]Jaskółeczka moja, moja mała
 [Am]A ja tutaj w obcej stronie
 [E]Dniem i nocą tęsk[Am]nię d[G]o niej
@@ -55,7 +55,7 @@ Ona jedn tam została
 [C]Hej, hej, hej sokoły
 [G]Omijajcie góry, lasy, doły
 [Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy, [Am]dzwoń,[E] dzwoń[Am], dzwoń
+[E]Mój stepowy, [Am]dzwoń,[E]dzwoń[Am], dzwoń
 {end_of_chorus}
 
 {start_of_verse}

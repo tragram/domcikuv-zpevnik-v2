@@ -5,34 +5,34 @@
 {capo: 0}
 {range: }
 
-{sov}
+{start_of_verse}
 [G]Když jsem sám doma, [Ami]poslouchám Vávra,
 [C]starýho volá, [D]pořád dokola
 [G]Chce to mít nápad, [Ami]a né pořád chrápat,
 [C]já dostal jsem nápad, [D]udělat mejdan.[C]
-{eov}
+{end_of_verse}
 
-{soc}
+{start_of_chorus}
 [G]Mám rád svařené [Ami]víno červené,
 já mám [C]rád, rád sva[G]řák.
 [G]Mám rád svařené [Ami]víno červené,
 já mám [C]rád, rád sva[G]řák.
-{eoc}
+{end_of_chorus}
 
-{sov}
+{start_of_verse}
 [G]Se známou partou, [Ami]domluva krátká,
 [C]zejtra v 6 hodin,[D]vstup jedna lampa.
 [G]Začíná mejdan, [Ami]na 200 procent,
 [C]my plníme plány, [D]rostou nám blán[C]y.
-{eov}
+{end_of_verse}
 
 {chorus}
 
-{sov}
+{start_of_verse}
 [G]Když jsem sám doma, [Ami]poslouchám Vavra,
 [C]starýho vola, [D]pořád dokola.
 [G]Chce to mít nápad, [Ami]a né pořád chrápat,
 [C]já dostal jsem nápad [D]udělat mejdan[C].
-{eov}
+{end_of_verse}
 
 {chorus}

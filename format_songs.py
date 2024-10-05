@@ -9,22 +9,24 @@ def extract_metadata(file_path):
     title = None
 
     with open(file_path, "r", encoding="utf-8") as file:
-        for line in file:
-            line = line.strip()
+        cleaned_lines = [l.strip().replace("] ", "]") for l in file.readlines()]
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.writelines("\n".join(cleaned_lines))
 
-            # Find the title from the line, e.g., {title: Song Title}
-            if line.startswith("{title:"):
-                title = line[len("{title:") :].rstrip("}")
-                title = title.strip()
+    for line in cleaned_lines:
+        # Find the title from the line, e.g., {title: Song Title}
+        if line.startswith("{title:"):
+            title = line[len("{title:") :].rstrip("}")
+            title = title.strip()
 
-            # Find the artist from the line, e.g., {artist: Artist Name}
-            if line.startswith("{artist:"):
-                artist = line[len("{artist:") :].rstrip("}")
-                artist = artist.strip()
+        # Find the artist from the line, e.g., {artist: Artist Name}
+        if line.startswith("{artist:"):
+            artist = line[len("{artist:") :].rstrip("}")
+            artist = artist.strip()
 
-            # Stop early if both artist and title are found
-            if artist and title:
-                break
+        # Stop early if both artist and title are found
+        if artist and title:
+            break
 
     return artist, title
 
@@ -42,7 +44,7 @@ def normalize_string(input_str):
     return ascii_str
 
 
-def rename_chordpro_files(directory):
+def format_chordpro_files(directory):
     # Walk through the given directory
     for root, dirs, files in os.walk(directory):
         for file in files:
@@ -77,4 +79,4 @@ def rename_chordpro_files(directory):
 songs_directory = "songs"
 
 # Call the function to rename the ChordPro files
-rename_chordpro_files(songs_directory)
+format_chordpro_files(songs_directory)

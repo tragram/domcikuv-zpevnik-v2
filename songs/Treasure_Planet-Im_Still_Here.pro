@@ -34,7 +34,7 @@ Wanna t[C]ouch things I don't fe[G]el
 Wanna ho[C]ld on, and f[Am7]eel I b[C]elong
 And h[G]ow, can the [C]world want me to c[G]hange?
 They're the o[C]nes that stay the s[G]ame
-They don't k[C]now me, cause[Em] I'm[D] not [C]here
+They don't k[C]now me, cause[Em]I'm[D]not [C]here
 {end_of_chorus}
 
 {start_of_verse}
@@ -58,18 +58,18 @@ They can't s[C]ee me, But I'[Em]m st[D]ill h[C]ere
 {end_of_chorus}
 
 
-{sob}
+{start_of_bridge}
 C[C]uz I'm n[D]ot what they s[Em]ee [*]
-Yeah the wo[C]rld is still sleeping While [D]I keep on dreaming, for[Em] me [*]
+Yeah the wo[C]rld is still sleeping While [D]I keep on dreaming, for[Em]me [*]
 And it w[C]asn't just whispers and l[D]ies That I'll never b[Em]eli[D]ev[C]e[*]
-{eob}
+{end_of_bridge}
 
 
 {start_of_chorus}
 And [G]I want a [C]moment to be r[G]eal
 Wanna t[C]ouch things I don't fe[G]el
 Wanna ho[C]ld on, and f[Am7]eel I b[C]elong
-And h[G]ow, can they[C] say I'll never ch[G]ange?
+And h[G]ow, can they[C]say I'll never ch[G]ange?
 They're the o[C]nes that stay the s[G]ame
 I'm the o[C]ne now, cause I'[Em]m st[D]ill h[C]ere
 {end_of_chorus}

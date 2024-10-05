@@ -65,4 +65,3 @@ Dobroděj, spása lidských duší,
 co jsou druzí zač, jen těžko tušíš,
 tak si [D]nestěžuj.
 
-

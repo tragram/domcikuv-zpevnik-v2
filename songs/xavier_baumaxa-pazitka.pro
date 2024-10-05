@@ -4,37 +4,37 @@
 {date_added: 09-2024}
 {capo: 0}
 {range: }
- 
+
 
 [A][C#mi][Cmi][F#mi][E][D]
-{sov}
+{start_of_verse}
 Krajina [A]svádí k podzimním [C#mi]výletům,
 tripům do [F#mi]mládí a častým [D]úletům.
 Barevný listí je rázem pestřejší,
 hlavu ti čistí, no a ty jsi bystřejší.
-{eov}
+{end_of_verse}
 
-{soc}
+{start_of_chorus}
 [A]Pašuješ zážitky, [E]pašuješ všechno co se [F#mi]dá,
 sáčky suchý pažitky, [D]tomu se říká dobrá nálada.
 Pašuješ zážitky, pašuješ všechno co se dá,
 sáčky suchý pažitky, tomu se říká dobrá nálada.
-{eoc}
+{end_of_chorus}
 
-{sov}
+{start_of_verse}
 Hladina tůní pomalu vychladá,
 je konec vůním a léto uvadá.
 Na stehna fenek dopadl dlouhý stín,
 skončil čas trenek, ale já zas něco vymyslím.
-{eov}
+{end_of_verse}
 
 {chorus}
 
-{sov}
+{start_of_verse}
 Kochám se chcaje, překvapen výdrží,
 té co mi ho saje a co mi podrží.
 malinký flíček na kalhotách vydržím
 kalhot dost maje, tyto poté vydražím.
-{eov}
+{end_of_verse}
 
 {chorus}

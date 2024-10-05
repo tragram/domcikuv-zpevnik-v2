@@ -20,7 +20,7 @@ rannas on vaid ük[Am]s võrku paikav [F]papi.
 Siin kauges [Dm]külas, teisi näinud pole [G]veel.
 Tühi [Dm]rand ja nõmmeliiva[G]tee.
 
-Siin ei[C] ole, pangaauto[G]maati,
+Siin ei[C]ole, pangaauto[G]maati,
 on vaid [Am]naati, palju [F]naati.
 Pole [C]noori, pole ühtki [G]poodi.
 Miski [Am]pole, linna [F]moodi
