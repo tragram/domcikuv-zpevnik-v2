@@ -39,11 +39,12 @@ function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, icon
 }
 
 function VocalRangeFilter({ maxRange, vocalRange, setVocalRange, iconOnly }) {
+    console.log(vocalRange)
     return (
         <Dropdown>
             <DropdownTrigger>
                 <Button
-                    variant={vocalRange == "all" ? "ghost" : "solid"} color="primary" disableAnimation
+                    variant={vocalRange === "all" ? "ghost" : "solid"} color="primary" disableAnimation
                     startContent={iconOnly ? "" : <Music />} isIconOnly={!iconOnly}>{iconOnly ? "Range" : ""}
                 </Button>
             </DropdownTrigger>
@@ -64,7 +65,7 @@ function VocalRangeFilter({ maxRange, vocalRange, setVocalRange, iconOnly }) {
     )
 }
 
-function FilterButtons({ languages, selectedLanguage, setSelectedLanguage, allowCapo, setAllowCapo, maxRange, vocalRange, setVocalRange }) {
+function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange }) {
     const iconOnly = useMediaQuery(
         "only screen and (min-width : 1000px)"
     );
@@ -74,17 +75,17 @@ function FilterButtons({ languages, selectedLanguage, setSelectedLanguage, allow
                 data-hover={false} disableAnimation disableRipple>
                 <Filter className="stroke-gray-400" />
             </Button>
-            <LanguageFilter languages={languages} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} iconOnly={iconOnly} />
-            <Button fullWidth={true} disableAnimation color="primary" variant={allowCapo ? "solid" : "bordered"} onClick={() => { setAllowCapo(!allowCapo) }} startContent={iconOnly ? "" : <Handshake />} isIconOnly={!iconOnly}>{iconOnly ? "Capo" : ""}</Button>
-            <VocalRangeFilter maxRange={maxRange} vocalRange={vocalRange} setVocalRange={setVocalRange} iconOnly={iconOnly} />
+            <LanguageFilter languages={languages} selectedLanguage={filterSettings.language} setSelectedLanguage={(language: string) => setFilterSettings({ ...filterSettings, language: language })} iconOnly={iconOnly} />
+            <Button fullWidth={true} disableAnimation color="primary" variant={filterSettings.capo ? "solid" : "bordered"} onClick={() => { setFilterSettings({ ...filterSettings, capo: !filterSettings.capo }) }} startContent={iconOnly ? "" : <Handshake />} isIconOnly={!iconOnly}>{iconOnly ? "Capo" : ""}</Button>
+            <VocalRangeFilter maxRange={maxRange} vocalRange={filterSettings.vocal_range} setVocalRange={(range) => setFilterSettings({ ...filterSettings, vocal_range: range })} iconOnly={iconOnly} />
         </ButtonGroup>)
 }
 
 
-function Filtering({ languages, selectedLanguage, setSelectedLanguage, allowCapo, setAllowCapo, maxRange, vocalRange, setVocalRange }) {
+function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
     return (
         <>
-            <FilterButtons languages={languages} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} allowCapo={allowCapo} setAllowCapo={setAllowCapo} maxRange={maxRange} vocalRange={vocalRange} setVocalRange={setVocalRange} />
+            <FilterButtons languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
             <div className='max-lg:hidden'>
             </div>
             <div className='lg:hidden'>

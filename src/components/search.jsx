@@ -3,7 +3,7 @@ import Fuse from "fuse.js";
 import { Search as SearchIcon } from "lucide-react";
 import React from 'react';
 //TODO: select should have a default value
-function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
+function Search({ songs, setSearchResults, setQuery }) {
     const options = {
         includeScore: true,
         keys: ["artist", "title"],
@@ -14,12 +14,9 @@ function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
     function search(e) {
         console.log("Searching")
         const query = e.target.value
-        setSongFiltering({
-            ...songFiltering,
-            query: query,
-        });
+        setQuery(query);
         if (query != "") {
-            const searchResults = fuse.search(songFiltering.query);
+            const searchResults = fuse.search(query);
             setSearchResults(searchResults.map((r) => r.item));
         }
         else {
@@ -28,17 +25,7 @@ function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
     }
 
     return (
-            <Input className="w-full sm:max-w-[44%]" isClearable onChange={search} placeholder="Search" size="md" startContent={<SearchIcon />}             type="text"/>
-            //  <svg
-            //     xmlns="http://www.w3.org/2000/svg"
-            //     viewBox="0 0 16 16"
-            //     fill="currentColor"
-            //     className="h-4 w-4 opacity-70">
-            //     <path
-            //         fillRule="evenodd"
-            //         d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-            //         clipRule="evenodd" />
-            // </svg>
+        <Input className="w-full sm:max-w-[44%]" isClearable onChange={search} placeholder="Search" size="md" startContent={<SearchIcon />} type="text" />
     )
 }
 

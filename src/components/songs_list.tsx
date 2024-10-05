@@ -30,7 +30,7 @@ class SongRange {
         "b": 11,
         "h": 11
     };
-    
+
     constructor(song_range_str) {
         if (!song_range_str || !song_range_str.includes("-")) {
             // return <></>
@@ -61,34 +61,37 @@ const SongsList = () => {
     const [searchResults, setSearchResults] = useState(songs);
     const [languages, setLanguages] = useState([]);
     const [maxRange, setMaxRange] = useState(24);
-    const [selectedLanguage, setSelectedLanguage] = useState("all");
-    const [allowCapo, setAllowCapo] = useState(true);
     const [selectedSong, setSelectedSong] = useState(null); // State for selected song
-    const [vocalRange, setVocalRange] = useState("all")
+    const [query, setQuery] = useState("");
     const songToKey = (song) => {
         // console.log(song.title+song.artist)
         return song.title + song.artist
     };
     // 
-    const [songFiltering, setSongFiltering] = useState({
-        query: '',
-        sortType: "ascending",
-        sortByField: "title",
+    const [sortSettings, setSortSettings] = useState<SortSettings>({
+        order: "ascending",
+        field: "title",
     });
+    const [filterSettings, setFilterSettings] = useState<FilterSettings>({
+        language: "all",
+        vocal_range: "all",
+        capo: true
+    })
 
     const [songListData, setSongListData] = useState(songs);
 
     useEffect(
         function updateSongList() {
-            let results = filterCapo(searchResults, allowCapo);
-            results = filterVocalRange(results, vocalRange);
-            results = filterLanguage(results, selectedLanguage);
-            if (songFiltering.query === "") {
+            //TODO: search results could be MEMOized and then it could be at the end after filters to make it faster
+            let results = filterCapo(searchResults, filterSettings.capo);
+            results = filterVocalRange(results, filterSettings.vocal_range);
+            results = filterLanguage(results, filterSettings.language);
+            if (query === "") {
                 // since fuse.js already does sorting based on proximity, only re-sort if no query is present
-                results = sortFunc(results, songFiltering.sortByField, songFiltering.sortType);
+                results = sortFunc(results, sortSettings.field, sortSettings.order);
             }
             setSongListData(results);
-        }, [songFiltering, songs, selectedLanguage, allowCapo, searchResults, vocalRange]);
+        }, [sortSettings, filterSettings, songs, searchResults]);
 
     useEffect(
         function showSong() {
@@ -186,9 +189,9 @@ const SongsList = () => {
         <div className='flex flex-col gap-4 p-5'>
             <Song selectedSong={selectedSong} />
             <div className='relative flex justify-end items-center gap-2'>
-                <Sorting setSongFiltering={setSongFiltering} songFiltering={songFiltering} />
-                <Search setSearchResults={setSearchResults} setSongFiltering={setSongFiltering} songFiltering={songFiltering} songs={songs} />
-                <Filtering allowCapo={allowCapo} languages={languages} maxRange={maxRange} selectedLanguage={selectedLanguage} setAllowCapo={setAllowCapo} setSelectedLanguage={setSelectedLanguage} setVocalRange={setVocalRange} vocalRange={vocalRange} />
+                <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />
+                <Search songs={songs} setSearchResults={setSearchResults} setQuery={setQuery} />
+                <Filtering languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">

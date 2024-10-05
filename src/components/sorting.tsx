@@ -19,7 +19,7 @@ const numberSortingIcons: SortingIcons = {
 }
 
 interface Category {
-    field: string;
+    field: SortField;
     title: string;
     icon: ReactElement;
     sorting_icons: SortingIcons;
@@ -33,33 +33,33 @@ const categories: Category[] = [
 ]
 
 
-function isActive(sorting_field: string, button_field: string) {
+function isActive(sorting_field: SortField, button_field: SortField) {
     return sorting_field === button_field;
 }
 
-function toggleSortType(sort_type: string) {
-    return sort_type === "descending" ? "ascending" : "descending";
+function toggleSortOrder(sort_order: SortOrder) {
+    return sort_order === "descending" ? "ascending" : "descending";
 }
 
-function activeCategory(sort_field): Category {
-    return categories.find((cat) => cat.field === sort_field)
+function activeCategory(sorting_field: SortField): Category {
+    return categories.find((cat) => cat.field === sorting_field)
 }
 
-function SortButtons({ sortByField, setSortField, sortType, setSortType }) {
+function SortButtons({ sortByField, setSortField, sortOrder, setSortOrder }) {
     return (
         <ButtonGroup>
             {categories.map(category => (
                 <Button color="primary" variant={isActive(sortByField, category.field) ? 'solid' : 'ghost'} size="md" className="max-w-24" key={category.field} onClick={() => { setSortField(category.field) }}>{category.title}</Button>
             ))}
-            <Button isIconOnly color="primary" onClick={() => setSortType(toggleSortType(sortType))}>
-                {activeCategory(sortByField).sorting_icons[sortType]}
+            <Button isIconOnly color="primary" onClick={() => setSortOrder(toggleSortOrder(sortOrder))}>
+                {activeCategory(sortByField).sorting_icons[sortOrder]}
             </Button>
         </ButtonGroup >
     )
 }
 
 
-function SortButtonMobile({ sortByField, setSortField, sortType, setSortType }) {
+function SortButtonMobile({ sortByField, setSortField, sortOrder, setSortOrder }) {
     return (
         <Dropdown closeOnSelect={false}>
             <DropdownTrigger>
@@ -84,16 +84,16 @@ function SortButtonMobile({ sortByField, setSortField, sortType, setSortType }) 
                     <DropdownItem
                         key="ascending_sort"
                         startContent={activeCategory(sortByField).sorting_icons.ascending}
-                        endContent={sortType === "ascending" ? <Check /> : ""}
-                        onPress={() => setSortType("ascending")}
+                        endContent={sortOrder === "ascending" ? <Check /> : ""}
+                        onPress={() => setSortOrder("ascending")}
                     >
                         Ascending
                     </DropdownItem>
                     <DropdownItem
                         key="descending_sort"
                         startContent={activeCategory(sortByField).sorting_icons.descending}
-                        endContent={sortType === "descending" ? <Check /> : ""}
-                        onPress={() => setSortType("descending")}
+                        endContent={sortOrder === "descending" ? <Check /> : ""}
+                        onPress={() => setSortOrder("descending")}
                     >
                         Descending
                     </DropdownItem>
@@ -103,24 +103,30 @@ function SortButtonMobile({ sortByField, setSortField, sortType, setSortType }) 
     )
 }
 
-function Sorting({ songFiltering, setSongFiltering }) {
-    function setSortField(field: string) {
-        setSongFiltering({
-            ...songFiltering,
-            sortByField: field
+
+interface SortingProps {
+    sortSettings: SortSettings;
+    setSortSettings: React.Dispatch<React.SetStateAction<SortSettings>>
+}
+
+function Sorting({ sortSettings, setSortSettings }: SortingProps) {
+    function setSortField(field: SortField) {
+        setSortSettings({
+            ...sortSettings,
+            field: field
         })
     }
 
-    function setSortType(type: string) {
-        setSongFiltering({ ...songFiltering, sortType: type })
+    function setSortOrder(order: SortOrder) {
+        setSortSettings({ ...sortSettings, order: order })
     }
     return (
         <>
             <div className='max-lg:hidden'>
-                <SortButtons sortByField={songFiltering.sortByField} setSortField={setSortField} sortType={songFiltering.sortType} setSortType={setSortType} />
+                <SortButtons sortByField={sortSettings.field} setSortField={setSortField} sortOrder={sortSettings.order} setSortOrder={setSortOrder} />
             </div>
             <div className='lg:hidden'>
-                <SortButtonMobile sortByField={songFiltering.sortByField} setSortField={setSortField} sortType={songFiltering.sortType} setSortType={setSortType} />
+                <SortButtonMobile sortByField={sortSettings.field} setSortField={setSortField} sortOrder={sortSettings.order} setSortOrder={setSortOrder} />
             </div>
         </>
     )
