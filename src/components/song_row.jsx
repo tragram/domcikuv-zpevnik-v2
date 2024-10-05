@@ -19,17 +19,17 @@ function VocalRangeIndicator({ song, maxRange }) {
 
     let songRangeSemitones = song.range.semitones;
     return (
-        <CircularProgress aria-label="vocal range" size="md" value={songRangeSemitones} maxValue={maxRange} color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} showValueLabel={true} strokeWidth={3} />
+        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={true} size="md" strokeWidth={3} value={songRangeSemitones} />
     );
 }
 
 function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
     return (
-        <tr onClick={() => { setSelectedSong(song) }} className="p-10 m-10">
+        <tr className="p-10 m-10" onClick={() => { setSelectedSong(song) }}>
             <td>
-                <Avatar showFallback src='https://images.unsplash.com/broken' fallback={
+                <Avatar fallback={
                     <Instagram size={24} />
-                } />
+                } showFallback src='https://images.unsplash.com/broken' />
             </td>
             <th>
                 <div className="text-left">
@@ -51,7 +51,7 @@ function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
             </td>
             <td>
                 <div className='flex justify-center align-center'>
-                    <VocalRangeIndicator song={song} maxRange={maxRange} /></div>
+                    <VocalRangeIndicator maxRange={maxRange} song={song} /></div>
             </td>
         </tr>
     )

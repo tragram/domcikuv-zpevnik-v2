@@ -28,7 +28,7 @@ function Search({ songs, songFiltering, setSongFiltering, setSearchResults }) {
     }
 
     return (
-            <Input isClearable type="text" className="w-full sm:max-w-[44%]" size="md" placeholder="Search" onChange={search}             startContent={<SearchIcon />}/>
+            <Input className="w-full sm:max-w-[44%]" isClearable onChange={search} placeholder="Search" size="md" startContent={<SearchIcon />}             type="text"/>
             //  <svg
             //     xmlns="http://www.w3.org/2000/svg"
             //     viewBox="0 0 16 16"

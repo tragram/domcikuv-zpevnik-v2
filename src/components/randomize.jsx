@@ -7,7 +7,7 @@ function Randomize({ filteredSongs, setSelectedSong }) {
         setSelectedSong(filteredSongs[Math.floor(Math.random() * filteredSongs.length)])
     }
     return (
-        <Button isIconOnly color="primary" variant="ghost" onClick={selectSong}>
+        <Button color="primary" isIconOnly onClick={selectSong} variant="ghost">
             <Dices />
         </Button>
     )

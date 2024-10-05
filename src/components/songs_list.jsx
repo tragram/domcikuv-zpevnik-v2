@@ -185,9 +185,9 @@ const SongsList = () => {
         <div className='flex flex-col gap-4 p-5'>
             <Song selectedSong={selectedSong} />
             <div className='relative flex justify-end items-center gap-2'>
-                <Sorting songFiltering={songFiltering} setSongFiltering={setSongFiltering} />
-                <Search songs={songs} songFiltering={songFiltering} setSongFiltering={setSongFiltering} setSearchResults={setSearchResults} />
-                <Filtering languages={languages} selectedLanguage={selectedLanguage} setSelectedLanguage={setSelectedLanguage} allowCapo={allowCapo} setAllowCapo={setAllowCapo} maxRange={maxRange} vocalRange={vocalRange} setVocalRange={setVocalRange} />
+                <Sorting setSongFiltering={setSongFiltering} songFiltering={songFiltering} />
+                <Search setSearchResults={setSearchResults} setSongFiltering={setSongFiltering} songFiltering={songFiltering} songs={songs} />
+                <Filtering allowCapo={allowCapo} languages={languages} maxRange={maxRange} selectedLanguage={selectedLanguage} setAllowCapo={setAllowCapo} setSelectedLanguage={setSelectedLanguage} setVocalRange={setVocalRange} vocalRange={vocalRange} />
                 <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
             </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">
@@ -204,7 +204,7 @@ const SongsList = () => {
                     </thead>
                     <tbody className='even:primary'>
                         {songListData.map((song, index) => (
-                            <SongRow song={song} setSelectedSong={setSelectedSong} key={songToKey(song)} maxRange={maxRange} />
+                            <SongRow key={songToKey(song)} maxRange={maxRange} setSelectedSong={setSelectedSong} song={song} />
                         ))}
                     </tbody>
                 </table>
