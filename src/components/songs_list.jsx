@@ -10,27 +10,28 @@ import SongRow from './song_row';
 import Filtering from './filters';
 import Sorting from './sorting';
 class SongRange {
+    static chromaticScale = {
+        "c": 0,
+        "c#": 1,
+        "db": 1,
+        "d": 2,
+        "d#": 3,
+        "eb": 3,
+        "e": 4,
+        "f": 5,
+        "f#": 6,
+        "gb": 6,
+        "g": 7,
+        "g#": 8,
+        "ab": 8,
+        "a": 9,
+        "a#": 10,
+        "bb": 10,
+        "b": 11,
+        "h": 11
+    };
+    
     constructor(song_range_str) {
-        const chromaticScale = {
-            "c": 0,
-            "c#": 1,
-            "db": 1,
-            "d": 2,
-            "d#": 3,
-            "eb": 3,
-            "e": 4,
-            "f": 5,
-            "f#": 6,
-            "gb": 6,
-            "g": 7,
-            "g#": 8,
-            "ab": 8,
-            "a": 9,
-            "a#": 10,
-            "bb": 10,
-            "b": 11,
-            "h": 11
-        };
         if (!song_range_str || !song_range_str.includes("-")) {
             // return <></>
             // song_range_str = "c1-d3"
@@ -38,15 +39,15 @@ class SongRange {
             this.max = "?"
             this.semitones = "?";
         } else {
-            const songRange = song_range_str.split("-");
-            const octaves = songRange[1].slice([-1]) - songRange[0].slice([-1])
-            const lowestTone = songRange[0].slice(0, -1).toLowerCase()
-            const highestTone = songRange[1].slice(0, -1).toLowerCase()
-            const withinOctave = chromaticScale[highestTone] - chromaticScale[lowestTone]
+            const song_range = song_range_str.split("-");
+            const octaves = song_range[1].slice([-1]) - song_range[0].slice([-1])
+            const lowestTone = song_range[0].slice(0, -1).toLowerCase()
+            const highestTone = song_range[1].slice(0, -1).toLowerCase()
+            const withinOctave = SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone]
 
             // console.log(octaves, withinOctave, 12 * octaves + withinOctave)
-            this.min = songRange[0]
-            this.max = songRange[1]
+            this.min = song_range[0]
+            this.max = song_range[1]
             this.semitones = 12 * octaves + withinOctave;
         }
     }

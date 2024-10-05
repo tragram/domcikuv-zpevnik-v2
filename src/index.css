@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .chord {
-  color: red;
-  font-weight: bold;
+  color: hsl(var(--nextui-primary-500));
+  font-weight: 800;
 }
 
 .chord-sheet .row {
@@ -19,7 +19,7 @@
 .chord-sheet {
   display: flex;
   flex-direction: column;
-  gap: 2em;
+  gap: 1.5em;
 }
 
 #song_content>h1 {
@@ -33,4 +33,13 @@
 .chord:after,
 .lyrics:after {
   content: '\200b'
+}
+
+.chorus {
+  font-weight: 700;
+}
+
+.chord:empty {
+  /* hide rows without chords */
+  display: none;
 }
