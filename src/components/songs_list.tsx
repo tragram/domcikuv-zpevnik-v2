@@ -225,13 +225,13 @@ const SongsList = () => {
         <div className='flex flex-col gap-4 p-5'>
             <div className="overflow-x-auto container mx-auto flex justify-center">
                 <div className="table w-full max-w-2xl space-10">
-                    <div className="table-header-group">
+                    <div className="hidden md:table-header-group">
                         <div className="table-row align-center ">
                             <div className="table-cell text-left"></div>
                             <div className="table-cell text-left">Song</div>
-                            <div className="table-cell text-center hidden sm:flex">Date added</div>
+                            <div className="table-cell text-center hidden sm:table-cell">Date added</div>
                             <div className="table-cell text-center">Language</div>
-                            <div className="table-cell text-center hidden lg:flex">Capo</div>
+                            <div className="table-cell text-center hidden lg:table-cell">Capo</div>
                             <div className="table-cell text-center">Vocal</div>
                         </div>
                     </div>
