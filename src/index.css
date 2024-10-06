@@ -11,9 +11,8 @@
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  /* gap: 0.3em; */
   line-height: 1.2;
-  /* justify-content: center; */
+  margin-top: 0.1em;
 }
 
 .chord-sheet {
@@ -42,4 +41,12 @@
 .chord:empty {
   /* hide rows without chords */
   display: none;
+}
+
+.chord-sheet .literal {
+  font-family: monospace;
+}
+
+.chord-sheet .column{
+  line-height: 1;
 }
