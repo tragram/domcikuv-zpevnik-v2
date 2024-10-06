@@ -224,24 +224,39 @@ const SongsList = () => {
         </Navbar >
         <div className='flex flex-col gap-4 p-5'>
             <div className="overflow-x-auto container mx-auto flex justify-center">
-                <table className="table-lg border-spacing-x-6 border-spacing-y-2 border-separate">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th className='text-left'>Song</th>
-                            <th>Date added</th>
-                            <th>Language</th>
-                            <th>Capo</th>
-                            <th>Vocal</th>
-                        </tr>
-                    </thead>
-                    <tbody className='even:primary'>
+                <div className="table w-full max-w-2xl space-10">
+                    <div className="table-header-group">
+                        <div className="table-row align-center ">
+                            <div className="table-cell text-left"></div>
+                            <div className="table-cell text-left">Song</div>
+                            <div className="table-cell text-center hidden sm:flex">Date added</div>
+                            <div className="table-cell text-center">Language</div>
+                            <div className="table-cell text-center hidden lg:flex">Capo</div>
+                            <div className="table-cell text-center">Vocal</div>
+                        </div>
+                    </div>
+
+                    <div className="table-row-group">
                         {songListData.map((song, index) => (
                             <SongRow key={songToKey(song)} maxRange={maxRange} setSelectedSong={setSelectedSong} song={song} />
                         ))}
-                    </tbody>
-                </table>
-            </div>
+                    </div>
+                    {/* <table className="table-lg border-spacing-x-6 border-spacing-y-2 border-separate">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th className='text-left'>Song</th>
+                                <th>Date added</th>
+                                <th>Language</th>
+                                <th>Capo</th>
+                                <th>Vocal</th>
+                            </tr>
+                        </thead>
+                        <tbody className='even:primary'>
+                        </tbody>
+                    </table> */}
+                </div>
+            </div >
         </div >
     </>
     );
