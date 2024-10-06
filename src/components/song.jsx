@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup } from "@nextui-org/react";
 import ChordSheetJS from 'chordsheetjs';
 import SongRange from "./songs_list"
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 const chromaticScale = {
     "c": 0,
@@ -63,13 +64,15 @@ function Song({ selectedSong }) {
         renderSong(selectedSong.key);
         onOpen();
     }, [selectedSong]);
-    console.log(selectedSong);
+    const fullScreen = useMediaQuery(
+        "only screen and (max-width : 600px)"
+    );
     return (
         <Modal
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             scrollBehavior={scrollBehavior}
-            size="xl"
+            size={fullScreen ? "full" : "xl"}
         ><ModalContent>
                 {(onClose) => (
                     <>
@@ -77,7 +80,7 @@ function Song({ selectedSong }) {
                             {selectedSong && selectedSong.artist}: {selectedSong && selectedSong.title}
                         </ModalHeader>
                         <ModalBody>
-                            <div className="" dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content"></div>
+                            <div className=" font-selection" dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content"></div>
                         </ModalBody>
                         <ModalFooter className="flex flex-col">
                             <ButtonGroup>
