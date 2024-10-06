@@ -1,6 +1,6 @@
 
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from "@nextui-org/react";
-import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownZA, AudioLines, CalendarPlus, Check, MicVocal, Music } from "lucide-react";
+import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownUp, ArrowDownZA, AudioLines, CalendarPlus, Check, MicVocal, Music } from "lucide-react";
 import React, { ReactElement } from 'react';
 
 import { ButtonGroup } from '@nextui-org/react';
@@ -37,7 +37,7 @@ function isActive(sorting_field: SortField, button_field: SortField) {
     return sorting_field === button_field;
 }
 
-function toggleSortOrder(sort_order: SortOrder) {
+function toggleSortOrder(sort_order: SortOrder): SortOrder {
     return sort_order === "descending" ? "ascending" : "descending";
 }
 
@@ -45,7 +45,14 @@ function activeCategory(sorting_field: SortField): Category {
     return categories.find((cat) => cat.field === sorting_field)
 }
 
-function SortButtons({ sortByField, setSortField, sortOrder, setSortOrder }) {
+interface SortButtonProps {
+    sortByField: SortField,
+    setSortField: (field: SortField) => void,
+    sortOrder: SortOrder,
+    setSortOrder: (order: SortOrder) => void
+}
+
+function SortButtons({ sortByField, setSortField, sortOrder, setSortOrder }: SortButtonProps) {
     return (
         <ButtonGroup>
             {categories.map(category => (
@@ -59,15 +66,16 @@ function SortButtons({ sortByField, setSortField, sortOrder, setSortOrder }) {
 }
 
 
-function SortButtonMobile({ sortByField, setSortField, sortOrder, setSortOrder }) {
+function SortButtonMobile({ sortByField, setSortField, sortOrder, setSortOrder }: SortButtonProps) {
     return (
         <Dropdown closeOnSelect={false}>
             <DropdownTrigger>
                 <Button
                     variant="ghost"
                     color="primary"
+                    isIconOnly
                 >
-                    Sorting
+                    <ArrowDownUp />
                 </Button>
             </DropdownTrigger>
             <DropdownMenu variant="faded" aria-label="Sorting dropdown menu">

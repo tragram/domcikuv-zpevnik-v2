@@ -4,11 +4,10 @@ import Song from "./song";
 import Randomize from './randomize';
 import Search from './search';
 import SongRow from './song_row';
-// const index = new Index(options);
-// const document = new Document(options);
-// const worker = new Worker(options);
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react";
 import Filtering from './filters';
 import Sorting from './sorting';
+import { SlidersHorizontal } from 'lucide-react';
 class SongRange {
     static chromaticScale = {
         "c": 0,
@@ -185,15 +184,45 @@ const SongsList = () => {
         return <div>Error: {error}</div>;
     }
 
-    return (
+    const navbar_items = [
+
+        <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />,
+
+        <Filtering languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />,
+        <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
+    ]
+
+    return (<>
+        <Song selectedSong={selectedSong} />
+        <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
+            <NavbarContent className="sm:hidden" justify="start">
+                <NavbarMenuToggle icon={<SlidersHorizontal />} />
+            </NavbarContent>
+            <NavbarContent as="div" justify="center" className='sm:flex w-full'>
+                <NavbarItem className='hidden sm:flex'>
+                    {navbar_items[0]}
+                </NavbarItem>
+                <NavbarItem isActive className='w-full'>
+                    <Search songs={songs} setSearchResults={setSearchResults} setQuery={setQuery} />
+                </NavbarItem>
+                <NavbarItem className='hidden sm:flex'>
+                    {navbar_items[1]}
+                </NavbarItem>
+                <NavbarItem className='hidden sm:flex'>
+                    {navbar_items[2]}
+                </NavbarItem>
+            </NavbarContent >
+            <NavbarMenu>
+                {navbar_items.map(ni =>
+                (
+                    <NavbarMenuItem>
+                        {ni}
+                    </NavbarMenuItem>
+                )
+                )}
+            </NavbarMenu>
+        </Navbar >
         <div className='flex flex-col gap-4 p-5'>
-            <Song selectedSong={selectedSong} />
-            <div className='relative flex justify-end items-center gap-2'>
-                <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />
-                <Search songs={songs} setSearchResults={setSearchResults} setQuery={setQuery} />
-                <Filtering languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
-                <Randomize filteredSongs={songListData} setSelectedSong={setSelectedSong} />
-            </div>
             <div className="overflow-x-auto container mx-auto flex justify-center">
                 <table className="table-lg border-spacing-x-6 border-spacing-y-2 border-separate">
                     <thead>
@@ -214,6 +243,7 @@ const SongsList = () => {
                 </table>
             </div>
         </div >
+    </>
     );
 };
 
