@@ -29,6 +29,46 @@ const chromaticScale = {
     "h": 11
 };
 
+function removeChorusDirective(song) {
+    // ChordSheetJS doesn't know the {chorus} directive but I want to use it
+    const lines = song.split("\n");
+    let currentChorus = "";
+    let inChorus = false;
+    let processedLines = [];
+
+    lines.forEach(line => {
+        // Detect start of chorus
+        if (line.trim() === "{start_of_chorus}") {
+            inChorus = true;
+            currentChorus = "{start_of_chorus}\n"; // Reset the chorus
+            return;
+        }
+
+        // Detect end of chorus
+        if (line.trim() === "{end_of_chorus}") {
+            inChorus = false;
+            processedLines.push(currentChorus.trim()); // Push the chorus immediately
+            currentChorus += "{end_of_chorus}"; // End the chorus with the marker
+            return;
+        }
+
+        // Store chorus lines
+        if (inChorus) {
+            currentChorus += line + "\n";
+            return;
+        }
+
+        // Replace {chorus} with the last defined chorus
+        if (line.trim() === "{chorus}") {
+            processedLines.push(currentChorus.trim());
+        } else {
+            processedLines.push(line);
+        }
+    });
+
+    return processedLines.join("\n");
+}
+
 function Song({ selectedSong }) {
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
@@ -45,7 +85,9 @@ function Song({ selectedSong }) {
             console.log("Song key missing! Setting it to 'F' to avoid crashing but this shuold be sanitized earlier on...")
             setSongRenderKey("F");
         }
-        let song = parser.parse(selectedSong.content);
+        let song = removeChorusDirective(selectedSong.content);
+        console.log(song)
+        song = parser.parse(song);
         // console.log(key, sle)
         // song = song.transposeUp()
         let difference = chromaticScale[key.toLowerCase()] - chromaticScale[selectedSong.key.toLowerCase()] + 1 * song.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
