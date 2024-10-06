@@ -30,8 +30,7 @@ function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
             <div className="table-cell flex content-center justify-center">
                 <Avatar fallback={
                     <Instagram size={24} />
-                } showFallback src={import.meta.env.BASE_URL + "/songs/images/" + song.file.split('.')[0] + "/FLUX.1-dev.jpg"} onClick={}/>
-                {/* <Image src={import.meta.env.BASE_URL +"/images/"+ song.file.split('.')[0] + "/FLUX.1-dev.jpg"}/> */}
+                } showFallback src={import.meta.env.BASE_URL + "/songs/images/" + song.file.split('.')[0] + "/FLUX.1-dev.jpg"}/>
             </div>
             <div className="table-cell flex content-center justify-center">
                 <div className="text-left">
