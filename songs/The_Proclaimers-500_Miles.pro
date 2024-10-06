@@ -78,5 +78,3 @@ But [D5]I would walk five [D5]hund-red miles, and
 Just to [D5]be the man who walked a thousand [G5]miles to
 fall down [D]at [A]your [D]door____[D]
 {end_of_chorus}
-
-

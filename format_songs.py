@@ -9,7 +9,9 @@ def extract_metadata(file_path):
     title = None
 
     with open(file_path, "r", encoding="utf-8") as file:
-        cleaned_lines = [l.strip().replace("] ", "]") for l in file.readlines()]
+        cleaned_lines = [
+            l.strip().replace("] ", "]".replace("  ", " ")) for l in file.readlines()
+        ]
     with open(file_path, "w", encoding="utf-8") as f:
         f.writelines("\n".join(cleaned_lines))
 
