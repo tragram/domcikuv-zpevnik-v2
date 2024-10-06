@@ -1,4 +1,4 @@
-import { Avatar, CircularProgress,Image } from "@nextui-org/react";
+import { Avatar, CircularProgress, Image } from "@nextui-org/react";
 import { Instagram } from "lucide-react";
 import LanguageFlag from "./language_flag";
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -24,13 +24,12 @@ function VocalRangeIndicator({ song, maxRange }) {
 }
 
 function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
-    console.log(import.meta.env.BASE_URL +"/images/"+ song.file.split('.')[0] + "/FLUX.1-dev.png")
     return (
         <div className="table-row h-14" onClick={() => { setSelectedSong(song) }}>
             <div className="table-cell flex content-center justify-center">
                 <Avatar fallback={
                     <Instagram size={24} />
-                } showFallback src={import.meta.env.BASE_URL + "/songs/images/" + song.file.split('.')[0] + "/FLUX.1-dev.jpg"}/>
+                } showFallback src={import.meta.env.BASE_URL + "/song_images/" + song.file.split('.')[0] + "/FLUX.1-dev.jpg"} />
             </div>
             <div className="table-cell flex content-center justify-center">
                 <div className="text-left">
