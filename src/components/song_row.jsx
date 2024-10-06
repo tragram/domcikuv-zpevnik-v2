@@ -44,7 +44,7 @@ function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
             <div className="table-cell flex content-center justify-center">
                 <div className='flex justify-center content-center'><LanguageFlag language={song.language} /></div>
             </div>
-            <div className="table-cell content-center justify-center text-center hidden lg:flex">
+            <div className="content-center justify-center text-center hidden lg:table-cell">
                 <div>{song.capo}</div>
             </div>
             <div className="table-cell flex content-center justify-center">
