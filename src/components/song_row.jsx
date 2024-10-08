@@ -26,7 +26,7 @@ function VocalRangeIndicator({ song, maxRange }) {
 function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
     return (
         <div className="table-row h-14" onClick={() => { setSelectedSong(song) }}>
-            <div className="table-cell flex content-center justify-center">
+            <div className="table-cell flex content-center justify-center pr-3">
                 <Avatar fallback={
                     <Instagram size={24} />
                 } showFallback src={import.meta.env.BASE_URL + "/song_images/" + song.file.split('.')[0] + "/FLUX.1-dev.jpg"} />
@@ -47,7 +47,7 @@ function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
             <div className="content-center justify-center text-center hidden lg:table-cell">
                 <div>{song.capo}</div>
             </div>
-            <div className="table-cell flex content-center justify-center">
+            <div className="hidden sm:table-cell flex content-center justify-center">
                 <div className='flex justify-center content-center'>
                     <VocalRangeIndicator maxRange={maxRange} song={song} /></div>
             </div>
