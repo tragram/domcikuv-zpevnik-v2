@@ -39,7 +39,6 @@ function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, icon
 }
 
 function VocalRangeFilter({ maxRange, vocalRange, setVocalRange, iconOnly }) {
-    console.log(vocalRange)
     return (
         <Dropdown>
             <DropdownTrigger>

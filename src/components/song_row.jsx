@@ -19,7 +19,7 @@ function VocalRangeIndicator({ song, maxRange }) {
 
     let songRangeSemitones = song.range.semitones;
     return (
-        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={true} size="md" strokeWidth={3} value={songRangeSemitones} />
+        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={songRangeSemitones!="?"} size="md" strokeWidth={3} value={songRangeSemitones!="?"?songRangeSemitones:2500} />
     );
 }
 

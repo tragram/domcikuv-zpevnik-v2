@@ -4,7 +4,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import ChordSheetJS from 'chordsheetjs';
 import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat } from 'lucide-react';
 
 const chromaticScale = {
     "c": 0,
@@ -32,7 +32,7 @@ const chromaticScale = {
 
 const renderKeys = ["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"]
 
-function replaceChorusDirective(song) {
+function replaceChorusDirective(song, repeatChorus) {
     // ChordSheetJS doesn't know the {chorus} directive but I want to use it
     const lines = song.split("\n");
     let currentChorus = "";
@@ -63,7 +63,10 @@ function replaceChorusDirective(song) {
 
         // Replace {chorus} with the last defined chorus
         if (line.trim() === "{chorus}") {
-            processedLines.push(currentChorus.trim());
+            if (repeatChorus) { processedLines.push(currentChorus.trim()); }
+            else {
+                processedLines.push("{start_of_chorus}R:{end_of_chorus}");
+            }
         } else {
             processedLines.push(line);
         }
@@ -99,6 +102,7 @@ function Song({ selectedSong }) {
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
     const [chordsHidden, setChordsHidden] = useState(false);
+    const [repeatChorus, setRepeatChorus] = useState(true);
     const [fontSize, setFontSize] = useState(2);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
@@ -109,14 +113,9 @@ function Song({ selectedSong }) {
     // const formatter = new ChordSheetJS.HtmlTableFormatter();
 
     function renderSong(key) {
-        console.log(selectedSong)
-        let song = replaceChorusDirective(selectedSong.content);
+        let song = replaceChorusDirective(selectedSong.content, repeatChorus);
         song = parser.parse(song);
-        // console.log(key, sle)
-        // song = song.transposeUp()
         let difference = chromaticScale[key.toLowerCase()] - chromaticScale[selectedSong.key.toLowerCase()] + 1 * song.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
-        // setSongRenderKey(key);
-        console.log(key.toLowerCase(), songRenderKey.toLowerCase(), difference, selectedSong.key)
         song = song.transpose(difference)
         const renderedSong = formatter.format(song);
         setParsedContent(renderedSong);
@@ -127,7 +126,7 @@ function Song({ selectedSong }) {
             return;
         }
         renderSong(songRenderKey);
-    }, [songRenderKey]);
+    }, [songRenderKey,repeatChorus]);
 
     useEffect(() => {
         if (!selectedSong) {
@@ -167,6 +166,8 @@ function Song({ selectedSong }) {
                                 <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
                                 <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
                                 <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
+                                <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
+
                             </ButtonGroup>
                         </ModalFooter>
                     </>
