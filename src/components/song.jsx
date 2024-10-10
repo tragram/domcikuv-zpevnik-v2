@@ -4,7 +4,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import ChordSheetJS from 'chordsheetjs';
 import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough } from 'lucide-react';
 
 const chromaticScale = {
     "c": 0,
@@ -73,6 +73,7 @@ function removeChorusDirective(song) {
 function Song({ selectedSong }) {
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
+    const [chordsHidden, setChordsHidden] = useState(false);
     const [fontSize, setFontSize] = useState(2);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
@@ -126,7 +127,7 @@ function Song({ selectedSong }) {
                             {selectedSong && selectedSong.artist}: {selectedSong && selectedSong.title}
                         </ModalHeader>
                         <ModalBody>
-                            <div className="" dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{fontSize: `${fontSize}vh`}}></div>
+                            <div className={`${chordsHidden?'chords-hidden':''}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
                         </ModalBody>
                         <ModalFooter className="flex flex-col">
                             <ButtonGroup>
@@ -139,6 +140,7 @@ function Song({ selectedSong }) {
                             <ButtonGroup>
                                 <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
                                 <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
+                                <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
                             </ButtonGroup>
                         </ModalFooter>
                     </>
