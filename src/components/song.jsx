@@ -4,6 +4,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import ChordSheetJS from 'chordsheetjs';
 import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { AArrowDown, AArrowUp } from 'lucide-react';
 
 const chromaticScale = {
     "c": 0,
@@ -72,17 +73,19 @@ function removeChorusDirective(song) {
 function Song({ selectedSong }) {
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
+    const [fontSize, setFontSize] = useState(2);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+
 
     // const formatter = new ChordSheetJS.HtmlTableFormatter();
 
     function renderSong(key) {
         if (!songRenderKey) {
             // song.key = "F";
-            console.log("Song key missing! Setting it to 'F' to avoid crashing but this shuold be sanitized earlier on...")
+            console.log("Song key missing! Setting it to 'F' to avoid crashing but this should be sanitized earlier on...")
             setSongRenderKey("F");
         }
         let song = removeChorusDirective(selectedSong.content);
@@ -109,6 +112,7 @@ function Song({ selectedSong }) {
     const fullScreen = useMediaQuery(
         "only screen and (max-width : 600px)"
     );
+    const fontSizeStep = 0.2;
     return (
         <Modal
             isOpen={isOpen}
@@ -122,7 +126,7 @@ function Song({ selectedSong }) {
                             {selectedSong && selectedSong.artist}: {selectedSong && selectedSong.title}
                         </ModalHeader>
                         <ModalBody>
-                            <div className=" font-selection" dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content"></div>
+                            <div className="" dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{fontSize: `${fontSize}vh`}}></div>
                         </ModalBody>
                         <ModalFooter className="flex flex-col">
                             <ButtonGroup>
@@ -131,6 +135,10 @@ function Song({ selectedSong }) {
                                         name="transpose_selection" onClick={() => { renderSong(chord) }} variant={selectedSong && songRenderKey.toLowerCase() == chord.toLowerCase() ? "solid" : "ghost"} >{chord}</Button>
                                 ))
                                 }
+                            </ButtonGroup>
+                            <ButtonGroup>
+                                <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
+                                <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
                             </ButtonGroup>
                         </ModalFooter>
                     </>
