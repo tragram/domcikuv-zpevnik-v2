@@ -30,7 +30,9 @@ const chromaticScale = {
     "h": 11
 };
 
-function removeChorusDirective(song) {
+const renderKeys = ["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"]
+
+function replaceChorusDirective(song) {
     // ChordSheetJS doesn't know the {chorus} directive but I want to use it
     const lines = song.split("\n");
     let currentChorus = "";
@@ -70,6 +72,29 @@ function removeChorusDirective(song) {
     return processedLines.join("\n");
 }
 
+function TransposeButtons({ selectedSong, songRenderKey, setSongRenderKey }) {
+    function getKeyIndex(key) {
+        return renderKeys.map(x => x.toLowerCase()).indexOf(key.toLowerCase());
+    }
+    return (<>
+        <div className='hidden lg:flex'>
+            <ButtonGroup>
+                {renderKeys.map((chord) => (
+                    <Button className="w-1/12" color="primary" isIconOnly key={`transpose_selection_${chord}`}
+                        name="transpose_selection" onClick={() => { setSongRenderKey(chord) }} variant={songRenderKey && songRenderKey.toLowerCase() == chord.toLowerCase() ? "solid" : "ghost"} >{chord}</Button>
+                ))
+                }
+            </ButtonGroup>
+        </div>
+        <div className='lg:hidden'>
+            <ButtonGroup>
+                <Button color="primary" isIconOnly onClick={() => setSongRenderKey(renderKeys[(getKeyIndex(songRenderKey) + 11) % 12])} variant='ghost'>-</Button>
+                <Button color="primary" isIconOnly onClick={() => setSongRenderKey(renderKeys[(getKeyIndex(songRenderKey) + 1) % 12])} variant='ghost'>+</Button>
+            </ButtonGroup>
+        </div>
+    </>)
+}
+
 function Song({ selectedSong }) {
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
@@ -84,18 +109,13 @@ function Song({ selectedSong }) {
     // const formatter = new ChordSheetJS.HtmlTableFormatter();
 
     function renderSong(key) {
-        if (!songRenderKey) {
-            // song.key = "F";
-            console.log("Song key missing! Setting it to 'F' to avoid crashing but this should be sanitized earlier on...")
-            setSongRenderKey("F");
-        }
-        let song = removeChorusDirective(selectedSong.content);
-        console.log(song)
+        console.log(selectedSong)
+        let song = replaceChorusDirective(selectedSong.content);
         song = parser.parse(song);
         // console.log(key, sle)
         // song = song.transposeUp()
         let difference = chromaticScale[key.toLowerCase()] - chromaticScale[selectedSong.key.toLowerCase()] + 1 * song.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
-        setSongRenderKey(key);
+        // setSongRenderKey(key);
         console.log(key.toLowerCase(), songRenderKey.toLowerCase(), difference, selectedSong.key)
         song = song.transpose(difference)
         const renderedSong = formatter.format(song);
@@ -106,10 +126,22 @@ function Song({ selectedSong }) {
         if (!selectedSong) {
             return;
         }
-        setSongRenderKey(selectedSong.key);
-        renderSong(selectedSong.key);
+        renderSong(songRenderKey);
+    }, [songRenderKey]);
+
+    useEffect(() => {
+        if (!selectedSong) {
+            return;
+        }
+        if (!selectedSong.key) {
+            // song.key = "F";
+            console.log("Song key missing! Setting it to 'F' to avoid crashing but this should be sanitized earlier on...")
+            setSongRenderKey("F");
+        } else { setSongRenderKey(selectedSong.key); }
         onOpen();
     }, [selectedSong]);
+
+
     const fullScreen = useMediaQuery(
         "only screen and (max-width : 600px)"
     );
@@ -127,16 +159,10 @@ function Song({ selectedSong }) {
                             {selectedSong && selectedSong.artist}: {selectedSong && selectedSong.title}
                         </ModalHeader>
                         <ModalBody>
-                            <div className={`${chordsHidden?'chords-hidden':''}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
+                            <TransposeButtons selectedSong={selectedSong} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
+                            <div className={`${chordsHidden ? 'chords-hidden' : ''}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
                         </ModalBody>
                         <ModalFooter className="flex flex-col">
-                            <ButtonGroup>
-                                {["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"].map((chord) => (
-                                    <Button className="w-1/12" color="primary" isIconOnly key={`transpose_selection_${chord}`}
-                                        name="transpose_selection" onClick={() => { renderSong(chord) }} variant={selectedSong && songRenderKey.toLowerCase() == chord.toLowerCase() ? "solid" : "ghost"} >{chord}</Button>
-                                ))
-                                }
-                            </ButtonGroup>
                             <ButtonGroup>
                                 <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
                                 <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
@@ -147,21 +173,6 @@ function Song({ selectedSong }) {
                 )}
             </ModalContent>
         </Modal>
-        // <dialog className="modal" id="song_modal">
-        //     <div className="modal-box w-11/12 max-w-5xl">
-        //             {/* TODO: on small screens, just offer transpose +/- */}
-        //             {/* TODO: if 'key' is missing, either guess it based on the first chord or show the same as on small screens*/}
-        //         </div>
-        //         <h3 className="font-bold text-lg text-center"></h3>
-        //         <p className="py-4" dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content"></p>
-        //         <div className="modal-action">
-        //             <form method="dialog" >
-        //                 {/* if there is a button, it will close the modal */}
-        //                 <button className="btn">Close</button>
-        //             </form>
-        //         </div>
-        //     </div>
-        // </dialog>
     );
 };
 

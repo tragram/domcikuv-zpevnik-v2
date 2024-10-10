@@ -13,3 +13,19 @@ interface FilterSettings {
     vocal_range: "all" | [int, int],
     capo: boolean
 }
+
+type SongKey = "C" | "C#" | "D" | "Es" | "E" | "F" | "F#" | "G" | "As" | "A" | "B" | "H"
+interface SongData {
+    title: string,
+    artist: string,
+    key: SongKey,
+    date_added: {
+        month: int,
+        year: int,
+    },
+    language: string,
+    tempo: int,
+    capo: int,
+    range: string,
+    content: string,
+}
