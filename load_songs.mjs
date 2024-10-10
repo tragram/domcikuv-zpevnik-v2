@@ -12,7 +12,8 @@ const metadata = files.map(file => {
   const tempo = content.match(/{tempo:\s*(.+?)}/i)?.[1] || 'Unknown Tempo';
   const capo = content.match(/{capo:\s*(.+?)}/i)?.[1] || 'Unknown Capo';
   const range = content.match(/{range:\s*(.+?)}/i)?.[1] || 'Unknown Range';
-  return { title, artist, key, language, date_added, capo, tempo, range, file, content };
+  const start_melody = content.match(/{start_melody:\s*(.+?)}/i)?.[1] || 'Unknown Start Melody';
+  return { title, artist, key, language, date_added, capo, tempo, range, file, content, start_melody };
 });
 fs.mkdir('public', { recursive: true }, (err) => {
   if (err) throw err;

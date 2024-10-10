@@ -32,7 +32,6 @@ Our [Am]courage will [G]pull us through
 [C]Po[D]kèm[E]on
 Gotta catch 'em [F]all!
 Gotta [G]catch 'em a[Am]ll!
-Yeah!
 {end_of_chorus}
 
 {start_of_verse}
@@ -46,19 +45,4 @@ To [C]claim my [D]rightful p[E]lace
 It's [C]always b[D]een our d[E]ream
 {end_of_verse}
 
-{start_of_chorus}
-Pokè[F]mon! (Gotta catch em' all)
-It's [C]you and me
-[F]I know it's my d[G]estiny
-Pokè[Am]mon!
-Ooh, you're [G]my best friend
-In [C]a world we m[D]ust d[E]efend
-Poke[Am]mon! (Gotta catch em' all)
-Our [G]hearts so true
-Our [Am]courage will [G]pull us through
-[F]You teach me and [C]I'll teach you
-[C]Po[D]ke[E]mon
-Gotta catch 'em [F]all!
-Gotta [G]catch 'em [Am]all!
-Pokèmon!
-{end_of_chorus}
+{chorus}
