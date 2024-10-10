@@ -1,6 +1,6 @@
 {title: Dívka s perlami ve vlasech}
 {artist: Aleš Brichta}
-{date: 07-2015}
+{date_added: 07-2015}
 {language: Czech}
 {capo: 0}
 {key: }

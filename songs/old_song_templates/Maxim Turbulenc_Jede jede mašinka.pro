@@ -1,6 +1,6 @@
 {title: Jede jede mašinka}
 {artist: Maxim Turbulenc}
-{date: 07-2015}
+{date_added: 07-2015}
 {language: Czech}
 {capo: 0}
 {key: }

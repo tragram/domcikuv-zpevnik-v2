@@ -1,6 +1,6 @@
 {title: Wind of Change}
 {artist: Scorpions}
-{date: 04-2017}
+{date_added: 04-2017}
 {language: English}
 {capo: 0}
 {key: }

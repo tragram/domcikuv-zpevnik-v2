@@ -1,6 +1,6 @@
 {title: Hurt}
 {artist: Johnny CashNIN}
-{date: 03-2018}
+{date_added: 03-2018}
 {language: English}
 {capo: 0}
 {key: }

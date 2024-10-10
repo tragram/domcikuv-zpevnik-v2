@@ -1,6 +1,6 @@
 {title: Magdaléna}
 {artist: Jelen}
-{date: 01-2017}
+{date_added: 01-2017}
 {language: Czech}
 {capo: 0}
 {key: }

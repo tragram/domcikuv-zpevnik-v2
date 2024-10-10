@@ -1,6 +1,6 @@
 {title: Veď mě dál cesto má}
 {artist: Pavel Bobek}
-{date: 07-2015}
+{date_added: 07-2015}
 {language: Czech}
 {capo: 0}
 {key: }

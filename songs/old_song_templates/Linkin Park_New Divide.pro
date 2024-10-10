@@ -1,6 +1,6 @@
 {title: New Divide}
 {artist: Linkin Park}
-{date: 07-2016}
+{date_added: 07-2016}
 {language: English}
 {capo: 0}
 {key: }

@@ -1,6 +1,6 @@
 {title: Popelka}
 {artist: Xindl X}
-{date: 10-2016}
+{date_added: 10-2016}
 {language: Czech}
 {capo: 0}
 {key: }

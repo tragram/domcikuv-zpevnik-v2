@@ -1,6 +1,6 @@
 {title: Hlas}
 {artist: Karel Kryl}
-{date: 07-2016}
+{date_added: 07-2016}
 {language: Czech}
 {capo: 0}
 {key: }

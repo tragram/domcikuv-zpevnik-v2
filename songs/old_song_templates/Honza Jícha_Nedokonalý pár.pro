@@ -1,6 +1,6 @@
 {title: Nedokonalý pár}
 {artist: Honza Jícha}
-{date: 08-2016}
+{date_added: 08-2016}
 {language: Czech}
 {capo: 0}
 {key: }

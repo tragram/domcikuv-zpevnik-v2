@@ -1,6 +1,6 @@
 {title: San Francisco}
 {artist: Scott McKenzie}
-{date: 07-2015}
+{date_added: 07-2015}
 {language: English}
 {capo: 0}
 {key: }

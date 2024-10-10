@@ -1,6 +1,6 @@
 {title: Dům u vycházejícího slunce}
 {artist: The Animals}
-{date: 07-2015}
+{date_added: 07-2015}
 {language: Czech}
 {capo: 0}
 {key: }

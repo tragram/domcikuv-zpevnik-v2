@@ -1,6 +1,6 @@
 {title: Papaoutai }
 {artist: Stromae}
-{date: 12-2018}
+{date_added: 12-2018}
 {language: Other}
 {capo: 0}
 {key: }

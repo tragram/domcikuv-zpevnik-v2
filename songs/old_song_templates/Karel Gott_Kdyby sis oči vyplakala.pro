@@ -1,6 +1,6 @@
 {title: Kdyby sis oči vyplakala}
 {artist: Karel Gott}
-{date: 10-2017}
+{date_added: 10-2017}
 {language: Czech}
 {capo: 0}
 {key: }

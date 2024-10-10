@@ -1,6 +1,6 @@
 {title: Kauges Kulas}
 {artist: Curly Strings}
-{date: 05-2019}
+{date_added: 05-2019}
 {language: Other}
 {capo: 0}
 {key: }

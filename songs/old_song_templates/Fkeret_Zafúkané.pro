@@ -1,6 +1,6 @@
 {title: Zafúkané}
 {artist: Fkeret}
-{date: 07-2015}
+{date_added: 07-2015}
 {language: Slovak}
 {capo: 0}
 {key: }

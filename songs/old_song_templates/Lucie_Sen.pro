@@ -1,6 +1,6 @@
 {title: Sen}
 {artist: Lucie}
-{date: 09-2015}
+{date_added: 09-2015}
 {language: Czech}
 {capo: 0}
 {key: }

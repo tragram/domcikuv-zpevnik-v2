@@ -1,6 +1,6 @@
 {title: Die Biene Maja}
 {artist: Karel Gott}
-{date: 07-2018}
+{date_added: 07-2018}
 {language: Other}
 {capo: 0}
 {key: }

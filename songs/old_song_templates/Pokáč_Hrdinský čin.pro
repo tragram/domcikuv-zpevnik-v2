@@ -1,6 +1,6 @@
 {title: Hrdinský čin}
 {artist: Pokáč}
-{date: 10-2018}
+{date_added: 10-2018}
 {language: Czech}
 {capo: 0}
 {key: }
