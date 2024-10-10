@@ -25,31 +25,31 @@ function VocalRangeIndicator({ song, maxRange }) {
 
 function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
     return (
-        <div className="table-row h-14" onClick={() => { setSelectedSong(song) }}>
-            <div className="table-cell flex content-center justify-center pr-3">
-                <Avatar fallback={
+        <div className="table-row h-12 song-row" onClick={() => { setSelectedSong(song) }}>
+            <div className="table-cell rounded-l-full flex content-center justify-center pr-3 bg-gray-100 relative pl-5 w-16">
+                <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                     <Instagram size={24} />
-                } showFallback src={import.meta.env.BASE_URL + "/song_images/" + song.file.split('.')[0] + "/FLUX.1-dev.jpg"} />
+                } showFallback size="lg" src={import.meta.env.BASE_URL + "/song_images/" + song.file.split('.')[0] + "/FLUX.1-dev.jpg"} />
             </div>
-            <div className="table-cell flex content-center justify-center">
+            <div className="table-cell flex content-center justify-center bg-gray-100 ">
                 <div className="text-left">
                     <h2 className="font-bold">{song.title}</h2>
                     <h3 className="text-sm opacity-50">{song.artist}</h3>
                 </div>
             </div>
-            <div className="table-cell flex content-center justify-center hidden sm:table-cell text-center">
+            <div className="table-cell flex content-center justify-center hidden sm:table-cell text-center bg-gray-100">
                 <h2 className="text-sm opacity-70">{song.date_added.split("-")[1]}</h2>
                 <h3 className="text-xs opacity-70">{month_names[parseInt(song.date_added.split("-")[0])]}</h3>
             </div>
-            <div className="table-cell flex content-center justify-center">
-                <div className='flex justify-center content-center'><LanguageFlag language={song.language} /></div>
-            </div>
-            <div className="content-center justify-center text-center hidden lg:table-cell">
+            <div className="content-center justify-center text-center hidden lg:table-cell bg-gray-100">
                 <div>{song.capo}</div>
             </div>
-            <div className="hidden sm:table-cell flex content-center justify-center">
+            <div className="hidden sm:table-cell flex content-center justify-center bg-gray-100">
                 <div className='flex justify-center content-center'>
                     <VocalRangeIndicator maxRange={maxRange} song={song} /></div>
+            </div>
+            <div className="table-cell flex content-center justify-center bg-gray-100 rounded-r-full">
+                <div className='flex justify-center content-center'><LanguageFlag language={song.language} /></div>
             </div>
         </div>
     )

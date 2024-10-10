@@ -224,7 +224,7 @@ const SongsList = () => {
         </Navbar >
         <div className='flex flex-col gap-4 p-5'>
             <div className="overflow-x-auto container mx-auto flex justify-center">
-                <div className="table w-full max-w-2xl space-10">
+                <div className="table w-full max-w-2xl border-separate ms-3">
                     <div className="hidden md:table-header-group">
                         <div className="table-row align-center ">
                             <div className="table-cell text-left"></div>
@@ -238,7 +238,10 @@ const SongsList = () => {
 
                     <div className="table-row-group">
                         {songListData.map((song, index) => (
+                            <>
                             <SongRow key={songToKey(song)} maxRange={maxRange} setSelectedSong={setSelectedSong} song={song} />
+                             <div className="table-row h-5"></div>
+                             </>
                         ))}
                     </div>
                     {/* <table className="table-lg border-spacing-x-6 border-spacing-y-2 border-separate">

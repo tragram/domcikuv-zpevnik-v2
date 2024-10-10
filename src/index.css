@@ -47,6 +47,25 @@
   font-family: monospace;
 }
 
-.chord-sheet .column{
+.chord-sheet .column {
   line-height: 1;
+}
+
+.song-row>* {
+  border-width: 3px 0 3px 0;
+  border-color: hsl(var(--nextui-primary-500));
+}
+
+.song-row>*:first-child {
+  border-left-width: 3px;
+}
+.song-row>*:last-child {
+  border-right-width: 3px;
+}
+
+
+.song-row .song-avatar {
+  border-color: hsl(var(--nextui-primary-500));
+  border-width: 4px;
+  border-style: solid;
 }
