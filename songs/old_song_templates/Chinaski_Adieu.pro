@@ -1,7 +1,8 @@
 {title: Adieu}
 {artist: Chinaski}
 {date_added: 06-2017}
-{language: Czech}
+{language: czech}
+{pdf_filename: chinaski_adieu.pdf}
 {capo: 0}
 {key: }
 {tempo: }

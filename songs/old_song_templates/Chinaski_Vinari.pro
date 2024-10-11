@@ -1,0 +1,10 @@
+{title: Vinaři}
+{artist: Chinaski}
+{date_added: 08-2015}
+{language: czech}
+{pdf_filename: chinaski_vinari.pdf}
+{capo: 0}
+{key: }
+{tempo: }
+{range: }
+{start_melody: }

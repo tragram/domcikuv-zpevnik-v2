@@ -1,7 +1,8 @@
 {title: Amerika}
 {artist: Lucie}
 {date_added: 07-2015}
-{language: Czech}
+{language: czech}
+{pdf_filename: lucie_amerika.pdf}
 {capo: 0}
 {key: }
 {tempo: }

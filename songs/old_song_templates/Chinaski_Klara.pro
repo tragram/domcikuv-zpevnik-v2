@@ -1,0 +1,10 @@
+{title: Klára}
+{artist: Chinaski}
+{date_added: 10-2018}
+{language: czech}
+{pdf_filename: chinaski_klara.pdf}
+{capo: 0}
+{key: }
+{tempo: }
+{range: }
+{start_melody: }

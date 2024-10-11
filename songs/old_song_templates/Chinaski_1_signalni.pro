@@ -1,0 +1,10 @@
+{title: 1. signální}
+{artist: Chinaski}
+{date_added: 07-2015}
+{language: czech}
+{pdf_filename: chinaski_1_signalni.pdf}
+{capo: 0}
+{key: }
+{tempo: }
+{range: }
+{start_melody: }

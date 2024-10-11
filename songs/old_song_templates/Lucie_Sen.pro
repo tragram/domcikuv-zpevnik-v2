@@ -1,7 +1,8 @@
 {title: Sen}
 {artist: Lucie}
 {date_added: 09-2015}
-{language: Czech}
+{language: czech}
+{pdf_filename: lucie_sen.pdf}
 {capo: 0}
 {key: }
 {tempo: }

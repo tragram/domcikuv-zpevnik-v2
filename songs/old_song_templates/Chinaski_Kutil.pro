@@ -1,7 +1,8 @@
 {title: Kutil}
 {artist: Chinaski}
 {date_added: 06-2018}
-{language: Czech}
+{language: czech}
+{pdf_filename: chinaski_kutil.pdf}
 {capo: 0}
 {key: }
 {tempo: }

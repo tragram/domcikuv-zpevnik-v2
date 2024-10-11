@@ -1,7 +1,8 @@
 {title: Kapela}
 {artist: Chinaski}
 {date_added: 07-2015}
-{language: Czech}
+{language: czech}
+{pdf_filename: chinaski_kapela.pdf}
 {capo: 0}
 {key: }
 {tempo: }

@@ -1,0 +1,10 @@
+{title: Spomal'}
+{artist: Peha}
+{date_added: 07-2015}
+{language: slovak}
+{pdf_filename: peha_spomal.pdf}
+{capo: 0}
+{key: }
+{tempo: }
+{range: }
+{start_melody: }

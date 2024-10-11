@@ -1,8 +1,8 @@
 {title: Knocking On Heaven's Door}
 {artist: Bob Dylan}
 {subtitle: }
-{zoom-ipad: 2.992135}
 {language: english}
+{date_added: 07-2015}
 {capo: 0}
 {range: e1-c2}
 {key: G}

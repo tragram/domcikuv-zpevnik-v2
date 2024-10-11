@@ -1,7 +1,8 @@
 {title: Maja}
 {artist: Nightwork}
 {date_added: 09-2015}
-{language: Czech}
+{language: czech}
+{pdf_filename: nightwork_maja.pdf}
 {capo: 0}
 {key: }
 {tempo: }

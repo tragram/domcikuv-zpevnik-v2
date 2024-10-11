@@ -1,0 +1,10 @@
+{title: Já chci poezii}
+{artist: Jaromír Nohavica}
+{date_added: 08-2018}
+{language: czech}
+{pdf_filename: jaromir_nohavica_ja_chci_poezii.pdf}
+{capo: 0}
+{key: }
+{tempo: }
+{range: }
+{start_melody: }

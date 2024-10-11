@@ -1,0 +1,10 @@
+{title: Král a klaun}
+{artist: Karel Kryl}
+{date_added: 07-2016}
+{language: czech}
+{pdf_filename: karel_kryl_kral_a_klaun.pdf}
+{capo: 0}
+{key: }
+{tempo: }
+{range: }
+{start_melody: }

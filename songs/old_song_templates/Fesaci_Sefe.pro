@@ -1,0 +1,10 @@
+{title: Šéfe}
+{artist: Fešáci}
+{date_added: 07-2015}
+{language: czech}
+{pdf_filename: fesaci_sefe.pdf}
+{capo: 0}
+{key: }
+{tempo: }
+{range: }
+{start_melody: }
