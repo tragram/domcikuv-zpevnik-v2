@@ -2,7 +2,7 @@
 {artist: Zdeněk Piškula}
 {date_added: 08-2017}
 {language: czech}
-{pdf_filename: zdenek_piskula_balic_novodoby.pdf}
+{pdf_filenames: ['zdenek_piskula_balic_novodoby-sken.pdf', 'zdenek_piskula_balic_novodoby-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Kabát}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: kabat_pohoda.pdf}
+{pdf_filenames: ['kabat_pohoda-sken.pdf', 'kabat_pohoda-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

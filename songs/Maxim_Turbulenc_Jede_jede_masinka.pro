@@ -2,7 +2,7 @@
 {artist: Maxim Turbulenc}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: maxim_turbulenc_jede_jede_masinka.pdf}
+{pdf_filenames: ['maxim_turbulenc_jede_jede_masinka-sken.pdf', 'maxim_turbulenc_jede_jede_masinka-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

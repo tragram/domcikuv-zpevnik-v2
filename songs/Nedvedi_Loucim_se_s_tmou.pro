@@ -2,7 +2,7 @@
 {artist: Nedvědi}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: nedvedi_loucim_se_s_tmou.pdf}
+{pdf_filenames: ['nedvedi_loucim_se_s_tmou-sken.pdf', 'nedvedi_loucim_se_s_tmou-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

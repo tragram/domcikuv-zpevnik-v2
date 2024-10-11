@@ -2,7 +2,7 @@
 {artist: Jaromír Nohavica}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: jaromir_nohavica_pritel.pdf}
+{pdf_filenames: ['jaromir_nohavica_pritel-sken.pdf', 'jaromir_nohavica_pritel-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

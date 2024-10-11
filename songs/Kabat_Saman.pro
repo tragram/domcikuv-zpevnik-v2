@@ -2,7 +2,7 @@
 {artist: Kabát}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: kabat_saman.pdf}
+{pdf_filenames: ['kabat_saman-sken.pdf', 'kabat_saman-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

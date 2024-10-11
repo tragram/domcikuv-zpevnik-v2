@@ -2,7 +2,7 @@
 {artist: The Beatles}
 {date_added: 07-2015}
 {language: english}
-{pdf_filename: the_beatles_hey_jude.pdf}
+{pdf_filenames: ['the_beatles_hey_jude-sken.pdf', 'the_beatles_hey_jude-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

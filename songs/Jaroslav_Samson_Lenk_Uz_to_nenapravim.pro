@@ -2,7 +2,7 @@
 {artist: Jaroslav Samson Lenk}
 {date_added: 09-2015}
 {language: czech}
-{pdf_filename: jaroslav_samson_lenk_uz_to_nenapravim.pdf}
+{pdf_filenames: ['jaroslav_samson_lenk_uz_to_nenapravim-sken.pdf', 'jaroslav_samson_lenk_uz_to_nenapravim-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Janek Ledecký}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: janek_ledecky_jenom_laska.pdf}
+{pdf_filenames: ['janek_ledecky_jenom_laska-sken.pdf', 'janek_ledecky_jenom_laska-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

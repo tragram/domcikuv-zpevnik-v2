@@ -2,7 +2,7 @@
 {artist: Chinaski}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: chinaski_1_signalni.pdf}
+{pdf_filenames: ['chinaski_1_signalni-sken.pdf', 'chinaski_1_signalni-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

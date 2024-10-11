@@ -2,7 +2,7 @@
 {artist: Stephen Lynch}
 {date_added: 07-2017}
 {language: english}
-{pdf_filename: stephen_lynch_special_ed_.pdf}
+{pdf_filenames: ['stephen_lynch_special_ed_-sken.pdf', 'stephen_lynch_special_ed_-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

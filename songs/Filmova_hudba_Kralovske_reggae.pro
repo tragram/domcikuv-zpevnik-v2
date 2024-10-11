@@ -2,7 +2,7 @@
 {artist: Filmová hudba}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: filmova_hudba_kralovske_reggae.pdf}
+{pdf_filenames: ['filmova_hudba_kralovske_reggae-sken.pdf', 'filmova_hudba_kralovske_reggae-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

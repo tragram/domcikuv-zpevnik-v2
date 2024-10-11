@@ -2,7 +2,7 @@
 {artist: Alphaville}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: alphaville_mel_jmeno_jan.pdf}
+{pdf_filenames: ['alphaville_mel_jmeno_jan-sken.pdf', 'alphaville_mel_jmeno_jan-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

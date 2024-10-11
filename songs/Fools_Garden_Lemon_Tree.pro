@@ -2,7 +2,7 @@
 {artist: Fools Garden}
 {date_added: 07-2016}
 {language: english}
-{pdf_filename: fools_garden_lemon_tree.pdf}
+{pdf_filenames: ['fools_garden_lemon_tree-sken.pdf', 'fools_garden_lemon_tree-comp.pdf', 'fools_garden_lemon_tree-gen.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

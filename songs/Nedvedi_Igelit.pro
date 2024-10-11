@@ -2,7 +2,7 @@
 {artist: Nedvědi}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: nedvedi_igelit.pdf}
+{pdf_filenames: ['nedvedi_igelit-sken.pdf', 'nedvedi_igelit-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

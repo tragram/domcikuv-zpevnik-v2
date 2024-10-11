@@ -2,7 +2,7 @@
 {artist: Rod Stewart}
 {date_added: 07-2015}
 {language: english}
-{pdf_filename: rod_stewart_sailing.pdf}
+{pdf_filenames: ['rod_stewart_sailing-sken.pdf', 'rod_stewart_sailing-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

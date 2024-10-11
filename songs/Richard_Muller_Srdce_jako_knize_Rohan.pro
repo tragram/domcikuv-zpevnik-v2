@@ -2,7 +2,7 @@
 {artist: Richard Müller}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: richard_muller_srdce_jako_knize_rohan.pdf}
+{pdf_filenames: ['richard_muller_srdce_jako_knize_rohan-sken.pdf', 'richard_muller_srdce_jako_knize_rohan-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

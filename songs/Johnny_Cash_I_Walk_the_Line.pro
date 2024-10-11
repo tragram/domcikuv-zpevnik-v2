@@ -2,7 +2,7 @@
 {artist: Johnny Cash}
 {date_added: 07-2015}
 {language: english}
-{pdf_filename: johnny_cash_i_walk_the_line.pdf}
+{pdf_filenames: ['johnny_cash_i_walk_the_line-sken.pdf', 'johnny_cash_i_walk_the_line-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Jaromír Nohavica}
 {date_added: 08-2018}
 {language: czech}
-{pdf_filename: jaromir_nohavica_ja_chci_poezii.pdf}
+{pdf_filenames: ['jaromir_nohavica_ja_chci_poezii-sken.pdf', 'jaromir_nohavica_ja_chci_poezii-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

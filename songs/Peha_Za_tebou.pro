@@ -2,7 +2,7 @@
 {artist: Peha}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: peha_za_tebou.pdf}
+{pdf_filenames: ['peha_za_tebou-sken.pdf', 'peha_za_tebou-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

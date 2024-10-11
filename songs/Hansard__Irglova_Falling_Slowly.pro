@@ -2,7 +2,7 @@
 {artist: Hansard & Irglová}
 {date_added: 07-2015}
 {language: english}
-{pdf_filename: hansard__irglova_falling_slowly.pdf}
+{pdf_filenames: ['hansard__irglova_falling_slowly-sken.pdf', 'hansard__irglova_falling_slowly-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

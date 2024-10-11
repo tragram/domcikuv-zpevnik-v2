@@ -2,7 +2,7 @@
 {artist: Lucie}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: lucie_chci_zas_v_tobe_spat.pdf}
+{pdf_filenames: ['lucie_chci_zas_v_tobe_spat-sken.pdf', 'lucie_chci_zas_v_tobe_spat-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

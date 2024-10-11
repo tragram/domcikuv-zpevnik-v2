@@ -2,7 +2,7 @@
 {artist: Chinaski}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: chinaski_dobrak_od_kosti.pdf}
+{pdf_filenames: ['chinaski_dobrak_od_kosti-sken.pdf', 'chinaski_dobrak_od_kosti-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Michal Horák}
 {date_added: 10-2018}
 {language: czech}
-{pdf_filename: michal_horak_mezinarodni.pdf}
+{pdf_filenames: ['michal_horak_mezinarodni-sken.pdf', 'michal_horak_mezinarodni-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

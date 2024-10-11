@@ -2,7 +2,7 @@
 {artist: Lucie}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: lucie_medvidek.pdf}
+{pdf_filenames: ['lucie_medvidek-sken.pdf', 'lucie_medvidek-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

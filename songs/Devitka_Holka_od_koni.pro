@@ -2,7 +2,7 @@
 {artist: Devítka}
 {date_added: 08-2016}
 {language: czech}
-{pdf_filename: devitka_holka_od_koni.pdf}
+{pdf_filenames: ['devitka_holka_od_koni-sken.pdf', 'devitka_holka_od_koni-comp.pdf', 'devitka_holka_od_koni-gen.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

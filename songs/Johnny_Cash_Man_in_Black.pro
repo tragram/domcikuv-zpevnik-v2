@@ -2,7 +2,7 @@
 {artist: Johnny Cash}
 {date_added: 07-2015}
 {language: english}
-{pdf_filename: johnny_cash_man_in_black.pdf}
+{pdf_filenames: ['johnny_cash_man_in_black-sken.pdf', 'johnny_cash_man_in_black-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Janek Ledecký}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: janek_ledecky_proklinam.pdf}
+{pdf_filenames: ['janek_ledecky_proklinam-sken.pdf', 'janek_ledecky_proklinam-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

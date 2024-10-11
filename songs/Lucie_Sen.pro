@@ -2,7 +2,7 @@
 {artist: Lucie}
 {date_added: 09-2015}
 {language: czech}
-{pdf_filename: lucie_sen.pdf}
+{pdf_filenames: ['lucie_sen-sken.pdf', 'lucie_sen-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

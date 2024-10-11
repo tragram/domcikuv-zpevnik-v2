@@ -2,7 +2,7 @@
 {artist: Neznámý}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: neznamy_nadrazi.pdf}
+{pdf_filenames: ['neznamy_nadrazi-sken.pdf', 'neznamy_nadrazi-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

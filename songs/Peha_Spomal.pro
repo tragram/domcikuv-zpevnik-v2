@@ -2,7 +2,7 @@
 {artist: Peha}
 {date_added: 07-2015}
 {language: slovak}
-{pdf_filename: peha_spomal.pdf}
+{pdf_filenames: ['peha_spomal-sken.pdf', 'peha_spomal-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: John Denver}
 {date_added: 07-2015}
 {language: english}
-{pdf_filename: john_denver_take_me_home_country_roads.pdf}
+{pdf_filenames: ['john_denver_take_me_home_country_roads-sken.pdf', 'john_denver_take_me_home_country_roads-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: UDG}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: udg_hvezdar.pdf}
+{pdf_filenames: ['udg_hvezdar-sken.pdf', 'udg_hvezdar-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

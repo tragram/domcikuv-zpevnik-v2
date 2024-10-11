@@ -2,7 +2,7 @@
 {artist: Chinaski}
 {date_added: 07-2017}
 {language: czech}
-{pdf_filename: chinaski_kompy.pdf}
+{pdf_filenames: ['chinaski_kompy-sken.pdf', 'chinaski_kompy-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

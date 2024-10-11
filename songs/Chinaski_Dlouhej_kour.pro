@@ -2,7 +2,7 @@
 {artist: Chinaski}
 {date_added: 04-2017}
 {language: czech}
-{pdf_filename: chinaski_dlouhej_kour.pdf}
+{pdf_filenames: ['chinaski_dlouhej_kour-sken.pdf', 'chinaski_dlouhej_kour-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Pokáč}
 {date_added: 12-2018}
 {language: czech}
-{pdf_filename: pokac_26_.pdf}
+{pdf_filenames: ['pokac_26_-sken.pdf', 'pokac_26_-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

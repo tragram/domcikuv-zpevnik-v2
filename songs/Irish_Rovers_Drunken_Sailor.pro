@@ -2,7 +2,7 @@
 {artist: Irish Rovers}
 {date_added: 07-2015}
 {language: english}
-{pdf_filename: irish_rovers_drunken_sailor.pdf}
+{pdf_filenames: ['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Michal Tučný}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: michal_tucny_prodavac.pdf}
+{pdf_filenames: ['michal_tucny_prodavac-sken.pdf', 'michal_tucny_prodavac-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

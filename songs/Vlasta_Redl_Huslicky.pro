@@ -2,7 +2,7 @@
 {artist: Vlasta Redl}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: vlasta_redl_huslicky.pdf}
+{pdf_filenames: ['vlasta_redl_huslicky-sken.pdf', 'vlasta_redl_huslicky-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

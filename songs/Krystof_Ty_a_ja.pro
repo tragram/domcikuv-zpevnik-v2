@@ -2,7 +2,7 @@
 {artist: Kryštof}
 {date_added: 01-2017}
 {language: czech}
-{pdf_filename: krystof_ty_a_ja.pdf}
+{pdf_filenames: ['krystof_ty_a_ja-sken.pdf', 'krystof_ty_a_ja-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Pokáč}
 {date_added: 10-2018}
 {language: czech}
-{pdf_filename: pokac_hrdinsky_cin.pdf}
+{pdf_filenames: ['pokac_hrdinsky_cin-sken.pdf', 'pokac_hrdinsky_cin-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

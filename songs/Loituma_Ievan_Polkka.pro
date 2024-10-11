@@ -2,7 +2,7 @@
 {artist: Loituma}
 {date_added: 03-2018}
 {language: other}
-{pdf_filename: loituma_ievan_polkka.pdf}
+{pdf_filenames: ['loituma_ievan_polkka-sken.pdf', 'loituma_ievan_polkka-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

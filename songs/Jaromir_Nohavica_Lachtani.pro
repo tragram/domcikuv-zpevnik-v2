@@ -2,7 +2,7 @@
 {artist: Jaromír Nohavica}
 {date_added: 08-2015}
 {language: czech}
-{pdf_filename: jaromir_nohavica_lachtani.pdf}
+{pdf_filenames: ['jaromir_nohavica_lachtani-sken.pdf', 'jaromir_nohavica_lachtani-comp.pdf', 'jaromir_nohavica_lachtani-gen.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

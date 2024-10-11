@@ -2,7 +2,7 @@
 {artist: Ready Kirken}
 {date_added: 06-2018}
 {language: czech}
-{pdf_filename: ready_kirken_winston_smith.pdf}
+{pdf_filenames: ['ready_kirken_winston_smith-sken.pdf', 'ready_kirken_winston_smith-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

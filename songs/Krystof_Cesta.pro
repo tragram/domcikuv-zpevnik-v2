@@ -2,7 +2,7 @@
 {artist: Kryštof}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: krystof_cesta.pdf}
+{pdf_filenames: ['krystof_cesta-sken.pdf', 'krystof_cesta-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

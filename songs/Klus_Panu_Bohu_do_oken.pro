@@ -2,7 +2,7 @@
 {artist: Klus}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: klus_panu_bohu_do_oken.pdf}
+{pdf_filenames: ['klus_panu_bohu_do_oken-sken.pdf', 'klus_panu_bohu_do_oken-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Nedvědi}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: nedvedi_skladanka.pdf}
+{pdf_filenames: ['nedvedi_skladanka-sken.pdf', 'nedvedi_skladanka-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

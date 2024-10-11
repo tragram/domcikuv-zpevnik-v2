@@ -2,7 +2,7 @@
 {artist: Václav Neckář}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: vaclav_neckar_pulnocni.pdf}
+{pdf_filenames: ['vaclav_neckar_pulnocni-sken.pdf', 'vaclav_neckar_pulnocni-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

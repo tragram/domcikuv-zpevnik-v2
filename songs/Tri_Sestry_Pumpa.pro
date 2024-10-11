@@ -2,7 +2,7 @@
 {artist: Tři Sestry}
 {date_added: 10-2018}
 {language: czech}
-{pdf_filename: tri_sestry_pumpa.pdf}
+{pdf_filenames: ['tri_sestry_pumpa-sken.pdf', 'tri_sestry_pumpa-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

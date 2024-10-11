@@ -2,7 +2,7 @@
 {artist: Hop Trop}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: hop_trop_tri_krize.pdf}
+{pdf_filenames: ['hop_trop_tri_krize-sken.pdf', 'hop_trop_tri_krize-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

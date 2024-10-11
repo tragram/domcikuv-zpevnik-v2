@@ -2,7 +2,7 @@
 {artist: Marta Kubišová}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: marta_kubisova_nechte_zvony_znit.pdf}
+{pdf_filenames: ['marta_kubisova_nechte_zvony_znit-sken.pdf', 'marta_kubisova_nechte_zvony_znit-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

@@ -2,7 +2,7 @@
 {artist: Vlasta Redl}
 {date_added: 02-2017}
 {language: czech}
-{pdf_filename: vlasta_redl_vecer_krupavych_srdicek.pdf}
+{pdf_filenames: ['vlasta_redl_vecer_krupavych_srdicek-sken.pdf', 'vlasta_redl_vecer_krupavych_srdicek-comp.pdf', 'vlasta_redl_vecer_krupavych_srdicek-gen.pdf']}
 {capo: 0}
 {key: }
 {tempo: }

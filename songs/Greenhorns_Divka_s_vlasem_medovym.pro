@@ -2,7 +2,7 @@
 {artist: Greenhorns}
 {date_added: 07-2015}
 {language: czech}
-{pdf_filename: greenhorns_divka_s_vlasem_medovym.pdf}
+{pdf_filenames: ['greenhorns_divka_s_vlasem_medovym-sken.pdf', 'greenhorns_divka_s_vlasem_medovym-comp.pdf']}
 {capo: 0}
 {key: }
 {tempo: }
