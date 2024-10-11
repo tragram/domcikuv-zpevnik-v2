@@ -42,12 +42,12 @@ class SongRange {
             const octaves = song_range[1].slice([-1]) - song_range[0].slice([-1])
             const lowestTone = song_range[0].slice(0, -1).toLowerCase()
             const highestTone = song_range[1].slice(0, -1).toLowerCase()
-            const withinOctave = SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone]
+            const withinOctave = (12+SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone])%12
 
-            // console.log(octaves, withinOctave, 12 * octaves + withinOctave)
             this.min = song_range[0]
             this.max = song_range[1]
             this.semitones = 12 * octaves + withinOctave;
+            console.log(lowestTone,highestTone, octaves, withinOctave, 12 * octaves + withinOctave)
         }
     }
 }
@@ -172,7 +172,7 @@ const SongsList = () => {
                 setSearchResults(data);
                 setLanguages(["all", ...new Set(data.map(item => item["language"]))].sort());
                 let songRanges = data.map(song => (song.range.semitones)).filter(range => range != "?");
-                setMaxRange(Math.max(songRanges));
+                setMaxRange(Math.max(...songRanges));
                 // TODO: languages with less than e.g. 5 songs should be merged into "other"
             })
             .catch((error) => {
@@ -230,9 +230,9 @@ const SongsList = () => {
                             <div className="table-cell text-left"></div>
                             <div className="table-cell text-left">Song</div>
                             <div className="table-cell text-center hidden sm:table-cell">Date added</div>
-                            <div className="table-cell text-center">Language</div>
                             <div className="table-cell text-center hidden lg:table-cell">Capo</div>
                             <div className="table-cell text-center">Vocal</div>
+                            <div className="table-cell text-center">Language</div>
                         </div>
                     </div>
 

@@ -5,6 +5,7 @@
 {language: english}
 {capo: 0}
 {range: e1-c2}
+{key: G}
 
 {start_of_verse}
 [G]Mama take this [D]badge off of [Am7]me

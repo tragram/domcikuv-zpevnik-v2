@@ -5,6 +5,7 @@
 {capo: 2}
 {range: g1-h2}
 {start_melody: g g g h d d h g}
+{key: G}
 
 
 {start_of_verse}

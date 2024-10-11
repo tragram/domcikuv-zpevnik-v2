@@ -5,6 +5,7 @@
 {date_added: 09-2024}
 {range: g1-a2}
 {start_melody: a a e f e}
+{key: a}
 
 
 {start_of_verse}

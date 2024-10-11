@@ -18,12 +18,13 @@ function progressColor(range) {
 function VocalRangeIndicator({ song, maxRange }) {
 
     let songRangeSemitones = song.range.semitones;
+    // console.log(song.title, songRangeSemitones,maxRange)
     return (
-        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={songRangeSemitones!="?"} size="md" strokeWidth={3} value={songRangeSemitones!="?"?songRangeSemitones:2500} />
+        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={songRangeSemitones != "?"} size="md" strokeWidth={3} value={songRangeSemitones != "?" ? songRangeSemitones : maxRange} />
     );
 }
 
-function SongRow({ song, setSelectedSong, maxRange = { maxRange } }) {
+function SongRow({ song, setSelectedSong, maxRange}) {
     return (
         <div className="table-row h-12 song-row" onClick={() => { setSelectedSong(song) }}>
             <div className="table-cell rounded-l-full flex content-center justify-center pr-3 bg-gray-100 relative pl-5 w-16">

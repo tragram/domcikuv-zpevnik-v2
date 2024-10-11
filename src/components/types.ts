@@ -23,6 +23,7 @@ interface SongData {
         month: int,
         year: int,
     },
+    start_melody: string,
     language: string,
     tempo: int,
     capo: int,

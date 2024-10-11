@@ -3,9 +3,9 @@
 {language: czech}
 {capo: 0}
 {date_added: 09-2024}
-{range: }
 {range: h1-e2}
 {start_melody: h c d}
+{key: G}
 
 
 {start_of_verse}

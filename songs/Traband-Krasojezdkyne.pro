@@ -5,6 +5,7 @@
 {date_added: 09-2024}
 {tempo: 110}
 {range: h1-d2}
+{key: f#}
 {start_melody: c# f# g# a g# f#}
 
 {start_of_verse}

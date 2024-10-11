@@ -5,6 +5,7 @@
 {capo: 0}
 {range: e1-e2}
 {start_melody: h h §h c d}
+{key: G}
 
 {start_of_verse}
 [G]Když jsem sám doma, [Ami]poslouchám Vávra,

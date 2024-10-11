@@ -126,7 +126,7 @@ function Song({ selectedSong }) {
             return;
         }
         renderSong(songRenderKey);
-    }, [songRenderKey,repeatChorus]);
+    }, [songRenderKey, repeatChorus]);
 
     useEffect(() => {
         if (!selectedSong) {
@@ -146,7 +146,7 @@ function Song({ selectedSong }) {
     );
     const fontSizeStep = 0.2;
     return (
-        <Modal
+        <Modal disableAnimation
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             scrollBehavior={scrollBehavior}

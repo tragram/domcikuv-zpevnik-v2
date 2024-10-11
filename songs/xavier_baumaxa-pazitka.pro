@@ -4,6 +4,7 @@
 {date_added: 09-2024}
 {capo: 0}
 {range: }
+{key: A}
 
 
 [A][C#mi][Cmi][F#mi][E][D]

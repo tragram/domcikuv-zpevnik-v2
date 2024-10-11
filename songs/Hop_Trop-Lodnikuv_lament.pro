@@ -6,6 +6,7 @@
 {date_added: 09-2024}
 {range: d1-c1}
 {start_melody:  e g h}
+{key: G}
 
 {start_of_verse}
 [Em]Já snad [G]hned, když jsem se [D]narodil, na [G]bludnej [D]kámen [G]šláp',
