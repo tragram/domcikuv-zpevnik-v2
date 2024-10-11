@@ -2,14 +2,14 @@
   {
     "title": "Knocking On Heaven's Door",
     "artist": "Bob Dylan",
-    "key": "Unknown Key",
+    "key": "G",
     "language": "english",
     "date_added": "Unknown Date",
     "capo": "0",
     "tempo": "Unknown Tempo",
     "range": "e1-c2",
     "file": "Bob_Dylan-Knocking_On_Heavens_Door.pro",
-    "content": "{title: Knocking On Heaven's Door}\n{artist: Bob Dylan}\n{subtitle: }\n{zoom-ipad: 2.992135}\n{language: english}\n{capo: 0}\n{range: e1-c2}\n\n{start_of_verse}\n[G]Mama take this [D]badge off of [Am7]me\n[G]I can't [D]use it any[C]more\n[G]It's getting [D]dark, too dark to [Am7]see\n[G]I feel I'm [D]knockin' on heaven's [C]door\n{end_of_verse}\n\n{start_of_chorus}\n[G]Knock, knock, [D]knockin' on heaven's [Am7]door\n[G]Knock, knock, [D]knockin' on heaven's [C]door\n[G]Knock, knock, [D]knockin' on heaven's [Am7]door\n[G]Knock, knock, [D]knockin' on heaven's [C]door\n{end_of_chorus}\n\n{start_of_verse}\n[G]Mama put my [D]guns in the [Am7]ground\n[G]I can't [D]shoot them any[C]more\n[G]That long black [D]cloud is coming [Am7]down\n[G]I feel I'm [D]knockin' on heaven's [C]door\n{end_of_verse}\n\n{chorus}",
+    "content": "{title: Knocking On Heaven's Door}\n{artist: Bob Dylan}\n{subtitle: }\n{zoom-ipad: 2.992135}\n{language: english}\n{capo: 0}\n{range: e1-c2}\n{key: G}\n\n{start_of_verse}\n[G]Mama take this [D]badge off of [Am7]me\n[G]I can't [D]use it any[C]more\n[G]It's getting [D]dark, too dark to [Am7]see\n[G]I feel I'm [D]knockin' on heaven's [C]door\n{end_of_verse}\n\n{start_of_chorus}\n[G]Knock, knock, [D]knockin' on heaven's [Am7]door\n[G]Knock, knock, [D]knockin' on heaven's [C]door\n[G]Knock, knock, [D]knockin' on heaven's [Am7]door\n[G]Knock, knock, [D]knockin' on heaven's [C]door\n{end_of_chorus}\n\n{start_of_verse}\n[G]Mama put my [D]guns in the [Am7]ground\n[G]I can't [D]shoot them any[C]more\n[G]That long black [D]cloud is coming [Am7]down\n[G]I feel I'm [D]knockin' on heaven's [C]door\n{end_of_verse}\n\n{chorus}",
     "start_melody": "Unknown Start Melody"
   },
   {
@@ -132,27 +132,27 @@
   {
     "title": "Svařák",
     "artist": "Harlej",
-    "key": "Unknown Key",
+    "key": "G",
     "language": "czech",
     "date_added": "09-2024",
     "capo": "0",
     "tempo": "Unknown Tempo",
     "range": "e1-e2",
     "file": "Harlej-Svarak.pro",
-    "content": "{title: Svařák}\n{artist: Harlej}\n{language: czech}\n{date_added: 09-2024}\n{capo: 0}\n{range: e1-e2}\n{start_melody: h h §h c d}\n\n{start_of_verse}\n[G]Když jsem sám doma, [Ami]poslouchám Vávra,\n[C]starýho volá, [D]pořád dokola\n[G]Chce to mít nápad, [Ami]a né pořád chrápat,\n[C]já dostal jsem nápad, [D]udělat mejdan.[C]\n{end_of_verse}\n\n{start_of_chorus}\n[G]Mám rád svařené [Ami]víno červené,\njá mám [C]rád, rád sva[G]řák.\n[G]Mám rád svařené [Ami]víno červené,\njá mám [C]rád, rád sva[G]řák.\n{end_of_chorus}\n\n{start_of_verse}\n[G]Se známou partou, [Ami]domluva krátká,\n[C]zejtra v 6 hodin,[D]vstup jedna lampa.\n[G]Začíná mejdan, [Ami]na 200 procent,\n[C]my plníme plány, [D]rostou nám blán[C]y.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\n[G]Když jsem sám doma, [Ami]poslouchám Vavra,\n[C]starýho vola, [D]pořád dokola.\n[G]Chce to mít nápad, [Ami]a né pořád chrápat,\n[C]já dostal jsem nápad [D]udělat mejdan[C].\n{end_of_verse}\n\n{chorus}",
+    "content": "{title: Svařák}\n{artist: Harlej}\n{language: czech}\n{date_added: 09-2024}\n{capo: 0}\n{range: e1-e2}\n{start_melody: h h §h c d}\n{key: G}\n\n{start_of_verse}\n[G]Když jsem sám doma, [Ami]poslouchám Vávra,\n[C]starýho volá, [D]pořád dokola\n[G]Chce to mít nápad, [Ami]a né pořád chrápat,\n[C]já dostal jsem nápad, [D]udělat mejdan.[C]\n{end_of_verse}\n\n{start_of_chorus}\n[G]Mám rád svařené [Ami]víno červené,\njá mám [C]rád, rád sva[G]řák.\n[G]Mám rád svařené [Ami]víno červené,\njá mám [C]rád, rád sva[G]řák.\n{end_of_chorus}\n\n{start_of_verse}\n[G]Se známou partou, [Ami]domluva krátká,\n[C]zejtra v 6 hodin,[D]vstup jedna lampa.\n[G]Začíná mejdan, [Ami]na 200 procent,\n[C]my plníme plány, [D]rostou nám blán[C]y.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\n[G]Když jsem sám doma, [Ami]poslouchám Vavra,\n[C]starýho vola, [D]pořád dokola.\n[G]Chce to mít nápad, [Ami]a né pořád chrápat,\n[C]já dostal jsem nápad [D]udělat mejdan[C].\n{end_of_verse}\n\n{chorus}",
     "start_melody": "h h §h c d"
   },
   {
     "title": "Lodníkův lament",
     "artist": "Hop Trop",
-    "key": "Unknown Key",
+    "key": "G",
     "language": "czech",
     "date_added": "09-2024",
     "capo": "0",
     "tempo": "120",
     "range": "d1-c1",
     "file": "Hop_Trop-Lodnikuv_lament.pro",
-    "content": "{title: Lodníkův lament}\n{artist: Hop Trop}\n{capo: 0}\n{tempo: 120}\n{language: czech}\n{date_added: 09-2024}\n{range: d1-c1}\n{start_melody:  e g h}\n\n{start_of_verse}\n[Em]Já snad [G]hned, když jsem se [D]narodil, na [G]bludnej [D]kámen [G]šláp',\na [G]do školy moc [D]nechodil, i [Em]tak je [D]ze mě [Em]chlap,\nvelký [G]dusno, který [D]nad hlavou mi [G]doma [D]vise[G]lo,\ndrsnýmu chlapu [D]nesvědčí, já [Em]ťuk' si [D]na če[Em]lo.\n{end_of_verse}\n\n{start_of_chorus}\n[Em],[D],[G],[D],[G],[C],[G]\n\nMá[G]ma mě doma držela a [D]táta na mě dřel,\njá moh' jsem jít hned študovat, kdy[G]bych jen [D]trochu [G]chtěl,\nvoženit se, vzít si ňákou [D]trajdu copatou\na za její lásku platit [G]celou vej[D]pla[G]tou, [D]hó [Em]hou.\n{end_of_chorus}\n\n{start_of_verse}\n[Em]Potom [G]do knajpy [D]jsem zašel a tam [G]uslyšel [D]ten [G]žvást,\nže na lodích [D]je veselo a [Em]fasuj[D]ou tam [Em]chlast,\na tak [G]honem jsem se [D]nalodil na sta[G]rej v[D]ratkej [G]křáp,\nkde kapitán byl [D]kořala a řval [Em]na nás [D]jak [Em]dráb.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\n[Em]Vlny s [G]kocábkou si [D]házely a každej [G]dostal [D]strach,\na my lodníci se [D]vsázeli, [Em]kdo p[D]řežije ten [Em]krach,\nvšechny [G]krysy z lodi [D]zmizely a v [G]dálce [D]maják [G]zhas',\na první byl hned [D]kapitán, kdo [Em]měl ko[D]rkovej [Em]pás.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\n[Em]Kolem [G]zubama už [D]cvakali žra[G]loci [D]hlado[G]ví,\nmoc [G]nikomu se [D]nechtělo do [Em]vody [D]ledo[Em]vý,\nk ránu [G]bouře trochu [D]ustala, já [G]mořskou [D]nemoc [G]měl,\nvšem, co [G]můžou [D]chodit po zemi, [Em]jsem tol[D]ik zá[Em]viděl.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\n[Em]Jako [G]zázrakem jsme [D]dojeli, byl [G]každý [D]živ a [G]zdráv,\na všichni byli [D]veselí, jen já [Em]jsem [D]rukou [Em]máv',\nna loď [G]nikdy víc už [D]nevlezu, to [G]nesmí [D]nikdo [G]chtít,\nteď lituju a [D]vzpomínám, jak jen [Em]jsem [D]moh' [Em]mít.\n{end_of_verse}\n\n{chorus}",
+    "content": "{title: Lodníkův lament}\n{artist: Hop Trop}\n{capo: 0}\n{tempo: 120}\n{language: czech}\n{date_added: 09-2024}\n{range: d1-c1}\n{start_melody:  e g h}\n{key: G}\n\n{start_of_verse}\n[Em]Já snad [G]hned, když jsem se [D]narodil, na [G]bludnej [D]kámen [G]šláp',\na [G]do školy moc [D]nechodil, i [Em]tak je [D]ze mě [Em]chlap,\nvelký [G]dusno, který [D]nad hlavou mi [G]doma [D]vise[G]lo,\ndrsnýmu chlapu [D]nesvědčí, já [Em]ťuk' si [D]na če[Em]lo.\n{end_of_verse}\n\n{start_of_chorus}\n[Em],[D],[G],[D],[G],[C],[G]\n\nMá[G]ma mě doma držela a [D]táta na mě dřel,\njá moh' jsem jít hned študovat, kdy[G]bych jen [D]trochu [G]chtěl,\nvoženit se, vzít si ňákou [D]trajdu copatou\na za její lásku platit [G]celou vej[D]pla[G]tou, [D]hó [Em]hou.\n{end_of_chorus}\n\n{start_of_verse}\n[Em]Potom [G]do knajpy [D]jsem zašel a tam [G]uslyšel [D]ten [G]žvást,\nže na lodích [D]je veselo a [Em]fasuj[D]ou tam [Em]chlast,\na tak [G]honem jsem se [D]nalodil na sta[G]rej v[D]ratkej [G]křáp,\nkde kapitán byl [D]kořala a řval [Em]na nás [D]jak [Em]dráb.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\n[Em]Vlny s [G]kocábkou si [D]házely a každej [G]dostal [D]strach,\na my lodníci se [D]vsázeli, [Em]kdo p[D]řežije ten [Em]krach,\nvšechny [G]krysy z lodi [D]zmizely a v [G]dálce [D]maják [G]zhas',\na první byl hned [D]kapitán, kdo [Em]měl ko[D]rkovej [Em]pás.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\n[Em]Kolem [G]zubama už [D]cvakali žra[G]loci [D]hlado[G]ví,\nmoc [G]nikomu se [D]nechtělo do [Em]vody [D]ledo[Em]vý,\nk ránu [G]bouře trochu [D]ustala, já [G]mořskou [D]nemoc [G]měl,\nvšem, co [G]můžou [D]chodit po zemi, [Em]jsem tol[D]ik zá[Em]viděl.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\n[Em]Jako [G]zázrakem jsme [D]dojeli, byl [G]každý [D]živ a [G]zdráv,\na všichni byli [D]veselí, jen já [Em]jsem [D]rukou [Em]máv',\nna loď [G]nikdy víc už [D]nevlezu, to [G]nesmí [D]nikdo [G]chtít,\nteď lituju a [D]vzpomínám, jak jen [Em]jsem [D]moh' [Em]mít.\n{end_of_verse}\n\n{chorus}",
     "start_melody": "e g h"
   },
   {
@@ -210,27 +210,27 @@
   {
     "title": "Lokomotiva",
     "artist": "Poletíme?",
-    "key": "Unknown Key",
+    "key": "G",
     "language": "czech",
     "date_added": "09-2024",
     "capo": "0",
     "tempo": "Unknown Tempo",
-    "range": " ",
+    "range": "h1-e2",
     "file": "Poletime-Lokomotiva.pro",
-    "content": "{title: Lokomotiva}\n{artist: Poletíme?}\n{language: czech}\n{capo: 0}\n{date_added: 09-2024}\n{range: }\n{range: h1-e2}\n{start_melody: h c d}\n\n\n{start_of_verse}\n[G]Pokaždé když tě vidím, [D]vím, že by to šlo\n[Emi]a když jsem přemejšlel, co cítím, [C]tak mě napadlo\njestli [G]nechceš svýho osla vedle [D]mýho osla hnát,\njestli [Emi]nechceš se mnou tahat ze ze[C]mě rezavej drát.\n{end_of_verse}\n\n{start_of_chorus}\n[G]Jsi loko[D]motiva, kte[Emi]rá se řítí [C]tmou,\n[G]jsi indi[D]áni, kteří [Emi]prérií je[C]dou,\n[G]jsi kulka [D]vystřelená [Emi]do mojí hla[C]vy,\n[G]jsi prezi[D]dent a já tvé [Emi]spojené stá[C]ty.\n{end_of_chorus}\n\n{start_of_verse}\nPřines jsem ti kytku, no co koukáš, to se má\nje to koruna žvejkačkou ke špejli přilepená,\na dva kelímky vod jogurtu, co je mezi nima niť,\nmůžeme si takhle vždycky volat, když budeme chtít.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\nKaždej příběh má svůj konec, ale né ten náš,\nnám to bude navždy dojit všude, kam se podíváš,\nnaše kachny budou zlato nosit a krmit se popcornem,\njá to každej večer spláchnu půlnočním expresem.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\nDětem dáme jména Jessie, Jared, Jack a John,\nve stopadesáti letech ho budu mít stále jako slon,\na ty neztratíš svoji krásu, stále štíhlá kolem pasu,\nstále dokážeš mě chytit lasem a přitáhnout na terasu.\n{end_of_verse}\n\n{chorus}\n+ já a [G]ty.",
+    "content": "{title: Lokomotiva}\n{artist: Poletíme?}\n{language: czech}\n{capo: 0}\n{date_added: 09-2024}\n{range: h1-e2}\n{start_melody: h c d}\n{key: G}\n\n\n{start_of_verse}\n[G]Pokaždé když tě vidím, [D]vím, že by to šlo\n[Emi]a když jsem přemejšlel, co cítím, [C]tak mě napadlo\njestli [G]nechceš svýho osla vedle [D]mýho osla hnát,\njestli [Emi]nechceš se mnou tahat ze ze[C]mě rezavej drát.\n{end_of_verse}\n\n{start_of_chorus}\n[G]Jsi loko[D]motiva, kte[Emi]rá se řítí [C]tmou,\n[G]jsi indi[D]áni, kteří [Emi]prérií je[C]dou,\n[G]jsi kulka [D]vystřelená [Emi]do mojí hla[C]vy,\n[G]jsi prezi[D]dent a já tvé [Emi]spojené stá[C]ty.\n{end_of_chorus}\n\n{start_of_verse}\nPřines jsem ti kytku, no co koukáš, to se má\nje to koruna žvejkačkou ke špejli přilepená,\na dva kelímky vod jogurtu, co je mezi nima niť,\nmůžeme si takhle vždycky volat, když budeme chtít.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\nKaždej příběh má svůj konec, ale né ten náš,\nnám to bude navždy dojit všude, kam se podíváš,\nnaše kachny budou zlato nosit a krmit se popcornem,\njá to každej večer spláchnu půlnočním expresem.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\nDětem dáme jména Jessie, Jared, Jack a John,\nve stopadesáti letech ho budu mít stále jako slon,\na ty neztratíš svoji krásu, stále štíhlá kolem pasu,\nstále dokážeš mě chytit lasem a přitáhnout na terasu.\n{end_of_verse}\n\n{chorus}\n+ já a [G]ty.",
     "start_melody": "h c d"
   },
   {
     "title": "Tři kámošky psycholožky",
     "artist": "Poletíme?",
-    "key": "Unknown Key",
+    "key": "G",
     "language": "czech",
     "date_added": "09-2024",
     "capo": "2",
     "tempo": "Unknown Tempo",
     "range": "g1-h2",
     "file": "Poletime-Tri_kamosky_psycholozky.pro",
-    "content": "{title: Tři kámošky psycholožky}\n{artist: Poletíme?}\n{language: czech}\n{date_added: 09-2024}\n{capo: 2}\n{range: g1-h2}\n{start_melody: g g g h d d h g}\n\n\n{start_of_verse}\n[G]Tři kámošky, psycholožky, vracely se [Emi]nocí,\n[G]tak asi nějak domů, cestou neces[Emi]tou.\n[G]Zpívaly si, chechtaly se, vlnily se v [Emi]bocích,\n[G]a měly prostě tu svoji [D]krásně roz[G]vernou.\n{end_of_verse}\n\n{start_of_chorus}\n[C]A to se ví, to se ví, že jim chlapi nechybí,\n[G]A to se ví, to se ví, že jim chlapi nechybí\n[C]A to se ví, to se ví, že jim chlapi nechybí\n[D]a tak si zpívají, když čůrají u cesty ve křoví.\n{end_of_chorus}\n\n{start_of_verse}\nTři kámošky, psycholožky, uzavřely sázku,\nkterá suchou nohou řeku překročí.\nDvě tam spadly, třetí asi zlomila si nohu,\nteď válejí se smíchy po jehličí.\n{end_of_verse}\n\n{chorus}\n+a tak si zpívají, když ždímají si prádlo krajkový.\n\n{start_of_verse}\nTři kámošky, psycholožky, zapomněly, že se\ntento rok strašně moc urodilo v lese.\nA tři kámošky, no, holky fajnový,\nTeď utíkaj, když je píchaj svině pruhovaný.\n{end_of_verse}\n\n{chorus}\n+a tak si zpívají a jsou šťastný i když jsou napuchlý.\n\n{start_of_verse}\nTři kámošky, psycholožky, vrátily se domů,\na městem se právě rozednívalo.\nNež usnuly, slíbily si, že zítra půjdou znovu\na budou dělat, že se nic nestalo.\n{end_of_verse}\n\n{chorus}\n+a teď už spinkají a jsou nahý, tak přejem hezký sny.",
+    "content": "{title: Tři kámošky psycholožky}\n{artist: Poletíme?}\n{language: czech}\n{date_added: 09-2024}\n{capo: 2}\n{range: g1-h2}\n{start_melody: g g g h d d h g}\n{key: G}\n\n\n{start_of_verse}\n[G]Tři kámošky, psycholožky, vracely se [Emi]nocí,\n[G]tak asi nějak domů, cestou neces[Emi]tou.\n[G]Zpívaly si, chechtaly se, vlnily se v [Emi]bocích,\n[G]a měly prostě tu svoji [D]krásně roz[G]vernou.\n{end_of_verse}\n\n{start_of_chorus}\n[C]A to se ví, to se ví, že jim chlapi nechybí,\n[G]A to se ví, to se ví, že jim chlapi nechybí\n[C]A to se ví, to se ví, že jim chlapi nechybí\n[D]a tak si zpívají, když čůrají u cesty ve křoví.\n{end_of_chorus}\n\n{start_of_verse}\nTři kámošky, psycholožky, uzavřely sázku,\nkterá suchou nohou řeku překročí.\nDvě tam spadly, třetí asi zlomila si nohu,\nteď válejí se smíchy po jehličí.\n{end_of_verse}\n\n{chorus}\n+a tak si zpívají, když ždímají si prádlo krajkový.\n\n{start_of_verse}\nTři kámošky, psycholožky, zapomněly, že se\ntento rok strašně moc urodilo v lese.\nA tři kámošky, no, holky fajnový,\nTeď utíkaj, když je píchaj svině pruhovaný.\n{end_of_verse}\n\n{chorus}\n+a tak si zpívají a jsou šťastný i když jsou napuchlý.\n\n{start_of_verse}\nTři kámošky, psycholožky, vrátily se domů,\na městem se právě rozednívalo.\nNež usnuly, slíbily si, že zítra půjdou znovu\na budou dělat, že se nic nestalo.\n{end_of_verse}\n\n{chorus}\n+a teď už spinkají a jsou nahý, tak přejem hezký sny.",
     "start_melody": "g g g h d d h g"
   },
   {
@@ -262,14 +262,14 @@
   {
     "title": "Krasojezdkyně",
     "artist": "Traband",
-    "key": "Unknown Key",
+    "key": "f#",
     "language": "czech",
     "date_added": "09-2024",
     "capo": "0",
     "tempo": "110",
     "range": "h1-d2",
     "file": "Traband-Krasojezdkyne.pro",
-    "content": "{title: Krasojezdkyně}\n{artist: Traband}\n{capo: 0}\n{language: czech}\n{date_added: 09-2024}\n{tempo: 110}\n{range: h1-d2}\n{start_melody: c# f# g# a g# f#}\n\n{start_of_verse}\n[F#m]Přijel jsem [D]na chvíli [E]pozdravit [C#7]přátele,\n[F#m]po hospodách [D]vést silácké [E]řeči.[C#7]\n[F#m]Představení [D]skončilo, [E]zítra je [C#7]neděle,\n[F#m]odplouvám [C#7]do bezpe[F#m]čí.\n{end_of_verse}\n\n\n{start_of_bridge}\n[F#m]Bolestí [D]jednoho je [E]druhého [C#7]štěstí,\n[F#m]co nelze [D]vyslovit,[E]to voní [C#7]po neřesti.\n{end_of_bridge}\n\n{start_of_chorus}\n[F#m]Krasojezdky[D]ně, sestro [E]akroba[C#7]tů,\n[F#m]Lotova [D]dcero [E]oděná [C#7]do šarlatu,\n[F#m]kdo smí se [D]dotknout lemu [E]od tvých ša[C#7]tů?\n[F#m]Jsem na cestě a toužím [C#7]po návra[F#m]tu.\n{end_of_chorus}\n\n{start_of_verse}\n[F#m]Čas je šarla[D]tán a věci [E]sotva změ[C#7]ní,\n[F#m]tahleta [D]zastávka [E]byla jen [C#7]na znamení,\n[F#m]naše cesty [D]už se asi [E]těžko skří[C#7]ží,\n[F#m]hledám tě [C#7]v Babylóně, a ty jsi v Paří[F#m]ži.\n{end_of_verse}\n\n{chorus}\n\n{chorus}",
+    "content": "{title: Krasojezdkyně}\n{artist: Traband}\n{capo: 0}\n{language: czech}\n{date_added: 09-2024}\n{tempo: 110}\n{range: h1-d2}\n{key: f#}\n{start_melody: c# f# g# a g# f#}\n\n{start_of_verse}\n[F#m]Přijel jsem [D]na chvíli [E]pozdravit [C#7]přátele,\n[F#m]po hospodách [D]vést silácké [E]řeči.[C#7]\n[F#m]Představení [D]skončilo, [E]zítra je [C#7]neděle,\n[F#m]odplouvám [C#7]do bezpe[F#m]čí.\n{end_of_verse}\n\n\n{start_of_bridge}\n[F#m]Bolestí [D]jednoho je [E]druhého [C#7]štěstí,\n[F#m]co nelze [D]vyslovit,[E]to voní [C#7]po neřesti.\n{end_of_bridge}\n\n{start_of_chorus}\n[F#m]Krasojezdky[D]ně, sestro [E]akroba[C#7]tů,\n[F#m]Lotova [D]dcero [E]oděná [C#7]do šarlatu,\n[F#m]kdo smí se [D]dotknout lemu [E]od tvých ša[C#7]tů?\n[F#m]Jsem na cestě a toužím [C#7]po návra[F#m]tu.\n{end_of_chorus}\n\n{start_of_verse}\n[F#m]Čas je šarla[D]tán a věci [E]sotva změ[C#7]ní,\n[F#m]tahleta [D]zastávka [E]byla jen [C#7]na znamení,\n[F#m]naše cesty [D]už se asi [E]těžko skří[C#7]ží,\n[F#m]hledám tě [C#7]v Babylóně, a ty jsi v Paří[F#m]ži.\n{end_of_verse}\n\n{chorus}\n\n{chorus}",
     "start_melody": "c# f# g# a g# f#"
   },
   {
@@ -314,14 +314,14 @@
   {
     "title": "Já písnička",
     "artist": "Žalman & Spol.",
-    "key": "Unknown Key",
+    "key": "a",
     "language": "czech",
     "date_added": "09-2024",
     "capo": "4",
     "tempo": "Unknown Tempo",
     "range": "g1-a2",
     "file": "Zalman__Spol-Ja_pisnicka.pro",
-    "content": "{title: Já písnička}\n{artist: Žalman & Spol.}\n{capo: 4}\n{language: czech}\n{date_added: 09-2024}\n{range: g1-a2}\n{start_melody: a a e f e}\n\n\n{start_of_verse}\nTo[Am]já, zrozená z nemoc[G]ných básníků,\nz tichých [Em]vět po nocích utka[Am]ná,\n[Am]to já, zrozená, ne[G]ní mi do smíchu,\nkdyž mám [Em]být pod cenou proda[Am]ná.\n{end_of_verse}\n\n{start_of_chorus}\nKdo [C]vás obléká do ša[G]tů svatebních,\nholky [Am]mý ztracený, ztrace[E7]ný,\nženich [Am]spí na růži, až [G]někam pod kůži\nse můj [Em]strach do klína schová[Am]vá.\n{end_of_chorus}\n\n{start_of_verse}\nTo[Am]já, zrozená v hos[G]podách na tácku\nraněný[Em]ch ospalých milen[Am]ců,\n[Am]to já, zrozená, vyry[G]tá na placku,\nsměju se po [Em]stěnách cizinc[Am]ům.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\nTo[Am]já, písnička, lež[G]ím tu před vámi,\njenom tak[Em], spoutaná toli[Am]krát,\n[Am]to já, písnička, provd[G]aná za pány,\nkteří pro [Em]lásku smí o mně hr[Am]át.\n{end_of_verse}\n\n{chorus}",
+    "content": "{title: Já písnička}\n{artist: Žalman & Spol.}\n{capo: 4}\n{language: czech}\n{date_added: 09-2024}\n{range: g1-a2}\n{start_melody: a a e f e}\n{key: a}\n\n\n{start_of_verse}\nTo[Am]já, zrozená z nemoc[G]ných básníků,\nz tichých [Em]vět po nocích utka[Am]ná,\n[Am]to já, zrozená, ne[G]ní mi do smíchu,\nkdyž mám [Em]být pod cenou proda[Am]ná.\n{end_of_verse}\n\n{start_of_chorus}\nKdo [C]vás obléká do ša[G]tů svatebních,\nholky [Am]mý ztracený, ztrace[E7]ný,\nženich [Am]spí na růži, až [G]někam pod kůži\nse můj [Em]strach do klína schová[Am]vá.\n{end_of_chorus}\n\n{start_of_verse}\nTo[Am]já, zrozená v hos[G]podách na tácku\nraněný[Em]ch ospalých milen[Am]ců,\n[Am]to já, zrozená, vyry[G]tá na placku,\nsměju se po [Em]stěnách cizinc[Am]ům.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\nTo[Am]já, písnička, lež[G]ím tu před vámi,\njenom tak[Em], spoutaná toli[Am]krát,\n[Am]to já, písnička, provd[G]aná za pány,\nkteří pro [Em]lásku smí o mně hr[Am]át.\n{end_of_verse}\n\n{chorus}",
     "start_melody": "a a e f e"
   },
   {
@@ -340,14 +340,14 @@
   {
     "title": "Pažitka",
     "artist": "Xavier Baumaxa",
-    "key": "Unknown Key",
+    "key": "A",
     "language": "czech",
     "date_added": "09-2024",
     "capo": "0",
     "tempo": "Unknown Tempo",
     "range": " ",
     "file": "xavier_baumaxa-pazitka.pro",
-    "content": "{title: Pažitka}\n{artist: Xavier Baumaxa}\n{language: czech}\n{date_added: 09-2024}\n{capo: 0}\n{range: }\n\n\n[A][C#mi][Cmi][F#mi][E][D]\n{start_of_verse}\nKrajina [A]svádí k podzimním [C#mi]výletům,\ntripům do [F#mi]mládí a častým [D]úletům.\nBarevný listí je rázem pestřejší,\nhlavu ti čistí, no a ty jsi bystřejší.\n{end_of_verse}\n\n{start_of_chorus}\n[A]Pašuješ zážitky, [E]pašuješ všechno co se [F#mi]dá,\nsáčky suchý pažitky, [D]tomu se říká dobrá nálada.\nPašuješ zážitky, pašuješ všechno co se dá,\nsáčky suchý pažitky, tomu se říká dobrá nálada.\n{end_of_chorus}\n\n{start_of_verse}\nHladina tůní pomalu vychladá,\nje konec vůním a léto uvadá.\nNa stehna fenek dopadl dlouhý stín,\nskončil čas trenek, ale já zas něco vymyslím.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\nKochám se chcaje, překvapen výdrží,\nté co mi ho saje a co mi podrží.\nmalinký flíček na kalhotách vydržím\nkalhot dost maje, tyto poté vydražím.\n{end_of_verse}\n\n{chorus}",
+    "content": "{title: Pažitka}\n{artist: Xavier Baumaxa}\n{language: czech}\n{date_added: 09-2024}\n{capo: 0}\n{range: }\n{key: A}\n\n\n[A][C#mi][Cmi][F#mi][E][D]\n{start_of_verse}\nKrajina [A]svádí k podzimním [C#mi]výletům,\ntripům do [F#mi]mládí a častým [D]úletům.\nBarevný listí je rázem pestřejší,\nhlavu ti čistí, no a ty jsi bystřejší.\n{end_of_verse}\n\n{start_of_chorus}\n[A]Pašuješ zážitky, [E]pašuješ všechno co se [F#mi]dá,\nsáčky suchý pažitky, [D]tomu se říká dobrá nálada.\nPašuješ zážitky, pašuješ všechno co se dá,\nsáčky suchý pažitky, tomu se říká dobrá nálada.\n{end_of_chorus}\n\n{start_of_verse}\nHladina tůní pomalu vychladá,\nje konec vůním a léto uvadá.\nNa stehna fenek dopadl dlouhý stín,\nskončil čas trenek, ale já zas něco vymyslím.\n{end_of_verse}\n\n{chorus}\n\n{start_of_verse}\nKochám se chcaje, překvapen výdrží,\nté co mi ho saje a co mi podrží.\nmalinký flíček na kalhotách vydržím\nkalhot dost maje, tyto poté vydražím.\n{end_of_verse}\n\n{chorus}",
     "start_melody": "Unknown Start Melody"
   }
 ]
