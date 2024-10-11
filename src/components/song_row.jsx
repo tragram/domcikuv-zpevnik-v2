@@ -24,9 +24,33 @@ function VocalRangeIndicator({ song, maxRange }) {
     );
 }
 
-function SongRow({ song, setSelectedSong, maxRange}) {
+function SongRow({ song, setSelectedSong, maxRange }) {
+    function decideWhatToShow(song) {
+        function getLyricsLength(chordPro) {
+            // Step 1: Remove ChordPro directives (e.g., {title}, {start_of_chorus}, etc.)
+            let lyricsOnly = chordPro.replace(/\{.*?\}/g, "");
+
+            // Step 2: Remove chords (e.g., [C], [Am], etc.)
+            lyricsOnly = lyricsOnly.replace(/\[.*?\]/g, "");
+
+            // Step 3: Remove extra whitespace (e.g., multiple spaces, newlines)
+            lyricsOnly = lyricsOnly.replace(/\s+/g, " ").trim();
+
+            // Step 4: Return the length of the lyrics (number of characters)
+            return lyricsOnly.length;
+        }
+
+        if (getLyricsLength(song.content) < 100) {
+            window.open(import.meta.env.BASE_URL + "/pdfs/"+JSON.parse(song.pdf_filenames.replace(/'/g, '"')).slice(-1),"_blank")
+        } else {
+            setSelectedSong(song)
+        }
+
+
+    }
+
     return (
-        <div className="table-row h-12 song-row" onClick={() => { setSelectedSong(song) }}>
+        <div className="table-row h-12 song-row" onClick={() => { decideWhatToShow(song) }}>
             <div className="table-cell rounded-l-full flex content-center justify-center pr-3 bg-gray-100 relative pl-5 w-16">
                 <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                     <Instagram size={24} />
