@@ -4,12 +4,12 @@
     "artist": "Bob Dylan",
     "key": "G",
     "language": "english",
-    "date_added": "Unknown Date",
+    "date_added": "07-2015",
     "capo": "0",
     "tempo": "Unknown Tempo",
     "range": "e1-c2",
     "file": "Bob_Dylan-Knocking_On_Heavens_Door.pro",
-    "content": "{title: Knocking On Heaven's Door}\n{artist: Bob Dylan}\n{subtitle: }\n{zoom-ipad: 2.992135}\n{language: english}\n{capo: 0}\n{range: e1-c2}\n{key: G}\n\n{start_of_verse}\n[G]Mama take this [D]badge off of [Am7]me\n[G]I can't [D]use it any[C]more\n[G]It's getting [D]dark, too dark to [Am7]see\n[G]I feel I'm [D]knockin' on heaven's [C]door\n{end_of_verse}\n\n{start_of_chorus}\n[G]Knock, knock, [D]knockin' on heaven's [Am7]door\n[G]Knock, knock, [D]knockin' on heaven's [C]door\n[G]Knock, knock, [D]knockin' on heaven's [Am7]door\n[G]Knock, knock, [D]knockin' on heaven's [C]door\n{end_of_chorus}\n\n{start_of_verse}\n[G]Mama put my [D]guns in the [Am7]ground\n[G]I can't [D]shoot them any[C]more\n[G]That long black [D]cloud is coming [Am7]down\n[G]I feel I'm [D]knockin' on heaven's [C]door\n{end_of_verse}\n\n{chorus}",
+    "content": "{title: Knocking On Heaven's Door}\n{artist: Bob Dylan}\n{subtitle: }\n{language: english}\n{date_added: 07-2015}\n{capo: 0}\n{range: e1-c2}\n{key: G}\n\n{start_of_verse}\n[G]Mama take this [D]badge off of [Am7]me\n[G]I can't [D]use it any[C]more\n[G]It's getting [D]dark, too dark to [Am7]see\n[G]I feel I'm [D]knockin' on heaven's [C]door\n{end_of_verse}\n\n{start_of_chorus}\n[G]Knock, knock, [D]knockin' on heaven's [Am7]door\n[G]Knock, knock, [D]knockin' on heaven's [C]door\n[G]Knock, knock, [D]knockin' on heaven's [Am7]door\n[G]Knock, knock, [D]knockin' on heaven's [C]door\n{end_of_chorus}\n\n{start_of_verse}\n[G]Mama put my [D]guns in the [Am7]ground\n[G]I can't [D]shoot them any[C]more\n[G]That long black [D]cloud is coming [Am7]down\n[G]I feel I'm [D]knockin' on heaven's [C]door\n{end_of_verse}\n\n{chorus}",
     "start_melody": "Unknown Start Melody"
   },
   {
