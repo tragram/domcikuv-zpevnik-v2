@@ -244,20 +244,6 @@ const SongsList = () => {
                              </>
                         ))}
                     </div>
-                    {/* <table className="table-lg border-spacing-x-6 border-spacing-y-2 border-separate">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th className='text-left'>Song</th>
-                                <th>Date added</th>
-                                <th>Language</th>
-                                <th>Capo</th>
-                                <th>Vocal</th>
-                            </tr>
-                        </thead>
-                        <tbody className='even:primary'>
-                        </tbody>
-                    </table> */}
                 </div>
             </div >
         </div >

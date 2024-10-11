@@ -3,9 +3,11 @@
 {subtitle: }
 {language: english}
 {date_added: 07-2015}
+{pdf_filename: bob_dylan_knocking_on_heavens_door.pdf}
 {capo: 0}
 {range: e1-c2}
 {key: G}
+{start_melody: }
 
 {start_of_verse}
 [G]Mama take this [D]badge off of [Am7]me

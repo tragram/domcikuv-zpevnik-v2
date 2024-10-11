@@ -70,6 +70,9 @@ def generate_missing_prompts(model="gpt-4o-mini"):
             continue
         song_str = load_chordpro_file(song)
         lyrics = remove_chordpro_directives(song_str)
+        if len(lyrics)<100:
+            print(song.stem,"- lyrics too short --> skipping")
+            continue
         response = summarize_lyrics(lyrics)
         save_response(response, song.stem)
         # break
