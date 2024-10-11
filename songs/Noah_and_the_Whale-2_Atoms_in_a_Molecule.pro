@@ -4,7 +4,10 @@
 {key: D}
 {title: 2 Atoms in a Molecule}
 {artist: Noah and the Whale}
-{range: }
+{range: c#1-a1}
+{key: D}
+{tempo: }
+{start_melody: d a}
 
 {start_of_tab}
 e|--------------------------------------|

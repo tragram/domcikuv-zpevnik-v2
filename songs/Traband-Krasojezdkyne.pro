@@ -4,7 +4,8 @@
 {language: czech}
 {date_added: 09-2024}
 {tempo: 110}
-{range: }
+{range: h1-d2}
+{start_melody: c# f# g# a g# f#}
 
 {start_of_verse}
 [F#m]Přijel jsem [D]na chvíli [E]pozdravit [C#7]přátele,
@@ -23,7 +24,7 @@
 [F#m]Krasojezdky[D]ně, sestro [E]akroba[C#7]tů,
 [F#m]Lotova [D]dcero [E]oděná [C#7]do šarlatu,
 [F#m]kdo smí se [D]dotknout lemu [E]od tvých ša[C#7]tů?
-[F#m]Jsem na ces[C#7]tě a toužím po návra[F#m]tu.
+[F#m]Jsem na cestě a toužím [C#7]po návra[F#m]tu.
 {end_of_chorus}
 
 {start_of_verse}
@@ -33,16 +34,6 @@
 [F#m]hledám tě [C#7]v Babylóně, a ty jsi v Paří[F#m]ži.
 {end_of_verse}
 
-{start_of_chorus}
-[F#m]Krasojezdky[D]ně, sestro [E]akroba[C#7]tů,
-[F#m]Lotova [D]dcero [E]oděná [C#7]do šarlatu,
-[F#m]kdo smí se [D]dotknout lemu [E]od tvých ša[C#7]tů?
-[F#m]Jsem na ces[C#7]tě a toužím po návra[F#m]tu.
-{end_of_chorus}
+{chorus}
 
-{start_of_chorus}
-[F#m]Krasojezdky[D]ně, sestro [E]akroba[C#7]tů,
-[F#m]Lotova [D]dcero [E]oděná [C#7]do šarlatu,
-[F#m]kdo smí se [D]dotknout lemu [E]od tvých ša[C#7]tů?
-[F#m]Jsem na ces[C#7]tě a toužím po návra[F#m]tu.
-{end_of_chorus}
+{chorus}

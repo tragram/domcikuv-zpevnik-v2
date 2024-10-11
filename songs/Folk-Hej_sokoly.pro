@@ -3,7 +3,8 @@
 {language: polish}
 {date_added: 09-2024}
 {capo: 0}
-{range: }
+{range: e1-a2}
+{start_melody: a c a c e}
 
 [Verse 1]
 [Am]Hej, tamgdzieś znad czarnej wody

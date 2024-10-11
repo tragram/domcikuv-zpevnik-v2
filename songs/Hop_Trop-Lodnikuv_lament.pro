@@ -4,74 +4,57 @@
 {tempo: 120}
 {language: czech}
 {date_added: 09-2024}
-{range: }
+{range: d1-c1}
+{start_melody:  e g h}
 
 {start_of_verse}
-[Em]Já snad [G]hned, když jsem se[D]narodil, na [G]bludnej[D]kámen [G]šláp',
-a do školy moc n[D]echodil, i t[Em]ak je [D]ze mě ch[Em]lap,
-velký d[G]usno, který n[D]ad hlavou mi d[G]oma v[D]isel[G]o,
-drsnýmu chlapu n[D]esvědčí, já ť[Em]uk' si [D]na če[Em]lo.[D][G][D][G][C][G]
+[Em]Já snad [G]hned, když jsem se [D]narodil, na [G]bludnej [D]kámen [G]šláp',
+a [G]do školy moc [D]nechodil, i [Em]tak je [D]ze mě [Em]chlap,
+velký [G]dusno, který [D]nad hlavou mi [G]doma [D]vise[G]lo,
+drsnýmu chlapu [D]nesvědčí, já [Em]ťuk' si [D]na če[Em]lo.
 {end_of_verse}
 
 {start_of_chorus}
-Mám[G]a mě doma držela a t[D]áta na mě dřel,
-já moh' jsem jít hned študovat, kdyb[G]ych [D]jen trochu [G]chtěl,
-voženit se, vzít si ňákou tr[D]ajdu copatou
-a za její lásku platit c[G]elou [D]vejplat[G]ou, [D]hó h[Em]ou.
+[Em],[D],[G],[D],[G],[C],[G]
+
+Má[G]ma mě doma držela a [D]táta na mě dřel,
+já moh' jsem jít hned študovat, kdy[G]bych jen [D]trochu [G]chtěl,
+voženit se, vzít si ňákou [D]trajdu copatou
+a za její lásku platit [G]celou vej[D]pla[G]tou, [D]hó [Em]hou.
 {end_of_chorus}
 
 {start_of_verse}
-P[Em]otom do [G]knajpy jsem zaše[D]l a tam us[G]lyšel t[D]en žvás[G]t,
-že na lodích[D]je veselo a[Em]fasuj[D]ou tam c[Em]hlast,
-a tak h[G]onem jsem se [D]nalodil na sta[G]rej vr[D]atkej[G]křáp,
-kde kapitán byl [D]kořala a řval[Em]na nás[D]jak [Em]drá[D]b.[G][D][G][C][G]
+[Em]Potom [G]do knajpy [D]jsem zašel a tam [G]uslyšel [D]ten [G]žvást,
+že na lodích [D]je veselo a [Em]fasuj[D]ou tam [Em]chlast,
+a tak [G]honem jsem se [D]nalodil na sta[G]rej v[D]ratkej [G]křáp,
+kde kapitán byl [D]kořala a řval [Em]na nás [D]jak [Em]dráb.
 {end_of_verse}
 
-{start_of_chorus}
-Mám[G]a mě doma držela a t[D]áta na mě dřel,
-já moh' jsem jít hned študovat, kdyb[G]ych [D]jen trochu [G]chtěl,
-voženit se, vzít si ňákou tr[D]ajdu copatou
-a za její lásku platit c[G]elou [D]vejplat[G]ou, [D]hó h[Em]ou.
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
-V[Em]lny s ko[G]cábkou si házely[D]a každej [G]dostal [D]strach[G]
-a my lodníci[D]se vsázeli,[Em]kdo p[D]řežije t[Em]en krach,
-všechny[G]krysy z lodi[D]zmizely a v d[G]álce [D]majá[G]k zhas'
-a první byl hned[D]kapitán, kdo[Em]měl ko[D]rkove[Em]j pá[D]s.[G][D][G][C][G]
+[Em]Vlny s [G]kocábkou si [D]házely a každej [G]dostal [D]strach,
+a my lodníci se [D]vsázeli, [Em]kdo p[D]řežije ten [Em]krach,
+všechny [G]krysy z lodi [D]zmizely a v [G]dálce [D]maják [G]zhas',
+a první byl hned [D]kapitán, kdo [Em]měl ko[D]rkovej [Em]pás.
 {end_of_verse}
 
-{start_of_chorus}
-Mám[G]a mě doma držela a t[D]áta na mě dřel,
-já moh' jsem jít hned študovat, kdyb[G]ych [D]jen trochu [G]chtěl,
-voženit se, vzít si ňákou tr[D]ajdu copatou
-a za její lásku platit c[G]elou [D]vejplat[G]ou, [D]hó h[Em]ou.
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
-K[Em]olem zub[G]ama už [D]cvakali žr[G]aloci h[D]ladoví,[G]
-moc n[D]ikomu se nec[Em]htělo [D]do vody [Em]ledový,
-k ránu [G]bouře trochu [D]ustala, já moř[G]skou [D]nemo[G]c měl,
-všem, co můžou chodi[D]t po zemi, js[Em]em toli[D]k záv[Em]idě[D]l.[G][D][G][C][G]
+[Em]Kolem [G]zubama už [D]cvakali žra[G]loci [D]hlado[G]ví,
+moc [G]nikomu se [D]nechtělo do [Em]vody [D]ledo[Em]vý,
+k ránu [G]bouře trochu [D]ustala, já [G]mořskou [D]nemoc [G]měl,
+všem, co [G]můžou [D]chodit po zemi, [Em]jsem tol[D]ik zá[Em]viděl.
 {end_of_verse}
 
-{start_of_chorus}
-Mám[G]a mě doma držela a t[D]áta na mě dřel,
-já moh' jsem jít hned študovat, kdyb[G]ych [D]jen trochu [G]chtěl,
-voženit se, vzít si ňákou tr[D]ajdu copatou
-a za její lásku platit c[G]elou [D]vejplat[G]ou, [D]hó h[Em]ou.
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
-J[Em]ako zázr[G]akem jsme [D]dojeli, by[G]l každý[D]živ a [G]zdráv
-a všichni by[D]li veselí, j[Em]en já [D]jsem ruk[Em]ou máv',
-na loď [G]nikdy víc už [D]nevlezu, to ne[G]smí n[D]ikdo[G]chtít,
-teď lituju a vzpomí[D]nám, jak jen [Em]jsem se[D]moh'[Em]mí[D]t.[G][D][G][C][G]
+[Em]Jako [G]zázrakem jsme [D]dojeli, byl [G]každý [D]živ a [G]zdráv,
+a všichni byli [D]veselí, jen já [Em]jsem [D]rukou [Em]máv',
+na loď [G]nikdy víc už [D]nevlezu, to [G]nesmí [D]nikdo [G]chtít,
+teď lituju a [D]vzpomínám, jak jen [Em]jsem [D]moh' [Em]mít.
 {end_of_verse}
 
-{start_of_chorus}
-Mám[G]a mě doma držela a t[D]áta na mě dřel,
-já moh' jsem jít hned študovat, kdyb[G]ych [D]jen trochu [G]chtěl,
-voženit se, vzít si ňákou tr[D]ajdu copatou
-a za její lásku platit c[G]elou [D]vejplat[G]ou, [D]hó h[Em]ou.
-{end_of_chorus}
+{chorus}

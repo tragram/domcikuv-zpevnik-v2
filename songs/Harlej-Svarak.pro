@@ -3,7 +3,8 @@
 {language: czech}
 {date_added: 09-2024}
 {capo: 0}
-{range: }
+{range: e1-e2}
+{start_melody: h h §h c d}
 
 {start_of_verse}
 [G]Když jsem sám doma, [Ami]poslouchám Vávra,

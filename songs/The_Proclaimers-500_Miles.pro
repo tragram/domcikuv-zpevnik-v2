@@ -3,9 +3,10 @@
 {tempo: 132}
 {capo: 0}
 {language: english}
-{time:}
 {key: D}
-{range: }
+{range: d1-g2}
+{start_melody: f# g a h}
+
 
 {start_of_verse}
 When I [D]wake up, yeah, I [D]know I'm gonna be,
