@@ -4,7 +4,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import ChordSheetJS from 'chordsheetjs';
 import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough, Repeat } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText } from 'lucide-react';
 
 const chromaticScale = {
     "c": 0,
@@ -103,6 +103,7 @@ function Song({ selectedSong }) {
     const [songRenderKey, setSongRenderKey] = useState('');
     const [chordsHidden, setChordsHidden] = useState(false);
     const [repeatChorus, setRepeatChorus] = useState(true);
+    const [repeatVerseChords, setRepeatVerseChords] = useState(true);
     const [fontSize, setFontSize] = useState(2);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
@@ -159,7 +160,7 @@ function Song({ selectedSong }) {
                         </ModalHeader>
                         <ModalBody>
                             <TransposeButtons selectedSong={selectedSong} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
-                            <div className={`${chordsHidden ? 'chords-hidden' : ''}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
+                            <div className={`${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
                         </ModalBody>
                         <ModalFooter className="flex flex-col">
                             <ButtonGroup>
@@ -167,6 +168,7 @@ function Song({ selectedSong }) {
                                 <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
                                 <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
                                 <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
+                                <Button color="primary" isIconOnly onClick={() => {setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
 
                             </ButtonGroup>
                         </ModalFooter>

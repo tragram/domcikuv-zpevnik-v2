@@ -73,3 +73,8 @@
 .chords-hidden .chord{
   display: none;
 }
+/* .repeat-verse-chords-hidden .verse .chord{ */
+.repeat-verse-chords-hidden .verse:not(:first-child) .chord{
+  display: none;
+}
+/* .repeat-verse-chords-hidden :not(:first-child). */
