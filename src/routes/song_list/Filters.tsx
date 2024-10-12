@@ -19,7 +19,6 @@ function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, icon
 
         return String.fromCodePoint(firstCodePoint).toUpperCase() + str.slice(index);
     }
-    console.log(Object.keys(languages))
     let language_choices = Object.keys(languages).map((language) => ({ text: capitalizeFirstLetter(language), value: language }));
 
     return (

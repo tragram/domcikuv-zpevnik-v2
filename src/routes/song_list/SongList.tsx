@@ -9,7 +9,6 @@ import Filtering from './Filters';
 import Sorting from './Sorting';
 import { SlidersHorizontal } from 'lucide-react';
 import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
-import SongDB from '../../components/song_loader'
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
     const songs = songDB.songs;

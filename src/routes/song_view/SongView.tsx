@@ -5,6 +5,7 @@ import ChordSheetJS from 'chordsheetjs';
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText } from 'lucide-react';
+import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
 
 const chromaticScale = {
     "c": 0,
@@ -75,7 +76,7 @@ function replaceChorusDirective(song, repeatChorus) {
     return processedLines.join("\n");
 }
 
-function TransposeButtons({ selectedSong, songRenderKey, setSongRenderKey }) {
+function TransposeButtons({ songData, songRenderKey, setSongRenderKey }) {
     function getKeyIndex(key) {
         return renderKeys.map(x => x.toLowerCase()).indexOf(key.toLowerCase());
     }
@@ -98,7 +99,29 @@ function TransposeButtons({ selectedSong, songRenderKey, setSongRenderKey }) {
     </>)
 }
 
+
 function SongView({ }) {
+    const songData = useLoaderData() as SongData;
+    const songContent = songData.content;
+    if (songData.lyricsLength() < 50) {
+        return (
+            <div >
+                <iframe src={songData.pdfFilenames.slice(-1)} className='w-screen h-screen'/>
+            </div>
+        );
+    };
+    // useEffect(() => {
+    //     console.log(songData.content, songData.lyricsLength())
+    //     // if (!songContent) {
+    //     //     fetch(import.meta.env.BASE_URL + "/songs/chordpro/" + songData.chordproFile)
+    //     //         .then(response => response.json())
+    //     //         // 4. Setting *dogImage* to the image url that we received from the response above
+    //     //         .then(data => setSongContent(data));
+    //     // } else {
+    //     //     setSongContent(songContent);
+    //     // }
+    // }, [])
+
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
     const [chordsHidden, setChordsHidden] = useState(false);
@@ -107,49 +130,29 @@ function SongView({ }) {
     const [fontSize, setFontSize] = useState(2);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [scrollBehavior, setScrollBehavior] = React.useState("inside");
 
-
-    // const formatter = new ChordSheetJS.HtmlTableFormatter();
-
-    // function renderSong(key) {
-    //     let song = replaceChorusDirective(selectedSong.content, repeatChorus);
-    //     song = parser.parse(song);
-    //     let difference = chromaticScale[key.toLowerCase()] - chromaticScale[selectedSong.key.toLowerCase()] + 1 * song.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
-    //     song = song.transpose(difference)
-    //     const renderedSong = formatter.format(song);
-    //     setParsedContent(renderedSong);
-    // }
+    function renderSong(key) {
+        let song = replaceChorusDirective(songData.content, repeatChorus);
+        song = parser.parse(song);
+        let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()] + 1 * song.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
+        song = song.transpose(difference)
+        const renderedSong = formatter.format(song);
+        setParsedContent(renderedSong);
+    }
 
     // useEffect(() => {
-    //     if (!selectedSong) {
-    //         return;
-    //     }
+    //     // if (!song) {
+    //     //     return;
+    //     // }
     //     renderSong(songRenderKey);
-    // }, [songRenderKey, repeatChorus]);
-
-    // useEffect(() => {
-    //     if (!selectedSong) {
-    //         return;
-    //     }
-    //     if (!selectedSong.key) {
-    //         // song.key = "F";
-    //         console.log("Song key missing! Setting it to 'F' to avoid crashing but this should be sanitized earlier on...")
-    //         setSongRenderKey("F");
-    //     } else { setSongRenderKey(selectedSong.key); }
-    //     onOpen();
-    // }, [selectedSong]);
-
+    // }, [songContent, songRenderKey, repeatChorus]);
 
     const fullScreen = useMediaQuery(
         "only screen and (max-width : 600px)"
     );
     const fontSizeStep = 0.2;
     return (<>
-        <h1>Ahoj!</h1>
-
-        {/* <TransposeButtons selectedSong={selectedSong} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
+        <TransposeButtons songData={songData} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
         <div className={`${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
         <ButtonGroup>
             <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
@@ -158,7 +161,7 @@ function SongView({ }) {
             <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
             <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
 
-        </ButtonGroup> */}
+        </ButtonGroup>
 
         {/* <Modal disableAnimation
             isOpen={isOpen}
@@ -169,10 +172,10 @@ function SongView({ }) {
                 {(onClose) => (
                     <>
                         <ModalHeader className="flex flex-col gap-1">
-                            {selectedSong && selectedSong.artist}: {selectedSong && selectedSong.title}
+                            {songData && songData.artist}: {songData && songData.title}
                         </ModalHeader>
                         <ModalBody>
-                            <TransposeButtons selectedSong={selectedSong} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
+                            <TransposeButtons songData={songData} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
                             <div className={`${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
                         </ModalBody>
                         <ModalFooter className="flex flex-col">

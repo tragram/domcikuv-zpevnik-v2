@@ -23,7 +23,9 @@ const router = createHashRouter([
   {
     // path: "/song",
     path: "/song/:artist/:title",
-    element: <SongView />
+    element: <SongView />,
+    errorElement: <ErrorPage />,
+    loader: fetchSongContent
   }
 ]);
 
