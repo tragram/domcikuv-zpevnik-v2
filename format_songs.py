@@ -78,7 +78,7 @@ def format_chordpro_files(directory):
 
 
 # Directory containing the song files
-songs_directory = "songs"
+songs_directory = "songs/chordpro"
 
 # Call the function to rename the ChordPro files
 format_chordpro_files(songs_directory)

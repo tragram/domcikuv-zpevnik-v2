@@ -65,25 +65,24 @@ class SongData {
     range: SongRange;
     chordproFile: string;
     pdfFilenames: Array<string>;
-    content: string;
 
     constructor(song: Object) {
-        function guessKey(song: Object): SongKey {
-            //TODO: this will fail with keys other than simple C-major chords 
-            // remove chordpro directives
-            let lyricsOnly = song.content.replace(/\{.*?\}/g, "")
-            // regex to match the first chord
-            const chordRegex = /\[([^\]]+)\]/;
-            const match = lyricsOnly.match(chordRegex);
-            // console.log(match)
-            // if (!match) {
-            //     console.log("Song", song.artist, "-", song.title, "doesn't have key specified and no chords were found!")
-            // }
-            return match ? match[1] : "C";
-        }
+        // function guessKey(song: Object): SongKey {
+        //     //TODO: this will fail with keys other than simple C-major chords 
+        //     // remove chordpro directives
+        //     let lyricsOnly = song.content.replace(/\{.*?\}/g, "")
+        //     // regex to match the first chord
+        //     const chordRegex = /\[([^\]]+)\]/;
+        //     const match = lyricsOnly.match(chordRegex);
+        //     // console.log(match)
+        //     // if (!match) {
+        //     //     console.log("Song", song.artist, "-", song.title, "doesn't have key specified and no chords were found!")
+        //     // }
+        //     return match ? match[1] : "C";
+        // }
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.key = song.key || guessKey(song);
+        this.key = song.key || null;
         this.dateAdded = {
             year: parseInt(song.date_added.split("-")[1]),
             month: parseInt(song.date_added.split("-")[0])
@@ -94,12 +93,11 @@ class SongData {
         this.capo = parseInt(song.capo) || 0;
         this.range = new SongRange(song.range);
         if (song.pdfFilenames) {
-            this.pdfFilenames = JSON.parse(song.pdf_filenames.replace(/'/g, '"')).map(f => import.meta.env.BASE_URL + "/pdfs/" + f);
+            this.pdfFilenames = JSON.parse(song.pdf_filenames.replace(/'/g, '"')).map(f => import.meta.env.BASE_URL + "songs/pdfs/" + f);
         } else {
             this.pdfFilenames = [];
         }
-        this.chordproFile = song.file;
-        this.content = song.content;
+        this.chordproFile = song.chordpro_file;
     }
 
     lyricsLength() {
@@ -126,11 +124,11 @@ interface LanguageCount {
 
 
 async function fetchSongs(): Promise<SongDB> {
-    const response = await fetch(import.meta.env.BASE_URL + '/songs.json');
+    const response = await fetch(import.meta.env.BASE_URL + '/songDB.json');
+    console.log(response)
     if (!response.ok) {
         throw new Error('Failed to fetch songs');
     }
-    console.log("fetching songs!")
     try {
         const data = await response.json();
         const songs = data.map(d => new SongData(d));

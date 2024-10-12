@@ -61,7 +61,7 @@ def remove_chordpro_directives(content):
 
 
 def generate_missing_prompts(model="gpt-4o-mini"):
-    songs = Path("songs/").glob("*.pro")
+    songs = Path("songs/chodpro/").glob("*.pro")
     generated_prompts = [p.stem for p in Path("songs/image_prompts").glob("*.yaml")]
 
     for song in songs:
@@ -91,7 +91,7 @@ def generate_missing_images(model="black-forest-labs/FLUX.1-dev"):
         token=secrets["hugging_face_token"],
     )
     for song_prompt in Path("songs/image_prompts").glob("*.yaml"):
-        image_folder = Path(f"public/song_images/{song_prompt.stem}")
+        image_folder = Path(f"songs/illustrations/{song_prompt.stem}")
         image_folder.mkdir(parents=True, exist_ok=True)
         image_filename = image_folder / model2filename(model)
         if image_filename.is_file():

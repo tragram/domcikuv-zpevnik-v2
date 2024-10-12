@@ -44,7 +44,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
             <div className="table-cell rounded-l-full flex content-center justify-center pr-3 bg-gray-100 relative pl-5 w-16">
                 <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                     <Instagram size={24} />
-                } showFallback size="lg" src={import.meta.env.BASE_URL + "/song_images/" + song.chordproFile.split('.')[0] + "/FLUX.1-dev.jpg"} />
+                } showFallback size="lg" src={import.meta.env.BASE_URL + "/songs/illustrations/" + song.chordproFile.split('.')[0] + "/FLUX.1-dev.jpg"} />
             </div>
             <div className="table-cell flex content-center justify-center bg-gray-100 ">
                 <div className="text-left">
