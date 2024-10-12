@@ -74,9 +74,9 @@ Da Da Da [D5]Da Da Da Da [D5]Da Da Da Da-[G5]Da-Da-La Da-Da-La [A]Da-Da-La La [D
 Da Da Da [D5]Da Da Da Da [D5]Da Da Da Da-[G5]Da-Da-La Da-Da-La [A]Da-Da-La La [D5]La
 {end_of_bridge}
 
-{boc}
+{start_of_chorus}
 But [D5]I would walk five [D5]hund-red miles, and
 [G5]I would walk five [A]hundred-red more,
 Just to [D5]be the man who walked a thousand [G5]miles to
-fall down [D]at [A]your [D]door____[D]
+fall down [D]at [A]your [D]door[D]
 {end_of_chorus}

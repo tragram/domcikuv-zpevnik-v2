@@ -18,7 +18,7 @@ A|-------------------2------2-0---0h2---|
 E|--------------------------------------|
 {end_of_tab}
 
-{verse}
+{start_of_verse}
 Last [D]night I had a [Em]dream
 We were in[G]separably en[A]twined
 Like a piece of rope made out of
@@ -27,7 +27,9 @@ Held together holding each other
 With no one else in mind
 Like two atoms in a molecule
 Inseparably combined
+{end_of_verse}
 
+{start_of_verse}
 But then I woke from the dream
 To realise I was alone
 A tragic event I must admit
@@ -36,8 +38,9 @@ I'm not trying to write a love song
 Just a sad pathetic moan
 And maybe I just need change
 Maybe I just need a new cologne
+{end_of_verse}
 
-{chorus}
+{start_of_verse}
 But now I look at love
 Like being stabbed in the heart
 You torture each other from day to day
@@ -46,3 +49,4 @@ Most of the time it's misery
 But there's some joy at the start
 And for that I'd say it's worth it
 Just use a blade that's short and sharp on me
+{end_of_verse}

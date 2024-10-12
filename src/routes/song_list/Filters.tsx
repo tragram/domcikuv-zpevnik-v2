@@ -6,7 +6,7 @@ import React from 'react';
 import { ButtonGroup } from '@nextui-org/react';
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { Slider } from "@nextui-org/react";
-import LanguageFlag from './language_flag';
+import LanguageFlag from './LanguageFlag';
 //TODO: icon for language in searchbar and possibly avatars https://nextui.org/docs/components/select
 //TODO: why do buttons change size when they are selected/variant changed to 'solid'?
 
@@ -19,7 +19,8 @@ function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, icon
 
         return String.fromCodePoint(firstCodePoint).toUpperCase() + str.slice(index);
     }
-    let language_choices = languages.map((language) => ({ text: capitalizeFirstLetter(language), value: language }))
+    console.log(Object.keys(languages))
+    let language_choices = Object.keys(languages).map((language) => ({ text: capitalizeFirstLetter(language), value: language }));
 
     return (
         <Dropdown >

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup } from "@nextui-org/react";
 import ChordSheetJS from 'chordsheetjs';
-import SongRange from "./songs_list"
+// import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText } from 'lucide-react';
 
@@ -98,7 +98,7 @@ function TransposeButtons({ selectedSong, songRenderKey, setSongRenderKey }) {
     </>)
 }
 
-function Song({ selectedSong }) {
+function SongView({ }) {
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
     const [chordsHidden, setChordsHidden] = useState(false);
@@ -113,41 +113,54 @@ function Song({ selectedSong }) {
 
     // const formatter = new ChordSheetJS.HtmlTableFormatter();
 
-    function renderSong(key) {
-        let song = replaceChorusDirective(selectedSong.content, repeatChorus);
-        song = parser.parse(song);
-        let difference = chromaticScale[key.toLowerCase()] - chromaticScale[selectedSong.key.toLowerCase()] + 1 * song.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
-        song = song.transpose(difference)
-        const renderedSong = formatter.format(song);
-        setParsedContent(renderedSong);
-    }
+    // function renderSong(key) {
+    //     let song = replaceChorusDirective(selectedSong.content, repeatChorus);
+    //     song = parser.parse(song);
+    //     let difference = chromaticScale[key.toLowerCase()] - chromaticScale[selectedSong.key.toLowerCase()] + 1 * song.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
+    //     song = song.transpose(difference)
+    //     const renderedSong = formatter.format(song);
+    //     setParsedContent(renderedSong);
+    // }
 
-    useEffect(() => {
-        if (!selectedSong) {
-            return;
-        }
-        renderSong(songRenderKey);
-    }, [songRenderKey, repeatChorus]);
+    // useEffect(() => {
+    //     if (!selectedSong) {
+    //         return;
+    //     }
+    //     renderSong(songRenderKey);
+    // }, [songRenderKey, repeatChorus]);
 
-    useEffect(() => {
-        if (!selectedSong) {
-            return;
-        }
-        if (!selectedSong.key) {
-            // song.key = "F";
-            console.log("Song key missing! Setting it to 'F' to avoid crashing but this should be sanitized earlier on...")
-            setSongRenderKey("F");
-        } else { setSongRenderKey(selectedSong.key); }
-        onOpen();
-    }, [selectedSong]);
+    // useEffect(() => {
+    //     if (!selectedSong) {
+    //         return;
+    //     }
+    //     if (!selectedSong.key) {
+    //         // song.key = "F";
+    //         console.log("Song key missing! Setting it to 'F' to avoid crashing but this should be sanitized earlier on...")
+    //         setSongRenderKey("F");
+    //     } else { setSongRenderKey(selectedSong.key); }
+    //     onOpen();
+    // }, [selectedSong]);
 
 
     const fullScreen = useMediaQuery(
         "only screen and (max-width : 600px)"
     );
     const fontSizeStep = 0.2;
-    return (
-        <Modal disableAnimation
+    return (<>
+        <h1>Ahoj!</h1>
+
+        {/* <TransposeButtons selectedSong={selectedSong} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
+        <div className={`${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
+        <ButtonGroup>
+            <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
+            <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
+            <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
+            <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
+            <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
+
+        </ButtonGroup> */}
+
+        {/* <Modal disableAnimation
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             scrollBehavior={scrollBehavior}
@@ -168,15 +181,16 @@ function Song({ selectedSong }) {
                                 <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
                                 <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
                                 <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
-                                <Button color="primary" isIconOnly onClick={() => {setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
+                                <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
 
                             </ButtonGroup>
                         </ModalFooter>
                     </>
                 )}
             </ModalContent>
-        </Modal>
+        </Modal> */}
+    </>
     );
 };
 
-export default Song;
+export default SongView;

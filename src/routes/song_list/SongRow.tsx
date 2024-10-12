@@ -1,9 +1,10 @@
 import { Avatar, CircularProgress, Image } from "@nextui-org/react";
 import { Instagram } from "lucide-react";
-import LanguageFlag from "./language_flag";
+import LanguageFlag from "./LanguageFlag";
+import SongData from "../../components/song_loader"
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 function progressColor(range) {
-    if (range == "?") {
+    if (!range) {
         return "default";
     }
     if (range < 12) {
@@ -20,41 +21,30 @@ function VocalRangeIndicator({ song, maxRange }) {
     let songRangeSemitones = song.range.semitones;
     // console.log(song.title, songRangeSemitones,maxRange)
     return (
-        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={songRangeSemitones != "?"} size="md" strokeWidth={3} value={songRangeSemitones != "?" ? songRangeSemitones : maxRange} />
+        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={songRangeSemitones} size="md" strokeWidth={3} value={songRangeSemitones ? songRangeSemitones : maxRange} />
     );
 }
 
-function SongRow({ song, setSelectedSong, maxRange }) {
+interface SongRowProps {
+    song: SongData;
+    setSelectedSong: any;
+    maxRange: number;
+}
+
+function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
     function decideWhatToShow(song) {
-        function getLyricsLength(chordPro) {
-            // Step 1: Remove ChordPro directives (e.g., {title}, {start_of_chorus}, etc.)
-            let lyricsOnly = chordPro.replace(/\{.*?\}/g, "");
-
-            // Step 2: Remove chords (e.g., [C], [Am], etc.)
-            lyricsOnly = lyricsOnly.replace(/\[.*?\]/g, "");
-
-            // Step 3: Remove extra whitespace (e.g., multiple spaces, newlines)
-            lyricsOnly = lyricsOnly.replace(/\s+/g, " ").trim();
-
-            // Step 4: Return the length of the lyrics (number of characters)
-            return lyricsOnly.length;
-        }
-
-        if (getLyricsLength(song.content) < 100) {
-            window.open(import.meta.env.BASE_URL + "/pdfs/"+JSON.parse(song.pdf_filenames.replace(/'/g, '"')).slice(-1),"_blank")
-        } else {
-            setSelectedSong(song)
-        }
-
-
+        // if (song.lyricsLength() < 100) {
+        //     window.open(import.meta.env.BASE_URL + "/pdfs/"+JSON.parse(song.pdf_filenames.replace(/'/g, '"')).slice(-1),"_blank")
+        // } else {
+        //     setSelectedSong(song)
+        // }
     }
-
     return (
-        <div className="table-row h-12 song-row" onClick={() => { decideWhatToShow(song) }}>
+        <div className="table-row h-12 song-row" onClick={() => { console.log(song); }}>
             <div className="table-cell rounded-l-full flex content-center justify-center pr-3 bg-gray-100 relative pl-5 w-16">
                 <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                     <Instagram size={24} />
-                } showFallback size="lg" src={import.meta.env.BASE_URL + "/song_images/" + song.file.split('.')[0] + "/FLUX.1-dev.jpg"} />
+                } showFallback size="lg" src={import.meta.env.BASE_URL + "/song_images/" + song.chordproFile.split('.')[0] + "/FLUX.1-dev.jpg"} />
             </div>
             <div className="table-cell flex content-center justify-center bg-gray-100 ">
                 <div className="text-left">
@@ -63,8 +53,8 @@ function SongRow({ song, setSelectedSong, maxRange }) {
                 </div>
             </div>
             <div className="table-cell flex content-center justify-center hidden sm:table-cell text-center bg-gray-100">
-                <h2 className="text-sm opacity-70">{song.date_added.split("-")[1]}</h2>
-                <h3 className="text-xs opacity-70">{month_names[parseInt(song.date_added.split("-")[0])]}</h3>
+                <h2 className="text-sm opacity-70">{song.dateAdded.year}</h2>
+                <h3 className="text-xs opacity-70">{month_names[song.dateAdded.month]}</h3>
             </div>
             <div className="content-center justify-center text-center hidden lg:table-cell bg-gray-100">
                 <div>{song.capo}</div>
