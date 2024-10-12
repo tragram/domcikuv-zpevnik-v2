@@ -11,7 +11,7 @@ import {
 import ErrorPage from './routes/404'
 import SongView from './routes/song_view/SongView'
 import { HashRouter } from "react-router-dom";
-import fetchSongs from './components/song_loader'
+import {fetchSongs,fetchSongContent} from './components/song_loader'
 const router = createHashRouter([
   {
     path: "/",

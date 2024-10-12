@@ -1,4 +1,6 @@
 import fs from 'fs';
+import makeHash from 'object-hash';
+
 const path = './songs/chordpro/';
 const files = fs.readdirSync(path).filter(file => (file.endsWith('.pro') || file.endsWith('.chordpro')));
 const metadata = files.map(chordpro_file => {
@@ -15,7 +17,10 @@ const metadata = files.map(chordpro_file => {
   const pdf_filenames = content.match(/{pdf_filenames:\s*(.+?)}/i)?.[1].trim() || "";
   return { title, artist, key, language, date_added, capo, tempo, range, start_melody, chordpro_file, pdf_filenames };
 });
+const hash = makeHash(metadata);
+console.log(hash);
 fs.mkdir('public', { recursive: true }, (err) => {
   if (err) throw err;
 });
 fs.writeFileSync('public/songDB.json', JSON.stringify(metadata, null, 2));
+fs.writeFileSync('public/songDB.hash', hash);

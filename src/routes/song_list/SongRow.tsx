@@ -1,7 +1,9 @@
 import { Avatar, CircularProgress, Image } from "@nextui-org/react";
 import { Instagram } from "lucide-react";
 import LanguageFlag from "./LanguageFlag";
-import SongData from "../../components/song_loader"
+import SongData from "../../components/song_loader";
+import { useNavigate } from "react-router-dom";
+
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 function progressColor(range) {
     if (!range) {
@@ -39,8 +41,14 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
         //     setSelectedSong(song)
         // }
     }
+    let navigate = useNavigate();
+    const routeChange = (song: SongData) => {
+        let path = `song/${song.artist}/${song.title}`;
+        navigate(path);
+    }
+
     return (
-        <div className="table-row h-12 song-row" onClick={() => { console.log(song); }}>
+        <div className="table-row h-12 song-row" onClick={() => { routeChange(song); }}>
             <div className="table-cell rounded-l-full flex content-center justify-center pr-3 bg-gray-100 relative pl-5 w-16">
                 <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                     <Instagram size={24} />

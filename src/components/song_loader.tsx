@@ -124,8 +124,21 @@ interface LanguageCount {
 
 
 async function fetchSongs(): Promise<SongDB> {
-    const response = await fetch(import.meta.env.BASE_URL + '/songDB.json');
-    console.log(response)
+    // check hash
+    let response = await fetch(import.meta.env.BASE_URL + '/songDB.hash');
+    if (!response.ok) {
+        throw new Error('Failed to fetch song hash');
+    }
+    const newHash = await response.text()
+    const savedHash = localStorage.getItem("songDB.hash");
+    console.log(savedHash, newHash, savedHash == newHash);
+    if (savedHash == newHash) {
+        return JSON.parse(localStorage.getItem("songDB"));
+    }
+
+
+
+    response = await fetch(import.meta.env.BASE_URL + '/songDB.json');
     if (!response.ok) {
         throw new Error('Failed to fetch songs');
     }
@@ -138,15 +151,23 @@ async function fetchSongs(): Promise<SongDB> {
         });
         // TODO: languages with less than e.g. 5 songs should be merged into "other"
         const songRanges = songs.map(s => s.range.semitones);
-        return {
+        const songDB = {
             maxRange: Math.max(...songRanges),
             languages: languages,
             songs: songs,
         }
+        localStorage.setItem("songDB", JSON.stringify(songDB));
+        localStorage.setItem("songDB.hash", newHash);
+        return songDB;
     } catch (error) {
         console.error('Error fetching songs:', error);
         throw error;
     }
 }
 
-export default fetchSongs;
+async function fetchSongContent(artist, title) {
+    // this is not the most efficient but the URLs will look great!
+    console.log(artist, title);
+}
+
+export { fetchSongs, fetchSongContent };
