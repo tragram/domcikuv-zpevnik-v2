@@ -11,7 +11,7 @@ def normalize_string(input_str):
     ascii_str = unidecode.unidecode(input_str)
     # delete any non-alphanumeric characters
     # Replace spaces with underscores
-    ascii_str = ascii_str.replace(" ", "_").replace("'","").replace("._","_")
+    ascii_str = ascii_str.replace(" ", "_").replace("'","").replace("._","_").replace("+","")
     return ascii_str
 
 # Function to rename PDF files in a directory
