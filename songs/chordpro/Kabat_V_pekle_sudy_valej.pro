@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_v_pekle_sudy_valej-sken.pdf', 'kabat_v_pekle_sudy_valej-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-e1}
+{start_melody: e}

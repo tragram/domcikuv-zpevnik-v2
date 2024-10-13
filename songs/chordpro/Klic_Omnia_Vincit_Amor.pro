@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['klic_omnia_vincit_amor-sken.pdf', 'klic_omnia_vincit_amor-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-d1}
+{start_melody: h}

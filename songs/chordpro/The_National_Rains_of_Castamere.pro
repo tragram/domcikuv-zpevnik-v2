@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['the_national_rains_of_castamere-sken.pdf', 'the_national_rains_of_castamere-comp.pdf', 'the_national_rains_of_castamere-gen.pdf']}
 {capo: 0}
-{key: }
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-f2}
+{start_melody: e a}

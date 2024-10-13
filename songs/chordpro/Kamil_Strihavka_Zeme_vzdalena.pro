@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kamil_strihavka_zeme_vzdalena-sken.pdf', 'kamil_strihavka_zeme_vzdalena-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-e2}
+{start_melody: e}

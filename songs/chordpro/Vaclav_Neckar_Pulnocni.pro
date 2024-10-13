@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['vaclav_neckar_pulnocni-sken.pdf', 'vaclav_neckar_pulnocni-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-a1}
+{start_melody: d}

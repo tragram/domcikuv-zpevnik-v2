@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['michal_david_nonstop-sken.pdf', 'michal_david_nonstop-comp.pdf', 'michal_david_nonstop-gen.pdf']}
 {capo: 0}
-{key: }
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-a1}
+{start_melody: e f#}

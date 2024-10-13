@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['nirvana_where_did_you_sleep_last_night-sken.pdf', 'nirvana_where_did_you_sleep_last_night-comp.pdf']}
 {capo: 0}
-{key: }
+{key: E}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-h1}
+{start_melody: g# f# e}

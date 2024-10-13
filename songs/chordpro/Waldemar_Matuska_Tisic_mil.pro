@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['waldemar_matuska_tisic_mil-sken.pdf', 'waldemar_matuska_tisic_mil-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-h1}
+{start_melody: d g h}

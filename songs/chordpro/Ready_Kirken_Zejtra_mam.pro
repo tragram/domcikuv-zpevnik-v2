@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['ready_kirken_zejtra_mam-sken.pdf', 'ready_kirken_zejtra_mam-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-g2}
+{start_melody: h d}

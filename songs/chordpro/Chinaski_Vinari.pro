@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['chinaski_vinari-sken.pdf', 'chinaski_vinari-comp.pdf', 'chinaski_vinari-gen.pdf']}
 {capo: 0}
-{key: }
+{key: A}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-d2}
+{start_melody: e}

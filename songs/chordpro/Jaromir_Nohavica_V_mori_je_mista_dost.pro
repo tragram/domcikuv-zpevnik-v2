@@ -3,8 +3,8 @@
 {date_added: 01-2017}
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_v_mori_je_mista_dost-sken.pdf', 'jaromir_nohavica_v_mori_je_mista_dost-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody: g}

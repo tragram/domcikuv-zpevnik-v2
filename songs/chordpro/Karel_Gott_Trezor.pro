@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['karel_gott_trezor-sken.pdf', 'karel_gott_trezor-comp.pdf']}
 {capo: 0}
-{key: }
+{key: A}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-c#2}
+{start_melody: a}

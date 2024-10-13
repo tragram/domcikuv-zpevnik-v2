@@ -1,10 +1,10 @@
 {title: Vlaštovko leť}
 {artist: Jaromír Nohavica}
-{date_added: 07-2015}
+{date_added: 10-2011}
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_vlastovko_let-sken.pdf', 'jaromir_nohavica_vlastovko_let-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-e2}
+{start_melody: c g1 c g2}

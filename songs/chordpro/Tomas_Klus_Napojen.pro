@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['tomas_klus_napojen-sken.pdf', 'tomas_klus_napojen-comp.pdf']}
 {capo: 0}
-{key: }
+{key: E}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-f#2}
+{start_melody: g# h}

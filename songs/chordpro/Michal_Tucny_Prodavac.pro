@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['michal_tucny_prodavac-sken.pdf', 'michal_tucny_prodavac-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-h1}
+{start_melody: g h d}

@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['nedvedi_skladanka-sken.pdf', 'nedvedi_skladanka-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 5}
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-a2}
+{start_melody: d}

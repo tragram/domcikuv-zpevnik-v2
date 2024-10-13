@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['vlasta_redl_vecer_krupavych_srdicek-sken.pdf', 'vlasta_redl_vecer_krupavych_srdicek-comp.pdf', 'vlasta_redl_vecer_krupavych_srdicek-gen.pdf']}
 {capo: 0}
-{key: }
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-d2}
+{start_melody: a}

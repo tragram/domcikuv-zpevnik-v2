@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['wohnout_svaz_ceskych_bohemu-sken.pdf', 'wohnout_svaz_ceskych_bohemu-comp.pdf', 'wohnout_svaz_ceskych_bohemu-gen.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
+{range: c1-c2}
 {start_melody: }

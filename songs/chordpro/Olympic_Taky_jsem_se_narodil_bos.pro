@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['olympic_taky_jsem_se_narodil_bos-sken.pdf', 'olympic_taky_jsem_se_narodil_bos-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-e2}
+{start_melody: h}

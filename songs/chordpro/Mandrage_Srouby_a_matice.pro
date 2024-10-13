@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['mandrage_srouby_a_matice-sken.pdf', 'mandrage_srouby_a_matice-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-d1}
+{start_melody: h}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['lucie_sen-sken.pdf', 'lucie_sen-comp.pdf']}
 {capo: 0}
-{key: }
+{key: E}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c#1-c#2}
+{start_melody: c# e g#}

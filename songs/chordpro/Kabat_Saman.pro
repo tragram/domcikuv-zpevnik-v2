@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_saman-sken.pdf', 'kabat_saman-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-a1}
+{start_melody: e d c}

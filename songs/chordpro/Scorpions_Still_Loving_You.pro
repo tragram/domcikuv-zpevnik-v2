@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: english}
 {pdf_filenames: ['scorpions_still_loving_you-sken.pdf', 'scorpions_still_loving_you-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: g}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-b2}
+{start_melody: d}

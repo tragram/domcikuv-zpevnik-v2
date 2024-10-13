@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['kabat_pohoda-sken.pdf', 'kabat_pohoda-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-b2}
+{start_melody: c}
