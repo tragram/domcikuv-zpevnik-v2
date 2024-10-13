@@ -4,7 +4,7 @@
 {language: other}
 {pdf_filenames: ['wise_guys_denglish-sken.pdf', 'wise_guys_denglish-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
 {range: }
 {start_melody: }

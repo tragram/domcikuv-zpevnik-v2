@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['zdenek_piskula_balic_novodoby-sken.pdf', 'zdenek_piskula_balic_novodoby-comp.pdf']}
 {capo: 0}
-{key: }
+{key: F}
 {tempo: }
 {range: }
 {start_melody: }

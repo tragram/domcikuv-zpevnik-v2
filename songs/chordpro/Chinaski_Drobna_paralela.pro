@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['chinaski_drobna_paralela-sken.pdf', 'chinaski_drobna_paralela-comp.pdf', 'chinaski_drobna_paralela-gen.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-d2}
+{start_melody: h d}

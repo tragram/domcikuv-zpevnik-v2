@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_kometa-sken.pdf', 'jaromir_nohavica_kometa-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-f1}
+{start_melody: e}

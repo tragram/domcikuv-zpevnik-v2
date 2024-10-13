@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['summer_all_stars_leto_lasky-sken.pdf', 'summer_all_stars_leto_lasky-comp.pdf', 'summer_all_stars_leto_lasky-gen.pdf']}
 {capo: 0}
-{key: }
+{key: F}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-d2}
+{start_melody: a}

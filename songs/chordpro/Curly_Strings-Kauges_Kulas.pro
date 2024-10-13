@@ -1,11 +1,11 @@
 {language: estonian}
 {date_added: 05-2019}
-{capo: 0}
+{capo: 3}
 {key: C}
 {artist: Curly Strings}
 {title: Kauges Külas}
 {capo: 2}
-{range: }
+{range: g1-a2}
 
 Kauges [C]külas, vanaema [G]juures,
 ela[Am]sin kord, kogu [F]suve.

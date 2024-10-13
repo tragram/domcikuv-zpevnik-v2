@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['chinaski_dobrak_od_kosti-sken.pdf', 'chinaski_dobrak_od_kosti-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: f#}

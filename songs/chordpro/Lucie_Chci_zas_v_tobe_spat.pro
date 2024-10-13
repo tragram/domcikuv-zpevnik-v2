@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['lucie_chci_zas_v_tobe_spat-sken.pdf', 'lucie_chci_zas_v_tobe_spat-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 6}
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-g2}
+{start_melody: a a g a}

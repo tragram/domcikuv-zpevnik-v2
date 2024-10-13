@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['chinaski_kutil-sken.pdf', 'chinaski_kutil-comp.pdf']}
 {capo: 0}
-{key: }
+{key: E}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-h2}
+{start_melody: e f#}

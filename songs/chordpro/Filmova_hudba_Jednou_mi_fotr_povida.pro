@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['filmova_hudba_jednou_mi_fotr_povida-sken.pdf', 'filmova_hudba_jednou_mi_fotr_povida-comp.pdf']}
 {capo: 0}
-{key: }
+{key: A}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-e2}
+{start_melody: c#}

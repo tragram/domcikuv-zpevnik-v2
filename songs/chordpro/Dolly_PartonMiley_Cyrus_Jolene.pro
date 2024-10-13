@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['dolly_partonmiley_cyrus_jolene-sken.pdf', 'dolly_partonmiley_cyrus_jolene-comp.pdf']}
 {capo: 0}
-{key: }
+{key: d}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-d2}
+{start_melody: a d}

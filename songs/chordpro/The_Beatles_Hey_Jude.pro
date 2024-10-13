@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['the_beatles_hey_jude-sken.pdf', 'the_beatles_hey_jude-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-c3}
+{start_melody: g e}

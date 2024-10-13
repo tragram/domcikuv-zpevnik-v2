@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['johnny_cashnin_hurt-sken.pdf', 'johnny_cashnin_hurt-comp.pdf']}
 {capo: 0}
-{key: }
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-g2}
+{start_melody: e g}

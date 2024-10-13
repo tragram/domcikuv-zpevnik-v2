@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['buty_frantisek-sken.pdf', 'buty_frantisek-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-g1}
+{start_melody: d}

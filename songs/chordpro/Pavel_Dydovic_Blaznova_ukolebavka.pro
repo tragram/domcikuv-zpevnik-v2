@@ -1,10 +1,10 @@
 {title: Bláznova ukolébavka}
 {artist: Pavel Dydovič}
-{date_added: 07-2015}
+{date_added: 09-2010}
 {language: czech}
 {pdf_filenames: ['pavel_dydovic_blaznova_ukolebavka-sken.pdf', 'pavel_dydovic_blaznova_ukolebavka-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: d d d c# d}

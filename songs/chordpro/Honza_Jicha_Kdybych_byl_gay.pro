@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['honza_jicha_kdybych_byl_gay-sken.pdf', 'honza_jicha_kdybych_byl_gay-comp.pdf']}
 {capo: 0}
-{key: }
+{key: F}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-d2}
+{start_melody: f}

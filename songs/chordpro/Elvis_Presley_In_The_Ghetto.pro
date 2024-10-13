@@ -3,8 +3,8 @@
 {date_added: 03-2018}
 {language: english}
 {pdf_filenames: ['elvis_presley_in_the_ghetto-sken.pdf', 'elvis_presley_in_the_ghetto-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: A}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-c#2}
+{start_melody: a}

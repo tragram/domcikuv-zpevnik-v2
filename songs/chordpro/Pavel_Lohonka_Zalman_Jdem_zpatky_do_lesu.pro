@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf', 'pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-h2}
+{start_melody: g}

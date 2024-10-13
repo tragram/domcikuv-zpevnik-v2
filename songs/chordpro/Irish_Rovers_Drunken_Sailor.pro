@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']}
 {capo: 0}
-{key: }
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1a-2}
+{start_melody: e}

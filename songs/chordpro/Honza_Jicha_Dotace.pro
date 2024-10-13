@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['honza_jicha_dotace-sken.pdf', 'honza_jicha_dotace-comp.pdf']}
 {capo: 0}
-{key: }
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-e2}
+{start_melody: e}

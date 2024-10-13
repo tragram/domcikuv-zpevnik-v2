@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_mala_dama-sken.pdf', 'kabat_mala_dama-comp.pdf']}
 {capo: 0}
-{key: }
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g#1-d2}
+{start_melody: e}

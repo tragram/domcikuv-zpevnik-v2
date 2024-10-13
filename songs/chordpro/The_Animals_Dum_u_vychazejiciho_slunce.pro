@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['the_animals_dum_u_vychazejiciho_slunce-sken.pdf', 'the_animals_dum_u_vychazejiciho_slunce-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 5}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-a2}
+{start_melody: e a}

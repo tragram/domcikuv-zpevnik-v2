@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_burlaci-sken.pdf', 'kabat_burlaci-comp.pdf']}
 {capo: 0}
-{key: }
+{key: e}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-c2/g2}
+{start_melody: e}

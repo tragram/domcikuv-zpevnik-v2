@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['michal_tucny_abych_tu_zil-sken.pdf', 'michal_tucny_abych_tu_zil-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-d2}
+{start_melody: e}

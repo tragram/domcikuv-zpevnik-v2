@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_idnescz-sken.pdf', 'jaromir_nohavica_idnescz-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-g1}
+{start_melody: g}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['honza_jicha_dezinfekce-sken.pdf', 'honza_jicha_dezinfekce-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-e2}
+{start_melody: c}

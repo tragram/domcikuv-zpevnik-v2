@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['lucie_medvidek-sken.pdf', 'lucie_medvidek-comp.pdf']}
 {capo: 0}
-{key: }
+{key: A}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-c#2}
+{start_melody: e}

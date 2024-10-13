@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['pacifik_mississippi_blues-sken.pdf', 'pacifik_mississippi_blues-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 03}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-a2}
+{start_melody: e}

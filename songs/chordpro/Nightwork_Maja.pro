@@ -3,8 +3,8 @@
 {date_added: 09-2015}
 {language: czech}
 {pdf_filenames: ['nightwork_maja-sken.pdf', 'nightwork_maja-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 4}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: e}

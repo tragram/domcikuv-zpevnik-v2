@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_colorado-sken.pdf', 'kabat_colorado-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-a1}
+{start_melody: c}

@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['survivor_eye_of_the_tiger-sken.pdf', 'survivor_eye_of_the_tiger-comp.pdf']}
 {capo: 0}
-{key: }
+{key: h}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-h2}
+{start_melody: f# a}

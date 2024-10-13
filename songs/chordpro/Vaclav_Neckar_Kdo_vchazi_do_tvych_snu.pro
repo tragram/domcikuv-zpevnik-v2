@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['vaclav_neckar_kdo_vchazi_do_tvych_snu-sken.pdf', 'vaclav_neckar_kdo_vchazi_do_tvych_snu-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: f1-d1}
+{start_melody: g c}

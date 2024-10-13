@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['pokac_co_z_tebe_bude-sken.pdf', 'pokac_co_z_tebe_bude-comp.pdf']}
 {capo: 0}
-{key: }
+{key: D}
 {tempo: }
 {range: }
 {start_melody: }

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['greenhorns_divka_s_vlasem_medovym-sken.pdf', 'greenhorns_divka_s_vlasem_medovym-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-g1}
+{start_melody: c g}
