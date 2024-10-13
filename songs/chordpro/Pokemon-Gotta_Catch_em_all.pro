@@ -5,7 +5,8 @@
 {title: Gotta Catch 'em all!}
 {artist: Pokémon}
 {tempo: 145}
-{range: }
+{range: g1-c2}
+{start_melody: e}
 
 {start_of_verse}
 [Am]I wanna be the [G]very best

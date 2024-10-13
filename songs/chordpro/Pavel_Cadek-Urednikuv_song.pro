@@ -4,7 +4,8 @@
 {date_added: 09-2020}
 {capo: 0}
 {key: d}
-{range: }
+{range: d1-a1}
+{start_melody: f}
 
 [Dmi]Vážený pane, na ty dveře klepe se.
 Nebojte vtipkuju, jen klidně pojďte sem.
