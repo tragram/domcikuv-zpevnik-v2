@@ -10,7 +10,7 @@ async function fetchSongs(): Promise<SongDB> {
     }
     const newHash = await response.text()
     const savedHash = localStorage.getItem("songDB.hash");
-    console.log(savedHash, newHash, savedHash == newHash);
+    // console.log(savedHash, newHash, savedHash == newHash);
     if (savedHash == newHash) {
         let songDB = JSON.parse(localStorage.getItem("songDB"));
         songDB.songs = songDB.songs.map(s => SongData.fromJSON(s));
@@ -50,9 +50,9 @@ async function fetchSongContent({ params }) {
     console.log(params.artist, params.title);
     // this is not the most efficient but the URLs will look great!
     const songDB = await fetchSongs();
-    let songData = songDB.songs.find(song => song.artist == params.artist && song.title == params.title);
+    let songData = songDB.songs.find(song => song.id == params.id);
     if (!songData) {
-        console.log(`Could not find song ${params.artist} - ${params.title}`);
+        console.log(`Could not find song ${params.id}`);
         throw new Response("Song not Found", { status: 404 });
     }
     let songContent = localStorage.getItem(songData.chordproFile);

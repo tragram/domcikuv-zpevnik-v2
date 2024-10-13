@@ -6,6 +6,7 @@ import ChordSheetJS from 'chordsheetjs';
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText } from 'lucide-react';
 import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
+import { SongData } from '../../types';
 
 const chromaticScale = {
     "c": 0,

@@ -1,4 +1,5 @@
 
+import unidecode from 'unidecode'
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range"
 interface SortSettings {
@@ -78,6 +79,7 @@ type SongKey = "C" | "C#" | "D" | "Es" | "E" | "F" | "F#" | "G" | "As" | "A" | "
 type SongLanguage = "czech" | "english" | "german" | "slovak" | "polish" | "spanish" | "romanian" | "finnish" | "estonian" | "french" | "italian" | "portuguese" | "other"
 
 class SongData {
+    id: string;
     title: string;
     artist: string;
     key: SongKey;
@@ -111,6 +113,7 @@ class SongData {
 
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
+        this.id = unidecode(`${song.artist}-${song.title}`.replace(/ /g, "_"));
         this.key = song.key || null;
         this.dateAdded = {
             year: parseInt(song.date_added.split("-")[1]),
@@ -136,6 +139,7 @@ class SongData {
         // Directly assign all fields without running constructor logic
         instance.title = json.title;
         instance.artist = json.artist;
+        instance.id = json.id;
         instance.key = json.key;
         instance.dateAdded = json.dateAdded;
         instance.startMelody = json.startMelody;

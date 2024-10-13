@@ -43,7 +43,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
     }
     let navigate = useNavigate();
     const routeChange = (song: SongData) => {
-        let path = `song/${song.artist}/${song.title}`;
+        let path = `song/${song.id}`;
         navigate(path);
     }
 

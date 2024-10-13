@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 // import Song from "./song";
 // import { Index, Document, Worker } from "flexsearch";
 import Randomize from './Randomize';
@@ -13,17 +13,10 @@ import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } 
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
     const songs = songDB.songs;
-    const exampleSong = songDB.songs[0];
 
     const [searchResults, setSearchResults] = useState(songs);
-    const [maxRange, setMaxRange] = useState(24);
     const [selectedSong, setSelectedSong] = useState(null); // State for selected song
     const [query, setQuery] = useState("");
-    const songToKey = (song) => {
-        // console.log(song.title+song.artist)
-        return song.title + song.artist
-    };
-    // 
     const [sortSettings, setSortSettings] = useState<SortSettings>({
         order: "ascending",
         field: "title",
@@ -47,7 +40,7 @@ const SongList = () => {
                 results = sortFunc(results, sortSettings.field, sortSettings.order);
             }
             setSongListData(results);
-        }, [sortSettings, filterSettings, songs, searchResults]);
+        }, [sortSettings, filterSettings, searchResults]);
 
     useEffect(
         function showSong() {
@@ -67,7 +60,7 @@ const SongList = () => {
                 if (a_semi === b_semi) {
                     // if the ranges are the same, just sort by title to make sort stable
                     return a["title"].localeCompare(b["title"]);
-                } else if (!a_semi) { return -1; } else if (!b_semi) {return 1; } else {
+                } else if (!a_semi) { return -1; } else if (!b_semi) { return 1; } else {
                     return a_semi - b_semi;
                 }
             } else if (sortByField === "dateAdded") {
@@ -126,7 +119,7 @@ const SongList = () => {
     const navbar_items = [
         <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />,
 
-        <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />,
+        <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={songDB.maxRange} />,
         <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
     ]
     return (<>
@@ -151,12 +144,11 @@ const SongList = () => {
                 </NavbarItem>
             </NavbarContent >
             <NavbarMenu>
-                {navbar_items.map(ni =>
-                (
-                    <NavbarMenuItem>
+                {navbar_items.map((ni, index) => {
+                    return <NavbarMenuItem key={index}>
                         {ni}
                     </NavbarMenuItem>
-                )
+                }
                 )}
             </NavbarMenu>
         </Navbar >
@@ -175,12 +167,12 @@ const SongList = () => {
                     </div>
 
                     <div className="table-row-group">
-                        {songListData.map((song, index) => (
-                            <>
-                                <SongRow key={songToKey(song)} maxRange={maxRange} setSelectedSong={setSelectedSong} song={song} />
+                        {songListData.map((song) => {
+                            return <Fragment key={song.id}>
+                                <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} />
                                 <div className="table-row h-5"></div>
-                            </>
-                        ))}
+                            </Fragment>
+                        })}
                     </div>
                 </div>
             </div >
