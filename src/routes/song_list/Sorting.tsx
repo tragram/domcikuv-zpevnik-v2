@@ -4,6 +4,7 @@ import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownUp, ArrowDownZA, AudioL
 import React, { ReactElement } from 'react';
 
 import { ButtonGroup } from '@nextui-org/react';
+import { SortField, SortOrder, SortSettings } from "../../types";
 
 interface SortingIcons {
     ascending: ReactElement;
@@ -28,7 +29,7 @@ interface Category {
 const categories: Category[] = [
     { field: "title", title: "Title", icon: <AudioLines />, sorting_icons: letterSortingIcons },
     { field: "artist", title: "Artist", icon: <MicVocal />, sorting_icons: letterSortingIcons },
-    { field: "date_added", title: "Date Added", icon: <CalendarPlus />, sorting_icons: numberSortingIcons },
+    { field: "dateAdded", title: "Date Added", icon: <CalendarPlus />, sorting_icons: numberSortingIcons },
     { field: "range", title: "Range", icon: <Music />, sorting_icons: numberSortingIcons },
 ]
 

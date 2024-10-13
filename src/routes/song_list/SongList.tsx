@@ -9,6 +9,7 @@ import Filtering from './Filters';
 import Sorting from './Sorting';
 import { SlidersHorizontal } from 'lucide-react';
 import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
+import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
     const songs = songDB.songs;
@@ -57,26 +58,39 @@ const SongList = () => {
     );
 
 
-    function sortFunc(results, sortByField, sortType) {
-        function compare(a, b) {
+    function sortFunc(results: Array<SongData>, sortByField: SortField, sortOrders: SortOrder) {
+        //TODO: clean up this mess
+        function compare(a: SongData, b: SongData): number {
             if (sortByField === "range") {
                 const a_semi = a.range.semitones;
                 const b_semi = b.range.semitones;
                 if (a_semi === b_semi) {
-                    // if the ranges are the same, just sort by title
+                    // if the ranges are the same, just sort by title to make sort stable
+                    return a["title"].localeCompare(b["title"]);
+                } else if (!a_semi) { return -1; } else if (!b_semi) {return 1; } else {
+                    return a_semi - b_semi;
+                }
+            } else if (sortByField === "dateAdded") {
+                const diff = (a[sortByField].year * 12 + a[sortByField].month) - (b[sortByField].year * 12 + b[sortByField].month)
+                if (diff == 0) {
+                    return a["title"].localeCompare(b["title"]);
+                } else { return diff; }
+            } else if (sortByField === "artist") {
+                if (a[sortByField] == b[sortByField]) {
                     return a["title"].localeCompare(b["title"]);
                 } else {
-                    return a_semi < b_semi;
+                    return a[sortByField].localeCompare(b[sortByField])
                 }
-            } else {
+            }
+            else {
                 return a[sortByField].localeCompare(b[sortByField]);
             }
         }
 
-        if (sortType === "ascending") {
+        if (sortOrders === "ascending") {
             results = results.toSorted((a, b) => compare(a, b))
         }
-        else if (sortType === "descending") {
+        else if (sortOrders === "descending") {
             results = results.toSorted((a, b) => compare(b, a))
         } else { console.log("Unknown ordering!") }
         return results;

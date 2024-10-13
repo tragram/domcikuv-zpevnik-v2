@@ -1,7 +1,7 @@
 import { Avatar, CircularProgress, Image } from "@nextui-org/react";
 import { Instagram } from "lucide-react";
 import LanguageFlag from "./LanguageFlag";
-import SongData from "../../components/song_loader";
+import { SongData } from "../../types";
 import { useNavigate } from "react-router-dom";
 
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -62,7 +62,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
             </div>
             <div className="table-cell flex content-center justify-center hidden sm:table-cell text-center bg-gray-100">
                 <h2 className="text-sm opacity-70">{song.dateAdded.year}</h2>
-                <h3 className="text-xs opacity-70">{month_names[song.dateAdded.month]}</h3>
+                <h3 className="text-xs opacity-70">{month_names[song.dateAdded.month-1]}</h3>
             </div>
             <div className="content-center justify-center text-center hidden lg:table-cell bg-gray-100">
                 <div>{song.capo}</div>

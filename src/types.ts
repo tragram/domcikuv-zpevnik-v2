@@ -1,6 +1,6 @@
 
 type SortOrder = "descending" | "ascending";
-type SortField = "title" | "artist" | "date_added" | "range"
+type SortField = "title" | "artist" | "dateAdded" | "range"
 interface SortSettings {
     order: SortOrder,
     field: SortField
@@ -175,6 +175,6 @@ interface LanguageCount {
     [key: SongLanguage]: int
 }
 
-export type { SongDB, SortSettings, FilterSettings, SongKey, SongLanguage, LanguageCount };
+export type { SongDB, SortSettings, FilterSettings, SongKey, SongLanguage, LanguageCount, SortOrder, SortField };
 export { SongData };
 
