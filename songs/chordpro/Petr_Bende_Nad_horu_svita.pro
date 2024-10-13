@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['petr_bende_nad_horu_svita-sken.pdf', 'petr_bende_nad_horu_svita-comp.pdf', 'petr_bende_nad_horu_svita-gen.pdf']}
 {capo: 0}
-{key: }
+{key: E}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-h2}
+{start_melody: e h e}

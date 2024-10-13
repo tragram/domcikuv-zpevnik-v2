@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['karel_kryl_nevidoma_divka-sken.pdf', 'karel_kryl_nevidoma_divka-comp.pdf', 'karel_kryl_nevidoma_divka-gen.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
+{range: c1-e2}
 {start_melody: }

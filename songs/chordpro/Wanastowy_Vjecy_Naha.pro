@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['wanastowy_vjecy_naha-sken.pdf', 'wanastowy_vjecy_naha-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: H}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g#1-f#1}
+{start_melody: d#}

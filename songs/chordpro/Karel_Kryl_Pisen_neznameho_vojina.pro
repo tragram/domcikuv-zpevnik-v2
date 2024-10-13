@@ -3,8 +3,8 @@
 {date_added: 01-2017}
 {language: czech}
 {pdf_filenames: ['karel_kryl_pisen_neznameho_vojina-sken.pdf', 'karel_kryl_pisen_neznameho_vojina-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: e}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-c2}
+{start_melody: h}

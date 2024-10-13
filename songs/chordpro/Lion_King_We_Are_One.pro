@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['lion_king_we_are_one-sken.pdf', 'lion_king_we_are_one-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-d2}
+{start_melody: g}

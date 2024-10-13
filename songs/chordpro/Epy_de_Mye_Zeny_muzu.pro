@@ -3,8 +3,8 @@
 {date_added: 11-2018}
 {language: czech}
 {pdf_filenames: ['epy_de_mye_zeny_muzu-sken.pdf', 'epy_de_mye_zeny_muzu-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: a d}

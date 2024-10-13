@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['otto_vokal_to_neni_vecer-sken.pdf', 'otto_vokal_to_neni_vecer-comp.pdf', 'otto_vokal_to_neni_vecer-gen.pdf']}
 {capo: 0}
-{key: }
+{key: d}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody: a d}

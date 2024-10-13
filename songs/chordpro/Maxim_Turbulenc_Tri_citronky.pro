@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['maxim_turbulenc_tri_citronky-sken.pdf', 'maxim_turbulenc_tri_citronky-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-g1}
+{start_melody: c e f g}

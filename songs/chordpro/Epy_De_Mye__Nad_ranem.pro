@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['epy_de_mye__nad_ranem-sken.pdf', 'epy_de_mye__nad_ranem-comp.pdf']}
 {capo: 0}
-{key: }
+{key: e}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-c1}
+{start_melody: h}

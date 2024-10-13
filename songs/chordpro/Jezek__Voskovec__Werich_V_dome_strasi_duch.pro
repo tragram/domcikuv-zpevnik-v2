@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jezek__voskovec__werich_v_dome_strasi_duch-sken.pdf', 'jezek__voskovec__werich_v_dome_strasi_duch-comp.pdf']}
 {capo: 0}
-{key: }
+{key: d}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-d2}
+{start_melody: a f d}

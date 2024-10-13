@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['ready_kirken_winston_smith-sken.pdf', 'ready_kirken_winston_smith-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-f2}
+{start_melody: g e}

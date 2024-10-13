@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['hop_trop_tri_krize-sken.pdf', 'hop_trop_tri_krize-comp.pdf']}
 {capo: 0}
-{key: }
+{key: d}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-a1}
+{start_melody: d d a}

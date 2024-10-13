@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['epy_de_mye_obycejne_fotky-sken.pdf', 'epy_de_mye_obycejne_fotky-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-h2}
+{start_melody: d d h}

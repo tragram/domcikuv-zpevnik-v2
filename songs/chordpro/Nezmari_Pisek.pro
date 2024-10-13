@@ -1,10 +1,10 @@
 {title: Písek}
 {artist: Nezmaři}
-{date_added: 07-2015}
+{date_added: 02-2012}
 {language: czech}
 {pdf_filenames: ['nezmari_pisek-sken.pdf', 'nezmari_pisek-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 5}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-g1}
+{start_melody: a a c}

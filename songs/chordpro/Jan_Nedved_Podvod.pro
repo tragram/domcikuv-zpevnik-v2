@@ -3,8 +3,8 @@
 {date_added: 01-2017}
 {language: czech}
 {pdf_filenames: ['jan_nedved_podvod-sken.pdf', 'jan_nedved_podvod-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: e}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-h2}
+{start_melody: h g}

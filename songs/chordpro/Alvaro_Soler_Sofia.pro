@@ -4,7 +4,7 @@
 {language: spanish}
 {pdf_filenames: ['alvaro_soler_sofia-sken.pdf', 'alvaro_soler_sofia-comp.pdf', 'alvaro_soler_sofia-gen.pdf']}
 {capo: 0}
-{key: }
+{key: f#}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-e2}
+{start_melody: c# e}

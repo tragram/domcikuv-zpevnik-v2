@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['honza_jicha_vlastizradce-sken.pdf', 'honza_jicha_vlastizradce-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 4}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g#1-e1}
+{start_melody: e}

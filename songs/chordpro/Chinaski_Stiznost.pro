@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['chinaski_stiznost-sken.pdf', 'chinaski_stiznost-comp.pdf', 'chinaski_stiznost-gen.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-d2}
+{start_melody: g}

@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['pavel_lohonka_zalman_rana_v_trave-sken.pdf', 'pavel_lohonka_zalman_rana_v_trave-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 5}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-g2}
+{start_melody: e}
