@@ -3,8 +3,9 @@
 {language: finnish}
 {date_added: 09-2020}
 {capo: 0}
-{key: d}
-{range: }
+{key: a}
+{range: a1-c2}
+{start_melody: e a}
 
 {start_of_verse}
 On [Am]kauniina muistona [E7]Karjalan maa

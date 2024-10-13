@@ -4,7 +4,8 @@
 {date_added: 09-2020}
 {capo: 0}
 {key: e}
-{range: }
+{range: d1-e2}
+{start_melody: g}
 
 {start_of_verse}
 [Em]When a humble bard[A]

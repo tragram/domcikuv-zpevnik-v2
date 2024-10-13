@@ -6,5 +6,5 @@
 {capo: 0}
 {key: D}
 {tempo: }
-{range: d1-h2}
+{range: d1-h1}
 {start_melody: f#}

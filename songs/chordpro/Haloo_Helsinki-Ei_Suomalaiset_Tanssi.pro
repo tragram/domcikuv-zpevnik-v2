@@ -4,7 +4,8 @@
 {date_added: 09-2020}
 {capo: 0}
 {key: c#}
-{range: }
+{range: c#1-c#2}
+{start_melody: f#}
 
 {start_of_verse}
 Kesä[C#m]lauantai [A]nyt

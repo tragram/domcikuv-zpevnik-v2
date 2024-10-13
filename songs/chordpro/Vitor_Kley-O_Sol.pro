@@ -3,8 +3,9 @@
 {language: portuguese}
 {date_added: 09-2020}
 {capo: 0}
-{key: d}
-{range: }
+{key: e}
+{range: d1-e2}
+{start_melody: e h}
 
 {start_of_chorus}
 Ô [Em7]sol, Vê se não [D9]esquece e me [Am7]ilumina
