@@ -37,8 +37,8 @@ class SongRange {
         "b": 11,
         "h": 11
     };
-    min: int;
-    max: int;
+    min: string;
+    max: string;
     semitones: int;
 
     constructor(song_range_str) {
@@ -54,9 +54,9 @@ class SongRange {
             const lowestTone = song_range[0].slice(0, -1).toLowerCase()
             const highestTone = song_range[1].slice(0, -1).toLowerCase()
             const withinOctave = (12 + SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone]) % 12
-
-            this.min = parseInt(song_range[0])
-            this.max = parseInt(song_range[1])
+            
+            this.min = song_range[0]
+            this.max = song_range[1]
             this.semitones = 12 * octaves + withinOctave;
             // console.log(lowestTone, highestTone, octaves, withinOctave, 12 * octaves + withinOctave)
         }
@@ -124,6 +124,7 @@ class SongData {
         this.tempo = parseInt(song.tempo);
         this.capo = parseInt(song.capo) || 0;
         this.range = new SongRange(song.range);
+        console.log(this.range)
         if (song.pdf_filenames) {
             this.pdfFilenames = JSON.parse(song.pdf_filenames.replace(/'/g, '"')).map(f => import.meta.env.BASE_URL + "/songs/pdfs/" + f);
         } else {

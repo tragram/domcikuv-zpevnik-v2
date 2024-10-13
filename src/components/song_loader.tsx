@@ -3,6 +3,7 @@ import { LanguageCount, SongData } from '../types'
 
 
 async function fetchSongs(): Promise<SongDB> {
+    localStorage.clear()
     // check hash
     let response = await fetch(import.meta.env.BASE_URL + '/songDB.hash');
     if (!response.ok) {
@@ -31,7 +32,7 @@ async function fetchSongs(): Promise<SongDB> {
             languages[song.language] = (languages[song.language] || 0) + 1;
         });
         // TODO: languages with less than e.g. 5 songs should be merged into "other"
-        const songRanges = songs.map(s => s.range.semitones);
+        const songRanges = songs.map(s => s.range.semitones).filter(s => s);
         const songDB = {
             maxRange: Math.max(...songRanges),
             languages: languages,

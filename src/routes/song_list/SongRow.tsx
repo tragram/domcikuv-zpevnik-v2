@@ -18,12 +18,17 @@ function progressColor(range) {
     }
 }
 
-function VocalRangeIndicator({ song, maxRange }) {
+interface VocalRangeIndicatorProps{
+    song: SongData;
+    maxRange: number;
+}
 
+function VocalRangeIndicator({ song, maxRange }: VocalRangeIndicatorProps) {
     let songRangeSemitones = song.range.semitones;
+    if (songRangeSemitones) { console.log(song.title, song.range.semitones) }
     // console.log(song.title, songRangeSemitones,maxRange)
     return (
-        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={songRangeSemitones} size="md" strokeWidth={3} value={songRangeSemitones ? songRangeSemitones : maxRange} />
+        <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={!!songRangeSemitones} size="md" strokeWidth={3} value={songRangeSemitones ? songRangeSemitones : maxRange} />
     );
 }
 
@@ -56,7 +61,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
             </div>
             <div className="hidden basis-1/6 sm:flex content-center justify-center bg-gray-100">
                 <div className='flex items-center'>
-                    <VocalRangeIndicator maxRange={maxRange} song={song} /></div>
+                    <VocalRangeIndicator song={song} maxRange={maxRange} /></div>
             </div>
             <div className="flex basis-1/12 min-w-12 bg-gray-100 rounded-r-full items-center justify-end p-2">
                 <LanguageFlag language={song.language} />

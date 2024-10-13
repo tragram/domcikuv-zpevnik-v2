@@ -170,7 +170,7 @@ const SongList = () => {
                             <div className="table-cell text-center">Language</div>
                         </div>
                     </div>  */}
-                {songListData.map((song) => { return <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
+                {songListData.map((song) => { return <SongRow key={song.id} maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
             </div >
         </div >
     </>
