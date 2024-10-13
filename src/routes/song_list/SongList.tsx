@@ -152,10 +152,9 @@ const SongList = () => {
                 )}
             </NavbarMenu>
         </Navbar >
-        <div className='flex flex-col gap-4 p-5'>
-            <div className="overflow-x-auto container mx-auto flex justify-center">
-                <div className="table w-full max-w-2xl border-separate ms-3">
-                    <div className="hidden md:table-header-group">
+        <div className='flex flex-col'>
+            <div className="container mx-auto flex flex-col p-5 justify-center gap-3.5 max-w-2xl">
+                {/* <div className="hidden md:table-header-group">
                         <div className="table-row align-center ">
                             <div className="table-cell text-left"></div>
                             <div className="table-cell text-left">Song</div>
@@ -164,17 +163,21 @@ const SongList = () => {
                             <div className="table-cell text-center">Vocal</div>
                             <div className="table-cell text-center">Language</div>
                         </div>
-                    </div>
+                    </div>  */}
 
-                    <div className="table-row-group">
+                {/* <div className="table-row-group">
                         {songListData.map((song) => {
                             return <Fragment key={song.id}>
                                 <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} />
                                 <div className="table-row h-5"></div>
                             </Fragment>
+                            </Fragment>
                         })}
-                    </div>
-                </div>
+                                </Fragment>
+                        })}
+                                </div>
+                        })} */}
+                {songListData.map((song) => { return <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
             </div >
         </div >
     </>
