@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['chinaski_dlouhej_kour-sken.pdf', 'chinaski_dlouhej_kour-comp.pdf']}
 {capo: 0}
-{key: }
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-a1}
+{start_melody: f#}

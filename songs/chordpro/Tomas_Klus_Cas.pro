@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['tomas_klus_cas-sken.pdf', 'tomas_klus_cas-comp.pdf']}
 {capo: 0}
-{key: }
+{key: e}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-c1}
+{start_melody: g f#}

@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['premier_hrobar-sken.pdf', 'premier_hrobar-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 5}
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: f1-e1}
+{start_melody: c}

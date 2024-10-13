@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['uhlir_barbora_pise_z_tabora-sken.pdf', 'uhlir_barbora_pise_z_tabora-comp.pdf']}
 {capo: 0}
-{key: }
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-a1}
+{start_melody: a}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['filmova_hudba_kralovske_reggae-sken.pdf', 'filmova_hudba_kralovske_reggae-comp.pdf']}
 {capo: 0}
-{key: }
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: f#1-e2}
+{start_melody: d}

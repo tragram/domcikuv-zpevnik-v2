@@ -1,10 +1,10 @@
 {title: Hejkal}
 {artist: Wabi Daněk}
-{date_added: 07-2015}
+{date_added: 02-2012}
 {language: czech}
 {pdf_filenames: ['wabi_danek_hejkal-sken.pdf', 'wabi_danek_hejkal-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-c2}
+{start_melody: a}

@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['leonard_cohen_hallelujah-sken.pdf', 'leonard_cohen_hallelujah-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
+{range: a1-e2}
 {start_melody: }

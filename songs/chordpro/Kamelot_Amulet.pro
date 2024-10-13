@@ -1,10 +1,10 @@
 {title: Amulet}
 {artist: Kamelot}
-{date_added: 07-2015}
+{date_added: 01-2011}
 {language: czech}
 {pdf_filenames: ['kamelot_amulet-sken.pdf', 'kamelot_amulet-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: h}

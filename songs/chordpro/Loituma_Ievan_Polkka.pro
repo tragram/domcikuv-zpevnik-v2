@@ -1,10 +1,10 @@
 {title: Ievan Polkka}
 {artist: Loituma}
 {date_added: 03-2018}
-{language: other}
+{language: finnish}
 {pdf_filenames: ['loituma_ievan_polkka-sken.pdf', 'loituma_ievan_polkka-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: d}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody: a d}

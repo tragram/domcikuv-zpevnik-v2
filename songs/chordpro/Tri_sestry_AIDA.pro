@@ -1,10 +1,10 @@
 {title: AIDA}
 {artist: Tři sestry}
-{date_added: 07-2015}
+{date_added: 10-2010}
 {language: czech}
 {pdf_filenames: ['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: A}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody: e d c}

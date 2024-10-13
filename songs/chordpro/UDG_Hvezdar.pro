@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['udg_hvezdar-sken.pdf', 'udg_hvezdar-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: d}

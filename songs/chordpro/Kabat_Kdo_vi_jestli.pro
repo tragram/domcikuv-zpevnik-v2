@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
 {range: }
 {start_melody: }

@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['krystof_cesta-sken.pdf', 'krystof_cesta-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 50}
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-f1}
+{start_melody: c g}

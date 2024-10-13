@@ -3,8 +3,8 @@
 {date_added: 01-2017}
 {language: czech}
 {pdf_filenames: ['jelen_magdalena-sken.pdf', 'jelen_magdalena-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 5}
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: f#1-a2}
+{start_melody: d d c#}

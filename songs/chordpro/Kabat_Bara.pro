@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_bara-sken.pdf', 'kabat_bara-comp.pdf']}
 {capo: 0}
-{key: }
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-g1}
+{start_melody: e d c d}

@@ -3,8 +3,8 @@
 {date_added: 08-2015}
 {language: english}
 {pdf_filenames: ['the_beatles_let_it_be-sken.pdf', 'the_beatles_let_it_be-comp.pdf', 'the_beatles_let_it_be-gen.pdf']}
-{capo: 0}
-{key: }
+{capo: 6}
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-a1}
+{start_melody: g}

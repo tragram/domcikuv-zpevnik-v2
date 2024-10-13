@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['epy_de_mye_lovec_amoru-sken.pdf', 'epy_de_mye_lovec_amoru-comp.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-h1}
+{start_melody: h}

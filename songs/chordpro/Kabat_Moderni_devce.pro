@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_moderni_devce-sken.pdf', 'kabat_moderni_devce-comp.pdf']}
 {capo: 0}
-{key: }
+{key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-d2}
+{start_melody: e}

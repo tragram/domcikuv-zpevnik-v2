@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['karel_kryl_kral_a_klaun-sken.pdf', 'karel_kryl_kral_a_klaun-comp.pdf', 'karel_kryl_kral_a_klaun-gen.pdf']}
 {capo: 0}
-{key: }
+{key: A}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: a h}

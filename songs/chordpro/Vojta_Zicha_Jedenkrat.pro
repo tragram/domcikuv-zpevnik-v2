@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['vojta_zicha_jedenkrat-sken.pdf', 'vojta_zicha_jedenkrat-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 2}
+{key: h}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: h}

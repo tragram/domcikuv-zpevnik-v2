@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['fesaci_jaro-sken.pdf', 'fesaci_jaro-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 5}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-g2}
+{start_melody: a}

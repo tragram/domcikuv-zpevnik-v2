@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['jaroslav_samson_lenk_amazonka-sken.pdf', 'jaroslav_samson_lenk_amazonka-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-h2}
+{start_melody: h c d}

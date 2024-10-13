@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['wanastowy_vjecy_andele-sken.pdf', 'wanastowy_vjecy_andele-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 3}
+{key: H}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-a1}
+{start_melody: f#}

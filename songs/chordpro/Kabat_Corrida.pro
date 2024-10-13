@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_corrida-sken.pdf', 'kabat_corrida-comp.pdf']}
 {capo: 0}
-{key: }
+{key: h}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-a1}
+{start_melody: f#}

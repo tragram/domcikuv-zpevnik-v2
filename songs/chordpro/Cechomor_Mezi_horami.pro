@@ -3,8 +3,8 @@
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['cechomor_mezi_horami-sken.pdf', 'cechomor_mezi_horami-comp.pdf']}
-{capo: 0}
-{key: }
+{capo: 4}
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-g1}
+{start_melody: e}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['honza_jicha_malicky_knirek-sken.pdf', 'honza_jicha_malicky_knirek-comp.pdf', 'honza_jicha_malicky_knirek-gen.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
 {range: }
 {start_melody: }

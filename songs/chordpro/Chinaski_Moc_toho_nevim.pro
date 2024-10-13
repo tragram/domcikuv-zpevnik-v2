@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['chinaski_moc_toho_nevim-sken.pdf', 'chinaski_moc_toho_nevim-comp.pdf']}
 {capo: 0}
-{key: }
+{key: A}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-c#1}
+{start_melody: a}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['chinaski_hlavolam-sken.pdf', 'chinaski_hlavolam-comp.pdf', 'chinaski_hlavolam-gen.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-d2}
+{start_melody: g}

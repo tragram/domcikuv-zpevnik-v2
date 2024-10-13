@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['nezmari_boure-sken.pdf', 'nezmari_boure-comp.pdf']}
 {capo: 0}
-{key: }
+{key: d}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-a1}
+{start_melody: f}

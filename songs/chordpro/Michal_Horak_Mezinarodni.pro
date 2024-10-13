@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['michal_horak_mezinarodni-sken.pdf', 'michal_horak_mezinarodni-comp.pdf']}
 {capo: 0}
-{key: }
+{key: h}
 {tempo: }
 {range: }
 {start_melody: }

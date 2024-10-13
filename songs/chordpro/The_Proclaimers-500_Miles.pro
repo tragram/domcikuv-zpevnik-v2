@@ -8,7 +8,6 @@
 {range: d1-g2}
 {start_melody: f# g a h}
 
-
 {start_of_verse}
 When I [D]wake up, yeah, I [D]know I'm gonna be,
 I'm gonna [G5]be the man who [A]wakes up next to [D]you.
@@ -46,10 +45,8 @@ I'm gonna [G5]be the man who's [A]growing old with [D5]you.
 
 {chorus}
 
-
 {start_of_bridge}
-Da Da Da [D5]Da Da Da Da [D5]Da Da Da Da-[G5]Da-Da-La Da-Da-La [A]Da-Da-La La [D5]La
-Da Da Da [D5]Da Da Da Da [D5]Da Da Da Da-[G5]Da-Da-La Da-Da-La [A]Da-Da-La La [D5]La
+|: Da Da Da [D5][G5][A][D5] :|
 {end_of_bridge}
 
 {start_of_verse}
@@ -63,15 +60,14 @@ When I [D5]go out(When I go out), well I know I'm gonna be
 I'm gonna [G5]be the man who [A]goes along with [D5]you
 
 And when I [D5]come home(When I come home), yes I know I'm gonna be
-I'm gonna [G5]be the man who [A]comes back home with [Bm]you
-I'm gonna [Em7]be the man who's [A]coming home with [D5]you
+I'm gonna [G5]be the man who [A7]comes back home with [H]you
+I'm gonna [Em7]be the man who's [As]coming home with [D5]you
 {end_of_verse}
 
 {chorus}
 
 {start_of_bridge}
-Da Da Da [D5]Da Da Da Da [D5]Da Da Da Da-[G5]Da-Da-La Da-Da-La [A]Da-Da-La La [D5]La
-Da Da Da [D5]Da Da Da Da [D5]Da Da Da Da-[G5]Da-Da-La Da-Da-La [A]Da-Da-La La [D5]La
+|: Da Da Da [D5][G5][A][D5] :|
 {end_of_bridge}
 
 {start_of_chorus}
