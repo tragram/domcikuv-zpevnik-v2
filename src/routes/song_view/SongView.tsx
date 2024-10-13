@@ -1,13 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, NavbarItem, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
 import ChordSheetJS from 'chordsheetjs';
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2 } from 'lucide-react';
 import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
 import { SongData } from '../../types';
-
+import { useNavigate} from "react-router-dom";
 const chromaticScale = {
     "c": 0,
     "c#": 1,
@@ -107,21 +107,10 @@ function SongView({ }) {
     if (songData.lyricsLength() < 50) {
         return (
             <div >
-                <iframe src={songData.pdfFilenames.slice(-1)} className='w-screen h-screen'/>
+                <iframe src={songData.pdfFilenames.slice(-1)} className='w-screen h-screen' />
             </div>
         );
     };
-    // useEffect(() => {
-    //     console.log(songData.content, songData.lyricsLength())
-    //     // if (!songContent) {
-    //     //     fetch(import.meta.env.BASE_URL + "/songs/chordpro/" + songData.chordproFile)
-    //     //         .then(response => response.json())
-    //     //         // 4. Setting *dogImage* to the image url that we received from the response above
-    //     //         .then(data => setSongContent(data));
-    //     // } else {
-    //     //     setSongContent(songContent);
-    //     // }
-    // }, [])
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
@@ -131,6 +120,7 @@ function SongView({ }) {
     const [fontSize, setFontSize] = useState(2);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
+    let navigate = useNavigate();
 
     function renderSong(key) {
         let song = replaceChorusDirective(songData.content, repeatChorus);
@@ -141,58 +131,54 @@ function SongView({ }) {
         setParsedContent(renderedSong);
     }
 
-    // useEffect(() => {
-    //     // if (!song) {
-    //     //     return;
-    //     // }
-    //     renderSong(songRenderKey);
-    // }, [songContent, songRenderKey, repeatChorus]);
+    useEffect(() => {
+        // if (!song) {
+        //     return;
+        // }
+        renderSong(songRenderKey);
+    }, [songContent, songRenderKey, repeatChorus]);
 
     const fullScreen = useMediaQuery(
         "only screen and (max-width : 600px)"
     );
     const fontSizeStep = 0.2;
-    return (<>
-        <TransposeButtons songData={songData} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
-        <div className={`${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
+    const navbar_items = [
+
         <ButtonGroup>
             <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
             <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
             <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
             <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
             <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
-
-        </ButtonGroup>
-
-        {/* <Modal disableAnimation
-            isOpen={isOpen}
-            onOpenChange={onOpenChange}
-            scrollBehavior={scrollBehavior}
-            size={fullScreen ? "full" : "xl"}
-        ><ModalContent>
-                {(onClose) => (
-                    <>
-                        <ModalHeader className="flex flex-col gap-1">
-                            {songData && songData.artist}: {songData && songData.title}
-                        </ModalHeader>
-                        <ModalBody>
-                            <TransposeButtons songData={songData} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
-                            <div className={`${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
-                        </ModalBody>
-                        <ModalFooter className="flex flex-col">
-                            <ButtonGroup>
-                                <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
-                                <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
-                                <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
-                                <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
-                                <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
-
-                            </ButtonGroup>
-                        </ModalFooter>
-                    </>
+        </ButtonGroup>,
+        <TransposeButtons songData={songData} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
+    ]
+    return (<>
+        <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
+            <NavbarContent justify="start">
+                <Button color="primary" isIconOnly variant='ghost'  onClick={() => navigate(-1)}>{<Undo2 />}</Button>
+            </NavbarContent>
+            <NavbarContent as="div" justify="center" className='sm:flex w-full'>
+                <NavbarItem className='hidden sm:flex'>
+                    {navbar_items[0]}
+                </NavbarItem>
+                <NavbarItem className='hidden sm:flex'>
+                    {navbar_items[1]}
+                </NavbarItem>
+            </NavbarContent >
+            <NavbarContent className="sm:hidden" justify="end">
+                <NavbarMenuToggle icon={<SlidersHorizontal />} />
+            </NavbarContent>
+            <NavbarMenu>
+                {navbar_items.map((ni, index) => {
+                    return <NavbarMenuItem key={index}>
+                        {ni}
+                    </NavbarMenuItem>
+                }
                 )}
-            </ModalContent>
-        </Modal> */}
+            </NavbarMenu>
+        </Navbar >
+        <div className={`flex text-center justify-center ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
     </>
     );
 };
