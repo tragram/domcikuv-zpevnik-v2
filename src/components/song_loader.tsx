@@ -3,7 +3,6 @@ import { LanguageCount, SongData } from '../types'
 
 
 async function fetchSongs(): Promise<SongDB> {
-    localStorage.clear()
     // check hash
     let response = await fetch(import.meta.env.BASE_URL + '/songDB.hash');
     if (!response.ok) {
@@ -17,6 +16,7 @@ async function fetchSongs(): Promise<SongDB> {
         songDB.songs = songDB.songs.map(s => SongData.fromJSON(s));
         return songDB;
     } else {
+        console.log("New DB detected -> Clearing LocalStorage!")
         localStorage.clear();
     }
 

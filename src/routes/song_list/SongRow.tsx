@@ -18,7 +18,7 @@ function progressColor(range) {
     }
 }
 
-interface VocalRangeIndicatorProps{
+interface VocalRangeIndicatorProps {
     song: SongData;
     maxRange: number;
 }
@@ -41,8 +41,8 @@ interface SongRowProps {
 function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
 
     return (
-        <div className="flex h-12 song-row w-full" onClick={() => { setSelectedSong(song); }}>
-            <div className="flex basis-[12%] min-w-14 rounded-l-full content-center justify-center bg-gray-100 relative pl-5">
+        <div className="flex h-12 song-row w-full pl-3" onClick={() => { setSelectedSong(song); }}>
+            <div className="flex basis-[12%] min-w-14 rounded-l-full content-center justify-center bg-gray-100 relative">
                 <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                     <Instagram size={24} />
                 } showFallback size="lg" src={import.meta.env.BASE_URL + "/songs/illustrations/" + song.chordproFile.split('.')[0] + "/FLUX.1-dev.jpg"} />
@@ -59,7 +59,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
                 <h2 className="text-xs opacity-70">Capo</h2>
                 <h3 className="text-sm opacity-70">{song.capo}</h3>
             </div>
-            <div className="hidden basis-1/6 sm:flex content-center justify-center bg-gray-100">
+            <div className="hidden basis-[10%] sm:flex content-center justify-center bg-gray-100">
                 <div className='flex items-center'>
                     <VocalRangeIndicator song={song} maxRange={maxRange} /></div>
             </div>
