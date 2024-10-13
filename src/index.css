@@ -59,6 +59,7 @@
 .song-row>*:first-child {
   border-left-width: 3px;
 }
+
 .song-row>*:last-child {
   border-right-width: 3px;
 }
@@ -70,11 +71,13 @@
   border-style: solid;
 }
 
-.chords-hidden .chord{
+.chords-hidden .chord {
   display: none;
 }
+
 /* .repeat-verse-chords-hidden .verse .chord{ */
-.repeat-verse-chords-hidden .verse:not(:first-child) .chord{
+.repeat-verse-chords-hidden .verse:not(:first-child) .chord {
   display: none;
 }
+
 /* .repeat-verse-chords-hidden :not(:first-child). */

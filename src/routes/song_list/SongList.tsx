@@ -8,7 +8,7 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Input, DropdownItem, Dr
 import Filtering from './Filters';
 import Sorting from './Sorting';
 import { SlidersHorizontal } from 'lucide-react';
-import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
+import { HashRouter, Route, Routes, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
@@ -28,7 +28,7 @@ const SongList = () => {
     })
 
     const [songListData, setSongListData] = useState(songs);
-
+    let navigate = useNavigate();
     useEffect(
         function updateSongList() {
             //TODO: search results could be MEMOized and then it could be at the end after filters to make it faster
@@ -44,8 +44,14 @@ const SongList = () => {
 
     useEffect(
         function showSong() {
+            const routeChange = (song: SongData) => {
+                let path = `song/${song.id}`;
+                navigate(path);
+            }
+        
             if (selectedSong) {
-                console.log(`Selected song: ${selectedSong.artist}: ${selectedSong.title}`)
+                console.log(`Selected song: ${selectedSong.artist}: ${selectedSong.title}`);
+                routeChange(selectedSong);
             }
         }, [selectedSong]
     );
@@ -164,19 +170,6 @@ const SongList = () => {
                             <div className="table-cell text-center">Language</div>
                         </div>
                     </div>  */}
-
-                {/* <div className="table-row-group">
-                        {songListData.map((song) => {
-                            return <Fragment key={song.id}>
-                                <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} />
-                                <div className="table-row h-5"></div>
-                            </Fragment>
-                            </Fragment>
-                        })}
-                                </Fragment>
-                        })}
-                                </div>
-                        })} */}
                 {songListData.map((song) => { return <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
             </div >
         </div >

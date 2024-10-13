@@ -34,21 +34,9 @@ interface SongRowProps {
 }
 
 function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
-    function decideWhatToShow(song) {
-        // if (song.lyricsLength() < 100) {
-        //     window.open(import.meta.env.BASE_URL + "/pdfs/"+JSON.parse(song.pdf_filenames.replace(/'/g, '"')).slice(-1),"_blank")
-        // } else {
-        //     setSelectedSong(song)
-        // }
-    }
-    let navigate = useNavigate();
-    const routeChange = (song: SongData) => {
-        let path = `song/${song.id}`;
-        navigate(path);
-    }
 
     return (
-        <div className="flex h-12 song-row w-full" onClick={() => { routeChange(song); }}>
+        <div className="flex h-12 song-row w-full" onClick={() => { setSelectedSong(song); }}>
             <div className="flex basis-[12%] min-w-14 rounded-l-full content-center justify-center bg-gray-100 relative pl-5">
                 <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                     <Instagram size={24} />

@@ -16,6 +16,4 @@ export default defineConfig({
 
   ],
   base: "/domcikuv-zpevnik-v2",
-
-  assetsInclude: ["/songs/images/*"],
 })
