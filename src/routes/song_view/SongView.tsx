@@ -7,7 +7,8 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2 } from 'lucide-react';
 import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
 import { SongData } from '../../types';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useLocalStorageState from 'use-local-storage-state'
 const chromaticScale = {
     "c": 0,
     "c#": 1,
@@ -111,13 +112,16 @@ function SongView({ }) {
             </div>
         );
     };
+    const [chordsHidden, setChordsHidden] = useLocalStorageState("chordsHidden", { defaultValue: false });
+    const [repeatChorus, setRepeatChorus] = useLocalStorageState("repeatChorus", { defaultValue: true });
+    const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("repeatVerseChords", { defaultValue: true });
+    const [fontSize, setFontSize] = useLocalStorageState("fontSize", { defaultValue: 2 });
+
+
+
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState('');
-    const [chordsHidden, setChordsHidden] = useState(false);
-    const [repeatChorus, setRepeatChorus] = useState(true);
-    const [repeatVerseChords, setRepeatVerseChords] = useState(true);
-    const [fontSize, setFontSize] = useState(2);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
     let navigate = useNavigate();
@@ -156,7 +160,7 @@ function SongView({ }) {
     return (<>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
             <NavbarContent justify="start">
-                <Button color="primary" isIconOnly variant='ghost'  onClick={() => navigate(-1)}>{<Undo2 />}</Button>
+                <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate(-1)}>{<Undo2 />}</Button>
             </NavbarContent>
             <NavbarContent as="div" justify="center" className='sm:flex w-full'>
                 <NavbarItem className='hidden sm:flex'>

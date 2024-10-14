@@ -10,6 +10,7 @@ import Sorting from './Sorting';
 import { SlidersHorizontal } from 'lucide-react';
 import { HashRouter, Route, Routes, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
+import useLocalStorageState from 'use-local-storage-state'
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
     const songs = songDB.songs;
@@ -17,14 +18,18 @@ const SongList = () => {
     const [searchResults, setSearchResults] = useState(songs);
     const [selectedSong, setSelectedSong] = useState(null); // State for selected song
     const [query, setQuery] = useState("");
-    const [sortSettings, setSortSettings] = useState<SortSettings>({
-        order: "ascending",
-        field: "title",
-    });
-    const [filterSettings, setFilterSettings] = useState<FilterSettings>({
-        language: "all",
-        vocal_range: "all",
-        capo: true
+    const [sortSettings, setSortSettings] = useLocalStorageState<SortSettings>("sortSettings", {
+        defaultValue: {
+            order: "ascending",
+            field: "title",
+        }
+    })
+    const [filterSettings, setFilterSettings] = useLocalStorageState<FilterSettings>("filterSettings", {
+        defaultValue: {
+            language: "all",
+            vocal_range: "all",
+            capo: true
+        }
     })
 
     const [songListData, setSongListData] = useState(songs);
@@ -48,7 +53,7 @@ const SongList = () => {
                 let path = `song/${song.id}`;
                 navigate(path);
             }
-        
+
             if (selectedSong) {
                 console.log(`Selected song: ${selectedSong.artist}: ${selectedSong.title}`);
                 routeChange(selectedSong);
