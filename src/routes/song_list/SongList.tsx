@@ -32,7 +32,14 @@ const SongList = () => {
         }
     })
 
-    const [songListData, setSongListData] = useState(songs);
+    useEffect(
+        function removeQuery() {
+            setQuery("");
+            setSearchResults(songs);
+        }, [sortSettings]
+    );
+
+    const [songListData, setSongListData] = useState([]);
     let navigate = useNavigate();
     useEffect(
         function updateSongList() {
@@ -145,7 +152,7 @@ const SongList = () => {
                     {navbar_items[0]}
                 </NavbarItem>
                 <NavbarItem isActive className='w-full'>
-                    <Search songs={songs} setSearchResults={setSearchResults} setQuery={setQuery} />
+                    <Search songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
                 </NavbarItem>
                 <NavbarItem className='hidden sm:flex'>
                     {navbar_items[1]}
