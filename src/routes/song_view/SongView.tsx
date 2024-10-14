@@ -1,10 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, NavbarItem, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import ChordSheetJS from 'chordsheetjs';
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2 } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check } from 'lucide-react';
 import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
 import { SongData } from '../../types';
 import { useNavigate } from "react-router-dom";
@@ -78,12 +78,12 @@ function replaceChorusDirective(song, repeatChorus) {
     return processedLines.join("\n");
 }
 
-function TransposeButtons({ songData, songRenderKey, setSongRenderKey }) {
+function TransposeButtons({ songRenderKey, setSongRenderKey }) {
     function getKeyIndex(key) {
         return renderKeys.map(x => x.toLowerCase()).indexOf(key.toLowerCase());
     }
     return (<>
-        <div className='hidden lg:flex'>
+        <div className='hidden sm:flex'>
             <ButtonGroup>
                 {renderKeys.map((chord) => (
                     <Button className="w-1/12" color="primary" isIconOnly key={`transpose_selection_${chord}`}
@@ -92,13 +92,115 @@ function TransposeButtons({ songData, songRenderKey, setSongRenderKey }) {
                 }
             </ButtonGroup>
         </div>
-        <div className='lg:hidden'>
+        <div className='sm:hidden'>
             <ButtonGroup>
                 <Button color="primary" isIconOnly onClick={() => setSongRenderKey(renderKeys[(getKeyIndex(songRenderKey) + 11) % 12])} variant='ghost'>-</Button>
                 <Button color="primary" isIconOnly onClick={() => setSongRenderKey(renderKeys[(getKeyIndex(songRenderKey) + 1) % 12])} variant='ghost'>+</Button>
             </ButtonGroup>
         </div>
     </>)
+}
+
+function TransposeSettings({ songRenderKey, setSongRenderKey }) {
+    return (<>
+        <div className='hidden md:flex'>
+            <ButtonGroup>
+                {renderKeys.map((chord) => (
+                    <Button className="w-1/12" color="primary" isIconOnly key={`transpose_selection_${chord}`}
+                        name="transpose_selection" onClick={() => { setSongRenderKey(chord) }} variant={songRenderKey && songRenderKey.toLowerCase() == chord.toLowerCase() ? "solid" : "ghost"} >{chord}</Button>
+                ))
+                }
+            </ButtonGroup>
+        </div>
+        <div className='md:hidden'>
+            <Dropdown closeOnSelect={false}>
+                <DropdownTrigger>
+                    <Button
+                        variant="ghost" color="primary" isIconOnly
+                    >
+                        <ArrowUpDown />
+                    </Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Tranpose chords">
+                    <DropdownItem>
+                        <TransposeButtons setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
+                    </DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
+        </div>
+    </>
+
+    )
+}
+
+function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setRepeatChorus, repeatVerseChords, setRepeatVerseChords }) {
+    return (
+        <>
+            <div className='hidden md:flex'>
+                <ButtonGroup>
+                    <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
+                </ButtonGroup>
+            </div>
+            <div className='flex md:hidden'>
+                <Dropdown closeOnSelect={false}>
+                    <DropdownTrigger>
+                        <Button
+                            variant="ghost" color="primary" isIconOnly
+                        >
+                            <ReceiptText />
+                        </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Change font size">
+                        <DropdownItem startContent={<Strikethrough />} key="hide_chords" onClick={() => { setChordsHidden(!chordsHidden) }} endContent={chordsHidden ? <Check /> : ""}>
+                            Hide chords
+                        </DropdownItem>
+                        <DropdownItem startContent={<Repeat />} key="hide_repeat_chorus" onClick={() => { setRepeatChorus(!repeatChorus) }} endContent={!repeatChorus ? <Check /> : ""}>
+                            Hide repeated chorus
+                        </DropdownItem>
+                        <DropdownItem startContent={<ReceiptText />} key="hide_verse_chords" onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} endContent={!repeatVerseChords ? <Check /> : ""}>
+                            Hide chords in repeated verses
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
+        </>
+    )
+}
+
+function FontSizeSettings({ fontSize, setFontSize }) {
+    const fontSizeStep = 0.2;
+
+    return (
+        <>
+            <div className='hidden md:flex'>
+                <ButtonGroup>
+                    <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
+                </ButtonGroup>
+            </div>
+            <div className='flex md:hidden'>
+                <Dropdown closeOnSelect={false}>
+                    <DropdownTrigger>
+                        <Button
+                            variant="ghost" color="primary" isIconOnly
+                        >
+                            <CaseSensitive />
+                        </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Change font size">
+                        <DropdownItem startContent={<Plus />} key="+" onClick={() => { setFontSize(fontSize + fontSizeStep) }}>
+                            Increase font size
+                        </DropdownItem>
+                        <DropdownItem startContent={<Minus />} key="-" onClick={() => { setFontSize(fontSize - fontSizeStep) }}>
+                            Decrease font size
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
+        </>
+    )
 }
 
 
@@ -121,17 +223,17 @@ function SongView({ }) {
 
 
     const [parsedContent, setParsedContent] = useState('');
-    const [songRenderKey, setSongRenderKey] = useState('');
+    const [songRenderKey, setSongRenderKey] = useState(songData.key);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
     let navigate = useNavigate();
 
     function renderSong(key) {
         let song = replaceChorusDirective(songData.content, repeatChorus);
-        song = parser.parse(song);
-        let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()] + 1 * song.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
-        song = song.transpose(difference)
-        const renderedSong = formatter.format(song);
+        let parsedSong = parser.parse(song);
+        let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()] + 1 * parsedSong.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
+        parsedSong = parsedSong.transpose(difference)
+        const renderedSong = formatter.format(parsedSong);
         setParsedContent(renderedSong);
     }
 
@@ -140,21 +242,12 @@ function SongView({ }) {
         //     return;
         // }
         renderSong(songRenderKey);
-    }, [songContent, songRenderKey, repeatChorus]);
+    }, [songRenderKey, repeatChorus]);
 
     const fullScreen = useMediaQuery(
         "only screen and (max-width : 600px)"
     );
-    const fontSizeStep = 0.2;
     const navbar_items = [
-
-        <ButtonGroup>
-            <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
-            <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
-            <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
-            <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
-            <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
-        </ButtonGroup>,
         <TransposeButtons songData={songData} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
     ]
     return (<>
@@ -162,25 +255,20 @@ function SongView({ }) {
             <NavbarContent justify="start">
                 <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate(-1)}>{<Undo2 />}</Button>
             </NavbarContent>
-            <NavbarContent as="div" justify="center" className='sm:flex w-full'>
-                <NavbarItem className='hidden sm:flex'>
-                    {navbar_items[0]}
+            <NavbarContent as="div" justify="end" className='w-full'>
+                <NavbarItem className=''>
+                    <TransposeSettings setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
                 </NavbarItem>
-                <NavbarItem className='hidden sm:flex'>
-                    {navbar_items[1]}
+                <NavbarItem className=''>
+                    <SpaceSavingSettings chordsHidden={chordsHidden} setChordsHidden={setChordsHidden} repeatChorus={repeatChorus} setRepeatChorus={setRepeatChorus} repeatVerseChords={repeatVerseChords} setRepeatVerseChords={setRepeatVerseChords} />
+                </NavbarItem>
+                <NavbarItem className=''>
+                    <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} />
                 </NavbarItem>
             </NavbarContent >
-            <NavbarContent className="sm:hidden" justify="end">
-                <NavbarMenuToggle icon={<SlidersHorizontal />} />
-            </NavbarContent>
-            <NavbarMenu>
-                {navbar_items.map((ni, index) => {
-                    return <NavbarMenuItem key={index}>
-                        {ni}
-                    </NavbarMenuItem>
-                }
-                )}
-            </NavbarMenu>
+            {/* <NavbarContent className="md:hidden" justify="end">
+
+            </NavbarContent> */}
         </Navbar >
         <div className={`flex text-center justify-center ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
     </>
