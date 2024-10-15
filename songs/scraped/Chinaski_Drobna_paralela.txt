@@ -1,0 +1,55 @@
+TRANS: -6 
+
+INTRO: 
+G  D  A   G  D  A   G  D  A   G  D  A
+  G         D            A 
+1. Ta stará dobrá hra je okoukaná. 
+  G         D                 A 
+   Nediv se brácho, kdekdo ji zná. 
+  G           D                 A 
+   Přestaň se ptát, bylo nebylo líp. 
+  G                D           A 
+   Včera je včera, bohužel bohudík.
+
+   G              D    A            Hmi
+R: Nic není jako dřív, nic není jak bejvávalo. 
+   G              D    A            Hmi
+   Nic není jako dřív, to se nám to mívávalo. 
+   G              D     A                  Hmi
+   Nic není jako dřív, ačkoliv máš všechno co si vždycky chtěla.
+   G              D     A                 Hmi
+   Nic není jako dřív, ačkoliv drobná paralela by tu byla.
+
+MEZIHRA: C  G  D  (4X)
+
+2. Snad nevěříš na tajný znamení.
+   Všechno to harampádí - balábile - mámení. 
+   Vážení platící, jak všeobecně ví se, 
+   včera i dneska, stále ta samá píseň.
+ 
+              G              D    A            Hmi
+R: Ačkoliv - nic není jako dřív, nic není jak bejvávalo...
+
+   G                D 
+*: Promlouvám k vám ústy múzy,
+   A            Hmi 
+   vzývám tón a lehkou chůzi, 
+   G             D 
+   vzývám zítřek nenadálý, 
+   A          Hmi 
+   odplouvám a mizím.
+    
+    G              D    A            Hmi
+R2: Nic není jako dřív, nic není jak bejvávalo.
+    G             D         A                   Hmi
+    Nic není jako dřív, jó, to se nám to dlouze kouřívalo.
+    G           D              A                 Hmi
+    Bohužel bohudík je s námi, ta nenahmatatelná intimita těla.
+    G             D             A           Hmi
+    Nic není jako dřív, jen fámy, bla-bla-bla-bla et-cetera.
+    G              D    A            Hmi
+    Nic není jako dřív, nic není jak bejvávalo,
+    G            D  A                       Hmi
+    bohužel bohudík, co myslíš ségra, je to hodně nebo málo?
+
+OUTRO: C  G  D  (4X)
