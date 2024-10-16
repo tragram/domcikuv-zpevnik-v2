@@ -20,6 +20,24 @@ A song should have the following entries:
 {tempo: 110}
 ```
 
+### Extensions of the ChordPro format
+Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features. For convenience, I have added the possibility to keep in memory more than one chorus. You can define the name of the chorus (note: it will be displayed!) in the directive by e.g. 
+```chordpro
+{start_of_chorus: R1}
+content
+{end_of_chorus}
+{start_of_chorus: R2}
+content
+{end_of_chorus}
+```
+and them later recall them by 
+```
+{chorus: R1}
+{chorus: R2}
+{chorus: R1}
+```
+This is compatible with the feature that hides repeated choruses (it will then just show the name of the chorus for reference).
+
 ### Image generation
 Since it's 2024, I decided to use AI for tasks other than helping me code this thing. The `generate_images.py` script loads the lyrics of each of the songs and generates a prompt (in English) for an image generation model.
 

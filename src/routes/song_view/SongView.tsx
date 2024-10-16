@@ -37,46 +37,66 @@ const renderKeys = ["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "
 
 function replaceChorusDirective(song, repeatChorus) {
     // ChordSheetJS doesn't know the {chorus} directive but I want to use it
-    const lines = song.split("\n");
-    let currentChorus = "";
-    let inChorus = false;
-    let processedLines = [];
+    const chorusMap = {}; // To store chorus sections by key
+    let currentChorus = null; // To store the current chorus being captured
+    let currentKey = null; // The key for the chorus
 
-    lines.forEach(line => {
-        // Detect start of chorus
-        if (line.trim() === "{start_of_chorus}") {
-            inChorus = true;
-            currentChorus = "{start_of_chorus}\n"; // Reset the chorus
-            return;
+    // Regex to match the start and end of chorus
+    const startOfChorusRegex = /\{start_of_chorus(?::\s*(\w+))?\}/; // Matches {start_of_chorus} or {start_of_chorus: key}
+    const endOfChorusRegex = /\{end_of_chorus\}/; // Matches {end_of_chorus}
+    const chorusCallRegex = /\{chorus(?::\s*(\w+))?\}/; // Matches {chorus} or {chorus: key}
+
+    // Split content into lines
+    const lines = song.split('\n');
+    let processedContent = [];
+
+    // Process each line
+    for (let line of lines) {
+        // Check for {start_of_chorus} or {start_of_chorus: key}
+        let startMatch = line.match(startOfChorusRegex);
+        if (startMatch) {
+            currentKey = startMatch[1] || 'default'; // Use key or default if no key is provided
+            currentChorus = [];
+            continue; // Skip this line from output
         }
 
-        // Detect end of chorus
-        if (line.trim() === "{end_of_chorus}") {
-            inChorus = false;
-            processedLines.push(currentChorus.trim()); // Push the chorus immediately
-            currentChorus += "{end_of_chorus}"; // End the chorus with the marker
-            return;
-        }
-
-        // Store chorus lines
-        if (inChorus) {
-            currentChorus += line + "\n";
-            return;
-        }
-
-        // Replace {chorus} with the last defined chorus
-        if (line.trim() === "{chorus}") {
-            if (repeatChorus) { processedLines.push(currentChorus.trim()); }
-            else {
-                processedLines.push("{start_of_chorus}R:{end_of_chorus}");
+        // Check for {end_of_chorus}
+        if (line.match(endOfChorusRegex)) {
+            if (currentChorus && currentKey) {
+                currentChorus[0]=`${currentKey != "default" ? currentKey : "R"}: `+currentChorus[0]
+                // Store the chorus with the start and end directives
+                chorusMap[currentKey] = `{start_of_chorus}\n${currentChorus.join('\n')}\n{end_of_chorus}`;
             }
-        } else {
-            processedLines.push(line);
+            processedContent.push(chorusMap[currentKey]);
+            currentChorus = null;
+            currentKey = null;
+            continue; // Skip this line from output
         }
-    });
 
-    return processedLines.join("\n");
+        // Check for {chorus} or {chorus: key}
+        let chorusCallMatch = line.match(chorusCallRegex);
+        if (chorusCallMatch) {
+            const chorusKey = chorusCallMatch[1] || 'default'; // Recall the chorus with the key or the default one
+            if (repeatChorus && chorusMap[chorusKey]) {
+                processedContent.push(chorusMap[chorusKey]); // Insert the stored chorus content
+            } else {
+                processedContent.push(`{start_of_chorus}\n${chorusKey != "default" ? chorusKey : "R"}:\n{end_of_chorus}`)
+            }
+            continue; // Skip the {chorus} line
+        }
+
+        // If we are inside a chorus, add the line to the chorus
+        if (currentChorus !== null) {
+            currentChorus.push(line);
+        } else {
+            // Otherwise, add the line to the processed content
+            processedContent.push(line);
+        }
+    }
+
+    return processedContent.join('\n');
 }
+
 
 function TransposeButtons({ songRenderKey, setSongRenderKey }) {
     function getKeyIndex(key) {
