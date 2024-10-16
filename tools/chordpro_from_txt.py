@@ -3,6 +3,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Tuple
 
+from utils import check_if_lyrics_present, extract_metadata, songs_path
+
 
 def is_chord_line(line):
     """
@@ -11,13 +13,14 @@ def is_chord_line(line):
     """
     # Check if the line contains mostly uppercase letters and spaces
     # Also check for typical chord symbols like A, G#m, etc.
-    chord_pattern = re.compile(r'[A-H][#bs]?m?[mi]?[5-7]?')
-    
+    chord_pattern = re.compile(r"[A-H][#bs]?m?[mi]?[5-7]?")
+
     # Count possible chord matches
     chords = chord_pattern.findall(line)
-    
+
     # If a significant portion of the line consists of chord names, assume it's a chord line
     return len(chords) > 0 and len(chords) >= len(line.split()) / 2
+
 
 def tokenize_with_positions(text):
     """
@@ -26,26 +29,27 @@ def tokenize_with_positions(text):
     """
     tokens = []
     pos = 0
-    for match in re.finditer(r'\S+', text):  # Match any non-space sequence
+    for match in re.finditer(r"\S+", text):  # Match any non-space sequence
         tokens.append((match.group(), match.start()))
     return tokens
 
-def place_chord(chord_token,lyric_token)-> tuple[str,bool]:
+
+def place_chord(chord_token, lyric_token) -> tuple[str, bool]:
     # returns the string and if it placed the chord, True as second return
     word, word_start_pos = lyric_token
-    chord, chord_pos=chord_token
+    chord, chord_pos = chord_token
 
     # even if the word fits, force the chords in front of prepositions ()
-    if chord_pos-(word_start_pos+len(word))>=0:
+    if chord_pos - (word_start_pos + len(word)) >= 0:
         return f"{word} ", False
     # move the chords at the start of word
-    elif chord_pos-word_start_pos<=2 or (chord_pos-word_start_pos<=3 and len(word)==3):
+    elif chord_pos - word_start_pos <= 2 or (
+        chord_pos - word_start_pos <= 3 and len(word) == 3
+    ):
         return f"[{chord}]{word} ", True
     else:
-        word_split_idx=chord_pos-word_start_pos
+        word_split_idx = chord_pos - word_start_pos
         return f"{word[:word_split_idx]}[{chord}]{word[word_split_idx:]} ", True
-
-
 
 
 def insert_chords_in_lyrics(chord_line, lyric_line):
@@ -59,24 +63,26 @@ def insert_chords_in_lyrics(chord_line, lyric_line):
     lyric_tokens = tokenize_with_positions(lyric_line)
 
     # Find all chords and their positions in the chord line
-    chord_tokens = [(m.group(), m.start()) for m in re.finditer(r'\S+', chord_line)]
+    chord_tokens = [(m.group(), m.start()) for m in re.finditer(r"\S+", chord_line)]
     token_index = 0  # Track the current word in the lyrics
     for chord_token in chord_tokens:
         # Ensure we don't overshoot the lyric length
         if token_index >= len(lyric_tokens):
-            result.append(f"[{chord_token[0]}]")  # Append any remaining chords if they are after the lyrics
+            result.append(
+                f"[{chord_token[0]}]"
+            )  # Append any remaining chords if they are after the lyrics
             continue
-        
-        chord_placed=False
-        while not chord_placed and token_index<len(lyric_tokens):
-            ret,chord_placed=place_chord(chord_token,lyric_tokens[token_index])
-            token_index+=1
+
+        chord_placed = False
+        while not chord_placed and token_index < len(lyric_tokens):
+            ret, chord_placed = place_chord(chord_token, lyric_tokens[token_index])
+            token_index += 1
             result.append(ret)
 
     # Add any remaining lyric tokens after all chords have been inserted
     if token_index < len(lyric_tokens):
         for word, _ in lyric_tokens[token_index:]:
-            result.append(word+" ")
+            result.append(word + " ")
     return "".join(result)
 
 
@@ -107,19 +113,19 @@ def add_chordpro_directives(paragraph):
     """
     output_lines = []
 
-    if(len(paragraph)==0):
+    if len(paragraph) == 0:
         return ""
     first_line = paragraph[0].strip()
 
     # Detect verses (e.g., "1. ", "2. ")
-    verse_match = re.match(r'\d+\.\s', first_line)
-    chorus_match = re.match(r'R\d*:\s*', first_line)
+    verse_match = re.match(r"\d+\.\s", first_line)
+    chorus_match = re.match(r"R\d*:\s*", first_line)
     if verse_match:
         output_lines.append("{start_of_verse}")
         for line in paragraph:
             # Remove the verse number from the first line
             if line == paragraph[0]:
-                output_lines.append(line[len(verse_match.group()):].strip())
+                output_lines.append(line[len(verse_match.group()) :].strip())
             else:
                 output_lines.append(line)
         output_lines.append("{end_of_verse}")
@@ -133,7 +139,7 @@ def add_chordpro_directives(paragraph):
             for line in paragraph:
                 # Remove "R: " from the first line of the chorus
                 if line == paragraph[0]:
-                    output_lines.append(line[len(chorus_match.group()):].strip())
+                    output_lines.append(line[len(chorus_match.group()) :].strip())
                 else:
                     output_lines.append(line)
             output_lines.append("{end_of_chorus}")
@@ -143,6 +149,8 @@ def add_chordpro_directives(paragraph):
         output_lines.extend(paragraph)
 
     return output_lines
+
+
 def process_paragraph(song_lines):
     """
     Processes an entire song by detecting chord and lyric lines, inserting chords into the lyrics,
@@ -161,58 +169,44 @@ def process_paragraph(song_lines):
                 structured_song.append(chordpro_line)
                 chord_line = None  # Reset chord line after processing
             else:
-                structured_song.append(line.strip())  # Add the lyric line if no chord line to match
+                structured_song.append(
+                    line.strip()
+                )  # Add the lyric line if no chord line to match
     # Add ChordPro directives after processing the chords
     chordpro_result = add_chordpro_directives(structured_song)
 
     return "\n".join(chordpro_result)
 
+
 def process_song(song_lines):
-    paragraphs=group_lines_into_paragraphs(song_lines)
-    result=[]
+    paragraphs = group_lines_into_paragraphs(song_lines)
+    result = []
     for paragraph in paragraphs:
-        processed=process_paragraph(paragraph)
+        processed = process_paragraph(paragraph)
         result.append(processed)
     return "\n\n".join(result)
 
-def check_if_lyrics_present(chordpro_filepath):
-    """
-    Checks if there are any lyrics (non-directive, non-chord) in the content.
-    """
-    # Split the content into lines
-    with open(chordpro_filepath,"r",encoding="utf-8") as f:
-        lines=f.readlines()
-        
-        for line in lines:
-            # Skip lines that are purely directives (e.g., {title: ...}, {artist: ...}, etc.)
-            if re.match(r"^\{.*\}$", line.strip()):
-                continue
-            
-            # If there's anything that isn't a directive and isn't empty, assume it's lyrics
-            if line.strip():  # Any non-empty line that isn't a directive
-                return True
-        
-        return False
 
-def process_scraped_folder(folder_path):
+def process_scraped_folder(folder_path: Path):
     """
     Walks through a folder and processes all ChordPro (.pro or .cho) files.
 
     """
-    chordpro_files=list(Path(folder_path).glob("*.txt"))
+    chordpro_files = list(folder_path.glob("*.txt"))
     for filepath in chordpro_files:
         print("-" * 40)
         print(f"Processing {filepath}")
-        chordpro_filepath=Path(f"songs/chordpro/{filepath.stem}.pro")
+        chordpro_filepath = Path(f"songs/chordpro/{filepath.stem}.pro")
         if check_if_lyrics_present(chordpro_filepath):
             print(f"{chordpro_filepath} contains lyrics --> skipping")
             continue
         with open(filepath, "r", encoding="utf-8") as file:
             song_lines = file.readlines()
-        
+
         chordpro_output = process_song(song_lines)
         print(chordpro_output)
-        with open(chordpro_filepath,'a+',encoding="utf-8") as file:
+        with open(chordpro_filepath, "a+", encoding="utf-8") as file:
             file.write(chordpro_output)
 
-process_scraped_folder("songs/scraped")
+
+process_scraped_folder(songs_path() / "scraped")

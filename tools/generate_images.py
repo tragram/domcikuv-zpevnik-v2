@@ -4,6 +4,7 @@ from pathlib import Path
 import yaml
 from huggingface_hub import InferenceClient, login
 from openai import OpenAI
+from utils import songs_path
 
 with open("secrets.yaml", "r") as f:
     secrets = yaml.safe_load(f)
@@ -61,8 +62,10 @@ def remove_chordpro_directives(content):
 
 
 def generate_missing_prompts(model="gpt-4o-mini"):
-    songs = Path("songs/chodpro/").glob("*.pro")
-    generated_prompts = [p.stem for p in Path("songs/image_prompts").glob("*.yaml")]
+    songs = Path(songs_path() / "chordpro/").glob("*.pro")
+    generated_prompts = [
+        p.stem for p in Path(songs_path() / "image_prompts").glob("*.yaml")
+    ]
 
     for song in songs:
         if (song.stem) in generated_prompts:
@@ -70,10 +73,10 @@ def generate_missing_prompts(model="gpt-4o-mini"):
             continue
         song_str = load_chordpro_file(song)
         lyrics = remove_chordpro_directives(song_str)
-        if len(lyrics)<100:
-            print(song.stem,"- lyrics too short --> skipping")
+        if len(lyrics) < 100:
+            print(song.stem, "- lyrics too short --> skipping")
             continue
-        response = summarize_lyrics(lyrics)
+        response = summarize_lyrics(lyrics, model)
         save_response(response, song.stem)
         # break
 
@@ -90,8 +93,8 @@ def generate_missing_images(model="black-forest-labs/FLUX.1-dev"):
     client = InferenceClient(
         token=secrets["hugging_face_token"],
     )
-    for song_prompt in Path("songs/image_prompts").glob("*.yaml"):
-        image_folder = Path(f"songs/illustrations/{song_prompt.stem}")
+    for song_prompt in Path(songs_path() / "image_prompts").glob("*.yaml"):
+        image_folder = Path(songs_path() / f"illustrations/{song_prompt.stem}")
         image_folder.mkdir(parents=True, exist_ok=True)
         image_filename = image_folder / model2filename(model)
         if image_filename.is_file():

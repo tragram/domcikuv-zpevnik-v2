@@ -2,17 +2,18 @@ import glob
 import os
 
 import unidecode
+from utils import normalize_string, songs_path
 
 # Example normalize_string function (customize as needed)
 
-def normalize_string(input_str):
-    """Convert a string to ASCII and replace spaces with underscores."""
-    # Convert to closest ASCII representation using unidecode
-    ascii_str = unidecode.unidecode(input_str)
-    # delete any non-alphanumeric characters
-    # Replace spaces with underscores
-    ascii_str = ascii_str.replace(" ", "_").replace("'","").replace("._","_").replace("+","")
-    return ascii_str
+# def normalize_string(input_str):
+#     """Convert a string to ASCII and replace spaces with underscores."""
+#     # Convert to closest ASCII representation using unidecode
+#     ascii_str = unidecode.unidecode(input_str)
+#     # delete any non-alphanumeric characters
+#     # Replace spaces with underscores
+#     ascii_str = ascii_str.replace(" ", "_").replace("'","").replace("._","_").replace("+","")
+#     return ascii_str
 
 # Function to rename PDF files in a directory
 def rename_pdfs_in_directory(directory):
@@ -36,5 +37,5 @@ def rename_pdfs_in_directory(directory):
         os.rename(file_path, new_file_path)
         print(f"Renamed: {file_path} -> {new_file_path}")
 
-directory_path = "songs/pdfs"
+directory_path = songs_path()/"pdfs"
 rename_pdfs_in_directory(directory_path)
