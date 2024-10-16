@@ -342,11 +342,11 @@ function SongView({ }) {
     );
 
     return (<>
-        <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
+        <Navbar shouldHideOnScroll maxWidth='xl' isBordered className=''>
             <NavbarContent justify="start">
                 <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
             </NavbarContent>
-            <NavbarContent as="div" justify="end" className='w-full'>
+            <NavbarContent as="div" justify="center" className='w-full max-sm:gap-2.5'>
                 <NavbarItem className=''>
                     <TransposeSettings setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
                 </NavbarItem>
