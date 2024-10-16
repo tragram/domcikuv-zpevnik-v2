@@ -29,10 +29,13 @@
   height: 1em
 }
 
-.chord:after,
 .lyrics:after {
   content: '\200b'
 }
+.chord:after{
+  content: '\00a0'
+}
+
 
 .chorus {
   font-weight: 700;
