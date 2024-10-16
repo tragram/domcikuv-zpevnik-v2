@@ -20,6 +20,8 @@ A song should have the following entries:
 {tempo: 110}
 ```
 
+Note that this project assumes the Czech/German note naming scheme, where the notes go as follows: `C C#/Des D D#/Es E F F#/Ges G G#/As A A#/B H C`.
+
 ### Extensions of the ChordPro format
 Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features. For convenience, I have added the possibility to keep in memory more than one chorus. You can define the name of the chorus (note: it will be displayed!) in the directive by e.g. 
 ```chordpro

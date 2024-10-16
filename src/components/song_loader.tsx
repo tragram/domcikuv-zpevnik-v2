@@ -58,7 +58,6 @@ async function fetchSongs(): Promise<SongDB> {
 }
 
 async function fetchSongContent({ params }) {
-    console.log("Fetching song", params.id);
     // this is not the most efficient but the URLs will look great!
     const songDB = await fetchSongs();
     let songData = songDB.songs.find(song => song.id == params.id);

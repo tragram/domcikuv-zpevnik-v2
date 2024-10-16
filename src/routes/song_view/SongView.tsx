@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
-import ChordSheetJS from 'chordsheetjs';
+import ChordSheetJS, { ChordLyricsPair } from 'chordsheetjs';
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check } from 'lucide-react';
@@ -230,7 +230,7 @@ function guessKey(songContent: string) {
     console.log(match)
     // If a match is found, return the first character of the chord
     if (match) {
-        const matched_chord=match[0].slice(1,-1);
+        const matched_chord = match[0].slice(1, -1);
         console.log(matched_chord)
         return matched_chord[0];
     }
@@ -238,12 +238,63 @@ function guessKey(songContent: string) {
     // If no chord is found, return "C"
     return "C";
 }
+function convertChord(chord, toEnglish = true) {
+    // chordsheet.js does not support german/czech chord names
+    // Function to convert a single chord (e.g., "Ami7") between English and German
+    // Dictionary mapping between English and German chords
+    const englishToGerman = {
+        "A": "A", "B": "H", "C": "C", "D": "D", "E": "E", "F": "F", "G": "G",
+        "A#": "A#", "C#": "C#", "D#": "D#", "F#": "F#", "G#": "G#",
+        "Ab": "Ab", "Bb": "B", "Cb": "Cb", "Db": "Db", "Eb": "Eb", "Gb": "Gb",
+    };
+
+    const germanToEnglish = {
+        "A": "A", "H": "B", "C": "C", "D": "D", "E": "E", "F": "F", "G": "G",
+    };
+    if (!chord) {
+        return chord;
+    }
+    // Extract the base note (first letter) and keep the rest of the chord (suffix)
+    let baseNote = chord[0].toUpperCase(); // First letter is the base chord
+    let suffix = chord.slice(1); // The rest of the chord (e.g., "m", "7")
+    if (suffix.length > 0) {
+        if (suffix[0] === "b" && !toEnglish) {
+            baseNote = baseNote + suffix[0];
+            suffix = suffix.slice(1);
+        }
+        // else if (suffix[0] === "#") {
+        //     baseNote.append(suffix[0]);
+        //     suffix = suffix.slice(1);
+        // }
+    }
+
+    // Convert the base note
+    const convertedBase = toEnglish ? germanToEnglish[baseNote] : englishToGerman[baseNote];
+
+    // Return the converted chord with the original suffix
+    return convertedBase ? convertedBase + suffix : chord;
+}
+
+// Function to convert all chords in a chordpro file
+function convertChordsInChordPro(content, toEnglish = true) {
+    // Convert the {key: ...} directive
+    content = content.replace(/\{key:\s*([A-Ha-h][^\s]*)\}/, (match, key) => {
+        console.log(match)
+        return `{key: ${convertChord(key, toEnglish)}}`;
+    });
+
+    // Convert all chords in square brackets (e.g., [Ami7], [B7], etc.)
+    content = content.replace(/\[([A-Ha-h][^\]]{0,10})\]/g, (match, chord) => {
+        return `[${convertChord(chord, toEnglish)}]`;
+    });
+
+    return content;
+}
 
 function SongView({ }) {
     let songData = useLoaderData() as SongData;
-    const songContent = songData.content;
-    if (!songData.key){
-        songData.key=guessKey(songContent);
+    if (!songData.key) {
+        songData.key = guessKey(songData.content);
     }
     if (songData.lyricsLength() < 50) {
         return (
@@ -261,16 +312,23 @@ function SongView({ }) {
 
 
     const [parsedContent, setParsedContent] = useState('');
-    const [songRenderKey, setSongRenderKey] = useState(songData.key );
+    const [songRenderKey, setSongRenderKey] = useState(songData.key);
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
     let navigate = useNavigate();
 
     function renderSong(key) {
-        let song = replaceChorusDirective(songData.content, repeatChorus);
+        let song = replaceChorusDirective(convertChordsInChordPro(songData.content), repeatChorus);
         let parsedSong = parser.parse(song);
         let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()] + 1 * parseInt(parsedSong.capo); // using capo in chordpro is not just a comment but actually modifies the chords... 
-        parsedSong = parsedSong.transpose(difference)
+        parsedSong = parsedSong.transpose(difference);
+        // convert back to Czech chord names after transposition
+        parsedSong = parsedSong.mapItems((item) => {
+            if (item instanceof ChordLyricsPair) {
+                return new ChordLyricsPair(convertChord(item.chords, false), item.lyrics, item.annotation)
+            }
+            return item;
+        })
         const renderedSong = formatter.format(parsedSong);
         setParsedContent(renderedSong);
     }
