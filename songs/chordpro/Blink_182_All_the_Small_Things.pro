@@ -17,17 +17,17 @@
 {language: English}
 
 {start_of_verse}
-[C]All the [G]small things 
-[F]True care, [G]truth brings 
-[C]I'll take [G]one lift 
-[F]Your ride [G]best trip 
-[C]Always [G]I know 
-[F]you'll be [G]at my show 
-[C]Watching, [G]waiting, [F]commise[G]rating 
+[C]All the [G]small things
+[F]True care, [G]truth brings
+[C]I'll take [G]one lift
+[F]Your ride [G]best trip
+[C]Always [G]I know
+[F]you'll be [G]at my show
+[C]Watching, [G]waiting, [F]commise[G]rating
 {end_of_verse}
 
 {start_of_chorus}
-[C]Say it ain't [G]so, I will not [F]go, 
+[C]Say it ain't [G]so, I will not [F]go,
 Turn the lights [G]off, Carry me [C]home
 [C],[G],[F],[C]
 Na, [G]na... [F],[C]
@@ -42,21 +42,21 @@ Na, [G]na... [F],[C]
 
 
 {start_of_verse}
-[C]All the [G]small things 
-[F]True care, [G]truth brings 
-[C]I'll take [G]one lift 
-[F]Your ride [G]best trip 
-[C]Always [G]I know 
-[F]you'll be [G]at my show 
-[C]Watching, [G]waiting, [F]commise[G]rating 
+[C]All the [G]small things
+[F]True care, [G]truth brings
+[C]I'll take [G]one lift
+[F]Your ride [G]best trip
+[C]Always [G]I know
+[F]you'll be [G]at my show
+[C]Watching, [G]waiting, [F]commise[G]rating
 {end_of_verse}
 
 {chorus}
 
 {start_of_chorus}
-[C]Say it ain't so, I will not [G]go, 
-Turn the lights [F]off, Carry me [C]home 
-Keep your head still, I'll be your [G]thrill, 
+[C]Say it ain't so, I will not [G]go,
+Turn the lights [F]off, Carry me [C]home
+Keep your head still, I'll be your [G]thrill,
 The night will go [F]on, the night will go [F]on,
-My little wind[C]mill 
+My little wind[C]mill
 {end_of_chorus}

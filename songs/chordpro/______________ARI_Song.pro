@@ -43,6 +43,6 @@ kterej nemá už co [G]ztratit.
 
 {start_of_verse}
 [G]Úúú, vyrobím si v Matlabu
-[D]ňákou pěknou [C]ko[C/H]so[C/A]čtver[C]co[C/D]vou 
+[D]ňákou pěknou [C]ko[C/H]so[C/A]čtver[C]co[C/D]vou
 [D]ma[Am]ti[G]ci.
 {end_of_verse}
