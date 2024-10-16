@@ -257,7 +257,7 @@ function convertChord(chord, toEnglish = true) {
     };
 
     const germanToEnglish = {
-        "A": "A", "H": "B", "C": "C", "D": "D", "E": "E", "F": "F", "G": "G",
+        "A": "A", "H": "B", "B":"Bb", "C": "C", "D": "D", "E": "E", "F": "F", "G": "G",
     };
     if (!chord) {
         return chord;
