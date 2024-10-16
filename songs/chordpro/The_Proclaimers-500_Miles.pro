@@ -46,7 +46,7 @@ I'm gonna [G5]be the man who's [A]growing old with [D5]you.
 {chorus}
 
 {start_of_bridge}
-|: Da Da Da [D5][G5][A][D5] :|
+|: Da Da Da [D5][G5][A][D5]:|
 {end_of_bridge}
 
 {start_of_verse}
@@ -67,7 +67,7 @@ I'm gonna [Em7]be the man who's [As]coming home with [D5]you
 {chorus}
 
 {start_of_bridge}
-|: Da Da Da [D5][G5][A][D5] :|
+|: Da Da Da [D5][G5][A][D5]:|
 {end_of_bridge}
 
 {start_of_chorus}

@@ -7,7 +7,6 @@
 {start_melody: a a e f e}
 {key: a}
 
-
 {start_of_verse}
 To[Am]já, zrozená z nemoc[G]ných básníků,
 z tichých [Em]vět po nocích utka[Am]ná,
