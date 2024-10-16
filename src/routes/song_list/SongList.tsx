@@ -134,54 +134,25 @@ const SongList = () => {
         }
     }
 
-    const navbar_items = [
-        <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />,
-
-        <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={songDB.maxRange} />,
-        <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
-    ]
     return (<>
-        {/* <Link to={`/song/${exampleSong.artist}/${exampleSong.title}`}>Song</Link> */}
-        {/* <Song selectedSong={selectedSong} /> */}
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
-            <NavbarContent className="sm:hidden" justify="start">
-                <NavbarMenuToggle icon={<SlidersHorizontal />} />
-            </NavbarContent>
             <NavbarContent as="div" justify="center" className='sm:flex w-full'>
-                <NavbarItem className='hidden sm:flex'>
-                    {navbar_items[0]}
+                <NavbarItem className=''>
+                    <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />
                 </NavbarItem>
                 <NavbarItem isActive className='w-full'>
                     <Search songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
                 </NavbarItem>
-                <NavbarItem className='hidden sm:flex'>
-                    {navbar_items[1]}
+                <NavbarItem className=''>
+                    <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={songDB.maxRange} />
                 </NavbarItem>
-                <NavbarItem className='hidden sm:flex'>
-                    {navbar_items[2]}
+                <NavbarItem className=''>
+                    <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
                 </NavbarItem>
             </NavbarContent >
-            <NavbarMenu>
-                {navbar_items.map((ni, index) => {
-                    return <NavbarMenuItem key={index}>
-                        {ni}
-                    </NavbarMenuItem>
-                }
-                )}
-            </NavbarMenu>
         </Navbar >
         <div className='flex flex-col'>
             <div className="container mx-auto flex flex-col p-5 justify-center gap-3.5 max-w-2xl">
-                {/* <div className="hidden md:table-header-group">
-                        <div className="table-row align-center ">
-                            <div className="table-cell text-left"></div>
-                            <div className="table-cell text-left">Song</div>
-                            <div className="table-cell text-center hidden sm:table-cell">Date added</div>
-                            <div className="table-cell text-center hidden lg:table-cell">Capo</div>
-                            <div className="table-cell text-center">Vocal</div>
-                            <div className="table-cell text-center">Language</div>
-                        </div>
-                    </div>  */}
                 {songListData.map((song) => { return <SongRow key={song.id} maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
             </div >
         </div >

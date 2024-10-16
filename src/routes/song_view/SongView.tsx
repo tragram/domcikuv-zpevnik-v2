@@ -308,9 +308,6 @@ function SongView({ }) {
     const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("repeatVerseChords", { defaultValue: true });
     const [fontSize, setFontSize] = useLocalStorageState("fontSize", { defaultValue: 2 });
 
-
-
-
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
     const parser = new ChordSheetJS.ChordProParser();

@@ -10,7 +10,7 @@ import LanguageFlag from './LanguageFlag';
 //TODO: icon for language in searchbar and possibly avatars https://nextui.org/docs/components/select
 //TODO: why do buttons change size when they are selected/variant changed to 'solid'?
 
-function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, iconOnly }) {
+function languageChoices(languages) {
     function capitalizeFirstLetter(str) {
         if (!str) return '';
 
@@ -20,7 +20,15 @@ function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, icon
         return String.fromCodePoint(firstCodePoint).toUpperCase() + str.slice(index);
     }
     let language_choices = Object.keys(languages).map((language) => ({ text: capitalizeFirstLetter(language), value: language }));
+    language_choices.unshift({ text: "All", value: "all" });
+    return language_choices.map((choice) => (
+        <DropdownItem key={choice.value} startContent={<LanguageFlag language={choice.text} />}>
+            {choice.text}
+        </DropdownItem>
+    ))
+}
 
+function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, iconOnly }) {
     return (
         <Dropdown >
             <DropdownTrigger>
@@ -30,12 +38,25 @@ function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, icon
                 </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Language Choices" onAction={(key) => setSelectedLanguage(key)}>
-                {language_choices.map((choice) => (
-                    <DropdownItem key={choice.value} startContent={<LanguageFlag language={choice.text} />}>{choice.text}</DropdownItem>
-                ))}
+                {languageChoices(languages)}
             </DropdownMenu>
         </Dropdown>
     )
+}
+
+function VocalRangeSlider({ maxRange, vocalRange, setVocalRange }) {
+    return (
+        <Slider
+            label="Semitones"
+            step={1}
+            minValue={0}
+            maxValue={maxRange}
+            defaultValue={vocalRange === "all" ? [0, maxRange] : vocalRange}
+            formatOptions={{ style: "decimal" }}
+            className="max-w-md"
+            onChangeEnd={(value) => { setVocalRange(value) }} />
+    )
+
 }
 
 function VocalRangeFilter({ maxRange, vocalRange, setVocalRange, iconOnly }) {
@@ -47,17 +68,10 @@ function VocalRangeFilter({ maxRange, vocalRange, setVocalRange, iconOnly }) {
                     startContent={iconOnly ? "" : <Music />} isIconOnly={!iconOnly}>{iconOnly ? "Range" : ""}
                 </Button>
             </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
+            <DropdownMenu aria-label="Vocal range filter slider">
                 <DropdownItem key="slider" closeOnSelect={false}>
-                    <Slider
-                        label="Semitones"
-                        step={1}
-                        minValue={0}
-                        maxValue={maxRange}
-                        defaultValue={vocalRange === "all" ? [0, maxRange] : vocalRange}
-                        formatOptions={{ style: "decimal" }}
-                        className="max-w-md"
-                        onChangeEnd={(value) => { setVocalRange(value) }} /></DropdownItem>
+                    <VocalRangeSlider maxRange={maxRange} vocalRange={vocalRange} setVocalRange={setVocalRange} />
+                </DropdownItem>
                 <DropdownItem key="reset" onClick={() => setVocalRange("all")}>Reset</DropdownItem>
             </DropdownMenu>
         </Dropdown>
@@ -82,12 +96,45 @@ function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange 
 
 
 function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
+    const filterActive = filterSettings.language === "all" && filterSettings.vocal_range === "all" && filterSettings.capo;
+    const setVocalRange = (range) => setFilterSettings({ ...filterSettings, vocal_range: range });
+    const flipCapoSetting = () => setFilterSettings({ ...filterSettings, capo: !filterSettings.capo })
     return (
         <>
-            <FilterButtons languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
-            <div className='max-lg:hidden'>
+            <div className='hidden lg:flex'>
+                <FilterButtons languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
             </div>
             <div className='lg:hidden'>
+                <Dropdown>
+                    <DropdownTrigger>
+                        <Button
+                            variant={filterActive ? "ghost" : "solid"} color="primary" disableAnimation
+                            startContent={<Filter />} isIconOnly>
+                        </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Filtering">
+                        <DropdownSection showDivider>
+                            <DropdownItem onClick={flipCapoSetting} key="slider" closeOnSelect={false} endContent={filterSettings.capo ? <Check /> : ""}>
+                                Allow capo
+                            </DropdownItem>
+                        </DropdownSection>
+
+                        <DropdownSection showDivider title="Select song range">
+                            <DropdownItem key="slider" closeOnSelect={false}>
+                                <VocalRangeSlider maxRange={maxRange} vocalRange={filterSettings.vocal_range} setVocalRange={(range) => setVocalRange(range)} />
+                            </DropdownItem>
+                            <DropdownItem key="reset" onClick={() => setVocalRange("all")}>Reset
+
+                            </DropdownItem>
+                        </DropdownSection>
+
+                        <DropdownSection title="Select languages">
+                            {languageChoices(languages)}
+                            {/* <DropdownItem key="languages" closeOnSelect={false}>
+                            </DropdownItem> */}
+                        </DropdownSection>
+                    </DropdownMenu>
+                </Dropdown>
             </div>
         </>
     )
