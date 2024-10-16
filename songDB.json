@@ -552,7 +552,7 @@
     "start_melody": "c h",
     "chordpro_file": "Die_Toten_Hosen_Tage_Wie_Diese.pro",
     "pdf_filenames": "['die_toten_hosen_tage_wie_diese-sken.pdf', 'die_toten_hosen_tage_wie_diese-comp.pdf', 'die_toten_hosen_tage_wie_diese-gen.pdf']",
-    "content_hash": "b178a64269518b7b5b83fa235a70e471c8c73594"
+    "content_hash": "878941607111be5cd48e016094419024f12c1620"
   },
   {
     "title": "Jolene",
@@ -567,7 +567,7 @@
     "start_melody": "a d",
     "chordpro_file": "Dolly_PartonMiley_Cyrus_Jolene.pro",
     "pdf_filenames": "['dolly_partonmiley_cyrus_jolene-sken.pdf', 'dolly_partonmiley_cyrus_jolene-comp.pdf']",
-    "content_hash": "4aa6fc47fede884ba8eb9fb00f70928b5b61d5a9"
+    "content_hash": "0a92a5ed5100ae13c3320257a228448bc71fd54d"
   },
   {
     "title": "Can You Feel The Love Tonight",
@@ -582,7 +582,7 @@
     "start_melody": "",
     "chordpro_file": "Elton_John-Can_You_Feel_The_Love_Tonight.pro",
     "pdf_filenames": "",
-    "content_hash": "6b691ac328142600fe6a74b8501c043dc8bd21be"
+    "content_hash": "e4736dd790d979a384661c562b9c83517aef3ae7"
   },
   {
     "title": "I Can't Help Falling In Love With You",
@@ -597,7 +597,7 @@
     "start_melody": "",
     "chordpro_file": "Elvis_Presley-Cant_Help_Falling_In_Love_With_You.pro",
     "pdf_filenames": "",
-    "content_hash": "7ab62d806802c96fe37379a24b9ac1742a785af7"
+    "content_hash": "a1bd798b14ea70251cfc23f53754c5d5731e4e2b"
   },
   {
     "title": "In The Ghetto",
@@ -612,7 +612,7 @@
     "start_melody": "a",
     "chordpro_file": "Elvis_Presley_In_The_Ghetto.pro",
     "pdf_filenames": "['elvis_presley_in_the_ghetto-sken.pdf', 'elvis_presley_in_the_ghetto-comp.pdf']",
-    "content_hash": "65af1488f92d32a66346570d3438dd7e28f65437"
+    "content_hash": "705910e7d9076dfc99d35fb3a018702d76251cb9"
   },
   {
     "title": "Tři Králové",
@@ -627,7 +627,7 @@
     "start_melody": "h a",
     "chordpro_file": "Epy_De_Mye_Tri_Kralove.pro",
     "pdf_filenames": "['epy_de_mye_tri_kralove-sken.pdf', 'epy_de_mye_tri_kralove-comp.pdf']",
-    "content_hash": "0461e51071f4963f2e86529aab9e75c1f162f525"
+    "content_hash": "5b37afd88e111f5dbf0ff15251632e921922acb4"
   },
   {
     "title": "Nad ránem",
@@ -642,7 +642,7 @@
     "start_melody": "h",
     "chordpro_file": "Epy_De_Mye__Nad_ranem.pro",
     "pdf_filenames": "['epy_de_mye__nad_ranem-sken.pdf', 'epy_de_mye__nad_ranem-comp.pdf']",
-    "content_hash": "3484040921b3f06f8e14305c0cc1964029061a2a"
+    "content_hash": "d48ad37ed8ae7354995e69d9d6032f5598a3d782"
   },
   {
     "title": "Lovec Amorů",
@@ -657,7 +657,7 @@
     "start_melody": "h",
     "chordpro_file": "Epy_de_Mye_Lovec_Amoru.pro",
     "pdf_filenames": "['epy_de_mye_lovec_amoru-sken.pdf', 'epy_de_mye_lovec_amoru-comp.pdf']",
-    "content_hash": "65060540e1644e385adae0894c287415ec958464"
+    "content_hash": "acf0fd023b45e940c21210ec8c07bef719a2b3ec"
   },
   {
     "title": "Obyčejné fotky",
@@ -672,7 +672,7 @@
     "start_melody": "d d h",
     "chordpro_file": "Epy_de_Mye_Obycejne_fotky.pro",
     "pdf_filenames": "['epy_de_mye_obycejne_fotky-sken.pdf', 'epy_de_mye_obycejne_fotky-comp.pdf']",
-    "content_hash": "ea49cc074c9a0ac7c7f19e0273f686df94d0187e"
+    "content_hash": "8e1010f9a7fa70620af950446a29c4b48b019e37"
   },
   {
     "title": "Ženy mužů",
@@ -687,7 +687,7 @@
     "start_melody": "a d",
     "chordpro_file": "Epy_de_Mye_Zeny_muzu.pro",
     "pdf_filenames": "['epy_de_mye_zeny_muzu-sken.pdf', 'epy_de_mye_zeny_muzu-comp.pdf']",
-    "content_hash": "f95aa9a1dd75d639d7fdcc83705bc16650908389"
+    "content_hash": "42fe6340cdd0a1f31f3aa212676d140936cf558a"
   },
   {
     "title": "Měls mě vůbec rád",
@@ -702,7 +702,7 @@
     "start_melody": "c d",
     "chordpro_file": "Ewa_Farna_Mels_me_vubec_rad.pro",
     "pdf_filenames": "['ewa_farna_mels_me_vubec_rad-sken.pdf', 'ewa_farna_mels_me_vubec_rad-comp.pdf']",
-    "content_hash": "72046b3347d531eb8f2edf2a5815cbbc4c84d966"
+    "content_hash": "af6de6c6e25b4f6d42bb2b2db306d3f1577f1db6"
   },
   {
     "title": "Jaro",
@@ -717,7 +717,7 @@
     "start_melody": "a",
     "chordpro_file": "Fesaci_Jaro.pro",
     "pdf_filenames": "['fesaci_jaro-sken.pdf', 'fesaci_jaro-comp.pdf']",
-    "content_hash": "7c38bea1baad03a5c2fb096c3e1edd7bcccf8691"
+    "content_hash": "d6cc84c29eae8e0f4cacfb2fc960bea432a05716"
   },
   {
     "title": "Šéfe",
@@ -732,7 +732,7 @@
     "start_melody": "a",
     "chordpro_file": "Fesaci_Sefe.pro",
     "pdf_filenames": "['fesaci_sefe-sken.pdf', 'fesaci_sefe-comp.pdf']",
-    "content_hash": "5005fd9063db87408f46e61a1f6cd4971486fb77"
+    "content_hash": "a252ff26a561faa26e9fa3a0228472f84464f7bc"
   },
   {
     "title": "Ani k stáru",
@@ -747,7 +747,7 @@
     "start_melody": "h c d",
     "chordpro_file": "Filmova_hudba_Ani_k_staru.pro",
     "pdf_filenames": "['filmova_hudba_ani_k_staru-sken.pdf', 'filmova_hudba_ani_k_staru-comp.pdf']",
-    "content_hash": "243ae3c54f41d67efef85d6ead10e93f1bcba170"
+    "content_hash": "366a6ba7a529e52f5d7318cb4e1457db291526f1"
   },
   {
     "title": "Jednou mi fotr povídá",
@@ -762,7 +762,7 @@
     "start_melody": "c#",
     "chordpro_file": "Filmova_hudba_Jednou_mi_fotr_povida.pro",
     "pdf_filenames": "['filmova_hudba_jednou_mi_fotr_povida-sken.pdf', 'filmova_hudba_jednou_mi_fotr_povida-comp.pdf']",
-    "content_hash": "d1c447d271ae8410d6ca15025a07829e2bb4ed67"
+    "content_hash": "494d3175cc850e05969908f4e8a9d721dcdce6a5"
   },
   {
     "title": "Kdyby se v komnatách",
@@ -777,7 +777,7 @@
     "start_melody": "d",
     "chordpro_file": "Filmova_hudba_Kdyby_se_v_komnatach.pro",
     "pdf_filenames": "['filmova_hudba_kdyby_se_v_komnatach-sken.pdf', 'filmova_hudba_kdyby_se_v_komnatach-comp.pdf']",
-    "content_hash": "a515ba3992776daa0ad9989fd64c206a2b239c0c"
+    "content_hash": "d66ac3a3acaa20ba84ae54efbd2f67df9ed27952"
   },
   {
     "title": "Když se načančám",
@@ -792,7 +792,7 @@
     "start_melody": "a",
     "chordpro_file": "Filmova_hudba_Kdyz_se_nacancam.pro",
     "pdf_filenames": "['filmova_hudba_kdyz_se_nacancam-sken.pdf', 'filmova_hudba_kdyz_se_nacancam-comp.pdf']",
-    "content_hash": "18c32824ecc9fc7e93b139e1512406c8e7fb1ec9"
+    "content_hash": "a3d6af569876a2b2fb11571c8cacde57b05f3126"
   },
   {
     "title": "Královské reggae",
@@ -807,7 +807,7 @@
     "start_melody": "d",
     "chordpro_file": "Filmova_hudba_Kralovske_reggae.pro",
     "pdf_filenames": "['filmova_hudba_kralovske_reggae-sken.pdf', 'filmova_hudba_kralovske_reggae-comp.pdf']",
-    "content_hash": "76c12e7566a80e819a08f56865806249b2262cb9"
+    "content_hash": "a2a4a9760809b08dbd86dba3cf9c6cd24877849a"
   },
   {
     "title": "Zabili, zabili, balada pro banditu",
@@ -822,7 +822,7 @@
     "start_melody": "",
     "chordpro_file": "Filmova_hudba_Zabili_zabili_balada_pro_banditu.pro",
     "pdf_filenames": "['filmova_hudba_zabili_zabili_balada_pro_banditu-sken.pdf', 'filmova_hudba_zabili_zabili_balada_pro_banditu-comp.pdf']",
-    "content_hash": "62e4deae54418f679598790c95604ca5c2b0a23b"
+    "content_hash": "0bf898e785f83b57a8fbc2fcb00d41f7b4bb6bcb"
   },
   {
     "title": "Zafúkané",
@@ -837,7 +837,7 @@
     "start_melody": "c",
     "chordpro_file": "Fkeret_Zafukane.pro",
     "pdf_filenames": "['fkeret_zafukane-sken.pdf', 'fkeret_zafukane-comp.pdf']",
-    "content_hash": "cac90086584b9f03c036fb1a218ef162bfa6f030"
+    "content_hash": "2c4ca6aa2c93eec2c3d8358af5b77d3273448580"
   },
   {
     "title": "Bella Ciao",
@@ -852,7 +852,7 @@
     "start_melody": "",
     "chordpro_file": "Folk-Bella_Ciao.pro",
     "pdf_filenames": "",
-    "content_hash": "0141ffece4b3e722973ed78c2a3c1e82e7463747"
+    "content_hash": "73a7ee9ac5d9a44e7f319fce0fc7931f447ba581"
   },
   {
     "title": "Hej sokoły",
@@ -882,7 +882,7 @@
     "start_melody": "e a",
     "chordpro_file": "Folk-Sakkijarven_Polkka.pro",
     "pdf_filenames": "",
-    "content_hash": "b10054d08ec7ef58c8164f910a9b918059e03119"
+    "content_hash": "bdedbd2865b6e343467410e2e373930cb92a36fd"
   },
   {
     "title": "Lemon Tree",
@@ -897,7 +897,7 @@
     "start_melody": "d e",
     "chordpro_file": "Fools_Garden_Lemon_Tree.pro",
     "pdf_filenames": "['fools_garden_lemon_tree-sken.pdf', 'fools_garden_lemon_tree-comp.pdf', 'fools_garden_lemon_tree-gen.pdf']",
-    "content_hash": "275b74c0fbb0c5ebfd868b2bf50e9292d741af1f"
+    "content_hash": "91c1760cc186cb1da41ad678fc3cecdd7c2f0d81"
   },
   {
     "title": "Pumped Up Kicks",
