@@ -216,7 +216,7 @@ function FontSizeSettings({ fontSize, setFontSize, autoFontSize, setAutoFontSize
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Change font size">
-                        <DropdownItem startContent={<Plus />} key="auto" onClick={() => { setAutoFontSize(!autoFontSize) }}>
+                        <DropdownItem startContent={<Ruler />} key="auto" onClick={() => { setAutoFontSize(!autoFontSize) }}>
                             Auto font size
                         </DropdownItem>
                         <DropdownItem startContent={<Plus />} key="+" onClick={() => { setAutoFontSize(false); setFontSize(fontSizeLimits(fontSize * fontSizeStep)) }}>
@@ -349,8 +349,8 @@ function SongView({ }) {
         "only screen and (max-width : 600px)"
     );
 
-    return (<div className='h-screen w-screen'>
-        <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex h-16'>
+    return (<div className={`${autoFontSize ? "h-screen w-screen overflow-hidden" : ""}`}>
+        <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
             <NavbarContent justify="start">
                 <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
             </NavbarContent>
@@ -369,12 +369,12 @@ function SongView({ }) {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className='flex justify-center mt-4 flex-col gap-3 md:gap-6 max-w-lg mx-auto px-6' style={{ height: 'calc(100% - 4rem)' }}>
+        <div className={`flex justify-center flex-col gap-3 md:gap-6 max-w-lg ${autoFontSize ? "overflow-hidden" : ""} mx-auto px-6`} style={{ height: 'calc(100% - 4rem)' }}>
             <div className='flex items-center flex-col m-auto'>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
                 <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
             </div>
-            <div className='flex-1 overflow-hidden'>
+            <div className={`${autoFontSize ? "overflow-hidden flex-1" : ""}`}>
                 <AutoTextSize mode="boxoneline" minFontSizePx={autoFontSize ? minFontSizePx : fontSize} maxFontSizePx={autoFontSize ? maxFontSizePx : fontSize}>
                     <div className={`m-auto  ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
                 </AutoTextSize>
