@@ -2,6 +2,7 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from "@nextui-org/react";
 import { Check, Filter, Handshake, Languages, Music } from "lucide-react";
 import React from 'react';
+import { SongLanguage } from '../../types'
 
 import { ButtonGroup } from '@nextui-org/react';
 import { useMediaQuery } from "@uidotdev/usehooks";
@@ -10,7 +11,7 @@ import LanguageFlag from './LanguageFlag';
 //TODO: icon for language in searchbar and possibly avatars https://nextui.org/docs/components/select
 //TODO: why do buttons change size when they are selected/variant changed to 'solid'?
 
-function languageChoices(languages) {
+function languageChoices(languages: Array<SongLanguage>, selectedLanguage, setSelectedLanguage) {
     function capitalizeFirstLetter(str) {
         if (!str) return '';
 
@@ -22,7 +23,7 @@ function languageChoices(languages) {
     let language_choices = Object.keys(languages).map((language) => ({ text: capitalizeFirstLetter(language), value: language }));
     language_choices.unshift({ text: "All", value: "all" });
     return language_choices.map((choice) => (
-        <DropdownItem key={choice.value} startContent={<LanguageFlag language={choice.text} />}>
+        <DropdownItem key={choice.value} closeOnSelect={false} startContent={<LanguageFlag language={choice.text} />} endContent={selectedLanguage === choice.value ? <Check /> : ""} onClick={() => setSelectedLanguage(choice.value)}>
             {choice.text}
         </DropdownItem>
     ))
@@ -37,8 +38,8 @@ function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, icon
                 >{iconOnly ? "Languages" : ""}
                 </Button>
             </DropdownTrigger>
-            <DropdownMenu aria-label="Language Choices" onAction={(key) => setSelectedLanguage(key)}>
-                {languageChoices(languages)}
+            <DropdownMenu aria-label="Language Choices">
+                {languageChoices(languages, selectedLanguage, setSelectedLanguage)}
             </DropdownMenu>
         </Dropdown>
     )
@@ -99,20 +100,21 @@ function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
     const filterActive = filterSettings.language === "all" && filterSettings.vocal_range === "all" && filterSettings.capo;
     const setVocalRange = (range) => setFilterSettings({ ...filterSettings, vocal_range: range });
     const flipCapoSetting = () => setFilterSettings({ ...filterSettings, capo: !filterSettings.capo })
+    const setSelectedLanguage = (language) => setFilterSettings({ ...filterSettings, language: language })
     return (
         <>
             <div className='hidden lg:flex'>
                 <FilterButtons languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
             </div>
             <div className='lg:hidden'>
-                <Dropdown>
+                <Dropdown backdrop="opaque">
                     <DropdownTrigger>
                         <Button
                             variant={filterActive ? "ghost" : "solid"} color="primary" disableAnimation
                             startContent={<Filter />} isIconOnly>
                         </Button>
                     </DropdownTrigger>
-                    <DropdownMenu aria-label="Filtering">
+                    <DropdownMenu aria-label="Filtering" className="dropdown-scroll">
                         <DropdownSection showDivider>
                             <DropdownItem onClick={flipCapoSetting} key="slider" closeOnSelect={false} endContent={filterSettings.capo ? <Check /> : ""}>
                                 Allow capo
@@ -129,9 +131,7 @@ function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
                         </DropdownSection>
 
                         <DropdownSection title="Select languages">
-                            {languageChoices(languages)}
-                            {/* <DropdownItem key="languages" closeOnSelect={false}>
-                            </DropdownItem> */}
+                            {languageChoices(languages, filterSettings.language, setSelectedLanguage)}
                         </DropdownSection>
                     </DropdownMenu>
                 </Dropdown>

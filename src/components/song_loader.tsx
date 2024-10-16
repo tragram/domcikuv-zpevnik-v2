@@ -11,6 +11,7 @@ async function fetchSongs(): Promise<SongDB> {
     const timeOut = savedSongDB ? 1000 : 3000;
     // check hash
     let response = await fetch(import.meta.env.BASE_URL + '/songDB.hash', { signal: AbortSignal.timeout(timeOut) });
+    console.log(response);
     if (!response.ok) {
         if (savedSongDB) {
             console.log("Failed to load hash but found SongDB in LocalStorage!")

@@ -32,7 +32,8 @@
 .lyrics:after {
   content: '\200b'
 }
-.chord:after{
+
+.chord:after {
   content: '\00a0'
 }
 
@@ -84,3 +85,9 @@
 }
 
 /* .repeat-verse-chords-hidden :not(:first-child). */
+
+.dropdown-scroll {
+  max-height: 80vh;
+  overflow: scroll;
+
+}

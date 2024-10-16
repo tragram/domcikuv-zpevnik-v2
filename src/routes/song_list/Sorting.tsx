@@ -69,7 +69,7 @@ function SortButtons({ sortByField, setSortField, sortOrder, setSortOrder }: Sor
 
 function SortButtonMobile({ sortByField, setSortField, sortOrder, setSortOrder }: SortButtonProps) {
     return (
-        <Dropdown closeOnSelect={false}>
+        <Dropdown closeOnSelect={false} backdrop="opaque">
             <DropdownTrigger>
                 <Button
                     variant="ghost"
@@ -79,7 +79,7 @@ function SortButtonMobile({ sortByField, setSortField, sortOrder, setSortOrder }
                     <ArrowDownUp />
                 </Button>
             </DropdownTrigger>
-            <DropdownMenu variant="faded" aria-label="Sorting dropdown menu">
+            <DropdownMenu variant="faded" aria-label="Sorting dropdown menu" className="dropdown-scroll">
                 <DropdownSection title="Sorting method" showDivider>
                     {categories.map(category => (
                         <DropdownItem key={category.field} startContent={category.icon}
