@@ -96,6 +96,7 @@ class SongData {
     chordproFile: string;
     pdfFilenames: Array<string>;
     content: string | null;
+    contentHash: string;
 
     constructor(song: Object) {
         this.title = song.title || "Unknown title";
@@ -118,6 +119,7 @@ class SongData {
             this.pdfFilenames = [];
         }
         this.chordproFile = song.chordpro_file;
+        this.contentHash = song.content_hash;
     }
 
     // Static method to restore an instance from a plain object (after JSON.parse)
@@ -139,6 +141,7 @@ class SongData {
         instance.chordproFile = json.chordproFile;
         instance.pdfFilenames = json.pdfFilenames;
         instance.content = json.content;
+        instance.contentHash = json.contentHash;
 
         return instance;
     }

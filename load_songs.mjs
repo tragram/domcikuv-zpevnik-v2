@@ -13,12 +13,13 @@ const metadata = files.map(chordpro_file => {
   const tempo = content.match(/{tempo:\s*(.+?)}/i)?.[1].trim() || "";
   const capo = content.match(/{capo:\s*(.+?)}/i)?.[1].trim() || "";
   const range = content.match(/{range:\s*(.+?)}/i)?.[1].trim() || "";
+  const illustration_author = content.match(/{illustration_author:\s*(.+?)}/i)?.[1].trim() || "";
   const start_melody = content.match(/{start_melody:\s*(.+?)}/i)?.[1].trim() || "";
   const pdf_filenames = content.match(/{pdf_filenames:\s*(.+?)}/i)?.[1].trim() || "";
-  return { title, artist, key, language, date_added, capo, tempo, range, start_melody, chordpro_file, pdf_filenames };
+  const content_hash = makeHash(content);
+  return { title, artist, key, language, date_added, capo, tempo, range, illustration_author, start_melody, chordpro_file, pdf_filenames, content_hash };
 });
 const hash = makeHash(metadata);
-console.log(hash);
 fs.mkdir('public', { recursive: true }, (err) => {
   if (err) throw err;
 });
