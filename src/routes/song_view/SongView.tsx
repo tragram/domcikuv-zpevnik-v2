@@ -251,7 +251,7 @@ function SongView({ }) {
     function renderSong(key) {
         let song = replaceChorusDirective(songData.content, repeatChorus);
         let parsedSong = parser.parse(song);
-        let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()] + 1 * parsedSong.capo; // using capo in chordpro is not just a comment but actually modifies the chords... 
+        let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()] + 1 * parseInt(parsedSong.capo); // using capo in chordpro is not just a comment but actually modifies the chords... 
         parsedSong = parsedSong.transpose(difference)
         const renderedSong = formatter.format(parsedSong);
         setParsedContent(renderedSong);
@@ -267,13 +267,11 @@ function SongView({ }) {
     const fullScreen = useMediaQuery(
         "only screen and (max-width : 600px)"
     );
-    const navbar_items = [
-        <TransposeButtons songData={songData} setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
-    ]
+
     return (<>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
             <NavbarContent justify="start">
-                <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate(-1)}>{<Undo2 />}</Button>
+                <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
             </NavbarContent>
             <NavbarContent as="div" justify="end" className='w-full'>
                 <NavbarItem className=''>
