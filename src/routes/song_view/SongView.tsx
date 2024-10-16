@@ -1,14 +1,15 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, Link, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import ChordSheetJS, { ChordLyricsPair } from 'chordsheetjs';
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler } from 'lucide-react';
 import { HashRouter, Route, Routes, useLoaderData } from "react-router-dom";
 import { SongData } from '../../types';
 import { useNavigate } from "react-router-dom";
 import useLocalStorageState from 'use-local-storage-state'
+import { AutoTextSize } from 'auto-text-size'
 const chromaticScale = {
     "c": 0,
     "c#": 1,
@@ -189,18 +190,23 @@ function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setR
     )
 }
 
-function FontSizeSettings({ fontSize, setFontSize }) {
-    const fontSizeStep = 0.2;
+const minFontSizePx = 8;
+const maxFontSizePx = 160;
+const fontSizeLimits = (fontSize) => Math.min(Math.max(minFontSizePx, fontSize), maxFontSizePx);
 
+function FontSizeSettings({ fontSize, setFontSize, autoFontSize, setAutoFontSize }) {
+    const fontSizeStep = 1.1;
+    // TODO: once JS stops being buggy (https://github.com/jsdom/jsdom/issues/2160), make it so that fontSize is read from the autoresizer, so there's not a jump when moving from auto to manual
     return (
         <>
-            <div className='hidden xs:flex'>
+            <div className='hidden sm:flex'>
                 <ButtonGroup>
-                    <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
-                    <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setAutoFontSize(false); setFontSize(fontSizeLimits(fontSize / fontSizeStep)) }} variant="ghost"><AArrowDown /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setAutoFontSize(!autoFontSize) }} variant={autoFontSize ? "solid" : "ghost"}><Ruler /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setAutoFontSize(false); setFontSize(fontSizeLimits(fontSize * fontSizeStep)) }} variant="ghost"><AArrowUp /></Button>
                 </ButtonGroup>
             </div>
-            <div className='flex xs:hidden'>
+            <div className='flex sm:hidden'>
                 <Dropdown closeOnSelect={false}>
                     <DropdownTrigger>
                         <Button
@@ -210,10 +216,13 @@ function FontSizeSettings({ fontSize, setFontSize }) {
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Change font size">
-                        <DropdownItem startContent={<Plus />} key="+" onClick={() => { setFontSize(fontSize + fontSizeStep) }}>
+                        <DropdownItem startContent={<Plus />} key="auto" onClick={() => { setAutoFontSize(!autoFontSize) }}>
+                            Auto font size
+                        </DropdownItem>
+                        <DropdownItem startContent={<Plus />} key="+" onClick={() => { setAutoFontSize(false); setFontSize(fontSizeLimits(fontSize * fontSizeStep)) }}>
                             Increase font size
                         </DropdownItem>
-                        <DropdownItem startContent={<Minus />} key="-" onClick={() => { setFontSize(fontSize - fontSizeStep) }}>
+                        <DropdownItem startContent={<Minus />} key="-" onClick={() => { setAutoFontSize(false); setFontSize(fontSizeLimits(fontSize / fontSizeStep)) }}>
                             Decrease font size
                         </DropdownItem>
                     </DropdownMenu>
@@ -227,7 +236,6 @@ function guessKey(songContent: string) {
     // Regex to match a chord inside square brackets, like [C], [G], [Ami], etc.
     const chordRegex = /\[[A-Ha-h].{0,10}\]/;
     const match = songContent.match(chordRegex);
-    console.log(match)
     // If a match is found, return the first character of the chord
     if (match) {
         const matched_chord = match[0].slice(1, -1);
@@ -291,6 +299,7 @@ function convertChordsInChordPro(content, toEnglish = true) {
 
 function SongView({ }) {
     let songData = useLoaderData() as SongData;
+
     if (!songData.key) {
         songData.key = guessKey(songData.content);
     }
@@ -304,7 +313,8 @@ function SongView({ }) {
     const [chordsHidden, setChordsHidden] = useLocalStorageState("chordsHidden", { defaultValue: false });
     const [repeatChorus, setRepeatChorus] = useLocalStorageState("repeatChorus", { defaultValue: true });
     const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("repeatVerseChords", { defaultValue: true });
-    const [fontSize, setFontSize] = useLocalStorageState("fontSize", { defaultValue: 2 });
+    const [fontSize, setFontSize] = useLocalStorageState("fontSize", { defaultValue: 12 });
+    const [autoFontSize, setAutoFontSize] = useLocalStorageState("autoFontSize", { defaultValue: true });
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
@@ -315,7 +325,6 @@ function SongView({ }) {
     function renderSong(key) {
         let song = replaceChorusDirective(convertChordsInChordPro(songData.content), repeatChorus);
         let parsedSong = parser.parse(song).setCapo(0);
-        console.log(parsedSong)
         let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()]; // using capo in chordpro is not just a comment but actually modifies the chords... 
         parsedSong = parsedSong.transpose(difference);
         // convert back to Czech chord names after transposition
@@ -340,8 +349,8 @@ function SongView({ }) {
         "only screen and (max-width : 600px)"
     );
 
-    return (<>
-        <Navbar shouldHideOnScroll maxWidth='xl' isBordered className=''>
+    return (<div className='h-screen w-screen'>
+        <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex h-16'>
             <NavbarContent justify="start">
                 <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
             </NavbarContent>
@@ -353,24 +362,25 @@ function SongView({ }) {
                     <SpaceSavingSettings chordsHidden={chordsHidden} setChordsHidden={setChordsHidden} repeatChorus={repeatChorus} setRepeatChorus={setRepeatChorus} repeatVerseChords={repeatVerseChords} setRepeatVerseChords={setRepeatVerseChords} />
                 </NavbarItem>
                 <NavbarItem className=''>
-                    <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} />
+                    <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} autoFontSize={autoFontSize} setAutoFontSize={setAutoFontSize} />
                 </NavbarItem>
                 <NavbarItem className='hidden sm:flex'>
                     <Button color="primary" variant="ghost" isIconOnly href={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile} as={Link}><Github /></Button>
                 </NavbarItem>
             </NavbarContent >
-            {/* <NavbarContent className="xs:hidden" justify="end">
-
-            </NavbarContent> */}
         </Navbar >
-        <div className='flex justify-center mt-4 flex-col gap-3 md:gap-6 max-w-lg mx-auto'>
-            <div className='flex items-center flex-col md:flex-row md:gap-14 m-auto'>
+        <div className='flex justify-center mt-4 flex-col gap-3 md:gap-6 max-w-lg mx-auto px-6' style={{ height: 'calc(100% - 4rem)' }}>
+            <div className='flex items-center flex-col m-auto'>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
                 <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
             </div>
-            <div className={`m-auto  ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
+            <div className='flex-1 overflow-hidden'>
+                <AutoTextSize mode="boxoneline" minFontSizePx={autoFontSize ? minFontSizePx : fontSize} maxFontSizePx={autoFontSize ? maxFontSizePx : fontSize}>
+                    <div className={`m-auto  ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
+                </AutoTextSize>
+            </div>
         </div>
-    </>
+    </div>
     );
 };
 
