@@ -40,7 +40,7 @@ Celou [Am]noc jim bude [G]zpívat jeden [F]blázen toula[Am]vej
 [F]vypráším celtu a [G]můžu vám říct, že [F]na starý songy
 si vzpomenu [G]rád, vzpomenu [Am]rád
 {end_of_chorus}
- 
+
 {start_of_verse}
 [Am]Někdo z vás, kdo [G]chutnal dálku, jeden z[Am]těch, co rozu[E]měj
 Ať vám [Am]poví, proč mi [G]říkaj proč mi [F]říkaj toulavej[Am]

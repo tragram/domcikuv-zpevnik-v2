@@ -6,8 +6,6 @@
 {range: }
 {key: A}
 
-
-[A][C#mi][Cmi][F#mi][E][D]
 {start_of_verse}
 Krajina [A]svádí k podzimním [C#mi]výletům,
 tripům do [F#mi]mládí a častým [D]úletům.
