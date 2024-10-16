@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle,Link, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, Link, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import ChordSheetJS, { ChordLyricsPair } from 'chordsheetjs';
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
@@ -103,7 +103,7 @@ function TransposeButtons({ songRenderKey, setSongRenderKey }) {
         return renderKeys.map(x => x.toLowerCase()).indexOf(key.toLowerCase());
     }
     return (<>
-        <div className='hidden xs:flex'>
+        <div className='hidden md:flex'>
             <ButtonGroup>
                 {renderKeys.map((chord) => (
                     <Button className="w-1/12" color="primary" isIconOnly key={`transpose_selection_${chord}`}
@@ -112,7 +112,7 @@ function TransposeButtons({ songRenderKey, setSongRenderKey }) {
                 }
             </ButtonGroup>
         </div>
-        <div className='xs:hidden'>
+        <div className='md:hidden'>
             <ButtonGroup>
                 <Button color="primary" isIconOnly onClick={() => setSongRenderKey(renderKeys[(getKeyIndex(songRenderKey) + 11) % 12])} variant='ghost'>-</Button>
                 <Button color="primary" isIconOnly onClick={() => setSongRenderKey(renderKeys[(getKeyIndex(songRenderKey) + 1) % 12])} variant='ghost'>+</Button>
@@ -231,7 +231,6 @@ function guessKey(songContent: string) {
     // If a match is found, return the first character of the chord
     if (match) {
         const matched_chord = match[0].slice(1, -1);
-        console.log(matched_chord)
         return matched_chord[0];
     }
 
@@ -279,7 +278,6 @@ function convertChord(chord, toEnglish = true) {
 function convertChordsInChordPro(content, toEnglish = true) {
     // Convert the {key: ...} directive
     content = content.replace(/\{key:\s*([A-Ha-h][^\s]*)\}/, (match, key) => {
-        console.log(match)
         return `{key: ${convertChord(key, toEnglish)}}`;
     });
 
@@ -316,8 +314,9 @@ function SongView({ }) {
 
     function renderSong(key) {
         let song = replaceChorusDirective(convertChordsInChordPro(songData.content), repeatChorus);
-        let parsedSong = parser.parse(song);
-        let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()] + 1 * parseInt(parsedSong.capo); // using capo in chordpro is not just a comment but actually modifies the chords... 
+        let parsedSong = parser.parse(song).setCapo(0);
+        console.log(parsedSong)
+        let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()]; // using capo in chordpro is not just a comment but actually modifies the chords... 
         parsedSong = parsedSong.transpose(difference);
         // convert back to Czech chord names after transposition
         parsedSong = parsedSong.mapItems((item) => {
