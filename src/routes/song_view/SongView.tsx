@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle,Link, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import ChordSheetJS, { ChordLyricsPair } from 'chordsheetjs';
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check } from 'lucide-react';
-import { HashRouter, Route, Routes, Link, useLoaderData } from "react-router-dom";
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github } from 'lucide-react';
+import { HashRouter, Route, Routes, useLoaderData } from "react-router-dom";
 import { SongData } from '../../types';
 import { useNavigate } from "react-router-dom";
 import useLocalStorageState from 'use-local-storage-state'
@@ -103,7 +103,7 @@ function TransposeButtons({ songRenderKey, setSongRenderKey }) {
         return renderKeys.map(x => x.toLowerCase()).indexOf(key.toLowerCase());
     }
     return (<>
-        <div className='hidden sm:flex'>
+        <div className='hidden xs:flex'>
             <ButtonGroup>
                 {renderKeys.map((chord) => (
                     <Button className="w-1/12" color="primary" isIconOnly key={`transpose_selection_${chord}`}
@@ -112,7 +112,7 @@ function TransposeButtons({ songRenderKey, setSongRenderKey }) {
                 }
             </ButtonGroup>
         </div>
-        <div className='sm:hidden'>
+        <div className='xs:hidden'>
             <ButtonGroup>
                 <Button color="primary" isIconOnly onClick={() => setSongRenderKey(renderKeys[(getKeyIndex(songRenderKey) + 11) % 12])} variant='ghost'>-</Button>
                 <Button color="primary" isIconOnly onClick={() => setSongRenderKey(renderKeys[(getKeyIndex(songRenderKey) + 1) % 12])} variant='ghost'>+</Button>
@@ -123,7 +123,7 @@ function TransposeButtons({ songRenderKey, setSongRenderKey }) {
 
 function TransposeSettings({ songRenderKey, setSongRenderKey }) {
     return (<>
-        <div className='hidden md:flex'>
+        <div className='hidden lg:flex'>
             <ButtonGroup>
                 {renderKeys.map((chord) => (
                     <Button className="w-1/12" color="primary" isIconOnly key={`transpose_selection_${chord}`}
@@ -132,7 +132,7 @@ function TransposeSettings({ songRenderKey, setSongRenderKey }) {
                 }
             </ButtonGroup>
         </div>
-        <div className='md:hidden'>
+        <div className='lg:hidden'>
             <Dropdown closeOnSelect={false}>
                 <DropdownTrigger>
                     <Button
@@ -156,14 +156,14 @@ function TransposeSettings({ songRenderKey, setSongRenderKey }) {
 function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setRepeatChorus, repeatVerseChords, setRepeatVerseChords }) {
     return (
         <>
-            <div className='hidden md:flex'>
+            <div className='hidden xs:flex'>
                 <ButtonGroup>
                     <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
                     <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
                     <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
                 </ButtonGroup>
             </div>
-            <div className='flex md:hidden'>
+            <div className='flex xs:hidden'>
                 <Dropdown closeOnSelect={false}>
                     <DropdownTrigger>
                         <Button
@@ -194,13 +194,13 @@ function FontSizeSettings({ fontSize, setFontSize }) {
 
     return (
         <>
-            <div className='hidden md:flex'>
+            <div className='hidden xs:flex'>
                 <ButtonGroup>
                     <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize - fontSizeStep) }} variant="ghost"><AArrowDown /></Button>
                     <Button color="primary" isIconOnly onClick={() => { setFontSize(fontSize + fontSizeStep) }} variant="ghost"><AArrowUp /></Button>
                 </ButtonGroup>
             </div>
-            <div className='flex md:hidden'>
+            <div className='flex xs:hidden'>
                 <Dropdown closeOnSelect={false}>
                     <DropdownTrigger>
                         <Button
@@ -356,17 +356,20 @@ function SongView({ }) {
                 <NavbarItem className=''>
                     <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} />
                 </NavbarItem>
+                <NavbarItem className='hidden sm:flex'>
+                    <Button color="primary" variant="ghost" isIconOnly href={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile} as={Link}><Github /></Button>
+                </NavbarItem>
             </NavbarContent >
-            {/* <NavbarContent className="md:hidden" justify="end">
+            {/* <NavbarContent className="xs:hidden" justify="end">
 
             </NavbarContent> */}
         </Navbar >
-        <div className='flex justify-center mt-4 flex-col gap-6 max-w-lg mx-auto'>
-            <div className='flex gap-14 items-center'>
+        <div className='flex justify-center mt-4 flex-col gap-3 md:gap-6 max-w-lg mx-auto'>
+            <div className='flex items-center flex-col md:flex-row md:gap-14 m-auto'>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
                 <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
             </div>
-            <div className={`${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
+            <div className={`m-auto  ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
         </div>
     </>
     );

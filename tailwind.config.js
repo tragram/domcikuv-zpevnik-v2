@@ -13,7 +13,10 @@ export default {
       fontFamily: {
         'selection': ['Selection'],
         'sono': ['Sono'],
-      }
+      },
+      screens: {
+        'xs': '350px',
+      },
     },
   },
   darkMode: "class",

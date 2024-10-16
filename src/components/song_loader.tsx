@@ -9,10 +9,12 @@ async function fetchSongs(): Promise<SongDB> {
 
     // have a more lenient timeout when the data is not available
     const timeOut = savedSongDB ? 1000 : 3000;
+    let newHash;
     // check hash
-    let response = await fetch(import.meta.env.BASE_URL + '/songDB.hash', { signal: AbortSignal.timeout(timeOut) });
-    console.log(response);
-    if (!response.ok) {
+    try {
+        let response = await fetch(import.meta.env.BASE_URL + '/songDB.hash', { signal: AbortSignal.timeout(timeOut) });
+        newHash = await response.text()
+    } catch {
         if (savedSongDB) {
             console.log("Failed to load hash but found SongDB in LocalStorage!")
             savedSongDB.songs = savedSongDB.songs.map(s => SongData.fromJSON(s));
@@ -22,7 +24,6 @@ async function fetchSongs(): Promise<SongDB> {
             throw new Error('Failed to fetch song hash and DB not saved in LocalStorage!');
         }
     }
-    const newHash = await response.text()
     // console.log(savedHash, newHash, savedHash == newHash);
     if (savedHash == newHash) {
         savedSongDB.songs = savedSongDB.songs.map(s => SongData.fromJSON(s));
@@ -37,7 +38,7 @@ async function fetchSongs(): Promise<SongDB> {
                 localStorage.removeItem(x))
     }
 
-    response = await fetch(import.meta.env.BASE_URL + '/songDB.json');
+    const response = await fetch(import.meta.env.BASE_URL + '/songDB.json');
     if (!response.ok) {
         throw new Error('Failed to fetch songs');
     }
