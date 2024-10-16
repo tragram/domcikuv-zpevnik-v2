@@ -357,7 +357,7 @@
     "start_melody": "g",
     "chordpro_file": "Chinaski_Hlavolam.pro",
     "pdf_filenames": "['chinaski_hlavolam-sken.pdf', 'chinaski_hlavolam-comp.pdf', 'chinaski_hlavolam-gen.pdf']",
-    "content_hash": "0fa3d47fe26d45a83e0fba15b8777794f6ec571e"
+    "content_hash": "7dceacd54642e8ecb0e54e7ae999584011e29efd"
   },
   {
     "title": "Kapela",
@@ -372,7 +372,7 @@
     "start_melody": "a a f#",
     "chordpro_file": "Chinaski_Kapela.pro",
     "pdf_filenames": "['chinaski_kapela-sken.pdf', 'chinaski_kapela-comp.pdf', 'chinaski_kapela-gen.pdf']",
-    "content_hash": "559fa3d198942b3aef4188a86f08f91cffc6b1fb"
+    "content_hash": "ea5cdc4c7b2852834fb09dbc35e749f3d830ffae"
   },
   {
     "title": "Klára",
@@ -387,7 +387,7 @@
     "start_melody": "f#",
     "chordpro_file": "Chinaski_Klara.pro",
     "pdf_filenames": "['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']",
-    "content_hash": "bcb44b5d57b60bf3ad31b4e9e30dbed06cd13a0a"
+    "content_hash": "b61ee4169ca64448cac1ae8f211db0a148c03c38"
   },
   {
     "title": "Kompy",
@@ -402,7 +402,7 @@
     "start_melody": "",
     "chordpro_file": "Chinaski_Kompy.pro",
     "pdf_filenames": "['chinaski_kompy-sken.pdf', 'chinaski_kompy-comp.pdf']",
-    "content_hash": "7b966762630f41bed696ed1616b3d48876a10dc2"
+    "content_hash": "2ab2cc8b3e4a1dabde3fb5f510f91ddb4f601a73"
   },
   {
     "title": "Kutil",
@@ -417,7 +417,7 @@
     "start_melody": "e f#",
     "chordpro_file": "Chinaski_Kutil.pro",
     "pdf_filenames": "['chinaski_kutil-sken.pdf', 'chinaski_kutil-comp.pdf']",
-    "content_hash": "cfd994013e36b3e5f942112c6923aab6e97ae5fc"
+    "content_hash": "f9d92074d3fdc1f583bd8f19855f11e067815869"
   },
   {
     "title": "Moc toho nevim",
@@ -432,7 +432,7 @@
     "start_melody": "a",
     "chordpro_file": "Chinaski_Moc_toho_nevim.pro",
     "pdf_filenames": "['chinaski_moc_toho_nevim-sken.pdf', 'chinaski_moc_toho_nevim-comp.pdf']",
-    "content_hash": "882c1a993d90ec9c5d6491694e95bd178a7044bd"
+    "content_hash": "1f160d532a54c6b1d91ca89b7fef3bb0e5ba99d5"
   },
   {
     "title": "Stížnost",
@@ -447,7 +447,7 @@
     "start_melody": "g",
     "chordpro_file": "Chinaski_Stiznost.pro",
     "pdf_filenames": "['chinaski_stiznost-sken.pdf', 'chinaski_stiznost-comp.pdf', 'chinaski_stiznost-gen.pdf']",
-    "content_hash": "c746fd4d382d30702b9f3c4147a414d8067fc691"
+    "content_hash": "86c63ec7013d7bcbd79599274c91a762e2c105f6"
   },
   {
     "title": "Venku je na nule",
@@ -462,7 +462,7 @@
     "start_melody": "",
     "chordpro_file": "Chinaski_Venku_je_na_nule.pro",
     "pdf_filenames": "['chinaski_venku_je_na_nule-sken.pdf', 'chinaski_venku_je_na_nule-comp.pdf']",
-    "content_hash": "5094865b185e69b4f5328f42cda8181b475b8d50"
+    "content_hash": "ee8c20d27c6681af1217974eced96bba09225956"
   },
   {
     "title": "Vinaři",
@@ -477,7 +477,7 @@
     "start_melody": "e",
     "chordpro_file": "Chinaski_Vinari.pro",
     "pdf_filenames": "['chinaski_vinari-sken.pdf', 'chinaski_vinari-comp.pdf', 'chinaski_vinari-gen.pdf']",
-    "content_hash": "198613bba17eb140e5bff266bafc98362eb4127e"
+    "content_hash": "34cf575e65139aa3907d920a26f1430cbdd8d2e5"
   },
   {
     "title": "Kauges Külas",
@@ -492,7 +492,7 @@
     "start_melody": "",
     "chordpro_file": "Curly_Strings-Kauges_Kulas.pro",
     "pdf_filenames": "",
-    "content_hash": "7a97920436482b587b4cf8b95004c8632650a2fb"
+    "content_hash": "ce6a0f12be219ef9cd38371f4d567ac58987c669"
   },
   {
     "title": "Sõbrad Mu Kallid",
@@ -522,7 +522,7 @@
     "start_melody": "a a g f#",
     "chordpro_file": "Devitka_Burcak.pro",
     "pdf_filenames": "['devitka_burcak-sken.pdf', 'devitka_burcak-comp.pdf', 'devitka_burcak-gen.pdf']",
-    "content_hash": "1187f92e2f265dfbae4a4d53fffe28417c2e9d11"
+    "content_hash": "5b8ce82c56db87f9f773927a3346f27bd4adede8"
   },
   {
     "title": "Holka od koní",
@@ -537,7 +537,7 @@
     "start_melody": "g g a h",
     "chordpro_file": "Devitka_Holka_od_koni.pro",
     "pdf_filenames": "['devitka_holka_od_koni-sken.pdf', 'devitka_holka_od_koni-comp.pdf', 'devitka_holka_od_koni-gen.pdf']",
-    "content_hash": "339accf096b8be643225efcee10efbe435e541cd"
+    "content_hash": "399bf263442d7d68358b226c101f3d43b8e72901"
   },
   {
     "title": "Tage Wie Diese",
