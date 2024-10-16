@@ -223,10 +223,28 @@ function FontSizeSettings({ fontSize, setFontSize }) {
     )
 }
 
+function guessKey(songContent: string) {
+    // Regex to match a chord inside square brackets, like [C], [G], [Ami], etc.
+    const chordRegex = /\[[A-Ha-h].{0,10}\]/;
+    const match = songContent.match(chordRegex);
+    console.log(match)
+    // If a match is found, return the first character of the chord
+    if (match) {
+        const matched_chord=match[0].slice(1,-1);
+        console.log(matched_chord)
+        return matched_chord[0];
+    }
+
+    // If no chord is found, return "C"
+    return "C";
+}
 
 function SongView({ }) {
-    const songData = useLoaderData() as SongData;
+    let songData = useLoaderData() as SongData;
     const songContent = songData.content;
+    if (!songData.key){
+        songData.key=guessKey(songContent);
+    }
     if (songData.lyricsLength() < 50) {
         return (
             <div >
@@ -243,7 +261,7 @@ function SongView({ }) {
 
 
     const [parsedContent, setParsedContent] = useState('');
-    const [songRenderKey, setSongRenderKey] = useState(songData.key);
+    const [songRenderKey, setSongRenderKey] = useState(songData.key );
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
     let navigate = useNavigate();
