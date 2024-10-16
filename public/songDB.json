@@ -1173,7 +1173,7 @@
     "title": "The AO of Island",
     "artist": "Inspired By Island",
     "key": "G",
-    "language": "islandic",
+    "language": "icelandic",
     "date_added": "07-2018",
     "capo": "0",
     "tempo": "",
@@ -1182,7 +1182,7 @@
     "start_melody": "",
     "chordpro_file": "Inspired_By_Island_The_AO_of_Island.pro",
     "pdf_filenames": "['inspired_by_island_the_ao_of_island-sken.pdf', 'inspired_by_island_the_ao_of_island-comp.pdf']",
-    "content_hash": "93f153315529d291f76cc64ac2ac11b7c627cce4"
+    "content_hash": "c4065ab21cfbb8ae13c8dc22f34add5821093a32"
   },
   {
     "title": "Drunken Sailor",
@@ -1998,7 +1998,7 @@
     "title": "Die Biene Maja",
     "artist": "Karel Gott",
     "key": "D",
-    "language": "other",
+    "language": "german",
     "date_added": "07-2018",
     "capo": "0",
     "tempo": "",
@@ -2007,7 +2007,7 @@
     "start_melody": "a d f# h",
     "chordpro_file": "Karel_Gott_Die_Biene_Maja.pro",
     "pdf_filenames": "['karel_gott_die_biene_maja-sken.pdf', 'karel_gott_die_biene_maja-comp.pdf']",
-    "content_hash": "fc7ff7446aee9f02a547dbcbe47fb0bcb5ea80e5"
+    "content_hash": "f98e39ccf0b22c78d005aab46a3c1c675d55f3c3"
   },
   {
     "title": "Kdyby sis oči vyplakala",
@@ -3783,7 +3783,7 @@
     "title": "Novii God",
     "artist": "Steklovata",
     "key": "",
-    "language": "other",
+    "language": "russian",
     "date_added": "12-2016",
     "capo": "0",
     "tempo": "",
@@ -3792,7 +3792,7 @@
     "start_melody": "",
     "chordpro_file": "Steklovata_Novii_God.pro",
     "pdf_filenames": "['steklovata_novii_god-sken.pdf', 'steklovata_novii_god-comp.pdf', 'steklovata_novii_god-gen.pdf']",
-    "content_hash": "75f41793ca08219b7b60dd9ff61eeef991243bca"
+    "content_hash": "41e212689382509928a72793c1f449d70556a0f6"
   },
   {
     "title": "Special Ed",
@@ -4398,7 +4398,7 @@
     "title": "Denglish",
     "artist": "Wise Guys",
     "key": "C",
-    "language": "other",
+    "language": "german",
     "date_added": "12-2018",
     "capo": "0",
     "tempo": "",
@@ -4407,7 +4407,7 @@
     "start_melody": "",
     "chordpro_file": "Wise_Guys_Denglish.pro",
     "pdf_filenames": "['wise_guys_denglish-sken.pdf', 'wise_guys_denglish-comp.pdf']",
-    "content_hash": "4c29c2fa0224adf6e52d56d5f3bf5335ed2d4057"
+    "content_hash": "9a552e47e95f000e7d47d996291d2ef31cc6d654"
   },
   {
     "title": "Svaz českých bohémů",
