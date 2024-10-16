@@ -28,7 +28,6 @@ def tokenize_with_positions(text):
     Returns a list of tuples: (token, start_position).
     """
     tokens = []
-    pos = 0
     for match in re.finditer(r"\S+", text):  # Match any non-space sequence
         tokens.append((match.group(), match.start()))
     return tokens

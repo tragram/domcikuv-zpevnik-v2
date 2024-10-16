@@ -5,7 +5,7 @@ import unidecode
 
 
 def songs_path():
-    return Path("../songs")
+    return Path(__file__).parent / "../songs"
 
 
 def normalize_string(input_str):
@@ -51,6 +51,7 @@ def check_if_lyrics_present(chordpro_filepath):
     Checks if there are any lyrics (non-directive, non-chord) in the content.
     """
     # Split the content into lines
+    print(chordpro_filepath)
     with open(chordpro_filepath, "r", encoding="utf-8") as f:
         lines = f.readlines()
 

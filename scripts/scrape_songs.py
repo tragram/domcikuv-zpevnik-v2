@@ -16,11 +16,8 @@ def process_chordpro_file(filepath):
     """
     Processes a single ChordPro file: checks for lyrics and extracts title and artist.
     """
-    with open(filepath, "r", encoding="utf-8") as file:
-        content = file.read()
-
     # Check if the file contains any lyrics
-    if not check_if_lyrics_present(content):
+    if not check_if_lyrics_present(filepath):
         # Extract title and artist from the directives
         artist, title, key = extract_metadata(filepath)
         if title and artist:
