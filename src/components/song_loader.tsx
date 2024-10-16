@@ -26,7 +26,12 @@ async function fetchSongs(): Promise<SongDB> {
         return savedSongDB;
     } else {
         console.log("New DB detected -> Clearing LocalStorage!")
-        localStorage.clear();
+        // remove any songDB from localstorage (this deletes the individual songs too - just in case)
+        Object.keys(localStorage)
+            .filter(x =>
+                x.startsWith('songDB'))
+            .forEach(x =>
+                localStorage.removeItem(x))
     }
 
     response = await fetch(import.meta.env.BASE_URL + '/songDB.json');
@@ -65,11 +70,11 @@ async function fetchSongContent({ params }) {
         console.log(`Could not find song ${params.id}`);
         throw new Response("Song not Found", { status: 404 });
     }
-    let songContent = localStorage.getItem(songData.chordproFile);
+    let songContent = localStorage.getItem("songDB/" + songData.chordproFile);
     if (!songContent) {
         let response = await fetch(import.meta.env.BASE_URL + "/songs/chordpro/" + songData.chordproFile);
         songContent = await response.text();
-        localStorage.setItem(songData.chordproFile, songContent);
+        localStorage.setItem("songDB/" + songData.chordproFile, songContent);
     }
     songData.content = songContent;
     return songData;

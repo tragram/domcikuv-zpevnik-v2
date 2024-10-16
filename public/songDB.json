@@ -377,7 +377,7 @@
   {
     "title": "Klára",
     "artist": "Chinaski",
-    "key": "C",
+    "key": "H",
     "language": "czech",
     "date_added": "10-2018",
     "capo": "0",
@@ -387,7 +387,7 @@
     "start_melody": "f#",
     "chordpro_file": "Chinaski_Klara.pro",
     "pdf_filenames": "['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']",
-    "content_hash": "e35c81b8ba71d305f1744e68f08f8baa50411be0"
+    "content_hash": "65d65c3e5eb7f8ad37f76b9ebe42b02279f587fb"
   },
   {
     "title": "Kompy",
@@ -417,7 +417,7 @@
     "start_melody": "e f#",
     "chordpro_file": "Chinaski_Kutil.pro",
     "pdf_filenames": "['chinaski_kutil-sken.pdf', 'chinaski_kutil-comp.pdf']",
-    "content_hash": "721d2e1a828e3a8155cd00218b2912e3c34fb5a7"
+    "content_hash": "8231cdb796a9fd4bbebde67fb665a3922f1c82de"
   },
   {
     "title": "Moc toho nevim",
@@ -432,7 +432,7 @@
     "start_melody": "a",
     "chordpro_file": "Chinaski_Moc_toho_nevim.pro",
     "pdf_filenames": "['chinaski_moc_toho_nevim-sken.pdf', 'chinaski_moc_toho_nevim-comp.pdf']",
-    "content_hash": "c7a5524fabceabe24a0d13f947f7865125d525c4"
+    "content_hash": "6577d8a2ff6d2d2c119ed46f6bc227a5ce70fc4a"
   },
   {
     "title": "Stížnost",
