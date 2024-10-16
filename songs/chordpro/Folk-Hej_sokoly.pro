@@ -5,12 +5,14 @@
 {capo: 0}
 {range: e1-a2}
 {start_melody: a c a c e}
+{key: a}
 
-[Verse 1]
+{start_of_verse}
 [Am]Hej, tamgdzieś znad czarnej wody
 [E]Wsiada na koń kozak młody
 [Am]Czule żegna się z dziewczyną
 [E]Jeszcze czulej z [Am]Ukra[G]iną
+{end_of_verse}
 
 {start_of_chorus}
 [C]Hej, hej, hej sokoły
