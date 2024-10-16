@@ -3,18 +3,27 @@ import { LanguageCount, SongData } from '../types'
 
 
 async function fetchSongs(): Promise<SongDB> {
+    // load data from localStorage
+    let savedSongDB = JSON.parse(localStorage.getItem("songDB"));
+    const savedHash = localStorage.getItem("songDB.hash");
+
     // check hash
-    let response = await fetch(import.meta.env.BASE_URL + '/songDB.hash');
+    let response = await fetch(import.meta.env.BASE_URL + '/songDB.hash', { signal: AbortSignal.timeout(500) });
     if (!response.ok) {
-        throw new Error('Failed to fetch song hash');
+        if (savedSongDB) {
+            console.log("Failed to load hash but found SongDB in LocalStorage!")
+            savedSongDB.songs = savedSongDB.songs.map(s => SongData.fromJSON(s));
+            return savedSongDB;
+        }
+        else {
+            throw new Error('Failed to fetch song hash and DB not saved in LocalStorage!');
+        }
     }
     const newHash = await response.text()
-    const savedHash = localStorage.getItem("songDB.hash");
     // console.log(savedHash, newHash, savedHash == newHash);
     if (savedHash == newHash) {
-        let songDB = JSON.parse(localStorage.getItem("songDB"));
-        songDB.songs = songDB.songs.map(s => SongData.fromJSON(s));
-        return songDB;
+        savedSongDB.songs = savedSongDB.songs.map(s => SongData.fromJSON(s));
+        return savedSongDB;
     } else {
         console.log("New DB detected -> Clearing LocalStorage!")
         localStorage.clear();
@@ -45,6 +54,7 @@ async function fetchSongs(): Promise<SongDB> {
         console.error('Error fetching songs:', error);
         throw error;
     }
+
 }
 
 async function fetchSongContent({ params }) {
