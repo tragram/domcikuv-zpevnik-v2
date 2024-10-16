@@ -63,7 +63,7 @@ function replaceChorusDirective(song, repeatChorus) {
         // Check for {end_of_chorus}
         if (line.match(endOfChorusRegex)) {
             if (currentChorus && currentKey) {
-                currentChorus[0]=`${currentKey != "default" ? currentKey : "R"}: `+currentChorus[0]
+                currentChorus[0] = `${currentKey != "default" ? currentKey : "R"}: ` + currentChorus[0]
                 // Store the chorus with the start and end directives
                 chorusMap[currentKey] = `{start_of_chorus}\n${currentChorus.join('\n')}\n{end_of_chorus}`;
             }
@@ -288,7 +288,13 @@ function SongView({ }) {
 
             </NavbarContent> */}
         </Navbar >
-        <div className={`flex text-center justify-center ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
+        <div className='flex justify-center mt-4 flex-col gap-6 max-w-lg mx-auto'>
+            <div className='flex gap-14 items-center'>
+                <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
+                <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
+            </div>
+            <div className={`${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" style={{ fontSize: `${fontSize}vh` }}></div>
+        </div>
     </>
     );
 };
