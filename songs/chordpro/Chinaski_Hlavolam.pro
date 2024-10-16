@@ -9,7 +9,6 @@
 {range: d1-d2}
 {start_melody: g}
 
-
 {start_of_verse}
 [G]Tisíce [Ami]nocí tisíc [C]slov a dní,
 [G]hlavolam [Ami]první a [C]poslední
