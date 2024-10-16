@@ -21,14 +21,12 @@ And [Em]I don't even know wha[G]t
 But he's [D]coming for you, yeah, he's [A]coming for you
 {end_of_verse}
 
-
 {start_of_chorus}
 [Em]All the other kids with the [G]pumped up kicks
 You'd better [D]run, better run, o[A]utrun my gun
 [Em]All the other kids with the [G]pumped up kicks
 You'd better [D]run, better run, f[A]aster than my bullet
 {end_of_chorus}
-
 
 {start_of_verse}
 [Em]Daddy works a long day[G]
@@ -41,7 +39,6 @@ I [Em]reason with my cigarette[G]
 And say your [D]hair's on fire
 You must have [A]lost your wits, yeah
 {end_of_verse}
-
 
 {chorus}
 
