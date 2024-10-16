@@ -36,65 +36,66 @@ const chromaticScale = {
 
 const renderKeys = ["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"]
 
-function replaceChorusDirective(song, repeatChorus) {
+function replaceRepeatedDirective(song, directive, repeat, shortHand = "R") {
     // ChordSheetJS doesn't know the {chorus} directive but I want to use it
-    const chorusMap = {}; // To store chorus sections by key
-    let currentChorus = null; // To store the current chorus being captured
-    let currentKey = null; // The key for the chorus
+    const directiveMap = {}; // To store directive sections by key
+    let currentdirective = null; // To store the current directive being captured
+    let currentKey = null; // The key for the directive
 
-    // Regex to match the start and end of chorus
-    const startOfChorusRegex = /\{start_of_chorus(?::\s*(\w+))?\}/; // Matches {start_of_chorus} or {start_of_chorus: key}
-    const endOfChorusRegex = /\{end_of_chorus\}/; // Matches {end_of_chorus}
-    const chorusCallRegex = /\{chorus(?::\s*(\w+))?\}/; // Matches {chorus} or {chorus: key}
-
+    // Regex to match the start and end of directive
+    const startOfdirectiveRegex = new RegExp(`\{start_of_${directive}(?::\\s*(\\w+))?\}`); // Matches {start_of_directive} or {start_of_directive: key}
+    const endOfdirectiveRegex = new RegExp(`\{end_of_${directive}\}`); // Matches {end_of_directive}
+    const directiveCallRegex = new RegExp(`\{${directive}(?::\\s*(\\w+))?\}`); // Matches {directive} or {directive: key}
     // Split content into lines
     const lines = song.split('\n');
     let processedContent = [];
 
     // Process each line
     for (let line of lines) {
-        // Check for {start_of_chorus} or {start_of_chorus: key}
-        let startMatch = line.match(startOfChorusRegex);
+        // Check for {start_of_directive} or {start_of_directive: key}
+        let startMatch = line.match(startOfdirectiveRegex);
         if (startMatch) {
+            console.log(startMatch)
             currentKey = startMatch[1] || 'default'; // Use key or default if no key is provided
-            currentChorus = [];
+            currentdirective = [];
             continue; // Skip this line from output
         }
 
-        // Check for {end_of_chorus}
-        if (line.match(endOfChorusRegex)) {
-            if (currentChorus && currentKey) {
-                currentChorus[0] = `${currentKey != "default" ? currentKey : "R"}: ` + currentChorus[0]
-                // Store the chorus with the start and end directives
-                chorusMap[currentKey] = `{start_of_chorus}\n${currentChorus.join('\n')}\n{end_of_chorus}`;
+        // Check for {end_of_directive}
+        let endMatch = line.match(endOfdirectiveRegex);
+        if (endMatch) {
+            if (currentdirective && currentKey) {
+                currentdirective[0] = `${currentKey != "default" ? currentKey : shortHand}: ` + currentdirective[0]
+                // Store the directive with the start and end directives
+                directiveMap[currentKey] = [`{start_of_${directive}}`].concat(currentdirective).concat([`{end_of_${directive}}`]);
             }
-            processedContent.push(chorusMap[currentKey]);
-            currentChorus = null;
+            processedContent.push(...directiveMap[currentKey]);
+            currentdirective = null;
             currentKey = null;
             continue; // Skip this line from output
         }
 
-        // Check for {chorus} or {chorus: key}
-        let chorusCallMatch = line.match(chorusCallRegex);
-        if (chorusCallMatch) {
-            const chorusKey = chorusCallMatch[1] || 'default'; // Recall the chorus with the key or the default one
-            if (repeatChorus && chorusMap[chorusKey]) {
-                processedContent.push(chorusMap[chorusKey]); // Insert the stored chorus content
+        // Check for {directive} or {directive: key}
+        let directiveCallMatch = line.match(directiveCallRegex);
+        if (directiveCallMatch) {
+            const directiveKey = directiveCallMatch[1] || 'default'; // Recall the directive with the key or the default one
+            if (repeat && directiveMap[directiveKey]) {
+                processedContent.push(...directiveMap[directiveKey]); // Insert the stored directive content
             } else {
-                processedContent.push(`{start_of_chorus}\n${chorusKey != "default" ? chorusKey : "R"}:\n{end_of_chorus}`)
+                processedContent.push(`{start_of_${directive}}\n${directiveKey != "default" ? directiveKey : "R"}:\n{end_of_${directive}}`)
             }
-            continue; // Skip the {chorus} line
+            continue; // Skip the {directive} line
         }
 
-        // If we are inside a chorus, add the line to the chorus
-        if (currentChorus !== null) {
-            currentChorus.push(line);
+        // If we are inside a directive, add the line to the directive
+        if (currentdirective !== null) {
+            currentdirective.push(line);
         } else {
             // Otherwise, add the line to the processed content
             processedContent.push(line);
         }
     }
-
+    console.log(directiveMap)
     return processedContent.join('\n');
 }
 
@@ -323,7 +324,8 @@ function SongView({ }) {
     let navigate = useNavigate();
 
     function renderSong(key) {
-        let song = replaceChorusDirective(convertChordsInChordPro(songData.content), repeatChorus);
+        let song = replaceRepeatedDirective(convertChordsInChordPro(songData.content), "chorus", repeatChorus);
+        song = replaceRepeatedDirective(song, "bridge", repeatChorus, "B");
         let parsedSong = parser.parse(song).setCapo(0);
         let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()]; // using capo in chordpro is not just a comment but actually modifies the chords... 
         parsedSong = parsedSong.transpose(difference);
