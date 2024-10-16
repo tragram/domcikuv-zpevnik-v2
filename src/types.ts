@@ -54,7 +54,7 @@ class SongRange {
             const lowestTone = song_range[0].slice(0, -1).toLowerCase()
             const highestTone = song_range[1].slice(0, -1).toLowerCase()
             const withinOctave = (12 + SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone]) % 12
-            
+
             this.min = song_range[0]
             this.max = song_range[1]
             this.semitones = 12 * octaves + withinOctave;
@@ -92,25 +92,12 @@ class SongData {
     tempo: int;
     capo: int;
     range: SongRange;
+    illustration_author: string;
     chordproFile: string;
     pdfFilenames: Array<string>;
     content: string | null;
 
     constructor(song: Object) {
-        // function guessKey(song: Object): SongKey {
-        //     //TODO: this will fail with keys other than simple C-major chords 
-        //     // remove chordpro directives
-        //     let lyricsOnly = song.content.replace(/\{.*?\}/g, "")
-        //     // regex to match the first chord
-        //     const chordRegex = /\[([^\]]+)\]/;
-        //     const match = lyricsOnly.match(chordRegex);
-        //     // console.log(match)
-        //     // if (!match) {
-        //     //     console.log("Song", song.artist, "-", song.title, "doesn't have key specified and no chords were found!")
-        //     // }
-        //     return match ? match[1] : "C";
-        // }
-
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
         this.id = unidecode(`${song.artist}-${song.title}`.replace(/ /g, "_"));
@@ -124,7 +111,7 @@ class SongData {
         this.tempo = parseInt(song.tempo);
         this.capo = parseInt(song.capo) || 0;
         this.range = new SongRange(song.range);
-        console.log(this.range)
+        this.illustration_author = song.illustration_author || "FLUX.1-dev";
         if (song.pdf_filenames) {
             this.pdfFilenames = JSON.parse(song.pdf_filenames.replace(/'/g, '"')).map(f => import.meta.env.BASE_URL + "/songs/pdfs/" + f);
         } else {
@@ -148,6 +135,7 @@ class SongData {
         instance.tempo = json.tempo;
         instance.capo = json.capo;
         instance.range = SongRange.fromJSON(json.range); // Re-create range object if needed
+        instance.illustration_author = json.illustration_author
         instance.chordproFile = json.chordproFile;
         instance.pdfFilenames = json.pdfFilenames;
         instance.content = json.content;

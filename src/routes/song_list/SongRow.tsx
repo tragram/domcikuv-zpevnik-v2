@@ -25,8 +25,6 @@ interface VocalRangeIndicatorProps {
 
 function VocalRangeIndicator({ song, maxRange }: VocalRangeIndicatorProps) {
     let songRangeSemitones = song.range.semitones;
-    if (songRangeSemitones) { console.log(song.title, song.range.semitones) }
-    // console.log(song.title, songRangeSemitones,maxRange)
     return (
         <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={!!songRangeSemitones} size="md" strokeWidth={3} value={songRangeSemitones ? songRangeSemitones : maxRange} />
     );
@@ -45,7 +43,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
             <div className="flex basis-[12%] min-w-14 rounded-l-full content-center justify-center bg-gray-100 relative">
                 <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                     <Instagram size={24} />
-                } showFallback size="lg" src={import.meta.env.BASE_URL + "/songs/illustrations/" + song.chordproFile.split('.')[0] + "/FLUX.1-dev.jpg"} />
+                } showFallback size="lg" src={import.meta.env.BASE_URL + "/songs/illustrations/" + song.chordproFile.split('.')[0] + `/${song.illustration_author}.jpg`} />
             </div>
             <div className="flex-auto min-w-48 flex-col bg-gray-100 text-left content-center">
                 <h2 className="text-sm font-bold">{song.title}</h2>
