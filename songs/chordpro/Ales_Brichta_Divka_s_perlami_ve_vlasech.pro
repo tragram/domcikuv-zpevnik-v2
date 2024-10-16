@@ -17,7 +17,7 @@
 [Ami]kolik se [G]platí za [Dmi]vláčnej [Ami]hřích.
 {end_of_verse}
 
-{start_of_chorus}
+{start_of_chorus: R1}
 No tak [C]lásko, [G]co chceš mi říct
 [Dmi]máš už perly [Ami]možná i víc
 [C]lásko [G]na co se ptáš, [Dmi]svíčku zhasí[Ami]náš.
@@ -33,7 +33,7 @@ Nemám [C]lásko [G]co bych ti dal,
 [Ami]bolí to, [G]hořím, [Dmi]jak černej [Ami]tér.
 {end_of_verse}
 
-{start_of_chorus}
+{start_of_chorus: R2}
 No tak [C]lásko, [G]kdo mi tě vzal,
 [Dmi]komus dala tělo i [Ami]duši,
 [C]lásko [G]na co je pláč, [Dmi]když to skončit [Ami]má.
@@ -42,14 +42,7 @@ Vždyť už [C]lásko, [G]svý perly máš
 [C]lásko [G]na co je pláč, [Dmi]perly ve vlasech [Ami]máš.
 {end_of_chorus}
 
-{start_of_chorus}
-No tak [C]lásko, [G]co chceš mi říct
-[Dmi]máš už perly možn[Ami]á i víc
-[C]lásko [G]na co se ptáš, [Dmi]svíčku zhasín[Ami]áš.
-Nemám [C]lásko [G]co bych ti dal,
-[Dmi]chtělas' všechno, [Ami]nebyl jsem král
-[C]lásko [G]na co se ptáš, [Dmi]perly ve vlasech [Ami]má
-{end_of_chorus}
+{chorus: R1}
 
 {start_of_verse}
 [Ami]Chtěla jsi [G]víc pro [Dmi]svoje [Ami]touhy,
@@ -58,29 +51,8 @@ Nemám [C]lásko [G]co bych ti dal,
 [Ami]ze svatební[G]ch zvon[Dmi]ů, z neb[Ami]eskejch bran.
 {end_of_verse}
 
-{start_of_chorus}
-No tak [C]lásko, [G]kdo mi tě vzal,
-[Dmi]komus dala tělo i [Ami]duši,
-[C]lásko [G]na co je pláč, [Dmi]když to skončit [Ami]má.
-Vždyť už [C]lásko, [G]svý perly máš
-[Dmi]tak proč padaj [Ami]měněj se v slzy,
-[C]lásko [G]na co je pláč, [Dmi]perly ve vlasech [Ami]máš.
-{end_of_chorus}
+{chorus: R2}
 
-{start_of_chorus}
-No tak [C]lásko, [G]co chceš mi říct
-[Dmi]máš už perly možn[Ami]á i víc
-[C]lásko [G]na co se ptáš, [Dmi]svíčku zhasín[Ami]áš.
-Nemám [C]lásko [G]co bych ti dal,
-[Dmi]chtělas' všechno, [Ami]nebyl jsem král
-[C]lásko [G]na co se ptáš, [Dmi]perly ve vlasech [Ami]má
-{end_of_chorus}
+{chorus: R1}
 
-{start_of_chorus}
-No tak [C]lásko, [G]kdo mi tě vzal,
-[Dmi]komus dala tělo i [Ami]duši,
-[C]lásko [G]na co je pláč, [Dmi]když to skončit [Ami]má.
-Vždyť už [C]lásko, [G]svý perly máš
-[Dmi]tak proč padaj [Ami]měněj se v slzy,
-[C]lásko [G]na co je pláč, [Dmi]perly ve vlasech [Ami]máš.
-{end_of_chorus}
+{chorus: R2}
