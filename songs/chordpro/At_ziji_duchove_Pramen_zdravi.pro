@@ -11,8 +11,8 @@
 
 {start_of_verse}
 Každý [G]den, každý den,
-k svači[Emi]ně jedině, 
-[C]jedině [D]pramen zdraví [G]z Posázaví. 
+k svači[Emi]ně jedině,
+[C]jedině [D]pramen zdraví [G]z Posázaví.
 {end_of_verse}
 
 {start_of_verse}
@@ -23,9 +23,9 @@ dítě[Emi]ti bledému,
 
 {start_of_chorus}
 [D]Výrobky [G]mléčné,
-to je [Em]marné, 
-jsou blaho[C]dárné 
-[D]a [G]věčné. 
+to je [Em]marné,
+jsou blaho[C]dárné
+[D]a [G]věčné.
 {end_of_chorus}
 
 {chorus}
