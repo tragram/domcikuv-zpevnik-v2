@@ -1,6 +1,7 @@
 # Domčíkův Zpěvník v2
 Welcome to the source code of my songbook, [available on Github Pages](https://tragram.github.io/domcikuv-zpevnik-v2/). It shows most of the songs I play without complaining and offers searching, filtering and sorting, as well as random song generation, transpositions etc.
-## Previous version
+
+### Previous version
 For my high-school graduation project, I created the first version of this songbook, [hosted here](https://appelt.cz/domcikuvzpevnik/). It consisted of an [Android app](https://github.com/tragram/DomcikuvZpevnik) and a [PHP server](https://github.com/tragram/DomcikuvZpevnik-Server). Due to a lack of updates, the app was taken down from the Playstore by Google in 2024 and the website was suboptimal for viewing on mobile devices, which is the main use-case of the songbook. Since I no longer program in Java nor PHP, I decided to make a new version, so here we are.
 
 ## Editing songs
