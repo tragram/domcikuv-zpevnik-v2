@@ -82,7 +82,7 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 * [ChordSheetJS](https://github.com/martijnversluis/ChordSheetJS): parsing Chordpro in JS
 * [Fuse.js](https://www.fusejs.io/): fuzzy search
 * [auto-text-size](https://www.npmjs.com/package/auto-text-size): automatic sizing of chords & lyrics
-* [country-flag-icons]()https://www.npmjs.com/package/country-flag-icons
+* [country-flag-icons](https://www.npmjs.com/package/country-flag-icons)
 
 ## TODO:
 A lot ATM. The one major feature to add is a mode in which you only see the generated illustrations and will choose based on those. Might be interesting to "judge the book by its cover".
