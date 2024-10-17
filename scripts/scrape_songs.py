@@ -90,21 +90,23 @@ def process_chordpro_folder(
             print(
                 "Didn't find anything for ", f"{artist} {title} site:pisnicky-akordy.cz"
             )
-            continue
+            song_text = ""
         else:
             pisnicky_akordy_url = pisnicky_akordy_url[0]
-        # Process each URL and print the extracted text
-        try:
-            song_text = scrape_akordy_pisnicky(pisnicky_akordy_url, key.title())
-        except NoSuchElementException:
-            print("Didn't find chords for", pisnicky_akordy_url, "saving an empty file")
-            song_text = ""
-        except Exception as e:
-            print(pisnicky_akordy_url, e)
-            raise e
-            continue
-        # For now, just print the extracted song text to ensure it's correct
-        print(f"Extracted song from {pisnicky_akordy_url}:\n{song_text}\n")
+            try:
+                song_text = scrape_akordy_pisnicky(pisnicky_akordy_url, key.title())
+            except NoSuchElementException:
+                print(
+                    "Didn't find chords for",
+                    pisnicky_akordy_url,
+                    "saving an empty file",
+                )
+                song_text = ""
+            except Exception as e:
+                print(pisnicky_akordy_url, e)
+                raise e
+            # For now, just print the extracted song text to ensure it's correct
+            print(f"Extracted song from {pisnicky_akordy_url}:\n{song_text}\n")
 
         # Optionally save the extracted song text to a file
         with open(scraped_path, "w", encoding="utf8") as file:
