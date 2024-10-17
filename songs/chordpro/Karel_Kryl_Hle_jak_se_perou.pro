@@ -12,16 +12,16 @@
 
 {start_of_verse}
 Tak [Emi]hle, jak se [D]perou, jen [Emi]pohleďte [D]na ně,
-jak [Emi]úplatky [D]berou a [G]svrbí je [Ami]dlaně, 
-jen [Emi]pohleďte [C]na ně, jak [D]zatančí [Emi]tance, 
-když [D]namísto [Emi]daně jim [H7]dají kus [Emi]žvance. 
+jak [Emi]úplatky [D]berou a [G]svrbí je [Ami]dlaně,
+jen [Emi]pohleďte [C]na ně, jak [D]zatančí [Emi]tance,
+když [D]namísto [Emi]daně jim [H7]dají kus [Emi]žvance.
 {end_of_verse}
 
 {start_of_chorus}
 [C]Pít, [D]klít, [G]rouhat se [Emi]víře,
 [G]pak sedět v [Emi]díře [D]nějaký [Emi]rok,
 [C]klít, [D]pít, [G]co hrdlo [Emi]ráčí,
-[G]vždyť osud [Emi]stáčí už [D]poslední [Emi]lok. 
+[G]vždyť osud [Emi]stáčí už [D]poslední [Emi]lok.
 {end_of_chorus}
 
 {start_of_verse}

@@ -10,8 +10,8 @@
 {start_melody: a a a g}
 {start_of_verse}
 Jestlipak [G]vzpomínáš si ještě na ten [D/F#]čas,
-táhlo nám [C]na dvacet a slunko bylo v [D]nás, 
-[Ami]vrabci nám jedli z ruky, [C]život šel bez záruky, 
+táhlo nám [C]na dvacet a slunko bylo v [D]nás,
+[Ami]vrabci nám jedli z ruky, [C]život šel bez záruky,
 [G]ale taky bez příkras.[D/F#]
 {end_of_verse}
 
@@ -24,8 +24,8 @@ anebo rovnou hned.
 
 {start_of_chorus}
 [Ami]Kam jsme se poděli, [C]kam jsme se to poděli,
-[G]kde je ti [D]konec, můj [Emi]jediný příteli, 
-[Ami]zmizels' mi, nevím [D]kam, 
+[G]kde je ti [D]konec, můj [Emi]jediný příteli,
+[Ami]zmizels' mi, nevím [D]kam,
 [Emi]sám, [Caad9?]sám, [C]sám, [Cmaj7?]jsem tady [G]sám.
 {end_of_chorus}
 

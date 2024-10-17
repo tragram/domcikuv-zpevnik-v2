@@ -41,4 +41,3 @@ půjdu se [Ami]mejt a pozhasínám, co bude [H7]dál?
 {chorus}
 
 {chorus}
-

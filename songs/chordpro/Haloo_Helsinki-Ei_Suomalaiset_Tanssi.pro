@@ -6,4 +6,3 @@
 {key: h}
 {range: h1-h2}
 {start_melody: f#}
-

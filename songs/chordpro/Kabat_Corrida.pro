@@ -10,8 +10,8 @@
 {start_melody: f#}
 {start_of_verse}
 Veš[Hmi]kerý slasti pozemský
-skryl [G]ďábel v zemi [E]španělský, 
-kde [Hmi]vítr hladí po tváři [G]a kastaněty [E]zní 
+skryl [G]ďábel v zemi [E]španělský,
+kde [Hmi]vítr hladí po tváři [G]a kastaněty [E]zní
 {end_of_verse}
 
 {start_of_verse}
@@ -33,13 +33,13 @@ za mě, ale hlavně víno, ženy zpěv
 {end_of_verse}
 
 {start_of_bridge}
-Na [A]vlnách slunce zářící, v Madridu zpívaj slavíci 
+Na [A]vlnách slunce zářící, v Madridu zpívaj slavíci
 {end_of_bridge}
 
 {start_of_chorus}
 Cer[Hmi]veza, rock'n'roll, [G]corrida Espa[E]ňol
-nandej [D]mi to seňor[C]ito, por [G]favor 
-teplý [D]tony mají [C]zvony v Caste[G]lon 
+nandej [D]mi to seňor[C]ito, por [G]favor
+teplý [D]tony mají [C]zvony v Caste[G]lon
 {end_of_chorus}
 
 {start_of_verse}

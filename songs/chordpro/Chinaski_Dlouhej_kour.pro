@@ -11,7 +11,7 @@
 
 {start_of_verse}
 [D]Když budeš hodná naučím tě [C]číst naučím tě [G]číst mezi [D]řádky
-to pokušení [C]znáš tak zapo[G]meň cestu [D]zpátky hmm cestu [C]zpát[G]ky 
+to pokušení [C]znáš tak zapo[G]meň cestu [D]zpátky hmm cestu [C]zpát[G]ky
 {end_of_verse}
 
 {start_of_verse}
@@ -29,15 +29,15 @@ Půjdem [C]nekonečně dlouhou [G]sametově černou
 {end_of_chorus}
 
 {start_of_verse}
-[D]Když budeš hodná, moje hodná [C]holka,  
-ukážu ti [G]všechny svoje tajný [D]skrýše,  
-poletíme [C]vejš, chvíli budem [G]řvát,  
-chvíli budem [D]tiše, úplně [C]ti[D]še.  
+[D]Když budeš hodná, moje hodná [C]holka,
+ukážu ti [G]všechny svoje tajný [D]skrýše,
+poletíme [C]vejš, chvíli budem [G]řvát,
+chvíli budem [D]tiše, úplně [C]ti[D]še.
 {end_of_verse}
 
 {start_of_verse}
-[D]Vezmu si tě celou, budem se mít [C]rádi, a když [G]ne, tak se ti něco [D]zdálo,  
-[D]a když budem [C]chtít, šlápnem na [G]zmizík, všechno bude [D]málo.  
+[D]Vezmu si tě celou, budem se mít [C]rádi, a když [G]ne, tak se ti něco [D]zdálo,
+[D]a když budem [C]chtít, šlápnem na [G]zmizík, všechno bude [D]málo.
 {end_of_verse}
 
 {chorus}

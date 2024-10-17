@@ -24,8 +24,8 @@ chci líbat tě na tvoje [Emi]ústa.
 {end_of_chorus}
 
 {start_of_verse}
-Že [G]byl jsem jak [Ami]blázen, že [C]byl se mnou kříž,  
-[G]jen ty mě [Ami]znáš, jen ty [C]jediná víš,  
+Že [G]byl jsem jak [Ami]blázen, že [C]byl se mnou kříž,
+[G]jen ty mě [Ami]znáš, jen ty [C]jediná víš,
 [G]tu správnou [Ami]odpověď [C]na otázku, odkud [D]kudy a kam.
 {end_of_verse}
 
