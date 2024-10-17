@@ -6,8 +6,10 @@
 {capo: 0}
 {key: e}
 {tempo: }
+{illustration_author: dalle3.webp}
 {range: c1-c2/g2}
 {start_melody: e}
+
 {start_of_verse}
 [Emi]Konopný lana, tak ty už něco vyd[Hmi]rží,
 zkaženej dech a čtyry deci pod [Emi]kůží, 

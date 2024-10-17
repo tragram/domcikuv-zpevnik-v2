@@ -112,7 +112,7 @@ class SongData {
         this.tempo = parseInt(song.tempo);
         this.capo = parseInt(song.capo) || 0;
         this.range = new SongRange(song.range);
-        this.illustration_author = song.illustration_author || "FLUX.1-dev";
+        this.illustration_author = song.illustration_author || "FLUX.1-dev.jpg";
         if (song.pdf_filenames) {
             this.pdfFilenames = JSON.parse(song.pdf_filenames.replace(/'/g, '"')).map(f => import.meta.env.BASE_URL + "/songs/pdfs/" + f);
         } else {
