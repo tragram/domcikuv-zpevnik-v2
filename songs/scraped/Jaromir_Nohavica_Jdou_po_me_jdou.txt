@@ -3,17 +3,19 @@
            F#mi       Hmi        A
    na půdě půdy jsem míval svou skrýš,
       G            D    A             Hmi
-   [: pak jednou v létě řek' jsem si: bať,
+   |: pak jednou v létě řek' jsem si: bať,
       G         D        G          D
-      svět fackuje tě, a tak mu to vrať. :]
+      svět fackuje tě, a tak mu to vrať. :|
+
                D           G        D
 2. Když mi dát nechceš, já vezmu si sám,
              F#mi    Hmi    A
    zámek jde lehce a adresu znám,
       G         D      A        Hmi
-   [: zlato jak zlato, dolar či frank,
+   |: zlato jak zlato, dolar či frank,
       G            D        G        D
-      tak jsem šel na to do National Bank. :]
+      tak jsem šel na to do National Bank. :|
+
                 D     G     D
 R: Jdou po mně, jdou, jdou, jdou,
              F#mi   Hmi      A
@@ -22,27 +24,31 @@ R: Jdou po mně, jdou, jdou, jdou,
    kdyby mě chytli, jó, byl by ring,
    G          D          C           G     A   D  G  D
    tma jako v pytli je v celách Sing-sing. Jé, Jé...
+   
             D        G        D
 3. Ve státě Iowa byl od poldů klid,
             F#mi     Hmi     A
    chudinká vdova mi nabídla byt,
       G       D       A          Hmi
-   [: byla to kráska, já měl peníze,
+   |: byla to kráska, já měl peníze,
       G         D         G       D
-      tak začla láska jak z televize. :]
+      tak začla láska jak z televize. :|
+
                  D    G         D
 4. Však půl roku nato řekla mi:"Dost,
               F#mi       Hmi   A
    tobě došlo zlato, mně trpělivost,
       G              D         A           Hmi
-   [: sbal svých pár švestek a běž si, kam chceš,"
+   |: sbal svých pár švestek a běž si, kam chceš,"
       G           D       G         D
-      tak jsem na cestě a chudý jak veš. :]
+      tak jsem na cestě a chudý jak veš. :|
+      
 R:
+
 5. Teď ve státě Utah žiju spokojen,
    pípu jsem utáh' a straním se žen,
-   [: kladou mi pasti a do pastí špek,
-      já na ně mastím, jen ať mají vztek. :]
+   |: kladou mi pasti a do pastí špek,
+      já na ně mastím, jen ať mají vztek. :|
     
 R: Jdou po mně jdou, jdou, jdou,
    na nočních stolcích mají fotku mou,

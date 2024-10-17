@@ -1,5 +1,3 @@
-kapo 2
-
    C             Ami
 1. Někde v dálce cesty končí,
    G              F        C
@@ -29,7 +27,7 @@ R: Veď mě dál, cesto má, veď mě dál, vždyť i já
    tam, kde končíš, chtěl bych dojít, veď mě dál, cesto má.
 
    Ami        G        C
-*: Pak na patník poslední napíšu křídou
+B: Pak na patník poslední napíšu křídou
    F            C                G
    jméno své, a pod něj, že jsem žil hrozně rád,
    Ami              B

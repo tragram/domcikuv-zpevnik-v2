@@ -1,4 +1,4 @@
- E  A  E  H  E  A  E  H
+
    E                        A
 1. Vzpomeň, jak's očima dítěte 
    E                   H
@@ -29,7 +29,6 @@ R: Ničeho nelituj,
    Přes všechny pochyby život je krásný.
    Jsi napojen
    a svět je Tvá továrna na sny.
-   E  A  E  H  E  A  E  H
    
 3. Nebe až najde jas ve vodní hladině,
    až měsíc opře se o břeh
@@ -44,4 +43,5 @@ R: Ničeho nelituj,
    v otázce, kdo vlastně jsem. 
    Poznej, že být je jednoduché,
    ucítíš klid, že vše jedno je duchem. 
+   
 R:

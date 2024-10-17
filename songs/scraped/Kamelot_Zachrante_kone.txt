@@ -1,6 +1,3 @@
-instrumental:   
-/Emi/ - / Ami7/ - /
-/ D / - / G / C7 H7/
    Emi                               Ami7
 1. Peklo byl ráj, když hořela stáj, příteli,
     C             D          G   C7 H7    
@@ -11,7 +8,7 @@ instrumental:
    hejna kohoutů, a bůhví kam
 
      G                Hmi              C
-R1: Zachraňte koně, křičel jsem tisíckrát,
+R: Zachraňte koně, křičel jsem tisíckrát,
      G                   Hmi              C
     žil jsem jen pro ně, bránil je nejvíckrát,
                   Ami             C
@@ -19,9 +16,6 @@ R1: Zachraňte koně, křičel jsem tisíckrát,
                Ami               H7 
     pročesal plamen, spálil na troud
 
-instrumental: 
-/Emi/ - / Ami7/ - /
-/ D / - / G / C7 H7/
     Emi                                 Ami7
 2. Ohrady a stáj, a v plamenech kraj už nedýchal,
       C             D       G   C7 H7 
@@ -30,8 +24,9 @@ instrumental:
    klisna u něj a smuteční děj se odbývá,
     C              H7      Emi
    jak tiše pláče, oči přivírá
+
      G                Hmi              C
-R2: Zachraňte koně, křičel jsem tisíckrát,
+R: Zachraňte koně, křičel jsem tisíckrát,
      G                   Hmi              C
     žil jsem jen pro ně, bránil je nejvíckrát,
                   Ami             C

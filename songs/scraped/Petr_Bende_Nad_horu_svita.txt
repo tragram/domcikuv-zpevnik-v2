@@ -1,12 +1,10 @@
-E   A(2)   E
-
-E                      A
-Nad horů svítá, začíná nový den
+ E                      A
+ Nad horů svítá, začíná nový den
            E
 slunce nás vítá
 
-         E                  A
-Mládenče vstávej, koně chců vody pít
+            E                  A
+1. Mládenče vstávej, koně chců vody pít
            E               A
 tak jim ju dávej, ať můžeš klidný být
 Amaj7    H2       Asmi        C#mi
@@ -14,8 +12,8 @@ v košili bílé teď spí v náručí milé
   Amaj7         H2       Asmi
 a sní, v košili bílé teď spí
 
-         E               A
-Zítra až půjdem do vojny Švédy bít,
+            E               A
+2. Zítra až půjdem do vojny Švédy bít,
         E              A
 maměnka pláče nedej se zastřelit,
 Amaj7    H2          Asmi           C#mi
@@ -23,13 +21,13 @@ v košili   rudé  teď sám v zemi spát bude
   Amaj7         H2          Asmi
 a sní, v košili   rudé  teď spí
 
-Amaj7       H2     Asmi          C#mi7
-Zrádný jsou vítání s válkou, jejijé
+   Amaj7       H2     Asmi          C#mi7
+R: Zrádný jsou vítání s válkou, jejijé
      Amaj7   H2         Asmi
 když svítání zlátnou, ouou
 
-         E              A
-Poslední náděj musíš jí v srdci mít
+            E              A
+3. Poslední náděj musíš jí v srdci mít
          E                  A
 modlitbu spřádej kdo nechce nepřežít
 Amaj7    H2         Asmi           C#mi 
@@ -37,13 +35,7 @@ v košili  rudé teď  sám v zemi spát bude
   Amaj7         H2         Asmi
 a sní, v košili  rudé teď  spí
 
-Amaj7       H2     Asmi          C#mi7
-Zrádný jsou vítání s válkou, jejijé
-     Amaj7   H2         Asmi
-když svítání zlátnou, ouou
-    Amaj7        H2       Asmi      C#mi7
-Teď zvláštní tón láká  tě dolů, jejijé
+       Amaj7        H2       Asmi      C#mi7
+R2: Teď zvláštní tón láká  tě dolů, jejijé
   Amaj7     H2        Asmi
 a zem vpíjí karmín, ouou
-
-E   A   E   A   E

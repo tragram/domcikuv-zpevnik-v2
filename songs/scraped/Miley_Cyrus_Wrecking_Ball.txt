@@ -10,7 +10,7 @@
    A love no one could deny
    
    C                 Em
-P: Don’t you ever say I just walked away
+B: Don’t you ever say I just walked away
    G                  C
    I will always want you
    C                  Em 
@@ -34,11 +34,12 @@ R: I came in like a wrecking ball
    It slowly turned, you let me burn
    And now, we’re ashes on the ground
    
-P:
+B:
+
 R: (2x)
    
-   C                       Em
-   I never meant to start a war
+      C                       Em
+B2:   I never meant to start a war
                              G
    I just wanted you to let me in
                       Hm

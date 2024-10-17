@@ -1,10 +1,6 @@
-[Intro]
-Emi 
-Emi F#7 H Emi Bdim7 H 2x
 
-[Verse]
-Emi                     F#7
-Bylas' jak poslední hlt vína,
+   Emi                     F#7
+1. Bylas' jak poslední hlt vína,
 H                   Emi Bdim7 H
 sladká a k ránu bolavá,
 Emi                 F#7
@@ -12,9 +8,9 @@ za nehty výčitky a špína,
 H                       Emi Bdim7 Adim7
 říkalas': dnešní noc je tvá.
 
-[Chorus]
-G                         H7
-Co my dva z lásky vlastně máme,
+
+   G                         H7
+R: Co my dva z lásky vlastně máme,
 Ami7     Bdim7        H
 hlubokou šachtou padá zdviž, já říkám "kiš-kiš",
 Emi                     F#7 
@@ -22,13 +18,13 @@ navrch má vždycky těžký kámen
 H                           Emi Bdim7 H
 a my jsme v koncích čím dál blíž,
 
-[Bridge] 2x
-Emi                     Ami7   Bdim7 H
-a me tu ha nadži vava jaj dari dari daj.
 
-[Verse]
-Emi                       F#7
-Zejtra tě potkám za svým stínem,
+      Emi                     Ami7   Bdim7 H
+B: |: a me tu ha nadži vava jaj dari dari daj. :|
+
+
+   Emi                       F#7
+1. Zejtra tě potkám za svým stínem,
 H                      Emi Bdim7 H
 neznámí známí v tramvaji,
 Emi                    F#7
@@ -36,12 +32,13 @@ v cukrárně kávu s harlekýnem,
 H                       Emi Bdim7 Adim7
 hořká a sladká splývají.
 
-[Chorus]
-[Bridge] 2x
 
-[Verse]
-Emi                     F#7
-Bylas' jak poslední hlt vína,
+R: 
+
+B:
+
+   Emi                     F#7
+1. Bylas' jak poslední hlt vína,
 H                   Emi Bdim7 H
 zbývá jen účet zaplatit a jít,
 Emi                 F#7
@@ -49,9 +46,9 @@ za nehty výčitky a špína
 H                    Emi Bdim7 Adim7
 a trapný průchod banalit.
 
-[Chorus]
-G                         H7 
-Co my tři z lásky vlastně máme,
+
+   G                         H7 
+R: Co my tři z lásky vlastně máme,
 Ami7     Bdim7      H
 hlubokou šachtou padá zdviž, co čumíš, kiš-kiš,
 Emi                     F#7 
@@ -59,9 +56,7 @@ navrch má vždycky těžký kámen
 H                           Emi Bdim7 H
 a my jsme v koncích čím dál blíž,
 
-[Bridge] 2x
-Emi                     Ami7   Bdim7 H
-a me tu ha nadži vava jaj dari dari daj.
+B: 
 
 [Outro] 4x
 Emi                     F#7 

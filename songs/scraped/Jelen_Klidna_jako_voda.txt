@@ -1,13 +1,14 @@
-C                F            C 
-Chodím světem už pěknejch pár let,
+   C                F            C 
+1. Chodím světem už pěknejch pár let,
 C              F           C
 parným létem i zrmzlej jak led.
 Ami              F          G       C
 Zjistil jsem, že lásku smím dávat i vzít,
            F         C            G        C
 nikdy jsem nešel tou cestou, kudy ty musíš jít.
-C                     F         C
-Viděl jsem i místa, lepší zapomenout.
+
+   C                     F         C
+2. Viděl jsem i místa, lepší zapomenout.
 C                            F         C
 Kulky vzduchem hvízdat, těla po vodě plout.
 Ami         F             G         C
@@ -15,8 +16,8 @@ Někdy si až říkám, jestli mám právo žít,
           F         C            G        C
 a to jsem nešel tou cestou, kudy ty musíš jít.
 
-    F           C         G          C
-Buď klidná jako voda, ale silná jako proud,
+       F           C         G          C
+R: Buď klidná jako voda, ale silná jako proud,
 F           C       G
 skála se ti poddá a zbavíš se všech pout.
 F                  C     E7         Ami
@@ -24,8 +25,8 @@ Svěží jako ranní rosa a čistá jako sníh.
         F              C          G          C
 Když tančíš po kamení bosá, svět máš na dlaních.
 
-C                 F             C 
-Život někdy umí lidem naložit kříž,
+   C                 F             C 
+3. Život někdy umí lidem naložit kříž,
     C                           F            C
 ale ničeho se neboj, jsem tu s tebou, vždyť víš.
   Ami         F           G       C
@@ -33,17 +34,10 @@ A i kdyby nás ďábel chtěl na rohy vzít,
       F          C            G        C
 spolu půjdem tou cestou, kudy ty musíš jít.
 
-        F           C         G          C
-Tak buď klidná jako voda, ale silná jako proud,
-F           C       G
-skála se ti poddá a zbavíš se všech pout.
-F                C      E7         Ami
-Svěží jako ranní rosa a čistá jako sníh.
-            F         C     G              C
-Když tančíš po kamení bosá, svět máš na dlaních.
+R:
 
-    F           C         G          C
-Buď klidná jako voda, ale silná jako proud,
+       F           C         G          C
+R: Buď klidná jako voda, ale silná jako proud,
 F           C       G
 skála se ti poddá a zbavíš se všech pout.
 F                C      E7         Ami
@@ -51,7 +45,7 @@ Svěží jako ranní rosa a čistá jako sníh.
         F               C        G          C
 Když tančíš po kamení bosá, svět máš na dlaních.
 
-F                C      E7         Ami
-Svěží jako ranní rosa a čistá jako sníh.
+   F                C      E7         Ami
+R: Svěží jako ranní rosa a čistá jako sníh.
        F                C         G        C
 Když tančíš po kamení bosá, svět máš na dlaních.

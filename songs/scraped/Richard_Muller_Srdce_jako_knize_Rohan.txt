@@ -7,8 +7,6 @@
    Emi             D
    otevře ti Kobera a můžeš mezi nás
 
-|C|G|Emi|D| 2x
-
 2. Moje teta, tvoje teta, parole 
    dvaatřicet karet křepčí na stole
    měsíc svítí sám a chleba nežere
@@ -22,8 +20,6 @@ R1: Dnes je valcha u starýho Růžičky
     Co je na tom, že to není extra nóbl byt,
     Emi                    D
     srdce jako kníže Rohan musíš mít.
-
-|C|G|Emi|D| 2x
 
 3. Ať jsi přes den docent nebo tunelář
    herold svatý pravdy nebo jinej lhář
@@ -50,8 +46,5 @@ R4: Dnes je valcha u starýho Růžičky
     malej nebo nachlapenej, cikán, brňák, žid
     srdce jako kníže Rohan musíš mít.
 
-Sólo:
-|C|G|Emi|D| 2x
-
 R1: 2x
-R3: +|G|
+R3:
