@@ -119,6 +119,7 @@ def add_chordpro_directives(paragraph):
     # Detect verses (e.g., "1. ", "2. ")
     verse_match = re.match(r"\d+\.\s", first_line)
     chorus_match = re.match(r"R\d*:\s*", first_line)
+    bridge_match = re.match(r"B\d*:\s*", first_line)
     if verse_match:
         output_lines.append("{start_of_verse}")
         for line in paragraph:
@@ -144,6 +145,16 @@ def add_chordpro_directives(paragraph):
             output_lines.append("{end_of_chorus}")
 
         # Append other paragraphs as is
+    elif bridge_match:
+        output_lines.append("{start_of_bridge}")
+        for line in paragraph:
+            # Remove the bridge number from the first line
+            if line == paragraph[0]:
+                output_lines.append(line[len(bridge_match.group()) :].strip())
+            else:
+                output_lines.append(line)
+        output_lines.append("{end_of_bridge}")
+
     else:
         output_lines.extend(paragraph)
 
@@ -186,13 +197,16 @@ def process_song(song_lines):
     return "\n\n".join(result)
 
 
-def process_scraped_folder(folder_path: Path):
+def process_scraped_folder(folder_path: Path, n=5):
     """
     Walks through a folder and processes all ChordPro (.pro or .cho) files.
 
     """
+    i = 0
     chordpro_files = list(folder_path.glob("*.txt"))
     for filepath in chordpro_files:
+        if i >= n:
+            break
         print("-" * 40)
         print(f"Processing {filepath}")
         chordpro_filepath = Path(f"songs/chordpro/{filepath.stem}.pro")
@@ -201,11 +215,15 @@ def process_scraped_folder(folder_path: Path):
             continue
         with open(filepath, "r", encoding="utf-8") as file:
             song_lines = file.readlines()
+        if len(song_lines) <= 2:
+            print("Empty file for", filepath, "--> skipping")
+            continue
 
         chordpro_output = process_song(song_lines)
         print(chordpro_output)
         with open(chordpro_filepath, "a+", encoding="utf-8") as file:
-            file.write(chordpro_output)
+            file.write("\n" + chordpro_output)
+        i += 1
 
 
 process_scraped_folder(songs_path() / "scraped")
