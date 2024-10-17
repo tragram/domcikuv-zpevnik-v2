@@ -85,4 +85,6 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 * [country-flag-icons](https://www.npmjs.com/package/country-flag-icons)
 
 ## TODO:
-A lot ATM. The one major feature to add is a mode in which you only see the generated illustrations and will choose based on those. Might be interesting to "judge the book by its cover".
+A lot ATM. The two major features to add are:
+* A mode in which you only see the generated illustrations and will choose based on those. Might be interesting to "judge the book by its cover".
+* Make the website a [PWA](https://en.wikipedia.org/wiki/Progressive_web_app) to make it available 100 % offline.
