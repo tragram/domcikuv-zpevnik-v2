@@ -10,9 +10,9 @@
 {start_melody: e g#}
 {start_of_verse}
 I [E]hear the train a comin' it's rollin' 'round the bent
-and I ain't seen the sunshine since [E7]I don't know when 
-I'm [A7]stuck at Folsom prison and time keeps drogin' [E]on 
-but that [H7]train keeps rollin' on down to San An[E]tone. 
+and I ain't seen the sunshine since [E7]I don't know when
+I'm [A7]stuck at Folsom prison and time keeps drogin' [E]on
+but that [H7]train keeps rollin' on down to San An[E]tone.
 {end_of_verse}
 
 {start_of_verse}

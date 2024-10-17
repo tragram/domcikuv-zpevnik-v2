@@ -24,7 +24,7 @@ krom naší [Dmi]vsi je všude moderní [E]svět.
 {end_of_bridge}
 
 {start_of_verse}
-Přestaňme pěstovat [A]už, [F#mi]obilí, 
+Přestaňme pěstovat [A]už, [F#mi]obilí,
 [Hmi]radši si [E]kupme všichni [A]mobily. [F#mi]
 [Hmi]No my tu nebudem [E]nikomu dělat [A]debily. [F#mi]
 [Hmi]My u nás [E]postavíme [A]sloup,

@@ -10,10 +10,10 @@
 {start_melody: a h}
 {start_of_verse}
 [G]Well, you wonder why I always dress in black
-Why you never see bright colors on my [A]back? 
-And [C]why does my [G]appearance 
-Seem to [C]have a sombre [G]tone? 
-Well, there's [A]a reason for the things that I have [D7]on. 
+Why you never see bright colors on my [A]back?
+And [C]why does my [G]appearance
+Seem to [C]have a sombre [G]tone?
+Well, there's [A]a reason for the things that I have [D7]on.
 {end_of_verse}
 
 {start_of_verse}
@@ -63,5 +63,5 @@ You'll never see me wear a suit of white.
 Aw! I'd love to wear a rainbow every day
 And tell the world that ev'rything's OK
 But I'll try to carry off a little darkness on my back
-'Til things are brighter [D7]I'm the man in [G]black. 
+'Til things are brighter [D7]I'm the man in [G]black.
 {end_of_verse}

@@ -18,7 +18,7 @@ Prázdej [Em]byt je jako [C]past, kde [Am]růže uva[G]dnou, [D]
 
 {start_of_chorus}
 Píšeš: [G]Proklínám, [D]ty [Em]tvoje [C]ústa proklíná[G]m,
-tvoje [D]oči ledov[Em]ý, 
+tvoje [D]oči ledov[Em]ý,
 v [C]srdci jen sníh, [G]sám a [D]sám,
 [Em]ať nikdy [C]úsvit nespa[G]tříš,
 na ústa [D]mříž, oči oslep[Em]nou,

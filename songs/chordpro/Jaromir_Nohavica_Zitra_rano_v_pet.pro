@@ -10,10 +10,10 @@
 {start_melody: e}
 {start_of_verse}
 Až [Ami]mě zítra ráno v pět [C]ke zdi postaví,
-[F]ještě si nap[G7]osled dám [C]vodku na zdra[Ami7]ví. 
-Z očí [Dmi]pásku strhnu [G]si, to abych [C]viděl [Emi]na ne[Ami]be, 
+[F]ještě si nap[G7]osled dám [C]vodku na zdra[Ami7]ví.
+Z očí [Dmi]pásku strhnu [G]si, to abych [C]viděl [Emi]na ne[Ami]be,
 a [Dmi]pak vzpomenu [E7]si má [Ami]lásko na [Ami7]tebe. [Dmi][G][C][Emi][Ami]
-a [Dmi]pak vzpomenu [E7]si na teb[Ami]e. 
+a [Dmi]pak vzpomenu [E7]si na teb[Ami]e.
 {end_of_verse}
 
 {start_of_verse}

@@ -24,7 +24,7 @@ protože [C]ty a já jsme [D]dvě křídla nad propastí
 
 {start_of_chorus}
 |: A tak [G]doufám, že to co mě i tebe tak [C]mrazí
-[D]nejsou jen tři tečky na konci [G]frází [Hmi/F#] :|
+[D]nejsou jen tři tečky na konci [G]frází [Hmi/F#]:|
 {end_of_chorus}
 
 {start_of_verse}
@@ -37,4 +37,3 @@ co s ní [D]každý den vstávám a večer jdu [G]spát [Hmi/F#]
 {bridge}
 
 {chorus}
-

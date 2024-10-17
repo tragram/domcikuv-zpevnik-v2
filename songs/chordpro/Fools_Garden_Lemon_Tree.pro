@@ -26,7 +26,7 @@ But nothing ever happens - and I wonder.
 {end_of_verse}
 
 {start_of_chorus}
-I [C]wonder how I [G]wonder why 
+I [C]wonder how I [G]wonder why
 [Ami]yesterday you told me 'bout the [Emi]blue blue sky
 and [F]all that I can [G]see is just a yellow [C]lemon-tree. [G7]
 I'm [C]turning my head [G]up and down
