@@ -311,11 +311,11 @@ function SongView({ }) {
             </div>
         );
     };
-    const [chordsHidden, setChordsHidden] = useLocalStorageState("chordsHidden", { defaultValue: false });
-    const [repeatChorus, setRepeatChorus] = useLocalStorageState("repeatChorus", { defaultValue: true });
-    const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("repeatVerseChords", { defaultValue: true });
-    const [fontSize, setFontSize] = useLocalStorageState("fontSize", { defaultValue: 12 });
-    const [autoFontSize, setAutoFontSize] = useLocalStorageState("autoFontSize", { defaultValue: true });
+    const [chordsHidden, setChordsHidden] = useLocalStorageState("settings/chordsHidden", { defaultValue: false });
+    const [repeatChorus, setRepeatChorus] = useLocalStorageState("settings/repeatChorus", { defaultValue: true });
+    const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("settings/repeatVerseChords", { defaultValue: true });
+    const [fontSize, setFontSize] = useLocalStorageState("settings/fontSize", { defaultValue: 12 });
+    const [autoFontSize, setAutoFontSize] = useLocalStorageState("settings/autoFontSize", { defaultValue: true });
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);

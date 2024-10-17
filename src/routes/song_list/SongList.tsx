@@ -18,13 +18,13 @@ const SongList = () => {
     const [searchResults, setSearchResults] = useState(songs);
     const [selectedSong, setSelectedSong] = useState(null); // State for selected song
     const [query, setQuery] = useState("");
-    const [sortSettings, setSortSettings] = useLocalStorageState<SortSettings>("sortSettings", {
+    const [sortSettings, setSortSettings] = useLocalStorageState<SortSettings>("settings/sortSettings", {
         defaultValue: {
             order: "ascending",
             field: "title",
         }
     })
-    const [filterSettings, setFilterSettings] = useLocalStorageState<FilterSettings>("filterSettings", {
+    const [filterSettings, setFilterSettings] = useLocalStorageState<FilterSettings>("settings/filterSettings", {
         defaultValue: {
             language: "all",
             vocal_range: "all",
