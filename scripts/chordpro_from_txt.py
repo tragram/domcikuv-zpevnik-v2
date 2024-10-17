@@ -146,14 +146,17 @@ def add_chordpro_directives(paragraph):
 
         # Append other paragraphs as is
     elif bridge_match:
-        output_lines.append("{start_of_bridge}")
-        for line in paragraph:
-            # Remove the bridge number from the first line
-            if line == paragraph[0]:
-                output_lines.append(line[len(bridge_match.group()) :].strip())
-            else:
-                output_lines.append(line)
-        output_lines.append("{end_of_bridge}")
+        if first_line == bridge_match.group():
+            output_lines.append("{bridge}")
+        else:
+            output_lines.append("{start_of_bridge}")
+            for line in paragraph:
+                # Remove the bridge number from the first line
+                if line == paragraph[0]:
+                    output_lines.append(line[len(bridge_match.group()) :].strip())
+                else:
+                    output_lines.append(line)
+            output_lines.append("{end_of_bridge}")
 
     else:
         output_lines.extend(paragraph)
