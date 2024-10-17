@@ -19,18 +19,11 @@ Se desvane[E]ció, desapare[D]ció
 {end_of_verse}
 
 {start_of_chorus}
-[D]Mira, Sofi[A]a
-[E]Sin tu mirada, sigo
-[Hm]Sin tu mirada, sigo
-[D]Dime, Sofí[A]a,
-[E]¿Cómo te mira? Dime
-[Hm]¿Cómo te mira? Dime
-[D]Sé que no, sé que no [A]o
-Sé que so[E]lo
+[D]Mira, Sofi[A]a [E]Sin tu mirada, sigo [Hm]Sin tu mirada, sigo
+[D]Dime, Sofí[A]a,[E]¿Cómo te mira? Dime [Hm]¿Cómo te mira? Dime
+[D]Sé que no, sé que no [A]o, Sé que so[E]lo
 Sé que ya no [Hm]soy oy oy oy
-[D]Mira, Sofi[A]a
-[E]Sin tu mirada, sigo
-[Hm]Sin tu mirada, Sofi[F#m]a
+[D]Mira, Sofi[A]a [E]Sin tu mirada, sigo [Hm]Sin tu mirada, Sofi[F#m]a
 {end_of_chorus}
 
 {start_of_verse}
