@@ -1,36 +1,35 @@
-   A D A D A D
-     E   D       A D A    D      A   D A
+     A   G       D G D    G      D   G D
 1. Král do boje táh, do veliké dálky,
-        D         A     E7            A
+        G         D     A7            D
    a s ním do té války jel na mezku klaun,
-    E    D        A D A       D       A  D A
+    A    G        D G D       G       D  G D
    než hledí si stáh, tak z výrazu tváře
-    D             A     E7           A
+    G             D     A7           D
    bys nepoznal lháře, co zakrývá strach.
-    E7                       A
+    A7                       D
    Tiše šeptal při té hrůze:"Inter arma silent musae,"
-    H                       E7 Es7 E7
+    E                       A7 As7 A7
    místo zvonku cinkal brněním,
-         D       A D A    D      A   D A
+         G       D G D    G      D   G D
    král do boje táh, do veliké dálky,
-   D              A     E7            A  C# D A H7
+   G              D     A7            D  F# G D E7
    a s ním do té války jel na mezku klaun.
 
-     E   D       A D A    D      A   D A
+     A   G       D G D    G      D   G D
 2. Král do boje táh, a sotva se vzdálil,
-        D         A     E7            A
+        G         D     A7            D
    tak vesnice pálil a dobýval měst,
-    E    D        A D A       D       A  D A
+    A    G        D G D       G       D  G D
    klaun v očích měl hněv, když sledoval žháře,
-    D             A     E7           A
+    G             D     A7           D
    jak smývali v páře prach z rukou a krev.
-    E7                       A
+    A7                       D
    Tiše šeptal při té hrůze:"Inter arma silent musae,"
-    H                       E7 Es7 E7
+    E                       A7 As7 A7
    místo loutny držel v ruce meč,
-         D       A D A    D      A   D A
+         G       D G D    G      D   G D
    král do boje táh, a sotva se vzdálil,
-   D              A     E7            A  C# D A H7
+   G              D     A7            D  F# G D E7
    tak vesnice pálil a dobýval měst.
 
 3. Král do boje táh, s tou vraždící lůzou
