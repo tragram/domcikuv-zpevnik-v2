@@ -46,6 +46,27 @@ def extract_metadata(file_path):
     return artist, title, key
 
 
+def load_chordpro_file(filepath):
+    # Read the file content
+    with open(filepath, "r", encoding="utf8") as file:
+        content = file.read()
+    return content
+
+
+def remove_chordpro_directives(content):
+    # Remove ChordPro directives (anything inside curly or square brackets brackets)
+    content = re.sub(r"\{.*?\}", "", content)
+    content = re.sub(r"\[.*?\]", "", content)
+    content = re.sub(r"[ ]+", " ", content)
+    content = re.sub(r"\n{3,}", "\n\n", content)
+    return content.strip()
+
+
+def get_lyrics(chordpro_file):
+    content = load_chordpro_file(chordpro_file)
+    return remove_chordpro_directives(content)
+
+
 def check_if_lyrics_present(chordpro_filepath):
     """
     Checks if there are any lyrics (non-directive, non-chord) in the content.

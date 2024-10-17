@@ -8,7 +8,7 @@ from googlesearch import search
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from utils import check_if_lyrics_present, extract_metadata, songs_path
+from utils import check_if_lyrics_present, extract_metadata, get_lyrics, songs_path
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -62,15 +62,21 @@ def process_chordpro_folder(
     Walks through a folder and processes all ChordPro (.pro or .cho) files.
 
     """
+    os.makedirs(songs_path / scrape_folder, exist_ok=True)
     chordpro_files = list((songs_path / chordpro_folder).glob("*.pro"))
     # Random shuffle to avoid wasting available searches before error 429 on the start of the list.
     random.shuffle(chordpro_files)
     for filepath in chordpro_files:
         print("-" * 40)
-        if Path(songs_path / scrape_folder / f"{filepath.stem}.txt").exists():
-            print(
-                songs_path / scrape_folder / f"{filepath.stem}.txt exists --> skipping"
-            )
+        scraped_path = Path(songs_path / scrape_folder / f"{filepath.stem}.txt")
+        lyrics = get_lyrics(filepath)
+        if scraped_path.exists():
+            if len(lyrics) > 50:
+                print("Deleting", scraped_path)
+                scraped_path.unlink()
+            print(scraped_path, "exists --> skipping")
+            continue
+        if len(lyrics) > 50:
             continue
         r = process_chordpro_file(filepath)
         if r is not None:
@@ -96,10 +102,7 @@ def process_chordpro_folder(
         print(f"Extracted song from {pisnicky_akordy_url}:\n{song_text}\n")
 
         # Optionally save the extracted song text to a file
-        os.makedirs(songs_path / scrape_folder, exist_ok=True)
-        with open(
-            songs_path / scrape_folder / f"{filepath.stem}.txt", "w", encoding="utf8"
-        ) as file:
+        with open(scraped_path, "w", encoding="utf8") as file:
             file.write(song_text)
             print(f"Saved: {artist} - {title}.txt")
 

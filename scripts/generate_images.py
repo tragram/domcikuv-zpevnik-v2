@@ -4,7 +4,7 @@ from pathlib import Path
 import yaml
 from huggingface_hub import InferenceClient, login
 from openai import OpenAI
-from utils import songs_path
+from utils import get_lyrics, songs_path
 
 with open("secrets.yaml", "r") as f:
     secrets = yaml.safe_load(f)
@@ -45,22 +45,6 @@ def save_response(response, stem):
     print(f"Saving prompt for {stem} by {response.model}.")
 
 
-def load_chordpro_file(filepath):
-    # Read the file content
-    with open(filepath, "r", encoding="utf8") as file:
-        content = file.read()
-    return content
-
-
-def remove_chordpro_directives(content):
-    # Remove ChordPro directives (anything inside curly or square brackets brackets)
-    content = re.sub(r"\{.*?\}", "", content)
-    content = re.sub(r"\[.*?\]", "", content)
-    content = re.sub(r"[ ]+", " ", content)
-    content = re.sub(r"\n{3,}", "\n\n", content)
-    return content.strip()
-
-
 def generate_missing_prompts(model="gpt-4o-mini"):
     songs = Path(songs_path() / "chordpro/").glob("*.pro")
     generated_prompts = [
@@ -71,8 +55,7 @@ def generate_missing_prompts(model="gpt-4o-mini"):
         if (song.stem) in generated_prompts:
             print(song.stem, "already generated --> skipping")
             continue
-        song_str = load_chordpro_file(song)
-        lyrics = remove_chordpro_directives(song_str)
+        lyrics = get_lyrics(song)
         if len(lyrics) < 100:
             print(song.stem, "- lyrics too short --> skipping")
             continue
