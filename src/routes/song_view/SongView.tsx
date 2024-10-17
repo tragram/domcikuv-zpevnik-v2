@@ -135,7 +135,7 @@ function TransposeSettings({ songRenderKey, setSongRenderKey }) {
             </ButtonGroup>
         </div>
         <div className='lg:hidden'>
-            <Dropdown closeOnSelect={false}>
+            <Dropdown closeOnSelect={false} disableAnimation>
                 <DropdownTrigger>
                     <Button
                         variant="ghost" color="primary" isIconOnly
@@ -166,7 +166,7 @@ function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setR
                 </ButtonGroup>
             </div>
             <div className='flex xs:hidden'>
-                <Dropdown closeOnSelect={false}>
+                <Dropdown closeOnSelect={false} disableAnimation>
                     <DropdownTrigger>
                         <Button
                             variant="ghost" color="primary" isIconOnly
@@ -174,7 +174,7 @@ function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setR
                             <ReceiptText />
                         </Button>
                     </DropdownTrigger>
-                    <DropdownMenu aria-label="Change font size">
+                    <DropdownMenu aria-label="Change font size" >
                         <DropdownItem startContent={<Strikethrough />} key="hide_chords" onClick={() => { setChordsHidden(!chordsHidden) }} endContent={chordsHidden ? <Check /> : ""}>
                             Hide chords
                         </DropdownItem>
@@ -208,7 +208,7 @@ function FontSizeSettings({ fontSize, setFontSize, autoFontSize, setAutoFontSize
                 </ButtonGroup>
             </div>
             <div className='flex sm:hidden'>
-                <Dropdown closeOnSelect={false}>
+                <Dropdown closeOnSelect={false} disableAnimation>
                     <DropdownTrigger>
                         <Button
                             variant="ghost" color="primary" isIconOnly

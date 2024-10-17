@@ -69,7 +69,7 @@ function SortButtons({ sortByField, setSortField, sortOrder, setSortOrder }: Sor
 
 function SortButtonMobile({ sortByField, setSortField, sortOrder, setSortOrder }: SortButtonProps) {
     return (
-        <Dropdown closeOnSelect={false} backdrop="opaque">
+        <Dropdown closeOnSelect={false} backdrop="opaque" disableAnimation>
             <DropdownTrigger>
                 <Button
                     variant="ghost"

@@ -107,7 +107,7 @@ function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
                 <FilterButtons languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
             </div>
             <div className='lg:hidden'>
-                <Dropdown backdrop="opaque">
+                <Dropdown backdrop="opaque" disableAnimation>
                     <DropdownTrigger>
                         <Button
                             variant={filterActive ? "ghost" : "solid"} color="primary" disableAnimation
