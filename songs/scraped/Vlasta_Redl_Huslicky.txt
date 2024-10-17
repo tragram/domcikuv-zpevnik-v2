@@ -1,7 +1,5 @@
-capo 2
-
      D                    G D  Emi        Hmi A
-1. [:Čí že ste, husličky, čie, kdo vás tu zanechal:]
+1. |: Čí že ste, husličky, čie, kdo vás tu zanechal :|
    Emi      A   D  G  Emi      A    D G  Emi    Hmi A  A   
    na trávě poválané, na trávě poválané, u paty ořecha?
    Emi Hmi A
@@ -15,16 +13,6 @@ capo 2
    co sa mu v noci zdálo, bože, co sa mu enem zdálo,
    že už vjec nechtěl hrát?
 
-4.Zahrajte, husličky, samy, zahrajte zvesela
+4. Zahrajte, husličky, samy, zahrajte zvesela
   až sa tá bude trápit, až sa tá bude trápit,
   která ho nechtěla.
-
-
-Poznámka:
-Vlasta Redl hraje místo druhého A ve sloce následující akord.
-e|---0---
-B|---2---
-G|---0---
-D|---0---
-A|---4---
-E|---x---

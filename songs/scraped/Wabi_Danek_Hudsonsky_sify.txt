@@ -29,7 +29,7 @@ R: Ahoj, páru tam hoď,
    kdo necejtil hrůzu z vody, kde se málem utopil,
    ať se na Hudsonský šífy najmout dá, johoho.
 
-R: Ahoj, páru tam hoď, ...
+R:
 
 5. Kdo má roztrhaný boty, kdo má pořád jenom hlad
    jako já, jó jako já,
@@ -41,4 +41,4 @@ R: Ahoj, páru tam hoď, ...
    kdo má srdce v správným místě, kdo je prostě príma kluk,
    ať se na Hudsonský šífy najmout dá, johoho.
 
-R: Ahoj, páru tam hoď, ... + jo-ho-ho.
+R: 

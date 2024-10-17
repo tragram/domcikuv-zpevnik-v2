@@ -20,9 +20,6 @@ R: Zdálo, zdálo, zdálo, asi se mi zdálo,
 R: Zdálo, zdálo, zdálo, asi se mi zdálo,
    G                                 Hmi  H
    málo, málo, málo, že chybí už tak málo. 
-   
-
-Mezihra:  A  C#mi  Hmi  G
 
                A                         C#mi       
 2. Docházej mi náboje, však nevzdávám to bez boje,
@@ -36,8 +33,5 @@ Mezihra:  A  C#mi  Hmi  G
    Ať mi někdo odpoví proč přišlo tohle období
                    A                       H   H7
    tak náhlá změna trasy má skrytej význam asi   
- 
-R:  3x
 
-Aohra:  C   Emi Asus2 Emi Asus2    G   Hmi H
-        F   (... do ztracena)  
+R:

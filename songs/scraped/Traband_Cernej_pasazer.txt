@@ -1,9 +1,5 @@
-     Ami
-XXXX XXXX XXXX XXXX
-
-
-    Ami                      E
-Mám kufr plnej přebytečnejch krámů
+       Ami                      E
+1. Mám kufr plnej přebytečnejch krámů
                         Ami
 a mapu zabalenou do plátna.
     Ami                       E
@@ -11,17 +7,15 @@ Můj vlak však jede na opačnou stranu
                               Ami
 a moje jízdenka je dávno neplatná.
 
-
-Ami  G5
-x----x
-
-
-C         Ami     C5C         Ami
-xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+   
+   C                                         Ami         G5
+B: Na na na na na na na na na na na na na na na na na na  na
+C                                         Ami
+Na na na na na na na na na na na na na na na na
 
 
-      Ami                  E
-Někde ve vzpomínkách stojí dům,
+         Ami                  E
+2. Někde ve vzpomínkách stojí dům,
                                 Ami
 ještě vidím, jak se kouří z komína.
       Ami                   E
@@ -30,8 +24,8 @@ V tom domě pro mě prostřený stůl,
 tam já a moje rodina.
 
 
-     Ami               E
-Moje minulost se na mě šklebí
+        Ami               E
+3. Moje minulost se na mě šklebí
                             Ami
 a srdce bolí, když si vzpomenu,
    Ami                      E
@@ -39,19 +33,10 @@ a srdce bolí, když si vzpomenu,
                         Ami
 tu leží vyvrácený z kořenů.
 
+B:
 
-Ami G5
-F#mm F#mm
-
-
-C                                         Ami         G5
-Na na na na na na na na na na na na na na na na na na  na
-C                                         Ami
-Na na na na na na na na na na na na na na na na
-
-
-            F       G     C
-Jsem černej pasažér, nemám cíl ani směr,
+               F       G     C
+R: Jsem černej pasažér, nemám cíl ani směr,
         F      G         C
 vezu se načerno životem a nevím.
             F       G     C
@@ -60,8 +45,8 @@ Jsem černej pasažér, nemám cíl ani směr,
 vezu se odnikud nikam a nevím, kde skončím.
 
 
-Ami                       E
-Mám to všechno na barevný fotce,
+   Ami                       E
+4. Mám to všechno na barevný fotce,
                       Ami
 někdy z minulýho století.
    Ami                  E
@@ -69,38 +54,8 @@ Tu jedinou a pocit bezdomovce
                           Ami
 si sebou nesu stále v paměti.
 
+B:
 
-Ami  G5
-A----a
+R:
 
-
-C                     Ami     G5
-A a a a a a a a a a a a a a a a
-C                     Ami
-A a a a a a a a a a a a a a
-
-
-            F       G     C
-Jsem černej pasažér, nemám cíl ani směr,
-        F      G         C
-vezu se načerno životem a nevím.
-            F       G     C
-Jsem černej pasažér, nemám cíl ani směr,
-        F      G       E
-vezu se odnikud nikam a nevím, kde skončím.
-
-
-F G  C    F G  C
-xx-xx xxxx xx-xx xxxx 
-F G  C    F G  E
-xx-xx xxxx xx-xx xxxx xxxx
-
-
-Ami                      E
-x Na na na naj naj na na naj
-                       Ami
-Na na na naj naj na na naj
-                       E
-Na na na naj naj na na naj
-                       Ami
-Na na na naj naj na na naj
+B:
