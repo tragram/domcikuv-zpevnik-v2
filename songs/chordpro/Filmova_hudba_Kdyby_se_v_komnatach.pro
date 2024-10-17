@@ -8,3 +8,25 @@
 {tempo: }
 {range: g1-g2}
 {start_melody: d}
+{start_of_verse}
+[G]K životu na zámku, [Dmi]mám jednu poznámku,
+[C]Je tu neveselo, je tu [G]truchlivo.
+V ostatních královstvích, [Dmi]nezní tak málo smích,
+[C]Není neveselo, není [G]truchlivo.
+{end_of_verse}
+
+{start_of_chorus}
+[G7]Kdyby se v [C]komnatách, běhoun jak [G]hrom natáh,
+a na něm [Ami]akrobati, [D]začali [G]kejklovati.
+[G7]Kdyby nám v [C]paláci, pištěli [G]dudáci,
+To by se [Ami]krásně žilo, [D]to by byl [G]ráj.
+{end_of_chorus}
+
+{start_of_verse}
+Kde není muzika, tam duše naříká,
+tam je neveselo, tam je truchlivo.
+Chtěla bych dvůr pestrý, kde znějí orchestry,
+pěkně na veselo, žádné truchlivo.
+{end_of_verse}
+
+{chorus}

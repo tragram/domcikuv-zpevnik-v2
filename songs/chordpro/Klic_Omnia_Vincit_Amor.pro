@@ -10,9 +10,9 @@
 {start_melody: h}
 {start_of_verse}
 [Emi]Šel pocestný kol [D]hospodských [Emi]zdí,
-[G]přisedl k nám a [D]lokálem [G]zní 
+[G]přisedl k nám a [D]lokálem [G]zní
 [Ami]pozdrav jak svaté [G]přikázání: [D]
-[Emi]omnia [D]vincit [Emi]Amor. 
+[Emi]omnia [D]vincit [Emi]Amor.
 {end_of_verse}
 
 {start_of_verse}
@@ -23,10 +23,10 @@ omnia vincit Amor.
 {end_of_verse}
 
 {start_of_chorus}
-R: Zlaťák [G]pálí, [D]nesleví [Emi]nic, 
-štěstí v [G]lásce [D]znamená [G]víc, 
+R: Zlaťák [G]pálí, [D]nesleví [Emi]nic,
+štěstí v [G]lásce [D]znamená [G]víc,
 všechny [Ami]pány [G]ať vezme [D]ďas! [H7]
-[Emi]Omnia [D]vincit [Emi]Amor. 
+[Emi]Omnia [D]vincit [Emi]Amor.
 {end_of_chorus}
 
 {start_of_verse}

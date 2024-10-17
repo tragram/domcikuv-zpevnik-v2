@@ -11,16 +11,16 @@
 
 {start_of_verse}
 [Ami]Učení páni [G]zkušení,
-[F]já bych Vám rád teď [E]podotknul. 
-[Ami]Nikdo z Vás nemá [G]tušení, 
-[F]že v dálce stojí [E]malý úl. 
+[F]já bych Vám rád teď [E]podotknul.
+[Ami]Nikdo z Vás nemá [G]tušení,
+[F]že v dálce stojí [E]malý úl.
 {end_of_verse}
 
 {start_of_chorus}
 Z něj každé [Ami]ráno vylétává včelka [G]Mája,
-[F]malá uličnice včelka [E]Mája. 
-Z něj každé [Ami]ráno vylétává včelka [G]Mája, 
-[F]naše kamarádka včelka [E]Mája... 
+[F]malá uličnice včelka [E]Mája.
+Z něj každé [Ami]ráno vylétává včelka [G]Mája,
+[F]naše kamarádka včelka [E]Mája...
 {end_of_chorus}
 
 {start_of_verse}

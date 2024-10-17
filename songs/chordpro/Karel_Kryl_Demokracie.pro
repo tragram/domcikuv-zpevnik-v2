@@ -10,9 +10,9 @@
 {start_melody: c}
 {start_of_verse}
 [C]Demokracie [F]rozkvé[C]tá, byť s kosme[G7]tickou [C]vadou:
-ti, kteří kradli [F]po lét[C]a, dnes dvojná[G7]sobně [C]kradou, 
-|: [F]ti, kdo nás léta [C]týrali, [D7]nás vyhazují z [G7]práce, 
-a z [C]těch, kdo pravdu [F]zpíva[C]li, dnes nadě[G7]lali [C]zrádce. :| 
+ti, kteří kradli [F]po lét[C]a, dnes dvojná[G7]sobně [C]kradou,
+|: [F]ti, kdo nás léta [C]týrali, [D7]nás vyhazují z [G7]práce,
+a z [C]těch, kdo pravdu [F]zpíva[C]li, dnes nadě[G7]lali [C]zrádce. :|
 {end_of_verse}
 
 {start_of_verse}

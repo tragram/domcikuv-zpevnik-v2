@@ -10,8 +10,8 @@
 {start_melody: h a}
 {start_of_verse}
 [Hmi]Pistole a [A]stará Bible [Hmi]kralická [A]
-[Hmi]Říká že mou [A]zemi nikdy [G]nezí[E]ská 
-[Emi]Kdo si na svých [G]hadrech musí [F#mi]křížit [Hmi]hnát 
+[Hmi]Říká že mou [A]zemi nikdy [G]nezí[E]ská
+[Emi]Kdo si na svých [G]hadrech musí [F#mi]křížit [Hmi]hnát
 [Hmi]Kdo sem dotách [A]mrchu jménem [F#mi]protektorát [Hmi]
 {end_of_verse}
 
@@ -25,8 +25,8 @@ Za to svinstvo ve sprchách   s  za cyklonB
 {start_of_chorus}
 [D]Tři hvězdy svítí [G]nad Vlta[D]vou
 [Hmi]Možná je nikdy [A]nedostanou [Hmi]
-[D]My tři králové [G]patříme [D]k vám 
-[Hmi]Morávek, Mašín [A]a Bala[Hmi]bán 
+[D]My tři králové [G]patříme [D]k vám
+[Hmi]Morávek, Mašín [A]a Bala[Hmi]bán
 {end_of_chorus}
 
 {start_of_verse}

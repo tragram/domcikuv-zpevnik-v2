@@ -10,14 +10,14 @@
 {start_melody: h h a g}
 {start_of_verse}
 [G]Z rozmláce[Emi]nýho kostela [G]v krabici s [D7]kusem mýdla
-[G]přinesl [Emi]jsem si anděla, [G]polámali [D7]mu kříd[G]la, 
-[G]díval se [Emi]na mě oddaně, [G]já měl jsem [D7]trochu trému, 
-[G]tak vtiskl [Emi]jsem mu do dlaně [G]lahvičku [D7]od parfému. 
+[G]přinesl [Emi]jsem si anděla, [G]polámali [D7]mu kříd[G]la,
+[G]díval se [Emi]na mě oddaně, [G]já měl jsem [D7]trochu trému,
+[G]tak vtiskl [Emi]jsem mu do dlaně [G]lahvičku [D7]od parfému.
 {end_of_verse}
 
 {start_of_chorus}
 [G]A proto, [Emi]prosím, věř mi, [G]chtěl jsem ho [D7]žádat,
-[G]aby mi [Emi]mezi dveřmi [G]pomohl [D7]hádat, 
+[G]aby mi [Emi]mezi dveřmi [G]pomohl [D7]hádat,
 [G]co mě čeká [Emi]a [D7]nemine, [G]
 [G]co mě čeká [Emi]a [D7]nemine. [G]
 {end_of_chorus}

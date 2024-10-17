@@ -10,8 +10,8 @@
 {start_melody: c}
 {start_of_verse}
 [Ami]Vezmu tě má milá [Emi]rovnou k nám
-[Ami]Kolem louky, lesy, [Emi]hejna vran 
-[Ami]Všude samá [G]kráva, samej [Dmi]vůl 
+[Ami]Kolem louky, lesy, [Emi]hejna vran
+[Ami]Všude samá [G]kráva, samej [Dmi]vůl
 {end_of_verse}
 
 {start_of_verse}
@@ -22,12 +22,12 @@ Máme hujer, žito, chléb i sůl
 
 {start_of_chorus}
 [F]Když se u nás chlapi [C]poperou,
-tak jenom [G]nožem anebo [Dmi]sekerou. 
-V zimě tam [F]dlouhý noci [C]jsou a tuhej [Dmi]mráz! 
-[F]Jak jsou naše cesty [C]zavátý, 
-tak vezmem [G]vidle a nebo [Dmi]lopaty, 
-když něco [F]nejde, co na tom [C]sejde? 
-My máme [Dmi]čas! 
+tak jenom [G]nožem anebo [Dmi]sekerou.
+V zimě tam [F]dlouhý noci [C]jsou a tuhej [Dmi]mráz!
+[F]Jak jsou naše cesty [C]zavátý,
+tak vezmem [G]vidle a nebo [Dmi]lopaty,
+když něco [F]nejde, co na tom [C]sejde?
+My máme [Dmi]čas!
 {end_of_chorus}
 
 {start_of_verse}

@@ -10,9 +10,9 @@
 {start_melody: f}
 {start_of_verse}
 [F]Měsíc je jak Zlatá bula [C]Sicilská
-[Ami]stvrzuje, že, kdo chce, ten se [G]dopíská 
-[F]pod lampou jen krátce, v přítmí [C]dlouze zas 
-[Ami]otevře ti Kobera [G]a můžeš mezi nás 
+[Ami]stvrzuje, že, kdo chce, ten se [G]dopíská
+[F]pod lampou jen krátce, v přítmí [C]dlouze zas
+[Ami]otevře ti Kobera [G]a můžeš mezi nás
 {end_of_verse}
 
 {start_of_verse}
@@ -24,9 +24,9 @@ Ty to ale koukej trefit frajere, protože
 
 {start_of_chorus: R1}
 [F]Dnes je valcha u starýho [C]Růžičky
-[Ami]dej si prachy do pořádný [G]roličky 
-[F]Co je na tom, že to není [C]extra nóbl byt, 
-[Ami]srdce jako kníže Rohan [G]musíš mít. 
+[Ami]dej si prachy do pořádný [G]roličky
+[F]Co je na tom, že to není [C]extra nóbl byt,
+[Ami]srdce jako kníže Rohan [G]musíš mít.
 {end_of_chorus}
 
 {start_of_verse}

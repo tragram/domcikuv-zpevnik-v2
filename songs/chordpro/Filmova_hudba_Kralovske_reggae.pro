@@ -10,16 +10,16 @@
 {start_melody: d}
 
 {start_of_bridge: Umbaba}
-[D]Umbabau, umbabaumbaumba 
-[Hmi]umbabau, umbabaumbaumba 
+[D]Umbabau, umbabaumbaumba
+[Hmi]umbabau, umbabaumbaumba
 {end_of_bridge}
 
 {start_of_verse}
 [D]Někdo ráčí kráčet v brnění,
-má na něm rádoby [A7]erb. 
-[D]Když není urozen, [G]rychle je prozrazen, 
-[D]když ne[A7]říká [D]krásné er, 
-tak ten si [A7]říká [D]o malér. 
+má na něm rádoby [A7]erb.
+[D]Když není urozen, [G]rychle je prozrazen,
+[D]když ne[A7]říká [D]krásné er,
+tak ten si [A7]říká [D]o malér.
 {end_of_verse}
 
 {start_of_verse}
@@ -32,7 +32,7 @@ kdo nemá er, ztrácí charakter.
 
 {start_of_chorus}
 [G]Královské reggae, [D]královské reggae,
-[G]královské reggae, [A7]královské reggae, 
+[G]královské reggae, [A7]královské reggae,
 {end_of_chorus}
 
 2x

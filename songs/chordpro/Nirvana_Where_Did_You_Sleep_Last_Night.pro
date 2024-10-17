@@ -11,9 +11,9 @@
 
 {start_of_verse}
 [E5]My girl, my girl, don'[A]t lie [G]to me
-Tell me [H]where did you [H/F#]sleep last [E5]night 
-[E5]In the pines, in the pines, where the [A]sun don't ever [G]shine 
-I would [H]shiver the [H/F#]whole night [E5]through 
+Tell me [H]where did you [H/F#]sleep last [E5]night
+[E5]In the pines, in the pines, where the [A]sun don't ever [G]shine
+I would [H]shiver the [H/F#]whole night [E5]through
 {end_of_verse}
 
 {start_of_chorus}
@@ -25,9 +25,9 @@ I would [H]shiver the [H/F#]whole night [E5]through
 
 {start_of_verse}
 [E5]Her husband, was a [A]hard working [G]man
-Just [H]about a mile from [E5]here 
-[E5]His head was found in a [A]driving [G]wheel 
-But his [H]body never was [E5]found 
+Just [H]about a mile from [E5]here
+[E5]His head was found in a [A]driving [G]wheel
+But his [H]body never was [E5]found
 {end_of_verse}
 
 {start_of_verse}

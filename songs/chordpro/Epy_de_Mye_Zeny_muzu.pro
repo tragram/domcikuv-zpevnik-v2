@@ -10,16 +10,16 @@
 {start_melody: a d}
 {start_of_verse}
 [D]Svěřit se křídlům [G]falešným a
-[D]silou neči[A]stou se vznést 
-[D]a najít pole [G]božích vín 
-to [D]stojí [A]někdy [D]trest. 
+[D]silou neči[A]stou se vznést
+[D]a najít pole [G]božích vín
+to [D]stojí [A]někdy [D]trest.
 {end_of_verse}
 
 {start_of_chorus}
 Čeka[G]jí na šťastné [D]přistání
-[Hmi]umět tak směry [A]bouří vést 
-co [Hmi]ještě [F#mi]všechno [G]musí [F#mi]snést 
-ženy [G]mužů [A]léta[D]vých. 
+[Hmi]umět tak směry [A]bouří vést
+co [Hmi]ještě [F#mi]všechno [G]musí [F#mi]snést
+ženy [G]mužů [A]léta[D]vých.
 {end_of_chorus}
 
 {start_of_verse}
@@ -75,9 +75,9 @@ zamčené postele.
 Čekající s pláčem v předsíni
 umět tak znovu chlapa svést
 co ještě všechno musí snést ...
-[D]ženy mužů [G]létavých 
-[D]ženy mužů [A]lezoucích 
-[D]ženy mužů [G]statečných 
+[D]ženy mužů [G]létavých
+[D]ženy mužů [A]lezoucích
+[D]ženy mužů [G]statečných
 [D]ženy mužů [A]domácích. [D]
 {end_of_chorus}
 
