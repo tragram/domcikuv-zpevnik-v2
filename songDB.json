@@ -1137,7 +1137,7 @@
     "start_melody": "d d a",
     "chordpro_file": "Hop_Trop_Tri_krize.pro",
     "pdf_filenames": "['hop_trop_tri_krize-sken.pdf', 'hop_trop_tri_krize-comp.pdf']",
-    "content_hash": "22755809a9d01b13546b5904ab2334b4ebbe97ab"
+    "content_hash": "4f908ed35b47cb827168d0a1e5f7341889534ca3"
   },
   {
     "title": "Red Dwarf Theme",
@@ -1362,7 +1362,7 @@
     "start_melody": "a",
     "chordpro_file": "Jaromir_Nohavica_Jdou_po_me_jdou.pro",
     "pdf_filenames": "['jaromir_nohavica_jdou_po_me_jdou-sken.pdf', 'jaromir_nohavica_jdou_po_me_jdou-comp.pdf']",
-    "content_hash": "fea49d361083bbf715eba12e789178d6379f6ce7"
+    "content_hash": "013075f5bc6d1769b93c84a69f43da2c29777608"
   },
   {
     "title": "Když mě brali za vojáka",
@@ -1377,7 +1377,7 @@
     "start_melody": "",
     "chordpro_file": "Jaromir_Nohavica_Kdyz_me_brali_za_vojaka.pro",
     "pdf_filenames": "['jaromir_nohavica_kdyz_me_brali_za_vojaka-sken.pdf', 'jaromir_nohavica_kdyz_me_brali_za_vojaka-comp.pdf']",
-    "content_hash": "856c65bd34fcb5f7943bbb80dc61043ea276e91b"
+    "content_hash": "2c2f883706121b63a2d12cf028e32ead04be272a"
   },
   {
     "title": "Kometa",
@@ -1392,7 +1392,7 @@
     "start_melody": "e",
     "chordpro_file": "Jaromir_Nohavica_Kometa.pro",
     "pdf_filenames": "['jaromir_nohavica_kometa-sken.pdf', 'jaromir_nohavica_kometa-comp.pdf']",
-    "content_hash": "ba56749713a907942d12ec2a86c8269c9f3111e5"
+    "content_hash": "84068d12abddcdfc3411f3f857244cbbae8118e5"
   },
   {
     "title": "Lachtani",
@@ -1452,7 +1452,7 @@
     "start_melody": "a a a g",
     "chordpro_file": "Jaromir_Nohavica_Pritel.pro",
     "pdf_filenames": "['jaromir_nohavica_pritel-sken.pdf', 'jaromir_nohavica_pritel-comp.pdf']",
-    "content_hash": "f8793a5e1240a260b916e44ff921f3b2682e5a73"
+    "content_hash": "eb969b93bde918d3a315cc9d64fbdbbe46414b04"
   },
   {
     "title": "V moři je místa dost",
@@ -1482,7 +1482,7 @@
     "start_melody": "c g1 c g2",
     "chordpro_file": "Jaromir_Nohavica_Vlastovko_let.pro",
     "pdf_filenames": "['jaromir_nohavica_vlastovko_let-sken.pdf', 'jaromir_nohavica_vlastovko_let-comp.pdf']",
-    "content_hash": "8f87c8120f19d1972a23d7397aada5c01aa272ab"
+    "content_hash": "3c8ecd69e224159f8b4732f23708329e4d0eaacd"
   },
   {
     "title": "Zítra ráno v pět",
@@ -1497,7 +1497,7 @@
     "start_melody": "e",
     "chordpro_file": "Jaromir_Nohavica_Zitra_rano_v_pet.pro",
     "pdf_filenames": "['jaromir_nohavica_zitra_rano_v_pet-sken.pdf', 'jaromir_nohavica_zitra_rano_v_pet-comp.pdf']",
-    "content_hash": "70982a079d41373ff76a6e581af526539ab3ccb7"
+    "content_hash": "6917b9e80a560f984929c2f76715efbc3181d84c"
   },
   {
     "title": "iDnes.cz",
@@ -1572,7 +1572,7 @@
     "start_melody": "c e",
     "chordpro_file": "Jelen_Klidna_jako_voda.pro",
     "pdf_filenames": "['jelen_klidna_jako_voda-sken.pdf', 'jelen_klidna_jako_voda-comp.pdf', 'jelen_klidna_jako_voda-gen.pdf']",
-    "content_hash": "233d9cdc1cfdf00af9f9713ec28e22ab3618ed37"
+    "content_hash": "6538a0f22d8470feefb78937f3c2c33d87d15e19"
   },
   {
     "title": "Magdaléna",
@@ -1677,7 +1677,7 @@
     "start_melody": "h",
     "chordpro_file": "Jiri_Schlinger_Holubi_dum.pro",
     "pdf_filenames": "['jiri_schlinger_holubi_dum-sken.pdf', 'jiri_schlinger_holubi_dum-comp.pdf']",
-    "content_hash": "e53e9a58485fbe6788acdb09d675fc58c62fad70"
+    "content_hash": "4c1de6701f244163b1e343e51afbc3001baa00fd"
   },
   {
     "title": "Tereza (Osamělý město)",
@@ -1737,7 +1737,7 @@
     "start_melody": "e g#",
     "chordpro_file": "Johnny_Cash_Folsom_Prison_Blues.pro",
     "pdf_filenames": "['johnny_cash_folsom_prison_blues-sken.pdf', 'johnny_cash_folsom_prison_blues-comp.pdf']",
-    "content_hash": "f61c601f481ce16be21fd10f43b0948ba86b7052"
+    "content_hash": "c09c6803027acbfe4028558313a99fc191016a93"
   },
   {
     "title": "I Walk the Line",
@@ -1762,12 +1762,12 @@
     "date_added": "07-2015",
     "capo": "3",
     "tempo": "",
-    "range": "f#1-h1",
+    "range": "g1-a1",
     "illustration_author": "",
-    "start_melody": "h",
+    "start_melody": "a h",
     "chordpro_file": "Johnny_Cash_Man_in_Black.pro",
     "pdf_filenames": "['johnny_cash_man_in_black-sken.pdf', 'johnny_cash_man_in_black-comp.pdf']",
-    "content_hash": "80d334e4b296df0d476b1b0ee58e51b231127d45"
+    "content_hash": "25329b46c4d3330075aeda958016d512563d7032"
   },
   {
     "title": "Bára",
@@ -1782,7 +1782,7 @@
     "start_melody": "e d c d",
     "chordpro_file": "Kabat_Bara.pro",
     "pdf_filenames": "['kabat_bara-sken.pdf', 'kabat_bara-comp.pdf']",
-    "content_hash": "5eb530d1de18b42159ff4678031d5757cede8ec1"
+    "content_hash": "b5505ed0e9a7645cda4c38599f1abc88fbcf1f85"
   },
   {
     "title": "Burlaci",
@@ -1827,7 +1827,7 @@
     "start_melody": "f#",
     "chordpro_file": "Kabat_Corrida.pro",
     "pdf_filenames": "['kabat_corrida-sken.pdf', 'kabat_corrida-comp.pdf']",
-    "content_hash": "a73dd0975512f2a13ae99bee430bc3e69b713d62"
+    "content_hash": "af3cef74cdee2475a3341c0bc1771140158083be"
   },
   {
     "title": "Kdo ví jestli",
@@ -1842,7 +1842,7 @@
     "start_melody": "",
     "chordpro_file": "Kabat_Kdo_vi_jestli.pro",
     "pdf_filenames": "['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']",
-    "content_hash": "f145f97038967094885fae5b07181edd13dba24d"
+    "content_hash": "4bc7bddfacb1ea148915072d0feaa4bfe8104cfd"
   },
   {
     "title": "Krutý krtek Joy",
@@ -1872,7 +1872,7 @@
     "start_melody": "e",
     "chordpro_file": "Kabat_Mala_dama.pro",
     "pdf_filenames": "['kabat_mala_dama-sken.pdf', 'kabat_mala_dama-comp.pdf']",
-    "content_hash": "98d9a754d48190bf1e6ed9bc990c4da4fb3032d6"
+    "content_hash": "8deaaa3c732daf29945997117d7d47fb63777849"
   },
   {
     "title": "Moderní děvče",
@@ -1887,7 +1887,7 @@
     "start_melody": "e",
     "chordpro_file": "Kabat_Moderni_devce.pro",
     "pdf_filenames": "['kabat_moderni_devce-sken.pdf', 'kabat_moderni_devce-comp.pdf']",
-    "content_hash": "103cc28a4e3e5aa6b77551a601ae213d410da36e"
+    "content_hash": "1cc3374946b587cee9c7688a4729c1358e6adc7c"
   },
   {
     "title": "Pohoda",
@@ -1947,7 +1947,7 @@
     "start_melody": "h",
     "chordpro_file": "Kamelot_Amulet.pro",
     "pdf_filenames": "['kamelot_amulet-sken.pdf', 'kamelot_amulet-comp.pdf']",
-    "content_hash": "97960ae25bbba11cde3624488c7b7613236ff2e3"
+    "content_hash": "33e3ee475195043ec383d59dde5c730d85488700"
   },
   {
     "title": "Cikáni",
@@ -1962,7 +1962,7 @@
     "start_melody": "e",
     "chordpro_file": "Kamelot_Cikani.pro",
     "pdf_filenames": "['kamelot_cikani-sken.pdf', 'kamelot_cikani-comp.pdf']",
-    "content_hash": "7619901d55cec014ea36d66c67334dd62a7eff26"
+    "content_hash": "0633c52280de1dd18917f078bd8086cfbc300d65"
   },
   {
     "title": "Zachraňte koně",
@@ -1977,7 +1977,7 @@
     "start_melody": "h g f# g",
     "chordpro_file": "Kamelot_Zachrante_kone.pro",
     "pdf_filenames": "['kamelot_zachrante_kone-sken.pdf', 'kamelot_zachrante_kone-comp.pdf']",
-    "content_hash": "261b0c5d95e9888a9be1edc75b62ccb4d3d59236"
+    "content_hash": "86bb78699062563f7af162b281828a7865351649"
   },
   {
     "title": "Země vzdálená",
@@ -1992,7 +1992,7 @@
     "start_melody": "e",
     "chordpro_file": "Kamil_Strihavka_Zeme_vzdalena.pro",
     "pdf_filenames": "['kamil_strihavka_zeme_vzdalena-sken.pdf', 'kamil_strihavka_zeme_vzdalena-comp.pdf']",
-    "content_hash": "0a06f0bd37ba1ce0f40258937af02acf01c501d7"
+    "content_hash": "f123e2b3606e385d5bf04662879e74f6142e8ebe"
   },
   {
     "title": "Die Biene Maja",
@@ -2007,7 +2007,7 @@
     "start_melody": "a d f# h",
     "chordpro_file": "Karel_Gott_Die_Biene_Maja.pro",
     "pdf_filenames": "['karel_gott_die_biene_maja-sken.pdf', 'karel_gott_die_biene_maja-comp.pdf']",
-    "content_hash": "a5727fa5c78666103075a303a910e336d57b186c"
+    "content_hash": "f467720dc2d1f83829c2ef97f87f8a8dd8726e59"
   },
   {
     "title": "Kdyby sis oči vyplakala",
@@ -2022,7 +2022,7 @@
     "start_melody": "d",
     "chordpro_file": "Karel_Gott_Kdyby_sis_oci_vyplakala.pro",
     "pdf_filenames": "['karel_gott_kdyby_sis_oci_vyplakala-sken.pdf', 'karel_gott_kdyby_sis_oci_vyplakala-comp.pdf']",
-    "content_hash": "f8522380060b0310b928edf7dbed07407b406767"
+    "content_hash": "aa1375a3841795c78250c4f4dc0208a2c8ad07ab"
   },
   {
     "title": "Trezor",
@@ -2067,7 +2067,7 @@
     "start_melody": "a",
     "chordpro_file": "Karel_Kryl_Bacil.pro",
     "pdf_filenames": "['karel_kryl_bacil-sken.pdf', 'karel_kryl_bacil-comp.pdf', 'karel_kryl_bacil-gen.pdf']",
-    "content_hash": "dd7f3290e820c3760cdedac91c4dbbdda779f0fc"
+    "content_hash": "05fce82242ef1bbb417e6733bbd45e50300cd088"
   },
   {
     "title": "Demokracie",
@@ -2097,7 +2097,7 @@
     "start_melody": "c h a",
     "chordpro_file": "Karel_Kryl_Hlas.pro",
     "pdf_filenames": "['karel_kryl_hlas-sken.pdf', 'karel_kryl_hlas-comp.pdf', 'karel_kryl_hlas-gen.pdf']",
-    "content_hash": "f938bb296e0ddc0d1dc06d84efca9a4b75326a09"
+    "content_hash": "d37d0f6baa2a740572cb220fe99d22ab77c1cfca"
   },
   {
     "title": "Hle, jak se perou",
@@ -2112,7 +2112,7 @@
     "start_melody": "h e",
     "chordpro_file": "Karel_Kryl_Hle_jak_se_perou.pro",
     "pdf_filenames": "['karel_kryl_hle_jak_se_perou-sken.pdf', 'karel_kryl_hle_jak_se_perou-comp.pdf', 'karel_kryl_hle_jak_se_perou-gen.pdf']",
-    "content_hash": "715ef95ef40ac13b75380a3fee212c64c13225df"
+    "content_hash": "f91bcf62ccacc2bd39272a5bb68123f127a2a443"
   },
   {
     "title": "Karavana mraků",
@@ -2157,7 +2157,7 @@
     "start_melody": "d",
     "chordpro_file": "Karel_Kryl_Lasko.pro",
     "pdf_filenames": "['karel_kryl_lasko-sken.pdf', 'karel_kryl_lasko-comp.pdf', 'karel_kryl_lasko-gen.pdf']",
-    "content_hash": "988b66b9cc1cd5d3ec5a890f3cd30a9a43b5d759"
+    "content_hash": "1acf0798289f878a9e6ed9619a0cce84064e8feb"
   },
   {
     "title": "Morituri te salutant",
@@ -2172,7 +2172,7 @@
     "start_melody": "e",
     "chordpro_file": "Karel_Kryl_Morituri_te_salutant.pro",
     "pdf_filenames": "['karel_kryl_morituri_te_salutant-sken.pdf', 'karel_kryl_morituri_te_salutant-comp.pdf']",
-    "content_hash": "10d11d60b27125fc7f11fda45fef11bae31c5c58"
+    "content_hash": "1c024cba03365a28a13b1542e93f140a01e01a4d"
   },
   {
     "title": "Nevidomá dívka",
@@ -2217,7 +2217,7 @@
     "start_melody": "a d e f",
     "chordpro_file": "Karel_Kryl_Ukolebavka.pro",
     "pdf_filenames": "['karel_kryl_ukolebavka-sken.pdf', 'karel_kryl_ukolebavka-comp.pdf', 'karel_kryl_ukolebavka-gen.pdf']",
-    "content_hash": "e6b25b6e249d7030a8fa37477651288a8ff37cd6"
+    "content_hash": "ac6f5cb0173f1fb3c3fd18f242638db4fb3c388c"
   },
   {
     "title": "Vasil",
