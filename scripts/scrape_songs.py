@@ -6,6 +6,7 @@ from pathlib import Path
 
 from googlesearch import search
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from utils import check_if_lyrics_present, extract_metadata, get_lyrics, songs_path
@@ -95,8 +96,12 @@ def process_chordpro_folder(
         # Process each URL and print the extracted text
         try:
             song_text = scrape_akordy_pisnicky(pisnicky_akordy_url, key.title())
+        except NoSuchElementException:
+            print("Didn't find chords for", pisnicky_akordy_url, "saving an empty file")
+            song_text = ""
         except Exception as e:
             print(pisnicky_akordy_url, e)
+            raise e
             continue
         # For now, just print the extracted song text to ensure it's correct
         print(f"Extracted song from {pisnicky_akordy_url}:\n{song_text}\n")
