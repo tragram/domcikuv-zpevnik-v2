@@ -21,7 +21,10 @@ polívka studená, co v ní plavou místo nudlí číslice a písmena
 {start_of_verse}
 Myslela jsem prostě, že budou různé soutěže
 Slíbili bojovku, pak jsme hráli vybíjendu, na ovce a na schovku
-4. Štefan, hlavní vedoucí, chodí s naší [A]vedoucí D D7 
+{end_of_verse}
+
+{start_of_verse}
+Štefan, hlavní vedoucí, chodí s naší vedoucí
 která je příšera, scházejí se, líbají se u totemu za šera
 {end_of_verse}
 
@@ -46,14 +49,12 @@ Užívá make-upu, co na ní ten Štefan vidí, to já prostě nechápu
 
 {start_of_verse}
 PS: Pošlete dvě tři sta, jsem bez peněz dočista
-Pojedem do Písku, máme v plánu zastavit se v jitexovém
-středisku
+Pojedem do Písku, máme v plánu zastavit se v jitexovém středisku
 {end_of_verse}
 
 {start_of_verse}
 Když jsme se koupali, všichni na mě koukali
-Je to tím, že možná, v jednodílných plavkách už jsem
-už jsem prostě nemožná
+Je to tím, že možná, v jednodílných plavkách už jsem už jsem prostě nemožná
 {end_of_verse}
 
 {chorus}
