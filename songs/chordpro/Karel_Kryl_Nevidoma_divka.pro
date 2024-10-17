@@ -11,8 +11,8 @@
 {start_of_verse}
 V [C]zahradě [Dmi]za cihlovou [C]zídkou, [Dmi]
 [C]popsanou v [Dmi]slavných výroč[C]ích, [Dmi]
-[C]sedává [Dmi]na podzim [E]na trávě [Ami]před besídkou 
-[F]děvčátko s [G]páskou na [E]očích. 
+[C]sedává [Dmi]na podzim [E]na trávě [Ami]před besídkou
+[F]děvčátko s [G]páskou na [E]očích.
 {end_of_verse}
 
 {start_of_verse}
@@ -23,10 +23,10 @@ na vymyšlenou adresu.
 {end_of_verse}
 
 {start_of_chorus}
-Prosím vás, [Ami]nechte ji, ach, [Dmi]nechte ji, 
+Prosím vás, [Ami]nechte ji, ach, [Dmi]nechte ji,
 [Ami]tu nevidomou [G7]dívku,
-[Dmi]prosím vás, [G]nechte ji si [E]hrát, 
-[Dmi]vždyť možná hraje si [Ami]na slunce s nebesy, 
+[Dmi]prosím vás, [G]nechte ji si [E]hrát,
+[Dmi]vždyť možná hraje si [Ami]na slunce s nebesy,
 [F]jež nikdy neuvidí, [G]ač ji bude [E]hřát. [C][Dmi][E]
 {end_of_chorus}
 

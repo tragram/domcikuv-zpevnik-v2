@@ -10,12 +10,12 @@
 {start_melody: a a e e}
 {start_of_verse}
 [Ami]Štěchovická laguna když dřímá v zadumaném stínu Kordylér,
-[Dmi]pirát zkrva[Ami]venou šerpu ždímá, [H7]šerif si láduje revol[E]ver. 
-[Ami]Pikovická rýžoviště zlata čeří se v příboji Sázavy, 
-[Dmi]ale za to [Ami]krčmářova chata [Dmi]křepčí rykem [E7]chlapské zába[Ami]vy. 
-[G7]Když tu náhle, co se [C]děje, [G7]divný šelest houštím [C]spěje, 
-[G7]plch, skunk, [C]vše utíká [F]po stráni [F#dim]od Mední[E]ka. 
-[Ami]Krčmář zhasne, kovbojové ztichnou, pirát zděšen tvář si zakryje, 
+[Dmi]pirát zkrva[Ami]venou šerpu ždímá, [H7]šerif si láduje revol[E]ver.
+[Ami]Pikovická rýžoviště zlata čeří se v příboji Sázavy,
+[Dmi]ale za to [Ami]krčmářova chata [Dmi]křepčí rykem [E7]chlapské zába[Ami]vy.
+[G7]Když tu náhle, co se [C]děje, [G7]divný šelest houštím [C]spěje,
+[G7]plch, skunk, [C]vše utíká [F]po stráni [F#dim]od Mední[E]ka.
+[Ami]Krčmář zhasne, kovbojové ztichnou, pirát zděšen tvář si zakryje,
 [Dmi]rudé squaw se [Ami]chvějí a pak vzdychnou: [H7]Blíží se k nám postrach préri[E]e. [G7]
 (a kdo to je?)
 {end_of_verse}
@@ -26,19 +26,19 @@ Stoletá Mary, babička [D7]Mary, ta zkrotí [G7]křepce hřebce, ať chce či [
 {end_of_chorus}
 
 {start_of_verse}
-[Ami]Žádné zuby, z jelenice sukně, ale za to tvrdé bicepsy,  
-[Dmi]Mary má vždy [Ami]slivovici v putně, [H7]Toma Mixe strčí [E]do kapsy.  
-[Ami]Klika cvakla, v krčmě dveře letí a babička vchází do dveří,  
-[Dmi]"Pintu ginu, [Ami]lumpové prokletí!" [Dmi]bezzubou dá[E7]sní zaláte[Ami]ří.  
-[G7]Vypiju to jen ve [C]stoje, [G7]jdu do volebního [C]boje,  
-[G7]zřím zas [C]město drahý, [F]jedu [F#dim]volit do [E]Prahy.  
-[Ami]Dopila a aby se neřeklo, putykáře změní v mrtvolu,  
+[Ami]Žádné zuby, z jelenice sukně, ale za to tvrdé bicepsy,
+[Dmi]Mary má vždy [Ami]slivovici v putně, [H7]Toma Mixe strčí [E]do kapsy.
+[Ami]Klika cvakla, v krčmě dveře letí a babička vchází do dveří,
+[Dmi]"Pintu ginu, [Ami]lumpové prokletí!" [Dmi]bezzubou dá[E7]sní zaláte[Ami]ří.
+[G7]Vypiju to jen ve [C]stoje, [G7]jdu do volebního [C]boje,
+[G7]zřím zas [C]město drahý, [F]jedu [F#dim]volit do [E]Prahy.
+[Ami]Dopila a aby se neřeklo, putykáře změní v mrtvolu,
 [Dmi]za zády má [Ami]štěchovické peklo [H7]s šlajsnou svatojánských ato[E]lů.  [G7]
 {end_of_verse}
 
 {start_of_chorus}
-[C]Mary, babička [D7]Mary, pádluje [G7]bez námahy po proudu [C]až do Prahy.  
-Stoletá Mary, babička [D7]Mary, jde do [G7]volebního boje za kovboje.  
+[C]Mary, babička [D7]Mary, pádluje [G7]bez námahy po proudu [C]až do Prahy.
+Stoletá Mary, babička [D7]Mary, jde do [G7]volebního boje za kovboje.
 {end_of_chorus}
 
 {start_of_verse}
@@ -53,6 +53,6 @@ Stoletá Mary, babička [D7]Mary, jde do [G7]volebního boje za kovboje.
 {end_of_verse}
 
 {start_of_chorus}
-[C]Mary, bojovná [D7]Mary, už nese[G7]dává v sedle, ve volbách [C]byla vedle.  
-Stoletou Mary, babičku [D7]Mary, volbama [G7]zabitou vzal k sobě Manito[C]u.  
+[C]Mary, bojovná [D7]Mary, už nese[G7]dává v sedle, ve volbách [C]byla vedle.
+Stoletou Mary, babičku [D7]Mary, volbama [G7]zabitou vzal k sobě Manito[C]u.
 {end_of_chorus}

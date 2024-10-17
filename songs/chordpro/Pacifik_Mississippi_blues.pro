@@ -10,13 +10,13 @@
 {start_melody: e}
 {start_of_verse}
 [Ami]Říkali mu Charlie a [Dmi]jako malej kluk
-[Ami]kalhoty si [G]o plot potrh[Ami]al, 
-říkali mu Charlie a [Dmi]byl to Toma vnuk, 
-[Ami]na plácku rád [G]košíkovou [Ami]hrál, 
-[C]křídou kreslil po ohradách [F]plány dětskejch snů, 
-[Dmi]až mu jednou ze tmy řekli: [E]konec je tvejch dnů, 
-[Ami]někdo střelil zezadu a [Dmi]vrub do pažby vryl, 
-nikdo [Ami]neplakal a [G]nikdo nepro[Ami]sil. 
+[Ami]kalhoty si [G]o plot potrh[Ami]al,
+říkali mu Charlie a [Dmi]byl to Toma vnuk,
+[Ami]na plácku rád [G]košíkovou [Ami]hrál,
+[C]křídou kreslil po ohradách [F]plány dětskejch snů,
+[Dmi]až mu jednou ze tmy řekli: [E]konec je tvejch dnů,
+[Ami]někdo střelil zezadu a [Dmi]vrub do pažby vryl,
+nikdo [Ami]neplakal a [G]nikdo nepro[Ami]sil.
 {end_of_verse}
 
 {start_of_chorus}

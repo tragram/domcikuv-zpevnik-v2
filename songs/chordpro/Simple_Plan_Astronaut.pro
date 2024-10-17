@@ -10,20 +10,20 @@
 {start_melody: f#}
 {start_of_verse}
 Can anybody [Emi]hear me?
-Am I [C]talking to my[D]self? 
+Am I [C]talking to my[D]self?
 My mind is running empty
 In the search for someone else who doesn't look right through me.
 It's all just static in my head
-Can anybody [C]tell me [Emi]why I'm lonely like a [Ami]satel[D]lite? 
+Can anybody [C]tell me [Emi]why I'm lonely like a [Ami]satel[D]lite?
 {end_of_verse}
 
 {start_of_chorus: R1}
 [Emi]Cause tonight I'm feeling like an [C]astronaut
-Sending [Ami]SOS from this [D]tiny box 
-[Emi]And I lost all signal when I [C]lifted up 
-Now I'm [Ami]stuck out here and the [D]world forgot 
-[Emi]Can I [C]please come [D]down, cause I'm [Emi]tired of drifting [C]round and [D]round 
-Can I [Emi]please [D]come [C]down? 
+Sending [Ami]SOS from this [D]tiny box
+[Emi]And I lost all signal when I [C]lifted up
+Now I'm [Ami]stuck out here and the [D]world forgot
+[Emi]Can I [C]please come [D]down, cause I'm [Emi]tired of drifting [C]round and [D]round
+Can I [Emi]please [D]come [C]down?
 {end_of_chorus}
 
 {start_of_verse}

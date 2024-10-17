@@ -10,9 +10,9 @@
 {start_melody: d h}
 {start_of_verse}
 [G]Nandej mi [D]do hlavy tvý [Ami]brouky
-A Bůh nám seber bezna[G]děj 
-V duši zbylo [D]světlo z jedny [Ami]holky 
-Tak mi teď za to vyna[G]dej 
+A Bůh nám seber bezna[G]děj
+V duši zbylo [D]světlo z jedny [Ami]holky
+Tak mi teď za to vyna[G]dej
 {end_of_verse}
 
 {start_of_verse}
@@ -22,28 +22,28 @@ Zbejvaj roky asi ne moc dlouhý
 {end_of_verse}
 
 {start_of_chorus}
-Do vlasů mi zabrouk[C]ej... pa pa pa [G]pá 
+Do vlasů mi zabrouk[C]ej... pa pa pa [G]pá
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
-[G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá 
+[G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá
 {end_of_chorus}
 
 {start_of_verse}
 [G]Tvoje oči [D]jenom žhavý [Ami]tóny
-Dotek slunce zapa[G]dá 
-Horkej vítr [D]rozezní mý [Ami]zvony 
+Dotek slunce zapa[G]dá
+Horkej vítr [D]rozezní mý [Ami]zvony
 {end_of_verse}
 
 {start_of_chorus}
-Do vlasů ti zabrouká[C]m ... pá pa pá [G]pá 
+Do vlasů ti zabrouká[C]m ... pá pa pá [G]pá
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
-[G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá 
+[G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá
 {end_of_chorus}
 
 {start_of_verse}
 [G]Na obloze [D]křídla tažnej[Ami]ch ptáků
-Tak už na svý bráchy zavol[G]ej 
-Na tváře ti [D]padaj slzy z mra[Ami]ků 
-A Bůh nám sebral beznadě[G]j 
+Tak už na svý bráchy zavol[G]ej
+Na tváře ti [D]padaj slzy z mra[Ami]ků
+A Bůh nám sebral beznadě[G]j
 {end_of_verse}
 
 {start_of_verse}

@@ -14,10 +14,10 @@ v [C]moři je místa, [Ami7]místa, ach, místa, v [Dmi7]moři je [G7]místa [C]
 {end_of_chorus}
 
 {start_of_verse}
-[C]Podmořský koník kluše s nákladem mořské pěny, 
-[F]cesta je velmi mokrá, a [G7]on je unavený, 
-[C]za první vlnou vlevo okolo mořských patní[F]ků, 
-na pravo v Golfském proudu [G7]už vidí Afriku. 
+[C]Podmořský koník kluše s nákladem mořské pěny,
+[F]cesta je velmi mokrá, a [G7]on je unavený,
+[C]za první vlnou vlevo okolo mořských patní[F]ků,
+na pravo v Golfském proudu [G7]už vidí Afriku.
 {end_of_verse}
 
 {chorus}

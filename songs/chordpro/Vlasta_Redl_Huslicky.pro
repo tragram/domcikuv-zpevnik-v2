@@ -9,8 +9,8 @@
 {range: g1-h2}
 {start_melody: d a}
 {start_of_verse}
-|: [D]Čí že ste, husličky, [G]či[D]e, 
-[Emi]kdo vás tu [Hmi]zanechal [A] :|
+|: [D]Čí že ste, husličky, [G]či[D]e,
+[Emi]kdo vás tu [Hmi]zanechal [A]:|
 [Emi]na trávě [D]pová[G]lané, [Emi]na trávě [A]pová[D]lané[G],
 [Emi]u paty [Hmi]oře[A]cha? [Emi][Hmi][A]
 {end_of_verse}

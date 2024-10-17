@@ -11,8 +11,8 @@
 {start_of_verse}
 Byly krásný naše [G]plány,
 byla jsi můj celej [Hmi]svět,[Bmi][Ami]
-čas je vzal a nechal [G]rány, 
-[Ami]starší jsme jen o pár [D]let. 
+čas je vzal a nechal [G]rány,
+[Ami]starší jsme jen o pár [D]let.
 {end_of_verse}
 
 {start_of_verse}
@@ -25,21 +25,21 @@ i když si tak neříká.
 {start_of_chorus}
 Nebe modrý zrcad[G]lí se
 [E7]v řece, která všechno [Ami]ví, [Asus2][Ami]
-stejnou barvu jako [G]měly 
-[Ami]tvoje oči džínov[D]ý. 
+stejnou barvu jako [G]měly
+[Ami]tvoje oči džínov[D]ý.
 {end_of_chorus}
 
 {start_of_verse}
 Kluci tenkrát, co tě znali,
 všude, kde jsem s tebou byl,
-Amazonka říkávali a já hrdě 
-přisvědčil. 
+Amazonka říkávali a já hrdě
+přisvědčil.
 {end_of_verse}
 
 {start_of_verse}
 Tvoje strachy, že ti mládí
 pod rukama utíká
-vedly k tomu, že ti nikdo 
+vedly k tomu, že ti nikdo
 "Amazonka" neříká.
 {end_of_verse}
 
@@ -54,8 +54,8 @@ nosit dáls' ho nechtěla.
 
 {start_of_chorus}
 Teď jsi víla z pan[G]eláku,
-[E7]samá dečka, samej [Ami]krám, 
-já si přál jen, abys [G]byla 
-[Ami]pořád stejná, přísa[D]hám, 
-[Ami]pořád stejná, přísa-[G]hám. 
+[E7]samá dečka, samej [Ami]krám,
+já si přál jen, abys [G]byla
+[Ami]pořád stejná, přísa[D]hám,
+[Ami]pořád stejná, přísa-[G]hám.
 {end_of_chorus}

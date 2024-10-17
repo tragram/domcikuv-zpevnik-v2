@@ -22,13 +22,13 @@ všude [G]tam kam se podí[Hm]vám něco z tebe [Em]mám [D]
 {end_of_verse}
 
 {start_of_bridge}
-tak se mi [C]zdá tak se mi [Em]zdá 
-že už asi [A]zejtra nebudu [D]sám 
+tak se mi [C]zdá tak se mi [Em]zdá
+že už asi [A]zejtra nebudu [D]sám
 {end_of_bridge}
 
 {start_of_chorus}
 Nebudu [C]sám, nebudu [H]sám
-zejtra tě [Em]máááá[G]ám 
+zejtra tě [Em]máááá[G]ám
 [Em]máááá[A]ám, [Em]máááá[A]ám, [H]jééé
 {end_of_chorus}
 
@@ -36,7 +36,7 @@ zejtra tě [Em]máááá[G]ám
 Zejtra [G]mám zejtra [Hm]mám svůj [Em]den [D]
 zejtra se mi [C]splní moje tajný [Hm]přání můj [Am]sen [D]
 všude [G]tam kam se [Hm]podívám něco z tebe [Em]mám [D]
-poslední [C]den jednou vyspím se [Hm]jen a pak už [Am]nikdy nebudu [D]sám 
+poslední [C]den jednou vyspím se [Hm]jen a pak už [Am]nikdy nebudu [D]sám
 {end_of_verse}
 
 {chorus}

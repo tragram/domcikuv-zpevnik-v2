@@ -10,8 +10,8 @@
 {start_melody: }
 {start_of_verse}
 Ten, kdo [Ami]nezná hukot vody lopat[C]kama vířený
-jako [G]já, jó jako [Ami]já, 
-kdo Hud[Ami]sonský slapy nezná sírou [G]pekla sířený, 
+jako [G]já, jó jako [Ami]já,
+kdo Hud[Ami]sonský slapy nezná sírou [G]pekla sířený,
 ať se [Ami]na Hudsonský [G]šífy najmout [Ami]dá, [G]jo-[G#]ho-[Ami]ho.
 {end_of_verse}
 
@@ -24,7 +24,7 @@ ať se na Hudsonský šífy najmout dá, johoho.
 
 {start_of_chorus}
 A[F]hoj, páru tam [Ami]hoď,
-ať [G]do pekla se dříve dohra[Ami]bem, 
+ať [G]do pekla se dříve dohra[Ami]bem,
 [G]jo-ho-ho, [G]jo-[G#]ho-[Ami]ho.
 {end_of_chorus}
 

@@ -10,9 +10,9 @@
 {start_melody: a e}
 {start_of_verse}
 [Am]Just a [D]perfect day,
-[G]Drink Sangria [C]in the park, 
-[F]And then later, when [Dm]it gets dark, 
-We go [E]home. 
+[G]Drink Sangria [C]in the park,
+[F]And then later, when [Dm]it gets dark,
+We go [E]home.
 {end_of_verse}
 
 {start_of_verse}
@@ -25,7 +25,7 @@ And then home.
 {start_of_chorus}
 Oh [A]it's such a [D]perfect day,
 I'm [C#m]glad I spent it with [D]you. [D/C#][D/H]
-[A]Oh such a [E]perfect day, 
+[A]Oh such a [E]perfect day,
 |: You just [F#m]keep me [E]hanging [D]on. :|
 {end_of_chorus}
 

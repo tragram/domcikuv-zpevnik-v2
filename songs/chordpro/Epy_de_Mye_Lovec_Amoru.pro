@@ -11,15 +11,15 @@
 {start_of_verse}
 [G]Pokud se vám u ženských [D]dnes a denně nedař[Emi]í [C][D]
 [G]a v tomletom odvětví [D]cejtíte se žabař[Emi]i [C][D]
-[C]budíte se v noci v [C/H]bouři na [Emi]voru 
-[F]zavolejte [B]lovce Amo[G]rů. 
+[C]budíte se v noci v [C/H]bouři na [Emi]voru
+[F]zavolejte [B]lovce Amo[G]rů.
 {end_of_verse}
 
 {start_of_chorus}
 [G]Tuny Amorů topí v [Hmi]lavoru
-[Emi]v takovém tom oranžov[D]ém 
-jak je [G]lynčuje jak je [Hmi]zmenšuje 
-navěs[C]í je [D]nad betl[G]ém. 
+[Emi]v takovém tom oranžov[D]ém
+jak je [G]lynčuje jak je [Hmi]zmenšuje
+navěs[C]í je [D]nad betl[G]ém.
 {end_of_chorus}
 
 {start_of_verse}

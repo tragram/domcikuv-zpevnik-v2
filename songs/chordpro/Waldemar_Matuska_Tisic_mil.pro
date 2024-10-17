@@ -11,8 +11,8 @@
 
 {start_of_verse}
 [G]V nohách mám už tisíc [Emi]mil,
-stopy [Ami]déšť a vítr [C]smyl 
-a můj [Ami]kůň i já jsme [D7]cestou znaveni. 
+stopy [Ami]déšť a vítr [C]smyl
+a můj [Ami]kůň i já jsme [D7]cestou znaveni.
 {end_of_verse}
 
 {start_of_chorus: R1}

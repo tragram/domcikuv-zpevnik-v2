@@ -11,8 +11,8 @@
 {start_of_verse}
 Jako [G]vášeň která hasne v [Emi]kouři
 namačkaná bez os[G]tychu, v zástup [Emi]živočichů
-jako jas dálkových [C]světel 
-jako nad talířem [D]večer, mi mizíš 
+jako jas dálkových [C]světel
+jako nad talířem [D]večer, mi mizíš
 {end_of_verse}
 
 {start_of_verse}
@@ -22,10 +22,10 @@ světě, toužím po odvetě a křičím
 {end_of_verse}
 
 {start_of_chorus}
-[C]Slova jsou jen [D]kapky deště a ty [Emi]voláš ať prším ještě 
+[C]Slova jsou jen [D]kapky deště a ty [Emi]voláš ať prším ještě
 slova jsou jen kapky deště a ty voláš
 slova jsou jen kapky deště a ty voláš ať prším ještě
-[C]slova jsou jen [D]kapky deště 
+[C]slova jsou jen [D]kapky deště
 {end_of_chorus}
 
 {start_of_verse}

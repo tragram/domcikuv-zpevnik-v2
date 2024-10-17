@@ -15,8 +15,8 @@
 
 {start_of_chorus}
 [D]Bylo tu, není tu, havrani [G]na plotu,
-[D]bylo víno v sudě, [G]teď tam voda bude, 
-[D]není, není tu. 
+[D]bylo víno v sudě, [G]teď tam voda bude,
+[D]není, není tu.
 {end_of_chorus}
 
 {start_of_verse}

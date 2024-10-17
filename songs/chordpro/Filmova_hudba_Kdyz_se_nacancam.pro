@@ -10,9 +10,9 @@
 {start_melody: a}
 {start_of_verse}
 [A]Rumělku ve tvá[D]řích, ležím v polšt[Emi7]ářích, to mě právě bav[A]í,
-nic mě netí[D]ží, jen si prohlí[Emi7]žím všechny šperky, co [A]mám. 
-A svět mi radosti [D]chystá a v kra[Emi7]mflecích jsem si [A]jistá, 
-[F#mi]když se načan[D]čám, když se nača[Emi7]nčám, když se nača[A]nčám. 
+nic mě netí[D]ží, jen si prohlí[Emi7]žím všechny šperky, co [A]mám.
+A svět mi radosti [D]chystá a v kra[Emi7]mflecích jsem si [A]jistá,
+[F#mi]když se načan[D]čám, když se nača[Emi7]nčám, když se nača[A]nčám.
 {end_of_verse}
 
 {start_of_verse}
@@ -29,8 +29,8 @@ ta která udělá [D]hačí a k [E]vladaření ji [A]stačí,
 
 {start_of_verse}
 [A]Čím je to čím, [D]že sním-li či bdím[E7], tak stále jsem švar[A]ná,
-příčinu [D]znej, já ze všech jsem [E7]nej, že na sebe [A]dbám. 
-Ať projdu zámkem či [D]smrčím, jsem [E7]dokonalá a [A]frčím, 
+příčinu [D]znej, já ze všech jsem [E7]nej, že na sebe [A]dbám.
+Ať projdu zámkem či [D]smrčím, jsem [E7]dokonalá a [A]frčím,
 [A]když se načan[D]čám, když se načan[E7]čám, když se načan[A]čám
 {end_of_verse}
 

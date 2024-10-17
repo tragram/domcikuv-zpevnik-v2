@@ -14,8 +14,8 @@
 I [G]follow the [Ami]Moscow
 Down to Gorky [G]park
 Listening to the [Ami]wind of [Emi]change [D]
-On [G]the august summer [Ami]night 
-soldiers passing [G]by 
+On [G]the august summer [Ami]night
+soldiers passing [G]by
 Listening to the [Ami]wind of [Emi]change [D]
 {end_of_verse}
 
@@ -30,9 +30,9 @@ The blowing with the wind of change
 
 {start_of_chorus}
 [G]Take [D]me to the [Ami]magic of the [D]moment
-on [G]glory [D]night 
-When the [Ami]children of tomor[D]row 
-Dream [Emi]away [C]in a wind of [D]change 
+on [G]glory [D]night
+When the [Ami]children of tomor[D]row
+Dream [Emi]away [C]in a wind of [D]change
 {end_of_chorus}
 
 {start_of_verse}

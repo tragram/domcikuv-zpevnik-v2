@@ -26,13 +26,13 @@ ale[D]luja, ale[Hmi]lu - [G]ja. [A]
 
 {start_of_chorus}
 Beránku [D]náš [A]na neb[Hmi]esích, [G]
-stůj při [D]nás, [A]až přijde [C]tma, 
-ale[D]luja, ale[Hmi]lu - [G]ja. 
+stůj při [D]nás, [A]až přijde [C]tma,
+ale[D]luja, ale[Hmi]lu - [G]ja.
 {end_of_chorus}
 
 {start_of_verse}
 [D]Stojím v prázdném kostele, hvězdy [G]nade mno[A]u,
-[D]z kříže zbyl jenom stín, ale přest[G]o slyším[A], 
+[D]z kříže zbyl jenom stín, ale přest[G]o slyším[A],
 {end_of_verse}
 
 {bridge}
@@ -40,6 +40,5 @@ ale[D]luja, ale[Hmi]lu - [G]ja.
 {chorus}
 
 {bridge}
-
 
 

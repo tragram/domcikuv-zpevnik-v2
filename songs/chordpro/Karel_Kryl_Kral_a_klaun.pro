@@ -10,13 +10,13 @@
 {start_melody: a h}
 {start_of_verse}
 [A]Král [G]do boje [D]táh, [G][D]do [G]veliké [D]dálky,[G][D]
-a s [G]ním do té [D]války [A7]jel na mezku [D]klaun, 
-než hledí si stáh, tak z výrazu tváře 
-bys nepoznal lháře, co zakrývá strach. 
+a s [G]ním do té [D]války [A7]jel na mezku [D]klaun,
+než hledí si stáh, tak z výrazu tváře
+bys nepoznal lháře, co zakrývá strach.
 {end_of_verse}
 
 {start_of_chorus}
-[A7]Tiše šeptal při té hrůze:"[D]Inter arma silent musae," 
+[A7]Tiše šeptal při té hrůze:"[D]Inter arma silent musae,"
 [E]místo zvonku cinkal brně[A7]ním, [As7][A7]
 král [G]do boje [D]táh, [G][D]do [G]veliké [D]dálky,[G][D]
 [G]a s ním do té [D]války [A7]jel na mezku [D]klaun. [F#][G][D][E7]

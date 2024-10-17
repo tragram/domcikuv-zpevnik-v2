@@ -10,15 +10,15 @@
 {start_melody: d d h}
 {start_of_verse}
 [G]Obyčejné fotky [Hm]na stole leží,
-[Em]samí mladí lidé [C]jako jsem [D]já, 
-možná [G]jsou mi podobní a já [Hm]dýchám jen stěží, 
-[C]co z jejich očí vyčíst se [D]dá. 
+[Em]samí mladí lidé [C]jako jsem [D]já,
+možná [G]jsou mi podobní a já [Hm]dýchám jen stěží,
+[C]co z jejich očí vyčíst se [D]dá.
 {end_of_verse}
 
 {start_of_verse}
 [G]Čím dál víc, [Hm]čekali spásu
-a [Em]cítili příchuť [C]posledních [D]slok, 
-když [G]sepnula spoušt [Hm]z nábojových pásů 
+a [Em]cítili příchuť [C]posledních [D]slok,
+když [G]sepnula spoušt [Hm]z nábojových pásů
 [C]začal psát dějiny [D]devětatřicátý [G]rok. [D][C][G]
 {end_of_verse}
 
@@ -59,5 +59,5 @@ možná jsou mi podobní a já dýchám jen stěží,
 
 {start_of_bridge: Outro}
 [G]Á [D]na [C]na [G]na ...
-[G]Á [D]na [C]na [G]na ... 
+[G]Á [D]na [C]na [G]na ...
 {end_of_bridge}

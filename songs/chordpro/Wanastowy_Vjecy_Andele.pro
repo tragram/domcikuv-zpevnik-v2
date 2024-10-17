@@ -10,16 +10,16 @@
 {start_melody: f#}
 {start_of_verse}
 [H]Co Tě to hne[C#mi]d po ránu [E]napadá [E]
-[H]nohy, ruce, [C#mi]komu je chceš [E]dát, 
-[H]je to v krvi [C#mi]co Tvou hlavu [E]přepadá 
-[H]chtělas padnou[C#mi]t do hrobu a [E]spát 
+[H]nohy, ruce, [C#mi]komu je chceš [E]dát,
+[H]je to v krvi [C#mi]co Tvou hlavu [E]přepadá
+[H]chtělas padnou[C#mi]t do hrobu a [E]spát
 {end_of_verse}
 
 {start_of_chorus}
 [D]Poranění [A]andělé jdou do [G]polí
-[D]stěhovaví [A]lidi ulí[G]taj, 
-[D]panenku bod[A]ni, jí to [G]nebolí 
-[D]svět je mami [A]prapodivnej [G]kraj 
+[D]stěhovaví [A]lidi ulí[G]taj,
+[D]panenku bod[A]ni, jí to [G]nebolí
+[D]svět je mami [A]prapodivnej [G]kraj
 {end_of_chorus}
 
 {start_of_verse}

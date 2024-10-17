@@ -17,12 +17,12 @@ You're the magician's assistant in their dream
 
 {start_of_bridge}
 [Am]Ooh, [G]ooh, [C]ooh, [C]
-[Am]Ooh, [G]ooh and they [C]come unstuck 
+[Am]Ooh, [G]ooh and they [C]come unstuck
 {end_of_bridge}
 
 {start_of_chorus}
 Lad[Am]y, run[G]ning down to the rip[C]tide, taken away
-to the [Am]dark side, [G]I wanna be your [C]left hand man 
+to the [Am]dark side, [G]I wanna be your [C]left hand man
 I love you when you're singing that song And I got a lump
 in my throat, 'Cause you're gonna sing the words wrong
 {end_of_chorus}
@@ -40,11 +40,11 @@ And she's been living on the highest shelf
 
 {start_of_bridge}
 [Am]I just wanna, I just wanna [G]know
-[C]If you're gonna, if you're gonna stay 
-[Am]I just gotta, I just gotta [G]know 
-[C]I can't have it, I can't have it any other way 
-[Am]I swear she's [G]destined for the [C]screen 
-[Am]Closest thing to [G]Michelle Pfeiffer [C]that you've ever seen, oh 
+[C]If you're gonna, if you're gonna stay
+[Am]I just gotta, I just gotta [G]know
+[C]I can't have it, I can't have it any other way
+[Am]I swear she's [G]destined for the [C]screen
+[Am]Closest thing to [G]Michelle Pfeiffer [C]that you've ever seen, oh
 {end_of_bridge}
 
 {chorus}

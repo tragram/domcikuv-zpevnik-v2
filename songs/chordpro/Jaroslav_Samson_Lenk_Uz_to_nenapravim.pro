@@ -14,16 +14,16 @@
 
 {start_of_verse}
 [Ami]V devět hodin dvacet pět [D]mě vopustilo štěstí
-ten [F]vlak, co jsem jím měl jet na koleji [E]dávno [E7]nestál 
-[Ami]V devět hodin dvacet pět [D]jako bych dostal pěstí 
-já [F]za hodinu na náměstí měl jsem [E]stát, ale [E7]v jiným městě 
+ten [F]vlak, co jsem jím měl jet na koleji [E]dávno [E7]nestál
+[Ami]V devět hodin dvacet pět [D]jako bych dostal pěstí
+já [F]za hodinu na náměstí měl jsem [E]stát, ale [E7]v jiným městě
 
-Tvá [A7]zpráva zněla prostě a byla tak krátká 
-že [Dmi]stavíš se jen na skok, že nechalas mi vrátka 
-[G]zadní otevřená, [E]zadní otevřená 
-já [G7]naposled tě viděl, když ti bylo dvacet 
-[Dmi]to jsi tenkrát řekla, že se nechceš vracet 
-[G]že jsi unavená, [E]ze mě unavená 
+Tvá [A7]zpráva zněla prostě a byla tak krátká
+že [Dmi]stavíš se jen na skok, že nechalas mi vrátka
+[G]zadní otevřená, [E]zadní otevřená
+já [G7]naposled tě viděl, když ti bylo dvacet
+[Dmi]to jsi tenkrát řekla, že se nechceš vracet
+[G]že jsi unavená, [E]ze mě unavená
 {end_of_verse}
 
 {chorus}

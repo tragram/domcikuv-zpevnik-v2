@@ -10,9 +10,9 @@
 {start_melody: e d c}
 {start_of_verse}
 [Ami]V noci někdy nespím a [Dmi]civím do zahrady
-[G]Se zástupem lidí kolem [Emi]nevim si už rady 
-[C]Asi spadnul řemen [F]do převodu total 
-[Dmi]Delirium tremens a [G]já se tak rád motal. 
+[G]Se zástupem lidí kolem [Emi]nevim si už rady
+[C]Asi spadnul řemen [F]do převodu total
+[Dmi]Delirium tremens a [G]já se tak rád motal.
 {end_of_verse}
 
 {start_of_verse}
@@ -24,10 +24,10 @@ Doufám, že se zula a nepoškrábe lino
 
 {start_of_chorus}
 [G]Je tady [C]Čingischán Rumcajs i [F]Cipísek
-Koktejl je [G]namíchán a myši diví se 
-Je konec [C]pásmu dní, ráno už [F]nespatřím 
-Prstýnek [G]zásnubní na můj prst nepatří 
-Vanu si [C]napouštím a skočím [F]za Aidou 
+Koktejl je [G]namíchán a myši diví se
+Je konec [C]pásmu dní, ráno už [F]nespatřím
+Prstýnek [G]zásnubní na můj prst nepatří
+Vanu si [C]napouštím a skočím [F]za Aidou
 Vylezu [G]na poušti, ráno mě nenajdou [Emi][Ami]
 {end_of_chorus}
 
@@ -48,6 +48,6 @@ Sedmnáctý císař na hradbách zpívat Ámen
 {chorus}
 
 {start_of_bridge: Outro}
-[Dmi]Ledaže by moje [Emi]holka chtěla brzo [Ami]vstát 
-[Dmi]Ledaže by moje [Emi]holka chtěla brzo [Ami]vstát 
+[Dmi]Ledaže by moje [Emi]holka chtěla brzo [Ami]vstát
+[Dmi]Ledaže by moje [Emi]holka chtěla brzo [Ami]vstát
 {end_of_bridge}

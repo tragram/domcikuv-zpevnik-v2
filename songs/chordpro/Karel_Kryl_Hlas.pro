@@ -10,9 +10,9 @@
 {start_melody: c h a}
 {start_of_verse}
 V [Ami]měsíci [G]září, kdy [Ami]jablka [F]zrají,
-kdy [Ami]mantilu [G]noci svit [Ami]měsíce [G]protkal, 
-když [Ami]dozněla [G]hymna, již v [Ami]půlnoci [F]hrají, 
-já [Ami]poprvé tehdy jsem [G]Satana [Ami]potkal. 
+kdy [Ami]mantilu [G]noci svit [Ami]měsíce [G]protkal,
+když [Ami]dozněla [G]hymna, již v [Ami]půlnoci [F]hrají,
+já [Ami]poprvé tehdy jsem [G]Satana [Ami]potkal.
 {end_of_verse}
 
 {start_of_verse}
@@ -24,10 +24,10 @@ jen z úst jako hadi mu syčely věty:
 
 
 {start_of_chorus: R1}
-"Jen [C]nech si svou duši, ta k ničemu [G]není, 
-vždyť [Ami]mnozí i [G]zdarma ji [Ami]upsali [E]čertu, 
-však [Ami]hlas - to je [G]zboží, jež [Ami]dneska se [F]cení 
-a [Ami]dobře se platí - to [G]beze všech [Ami]žertů!" 
+"Jen [C]nech si svou duši, ta k ničemu [G]není,
+vždyť [Ami]mnozí i [G]zdarma ji [Ami]upsali [E]čertu,
+však [Ami]hlas - to je [G]zboží, jež [Ami]dneska se [F]cení
+a [Ami]dobře se platí - to [G]beze všech [Ami]žertů!"
 {end_of_chorus}
 
 {start_of_chorus: R2}

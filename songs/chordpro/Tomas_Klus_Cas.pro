@@ -10,21 +10,21 @@
 {start_melody: g f#}
 {start_of_verse}
 [Emi]V jednu chvíli oba zavřem oči,
-[C]asi protože už není víc co říct. 
-[G]Je to zklamání toho, kdo právě procit. 
-[D]Tyhle dokonale šťastný konce. 
+[C]asi protože už není víc co říct.
+[G]Je to zklamání toho, kdo právě procit.
+[D]Tyhle dokonale šťastný konce.
 {end_of_verse}
 
 {start_of_verse}
 [Emi]Slunce zrovna přiválo jaro,
-na rovných [C]cestách křivý stíny. 
-[G]A cizí masky …a manekýny…[D]a slova lásky... 
+na rovných [C]cestách křivý stíny.
+[G]A cizí masky …a manekýny…[D]a slova lásky...
 {end_of_verse}
 
 {start_of_chorus}
 Můj sladký [Emi]život mezi světy,
-mý sle[C]pý rány bez odvety. 
-[G]Nepochopitelná touha [D]plout ... 
+mý sle[C]pý rány bez odvety.
+[G]Nepochopitelná touha [D]plout ...
 [*pauza*]Raději shořet, než vyhasn[Emi,]out! [C,][G,][D]
 {end_of_chorus}
 
