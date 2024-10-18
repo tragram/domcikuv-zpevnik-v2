@@ -55,7 +55,6 @@ function replaceRepeatedDirective(song, directive, repeat, shortHand = "R") {
         // Check for {start_of_directive} or {start_of_directive: key}
         let startMatch = line.match(startOfdirectiveRegex);
         if (startMatch) {
-            console.log(startMatch)
             currentKey = startMatch[1] || 'default'; // Use key or default if no key is provided
             currentdirective = [];
             continue; // Skip this line from output
@@ -95,7 +94,6 @@ function replaceRepeatedDirective(song, directive, repeat, shortHand = "R") {
             processedContent.push(line);
         }
     }
-    console.log(directiveMap)
     return processedContent.join('\n');
 }
 

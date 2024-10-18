@@ -12,7 +12,7 @@
 {start_of_bridge: Intro}
 Jak může[C]š bejt tak krut[A7]á,
 [Dmi]copak nemáš kouska citu v [G6]těle? [C][C6][C]
-{start_of_bridge}
+{end_of_bridge}
 
 {start_of_chorus: R1}
 [C]Tu [C6]kytáru [C]jsem [C6]kou[C]pil [C6]kvů[C]li [C6]to[C]bě
