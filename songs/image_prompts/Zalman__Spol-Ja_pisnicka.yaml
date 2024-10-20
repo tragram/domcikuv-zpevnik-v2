@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an image of a melancholic woman, embodying the spirit of a song,
-  surrounded by shadows of poets and lovers. She is dressed in a wedding gown, with
-  a sense of vulnerability, sitting in a dimly lit tavern filled with echoes of lost
-  love. Include elements like a rose, a music note, and faint silhouettes of strangers
-  on the walls. The atmosphere should be introspective and poignant, capturing the
-  essence of longing and the weight of unspoken fears.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an image of a melancholic woman, embodying the spirit of a song,
+    surrounded by shadows of poets and lovers. She is dressed in a wedding gown, with
+    a sense of vulnerability, sitting in a dimly lit tavern filled with echoes of
+    lost love. Include elements like a rose, a music note, and faint silhouettes of
+    strangers on the walls. The atmosphere should be introspective and poignant, capturing
+    the essence of longing and the weight of unspoken fears.

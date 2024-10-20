@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an image that captures a sense of existential struggle and desire
-  for erasure. Visualize a figure sitting at a desk surrounded by papers, envelopes,
-  and stamps, looking contemplative and frustrated. The background should be dark
-  and moody, symbolizing the weight of life's burdens, while hints of official documents
-  like a birth certificate and ID cards are scattered around, representing the desire
-  to escape one's identity.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an image that captures a sense of existential struggle and desire
+    for erasure. Visualize a figure sitting at a desk surrounded by papers, envelopes,
+    and stamps, looking contemplative and frustrated. The background should be dark
+    and moody, symbolizing the weight of life's burdens, while hints of official documents
+    like a birth certificate and ID cards are scattered around, representing the desire
+    to escape one's identity.

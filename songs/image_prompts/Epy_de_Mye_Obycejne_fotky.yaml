@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a table scattered with ordinary photographs of
-  young people from the 1930s, capturing a sense of nostalgia and loss. The images
-  should reflect a haunting atmosphere, with subtle hints of historical turmoil, like
-  faded memories of joy and sorrow. Include elements like an old camera and shadows
-  that evoke a feeling of longing and connection to the past.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a table scattered with ordinary photographs
+    of young people from the 1930s, capturing a sense of nostalgia and loss. The images
+    should reflect a haunting atmosphere, with subtle hints of historical turmoil,
+    like faded memories of joy and sorrow. Include elements like an old camera and
+    shadows that evoke a feeling of longing and connection to the past.

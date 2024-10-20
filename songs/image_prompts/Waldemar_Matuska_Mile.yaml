@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a winding path through grassy fields and
-  rocky slopes, with a distant view of white crosses and faintly glowing star-like
-  lanterns in the twilight. Include elements of rain and wind swirling around, symbolizing
-  nature's mystery, alongside a figure holding a flute, embodying hope and resilience
-  amidst the journey.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a winding path through grassy fields
+    and rocky slopes, with a distant view of white crosses and faintly glowing star-like
+    lanterns in the twilight. Include elements of rain and wind swirling around, symbolizing
+    nature's mystery, alongside a figure holding a flute, embodying hope and resilience
+    amidst the journey.

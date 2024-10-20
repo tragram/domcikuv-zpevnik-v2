@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a vast desert landscape under a starry night sky,
-  with a couple walking hand in hand, their faces reflecting determination and love.
-  In the background, depict a frozen polar landscape with shimmering auroras, symbolizing
-  their journey through hardships. The scene should convey a sense of adventure, resilience,
-  and the power of love amidst challenges.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a vast desert landscape under a starry night
+    sky, with a couple walking hand in hand, their faces reflecting determination
+    and love. In the background, depict a frozen polar landscape with shimmering auroras,
+    symbolizing their journey through hardships. The scene should convey a sense of
+    adventure, resilience, and the power of love amidst challenges.

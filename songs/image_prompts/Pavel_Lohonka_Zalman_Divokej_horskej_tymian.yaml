@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a serene summer landscape featuring a winding
-  dirt road, where two figures walk together, surrounded by wild thyme blooming on
-  the hills. Capture the essence of warmth and nostalgia, with sunlight filtering
-  through the trees and a vase filled with thyme nearby. The atmosphere should evoke
-  a sense of peace and connection to nature.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a serene summer landscape featuring a winding
+    dirt road, where two figures walk together, surrounded by wild thyme blooming
+    on the hills. Capture the essence of warmth and nostalgia, with sunlight filtering
+    through the trees and a vase filled with thyme nearby. The atmosphere should evoke
+    a sense of peace and connection to nature.

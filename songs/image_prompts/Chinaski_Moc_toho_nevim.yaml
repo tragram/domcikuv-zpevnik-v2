@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a chaotic, late-night party scene. Include
-  a disheveled man searching for his clothes in a dimly lit room, surrounded by empty
-  bottles and a hint of a mysterious figure in the background. The atmosphere should
-  be a mix of confusion and wild energy, capturing the essence of a reckless night
-  out.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a chaotic, late-night party scene. Include
+    a disheveled man searching for his clothes in a dimly lit room, surrounded by
+    empty bottles and a hint of a mysterious figure in the background. The atmosphere
+    should be a mix of confusion and wild energy, capturing the essence of a reckless
+    night out.

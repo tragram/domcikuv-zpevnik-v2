@@ -1,5 +1,5 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a bustling office scene with a frustrated
-  worker holding a stamp, surrounded by clocks ticking down, and people rushing in
-  and out. Include a humorous touch with a ping pong game happening in the background,
-  symbolizing the chaos of daily life and the pressure of time.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a bustling office scene with a frustrated
+    worker holding a stamp, surrounded by clocks ticking down, and people rushing
+    in and out. Include a humorous touch with a ping pong game happening in the background,
+    symbolizing the chaos of daily life and the pressure of time.

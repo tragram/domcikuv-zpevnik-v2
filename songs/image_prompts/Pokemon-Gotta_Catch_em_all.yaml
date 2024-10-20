@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: "Create an illustration of a young Pok\xE9mon Trainer standing confidently\
-  \ in a vibrant landscape filled with various Pok\xE9mon. The Trainer is determined,\
-  \ ready for adventure, with a Pok\xE9ball in hand. Surrounding them are iconic Pok\xE9\
-  mon, showcasing teamwork and friendship, with a backdrop of mountains and a bright\
-  \ blue sky symbolizing hope and courage."
+- model: gpt-4o-mini-2024-07-18
+  response: "Create an illustration of a young Pok\xE9mon Trainer standing confidently\
+    \ in a vibrant landscape filled with various Pok\xE9mon. The Trainer is determined,\
+    \ ready for adventure, with a Pok\xE9ball in hand. Surrounding them are iconic\
+    \ Pok\xE9mon, showcasing teamwork and friendship, with a backdrop of mountains\
+    \ and a bright blue sky symbolizing hope and courage."

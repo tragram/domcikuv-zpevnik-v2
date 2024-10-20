@@ -1,8 +1,8 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a whimsical, surreal scene featuring a character
-  named Zuzana, who is playfully exploring the world through a barred window. In the
-  background, depict a scene with Icarus missing his wings and Copernicus tied to
-  a bed, gazing at a star on the ceiling. Include Columbus standing nearby, surrounded
-  by a dreamlike landscape of floating ships and flying stars, with a sense of longing
-  and connection to the earth. The overall mood should be both fantastical and melancholic,
-  capturing the essence of searching for freedom and love.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a whimsical, surreal scene featuring a character
+    named Zuzana, who is playfully exploring the world through a barred window. In
+    the background, depict a scene with Icarus missing his wings and Copernicus tied
+    to a bed, gazing at a star on the ceiling. Include Columbus standing nearby, surrounded
+    by a dreamlike landscape of floating ships and flying stars, with a sense of longing
+    and connection to the earth. The overall mood should be both fantastical and melancholic,
+    capturing the essence of searching for freedom and love.

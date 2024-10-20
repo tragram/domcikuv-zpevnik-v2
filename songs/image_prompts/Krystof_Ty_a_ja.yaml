@@ -1,5 +1,5 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a mystical city filled with shimmering lights
-  and countless doors leading to intricate labyrinths. Above, a starry sky glimmers
-  with more stars than one can count. In the foreground, two ethereal figures represent
-  unity, with wings poised above a deep chasm, symbolizing connection and hope.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a mystical city filled with shimmering lights
+    and countless doors leading to intricate labyrinths. Above, a starry sky glimmers
+    with more stars than one can count. In the foreground, two ethereal figures represent
+    unity, with wings poised above a deep chasm, symbolizing connection and hope.

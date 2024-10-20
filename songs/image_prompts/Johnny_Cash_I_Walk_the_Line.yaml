@@ -1,5 +1,5 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an image of a person walking along a winding path, surrounded by
-  vibrant day and night elements, symbolizing love and devotion. Include subtle imagery
-  of a heart and a tie to represent the connection and commitment, with a serene landscape
-  that evokes a sense of happiness and loyalty.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an image of a person walking along a winding path, surrounded by
+    vibrant day and night elements, symbolizing love and devotion. Include subtle
+    imagery of a heart and a tie to represent the connection and commitment, with
+    a serene landscape that evokes a sense of happiness and loyalty.

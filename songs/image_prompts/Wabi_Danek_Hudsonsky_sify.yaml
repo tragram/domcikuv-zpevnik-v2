@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a rugged, adventurous sailor standing on the deck
-  of an old Hudson River steamboat, surrounded by misty waters and dark, towering
-  cliffs. The scene should capture a sense of camaraderie and the harsh beauty of
-  river life, with elements like broken shoes, a weathered face, and hints of a fiery
-  glow from the depths of the river. The atmosphere should evoke a mix of danger and
-  excitement, embodying the spirit of those who embrace the unknown.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a rugged, adventurous sailor standing on the
+    deck of an old Hudson River steamboat, surrounded by misty waters and dark, towering
+    cliffs. The scene should capture a sense of camaraderie and the harsh beauty of
+    river life, with elements like broken shoes, a weathered face, and hints of a
+    fiery glow from the depths of the river. The atmosphere should evoke a mix of
+    danger and excitement, embodying the spirit of those who embrace the unknown.

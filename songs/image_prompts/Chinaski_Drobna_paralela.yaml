@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration that captures the essence of nostalgia and change,
-  featuring a vintage game board with faded colors, surrounded by symbols of the past
-  and present, like an hourglass, a vinyl record, and a modern smartphone. The scene
-  should evoke a sense of reflection and the passage of time, blending elements from
-  different eras in a dreamlike atmosphere.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration that captures the essence of nostalgia and change,
+    featuring a vintage game board with faded colors, surrounded by symbols of the
+    past and present, like an hourglass, a vinyl record, and a modern smartphone.
+    The scene should evoke a sense of reflection and the passage of time, blending
+    elements from different eras in a dreamlike atmosphere.

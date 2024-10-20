@@ -1,8 +1,8 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a whimsical, nostalgic scene featuring a group
-  of folk musicians gathered outside a quaint funeral home. Include a vibrant, singing
-  bird perched on a birdhouse, surrounded by colorful tablets scattered on a breakfast
-  table. The musicians, representing various styles, should be depicted with expressive
-  faces, showcasing a mix of frustration and camaraderie, as they confront the metaphorical
-  "songwriter's virus." Capture the essence of a lively folk music community with
-  elements of humor and a hint of melancholy.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a whimsical, nostalgic scene featuring a group
+    of folk musicians gathered outside a quaint funeral home. Include a vibrant, singing
+    bird perched on a birdhouse, surrounded by colorful tablets scattered on a breakfast
+    table. The musicians, representing various styles, should be depicted with expressive
+    faces, showcasing a mix of frustration and camaraderie, as they confront the metaphorical
+    "songwriter's virus." Capture the essence of a lively folk music community with
+    elements of humor and a hint of melancholy.

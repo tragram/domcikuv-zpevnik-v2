@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: 'Create an illustration of a quiet roadside gas station at midnight, surrounded
-  by a dark forest. Include a vintage car parked slowly, a small diner with a neon
-  sign, and a few characters: a man leaning on beer bottles, another pondering a menu,
-  and a cashier with a name tag. The atmosphere should feel surreal and dreamlike,
-  reflecting a sense of nostalgia and introspection.'
+- model: gpt-4o-mini-2024-07-18
+  response: 'Create an illustration of a quiet roadside gas station at midnight, surrounded
+    by a dark forest. Include a vintage car parked slowly, a small diner with a neon
+    sign, and a few characters: a man leaning on beer bottles, another pondering a
+    menu, and a cashier with a name tag. The atmosphere should feel surreal and dreamlike,
+    reflecting a sense of nostalgia and introspection.'

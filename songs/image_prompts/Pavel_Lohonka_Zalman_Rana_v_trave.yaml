@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a serene morning scene in the countryside, featuring
-  a man removing his shoes and dipping his feet in dewy grass. In the background,
-  depict a beautiful Moravian woman and a golden wine glass, symbolizing love and
-  celebration. Include a mystical well that seems to whisper wisdom, surrounded by
-  lush greenery, capturing the essence of longing and reflection.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a serene morning scene in the countryside, featuring
+    a man removing his shoes and dipping his feet in dewy grass. In the background,
+    depict a beautiful Moravian woman and a golden wine glass, symbolizing love and
+    celebration. Include a mystical well that seems to whisper wisdom, surrounded
+    by lush greenery, capturing the essence of longing and reflection.

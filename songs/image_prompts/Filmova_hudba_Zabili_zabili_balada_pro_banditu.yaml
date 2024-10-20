@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: "Create an eerie landscape featuring a graveyard in Kolo\u010Dava, with\
-  \ a somber atmosphere. Include crows perched on a wooden fence, a misty backdrop\
-  \ of distant mountains, and an old, weathered grave with signs of disturbance. The\
-  \ scene should evoke a sense of mystery and loss, with hints of wine barrels and\
-  \ a whisper of the wind carrying tales of the past."
+- model: gpt-4o-mini-2024-07-18
+  response: "Create an eerie landscape featuring a graveyard in Kolo\u010Dava, with\
+    \ a somber atmosphere. Include crows perched on a wooden fence, a misty backdrop\
+    \ of distant mountains, and an old, weathered grave with signs of disturbance.\
+    \ The scene should evoke a sense of mystery and loss, with hints of wine barrels\
+    \ and a whisper of the wind carrying tales of the past."

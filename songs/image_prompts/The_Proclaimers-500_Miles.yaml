@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a romantic scene depicting a man walking a long,
-  winding path through various landscapes (fields, forests, and city streets) with
-  a loving expression, symbolizing his dedication and journey to be with his partner.
-  Include subtle elements like a cozy home in the distance and hints of companionship,
-  like a silhouette of a woman waiting at the door. The atmosphere should feel warm
-  and inviting, evoking a sense of love and commitment.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a romantic scene depicting a man walking a long,
+    winding path through various landscapes (fields, forests, and city streets) with
+    a loving expression, symbolizing his dedication and journey to be with his partner.
+    Include subtle elements like a cozy home in the distance and hints of companionship,
+    like a silhouette of a woman waiting at the door. The atmosphere should feel warm
+    and inviting, evoking a sense of love and commitment.

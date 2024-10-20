@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a plush teddy bear traveling through a snowy landscape,
-  carrying a small gift. The bear is depicted on a cross, dreaming peacefully, while
-  Roman dogs in festive attire play nearby. The scene is set during a magical Christmas
-  night, with a glowing sunrise in the background and a crown made of thorns subtly
-  present.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a plush teddy bear traveling through a snowy
+    landscape, carrying a small gift. The bear is depicted on a cross, dreaming peacefully,
+    while Roman dogs in festive attire play nearby. The scene is set during a magical
+    Christmas night, with a glowing sunrise in the background and a crown made of
+    thorns subtly present.

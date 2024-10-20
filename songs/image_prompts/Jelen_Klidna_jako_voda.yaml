@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a serene, enchanting landscape where a
-  person dances barefoot on smooth stones by a flowing river, embodying both calmness
-  and strength. The scene should evoke feelings of love and companionship, with elements
-  of morning dew and fresh snow, symbolizing purity and renewal. Include hints of
-  a challenging journey, like distant mountains and shadows, to represent life's struggles,
-  while the overall atmosphere remains hopeful and uplifting.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a serene, enchanting landscape where
+    a person dances barefoot on smooth stones by a flowing river, embodying both calmness
+    and strength. The scene should evoke feelings of love and companionship, with
+    elements of morning dew and fresh snow, symbolizing purity and renewal. Include
+    hints of a challenging journey, like distant mountains and shadows, to represent
+    life's struggles, while the overall atmosphere remains hopeful and uplifting.

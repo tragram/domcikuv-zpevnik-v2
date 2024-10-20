@@ -1,8 +1,8 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a vibrant, chaotic scene of a late-night
-  gathering among friends, set in a cozy yet disheveled living room. Include a group
-  of bohemian characters laughing and toasting with glasses of wine, surrounded by
-  scattered party decorations and remnants of a wild night. In the background, show
-  a princess figure playfully leaning over, hinting at the revelry. Capture the essence
-  of friendship and the carefree spirit of youth, with a touch of whimsy and a hint
-  of introspection.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a vibrant, chaotic scene of a late-night
+    gathering among friends, set in a cozy yet disheveled living room. Include a group
+    of bohemian characters laughing and toasting with glasses of wine, surrounded
+    by scattered party decorations and remnants of a wild night. In the background,
+    show a princess figure playfully leaning over, hinting at the revelry. Capture
+    the essence of friendship and the carefree spirit of youth, with a touch of whimsy
+    and a hint of introspection.

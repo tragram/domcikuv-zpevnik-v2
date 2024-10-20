@@ -1,5 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration capturing the vibrant essence of a Spanish fiesta,
-  featuring a lively scene with castanets, flamenco dancers, and the sun setting over
-  Madrid. Include elements like wine glasses, roses, and a bullfighter in traditional
-  attire, all set against a backdrop of a bustling street filled with music and celebration.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration capturing the vibrant essence of a Spanish fiesta,
+    featuring a lively scene with castanets, flamenco dancers, and the sun setting
+    over Madrid. Include elements like wine glasses, roses, and a bullfighter in traditional
+    attire, all set against a backdrop of a bustling street filled with music and
+    celebration.

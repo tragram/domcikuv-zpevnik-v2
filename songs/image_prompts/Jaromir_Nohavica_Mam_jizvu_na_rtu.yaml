@@ -1,8 +1,8 @@
-model: gpt-4o-mini-2024-07-18
-response: "Create an illustration of a weathered man with a scar on his lip, wearing\
-  \ a soot-stained suit and a slightly worn-out hood. He stands in a bustling urban\
-  \ environment, surrounded by hints of his past experiences: a vintage tank, a newspaper\
-  \ with the word \"l'Humanit\xE9,\" and a coffee cup from a small caf\xE9. In the\
-  \ background, wolves lurk in the forest, symbolizing the struggles he has faced.\
-  \ The scene captures a mix of nostalgia, resilience, and a hint of romance, reflecting\
-  \ the bittersweet tone of the song."
+- model: gpt-4o-mini-2024-07-18
+  response: "Create an illustration of a weathered man with a scar on his lip, wearing\
+    \ a soot-stained suit and a slightly worn-out hood. He stands in a bustling urban\
+    \ environment, surrounded by hints of his past experiences: a vintage tank, a\
+    \ newspaper with the word \"l'Humanit\xE9,\" and a coffee cup from a small caf\xE9\
+    . In the background, wolves lurk in the forest, symbolizing the struggles he has\
+    \ faced. The scene captures a mix of nostalgia, resilience, and a hint of romance,\
+    \ reflecting the bittersweet tone of the song."

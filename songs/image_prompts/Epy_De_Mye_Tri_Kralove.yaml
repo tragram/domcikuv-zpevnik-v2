@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a dark, war-torn cityscape under a stormy
-  sky, with three glowing stars above the Vltava River. In the foreground, portray
-  three determined figures symbolizing resistance, standing together with a sense
-  of defiance. Incorporate elements of struggle, such as shadows of oppressive forces
-  and hints of hope, like a faint light breaking through the darkness. The overall
-  mood should convey resilience and the fight for freedom.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a dark, war-torn cityscape under a stormy
+    sky, with three glowing stars above the Vltava River. In the foreground, portray
+    three determined figures symbolizing resistance, standing together with a sense
+    of defiance. Incorporate elements of struggle, such as shadows of oppressive forces
+    and hints of hope, like a faint light breaking through the darkness. The overall
+    mood should convey resilience and the fight for freedom.

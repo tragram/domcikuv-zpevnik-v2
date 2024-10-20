@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration that captures a moody, nostalgic scene of a dimly
-  lit train compartment. A figure, wearing a hat, is lighting a cigarette with a match,
-  while memories swirl around them like wisps of smoke. In the background, a shadowy
-  silhouette of a bird takes flight, and a delicate embroidery of spiders is visible
-  on the hat. The atmosphere should evoke a sense of longing and reflection, with
-  hints of vibrant red flames symbolizing lost summer moments.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration that captures a moody, nostalgic scene of a dimly
+    lit train compartment. A figure, wearing a hat, is lighting a cigarette with a
+    match, while memories swirl around them like wisps of smoke. In the background,
+    a shadowy silhouette of a bird takes flight, and a delicate embroidery of spiders
+    is visible on the hat. The atmosphere should evoke a sense of longing and reflection,
+    with hints of vibrant red flames symbolizing lost summer moments.

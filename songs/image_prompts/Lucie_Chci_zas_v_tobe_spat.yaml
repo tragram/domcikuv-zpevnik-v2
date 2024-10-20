@@ -1,8 +1,8 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a dreamy, surreal landscape where two figures
-  stand on the edge of a dark, mysterious water body, surrounded by ethereal light
-  and shadow. One figure reaches out to the other, symbolizing love and longing, while
-  dragon-like claws emerge from the depths, representing hidden challenges. The sky
-  above is filled with stars, and a sense of both beauty and chaos permeates the scene,
-  capturing the essence of love's complexities and the struggle against the tides
-  of life.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a dreamy, surreal landscape where two figures
+    stand on the edge of a dark, mysterious water body, surrounded by ethereal light
+    and shadow. One figure reaches out to the other, symbolizing love and longing,
+    while dragon-like claws emerge from the depths, representing hidden challenges.
+    The sky above is filled with stars, and a sense of both beauty and chaos permeates
+    the scene, capturing the essence of love's complexities and the struggle against
+    the tides of life.

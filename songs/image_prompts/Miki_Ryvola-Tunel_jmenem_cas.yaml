@@ -1,8 +1,8 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a melancholic train journey through a dark,
-  expansive tunnel named "Time." The scene should feature a vintage steam locomotive
-  disappearing into the shadowy entrance of the tunnel, with faint stars and glowing
-  embers in the background. Include elements of nostalgia, such as old love letters
-  and memories floating away with the train, surrounded by a hauntingly beautiful
-  landscape of railway tracks and distant, flickering lights. The atmosphere should
-  evoke a sense of longing and reflection.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a melancholic train journey through a
+    dark, expansive tunnel named "Time." The scene should feature a vintage steam
+    locomotive disappearing into the shadowy entrance of the tunnel, with faint stars
+    and glowing embers in the background. Include elements of nostalgia, such as old
+    love letters and memories floating away with the train, surrounded by a hauntingly
+    beautiful landscape of railway tracks and distant, flickering lights. The atmosphere
+    should evoke a sense of longing and reflection.
