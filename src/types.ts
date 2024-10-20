@@ -41,25 +41,23 @@ class SongRange {
     max: string;
     semitones: int;
 
-    constructor(song_range_str) {
+    constructor(song_range_str: string) {
         if (!song_range_str || !song_range_str.includes("-")) {
-            // return <></>
-            // song_range_str = "c1-d3"
-            this.min = null
-            this.max = null
+            this.min = null;
+            this.max = null;
             this.semitones = null;
-        } else {
-            const song_range = song_range_str.split("-");
-            const octaves = song_range[1].slice([-1]) - song_range[0].slice([-1])
-            const lowestTone = song_range[0].slice(0, -1).toLowerCase()
-            const highestTone = song_range[1].slice(0, -1).toLowerCase()
-            const withinOctave = (12 + SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone]) % 12
-
-            this.min = song_range[0]
-            this.max = song_range[1]
-            this.semitones = 12 * octaves + withinOctave;
-            // console.log(lowestTone, highestTone, octaves, withinOctave, 12 * octaves + withinOctave)
+            return; // Exit early to reduce nesting
         }
+    
+        const [minRange, maxRange] = song_range_str.split("-");
+        const lowestTone = minRange.slice(0, -1).toLowerCase();
+        const highestTone = maxRange.slice(0, -1).toLowerCase();
+        const octaves = parseInt(maxRange.slice(-1)) - parseInt(minRange.slice(-1));
+        const withinOctave = (12 + SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone]) % 12;
+    
+        this.min = minRange;
+        this.max = maxRange;
+        this.semitones = 12 * octaves + withinOctave;
     }
 
     static fromJSON(json: any): SongData {
@@ -77,6 +75,22 @@ class SongRange {
 type SongKey = "C" | "C#" | "D" | "Es" | "E" | "F" | "F#" | "G" | "As" | "A" | "B" | "H"
 
 type SongLanguage = "czech" | "english" | "german" | "slovak" | "polish" | "spanish" | "romanian" | "finnish" | "estonian" | "french" | "italian" | "portuguese" | "other"
+
+interface SongRawData {
+    title?: string;
+    artist?: string;
+    key?: SongKey;
+    date_added: string;
+    startMelody?: string;
+    language?: SongLanguage;
+    tempo?: string | number;
+    capo?: string | number;
+    range?: string;
+    illustration_author?: string;
+    pdf_filenames?: string;
+    chordpro_file?: string;
+    content_hash?: string;
+}
 
 class SongData {
     id: string;
@@ -98,32 +112,32 @@ class SongData {
     content: string | null;
     contentHash: string;
 
-    constructor(song: Object) {
+    constructor(song: SongRawData) {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.id = unidecode(`${song.artist}-${song.title}`.replace(/ /g, "_")).replace("?","");
+        this.id = unidecode(`${this.artist}-${this.title}`.replace(/ /g, "_")).replace("?", "");
         this.key = song.key || null;
-        this.dateAdded = {
-            year: parseInt(song.date_added.split("-")[1]),
-            month: parseInt(song.date_added.split("-")[0])
-        };
+        
+        const [month, year] = song.date_added.split("-");
+        this.dateAdded = { month: parseInt(month), year: parseInt(year) };
+        
         this.startMelody = song.startMelody;
-        this.language = song.language; // TODO: should parse it properly
-        this.tempo = parseInt(song.tempo);
-        this.capo = parseInt(song.capo) || 0;
-        this.range = new SongRange(song.range);
+        this.language = song.language || "other";
+        this.tempo = parseInt(song.tempo as string);
+        this.capo = parseInt(song.capo as string) || 0;
+        this.range = new SongRange(song.range || "");
         this.illustration_author = song.illustration_author || "FLUX.1-dev";
-        if (song.pdf_filenames) {
-            this.pdfFilenames = JSON.parse(song.pdf_filenames.replace(/'/g, '"')).map(f => import.meta.env.BASE_URL + "/songs/pdfs/" + f);
-        } else {
-            this.pdfFilenames = [];
-        }
-        this.chordproFile = song.chordpro_file;
-        this.contentHash = song.content_hash;
+        
+        this.pdfFilenames = song.pdf_filenames 
+            ? JSON.parse(song.pdf_filenames.replace(/'/g, '"')).map(f => import.meta.env.BASE_URL + "/songs/pdfs/" + f)
+            : [];
+        
+        this.chordproFile = song.chordpro_file || "";
+        this.contentHash = song.content_hash || "";
     }
 
     // Static method to restore an instance from a plain object (after JSON.parse)
-    static fromJSON(json: any): SongData {
+    static fromJSON(json:  Partial<SongData>): SongData {
         const instance = Object.create(SongData.prototype);
 
         // Directly assign all fields without running constructor logic
@@ -166,10 +180,7 @@ interface SongDB {
     languages: LanguageCount, // counts the occurences of each language
     songs: Array<SongData>
 }
-
-interface LanguageCount {
-    [key: SongLanguage]: int
-}
+interface LanguageCount extends Record<SongLanguage, int> {}
 
 export type { SongDB, SortSettings, FilterSettings, SongKey, SongLanguage, LanguageCount, SortOrder, SortField };
 export { SongData };

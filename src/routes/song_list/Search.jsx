@@ -12,7 +12,6 @@ function Search({ songs, setSearchResults, query, setQuery }) {
     }
     const fuse = new Fuse(songs, options)
     function search(e) {
-        console.log("Searching")
         const newQuery = e.target.value
         setQuery(newQuery);
         if (newQuery != "") {
