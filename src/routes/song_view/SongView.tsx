@@ -369,7 +369,7 @@ function SongView({ }) {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className={`flex justify-center flex-col gap-3 md:gap-6 max-w-lg ${autoFontSize ? "overflow-hidden" : ""} mx-auto px-6`} style={{ height: 'calc(100% - 4rem)' }}>
+        <div className={`flex justify-center items-center flex-col gap-3 md:gap-6 px-6 ${autoFontSize ? "overflow-hidden" : ""}`} style={{ height: 'calc(100% - 4rem)' }}>
             <div className='flex items-center flex-col m-auto'>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
                 <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>

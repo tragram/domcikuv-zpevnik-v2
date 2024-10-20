@@ -191,7 +191,7 @@ const SongList = () => {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className='flex h-full container mx-auto max-w-2xl scroll-smooth no-scrollbar'>
+        <div className='flex h-full container mx-auto max-w-2xl scroll-smooth no-scrollbar p-4'>
             <AutoSizer>
                 {({ height, width }) => (
                     <List height={height} itemCount={songListData.length} itemSize={60} width={width} useIsScrolling onScroll={onScroll} itemKey={(index) => songListData[index].id} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
