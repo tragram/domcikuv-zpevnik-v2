@@ -5,6 +5,7 @@
 {pdf_filenames: ['honza_jicha_kdybych_byl_gay-sken.pdf', 'honza_jicha_kdybych_byl_gay-comp.pdf']}
 {capo: 0}
 {key: F}
+{illustration_author: dalle3}
 {tempo: }
 {range: c1-d2}
 {start_melody: f}

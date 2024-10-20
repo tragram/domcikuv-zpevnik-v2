@@ -51,6 +51,10 @@ def retrieve_model_prompt(prompt_path: Path, model: str = "gpt-4o-mini") -> str 
         return None
     with open(prompt_path, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
+    if isinstance(data, dict):
+        data = [data]
+        with open(prompt_path, "w", encoding="utf-8") as f:
+            yaml.safe_dump(data, f)
     for d in data:
         if model in d["model"]:
             return d["response"]
