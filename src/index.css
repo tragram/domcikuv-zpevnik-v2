@@ -55,6 +55,11 @@
   line-height: 1;
 }
 
+.chord-sheet .row{
+  /* padding-left: 2rem;
+  padding-right: 2rem; */
+}
+
 .song-row>* {
   border-width: 3px 0 3px 0;
   border-color: hsl(var(--nextui-primary-500));

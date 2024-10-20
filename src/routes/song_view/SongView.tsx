@@ -349,7 +349,7 @@ function SongView({ }) {
         "only screen and (max-width : 600px)"
     );
 
-    return (<div className={`${autoFontSize ? "h-screen w-screen overflow-hidden" : ""}`}>
+    return (<div className={`h-screen w-screen ${autoFontSize ? "overflow-hidden" : ""}`}>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
             <NavbarContent justify="start">
                 <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
@@ -369,12 +369,12 @@ function SongView({ }) {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className={`flex justify-center items-center flex-col gap-3 md:gap-6 px-6 ${autoFontSize ? "overflow-hidden" : ""}`} style={{ height: 'calc(100% - 4rem)' }}>
-            <div className='flex items-center flex-col m-auto'>
+        <div className={`px-6 ${autoFontSize ? "overflow-hidden" : ""}`} style={{ height: 'calc(100% - 4rem)' }}>
+            <div className='flex flex-col text-center '>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
                 <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
             </div>
-            <div className={`${autoFontSize ? "overflow-hidden flex-1" : ""} pb-4`}>
+            <div className={`${autoFontSize ? "overflow-hidden flex-1" : ""} pb-4 w-full justify-center`}  style={{ height: 'calc(100% - 4rem)' }}>
                 <AutoTextSize mode="boxoneline" minFontSizePx={autoFontSize ? minFontSizePx : fontSize} maxFontSizePx={autoFontSize ? maxFontSizePx : fontSize}>
                     <div className={`m-auto  ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
                 </AutoTextSize>
