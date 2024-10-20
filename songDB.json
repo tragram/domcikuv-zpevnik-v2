@@ -837,7 +837,7 @@
     "start_melody": "c",
     "chordpro_file": "Fkeret_Zafukane.pro",
     "pdf_filenames": "['fkeret_zafukane-sken.pdf', 'fkeret_zafukane-comp.pdf']",
-    "content_hash": "2c4ca6aa2c93eec2c3d8358af5b77d3273448580"
+    "content_hash": "9d569cdc4c72d9c332c925573ca94bdda0da2608"
   },
   {
     "title": "Bella Ciao",
@@ -2033,11 +2033,11 @@
     "capo": "0",
     "tempo": "",
     "range": "e1-c#2",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "a",
     "chordpro_file": "Karel_Gott_Trezor.pro",
     "pdf_filenames": "['karel_gott_trezor-sken.pdf', 'karel_gott_trezor-comp.pdf']",
-    "content_hash": "409ac42410974148c7716e578bbedff6336c7ef0"
+    "content_hash": "d0a9c7f82670bf3732d747b539747fef4dabf464"
   },
   {
     "title": "Anděl",
@@ -2067,7 +2067,7 @@
     "start_melody": "a",
     "chordpro_file": "Karel_Kryl_Bacil.pro",
     "pdf_filenames": "['karel_kryl_bacil-sken.pdf', 'karel_kryl_bacil-comp.pdf', 'karel_kryl_bacil-gen.pdf']",
-    "content_hash": "961d12e11ef4ab1e6a9c828908473aaeb24ddd7d"
+    "content_hash": "cfc0f6f735f13f170f2e1a179f5a13fe3309559e"
   },
   {
     "title": "Demokracie",
@@ -2543,11 +2543,11 @@
     "capo": "6",
     "tempo": "",
     "range": "d1-g2",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "a a g a",
     "chordpro_file": "Lucie_Chci_zas_v_tobe_spat.pro",
     "pdf_filenames": "['lucie_chci_zas_v_tobe_spat-sken.pdf', 'lucie_chci_zas_v_tobe_spat-comp.pdf']",
-    "content_hash": "9d0aac95a768ceb7d5d89103f469fd5cfbb3355d"
+    "content_hash": "947aecfff649a2567028e9e7e80ec2c280eb794e"
   },
   {
     "title": "Medvídek",
@@ -2558,11 +2558,11 @@
     "capo": "0",
     "tempo": "",
     "range": "a1-c#2",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "e",
     "chordpro_file": "Lucie_Medvidek.pro",
     "pdf_filenames": "['lucie_medvidek-sken.pdf', 'lucie_medvidek-comp.pdf']",
-    "content_hash": "dec1497aecdff8f0666b6d545718963d2c772587"
+    "content_hash": "d2faeb7e219df0a9a1a51eacd21e112ecc027e3e"
   },
   {
     "title": "Sen",
@@ -2708,11 +2708,11 @@
     "capo": "0",
     "tempo": "",
     "range": "d1-a1",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "e f#",
     "chordpro_file": "Michal_David_Nonstop.pro",
     "pdf_filenames": "['michal_david_nonstop-sken.pdf', 'michal_david_nonstop-comp.pdf', 'michal_david_nonstop-gen.pdf']",
-    "content_hash": "1170229835aa4637633128631abcc9dd5665d3f7"
+    "content_hash": "8627092df537b214e98c930e5f02285ff80824f3"
   },
   {
     "title": "Mezinárodní",
@@ -3297,7 +3297,7 @@
     "start_melody": "h c d",
     "chordpro_file": "Pavel_Lohonka_Zalman_Vsech_vandraku_muza.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_vsech_vandraku_muza-sken.pdf', 'pavel_lohonka_zalman_vsech_vandraku_muza-comp.pdf']",
-    "content_hash": "bca207299569f8fc09b7b2cd439263f4a2583bb2"
+    "content_hash": "ff6308a567d7186aa912fe42e648f958c179d6bc"
   },
   {
     "title": "Zahrada ticha",
@@ -4227,7 +4227,7 @@
     "start_melody": "d a",
     "chordpro_file": "Vlasta_Redl_Huslicky.pro",
     "pdf_filenames": "['vlasta_redl_huslicky-sken.pdf', 'vlasta_redl_huslicky-comp.pdf']",
-    "content_hash": "b7022265bae46b969d3b51552b0f73e60232c433"
+    "content_hash": "60c7e921f548362b8d39090cea563f2985bf8fba"
   },
   {
     "title": "Večer křupavých srdíček",
@@ -4418,11 +4418,11 @@
     "capo": "0",
     "tempo": "",
     "range": "c1-c2",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "",
     "chordpro_file": "Wohnout_Svaz_ceskych_bohemu.pro",
     "pdf_filenames": "['wohnout_svaz_ceskych_bohemu-sken.pdf', 'wohnout_svaz_ceskych_bohemu-comp.pdf', 'wohnout_svaz_ceskych_bohemu-gen.pdf']",
-    "content_hash": "06a8166cdb15209363f8c302f4d77dcaaf1b5b82"
+    "content_hash": "aa50090080ae304d9773e35766810416a194f622"
   },
   {
     "title": "Pažitka",

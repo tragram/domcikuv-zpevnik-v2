@@ -1,5 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: "Create an illustration of a picturesque landscape in Pos\xE1zav\xED, featuring\
-  \ a serene spring surrounded by lush greenery. Include a cheerful child drinking\
-  \ from the spring, with a backdrop of dairy products like cheese and milk, symbolizing\
-  \ health and vitality. The scene should evoke a sense of wellness and nature's bounty."
+- model: gpt-4o-mini-2024-07-18
+  response: "Create an illustration of a picturesque landscape in Pos\xE1zav\xED,\
+    \ featuring a serene spring surrounded by lush greenery. Include a cheerful child\
+    \ drinking from the spring, with a backdrop of dairy products like cheese and\
+    \ milk, symbolizing health and vitality. The scene should evoke a sense of wellness\
+    \ and nature's bounty."

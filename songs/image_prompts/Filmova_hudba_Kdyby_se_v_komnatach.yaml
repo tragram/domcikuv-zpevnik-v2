@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a vibrant royal palace filled with joyful musicians
-  and acrobats performing in a colorful courtyard. The scene should contrast with
-  a gloomy castle interior, highlighting the difference between a lively celebration
-  and a somber atmosphere. Include instruments, dancers, and a festive ambiance, capturing
-  the essence of music bringing happiness to life.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a vibrant royal palace filled with joyful musicians
+    and acrobats performing in a colorful courtyard. The scene should contrast with
+    a gloomy castle interior, highlighting the difference between a lively celebration
+    and a somber atmosphere. Include instruments, dancers, and a festive ambiance,
+    capturing the essence of music bringing happiness to life.

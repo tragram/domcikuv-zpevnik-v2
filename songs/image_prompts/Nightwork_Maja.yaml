@@ -1,5 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a vibrant meadow with a small, whimsical beehive
-  in the background. In the foreground, depict a cheerful cartoon bee, resembling
-  a playful character, flying joyfully among colorful flowers. The scene should convey
-  a sense of friendship and adventure, with a bright blue sky and soft, fluffy clouds.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a vibrant meadow with a small, whimsical beehive
+    in the background. In the foreground, depict a cheerful cartoon bee, resembling
+    a playful character, flying joyfully among colorful flowers. The scene should
+    convey a sense of friendship and adventure, with a bright blue sky and soft, fluffy
+    clouds.

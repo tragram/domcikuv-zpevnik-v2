@@ -10,7 +10,7 @@
 {start_melody: h c d}
 {start_of_verse}
 Přišla [G]k nám znenadání, [Fmaj7]hubená až [G]hrůza,
-a [Fmaj7]řekla, že je [G]múza [Fmaj7]všech vandráků z [C]Čech,
+a [Fmaj7]řekla, že je [G]múza [Fmaj7]všech vandráků z [G]Čech,
 to nebyl [G]hřích po nocích, než [Fmaj7]po kytaře [G]sáhla,
 [Fmaj7]tak nám chleba [G]kradla a [Fmaj7]čmárala po [Emi]zdech.
 {end_of_verse}

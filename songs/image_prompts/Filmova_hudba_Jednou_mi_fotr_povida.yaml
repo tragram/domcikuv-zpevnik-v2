@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a whimsical scene featuring a young man dancing
-  joyfully under a starry sky, with a black stork beside him tapping its beak in rhythm.
-  In the background, a vintage car is parked next to a charming house, while an ethereal
-  figure of Elvis Presley watches over from above. The atmosphere should convey a
-  blend of freedom, nostalgia, and a hint of chaos, with colorful birds flying around
-  and a sense of adventure in the air.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a whimsical scene featuring a young man dancing
+    joyfully under a starry sky, with a black stork beside him tapping its beak in
+    rhythm. In the background, a vintage car is parked next to a charming house, while
+    an ethereal figure of Elvis Presley watches over from above. The atmosphere should
+    convey a blend of freedom, nostalgia, and a hint of chaos, with colorful birds
+    flying around and a sense of adventure in the air.

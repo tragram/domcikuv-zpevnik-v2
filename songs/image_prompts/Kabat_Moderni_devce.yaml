@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a vibrant disco scene featuring a stylish young
-  man in a pink vest and blue eyes, reminiscent of a circus clown, dancing joyfully.
-  Surround him with modern girls showcasing their fashionable legs, exuding a mix
-  of innocence and mischief. The backdrop should evoke the lively atmosphere of Rio
-  de Janeiro, capturing the essence of nightlife, celebration, and a hint of longing
-  for a better life.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a vibrant disco scene featuring a stylish young
+    man in a pink vest and blue eyes, reminiscent of a circus clown, dancing joyfully.
+    Surround him with modern girls showcasing their fashionable legs, exuding a mix
+    of innocence and mischief. The backdrop should evoke the lively atmosphere of
+    Rio de Janeiro, capturing the essence of nightlife, celebration, and a hint of
+    longing for a better life.

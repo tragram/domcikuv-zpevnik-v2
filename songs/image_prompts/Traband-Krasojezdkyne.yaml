@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an image of a nostalgic traveler standing at a crossroads, surrounded
-  by vibrant taverns and circus performers. In the background, depict a glamorous
-  acrobat in a red costume, symbolizing longing and adventure. Include elements of
-  Paris and Babylon in the scenery, blending cultural motifs to evoke a sense of journey
-  and desire for return.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an image of a nostalgic traveler standing at a crossroads, surrounded
+    by vibrant taverns and circus performers. In the background, depict a glamorous
+    acrobat in a red costume, symbolizing longing and adventure. Include elements
+    of Paris and Babylon in the scenery, blending cultural motifs to evoke a sense
+    of journey and desire for return.

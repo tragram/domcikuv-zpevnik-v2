@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an image of a solitary figure walking down an empty street at night,
-  surrounded by dimly lit buildings. The atmosphere should convey a sense of loneliness
-  and introspection, with shadows stretching alongside the figure. Include elements
-  like a deserted boulevard and a faint glow of city lights in the background, emphasizing
-  the theme of walking alone on a journey of self-discovery.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an image of a solitary figure walking down an empty street at night,
+    surrounded by dimly lit buildings. The atmosphere should convey a sense of loneliness
+    and introspection, with shadows stretching alongside the figure. Include elements
+    like a deserted boulevard and a faint glow of city lights in the background, emphasizing
+    the theme of walking alone on a journey of self-discovery.

@@ -1,6 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a solitary wanderer with worn-out shoes, walking
-  along a winding path under a vast sky where the horizon meets the clouds. The scene
-  captures a sense of nostalgia and longing, with a hint of a summer landscape, evoking
-  memories of a joyful past and a lost father. Include elements like a distant mountain
-  range and a soft, melancholic light to reflect the themes of journey and remembrance.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a solitary wanderer with worn-out shoes, walking
+    along a winding path under a vast sky where the horizon meets the clouds. The
+    scene captures a sense of nostalgia and longing, with a hint of a summer landscape,
+    evoking memories of a joyful past and a lost father. Include elements like a distant
+    mountain range and a soft, melancholic light to reflect the themes of journey
+    and remembrance.

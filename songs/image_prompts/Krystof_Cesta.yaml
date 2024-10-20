@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: "Create an illustration that captures a snowy, winding path leading towards\
-  \ an uncertain destination, symbolizing the struggle between perseverance and surrender.\
-  \ Include elements like fading footprints in the snow, a hint of light breaking\
-  \ through clouds, and silhouettes of people in the background\u2014some following\
-  \ the path, others dancing joyfully, representing the choice between following the\
-  \ crowd and pursuing individual dreams."
+- model: gpt-4o-mini-2024-07-18
+  response: "Create an illustration that captures a snowy, winding path leading towards\
+    \ an uncertain destination, symbolizing the struggle between perseverance and\
+    \ surrender. Include elements like fading footprints in the snow, a hint of light\
+    \ breaking through clouds, and silhouettes of people in the background\u2014some\
+    \ following the path, others dancing joyfully, representing the choice between\
+    \ following the crowd and pursuing individual dreams."

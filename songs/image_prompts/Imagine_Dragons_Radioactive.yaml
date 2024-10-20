@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a post-apocalyptic landscape with a person
-  standing amidst ash and dust. They are sweating and surrounded by a mix of vibrant
-  colors representing revolution, with flags raised and clothes dyed red. In the background,
-  a prison bus looms, symbolizing freedom and change, under a dramatic sky that hints
-  at a new age. The atmosphere should feel intense and energetic, capturing the essence
-  of transformation and resilience.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a post-apocalyptic landscape with a person
+    standing amidst ash and dust. They are sweating and surrounded by a mix of vibrant
+    colors representing revolution, with flags raised and clothes dyed red. In the
+    background, a prison bus looms, symbolizing freedom and change, under a dramatic
+    sky that hints at a new age. The atmosphere should feel intense and energetic,
+    capturing the essence of transformation and resilience.

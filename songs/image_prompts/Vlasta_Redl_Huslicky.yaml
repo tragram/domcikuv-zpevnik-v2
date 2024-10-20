@@ -1,6 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a serene outdoor scene featuring a grassy area
-  at the base of a large walnut tree. Scatter blue violets among the grass, and include
-  a pair of abandoned violins resting on the ground. In the background, depict a dreamy,
-  ethereal figure of a young musician peacefully asleep, hinting at a whimsical dream.
-  The atmosphere should evoke a sense of nostalgia and longing, with soft, warm colors.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a serene outdoor scene featuring a grassy area
+    at the base of a large walnut tree. Scatter blue violets among the grass, and
+    include a pair of abandoned violins resting on the ground. In the background,
+    depict a dreamy, ethereal figure of a young musician peacefully asleep, hinting
+    at a whimsical dream. The atmosphere should evoke a sense of nostalgia and longing,
+    with soft, warm colors.

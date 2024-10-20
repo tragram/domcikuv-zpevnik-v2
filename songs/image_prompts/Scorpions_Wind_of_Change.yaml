@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a serene summer night in Gorky Park, Moscow, with
-  soldiers passing by. The scene should capture a sense of nostalgia and hope, featuring
-  children dreaming under a starry sky, symbolizing the "wind of change." Include
-  elements of nature like gently blowing trees and a soft breeze to evoke a magical
-  atmosphere.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a serene summer night in Gorky Park, Moscow,
+    with soldiers passing by. The scene should capture a sense of nostalgia and hope,
+    featuring children dreaming under a starry sky, symbolizing the "wind of change."
+    Include elements of nature like gently blowing trees and a soft breeze to evoke
+    a magical atmosphere.

@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an image of a person wearing black sunglasses, standing in a dimly
-  lit urban environment, reflecting a sense of introspection and waiting. The background
-  should hint at a sudden change, with blurred city lights and a mysterious pathway
-  leading into the unknown. Include subtle elements that suggest struggle and hope,
-  like a flickering streetlight or a distant sunrise.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an image of a person wearing black sunglasses, standing in a dimly
+    lit urban environment, reflecting a sense of introspection and waiting. The background
+    should hint at a sudden change, with blurred city lights and a mysterious pathway
+    leading into the unknown. Include subtle elements that suggest struggle and hope,
+    like a flickering streetlight or a distant sunrise.

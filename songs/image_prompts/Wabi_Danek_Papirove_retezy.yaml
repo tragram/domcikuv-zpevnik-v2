@@ -1,6 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: 'Create an illustration of a melancholic Christmas scene: a dimly lit room
-  decorated with paper chains, where a woman prepares a festive dinner, her face reflecting
-  a sense of longing and sadness. Outside the window, children play, and a postman
-  stands at the door holding a telegram. The atmosphere is a mix of holiday cheer
-  and emotional solitude, capturing the essence of a bittersweet Christmas night.'
+- model: gpt-4o-mini-2024-07-18
+  response: 'Create an illustration of a melancholic Christmas scene: a dimly lit
+    room decorated with paper chains, where a woman prepares a festive dinner, her
+    face reflecting a sense of longing and sadness. Outside the window, children play,
+    and a postman stands at the door holding a telegram. The atmosphere is a mix of
+    holiday cheer and emotional solitude, capturing the essence of a bittersweet Christmas
+    night.'

@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration that captures a melancholic yet hopeful scene inspired
-  by the song lyrics. Depict a winter landscape with rain falling on gnarled trees,
-  while a warm light glows softly in the background. Include silhouettes of migrating
-  birds in the sky and a figure with flowing hair, symbolizing lost love and longing,
-  surrounded by musical notes. The overall mood should blend sadness with a sense
-  of beauty and nostalgia.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration that captures a melancholic yet hopeful scene inspired
+    by the song lyrics. Depict a winter landscape with rain falling on gnarled trees,
+    while a warm light glows softly in the background. Include silhouettes of migrating
+    birds in the sky and a figure with flowing hair, symbolizing lost love and longing,
+    surrounded by musical notes. The overall mood should blend sadness with a sense
+    of beauty and nostalgia.

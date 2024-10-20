@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a nostalgic rock band performing on a small stage,
-  surrounded by colorful fireworks and a cheering crowd. The band members should be
-  wearing worn-out sweaters and playing slightly out-of-tune instruments, capturing
-  the essence of a grassroots music festival. In the background, depict a fading sunset
-  and hints of past rock legends, symbolizing the passage of time and the enduring
-  spirit of rock 'n' roll.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a nostalgic rock band performing on a small
+    stage, surrounded by colorful fireworks and a cheering crowd. The band members
+    should be wearing worn-out sweaters and playing slightly out-of-tune instruments,
+    capturing the essence of a grassroots music festival. In the background, depict
+    a fading sunset and hints of past rock legends, symbolizing the passage of time
+    and the enduring spirit of rock 'n' roll.

@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: "Create an illustration of a bittersweet night scene in a cozy caf\xE9,\
-  \ featuring a couple sharing a moment over coffee and pastries. The atmosphere should\
-  \ be a mix of warmth and melancholy, with hints of wine glasses and shadows representing\
-  \ past regrets. Include a tram passing by outside, symbolizing the fleeting nature\
-  \ of their connection."
+- model: gpt-4o-mini-2024-07-18
+  response: "Create an illustration of a bittersweet night scene in a cozy caf\xE9\
+    , featuring a couple sharing a moment over coffee and pastries. The atmosphere\
+    \ should be a mix of warmth and melancholy, with hints of wine glasses and shadows\
+    \ representing past regrets. Include a tram passing by outside, symbolizing the\
+    \ fleeting nature of their connection."

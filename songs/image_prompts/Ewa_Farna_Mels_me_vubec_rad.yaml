@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration that captures the emotional turmoil of longing and
-  uncertainty in a relationship. Depict a solitary figure standing on a dimly lit
-  street, looking up at a starry sky, with a mix of hope and despair in their expression.
-  Include elements like fading memories represented by ghostly silhouettes in the
-  background and a distant phone glowing, symbolizing the desire for connection.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration that captures the emotional turmoil of longing
+    and uncertainty in a relationship. Depict a solitary figure standing on a dimly
+    lit street, looking up at a starry sky, with a mix of hope and despair in their
+    expression. Include elements like fading memories represented by ghostly silhouettes
+    in the background and a distant phone glowing, symbolizing the desire for connection.

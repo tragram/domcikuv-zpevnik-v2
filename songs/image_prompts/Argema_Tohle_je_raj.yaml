@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a dreamy, romantic scene featuring a couple in
-  a mystical garden at night. The woman, with an air of mystery, hesitates at a doorway
-  surrounded by shadows, while the man, gentle and inviting, reaches out to her with
-  a hopeful expression. Soft, glowing lights and ethereal flowers create a fairytale
-  atmosphere, emphasizing the themes of longing, love, and the allure of a paradise
-  waiting to be explored together.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a dreamy, romantic scene featuring a couple
+    in a mystical garden at night. The woman, with an air of mystery, hesitates at
+    a doorway surrounded by shadows, while the man, gentle and inviting, reaches out
+    to her with a hopeful expression. Soft, glowing lights and ethereal flowers create
+    a fairytale atmosphere, emphasizing the themes of longing, love, and the allure
+    of a paradise waiting to be explored together.

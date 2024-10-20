@@ -1,6 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a mysterious, slender muse with a whimsical
-  aura, surrounded by wandering musicians in a lively, bohemian setting. Include elements
-  of graffiti on the walls, a guitar resting nearby, and a backdrop of a wintry landscape
-  hinting at falling snow. The scene should capture a sense of both joy and melancholy,
-  reflecting the muse's rise and fall in a vibrant yet gritty urban environment.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a mysterious, slender muse with a whimsical
+    aura, surrounded by wandering musicians in a lively, bohemian setting. Include
+    elements of graffiti on the walls, a guitar resting nearby, and a backdrop of
+    a wintry landscape hinting at falling snow. The scene should capture a sense of
+    both joy and melancholy, reflecting the muse's rise and fall in a vibrant yet
+    gritty urban environment.

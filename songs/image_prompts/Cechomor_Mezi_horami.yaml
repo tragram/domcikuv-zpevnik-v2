@@ -1,4 +1,5 @@
-model: gpt-4o-mini-2024-07-18
-response: "Create an illustration featuring a serene mountainous landscape with a\
-  \ green linden tree, a somber grave marked by a cross, and a sorrowful woman, Ani\u010D\
-  ka, kneeling by the grave of Jan\xEDk, surrounded by a melancholic atmosphere."
+- model: gpt-4o-mini-2024-07-18
+  response: "Create an illustration featuring a serene mountainous landscape with\
+    \ a green linden tree, a somber grave marked by a cross, and a sorrowful woman,\
+    \ Ani\u010Dka, kneeling by the grave of Jan\xEDk, surrounded by a melancholic\
+    \ atmosphere."

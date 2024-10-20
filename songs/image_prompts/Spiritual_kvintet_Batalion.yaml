@@ -1,7 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration depicting a lively, romantic scene set in a rustic
-  tavern at night. Include a soldier sharing a bottle of wine with a beautiful woman,
-  surrounded by the warm glow of candlelight. In the background, suggest a sense of
-  impending adventure with hints of military uniforms and a map of Burgundy. Capture
-  the atmosphere of camaraderie and bittersweet farewell, with a hint of melancholy
-  in the air.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration depicting a lively, romantic scene set in a rustic
+    tavern at night. Include a soldier sharing a bottle of wine with a beautiful woman,
+    surrounded by the warm glow of candlelight. In the background, suggest a sense
+    of impending adventure with hints of military uniforms and a map of Burgundy.
+    Capture the atmosphere of camaraderie and bittersweet farewell, with a hint of
+    melancholy in the air.

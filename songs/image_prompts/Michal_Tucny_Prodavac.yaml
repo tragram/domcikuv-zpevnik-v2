@@ -1,8 +1,8 @@
-model: gpt-4o-mini-2024-07-18
-response: "Create an illustration of a nostalgic small-town shop filled with colorful\
-  \ jars of candies, sausages, and cheeses, with a friendly shopkeeper behind the\
-  \ counter. The scene should evoke a warm, inviting atmosphere, capturing the essence\
-  \ of community and childhood memories, with a hint of music in the air, symbolizing\
-  \ the transition from a shopkeeper to a performer. Include details like a vintage\
-  \ gramophone and a sign that reads \"Michal Tu\u010Dn\xFD, odpov\u011Bdn\xFD vedouc\xED\
-  .\""
+- model: gpt-4o-mini-2024-07-18
+  response: "Create an illustration of a nostalgic small-town shop filled with colorful\
+    \ jars of candies, sausages, and cheeses, with a friendly shopkeeper behind the\
+    \ counter. The scene should evoke a warm, inviting atmosphere, capturing the essence\
+    \ of community and childhood memories, with a hint of music in the air, symbolizing\
+    \ the transition from a shopkeeper to a performer. Include details like a vintage\
+    \ gramophone and a sign that reads \"Michal Tu\u010Dn\xFD, odpov\u011Bdn\xFD vedouc\xED\
+    .\""

@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration that captures a nostalgic and bittersweet moment
-  of a young person reflecting on lost love. Include elements of childhood innocence,
-  like toys or a playground, contrasted with a sense of longing and emptiness. Incorporate
-  a figure named Sofia, depicted as a distant presence, symbolizing the fading connection.
-  Use soft, muted colors to evoke a dreamlike quality.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration that captures a nostalgic and bittersweet moment
+    of a young person reflecting on lost love. Include elements of childhood innocence,
+    like toys or a playground, contrasted with a sense of longing and emptiness. Incorporate
+    a figure named Sofia, depicted as a distant presence, symbolizing the fading connection.
+    Use soft, muted colors to evoke a dreamlike quality.

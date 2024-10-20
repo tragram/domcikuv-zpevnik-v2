@@ -1,6 +1,7 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a whimsical royal scene featuring a wise king
-  in a lush forest, surrounded by five daughters in elegant gowns. The king looks
-  thoughtful, holding a royal crest, while the daughters playfully interact with forest
-  creatures. Incorporate elements of reggae music, such as instruments and vibrant
-  colors, to reflect the song's playful tone and themes of nobility and character.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a whimsical royal scene featuring a wise king
+    in a lush forest, surrounded by five daughters in elegant gowns. The king looks
+    thoughtful, holding a royal crest, while the daughters playfully interact with
+    forest creatures. Incorporate elements of reggae music, such as instruments and
+    vibrant colors, to reflect the song's playful tone and themes of nobility and
+    character.

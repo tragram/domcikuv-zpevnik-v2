@@ -1,6 +1,6 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a person standing on one side of a tall, imposing
-  wall, reaching out with a hopeful expression towards a figure on the other side,
-  symbolizing love and longing. The scene should convey a sense of yearning and determination,
-  with soft lighting to evoke an emotional atmosphere. Include elements of nature,
-  like flowers or vines, suggesting the possibility of growth and reconciliation.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a person standing on one side of a tall, imposing
+    wall, reaching out with a hopeful expression towards a figure on the other side,
+    symbolizing love and longing. The scene should convey a sense of yearning and
+    determination, with soft lighting to evoke an emotional atmosphere. Include elements
+    of nature, like flowers or vines, suggesting the possibility of growth and reconciliation.

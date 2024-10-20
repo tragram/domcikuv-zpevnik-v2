@@ -12,7 +12,7 @@
 {start_of_chorus}
 [Ami][G][C][E]
 |: Ta ta ta... :|
-{start_of_chorus}
+{end_of_chorus}
 
 {start_of_verse}
 [Ami]Jednou před lety snídal Gustav tablety,
