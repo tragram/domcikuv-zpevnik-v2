@@ -1,69 +1,70 @@
-     Emi       
-Tvůj dům měl sto bran 
-       D
+        Hmi       
+1. Tvůj dům měl sto bran 
+       A
 krásný bílý štít 
-       C         Ami          Emi
+       G         Emi          Hmi
 kde se potkávalo slunce s měsícem 
-tvůj kraj čistých rán 
-      D
+
+        Hmi       
+2. tvůj kraj čistých rán 
+      A
 dával řekám pít 
-         C            Ami          Emi
+         G            Emi          Hmi
 chladnou rosu z prstů trávy nad břehem 
-                         D
-Má lásko mé mládí sladká písni z irských blat 
-      Emi         D         Cmaj7
+
+                            A
+R: Má lásko mé mládí sladká písni z irských blat 
+      Hmi         A         Gmaj7
 jenom o nás mluví vlny moře Maine 
-    Emi            Ami
+    Hmi            Emi
 sám bůh skryl svou tvář 
-   D       Hmi
+   A       F#mi
 kamsi za obzor 
-        C             Ami            Emi
+        G             Emi            Hmi
 dal nám celou krásnou zemi Moorlough Shore
  
-Krákání černých vran 
+3. Krákání černých vran 
 vzalo srdcím klid 
 bubny rozvířily prach nad ostrovem 
 tvůj hlas do mých ran 
 plakal chci tě mít 
 takhle mladí přece ještě neumřem 
-Má lásko můj malý sladký irský vojáčku 
+
+R: Má lásko můj malý sladký irský vojáčku 
 kam mi odplouváš po vlnách moře Maine 
 z tvých slov cos chtěl říct 
 sroubím pevný vor 
 co nás donese do země Moorlough Shore
 
-modulace do F#mi 
-
-Cmi     F#mi
-Z tvých hor bílých štítů 
-       E
+   Gmi     C#mi
+3. Z tvých hor bílých štítů 
+       H
 tvých údolí
-       D            Hmi      F#mi
+       A            F#mi      C#mi
 mám tu sílu co tě pro mě zachrání 
-Cmi   F#mi                 E          
+Gmi   C#mi                 H          
 bůh blat starých mýtů nám dovolí 
-       D           Hmi       F#mi
+       A           F#mi       C#mi
 zůstat před válkou a smrtí schovaní 
 
-                          E
-Má lásko můj malý sladký irský vojáčku
-       F#mi        E         D
+                             H
+R: Má lásko můj malý sladký irský vojáčku
+       C#mi        H         A
 ať si běží černé vody moře Maine 
-       F#mi
+       C#mi
 já tvůj stín věrný druh  
-        E     Cmi
+        H     Gmi
 volám z výšky hor 
-        D           Hmi                Emi
+        A           F#mi                Hmi
 vrať se domů ke své lásce z Moorlough Shore 
 
-zpět do  Emi
-
-Můj pán bájný kůň  
+4. Můj pán bájný kůň  
 zmizel v kouři střel 
 tráva řekla už se domů nevrátí 
 bílý kraj útesů náhle osiřel 
 vyschly řeky zmlkli ptáci v úvratích 
-Má lásko na bílých slaných březích moře Maine 
+
+R: Má lásko na bílých slaných březích moře Maine 
 budu čekat sedm dlouhých pustých let 
 ne můj stín lásko já 
 volám z výšky hor 

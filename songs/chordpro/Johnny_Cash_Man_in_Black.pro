@@ -6,7 +6,7 @@
 {capo: 3}
 {key: G}
 {tempo: }
-{range: g1-a1}
+{range: f#1-h2}
 {start_melody: a h}
 {start_of_verse}
 [G]Well, you wonder why I always dress in black
