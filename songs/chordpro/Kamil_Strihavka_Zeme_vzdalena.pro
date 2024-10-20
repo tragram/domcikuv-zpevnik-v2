@@ -47,7 +47,8 @@ v malým [Dmi]ráji chtěl jsem říct:
 {start_of_bridge}
 [B]Bláznům se jen [F]může smát,
 [C]když nám ráno [G]dává mat.
-[B]Chtěl jsem dál jen [F]poslouchat, že jsi mou, že jsi [G]mou. [A]
+[B]Chtěl jsem dál jen [F]poslouchat, 
+že jsi mou, že jsi [G]mou. [A]
 {end_of_bridge}
 
 {chorus}

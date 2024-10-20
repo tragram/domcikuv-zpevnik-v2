@@ -27,7 +27,7 @@
     "start_melody": "a c",
     "chordpro_file": "Akaty_Vdovy_z_Cordoby.pro",
     "pdf_filenames": "['akaty_vdovy_z_cordoby-sken.pdf', 'akaty_vdovy_z_cordoby-comp.pdf']",
-    "content_hash": "3c3ab1e8484128030fd815949b0d720da5543d14"
+    "content_hash": "e6a1d66655bbfe84d091c872035ee6a14191efec"
   },
   {
     "title": "Dívka s perlami ve vlasech",
@@ -402,7 +402,7 @@
     "start_melody": "",
     "chordpro_file": "Chinaski_Kompy.pro",
     "pdf_filenames": "['chinaski_kompy-sken.pdf', 'chinaski_kompy-comp.pdf']",
-    "content_hash": "2ab2cc8b3e4a1dabde3fb5f510f91ddb4f601a73"
+    "content_hash": "d59ce248c4b7d5fc1db5e9dd7b8f22c9889de44a"
   },
   {
     "title": "Kutil",
@@ -1028,11 +1028,11 @@
     "capo": "0",
     "tempo": "",
     "range": "c1-d2",
-    "illustration_author": "",
+    "illustration_author": "dalle3",
     "start_melody": "f",
     "chordpro_file": "Honza_Jicha_Kdybych_byl_gay.pro",
     "pdf_filenames": "['honza_jicha_kdybych_byl_gay-sken.pdf', 'honza_jicha_kdybych_byl_gay-comp.pdf']",
-    "content_hash": "d74ce5ac790c72b5b3f9e55da84c5d0b4f15991a"
+    "content_hash": "a69e381776bedc4b94007efbaa13f53de0576715"
   },
   {
     "title": "Maličký knírek",
@@ -1062,7 +1062,7 @@
     "start_melody": "e",
     "chordpro_file": "Honza_Jicha_Matfyzak.pro",
     "pdf_filenames": "['honza_jicha_matfyzak-sken.pdf', 'honza_jicha_matfyzak-comp.pdf']",
-    "content_hash": "375592ff1fbe870838adb5494e20067f2171ffa4"
+    "content_hash": "5693735593e5b011b849f5a1c598548d892c9b63"
   },
   {
     "title": "Nedokonalý pár",
@@ -1077,7 +1077,7 @@
     "start_melody": "",
     "chordpro_file": "Honza_Jicha_Nedokonaly_par.pro",
     "pdf_filenames": "['honza_jicha_nedokonaly_par-sken.pdf', 'honza_jicha_nedokonaly_par-comp.pdf', 'honza_jicha_nedokonaly_par-gen.pdf']",
-    "content_hash": "ac550bf1d7adbbe22e05e145b5a795433ef02983"
+    "content_hash": "5d64d8dd197b7d39572ec2a437a38f5f5bc2aae5"
   },
   {
     "title": "Nekvalifikovaný učitel",
@@ -1092,7 +1092,7 @@
     "start_melody": "c",
     "chordpro_file": "Honza_Jicha_Nekvalifikovany_ucitel.pro",
     "pdf_filenames": "['honza_jicha_nekvalifikovany_ucitel-sken.pdf', 'honza_jicha_nekvalifikovany_ucitel-comp.pdf']",
-    "content_hash": "86f00aba140297e7985d58b4b6a71d06a58fb2cc"
+    "content_hash": "49173556ef94335d0d3b740ddcd756517114d473"
   },
   {
     "title": "Vlastizrádce",
@@ -1107,7 +1107,7 @@
     "start_melody": "e",
     "chordpro_file": "Honza_Jicha_Vlastizradce.pro",
     "pdf_filenames": "['honza_jicha_vlastizradce-sken.pdf', 'honza_jicha_vlastizradce-comp.pdf']",
-    "content_hash": "26dea46ffb304044ca1d3b1306f3a2c22aff5c05"
+    "content_hash": "9678b179bf4b5fe01a5765cdf04539245e629cbe"
   },
   {
     "title": "Lodníkův lament",
@@ -1587,7 +1587,7 @@
     "start_melody": "d d c#",
     "chordpro_file": "Jelen_Magdalena.pro",
     "pdf_filenames": "['jelen_magdalena-sken.pdf', 'jelen_magdalena-comp.pdf']",
-    "content_hash": "343dd3dd55aa40e92769e90fe5307b19a7a662ff"
+    "content_hash": "c5778dd3c1580c300eba2d742adc45cdf412a593"
   },
   {
     "title": "Babička Mary",
@@ -1647,7 +1647,7 @@
     "start_melody": "c e g",
     "chordpro_file": "Jezek__Voskovec__Werich_Stene.pro",
     "pdf_filenames": "['jezek__voskovec__werich_stene-sken.pdf', 'jezek__voskovec__werich_stene-comp.pdf', 'jezek__voskovec__werich_stene-gen.pdf']",
-    "content_hash": "ae009bcf279bab9f75baa603d46db45a71305327"
+    "content_hash": "aa5f45ee17eea68df694ac6cd84b89ef02d9612a"
   },
   {
     "title": "V domě straší duch",
@@ -1762,12 +1762,12 @@
     "date_added": "07-2015",
     "capo": "3",
     "tempo": "",
-    "range": "g1-a1",
+    "range": "f#1-h2",
     "illustration_author": "",
     "start_melody": "a h",
     "chordpro_file": "Johnny_Cash_Man_in_Black.pro",
     "pdf_filenames": "['johnny_cash_man_in_black-sken.pdf', 'johnny_cash_man_in_black-comp.pdf']",
-    "content_hash": "21560a7160d2e1a5fef9478e387d877ba456031a"
+    "content_hash": "1d1865e9975a8e4267a7ee6d7aa2915177136e10"
   },
   {
     "title": "Bára",
@@ -1992,7 +1992,7 @@
     "start_melody": "e",
     "chordpro_file": "Kamil_Strihavka_Zeme_vzdalena.pro",
     "pdf_filenames": "['kamil_strihavka_zeme_vzdalena-sken.pdf', 'kamil_strihavka_zeme_vzdalena-comp.pdf']",
-    "content_hash": "f123e2b3606e385d5bf04662879e74f6142e8ebe"
+    "content_hash": "875700d8467bb739aa43f495286da8bcca65c9f0"
   },
   {
     "title": "Die Biene Maja",
@@ -2232,7 +2232,7 @@
     "start_melody": "",
     "chordpro_file": "Karel_Kryl_Vasil.pro",
     "pdf_filenames": "['karel_kryl_vasil-sken.pdf', 'karel_kryl_vasil-comp.pdf']",
-    "content_hash": "642ecb47ce72b66027cd49d844e3012b93513861"
+    "content_hash": "afec2076d18df4ad7b82a86727c1150a12268d1d"
   },
   {
     "title": "Veličenstvo kat",
@@ -2427,7 +2427,7 @@
     "start_melody": "h a",
     "chordpro_file": "Lidova_pisen_Buraky.pro",
     "pdf_filenames": "['lidova_pisen_buraky-sken.pdf', 'lidova_pisen_buraky-comp.pdf']",
-    "content_hash": "2244b0d3f26ddbcbc1896d7aef9e3cb35bbe189c"
+    "content_hash": "6bed8110d617e76d1a545aa96b239049f44a7819"
   },
   {
     "title": "Čerešničky",
@@ -2442,7 +2442,7 @@
     "start_melody": "d",
     "chordpro_file": "Lidova_pisen_Ceresnicky.pro",
     "pdf_filenames": "['lidova_pisen_ceresnicky-sken.pdf', 'lidova_pisen_ceresnicky-comp.pdf']",
-    "content_hash": "14aa3537c1bfc6eb1b7da4e49cb5fbcead993512"
+    "content_hash": "c9472bca77d9733a0149be02e88080dfd7a88864"
   },
   {
     "title": "Foggy Dew",
@@ -2607,7 +2607,7 @@
     "start_melody": "e",
     "chordpro_file": "Malomocnost_pazdnoty_Maruska.pro",
     "pdf_filenames": "['malomocnost_pazdnoty_maruska-sken.pdf', 'malomocnost_pazdnoty_maruska-comp.pdf']",
-    "content_hash": "1c2ca14c99c284f7ee446cbb3694af781f798b3f"
+    "content_hash": "bd3f806576458f43783aafe7bc6c0c846b355821"
   },
   {
     "title": "Šrouby a matice",
@@ -2682,7 +2682,7 @@
     "start_melody": "c e f g",
     "chordpro_file": "Maxim_Turbulenc_Tri_citronky.pro",
     "pdf_filenames": "['maxim_turbulenc_tri_citronky-sken.pdf', 'maxim_turbulenc_tri_citronky-comp.pdf']",
-    "content_hash": "dfa71ad9b439775b39d3869b57f8cfa2adf3f450"
+    "content_hash": "91481a1b2daa72c03d46a27eb85b9535737c0eb5"
   },
   {
     "title": "Nothing Else Matters",
@@ -2697,7 +2697,7 @@
     "start_melody": "",
     "chordpro_file": "Metallica_Nothing_Else_Matters.pro",
     "pdf_filenames": "['metallica_nothing_else_matters-sken.pdf', 'metallica_nothing_else_matters-comp.pdf']",
-    "content_hash": "26d4b91dfbb05e2dc3fc3a7f3d599fcbe286acde"
+    "content_hash": "c2fb8e72174d01893982f6bc8ba28539a2054cec"
   },
   {
     "title": "Nonstop",
@@ -2742,7 +2742,7 @@
     "start_melody": "",
     "chordpro_file": "Michal_Hruza_Zakazane_uvolneni.pro",
     "pdf_filenames": "['michal_hruza_zakazane_uvolneni-sken.pdf', 'michal_hruza_zakazane_uvolneni-comp.pdf', 'michal_hruza_zakazane_uvolneni-gen.pdf']",
-    "content_hash": "5970784f76e886efd736e0f28d63d4a4d8ee8cf5"
+    "content_hash": "b382d9782ce2f9a88ab05c5e041a08435ebc0432"
   },
   {
     "title": "Abych Tu Žil",
@@ -3192,7 +3192,7 @@
     "start_melody": "f",
     "chordpro_file": "Pavel_Cadek-Urednikuv_song.pro",
     "pdf_filenames": "",
-    "content_hash": "b19f06c3f1d7231a7a6462de4f400849a13581e0"
+    "content_hash": "3c8a35808f5807f0eca5b3f34ce6d28f5d6f05c0"
   },
   {
     "title": "Bláznova ukolébavka",
@@ -3282,7 +3282,7 @@
     "start_melody": "f# a h",
     "chordpro_file": "Pavel_Lohonka_Zalman_Vojacek_z_Moorlough_Shore.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf']",
-    "content_hash": "ef410ff9f0a99509125199521cfeeb72f09bbd3a"
+    "content_hash": "74a593344c332aeddd5e3ae4219abb081a75c92f"
   },
   {
     "title": "Všech vandráků můza",
@@ -3312,7 +3312,7 @@
     "start_melody": "f#",
     "chordpro_file": "Pavel_Roth_Zahrada_ticha.pro",
     "pdf_filenames": "['pavel_roth_zahrada_ticha-sken.pdf', 'pavel_roth_zahrada_ticha-comp.pdf']",
-    "content_hash": "94c4a0591478d3086d13eb01a43fc09743239c1a"
+    "content_hash": "41c8af7f83cedd1234b81f0b4178a8f70717381d"
   },
   {
     "title": "Spomal'",
@@ -3357,7 +3357,7 @@
     "start_melody": "",
     "chordpro_file": "Penk__Pergner_O_blaznech.pro",
     "pdf_filenames": "['penk__pergner_o_blaznech-sken.pdf', 'penk__pergner_o_blaznech-comp.pdf']",
-    "content_hash": "1b8fdbc32a7f6f640903a3481d7412b66919b2a4"
+    "content_hash": "b2b7d92701135388e9616f8cfb6800ad4c0f2f83"
   },
   {
     "title": "Nad horů svítá",
@@ -3397,12 +3397,12 @@
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-h1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "a g f#",
     "chordpro_file": "Petr_Novak_Ja_budu_chodit_po_spickach.pro",
     "pdf_filenames": "['petr_novak_ja_budu_chodit_po_spickach-sken.pdf', 'petr_novak_ja_budu_chodit_po_spickach-comp.pdf']",
-    "content_hash": "f2edee57934aea440a3450719c21c5263cbe3a95"
+    "content_hash": "a192d53ec51cbf1f0851ce2e757c9a03c3217d2a"
   },
   {
     "title": "26",
@@ -3692,17 +3692,17 @@
   {
     "title": "San Francisco",
     "artist": "Scott McKenzie",
-    "key": "h",
+    "key": "e",
     "language": "english",
     "date_added": "07-2015",
-    "capo": "0",
+    "capo": "2",
     "tempo": "",
-    "range": "a1-c2",
+    "range": "g1-d2",
     "illustration_author": "",
     "start_melody": "d",
     "chordpro_file": "Scott_McKenzie_San_Francisco.pro",
     "pdf_filenames": "['scott_mckenzie_san_francisco-sken.pdf', 'scott_mckenzie_san_francisco-comp.pdf']",
-    "content_hash": "d668f53b541c2bef7503fa09cef892eeb0a9d92d"
+    "content_hash": "8f8c05ffe40dbbfd9b7d79656c60025755c03c70"
   },
   {
     "title": "Scarborough Fair",
@@ -3777,7 +3777,7 @@
     "start_melody": "h",
     "chordpro_file": "Stanislav_Hlozek_Dajana.pro",
     "pdf_filenames": "['stanislav_hlozek_dajana-sken.pdf', 'stanislav_hlozek_dajana-comp.pdf']",
-    "content_hash": "598153fe7f51148fbe7f15cc5623cb340c86387d"
+    "content_hash": "7df5c23df79d87fc3bcf407a643212f7a1cd681c"
   },
   {
     "title": "Novii God",
