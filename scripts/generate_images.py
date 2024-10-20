@@ -45,14 +45,24 @@ def save_response(response, stem):
     print(f"Saving prompt for {stem} by {response.model}.")
 
 
+def retrieve_model_prompt(prompt_path: Path, model: str = "gpt-4o-mini") -> str | None:
+    if not prompt_path.exists():
+        return None
+    with open(prompt_path, "r") as f:
+        data = yaml.safe_load(f)
+    for d in data:
+        if model in d["model"]:
+            return d["response"]
+    return None
+
+
 def generate_missing_prompts(model="gpt-4o-mini"):
     songs = Path(songs_path() / "chordpro/").glob("*.pro")
-    generated_prompts = [
-        p.stem for p in Path(songs_path() / "image_prompts").glob("*.yaml")
-    ]
-
     for song in songs:
-        if (song.stem) in generated_prompts:
+        existing_prompt = retrieve_model_prompt(
+            songs_path() / "image_prompts" / (song.stem + ".yaml"), model
+        )
+        if existing_prompt is not None:
             print(song.stem, "already generated --> skipping")
             continue
         lyrics = get_lyrics(song)
@@ -64,14 +74,11 @@ def generate_missing_prompts(model="gpt-4o-mini"):
         # break
 
 
-def generate_missing_images(model="black-forest-labs/FLUX.1-dev"):
+def generate_missing_images(
+    prompt_model="gpt-4o-mini", model="black-forest-labs/FLUX.1-dev"
+):
     def model2filename(model):
         return model.split("/")[-1] + ".jpg"
-
-    def load_prompt(song_prompt):
-        with open(song_prompt, "r") as f:
-            data = yaml.safe_load(f)
-        return data["response"]
 
     client = InferenceClient(
         token=secrets["hugging_face_token"],
@@ -83,7 +90,7 @@ def generate_missing_images(model="black-forest-labs/FLUX.1-dev"):
         if image_filename.is_file():
             print(f"{song_prompt.stem} already generated with {model} --> skipping")
             continue
-        prompt = load_prompt(song_prompt)
+        prompt = retrieve_model_prompt(song_prompt, prompt_model)
         img = client.text_to_image(
             prompt=prompt,
             height=512,
