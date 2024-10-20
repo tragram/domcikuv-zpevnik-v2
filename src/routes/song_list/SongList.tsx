@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, memo, useLayoutEffect, useRef } from 'react';
 // import Song from "./song";
 // import { Index, Document, Worker } from "flexsearch";
 import Randomize from './Randomize';
@@ -11,11 +11,16 @@ import { SlidersHorizontal } from 'lucide-react';
 import { HashRouter, Route, Routes, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
 import useLocalStorageState from 'use-local-storage-state'
+import { FixedSizeList as List, areEqual } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
+
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
     const songs = songDB.songs;
 
     const [searchResults, setSearchResults] = useState(songs);
+    const [positionRestored, setPositionRestored] = useState(false);
+    const [songListData, setSongListData] = useState(songs);
     const [selectedSong, setSelectedSong] = useState(null); // State for selected song
     const [query, setQuery] = useState("");
     const [sortSettings, setSortSettings] = useLocalStorageState<SortSettings>("settings/sortSettings", {
@@ -39,7 +44,6 @@ const SongList = () => {
         }, [sortSettings]
     );
 
-    const [songListData, setSongListData] = useState([]);
     let navigate = useNavigate();
     useEffect(
         function updateSongList() {
@@ -134,6 +138,42 @@ const SongList = () => {
         }
     }
 
+    // const saveScrollPosition = () => {
+    //     const scrollPosition = window.scrollY;
+    //     sessionStorage.setItem('scrollPosition', scrollPosition);
+    //     console.log(scrollPosition)
+    // };
+
+    // const [listRef, setListRef] = useState();
+    // useEffect(() => {
+    //     if (!listRef) {
+    //         return;
+    //     }
+    //     const savedScrollPosition = parseInt(sessionStorage.getItem('scrollOffset'), 10);
+    //     console.log("restore scroll position", sessionStorage.getItem('scrollOffset'), savedScrollPosition)
+
+    //     // setTimeout(() => {
+    //     //     listRef.scrollTo(savedScrollPosition);
+    //     // }, 100); // Delay scroll by 100ms until the list is loaded
+    //     setPositionRestored(true);
+    // }, [listRef]);
+
+    const SongRowFactory = memo(({ index, isScrolling, style }) => {
+        return (
+            <div style={style}>
+                <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={songListData[index]} />
+            </div>
+        )
+    }, areEqual);
+
+    function onScroll({
+        scrollDirection,
+        scrollOffset,
+        scrollUpdateWasRequested
+    }) {
+        sessionStorage.setItem('scrollOffset', scrollOffset);
+    }
+
     return (<>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
             <NavbarContent as="div" justify="center" className='sm:flex w-full'>
@@ -151,11 +191,14 @@ const SongList = () => {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className='flex flex-col'>
-            <div className="container mx-auto flex flex-col p-5 justify-center gap-3.5 max-w-2xl">
-                {songListData.map((song) => { return <SongRow key={song.id} maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
-            </div >
-        </div >
+        <div className='flex h-full container mx-auto max-w-2xl scroll-smooth no-scrollbar'>
+            <AutoSizer>
+                {({ height, width }) => (
+                    <List height={height} itemCount={songListData.length} itemSize={60} width={width} useIsScrolling onScroll={onScroll} itemKey={(index) => songListData[index].id} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
+                        {SongRowFactory}
+                    </List>)}
+            </AutoSizer>
+        </div>
     </>
     );
 };
