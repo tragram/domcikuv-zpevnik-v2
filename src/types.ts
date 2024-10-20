@@ -101,7 +101,7 @@ class SongData {
     constructor(song: Object) {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.id = unidecode(`${song.artist}-${song.title}`.replace(/ /g, "_"));
+        this.id = unidecode(`${song.artist}-${song.title}`.replace(/ /g, "_")).replace("?","");
         this.key = song.key || null;
         this.dateAdded = {
             year: parseInt(song.date_added.split("-")[1]),
