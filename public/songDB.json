@@ -2033,11 +2033,11 @@
     "capo": "0",
     "tempo": "",
     "range": "e1-c#2",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "a",
     "chordpro_file": "Karel_Gott_Trezor.pro",
     "pdf_filenames": "['karel_gott_trezor-sken.pdf', 'karel_gott_trezor-comp.pdf']",
-    "content_hash": "51191858936089b2c5d2a679dd41ba6f88f059b2"
+    "content_hash": "817122376557cab6b1e0b7eefec8a7490348ef00"
   },
   {
     "title": "Anděl",
@@ -2067,7 +2067,7 @@
     "start_melody": "a",
     "chordpro_file": "Karel_Kryl_Bacil.pro",
     "pdf_filenames": "['karel_kryl_bacil-sken.pdf', 'karel_kryl_bacil-comp.pdf', 'karel_kryl_bacil-gen.pdf']",
-    "content_hash": "e39f85a4ae8548c7048b9e653d8a9ccf5e55122b"
+    "content_hash": "b044851fa4b5e4e1991c6710a73b73fc5b77acf6"
   },
   {
     "title": "Demokracie",
@@ -2543,11 +2543,11 @@
     "capo": "6",
     "tempo": "",
     "range": "d1-g2",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "a a g a",
     "chordpro_file": "Lucie_Chci_zas_v_tobe_spat.pro",
     "pdf_filenames": "['lucie_chci_zas_v_tobe_spat-sken.pdf', 'lucie_chci_zas_v_tobe_spat-comp.pdf']",
-    "content_hash": "23807f1c7c453728ca6292ac6b40ffed8a1674fd"
+    "content_hash": "6cfb7ac806a3ed0ccdf6ee33541278d716f7d9ab"
   },
   {
     "title": "Medvídek",
@@ -2558,11 +2558,11 @@
     "capo": "0",
     "tempo": "",
     "range": "a1-c#2",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "e",
     "chordpro_file": "Lucie_Medvidek.pro",
     "pdf_filenames": "['lucie_medvidek-sken.pdf', 'lucie_medvidek-comp.pdf']",
-    "content_hash": "41f2c9d5112fc6330a8237c91a9c0f25f71eda6a"
+    "content_hash": "ba1ff5872fdfe80f160a7116d0aea61d1fa993fa"
   },
   {
     "title": "Sen",
@@ -2708,11 +2708,11 @@
     "capo": "0",
     "tempo": "",
     "range": "d1-a1",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "e f#",
     "chordpro_file": "Michal_David_Nonstop.pro",
     "pdf_filenames": "['michal_david_nonstop-sken.pdf', 'michal_david_nonstop-comp.pdf', 'michal_david_nonstop-gen.pdf']",
-    "content_hash": "63163b0b9bc8ec5fae2fb006e25d58118c80c4b2"
+    "content_hash": "c1f8630b00c5c12cf662b740ccc4a78ad13f83e4"
   },
   {
     "title": "Mezinárodní",
@@ -4418,11 +4418,11 @@
     "capo": "0",
     "tempo": "",
     "range": "c1-c2",
-    "illustration_author": "",
+    "illustration_author": "dalle3.webp",
     "start_melody": "",
     "chordpro_file": "Wohnout_Svaz_ceskych_bohemu.pro",
     "pdf_filenames": "['wohnout_svaz_ceskych_bohemu-sken.pdf', 'wohnout_svaz_ceskych_bohemu-comp.pdf', 'wohnout_svaz_ceskych_bohemu-gen.pdf']",
-    "content_hash": "f0fe09dcc1dc470a983464908ce34a09ff4917ec"
+    "content_hash": "101828d3d104f5856da3cf96a24721e56fa3ae85"
   },
   {
     "title": "Pažitka",
