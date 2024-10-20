@@ -18,6 +18,7 @@ function progressColor(range) {
     }
 }
 
+
 interface VocalRangeIndicatorProps {
     song: SongData;
     maxRange: number;
@@ -37,14 +38,13 @@ interface SongRowProps {
 }
 
 function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
-
     return (
         <div className="h-14 flex items-center">
             <div className="flex h-12 song-row w-full pl-3" onClick={() => { setSelectedSong(song); }}>
                 <div className="flex basis-[12%] min-w-14 rounded-l-full content-center justify-center bg-gray-100 relative">
                     <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={
                         <Instagram size={24} />
-                    } showFallback size="lg" src={import.meta.env.BASE_URL + "/songs/illustrations/" + song.chordproFile.split('.')[0] + `/${song.illustration_author}`} />
+                    } showFallback size="lg" src={import.meta.env.BASE_URL + "/songs/illustrations_thumbnails/" + song.chordproFile.split('.')[0] + `/${song.illustration_author}.webp`} />
                 </div>
                 <div className="flex-auto min-w-48 flex-col bg-gray-100 text-left content-center">
                     <h2 className="text-sm font-bold">{song.title}</h2>

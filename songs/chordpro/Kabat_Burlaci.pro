@@ -6,7 +6,7 @@
 {capo: 0}
 {key: e}
 {tempo: }
-{illustration_author: dalle3.webp}
+{illustration_author: dalle3}
 {range: c1-c2/g2}
 {start_melody: e}
 
