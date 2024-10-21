@@ -12,6 +12,7 @@ import ErrorPage from './routes/404'
 import SongView from './routes/song_view/SongView'
 import { HashRouter } from "react-router-dom";
 import { fetchSongs, fetchSongContent } from './components/song_loader'
+import SongGallery from './routes/gallery/SongGallery';
 const router = createHashRouter([
   {
     path: "/",
@@ -26,6 +27,13 @@ const router = createHashRouter([
     element: <SongView />,
     errorElement: <ErrorPage />,
     loader: fetchSongContent
+  },
+  {
+    // path: "/gallery",
+    path: "/gallery",
+    element: <SongGallery />,
+    errorElement: <ErrorPage />,
+    loader: fetchSongs
   }
 ]);
 
