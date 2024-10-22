@@ -57,7 +57,7 @@
     "start_melody": "g",
     "chordpro_file": "Alphaville_Mel_jmeno_Jan.pro",
     "pdf_filenames": "['alphaville_mel_jmeno_jan-sken.pdf', 'alphaville_mel_jmeno_jan-comp.pdf']",
-    "content_hash": "2e43a4ad4accf3fb1bee27d63864a5c764a0875a"
+    "content_hash": "532765a5189fe7ba9843f132237f1a62ff175f71"
   },
   {
     "title": "Sofia",
@@ -147,7 +147,7 @@
     "start_melody": "e a",
     "chordpro_file": "Bo_Burnham_From_Gods_Perspective.pro",
     "pdf_filenames": "['bo_burnham_from_gods_perspective-sken.pdf', 'bo_burnham_from_gods_perspective-comp.pdf']",
-    "content_hash": "bfa1a9f7aa5c05ef15092f255525ecd24ba23364"
+    "content_hash": "d76c29dcc8a252352766da9d023f0fe487c85a73"
   },
   {
     "title": "Lower Your Expectations",
@@ -162,7 +162,7 @@
     "start_melody": "e",
     "chordpro_file": "Bo_Burnham_Lower_Your_Expectations.pro",
     "pdf_filenames": "['bo_burnham_lower_your_expectations-sken.pdf', 'bo_burnham_lower_your_expectations-comp.pdf']",
-    "content_hash": "6e8a2d5c86baf20e4350f2558c8c7c6fe8f6329c"
+    "content_hash": "5b832242dcdaa4df82f50f2a1483ca35cf50291a"
   },
   {
     "title": "Knocking On Heaven's Door",
@@ -451,7 +451,7 @@
   },
   {
     "title": "Venku je na nule",
-    "artist": "Chinaski",
+    "artist": "[C]hinaski",
     "key": "",
     "language": "czech",
     "date_added": "06-2017",
@@ -462,7 +462,7 @@
     "start_melody": "",
     "chordpro_file": "Chinaski_Venku_je_na_nule.pro",
     "pdf_filenames": "['chinaski_venku_je_na_nule-sken.pdf', 'chinaski_venku_je_na_nule-comp.pdf']",
-    "content_hash": "ee8c20d27c6681af1217974eced96bba09225956"
+    "content_hash": "69344c3d0007eb4f88c45c7551ce075aaba2b154"
   },
   {
     "title": "Vinaři",
@@ -561,13 +561,13 @@
     "language": "english",
     "date_added": "07-2017",
     "capo": "0",
-    "tempo": "",
+    "tempo": "111",
     "range": "c1-d2",
     "illustration_author": "",
     "start_melody": "a d",
     "chordpro_file": "Dolly_PartonMiley_Cyrus_Jolene.pro",
     "pdf_filenames": "['dolly_partonmiley_cyrus_jolene-sken.pdf', 'dolly_partonmiley_cyrus_jolene-comp.pdf']",
-    "content_hash": "0a92a5ed5100ae13c3320257a228448bc71fd54d"
+    "content_hash": "333a8af916b58f69856bd6d3274e4af604cfcb6b"
   },
   {
     "title": "Can You Feel The Love Tonight",
@@ -957,7 +957,7 @@
     "start_melody": "f#",
     "chordpro_file": "Haloo_Helsinki-Ei_Suomalaiset_Tanssi.pro",
     "pdf_filenames": "",
-    "content_hash": "60a673d15a48cb9c2284c5a1e19e73aad73b7d4b"
+    "content_hash": "9e38746c11ef6809c98296a3cb13f15312fdcaee"
   },
   {
     "title": "Falling Slowly",
@@ -1192,12 +1192,12 @@
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "g1a-2",
+    "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "e",
     "chordpro_file": "Irish_Rovers_Drunken_Sailor.pro",
     "pdf_filenames": "['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']",
-    "content_hash": "6b5b1b4d28219b1482fe2947d3a00d4e7e6aed2a"
+    "content_hash": "afc41478f0767b3776b0c7bd8e0bcf667fa26444"
   },
   {
     "title": "Podvod",
@@ -1812,7 +1812,7 @@
     "start_melody": "c",
     "chordpro_file": "Kabat_Colorado.pro",
     "pdf_filenames": "['kabat_colorado-sken.pdf', 'kabat_colorado-comp.pdf']",
-    "content_hash": "651bd782c466773c7f434979316059210cb6ead8"
+    "content_hash": "d5dad3c90e2d4c2b4b9281dd0dafb89bafdcf1f1"
   },
   {
     "title": "Corrida",
@@ -3882,7 +3882,7 @@
     "start_melody": "e",
     "chordpro_file": "The_Barenaked_Ladies__Chris_Hadfield_ISS_Is_Somebody_Singing.pro",
     "pdf_filenames": "['the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-sken.pdf', 'the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-comp.pdf']",
-    "content_hash": "1855d445cd5e62e54d9453896b1d9b77b9e4299c"
+    "content_hash": "5803ce4d4199e1686825c0a902c86d304c1fc57a"
   },
   {
     "title": "Hey Jude",
@@ -3927,7 +3927,7 @@
     "start_melody": "e a",
     "chordpro_file": "The_National_Rains_of_Castamere.pro",
     "pdf_filenames": "['the_national_rains_of_castamere-sken.pdf', 'the_national_rains_of_castamere-comp.pdf', 'the_national_rains_of_castamere-gen.pdf']",
-    "content_hash": "91eca605adb7eab025dc61201f4132ae41e96e32"
+    "content_hash": "2e0d240c5992ac2cb04eeaa16c63c2c0d76017b8"
   },
   {
     "title": "500 Miles",
