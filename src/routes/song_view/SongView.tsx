@@ -232,13 +232,21 @@ function FontSizeSettings({ fontSize, setFontSize, autoFontSize, setAutoFontSize
 }
 
 function guessKey(songContent: string) {
+    console.log(songContent);
     // Regex to match a chord inside square brackets, like [C], [G], [Ami], etc.
     const chordRegex = /\[[A-Ha-h].{0,10}\]/;
     const match = songContent.match(chordRegex);
+
     // If a match is found, return the first character of the chord
     if (match) {
         const matched_chord = match[0].slice(1, -1);
-        return matched_chord[0];
+        if (matched_chord.length > 2 && "es" === matched_chord.slice(1, 3)) {
+            return matched_chord.slice(0, 3);
+        }
+        else if (matched_chord.length > 1 && ["#", "b", "s"].includes(matched_chord[1])) {
+            return matched_chord.slice(0, 2);
+        }
+        else { return matched_chord[0]; }
     }
 
     // If no chord is found, return "C"
@@ -255,7 +263,7 @@ function convertChord(chord, toEnglish = true) {
     };
 
     const germanToEnglish = {
-        "A": "A", "H": "B", "B":"Bb", "C": "C", "D": "D", "E": "E", "F": "F", "G": "G",
+        "A": "A", "H": "B", "B": "Bb", "C": "C", "D": "D", "E": "E", "F": "F", "G": "G",
     };
     if (!chord) {
         return chord;
@@ -305,6 +313,7 @@ function SongView({ }) {
     if (songData.lyricsLength() < 50) {
         return (
             <div >
+                {/* the last PDF is the smallest filesize (they are ordered as scan > compressed > gen (if it exists)) */}
                 <iframe src={songData.pdfFilenames.slice(-1)} className='w-screen h-screen' />
             </div>
         );
@@ -324,7 +333,7 @@ function SongView({ }) {
     function renderSong(key) {
         let song = replaceRepeatedDirective(convertChordsInChordPro(songData.content), "chorus", repeatChorus);
         song = replaceRepeatedDirective(song, "bridge", repeatChorus, "B");
-        let parsedSong = parser.parse(song).setCapo(0);
+        let parsedSong = parser.parse(song).setCapo(0).setKey(songData.key);
         let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()]; // using capo in chordpro is not just a comment but actually modifies the chords... 
         parsedSong = parsedSong.transpose(difference);
         // convert back to Czech chord names after transposition
@@ -374,7 +383,7 @@ function SongView({ }) {
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
                 <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
             </div>
-            <div className={`${autoFontSize ? "overflow-hidden flex-1" : ""} pb-4 w-full justify-center`}  style={{ height: 'calc(100% - 4rem)' }}>
+            <div className={`${autoFontSize ? "overflow-hidden flex-1" : ""} pb-4 w-full justify-center`} style={{ height: 'calc(100% - 4rem)' }}>
                 <AutoTextSize mode="boxoneline" minFontSizePx={autoFontSize ? minFontSizePx : fontSize} maxFontSizePx={autoFontSize ? maxFontSizePx : fontSize}>
                     <div className={`m-auto  ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
                 </AutoTextSize>

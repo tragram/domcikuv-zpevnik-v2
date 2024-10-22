@@ -150,7 +150,7 @@ const SongList = () => {
             </NavbarContent >
         </Navbar >
         <div className='flex flex-col'>
-            <div className="container mx-auto flex flex-col p-5 justify-center gap-3.5 max-w-2xl">
+            <div className="container mx-auto flex flex-col p-5 justify-center gap-1 max-w-2xl">
                 {filteredAndSortedSongs.map((song) => { return <SongRow key={song.id} maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
             </div >
         </div >
