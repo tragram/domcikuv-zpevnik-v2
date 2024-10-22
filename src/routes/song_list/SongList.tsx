@@ -1,18 +1,17 @@
-import React, { Fragment, useEffect, useState, memo, useLayoutEffect, useRef, useMemo } from 'react';
-// import Song from "./song";
-// import { Index, Document, Worker } from "flexsearch";
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { areEqual, FixedSizeList as List } from 'react-window';
+import useLocalStorageState from 'use-local-storage-state';
+import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
+import Filtering from './filters/Filters';
 import Randomize from './Randomize';
 import Search from './Search';
 import SongRow from './SongRow';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react";
-import Filtering from './filters/Filters';
 import Sorting from './Sorting';
-import { SlidersHorizontal } from 'lucide-react';
-import { HashRouter, Route, Routes, Link, useLoaderData, useNavigate } from "react-router-dom";
-import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
-import useLocalStorageState from 'use-local-storage-state'
-import { FixedSizeList as List, areEqual } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
+
+import memoize from 'memoize-one';
 
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
@@ -47,17 +46,17 @@ const SongList = () => {
         let results = filterCapo(searchResults, filterSettings.capo);
         results = filterVocalRange(results, filterSettings.vocal_range);
         results = filterLanguage(results, filterSettings.language);
-        
+
         if (query === "") {
             // since fuse.js already sorts based on proximity, avoid re-sort if query is present
             results = sortFunc(results, sortSettings.field, sortSettings.order);
         }
-        
+
         return results;
     }, [sortSettings, filterSettings, searchResults, query]);
 
     let navigate = useNavigate();
-    
+
     useEffect(
         function showSong() {
             const routeChange = (song: SongData) => {
@@ -80,20 +79,20 @@ const SongList = () => {
                 const bSemi = b.range?.semitones || -Infinity;
                 return aSemi === bSemi ? a.title.localeCompare(b.title) : aSemi - bSemi;
             }
-    
+
             if (sortByField === "dateAdded") {
                 const aDate = a.dateAdded?.year * 12 + a.dateAdded?.month;
                 const bDate = b.dateAdded?.year * 12 + b.dateAdded?.month;
                 return aDate === bDate ? a.title.localeCompare(b.title) : aDate - bDate;
             }
-    
+
             return a[sortByField].localeCompare(b[sortByField]);
         };
-    
+
         const sortedResults = results.slice().sort(compare);
         return sortOrder === "ascending" ? sortedResults : sortedResults.reverse();
     }
-    
+
 
     function filterLanguage(songs, selectedLanguage) {
         if (selectedLanguage != "all") {
@@ -122,21 +121,16 @@ const SongList = () => {
         }
     }
 
-    const SongRowFactory = memo(({ index, isScrolling, style }) => {
-        return (
-            <div style={style}>
-                <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index]} />
-            </div>
-        )
-    }, areEqual);
+    useEffect(() => {
+        const onScroll = () => {
+            sessionStorage.setItem('scrollOffset', window.scrollY)
+        };
 
-    function onScroll({
-        scrollDirection,
-        scrollOffset,
-        scrollUpdateWasRequested
-    }) {
-        sessionStorage.setItem('scrollOffset', scrollOffset);
-    }
+        const savedScrollOffset = parseInt(sessionStorage.getItem('scrollOffset'), 10) || 0;
+        window.scrollTo(0, savedScrollOffset);
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     return (<>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
@@ -155,14 +149,11 @@ const SongList = () => {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className='flex h-full container mx-auto max-w-2xl scroll-smooth no-scrollbar p-4'>
-            <AutoSizer>
-                {({ height, width }) => (
-                    <List height={height} itemCount={filteredAndSortedSongs.length} itemSize={60} width={width} useIsScrolling onScroll={onScroll} itemKey={(index) => filteredAndSortedSongs[index].id} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
-                        {SongRowFactory}
-                    </List>)}
-            </AutoSizer>
-        </div>
+        <div className='flex flex-col'>
+            <div className="container mx-auto flex flex-col p-5 justify-center gap-3.5 max-w-2xl">
+                {filteredAndSortedSongs.map((song) => { return <SongRow key={song.id} maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
+            </div >
+        </div >
     </>
     );
 };
