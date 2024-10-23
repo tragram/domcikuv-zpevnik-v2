@@ -1,7 +1,8 @@
-model: gpt-4o-mini-2024-07-18
-response: Create an illustration of a whimsical, colorful scene depicting the contrast
-  between idealized relationships and the reality of love. Include a dreamy landscape
-  with a "Prince Charming" figure who looks perplexed, surrounded by exaggerated expectations
-  like a "good boy" and a "bad boy." In the foreground, depict a couple laughing together,
-  embracing their imperfections. Add playful elements like hearts and quirky symbols
-  of love, emphasizing the message that love thrives in authenticity rather than perfection.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration of a whimsical, colorful scene depicting the contrast
+    between idealized relationships and the reality of love. Include a dreamy landscape
+    with a "Prince Charming" figure who looks perplexed, surrounded by exaggerated
+    expectations like a "good boy" and a "bad boy." In the foreground, depict a couple
+    laughing together, embracing their imperfections. Add playful elements like hearts
+    and quirky symbols of love, emphasizing the message that love thrives in authenticity
+    rather than perfection.
