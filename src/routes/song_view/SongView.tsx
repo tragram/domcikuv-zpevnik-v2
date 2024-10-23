@@ -333,7 +333,7 @@ function SongView({ }) {
     function renderSong(key) {
         let song = replaceRepeatedDirective(convertChordsInChordPro(songData.content), "chorus", repeatChorus);
         song = replaceRepeatedDirective(song, "bridge", repeatChorus, "B");
-        let parsedSong = parser.parse(song).setCapo(0).setKey(songData.key);
+        let parsedSong = parser.parse(song).setCapo(0).setKey(convertChord(songData.key, true));
         let difference = chromaticScale[key.toLowerCase()] - chromaticScale[songData.key.toLowerCase()]; // using capo in chordpro is not just a comment but actually modifies the chords... 
         parsedSong = parsedSong.transpose(difference);
         // convert back to Czech chord names after transposition
