@@ -13,7 +13,6 @@ import Sorting from './Sorting';
 
 import memoize from 'memoize-one';
 import { Images } from 'lucide-react';
-
 function Gallery() {
     let navigate = useNavigate();
     return (
@@ -151,13 +150,9 @@ const SongList = () => {
                 <NavbarItem isActive className='w-full'>
                     <Search songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
                 </NavbarItem>
-                <NavbarItem className=''>
+                <NavbarItem className='flex-row gap-1'>
                     <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={songDB.maxRange} />
-                </NavbarItem>
-                <NavbarItem className=''>
                     <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
-                </NavbarItem>
-                <NavbarItem className=''>
                     <Gallery />
                 </NavbarItem>
             </NavbarContent >
