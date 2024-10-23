@@ -51,9 +51,9 @@ const SongGallery = () => {
     const songs = getShuffledArr(songDB.songs) as Array<SongData>;
 
     return (
-        <div className='max-w-full mt-[10px]'>
+        <div className='max-w-full m-[10px]'>
             <ResponsiveMasonry
-                columnsCountBreakPoints={{ 350: 1, 700: 2, 900: 3 }}
+                columnsCountBreakPoints={{ 350: 1, 800: 2, 1300: 3 }}
             >
                 <Masonry className="image-masonry" gutter="10px">
                     {songs.map(song =>
