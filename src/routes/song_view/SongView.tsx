@@ -4,7 +4,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import ChordSheetJS, { ChordLyricsPair } from 'chordsheetjs';
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar } from 'lucide-react';
 import { HashRouter, Route, Routes, useLoaderData } from "react-router-dom";
 import { SongData } from '../../types';
 import { useNavigate } from "react-router-dom";
@@ -158,9 +158,9 @@ function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setR
         <>
             <div className='hidden xs:flex'>
                 <ButtonGroup>
-                    <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "solid" : "ghost"}><Strikethrough /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "ghost" : "solid"}><Guitar /></Button>
                     <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
-                    <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><ReceiptText /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}><Strikethrough /></Button>
                 </ButtonGroup>
             </div>
             <div className='flex xs:hidden'>
@@ -169,11 +169,11 @@ function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setR
                         <Button
                             variant="ghost" color="primary" isIconOnly
                         >
-                            <ReceiptText />
+                            <Strikethrough />
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Change font size" >
-                        <DropdownItem startContent={<Strikethrough />} key="hide_chords" onClick={() => { setChordsHidden(!chordsHidden) }} endContent={chordsHidden ? <Check /> : ""}>
+                        <DropdownItem startContent={<Guitar />} key="hide_chords" onClick={() => { setChordsHidden(!chordsHidden) }} endContent={chordsHidden ? <Check /> : ""}>
                             Hide chords
                         </DropdownItem>
                         <DropdownItem startContent={<Repeat />} key="hide_repeat_chorus" onClick={() => { setRepeatChorus(!repeatChorus) }} endContent={!repeatChorus ? <Check /> : ""}>
