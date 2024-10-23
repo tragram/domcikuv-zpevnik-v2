@@ -16,4 +16,8 @@ export default defineConfig({
 
   ],
   base: "/domcikuv-zpevnik-v2",
+  build: {
+    minify: false,
+    sourcemap: false,
+  },
 })
