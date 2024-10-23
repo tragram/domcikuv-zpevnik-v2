@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
+import { Button, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { areEqual, FixedSizeList as List } from 'react-window';
@@ -12,6 +12,16 @@ import SongRow from './SongRow';
 import Sorting from './Sorting';
 
 import memoize from 'memoize-one';
+import { Images } from 'lucide-react';
+
+function Gallery() {
+    let navigate = useNavigate();
+    return (
+        <Button color="primary" isIconOnly onClick={() => navigate("gallery")} variant="ghost">
+            <Images />
+        </Button>
+    )
+}
 
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
@@ -146,6 +156,9 @@ const SongList = () => {
                 </NavbarItem>
                 <NavbarItem className=''>
                     <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
+                </NavbarItem>
+                <NavbarItem className=''>
+                    <Gallery />
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
