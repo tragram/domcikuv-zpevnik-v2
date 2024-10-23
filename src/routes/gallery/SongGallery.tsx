@@ -53,7 +53,7 @@ const SongGallery = () => {
     return (
         <div className='max-w-full m-[10px]'>
             <ResponsiveMasonry
-                columnsCountBreakPoints={{ 350: 1, 800: 2, 1300: 3 }}
+                columnsCountBreakPoints={{ 350: 1, 700: 2, 1300: 3 }}
             >
                 <Masonry className="image-masonry" gutter="10px">
                     {songs.map(song =>
