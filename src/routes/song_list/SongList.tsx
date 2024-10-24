@@ -138,7 +138,10 @@ const SongList = () => {
         const savedScrollOffset = parseInt(sessionStorage.getItem('scrollOffset'), 10) || 0;
         window.scrollTo(0, savedScrollOffset);
         window.addEventListener('scroll', onScroll);
-        return () => window.removeEventListener('scroll', onScroll);
+        window.addEventListener('touchend', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('touchend', onScroll)};
     }, []);
 
     return (<>
