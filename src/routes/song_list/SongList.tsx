@@ -150,7 +150,7 @@ const SongList = () => {
                 <NavbarItem isActive className='w-full'>
                     <Search songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
                 </NavbarItem>
-                <NavbarItem className='flex-row gap-1 flex-nowrap'>
+                <NavbarItem className='flex flex-row gap-1 flex-nowrap'>
                     <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={songDB.maxRange} />
                     <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
                     <Gallery />
