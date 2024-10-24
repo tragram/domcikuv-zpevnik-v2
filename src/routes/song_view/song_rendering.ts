@@ -1,5 +1,6 @@
 
 import ChordSheetJS, { ChordLyricsPair } from 'chordsheetjs';
+import { SongData } from '../../types';
 
 
 const CHROMATIC_SCALE: { [key: string]: number } = {
@@ -83,64 +84,58 @@ function convertChordsInChordPro(content: string, toEnglish: boolean = true): st
     return content;
   }
 
-function replaceRepeatedDirective(song, directive, repeat, shortHand = "R") {
-    // ChordSheetJS doesn't know the {chorus} directive but I want to use it
-    const directiveMap = {}; // To store directive sections by key
-    let currentdirective = null; // To store the current directive being captured
-    let currentKey = null; // The key for the directive
+  function replaceRepeatedDirective(song: string, directive: string, repeat: boolean, shortHand: string = "R"): string {
+    const directiveMap: { [key: string]: string[] } = {};  // Stores directive content by key
+    let currentDirective: string[] | null = null;         // To store current directive lines
+    let currentKey: string | null = null;                 // The key for the current directive
 
-    // Regex to match the start and end of directive
-    const startOfdirectiveRegex = new RegExp(`\{start_of_${directive}(?::\\s*(\\w+))?\}`); // Matches {start_of_directive} or {start_of_directive: key}
-    const endOfdirectiveRegex = new RegExp(`\{end_of_${directive}\}`); // Matches {end_of_directive}
-    const directiveCallRegex = new RegExp(`\{${directive}(?::\\s*(\\w+))?\}`); // Matches {directive} or {directive: key}
-    // Split content into lines
-    const lines = song.split('\n');
-    let processedContent = [];
-    // Process each line
-    for (let line of lines) {
-        // Check for {start_of_directive} or {start_of_directive: key}
-        let startMatch = line.match(startOfdirectiveRegex);
+    // Precompiled regexes for matching start, end, and directive calls
+    const startDirectiveRegex = new RegExp(`\\{start_of_${directive}(?::\\s*(\\w+))?\\}`);  // Matches {start_of_directive} or {start_of_directive: key}
+    const endDirectiveRegex = new RegExp(`\\{end_of_${directive}\\}`);  // Matches {end_of_directive}
+    const directiveCallRegex = new RegExp(`\\{${directive}(?::\\s*(\\w+))?\\}`);  // Matches {directive} or {directive: key}
+
+    // Process each line of the song
+    const processedContent: string[] = song.split('\n').map(line => {
+        // Check for the start of the directive (e.g., {start_of_chorus})
+        const startMatch = line.match(startDirectiveRegex);
         if (startMatch) {
-            currentKey = startMatch[1] || 'default'; // Use key or default if no key is provided
-            currentdirective = [];
-            continue; // Skip this line from output
+            currentKey = startMatch[1] || 'default';  // Use key or default if no key is provided
+            currentDirective = [];  // Initialize the directive content
         }
 
-        // Check for {end_of_directive}
-        let endMatch = line.match(endOfdirectiveRegex);
-        if (endMatch) {
-            if (currentdirective && currentKey) {
-                currentdirective[0] = `${currentKey != "default" ? currentKey : shortHand}: ` + currentdirective[0]
-                // Store the directive with the start and end directives
-                directiveMap[currentKey] = [`{start_of_${directive}}`].concat(currentdirective).concat([`{end_of_${directive}}`]);
-            }
-            processedContent.push(...directiveMap[currentKey]);
-            currentdirective = null;
+        // Check for the end of the directive (e.g., {end_of_chorus})
+        const endMatch = line.match(endDirectiveRegex);
+        if (endMatch && currentDirective) {
+            // Store the directive content and reset the current state
+            directiveMap[currentKey] = [`{start_of_${directive}}`, ...currentDirective, `{end_of_${directive}}`];
+            currentDirective = null;
             currentKey = null;
-            continue; // Skip this line from output
         }
 
-        // Check for {directive} or {directive: key}
-        let directiveCallMatch = line.match(directiveCallRegex);
+        // Check for directive calls (e.g., {chorus})
+        const directiveCallMatch = line.match(directiveCallRegex);
         if (directiveCallMatch) {
-            const directiveKey = directiveCallMatch[1] || 'default'; // Recall the directive with the key or the default one
+            const directiveKey = directiveCallMatch[1] || 'default';  // Use the key or default
+            // If repeating is allowed and the directive exists, insert it
             if (repeat && directiveMap[directiveKey]) {
-                processedContent.push(...directiveMap[directiveKey]); // Insert the stored directive content
+                return directiveMap[directiveKey].join('\n');
             } else {
-                processedContent.push(`{start_of_${directive}}\n${directiveKey != "default" ? directiveKey : shortHand}:\n{end_of_${directive}}`)
+                // If not repeating, just show shorthand notation for the directive
+                return `{start_of_${directive}}\n${directiveKey !== 'default' ? directiveKey : shortHand}:\n{end_of_${directive}}`;
             }
-            continue; // Skip the {directive} line
         }
 
-        // If we are inside a directive, add the line to the directive
-        if (currentdirective !== null) {
-            currentdirective.push(line);
-        } else {
-            // Otherwise, add the line to the processed content
-            processedContent.push(line);
+        // Add the line to the current directive content if inside a directive
+        if (currentDirective !== null) {
+            currentDirective.push(line);
         }
-    }
-    return processedContent.join('\n');
+
+        // Regular lines are returned as is
+        return line;
+    });
+
+    // Join the processed content back into a string
+    return processedContent.join('\n').trim();
 }
 
 function renderSong(songData: SongData, key: string, repeatChorus: boolean): string {
