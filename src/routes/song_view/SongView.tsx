@@ -43,7 +43,7 @@ function SongView({ }) {
 
     useEffect(() => {
         setParsedContent(renderSong(songData, songRenderKey, repeatChorus));
-    }, [songRenderKey, repeatChorus]);
+    }, [songRenderKey, repeatChorus, songData]);
 
     // const fullScreen = useMediaQuery(
     //     "only screen and (max-width : 600px)"
