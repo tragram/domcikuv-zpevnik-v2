@@ -38,7 +38,7 @@ interface SongRowProps {
 
 function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
     return (
-        <div className="h-14 flex items-center container max-w-2xl mx-auto mt-20">
+        <div className="h-[60px] flex items-center container max-w-2xl mx-auto px-4 bottom-0">
             <div className="flex h-12 song-row w-full pl-3" onClick={() => { setSelectedSong(song); }}>
                 <div className="flex basis-[12%] min-w-14 rounded-l-full content-center justify-center bg-gray-100 relative">
                     <Avatar className="absolute -left-3 top-0 bottom-0 m-auto song-avatar" fallback={

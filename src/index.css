@@ -174,7 +174,7 @@ img {
   transition: scale 0.1s linear;
 }
 
-.navbar{
+.navbar {
   position: absolute;
   top: 0;
   transition: transform 0.3s ease;
@@ -182,8 +182,9 @@ img {
 }
 
 .visible-navbar {
-  transform: translateY(0); 
+  transform: translateY(0);
 }
+
 .hidden-navbar {
   transform: translateY(-100%);
 }

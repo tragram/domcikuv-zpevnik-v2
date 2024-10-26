@@ -2,7 +2,7 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Button, Navbar, NavbarContent, NavbarItem } from "@nextui-org/react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { areEqual, FixedSizeList as List } from 'react-window';
+import { areEqual, VariableSizeList as List } from 'react-window';
 import useLocalStorageState from 'use-local-storage-state';
 import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
 import Filtering from './filters/Filters';
@@ -145,12 +145,19 @@ const SongList = () => {
         };
     }, []);
 
-    const SongRowFactory = memo(({ index, isScrolling, style }) => {
-        return (
-            <div style={style}>
-                <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index]} />
-            </div>
-        )
+    const SongRowFactory = memo(({ index, style }) => {
+        if (index < 1) {
+            return (
+                <div style={style}>
+                </div>
+            )
+        } else {
+            return (
+                <div style={style}>
+                    <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index - 1]} />
+                </div>
+            )
+        }
     }, areEqual);
     const [showNavbar, setShowNavbar] = useState(true);
 
@@ -167,6 +174,7 @@ const SongList = () => {
         }
     };
 
+    const itemSize = (index: number) => { return index > 0 ? 60 : 70 }
 
     return (<>
         <Navbar maxWidth='2xl' isBordered className={`navbar ${showNavbar ? 'visible-navbar' : 'hidden-navbar'}`}>
@@ -184,14 +192,14 @@ const SongList = () => {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className='flex h-full w-full scroll-smooth no-scrollbar'>
+        <div className='flex h-full w-full no-scrollbar'>
             <AutoSizer>
                 {({ height, width }) => (
-                    <List height={height} itemCount={filteredAndSortedSongs.length} itemSize={60} width={width} useIsScrolling onScroll={onScroll} itemKey={(index) => filteredAndSortedSongs[index].id} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
+                    <List height={height} itemCount={filteredAndSortedSongs.length + 1} itemSize={itemSize} width={width} onScroll={onScroll} itemKey={(index) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
                         {SongRowFactory}
                     </List>)}
             </AutoSizer>
-        </div>
+        </div >
     </>
     );
 };
