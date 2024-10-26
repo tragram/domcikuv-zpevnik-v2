@@ -19,6 +19,8 @@ const PdfView = ({ pdfFilenames }: { pdfFilenames: string[] }) => (
     <iframe src={pdfFilenames.slice(-1)[0]} className='w-screen h-screen' />
 );
 
+type fitScreenModeType = "none" | "X" | "XY"
+
 function SongView({ }) {
     let songData = useLoaderData() as SongData;
 
@@ -32,7 +34,7 @@ function SongView({ }) {
     const [repeatChorus, setRepeatChorus] = useLocalStorageState("settings/repeatChorus", { defaultValue: true });
     const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("settings/repeatVerseChords", { defaultValue: true });
     const [fontSize, setFontSize] = useLocalStorageState("settings/fontSize", { defaultValue: 12 });
-    const [autoFontSize, setAutoFontSize] = useLocalStorageState("settings/autoFontSize", { defaultValue: true });
+    const [fitScreenMode, setfitScreenMode] = useLocalStorageState<fitScreenModeType>("settings/fitScreenMode", { defaultValue: "XY" });
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
@@ -47,7 +49,7 @@ function SongView({ }) {
     //     "only screen and (max-width : 600px)"
     // );
 
-    return (<div className={`h-screen w-screen ${autoFontSize ? "overflow-hidden" : ""}`}>
+    return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-screen" : "")}>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
             <NavbarContent justify="start">
                 <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
@@ -60,21 +62,25 @@ function SongView({ }) {
                     <SpaceSavingSettings chordsHidden={chordsHidden} setChordsHidden={setChordsHidden} repeatChorus={repeatChorus} setRepeatChorus={setRepeatChorus} repeatVerseChords={repeatVerseChords} setRepeatVerseChords={setRepeatVerseChords} />
                 </NavbarItem>
                 <NavbarItem className=''>
-                    <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} autoFontSize={autoFontSize} setAutoFontSize={setAutoFontSize} />
+                    <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} fitScreenMode={fitScreenMode} setfitScreenMode={setfitScreenMode} />
                 </NavbarItem>
                 <NavbarItem className='hidden sm:flex'>
                     <Button color="primary" variant="ghost" isIconOnly href={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile} as={Link}><Github /></Button>
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className={`px-6 ${autoFontSize ? "overflow-hidden" : ""}`} style={{ height: 'calc(100% - 4rem)' }}>
+        <div className={`px-6 flex flex-grow flex-col  ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
+        >
             <div className='flex flex-col text-center '>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
                 <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
             </div>
-            <div className={`${autoFontSize ? "overflow-hidden flex-1" : ""} pb-4 w-full justify-center`} style={{ height: 'calc(100% - 4rem)' }}>
-                <AutoTextSize mode="boxoneline" minFontSizePx={autoFontSize ? minFontSizePx : fontSize} maxFontSizePx={autoFontSize ? maxFontSizePx : fontSize}>
-                    <div className={`m-auto  ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
+            <div className={"py-4 w-full justify-center  " + (fitScreenMode === "XY" ? "flex-1" : "")}>
+                <AutoTextSize
+                    mode={fitScreenMode === "XY" ? "boxoneline" : "oneline"}
+                    minFontSizePx={fitScreenMode !== "none" ? minFontSizePx : fontSize}
+                    maxFontSizePx={fitScreenMode !== "none" ? maxFontSizePx : fontSize}>
+                    <div className={` ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
                 </AutoTextSize>
             </div>
         </div>

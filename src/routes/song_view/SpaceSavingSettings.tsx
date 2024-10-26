@@ -10,9 +10,6 @@ const LoopNoteIcon = () => {
         viewBox="0 0 531.12134 487.28763"
         fill="none"
         stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
     >
   <g
      transform="matrix(0.1,0,0,-0.1,9.4062996,499.50655)"
