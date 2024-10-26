@@ -25,7 +25,7 @@
 [F#m]Krasojezdky[D]ně, sestro [E]akroba[C#7]tů,
 [F#m]Lotova [D]dcero [E]oděná [C#7]do šarlatu,
 [F#m]kdo smí se [D]dotknout lemu [E]od tvých ša[C#7]tů?
-[F#m]Jsem na cestě a toužím [C#7]po návra[F#m]tu.
+[F#m]Jsem na ces[D]tě a toužím [C#7]po návra[F#m]tu.
 {end_of_chorus}
 
 {start_of_verse}

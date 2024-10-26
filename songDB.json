@@ -837,7 +837,7 @@
     "start_melody": "c",
     "chordpro_file": "Fkeret_Zafukane.pro",
     "pdf_filenames": "['fkeret_zafukane-sken.pdf', 'fkeret_zafukane-comp.pdf']",
-    "content_hash": "9d569cdc4c72d9c332c925573ca94bdda0da2608"
+    "content_hash": "b4e239f3d503db8f3533e3ad22866b352bcc8675"
   },
   {
     "title": "Bella Ciao",
@@ -1711,7 +1711,7 @@
   },
   {
     "title": "Hurt",
-    "artist": "Johnny CashNIN",
+    "artist": "Johnny Cash/NIN",
     "key": "a",
     "language": "english",
     "date_added": "03-2018",
@@ -1722,7 +1722,7 @@
     "start_melody": "e g",
     "chordpro_file": "Johnny_CashNIN_Hurt.pro",
     "pdf_filenames": "['johnny_cashnin_hurt-sken.pdf', 'johnny_cashnin_hurt-comp.pdf']",
-    "content_hash": "f68adf558693578753c1c4f1ae7c8ed9634d8830"
+    "content_hash": "88926ce7c4ccadac101999f72119dd610f946ee8"
   },
   {
     "title": "Folsom Prison Blues",
@@ -2311,7 +2311,7 @@
   },
   {
     "title": "Obchodník s deštěm",
-    "artist": "Krštof",
+    "artist": "Kryštof",
     "key": "G",
     "language": "czech",
     "date_added": "09-2015",
@@ -2322,7 +2322,7 @@
     "start_melody": "d",
     "chordpro_file": "Krstof_Obchodnik_s_destem.pro",
     "pdf_filenames": "['krstof_obchodnik_s_destem-sken.pdf', 'krstof_obchodnik_s_destem-comp.pdf']",
-    "content_hash": "85d3f2b7f0406d1e359f5397ef6cd6a002199188"
+    "content_hash": "9eb8f374f978c6007bb555f20dde86cb8e05b466"
   },
   {
     "title": "Cesta",
@@ -2596,7 +2596,7 @@
   },
   {
     "title": "Maruška",
-    "artist": "Malomocnost pázdnoty",
+    "artist": "Malomocnost prázdnoty",
     "key": "C",
     "language": "czech",
     "date_added": "07-2015",
@@ -2607,7 +2607,7 @@
     "start_melody": "e",
     "chordpro_file": "Malomocnost_pazdnoty_Maruska.pro",
     "pdf_filenames": "['malomocnost_pazdnoty_maruska-sken.pdf', 'malomocnost_pazdnoty_maruska-comp.pdf']",
-    "content_hash": "bd3f806576458f43783aafe7bc6c0c846b355821"
+    "content_hash": "98e6cf56f770debc38840563da777f55b3ef0fdb"
   },
   {
     "title": "Šrouby a matice",
@@ -3867,7 +3867,7 @@
     "start_melody": "e a",
     "chordpro_file": "The_Animals_Dum_u_vychazejiciho_slunce.pro",
     "pdf_filenames": "['the_animals_dum_u_vychazejiciho_slunce-sken.pdf', 'the_animals_dum_u_vychazejiciho_slunce-comp.pdf']",
-    "content_hash": "9745c94509cdeb96511a85bd77ed87412d44759a"
+    "content_hash": "a036c2a7ab358f14ca1431dddd8834b64b71bf2a"
   },
   {
     "title": "I.S.S Is Somebody Singing",
@@ -4017,7 +4017,7 @@
     "start_melody": "c# f# g# a g# f#",
     "chordpro_file": "Traband-Krasojezdkyne.pro",
     "pdf_filenames": "",
-    "content_hash": "4d86572ce983bbd332a446dc2377a4c7b66517ca"
+    "content_hash": "599a84bc06f032ccf644d15d16a3a409eaabca39"
   },
   {
     "title": "Černej pasažér",

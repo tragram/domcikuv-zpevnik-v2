@@ -17,8 +17,10 @@
 {end_of_verse}
 
 {start_of_chorus}
-[Ami]Zafúkané, [C]zafúkané, [G]kolem [C]mňa [F]všecko [C]je [Dmi]zafúkané. [E]
-[Ami]Zafúkané, [C]zafúkané, [G]kolem [C]mňa [F]všecko [Dmi]je [E]zafúkané. [Ami]
+[Ami]Zafúkané, [G]zafúkané[C],
+[F]kolem mňa [C]všecko je [Dmi]zafúkané. [E]
+[Ami]Zafúkané, [G]zafúkané[C],
+[F]kolem mňa [C]všecko je [E]zafúkané. [Ami]
 {end_of_chorus}
 
 {start_of_verse}
