@@ -7,6 +7,11 @@
   font-weight: 800;
 }
 
+/* since chordsheet is not defined explicitly, this is used to toggle the two-column layout */
+.chord-sheet-columns>*{
+  columns: 2;
+}
+
 .chord-sheet .row {
   display: flex;
   flex-direction: row;
@@ -15,10 +20,13 @@
   margin-top: 0.1em;
 }
 
-.chord-sheet {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5em;
+.chord-sheet>* {
+  margin-top: 1.5em;
+  break-inside: avoid-column;
+}
+
+.chord-sheet>*:first-child {
+  margin-top: 0px;
 }
 
 #song_content>h1 {

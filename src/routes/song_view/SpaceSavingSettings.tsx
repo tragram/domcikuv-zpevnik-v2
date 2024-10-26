@@ -1,5 +1,5 @@
 import { ButtonGroup, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react"
-import { Guitar, Repeat, Strikethrough, Check, ReceiptText } from "lucide-react"
+import { Guitar, Repeat, Strikethrough, Check, ReceiptText, Columns2 } from "lucide-react"
 import LoopNoteIconSVG from '/loop_note.svg'
 const LoopNoteIcon = () => {
     // return <LoopNoteIconSVG />
@@ -32,7 +32,7 @@ const LoopNoteIcon = () => {
     </svg>
 }
 
-function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setRepeatChorus, repeatVerseChords, setRepeatVerseChords }) {
+function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setRepeatChorus, repeatVerseChords, setRepeatVerseChords,twoColumns,settwoColumns }) {
     return (
         <>
             <div className='hidden xs:flex'>
@@ -40,6 +40,7 @@ function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setR
                     <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "ghost" : "solid"}><Guitar /></Button>
                     <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
                     <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}>{LoopNoteIcon()}</Button>
+                    <Button color="primary" isIconOnly onClick={() => { settwoColumns(!twoColumns) }} variant={twoColumns ? "solid" : "ghost"}><Columns2 /></Button>
                 </ButtonGroup>
             </div>
             <div className='flex xs:hidden'>
@@ -60,6 +61,9 @@ function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setR
                         </DropdownItem>
                         <DropdownItem startContent={LoopNoteIcon()} key="hide_verse_chords" onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} endContent={!repeatVerseChords ? <Check /> : ""}>
                             Hide chords in repeated verses
+                        </DropdownItem>
+                        <DropdownItem startContent={<Columns2 />} key="show_two_columns" onClick={() => { settwoColumns(!twoColumns) }} endContent={!twoColumns ? <Check /> : ""}>
+                            Show in two columns
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>

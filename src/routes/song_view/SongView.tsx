@@ -34,6 +34,7 @@ function SongView({ }) {
     const [repeatChorus, setRepeatChorus] = useLocalStorageState("settings/repeatChorus", { defaultValue: true });
     const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("settings/repeatVerseChords", { defaultValue: true });
     const [fontSize, setFontSize] = useLocalStorageState("settings/fontSize", { defaultValue: 12 });
+    const [twoColumns, settwoColumns] = useLocalStorageState("settings/twoColumns", { defaultValue: false });
     const [fitScreenMode, setfitScreenMode] = useLocalStorageState<fitScreenModeType>("settings/fitScreenMode", { defaultValue: "XY" });
 
     const [parsedContent, setParsedContent] = useState('');
@@ -59,7 +60,7 @@ function SongView({ }) {
                     <TransposeSettings setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
                 </NavbarItem>
                 <NavbarItem className=''>
-                    <SpaceSavingSettings chordsHidden={chordsHidden} setChordsHidden={setChordsHidden} repeatChorus={repeatChorus} setRepeatChorus={setRepeatChorus} repeatVerseChords={repeatVerseChords} setRepeatVerseChords={setRepeatVerseChords} />
+                    <SpaceSavingSettings chordsHidden={chordsHidden} setChordsHidden={setChordsHidden} repeatChorus={repeatChorus} setRepeatChorus={setRepeatChorus} repeatVerseChords={repeatVerseChords} setRepeatVerseChords={setRepeatVerseChords} twoColumns={twoColumns} settwoColumns={settwoColumns} />
                 </NavbarItem>
                 <NavbarItem className=''>
                     <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} fitScreenMode={fitScreenMode} setfitScreenMode={setfitScreenMode} />
@@ -80,7 +81,7 @@ function SongView({ }) {
                     mode={fitScreenMode === "XY" ? "boxoneline" : "oneline"}
                     minFontSizePx={fitScreenMode !== "none" ? minFontSizePx : fontSize}
                     maxFontSizePx={fitScreenMode !== "none" ? maxFontSizePx : fontSize}>
-                    <div className={` ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
+                    <div className={`flex flex-col ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'} ${twoColumns ? "chord-sheet-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
                 </AutoTextSize>
             </div>
         </div>
