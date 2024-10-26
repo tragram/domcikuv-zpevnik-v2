@@ -49,7 +49,7 @@ function SongView({ }) {
     //     "only screen and (max-width : 600px)"
     // );
 
-    return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-screen" : "")}>
+    return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-dvh" : "")}>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
             <NavbarContent justify="start">
                 <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
