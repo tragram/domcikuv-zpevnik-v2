@@ -174,10 +174,16 @@ img {
   transition: scale 0.1s linear;
 }
 
-/* .image-masonry {
-  gap: 2rem;
+.navbar{
+  position: absolute;
+  top: 0;
+  transition: transform 0.3s ease;
+  will-change: transform;
 }
 
-.image-masonry>div {
-  gap: 2rem;
-} */
+.visible-navbar {
+  transform: translateY(0); 
+}
+.hidden-navbar {
+  transform: translateY(-100%);
+}

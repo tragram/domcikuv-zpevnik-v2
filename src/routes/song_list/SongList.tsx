@@ -141,30 +141,57 @@ const SongList = () => {
         window.addEventListener('touchend', onScroll);
         return () => {
             window.removeEventListener('scroll', onScroll);
-            window.removeEventListener('touchend', onScroll)};
+            window.removeEventListener('touchend', onScroll)
+        };
     }, []);
 
+    const SongRowFactory = memo(({ index, isScrolling, style }) => {
+        return (
+            <div style={style}>
+                <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index]} />
+            </div>
+        )
+    }, areEqual);
+    const [showNavbar, setShowNavbar] = useState(true);
+
+    function onScroll({
+        scrollDirection,
+        scrollOffset,
+        scrollUpdateWasRequested
+    }) {
+        sessionStorage.setItem('scrollOffset', scrollOffset);
+        if (scrollDirection === 'forward') {
+            setShowNavbar(false);
+        } else if (scrollDirection === 'backward') {
+            setShowNavbar(true);
+        }
+    };
+
+
     return (<>
-        <Navbar shouldHideOnScroll maxWidth='xl' isBordered>
-            <NavbarContent as="div" justify="center" className='sm:flex w-full'>
+        <Navbar maxWidth='2xl' isBordered className={`navbar ${showNavbar ? 'visible-navbar' : 'hidden-navbar'}`}>
+            <NavbarContent as="div" justify="center" className='sm:flex gap-2  sm:gap-4 w-full'>
                 <NavbarItem className=''>
                     <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />
                 </NavbarItem>
                 <NavbarItem isActive className='w-full'>
                     <Search songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
                 </NavbarItem>
-                <NavbarItem className='flex flex-row gap-1 flex-nowrap'>
+                <NavbarItem className='flex flex-row gap-1 sm:gap-4 flex-nowrap'>
                     <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={songDB.maxRange} />
                     <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
                     <Gallery />
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className='flex flex-col'>
-            <div className="container mx-auto flex flex-col p-5 justify-center gap-1 max-w-2xl">
-                {filteredAndSortedSongs.map((song) => { return <SongRow key={song.id} maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} /> })}
-            </div >
-        </div >
+        <div className='flex h-full w-full scroll-smooth no-scrollbar'>
+            <AutoSizer>
+                {({ height, width }) => (
+                    <List height={height} itemCount={filteredAndSortedSongs.length} itemSize={60} width={width} useIsScrolling onScroll={onScroll} itemKey={(index) => filteredAndSortedSongs[index].id} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
+                        {SongRowFactory}
+                    </List>)}
+            </AutoSizer>
+        </div>
     </>
     );
 };
