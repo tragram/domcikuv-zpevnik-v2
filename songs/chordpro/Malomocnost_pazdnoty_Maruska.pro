@@ -1,5 +1,5 @@
 {title: Maruška}
-{artist: Malomocnost pázdnoty}
+{artist: Malomocnost prázdnoty}
 {date_added: 07-2015}
 {language: czech}
 {pdf_filenames: ['malomocnost_pazdnoty_maruska-sken.pdf', 'malomocnost_pazdnoty_maruska-comp.pdf']}

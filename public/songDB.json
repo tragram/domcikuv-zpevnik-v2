@@ -837,7 +837,7 @@
     "start_melody": "c",
     "chordpro_file": "Fkeret_Zafukane.pro",
     "pdf_filenames": "['fkeret_zafukane-sken.pdf', 'fkeret_zafukane-comp.pdf']",
-    "content_hash": "932bf78a34b0ae4827a0bf5a82d4f61f36e543af"
+    "content_hash": "a2bc1982e5041addcefac1402dbe9ba9ad1cf2bb"
   },
   {
     "title": "Bella Ciao",
@@ -1692,11 +1692,11 @@
     "start_melody": "h c",
     "chordpro_file": "Jiri_Wabi_Rivola_Tereza_Osamely_mesto.pro",
     "pdf_filenames": "['jiri_wabi_rivola_tereza_osamely_mesto-sken.pdf', 'jiri_wabi_rivola_tereza_osamely_mesto-comp.pdf']",
-    "content_hash": "93e867519e36a9a68d1a9f93a20acabeb9ac4c55"
+    "content_hash": "4ee7610f8b1c01dd7ff68b99946a6e06adad8fce"
   },
   {
     "title": "Hurt",
-    "artist": "Johnny CashNIN",
+    "artist": "Johnny Cash/NIN",
     "key": "a",
     "language": "english",
     "date_added": "03-2018",
@@ -1707,7 +1707,7 @@
     "start_melody": "e g",
     "chordpro_file": "Johnny_CashNIN_Hurt.pro",
     "pdf_filenames": "['johnny_cashnin_hurt-sken.pdf', 'johnny_cashnin_hurt-comp.pdf']",
-    "content_hash": "d08f7c41d29fb4d72545f9361a25682f2d1acc78"
+    "content_hash": "2ad650d5c480812f0946c5a9707bc9fd03ab4e9a"
   },
   {
     "title": "Folsom Prison Blues",
@@ -2007,7 +2007,7 @@
     "start_melody": "a d f# h",
     "chordpro_file": "Karel_Gott_Die_Biene_Maja.pro",
     "pdf_filenames": "['karel_gott_die_biene_maja-sken.pdf', 'karel_gott_die_biene_maja-comp.pdf']",
-    "content_hash": "a8086297a9b1ce8b83e4d6711704c7e600479304"
+    "content_hash": "495ee8a89803b560c3dd73926ea7c318ee563f7d"
   },
   {
     "title": "Kdyby sis oči vyplakala",
@@ -2277,7 +2277,7 @@
     "start_melody": "",
     "chordpro_file": "Kenny_Rogers_The_Gambler.pro",
     "pdf_filenames": "['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']",
-    "content_hash": "c75dba0ed3ac63c8eb0450b7eb2887c21bdb8b16"
+    "content_hash": "b794db1e3e584bf8dcc97956a4558f7e5452eedb"
   },
   {
     "title": "Omnia Vincit Amor",
@@ -2311,7 +2311,7 @@
   },
   {
     "title": "Obchodník s deštěm",
-    "artist": "Krštof",
+    "artist": "Kryštof",
     "key": "G",
     "language": "czech",
     "date_added": "09-2015",
@@ -2322,7 +2322,7 @@
     "start_melody": "d",
     "chordpro_file": "Krstof_Obchodnik_s_destem.pro",
     "pdf_filenames": "['krstof_obchodnik_s_destem-sken.pdf', 'krstof_obchodnik_s_destem-comp.pdf']",
-    "content_hash": "e8e77d8f92abbd89ad7e1b03cce8094d4a23c5a5"
+    "content_hash": "153752676dd5fbbc56d08b1c5bc3fec56aa31018"
   },
   {
     "title": "Cesta",
@@ -2367,7 +2367,7 @@
     "start_melody": "a f#",
     "chordpro_file": "La_Vela_Puerca_De_Atar.pro",
     "pdf_filenames": "['la_vela_puerca_de_atar-sken.pdf', 'la_vela_puerca_de_atar-comp.pdf', 'la_vela_puerca_de_atar-gen.pdf']",
-    "content_hash": "2391ad6e6475b91542a7037360379adf999f6f98"
+    "content_hash": "78e34a3bf0c2aea2599cfe177b1ed8af172c7912"
   },
   {
     "title": "Sé a Dónde Quiere Ir",
@@ -2382,7 +2382,7 @@
     "start_melody": "g d",
     "chordpro_file": "La_Vela_Puerca_Se_a_Donde_Quiere_Ir.pro",
     "pdf_filenames": "['la_vela_puerca_se_a_donde_quiere_ir-sken.pdf', 'la_vela_puerca_se_a_donde_quiere_ir-comp.pdf', 'la_vela_puerca_se_a_donde_quiere_ir-gen.pdf']",
-    "content_hash": "83f07c8cd13acad86d3eed32b6ddd86247777b42"
+    "content_hash": "07aaf1a513b30499a99a96717cb3df711b3e5642"
   },
   {
     "title": "Pro tebe",
@@ -2592,11 +2592,11 @@
     "start_melody": "e",
     "chordpro_file": "Luis_Fonsi_Despacito.pro",
     "pdf_filenames": "['luis_fonsi_despacito-sken.pdf', 'luis_fonsi_despacito-comp.pdf']",
-    "content_hash": "682065268a930b65728202d368f15c94ce62e90b"
+    "content_hash": "2d0b0d3ec2344a562d8458a5c22f78086e06a889"
   },
   {
     "title": "Maruška",
-    "artist": "Malomocnost pázdnoty",
+    "artist": "Malomocnost prázdnoty",
     "key": "C",
     "language": "czech",
     "date_added": "07-2015",
@@ -2607,7 +2607,7 @@
     "start_melody": "e",
     "chordpro_file": "Malomocnost_pazdnoty_Maruska.pro",
     "pdf_filenames": "['malomocnost_pazdnoty_maruska-sken.pdf', 'malomocnost_pazdnoty_maruska-comp.pdf']",
-    "content_hash": "899d9835c0cfd98430728cfba3e71881f6eb15bc"
+    "content_hash": "cc3e7715cbd246f1d206393259eb7575f8caeaca"
   },
   {
     "title": "Šrouby a matice",
@@ -2802,7 +2802,7 @@
     "start_melody": "",
     "chordpro_file": "Miki_Ryvola-Tunel_jmenem_cas.pro",
     "pdf_filenames": "",
-    "content_hash": "09e8ab96012361491f8d735f1b6489d2c448f14c"
+    "content_hash": "f9d4ad6ab7ef58214809994b93d92bc8035e34c3"
   },
   {
     "title": "Wrecking Ball",
@@ -3867,7 +3867,7 @@
     "start_melody": "e a",
     "chordpro_file": "The_Animals_Dum_u_vychazejiciho_slunce.pro",
     "pdf_filenames": "['the_animals_dum_u_vychazejiciho_slunce-sken.pdf', 'the_animals_dum_u_vychazejiciho_slunce-comp.pdf']",
-    "content_hash": "df06ff98e2e923632593389b391d678fb2668474"
+    "content_hash": "68f2a6cbc62271313abe8947363e2937d76253ce"
   },
   {
     "title": "I.S.S Is Somebody Singing",
@@ -4017,7 +4017,7 @@
     "start_melody": "c# f# g# a g# f#",
     "chordpro_file": "Traband-Krasojezdkyne.pro",
     "pdf_filenames": "",
-    "content_hash": "9e85800a7850d178017ad744a4a924f5952d5c6d"
+    "content_hash": "dc6f0e78c6d327a58b0e4d3a598d912955b43947"
   },
   {
     "title": "Černej pasažér",

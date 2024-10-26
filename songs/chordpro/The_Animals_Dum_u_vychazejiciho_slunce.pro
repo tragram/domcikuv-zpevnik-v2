@@ -31,9 +31,9 @@ k puty[Ami]kám pak [C]táhl tu [D]pouť mize[F]rnou
 
 {start_of_verse}
 [Ami]Být mat[C]kou, dám svým [D]synům lepší [F]dům,
-než [Ami]máááá1 [C]kdo z [E]vás,
-tak [Ami]spím a [C]mám [D]emblém sluneč[F]ní,
-ale [Ami]v něm jen [E]sníh a [Ami]mráz. [C][D][F][Ami][E][Ami][E]
+než [Ami]má [C]kdo z [E]vás,
+ten dům, kde [Ami]spím [C]má [D]emblém sluneč[F]ní,
+ale [Ami]v něm jen [E]zima a [Ami]chlad. [C][D][F][Ami][E][Ami][E]
 {end_of_verse}
 
 {start_of_verse}
