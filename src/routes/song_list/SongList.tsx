@@ -22,6 +22,26 @@ function Gallery() {
     )
 }
 
+const SongRowMemo = memo(({ data, index, style }) => {
+    const { songDB, setSelectedSong, filteredAndSortedSongs } = data;
+    if (index < 1) {
+        return (
+            <div style={style}>
+            </div>
+        )
+    } else {
+        return (
+            <div style={style}>
+                <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index - 1]} />
+            </div>
+        )
+    }
+}, areEqual);
+
+const createSongRowData = memoize((filteredAndSortedSongs, songDB, setSelectedSong) => ({
+    filteredAndSortedSongs, songDB, setSelectedSong
+}));
+
 const SongList = () => {
     const songDB = useLoaderData() as SongDB;
     const songs = songDB.songs;
@@ -130,36 +150,8 @@ const SongList = () => {
         }
     }
 
-    useEffect(() => {
-        const onScroll = () => {
-            sessionStorage.setItem('scrollOffset', window.scrollY)
-        };
-
-        const savedScrollOffset = parseInt(sessionStorage.getItem('scrollOffset'), 10) || 0;
-        window.scrollTo(0, savedScrollOffset);
-        window.addEventListener('scroll', onScroll);
-        window.addEventListener('touchend', onScroll);
-        return () => {
-            window.removeEventListener('scroll', onScroll);
-            window.removeEventListener('touchend', onScroll)
-        };
-    }, []);
-
-    const SongRowFactory = memo(({ index, style }) => {
-        if (index < 1) {
-            return (
-                <div style={style}>
-                </div>
-            )
-        } else {
-            return (
-                <div style={style}>
-                    <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index - 1]} />
-                </div>
-            )
-        }
-    }, areEqual);
     const [showNavbar, setShowNavbar] = useState(true);
+    const [initialRenderDone, setInitialRenderDone] = useState(false);
 
     function onScroll({
         scrollDirection,
@@ -167,6 +159,11 @@ const SongList = () => {
         scrollUpdateWasRequested
     }) {
         sessionStorage.setItem('scrollOffset', scrollOffset);
+        if (!initialRenderDone) {
+            // ensure the navbar is shown on initial render
+            setInitialRenderDone(true);
+            return;
+        }
         if (scrollDirection === 'forward') {
             setShowNavbar(false);
         } else if (scrollDirection === 'backward') {
@@ -175,7 +172,7 @@ const SongList = () => {
     };
 
     const itemSize = (index: number) => { return index > 0 ? 60 : 70 }
-
+    const songRowData = createSongRowData(filteredAndSortedSongs, songDB, setSelectedSong);
     return (<>
         <Navbar maxWidth='2xl' isBordered className={`navbar ${showNavbar ? 'visible-navbar' : 'hidden-navbar'}`}>
             <NavbarContent as="div" justify="center" className='sm:flex gap-2  sm:gap-4 w-full'>
@@ -195,8 +192,8 @@ const SongList = () => {
         <div className='flex h-full w-full no-scrollbar'>
             <AutoSizer>
                 {({ height, width }) => (
-                    <List height={height} itemCount={filteredAndSortedSongs.length + 1} itemSize={itemSize} width={width} onScroll={onScroll} itemKey={(index) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
-                        {SongRowFactory}
+                    <List height={height} itemCount={filteredAndSortedSongs.length + 1} itemSize={itemSize} width={width} onScroll={onScroll} itemData={songRowData} itemKey={(index) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
+                        {SongRowMemo}
                     </List>)}
             </AutoSizer>
         </div >
