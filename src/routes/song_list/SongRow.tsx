@@ -45,7 +45,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
                     <Avatar className="absolute left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" fallback={
                         <Instagram size={24} />
                     } showFallback src={import.meta.env.BASE_URL + "/songs/illustrations/" + song.chordproFile.split('.')[0] + `/${song.illustration_author}.webp`} />
-                    <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-white/70 rounded-full border-solid border-white">
+                    <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-white/70 dark:bg-black/70 rounded-full">
                         <div className="flex basis-[12%] min-w-[72px] rounded-l-full content-center justify-center relative">
                         </div>
                         <div className="flex-auto min-w-40 flex-col text-left content-center ">
