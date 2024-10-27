@@ -14,7 +14,7 @@ import SpaceSavingSettings from './SpaceSavingSettings';
 import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './song_rendering';
 
-const PdfView = (pdfFilenames : string[]) => {
+const PdfView = (pdfFilenames: string[]) => {
     // {/* the last PDF is the smallest filesize (they are ordered as scan > compressed > gen (if it exists)) */}
     return <iframe src={pdfFilenames.slice(-1)[0]} className='w-screen h-screen' />
 };
@@ -31,8 +31,8 @@ function SongView({ }) {
         return PdfView(songData.pdfFilenames);
     };
     const [chordsHidden, setChordsHidden] = useLocalStorageState("settings/chordsHidden", { defaultValue: false });
-    const [repeatParts, setRepeatParts] = useLocalStorageState("settings/repeatParts", { defaultValue: true });
-    const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("settings/repeatVerseChords", { defaultValue: true });
+    const [repeatParts, setRepeatParts] = useLocalStorageState("settings/repeatParts", { defaultValue: false });
+    const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("settings/repeatVerseChords", { defaultValue: false });
     const [fontSize, setFontSize] = useLocalStorageState("settings/fontSize", { defaultValue: 12 });
     const [twoColumns, settwoColumns] = useLocalStorageState("settings/twoColumns", { defaultValue: false });
     const [fitScreenMode, setfitScreenMode] = useLocalStorageState<fitScreenModeType>("settings/fitScreenMode", { defaultValue: "XY" });

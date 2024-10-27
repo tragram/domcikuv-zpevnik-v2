@@ -15,8 +15,8 @@ function FontSizeSettings({ fontSize, setFontSize, fitScreenMode, setfitScreenMo
             <div className='hidden sm:flex'>
                 <ButtonGroup>
                     <Button color="primary" isIconOnly onClick={() => { setfitScreenMode("none"); setFontSize(fontSizeLimits(fontSize / fontSizeStep)) }} variant="ghost"><AArrowDown /></Button>
-                    <Button color="primary" isIconOnly onClick={() => { setfitScreenMode("XY") }} variant={fitScreenMode === "XY" ? "solid" : "ghost"}><MoveDiagonal /></Button>
-                    <Button color="primary" isIconOnly onClick={() => { setfitScreenMode("X") }} variant={fitScreenMode === "X" ? "solid" : "ghost"}><MoveHorizontal /></Button>
+                    <Button color="primary" isIconOnly id="fitXYButton" aria-label="fitXY" onClick={() => { setfitScreenMode("XY") }} variant={fitScreenMode === "XY" ? "solid" : "ghost"}><MoveDiagonal /></Button>
+                    <Button color="primary" isIconOnly id="fitXButton" aria-label="fitX" onClick={() => { setfitScreenMode("X") }} variant={fitScreenMode === "X" ? "solid" : "ghost"}><MoveHorizontal /></Button>
                     <Button color="primary" isIconOnly onClick={() => { setfitScreenMode("none"); setFontSize(fontSizeLimits(fontSize * fontSizeStep)) }} variant="ghost"><AArrowUp /></Button>
                 </ButtonGroup>
             </div>
@@ -24,16 +24,16 @@ function FontSizeSettings({ fontSize, setFontSize, fitScreenMode, setfitScreenMo
                 <Dropdown closeOnSelect={false} disableAnimation>
                     <DropdownTrigger>
                         <Button
-                            variant="ghost" color="primary" isIconOnly
+                            variant="ghost" color="primary" isIconOnly id="font_size_settings"
                         >
                             <CaseSensitive />
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Change font size">
-                        <DropdownItem startContent={<MoveDiagonal />} key="fitXY" onClick={() => { setfitScreenMode("XY") }}>
+                        <DropdownItem startContent={<MoveDiagonal />} id="fitXYDropdown"  key="fitXYDropdown" onClick={() => { setfitScreenMode("XY") }}>
                             Fit screen
                         </DropdownItem>
-                        <DropdownItem startContent={<MoveHorizontal />} key="fitX" onClick={() => { setfitScreenMode("X") }}>
+                        <DropdownItem startContent={<MoveHorizontal />} id="fitXDropdown" key="fitXDropdown" onClick={() => { setfitScreenMode("X") }}>
                             Fit screen width
                         </DropdownItem>
                         <DropdownItem startContent={<Plus />} key="+" onClick={() => { setfitScreenMode("none"); setFontSize(fontSizeLimits(fontSize * fontSizeStep)) }}>

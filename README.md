@@ -78,6 +78,11 @@ Songs from there *usually* are in their "standard" format but it's worth checkin
 * chords are above and aligned with the lyrics
 If this holds, you can use the `scripts/chordpro_from_txt.py` and it will process the contents, inserting chords where appropriate (avoiding inserting the chords at the very start of the word in case of minor misalignments) and converting the verse numbers etc. into chordpro directives.
 
+### Checking song aspect ratio
+Because most viewing is done using the `fitXY` feature, it is important to keep in balance the maximum line length and number of lines in the song to ensure proper fit. And wouldn't you know it - there's a Python script even for that! Run `find_font_sizes.py` to automatically evaluate the resulting font-size of each of the songs at a few selected screen sizes (at the time of writing: `Galaxy Tab S7, iPhone XR, Galaxy Z Flip6`).
+
+This is done via Selenium again, so expect it to take a while. Also, do not expect it to work, since it's prone to breaking with any future changes! :-)
+
 ## Tech
 Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) and [NextUI](https://nextui.org) and uses the following libraries:
 * [Lucide](https://lucide.dev/): icons
