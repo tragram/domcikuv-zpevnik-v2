@@ -14,10 +14,10 @@ import SpaceSavingSettings from './SpaceSavingSettings';
 import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './song_rendering';
 
-const PdfView = ({ pdfFilenames }: { pdfFilenames: string[] }) => (
+const PdfView = (pdfFilenames : string[]) => {
     // {/* the last PDF is the smallest filesize (they are ordered as scan > compressed > gen (if it exists)) */}
-    <iframe src={pdfFilenames.slice(-1)[0]} className='w-screen h-screen' />
-);
+    return <iframe src={pdfFilenames.slice(-1)[0]} className='w-screen h-screen' />
+};
 
 type fitScreenModeType = "none" | "X" | "XY"
 
