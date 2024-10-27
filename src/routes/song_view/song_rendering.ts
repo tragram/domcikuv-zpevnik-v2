@@ -154,11 +154,14 @@ function addRepeatClasses(htmlString, className = "verse") {
     verses.forEach((verse) => {
         const labelElement = verse.querySelector('.label');
         const label = labelElement ? labelElement.textContent.trim() : "default";
-
-        if (seen[label] ?? false) {
+        const chords_str = Array.from(verse.querySelectorAll('.chord')).map(el => el.textContent.trim()).filter(el => el).join('_')
+        if (!seen[label]) {
+            seen[label] = [];
+        }
+        if (seen[label].includes(chords_str)) {
             verse.classList.add('repeated-chords');
         } else {
-            seen[label] = true;
+            seen[label].push(chords_str);
         }
     });
     return doc.body.innerHTML; // Convert the document back to an HTML string
