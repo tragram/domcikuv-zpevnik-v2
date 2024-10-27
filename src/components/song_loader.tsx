@@ -1,5 +1,6 @@
 
 import { LanguageCount, SongData, SongDB } from '../types'
+import * as yaml from 'js-yaml';
 
 function loadFromLocalStorage(key: string): any {
     const item = localStorage.getItem(key);
@@ -96,5 +97,24 @@ async function fetchSongContent({ params }): Promise<SongData> {
     return songData;
 }
 
+async function fetchIllustrationPrompt(id: string): Promise<Object> {
+    const songDB = await fetchSongs();
+    const songData = songDB.songs.find(song => song.id === id);
 
-export { fetchSongs, fetchSongContent };
+    if (!songData) {
+        console.log(`Could not find song ${id}`);
+        throw new Response("Song not Found", { status: 404 });
+    }
+    const promptFilename = songData.chordproFile.split(".").slice(0, -1) + ".yaml"
+    const promptKey = `songDB/${promptFilename}`;
+    let promptContent = localStorage.getItem(promptKey);
+    if (!promptContent) {
+        const response = await fetch(`${import.meta.env.BASE_URL}/songs/image_prompts/${promptFilename}`);
+        promptContent = await response.text();
+        localStorage.setItem(promptKey, promptContent);
+    }
+    return yaml.load(promptContent);
+}
+
+
+export { fetchSongs, fetchSongContent, fetchIllustrationPrompt };

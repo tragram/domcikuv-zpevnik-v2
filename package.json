@@ -43,6 +43,7 @@
     "fuse.js": "^7.0.0",
     "globals": "^15.9.0",
     "husky": "^9.1.6",
+    "js-yaml": "^4.1.0",
     "lint-staged": "^15.2.10",
     "memoize-one": "^6.0.0",
     "object-hash": "^3.0.0",
