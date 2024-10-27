@@ -8,7 +8,7 @@
 }
 
 /* since chordsheet is not defined explicitly, this is used to toggle the two-column layout */
-.chord-sheet-columns>*{
+.chord-sheet-columns>* {
   columns: 2;
 }
 
@@ -59,33 +59,73 @@
   font-family: monospace;
 }
 
+.song-row-bg-image {
+  /* the top of the image is actually nicer to get color */
+  /* background-position: center;  */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body {
+  /* background-size: contain; */
+  /* background-color: red;
+  mask-image: url("/public/401_vector_image.svg");
+  mask-repeat: repeat;
+  mask-size: cover; */
+}
+
+
+.pattern-bg::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  /* red waves */
+  /* mask-image: url("/public/loop_note.svg"); */
+  /* background-color: red;
+  mask-image: url("/public/401_vector_image.svg");
+  mask-repeat: repeat;
+  mask-size: cover; */
+
+  /* waves */
+  /* background-image: url("/public/401_vector_image.svg");
+  background-size: cover;
+  opacity:0.1; */
+
+  /* paper */
+  /* background-color: #e5e5f7;
+  opacity: 0.05;
+  background-image: linear-gradient(#444cf7 2px, transparent 2px), linear-gradient(90deg, #444cf7 2px, transparent 2px), linear-gradient(#444cf7 1px, transparent 1px), linear-gradient(90deg, #444cf7 1px, #e5e5f7 1px);
+  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px; */
+
+  /* polka dots */
+  /* background: white; */
+  /* background-image: "abstract-background-with-distorted-line-shapes-white-background-monochrome-sound-line-waves/401_vector_image.jpg";
+  background-size: 40px 40px;
+  background-position: -19px -19px; */
+  /* dots diagonal */
+  /* background: radial-gradient(circle, #000000 10%, transparent 11%), radial-gradient(circle at bottom left, #000000 5%, transparent 6%), radial-gradient(circle at bottom right, #000000 5%, transparent 6%), radial-gradient(circle at top left, #000000 5%, transparent 6%), radial-gradient(circle at top right, #000000 5%, transparent 6%);
+  background-size: 1em 1em;
+  background-color: #ffffff;
+  opacity: 0.05 */
+
+  /* basic gradient */
+  /* background: rgb(131,58,180);
+  background: linear-gradient(50deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); 
+  opacity: 0.3; */
+
+  /* bg-amber-50 */
+  /* background-color: rgb(255 251 235);  */
+}
+
+.pattern-bg div {
+  opacity: 1;
+}
+
 .chord-sheet .column {
   line-height: 1;
-}
-
-.chord-sheet .row {
-  /* padding-left: 2rem;
-  padding-right: 2rem; */
-}
-
-.song-row>* {
-  border-width: 3px 0 3px 0;
-  border-color: hsl(var(--nextui-primary-500));
-}
-
-.song-row>*:first-child {
-  border-left-width: 3px;
-}
-
-.song-row>*:last-child {
-  border-right-width: 3px;
-}
-
-
-.song-row .song-avatar {
-  border-color: hsl(var(--nextui-primary-500));
-  border-width: 4px;
-  border-style: solid;
 }
 
 .chords-hidden .chord {

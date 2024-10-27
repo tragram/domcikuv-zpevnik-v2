@@ -172,31 +172,32 @@ const SongList = () => {
     };
 
     const songRowData = createSongRowData(filteredAndSortedSongs, songDB, setSelectedSong);
-    return (<>
-        <Navbar maxWidth='2xl' isBordered className={`navbar ${showNavbar ? 'visible-navbar' : 'hidden-navbar'}`}>
-            <NavbarContent as="div" justify="center" className='sm:flex gap-2  sm:gap-4 w-full'>
-                <NavbarItem className=''>
-                    <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />
-                </NavbarItem>
-                <NavbarItem isActive className='w-full'>
-                    <Search songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
-                </NavbarItem>
-                <NavbarItem className='flex flex-row gap-1 sm:gap-4 flex-nowrap'>
-                    <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={songDB.maxRange} />
-                    <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
-                    <Gallery />
-                </NavbarItem>
-            </NavbarContent >
-        </Navbar >
-        <div className='flex h-full w-full no-scrollbar'>
-            <AutoSizer>
-                {({ height, width }) => (
-                    <List height={height} itemCount={filteredAndSortedSongs.length + 1} itemSize={70} width={width} onScroll={onScroll} itemData={songRowData} itemKey={(index) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
-                        {SongRowMemo}
-                    </List>)}
-            </AutoSizer>
-        </div >
-    </>
+    return (
+        <main className='light text-foreground bg-background h-screen w-screen'>
+            <Navbar maxWidth='2xl' isBordered className={`navbar ${showNavbar ? 'visible-navbar' : 'hidden-navbar'}`}>
+                <NavbarContent as="div" justify="center" className='sm:flex gap-2  sm:gap-4 w-full'>
+                    <NavbarItem className=''>
+                        <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />
+                    </NavbarItem>
+                    <NavbarItem isActive className='w-full'>
+                        <Search songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
+                    </NavbarItem>
+                    <NavbarItem className='flex flex-row gap-1 sm:gap-4 flex-nowrap'>
+                        <Filtering languages={songDB.languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={songDB.maxRange} />
+                        <Randomize filteredSongs={songs} setSelectedSong={setSelectedSong} />
+                        <Gallery />
+                    </NavbarItem>
+                </NavbarContent >
+            </Navbar >
+            <div className='flex h-full w-full no-scrollbar'>
+                <AutoSizer>
+                    {({ height, width }) => (
+                        <List height={height} itemCount={filteredAndSortedSongs.length + 1} itemSize={70} width={width} onScroll={onScroll} itemData={songRowData} itemKey={(index) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
+                            {SongRowMemo}
+                        </List>)}
+                </AutoSizer>
+            </div >
+        </main>
     );
 };
 

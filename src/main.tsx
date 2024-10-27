@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import SongsList from './routes/song_list/SongList'
 import './index.css'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { NextUIProvider } from '@nextui-org/react'
 import {
   createHashRouter,
@@ -39,6 +39,8 @@ const router = createHashRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <NextUIProvider navigate={router.navigate} >
+        <RouterProvider router={router} />
+    </NextUIProvider>
   </StrictMode>,
 )
