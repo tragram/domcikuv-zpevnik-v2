@@ -50,6 +50,34 @@ function SongView({ }) {
     //     "only screen and (max-width : 600px)"
     // );
 
+    const [pinchDistance, setPinchDistance] = useState(null);
+    
+    const handleTouchMove = (event) => {
+        if (event.touches.length === 2) {
+            const dist = Math.hypot(
+                event.touches[0].pageX - event.touches[1].pageX,
+                event.touches[0].pageY - event.touches[1].pageY
+            );
+            setPinchDistance(dist);
+            console.log(dist);
+        }
+    };
+
+    const handleTouchEnd = () => {
+        setPinchDistance(null); // Reset pinch distance on touch end
+    };
+    useEffect(() => {
+
+
+        window.addEventListener('touchmove', handleTouchMove);
+        window.addEventListener('touchend', handleTouchEnd);
+
+        return () => {
+            window.removeEventListener('touchmove', handleTouchMove);
+            window.removeEventListener('touchend', handleTouchEnd);
+        };
+    }, []);
+
     return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-dvh" : "")}>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
             <NavbarContent justify="start">
