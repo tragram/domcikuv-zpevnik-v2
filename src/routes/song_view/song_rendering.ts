@@ -111,7 +111,6 @@ function replaceRepeatedDirective(song: string, directive: string, repeat: boole
         if (endMatch && currentDirective) {
             // Store the directive content and reset the current state
             if (currentKey !== defaultKey) { currentDirective[1] = currentKey + ": " + currentDirective[1] }
-            console.log(currentDirective)
             directiveMap[currentKey] = [`{start_of_${directive}}`, ...currentDirective, `{end_of_${directive}}`];
             const ret = currentDirective.join('\n');
             currentDirective = null;
@@ -128,7 +127,6 @@ function replaceRepeatedDirective(song: string, directive: string, repeat: boole
                 return directiveMap[directiveKey].join('\n');
             } else {
                 // If not repeating, just show shorthand notation for the directive
-                console.log(directiveKey)
                 return `{start_of_${directive}}\n${directiveKey === defaultKey ? '' : directiveKey}:\n{end_of_${directive}}`;
             }
         }
@@ -154,7 +152,6 @@ function addRepeatClasses(htmlString, className = "verse") {
     const verses = doc.querySelectorAll(`.${className}`);
     let seen = { "default": false };
     verses.forEach((verse) => {
-        console.log(verse);
         const labelElement = verse.querySelector('.label');
         const label = labelElement ? labelElement.textContent.trim() : "default";
 
@@ -164,7 +161,6 @@ function addRepeatClasses(htmlString, className = "verse") {
             seen[label] = true;
         }
     });
-    console.log(seen)
     return doc.body.innerHTML; // Convert the document back to an HTML string
 }
 
