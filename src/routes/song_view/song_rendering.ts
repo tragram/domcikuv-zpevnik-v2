@@ -1,7 +1,7 @@
 
-import ChordSheetJS, { ChordLyricsPair } from 'chordsheetjs';
+import ChordSheetJS, { ChordLyricsPair, ChordSheetSerializer, Tag } from 'chordsheetjs';
 import { SongData } from '../../types';
-
+import { Song as ChordSheetJSSong } from 'chordsheetjs';
 
 const CHROMATIC_SCALE: { [key: string]: number } = {
     "c": 0,
@@ -63,7 +63,7 @@ function convertChord(chord: string, toEnglish: boolean = true): string | null {
     if (suffix.length > 0 && suffix.startsWith('b') && !toEnglish) {
         baseNote += suffix[0];
         suffix = suffix.slice(1);
-        }
+    }
 
     // Convert the base note
     const convertedBase = toEnglish ? GERMAN2ENGLISH[baseNote] : ENGLISH2GERMAN[baseNote];
@@ -76,15 +76,15 @@ function convertChordsInChordPro(content: string, toEnglish: boolean = true): st
     // Convert key directive
     const convertKeyDirective = (match: string, key: string) => `{key: ${convertChord(key, toEnglish)}}`;
     content = content.replace(/\{key:\s*([A-Ha-h][^\s]*)\}/, convertKeyDirective);
-  
+
     // Convert chords inside square brackets
     const convertChordBracket = (match: string, chord: string) => `[${convertChord(chord, toEnglish)}]`;
     content = content.replace(/\[([A-Ha-h][^\]]{0,10})\]/g, convertChordBracket);
-  
-    return content;
-  }
 
-  function replaceRepeatedDirective(song: string, directive: string, repeat: boolean, shortHand: string = "R"): string {
+    return content;
+}
+
+function replaceRepeatedDirective(song: string, directive: string, repeat: boolean, shortHand: string = "R"): string {
     const directiveMap: { [key: string]: string[] } = {};  // Stores directive content by key
     let currentDirective: string[] | null = null;         // To store current directive lines
     let currentKey: string | null = null;                 // The key for the current directive
@@ -94,12 +94,15 @@ function convertChordsInChordPro(content: string, toEnglish: boolean = true): st
     const endDirectiveRegex = new RegExp(`\\{end_of_${directive}\\}`);  // Matches {end_of_directive}
     const directiveCallRegex = new RegExp(`\\{${directive}(?::\\s*(\\w+))?\\}`);  // Matches {directive} or {directive: key}
 
+    // make the deafault key hopefully weird enough that no chorpro file will include it
+    const defaultKey = "a4c0d35c95a63a805915367dcfe6b751"
+
     // Process each line of the song
     const processedContent: string[] = song.split('\n').map(line => {
         // Check for the start of the directive (e.g., {start_of_chorus})
         const startMatch = line.match(startDirectiveRegex);
         if (startMatch) {
-            currentKey = startMatch[1] || 'default';  // Use key or default if no key is provided
+            currentKey = startMatch[1] || shortHand || defaultKey;  // Use key or default if no key is provided
             currentDirective = [];  // Initialize the directive content
         }
 
@@ -107,27 +110,33 @@ function convertChordsInChordPro(content: string, toEnglish: boolean = true): st
         const endMatch = line.match(endDirectiveRegex);
         if (endMatch && currentDirective) {
             // Store the directive content and reset the current state
+            if (currentKey !== defaultKey) { currentDirective[1] = currentKey + ": " + currentDirective[1] }
+            console.log(currentDirective)
             directiveMap[currentKey] = [`{start_of_${directive}}`, ...currentDirective, `{end_of_${directive}}`];
+            const ret = currentDirective.join('\n');
             currentDirective = null;
             currentKey = null;
+            return ret;
         }
 
         // Check for directive calls (e.g., {chorus})
         const directiveCallMatch = line.match(directiveCallRegex);
         if (directiveCallMatch) {
-            const directiveKey = directiveCallMatch[1] || 'default';  // Use the key or default
+            const directiveKey = directiveCallMatch[1] || shortHand || defaultKey;  // Use the key or default
             // If repeating is allowed and the directive exists, insert it
             if (repeat && directiveMap[directiveKey]) {
                 return directiveMap[directiveKey].join('\n');
             } else {
                 // If not repeating, just show shorthand notation for the directive
-                return `{start_of_${directive}}\n${directiveKey !== 'default' ? directiveKey : shortHand}:\n{end_of_${directive}}`;
+                console.log(directiveKey)
+                return `{start_of_${directive}}\n${directiveKey === defaultKey ? '' : directiveKey}:\n{end_of_${directive}}`;
             }
         }
 
         // Add the line to the current directive content if inside a directive
         if (currentDirective !== null) {
             currentDirective.push(line);
+            return;
         }
 
         // Regular lines are returned as is
@@ -138,32 +147,54 @@ function convertChordsInChordPro(content: string, toEnglish: boolean = true): st
     return processedContent.join('\n').trim();
 }
 
+function addRepeatClasses(htmlString, className = "verse") {
+    // adds the 'repeated-chords' where appropriate class
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    const verses = doc.querySelectorAll(`.${className}`);
+    let seen = { "default": false };
+    verses.forEach((verse) => {
+        console.log(verse);
+        const labelElement = verse.querySelector('.label');
+        const label = labelElement ? labelElement.textContent.trim() : "default";
+
+        if (seen[label] ?? false) {
+            verse.classList.add('repeated-chords');
+        } else {
+            seen[label] = true;
+        }
+    });
+    console.log(seen)
+    return doc.body.innerHTML; // Convert the document back to an HTML string
+}
+
 function renderSong(songData: SongData, key: string, repeatChorus: boolean): string {
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
     // Convert chords to English and repeat choruses/bridges if necessary
     let song = replaceRepeatedDirective(convertChordsInChordPro(songData.content), "chorus", repeatChorus);
     song = replaceRepeatedDirective(song, "bridge", repeatChorus, "B");
-  
+    song = replaceRepeatedDirective(song, "verse", repeatChorus, null);
+
     // Parse the song using ChordSheetJS
-    const parsedSong = parser.parse(song)
-      .setCapo(0)
-      .setKey(convertChord(songData.key, true));
-  
+    let parsedSong = parser.parse(song)
+        .setCapo(0)
+        .setKey(convertChord(songData.key, true));
+
     // Transpose the song
     const transpositionAmount = CHROMATIC_SCALE[key.toLowerCase()] - CHROMATIC_SCALE[songData.key.toLowerCase()];
     let transposedSong = parsedSong.transpose(transpositionAmount);
-  
+
     // Convert back to Czech/German chord names after transposition
     transposedSong = transposedSong.mapItems((item) => {
-      if (item instanceof ChordLyricsPair) {
-        return new ChordLyricsPair(convertChord(item.chords, false), item.lyrics, item.annotation);
-      }
-      return item;
+        if (item instanceof ChordLyricsPair) {
+            return new ChordLyricsPair(convertChord(item.chords, false), item.lyrics, item.annotation);
+        }
+        return item;
     });
-  
+
     // Format the final song into HTML
-    return formatter.format(transposedSong);
-  }
+    return addRepeatClasses(addRepeatClasses(addRepeatClasses(formatter.format(transposedSong), "verse"), "chorus"), "bridge");
+}
 
 export { renderSong, guessKey };

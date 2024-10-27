@@ -32,13 +32,13 @@ const LoopNoteIcon = () => {
     </svg>
 }
 
-function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setRepeatChorus, repeatVerseChords, setRepeatVerseChords,twoColumns,settwoColumns }) {
+function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatParts, setRepeatParts, repeatVerseChords, setRepeatVerseChords,twoColumns,settwoColumns }) {
     return (
         <>
             <div className='hidden xs:flex'>
                 <ButtonGroup>
                     <Button color="primary" isIconOnly onClick={() => { setChordsHidden(!chordsHidden) }} variant={chordsHidden ? "ghost" : "solid"}><Guitar /></Button>
-                    <Button color="primary" isIconOnly onClick={() => { setRepeatChorus(!repeatChorus) }} variant={repeatChorus ? "solid" : "ghost"}><Repeat /></Button>
+                    <Button color="primary" isIconOnly onClick={() => { setRepeatParts(!repeatParts) }} variant={repeatParts ? "solid" : "ghost"}><Repeat /></Button>
                     <Button color="primary" isIconOnly onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} variant={repeatVerseChords ? "solid" : "ghost"}>{LoopNoteIcon()}</Button>
                     <Button color="primary" isIconOnly onClick={() => { settwoColumns(!twoColumns) }} variant={twoColumns ? "solid" : "ghost"}><Columns2 /></Button>
                 </ButtonGroup>
@@ -56,11 +56,11 @@ function SpaceSavingSettings({ chordsHidden, setChordsHidden, repeatChorus, setR
                         <DropdownItem startContent={<Guitar />} key="hide_chords" onClick={() => { setChordsHidden(!chordsHidden) }} endContent={chordsHidden ? <Check /> : ""}>
                             Hide chords
                         </DropdownItem>
-                        <DropdownItem startContent={<Repeat />} key="hide_repeat_chorus" onClick={() => { setRepeatChorus(!repeatChorus) }} endContent={!repeatChorus ? <Check /> : ""}>
-                            Hide repeated chorus
+                        <DropdownItem startContent={<Repeat />} key="hide_repeat_parts" onClick={() => { setRepeatParts(!repeatParts) }} endContent={!repeatParts ? <Check /> : ""}>
+                            Hide repeated parts
                         </DropdownItem>
-                        <DropdownItem startContent={LoopNoteIcon()} key="hide_verse_chords" onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} endContent={!repeatVerseChords ? <Check /> : ""}>
-                            Hide chords in repeated verses
+                        <DropdownItem startContent={LoopNoteIcon()} key="hide_repeated_chords" onClick={() => { setRepeatVerseChords(!repeatVerseChords) }} endContent={!repeatVerseChords ? <Check /> : ""}>
+                            Hide chords in repeated parts
                         </DropdownItem>
                         <DropdownItem startContent={<Columns2 />} key="show_two_columns" onClick={() => { settwoColumns(!twoColumns) }} endContent={!twoColumns ? <Check /> : ""}>
                             Show in two columns

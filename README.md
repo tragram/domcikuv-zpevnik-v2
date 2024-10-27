@@ -24,7 +24,7 @@ A song should have the following entries:
 Note that this project assumes the Czech/German note naming scheme, where the notes go as follows: `C C#/Des D D#/Es E F F#/Ges G G#/As A A#/B H C`.
 
 ### Extensions of the ChordPro format
-Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features. For convenience, I have added the possibility to keep in memory more than one chorus. You can define the name of the chorus (note: it will be displayed!) in the directive by e.g. 
+Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features. For convenience, I have added the possibility to keep in memory more than one chorus/verse/bridge. You can define the name of the chorus (note: it will be displayed!) in the directive by e.g. 
 ```chordpro
 {start_of_chorus: R1}
 content
@@ -39,9 +39,9 @@ and them later recall them by
 {chorus: R2}
 {chorus: R1}
 ```
-This is compatible with the feature that hides repeated choruses (it will then just show the name of the chorus for reference).
+Adding these names will also make sure that both the lyrics and the chords are shown, regardless of the settings for repeats of parts and chords.
 
-Keyword "bridge" works analogously to "chorus". Hiding/showing is controlled via the same toggle as for chorus.
+Keywords "bridge" and "verse" work analogously to "chorus". In the future it might be interesting to look at automatically hiding the chords when they are the same (when the chorus has the same chords/lyrics). This could be done by comparing the actual chords in the DOMParser in `src/routes/song_view/song_rendering.ts`. Unfortunately, ChordSheetJS is incredibly inflexible regarding this sort of stuff and the code is very ugly as it is...
 
 ### Image generation
 Since it's 2024, I decided to use AI for tasks other than helping me code this thing. The `scripts/generate_images.py` script loads the lyrics of each of the songs and generates a prompt (in English) for an image generation model.

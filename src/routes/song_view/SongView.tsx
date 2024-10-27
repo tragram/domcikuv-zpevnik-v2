@@ -31,7 +31,7 @@ function SongView({ }) {
         return PdfView(songData.pdfFilenames);
     };
     const [chordsHidden, setChordsHidden] = useLocalStorageState("settings/chordsHidden", { defaultValue: false });
-    const [repeatChorus, setRepeatChorus] = useLocalStorageState("settings/repeatChorus", { defaultValue: true });
+    const [repeatParts, setRepeatParts] = useLocalStorageState("settings/repeatParts", { defaultValue: true });
     const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("settings/repeatVerseChords", { defaultValue: true });
     const [fontSize, setFontSize] = useLocalStorageState("settings/fontSize", { defaultValue: 12 });
     const [twoColumns, settwoColumns] = useLocalStorageState("settings/twoColumns", { defaultValue: false });
@@ -43,8 +43,8 @@ function SongView({ }) {
 
 
     useEffect(() => {
-        setParsedContent(renderSong(songData, songRenderKey, repeatChorus));
-    }, [songRenderKey, repeatChorus, songData]);
+        setParsedContent(renderSong(songData, songRenderKey, repeatParts));
+    }, [songRenderKey, repeatParts, songData]);
 
     // const fullScreen = useMediaQuery(
     //     "only screen and (max-width : 600px)"
@@ -60,7 +60,7 @@ function SongView({ }) {
                     <TransposeSettings setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
                 </NavbarItem>
                 <NavbarItem className=''>
-                    <SpaceSavingSettings chordsHidden={chordsHidden} setChordsHidden={setChordsHidden} repeatChorus={repeatChorus} setRepeatChorus={setRepeatChorus} repeatVerseChords={repeatVerseChords} setRepeatVerseChords={setRepeatVerseChords} twoColumns={twoColumns} settwoColumns={settwoColumns} />
+                    <SpaceSavingSettings chordsHidden={chordsHidden} setChordsHidden={setChordsHidden} repeatParts={repeatParts} setRepeatParts={setRepeatParts} repeatVerseChords={repeatVerseChords} setRepeatVerseChords={setRepeatVerseChords} twoColumns={twoColumns} settwoColumns={settwoColumns} />
                 </NavbarItem>
                 <NavbarItem className=''>
                     <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} fitScreenMode={fitScreenMode} setfitScreenMode={setfitScreenMode} />
@@ -70,7 +70,7 @@ function SongView({ }) {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className={`px-6 flex flex-grow flex-col  ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
+        <div className={`px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
         >
             <div className='flex flex-col text-center '>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
@@ -81,7 +81,7 @@ function SongView({ }) {
                     mode={fitScreenMode === "XY" ? "boxoneline" : "oneline"}
                     minFontSizePx={fitScreenMode !== "none" ? minFontSizePx : fontSize}
                     maxFontSizePx={fitScreenMode !== "none" ? maxFontSizePx : fontSize}>
-                    <div className={`flex flex-col ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeat-verse-chords-hidden'} ${twoColumns ? "chord-sheet-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
+                    <div className={`flex flex-col ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeated-chords-hidden'} ${twoColumns ? "chord-sheet-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
                 </AutoTextSize>
             </div>
         </div>

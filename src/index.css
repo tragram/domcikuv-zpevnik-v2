@@ -133,7 +133,7 @@ body {
 }
 
 /* .repeat-verse-chords-hidden .verse .chord{ */
-.repeat-verse-chords-hidden .verse:not(:first-child) .chord {
+.repeated-chords-hidden .repeated-chords .chord {
   display: none;
 }
 
@@ -155,6 +155,10 @@ body {
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+.paragraph .label {
+  display: none;
 }
 
 
