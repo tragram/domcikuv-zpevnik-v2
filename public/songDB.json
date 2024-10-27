@@ -10,7 +10,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "c d e",
-    "chordpro_file": "AG_Flek_Carpe_diem.pro",
+    "chordpro_file": "AG_Flek-Carpe_diem.pro",
     "pdf_filenames": "['ag_flek_carpe_diem-sken.pdf', 'ag_flek_carpe_diem-comp.pdf', 'ag_flek_carpe_diem-gen.pdf']",
     "content_hash": "df2a2fcf41cba200c0cb237934af79e9dcd9b3fc"
   },
@@ -25,9 +25,9 @@
     "range": "h1-e2",
     "illustration_author": "",
     "start_melody": "a c",
-    "chordpro_file": "Akaty_Vdovy_z_Cordoby.pro",
+    "chordpro_file": "Akaty-Vdovy_z_Cordoby.pro",
     "pdf_filenames": "['akaty_vdovy_z_cordoby-sken.pdf', 'akaty_vdovy_z_cordoby-comp.pdf']",
-    "content_hash": "18234c5fb43f3069de14f2dcefd3a18dedabc56e"
+    "content_hash": "35bfd4aa5adff8a7b896105eca4acaf5211f5c94"
   },
   {
     "title": "Dívka s perlami ve vlasech",
@@ -40,7 +40,7 @@
     "range": "a1-e1",
     "illustration_author": "",
     "start_melody": "e e c d",
-    "chordpro_file": "Ales_Brichta_Divka_s_perlami_ve_vlasech.pro",
+    "chordpro_file": "Ales_Brichta-Divka_s_perlami_ve_vlasech.pro",
     "pdf_filenames": "['ales_brichta_divka_s_perlami_ve_vlasech-sken.pdf', 'ales_brichta_divka_s_perlami_ve_vlasech-comp.pdf']",
     "content_hash": "3269ba99cbced1dd7e460e5cb266e55304ee119b"
   },
@@ -55,9 +55,9 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Alphaville_Mel_jmeno_Jan.pro",
+    "chordpro_file": "Alphaville-Mel_jmeno_Jan.pro",
     "pdf_filenames": "['alphaville_mel_jmeno_jan-sken.pdf', 'alphaville_mel_jmeno_jan-comp.pdf']",
-    "content_hash": "0f66f07784282dec58dae8956a783621aefe8f7f"
+    "content_hash": "bd315ce78d4efe34bc20dbaad2e9542d6a1dd704"
   },
   {
     "title": "Sofia",
@@ -70,7 +70,7 @@
     "range": "a1-e2",
     "illustration_author": "",
     "start_melody": "c# e",
-    "chordpro_file": "Alvaro_Soler_Sofia.pro",
+    "chordpro_file": "Alvaro_Soler-Sofia.pro",
     "pdf_filenames": "['alvaro_soler_sofia-sken.pdf', 'alvaro_soler_sofia-comp.pdf', 'alvaro_soler_sofia-gen.pdf']",
     "content_hash": "91e445ad2c86ae4eff0e90b7db1662f3bb566b37"
   },
@@ -85,7 +85,7 @@
     "range": "g1-d2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Argema_Jarosovsky_pivovar.pro",
+    "chordpro_file": "Argema-Jarosovsky_pivovar.pro",
     "pdf_filenames": "['argema_jarosovsky_pivovar-sken.pdf', 'argema_jarosovsky_pivovar-comp.pdf']",
     "content_hash": "e9533daf0ce2c7696ca87aea9ea5b4749dd30537"
   },
@@ -100,7 +100,7 @@
     "range": "a1-e1",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Argema_Tohle_je_raj.pro",
+    "chordpro_file": "Argema-Tohle_je_raj.pro",
     "pdf_filenames": "['argema_tohle_je_raj-sken.pdf', 'argema_tohle_je_raj-comp.pdf']",
     "content_hash": "821df05c1a689fba6f76ddd27f907d348c901142"
   },
@@ -115,7 +115,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "d e g",
-    "chordpro_file": "At_ziji_duchove_Pramen_zdravi.pro",
+    "chordpro_file": "At_ziji_duchove-Pramen_zdravi.pro",
     "pdf_filenames": "['at_ziji_duchove_pramen_zdravi-sken.pdf', 'at_ziji_duchove_pramen_zdravi-comp.pdf']",
     "content_hash": "44c80bc71578322677d2ab5ab4813513a0d4cc72"
   },
@@ -130,7 +130,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Blink_182_All_the_Small_Things.pro",
+    "chordpro_file": "Blink182-All_the_Small_Things.pro",
     "pdf_filenames": "['blink_182_all_the_small_things-sken.pdf', 'blink_182_all_the_small_things-comp.pdf']",
     "content_hash": "26cfbc7296735bc5f09c2b815cfb7623da3b91fa"
   },
@@ -160,9 +160,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Bob_Dylan_Mr_Tambourine_Man.pro",
+    "chordpro_file": "Bob_Dylan-Mr_Tambourine_Man.pro",
     "pdf_filenames": "['bob_dylan_mr_tambourine_man-sken.pdf', 'bob_dylan_mr_tambourine_man-comp.pdf']",
-    "content_hash": "555fd64a9b43c31f9872fee9127b9f2cc0497466"
+    "content_hash": "b24702adc963f758d730f157177945dbb3544d80"
   },
   {
     "title": "From God's Perspective",
@@ -175,9 +175,9 @@
     "range": "a1-c2",
     "illustration_author": "",
     "start_melody": "e a",
-    "chordpro_file": "Bo_Burnham_From_Gods_Perspective.pro",
+    "chordpro_file": "Bo_Burnham-From_Gods_Perspective.pro",
     "pdf_filenames": "['bo_burnham_from_gods_perspective-sken.pdf', 'bo_burnham_from_gods_perspective-comp.pdf']",
-    "content_hash": "8eedfe9c6109a8f742f1426575eee8bc34ccac96"
+    "content_hash": "139c0428cca6f171bf8c0246d1663ab6f7dde7ba"
   },
   {
     "title": "Lower Your Expectations",
@@ -190,9 +190,9 @@
     "range": "h1-c#2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Bo_Burnham_Lower_Your_Expectations.pro",
+    "chordpro_file": "Bo_Burnham-Lower_Your_Expectations.pro",
     "pdf_filenames": "['bo_burnham_lower_your_expectations-sken.pdf', 'bo_burnham_lower_your_expectations-comp.pdf']",
-    "content_hash": "24178857724d291cf9da0efb186cd0fea2431fee"
+    "content_hash": "119d5fcbe46f00e7718362c0b18aaddebd48ff48"
   },
   {
     "title": "Vločky",
@@ -205,7 +205,7 @@
     "range": "h1-g1",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Brontosauri_Vlocky.pro",
+    "chordpro_file": "Brontosauri-Vlocky.pro",
     "pdf_filenames": "['brontosauri_vlocky-sken.pdf', 'brontosauri_vlocky-comp.pdf']",
     "content_hash": "7b6277c0990b7c8f53940b28a992bf743c8210f5"
   },
@@ -220,7 +220,7 @@
     "range": "h1-g1",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Buty_Frantisek.pro",
+    "chordpro_file": "Buty-Frantisek.pro",
     "pdf_filenames": "['buty_frantisek-sken.pdf', 'buty_frantisek-comp.pdf']",
     "content_hash": "5d01c72c7ab523a385a282c663e5695c682e8eb9"
   },
@@ -235,7 +235,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Buty_Nad_stadem_koni.pro",
+    "chordpro_file": "Buty-Nad_stadem_koni.pro",
     "pdf_filenames": "['buty_nad_stadem_koni-sken.pdf', 'buty_nad_stadem_koni-comp.pdf']",
     "content_hash": "ccde0b0b95cbbf6cd6ebe05ea7ad2b3ccf232b4e"
   },
@@ -250,9 +250,9 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "h c h a",
-    "chordpro_file": "Cechomor_Az_pujdou_cikani.pro",
+    "chordpro_file": "Cechomor-Az_pujdou_cikani.pro",
     "pdf_filenames": "['cechomor_az_pujdou_cikani-sken.pdf', 'cechomor_az_pujdou_cikani-comp.pdf']",
-    "content_hash": "c90fd0849f72415781cf3fd95b67690ddc19a151"
+    "content_hash": "c671a6de32a64424a4b8debab43cde41b08dbeae"
   },
   {
     "title": "Mezi horami",
@@ -265,7 +265,7 @@
     "range": "a1-g1",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Cechomor_Mezi_horami.pro",
+    "chordpro_file": "Cechomor-Mezi_horami.pro",
     "pdf_filenames": "['cechomor_mezi_horami-sken.pdf', 'cechomor_mezi_horami-comp.pdf']",
     "content_hash": "48330adbc645683440d4199f756588b219694068"
   },
@@ -280,7 +280,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Chinaski_1_signalni.pro",
+    "chordpro_file": "Chinaski-1_signalni.pro",
     "pdf_filenames": "['chinaski_1_signalni-sken.pdf', 'chinaski_1_signalni-comp.pdf']",
     "content_hash": "c913455c58471e5b6b53f92d9b01cf952467cd2d"
   },
@@ -295,7 +295,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Chinaski_Adieu.pro",
+    "chordpro_file": "Chinaski-Adieu.pro",
     "pdf_filenames": "['chinaski_adieu-sken.pdf', 'chinaski_adieu-comp.pdf']",
     "content_hash": "67dd9d670e96fd7c08b2f63eabba48bf0b9fbb59"
   },
@@ -310,7 +310,7 @@
     "range": "h1-a1",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Chinaski_Dlouhej_kour.pro",
+    "chordpro_file": "Chinaski-Dlouhej_kour.pro",
     "pdf_filenames": "['chinaski_dlouhej_kour-sken.pdf', 'chinaski_dlouhej_kour-comp.pdf']",
     "content_hash": "5db3dc86643de519e8c81dabc467de926d1176a2"
   },
@@ -325,7 +325,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Chinaski_Dobrak_od_kosti.pro",
+    "chordpro_file": "Chinaski-Dobrak_od_kosti.pro",
     "pdf_filenames": "['chinaski_dobrak_od_kosti-sken.pdf', 'chinaski_dobrak_od_kosti-comp.pdf']",
     "content_hash": "631e0ba60d039dc3bd818d20cd04217dd26cdfa1"
   },
@@ -340,7 +340,7 @@
     "range": "a1-d2",
     "illustration_author": "",
     "start_melody": "h d",
-    "chordpro_file": "Chinaski_Drobna_paralela.pro",
+    "chordpro_file": "Chinaski-Drobna_paralela.pro",
     "pdf_filenames": "['chinaski_drobna_paralela-sken.pdf', 'chinaski_drobna_paralela-comp.pdf', 'chinaski_drobna_paralela-gen.pdf']",
     "content_hash": "fb3c67ede9a06076c4aaa255fda61a8d0678c899"
   },
@@ -355,7 +355,7 @@
     "range": "d1-d2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Chinaski_Hlavolam.pro",
+    "chordpro_file": "Chinaski-Hlavolam.pro",
     "pdf_filenames": "['chinaski_hlavolam-sken.pdf', 'chinaski_hlavolam-comp.pdf', 'chinaski_hlavolam-gen.pdf']",
     "content_hash": "1fffa7bcd2d6d0aaff6d9bd89356ab0a93d28324"
   },
@@ -370,7 +370,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a a f#",
-    "chordpro_file": "Chinaski_Kapela.pro",
+    "chordpro_file": "Chinaski-Kapela.pro",
     "pdf_filenames": "['chinaski_kapela-sken.pdf', 'chinaski_kapela-comp.pdf', 'chinaski_kapela-gen.pdf']",
     "content_hash": "b5e848dccf6652ef1c9598865dc3b539cb7bb5e8"
   },
@@ -385,7 +385,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Chinaski_Klara.pro",
+    "chordpro_file": "Chinaski-Klara.pro",
     "pdf_filenames": "['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']",
     "content_hash": "65d65c3e5eb7f8ad37f76b9ebe42b02279f587fb"
   },
@@ -400,9 +400,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Chinaski_Kompy.pro",
+    "chordpro_file": "Chinaski-Kompy.pro",
     "pdf_filenames": "['chinaski_kompy-sken.pdf', 'chinaski_kompy-comp.pdf']",
-    "content_hash": "4337cf48e4958dd55641411957a5ee1e8831c5c1"
+    "content_hash": "cbbca23941aa599b62645765e2ba518923ae33a6"
   },
   {
     "title": "Kutil",
@@ -415,7 +415,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "e f#",
-    "chordpro_file": "Chinaski_Kutil.pro",
+    "chordpro_file": "Chinaski-Kutil.pro",
     "pdf_filenames": "['chinaski_kutil-sken.pdf', 'chinaski_kutil-comp.pdf']",
     "content_hash": "8231cdb796a9fd4bbebde67fb665a3922f1c82de"
   },
@@ -430,7 +430,7 @@
     "range": "e1-c#1",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Chinaski_Moc_toho_nevim.pro",
+    "chordpro_file": "Chinaski-Moc_toho_nevim.pro",
     "pdf_filenames": "['chinaski_moc_toho_nevim-sken.pdf', 'chinaski_moc_toho_nevim-comp.pdf']",
     "content_hash": "6577d8a2ff6d2d2c119ed46f6bc227a5ce70fc4a"
   },
@@ -445,7 +445,7 @@
     "range": "a1-d2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Chinaski_Stiznost.pro",
+    "chordpro_file": "Chinaski-Stiznost.pro",
     "pdf_filenames": "['chinaski_stiznost-sken.pdf', 'chinaski_stiznost-comp.pdf', 'chinaski_stiznost-gen.pdf']",
     "content_hash": "c0335bf8fec904aaf07858c7dc9e66b405aa04eb"
   },
@@ -460,9 +460,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Chinaski_Venku_je_na_nule.pro",
+    "chordpro_file": "Chinaski-Venku_je_na_nule.pro",
     "pdf_filenames": "['chinaski_venku_je_na_nule-sken.pdf', 'chinaski_venku_je_na_nule-comp.pdf']",
-    "content_hash": "b2e60bb756f93dfe6c85f05ee3d6359676710219"
+    "content_hash": "e3324829938e28bda9fb40137dfc6e68fa325dcf"
   },
   {
     "title": "Vinaři",
@@ -475,7 +475,7 @@
     "range": "a1-d2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Chinaski_Vinari.pro",
+    "chordpro_file": "Chinaski-Vinari.pro",
     "pdf_filenames": "['chinaski_vinari-sken.pdf', 'chinaski_vinari-comp.pdf', 'chinaski_vinari-gen.pdf']",
     "content_hash": "90a0840593e839675ebf2cce57c65a52589f61da"
   },
@@ -520,7 +520,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "a a g f#",
-    "chordpro_file": "Devitka_Burcak.pro",
+    "chordpro_file": "Devitka-Burcak.pro",
     "pdf_filenames": "['devitka_burcak-sken.pdf', 'devitka_burcak-comp.pdf', 'devitka_burcak-gen.pdf']",
     "content_hash": "ae47515ebe07ff246bdd344c16071b3ee42c147c"
   },
@@ -535,7 +535,7 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "g g a h",
-    "chordpro_file": "Devitka_Holka_od_koni.pro",
+    "chordpro_file": "Devitka-Holka_od_koni.pro",
     "pdf_filenames": "['devitka_holka_od_koni-sken.pdf', 'devitka_holka_od_koni-comp.pdf', 'devitka_holka_od_koni-gen.pdf']",
     "content_hash": "65d30bf5a52cf3ecde707c313bedb8d424ba0809"
   },
@@ -550,13 +550,13 @@
     "range": "d1-d1",
     "illustration_author": "",
     "start_melody": "c h",
-    "chordpro_file": "Die_Toten_Hosen_Tage_Wie_Diese.pro",
+    "chordpro_file": "Die_Toten_Hosen-Tage_Wie_Diese.pro",
     "pdf_filenames": "['die_toten_hosen_tage_wie_diese-sken.pdf', 'die_toten_hosen_tage_wie_diese-comp.pdf', 'die_toten_hosen_tage_wie_diese-gen.pdf']",
-    "content_hash": "54d0d950cdb2a003f106a1ce171b9e647db49177"
+    "content_hash": "09b092cc23652fc04113977ddfc67716692d34a2"
   },
   {
     "title": "Jolene",
-    "artist": "Dolly PartonMiley Cyrus",
+    "artist": "Dolly Parton/Miley Cyrus",
     "key": "d",
     "language": "english",
     "date_added": "07-2017",
@@ -565,9 +565,9 @@
     "range": "c1-d2",
     "illustration_author": "",
     "start_melody": "a d",
-    "chordpro_file": "Dolly_PartonMiley_Cyrus_Jolene.pro",
+    "chordpro_file": "Dolly_PartonMiley_Cyrus-Jolene.pro",
     "pdf_filenames": "['dolly_partonmiley_cyrus_jolene-sken.pdf', 'dolly_partonmiley_cyrus_jolene-comp.pdf']",
-    "content_hash": "95532f91dbbb4a33763b316b99c7d6ebf3749ebb"
+    "content_hash": "89a4eb66e1a3d4c1d0eda745b10d436793f51b3c"
   },
   {
     "title": "Can You Feel The Love Tonight",
@@ -585,21 +585,6 @@
     "content_hash": "9b4f0c57bf3df1f4f339ddc288162a44f2e54f85"
   },
   {
-    "title": "I Can't Help Falling In Love With You",
-    "artist": "Elvis Presley",
-    "key": "c",
-    "language": "english",
-    "date_added": "03-2018",
-    "capo": "2",
-    "tempo": "",
-    "range": "",
-    "illustration_author": "",
-    "start_melody": "",
-    "chordpro_file": "Elvis_Presley-Cant_Help_Falling_In_Love_With_You.pro",
-    "pdf_filenames": "",
-    "content_hash": "2067efb2d661d80d8f78939babc728c3f9a2d311"
-  },
-  {
     "title": "In The Ghetto",
     "artist": "Elvis Presley",
     "key": "A",
@@ -610,9 +595,24 @@
     "range": "a1-c#2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Elvis_Presley_In_The_Ghetto.pro",
+    "chordpro_file": "Elvis_Presley-In_The_Ghetto.pro",
     "pdf_filenames": "['elvis_presley_in_the_ghetto-sken.pdf', 'elvis_presley_in_the_ghetto-comp.pdf']",
     "content_hash": "7b4a91135c91a29bea0476ad5b93b4eb88198a4a"
+  },
+  {
+    "title": "I Can't Help Falling In Love With You",
+    "artist": "Elvis Presley",
+    "key": "c",
+    "language": "english",
+    "date_added": "03-2018",
+    "capo": "2",
+    "tempo": "",
+    "range": "",
+    "illustration_author": "",
+    "start_melody": "",
+    "chordpro_file": "Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You.pro",
+    "pdf_filenames": "",
+    "content_hash": "2067efb2d661d80d8f78939babc728c3f9a2d311"
   },
   {
     "title": "Lovec Amorů",
@@ -625,9 +625,24 @@
     "range": "d1-h1",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Epy_de_Mye_Lovec_Amoru.pro",
+    "chordpro_file": "Epy_de_Mye-Lovec_Amoru.pro",
     "pdf_filenames": "['epy_de_mye_lovec_amoru-sken.pdf', 'epy_de_mye_lovec_amoru-comp.pdf']",
     "content_hash": "edbb861aa1eabb63f80dcf834041b8c000647cc6"
+  },
+  {
+    "title": "Nad ránem",
+    "artist": "Epy De Mye",
+    "key": "e",
+    "language": "czech",
+    "date_added": "08-2018",
+    "capo": "0",
+    "tempo": "",
+    "range": "e1-c1",
+    "illustration_author": "",
+    "start_melody": "h",
+    "chordpro_file": "Epy_De_Mye-Nad_ranem.pro",
+    "pdf_filenames": "['epy_de_mye__nad_ranem-sken.pdf', 'epy_de_mye__nad_ranem-comp.pdf']",
+    "content_hash": "d46532f31496832f9710d8b11b9e2c96328de9a6"
   },
   {
     "title": "Obyčejné fotky",
@@ -640,7 +655,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "d d h",
-    "chordpro_file": "Epy_de_Mye_Obycejne_fotky.pro",
+    "chordpro_file": "Epy_de_Mye-Obycejne_fotky.pro",
     "pdf_filenames": "['epy_de_mye_obycejne_fotky-sken.pdf', 'epy_de_mye_obycejne_fotky-comp.pdf']",
     "content_hash": "e1ab8c6b8398c678dc4f093ee66bd830c60ddd14"
   },
@@ -655,7 +670,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "h a",
-    "chordpro_file": "Epy_De_Mye_Tri_Kralove.pro",
+    "chordpro_file": "Epy_De_Mye-Tri_Kralove.pro",
     "pdf_filenames": "['epy_de_mye_tri_kralove-sken.pdf', 'epy_de_mye_tri_kralove-comp.pdf']",
     "content_hash": "5e8e80754704a5899fcaa615b8c30b87b4373391"
   },
@@ -670,24 +685,9 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a d",
-    "chordpro_file": "Epy_de_Mye_Zeny_muzu.pro",
+    "chordpro_file": "Epy_de_Mye-Zeny_muzu.pro",
     "pdf_filenames": "['epy_de_mye_zeny_muzu-sken.pdf', 'epy_de_mye_zeny_muzu-comp.pdf']",
     "content_hash": "265b97a0407c38471aaa6ff0692714dde82974ec"
-  },
-  {
-    "title": "Nad ránem",
-    "artist": "Epy De Mye",
-    "key": "e",
-    "language": "czech",
-    "date_added": "08-2018",
-    "capo": "0",
-    "tempo": "",
-    "range": "e1-c1",
-    "illustration_author": "",
-    "start_melody": "h",
-    "chordpro_file": "Epy_De_Mye__Nad_ranem.pro",
-    "pdf_filenames": "['epy_de_mye__nad_ranem-sken.pdf', 'epy_de_mye__nad_ranem-comp.pdf']",
-    "content_hash": "d46532f31496832f9710d8b11b9e2c96328de9a6"
   },
   {
     "title": "Měls mě vůbec rád",
@@ -700,7 +700,7 @@
     "range": "h1-a1",
     "illustration_author": "",
     "start_melody": "c d",
-    "chordpro_file": "Ewa_Farna_Mels_me_vubec_rad.pro",
+    "chordpro_file": "Ewa_Farna-Mels_me_vubec_rad.pro",
     "pdf_filenames": "['ewa_farna_mels_me_vubec_rad-sken.pdf', 'ewa_farna_mels_me_vubec_rad-comp.pdf']",
     "content_hash": "86a82bee391cc6c130d9c6535f5eeda3727b7f6a"
   },
@@ -715,7 +715,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Fesaci_Jaro.pro",
+    "chordpro_file": "Fesaci-Jaro.pro",
     "pdf_filenames": "['fesaci_jaro-sken.pdf', 'fesaci_jaro-comp.pdf']",
     "content_hash": "5e1e7ad4975ac1f33aaa3d12e2cf8321fa0abc01"
   },
@@ -730,7 +730,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Fesaci_Sefe.pro",
+    "chordpro_file": "Fesaci-Sefe.pro",
     "pdf_filenames": "['fesaci_sefe-sken.pdf', 'fesaci_sefe-comp.pdf']",
     "content_hash": "35866196029267849347cf55df1ed107c80f4f23"
   },
@@ -745,7 +745,7 @@
     "range": "c1-a1",
     "illustration_author": "",
     "start_melody": "e f g",
-    "chordpro_file": "Filmova_hudba_Ani_k_staru.pro",
+    "chordpro_file": "Filmova_hudba-Ani_k_staru.pro",
     "pdf_filenames": "['filmova_hudba_ani_k_staru-sken.pdf', 'filmova_hudba_ani_k_staru-comp.pdf']",
     "content_hash": "fdeafb406f72975e2b1df4c686aa9d73a75e0be0"
   },
@@ -760,7 +760,7 @@
     "range": "a1-e2",
     "illustration_author": "",
     "start_melody": "c#",
-    "chordpro_file": "Filmova_hudba_Jednou_mi_fotr_povida.pro",
+    "chordpro_file": "Filmova_hudba-Jednou_mi_fotr_povida.pro",
     "pdf_filenames": "['filmova_hudba_jednou_mi_fotr_povida-sken.pdf', 'filmova_hudba_jednou_mi_fotr_povida-comp.pdf']",
     "content_hash": "cf65980697aa3ded901c92ebb6cf88706f2e6ace"
   },
@@ -775,7 +775,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Filmova_hudba_Kdyby_se_v_komnatach.pro",
+    "chordpro_file": "Filmova_hudba-Kdyby_se_v_komnatach.pro",
     "pdf_filenames": "['filmova_hudba_kdyby_se_v_komnatach-sken.pdf', 'filmova_hudba_kdyby_se_v_komnatach-comp.pdf']",
     "content_hash": "ee7d68fb1052b8721d8a81ec63198b36e27001a3"
   },
@@ -790,7 +790,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Filmova_hudba_Kdyz_se_nacancam.pro",
+    "chordpro_file": "Filmova_hudba-Kdyz_se_nacancam.pro",
     "pdf_filenames": "['filmova_hudba_kdyz_se_nacancam-sken.pdf', 'filmova_hudba_kdyz_se_nacancam-comp.pdf']",
     "content_hash": "89fb69b054cc93f1437a1aed8943a13a4383a3f5"
   },
@@ -805,7 +805,7 @@
     "range": "f#1-e2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Filmova_hudba_Kralovske_reggae.pro",
+    "chordpro_file": "Filmova_hudba-Kralovske_reggae.pro",
     "pdf_filenames": "['filmova_hudba_kralovske_reggae-sken.pdf', 'filmova_hudba_kralovske_reggae-comp.pdf']",
     "content_hash": "12340af958727372170555882ad7637c28ab822b"
   },
@@ -820,7 +820,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Filmova_hudba_Zabili_zabili_balada_pro_banditu.pro",
+    "chordpro_file": "Filmova_hudba-Zabili_zabili_balada_pro_banditu.pro",
     "pdf_filenames": "['filmova_hudba_zabili_zabili_balada_pro_banditu-sken.pdf', 'filmova_hudba_zabili_zabili_balada_pro_banditu-comp.pdf']",
     "content_hash": "b3699ac33d9ada6b040cf095660dd20bcfc09e16"
   },
@@ -835,9 +835,9 @@
     "range": "g1-f1",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Fkeret_Zafukane.pro",
+    "chordpro_file": "Fleret-Zafukane.pro",
     "pdf_filenames": "['fkeret_zafukane-sken.pdf', 'fkeret_zafukane-comp.pdf']",
-    "content_hash": "a2bc1982e5041addcefac1402dbe9ba9ad1cf2bb"
+    "content_hash": "4bb8c9adadbdb3f862df2f7e400700942b3e256c"
   },
   {
     "title": "Bella Ciao",
@@ -867,7 +867,7 @@
     "start_melody": "a c a c e",
     "chordpro_file": "Folk-Hej_sokoly.pro",
     "pdf_filenames": "",
-    "content_hash": "78f1eebc6c06b9c7a8ebe9284a86623752166a12"
+    "content_hash": "10eda92a407d66cc7d7098fcf43c93e878e1d7b5"
   },
   {
     "title": "Säkkijärven Polkka",
@@ -895,7 +895,7 @@
     "range": "a1-c2",
     "illustration_author": "",
     "start_melody": "d e",
-    "chordpro_file": "Fools_Garden_Lemon_Tree.pro",
+    "chordpro_file": "Fools_Garden-Lemon_Tree.pro",
     "pdf_filenames": "['fools_garden_lemon_tree-sken.pdf', 'fools_garden_lemon_tree-comp.pdf', 'fools_garden_lemon_tree-gen.pdf']",
     "content_hash": "7f7bbc967f20f28d4949b4da5aadf0421b504641"
   },
@@ -925,7 +925,7 @@
     "range": "h1-g1",
     "illustration_author": "",
     "start_melody": "c g",
-    "chordpro_file": "Greenhorns_Divka_s_vlasem_medovym.pro",
+    "chordpro_file": "Greenhorns-Divka_s_vlasem_medovym.pro",
     "pdf_filenames": "['greenhorns_divka_s_vlasem_medovym-sken.pdf', 'greenhorns_divka_s_vlasem_medovym-comp.pdf']",
     "content_hash": "d6fe1b964ac0f04be30e0df49516de6e75fcb446"
   },
@@ -940,7 +940,7 @@
     "range": "d1-d2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Green_Day_Boulevard_of_Broken_Dreams.pro",
+    "chordpro_file": "Green_Day-Boulevard_of_Broken_Dreams.pro",
     "pdf_filenames": "['green_day_boulevard_of_broken_dreams-sken.pdf', 'green_day_boulevard_of_broken_dreams-comp.pdf', 'green_day_boulevard_of_broken_dreams-gen.pdf']",
     "content_hash": "965d215b497b081508a30aff386f8a92d3655d7f"
   },
@@ -957,7 +957,7 @@
     "start_melody": "f#",
     "chordpro_file": "Haloo_Helsinki-Ei_Suomalaiset_Tanssi.pro",
     "pdf_filenames": "",
-    "content_hash": "fb42b032137116c19edf31ca3ebc6ef3238f3efd"
+    "content_hash": "2b01b01d7f2a954ab1605a53c1423909514f9536"
   },
   {
     "title": "Falling Slowly",
@@ -970,7 +970,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Hansard__Irglova_Falling_Slowly.pro",
+    "chordpro_file": "Hansard__Irglova-Falling_Slowly.pro",
     "pdf_filenames": "['hansard__irglova_falling_slowly-sken.pdf', 'hansard__irglova_falling_slowly-comp.pdf']",
     "content_hash": "412eb0203a5c72b09818a26b07cc47c78959f564"
   },
@@ -1000,9 +1000,9 @@
     "range": "c1-e2",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Honza_Jicha_Dezinfekce.pro",
+    "chordpro_file": "Honza_Jicha-Dezinfekce.pro",
     "pdf_filenames": "['honza_jicha_dezinfekce-sken.pdf', 'honza_jicha_dezinfekce-comp.pdf']",
-    "content_hash": "09f8aa301583679e5862ac9b5e17ee74a83ae379"
+    "content_hash": "e70331efaa143b972f01077ad71d8ca2b81e5043"
   },
   {
     "title": "Dotace",
@@ -1015,9 +1015,9 @@
     "range": "a1-e2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Honza_Jicha_Dotace.pro",
+    "chordpro_file": "Honza_Jicha-Dotace.pro",
     "pdf_filenames": "['honza_jicha_dotace-sken.pdf', 'honza_jicha_dotace-comp.pdf']",
-    "content_hash": "f42bd7c6c91a44d9cb01669ed2d0a751d42e154c"
+    "content_hash": "73835f8271164419068c59f3da2d8c919bccd5ab"
   },
   {
     "title": "Kdybych byl gay",
@@ -1030,9 +1030,9 @@
     "range": "c1-d2",
     "illustration_author": "dalle3",
     "start_melody": "f",
-    "chordpro_file": "Honza_Jicha_Kdybych_byl_gay.pro",
+    "chordpro_file": "Honza_Jicha-Kdybych_byl_gay.pro",
     "pdf_filenames": "['honza_jicha_kdybych_byl_gay-sken.pdf', 'honza_jicha_kdybych_byl_gay-comp.pdf']",
-    "content_hash": "4a0657a71090650720b53cb3c97885960418b4c9"
+    "content_hash": "77bf1364ad8871beed22384b466420f5e7a791a7"
   },
   {
     "title": "Maličký knírek",
@@ -1045,9 +1045,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Honza_Jicha_Malicky_knirek.pro",
+    "chordpro_file": "Honza_Jicha-Malicky_knirek.pro",
     "pdf_filenames": "['honza_jicha_malicky_knirek-sken.pdf', 'honza_jicha_malicky_knirek-comp.pdf', 'honza_jicha_malicky_knirek-gen.pdf']",
-    "content_hash": "9abfa94cacb59d7495c8fb8bc92f096daa0a9f68"
+    "content_hash": "70d14b985b6a6b2b9129dfed63ea2dc28d184193"
   },
   {
     "title": "Matfyzák",
@@ -1060,9 +1060,9 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Honza_Jicha_Matfyzak.pro",
+    "chordpro_file": "Honza_Jicha-Matfyzak.pro",
     "pdf_filenames": "['honza_jicha_matfyzak-sken.pdf', 'honza_jicha_matfyzak-comp.pdf']",
-    "content_hash": "aaaf4a3ec610247458c93f7b64829fab2840abb8"
+    "content_hash": "434198325a32370cdb63d01a11dd6e65497e3796"
   },
   {
     "title": "Nedokonalý pár",
@@ -1075,9 +1075,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Honza_Jicha_Nedokonaly_par.pro",
+    "chordpro_file": "Honza_Jicha-Nedokonaly_par.pro",
     "pdf_filenames": "['honza_jicha_nedokonaly_par-sken.pdf', 'honza_jicha_nedokonaly_par-comp.pdf', 'honza_jicha_nedokonaly_par-gen.pdf']",
-    "content_hash": "1150fc89734a461d263023ff4f8e996c9bf66e91"
+    "content_hash": "fcbe8773b3d13018831cd24166b10fca0f9214d3"
   },
   {
     "title": "Nekvalifikovaný učitel",
@@ -1090,9 +1090,9 @@
     "range": "c1-e2",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Honza_Jicha_Nekvalifikovany_ucitel.pro",
+    "chordpro_file": "Honza_Jicha-Nekvalifikovany_ucitel.pro",
     "pdf_filenames": "['honza_jicha_nekvalifikovany_ucitel-sken.pdf', 'honza_jicha_nekvalifikovany_ucitel-comp.pdf']",
-    "content_hash": "123fc1191fd76ad9eeaf60d5020257f50844c8ba"
+    "content_hash": "47c50ff4e7fd1799b39480ba9fdb6198bdb24ee5"
   },
   {
     "title": "Vlastizrádce",
@@ -1105,9 +1105,9 @@
     "range": "g#1-e1",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Honza_Jicha_Vlastizradce.pro",
+    "chordpro_file": "Honza_Jicha-Vlastizradce.pro",
     "pdf_filenames": "['honza_jicha_vlastizradce-sken.pdf', 'honza_jicha_vlastizradce-comp.pdf']",
-    "content_hash": "97ff40ca22db56e7cc9067fdeb58fd2db8708ab3"
+    "content_hash": "09477312c8ea71f717f1b3208dd8ef049500290d"
   },
   {
     "title": "Lodníkův lament",
@@ -1135,7 +1135,7 @@
     "range": "c1-a1",
     "illustration_author": "",
     "start_melody": "d d a",
-    "chordpro_file": "Hop_Trop_Tri_krize.pro",
+    "chordpro_file": "Hop_Trop-Tri_krize.pro",
     "pdf_filenames": "['hop_trop_tri_krize-sken.pdf', 'hop_trop_tri_krize-comp.pdf']",
     "content_hash": "a85f5f463083f1a1262b53784d9a8c82b1673fdf"
   },
@@ -1150,9 +1150,9 @@
     "range": "c1-d2",
     "illustration_author": "",
     "start_melody": "e c",
-    "chordpro_file": "Howard_Goodall_Red_Dwarf_Theme.pro",
+    "chordpro_file": "Howard_Goodall-Red_Dwarf_Theme.pro",
     "pdf_filenames": "['howard_goodall_red_dwarf_theme-sken.pdf', 'howard_goodall_red_dwarf_theme-comp.pdf', 'howard_goodall_red_dwarf_theme-gen.pdf']",
-    "content_hash": "6587c33aae40dedd107900ea8905dc0827f1c798"
+    "content_hash": "b1ec615641b577812f547a1dc999c3eb4a5f5c4c"
   },
   {
     "title": "Radioactive",
@@ -1165,13 +1165,13 @@
     "range": "c1-d2",
     "illustration_author": "",
     "start_melody": "d a",
-    "chordpro_file": "Imagine_Dragons_Radioactive.pro",
+    "chordpro_file": "Imagine_Dragons-Radioactive.pro",
     "pdf_filenames": "['imagine_dragons_radioactive-sken.pdf', 'imagine_dragons_radioactive-comp.pdf', 'imagine_dragons_radioactive-gen.pdf']",
     "content_hash": "dde2a231880ef5cae4c9ad924ad45dd3635a2658"
   },
   {
-    "title": "The AO of Island",
-    "artist": "Inspired By Island",
+    "title": "The A-Ö of Iceland",
+    "artist": "Inspired By Iceland",
     "key": "G",
     "language": "icelandic",
     "date_added": "07-2018",
@@ -1180,9 +1180,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Inspired_By_Island_The_AO_of_Island.pro",
+    "chordpro_file": "Inspired_By_Iceland-The_AO_of_Iceland.pro",
     "pdf_filenames": "['inspired_by_island_the_ao_of_island-sken.pdf', 'inspired_by_island_the_ao_of_island-comp.pdf']",
-    "content_hash": "c4065ab21cfbb8ae13c8dc22f34add5821093a32"
+    "content_hash": "5c2282dac65aaa83f270c342406403ed65ac94a3"
   },
   {
     "title": "Drunken Sailor",
@@ -1195,7 +1195,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Irish_Rovers_Drunken_Sailor.pro",
+    "chordpro_file": "Irish_Rovers-Drunken_Sailor.pro",
     "pdf_filenames": "['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']",
     "content_hash": "3f66fefa164100e14615b1c8485efae109255125"
   },
@@ -1210,7 +1210,7 @@
     "range": "c1-c2",
     "illustration_author": "",
     "start_melody": "d a",
-    "chordpro_file": "Jananas_Jana_Smutna.pro",
+    "chordpro_file": "Jananas-Jana_Smutna.pro",
     "pdf_filenames": "['jananas_jana_smutna-sken.pdf', 'jananas_jana_smutna-comp.pdf']",
     "content_hash": "0c61535916f9d05133a69f1441dfee964f2fea7a"
   },
@@ -1225,7 +1225,7 @@
     "range": "e1-g2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Janek_Ledecky_Jenom_laska.pro",
+    "chordpro_file": "Janek_Ledecky-Jenom_laska.pro",
     "pdf_filenames": "['janek_ledecky_jenom_laska-sken.pdf', 'janek_ledecky_jenom_laska-comp.pdf']",
     "content_hash": "7e4ea3a55163f570139906b4c4e36362895e1acd"
   },
@@ -1240,7 +1240,7 @@
     "range": "f#1-c2",
     "illustration_author": "",
     "start_melody": "h c d",
-    "chordpro_file": "Janek_Ledecky_Proklinam.pro",
+    "chordpro_file": "Janek_Ledecky-Proklinam.pro",
     "pdf_filenames": "['janek_ledecky_proklinam-sken.pdf', 'janek_ledecky_proklinam-comp.pdf']",
     "content_hash": "7c1546d4524a29dae4d0306102b63266238a2d6f"
   },
@@ -1255,7 +1255,7 @@
     "range": "g1-h2",
     "illustration_author": "",
     "start_melody": "h g",
-    "chordpro_file": "Jan_Nedved_Podvod.pro",
+    "chordpro_file": "Jan_Nedved-Podvod.pro",
     "pdf_filenames": "['jan_nedved_podvod-sken.pdf', 'jan_nedved_podvod-comp.pdf']",
     "content_hash": "3397962e5dd82da4e99d6c504fd33440ed6351f1"
   },
@@ -1270,7 +1270,7 @@
     "range": "d1-c1",
     "illustration_author": "",
     "start_melody": "f",
-    "chordpro_file": "Jan_Nedved_Tulacky_rano.pro",
+    "chordpro_file": "Jan_Nedved-Tulacky_rano.pro",
     "pdf_filenames": "['jan_nedved_tulacky_rano-sken.pdf', 'jan_nedved_tulacky_rano-comp.pdf']",
     "content_hash": "edd87d3abff7c4c325906cb6fed26e9d94c63bcd"
   },
@@ -1285,7 +1285,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Jaromir_Nohavica_Darmodej.pro",
+    "chordpro_file": "Jaromir_Nohavica-Darmodej.pro",
     "pdf_filenames": "['jaromir_nohavica_darmodej-sken.pdf', 'jaromir_nohavica_darmodej-comp.pdf']",
     "content_hash": "912aa534f963101d05be1797d43c1c66b9899d9d"
   },
@@ -1300,7 +1300,7 @@
     "range": "g1-d2",
     "illustration_author": "",
     "start_melody": "e g",
-    "chordpro_file": "Jaromir_Nohavica_Dokud_se_zpiva.pro",
+    "chordpro_file": "Jaromir_Nohavica-Dokud_se_zpiva.pro",
     "pdf_filenames": "['jaromir_nohavica_dokud_se_zpiva-sken.pdf', 'jaromir_nohavica_dokud_se_zpiva-comp.pdf']",
     "content_hash": "5406182585fbe0b55a08f4161c7a22293197ba48"
   },
@@ -1315,7 +1315,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Jaromir_Nohavica_Gronska_pisnicka.pro",
+    "chordpro_file": "Jaromir_Nohavica-Gronska_pisnicka.pro",
     "pdf_filenames": "['jaromir_nohavica_gronska_pisnicka-sken.pdf', 'jaromir_nohavica_gronska_pisnicka-comp.pdf']",
     "content_hash": "caa8aa8dfd2c0f730baa1f14ea2f2a64798aa90f"
   },
@@ -1330,7 +1330,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Jaromir_Nohavica_Hlidac_krav.pro",
+    "chordpro_file": "Jaromir_Nohavica-Hlidac_krav.pro",
     "pdf_filenames": "['jaromir_nohavica_hlidac_krav-sken.pdf', 'jaromir_nohavica_hlidac_krav-comp.pdf']",
     "content_hash": "6e623380002244e68a069107832d609e6181892a"
   },
@@ -1345,7 +1345,7 @@
     "range": "d1-g1",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Jaromir_Nohavica_iDnescz.pro",
+    "chordpro_file": "Jaromir_Nohavica-iDnescz.pro",
     "pdf_filenames": "['jaromir_nohavica_idnescz-sken.pdf', 'jaromir_nohavica_idnescz-comp.pdf']",
     "content_hash": "9ac462d468da3790dc47915b4ac2e169510fcd51"
   },
@@ -1360,7 +1360,7 @@
     "range": "a1-c2",
     "illustration_author": "",
     "start_melody": "e f#",
-    "chordpro_file": "Jaromir_Nohavica_Ja_chci_poezii.pro",
+    "chordpro_file": "Jaromir_Nohavica-Ja_chci_poezii.pro",
     "pdf_filenames": "['jaromir_nohavica_ja_chci_poezii-sken.pdf', 'jaromir_nohavica_ja_chci_poezii-comp.pdf']",
     "content_hash": "ffbfd418ac472927b46e3af8b3122dea5ff49a7e"
   },
@@ -1375,7 +1375,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Jaromir_Nohavica_Jdou_po_me_jdou.pro",
+    "chordpro_file": "Jaromir_Nohavica-Jdou_po_me_jdou.pro",
     "pdf_filenames": "['jaromir_nohavica_jdou_po_me_jdou-sken.pdf', 'jaromir_nohavica_jdou_po_me_jdou-comp.pdf']",
     "content_hash": "d35278cb2941dfb592891fd738dbd7440be73bed"
   },
@@ -1390,7 +1390,7 @@
     "range": "g#1-a2",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Jaromir_Nohavica_Kdyz_me_brali_za_vojaka.pro",
+    "chordpro_file": "Jaromir_Nohavica-Kdyz_me_brali_za_vojaka.pro",
     "pdf_filenames": "['jaromir_nohavica_kdyz_me_brali_za_vojaka-sken.pdf', 'jaromir_nohavica_kdyz_me_brali_za_vojaka-comp.pdf']",
     "content_hash": "faa7a06c5a02141d9659f68090899ba2cb373090"
   },
@@ -1405,7 +1405,7 @@
     "range": "g1-f1",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Jaromir_Nohavica_Kometa.pro",
+    "chordpro_file": "Jaromir_Nohavica-Kometa.pro",
     "pdf_filenames": "['jaromir_nohavica_kometa-sken.pdf', 'jaromir_nohavica_kometa-comp.pdf']",
     "content_hash": "e39fe4067bbb223ab21b9bea3c0f4ec249619538"
   },
@@ -1420,7 +1420,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "g e",
-    "chordpro_file": "Jaromir_Nohavica_Lachtani.pro",
+    "chordpro_file": "Jaromir_Nohavica-Lachtani.pro",
     "pdf_filenames": "['jaromir_nohavica_lachtani-sken.pdf', 'jaromir_nohavica_lachtani-comp.pdf', 'jaromir_nohavica_lachtani-gen.pdf']",
     "content_hash": "d53bb1b35a6865eda11d24564846efe6bc7e99fd"
   },
@@ -1435,7 +1435,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Jaromir_Nohavica_Ladovska_zima.pro",
+    "chordpro_file": "Jaromir_Nohavica-Ladovska_zima.pro",
     "pdf_filenames": "['jaromir_nohavica_ladovska_zima-sken.pdf', 'jaromir_nohavica_ladovska_zima-comp.pdf']",
     "content_hash": "bb1b2781eaaea5171defabc86181d45eb5f77f13"
   },
@@ -1450,7 +1450,7 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Jaromir_Nohavica_Mam_jizvu_na_rtu.pro",
+    "chordpro_file": "Jaromir_Nohavica-Mam_jizvu_na_rtu.pro",
     "pdf_filenames": "['jaromir_nohavica_mam_jizvu_na_rtu-sken.pdf', 'jaromir_nohavica_mam_jizvu_na_rtu-comp.pdf', 'jaromir_nohavica_mam_jizvu_na_rtu-gen.pdf']",
     "content_hash": "054ece4f72d772654d11b65d37d030e12d0e5e99"
   },
@@ -1465,7 +1465,7 @@
     "range": "g1-h2",
     "illustration_author": "",
     "start_melody": "a a a g",
-    "chordpro_file": "Jaromir_Nohavica_Pritel.pro",
+    "chordpro_file": "Jaromir_Nohavica-Pritel.pro",
     "pdf_filenames": "['jaromir_nohavica_pritel-sken.pdf', 'jaromir_nohavica_pritel-comp.pdf']",
     "content_hash": "1112e7ef2c0a03f60ca2770682c39104372f2302"
   },
@@ -1480,7 +1480,7 @@
     "range": "g1-e2",
     "illustration_author": "",
     "start_melody": "c g1 c g2",
-    "chordpro_file": "Jaromir_Nohavica_Vlastovko_let.pro",
+    "chordpro_file": "Jaromir_Nohavica-Vlastovko_let.pro",
     "pdf_filenames": "['jaromir_nohavica_vlastovko_let-sken.pdf', 'jaromir_nohavica_vlastovko_let-comp.pdf']",
     "content_hash": "0e2bd6598852a6f952161b9c2ec12954a1afd5e4"
   },
@@ -1495,7 +1495,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Jaromir_Nohavica_V_mori_je_mista_dost.pro",
+    "chordpro_file": "Jaromir_Nohavica-V_mori_je_mista_dost.pro",
     "pdf_filenames": "['jaromir_nohavica_v_mori_je_mista_dost-sken.pdf', 'jaromir_nohavica_v_mori_je_mista_dost-comp.pdf']",
     "content_hash": "b2d0e6e2b5b9604a55b6c58e31a2ecdd36e249a5"
   },
@@ -1510,7 +1510,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Jaromir_Nohavica_Zitra_rano_v_pet.pro",
+    "chordpro_file": "Jaromir_Nohavica-Zitra_rano_v_pet.pro",
     "pdf_filenames": "['jaromir_nohavica_zitra_rano_v_pet-sken.pdf', 'jaromir_nohavica_zitra_rano_v_pet-comp.pdf']",
     "content_hash": "38387a26e6aea76d7f0e7f2cdbfccca4b43aa9cc"
   },
@@ -1525,7 +1525,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "h c d",
-    "chordpro_file": "Jaroslav_Samson_Lenk_Amazonka.pro",
+    "chordpro_file": "Jaroslav_Samson_Lenk-Amazonka.pro",
     "pdf_filenames": "['jaroslav_samson_lenk_amazonka-sken.pdf', 'jaroslav_samson_lenk_amazonka-comp.pdf']",
     "content_hash": "88ad7febefee70efae9e37912a5aa965b1086dac"
   },
@@ -1540,7 +1540,7 @@
     "range": "a1-c2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Jaroslav_Samson_Lenk_Uz_to_nenapravim.pro",
+    "chordpro_file": "Jaroslav_Samson_Lenk-Uz_to_nenapravim.pro",
     "pdf_filenames": "['jaroslav_samson_lenk_uz_to_nenapravim-sken.pdf', 'jaroslav_samson_lenk_uz_to_nenapravim-comp.pdf']",
     "content_hash": "c78f3c2a206b46c6b751c7b14527feece3aa9dff"
   },
@@ -1555,9 +1555,9 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "g e",
-    "chordpro_file": "Jeff_Dunham_Jingle_Bombs.pro",
+    "chordpro_file": "Jeff_Dunham-Jingle_Bombs.pro",
     "pdf_filenames": "['jeff_dunham_jingle_bombs-sken.pdf', 'jeff_dunham_jingle_bombs-comp.pdf']",
-    "content_hash": "bde7cce0e0598788b9b82776217db465873dd332"
+    "content_hash": "c712c68dbe8389a76dc9ad9f9f8788852e385b00"
   },
   {
     "title": "Klidná jako voda",
@@ -1570,7 +1570,7 @@
     "range": "h1-c2",
     "illustration_author": "",
     "start_melody": "c e",
-    "chordpro_file": "Jelen_Klidna_jako_voda.pro",
+    "chordpro_file": "Jelen-Klidna_jako_voda.pro",
     "pdf_filenames": "['jelen_klidna_jako_voda-sken.pdf', 'jelen_klidna_jako_voda-comp.pdf', 'jelen_klidna_jako_voda-gen.pdf']",
     "content_hash": "0344bf9c38f9a45d3bda478a2f79c7c55429bb0d"
   },
@@ -1585,9 +1585,9 @@
     "range": "f#1-a2",
     "illustration_author": "",
     "start_melody": "d d c#",
-    "chordpro_file": "Jelen_Magdalena.pro",
+    "chordpro_file": "Jelen-Magdalena.pro",
     "pdf_filenames": "['jelen_magdalena-sken.pdf', 'jelen_magdalena-comp.pdf']",
-    "content_hash": "3bdfe2c66e3a8aa1b5107deec33cb5d867ecd82a"
+    "content_hash": "0432d9d9ed084e89c45bbe41bfa2c7836dbda19a"
   },
   {
     "title": "Babička Mary",
@@ -1600,7 +1600,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "a a e e",
-    "chordpro_file": "Jezek__Voskovec__Werich_Babicka_Mary.pro",
+    "chordpro_file": "Jezek__Voskovec__Werich-Babicka_Mary.pro",
     "pdf_filenames": "['jezek__voskovec__werich_babicka_mary-sken.pdf', 'jezek__voskovec__werich_babicka_mary-comp.pdf', 'jezek__voskovec__werich_babicka_mary-gen.pdf']",
     "content_hash": "b0f374b98293fba94fc9faa4c06f45a8484bb4d6"
   },
@@ -1615,7 +1615,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "e e g g",
-    "chordpro_file": "Jezek__Voskovec__Werich_Ezop_a_brabenec.pro",
+    "chordpro_file": "Jezek__Voskovec__Werich-Ezop_a_brabenec.pro",
     "pdf_filenames": "['jezek__voskovec__werich_ezop_a_brabenec-sken.pdf', 'jezek__voskovec__werich_ezop_a_brabenec-comp.pdf', 'jezek__voskovec__werich_ezop_a_brabenec-gen.pdf']",
     "content_hash": "ae7ff74f57e3070fcbe9cd4f60f43965b1957d04"
   },
@@ -1630,9 +1630,9 @@
     "range": "g1-d2",
     "illustration_author": "",
     "start_melody": "d e f#",
-    "chordpro_file": "Jezek__Voskovec__Werich_Holduj_tanci_pohybu.pro",
+    "chordpro_file": "Jezek__Voskovec__Werich-Holduj_tanci_pohybu.pro",
     "pdf_filenames": "['jezek__voskovec__werich_holduj_tanci_pohybu-sken.pdf', 'jezek__voskovec__werich_holduj_tanci_pohybu-comp.pdf', 'jezek__voskovec__werich_holduj_tanci_pohybu-gen.pdf']",
-    "content_hash": "0c4db8d6ed8a0801e73a97533365d861766d5087"
+    "content_hash": "42968ee795e7b0653c25d3e7353ded329c4af262"
   },
   {
     "title": "Štěně",
@@ -1645,9 +1645,9 @@
     "range": "c1-c2",
     "illustration_author": "",
     "start_melody": "c e g",
-    "chordpro_file": "Jezek__Voskovec__Werich_Stene.pro",
+    "chordpro_file": "Jezek__Voskovec__Werich-Stene.pro",
     "pdf_filenames": "['jezek__voskovec__werich_stene-sken.pdf', 'jezek__voskovec__werich_stene-comp.pdf', 'jezek__voskovec__werich_stene-gen.pdf']",
-    "content_hash": "a7dde489e7cae22b0ebf728fa531a3a1e9dffbce"
+    "content_hash": "62d76792e0af096d1b3554fb1c557e2b3594000f"
   },
   {
     "title": "V domě straší duch",
@@ -1660,9 +1660,9 @@
     "range": "d1-d2",
     "illustration_author": "",
     "start_melody": "a f d",
-    "chordpro_file": "Jezek__Voskovec__Werich_V_dome_strasi_duch.pro",
+    "chordpro_file": "Jezek__Voskovec__Werich-V_dome_strasi_duch.pro",
     "pdf_filenames": "['jezek__voskovec__werich_v_dome_strasi_duch-sken.pdf', 'jezek__voskovec__werich_v_dome_strasi_duch-comp.pdf']",
-    "content_hash": "8efb7a707d7ae2e8c4d4dc10033986ce5523177a"
+    "content_hash": "deaa44acd0dd19c99e23b3fa97f26ec5a3beea1f"
   },
   {
     "title": "Holubí dům",
@@ -1675,7 +1675,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Jiri_Schlinger_Holubi_dum.pro",
+    "chordpro_file": "Jiri_Schlinger-Holubi_dum.pro",
     "pdf_filenames": "['jiri_schlinger_holubi_dum-sken.pdf', 'jiri_schlinger_holubi_dum-comp.pdf']",
     "content_hash": "3377d63baa86c647412011e65f5653096fd08db8"
   },
@@ -1690,24 +1690,9 @@
     "range": "g1-h2",
     "illustration_author": "",
     "start_melody": "h c",
-    "chordpro_file": "Jiri_Wabi_Rivola_Tereza_Osamely_mesto.pro",
+    "chordpro_file": "Jiri_Wabi_Rivola-Tereza_Osamely_mesto.pro",
     "pdf_filenames": "['jiri_wabi_rivola_tereza_osamely_mesto-sken.pdf', 'jiri_wabi_rivola_tereza_osamely_mesto-comp.pdf']",
-    "content_hash": "4ee7610f8b1c01dd7ff68b99946a6e06adad8fce"
-  },
-  {
-    "title": "Hurt",
-    "artist": "Johnny Cash/NIN",
-    "key": "a",
-    "language": "english",
-    "date_added": "03-2018",
-    "capo": "0",
-    "tempo": "",
-    "range": "g1-g2",
-    "illustration_author": "",
-    "start_melody": "e g",
-    "chordpro_file": "Johnny_CashNIN_Hurt.pro",
-    "pdf_filenames": "['johnny_cashnin_hurt-sken.pdf', 'johnny_cashnin_hurt-comp.pdf']",
-    "content_hash": "2ad650d5c480812f0946c5a9707bc9fd03ab4e9a"
+    "content_hash": "c37efcba6bf6f842626a62ace6e5ad3284fca5fe"
   },
   {
     "title": "Folsom Prison Blues",
@@ -1720,7 +1705,7 @@
     "range": "e1-h2",
     "illustration_author": "",
     "start_melody": "e g#",
-    "chordpro_file": "Johnny_Cash_Folsom_Prison_Blues.pro",
+    "chordpro_file": "Johnny_Cash-Folsom_Prison_Blues.pro",
     "pdf_filenames": "['johnny_cash_folsom_prison_blues-sken.pdf', 'johnny_cash_folsom_prison_blues-comp.pdf']",
     "content_hash": "39247d8f452ed027b2b8ac1eadecb43687b9ba61"
   },
@@ -1735,7 +1720,7 @@
     "range": "g#1-e2",
     "illustration_author": "",
     "start_melody": "e e e f#",
-    "chordpro_file": "Johnny_Cash_I_Walk_the_Line.pro",
+    "chordpro_file": "Johnny_Cash-I_Walk_the_Line.pro",
     "pdf_filenames": "['johnny_cash_i_walk_the_line-sken.pdf', 'johnny_cash_i_walk_the_line-comp.pdf']",
     "content_hash": "569f657d912eff359adc48b83e981951ad63f134"
   },
@@ -1750,9 +1735,24 @@
     "range": "f#1-h2",
     "illustration_author": "",
     "start_melody": "a h",
-    "chordpro_file": "Johnny_Cash_Man_in_Black.pro",
+    "chordpro_file": "Johnny_Cash-Man_in_Black.pro",
     "pdf_filenames": "['johnny_cash_man_in_black-sken.pdf', 'johnny_cash_man_in_black-comp.pdf']",
     "content_hash": "5f3c317f43abbdf3f3c8e331606f573bda3e384a"
+  },
+  {
+    "title": "Hurt",
+    "artist": "Johnny Cash/NIN",
+    "key": "a",
+    "language": "english",
+    "date_added": "03-2018",
+    "capo": "0",
+    "tempo": "",
+    "range": "g1-g2",
+    "illustration_author": "",
+    "start_melody": "e g",
+    "chordpro_file": "Johnny_CashNIN-Hurt.pro",
+    "pdf_filenames": "['johnny_cashnin_hurt-sken.pdf', 'johnny_cashnin_hurt-comp.pdf']",
+    "content_hash": "2ad650d5c480812f0946c5a9707bc9fd03ab4e9a"
   },
   {
     "title": "Take Me Home Country Roads",
@@ -1765,7 +1765,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "John_Denver_Take_Me_Home_Country_Roads.pro",
+    "chordpro_file": "John_Denver-Take_Me_Home_Country_Roads.pro",
     "pdf_filenames": "['john_denver_take_me_home_country_roads-sken.pdf', 'john_denver_take_me_home_country_roads-comp.pdf']",
     "content_hash": "cb5805eb7bc34b27f55753ff2ecfe3a5e98453df"
   },
@@ -1780,7 +1780,7 @@
     "range": "c1-g1",
     "illustration_author": "",
     "start_melody": "e d c d",
-    "chordpro_file": "Kabat_Bara.pro",
+    "chordpro_file": "Kabat-Bara.pro",
     "pdf_filenames": "['kabat_bara-sken.pdf', 'kabat_bara-comp.pdf']",
     "content_hash": "2e80779e8cafaf7dfaf3ce33b7afe982e2a2ffe4"
   },
@@ -1795,7 +1795,7 @@
     "range": "c1-c2/g2",
     "illustration_author": "dalle3",
     "start_melody": "e",
-    "chordpro_file": "Kabat_Burlaci.pro",
+    "chordpro_file": "Kabat-Burlaci.pro",
     "pdf_filenames": "['kabat_burlaci-sken.pdf', 'kabat_burlaci-comp.pdf']",
     "content_hash": "7b2623541f5bfe1d03d0dd624bdaded45987691e"
   },
@@ -1810,9 +1810,9 @@
     "range": "c1-a1",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Kabat_Colorado.pro",
+    "chordpro_file": "Kabat-Colorado.pro",
     "pdf_filenames": "['kabat_colorado-sken.pdf', 'kabat_colorado-comp.pdf']",
-    "content_hash": "0a135ea5261aa99a28262552ce5cdd95ab08c624"
+    "content_hash": "b7f2b5d394f7fd6c05af605e2cff642f826736ac"
   },
   {
     "title": "Corrida",
@@ -1825,7 +1825,7 @@
     "range": "h1-a1",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Kabat_Corrida.pro",
+    "chordpro_file": "Kabat-Corrida.pro",
     "pdf_filenames": "['kabat_corrida-sken.pdf', 'kabat_corrida-comp.pdf']",
     "content_hash": "7d871ebe01492796a8588f0543bb82321a01298a"
   },
@@ -1840,7 +1840,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Kabat_Kdo_vi_jestli.pro",
+    "chordpro_file": "Kabat-Kdo_vi_jestli.pro",
     "pdf_filenames": "['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']",
     "content_hash": "0a29f5bdee3bc85e1c0bc5c92197ed5d19e771e5"
   },
@@ -1855,7 +1855,7 @@
     "range": "a1-g1",
     "illustration_author": "",
     "start_melody": "a c e",
-    "chordpro_file": "Kabat_Kruty_krtek_Joy.pro",
+    "chordpro_file": "Kabat-Kruty_krtek_Joy.pro",
     "pdf_filenames": "['kabat_kruty_krtek_joy-sken.pdf', 'kabat_kruty_krtek_joy-comp.pdf']",
     "content_hash": "c2bb55aa6075b6e724ad06624458e2d17dd37abf"
   },
@@ -1870,7 +1870,7 @@
     "range": "g#1-d2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Kabat_Mala_dama.pro",
+    "chordpro_file": "Kabat-Mala_dama.pro",
     "pdf_filenames": "['kabat_mala_dama-sken.pdf', 'kabat_mala_dama-comp.pdf']",
     "content_hash": "18191003e07c4c1de271ec51df50396a2a1845b6"
   },
@@ -1885,7 +1885,7 @@
     "range": "c1-d2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Kabat_Moderni_devce.pro",
+    "chordpro_file": "Kabat-Moderni_devce.pro",
     "pdf_filenames": "['kabat_moderni_devce-sken.pdf', 'kabat_moderni_devce-comp.pdf']",
     "content_hash": "82e0cc60a02c5b32acaf1b582e1639128cae763a"
   },
@@ -1900,7 +1900,7 @@
     "range": "g1-b2",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Kabat_Pohoda.pro",
+    "chordpro_file": "Kabat-Pohoda.pro",
     "pdf_filenames": "['kabat_pohoda-sken.pdf', 'kabat_pohoda-comp.pdf']",
     "content_hash": "cda1053f6af326c6bda6d4ba35f05a85e58ada48"
   },
@@ -1915,7 +1915,7 @@
     "range": "c1-a1",
     "illustration_author": "",
     "start_melody": "e d c",
-    "chordpro_file": "Kabat_Saman.pro",
+    "chordpro_file": "Kabat-Saman.pro",
     "pdf_filenames": "['kabat_saman-sken.pdf', 'kabat_saman-comp.pdf']",
     "content_hash": "0010208c75556f80bb0023a4dd3177d13af99886"
   },
@@ -1930,7 +1930,7 @@
     "range": "a1-e1",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Kabat_V_pekle_sudy_valej.pro",
+    "chordpro_file": "Kabat-V_pekle_sudy_valej.pro",
     "pdf_filenames": "['kabat_v_pekle_sudy_valej-sken.pdf', 'kabat_v_pekle_sudy_valej-comp.pdf']",
     "content_hash": "903243cb463053dbee021f8274b1d51f21538277"
   },
@@ -1945,7 +1945,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Kamelot_Amulet.pro",
+    "chordpro_file": "Kamelot-Amulet.pro",
     "pdf_filenames": "['kamelot_amulet-sken.pdf', 'kamelot_amulet-comp.pdf']",
     "content_hash": "4f227ae0781eaaea73c094b8288c73cec2afc8f6"
   },
@@ -1960,7 +1960,7 @@
     "range": "a1-g1",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Kamelot_Cikani.pro",
+    "chordpro_file": "Kamelot-Cikani.pro",
     "pdf_filenames": "['kamelot_cikani-sken.pdf', 'kamelot_cikani-comp.pdf']",
     "content_hash": "7f0e3ab5ceb3759775be5740c7f62f0e3c0fd8fd"
   },
@@ -1975,7 +1975,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "h g f# g",
-    "chordpro_file": "Kamelot_Zachrante_kone.pro",
+    "chordpro_file": "Kamelot-Zachrante_kone.pro",
     "pdf_filenames": "['kamelot_zachrante_kone-sken.pdf', 'kamelot_zachrante_kone-comp.pdf']",
     "content_hash": "d4b94dbe1c860e3e2a3ccc4208d89865b6feb0b4"
   },
@@ -1990,9 +1990,9 @@
     "range": "g1-e2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Kamil_Strihavka_Zeme_vzdalena.pro",
+    "chordpro_file": "Kamil_Strihavka-Zeme_vzdalena.pro",
     "pdf_filenames": "['kamil_strihavka_zeme_vzdalena-sken.pdf', 'kamil_strihavka_zeme_vzdalena-comp.pdf']",
-    "content_hash": "c55512c0c76c3e748dad5b6c8aa1e5e145643424"
+    "content_hash": "a21107e4468c1ec9f85da94c334bb47b641c4997"
   },
   {
     "title": "Die Biene Maja",
@@ -2005,9 +2005,9 @@
     "range": "a1-f#2",
     "illustration_author": "",
     "start_melody": "a d f# h",
-    "chordpro_file": "Karel_Gott_Die_Biene_Maja.pro",
+    "chordpro_file": "Karel_Gott-Die_Biene_Maja.pro",
     "pdf_filenames": "['karel_gott_die_biene_maja-sken.pdf', 'karel_gott_die_biene_maja-comp.pdf']",
-    "content_hash": "495ee8a89803b560c3dd73926ea7c318ee563f7d"
+    "content_hash": "114068412b064aa344101b87c253624a01f80770"
   },
   {
     "title": "Kdyby sis oči vyplakala",
@@ -2020,7 +2020,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Karel_Gott_Kdyby_sis_oci_vyplakala.pro",
+    "chordpro_file": "Karel_Gott-Kdyby_sis_oci_vyplakala.pro",
     "pdf_filenames": "['karel_gott_kdyby_sis_oci_vyplakala-sken.pdf', 'karel_gott_kdyby_sis_oci_vyplakala-comp.pdf']",
     "content_hash": "434121088dabee55ea8215e19e5b94f6433e603d"
   },
@@ -2035,7 +2035,7 @@
     "range": "e1-c#2",
     "illustration_author": "dalle3",
     "start_melody": "a",
-    "chordpro_file": "Karel_Gott_Trezor.pro",
+    "chordpro_file": "Karel_Gott-Trezor.pro",
     "pdf_filenames": "['karel_gott_trezor-sken.pdf', 'karel_gott_trezor-comp.pdf']",
     "content_hash": "4ab6124be3bf96a32c44e6d9da570c65f8a821eb"
   },
@@ -2050,7 +2050,7 @@
     "range": "g1-h2",
     "illustration_author": "",
     "start_melody": "h h a g",
-    "chordpro_file": "Karel_Kryl_Andel.pro",
+    "chordpro_file": "Karel_Kryl-Andel.pro",
     "pdf_filenames": "['karel_kryl_andel-sken.pdf', 'karel_kryl_andel-comp.pdf']",
     "content_hash": "541f80cecfa1ce619e230116affbde7ee56e24d1"
   },
@@ -2065,7 +2065,7 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Karel_Kryl_Bacil.pro",
+    "chordpro_file": "Karel_Kryl-Bacil.pro",
     "pdf_filenames": "['karel_kryl_bacil-sken.pdf', 'karel_kryl_bacil-comp.pdf', 'karel_kryl_bacil-gen.pdf']",
     "content_hash": "b044851fa4b5e4e1991c6710a73b73fc5b77acf6"
   },
@@ -2080,7 +2080,7 @@
     "range": "a1-g1",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Karel_Kryl_Demokracie.pro",
+    "chordpro_file": "Karel_Kryl-Demokracie.pro",
     "pdf_filenames": "['karel_kryl_demokracie-sken.pdf', 'karel_kryl_demokracie-comp.pdf']",
     "content_hash": "bdc42327c34334194ff0befaa13b70fbc98d7a55"
   },
@@ -2095,7 +2095,7 @@
     "range": "g1-e2",
     "illustration_author": "",
     "start_melody": "c h a",
-    "chordpro_file": "Karel_Kryl_Hlas.pro",
+    "chordpro_file": "Karel_Kryl-Hlas.pro",
     "pdf_filenames": "['karel_kryl_hlas-sken.pdf', 'karel_kryl_hlas-comp.pdf', 'karel_kryl_hlas-gen.pdf']",
     "content_hash": "95b2f8de62701fbefd567457afde9ad36f05a4e0"
   },
@@ -2110,7 +2110,7 @@
     "range": "d1-e2",
     "illustration_author": "",
     "start_melody": "h e",
-    "chordpro_file": "Karel_Kryl_Hle_jak_se_perou.pro",
+    "chordpro_file": "Karel_Kryl-Hle_jak_se_perou.pro",
     "pdf_filenames": "['karel_kryl_hle_jak_se_perou-sken.pdf', 'karel_kryl_hle_jak_se_perou-comp.pdf', 'karel_kryl_hle_jak_se_perou-gen.pdf']",
     "content_hash": "2f8a0c003475dafd318f02f72ce4b8dce9542275"
   },
@@ -2125,7 +2125,7 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Karel_Kryl_Karavana_mraku.pro",
+    "chordpro_file": "Karel_Kryl-Karavana_mraku.pro",
     "pdf_filenames": "['karel_kryl_karavana_mraku-sken.pdf', 'karel_kryl_karavana_mraku-comp.pdf']",
     "content_hash": "70389ecf60c7cee50fff6138be7a38d0fa586218"
   },
@@ -2140,7 +2140,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a h",
-    "chordpro_file": "Karel_Kryl_Kral_a_klaun.pro",
+    "chordpro_file": "Karel_Kryl-Kral_a_klaun.pro",
     "pdf_filenames": "['karel_kryl_kral_a_klaun-sken.pdf', 'karel_kryl_kral_a_klaun-comp.pdf', 'karel_kryl_kral_a_klaun-gen.pdf']",
     "content_hash": "bd474d481e629891d558eb30d2edd82b85707424"
   },
@@ -2155,7 +2155,7 @@
     "range": "a1-d2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Karel_Kryl_Lasko.pro",
+    "chordpro_file": "Karel_Kryl-Lasko.pro",
     "pdf_filenames": "['karel_kryl_lasko-sken.pdf', 'karel_kryl_lasko-comp.pdf', 'karel_kryl_lasko-gen.pdf']",
     "content_hash": "c882f87135a7769eae484f0db45656fde4ae4b4a"
   },
@@ -2170,7 +2170,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Karel_Kryl_Morituri_te_salutant.pro",
+    "chordpro_file": "Karel_Kryl-Morituri_te_salutant.pro",
     "pdf_filenames": "['karel_kryl_morituri_te_salutant-sken.pdf', 'karel_kryl_morituri_te_salutant-comp.pdf']",
     "content_hash": "c2dc37940d9e1019b161a001c86cff8e6bd4ccff"
   },
@@ -2185,7 +2185,7 @@
     "range": "c1-e2",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Karel_Kryl_Nevidoma_divka.pro",
+    "chordpro_file": "Karel_Kryl-Nevidoma_divka.pro",
     "pdf_filenames": "['karel_kryl_nevidoma_divka-sken.pdf', 'karel_kryl_nevidoma_divka-comp.pdf', 'karel_kryl_nevidoma_divka-gen.pdf']",
     "content_hash": "fbc6aab4468731f1940a0bd4ec042221e8e8ab00"
   },
@@ -2200,7 +2200,7 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Karel_Kryl_Pisen_neznameho_vojina.pro",
+    "chordpro_file": "Karel_Kryl-Pisen_neznameho_vojina.pro",
     "pdf_filenames": "['karel_kryl_pisen_neznameho_vojina-sken.pdf', 'karel_kryl_pisen_neznameho_vojina-comp.pdf']",
     "content_hash": "f47cfbaba8a3dde758ae98c53c9a7dd2d0db7b0e"
   },
@@ -2215,7 +2215,7 @@
     "range": "a1-d2",
     "illustration_author": "",
     "start_melody": "a d e f",
-    "chordpro_file": "Karel_Kryl_Ukolebavka.pro",
+    "chordpro_file": "Karel_Kryl-Ukolebavka.pro",
     "pdf_filenames": "['karel_kryl_ukolebavka-sken.pdf', 'karel_kryl_ukolebavka-comp.pdf', 'karel_kryl_ukolebavka-gen.pdf']",
     "content_hash": "bc28a8c5b9862de691984ea529fc8e756b0faa74"
   },
@@ -2230,7 +2230,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Karel_Kryl_Vasil.pro",
+    "chordpro_file": "Karel_Kryl-Vasil.pro",
     "pdf_filenames": "['karel_kryl_vasil-sken.pdf', 'karel_kryl_vasil-comp.pdf']",
     "content_hash": "c8032e4a65816d66955b616047965726d1f8a1f1"
   },
@@ -2245,7 +2245,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Karel_Kryl_Velicenstvo_kat.pro",
+    "chordpro_file": "Karel_Kryl-Velicenstvo_kat.pro",
     "pdf_filenames": "['karel_kryl_velicenstvo_kat-sken.pdf', 'karel_kryl_velicenstvo_kat-comp.pdf']",
     "content_hash": "c593ca1bbc4e1ee463ba8d94dd54d247530a5b10"
   },
@@ -2260,7 +2260,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "f# a",
-    "chordpro_file": "Karel_Plihal_Muj_gral.pro",
+    "chordpro_file": "Karel_Plihal-Muj_gral.pro",
     "pdf_filenames": "['karel_plihal_muj_gral-sken.pdf', 'karel_plihal_muj_gral-comp.pdf']",
     "content_hash": "6ef3905685285892ce0ae2dfa572f7a96ee95c89"
   },
@@ -2275,9 +2275,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Kenny_Rogers_The_Gambler.pro",
+    "chordpro_file": "Kenny_Rogers-The_Gambler.pro",
     "pdf_filenames": "['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']",
-    "content_hash": "b794db1e3e584bf8dcc97956a4558f7e5452eedb"
+    "content_hash": "69324e7a581d38ffb21b6e848a41210406a523bc"
   },
   {
     "title": "Omnia Vincit Amor",
@@ -2290,7 +2290,7 @@
     "range": "e1-d1",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Klic_Omnia_Vincit_Amor.pro",
+    "chordpro_file": "Klic-Omnia_Vincit_Amor.pro",
     "pdf_filenames": "['klic_omnia_vincit_amor-sken.pdf', 'klic_omnia_vincit_amor-comp.pdf']",
     "content_hash": "26bcecbd4a5ff7d5969a707407a616de6da5c5e7"
   },
@@ -2305,24 +2305,9 @@
     "range": "f#1-f1",
     "illustration_author": "",
     "start_melody": "g g a h",
-    "chordpro_file": "Klus_Panu_Bohu_do_oken.pro",
+    "chordpro_file": "Klus-Panu_Bohu_do_oken.pro",
     "pdf_filenames": "['klus_panu_bohu_do_oken-sken.pdf', 'klus_panu_bohu_do_oken-comp.pdf']",
     "content_hash": "66ea9bf0d697729df9ef56ff9a39d533ca00d0fc"
-  },
-  {
-    "title": "Obchodník s deštěm",
-    "artist": "Kryštof",
-    "key": "G",
-    "language": "czech",
-    "date_added": "09-2015",
-    "capo": "2",
-    "tempo": "",
-    "range": "h1-c2",
-    "illustration_author": "",
-    "start_melody": "d",
-    "chordpro_file": "Krstof_Obchodnik_s_destem.pro",
-    "pdf_filenames": "['krstof_obchodnik_s_destem-sken.pdf', 'krstof_obchodnik_s_destem-comp.pdf']",
-    "content_hash": "153752676dd5fbbc56d08b1c5bc3fec56aa31018"
   },
   {
     "title": "Cesta",
@@ -2335,9 +2320,24 @@
     "range": "g1-f1",
     "illustration_author": "",
     "start_melody": "c g",
-    "chordpro_file": "Krystof_Cesta.pro",
+    "chordpro_file": "Krystof-Cesta.pro",
     "pdf_filenames": "['krystof_cesta-sken.pdf', 'krystof_cesta-comp.pdf']",
     "content_hash": "6cdb75b1a92f67a788148d41ba6206b6c5300ed6"
+  },
+  {
+    "title": "Obchodník s deštěm",
+    "artist": "Kryštof",
+    "key": "G",
+    "language": "czech",
+    "date_added": "09-2015",
+    "capo": "2",
+    "tempo": "",
+    "range": "h1-c2",
+    "illustration_author": "",
+    "start_melody": "d",
+    "chordpro_file": "Krystof-Obchodnik_s_destem.pro",
+    "pdf_filenames": "['krstof_obchodnik_s_destem-sken.pdf', 'krstof_obchodnik_s_destem-comp.pdf']",
+    "content_hash": "153752676dd5fbbc56d08b1c5bc3fec56aa31018"
   },
   {
     "title": "Ty a já",
@@ -2350,7 +2350,7 @@
     "range": "d1-d3",
     "illustration_author": "",
     "start_melody": "g d",
-    "chordpro_file": "Krystof_Ty_a_ja.pro",
+    "chordpro_file": "Krystof-Ty_a_ja.pro",
     "pdf_filenames": "['krystof_ty_a_ja-sken.pdf', 'krystof_ty_a_ja-comp.pdf']",
     "content_hash": "70089fe2d6cdc2398b8375fba50ef7e2aa99fd2c"
   },
@@ -2365,9 +2365,9 @@
     "range": "a1-d2",
     "illustration_author": "",
     "start_melody": "a f#",
-    "chordpro_file": "La_Vela_Puerca_De_Atar.pro",
+    "chordpro_file": "La_Vela_Puerca-De_Atar.pro",
     "pdf_filenames": "['la_vela_puerca_de_atar-sken.pdf', 'la_vela_puerca_de_atar-comp.pdf', 'la_vela_puerca_de_atar-gen.pdf']",
-    "content_hash": "78e34a3bf0c2aea2599cfe177b1ed8af172c7912"
+    "content_hash": "78911dfa0b1f3e5e80f9e630c07ceb38c9054bc3"
   },
   {
     "title": "Sé a Dónde Quiere Ir",
@@ -2380,9 +2380,9 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "g d",
-    "chordpro_file": "La_Vela_Puerca_Se_a_Donde_Quiere_Ir.pro",
+    "chordpro_file": "La_Vela_Puerca-Se_a_Donde_Quiere_Ir.pro",
     "pdf_filenames": "['la_vela_puerca_se_a_donde_quiere_ir-sken.pdf', 'la_vela_puerca_se_a_donde_quiere_ir-comp.pdf', 'la_vela_puerca_se_a_donde_quiere_ir-gen.pdf']",
-    "content_hash": "07aaf1a513b30499a99a96717cb3df711b3e5642"
+    "content_hash": "4318db2676c01232a0785822f557a215589fe259"
   },
   {
     "title": "Pro tebe",
@@ -2395,7 +2395,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "a f",
-    "chordpro_file": "Lenka_Dusilova_Pro_tebe.pro",
+    "chordpro_file": "Lenka_Dusilova-Pro_tebe.pro",
     "pdf_filenames": "['lenka_dusilova_pro_tebe-sken.pdf', 'lenka_dusilova_pro_tebe-comp.pdf']",
     "content_hash": "93a58813ad425328956f21b13e92ddd3c9897df6"
   },
@@ -2410,7 +2410,7 @@
     "range": "a1-e2",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Leonard_Cohen_Hallelujah.pro",
+    "chordpro_file": "Leonard_Cohen-Hallelujah.pro",
     "pdf_filenames": "['leonard_cohen_hallelujah-sken.pdf', 'leonard_cohen_hallelujah-comp.pdf']",
     "content_hash": "c903e141ad49c04286874e4039b1031525481588"
   },
@@ -2425,9 +2425,9 @@
     "range": "a1-f#1",
     "illustration_author": "",
     "start_melody": "h a",
-    "chordpro_file": "Lidova_pisen_Buraky.pro",
+    "chordpro_file": "Lidova_pisen-Buraky.pro",
     "pdf_filenames": "['lidova_pisen_buraky-sken.pdf', 'lidova_pisen_buraky-comp.pdf']",
-    "content_hash": "ffa081da86e1fbf1f26e7b7f7cde35e727c93ca7"
+    "content_hash": "ab19e6a63828e2b651f21205e4bae99565ecfa57"
   },
   {
     "title": "Čerešničky",
@@ -2440,24 +2440,9 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Lidova_pisen_Ceresnicky.pro",
+    "chordpro_file": "Lidova_pisen-Ceresnicky.pro",
     "pdf_filenames": "['lidova_pisen_ceresnicky-sken.pdf', 'lidova_pisen_ceresnicky-comp.pdf']",
-    "content_hash": "991d4e567b590aedfe63c93f56715bf0ec5b5318"
-  },
-  {
-    "title": "Foggy Dew",
-    "artist": "Lidová píseň",
-    "key": "",
-    "language": "other",
-    "date_added": "07-2015",
-    "capo": "0",
-    "tempo": "",
-    "range": "",
-    "illustration_author": "",
-    "start_melody": "",
-    "chordpro_file": "Lidova_pisen_Foggy_Dew.pro",
-    "pdf_filenames": "['lidova_pisen_foggy_dew-sken.pdf', 'lidova_pisen_foggy_dew-comp.pdf']",
-    "content_hash": "883ef2d65cbe3dd4c04baf638c5a9b2d62427f57"
+    "content_hash": "61d5b2fd7dceb3b89ee4194a15b8f7d2802958e5"
   },
   {
     "title": "To ta Hel'pa",
@@ -2470,7 +2455,7 @@
     "range": "d1-d2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Lidova_pisen_To_ta_Helpa.pro",
+    "chordpro_file": "Lidova_pisen-To_ta_Helpa.pro",
     "pdf_filenames": "['lidova_pisen_to_ta_helpa-sken.pdf', 'lidova_pisen_to_ta_helpa-comp.pdf']",
     "content_hash": "1ca3a9e3b3ceb0644d7f44844d9f6f25c1e0ead9"
   },
@@ -2485,9 +2470,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Linkin_Park_New_Divide.pro",
+    "chordpro_file": "Linkin_Park-New_Divide.pro",
     "pdf_filenames": "['linkin_park_new_divide-sken.pdf', 'linkin_park_new_divide-comp.pdf', 'linkin_park_new_divide-gen.pdf']",
-    "content_hash": "e280880de8364a84e1440446d43e0875bec0ca71"
+    "content_hash": "7aca94d45236ef3216f94b60df75e6badfdf89c9"
   },
   {
     "title": "We Are One",
@@ -2500,9 +2485,9 @@
     "range": "d1-d2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Lion_King_We_Are_One.pro",
+    "chordpro_file": "Lion_King-We_Are_One.pro",
     "pdf_filenames": "['lion_king_we_are_one-sken.pdf', 'lion_king_we_are_one-comp.pdf']",
-    "content_hash": "c884fd76d9298e4d9471c8d7118b3e681b81b75f"
+    "content_hash": "c88532f42ef696351da0bb48717e35c8fa85810c"
   },
   {
     "title": "Ievan Polkka",
@@ -2515,9 +2500,9 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "a d",
-    "chordpro_file": "Loituma_Ievan_Polkka.pro",
+    "chordpro_file": "Loituma-Ievan_Polkka.pro",
     "pdf_filenames": "['loituma_ievan_polkka-sken.pdf', 'loituma_ievan_polkka-comp.pdf']",
-    "content_hash": "52469c16b41904298e0a856e62497eeb700690de"
+    "content_hash": "ba78e85a06570c910f4ffe28836cbb8a56cd755d"
   },
   {
     "title": "Amerika",
@@ -2530,7 +2515,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "d h",
-    "chordpro_file": "Lucie_Amerika.pro",
+    "chordpro_file": "Lucie-Amerika.pro",
     "pdf_filenames": "['lucie_amerika-sken.pdf', 'lucie_amerika-comp.pdf']",
     "content_hash": "57c6100ec5762218e3d22fdd6d142e11b96b625d"
   },
@@ -2545,7 +2530,7 @@
     "range": "d1-g2",
     "illustration_author": "dalle3",
     "start_melody": "a a g a",
-    "chordpro_file": "Lucie_Chci_zas_v_tobe_spat.pro",
+    "chordpro_file": "Lucie-Chci_zas_v_tobe_spat.pro",
     "pdf_filenames": "['lucie_chci_zas_v_tobe_spat-sken.pdf', 'lucie_chci_zas_v_tobe_spat-comp.pdf']",
     "content_hash": "80896f159bb538183bfeec2b573b0a3ac08f8cd6"
   },
@@ -2560,7 +2545,7 @@
     "range": "a1-c#2",
     "illustration_author": "dalle3",
     "start_melody": "e",
-    "chordpro_file": "Lucie_Medvidek.pro",
+    "chordpro_file": "Lucie-Medvidek.pro",
     "pdf_filenames": "['lucie_medvidek-sken.pdf', 'lucie_medvidek-comp.pdf']",
     "content_hash": "a7c520ca9ba071f742459013d1cd9db46ac58495"
   },
@@ -2575,7 +2560,7 @@
     "range": "c#1-c#2",
     "illustration_author": "",
     "start_melody": "c# e g#",
-    "chordpro_file": "Lucie_Sen.pro",
+    "chordpro_file": "Lucie-Sen.pro",
     "pdf_filenames": "['lucie_sen-sken.pdf', 'lucie_sen-comp.pdf']",
     "content_hash": "304ddd739f56afb6966b414739b6048bca9424b8"
   },
@@ -2590,9 +2575,9 @@
     "range": "h1-d2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Luis_Fonsi_Despacito.pro",
+    "chordpro_file": "Luis_Fonsi-Despacito.pro",
     "pdf_filenames": "['luis_fonsi_despacito-sken.pdf', 'luis_fonsi_despacito-comp.pdf']",
-    "content_hash": "2d0b0d3ec2344a562d8458a5c22f78086e06a889"
+    "content_hash": "f97112ec105a3d4334a4943d31e8d945684c55c5"
   },
   {
     "title": "Maruška",
@@ -2605,9 +2590,9 @@
     "range": "h1-g1",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Malomocnost_pazdnoty_Maruska.pro",
+    "chordpro_file": "Malomocnost_prazdnoty-Maruska.pro",
     "pdf_filenames": "['malomocnost_pazdnoty_maruska-sken.pdf', 'malomocnost_pazdnoty_maruska-comp.pdf']",
-    "content_hash": "cc3e7715cbd246f1d206393259eb7575f8caeaca"
+    "content_hash": "3ee6c5dff293f91bd100b5ebbd05ed8a6a56797f"
   },
   {
     "title": "Šrouby a matice",
@@ -2620,7 +2605,7 @@
     "range": "e1-d1",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Mandrage_Srouby_a_matice.pro",
+    "chordpro_file": "Mandrage-Srouby_a_matice.pro",
     "pdf_filenames": "['mandrage_srouby_a_matice-sken.pdf', 'mandrage_srouby_a_matice-comp.pdf']",
     "content_hash": "892f2fcdc2acd12deaf0dee2f614b56e52594405"
   },
@@ -2635,7 +2620,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Marsyas_S_Luisem.pro",
+    "chordpro_file": "Marsyas-S_Luisem.pro",
     "pdf_filenames": "['marsyas_s_luisem-sken.pdf', 'marsyas_s_luisem-comp.pdf']",
     "content_hash": "ee48103664108a0bf795c504e0b167daf469838f"
   },
@@ -2650,7 +2635,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Marta_Kubisova_Nechte_zvony_znit.pro",
+    "chordpro_file": "Marta_Kubisova-Nechte_zvony_znit.pro",
     "pdf_filenames": "['marta_kubisova_nechte_zvony_znit-sken.pdf', 'marta_kubisova_nechte_zvony_znit-comp.pdf']",
     "content_hash": "3002a39a4da59133ad7a5e17da71b6dca638c446"
   },
@@ -2665,7 +2650,7 @@
     "range": "c1-a1",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Maxim_Turbulenc_Jede_jede_masinka.pro",
+    "chordpro_file": "Maxim_Turbulenc-Jede_jede_masinka.pro",
     "pdf_filenames": "['maxim_turbulenc_jede_jede_masinka-sken.pdf', 'maxim_turbulenc_jede_jede_masinka-comp.pdf']",
     "content_hash": "870d953b58f30af1d5aad96f9697d8cb257b5543"
   },
@@ -2680,9 +2665,9 @@
     "range": "c1-g1",
     "illustration_author": "",
     "start_melody": "c e f g",
-    "chordpro_file": "Maxim_Turbulenc_Tri_citronky.pro",
+    "chordpro_file": "Maxim_Turbulenc-Tri_citronky.pro",
     "pdf_filenames": "['maxim_turbulenc_tri_citronky-sken.pdf', 'maxim_turbulenc_tri_citronky-comp.pdf']",
-    "content_hash": "2947a71b4de44fe6d7cb7d988013061476527820"
+    "content_hash": "b7182e9b5abd834a9d5b044386f8288908ae3731"
   },
   {
     "title": "Nothing Else Matters",
@@ -2695,9 +2680,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Metallica_Nothing_Else_Matters.pro",
+    "chordpro_file": "Metallica-Nothing_Else_Matters.pro",
     "pdf_filenames": "['metallica_nothing_else_matters-sken.pdf', 'metallica_nothing_else_matters-comp.pdf']",
-    "content_hash": "c0ffd3f4792ec0785bb938f4c8478161a033142c"
+    "content_hash": "75646ea474f5a0a672f88053096b702174d75fcd"
   },
   {
     "title": "Nonstop",
@@ -2710,7 +2695,7 @@
     "range": "d1-a1",
     "illustration_author": "dalle3",
     "start_melody": "e f#",
-    "chordpro_file": "Michal_David_Nonstop.pro",
+    "chordpro_file": "Michal_David-Nonstop.pro",
     "pdf_filenames": "['michal_david_nonstop-sken.pdf', 'michal_david_nonstop-comp.pdf', 'michal_david_nonstop-gen.pdf']",
     "content_hash": "2b5d48bcef841c7ed297b63a97ee3d17e11c7495"
   },
@@ -2725,9 +2710,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Michal_Horak_Mezinarodni.pro",
+    "chordpro_file": "Michal_Horak-Mezinarodni.pro",
     "pdf_filenames": "['michal_horak_mezinarodni-sken.pdf', 'michal_horak_mezinarodni-comp.pdf']",
-    "content_hash": "6ca12093b33eb42be9dbb5abfd380dc641afe7cf"
+    "content_hash": "2cef8c676985c0f282bd3865189ab79a612a6186"
   },
   {
     "title": "Zakázané uvolnění",
@@ -2740,9 +2725,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Michal_Hruza_Zakazane_uvolneni.pro",
+    "chordpro_file": "Michal_Hruza-Zakazane_uvolneni.pro",
     "pdf_filenames": "['michal_hruza_zakazane_uvolneni-sken.pdf', 'michal_hruza_zakazane_uvolneni-comp.pdf', 'michal_hruza_zakazane_uvolneni-gen.pdf']",
-    "content_hash": "4a723e68f1e60884339f7dd217eab251edffa578"
+    "content_hash": "62144caf9044601e7783ad25da717623fc69a7f6"
   },
   {
     "title": "Abych Tu Žil",
@@ -2755,7 +2740,7 @@
     "range": "a1-d2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Michal_Tucny_Abych_Tu_Zil.pro",
+    "chordpro_file": "Michal_Tucny-Abych_Tu_Zil.pro",
     "pdf_filenames": "['michal_tucny_abych_tu_zil-sken.pdf', 'michal_tucny_abych_tu_zil-comp.pdf']",
     "content_hash": "bf13db92c2e4e0cb73324aa61aefac9fc7b59613"
   },
@@ -2770,7 +2755,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Michal_Tucny_Poveste_ho_vejs.pro",
+    "chordpro_file": "Michal_Tucny-Poveste_ho_vejs.pro",
     "pdf_filenames": "['michal_tucny_poveste_ho_vejs-sken.pdf', 'michal_tucny_poveste_ho_vejs-comp.pdf', 'michal_tucny_poveste_ho_vejs-gen.pdf']",
     "content_hash": "6aa8370d4856c799a54771a52699773acf6a78fa"
   },
@@ -2785,7 +2770,7 @@
     "range": "c1-h1",
     "illustration_author": "",
     "start_melody": "g h d",
-    "chordpro_file": "Michal_Tucny_Prodavac.pro",
+    "chordpro_file": "Michal_Tucny-Prodavac.pro",
     "pdf_filenames": "['michal_tucny_prodavac-sken.pdf', 'michal_tucny_prodavac-comp.pdf']",
     "content_hash": "22ad915648b2613e2c5afeb03f0c1d11f80f94bf"
   },
@@ -2805,6 +2790,21 @@
     "content_hash": "f9d4ad6ab7ef58214809994b93d92bc8035e34c3"
   },
   {
+    "title": "ARI song",
+    "artist": "Milan Prouza",
+    "key": "G",
+    "language": "czech",
+    "date_added": "08-2018",
+    "capo": "5",
+    "tempo": "",
+    "range": "d1-a2",
+    "illustration_author": "",
+    "start_melody": "f#",
+    "chordpro_file": "Milan_Prouza-ARI_song.pro",
+    "pdf_filenames": "['______________ari_song-sken.pdf', '______________ari_song-comp.pdf']",
+    "content_hash": "a72d48283b5788723d51b3041bddbf4537c7bc83"
+  },
+  {
     "title": "Wrecking Ball",
     "artist": "Miley Cyrus",
     "key": "e",
@@ -2815,7 +2815,7 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "h e",
-    "chordpro_file": "Miley_Cyrus_Wrecking_Ball.pro",
+    "chordpro_file": "Miley_Cyrus-Wrecking_Ball.pro",
     "pdf_filenames": "['miley_cyrus_wrecking_ball-sken.pdf', 'miley_cyrus_wrecking_ball-comp.pdf']",
     "content_hash": "1ebcacbaa5c4ea2ff43c155b85319e5a52ef1bf5"
   },
@@ -2830,9 +2830,9 @@
     "range": "g1-c#2",
     "illustration_author": "",
     "start_melody": "a e",
-    "chordpro_file": "Mulan_Ill_Make_a_Man_out_of_You.pro",
+    "chordpro_file": "Mulan-Ill_Make_a_Man_out_of_You.pro",
     "pdf_filenames": "['mulan_ill_make_a_man_out_of_you-sken.pdf', 'mulan_ill_make_a_man_out_of_you-comp.pdf', 'mulan_ill_make_a_man_out_of_you-gen.pdf']",
-    "content_hash": "4c72ff090df55e1012d4467e6774d79fa6257cd8"
+    "content_hash": "bdc9bc2fadeb66ea6b8a8e8629dcc48e64a920e3"
   },
   {
     "title": "Igelit",
@@ -2845,9 +2845,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Nedvedi_Igelit.pro",
+    "chordpro_file": "Nedvedi-Igelit.pro",
     "pdf_filenames": "['nedvedi_igelit-sken.pdf', 'nedvedi_igelit-comp.pdf']",
-    "content_hash": "a4c265377a66426d3adedb3c954b9f38c7788ae1"
+    "content_hash": "ec74f99a2a3df9cbf10012516fe43d783357dd5f"
   },
   {
     "title": "Loučím se s tmou",
@@ -2860,7 +2860,7 @@
     "range": "d1-h1",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Nedvedi_Loucim_se_s_tmou.pro",
+    "chordpro_file": "Nedvedi-Loucim_se_s_tmou.pro",
     "pdf_filenames": "['nedvedi_loucim_se_s_tmou-sken.pdf', 'nedvedi_loucim_se_s_tmou-comp.pdf']",
     "content_hash": "025c3387f94656b8998b6cd6fdbd4ae45e363d08"
   },
@@ -2875,7 +2875,7 @@
     "range": "d1-a2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Nedvedi_Skladanka.pro",
+    "chordpro_file": "Nedvedi-Skladanka.pro",
     "pdf_filenames": "['nedvedi_skladanka-sken.pdf', 'nedvedi_skladanka-comp.pdf']",
     "content_hash": "6109e5e0a82eeae18aa426dba12f70dbbf4db671"
   },
@@ -2890,7 +2890,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Nerez_Ja_s_tebou_zit_nebudu.pro",
+    "chordpro_file": "Nerez-Ja_s_tebou_zit_nebudu.pro",
     "pdf_filenames": "['nerez_ja_s_tebou_zit_nebudu-sken.pdf', 'nerez_ja_s_tebou_zit_nebudu-comp.pdf']",
     "content_hash": "7a1c19e6268b30495d8ac0cef9388586dd253ef9"
   },
@@ -2905,7 +2905,7 @@
     "range": "c1-a1",
     "illustration_author": "",
     "start_melody": "f",
-    "chordpro_file": "Nezmari_Boure.pro",
+    "chordpro_file": "Nezmari-Boure.pro",
     "pdf_filenames": "['nezmari_boure-sken.pdf', 'nezmari_boure-comp.pdf']",
     "content_hash": "0833bfc073329a76455fdb223dd2323fc90730f1"
   },
@@ -2920,7 +2920,7 @@
     "range": "a1-g1",
     "illustration_author": "",
     "start_melody": "a a c",
-    "chordpro_file": "Nezmari_Pisek.pro",
+    "chordpro_file": "Nezmari-Pisek.pro",
     "pdf_filenames": "['nezmari_pisek-sken.pdf', 'nezmari_pisek-comp.pdf']",
     "content_hash": "ad9a1113d2703a0730162d989f978bdbe9a60106"
   },
@@ -2935,7 +2935,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Neznamy_Nadrazi.pro",
+    "chordpro_file": "Neznamy-Nadrazi.pro",
     "pdf_filenames": "['neznamy_nadrazi-sken.pdf', 'neznamy_nadrazi-comp.pdf']",
     "content_hash": "20035f8eda1d6c05c093c0fa36435816a3fdfe8e"
   },
@@ -2950,7 +2950,7 @@
     "range": "a1-g2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Nightwork_Cekam_na_signal.pro",
+    "chordpro_file": "Nightwork-Cekam_na_signal.pro",
     "pdf_filenames": "['nightwork_cekam_na_signal-sken.pdf', 'nightwork_cekam_na_signal-comp.pdf']",
     "content_hash": "642b4c1188f26294497938d91d9b072fe2390623"
   },
@@ -2965,7 +2965,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Nightwork_Maja.pro",
+    "chordpro_file": "Nightwork-Maja.pro",
     "pdf_filenames": "['nightwork_maja-sken.pdf', 'nightwork_maja-comp.pdf']",
     "content_hash": "93434a126565ab443340bb7521f62fe88e30f542"
   },
@@ -2980,7 +2980,7 @@
     "range": "e1-h1",
     "illustration_author": "",
     "start_melody": "g# f# e",
-    "chordpro_file": "Nirvana_Where_Did_You_Sleep_Last_Night.pro",
+    "chordpro_file": "Nirvana-Where_Did_You_Sleep_Last_Night.pro",
     "pdf_filenames": "['nirvana_where_did_you_sleep_last_night-sken.pdf', 'nirvana_where_did_you_sleep_last_night-comp.pdf']",
     "content_hash": "8d3ab426a46f2690eb1a6c28e0467456e1d5dddf"
   },
@@ -3010,7 +3010,7 @@
     "range": "h1-d2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Olympic_Bon_soir_mademoiselle_Paris.pro",
+    "chordpro_file": "Olympic-Bon_soir_mademoiselle_Paris.pro",
     "pdf_filenames": "['olympic_bon_soir_mademoiselle_paris-sken.pdf', 'olympic_bon_soir_mademoiselle_paris-comp.pdf']",
     "content_hash": "2ad5503e9b36f734ab29182da6cd834b775fa099"
   },
@@ -3025,7 +3025,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Olympic_Dej_mi_vic_sve_lasky.pro",
+    "chordpro_file": "Olympic-Dej_mi_vic_sve_lasky.pro",
     "pdf_filenames": "['olympic_dej_mi_vic_sve_lasky-sken.pdf', 'olympic_dej_mi_vic_sve_lasky-comp.pdf']",
     "content_hash": "678a6b2485345efc32f522557d4fee06f1b6d7ab"
   },
@@ -3040,7 +3040,7 @@
     "range": "g1-e1",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Olympic_Jasna_zprava.pro",
+    "chordpro_file": "Olympic-Jasna_zprava.pro",
     "pdf_filenames": "['olympic_jasna_zprava-sken.pdf', 'olympic_jasna_zprava-comp.pdf']",
     "content_hash": "24b1859d4508b0d89e0fd1adbf67e798a9a9ec60"
   },
@@ -3055,7 +3055,7 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Olympic_Okno_me_lasky.pro",
+    "chordpro_file": "Olympic-Okno_me_lasky.pro",
     "pdf_filenames": "['olympic_okno_me_lasky-sken.pdf', 'olympic_okno_me_lasky-comp.pdf']",
     "content_hash": "238effea29a9da68d80aae6d7c0989bc892ad6de"
   },
@@ -3070,7 +3070,7 @@
     "range": "d1-e2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Olympic_Taky_jsem_se_narodil_bos.pro",
+    "chordpro_file": "Olympic-Taky_jsem_se_narodil_bos.pro",
     "pdf_filenames": "['olympic_taky_jsem_se_narodil_bos-sken.pdf', 'olympic_taky_jsem_se_narodil_bos-comp.pdf']",
     "content_hash": "3f121d862c6220e3b2ece2178ce03dd59f0feb74"
   },
@@ -3085,7 +3085,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "a d",
-    "chordpro_file": "Otto_Vokal_To_neni_vecer.pro",
+    "chordpro_file": "Otto_Vokal-To_neni_vecer.pro",
     "pdf_filenames": "['otto_vokal_to_neni_vecer-sken.pdf', 'otto_vokal_to_neni_vecer-comp.pdf', 'otto_vokal_to_neni_vecer-gen.pdf']",
     "content_hash": "309f748b938ce7eb4f4c43787257caf17dceedea"
   },
@@ -3100,7 +3100,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Owl_City_Fireflies.pro",
+    "chordpro_file": "Owl_City-Fireflies.pro",
     "pdf_filenames": "['owl_city_fireflies-sken.pdf', 'owl_city_fireflies-comp.pdf']",
     "content_hash": "716ffb59c950510738da88d07db639ed6abb0ea3"
   },
@@ -3115,9 +3115,9 @@
     "range": "g1-e2/c3",
     "illustration_author": "",
     "start_melody": "c a",
-    "chordpro_file": "OZone_Dragostea_Din_Tei.pro",
+    "chordpro_file": "OZone-Dragostea_Din_Tei.pro",
     "pdf_filenames": "['ozone_dragostea_din_tei-sken.pdf', 'ozone_dragostea_din_tei-comp.pdf', 'ozone_dragostea_din_tei-gen.pdf']",
-    "content_hash": "497de1de526a371fdc20e9957c8a2e6150b71bd5"
+    "content_hash": "564f993bcc9e772b56d3c8cd1ac88ae87d280e46"
   },
   {
     "title": "Strom",
@@ -3130,7 +3130,7 @@
     "range": "a1-f#1",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Ozvena_Strom.pro",
+    "chordpro_file": "Ozvena-Strom.pro",
     "pdf_filenames": "['ozvena_strom-sken.pdf', 'ozvena_strom-comp.pdf', 'ozvena_strom-gen.pdf']",
     "content_hash": "13bddfa1d1616de9f6ae7a2b74ffd066c06accc1"
   },
@@ -3145,9 +3145,9 @@
     "range": "e1-g#2",
     "illustration_author": "",
     "start_melody": "h g#",
-    "chordpro_file": "Ozzy_Osbourne_Mama.pro",
+    "chordpro_file": "Ozzy_Osbourne-Mama.pro",
     "pdf_filenames": "['ozzy_osbourne_mama-sken.pdf', 'ozzy_osbourne_mama-comp.pdf']",
-    "content_hash": "37077a17ed1c696e255260851b03f7239eab2320"
+    "content_hash": "080060d4fa5679a67531657559b591ed501ea1e5"
   },
   {
     "title": "Mississippi blues",
@@ -3160,7 +3160,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Pacifik_Mississippi_blues.pro",
+    "chordpro_file": "Pacifik-Mississippi_blues.pro",
     "pdf_filenames": "['pacifik_mississippi_blues-sken.pdf', 'pacifik_mississippi_blues-comp.pdf']",
     "content_hash": "d91eb357fe35b268f3fa5ba2974733dedc28cbdd"
   },
@@ -3175,7 +3175,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Pavel_Bobek_Ved_me_dal_cesto_ma.pro",
+    "chordpro_file": "Pavel_Bobek-Ved_me_dal_cesto_ma.pro",
     "pdf_filenames": "['pavel_bobek_ved_me_dal_cesto_ma-sken.pdf', 'pavel_bobek_ved_me_dal_cesto_ma-comp.pdf']",
     "content_hash": "475ec08708655717ae7000818771357080cc0c69"
   },
@@ -3192,7 +3192,7 @@
     "start_melody": "f",
     "chordpro_file": "Pavel_Cadek-Urednikuv_song.pro",
     "pdf_filenames": "",
-    "content_hash": "e2a4d227f651eeeaf5b6f25a82ec0f4278ee942b"
+    "content_hash": "2f6b08f7fcfa1350aa50885eb2cc1bae8f4b759c"
   },
   {
     "title": "Bláznova ukolébavka",
@@ -3205,7 +3205,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "d d d c# d",
-    "chordpro_file": "Pavel_Dydovic_Blaznova_ukolebavka.pro",
+    "chordpro_file": "Pavel_Dydovic-Blaznova_ukolebavka.pro",
     "pdf_filenames": "['pavel_dydovic_blaznova_ukolebavka-sken.pdf', 'pavel_dydovic_blaznova_ukolebavka-comp.pdf']",
     "content_hash": "3dbe4c10cc28899d6b5cfc465fa760c2a366330b"
   },
@@ -3220,24 +3220,9 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Pavel_Lohonka_Zalman_Divokej_horskej_tymian.pro",
+    "chordpro_file": "Pavel_Lohonka_Zalman-Divokej_horskej_tymian.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf', 'pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf']",
     "content_hash": "b59565f846884e08be61571d0d8ea1a762c2f911"
-  },
-  {
-    "title": "Jdem zpátky do lesů",
-    "artist": "Žalman & Spol.",
-    "key": "G",
-    "language": "czech",
-    "date_added": "07-2015",
-    "capo": "0",
-    "tempo": "",
-    "range": "d1-h1",
-    "illustration_author": "",
-    "start_melody": "g",
-    "chordpro_file": "Pavel_Lohonka_Zalman_Jdem_zpatky_do_lesu.pro",
-    "pdf_filenames": "['pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf', 'pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf']",
-    "content_hash": "7bfef79f1d4176f16c18f8e58ef160af2f43180d"
   },
   {
     "title": "Rána v trávě",
@@ -3250,7 +3235,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Pavel_Lohonka_Zalman_Rana_v_trave.pro",
+    "chordpro_file": "Pavel_Lohonka_Zalman-Rana_v_trave.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_rana_v_trave-sken.pdf', 'pavel_lohonka_zalman_rana_v_trave-comp.pdf']",
     "content_hash": "c37c314f1aa92fef65b28ef6f890a3cd3746202f"
   },
@@ -3265,7 +3250,7 @@
     "range": "a1-c2",
     "illustration_author": "",
     "start_melody": "a d",
-    "chordpro_file": "Pavel_Lohonka_Zalman_Tri_prani.pro",
+    "chordpro_file": "Pavel_Lohonka_Zalman-Tri_prani.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_tri_prani-sken.pdf', 'pavel_lohonka_zalman_tri_prani-comp.pdf']",
     "content_hash": "d0fac249922ac7a9f040c6415beb198d5d09c949"
   },
@@ -3280,9 +3265,9 @@
     "range": "a1-c#2",
     "illustration_author": "",
     "start_melody": "f# a h",
-    "chordpro_file": "Pavel_Lohonka_Zalman_Vojacek_z_Moorlough_Shore.pro",
+    "chordpro_file": "Pavel_Lohonka_Zalman-Vojacek_z_Moorlough_Shore.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf']",
-    "content_hash": "00f964acc1b7102f0f797f244660986713e19931"
+    "content_hash": "4f1feecf1ba93df1829fe2f0c3db3f6579c9ef21"
   },
   {
     "title": "Všech vandráků můza",
@@ -3295,7 +3280,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "h c d",
-    "chordpro_file": "Pavel_Lohonka_Zalman_Vsech_vandraku_muza.pro",
+    "chordpro_file": "Pavel_Lohonka_Zalman-Vsech_vandraku_muza.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_vsech_vandraku_muza-sken.pdf', 'pavel_lohonka_zalman_vsech_vandraku_muza-comp.pdf']",
     "content_hash": "ef544d54f16997d59d893c701208a6bc313e5695"
   },
@@ -3310,9 +3295,9 @@
     "range": "d1/c1-a1/a1",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Pavel_Roth_Zahrada_ticha.pro",
+    "chordpro_file": "Pavel_Roth-Zahrada_ticha.pro",
     "pdf_filenames": "['pavel_roth_zahrada_ticha-sken.pdf', 'pavel_roth_zahrada_ticha-comp.pdf']",
-    "content_hash": "b3a3eda089a775573bf32f87cb7af7c64dee3f95"
+    "content_hash": "ae566f48514d24bc051481f073af8adc4e1ae7d6"
   },
   {
     "title": "Spomal'",
@@ -3325,7 +3310,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Peha_Spomal.pro",
+    "chordpro_file": "Peha-Spomal.pro",
     "pdf_filenames": "['peha_spomal-sken.pdf', 'peha_spomal-comp.pdf']",
     "content_hash": "772e1a856ad5a4caaf3f8ece7c8f24b78fba8fe0"
   },
@@ -3340,7 +3325,7 @@
     "range": "g1-h2",
     "illustration_author": "",
     "start_melody": "e f#",
-    "chordpro_file": "Peha_Za_tebou.pro",
+    "chordpro_file": "Peha-Za_tebou.pro",
     "pdf_filenames": "['peha_za_tebou-sken.pdf', 'peha_za_tebou-comp.pdf']",
     "content_hash": "83fa44eb633b701297ba4270b361e0398c000577"
   },
@@ -3355,9 +3340,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Penk__Pergner_O_blaznech.pro",
+    "chordpro_file": "Penk__Pergner-O_blaznech.pro",
     "pdf_filenames": "['penk__pergner_o_blaznech-sken.pdf', 'penk__pergner_o_blaznech-comp.pdf']",
-    "content_hash": "6d37f0e3a8d61bfb995a49e2aa82036496e3df11"
+    "content_hash": "ae70bedef2a35b40110137f34b12b90738975e43"
   },
   {
     "title": "Nad horů svítá",
@@ -3370,7 +3355,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "e h e",
-    "chordpro_file": "Petr_Bende_Nad_horu_svita.pro",
+    "chordpro_file": "Petr_Bende-Nad_horu_svita.pro",
     "pdf_filenames": "['petr_bende_nad_horu_svita-sken.pdf', 'petr_bende_nad_horu_svita-comp.pdf', 'petr_bende_nad_horu_svita-gen.pdf']",
     "content_hash": "dfd44a6e83e31d7dea940fa8b7a8703f23c8540f"
   },
@@ -3385,7 +3370,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Petr_Muller_Koleje.pro",
+    "chordpro_file": "Petr_Muller-Koleje.pro",
     "pdf_filenames": "['petr_muller_koleje-sken.pdf', 'petr_muller_koleje-comp.pdf']",
     "content_hash": "06bc9deff1629962c1d77c32aacec298ff508d8b"
   },
@@ -3400,14 +3385,14 @@
     "range": "d1-h1",
     "illustration_author": "",
     "start_melody": "a g f#",
-    "chordpro_file": "Petr_Novak_Ja_budu_chodit_po_spickach.pro",
+    "chordpro_file": "Petr_Novak-Ja_budu_chodit_po_spickach.pro",
     "pdf_filenames": "['petr_novak_ja_budu_chodit_po_spickach-sken.pdf', 'petr_novak_ja_budu_chodit_po_spickach-comp.pdf']",
-    "content_hash": "2c74c0a480c49f98fd80c4bdd3c2df20c6fc8dfb"
+    "content_hash": "c57050a49f0205c091c3c61e9bb3e1201f43ea16"
   },
   {
     "title": "26",
     "artist": "Pokáč",
-    "key": "",
+    "key": "C",
     "language": "czech",
     "date_added": "12-2018",
     "capo": "0",
@@ -3415,9 +3400,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Pokac_26_.pro",
+    "chordpro_file": "Pokac-26.pro",
     "pdf_filenames": "['pokac_26_-sken.pdf', 'pokac_26_-comp.pdf']",
-    "content_hash": "7be818da02d277e91ca506adcc0d69c0e6ad32aa"
+    "content_hash": "7d93af5308bbde786aeef118a4209b6bc303b55e"
   },
   {
     "title": "Co z tebe bude",
@@ -3430,7 +3415,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Pokac_Co_z_tebe_bude.pro",
+    "chordpro_file": "Pokac-Co_z_tebe_bude.pro",
     "pdf_filenames": "['pokac_co_z_tebe_bude-sken.pdf', 'pokac_co_z_tebe_bude-comp.pdf']",
     "content_hash": "533891c87829df23a3d51b5fa3f08b6c633ed5cc"
   },
@@ -3445,7 +3430,7 @@
     "range": "e1-c2",
     "illustration_author": "",
     "start_melody": "e g a",
-    "chordpro_file": "Pokac_Hrdinsky_cin.pro",
+    "chordpro_file": "Pokac-Hrdinsky_cin.pro",
     "pdf_filenames": "['pokac_hrdinsky_cin-sken.pdf', 'pokac_hrdinsky_cin-comp.pdf']",
     "content_hash": "561622d59924ac601a0914306849ac0a4f9c8f18"
   },
@@ -3460,9 +3445,9 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Pokac_Kebaby.pro",
+    "chordpro_file": "Pokac-Kebaby.pro",
     "pdf_filenames": "['pokac_kebaby-sken.pdf', 'pokac_kebaby-comp.pdf']",
-    "content_hash": "0917649d3b5dd553af25fdee0c54ee8b41b0f036"
+    "content_hash": "5b76d27b11e29856e22fbcf39cace2197072f4ec"
   },
   {
     "title": "Mám doma kočku",
@@ -3475,7 +3460,7 @@
     "range": "e1-c2",
     "illustration_author": "",
     "start_melody": "g a",
-    "chordpro_file": "Pokac_Mam_doma_kocku.pro",
+    "chordpro_file": "Pokac-Mam_doma_kocku.pro",
     "pdf_filenames": "['pokac_mam_doma_kocku-sken.pdf', 'pokac_mam_doma_kocku-comp.pdf']",
     "content_hash": "c7c8964c498b7cb7f4430a3c64c9baa6ef6fd979"
   },
@@ -3490,7 +3475,7 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Pokac_Rad_chodim_na_postu.pro",
+    "chordpro_file": "Pokac-Rad_chodim_na_postu.pro",
     "pdf_filenames": "['pokac_rad_chodim_na_postu-sken.pdf', 'pokac_rad_chodim_na_postu-comp.pdf']",
     "content_hash": "3e687195f678f5de15a0843b4db501cfab07f5d7"
   },
@@ -3550,9 +3535,9 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "e d c#",
-    "chordpro_file": "Poupata_Toulavy_boty.pro",
+    "chordpro_file": "Poupata-Toulavy_boty.pro",
     "pdf_filenames": "['poupata_toulavy_boty-sken.pdf', 'poupata_toulavy_boty-comp.pdf']",
-    "content_hash": "75ec05e7d2e792598d0163faac286e5ca0fa5ac6"
+    "content_hash": "7eb9a8ee4db772e2a06a887ebd78a830de340f18"
   },
   {
     "title": "Hrobař",
@@ -3565,7 +3550,7 @@
     "range": "f1-e1",
     "illustration_author": "",
     "start_melody": "c",
-    "chordpro_file": "Premier_Hrobar.pro",
+    "chordpro_file": "Premier-Hrobar.pro",
     "pdf_filenames": "['premier_hrobar-sken.pdf', 'premier_hrobar-comp.pdf']",
     "content_hash": "245a01d64a496af04ebcb72fe4d6ddc0d0b69ab1"
   },
@@ -3580,7 +3565,7 @@
     "range": "d1-g2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Ready_Kirken_11.pro",
+    "chordpro_file": "Ready_Kirken-11.pro",
     "pdf_filenames": "['ready_kirken_11-sken.pdf', 'ready_kirken_11-comp.pdf']",
     "content_hash": "14bc1d249096585f035827e144f26e00d9399237"
   },
@@ -3595,7 +3580,7 @@
     "range": "g#1-c2",
     "illustration_author": "",
     "start_melody": "c# h c# a",
-    "chordpro_file": "Ready_Kirken_Cerny_brejle.pro",
+    "chordpro_file": "Ready_Kirken-Cerny_brejle.pro",
     "pdf_filenames": "['ready_kirken_cerny_brejle-sken.pdf', 'ready_kirken_cerny_brejle-comp.pdf']",
     "content_hash": "e47bd56864b00f86cdabb5fbff728b93265a0922"
   },
@@ -3610,7 +3595,7 @@
     "range": "g1-f2",
     "illustration_author": "",
     "start_melody": "g e",
-    "chordpro_file": "Ready_Kirken_Winston_Smith.pro",
+    "chordpro_file": "Ready_Kirken-Winston_Smith.pro",
     "pdf_filenames": "['ready_kirken_winston_smith-sken.pdf', 'ready_kirken_winston_smith-comp.pdf']",
     "content_hash": "2d28e6ce42cdfb70189020cb37a11ae24e5ee156"
   },
@@ -3625,7 +3610,7 @@
     "range": "g1-g2",
     "illustration_author": "",
     "start_melody": "h d",
-    "chordpro_file": "Ready_Kirken_Zejtra_mam.pro",
+    "chordpro_file": "Ready_Kirken-Zejtra_mam.pro",
     "pdf_filenames": "['ready_kirken_zejtra_mam-sken.pdf', 'ready_kirken_zejtra_mam-comp.pdf']",
     "content_hash": "3ae04ebfc8328a556d63f09b4840853069db18b9"
   },
@@ -3640,7 +3625,7 @@
     "range": "a1-f1",
     "illustration_author": "",
     "start_melody": "f",
-    "chordpro_file": "Richard_Muller_Srdce_jako_knize_Rohan.pro",
+    "chordpro_file": "Richard_Muller-Srdce_jako_knize_Rohan.pro",
     "pdf_filenames": "['richard_muller_srdce_jako_knize_rohan-sken.pdf', 'richard_muller_srdce_jako_knize_rohan-comp.pdf']",
     "content_hash": "217ae713fadf9759647f2b9ee44b97c36ae84fef"
   },
@@ -3655,7 +3640,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Rod_Stewart_Sailing.pro",
+    "chordpro_file": "Rod_Stewart-Sailing.pro",
     "pdf_filenames": "['rod_stewart_sailing-sken.pdf', 'rod_stewart_sailing-comp.pdf']",
     "content_hash": "e176d04b7f3eef0d389027ddfb9ec37ec82ae452"
   },
@@ -3670,7 +3655,7 @@
     "range": "a1-b2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Scorpions_Still_Loving_You.pro",
+    "chordpro_file": "Scorpions-Still_Loving_You.pro",
     "pdf_filenames": "['scorpions_still_loving_you-sken.pdf', 'scorpions_still_loving_you-comp.pdf']",
     "content_hash": "0b7bb470a0273452d81fcd5b6ec8290e2fdafc4e"
   },
@@ -3685,7 +3670,7 @@
     "range": "e1-f2",
     "illustration_author": "",
     "start_melody": "g a h",
-    "chordpro_file": "Scorpions_Wind_of_Change.pro",
+    "chordpro_file": "Scorpions-Wind_of_Change.pro",
     "pdf_filenames": "['scorpions_wind_of_change-sken.pdf', 'scorpions_wind_of_change-comp.pdf']",
     "content_hash": "0235fefc374fdcbbb620b36f7b84e61da8015f9d"
   },
@@ -3700,9 +3685,9 @@
     "range": "g1-d2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Scott_McKenzie_San_Francisco.pro",
+    "chordpro_file": "Scott_McKenzie-San_Francisco.pro",
     "pdf_filenames": "['scott_mckenzie_san_francisco-sken.pdf', 'scott_mckenzie_san_francisco-comp.pdf']",
-    "content_hash": "be46e1719f1bb78121928e7750caf1cf5f116be3"
+    "content_hash": "bfda1d7677cc000d5da727c388ce4bb1ad934444"
   },
   {
     "title": "Scarborough Fair",
@@ -3715,7 +3700,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "a e",
-    "chordpro_file": "Simon__Garfunkel_Scarborough_Fair.pro",
+    "chordpro_file": "Simon__Garfunkel-Scarborough_Fair.pro",
     "pdf_filenames": "['simon__garfunkel_scarborough_fair-sken.pdf', 'simon__garfunkel_scarborough_fair-comp.pdf']",
     "content_hash": "41ab360803cf45772c479de54b11fbc64922593a"
   },
@@ -3730,7 +3715,7 @@
     "range": "h1-d2",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Simple_Plan_Astronaut.pro",
+    "chordpro_file": "Simple_Plan-Astronaut.pro",
     "pdf_filenames": "['simple_plan_astronaut-sken.pdf', 'simple_plan_astronaut-comp.pdf', 'simple_plan_astronaut-gen.pdf']",
     "content_hash": "552e0855103c239c529d90893e26332b8d222ab2"
   },
@@ -3745,7 +3730,7 @@
     "range": "a1-g1",
     "illustration_author": "",
     "start_melody": "c d e",
-    "chordpro_file": "Simple_Plan_Welcome_to_My_Life.pro",
+    "chordpro_file": "Simple_Plan-Welcome_to_My_Life.pro",
     "pdf_filenames": "['simple_plan_welcome_to_my_life-sken.pdf', 'simple_plan_welcome_to_my_life-comp.pdf', 'simple_plan_welcome_to_my_life-gen.pdf']",
     "content_hash": "e3e514bed40fedf96aa721fbc918ae61234a2540"
   },
@@ -3760,7 +3745,7 @@
     "range": "g1-c2/e2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Spiritual_kvintet_Batalion.pro",
+    "chordpro_file": "Spiritual_kvintet-Batalion.pro",
     "pdf_filenames": "['spiritual_kvintet_batalion-sken.pdf', 'spiritual_kvintet_batalion-comp.pdf']",
     "content_hash": "a004a1baf65a012ee562131233f116663565a20c"
   },
@@ -3775,9 +3760,9 @@
     "range": "f#1-f#2",
     "illustration_author": "",
     "start_melody": "h",
-    "chordpro_file": "Stanislav_Hlozek_Dajana.pro",
+    "chordpro_file": "Stanislav_Hlozek-Dajana.pro",
     "pdf_filenames": "['stanislav_hlozek_dajana-sken.pdf', 'stanislav_hlozek_dajana-comp.pdf']",
-    "content_hash": "4b16676d20e3b1ab61edd7d419ee65584525b55e"
+    "content_hash": "f1b2cc85f1db0d56544d4547edfcebcae8487e22"
   },
   {
     "title": "Novii God",
@@ -3790,9 +3775,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Steklovata_Novii_God.pro",
+    "chordpro_file": "Steklovata-Novii_God.pro",
     "pdf_filenames": "['steklovata_novii_god-sken.pdf', 'steklovata_novii_god-comp.pdf', 'steklovata_novii_god-gen.pdf']",
-    "content_hash": "41e212689382509928a72793c1f449d70556a0f6"
+    "content_hash": "c996133a51b63d98448109b95ed4acb7a2e20e78"
   },
   {
     "title": "Special Ed",
@@ -3805,7 +3790,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "a d",
-    "chordpro_file": "Stephen_Lynch_Special_Ed_.pro",
+    "chordpro_file": "Stephen_Lynch-Special_Ed.pro",
     "pdf_filenames": "['stephen_lynch_special_ed_-sken.pdf', 'stephen_lynch_special_ed_-comp.pdf']",
     "content_hash": "4009d313644b15384ba310991ec749127cc0294f"
   },
@@ -3820,9 +3805,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Stromae_Papaoutai_.pro",
+    "chordpro_file": "Stromae-Papaoutai.pro",
     "pdf_filenames": "['stromae_papaoutai_-sken.pdf', 'stromae_papaoutai_-comp.pdf']",
-    "content_hash": "5d6cd2e9674ea3130377a2ef6bf81f7082f21739"
+    "content_hash": "962e92b7b5de4479cdc2e461f6a300ec241013bf"
   },
   {
     "title": "Léto lásky",
@@ -3835,9 +3820,9 @@
     "range": "a1-d2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Summer_All_Stars_Leto_lasky.pro",
+    "chordpro_file": "Summer_All_Stars-Leto_lasky.pro",
     "pdf_filenames": "['summer_all_stars_leto_lasky-sken.pdf', 'summer_all_stars_leto_lasky-comp.pdf', 'summer_all_stars_leto_lasky-gen.pdf']",
-    "content_hash": "93982e1d5d0450176cbf936f4964152e1cfdf094"
+    "content_hash": "70e72495f426c8f65d622e7d27fa39f043697cbf"
   },
   {
     "title": "Eye Of The Tiger",
@@ -3850,7 +3835,7 @@
     "range": "h1-h2",
     "illustration_author": "",
     "start_melody": "f# a",
-    "chordpro_file": "Survivor_Eye_Of_The_Tiger.pro",
+    "chordpro_file": "Survivor-Eye_Of_The_Tiger.pro",
     "pdf_filenames": "['survivor_eye_of_the_tiger-sken.pdf', 'survivor_eye_of_the_tiger-comp.pdf']",
     "content_hash": "85d8ab9ca0afaa45bb148f8cd2a123e4173b2804"
   },
@@ -3865,7 +3850,7 @@
     "range": "e1-a2",
     "illustration_author": "",
     "start_melody": "e a",
-    "chordpro_file": "The_Animals_Dum_u_vychazejiciho_slunce.pro",
+    "chordpro_file": "The_Animals-Dum_u_vychazejiciho_slunce.pro",
     "pdf_filenames": "['the_animals_dum_u_vychazejiciho_slunce-sken.pdf', 'the_animals_dum_u_vychazejiciho_slunce-comp.pdf']",
     "content_hash": "68f2a6cbc62271313abe8947363e2937d76253ce"
   },
@@ -3880,9 +3865,9 @@
     "range": "d1-e2",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "The_Barenaked_Ladies__Chris_Hadfield_ISS_Is_Somebody_Singing.pro",
+    "chordpro_file": "The_Barenaked_Ladies__Chris_Hadfield-ISS_Is_Somebody_Singing.pro",
     "pdf_filenames": "['the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-sken.pdf', 'the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-comp.pdf']",
-    "content_hash": "f124f75de56d7675a6484554ae57cbf18c01a035"
+    "content_hash": "bf7dc176e2906a740e12f0d3d62a84224ee205f7"
   },
   {
     "title": "Hey Jude",
@@ -3895,7 +3880,7 @@
     "range": "c1-c3",
     "illustration_author": "",
     "start_melody": "g e",
-    "chordpro_file": "The_Beatles_Hey_Jude.pro",
+    "chordpro_file": "The_Beatles-Hey_Jude.pro",
     "pdf_filenames": "['the_beatles_hey_jude-sken.pdf', 'the_beatles_hey_jude-comp.pdf']",
     "content_hash": "402acb6a8771dba88203e359063c0c0a23d98897"
   },
@@ -3910,7 +3895,7 @@
     "range": "e1-a1",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "The_Beatles_Let_It_Be.pro",
+    "chordpro_file": "The_Beatles-Let_It_Be.pro",
     "pdf_filenames": "['the_beatles_let_it_be-sken.pdf', 'the_beatles_let_it_be-comp.pdf', 'the_beatles_let_it_be-gen.pdf']",
     "content_hash": "e6f666dbd1472accf3dec5954905179358736598"
   },
@@ -3925,7 +3910,7 @@
     "range": "e1-f2",
     "illustration_author": "",
     "start_melody": "e a",
-    "chordpro_file": "The_National_Rains_of_Castamere.pro",
+    "chordpro_file": "The_National-Rains_of_Castamere.pro",
     "pdf_filenames": "['the_national_rains_of_castamere-sken.pdf', 'the_national_rains_of_castamere-comp.pdf', 'the_national_rains_of_castamere-gen.pdf']",
     "content_hash": "5f71710c6b0b7d19e2795f82c3490b0f5bd29f00"
   },
@@ -3942,7 +3927,7 @@
     "start_melody": "f# g a h",
     "chordpro_file": "The_Proclaimers-500_Miles.pro",
     "pdf_filenames": "",
-    "content_hash": "f958489417fef2c3fb98c15ceeb08d7e1b2b4566"
+    "content_hash": "c2faf4fbf5cd47144999fdf4a418325d3c86d609"
   },
   {
     "title": "Toss a Coin to Your Witcher",
@@ -3970,7 +3955,7 @@
     "range": "g1-f1",
     "illustration_author": "",
     "start_melody": "g g e",
-    "chordpro_file": "Tlusta_Berta_Blazniva_Zuzana.pro",
+    "chordpro_file": "Tlusta_Berta-Blazniva_Zuzana.pro",
     "pdf_filenames": "['tlusta_berta_blazniva_zuzana-sken.pdf', 'tlusta_berta_blazniva_zuzana-comp.pdf']",
     "content_hash": "1deb9120556c3564202d92836b574ccf1f8a098d"
   },
@@ -3985,7 +3970,7 @@
     "range": "d1-c1",
     "illustration_author": "",
     "start_melody": "g f#",
-    "chordpro_file": "Tomas_Klus_Cas.pro",
+    "chordpro_file": "Tomas_Klus-Cas.pro",
     "pdf_filenames": "['tomas_klus_cas-sken.pdf', 'tomas_klus_cas-comp.pdf']",
     "content_hash": "17e85f6746c1fbb9ff858947d7ab7934d09c453e"
   },
@@ -4000,9 +3985,24 @@
     "range": "e1-f#2",
     "illustration_author": "",
     "start_melody": "g# h",
-    "chordpro_file": "Tomas_Klus_Napojen.pro",
+    "chordpro_file": "Tomas_Klus-Napojen.pro",
     "pdf_filenames": "['tomas_klus_napojen-sken.pdf', 'tomas_klus_napojen-comp.pdf']",
     "content_hash": "8abd004c1684a5e83e25df0de7aab5cb9e81603b"
+  },
+  {
+    "title": "Černej pasažér",
+    "artist": "Traband",
+    "key": "a",
+    "language": "czech",
+    "date_added": "07-2015",
+    "capo": "3",
+    "tempo": "",
+    "range": "a1-a2",
+    "illustration_author": "",
+    "start_melody": "e a",
+    "chordpro_file": "Traband-Cernej_pasazer.pro",
+    "pdf_filenames": "['traband_cernej_pasazer-sken.pdf', 'traband_cernej_pasazer-comp.pdf']",
+    "content_hash": "0689e8853cf7b5960f36221a917b552cd3a90a68"
   },
   {
     "title": "Krasojezdkyně",
@@ -4020,21 +4020,6 @@
     "content_hash": "dc6f0e78c6d327a58b0e4d3a598d912955b43947"
   },
   {
-    "title": "Černej pasažér",
-    "artist": "Traband",
-    "key": "a",
-    "language": "czech",
-    "date_added": "07-2015",
-    "capo": "3",
-    "tempo": "",
-    "range": "a1-a2",
-    "illustration_author": "",
-    "start_melody": "e a",
-    "chordpro_file": "Traband_Cernej_pasazer.pro",
-    "pdf_filenames": "['traband_cernej_pasazer-sken.pdf', 'traband_cernej_pasazer-comp.pdf']",
-    "content_hash": "0689e8853cf7b5960f36221a917b552cd3a90a68"
-  },
-  {
     "title": "Sára",
     "artist": "Traband",
     "key": "e",
@@ -4045,7 +4030,7 @@
     "range": "d1/g1-a1/e1",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Traband_Sara.pro",
+    "chordpro_file": "Traband-Sara.pro",
     "pdf_filenames": "['traband_sara-sken.pdf', 'traband_sara-comp.pdf']",
     "content_hash": "0e720f64fef3fa6018285a04a4eb2bedfbc131ff"
   },
@@ -4060,7 +4045,7 @@
     "range": "g1-h2",
     "illustration_author": "",
     "start_melody": "a e",
-    "chordpro_file": "Trainspotting_Perfect_Day.pro",
+    "chordpro_file": "Trainspotting-Perfect_Day.pro",
     "pdf_filenames": "['trainspotting_perfect_day-sken.pdf', 'trainspotting_perfect_day-comp.pdf']",
     "content_hash": "3b99ff8bead3046dc165598ef874dd844aef8295"
   },
@@ -4090,7 +4075,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "e d c",
-    "chordpro_file": "Tri_sestry_AIDA.pro",
+    "chordpro_file": "Tri_sestry-AIDA.pro",
     "pdf_filenames": "['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']",
     "content_hash": "44507d63ade2862e5c65e2fa528fdf42ccf2ec00"
   },
@@ -4105,7 +4090,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "f# d h",
-    "chordpro_file": "Tri_Sestry_Pumpa.pro",
+    "chordpro_file": "Tri_Sestry-Pumpa.pro",
     "pdf_filenames": "['tri_sestry_pumpa-sken.pdf', 'tri_sestry_pumpa-comp.pdf']",
     "content_hash": "5b6351f8ca3f32a5665b1ef6e74be45cbdaa48c9"
   },
@@ -4120,7 +4105,7 @@
     "range": "a1-h2",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "UDG_Hvezdar.pro",
+    "chordpro_file": "UDG-Hvezdar.pro",
     "pdf_filenames": "['udg_hvezdar-sken.pdf', 'udg_hvezdar-comp.pdf']",
     "content_hash": "7a2f7e4baa21cd3aa923f6e6a4b640aa1e061f76"
   },
@@ -4135,7 +4120,7 @@
     "range": "c1-a1",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Uhlir_Barbora_pise_z_tabora.pro",
+    "chordpro_file": "Uhlir-Barbora_pise_z_tabora.pro",
     "pdf_filenames": "['uhlir_barbora_pise_z_tabora-sken.pdf', 'uhlir_barbora_pise_z_tabora-comp.pdf']",
     "content_hash": "65445cf1124619deafaf2bae22a42ff11ec6b023"
   },
@@ -4150,7 +4135,7 @@
     "range": "f1-d1",
     "illustration_author": "",
     "start_melody": "g c",
-    "chordpro_file": "Vaclav_Neckar_Kdo_vchazi_do_tvych_snu.pro",
+    "chordpro_file": "Vaclav_Neckar-Kdo_vchazi_do_tvych_snu.pro",
     "pdf_filenames": "['vaclav_neckar_kdo_vchazi_do_tvych_snu-sken.pdf', 'vaclav_neckar_kdo_vchazi_do_tvych_snu-comp.pdf']",
     "content_hash": "3e27d21a0c5b3a7fc20f61f56eebd036ba4aa09f"
   },
@@ -4165,9 +4150,9 @@
     "range": "h1-a1",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Vaclav_Neckar_Pulnocni.pro",
+    "chordpro_file": "Vaclav_Neckar-Pulnocni.pro",
     "pdf_filenames": "['vaclav_neckar_pulnocni-sken.pdf', 'vaclav_neckar_pulnocni-comp.pdf']",
-    "content_hash": "8f784dc138c5109458b5ca3aec8965cfffd328a7"
+    "content_hash": "731737dc41b77085b2992ffb564b008d60c4117a"
   },
   {
     "title": "Tu kytaru jsem koupil kvůli tobě",
@@ -4180,7 +4165,7 @@
     "range": "g1-c#2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Vaclav_Neckar_Tu_kytaru_jsem_koupil_kvuli_tobe.pro",
+    "chordpro_file": "Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe.pro",
     "pdf_filenames": "['vaclav_neckar_tu_kytaru_jsem_koupil_kvuli_tobe-sken.pdf', 'vaclav_neckar_tu_kytaru_jsem_koupil_kvuli_tobe-comp.pdf']",
     "content_hash": "59b2b3ef35d7a2671c33f86052bf1ae03ddc6369"
   },
@@ -4195,7 +4180,7 @@
     "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "a h c d",
-    "chordpro_file": "Vance_Joy_Riptide.pro",
+    "chordpro_file": "Vance_Joy-Riptide.pro",
     "pdf_filenames": "['vance_joy_riptide-sken.pdf', 'vance_joy_riptide-comp.pdf']",
     "content_hash": "5add8b1354853bdeba4e43432e20a1064003f0cb"
   },
@@ -4225,9 +4210,9 @@
     "range": "g1-h2",
     "illustration_author": "",
     "start_melody": "d a",
-    "chordpro_file": "Vlasta_Redl_Huslicky.pro",
+    "chordpro_file": "Vlasta_Redl-Huslicky.pro",
     "pdf_filenames": "['vlasta_redl_huslicky-sken.pdf', 'vlasta_redl_huslicky-comp.pdf']",
-    "content_hash": "6a7ee030738f7c6c0ab5e51cf07acd481d953788"
+    "content_hash": "9355bb1e004ac2e560badf889612a5131615266c"
   },
   {
     "title": "Večer křupavých srdíček",
@@ -4240,7 +4225,7 @@
     "range": "d1-d2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Vlasta_Redl_Vecer_krupavych_srdicek.pro",
+    "chordpro_file": "Vlasta_Redl-Vecer_krupavych_srdicek.pro",
     "pdf_filenames": "['vlasta_redl_vecer_krupavych_srdicek-sken.pdf', 'vlasta_redl_vecer_krupavych_srdicek-comp.pdf', 'vlasta_redl_vecer_krupavych_srdicek-gen.pdf']",
     "content_hash": "2c916598ba09515aacc54d2628f63fb281aa1d13"
   },
@@ -4260,21 +4245,6 @@
     "content_hash": "0f61380ff73c10198259f485108ffe27e3cbc7e9"
   },
   {
-    "title": "Jedenkrát",
-    "artist": "Žalman & Spol.",
-    "key": "h",
-    "language": "czech",
-    "date_added": "07-2015",
-    "capo": "2",
-    "tempo": "",
-    "range": "a1-h2",
-    "illustration_author": "",
-    "start_melody": "h",
-    "chordpro_file": "Vojta_Zicha_Jedenkrat.pro",
-    "pdf_filenames": "['vojta_zicha_jedenkrat-sken.pdf', 'vojta_zicha_jedenkrat-comp.pdf']",
-    "content_hash": "faed09364c2320bc1590d7f1e93ef0b7f753b807"
-  },
-  {
     "title": "Hejkal",
     "artist": "Wabi Daněk",
     "key": "a",
@@ -4285,7 +4255,7 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "a",
-    "chordpro_file": "Wabi_Danek_Hejkal.pro",
+    "chordpro_file": "Wabi_Danek-Hejkal.pro",
     "pdf_filenames": "['wabi_danek_hejkal-sken.pdf', 'wabi_danek_hejkal-comp.pdf']",
     "content_hash": "1be2667f01b60a06a077511a53246131cba67e05"
   },
@@ -4300,7 +4270,7 @@
     "range": "g1-a2",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Wabi_Danek_Hudsonsky_sify.pro",
+    "chordpro_file": "Wabi_Danek-Hudsonsky_sify.pro",
     "pdf_filenames": "['wabi_danek_hudsonsky_sify-sken.pdf', 'wabi_danek_hudsonsky_sify-comp.pdf']",
     "content_hash": "0941e5b5098743dd7bf4a2c61d7d328269717f1d"
   },
@@ -4315,7 +4285,7 @@
     "range": "f#1-h2",
     "illustration_author": "",
     "start_melody": "c# c# h c#",
-    "chordpro_file": "Wabi_Danek_Papirove_retezy.pro",
+    "chordpro_file": "Wabi_Danek-Papirove_retezy.pro",
     "pdf_filenames": "['wabi_danek_papirove_retezy-sken.pdf', 'wabi_danek_papirove_retezy-comp.pdf']",
     "content_hash": "66265dccd5f790a6c3387c30d2d8133fe9273caf"
   },
@@ -4330,7 +4300,7 @@
     "range": "f#1-e1",
     "illustration_author": "",
     "start_melody": "d",
-    "chordpro_file": "Waldemar_Matuska_Mile.pro",
+    "chordpro_file": "Waldemar_Matuska-Mile.pro",
     "pdf_filenames": "['waldemar_matuska_mile-sken.pdf', 'waldemar_matuska_mile-comp.pdf']",
     "content_hash": "1a3ba520182e614689fffe60985f48a8eaf0549c"
   },
@@ -4345,7 +4315,7 @@
     "range": "d1-h1",
     "illustration_author": "",
     "start_melody": "d g h",
-    "chordpro_file": "Waldemar_Matuska_Tisic_mil.pro",
+    "chordpro_file": "Waldemar_Matuska-Tisic_mil.pro",
     "pdf_filenames": "['waldemar_matuska_tisic_mil-sken.pdf', 'waldemar_matuska_tisic_mil-comp.pdf']",
     "content_hash": "c7ca1dadb0f79d3f3c6a665c21745ea6630b31da"
   },
@@ -4360,7 +4330,7 @@
     "range": "h1-a1",
     "illustration_author": "",
     "start_melody": "f#",
-    "chordpro_file": "Wanastowy_Vjecy_Andele.pro",
+    "chordpro_file": "Wanastowy_Vjecy-Andele.pro",
     "pdf_filenames": "['wanastowy_vjecy_andele-sken.pdf', 'wanastowy_vjecy_andele-comp.pdf']",
     "content_hash": "113c8f7c47df0411db5c0dc86bcf6b6437c2221a"
   },
@@ -4375,7 +4345,7 @@
     "range": "g#1-f#1",
     "illustration_author": "",
     "start_melody": "d#",
-    "chordpro_file": "Wanastowy_Vjecy_Naha.pro",
+    "chordpro_file": "Wanastowy_Vjecy-Naha.pro",
     "pdf_filenames": "['wanastowy_vjecy_naha-sken.pdf', 'wanastowy_vjecy_naha-comp.pdf']",
     "content_hash": "c118a6204774646d2f9c18c91c8bf7784be94d6f"
   },
@@ -4390,7 +4360,7 @@
     "range": "e1-g#2",
     "illustration_author": "",
     "start_melody": "e e e c#",
-    "chordpro_file": "Wanastowy_Vjecy_Otevrena_zlomenina_srdecniho_svalu.pro",
+    "chordpro_file": "Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu.pro",
     "pdf_filenames": "['wanastowy_vjecy_otevrena_zlomenina_srdecniho_svalu-sken.pdf', 'wanastowy_vjecy_otevrena_zlomenina_srdecniho_svalu-comp.pdf']",
     "content_hash": "38d2c990054a5c9a3676d1b1b288a081eeeb650c"
   },
@@ -4405,9 +4375,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Wise_Guys_Denglish.pro",
+    "chordpro_file": "Wise_Guys-Denglish.pro",
     "pdf_filenames": "['wise_guys_denglish-sken.pdf', 'wise_guys_denglish-comp.pdf']",
-    "content_hash": "9a552e47e95f000e7d47d996291d2ef31cc6d654"
+    "content_hash": "57dc9c9776cccfe0ee92c608397af9fa08b2cea1"
   },
   {
     "title": "Svaz českých bohémů",
@@ -4420,7 +4390,7 @@
     "range": "c1-c2",
     "illustration_author": "dalle3",
     "start_melody": "",
-    "chordpro_file": "Wohnout_Svaz_ceskych_bohemu.pro",
+    "chordpro_file": "Wohnout-Svaz_ceskych_bohemu.pro",
     "pdf_filenames": "['wohnout_svaz_ceskych_bohemu-sken.pdf', 'wohnout_svaz_ceskych_bohemu-comp.pdf', 'wohnout_svaz_ceskych_bohemu-gen.pdf']",
     "content_hash": "2d588007a8cfc8fb531738b42635262fbf4d3729"
   },
@@ -4450,7 +4420,7 @@
     "range": "a1-e2",
     "illustration_author": "",
     "start_melody": "d e d",
-    "chordpro_file": "Xindl_X_Popelka.pro",
+    "chordpro_file": "Xindl_X-Popelka.pro",
     "pdf_filenames": "['xindl_x_popelka-sken.pdf', 'xindl_x_popelka-comp.pdf', 'xindl_x_popelka-gen.pdf']",
     "content_hash": "67ea0bbce3654d8d8ec0ae12b5fd4d137bfd0b12"
   },
@@ -4470,6 +4440,36 @@
     "content_hash": "e6795e4d734b3f69f5e3cfbf1d9cc72ce7b1a7cf"
   },
   {
+    "title": "Jdem zpátky do lesů",
+    "artist": "Žalman & Spol.",
+    "key": "G",
+    "language": "czech",
+    "date_added": "07-2015",
+    "capo": "0",
+    "tempo": "",
+    "range": "d1-h1",
+    "illustration_author": "",
+    "start_melody": "g",
+    "chordpro_file": "Zalman__Spol-Jdem_zpatky_do_lesu.pro",
+    "pdf_filenames": "['pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf', 'pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf']",
+    "content_hash": "7bfef79f1d4176f16c18f8e58ef160af2f43180d"
+  },
+  {
+    "title": "Jedenkrát",
+    "artist": "Žalman & Spol.",
+    "key": "h",
+    "language": "czech",
+    "date_added": "07-2015",
+    "capo": "2",
+    "tempo": "",
+    "range": "a1-h2",
+    "illustration_author": "",
+    "start_melody": "h",
+    "chordpro_file": "Zalman__Spol-Jedenkrat.pro",
+    "pdf_filenames": "['vojta_zicha_jedenkrat-sken.pdf', 'vojta_zicha_jedenkrat-comp.pdf']",
+    "content_hash": "faed09364c2320bc1590d7f1e93ef0b7f753b807"
+  },
+  {
     "title": "Balič Novodobý",
     "artist": "Zdeněk Piškula",
     "key": "F",
@@ -4480,9 +4480,9 @@
     "range": "",
     "illustration_author": "",
     "start_melody": "",
-    "chordpro_file": "Zdenek_Piskula_Balic_Novodoby.pro",
+    "chordpro_file": "Zdenek_Piskula-Balic_Novodoby.pro",
     "pdf_filenames": "['zdenek_piskula_balic_novodoby-sken.pdf', 'zdenek_piskula_balic_novodoby-comp.pdf']",
-    "content_hash": "84d8aad8992c62e000bc3b9bbd24867a3229ebfe"
+    "content_hash": "671cd6f173b9a77e5684c01ea682ff3137772faf"
   },
   {
     "title": "Modrá",
@@ -4495,7 +4495,7 @@
     "range": "c1-g1",
     "illustration_author": "",
     "start_melody": "e",
-    "chordpro_file": "Zluty_pes_Modra.pro",
+    "chordpro_file": "Zluty_pes-Modra.pro",
     "pdf_filenames": "['zluty_pes_modra-sken.pdf', 'zluty_pes_modra-comp.pdf']",
     "content_hash": "f5bf479cf00a04f0329f7fa7b8ce38864a9c15ea"
   },
@@ -4510,23 +4510,8 @@
     "range": "g1-c2",
     "illustration_author": "",
     "start_melody": "g",
-    "chordpro_file": "Zluty_pes_Sametova.pro",
+    "chordpro_file": "Zluty_pes-Sametova.pro",
     "pdf_filenames": "['zluty_pes_sametova-sken.pdf', 'zluty_pes_sametova-comp.pdf']",
     "content_hash": "dd1dba0b9ef259a5200be3d3389d7c507fa10aa0"
-  },
-  {
-    "title": "ARI song",
-    "artist": "Milan Prouza",
-    "key": "G",
-    "language": "czech",
-    "date_added": "08-2018",
-    "capo": "5",
-    "tempo": "",
-    "range": "d1-a2",
-    "illustration_author": "",
-    "start_melody": "f#",
-    "chordpro_file": "______________ARI_Song.pro",
-    "pdf_filenames": "['______________ari_song-sken.pdf', '______________ari_song-comp.pdf']",
-    "content_hash": "a72d48283b5788723d51b3041bddbf4537c7bc83"
   }
 ]

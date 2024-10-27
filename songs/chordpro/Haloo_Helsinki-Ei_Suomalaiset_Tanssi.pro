@@ -106,5 +106,5 @@ Ja [Hm]tanssii, ja [G]tanssii, ja [D]tanssii, ye[A]ah
 {end_of_chorus}
 
 {start_of_bridge: Outro}
-[Hm]  Ei suomalaiset [Hm]tanssi
+[Hm] Ei suomalaiset [Hm]tanssi
 {end_of_bridge}

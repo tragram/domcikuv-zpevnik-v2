@@ -32,16 +32,7 @@
 [E]Dniem i nocą tęsk[Am]nię d[G]o niej
 {end_of_verse}
 
-{start_of_chorus}
-[C]Hej, hej, hej sokoły
-[G]Omijajcie góry, lasy, doły
-[Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy s[Am]kowro[G]neczku
-[C]Hej, hej, hej sokoły
-[G]Omijajcie góry, lasy, doły
-[Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy, [Am]dzwoń, [E]dzwoń, [Am]dzwoń
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Am]Pięknych dziewcząt jest niemało
@@ -50,16 +41,7 @@
 [E]Przy kochanej m[Am]ej d[G]ziewczynie
 {end_of_verse}
 
-{start_of_chorus}
-[C]Hej, hej, hej sokoły
-[G]Omijajcie góry, lasy, doły
-[Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy s[Am]kowr[G]oneczku
-[C]Hej, hej, hej sokoły
-[G]Omijajcie góry, lasy, doły
-[Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy, [Am]dzwoń,[E]dzwoń[Am], dzwoń
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Am]Żal, żal za dziewczyną
@@ -68,16 +50,7 @@
 [E]Już jej więcej [Am]nie [G]zobaczę
 {end_of_verse}
 
-{start_of_chorus}
-[C]Hej, hej, hej sokoły
-[G]Omijajcie góry, lasy, doły
-[Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy [Am]skowro[G]neczku
-[C]Hej, hej, hej sokoł
-[G]Omijajcie góry, lasy, doły
-[Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy, [Am]dzwoń, [E]dzwoń, [Am]dzwoń
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Am]Wina, wina, wina, wina dajcie
@@ -86,13 +59,4 @@
 [E]Przy kochanej [Am]mej dzie[G]wczynie
 {end_of_verse}
 
-{start_of_chorus}
-[C]Hej, hej, hej sokoły
-[G]Omijajcie góry, lasy, doły
-[Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy [Am]skowro[G]neczku
-[C]Hej, hej, hej sokoły
-[G]Omijajcie góry, lasy, doły
-[Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy, [Am]dzwoń, [E]dzwoń, [Am]dzwoń
-{end_of_chorus}
+{chorus}
