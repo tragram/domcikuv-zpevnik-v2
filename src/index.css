@@ -33,6 +33,10 @@
   display: none;
 }
 
+#autotextsize_wrapper{
+  justify-content: safe center
+}
+
 .empty-line {
   height: 1em
 }
