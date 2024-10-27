@@ -6,7 +6,7 @@
 {capo: 6}
 {key: C}
 {tempo: }
-{range: e1-a1}
+{range: e1-a2}
 {start_melody: g}
 {start_of_verse}
 When I [C]find myself in [G]times of trouble
@@ -21,7 +21,7 @@ she is [Am]standing right in [F]front of me
 {end_of_verse}
 
 {start_of_chorus}
-R: Let it [Ami]be let it [C/G]be Let it [F]be let it be
+Let it [Ami]be let it [C/G]be Let it [F]be let it be
 whisper words of [G]wisdom let it [F]be. [C]
 {end_of_chorus}
 

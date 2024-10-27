@@ -162,7 +162,7 @@
     "start_melody": "e",
     "chordpro_file": "Bo_Burnham-Lower_Your_Expectations.pro",
     "pdf_filenames": "['bo_burnham_lower_your_expectations-sken.pdf', 'bo_burnham_lower_your_expectations-comp.pdf']",
-    "content_hash": "29dfd61dff226672644274966ade92b9f3906545"
+    "content_hash": "74cff7b786d7f16b382aecd1b25eceeab1e66275"
   },
   {
     "title": "Knocking On Heaven's Door",
@@ -597,7 +597,7 @@
     "start_melody": "",
     "chordpro_file": "Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You.pro",
     "pdf_filenames": "",
-    "content_hash": "a1bd798b14ea70251cfc23f53754c5d5731e4e2b"
+    "content_hash": "95340fab8d79a9f11c95ebc4b72447bdc5463941"
   },
   {
     "title": "In The Ghetto",
@@ -612,7 +612,7 @@
     "start_melody": "a",
     "chordpro_file": "Elvis_Presley-In_The_Ghetto.pro",
     "pdf_filenames": "['elvis_presley_in_the_ghetto-sken.pdf', 'elvis_presley_in_the_ghetto-comp.pdf']",
-    "content_hash": "705910e7d9076dfc99d35fb3a018702d76251cb9"
+    "content_hash": "90517101bff8d149c1c4079840392fc1185503a8"
   },
   {
     "title": "Nad ránem",
@@ -736,7 +736,7 @@
   },
   {
     "title": "Ani k stáru",
-    "artist": "Filmová hudba",
+    "artist": "Svěrák & Uhlíř",
     "key": "C",
     "language": "czech",
     "date_added": "07-2015",
@@ -747,7 +747,7 @@
     "start_melody": "e f g",
     "chordpro_file": "Filmova_hudba-Ani_k_staru.pro",
     "pdf_filenames": "['filmova_hudba_ani_k_staru-sken.pdf', 'filmova_hudba_ani_k_staru-comp.pdf']",
-    "content_hash": "16f06ea3ced3bc1deda62b5d03fe051af91eee2c"
+    "content_hash": "c64752551e5f868196ef57f84c82867fade1114c"
   },
   {
     "title": "Jednou mi fotr povídá",
@@ -814,7 +814,7 @@
     "artist": "Filmová hudba",
     "key": "D",
     "language": "czech",
-    "date_added": "01-2010",
+    "date_added": "01-2011",
     "capo": "0",
     "tempo": "",
     "range": "",
@@ -822,7 +822,7 @@
     "start_melody": "",
     "chordpro_file": "Filmova_hudba-Zabili_zabili_balada_pro_banditu.pro",
     "pdf_filenames": "['filmova_hudba_zabili_zabili_balada_pro_banditu-sken.pdf', 'filmova_hudba_zabili_zabili_balada_pro_banditu-comp.pdf']",
-    "content_hash": "6746a523eda0c57fd33af62aec9cb30b8be9be68"
+    "content_hash": "94d7cb0524e729a52ae7cd2569847f62d7f6eed5"
   },
   {
     "title": "Zafúkané",
@@ -957,7 +957,7 @@
     "start_melody": "f#",
     "chordpro_file": "Haloo_Helsinki-Ei_Suomalaiset_Tanssi.pro",
     "pdf_filenames": "",
-    "content_hash": "652114beebba774adaec2a01b1a2db771600503f"
+    "content_hash": "087c6a647677fadc3c3ef69b65952bdecf82ff0f"
   },
   {
     "title": "Falling Slowly",
@@ -1309,7 +1309,7 @@
     "artist": "Jaromír Nohavica",
     "key": "D",
     "language": "czech",
-    "date_added": "06-2011",
+    "date_added": "06-2010",
     "capo": "3",
     "tempo": "",
     "range": "a1-h2",
@@ -1317,7 +1317,7 @@
     "start_melody": "a",
     "chordpro_file": "Jaromir_Nohavica-Gronska_pisnicka.pro",
     "pdf_filenames": "['jaromir_nohavica_gronska_pisnicka-sken.pdf', 'jaromir_nohavica_gronska_pisnicka-comp.pdf']",
-    "content_hash": "1d43a57e8372164b9798a7ef2c8fcd00063b04de"
+    "content_hash": "2a677ca16f20d3a6870e3d7dd6f6e1dca69f70f9"
   },
   {
     "title": "Hlídač krav",
@@ -1408,21 +1408,6 @@
     "chordpro_file": "Jaromir_Nohavica-Lachtani.pro",
     "pdf_filenames": "['jaromir_nohavica_lachtani-sken.pdf', 'jaromir_nohavica_lachtani-comp.pdf', 'jaromir_nohavica_lachtani-gen.pdf']",
     "content_hash": "0eedb39a6628f514b2ae4ec261b63b061deb9548"
-  },
-  {
-    "title": "Ladovská zima",
-    "artist": "Jaromír Nohavica",
-    "key": "G",
-    "language": "czech",
-    "date_added": "07-2015",
-    "capo": "5",
-    "tempo": "",
-    "range": "",
-    "illustration_author": "",
-    "start_melody": "",
-    "chordpro_file": "Jaromir_Nohavica-Ladovska_zima.pro",
-    "pdf_filenames": "['jaromir_nohavica_ladovska_zima-sken.pdf', 'jaromir_nohavica_ladovska_zima-comp.pdf']",
-    "content_hash": "108996240489cb56df5198c96a5d7ee601138968"
   },
   {
     "title": "Mám jizvu na rtu",
@@ -2577,7 +2562,7 @@
     "start_melody": "e",
     "chordpro_file": "Luis_Fonsi-Despacito.pro",
     "pdf_filenames": "['luis_fonsi_despacito-sken.pdf', 'luis_fonsi_despacito-comp.pdf']",
-    "content_hash": "ca625515cb72f5f7e0a8f96e2dee87e023f98f28"
+    "content_hash": "546b82465aa3d06606c53bb94dbf5eea61dc6d5a"
   },
   {
     "title": "Maruška",
@@ -3211,7 +3196,7 @@
   },
   {
     "title": "Divokej horskej tymián",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "C",
     "language": "czech",
     "date_added": "07-2015",
@@ -3222,11 +3207,11 @@
     "start_melody": "c",
     "chordpro_file": "Pavel_Lohonka_Zalman-Divokej_horskej_tymian.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf', 'pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf']",
-    "content_hash": "50dfef3b3beac0489d5839441d424029ecd4d9ff"
+    "content_hash": "d74d93d946e40c47f2ed3f1b8d090079ecfd4389"
   },
   {
     "title": "Rána v trávě",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "a",
     "language": "czech",
     "date_added": "07-2015",
@@ -3237,11 +3222,11 @@
     "start_melody": "e",
     "chordpro_file": "Pavel_Lohonka_Zalman-Rana_v_trave.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_rana_v_trave-sken.pdf', 'pavel_lohonka_zalman_rana_v_trave-comp.pdf']",
-    "content_hash": "c3101b7bc1904c1b67ac01443daa18303eff3ecb"
+    "content_hash": "e9990adf5ad80102c682bface99c6405a11800e9"
   },
   {
     "title": "Tři přání",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "d",
     "language": "czech",
     "date_added": "07-2015",
@@ -3252,11 +3237,11 @@
     "start_melody": "a d",
     "chordpro_file": "Pavel_Lohonka_Zalman-Tri_prani.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_tri_prani-sken.pdf', 'pavel_lohonka_zalman_tri_prani-comp.pdf']",
-    "content_hash": "4885ef66094da03f5bc1ecf94bfc1ad398928dd6"
+    "content_hash": "efb66de53da553f2e8e38d11dc2aab9d10385b66"
   },
   {
     "title": "Vojáček z Moorlough Shore",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "h",
     "language": "czech",
     "date_added": "08-2016",
@@ -3267,11 +3252,11 @@
     "start_melody": "f# a h",
     "chordpro_file": "Pavel_Lohonka_Zalman-Vojacek_z_Moorlough_Shore.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf']",
-    "content_hash": "ce26eadd41dcf512a18096d2ef04c948c425b3ed"
+    "content_hash": "ed503a44d056a83fcb0e9ccbb21ba37c5a3ed762"
   },
   {
     "title": "Všech vandráků můza",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "G",
     "language": "czech",
     "date_added": "07-2015",
@@ -3282,7 +3267,7 @@
     "start_melody": "h c d",
     "chordpro_file": "Pavel_Lohonka_Zalman-Vsech_vandraku_muza.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_vsech_vandraku_muza-sken.pdf', 'pavel_lohonka_zalman_vsech_vandraku_muza-comp.pdf']",
-    "content_hash": "ff6308a567d7186aa912fe42e648f958c179d6bc"
+    "content_hash": "b59bda9e704cfc6bda19a4fe07ba8e9a38c9b7ed"
   },
   {
     "title": "Zahrada ticha",
@@ -3492,7 +3477,7 @@
     "start_melody": "e",
     "chordpro_file": "Pokemon-Gotta_Catch_em_all.pro",
     "pdf_filenames": "",
-    "content_hash": "edfcb8e253201619d00aecb66736a44c41f020ff"
+    "content_hash": "e54b15a8cc1aed3debcd787fd61059de80354e2c"
   },
   {
     "title": "Lokomotiva",
@@ -3672,7 +3657,7 @@
     "start_melody": "g a h",
     "chordpro_file": "Scorpions-Wind_of_Change.pro",
     "pdf_filenames": "['scorpions_wind_of_change-sken.pdf', 'scorpions_wind_of_change-comp.pdf']",
-    "content_hash": "7bb0d92793641263f0b5ad872c0b2260c789f4b9"
+    "content_hash": "081eb1d3eaecf3e986f3fd4d3cc1d25a43bb05a6"
   },
   {
     "title": "San Francisco",
@@ -3892,12 +3877,12 @@
     "date_added": "08-2015",
     "capo": "6",
     "tempo": "",
-    "range": "e1-a1",
+    "range": "e1-a2",
     "illustration_author": "",
     "start_melody": "g",
     "chordpro_file": "The_Beatles-Let_It_Be.pro",
     "pdf_filenames": "['the_beatles_let_it_be-sken.pdf', 'the_beatles_let_it_be-comp.pdf', 'the_beatles_let_it_be-gen.pdf']",
-    "content_hash": "25123e20b62e30e29a056ec5d344e329e7ccc1ef"
+    "content_hash": "e8565838014805b6b9aca1c310f0cc273ed2f48c"
   },
   {
     "title": "Rains of Castamere",
@@ -4084,7 +4069,7 @@
     "artist": "Tři sestry",
     "key": "A",
     "language": "czech",
-    "date_added": "10-2010",
+    "date_added": "10-2011",
     "capo": "3",
     "tempo": "",
     "range": "a1-a2",
@@ -4092,7 +4077,7 @@
     "start_melody": "e d c",
     "chordpro_file": "Tri_sestry-AIDA.pro",
     "pdf_filenames": "['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']",
-    "content_hash": "7a42eaa82f1345e8290c8b6803b6eec5515e2201"
+    "content_hash": "b953d99d69b53f80788e3665b44e7e9f160c2c0a"
   },
   {
     "title": "Hvězdář",
@@ -4111,7 +4096,7 @@
   },
   {
     "title": "Barbora píše z tábora",
-    "artist": "Uhlíř",
+    "artist": "Svěrák & Uhlíř",
     "key": "D",
     "language": "czech",
     "date_added": "07-2015",
@@ -4122,7 +4107,7 @@
     "start_melody": "a",
     "chordpro_file": "Uhlir-Barbora_pise_z_tabora.pro",
     "pdf_filenames": "['uhlir_barbora_pise_z_tabora-sken.pdf', 'uhlir_barbora_pise_z_tabora-comp.pdf']",
-    "content_hash": "bcd6d954f6914b200e2b4a0d2d22cbf2c4432447"
+    "content_hash": "40b4b5abf3bc3326131effab0f24f0654156aeae"
   },
   {
     "title": "Kdo vchází do tvých snů",

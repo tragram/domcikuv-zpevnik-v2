@@ -1,6 +1,6 @@
 {title: Grónská písnička}
 {artist: Jaromír Nohavica}
-{date_added: 06-2011}
+{date_added: 06-2010}
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_gronska_pisnicka-sken.pdf', 'jaromir_nohavica_gronska_pisnicka-comp.pdf']}
 {capo: 3}

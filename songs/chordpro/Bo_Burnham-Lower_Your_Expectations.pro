@@ -23,15 +23,18 @@ Without [H]being attracted to any of them
 {end_of_verse}
 
 {start_of_bridge: Pre-chorus}
-[C#m]Now you might [A]think that this guy [C#m]only ex[H]ists in your[E]mind
-[A]Well guess wh[C#m]at
-[H]You're right
+[C#m]Now you might [A]think that this guy
+[C#m]only ex[H]ists in your [E]mind
+[A]Well guess wh[C#m]at: [H]You're right
 {end_of_bridge}
 
 {start_of_chorus}
 [E]If you want [C#m]love  [A]
 [H]Lower your expec[E]tations a fe[C#m]w
 Because Prince [A]Charming would never [H]settle for you
+{end_of_chorus}
+
+{start_of_chorus}
 If [E]you want[C#m]love [A]
 Just [H]pick a guy and [E]love him
 And [C#m]if he's got a thing for [A]feet
@@ -53,39 +56,43 @@ And [H]only ever uses you to tickle her throat with
 {end_of_verse}
 
 {start_of_bridge: Pre-chorus}
-[C#m]Now you might [A]think that this girl [C#m]only ex[H]ists in your [E]mind
-[A]But she's real
-[C#m]But last [H]week, she died
+[C#m]Now you might [A]think that this girl 
+[C#m]only ex[H]ists in your [E]mind
+[A]But she's real; [C#m]But last [H]week, she died
 {end_of_bridge}
 
 {start_of_chorus}
 [E]If you want [C#m]love  [A]
 [H]Lower your expec[E]tations a lo[C#m]t
 You might think your [A]dick is a gift, I [H]promise it's not
-If [E]you want[C#m]love [A]
-Just [H]pick a girl and[E]love her
-Then whip out your[C#m]dick and let the [A]
+{end_of_chorus}
+
+{start_of_chorus}
+If [E]you want [C#m]love [A]
+Just [H]pick a girl and [E]love her
+Then whip out your [C#m]dick and let the [A]
 Girl you love de[H]cline the offer
 {end_of_chorus}
 
 {start_of_bridge}
-[A]I don't want a[E]neat freak I don't want a [H]slob
+[A]I don't want a [E]neat freak I don't want a [H]slob
 Or somebody with [H]bedhead and a dead-end [A]job
 [A]Cause I won't [E]settle for less than [C#mi]per[H]fect
 [A]We want perfect [E]children, a perfect [H]life
 Perfect [H]husband or a perfect [A]wife
-[A]But [E]deep down we [H]know
-We don't de[C#mi]serve [H]it
+[A]But [E]deep down we [H]know, We don't de[C#mi]serve [H]it
 {end_of_bridge}
 
-{start_of_bridge: Outro}
-But we [E]all deserve[C#m]love [A]
+{start_of_chorus}
+But we [E]all deserve [C#m]love [A]
 [H]Even on the days when [E]we aren't our [C#mi]best
 Cause we all [A]suck
 But love can [H]make us suck less
+{end_of_chorus}
 
+{start_of_chorus}
 [E]We all deserve [C#m]love[A]
 It's the [H]very best part of [E]being [C#m]alive
 And [A]I would know
-I [H]just turned twenty [E]five
-{end_of_bridge}
+I [H]just turned twenty five
+{end_of_chorus}
