@@ -29,19 +29,13 @@ Já [G]matlám patlám v Matlabu, [D]už jsem z toho na hlavu,
 [Am]holky už mě neberou a [D]nechutná mi pivo.
 {end_of_verse}
 
-{start_of_chorus}
-[G]Náá, [D]na, [C]na, [D]náá...
-[Am]Náá, [C]na, [D]na, [G]náá...
-{end_of_chorus}
+{chorus}
 
-{start_of_verse}
+{start_of_verse: Outro}
 No jen si mě zkuste vyhodit!
 [G]To by se vám [D]mohlo nevyplatit,
 páč [Am]nejhorší nepřítel je [C]ten,
 kterej nemá už co [G]ztratit.
-{end_of_verse}
-
-{start_of_verse}
 [G]Úúú, vyrobím si v Matlabu
 [D]ňákou pěknou [C]ko[C/H]so[C/A]čtver[C]co[C/D]vou
 [D]ma[Am]ti[G]ci.

@@ -41,14 +41,7 @@ They stack the odds still we take to the street
 For the kill with the skill to survive
 {end_of_verse}
 
-{start_of_verse}
-It's the eye of the tiger
-It's the thrill of the fight
-Rising up to the challenge of our rival
-And the last known survivor
-Stalks his prey in the night
-And he's watching us all with the eye of the tiger
-{end_of_verse}
+{chorus}
 
 {start_of_verse}
 Rising up, straight to the top

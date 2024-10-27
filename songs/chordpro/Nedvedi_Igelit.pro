@@ -16,7 +16,7 @@ tát[G]ovu bundu šitou z maskáč[C]ů,
 {end_of_verse}
 
 {start_of_verse}
-k ránu se mlhy zvednou a [G]ptáci volaj':
+K ránu se mlhy zvednou a [G]ptáci volaj':
 hele, lidi, [F]svítá, [C]
 pak větvičky si nalámou na [G]oheň,
 aby uvařili [C]čaj.
@@ -37,14 +37,13 @@ kytara zpívá o tom,
 {end_of_verse}
 
 {start_of_verse}
-ten, kdo neví, nepochopí, [G]nepromíjí
+Ten, kdo neví, nepochopí, [G]nepromíjí
 čas nic, všechno [F]vrátí, [C]
 ta chvilka, co máš na život,
 ti [G]uplyne jak od ohýnku [C]dým.
 {end_of_verse}
 
-{chorus}
-
 {start_of_verse: Outro}
-[C]Ukrytý v stínu lesa, [G]igelit, to kdyby přišel k [F]ránu [C]déšť ...
+[C]Ukrytý v stínu lesa, [G]igelit,
+to kdyby přišel k [F]ránu [C]déšť ...
 {end_of_verse}
