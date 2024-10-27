@@ -9,11 +9,12 @@
 {range: e1-f2}
 {start_melody: g a h}
 
-
 {start_of_verse}
 I [G]follow the [Ami]Moscow
 Down to Gorky [G]park
 Listening to the [Ami]wind of [Emi]change [D]
+{end_of_verse}
+{start_of_verse}
 On [G]the august summer [Ami]night
 soldiers passing [G]by
 Listening to the [Ami]wind of [Emi]change [D]
@@ -23,6 +24,8 @@ Listening to the [Ami]wind of [Emi]change [D]
 The world is closing in
 Did you ever think
 That we could be so closed like brothers
+{end_of_verse}
+{start_of_verse}
 The future's in the air
 Can feel it everywhere
 The blowing with the wind of change
@@ -39,6 +42,8 @@ Dream [Emi]away [C]in a wind of [D]change
 Walking down the street
 And distant memories
 Are buried in the past forever
+{end_of_verse}
+{start_of_verse}
 Follow the Moscow
 And don't you go give up
 Listening to the wind of change

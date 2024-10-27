@@ -10,9 +10,12 @@
 
 {start_of_verse}
 [Am]I wanna be the [G]very best
-Like [Am]no one ever[G]was
+Like [Am]no one ever [G]was
 [F]To catch them is [C]my real test
 To [C]train them [D]is my [E]cause
+{end_of_verse}
+
+{start_of_verse}
 [Am]I will travel [G]across the land
 [Am]Searching far and w[G]ide
 [F]Teach Pokèmon t[C]o understand
@@ -23,8 +26,7 @@ The [C]power [D]that's i[E]nside
 Pokè[F]mon! (Gotta catch em' all)
 It's [C]you and me
 [F]I know it's my d[G]estiny
-Pokè[Am]mon!
-Ooh, you're [G]my best friend
+Pokè[Am]mon! Ooh, you're [G]my best friend
 In a [C]world we [D]must d[E]efend
 Poke[Am]mon! (Gotta catch em' all)
 Our [G]hearts so true
@@ -40,6 +42,9 @@ Gotta [G]catch 'em a[Am]ll!
 With [Am]courage I will [G]face
 [F]I will battle [C]every day
 To [C]claim my [D]rightful p[E]lace
+{end_of_verse}
+
+{start_of_verse}
 [Am]Come with me, the [G]time is right
 [Am]There's no better [G]team
 [F]Arm in arm we'll[C]win the fight

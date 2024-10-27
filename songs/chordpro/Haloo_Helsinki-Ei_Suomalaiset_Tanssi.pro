@@ -15,8 +15,10 @@ Meni [D]rikki myös radi[A]o
 
 [Hm]Järvi [G]tyyni on
 [D]Mut minä [A]levoton
-Ah [Hm]silloin kuu[G]len sen ää[D]nen  [A]
+Ah [Hm]silloin kuu[G]len sen ää[D]nen
+{end_of_verse}
 
+{start_of_verse}
 Vanha [Hm]naapuri [G]Jack
 Tuli [D]jenkeistä [A]back
 Nyt hän [Hm]saapuu hake[G]maan
@@ -29,22 +31,16 @@ Ja [Hm]mietin et [G]miten tässä [D]käy
 
 {start_of_chorus}
 Kun ei [A]suomalaiset [Hm]tanssi
-
 Mikä [G]cha-cha-cha?
 Mä [D]osaan vetää pel[A]kkää polkkaa
-Ei [Hm]tanssi
-Mi[G]tään sambadaa
+Ei [Hm]tanssi Mi[G]tään sambadaa
 Mä [D]osaan vetää let[A]kajenkkaa
-Ei [Hm]tanssi
-Mikä [D]boogie-boog?
+Ei [Hm]tanssi Mikä [D]boogie-boog?
 Mä [G]osaan vetää vaan [A]valssimood
 Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi  [A]
-{end_of_chorus}
 
-{start_of_bridge: Post-chorus}
-Ei suomalaiset [Hm]tanssi [G][D][A]
-Ei suomalaiset [Hm]tanssi [G][D][A]
-{end_of_bridge}
+|: Ei suomalaiset [Hm]tanssi [G][D][A] :|
+{end_of_chorus}
 
 {start_of_verse}
 Jack mut [Hm]perille [G]tuo
@@ -55,7 +51,9 @@ Jengi [D]odottaa haku[A]a
 [Hm]Miehet [G]sivulle
 [D]Ja naiset [A]toiselle
 Ja [Hm]niin homma [G]lähtee käyn[D]tiin [A]
+{end_of_verse}
 
+{start_of_verse}
 Eka [Hm]sointu kun [G]soi
 Jack [D]katseen muhun [A]loi
 Hän [Hm]näyttää käsil[G]lään
@@ -68,40 +66,25 @@ Ja [Hm]Ennen tätä [G]päivää luu[D]lin
 
 {start_of_chorus}
 Ei [A]suomalaiset [Hm]tanssi
-
 Mikä [G]cha-cha-cha?
 Mä [D]osaan vetää pel[A]kkää polkkaa
-Ei [Hm]tanssi
-Mi[G]tään sambadaa
+Ei [Hm]tanssi Mi[G]tään sambadaa
 Mä [D]osaan vetää let[A]kajenkkaa
-Ei [Hm]tanssi
-Mikä [D]boogie-boog?
+Ei [Hm]tanssi Mikä [D]boogie-boog?
 Mä [G]osaan vetää vaan [A]valssimood
 Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi  [A]
+
+|: Ei suomalaiset [Hm]tanssi [G][D][A] :|
 {end_of_chorus}
-
-{start_of_bridge: Post-chorus}
-Ei suomalaiset [Hm]tanssi [G][D][A]
-Ei suomalaiset [Hm]tanssi [G][D][A]
-Ei suomalaiset [Hm]tanssi [G][D][A]
-Ei suomalaiset [Hm]tanssi [G][D][A]
-{end_of_bridge}
-
-{start_of_bridge: Instrumental}
-[Hm][G][D][A][*x3]
-[Hm][G][D]
-{end_of_bridge}
 
 {start_of_chorus}
 Ei [A]suomalaiset [Hm]tanssi
 Pel[G]kkää polkkaa
-Mä [D]haluun vetää myös [A]cha-cha-cha
-Ei [Hm]tanssi
-Pel[G]kkää jenkkaa
+Mä [D]haluun vetää myös [A]cha-cha-cha 
+Ei [Hm]tanssi Pel[G]kkää jenkkaa
 Mä [D]haluun vetää myös [A]sambadaa
-Ei [Hm]tanssi
-Vaik olis [G]tangokuu
-Mä [D]haluun vetää myös [A]boogie-boog
+Ei [Hm]tanssi Vaik olis [D]tangokuu
+Mä [G]haluun vetää myös [A]boogie-boog
 Ja [Hm]tanssii, ja [G]tanssii, ja [D]tanssii, ye[A]ah
 {end_of_chorus}
 

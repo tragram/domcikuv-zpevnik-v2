@@ -192,7 +192,7 @@
     "start_melody": "e",
     "chordpro_file": "Bo_Burnham-Lower_Your_Expectations.pro",
     "pdf_filenames": "['bo_burnham_lower_your_expectations-sken.pdf', 'bo_burnham_lower_your_expectations-comp.pdf']",
-    "content_hash": "119d5fcbe46f00e7718362c0b18aaddebd48ff48"
+    "content_hash": "5fa5dbb4234cbc6be16e83c27848a5ab7915cbbb"
   },
   {
     "title": "Vločky",
@@ -297,7 +297,7 @@
     "start_melody": "",
     "chordpro_file": "Chinaski-Adieu.pro",
     "pdf_filenames": "['chinaski_adieu-sken.pdf', 'chinaski_adieu-comp.pdf']",
-    "content_hash": "67dd9d670e96fd7c08b2f63eabba48bf0b9fbb59"
+    "content_hash": "fbd56296208fdab376788a66a70be92ea0476064"
   },
   {
     "title": "Dlouhej kouř",
@@ -597,7 +597,7 @@
     "start_melody": "a",
     "chordpro_file": "Elvis_Presley-In_The_Ghetto.pro",
     "pdf_filenames": "['elvis_presley_in_the_ghetto-sken.pdf', 'elvis_presley_in_the_ghetto-comp.pdf']",
-    "content_hash": "7b4a91135c91a29bea0476ad5b93b4eb88198a4a"
+    "content_hash": "fdccf7576342a6abc849fa266413539820f60221"
   },
   {
     "title": "I Can't Help Falling In Love With You",
@@ -612,7 +612,7 @@
     "start_melody": "",
     "chordpro_file": "Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You.pro",
     "pdf_filenames": "",
-    "content_hash": "2067efb2d661d80d8f78939babc728c3f9a2d311"
+    "content_hash": "75f32be93b628d3d96866c63d8d94e67b9032f7d"
   },
   {
     "title": "Lovec Amorů",
@@ -957,7 +957,7 @@
     "start_melody": "f#",
     "chordpro_file": "Haloo_Helsinki-Ei_Suomalaiset_Tanssi.pro",
     "pdf_filenames": "",
-    "content_hash": "2b01b01d7f2a954ab1605a53c1423909514f9536"
+    "content_hash": "1651baf5a9108dd450d7f34d6baa12d47fcb2f22"
   },
   {
     "title": "Falling Slowly",
@@ -3211,7 +3211,7 @@
   },
   {
     "title": "Divokej horskej tymián",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "C",
     "language": "czech",
     "date_added": "07-2015",
@@ -3226,7 +3226,7 @@
   },
   {
     "title": "Rána v trávě",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "a",
     "language": "czech",
     "date_added": "07-2015",
@@ -3241,7 +3241,7 @@
   },
   {
     "title": "Tři přání",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "d",
     "language": "czech",
     "date_added": "07-2015",
@@ -3256,7 +3256,7 @@
   },
   {
     "title": "Vojáček z Moorlough Shore",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "h",
     "language": "czech",
     "date_added": "08-2016",
@@ -3271,7 +3271,7 @@
   },
   {
     "title": "Všech vandráků můza",
-    "artist": "Pavel Lohonka Žalman",
+    "artist": "Žalman & Spol.",
     "key": "G",
     "language": "czech",
     "date_added": "07-2015",
@@ -3492,7 +3492,7 @@
     "start_melody": "e",
     "chordpro_file": "Pokemon-Gotta_Catch_em_all.pro",
     "pdf_filenames": "",
-    "content_hash": "aa307a16eab02b6745fa1b2e4a8f0e3eca9fc166"
+    "content_hash": "146e04f05202f49e11d9c1784ff9895ca60acd5f"
   },
   {
     "title": "Lokomotiva",
@@ -4482,7 +4482,7 @@
     "start_melody": "",
     "chordpro_file": "Zdenek_Piskula-Balic_Novodoby.pro",
     "pdf_filenames": "['zdenek_piskula_balic_novodoby-sken.pdf', 'zdenek_piskula_balic_novodoby-comp.pdf']",
-    "content_hash": "671cd6f173b9a77e5684c01ea682ff3137772faf"
+    "content_hash": "2efdc22c53afdd7fe59ac85fae7eec7277e737e5"
   },
   {
     "title": "Modrá",
