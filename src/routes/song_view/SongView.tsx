@@ -76,7 +76,7 @@ function SongView({ }) {
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
                 <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
             </div>
-            <div className={"py-4 w-full" + (fitScreenMode === "XY" ? "flex-1" : "")} id="autotextsize_wrapper">
+            <div className={"py-4 w-full " + (fitScreenMode === "XY" ? "flex-1" : "")} id="autotextsize_wrapper">
                 <AutoTextSize
                     mode={fitScreenMode === "XY" ? "boxoneline" : "oneline"}
                     minFontSizePx={fitScreenMode !== "none" ? minFontSizePx : fontSize}
