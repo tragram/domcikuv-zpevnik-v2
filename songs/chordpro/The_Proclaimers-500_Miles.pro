@@ -58,7 +58,7 @@ I'm gonna [G5]be the man who's [A]growing old with [D5]you.
 {chorus}
 
 {start_of_chorus: R2}
-|: [D5]Da [G5]Da [A]Da [D5] :|
+|: [D5]Da [G5]Da [A]Da [D5]:|
 {end_of_chorus}
 
 {start_of_verse}

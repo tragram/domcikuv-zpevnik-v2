@@ -13,8 +13,8 @@ Oon [D]mökille lähte[A]nyt
 Poltto[Hm]puut tehty [G]jo
 Meni [D]rikki myös radi[A]o
 
-[Hm] Järvi [G]tyyni on
-[D] Mut minä [A]levoton
+[Hm]Järvi [G]tyyni on
+[D]Mut minä [A]levoton
 Ah [Hm]silloin kuu[G]len sen ää[D]nen  [A]
 
 Vanha [Hm]naapuri [G]Jack
@@ -22,8 +22,8 @@ Tuli [D]jenkeistä [A]back
 Nyt hän [Hm]saapuu hake[G]maan
 Mua [D]mukaan tanssi[A]maan
 
-[Hm] On päällä [G]stetsoni
-[D] Ja krokotiili[A]nahkabuutsit
+[Hm]On päällä [G]stetsoni
+[D]Ja krokotiili[A]nahkabuutsit
 Ja [Hm]mietin et [G]miten tässä [D]käy
 {end_of_verse}
 
@@ -42,8 +42,8 @@ Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi  [A]
 {end_of_chorus}
 
 {start_of_bridge: Post-chorus}
-Ei suomalaiset [Hm]tanssi [G]  [D]  [A]
-Ei suomalaiset [Hm]tanssi [G]  [D]  [A]
+Ei suomalaiset [Hm]tanssi [G][D][A]
+Ei suomalaiset [Hm]tanssi [G][D][A]
 {end_of_bridge}
 
 {start_of_verse}
@@ -52,8 +52,8 @@ Lava[D]tanssien [A]luo
 Bändi [Hm]purkaa paku[G]a
 Jengi [D]odottaa haku[A]a
 
-[Hm] Miehet [G]sivulle
-[D] Ja naiset [A]toiselle
+[Hm]Miehet [G]sivulle
+[D]Ja naiset [A]toiselle
 Ja [Hm]niin homma [G]lähtee käyn[D]tiin [A]
 
 Eka [Hm]sointu kun [G]soi
@@ -61,8 +61,8 @@ Jack [D]katseen muhun [A]loi
 Hän [Hm]näyttää käsil[G]lään
 Kato [D]täällä ele[A]tään
 
-[Hm] Tän tanssi[G]partnerin
-[D] Orkeste[A]rin kuulin
+[Hm]Tän tanssi[G]partnerin
+[D]Orkeste[A]rin kuulin
 Ja [Hm]Ennen tätä [G]päivää luu[D]lin
 {end_of_verse}
 
@@ -81,15 +81,15 @@ Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi  [A]
 {end_of_chorus}
 
 {start_of_bridge: Post-chorus}
-Ei suomalaiset [Hm]tanssi [G]  [D]  [A]
-Ei suomalaiset [Hm]tanssi [G]  [D]  [A]
-Ei suomalaiset [Hm]tanssi [G]  [D]  [A]
-Ei suomalaiset [Hm]tanssi [G]  [D]  [A]
+Ei suomalaiset [Hm]tanssi [G][D][A]
+Ei suomalaiset [Hm]tanssi [G][D][A]
+Ei suomalaiset [Hm]tanssi [G][D][A]
+Ei suomalaiset [Hm]tanssi [G][D][A]
 {end_of_bridge}
 
 {start_of_bridge: Instrumental}
-[Hm]  [G] [D] [A] [*x3]
-[Hm]  [G] [D]
+[Hm][G][D][A][*x3]
+[Hm][G][D]
 {end_of_bridge}
 
 {start_of_chorus}
@@ -106,5 +106,5 @@ Ja [Hm]tanssii, ja [G]tanssii, ja [D]tanssii, ye[A]ah
 {end_of_chorus}
 
 {start_of_bridge: Outro}
-[Hm]     Ei suomalaiset [Hm]tanssi
+[Hm]  Ei suomalaiset [Hm]tanssi
 {end_of_bridge}

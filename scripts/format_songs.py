@@ -20,7 +20,7 @@ def rename_file_in_directory(
     old_path = directory / (old_stem + extension)
     if old_path.exists():
         print(f"Renaming in {directory}: {old_stem+extension} --> {new_stem+extension}")
-        # old_path.rename(directory / (new_stem + extension))
+        old_path.rename(directory / (new_stem + extension))
     else:
         f"Path {old_path} does not exist"
 
@@ -49,8 +49,8 @@ def format_chordpro_files(
                     song_directory / folder, file_path.stem, new_stem, extension
                 )
             new_file_name = directory / f"{new_stem}.pro"
-            # new_file_path = file_path.rename(directory / new_file_name)
-            # print(f"Renamed: '{file_path}' -> '{new_file_path}'")
+            new_file_path = file_path.rename(directory / new_file_name)
+            print(f"Renamed: '{file_path}' -> '{new_file_path}'")
         else:
             print(f"Metadata not found for '{file_path}', skipping.")
 
@@ -60,7 +60,6 @@ songs_directory = songs_path()
 other_folders = [
     ("illustrations", ""),
     ("image_prompts", ".yaml"),
-    ("pdfs", ".pdf"),
     ("scraped", ".txt"),
 ]
 # Call the function to rename the ChordPro files

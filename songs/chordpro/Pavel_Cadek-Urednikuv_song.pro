@@ -24,7 +24,7 @@ Je to [Dmi]tak,
 mám v ruce štempl
 a ty jsi [F]tady ten, co platí,
 slovo [Gmi]jen a život ti převrátím
-[Dmi]vejpůl a celkem v tempu. 
+[Dmi]vejpůl a celkem v tempu.
 Má máma [F]byla ke mně němá,
 otec [Gmi]přes koleno bral a teď mám
 [Dmi]Štempl. [Gmi][A7]
