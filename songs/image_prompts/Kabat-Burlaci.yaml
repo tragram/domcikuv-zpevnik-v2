@@ -1,8 +1,10 @@
-- model: chatgpt
-  response: A dramatic and gritty scene of men pulling heavy boats against a strong
-    river current under a dark, overcast sky. The landscape is harsh and rugged with
-    dirt, rocks, and jagged terrain. In the background, distant mountains loom under
-    the somber clouds, while faint silhouettes of wolves are visible in the distance.
-    The overall color scheme is muted and dark, evoking a sense of hardship, perseverance,
-    and survival. The atmosphere feels tense and reflective, capturing the struggle
-    of labor and the journey through tough conditions.
+- model: gpt-4o-mini-2024-07-18
+  response: Create an illustration that captures a surreal riverside scene at dusk,
+    featuring rugged men pulling boats upstream against a backdrop of red skies and
+    blooming birch trees. Include elements of struggle and resilience, like a bear
+    dancing with death, while hints of harmony emerge from an accordion playing on
+    the riverbank. The atmosphere should blend tension and beauty, reflecting the
+    themes of longing and the passage of time.
+
+- model: chatgpt-2024-10-20
+  reponse: A dramatic and gritty scene of men, dressed in rugged clothes, pulling heavy wooden boats against the powerful river's current. The men strain as they drag the boats with thick ropes, battling the flow of water. Above them, the sky is dark and overcast, adding to the intense, somber atmosphere. The riverbank is rough, with dirt, rocks, and sparse vegetation. In the background, distant mountains rise under the gloomy sky, and faint silhouettes of wolves can be seen. The muted colors and harsh lighting emphasize the themes of struggle, survival, and resilience in the face of adversity.
