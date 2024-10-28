@@ -1,0 +1,10 @@
+{title: 1970}
+{artist: Chinaski}
+{date_added: 06-2015}
+{language: czech}
+{pdf_filenames: []}
+{capo: 0}
+{key: D}
+{tempo: }
+{range: }
+{start_melody: }
