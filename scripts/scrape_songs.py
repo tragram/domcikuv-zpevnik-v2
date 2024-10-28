@@ -12,6 +12,8 @@ from selenium.webdriver.common.by import By
 from utils import check_if_lyrics_present, extract_metadata, get_lyrics, songs_path
 from webdriver_manager.chrome import ChromeDriverManager
 
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
 
 def process_chordpro_file(filepath):
     """
@@ -34,7 +36,6 @@ def process_chordpro_file(filepath):
 
 def scrape_akordy_pisnicky(url, key="D"):
     # Set up the Chrome WebDriver using the webdriver manager
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
     # Navigate to the page
     driver.get(url)
@@ -49,9 +50,6 @@ def scrape_akordy_pisnicky(url, key="D"):
     song_element = driver.find_element(By.ID, "songtext")
     # Extract the full text content as rendered (with spacing)
     rendered_text = song_element.text
-
-    # Close the browser
-    driver.quit()
 
     return rendered_text
 
