@@ -56,7 +56,7 @@ And [H]only ever uses you to tickle her throat with
 {end_of_verse}
 
 {start_of_bridge: Pre-chorus}
-[C#m]Now you might [A]think that this girl 
+[C#m]Now you might [A]think that this girl
 [C#m]only ex[H]ists in your [E]mind
 [A]But she's real; [C#m]But last [H]week, she died
 {end_of_bridge}

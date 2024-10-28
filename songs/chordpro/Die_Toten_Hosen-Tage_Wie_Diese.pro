@@ -67,5 +67,5 @@ Kein Ende in Sic[C]ht...     [D]
 {chorus: R2}
 {start_of_chorus: Outro}
 Erleben wir das [Fadd9]Beste, [C]und kein Ende in [G]Sicht...
-Kein Ende in Si[C]cht... [D]       [G]
+Kein Ende in Si[C]cht... [D]     [G]
 {end_of_chorus}

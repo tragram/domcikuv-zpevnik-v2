@@ -12,7 +12,7 @@
 {start_of_verse}
 [Am]The books you think I [F]wrote are way too [C]thick        [G]
 [Am]Who needs a thousand [F]metaphors to [C]figure out you shouldn't [G]be a dick?
-[Am]And I don't [F]watch you when you sleep[C]         [G]
+[Am]And I don't [F]watch you when you sleep[C]  [G]
 [Am]Surprisingly [F]I don't use my [C]omnipotence to be a [Em]fucking [F]creep
 {end_of_verse}
 
@@ -32,9 +32,9 @@ Didn't think I had to write that one down for ya.)
 {end_of_bridge}
 
 {start_of_verse}
-[Am]I don't think [F]masturbation is obscene[C]     [G]
+[Am]I don't think [F]masturbation is obscene[C][G]
 [Am]It's absolutely [F]natural and the [C]weirdest fucking thing I've [G]ever seen     [Am]
-You make my [F]job a living hell [C]     [G]
+You make my [F]job a living hell [C][G]
 [Am]I sent gays to [F]fix overpopulation[C]
 And boy, did [G]that go [F]well
 {end_of_verse}

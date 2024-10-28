@@ -10,9 +10,9 @@
 {start_melody: g}
 
 {start_of_verse}
-[G]  As you go through life you'll [Em]see
+[G]As you go through life you'll [Em]see
 there is so much that [C]we don't unders[G]tand.
-[G]  And the only thing we [Em]know
+[G]And the only thing we [Em]know
 is things don't always [C]go the way we p[G]lanned.
 {end_of_verse}
 
@@ -24,13 +24,13 @@ we are [Em]more than we [D]are, we are o[G]ne.
 {end_of_bridge}
 
 {start_of_chorus}
-[G]  [C]We are o[D]ne. [G]   [C]We are [D]one.
+[G][C]We are o[D]ne. [G] [C]We are [D]one.
 {end_of_chorus}
 
 {start_of_verse}
-[G]  If there's so much I must [Em]be
+[G]If there's so much I must [Em]be
 Can I still just be [C]me, the way I [G]am?
-[G]  Can I trust in my own h[Em]eart
+[G]Can I trust in my own h[Em]eart
 Or am I just one p[C]art, of some big [G]plan?
 {end_of_verse}
 
@@ -44,7 +44,7 @@ is our p[Em]ride, deep in[D]side, we are o[G]ne.
 {chorus}
 
 {start_of_bridge: Pre}
-We are [G]one, you and[Am] I, we are l[F]ike the earth and s[C]ky,
+We are [G]one, you and[Am]I, we are l[F]ike the earth and s[C]ky,
 one f[Em]amily u[C]nder the s[D]un.
 All the w[G]isdom to l[Am]ead, all the co[F]urage that you n[C]eed,
 you will f[Em]ind when you s[D]ee, we are o[G]ne.

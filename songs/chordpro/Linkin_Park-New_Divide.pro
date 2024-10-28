@@ -30,7 +30,7 @@ Give me [Em]reason
 To [G]fill this hole
 Con[D]nect the space betw[A]een
 Let it [C]be enough to reach the truth that [D]lies
-A[D]cross this new div[Em]ide  [G]    [D]    [A]
+A[D]cross this new div[Em]ide  [G]  [D]  [A]
 {end_of_chorus}
 
 {start_of_verse}
@@ -64,6 +64,6 @@ But I [A]get what I deserve
 
 {chorus}
 {start_of_chorus}
-A[A]cross this new div[Em]ide  [G]    [D]
-A[A]cross this new div[Em]ide  [G]    [D]    [A]    [*Em]
+A[A]cross this new div[Em]ide  [G]  [D]
+A[A]cross this new div[Em]ide  [G]  [D]  [A]  [*Em]
 {end_of_chorus}

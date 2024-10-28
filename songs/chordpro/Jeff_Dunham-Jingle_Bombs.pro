@@ -32,5 +32,5 @@ Per[Dm]haps it would be [C]much safer as a con[G7]venience store night [C]clerk,
 
 {start_of_chorus}
 [C]Jingle bombs, jingle bombs I think I got screwed
-Don't [F]laugh at me be[C]cause I'm dead or[G7] I k[G]ill y[C]ou!
+Don't [F]laugh at me be[C]cause I'm dead or[G7]I k[G]ill y[C]ou!
 {end_of_chorus}

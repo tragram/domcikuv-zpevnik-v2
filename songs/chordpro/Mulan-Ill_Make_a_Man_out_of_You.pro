@@ -18,7 +18,7 @@
 You're the [F/A]saddest bunch I [G/H]ever met
 But you can [C]bet, before we're [F]through
 [F]Mis[F/E]ter, [F]I'll make a [G]man
-out of [Am] you [G]  [Am]
+out of [Am]you [G][Am]
 {end_of_verse}
 
 {start_of_verse}
@@ -27,10 +27,10 @@ out of [Am] you [G]  [Am]
 [Am]Once you fin[G/H]d your cent[C]er
 [G/H]you a[C]re [Dm]sure to win[G/H]
 
-You're a [F/A]spineless, pale, pa[G/H]thetic lot  
+You're a [F/A]spineless, pale, pa[G/H]thetic lot
 And you [C]haven't got a [F]clue
 [F]Some[F/E]how [F]I'll make a [G]man
-out of [Am]you    [G] [Am]
+out of [Am]you    [G][Am]
 {end_of_verse}
 
 {start_of_bridge}
@@ -49,7 +49,7 @@ We must be [G/H]swift as the [E7]coursing [Am]river
 [F]With all the [G]force [E7]of a great ty[Am]phoon
 [G]Be a [F/A]man
 [F]With all the [G]strength of a [E7]raging [Am]fire
-[F]Mysterious as the [G]dark side of the [Asus2]moon [G]   [Asus2]
+[F]Mysterious as the [G]dark side of the [Asus2]moon [G] [Asus2]
 {end_of_chorus}
 
 {comment: Capo++}
@@ -62,7 +62,7 @@ and  you might survive
 You're unsuited for the rage of war
 So pack up, go home you're through
 How could I make a man
-out of you?      
+out of you?
 {end_of_verse}
 
 {chorus}

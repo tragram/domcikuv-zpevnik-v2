@@ -39,7 +39,7 @@ Ei [Hm]tanssi Mikä [D]boogie-boog?
 Mä [G]osaan vetää vaan [A]valssimood
 Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi  [A]
 
-|: Ei suomalaiset [Hm]tanssi [G][D][A] :|
+|: Ei suomalaiset [Hm]tanssi [G][D][A]:|
 {end_of_chorus}
 
 {start_of_verse}
@@ -74,13 +74,13 @@ Ei [Hm]tanssi Mikä [D]boogie-boog?
 Mä [G]osaan vetää vaan [A]valssimood
 Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi  [A]
 
-|: Ei suomalaiset [Hm]tanssi [G][D][A] :|
+|: Ei suomalaiset [Hm]tanssi [G][D][A]:|
 {end_of_chorus}
 
 {start_of_chorus}
 Ei [A]suomalaiset [Hm]tanssi
 Pel[G]kkää polkkaa
-Mä [D]haluun vetää myös [A]cha-cha-cha 
+Mä [D]haluun vetää myös [A]cha-cha-cha
 Ei [Hm]tanssi Pel[G]kkää jenkkaa
 Mä [D]haluun vetää myös [A]sambadaa
 Ei [Hm]tanssi Vaik olis [D]tangokuu
@@ -89,5 +89,5 @@ Ja [Hm]tanssii, ja [G]tanssii, ja [D]tanssii, ye[A]ah
 {end_of_chorus}
 
 {start_of_bridge: Outro}
-[Hm] Ei suomalaiset [Hm]tanssi
+[Hm]Ei suomalaiset [Hm]tanssi
 {end_of_bridge}

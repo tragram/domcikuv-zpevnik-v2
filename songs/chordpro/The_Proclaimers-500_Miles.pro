@@ -77,7 +77,7 @@ I'm gonna [G5]be the man who [A]goes along with [D5]you
 {end_of_verse}
 
 {start_of_bridge}
-And when I [D5]come home (When I come home), 
+And when I [D5]come home (When I come home),
 yes I know I'm gonna be
 I'm gonna [G5]be the man who [A7]comes back home with [H]you
 I'm gonna [Em7]be the man who's [As]coming home with [D5]you

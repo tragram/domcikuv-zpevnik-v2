@@ -44,12 +44,12 @@ Mama, I'm coming [E]home
 [C#m]Selfish love, yeah, we're [A]both alone
 The [E]ride before the fall, yeah.
 But [C#m]I'm gonna take this [A]heart of stone
-I just [H]got to have it all.  
+I just [H]got to have it all.
 {end_of_bridge}
 
 {start_of_chorus}
 [A]I've seen your face a hundred [E]times,
-[A]Every day we've been a[E]part    
+[A]Every day we've been a[E]part
 [A]I don't [H]care about the [E]sunshine, [A]yeah
 'cause [A]mama, [H]mama, I'm coming [C]ho[D]me[E]
 I'm coming [C]ho[D]me[H]
