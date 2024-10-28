@@ -8,7 +8,7 @@
 {key: a}
 
 {start_of_verse}
-To[Am]já, zrozená z nemoc[G]ných básníků,
+To [Am]já, zrozená z nemoc[G]ných básníků,
 z tichých [Em]vět po nocích utka[Am]ná,
 [Am]to já, zrozená, ne[G]ní mi do smíchu,
 když mám [Em]být pod cenou proda[Am]ná.

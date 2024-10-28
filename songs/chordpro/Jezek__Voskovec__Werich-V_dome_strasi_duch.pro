@@ -25,16 +25,16 @@
 
 {start_of_chorus}
 [Dm]Boty d[Bb]upou [Dm6]po sch[A7]odech
-[Dm]v domě [Bb]straší[Dm6] duch[A7]
+[Dm]v domě [Bb]straší[Dm6]duch[A7]
 [D]náhle t[D7]áhle [Gm]začne [Dm]pištět
-[D7]prásk a[Gm] zbyl po něm [Dm]puch[A7]
+[D7]prásk a[Gm]zbyl po něm [Dm]puch[A7]
 {end_of_chorus}
 
 {start_of_chorus}
 [Dm]Ve vik[Bb]ýři n[Dm6]ahoře[A7]
 [Dm]vytřeš[Bb]těná [Dm6]tvář[A7]
-[D]dlouhá [D7]čouhá z[Gm] kamen [Dm]ruka
-[D7]a trhá[Gm] kalen[Dm]dář[A7]
+[D]dlouhá [D7]čouhá z[Gm]kamen [Dm]ruka
+[D7]a trhá[Gm]kalen[Dm]dář[A7]
 {end_of_chorus}
 
 {start_of_bridge}
@@ -44,8 +44,8 @@
 {end_of_bridge}
 
 {start_of_chorus}
-[Dm]Hodiny[Bb] jdou p[Dm6]ozpátk[A7]u
+[Dm]Hodiny[Bb]jdou p[Dm6]ozpátk[A7]u
 [Dm]je tu [Bb]mrtvej [Dm6]vzduch[A7]
-[D]je tu n[D7]ěco v[Gm] nepoř[Dm]ádku
+[D]je tu n[D7]ěco v[Gm]nepoř[Dm]ádku
 [D7]lítá [Gm]tady z[A7]lej d[Dm]uch[Dm6]
 {end_of_chorus}

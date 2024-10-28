@@ -41,6 +41,6 @@ No tak [C]có, tak [G]có, tak [A]có
 {end_of_verse}
 
 {start_of_verse}
-2x [D]Vysyp ten [A]popel, kamaráde, [Emi]do bílé [G]vody, vody  / Heja hej...
+2x [D]Vysyp ten [A]popel, kamaráde, [Emi]do bílé [G]vody, vody / Heja hej...
 [D]Vyhasnul [A]kotel a [Emi]náhoda je, [G]štěstí od podko[G/F#]vy. [G],[G/F#]
 {end_of_verse}

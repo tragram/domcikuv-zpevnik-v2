@@ -13,13 +13,13 @@
 {comment: so please feel free to correct me!}
 
 {start_of_bridge: Intro}
-[Em] [D] [Am] [C] [G]
+[Em][D][Am][C][G]
 {end_of_bridge}
 
 {start_of_verse}
-[Em] On [D]solid fuel and w[Am]ires,
+[Em]On [D]solid fuel and w[Am]ires,
 Turn the [C]key and [D]light the f[Em]ire,
-We're l[D]eaving Earth toda[Am]y.   [C]   [G]
+We're l[D]eaving Earth toda[Am]y. [C][G]
 {end_of_verse}
 
 {start_of_verse}
@@ -48,7 +48,7 @@ You'd[Em]know why I want [D]to get back [C]soon (Get back soon).
 {start_of_verse}
 [Em]Eighteen [D]thousand miles an [Am]hour,
 Fueled by [C]science and [D]solar [Em]power,
-The [D]ocean's racing [Am]past. [C]  [G]  [Em]
+The [D]ocean's racing [Am]past. [C][G][Em]
 {end_of_verse}
 {start_of_verse}
 

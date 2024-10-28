@@ -11,13 +11,13 @@
 
 {start_of_verse}
 [E]Times have changed and times are strange
-[E]Here I come, but I ain't the same   [A]
+[E]Here I come, but I ain't the same [A]
 Mama, I'm coming [E]home
 {end_of_verse}
 
 {start_of_verse}
 [E]Times gone by, seems to be
-You [E]could have been a better friend to me  [A]
+You [E]could have been a better friend to me [A]
 Mama, I'm coming [E]home
 {end_of_verse}
 
@@ -36,7 +36,7 @@ Mama, I'm coming [E]home
 
 {start_of_verse}
 I [E]could be right, I could be wrong
-It [E]hurts so bad, it's been so long  [A]
+It [E]hurts so bad, it's been so long [A]
 Mama, I'm coming [E]home
 {end_of_verse}
 
@@ -44,12 +44,12 @@ Mama, I'm coming [E]home
 [C#m]Selfish love, yeah, we're [A]both alone
 The [E]ride before the fall, yeah.
 But [C#m]I'm gonna take this [A]heart of stone
-I just [H]got to have it all.  
+I just [H]got to have it all.
 {end_of_bridge}
 
 {start_of_chorus}
 [A]I've seen your face a hundred [E]times,
-[A]Every day we've been a[E]part    
+[A]Every day we've been a[E]part
 [A]I don't [H]care about the [E]sunshine, [A]yeah
 'cause [A]mama, [H]mama, I'm coming [C]ho[D]me[E]
 I'm coming [C]ho[D]me[H]

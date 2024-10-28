@@ -60,12 +60,12 @@ Erleben wir das [Fadd9]Beste, [C]kein Ende ist in Si[G]cht
 {start_of_bridge}
 Kein Ende in Sic[C]ht...
 Kein Ende in Sic[Em7]ht...
-Kein Ende in Sic[C]ht...     [D]
+Kein Ende in Sic[C]ht... [D]
 {end_of_bridge}
 
 {chorus}
 {chorus: R2}
 {start_of_chorus: Outro}
 Erleben wir das [Fadd9]Beste, [C]und kein Ende in [G]Sicht...
-Kein Ende in Si[C]cht... [D]       [G]
+Kein Ende in Si[C]cht... [D][G]
 {end_of_chorus}

@@ -10,10 +10,10 @@
 {start_melody: }
 
 {start_of_verse}
-[C]V zem  křesťanů, kebaby sto[G]jí,
-Ať m  někdo [Dm]z vás na to odpo[Am]ví,
+[C]V zem křesťanů, kebaby sto[G]jí,
+Ať m někdo [Dm]z vás na to odpo[Am]ví,
 Proč bufet nesta[C]ví v arabských ze[G]mích
-A proč oběd [Dm]můj  všude je pro [Am]smích?
+A proč oběd [Dm]můj všude je pro [Am]smích?
 {end_of_verse}
 
 {start_of_verse}

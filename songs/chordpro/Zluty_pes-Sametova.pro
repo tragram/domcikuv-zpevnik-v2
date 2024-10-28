@@ -24,20 +24,20 @@ a [C]někdo se moh' [Ami]docela dobře [F]flákat. [G]
 
 {start_of_chorus}
 [C]Vzpomínáš, takys' tu [G]žila, a [Ami]nedělej, že si [F]jiná,
-taková [C]malá pilná [G]včela, taková [F]celá [G]sametová. [C]- (na sametová se rozjedou bící a hrají všichni)
+taková [C]malá pilná [G]včela, taková [F]celá [G]sametová. [C]
 {end_of_chorus}
 
 {start_of_verse}
 [C]Přišel čas a jako [F]náhoda [C]byla tu bigbítová [F]pohoda,
 [C]kytičky a [F]úsměvy sekretáro[G]k,
-[C]sousedovic bejby [F]Milena je [C]celá blbá z Boba [F]Dylana,
+[C]Sousedovic bejby [F]Milena je [C]celá blbá z Boba [F]Dylana,
 [C]ale to nevadí[Ami], já mám taky nár[F]ok. [G]
 {end_of_verse}
 
 {start_of_verse}
-[C]Starý, mladý nebo [F]pitomý [C]mlátili do toho [F]jako my,
+[C]Starý, mladý nebo [F]pitomý, [C]mlátili do toho [F]jako my,
 [C]hlavu plnou [F]Londýna nad [G]Temží,
-[C]a starej dobrej [F]satanáš hraje [C]u nás v hospodě [F]mariáš
+[C]A starej dobrej [F]satanáš hraje [C]u nás v hospodě [F]mariáš
 [C]a pazoura se mu [Ami]trumfama jenom [F]hemží. [G]
 {end_of_verse}
 
@@ -55,5 +55,5 @@ ty jsi, [C]holka, tehdá [G]byla taková [F]celá [G]sametová. [C]
 
 {start_of_chorus}
 |: [C]Vzpomínáš, jak jsi se [G]měla, [Ami]když jsi nic nevěděl[F]a,
-byla to [C]taková krásná [G]cela a byla [F]celá [G](sametová) [C]:|
+byla to [C]taková krásná [G]cela a byla [F]celá [G] :| sametová [C] 
 {end_of_chorus}

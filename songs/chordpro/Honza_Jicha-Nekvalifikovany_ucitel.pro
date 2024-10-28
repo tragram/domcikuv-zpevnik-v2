@@ -68,7 +68,7 @@ s pedagogickým [C]miminem.
 {start_of_chorus: R2}
 [G]Jsem pedagog od přírody
 a ten [F]demagog říká, že vařím z vody
-[C]Systém je ale takhle  [Ami]nastaven
-so  [F]goodbye my kids[G]
+[C]Systém je ale takhle [Ami]nastaven
+so [F]goodbye my kids[G]
 comment je vous aime.[C]
 {end_of_chorus}

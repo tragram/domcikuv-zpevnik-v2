@@ -40,4 +40,3 @@ ale[D]luja, ale[Hmi]lu - [G]ja.
 {chorus}
 
 {bridge}
-
