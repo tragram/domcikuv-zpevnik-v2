@@ -32,7 +32,7 @@ function convert2flag(language) {
 
 function LanguageFlag({ language }) {
     return (
-        <Avatar alt={language} className='w-6 h-6 outline outline-1 outline-foreground' src={convert2flag(language)} />
+        <Avatar alt={language} className='w-6 h-6 shadow-black' src={convert2flag(language)} />
     )
 }
 

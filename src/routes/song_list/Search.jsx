@@ -24,7 +24,7 @@ function Search({ songs, setSearchResults, query, setQuery }) {
     }
 
     return (
-        <Input className="w-full sm:max-w" color={query ? "primary" : "default"} isClearable onChange={search} placeholder="Search" size="md" startContent={<SearchIcon />} type="text" />
+        <Input className="w-full sm:max-w" color={query ? "primary" : "bg-primary-500"} isClearable onChange={search} placeholder="Search" size="md" startContent={<SearchIcon />} type="text" />
     )
 }
 

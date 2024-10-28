@@ -42,7 +42,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
         <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4">
             <div className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" style={{ backgroundImage: `url(${imageURL})` }}
                 onClick={() => { setSelectedSong(song); }}>
-                <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image outline outline-foreground outline-1" >
+                <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow" >
                     <Avatar className="absolute -left-1 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" fallback={
                         <Instagram size={24} />
                     } showFallback src={imageURL} />

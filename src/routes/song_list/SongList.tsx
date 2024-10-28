@@ -174,7 +174,7 @@ const SongList = () => {
     const songRowData = createSongRowData(filteredAndSortedSongs, songDB, setSelectedSong);
     return (
         <main className='light text-foreground bg-background h-screen w-screen'>
-            <Navbar maxWidth='2xl' isBordered className={`navbar ${showNavbar ? 'visible-navbar' : 'hidden-navbar'}`}>
+            <Navbar maxWidth='2xl' isBordered className={`navbar shadow-black ${showNavbar ? 'visible-navbar' : 'hidden-navbar'}`}>
                 <NavbarContent as="div" justify="center" className='sm:flex gap-2  sm:gap-4 w-full'>
                     <NavbarItem className=''>
                         <Sorting sortSettings={sortSettings} setSortSettings={setSortSettings} />
