@@ -50,29 +50,48 @@ function SongView({ }) {
     //     "only screen and (max-width : 600px)"
     // );
 
-    const [pinchDistance, setPinchDistance] = useState(null);
-    
-    const handleTouchMove = (event) => {
+    const [pinchDistanceStart, setPinchDistanceStart] = useState(null);
+    const [pinchDistanceEnd, setPinchDistanceEnd] = useState(null);
+
+    const touchDist = (event) => {
+        const dist = Math.hypot(
+            event.touches[0].pageX - event.touches[1].pageX,
+            event.touches[0].pageY - event.touches[1].pageY
+        );
+        return dist;
+    }
+
+    const handleTouchStart = (event) => {
+        console.log("new touch!")
         if (event.touches.length === 2) {
-            const dist = Math.hypot(
-                event.touches[0].pageX - event.touches[1].pageX,
-                event.touches[0].pageY - event.touches[1].pageY
-            );
-            setPinchDistance(dist);
+            const dist = touchDist(event);
+            setPinchDistanceStart(dist);
             console.log(dist);
         }
     };
 
-    const handleTouchEnd = () => {
-        setPinchDistance(null); // Reset pinch distance on touch end
+    const handleTouchMove = (event) => {
+        console.log(event.touches)
+        if (event.touches.length === 2) {
+            event.preventDefault();
+            const dist = touchDist(event);
+            setPinchDistanceEnd(dist);
+        }
+    };
+
+    const handleTouchEnd = (event) => {
+        if (event.touches.length === 2) {
+            console.log(event.touch);
+            console.log(pinchDistanceStart, pinchDistanceEnd);
+        }
     };
     useEffect(() => {
-
-
+        window.addEventListener('touchstart', handleTouchStart);
         window.addEventListener('touchmove', handleTouchMove);
         window.addEventListener('touchend', handleTouchEnd);
 
         return () => {
+            window.removeEventListener('touchstart', handleTouchStart);
             window.removeEventListener('touchmove', handleTouchMove);
             window.removeEventListener('touchend', handleTouchEnd);
         };
