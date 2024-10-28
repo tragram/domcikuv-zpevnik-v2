@@ -1,4 +1,5 @@
 import os
+import re
 from pathlib import Path
 
 import unidecode
@@ -8,7 +9,7 @@ from utils import extract_metadata, normalize_string, songs_path
 def remove_whitespaces(file_path: Path):
     with open(file_path, "r", encoding="utf-8") as file:
         cleaned_lines = [
-            l.strip().replace("] ", "]".replace("  ", " ")) for l in file.readlines()
+            re.sub(" +", " ", l.strip()).replace("] ", "]") for l in file.readlines()
         ]
     with open(file_path, "w", encoding="utf-8") as f:
         f.writelines("\n".join(cleaned_lines))
@@ -31,8 +32,6 @@ def format_chordpro_files(
     # Walk through the given directory
     directory = song_directory / chordpro_folder
     for file_path in directory.glob("*.pro"):
-        print("-" * 40)
-        print("Looking at file", file_path)
         # Extract artist and title from the file
         remove_whitespaces(file_path)
         artist, title, _ = extract_metadata(file_path)
@@ -44,13 +43,17 @@ def format_chordpro_files(
             title_clean = normalize_string(title)
 
             new_stem = f"{artist_clean}-{title_clean}"
-            for folder, extension in other_folders:
-                rename_file_in_directory(
-                    song_directory / folder, file_path.stem, new_stem, extension
-                )
             new_file_name = directory / f"{new_stem}.pro"
-            new_file_path = file_path.rename(directory / new_file_name)
-            print(f"Renamed: '{file_path}' -> '{new_file_path}'")
+            print(file_path, directory / new_file_name)
+            if file_path != directory / new_file_name:
+                print("-" * 40)
+                print("Looking at file", file_path)
+                new_file_path = file_path.rename(directory / new_file_name)
+                for folder, extension in other_folders:
+                    rename_file_in_directory(
+                        song_directory / folder, file_path.stem, new_stem, extension
+                    )
+                print(f"Renamed: '{file_path}' -> '{new_file_path}'")
         else:
             print(f"Metadata not found for '{file_path}', skipping.")
 

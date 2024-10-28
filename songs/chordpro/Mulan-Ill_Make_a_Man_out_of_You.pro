@@ -11,7 +11,7 @@
 
 {start_of_verse}
 [Am]Let's get [G/H]down to [C]business
-[G/H]To   [C]de[Dm]feat the [G]Huns
+[G/H]To [C]de[Dm]feat the [G]Huns
 [Am]Did they [G/H]send me [C]daughters
 [G/H]When [C]I [Dm]asked for [G/H]sons?
 
@@ -22,7 +22,7 @@ out of [Am]you [G][Am]
 {end_of_verse}
 
 {start_of_verse}
-[Am]Tranquil as [G/H]a forest   [C]
+[Am]Tranquil as [G/H]a forest [C]
 [G/H]But o[C]n f[Dm]ire within [G]
 [Am]Once you fin[G/H]d your cent[C]er
 [G/H]you a[C]re [Dm]sure to win[G/H]
@@ -30,7 +30,7 @@ out of [Am]you [G][Am]
 You're a [F/A]spineless, pale, pa[G/H]thetic lot
 And you [C]haven't got a [F]clue
 [F]Some[F/E]how [F]I'll make a [G]man
-out of [Am]you    [G][Am]
+out of [Am]you [G][Am]
 {end_of_verse}
 
 {start_of_bridge}
@@ -49,15 +49,15 @@ We must be [G/H]swift as the [E7]coursing [Am]river
 [F]With all the [G]force [E7]of a great ty[Am]phoon
 [G]Be a [F/A]man
 [F]With all the [G]strength of a [E7]raging [Am]fire
-[F]Mysterious as the [G]dark side of the [Asus2]moon [G] [Asus2]
+[F]Mysterious as the [G]dark side of the [Asus2]moon [G][Asus2]
 {end_of_chorus}
 
 {comment: Capo++}
 {start_of_verse}
 Time is racing toward us
-till  the Huns arrive
+till the Huns arrive
 Heed my every order
-and  you might survive
+and you might survive
 
 You're unsuited for the rage of war
 So pack up, go home you're through

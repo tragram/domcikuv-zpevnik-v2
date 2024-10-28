@@ -37,7 +37,7 @@ Ei [Hm]tanssi Mi[G]tään sambadaa
 Mä [D]osaan vetää let[A]kajenkkaa
 Ei [Hm]tanssi Mikä [D]boogie-boog?
 Mä [G]osaan vetää vaan [A]valssimood
-Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi  [A]
+Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi [A]
 
 |: Ei suomalaiset [Hm]tanssi [G][D][A]:|
 {end_of_chorus}
@@ -72,7 +72,7 @@ Ei [Hm]tanssi Mi[G]tään sambadaa
 Mä [D]osaan vetää let[A]kajenkkaa
 Ei [Hm]tanssi Mikä [D]boogie-boog?
 Mä [G]osaan vetää vaan [A]valssimood
-Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi  [A]
+Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi [A]
 
 |: Ei suomalaiset [Hm]tanssi [G][D][A]:|
 {end_of_chorus}

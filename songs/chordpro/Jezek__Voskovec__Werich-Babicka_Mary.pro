@@ -33,7 +33,7 @@ Stoletá Mary, babička [D7]Mary, ta zkrotí [G7]křepce hřebce, ať chce či [
 [G7]Vypiju to jen ve [C]stoje, [G7]jdu do volebního [C]boje,
 [G7]zřím zas [C]město drahý, [F]jedu [F#dim]volit do [E]Prahy.
 [Ami]Dopila a aby se neřeklo, putykáře změní v mrtvolu,
-[Dmi]za zády má [Ami]štěchovické peklo [H7]s šlajsnou svatojánských ato[E]lů.  [G7]
+[Dmi]za zády má [Ami]štěchovické peklo [H7]s šlajsnou svatojánských ato[E]lů. [G7]
 {end_of_verse}
 
 {start_of_chorus}

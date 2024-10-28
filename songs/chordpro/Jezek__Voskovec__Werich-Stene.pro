@@ -11,7 +11,7 @@
 {start_of_verse}
 [C]Narodilo se štěně, lidí [F]se nebál[C]o,
 |: [F]se svým stínem [C]na stěně [F]to štěně
-[C]celej [G]den si hrál[C]o.  :|
+[C]celej [G]den si hrál[C]o. :|
 {end_of_verse}
 
 {start_of_verse}

@@ -5,7 +5,7 @@
 {language: czech}
 {date_added: 09-2024}
 {range: d1-c1}
-{start_melody:  e g h}
+{start_melody: e g h}
 {key: G}
 
 {start_of_verse}

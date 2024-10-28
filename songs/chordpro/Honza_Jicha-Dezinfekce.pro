@@ -41,7 +41,7 @@ co [F]úplně zbytečně se v tom [C]hnojišti [G]rylo [G7]
 [C]Mohlo by to prospět [F]zatuchající [C]Praze
 kdyby se té dezi[F]nfekci ote[C]vřely hrá[D7]ze
 Snad by [C]ten, co si tam teďka [F]hraje na mona[C]rchu
-ne[F]stihl si v tempu dění [C]vybudovat [G]archu  [G7]
+ne[F]stihl si v tempu dění [C]vybudovat [G]archu [G7]
 {end_of_verse}
 
 {start_of_verse}

@@ -24,7 +24,7 @@ we are [Em]more than we [D]are, we are o[G]ne.
 {end_of_bridge}
 
 {start_of_chorus}
-[G][C]We are o[D]ne. [G] [C]We are [D]one.
+[G][C]We are o[D]ne. [G][C]We are [D]one.
 {end_of_chorus}
 
 {start_of_verse}

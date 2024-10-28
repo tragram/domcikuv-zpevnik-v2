@@ -29,7 +29,7 @@ Without [H]being attracted to any of them
 {end_of_bridge}
 
 {start_of_chorus}
-[E]If you want [C#m]love  [A]
+[E]If you want [C#m]love [A]
 [H]Lower your expec[E]tations a fe[C#m]w
 Because Prince [A]Charming would never [H]settle for you
 {end_of_chorus}
@@ -62,7 +62,7 @@ And [H]only ever uses you to tickle her throat with
 {end_of_bridge}
 
 {start_of_chorus}
-[E]If you want [C#m]love  [A]
+[E]If you want [C#m]love [A]
 [H]Lower your expec[E]tations a lo[C#m]t
 You might think your [A]dick is a gift, I [H]promise it's not
 {end_of_chorus}

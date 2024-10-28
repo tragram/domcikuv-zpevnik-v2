@@ -24,7 +24,7 @@
 
 {start_of_verse}
 Pak hlídali jsme oblohu, pozorujíce ptáky,
-debatujíce o Bohu  a hraní  na vojáky,
+debatujíce o Bohu a hraní na vojáky,
 do tváře jsem mu neviděl, pokoušel se ji schovat,
 to asi ptákům záviděl, že mohou poletovat.
 {end_of_verse}

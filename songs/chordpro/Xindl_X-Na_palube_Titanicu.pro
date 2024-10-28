@@ -12,11 +12,11 @@
 {title: Na palubě Titanicu}
 
 {start_of_verse}
-[C]Na palubě Titani[G]cu máme dneska [Ami]švandu  [G]
+[C]Na palubě Titani[G]cu máme dneska [Ami]švandu [G]
 [C]Kapitán důstojníko[G]vi spílá do [Ami]nýmandů [G]
 A [F]důstojník na oplátku kydá špínu na[G]něj
 Přijím[C]áme stanov[G]iska a pak všichni [Ami]žvaněj
-Jo [G]všichni žvaně[C]j     [G] [Ami]   [F] [G] [C]
+Jo [G]všichni žvaně[C]j [G][Ami][F][G][C]
 {end_of_verse}
 
 {start_of_verse}
@@ -35,7 +35,7 @@ Poskládat [C]milion z desetní[G]ků
 Na konci [F]párty, na každej [G]pád
 se všechny [Emi]naděje roztříští [Ami]o kru
 tak už to [F]chodí, na týhle [C]lodi
-na [G]Titanic[C]u  [G] [Ami]   [F] [G] [C]
+na [G]Titanic[C]u [G][Ami][F][G][C]
 {end_of_chorus}
 
 {start_of_verse}

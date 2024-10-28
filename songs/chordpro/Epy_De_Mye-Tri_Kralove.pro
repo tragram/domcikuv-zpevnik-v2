@@ -19,7 +19,7 @@
 Na frekvenci naděje se vysílá
 Jak jim vrazit ránu přímo do týla
 Orlice jim sama oči vyklove
-Za to svinstvo ve sprchách   s  za cyklonB
+Za to svinstvo ve sprchách s za cyklon B
 {end_of_verse}
 
 {start_of_chorus}
@@ -37,10 +37,10 @@ Krvácejí cíle našich střelných drah
 {end_of_verse}
 
 {start_of_verse}
-V týhle zemi  budou naše děti žít
+V týhle zemi budou naše děti žít
 pro ně taky složili jsme pevný slib
 Do poslední chvíle budeme se prát
-Kralové se  lůze prostě neumí  vzdát.
+Kralové se lůze prostě neumí vzdát.
 {end_of_verse}
 
 {chorus}

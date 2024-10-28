@@ -1,4 +1,4 @@
-{title:  Nad ránem}
+{title: Nad ránem}
 {artist: Epy De Mye}
 {date_added: 08-2018}
 {language: czech}

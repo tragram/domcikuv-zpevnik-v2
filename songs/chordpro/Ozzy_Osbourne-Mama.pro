@@ -11,13 +11,13 @@
 
 {start_of_verse}
 [E]Times have changed and times are strange
-[E]Here I come, but I ain't the same   [A]
+[E]Here I come, but I ain't the same [A]
 Mama, I'm coming [E]home
 {end_of_verse}
 
 {start_of_verse}
 [E]Times gone by, seems to be
-You [E]could have been a better friend to me  [A]
+You [E]could have been a better friend to me [A]
 Mama, I'm coming [E]home
 {end_of_verse}
 
@@ -36,7 +36,7 @@ Mama, I'm coming [E]home
 
 {start_of_verse}
 I [E]could be right, I could be wrong
-It [E]hurts so bad, it's been so long  [A]
+It [E]hurts so bad, it's been so long [A]
 Mama, I'm coming [E]home
 {end_of_verse}
 

@@ -11,9 +11,9 @@
 
 {start_of_verse}
 Za za[D]táčkou houká [A]vlak, snad to [Hmi]není nákla[G]ďák
-Za [D]chvíli [A]vjede do nádra[D]ží  [A]
+Za [D]chvíli [A]vjede do nádra[D]ží [A]
 Na dne[D]šek jsem nemoh [A]spát, stejně [Hmi]jako [G]tolikrát
-Dnes [D]ráno na [A]vandr vyrá[D]žím  [D7]
+Dnes [D]ráno na [A]vandr vyrá[D]žím [D7]
 {end_of_verse}
 
 {start_of_chorus}
