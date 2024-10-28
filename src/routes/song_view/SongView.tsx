@@ -13,6 +13,7 @@ import { FontSizeSettings, minFontSizePx, maxFontSizePx } from './FontSizeSettin
 import SpaceSavingSettings from './SpaceSavingSettings';
 import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './song_rendering';
+import { usePinch } from '@use-gesture/react'
 
 const PdfView = (pdfFilenames: string[]) => {
     // {/* the last PDF is the smallest filesize (they are ordered as scan > compressed > gen (if it exists)) */}
@@ -45,58 +46,8 @@ function SongView({ }) {
     useEffect(() => {
         setParsedContent(renderSong(songData, songRenderKey, repeatParts));
     }, [songRenderKey, repeatParts, songData]);
-
-    // const fullScreen = useMediaQuery(
-    //     "only screen and (max-width : 600px)"
-    // );
-
-    const [pinchDistanceStart, setPinchDistanceStart] = useState(null);
-    const [pinchDistanceEnd, setPinchDistanceEnd] = useState(null);
-
-    const touchDist = (event) => {
-        const dist = Math.hypot(
-            event.touches[0].pageX - event.touches[1].pageX,
-            event.touches[0].pageY - event.touches[1].pageY
-        );
-        return dist;
-    }
-
-    const handleTouchStart = (event) => {
-        console.log("new touch!")
-        if (event.touches.length === 2) {
-            const dist = touchDist(event);
-            setPinchDistanceStart(dist);
-            console.log(dist);
-        }
-    };
-
-    const handleTouchMove = (event) => {
-        console.log(event.touches)
-        if (event.touches.length === 2) {
-            event.preventDefault();
-            const dist = touchDist(event);
-            setPinchDistanceEnd(dist);
-        }
-    };
-
-    const handleTouchEnd = (event) => {
-        if (event.touches.length === 2) {
-            console.log(event.touch);
-            console.log(pinchDistanceStart, pinchDistanceEnd);
-        }
-    };
-    useEffect(() => {
-        window.addEventListener('touchstart', handleTouchStart);
-        window.addEventListener('touchmove', handleTouchMove);
-        window.addEventListener('touchend', handleTouchEnd);
-
-        return () => {
-            window.removeEventListener('touchstart', handleTouchStart);
-            window.removeEventListener('touchmove', handleTouchMove);
-            window.removeEventListener('touchend', handleTouchEnd);
-        };
-    }, []);
-
+    const config = { eventOptions: { capture: true, passive: false } }
+    const bind = usePinch((state) => { console.log(state) }, config)
     return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-dvh" : "")}>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
             <NavbarContent justify="start">
@@ -117,7 +68,7 @@ function SongView({ }) {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className={`px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
+        <div {...bind()} className={`px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
         >
             <div className='flex flex-col text-center '>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
