@@ -49,7 +49,7 @@ function CardThatHides({ song }) {
     return (
         <Card className={"w-full show-overlay-hover " + (hidden ? 'hidden' : 'flex')} style={{ height: imageHeightGen }} isHoverable isFooterBlurred onMouseEnter={() => setShowingContent(true)} onClick={() => setShowingContent(true)}
         >
-            <div className={"image-overlay absolute flex flex-col items-center before:bg-white/10 border-white/20 border-1 overflow-hidden before:rounded-xl rounded-large shadow-small z-10 backdrop-blur-lg pt-4 justify-start " + ("opacity-" + overlayOpacity)} onMouseEnter={() => setOverlayOpacity(100)} onMouseLeave={() => setOverlayOpacity(0)}>
+            <div className={"image-overlay absolute flex flex-col items-center before:bg-white/10 border-white/20 border-1 overflow-hidden before:rounded-xl rounded-large shadow-small z-10 backdrop-blur-lg pt-4 justify-start " + ("opacity-" + overlayOpacity)} onMouseOver={() => setOverlayOpacity(100)} onMouseOut={() => setOverlayOpacity(0)}>
                 <CircleX className='absolute top-4 right-4 w-8 h-8 text-white/60 hover:text-white' onClick={() => setOverlayOpacity(0)} />
                 <div >
                     {/* <Avatar showFallback src='https://images.unsplash.com/broken' className='w-full h-full' /> */}
