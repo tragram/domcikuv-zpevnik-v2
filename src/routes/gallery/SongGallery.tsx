@@ -5,9 +5,11 @@ import { areEqual, FixedSizeList as List } from 'react-window';
 import useLocalStorageState from 'use-local-storage-state';
 import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
 import { AnimatePresence, motion, wrap } from 'framer-motion';
-import { Card, CardHeader, CardBody, CardFooter, Image, Button, Link } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter, Image, Button, Link, Avatar, Skeleton } from "@nextui-org/react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import { fetchIllustrationPrompt } from '../../components/song_loader';
+import { AutoTextSize } from 'auto-text-size';
+import { CircleX } from 'lucide-react';
 
 const getShuffledArr = arr => {
     const newArr = arr.slice()
@@ -28,6 +30,7 @@ function CardThatHides({ song }) {
     const onError = () => { console.log("Error showing image in gallery!"); setHidden(true) };
     const [promptContent, setPromptContent] = useState(null);
     const [imageHeightGen, setImageHeightGen] = useState(null);
+    const [overlayOpacity, setOverlayOpacity] = useState(0);
 
 
     useEffect(() => {
@@ -44,14 +47,22 @@ function CardThatHides({ song }) {
     }, [showingContent]);
 
     return (
-        <Card className={"w-full show-footer-hover items-center align-center " + (hidden ? 'hidden' : 'flex')} style={{ height: imageHeightGen }} isHoverable isFooterBlurred onMouseEnter={() => setShowingContent(true)} onClick={() => setShowingContent(true)}
+        <Card className={"w-full show-overlay-hover " + (hidden ? 'hidden' : 'flex')} style={{ height: imageHeightGen }} isHoverable isFooterBlurred onMouseEnter={() => setShowingContent(true)} onClick={() => setShowingContent(true)}
         >
-            <CardFooter className="image-footer flex-col justify-between before:bg-white/10 border-white/20 border-1 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10 backdrop-blur-lg">
+            <div className={"image-overlay absolute flex flex-col items-center before:bg-white/10 border-white/20 border-1 overflow-hidden before:rounded-xl rounded-large shadow-small z-10 backdrop-blur-lg pt-4 justify-start " + ("opacity-" + overlayOpacity)} onMouseEnter={() => setOverlayOpacity(100)} onMouseLeave={() => setOverlayOpacity(0)}>
+                <CircleX className='absolute top-4 right-4 w-8 h-8 text-white/60 hover:text-white' onClick={() => setOverlayOpacity(0)} />
+                <div >
+                    {/* <Avatar showFallback src='https://images.unsplash.com/broken' className='w-full h-full' /> */}
+                </div>
                 <p className="text-tiny text-white/80 uppercase font-bold">{song.artist}</p>
                 <h4 className="text-white font-medium text-large">{song.title}</h4>
-                <p className='text-tiny text-white my-2'>{promptContent}</p>
-                <Button as={Link} href={"/song/" + song.id} color="primary">View</Button>
-            </CardFooter>
+                <div className='mx-4 flex flex-grow'>
+                    {/* <Skeleton isLoaded={promptContent} className='bg-white/60 opacity-50 m-4 mb-10 rounded-lg '> */}
+                        <p className='text-xs text-white mt-4'>{promptContent}</p>
+                    {/* </Skeleton> */}
+                </div>
+                <Button as={Link} href={"/song/" + song.id} className="w-full rounded-t-none bg-white/60 text-white text-md backdrop-blur-sm hover:bg-white">View</Button>
+            </div>
             <Image
                 // TODO: variable image height by cropping the contents
                 onError={onError}
