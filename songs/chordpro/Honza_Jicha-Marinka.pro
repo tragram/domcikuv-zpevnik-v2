@@ -16,12 +16,12 @@ ještě že mám na tohleto vyvinutý cit!
 {end_of_verse}
 
 {start_of_chorus}
-[G#]Sleduju tu [Cm]koroptvičku, [D#7]jak po jídle [G#] kouří špičku   
+[G#]Sleduju tu [Cm]koroptvičku, [D#7]jak po jídle [G#]kouří špičku
 a [C#7]rozkládá si [G#]vějířek a [D#7]odhaduju [C7]její věk
 [G#]z muziky - no [Cm]nádhera, má [D#7]ráda Karla [G#]Hašlera
-a [C#7]chce se mnou [G#]obeplout i [Hmi]Svatojánský  [E]proud.                   
+a [C#7]chce se mnou [G#]obeplout i [Hmi]Svatojánský [E]proud.
 {end_of_chorus}
- 
+
 
 {start_of_verse}
 Kolik jí tak může být? Prý má krásný nový byt
@@ -35,7 +35,7 @@ Světlou Karolinu, co prý už odpadla.
 Ptala se mě taky kdysi, jestli věřím v Rukopisy,
 jestli ne, tak ona to prý na mě nepoví.
 Kdypak asi dovím se, kolik je mé Márince
-a proč pořád vykládá o Karlu Máchovi?                
+a proč pořád vykládá o Karlu Máchovi?
 {end_of_chorus}
 
 
@@ -51,7 +51,7 @@ jenže před svatbou musel dát hlavu na špalek.
 Děvče je to půvabné a má historky zábavné,
 jako malá nejradši si hrála s kalichem.
 Její táta není žádný vůl, má v Kutných Horách pěkný důl
-a ve všech krizích zatím ho uhájil proti všem.                
+a ve všech krizích zatím ho uhájil proti všem.
 {end_of_chorus}
 
 
@@ -67,7 +67,7 @@ radši zdrhla do Prahy už před tím masakrem.
 Mám dívku jako obrázek a neznám sice její věk,
 ale myslím, že to není žádná apokalypsa.
 Když nad kraj se snese tma, tak nechce zůstat samotná
-a prosí mě, abych prý zkusil jí ochočit psa.                
+a prosí mě, abych prý zkusil jí ochočit psa.
 {end_of_chorus}
 
 
@@ -75,6 +75,6 @@ a prosí mě, abych prý zkusil jí ochočit psa.
 Umí navléct korálky a vždycky, když jdu do války,
 nakreslí mě na jeskyni hroudou hliněnou,
 umí oheň rozdělat, tak proč bych se měl vlastně ptát,
-kolik jí je? Nedávno se rvala s hyenou!    
+kolik jí je? Nedávno se rvala s hyenou!
 [D]O vever[E]ku. A [D]bezmá[E]la to [D]vyhrá[E]la.
 {end_of_verse}

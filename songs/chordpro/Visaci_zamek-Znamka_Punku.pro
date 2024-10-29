@@ -11,15 +11,15 @@
 
 {start_of_verse}
 [E]Holinky [D]nosil [A]vždycky [G]naruby
-[E]Kohoutí [D]hnát [A]si zapích [G]do huby 
-[E]Teplej rum [D]pili [A]když potom [G]blil 
-[E]Co hoře[D]lo [A]to vyhu[G]lil 
-[E]Myslel si [D]že je to [A]známka [G]punku 
+[E]Kohoutí [D]hnát [A]si zapích [G]do huby
+[E]Teplej rum [D]pili [A]když potom [G]blil
+[E]Co hoře[D]lo [A]to vyhu[G]lil
+[E]Myslel si [D]že je to [A]známka [G]punku
 {end_of_verse}
 
 {start_of_chorus}
-[E] [F#] [E]Ale [D]holky [A]říkaly [E] [F#] [E]
-Že [D]punk [A]je [E]jinde 
+[E][F#][E]Ale [D]holky [A]říkaly [E][F#][E]
+Že [D]punk [A]je [E]jinde
 Ale holky říkaly
 To snad není možný
 {end_of_chorus}

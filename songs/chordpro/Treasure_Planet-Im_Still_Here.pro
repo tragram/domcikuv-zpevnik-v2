@@ -54,8 +54,8 @@ As [Em]long as I k[D]now who I [C]am[G][C][G][C]
 
 
 {start_of_bridge}
-C[C]uz I'm n[D]ot what they s[Em]ee 
-Yeah the wo[C]rld is still sleeping While [D]I keep on dreaming, for [Em]me 
+C[C]uz I'm n[D]ot what they s[Em]ee
+Yeah the wo[C]rld is still sleeping While [D]I keep on dreaming, for [Em]me
 And it w[C]asn't just whispers and l[D]ies That I'll never b[Em]eli[D]ev[C]e
 {end_of_bridge}
 

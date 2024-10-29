@@ -12,14 +12,14 @@
 {start_of_verse}
 [Am]Soy de la ciudad con t[Dm]odo lo que v[G]es
 [Am]Con su ruido, con su gente, [Dm]consume ve[G]jez
-Y [Am]no puedo evitar, el[Dm] humo que entra h[G]oy
+Y [Am]no puedo evitar, el[Dm]humo que entra h[G]oy
 [Am]Pero igual sigo creciendo, [Dm]soy otro carb[G]ón
 {end_of_verse}
 
 {start_of_verse}
 No [Am]voy a imaginar, la [Dm]pena en los dem[G]ás
 [Am]Compro aire y si es puro, [Dm]pago mucho m[G]ás
-No [Am]voy a tolerar, que[Dm] ya no tengan [G]fe
+No [Am]voy a tolerar, que[Dm]ya no tengan [G]fe
 Que [Am]se bajen los brazos, que no [Dm]haya luci[G]dez
 {end_of_verse}
 
@@ -32,7 +32,7 @@ Y es[Am]toy, za[Dm]fando del o[G]lor
 
 {start_of_verse}
 Me en[Am]contré con la gente, que [Dm]sabe valo[G]rar
-Que[Am] de turista en la capital, han [Dm]sabido va[G]gar
+Que[Am]de turista en la capital, han [Dm]sabido va[G]gar
 Y [Am]no encarado al fin, la [Dm]cruda reali[G]dad
 De [Am]respirar hollín, de [Dm]llorar alquit[G]rán
 {end_of_verse}

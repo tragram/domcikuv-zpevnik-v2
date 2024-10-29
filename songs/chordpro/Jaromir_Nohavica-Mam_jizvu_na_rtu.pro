@@ -78,5 +78,5 @@ A [Dmi]kdyby se někdo z vás [F]na anděla ptal,
 [Gsus4]tak mám jizvu na rtu, [G/H]když při mně [Cadd9]stál. [G/H][F][G]
 {end_of_chorus}
 {start_of_chorus}
-Když při mně [Cadd9]stál. [G/H][F][G] ...on při mě [Cadd9]stál.
+Když při mně [Cadd9]stál. [G/H][F][G]...on při mě [Cadd9]stál.
 {end_of_chorus}

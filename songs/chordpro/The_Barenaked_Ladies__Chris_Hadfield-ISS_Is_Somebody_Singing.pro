@@ -13,13 +13,13 @@ TBD jine akordy
 {start_of_verse}
 [Em]On [D]solid fuel and [Am]wires,
 Turn the [C]key and [D]light the f[Em]ire,
-We're [D]leaving Earth to[Am]day. [C] [D]
+We're [D]leaving Earth to[Am]day. [C][D]
 {end_of_verse}
 
 {start_of_verse}
 [Em]This [D]rocket's burning [Am]bright,
 We'll s[C]oon be [D]out of [Em]sight,
-And [D]orbiting in [Am]Space. [C] [D]
+And [D]orbiting in [Am]Space. [C][D]
 {end_of_verse}
 
 {start_of_bridge: Pre-Chorus}
@@ -79,6 +79,6 @@ Now has [G]fifteen nations [D]orbiting to[Cadd9]gether here.[D]
 {chorus}
 
 {start_of_bridge: Outro}
-|: [G]You'd know why I [D]want to get back soon[Cadd9] :| (3x)
+|: [G]You'd know why I [D]want to get back soon[Cadd9]:| (3x)
 [G]You'd know why I [D]want to get back soon[Cmaj7].
 {end_of_bridge}

@@ -54,4 +54,4 @@ Stoletá Mary, babička [D7]Mary, jde do [G7]volebního boje za kovbo[C]je. [E7]
 {start_of_chorus}
 [C]Mary, bojovná [D7]Mary, už nese[G7]dává v sedle, ve volbách [C]byla vedle.
 Stoletou Mary, babičku [D7]Mary, volbama [G7]zabitou vzal k sobě Manito[C]u.[E7]
-{end_of_chorus} 
+{end_of_chorus}
