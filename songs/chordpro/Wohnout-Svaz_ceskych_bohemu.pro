@@ -1,6 +1,6 @@
 {title: Svaz českých bohémů}
 {artist: Wohnout}
-{date_added: 08-2015}
+{date_added: 02-2015}
 {language: czech}
 {pdf_filenames: ['wohnout_svaz_ceskych_bohemu-sken.pdf', 'wohnout_svaz_ceskych_bohemu-comp.pdf', 'wohnout_svaz_ceskych_bohemu-gen.pdf']}
 {illustration_author: dalle3}
@@ -10,25 +10,21 @@
 {range: c1-c2}
 {start_melody: }
 {start_of_chorus}
-[G]Vracím se domů nad [Dmi]ránem,
-kvalitním vínem omá[Ami]men,
-z přímek se stávaj zatáč[F]ky,
-točí se [C]svět, jsem na srač[G]ky.
-[G]Vedle mě zvrací princez[Dmi]na,
-nastavím dlaň a požeh[Ami]nám,
-pro všechny jasný poselst[F]ví
-- tomu se [C]říká přátelst[G]ví.
+[G]Vracím se domů nad [Dmi]ránem, kvalitním vínem omá[Ami]men,
+z přímek se stávaj zatáč[F]ky, točí se [C]svět, jsem na srač[G]ky.
+[G]Vedle mě zvrací princez[Dmi]na, nastavím dlaň a požeh[Ami]nám,
+pro všechny jasný poselst[F]ví - tomu se [C]říká přátelst[G]ví.
 {end_of_chorus}
 
 {start_of_verse}
-[G]wow, mám tisíc otá[Dmi]zek, na žádnou vzpomín[Ami]ku,
+[G]Wow, mám tisíc otá[Dmi]zek, na žádnou vzpomín[Ami]ku,
 skládám si obrá[F]zek, [C]kámen po kamín[G]ku.
 [G]Včerejší produk[Dmi]ce, šla do bezvědo[Ami]mí,
 nastává deduk[F]ce, co [C]na to svědo[G]mí.
 {end_of_verse}
 
 {start_of_verse}
-A už si vzpomí[Dmi]nám, já byl jsem na sra[Ami]zu,
+[G]A už si vzpomí[Dmi]nám, já byl jsem na sra[Ami]zu,
 s kumpány který [F]mám, [C]patříme do [G]svazu,
 [G]vlastníme domé[Dmi]nu, tak si nás rozklik[Ami]ni,
 svaz českejch bohé[F]mů...
@@ -53,12 +49,9 @@ svatýho Vyšu[F]se.
 {chorus}
 
 {start_of_bridge}
-[G]Svět zrychluje svý otáčky,
-[Dmi]sousedka peče koláčky.
-[Ami]Hlášen stav nouze nejvyšší,
-[G]Zástupy českejch bohému,
-[Dmi]vyráží ven do terénů
-[Ami]šavlí z kvalitního vína
+[G]Svět zrychluje svý otáčky, [Dmi]sousedka peče koláčky.
+[Ami]Hlášen stav nouze nejvyšší, [G]Zástupy českejch bohému,
+[Dmi]vyráží ven do terénů [Ami]šavlí z kvalitního vína
 [F]bojovat [C]proti systém[G]u.
 {end_of_bridge}
 

@@ -1,6 +1,6 @@
 {title: The Gambler}
 {artist: Kenny Rogers}
-{date_added: 08-2015}
+{date_added: 02-2015}
 {language: english}
 {pdf_filenames: ['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']}
 {capo: 0}
@@ -42,7 +42,6 @@ There'll be time [A]enough for [E]countin' [H]when the dealin's [E]done.
 
 
 {start_of_verse}
-{comment: tranpose +1 here if you want to play it correctly}
 [E]Ev'ry gambler knows that the s[A]ecret to survi[E]vin'
 is [A]knowin' what to [E]throw away and [A]knowing what to [H]keep.
 'Cause [E]ev'ry hand's a winner and [A]ev'ry hand's a [E]loser,

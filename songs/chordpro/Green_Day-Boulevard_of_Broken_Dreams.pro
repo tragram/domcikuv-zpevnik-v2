@@ -48,7 +48,7 @@ On the [F]border line
 {end_of_verse}
 
 {start_of_verse}
-Read betw[F]een the lines
+[Dm]Read betw[F]een the lines
 [C]What's fucked up and ever[G]ything's alri[Dm]ght
 Check my [F]vital signs
 [C]To know I'm still [G]alive and I walk alon[Dm]e

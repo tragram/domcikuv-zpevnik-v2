@@ -13,7 +13,10 @@ Tvůj [C]krok je lehký jako [Emi]dech,
 kudy [F]jdeš, tam začíná [G]bál,
 šaty [C]tvé, ty šila tvá [Emi]máma,
 nemáš [F]prsten, kdo by ti jej [G]dal, nevím [G7]sám. [Emi][G]
-2. Tvým [C]bytem je studentská [Emi]kolej,
+{end_of_verse}
+
+{start_of_verse}
+Tvým [C]bytem je studentská [Emi]kolej,
 jedna [F]postel, gramo[G]fon,
 Ringo [C]Starr se z obrázku [Emi]dívá,
 já bych [F]snad, co vidí jen [G]on, viděl [G7]rád. [Emi][G]

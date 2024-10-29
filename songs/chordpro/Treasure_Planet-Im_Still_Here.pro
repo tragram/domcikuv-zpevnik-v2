@@ -47,36 +47,25 @@ They can't b[C]reak me
 As [Em]long as I k[D]now who I [C]am[G][C][G][C]
 {end_of_verse}
 
-
-{start_of_chorus}
-And [G]I want a [C]moment to be r[G]eal
-Wanna t[C]ouch things I don't fe[G]el
-Wanna ho[C]ld on, and f[Am7]eel I b[C]elong
-And h[G]ow, can the [C]world want me to c[G]hange?
-They're the o[C]nes that stay the s[G]ame
-They can't s[C]ee me, But I'[Em]m st[D]ill h[C]ere
+{chorus}
+{start_of_chorus: R2}
++ They can't s[C]ee me, But I'[Em]m st[D]ill h[C]ere
 {end_of_chorus}
 
 
 {start_of_bridge}
-C[C]uz I'm n[D]ot what they s[Em]ee [*]
-Yeah the wo[C]rld is still sleeping While [D]I keep on dreaming, for[Em]me [*]
-And it w[C]asn't just whispers and l[D]ies That I'll never b[Em]eli[D]ev[C]e[*]
+C[C]uz I'm n[D]ot what they s[Em]ee 
+Yeah the wo[C]rld is still sleeping While [D]I keep on dreaming, for [Em]me 
+And it w[C]asn't just whispers and l[D]ies That I'll never b[Em]eli[D]ev[C]e
 {end_of_bridge}
 
-
-{start_of_chorus}
-And [G]I want a [C]moment to be r[G]eal
-Wanna t[C]ouch things I don't fe[G]el
-Wanna ho[C]ld on, and f[Am7]eel I b[C]elong
-And h[G]ow, can they[C]say I'll never ch[G]ange?
-They're the o[C]nes that stay the s[G]ame
-I'm the o[C]ne now, cause I'[Em]m st[D]ill h[C]ere
+{chorus}
+{start_of_chorus: R3}
++ I'm the o[C]ne now, cause I'[Em]m st[D]ill h[C]ere
 {end_of_chorus}
 
-
-{comment: Outro}
+{start_of_verse: Outro}
 I'm the [G]one, cause I[Em]'m st[D]ill h[G]ere
-I'[Em]m st[D]ill he[G]re
-I'[Em]m st[D]ill h[G]ere
+|: I'[Em]m st[D]ill he[G]re :|
 I'[Em]m st[D]ill h[C]ere
+{end_of_verse}
