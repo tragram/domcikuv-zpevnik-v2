@@ -6,7 +6,7 @@
 {capo: 4}
 {key: C}
 {tempo: }
-{range: }
+{range: a1-a2}
 {start_melody: e}
 {start_of_verse}
 [C]Ukrytý v stínu lesa, [G]igelit,

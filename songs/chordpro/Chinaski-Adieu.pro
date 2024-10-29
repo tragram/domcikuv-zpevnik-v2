@@ -1,13 +1,13 @@
 {title: Adieu}
 {artist: Chinaski}
-{date_added: 06-2017}
+{date_added: 10-2024}
 {language: czech}
 {pdf_filenames: ['chinaski_adieu-sken.pdf', 'chinaski_adieu-comp.pdf']}
 {capo: 0}
-{key: }
+{key: a}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-e2}
+{start_melody: a e}
 
 {start_of_verse: Intro}
 Už [Ami]dlouho mě [G]znají v tomhle podniku
@@ -30,6 +30,7 @@ a do rána zpívali:
 {start_of_chorus}
 [Dmi]Adieu, [F]adieu
 [C]Dnes naposled se [G]napijem.
+[Dmi]Adieu, [F]adieu
 [C]A potísíci zahra[G]jem tu věčnou píse[F]ň.
 {end_of_chorus}
 

@@ -3,11 +3,11 @@
 {date_added: 12-2018}
 {language: czech}
 {pdf_filenames: ['pokac_26_-sken.pdf', 'pokac_26_-comp.pdf']}
-{capo: 0}
+{capo: 3}
 {key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody: e}
 
 {start_of_verse}
 [C]Právě mi odbilo 26,
@@ -31,7 +31,7 @@ a teď [G7]ujíždí mi vlak.
 
 {start_of_chorus}
 [C]Ať dělám [E]co dělám, [Am]tak roky [F]nezastavím.
-[C]Dnes je mi [E]26 [Am]a víc truchlím [F]něž slavím.
+[C]Dnes je mi [E]26 a [Am]víc truchlím [F]něž slavím.
 [C]Na hlavě [E]sotva vlas, [Am]ztrácím i [A]sluch a hlas.
 [Dm]Dřív jsem lítal ke hvězdám a [G]teď jsem rád že trefím domů sám.
 {end_of_chorus}

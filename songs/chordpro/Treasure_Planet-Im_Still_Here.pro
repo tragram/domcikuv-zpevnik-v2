@@ -5,7 +5,8 @@
 {title: I'm Still Here}
 {artist: Treasure Planet}
 {tempo: 74}
-{range: }
+{range: g1-e2}
+{start_melody: g d}
 
 {start_of_verse}
 [G]I am a qu[C]estion to the w[G]orld
@@ -54,9 +55,10 @@ As [Em]long as I k[D]now who I [C]am[G][C][G][C]
 
 
 {start_of_bridge}
-C[C]uz I'm n[D]ot what they s[Em]ee
-Yeah the wo[C]rld is still sleeping While [D]I keep on dreaming, for [Em]me
-And it w[C]asn't just whispers and l[D]ies That I'll never b[Em]eli[D]ev[C]e
+[Csus2]They can't [D]tell me who to [Em7]be
+[Csus2]Cuz I'm [D]not what they [Em7]see
+Yeah the [Csus2]world is still sleeping While [D]I keep on dreaming, for [Em7]me
+And it [Csus2]wasn't just whispers and [D]lies That I'll never be[Em]lie[D]ve[C]
 {end_of_bridge}
 
 {chorus}

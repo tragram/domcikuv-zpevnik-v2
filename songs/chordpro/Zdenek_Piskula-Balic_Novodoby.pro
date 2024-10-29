@@ -6,8 +6,8 @@
 {capo: 0}
 {key: F}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-c2}
+{start_melody: a g a}
 
 {start_of_chorus: R1}
 [F]Ratatatatatadau
@@ -39,7 +39,7 @@ rozdávaj mi lajky z lásky.
 
 {start_of_bridge}
 [F]Nosit slečnám [Ami]kytky, to se [B]dneska neno [Bmi]sí,
-a [Dmi]v tramvaji je pouštím sednout, [C]jen když poprosí...
+a [Bmi]v tramvaji je pouštím sednout, [C]jen když poprosí...
 {end_of_bridge}
 
 {start_of_chorus: R2}
