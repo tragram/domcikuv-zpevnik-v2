@@ -13,7 +13,6 @@ import { FontSizeSettings, minFontSizePx, maxFontSizePx } from './FontSizeSettin
 import SpaceSavingSettings from './SpaceSavingSettings';
 import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './song_rendering';
-import { usePinch } from '@use-gesture/react'
 
 const PdfView = (pdfFilenames: string[]) => {
     // {/* the last PDF is the smallest filesize (they are ordered as scan > compressed > gen (if it exists)) */}
@@ -46,8 +45,7 @@ function SongView({ }) {
     useEffect(() => {
         setParsedContent(renderSong(songData, songRenderKey, repeatParts));
     }, [songRenderKey, repeatParts, songData]);
-    const config = { eventOptions: { capture: true, passive: false } }
-    const bind = usePinch((state) => { console.log(state) }, config)
+
     return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-dvh" : "")}>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
             <NavbarContent justify="start">
@@ -68,7 +66,7 @@ function SongView({ }) {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div {...bind()} className={`px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
+        <div className={`px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
         >
             <div className='flex flex-col text-center '>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
