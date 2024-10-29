@@ -1,11 +1,12 @@
 {language: italian}
 {date_added: 02-2020}
-{capo: 0}
+{capo: 3}
 {key: a}
 {title: Bella Ciao}
 {artist: Folk}
 {tempo: 115}
-{range: }
+{range: a1-a2}
+{start_melody: a a h c a}
 
 {start_of_verse}
 [Am]Una mattina mi son svegliato,
@@ -51,6 +52,6 @@ Ti dir[E7]anno «Che bel fi[Am]or!»
 [Am]«È questo il fiore del partigiano»,
 O bella, ciao! Bella, ciao!
 Bella, c[Am7]iao, ciao, ciao!
-«È questo il [Dm]fiore del partig[Am]iano
-morto [E7]per la liber[Am]tà!»
+|: «È questo il [Dm]fiore del partig[Am]iano
+morto [E7]per la liber[Am]tà!» :|
 {end_of_verse}

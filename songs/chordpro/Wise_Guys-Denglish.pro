@@ -6,8 +6,8 @@
 {capo: 0}
 {key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-f#2}
+{start_melody: c c a g}
 
 {start_of_chorus}
 Oh [C]Herr, bitte gib mir meine [F]Sprache zur[C]ück,
@@ -37,7 +37,7 @@ Du vers[C]uchst, mich upzudaten, doch mein [F]Feedback turned dich ab.
 Du [D]sagst, dass ich ein Wellness-Weekend [G]dringend nötig hab.
 Du [C]sagst, ich käm' mit Good Vibrations [F]wieder in den Flow.
 Du [D]sagst, ich brauche Energy. Und ich [G]denk: “Das sagst du so…”
-{end_of_bridge}
+{end_of_verse}
 
 {start_of_bridge}
 Statt [F]Nachrichten bekomme ich den [C]Infotainment-Flash.

@@ -6,8 +6,8 @@
 {capo: 0}
 {key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody: f# f# f# e d}
 {start_of_verse}
 [D]Když jsem byl prcek, [Em]tak se mě všude
 [A]dospěláci ptali chlapče [D]co z tebe bude

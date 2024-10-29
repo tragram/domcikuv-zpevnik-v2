@@ -292,12 +292,12 @@
     "date_added": "06-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-d2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "f#",
     "chordpro_file": "Chinaski-1970.pro",
     "pdf_filenames": "[]",
-    "content_hash": "42bf871b7b1e4637ad079bdbc822af1f3db862e7"
+    "content_hash": "20abc06b8e0adbb6c3acff732b96c9b0ad6bb188"
   },
   {
     "title": "1. signální",
@@ -317,17 +317,17 @@
   {
     "title": "Adieu",
     "artist": "Chinaski",
-    "key": "",
+    "key": "a",
     "language": "czech",
-    "date_added": "06-2017",
+    "date_added": "10-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "g1-e2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "a e",
     "chordpro_file": "Chinaski-Adieu.pro",
     "pdf_filenames": "['chinaski_adieu-sken.pdf', 'chinaski_adieu-comp.pdf']",
-    "content_hash": "6ee6117c4fe7be044ff0671c7d29c185b107f29b"
+    "content_hash": "696fdf59d71679aabe0c24ccc3517156a0a276b3"
   },
   {
     "title": "Dlouhej kouř",
@@ -617,17 +617,17 @@
   {
     "title": "Can You Feel The Love Tonight",
     "artist": "Elton John",
-    "key": "C",
+    "key": "G",
     "language": "english",
     "date_added": "02-2020",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-d2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e f# g",
     "chordpro_file": "Elton_John-Can_You_Feel_The_Love_Tonight.pro",
     "pdf_filenames": "",
-    "content_hash": "e4736dd790d979a384661c562b9c83517aef3ae7"
+    "content_hash": "df798fbea81b742f3e2798d99aba31653cfbacb2"
   },
   {
     "title": "I Can't Help Falling In Love With You",
@@ -875,14 +875,14 @@
     "key": "a",
     "language": "italian",
     "date_added": "02-2020",
-    "capo": "0",
+    "capo": "3",
     "tempo": "115",
-    "range": "",
+    "range": "a1-a2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "a a h c a",
     "chordpro_file": "Folk-Bella_Ciao.pro",
     "pdf_filenames": "",
-    "content_hash": "73a7ee9ac5d9a44e7f319fce0fc7931f447ba581"
+    "content_hash": "0e38cfc129a7c2ad4017f10a6dee35f124f84372"
   },
   {
     "title": "Hej sokoły",
@@ -2932,12 +2932,12 @@
     "date_added": "07-2015",
     "capo": "4",
     "tempo": "",
-    "range": "",
+    "range": "a1-a2",
     "illustration_author": "",
     "start_melody": "e",
     "chordpro_file": "Nedvedi-Igelit.pro",
     "pdf_filenames": "['nedvedi_igelit-sken.pdf', 'nedvedi_igelit-comp.pdf']",
-    "content_hash": "284b212772cc8936c2abb820c0f31efcb89cbcff"
+    "content_hash": "10a42c219a27fa7b019f24535d1da32935486357"
   },
   {
     "title": "Loučím se s tmou",
@@ -3440,14 +3440,14 @@
     "key": "C",
     "language": "czech",
     "date_added": "12-2018",
-    "capo": "0",
+    "capo": "3",
     "tempo": "",
-    "range": "",
+    "range": "a1-a2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e",
     "chordpro_file": "Pokac-26.pro",
     "pdf_filenames": "['pokac_26_-sken.pdf', 'pokac_26_-comp.pdf']",
-    "content_hash": "1e25684c72ba7c0239e3723783292bb74f95a45f"
+    "content_hash": "e6675f4e0648828151cc0f448c9335f5ce545ddf"
   },
   {
     "title": "Co z tebe bude",
@@ -3457,12 +3457,12 @@
     "date_added": "12-2018",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "a1-a2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "f# f# f# e d",
     "chordpro_file": "Pokac-Co_z_tebe_bude.pro",
     "pdf_filenames": "['pokac_co_z_tebe_bude-sken.pdf', 'pokac_co_z_tebe_bude-comp.pdf']",
-    "content_hash": "88a08d4bf35950be5d6a07413ac4c4d49f775f8c"
+    "content_hash": "77851143ec80263a2d2e6d17466477949f853784"
   },
   {
     "title": "Hrdinský čin",
@@ -4132,12 +4132,12 @@
     "date_added": "02-2020",
     "capo": "0",
     "tempo": "74",
-    "range": "",
+    "range": "g1-e2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "g d",
     "chordpro_file": "Treasure_Planet-Im_Still_Here.pro",
     "pdf_filenames": "",
-    "content_hash": "b8236865fde058aef2a32884a301706d4aa798be"
+    "content_hash": "9f1ee2606d88c9aa10c5ab5c5a8533f1bc34a9d8"
   },
   {
     "title": "Pumpa",
@@ -4447,12 +4447,12 @@
     "date_added": "12-2018",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "a1-f#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "c c a g",
     "chordpro_file": "Wise_Guys-Denglish.pro",
     "pdf_filenames": "['wise_guys_denglish-sken.pdf', 'wise_guys_denglish-comp.pdf']",
-    "content_hash": "b1f7bc461252c6d4c48c1cbc9bd735de3c021d90"
+    "content_hash": "bd0572eebe2ffb5fcb78dd049385b54b97a835c7"
   },
   {
     "title": "Svaz českých bohémů",
@@ -4687,12 +4687,12 @@
     "date_added": "08-2017",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "c1-c2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "a g a",
     "chordpro_file": "Zdenek_Piskula-Balic_Novodoby.pro",
     "pdf_filenames": "['zdenek_piskula_balic_novodoby-sken.pdf', 'zdenek_piskula_balic_novodoby-comp.pdf']",
-    "content_hash": "e6731b815ce8888b34b7546be37f76d189e4276d"
+    "content_hash": "890499ccc6cbfda0f892a766ea7bf362da5e9415"
   },
   {
     "title": "Modrá",

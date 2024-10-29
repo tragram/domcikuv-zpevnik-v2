@@ -1,10 +1,11 @@
 {language: english}
 {date_added: 02-2020}
 {capo: 0}
-{key: C}
+{key: G}
 {title: Can You Feel The Love Tonight}
 {artist: Elton John}
-{range: }
+{range: d1-d2}
+{start_melody: e f# g}
 
 {start_of_verse}
 [C]There's a calm sur[G]render
@@ -23,14 +24,14 @@
 {start_of_chorus: R1}
 [G]Can you [D/F#]feel the [Emi]love to[C]night?
 [G]It is [C]where [A]we [D]are
-[C]It's e[G]nough for this [Emi]wide-[Emi/G]eyed [C]wanderer[C/H]
+[C]It's e[G]nough for this [Emi]wide-[G]eyed [C]wanderer[C/H]
 [Ami]That [G]we [C]got this [D]far
 {end_of_chorus}
 
 {start_of_chorus: R2}
 [G]Can you [D/F#]feel the [Emi]love to[C]night?
 [G]How it's [C]laid [A]to [D]rest
-[C]It's e[G]nough to [Emi]make kings [Emi/G]and [C]vagabonds[C/H]
+[C]It's e[G]nough to [Emi]make kings [G]and [C]vagabonds[C/H]
 Be[Ami]lieve [G]the [D]very [C]best[G]
 {end_of_chorus}
 
