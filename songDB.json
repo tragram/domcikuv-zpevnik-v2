@@ -387,7 +387,7 @@
     "start_melody": "g",
     "chordpro_file": "Chinaski-Hlavolam.pro",
     "pdf_filenames": "['chinaski_hlavolam-sken.pdf', 'chinaski_hlavolam-comp.pdf', 'chinaski_hlavolam-gen.pdf']",
-    "content_hash": "78cbd50783c79faa80dd8a0290a9c651b6a09045"
+    "content_hash": "462996a842e2700ada5299f222ce3f3aff3fc6fa"
   },
   {
     "title": "Kapela",
@@ -687,7 +687,7 @@
     "start_melody": "h a",
     "chordpro_file": "Epy_De_Mye-Tri_Kralove.pro",
     "pdf_filenames": "['epy_de_mye_tri_kralove-sken.pdf', 'epy_de_mye_tri_kralove-comp.pdf']",
-    "content_hash": "3edf9fd7c6e6052826b984642fb30e58800b00fc"
+    "content_hash": "ffde9f600fdb25d23e869c98a616c97bfce897fc"
   },
   {
     "title": "Lovec Amorů",
@@ -3567,7 +3567,7 @@
     "start_melody": "g g g h d d h g",
     "chordpro_file": "Poletime-Tri_kamosky_psycholozky.pro",
     "pdf_filenames": "",
-    "content_hash": "01a10217dc9fbc7268d02db5901add0daef4a19f"
+    "content_hash": "0f746e2a8cd978cb27c593c2e6c1bfcc8df88902"
   },
   {
     "title": "Toulavý boty",
