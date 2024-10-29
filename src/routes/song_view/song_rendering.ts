@@ -84,65 +84,143 @@ function convertChordsInChordPro(content: string, toEnglish: boolean = true): st
     return content;
 }
 
-function replaceRepeatedDirective(song: string, directive: string, repeat: boolean, shortHand: string = "R"): string {
-    const directiveMap: { [key: string]: string[] } = {};  // Stores directive content by key
-    let currentDirective: string[] | null = null;         // To store current directive lines
-    let currentKey: string | null = null;                 // The key for the current directive
+const validVariationValues = ["replace_last_line", "replace_last_lines", "append_content"] as const;
+type validVariation = (typeof validVariationValues)[number]
 
-    // Precompiled regexes for matching start, end, and directive calls
-    const startDirectiveRegex = new RegExp(`\\{start_of_${directive}(?::\\s*(\\w+))?\\}`);  // Matches {start_of_directive} or {start_of_directive: key}
-    const endDirectiveRegex = new RegExp(`\\{end_of_${directive}\\}`);  // Matches {end_of_directive}
-    const directiveCallRegex = new RegExp(`\\{${directive}(?::\\s*(\\w+))?\\}`);  // Matches {directive} or {directive: key}
+function partVariation(originalLines: string[], variationType: validVariation, variationContent: string[], repeat: boolean, repeatKey: string): string[] {
+    if (originalLines.length < 3) {
+        console.log("Ignoring part variation ", variationType, " on ", originalLines, " - originalLines content too short!")
+        return originalLines;
+    }
+    if (variationType === "replace_last_line") {
+        if (repeat) {
+            const replacedLines = [...originalLines.slice(0, -2), ...variationContent, ...originalLines.slice(-1)];
+            return replacedLines;
+        } else {
+            const replacedLines = [originalLines[0], repeatKey + " ..." + variationContent, ...originalLines.slice(-1)]
+            return replacedLines;
+        }
+    } else if (variationType === "replace_last_lines") {
+        throw new Error("Replace last lines not yet supported!")
+    } else if (variationType === "append_content") {
+        if (repeat) {
+            // assuming first and last line are {start_of_xyz} and {end_of_xyz}
+            const replacedLines = [...originalLines.slice(0, -1), ...variationContent, ...originalLines.slice(-1)];
+            return replacedLines;
+        } else {
+            const replacedLines = [originalLines[0], repeatKey + " + " + variationContent, ...originalLines.slice(-1)]
+            return replacedLines;
+        }
+    }
+}
 
+function replaceRepeatedDirectives(song: string, directives: string[] = ["chorus"], shortHands: string[] = ["R"], repeat: boolean = true): string {
+    // Takes care of replacing the shorthand directives ({chorus}) that aren't supported by the parsers by whatever's appropriate. Supports custom extensions to the ChordPro format as defined in the README.md file.
+    if (directives.length !== shortHands.length) {
+        throw new Error("Directives and shortHands must be the same length.");
+    }
+    const directiveMaps: { [directive: string]: { [key: string]: string[] } } = {};  // Stores content for each directive by key
+    const directiveRegexes = directives.map((directive, i) => ({
+        directive,
+        shortHand: shortHands[i],
+        startRegex: new RegExp(`^\\{start_of_${directive}(?::\\s*(\\w+))?\\}`),
+        endRegex: new RegExp(`^\\{end_of_${directive}\\}`),
+        callRegex: new RegExp(`^\\{${directive}(?::\\s*(\\w+))?\\}`)
+    }));
+
+    let currentDirective: string | null = null;         // To store current directive lines
+    let currentContent: string[] | null = null;             // Current directive's content
+    let currentKey: string | null = null;
+
+    let currentVariationType: validVariation | null = null;
+    let currentVariationContent: string[] | null = null;
+    let variationActive = false;
+    let variationStartRegex = new RegExp("^\\{start_of_variation: (\\w+)\\}")
+    let variationEndRegex = new RegExp("^\\{end_of_variation\\}")
     // make the deafault key hopefully weird enough that no chorpro file will include it
     const defaultKey = "a4c0d35c95a63a805915367dcfe6b751"
 
     // Process each line of the song
     const processedContent: string[] = song.split('\n').map(line => {
-        // Check for the start of the directive (e.g., {start_of_chorus})
-        const startMatch = line.match(startDirectiveRegex);
-        if (startMatch) {
-            currentKey = startMatch[1] || shortHand || defaultKey;  // Use key or default if no key is provided
-            currentDirective = [];  // Initialize the directive content
-        }
-
-        // Check for the end of the directive (e.g., {end_of_chorus})
-        const endMatch = line.match(endDirectiveRegex);
-        if (endMatch && currentDirective) {
-            // Store the directive content and reset the current state
-            if (currentKey !== defaultKey) { currentDirective[1] = currentKey + ": " + currentDirective[1] }
-            directiveMap[currentKey] = [`{start_of_${directive}}`, ...currentDirective, `{end_of_${directive}}`];
-            const ret = currentDirective.join('\n');
-            currentDirective = null;
-            currentKey = null;
-            return ret;
-        }
-
-        // Check for directive calls (e.g., {chorus})
-        const directiveCallMatch = line.match(directiveCallRegex);
-        if (directiveCallMatch) {
-            const directiveKey = directiveCallMatch[1] || shortHand || defaultKey;  // Use the key or default
-            // If repeating is allowed and the directive exists, insert it
-            if (repeat && directiveMap[directiveKey]) {
-                return directiveMap[directiveKey].join('\n');
-            } else {
-                // If not repeating, just show shorthand notation for the directive
-                return `{start_of_${directive}}\n${directiveKey === defaultKey ? '' : directiveKey}:\n{end_of_${directive}}`;
+        // check for any variation
+        const variationStartMatch = line.match(variationStartRegex);
+        if (variationStartMatch) {
+            if (!validVariationValues.includes(variationStartMatch[1])) {
+                console.log("Invalid variation type: ", currentVariationType, " --> Skipping...")
+                return;
             }
+            currentVariationType = variationStartMatch[1] as validVariation;
+            currentVariationContent = [];
+            variationActive = true;
+            return;
         }
-
-        // Add the line to the current directive content if inside a directive
-        if (currentDirective !== null) {
-            currentDirective.push(line);
+        const variationEndMatch = line.match(variationEndRegex);
+        if (variationEndMatch) {
+            variationActive = false;
+            return;
+        }
+        if (variationActive) {
+            currentVariationContent.push(line);
             return;
         }
 
-        // Regular lines are returned as is
+        // Check each directive's start, end, and call matches
+        for (const { directive, shortHand, startRegex, endRegex, callRegex } of directiveRegexes) {
+            // Check for the start of a directive
+            const startMatch = line.match(startRegex);
+            if (startMatch) {
+                currentDirective = directive;
+                currentKey = startMatch[1] || shortHand || defaultKey;
+                currentContent = [line];
+                directiveMaps[directive] = directiveMaps[directive] || {};
+                return;  // Skip to the next line after marking the start
+            }
+
+            // Check for the end of a directive
+            const endMatch = line.match(endRegex);
+            if (endMatch && currentContent && currentDirective === directive) {
+                currentContent.push(line);
+                directiveMaps[directive][currentKey] = currentContent;
+                if (currentKey !== defaultKey) {
+                    currentContent[1] = currentKey + ": " + currentContent[1];
+                }
+                const currentBlock = currentContent;
+                currentDirective = null;
+                currentContent = null;
+                currentKey = null;
+                return currentBlock.join('\n');
+            }
+
+            // Check for a directive call
+            const callMatch = line.match(callRegex);
+            if (callMatch) {
+                const directiveKey = callMatch[1] || shortHand || defaultKey;
+                let contentToInsert = directiveMaps[directive][directiveKey];
+                const repeatKey = `${directiveKey === defaultKey ? '' : `${directiveKey}:`}`
+                if (currentVariationContent) {
+                    contentToInsert = partVariation(contentToInsert, currentVariationType, currentVariationContent, repeat, repeatKey);
+                    currentVariationType = null;
+                    currentVariationContent = null;
+                } else if (!repeat) {
+                    contentToInsert = [`{start_of_${directive}}`, repeatKey, `{end_of_${directive}}`]
+                }
+
+                if (contentToInsert) { return contentToInsert.join('\n'); }
+            }
+        }
+
+        // If inside a directive, add line to current content
+        if (currentContent !== null) {
+            currentContent.push(line);
+            return;
+        }
+
+        // Regular line
         return line;
     });
-
-    // Join the processed content back into a string
-    return processedContent.join('\n').trim();
+    console.log(processedContent.filter(p => p))
+    // remove any nulls and join the processed content back into a string
+    return processedContent.filter(p => p).map(l => l.trim()).join('\n').trim();
 }
 
 function addRepeatClasses(htmlString, className = "verse") {
@@ -167,16 +245,23 @@ function addRepeatClasses(htmlString, className = "verse") {
     return doc.body.innerHTML; // Convert the document back to an HTML string
 }
 
+import { ChordProParser, FormatterSettings, HtmlFormatter } from "chordproject-parser";
 function renderSong(songData: SongData, key: string, repeatChorus: boolean): string {
+    let preparsedContent = replaceRepeatedDirectives(songData.content, ["chorus", "bridge", "verse"], ["R", "B", ""], repeatChorus);
+
+    // const parser = new ChordProParser();
+    // const song = parser.parse(preparsedContent);
+    // const settings = new FormatterSettings();
+    // settings.showMetadata = false;
+    // const formatter = new HtmlFormatter(settings);
+    // const songText = formatter.format(song);
+    // return songText.join("");
+
     const parser = new ChordSheetJS.ChordProParser();
     const formatter = new ChordSheetJS.HtmlDivFormatter();
     // Convert chords to English and repeat choruses/bridges if necessary
-    let song = replaceRepeatedDirective(convertChordsInChordPro(songData.content), "chorus", repeatChorus);
-    song = replaceRepeatedDirective(song, "bridge", repeatChorus, "B");
-    song = replaceRepeatedDirective(song, "verse", repeatChorus, null);
-
     // Parse the song using ChordSheetJS
-    let parsedSong = parser.parse(song)
+    let parsedSong = parser.parse(convertChordsInChordPro(preparsedContent))
         .setCapo(0)
         .setKey(convertChord(songData.key, true));
 

@@ -45,6 +45,20 @@ If the label is the same, the chord sequence will be checked. If it's the same a
 
 This was necessary because ChordSheetJS disregards where the verse start and end are defined in the ChordPro file and rather parses it based on paragraphs. This means that if one defined a verse with two parts (each having different chords) with a newline in between for readability, the second set of chords would be deleted.
 
+#### Part variations
+It is very common that a chorus is repeated with only a minor modification at the end. To this end, I have included the option to define a variant of the chorus as follows
+```
+{start_of_variant: replace_last_line}
+This is the end.
+{end_of_variant}
+{chorus}
+```
+This will replace the last line of the following recall directive (`{chorus}` in this case) if it is expanded or add a note that the last line is different if collapsed. This should work with other parts (verse, bridge) but is not tested.
+
+Generalization to more lines being replaced is planned but not implemented yet.
+
+Another common occurrence is that the chorus has an additional line. This can be managed analogously by using  `{start_of_variant: append_content}`.
+
 ### Image generation
 Since it's 2024, I decided to use AI for tasks other than helping me code this thing. The `scripts/generate_images.py` script loads the lyrics of each of the songs and generates a prompt (in English) for an image generation model.
 

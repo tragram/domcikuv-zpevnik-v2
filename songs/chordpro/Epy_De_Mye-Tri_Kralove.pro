@@ -19,7 +19,7 @@
 Na frekvenci naděje se vysílá
 Jak jim vrazit ránu přímo do týla
 Orlice jim sama oči vyklove
-Za to svinstvo ve sprchách s za cyklon B
+Za to svinstvo ve sprchách, za cyklon B
 {end_of_verse}
 
 {start_of_chorus}

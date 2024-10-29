@@ -29,8 +29,10 @@ Dvě tam spadly, třetí asi zlomila si nohu,
 teď válejí se smíchy po jehličí.
 {end_of_verse}
 
+{start_of_variation: replace_last_line}
+a tak si [D]zpívají, když ždímají si prádlo krajkový.
+{end_of_variation}
 {chorus}
-+a tak si zpívají, když ždímají si prádlo krajkový.
 
 {start_of_verse}
 Tři kámošky, psycholožky, zapomněly, že se
@@ -39,8 +41,10 @@ A tři kámošky, no, holky fajnový,
 Teď utíkaj, když je píchaj svině pruhovaný.
 {end_of_verse}
 
+{start_of_variation: replace_last_line}
+a tak si [D]zpívají a jsou šťastný i když jsou napuchlý.
+{end_of_variation}
 {chorus}
-+a tak si zpívají a jsou šťastný i když jsou napuchlý.
 
 {start_of_verse}
 Tři kámošky, psycholožky, vrátily se domů,
@@ -49,5 +53,7 @@ Než usnuly, slíbily si, že zítra půjdou znovu
 a budou dělat, že se nic nestalo.
 {end_of_verse}
 
+{start_of_variation: replace_last_line}
+a teď už [D]spinkají a jsou nahý, tak přejem hezký sny.
+{end_of_variation}
 {chorus}
-+a teď už spinkají a jsou nahý, tak přejem hezký sny.
