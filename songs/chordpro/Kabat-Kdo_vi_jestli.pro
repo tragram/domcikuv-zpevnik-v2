@@ -8,12 +8,12 @@
 {tempo: }
 {range: }
 {start_melody: }
-{start_of_verse}
+{start_of_verse: V1}
 Kdoví [C]jestli, jestli jsou na měsíci vůbec ňáký [F]stopy
 a proč [Ami]kope kolem sebe kdo se [G]topí, jakej [F]sval to Zemí [C]otáčí?
 {end_of_verse}
 
-{start_of_verse}
+{start_of_verse: V2}
 Jak je to s [C]pravdou? S pravdou se šetří možná proto aby [F]zbyla.
 Je flekatá jak dalmatin, je černo[G]bílá. Chudák [F]holka s dechem [C]nestačí.
 {end_of_verse}
@@ -44,4 +44,6 @@ a to si pište, že budem [C]platit. [C]
 já projdu Zem a třeba celej [G]svět, bude to chvíli a nebo [C]pár let.
 {end_of_bridge}
 
-Sloka 1 + sloka 2 + R:
+{verse: V1}
+{verse: V2}
+{verse: R1}

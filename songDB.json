@@ -4,7 +4,7 @@
     "artist": "AG Flek",
     "key": "a",
     "language": "czech",
-    "date_added": "08-2015",
+    "date_added": "02-2015",
     "capo": "3",
     "tempo": "",
     "range": "g1-g2",
@@ -12,14 +12,14 @@
     "start_melody": "c d e",
     "chordpro_file": "AG_Flek-Carpe_diem.pro",
     "pdf_filenames": "['ag_flek_carpe_diem-sken.pdf', 'ag_flek_carpe_diem-comp.pdf', 'ag_flek_carpe_diem-gen.pdf']",
-    "content_hash": "2e93684590d252f9aa2e3f34f3ffa9f98cf7ebeb"
+    "content_hash": "b47e6cad7591d4edef24e4e47f242f150a170006"
   },
   {
     "title": "Vdovy z Cordoby",
     "artist": "Akáty",
     "key": "a",
     "language": "czech",
-    "date_added": "01-2017",
+    "date_added": "08-2013",
     "capo": "0",
     "tempo": "",
     "range": "h1-e2",
@@ -27,7 +27,7 @@
     "start_melody": "a c",
     "chordpro_file": "Akaty-Vdovy_z_Cordoby.pro",
     "pdf_filenames": "['akaty_vdovy_z_cordoby-sken.pdf', 'akaty_vdovy_z_cordoby-comp.pdf']",
-    "content_hash": "63153d09028804a58f357fdc284b41a3e1e21d27"
+    "content_hash": "e042e32c18615a6750f806c57f5ba8d7a329d0e9"
   },
   {
     "title": "Dívka s perlami ve vlasech",
@@ -94,7 +94,7 @@
     "artist": "Argema",
     "key": "C",
     "language": "czech",
-    "date_added": "07-2015",
+    "date_added": "08-2013",
     "capo": "3",
     "tempo": "",
     "range": "a1-e1",
@@ -102,7 +102,7 @@
     "start_melody": "c",
     "chordpro_file": "Argema-Tohle_je_raj.pro",
     "pdf_filenames": "['argema_tohle_je_raj-sken.pdf', 'argema_tohle_je_raj-comp.pdf']",
-    "content_hash": "3d48553d5d7a1c989d0229c687be3045c6d35efd"
+    "content_hash": "4315bda754f15d84debf36d7cc2d4d5cfaed661f"
   },
   {
     "title": "Pramen zdraví",
@@ -499,7 +499,7 @@
     "artist": "Chinaski",
     "key": "A",
     "language": "czech",
-    "date_added": "08-2015",
+    "date_added": "02-2015",
     "capo": "0",
     "tempo": "",
     "range": "a1-d2",
@@ -507,7 +507,7 @@
     "start_melody": "e",
     "chordpro_file": "Chinaski-Vinari.pro",
     "pdf_filenames": "['chinaski_vinari-sken.pdf', 'chinaski_vinari-comp.pdf', 'chinaski_vinari-gen.pdf']",
-    "content_hash": "34cf575e65139aa3907d920a26f1430cbdd8d2e5"
+    "content_hash": "d655e67b02b51c3658b5f41a196860909b981363"
   },
   {
     "title": "Kauges Külas",
@@ -537,7 +537,7 @@
     "start_melody": "",
     "chordpro_file": "Curly_Strings-Sobrad_Mu_Kallid.pro",
     "pdf_filenames": "",
-    "content_hash": "bfc7207cb65e8040f5c9f716b1ccc966e1ce3b0d"
+    "content_hash": "1fbcbd3111543310e5bb976cf56d642fe210a15b"
   },
   {
     "title": "Burčák",
@@ -598,6 +598,21 @@
     "chordpro_file": "Dolly_PartonMiley_Cyrus-Jolene.pro",
     "pdf_filenames": "['dolly_partonmiley_cyrus_jolene-sken.pdf', 'dolly_partonmiley_cyrus_jolene-comp.pdf']",
     "content_hash": "dccf13f4581eddc7aa0155b6c6e4eb37986ae221"
+  },
+  {
+    "title": "No quiero ser normal",
+    "artist": "El Cuarteto de Nos",
+    "key": "D",
+    "language": "spanish",
+    "date_added": "03-2016",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustration_author": "",
+    "start_melody": "f#-a",
+    "chordpro_file": "El_Cuarteto_de_Nos-No_quiero_ser_normal.pro",
+    "pdf_filenames": "[]",
+    "content_hash": "aeaedf97007d81d59706199733fa4fc5811feef0"
   },
   {
     "title": "Can You Feel The Love Tonight",
@@ -717,7 +732,7 @@
     "start_melody": "a d",
     "chordpro_file": "Epy_de_Mye-Zeny_muzu.pro",
     "pdf_filenames": "['epy_de_mye_zeny_muzu-sken.pdf', 'epy_de_mye_zeny_muzu-comp.pdf']",
-    "content_hash": "2f98b089c0cf66cad4806d90626482638a071bf2"
+    "content_hash": "6b3fb9f4712ddcb95b4e8b3711d06bc206696e2c"
   },
   {
     "title": "Měls mě vůbec rád",
@@ -942,7 +957,7 @@
     "start_melody": "d",
     "chordpro_file": "Green_Day-Boulevard_of_Broken_Dreams.pro",
     "pdf_filenames": "['green_day_boulevard_of_broken_dreams-sken.pdf', 'green_day_boulevard_of_broken_dreams-comp.pdf', 'green_day_boulevard_of_broken_dreams-gen.pdf']",
-    "content_hash": "612655eb15895ad9f1dba5ebc9a37b25fd2273a7"
+    "content_hash": "a744b4dbeb4a4bc02f6d349be9b0cc4dae6e33f5"
   },
   {
     "title": "Dívka s vlasem medovým",
@@ -1065,6 +1080,21 @@
     "content_hash": "06692db9e94f769e5b7c7018a0bb5b437024039d"
   },
   {
+    "title": "Márinka",
+    "artist": "Honza Jícha",
+    "key": "a",
+    "language": "czech",
+    "date_added": "07-2018",
+    "capo": "0",
+    "tempo": "",
+    "range": "a1-c2",
+    "illustration_author": "",
+    "start_melody": "",
+    "chordpro_file": "Honza_Jicha-Marinka.pro",
+    "pdf_filenames": "[]",
+    "content_hash": "7d25f7e60ca4facc65843e9d228f4834ef2bfa84"
+  },
+  {
     "title": "Matfyzák",
     "artist": "Honza Jícha",
     "key": "a",
@@ -1107,7 +1137,7 @@
     "start_melody": "c",
     "chordpro_file": "Honza_Jicha-Nekvalifikovany_ucitel.pro",
     "pdf_filenames": "['honza_jicha_nekvalifikovany_ucitel-sken.pdf', 'honza_jicha_nekvalifikovany_ucitel-comp.pdf']",
-    "content_hash": "656a8b213ff5083bbbe195a3f0f60bdccf926de9"
+    "content_hash": "bd4dbff19823a98c762975c7546816c899a7759e"
   },
   {
     "title": "Vlastizrádce",
@@ -1123,6 +1153,21 @@
     "chordpro_file": "Honza_Jicha-Vlastizradce.pro",
     "pdf_filenames": "['honza_jicha_vlastizradce-sken.pdf', 'honza_jicha_vlastizradce-comp.pdf']",
     "content_hash": "6962c4ad894cee3e3b9e2702948bb20bb374a9fb"
+  },
+  {
+    "title": "Zastávky",
+    "artist": "Honza Jícha",
+    "key": "a",
+    "language": "czech",
+    "date_added": "07-2018",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustration_author": "",
+    "start_melody": "",
+    "chordpro_file": "Honza_Jicha-Zastavky.pro",
+    "pdf_filenames": "[]",
+    "content_hash": "ca63cf717215c7b2ca4f3688f09a4c370830c42a"
   },
   {
     "title": "Lodníkův lament",
@@ -1204,7 +1249,7 @@
     "artist": "Irish Rovers",
     "key": "a",
     "language": "english",
-    "date_added": "07-2015",
+    "date_added": "08-2013",
     "capo": "0",
     "tempo": "",
     "range": "g1-a2",
@@ -1212,7 +1257,7 @@
     "start_melody": "e",
     "chordpro_file": "Irish_Rovers-Drunken_Sailor.pro",
     "pdf_filenames": "['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']",
-    "content_hash": "afc41478f0767b3776b0c7bd8e0bcf667fa26444"
+    "content_hash": "93353d150978e685f5a8d4df93b2626074432c2b"
   },
   {
     "title": "Podvod",
@@ -1437,7 +1482,7 @@
     "start_melody": "e",
     "chordpro_file": "Jaromir_Nohavica-Mam_jizvu_na_rtu.pro",
     "pdf_filenames": "['jaromir_nohavica_mam_jizvu_na_rtu-sken.pdf', 'jaromir_nohavica_mam_jizvu_na_rtu-comp.pdf', 'jaromir_nohavica_mam_jizvu_na_rtu-gen.pdf']",
-    "content_hash": "1eb017b4d8f22de1567a36eb67a791d92b2a84a1"
+    "content_hash": "b5f83069c778170aefefe54cf8078b614ddcb689"
   },
   {
     "title": "Přítel",
@@ -1602,7 +1647,7 @@
     "start_melody": "a a e e",
     "chordpro_file": "Jezek__Voskovec__Werich-Babicka_Mary.pro",
     "pdf_filenames": "['jezek__voskovec__werich_babicka_mary-sken.pdf', 'jezek__voskovec__werich_babicka_mary-comp.pdf', 'jezek__voskovec__werich_babicka_mary-gen.pdf']",
-    "content_hash": "d5bc039af491b59396a0d2dfd8eb62144b2a06ea"
+    "content_hash": "b34d323d4dbed845abac62c78a6bc13001ca4b49"
   },
   {
     "title": "Ezop a brabenec",
@@ -1669,7 +1714,7 @@
     "artist": "Jiří Schlinger",
     "key": "h",
     "language": "czech",
-    "date_added": "07-2015",
+    "date_added": "08-2013",
     "capo": "3",
     "tempo": "",
     "range": "a1-h2",
@@ -1677,7 +1722,7 @@
     "start_melody": "h",
     "chordpro_file": "Jiri_Schlinger-Holubi_dum.pro",
     "pdf_filenames": "['jiri_schlinger_holubi_dum-sken.pdf', 'jiri_schlinger_holubi_dum-comp.pdf']",
-    "content_hash": "4beade1b21b744489c5268782e7284c35f0689a7"
+    "content_hash": "91a6e26acea0ce928cdc313a238fc6833518a670"
   },
   {
     "title": "Tereza (Osamělý město)",
@@ -1842,7 +1887,7 @@
     "start_melody": "",
     "chordpro_file": "Kabat-Kdo_vi_jestli.pro",
     "pdf_filenames": "['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']",
-    "content_hash": "1be2f6d08bd4943cfbc9180b6167d084de91122b"
+    "content_hash": "8668b3ac713cd55a787d1224c8d1dbf604fe8fc1"
   },
   {
     "title": "Krutý krtek Joy",
@@ -2269,7 +2314,7 @@
     "artist": "Kenny Rogers",
     "key": "",
     "language": "english",
-    "date_added": "08-2015",
+    "date_added": "02-2015",
     "capo": "0",
     "tempo": "",
     "range": "",
@@ -2277,7 +2322,7 @@
     "start_melody": "",
     "chordpro_file": "Kenny_Rogers-The_Gambler.pro",
     "pdf_filenames": "['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']",
-    "content_hash": "d93846d172830a1231f1ca97a2176311334828bb"
+    "content_hash": "5228b09f207dc04cafe6e7888e07e48b00ebbe91"
   },
   {
     "title": "Omnia Vincit Amor",
@@ -2308,6 +2353,21 @@
     "chordpro_file": "Klus-Panu_Bohu_do_oken.pro",
     "pdf_filenames": "['klus_panu_bohu_do_oken-sken.pdf', 'klus_panu_bohu_do_oken-comp.pdf']",
     "content_hash": "4f5988989a061fec3d060a264650bd5c90d9efb2"
+  },
+  {
+    "title": "Wavin' flag",
+    "artist": "K'naan",
+    "key": "C",
+    "language": "spanish",
+    "date_added": "07-2018",
+    "capo": "3",
+    "tempo": "",
+    "range": "g1-a2",
+    "illustration_author": "",
+    "start_melody": "e",
+    "chordpro_file": "Knaan-Wavin_flag.pro",
+    "pdf_filenames": "[]",
+    "content_hash": "ba4af8a326bf4c77815fea4bdbaa823c7ec5d4ce"
   },
   {
     "title": "Cesta",
@@ -2383,6 +2443,21 @@
     "chordpro_file": "La_Vela_Puerca-Se_a_Donde_Quiere_Ir.pro",
     "pdf_filenames": "['la_vela_puerca_se_a_donde_quiere_ir-sken.pdf', 'la_vela_puerca_se_a_donde_quiere_ir-comp.pdf', 'la_vela_puerca_se_a_donde_quiere_ir-gen.pdf']",
     "content_hash": "e6e915d52b45d06d60c873ebaf92fff1f62e1c63"
+  },
+  {
+    "title": "Zafar",
+    "artist": "La Vela Puerca",
+    "key": "a",
+    "language": "spanish",
+    "date_added": "10-2020",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustration_author": "",
+    "start_melody": "",
+    "chordpro_file": "La_Vela_Puerca-Zafar.pro",
+    "pdf_filenames": "[]",
+    "content_hash": "f5790b4307abf94cb75070b432df984dc8f2c037"
   },
   {
     "title": "Pro tebe",
@@ -2472,7 +2547,7 @@
     "start_melody": "",
     "chordpro_file": "Linkin_Park-New_Divide.pro",
     "pdf_filenames": "['linkin_park_new_divide-sken.pdf', 'linkin_park_new_divide-comp.pdf', 'linkin_park_new_divide-gen.pdf']",
-    "content_hash": "54eb7076bbc31905a028ef978e0fc3eaf08fa747"
+    "content_hash": "55524555cfc3a92cfc4b052384d2c1cc310e9269"
   },
   {
     "title": "We Are One",
@@ -2584,7 +2659,7 @@
     "artist": "Malomocnost prázdnoty",
     "key": "C",
     "language": "czech",
-    "date_added": "07-2015",
+    "date_added": "08-2013",
     "capo": "0",
     "tempo": "",
     "range": "h1-g1",
@@ -2592,7 +2667,7 @@
     "start_melody": "e",
     "chordpro_file": "Malomocnost_prazdnoty-Maruska.pro",
     "pdf_filenames": "['malomocnost_pazdnoty_maruska-sken.pdf', 'malomocnost_pazdnoty_maruska-comp.pdf']",
-    "content_hash": "a8f82f64913e662e63fd56e20d89e73cc5764d96"
+    "content_hash": "b3346b884784f4d82d65238e195a63e1e42fb032"
   },
   {
     "title": "Šrouby a matice",
@@ -2614,7 +2689,7 @@
     "artist": "Marsyas",
     "key": "G",
     "language": "czech",
-    "date_added": "07-2015",
+    "date_added": "08-2013",
     "capo": "2",
     "tempo": "",
     "range": "a1-h2",
@@ -2622,7 +2697,7 @@
     "start_melody": "d",
     "chordpro_file": "Marsyas-S_Luisem.pro",
     "pdf_filenames": "['marsyas_s_luisem-sken.pdf', 'marsyas_s_luisem-comp.pdf']",
-    "content_hash": "ab225173cf3f8f88f11dd211f8ef0d19ba35479e"
+    "content_hash": "10445c0bb29188e136f6df5850d323e5be9c1df4"
   },
   {
     "title": "Nechte zvony znít",
@@ -2749,7 +2824,7 @@
     "artist": "Michal Tučný",
     "key": "a",
     "language": "czech",
-    "date_added": "08-2015",
+    "date_added": "02-2015",
     "capo": "0",
     "tempo": "",
     "range": "",
@@ -2757,7 +2832,7 @@
     "start_melody": "",
     "chordpro_file": "Michal_Tucny-Poveste_ho_vejs.pro",
     "pdf_filenames": "['michal_tucny_poveste_ho_vejs-sken.pdf', 'michal_tucny_poveste_ho_vejs-comp.pdf', 'michal_tucny_poveste_ho_vejs-gen.pdf']",
-    "content_hash": "017f7303524e267f6435ce79ffd4f54e9ebac49e"
+    "content_hash": "625d27eaf48016e5c734337db812c5362fb60647"
   },
   {
     "title": "Prodavač",
@@ -2944,7 +3019,7 @@
     "artist": "Neznámý",
     "key": "D",
     "language": "czech",
-    "date_added": "07-2015",
+    "date_added": "08-2013",
     "capo": "2",
     "tempo": "",
     "range": "a1-h2",
@@ -2952,7 +3027,7 @@
     "start_melody": "f#",
     "chordpro_file": "Neznamy-Nadrazi.pro",
     "pdf_filenames": "['neznamy_nadrazi-sken.pdf', 'neznamy_nadrazi-comp.pdf']",
-    "content_hash": "e90936d9e6224b0c2f9996b08995d425ef613907"
+    "content_hash": "8c8500b9ce4fb6e53742819aa015c2fcf60825bb"
   },
   {
     "title": "Čekám na signál",
@@ -3649,7 +3724,7 @@
     "artist": "Scott McKenzie",
     "key": "e",
     "language": "english",
-    "date_added": "07-2015",
+    "date_added": "08-2013",
     "capo": "2",
     "tempo": "",
     "range": "g1-d2",
@@ -3657,7 +3732,7 @@
     "start_melody": "d",
     "chordpro_file": "Scott_McKenzie-San_Francisco.pro",
     "pdf_filenames": "['scott_mckenzie_san_francisco-sken.pdf', 'scott_mckenzie_san_francisco-comp.pdf']",
-    "content_hash": "c073cb8c4aff025d44585331935c0e72f1b097bb"
+    "content_hash": "5bb9aada28e0c53ad55e48437a7e6b029efb7736"
   },
   {
     "title": "Scarborough Fair",
@@ -3694,7 +3769,7 @@
     "artist": "Simple Plan",
     "key": "C",
     "language": "english",
-    "date_added": "08-2015",
+    "date_added": "02-2015",
     "capo": "5",
     "tempo": "",
     "range": "a1-g1",
@@ -3702,7 +3777,7 @@
     "start_melody": "c d e",
     "chordpro_file": "Simple_Plan-Welcome_to_My_Life.pro",
     "pdf_filenames": "['simple_plan_welcome_to_my_life-sken.pdf', 'simple_plan_welcome_to_my_life-comp.pdf', 'simple_plan_welcome_to_my_life-gen.pdf']",
-    "content_hash": "3427188dac8ac47cff04eef3aa65a698ff9287b7"
+    "content_hash": "57a50b97d94364c07d299f9756e939806061e060"
   },
   {
     "title": "Batalion",
@@ -3867,7 +3942,7 @@
     "start_melody": "e",
     "chordpro_file": "The_Barenaked_Ladies__Chris_Hadfield-ISS_Is_Somebody_Singing.pro",
     "pdf_filenames": "['the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-sken.pdf', 'the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-comp.pdf']",
-    "content_hash": "c23daa171b067258a8ebcee969a5dbb36581afa0"
+    "content_hash": "8c41f9a3f9ef74460f6ba28bbe4b2aedf7ad4449"
   },
   {
     "title": "Hey Jude",
@@ -3889,7 +3964,7 @@
     "artist": "The Beatles",
     "key": "C",
     "language": "english",
-    "date_added": "08-2015",
+    "date_added": "02-2015",
     "capo": "6",
     "tempo": "",
     "range": "e1-a2",
@@ -3897,7 +3972,7 @@
     "start_melody": "g",
     "chordpro_file": "The_Beatles-Let_It_Be.pro",
     "pdf_filenames": "['the_beatles_let_it_be-sken.pdf', 'the_beatles_let_it_be-comp.pdf', 'the_beatles_let_it_be-gen.pdf']",
-    "content_hash": "e8565838014805b6b9aca1c310f0cc273ed2f48c"
+    "content_hash": "b2e0832c1e01aceb5295aefb9218fa1708446bd5"
   },
   {
     "title": "Rains of Castamere",
@@ -4062,7 +4137,7 @@
     "start_melody": "",
     "chordpro_file": "Treasure_Planet-Im_Still_Here.pro",
     "pdf_filenames": "",
-    "content_hash": "a708d2368c3408372569ddc8163bcc2103d4b990"
+    "content_hash": "b8236865fde058aef2a32884a301706d4aa798be"
   },
   {
     "title": "Pumpa",
@@ -4122,7 +4197,7 @@
     "start_melody": "g c",
     "chordpro_file": "Vaclav_Neckar-Kdo_vchazi_do_tvych_snu.pro",
     "pdf_filenames": "['vaclav_neckar_kdo_vchazi_do_tvych_snu-sken.pdf', 'vaclav_neckar_kdo_vchazi_do_tvych_snu-comp.pdf']",
-    "content_hash": "1dbd8bc5edeb52926bd55ca76c4fa04fdec4162a"
+    "content_hash": "d141ba1c89779295148672efa48a8eda54239e4f"
   },
   {
     "title": "Půlnoční",
@@ -4168,6 +4243,21 @@
     "chordpro_file": "Vance_Joy-Riptide.pro",
     "pdf_filenames": "['vance_joy_riptide-sken.pdf', 'vance_joy_riptide-comp.pdf']",
     "content_hash": "5cacd5a9bf06500c1fc72b42a754055525177534"
+  },
+  {
+    "title": "Známka Punku",
+    "artist": "Visací zámek",
+    "key": "E",
+    "language": "czech",
+    "date_added": "08-2013",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustration_author": "",
+    "start_melody": "",
+    "chordpro_file": "Visaci_zamek-Znamka_Punku.pro",
+    "pdf_filenames": "[]",
+    "content_hash": "104b39a154e23d4606b66a22356683d0328352b8"
   },
   {
     "title": "O Sol",
@@ -4369,7 +4459,7 @@
     "artist": "Wohnout",
     "key": "G",
     "language": "czech",
-    "date_added": "08-2015",
+    "date_added": "02-2015",
     "capo": "0",
     "tempo": "",
     "range": "c1-c2",
@@ -4377,7 +4467,7 @@
     "start_melody": "",
     "chordpro_file": "Wohnout-Svaz_ceskych_bohemu.pro",
     "pdf_filenames": "['wohnout_svaz_ceskych_bohemu-sken.pdf', 'wohnout_svaz_ceskych_bohemu-comp.pdf', 'wohnout_svaz_ceskych_bohemu-gen.pdf']",
-    "content_hash": "af5632642f543195f47f4539d7c92ceda9e14132"
+    "content_hash": "989f48ffd4114c7a41bff7c9e8bbe6a56081936f"
   },
   {
     "title": "Pažitka",
@@ -4504,7 +4594,7 @@
     "artist": "Žalman & Spol.",
     "key": "h",
     "language": "czech",
-    "date_added": "07-2015",
+    "date_added": "07-2013",
     "capo": "2",
     "tempo": "",
     "range": "a1-h2",
@@ -4512,7 +4602,7 @@
     "start_melody": "h",
     "chordpro_file": "Zalman__Spol-Jedenkrat.pro",
     "pdf_filenames": "['vojta_zicha_jedenkrat-sken.pdf', 'vojta_zicha_jedenkrat-comp.pdf']",
-    "content_hash": "bbb09da17bec8547c678a6afbfc621adfb04ee61"
+    "content_hash": "80d1edb326d5381c85186ce876ae6090e76f1ace"
   },
   {
     "title": "Rána v trávě",
@@ -4528,6 +4618,21 @@
     "chordpro_file": "Zalman__Spol-Rana_v_trave.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_rana_v_trave-sken.pdf', 'pavel_lohonka_zalman_rana_v_trave-comp.pdf']",
     "content_hash": "e9990adf5ad80102c682bface99c6405a11800e9"
+  },
+  {
+    "title": "Sejdeme se v pánu",
+    "artist": "Žalman & Spol.",
+    "key": "G",
+    "language": "czech",
+    "date_added": "04-2017",
+    "capo": "0",
+    "tempo": "",
+    "range": "d1-c2",
+    "illustration_author": "",
+    "start_melody": "d e g",
+    "chordpro_file": "Zalman__Spol-Sejdeme_se_v_panu.pro",
+    "pdf_filenames": "[]",
+    "content_hash": "e0772d4a9747208875ec419de248506e67c4287f"
   },
   {
     "title": "Tři přání",
@@ -4557,7 +4662,7 @@
     "start_melody": "f# a h",
     "chordpro_file": "Zalman__Spol-Vojacek_z_Moorlough_Shore.pro",
     "pdf_filenames": "['pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf']",
-    "content_hash": "ed503a44d056a83fcb0e9ccbb21ba37c5a3ed762"
+    "content_hash": "7913dd3813c33f33cb36cea3e51b8ec41c00db1a"
   },
   {
     "title": "Všech vandráků můza",

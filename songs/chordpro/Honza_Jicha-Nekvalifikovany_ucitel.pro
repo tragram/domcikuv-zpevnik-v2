@@ -8,7 +8,7 @@
 {tempo: }
 {range: c1-e2}
 {start_melody: c}
-{start_of_chorus}
+{start_of_chorus: R1}
 [C]Jsem kantor, mám na to talent
 těžko byste ke mně našli ekvivalent
 [F]ale začal jsem vadit, chtějí mě vystrnadit
@@ -31,9 +31,8 @@ a [F]chlapcům co jsou nezvladatelní, [C]věnuji péči individuelní
 Už jenom zuby, pusu, [C]hají.
 {end_of_verse}
 
-{start_of_chorus: R1}
-[G]Mám srdce na dlani
-a k učitelství přirozené nad[F]ání,
+{start_of_chorus: R2}
+[G]Mám srdce na dlani a k učitelství přirozené nad[F]ání,
 tak ať mi [C]nebrání v té kuk[Ami]ani,
 [F]ten co pořád [G]novým zákonem se ohá[C]ní
 {end_of_chorus}
@@ -50,11 +49,9 @@ a [F]mezi ně chodím i kvůli tobě
 {end_of_verse}
 
 {start_of_chorus: R2}
-[G]Jsem špatný učitel a nemám na to,
-tak [F]snad abych šel, sbohem zlato.
+[G]Jsem špatný učitel a nemám na to, tak [F]snad abych šel, sbohem zlato.
 [C]Systém je takhle [Ami]nastaven
-tak [F]sbohem buď [G],
-já musím [C]ven.
+tak [F]sbohem buď, [G]já musím [C]ven.
 {end_of_chorus}
 
 {start_of_bridge}
