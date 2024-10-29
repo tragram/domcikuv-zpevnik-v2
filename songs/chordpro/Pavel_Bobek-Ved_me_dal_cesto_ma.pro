@@ -36,11 +36,8 @@ tam, kde [C]končíš, chtěl bych [G]dojít, veď mě [F]dál, cesto [C]má.
 [F]dám si bandou [C]cvrčků hrát a [G]půjdu spát, půjdu [G7]spát.
 {end_of_bridge}
 
+{chorus}
 {start_of_chorus}
-Veď mě [C]dál, cesto [G]má, veď mě [Ami]dál, vždyť i [F]já
-tam, kde [C]končíš, chtěl bych [G]dojít, veď mě [F]dál, cesto [C]má.
-Veď mě [C]dál, cesto [G]má, veď mě [Ami]dál, vždyť i [F]já
-tam, kde [C]končíš, chtěl bych [G]dojít, veď mě [F]dál, cesto [C]má.
 Veď mě [G]dál cesto [C]má.
 Veď mě [G]dál cesto [C]má. [(G)][(C)]
 {end_of_chorus}

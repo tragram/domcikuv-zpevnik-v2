@@ -3297,7 +3297,7 @@
     "start_melody": "g",
     "chordpro_file": "Pavel_Bobek-Ved_me_dal_cesto_ma.pro",
     "pdf_filenames": "['pavel_bobek_ved_me_dal_cesto_ma-sken.pdf', 'pavel_bobek_ved_me_dal_cesto_ma-comp.pdf']",
-    "content_hash": "b33e72d57de60ca4f4319e448fd046eb8be22262"
+    "content_hash": "033e0db5094b21888e3a17738e06b3eb88ffeba4"
   },
   {
     "title": "Úředníkův song",
@@ -4249,7 +4249,7 @@
     "artist": "Visací zámek",
     "key": "E",
     "language": "czech",
-    "date_added": "08-2013",
+    "date_added": "11-2024",
     "capo": "0",
     "tempo": "",
     "range": "",
@@ -4257,7 +4257,7 @@
     "start_melody": "",
     "chordpro_file": "Visaci_zamek-Znamka_Punku.pro",
     "pdf_filenames": "[]",
-    "content_hash": "104b39a154e23d4606b66a22356683d0328352b8"
+    "content_hash": "a67528468d29cd5aa43b5698a08168864f5f05e4"
   },
   {
     "title": "O Sol",
