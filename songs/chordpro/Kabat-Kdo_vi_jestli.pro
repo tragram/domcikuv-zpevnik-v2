@@ -6,8 +6,8 @@
 {capo: 0}
 {key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-a1}
+{start_melody: e g a g}
 {start_of_verse: V1}
 Kdoví [C]jestli, jestli jsou na měsíci vůbec ňáký [F]stopy
 a proč [Ami]kope kolem sebe kdo se [G]topí, jakej [F]sval to Zemí [C]otáčí?

@@ -1,13 +1,13 @@
 {title: Osmý den}
 {artist: Olympic}
-{date_added: 16-2014}
+{date_added: 12-2014}
 {language: czech}
 {pdf_filenames: []}
 {capo: 3}
 {key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: f#}
 
 {start_of_verse}
 [D]Z kraje týdne málo jsem [G]ti [D]vhod, [G][D]

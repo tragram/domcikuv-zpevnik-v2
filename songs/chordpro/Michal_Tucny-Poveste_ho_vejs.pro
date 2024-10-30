@@ -6,8 +6,8 @@
 {capo: 0}
 {key: Am}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-g#2}
+{start_melody: e e e c e}
 
 {start_of_chorus: R1}
 Pověste [Ami]ho vejš, ať se houpá, pověste [C]ho vejš, ať [G]má dost,

@@ -6,8 +6,8 @@
 {capo: 0}
 {key: }
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-c#2}
+{start_melody: e e e h e}
 
 {start_of_verse}
 On a [E]warm summer's evenin' on a [A]train bound for [E]nowhere,

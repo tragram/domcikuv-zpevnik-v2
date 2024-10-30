@@ -412,27 +412,27 @@
     "date_added": "10-2018",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-d#2",
     "illustration_author": "",
     "start_melody": "f#",
     "chordpro_file": "Chinaski-Klara.pro",
     "pdf_filenames": "['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']",
-    "content_hash": "075e760c88bb0a1e63d63805fc47c8bc32884a5d"
+    "content_hash": "ba8fa07db41fa05d82b8c0a77b6bd54c131bd553"
   },
   {
     "title": "Kompy",
     "artist": "Chinaski",
-    "key": "",
+    "key": "F#m",
     "language": "czech",
     "date_added": "07-2017",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-c#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "g# a g# f#",
     "chordpro_file": "Chinaski-Kompy.pro",
     "pdf_filenames": "['chinaski_kompy-sken.pdf', 'chinaski_kompy-comp.pdf']",
-    "content_hash": "86260204aa4da2fc0918a595916ac30da948e6f1"
+    "content_hash": "e02d5e8bfca347a126c8c8f770f9f34f28824e17"
   },
   {
     "title": "Kutil",
@@ -577,12 +577,12 @@
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "d1-d1",
+    "range": "d1-d2",
     "illustration_author": "",
     "start_melody": "c h",
     "chordpro_file": "Die_Toten_Hosen-Tage_Wie_Diese.pro",
     "pdf_filenames": "['die_toten_hosen_tage_wie_diese-sken.pdf', 'die_toten_hosen_tage_wie_diese-comp.pdf', 'die_toten_hosen_tage_wie_diese-gen.pdf']",
-    "content_hash": "4649c8bb93a2a9fc13376fac2d8809ba759389d1"
+    "content_hash": "83b9682b4aae7a7b525a58e4a2657c7419d09785"
   },
   {
     "title": "Jolene",
@@ -847,12 +847,12 @@
     "date_added": "01-2011",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "a1-h2/e2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "f#",
     "chordpro_file": "Filmova_hudba-Zabili_zabili_balada_pro_banditu.pro",
     "pdf_filenames": "['filmova_hudba_zabili_zabili_balada_pro_banditu-sken.pdf', 'filmova_hudba_zabili_zabili_balada_pro_banditu-comp.pdf']",
-    "content_hash": "94d7cb0524e729a52ae7cd2569847f62d7f6eed5"
+    "content_hash": "5143ed0a13e7d077739870e3e46299526fdf9da2"
   },
   {
     "title": "Zafúkané",
@@ -1072,12 +1072,12 @@
     "date_added": "08-2016",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-d2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "g a g h",
     "chordpro_file": "Honza_Jicha-Malicky_knirek.pro",
     "pdf_filenames": "['honza_jicha_malicky_knirek-sken.pdf', 'honza_jicha_malicky_knirek-comp.pdf', 'honza_jicha_malicky_knirek-gen.pdf']",
-    "content_hash": "3e49c7ca84caafcd5ac7c4ac5000801decc440d0"
+    "content_hash": "ea4d4ba4140efdb7fd1a1e037e48f8e25fc156a1"
   },
   {
     "title": "Márinka",
@@ -1112,17 +1112,17 @@
   {
     "title": "Nedokonalý pár",
     "artist": "Honza Jícha",
-    "key": "",
+    "key": "G",
     "language": "czech",
     "date_added": "08-2016",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "a1-d2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "d h h h a",
     "chordpro_file": "Honza_Jicha-Nedokonaly_par.pro",
     "pdf_filenames": "['honza_jicha_nedokonaly_par-sken.pdf', 'honza_jicha_nedokonaly_par-comp.pdf', 'honza_jicha_nedokonaly_par-gen.pdf']",
-    "content_hash": "29a38c40158f09bd8c62cb08df22d52c48e0c383"
+    "content_hash": "db71e32c63cb15995d317a61a1c1455f001f267a"
   },
   {
     "title": "Nekvalifikovaný učitel",
@@ -1882,12 +1882,12 @@
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "c1-a1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e g a g",
     "chordpro_file": "Kabat-Kdo_vi_jestli.pro",
     "pdf_filenames": "['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']",
-    "content_hash": "8668b3ac713cd55a787d1224c8d1dbf604fe8fc1"
+    "content_hash": "b7c1c899429e5922e031c97e74804e8e9886e16d"
   },
   {
     "title": "Krutý krtek Joy",
@@ -2317,12 +2317,12 @@
     "date_added": "02-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-c#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e e e h e",
     "chordpro_file": "Kenny_Rogers-The_Gambler.pro",
     "pdf_filenames": "['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']",
-    "content_hash": "8a2db0cc38ee5d5677361314b38bf8fc3c94f28a"
+    "content_hash": "592393e825d8e16002e7a95bea22da3c38485feb"
   },
   {
     "title": "Omnia Vincit Amor",
@@ -2782,12 +2782,12 @@
     "date_added": "10-2018",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-d#2",
     "illustration_author": "",
     "start_melody": "",
     "chordpro_file": "Michal_Horak-Mezinarodni.pro",
     "pdf_filenames": "['michal_horak_mezinarodni-sken.pdf', 'michal_horak_mezinarodni-comp.pdf']",
-    "content_hash": "f69de6731b66e80df6542eaf0ec119d6ba9d710a"
+    "content_hash": "9a146a742bd5bee36e19a65fb508bc8378daca87"
   },
   {
     "title": "Zakázané uvolnění",
@@ -2827,12 +2827,12 @@
     "date_added": "02-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "g1-g#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e e e c e",
     "chordpro_file": "Michal_Tucny-Poveste_ho_vejs.pro",
     "pdf_filenames": "['michal_tucny_poveste_ho_vejs-sken.pdf', 'michal_tucny_poveste_ho_vejs-comp.pdf', 'michal_tucny_poveste_ho_vejs-gen.pdf']",
-    "content_hash": "ffc5b20a50cfdddbf927980b902fdada7313ff44"
+    "content_hash": "f45f28bf941eabe87ef6d5832c12c74b542f04a5"
   },
   {
     "title": "Prodavač",
@@ -3169,15 +3169,15 @@
     "artist": "Olympic",
     "key": "D",
     "language": "czech",
-    "date_added": "16-2014",
+    "date_added": "12-2014",
     "capo": "3",
     "tempo": "",
-    "range": "",
+    "range": "a1-h2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "f#",
     "chordpro_file": "Olympic-Osmy_den.pro",
     "pdf_filenames": "[]",
-    "content_hash": "261a69608a4c07a52bfa3752edb01f573b2c7ec4"
+    "content_hash": "815adde6191a34eeefc69da38bfff61ca9a08982"
   },
   {
     "title": "Taky jsem se narodil bos",
@@ -3532,12 +3532,12 @@
     "date_added": "12-2018",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "f#1-g2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "d",
     "chordpro_file": "Pokac-Rad_chodim_na_postu.pro",
     "pdf_filenames": "['pokac_rad_chodim_na_postu-sken.pdf', 'pokac_rad_chodim_na_postu-comp.pdf']",
-    "content_hash": "7c64292509dc5dd5e9af4ab628c97db0ee238e91"
+    "content_hash": "b9557f79fa0bd878b98d5d04933ca16e13ad4de5"
   },
   {
     "title": "Gotta Catch 'em all!",
@@ -4492,12 +4492,12 @@
     "date_added": "09-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "c#1-c#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e e e c# e",
     "chordpro_file": "Xavier_Baumaxa-Pazitka.pro",
     "pdf_filenames": "",
-    "content_hash": "34165e677f8eaf3996c257d3dcbef35cd3f5b9c2"
+    "content_hash": "eb7fd7fcabc5032026eebf928bbccab23427a5b0"
   },
   {
     "title": "Na palubě Titanicu",
