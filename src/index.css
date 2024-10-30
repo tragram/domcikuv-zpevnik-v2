@@ -1,67 +1,7 @@
+@import "song_content.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.chord {
-  color: hsl(var(--nextui-primary-500));
-  font-weight: 800;
-}
-
-/* since chordsheet is not defined explicitly, this is used to toggle the two-column layout */
-.chord-sheet-columns>* {
-  columns: 2;
-}
-
-.chord-sheet .row {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  line-height: 1.2;
-  margin-top: 0.1em;
-}
-
-.chord-sheet>* {
-  margin-top: 1.5em;
-  break-inside: avoid-column;
-}
-
-.chord-sheet>*:first-child {
-  margin-top: 0px;
-}
-
-#song_content>h1 {
-  display: none;
-}
-
-#autotextsize_wrapper {
-  justify-content: safe center
-}
-
-.empty-line {
-  height: 1em
-}
-
-.lyrics:after {
-  content: '\200b'
-}
-
-.chord:after {
-  content: '\00a0'
-}
-
-
-.chorus {
-  font-weight: 700;
-}
-
-.chord:empty {
-  /* hide rows without chords */
-  display: none;
-}
-
-.chord-sheet .literal {
-  font-family: monospace;
-}
 
 .song-row-bg-image {
   /* the top of the image is actually nicer to get color */
@@ -128,19 +68,6 @@ body {
   opacity: 1;
 }
 
-.chord-sheet .column {
-  line-height: 1;
-}
-
-.chords-hidden .chord {
-  display: none;
-}
-
-/* .repeat-verse-chords-hidden .verse .chord{ */
-.repeated-chords-hidden .repeated-chords .chord {
-  display: none;
-}
-
 /* .repeat-verse-chords-hidden :not(:first-child). */
 
 .dropdown-scroll {
@@ -154,7 +81,8 @@ body {
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-.no-scrollbar, .no-scrollbar * {
+.no-scrollbar,
+.no-scrollbar * {
   -ms-overflow-style: none;
   /* IE and Edge */
   scrollbar-width: none;

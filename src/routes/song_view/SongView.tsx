@@ -66,7 +66,7 @@ function SongView({ }) {
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
-        <div className={`px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
+        <div id="song-content-wrapper" className={`px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
         >
             <div className='flex flex-col text-center '>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
@@ -77,7 +77,7 @@ function SongView({ }) {
                     mode={fitScreenMode === "XY" ? "boxoneline" : "oneline"}
                     minFontSizePx={fitScreenMode !== "none" ? minFontSizePx : fontSize}
                     maxFontSizePx={fitScreenMode !== "none" ? maxFontSizePx : fontSize}>
-                    <div className={`flex flex-col ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeated-chords-hidden'} ${twoColumns ? "chord-sheet-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
+                    <div className={`flex flex-col ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeated-chords-hidden'} ${twoColumns ? "song-content-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
                 </AutoTextSize>
             </div>
         </div>
