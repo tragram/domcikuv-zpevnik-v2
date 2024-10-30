@@ -1,6 +1,9 @@
 
 import { SongData } from '../../types';
-
+import {
+    chordParserFactory,
+    chordRendererFactory,
+} from 'chord-symbol/lib/chord-symbol.js'; // bundled version
 import { ChordProParser, FormatterSettings, HtmlFormatter, MusicLetter, MusicNote, Song, Transposer } from "chordproject-parser";
 import { replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
 
@@ -42,6 +45,15 @@ function chordToGerman(chord: string) {
     return chord;
 }
 
+function noteToEnglish(note: string) {
+    if (note === "B") {
+        return "Bb";
+    } else if (note === "H") {
+        return "B";
+    }
+    return note;
+}
+
 function convertHTMLChordToGerman(songText: string) {
     // TODO: force display chords could be done here
     const parser = new DOMParser();
@@ -62,8 +74,8 @@ function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey, 
 }
 
 export function guessKey(chordProContent: string) {
-    const song = parseChordPro(chordProContent, false);
-    return chordToGerman(MusicLetter[song.getPossibleKey().note.letter]);
+    const song = parseChordPro(chordProContent, false, null, null);
+    return MusicLetter[song.getPossibleKey().note.letter];
 }
 
 export function renderSong(songData: SongData, newKey: string, repeatChorus: boolean): string {

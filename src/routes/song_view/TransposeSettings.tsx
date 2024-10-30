@@ -18,6 +18,21 @@ const german2English = {
     "H": "B",
 }
 
+const english2German = {
+    "C": "C",
+    "C#": "C#",
+    "D": "D",
+    "Eb": "Es",
+    "E": "E",
+    "F": "F",
+    "F#": "F#",
+    "G": "G",
+    "Ab": "As",
+    "A": "A",
+    "Bb": "B",
+    "B": "H",
+}
+
 function TransposeButtons({ songRenderKey, setSongRenderKey }) {
     function getKeyIndex(key) {
         return renderKeys.map(x => x.toLowerCase()).indexOf(key.toLowerCase());
@@ -42,12 +57,13 @@ function TransposeButtons({ songRenderKey, setSongRenderKey }) {
 }
 
 function TransposeSettings({ songRenderKey, setSongRenderKey }) {
+    const safeSongRenderKey = english2German[songRenderKey?.replace("m", "")].toLowerCase()
     return (<>
         <div className='hidden lg:flex'>
             <ButtonGroup>
                 {renderKeys.map((chord) => (
                     <Button className="w-1/12" color="primary" isIconOnly key={`transpose_selection_${chord}`}
-                        name="transpose_selection" onClick={() => { setSongRenderKey(german2English[(chord)]) }} variant={songRenderKey && songRenderKey.toLowerCase() == chord.toLowerCase() ? "solid" : "ghost"} >{chord}</Button>
+                        name="transpose_selection" onClick={() => { setSongRenderKey(german2English[(chord)]) }} variant={safeSongRenderKey && safeSongRenderKey == chord.toLowerCase() ? "solid" : "ghost"} >{chord}</Button>
                 ))
                 }
             </ButtonGroup>
@@ -63,7 +79,7 @@ function TransposeSettings({ songRenderKey, setSongRenderKey }) {
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Tranpose chords">
                     <DropdownItem>
-                        <TransposeButtons setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
+                        <TransposeButtons setSongRenderKey={setSongRenderKey} songRenderKey={safeSongRenderKey} />
                     </DropdownItem>
                 </DropdownMenu>
             </Dropdown>
