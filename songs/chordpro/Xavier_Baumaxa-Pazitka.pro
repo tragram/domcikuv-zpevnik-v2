@@ -3,8 +3,9 @@
 {language: czech}
 {date_added: 09-2024}
 {capo: 0}
-{range: }
+{range: c#1-c#2}
 {key: A}
+{start_melody: e e e c# e}
 
 {start_of_verse}
 Krajina [A]svádí k podzimním [C#mi]výletům,

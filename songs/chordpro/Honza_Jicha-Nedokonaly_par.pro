@@ -4,15 +4,15 @@
 {language: czech}
 {pdf_filenames: ['honza_jicha_nedokonaly_par-sken.pdf', 'honza_jicha_nedokonaly_par-comp.pdf', 'honza_jicha_nedokonaly_par-gen.pdf']}
 {capo: 0}
-{key: }
+{key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-d2}
+{start_melody: d h h h a}
 {start_of_verse}
 [G]U holiče v časopise přečetla si, jak má správně [Ami]vypadat,
-[D]že má malý prsa, krátký vlasy, prostě že nic [D7]není akorát,
+[D]že má malý prsa, krátký vlasy, [D7]prostě že nic není [G]akorát,
 do výšky jí chybí osm čísel a pět kolem [G7]pasu přebýv[C]á,
-[D]v katalogu plavek ať se na bikiny [G7]radši vůbec [G]nedívá.
+[D]v katalogu plavek ať se na bikiny [D7]radši vůbec [G]nedívá.
 {end_of_verse}
 
 {start_of_verse}
@@ -26,7 +26,7 @@ prohráváš to, kamaráde, proč ses hlásil do tohohle dostihu?
 [G7]Co můžou [C]chtít?
 Bez bicepsů, bez prsou a s pihama a s kilama, kde nemaj [G]být,
 jenom srdce [Ami]tlučou jim, jenže koho to [D]zajímá,
-kdo [D7]poradí, jak to zpeněž [G]it?
+kdo [D7]poradí, jak to [G]zpeněžit?
 {end_of_chorus}
 
 {start_of_verse}

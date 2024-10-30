@@ -6,8 +6,9 @@
 {capo: 0}
 {key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-h2/e2}
+{start_melody: f#}
+
 {start_of_verse}
 [D]Zabili, [G]zabili [Emi]chlapa z Kolo[G]čavy,
 [D]řekněte [G]hrobaři, [Emi]kde je pocho[G]vaný.

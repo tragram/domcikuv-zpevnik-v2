@@ -6,7 +6,7 @@
 {capo: 0}
 {key: G}
 {tempo: }
-{range: d1-d1}
+{range: d1-d2}
 {start_melody: c h}
 
 {start_of_verse}

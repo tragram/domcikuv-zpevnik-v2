@@ -4,10 +4,10 @@
 {language: czech}
 {pdf_filenames: ['chinaski_kompy-sken.pdf', 'chinaski_kompy-comp.pdf']}
 {capo: 0}
-{key: }
+{key: F#m}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-c#2}
+{start_melody: g# a g# f#}
 
 {start_of_verse}
 Můj [F#mi]nový Mac, zas včera klek',
@@ -38,7 +38,7 @@ vaše [E7]stříbrné rety.
 {start_of_chorus}
 [F#mi]Kilo, mega, giga, tera,
 [E]marně vzpomínám co bylo včera,
-sbohem můj drahý [B]kompaktní disku
+[F#mi]sbohem můj drahý [B]kompaktní disku
 [E]vždycky tu u mě budeš plnou [E7]mít misku.
 {end_of_chorus}
 
