@@ -14,7 +14,7 @@ That [G]David played, and it [Emi]pleased the Lord.
 But [C]you don't really [D]care for music, [G]do you?
 It [G]goes like this, the [C]fourth, the [D]fifth
 The [Emi]minor fall, the [C]major lift
-The [D]baffled king com[H7]posing Halle[Emi]lujah
+The [D]baffled king com[B7]posing Halle[Emi]lujah
 {end_of_verse}
 
 {start_of_chorus}
@@ -28,7 +28,7 @@ You [G]saw her bathing on [Emi]the roof
 Her [C]beauty and the [D]moonlight [G]overthrew you
 She [G]tied you To a [C]kitchen cha[D]ir
 She [Emi]broke your throne, and she [C]cut your hair
-And [D]from your lips she [H7]drew the [Emi]Hallelujah
+And [D]from your lips she [B7]drew the [Emi]Hallelujah
 {end_of_verse}
 
 {chorus}

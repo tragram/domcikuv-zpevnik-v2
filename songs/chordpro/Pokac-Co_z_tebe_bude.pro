@@ -11,7 +11,7 @@
 {start_of_verse}
 [D]Když jsem byl prcek, [Em]tak se mě všude
 [A]dospěláci ptali chlapče [D]co z tebe bude
-[Hmi]já řek že nevim a [Emi]div se nerozbrečel
+[Bmi]já řek že nevim a [Emi]div se nerozbrečel
 dyť [A]já měl sotva páru co [D]budu dělat večer
 {end_of_verse}
 
@@ -25,7 +25,7 @@ moc rád bych mu odpověděl (já pane učitel)
 {start_of_chorus}
 [D]Já chci milovat já [Emi]chci poznat svět
 já chci [A]lítat na měsíc [D]a pak zpět
-já chci [Hmi]drink a pláž ne tvou [Emi]kancelář
+já chci [Bmi]drink a pláž ne tvou [Emi]kancelář
 tak [A]proč se mě tak blbě [D]ptáš?
 {end_of_chorus}
 

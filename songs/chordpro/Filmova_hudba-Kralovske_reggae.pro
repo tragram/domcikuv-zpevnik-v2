@@ -11,7 +11,7 @@
 
 {start_of_bridge: Umbaba}
 [D]Umbabau, umbabaumbaumba
-[Hmi]umbabau, umbabaumbaumba
+[Bmi]umbabau, umbabaumbaumba
 {end_of_bridge}
 
 {start_of_verse}

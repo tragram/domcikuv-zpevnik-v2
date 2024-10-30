@@ -26,7 +26,7 @@ Meu abrigo
 {end_of_bridge}
 
 {start_of_chorus}
-[G/H]E [Cmaj7]toda vez que você sai
+[G/B]E [Cmaj7]toda vez que você sai
 [Am7]O mundo se distrai
 [Em7]Quem fica, ficou
 [D4]Quem foi, vai vai

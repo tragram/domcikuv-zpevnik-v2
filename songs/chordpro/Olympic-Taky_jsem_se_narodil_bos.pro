@@ -23,8 +23,8 @@ a [C]rozum až s [D]léty začal [G]brát
 {end_of_verse}
 
 {start_of_bridge}
-[Emi]My měli roucha stejně [Hmi]průhledná
-[Emi]když jsme jen sáli z mléčných [Hmi]žláz
+[Emi]My měli roucha stejně [Bmi]průhledná
+[Emi]když jsme jen sáli z mléčných [Bmi]žláz
 {end_of_bridge}
 
 {start_of_chorus}
@@ -40,8 +40,8 @@ a [C]sousedům slí[D]vy chodil [G]krást
 {end_of_verse}
 
 {start_of_bridge}
-Je [Emi]v Mléčné dráze mince [Hmi]stříbrná
-[Emi]tu věnem dostal každý z [Hmi]nás
+Je [Emi]v Mléčné dráze mince [Bmi]stříbrná
+[Emi]tu věnem dostal každý z [Bmi]nás
 {end_of_bridge}
 
 {start_of_chorus}

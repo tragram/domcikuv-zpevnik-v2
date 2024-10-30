@@ -11,7 +11,7 @@
 {start_of_verse}
 [Dmi]Slyším bití vln a příboje
 moře [Dmi/C]zuří, bouře blízko je
-maják [B7maj]bílým světlem varuje
+maják [Bb7maj]bílým světlem varuje
 [C]osamělé námořníky.
 {end_of_verse}
 
@@ -23,9 +23,9 @@ jenom rozbouřené moře.
 {end_of_verse}
 
 {start_of_chorus}
-[Dmi]Já mám [B]přečkat bouře [Ami]čas
+[Dmi]Já mám [Bb]přečkat bouře [Ami]čas
 [Ami]ano Pane
-já [Dmi]mám [B]přečkat bouře [Ami]čas
+já [Dmi]mám [Bb]přečkat bouře [Ami]čas
 přečkat bouře [Dmi]čas.
 {end_of_chorus}
 

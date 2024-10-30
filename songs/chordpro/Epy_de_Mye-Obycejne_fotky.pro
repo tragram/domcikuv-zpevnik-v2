@@ -9,16 +9,16 @@
 {range: h1-h2}
 {start_melody: d d h}
 {start_of_chorus}
-[G]Obyčejné fotky [Hm]na stole leží,
+[G]Obyčejné fotky [Bm]na stole leží,
 [Em]samí mladí lidé [C]jako jsem [D]já,
-možná [G]jsou mi podobní a já [Hm]dýchám jen stěží,
+možná [G]jsou mi podobní a já [Bm]dýchám jen stěží,
 [C]co z jejich očí vyčíst se [D]dá.
 {end_of_chorus}
 
 {start_of_verse}
-[G]Čím dál víc, [Hm]čekali spásu
+[G]Čím dál víc, [Bm]čekali spásu
 a [Em]cítili příchuť [C]posledních [D]slok,
-když [G]sepnula spoušt [Hm]z nábojových pásů
+když [G]sepnula spoušt [Bm]z nábojových pásů
 [C]začal psát dějiny [D]devětatřicátý [G]rok. [D][C][G]
 {end_of_verse}
 

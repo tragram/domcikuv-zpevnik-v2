@@ -9,10 +9,10 @@
 {range: }
 {start_melody: }
 {start_of_verse}
-V [D]botičkách z kozinky [Hmi]vybírám rozinky z [G]koláčků, [A]
-[D]vybírám zběsile [Hmi]pro tebe, Vasile, [G]miláčku, [A]
-[D]šičky už došily [Hmi]svatební košili z [G]batistu, [A]
-[Hmi]krmení zvěře je, když vrznou veřeje [Emi]a tys [F#]tu, a tys [Hmi]tu. [A7]
+V [D]botičkách z kozinky [Bmi]vybírám rozinky z [G]koláčků, [A]
+[D]vybírám zběsile [Bmi]pro tebe, Vasile, [G]miláčku, [A]
+[D]šičky už došily [Bmi]svatební košili z [G]batistu, [A]
+[Bmi]krmení zvěře je, když vrznou veřeje [Emi]a tys [F#]tu, a tys [Bmi]tu. [A7]
 {end_of_verse}
 
 {start_of_verse}

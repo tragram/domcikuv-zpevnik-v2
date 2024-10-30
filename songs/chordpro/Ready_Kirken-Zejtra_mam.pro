@@ -9,16 +9,16 @@
 {range: g1-g2}
 {start_melody: h d}
 {start_of_verse}
-Zejtra [G]mám zejtra [Hm]mám svůj [Em]den [D]
-zejtra se mi [C]splní moje tajný [Hm]přání můj [Am]sen [D]
-dlouho tě [G]znám dlouho tě [Hm]znám mám tě [Em]rád [D]
-uvidím tě [C]zas uslyším tvůj [Hm]hlas [Am]možná [D]
+Zejtra [G]mám zejtra [Bm]mám svůj [Em]den [D]
+zejtra se mi [C]splní moje tajný [Bm]přání můj [Am]sen [D]
+dlouho tě [G]znám dlouho tě [Bm]znám mám tě [Em]rád [D]
+uvidím tě [C]zas uslyším tvůj [Bm]hlas [Am]možná [D]
 {end_of_verse}
 
 {start_of_verse}
-Zejtra [G]mám zejtra [Hm]mám svůj [Em]den [D]
-asi to tak [C]bude je to cejtit [Hm]všude je to cejtit [Am]všude [D]
-všude [G]tam kam se podí[Hm]vám něco z tebe [Em]mám [D]
+Zejtra [G]mám zejtra [Bm]mám svůj [Em]den [D]
+asi to tak [C]bude je to cejtit [Bm]všude je to cejtit [Am]všude [D]
+všude [G]tam kam se podí[Bm]vám něco z tebe [Em]mám [D]
 {end_of_verse}
 
 {start_of_bridge}
@@ -27,16 +27,16 @@ tak se mi [C]zdá tak se mi [Em]zdá
 {end_of_bridge}
 
 {start_of_chorus}
-Nebudu [C]sám, nebudu [H]sám
+Nebudu [C]sám, nebudu [B]sám
 zejtra tě [Em]máááá[G]ám
-[Em]máááá[A]ám, [Em]máááá[A]ám, [H]jééé
+[Em]máááá[A]ám, [Em]máááá[A]ám, [B]jééé
 {end_of_chorus}
 
 {start_of_verse}
-Zejtra [G]mám zejtra [Hm]mám svůj [Em]den [D]
-zejtra se mi [C]splní moje tajný [Hm]přání můj [Am]sen [D]
-všude [G]tam kam se [Hm]podívám něco z tebe [Em]mám [D]
-poslední [C]den jednou vyspím se [Hm]jen a pak už [Am]nikdy nebudu [D]sám
+Zejtra [G]mám zejtra [Bm]mám svůj [Em]den [D]
+zejtra se mi [C]splní moje tajný [Bm]přání můj [Am]sen [D]
+všude [G]tam kam se [Bm]podívám něco z tebe [Em]mám [D]
+poslední [C]den jednou vyspím se [Bm]jen a pak už [Am]nikdy nebudu [D]sám
 {end_of_verse}
 
 {chorus}

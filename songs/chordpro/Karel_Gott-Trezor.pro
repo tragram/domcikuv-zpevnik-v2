@@ -11,14 +11,14 @@
 {start_melody: a}
 {start_of_verse}
 [A]Ze zdi na mě tupě zírá [D]po trezoru temná díra,
-[H7]poznám tedy bez nesnází, [E7]že tam nepochybně něco schází,
+[B7]poznám tedy bez nesnází, [E7]že tam nepochybně něco schází,
 [A]ve zdi byl totiž po dědovi [D]velký trezor ocelový.
 [E7]Mám tedy ztrátu zdánlivě minimáln[D]í [A]
 {end_of_verse}
 
 {start_of_chorus}
 [A]Na to že [E7]náhodně v krámě vášnivé dámě [A]padl jsem za tro[F#mi]fej,
-[H7]tvrdila pevně: přijdu tě levně, [E7]nezoufej, ó jé, jé, jé, jé.
+[B7]tvrdila pevně: přijdu tě levně, [E7]nezoufej, ó jé, jé, jé, jé.
 {end_of_chorus}
 
 {start_of_verse}

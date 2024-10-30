@@ -10,7 +10,7 @@
 {start_melody: }
 {start_of_verse}
 [Ami]Začal jsem [D]před pár dny [C]chodit s dívkou [F]z kavárny,
-[B]rozumí mi [F]báječně, jen [Hmi]nechce prozra[E]dit,
+[Bb]rozumí mi [F]báječně, jen [Bmi]nechce prozra[E]dit,
 kolik že je jí let, jak dlouho ji nosí svět
 ještě že mám na tohleto vyvinutý cit!
 {end_of_verse}
@@ -19,7 +19,7 @@ ještě že mám na tohleto vyvinutý cit!
 [G#]Sleduju tu [Cm]koroptvičku, [D#7]jak po jídle [G#]kouří špičku
 a [C#7]rozkládá si [G#]vějířek a [D#7]odhaduju [C7]její věk
 [G#]z muziky - no [Cm]nádhera, má [D#7]ráda Karla [G#]Hašlera
-a [C#7]chce se mnou [G#]obeplout i [Hmi]Svatojánský [E]proud.
+a [C#7]chce se mnou [G#]obeplout i [Bmi]Svatojánský [E]proud.
 {end_of_chorus}
 
 

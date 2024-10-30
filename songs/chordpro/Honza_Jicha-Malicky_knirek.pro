@@ -74,7 +74,7 @@ Tak už slez z toho tanku
 {end_of_chorus}
 
 {start_of_bridge}
-[Hm]Říkáš: láska je [C]slepá, tak [Hm]odkud to [C]vím?
+[Bm]Říkáš: láska je [C]slepá, tak [Bm]odkud to [C]vím?
 Ale potkal [Am]jsem tě i na [D]Poctě Wagnerovi
 {end_of_bridge}
 

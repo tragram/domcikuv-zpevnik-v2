@@ -12,7 +12,7 @@
 Má [Dmi]dívka sbírá rozmarýn
 do vína prý ho [Ami]dá
 a [F]já mám v zádech [Gmi]mrazení
-že se [Dmi]zítra [C]bez lásky [B]vdá. [Ami][Dmi]
+že se [Dmi]zítra [C]bez lásky [Bb]vdá. [Ami][Dmi]
 {end_of_verse}
 
 {start_of_verse}
@@ -26,7 +26,7 @@ když na slámě usínám.
 A [F]vítr co s ní [Gmi]ve skalách
 na [F]flétnu dlouze [Gmi]hrál [C]
 tak [F]dlouho až se [Gmi]strachy třás'
-ten kdo [Dmi]lásku [C]nemiloval. [B][Ami][Dmi]
+ten kdo [Dmi]lásku [C]nemiloval. [Bb][Ami][Dmi]
 {end_of_chorus}
 
 {start_of_verse}

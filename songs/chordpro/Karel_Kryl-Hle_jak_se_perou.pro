@@ -14,7 +14,7 @@
 Tak [Emi]hle, jak se [D]perou, jen [Emi]pohleďte [D]na ně,
 jak [Emi]úplatky [D]berou a [G]svrbí je [Ami]dlaně,
 jen [Emi]pohleďte [C]na ně, jak [D]zatančí [Emi]tance,
-když [D]namísto [Emi]daně jim [H7]dají kus [Emi]žvance.
+když [D]namísto [Emi]daně jim [B7]dají kus [Emi]žvance.
 {end_of_verse}
 
 {start_of_chorus}

@@ -32,7 +32,7 @@ tam, kde [C]končíš, chtěl bych [G]dojít, veď mě [F]dál, cesto [C]má.
 {start_of_bridge}
 [Ami]Pak na patn[G]ík posled[C]ní napíšu křídou
 [F]jméno své, a [C]pod něj, že jsem [G]žil [C]hrozně [G]rád,
-[Ami]písně své, co mi [B]v kapsách zbydou,
+[Ami]písně své, co mi [Bb]v kapsách zbydou,
 [F]dám si bandou [C]cvrčků hrát a [G]půjdu spát, půjdu [G7]spát.
 {end_of_bridge}
 

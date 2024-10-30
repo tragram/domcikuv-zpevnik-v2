@@ -10,9 +10,9 @@
 {start_melody: d a}
 {start_of_verse}
 |: [D]Čí že ste, husličky, [G]či[D]e,
-[Emi]kdo vás tu [Hmi]zanechal [A]:|
+[Emi]kdo vás tu [Bmi]zanechal [A]:|
 [Emi]na trávě [A]pová[D]lané[G], [Emi]na trávě [A]pová[D]lané[G],
-[Emi]u paty [Hmi]oře[A]cha? [Emi][Hmi][A]
+[Emi]u paty [Bmi]oře[A]cha? [Emi][Bmi][A]
 {end_of_verse}
 
 {start_of_verse}

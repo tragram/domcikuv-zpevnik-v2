@@ -10,13 +10,13 @@
 {start_melody: a a e e}
 {start_of_verse}
 [Ami]Štěchovická laguna když dřímá v zadumaném stínu Kordylér,
-[Dmi]pirát zkrva[Ami]venou šerpu ždímá, [H7]šerif si láduje revol[E]ver.
+[Dmi]pirát zkrva[Ami]venou šerpu ždímá, [B7]šerif si láduje revol[E]ver.
 [Ami]Pikovická rýžoviště zlata čeří se v příboji Sázavy,
 [Dmi]ale za to [Ami]krčmářova chata [Dmi]křepčí rykem [E7]chlapské zába[Ami]vy.
 [G7]Když tu náhle, co se [C]děje, [G7]divný šelest houštím [C]spěje,
 [G7]plch, skunk, [C]vše utíká [F]po stráni [F#dim]od Mední[E]ka.
 [Ami]Krčmář zhasne, kovbojové ztichnou, pirát zděšen tvář si zakryje,
-[Dmi]rudé squaw se [Ami]chvějí a pak vzdychnou: [H7]Blíží se k nám postrach préri[E]e. [G7]
+[Dmi]rudé squaw se [Ami]chvějí a pak vzdychnou: [B7]Blíží se k nám postrach préri[E]e. [G7]
 {end_of_verse}
 
 {start_of_chorus}
@@ -26,13 +26,13 @@ Stoletá Mary, babička [D7]Mary, ta zkrotí [G7]křepce hřebce, ať chce či [
 
 {start_of_verse}
 [Ami]Žádné zuby, z jelenice sukně, ale za to tvrdé bicepsy,
-[Dmi]Mary má vždy [Ami]slivovici v putně, [H7]Toma Mixe strčí [E]do kapsy.
+[Dmi]Mary má vždy [Ami]slivovici v putně, [B7]Toma Mixe strčí [E]do kapsy.
 [Ami]Klika cvakla, v krčmě dveře letí a babička vchází do dveří,
 [Dmi]"Pintu ginu, [Ami]lumpové prokletí!" [Dmi]bezzubou dá[E7]sní zaláte[Ami]ří.
 [G7]Vypiju to jen ve [C]stoje, [G7]jdu do volebního [C]boje,
 [G7]zřím zas [C]město drahý, [F]jedu [F#dim]volit do [E]Prahy.
 [Ami]Dopila a aby se neřeklo, putykáře změní v mrtvolu,
-[Dmi]za zády má [Ami]štěchovické peklo [H7]s šlajsnou svatojánských ato[E]lů. [G7]
+[Dmi]za zády má [Ami]štěchovické peklo [B7]s šlajsnou svatojánských ato[E]lů. [G7]
 {end_of_verse}
 
 {start_of_chorus}
@@ -42,13 +42,13 @@ Stoletá Mary, babička [D7]Mary, jde do [G7]volebního boje za kovbo[C]je. [E7]
 
 {start_of_verse}
 [Ami]Ledva v Praze kotvu vyhodila, pro babičku nastal hrozný čas,
-[Dmi]neboť hned každá [Ami]strana tvrdila, [H7]že jí náleží babiččin [E]hlas.
+[Dmi]neboť hned každá [Ami]strana tvrdila, [B7]že jí náleží babiččin [E]hlas.
 [Ami]Malá stejně jako velká strana psala, že bude mít o hlas víc,
 [Dmi]že ta druhá [Ami]strana je nahraná, oni [Dmi]že maj [E7]hlas ze Štecho[Ami]vic.
 [G7]Stoletý věk prý ne[C]vadí, [G7]na předáka je to [C]mládí,
 [G7]ze všech [C]nejvíce, [F]volala ji [F#dim]polni[E]ce.
 [Ami]Tak babičku, pro kterou vždy byla válka s lidojedy legrace,
-[Dmi]tu babičku za [Ami]pár dní zabila, [H7]volební agita[E]ce. [G7]
+[Dmi]tu babičku za [Ami]pár dní zabila, [B7]volební agita[E]ce. [G7]
 {end_of_verse}
 
 {start_of_chorus}

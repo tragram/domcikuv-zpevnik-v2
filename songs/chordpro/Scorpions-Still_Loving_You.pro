@@ -27,8 +27,8 @@ I will be there, I will be there.
 {end_of_verse}
 
 {start_of_chorus}
-[Gmi]If we'd [Eb]go again [B]all the way from the [F]start.
-[Gmi]I would [Eb]try to change [B]the things that killed our [F]love.
+[Gmi]If we'd [Eb]go again [Bb]all the way from the [F]start.
+[Gmi]I would [Eb]try to change [Bb]the things that killed our [F]love.
 [Gmi]Your pride has [Cmi]build a wall, so [D]strong that I can't get [Gmi]through.
 Is there [Eb]really no chance to [F]start once again? I'm loving [Gmi]you.
 {end_of_chorus}

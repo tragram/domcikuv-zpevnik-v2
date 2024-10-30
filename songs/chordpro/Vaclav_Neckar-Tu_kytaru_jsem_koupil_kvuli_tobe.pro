@@ -40,5 +40,5 @@ tak už nás [C]oba [G7]pozvi naho[C]ru.
 {chorus: R2}
 {start_of_chorus: Outro}
 [G7]pozvi naho[C]ru,
-[B]pozvi [H]nahoru. [C]
+[Bb]pozvi [B]nahoru. [C]
 {end_of_chorus}

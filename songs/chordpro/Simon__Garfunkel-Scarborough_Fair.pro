@@ -11,7 +11,7 @@
 {start_of_verse}
 [Ami]Are you going to [G]Scar[Gsus4]bo[G]rough [Ami]Fair
 [C]parsley [Ami]sage rose[C]ma[D]ry and [Ami]thyme
-[Ami]remember [C]me to one [Hmi]who [Ami]lives [G]there[Gsus4][G]
+[Ami]remember [C]me to one [Bmi]who [Ami]lives [G]there[Gsus4][G]
 [Ami]she once [G]was [Ami]a [G]true [Ami]love [G]of [Ami]mine.
 {end_of_verse}
 

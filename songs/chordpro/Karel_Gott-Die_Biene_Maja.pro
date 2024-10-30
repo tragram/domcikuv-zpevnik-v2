@@ -22,7 +22,7 @@ war eine Biene sehr be[A]kannt, [A][G#][A]
 Maja fliegt durch ihre [A]Welt,
 [A7]zeigt uns das, was ihr ge[D]fällt.
 [A]Wir treffen [D]heute unsre Freundin, Biene [Em]Maja,
-[A]diese kleine, [A7]freche Biene [Hm]Maja.[E]
+[A]diese kleine, [A7]freche Biene [Bm]Maja.[E]
 [D]Maja, alle lieben [G]Maja!
 [D/A]Maja! [D/A]Maja! [D/A]Maja! Erz[A]ähle uns von [D]dir!
 {end_of_chorus}

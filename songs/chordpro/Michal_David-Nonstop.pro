@@ -23,9 +23,9 @@ kdo jsem já, to nemaj poně[D]tí.
 {end_of_verse}
 
 {start_of_bridge}
-[Hmi]Nemůžou znát mý nápady,
+[Bmi]Nemůžou znát mý nápady,
 [G]ty pěkně v sejfu [A]mám,
-[Hmi]jen tobě můžu vážně říct,
+[Bmi]jen tobě můžu vážně říct,
 [G]jsem vítr huri[A]kán,
 {end_of_bridge}
 
@@ -49,8 +49,8 @@ jenomže, to právě jen ty [D]víš.
 {end_of_verse}
 
 {start_of_bridge}
-[Hmi]Už nejsem dítě mejdanů, [G]už nejsem módní [A]hit,
-[Hmi]láká mě vůně príma dnů a [G]chci je nonstop [A]žít,
+[Bmi]Už nejsem dítě mejdanů, [G]už nejsem módní [A]hit,
+[Bmi]láká mě vůně príma dnů a [G]chci je nonstop [A]žít,
 {end_of_bridge}
 
 {chorus}

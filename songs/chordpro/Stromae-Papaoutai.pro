@@ -13,7 +13,7 @@
 [Am]Dites-moi d'où il vie[G/A]nt,
 [Am]Enfin je saurais où je v[G/A]ais,
 [Am]Maman dit que lorsqu'o[G]n cherche bien,
-On fin[F#]it toujours par trou[Hm]ver,
+On fin[F#]it toujours par trou[Bm]ver,
 
 [Am]Elle dit qu'il n'est jamais très [Dm/A]loin,
 [Am]Qu'il part très souvent travail[Dm/A]ler,
@@ -44,7 +44,7 @@ Ca doit[F]faire au moins mille [Dm]fois que j'ai,
 [Am]Quoi? Qu'on y croie ou p[G/A]as,
 Y aura [Am]bien un jour où on y croira p[G/A]lus,
 Un [Am]jour ou l'autre on sera tous pa[G]pa,
-Et d'un [F#]jour à l'autre on aura dis[Hm]paru,
+Et d'un [F#]jour à l'autre on aura dis[Bm]paru,
 
 [Am]Serons-nous détes[Dm/A]tables?
 [Am]Serons-nous admir[Dm/A]ables?

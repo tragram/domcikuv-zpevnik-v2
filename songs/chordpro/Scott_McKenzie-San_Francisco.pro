@@ -12,14 +12,14 @@
 [Em]If you're [C]going to [G]San Franc[D]isco
 [Em]Be sure to [C]wear some [G]flowers in your [D]hair
 [Em]If you're [G]going to [C]San Fran[G]cisco
-[G]You're gonna [Hm]meet [Em]some gentle people [D]there
+[G]You're gonna [Bm]meet [Em]some gentle people [D]there
 {end_of_verse}
 
 {start_of_verse}
 [Em]For those who [C]come to [G]San Fran[D]cisco
 [Em]Summer [C]time will [G]be a love-in [D]there
 [Em]In the [G]streets of [C]San Fran[G]cisco
-[G]Gentle [Hm]people with [Em]flowers in their [D]hair
+[G]Gentle [Bm]people with [Em]flowers in their [D]hair
 {end_of_verse}
 
 {start_of_bridge}
@@ -33,7 +33,7 @@
 [Em]For those who com[C]e to [G]San Franci[D]sco
 [Em]Be sure to [C]wear some [G]flowers in your [D]hair
 [Em]If you [G]come to [C]San Fran[G]cisco
-[G]Summer [Hm]time [Em]will be a love-in [G]there [Em]
+[G]Summer [Bm]time [Em]will be a love-in [G]there [Em]
 {end_of_verse}
 
 {start_of_verse}

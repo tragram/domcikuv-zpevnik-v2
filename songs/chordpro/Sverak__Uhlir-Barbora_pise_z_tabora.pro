@@ -30,9 +30,9 @@ která je příšera, scházejí se, líbají se u totemu za šera
 
 {start_of_chorus}
 Proč jsem se [Em7]nenarodila [A]o pár let [D]dřív?
-[Hm]Dneska bych [G]krásně chodila, [A]se Štefanem, co [D]říká si Stýv[D7].
+[Bm]Dneska bych [G]krásně chodila, [A]se Štefanem, co [D]říká si Stýv[D7].
 Proč jste mě [Em7]prostě neměli [A]o pár let [D]dříve?
-[Hmi]Řekla bych: [G]"Nebuď nesmělý, [A]líbej mě [D]Stýve."
+[Bmi]Řekla bych: [G]"Nebuď nesmělý, [A]líbej mě [D]Stýve."
 {end_of_chorus}
 
 {start_of_verse}

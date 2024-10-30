@@ -23,7 +23,7 @@
 {end_of_verse}
 
 {start_of_chorus}
-[C]Někde si najdu malej [G/H]byt
+[C]Někde si najdu malej [G/B]byt
 A tam si budu jen tak [Dmi]žít
 a [F]snít
 [C]To je můj utajený [G]svět
