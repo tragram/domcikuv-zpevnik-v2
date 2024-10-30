@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['pavel_lohonka_zalman_tri_prani-sken.pdf', 'pavel_lohonka_zalman_tri_prani-comp.pdf']}
 {capo: 0}
-{key: d}
+{key: Dm}
 {tempo: }
 {range: a1-c2}
 {start_melody: a d}

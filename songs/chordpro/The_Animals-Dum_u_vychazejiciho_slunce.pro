@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['the_animals_dum_u_vychazejiciho_slunce-sken.pdf', 'the_animals_dum_u_vychazejiciho_slunce-comp.pdf']}
 {capo: 5}
-{key: a}
+{key: Am}
 {tempo: }
 {range: e1-a2}
 {start_melody: e a}

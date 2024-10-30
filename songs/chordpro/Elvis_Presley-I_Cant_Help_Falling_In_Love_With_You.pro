@@ -4,7 +4,7 @@
 {pdf_filename: elvis_presley_i_cant_help_falling_in_love.pdf}
 {date_added: 03-2018}
 {capo: 2}
-{key: c}
+{key: Cm}
 {range: }
 {start_melody: }
 {tempo: }

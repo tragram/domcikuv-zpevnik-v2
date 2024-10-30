@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['chinaski_adieu-sken.pdf', 'chinaski_adieu-comp.pdf']}
 {capo: 0}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-e2}
 {start_melody: a e}

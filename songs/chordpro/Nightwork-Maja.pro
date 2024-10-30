@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['nightwork_maja-sken.pdf', 'nightwork_maja-comp.pdf']}
 {capo: 4}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-h2}
 {start_melody: e}

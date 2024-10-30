@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['green_day_boulevard_of_broken_dreams-sken.pdf', 'green_day_boulevard_of_broken_dreams-comp.pdf', 'green_day_boulevard_of_broken_dreams-gen.pdf']}
 {capo: 0}
-{key: d}
+{key: Dm}
 {tempo: }
 {range: d1-d2}
 {start_melody: d}

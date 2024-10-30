@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jezek__voskovec__werich_babicka_mary-sken.pdf', 'jezek__voskovec__werich_babicka_mary-comp.pdf', 'jezek__voskovec__werich_babicka_mary-gen.pdf']}
 {capo: 4}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-g2}
 {start_melody: a a e e}

@@ -16,12 +16,12 @@ A song should have the following entries:
 {language: english}
 {date_added: 02-2020}
 {capo: 0}
-{key: C}
+{key: Bb}
 {range: c1-f#2}
 {tempo: 110}
 ```
 
-Note that this project assumes the Czech/German note naming scheme, where the notes go as follows: `C C#/Des D D#/Es E F F#/Ges G G#/As A A#/B H C`.
+Note that while the website shows the songs in the Czech/German-ish note naming scheme, the underlying files **must use the English note labels**. Why the discrepancy? Well, none of the ChordPro parsers for JS are aware of there being anything other than the English convention. While that could be circumvented using e.g. the superb [chord-symbol](https://github.com/no-chris/chord-symbol) library (in fact, this used to be implemented), there are still issues. Namely, because `Ab` is spelled `As`, then `Asus2` (a common-enough chord) gets parsed as `A-flat-modifier(us2)` and then fails, because `us2` is not a valid modifier. Anyways, that's how I found out I actually use a mix of both systems, which is terrible. :-)
 
 ### Extensions of the ChordPro format
 Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features. For convenience, I have added the possibility to keep in memory more than one chorus/verse/bridge (not that ChordSheetJS can manage even that). You can define the label of the chorus (note: it will be displayed!) in the directive by e.g. 

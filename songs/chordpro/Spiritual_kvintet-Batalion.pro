@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['spiritual_kvintet_batalion-sken.pdf', 'spiritual_kvintet_batalion-comp.pdf']}
 {capo: 5}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-c2/e2}
 {start_melody: a}

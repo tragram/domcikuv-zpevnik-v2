@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['simon__garfunkel_scarborough_fair-sken.pdf', 'simon__garfunkel_scarborough_fair-comp.pdf']}
 {capo: 4}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-a2}
 {start_melody: a e}

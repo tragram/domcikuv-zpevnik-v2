@@ -1,7 +1,7 @@
 {language: english}
 {date_added: 02-2020}
 {capo: 0}
-{key: e}
+{key: Em}
 {title: Pumped Up Kicks}
 {artist: Foster the People}
 {range: f#1-f#2}

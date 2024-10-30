@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['miley_cyrus_wrecking_ball-sken.pdf', 'miley_cyrus_wrecking_ball-comp.pdf']}
 {capo: 0}
-{key: e}
+{key: Em}
 {tempo: }
 {range: g1-c2}
 {start_melody: h e}

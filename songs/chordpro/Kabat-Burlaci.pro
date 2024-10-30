@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_burlaci-sken.pdf', 'kabat_burlaci-comp.pdf']}
 {capo: 0}
-{key: e}
+{key: Em}
 {tempo: }
 {illustration_author: dalle3}
 {range: c1-c2/g2}

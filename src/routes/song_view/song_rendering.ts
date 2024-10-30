@@ -1,14 +1,10 @@
 
-import ChordSheetJS, { ChordLyricsPair, ChordSheetSerializer, Tag } from 'chordsheetjs';
 import { SongData } from '../../types';
-import { Song as ChordSheetJSSong } from 'chordsheetjs';
 
-import { ChordProParser, FormatterSettings, HtmlFormatter, MusicLetter, MusicNote, Transposer } from "chordproject-parser";
-import { convertChordsInChordPro, replaceRepeatedDirectives } from './preparseChordpro';
-import {
-    chordParserFactory,
-    chordRendererFactory,
-} from 'chord-symbol/lib/chord-symbol.js'; // bundled version
+import { ChordProParser, FormatterSettings, HtmlFormatter, MusicLetter, MusicNote, Song, Transposer } from "chordproject-parser";
+import { replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
+
+import { render } from 'react-dom';
 
 function addRepeatClasses(htmlString, className = "verse") {
     // adds the 'repeated-chords' where appropriate class
@@ -38,6 +34,10 @@ function chordToGerman(chord: string) {
         return "B" + trimmedChord.slice(2);
     } else if (trimmedChord.startsWith("B")) {
         return "H" + trimmedChord.slice(1);
+    } else if (trimmedChord.endsWith("Bb")) {
+        return trimmedChord.slice(0, -2) + "B";
+    } else if (trimmedChord.endsWith("B")) {
+        return trimmedChord.slice(0, -1) + "H";
     }
     return chord;
 }
@@ -50,27 +50,25 @@ function convertHTMLChordToGerman(songText: string) {
     chords.forEach((chord) => {
         chord.textContent = chordToGerman(chord.textContent);
     })
-    // console.log(songText)
     return doc.body.innerHTML;
 }
 
-function parseChordPro(chordProContent: string, songKey: string | null, key: string | null, repeatChorus: boolean) {
+function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey, newKey) {
     let preparsedContent = replaceRepeatedDirectives(chordProContent, ["chorus", "bridge", "verse"], ["R", "B", ""], repeatChorus);
-    // Convert chords to English
-    preparsedContent = convertChordsInChordPro(preparsedContent, songKey?.toUpperCase(), key);
+    const transposedContent = transposeChordPro(preparsedContent, songKey, newKey);
     const parser = new ChordProParser();
-    const song = parser.parse(preparsedContent);
+    const song = parser.parse(transposedContent);
     return song;
 }
 
 export function guessKey(chordProContent: string) {
-    const song = parseChordPro(chordProContent, null, null, false);
+    const song = parseChordPro(chordProContent, false);
     return chordToGerman(MusicLetter[song.getPossibleKey().note.letter]);
 }
 
-export function renderSong(songData: SongData, key: string, repeatChorus: boolean): string {
+export function renderSong(songData: SongData, newKey: string, repeatChorus: boolean): string {
     // repeat choruses/bridges/verses if necessary
-    const song = parseChordPro(songData.content, songData.key, key, repeatChorus);
+    const song = parseChordPro(songData.content, repeatChorus, songData.key, newKey);
     const settings = new FormatterSettings();
     settings.showMetadata = false;
     const formatter = new HtmlFormatter(settings);

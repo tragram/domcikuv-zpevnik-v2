@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['scott_mckenzie_san_francisco-sken.pdf', 'scott_mckenzie_san_francisco-comp.pdf']}
 {capo: 2}
-{key: e}
+{key: Em}
 {tempo: }
 {range: g1-d2}
 {start_melody: d}

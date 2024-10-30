@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jan_nedved_tulacky_rano-sken.pdf', 'jan_nedved_tulacky_rano-comp.pdf']}
 {capo: 0}
-{key: d}
+{key: Dm}
 {tempo: }
 {range: d1-c1}
 {start_melody: f}

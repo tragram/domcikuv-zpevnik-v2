@@ -5,7 +5,7 @@
 {date_added: 09-2024}
 {range: g1-a2}
 {start_melody: a a e f e}
-{key: a}
+{key: Am}
 
 {start_of_verse}
 To [Am]já, zrozená z nemoc[G]ných básníků,

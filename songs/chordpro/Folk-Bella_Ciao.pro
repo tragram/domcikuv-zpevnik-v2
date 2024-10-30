@@ -1,7 +1,7 @@
 {language: italian}
 {date_added: 02-2020}
 {capo: 3}
-{key: a}
+{key: Am}
 {title: Bella Ciao}
 {artist: Folk}
 {tempo: 115}

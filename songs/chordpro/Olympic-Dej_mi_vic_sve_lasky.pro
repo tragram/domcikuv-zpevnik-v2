@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['olympic_dej_mi_vic_sve_lasky-sken.pdf', 'olympic_dej_mi_vic_sve_lasky-comp.pdf']}
 {capo: 1}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-h2}
 {start_melody: a}

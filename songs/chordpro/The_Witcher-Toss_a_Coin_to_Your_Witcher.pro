@@ -3,7 +3,7 @@
 {language: english}
 {date_added: 09-2020}
 {capo: 0}
-{key: e}
+{key: Em}
 {range: d1-e2}
 {start_melody: g}
 

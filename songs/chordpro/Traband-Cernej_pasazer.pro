@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['traband_cernej_pasazer-sken.pdf', 'traband_cernej_pasazer-comp.pdf']}
 {capo: 3}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-a2}
 {start_melody: e a}

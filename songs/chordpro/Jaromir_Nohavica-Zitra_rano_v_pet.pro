@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_zitra_rano_v_pet-sken.pdf', 'jaromir_nohavica_zitra_rano_v_pet-comp.pdf']}
 {capo: 3}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-a2}
 {start_melody: e}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['karel_kryl_ukolebavka-sken.pdf', 'karel_kryl_ukolebavka-comp.pdf', 'karel_kryl_ukolebavka-gen.pdf']}
 {capo: 0}
-{key: d}
+{key: Dm}
 {tempo: }
 {range: a1-d2}
 {start_melody: a d e f}

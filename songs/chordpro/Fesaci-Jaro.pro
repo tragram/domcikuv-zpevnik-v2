@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['fesaci_jaro-sken.pdf', 'fesaci_jaro-comp.pdf']}
 {capo: 5}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-g2}
 {start_melody: a}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['akaty_vdovy_z_cordoby-sken.pdf', 'akaty_vdovy_z_cordoby-comp.pdf']}
 {capo: 0}
-{key: a}
+{key: Am}
 {tempo: }
 {range: h1-e2}
 {start_melody: a c}

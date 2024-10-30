@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['tri_sestry_pumpa-sken.pdf', 'tri_sestry_pumpa-comp.pdf']}
 {capo: 3}
-{key: b}
+{key: Bm}
 {tempo: }
 {range: a1-a2}
 {start_melody: f# d h}

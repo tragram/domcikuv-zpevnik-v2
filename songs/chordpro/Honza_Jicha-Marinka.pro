@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: []}
 {capo: 0}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-c2}
 {start_melody: }

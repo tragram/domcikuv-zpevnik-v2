@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['vance_joy_riptide-sken.pdf', 'vance_joy_riptide-comp.pdf']}
 {capo: 4}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-a2}
 {start_melody: a h c d}

@@ -4,7 +4,7 @@
 {language: french}
 {pdf_filenames: ['stromae_papaoutai_-sken.pdf', 'stromae_papaoutai_-comp.pdf']}
 {capo: 0}
-{key: a}
+{key: Am}
 {tempo: }
 {range: }
 {start_melody: }

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_kruty_krtek_joy-sken.pdf', 'kabat_kruty_krtek_joy-comp.pdf']}
 {capo: 3}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-g1}
 {start_melody: a c e}

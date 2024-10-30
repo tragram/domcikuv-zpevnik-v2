@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jan_nedved_podvod-sken.pdf', 'jan_nedved_podvod-comp.pdf']}
 {capo: 3}
-{key: e}
+{key: Em}
 {tempo: }
 {range: g1-h2}
 {start_melody: h g}

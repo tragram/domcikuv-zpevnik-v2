@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_ja_chci_poezii-sken.pdf', 'jaromir_nohavica_ja_chci_poezii-comp.pdf']}
 {capo: 2}
-{key: e}
+{key: Em}
 {tempo: }
 {range: a1-c2}
 {start_melody: e f#}

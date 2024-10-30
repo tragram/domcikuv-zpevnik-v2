@@ -4,7 +4,7 @@
 {language: english}
 {pdf_filenames: ['bo_burnham_from_gods_perspective-sken.pdf', 'bo_burnham_from_gods_perspective-comp.pdf']}
 {capo: 2}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-c2}
 {start_melody: e a}

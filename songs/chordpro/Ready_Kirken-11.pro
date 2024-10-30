@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['ready_kirken_11-sken.pdf', 'ready_kirken_11-comp.pdf']}
 {capo: 7}
-{key: a}
+{key: Am}
 {tempo: }
 {range: d1-g2}
 {start_melody: a}

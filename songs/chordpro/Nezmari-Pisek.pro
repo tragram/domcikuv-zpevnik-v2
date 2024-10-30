@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['nezmari_pisek-sken.pdf', 'nezmari_pisek-comp.pdf']}
 {capo: 5}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-g1}
 {start_melody: a a c}

@@ -4,7 +4,7 @@
 {language: slovak}
 {pdf_filenames: ['peha_za_tebou-sken.pdf', 'peha_za_tebou-comp.pdf']}
 {capo: 3}
-{key: e}
+{key: Em}
 {tempo: }
 {range: g1-h2}
 {start_melody: e f#}

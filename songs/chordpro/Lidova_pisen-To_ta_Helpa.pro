@@ -4,7 +4,7 @@
 {language: slovak}
 {pdf_filenames: ['lidova_pisen_to_ta_helpa-sken.pdf', 'lidova_pisen_to_ta_helpa-comp.pdf']}
 {capo: 0}
-{key: d}
+{key: Dm}
 {tempo: }
 {range: d1-d2}
 {start_melody: d}

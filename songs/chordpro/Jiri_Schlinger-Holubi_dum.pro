@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jiri_schlinger_holubi_dum-sken.pdf', 'jiri_schlinger_holubi_dum-comp.pdf']}
 {capo: 3}
-{key: b}
+{key: Bm}
 {tempo: }
 {range: a1-h2}
 {start_melody: h}

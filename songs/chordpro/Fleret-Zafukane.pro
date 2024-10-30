@@ -4,7 +4,7 @@
 {language: slovak}
 {pdf_filenames: ['fkeret_zafukane-sken.pdf', 'fkeret_zafukane-comp.pdf']}
 {capo: 2}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-f1}
 {start_melody: c}

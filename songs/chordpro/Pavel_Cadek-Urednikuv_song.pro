@@ -3,7 +3,7 @@
 {language: czech}
 {date_added: 09-2020}
 {capo: 0}
-{key: d}
+{key: Dm}
 {range: d1-a1}
 {start_melody: f}
 {start_of_verse}

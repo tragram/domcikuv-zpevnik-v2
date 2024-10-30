@@ -4,7 +4,7 @@
 {language: spanish}
 {pdf_filenames: ['luis_fonsi_despacito-sken.pdf', 'luis_fonsi_despacito-comp.pdf']}
 {capo: 0}
-{key: e}
+{key: Em}
 {tempo: }
 {range: h1-d2}
 {start_melody: e}

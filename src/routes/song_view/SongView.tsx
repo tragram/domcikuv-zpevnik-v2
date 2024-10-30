@@ -23,7 +23,7 @@ type fitScreenModeType = "none" | "X" | "XY"
 
 function SongView({ }) {
     let songData = useLoaderData() as SongData;
-
+    
     if (!songData.key) {
         songData.key = guessKey(songData.content);
     }

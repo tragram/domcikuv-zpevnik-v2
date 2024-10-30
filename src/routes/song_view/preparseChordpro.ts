@@ -2,12 +2,12 @@ import {
     chordParserFactory,
     chordRendererFactory,
 } from 'chord-symbol/lib/chord-symbol.js'; // bundled version
+import { hasExactly } from 'chord-symbol/src/helpers/hasElement';
 
 const validVariationValues = ["replace_last_line", "replace_last_lines", "append_content"] as const;
 type validVariation = (typeof validVariationValues)[number]
 
 function partVariation(originalLines: string[], variantType: validVariation, variantContent: string[], repeat: boolean, repeatKey: string): string[] {
-    console.log(variantType)
     if (originalLines.length < 3) {
         console.log("Ignoring part variant ", variantType, " on ", originalLines, " - originalLines content too short!")
         return originalLines;
@@ -65,7 +65,6 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
         // check for any variant
         const variantStartMatch = line.match(variantStartRegex);
         if (variantStartMatch) {
-            console.log(variantStartMatch)
             if (!validVariationValues.includes(variantStartMatch[1])) {
                 console.log("Invalid variant type: ", currentVariationType, " --> Skipping...")
                 return;
@@ -144,39 +143,49 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
     return processedContent.map(l => l ? l.trim() : null).filter(p => p).join('\n').trim();
 }
 
-
-function guessKey(songContent: string): string {
-    const chordRegex = /\[[A-Ha-h].{0,10}\]/;
-    const match = songContent.match(chordRegex);
-    if (!match) return "C"; // Default key if no chord is found
-
-    const matchedChord = match[0].slice(1, -1);
-    if (matchedChord.length > 2 && matchedChord.slice(1, 3) === "es") {
-        return matchedChord.slice(0, 3); // For chords like "Des"
-    }
-    if (matchedChord.length > 1 && ["#", "b", "s"].includes(matchedChord[1])) {
-        return matchedChord.slice(0, 2); // For chords like "C#", "Db"
-    }
-    return matchedChord[0]; // Return first letter for simple chords
-}
-
-export function convertChordsInChordPro(content: string, songKey, newKey: string | null = null): string {
-    // converts chords and key from German to English convention because all JS chordpro parser are oblivious to the fact that not everyone uses english conventions
-    const flatKey = newKey && (newKey.includes("b") || newKey.includes("s"))
-    const parseChord = chordParserFactory({ notationSystems: ["german"], key: songKey });
+export function transposeChordPro(song: string, songKey, newKey) {
+    // chordpro-js appears to have a bug when transposing a semitone lower when in A-scale --> need to use a different library
     const CHROMATIC_SCALE: { [key: string]: number } = {
-        "c": 0, "c#": 1, "db": 1, "des": 1, "d": 2, "d#": 3, "eb": 3, "es": 3, "e": 4, "f": 5, "f#": 6, "gb": 6, "g": 7, "g#": 8, "ab": 8, "as": 8, "a": 9, "a#": 10, "b": 10, "h": 11
+        "c": 0, "c#": 1, "db": 1, "des": 1, "d": 2, "d#": 3, "eb": 3, "es": 3, "e": 4, "f": 5, "f#": 6, "gb": 6, "g": 7, "g#": 8, "ab": 8, "as": 8, "a": 9, "a#": 10, "bb": 10, "b": 11
     };
-    const canTranspose = songKey && newKey
-    const transposeValue = canTranspose ? CHROMATIC_SCALE[newKey.toLowerCase()] - CHROMATIC_SCALE[songKey.toLowerCase()] : 0
-    const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeValue, accidental: flatKey ? "flat" : "sharp" });
-    // Convert key directive
-    const convertKeyDirective = (match: string, key: string) => `{key: ${renderChord(parseChord(key))}}`;
-    content = content.replace(/\{key:\s*([A-Ha-h](#|b|s|is|es)?[^\s]*)\}/, convertKeyDirective);
+    const canTranspose = songKey && newKey;
+    if (!canTranspose) {
+        return song;
+    }
 
-    // Convert chords inside square brackets
-    const convertChordBracket = (match: string, chord: string) => `[${renderChord(parseChord(chord))}]`;
-    content = content.replace(/\[([A-Ha-h][^\]]{0,10})\]/g, convertChordBracket);
+    const flatKey = newKey && (newKey.includes("b") || newKey.includes("s"))
 
-    return content;
+    const parseChord = chordParserFactory({ key: songKey });
+    const chromaticIndex = (chord: string) => CHROMATIC_SCALE[parseChord(chord).normalized.rootNote.toLowerCase()]
+    const transposeValue = chromaticIndex(newKey) - chromaticIndex(songKey);
+    const keepSus2 = (chord) => {
+        // the library renames sus2 to (omit3, add9) by default --> avoid
+        if (!hasExactly(chord.normalized.intervals, ['1', '5', '9'])) {
+            return chord;
+        }
+        const { rootNote, bassNote, descriptor, chordChanges } = chord.formatted;
+        let symbol = rootNote + "sus2";
+        if (bassNote) {
+            symbol += '/' + bassNote;
+        }
+
+        chord.formatted.symbol = symbol;
+
+        return chord;
+    }
+
+    const hideParentheses = (chord) => {
+        // I don't like parentheses around my chord modifiers...
+        if (chord.formatted.symbol.includes(",")) {
+            // keep them in case of multiple modifiers
+            return chord;
+        }
+        chord.formatted.symbol = chord.formatted.symbol.replace("(", "").replace(")", "")
+        return chord;
+    }
+    const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeValue, accidental: flatKey ? "flat" : "sharp", customFilters: [keepSus2, hideParentheses] });
+
+    const convertChordBracket = (match: string, chord: string) => `[${renderChord(parseChord(chord))}]`
+    song = song.replace(/\[([A-Ha-h][^\]]{0,10})\]/g, convertChordBracket);
+    return song;
 }

@@ -3,7 +3,7 @@
 {language: finnish}
 {date_added: 09-2020}
 {capo: 0}
-{key: a}
+{key: Am}
 {range: a1-c2}
 {start_melody: e a}
 
