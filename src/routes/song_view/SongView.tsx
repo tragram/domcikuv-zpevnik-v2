@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, Link, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 // import SongRange from "./songs_list"
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown } from 'lucide-react';
 import { HashRouter, Route, Routes, useLoaderData } from "react-router-dom";
 import { SongData } from '../../types';
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ import { FontSizeSettings, minFontSizePx, maxFontSizePx } from './FontSizeSettin
 import SpaceSavingSettings from './SpaceSavingSettings';
 import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './song_rendering';
-
+import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
 const PdfView = (pdfFilenames: string[]) => {
     // {/* the last PDF is the smallest filesize (they are ordered as scan > compressed > gen (if it exists)) */}
     return <iframe src={pdfFilenames.slice(-1)[0]} className='w-screen h-screen' />
@@ -23,7 +23,7 @@ type fitScreenModeType = "none" | "X" | "XY"
 
 function SongView({ }) {
     let songData = useLoaderData() as SongData;
-    
+
     if (!songData.key) {
         songData.key = guessKey(songData.content);
     }
@@ -44,7 +44,52 @@ function SongView({ }) {
 
     useEffect(() => {
         setParsedContent(renderSong(songData, songRenderKey, repeatParts));
+        scrollSpy.update();
     }, [songRenderKey, repeatParts, songData]);
+
+    const scrollDown = () => {
+        if (document.body.scrollHeight / screen.height < 1.5 || (document.body.scrollHeight - window.scrollY) < 0.8 * screen.height) {
+            scroll.scrollToBottom();
+            return;
+        }
+        const sections = document.querySelectorAll('.section');
+        // Find the next container that is not fully visible
+        for (let container of sections) {
+            const rect = container.getBoundingClientRect();
+            console.log(rect.bottom, window.scrollY, window.innerHeight)
+            // Check if the container is not fully visible within the viewport
+            if (rect.bottom >= window.scrollY + window.innerHeight) {
+                // Scroll this container into view and exit the loop
+                scroll.scrollTo(rect.top - Math.max(100, 0.2 * screen.height));
+                break;
+            }
+        }
+    };
+    const scrollUp = () => {
+        scroll.scrollToTop();
+        return;
+        // console.log("scroll up")
+        // if (document.body.scrollHeight / screen.height < 1.5 || window.scrollY < 0.8 * screen.height) {
+        //     scroll.scrollToTop();
+        //     return;
+        // }
+        // // Find the next container that is not fully visible
+        // for (let [index, container] of Array.from(sections).reverse().entries()) {
+        //     const rect = container.getBoundingClientRect();
+        //     // Check if the container is not fully visible within the viewport
+        //     if (rect.top <= window.scrollY) {
+        //         if (index == sections.length - 1) {
+        //             console.log("scroll to top")
+        //             // top element
+        //             scroll.scrollToTop();
+        //         } else {
+        //             // Scroll this container into view and exit the loop
+        //             scroll.scrollTo(rect.top - Math.max(100, 0.2 * screen.height));
+        //         }
+        //         break;
+        //     }
+        // }
+    };
 
     return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-dvh" : "")}>
         <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
@@ -61,11 +106,15 @@ function SongView({ }) {
                 <NavbarItem className=''>
                     <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} fitScreenMode={fitScreenMode} setfitScreenMode={setfitScreenMode} />
                 </NavbarItem>
-                <NavbarItem className='hidden sm:flex'>
+                <NavbarItem className='hidden sm:flex '>
                     <Button color="primary" variant="ghost" isIconOnly href={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile} as={Link}><Github /></Button>
                 </NavbarItem>
             </NavbarContent >
         </Navbar >
+        <div className={"fixed bottom-12 right-10 z-50 flex-col gap-2 " + (fitScreenMode === "X" ? "flex" : "hidden")}>
+            <Button className='' isIconOnly onPress={scrollUp}><ArrowBigUpDash /></Button>
+            <Button className='' isIconOnly onPress={scrollDown}><ArrowBigDown /></Button>
+        </div>
         <div id="song-content-wrapper" className={`px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
         >
             <div className='flex flex-col text-center '>
@@ -81,7 +130,7 @@ function SongView({ }) {
                 </AutoTextSize>
             </div>
         </div>
-    </div>
+    </div >
     );
 };
 
