@@ -86,5 +86,5 @@ slétni z oblak na pevnou zem, tiše stůj a poslouchej.
 To já [C]vcházím do tvých snů, má [Emi]lásko,
 [F]když nemůžeš v noci [G]spát,
 a [C]mé jsou ty kroky, co [Emi]slýcháš,
-jen [F]myšlenky [G]tvé chtěl bych [C]znát ...
+jen [F]myšlenky [G]tvé chtěl bych [C]znát
 {end_of_chorus}

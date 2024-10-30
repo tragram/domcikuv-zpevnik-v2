@@ -37,7 +37,8 @@ mlčky naše láska pomi[G]ne
 osmý den [D]scházel nám
 {end_of_verse}
 
+
+{start_of_variant: append_content}
+vždyť [D]víš.
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-+vždyť [D]víš
-{end_of_chorus}

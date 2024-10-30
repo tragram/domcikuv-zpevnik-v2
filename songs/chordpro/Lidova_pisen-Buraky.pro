@@ -29,9 +29,7 @@ Tak plukovník se otočí a vzhlédne do dálky
 a vidí slavnou armádu jak louská buráky.
 {end_of_verse}
 
-{start_of_chorus}
-Hej hou, hej hou...
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 Až táhle válka skončí a my zas budem žít
@@ -40,6 +38,4 @@ A když se mě zeptají: hrdino, cos dělal za války?
 No, flákal jsem se s kvérem a louskal buráky.
 {end_of_verse}
 
-{start_of_chorus}
-Hej hou, hej hou...
-{end_of_chorus}
+{chorus}

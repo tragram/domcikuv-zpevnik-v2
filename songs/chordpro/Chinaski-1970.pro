@@ -18,7 +18,7 @@ silnej ročník [G]sedmdesát, tak začni počítat.
 {end_of_verse}
 {start_of_verse}
 [D]Tenkrát tu bejval [Emi]jinej stát a já byl blbej na [F#mi]kvadrát,
-jsem silnej ročník [G]sedmdesát, třeba například...
+jsem silnej ročník [G]sedmdesát, třeba například.
 {end_of_verse}
 
 {start_of_bridge}

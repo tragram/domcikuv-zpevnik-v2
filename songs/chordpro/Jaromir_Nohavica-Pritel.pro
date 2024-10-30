@@ -8,6 +8,9 @@
 {tempo: }
 {range: g1-h2}
 {start_melody: a a a g}
+
+TBD: akordy
+
 {start_of_verse}
 Jestlipak [G]vzpomínáš si ještě na ten [D/F#]čas,
 táhlo nám [C]na dvacet a slunko bylo v [D]nás,
@@ -26,7 +29,7 @@ anebo rovnou hned.
 [Ami]Kam jsme se poděli, [C]kam jsme se to poděli,
 [G]kde je ti [D]konec, můj [Emi]jediný příteli,
 [Ami]zmizels' mi, nevím [D]kam,
-[Emi]sám, [Caad9?]sám, [C]sám, [Cmaj7?]jsem tady [G]sám.
+[Emi]sám, [Cadd9?]sám, [C]sám, [Cmaj7?]jsem tady [G]sám.
 {end_of_chorus}
 
 {start_of_verse}
@@ -43,10 +46,10 @@ a vlasy, vlasy kratší, jó, bývali jsme mladší,
 no a co, vem to ďas.
 {end_of_verse}
 
-{start_of_chorus}
-... kde je ti konec, můj jediný příteli,
-... sám, sám, sám, peru se teď sám.
-{end_of_chorus}
+{start_of_variant: replace_last_line}
+(+nejlepší) [Emi]sám, [Cadd9?]sám, [C]sám, [Cmaj7?]peru se teď [G]sám.
+{end_of_variant}
+{chorus}
 
 {start_of_verse}
 Jestlipak vzpomínáš si ještě na ten rok,
@@ -62,10 +65,10 @@ a byla velká voda, vzala nám, co jí kdo dal,
 a tobě i to poslední.
 {end_of_verse}
 
-{start_of_chorus}
-... kde je ti konec, můj jediný příteli,
-... sám, sám, sám, zpívám tady sám.
-{end_of_chorus}
+{start_of_variant: replace_last_line}
+(+nejlepší) [Emi]sám, [Cadd9?]sám, [C]sám, [Cmaj7?]zpívám tady [G]sám.
+{end_of_variant}
+{chorus}
 
 {start_of_verse}
 Jestlipak vzpomínáš si na to, jakýs' byl,
@@ -81,7 +84,7 @@ a přesto líto je mi, že už nám nad písněmi
 společný slunko nesvítí.
 {end_of_verse}
 
-{start_of_chorus}
-... kde je ti konec, můj bývalý příteli,
-... sám, sám, sám, dýchám tady sám.
-{end_of_chorus}
+{start_of_variant: replace_last_line}
+(+ztracený) [Emi]sám, [Cadd9?]sám, [C]sám, [Cmaj7?]dýchám se teď [G]sám.
+{end_of_variant}
+{chorus}

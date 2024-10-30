@@ -38,7 +38,7 @@ a [Dmi]bude jásat, [Ami]že se dožil [E]rána ve zdr[Ami]aví.
 [F]až koktavě bude poví[E]dat, [Ami]že
 {end_of_verse}
 
+{start_of_variant: append_content}
+ne[F]boť za boudou [C]v lese zase [G]hejkal začal [C]výt, hej!
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-+ne[F]boť za boudou [C]v lese zase [G]hejkal začal [C]výt, hej!
-{end_of_chorus}

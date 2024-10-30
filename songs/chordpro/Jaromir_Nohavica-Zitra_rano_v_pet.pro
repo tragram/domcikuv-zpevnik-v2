@@ -37,5 +37,5 @@ Až zítra ráno v pět prádlo půjdeš prát
 a seno obracet, já u zdi budu stát,
 tak přilož na oheň a smutek v sobě skryj,
 prosím, nezapomeň, nezapomeň a žij,
-na mě nezapomeň a žij ...
+na mě nezapomeň a žij.
 {end_of_verse}

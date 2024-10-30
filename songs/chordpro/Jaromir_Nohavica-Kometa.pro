@@ -44,7 +44,7 @@ a [C]krev našich nadějí [E7]vesmírem putuje.
 {end_of_verse}
 
 {start_of_chorus}
-Ami Dmi G7 C E7 Ami Dmi E E7 Ami Dmi E7
+[Ami] [Dmi] [G7] [C] [E7] [Ami] [Dmi] [E] [E7] [Ami] [Dmi] [E7]
 Na na na ...
 {end_of_chorus}
 
@@ -66,5 +66,5 @@ my [C]už tu nebudem, ale [E7]jiný jí zazpívá.
 [Ami]O vodě, o trávě, [Dmi]o lese,
 [G7]o smrti, se kterou smířit [C]nejde se,
 o lásce, o zradě, o světě Ami,Dmi
-bude to písnička o nás a kometě. E,E7,Ami
+bude to písnička o nás a kometě. [E][E7][Ami]
 {end_of_chorus}

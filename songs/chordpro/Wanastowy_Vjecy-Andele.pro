@@ -38,7 +38,8 @@ miluju Tě, chci Tě to Ti přísahám,
 na kolenou lásce pomož vstát.
 {end_of_verse}
 
+
+{start_of_variant: append_content}
+|: Svět je mami dokonalej kraj. :|
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-+|: Svět je mami dokonalej kraj. :|
-{end_of_chorus}

@@ -38,7 +38,8 @@
 [C#mi]a na řetězech jako vždycky [E7]přibývá kroužek ke kroužku.
 {end_of_verse}
 
+
+{start_of_variant: append_content}
+[Dmi]vánoční [A]noc.
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-+ [Dmi]vánoční [A]noc ...
-{end_of_chorus}

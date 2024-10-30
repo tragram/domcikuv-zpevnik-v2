@@ -50,14 +50,14 @@ vždyť za prachy jde dnes i důvěra.
 Ještě pár chvil, než se rozední
 já vím, naděje umírá poslední,
 na vzdušné zámky zvolna usedá prach,
-často mívám v noci strach...
+často mívám v noci strach
 {end_of_verse}
 
 {start_of_verse}
 Vzít tě tak pryč daleko od lidí,
 kam ani měsíc moc dobře nevidí,
 abych byl sám až tě budu objímat,
-víc ti nemůžu dát...
+víc ti nemůžu dát
 {end_of_verse}
 
 {chorus}

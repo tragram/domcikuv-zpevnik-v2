@@ -67,5 +67,8 @@ se [E]vztekat že už zase šunku zdražili.
 cože čtrnáct? No to si dělaj prdel snad.
 {end_of_verse}
 
+
+{start_of_variant: replace_last_line}
+[Dm]Dřív jsem lítal ke hvězdám a [G]teď jsem rád že trefím domů (aspoň za světla) sám
+{end_of_variant}
 {chorus}
-...trefím domů (aspoň za světla) sám

@@ -47,5 +47,7 @@ a ty neztratíš svoji krásu, stále štíhlá kolem pasu,
 stále dokážeš mě chytit lasem a přitáhnout na terasu.
 {end_of_verse}
 
+{start_of_variant: append_content}
+já a [G]ty.
+{end_of_variant}
 {chorus}
-+ já a [G]ty.

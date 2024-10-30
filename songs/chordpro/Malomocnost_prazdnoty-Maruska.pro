@@ -29,7 +29,7 @@ házíte kamení
 Na to my nehrajem
 vy nám to kazíte
 nedbáte pravidel
-a pak se divíte...
+a pak se divíte
 {end_of_chorus}
 
 {start_of_verse}

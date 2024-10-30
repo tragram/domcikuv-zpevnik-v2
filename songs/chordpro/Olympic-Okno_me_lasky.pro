@@ -39,5 +39,5 @@
 [G]Kdo tě hladí, když ne [C]já,
 [G]kdo tě svádí, když ne [C]já,
 [G]kdo tě zradí, když ne [C]já.
-+ [G]Ty, [C]já, [G]jsme [C]my, [G]my a [D]náš [C]byl svět.
+[G]Ty, [C]já, [G]jsme [C]my, [G]my a [D]náš [C]byl svět.
 {end_of_verse}

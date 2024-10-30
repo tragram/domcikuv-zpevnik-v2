@@ -31,11 +31,13 @@ Dark and dusty [Hmi]painted on the sky,
 {end_of_verse}
 
 {start_of_bridge}
-*: [Hmi]I hear her [A]voice in the [D]morning hours she calls me
+[Hmi]I hear her [A]voice in the [D]morning hours she calls me
 the [G]radio [D]reminds me of my [A]home far away
 And [Hmi]driving down the [C]road I get [G]feeling that I [D]should
 have been home [A]yesterday, yester[A7]day.
 {end_of_bridge}
 
+{start_of_variant: append_content}
+|: country [A]roads take me [D]home :|
+{end_of_variant}
 {chorus}
-+ |: country [A]roads take me [D]home ... :|

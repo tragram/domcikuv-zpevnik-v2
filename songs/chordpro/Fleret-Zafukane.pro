@@ -30,8 +30,10 @@
 a [F]budu u [C]tvého [E]okénka [Ami]stát. [Asus2][Ami][Asus2]
 {end_of_verse}
 
+{start_of_variant: replace_last_line}
+okénko k tobě je zafúkané.
+{end_of_variant}
 {chorus}
-... okénko k tobě je zafúkané
 
 {start_of_verse}
 [Ami]Od tvého [Asus2]okna sa [Ami]smutný vra[Asus2]cám,
@@ -39,5 +41,8 @@ a [F]budu u [C]tvého [E]okénka [Ami]stát. [Asus2][Ami][Asus2]
 [C]spadl sněh [G]na srdce [G]zatúlané, [C]
 [F]aj na mé [C]stopy - sú [E]zafúkané. [Ami][Asus2][Ami][Asus2]
 {end_of_verse}
+
+{start_of_variant: replace_last_line}
+mé stopy k tobě sú zafúkané.
+{end_of_variant}
 {chorus}
-... mé stopy k tobě sú zafúkané

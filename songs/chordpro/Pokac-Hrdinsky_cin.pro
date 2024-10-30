@@ -38,7 +38,7 @@ já tou tvojí hatmatilkou nemluvim
 
 {start_of_chorus}
 [Dm]laj-lalala [G]laj-lalala [E]laj-lalala [Am]laj-laj-laj (3x)
-[Dm]laj-laj-laj [E]laj-laj-laj la-[Am]laj...
+[Dm]laj-laj-laj [E]laj-laj-laj la-[Am]laj
 {end_of_chorus}
 
 {start_of_verse}

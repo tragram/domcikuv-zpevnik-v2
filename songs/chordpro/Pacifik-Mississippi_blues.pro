@@ -48,7 +48,7 @@ jeho blues se naposledy řekou rozletí,
 kdo vyléčí rány, smaže prokletí.
 {end_of_verse}
 
+{start_of_variant: append_content}
+|: Mississippi, Mississippi :|
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-+ |: Mississippi, Mississippi ... :|
-{end_of_chorus}

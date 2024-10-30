@@ -25,7 +25,7 @@ And [C]I'm the only [G]one and I walk [Dm]alone
 
 {start_of_bridge: B1}
 [F]I [C]walk alo[G]ne, I walk alo[Dm]ne
-[F]I [C]walk alo[G]ne, I walk a...
+[F]I [C]walk alo[G]ne, I walk a-
 {end_of_bridge}
 
 {start_of_chorus}
@@ -64,7 +64,7 @@ Check my [F]vital signs
 [Dm]I walk this [F]empty street
 [C]On the Boule[G]vard of broken [Dm]dreams
 When the [F]city sleeps
-[C]And I'm the only [G]one and I walk a...
+[C]And I'm the only [G]one and I walk a-
 {end_of_verse}
 
 {chorus}

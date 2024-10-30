@@ -47,5 +47,7 @@ Quem foi, vai vai [Cmaj7]vai
 [D4]E me faz ficar tranquilo :| [Cmaj7], [D4]
 {end_of_bridge}
 
+{start_of_variant: append_content}
+Vai vai [Cmaj7]vai
+{end_of_variant}
 {chorus}
-+Vai vai [Cmaj7]vai

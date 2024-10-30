@@ -62,5 +62,5 @@ mám v paláci všechno, jen lidé tu chybí!
 Dnes podruhé oko mé Satana spatří,
 je krásný, byť s úsměvem krysím,
 vždyť jemu dnes s hlasem i duše má patří,
-když na větvi visím ...
+když na větvi visím.
 {end_of_chorus}
