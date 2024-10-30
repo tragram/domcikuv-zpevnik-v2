@@ -39,15 +39,15 @@ v malým [Dmi]ráji chtěl jsem říct:
 {end_of_verse}
 
 {start_of_bridge}
-[B]Den chová stín v zác[F]lonách,
+[Bb]Den chová stín v zác[F]lonách,
 [C]toulavej pár [G]koček, strach,
-[B]sen ti skrývá na [F]víčkách, že jsi mou[C].
+[Bb]sen ti skrývá na [F]víčkách, že jsi mou[C].
 {end_of_bridge}
 
 {start_of_bridge}
-[B]Bláznům se jen [F]může smát,
+[Bb]Bláznům se jen [F]může smát,
 [C]když nám ráno [G]dává mat.
-[B]Chtěl jsem dál jen [F]poslouchat,
+[Bb]Chtěl jsem dál jen [F]poslouchat,
 že jsi mou, že jsi [G]mou. [A]
 {end_of_bridge}
 

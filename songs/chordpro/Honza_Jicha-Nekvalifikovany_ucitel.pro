@@ -55,9 +55,9 @@ tak [F]sbohem buď, [G]já musím [C]ven.
 {end_of_chorus}
 
 {start_of_bridge}
-A mně [B]to nevadí, já mám co dělat,
+A mně [Bb]to nevadí, já mám co dělat,
 ale [F]ty smradi budou jak stádo telat
-a [Eb]Shakespeara nahradí jim [B]Eminem
+a [Eb]Shakespeara nahradí jim [Bb]Eminem
 když na ně [F]vyrukujou [G]
 s pedagogickým [C]miminem.
 {end_of_bridge}

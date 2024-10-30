@@ -4,14 +4,14 @@
 {language: czech}
 {pdf_filenames: ['kabat_corrida-sken.pdf', 'kabat_corrida-comp.pdf']}
 {capo: 0}
-{key: h}
+{key: Bm}
 {tempo: }
 {range: h1-a1}
 {start_melody: f#}
 {start_of_verse}
-Veš[Hmi]kerý slasti pozemský
+Veš[Bmi]kerý slasti pozemský
 skryl [G]ďábel v zemi [E]španělský,
-kde [Hmi]vítr hladí po tváři [G]a kastaněty [E]zní
+kde [Bmi]vítr hladí po tváři [G]a kastaněty [E]zní
 {end_of_verse}
 
 {start_of_verse}
@@ -37,7 +37,7 @@ Na [A]vlnách slunce zářící, v Madridu zpívaj slavíci
 {end_of_bridge}
 
 {start_of_chorus}
-Cer[Hmi]veza, rock'n'roll, [G]corrida Espa[E]ňol
+Cer[Bmi]veza, rock'n'roll, [G]corrida Espa[E]ňol
 nandej [D]mi to seňor[C]ito, por [G]favor
 teplý [D]tony mají [C]zvony v Caste[G]lon
 {end_of_chorus}

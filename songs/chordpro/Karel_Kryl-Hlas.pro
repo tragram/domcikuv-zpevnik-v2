@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['karel_kryl_hlas-sken.pdf', 'karel_kryl_hlas-comp.pdf', 'karel_kryl_hlas-gen.pdf']}
 {capo: 0}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-e2}
 {start_melody: c h a}

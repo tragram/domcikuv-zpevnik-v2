@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['pacifik_mississippi_blues-sken.pdf', 'pacifik_mississippi_blues-comp.pdf']}
 {capo: 3}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-a2}
 {start_melody: e}

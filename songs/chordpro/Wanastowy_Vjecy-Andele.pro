@@ -4,15 +4,15 @@
 {language: czech}
 {pdf_filenames: ['wanastowy_vjecy_andele-sken.pdf', 'wanastowy_vjecy_andele-comp.pdf']}
 {capo: 3}
-{key: H}
+{key: B}
 {tempo: }
 {range: h1-a1}
 {start_melody: f#}
 {start_of_verse}
-[H]Co Tě to hne[C#mi]d po ránu [E]napadá [E]
-[H]nohy, ruce, [C#mi]komu je chceš [E]dát,
-[H]je to v krvi [C#mi]co Tvou hlavu [E]přepadá
-[H]chtělas padnou[C#mi]t do hrobu a [E]spát
+[B]Co Tě to hne[C#mi]d po ránu [E]napadá [E]
+[B]nohy, ruce, [C#mi]komu je chceš [E]dát,
+[B]je to v krvi [C#mi]co Tvou hlavu [E]přepadá
+[B]chtělas padnou[C#mi]t do hrobu a [E]spát
 {end_of_verse}
 
 {start_of_chorus}

@@ -26,7 +26,7 @@ an [E]angry young man some [A]day
 Take a look at [E]you and me
 Are we too [D]blind to [A]see
 Or [D]do we simply [C#mi]turn our heads
-and [Bmi]look the other [E7]way
+and [Bbmi]look the other [E7]way
 {end_of_chorus}
 
 {start_of_verse}
@@ -42,7 +42,7 @@ And he learns how to steal and he learns how to fight in the ghetto
 [E]Then one night in desperation
 the [D]young man breaks [A]away
 He [D]buys a gun, he [C#mi7]steals a car,
-He [Bmi]tries to run but he [E7]dont get far
+He [Bbmi]tries to run but he [E7]dont get far
 {end_of_chorus}
 
 {start_of_verse}

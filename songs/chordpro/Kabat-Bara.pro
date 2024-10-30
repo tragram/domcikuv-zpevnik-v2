@@ -4,24 +4,24 @@
 {language: czech}
 {pdf_filenames: ['kabat_bara-sken.pdf', 'kabat_bara-comp.pdf']}
 {capo: 0}
-{key: a}
+{key: Am}
 {tempo: }
 {range: c1-g1}
 {start_melody: e d c d}
 {start_of_verse}
 [Ami]Jenom se [Dmi]ptej
 Kolem [F]plameny tančí
-Tak [C]proč je tady divnej [B]chlad
+Tak [C]proč je tady divnej [Bb]chlad
 [Ami]Nepospíchej [Dmi]
 Kdo tě [F]zavede zpátky
-A [C]kdo při tobě bude [B]stát
+A [C]kdo při tobě bude [Bb]stát
 {end_of_verse}
 
 {start_of_chorus}
 Víš já [F]mám spoustu [Ami]známejch v podz[Dmi]emí
-A divá [B]Bára se mnou spí
+A divá [Bb]Bára se mnou spí
 Když je [F]noc všechno [Ami]krásný zdá se [Dmi]mi
-To sme my [B]dávno prokle[Ami]tý
+To sme my [Bb]dávno prokle[Ami]tý
 {end_of_chorus}
 
 {start_of_verse}

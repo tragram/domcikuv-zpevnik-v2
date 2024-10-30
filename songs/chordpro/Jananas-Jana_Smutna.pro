@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jananas_jana_smutna-sken.pdf', 'jananas_jana_smutna-comp.pdf']}
 {capo: 0}
-{key: d}
+{key: Dm}
 {tempo: }
 {range: c1-c2}
 {start_melody: d a}
@@ -12,8 +12,8 @@
 {start_of_verse}
 [Dm]Je smutné, když štěňátko na nádor umírá
 [Dm]když prášek na spaní až ráno zabírá
-[G]když raněná srna [B]padá do mlází
-když [Dm]starou paní záchranka před [G]domem [B]porazí
+[G]když raněná srna [Bb]padá do mlází
+když [Dm]starou paní záchranka před [G]domem [Bb]porazí
 {end_of_verse}
 
 {start_of_verse}
@@ -24,7 +24,7 @@ když hygienik otráví se sýrem plísňovým
 {end_of_verse}
 
 {start_of_chorus: R1}
-[Dm]Já vím, [C]každý [B]trápení své [Dm]má
+[Dm]Já vím, [C]každý [Bb]trápení své [Dm]má
 ale [Gm]nejsmutnější [C]na světě jsem [Dm]já
 {end_of_chorus}
 

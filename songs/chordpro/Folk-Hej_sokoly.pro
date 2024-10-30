@@ -5,7 +5,7 @@
 {capo: 0}
 {range: e1-a2}
 {start_melody: a c a c e}
-{key: a}
+{key: Am}
 
 {start_of_verse}
 [Am]Hej, tamgdzieś znad czarnej wody

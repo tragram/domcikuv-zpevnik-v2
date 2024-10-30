@@ -4,14 +4,14 @@
 {language: english}
 {pdf_filenames: ['simon__garfunkel_scarborough_fair-sken.pdf', 'simon__garfunkel_scarborough_fair-comp.pdf']}
 {capo: 4}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-a2}
 {start_melody: a e}
 {start_of_verse}
 [Ami]Are you going to [G]Scar[Gsus4]bo[G]rough [Ami]Fair
 [C]parsley [Ami]sage rose[C]ma[D]ry and [Ami]thyme
-[Ami]remember [C]me to one [Hmi]who [Ami]lives [G]there[Gsus4][G]
+[Ami]remember [C]me to one [Bmi]who [Ami]lives [G]there[Gsus4][G]
 [Ami]she once [G]was [Ami]a [G]true [Ami]love [G]of [Ami]mine.
 {end_of_verse}
 

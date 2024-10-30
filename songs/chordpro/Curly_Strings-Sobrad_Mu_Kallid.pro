@@ -7,37 +7,37 @@
 {range: }
 
 {start_of_verse}
-[G]Siis, kui ma üks[Hm]inda jään,
+[G]Siis, kui ma üks[Bm]inda jään,
 [C]kõikjal vaid tuimust ja üksk[G]õiksust n[D]äen.
-[G]Näib, et ei ho[Hm]oli maailm
+[G]Näib, et ei ho[Bm]oli maailm
 [C]sellest, kui kellelgi ku[G]rb on, ja [D]külm.[C]
 {end_of_verse}
 
 {start_of_verse}
-[G]Päev nagu ö[Hm]ögi on hall,
+[G]Päev nagu ö[Bm]ögi on hall,
 [C]päikest ei näegi siin pil[G]vede a[D]ll.
-[G]Tuul rebib pu[Hm]ude pealt rüüd.
+[G]Tuul rebib pu[Bm]ude pealt rüüd.
 [C]Sõbrad, mu kallid, teid iga[G]tsen nü[D]üd![C]
 {end_of_verse}
 
 {start_of_chorus}
-[G]Igatsen nae[D]ru ja hel[Em]edat me[Hm]elt,
+[G]Igatsen nae[D]ru ja hel[Em]edat me[Bm]elt,
 [C]torkeid, mis hai[G]get ei t[D]ee.
-[G]Ammuseid la[D]ule ja lus[Em]takat ke[Hm]elt,
+[G]Ammuseid la[D]ule ja lus[Em]takat ke[Bm]elt,
 [C]meile vaid sel[G]ge on s[D]ee.[C]
 {end_of_chorus}
 
 {start_of_verse}
-[G]Siis, kui mul hä[Hm]sti on kõik,
+[G]Siis, kui mul hä[Bm]sti on kõik,
 [C]päev on kui peotordi roo[G]siga lõi[D]k.
-Vaid si[G]is teeb rõ[Hm]õmu see õis,
+Vaid si[G]is teeb rõ[Bm]õmu see õis,
 [C]kui teda jagada tei[G]ega võ[D]in.[C]
 {end_of_verse}
 
 {start_of_chorus}
-[G]Sõbrad, mu kal[D]lid, ma iga[Em]tsen te[Hm]id,
+[G]Sõbrad, mu kal[D]lid, ma iga[Em]tsen te[Bm]id,
 [C]jagatult suu[G]rem on rõ[D]õm.
-[G]Jagatud kur[D]busest rii[Em]smed vaid jä[Hm]id,
+[G]Jagatud kur[D]busest rii[Em]smed vaid jä[Bm]id,
 [C]murest jäi vä[G]ikene sõ[D]õm.[C]
 {end_of_chorus}
 
@@ -45,7 +45,7 @@ Vaid si[G]is teeb rõ[Hm]õmu see õis,
 [Am]Siis, kui ma üksinda j[Cm]ään -
 [Em]igatsen naeru ja he[F#]ledat m[D]eelt.
 [G]Torkeid, mis haiget ei t[C]ee,
-[Am]ammuseid laule ja lu[Hm]stakat keelt,
+[Am]ammuseid laule ja lu[Bm]stakat keelt,
 [C]meile vaid selge on s[D]ee.
 {end_of_verse}
 

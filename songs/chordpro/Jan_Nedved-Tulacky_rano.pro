@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jan_nedved_tulacky_rano-sken.pdf', 'jan_nedved_tulacky_rano-comp.pdf']}
 {capo: 0}
-{key: d}
+{key: Dm}
 {tempo: }
 {range: d1-c1}
 {start_melody: f}
@@ -18,9 +18,9 @@ a když se zvedám s písničkou známou
 
 {start_of_chorus}
 Tulácký [Dmi]ráno na kemp se snáší,
-[B]za chvíli půjdem [C]toulat se [F]dál,
+[Bb]za chvíli půjdem [C]toulat se [F]dál,
 [Dmi]a vodou z říčky oheň se zháší,
-[B]tak zase půjdem [Am]toulat se [Dmi]dál.
+[Bb]tak zase půjdem [Am]toulat se [Dmi]dál.
 {end_of_chorus}
 
 {start_of_verse}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['pokac_hrdinsky_cin-sken.pdf', 'pokac_hrdinsky_cin-comp.pdf']}
 {capo: 3}
-{key: a}
+{key: Am}
 {tempo: }
 {range: e1-c2}
 {start_melody: e g a}

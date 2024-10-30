@@ -12,21 +12,21 @@
 [Em]So close, no matter [D]how [C]far
 [Em]Couldn't be much more [D]from the he[C]art
 [Em]Forever trusting [D]who we [C]are
-[G]And [H7]nothing else [Em]matters
+[G]And [B7]nothing else [Em]matters
 {end_of_verse}
 
 {start_of_verse}
 [Em]Never opened mys[D]elf this [C]way
 [Em]Life is ours, we live it [D]our [C]way
 [Em]All these words, I don't [D]just [C]say
-[G]And [H7]nothing else [Em]matters
+[G]And [B7]nothing else [Em]matters
 {end_of_verse}
 
 {start_of_verse}
 [Em]Trust I seek and I [D]find in [C]you
 [Em]Every day for us [D]something [C]new
 [Em]Open mind for a [D]different [C]view
-[G]And [H7]nothing else [Em]matters
+[G]And [B7]nothing else [Em]matters
 {end_of_verse}
 
 {start_of_chorus}
@@ -39,7 +39,7 @@
 [Em]So close, no matter [D]how far
 [Em]Couldn't be much more [D]from the heart
 [Em]Forever trusting [D]who we are
-[G]And [H7]nothing else [Em]matters
+[G]And [B7]nothing else [Em]matters
 {end_of_verse}
 
 {chorus}
@@ -48,14 +48,14 @@
 [Em]Never opened mys[D]elf this way
 [Em]Life is ours, we live it [D]our way
 [Em]All these words, I don't [D]just say
-[G]And [H7]nothing else [Em]matters
+[G]And [B7]nothing else [Em]matters
 {end_of_verse}
 
 {start_of_verse}
 [Em]Trust I seek and I [D]find in you
 [Em]Every day for us [D]something new
 [Em]Open mind for a [D]different view
-[G]And [H7]nothing else [Em]matters
+[G]And [B7]nothing else [Em]matters
 {end_of_verse}
 
 {start_of_chorus}
@@ -70,5 +70,5 @@
 [Em]So close, no matter [D]how far
 [Em]Couldn't be much more [D]from the heart
 [Em]Forever trusting [D]who we are
-[G]And [H7]nothing else [Em]matters
+[G]And [B7]nothing else [Em]matters
 {end_of_verse}

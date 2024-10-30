@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['olympic_bon_soir_mademoiselle_paris-sken.pdf', 'olympic_bon_soir_mademoiselle_paris-comp.pdf']}
 {capo: 0}
-{key: a}
+{key: Am}
 {tempo: }
 {range: h1-d2}
 {start_melody: e}

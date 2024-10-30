@@ -4,23 +4,23 @@
 {language: czech}
 {pdf_filenames: ['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']}
 {capo: 0}
-{key: H}
+{key: B}
 {tempo: }
 {range: }
 {start_melody: f#}
 
 {start_of_verse}
-|: [H]Ná nananan[G#mi]nananananana [E]ná [Emi]Ná :|
-[H]Kláro, jak to s [D#mi]tebou vypadá od půl [C#mi]devátý, do osmi [Emi]ráno
-Co nám [H]brání bejt spolu [D#mi]jenom ty a já, nebuď [C#mi]včerejší no tak [Emi]Kláro
-Pro tebe [H]slibuju, žaluju denně [D#mi]piju jak Dán
+|: [B]Ná nananan[G#mi]nananananana [E]ná [Emi]Ná :|
+[B]Kláro, jak to s [D#mi]tebou vypadá od půl [C#mi]devátý, do osmi [Emi]ráno
+Co nám [B]brání bejt spolu [D#mi]jenom ty a já, nebuď [C#mi]včerejší no tak [Emi]Kláro
+Pro tebe [B]slibuju, žaluju denně [D#mi]piju jak Dán
 [C#mi]ve skrytu duše marně [Emi]tajně doufám
-že [H]já, jenom [G#mi]já jsem ten tvůj vysněný [E]pán [Emi]
+že [B]já, jenom [G#mi]já jsem ten tvůj vysněný [E]pán [Emi]
 {end_of_verse}
 
 {start_of_chorus}
-[H]Ná nanana[G#mi]nananannanaá aáá[E]aáa[Emi]Ná
-[H]nananananananananá [G#mi]aááaáa [E][Emi]
+[B]Ná nanana[G#mi]nananannanaá aáá[E]aáa[Emi]Ná
+[B]nananananananananá [G#mi]aááaáa [E][Emi]
 {end_of_chorus}
 
 {start_of_verse}
@@ -62,5 +62,5 @@ Královno, má ty to víš co bych si přál
 {end_of_verse}
 
 {start_of_chorus}
-3x [C#]Ná nanana[Bmi]nananannanaá aáá[F#]aáa [F#mi]
+3x [C#]Ná nanana[Bbmi]nananannanaá aáá[F#]aáa [F#mi]
 {end_of_chorus}

@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['karel_kryl_lasko-sken.pdf', 'karel_kryl_lasko-comp.pdf', 'karel_kryl_lasko-gen.pdf']}
 {capo: 0}
-{key: d}
+{key: Dm}
 {tempo: }
 {range: a1-d2}
 {start_melody: d}

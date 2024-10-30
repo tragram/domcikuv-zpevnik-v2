@@ -3,13 +3,13 @@
 {language: czech}
 {date_added: 09-2020}
 {capo: 0}
-{key: d}
+{key: Dm}
 {range: d1-a1}
 {start_melody: f}
 {start_of_verse}
 [Dmi]Vážený pane, na ty dveře klepe se.
 Nebojte vtipkuju, jen klidně pojďte sem.
-Já doufám jen, že máte [Gmi]všechno [B]připraveno,
+Já doufám jen, že máte [Gmi]všechno [Bb]připraveno,
 [Dmi]ó pé i dé pé pé, jak [Gmi]že bylo to [A7]jméno?
 {end_of_verse}
 {start_of_verse}

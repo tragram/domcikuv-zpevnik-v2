@@ -10,16 +10,16 @@
 {start_melody: f#}
 
 {start_of_verse}
-Za za[D]táčkou houká [A]vlak, snad to [Hmi]není nákla[G]ďák
+Za za[D]táčkou houká [A]vlak, snad to [Bmi]není nákla[G]ďák
 Za [D]chvíli [A]vjede do nádra[D]ží [A]
-Na dne[D]šek jsem nemoh [A]spát, stejně [Hmi]jako [G]tolikrát
+Na dne[D]šek jsem nemoh [A]spát, stejně [Bmi]jako [G]tolikrát
 Dnes [D]ráno na [A]vandr vyrá[D]žím [D7]
 {end_of_verse}
 
 {start_of_chorus}
-Po ho[G]rách a po strá[A]ních, toulat [D]se do svítá[Hm]ní
+Po ho[G]rách a po strá[A]ních, toulat [D]se do svítá[Bm]ní
 Slyšet [G]ptáky jak se [A]večer háda[D]jí [D7]
-Ze dla[G]ní vodu [A]pít, kouzlo [D]dálek v očích [Hmi]mít
+Ze dla[G]ní vodu [A]pít, kouzlo [D]dálek v očích [Bmi]mít
 Jako [G]blázni, kteří [A]větru máva[D]jí
 {end_of_chorus}
 

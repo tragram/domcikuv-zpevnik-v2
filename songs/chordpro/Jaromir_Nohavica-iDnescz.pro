@@ -10,7 +10,7 @@
 {start_melody: g}
 
 {start_of_verse}
-[G]Žalobce zastavil stíhání sektáře [Hmi]Parsifala
+[G]Žalobce zastavil stíhání sektáře [Bmi]Parsifala
 [C]A ty ses mi už lásko dva měsíce prost[D]ě neozvala
 Hajlující mladíci zkopali muže
 chtěl bych být hadem, abych vysvlékl se ze své kůže
@@ -24,7 +24,7 @@ a když tě bolí srdce, není kam si dojít pro instrukce
 {end_of_verse}
 
 {start_of_chorus}
-www [G]iDnes, dvaa[Hmi]dvacátého května dva tisíce devět černá [C]kronika, a j[D]á
+www [G]iDnes, dvaa[Bmi]dvacátého května dva tisíce devět černá [C]kronika, a j[D]á
 www iDnes, dvaadvacátého května dva tisíce devět černá kronika, a já
 {end_of_chorus}
 

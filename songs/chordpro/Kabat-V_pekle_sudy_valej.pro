@@ -11,14 +11,14 @@
 {start_of_chorus}
 [C]V pekle sudy válej
 [G]Z kotle pára [D]stoupá
-Na stůl nám [Bmi]to dávej
+Na stůl nám [Bbmi]to dávej
 Ať to s náma [F]houpá
 {end_of_chorus}
 
 {start_of_verse}
 [C]Jede vlak no a my jedem v něm
 [G]Vlak s ucpaným [D]komínem
-Lidi řvou [B]zmatkujou
+Lidi řvou [Bb]zmatkujou
 Kdo ví zda to [F]přežijem
 {end_of_verse}
 

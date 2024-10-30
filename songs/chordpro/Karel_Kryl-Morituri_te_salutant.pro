@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['karel_kryl_morituri_te_salutant-sken.pdf', 'karel_kryl_morituri_te_salutant-comp.pdf']}
 {capo: 3}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-a2}
 {start_melody: e}

@@ -11,15 +11,15 @@
 
 {start_of_verse}
 [D]Hay algo que ya no pu[A]edo contener
-me tira un su[Hm]eño y no le puedo contes[G]tar.
+me tira un su[Bm]eño y no le puedo contes[G]tar.
 [D]Arranca sola y no se v[A]a a detener
-caigo de trip[Hm]a, no me va a dejar vo[G]lar.
+caigo de trip[Bm]a, no me va a dejar vo[G]lar.
 {end_of_verse}
 {start_of_verse}
 [D]Me pregunta si hoy tra[A]igo mi fe
-siempre quiere [Hm]saber aunque sea un poco[G]mas
+siempre quiere [Bm]saber aunque sea un poco[G]mas
 [D]Si no me cuelgo no me pu[A]edo poner
-a dar patadas a [Hm]mi propio malesta[G]r.
+a dar patadas a [Bm]mi propio malesta[G]r.
 {end_of_verse}
 
 {start_of_bridge}
@@ -29,42 +29,42 @@ a dar patadas a [Hm]mi propio malesta[G]r.
 
 {start_of_verse}
 [D]Me tiro al suelo y no[A]me quiero parar
-y si me pa[Hm]ro va a hacer para des[G]pegar
+y si me pa[Bm]ro va a hacer para des[G]pegar
 [D]Salgo de casa, creo qu[A]e voy a estallar
-Me sale al [Hm]vuelo y yo que le quiero[G]escapar
+Me sale al [Bm]vuelo y yo que le quiero[G]escapar
 {end_of_verse}
 {start_of_verse}
 [D]Me pregunta si hoy trai[A]go mi sed
-siempre quiere[Hm]morder aunque sea un po[G]co mas
+siempre quiere[Bm]morder aunque sea un po[G]co mas
 [D]Se tranca todo y yo me quie[A]ro matar
-y me preoc[Hm]upa no tener que men[G]digar.
+y me preoc[Bm]upa no tener que men[G]digar.
 {end_of_verse}
 
 {bridge}
 
 {start_of_chorus}
-[Hm]Esto no es joda, voy [A]avisando
-[Hm]me pongo malo y es[A]toy de a[G]tar
-[Hm]Solo te cuento que es[A]toy tratando
-[Hm]de ya no perderme [A]nunca m[G]as
+[Bm]Esto no es joda, voy [A]avisando
+[Bm]me pongo malo y es[A]toy de a[G]tar
+[Bm]Solo te cuento que es[A]toy tratando
+[Bm]de ya no perderme [A]nunca m[G]as
 
-[Hm]Esto no es joda si[A]go gritando
-[Hm]voy caminando y qu[A]iero [G]volar
-[Hm]solo te digo que vo[A]y tocando
-[Hm]la rabia de los d[G]emás
+[Bm]Esto no es joda si[A]go gritando
+[Bm]voy caminando y qu[A]iero [G]volar
+[Bm]solo te digo que vo[A]y tocando
+[Bm]la rabia de los d[G]emás
 {end_of_chorus}
 
 {start_of_verse}
 [D]¿De que manera me voy a[A]destruir?
-si con am[Hm]ores o durmiendo el p[G]aladar.
+si con am[Bm]ores o durmiendo el p[G]aladar.
 [D]Con la utopia, la de sob[A]revivir
-y que mi [Hm]llanto termine siempre en [G]el mar
+y que mi [Bm]llanto termine siempre en [G]el mar
 {end_of_verse}
 {start_of_verse}
 [D]Me pregunta si hoy trai[A]go mi red
-siempre q[Hm]uiere romper aunque sea un [G]poco mas
+siempre q[Bm]uiere romper aunque sea un [G]poco mas
 [D]Me gusta todo lo que me [A]haga subir
-pero la v[Hm]ida me convence con b[G]ajar
+pero la v[Bm]ida me convence con b[G]ajar
 {end_of_verse}
 
 {bridge}

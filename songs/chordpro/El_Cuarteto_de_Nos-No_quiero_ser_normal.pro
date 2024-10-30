@@ -12,9 +12,9 @@
 {start_of_verse}
 ¿Por[D]qué tienen la teoría
 [F#]que siempre la mayoría
-[Hm]de la gente tie[G9]ne razón?
+[Bm]de la gente tie[G9]ne razón?
 
-[Hm]Si en una isla abandonado
+[Bm]Si en una isla abandonado
 quedo con tr[E]es retardados
 y entre ellos [F#]un líder votan,
 yo no voy a[F#7/E]dar pelota.
@@ -23,16 +23,16 @@ yo no voy a[F#7/E]dar pelota.
 {start_of_bridge}
 Ay, [D]no, democraci[E]a no,
 mi voto es m[G]ejor,
-y si es por mí d[Hm]ominaría una[A]minoría.
+y si es por mí d[Bm]ominaría una[A]minoría.
 Ay, [D]huyo de la mul[E]titud,
 y no me electro[G]cuto en la corriente.
 {end_of_bridge}
 
 {start_of_chorus}
-[D]No qui[A]ero ir dond[Hm]e todos [G]van
-y odi[D]o la navi[A]dad.[Hm][G]
-Mucho[D]s dirán, '[A]eso est[Hm]á mal', [G]
-no qu[D]iero ser n[A]orma[Hm]l. [G]
+[D]No qui[A]ero ir dond[Bm]e todos [G]van
+y odi[D]o la navi[A]dad.[Bm][G]
+Mucho[D]s dirán, '[A]eso est[Bm]á mal', [G]
+no qu[D]iero ser n[A]orma[Bm]l. [G]
 {end_of_chorus}
 
 {start_of_verse}

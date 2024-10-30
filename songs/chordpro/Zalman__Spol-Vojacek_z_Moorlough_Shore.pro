@@ -4,26 +4,26 @@
 {language: czech}
 {pdf_filenames: ['pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf']}
 {capo: 0}
-{key: h}
+{key: Bm}
 {tempo: }
 {range: a1-c#2}
 {start_melody: f# a h}
 
 {start_of_verse}
-Tvůj [Hmi]dům měl sto bran. krásný [A]bílý štít
-kde se [G]potkávalo [Emi]slunce s měsí[Hmi]cem
+Tvůj [Bmi]dům měl sto bran. krásný [A]bílý štít
+kde se [G]potkávalo [Emi]slunce s měsí[Bmi]cem
 {end_of_verse}
 
 {start_of_verse}
-Tvůj [Hmi]kraj čistých rán, dával [A]řekám pít
-chladnou [G]rosu z prstů [Emi]trávy nad bře[Hmi]hem
+Tvůj [Bmi]kraj čistých rán, dával [A]řekám pít
+chladnou [G]rosu z prstů [Emi]trávy nad bře[Bmi]hem
 {end_of_verse}
 
 {start_of_chorus}
 Má lásko mé mládí sladká [A]písni z irských blat
-jenom [Hmi]o nás mluví [A]vlny moře [Gmaj7]Maine
-sám [Hmi]bůh skryl svou [Emi]tvář kam[A]si za [F#mi]obzor
-dal nám [G]celou krásnou [Emi]zemi Moorlough [Hmi]Shore
+jenom [Bmi]o nás mluví [A]vlny moře [Gmaj7]Maine
+sám [Bmi]bůh skryl svou [Emi]tvář kam[A]si za [F#mi]obzor
+dal nám [G]celou krásnou [Emi]zemi Moorlough [Bmi]Shore
 {end_of_chorus}
 
 {start_of_verse}
@@ -44,20 +44,20 @@ co nás donese do země Moorlough Shore
 {end_of_chorus}
 
 {start_of_verse}
-[Gmi]Z tvých [C#mi]hor bílých štítů, tvých [H]údolí
+[Gmi]Z tvých [C#mi]hor bílých štítů, tvých [B]údolí
 mám tu [A]sílu co tě [F#mi]pro mě zachr[C#mi]ání
 {start_of_verse}
 
 {end_of_verse}
-[Gmi]Bůh [C#mi]blat starých mýtů nám [H]dovolí
+[Gmi]Bůh [C#mi]blat starých mýtů nám [B]dovolí
 zůstat [A]před válkou [F#mi]a smrtí sch[C#mi]ovaní
 {end_of_verse}
 
 {start_of_chorus}
-Má lásko můj malý sladký [H]irský vojáčku
-ať si [C#mi]běží černé [H]vody moře [A]Maine
-já tvůj [C#mi]stín věrný druh volám z [H]výšky [Gmi]hor
-vrať se [A]domů ke své [F#mi]lásce z Moorlough [Hmi]Shore
+Má lásko můj malý sladký [B]irský vojáčku
+ať si [C#mi]běží černé [B]vody moře [A]Maine
+já tvůj [C#mi]stín věrný druh volám z [B]výšky [Gmi]hor
+vrať se [A]domů ke své [F#mi]lásce z Moorlough [Bmi]Shore
 {end_of_chorus}
 
 {start_of_verse}

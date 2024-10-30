@@ -25,7 +25,7 @@ omnia vincit Amor.
 {start_of_chorus}
 R: Zlaťák [G]pálí, [D]nesleví [Emi]nic,
 štěstí v [G]lásce [D]znamená [G]víc,
-všechny [Ami]pány [G]ať vezme [D]ďas! [H7]
+všechny [Ami]pány [G]ať vezme [D]ďas! [B7]
 [Emi]Omnia [D]vincit [Emi]Amor.
 {end_of_chorus}
 

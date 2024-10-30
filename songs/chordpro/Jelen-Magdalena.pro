@@ -24,10 +24,10 @@ Pojď [D]dá-ál, prosím tě [G2]nenech se, prosit se [D]dá-ál - [G2]nenech s
 {end_of_verse}
 
 {start_of_chorus}
-[Hmi]Hodiny se zastaví a v [A]devět třicet v pondělí.
-[D]Magdaléno, tvoje vlasy, [Hmi]leží pod mou postelí
+[Bmi]Hodiny se zastaví a v [A]devět třicet v pondělí.
+[D]Magdaléno, tvoje vlasy, [Bmi]leží pod mou postelí
 a [A]i když jsme to nechtěli, [D]oblíkáš se, pročpak asi?
-[Hmi]Hodiny se zastaví a v [A]devět třicet v pondělí jsem [D]sám. [G2][D][G2]
+[Bmi]Hodiny se zastaví a v [A]devět třicet v pondělí jsem [D]sám. [G2][D][G2]
 {end_of_chorus}
 
 {start_of_verse}

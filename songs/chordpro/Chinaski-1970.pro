@@ -22,9 +22,9 @@ jsem silnej ročník [G]sedmdesát, třeba například.
 {end_of_verse}
 
 {start_of_bridge}
-[A]Naši mi vždycky říka[Hmi]li, jen nehas co tě nepá[G]lí,
+[A]Naši mi vždycky říka[Bmi]li, jen nehas co tě nepá[G]lí,
 jakej pán takovej [D]krám. [A]
-[A]Naši mi vždycky říka[Hmi]li, co můžeš sleduj zpovzdá[G]lí
+[A]Naši mi vždycky říka[Bmi]li, co můžeš sleduj zpovzdá[G]lí
 a nikdy nebojuj [D]sám..
 {end_of_bridge}
 
@@ -38,9 +38,9 @@ jsem silnej ročník [G]sedmdesát a možná, že jsem rád.
 {end_of_verse}
 
 {start_of_bridge}
-[A]Naši mi vždycky říka[Hmi]li, jen nehas co tě nepá[G]lí,
+[A]Naši mi vždycky říka[Bmi]li, jen nehas co tě nepá[G]lí,
 jakej pán takovej [D]krám. 
-[A]Naši mi vždycky říka[Hmi]li, co můžeš sleduj zpov[G]zdálí
+[A]Naši mi vždycky říka[Bmi]li, co můžeš sleduj zpov[G]zdálí
 a nikdy nebojuj [A]sám..
 {end_of_bridge}
 

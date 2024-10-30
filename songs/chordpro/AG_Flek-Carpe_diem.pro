@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['ag_flek_carpe_diem-sken.pdf', 'ag_flek_carpe_diem-comp.pdf', 'ag_flek_carpe_diem-gen.pdf']}
 {capo: 3}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-g2}
 {start_melody: c d e}

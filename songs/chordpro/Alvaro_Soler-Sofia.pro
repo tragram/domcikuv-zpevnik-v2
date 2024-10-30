@@ -19,11 +19,11 @@ Se desvane[E]ció, desapare[D]ció
 {end_of_verse}
 
 {start_of_chorus}
-[D]Mira, Sofi[A]a [E]Sin tu mirada, sigo [Hm]Sin tu mirada, sigo
-[D]Dime, Sofí[A]a,[E]¿Cómo te mira? Dime [Hm]¿Cómo te mira? Dime
+[D]Mira, Sofi[A]a [E]Sin tu mirada, sigo [Bm]Sin tu mirada, sigo
+[D]Dime, Sofí[A]a,[E]¿Cómo te mira? Dime [Bm]¿Cómo te mira? Dime
 [D]Sé que no, sé que no [A]o, Sé que so[E]lo
-Sé que ya no [Hm]soy oy oy oy
-[D]Mira, Sofi[A]a [E]Sin tu mirada, sigo [Hm]Sin tu mirada, Sofi[F#m]a
+Sé que ya no [Bm]soy oy oy oy
+[D]Mira, Sofi[A]a [E]Sin tu mirada, sigo [Bm]Sin tu mirada, Sofi[F#m]a
 {end_of_chorus}
 
 {start_of_verse}
@@ -38,9 +38,9 @@ El te hizo vo[E]lar, el te hizo so[D]ñar
 {chorus}
 
 {start_of_bridge}
-Y, por [Hm]qué no me dices la verdad? [A][E]
-[Hm]Sigo sin tu mirada, Sofia [F#m](Ey [A]ey, [E]ey ey)
-Y, por [Hm]qué no me dices la verdad?
+Y, por [Bm]qué no me dices la verdad? [A][E]
+[Bm]Sigo sin tu mirada, Sofia [F#m](Ey [A]ey, [E]ey ey)
+Y, por [Bm]qué no me dices la verdad?
 {end_of_bridge}
 
 {chorus}

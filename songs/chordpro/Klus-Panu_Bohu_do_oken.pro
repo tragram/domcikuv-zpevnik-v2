@@ -67,30 +67,30 @@ Za co Pane Bože, za co? Chceš, abychom trpěl[A]i.
 {end_of_chorus}
 
 {start_of_verse}
-Nutno [B]ještě říct k tomu všemu,
+Nutno [Bb]ještě říct k tomu všemu,
 hledá mnohý nešťastník řešení v extrému
 a tak [F]bacha na Rudé koalice,
 vzpomeňme jaká je po třešních stolice.
-[B]Nedávno přišla jedna děsivá zpráva,
+[Bb]Nedávno přišla jedna děsivá zpráva,
 že se zase valí dělníci tentokrát zprava,
 [F]poznávacím znamením, jsou holé hlavy,
 neznalost dějin a ústavy.
 {end_of_verse}
 
 {start_of_verse}
-Pře[B]sto všechno, co lid v tom kraji zažívá,
+Pře[Bb]sto všechno, co lid v tom kraji zažívá,
 probírá všechny nepokoje v pajzlu u piva
 a [F]stále věří na rytíře z Blaníku,
 než přijdou zvolil národ vyčkávací taktiku.
-[B]Tak si tu pomalu každý svůj život hnije,
+[Bb]Tak si tu pomalu každý svůj život hnije,
 z úcty k tradici ruka v ruku myje
 [F]upřímně řečeno trošku těžko mi je,
 že nám stačí demo Demokracie
 {end_of_verse}
 
 {start_of_chorus}
-[B]Za co Pane Bože, za co? Trestáš tento prostý [F]lid.
-Za co Pane Bože, za co? Nechals nás se napá[B]lit.
+[Bb]Za co Pane Bože, za co? Trestáš tento prostý [F]lid.
+Za co Pane Bože, za co? Nechals nás se napá[Bb]lit.
 Za co Pane Bože, za co? Zas štyry roky v prd[F]eli.
-Za co Pane Bože, za co? Tak snad mě někdo vods[B]třelí.
+Za co Pane Bože, za co? Tak snad mě někdo vods[Bb]třelí.
 {end_of_chorus}

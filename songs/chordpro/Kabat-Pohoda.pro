@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['kabat_pohoda-sken.pdf', 'kabat_pohoda-comp.pdf']}
 {capo: 3}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-b2}
 {start_melody: c}

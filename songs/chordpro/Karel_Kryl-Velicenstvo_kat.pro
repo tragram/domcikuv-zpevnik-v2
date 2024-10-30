@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['karel_kryl_velicenstvo_kat-sken.pdf', 'karel_kryl_velicenstvo_kat-comp.pdf']}
 {capo: 4}
-{key: a}
+{key: Am}
 {tempo: }
 {range: g1-a2}
 {start_melody: }

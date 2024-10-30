@@ -1,7 +1,7 @@
 {language: english}
 {date_added: 02-2020}
 {capo: 0}
-{key: a}
+{key: Am}
 {title: Gotta Catch 'em all!}
 {artist: Pokémon}
 {tempo: 145}

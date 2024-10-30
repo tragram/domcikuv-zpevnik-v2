@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['cechomor_mezi_horami-sken.pdf', 'cechomor_mezi_horami-comp.pdf']}
 {capo: 4}
-{key: a}
+{key: Am}
 {tempo: }
 {range: a1-g1}
 {start_melody: e}

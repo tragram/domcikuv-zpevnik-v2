@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_ja_chci_poezii-sken.pdf', 'jaromir_nohavica_ja_chci_poezii-comp.pdf']}
 {capo: 2}
-{key: e}
+{key: Em}
 {tempo: }
 {range: a1-c2}
 {start_melody: e f#}
@@ -15,17 +15,17 @@
 proč se mnou [Ami]nikdo nechce diskutovat
 [D7]o sonetech Karla [G]Hynka Máchy,
 to bych se [Ami]vážně nezlobil
-roze[Adim]bírat s tebou Máchův tro[H7]chej
+roze[Adim]bírat s tebou Máchův tro[B7]chej
 Jenomže [Emi]ty chceš podpis nebo fotku na mobil,
 a když bych ti ho [Ami]nedal,
-tak jsem frajer plochej[H7]
+tak jsem frajer plochej[B7]
 {end_of_verse}
 
 {start_of_chorus}
 Já chci [Emi]poezii, jen trochu [Ami]pochopení [D7]
-ale [G]tu, kde žiji, nic [H7]z toho není
+ale [G]tu, kde žiji, nic [B7]z toho není
 Co mám [Emi]ze života, samé [C]přízemnosti
-mé srdce [Ami]Don Quijota tím [H7]trpí dosti
+mé srdce [Ami]Don Quijota tím [B7]trpí dosti
 {end_of_chorus}
 
 {start_of_verse}
