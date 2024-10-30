@@ -11,9 +11,9 @@
 
 {start_of_verse}
 [G6]Salio de casa y tras de sí dejo sus miedos y,
-con el frio que sintio lloro de nuevo ya [C]ves...
+con el frio que sintio lloro de nuevo ya [C]ves
 [G6]Al caminar se tropezo con mi desvelo,
-y alli la tuve q abrazar bajo mi cielo[C]ya ves...
+y alli la tuve q abrazar bajo mi cielo[C]ya ves
 Adonde quiere ir si no la quieren [G6]ver,
 {end_of_verse}
 
@@ -26,19 +26,19 @@ si fue la compas[G6]ion o fue mi porven[D2]ir
 
 {start_of_verse}
 [G6]La vi cerrar los ojos asi a toda prisa,
-bajo corriendo un lagrimon de pura risa ya [C]ves...
+bajo corriendo un lagrimon de pura risa ya [C]ves
 [G6]me hablo de la sinceridad, de abrir las venas
-de cuando me ponga a escribir valga la pena ya [C]ves...
-Adonde quiere ir si no la quieren [G6]ver ya v[C]es...
-si adonde quiere ir y yo la quiero [G6]ver...
+de cuando me ponga a escribir valga la pena ya [C]ves
+Adonde quiere ir si no la quieren [G6]ver ya v[C]es
+si adonde quiere ir y yo la quiero [G6]ver
 {end_of_verse}
 
 {start_of_chorus}
 [Em]Luego peleamos sin p[C]elear,
-ganamos sin [G]ganar, perdimos sin per[D]der...
+ganamos sin [G]ganar, perdimos sin per[D]der
 [Em]y ahora me queda la ver[C]dad
 de que yo ya no s[G]oy si ella no quiere [D]ser,
-ni vo[C]lver...
+ni vo[C]lver
 {end_of_chorus}
 
 {start_of_chorus}
@@ -50,6 +50,6 @@ si fue la compa[G]sion o fue mi porv[D]enir
 
 {start_of_chorus: Outro}
 [Em]Luego peleamos sin pele[C]ar,
-ganamos sin ga[G]nar, perdimos sin per[D]der...
+ganamos sin ga[G]nar, perdimos sin per[D]der
 y hoy me arri[C]mo y hoy se qued[G]a. [G6]
 {end_of_chorus}

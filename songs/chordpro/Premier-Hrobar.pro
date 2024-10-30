@@ -8,7 +8,7 @@
 {tempo: }
 {range: f1-e1}
 {start_melody: c}
-{start_of_verse}
+{start_of_verse: V1}
 [C]V mládí jsem se učil hrobařem,
 [Ami]jezdit s hlínou, jezdit s trakařem,
 [F]kopat hroby byl můj ide[G]ál. [G7]
@@ -47,3 +47,5 @@
 {start_of_verse}
 [C]Na na [Ami]na [F]na... [G][G7]
 {end_of_verse}
+
+{verse: V1}

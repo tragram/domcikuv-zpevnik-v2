@@ -27,7 +27,7 @@ nastává deduk[F]ce, co [C]na to svědo[G]mí.
 [G]A už si vzpomí[Dmi]nám, já byl jsem na sra[Ami]zu,
 s kumpány který [F]mám, [C]patříme do [G]svazu,
 [G]vlastníme domé[Dmi]nu, tak si nás rozklik[Ami]ni,
-svaz českejch bohé[F]mů...
+svaz českejch bohé[F]mů
 {end_of_verse}
 
 {chorus}

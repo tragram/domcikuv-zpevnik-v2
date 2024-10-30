@@ -35,5 +35,5 @@
 [Ami]Já budu chodit [D]po špičkách
 [Ami]Já budu chodit [D]po špičkách
 [Ami]Já budu chodit [D]po špičkách
-[Ami]á ááááá...
+[Ami]á ááááá
 {end_of_verse}

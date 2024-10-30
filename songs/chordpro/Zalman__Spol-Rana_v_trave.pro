@@ -38,7 +38,7 @@
 [Ami]měl ses' [Emi]jindy [Ami]narodit.
 {end_of_verse}
 
+{start_of_variant: append_content}
+|: [Ami]před se[Emi]bou sta [Ami]sáhů. :|
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-+ |: [Ami]před se[Emi]bou sta [Ami]sáhů. :|
-{end_of_chorus}

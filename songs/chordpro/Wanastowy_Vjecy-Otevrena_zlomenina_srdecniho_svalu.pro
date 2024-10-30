@@ -19,7 +19,7 @@ Jsem jako [A]vítr kterej zfoukne pírko ze tvejch dlaní,
 Narovnám ti páteř, poškrábu ti záda,
 pofoukám ti srdce, zrada kamaráda
 lásky účel světí prostředky a smetí,
-špínu jedný noci, který neuletíš...
+špínu jedný noci, který neuletíš
 {end_of_verse}
 
 {start_of_verse}

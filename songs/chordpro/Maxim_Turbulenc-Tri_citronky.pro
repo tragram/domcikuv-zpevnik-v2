@@ -31,7 +31,7 @@ vždyť je to přece veselé,
 
 {start_of_verse}
 A tak se citrónky plavily dál,
-jeden jim k tomu na kytaru hrál (a byl to...).
+jeden jim k tomu na kytaru hrál
 A tak se plavily do dáli,
 až na ostrov korálový
 {end_of_verse}

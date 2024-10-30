@@ -29,8 +29,8 @@
 {start_of_chorus}
 [C]Say it ain't [G]so, I will not [F]go,
 Turn the lights [G]off, Carry me [C]home
-[C],[G],[F],[C]
-Na, [G]na... [F],[C]
+[C][G][F][C]
+Na, [G]na... [F][C]
 {end_of_chorus}
 
 {start_of_verse}

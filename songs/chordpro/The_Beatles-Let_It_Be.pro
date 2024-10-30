@@ -8,6 +8,9 @@
 {tempo: }
 {range: e1-a2}
 {start_melody: g}
+
+TBD: jiné akordy
+
 {start_of_verse}
 When I [C]find myself in [G]times of trouble
 [Ami]Mother Mary [F]comes to me
@@ -37,10 +40,10 @@ there is [Ami]still a chance that [F]they will see
 [C]there will be an [G]answer let [F]it [C]be.
 {end_of_verse}
 
+{start_of_variant: replace_last_line}
+there will be an [G]answer let it [F]be. [C]
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-...there will be an answer let it be.
-{end_of_chorus}
 
 {start_of_verse}
 And [C]when the night is [G]cloudy

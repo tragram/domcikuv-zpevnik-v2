@@ -58,7 +58,8 @@ kdo má srdce v správným místě, kdo je prostě príma kluk,
 ať se na Hudsonský šífy najmout dá, johoho.
 {end_of_verse}
 
+
+{start_of_variant: append_content}
+[G]jo-[G#]ho-[A]ho.
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-+[G]jo-[G#]ho-[A]ho.
-{end_of_chorus}

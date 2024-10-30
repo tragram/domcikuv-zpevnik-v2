@@ -81,7 +81,7 @@ všechno o ní už vím z asku.
 
 {start_of_bridge}
 Že tě rád mám,snad už víš, tvým klukem bych byl rád,
-ale nač to uspěchat, když můžem dál jen, chatovat...
+ale nač to uspěchat, když můžem dál jen, chatovat
 {end_of_bridge}
 
 {chorus: R1}

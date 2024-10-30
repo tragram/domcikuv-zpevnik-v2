@@ -34,7 +34,7 @@ a měl jsem taky málo žen, teď už to asi nedohoním,
 už to nedohoním.
 {end_of_verse}
 
+{start_of_variant: replace_last_line}
+třeba [F]s vámi, milé [Emi]dámy, chcete - [C]li.
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-... třeba s vámi, milé dámy, chcete-li...
-{end_of_chorus}

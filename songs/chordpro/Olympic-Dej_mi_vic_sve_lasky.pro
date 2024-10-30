@@ -36,7 +36,7 @@ mi [Ami]dokonale zvednul nála[G]du, [E7]aů,
 [Ami]zamknu si na [E]sedm záp[Ami]adů, [G]aů
 {end_of_verse}
 
+{start_of_variant: append_content}
+[G7]aůůůůůůů, aůůůůůůů, aůůůůůůů, [A]aůůůůůůů
+{end_of_variant}
 {chorus}
-{start_of_chorus}
-+[G7]aůůůůůůů, aůůůůůůů, aůůůůůůů, [A]aůůůůůůů
-{end_of_chorus}

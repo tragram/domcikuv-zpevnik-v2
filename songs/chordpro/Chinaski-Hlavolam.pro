@@ -29,9 +29,9 @@ chci líbat tě na tvoje [Emi]ústa.
 [G]tu správnou [Ami]odpověď [C]na otázku, odkud [D]kudy a kam.
 {end_of_verse}
 
-{start_of_variation: append_content}
+{start_of_variant: append_content}
 [D]Chci vzývat jak boha tvůj [Emi]klín.
-{end_of_variation}
+{end_of_variant}
 {chorus: R1}
 
 {start_of_chorus: R2}
@@ -43,7 +43,7 @@ chci [G]cítit tvůj [Ami]ledový [C]klid,
 
 {chorus: R1}
 
-{start_of_variation: append_content}
+{start_of_variant: append_content}
 Chci [G]líbat tě na [Ami]tvoje [C]ústa
-{end_of_variation}
+{end_of_variant}
 {chorus: R2}

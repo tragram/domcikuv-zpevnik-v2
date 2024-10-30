@@ -22,7 +22,7 @@ Zbejvaj roky asi ne moc dlouhý
 {end_of_verse}
 
 {start_of_chorus}
-Do vlasů mi zabrouk[C]ej... pa pa pa [G]pá
+Do vlasů mi zabrouk[C]e, pa pa pa [G]pá
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá
 {end_of_chorus}
@@ -34,7 +34,7 @@ Horkej vítr [D]rozezní mý [Ami]zvony
 {end_of_verse}
 
 {start_of_chorus}
-Do vlasů ti zabrouká[C]m ... pá pa pá [G]pá
+Do vlasů ti zabrouká[C]m, pá pa pá [G]pá
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá
 {end_of_chorus}

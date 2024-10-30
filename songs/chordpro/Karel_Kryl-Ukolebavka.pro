@@ -47,5 +47,5 @@ když noc se s ránem střídá.
 Recepis na lhaní dají ti na hraní
 a nález bude ztráta,
 kompromis, z života zbude ti samota
-a budeš jako táta ...
+a budeš jako táta.
 {end_of_chorus}

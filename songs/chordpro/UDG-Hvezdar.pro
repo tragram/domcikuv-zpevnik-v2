@@ -43,9 +43,9 @@ s nebes[Emi]kou interpunkcí, [G]jiným tulákům svítíš.
 
 {start_of_chorus: Outro}
 Obzor ne[D]klesne níž, je ráno [A]a ty spíš.
-Od vlků [Emi]odraná hvězdáře [G]Giordána...
+Od vlků [Emi]odraná hvězdáře [G]Giordána
 Obzor neklesne níž, je ráno a ty spíš.
-Od vlků odraná hvězdáře Giordána...
+Od vlků odraná hvězdáře Giordána
 Obzor neklesne níž, je ráno a ty spíš.
-Od vlků odraná hvězdáře Giordána... odpouštíš.
+Od vlků odraná hvězdáře Giordána odpouštíš.
 {end_of_chorus}

@@ -45,5 +45,5 @@ ti [G]uplyne jak od ohýnku [C]dým.
 
 {start_of_verse: Outro}
 [C]Ukrytý v stínu lesa, [G]igelit,
-to kdyby přišel k [F]ránu [C]déšť ...
+to kdyby přišel k [F]ránu [C]déšť
 {end_of_verse}

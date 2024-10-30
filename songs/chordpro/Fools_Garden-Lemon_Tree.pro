@@ -32,9 +32,11 @@ and [F]all that I can [G]see is just a yellow [C]lemon-tree. [G7]
 I'm [C]turning my head [G]up and down
 I'm [Ami]turning turning turning turning [Emi]turning around
 And [F]all that I can [G]see is just a yellow lemon[C]-tree. [G7]
-[Ami]Dip, [Emi]da da di da da [Ami]di dap di di [Emi]... [Dmi][Emi][Ami][Emi][Ami]
 {end_of_chorus}
 
+{start_of_bridge}
+[Ami]Dip, [Emi]da da di da da [Ami]di dap di di [Emi]... [Dmi][Emi][Ami][Emi][Ami]
+{end_of_bridge}
 
 {start_of_verse}
 I'm sitting here I miss the power,
@@ -55,6 +57,8 @@ I'm [Ami]steppin' around in a [Emi]desert of joy,
 and [Dmi]everything will [Emi]happen - and [Ami]I will wond[Emi]er [Ami]
 {end_of_verse}
 
-{chorus}
+{start_of_variant: replace_last_line}
 And [F]all that I can [G]see, And [F]all that I can [G]see,
 And [F]all that I can [G]see is just a yellow [C]lemon tree.
+{end_of_variant}
+{chorus}

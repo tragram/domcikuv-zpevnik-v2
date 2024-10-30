@@ -29,5 +29,7 @@ cosi [Hmi]stoupá jak [A]hlad, byl [D]jsem slaboch [G]a šel
 a teď [Hmi]sklízím, co v [A]touze jsem [D]sel.
 {end_of_verse}
 
+{start_of_variant: append_content}
+a ty mi odpustíš, co já jen vím.
+{end_of_variant}
 {chorus}
-+a ty mi odpustíš, co já jen vím.

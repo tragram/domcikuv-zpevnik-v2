@@ -30,8 +30,8 @@ vyhrn[F]u si rukáv[G]y praštím s [F]tebou do tráv[C]y
 
 {start_of_verse}
 Recitatív:
-Pozor hlášení .... vlak do dáli opustí z první
-koleje druhé nástupiště ve 13 hodin ..
+Pozor hlášení: vlak do dáli opustí z první
+koleje druhé nástupiště ve 13 hodin!
 {end_of_verse}
 
 {chorus}

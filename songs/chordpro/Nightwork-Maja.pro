@@ -20,7 +20,7 @@
 Z něj každé [Ami]ráno vylétává včelka [G]Mája,
 [F]malá uličnice včelka [E]Mája.
 Z něj každé [Ami]ráno vylétává včelka [G]Mája,
-[F]naše kamarádka včelka [E]Mája...
+[F]naše kamarádka včelka [E]Mája
 {end_of_chorus}
 
 {start_of_verse}
@@ -34,7 +34,7 @@ Nikdo z Vás nemá tušení,
 Z něj každé ráno vylétává včelka Mája,
 malá uličnice včelka Mája
 Z něj každé ráno vylétává Mája,
-Mája ja ja ja...
-naše kamarádka včelka Má...ja ja ja ja.
-Maja, Maja, Maja, Maja...
+Mája ja ja ja
+naše kamarádka včelka Mája ja ja ja.
+Maja, Maja, Maja, Maja
 {end_of_chorus}

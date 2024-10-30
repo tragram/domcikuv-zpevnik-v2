@@ -9,7 +9,7 @@
 {start_melody: f# g a h}
 
 {start_of_verse}
-When I [D]wake up, yeah, I [D]know I'm gonna be,
+When I [H]wake up, yeah, I [D]know I'm gonna be,
 I'm gonna [G5]be the man who [A]wakes up next to [D]you.
 {end_of_verse}
 
@@ -80,7 +80,7 @@ I'm gonna [G5]be the man who [A]goes along with [D5]you
 And when I [D5]come home (When I come home),
 yes I know I'm gonna be
 I'm gonna [G5]be the man who [A7]comes back home with [H]you
-I'm gonna [Em7]be the man who's [As]coming home with [D5]you
+I'm gonna [Em7]be the man who's [Ab]coming home with [D5]you
 {end_of_bridge}
 
 {chorus}

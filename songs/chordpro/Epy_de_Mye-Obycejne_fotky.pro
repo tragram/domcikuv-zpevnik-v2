@@ -8,12 +8,12 @@
 {tempo: }
 {range: h1-h2}
 {start_melody: d d h}
-{start_of_verse}
+{start_of_chorus}
 [G]Obyčejné fotky [Hm]na stole leží,
 [Em]samí mladí lidé [C]jako jsem [D]já,
 možná [G]jsou mi podobní a já [Hm]dýchám jen stěží,
 [C]co z jejich očí vyčíst se [D]dá.
-{end_of_verse}
+{end_of_chorus}
 
 {start_of_verse}
 [G]Čím dál víc, [Hm]čekali spásu
@@ -50,14 +50,8 @@ a tak nebylo nutné zachytávat hrůzy,
 jejich oči byly filmem, co se točí dokola.
 {end_of_verse}
 
-{start_of_verse}
-Obyčejné fotky na stole leží,
-samí mladí lidé jako jsem já,
-možná jsou mi podobní a já dýchám jen stěží,
-[C]ze zapadlých očí [D]všechno vyčíst se [G]dá. [D][C][G]
-{end_of_verse}
-
-{start_of_bridge: Outro}
+{start_of_variant: append_content}
 [G]Á [D]na [C]na [G]na ...
 [G]Á [D]na [C]na [G]na ...
-{end_of_bridge}
+{end_of_variant}
+{chorus}

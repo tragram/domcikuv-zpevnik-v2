@@ -37,7 +37,7 @@ Despac[Em]ito
 Quiero desnudarte a besos despa[C]cito
 Firmo en las paredes de tu labe[G]rinto
 Y hacer de tu cuerpo todo un manus[D]crito
-Sube[D]sube sube, sube sube...
+Sube[D]sube sube, sube sube
 {end_of_chorus}
 
 {start_of_bridge}

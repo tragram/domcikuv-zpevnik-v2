@@ -48,11 +48,10 @@ They can't b[C]reak me
 As [Em]long as I k[D]now who I [C]am[G][C][G][C]
 {end_of_verse}
 
+{start_of_variant: append_content}
+They can't s[C]ee me, But I'[Em]m st[D]ill h[C]ere
+{end_of_variant}
 {chorus}
-{start_of_chorus: R2}
-+ They can't s[C]ee me, But I'[Em]m st[D]ill h[C]ere
-{end_of_chorus}
-
 
 {start_of_bridge}
 [Csus2]They can't [D]tell me who to [Em7]be
@@ -61,10 +60,10 @@ Yeah the [Csus2]world is still sleeping While [D]I keep on dreaming, for [Em7]me
 And it [Csus2]wasn't just whispers and [D]lies That I'll never be[Em]lie[D]ve[C]
 {end_of_bridge}
 
+{start_of_variant: append_content}
+I'm the o[C]ne now, cause I'[Em]m st[D]ill h[C]ere
+{end_of_variant}
 {chorus}
-{start_of_chorus: R3}
-+ I'm the o[C]ne now, cause I'[Em]m st[D]ill h[C]ere
-{end_of_chorus}
 
 {start_of_verse: Outro}
 I'm the [G]one, cause I[Em]'m st[D]ill h[G]ere
