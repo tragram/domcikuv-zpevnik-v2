@@ -54,10 +54,16 @@
 .song-content {
     display: flex;
     flex-direction: column;
-    line-height: 1.2;
+    line-height: 1.1;
     gap: 1em;
+    white-space: nowrap;
 }
 
+.section{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+}
 .song-content .literal {
     font-family: monospace;
 }
@@ -66,7 +72,7 @@
     /* display: flex;
     flex-direction: row;
     align-items: flex-end; */
-    margin-top: 0.1em;
+    /* margin-top: 0.1em; */
     /* line-height: 2; */
 }
 
@@ -104,5 +110,9 @@
 }
 
 #song-content-wrapper{
-    /* margin-bottom: 1.5em; */
+    margin-bottom: 1.5em;
+}
+
+.lyrics-line{
+    flex-wrap: nowrap;
 }
