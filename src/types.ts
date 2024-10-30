@@ -17,6 +17,7 @@ interface FilterSettings {
 
 
 class SongRange {
+    // TODO: tohle by se taky asi melo predelat na anglickou variantu, ne?
     static chromaticScale = {
         "c": 0,
         "c#": 1,
@@ -48,13 +49,16 @@ class SongRange {
             this.semitones = null;
             return; // Exit early to reduce nesting
         }
-    
-        const [minRange, maxRange] = song_range_str.split("-");
+
+        let [minRange, maxRange] = song_range_str.split("-");
+        // songs with multiple voices may be written as e.g. e1/g1-e2/c3 --> just take the base voice
+        minRange = minRange.split("/")[0]
+        maxRange = maxRange.split("/")[0]
         const lowestTone = minRange.slice(0, -1).toLowerCase();
         const highestTone = maxRange.slice(0, -1).toLowerCase();
         const octaves = parseInt(maxRange.slice(-1)) - parseInt(minRange.slice(-1));
         const withinOctave = (12 + SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone]) % 12;
-    
+
         this.min = minRange;
         this.max = maxRange;
         this.semitones = 12 * octaves + withinOctave;
@@ -72,6 +76,7 @@ class SongRange {
 
 }
 
+// TODO: už se používají anglické...
 type SongKey = "C" | "C#" | "D" | "Es" | "E" | "F" | "F#" | "G" | "As" | "A" | "B" | "H"
 
 type SongLanguage = "czech" | "english" | "german" | "slovak" | "polish" | "spanish" | "romanian" | "finnish" | "estonian" | "french" | "italian" | "portuguese" | "other"
@@ -117,27 +122,27 @@ class SongData {
         this.artist = song.artist || "Unknown artist";
         this.id = unidecode(`${this.artist}-${this.title}`.replace(/ /g, "_")).replace("?", "");
         this.key = song.key || null;
-        
+
         const [month, year] = song.date_added.split("-");
         this.dateAdded = { month: parseInt(month), year: parseInt(year) };
-        
+
         this.startMelody = song.startMelody;
         this.language = song.language || "other";
         this.tempo = parseInt(song.tempo as string);
         this.capo = parseInt(song.capo as string) || 0;
         this.range = new SongRange(song.range || "");
         this.illustration_author = song.illustration_author || "FLUX.1-dev";
-        
-        this.pdfFilenames = song.pdf_filenames 
+
+        this.pdfFilenames = song.pdf_filenames
             ? JSON.parse(song.pdf_filenames.replace(/'/g, '"')).map(f => import.meta.env.BASE_URL + "/songs/pdfs/" + f)
             : [];
-        
+
         this.chordproFile = song.chordpro_file || "";
         this.contentHash = song.content_hash || "";
     }
 
     // Static method to restore an instance from a plain object (after JSON.parse)
-    static fromJSON(json:  Partial<SongData>): SongData {
+    static fromJSON(json: Partial<SongData>): SongData {
         const instance = Object.create(SongData.prototype);
 
         // Directly assign all fields without running constructor logic
@@ -180,7 +185,7 @@ interface SongDB {
     languages: LanguageCount, // counts the occurences of each language
     songs: Array<SongData>
 }
-interface LanguageCount extends Record<SongLanguage, int> {}
+interface LanguageCount extends Record<SongLanguage, int> { }
 
 export type { SongDB, SortSettings, FilterSettings, SongKey, SongLanguage, LanguageCount, SortOrder, SortField };
 export { SongData };
