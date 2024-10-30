@@ -158,18 +158,22 @@ export function transposeChordPro(song: string, songKey, newKey) {
     const parseChord = chordParserFactory({ key: songKey });
     const chromaticIndex = (chord: string) => CHROMATIC_SCALE[parseChord(chord).normalized.rootNote.toLowerCase()]
     const transposeValue = chromaticIndex(newKey) - chromaticIndex(songKey);
-    const keepSus2 = (chord) => {
+    const keepSus2Maj7 = (chord) => {
         // the library renames sus2 to (omit3, add9) by default --> avoid
-        if (!hasExactly(chord.normalized.intervals, ['1', '5', '9'])) {
+        function overwriteDescriptor(chord, descriptor) {
+            const { rootNote, bassNote } = chord.formatted;
+            let symbol = rootNote + descriptor;
+            if (bassNote) {
+                symbol += '/' + bassNote;
+            }
+            chord.formatted.symbol = symbol;
             return chord;
         }
-        const { rootNote, bassNote, descriptor, chordChanges } = chord.formatted;
-        let symbol = rootNote + "sus2";
-        if (bassNote) {
-            symbol += '/' + bassNote;
+        if (hasExactly(chord.normalized.intervals, ['1', '5', '9'])) {
+            chord = overwriteDescriptor(chord, "sus2")
+        } else if (chord.formatted.descriptor == "ma7") {
+            chord = overwriteDescriptor(chord, "maj7");
         }
-
-        chord.formatted.symbol = symbol;
 
         return chord;
     }
@@ -183,7 +187,7 @@ export function transposeChordPro(song: string, songKey, newKey) {
         chord.formatted.symbol = chord.formatted.symbol.replace("(", "").replace(")", "")
         return chord;
     }
-    const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeValue, accidental: flatKey ? "flat" : "sharp", customFilters: [keepSus2, hideParentheses] });
+    const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeValue, accidental: flatKey ? "flat" : "sharp", customFilters: [keepSus2Maj7, hideParentheses] });
 
     const convertChordBracket = (match: string, chord: string) => `[${renderChord(parseChord(chord))}]`
     song = song.replace(/\[([A-Ha-h][^\]]{0,10})\]/g, convertChordBracket);
