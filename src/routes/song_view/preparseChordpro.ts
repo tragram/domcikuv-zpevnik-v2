@@ -173,6 +173,8 @@ export function transposeChordPro(song: string, songKey, newKey) {
             chord = overwriteDescriptor(chord, "sus2")
         } else if (chord.formatted.descriptor == "ma7") {
             chord = overwriteDescriptor(chord, "maj7");
+        } else if (chord.formatted.descriptor == "sus") {
+            chord = overwriteDescriptor(chord, "sus4");
         }
 
         return chord;
