@@ -21,7 +21,7 @@
     padding-right: 0;
 }
 
-.song-content .section-title{
+.song-content .section-title {
     display: none;
 }
 
@@ -53,20 +53,25 @@
 }
 
 .song-content {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
+    gap: 1em; */
     line-height: 1.1;
-    gap: 1em;
-    white-space: nowrap;
+    white-space: nowrap;   
 }
 
-.section{
+.song-content > .section{
+    margin: 2em;
+}
+
+.section {
     display: flex;
     flex-direction: column;
     gap: 0.2em;
 }
 
-.song-content .literal,.song-content .tab-section {
+.song-content .literal, .song-content .tab-section {
+    color: black;
     font-family: monospace;
 }
 
@@ -114,11 +119,11 @@
     display: none;
 }
 
-#song-content-wrapper{
+#song-content-wrapper {
     margin-bottom: 1.5em;
 }
 
-.lyrics-line{
+.lyrics-line {
     flex-wrap: nowrap;
 }
 
@@ -1238,6 +1243,10 @@ video {
 
 .max-h-\[calc\(100\%_-_8rem\)\] {
     max-height: calc(100% - 8rem);
+}
+
+.max-h-full {
+    max-height: 100%;
 }
 
 .min-h-10 {

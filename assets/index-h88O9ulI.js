@@ -46285,7 +46285,8 @@ function transposeChordPro(song, songKey, newKey) {
   if (!canTranspose) {
     return song;
   }
-  const flatKey = newKey && (newKey.includes("b") || newKey.includes("s"));
+  const songMinorKey = songKey.includes("m");
+  const flatKey = newKey && (newKey.includes("b") || newKey.includes("s") || newKey == "D" && songMinorKey || newKey == "F" && !songMinorKey);
   const parseChord = chordSymbolExports.chordParserFactory({ key: songKey });
   const chromaticIndex = (chord) => CHROMATIC_SCALE[parseChord(chord).normalized.rootNote.toLowerCase()];
   const transposeValue = chromaticIndex(newKey) - chromaticIndex(songKey);
@@ -48178,7 +48179,7 @@ function SongView({}) {
       "div",
       {
         id: "song-content-wrapper",
-        className: `px-6 flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`,
+        className: `px-6 max-h-full flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`,
         children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col text-center ", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "text-lg font-bold", children: [
@@ -48191,7 +48192,7 @@ function SongView({}) {
               songData.capo
             ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-4 w-full " + (fitScreenMode === "XY" ? "flex-1" : ""), id: "autotextsize_wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-4 w-full max-h-full " + (fitScreenMode === "XY" ? "flex-1" : ""), id: "autotextsize_wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             AutoTextSize,
             {
               mode: fitScreenMode === "XY" ? "boxoneline" : "oneline",
