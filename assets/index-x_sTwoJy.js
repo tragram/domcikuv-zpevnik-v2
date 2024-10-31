@@ -46177,9 +46177,9 @@ function replaceRepeatedDirectives(song, directives = ["chorus"], shortHands = [
   const directiveRegexes = directives.map((directive, i) => ({
     directive,
     shortHand: shortHands[i],
-    startRegex: new RegExp(`^\\{start_of_${directive}(?::\\s*(\\w+))?\\}`),
+    startRegex: new RegExp(`^\\{start_of_${directive}(?::\\s*([\\w\\-_+]+))?\\}`),
     endRegex: new RegExp(`^\\{end_of_${directive}\\}`),
-    callRegex: new RegExp(`^\\{${directive}(?::\\s*(\\w+))?\\}`)
+    callRegex: new RegExp(`^\\{${directive}(?::\\s*([\\w\\-_+]+))?\\}`)
   }));
   let currentDirective = null;
   let currentContent = null;
@@ -46187,7 +46187,7 @@ function replaceRepeatedDirectives(song, directives = ["chorus"], shortHands = [
   let currentVariationType = null;
   let currentVariationContent = null;
   let variantActive = false;
-  let variantStartRegex = new RegExp("^\\{start_of_variant: (\\w+)\\}");
+  let variantStartRegex = new RegExp("^\\{start_of_variant: ([\\w\\-_+]+)\\}");
   let variantEndRegex = new RegExp("^\\{end_of_variant\\}");
   const defaultKey = "a4c0d35c95a63a805915367dcfe6b751";
   const processedContent = song.split("\n").map((line) => {
@@ -46286,7 +46286,7 @@ function transposeChordPro(song, songKey, newKey) {
     return song;
   }
   const songMinorKey = songKey.includes("m");
-  const flatKey = newKey && (newKey.includes("b") || newKey.includes("s") || newKey == "D" && songMinorKey || newKey == "F" && !songMinorKey);
+  const flatKey = newKey && (newKey.includes("b") || newKey.includes("s") || newKey == "Dm" || newKey == "D" && songMinorKey || newKey == "F" && !songMinorKey);
   const parseChord = chordSymbolExports.chordParserFactory({ key: songKey });
   const chromaticIndex = (chord) => CHROMATIC_SCALE[parseChord(chord).normalized.rootNote.toLowerCase()];
   const transposeValue = chromaticIndex(newKey) - chromaticIndex(songKey);
