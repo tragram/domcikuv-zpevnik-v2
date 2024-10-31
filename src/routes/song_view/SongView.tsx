@@ -48,25 +48,26 @@ function SongView({ }) {
     }, [songRenderKey, repeatParts, songData]);
 
     const scrollDown = () => {
+        // if the rest can fit on the next screen --> scroll all the way
         if (document.body.scrollHeight / screen.height < 1.5 || (document.body.scrollHeight - window.scrollY) < 0.8 * screen.height) {
-            scroll.scrollToBottom();
+            scroll.scrollToBottom({ duration: 3000 });
             return;
         }
         const sections = document.querySelectorAll('.section');
         // Find the next container that is not fully visible
         for (let container of sections) {
             const rect = container.getBoundingClientRect();
-            console.log(rect.bottom, window.scrollY, window.innerHeight)
+            // console.log(rect.bottom, window.scrollY, window.innerHeight)
             // Check if the container is not fully visible within the viewport
             if (rect.bottom >= window.scrollY + window.innerHeight) {
                 // Scroll this container into view and exit the loop
-                scroll.scrollTo(rect.top - Math.max(100, 0.2 * screen.height));
+                scroll.scrollTo(rect.top - Math.max(100, 0.2 * screen.height), { duration: 3000 });
                 break;
             }
         }
     };
     const scrollUp = () => {
-        scroll.scrollToTop();
+        scroll.scrollToTop({ duration: 200 });
         return;
         // console.log("scroll up")
         // if (document.body.scrollHeight / screen.height < 1.5 || window.scrollY < 0.8 * screen.height) {
