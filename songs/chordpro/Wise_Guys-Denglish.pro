@@ -51,7 +51,7 @@ da [D]nützt mir auch kein Bodyguard. Ich [G]brauch Security!
 Ich [F]will, dass beim Coffee-Shop “Kaff[C]eehaus” oben draufsteht,
 [F]oder dass beim Auto-Crash die “[C]Lufttasche” aufgeht,
 und [F]schön wär's, wenn wir Bodybuilder “[C]Muskel-Mäster” [C7]nennen
-[D]und wenn nur noch “Nordisch Geher” d[G]urch die Landschaft rennen…
+[D]und wenn nur noch “Nordisch Geher” [G]durch die Landschaft rennen…
 {end_of_bridge}
 
 {start_of_chorus}

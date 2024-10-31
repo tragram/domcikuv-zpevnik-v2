@@ -18,7 +18,7 @@ We're [D]leaving Earth to[Am]day. [C][D]
 
 {start_of_verse}
 [Em]This [D]rocket's burning [Am]bright,
-We'll s[C]oon be [D]out of [Em]sight,
+We'll [C]soon be [D]out of [Em]sight,
 And [D]orbiting in [Am]Space. [C][D]
 {end_of_verse}
 
@@ -31,8 +31,8 @@ Houses [G]everybody [D]anybody ev[Cadd9]er knew.[D]
 {end_of_bridge}
 
 {start_of_chorus}
-[D]So sing your [G]song, I'm l[D]istening,
-[Am]Out where s[G]tars are gli[C]stening,
+[D]So sing your [G]song, I'm [D]listening,
+[Am]Out where [G]stars are gli[C]stening,
 I [D]can [Em]hear your voices [D]bouncing off the M[Am]oon. [C]
 If you could [G]see our [D]nation,
 From the [Am]Inter[G]nation[C]al Space [D]Station,
@@ -47,7 +47,7 @@ The [D]ocean's racing [Am]past. [C][D]
 
 {start_of_verse}
 [Em]At [D]half a thousand [Am]tons,
-Ninety [C]minutes, M[D]oon to [Em]Sun,
+Ninety [C]minutes, [D]Moon to [Em]Sun,
 A [D]bullet can't go [Am]half as fast.
 {end_of_verse}
 
@@ -63,7 +63,7 @@ Is [G]where I'm from and [D]also where I'm [Cadd9]going to.[D]
 
 {start_of_bridge}
 [A]All black an[E]d white just fades to[D]gray,
-Where the S[A]un rises [E]sixteen times a [D]day (Day),
+Where the [A]Sun rises [E]sixteen times a [D]day (Day),
 [A]You can't make out [E]borders from up [D]here,
 Just a [A]spinning ball with[E]in a tiny [D]atmosphere [Cadd9][D][Cadd9]
 {end_of_bridge}

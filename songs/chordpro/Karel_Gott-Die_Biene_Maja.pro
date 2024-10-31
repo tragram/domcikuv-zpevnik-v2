@@ -18,7 +18,7 @@ war eine Biene sehr be[A]kannt, [A][G#][A]
 
 {start_of_chorus}
 [A]Und diese [D]Biene, die ich meine, nennt sich [Em]Maja,
-[A]kleine, freche, schl[A7]aue Biene M[D]aja.
+[A]kleine, freche, schl[A7]aue Biene [D]Maja.
 Maja fliegt durch ihre [A]Welt,
 [A7]zeigt uns das, was ihr ge[D]fällt.
 [A]Wir treffen [D]heute unsre Freundin, Biene [Em]Maja,

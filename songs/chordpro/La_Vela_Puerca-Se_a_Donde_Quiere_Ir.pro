@@ -29,15 +29,15 @@ si fue la compas[G6]ion o fue mi porven[D2]ir
 bajo corriendo un lagrimon de pura risa ya [C]ves
 [G6]me hablo de la sinceridad, de abrir las venas
 de cuando me ponga a escribir valga la pena ya [C]ves
-Adonde quiere ir si no la quieren [G6]ver ya v[C]es
+Adonde quiere ir si no la quieren [G6]ver ya [C]ves
 si adonde quiere ir y yo la quiero [G6]ver
 {end_of_verse}
 
 {start_of_chorus}
-[Em]Luego peleamos sin p[C]elear,
+[Em]Luego peleamos sin [C]pelear,
 ganamos sin [G]ganar, perdimos sin per[D]der
 [Em]y ahora me queda la ver[C]dad
-de que yo ya no s[G]oy si ella no quiere [D]ser,
+de que yo ya no [G]soy si ella no quiere [D]ser,
 ni vo[C]lver
 {end_of_chorus}
 
@@ -45,7 +45,7 @@ ni vo[C]lver
 [Em]No me dio tiempo a diser[C]nir
 si fue la compa[G]sion o fue mi porv[D]enir
 [Em]y ahora lo unico q [C]se
-[G]es q aquel dia fue para lo que n[D]aci y soñ[C]e.
+[G]es q aquel dia fue para lo que [D]naci y soñ[C]e.
 {end_of_chorus}
 
 {start_of_chorus: Outro}

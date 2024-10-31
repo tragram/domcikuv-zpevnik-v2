@@ -27,7 +27,7 @@ a za její lásku platit [G]celou vej[D]pla[G]tou, [D]hó [Em]hou.
 {start_of_verse}
 [Em]Potom [G]do knajpy [D]jsem zašel a tam [G]uslyšel [D]ten [G]žvást,
 že na lodích [D]je veselo a [Em]fasuj[D]ou tam [Em]chlast,
-a tak [G]honem jsem se [D]nalodil na sta[G]rej v[D]ratkej [G]křáp,
+a tak [G]honem jsem se [D]nalodil na sta[G]rej [D]vratkej [G]křáp,
 kde kapitán byl [D]kořala a řval [Em]na nás [D]jak [Em]dráb.
 {end_of_verse}
 
@@ -35,7 +35,7 @@ kde kapitán byl [D]kořala a řval [Em]na nás [D]jak [Em]dráb.
 
 {start_of_verse}
 [Em]Vlny s [G]kocábkou si [D]házely a každej [G]dostal [D]strach,
-a my lodníci se [D]vsázeli, [Em]kdo p[D]řežije ten [Em]krach,
+a my lodníci se [D]vsázeli, [Em]kdo [D]p ten [Em]krach,
 všechny [G]krysy z lodi [D]zmizely a v [G]dálce [D]maják [G]zhas',
 a první byl hned [D]kapitán, kdo [Em]měl ko[D]rkovej [Em]pás.
 {end_of_verse}

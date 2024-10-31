@@ -12,7 +12,7 @@
 {start_of_verse}
 [D]Hay algo que ya no pu[A]edo contener
 me tira un su[Bm]eño y no le puedo contes[G]tar.
-[D]Arranca sola y no se v[A]a a detener
+[D]Arranca sola y no se [A]va a detener
 caigo de trip[Bm]a, no me va a dejar vo[G]lar.
 {end_of_verse}
 {start_of_verse}
@@ -24,7 +24,7 @@ a dar patadas a [Bm]mi propio malesta[G]r.
 
 {start_of_bridge}
 [D]Va a des[Em]cubrir porque [F#m]ahora no[G]quiero[A]pensar
-[D]y me va a[Em]reprimir la [F#m]locura a[G]punto de e[A]mpezar.
+[D]y me va a[Em]reprimir la [F#m]locura a[G]punto de [A]empezar.
 {end_of_bridge}
 
 {start_of_verse}
@@ -44,19 +44,19 @@ y me preoc[Bm]upa no tener que men[G]digar.
 
 {start_of_chorus}
 [Bm]Esto no es joda, voy [A]avisando
-[Bm]me pongo malo y es[A]toy de a[G]tar
+[Bm]me pongo malo y es[A]toy de [G]atar
 [Bm]Solo te cuento que es[A]toy tratando
-[Bm]de ya no perderme [A]nunca m[G]as
+[Bm]de ya no perderme [A]nunca [G]mas
 
 [Bm]Esto no es joda si[A]go gritando
 [Bm]voy caminando y qu[A]iero [G]volar
 [Bm]solo te digo que vo[A]y tocando
-[Bm]la rabia de los d[G]emás
+[Bm]la rabia de los [G]demás
 {end_of_chorus}
 
 {start_of_verse}
 [D]¿De que manera me voy a[A]destruir?
-si con am[Bm]ores o durmiendo el p[G]aladar.
+si con am[Bm]ores o durmiendo el [G]paladar.
 [D]Con la utopia, la de sob[A]revivir
 y que mi [Bm]llanto termine siempre en [G]el mar
 {end_of_verse}
@@ -64,7 +64,7 @@ y que mi [Bm]llanto termine siempre en [G]el mar
 [D]Me pregunta si hoy trai[A]go mi red
 siempre q[Bm]uiere romper aunque sea un [G]poco mas
 [D]Me gusta todo lo que me [A]haga subir
-pero la v[Bm]ida me convence con b[G]ajar
+pero la v[Bm]ida me convence con [G]bajar
 {end_of_verse}
 
 {bridge}

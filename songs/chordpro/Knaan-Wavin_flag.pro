@@ -20,7 +20,7 @@
 
 {start_of_verse}
 [C]En las calles, [F]muchas manos, [Am]levantadas [G]celebrando,
-[C]una fiesta s[F]in descanso, [Am]los paìses [G]como hermanos
+[C]una fiesta [F]sin descanso, [Am]los paìses [G]como hermanos
 {end_of_verse}
 
 {start_of_bridge: Pre-chorus}
@@ -29,7 +29,7 @@ el part[C]ido ya va a comenz[F]ar, todos j[Am]untos vamos a gan[G]ar
 {end_of_bridge}
 
 {start_of_chorus: ES}
-Unidos s[C]eremos grandes, s[F]eremos fuertes
+Unidos [C]seremos grandes, [F]seremos fuertes
 s[Am]omos un pueblo [G]bandera de libert[C]ad,
 que viene y que [F]va que viene y que [Am]va,
 que viene y que [G]va que viene y que [C]va
@@ -37,9 +37,9 @@ que viene y que [G]va que viene y que [C]va
 
 {start_of_chorus: EN}
 [C]When I get older, [F]I will be stronger!
-[Am]they'll call me freedom, j[G]ust like the waving fl[C]ag!
-|: Now wave your f[F]lag now wave your f[Am]lag
-now wave your f[G]lag now wave your f[C]lag :|
+[Am]they'll call me freedom, [G]just like the waving fl[C]ag!
+|: Now wave your [F]flag now wave your f[Am]lag
+now wave your [G]flag now wave your [C]flag :|
 {end_of_chorus}
 
 {chorus: Ooo}
@@ -55,8 +55,8 @@ now wave your f[G]lag now wave your f[C]lag :|
 {end_of_verse}
 
 {start_of_bridge: Pre-chorus}
-[C]Singing forever y[F]oung, singing s[Am]ongs underneath the [G]sun!
-let's rej[C]oice the beautiful g[F]ame and tog[Am]ether at the end of the [G]day
+[C]Singing forever [F]young, singing s[Am]ongs underneath the [G]sun!
+let's rej[C]oice the beautiful [F]game and tog[Am]ether at the end of the [G]day
 we all say
 {end_of_bridge}
 

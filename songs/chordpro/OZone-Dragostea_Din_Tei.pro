@@ -17,7 +17,7 @@
 Al[F]o, Sal[C]ut, sunt [G]eu, un haid[Am]uc,
 Și te [F]rog, iu[C]birea mea, prim[G]ește feri[Am]cirea.
 Al[F]o, al[C]o, sunt [G]eu Picas[Am]so,
-Ți-am dat [F]beep, și sunt v[C]oinic,
+Ți-am dat [F]beep, și sunt [C]voinic,
 Dar sa [G]știi, nu-ți cer ni[Am]mic.
 {end_of_verse}
 
@@ -31,7 +31,7 @@ Mi-amin[G]tesc de ochii [Am]tăi.
 {start_of_verse: Verse 2}
 Te [F]sun, să-ți [C]spun, ce [G]simt a[Am]cum,
 [F]Alo, iu[C]birea mea, sunt [G]eu, feri[Am]cirea.
-Al[F]o, al[C]o, sunt i[G]arăși eu, Picas[Am]so,
+Al[F]o, al[C]o, sunt [G]iarăși eu, Picas[Am]so,
 Ți-am dat [F]beep, și sunt [C]voinic,
 Dar sa ș[G]tii, nu-ți cer n[Am]imic
 {end_of_verse}

@@ -40,7 +40,7 @@ a teď [G7]ujíždí mi vlak.
 [C]Na pivo jen tam kde se nekouří
 [E]a už po prvním loku oči se mhouří.
 [Am]Než slečna barmanka mi [G]naleje,
-tak s ní [F]laškuju až mě i jí [G#]trapně j[G]e.
+tak s ní [F]laškuju až mě i jí [G#]trapně [G]je.
 {end_of_verse}
 
 {start_of_verse}

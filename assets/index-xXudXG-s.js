@@ -48144,21 +48144,20 @@ function SongView({}) {
   }, [songRenderKey, repeatParts, songData]);
   const scrollDown = () => {
     if (document.body.scrollHeight / screen.height < 1.5 || document.body.scrollHeight - window.scrollY < 0.8 * screen.height) {
-      animateScroll2.scrollToBottom();
+      animateScroll2.scrollToBottom({ duration: 3e3 });
       return;
     }
     const sections = document.querySelectorAll(".section");
     for (let container of sections) {
       const rect = container.getBoundingClientRect();
-      console.log(rect.bottom, window.scrollY, window.innerHeight);
       if (rect.bottom >= window.scrollY + window.innerHeight) {
-        animateScroll2.scrollTo(rect.top - Math.max(100, 0.2 * screen.height));
+        animateScroll2.scrollTo(rect.top - Math.max(100, 0.2 * screen.height), { duration: 3e3 });
         break;
       }
     }
   };
   const scrollUp = () => {
-    animateScroll2.scrollToTop();
+    animateScroll2.scrollToTop({ duration: 200 });
     return;
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: " " + (fitScreenMode === "XY" ? " flex flex-col h-dvh" : ""), children: [

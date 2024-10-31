@@ -25,7 +25,7 @@ jestli ty v [D]mých představách [G]už [D]mizíš
 {end_of_chorus}
 
 {start_of_verse}
-[D]Máš má ovečk[A]o dávno spát
+[D]Máš má [A]ovečko dávno spát
 dnes [G]máme půlnoc [D]temnou
 [D]Ráno budou nám [A]bláznům lhát
 že [G]ráda snídáš [D]se mnou
