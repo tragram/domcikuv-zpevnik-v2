@@ -44,7 +44,7 @@ and them later recall them by
 ```
 Adding these labels will also make sure that both the lyrics and the chords are shown, regardless of the settings for repeats of parts and chords. Keywords "bridge" and "verse" work analogously to "chorus". 
 
-If the label is the same, the chord sequence will be checked. If it's the same as some previous part with the same label, the verse will be given the class that is used for hiding repeated chords. 
+If the label is the same, the chord sequence will be checked. If it's (almost) the same as some previous part with the same label, the verse will be given the class that is used for hiding repeated chords. The chords that are not the same will be forcibly shown regardless of the hide/show setting. Note that this feature can only manage replacements and/or appended chords (max difference set to 3 ATM), not inserting. If you wish to insert a chord and still keep the rest hidden, add a repeated chord in the previous "model" part. Yes I know this is hard to unederstand, I'm tired at ATM. :-)
 
 This was necessary because ChordSheetJS disregards where the verse start and end are defined in the ChordPro file and rather parses it based on paragraphs. This means that if one defined a verse with two parts (each having different chords) with a newline in between for readability, the second set of chords would be deleted.
 

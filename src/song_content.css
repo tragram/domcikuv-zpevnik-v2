@@ -122,3 +122,7 @@
 .lyrics-line {
     flex-wrap: nowrap;
 }
+
+.force-shown{
+    display: inline !important;
+}

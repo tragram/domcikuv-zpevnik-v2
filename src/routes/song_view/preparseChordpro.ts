@@ -192,6 +192,6 @@ export function transposeChordPro(song: string, songKey, newKey) {
     const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeValue, accidental: flatKey ? "flat" : "sharp", customFilters: [keepSus2Maj7, hideParentheses] });
 
     const convertChordBracket = (match: string, chord: string) => `[${renderChord(parseChord(chord))}]`
-    song = song.replace(/\[([A-Ha-h][^\]]{0,10})\]/g, convertChordBracket);
+    song = song.replace(/\[([A-Ha-h][A-Za-z\d#b,\s]{0,10})\]/g, convertChordBracket);
     return song;
 }
