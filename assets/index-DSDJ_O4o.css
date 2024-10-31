@@ -127,6 +127,10 @@
     flex-wrap: nowrap;
 }
 
+.force-shown{
+    display: inline !important;
+}
+
 *, ::before, ::after {
     --tw-border-spacing-x: 0;
     --tw-border-spacing-y: 0;

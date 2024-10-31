@@ -24,7 +24,7 @@ Za to svinstvo ve sprchách, za cyklon B
 
 {start_of_chorus}
 [D]Tři hvězdy svítí [G]nad Vlta[D]vou
-[Bmi]Možná je nikdy [A]nedostanou [Bmi]
+[Bmi]Možná je nikdy [A]nedostanou[Bmi]
 [D]My tři králové [G]patříme [D]k vám
 [Bmi]Morávek, Mašín [A]a Bala[Bmi]bán
 {end_of_chorus}
@@ -43,5 +43,7 @@ Do poslední chvíle budeme se prát
 Kralové se lůze prostě neumí vzdát.
 {end_of_verse}
 
+{start_of_variant: replace_last_line}
+[Bmi]Morávek, Mašín [A]a Bala[Bsus2]bán
+{end_of_variant}
 {chorus}
-[Bsus2]

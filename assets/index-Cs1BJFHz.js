@@ -46318,25 +46318,57 @@ function transposeChordPro(song, songKey, newKey) {
   };
   const renderChord = chordSymbolExports.chordRendererFactory({ notationSystem: "english", transposeValue, accidental: flatKey ? "flat" : "sharp", customFilters: [keepSus2Maj7, hideParentheses] });
   const convertChordBracket = (match, chord) => `[${renderChord(parseChord(chord))}]`;
-  song = song.replace(/\[([A-Ha-h][^\]]{0,10})\]/g, convertChordBracket);
+  song = song.replace(/\[([A-Ha-h][A-Za-z\d#b,\s]{0,10})\]/g, convertChordBracket);
   return song;
 }
-function addRepeatClasses(htmlString, className = "verse") {
+function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"], useLabels = false) {
+  const defaultKey = "a4c0d35c95a63a805915367dcfe6b751";
   const parser = new DOMParser();
   const doc = parser.parseFromString(htmlString, "text/html");
-  const verses = doc.querySelectorAll(`.${className}`);
-  let seen = { "default": false };
-  verses.forEach((verse) => {
-    const labelElement = verse.querySelector(".label");
-    const label = labelElement ? labelElement.textContent.trim() : "default";
-    const chords_str = Array.from(verse.querySelectorAll(".chord")).map((el2) => el2.textContent.trim()).filter((el2) => el2).join("_");
-    if (!seen[label]) {
-      seen[label] = [];
-    }
-    if (seen[label].includes(chords_str)) {
-      verse.classList.add("repeated-chords");
-    } else {
-      seen[label].push(chords_str);
+  let seen = {};
+  classNames.forEach((className) => {
+    seen[className] = { defaultKey: false };
+  });
+  doc.querySelectorAll(classNames.map((className) => `.${className}`).join(",")).forEach((element) => {
+    const elementClass = classNames.find((className) => element.classList.contains(className));
+    if (elementClass) {
+      const labelElement = element.querySelector(".section-title");
+      console.log(labelElement);
+      const label = labelElement && useLabels ? labelElement.textContent.trim() : defaultKey;
+      const chordsWElements = Array.from(element.querySelectorAll(".chord")).map((el2) => {
+        return { "element": el2, "chord": el2.textContent.trim() };
+      }).filter((el2) => el2.chord);
+      const onlyChords = chordsWElements.map((c) => c.chord);
+      if (!seen[elementClass][label]) {
+        seen[elementClass][label] = [];
+      }
+      const chordMatches = (chords1, chords2) => {
+        const zip = (a2, b) => Array.from(Array(Math.max(b.length, a2.length)), (_2, i) => [a2[i], b[i]]);
+        const matches2 = zip(chords1, chords2).map((c) => c[0] === c[1]);
+        const distance = matches2.reduce((a2, b) => a2 + (b ? 0 : 1), 0);
+        return { "matches": matches2, "distance": distance };
+      };
+      const matches = seen[elementClass][label].map((chordList) => chordMatches(chordList, onlyChords));
+      const minIndex = matches.reduce((minIdx, match, idx) => match.distance < matches[minIdx].distance ? idx : minIdx, 0);
+      if (seen[elementClass][label].length === 0 || matches[minIndex].distance > 3) {
+        seen[elementClass][label].push(onlyChords);
+      } else {
+        if (matches[minIndex].distance > 0) {
+          seen[elementClass][label].push(onlyChords);
+        }
+        element.classList.add("repeated-chords");
+        matches[minIndex].matches.forEach((match, index) => {
+          if (index >= chordsWElements.length) {
+            return;
+          }
+          if (!match) {
+            chordsWElements[index].element.classList.add("force-shown");
+          }
+        });
+        if (matches[minIndex].matches.length < chordsWElements.length) {
+          chordsWElements.slice(-(chordsWElements.length - matches[minIndex].matches.length)).forEach((cwe) => cwe.element.classList.add("force-shown"));
+        }
+      }
     }
   });
   return doc.body.innerHTML;
@@ -46381,7 +46413,7 @@ function renderSong(songData, newKey, repeatChorus) {
   const formatter = new chordprojectParser_bundleExports.HtmlFormatter(settings);
   let songText = formatter.format(song).join("\n");
   songText = convertHTMLChordToGerman(songText);
-  return addRepeatClasses(addRepeatClasses(addRepeatClasses(songText, "verse-section"), "chorus-section"), "bridge-section");
+  return addRepeatClasses(songText, ["verse-section", "chorus-section", "bridge-section"]);
 }
 var modules = {};
 var Link = {};
