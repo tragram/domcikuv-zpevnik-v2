@@ -24,7 +24,10 @@ A song should have the following entries:
 Note that while the website shows the songs in the Czech/German-ish note naming scheme, the underlying files **must use the English note labels**. Why the discrepancy? Well, none of the ChordPro parsers for JS are aware of there being anything other than the English convention. While that could be circumvented using e.g. the superb [chord-symbol](https://github.com/no-chris/chord-symbol) library (in fact, this used to be implemented), there are still issues. Namely, because `Ab` is spelled `As`, then `Asus2` (a common-enough chord) gets parsed as `A-flat-modifier(us2)` and then fails, because `us2` is not a valid modifier. Anyways, that's how I found out I actually use a mix of both systems, which is terrible. :-)
 
 ### Extensions of the ChordPro format
-Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features. For convenience, I have added the possibility to keep in memory more than one chorus/verse/bridge (not that ChordSheetJS can manage even that). You can define the label of the chorus (note: it will be displayed!) in the directive by e.g. 
+Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features. For convenience, I have added the following.
+
+#### Recall
+You have the possibility to keep in memory more than one chorus/verse/bridge (not that ChordSheetJS can manage even that). You can define the label of the chorus (note: it will be displayed!) in the directive by e.g. 
 ```chordpro
 {start_of_chorus: R1}
 content
@@ -44,6 +47,8 @@ Adding these labels will also make sure that both the lyrics and the chords are 
 If the label is the same, the chord sequence will be checked. If it's the same as some previous part with the same label, the verse will be given the class that is used for hiding repeated chords. 
 
 This was necessary because ChordSheetJS disregards where the verse start and end are defined in the ChordPro file and rather parses it based on paragraphs. This means that if one defined a verse with two parts (each having different chords) with a newline in between for readability, the second set of chords would be deleted.
+
+The labels may contains letters, numbers, and the following special characters: `+_-/`. In short, they must match `[\w\-_+]+`.
 
 #### Part variations
 It is very common that a chorus is repeated with only a minor modification at the end. To this end, I have included the option to define a variant of the chorus as follows
