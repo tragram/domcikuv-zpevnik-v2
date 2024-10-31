@@ -23,9 +23,9 @@ But he's [D]coming for you, yeah, he's [A]coming for you
 
 {start_of_chorus}
 [Em]All the other kids with the [G]pumped up kicks
-You'd better [D]run, better run, o[A]utrun my gun
+You'd better [D]run, better run, [A]outrun my gun
 [Em]All the other kids with the [G]pumped up kicks
-You'd better [D]run, better run, f[A]aster than my bullet
+You'd better [D]run, better run, [A]faster than my bullet
 {end_of_chorus}
 
 {start_of_verse}

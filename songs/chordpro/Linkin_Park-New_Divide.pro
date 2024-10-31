@@ -11,11 +11,11 @@
 
 {start_of_verse}
 I [Em]remembered black skies
-The [G]lightning all ar[D]ound m[A]e
+The [G]lightning all ar[D]ound [A]me
 I re[Em]membered each flash
 As [G]time began to [D]blu[A]r
 Like a [Em]startling sign
-That [G]fate had finally [D]found m[A]e
+That [G]fate had finally [D]found [A]me
 And your [C]voice was all I heard
 That I [A]get what I deserve
 {end_of_verse}
@@ -36,7 +36,7 @@ A[D]cross this new div[Em]ide [G][D][A]
 
 {start_of_verse}
 There was [Em]nothing in sight
-But [G]memories left a[D]bandon[A]ed
+But [G]memories left [D]abandon[A]ed
 There was [Em]nowhere to hide
 The [G]ashes fell like [D]sn[A]ow
 And the [Em]ground caved in
@@ -58,7 +58,7 @@ A[Dsus4]cross this [D]new div[Em]ide
 In every [Em]loss in every [G]lie
 In every [D]truth that you de[A]ny
 And each re[Em]gret and each good[G]bye
-Was a mis[D]take too great to h[A]ide
+Was a mis[D]take too great to [A]hide
 And your [C]voice was all I heard
 But I [A]get what I deserve
 {end_of_bridge}

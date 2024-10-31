@@ -8,23 +8,23 @@
 
 {start_of_verse}
 [G]Siis, kui ma üks[Bm]inda jään,
-[C]kõikjal vaid tuimust ja üksk[G]õiksust n[D]äen.
+[C]kõikjal vaid tuimust ja üksk[G]õiksust [D]näen.
 [G]Näib, et ei ho[Bm]oli maailm
 [C]sellest, kui kellelgi ku[G]rb on, ja [D]külm.[C]
 {end_of_verse}
 
 {start_of_verse}
 [G]Päev nagu ö[Bm]ögi on hall,
-[C]päikest ei näegi siin pil[G]vede a[D]ll.
+[C]päikest ei näegi siin pil[G]vede [D]all.
 [G]Tuul rebib pu[Bm]ude pealt rüüd.
 [C]Sõbrad, mu kallid, teid iga[G]tsen nü[D]üd![C]
 {end_of_verse}
 
 {start_of_chorus}
 [G]Igatsen nae[D]ru ja hel[Em]edat me[Bm]elt,
-[C]torkeid, mis hai[G]get ei t[D]ee.
+[C]torkeid, mis hai[G]get ei [D]tee.
 [G]Ammuseid la[D]ule ja lus[Em]takat ke[Bm]elt,
-[C]meile vaid sel[G]ge on s[D]ee.[C]
+[C]meile vaid sel[G]ge on [D]see.[C]
 {end_of_chorus}
 
 {start_of_verse}
@@ -43,22 +43,22 @@ Vaid si[G]is teeb rõ[Bm]õmu see õis,
 
 {start_of_verse}
 [Am]Siis, kui ma üksinda j[Cm]ään -
-[Em]igatsen naeru ja he[F#]ledat m[D]eelt.
-[G]Torkeid, mis haiget ei t[C]ee,
+[Em]igatsen naeru ja he[F#]ledat[D]meelt.
+[G]Torkeid, mis haiget ei[C]tee,
 [Am]ammuseid laule ja lu[Bm]stakat keelt,
-[C]meile vaid selge on s[D]ee.
+[C]meile vaid selge on[D]see.
 {end_of_verse}
 
 {start_of_chorus}
-[A]Sõbrad, mu [E]kallid, ma ig[F#]atsen t[A]eid,
-[D]jagatult su[A]urem on r[E]õõm.
-[A]Jagatud kur[E]busest ri[F#]ismed vaid j[A]äid,
-[D]murest jäi väi[A]kene s[E]õõm.
+[A]Sõbrad, mu [E]kallid, ma ig[F#]atsen[A]teid,
+[D]jagatult su[A]urem on[E]rõõm.
+[A]Jagatud kur[E]busest ri[F#]ismed vaid[A]jäid,
+[D]murest jäi väi[A]kene[E]sõõm.
 {end_of_chorus}
 
 {start_of_verse}
 [F#m]Läidame küü[E]nlad ja ka[D]minap[A]uud –
-[A]jälle on v[D]alge ja s[E]oe.
+[A]jälle on[D]valge ja[E]soe.
 [E]Täidame klaasid ja kastame suud,
-|: [D]koos olles m[A]ured ei l[E]oe :| (3x)
+|: [D]koos olles[A]mured ei[E]loe :| (3x)
 {end_of_verse}

@@ -12,7 +12,7 @@
 
 {start_of_chorus}
 Jo[Dm]lene, Jo[F]lene, Jo[C]lene, Jo[Dm]lene
-I'm b[C]egging of you, please don't take my[Dm]man
+I'm [C]begging of you, please don't take my[Dm]man
 Jo[Dm]lene, Jo[F]lene, Jo[C]lene, J[Dm]olene
 Ple[C]ase don't take him j[Am]ust because you[Dm]can
 {end_of_chorus}
@@ -21,18 +21,18 @@ Ple[C]ase don't take him j[Am]ust because you[Dm]can
 Your be[Dm]auty is be[F]yond compare
 With fl[C]aming locks of au[Dm]burn hair
 With iv[C]ory skin and e[Am]yes of emerald g[Dm]reen
-Your sm[Dm]ile is like a b[F]reath of spring
+Your sm[Dm]ile is like a [F]breath of spring
 Your vo[C]ice is soft like su[Dm]mmer rain
-And I c[C]annot comp[Am]ete with you, J[Dm]olene
+And I [C]cannot comp[Am]ete with you, J[Dm]olene
 {end_of_verse}
 
 {start_of_verse}
 He t[Dm]alks about you [F]in his sleep
 There[C]'s nothing I can [Dm]do to keep
 From cr[C]ying when he c[Am]alls your name, J[Dm]olene
-And [Dm]I can easily u[F]nderstand
+And [Dm]I can easily[F]understand
 How [C]you could easily t[Dm]ake my man
-But you d[C]on't know what he m[Am]eans to me, J[Dm]olene
+But you[C]don't know what he m[Am]eans to me, J[Dm]olene
 {end_of_verse}
 
 {start_of_chorus}
@@ -46,8 +46,8 @@ Pl[C]ease don't take him j[Am]ust because you[Dm]can
 [Dm]You could have your ch[F]oice of men
 But [C]I could never l[Dm]ove again
 He'[C]s the only o[Am]ne for me, Jo[Dm]lene
-I h[Dm]ad to have this t[F]alk with you
-My h[C]appiness dep[Dm]ends on you
+I h[Dm]ad to have this[F]talk with you
+My[C]happiness dep[Dm]ends on you
 And what[C]ever you de[Am]cide to do, Jo[Dm]lene
 {end_of_verse}
 

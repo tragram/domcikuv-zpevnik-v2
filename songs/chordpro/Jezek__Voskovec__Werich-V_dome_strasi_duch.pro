@@ -25,7 +25,7 @@
 
 {start_of_chorus}
 [Dm]Boty d[Bb]upou [Dm6]po sch[A7]odech
-[Dm]v domě [Bb]straší[Dm6]duch[A7]
+[Dm]v domě [Bb]straší [Dm6]duch[A7]
 [D]náhle t[D7]áhle [Gm]začne [Dm]pištět
 [D7]prásk a[Gm]zbyl po něm [Dm]puch[A7]
 {end_of_chorus}

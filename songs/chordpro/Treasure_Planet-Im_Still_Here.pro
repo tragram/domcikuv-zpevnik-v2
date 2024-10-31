@@ -9,47 +9,47 @@
 {start_melody: g d}
 
 {start_of_verse}
-[G]I am a qu[C]estion to the w[G]orld
-Not an a[C]nswer to be he[G]ard
+[G]I am a qu[C]estion to the [G]world
+Not an [C]answer to be he[G]ard
 Or a mo[C]ment, that's [Am7]held in your ar[C]ms
-And w[G]hat, do ya t[C]hink you'd ever s[G]ay?
+And [G]what, do ya [C]think you'd ever [G]say?
 I won't lis[C]ten an[G]yway
 You don't kn[C]ow me
 And I'[Em]ll never [D]be what you [C]want me to [G]be[C][G][C]
 {end_of_verse}
 
 {start_of_verse}
-And w[G]hat, do you th[C]ink you'd understa[G]nd?
-I'm a b[C]oy, no, I'm a m[G]an
+And [G]what, do you th[C]ink you'd understa[G]nd?
+I'm a [C]boy, no, I'm a [G]man
 You can't ta[C]ke me, and t[Am7]hrow me aw[C]ay
-And h[G]ow, can you lea[C]rn what's never sh[G]own?
-Yeah you s[C]tand here on your ow[G]n
+And [G]how, can you lea[C]rn what's never sh[G]own?
+Yeah you [C]stand here on your ow[G]n
 They don't kn[C]ow me,
-cause I[Em]'m n[D]ot he[C]re[G][C][G][C]
+cause I[Em]'m [D]not he[C]re[G][C][G][C]
 {end_of_verse}
 
 
 {start_of_chorus}
-And [G]I want a [C]moment to be r[G]eal
-Wanna t[C]ouch things I don't fe[G]el
-Wanna ho[C]ld on, and f[Am7]eel I b[C]elong
-And h[G]ow, can the [C]world want me to c[G]hange?
-They're the o[C]nes that stay the s[G]ame
-They don't k[C]now me, cause[Em]I'm[D]not [C]here
+And [G]I want a [C]moment to be [G]real
+Wanna [C]touch things I don't fe[G]el
+Wanna ho[C]ld on, and f[Am7]eel I [C]belong
+And [G]how, can the [C]world want me to [G]change?
+They're the [C]ones that stay the [G]same
+They don't [C]know me, cause[Em]I'm[D]not [C]here
 {end_of_chorus}
 
 {start_of_verse}
-And y[G]ou, see the th[C]ings they never se[G]e
-All you w[C]anted, I could b[G]e
+And [G]you, see the th[C]ings they never se[G]e
+All you [C]wanted, I could [G]be
 Now you kn[C]ow me, and I[Am7]'m not afr[C]aid
-And [G]I, wanna [C]tell you who I[G]am
-Can you h[C]elp me be a m[G]an?
-They can't b[C]reak me
-As [Em]long as I k[D]now who I [C]am[G][C][G][C]
+And [G]I, wanna [C]tell you who [G]Iam
+Can you [C]help me be a [G]man?
+They can't [C]break me
+As [Em]long as I [D]know who I [C]am[G][C][G][C]
 {end_of_verse}
 
 {start_of_variant: append_content}
-They can't s[C]ee me, But I'[Em]m st[D]ill h[C]ere
+They can't [C]see me, But I'[Em]m st[D]ill [C]here
 {end_of_variant}
 {chorus}
 
@@ -61,12 +61,12 @@ And it [Csus2]wasn't just whispers and [D]lies That I'll never be[Em]lie[D]ve[C]
 {end_of_bridge}
 
 {start_of_variant: append_content}
-I'm the o[C]ne now, cause I'[Em]m st[D]ill h[C]ere
+I'm the [C]one now, cause I'[Em]m st[D]ill [C]here
 {end_of_variant}
 {chorus}
 
 {start_of_verse: Outro}
-I'm the [G]one, cause I[Em]'m st[D]ill h[G]ere
+I'm the [G]one, cause I[Em]'m st[D]ill [G]here
 |: I'[Em]m st[D]ill he[G]re :|
-I'[Em]m st[D]ill h[C]ere
+I'[Em]m st[D]ill [C]here
 {end_of_verse}

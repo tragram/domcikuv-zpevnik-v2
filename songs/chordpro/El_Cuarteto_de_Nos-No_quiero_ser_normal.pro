@@ -22,7 +22,7 @@ yo no voy a[F#7/E]dar pelota.
 
 {start_of_bridge}
 Ay, [D]no, democraci[E]a no,
-mi voto es m[G]ejor,
+mi voto es [G]mejor,
 y si es por mí d[Bm]ominaría una[A]minoría.
 Ay, [D]huyo de la mul[E]titud,
 y no me electro[G]cuto en la corriente.
@@ -30,9 +30,9 @@ y no me electro[G]cuto en la corriente.
 
 {start_of_chorus}
 [D]No qui[A]ero ir dond[Bm]e todos [G]van
-y odi[D]o la navi[A]dad.[Bm][G]
-Mucho[D]s dirán, '[A]eso est[Bm]á mal', [G]
-no qu[D]iero ser n[A]orma[Bm]l. [G]
+y o[D]dio la navi[A]dad.[Bm][G]
+Mu[D]chos dirán, '[A]eso est[Bm]á mal', [G]
+no [D]quiero ser [A]norma[Bm]l. [G]
 {end_of_chorus}
 
 {start_of_verse}

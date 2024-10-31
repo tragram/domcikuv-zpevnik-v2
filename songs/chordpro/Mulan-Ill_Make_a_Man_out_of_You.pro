@@ -23,9 +23,9 @@ out of [Am]you [G][Am]
 
 {start_of_verse}
 [Am]Tranquil as [G/B]a forest [C]
-[G/B]But o[C]n f[Dm]ire within [G]
+[G/B]But [C]on f[Dm]ire within [G]
 [Am]Once you fin[G/B]d your cent[C]er
-[G/B]you a[C]re [Dm]sure to win[G/B]
+[G/B]you [C]are [Dm]sure to win[G/B]
 
 You're a [F/A]spineless, pale, pa[G/B]thetic lot
 And you [C]haven't got a [F]clue

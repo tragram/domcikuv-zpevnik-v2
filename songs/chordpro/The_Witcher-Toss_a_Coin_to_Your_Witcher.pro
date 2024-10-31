@@ -53,8 +53,7 @@ He's a friend of huma[D]nity, so [B7]give him the [Em]rest
 Defeated the [D]villain - Now pour him some [D]ale[B7]
 {end_of_verse}
 
-(2x)
-{chorus}
-{start_of_chorus}
+{start_of_variant: replace_last_line}
 A [A]friend of [Bsus4]humanity[B]
-{end_of_chorus}
+{end_of_variant}
+{chorus}

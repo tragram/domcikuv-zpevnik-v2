@@ -49,7 +49,7 @@ I just [B]got to have it all.
 
 {start_of_chorus}
 [A]I've seen your face a hundred [E]times,
-[A]Every day we've been a[E]part
+[A]Every day we've been [E]apart
 [A]I don't [B]care about the [E]sunshine, [A]yeah
 'cause [A]mama, [B]mama, I'm coming [C]ho[D]me[E]
 I'm coming [C]ho[D]me[B]

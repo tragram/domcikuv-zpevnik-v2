@@ -11,7 +11,7 @@
 
 {start_of_verse: Intro}
 [Em]Si, sabes que ya llevo rato mir[C]ándote
-[G]Tengo que bailar contigo h[D]oy(DY)
+[G]Tengo que bailar contigo [D]hoy(DY)
 [Em]Vi, que tu mirada ya estaba llam[C]ándome
 [G]Muéstrame el camino que yo [D]voy (oh)
 {end_of_verse}
@@ -48,35 +48,35 @@ Tus lugares favor[D]itos (favorito, favorito baby)
 {end_of_bridge}
 {start_of_bridge}
 [Em]Déjame sobrepasar tus zonas de pe[C]ligro
-Hasta provocar tus g[G]ritos
+Hasta provocar tus [G]gritos
 Y que olvides tu ape[D]llido
 {end_of_bridge}
 
 {start_of_verse: Rap}
 Si te pido un beso, ven [Em]dármelo - Yo sé que estás pensándolo
 Llevo tiempo inte[C]ntándolo, Mami esto es dando y dándolo
-Sabes que tu c[G]orazón conmigo te hace bom bom
+Sabes que tu [G]corazón conmigo te hace bom bom
 Sabes que esa [D]beba está buscando de mi bom bom
 {end_of_verse}
 
 {start_of_verse: Rap}
 Ven prueba de mi [Em]boca para ver como te sabe
 Quiero quiero, quie[C]ro ver cuanto amor a ti te cabe
-Yo no tengo p[G]risa yo me quiero dar el viaje
-Empezamos l[D]ento, después salvaje
+Yo no tengo [G]prisa yo me quiero dar el viaje
+Empezamos [D]lento, después salvaje
 {end_of_verse}
 
 {start_of_bridge}
 Pasito a pas[Em]ito, suave suavecito
 Nos vamos pega[C]ndo, poquito a poquito
-Cuando tú me b[G]esas, con esa destreza
-Veo que eres m[D]alicia, con delicadeza
+Cuando tú me [G]besas, con esa destreza
+Veo que eres [D]malicia, con delicadeza
 {end_of_bridge}
 
 {start_of_bridge}
 Pasito a pa[Em]sito, suave suavecito
 Nos vamos peg[C]ando, poquito a poquito
-Y es que esa b[G]elleza, es un rompecabezas
+Y es que esa [G]belleza, es un rompecabezas
 Pero pa' mon[D]tarlo aquí tengo la pieza
 {end_of_bridge}
 

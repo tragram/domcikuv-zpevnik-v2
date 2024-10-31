@@ -28,7 +28,7 @@ Nemám [C]lásko [G]co bych ti dal,
 
 {start_of_verse}
 [Ami]Tvý horky [G]rty, víc [Dmi]radši [Ami]ne,
-[Ami]nejsou už [G]mý, nejs[Dmi]i má Cher.
+[Ami]nejsou už [G]mý, nej[Dmi]si má Cher.
 [Ami]Něco snad [G]chápu, [Dmi]to ne, to [Ami]ne,
 [Ami]bolí to, [G]hořím, [Dmi]jak černej [Ami]tér.
 {end_of_verse}
@@ -48,7 +48,7 @@ Vždyť už [C]lásko, [G]svý perly máš
 [Ami]Chtěla jsi [G]víc pro [Dmi]svoje [Ami]touhy,
 [Ami]já chudej [G]princ, [Dmi]mám jen [Ami]co mám
 [Ami]Co vlastně [G]zbývá [Dmi]jen slzy [Ami]pouhý
-[Ami]ze svatební[G]ch zvon[Dmi]ů, z neb[Ami]eskejch bran.
+[Ami]ze svatební[G]ch [Dmi]zvonů, z neb[Ami]eskejch bran.
 {end_of_verse}
 
 {chorus: R2}

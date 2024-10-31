@@ -17,17 +17,17 @@ To [C]train them [D]is my [E]cause
 
 {start_of_verse}
 [Am]I will travel [G]across the land
-[Am]Searching far and w[G]ide
-[F]Teach Pokèmon t[C]o understand
-The [C]power [D]that's i[E]nside
+[Am]Searching far and [G]wide
+[F]Teach Pokèmon [C]to understand
+The [C]power [D]that's [E]inside
 {end_of_verse}
 
 {start_of_chorus}
 Pokè[F]mon! (Gotta catch em' all)
 It's [C]you and me
-[F]I know it's my d[G]estiny
+[F]I know it's my [G]destiny
 Pokè[Am]mon! Ooh, you're [G]my best friend
-In a [C]world we [D]must d[E]efend
+In a [C]world we [D]must [E]defend
 Poke[Am]mon! (Gotta catch em' all)
 Our [G]hearts so true
 Our [Am]courage will [G]pull us through
@@ -41,14 +41,14 @@ Gotta [G]catch 'em a[Am]ll!
 [Am]Every challenge [G]along the way
 With [Am]courage I will [G]face
 [F]I will battle [C]every day
-To [C]claim my [D]rightful p[E]lace
+To [C]claim my [D]rightful [E]place
 {end_of_verse}
 
 {start_of_verse}
 [Am]Come with me, the [G]time is right
 [Am]There's no better [G]team
 [F]Arm in arm we'll[C]win the fight
-It's [C]always b[D]een our d[E]ream
+It's [C]always [D]been our [E]dream
 {end_of_verse}
 
 {chorus}

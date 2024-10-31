@@ -29,7 +29,7 @@
 [Am]Ona jedn tam została
 [E]Jaskółeczka moja, moja mała
 [Am]A ja tutaj w obcej stronie
-[E]Dniem i nocą tęsk[Am]nię d[G]o niej
+[E]Dniem i nocą tęsk[Am]nię [G]do niej
 {end_of_verse}
 
 {chorus}
@@ -38,7 +38,7 @@
 [Am]Pięknych dziewcząt jest niemało
 [E]Lecz najwięcej w Ukrainie
 [Am]Tam me serce pozostało
-[E]Przy kochanej m[Am]ej d[G]ziewczynie
+[E]Przy kochanej m[Am]ej [G]dziewczynie
 {end_of_verse}
 
 {chorus}

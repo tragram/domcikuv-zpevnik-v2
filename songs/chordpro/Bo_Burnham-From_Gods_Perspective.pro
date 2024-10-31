@@ -25,7 +25,7 @@ None of you are [Am]going to [G]heaven
 
 
 {start_of_bridge}
-[Am]You shouldn't [G]abstain from rape just [Am]because you think that I[G]want you to [F]
+[Am]You shouldn't [G]abstain from rape just [Am]because you think that I [G]want you to [F]
 [Am]You shouldn't rape 'cause rape is a [G]fucked up thing to do[C]
 (Pretty obvious - just don't fucking rape people
 Didn't think I had to write that one down for ya.)
@@ -67,8 +67,8 @@ You pray so [Am]badly for [G]heaven [F]
 knowing any day [Am]may be the [G]day that you [F]die
 But maybe life on [Am]earth could be [G]heaven [F]
 Doesn't just the thought [Am]of it make it [G]worth a try? [F]
-[C]My love's the type of [F]thing that[C]you have to earn [G]
-And when you [C]earn i[F]t you won'[C]t [*(x2)]need it [G]
+[C]My love's the type of [F]thing that [C]you have to earn [G]
+And when you [C]earn [F]it you won'[C]t [*(x2)]need it [G]
 {end_of_chorus}
 
 {start_of_bridge}

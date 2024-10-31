@@ -24,13 +24,13 @@ Without [B]being attracted to any of them
 
 {start_of_bridge: Pre-chorus}
 [C#m]Now you might [A]think that this guy
-[C#m]only ex[B]ists in your [E]mind
+[C#m]only e[B]xists in your [E]mind
 [A]Well guess wh[C#m]at: [B]You're right
 {end_of_bridge}
 
 {start_of_chorus}
 [E]If you want [C#m]love [A]
-[B]Lower your expec[E]tations a fe[C#m]w
+[B]Lower your expec[E]tations a [C#m]few
 Because Prince [A]Charming would never [B]settle for you
 {end_of_chorus}
 

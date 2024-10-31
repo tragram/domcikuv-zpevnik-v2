@@ -42,7 +42,7 @@ There'll be time [A]enough for [E]countin' [B]when the dealin's [E]done.
 
 
 {start_of_verse}
-[E]Ev'ry gambler knows that the s[A]ecret to survi[E]vin'
+[E]Ev'ry gambler knows that the [A]secret to survi[E]vin'
 is [A]knowin' what to [E]throw away and [A]knowing what to [B]keep.
 'Cause [E]ev'ry hand's a winner and [A]ev'ry hand's a [E]loser,
 and the [A]best that you can [E]hope for is to [B]die in your [E]sleep."

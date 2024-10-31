@@ -25,7 +25,7 @@ až se tě budou p[Dm]tát jakou omáčku bys r[Am]ád
 
 {start_of_chorus}
 Cítit se budou v [C]právu
-Ti v tričku bez ruká v[G]u
+Ti v tričku bez ru[G]kávu
 až ti halal [F]stravu za draho proda[C]jí
 Pro Aláhovo slávu, do pity vám narv[G]u
 kuře nebo [F]krávu a nebo obo[C]jí!

@@ -16,7 +16,7 @@ tvá [Am]dráha míří [E]k tunelu a [Fmaj7]tunel ten má [E]hlad.[E]
 Už [E]tolikrát ses [G#m]mašinfíry [E7]zkusil na to [A]ptát,
 kdo [Am]nechal roky [E]nejhezčí do [F#]vozů naklá[B7]dat.
 Proč [E]vlaky, co si [G#m]každou noc pod [E7]voknem laděj [A]hlas,
-po[Am]lyká díra [E]kamenná - [Fmaj7]tunel jménem[E]čas.
+po[Am]lyká díra [E]kamenná - [Fmaj7]tunel jménem [E]čas.
 {end_of_verse}
 
 {start_of_verse}
@@ -43,6 +43,6 @@ i [Am]kapela se [E]probudí a [Fmaj7]začne zase [E]hrát.[E]
 {start_of_verse}
 Vlak [E]v nula nula [G#m]dvacet pět bu[E7]de ten posle[A]dní,
 mi[Am]nér svou práci [E]nestačí dřív, [F#]než se rozed[B7]ní.
-Ten [E]konec moh' bejt [G#m]veselej, jen [E7]nemít tenhle k[A]az,
+Ten [E]konec moh' bejt [G#m]veselej, jen [E7]nemít tenhle [A]kaz,
 tu [Am]černou díru [E]kamennou – [Fmaj7]tunel jménem [E]čas.[Fmaj7][E]
 {end_of_verse}

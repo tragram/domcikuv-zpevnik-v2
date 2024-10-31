@@ -15,9 +15,9 @@ aga noorel [Am]neiul, neist ei[F]piisa.
 {end_of_verse}
 
 {start_of_verse}
-Jooksen r[C]anda, koduküla [G]randa,
+Jooksen [C]randa, koduküla [G]randa,
 et saada [Am]pruuniks, teiseks[F]juuniks.
-Võtan k[C]aasa, reketid ja[G]maki, kuid
+Võtan [C]kaasa, reketid ja[G]maki, kuid
 rannas on vaid ük[Am]s võrku paikav [F]papi.
 {end_of_verse}
 
@@ -43,6 +43,6 @@ Seal on [Am]noored, teised [F]noored
 {chorus}
 
 {start_of_chorus: Outro}
-Korraks [Dm]vaatan, seljataha v[G]eel
+Korraks [Dm]vaatan, seljataha [G]veel
 Tühi [Dm]rand ja nõmmeliivat[G]ee (2x)
 {end_of_chorus}

@@ -10,11 +10,11 @@
 {start_melody: }
 
 {start_of_verse}
-[E]Holinky [D]nosil [A]vždycky [G]naruby
-[E]Kohoutí [D]hnát [A]si zapích [G]do huby
-[E]Teplej rum [D]pili [A]když potom [G]blil
-[E]Co hoře[D]lo [A]to vyhu[G]lil
-[E]Myslel si [D]že je to [A]známka [G]punku
+[E]Holinky [D]nosil [A]vždycky [G]naruby[F#]
+[E]Kohoutí [D]hnát [A]si zapích [G]do huby[F#]
+[E]Teplej rum [D]pili [A]když potom [G]blil[F#]
+[E]Co hoře[D]lo [A]to vyhu[G]lil[F#]
+[E]Myslel si [D]že je to [A]známka [G]punku[F#]
 {end_of_verse}
 
 {start_of_chorus}
