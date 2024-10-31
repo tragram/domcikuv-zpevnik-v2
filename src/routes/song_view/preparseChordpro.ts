@@ -152,8 +152,8 @@ export function transposeChordPro(song: string, songKey, newKey) {
     if (!canTranspose) {
         return song;
     }
-
-    const flatKey = newKey && (newKey.includes("b") || newKey.includes("s"))
+    const songMinorKey = songKey.includes("m");
+    const flatKey = newKey && (newKey.includes("b") || newKey.includes("s") || (newKey == "D" && songMinorKey) || (newKey == "F" && !songMinorKey))
 
     const parseChord = chordParserFactory({ key: songKey });
     const chromaticIndex = (chord: string) => CHROMATIC_SCALE[parseChord(chord).normalized.rootNote.toLowerCase()]
