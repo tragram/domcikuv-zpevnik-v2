@@ -1,8 +1,7 @@
 import { Input } from "@nextui-org/react";
 import Fuse from "fuse.js";
 import { Search as SearchIcon } from "lucide-react";
-import React from 'react';
-//TODO: select should have a default value
+
 function Search({ songs, setSearchResults, query, setQuery }) {
     const options = {
         includeScore: true,

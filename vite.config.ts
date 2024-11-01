@@ -1,23 +1,14 @@
+import path from "path"
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { viteStaticCopy } from 'vite-plugin-static-copy'
+import react from '@vitejs/plugin-react-swc'
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(),
-  viteStaticCopy({
-    targets: [
-      {
-        src: 'songs/*',
-        dest: 'songs'
-      }
-    ]
-  })
+  plugins: [react()],
 
-  ],
-  base: "/domcikuv-zpevnik-v2",
-  build: {
-    minify: false,
-    sourcemap: false,
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
 })

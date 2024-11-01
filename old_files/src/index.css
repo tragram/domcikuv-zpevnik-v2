@@ -1,0 +1,146 @@
+@import "song_content.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.song-row-bg-image {
+  /* the top of the image is actually nicer to get color */
+  /* background-position: center;  */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body {
+  /* background-size: contain; */
+  /* background-color: red;
+  mask-image: url("/public/401_vector_image.svg");
+  mask-repeat: repeat;
+  mask-size: cover; */
+}
+
+
+.pattern-bg::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  /* red waves */
+  /* mask-image: url("/public/loop_note.svg"); */
+  /* background-color: red;
+  mask-image: url("/public/401_vector_image.svg");
+  mask-repeat: repeat;
+  mask-size: cover; */
+
+  /* waves */
+  /* background-image: url("/public/401_vector_image.svg");
+  background-size: cover;
+  opacity:0.1; */
+
+  /* paper */
+  /* background-color: #e5e5f7;
+  opacity: 0.05;
+  background-image: linear-gradient(#444cf7 2px, transparent 2px), linear-gradient(90deg, #444cf7 2px, transparent 2px), linear-gradient(#444cf7 1px, transparent 1px), linear-gradient(90deg, #444cf7 1px, #e5e5f7 1px);
+  background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+  background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px; */
+
+  /* polka dots */
+  /* background: white; */
+  /* background-image: "abstract-background-with-distorted-line-shapes-white-background-monochrome-sound-line-waves/401_vector_image.jpg";
+  background-size: 40px 40px;
+  background-position: -19px -19px; */
+  /* dots diagonal */
+  /* background: radial-gradient(circle, #000000 10%, transparent 11%), radial-gradient(circle at bottom left, #000000 5%, transparent 6%), radial-gradient(circle at bottom right, #000000 5%, transparent 6%), radial-gradient(circle at top left, #000000 5%, transparent 6%), radial-gradient(circle at top right, #000000 5%, transparent 6%);
+  background-size: 1em 1em;
+  background-color: #ffffff;
+  opacity: 0.05 */
+
+  /* basic gradient */
+  /* background: rgb(131,58,180);
+  background: linear-gradient(50deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); 
+  opacity: 0.3; */
+
+  /* bg-amber-50 */
+  /* background-color: rgb(255 251 235);  */
+}
+
+.pattern-bg div {
+  opacity: 1;
+}
+
+/* .repeat-verse-chords-hidden :not(:first-child). */
+
+.dropdown-scroll {
+  max-height: 80vh;
+  overflow: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar * {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar,
+.no-scrollbar * {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.paragraph .label {
+  display: none;
+}
+
+.refresh {
+  padding: 10px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.image-overlay {
+  transition: opacity 0.2s linear;
+  /* transition: bottom 0.1s linear;
+  transition: scale 0.1s linear; */
+  bottom: 1rem;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 1) */
+}
+
+.shadow-black {
+  /* box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2); */
+  box-shadow: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12)
+    /* box-shadow:0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12) */
+}
+
+.row-text-shadow {
+  /* text-shadow: 0px 0px 4px hsl(var(--nextui-background)) */
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.visible-navbar {
+  transform: translateY(0);
+}
+
+.hidden-navbar {
+  transform: translateY(-100%);
+}

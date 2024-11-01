@@ -116,6 +116,7 @@ function SongView({ }) {
             <Button className='' isIconOnly onPress={scrollUp}><ArrowBigUpDash /></Button>
             <Button className='' isIconOnly onPress={scrollDown}><ArrowBigDown /></Button>
         </div>
+        {/* https://bundui.io/docs/components/floating-button */}
         <div id="song-content-wrapper" className={`px-6 max-h-full flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
         >
             <div className='flex flex-col text-center '>

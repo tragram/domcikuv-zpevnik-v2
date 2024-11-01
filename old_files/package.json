@@ -1,0 +1,80 @@
+{
+  "name": "domcikuv-zpevnik-v2",
+  "private": true,
+  "version": "0.9.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "prebuild": "node load_songs.mjs",
+    "build": "npm run prebuild && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "@tanstack/react-table": "^8.20.5",
+    "chordproject-parser": "^0.2.14",
+    "flexsearch": "^0.7.43",
+    "gh-pages": "^6.1.1",
+    "lucide-react": "^0.447.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0",
+    "react-virtualized-auto-sizer": "^1.0.24",
+    "unidecode": "^1.1.0",
+    "use-local-storage-state": "^19.4.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@nextui-org/react": "^2.4.8",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@uidotdev/usehooks": "^2.4.1",
+    "@use-gesture/react": "^10.3.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "auto-text-size": "^0.2.3",
+    "autoprefixer": "^10.4.20",
+    "chord-symbol": "^4.0.0",
+    "chordsheetjs": "^10.3.0",
+    "country-flag-icons": "^1.5.13",
+    "eslint": "^9.12.0",
+    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "framer-motion": "^11.9.0",
+    "fuse.js": "^7.0.0",
+    "globals": "^15.9.0",
+    "husky": "^9.1.6",
+    "js-yaml": "^4.1.0",
+    "lint-staged": "^15.2.10",
+    "memoize-one": "^6.0.0",
+    "object-hash": "^3.0.0",
+    "postcss": "^8.4.47",
+    "prettier": "^3.3.3",
+    "react-responsive-masonry": "^2.4.1",
+    "react-scroll": "^1.9.0",
+    "react-window": "^1.8.10",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.1",
+    "vite-plugin-static-copy": "^2.0.0"
+  },
+  "homepage": "https://tragram.github.io/domcikuv-zpevnik-v2",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
