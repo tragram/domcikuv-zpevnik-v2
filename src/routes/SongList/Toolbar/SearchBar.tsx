@@ -23,15 +23,15 @@ function SearchBar({ songs, setSearchResults, query, setQuery }) {
     }
 
     return (
-        <div className="relative flex items-center h-full text-foreground max-w-sm focus:w-[300px] transition-all duration-300 ease-in-out shadow-sm">
+        <div className="relative flex items-center h-full text-foreground max-w-sm dwatransition-all duration-300 ease-in-out shadow-sm">
             <Input
                 onChange={e => search(e)}
                 // type="search"
                 placeholder="Search..."
-                className="pl-10 pr-4 py-2 w-full text-sm rounded-md border border-white bg-transparent focus:bg-white peer"
+                className={"pl-10 pr-4 py-2 w-full text-sm rounded-md border border-white bg-transparent focus:bg-background peer " + (query ? "bg-background" : "")}
             />
             {/* this is placed second for the peer feature to work */}
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none peer-focus:scale-110 duration-300 ease-in-out transorm">
+            <div className={"absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none peer-focus:scale-110 duration-300 ease-in-out transform " + (query ? "scale-110" : "")}>
                 <SearchIcon className="w-5 h-5" />
             </div>
         </div>

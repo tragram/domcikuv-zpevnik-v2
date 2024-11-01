@@ -1,76 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import SearchBar from './SearchBar'
-import { FancySwitch } from '@omit/react-fancy-switch'
 import { SortSettings, FilterSettings, SongData, SortField, SortOrder } from "@/types";
 import useLocalStorageState from "use-local-storage-state";
-import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
-
-
-type Checked = DropdownMenuCheckboxItemProps["checked"]
-export function SortMenu() {
-    const [showStatusBar, setShowStatusBar] = useState<Checked>(true)
-    const [showActivityBar, setShowActivityBar] = useState<Checked>(false)
-    const [showPanel, setShowPanel] = useState<Checked>(false)
-
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button>Open</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem
-                    checked={showStatusBar}
-                    onCheckedChange={setShowStatusBar}
-                >
-                    Status Bar
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                    checked={showActivityBar}
-                    onCheckedChange={setShowActivityBar}
-                    disabled
-                >
-                    Activity Bar
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                    checked={showPanel}
-                    onCheckedChange={setShowPanel}
-                >
-                    Panel
-                </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-    )
-}
-
-const StringExample = () => {
-    const [selectedOption, setSelectedOption] = useState('Title')
-
-    const options = ['Title', 'Artist', 'Date Added', 'Range']
-
-    return (
-        <FancySwitch
-            options={options}
-            value={selectedOption}
-            onChange={setSelectedOption}
-            className="flex rounded-lg border-white border w-fit p-1 h-full shadow-sm "
-            highlighterClassName="bg-primary rounded-full h-full"
-            radioClassName="relative mx-2 flex h-full cursor-pointer items-center justify-center rounded-full px-3.5 text-sm font-medium transition-colors focus:outline-none data-[checked]:text-primary-foreground"
-            highlighterIncludeMargin={true}
-        />
-    )
-}
-
+import SortMenu from "./SortMenu";
 
 function Toolbar({ songs, setFilteredAndSortedSongs, showToolbar }) {
     const [searchResults, setSearchResults] = useState(songs);
@@ -159,11 +91,9 @@ function Toolbar({ songs, setFilteredAndSortedSongs, showToolbar }) {
     return (
         <div className='flex justify-center w-full h-16 absolute p-2 z-50'>
             <div className='container w-full h-full bg-white/80 backdrop-blur-md rounded-lg shadow-md flex gap-2 p-1 items-center' id="navbar">
-                <SortMenu />
-                {StringExample()}
+                <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings}  />
                 <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
             </div>
-            {query}
         </div>
     )
 }
