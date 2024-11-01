@@ -1,0 +1,9 @@
+#navbar * {
+    /* opacity: 50%; */
+    /* background-color: hsl(var(--primary-foreground)); */
+    border-radius: var(--radius);
+}
+
+#navbar > *:hover{
+    opacity: 100%;
+}
