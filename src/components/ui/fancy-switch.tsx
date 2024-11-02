@@ -1,22 +1,23 @@
 
 import { FancySwitch as FancySwitchBase } from '@omit/react-fancy-switch'
-export default function FancySwitch({ options, selectedOption, setSelectedOption, children }) {
+export default function FancySwitch({ options, selectedOption, setSelectedOption, children, vertical = false }) {
     return (
-        <div className="h-full rounded-full bg-primary/10 shadow-sm flex">
+        <div className={"h-full rounded-full shadow-sm flex " + (vertical ? " bg-white/70 text-background backdrop-blur-xl " : "bg-primary/10 ")}>
             <FancySwitchBase
                 options={options}
                 value={selectedOption}
                 onChange={setSelectedOption}
-                className={"flex w-fit h-full " + (children ? "pr-1" : "")}
+                className={"flex w-fit h-full " + (children ? " pr-1 " : "") + (vertical ? " flex-col py-2" : "")}
                 highlighterClassName="bg-primary rounded-full h-full"
                 radioClassName="relative mx-2 flex h-full cursor-pointer items-center justify-center rounded-full px-3.5 text-sm font-medium transition-colors focus:outline-none data-[checked]:text-primary-foreground"
                 highlighterIncludeMargin={true}
                 renderOption={({ option, isSelected, getOptionProps }) => (
-                    <div {...getOptionProps()} className="flex items-center gap-2 z-50 px-4">
-                        <span>{option.icon}</span>
+                    <div {...getOptionProps()}
+                        className={"flex items-center gap-2 z-50 justify-center" + (vertical ? " px-3" : " px-4 ")}>
+                        {option.icon ? <span>{option.icon}</span> : ""}
                         <span>{option.label}</span>
-                    </div>
-                )}
+                    </div>)
+                }
             />
             {children}
         </div>

@@ -26,7 +26,6 @@ function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"]
         if (elementClass) {
             // Extract label or use defaultKey if no label is found
             const labelElement = element.querySelector('.section-title');
-            console.log(labelElement)
             const label = labelElement && useLabels ? labelElement.textContent.trim() : defaultKey;
 
             // Get a unique chord string representation for the element

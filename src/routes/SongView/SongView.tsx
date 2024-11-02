@@ -15,6 +15,7 @@ import PdfView from './pdfView';
 import { Button } from '@/components/ui/button';
 import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
+import TransposeSettings from './TransposeSettings';
 
 function SongView() {
     const songData = useLoaderData() as SongData;
@@ -38,6 +39,7 @@ function SongView() {
     const navigate = useNavigate();
 
     useMemo(() => {
+        console.log(songRenderKey)
         const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts);
         setParsedContent(renderedSong);
         scrollSpy.update();
@@ -80,6 +82,7 @@ function SongView() {
                         <Button size="icon" className="rounded-full"><Settings2 size={32} /></Button>
                     </DropdownMenuTrigger>
                     <LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
+                    <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey}/>
                 </DropdownMenu>
             </ToolbarBase>
         </div>
