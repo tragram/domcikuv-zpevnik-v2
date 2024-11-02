@@ -90,8 +90,8 @@ function Toolbar({ songs, setFilteredAndSortedSongs, showToolbar }) {
         }
     }
     return (
-        <div className='flex justify-center w-full h-16 absolute p-2 z-50'>
-            <div className='container w-full h-full bg-white/80 backdrop-blur-md rounded-lg shadow-md flex gap-2 p-1 items-center' id="navbar">
+        <div className={'flex justify-center w-full h-26 fixed p-4 z-50 toolbar '+(showToolbar?"visible-toolbar":"hidden-toolbar")}>
+            <div className='container w-full h-14 bg-white/80 backdrop-blur-md rounded-full shadow-md flex gap-2 p-2 items-center' id="navbar">
                 <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings}  />
                 <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
                 <ModeToggle/>

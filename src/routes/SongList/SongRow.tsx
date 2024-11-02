@@ -37,6 +37,12 @@ interface SongRowProps {
 }
 
 function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
+    if (!song) {
+        console.log("Invalid song!")
+        return (
+            <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4 bg-white text-black">Invalid song</div>
+        )
+    }
     const imageURL = import.meta.env.BASE_URL + "/songs/illustrations_thumbnails/" + song.chordproFile.split('.')[0] + `/${song.illustration_author}.webp`
     return (
         <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4">

@@ -1,7 +1,7 @@
 #navbar * {
     /* opacity: 50%; */
     /* background-color: hsl(var(--primary-foreground)); */
-    border-radius: var(--radius);
+    /* border-radius: var(--radius); */
 }
 
 #navbar > *:hover{
