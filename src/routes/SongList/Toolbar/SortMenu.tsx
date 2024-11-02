@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import {
+    DropdownIconStart,
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
@@ -69,14 +70,6 @@ interface SortMenuProps {
     setSortSettings: React.Dispatch<React.SetStateAction<SortSettings>>
 }
 
-function DropdownIconStart({ icon }) {
-    return (
-        <div className="h-5 w-5 items-center justify-center mr-2 flex">
-            {icon}
-        </div>
-    )
-}
-
 function SortMenu({ sortSettings, setSortSettings }: SortMenuProps) {
     // just convenience functions to make inline specs shorter
     function setSortField(field: SortField) {
@@ -131,10 +124,9 @@ function SortMenu({ sortSettings, setSortSettings }: SortMenuProps) {
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
-        <div className="hidden md:flex h-full rounded-full bg-primary/10 shadow-sm">
-            <FancySwitch options={categories.map(c => { return { "label": c.title, "value": c.field } })} setSelectedOption={(value: SortField) => { setSortField(value) }} selectedOption={sortByField} />
+        <FancySwitch options={categories.map(c => { return { "label": c.title, "value": c.field } })} setSelectedOption={(value: SortField) => { setSortField(value) }} selectedOption={sortByField} >
             <Button className="rounded-r-full" onClick={() => setSortOrder(toggleSortOrder(sortOrder))}>{activeCategory(sortByField).sorting_icons[sortOrder]}</Button>
-        </div>
+        </FancySwitch>
     </>
     )
 }

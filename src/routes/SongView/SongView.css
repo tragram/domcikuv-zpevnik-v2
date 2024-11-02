@@ -7,17 +7,25 @@
 
 .chorus-section {
     font-weight: bold;
-    border-left: 2px black solid;
+    border-left: solid 2px;
+    border-color: hsl(var(--primary));
     padding-left: 1em;
 }
 
 /* chord settings */
 
+.above-lyrics {
+    /* padding-right: 0.3em; */
+}
+
 .chord {
-    color: hsl(var(--nextui-primary-500));
+    color: hsl(var(--primary));
     font-weight: 800;
 }
 
+.repeated-chords-hidden .repeated-chords .chord {
+    display: none;
+}
 
 .chord:empty {
     /* hide rows without chords */
@@ -27,7 +35,6 @@
 .chords-hidden .chord {
     display: none;
 }
-
 
 .chord-lyrics {
     display: flex;

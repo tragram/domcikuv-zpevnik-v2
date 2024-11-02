@@ -4,6 +4,7 @@ import { SortSettings, FilterSettings, SongData, SortField, SortOrder } from "@/
 import useLocalStorageState from "use-local-storage-state";
 import SortMenu from "./SortMenu";
 import { ModeToggle } from "@/components/mode-toggle";
+import ToolbarBase from "@/components/ui/toolbar-base";
 
 function Toolbar({ songs, setFilteredAndSortedSongs, showToolbar }) {
     const [searchResults, setSearchResults] = useState(songs);
@@ -90,13 +91,11 @@ function Toolbar({ songs, setFilteredAndSortedSongs, showToolbar }) {
         }
     }
     return (
-        <div className={'flex justify-center w-full h-26 fixed p-4 z-50 toolbar '+(showToolbar?"visible-toolbar":"hidden-toolbar")}>
-            <div className='container w-full h-14 bg-white/80 backdrop-blur-md rounded-full shadow-md flex gap-2 p-2 items-center' id="navbar">
-                <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings}  />
-                <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
-                <ModeToggle/>
-            </div>
-        </div>
+        <ToolbarBase showToolbar={showToolbar}>
+            <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings} />
+            <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
+            <ModeToggle />
+        </ToolbarBase>
     )
 }
 
