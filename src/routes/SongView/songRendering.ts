@@ -14,7 +14,7 @@ function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"]
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
 
-    let seen = {}; // Track seen chord strings by section type and label
+    const seen = {}; // Track seen chord strings by section type and label
     // Initialize `seen` for each className
     classNames.forEach(className => {
         seen[className] = { defaultKey: false };
@@ -114,7 +114,7 @@ function convertHTMLChordToGerman(songText: string) {
 }
 
 function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey, newKey) {
-    let preparsedContent = replaceRepeatedDirectives(chordProContent, ["chorus", "bridge", "verse"], ["R", "B", ""], repeatChorus);
+    const preparsedContent = replaceRepeatedDirectives(chordProContent, ["chorus", "bridge", "verse"], ["R", "B", ""], repeatChorus);
     const transposedContent = transposeChordPro(preparsedContent, songKey, newKey);
     const parser = new ChordProParser();
     const song = parser.parse(transposedContent);

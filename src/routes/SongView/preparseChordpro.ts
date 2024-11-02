@@ -55,8 +55,8 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
     let currentVariationType: validVariation | null = null;
     let currentVariationContent: string[] | null = null;
     let variantActive = false;
-    let variantStartRegex = new RegExp("^\\{start_of_variant: ([\\w\\-_+]+)\\}")
-    let variantEndRegex = new RegExp("^\\{end_of_variant\\}")
+    const variantStartRegex = new RegExp("^\\{start_of_variant: ([\\w\\-_+]+)\\}")
+    const variantEndRegex = new RegExp("^\\{end_of_variant\\}")
     // make the deafault key hopefully weird enough that no chorpro file will include it
     const defaultKey = "a4c0d35c95a63a805915367dcfe6b751"
 

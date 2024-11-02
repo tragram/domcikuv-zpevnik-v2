@@ -7,7 +7,8 @@ import {
 } from "react-router-dom";
 
 import SongList from './routes/SongList/SongList';
-import { fetchSongs } from './components/song_loader';
+import { fetchSongContent, fetchSongs } from './components/song_loader';
+import SongView from './routes/SongView/SongView';
 
 const router = createHashRouter([
   {
@@ -17,13 +18,13 @@ const router = createHashRouter([
     // errorElement: <ErrorPage />,
     loader: fetchSongs
   },
-  // {
-  //   // path: "/song",
-  //   path: "/song/:id",
-  //   element: <SongView />,
-  //   errorElement: <ErrorPage />,
-  //   loader: fetchSongContent
-  // },
+  {
+    // path: "/song",
+    path: "/song/:id",
+    element: <SongView />,
+    // errorElement: <ErrorPage />,
+    loader: fetchSongContent
+  },
   // {
   //   // path: "/gallery",
   //   path: "/gallery",

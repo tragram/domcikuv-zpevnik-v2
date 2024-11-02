@@ -1,31 +1,25 @@
-'use client'
-import React, { useEffect, useRef, useState } from 'react';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, RadioGroup, Radio, ButtonGroup, Navbar, NavbarContent, NavbarMenuToggle, Link, NavbarItem, NavbarMenu, NavbarMenuItem, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
-// import SongRange from "./songs_list"
-import { useMediaQuery } from "@uidotdev/usehooks";
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown } from 'lucide-react';
-import { HashRouter, Route, Routes, useLoaderData } from "react-router-dom";
 import { SongData } from '../../types';
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import useLocalStorageState from 'use-local-storage-state'
 import { AutoTextSize } from 'auto-text-size'
-import { FontSizeSettings, minFontSizePx, maxFontSizePx } from './FontSizeSettings';
-import SpaceSavingSettings from './SpaceSavingSettings';
-import TransposeSettings from './TransposeSettings';
-import { renderSong, guessKey } from '../SongView/songRendering';
+import './SongView.css'
+import { minFontSizePx, maxFontSizePx } from './FontSizeSettings';
+// import SpaceSavingSettings from './SpaceSavingSettings';
+// import TransposeSettings from './TransposeSettings';
+import { renderSong, guessKey } from './songRendering';
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 
+type fitScreenModeType = "none" | "X" | "XY"
 
 
 function SongView() {
     const songData = useLoaderData() as SongData;
-
     if (!songData.key) {
         songData.key = guessKey(songData.content);
     }
-    if (songData.lyricsLength() < 50) {
-        return PdfView(songData.pdfFilenames);
-    };
+
     const [chordsHidden, setChordsHidden] = useLocalStorageState("settings/chordsHidden", { defaultValue: false });
     const [repeatParts, setRepeatParts] = useLocalStorageState("settings/repeatParts", { defaultValue: false });
     const [repeatVerseChords, setRepeatVerseChords] = useLocalStorageState("settings/repeatVerseChords", { defaultValue: false });
@@ -36,7 +30,6 @@ function SongView() {
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
     const navigate = useNavigate();
-
 
     useEffect(() => {
         setParsedContent(renderSong(songData, songRenderKey, repeatParts));
@@ -88,8 +81,11 @@ function SongView() {
         // }
     };
 
-    return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-dvh" : "")}>
-        <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
+    if (songData.lyricsLength() < 50) {
+        return PdfView(songData.pdfFilenames);
+    };
+    return (<div className={"flex flex-col " + (fitScreenMode === "XY" ? " h-dvh" : "")}>
+        {/* <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
             <NavbarContent justify="start">
                 <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
             </NavbarContent>
@@ -111,23 +107,27 @@ function SongView() {
         <div className={"fixed bottom-12 right-10 z-50 flex-col gap-2 " + (fitScreenMode === "X" ? "flex" : "hidden")}>
             <Button className='' isIconOnly onPress={scrollUp}><ArrowBigUpDash /></Button>
             <Button className='' isIconOnly onPress={scrollDown}><ArrowBigDown /></Button>
-        </div>
+        </div> */}
         {/* https://bundui.io/docs/components/floating-button */}
-        <div id="song-content-wrapper" className={`px-6 max-h-full flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
-        >
-            <div className='flex flex-col text-center '>
-                <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
-                <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
-            </div>
-            <div className={"py-4 w-full max-h-full " + (fitScreenMode === "XY" ? "flex-1" : "")} id="autotextsize_wrapper">
-                <AutoTextSize
-                    mode={fitScreenMode === "XY" ? "boxoneline" : "oneline"}
-                    minFontSizePx={fitScreenMode !== "none" ? minFontSizePx : fontSize}
-                    maxFontSizePx={fitScreenMode !== "none" ? maxFontSizePx : fontSize}>
-                    <div className={`flex flex-col ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeated-chords-hidden'} ${twoColumns ? "song-content-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song_content" ></div>
-                </AutoTextSize>
-            </div>
+
+
+        <div id="auto-text-size-wrapper" className='w-full h-full'>
+            <AutoTextSize
+                mode={fitScreenMode === "XY" ? "boxoneline" : "oneline"}
+                minFontSizePx={fitScreenMode !== "none" ? minFontSizePx : fontSize}
+                maxFontSizePx={fitScreenMode !== "none" ? maxFontSizePx : fontSize}>
+                <div className={`flex flex-col ${chordsHidden ? 'chords-hidden' : ''} ${repeatVerseChords ? '' : 'repeated-chords-hidden'} ${twoColumns ? "song-content-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper" ></div>
+            </AutoTextSize>
         </div>
+
+
+        {/* className={`px-6 max-h-full flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`} */}
+        {/* <div className='flex flex-col text-center '>
+            <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
+            <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
+        </div>
+        <div className={"py-4 w-full max-h-full " + (fitScreenMode === "XY" ? "flex-1" : "")} id="autotextsize_wrapper">
+        </div> */}
     </div >
     );
 };

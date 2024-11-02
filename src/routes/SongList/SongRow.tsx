@@ -3,6 +3,10 @@ import { SongData } from "../../types";
 import { Instagram } from "lucide-react";
 import { AvatarImage } from "@radix-ui/react-avatar";
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+import {
+    useHref,
+    useLinkClickHandler,
+} from "react-router-dom";
 
 function progressColor(range) {
     if (!range) {
@@ -37,17 +41,22 @@ interface SongRowProps {
 }
 
 function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
+    const imageURL = import.meta.env.BASE_URL + "/songs/illustrations_thumbnails/" + song.chordproFile.split('.')[0] + `/${song.illustration_author}.webp`;
+    const handleClick = useLinkClickHandler(`song/${song.id}`, {
+        // replace,
+        // state,
+        // target,
+    });
     if (!song) {
         console.log("Invalid song!")
         return (
             <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4 bg-white text-black">Invalid song</div>
         )
     }
-    const imageURL = import.meta.env.BASE_URL + "/songs/illustrations_thumbnails/" + song.chordproFile.split('.')[0] + `/${song.illustration_author}.webp`
     return (
         <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4">
             <div className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" style={{ backgroundImage: `url(${imageURL})` }}
-                onClick={() => { setSelectedSong(song); }}>
+                onClick={(event) => handleClick(event)}>
                 <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow" >
                     <Avatar className="absolute -left-1 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" ><AvatarImage src={imageURL} /></Avatar>
                     <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-white/70 hover:bg-white/90 dark:bg-black/70 rounded-full">
