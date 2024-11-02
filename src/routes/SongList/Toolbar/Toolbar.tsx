@@ -3,6 +3,7 @@ import SearchBar from './SearchBar'
 import { SortSettings, FilterSettings, SongData, SortField, SortOrder } from "@/types";
 import useLocalStorageState from "use-local-storage-state";
 import SortMenu from "./SortMenu";
+import { ModeToggle } from "@/components/mode-toggle";
 
 function Toolbar({ songs, setFilteredAndSortedSongs, showToolbar }) {
     const [searchResults, setSearchResults] = useState(songs);
@@ -93,6 +94,7 @@ function Toolbar({ songs, setFilteredAndSortedSongs, showToolbar }) {
             <div className='container w-full h-full bg-white/80 backdrop-blur-md rounded-lg shadow-md flex gap-2 p-1 items-center' id="navbar">
                 <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings}  />
                 <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
+                <ModeToggle/>
             </div>
         </div>
     )

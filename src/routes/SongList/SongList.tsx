@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import memoize from 'memoize-one';
 import { areEqual, FixedSizeList as List } from 'react-window';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import SongRow from './SongRow';
 
 const SongRowMemo = memo(({ data, index, style }) => {
     const { songDB, setSelectedSong, filteredAndSortedSongs } = data;
@@ -20,10 +21,7 @@ const SongRowMemo = memo(({ data, index, style }) => {
         )
     } else {
         return (
-            <div style={style} className='h-[70px] w-24 p-4'>
-                <div className='bg-yellow-900 h-full w-full'></div>
-                {/* <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index - 1]} /> */}
-            </div>
+            <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index - 1]} />
         )
     }
 }, areEqual);
@@ -60,16 +58,21 @@ function SongList() {
     };
 
     const songRowData = createSongRowData(filteredAndSortedSongs, songDB, setSelectedSong);
-    console.log(filteredAndSortedSongs)
+    console.log(filteredAndSortedSongs[100])
     return (<>
         <Toolbar songs={songs} setFilteredAndSortedSongs={setFilteredAndSortedSongs} showToolbar={showToolbar} />
         <div className='flex w-full no-scrollbar h-screen'>
-            <AutoSizer>
+            <div className='flex w-full h-fit flex-col mt-20'>
+                {filteredAndSortedSongs.map(song => (
+                    <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} />
+                ))}
+            </div>
+            {/* <AutoSizer>
                 {({ height, width }) => (
-                    <List height={height} itemCount={filteredAndSortedSongs.length + 1} itemSize={70} width={width} onScroll={onScroll} itemData={songRowData} itemKey={(index) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
+                    <List height={height} width={width} itemCount={filteredAndSortedSongs.length + 1} itemSize={70} onScroll={onScroll} itemData={songRowData} itemKey={(index: number) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={30} initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}>
                         {SongRowMemo}
                     </List>)}
-            </AutoSizer>
+            </AutoSizer> */}
         </div >
     </>
     )
