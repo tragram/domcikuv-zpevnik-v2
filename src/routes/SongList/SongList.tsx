@@ -62,7 +62,7 @@ function SongList() {
     const listMarginTop = 80;
     const itemSize = (index: number) => index > 0 ? 70 : listMarginTop;
     return (<>
-        <Toolbar songs={songs} setFilteredAndSortedSongs={setFilteredAndSortedSongs} showToolbar={showToolbar} />
+        <Toolbar songs={songs} setFilteredAndSortedSongs={setFilteredAndSortedSongs} showToolbar={showToolbar} filteredAndSortedSongs={filteredAndSortedSongs} />
         <div className='flex w-full no-scrollbar h-full'>
             {/* <div className='flex w-full h-fit flex-col mt-20'>
                 {filteredAndSortedSongs.map(song => (

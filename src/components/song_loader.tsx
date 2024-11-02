@@ -76,7 +76,12 @@ async function fetchSongs(): Promise<SongDB> {
     }
 }
 
-async function fetchSongContent({ params }): Promise<SongData> {
+interface DataForSongView {
+    songDB: SongDB,
+    songData: SongData
+}
+
+async function fetchSongContent({ params }): Promise<DataForSongView> {
     const songDB = await fetchSongs();
     const songData = songDB.songs.find(song => song.id === params.id);
 
@@ -95,7 +100,7 @@ async function fetchSongContent({ params }): Promise<SongData> {
     }
 
     songData.content = songContent;
-    return songData;
+    return { songDB: songDB, songData: songData };
 }
 
 async function fetchIllustrationPrompt(id: string): Promise<object> {
@@ -118,4 +123,4 @@ async function fetchIllustrationPrompt(id: string): Promise<object> {
 }
 
 
-export { fetchSongs, fetchSongContent, fetchIllustrationPrompt };
+export { fetchSongs, fetchSongContent, fetchIllustrationPrompt, DataForSongView };

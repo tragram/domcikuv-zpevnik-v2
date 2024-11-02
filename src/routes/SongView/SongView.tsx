@@ -15,9 +15,11 @@ import PdfView from './pdfView';
 import { Button } from '@/components/ui/button';
 import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import TransposeSettings from './TransposeSettings';
+import RandomSong from '@/components/RandomSong';
+import { DataForSongView } from '@/components/song_loader';
 
 function SongView() {
-    const songData = useLoaderData() as SongData;
+    const { songDB, songData } = useLoaderData() as DataForSongView;
     if (!songData.key) {
         songData.key = guessKey(songData.content);
     }
@@ -99,6 +101,7 @@ function SongView() {
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
+                <RandomSong songs={songDB.songs} />
             </ToolbarBase>
         </div>
         {/* https://bundui.io/docs/components/floating-button */}

@@ -41,8 +41,7 @@ interface SongRowProps {
 }
 
 function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
-    const imageURL = import.meta.env.BASE_URL + "/songs/illustrations_thumbnails/" + song.chordproFile.split('.')[0] + `/${song.illustration_author}.webp`;
-    const handleClick = useLinkClickHandler(`song/${song.id}`, {
+    const handleClick = useLinkClickHandler(song.url(), {
         // replace,
         // state,
         // target,
@@ -53,12 +52,13 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
             <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4 bg-white text-black">Invalid song</div>
         )
     }
+    console.log(song.thumbnailURL())
     return (
         <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4">
-            <div className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" style={{ backgroundImage: `url(${imageURL})` }}
+            <div className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
                 onClick={(event) => handleClick(event)}>
                 <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow" >
-                    <Avatar className="absolute -left-1 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" ><AvatarImage src={imageURL} /></Avatar>
+                    <Avatar className="absolute -left-1 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" ><AvatarImage src={song.thumbnailURL()} /></Avatar>
                     <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-white/70 hover:bg-white/90 dark:bg-black/70 rounded-full">
                         <div className="flex basis-[12%] min-w-[72px] rounded-l-full content-center justify-center relative">
                         </div>
