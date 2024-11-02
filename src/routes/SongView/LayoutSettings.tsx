@@ -30,8 +30,8 @@ const layouSettingsBoolsKeys = ["showChords", "twoColumns", "repeatParts", "repe
 const layoutSettingsBools = {
     "showChords": { icon: <Guitar />, label: "Show chords" },
     "twoColumns": { icon: <Columns2 />, label: "View as two columns" },
-    "repeatParts": { icon: <Repeat/>, label: "Show repeated parts" },
-    "repeatPartsChords": { icon: <Repeat/>, label: "Show chords in repeated parts" },
+    "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
+    "repeatPartsChords": { icon: <Repeat />, label: "Show chords in repeated parts" },
 }
 
 const toggleSettingFactory = (layoutSettings, setLayoutSettings) => {
@@ -83,53 +83,51 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
 function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
     // TODO: once JS stops being buggy (https://github.com/jsdom/jsdom/issues/2160), make it so that fontSize is read from the autoresizer, so there's not a jump when moving from auto to manual
     const toggleSetting = toggleSettingFactory(layoutSettings, setLayoutSettings);
-    return (
-        <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Layout settings</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuSeparator />
-            <DropdownMenuLabel>Font size</DropdownMenuLabel>
+    return (<>
+        <DropdownMenuLabel>Layout settings</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel>Font size</DropdownMenuLabel>
+        <DropdownMenuCheckboxItem
+            key="fitXY"
+            checked={layoutSettings.fitScreenMode == "fitXY"}
+            onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitXY" })}
+        >
+            <DropdownIconStart icon={<MoveDiagonal />} />
+            Fit screen
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+            key="fitX"
+            checked={layoutSettings.fitScreenMode == "fitX"}
+            onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitX" })}
+        >
+            <DropdownIconStart icon={<MoveDiagonal />} />
+            Fit screen width
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuItem onClick={() => { setLayoutSettings({ ...layoutSettings, fitScreenMode: "none", fontSize: fontSizeLimits(layoutSettings.fontSize * fontSizeStep) }) }}
+            onSelect={e => e.preventDefault()}>
+            <DropdownIconStart icon={<AArrowUp />} />
+            Increase font size
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => { setLayoutSettings({ ...layoutSettings, fitScreenMode: "none", fontSize: fontSizeLimits(layoutSettings.fontSize / fontSizeStep) }) }}
+            onSelect={e => e.preventDefault()}>
+            <DropdownIconStart icon={<AArrowDown />} />
+            Decrease font size
+        </DropdownMenuItem>
+        <DropdownMenuLabel>Contents</DropdownMenuLabel>
+        {layouSettingsBoolsKeys.map(k => (
             <DropdownMenuCheckboxItem
-                key="fitXY"
-                checked={layoutSettings.fitScreenMode == "fitXY"}
-                onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitXY" })}
+                key={k}
+                checked={layoutSettings[k]}
+                onCheckedChange={() => toggleSetting(k)}
+                onSelect={e => e.preventDefault()}
             >
-                <DropdownIconStart icon={<MoveDiagonal />} />
-                Fit screen
+                <DropdownIconStart icon={layoutSettingsBools[k].icon} />
+                {layoutSettingsBools[k].label}
             </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-                key="fitX"
-                checked={layoutSettings.fitScreenMode == "fitX"}
-                onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitX" })}
-            >
-                <DropdownIconStart icon={<MoveDiagonal />} />
-                Fit screen width
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuItem onClick={() => { setLayoutSettings({ ...layoutSettings, fitScreenMode: "none", fontSize: fontSizeLimits(layoutSettings.fontSize * fontSizeStep) }) }}
-                onSelect={e => e.preventDefault()}>
-                <DropdownIconStart icon={<AArrowUp />} />
-                Increase font size
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => { setLayoutSettings({ ...layoutSettings, fitScreenMode: "none", fontSize: fontSizeLimits(layoutSettings.fontSize / fontSizeStep) }) }}
-                onSelect={e => e.preventDefault()}>
-                <DropdownIconStart icon={<AArrowDown />} />
-                Decrease font size
-            </DropdownMenuItem>
-            <DropdownMenuLabel>Contents</DropdownMenuLabel>
-            {layouSettingsBoolsKeys.map(k => (
-                <DropdownMenuCheckboxItem
-                    key={k}
-                    checked={layoutSettings[k]}
-                    onCheckedChange={() => toggleSetting(k)}
-                    onSelect={e => e.preventDefault()}
-                >
-                    <DropdownIconStart icon={layoutSettingsBools[k].icon} />
-                    {layoutSettingsBools[k].label}
-                </DropdownMenuCheckboxItem>
-            ))}
+        ))}
+    </>
 
-            <DropdownMenuSeparator />
-        </DropdownMenuContent>
+
     )
 }
 

@@ -1,5 +1,5 @@
 import { SongData } from '../../types';
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import useLocalStorageState from 'use-local-storage-state'
 import { AutoTextSize } from 'auto-text-size'
 import './SongView.css'
@@ -13,8 +13,7 @@ import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import ToolbarBase from '@/components/ui/toolbar-base';
 import PdfView from './pdfView';
 import { Button } from '@/components/ui/button';
-import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
-import { DropdownMenu } from '@/components/ui/dropdown-menu';
+import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import TransposeSettings from './TransposeSettings';
 
 function SongView() {
@@ -43,12 +42,11 @@ function SongView() {
         const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts);
         setParsedContent(renderedSong);
         scrollSpy.update();
-    }, [songRenderKey, layoutSettings, songData])
+    }, [songRenderKey, layoutSettings.repeatParts, songData])
 
     const scrollDown = () => {
         // if the rest can fit on the next screen --> scroll all the way
         const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
-        console.log(remainingContent)
         if (remainingContent < 0.8 * screen.height) {
             scroll.scrollToBottom({ duration: 3000 });
             return;
@@ -60,7 +58,8 @@ function SongView() {
             // Check if the container is not fully visible within the viewport
             if (rect.bottom >= screen.height) {
                 // Scroll this container into view and exit the loop
-                scroll.scrollTo(rect.top - Math.max(100, 0.2 * screen.height), { duration: 2000 });
+                const offset = Math.max(100, 0.2 * screen.height);
+                scroll.scrollTo(rect.top + window.scrollY - offset, { duration: 2000 });
                 break;
             }
         }
@@ -73,38 +72,35 @@ function SongView() {
     if (songData.lyricsLength() < 50) {
         return PdfView(songData.pdfFilenames);
     };
-    return (<div className={"flex flex-col pt-20 " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")}>
+
+
+    return (<div className={"flex flex-col pt-20 " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")} >
         <div className='absolute top-0'>
             <ToolbarBase>
                 <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
+                <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button size="icon" className="rounded-full"><Settings2 size={32} /></Button>
                     </DropdownMenuTrigger>
-                    <LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
-                    <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey}/>
+                    <DropdownMenuContent className="w-56">
+                        {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />)}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Results settings</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem>
+                            <DropdownIconStart icon={<Github />} />
+
+                            <Link
+                                to={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile}>
+                                Edit on GitHub
+                            </Link>
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
                 </DropdownMenu>
             </ToolbarBase>
         </div>
-        {/* <Navbar shouldHideOnScroll maxWidth='xl' isBordered className='flex'>
-            <NavbarContent justify="start">
-                <Button color="primary" isIconOnly variant='ghost' onClick={() => navigate("/")}>{<Undo2 />}</Button>
-            </NavbarContent>
-            <NavbarContent as="div" justify="center" className='w-full max-sm:gap-2.5'>
-                <NavbarItem className=''>
-                    <TransposeSettings setSongRenderKey={setSongRenderKey} songRenderKey={songRenderKey} />
-                </NavbarItem>
-                <NavbarItem className=''>
-                    <SpaceSavingSettings chordsHidden={chordsHidden} setChordsHidden={setChordsHidden} repeatParts={repeatParts} setRepeatParts={setRepeatParts} repeatVerseChords={repeatVerseChords} setRepeatVerseChords={setRepeatVerseChords} twoColumns={twoColumns} settwoColumns={settwoColumns} />
-                </NavbarItem>
-                <NavbarItem className=''>
-                    <FontSizeSettings fontSize={fontSize} setFontSize={setFontSize} fitScreenMode={fitScreenMode} setfitScreenMode={setfitScreenMode} />
-                </NavbarItem>
-                <NavbarItem className='hidden sm:flex '>
-                    <Button color="primary" variant="ghost" isIconOnly href={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile} as={Link}><Github /></Button>
-                </NavbarItem>
-            </NavbarContent >
-        </Navbar > */}
         {/* https://bundui.io/docs/components/floating-button */}
         <div className={"fixed bottom-12 right-10 z-50 flex-col gap-2 " + (layoutSettings.fitScreenMode === "fitX" ? "flex" : "hidden")}>
             <Button className='' size="icon" onClick={scrollUp}><ArrowBigUpDash /></Button>
