@@ -35,7 +35,7 @@ function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, icon
     return (
         <DropdownMenu >
             <DropdownMenuTrigger>
-                <Button variant="circular">
+                <Button variant="circular" className="rounded-r-none border-r-0">
                     <Languages />{iconOnly ? "Languages" : ""}
                 </Button>
             </DropdownMenuTrigger>

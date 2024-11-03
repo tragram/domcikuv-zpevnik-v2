@@ -15,12 +15,12 @@ function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange 
         "only screen and (min-width : 1000px)"
     );
     return (
-        <div className="flex gap-2">
+        <div className="flex">
             {/* <Button size="icon" variant="circular">
                 <Filter className="stroke-gray-400" />
             </Button> */}
             <LanguageFilter languages={languages} selectedLanguage={filterSettings.language} setSelectedLanguage={(language: string) => setFilterSettings({ ...filterSettings, language: language })} iconOnly={iconOnly} />
-            <Button variant="circular"
+            <Button variant="circular" className=" rounded-none border-x-background border-x-4"
                 // variant={filterSettings.capo ? "solid" : "bordered"}
                 onClick={() => { setFilterSettings({ ...filterSettings, capo: !filterSettings.capo }) }} startContent={iconOnly ? "" : <Handshake />} isIconOnly={!iconOnly}>{iconOnly ? "Capo" : ""}</Button>
             <VocalRangeFilter maxRange={maxRange} vocalRangeFilter={filterSettings.vocal_range} setVocalRangeFilter={(range) => setFilterSettings({ ...filterSettings, vocal_range: range })} iconOnly={iconOnly} />
