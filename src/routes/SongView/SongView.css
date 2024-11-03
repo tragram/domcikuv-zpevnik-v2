@@ -106,6 +106,10 @@
     flex-wrap: wrap;
 }
 
+.section-title{
+    display: none;
+}
+
 .word {
     display: flex;
     flex-direction: row;

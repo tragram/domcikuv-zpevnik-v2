@@ -88,7 +88,7 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
             checked={layoutSettings.fitScreenMode == "fitX"}
             onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitX" })}
         >
-            <DropdownIconStart icon={<MoveDiagonal />} />
+            <DropdownIconStart icon={<MoveHorizontal />} />
             Fit screen width
         </DropdownMenuCheckboxItem>
         <DropdownMenuItem onClick={() => { setLayoutSettings({ ...layoutSettings, fitScreenMode: "none", fontSize: fontSizeLimits(layoutSettings.fontSize * fontSizeStep) }) }}
