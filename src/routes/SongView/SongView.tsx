@@ -8,12 +8,12 @@ import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, La
 // import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './songRendering';
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2 } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano } from 'lucide-react';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import ToolbarBase from '@/components/ui/toolbar-base';
 import PdfView from './pdfView';
 import { Button } from '@/components/ui/button';
-import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import TransposeSettings from './TransposeSettings';
 import RandomSong from '@/components/RandomSong';
 import { DataForSongView } from '@/components/song_loader';
@@ -34,17 +34,17 @@ function SongView() {
             twoColumns: false,
         }
     });
+    const [czechChordNames, setCzechChordNames] = useLocalStorageState<boolean>("settings/czechChordNames", { defaultValue: true });
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
     const navigate = useNavigate();
 
     useMemo(() => {
-        console.log(songRenderKey)
-        const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts);
+        const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts, czechChordNames);
         setParsedContent(renderedSong);
         scrollSpy.update();
-    }, [songRenderKey, layoutSettings.repeatParts, songData])
+    }, [songRenderKey, layoutSettings.repeatParts, songData, czechChordNames])
 
     const scrollDown = () => {
         // if the rest can fit on the next screen --> scroll all the way
@@ -91,12 +91,14 @@ function SongView() {
                     <DropdownMenuContent className="w-56">
                         {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />)}
                         <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Chord settings</DropdownMenuLabel>
+                        <DropdownMenuCheckboxItem checked={czechChordNames} onSelect={e => e.preventDefault()} onClick={() => setCzechChordNames(!czechChordNames)}>
+                            <DropdownIconStart icon={<Piano />} />
+                            Czech notes (A-B-H-C)
+                        </DropdownMenuCheckboxItem>
                         <DropdownMenuSeparator />
-                        {/* <DropdownMenuLabel>Results settings</DropdownMenuLabel>
-                        <DropdownMenuSeparator /> */}
                         <DropdownMenuItem>
                             <DropdownIconStart icon={<Github />} />
-
                             <Link
                                 to={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile}>
                                 Edit on GitHub

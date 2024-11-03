@@ -125,13 +125,13 @@ export function guessKey(chordProContent: string) {
     return MusicLetter[song.getPossibleKey().note.letter];
 }
 
-export function renderSong(songData: SongData, newKey: string, repeatChorus: boolean): string {
+export function renderSong(songData: SongData, newKey: string, repeatChorus: boolean, czechChordNames: boolean): string {
     // repeat choruses/bridges/verses if necessary
     const song = parseChordPro(songData.content, repeatChorus, songData.key, newKey);
     const settings = new FormatterSettings();
     settings.showMetadata = false;
     const formatter = new HtmlFormatter(settings);
     let songText = formatter.format(song).join('\n');
-    songText = convertHTMLChordToGerman(songText);
+    if (czechChordNames) { songText = convertHTMLChordToGerman(songText); }
     return addRepeatClasses(songText, ["verse-section", "chorus-section", "bridge-section"]);
 }
