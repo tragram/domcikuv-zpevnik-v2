@@ -26,6 +26,7 @@ function ChordSettingsMenu({ chordSettings, setChordSettings }) {
                 <DropdownMenuCheckboxItem
                     key={k}
                     checked={chordSettings[k]}
+                    disabled={k != "showChords" && !chordSettings.showChords}
                     onCheckedChange={() => toggleSetting(k)}
                     onSelect={e => e.preventDefault()}
                 >
