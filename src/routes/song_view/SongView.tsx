@@ -114,6 +114,7 @@ function SongView() {
         </div>
         {/* https://bundui.io/docs/components/floating-button */}
         <div id="song-content-wrapper" className={`px-6 max-h-full flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${fitScreenMode === "XY" ? "overflow-hidden" : ""}`}
+            style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}
         >
             <div className='flex flex-col text-center '>
                 <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>

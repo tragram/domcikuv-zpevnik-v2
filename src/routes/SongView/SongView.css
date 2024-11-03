@@ -1,4 +1,9 @@
-#auto-text-size-wrapper {}
+.bg-image {
+    /* the top of the image is actually nicer to get color */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 /* chorus settings */
 .chorus {
@@ -50,7 +55,19 @@
 
 #auto-text-size-wrapper {
     justify-content: safe center;
+    /* padding: 2rem; */
+    /* padding: 2rem; */
+    padding-top: 0;
+}
+
+#auto-text-size-wrapper>div {
+    /* TODO: smaller padding on mobile? */
+    border-radius: var(--radius);
+    /* border: solid white; */
     padding: 2rem;
+    /* margin-bottom: 2rem; */
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(30px);
 }
 
 .song-content {

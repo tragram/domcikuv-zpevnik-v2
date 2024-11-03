@@ -76,9 +76,12 @@ function SongView() {
     };
 
 
-    return (<div className={"flex flex-col pt-20 " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")} >
+    return (<div className={"flex flex-col pt-20 " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")}
+    >
+        <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-md' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}></div>
         <div className='absolute top-0'>
             <ToolbarBase>
+                <Button size="icon" onClick={() => navigate("/")}>{<Undo2 />}</Button>
                 <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
                 <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} />
                 <DropdownMenu>
@@ -89,8 +92,8 @@ function SongView() {
                         {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />)}
                         <DropdownMenuSeparator />
                         <DropdownMenuSeparator />
-                        <DropdownMenuLabel>Results settings</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
+                        {/* <DropdownMenuLabel>Results settings</DropdownMenuLabel>
+                        <DropdownMenuSeparator /> */}
                         <DropdownMenuItem>
                             <DropdownIconStart icon={<Github />} />
 
@@ -110,13 +113,19 @@ function SongView() {
             <Button className='' size="icon" onClick={scrollDown}><ArrowBigDown /></Button>
         </div>
 
+        <div className='h-12 self-center items-center flex bg-white/70 backdrop-blur-md mb-2 justify-between container px-20'>
+            <h2 className='text-sm text-nowrap'>Capo: {songData.capo}</h2>
+            <h1 className='self-center font-bold text-nowrap'>{songData.artist} - {songData.title}</h1>
+            <h2 className='text-sm text-nowrap'>Range: {songData.range.min}-{songData.range.max}</h2>
+        </div>
 
-        <div id="auto-text-size-wrapper" className='w-full h-full'>
+
+        <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-[calc(100%-3rem)] " : " h-fit ")}>
             <AutoTextSize
                 mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                 minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
                 maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
-                <div className={`flex flex-col ${layoutSettings.showChords ? '' : 'chords-hidden'} ${layoutSettings.repeatPartsChords ? '' : 'repeated-chords-hidden'} ${layoutSettings.twoColumns ? "song-content-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper" ></div>
+                <div className={`flex flex-col  ${layoutSettings.showChords ? '' : 'chords-hidden'} ${layoutSettings.repeatPartsChords ? '' : 'repeated-chords-hidden'} ${layoutSettings.twoColumns ? "song-content-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper" ></div>
             </AutoTextSize>
         </div>
 

@@ -84,7 +84,7 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
     // TODO: once JS stops being buggy (https://github.com/jsdom/jsdom/issues/2160), make it so that fontSize is read from the autoresizer, so there's not a jump when moving from auto to manual
     const toggleSetting = toggleSettingFactory(layoutSettings, setLayoutSettings);
     return (<>
-        <DropdownMenuLabel>Layout settings</DropdownMenuLabel>
+        <DropdownMenuLabel>Layout</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuLabel>Font size</DropdownMenuLabel>
         <DropdownMenuCheckboxItem

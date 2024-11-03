@@ -3,13 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.song-row-bg-image {
-  /* the top of the image is actually nicer to get color */
-  /* background-position: center;  */
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 body {
   /* background-size: contain; */
   /* background-color: red;

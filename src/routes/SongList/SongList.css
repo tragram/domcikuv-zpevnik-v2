@@ -25,3 +25,10 @@
 .hidden-toolbar {
     transform: translateY(-100%);
 }
+
+.song-row-bg-image {
+    /* the top of the image is actually nicer to get color */
+    /* background-position: center;  */
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
