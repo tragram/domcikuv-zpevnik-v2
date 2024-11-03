@@ -39,7 +39,7 @@ const english2German = {
 
 function TransposeButtons({ songRenderKey, setSongRenderKey, vertical = false }) {
     return (
-        <FancySwitch options={renderKeys} selectedOption={songRenderKey} setSelectedOption={key => setSongRenderKey(german2English[key])} vertical={vertical}/>
+        <FancySwitch options={renderKeys} selectedOption={songRenderKey.toUpperCase()} setSelectedOption={key => setSongRenderKey(german2English[key])} vertical={vertical}/>
     )
 }
 
