@@ -1,3 +1,4 @@
+import { toggleSettingFactory } from "@/components/toogle-settings-factory";
 import { Button } from "@/components/ui/button";
 import { DropdownIconStart, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import FancySwitch from "@/components/ui/fancy-switch";
@@ -13,7 +14,6 @@ type FitScreenMode = "none" | "fitX" | "fitXY";
 interface LayoutSettings {
     fitScreenMode: FitScreenMode;
     fontSize: number;
-    showChords: boolean;
     repeatParts: boolean;
     repeatPartsChords: boolean;
     twoColumns: boolean;
@@ -26,23 +26,14 @@ const presetModesIcons = {
     "compact": <MoveDiagonal />
 };
 
-const layouSettingsBoolsKeys = ["showChords", "twoColumns", "repeatParts", "repeatPartsChords"]
+const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords"]
 const layoutSettingsBools = {
-    "showChords": { icon: <Guitar />, label: "Show chords" },
     "twoColumns": { icon: <Columns2 />, label: "View as two columns" },
     "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
     "repeatPartsChords": { icon: <Repeat />, label: "Show chords in repeated parts" },
 }
 
-const toggleSettingFactory = (layoutSettings, setLayoutSettings) => {
-    return function toggleSetting(setting: string) {
-        if (typeof layoutSettings[setting] == "boolean") {
-            setLayoutSettings({ ...layoutSettings, [setting]: !layoutSettings[setting] })
-        } else {
-            console.log("Error: Could not toggle ", setting)
-        }
-    }
-}
+
 
 function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
     const toggleSetting = toggleSettingFactory(layoutSettings, setLayoutSettings);
@@ -69,9 +60,6 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
     }
     return (
         <>
-            <Button size="icon" className="rounded-full" onClick={() => { toggleSetting("showChords") }}>
-                {layoutSettingsBools["showChords"].icon}
-            </Button >
             <Button size="icon" className="rounded-full" onClick={() => { toggleSetting("twoColumns") }}>
                 {layoutSettingsBools["twoColumns"].icon}
             </Button>

@@ -51,6 +51,21 @@
     display: inline !important;
 }
 
+/* chords-inline mode */
+.chords-inline .chord-lyrics{
+    flex-direction: row;
+}
+
+.chords-inline .chord{
+    margin-bottom: 0.5em;
+    font-size: 1em;
+}
+
+.chords-inline .lyrics{
+    align-content: end;
+}
+
+
 /* layout */
 
 #auto-text-size-wrapper {

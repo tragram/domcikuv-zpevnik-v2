@@ -13,10 +13,13 @@ import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import ToolbarBase from '@/components/ui/toolbar-base';
 import PdfView from './pdfView';
 import { Button } from '@/components/ui/button';
-import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
+import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import TransposeSettings from './TransposeSettings';
 import RandomSong from '@/components/RandomSong';
 import { DataForSongView } from '@/components/song_loader';
+import { ChordSettingsMenu, ChordSettingsButtons, ChordSettings } from './ChordSettingsMenu';
+
+
 
 function SongView() {
     const { songDB, songData } = useLoaderData() as DataForSongView;
@@ -24,27 +27,34 @@ function SongView() {
         songData.key = guessKey(songData.content);
     }
 
-    const [layoutSettings, setLayoutSettings] = useLocalStorageState<LayoutSettings>("settings/viewLayoutSettings", {
+    const [layoutSettings, setLayoutSettings] = useLocalStorageState<LayoutSettings>("settings/SongView/LayoutSettings", {
         defaultValue: {
             fitScreenMode: "fitXY",
             fontSize: 12,
-            showChords: true,
             repeatParts: false,
             repeatPartsChords: false,
             twoColumns: false,
         }
     });
-    const [czechChordNames, setCzechChordNames] = useLocalStorageState<boolean>("settings/czechChordNames", { defaultValue: true });
+
+    const [chordSettings, setChordSettings] = useLocalStorageState<ChordSettings>("settings/SongView/ChordSettings", {
+        defaultValue: {
+            showChords: true,
+            czechChordNames: true,
+            inlineChords: true,
+        }
+    });
+
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
     const navigate = useNavigate();
 
     useMemo(() => {
-        const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts, czechChordNames);
+        const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts, chordSettings.czechChordNames);
         setParsedContent(renderedSong);
         scrollSpy.update();
-    }, [songRenderKey, layoutSettings.repeatParts, songData, czechChordNames])
+    }, [songRenderKey, layoutSettings.repeatParts, songData, chordSettings.czechChordNames])
 
     const scrollDown = () => {
         // if the rest can fit on the next screen --> scroll all the way
@@ -82,6 +92,7 @@ function SongView() {
         <div className='absolute top-0'>
             <ToolbarBase>
                 <Button size="icon" onClick={() => navigate("/")}>{<Undo2 />}</Button>
+                <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
                 <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
                 <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} />
                 <DropdownMenu>
@@ -91,11 +102,7 @@ function SongView() {
                     <DropdownMenuContent className="w-56">
                         {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />)}
                         <DropdownMenuSeparator />
-                        <DropdownMenuLabel>Chord settings</DropdownMenuLabel>
-                        <DropdownMenuCheckboxItem checked={czechChordNames} onSelect={e => e.preventDefault()} onClick={() => setCzechChordNames(!czechChordNames)}>
-                            <DropdownIconStart icon={<Piano />} />
-                            Czech notes (A-B-H-C)
-                        </DropdownMenuCheckboxItem>
+                        {React.Children.toArray(<ChordSettingsMenu chordSettings={chordSettings} setChordSettings={setChordSettings} />)}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <DropdownIconStart icon={<Github />} />
@@ -127,7 +134,12 @@ function SongView() {
                 mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                 minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
                 maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
-                <div className={`flex flex-col  ${layoutSettings.showChords ? '' : 'chords-hidden'} ${layoutSettings.repeatPartsChords ? '' : 'repeated-chords-hidden'} ${layoutSettings.twoColumns ? "song-content-columns" : ""}`} dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper" ></div>
+                <div className={`flex flex-col 
+                    ${chordSettings.inlineChords ? ' chords-inline ' : ' '}
+                    ${chordSettings.showChords ? '' : ' chords-hidden '}
+                    ${layoutSettings.repeatPartsChords ? '' : ' repeated-chords-hidden '}
+                    ${layoutSettings.twoColumns ? " song-content-columns " : ""}`}
+                    dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper" ></div>
             </AutoTextSize>
         </div>
 
