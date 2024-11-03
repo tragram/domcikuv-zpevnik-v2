@@ -24,7 +24,7 @@ function SearchBar({ songs, setSearchResults, query, setQuery }) {
     }
 
     return (
-        <div className="relative flex items-center h-full text-foreground max-w-sm transition-all duration-300 ease-in-out shadow-sm">
+        <div className="relative flex items-center h-full text-foreground transition-all duration-300 ease-in-out shadow-sm rounded-full flex-1 border-background border-2">
             <Input
                 onChange={e => search(e)}
                 // type="search"

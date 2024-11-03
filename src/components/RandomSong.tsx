@@ -10,7 +10,7 @@ function RandomSong({ songs }) {
         navigate(selectedSong.url());
     }
     return (
-        <Button size="icon" onClick={selectSong} className='rounded-full'>
+        <Button size="icon" variant="circular" onClick={selectSong} className='rounded-full'>
             <Dices />
         </Button>
     )

@@ -15,16 +15,16 @@ function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange 
         "only screen and (min-width : 1000px)"
     );
     return (
-        <>
-            <Button size="icon">
+        <div className="flex gap-2">
+            {/* <Button size="icon" variant="circular">
                 <Filter className="stroke-gray-400" />
-            </Button>
+            </Button> */}
             <LanguageFilter languages={languages} selectedLanguage={filterSettings.language} setSelectedLanguage={(language: string) => setFilterSettings({ ...filterSettings, language: language })} iconOnly={iconOnly} />
-            <Button fullWidth={true} disableAnimation color="primary"
+            <Button variant="circular"
                 // variant={filterSettings.capo ? "solid" : "bordered"}
                 onClick={() => { setFilterSettings({ ...filterSettings, capo: !filterSettings.capo }) }} startContent={iconOnly ? "" : <Handshake />} isIconOnly={!iconOnly}>{iconOnly ? "Capo" : ""}</Button>
             <VocalRangeFilter maxRange={maxRange} vocalRangeFilter={filterSettings.vocal_range} setVocalRangeFilter={(range) => setFilterSettings({ ...filterSettings, vocal_range: range })} iconOnly={iconOnly} />
-        </>
+        </div>
     )
 }
 
@@ -64,7 +64,7 @@ function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
             <div className='lg:hidden'>
                 <DropdownMenu>
                     <DropdownMenuTrigger>
-                        <Button size="icon">
+                        <Button size="icon" variant="circular">
                             {<Filter />}
                         </Button>
                     </DropdownMenuTrigger>

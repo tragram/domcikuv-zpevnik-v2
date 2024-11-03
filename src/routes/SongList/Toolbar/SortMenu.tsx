@@ -89,7 +89,7 @@ function SortMenu({ sortSettings, setSortSettings }: SortMenuProps) {
         <div className="flex md:hidden">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button size="icon"><ArrowDownUp size={32} /></Button>
+                    <Button size="icon" variant="circular"><ArrowDownUp size={32} /></Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
                     <DropdownMenuLabel>Sorting method</DropdownMenuLabel>
@@ -124,9 +124,11 @@ function SortMenu({ sortSettings, setSortSettings }: SortMenuProps) {
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
-        <FancySwitch options={categories.map(c => { return { "label": c.title, "value": c.field } })} setSelectedOption={(value: SortField) => { setSortField(value) }} selectedOption={sortByField} >
-            <Button className="rounded-r-full" onClick={() => setSortOrder(toggleSortOrder(sortOrder))}>{activeCategory(sortByField).sorting_icons[sortOrder]}</Button>
-        </FancySwitch>
+        <div className="hidden md:flex h-full w-fit">
+            <FancySwitch options={categories.map(c => { return { "label": c.title, "value": c.field } })} setSelectedOption={(value: SortField) => { setSortField(value) }} selectedOption={sortByField} >
+                <Button className="rounded-r-full" onClick={() => setSortOrder(toggleSortOrder(sortOrder))}>{activeCategory(sortByField).sorting_icons[sortOrder]}</Button>
+            </FancySwitch>
+        </div>
     </>
     )
 }
