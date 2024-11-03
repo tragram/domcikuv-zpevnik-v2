@@ -7,6 +7,8 @@ import {
     useHref,
     useLinkClickHandler,
 } from "react-router-dom";
+import LanguageFlag from "@/components/LanguageFlag";
+import CircularProgress from "@/components/ui/circular-progress";
 
 function progressColor(range) {
     if (!range) {
@@ -29,9 +31,11 @@ interface VocalRangeIndicatorProps {
 
 function VocalRangeIndicator({ song, maxRange }: VocalRangeIndicatorProps) {
     const songRangeSemitones = song.range.semitones;
-    return (<div></div>
-        // <CircularProgress aria-label="vocal range" color={progressColor(songRangeSemitones)} formatOptions={{ style: "decimal", }} maxValue={maxRange} showValueLabel={!!songRangeSemitones} size="md" strokeWidth={3} value={songRangeSemitones ? songRangeSemitones : maxRange} />
-    );
+    return (
+        <CircularProgress
+            value={songRangeSemitones} maxValue={maxRange} color={"#FF0000"}
+        />
+    )
 }
 
 interface SongRowProps {
@@ -76,10 +80,10 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
                         </div>
                         <div className="hidden basis-[10%] sm:flex content-center justify-center">
                             <div className='flex items-center'>
-                                {/* <VocalRangeIndicator song={song} maxRange={maxRange} />*/}
+                                <VocalRangeIndicator song={song} maxRange={maxRange} />
                             </div>
                             <div className="flex basis-1/12 min-w-12 items-center justify-end p-2">
-                                {/* <LanguageFlag language={song.language} /> */}
+                                <LanguageFlag language={song.language} />
                             </div>
                         </div>
                     </div>

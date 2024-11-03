@@ -27,15 +27,14 @@ const SongRowMemo = memo(({ data, index, style }) => {
     )
 }, areEqual);
 
-const createSongRowData = memoize((filteredAndSortedSongs, songDB, setSelectedSong) => ({
-    filteredAndSortedSongs, songDB, setSelectedSong
+const createSongRowData = memoize((filteredAndSortedSongs, songDB) => ({
+    filteredAndSortedSongs, songDB
 }));
 
 function SongList() {
     const songDB = useLoaderData() as SongDB;
     const songs = songDB.songs;
     const [filteredAndSortedSongs, setFilteredAndSortedSongs] = useState(songDB.songs);
-    const [selectedSong, setSelectedSong] = useState(null); // State for selected song
 
     const [showToolbar, setShowToolbar] = useState(true);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
@@ -58,11 +57,11 @@ function SongList() {
         }
     };
 
-    const songRowData = createSongRowData(filteredAndSortedSongs, songDB, setSelectedSong);
+    const songRowData = createSongRowData(filteredAndSortedSongs, songDB);
     const listMarginTop = 80;
     const itemSize = (index: number) => index > 0 ? 70 : listMarginTop;
     return (<>
-        <Toolbar songs={songs} setFilteredAndSortedSongs={setFilteredAndSortedSongs} showToolbar={showToolbar} filteredAndSortedSongs={filteredAndSortedSongs} />
+        <Toolbar songs={songs} setFilteredAndSortedSongs={setFilteredAndSortedSongs} showToolbar={showToolbar} filteredAndSortedSongs={filteredAndSortedSongs} maxRange={songDB.maxRange} languages={songDB.languages} />
         <div className='flex w-full no-scrollbar h-full'>
             {/* <div className='flex w-full h-fit flex-col mt-20'>
                 {filteredAndSortedSongs.map(song => (

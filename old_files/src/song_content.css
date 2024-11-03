@@ -19,11 +19,6 @@
     display: none;
 }
 
-.song-content > .section{
-    margin: 2em;
-}
-
-
 
 .song-content .lyrics-line {
     /* display: flex;
@@ -40,11 +35,6 @@
 .song-content>*:first-child {
     margin-top: 0px;
 }
-
-.tab-section {
-    color: #008702;
-}
-
 
 
 #song_content>h1 {

@@ -6,8 +6,9 @@ import SortMenu from "./SortMenu";
 import { ModeToggle } from "@/components/mode-toggle";
 import ToolbarBase from "@/components/ui/toolbar-base";
 import RandomSong from "@/components/RandomSong";
+import Filtering from "./filters/Filters";
 
-function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, showToolbar }) {
+function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, showToolbar, maxRange, languages }) {
     const [searchResults, setSearchResults] = useState(songs);
     const [query, setQuery] = useState("");
     const [sortSettings, setSortSettings] = useLocalStorageState<SortSettings>("settings/sortSettings", {
@@ -95,6 +96,7 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
         <ToolbarBase showToolbar={showToolbar}>
             <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings} />
             <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
+            <Filtering languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
             <ModeToggle />
             <RandomSong songs={filteredAndSortedSongs} />
         </ToolbarBase>
