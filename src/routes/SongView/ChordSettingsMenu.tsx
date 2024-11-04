@@ -1,6 +1,6 @@
 import { toggleSettingFactory } from "@/components/toogle-settings-factory";
 import { Button } from "@/components/ui/button";
-import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
+import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { Guitar, Piano, ChevronsLeftRightEllipsis } from "lucide-react";
 
 export interface ChordSettings {
@@ -21,6 +21,7 @@ function ChordSettingsMenu({ chordSettings, setChordSettings }) {
     const toggleSetting = toggleSettingFactory(chordSettings, setChordSettings);
     return (<>
         <DropdownMenuLabel>Chord settings</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         {
             chordSettingsNames.map(k => (
                 <DropdownMenuCheckboxItem
@@ -40,7 +41,7 @@ function ChordSettingsMenu({ chordSettings, setChordSettings }) {
 
 function ChordSettingsButtons({ chordSettings, setChordSettings }) {
     const toggleSetting = toggleSettingFactory(chordSettings, setChordSettings);
-    return <Button size="icon" className="rounded-full" onClick={() => { toggleSetting("showChords") }}>
+    return <Button size="icon" variant="circular" onClick={() => { toggleSetting("showChords") }}>
         {chordSettingsValues["showChords"].icon}
     </Button >
 }

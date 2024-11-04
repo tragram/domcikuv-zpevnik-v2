@@ -8,14 +8,14 @@ import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, La
 // import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './songRendering';
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano, Dices } from 'lucide-react';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import ToolbarBase from '@/components/ui/toolbar-base';
 import PdfView from './pdfView';
 import { Button } from '@/components/ui/button';
 import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import TransposeSettings from './TransposeSettings';
-import RandomSong from '@/components/RandomSong';
+import RandomSong, { openRandomSong, openRandomSongs, randomSongURL } from '@/components/RandomSong';
 import { DataForSongView } from '@/components/song_loader';
 import { ChordSettingsMenu, ChordSettingsButtons, ChordSettings } from './ChordSettingsMenu';
 
@@ -91,17 +91,16 @@ function SongView() {
         <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-md' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}></div>
         <div className='absolute top-0'>
             <ToolbarBase>
-                <Button size="icon" onClick={() => navigate("/")}>{<Undo2 />}</Button>
+                <Button size="icon" variant="circular" onClick={() => navigate("/")}>{<Undo2 />}</Button>
                 <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
                 <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
                 <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} />
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button size="icon" className="rounded-full"><Settings2 size={32} /></Button>
+                        <Button size="icon" variant="circular"><Settings2 size={32} /></Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56">
                         {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />)}
-                        <DropdownMenuSeparator />
                         {React.Children.toArray(<ChordSettingsMenu chordSettings={chordSettings} setChordSettings={setChordSettings} />)}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
@@ -109,6 +108,13 @@ function SongView() {
                             <Link
                                 to={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile}>
                                 Edit on GitHub
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <DropdownIconStart icon={<Dices />} />
+                            <Link
+                                to={randomSongURL(songDB.songs)} >
+                                Show random song
                             </Link>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -122,7 +128,7 @@ function SongView() {
             <Button className='' size="icon" onClick={scrollDown}><ArrowBigDown /></Button>
         </div>
 
-        <div className='h-12 self-center items-center flex bg-white/70 backdrop-blur-md mb-2 justify-between container px-20'>
+        <div className='h-12 self-center items-center flex bg-[hsl(var(--glass))]/70 backdrop-blur-md mb-2 justify-between container px-20'>
             <h2 className='text-sm text-nowrap'>Capo: {songData.capo}</h2>
             <h1 className='self-center font-bold text-nowrap'>{songData.artist} - {songData.title}</h1>
             <h2 className='text-sm text-nowrap'>Range: {songData.range.min}-{songData.range.max}</h2>

@@ -24,13 +24,13 @@ function SearchBar({ songs, setSearchResults, query, setQuery }) {
     }
 
     return (
-        <div className="relative flex items-center h-full text-foreground transition-all duration-300 ease-in-out shadow-sm rounded-full flex-1 border-background border-2">
+        <div className="relative flex items-center h-full text-foreground transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 ">
             <Input
                 onChange={e => search(e)}
                 // type="search"
                 value={query}
                 placeholder="Search..."
-                className={"pl-10 pr-4 py-2 w-full text-sm rounded-md border border-white bg-transparent focus:bg-background peer " + (query ? "bg-background" : "")}
+                className={"pl-10 pr-4 w-full text-sm border-none rounded-full peer bg-transparent focus:bg-background " + (query ? "bg-background" : "")}
             />
             <Button
                 type="button"

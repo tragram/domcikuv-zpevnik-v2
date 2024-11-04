@@ -3,14 +3,14 @@ import React from 'react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
 //TODO: select should have a default value
+export function randomSongURL(songs) {
+    const selectedSong = songs[Math.floor(Math.random() * songs.length)];
+    return selectedSong.url();
+}
 function RandomSong({ songs }) {
     const navigate = useNavigate();
-    function selectSong() {
-        const selectedSong = songs[Math.floor(Math.random() * songs.length)];
-        navigate(selectedSong.url());
-    }
     return (
-        <Button size="icon" variant="circular" onClick={selectSong} className='rounded-full'>
+        <Button size="icon" variant="circular" onClick={() => navigate(randomSongURL(songs))} className='rounded-full'>
             <Dices />
         </Button>
     )

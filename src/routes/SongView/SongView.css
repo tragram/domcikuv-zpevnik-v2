@@ -5,6 +5,13 @@
     background-size: cover;
 }
 
+@media (max-width: 768px) {
+    .hide-fancy-switch-label .fancy-switch-label {
+        display: none;
+    }
+}
+
+/* ### actual song ### */
 /* chorus settings */
 .chorus {
     font-weight: 700;
@@ -12,7 +19,7 @@
 
 .chorus-section {
     font-weight: bold;
-    border-left: solid 2px;
+    border-left: solid 4px;
     border-color: hsl(var(--primary));
     padding-left: 1em;
 }
@@ -52,16 +59,16 @@
 }
 
 /* chords-inline mode */
-.chords-inline .chord-lyrics{
+.chords-inline .chord-lyrics {
     flex-direction: row;
 }
 
-.chords-inline .chord{
+.chords-inline .chord {
     margin-bottom: 0.5em;
     font-size: 1em;
 }
 
-.chords-inline .lyrics{
+.chords-inline .lyrics {
     align-content: end;
 }
 
@@ -81,8 +88,8 @@
     /* border: solid white; */
     padding: 2rem;
     /* margin-bottom: 2rem; */
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(30px);
+    background-color: rgba(from hsl(var(--glass)) r g b / 70%);
+    backdrop-filter: blur(50px);
 }
 
 .song-content {
@@ -106,7 +113,7 @@
     flex-wrap: wrap;
 }
 
-.section-title{
+.section-title {
     display: none;
 }
 

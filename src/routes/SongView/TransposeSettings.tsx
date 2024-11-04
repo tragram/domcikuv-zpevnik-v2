@@ -39,23 +39,23 @@ const english2German = {
 
 function TransposeButtons({ songRenderKey, setSongRenderKey, vertical = false }) {
     return (
-        <FancySwitch options={renderKeys} selectedOption={songRenderKey.toUpperCase()} setSelectedOption={key => setSongRenderKey(german2English[key])} vertical={vertical}/>
+        <FancySwitch options={renderKeys} selectedOption={songRenderKey.toUpperCase()} setSelectedOption={key => setSongRenderKey(german2English[key])} vertical={vertical} />
     )
 }
 
 function TransposeSettings({ songRenderKey, setSongRenderKey }) {
     const safeSongRenderKey = english2German[songRenderKey?.replace("m", "")].toLowerCase()
     return (<>
-        <div className='hidden lg:flex h-full'>
+        <div className='hidden xl:flex h-full'>
             <TransposeButtons songRenderKey={safeSongRenderKey} setSongRenderKey={setSongRenderKey} />
         </div>
-        <div className='lg:hidden'>
+        <div className='xl:hidden'>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button size="icon" className="rounded-full"><ArrowUpDown /></Button>
+                    <Button size="icon" variant="circular"><ArrowUpDown /></Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-12">
-                <TransposeButtons songRenderKey={safeSongRenderKey} setSongRenderKey={setSongRenderKey} vertical={true} />
+                    <TransposeButtons songRenderKey={safeSongRenderKey} setSongRenderKey={setSongRenderKey} vertical={true} />
                 </DropdownMenuContent>
             </DropdownMenu>
             {/* <Dropdown closeOnSelect={false} disableAnimation>

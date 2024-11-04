@@ -14,8 +14,8 @@ export default function FancySwitch({ options, selectedOption, setSelectedOption
                 renderOption={({ option, isSelected, getOptionProps }) => (
                     <div {...getOptionProps()}
                         className={"flex items-center gap-2 z-50 justify-center" + (vertical ? " px-3" : " px-4 ") + (isSelected ? " text-primary-foreground" : "")}>
-                        {option.icon ? <span>{option.icon}</span> : ""}
-                        <span>{option.label}</span>
+                        {option.icon ? <span className='fancy-switch-icon'>{option.icon}</span> : ""}
+                        <span className='fancy-switch-label'>{option.label}</span>
                     </div>)
                 }
             />

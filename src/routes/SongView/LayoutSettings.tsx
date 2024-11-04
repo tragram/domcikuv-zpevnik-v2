@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownIconStart, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import FancySwitch from "@/components/ui/fancy-switch";
 // import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
-import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat } from "lucide-react";
+import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat, UserCog, PencilRuler } from "lucide-react";
 
 const minFontSizePx = 4;
 const maxFontSizePx = 160;
@@ -20,14 +20,15 @@ interface LayoutSettings {
 }
 
 type LayoutPreset = "compact" | "maximizeFontSize" | "custom";
-const presetModes: Array<LayoutPreset> = ["compact", "maximizeFontSize"];
-const presetModesIcons = {
-    "maximizeFontSize": <MoveHorizontal />,
-    "compact": <MoveDiagonal />
+const presetModes: Array<LayoutPreset> = ["compact", "custom", "maximizeFontSize"];
+const presetModesValues = {
+    "maximizeFontSize": { "label": "Max font size", "icon": <MoveHorizontal /> },
+    "custom": { "label": "Custom", "icon": <PencilRuler /> },
+    "compact": { "label": "Fit screen", "icon": <MoveDiagonal /> },
 };
 
 const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords"]
-const layoutSettingsBools = {
+const layoutSettingsValues = {
     "twoColumns": { icon: <Columns2 />, label: "View as two columns" },
     "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
     "repeatPartsChords": { icon: <Repeat />, label: "Show chords in repeated parts" },
@@ -52,7 +53,8 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
                 ...layoutSettings,
                 fitScreenMode: "fitX",
                 repeatParts: true,
-                repeatPartsChords: true
+                repeatPartsChords: true,
+                twoColumns: false,
             }
             setLayoutSettings(newLayoutSettings);
         }
@@ -60,10 +62,12 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
     }
     return (
         <>
-            <Button size="icon" className="rounded-full" onClick={() => { toggleSetting("twoColumns") }}>
-                {layoutSettingsBools["twoColumns"].icon}
+            <Button size="icon" variant="circular" className="max-sm:hidden" onClick={() => { toggleSetting("twoColumns") }}>
+                {layoutSettingsValues["twoColumns"].icon}
             </Button>
-            <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesIcons[mode], label: mode, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutSettings.fitScreenMode} />
+            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label'>
+                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutSettings.fitScreenMode == "none" ? "custom" : layoutSettings.fitScreenMode} />
+            </div>
         </>
     )
 }
@@ -72,9 +76,8 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
     // TODO: once JS stops being buggy (https://github.com/jsdom/jsdom/issues/2160), make it so that fontSize is read from the autoresizer, so there's not a jump when moving from auto to manual
     const toggleSetting = toggleSettingFactory(layoutSettings, setLayoutSettings);
     return (<>
-        <DropdownMenuLabel>Layout</DropdownMenuLabel>
-        <DropdownMenuSeparator />
         <DropdownMenuLabel>Font size</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
             key="fitXY"
             checked={layoutSettings.fitScreenMode == "fitXY"}
@@ -102,6 +105,7 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
             Decrease font size
         </DropdownMenuItem>
         <DropdownMenuLabel>Contents</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         {layouSettingsBoolsKeys.map(k => (
             <DropdownMenuCheckboxItem
                 key={k}
@@ -109,8 +113,8 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
                 onCheckedChange={() => toggleSetting(k)}
                 onSelect={e => e.preventDefault()}
             >
-                <DropdownIconStart icon={layoutSettingsBools[k].icon} />
-                {layoutSettingsBools[k].label}
+                <DropdownIconStart icon={layoutSettingsValues[k].icon} />
+                {layoutSettingsValues[k].label}
             </DropdownMenuCheckboxItem>
         ))}
     </>

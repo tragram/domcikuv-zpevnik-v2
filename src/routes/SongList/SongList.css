@@ -31,7 +31,7 @@
     /* background-position: center;  */
     background-repeat: no-repeat;
     background-size: cover;
-}
+}c
 
 .song-row-wrapper {
     transition: all;
@@ -45,4 +45,9 @@
     0% {
         stroke-dashoffset: 251.3;
     }
+}
+
+
+.shadow-black {
+    box-shadow: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12);
 }
