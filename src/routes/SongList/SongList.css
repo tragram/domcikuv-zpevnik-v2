@@ -31,4 +31,18 @@
     /* background-position: center;  */
     background-repeat: no-repeat;
     background-size: cover;
-  }
+}
+
+.song-row-wrapper {
+    transition: all;
+}
+
+.progress {
+    animation: grow 5s ease-out;
+}
+
+@keyframes grow {
+    0% {
+        stroke-dashoffset: 251.3;
+    }
+}

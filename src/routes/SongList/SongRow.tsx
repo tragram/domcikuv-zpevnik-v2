@@ -15,11 +15,11 @@ function progressColor(range) {
         return "default";
     }
     if (range < 12) {
-        return "success";
+        return "var(--google-dark-green)";
     } else if (range < 18) {
-        return "warning";
+        return  "var(--google-dark-yellow)";
     } else {
-        return "danger";
+        return  "var(--google-dark-red)";
     }
 }
 
@@ -33,7 +33,8 @@ function VocalRangeIndicator({ song, maxRange }: VocalRangeIndicatorProps) {
     const songRangeSemitones = song.range.semitones;
     return (
         <CircularProgress
-            value={songRangeSemitones} maxValue={maxRange} color={"#FF0000"}
+            value={songRangeSemitones} maxValue={maxRange} 
+            // color={progressColor(songRangeSemitones)}
         />
     )
 }
@@ -58,7 +59,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
     }
     console.log(song.thumbnailURL())
     return (
-        <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4">
+        <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4 song-row-wrapper">
             <div className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
                 onClick={(event) => handleClick(event)}>
                 <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow" >
@@ -70,7 +71,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
                             <h2 className="text-sm font-bold truncate">{song.title}</h2>
                             <h3 className="text-sm opacity-50 truncate">{song.artist}</h3>
                         </div>
-                        <div className="flex basis-1/6 min-w-12 flex-col content-center justify-center hidden sm:flex text-center">
+                        <div className="basis-1/6 min-w-12 flex-col content-center justify-center hidden sm:flex text-center">
                             <h3 className="text-xs opacity-70">{month_names[song.dateAdded.month - 1]}</h3>
                             <h2 className="text-sm opacity-70">{song.dateAdded.year}</h2>
                         </div>

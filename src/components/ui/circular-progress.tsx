@@ -1,27 +1,24 @@
-export default function CircularProgress({ value, maxValue, color, strokeWidth = 18 }) {
+export default function CircularProgress({ value, maxValue, color, strokeWidth = 10 }) {
+    console.log(color)
     return (
-        <div className="flex items-center justify-center h-8 w-8">
-            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+        <div className="block relative items-center justify-center h-10 w-10">
+            <svg className="w-full h-full relative overflow-visible" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="40" fill="transparent" stroke={"#e5e7eb"} strokeWidth={strokeWidth} />
                 <circle
                     cx="50"
                     cy="50"
                     r="40"
+                    className="transition-all !duration-500 progress"
                     fill="transparent"
-                    stroke="url(#progress-gradient)"
+                    transform="rotate(-90 50 50)"
+                    stroke={color && value ? color : "hsl(var(--primary))"}
                     strokeWidth={strokeWidth}
-                    strokeDasharray="251.2"
-                    strokeDashoffset={251.2 * (1 - value/maxValue)}
-                />
-                <defs>
-                    <linearGradient id="progress-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#d2222d" />
-                        <stop offset="50%" stopColor="#FFBF00" />
-                        <stop offset="100%" stopColor="#238823" />
-                    </linearGradient>
-                </defs>
+                    strokeDasharray="251.3"
+                    strokeDashoffset={251.3 * (1 - value / maxValue)}
+                    strokeLinecap="round"
+                    role="progressbar" />
             </svg>
-            <div className="absolute text-xs text-gray-900 dark:text-gray-50">
+            <div className="absolute inset-0 flex items-center justify-center font-normal text-[0.65rem] text-muted-foreground">
                 {value}
             </div>
         </div>

@@ -26,6 +26,9 @@
     --input: 30 30% 26%;
     --ring: 30 88.6% 55.3%;
     --radius: 0.5rem;
+    --google-dark-green: #137333;
+    --google-dark-yellow: #EA8600;
+    --google-dark-red: #B31412;
   }
 
   .dark {

@@ -20,7 +20,7 @@ function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange 
                 <Filter className="stroke-gray-400" />
             </Button> */}
             <LanguageFilter languages={languages} selectedLanguage={filterSettings.language} setSelectedLanguage={(language: string) => setFilterSettings({ ...filterSettings, language: language })} iconOnly={iconOnly} />
-            <Button variant="circular" className=" rounded-none border-x-background border-x-4"
+            <Button variant="circular" className={" rounded-none border-x-background border-x-4 "+(filterSettings.capo?"":" bg-background text-muted-foreground")}
                 // variant={filterSettings.capo ? "solid" : "bordered"}
                 onClick={() => { setFilterSettings({ ...filterSettings, capo: !filterSettings.capo }) }} startContent={iconOnly ? "" : <Handshake />} isIconOnly={!iconOnly}>{iconOnly ? "Capo" : ""}</Button>
             <VocalRangeFilter maxRange={maxRange} vocalRangeFilter={filterSettings.vocal_range} setVocalRangeFilter={(range) => setFilterSettings({ ...filterSettings, vocal_range: range })} iconOnly={iconOnly} />
@@ -68,7 +68,7 @@ function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
                             {<Filter />}
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent aria-label="Filtering" className="dropdown-scroll no-scrollbar">
+                    <DropdownMenuContent aria-label="Filtering" className="dropdown-scroll no-scrollbar w-52">
                         <DropdownMenuCheckboxItem onClick={flipCapoSetting} key="slider" onSelect={e => e.preventDefault()} checked={filterSettings.capo}>
                             Allow capo
                         </DropdownMenuCheckboxItem>
