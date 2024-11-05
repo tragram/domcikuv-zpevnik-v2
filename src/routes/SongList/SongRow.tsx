@@ -64,7 +64,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
                 onClick={(event) => handleClick(event)}>
                 <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow" >
                     <Avatar className="absolute -left-1 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" ><AvatarImage src={song.thumbnailURL()} /></Avatar>
-                    <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-[hsl(var(--glass))]/70 hover:bg-white/90  rounded-full">
+                    <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-[hsl(var(--glass))]/60 hover:bg-[hsl(var(--glass))]/90  rounded-full">
                         <div className="flex basis-[12%] min-w-[72px] rounded-l-full content-center justify-center relative">
                         </div>
                         <div className="flex-auto min-w-40 flex-col text-left content-center">

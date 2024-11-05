@@ -119,7 +119,9 @@ function SongView() {
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <RandomSong songs={songDB.songs} />
+                <div className='max-sm:hidden'>
+                    <RandomSong songs={songDB.songs} />
+                </div>
             </ToolbarBase>
         </div>
         {/* https://bundui.io/docs/components/floating-button */}

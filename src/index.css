@@ -63,7 +63,7 @@
   }
   
   .dark {
-    --glass: rgba(0,0,0,0.7);
+    --glass: 179 100% 0%;
     --glass-opacity: 70;
   }
 }
