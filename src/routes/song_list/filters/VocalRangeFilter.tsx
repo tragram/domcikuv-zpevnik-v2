@@ -14,6 +14,7 @@ function VocalRangeSlider({ maxRange, vocalRange, setVocalRange }) {
             defaultValue={vocalRange === "all" ? [0, maxRange] : vocalRange}
             formatOptions={{ style: "decimal" }}
             className="max-w-md"
+            vocalRange={vocalRange}
             onChangeEnd={(value) => { setVocalRange(value) }} />
     )
 

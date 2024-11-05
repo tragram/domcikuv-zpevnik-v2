@@ -7,12 +7,13 @@ import { RangeSlider } from "@/components/ui/slider"
 function VocalRangeSlider({ maxRange, vocalRangeFilter, setVocalRangeFilter }) {
     return (
         <RangeSlider
-            // label="Semitones"
+            label="Semitones"
             step={1}
             min={0}
             max={maxRange}
             defaultValue={vocalRangeFilter === "all" ? [0, maxRange] : vocalRangeFilter}
             // formatOptions={{ style: "decimal" }}
+            value={vocalRangeFilter === "all" ? [0, maxRange] : vocalRangeFilter}
             className="max-w-md"
             onValueChange={(value) => { setVocalRangeFilter(value) }} />
     )
