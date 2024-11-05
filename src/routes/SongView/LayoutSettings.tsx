@@ -4,6 +4,7 @@ import { DropdownIconStart, DropdownMenuItem, DropdownMenuCheckboxItem, Dropdown
 import FancySwitch from "@/components/ui/fancy-switch";
 // import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
 import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat, UserCog, PencilRuler } from "lucide-react";
+import useLocalStorageState from "use-local-storage-state";
 
 const minFontSizePx = 4;
 const maxFontSizePx = 160;
@@ -38,7 +39,9 @@ const layoutSettingsValues = {
 
 function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
     const toggleSetting = toggleSettingFactory(layoutSettings, setLayoutSettings);
+    const [layoutPreset, setLayoutPreset] = useLocalStorageState<LayoutPreset>("settings/SongView/LayoutPreset", { defaultValue: "compact" })
     function applyLayoutPreset(layoutPreset: LayoutPreset) {
+        setLayoutPreset(layoutPreset);
         if (layoutPreset === "compact") {
             const newLayoutSettings = {
                 ...layoutSettings,
@@ -60,13 +63,14 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
         }
         // custom doesn't change anything
     }
+    console.log(layoutSettings.fitScreenMode)
     return (
         <>
             <Button size="icon" variant="circular" className="max-sm:hidden" onClick={() => { toggleSetting("twoColumns") }}>
                 {layoutSettingsValues["twoColumns"].icon}
             </Button>
             <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label'>
-                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutSettings.fitScreenMode == "none" ? "custom" : layoutSettings.fitScreenMode} />
+                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} />
             </div>
         </>
     )

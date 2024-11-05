@@ -66,7 +66,6 @@ function SongView() {
     resizeObserver.observe(document.body);
 
     const scrollDown = () => {
-        console.log("there")
         // if the rest can fit on the next screen --> scroll all the way
         const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
         if (remainingContent < 0.8 * screen.height) {
@@ -88,7 +87,6 @@ function SongView() {
     };
     const scrollUp = () => {
         scroll.scrollToTop({ duration: 200 });
-        console.log("here")
         return;
     };
 
