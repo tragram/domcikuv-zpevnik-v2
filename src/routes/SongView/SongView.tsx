@@ -18,6 +18,7 @@ import TransposeSettings from './TransposeSettings';
 import RandomSong, { openRandomSong, openRandomSongs, randomSongURL } from '@/components/RandomSong';
 import { DataForSongView } from '@/components/song_loader';
 import { ChordSettingsMenu, ChordSettingsButtons, ChordSettings } from './ChordSettingsMenu';
+import { parse } from 'path';
 
 
 
@@ -44,6 +45,7 @@ function SongView() {
             inlineChords: true,
         }
     });
+    const [showScrollButtons, setShowScrollButtons] = useState(false);
 
 
     const [parsedContent, setParsedContent] = useState('');
@@ -56,7 +58,15 @@ function SongView() {
         scrollSpy.update();
     }, [songRenderKey, layoutSettings.repeatParts, songData, chordSettings.czechChordNames])
 
+    useEffect(() => {
+    })
+    const resizeObserver = new ResizeObserver((entries) => {
+        setShowScrollButtons(document.body.scrollHeight > screen.height && layoutSettings.fitScreenMode === "fitX");
+    })
+    resizeObserver.observe(document.body);
+
     const scrollDown = () => {
+        console.log("there")
         // if the rest can fit on the next screen --> scroll all the way
         const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
         if (remainingContent < 0.8 * screen.height) {
@@ -78,6 +88,7 @@ function SongView() {
     };
     const scrollUp = () => {
         scroll.scrollToTop({ duration: 200 });
+        console.log("here")
         return;
     };
 
@@ -125,9 +136,9 @@ function SongView() {
             </ToolbarBase>
         </div>
         {/* https://bundui.io/docs/components/floating-button */}
-        <div className={"fixed bottom-12 right-10 z-50 flex-col gap-2 " + (layoutSettings.fitScreenMode === "fitX" ? "flex" : "hidden")}>
-            <Button className='' size="icon" onClick={scrollUp}><ArrowBigUpDash /></Button>
-            <Button className='' size="icon" onClick={scrollDown}><ArrowBigDown /></Button>
+        <div className={"fixed bottom-12 right-10 z-50 flex-col gap-3 " + (showScrollButtons ? "flex" : "hidden")}>
+            <Button className='' size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
+            <Button className='' size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
         </div>
 
         <div className='h-12 self-center items-center flex bg-[hsl(var(--glass))]/70 backdrop-blur-md mb-2 justify-between container px-20'>
