@@ -52,6 +52,28 @@ function SongView() {
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
     const navigate = useNavigate();
 
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visibleToolbar, setVisibleToolbar] = useState(true)
+
+    const handleScroll = () => {
+        const currentScrollPos = window.scrollY
+
+        if (currentScrollPos > prevScrollPos) {
+            setVisibleToolbar(false)
+            setPrevScrollPos(currentScrollPos);
+        } else if (currentScrollPos < prevScrollPos - 10) {
+            // -10 to "debounce" weird stuttering
+            setVisibleToolbar(true)
+            setPrevScrollPos(currentScrollPos);
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll)
+    })
+
+
     useMemo(() => {
         const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts, chordSettings.czechChordNames);
         setParsedContent(renderedSong);
@@ -93,13 +115,11 @@ function SongView() {
     if (songData.lyricsLength() < 50) {
         return PdfView(songData.pdfFilenames);
     };
-
-
-    return (<div className={"flex flex-col pt-20 " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")}
+    return (<div className={"flex flex-col pt-[88px] " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")}
     >
         <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-md' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}></div>
         <div className='absolute top-0'>
-            <ToolbarBase>
+            <ToolbarBase showToolbar={visibleToolbar}>
                 <Button size="icon" variant="circular" onClick={() => navigate("/")}>{<Undo2 />}</Button>
                 <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
                 <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
@@ -139,18 +159,18 @@ function SongView() {
             <Button className='' size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
         </div>
 
-        <div className='h-12 self-center items-center flex bg-[hsl(var(--glass))]/70 backdrop-blur-md mb-2 justify-between container px-20'>
-            <h2 className='text-sm text-nowrap'>Capo: {songData.capo}</h2>
-            <h1 className='self-center font-bold text-nowrap'>{songData.artist} - {songData.title}</h1>
-            <h2 className='text-sm text-nowrap'>Range: {songData.range.min}-{songData.range.max}</h2>
-        </div>
 
 
-        <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-[calc(100%-3rem)] " : " h-fit ")}>
+        <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ")}>
             <AutoTextSize
                 mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                 minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
                 maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
+                <div className='absolute h-12 self-center items-center flex bg-[hsl(var(--glass))]/70 backdrop-blur-md mb-2 justify-between'>
+                    {/* <h2 className='text-sm text-nowrap'>Capo: {songData.capo}</h2> */}
+                    {/* <h2 className='text-sm text-nowrap'>Range: {songData.range.min}-{songData.range.max}</h2> */}
+                </div>
+                <h1 className='self-center font-bold text-sm text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
                 <div className={`flex flex-col 
                     ${chordSettings.inlineChords ? ' chords-inline ' : ' '}
                     ${chordSettings.showChords ? '' : ' chords-hidden '}

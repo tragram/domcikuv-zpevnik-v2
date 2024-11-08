@@ -19,7 +19,7 @@
 
 .chorus-section {
     font-weight: bold;
-    border-left: solid 4px;
+    border-left: solid 3px;
     border-color: hsl(var(--primary));
     padding-left: 1em;
 }
@@ -84,12 +84,16 @@
 
 #auto-text-size-wrapper>div {
     /* TODO: smaller padding on mobile? */
-    border-radius: var(--radius);
+    border-radius: 28px;
     /* border: solid white; */
     padding: 2rem;
     /* margin-bottom: 2rem; */
     background-color: rgba(from hsl(var(--glass)) r g b / 70%);
     backdrop-filter: blur(50px);
+    
+    box-shadow: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12);
+    /* width: 100%;
+    height: 100%; */
 }
 
 .song-content {
