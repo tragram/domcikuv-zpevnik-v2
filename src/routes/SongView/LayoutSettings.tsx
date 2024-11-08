@@ -70,7 +70,7 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
                 {layoutSettingsValues["twoColumns"].icon}
             </Button>
             <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label'>
-                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} />
+                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"}/>
             </div>
         </>
     )

@@ -125,7 +125,7 @@ function SortMenu({ sortSettings, setSortSettings }: SortMenuProps) {
             </DropdownMenu>
         </div>
         <div className="hidden md:flex h-full w-fit">
-            <FancySwitch options={categories.map(c => { return { "label": c.title, "value": c.field } })} setSelectedOption={(value: SortField) => { setSortField(value) }} selectedOption={sortByField} >
+            <FancySwitch options={categories.map(c => { return { "label": c.title, "value": c.field } })} setSelectedOption={(value: SortField) => { setSortField(value) }} selectedOption={sortByField} roundedClass={"rounded-l-full"} >
                 <Button className="rounded-r-full" onClick={() => setSortOrder(toggleSortOrder(sortOrder))}>{activeCategory(sortByField).sorting_icons[sortOrder]}</Button>
             </FancySwitch>
         </div>
