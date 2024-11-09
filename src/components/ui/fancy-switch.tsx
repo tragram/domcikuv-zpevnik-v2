@@ -7,7 +7,7 @@ export default function FancySwitch({ options, selectedOption, setSelectedOption
                 options={options}
                 value={selectedOption}
                 onChange={setSelectedOption}
-                className={"flex w-fit h-full text-sm text-muted-foreground " + (children ? " pr-1 " : "") + (vertical ? " flex-col py-2" : "")}
+                className={"flex w-fit h-full text-sm text-muted-foreground dark:text-white " + (children ? " pr-1 " : "") + (vertical ? " flex-col py-2" : "")}
                 highlighterClassName={"bg-primary h-full " + roundedClass}
                 radioClassName="relative mx-2 flex h-full cursor-pointer items-center justify-center rounded-full px-3.5 text-sm text-primary-foreground transition-colors focus:outline-none data-[checked]:text-primary-foreground"
                 highlighterIncludeMargin={true}
