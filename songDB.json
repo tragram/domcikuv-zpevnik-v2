@@ -12,7 +12,7 @@
     "start_melody": "c d e",
     "chordpro_file": "AG_Flek-Carpe_diem.pro",
     "pdf_filenames": "['ag_flek_carpe_diem-sken.pdf', 'ag_flek_carpe_diem-comp.pdf', 'ag_flek_carpe_diem-gen.pdf']",
-    "content_hash": "b40ed7cbe8b4a7e3f4512b8f939cdf133092f9e1"
+    "content_hash": "f29afe7a01202fe9133e0cdc32b441b7bfa36891"
   },
   {
     "title": "Vdovy z Cordoby",
@@ -27,7 +27,7 @@
     "start_melody": "a c",
     "chordpro_file": "Akaty-Vdovy_z_Cordoby.pro",
     "pdf_filenames": "['akaty_vdovy_z_cordoby-sken.pdf', 'akaty_vdovy_z_cordoby-comp.pdf']",
-    "content_hash": "3048ab2df2d3d1cbaa25f8a6331ff4f4d1906c87"
+    "content_hash": "cdcaaa9ab486dd447f59c7fe6a7b51eb534d20d9"
   },
   {
     "title": "Dívka s perlami ve vlasech",
@@ -102,7 +102,7 @@
     "start_melody": "c",
     "chordpro_file": "Argema-Tohle_je_raj.pro",
     "pdf_filenames": "['argema_tohle_je_raj-sken.pdf', 'argema_tohle_je_raj-comp.pdf']",
-    "content_hash": "4315bda754f15d84debf36d7cc2d4d5cfaed661f"
+    "content_hash": "ba55e2215bf79d4e6b27eac593a2630a763e4127"
   },
   {
     "title": "Pramen zdraví",
@@ -147,7 +147,7 @@
     "start_melody": "e a",
     "chordpro_file": "Bo_Burnham-From_Gods_Perspective.pro",
     "pdf_filenames": "['bo_burnham_from_gods_perspective-sken.pdf', 'bo_burnham_from_gods_perspective-comp.pdf']",
-    "content_hash": "f76c6e020146cd5563b210f3b5d8f3968c1a6065"
+    "content_hash": "38dab8ec007914541b03178161f6050fd3780114"
   },
   {
     "title": "Lower Your Expectations",
@@ -342,7 +342,7 @@
     "start_melody": "f#",
     "chordpro_file": "Chinaski-Dlouhej_kour.pro",
     "pdf_filenames": "['chinaski_dlouhej_kour-sken.pdf', 'chinaski_dlouhej_kour-comp.pdf']",
-    "content_hash": "e9fd9fe92044a0647381d580e6650d6611f7143d"
+    "content_hash": "2ca168eb47c13b0224e7d640d189ddcc54c6c6ec"
   },
   {
     "title": "Dobrák od kosti",
@@ -417,7 +417,7 @@
     "start_melody": "f#",
     "chordpro_file": "Chinaski-Klara.pro",
     "pdf_filenames": "['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']",
-    "content_hash": "ba8fa07db41fa05d82b8c0a77b6bd54c131bd553"
+    "content_hash": "324ef093d43b18f241cff323a0e67b90b9dd1d67"
   },
   {
     "title": "Kompy",
@@ -732,7 +732,7 @@
     "start_melody": "a d",
     "chordpro_file": "Epy_de_Mye-Zeny_muzu.pro",
     "pdf_filenames": "['epy_de_mye_zeny_muzu-sken.pdf', 'epy_de_mye_zeny_muzu-comp.pdf']",
-    "content_hash": "50ca95e6b92235e4686798c46ed1318b3b0576f6"
+    "content_hash": "57b419d14e351492769d2b6de0d21e663606022a"
   },
   {
     "title": "Měls mě vůbec rád",
@@ -822,7 +822,7 @@
     "start_melody": "a",
     "chordpro_file": "Filmova_hudba-Kdyz_se_nacancam.pro",
     "pdf_filenames": "['filmova_hudba_kdyz_se_nacancam-sken.pdf', 'filmova_hudba_kdyz_se_nacancam-comp.pdf']",
-    "content_hash": "b1a824753430017d83f05b2e3084bd17af6efb2f"
+    "content_hash": "df21becbe3604832d546e68a43cf0cc7a1f8b7e0"
   },
   {
     "title": "Královské reggae",
@@ -1602,7 +1602,7 @@
     "start_melody": "g e",
     "chordpro_file": "Jeff_Dunham-Jingle_Bombs.pro",
     "pdf_filenames": "['jeff_dunham_jingle_bombs-sken.pdf', 'jeff_dunham_jingle_bombs-comp.pdf']",
-    "content_hash": "f1d31cd4a69c58cbd7487b4bca4d861440b1d50d"
+    "content_hash": "ce6b707a31547932e489ba567b24bfa9ada681d0"
   },
   {
     "title": "Klidná jako voda",
@@ -1647,7 +1647,7 @@
     "start_melody": "a a e e",
     "chordpro_file": "Jezek__Voskovec__Werich-Babicka_Mary.pro",
     "pdf_filenames": "['jezek__voskovec__werich_babicka_mary-sken.pdf', 'jezek__voskovec__werich_babicka_mary-comp.pdf', 'jezek__voskovec__werich_babicka_mary-gen.pdf']",
-    "content_hash": "f392f181e84c071184f0cd07626c576d8a0fed28"
+    "content_hash": "cd69863ad41fb49555bd2d7292eae24bfdf18e8f"
   },
   {
     "title": "Ezop a brabenec",
@@ -1767,7 +1767,7 @@
     "start_melody": "e g#",
     "chordpro_file": "Johnny_Cash-Folsom_Prison_Blues.pro",
     "pdf_filenames": "['johnny_cash_folsom_prison_blues-sken.pdf', 'johnny_cash_folsom_prison_blues-comp.pdf']",
-    "content_hash": "c4e3009007b9ebcbf7d01fbcb41674c045bc793a"
+    "content_hash": "e6edc3e82a3f827a53cb96c6738290a3d724cc72"
   },
   {
     "title": "I Walk the Line",
@@ -1887,7 +1887,7 @@
     "start_melody": "e g a g",
     "chordpro_file": "Kabat-Kdo_vi_jestli.pro",
     "pdf_filenames": "['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']",
-    "content_hash": "b7c1c899429e5922e031c97e74804e8e9886e16d"
+    "content_hash": "df9ac5af2af2ece2a6480b492bedac8281451ab1"
   },
   {
     "title": "Krutý krtek Joy",
@@ -2322,7 +2322,7 @@
     "start_melody": "e e e h e",
     "chordpro_file": "Kenny_Rogers-The_Gambler.pro",
     "pdf_filenames": "['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']",
-    "content_hash": "5d8a0921e6c53ce3e0aedd49287ec9db3414ecba"
+    "content_hash": "d947a0400a0a60d85ec1840fb6ae45039e5ecf15"
   },
   {
     "title": "Omnia Vincit Amor",
@@ -2375,14 +2375,14 @@
     "key": "C",
     "language": "czech",
     "date_added": "07-2015",
-    "capo": "50",
+    "capo": "5",
     "tempo": "",
     "range": "g1-f1",
     "illustration_author": "",
     "start_melody": "c g",
     "chordpro_file": "Krystof-Cesta.pro",
     "pdf_filenames": "['krystof_cesta-sken.pdf', 'krystof_cesta-comp.pdf']",
-    "content_hash": "7baa5ef04c7d99e4ff842c591fc54b7b0990f5fb"
+    "content_hash": "bdde5ff0dfac15dfcd81f068eb769965a278e68a"
   },
   {
     "title": "Obchodník s deštěm",
@@ -3387,7 +3387,7 @@
     "start_melody": "",
     "chordpro_file": "Penk__Pergner-O_blaznech.pro",
     "pdf_filenames": "['penk__pergner_o_blaznech-sken.pdf', 'penk__pergner_o_blaznech-comp.pdf']",
-    "content_hash": "b4506948b36ace1a848986b6f67bb266e38eb3e3"
+    "content_hash": "7bb0a3bf70f890c7bdcf89283b5bb04e9f39bfb3"
   },
   {
     "title": "Nad horů svítá",
@@ -3462,7 +3462,7 @@
     "start_melody": "e",
     "chordpro_file": "Pokac-26.pro",
     "pdf_filenames": "['pokac_26_-sken.pdf', 'pokac_26_-comp.pdf']",
-    "content_hash": "f960650291ee0ccda4d826b662ddeb1bc162982b"
+    "content_hash": "8bcff1d26becaf2ae99e3f840dc9d6fe5c7204ef"
   },
   {
     "title": "Co z tebe bude",
@@ -3927,7 +3927,7 @@
     "start_melody": "a",
     "chordpro_file": "Sverak__Uhlir-Barbora_pise_z_tabora.pro",
     "pdf_filenames": "['uhlir_barbora_pise_z_tabora-sken.pdf', 'uhlir_barbora_pise_z_tabora-comp.pdf']",
-    "content_hash": "a74658d5a57ba9ab8f3f1643af6d4f076178e29f"
+    "content_hash": "6978f0ac2fb1756b650fcbf4f5372c0604fa4ece"
   },
   {
     "title": "Dům u vycházejícího slunce",
@@ -4317,7 +4317,7 @@
     "start_melody": "a",
     "chordpro_file": "Vlasta_Redl-Vecer_krupavych_srdicek.pro",
     "pdf_filenames": "['vlasta_redl_vecer_krupavych_srdicek-sken.pdf', 'vlasta_redl_vecer_krupavych_srdicek-comp.pdf', 'vlasta_redl_vecer_krupavych_srdicek-gen.pdf']",
-    "content_hash": "d6b21afc4e2c890dfe32631219b352e4a0217e99"
+    "content_hash": "5ce473c9df08f52c40e47d4e34220a86a4eb3740"
   },
   {
     "title": "Toulavej",

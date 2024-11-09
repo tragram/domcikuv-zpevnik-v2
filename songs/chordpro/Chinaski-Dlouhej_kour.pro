@@ -10,12 +10,15 @@
 {start_melody: f#}
 
 {start_of_verse}
-[D]Když budeš hodná naučím tě [C]číst naučím tě [G]číst mezi [D]řádky
-to pokušení [C]znáš tak zapo[G]meň cestu [D]zpátky hmm cestu [C]zpát[G]ky
+[D]Když budeš hodná naučím tě [C]číst
+naučím tě [G]číst mezi [D]řádky
+to pokušení [C]znáš tak zapo[G]meň
+cestu [D]zpátky hmm cestu [C]zpát[G]ky
 {end_of_verse}
 
 {start_of_verse}
-[D]Naše noc je mladá vane jižní [C]vítr, papírový kří[G]dla vzduchem [D]víří
+[D]Naše noc je mladá vane jižní [C]vítr,
+papírový kří[G]dla vzduchem [D]víří
 řekni co bys [C]ráda než nám [G]ráno plány [D]zkříží
 {end_of_verse}
 
@@ -36,8 +39,10 @@ chvíli budem [D]tiše, úplně [C]ti[D]še.
 {end_of_verse}
 
 {start_of_verse}
-[D]Vezmu si tě celou, budem se mít [C]rádi, a když [G]ne, tak se ti něco [D]zdálo,
-[D]a když budem [C]chtít, šlápnem na [G]zmizík, všechno bude [D]málo.
+[D]Vezmu si tě celou, budem se mít [C]rádi,
+a když [G]ne, tak se ti něco [D]zdálo,
+[D]a když budem [C]chtít, šlápnem na [G]zmizík,
+všechno bude [D]málo.
 {end_of_verse}
 
 {chorus}

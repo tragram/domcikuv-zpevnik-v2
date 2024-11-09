@@ -11,8 +11,10 @@
 
 {start_of_verse}
 |: [B]Ná nananan[G#mi]nananananana [E]ná [Emi]Ná :|
-[B]Kláro, jak to s [D#mi]tebou vypadá od půl [C#mi]devátý, do osmi [Emi]ráno
-Co nám [B]brání bejt spolu [D#mi]jenom ty a já, nebuď [C#mi]včerejší no tak [Emi]Kláro
+[B]Kláro, jak to s [D#mi]tebou vypadá
+od půl [C#mi]devátý, do osmi [Emi]ráno
+Co nám [B]brání bejt spolu [D#mi]jenom ty a já,
+nebuď [C#mi]včerejší no tak [Emi]Kláro
 Pro tebe [B]slibuju, žaluju denně [D#mi]piju jak Dán
 [C#mi]ve skrytu duše marně [Emi]tajně doufám
 že [B]já, jenom [G#mi]já jsem ten tvůj vysněný [E]pán [Emi]
