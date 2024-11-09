@@ -11,9 +11,11 @@
 
 {start_of_verse}
 [Am]The books you think I [F]wrote are way too [C]thick [G]
-[Am]Who needs a thousand [F]metaphors to [C]figure out you shouldn't [G]be a dick?
+[Am]Who needs a thousand [F]metaphors 
+to [C]figure out you shouldn't [G]be a dick?
 [Am]And I don't [F]watch you when you sleep[C][G]
-[Am]Surprisingly [F]I don't use my [C]omnipotence to be a [Em]fucking [F]creep
+[Am]Surprisingly [F]I don't use my [C]omnipotence
+to be a [Em]fucking [F]creep
 {end_of_verse}
 
 {start_of_chorus}
@@ -25,7 +27,8 @@ None of you are [Am]going to [G]heaven
 
 
 {start_of_bridge}
-[Am]You shouldn't [G]abstain from rape just [Am]because you think that I [G]want you to [F]
+[Am]You shouldn't [G]abstain from rape just
+[Am]because you think that I [G]want you to [F]
 [Am]You shouldn't rape 'cause rape is a [G]fucked up thing to do[C]
 (Pretty obvious - just don't fucking rape people
 Didn't think I had to write that one down for ya.)
@@ -33,7 +36,8 @@ Didn't think I had to write that one down for ya.)
 
 {start_of_verse}
 [Am]I don't think [F]masturbation is obscene[C][G]
-[Am]It's absolutely [F]natural and the [C]weirdest fucking thing I've [G]ever seen [Am]
+[Am]It's absolutely [F]natural
+and the [C]weirdest fucking thing I've [G]ever seen [Am]
 You make my [F]job a living hell [C][G]
 [Am]I sent gays to [F]fix overpopulation[C]
 And boy, did [G]that go [F]well
@@ -48,17 +52,21 @@ You're not my [Am]children, you're a [G]bad game of sims [F]
 
 
 {start_of_bridge}
-[Am]You shouldn't abstain from [G]pork 'cause you [Am]think that I [G]want you to[F]
+[Am]You shouldn't abstain from [G]pork 
+'cause you [Am]think that I [G]want you to[F]
 [Am]You can eat pork 'cause [G]why the fuck would I give a [C]shit?
-I created the universe, think I'm drawing the line at the fuckin' deli aisle?)
+I created the universe, 
+do you think I'm drawing the line at the fuckin' deli aisle?
 {end_of_bridge}
 
 
 {start_of_verse}
 [Am]You argue and you [F]bicker and you [C]fight [G]
-[Am]Atheists and [F]Catholics, [C]Jews and Hindus argue [G]day and [Am]night
+[Am]Atheists and [F]Catholics,
+[C]Jews and Hindus argue [G]day and [Am]night
 Over [F]what they think is [C]true [G]
-[Am]But no one [F]entertains the [C]thought that maybe God does not [G]believe in you[F]
+[Am]But no one [F]entertains the [C]thought
+that maybe God does not [G]believe in you[F]
 {end_of_verse}
 
 
@@ -72,6 +80,7 @@ And when you [C]earn [F]it you won'[C]t [*(x2)]need it [G]
 {end_of_chorus}
 
 {start_of_bridge}
-[Am]I'm not gonna give you [G]love just 'cause I [Am]know that you [G]want me [F]to
+[Am]I'm not gonna give you [G]love
+just 'cause I [Am]know that you [G]want me [F]to
 [Am]If you want love then the love has [G]gotta come from you[C]
 {end_of_bridge}
