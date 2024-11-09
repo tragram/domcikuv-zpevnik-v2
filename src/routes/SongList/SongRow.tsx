@@ -57,7 +57,6 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
             <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4 bg-white text-foreground">Invalid song</div>
         )
     }
-    console.log(song.thumbnailURL())
     return (
         <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4 song-row-wrapper">
             <div className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" style={{ backgroundImage: `url(${song.thumbnailURL()})` }}

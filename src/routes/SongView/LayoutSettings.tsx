@@ -63,7 +63,6 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
         }
         // custom doesn't change anything
     }
-    console.log(layoutSettings.fitScreenMode)
     return (
         <>
             <Button size="icon" variant="circular" className="max-sm:hidden" onClick={() => { toggleSetting("twoColumns") }}>

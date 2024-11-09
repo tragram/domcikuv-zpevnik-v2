@@ -7,7 +7,7 @@ import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, La
 // import SpaceSavingSettings from './SpaceSavingSettings';
 // import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './songRendering';
-import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll';
+import { Events, animateScroll as scroll } from 'react-scroll';
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano, Dices } from 'lucide-react';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import ToolbarBase from '@/components/ui/toolbar-base';
@@ -48,7 +48,7 @@ function SongView() {
         }
     });
     const [showScrollButtons, setShowScrollButtons] = useState(false);
-
+    const [atBottom, setAtBottom] = useState(false);
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
@@ -56,18 +56,25 @@ function SongView() {
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visibleToolbar, setVisibleToolbar] = useState(true)
+    const [scrollInProgress, setscrollInProgress] = useState(false)
 
     const handleScroll = () => {
         const currentScrollPos = window.scrollY
-
+        // console.log(currentScrollPos, prevScrollPos)
         if (currentScrollPos > prevScrollPos) {
             setVisibleToolbar(false)
             setPrevScrollPos(currentScrollPos);
         } else if (currentScrollPos < prevScrollPos - 10) {
             // -10 to "debounce" weird stuttering
             setVisibleToolbar(true)
+            setAtBottom(false);
             setPrevScrollPos(currentScrollPos);
         }
+        const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
+        if (remainingContent <= 0) {
+            setAtBottom(true);
+        }
+        // console.log(remainingContent)
     }
 
     useEffect(() => {
@@ -75,11 +82,29 @@ function SongView() {
         return () => window.removeEventListener('scroll', handleScroll)
     })
 
+    // react-scroll is buggy, so this is an ugly work-around (no way to cancel animation directly)
+    useEffect(() => {
+        // Registering the 'begin' event and logging it to the console when triggered.
+        Events.scrollEvent.register('begin', () => {
+            setscrollInProgress(true);
+        });
+
+        // Registering the 'end' event and logging it to the console when triggered.
+        Events.scrollEvent.register('end', () => {
+            setscrollInProgress(false);
+        });
+
+        // Returning a cleanup function to remove the registered events when the component unmounts.
+        return () => {
+            Events.scrollEvent.remove('begin');
+            Events.scrollEvent.remove('end');
+        };
+    }, []);
+
 
     useMemo(() => {
         const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts, chordSettings.czechChordNames);
         setParsedContent(renderedSong);
-        scrollSpy.update();
     }, [songRenderKey, layoutSettings.repeatParts, songData, chordSettings.czechChordNames])
 
     useEffect(() => {
@@ -90,10 +115,20 @@ function SongView() {
     resizeObserver.observe(document.body);
 
     const scrollDown = () => {
+        if (scrollInProgress) return;
         // if the rest can fit on the next screen --> scroll all the way
         const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
+        if (remainingContent < 0) {
+            return;
+        }
         if (remainingContent < 0.8 * screen.height) {
-            scroll.scrollToBottom({ duration: 3000 });
+            console.log(remainingContent / screen.height * 3000)
+            scroll.scrollToBottom({
+                duration: remainingContent / screen.height * 3000, onComplete: () => {
+                    // Trigger a tiny native scroll to hide the UI in Firefox Mobile
+                    window.scrollBy(0, -1);
+                }
+            });
             return;
         }
         const sections = document.querySelectorAll('.section');
@@ -109,17 +144,18 @@ function SongView() {
             }
         }
     };
+    //return "scroll-down" animation is still running (even when it's scrolled down - buggy library)
     const scrollUp = () => {
-        scroll.scrollToTop({ duration: 200 });
-        return;
+        if (scrollInProgress) return;
+        scroll.scrollTo(0, { duration: 200 });
     };
 
     if (songData.lyricsLength() < 50) {
         return PdfView(songData.pdfFilenames);
     };
-    return (<div className={"flex flex-col sm:pt-[88px] pt-[72px] " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")}
+    return (<div className={"flex flex-col relative sm:pt-[88px] pt-[72px] " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh")}
     >
-        <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-md' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}></div>
+        <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-md overflow-hidden' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}></div>
         <div className='absolute top-0'>
             <ToolbarBase showToolbar={visibleToolbar}>
                 <Button size="icon" variant="circular" onClick={() => navigate("/")}>{<Undo2 />}</Button>
@@ -160,13 +196,13 @@ function SongView() {
             </ToolbarBase>
         </div>
         {/* https://bundui.io/docs/components/floating-button */}
-        <div className={"fixed bottom-12 right-10 z-50 flex-col gap-3 " + (showScrollButtons ? "flex" : "hidden")}>
-            <Button className='' size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
-            <Button className='' size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
+        <div className={"fixed bottom-10 right-10 z-50 h-24 " + (showScrollButtons ? "flex" : "hidden")}>
+            <Button className={'bg-primary/70 absolute top-0 right-0 ' + (atBottom ? "flex" : "hidden")} size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
+            <Button className={'bg-primary/70 absolute bottom-0 right-0 ' + (atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
         </div>
 
 
-        <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-2 sm:p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ")}>
+        <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-2 sm:p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? "" : "")}>
             <AutoTextSize
                 mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                 minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
