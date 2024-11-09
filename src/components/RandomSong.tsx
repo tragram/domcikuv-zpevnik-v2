@@ -10,7 +10,7 @@ export function randomSongURL(songs) {
 function RandomSong({ songs }) {
     const navigate = useNavigate();
     return (
-        <Button size="icon" variant="circular" onClick={() => navigate(randomSongURL(songs))} className='rounded-full'>
+        <Button size="icon" variant="circular" onClick={() => navigate(randomSongURL(songs))}>
             <Dices />
         </Button>
     )

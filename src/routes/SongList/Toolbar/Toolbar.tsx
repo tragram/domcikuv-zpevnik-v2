@@ -7,6 +7,9 @@ import { ModeToggle } from "@/components/mode-toggle";
 import ToolbarBase from "@/components/ui/toolbar-base";
 import RandomSong from "@/components/RandomSong";
 import Filtering from "./filters/Filters";
+import { ImagesIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, showToolbar, maxRange, languages }) {
     const [searchResults, setSearchResults] = useState(songs);
@@ -92,6 +95,7 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
             return songs.filter(song => inRange(song.range.semitones, vocalRange[0], vocalRange[1]));
         }
     }
+    const navigate = useNavigate();
     return (
         <ToolbarBase showToolbar={showToolbar}>
             <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings} />
@@ -101,6 +105,9 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
                 <ModeToggle />
             </div>
             <RandomSong songs={filteredAndSortedSongs} />
+            <Button size="icon" variant="circular" onClick={() => navigate("gallery")}>
+                <ImagesIcon />
+            </Button>
         </ToolbarBase>
     )
 }

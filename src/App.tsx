@@ -9,6 +9,7 @@ import {
 import SongList from './routes/SongList/SongList';
 import { fetchSongContent, fetchSongs } from './components/song_loader';
 import SongView from './routes/SongView/SongView';
+import SongGallery from './routes/gallery/SongGallery';
 
 const router = createHashRouter([
   {
@@ -25,13 +26,12 @@ const router = createHashRouter([
     // errorElement: <ErrorPage />,
     loader: fetchSongContent
   },
-  // {
-  //   // path: "/gallery",
-  //   path: "/gallery",
-  //   element: <SongGallery />,
-  //   errorElement: <ErrorPage />,
-  //   loader: fetchSongs
-  // }
+  {
+    path: "/gallery",
+    element: <SongGallery />,
+    // errorElement: <ErrorPage />,
+    loader: fetchSongs
+  }
 ]);
 
 function App() {

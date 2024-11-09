@@ -210,8 +210,8 @@ function SongView() {
                 <div className='flex w-full justify-between'>
                     <h1 className='self-center font-bold text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
                     <div className='flex flex-col text-right'>
-                    <h2 className='text-xs text-muted-foreground text-nowrap'>Capo: {songData.capo}</h2>
-                    <h2 className='text-xs text-muted-foreground '>Range: {songData.range.min}-{songData.range.max}</h2>
+                    <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {songData.capo}</h2>
+                    <h2 className='text-[0.75em] text-muted-foreground '>{songData.range.min}-{songData.range.max} ({songData.key})</h2>
                     </div>
                 </div>
                 <div className={`flex flex-col 
