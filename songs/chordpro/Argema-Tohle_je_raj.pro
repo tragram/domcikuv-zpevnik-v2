@@ -29,7 +29,7 @@
 [Ami]Pojď ke mně a dej mi ruku, [Emi]ať ji políbím,
 [Ami]tvé oči jsou tak blízko, [Emi]já ti nabízím,
 nabí[F]zím toulá[G]ní, poslou[F]chej volá[G]ní.
-Tohle je [C]ráj, tohle je [Ami]ráj, 
+Tohle je [C]ráj, tohle je [Ami]ráj,
 tohle je [F]ráj, tohle je [G]rá-á-áj.
 {end_of_chorus}
 

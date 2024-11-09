@@ -39,7 +39,7 @@ jsem silnej ročník [G]sedmdesát a možná, že jsem rád.
 
 {start_of_bridge}
 [A]Naši mi vždycky říka[Bmi]li, jen nehas co tě nepá[G]lí,
-jakej pán takovej [D]krám. 
+jakej pán takovej [D]krám.
 [A]Naši mi vždycky říka[Bmi]li, co můžeš sleduj zpov[G]zdálí
 a nikdy nebojuj [A]sám..
 {end_of_bridge}

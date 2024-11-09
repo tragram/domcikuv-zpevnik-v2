@@ -51,7 +51,7 @@ You got to [E]know when to hold 'em,
 [A]know when to [E]walk away
 [A]and know when to [B]run.
 You never [E]count your mone
- when you're [A]sittin' at the [E]table.
+when you're [A]sittin' at the [E]table.
 There'll be time [A]enough for [E]countin'
 [B]when the dealin's [E]done.
 {end_of_chorus}

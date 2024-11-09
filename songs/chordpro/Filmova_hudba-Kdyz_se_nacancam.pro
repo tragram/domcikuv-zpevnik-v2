@@ -18,7 +18,7 @@ A svět mi radosti [D]chystá a v kra[Emi7]mflecích jsem si [A]jistá,
 {start_of_verse}
 Po drahých kobercích chodit ve špercích to mi zkrátka sluší,
 hosty přijímám, jen se zajímám, copak ušít si dám.
-A svět mi rukama tleská, jsem roztomilá a hezká, 
+A svět mi rukama tleská, jsem roztomilá a hezká,
 |: když se načančám :| (3x)
 {end_of_verse}
 
