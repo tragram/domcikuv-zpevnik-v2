@@ -13,11 +13,12 @@ function partVariation(originalLines: string[], variantType: validVariation, var
         return originalLines;
     }
     if (variantType === "replace_last_line") {
+        console.log(variantContent)
         if (repeat) {
             const replacedLines = [...originalLines.slice(0, -2), ...variantContent, ...originalLines.slice(-1)];
             return replacedLines;
         } else {
-            const replacedLines = [originalLines[0], repeatKey + " ..." + variantContent, ...originalLines.slice(-1)]
+            const replacedLines = [originalLines[0], repeatKey + " ..." + variantContent.join('\n'), ...originalLines.slice(-1)]
             return replacedLines;
         }
     } else if (variantType === "replace_last_lines") {
