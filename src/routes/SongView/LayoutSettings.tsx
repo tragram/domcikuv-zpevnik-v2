@@ -65,7 +65,7 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
     }
     return (
         <>
-            <Button size="icon" variant="circular" className="max-sm:hidden" onClick={() => { toggleSetting("twoColumns") }}>
+            <Button size="icon" variant="circular" className="max-sm:hidden" isActive={layoutSettings.twoColumns} onClick={() => { toggleSetting("twoColumns") }}>
                 {layoutSettingsValues["twoColumns"].icon}
             </Button>
             <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label max-xs:hidden'>

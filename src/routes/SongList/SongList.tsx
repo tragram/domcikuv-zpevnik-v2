@@ -11,7 +11,11 @@ import memoize from 'memoize-one';
 import { areEqual, VariableSizeList as List } from 'react-window';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import SongRow from './SongRow';
+import theme from 'tailwindcss/defaultTheme'
 
+function getCurrentBreakpoints() {
+    return Object.keys(theme.screens).filter((key) => window.innerWidth > parseInt(theme.screens[key], 10));
+}
 const SongRowMemo = memo(({ data, index, style }) => {
     if (index === 0) {
         return (
@@ -38,7 +42,6 @@ function SongList() {
 
     const [showToolbar, setShowToolbar] = useState(true);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
-
     function onScroll({
         scrollDirection,
         scrollOffset,
@@ -57,7 +60,13 @@ function SongList() {
         }
     };
     const songRowData = createSongRowData(filteredAndSortedSongs, songDB);
-    const listMarginTop = 80;
+    const currentBreakpoints = getCurrentBreakpoints();
+    let listMarginTop: number;
+    if (currentBreakpoints.includes("sm")) {
+        listMarginTop = 88;
+    } else{
+        listMarginTop = 72;
+    }
     const itemSize = (index: number) => index > 0 ? 70 : listMarginTop;
     return (<div className='h-dvh'>
         <Toolbar songs={songs} setFilteredAndSortedSongs={setFilteredAndSortedSongs} showToolbar={showToolbar} filteredAndSortedSongs={filteredAndSortedSongs} maxRange={songDB.maxRange} languages={songDB.languages} />

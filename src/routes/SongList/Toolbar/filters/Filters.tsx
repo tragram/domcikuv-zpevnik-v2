@@ -9,9 +9,6 @@ import LanguageFlag from "@/components/LanguageFlag";
 import { SongLanguage } from "@/types";
 import { DropdownMenuItem, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 
-const activeClass = "bg-primary ";
-const inactiveClass = "bg-background text-primary hover:text-white outline-primary";
-
 function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange }) {
     const iconOnly = useMediaQuery(
         "only screen and (min-width : 1000px)"
@@ -19,7 +16,7 @@ function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange 
     return (
         <div className="flex">
             <LanguageFilter languages={languages} selectedLanguage={filterSettings.language} setSelectedLanguage={(language: string) => setFilterSettings({ ...filterSettings, language: language })} iconOnly={iconOnly} />
-            <Button variant="circular" className={" rounded-none " + (filterSettings.capo ? activeClass : inactiveClass+" outline-background")}
+            <Button variant="circular" isActive={filterSettings.capo} className={" rounded-none " + (filterSettings.capo ? "" : " outline-background")}
                 // variant={filterSettings.capo ? "solid" : "bordered"}
                 onClick={() => { setFilterSettings({ ...filterSettings, capo: !filterSettings.capo }) }}><Handshake /> Capo</Button>
             <VocalRangeFilter maxRange={maxRange} vocalRangeFilter={filterSettings.vocal_range} setVocalRangeFilter={(range) => setFilterSettings({ ...filterSettings, vocal_range: range })} iconOnly={iconOnly} />
@@ -29,7 +26,7 @@ function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange 
 
 function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
     // TODO: this is actually filter inactive...
-    const filterActive = filterSettings.language === "all" && (filterSettings.vocal_range === "all" || (filterSettings.vocal_range[0] == 0 && filterSettings.vocal_range[1] == maxRange)) && filterSettings.capo;
+    const filterInactive = filterSettings.language === "all" && (filterSettings.vocal_range === "all" || (filterSettings.vocal_range[0] == 0 && filterSettings.vocal_range[1] == maxRange)) && filterSettings.capo;
     const setVocalRange = (range) => setFilterSettings({ ...filterSettings, vocal_range: range });
     const flipCapoSetting = () => setFilterSettings({ ...filterSettings, capo: !filterSettings.capo })
     const setSelectedLanguage = (language) => setFilterSettings({ ...filterSettings, language: language })
@@ -41,7 +38,7 @@ function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
             <div className='lg:hidden'>
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
-                        <Button size="icon" variant="circular" className={filterActive ? activeClass : inactiveClass}>
+                        <Button size="icon" variant="circular" isActive={!filterInactive}>
                             <Filter />
                         </Button>
                     </DropdownMenuTrigger>

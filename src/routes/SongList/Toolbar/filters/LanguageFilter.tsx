@@ -11,6 +11,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { activeClass, inactiveClass } from "./Filters";
 
 function languageChoices(languages: Array<SongLanguage>, selectedLanguage: SongLanguage, setSelectedLanguage) {
     function capitalizeFirstLetter(str: string) {
@@ -32,10 +33,11 @@ function languageChoices(languages: Array<SongLanguage>, selectedLanguage: SongL
 }
 
 function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, iconOnly }) {
+    const active = languages == "all";
     return (
         <DropdownMenu >
             <DropdownMenuTrigger asChild>
-                <Button variant="circular" className="rounded-r-none border-r-0">
+                <Button variant="circular" isActive={active} className={"rounded-r-none border-r-0 "}>
                     <Languages />{iconOnly ? "Languages" : ""}
                 </Button>
             </DropdownMenuTrigger>
