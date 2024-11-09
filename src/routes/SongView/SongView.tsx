@@ -202,16 +202,18 @@ function SongView() {
         </div>
 
 
-        <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-2 sm:p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? "" : "")}>
+        <div id="auto-text-size-wrapper" className={'w-full z-10 lg:p-8 p-2 sm:p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? "" : "")}>
             <AutoTextSize
                 mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                 minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
                 maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
-                <div className='absolute h-12 self-center items-center flex bg-glass/70 backdrop-blur-md mb-2 justify-between'>
-                    {/* <h2 className='text-sm text-nowrap'>Capo: {songData.capo}</h2> */}
-                    {/* <h2 className='text-sm text-nowrap'>Range: {songData.range.min}-{songData.range.max}</h2> */}
+                <div className='flex w-full justify-between'>
+                    <h1 className='self-center font-bold text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
+                    <div className='flex flex-col text-right'>
+                    <h2 className='text-xs text-muted-foreground text-nowrap'>Capo: {songData.capo}</h2>
+                    <h2 className='text-xs text-muted-foreground '>Range: {songData.range.min}-{songData.range.max}</h2>
+                    </div>
                 </div>
-                <h1 className='self-center font-bold text-sm text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
                 <div className={`flex flex-col 
                     ${chordSettings.inlineChords ? ' chords-inline ' : ' '}
                     ${chordSettings.showChords ? '' : ' chords-hidden '}

@@ -110,6 +110,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.2em;
+    break-inside: avoid-column;
 }
 
 .lyrics-line {
