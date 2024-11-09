@@ -18,11 +18,13 @@ A svět mi radosti [D]chystá a v kra[Emi7]mflecích jsem si [A]jistá,
 {start_of_verse}
 Po drahých kobercích chodit ve špercích to mi zkrátka sluší,
 hosty přijímám, jen se zajímám, copak ušít si dám.
-A svět mi rukama tleská, jsem roztomilá a hezká, /: když se načančám :/ (3x)
+A svět mi rukama tleská, jsem roztomilá a hezká, 
+|: když se načančám :| (3x)
 {end_of_verse}
 
 {start_of_chorus}
-[E]Jen já, jen [D]já, o mě tu [A]kráčí, [E]jen já, jen [D]já jsem princezna [A]tvá,
+[E]Jen já, jen [D]já, o mě tu [A]kráčí,
+[E]jen já, jen [D]já jsem princezna [A]tvá,
 ta která udělá [D]hačí a k [E]vladaření ji [A]stačí,
 [A]když se načan[D]čá, když se načan[E7]čá, když se načan[A]čá
 {end_of_chorus}

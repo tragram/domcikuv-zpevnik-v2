@@ -1,0 +1,148 @@
+.bg-image {
+    /* the top of the image is actually nicer to get color */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (max-width: 768px) {
+    .hide-fancy-switch-label .fancy-switch-label {
+        display: none;
+    }
+}
+
+/* ### actual song ### */
+/* chorus settings */
+.chorus {
+    font-weight: 700;
+}
+
+.chorus-section {
+    font-weight: bold;
+    border-left: solid 3px;
+    border-color: hsl(var(--primary));
+    padding-left: 1em;
+}
+
+/* chord settings */
+
+.above-lyrics {
+    /* padding-right: 0.3em; */
+}
+
+.chord {
+    color: hsl(var(--primary));
+    font-weight: 800;
+}
+
+.repeated-chords-hidden .repeated-chords .chord {
+    display: none;
+}
+
+.chord:empty {
+    /* hide rows without chords */
+    display: none;
+}
+
+.chords-hidden .chord {
+    display: none;
+}
+
+.chord-lyrics {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.force-shown {
+    display: inline !important;
+}
+
+/* chords-inline mode */
+.chords-inline .chord-lyrics {
+    flex-direction: row;
+}
+
+.chords-inline .chord {
+    margin-bottom: 0.5em;
+    font-size: 1em;
+}
+
+.chords-inline .lyrics {
+    align-content: end;
+}
+
+
+/* layout */
+
+#auto-text-size-wrapper {
+    justify-content: safe center;
+    /* padding: 2rem; */
+    /* padding: 2rem; */
+    padding-top: 0;
+}
+
+#auto-text-size-wrapper>div {
+    border-radius: 28px;
+    padding: 1rem;
+    background-color: rgba(from hsl(var(--glass)) r g b / 70%);
+    backdrop-filter: blur(50px);
+
+    box-shadow: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12);
+}
+
+@media screen(sm) {
+    #auto-text-size-wrapper>div {
+        padding: 2rem;
+    }
+}
+
+.song-content {
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.song-content>.section+.section {
+    margin-top: 2em;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+    break-inside: avoid-column;
+}
+
+.lyrics-line {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.section-title {
+    display: none;
+}
+
+.word {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-right: 0.33em;
+    /*border: 1px solid red;*/
+}
+
+/* this class is added when user toggles the two-column layout */
+.song-content-columns>* {
+    columns: 2;
+}
+
+
+.lyrics-line {
+    flex-wrap: nowrap;
+}
+
+/* misc */
+.song-content .literal, .song-content .tab-section {
+    color: hsl(var("--text-foreground"));
+    font-family: monospace;
+}

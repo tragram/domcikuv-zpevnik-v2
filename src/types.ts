@@ -177,6 +177,26 @@ class SongData {
         lyricsOnly = lyricsOnly.replace(/\s+/g, " ").trim();
         return lyricsOnly.length;
     }
+
+    url(): string {
+        return `/song/${this.id}`;
+    }
+
+    imageURLFactory(folder: string, model: string | null = null) {
+        if (!model) {
+            model = this.illustration_author;
+        }
+        return `${import.meta.env.BASE_URL}/songs/${folder}/${this.chordproFile.split('.')[0]}/${model}.webp`
+
+    }
+
+    thumbnailURL(model: string | null = null): string {
+        return this.imageURLFactory("illustrations_thumbnails", model);
+    }
+
+    illustrationURL(model: string | null = null): string {
+        return this.imageURLFactory("illustrations", model);
+    }
 }
 
 

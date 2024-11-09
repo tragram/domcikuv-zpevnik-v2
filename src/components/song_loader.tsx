@@ -18,12 +18,13 @@ function clearSongDBFromLocalStorage() {
 }
 
 async function fetchSongs(): Promise<SongDB> {
-    let savedSongDB = loadFromLocalStorage("songDB");
+    const savedSongDB = loadFromLocalStorage("songDB");
     const savedHash = localStorage.getItem("songDB.hash");
     const timeOut = savedSongDB ? 1000 : 3000;
     let newHash;
 
     // Fetch the hash
+    console.log(`${import.meta.env.BASE_URL}/songDB.hash`)
     try {
         const response = await fetch(`${import.meta.env.BASE_URL}/songDB.hash`, { signal: AbortSignal.timeout(timeOut) });
         newHash = await response.text();
@@ -54,7 +55,7 @@ async function fetchSongs(): Promise<SongDB> {
         const songs = data.map(d => new SongData(d));
 
         // Count languages
-        let languages: LanguageCount = {};
+        const languages: LanguageCount = {};
         songs.forEach(song => {
             languages[song.language] = (languages[song.language] || 0) + 1;
         });
@@ -75,7 +76,12 @@ async function fetchSongs(): Promise<SongDB> {
     }
 }
 
-async function fetchSongContent({ params }): Promise<SongData> {
+interface DataForSongView {
+    songDB: SongDB,
+    songData: SongData
+}
+
+async function fetchSongContent({ params }): Promise<DataForSongView> {
     const songDB = await fetchSongs();
     const songData = songDB.songs.find(song => song.id === params.id);
 
@@ -94,10 +100,10 @@ async function fetchSongContent({ params }): Promise<SongData> {
     }
 
     songData.content = songContent;
-    return songData;
+    return { songDB: songDB, songData: songData };
 }
 
-async function fetchIllustrationPrompt(id: string): Promise<Object> {
+async function fetchIllustrationPrompt(id: string): Promise<object> {
     const songDB = await fetchSongs();
     const songData = songDB.songs.find(song => song.id === id);
 
@@ -117,4 +123,4 @@ async function fetchIllustrationPrompt(id: string): Promise<Object> {
 }
 
 
-export { fetchSongs, fetchSongContent, fetchIllustrationPrompt };
+export { fetchSongs, fetchSongContent, fetchIllustrationPrompt, DataForSongView };
