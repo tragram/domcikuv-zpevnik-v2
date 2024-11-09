@@ -38,7 +38,7 @@ def summarize_lyrics(lyrics, model="gpt-4o-mini"):
 
 
 def save_response(response, stem):
-    with open(f"songs/image_prompts/{stem}.yaml", "w") as f:
+    with open(songs_path() / f"image_prompts/{stem}.yaml", "w") as f:
         yaml.safe_dump(
             {"model": response.model, "response": response.choices[0].message.content},
             f,

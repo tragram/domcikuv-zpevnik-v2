@@ -212,7 +212,7 @@ def process_scraped_folder(folder_path: Path, n=5):
             break
         print("-" * 40)
         print(f"Processing {filepath}")
-        chordpro_filepath = Path(f"songs/chordpro/{filepath.stem}.pro")
+        chordpro_filepath = Path(songs_path() / f"chordpro/{filepath.stem}.pro")
         if check_if_lyrics_present(chordpro_filepath):
             print(f"{chordpro_filepath} contains lyrics --> skipping")
             continue
