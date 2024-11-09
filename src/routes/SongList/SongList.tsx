@@ -63,11 +63,6 @@ function SongList() {
     return (<>
         <Toolbar songs={songs} setFilteredAndSortedSongs={setFilteredAndSortedSongs} showToolbar={showToolbar} filteredAndSortedSongs={filteredAndSortedSongs} maxRange={songDB.maxRange} languages={songDB.languages} />
         <div className='flex w-full no-scrollbar h-full'>
-            {/* <div className='flex w-full h-fit flex-col mt-20'>
-                {filteredAndSortedSongs.map(song => (
-                    <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={song} />
-                ))}
-            </div> */}
             <AutoSizer>
                 {({ height, width }) => (
                     <List height={height} width={width}

@@ -19,6 +19,7 @@ import RandomSong, { openRandomSong, openRandomSongs, randomSongURL } from '@/co
 import { DataForSongView } from '@/components/song_loader';
 import { ChordSettingsMenu, ChordSettingsButtons, ChordSettings } from './ChordSettingsMenu';
 import { parse } from 'path';
+import { ModeToggleInner } from '@/components/mode-toggle';
 
 
 
@@ -131,6 +132,10 @@ function SongView() {
                     <DropdownMenuContent className="w-56">
                         {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />)}
                         {React.Children.toArray(<ChordSettingsMenu chordSettings={chordSettings} setChordSettings={setChordSettings} />)}
+                        <DropdownMenuLabel>Theme</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {React.Children.toArray(<ModeToggleInner />)}
+                        <DropdownMenuLabel>Misc</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
                             <DropdownIconStart icon={<Github />} />
@@ -160,13 +165,12 @@ function SongView() {
         </div>
 
 
-
         <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ")}>
             <AutoTextSize
                 mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                 minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
                 maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
-                <div className='absolute h-12 self-center items-center flex bg-[hsl(var(--glass))]/70 backdrop-blur-md mb-2 justify-between'>
+                <div className='absolute h-12 self-center items-center flex bg-glass/70 backdrop-blur-md mb-2 justify-between'>
                     {/* <h2 className='text-sm text-nowrap'>Capo: {songData.capo}</h2> */}
                     {/* <h2 className='text-sm text-nowrap'>Range: {songData.range.min}-{songData.range.max}</h2> */}
                 </div>
@@ -179,15 +183,6 @@ function SongView() {
                     dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper" ></div>
             </AutoTextSize>
         </div>
-
-
-        {/* className={`px-6 max-h-full flex flex-grow flex-col backdrop-blur-sm bg-white/70 ${layoutSettings.fitScreenMode === "XY" ? "overflow-hidden" : ""}`} */}
-        {/* <div className='flex flex-col text-center '>
-            <h1 className='text-lg font-bold'>{songData.artist} - {songData.title}</h1>
-            <h2 className='opacity-70 text-sm'>Capo: {songData.capo}</h2>
-        </div>
-        <div className={"py-4 w-full max-h-full " + (layoutSettings.fitScreenMode === "XY" ? "flex-1" : "")} id="autotextsize_wrapper">
-        </div> */}
     </div >
     );
 };

@@ -69,27 +69,6 @@ function SongView({ }) {
     const scrollUp = () => {
         scroll.scrollToTop({ duration: 200 });
         return;
-        // console.log("scroll up")
-        // if (document.body.scrollHeight / screen.height < 1.5 || window.scrollY < 0.8 * screen.height) {
-        //     scroll.scrollToTop();
-        //     return;
-        // }
-        // // Find the next container that is not fully visible
-        // for (let [index, container] of Array.from(sections).reverse().entries()) {
-        //     const rect = container.getBoundingClientRect();
-        //     // Check if the container is not fully visible within the viewport
-        //     if (rect.top <= window.scrollY) {
-        //         if (index == sections.length - 1) {
-        //             console.log("scroll to top")
-        //             // top element
-        //             scroll.scrollToTop();
-        //         } else {
-        //             // Scroll this container into view and exit the loop
-        //             scroll.scrollTo(rect.top - Math.max(100, 0.2 * screen.height));
-        //         }
-        //         break;
-        //     }
-        // }
     };
 
     return (<div className={" " + (fitScreenMode === "XY" ? " flex flex-col h-dvh" : "")}>

@@ -4,6 +4,10 @@ export default {
 	content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
 	theme: {
 		extend: {
+
+			screens: {
+				'xs': '400px',
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
@@ -39,6 +43,9 @@ export default {
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
+				},
+				glass: {
+					DEFAULT: 'hsl(var(--glass))',
 				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

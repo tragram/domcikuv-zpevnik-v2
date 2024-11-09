@@ -28,29 +28,6 @@ function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange 
     )
 }
 
-function languageChoices(languages: Array<SongLanguage>, selectedLanguage, setSelectedLanguage) {
-    function capitalizeFirstLetter(str) {
-        if (!str) return '';
-
-        const firstCodePoint = str.codePointAt(0);
-        const index = firstCodePoint > 0xFFFF ? 2 : 1;
-
-        return String.fromCodePoint(firstCodePoint).toUpperCase() + str.slice(index);
-    }
-    const language_choices = Object.keys(languages).map((language) => ({ text: capitalizeFirstLetter(language), value: language }));
-    language_choices.unshift({ text: "All", value: "all" });
-    return language_choices.map((choice) => (
-        <DropdownMenuItem key={choice.value}
-            onSelect={e => e.preventDefault()}
-            startContent={<LanguageFlag language={choice.text} />}
-            endContent={selectedLanguage === choice.value ? <Check /> : ""}
-            onClick={() => setSelectedLanguage(choice.value)}>
-            {choice.text}
-        </DropdownMenuItem>
-    ))
-}
-
-
 function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
     const filterActive = filterSettings.language === "all" && filterSettings.vocal_range === "all" && filterSettings.capo;
     const setVocalRange = (range) => setFilterSettings({ ...filterSettings, vocal_range: range });
