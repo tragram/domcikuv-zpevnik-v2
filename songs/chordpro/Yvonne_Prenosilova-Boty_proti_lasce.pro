@@ -6,8 +6,8 @@
 {capo: 0}
 {key: E}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-e2}
+{start_melody: e d#}
 {start_of_verse}
 [E]Zas mi říkal, že má něco pro mne,
 a to něco, to prý láska je.

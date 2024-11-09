@@ -3,7 +3,8 @@
 {capo: 0}
 {language: czech}
 {date_added: 09-2024}
-{range: }
+{range: h1-g#1}
+{start_melody: h g#}
 
 {start_of_verse}
 Těch [E]strašnejch vlaků, [G#m]co se ženou [E7]kolejí tvejch [A]snů,

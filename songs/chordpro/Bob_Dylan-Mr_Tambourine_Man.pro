@@ -4,10 +4,10 @@
 {language: english}
 {pdf_filenames: ['bob_dylan_mr_tambourine_man-sken.pdf', 'bob_dylan_mr_tambourine_man-comp.pdf']}
 {capo: 0}
-{key: }
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-d2}
+{start_melody: d}
 
 {start_of_chorus}
 [G]Hey! Mr. [A]Tambourine Man, [D]play a song for [G]me,
