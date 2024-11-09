@@ -31,6 +31,7 @@ function CardThatHides({ song }) {
     const [promptContent, setPromptContent] = useState(null);
     const [imageHeightGen, setImageHeightGen] = useState(null);
     const [overlayOpacity, setOverlayOpacity] = useState(0);
+    console.log(overlayOpacity)
 
     useEffect(() => {
         setImageHeightGen(imageHeight(512, 0.3));
@@ -47,21 +48,20 @@ function CardThatHides({ song }) {
 
     return (<>
         <div className={"w-full relative " + (hidden ? 'hidden' : 'flex')} style={{ height: imageHeightGen }} >
-            <div className="flex w-full rounded-lg image-overlay" style={{ backgroundImage: `url(${song.illustrationURL()})` }}>
+            <div className="flex w-full rounded-lg" onError={onError} style={{ backgroundImage: `url(${song.illustrationURL()})` }}>
             </div>
-            <div className={"image-overlay absolute  before:bg-white/10 border-white/20 border-1 overflow-hidden rounded-lg z-10 backdrop-blur-lg bg-glass/30 " + ("opacity-" + overlayOpacity)} onMouseOver={() => setOverlayOpacity(100)} onMouseOut={() => setOverlayOpacity(0)}
+            <div className={"image-overlay absolute overflow-hidden rounded-lg z-10 border border-1 border-glass/30 backdrop-blur-lg bg-primary/30 " + ("opacity-" + overlayOpacity)} onMouseOver={() => setOverlayOpacity(100)} onMouseOut={() => setOverlayOpacity(0)}
                 onMouseEnter={() => setShowingContent(true)} onClick={() => setShowingContent(true)}>
                 <div className='w-full h-full flex flex-col items-center justify-start pt-4 overflow-hidden '>
-
                     <CircleX className='absolute top-4 right-4 w-8 h-8 text-white/80 hover:text-white' onClick={() => setOverlayOpacity(0)} />
-                    <h2 className="text-tiny text-white/60 uppercase font-bold">{song.artist}</h2>
-                    <h2 className="text-white font-medium text-large">{song.title}</h2>
+                    <h2 className="text-tiny text-white/90 font-bold uppercase text-shadow">{song.artist}</h2>
+                    <h2 className="text-white font-bold text-shadow">{song.title}</h2>
                     <div className='px-4 flex flex-grow h-32 my-4 w-full'>
                         <AutoTextSize mode="boxoneline">
-                            <p className='text-foreground text-wrap max-h-full w-full'>{promptContent}</p>
+                            <p className='text-white text-wrap max-h-full w-full text-shadow'>{promptContent}</p>
                         </AutoTextSize>
                     </div>
-                    <Button onClick={() => navigate(song.url())} className="w-full rounded-t-none bg-primary/60 text-white text-md backdrop-blur-sm hover:bg-white hover:text-primary">View</Button>
+                    <Button onClick={() => navigate(song.url())} className="w-full rounded-t-none bg-primary text-white text-md backdrop-blur-sm hover:bg-background hover:text-primary">View</Button>
                 </div>
             </div>
         </div>
