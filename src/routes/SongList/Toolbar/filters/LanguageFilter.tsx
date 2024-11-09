@@ -34,7 +34,7 @@ function languageChoices(languages: Array<SongLanguage>, selectedLanguage: SongL
 function LanguageFilter({ languages, selectedLanguage, setSelectedLanguage, iconOnly }) {
     return (
         <DropdownMenu >
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
                 <Button variant="circular" className="rounded-r-none border-r-0">
                     <Languages />{iconOnly ? "Languages" : ""}
                 </Button>

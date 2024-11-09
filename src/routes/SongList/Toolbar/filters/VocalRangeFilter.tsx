@@ -23,7 +23,7 @@ function VocalRangeSlider({ maxRange, vocalRangeFilter, setVocalRangeFilter }) {
 function VocalRangeFilter({ maxRange, vocalRangeFilter, setVocalRangeFilter, iconOnly }) {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
                 <Button variant="circular" className="border-l-0 rounded-l-none">
                     <Music />{iconOnly ? "Range" : ""}
                 </Button>

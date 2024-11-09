@@ -1,5 +1,4 @@
 export default function CircularProgress({ value, maxValue, color, strokeWidth = 10 }) {
-    console.log(color)
     return (
         <div className="block relative items-center justify-center h-10 w-10">
             <svg className="w-full h-full relative overflow-visible" viewBox="0 0 100 100">

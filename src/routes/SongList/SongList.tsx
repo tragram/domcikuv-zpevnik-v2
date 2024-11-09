@@ -56,27 +56,26 @@ function SongList() {
             setShowToolbar(true);
         }
     };
-
     const songRowData = createSongRowData(filteredAndSortedSongs, songDB);
     const listMarginTop = 80;
     const itemSize = (index: number) => index > 0 ? 70 : listMarginTop;
-    return (<>
+    return (<div className='h-dvh'>
         <Toolbar songs={songs} setFilteredAndSortedSongs={setFilteredAndSortedSongs} showToolbar={showToolbar} filteredAndSortedSongs={filteredAndSortedSongs} maxRange={songDB.maxRange} languages={songDB.languages} />
-        <div className='flex w-full no-scrollbar h-full'>
+        <div className='flex w-full h-full no-scrollbar'>
             <AutoSizer>
                 {({ height, width }) => (
                     <List height={height} width={width}
                         itemCount={filteredAndSortedSongs.length + 1} itemSize={itemSize}
                         onScroll={onScroll}
                         itemData={songRowData}
-                        itemKey={(index: number) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={30}
+                        itemKey={(index: number) => index > 1 ? filteredAndSortedSongs[index - 1].id : "blank" + index} overscanCount={10}
                         initialScrollOffset={parseInt(sessionStorage.getItem('scrollOffset') || '0', 10)}
                     >
                         {SongRowMemo}
                     </List>)}
             </AutoSizer>
         </div >
-    </>
+    </div>
     )
 }
 

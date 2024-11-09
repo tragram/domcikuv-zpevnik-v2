@@ -32,7 +32,7 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
         }, [sortSettings]
     );
 
-    const filterAndSortSongs = useMemo(() => {
+    useEffect(() => {
         let results = filterCapo(searchResults, filterSettings.capo);
         results = filterVocalRange(results, filterSettings.vocal_range);
         results = filterLanguage(results, filterSettings.language);
@@ -98,7 +98,7 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
             <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
             <Filtering languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
             <div className="hidden h-full w-fit xs:flex">
-            <ModeToggle />
+                <ModeToggle />
             </div>
             <RandomSong songs={filteredAndSortedSongs} />
         </ToolbarBase>

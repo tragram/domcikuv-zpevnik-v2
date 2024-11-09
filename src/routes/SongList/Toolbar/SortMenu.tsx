@@ -59,13 +59,6 @@ function activeCategory(sortingField: SortField): Category {
 }
 
 interface SortMenuProps {
-    sortByField: SortField,
-    setSortField: (field: SortField) => void,
-    sortOrder: SortOrder,
-    setSortOrder: (order: SortOrder) => void
-}
-
-interface SortMenuProps {
     sortSettings: SortSettings;
     setSortSettings: React.Dispatch<React.SetStateAction<SortSettings>>
 }

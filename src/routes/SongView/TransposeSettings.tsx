@@ -93,7 +93,7 @@ function TransposeSettings({ songRenderKey, setSongRenderKey }) {
         </div >
         <div className='sm:hidden xl:hidden flex'>
             <DropdownMenu>
-                <DropdownMenuTrigger>
+                <DropdownMenuTrigger asChild>
                     <Button size="icon" variant="circular" onClick={() => { setIsComponentVisible(!isComponentVisible) }}><ArrowUpDown /></Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-12">
