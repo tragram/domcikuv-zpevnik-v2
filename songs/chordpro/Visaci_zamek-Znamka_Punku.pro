@@ -6,8 +6,8 @@
 {capo: 0}
 {key: E}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-d1}
+{start_melody: e d}
 
 {start_of_verse}
 [E]Holinky [D]nosil [A]vždycky [G]naruby[F#]

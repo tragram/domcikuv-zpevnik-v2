@@ -1,10 +1,11 @@
 {language: estonian}
-{date_added: 02-2020}
-{capo: 0}
+{date_added: 11-2024}
+{capo: 3}
 {key: G}
 {title: Sõbrad Mu Kallid}
 {artist: Curly Strings}
-{range: }
+{range: e1-c#2}
+{start_melody: h}
 
 {start_of_verse}
 [G]Siis, kui ma üks[Bm]inda jään,
@@ -42,11 +43,11 @@ Vaid si[G]is teeb rõ[Bm]õmu see õis,
 {end_of_chorus}
 
 {start_of_verse}
-[Am]Siis, kui ma üksinda j[Cm]ään -
-[Em]igatsen naeru ja he[F#]ledat[D]meelt.
-[G]Torkeid, mis haiget ei[C]tee,
-[Am]ammuseid laule ja lu[Bm]stakat keelt,
-[C]meile vaid selge on[D]see.
+[Am]Siis, kui ma üksinda [Cm]jään -
+[Em]igatsen [F#m]naeru ja [G]heledat [D]meelt.
+[C]Torkeid, mis haiget ei [D]tee,
+[Am]ammuseid laule ja [Bm]lustakat keelt,
+[C]meile vaid selge on [D]see.
 {end_of_verse}
 
 {start_of_chorus}

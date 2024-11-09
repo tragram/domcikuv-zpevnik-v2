@@ -6,8 +6,8 @@
 {capo: 3}
 {key: Am}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-g2}
+{start_melody: a}
 {start_of_verse}
 |: [Ami]Sousedovic Věra [G]má [Ami]jako žádná [G]jiná
 [Ami]Viděl jsem ji včera [G]máchat [Ami]dole [Emi]u vče[Ami]lína :|

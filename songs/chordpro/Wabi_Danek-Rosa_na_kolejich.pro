@@ -5,7 +5,8 @@
 {tempo: }
 {title: Rosa na kolejích}
 {artist: Wabi Daněk}
-{range: }
+{range: a1-a2}
+{start_melody: g g a c a}
 {start_of_verse}
 [C]Tak, jako jazyk [F6]stále na[F#6]rá[G6]ží
 na vylomený [C]zub,

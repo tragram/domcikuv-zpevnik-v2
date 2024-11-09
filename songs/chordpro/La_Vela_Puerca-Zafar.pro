@@ -6,8 +6,8 @@
 {capo: 0}
 {key: Am}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-e1}
+{start_melody: e d c h c}
 
 {start_of_verse}
 [Am]Soy de la ciudad con t[Dm]odo lo que [G]ves

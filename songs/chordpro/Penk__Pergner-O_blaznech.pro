@@ -4,10 +4,10 @@
 {language: czech}
 {pdf_filenames: ['penk__pergner_o_blaznech-sken.pdf', 'penk__pergner_o_blaznech-comp.pdf']}
 {capo: 0}
-{key: }
+{key: E}
 {tempo: }
-{range: }
-{start_melody: }
+{range: f#1-a#2}
+{start_melody: e}
 {start_of_verse}
 [E]Nevěř lidem, když jsou jak [B]psi,
 v boudá[A]ch, tlous[E]tnou

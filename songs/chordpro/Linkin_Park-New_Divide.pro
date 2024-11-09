@@ -1,13 +1,13 @@
 {title: New Divide}
 {artist: Linkin Park}
-{date_added: 07-2016}
+{date_added: 11-2024}
 {language: english}
 {pdf_filenames: ['linkin_park_new_divide-sken.pdf', 'linkin_park_new_divide-comp.pdf', 'linkin_park_new_divide-gen.pdf']}
-{capo: 0}
-{key: }
+{capo: 5}
+{key: Em}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody:h d e}
 
 {start_of_verse}
 I [Em]remembered black skies

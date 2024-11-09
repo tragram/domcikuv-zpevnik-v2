@@ -182,17 +182,17 @@
   {
     "title": "Mr. Tambourine Man",
     "artist": "Bob Dylan",
-    "key": "",
+    "key": "D",
     "language": "english",
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-d2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "d",
     "chordpro_file": "Bob_Dylan-Mr_Tambourine_Man.pro",
     "pdf_filenames": "['bob_dylan_mr_tambourine_man-sken.pdf', 'bob_dylan_mr_tambourine_man-comp.pdf']",
-    "content_hash": "766accaecb1699cb594b2a9683297c3acd0ac5d2"
+    "content_hash": "826ec910a6167d9e5f07b43826dff6dd141bdbb0"
   },
   {
     "title": "Vločky",
@@ -277,12 +277,12 @@
     "date_added": "11-2024",
     "capo": "3",
     "tempo": "",
-    "range": "",
+    "range": "g1-g2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "a",
     "chordpro_file": "Cechomor-Vcelin.pro",
     "pdf_filenames": "[]",
-    "content_hash": "62a80baf00a633bc4e5be8b33d7c1812ae70cd36"
+    "content_hash": "967f84e13fc6ff134d2551e084f8107f0141c08a"
   },
   {
     "title": "1970",
@@ -529,15 +529,15 @@
     "artist": "Curly Strings",
     "key": "G",
     "language": "estonian",
-    "date_added": "02-2020",
-    "capo": "0",
+    "date_added": "11-2024",
+    "capo": "3",
     "tempo": "",
-    "range": "",
+    "range": "e1-c#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "h",
     "chordpro_file": "Curly_Strings-Sobrad_Mu_Kallid.pro",
     "pdf_filenames": "",
-    "content_hash": "cb45b0a571ac5baa7e16bfb59c99b4f59895865f"
+    "content_hash": "19df484559f832819976c4b61db17ac30217d400"
   },
   {
     "title": "Burčák",
@@ -2452,12 +2452,12 @@
     "date_added": "10-2020",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "g1-e1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e d c h c",
     "chordpro_file": "La_Vela_Puerca-Zafar.pro",
     "pdf_filenames": "[]",
-    "content_hash": "57d60df3ad2d2afdc1ba1a8b20ca11fcfd6afe0e"
+    "content_hash": "f6e9c30731e30bc198b21bdcb87f2544802167a9"
   },
   {
     "title": "Pro tebe",
@@ -2537,17 +2537,17 @@
   {
     "title": "New Divide",
     "artist": "Linkin Park",
-    "key": "",
+    "key": "Em",
     "language": "english",
-    "date_added": "07-2016",
-    "capo": "0",
+    "date_added": "11-2024",
+    "capo": "5",
     "tempo": "",
-    "range": "",
+    "range": "a1-a2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "h d e",
     "chordpro_file": "Linkin_Park-New_Divide.pro",
     "pdf_filenames": "['linkin_park_new_divide-sken.pdf', 'linkin_park_new_divide-comp.pdf', 'linkin_park_new_divide-gen.pdf']",
-    "content_hash": "88a788b249816205a4de3e87d512ef02bae5cbe7"
+    "content_hash": "145a19bcca48dabccc30beeb587bb3cfd87d5c5c"
   },
   {
     "title": "We Are One",
@@ -2857,12 +2857,12 @@
     "date_added": "09-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-g#1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "h g#",
     "chordpro_file": "Miki_Ryvola-Tunel_jmenem_cas.pro",
     "pdf_filenames": "",
-    "content_hash": "b6d63e37b8ea3684db0e42c0280f1c114330fc3c"
+    "content_hash": "4c36ad61f49eddd80477d44702886bc9e620c9db"
   },
   {
     "title": "Jezdím bez nehod",
@@ -3377,17 +3377,17 @@
   {
     "title": "O bláznech",
     "artist": "Penk & Pergner",
-    "key": "",
+    "key": "E",
     "language": "czech",
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "f#1-a#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e",
     "chordpro_file": "Penk__Pergner-O_blaznech.pro",
     "pdf_filenames": "['penk__pergner_o_blaznech-sken.pdf', 'penk__pergner_o_blaznech-comp.pdf']",
-    "content_hash": "7bb0a3bf70f890c7bdcf89283b5bb04e9f39bfb3"
+    "content_hash": "10f281a81ad7b815a776c319197a6accdbba8ea1"
   },
   {
     "title": "Nad horů svítá",
@@ -4267,12 +4267,12 @@
     "date_added": "11-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "e1-d1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e d",
     "chordpro_file": "Visaci_zamek-Znamka_Punku.pro",
     "pdf_filenames": "[]",
-    "content_hash": "6bd74917d3e0b0586b2ef5d0b9b62a5c0b2bbc6c"
+    "content_hash": "65a0558e5f2f4711a5cb8d2dafe638f537855a16"
   },
   {
     "title": "O Sol",
@@ -4387,12 +4387,12 @@
     "date_added": "11-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "a1-a2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "g g a c a",
     "chordpro_file": "Wabi_Danek-Rosa_na_kolejich.pro",
     "pdf_filenames": "",
-    "content_hash": "d235436577493cf41c0c62af9211eb9032f62351"
+    "content_hash": "9acd40373115f4714cc23719fd76b054cd9c8aba"
   },
   {
     "title": "Míle",
@@ -4567,12 +4567,12 @@
     "date_added": "11-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "e1-e2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e d#",
     "chordpro_file": "Yvonne_Prenosilova-Boty_proti_lasce.pro",
     "pdf_filenames": "[]",
-    "content_hash": "b9e957cf464dd7e3f0264670235e5e16d863bbdb"
+    "content_hash": "e44cf49ecd72e2485cc4eaf53c3130ac2ec512ae"
   },
   {
     "title": "Divokej horskej tymián",
