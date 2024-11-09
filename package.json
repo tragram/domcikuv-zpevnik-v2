@@ -8,7 +8,8 @@
     "prebuild": "node load_songs.mjs",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@omit/react-fancy-switch": "^1.0.2",
