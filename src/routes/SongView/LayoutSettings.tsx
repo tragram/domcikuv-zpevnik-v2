@@ -4,6 +4,7 @@ import { DropdownIconStart, DropdownMenuItem, DropdownMenuCheckboxItem, Dropdown
 import FancySwitch from "@/components/ui/fancy-switch";
 // import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
 import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat, UserCog, PencilRuler } from "lucide-react";
+import { useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
 const minFontSizePx = 4;
@@ -35,11 +36,10 @@ const layoutSettingsValues = {
     "repeatPartsChords": { icon: <Repeat />, label: "Show chords in repeated parts" },
 }
 
-
-
-function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
-    const toggleSetting = toggleSettingFactory(layoutSettings, setLayoutSettings);
+function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset }) {
+    const toggleSetting = toggleSettingFactory(customLayoutPreset, setCustomLayoutPreset);
     const [layoutPreset, setLayoutPreset] = useLocalStorageState<LayoutPreset>("settings/SongView/LayoutPreset", { defaultValue: "compact" })
+
     function applyLayoutPreset(layoutPreset: LayoutPreset) {
         setLayoutPreset(layoutPreset);
         if (layoutPreset === "compact") {
@@ -60,34 +60,46 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
                 twoColumns: false,
             }
             setLayoutSettings(newLayoutSettings);
+        } else if (layoutPreset === "custom") {
+            setLayoutSettings(customLayoutPreset);
         }
         // custom doesn't change anything
     }
     return (
         <>
-            <Button size="icon" variant="circular" className="max-sm:hidden" isActive={layoutSettings.twoColumns} onClick={() => { toggleSetting("twoColumns") }}>
+            <Button size="icon" variant="circular" className="max-sm:hidden" isActive={layoutSettings.twoColumns} onClick={() => { toggleSetting("twoColumns"); }}>
                 {layoutSettingsValues["twoColumns"].icon}
             </Button>
             <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label max-xs:hidden'>
-                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"}/>
+                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"} />
             </div>
             <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label xs:hidden'>
-                <FancySwitch options={presetModes.filter(m=>m!="custom").map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"}/>
+                <FancySwitch options={presetModes.filter(m => m != "custom").map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"} />
             </div>
         </>
     )
 }
 
-function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
+function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset }) {
     // TODO: once JS stops being buggy (https://github.com/jsdom/jsdom/issues/2160), make it so that fontSize is read from the autoresizer, so there's not a jump when moving from auto to manual
-    const toggleSetting = toggleSettingFactory(layoutSettings, setLayoutSettings);
+    function setBothSettings(key: string, value: any) {
+        setLayoutSettings({ ...layoutSettings, [key]: value });
+        setCustomLayoutPreset({ ...customLayoutPreset, [key]: value });
+    }
+    const toggleSettingLayout = toggleSettingFactory(layoutSettings, setLayoutSettings);
+    const toggleSettingCustomLayout = toggleSettingFactory(customLayoutPreset, setCustomLayoutPreset);
+    const toggleSetting = (params) => { toggleSettingLayout(params); toggleSettingCustomLayout(params); }
+    const [layoutPreset, setLayoutPreset] = useLocalStorageState<LayoutPreset>("settings/SongView/LayoutPreset", { defaultValue: "compact" })
+    // useEffect(function toggleCustom() {
+    //     setLayoutPreset("custom");
+    // }, [setLayoutPreset, customLayoutPreset]);
     return (<>
         <DropdownMenuLabel>Font size</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
             key="fitXY"
             checked={layoutSettings.fitScreenMode == "fitXY"} onSelect={e => e.preventDefault()}
-            onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitXY" })}
+            onCheckedChange={() => setBothSettings("fitScreenMode", "fitXY")}
         >
             <DropdownIconStart icon={<MoveDiagonal />} />
             Fit screen
@@ -95,37 +107,37 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
         <DropdownMenuCheckboxItem
             key="fitX"
             checked={layoutSettings.fitScreenMode == "fitX"} onSelect={e => e.preventDefault()}
-            onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitX" })}
+            onCheckedChange={() => setBothSettings("fitScreenMode", "fitX")}
         >
             <DropdownIconStart icon={<MoveHorizontal />} />
             Fit screen width
         </DropdownMenuCheckboxItem>
-        <DropdownMenuItem onClick={() => { setLayoutSettings({ ...layoutSettings, fitScreenMode: "none", fontSize: fontSizeLimits(layoutSettings.fontSize * fontSizeStep) }) }}
+        <DropdownMenuItem onClick={() => { setBothSettings("fitScreenMode", "none"); setBothSettings("fontSize", fontSizeLimits(layoutSettings.fontSize * fontSizeStep)) }}
             onSelect={e => e.preventDefault()}>
             <DropdownIconStart icon={<AArrowUp />} />
             Increase font size
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => { setLayoutSettings({ ...layoutSettings, fitScreenMode: "none", fontSize: fontSizeLimits(layoutSettings.fontSize / fontSizeStep) }) }}
-            onSelect={e => e.preventDefault()}>
+        </DropdownMenuItem >
+        <DropdownMenuItem onClick={() => { setBothSettings("fitScreenMode", "none"); setBothSettings("fontSize", fontSizeLimits(layoutSettings.fontSize / fontSizeStep)) }}
+            onSelect={e => e.preventDefault()} >
             <DropdownIconStart icon={<AArrowDown />} />
             Decrease font size
-        </DropdownMenuItem>
+        </DropdownMenuItem >
         <DropdownMenuLabel>Contents</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {layouSettingsBoolsKeys.map(k => (
-            <DropdownMenuCheckboxItem
-                key={k}
-                checked={layoutSettings[k]}
-                onCheckedChange={() => toggleSetting(k)}
-                onSelect={e => e.preventDefault()}
-            >
-                <DropdownIconStart icon={layoutSettingsValues[k].icon} />
-                {layoutSettingsValues[k].label}
-            </DropdownMenuCheckboxItem>
-        ))}
+        {
+            layouSettingsBoolsKeys.map(k => (
+                <DropdownMenuCheckboxItem
+                    key={k}
+                    checked={layoutSettings[k]}
+                    onCheckedChange={() => toggleSetting(k)}
+                    onSelect={e => e.preventDefault()}
+                >
+                    <DropdownIconStart icon={layoutSettingsValues[k].icon} />
+                    {layoutSettingsValues[k].label}
+                </DropdownMenuCheckboxItem>
+            ))
+        }
     </>
-
-
     )
 }
 

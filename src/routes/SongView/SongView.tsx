@@ -30,14 +30,17 @@ function SongView() {
         songData.key = guessKey(songData.content);
     }
 
-    const [layoutSettings, setLayoutSettings] = useLocalStorageState<LayoutSettings>("settings/SongView/LayoutSettings", {
+    const [customLayoutPreset, setCustomLayoutPreset] = useLocalStorageState<LayoutSettings>("settings/SongView/CustomLayoutPreset", {
         defaultValue: {
-            fitScreenMode: "fitXY",
+            fitScreenMode: "none",
             fontSize: 12,
             repeatParts: false,
             repeatPartsChords: false,
             twoColumns: false,
         }
+    });
+    const [layoutSettings, setLayoutSettings] = useLocalStorageState<LayoutSettings>("settings/SongView/LayoutSettings", {
+        defaultValue: customLayoutPreset
     });
 
     const [chordSettings, setChordSettings] = useLocalStorageState<ChordSettings>("settings/SongView/ChordSettings", {
@@ -160,14 +163,14 @@ function SongView() {
             <ToolbarBase showToolbar={visibleToolbar}>
                 <Button size="icon" variant="circular" onClick={() => navigate("/")}>{<Undo2 />}</Button>
                 <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
-                <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
+                <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} />
                 <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} />
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Button size="icon" variant="circular"><Settings2 size={32} /></Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 max-h-[80vh] overflow-y-scroll">
-                        {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />)}
+                        {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} />)}
                         {React.Children.toArray(<ChordSettingsMenu chordSettings={chordSettings} setChordSettings={setChordSettings} />)}
                         <DropdownMenuLabel>Theme</DropdownMenuLabel>
                         <DropdownMenuSeparator />
@@ -210,8 +213,8 @@ function SongView() {
                 <div className='flex w-full justify-between'>
                     <h1 className='self-center font-bold text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
                     <div className='flex flex-col text-right'>
-                    <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {songData.capo}</h2>
-                    <h2 className='text-[0.75em] text-muted-foreground '>{songData.range.min}-{songData.range.max} ({songData.key})</h2>
+                        <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {songData.capo}</h2>
+                        <h2 className='text-[0.75em] text-muted-foreground '>{songData.range.min}-{songData.range.max} ({songData.key})</h2>
                     </div>
                 </div>
                 <div className={`flex flex-col 
