@@ -20,6 +20,7 @@ import { DataForSongView } from '@/components/song_loader';
 import { ChordSettingsMenu, ChordSettingsButtons, ChordSettings } from './ChordSettingsMenu';
 import { parse } from 'path';
 import { ModeToggleInner } from '@/components/mode-toggle';
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 
 
@@ -125,11 +126,11 @@ function SongView() {
                 <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
                 <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />
                 <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} />
-                <DropdownMenu>
+                <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Button size="icon" variant="circular"><Settings2 size={32} /></Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
+                    <DropdownMenuContent className="w-56 max-h-[80vh] overflow-y-scroll">
                         {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} />)}
                         {React.Children.toArray(<ChordSettingsMenu chordSettings={chordSettings} setChordSettings={setChordSettings} />)}
                         <DropdownMenuLabel>Theme</DropdownMenuLabel>
