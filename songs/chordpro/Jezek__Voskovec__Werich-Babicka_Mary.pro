@@ -23,7 +23,7 @@ v zadumaném stínu Kordylér,
 {end_of_verse}
 
 {start_of_verse}
-[G7]Když tu náhle, co se [C]děje, 
+[G7]Když tu náhle, co se [C]děje,
 [G7]divný šelest houštím [C]spěje,
 [G7]plch, skunk, [C]vše utíká
 [F]po stráni [F#dim]od Mední[E]ka.

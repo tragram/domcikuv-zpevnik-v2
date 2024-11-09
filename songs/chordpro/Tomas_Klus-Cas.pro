@@ -24,7 +24,7 @@ na rovných [C]cestách křivý stíny.
 {start_of_chorus}
 Můj sladký [Emi]život mezi světy,
 mý sle[C]pý rány bez odvety.
-[G]Nepochopitelná touha [D]plout 
+[G]Nepochopitelná touha [D]plout
 [*pauza*]Raději shořet, než vyhasn[Emi,]out! [C,][G,][D]
 {end_of_chorus}
 
@@ -32,13 +32,13 @@ mý sle[C]pý rány bez odvety.
 Když má člověk svý usměvavý stavy
 celej svět se baví s ním.
 Zatímco chceš-li brečet,
-musíš,člověče, sám 
+musíš,člověče, sám
 {end_of_verse}
 
 {start_of_verse}
 Mám strach, že mezi náma
 hloubíš propast do neznáma,
-že se někde ve mně snažíš nadechnout 
+že se někde ve mně snažíš nadechnout
 Raději shořet, než vyhasnout!
 {end_of_verse}
 
@@ -52,7 +52,7 @@ Stačí slovo, proč dlouhý věty, když víš,
 {start_of_verse}
 A tak se kolem nás stahuje neúprosný čas.
 A střepy loňských lét poskládám a chci zpět,
-ale už nemůžu se hnout 
+ale už nemůžu se hnout
 Raději shořet, než vyhasnout!
 {end_of_verse}
 
@@ -66,7 +66,7 @@ a k ránu vstát.
 {start_of_verse}
 Schovat se všemu a všem,
 jen tak probloudit se osudem
-Oslněn, být na chvíli sám sebou 
+Oslněn, být na chvíli sám sebou
 {end_of_verse}
 
 {chorus}

@@ -44,7 +44,7 @@ a [C]krev našich nadějí [E7]vesmírem putuje.
 {end_of_verse}
 
 {start_of_chorus}
-[Ami] [Dmi] [G7] [C] [E7] [Ami] [Dmi] [E] [E7] [Ami] [Dmi] [E7]
+[Ami][Dmi][G7][C][E7][Ami][Dmi][E][E7][Ami][Dmi][E7]
 Na na na ...
 {end_of_chorus}
 

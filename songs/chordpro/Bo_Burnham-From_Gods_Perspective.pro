@@ -11,7 +11,7 @@
 
 {start_of_verse}
 [Am]The books you think I [F]wrote are way too [C]thick [G]
-[Am]Who needs a thousand [F]metaphors 
+[Am]Who needs a thousand [F]metaphors
 to [C]figure out you shouldn't [G]be a dick?
 [Am]And I don't [F]watch you when you sleep[C][G]
 [Am]Surprisingly [F]I don't use my [C]omnipotence
@@ -52,10 +52,10 @@ You're not my [Am]children, you're a [G]bad game of sims [F]
 
 
 {start_of_bridge}
-[Am]You shouldn't abstain from [G]pork 
+[Am]You shouldn't abstain from [G]pork
 'cause you [Am]think that I [G]want you to[F]
 [Am]You can eat pork 'cause [G]why the fuck would I give a [C]shit?
-I created the universe, 
+I created the universe,
 do you think I'm drawing the line at the fuckin' deli aisle?
 {end_of_bridge}
 

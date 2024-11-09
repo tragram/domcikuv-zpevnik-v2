@@ -51,5 +51,5 @@ Vysoko [G]nad zemí,
 životem [D]kalený,
 navěky [Ami]spojení.
 Šrouby a [C]matice
-|: Šrouby a [G]matice :|  (4x)
+|: Šrouby a [G]matice :| (4x)
 {end_of_chorus}

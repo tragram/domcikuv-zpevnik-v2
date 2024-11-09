@@ -54,7 +54,7 @@ a chce se [Bm]létat,
 {end_of_chorus}
 
 {start_of_verse}
-[D]Pak jsem si skládal na stůl srdíčka, 
+[D]Pak jsem si skládal na stůl srdíčka,
 [D9]až mi z nich vyšla [B7]osmička,
 [Em]hle, nekonečno ze dvou malých
 [Gm6]vypečených [A4sus]nul, [A7A]

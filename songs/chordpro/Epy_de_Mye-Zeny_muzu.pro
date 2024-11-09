@@ -18,7 +18,7 @@ to [D]stojí [A]někdy [D]trest.
 {start_of_chorus}
 Čeka[G]jí na šťastné [D]přistání
 [Bmi]umět tak směry [A]bouří vést
-co [Bmi]ještě [F#mi]všechno 
+co [Bmi]ještě [F#mi]všechno
 [G]musí [F#mi]snést?
 Ženy [G]mužů [A]léta[D]vých.
 {end_of_chorus}
@@ -31,59 +31,59 @@ do sbírky další květ.
 {end_of_verse}
 
 {start_of_chorus}
-Čekající dole na zemi 
+Čekající dole na zemi
 umět tak pevná lana plést
 co ještě všechno musí snést?
 ženy mužů lezoucích.
 {end_of_chorus}
 
 {start_of_verse}
-Oporu svou mít ve zbrani 
+Oporu svou mít ve zbrani
 a domů dálka celý svět
-jenom se zítra ubránit 
+jenom se zítra ubránit
 a pak se vrátit zpět.
 {end_of_verse}
 
 {start_of_chorus}
-Čekající denně na návrat, 
+Čekající denně na návrat,
 umět tak zahnat černou zvěst
 co ještě všechno musí snést?
 ženy mužů statečných.
 {end_of_chorus}
 
 {start_of_verse}
-Svůj svět mít doma v komoře 
+Svůj svět mít doma v komoře
 a ze snů z dětství stavět hrad
-točí se vláčky v oboře 
+točí se vláčky v oboře
 až večer cítit hlad.
 {end_of_verse}
 
 {start_of_chorus}
-Čekající doma v kuchyni, 
+Čekající doma v kuchyni,
 umět tak nudu prostě smést
 co ještě všechno musí snést?
 ženy mužů domácích.
 {end_of_chorus}
 
 {start_of_verse}
-Domů se po schodech potácet 
+Domů se po schodech potácet
 a nadávat už i na sebe
-před zraky ženy se vytrácet, 
+před zraky ženy se vytrácet,
 zamčené postele.
 {end_of_verse}
 
 {start_of_chorus}
-Čekající s pláčem v předsíni, 
+Čekající s pláčem v předsíni,
 umět tak znovu chlapa svést
 co ještě všechno musí snést ...
-[D]ženy mužů [G]létavých 
+[D]ženy mužů [G]létavých
 [D]ženy mužů [A]lezoucích
-[D]ženy mužů [G]statečných 
+[D]ženy mužů [G]statečných
 [D]ženy mužů [A]domácích. [D]
 {end_of_chorus}
 
 {start_of_chorus}
-Čekající s pláčem v předsíni, 
+Čekající s pláčem v předsíni,
 umět tak znovu chlapa svést
 co ještě všechno musí snést?
 ženy mužů ztracených
