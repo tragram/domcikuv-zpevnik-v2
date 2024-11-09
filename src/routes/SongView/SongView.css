@@ -58,6 +58,10 @@
     display: inline !important;
 }
 
+.chords-hidden .force-shown {
+    display: none !important;
+}
+
 /* chords-inline mode */
 .chords-inline .chord-lyrics {
     flex-direction: row;
