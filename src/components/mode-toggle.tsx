@@ -8,24 +8,26 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useTheme } from "@/components/theme-provider"
+import { useTheme, ThemeProvider } from "@/components/theme-provider"
 import React from "react";
+import { DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
 
 export function ModeToggleInner() {
   const { setTheme } = useTheme();
+  const currentTheme = localStorage.getItem("vite-ui-theme");
   return (<>
-    <DropdownMenuItem onClick={() => setTheme("light")}>
-    <DropdownIconStart icon={<Sun />} />
+    <DropdownMenuCheckboxItem checked={currentTheme == "light"} onCheckedChange={() => setTheme("light")} onSelect={e => e.preventDefault()}>
+      <DropdownIconStart icon={<Sun />} />
       Light
-    </DropdownMenuItem>
-    <DropdownMenuItem onClick={() => setTheme("dark")}>
-    <DropdownIconStart icon={<Moon />} />
+    </DropdownMenuCheckboxItem>
+    <DropdownMenuCheckboxItem checked={currentTheme == "dark"} onCheckedChange={() => setTheme("dark")} onSelect={e => e.preventDefault()}>
+      <DropdownIconStart icon={<Moon />} />
       Dark
-    </DropdownMenuItem>
-    <DropdownMenuItem onClick={() => setTheme("system")}>
-    <DropdownIconStart icon={<SunMoon />} />
+    </DropdownMenuCheckboxItem>
+    <DropdownMenuCheckboxItem checked={currentTheme == "system"} onCheckedChange={() => setTheme("system")} onSelect={e => e.preventDefault()}>
+      <DropdownIconStart icon={<SunMoon />} />
       System
-    </DropdownMenuItem>
+    </DropdownMenuCheckboxItem>
   </>
   )
 }
@@ -42,7 +44,7 @@ export function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-      {React.Children.toArray(<ModeToggleInner />)}
+        {React.Children.toArray(<ModeToggleInner />)}
       </DropdownMenuContent>
     </DropdownMenu >
   )

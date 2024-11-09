@@ -86,7 +86,7 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
             key="fitXY"
-            checked={layoutSettings.fitScreenMode == "fitXY"}
+            checked={layoutSettings.fitScreenMode == "fitXY"} onSelect={e => e.preventDefault()}
             onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitXY" })}
         >
             <DropdownIconStart icon={<MoveDiagonal />} />
@@ -94,7 +94,7 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings }) {
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
             key="fitX"
-            checked={layoutSettings.fitScreenMode == "fitX"}
+            checked={layoutSettings.fitScreenMode == "fitX"} onSelect={e => e.preventDefault()}
             onCheckedChange={() => setLayoutSettings({ ...layoutSettings, fitScreenMode: "fitX" })}
         >
             <DropdownIconStart icon={<MoveHorizontal />} />
