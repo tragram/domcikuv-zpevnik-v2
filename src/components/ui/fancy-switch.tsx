@@ -2,7 +2,7 @@
 import { FancySwitch as FancySwitchBase } from '@omit/react-fancy-switch'
 export default function FancySwitch({ options, selectedOption, setSelectedOption, roundedClass, children, vertical = false, full = false }) {
     return (
-        <div className={"h-full rounded-full transition-all shadow-sm flex " + (vertical ? " outline-white outline-2 outline " : "bg-primary/10 ") + (full ? "w-full justify-center" : "w-fit")}>
+        <div className={"h-full rounded-full transition-all shadow-sm flex outline-white outline-2 outline bg-backround " + (full ? "w-full justify-center" : "w-fit")}>
             <FancySwitchBase
                 options={options}
                 value={selectedOption}

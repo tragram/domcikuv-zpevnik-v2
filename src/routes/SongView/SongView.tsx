@@ -117,7 +117,7 @@ function SongView() {
     if (songData.lyricsLength() < 50) {
         return PdfView(songData.pdfFilenames);
     };
-    return (<div className={"flex flex-col pt-[88px] " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")}
+    return (<div className={"flex flex-col sm:pt-[88px] pt-[72px] " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : "")}
     >
         <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-md' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}></div>
         <div className='absolute top-0'>
@@ -166,7 +166,7 @@ function SongView() {
         </div>
 
 
-        <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ")}>
+        <div id="auto-text-size-wrapper" className={'w-full z-10 md:p-8 p-2 sm:p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ")}>
             <AutoTextSize
                 mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                 minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}

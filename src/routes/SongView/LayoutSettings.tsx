@@ -69,8 +69,11 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings }) {
             <Button size="icon" variant="circular" className="max-sm:hidden" onClick={() => { toggleSetting("twoColumns") }}>
                 {layoutSettingsValues["twoColumns"].icon}
             </Button>
-            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label'>
+            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label max-xs:hidden'>
                 <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"}/>
+            </div>
+            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label xs:hidden'>
+                <FancySwitch options={presetModes.filter(m=>m!="custom").map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"}/>
             </div>
         </>
     )
