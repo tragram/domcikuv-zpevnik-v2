@@ -6,7 +6,7 @@
 {capo: 0}
 {key: D}
 {tempo: }
-{range: }
+{range: d1-e2}
 {start_melody: f#-a}
 
 {start_of_verse}
@@ -29,10 +29,10 @@ y no me electro[G]cuto en la corriente.
 {end_of_bridge}
 
 {start_of_chorus}
-[D]No qui[A]ero ir dond[Bm]e todos [G]van
-y o[D]dio la navi[A]dad.[Bm][G]
-Mu[D]chos dirán, '[A]eso est[Bm]á mal', [G]
-no [D]quiero ser [A]norma[Bm]l. [G]
+No [D]quiero [A]ir donde [Bm]todos [G]van
+y o[D]dio la [A]navi[Bm]dad.[G]
+Mu[D]chos di[A]rán, 'eso [Bm]está [G]mal',
+no [D]quiero [A]ser nor[Bm]mal. [G]
 {end_of_chorus}
 
 {start_of_verse}

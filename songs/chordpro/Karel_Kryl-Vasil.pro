@@ -4,10 +4,10 @@
 {language: czech}
 {pdf_filenames: ['karel_kryl_vasil-sken.pdf', 'karel_kryl_vasil-comp.pdf']}
 {capo: 0}
-{key: }
+{key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: d1-f#2}
+{start_melody: f#}
 {start_of_verse}
 V [D]botičkách z kozinky [Bmi]vybírám rozinky z [G]koláčků, [A]
 [D]vybírám zběsile [Bmi]pro tebe, Vasile, [G]miláčku, [A]
