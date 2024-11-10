@@ -4,10 +4,11 @@
 {language: english}
 {pdf_filenames: ['metallica_nothing_else_matters-sken.pdf', 'metallica_nothing_else_matters-comp.pdf']}
 {capo: 0}
-{key: }
+{key: Em}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-h2}
+{start_melody: e}
+
 {start_of_verse}
 [Em]So close, no matter [D]how [C]far
 [Em]Couldn't be much more [D]from the he[C]art
