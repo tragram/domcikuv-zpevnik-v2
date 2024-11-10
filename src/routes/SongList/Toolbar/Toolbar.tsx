@@ -101,7 +101,7 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
             <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings} />
             <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
             <Filtering languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
-            <div className="hidden h-full w-fit xs:flex">
+            <div className="hidden h-full w-fit sm:flex">
                 <ModeToggle />
             </div>
             <RandomSong songs={filteredAndSortedSongs} />
