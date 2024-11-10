@@ -32,7 +32,7 @@
 
 {start_of_bridge: B1}
 [Em]Je šedivé sychravo,
-[D]Údolí tiše zalehl chlad.
+[D]Údolí tiše [A]zalehl chlad.
 [Em]Po zemi [C]táhne se 
 [D]lezavá zima.
 {end_of_bridge}
