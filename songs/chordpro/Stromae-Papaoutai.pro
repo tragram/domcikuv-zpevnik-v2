@@ -6,8 +6,8 @@
 {capo: 0}
 {key: Am}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-d2}
+{start_melody: e d e d}
 
 {start_of_verse}
 [Am]Dites-moi d'où il vie[G/A]nt,
