@@ -2747,17 +2747,17 @@
   {
     "title": "Nothing Else Matters",
     "artist": "Metallica",
-    "key": "",
+    "key": "Em",
     "language": "english",
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-h2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e",
     "chordpro_file": "Metallica-Nothing_Else_Matters.pro",
     "pdf_filenames": "['metallica_nothing_else_matters-sken.pdf', 'metallica_nothing_else_matters-comp.pdf']",
-    "content_hash": "7b806eb89258b2cc6031f86ea7ec45ad493d06ac"
+    "content_hash": "9cf0edd45a7ac238a7feb15f785fe30838572b98"
   },
   {
     "title": "Nonstop",
