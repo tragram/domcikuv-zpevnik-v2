@@ -54,15 +54,15 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
     if (!song) {
         console.log("Invalid song!")
         return (
-            <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4 bg-white text-foreground">Invalid song</div>
+            <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-2 sm:px-4 bg-white text-foreground">Invalid song</div>
         )
     }
     return (
-        <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-4 song-row-wrapper">
+        <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-2 sm:px-4 song-row-wrapper">
             <div className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
                 onClick={(event) => handleClick(event)}>
                 <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow" >
-                    <Avatar className="absolute -left-1 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" ><AvatarImage src={song.thumbnailURL()} /></Avatar>
+                    <Avatar className="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" ><AvatarImage src={song.thumbnailURL()} /></Avatar>
                     <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-glass/60 hover:bg-glass/90  rounded-full">
                         <div className="flex basis-[12%] min-w-[72px] rounded-l-full content-center justify-center relative">
                         </div>
