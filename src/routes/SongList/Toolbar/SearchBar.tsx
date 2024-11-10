@@ -34,7 +34,6 @@ function SearchBar({ songs, setSearchResults, query, setQuery }) {
     }, [isExpanded])
 
     const handleToggle = () => {
-        console.log(document.getElementById('navbar').offsetWidth-4,expandedWidth)
         setExpandedWidth(document.getElementById('navbar').offsetWidth);
         setIsExpanded(!isExpanded);
     }

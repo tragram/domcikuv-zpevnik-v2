@@ -31,7 +31,6 @@ function CardThatHides({ song }) {
     const [promptContent, setPromptContent] = useState(null);
     const [imageHeightGen, setImageHeightGen] = useState(null);
     const [overlayOpacity, setOverlayOpacity] = useState(0);
-    console.log(overlayOpacity)
 
     useEffect(() => {
         setImageHeightGen(imageHeight(512, 0.3));

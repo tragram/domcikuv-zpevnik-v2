@@ -125,7 +125,6 @@ function SongView() {
             return;
         }
         if (remainingContent < 0.8 * screen.height) {
-            console.log(remainingContent / screen.height * 3000)
             scroll.scrollToBottom({
                 duration: remainingContent / screen.height * 3000, onComplete: () => {
                     // Trigger a tiny native scroll to hide the UI in Firefox Mobile

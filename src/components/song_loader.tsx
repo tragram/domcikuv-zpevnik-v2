@@ -24,7 +24,6 @@ async function fetchSongs(): Promise<SongDB> {
     let newHash;
 
     // Fetch the hash
-    console.log(`${import.meta.env.BASE_URL}/songDB.hash`)
     try {
         const response = await fetch(`${import.meta.env.BASE_URL}/songDB.hash`, { signal: AbortSignal.timeout(timeOut) });
         newHash = await response.text();
