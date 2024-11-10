@@ -18,9 +18,9 @@
 
 {start_of_chorus}
 [Em]Venku je na nule, [C]milujem minulé,
-[Bb]Tak nějak zdánlivě [D]tady žijem.
+[G]Tak nějak zdánlivě [D]tady žijem.
 [Em]Venku je na nule, [C]milujem minulé,
-[Bb]Svůj klid a stálý [D]příjem.
+[G]Svůj klid a stálý [D]příjem.
 {end_of_chorus}
 
 {start_of_verse}
