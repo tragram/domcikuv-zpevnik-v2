@@ -62,7 +62,7 @@
   {
     "title": "Sofia",
     "artist": "Alvaro Soler",
-    "key": "f#",
+    "key": "F#m",
     "language": "spanish",
     "date_added": "12-2016",
     "capo": "0",
@@ -72,7 +72,7 @@
     "start_melody": "c# e",
     "chordpro_file": "Alvaro_Soler-Sofia.pro",
     "pdf_filenames": "['alvaro_soler_sofia-sken.pdf', 'alvaro_soler_sofia-comp.pdf', 'alvaro_soler_sofia-gen.pdf']",
-    "content_hash": "ec5d2047ba0d6a2f216f79c51d4cb30cdacad9d6"
+    "content_hash": "e0a554c39d8f76f618e8acf2e0217d9f4ed983ed"
   },
   {
     "title": "Jarošovský pivovar",
