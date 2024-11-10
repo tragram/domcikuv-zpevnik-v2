@@ -37,7 +37,9 @@ const layoutSettingsValues = {
 }
 
 function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset }) {
-    const toggleSetting = toggleSettingFactory(customLayoutPreset, setCustomLayoutPreset);
+    const toggleSettingLayout = toggleSettingFactory(layoutSettings, setLayoutSettings);
+    const toggleSettingCustomLayout = toggleSettingFactory(customLayoutPreset, setCustomLayoutPreset);
+    const toggleSetting = (params) => { toggleSettingLayout(params); toggleSettingCustomLayout(params); }
     const [layoutPreset, setLayoutPreset] = useLocalStorageState<LayoutPreset>("settings/SongView/LayoutPreset", { defaultValue: "compact" })
 
     function applyLayoutPreset(layoutPreset: LayoutPreset) {
@@ -89,7 +91,6 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings, cust
     const toggleSettingLayout = toggleSettingFactory(layoutSettings, setLayoutSettings);
     const toggleSettingCustomLayout = toggleSettingFactory(customLayoutPreset, setCustomLayoutPreset);
     const toggleSetting = (params) => { toggleSettingLayout(params); toggleSettingCustomLayout(params); }
-    const [layoutPreset, setLayoutPreset] = useLocalStorageState<LayoutPreset>("settings/SongView/LayoutPreset", { defaultValue: "compact" })
     // useEffect(function toggleCustom() {
     //     setLayoutPreset("custom");
     // }, [setLayoutPreset, customLayoutPreset]);
