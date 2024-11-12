@@ -6,8 +6,8 @@
 {capo: 0}
 {key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-e1}
+{start_melody: g g g}
 
 {start_of_chorus}
 This is the [G]A-Ö of [C]Iceland,[G]
