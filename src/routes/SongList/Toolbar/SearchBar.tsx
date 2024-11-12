@@ -41,7 +41,7 @@ function SearchBar({ songs, setSearchResults, query, setQuery }) {
         type="button"
         variant="ghost"
         size="icon"
-        className={`absolute right-1 top-1/2 ${query ? "scale-100" : "scale-0"} transition-all -translate-y-1/2 h-7 w-7 !bg-transparent !hover:bg-transparent dark:hover:text-primary hover:scale-125 hover:text-primary`}
+        className={`absolute right-1 top-1/2 ${query ? "scale-100" : "scale-0"} transition-all duration-300 ease-in-out -translate-y-1/2 h-7 w-7 !bg-transparent !hover:bg-transparent dark:hover:text-primary hover:scale-125 hover:text-primary`}
         onClick={() => {
             setQuery("");
             setIsExpanded(false);
