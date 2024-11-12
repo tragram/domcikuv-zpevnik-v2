@@ -87,9 +87,9 @@
 }
 
 #auto-text-size-wrapper>div {
-    border-radius: 28px;
+    border-radius: 36px;
     padding: 1rem;
-    background-color: rgba(from hsl(var(--glass)) r g b / 90%);
+    background-color: rgba(from hsl(var(--glass)) r g b / 80%);
     backdrop-filter: blur(50px);
     outline-style: solid;
     outline-width: 2px;

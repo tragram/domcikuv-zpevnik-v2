@@ -41,7 +41,7 @@ function SearchBar({ songs, setSearchResults, query, setQuery }) {
         type="button"
         variant="ghost"
         size="icon"
-        className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7 !bg-transparent !hover:bg-transparent dark:hover:text-primary hover:scale-125 hover:text-primary"
+        className={`absolute right-1 top-1/2 ${query ? "scale-100" : "scale-0"} transition-all -translate-y-1/2 h-7 w-7 !bg-transparent !hover:bg-transparent dark:hover:text-primary hover:scale-125 hover:text-primary`}
         onClick={() => {
             setQuery("");
             setIsExpanded(false);
@@ -97,7 +97,7 @@ function SearchBar({ songs, setSearchResults, query, setQuery }) {
                 // type="search"
                 value={query}
                 placeholder="Search..."
-                className={"pl-10 pr-4 text-sm font-medium placeholder:font-normal border-none rounded-full peer bg-glass/50 focus:bg-background text-primary placeholder:text-primary dark:placeholder:text-primary/30" + (query ? "bg-background" : "")}
+                className={"pl-10 pr-4 text-sm font-medium placeholder:font-normal border-none rounded-full peer bg-glass/50 focus:bg-background text-primary placeholder:text-primary dark:placeholder:text-primary/30 " + (query ? "bg-background dark:bg-primary/30" : "dark:bg-background")}
             />
             {clearIcon}
             {/* this is placed second for the peer feature to work */}
