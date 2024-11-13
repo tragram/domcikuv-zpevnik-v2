@@ -12,14 +12,22 @@
 TBD: jiné akordy
 
 {start_of_chorus}
-[C]Čekám [Emi]na sig[Ami]nál, ten z nebe [Dmi]nepřichází a [G]tak čekám [C]dál [G]
-Hledím ke hvězdám, ve dne je nevidím a v noci nevnímám.
+[C]Čekám [Emi]na sig[Ami]nál,
+ten z nebe [Dmi]nepřichází a 
+[G]tak čekám [C]dál [G]
+
+Hledím ke hvězdám,
+ve dne je nevidím
+a v noci nevnímám.
 {end_of_chorus}
 
 {start_of_bridge}
-Tisíce [F]družic, [G]vysílačů, [C]vedení [A7]a přijímačů,
-jak [Dmi]pilné včelky [G]rozsévají signál z [C]květu na květ.
-V zemi [F]České čtrnáct [G]miliónů [C]funkčních SIM [A7]karet,
+Tisíce [F]družic, [G]vysílačů, 
+[C]vedení [A7]a přijímačů,
+jak [Dmi]pilné včelky [G]rozsévají 
+signál z [C]květu na květ.
+V zemi [F]České čtrnáct [G]miliónů
+[C]funkčních SIM [A7]karet,
 krom naší [Dmi]vsi je všude moderní [E]svět.
 {end_of_bridge}
 
@@ -48,22 +56,29 @@ A Tom [Dmi]sváří, pájí, [G]krájí, český [C]ruce všechno znaj.
 {end_of_bridge}
 
 {start_of_verse}
-Připojme na kostel v naší vesnici, tuhletu prapodivnou krabici.
-Vyšlem signál na všechny družice, ať rozšíříme obzory i hranice.
+Připojme na kostel v naší vesnici,
+tuhletu prapodivnou krabici.
+Vyšlem signál na všechny družice, 
+ať rozšíříme obzory i hranice.
 {end_of_verse}
 
 {start_of_verse}
-Nikdo však u nás neměl tušení, že globální způsobíme rušení.
-Že způsobíme těžké časy, no co. Opět budem pěstovati klasy, no co.
+Nikdo však u nás neměl tušení, 
+že globální způsobíme rušení.
+Že způsobíme těžké časy, no co. 
+Opět budem pěstovati klasy, no co.
 {end_of_verse}
 
 {start_of_verse}
-Tohle je vzkaz pro všechny [B]kutily, [Asmi]
-[E]kde bychom [F#]byli, kdybyste [B]nebyli. [Asmi]
-Vždyť vaše výtvory jsou báječné, progresivní, ba i bezpečné.
+Tohle je vzkaz pro všechny [B]kutily, [G#mi]
+[E]kde bychom [F#]byli, kdybyste [B]nebyli. [G#mi]
+Vždyť vaše výtvory jsou báječné, 
+progresivní, ba i bezpečné.
 {end_of_verse}
 
 {start_of_verse}
-Osmý div světa byste stvořili, kdyby však vodiče víc vodily.
-Dočkej času jako husa klasu, zejtra tu bude stát i stroj času.
+Osmý div světa byste stvořili, 
+kdyby však vodiče víc vodily.
+Dočkej času jako husa klasu, 
+zejtra tu bude stát i stroj času.
 {end_of_verse}

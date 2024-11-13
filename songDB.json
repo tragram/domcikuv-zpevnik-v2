@@ -237,7 +237,7 @@
     "start_melody": "a",
     "chordpro_file": "Buty-Nad_stadem_koni.pro",
     "pdf_filenames": "['buty_nad_stadem_koni-sken.pdf', 'buty_nad_stadem_koni-comp.pdf']",
-    "content_hash": "2b73e12a3eea3da7a8882d06524e9d51a1cbbf76"
+    "content_hash": "1747d7c3c7a2194063b70fe76c1a315b79e692ee"
   },
   {
     "title": "Až půjdou cikáni",
@@ -537,7 +537,7 @@
     "start_melody": "h",
     "chordpro_file": "Curly_Strings-Sobrad_Mu_Kallid.pro",
     "pdf_filenames": "",
-    "content_hash": "19df484559f832819976c4b61db17ac30217d400"
+    "content_hash": "606d91becbdf5eb6fb017eec25cf98061b4dfde6"
   },
   {
     "title": "Burčák",
@@ -1137,7 +1137,7 @@
     "start_melody": "c",
     "chordpro_file": "Honza_Jicha-Nekvalifikovany_ucitel.pro",
     "pdf_filenames": "['honza_jicha_nekvalifikovany_ucitel-sken.pdf', 'honza_jicha_nekvalifikovany_ucitel-comp.pdf']",
-    "content_hash": "38f30b5446f993db3df003d89a7a178ab0b46269"
+    "content_hash": "59b113fe6f2b0ee473188648e280e9da9b1ce023"
   },
   {
     "title": "Vlastizrádce",
@@ -3042,7 +3042,7 @@
     "start_melody": "e",
     "chordpro_file": "Nightwork-Cekam_na_signal.pro",
     "pdf_filenames": "['nightwork_cekam_na_signal-sken.pdf', 'nightwork_cekam_na_signal-comp.pdf']",
-    "content_hash": "8ac46d40db29b84b028c0d280b306ec367241893"
+    "content_hash": "c21dbf0a191423e775ea7b19ccdd2140096e817a"
   },
   {
     "title": "Maja",
@@ -4542,7 +4542,7 @@
     "start_melody": "g",
     "chordpro_file": "Xindl_X-Od_mozku_k_srdci.pro",
     "pdf_filenames": "[]",
-    "content_hash": "1ec42f430629daebfa950cdcb9a96c08bbf27959"
+    "content_hash": "f022adea9e7ee5157d4e6a5cd5dd8c3db8c9fbe7"
   },
   {
     "title": "Popelka",

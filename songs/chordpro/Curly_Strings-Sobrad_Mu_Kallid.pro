@@ -51,9 +51,9 @@ Vaid si[G]is teeb rõ[Bm]õmu see õis,
 {end_of_verse}
 
 {start_of_chorus}
-[A]Sõbrad, mu [E]kallid, ma ig[F#]atsen[A]teid,
+[A]Sõbrad, mu [E]kallid, ma ig[F#m]atsen[A]teid,
 [D]jagatult su[A]urem on[E]rõõm.
-[A]Jagatud kur[E]busest ri[F#]ismed vaid[A]jäid,
+[A]Jagatud kur[E]busest ri[F#m]ismed vaid[A]jäid,
 [D]murest jäi väi[A]kene[E]sõõm.
 {end_of_chorus}
 
