@@ -24,15 +24,20 @@ mám [F]milion hodin [G]bez nehody
 {end_of_verse}
 
 {start_of_verse}
-[C]Dbám o sebe, hned po ránu, aby dívky neřekly: „ten má zas ránu“
-a [F]chlapcům co jsou nezvladatelní, [C]věnuji péči individuelní
-[G]mám rád žáky i žákyně a vždy po hodině [F]se ještě dobrovolně ptají
-[C]vyháním je kolem [Ami]desáté, co ještě čekát[F]e? [G]
+[C]Dbám o sebe, hned po ránu, 
+aby dívky neřekly: „ten má zas ránu“
+a [F]chlapcům co jsou nezvladatelní, 
+[C]věnuji péči individuelní
+[G]mám rád žáky i žákyně a vždy po hodině
+[F]se ještě dobrovolně ptají
+[C]vyháním je kolem [Ami]desáté, 
+co ještě čekát[F]e? [G]
 Už jenom zuby, pusu, [C]hají.
 {end_of_verse}
 
 {start_of_chorus: R2}
-[G]Mám srdce na dlani a k učitelství přirozené nad[F]ání,
+[G]Mám srdce na dlani
+a k učitelství přirozené nad[F]ání,
 tak ať mi [C]nebrání v té kuk[Ami]ani,
 [F]ten co pořád [G]novým zákonem se ohá[C]ní
 {end_of_chorus}
@@ -49,7 +54,8 @@ a [F]mezi ně chodím i kvůli tobě
 {end_of_verse}
 
 {start_of_chorus: R2}
-[G]Jsem špatný učitel a nemám na to, tak [F]snad abych šel, sbohem zlato.
+[G]Jsem špatný učitel a nemám na to,
+tak [F]snad abych šel, sbohem zlato.
 [C]Systém je takhle [Ami]nastaven
 tak [F]sbohem buď, [G]já musím [C]ven.
 {end_of_chorus}

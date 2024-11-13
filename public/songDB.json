@@ -62,7 +62,7 @@
   {
     "title": "Sofia",
     "artist": "Alvaro Soler",
-    "key": "f#",
+    "key": "F#m",
     "language": "spanish",
     "date_added": "12-2016",
     "capo": "0",
@@ -72,7 +72,7 @@
     "start_melody": "c# e",
     "chordpro_file": "Alvaro_Soler-Sofia.pro",
     "pdf_filenames": "['alvaro_soler_sofia-sken.pdf', 'alvaro_soler_sofia-comp.pdf', 'alvaro_soler_sofia-gen.pdf']",
-    "content_hash": "8dd002017b1421dd199a57206e3d044685bab4e6"
+    "content_hash": "0fefad4e544f7eae64003d97ea97b5566a518c43"
   },
   {
     "title": "Jarošovský pivovar",
@@ -152,17 +152,17 @@
   {
     "title": "Mr. Tambourine Man",
     "artist": "Bob Dylan",
-    "key": "",
+    "key": "D",
     "language": "english",
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-d2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "d",
     "chordpro_file": "Bob_Dylan-Mr_Tambourine_Man.pro",
     "pdf_filenames": "['bob_dylan_mr_tambourine_man-sken.pdf', 'bob_dylan_mr_tambourine_man-comp.pdf']",
-    "content_hash": "b24702adc963f758d730f157177945dbb3544d80"
+    "content_hash": "671d97f9be85630481a4f6144521e8daeb7573e4"
   },
   {
     "title": "From God's Perspective",
@@ -237,7 +237,7 @@
     "start_melody": "a",
     "chordpro_file": "Buty-Nad_stadem_koni.pro",
     "pdf_filenames": "['buty_nad_stadem_koni-sken.pdf', 'buty_nad_stadem_koni-comp.pdf']",
-    "content_hash": "66b0683a8d34c4dbee28ed583cf09ce0a4e97354"
+    "content_hash": "c718518a936143670664f46ffa121ff5e94c53f1"
   },
   {
     "title": "Až půjdou cikáni",
@@ -277,12 +277,12 @@
     "date_added": "11-2024",
     "capo": "3",
     "tempo": "",
-    "range": "",
+    "range": "g1-g2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "a",
     "chordpro_file": "Cechomor-Vcelin.pro",
     "pdf_filenames": "[]",
-    "content_hash": "b494adbd601ff0072cd355d0b947914d8cdc8fd4"
+    "content_hash": "6565ce9e4ac5be4aaad96dfbdc5f43b4a5a7b8df"
   },
   {
     "title": "1970",
@@ -482,17 +482,17 @@
   {
     "title": "Venku je na nule",
     "artist": "Chinaski",
-    "key": "",
+    "key": "Em",
     "language": "czech",
-    "date_added": "06-2017",
+    "date_added": "11-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "e1-d1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "g e",
     "chordpro_file": "Chinaski-Venku_je_na_nule.pro",
     "pdf_filenames": "['chinaski_venku_je_na_nule-sken.pdf', 'chinaski_venku_je_na_nule-comp.pdf']",
-    "content_hash": "361e534a9ec04a051e8a5b991f7e8473fc9c72b4"
+    "content_hash": "de4e6a4ec8c05c36258479d6c06a47981be7a965"
   },
   {
     "title": "Vinaři",
@@ -529,15 +529,15 @@
     "artist": "Curly Strings",
     "key": "G",
     "language": "estonian",
-    "date_added": "02-2020",
-    "capo": "0",
+    "date_added": "11-2024",
+    "capo": "3",
     "tempo": "",
-    "range": "",
+    "range": "e1-c#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "h",
     "chordpro_file": "Curly_Strings-Sobrad_Mu_Kallid.pro",
     "pdf_filenames": "",
-    "content_hash": "d78c4f34c15a86210a67468a5a0c04c97746ff5a"
+    "content_hash": "5260bb46573ef5fa0d3d0f0598d5c0c3204c1dcb"
   },
   {
     "title": "Burčák",
@@ -637,12 +637,12 @@
     "date_added": "03-2018",
     "capo": "2",
     "tempo": "",
-    "range": "",
+    "range": "g1-h2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "c g",
     "chordpro_file": "Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You.pro",
     "pdf_filenames": "",
-    "content_hash": "30849cfa6b0cdd26d94fdf337df1cc38551bbc59"
+    "content_hash": "de22204e5f75f67e5708a99493fea544f239935c"
   },
   {
     "title": "No quiero ser normal",
@@ -652,12 +652,12 @@
     "date_added": "03-2016",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-e2",
     "illustration_author": "",
     "start_melody": "f#-a",
     "chordpro_file": "El_Cuarteto_de_Nos-No_quiero_ser_normal.pro",
     "pdf_filenames": "[]",
-    "content_hash": "5f78bc674d780d8833fc13c4f1d7852652796e37"
+    "content_hash": "a4dee8106f88e1dce41ce9e2e4e62d3f6fcb2aca"
   },
   {
     "title": "Lovec Amorů",
@@ -1137,7 +1137,7 @@
     "start_melody": "c",
     "chordpro_file": "Honza_Jicha-Nekvalifikovany_ucitel.pro",
     "pdf_filenames": "['honza_jicha_nekvalifikovany_ucitel-sken.pdf', 'honza_jicha_nekvalifikovany_ucitel-comp.pdf']",
-    "content_hash": "3f84ba0a8c54697184c149b06ae26f25c231a1ef"
+    "content_hash": "7d46337adf25efa531520c43d4767b2a12790823"
   },
   {
     "title": "Vlastizrádce",
@@ -1237,12 +1237,12 @@
     "date_added": "07-2018",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "g1-e1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "g g g",
     "chordpro_file": "Inspired_By_Iceland-The_AO_of_Iceland.pro",
     "pdf_filenames": "['inspired_by_island_the_ao_of_island-sken.pdf', 'inspired_by_island_the_ao_of_island-comp.pdf']",
-    "content_hash": "5c2282dac65aaa83f270c342406403ed65ac94a3"
+    "content_hash": "c6b549e6265da2853b44d3b639024cbeeec67bf7"
   },
   {
     "title": "Drunken Sailor",
@@ -2267,17 +2267,17 @@
   {
     "title": "Vasil",
     "artist": "Karel Kryl",
-    "key": "",
+    "key": "D",
     "language": "czech",
     "date_added": "11-2018",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-f#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "f#",
     "chordpro_file": "Karel_Kryl-Vasil.pro",
     "pdf_filenames": "['karel_kryl_vasil-sken.pdf', 'karel_kryl_vasil-comp.pdf']",
-    "content_hash": "001250d0aff8da5fe6c74cb1e5b93db013808461"
+    "content_hash": "00b2f9c33b0181493d3e558ff8708e0718bd5f95"
   },
   {
     "title": "Veličenstvo kat",
@@ -2452,12 +2452,12 @@
     "date_added": "10-2020",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "g1-e1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e d c h c",
     "chordpro_file": "La_Vela_Puerca-Zafar.pro",
     "pdf_filenames": "[]",
-    "content_hash": "bc9c13f7f8f3d2d090930c44e5ae2d2cb24069e7"
+    "content_hash": "e45383ba7fc1cdb0f52f5866c32d0ffc6bdb3b84"
   },
   {
     "title": "Pro tebe",
@@ -2537,17 +2537,17 @@
   {
     "title": "New Divide",
     "artist": "Linkin Park",
-    "key": "",
+    "key": "Em",
     "language": "english",
-    "date_added": "07-2016",
-    "capo": "0",
+    "date_added": "11-2024",
+    "capo": "5",
     "tempo": "",
-    "range": "",
+    "range": "a1-a2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "h d e",
     "chordpro_file": "Linkin_Park-New_Divide.pro",
     "pdf_filenames": "['linkin_park_new_divide-sken.pdf', 'linkin_park_new_divide-comp.pdf', 'linkin_park_new_divide-gen.pdf']",
-    "content_hash": "b5b005ca04c3174b0c58d970ccaba2b3c74f5967"
+    "content_hash": "6965ea8b54fe667ddc078e6d1d30243560ef29c7"
   },
   {
     "title": "We Are One",
@@ -2747,17 +2747,17 @@
   {
     "title": "Nothing Else Matters",
     "artist": "Metallica",
-    "key": "",
+    "key": "Em",
     "language": "english",
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-h2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e",
     "chordpro_file": "Metallica-Nothing_Else_Matters.pro",
     "pdf_filenames": "['metallica_nothing_else_matters-sken.pdf', 'metallica_nothing_else_matters-comp.pdf']",
-    "content_hash": "ea5ea70af585c87e1077fa28bf9fdd7b0e4bbe90"
+    "content_hash": "40576f79aefa6998c7ad649e58f3f2216c1a51f9"
   },
   {
     "title": "Nonstop",
@@ -2792,17 +2792,17 @@
   {
     "title": "Zakázané uvolnění",
     "artist": "Michal Hrůza",
-    "key": "",
+    "key": "D",
     "language": "czech",
-    "date_added": "02-2017",
-    "capo": "0",
+    "date_added": "11-2024",
+    "capo": "5",
     "tempo": "",
-    "range": "",
+    "range": "f#1-f#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "d d d c#",
     "chordpro_file": "Michal_Hruza-Zakazane_uvolneni.pro",
     "pdf_filenames": "['michal_hruza_zakazane_uvolneni-sken.pdf', 'michal_hruza_zakazane_uvolneni-comp.pdf', 'michal_hruza_zakazane_uvolneni-gen.pdf']",
-    "content_hash": "d130b52045f87ddd882b4fc3ad7a7d6f78e288b2"
+    "content_hash": "b15083b2b4dd1c0c3a534cfacc41ed61c69f4c99"
   },
   {
     "title": "Abych Tu Žil",
@@ -2857,12 +2857,12 @@
     "date_added": "09-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-g#1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "h g#",
     "chordpro_file": "Miki_Ryvola-Tunel_jmenem_cas.pro",
     "pdf_filenames": "",
-    "content_hash": "af3cddac8d022af46d0a288f416d3a031abe6979"
+    "content_hash": "97c9ca6184e49c83e621a83ad65b29b248ac88ae"
   },
   {
     "title": "Jezdím bez nehod",
@@ -3042,7 +3042,7 @@
     "start_melody": "e",
     "chordpro_file": "Nightwork-Cekam_na_signal.pro",
     "pdf_filenames": "['nightwork_cekam_na_signal-sken.pdf', 'nightwork_cekam_na_signal-comp.pdf']",
-    "content_hash": "94c7271e714d467731bf383f002908faed00e1c9"
+    "content_hash": "d78a84e90e0c849c555d2537bdfa75bbda59ba4b"
   },
   {
     "title": "Maja",
@@ -3377,17 +3377,17 @@
   {
     "title": "O bláznech",
     "artist": "Penk & Pergner",
-    "key": "",
+    "key": "E",
     "language": "czech",
     "date_added": "07-2015",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "f#1-a#2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e",
     "chordpro_file": "Penk__Pergner-O_blaznech.pro",
     "pdf_filenames": "['penk__pergner_o_blaznech-sken.pdf', 'penk__pergner_o_blaznech-comp.pdf']",
-    "content_hash": "7a959e09bbe109090c35d32f5aec96fb3fff5eb2"
+    "content_hash": "280179d3b6cd8c7c6fa5c930df3f0a8723453645"
   },
   {
     "title": "Nad horů svítá",
@@ -3862,12 +3862,12 @@
     "date_added": "12-2018",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "h1-d2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e d e d",
     "chordpro_file": "Stromae-Papaoutai.pro",
     "pdf_filenames": "['stromae_papaoutai_-sken.pdf', 'stromae_papaoutai_-comp.pdf']",
-    "content_hash": "06887c982549a9185bde1a6382d6e81ed86553d2"
+    "content_hash": "16626be9da772ee1d6d1fc95d48e0c9a8a847604"
   },
   {
     "title": "Léto lásky",
@@ -4267,12 +4267,12 @@
     "date_added": "11-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "e1-d1",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e d",
     "chordpro_file": "Visaci_zamek-Znamka_Punku.pro",
     "pdf_filenames": "[]",
-    "content_hash": "55a34cfd812dee37c3514a5c67e5f13a69caf60e"
+    "content_hash": "ce831fef2818f9ef0b338f267169a56955c2ebdf"
   },
   {
     "title": "O Sol",
@@ -4387,12 +4387,12 @@
     "date_added": "11-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "a1-a2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "g g a c a",
     "chordpro_file": "Wabi_Danek-Rosa_na_kolejich.pro",
     "pdf_filenames": "",
-    "content_hash": "6b4112944efc32198da1444e82848798ed692dd0"
+    "content_hash": "12c0535309c55bb0ea19692bbd59fa39c70886a9"
   },
   {
     "title": "Míle",
@@ -4542,7 +4542,7 @@
     "start_melody": "g",
     "chordpro_file": "Xindl_X-Od_mozku_k_srdci.pro",
     "pdf_filenames": "[]",
-    "content_hash": "f8e0697bccb18c4544ec2354dc5b87cfc761668d"
+    "content_hash": "b2779f7459cf1526b4177950eff4d918e9a5dacb"
   },
   {
     "title": "Popelka",
@@ -4567,12 +4567,12 @@
     "date_added": "11-2024",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "e1-e2",
     "illustration_author": "",
-    "start_melody": "",
+    "start_melody": "e d#",
     "chordpro_file": "Yvonne_Prenosilova-Boty_proti_lasce.pro",
     "pdf_filenames": "[]",
-    "content_hash": "926c1cea50bd459cae84a08e86af8328fbe39832"
+    "content_hash": "5962012e2180e98d8c790f9bb9754598b4c05307"
   },
   {
     "title": "Divokej horskej tymián",
