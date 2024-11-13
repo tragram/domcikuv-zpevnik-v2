@@ -15,7 +15,6 @@ interface FilterSettings {
     capo: boolean
 }
 
-
 class SongRange {
     // TODO: tohle by se taky asi melo predelat na anglickou variantu, ne?
     static chromaticScale = {
@@ -35,13 +34,13 @@ class SongRange {
         "a": 9,
         "a#": 10,
         "bb": 10,
-        "b": 11,
+        "b": 10,
         "h": 11
     };
-    min: string;
-    max: string;
-    semitones: int;
-
+    min: string | null;
+    max: string | null;
+    semitones: int | null;
+    // TODO: base tone+semitones is a full description, no need to save the rest...
     constructor(song_range_str: string) {
         if (!song_range_str || !song_range_str.includes("-")) {
             this.min = null;
@@ -64,8 +63,8 @@ class SongRange {
         this.semitones = 12 * octaves + withinOctave;
     }
 
-    static fromJSON(json: any): SongData {
-        const instance = Object.create(SongData.prototype);
+    static fromJSON(json: any): SongRange {
+        const instance = Object.create(SongRange.prototype);
 
         // Directly assign all fields without running constructor logic
         instance.min = json.min;
@@ -74,6 +73,24 @@ class SongRange {
         return instance;
     }
 
+    transposed(semitones: number): SongRange {
+        function transposeTone(tone: string, semitones: number) {
+            const chromaticScale = SongRange.chromaticScale;
+            const transposedNr = (chromaticScale[tone.replace(/[0-9]/g, '')] + semitones) % 12;
+            // console.log(tone.replace(/[0-9]/g, ''), transposedNr, semitones)
+            return Object.keys(chromaticScale).find(key => chromaticScale[key] === transposedNr);
+        }
+        return SongRange.fromJSON({
+            min: `${transposeTone(this.min, semitones)}${this.min?.slice(-1)[0]}`,
+            max: `${transposeTone(this.max, semitones)}${this.max?.slice(-1)[0]}`,
+            semitones: this.semitones,
+        })
+    }
+    toString(transpose_semitones: number) {
+        // console.log(transpose_semitones)
+        const transposedRange = this.transposed(transpose_semitones);
+        return `${transposedRange.min} - ${transposedRange.max}`
+    }
 }
 
 // TODO: už se používají anglické...

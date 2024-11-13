@@ -4,8 +4,6 @@ import useLocalStorageState from 'use-local-storage-state'
 import { AutoTextSize } from 'auto-text-size'
 import './SongView.css'
 import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, LayoutSettingsDropdownSection } from './LayoutSettings';
-// import SpaceSavingSettings from './SpaceSavingSettings';
-// import TransposeSettings from './TransposeSettings';
 import { renderSong, guessKey } from './songRendering';
 import { Events, animateScroll as scroll } from 'react-scroll';
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano, Dices } from 'lucide-react';
@@ -58,8 +56,9 @@ function SongView() {
     const navigate = useNavigate();
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
-    const [visibleToolbar, setVisibleToolbar] = useState(true)
-    const [scrollInProgress, setscrollInProgress] = useState(false)
+    const [visibleToolbar, setVisibleToolbar] = useState(true);
+    const [scrollInProgress, setscrollInProgress] = useState(false);
+    const [transposeSteps, setTransposeSteps] = useState(0);
 
     const handleScroll = () => {
         const currentScrollPos = window.scrollY
@@ -155,6 +154,18 @@ function SongView() {
     if (songData.lyricsLength() < 50) {
         return PdfView(songData.pdfFilenames);
     };
+
+    function formatChords(data) {
+        return data.split(/(\d|[#b])/).map((part, index) => {
+            if (/\d/.test(part)) {
+                return <sub key={index}>{part}</sub>; // Render numbers as subscripts
+            } else if (/[#b]/.test(part)) {
+                return <sup key={index}>{part}</sup>; // Render # or b as superscripts
+            }
+            return part; // Render other parts as plain text
+        });
+    }
+
     return (<div className={"flex flex-col relative sm:pt-[88px] pt-[72px] " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh")}
     >
         <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-md overflow-hidden' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}></div>
@@ -163,7 +174,7 @@ function SongView() {
                 <Button size="icon" variant="circular" onClick={() => navigate("/")}>{<Undo2 />}</Button>
                 <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
                 <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} />
-                <TransposeSettings songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} />
+                <TransposeSettings songOriginalKey={songData.key} songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} setTransposeSteps={setTransposeSteps} />
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Button size="icon" variant="circular"><Settings2 size={32} /></Button>
@@ -203,7 +214,6 @@ function SongView() {
             <Button className={'bg-primary/70 absolute bottom-0 right-0 ' + (atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
         </div>
 
-
         <div id="auto-text-size-wrapper" className={'w-full z-10 lg:p-8 p-2 sm:p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? "" : "")}>
             <AutoTextSize
                 mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
@@ -213,7 +223,7 @@ function SongView() {
                     <h1 className='self-center font-bold text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
                     <div className='flex flex-col text-right'>
                         <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {songData.capo}</h2>
-                        <h2 className='text-[0.75em] text-muted-foreground '>{songData.range.min}-{songData.range.max} ({songData.key})</h2>
+                        <h2 className='text-[0.75em] text-muted-foreground sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
                     </div>
                 </div>
                 <div className={`flex flex-col 

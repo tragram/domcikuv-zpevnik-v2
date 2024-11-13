@@ -45,6 +45,10 @@ const english2German = {
     "B": "H",
 }
 
+// TODO: unify with preparse_ChordPro
+const CHROMATIC_SCALE: { [key: string]: number } = {
+    "c": 0, "c#": 1, "db": 1, "des": 1, "d": 2, "d#": 3, "eb": 3, "es": 3, "e": 4, "f": 5, "f#": 6, "gb": 6, "g": 7, "g#": 8, "ab": 8, "as": 8, "a": 9, "a#": 10, "b": 10, "h": 11
+};
 
 function useComponentVisible(initialIsVisible) {
     const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible);
@@ -66,15 +70,22 @@ function useComponentVisible(initialIsVisible) {
     return { ref, isComponentVisible, setIsComponentVisible };
 }
 
+function findTransposeSteps(originalKey: string, newKey: string): number {
+    const chromaticIndex = (key: string) => CHROMATIC_SCALE[key];
+    const transposeSteps = originalKey && newKey ? (chromaticIndex(newKey) - chromaticIndex(originalKey)) % 12 : 0;
+    return transposeSteps;
+}
+
 function TransposeButtons({ songRenderKey, setSongRenderKey, vertical = false }) {
     return (
         <FancySwitch options={renderKeys} selectedOption={songRenderKey.toUpperCase()} setSelectedOption={key => setSongRenderKey(german2English[key])} vertical={vertical} roundedClass={"rounded-full"} full={true} />
     )
 }
 
-function TransposeSettings({ songRenderKey, setSongRenderKey }) {
-    const safeSongRenderKey = english2German[songRenderKey?.replace("m", "")].toLowerCase()
-    // const [visibleTranspose, setVisibleTranspose] = useState(false);
+function TransposeSettings({ songOriginalKey, songRenderKey, setSongRenderKey, setTransposeSteps }) {
+    const makeKeySafe = (key) => key ? english2German[key?.replace("m", "")].toLowerCase() : null;
+    const safeSongRenderKey = makeKeySafe(songRenderKey)
+    setTransposeSteps(findTransposeSteps(makeKeySafe(songOriginalKey), safeSongRenderKey));
     const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
     return (<>
         <div className='hidden xl:flex h-full'>
@@ -98,7 +109,7 @@ function TransposeSettings({ songRenderKey, setSongRenderKey }) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-12">
                     {renderKeys.map(k => (
-                        <DropdownMenuCheckboxItem checked={songRenderKey.toUpperCase() == k} onCheckedChange={()=>setSongRenderKey(german2English[k])}>{k}</DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem checked={songRenderKey.toUpperCase() == k} onCheckedChange={() => setSongRenderKey(german2English[k])}>{k}</DropdownMenuCheckboxItem>
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>
