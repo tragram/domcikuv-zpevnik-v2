@@ -9,8 +9,6 @@
 {range: a1-g2}
 {start_melody: e}
 
-TBD: jiné akordy
-
 {start_of_chorus}
 [C]Čekám [Emi]na sig[Ami]nál,
 ten z nebe [Dmi]nepřichází a 
@@ -23,20 +21,20 @@ a v noci nevnímám.
 
 {start_of_bridge}
 Tisíce [F]družic, [G]vysílačů, 
-[C]vedení [A7]a přijímačů,
+[Emi]vedení [A7]a přijímačů,
 jak [Dmi]pilné včelky [G]rozsévají 
 signál z [C]květu na květ.
 V zemi [F]České čtrnáct [G]miliónů
-[C]funkčních SIM [A7]karet,
+[Emi]funkčních SIM [A7]karet,
 krom naší [Dmi]vsi je všude moderní [E]svět.
 {end_of_bridge}
 
 {start_of_verse}
 Přestaňme pěstovat [A]už, [F#mi]obilí,
 [Bmi]radši si [E]kupme všichni [A]mobily. [F#mi]
-[Bmi]No my tu nebudem [E]nikomu dělat [A]debily. [F#mi]
+No [Bmi]my tu nebudem [E]nikomu dělat [A]debily. [F#mi]
 [Bmi]My u nás [E]postavíme [A]sloup,
-[F#mi]vysílací [Bmi]sloup. [E]
+[F#mi]vysílací [D]sloup. [E]
 {end_of_verse}
 
 {start_of_verse}
@@ -49,9 +47,12 @@ ať signál zalije naši vesnici.
 {chorus}
 
 {start_of_bridge}
-[F]Za zatáčkou u [G]rybníka, [Emi]máme [A7]kutila.
-A Tom [Dmi]sváří, pájí, [G]krájí, český [C]ruce všechno znaj.
-[F]Do týdne tu [G]stálo dílo [Dmi]hodno [A7]génia.
+[F]Za zatáčkou u [G]rybníka, 
+[Emi]máme [A7]kutila.
+A Tom [Dmi]sváří, pájí, 
+[G]krájí, český [C]ruce všechno znaj.
+[F]Do týdne tu [G]stálo dílo 
+[Dmi]hodno [A7]génia.
 [Dmi]Kam, že tenhle skvělý přístroj [E]daj'?
 {end_of_bridge}
 
