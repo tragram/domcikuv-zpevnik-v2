@@ -297,7 +297,7 @@
     "start_melody": "f#",
     "chordpro_file": "Chinaski-1970.pro",
     "pdf_filenames": "[]",
-    "content_hash": "3468232a60a2bd034f4374015ec07d9fb756878a"
+    "content_hash": "3ea15790a4156d7b0f9718f0f8459c0072f2a37e"
   },
   {
     "title": "1. signální",
@@ -507,7 +507,7 @@
     "start_melody": "e",
     "chordpro_file": "Chinaski-Vinari.pro",
     "pdf_filenames": "['chinaski_vinari-sken.pdf', 'chinaski_vinari-comp.pdf', 'chinaski_vinari-gen.pdf']",
-    "content_hash": "4e23448f9c1a49eaab11ea172ab3081ff73a28ba"
+    "content_hash": "ca6f71d6562aba741fe9a717aa269675a9198c35"
   },
   {
     "title": "Kauges Külas",
@@ -2022,7 +2022,7 @@
     "start_melody": "h g f# g",
     "chordpro_file": "Kamelot-Zachrante_kone.pro",
     "pdf_filenames": "['kamelot_zachrante_kone-sken.pdf', 'kamelot_zachrante_kone-comp.pdf']",
-    "content_hash": "1176a804f168d2618fcc9417397cb48bc0e1ead9"
+    "content_hash": "43729e14f9f7833846012616093cd4008fd1662c"
   },
   {
     "title": "Země vzdálená",
@@ -3042,7 +3042,7 @@
     "start_melody": "e",
     "chordpro_file": "Nightwork-Cekam_na_signal.pro",
     "pdf_filenames": "['nightwork_cekam_na_signal-sken.pdf', 'nightwork_cekam_na_signal-comp.pdf']",
-    "content_hash": "d78a84e90e0c849c555d2537bdfa75bbda59ba4b"
+    "content_hash": "159b98dea593f5c8f0baee5d4d3f85558fc5f152"
   },
   {
     "title": "Maja",
