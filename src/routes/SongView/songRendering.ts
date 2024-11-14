@@ -80,6 +80,7 @@ function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"]
 }
 function chordToGerman(chord: string) {
     const trimmedChord = chord.trim()
+    console.log(trimmedChord)
     if (trimmedChord.startsWith("Bb")) {
         return "B" + trimmedChord.slice(2);
     } else if (trimmedChord.startsWith("B")) {
@@ -108,6 +109,7 @@ function convertHTMLChordToGerman(songText: string) {
     const chords = doc.querySelectorAll(`.chord`);
     chords.forEach((chord) => {
         chord.textContent = chordToGerman(chord.textContent);
+        chord.innerHTML = chord.textContent.replace("b", "♭").replace("#", "♯").replace(/([♯♭67])/, "<sup>$1</sup>");
     })
     return doc.body.innerHTML;
 }
