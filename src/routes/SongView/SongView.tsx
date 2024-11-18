@@ -28,6 +28,8 @@ function SongView() {
         songData.key = guessKey(songData.content);
     }
 
+    
+
     const [customLayoutPreset, setCustomLayoutPreset] = useLocalStorageState<LayoutSettings>("settings/SongView/CustomLayoutPreset", {
         defaultValue: {
             fitScreenMode: "none",
@@ -53,6 +55,11 @@ function SongView() {
 
     const [parsedContent, setParsedContent] = useState('');
     const [songRenderKey, setSongRenderKey] = useState(songData.key);
+    useEffect(() => {
+        // avoids an annoying bug when user goes directly from one song to another, where the key stays the same
+        setSongRenderKey(songData.key);
+    }, [songData.id]); 
+    
     const navigate = useNavigate();
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
