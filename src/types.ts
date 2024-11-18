@@ -137,7 +137,7 @@ class SongData {
     constructor(song: SongRawData) {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.id = unidecode(`${this.artist}-${this.title}`.replace(/ /g, "_")).replace("?", "");
+        this.id = unidecode(`${this.artist}-${this.title}`.replace(/ /g, "_")).replace("?", "").replace("/","");
         this.key = song.key || null;
 
         const [month, year] = song.date_added.split("-");
