@@ -76,7 +76,7 @@ class SongRange {
     transposed(semitones: number): SongRange {
         function transposeTone(tone: string, semitones: number) {
             const chromaticScale = SongRange.chromaticScale;
-            const transposedNr = (chromaticScale[tone.replace(/[0-9]/g, '')] + semitones) % 12;
+            const transposedNr = (chromaticScale[tone.replace(/[0-9]/g, '')] + semitones + 12) % 12;
             // console.log(tone.replace(/[0-9]/g, ''), transposedNr, semitones)
             return Object.keys(chromaticScale).find(key => chromaticScale[key] === transposedNr);
         }
