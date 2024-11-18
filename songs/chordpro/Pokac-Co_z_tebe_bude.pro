@@ -52,4 +52,8 @@ uo o o o co z tebe bude
 uo o o o
 {end_of_verse}
 
-{chorus} (ale vážně hodně blbě)
+{start_of_variant: replace_last_line}
+tak [A]proč se mě tak blbě 
+ale vážně hodně blbě [D]ptáš?
+{end_of_variant}
+{chorus}

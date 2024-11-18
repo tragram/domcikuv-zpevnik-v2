@@ -36,9 +36,9 @@ Cinká moje tramvaj a stydne ranní káva
 A na dveře marně buší domácí, ta kráva
 Policie hledá, nenachází stopy
 Moje dívka bledá zatím sbírá zátky od piv
-{start_of_verse}
-
 {end_of_verse}
+
+{start_of_verse}
 Asi něco tuší, vždyť ta holka není hloupá
 Právě jsem se narodil a pára k nebi stoupá
 Možná budu písař anebo lámat kámen
