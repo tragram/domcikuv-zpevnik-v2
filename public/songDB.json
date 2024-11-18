@@ -897,7 +897,11 @@
     "start_melody": "a c a c e",
     "chordpro_file": "Folk-Hej_sokoly.pro",
     "pdf_filenames": "",
+<<<<<<< HEAD
     "content_hash": "8b79329d3ee6506ccfb9b3f5041704fc5f722701"
+=======
+    "content_hash": "b8fe230ca44afb6e178413e3d219e6607b112c6a"
+>>>>>>> ecc126bac5bee197af29bf693093aaec81126428
   },
   {
     "title": "Säkkijärven Polkka",
