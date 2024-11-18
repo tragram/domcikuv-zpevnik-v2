@@ -37,7 +37,7 @@
 
 {start_of_verse}
 [Am]Pięknych dziewcząt jest niemało
-[E]Lecz najwięcej w Ukrainie
+[G]Lecz najwięcej w Ukrainie
 [Am]Tam me serce pozostało
 [E7]Przy kochanej [Am]mej [G]dziew[C]czy[G]nie
 {end_of_verse}
