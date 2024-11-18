@@ -80,7 +80,6 @@ function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"]
 }
 function chordToGerman(chord: string) {
     const trimmedChord = chord.trim()
-    console.log(trimmedChord)
     if (trimmedChord.startsWith("Bb")) {
         return "B" + trimmedChord.slice(2);
     } else if (trimmedChord.startsWith("B")) {
@@ -103,10 +102,10 @@ function noteToEnglish(note: string) {
 }
 
 function convertHTMLChordToGerman(songText: string) {
-    // TODO: force display chords could be done here
     const parser = new DOMParser();
     const doc = parser.parseFromString(songText, 'text/html');
     const chords = doc.querySelectorAll(`.chord`);
+    // TODO: this should be separate from German conversion
     chords.forEach((chord) => {
         chord.textContent = chordToGerman(chord.textContent);
         chord.innerHTML = chord.textContent.replace("b", "♭").replace("#", "♯").replace(/([♯♭67])/, "<sup>$1</sup>");

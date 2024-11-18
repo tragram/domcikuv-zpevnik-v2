@@ -28,11 +28,9 @@ function SongView() {
         songData.key = guessKey(songData.content);
     }
 
-    
-
     const [customLayoutPreset, setCustomLayoutPreset] = useLocalStorageState<LayoutSettings>("settings/SongView/CustomLayoutPreset", {
         defaultValue: {
-            fitScreenMode: "none",
+            fitScreenMode: "fitXY",
             fontSize: 12,
             repeatParts: false,
             repeatPartsChords: false,
@@ -59,7 +57,7 @@ function SongView() {
         // avoids an annoying bug when user goes directly from one song to another, where the key stays the same
         setSongRenderKey(songData.key);
     }, [songData.id]); 
-    
+
     const navigate = useNavigate();
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -165,7 +163,7 @@ function SongView() {
     function formatChords(data) {
         return data.split(/(\d|[#b])/).map((part, index) => {
             if (/\d/.test(part)) {
-                return <sub key={index}>{part}</sub>; // Render numbers as subscripts
+                return <sub key={index}>{part}</sub>; // Render numbers as superscripts
             } else if (/[#b]/.test(part)) {
                 return <sup key={index}>{part}</sup>; // Render # or b as superscripts
             }
