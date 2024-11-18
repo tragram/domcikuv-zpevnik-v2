@@ -16,18 +16,18 @@ import { useEffect, useRef, useState } from "react";
 const renderKeys = ["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"]
 
 const german2English = {
-    "C": "C",
-    "C#": "C#",
-    "D": "D",
-    "Es": "Eb",
-    "E": "E",
-    "F": "F",
-    "F#": "F#",
-    "G": "G",
-    "As": "Ab",
-    "A": "A",
-    "B": "Bb",
-    "H": "B",
+    "c": "C",
+    "c#": "C#",
+    "d": "D",
+    "es": "Eb",
+    "e": "E",
+    "f": "F",
+    "f#": "F#",
+    "g": "G",
+    "as": "Ab",
+    "a": "A",
+    "b": "Bb",
+    "h": "B",
 }
 
 const english2German = {
@@ -78,7 +78,7 @@ function findTransposeSteps(originalKey: string, newKey: string): number {
 
 function TransposeButtons({ songRenderKey, setSongRenderKey, vertical = false }) {
     return (
-        <FancySwitch options={renderKeys} selectedOption={songRenderKey.toUpperCase()} setSelectedOption={key => setSongRenderKey(german2English[key])} vertical={vertical} roundedClass={"rounded-full"} full={true} />
+        <FancySwitch options={renderKeys.map(k => { return { "label": k, "value": k.toLowerCase() } })} selectedOption={songRenderKey.toLowerCase()} setSelectedOption={key => setSongRenderKey(german2English[key])} vertical={vertical} roundedClass={"rounded-full"} full={true} />
     )
 }
 
