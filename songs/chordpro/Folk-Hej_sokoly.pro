@@ -9,54 +9,55 @@
 
 {start_of_verse}
 [Am]Hej, tamgdzieś znad czarnej wody
-[E]Wsiada na koń kozak młody
+[G]Wsiada na koń kozak młody
 [Am]Czule żegna się z dziewczyną
-[E]Jeszcze czulej z [Am]Ukra[G]iną
+[E7]Jeszcze czulej z [Am]U[G]kra[C]i[G]ną
 {end_of_verse}
 
 {start_of_chorus}
 [C]Hej, hej, hej sokoły
 [G]Omijajcie góry, lasy, doły
 [Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy [Am]skowro[G]neczku
+[E7]Mój stepowy [Am]sko[G]wro[C]necz[G]ku
+
 [C]Hej, hej, hej sokoły
 [G]Omijajcie góry, lasy, doły
 [Am]Dzwoń, dzwoń, dzwoń dzwoneczku
-[E]Mój stepowy, [Am]dzwoń, [E]dzwoń, [Am]dzwoń
+[E7]Mój stepowy, [Am]dzwoń, [E7]dzwoń, [Am]dzwoń
 {end_of_chorus}
 
 {start_of_verse}
 [Am]Ona jedn tam została
-[E]Jaskółeczka moja, moja mała
+[G]Jaskółeczka moja, moja mała
 [Am]A ja tutaj w obcej stronie
-[E]Dniem i nocą tęsk[Am]nię [G]do niej
+[E7]Dniem i nocą [Am]tęs[G]knię [C]do [G]niej
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
 [Am]Pięknych dziewcząt jest niemało
-[E]Lecz najwięcej w Ukrainie
+[G]Lecz najwięcej w Ukrainie
 [Am]Tam me serce pozostało
-[E]Przy kochanej m[Am]ej [G]dziewczynie
+[E7]Przy kochanej [Am]mej [G]dziew[C]czy[G]nie
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
 [Am]Żal, żal za dziewczyną
-[E]Za zieloną Ukrainą
+[G]Za zieloną Ukrainą
 [Am]Żal, żal serce płacze
-[E]Już jej więcej [Am]nie [G]zobaczę
+[E7]Już jej więcej [Am]nie [G]zo[C]ba[G]czę
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
 [Am]Wina, wina, wina, wina dajcie
-[E]A jak umrę pochowajcie
+[G]A jak umrę pochowajcie
 [Am]Na zielonej Ukrainie
-[E]Przy kochanej [Am]mej dzie[G]wczynie
+[E7]Przy kochanej [Am]mej [G]dziew[C]czy[G]nie
 {end_of_verse}
 
 {chorus}

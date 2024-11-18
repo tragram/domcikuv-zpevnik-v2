@@ -10,27 +10,29 @@
 {start_melody: e d e d}
 
 {start_of_verse}
-[Am]Dites-moi d'où il vie[G/A]nt,
-[Am]Enfin je saurais où je v[G/A]ais,
-[Am]Maman dit que lorsqu'o[G]n cherche bien,
-On fin[F#]it toujours par trou[Bm]ver,
+[Am]Dites-moi d'où il [G]ient,
+[Am]Enfin je saurais où je [G]vais,
+[Am]Maman dit que lorsqu'on cherche [G]bien,
+On fin[F#m]it toujours par trou[Bbm]ver,
+{end_of_verse}
 
-[Am]Elle dit qu'il n'est jamais très [Dm/A]loin,
-[Am]Qu'il part très souvent travail[Dm/A]ler,
+{start_of_verse}
+[Am]Elle dit qu'il n'est jamais très [Dm]loin,
+[Am]Qu'il part très souvent travail[Dm]ler,
 [F]Maman dit "travailler c'est [Dm]bien",
 Bien mieux [E]qu'être mal accompa[Am]gné, pas vrai ?
 {end_of_verse}
 
 {start_of_bridge: Prechorus}
-[Am]Où [G]est ton [F]papa ?
-[Dm]Dis-moi où [G]est ton pa[Am]pa.
-[Am]Sans[G]même de[F]voir lui parler,
-[Dm]Il sait ce [G]qui ne va [Am]pas,
+[F]Où est ton [Dm]papa ?
+[G]Dis-moi où est ton pa[Am]pa.
+[F]Sansmême de[Dmi]voir lui parler,
+[G]Il sait ce qui ne va [Am]pas,
 
 [F]Ah sacré [Dm]papa,
 [G]Dis-moi où es-tu ca[Am]ché ?
-Ca doit[F]faire au moins mille [Dm]fois que j'ai,
-[G]Compté mes [Am]doigts,
+Ca doit [F]faire au moins mille [Dm]fois que j'ai,
+[E]Compté mes [Am]doigts,
 {end_of_bridge}
 
 {start_of_chorus}
@@ -41,22 +43,24 @@ Ca doit[F]faire au moins mille [Dm]fois que j'ai,
 {end_of_chorus}
 
 {start_of_verse}
-[Am]Quoi? Qu'on y croie ou p[G/A]as,
-Y aura [Am]bien un jour où on y croira p[G/A]lus,
+[Am]Quoi? Qu'on y [G]croie ou pas,
+Y aura [Am]bien un jour où on y [G]croira plus,
 Un [Am]jour ou l'autre on sera tous pa[G]pa,
-Et d'un [F#]jour à l'autre on aura dis[Bm]paru,
+Et d'un [F#m]jour à l'autre on aura dis[Bbm]paru,
+{end_of_verse}
 
-[Am]Serons-nous détes[Dm/A]tables?
-[Am]Serons-nous admir[Dm/A]ables?
+{start_of_verse}
+[Am]Serons-nous détes[Dm]tables?
+[Am]Serons-nous admir[Dm]ables?
 Des [F]géniteurs ou des [Dm]génies,
 Dites-nous [E]qui donne naissance, aux ir[Am]responsables,
 {end_of_verse}
 
 {start_of_bridge}
-[Am]Hein? Dites-nous qui tie[G/A]nt,
-[Am]Tout le monde sait comment on fa[G/A]it des bébés
-[Am]Mais personne sait comment on f[G/A]ait des papas,
-[Ami]Monsieur JeSaisTout en aurait héri[G/A]té, c'est ça...
+[Am]Hein? Dites-nous qui tie[G]nt,
+[Am]Tout le monde sait comment on fa[G]it des bébés
+[Am]Mais personne sait comment on f[G]ait des papas,
+[Ami]Monsieur JeSaisTout en aurait héri[G]té, c'est ça...
 
 [Am]Faut l'sucer de son pouc[G]e ou quoi,
 [Am]Dites-nous où c'est cach[G]é,
