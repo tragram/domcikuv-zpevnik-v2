@@ -172,3 +172,11 @@
 .chord sup {
     /* margin-right: -0.1em; */
 }
+
+.empty-line {
+height: 1em;
+}
+
+.empty-line+.empty-line{
+    display:none;
+}
