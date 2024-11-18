@@ -27,19 +27,19 @@
 {end_of_chorus}
 
 {start_of_verse}
-[Am]Ona jedn tam została
-[G]Jaskółeczka moja, moja mała
-[Am]A ja tutaj w obcej stronie
-[E7]Dniem i nocą [Am]tęs[G]knię [C]do [G]niej
+[Am]Wiele dziewcząt jest na świecie
+[G]Lecz najwięcej w Ukrainie
+[Am]Tam me serce pozostało
+[E7]Przy kochanej [Am]mej [G]dziew[C]czy[G]nie
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-[Am]Pięknych dziewcząt jest niemało
-[G]Lecz najwięcej w Ukrainie
-[Am]Tam me serce pozostało
-[E7]Przy kochanej [Am]mej [G]dziew[C]czy[G]nie
+[Am]Ona biedna tam została
+[G]Jaskółeczka moja, moja mała
+[Am]A ja tutaj w obcej stronie
+[E7]Dniem i nocą [Am]tęs[G]knię [C]do [G]niej
 {end_of_verse}
 
 {chorus}
