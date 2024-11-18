@@ -9,7 +9,6 @@
 {range: c1-d2}
 {start_melody: a d}
 
-
 {start_of_chorus}
 Jo[Dm]lene, Jo[F]lene, Jo[C]lene, Jo[Dm]lene
 I'm [C]begging of you, please don't take my[Dm]man

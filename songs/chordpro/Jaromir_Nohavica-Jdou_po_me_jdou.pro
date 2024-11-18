@@ -1,4 +1,4 @@
-{title: Jdou po mě jdou}
+{title: Jdou po mně jdou}
 {artist: Jaromír Nohavica}
 {date_added: 07-2015}
 {language: czech}
@@ -25,8 +25,8 @@ zámek jde [F#mi]lehce a [Bmi]adresu [A7]znám,
 {start_of_chorus}
 Jdou po mně, [D]jdou, [G]jdou, [D]jdou,
 na každém [F#mi]rohu [Bmi]mají fotku [A7]mou,
-[G]kdyby mě [D]chytli, [A7]jó, byl by [Bmi]ring,
-[G]tma jako v [D]pytli je v [C]celách Sing-[G]sing. [A7]Jé, [D]Jé... [G][D]
+[G]kdyby mě [D]chytli, [A]jó, byl by [Bmi]ring,
+[G]tma jako v [D]pytli je v [C]celách Sing-[G]sing. [A]Jé, [D]Jé... [G][D]
 {end_of_chorus}
 
 {start_of_verse}
@@ -37,7 +37,7 @@ chudinká [F#mi]vdova mi [Bmi]nabídla [A7]byt,
 {end_of_verse}
 
 {start_of_verse}
-Však půl roku [D]nato [G]řekla mi:"[D]Dost,
+Však půl roku [D]na to [G]řekla mi:"[D]Dost,
 tobě došlo [F#mi]zlato, mně [Bmi]trpělivost, [A7]
 |: [G]sbal svých pár [D]švestek a [A7]běž si, kam [Bmi]chceš,"
 [G]tak jsem na [D]cestě a [G]chudý jak [D]veš. :|

@@ -10,14 +10,14 @@
 {start_melody: e}
 {start_of_chorus}
 [C]V pekle sudy válej
-[G]Z kotle pára [D]stoupá
+[G]Z kotle pára [Dmi]stoupá
 Na stůl nám [Bbmi]to dávej
 Ať to s náma [F]houpá
 {end_of_chorus}
 
 {start_of_verse}
 [C]Jede vlak no a my jedem v něm
-[G]Vlak s ucpaným [D]komínem
+[G]Vlak s ucpaným [Dmi]komínem
 Lidi řvou [Bb]zmatkujou
 Kdo ví zda to [F]přežijem
 {end_of_verse}
@@ -34,10 +34,10 @@ Kdesi protrhla se hráz
 {chorus}
 
 {start_of_bridge}
-[C]Nejlíp to vydejchal
-Mašinfíra [G]s topičem
-[C]Jedou si na koksu
-A zatím neví [A]o ničem
+[Bb]Nejlíp to vydejchal
+Mašinfíra [F]s topičem
+[Bb]Jedou si na koksu
+A zatím neví [G]o ničem
 {end_of_bridge}
 
 {start_of_verse}

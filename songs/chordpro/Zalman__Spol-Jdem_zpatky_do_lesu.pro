@@ -29,11 +29,11 @@ jdem zpátky do [Am7]lesů [C]za nějaký [G]čas.
 [Am7]i pes, kterej chce přízeň, napřed [D7]svýho pána popros[G]í. [D7]
 {end_of_verse}
 
-{chorus}
+{start_of_verse}
+[Am7]Už tě vidím z dálky, jak [D7]máváš na mě [G]korunou,  
+[Am7]a jestli nám to bude stačit, [D7]zatleskáme [G]na druhou,  
+[Am7]zabalíme všechny, co si [D7]dávaj' rande za [G]branou,  
+[Am7]v ráji není místa, možná [D7]v pekle se nás [G]zastanou.  
+{end_of_verse}
 
-{start_of_chorus}
-[G]Z ráje, my vyhnaní [Emi]z ráje,
-kde není už [Am7]místa, [C]prej něco se [G]chystá, [D7]
-[G]z ráje nablýskaných [Emi]plesů,
-jdem zpátky do [Am7]lesů [C]za nějaký [G]čas. (2X)
-{end_of_chorus}
+{chorus}
