@@ -162,7 +162,7 @@
     "start_melody": "d",
     "chordpro_file": "Bob_Dylan-Mr_Tambourine_Man.pro",
     "pdf_filenames": "['bob_dylan_mr_tambourine_man-sken.pdf', 'bob_dylan_mr_tambourine_man-comp.pdf']",
-    "content_hash": "671d97f9be85630481a4f6144521e8daeb7573e4"
+    "content_hash": "f19d39efa0cecca086dfa34126054767b44e2ea6"
   },
   {
     "title": "From God's Perspective",
@@ -207,7 +207,7 @@
     "start_melody": "f#",
     "chordpro_file": "Brontosauri-Vlocky.pro",
     "pdf_filenames": "['brontosauri_vlocky-sken.pdf', 'brontosauri_vlocky-comp.pdf']",
-    "content_hash": "d6178d372800f38678ef2b934eda1cd3d026c94e"
+    "content_hash": "fa7eedb1ab9cbd81a52309bbd46f6cfbfdcff0ff"
   },
   {
     "title": "František",
@@ -372,7 +372,7 @@
     "start_melody": "h d",
     "chordpro_file": "Chinaski-Drobna_paralela.pro",
     "pdf_filenames": "['chinaski_drobna_paralela-sken.pdf', 'chinaski_drobna_paralela-comp.pdf', 'chinaski_drobna_paralela-gen.pdf']",
-    "content_hash": "45060a573f67152dcdbcc7c38003c75c8e5acb84"
+    "content_hash": "c73806dd7b059412d6fcbe2c3947da695cd9d371"
   },
   {
     "title": "Hlavolam",
@@ -402,7 +402,7 @@
     "start_melody": "a a f#",
     "chordpro_file": "Chinaski-Kapela.pro",
     "pdf_filenames": "['chinaski_kapela-sken.pdf', 'chinaski_kapela-comp.pdf', 'chinaski_kapela-gen.pdf']",
-    "content_hash": "1c26e1bc2f3eb9663f3829450fbcd682f7add210"
+    "content_hash": "65985d64c9d37338af8a9abbd97de3dd6995caf5"
   },
   {
     "title": "Klára",
@@ -627,7 +627,7 @@
     "start_melody": "a",
     "chordpro_file": "Elvis_Presley-In_The_Ghetto.pro",
     "pdf_filenames": "['elvis_presley_in_the_ghetto-sken.pdf', 'elvis_presley_in_the_ghetto-comp.pdf']",
-    "content_hash": "6d6741401722cb8a9272e3d8f7d51e84356f6f9e"
+    "content_hash": "2c758960265cbf8597b89fdf5e877c6d2183d5c6"
   },
   {
     "title": "I Can't Help Falling In Love With You",
@@ -1077,7 +1077,7 @@
     "start_melody": "g a g h",
     "chordpro_file": "Honza_Jicha-Malicky_knirek.pro",
     "pdf_filenames": "['honza_jicha_malicky_knirek-sken.pdf', 'honza_jicha_malicky_knirek-comp.pdf', 'honza_jicha_malicky_knirek-gen.pdf']",
-    "content_hash": "f4f355bed2a69c6e12bd2cac8588fe8e344405b7"
+    "content_hash": "f6bf2a8cf415bbffeec03906effb77a5b3757111"
   },
   {
     "title": "Márinka",
@@ -2562,7 +2562,7 @@
     "start_melody": "g",
     "chordpro_file": "Lion_King-We_Are_One.pro",
     "pdf_filenames": "['lion_king_we_are_one-sken.pdf', 'lion_king_we_are_one-comp.pdf']",
-    "content_hash": "7c0430d36da601a5d00c7a344655bc5ed20f5419"
+    "content_hash": "aa04cc60ea5f7374d0367d5709ab39ec501c8c02"
   },
   {
     "title": "Ievan Polkka",
@@ -3372,7 +3372,7 @@
     "start_melody": "e f#",
     "chordpro_file": "Peha-Za_tebou.pro",
     "pdf_filenames": "['peha_za_tebou-sken.pdf', 'peha_za_tebou-comp.pdf']",
-    "content_hash": "b262ee9b9cfc1bf030b192ee866d4c390e0d23ba"
+    "content_hash": "e4ab896fc568fa9819080cb3d22c8b68f53f3ebe"
   },
   {
     "title": "O bláznech",
