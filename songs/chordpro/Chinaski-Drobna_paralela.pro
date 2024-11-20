@@ -17,10 +17,17 @@ Ta [G]stará [D]dobrá hra je [A]okoukaná.
 {end_of_verse}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív, [A]nic není jak [Bmi]bejvávalo.
-[G]Nic není jako [D]dřív, [A]to se nám to [Bmi]mívávalo.
-[G]Nic není jako [D]dřív, [A]ačkoliv máš všechno [Bmi]co si vždycky chtěla.
-[G]Nic není jako [D]dřív, [A]ačkoliv drobná para[Bmi]lela by tu byla.
+[G]Nic není jako [D]dřív, 
+[A]nic není jak [Bmi]bejvávalo.
+[G]Nic není jako [D]dřív, 
+[A]to se nám to [Bmi]mívávalo.
+{end_of_chorus}
+
+{start_of_chorus}
+[G]Nic není jako [D]dřív, 
+[A]ačkoliv máš všechno [Bmi]co si vždycky chtěla.
+[G]Nic není jako [D]dřív, 
+[A]ačkoliv drobná para[Bmi]lela by tu byla.
 {end_of_chorus}
 
 {start_of_verse}
@@ -30,9 +37,7 @@ Vážení platící, jak všeobecně ví se,
 včera i dneska, stále ta samá píseň.
 {end_of_verse}
 
-{start_of_chorus}
-Ačkoliv - [G]nic není jako [D]dřív, [A]nic není jak [Bmi]bejvávalo...
-{end_of_chorus}
+{chorus}
 
 {start_of_bridge}
 [G]Promlouvám k vám [D]ústy múzy,
@@ -42,10 +47,23 @@ Ačkoliv - [G]nic není jako [D]dřív, [A]nic není jak [Bmi]bejvávalo...
 {end_of_bridge}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív, [A]nic není jak [Bmi]bejvávalo.
-[G]Nic není jako [D]dřív, jó, [A]to se nám to dlouze [Bmi]kouřívalo.
-[G]Bohužel bohu[D]dík je s námi, [A]ta nenahmatatelná [Bmi]intimita těla.
-[G]Nic není jako [D]dřív, jen fámy[A], bla-bla-bl[Bmi]a-bla et-cetera.
-[G]Nic není jako [D]dřív, [A]nic není jak [Bmi]bejvávalo,
-[G]bohužel bohud[D]ík, [A]co myslíš ségra, je to [Bmi]hodně nebo málo?
+[G]Nic není jako [D]dřív, 
+[A]nic není jak [Bmi]bejvávalo.
+[G]Nic není jako [D]dřív, jó, 
+[A]to se nám to dlouze [Bmi]kouřívalo.
+{end_of_chorus}
+
+{start_of_chorus}
+[G]Bohužel bohu[D]dík je s námi, 
+[A]ta nenahmatatelná [Bmi]intimita těla.
+[G]Nic není jako [D]dřív, jen fámy,
+[A]bla-bla-bl[Bmi]a-bla et-cetera.
+{end_of_chorus}
+
+{start_of_chorus}
+[G]Nic není jako [D]dřív
+[A]nic není jak [Bmi]bejvávalo,
+[G]bohužel bohud[D]ík,
+[A]co myslíš ségra,
+je to [Bmi]hodně nebo málo?
 {end_of_chorus}
