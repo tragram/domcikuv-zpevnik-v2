@@ -89,12 +89,18 @@
 #auto-text-size-wrapper>div {
     border-radius: 36px;
     padding: 1rem;
-    background-color: rgba(from hsl(var(--glass)) r g b / 80%);
+    background-color: rgba(255,255,255, 0.6); 
+    /* Fallback for Safari or unsupported */
+    /* background-color: rgba(from hsl(var(--glass)) r g b / 80%); */
     backdrop-filter: blur(50px);
     outline-style: solid;
     outline-width: 2px;
     outline-color: rgba(from hsl(var(--primary)) r g b / 30%);
     box-shadow: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12);
+}
+
+.dark #auto-text-size-wrapper>div {
+    background-color: rgba(0,0,0, 0.5);
 }
 
 @media screen(sm) {
