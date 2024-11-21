@@ -12,46 +12,43 @@
 [Emi]Bylas' jak poslední hlt [F#7]vína,
 [B7]sladká a k ránu bola[Emi]vá, [Gdim][B7]
 [Emi]za nehty výčitky a [F#7]špína,
-[B7]říkalas': dnešní noc je [Emi]tvá. [Gdim][Adim7]
+[B7]říkalas': dnešní noc je [Emi]tvá. [Gdim][B7]
 {end_of_verse}
 
 {start_of_chorus}
 [G]Co my dva z lásky vlastně [B7]máme,
-[Ami]hlubokou [Gdim]šachtou padá [B7]zdviž, já říkám "kiš-kiš",
+[Ami]hlubokou [Gdim]šachtou padá 
+[B7]zdviž, já říkám "kiš-kiš",
 [Emi]navrch má vždycky těžký [F#7]kámen
-[B7]a my jsme v koncích čím dál [Emi]blíž, [Gdim][B]
+[B7]a my jsme v koncích čím dál [Emi]blíž, [Gdim][B7]
 {end_of_chorus}
 
 {start_of_bridge}
-|: [Emi]a me tu ha nadži vava [Ami7]jaj dari [Gdim]dari [B7]daj. :|
+|: [Emi]a me tu ha nadži vava 
+[Ami7]jaj dari [Gdim]dari [B7]daj. :|
 {end_of_bridge}
 
 {start_of_verse}
 [Emi]Zejtra tě potkám za svým [F#7]stínem,
-[B]neznámí známí v tramvaj[Emi]i, [Gdim][B]
+[B7]neznámí známí v tramvaj[Emi]i, [Gdim][B7]
 [Emi]v cukrárně kávu s harle[F#7]kýnem,
-[B]hořká a sladká splývají. [Gdim][Adim7]
+[B7]hořká a sladká splýva[Emi]jí. [Gdim][B7]
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
 [Emi]Bylas' jak poslední hlt [F#7]vína,
-[B]zbývá jen účet zapla[Emi]tit [Gdim]a jít,
+[B7]zbývá jen účet zapla[Emi]tit [Gdim]a jít[B7]
 [Emi]za nehty výčitky a [F#7]špína
-[B]a trapný průchod bana[Emi]lit. [Gdim][Adim7]
+[B7]a trapný průchod bana[Emi]lit. [Gdim][B7]
 {end_of_verse}
 
-{start_of_chorus}
-[G]Co my tři z lásky vlastně [B7]máme,
-[Ami7]hlubokou [Gdim]šachtou pad[B]á zdviž, co čumíš, kiš-kiš,
-[Emi]navrch má vždycky těžký [F#7]kámen
-[B]a my jsme v koncích čím dál [Emi]blíž, [Gdim][B]
-{end_of_chorus}
+{chorus}
 
 {bridge}
 
 {start_of_chorus}
 [Emi]navrch má vždycky těžký [F#7]kámen
-[B]a my jsme v koncích čím dál [Emi]blíž. [Gdim][B]
+[B7]a my jsme v koncích čím dál [Emi]blíž. [Gdim][B7]
 {end_of_chorus}
