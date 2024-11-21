@@ -53,7 +53,7 @@ Já čekala jsem hlavu jako střep,
 zdálo se, že dlouho
 může za to vinný sklep, 
 že člověk často sleví
-
+{end_of_verse}
 
 {start_of_verse}
 Já čekala jsem hlavu jako střep, 
