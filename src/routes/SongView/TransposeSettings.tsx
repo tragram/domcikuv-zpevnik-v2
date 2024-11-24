@@ -12,43 +12,9 @@ import {
 } from "@/components/ui/select"
 import ToolbarBase from "@/components/ui/toolbar-base";
 import { useEffect, useRef, useState } from "react";
-
-const renderKeys = ["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"]
-
-const german2English = {
-    "c": "C",
-    "c#": "C#",
-    "d": "D",
-    "es": "Eb",
-    "e": "E",
-    "f": "F",
-    "f#": "F#",
-    "g": "G",
-    "as": "Ab",
-    "a": "A",
-    "b": "Bb",
-    "h": "B",
-}
-
-const english2German = {
-    "C": "C",
-    "C#": "C#",
-    "D": "D",
-    "Eb": "Es",
-    "E": "E",
-    "F": "F",
-    "F#": "F#",
-    "G": "G",
-    "Ab": "As",
-    "A": "A",
-    "Bb": "B",
-    "B": "H",
-}
-
-// TODO: unify with preparse_ChordPro
-const CHROMATIC_SCALE: { [key: string]: number } = {
-    "c": 0, "c#": 1, "db": 1, "des": 1, "d": 2, "d#": 3, "eb": 3, "es": 3, "e": 4, "f": 5, "f#": 6, "gb": 6, "g": 7, "g#": 8, "ab": 8, "as": 8, "a": 9, "a#": 10, "b": 10, "h": 11
-};
+import { MusicNoteHelper } from './MusicNoteHelper';
+import { MusicNote } from "chordproject-parser";
+const renderKeys = ["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"];
 
 function useComponentVisible(initialIsVisible) {
     const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible);
@@ -70,26 +36,28 @@ function useComponentVisible(initialIsVisible) {
     return { ref, isComponentVisible, setIsComponentVisible };
 }
 
-function findTransposeSteps(originalKey: string, newKey: string): number {
-    const chromaticIndex = (key: string) => CHROMATIC_SCALE[key];
-    const transposeSteps = originalKey && newKey ? (chromaticIndex(newKey) - chromaticIndex(originalKey)) % 12 : 0;
-    return transposeSteps;
-}
+// function findTransposeSteps(originalKey: string, newKey: string): number {
+//     const chromaticIndex = (key: string) => CHROMATIC_SCALE[key];
+//     const transposeSteps = originalKey && newKey ? (chromaticIndex(newKey) - chromaticIndex(originalKey)) % 12 : 0;
+//     return transposeSteps;
+// }
 
-function TransposeButtons({ songRenderKey, setSongRenderKey, vertical = false }) {
+function TransposeButtons({ transposeValues, transposeSteps, setTransposeSteps, vertical = false }) {
     return (
-        <FancySwitch options={renderKeys.map(k => { return { "label": k, "value": k.toLowerCase() } })} selectedOption={songRenderKey.toLowerCase()} setSelectedOption={key => setSongRenderKey(german2English[key])} vertical={vertical} roundedClass={"rounded-full"} full={true} />
+        <FancySwitch options={renderKeys.map((k, index) => { return { "label": k, "value": transposeValues[index] } })} selectedOption={transposeSteps} setSelectedOption={key => {setTransposeSteps(key)}} vertical={vertical} roundedClass={"rounded-full"} full={true} />
     )
 }
 
-function TransposeSettings({ songOriginalKey, songRenderKey, setSongRenderKey, setTransposeSteps }) {
-    const makeKeySafe = (key) => key ? english2German[key?.replace("m", "")].toLowerCase() : null;
-    const safeSongRenderKey = makeKeySafe(songRenderKey)
-    setTransposeSteps(findTransposeSteps(makeKeySafe(songOriginalKey), safeSongRenderKey));
+function TransposeSettings({ songOriginalKey, transposeSteps, setTransposeSteps }) {
+    // const makeKeySafe = (key) => key ? english2German[key?.replace("m", "")].toLowerCase() : null;
+    // const safeSongRenderKey = makeKeySafe(songRenderKey)
+    // setTransposeSteps(findTransposeSteps(makeKeySafe(songOriginalKey), safeSongRenderKey));
     const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
+    const originalKeyIndex = MusicNoteHelper.semiTonesBetween(MusicNote.parse("C"), songOriginalKey.note);
+    const transposeValues = [...Array(12).keys()].map(v => v - originalKeyIndex);
     return (<>
         <div className='hidden xl:flex h-full'>
-            <TransposeButtons songRenderKey={safeSongRenderKey} setSongRenderKey={setSongRenderKey} />
+            <TransposeButtons transposeValues={transposeValues} transposeSteps={transposeSteps} setTransposeSteps={setTransposeSteps} />
         </div>
         <div className='xl:hidden max-sm:hidden'>
             <Button size="icon" variant="circular" onClick={() => { setIsComponentVisible(!isComponentVisible) }}><ArrowUpDown /></Button>
@@ -97,7 +65,7 @@ function TransposeSettings({ songOriginalKey, songRenderKey, setSongRenderKey, s
                 {isComponentVisible &&
                     <ToolbarBase showToolbar={isComponentVisible}>
                         <div className="w-full flex justify-center p-0 h-full">
-                            <TransposeButtons songRenderKey={safeSongRenderKey} setSongRenderKey={setSongRenderKey} />
+                            <TransposeButtons transposeValues={transposeValues} transposeSteps={transposeSteps} setTransposeSteps={setTransposeSteps} />
                         </div>
                     </ToolbarBase>}
             </div>
@@ -108,8 +76,8 @@ function TransposeSettings({ songOriginalKey, songRenderKey, setSongRenderKey, s
                     <Button size="icon" variant="circular" onClick={() => { setIsComponentVisible(!isComponentVisible) }}><ArrowUpDown /></Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-12">
-                    {renderKeys.map(k => (
-                        <DropdownMenuCheckboxItem checked={songRenderKey.toUpperCase() == k} onCheckedChange={() => setSongRenderKey(german2English[k])}>{k}</DropdownMenuCheckboxItem>
+                    {renderKeys.map((k, index) => (
+                        <DropdownMenuCheckboxItem checked={transposeSteps == index - originalKeyIndex} key={k} onCheckedChange={() => setTransposeSteps(index - originalKeyIndex)}>{k}</DropdownMenuCheckboxItem>
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>

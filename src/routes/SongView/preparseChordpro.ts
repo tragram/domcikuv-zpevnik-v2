@@ -3,7 +3,7 @@ import {
     chordRendererFactory,
 } from 'chord-symbol/lib/chord-symbol.js'; // bundled version
 import { hasExactly } from 'chord-symbol/src/helpers/hasElement';
-
+import { MusicNote, MusicAccidental, Key as SongKey } from "chordproject-parser";
 const validVariationValues = ["replace_last_line", "replace_last_lines", "append_content"] as const;
 type validVariation = (typeof validVariationValues)[number]
 
@@ -143,21 +143,22 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
     return processedContent.map(l => l ? l.trim() : null).filter(p => p).join('\n').trim();
 }
 
-export function transposeChordPro(song: string, songKey, newKey) {
+export function transposeChordPro(song: string, songKey: SongKey, transposeSteps: number) {
     // chordpro-js appears to have a bug when transposing a semitone lower when in A-scale --> need to use a different library
     const CHROMATIC_SCALE: { [key: string]: number } = {
         "c": 0, "c#": 1, "db": 1, "des": 1, "d": 2, "d#": 3, "eb": 3, "es": 3, "e": 4, "f": 5, "f#": 6, "gb": 6, "g": 7, "g#": 8, "ab": 8, "as": 8, "a": 9, "a#": 10, "bb": 10, "b": 11
     };
-    const canTranspose = songKey && newKey;
+    const canTranspose = songKey && transposeSteps;
     if (!canTranspose) {
         return song;
     }
-    const songMinorKey = songKey.includes("m");
-    const flatKey = newKey && (newKey.includes("b") || newKey.includes("s") || newKey == "Dm" || (newKey == "D" && songMinorKey) || (newKey == "F" && !songMinorKey))
+    // TODO: select flat or sharp again
+    // const songMinorKey = songKey.includes("m");
+    // const flatKey = newKey && (newKey.includes("b") || newKey.includes("s") || newKey == "Dm" || (newKey == "D" && songMinorKey) || (newKey == "F" && !songMinorKey))
 
-    const parseChord = chordParserFactory({ key: songKey });
-    const chromaticIndex = (chord: string) => CHROMATIC_SCALE[parseChord(chord).normalized.rootNote.toLowerCase()]
-    const transposeValue = chromaticIndex(newKey) - chromaticIndex(songKey);
+    const parseChord = chordParserFactory({ key: songKey.note.toString() });
+    // const chromaticIndex = (chord: string) => CHROMATIC_SCALE[parseChord(chord).normalized.rootNote.toLowerCase()]
+    // const transposeValue = chromaticIndex(newKey) - chromaticIndex(songKey);
     const keepSus2Maj7 = (chord) => {
         // the library renames sus2 to (omit3, add9) by default --> avoid
         function overwriteDescriptor(chord, descriptor) {
@@ -189,7 +190,8 @@ export function transposeChordPro(song: string, songKey, newKey) {
         chord.formatted.symbol = chord.formatted.symbol.replace("(", "").replace(")", "")
         return chord;
     }
-    const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeValue, accidental: flatKey ? "flat" : "sharp", customFilters: [keepSus2Maj7, hideParentheses] });
+    const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeSteps, customFilters: [keepSus2Maj7, hideParentheses] });
+    // const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeValue, accidental: flatKey ? "flat" : "sharp", customFilters: [keepSus2Maj7, hideParentheses] });
 
     const convertChordBracket = (match: string, chord: string) => `[${renderChord(parseChord(chord))}]`
     song = song.replace(/\[([A-Ha-h][A-Za-z\d#b,\s/]{0,10})\]/g, convertChordBracket);

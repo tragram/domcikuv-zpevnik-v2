@@ -113,9 +113,9 @@ function convertHTMLChordToGerman(songText: string) {
     return doc.body.innerHTML;
 }
 
-function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey, newKey) {
+function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey, transposeSteps) {
     const preparsedContent = replaceRepeatedDirectives(chordProContent, ["chorus", "bridge", "verse"], ["R", "B", ""], repeatChorus);
-    const transposedContent = transposeChordPro(preparsedContent, songKey, newKey);
+    const transposedContent = transposeChordPro(preparsedContent, songKey, transposeSteps);
     const parser = new ChordProParser();
     const song = parser.parse(transposedContent);
     return song;
@@ -123,12 +123,13 @@ function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey, 
 
 export function guessKey(chordProContent: string) {
     const song = parseChordPro(chordProContent, false, null, null);
-    return MusicLetter[song.getPossibleKey().note.letter];
+    console.log(song.getPossibleKey())
+    return song.getPossibleKey();
 }
 
-export function renderSong(songData: SongData, newKey: string, repeatChorus: boolean, czechChordNames: boolean): string {
+export function renderSong(songData: SongData, transposeSteps: number, repeatChorus: boolean, czechChordNames: boolean): string {
     // repeat choruses/bridges/verses if necessary
-    const song = parseChordPro(songData.content, repeatChorus, songData.key, newKey);
+    const song = parseChordPro(songData.content, repeatChorus, songData.key, transposeSteps);
     const settings = new FormatterSettings();
     settings.showMetadata = false;
     const formatter = new HtmlFormatter(settings);

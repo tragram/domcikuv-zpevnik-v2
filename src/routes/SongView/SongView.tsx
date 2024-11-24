@@ -6,7 +6,7 @@ import './SongView.css'
 import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, LayoutSettingsDropdownSection } from './LayoutSettings';
 import { renderSong, guessKey } from './songRendering';
 import { Events, animateScroll as scroll } from 'react-scroll';
-import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano, Dices } from 'lucide-react';
+import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano, Dices, Trash } from 'lucide-react';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import ToolbarBase from '@/components/ui/toolbar-base';
 import PdfView from './pdfView';
@@ -52,22 +52,20 @@ function SongView() {
     const [atBottom, setAtBottom] = useState(false);
 
     const [parsedContent, setParsedContent] = useState('');
-    const [songRenderKey, setSongRenderKey] = useState(songData.key);
+    const [transposeSteps, setTransposeSteps] = useState(0);
     useEffect(() => {
         // avoids an annoying bug when user goes directly from one song to another, where the key stays the same
-        setSongRenderKey(songData.key);
-    }, [songData.id]); 
+        setTransposeSteps(0);
+    }, [songData.id]);
 
     const navigate = useNavigate();
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visibleToolbar, setVisibleToolbar] = useState(true);
     const [scrollInProgress, setscrollInProgress] = useState(false);
-    const [transposeSteps, setTransposeSteps] = useState(0);
 
     const handleScroll = () => {
         const currentScrollPos = window.scrollY
-        // console.log(currentScrollPos, prevScrollPos)
         if (currentScrollPos > prevScrollPos) {
             setVisibleToolbar(false)
             setPrevScrollPos(currentScrollPos);
@@ -81,7 +79,6 @@ function SongView() {
         if (remainingContent <= 0) {
             setAtBottom(true);
         }
-        // console.log(remainingContent)
     }
 
     useEffect(() => {
@@ -110,9 +107,9 @@ function SongView() {
 
 
     useMemo(() => {
-        const renderedSong = renderSong(songData, songRenderKey, layoutSettings.repeatParts, chordSettings.czechChordNames);
+        const renderedSong = renderSong(songData, transposeSteps, layoutSettings.repeatParts, chordSettings.czechChordNames);
         setParsedContent(renderedSong);
-    }, [songRenderKey, layoutSettings.repeatParts, songData, chordSettings.czechChordNames])
+    }, [transposeSteps, layoutSettings.repeatParts, songData, chordSettings.czechChordNames])
 
     useEffect(() => {
     })
@@ -171,6 +168,7 @@ function SongView() {
         });
     }
 
+
     return (<div className={"flex flex-col relative sm:pt-[88px] pt-[72px] " + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh")}
     >
         <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-md overflow-hidden' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}></div>
@@ -179,7 +177,7 @@ function SongView() {
                 <Button size="icon" variant="circular" onClick={() => navigate("/")}>{<Undo2 />}</Button>
                 <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
                 <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} />
-                <TransposeSettings songOriginalKey={songData.key} songRenderKey={songRenderKey} setSongRenderKey={setSongRenderKey} setTransposeSteps={setTransposeSteps} />
+                <TransposeSettings songOriginalKey={songData.key} transposeSteps={transposeSteps} setTransposeSteps={setTransposeSteps} />
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
                         <Button size="icon" variant="circular"><Settings2 size={32} /></Button>
@@ -227,7 +225,7 @@ function SongView() {
                 <div className='flex w-full justify-between'>
                     <h1 className='self-center font-bold text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
                     <div className='flex flex-col text-right'>
-                        <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {songData.capo}</h2>
+                        <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {(songData.capo - transposeSteps + 12) % 12}</h2>
                         <h2 className='text-[0.75em] text-muted-foreground sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-
+import { Key, MusicNote, Key as SongKey } from 'chordproject-parser';
 import unidecode from 'unidecode'
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range"
@@ -77,7 +77,6 @@ class SongRange {
         function transposeTone(tone: string, semitones: number) {
             const chromaticScale = SongRange.chromaticScale;
             const transposedNr = (chromaticScale[tone.replace(/[0-9]/g, '')] + semitones + 12) % 12;
-            // console.log(tone.replace(/[0-9]/g, ''), transposedNr, semitones)
             return Object.keys(chromaticScale).find(key => chromaticScale[key] === transposedNr);
         }
         return SongRange.fromJSON({
@@ -87,21 +86,17 @@ class SongRange {
         })
     }
     toString(transpose_semitones: number) {
-        // console.log(transpose_semitones)
         const transposedRange = this.transposed(transpose_semitones);
         return `${transposedRange.min} - ${transposedRange.max}`
     }
 }
-
-// TODO: už se používají anglické...
-type SongKey = "C" | "C#" | "D" | "Es" | "E" | "F" | "F#" | "G" | "As" | "A" | "B" | "H"
 
 type SongLanguage = "czech" | "english" | "german" | "slovak" | "polish" | "spanish" | "romanian" | "finnish" | "estonian" | "french" | "italian" | "portuguese" | "other"
 
 interface SongRawData {
     title?: string;
     artist?: string;
-    key?: SongKey;
+    key?: string;
     date_added: string;
     startMelody?: string;
     language?: SongLanguage;
@@ -118,12 +113,12 @@ class SongData {
     id: string;
     title: string;
     artist: string;
-    key: SongKey;
+    key?: SongKey;
     dateAdded: {
         month: int;
         year: int;
     };
-    startMelody: string;
+    startMelody?: string;
     language: SongLanguage;
     tempo: int;
     capo: int;
@@ -131,15 +126,14 @@ class SongData {
     illustration_author: string;
     chordproFile: string;
     pdfFilenames: Array<string>;
-    content: string | null;
+    content?: string;
     contentHash: string;
 
     constructor(song: SongRawData) {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.id = unidecode(`${this.artist}-${this.title}`.replace(/ /g, "_")).replace("?", "").replace("/","");
-        this.key = song.key || null;
-
+        this.id = unidecode(`${this.artist}-${this.title}`.replace(/ /g, "_")).replace("?", "").replace("/", "");
+        this.key = SongKey.parse(song.key?.replace("B", "Bb").replace("H", "B"));
         const [month, year] = song.date_added.split("-");
         this.dateAdded = { month: parseInt(month), year: parseInt(year) };
 
@@ -166,14 +160,14 @@ class SongData {
         instance.title = json.title;
         instance.artist = json.artist;
         instance.id = json.id;
-        instance.key = json.key;
+        instance.key = json.key ? new SongKey(new MusicNote(json.key.note.letter, json.key.note.accidental), json.key.mode) : null;
         instance.dateAdded = json.dateAdded;
         instance.startMelody = json.startMelody;
         instance.language = json.language;
         instance.tempo = json.tempo;
         instance.capo = json.capo;
         instance.range = SongRange.fromJSON(json.range); // Re-create range object if needed
-        instance.illustration_author = json.illustration_author
+        instance.illustration_author = json.illustration_author;
         instance.chordproFile = json.chordproFile;
         instance.pdfFilenames = json.pdfFilenames;
         instance.content = json.content;
