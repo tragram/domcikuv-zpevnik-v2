@@ -23,10 +23,10 @@ const SongRowMemo = memo(({ data, index, style }) => {
             </div>
         )
     }
-    const { songDB, setSelectedSong, filteredAndSortedSongs } = data;
+    const { songDB, filteredAndSortedSongs } = data;
     return (
         <div style={style}>
-            <SongRow maxRange={songDB.maxRange} setSelectedSong={setSelectedSong} song={filteredAndSortedSongs[index - 1]} />
+            <SongRow maxRange={songDB.maxRange} song={filteredAndSortedSongs[index - 1]} />
         </div>
     )
 }, areEqual);

@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import LanguageFlag from "@/components/LanguageFlag";
 import CircularProgress from "@/components/ui/circular-progress";
+import { AvatarWithModal } from "@/components/ui/avatar-with-modal";
 
 function progressColor(range) {
     if (!range) {
@@ -41,16 +42,12 @@ function VocalRangeIndicator({ song, maxRange }: VocalRangeIndicatorProps) {
 
 interface SongRowProps {
     song: SongData;
-    setSelectedSong: any;
     maxRange: number;
 }
 
-function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
-    const handleClick = useLinkClickHandler(song.url(), {
-        // replace,
-        // state,
-        // target,
-    });
+function SongRow({ song, maxRange }: SongRowProps) {
+    const handleClick = useLinkClickHandler(song.url(), {});
+    // const handleClick = null;
     if (!song) {
         console.log("Invalid song!")
         return (
@@ -62,7 +59,7 @@ function SongRow({ song, setSelectedSong, maxRange }: SongRowProps) {
             <div className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
                 onClick={(event) => handleClick(event)}>
                 <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow" >
-                    <Avatar className="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" ><AvatarImage src={song.thumbnailURL()} /></Avatar>
+                    <AvatarWithModal avatarClassName="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" src={song.thumbnailURL()} fullSrc={song.illustrationURL()} />
                     <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-glass/60 hover:bg-glass/90  rounded-full">
                         <div className="flex basis-[12%] min-w-[72px] rounded-l-full content-center justify-center relative">
                         </div>
