@@ -91,7 +91,7 @@ function SearchBar({ songs, setSearchResults, query, setQuery }) {
             </div>
         </div >
 
-        <div className="relative hidden xs:flex items-center h-full text-primary dark:text-primary/30 transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 outline-primary dark:outline-primary/30 outline outline-2 max-w-[400px]">
+        <div className="relative hidden xs:flex items-center h-full text-primary dark:text-primary/30 transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 outline-primary dark:outline-primary/30 outline outline-2">
             <Input
                 onChange={e => search(e)}
                 // type="search"
