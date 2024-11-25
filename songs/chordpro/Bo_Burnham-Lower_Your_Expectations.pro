@@ -31,7 +31,8 @@ Without [H]being attracted to any of them
 {start_of_chorus}
 [E]If you want [C#m]love [A]
 [H]Lower your expec[E]tations a [C#m]few
-Because Prince [A]Charming would never [H]settle for you
+Because Prince [A]Charming 
+would never [H]settle for you
 {end_of_chorus}
 
 {start_of_chorus}
@@ -45,7 +46,8 @@ Say fuck it, [H]sweep me off them
 [E]You want a girl that's nice, a girl that's not
 [C#m]Obsessed with her looks but is insanely hot
 [A]The kinda girl that you can show to your folks
-Loves the [H]movies that you like and always laughs at your jokes
+Loves the [H]movies that you like 
+and always laughs at your jokes
 {end_of_verse}
 
 {start_of_verse}
@@ -64,7 +66,8 @@ And [H]only ever uses you to tickle her throat with
 {start_of_chorus}
 [E]If you want [C#m]love [A]
 [H]Lower your expec[E]tations a lo[C#m]t
-You might think your [A]dick is a gift, I [H]promise it's not
+You might think your [A]dick is a gift, 
+I [H]promise it's not
 {end_of_chorus}
 
 {start_of_chorus}
@@ -80,7 +83,8 @@ Or somebody with [H]bedhead and a dead-end [A]job
 [A]Cause I won't [E]settle for less than [C#mi]per[H]fect
 [A]We want perfect [E]children, a perfect [H]life
 Perfect [H]husband or a perfect [A]wife
-[A]But [E]deep down we [H]know, We don't de[C#mi]serve [H]it
+[A]But [E]deep down we [H]know, 
+We don't de[C#mi]serve [H]it
 {end_of_bridge}
 
 {start_of_chorus}

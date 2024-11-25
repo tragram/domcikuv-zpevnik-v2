@@ -61,13 +61,10 @@ And you [Em]must say hi to Villi
 Because[D]that is my dad? Pabbi!
 {end_of_verse}
 
-{start_of_bridge: Prechorus}
-And you can [C]rent 
-a bíla[G]leigu[D]bíll
-Enjoy the [C]drive 
-on hring[G]vegur[D]inn
-Be mindful [C]of 
-mal[G]arveg[D]ir
+{start_of_bridge: Pre}
+And you can [C]rent a bíla[G]leigu[D]bíll
+Enjoy the [C]drive on hring[G]vegur[D]inn
+Be mindful [C]of mal[G]arveg[D]ir
 And don't traðka on the[Am]moss -
 It grows back so [D]slow! 
 Like seventy years!
