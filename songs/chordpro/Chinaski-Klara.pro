@@ -9,25 +9,27 @@
 {range: h1-d#2}
 {start_melody: f#}
 
+{start_of_chorus}
+|: [H]Ná nanana[G#mi]nananaá aáá[E]aáa[Emi] ná :|
+{end_of_chorus}
+
 {start_of_verse}
-|: [H]Ná nananan[G#mi]nananananana [E]ná [Emi]Ná :|
 [H]Kláro, jak to s [D#mi]tebou vypadá
 od půl [C#mi]devátý, do osmi [Emi]ráno
 Co nám [H]brání bejt spolu [D#mi]jenom ty a já,
 nebuď [C#mi]včerejší no tak [Emi]Kláro
 Pro tebe [H]slibuju, žaluju denně [D#mi]piju jak Dán
 [C#mi]ve skrytu duše marně [Emi]tajně doufám
-že [H]já, jenom [G#mi]já jsem ten tvůj vysněný [E]pán [Emi]
+že [H]já, jenom [G#mi]já 
+jsem ten tvůj vysněný [E]pán [Emi]
 {end_of_verse}
 
-{start_of_chorus}
-[H]Ná nanana[G#mi]nananannanaá aáá[E]aáa[Emi]Ná
-[H]nananananananananá [G#mi]aááaáa [E][Emi]
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 Já se prostě nekontroluju a plácám a plácám
-si vážně úžasná já tě nejspíš miluju, no ty mi dáváš .. jééé
+si vážně úžasná já tě nejspíš miluju, 
+no ty mi dáváš .. jééé
 Zabalit, vyrazit, rychle frčíme dál
 bereme čáru šup do kočáru
 Já jenom já jsem ten tvůj vysněný pán
@@ -42,8 +44,7 @@ Inženýr šarlatán
 {end_of_verse}
 
 {start_of_chorus}
-[C]Ná nanana[Ami]nananannanaá aáá[F]aáa
-[Fmi]Ná [C]nananananananananá [Ami]aááaáa [F][Fmi]
+|: [C]Ná nanana[Ami]nananaá aáá[F]aáa[Fmi]Ná :|
 {end_of_chorus}
 
 {start_of_verse}
@@ -64,5 +65,5 @@ Královno, má ty to víš co bych si přál
 {end_of_verse}
 
 {start_of_chorus}
-3x [C#]Ná nanana[Bmi]nananannanaá aáá[F#]aáa [F#mi]
+3x [C#]Ná nanana[Bmi]nananaá aáá[F#]aáa [F#mi]
 {end_of_chorus}

@@ -147,7 +147,7 @@
     "start_melody": "e a",
     "chordpro_file": "Bo_Burnham-From_Gods_Perspective.pro",
     "pdf_filenames": "['bo_burnham_from_gods_perspective-sken.pdf', 'bo_burnham_from_gods_perspective-comp.pdf']",
-    "content_hash": "34966340c904fe845b133c91cb4169654c136b51"
+    "content_hash": "80c0992fb4e4fca7ceb6c4ca8384a2f9a4c1ab9a"
   },
   {
     "title": "Lower Your Expectations",
@@ -162,7 +162,7 @@
     "start_melody": "e",
     "chordpro_file": "Bo_Burnham-Lower_Your_Expectations.pro",
     "pdf_filenames": "['bo_burnham_lower_your_expectations-sken.pdf', 'bo_burnham_lower_your_expectations-comp.pdf']",
-    "content_hash": "b35732e6db18650655a2fb9bd5ed65af81c0a6d4"
+    "content_hash": "3302f6ee6152f45f89b8cf479df1f31bd734b303"
   },
   {
     "title": "Knocking On Heaven's Door",
@@ -312,7 +312,7 @@
     "start_melody": "d",
     "chordpro_file": "Chinaski-1_signalni.pro",
     "pdf_filenames": "['chinaski_1_signalni-sken.pdf', 'chinaski_1_signalni-comp.pdf']",
-    "content_hash": "3090d21c10cb5826fa738f4c7e474f37b4a30164"
+    "content_hash": "f6766b0e9f63314b05a48047195923dfc45d99e6"
   },
   {
     "title": "Adieu",
@@ -417,7 +417,7 @@
     "start_melody": "f#",
     "chordpro_file": "Chinaski-Klara.pro",
     "pdf_filenames": "['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']",
-    "content_hash": "3c7f6dd781887f458528c8311810ff7db16fd7ad"
+    "content_hash": "57a94294410fa4957758f5ef6de9443a962b5ad0"
   },
   {
     "title": "Kompy",
@@ -567,7 +567,7 @@
     "start_melody": "g g a h",
     "chordpro_file": "Devitka-Holka_od_koni.pro",
     "pdf_filenames": "['devitka_holka_od_koni-sken.pdf', 'devitka_holka_od_koni-comp.pdf', 'devitka_holka_od_koni-gen.pdf']",
-    "content_hash": "4f96e6b36dd605621d676550f0aea2bf6f98ce65"
+    "content_hash": "d10174b77cdd954346e2c0c4965297f795268d64"
   },
   {
     "title": "Tage Wie Diese",
@@ -582,7 +582,7 @@
     "start_melody": "c h",
     "chordpro_file": "Die_Toten_Hosen-Tage_Wie_Diese.pro",
     "pdf_filenames": "['die_toten_hosen_tage_wie_diese-sken.pdf', 'die_toten_hosen_tage_wie_diese-comp.pdf', 'die_toten_hosen_tage_wie_diese-gen.pdf']",
-    "content_hash": "83b9682b4aae7a7b525a58e4a2657c7419d09785"
+    "content_hash": "0e434cb8df65ea110402cd7c724032cc2da265c8"
   },
   {
     "title": "Jolene",
@@ -627,7 +627,7 @@
     "start_melody": "e f# g",
     "chordpro_file": "Elton_John-Can_You_Feel_The_Love_Tonight.pro",
     "pdf_filenames": "",
-    "content_hash": "df798fbea81b742f3e2798d99aba31653cfbacb2"
+    "content_hash": "e445e4c786c3c95f04a26fb900206e2bedd2f3ce"
   },
   {
     "title": "I Can't Help Falling In Love With You",
@@ -822,7 +822,7 @@
     "start_melody": "a",
     "chordpro_file": "Filmova_hudba-Kdyz_se_nacancam.pro",
     "pdf_filenames": "['filmova_hudba_kdyz_se_nacancam-sken.pdf', 'filmova_hudba_kdyz_se_nacancam-comp.pdf']",
-    "content_hash": "7a19309f11aef0322635042c55d605d99dbdc4b5"
+    "content_hash": "a48147e06b9d6f8f37fef00b5c2cae59ad90257e"
   },
   {
     "title": "Královské reggae",
@@ -972,7 +972,7 @@
     "start_melody": "c g",
     "chordpro_file": "Greenhorns-Divka_s_vlasem_medovym.pro",
     "pdf_filenames": "['greenhorns_divka_s_vlasem_medovym-sken.pdf', 'greenhorns_divka_s_vlasem_medovym-comp.pdf']",
-    "content_hash": "567beb70a519f83abc1f6cce35a0818549f8e8b0"
+    "content_hash": "5f287cd178afb56a7b645eacd8dc5b81850b614f"
   },
   {
     "title": "Ei Suomalaiset Tanssi",
@@ -1122,7 +1122,7 @@
     "start_melody": "d h h h a",
     "chordpro_file": "Honza_Jicha-Nedokonaly_par.pro",
     "pdf_filenames": "['honza_jicha_nedokonaly_par-sken.pdf', 'honza_jicha_nedokonaly_par-comp.pdf', 'honza_jicha_nedokonaly_par-gen.pdf']",
-    "content_hash": "db71e32c63cb15995d317a61a1c1455f001f267a"
+    "content_hash": "c277cee8f235a2b68241fcf21510253b91a846b6"
   },
   {
     "title": "Nekvalifikovaný učitel",
@@ -1227,7 +1227,7 @@
     "start_melody": "d a",
     "chordpro_file": "Imagine_Dragons-Radioactive.pro",
     "pdf_filenames": "['imagine_dragons_radioactive-sken.pdf', 'imagine_dragons_radioactive-comp.pdf', 'imagine_dragons_radioactive-gen.pdf']",
-    "content_hash": "d4c6db9d0c86c3d97b3a2bac5b5c4f2e8dbbe720"
+    "content_hash": "34db4a3038938a1b35df2fd8de2734847dab8357"
   },
   {
     "title": "The A-Ö of Iceland",
@@ -1242,7 +1242,7 @@
     "start_melody": "g g g",
     "chordpro_file": "Inspired_By_Iceland-The_AO_of_Iceland.pro",
     "pdf_filenames": "['inspired_by_island_the_ao_of_island-sken.pdf', 'inspired_by_island_the_ao_of_island-comp.pdf']",
-    "content_hash": "45dd6b679dde0c48da29e76844e522ca9b22e1be"
+    "content_hash": "3c05ba412dd36dca091b6ef3418d8d87ad4c7da1"
   },
   {
     "title": "Drunken Sailor",
@@ -1557,7 +1557,7 @@
     "start_melody": "g",
     "chordpro_file": "Jaromir_Nohavica-iDnescz.pro",
     "pdf_filenames": "['jaromir_nohavica_idnescz-sken.pdf', 'jaromir_nohavica_idnescz-comp.pdf']",
-    "content_hash": "abd4372fc7386b4f91a7ba09a44f3956cafa25fc"
+    "content_hash": "a225b6c8654c78ce4deedc1ce338b8ac5a8ad1f8"
   },
   {
     "title": "Amazonka",
@@ -1632,7 +1632,7 @@
     "start_melody": "d d c#",
     "chordpro_file": "Jelen-Magdalena.pro",
     "pdf_filenames": "['jelen_magdalena-sken.pdf', 'jelen_magdalena-comp.pdf']",
-    "content_hash": "ea97935216aab4c8114ffd1859462f58cc1f2eb6"
+    "content_hash": "ca826bcbf587119512bcc0295f5c8026f207851f"
   },
   {
     "title": "Babička Mary",
@@ -1722,7 +1722,7 @@
     "start_melody": "h",
     "chordpro_file": "Jiri_Schlinger-Holubi_dum.pro",
     "pdf_filenames": "['jiri_schlinger_holubi_dum-sken.pdf', 'jiri_schlinger_holubi_dum-comp.pdf']",
-    "content_hash": "3715e7fe942ca1edc125420434c9e0277baca796"
+    "content_hash": "ae7fc5cb1cfdbc943ce7491f169dea2a8d45de63"
   },
   {
     "title": "Tereza (Osamělý město)",
@@ -1797,7 +1797,7 @@
     "start_melody": "a h",
     "chordpro_file": "Johnny_Cash-Man_in_Black.pro",
     "pdf_filenames": "['johnny_cash_man_in_black-sken.pdf', 'johnny_cash_man_in_black-comp.pdf']",
-    "content_hash": "1d1865e9975a8e4267a7ee6d7aa2915177136e10"
+    "content_hash": "db6855cbf1362df5a5aa76854b6768bf741ca07a"
   },
   {
     "title": "Hurt",
@@ -1842,7 +1842,7 @@
     "start_melody": "e",
     "chordpro_file": "Kabat-Burlaci.pro",
     "pdf_filenames": "['kabat_burlaci-sken.pdf', 'kabat_burlaci-comp.pdf']",
-    "content_hash": "a83062401c19c9e6eba38edee01d0af04f1ec154"
+    "content_hash": "a82b6d753ede0b63d39dcc8a9b260117ef28d6e3"
   },
   {
     "title": "Colorado",
@@ -2082,7 +2082,7 @@
     "start_melody": "a",
     "chordpro_file": "Karel_Gott-Trezor.pro",
     "pdf_filenames": "['karel_gott_trezor-sken.pdf', 'karel_gott_trezor-comp.pdf']",
-    "content_hash": "1a963732f420380710a7781fd0062b07f3ccb57c"
+    "content_hash": "ce9d2c940b8d8795b302f27bf2edef1a5fef0770"
   },
   {
     "title": "Anděl",
@@ -2367,7 +2367,7 @@
     "start_melody": "e",
     "chordpro_file": "Knaan-Wavin_flag.pro",
     "pdf_filenames": "[]",
-    "content_hash": "9f073dee16bedd195a8908958df1599d4609aee0"
+    "content_hash": "3b2fe7331c164660112bc61b848824d4da0aba6a"
   },
   {
     "title": "Cesta",
@@ -2607,7 +2607,7 @@
     "start_melody": "a a g a",
     "chordpro_file": "Lucie-Chci_zas_v_tobe_spat.pro",
     "pdf_filenames": "['lucie_chci_zas_v_tobe_spat-sken.pdf', 'lucie_chci_zas_v_tobe_spat-comp.pdf']",
-    "content_hash": "53e8b5246bc8625c7d76dcdd2d0acfd946df72d8"
+    "content_hash": "331a53ad0499b1a4e0644c59a873471bfcb29039"
   },
   {
     "title": "Medvídek",
@@ -2652,7 +2652,7 @@
     "start_melody": "e",
     "chordpro_file": "Luis_Fonsi-Despacito.pro",
     "pdf_filenames": "['luis_fonsi_despacito-sken.pdf', 'luis_fonsi_despacito-comp.pdf']",
-    "content_hash": "3ec6d953668c40be6a923b643f6306d2ab188d42"
+    "content_hash": "96f9fdd582eff345833094d477772ec467530e96"
   },
   {
     "title": "Maruška",
@@ -3717,7 +3717,7 @@
     "start_melody": "d",
     "chordpro_file": "Scorpions-Still_Loving_You.pro",
     "pdf_filenames": "['scorpions_still_loving_you-sken.pdf', 'scorpions_still_loving_you-comp.pdf']",
-    "content_hash": "a97fc2c70b19f35c6934db319a09739a6d04b3f8"
+    "content_hash": "3f5a72b9a492dd3aa4063f57839def7696218580"
   },
   {
     "title": "Wind of Change",
@@ -3777,7 +3777,7 @@
     "start_melody": "f#",
     "chordpro_file": "Simple_Plan-Astronaut.pro",
     "pdf_filenames": "['simple_plan_astronaut-sken.pdf', 'simple_plan_astronaut-comp.pdf', 'simple_plan_astronaut-gen.pdf']",
-    "content_hash": "ae284d5ecb86d5abdbfcadbac2dcde97e8c1a5af"
+    "content_hash": "7f12b0a5f5f8a92b423fd894bfd8280a0697e670"
   },
   {
     "title": "Welcome to My Life",
@@ -4017,7 +4017,7 @@
     "start_melody": "f# g a h",
     "chordpro_file": "The_Proclaimers-500_Miles.pro",
     "pdf_filenames": "",
-    "content_hash": "5aa3a4018baa0ea3bd60bc647df8b9adfefc39dc"
+    "content_hash": "821da7ad1b44334dbf70b7a5ec2c4bc694b8975f"
   },
   {
     "title": "Toss a Coin to Your Witcher",
@@ -4047,7 +4047,7 @@
     "start_melody": "g g e",
     "chordpro_file": "Tlusta_Berta-Blazniva_Zuzana.pro",
     "pdf_filenames": "['tlusta_berta_blazniva_zuzana-sken.pdf', 'tlusta_berta_blazniva_zuzana-comp.pdf']",
-    "content_hash": "92b5c90b953551c0b20ea2411dc105373b4b0200"
+    "content_hash": "d88e2ec1cfa4ba54fad08e17d9f298b4d8d1cca0"
   },
   {
     "title": "Čas",
@@ -4257,7 +4257,7 @@
     "start_melody": "a h c d",
     "chordpro_file": "Vance_Joy-Riptide.pro",
     "pdf_filenames": "['vance_joy_riptide-sken.pdf', 'vance_joy_riptide-comp.pdf']",
-    "content_hash": "ecc67f42a4eab013d97266c676ff10da3a8429bd"
+    "content_hash": "56998e3fe7284f9e73bcb4e57499ffb28ffaa5eb"
   },
   {
     "title": "Známka Punku",

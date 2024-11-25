@@ -16,19 +16,24 @@ možná jsem [Ami]zapomněla něco ti [Hmi]říct,
 a najednou je [Emi]pozdě,
 pro lásku koní, krásu všedních dnů
 na kontě [A]mám zase jeden [C]hřích,
-pozdě se [G]omlouvat, že ublížit [C]nechci ani jednomu z [Hmi]nás. [H7]
+pozdě se [G]omlouvat, že ublížit 
+[C]nechci ani jednomu z [Hmi]nás. [H7]
 {end_of_verse}
 
 {start_of_chorus: R1}
-A jak ty [Emi]bláznivý koně chci [D]dohonit slunce, když [C]zapadá,
-písničku [Ami]kolejí, který se tam [D/F#]někde v dálce snad setkaj[G]í, [H7]
-chci tiše [Emi]zpívat a hrát jenom [D]pro ně, než prach na ni [C]napadá
+A jak ty [Emi]bláznivý koně 
+chci [D]dohonit slunce, když [C]zapadá,
+písničku [Ami]kolejí, který se tam 
+[D/F#]někde v dálce snad setkaj[G]í, [H7]
+chci tiše [Emi]zpívat a hrát 
+jenom [D]pro ně, než prach na ni [C]napadá
 a [Hmi]zapomenout, že se ještě někdy rozedn[H7]í,
 {end_of_chorus}
 
 {start_of_chorus: R2}
 kolem hlavy [Emi]mám svatozář [C]holky od koní,
-když zavír[Ami]ám oči a [H7]doufám, že předhoním aspoň o kousek [Emi]čas.
+když zavír[Ami]ám oči a [H7]doufám, 
+že předhoním aspoň o kousek [Emi]čas.
 {end_of_chorus}
 
 {start_of_verse}
@@ -38,13 +43,16 @@ i vůně [Ami]potu a zkosenejch [Hmi]trav,
 a pak se tiše vytrá[Emi]cíš,
 stejně po dnech krátkejch vteřin štěstí,
 po nocích [A]hlídám telef[C]on,
-a krabice na [G]sny pro hloupý [C]holky nezv[Hmi]oní. [H7]
+a krabice na [G]sny pro hloupý 
+[C]holky nezv[Hmi]oní. [H7]
 {end_of_verse}
 
 {chorus: R1}
 {chorus: R2}
 
 {start_of_chorus: R3}
-[Emi]dráhy čar [C]osudu odkloním, a příště, až se pro[Ami]budím,
-možná to [H7]budu zase já, [Emi]tak jako dřív [E]
+[Emi]dráhy čar [C]osudu odkloním, 
+a příště, až se pro[Ami]budím,
+možná to [H7]budu zase já, 
+[Emi]tak jako dřív [E]
 {end_of_chorus}
