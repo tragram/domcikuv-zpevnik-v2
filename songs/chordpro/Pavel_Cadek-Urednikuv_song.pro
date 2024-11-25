@@ -9,7 +9,7 @@
 {start_of_verse}
 [Dmi]Vážený pane, na ty dveře klepe se.
 Nebojte vtipkuju, jen klidně pojďte sem.
-Já doufám jen, že máte [Gmi]všechno [Bb]připraveno,
+Já doufám jen, že máte [Gmi]všechno [B]připraveno,
 [Dmi]ó pé i dé pé pé, jak [Gmi]že bylo to [A7]jméno?
 {end_of_verse}
 {start_of_verse}

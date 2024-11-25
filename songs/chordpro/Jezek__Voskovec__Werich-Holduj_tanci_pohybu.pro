@@ -45,9 +45,9 @@ zpěv je přeci [Cmi]ušlechtilý [G7]zjev.
 {end_of_chorus}
 
 {start_of_bridge}
-[E]Lá[C#mi]ska srdce [F#mi]mo[B]ří
-[E]or[C#mi]ganismus [F#mi]ho[B7]ří,
-[G]láska ničí tě[G#dim]lo [Bmi]jež by [D7]sílit [Dmi7]mělo.
+[E]Lá[C#mi]ska srdce [F#mi]mo[H]ří
+[E]or[C#mi]ganismus [F#mi]ho[H7]ří,
+[G]láska ničí tě[G#dim]lo [Hmi]jež by [D7]sílit [Dmi7]mělo.
 {end_of_bridge}
 
 {start_of_chorus}

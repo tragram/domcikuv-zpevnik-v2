@@ -4,10 +4,9 @@ import {
     chordParserFactory,
     chordRendererFactory,
 } from 'chord-symbol/lib/chord-symbol.js'; // bundled version
-import { ChordProParser, FormatterSettings, HtmlFormatter, MusicLetter, MusicNote, Song, Transposer } from "chordproject-parser";
-import { replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
-
-import { render } from 'react-dom';
+import { ChordProParser, FormatterSettings, HtmlFormatter, Key, MusicLetter, MusicNote, Song, Transposer } from "chordproject-parser";
+import { czechToEnglish, replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
+import memoize from 'memoize-one';
 
 function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"], useLabels = false) {
     const defaultKey = "a4c0d35c95a63a805915367dcfe6b751"
@@ -92,15 +91,6 @@ function chordToGerman(chord: string) {
     return chord;
 }
 
-function noteToEnglish(note: string) {
-    if (note === "B") {
-        return "Bb";
-    } else if (note === "H") {
-        return "B";
-    }
-    return note;
-}
-
 function convertHTMLChordToGerman(songText: string) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(songText, 'text/html');
@@ -113,8 +103,10 @@ function convertHTMLChordToGerman(songText: string) {
     return doc.body.innerHTML;
 }
 
-function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey, transposeSteps) {
-    const preparsedContent = replaceRepeatedDirectives(chordProContent, ["chorus", "bridge", "verse"], ["R", "B", ""], repeatChorus);
+function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey: Key, transposeSteps: number) {
+    const memoizedCzechToEnglish = memoize(czechToEnglish);
+    const withEnglishChords = memoizedCzechToEnglish(chordProContent);
+    const preparsedContent = replaceRepeatedDirectives(withEnglishChords, ["chorus", "bridge", "verse"], ["R", "B", ""], repeatChorus);
     const transposedContent = transposeChordPro(preparsedContent, songKey, transposeSteps);
     const parser = new ChordProParser();
     const song = parser.parse(transposedContent);

@@ -54,5 +54,5 @@ then you'll begin to make it better
 
 {start_of_bridge}
 [C]better better better better better oh.
-[C]Na na na [Bb]na na na na [F]na na na na hey [C]Jude ...
+[C]Na na na [B]na na na na [F]na na na na hey [C]Jude ...
 {end_of_bridge}

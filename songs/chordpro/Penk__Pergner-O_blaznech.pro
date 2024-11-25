@@ -9,9 +9,9 @@
 {range: f#1-a#2}
 {start_melody: e}
 {start_of_verse}
-[E]Nevěř lidem, když jsou jak [B]psi,
+[E]Nevěř lidem, když jsou jak [H]psi,
 v boudá[A]ch, tlous[E]tnou
-[E]pro ně je víra míň než [B]kost,
+[E]pro ně je víra míň než [H]kost,
 [A]pro níž [E]kousnou
 {end_of_verse}
 
@@ -19,13 +19,13 @@ v boudá[A]ch, tlous[E]tnou
 [E]Blázen by jsi [A]byl, kdybys pro ně [E]žil,
 [F#mi]kdybys krásný [A]řeči uvě[E]řil
 [E]Jen blázni stavěj [A]most, jinejm pro [E]radost,
-[Abmi]nejsměšnější [A]bejvá upřím[B]nost.
+[Abmi]nejsměšnější [A]bejvá upřím[H]nost.
 {end_of_chorus}
 
 {start_of_verse}
-[E]Ty blázne s láskou bys jen [B]byl,
+[E]Ty blázne s láskou bys jen [H]byl,
 [A]k pláči, [E]k smíchu
-[E]Jak nemocnou krev jí vypusť [B]z žil,
+[E]Jak nemocnou krev jí vypusť [H]z žil,
 [A]dítě, [E]hříchu.
 {end_of_verse}
 
@@ -33,8 +33,8 @@ v boudá[A]ch, tlous[E]tnou
 
 {start_of_verse}
 [F#]Teď musíme vstát, slyšíš už [C#]jdou,
-[B]sčítaj, [F#]blázny
+[H]sčítaj, [F#]blázny
 [F#]Tebe nezastavěj máš víru [C#]svou,
-[B]blázne, [F#]blázne
-/: [F#]na ná na ná na na [C#]na, [B]na na, [F#]na na :/
+[H]blázne, [F#]blázne
+/: [F#]na ná na ná na na [C#]na, [H]na na, [F#]na na :/
 {end_of_verse}

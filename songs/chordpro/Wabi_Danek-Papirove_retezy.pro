@@ -9,9 +9,9 @@
 {range: f#1-h2}
 {start_melody: c# c# h c#}
 {start_of_verse}
-[A]Slepuje očko do očka, [Bmi]řetězy z papíru,
+[A]Slepuje očko do očka, [Hmi]řetězy z papíru,
 [C#mi]není to jen tak z plezíru a v [E7]domě voní vánočka,
-[A]co kdyby třeba zrovna teď, [Bmi]pohyby prstů stále stejný,
+[A]co kdyby třeba zrovna teď, [Hmi]pohyby prstů stále stejný,
 [C#mi]už ví, že je to beznadějný, [E7]už to ví, že se nedočká.
 {end_of_verse}
 
@@ -23,18 +23,18 @@
 {end_of_chorus}
 
 {start_of_verse}
-[A]Pomalu chystá večeři, [Bmi]prostírá po paměti,
+[A]Pomalu chystá večeři, [Hmi]prostírá po paměti,
 [C#mi]venku jsou slyšet hlasy dětí a [E7]někdo zvoní u dveří,
-[A]běží jak voda v potoce, [Bmi]je to jen pošťák s telegramem,
+[A]běží jak voda v potoce, [Hmi]je to jen pošťák s telegramem,
 [C#mi]zarámovaný dveřním rámem [E7]přeje veselé Vánoce.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-[A]Nemusí ani slova číst[Bmi], je jí to dávno všechno jasné,
+[A]Nemusí ani slova číst[Hmi], je jí to dávno všechno jasné,
 [C#mi]tak zavře dveře, světlo zhasne, [E7]ke stolu nese bílý list,
-[A]nůžkama proužek po [Bmi]proužku odstřihuje z něj mechanicky
+[A]nůžkama proužek po [Hmi]proužku odstřihuje z něj mechanicky
 [C#mi]a na řetězech jako vždycky [E7]přibývá kroužek ke kroužku.
 {end_of_verse}
 

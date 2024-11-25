@@ -10,7 +10,7 @@
 {start_melody: h c d}
 {start_of_verse}
 Byly krásný naše [G]plány,
-byla jsi můj celej [Bmi]svět,[Bbmi][Ami]
+byla jsi můj celej [Hmi]svět,[Bmi][Ami]
 čas je vzal a nechal [G]rány,
 [Ami]starší jsme jen o pár [D]let.
 {end_of_verse}

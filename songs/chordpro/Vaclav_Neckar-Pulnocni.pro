@@ -16,7 +16,7 @@ už [D]slyším lidi na půlnoční zpívat v kostele, [A]
 {end_of_verse}
 
 {start_of_bridge}
-ale[D]luja, ale[Bmi]lu - [G]ja. [A]
+ale[D]luja, ale[Hmi]lu - [G]ja. [A]
 {end_of_bridge}
 
 {start_of_verse}
@@ -25,9 +25,9 @@ ale[D]luja, ale[Bmi]lu - [G]ja. [A]
 {end_of_verse}
 
 {start_of_chorus}
-Beránku [D]náš [A]na neb[Bmi]esích, [G]
+Beránku [D]náš [A]na neb[Hmi]esích, [G]
 stůj při [D]nás, [A]až přijde [C]tma,
-ale[D]luja, ale[Bmi]lu - [G]ja.
+ale[D]luja, ale[Hmi]lu - [G]ja.
 {end_of_chorus}
 
 {start_of_verse}

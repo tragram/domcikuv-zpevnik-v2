@@ -10,20 +10,18 @@ Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/ch
 ### File format
 The songs shall be named `artist_name-song_name.pro` (any special characters converted to ASCII). Use `scripts/format_songs.py` to rename files (and fix common whitespace issues) automatically.
 
-A song should have the following preable (tempo may be left empty - it's currently not used):
+A song should have the following preamble (tempo may be left empty - it's currently not used):
 ```chordpro
 {artist: František Vomáčka}
 {title: Svíčková}
 {language: english}
 {date_added: 02-2020}
 {capo: 0}
-{key: Bb}
+{key: H}
 {range: c1-f#2}
 {tempo: 110}
 ```
-Note that while the website shows the songs in the Czech/German-ish note naming scheme by default, the underlying files **must use the English note labels**. 
-
-*Side rant: Why the discrepancy? Well, none of the ChordPro parsers for JS are aware of there being anything other than the English convention. While that could be circumvented using e.g. the superb [chord-symbol](https://github.com/no-chris/chord-symbol) library (in fact, this used to be implemented), there are still issues. Namely, because `Ab` is spelled `As`, `Asus2` (a common-enough chord) gets parsed as `A-flat-modifier(us2)` and then fails, because `us2` is not a valid modifier. Anyways, that's how I found out I actually use a mix of both systems, which is terrible but you can't teach an old dog new tricks. :-)*
+**Note that the chords need to use the Czech/German note names (H:=B, B:=Bb).**
 
 ### Extensions of the ChordPro format
 Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features and even when they do exist, JS parsers do not implement them. For convenience, I have added the following:

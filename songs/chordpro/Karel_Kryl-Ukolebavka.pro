@@ -10,23 +10,23 @@
 {start_melody: a d e f}
 {start_of_verse}
 [Dmi]Spinkej, synáčku, spi, zavři očička [C]svý -
-- dva [A]modré květy [Dmi]hořce, [Bb][A]
+- dva [A]modré květy [Dmi]hořce, [B][A]
 [Dmi]jednou zšednou jak plech, zachutná tabákem [C]dech
-a políbení [Dmi]hořce. [Bb][A]
+a políbení [Dmi]hořce. [B][A]
 {end_of_verse}
 
 {start_of_chorus}
-[Dmi]Na zlomu stole[Bb]tí v náruči zhebkne [C]ti
+[Dmi]Na zlomu stole[B]tí v náruči zhebkne [C]ti
 tvá první nebo [Gmi]pátá,
 [A]než kdo cokoli [Dmi]zví, rány se zajizv[C]í
-a [A]budeš jako [Dmi]táta. [Bb][A]
+a [A]budeš jako [Dmi]táta. [B][A]
 {end_of_chorus}
 
 {start_of_verse}
 [Dmi]Spinkej, synáčku, spi, zavři očička [C]svý,
-mám[A]a vypere plen[Dmi]ky, [Bb][A]
+mám[A]a vypere plen[Dmi]ky, [B][A]
 [Dmi]odrosteš Sunaru, usedneš u [C]baru¨
-u trochu jiné skl[Dmi]enky. [Bb][A]
+u trochu jiné skl[Dmi]enky. [B][A]
 {end_of_verse}
 
 {start_of_chorus}

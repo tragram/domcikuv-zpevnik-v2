@@ -9,22 +9,22 @@
 {range: f#1-f#2}
 {start_melody: d d d c#}
 {start_of_verse}
-[D]Někdy je to [F#]tak a nezmůžeš s tím [Bmi]nic,
+[D]Někdy je to [F#]tak a nezmůžeš s tím [Hmi]nic,
 můžeš se jen [G]smát ze svých [A]plných [D]plic.
-[D]Chceš to přivo[F#]lat a chceš to čím [Bmi]dál víc,
+[D]Chceš to přivo[F#]lat a chceš to čím [Hmi]dál víc,
 stačí poslouc[G]hat, co se snaží[A]m říct[D].
 {end_of_verse}
 
 {start_of_verse}
-[D]Můžeš tady [F#]stát, všemu vzdoro[Bmi]vat,
+[D]Můžeš tady [F#]stát, všemu vzdoro[Hmi]vat,
 udělat to [G]pak, tak [A]jak to máš [D]rád.
-[D]Nebudem se [F#]prát, nemusíš mít [Bmi]strach,
+[D]Nebudem se [F#]prát, nemusíš mít [Hmi]strach,
 chce to ako[G]rát realiz[A]ovat. [D]
 {end_of_verse}
 
 {start_of_bridge}
-[A]Na chvíli [G]zavřít [Emi]oči, [Bmi][A]vesmír [G]se poo[Em]točí,
-[Bmi]taky [A]můžeš [G]mít, [Emi][F#] co si budeš přát a co budeš chtít[D]!
+[A]Na chvíli [G]zavřít [Emi]oči, [Hmi][A]vesmír [G]se poo[Em]točí,
+[Hmi]taky [A]můžeš [G]mít, [Emi][F#] co si budeš přát a co budeš chtít[D]!
 {end_of_bridge}
 
 {start_of_chorus}
@@ -34,9 +34,9 @@ chce to ako[G]rát realiz[A]ovat. [D]
 [D]Je to [F#]pravda, bludnej [Hmi]kruh, zakáza[G]né uvolně[D]ní. 
 {end_of_chorus}
 {start_of_verse}
-[D]Někdy je to [F#]tak a nezmůžeš s tím [Bmi]nic,
+[D]Někdy je to [F#]tak a nezmůžeš s tím [Hmi]nic,
 můžeš se jen [G]smát ze svých pln[A]ých [D]plic.
-[D]Chceš to při[F#]volat a chceš to čím dál [Bmi]víc,
+[D]Chceš to při[F#]volat a chceš to čím dál [Hmi]víc,
 stačí poslouc[G]hat, co se sna[A]žím říc[D]t.
 {end_of_verse}
 

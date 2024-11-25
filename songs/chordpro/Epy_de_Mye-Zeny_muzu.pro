@@ -17,8 +17,8 @@ to [D]stojí [A]někdy [D]trest.
 
 {start_of_chorus}
 Čeka[G]jí na šťastné [D]přistání
-[Bmi]umět tak směry [A]bouří vést
-co [Bmi]ještě [F#mi]všechno
+[Hmi]umět tak směry [A]bouří vést
+co [Hmi]ještě [F#mi]všechno
 [G]musí [F#mi]snést?
 Ženy [G]mužů [A]léta[D]vých.
 {end_of_chorus}

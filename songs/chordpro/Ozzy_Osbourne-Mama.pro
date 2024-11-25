@@ -25,7 +25,7 @@ Mama, I'm coming [E]home
 You [C#m]took me in and you [A]drove me out
 Yeah, you [E]had me hypnotized
 [C#m]Lost and found and [A]turned around
-By the [B]fire in your eyes
+By the [H]fire in your eyes
 {end_of_bridge}
 
 {start_of_verse}
@@ -44,15 +44,15 @@ Mama, I'm coming [E]home
 [C#m]Selfish love, yeah, we're [A]both alone
 The [E]ride before the fall, yeah.
 But [C#m]I'm gonna take this [A]heart of stone
-I just [B]got to have it all.
+I just [H]got to have it all.
 {end_of_bridge}
 
 {start_of_chorus}
 [A]I've seen your face a hundred [E]times,
 [A]Every day we've been [E]apart
-[A]I don't [B]care about the [E]sunshine, [A]yeah
-'cause [A]mama, [B]mama, I'm coming [C]ho[D]me[E]
-I'm coming [C]ho[D]me[B]
+[A]I don't [H]care about the [E]sunshine, [A]yeah
+'cause [A]mama, [H]mama, I'm coming [C]ho[D]me[E]
+I'm coming [C]ho[D]me[H]
 {end_of_chorus}
 
 {bridge: B1}

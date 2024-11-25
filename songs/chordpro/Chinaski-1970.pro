@@ -28,10 +28,10 @@ třeba například.
 {end_of_verse}
 
 {start_of_bridge}
-[A]Naši mi vždycky říka[Bmi]li, 
+[A]Naši mi vždycky říka[Hmi]li, 
 jen nehas co tě nepá[G]lí,
 jakej pán takovej [D]krám. [A]
-[A]Naši mi vždycky říka[Bmi]li, 
+[A]Naši mi vždycky říka[Hmi]li, 
 co můžeš sleduj zpovzdá[G]lí
 a nikdy nebojuj [D]sám..
 {end_of_bridge}

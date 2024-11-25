@@ -19,8 +19,8 @@ If [F]I [G]can't [Am]help [F]falling in [C]love [G]with [C]you
 {end_of_verse}
 
 {start_of_chorus}
-[Em]Like a river [B7]flows [Em]surely to the [B7]sea
-[Em]Darling so it [B7]goes
+[Em]Like a river [H7]flows [Em]surely to the [H7]sea
+[Em]Darling so it [H7]goes
 [Em]Some things [A7]are meant to [Dm]be [G]
 {end_of_chorus}
 

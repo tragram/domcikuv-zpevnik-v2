@@ -32,13 +32,13 @@ Dlouhý pro[E]ud řeky [E7]mám, abych [Ami]shýbnul se a [F]pil,
 {start_of_verse}
 Slunce [D]mám, [G]na cestu mi [D]svítí,
 štíty hor a jejich [A]úbočí.
-Lásky [F#]mám nesče[F#7]tné, abych se [Bmi]sám přesvědč[G]il,
+Lásky [F#]mám nesče[F#7]tné, abych se [Hmi]sám přesvědč[G]il,
 že [D]mám to, co mi [Emi]stačí, [A7]abych tu [D]žil.
 {end_of_verse}
 
 {start_of_verse}
 5/1. Kapsy [D]mám, [G]abych v nich měl [D]díru
 boty mám a na nich letní pra[A]ch.
-Pod [F#]širou oblo[F#7]hou, jsem se [Bmi]sám usa[G]dil,
+Pod [F#]širou oblo[F#7]hou, jsem se [Hmi]sám usa[G]dil,
 že [D]mám chuť v hlave si srov[Emi]nat, [A7]pro co jsem [D]žil.
 {end_of_verse}

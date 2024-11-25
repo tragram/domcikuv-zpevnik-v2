@@ -29,12 +29,12 @@
 {end_of_bridge}
 
 {start_of_chorus}
-[D]Tak měl[A]s mě [Bmi]vůbec rád
+[D]Tak měl[A]s mě [Hmi]vůbec rád
 [G]To nedovolím
-[D]Vím, že [A]můžu [Bmi]řvát
+[D]Vím, že [A]můžu [Hmi]řvát
 [G]Nebudu v [D]koutě [D/C#]stát
-[Bmi]A jen [A]se hlou[G]pě ptát[A], jeé
-[D]Tak měls [A]mě vůbe[Bmi]c rád
+[Hmi]A jen [A]se hlou[G]pě ptát[A], jeé
+[D]Tak měls [A]mě vůbe[Hmi]c rád
 [G]Aspoň [A]trochu rád
 {end_of_chorus}
 

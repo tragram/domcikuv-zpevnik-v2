@@ -13,7 +13,7 @@
 Jak se [G]vám nahoře ze sametu líbí,
 bývalí [C]kamarádi z dálek nebe[G]ských,
 stáli jsme [Emi7]pod hvězdami v zimě plný [A]síly,
-[Ami]po tleskání ještě ruce hře[Bmi]jou,
+[Ami]po tleskání ještě ruce hře[Hmi]jou,
 jenom [C]kde vzít kolem [A]hlavy svato[D]zář?
 {end_of_bridge}
 
@@ -33,10 +33,10 @@ ten si ve snu [Ami]dává
 čistýho [C]vína do [G]hlavy,
 [Emi]anděl nám včera v nebi [A]sbalil 
 dva bágly [C]na dvě lidský post[G]avy,
-nejsem [Bmi]hrdina ani blázen,
+nejsem [Hmi]hrdina ani blázen,
 raděj [Ami]padejme zpátky na zem,
-než nám v [Bmi]té výšce udělí 
-[C]páni vyzname[D]nání, [Bmi]
+než nám v [Hmi]té výšce udělí 
+[C]páni vyzname[D]nání, [Hmi]
 [Emi]to bych se radši holka [A]zabil, 
 ještě [C]nechci s tebou z kola [G]ven.
 {end_of_verse}

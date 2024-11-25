@@ -143,6 +143,21 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
     return processedContent.map(l => l ? l.trim() : null).filter(p => p).join('\n').trim();
 }
 
+export function czechToEnglish(song:string){
+    // converts H -> B and B to Bb
+    // replace song key
+    song = song.replace(/\{key: B([ieasm#b]){0,5}\}/g, "{key: Bb$1}");
+    song = song.replace(/\{key: H([ieasm#b]){0,5}\}/g, "{key: B$1}");
+    // replace chords with a bass note
+    song = song.replace(/\[([A-Za-z\d#b,\s/]{0,10})\/B\]/g, "[$1/Bb]");
+    song = song.replace(/\[([A-Za-z\d#b,\s/]{0,10})\/H\]/g, "[$1/B]");
+    // replace regular chords
+    song = song.replace(/\[B([A-Za-z\d#b,\s/]{0,10})\]/g, "[Bb$1]");
+    song = song.replace(/\[H([A-Za-z\d#b,\s/]{0,10})\]/g, "[B$1]");
+
+    return song;
+}
+
 export function transposeChordPro(song: string, songKey: SongKey, transposeSteps: number) {
     // chordpro-js appears to have a bug when transposing a semitone lower when in A-scale --> need to use a different library
     const CHROMATIC_SCALE: { [key: string]: number } = {

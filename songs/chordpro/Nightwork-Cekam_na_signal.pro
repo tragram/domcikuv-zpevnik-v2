@@ -31,9 +31,9 @@ krom naší [Dmi]vsi je všude moderní [E]svět.
 
 {start_of_verse}
 Přestaňme pěstovat [A]už, [F#mi]obilí,
-[Bmi]radši si [E]kupme všichni [A]mobily. [F#mi]
-No [Bmi]my tu nebudem [E]nikomu dělat [A]debily. [F#mi]
-[Bmi]My u nás [E]postavíme [A]sloup,
+[Hmi]radši si [E]kupme všichni [A]mobily. [F#mi]
+No [Hmi]my tu nebudem [E]nikomu dělat [A]debily. [F#mi]
+[Hmi]My u nás [E]postavíme [A]sloup,
 [F#mi]vysílací [D]sloup. [E]
 {end_of_verse}
 
@@ -71,8 +71,8 @@ Opět budem pěstovati klasy, no co.
 {end_of_verse}
 
 {start_of_verse}
-Tohle je vzkaz pro všechny [B]kutily, [G#mi]
-[E]kde bychom [F#]byli, kdybyste [B]nebyli. [G#mi]
+Tohle je vzkaz pro všechny [H]kutily, [G#mi]
+[E]kde bychom [F#]byli, kdybyste [H]nebyli. [G#mi]
 Vždyť vaše výtvory jsou báječné, 
 progresivní, ba i bezpečné.
 {end_of_verse}

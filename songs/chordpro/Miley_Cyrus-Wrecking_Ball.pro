@@ -46,11 +46,11 @@ And now, we're ashes on the ground
 {start_of_bridge}
 [C]I never meant to start a [Em]war
 I just wanted you to let [G]me in
-And instead of usin[Bm]g force
+And instead of usin[Hm]g force
 I guess I should've let [C]you in
 I never meant to start [Em]a war
 I just wanted you to let [G]me in
-I guess I should've let [Bm]you in
+I guess I should've let [Hm]you in
 [C]Don't you ever say [Em]I just walked away
 [G]I will always want [C]you
 {end_of_bridge}

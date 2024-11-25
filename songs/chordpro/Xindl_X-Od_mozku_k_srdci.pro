@@ -10,14 +10,14 @@
 {start_melody: g}
 
 {start_of_verse}
-[C]Od povrchu [C/B]Marsu k [Am]Venuši [Am/G]
+[C]Od povrchu [C/H]Marsu k [Am]Venuši [Am/G]
 [F]je to na sto miliónů [G]mil
-[C]Proto když to [C/B]v hrudi zabu[Am]ší, [Am/G]
+[C]Proto když to [C/H]v hrudi zabu[Am]ší, [Am/G]
 [F]tak vršíme omyl na [G]omyl
 
 [F]Tři tisíce [G]tři sta třicet [C]čtyři [Am]
 [F]kiláků je [G]od Betléma k [C]Mecce
-[C]S cizí pravdou [C/B]těžký je se [Am]smířit [Am/G]
+[C]S cizí pravdou [C/H]těžký je se [Am]smířit [Am/G]
 [F]ani o krok [G]zpět ustoupit [C]nechcem
 {end_of_verse}
 
@@ -49,14 +49,14 @@ i [F]číslo mý ne by[G]lo pito mý[C]
 {end_of_chorus}
 
 {start_of_verse}
-[C]Na Slapech [C/B]de dna k hladi[Am]ně [Am/G]
+[C]Na Slapech [C/H]de dna k hladi[Am]ně [Am/G]
 [F]je to yardů víc než pade sá[G]t
-A my [C]dál s tou loutkou [C/B]boje svádí me[Am], [Am/G]
+A my [C]dál s tou loutkou [C/H]boje svádí me[Am], [Am/G]
 [F]vždyť dolů stačil jeden volnej pád[G]
 
 [F]A od porod[G]nice ke hřb[C]tovu [Am]
 je to [F]třicet šest za[G]stávek tramva je[C]
-I [C]kdo přestoupil [C/B]stokrát věří tomu[Am], [Am/G]
+I [C]kdo přestoupil [C/H]stokrát věří tomu[Am], [Am/G]
 [F]že ta cesta [G]příliš krátká je [C]
 {end_of_verse}
 

@@ -11,32 +11,32 @@
 
 {start_of_verse}
 Každá [D]kapela se jednou [A]propadne
-do histo[Bmi]rie
+do histo[Hmi]rie
 a je [G]jedno jestli ta [D]moje 
 nebo ta [A]tvoje. [G]
 
 [D]Důležitý je co [A]bude dál,
-snad [Bmi]kapely kterejch se 
+snad [Hmi]kapely kterejch se 
 jaktě[G]živ nikdo z vás nenadál
 [D]už navždy [A]spolu pod knutou [G]rock'n'rollu.
 {end_of_verse}
 
 {start_of_chorus: R1}
-[Bmi]Třeba ta naše [A]kapela 
+[Hmi]Třeba ta naše [A]kapela 
 je [G]možná ta, co se [D]nikdy nepropadne
 nebo [G]jo kdo [D]ví 
-[A]a to je na tom [Bmi]to hezký a tutový,
+[A]a to je na tom [Hmi]to hezký a tutový,
 [D]že každej ví [A]kulový.
 {end_of_chorus}
 
 {start_of_verse}
 [D]Pět kaťáků [A]na prakťáku 
-[Bmi]dva krát čtyři metry
+[Hmi]dva krát čtyři metry
 [G]rozladěný [D]kytary 
 [A]a vytahaný svetry. [G]
 
 [D]Pět kaťáků [A]na fesťáku 
-[Bmi]v nejhorším čase
+[Hmi]v nejhorším čase
 [G]díky zlato [D]bylo to krásný 
 [A]tak za rok zase. [G]
 {end_of_verse}
@@ -45,12 +45,12 @@ nebo [G]jo kdo [D]ví
 
 {start_of_verse}
 A [D]tak s velkým [A]ohňostrojem 
-[Bmi]za zády
+[Hmi]za zády
 pomalu [G]mizí hvězdy 
 [D]minulé [A]dekády [G]
 
 [D]důležitý je [A]co bude dál
-snad [Bmi]pět kaťáků v kulturáku a [G]v léťě festival
+snad [Hmi]pět kaťáků v kulturáku a [G]v léťě festival
 [D]už navždy [A]spolu 
 pod knutou [G]rock'n'rollu.
 {end_of_verse}
@@ -58,17 +58,17 @@ pod knutou [G]rock'n'rollu.
 {chorus: R1} (tvoje)
 
 {start_of_chorus: R2}
-[Bmi]Slyšel jsem včer[A]a kapelu 
+[Hmi]Slyšel jsem včer[A]a kapelu 
 dobro[G]u tak, že [D]vypadly mi málem uši
 [G]z důlků [D]
-[A]a to jsem slyšel jeno[Bmi]m půlku
+[A]a to jsem slyšel jeno[Hmi]m půlku
 [G]Takže [D]vím kulo[A]vý. [G]
 [G]Zase [D]vím kulový[A].
 {end_of_chorus}
 
 {start_of_verse}
 [D]Každá kapela se [A]jednou propadne 
-do [Bmi]historie
+do [Hmi]historie
 a je [G]jedno jestli [D]ta moje 
 nebo ta [A]tvoje. [G]
 {end_of_verse}

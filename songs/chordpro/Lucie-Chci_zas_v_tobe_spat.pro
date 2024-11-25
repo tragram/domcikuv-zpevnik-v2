@@ -10,9 +10,9 @@
 {range: d1-g2}
 {start_melody: a a g a}
 {start_of_verse}
-[G]Mlčíš a svět je funny[Bmi], záhadou,
+[G]Mlčíš a svět je funny[Hmi], záhadou,
 [Emi]stává se pro mě honey, když [C]dračí drápy tnou,
-[G]temnice tmavá vříská, [Bmi]bleskne tmou,
+[G]temnice tmavá vříská, [Hmi]bleskne tmou,
 [Emi]mý vlasy loučí víská a [C]letí nad vodou
 {end_of_verse}
 
@@ -35,9 +35,9 @@
 {end_of_chorus}
 
 {start_of_verse}
-[G]Říkáš, že svět je krá[Bmi]snej, svět je zlej,
+[G]Říkáš, že svět je krá[Hmi]snej, svět je zlej,
 [Emi]až naše hvězda zhasne, [C]haudy haudy hej,
-[G]štěstím se lůza brodí [Bmi]neříkám,
+[G]štěstím se lůza brodí [Hmi]neříkám,
 [Emi]hledá, pravdu rodí, [C]neví, nesvlíká se lásko
 {end_of_verse}
 

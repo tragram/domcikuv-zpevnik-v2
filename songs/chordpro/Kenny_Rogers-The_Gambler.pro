@@ -13,11 +13,11 @@
 On a [E]warm summer's evenin'
 on a [A]train bound for [E]nowhere,
 I [A]met up with the [E]gambler;
-we were [A]both too tired to [B]sleep.
+we were [A]both too tired to [H]sleep.
 So [E]we took turns a starin' out
 the [A]window at the [E]darkness
 'til [A]boredom over[E]took us,
-[B]and he began to [E]speak.
+[H]and he began to [E]speak.
 {end_of_verse}
 
 
@@ -25,11 +25,11 @@ the [A]window at the [E]darkness
 He said, [E]"Son, I've made a life
 out of [A]readin' people's [E]faces,
 and [A]knowin' what their [E]cards were
-by the [A]way they held their [B]eyes.
+by the [A]way they held their [H]eyes.
 And if [E]you don't mind my sayin',
 I can [A]see you're out of [E]aces.
 For a [A]taste of your [E]whiskey
-I'll [B]give you some [E]advice."
+I'll [H]give you some [E]advice."
 {end_of_verse}
 
 
@@ -37,11 +37,11 @@ I'll [B]give you some [E]advice."
 So I [E]handed him my bottle
 and he [A]drank down my last [E]swallow.
 [A]Then he bummed a [E]cigarette
-and [A]asked me for a [B]light.
+and [A]asked me for a [H]light.
 And the [E]night got deathly quiet,
 and his [A]face lost all expr[E]ession.
 Said, "If you're [A]gonna play the game,
-[E]boy, ya gotta [B]learn to play it [E]right.
+[E]boy, ya gotta [H]learn to play it [E]right.
 {end_of_verse}
 
 
@@ -49,11 +49,11 @@ Said, "If you're [A]gonna play the game,
 You got to [E]know when to hold 'em,
 [A]know when to [E]fold 'em,
 [A]know when to [E]walk away
-[A]and know when to [B]run.
+[A]and know when to [H]run.
 You never [E]count your mone
 when you're [A]sittin' at the [E]table.
 There'll be time [A]enough for [E]countin'
-[B]when the dealin's [E]done.
+[H]when the dealin's [E]done.
 {end_of_chorus}
 
 
@@ -61,11 +61,11 @@ There'll be time [A]enough for [E]countin'
 [E]Ev'ry gambler knows
 that the [A]secret to survi[E]vin'
 is [A]knowin' what to [E]throw away
-and [A]knowing what to [B]keep.
+and [A]knowing what to [H]keep.
 'Cause [E]ev'ry hand's a winner
 and [A]ev'ry hand's a [E]loser,
 and the [A]best that you can [E]hope for
-is to [B]die in your [E]sleep."
+is to [H]die in your [E]sleep."
 {end_of_verse}
 
 
@@ -73,11 +73,11 @@ is to [B]die in your [E]sleep."
 And [E]when he'd finished speakin',
 he [A]turned back towards the [E]window,
 [A]crushed out his [E]cigarette
-and [A]faded off to [B]sleep.
+and [A]faded off to [H]sleep.
 And [E]somewhere in the darkness
 the [A]gambler, he broke [E]even.
 But [A]in his final [E]words
-I found an [B]ace that I could [E]keep.
+I found an [H]ace that I could [E]keep.
 {end_of_verse}
 
 

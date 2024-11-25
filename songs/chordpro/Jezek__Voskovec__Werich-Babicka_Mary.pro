@@ -12,7 +12,7 @@
 [Ami]Štěchovická laguna když dřímá
 v zadumaném stínu Kordylér,
 [Dmi]pirát zkrva[Ami]venou šerpu ždímá,
-[B7]šerif si láduje revol[E]ver.
+[H7]šerif si láduje revol[E]ver.
 {end_of_verse}
 
 {start_of_verse}
@@ -33,7 +33,7 @@ v zadumaném stínu Kordylér,
 [Ami]Krčmář zhasne, kovbojové ztichnou,
 pirát zděšen tvář si zakryje,
 [Dmi]rudé squaw se [Ami]chvějí a pak vzdychnou:
-[B7]Blíží se k nám postrach préri[E]e. [G7]
+[H7]Blíží se k nám postrach préri[E]e. [G7]
 {end_of_verse}
 
 {start_of_chorus}
@@ -49,7 +49,7 @@ ať chce či [C]nechce. [E7]
 [Ami]Žádné zuby, z jelenice sukně,
 ale za to tvrdé bicepsy,
 [Dmi]Mary má vždy [Ami]slivovici v putně,
-[B7]Toma Mixe strčí [E]do kapsy.
+[H7]Toma Mixe strčí [E]do kapsy.
 {end_of_verse}
 
 {start_of_verse}
@@ -70,7 +70,7 @@ a babička vchází do dveří,
 [Ami]Dopila a aby se neřeklo,
 putykáře změní v mrtvolu,
 [Dmi]za zády má [Ami]štěchovické peklo
-[B7]s šlajsnou svatojánských ato[E]lů. [G7]
+[H7]s šlajsnou svatojánských ato[E]lů. [G7]
 {end_of_verse}
 
 {start_of_chorus}
@@ -85,7 +85,7 @@ jde do [G7]volebního boje za kovbo[C]je. [E7]
 [Ami]Ledva v Praze kotvu vyhodila,
 pro babičku nastal hrozný čas,
 [Dmi]neboť hned každá [Ami]strana tvrdila,
-[B7]že jí náleží babiččin [E]hlas.
+[H7]že jí náleží babiččin [E]hlas.
 {end_of_verse}
 
 {start_of_verse}
@@ -106,7 +106,7 @@ oni [Dmi]že maj [E7]hlas ze Štecho[Ami]vic.
 [Ami]Tak babičku, pro kterou vždy byla
 válka s lidojedy legrace,
 [Dmi]tu babičku za [Ami]pár dní zabila,
-[B7]volební agita[E]ce. [G7]
+[H7]volební agita[E]ce. [G7]
 {end_of_verse}
 
 {start_of_chorus}
