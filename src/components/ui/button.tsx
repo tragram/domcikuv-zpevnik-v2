@@ -28,7 +28,7 @@ const buttonVariants = cva(
       },
       isActive: {
         true: "bg-primary dark:outline-primary/30",
-        false: "bg-white dark:bg-background text-primary hover:text-white hover:outline-white outline-primary dark:outline-primary/30",
+        false: "bg-white dark:bg-background/90 text-primary hover:text-white hover:outline-white outline-primary dark:outline-primary/30",
       }
     },
     defaultVariants: {

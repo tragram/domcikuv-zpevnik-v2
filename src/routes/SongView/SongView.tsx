@@ -213,8 +213,8 @@ function SongView() {
         </div>
         {/* https://bundui.io/docs/components/floating-button */}
         <div className={"fixed bottom-10 right-10 z-50 h-24 " + (showScrollButtons ? "flex" : "hidden")}>
-            <Button className={'bg-primary/70 absolute top-0 right-0 ' + (atBottom ? "flex" : "hidden")} size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
-            <Button className={'bg-primary/70 absolute bottom-0 right-0 ' + (atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
+            <Button className={'absolute top-0 right-0 ' + (atBottom ? "flex" : "hidden")} size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
+            <Button className={'absolute bottom-0 right-0 ' + (atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
         </div>
 
         <div id="auto-text-size-wrapper" className={'w-full z-10 lg:p-8 p-2 sm:p-4' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? " mb-8" : "")}>
