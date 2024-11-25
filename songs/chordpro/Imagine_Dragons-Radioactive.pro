@@ -13,7 +13,8 @@
 [Dmi]I'm waking [F]up to ash and [C]dust
 I wipe my [G]brow and I sweat my [Dmi]rust
 [Dmi]I'm breathing [F]in the chemi[C]cals (Gasp)[G]
-[Dmi]I'm breaking [F]in, shaping [C]up, then checking [G]out on the prison bus
+[Dmi]I'm breaking [F]in, shaping [C]up, 
+then checking [G]out on the prison bus
 [Dmi]This is [F]it, the apoca[C]lypse, [G]whoa
 {end_of_verse}
 
@@ -30,7 +31,8 @@ I'm waking [Dmi]up, I feel it [F]in my bones
 [Dmi]I raise my [F]flags, dye my [C]clothes
 It's a revo[G]lution, I sup[Dmi]pose
 We're painted [F]red to fit right [C]in, [G]whoa
-[Dmi]I'm breaking [F]in, shaping [C]up, then checking [G]out on the prisonbus
+[Dmi]I'm breaking [F]in, shaping [C]up, 
+then checking [G]out on the prisonbus
 [Dmi]This is [F]it, the apoca[C]lypse, [G]whoa
 {end_of_verse}
 
