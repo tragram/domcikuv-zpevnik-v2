@@ -11,25 +11,31 @@
 {start_of_verse}
 |: [D]Čí že ste, husličky, [G]či[D]e,
 [Emi]kdo vás tu [Bmi]zanechal [A]:|
-[Emi]na trávě [A]pová[D]lané[G], [Emi]na trávě [A]pová[D]lané[G],
+[Emi]na trávě [A]pová[D]lané[G], 
+[Emi]na trávě [A]pová[D]lané[G],
 [Emi]u paty [Bmi]oře[A]cha? [Emi][Bmi][A]
 {end_of_verse}
 
 {start_of_verse}
-A kdože tu trávu tak zválal, aj modré fialy
-a kdo tu trávu tak zválal a modré fialy
-že ste husličky samé, že ste husličky samé, na světě zostaly?
+|: A kdože tu trávu tak zválal, 
+aj modré fialy :|
+že ste husličky samé, 
+že ste husličky samé, 
+na světě zostaly?
 {end_of_verse}
 
 {start_of_verse}
-A kerý tu muzikant usnul a co sa mu přišlo zdát
-kerý tu mládenec usnul a co sa mu přišlo zdát
-co sa mu v noci zdálo, bože, co sa mu enem zdálo,
+|: A kerý tu muzikant usnul 
+a co sa mu přišlo zdát :|
+co sa mu v noci zdálo, 
+bože, co sa mu enem zdálo,
 že už vjec nechtěl hrát?
 {end_of_verse}
 
 {start_of_verse}
-Zahrajte, husličky, samy, zahrajte zvesela
-až sa tá bude trápit, až sa tá bude trápit,
+|: Zahrajte, husličky, samy, 
+zahrajte zvesela :|
+až sa tá bude trápit, 
+až sa tá bude trápit,
 která ho nechtěla.
 {end_of_verse}
