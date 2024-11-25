@@ -13,34 +13,34 @@
 {start_of_verse}
 [A]Dlouhá noc a mě se stýská moc,
 pro tebe malý dárek mám.
-Přes hory [Bm]přes ploty, medvídek z [E]Bogoty
+Přes hory [Hm]přes ploty, medvídek z [E]Bogoty
 už [A]letí.
 {end_of_verse}
 
 {start_of_verse}
 [A]Medvídek plyšový, na cestě křížový,
 Bůh ho ochrání.
-Před smečkou [Bm]římskejch psů a jejich [E]úřadů
+Před smečkou [Hm]římskejch psů a jejich [E]úřadů
 ti [D]posílá lásku co v [E]bříšku má.
 {end_of_verse}
 
 {start_of_chorus}
 [F]Medvídek z Bogoty [A]usnul a sní [F]na kříži z Golgoty [A]spí.
-Za třicet [Bm]stříbrných z medvídka [E]padá sníh
+Za třicet [Hm]stříbrných z medvídka [E]padá sníh
 no a ti [D]římští psi ho sjížděj[E]í na saních o Váno[A]cích.
 {end_of_chorus}
 
 {start_of_verse}
 Nesvatá [A]hodina, medvídka proklíná,
 že odhodil korunu bez trnů.
-Medvídek [Bm]ospalý pod křížem [E]pokleká,
+Medvídek [Hm]ospalý pod křížem [E]pokleká,
 chce [A]pít.
 {end_of_verse}
 
 {start_of_verse}
 [A]Kalichem sladkosti, medvídka napustí
 do bříška, jak to má rád.
-Koruna [Bm]plyšová, vánoční [E]cukroví,
+Koruna [Hm]plyšová, vánoční [E]cukroví,
 nikdo se [D]nedoví o svatoz[E]áři trnový.
 {end_of_verse}
 
@@ -51,7 +51,7 @@ nikdo se [D]nedoví o svatoz[E]áři trnový.
 psi se už sbíhají, připrav si dlaň
 [A]slunce zas vychází, cítíš tu zář,
 tlapky dáš v pěst nebo nastavíš tvář.
-[Bm]Římskejm psům a jejich [E]úřadům
+[Hm]Římskejm psům a jejich [E]úřadům
 Maxipes [D]Herodes vánoční [E]slib dal dnes.
 {end_of_bridge}
 

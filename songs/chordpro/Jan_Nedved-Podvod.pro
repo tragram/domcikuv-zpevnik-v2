@@ -13,7 +13,7 @@
 [Emi]Na dlani jednu z tvých řas, do tmy se [Ami]koukám,
 [D]hraju si písničky tvý, co jsem ti [G]psal[C][G]
 je skoro [Ami]půlnoc a z kostela [Ami/C]zvon mi noc připo[Emi]míná,
-půjdu se [Ami]mejt a pozhasínám, co bude [B7]dál?
+půjdu se [Ami]mejt a pozhasínám, co bude [H7]dál?
 {end_of_verse}
 
 {start_of_verse}
@@ -27,7 +27,7 @@ půjdu se mejt a pozhasínám, co bude dál?
 Chtěl jsem to [Ami]ráno, kdy naposled snídal jsem s tebou,
 ti [Emi]říct, že už ti nezavolám,
 pro jednu pitomou [Ami]holku, pro pár nocí [D]touhy
-podved jsem [G]všechno, o čem doma si [B7]sníš,
+podved jsem [G]všechno, o čem doma si [H7]sníš,
 teď je mi to [Emi]líto.[Emi][Emi/D][Emi/C][Emi/H][Emi]
 {end_of_chorus}
 
@@ -35,7 +35,7 @@ teď je mi to [Emi]líto.[Emi][Emi/D][Emi/C][Emi/H][Emi]
 [Emi]Kolikrát člověk může mít rád tak opravdu [Ami]z lásky,
 [D]dvakrát či třikrát - to ne, i jednou je [G]dost,
 je skoro [Ami]půlnoc a z kostela [Ami/C]zvon mi noc připo[Emi]míná,
-půjdu se [Ami]mejt a pozhasínám, co bude [B7]dál?
+půjdu se [Ami]mejt a pozhasínám, co bude [H7]dál?
 {end_of_verse}
 
 {chorus}

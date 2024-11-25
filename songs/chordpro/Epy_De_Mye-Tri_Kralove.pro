@@ -4,15 +4,15 @@
 {language: czech}
 {pdf_filenames: ['epy_de_mye_tri_kralove-sken.pdf', 'epy_de_mye_tri_kralove-comp.pdf']}
 {capo: 2}
-{key: Bm}
+{key: Hm}
 {tempo: }
 {range: h1-h2}
 {start_melody: h a}
 {start_of_verse}
-[Bmi]Pistole a [A]stará Bible [Bmi]kralická [A]
-[Bmi]Říká že mou [A]zemi nikdy [G]nezí[E]ská
-[Emi]Kdo si na svých [G]hadrech musí [F#mi]křížit [Bmi]hnát
-[Bmi]Kdo sem dotách [A]mrchu jménem [F#mi]protektorát [Bmi]
+[Hmi]Pistole a [A]stará Bible [Hmi]kralická [A]
+[Hmi]Říká že mou [A]zemi nikdy [G]nezí[E]ská
+[Emi]Kdo si na svých [G]hadrech musí [F#mi]křížit [Hmi]hnát
+[Hmi]Kdo sem dotách [A]mrchu jménem [F#mi]protektorát [Hmi]
 {end_of_verse}
 
 {start_of_verse}
@@ -24,9 +24,9 @@ Za to svinstvo ve sprchách, za cyklon B
 
 {start_of_chorus}
 [D]Tři hvězdy svítí [G]nad Vlta[D]vou
-[Bmi]Možná je nikdy [A]nedostanou[Bmi]
+[Hmi]Možná je nikdy [A]nedostanou[Hmi]
 [D]My tři králové [G]patříme [D]k vám
-[Bmi]Morávek, Mašín [A]a Bala[Bmi]bán
+[Hmi]Morávek, Mašín [A]a Bala[Hmi]bán
 {end_of_chorus}
 
 {start_of_verse}
@@ -44,6 +44,6 @@ Kralové se lůze prostě neumí vzdát.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-[Bmi]Morávek, Mašín [A]a Bala[Bsus2]bán
+[Hmi]Morávek, Mašín [A]a Bala[Hsus2]bán
 {end_of_variant}
 {chorus}

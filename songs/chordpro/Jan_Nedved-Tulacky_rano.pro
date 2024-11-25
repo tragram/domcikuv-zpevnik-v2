@@ -18,9 +18,9 @@ a když se zvedám s písničkou známou
 
 {start_of_chorus}
 Tulácký [Dmi]ráno na kemp se snáší,
-[Bb]za chvíli půjdem [C]toulat se [F]dál,
+[B]za chvíli půjdem [C]toulat se [F]dál,
 [Dmi]a vodou z říčky oheň se zháší,
-[Bb]tak zase půjdem [Am]toulat se [Dmi]dál.
+[B]tak zase půjdem [Am]toulat se [Dmi]dál.
 {end_of_chorus}
 
 {start_of_verse}

@@ -10,11 +10,11 @@
 {start_melody: g# h}
 {start_of_verse}
 [E]Vzpomeň, jak's očima dítě[A]te
-[E]hleděl na letící ptá[B]ky,
+[E]hleděl na letící ptá[H]ky,
 [E]jak krásné bylo být na svě[A]tě
-[E]s vědomím, že umíš to [B]taky.
+[E]s vědomím, že umíš to [H]taky.
 [F#]Dnes už nelétáš, neboť [A]okolí
-[F#]zmátlo Tě strachem, že pády [A]bolí.[B]
+[F#]zmátlo Tě strachem, že pády [A]bolí.[H]
 {end_of_verse}
 
 {start_of_verse}

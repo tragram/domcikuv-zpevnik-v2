@@ -11,7 +11,7 @@
 {start_of_verse}
 [G]Kdyby sis oči [Emi]vyplakala
 [C]a jako moře [D7]byl tvůj žal,
-[Bmi]nikomu tím [Emi]nepomůžeš,
+[Hmi]nikomu tím [Emi]nepomůžeš,
 [Ami7]život půjde [D7]dál.
 {end_of_verse}
 

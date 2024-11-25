@@ -25,7 +25,7 @@ má jednu malinkatou chybu,
 {start_of_chorus}
 A tak [F#mi]hledám holku sdílnou
 co by chtěla kluka s dílnou
-[A]abych nebyl [B]sám[B7]
+[A]abych nebyl [H]sám[H7]
 {end_of_chorus}
 
 {start_of_verse}

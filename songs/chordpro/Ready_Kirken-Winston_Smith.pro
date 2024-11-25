@@ -22,9 +22,9 @@ jsi [C]krásná má Julie chci [F]všechno nebo nic
 
 {start_of_chorus}
 |: [Cmi]Dnes ještě [Gmi]můžeme se milovat
-[Bb]jenom tak [F]ležet jenom tak [Cmi]usínat
+[B]jenom tak [F]ležet jenom tak [Cmi]usínat
 než [Gmi]budem litovat
-[Bb]a sebe [F]proklínat :|
+[B]a sebe [F]proklínat :|
 {end_of_chorus}
 
 {start_of_verse}

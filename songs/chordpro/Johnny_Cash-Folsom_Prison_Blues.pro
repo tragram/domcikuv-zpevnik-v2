@@ -15,7 +15,7 @@ and I ain't seen the sunshine since
 [E7]I don't know when
 I'm [A7]stuck at Folsom prison
 and time keeps drogin' [E]on
-but that [B7]train keeps rollin'
+but that [H7]train keeps rollin'
 on down to San An[E]tone.
 {end_of_verse}
 

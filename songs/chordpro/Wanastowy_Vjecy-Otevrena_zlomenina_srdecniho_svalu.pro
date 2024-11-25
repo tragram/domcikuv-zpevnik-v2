@@ -11,7 +11,7 @@
 {start_of_verse}
 Jsem jako [A]vítr kterej zfoukne pírko ze tvejch dlaní,
 [E]špínu jedný noci, jako hygiena ranní
-[Bmi]velká voda slzí, který spláchnou noční hříchy,
+[Hmi]velká voda slzí, který spláchnou noční hříchy,
 [Dmi]tamburíny zvoní [F]k operaci míchy
 {end_of_verse}
 
@@ -31,10 +31,10 @@ neumírej děvče moje, chci ti říct, že
 
 {start_of_chorus}
 Ohořelou [A]károu chtěl bych dojet [E]ke hvězdám,
-který svítily z tvejch [Bmi]očí dřív než červo[D]toči
+který svítily z tvejch [Hmi]očí dřív než červo[D]toči
 se do tvýho srdce [G]daj, hm [E]hm
 V ohořelým [A]autě už dva měsíce [E]nedejchám,
-sám se svojí [Bmi]vinou, už nikdy nechci [D]jinou,
+sám se svojí [Hmi]vinou, už nikdy nechci [D]jinou,
 už asi nedou[G]fám. [E]
 {end_of_chorus}
 
@@ -48,7 +48,7 @@ zmizelas jak před přízrakem, padám do hlubiny
 {start_of_verse}
 Tvůj pramínek vlasů zaliju včelím voskem,
 koukám na tu krásu a nechápu to mozkem
-[Bmi]to, co jsi mi dala, já [Bmi]nikomu už nedám,
+[Hmi]to, co jsi mi dala, já [Hmi]nikomu už nedám,
 [Dmi]tak mi řekni, má opičko, [F]proč tě marně hledám
 {end_of_verse}
 

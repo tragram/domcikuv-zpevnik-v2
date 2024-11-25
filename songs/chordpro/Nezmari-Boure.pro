@@ -23,9 +23,9 @@ jenom rozbouřené moře.
 {end_of_verse}
 
 {start_of_chorus}
-[Dmi]Já mám [Bb]přečkat bouře [Ami]čas
+[Dmi]Já mám [B]přečkat bouře [Ami]čas
 [Ami]ano Pane
-já [Dmi]mám [Bb]přečkat bouře [Ami]čas
+já [Dmi]mám [B]přečkat bouře [Ami]čas
 přečkat bouře [Dmi]čas.
 {end_of_chorus}
 

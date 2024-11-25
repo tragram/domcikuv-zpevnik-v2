@@ -16,12 +16,12 @@
 {end_of_verse}
 
 {start_of_chorus}
-[C]Já, povídá [G7]brabenec, se taky [C]rád [Bb]hlasitě [A7]chechtám
+[C]Já, povídá [G7]brabenec, se taky [C]rád [B]hlasitě [A7]chechtám
 chech[D7]tám, když pup[As7]enec kyse[G7]linou lep[C]tám [D7][Dmi7][G7]
 {end_of_chorus}
 
 {start_of_chorus}
-[C]Vím, totiž ten [G7]brabenec, mraveneč[C]ník, [Bb]že se mě [A7]neptá
+[C]Vím, totiž ten [G7]brabenec, mraveneč[C]ník, [B]že se mě [A7]neptá
 nep[D7]tá, pozře mne [As7]ať se chech[G7]tám, nechech[C]tám [Dmi][G7][C]
 {end_of_chorus}
 
@@ -31,7 +31,7 @@ nep[D7]tá, pozře mne [As7]ať se chech[G7]tám, nechech[C]tám [Dmi][G7][C]
 {end_of_bridge}
 
 {start_of_chorus}
-[C]Ty, ač nejsi [G7]brabenec, se taky [C]rád [Bb]hlasitě [A7]chechtej,
+[C]Ty, ač nejsi [G7]brabenec, se taky [C]rád [B]hlasitě [A7]chechtej,
 chech[D7]tej a na svou [As7]bídu si [G7]nezarep[C]tej [A7]
 chech[D7]tej a na svou [As7]bídu si [G7]nezarep[C]tej
 {end_of_chorus}

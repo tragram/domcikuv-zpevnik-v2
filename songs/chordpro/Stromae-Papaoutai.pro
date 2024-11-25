@@ -13,7 +13,7 @@
 [Am]Dites-moi d'où il [G]ient,
 [Am]Enfin je saurais où je [G]vais,
 [Am]Maman dit que lorsqu'on cherche [G]bien,
-On fin[F#m]it toujours par trou[Bbm]ver,
+On fin[F#m]it toujours par trou[Bm]ver,
 {end_of_verse}
 
 {start_of_verse}
@@ -46,7 +46,7 @@ Ca doit [F]faire au moins mille [Dm]fois que j'ai,
 [Am]Quoi? Qu'on y [G]croie ou pas,
 Y aura [Am]bien un jour où on y [G]croira plus,
 Un [Am]jour ou l'autre on sera tous pa[G]pa,
-Et d'un [F#m]jour à l'autre on aura dis[Bbm]paru,
+Et d'un [F#m]jour à l'autre on aura dis[Bm]paru,
 {end_of_verse}
 
 {start_of_verse}

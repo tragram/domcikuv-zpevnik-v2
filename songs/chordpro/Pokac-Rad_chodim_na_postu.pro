@@ -24,7 +24,7 @@ tam je tolik lidí, že
 
 {start_of_verse}
 [G]za přepážkou [D]paní v letech [G]má razítko [D]gumové
-[G]a občas tiskne [Bmi]tiskárnou z dob [Emi]první války [A]světové
+[G]a občas tiskne [Hmi]tiskárnou z dob [Emi]první války [A]světové
 každému kdo spílá jí že zas na poště pros*al den
 nabídne los stírací ať uklidní se hazardem
 {end_of_verse}

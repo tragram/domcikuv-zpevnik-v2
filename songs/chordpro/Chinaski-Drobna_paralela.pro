@@ -18,16 +18,16 @@ Ta [G]stará [D]dobrá hra je [A]okoukaná.
 
 {start_of_chorus}
 [G]Nic není jako [D]dřív, 
-[A]nic není jak [Bmi]bejvávalo.
+[A]nic není jak [Hmi]bejvávalo.
 [G]Nic není jako [D]dřív, 
-[A]to se nám to [Bmi]mívávalo.
+[A]to se nám to [Hmi]mívávalo.
 {end_of_chorus}
 
 {start_of_chorus}
 [G]Nic není jako [D]dřív, 
-[A]ačkoliv máš všechno [Bmi]co si vždycky chtěla.
+[A]ačkoliv máš všechno [Hmi]co si vždycky chtěla.
 [G]Nic není jako [D]dřív, 
-[A]ačkoliv drobná para[Bmi]lela by tu byla.
+[A]ačkoliv drobná para[Hmi]lela by tu byla.
 {end_of_chorus}
 
 {start_of_verse}
@@ -41,29 +41,29 @@ včera i dneska, stále ta samá píseň.
 
 {start_of_bridge}
 [G]Promlouvám k vám [D]ústy múzy,
-[A]vzývám tón a [Bmi]lehkou chůzi,
+[A]vzývám tón a [Hmi]lehkou chůzi,
 [G]vzývám zítřek [D]nenadálý,
-[A]odplouvám a [Bmi]mizím.
+[A]odplouvám a [Hmi]mizím.
 {end_of_bridge}
 
 {start_of_chorus}
 [G]Nic není jako [D]dřív, 
-[A]nic není jak [Bmi]bejvávalo.
+[A]nic není jak [Hmi]bejvávalo.
 [G]Nic není jako [D]dřív, jó, 
-[A]to se nám to dlouze [Bmi]kouřívalo.
+[A]to se nám to dlouze [Hmi]kouřívalo.
 {end_of_chorus}
 
 {start_of_chorus}
 [G]Bohužel bohu[D]dík je s námi, 
-[A]ta nenahmatatelná [Bmi]intimita těla.
+[A]ta nenahmatatelná [Hmi]intimita těla.
 [G]Nic není jako [D]dřív, jen fámy,
-[A]bla-bla-bl[Bmi]a-bla et-cetera.
+[A]bla-bla-bl[Hmi]a-bla et-cetera.
 {end_of_chorus}
 
 {start_of_chorus}
 [G]Nic není jako [D]dřív
-[A]nic není jak [Bmi]bejvávalo,
+[A]nic není jak [Hmi]bejvávalo,
 [G]bohužel bohud[D]ík,
 [A]co myslíš ségra,
-je to [Bmi]hodně nebo málo?
+je to [Hmi]hodně nebo málo?
 {end_of_chorus}
