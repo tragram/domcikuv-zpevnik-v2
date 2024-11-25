@@ -1,9 +1,11 @@
 
-import { useState } from "react"
+
+import { useState, useCallback, useRef, useEffect } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Dialog, DialogClose, DialogContent, DialogTitle } from "@/components/ui/dialog-custom"
+import { Dialog, DialogClose, DialogContent, DialogOverlay, DialogPortal, DialogTitle } from "@/components/ui/dialog-custom"
 import { X } from 'lucide-react'
 import { Button } from "./button"
+import { Description } from "@radix-ui/react-dialog"
 
 interface AvatarWithModalProps {
   avatarClassName: string
@@ -23,26 +25,19 @@ export function AvatarWithModal({ avatarClassName, src, fallback, alt, fullSrc }
         <AvatarFallback>{fallback}</AvatarFallback>
       </Avatar>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTitle className="hidden">Illustration image view</DialogTitle>
-        <DialogContent className="max-w-[512px] max-h-[512px] bg-transparent backdrop-blur-sm p-0 avatar-modal-dialog overflow-clip">
-          <div className="relative flex justify-center ">
-            <DialogClose asChild>
-              <Button variant="circular" size="icon"
-              onClick={e=>e.stopPropagation()}
-                className="absolute top-4 right-4 p-2"
-                aria-label="Close full screen image"
-              >
-                <X className="h-6 w-6" />
-              </Button>
-
-            </DialogClose>
-            <img
-              src={fullSrc}
-              alt={alt}
-              className="object-scale-down "
-            />
-          </div>
-        </DialogContent>
+          <DialogTitle className="hidden">Illustration image view</DialogTitle>
+          <DialogContent className="max-w-[512px] max-h-[512px] bg-transparent backdrop-blur-sm p-0 avatar-modal-dialog overflow-clip content-radix"
+            aria-describedby="Illustration"
+            close={()=>setIsOpen(false)}
+            >
+            <div className="relative flex justify-center ">
+              <img
+                src={fullSrc}
+                alt={alt}
+                className="object-scale-down "
+              />
+            </div>
+          </DialogContent>
       </Dialog>
     </>
   )
