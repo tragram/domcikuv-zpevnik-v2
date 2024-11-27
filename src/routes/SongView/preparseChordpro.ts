@@ -4,10 +4,13 @@ import {
 } from 'chord-symbol/lib/chord-symbol.js'; // bundled version
 import { hasExactly } from 'chord-symbol/src/helpers/hasElement';
 import { MusicNote, MusicAccidental, Key as SongKey } from "chordproject-parser";
-const validVariationValues = ["replace_last_line", "replace_last_lines", "append_content"] as const;
+const validVariationValues = ["replace_last_line", "replace_last_lines", "append_content", "replace_first_line", "prepend_content"] as const;
 type validVariation = (typeof validVariationValues)[number]
 
 function partVariation(originalLines: string[], variantType: validVariation, variantContent: string[], repeat: boolean, repeatKey: string): string[] {
+    if (variantContent.length > 1) {
+        variantContent = [variantContent.join('\n').trim()];
+    }
     if (originalLines.length < 3) {
         console.log("Ignoring part variant ", variantType, " on ", originalLines, " - originalLines content too short!")
         return originalLines;
@@ -17,7 +20,7 @@ function partVariation(originalLines: string[], variantType: validVariation, var
             const replacedLines = [...originalLines.slice(0, -2), ...variantContent, ...originalLines.slice(-1)];
             return replacedLines;
         } else {
-            const replacedLines = [originalLines[0], repeatKey + " ..." + variantContent.join('\n'), ...originalLines.slice(-1)]
+            const replacedLines = [originalLines[0], repeatKey + " ..." + variantContent, ...originalLines.slice(-1)]
             return replacedLines;
         }
     } else if (variantType === "replace_last_lines") {
@@ -29,6 +32,28 @@ function partVariation(originalLines: string[], variantType: validVariation, var
             return replacedLines;
         } else {
             const replacedLines = [originalLines[0], repeatKey + " + " + variantContent, ...originalLines.slice(-1)]
+            return replacedLines;
+        }
+    } else if (variantType === "replace_first_line") {
+        if (repeat) {
+            // assuming first and last line are {start_of_xyz} and {end_of_xyz}
+            const replacedLines = [...originalLines.slice(0, 1), repeatKey + " " + variantContent[0], ...originalLines.slice(2, -1)];
+            return replacedLines;
+        } else {
+            const replacedLines = [originalLines[0], repeatKey + " " + variantContent[0] + "...", ...originalLines.slice(-1)]
+            return replacedLines;
+        }
+    } else if (variantType === "prepend_content") {
+        console.log(variantContent[0] + "...", originalLines.slice(-1))
+        const replaceRegex = new RegExp("^" + repeatKey, "g")
+        if (repeat) {
+            // assuming first and last line are {start_of_xyz} and {end_of_xyz}
+            const replacedLines = [...originalLines.slice(0, 1), repeatKey + " " + variantContent[0], ...originalLines.slice(1, -1).map(l => l.replace(replaceRegex, ""))];
+            console.log(replacedLines)
+            return replacedLines;
+        } else {
+            const replacedLines = [originalLines[0], repeatKey + " " + variantContent[0] + "...", originalLines[1].replace(replaceRegex, ""), ...originalLines.slice(-1)]
+            console.log(replacedLines, replaceRegex)
             return replacedLines;
         }
     }
@@ -119,7 +144,7 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
                 let contentToInsert = directiveMaps[directive][directiveKey];
                 const repeatKey = `${directiveKey === defaultKey ? '' : `${directiveKey}:`}`
                 if (currentVariationContent) {
-                    contentToInsert = partVariation(contentToInsert, currentVariationType, currentVariationContent, repeat, repeatKey);
+                    contentToInsert = partVariation(contentToInsert, currentVariationType, currentVariationContent, repeat, repeatKey,);
                     currentVariationType = null;
                     currentVariationContent = null;
                 } else if (!repeat) {
@@ -143,7 +168,7 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
     return processedContent.map(l => l ? l.trim() : null).filter(p => p).join('\n').trim();
 }
 
-export function czechToEnglish(song:string){
+export function czechToEnglish(song: string) {
     // converts H -> B and B to Bb
     // replace song key
     song = song.replace(/\{key: B([ieasm#b]){0,5}\}/g, "{key: Bb$1}");

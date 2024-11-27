@@ -10,7 +10,7 @@
 {start_melody: f#-a}
 
 {start_of_verse}
-¿Por[D]qué tienen la teoría
+¿Por [D]qué tienen la teoría
 [F#]que siempre la mayoría
 [Hm]de la gente tie[G9]ne razón?
 
@@ -23,14 +23,14 @@ yo no voy a[F#7/E]dar pelota.
 {start_of_bridge}
 Ay, [D]no, democraci[E]a no,
 mi voto es [G]mejor,
-y si es por mí d[Hm]ominaría una[A]minoría.
-Ay, [D]huyo de la mul[E]titud,
+y si es por mí do[Hm]minaría una [A]minoría.
+Ay, [D]huyo de la multi[E]tud,
 y no me electro[G]cuto en la corriente.
 {end_of_bridge}
 
 {start_of_chorus}
 No [D]quiero [A]ir donde [Hm]todos [G]van
-y o[D]dio la [A]navi[Hm]dad.[G]
+y o[D]dio la [A]navi[Hm]dad. [G]
 Mu[D]chos di[A]rán, 'eso [Hm]está [G]mal',
 no [D]quiero [A]ser nor[Hm]mal. [G]
 {end_of_chorus}
@@ -64,7 +64,7 @@ Y si se vuelve popular
 a mí me aburre y ya no me interesa.
 {end_of_bridge}
 
-{start_of_chorus: Final R:}
-Porque no quiero ir...
-{end_of_chorus}
+{start_of_variant: replace_first_line}
+Porque no [D]quiero [A]ir donde [Hm]todos [G]van
+{end_of_variant}
 {chorus}

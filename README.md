@@ -58,6 +58,8 @@ Generalization to more lines being replaced is planned but not implemented yet.
 
 Another common occurrence is that the final chorus has an additional line. This can be defined analogously by using  `{start_of_variant: append_content}`.
 
+Lastly, though less common, it might happen that a part has a variation at the start. For that, you have `{start_of_variant: replace_first_line}` and `{start_of_variant: prepend_content}`. These work analogously to their "end" counterparts.
+
 ### Image generation
 Since it's 2024, I decided to use AI for tasks other than helping me code this thing. The `scripts/generate_images.py` script loads the lyrics of each of the songs and generates a prompt (in English) for an image generation model.
 
