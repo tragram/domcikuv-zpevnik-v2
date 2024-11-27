@@ -2,6 +2,7 @@ import { toggleSettingFactory } from "@/components/toogle-settings-factory";
 import { Button } from "@/components/ui/button";
 import { DropdownIconStart, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import FancySwitch from "@/components/ui/fancy-switch";
+import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
 // import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
 import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat, UserCog, PencilRuler } from "lucide-react";
 import { useEffect } from "react";
@@ -33,7 +34,7 @@ const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords"
 const layoutSettingsValues = {
     "twoColumns": { icon: <Columns2 />, label: "View as two columns" },
     "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
-    "repeatPartsChords": { icon: <Repeat />, label: "Show chords in repeated parts" },
+    "repeatPartsChords": { icon: <LoopNoteIcon />, label: "Show chords in repeated parts" },
 }
 
 function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset }) {
