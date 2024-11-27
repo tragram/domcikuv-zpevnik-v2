@@ -105,7 +105,6 @@ function SongView() {
         };
     }, []);
 
-
     useMemo(() => {
         const renderedSong = renderSong(songData, transposeSteps, layoutSettings.repeatParts, chordSettings.czechChordNames);
         setParsedContent(renderedSong);
@@ -122,12 +121,14 @@ function SongView() {
         if (scrollInProgress) return;
         // if the rest can fit on the next screen --> scroll all the way
         const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
+        const scrollSpeed = screen.height / 3000 // whole screen in 3s 
         if (remainingContent < 0) {
             return;
         }
         if (remainingContent < 0.8 * screen.height) {
             scroll.scrollToBottom({
-                duration: remainingContent / screen.height * 3000, onComplete: () => {
+                // why *10? IDK, the same scroll speed looks bad, possibly due to the easings...
+                duration: remainingContent / scrollSpeed * 10, onComplete: () => {
                     // Trigger a tiny native scroll to hide the UI in Firefox Mobile
                     window.scrollBy(0, -1);
                 }
@@ -142,7 +143,9 @@ function SongView() {
             if (rect.bottom >= screen.height) {
                 // Scroll this container into view and exit the loop
                 const offset = Math.max(100, 0.2 * screen.height);
-                scroll.scrollTo(rect.top + window.scrollY - offset, { duration: 2000 });
+                const scrollDist = rect.top - offset;
+                console.log("duration: ", scrollDist / scrollSpeed)
+                scroll.scrollTo(rect.top + window.scrollY - offset, { duration: scrollDist / scrollSpeed });
                 break;
             }
         }
