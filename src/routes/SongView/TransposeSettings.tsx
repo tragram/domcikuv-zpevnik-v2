@@ -61,9 +61,9 @@ function TransposeSettings({ songOriginalKey, transposeSteps, setTransposeSteps 
         </div>
         <div className='xl:hidden max-sm:hidden'>
             <Button size="icon" variant="circular" onClick={() => { setIsComponentVisible(!isComponentVisible) }}><ArrowUpDown /></Button>
-            <div className={"absolute top-12 w-fit left-0 "} ref={ref}>
+            <div className={"absolute top-14 w-fit left-0 "} ref={ref}>
                 {isComponentVisible &&
-                    <ToolbarBase showToolbar={isComponentVisible}>
+                    <ToolbarBase showToolbar={isComponentVisible} className="!px-0">
                         <div className="w-full flex justify-center p-0 h-full">
                             <TransposeButtons transposeValues={transposeValues} transposeSteps={transposeSteps} setTransposeSteps={setTransposeSteps} />
                         </div>
@@ -77,7 +77,7 @@ function TransposeSettings({ songOriginalKey, transposeSteps, setTransposeSteps 
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-12">
                     {renderKeys.map((k, index) => (
-                        <DropdownMenuCheckboxItem checked={transposeSteps == index - originalKeyIndex} key={k} onCheckedChange={() => setTransposeSteps(index - originalKeyIndex)}>{k}</DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem checked={transposeSteps == index - originalKeyIndex} key={k} onSelect={e=>e.preventDefault()}onCheckedChange={() => setTransposeSteps(index - originalKeyIndex)}>{k}</DropdownMenuCheckboxItem>
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>
