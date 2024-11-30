@@ -123,7 +123,7 @@ function SongView() {
     useEffect(() => {
     })
     const resizeObserver = new ResizeObserver((entries) => {
-        setShowScrollButtons(document.body.scrollHeight > screen.height && layoutSettings.fitScreenMode === "fitX");
+        setShowScrollButtons(document.body.scrollHeight > screen.height && layoutSettings.fitScreenMode != "fitXY");
     })
     resizeObserver.observe(document.body);
 
@@ -154,7 +154,6 @@ function SongView() {
                 // Scroll this container into view and exit the loop
                 const offset = Math.max(100, 0.2 * screen.height);
                 const scrollDist = rect.top - offset;
-                console.log("duration: ", scrollDist / scrollSpeed)
                 scroll.scrollTo(rect.top + window.scrollY - offset, { duration: scrollDist / scrollSpeed });
                 break;
             }
@@ -180,6 +179,7 @@ function SongView() {
             return part; // Render other parts as plain text
         });
     }
+    const [pinching, setPinching] = useState(false);
     const bind = useGesture({
         onPinch: ({ offset: [scale], movement: [dScale], memo }) => {
             if (!memo) memo = layoutSettings.fontSize; // Use memo to preserve initial state
@@ -189,20 +189,41 @@ function SongView() {
                 fitScreenMode: "none",
                 fontSize: newFontSize
             })
-            console.log(layoutSettings.fontSize, newFontSize)
+            setPinching(true); // Track whether pinching is active
+            if (screen.height < document.body.scrollHeight) {
+                setVisibleToolbar(true);
+            } else {
+                setVisibleToolbar(false);
+            }
             return memo; // Return updated memo
         },
+        onPinchEnd: () => setPinching(false),
+        onDrag: ({ movement, direction: [dx, dy], swipe: [x, y], down, last }) => {
+            if (pinching) {
+                return;
+            }
+            if (dy < 0 && (layoutSettings.fitScreenMode != "none" || screen.height < document.body.scrollHeight)) {
+                // Update while dragging 
+                setVisibleToolbar(false);
+            } else if (dy > 0) {
+                // Update while dragging downward
+                setVisibleToolbar(true);
+            }
+        },
+    }, {
+        drag: { threshold: 0.5 }, // Adjust threshold for easier detection}
     });
     return (
-        <div className={"flex flex-col relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh") + (visibleToolbar || layoutSettings.fitScreenMode != "fitXY" ? " sm:pt-[80px] pt-[72px]" : "")}
+        <div className={"flex flex-col relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh") + (visibleToolbar || layoutSettings.fitScreenMode == "fitX" ? " sm:pt-[80px] pt-[72px]" : "")}
             {...bind()} // Bind gesture handlers
             style={{
                 touchAction: 'pan-y', // Prevent default pinch-to-zoom behavior
+                // touchAction: 'none', // Prevent default pinch-to-zoom behavior
                 userSelect: 'none',  // Prevent text selection
                 transition: 'font-size 0.2s ease',
             }}
         >
-            <div className='absolute top-0 left-0 h-dvh w-full bg-image -z-20 blur-lg overflow-hidden' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}>
+            <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-lg overflow-hidden  transition-all duration-1000 ease-in-out ' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}>
                 <div className='w-full h-full bg-glass/60 dark:bg-glass/50'></div>
             </div>
             <div className='absolute top-0'>
