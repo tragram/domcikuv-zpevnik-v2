@@ -17,11 +17,18 @@ po noci plný neřes[F]tí
 je pohla[E]dí a dá jim [Ami]jíst.
 {end_of_verse}
 
+{start_of_bridge}
+[Dmi]Po tmě se toulá a ve dne [Ami]spí 
+a její oči vědí víc než [Dmi]míň
+došly mi slova já stál tam [F]jen 
+s touhle [E]jedinou bych [Ami]zemřel
+{end_of_bridge}
+
 {start_of_chorus}
-[Dmi]Po tmě se toulá a ve dne [Ami]spí a její oči vědí víc než [Dmi]míň
-došly mi slova já stál tam [F]jen s touhle [E]jedinou bych [Ami]zemřel
-S touhle bych [F]zemřel v jedinej [C]den a jestli [E]vám to nesta[Ami]čí
-kdyby tam [F]stála stovka [C]žen, vyzvu ji k [E]tanci a to [F]netančím [Ami]
+S touhle bych [F]zemřel v jedinej [C]den 
+a jestli [E]vám to nesta[Ami]čí
+kdyby tam [F]stála stovka [C]žen, 
+vyzvu ji k [E]tanci a to [F]netančím [Ami]
 {end_of_chorus}
 
 {start_of_verse}
@@ -33,12 +40,14 @@ už po něm kráčí první host,
 tak ať ho nohy nebolej.
 {end_of_verse}
 
-{start_of_chorus}
-[Dmi]Prošla si peklem a kouzla [Ami]zná, přejetý mince počí[Dmi]tá
-a kdo ji spatří je zatra[F]cen, s touhle [E]jedinou bych zem[Ami]řel.
-[Ami]S touhle bych [F]zemřel v jedinej [C]den a jestli [E]vám to [F]nestačí, [Ami]
-kdyby tam [F]stála stovka [C]žen, vyzvu ji k [E]tanci a to [F]netančím [Ami]
-{end_of_chorus}
+{start_of_bridge}
+[Dmi]Prošla si peklem a kouzla [Ami]zná, 
+přejetý mince počí[Dmi]tá
+a kdo ji spatří je zatra[F]cen, 
+s touhle [E]jedinou bych zem[Ami]řel.
+{end_of_bridge}
+
+{chorus}
 
 {start_of_bridge}
 [Ami]Budu si pamatovat na tu [C]chvíli,
@@ -47,7 +56,4 @@ a já už [Ami]věděl, že jsem ztrace[C]nej,
 zeptal se [F]za kolik? s pocitem [E7]viny
 {end_of_bridge}
 
-{start_of_chorus}
-R: [Ami]S touhle bych [F]zemřel v jedinej [C]den a jestli [E]vám to [F]nestačí, [Ami]
-kdyby tam [F]stála stovka [C]žen, vyzvu ji k [E]tanci a to [F]netančím [Ami]
-{end_of_chorus}
+{chorus}

@@ -8,6 +8,7 @@
 {tempo: }
 {range: }
 {start_melody: }
+{disabled: true}
 
 {start_of_verse}
 V čas kag[C]da zažigajutsa svěči,
