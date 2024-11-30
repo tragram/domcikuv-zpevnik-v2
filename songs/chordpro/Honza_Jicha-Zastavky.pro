@@ -8,3 +8,4 @@
 {tempo: }
 {range: }
 {start_melody: }
+{disabled: true}

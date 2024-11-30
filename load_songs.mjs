@@ -3,7 +3,7 @@ import makeHash from 'object-hash';
 
 const path = './songs/chordpro/';
 const files = fs.readdirSync(path).filter(file => (file.endsWith('.pro') || file.endsWith('.chordpro')));
-const metadata = files.map(chordpro_file => {
+let metadata = files.map(chordpro_file => {
   const content = fs.readFileSync(`${path}/${chordpro_file}`, 'utf8') || "";
   const title = content.match(/{title:\s*(.+?)}/i)?.[1].trim() || "";
   const artist = content.match(/{artist:\s*(.+?)}/i)?.[1].trim() || "";
@@ -17,8 +17,10 @@ const metadata = files.map(chordpro_file => {
   const start_melody = content.match(/{start_melody:\s*(.+?)}/i)?.[1].trim() || "";
   const pdf_filenames = content.match(/{pdf_filenames:\s*(.+?)}/i)?.[1].trim() || "";
   const content_hash = makeHash(content);
-  return { title, artist, key, language, date_added, capo, tempo, range, illustration_author, start_melody, chordpro_file, pdf_filenames, content_hash };
+  const disabled = (content.match(/{disabled:\s*(.+?)}/i)?.[1].trim() === 'true') || false;
+  return { title, artist, key, language, date_added, capo, tempo, range, illustration_author, start_melody, chordpro_file, pdf_filenames, content_hash, disabled };
 });
+metadata = metadata.filter(m => !m.disabled);
 const hash = makeHash(metadata);
 fs.mkdir('public', { recursive: true }, (err) => {
   if (err) throw err;

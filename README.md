@@ -23,6 +23,8 @@ A song should have the following preamble (tempo may be left empty - it's curren
 ```
 **Note that the chords need to use the Czech/German note names (H:=B, B:=Bb).**
 
+To exclude a file from the database, simply insert `{disabled: true}` in the preamble.
+
 ### Extensions of the ChordPro format
 Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features and even when they do exist, JS parsers do not implement them. For convenience, I have added the following:
 
