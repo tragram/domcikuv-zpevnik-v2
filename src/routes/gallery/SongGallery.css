@@ -4,6 +4,9 @@
     top: 1rem;
     left: 1rem;
     right: 1rem;
+}
+
+.background-image {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

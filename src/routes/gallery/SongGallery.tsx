@@ -3,12 +3,14 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import AutoSizer from 'react-virtualized-auto-sizer';
 import useLocalStorageState from 'use-local-storage-state';
 import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import { fetchIllustrationPrompt } from '../../components/song_loader';
 import { AutoTextSize } from 'auto-text-size';
 import { CircleX } from 'lucide-react';
 import './SongGallery.css'
 import { Button } from '@/components/ui/button';
+// import LazyLoad from 'react-lazyload';
+// import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+import { Masonry } from "masonic";
 
 const getShuffledArr = arr => {
     const newArr = arr.slice()
@@ -44,10 +46,9 @@ function CardThatHides({ song }) {
         }
         if (showingContent && !promptContent) { fetchPrompt(); }
     }, [showingContent]);
-
     return (<>
         <div className={"w-full relative " + (hidden ? 'hidden' : 'flex')} style={{ height: imageHeightGen }} >
-            <div className="flex w-full rounded-lg" onError={onError} style={{ backgroundImage: `url(${song.illustrationURL()})` }}>
+            <div className="background-image flex w-full rounded-lg" onError={onError} style={{ backgroundImage: `url("${song.illustrationURL()}")` }}>
             </div>
             <div className={"image-overlay absolute overflow-hidden rounded-lg z-10 border border-1 border-glass/30 backdrop-blur-lg bg-primary/30 " + ("opacity-" + overlayOpacity)} onMouseOver={() => setOverlayOpacity(100)} onMouseOut={() => setOverlayOpacity(0)}
                 onMouseEnter={() => setShowingContent(true)} onClick={() => setShowingContent(true)}>
@@ -77,17 +78,26 @@ const SongGallery = () => {
     const songDB = useLoaderData() as SongDB;
     const songs = getShuffledArr(songDB.songs) as Array<SongData>;
 
+    const [windowSize, setWindowSize] = useState(null)
+
+    const MasonryCard = ({ index, data, width }) => (
+        <CardThatHides song={data} />
+    );
+
+    const columnWidth = () => {
+        const breakpoints = [700, 1200, 1800];
+        const windowWidth = window.innerWidth;
+        for (const i of Array(3).keys()) {
+            console.log(i, windowWidth, window.innerWidth)
+            if (windowWidth < breakpoints[i]) {
+                return windowWidth / (i + 2);
+            }
+        }
+    }
+
     return (
         <div className='max-w-full m-[10px]'>
-            <ResponsiveMasonry
-                columnsCountBreakPoints={{ 350: 1, 700: 2, 1200: 3, 1800: 4 }}
-            >
-                <Masonry className="image-masonry" gutter="10px">
-                    {songs.map(song =>
-                        <CardThatHides song={song} key={song.id} />
-                    )}
-                </Masonry>
-            </ResponsiveMasonry>
+            <Masonry items={songs} render={MasonryCard} columnGutter={10} rowGutter={10} columnWidth={columnWidth()} />
         </div>
     );
 };
