@@ -3,11 +3,12 @@ import { Input } from '@/components/ui/input'
 import Fuse from "fuse.js";
 import { Search as SearchIcon, XIcon } from "lucide-react";
 import { useEffect, useRef, useState } from 'react';
+import { SongData } from '@/types';
 
 function SearchBar({ songs, setSearchResults, query, setQuery }) {
     const options = {
         includeScore: true,
-        keys: ["artist", "title"],
+        keys: ["artist", "title", "ascii_title", "ascii_artist"],
         ignoreLocation: true,
         threshold: 0.4,
     }

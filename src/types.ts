@@ -149,10 +149,22 @@ class SongData {
         this.contentHash = song.content_hash || "";
     }
 
-    get id() {
-        return `${this.artist}-${this.title}`.replace(/ /g, "_").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace("?", "").replace("/", "");
+    static to_ascii(text:string){
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     }
-    
+
+    get ascii_title(){
+        return SongData.to_ascii(this.title)
+    }
+
+    get ascii_artist(){
+        return SongData.to_ascii(this.artist)
+    }
+
+    get id() {
+        return `${this.ascii_artist}-${this.ascii_title}`.replace(/ /g, "_").replace("?", "").replace("/", "");
+    }
+
     // Static method to restore an instance from a plain object (after JSON.parse)
     static fromJSON(json: Partial<SongData>): SongData {
         const instance = Object.create(SongData.prototype);
