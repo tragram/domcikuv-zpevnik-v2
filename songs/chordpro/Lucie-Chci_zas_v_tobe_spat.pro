@@ -18,7 +18,7 @@
 
 {start_of_chorus: R1}
 [D]A hrubý síly vzývám, [C]snídám bezprá[G]ví,
-[D]tvý voči v hlavě vídám, 
+[D]tvý voči v hlavě vídám,
 [Ami]je to všechno jedna [Ami7]velká síla,
 [Emi]jestli se vážně hodíš, [C]nevím nejdu spát,
 [D]na kolej kluky vodíš a [C]ráno se chceš brát,
@@ -47,11 +47,11 @@
 {chorus: R2}
 
 {start_of_bridge}
-[Emi]Sami se k břehům kloníme, 
+[Emi]Sami se k břehům kloníme,
 [C]sami jak bezvládnej proud,
-[Emi]sami se proti vlnám stavíme, 
+[Emi]sami se proti vlnám stavíme,
 [C]sami se chcem zbavit těch [C7]pout,
-[Emi]sami se k břehům kloníme, 
+[Emi]sami se k břehům kloníme,
 [C]sami jak bezvládnej [C7]proud,
 [Emi]sami se proti vlnám stavíme. [C][D]
 [C]Jsem na tom [D]stejně mám tě [Emi]rád

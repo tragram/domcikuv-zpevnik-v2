@@ -17,16 +17,16 @@ Ta [G]stará [D]dobrá hra je [A]okoukaná.
 {end_of_verse}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív, 
+[G]Nic není jako [D]dřív,
 [A]nic není jak [Hmi]bejvávalo.
-[G]Nic není jako [D]dřív, 
+[G]Nic není jako [D]dřív,
 [A]to se nám to [Hmi]mívávalo.
 {end_of_chorus}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív, 
+[G]Nic není jako [D]dřív,
 [A]ačkoliv máš všechno [Hmi]co si vždycky chtěla.
-[G]Nic není jako [D]dřív, 
+[G]Nic není jako [D]dřív,
 [A]ačkoliv drobná para[Hmi]lela by tu byla.
 {end_of_chorus}
 
@@ -47,14 +47,14 @@ včera i dneska, stále ta samá píseň.
 {end_of_bridge}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív, 
+[G]Nic není jako [D]dřív,
 [A]nic není jak [Hmi]bejvávalo.
-[G]Nic není jako [D]dřív, jó, 
+[G]Nic není jako [D]dřív, jó,
 [A]to se nám to dlouze [Hmi]kouřívalo.
 {end_of_chorus}
 
 {start_of_chorus}
-[G]Bohužel bohu[D]dík je s námi, 
+[G]Bohužel bohu[D]dík je s námi,
 [A]ta nenahmatatelná [Hmi]intimita těla.
 [G]Nic není jako [D]dřív, jen fámy,
 [A]bla-bla-bl[Hmi]a-bla et-cetera.

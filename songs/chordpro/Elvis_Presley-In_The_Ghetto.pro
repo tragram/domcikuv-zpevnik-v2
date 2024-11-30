@@ -12,12 +12,12 @@
 {start_of_verse}
 [A]As the snow flies
 On a [C#mi7]cold and grey Chicago morning
-A [D]poor little baby 
+A [D]poor little baby
 [E7]child is born in the [A]ghetto
 
 And his [A]mamma cries
 'Cos if [C#mi7]there's one thing that she dont need
-It's [D]another hungry 
+It's [D]another hungry
 [E7]mouth to feed in the [A]ghetto
 {end_of_verse}
 
@@ -36,12 +36,12 @@ and [Bmi]look the other [E7]way
 {start_of_verse}
 Well, the world turns
 And a hungry little boy with a runny nose
-Plays in the street as the 
+Plays in the street as the
 cold wind blows in the ghetto
 
 And his hunger burns
 So he starts to roam the streets at night
-And he learns how to steal and he 
+And he learns how to steal and he
 learns how to fight in the ghetto
 {end_of_verse}
 
@@ -55,11 +55,11 @@ He [Bmi]tries to run but he [E7]dont get far
 {start_of_verse}
 And his mamma cries
 As a crowd gathers round an angry young man
-Face down in the street with a 
+Face down in the street with a
 gun in his hand in the ghetto
 
 And as her young man dies
 On a cold and grey Chicago morning
-Another little baby 
+Another little baby
 child is born in the ghetto
 {end_of_verse}

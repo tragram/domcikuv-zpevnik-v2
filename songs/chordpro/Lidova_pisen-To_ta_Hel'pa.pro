@@ -16,10 +16,10 @@
 {end_of_verse}
 
 {start_of_chorus}
-|: [B]Koho [C7]je [F]sto, toho je [C]sto,
+𝄆 [B]Koho [C7]je [F]sto, toho je [C]sto,
 nie po [F]mojej [A7]vóli,
 [Dmi]len za [G]jednym, [Dmi]len za [G]jednym
-[Dmi]srdiečko [A7]ma [Dmi]boli :|
+[Dmi]srdiečko [A7]ma [Dmi]boli 𝄇
 {end_of_chorus}
 
 {start_of_verse}
@@ -30,8 +30,8 @@ nie po [F]mojej [A7]vóli,
 {end_of_verse}
 
 {start_of_chorus}
-|: [B]Dunaj, [C7]Dunaj, [F]Dunaj, Dunaj,
+𝄆 [B]Dunaj, [C7]Dunaj, [F]Dunaj, Dunaj,
 [C]aj to širé [F]pole, [A7]
 [Dmi]len za [G]jedním, [Dmi]len za [G]jedním,
-[Dmi]počešenie [A7]moje. [Dmi]:|
+[Dmi]počešenie [A7]moje. [Dmi] 𝄇
 {end_of_chorus}

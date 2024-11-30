@@ -49,6 +49,6 @@ kdo vyléčí rány, smaže prokletí.
 {end_of_verse}
 
 {start_of_variant: append_content}
-|: Mississippi, Mississippi :|
+𝄆 Mississippi, Mississippi 𝄇
 {end_of_variant}
 {chorus}

@@ -26,7 +26,7 @@ And then home.
 Oh [A]it's such a [D]perfect day,
 I'm [C#m]glad I spent it with [D]you. [D/C#][D/H]
 [A]Oh such a [E]perfect day,
-|: You just [F#m]keep me [E]hanging [D]on. :|
+𝄆 You just [F#m]keep me [E]hanging [D]on. 𝄇
 {end_of_chorus}
 
 {start_of_verse}

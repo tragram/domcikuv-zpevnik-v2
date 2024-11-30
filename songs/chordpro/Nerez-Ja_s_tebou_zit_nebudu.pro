@@ -17,15 +17,15 @@
 
 {start_of_chorus}
 [G]Co my dva z lásky vlastně [H7]máme,
-[Ami]hlubokou [Gdim]šachtou padá 
+[Ami]hlubokou [Gdim]šachtou padá
 [H7]zdviž, já říkám "kiš-kiš",
 [Emi]navrch má vždycky těžký [F#7]kámen
 [H7]a my jsme v koncích čím dál [Emi]blíž, [Gdim][H7]
 {end_of_chorus}
 
 {start_of_bridge}
-|: [Emi]a me tu ha nadži vava 
-[Ami7]jaj dari [Gdim]dari [H7]daj. :|
+𝄆 [Emi]a me tu ha nadži vava
+[Ami7]jaj dari [Gdim]dari [H7]daj. 𝄇
 {end_of_bridge}
 
 {start_of_verse}

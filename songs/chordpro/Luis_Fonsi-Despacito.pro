@@ -57,20 +57,20 @@ Y que olvides tu ape[D]llido
 {start_of_verse: Rap}
 Si te pido un beso, ven [Em]dármelo
 Yo sé que estás pensándolo
-Llevo tiempo inte[C]ntándolo, 
+Llevo tiempo inte[C]ntándolo,
 Mami esto es dando y dándolo
-Sabes que tu [G]corazón 
+Sabes que tu [G]corazón
 conmigo te hace bom bom
-Sabes que esa [D]beba 
+Sabes que esa [D]beba
 está buscando de mi bom bom
 {end_of_verse}
 
 {start_of_verse: Rap}
-Ven prueba de mi [Em]boca 
+Ven prueba de mi [Em]boca
 para ver como te sabe
-Quiero quiero, quie[C]ro ver 
+Quiero quiero, quie[C]ro ver
 cuanto amor a ti te cabe
-Yo no tengo [G]prisa 
+Yo no tengo [G]prisa
 yo me quiero dar el viaje
 Empezamos [D]lento, después salvaje
 {end_of_verse}

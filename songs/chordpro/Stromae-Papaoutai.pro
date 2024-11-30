@@ -36,10 +36,10 @@ Ca doit [F]faire au moins mille [Dm]fois que j'ai,
 {end_of_bridge}
 
 {start_of_chorus}
-|: [F]Où t'es [Dm]papa où t'es ?
+𝄆 [F]Où t'es [Dm]papa où t'es ?
 [G]Où t'es [Am]papa où t'es ?
 [F]Où t'es [Dm]papa où t'es ?
-[G]Où t'es où t'es [Am]où papa, où t'es ? :|
+[G]Où t'es où t'es [Am]où papa, où t'es ? 𝄇
 {end_of_chorus}
 
 {start_of_verse}

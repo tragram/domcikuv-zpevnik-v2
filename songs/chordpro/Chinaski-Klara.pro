@@ -10,7 +10,7 @@
 {start_melody: f#}
 
 {start_of_chorus}
-|: [H]Ná nanana[G#mi]nananaá aáá[E]aáa[Emi] ná :|
+𝄆 [H]Ná nanana[G#mi]nananaá aáá[E]aáa[Emi]ná 𝄇
 {end_of_chorus}
 
 {start_of_verse}
@@ -20,7 +20,7 @@ Co nám [H]brání bejt spolu [D#mi]jenom ty a já,
 nebuď [C#mi]včerejší no tak [Emi]Kláro
 Pro tebe [H]slibuju, žaluju denně [D#mi]piju jak Dán
 [C#mi]ve skrytu duše marně [Emi]tajně doufám
-že [H]já, jenom [G#mi]já 
+že [H]já, jenom [G#mi]já
 jsem ten tvůj vysněný [E]pán [Emi]
 {end_of_verse}
 
@@ -28,7 +28,7 @@ jsem ten tvůj vysněný [E]pán [Emi]
 
 {start_of_verse}
 Já se prostě nekontroluju a plácám a plácám
-si vážně úžasná já tě nejspíš miluju, 
+si vážně úžasná já tě nejspíš miluju,
 no ty mi dáváš .. jééé
 Zabalit, vyrazit, rychle frčíme dál
 bereme čáru šup do kočáru
@@ -44,7 +44,7 @@ Inženýr šarlatán
 {end_of_verse}
 
 {start_of_chorus}
-|: [C]Ná nanana[Ami]nananaá aáá[F]aáa[Fmi]Ná :|
+𝄆 [C]Ná nanana[Ami]nananaá aáá[F]aáa[Fmi]Ná 𝄇
 {end_of_chorus}
 
 {start_of_verse}

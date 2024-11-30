@@ -9,74 +9,74 @@
 {range: a1-c2}
 {start_melody: a}
 {start_of_chorus}
-|: [Ami]Vap tada dap... 
-[D][F][E][Ami][E][F][F#][G] :|
+𝄆 [Ami]Vap tada dap...
+[D][F][E][Ami][E][F][F#][G] 𝄇
 {end_of_chorus}
 
 {start_of_verse}
-[Ami]V devět hodin dvacet pět 
+[Ami]V devět hodin dvacet pět
 [D]mě vopustilo štěstí
-ten [F]vlak, co jsem jím měl jet 
+ten [F]vlak, co jsem jím měl jet
 na koleji [E]dávno [E7]nestál
 {end_of_verse}
 
 {start_of_verse}
-[Ami]V devět hodin dvacet pět 
+[Ami]V devět hodin dvacet pět
 [D]jako bych dostal pěstí
 já [F]za hodinu na náměstí
 měl jsem [E]stát, ale [E7]v jiným městě
 {end_of_verse}
 
 {start_of_verse}
-Tvá [A]zpráva zněla prostě 
+Tvá [A]zpráva zněla prostě
 a [A7]byla tak krátká
-že [Dmi]stavíš se jen na skok, 
+že [Dmi]stavíš se jen na skok,
 že nechalas mi vrátka
-[G]zadní otevřená, 
+[G]zadní otevřená,
 [E]zadní otevře[E7]ná
 {end_of_verse}
 
 
 {start_of_verse}
-Já [A]naposled tě viděl, 
+Já [A]naposled tě viděl,
 [A7]když ti bylo dvacet
-[Dmi]to jsi tenkrát řekla, 
+[Dmi]to jsi tenkrát řekla,
 že se nechceš vracet
-[G]že jsi unavená, 
+[G]že jsi unavená,
 [E]ze mě unave[E7]ná
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Já čekala jsem hlavu jako střep, 
+Já čekala jsem hlavu jako střep,
 zdálo se, že dlouho
-může za to vinný sklep, 
+může za to vinný sklep,
 že člověk často sleví
 {end_of_verse}
 
 {start_of_verse}
-Já čekala jsem hlavu jako střep, 
+Já čekala jsem hlavu jako střep,
 s podvědomou touhou
-já čekala jsem dobu dlouhou 
+já čekala jsem dobu dlouhou
 víc než dost kolik přesně nevím
 {end_of_verse}
 
 {start_of_verse}
-Pak jedenáctá bila 
+Pak jedenáctá bila
 a už to bylo pasé
-já měla vědět dřív, 
+já měla vědět dřív,
 že vidět chci tě zase
-láska nerezaví, 
+láska nerezaví,
 láska nerezaví
 {end_of_verse}
 
 {start_of_verse}
-Ten list co jsem ti psala 
+Ten list co jsem ti psala
 byl dozajista hloupý
-byl odměřený moc, 
+byl odměřený moc,
 na vlídný slovo skoupý
-už to nenapravím, 
+už to nenapravím,
 už to nenapravím
 {end_of_verse}
 

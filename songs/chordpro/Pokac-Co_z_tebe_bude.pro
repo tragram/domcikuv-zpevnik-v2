@@ -53,7 +53,7 @@ uo o o o
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-tak [A]proč se mě tak blbě 
+tak [A]proč se mě tak blbě
 ale vážně hodně blbě [D]ptáš?
 {end_of_variant}
 {chorus}

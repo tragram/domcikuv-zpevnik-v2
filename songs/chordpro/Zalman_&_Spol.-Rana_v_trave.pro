@@ -39,6 +39,6 @@
 {end_of_verse}
 
 {start_of_variant: append_content}
-|: [Ami]před se[Emi]bou sta [Ami]sáhů. :|
+𝄆 [Ami]před se[Emi]bou sta [Ami]sáhů. 𝄇
 {end_of_variant}
 {chorus}

@@ -24,13 +24,13 @@ mám [F]milion hodin [G]bez nehody
 {end_of_verse}
 
 {start_of_verse}
-[C]Dbám o sebe, hned po ránu, 
+[C]Dbám o sebe, hned po ránu,
 aby dívky neřekly: „ten má zas ránu“
-a [F]chlapcům co jsou nezvladatelní, 
+a [F]chlapcům co jsou nezvladatelní,
 [C]věnuji péči individuelní
 [G]mám rád žáky i žákyně a vždy po hodině
 [F]se ještě dobrovolně ptají
-[C]vyháním je kolem [Ami]desáté, 
+[C]vyháním je kolem [Ami]desáté,
 co ještě čekát[F]e? [G]
 Už jenom zuby, pusu, [C]hají.
 {end_of_verse}

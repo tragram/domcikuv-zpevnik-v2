@@ -11,7 +11,7 @@
 
 {start_of_chorus}
 [C]Čekám [Emi]na sig[Ami]nál,
-ten z nebe [Dmi]nepřichází a 
+ten z nebe [Dmi]nepřichází a
 [G]tak čekám [C]dál [G]
 
 Hledím ke hvězdám,
@@ -20,9 +20,9 @@ a v noci nevnímám.
 {end_of_chorus}
 
 {start_of_bridge}
-Tisíce [F]družic, [G]vysílačů, 
+Tisíce [F]družic, [G]vysílačů,
 [Emi]vedení [A7]a přijímačů,
-jak [Dmi]pilné včelky [G]rozsévají 
+jak [Dmi]pilné včelky [G]rozsévají
 signál z [C]květu na květ.
 V zemi [F]České čtrnáct [G]miliónů
 [Emi]funkčních SIM [A7]karet,
@@ -47,11 +47,11 @@ ať signál zalije naši vesnici.
 {chorus}
 
 {start_of_bridge}
-[F]Za zatáčkou u [G]rybníka, 
+[F]Za zatáčkou u [G]rybníka,
 [Emi]máme [A7]kutila.
-A Tom [Dmi]sváří, pájí, 
+A Tom [Dmi]sváří, pájí,
 [G]krájí, český [C]ruce všechno znaj.
-[F]Do týdne tu [G]stálo dílo 
+[F]Do týdne tu [G]stálo dílo
 [Dmi]hodno [A7]génia.
 [Dmi]Kam, že tenhle skvělý přístroj [E]daj'?
 {end_of_bridge}
@@ -59,27 +59,27 @@ A Tom [Dmi]sváří, pájí,
 {start_of_verse}
 Připojme na kostel v naší vesnici,
 tuhletu prapodivnou krabici.
-Vyšlem signál na všechny družice, 
+Vyšlem signál na všechny družice,
 ať rozšíříme obzory i hranice.
 {end_of_verse}
 
 {start_of_verse}
-Nikdo však u nás neměl tušení, 
+Nikdo však u nás neměl tušení,
 že globální způsobíme rušení.
-Že způsobíme těžké časy, no co. 
+Že způsobíme těžké časy, no co.
 Opět budem pěstovati klasy, no co.
 {end_of_verse}
 
 {start_of_verse}
 Tohle je vzkaz pro všechny [H]kutily, [G#mi]
 [E]kde bychom [F#]byli, kdybyste [H]nebyli. [G#mi]
-Vždyť vaše výtvory jsou báječné, 
+Vždyť vaše výtvory jsou báječné,
 progresivní, ba i bezpečné.
 {end_of_verse}
 
 {start_of_verse}
-Osmý div světa byste stvořili, 
+Osmý div světa byste stvořili,
 kdyby však vodiče víc vodily.
-Dočkej času jako husa klasu, 
+Dočkej času jako husa klasu,
 zejtra tu bude stát i stroj času.
 {end_of_verse}

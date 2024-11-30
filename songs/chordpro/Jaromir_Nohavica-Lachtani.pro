@@ -10,7 +10,7 @@
 {start_melody: g e}
 
 {start_of_chorus}
-|: [C]Lach, lach, [F]jé, [C]jé [Ami]lach, lach[G], [C]jé,jé :|
+𝄆 [C]Lach, lach, [F]jé, [C]jé [Ami]lach, lach[G], [C]jé,jé 𝄇
 {end_of_chorus}
 
 {start_of_verse}

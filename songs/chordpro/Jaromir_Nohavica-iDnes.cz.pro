@@ -24,9 +24,9 @@ a když tě bolí srdce, není kam si dojít pro instrukce
 {end_of_verse}
 
 {start_of_chorus}
-www [G]iDnes, dvaa[Hmi]dvacátého května 
+www [G]iDnes, dvaa[Hmi]dvacátého května
 dva tisíce devět černá [C]kronika, a j[D]á
-www iDnes, dvaadvacátého května 
+www iDnes, dvaadvacátého května
 dva tisíce devět černá kronika, a já
 {end_of_chorus}
 
@@ -70,7 +70,7 @@ k životu žádný důvod, a ke smrti stovka různých důvodů
 {end_of_verse}
 
 {start_of_verse}
-Silnici obsadila policie. 
+Silnici obsadila policie.
 Naposledy promíjela řidičům varovné blikání
 proč musí každá sebeblbší píseň mít nějaké poslání
 Dívka ze Stříbra zemřela na následky meningoko(ko)vé infekce
