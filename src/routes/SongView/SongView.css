@@ -32,7 +32,7 @@
 
 .chord {
     color: hsl(var(--primary));
-    font-weight: 800;      
+    font-weight: 800;
     text-shadow: 1px 1px 2px #000000;
 }
 
@@ -82,28 +82,6 @@
 
 #auto-text-size-wrapper {
     justify-content: safe center;
-    /* padding: 2rem; */
-    /* padding: 2rem; */
-    padding-top: 0;
-}
-
-#auto-text-size-wrapper>div {
-    border-radius: 12px;
-    padding: 1rem;
-    /* background-color: rgba(from hsl(var(--glass)) r g b / 80%); */
-    /* Fallback for Safari or unsupported */
-    /* background-color: rgba(from hsl(var(--glass)) r g b / 80%); */
-    /* 
-    outline-style: solid;
-    outline-width: 2px;
-    outline-color: rgba(from hsl(var(--primary)) r g b / 30%);
-    box-shadow: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12); */
-}
-
-@media screen(sm) {
-    #auto-text-size-wrapper>div {
-        padding: 2rem;
-    }
 }
 
 .song-content {
@@ -184,7 +162,7 @@
     display: none;
 }
 
-.repetition{
+.repetition {
     color: hsl(var(--primary));
     /* font-size:larger; */
 }
