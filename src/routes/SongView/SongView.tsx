@@ -212,7 +212,7 @@ function SongView() {
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <div className='max-sm:hidden'>
+                    <div className='max-xs:hidden'>
                         <RandomSong songs={songDB.songs} />
                     </div>
                 </ToolbarBase>

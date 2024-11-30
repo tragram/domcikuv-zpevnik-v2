@@ -66,17 +66,16 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayout
         } else if (layoutPreset === "custom") {
             setLayoutSettings(customLayoutPreset);
         }
-        // custom doesn't change anything
     }
     return (
         <>
             <Button size="icon" variant="circular" className="max-sm:hidden" isActive={layoutSettings.twoColumns} onClick={() => { toggleSetting("twoColumns"); }}>
                 {layoutSettingsValues["twoColumns"].icon}
             </Button>
-            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label max-xs:hidden'>
+            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label max-xsm:hidden'>
                 <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"} />
             </div>
-            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label xs:hidden'>
+            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label xsm:hidden'>
                 <FancySwitch options={presetModes.filter(m => m != "custom").map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"} />
             </div>
         </>
