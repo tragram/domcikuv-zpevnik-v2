@@ -109,7 +109,6 @@ interface SongRawData {
 }
 
 class SongData {
-    id: string;
     title: string;
     artist: string;
     key?: SongKey;
@@ -131,7 +130,6 @@ class SongData {
     constructor(song: SongRawData) {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.id = `${this.artist}-${this.title}`.replace(/ /g, "_").normalize("NFD").replace("?", "").replace("/", "");
         this.key = SongKey.parse(song.key?.replace("B", "Bb").replace("H", "B") || "");
         const [month, year] = song.date_added.split("-");
         this.dateAdded = { month: parseInt(month), year: parseInt(year) };
@@ -151,6 +149,10 @@ class SongData {
         this.contentHash = song.content_hash || "";
     }
 
+    get id() {
+        return `${this.artist}-${this.title}`.replace(/ /g, "_").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace("?", "").replace("/", "");
+    }
+    
     // Static method to restore an instance from a plain object (after JSON.parse)
     static fromJSON(json: Partial<SongData>): SongData {
         const instance = Object.create(SongData.prototype);
@@ -158,7 +160,6 @@ class SongData {
         // Directly assign all fields without running constructor logic
         instance.title = json.title;
         instance.artist = json.artist;
-        instance.id = json.id;
         instance.key = json.key ? new SongKey(new MusicNote(json.key.note.letter, json.key.note.accidental), json.key.mode) : null;
         instance.dateAdded = json.dateAdded;
         instance.startMelody = json.startMelody;
@@ -167,11 +168,11 @@ class SongData {
         instance.capo = json.capo;
         instance.range = SongRange.fromJSON(json.range); // Re-create range object if needed
         instance.illustration_author = json.illustration_author;
+        // TODO: isn't this duplicate with the ID?
         instance.chordproFile = json.chordproFile;
         instance.pdfFilenames = json.pdfFilenames;
         instance.content = json.content;
         instance.contentHash = json.contentHash;
-
         return instance;
     }
 
@@ -196,7 +197,7 @@ class SongData {
         if (!model) {
             model = this.illustration_author;
         }
-        return `${import.meta.env.BASE_URL}/songs/${folder}/${this.chordproFile.split('.')[0]}/${model}.webp`
+        return `${import.meta.env.BASE_URL}/songs/${folder}/${this.id}/${model}.webp`
 
     }
 
