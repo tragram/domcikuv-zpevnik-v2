@@ -19,7 +19,7 @@ import { ChordSettingsMenu, ChordSettingsButtons, ChordSettings } from './ChordS
 import { parse } from 'path';
 import { ModeToggleInner } from '@/components/mode-toggle';
 import { ScrollArea } from "@/components/ui/scroll-area"
-
+import { useGesture } from '@use-gesture/react';
 
 
 function SongView() {
@@ -28,7 +28,7 @@ function SongView() {
         songData.key = guessKey(songData.content);
     }
 
-    const mobilePreset = {
+    const mobilePreset: LayoutSettings = {
         fitScreenMode: "fitX",
         fontSize: 12,
         repeatParts: true,
@@ -36,7 +36,7 @@ function SongView() {
         twoColumns: false,
     }
 
-    const tabletPreset = {
+    const tabletPreset: LayoutSettings = {
         fitScreenMode: "fitXY",
         fontSize: 12,
         repeatParts: false,
@@ -180,11 +180,29 @@ function SongView() {
             return part; // Render other parts as plain text
         });
     }
-
+    const bind = useGesture({
+        onPinch: ({ offset: [scale], movement: [dScale], memo }) => {
+            if (!memo) memo = layoutSettings.fontSize; // Use memo to preserve initial state
+            const newFontSize = Math.max(8, Math.min(memo * dScale, 50)); // Clamp between 12px and 50px
+            setLayoutSettings({
+                ...layoutSettings,
+                fitScreenMode: "none",
+                fontSize: newFontSize
+            })
+            console.log(layoutSettings.fontSize, newFontSize)
+            return memo; // Return updated memo
+        },
+    });
     return (
         <div className={"flex flex-col relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh") + (visibleToolbar || layoutSettings.fitScreenMode != "fitXY" ? " sm:pt-[80px] pt-[72px]" : "")}
+            {...bind()} // Bind gesture handlers
+            style={{
+                touchAction: 'pan-y', // Prevent default pinch-to-zoom behavior
+                userSelect: 'none',  // Prevent text selection
+                transition: 'font-size 0.2s ease',
+            }}
         >
-            <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-lg overflow-hidden' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}>
+            <div className='absolute top-0 left-0 h-dvh w-full bg-image -z-20 blur-lg overflow-hidden' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}>
                 <div className='w-full h-full bg-glass/60 dark:bg-glass/50'></div>
             </div>
             <div className='absolute top-0'>
@@ -231,7 +249,8 @@ function SongView() {
                 <Button className={'absolute bottom-0 right-0 ' + (atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
             </div>
 
-            <div id="auto-text-size-wrapper" className={'w-full z-10 lg:p-16 p-4 sm:p-8' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? " mb-8" : "")}>
+            <div id="auto-text-size-wrapper" className={'w-full z-10 lg:p-16 p-4 sm:p-8' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? " mb-8" : "")}
+            >
                 <AutoTextSize
                     mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                     minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
@@ -256,7 +275,7 @@ function SongView() {
                     ${layoutSettings.repeatPartsChords ? '' : ' repeated-chords-hidden '}
                     ${layoutSettings.twoColumns ? " song-content-columns " : ""}`}
                         dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper">
-                        </div>
+                    </div>
                 </AutoTextSize>
             </div>
         </div >
