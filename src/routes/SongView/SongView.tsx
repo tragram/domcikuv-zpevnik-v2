@@ -182,7 +182,7 @@ function SongView() {
     }
 
     return (
-        <div className={"flex flex-col sm:pt-[80px] pt-[72px] relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh")}
+        <div className={"flex flex-col relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh") + (visibleToolbar || layoutSettings.fitScreenMode != "fitXY" ? " sm:pt-[80px] pt-[72px]" : "")}
         >
             <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-lg overflow-hidden' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}>
                 <div className='w-full h-full bg-glass/60 dark:bg-glass/50'></div>

@@ -82,6 +82,8 @@
 
 #auto-text-size-wrapper {
     justify-content: safe center;
+    /* Allows vertical scrolling but blocks zoom */
+    touch-action: pan-y;
 }
 
 .song-content {
