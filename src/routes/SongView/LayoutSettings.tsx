@@ -26,7 +26,7 @@ type LayoutPreset = "compact" | "maximizeFontSize" | "custom";
 const presetModes: Array<LayoutPreset> = ["compact", "custom", "maximizeFontSize"];
 const presetModesValues = {
     "maximizeFontSize": {
-        label: "Scroll", icon: <MoveVertical />, preset: {
+        label: "Scroll", icon: <MoveHorizontal />, preset: {
             fitScreenMode: "fitX",
             repeatParts: true,
             repeatPartsChords: true,

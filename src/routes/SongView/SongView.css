@@ -86,6 +86,10 @@
     touch-action: pan-y;
 }
 
+#auto-text-size-wrapper>div {
+    max-width: 100%;
+}
+
 .song-content {
     line-height: 1.1;
     white-space: nowrap;
@@ -100,13 +104,20 @@
     flex-direction: column;
     gap: 0.2em;
     break-inside: avoid-column;
+    max-width: 100%;
 }
 
 .lyrics-line {
     display: flex;
     align-items: flex-end;
+    flex-wrap: nowrap;
+    max-width: 100%;
+}
+
+.fit-screen-none .lyrics-line {
     flex-wrap: wrap;
 }
+
 
 .section-title {
     display: none;
@@ -124,12 +135,6 @@
 .song-content-columns>* {
     columns: 2;
 }
-
-
-.lyrics-line {
-    flex-wrap: nowrap;
-}
-
 
 /* misc */
 .song-content .literal, .song-content .tab-section {

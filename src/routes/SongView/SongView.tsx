@@ -249,12 +249,14 @@ function SongView() {
                             <h2 className='text-[0.75em] text-muted-foreground sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
                         </div>
                     </div>
-                    <div className={`flex flex-col 
+                    <div className={`flex flex-col max-w-screen overflow-clip 
                     ${chordSettings.inlineChords ? ' chords-inline ' : ' '}
                     ${chordSettings.showChords ? '' : ' chords-hidden '}
+                    fit-screen-${layoutSettings.fitScreenMode}
                     ${layoutSettings.repeatPartsChords ? '' : ' repeated-chords-hidden '}
                     ${layoutSettings.twoColumns ? " song-content-columns " : ""}`}
-                        dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper" ></div>
+                        dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper">
+                        </div>
                 </AutoTextSize>
             </div>
         </div >
