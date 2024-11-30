@@ -79,8 +79,8 @@ class SongRange {
             return Object.keys(chromaticScale).find(key => chromaticScale[key] === transposedNr);
         }
         return SongRange.fromJSON({
-            min: `${transposeTone(this.min, semitones)}${this.min?.slice(-1)[0]}`,
-            max: `${transposeTone(this.max, semitones)}${this.max?.slice(-1)[0]}`,
+            min: this.min ? `${transposeTone(this.min, semitones)}${this.min?.slice(-1)[0]}` : "",
+            max: this.max ? `${transposeTone(this.max, semitones)}${this.max?.slice(-1)[0]}` : "",
             semitones: this.semitones,
         })
     }
@@ -149,15 +149,15 @@ class SongData {
         this.contentHash = song.content_hash || "";
     }
 
-    static to_ascii(text:string){
+    static to_ascii(text: string) {
         return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     }
 
-    get ascii_title(){
+    get ascii_title() {
         return SongData.to_ascii(this.title)
     }
 
-    get ascii_artist(){
+    get ascii_artist() {
         return SongData.to_ascii(this.artist)
     }
 
