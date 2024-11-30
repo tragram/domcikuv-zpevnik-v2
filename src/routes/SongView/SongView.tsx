@@ -28,14 +28,24 @@ function SongView() {
         songData.key = guessKey(songData.content);
     }
 
+    const mobilePreset = {
+        fitScreenMode: "fitX",
+        fontSize: 12,
+        repeatParts: true,
+        repeatPartsChords: true,
+        twoColumns: false,
+    }
+
+    const tabletPreset = {
+        fitScreenMode: "fitXY",
+        fontSize: 12,
+        repeatParts: false,
+        repeatPartsChords: false,
+        twoColumns: true,
+    }
+
     const [customLayoutPreset, setCustomLayoutPreset] = useLocalStorageState<LayoutSettings>("settings/SongView/CustomLayoutPreset", {
-        defaultValue: {
-            fitScreenMode: "fitXY",
-            fontSize: 12,
-            repeatParts: false,
-            repeatPartsChords: false,
-            twoColumns: false,
-        }
+        defaultValue: window.innerWidth > 750 ? tabletPreset : mobilePreset
     });
     const [layoutSettings, setLayoutSettings] = useLocalStorageState<LayoutSettings>("settings/SongView/LayoutSettings", {
         defaultValue: customLayoutPreset
@@ -170,7 +180,6 @@ function SongView() {
             return part; // Render other parts as plain text
         });
     }
-
 
     return (
         <div className={"flex flex-col sm:pt-[80px] pt-[72px] relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh")}
