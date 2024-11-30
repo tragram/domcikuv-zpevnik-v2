@@ -1,7 +1,6 @@
 import re
+import unicodedata
 from pathlib import Path
-
-import unidecode
 
 
 def songs_path():
@@ -11,14 +10,15 @@ def songs_path():
 def normalize_string(input_str):
     """Convert a string to ASCII and replace spaces with underscores."""
     # Convert to closest ASCII representation using unidecode
-    ascii_str = unidecode.unidecode(input_str)
-    # delete any non-alphanumeric characters
-    ascii_str = "".join(
-        char if char.isalnum() or char == " " else "" for char in ascii_str
-    )
+    nfkd_form = unicodedata.normalize("NFD", input_str)
+    ascii_str = re.sub(r"[\u0300-\u036f]", "", nfkd_form)
     # Replace spaces with underscores
-    ascii_str = ascii_str.replace(" ", "_")
+    ascii_str = ascii_str.replace(" ", "_").replace("?", "").replace("/", "")
     return ascii_str
+
+
+def filename_stem(artist, title):
+    return f"{normalize_string(artist)}-{normalize_string(title)}"
 
 
 def get_directive(content, directive_name):

@@ -1,5 +1,4 @@
 import { Key, MusicNote, Key as SongKey } from 'chordproject-parser';
-import unidecode from 'unidecode'
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range"
 interface SortSettings {
@@ -132,8 +131,8 @@ class SongData {
     constructor(song: SongRawData) {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.id = unidecode(`${this.artist}-${this.title}`.replace(/ /g, "_")).replace("?", "").replace("/", "");
-        this.key = SongKey.parse(song.key?.replace("B", "Bb").replace("H", "B"));
+        this.id = `${this.artist}-${this.title}`.replace(/ /g, "_").normalize("NFD").replace("?", "").replace("/", "");
+        this.key = SongKey.parse(song.key?.replace("B", "Bb").replace("H", "B") || "");
         const [month, year] = song.date_added.split("-");
         this.dateAdded = { month: parseInt(month), year: parseInt(year) };
 

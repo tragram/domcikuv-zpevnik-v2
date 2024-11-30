@@ -1,4 +1,4 @@
-from utils import extract_metadata, get_lyrics, normalize_string, songs_path
+from utils import get_lyrics, songs_path
 
 chordpro_dir = songs_path() / "chordpro"
 total_max = 0

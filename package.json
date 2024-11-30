@@ -41,7 +41,6 @@
     "react-window": "^1.8.10",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "unidecode": "^1.1.0",
     "use-local-storage-state": "^19.4.1",
     "vite-plugin-static-copy": "^2.0.0"
   },

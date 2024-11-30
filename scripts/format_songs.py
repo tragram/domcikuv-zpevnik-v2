@@ -2,8 +2,7 @@ import os
 import re
 from pathlib import Path
 
-import unidecode
-from utils import extract_metadata, normalize_string, songs_path
+from utils import extract_metadata, filename_stem, songs_path
 
 
 def remove_whitespaces(file_path: Path):
@@ -38,11 +37,7 @@ def format_chordpro_files(
 
         # Only rename if both artist and title are found
         if artist and title:
-            # Normalize artist and title to ASCII and replace spaces/non-alphanumeric chars
-            artist_clean = normalize_string(artist)
-            title_clean = normalize_string(title)
-
-            new_stem = f"{artist_clean}-{title_clean}"
+            new_stem = filename_stem(artist, title)
             new_file_name = directory / f"{new_stem}.pro"
             print(file_path, directory / new_file_name)
             if file_path != directory / new_file_name:
