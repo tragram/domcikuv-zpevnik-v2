@@ -12,9 +12,11 @@ function saveToLocalStorage(key: string, value: any): void {
 }
 
 function clearSongDBFromLocalStorage() {
-    Object.keys(localStorage)
-        .filter(key => key.startsWith('songDB'))
-        .forEach(key => localStorage.removeItem(key));
+    localStorage.removeItem("songDB")
+    localStorage.removeItem("songDB.hash")
+    // Object.keys(localStorage)
+    //     .filter(key => key.startsWith('songDB'))
+    //     .forEach(key => localStorage.removeItem(key));
 }
 
 async function fetchSongs(): Promise<SongDB> {
@@ -89,13 +91,16 @@ async function fetchSongContent({ params }): Promise<DataForSongView> {
         throw new Response("Song not Found", { status: 404 });
     }
 
-    const contentKey = `songDB/${songData.chordproFile}`;
+    const contentKey = `songDB/${songData.id}`;
+    const savedSongHash = localStorage.getItem(contentKey + ".hash")
+
     let songContent = localStorage.getItem(contentKey);
 
-    if (!songContent) {
+    if (!songContent || savedSongHash != songData.contentHash) {
         const response = await fetch(`${import.meta.env.BASE_URL}/songs/chordpro/${songData.chordproFile}`);
         songContent = await response.text();
         localStorage.setItem(contentKey, songContent);
+        localStorage.setItem(contentKey + ".hash", songData.contentHash);
     }
 
     songData.content = songContent;

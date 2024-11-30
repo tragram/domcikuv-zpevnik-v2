@@ -7,6 +7,8 @@ The original songbook was my high-school graduation project, consisting of an [A
 ## Editing songs
 Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the songs/ directory. Pushes to the main branch trigger automatic updates (live in a few minutes). If you don't have edit rights, submit a pull request or let me know. 😉
 
+For local editing, you will need to manually run `npm run prebuild` to recreate the database with your changes.
+
 ### File format
 The songs shall be named `artist_name-song_name.pro` (any special characters converted to ASCII). Use `scripts/format_songs.py` to rename files (and fix common whitespace issues) automatically.
 
