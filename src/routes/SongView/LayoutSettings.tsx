@@ -4,7 +4,7 @@ import { DropdownIconStart, DropdownMenuItem, DropdownMenuCheckboxItem, Dropdown
 import FancySwitch from "@/components/ui/fancy-switch";
 import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
 // import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
-import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat, UserCog, PencilRuler } from "lucide-react";
+import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat, UserCog, PencilRuler, MoveVertical } from "lucide-react";
 import { useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
@@ -25,9 +25,22 @@ interface LayoutSettings {
 type LayoutPreset = "compact" | "maximizeFontSize" | "custom";
 const presetModes: Array<LayoutPreset> = ["compact", "custom", "maximizeFontSize"];
 const presetModesValues = {
-    "maximizeFontSize": { "label": "Max font size", "icon": <MoveHorizontal /> },
-    "custom": { "label": "Custom", "icon": <PencilRuler /> },
-    "compact": { "label": "Fit screen", "icon": <MoveDiagonal /> },
+    "maximizeFontSize": {
+        label: "Scroll", icon: <MoveVertical />, preset: {
+            fitScreenMode: "fitX",
+            repeatParts: true,
+            repeatPartsChords: true,
+            twoColumns: false,
+        }
+    },
+    "custom": { label: "Custom", icon: <PencilRuler /> },
+    "compact": {
+        label: "Compact", icon: <MoveDiagonal />, preset: {
+            fitScreenMode: "fitXY",
+            repeatParts: false,
+            repeatPartsChords: false
+        }
+    },
 };
 
 const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords"]
@@ -43,24 +56,36 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayout
     const toggleSetting = (params) => { toggleSettingLayout(params); toggleSettingCustomLayout(params); }
     const [layoutPreset, setLayoutPreset] = useLocalStorageState<LayoutPreset>("settings/SongView/LayoutPreset", { defaultValue: "compact" })
 
+    useEffect(() => {
+        const checkPreset = (preset: "maximizeFontSize" | "compact", currentSettings: LayoutSettings) => {
+            for (const [key, value] of Object.entries(presetModesValues[preset].preset)) {
+                if (currentSettings[key] != value) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        if (checkPreset("maximizeFontSize", layoutSettings)) {
+            setLayoutPreset("maximizeFontSize");
+        }
+        else if (checkPreset("compact", layoutSettings)) {
+            setLayoutPreset("compact");
+        } else { setLayoutPreset("custom") }
+    }, [layoutSettings, setLayoutPreset])
+
     function applyLayoutPreset(layoutPreset: LayoutPreset) {
         setLayoutPreset(layoutPreset);
         if (layoutPreset === "compact") {
             const newLayoutSettings = {
                 ...layoutSettings,
-                fitScreenMode: "fitXY",
-                repeatParts: false,
-                repeatPartsChords: false
+                ...presetModesValues["compact"].preset
             }
             setLayoutSettings(newLayoutSettings);
         }
         else if (layoutPreset === "maximizeFontSize") {
             const newLayoutSettings = {
                 ...layoutSettings,
-                fitScreenMode: "fitX",
-                repeatParts: true,
-                repeatPartsChords: true,
-                twoColumns: false,
+                ...presetModesValues["maximizeFontSize"].preset
             }
             setLayoutSettings(newLayoutSettings);
         } else if (layoutPreset === "custom") {
@@ -84,9 +109,9 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayout
 
 function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset }) {
     // TODO: once JS stops being buggy (https://github.com/jsdom/jsdom/issues/2160), make it so that fontSize is read from the autoresizer, so there's not a jump when moving from auto to manual
-    function setBothSettings(key: string, value: any) {
-        setLayoutSettings({ ...layoutSettings, [key]: value });
-        setCustomLayoutPreset({ ...customLayoutPreset, [key]: value });
+    function setBothSettings(modifiedSettings) {
+        setLayoutSettings({ ...layoutSettings, ...modifiedSettings });
+        setCustomLayoutPreset({ ...customLayoutPreset, ...modifiedSettings });
     }
     const toggleSettingLayout = toggleSettingFactory(layoutSettings, setLayoutSettings);
     const toggleSettingCustomLayout = toggleSettingFactory(customLayoutPreset, setCustomLayoutPreset);
@@ -94,13 +119,14 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings, cust
     // useEffect(function toggleCustom() {
     //     setLayoutPreset("custom");
     // }, [setLayoutPreset, customLayoutPreset]);
+    // TODO: explain better that this fit screen only changes font size while the fit screen in toolbar changes more stuff
     return (<>
         <DropdownMenuLabel>Font size</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
             key="fitXY"
             checked={layoutSettings.fitScreenMode == "fitXY"} onSelect={e => e.preventDefault()}
-            onCheckedChange={() => setBothSettings("fitScreenMode", "fitXY")}
+            onCheckedChange={() => setBothSettings({ "fitScreenMode": "fitXY" })}
         >
             <DropdownIconStart icon={<MoveDiagonal />} />
             Fit screen
@@ -108,17 +134,17 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings, cust
         <DropdownMenuCheckboxItem
             key="fitX"
             checked={layoutSettings.fitScreenMode == "fitX"} onSelect={e => e.preventDefault()}
-            onCheckedChange={() => setBothSettings("fitScreenMode", "fitX")}
+            onCheckedChange={() => setBothSettings({ "fitScreenMode": "fitX" })}
         >
             <DropdownIconStart icon={<MoveHorizontal />} />
             Fit screen width
         </DropdownMenuCheckboxItem>
-        <DropdownMenuItem onClick={() => { setBothSettings("fitScreenMode", "none"); setBothSettings("fontSize", fontSizeLimits(layoutSettings.fontSize * fontSizeStep)) }}
+        <DropdownMenuItem onClick={() => { setBothSettings({ "fitScreenMode": "none", "fontSize": fontSizeLimits(layoutSettings.fontSize * fontSizeStep) }) }}
             onSelect={e => e.preventDefault()}>
             <DropdownIconStart icon={<AArrowUp />} />
             Increase font size
         </DropdownMenuItem >
-        <DropdownMenuItem onClick={() => { setBothSettings("fitScreenMode", "none"); setBothSettings("fontSize", fontSizeLimits(layoutSettings.fontSize / fontSizeStep)) }}
+        <DropdownMenuItem onClick={() => { setBothSettings({ "fitScreenMode": "none", "fontSize": fontSizeLimits(layoutSettings.fontSize / fontSizeStep) }) }}
             onSelect={e => e.preventDefault()} >
             <DropdownIconStart icon={<AArrowDown />} />
             Decrease font size
