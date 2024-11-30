@@ -41,10 +41,10 @@ Quem foi, vai vai [Cmaj7]vai
 [D4]Quem foi
 
 {start_of_bridge}
-|: [Cmaj7](sol) Vem aquece a minha alma
+𝄆 [Cmaj7](sol) Vem aquece a minha alma
 [Am7]E mantém a minha calma
 [Em7]Não esquece que eu existo
-[D4]E me faz ficar tranquilo :| [Cmaj7], [D4]
+[D4]E me faz ficar tranquilo 𝄇 [Cmaj7], [D4]
 {end_of_bridge}
 
 {start_of_variant: append_content}

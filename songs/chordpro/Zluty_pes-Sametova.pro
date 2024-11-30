@@ -54,6 +54,6 @@ ty jsi, [C]holka, tehdá [G]byla taková [F]celá [G]sametová. [C]
 {end_of_verse}
 
 {start_of_chorus}
-|: [C]Vzpomínáš, jak jsi se [G]měla, [Ami]když jsi nic nevěděl[F]a,
-byla to [C]taková krásná [G]cela a byla [F]celá [G]:| sametová [C]
+𝄆 [C]Vzpomínáš, jak jsi se [G]měla, [Ami]když jsi nic nevěděl[F]a,
+byla to [C]taková krásná [G]cela a byla [F]celá [G] 𝄇 sametová [C]
 {end_of_chorus}

@@ -15,7 +15,7 @@ Or a mo[C]ment, that's [Am7]held in your ar[C]ms
 And [G]what, do ya [C]think you'd ever [G]say?
 I won't lis[C]ten an[G]yway
 You don't kn[C]ow me
-And I'[Em]ll never [D]be 
+And I'[Em]ll never [D]be
 what you [C]want me to [G]be[C][G][C]
 {end_of_verse}
 
@@ -57,9 +57,9 @@ They can't [C]see me, But I'[Em]m st[D]ill [C]here
 {start_of_bridge}
 [Csus2]They can't [D]tell me who to [Em7]be
 [Csus2]Cuz I'm [D]not what they [Em7]see
-Yeah the [Csus2]world is still sleeping 
+Yeah the [Csus2]world is still sleeping
 While [D]I keep on dreaming, for [Em7]me
-And it [Csus2]wasn't just whispers and 
+And it [Csus2]wasn't just whispers and
 [D]lies That I'll never be[Em]lie[D]ve[C]
 {end_of_bridge}
 
@@ -70,6 +70,6 @@ I'm the [C]one now, cause I'[Em]m st[D]ill [C]here
 
 {start_of_verse: Outro}
 I'm the [G]one, cause I[Em]'m st[D]ill [G]here
-|: I'[Em]m st[D]ill he[G]re :|
+𝄆 I'[Em]m st[D]ill he[G]re 𝄇
 I'[Em]m st[D]ill [C]here
 {end_of_verse}

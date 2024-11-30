@@ -16,13 +16,13 @@
 {end_of_verse}
 
 {start_of_chorus}
-[G]Zachraňte koně, 
+[G]Zachraňte koně,
 [Hmi]křičel jsem tisíc[C]krát,
-[G]žil jsem jen pro ně, 
+[G]žil jsem jen pro ně,
 [Hmi]bránil je nejvíc[C]krát,
-než přišla [Ami]chvíle, 
+než přišla [Ami]chvíle,
 kdy hřívy [C]bílé
-pročesal [Ami]plamen, 
+pročesal [Ami]plamen,
 spálil na [H7]troud [D7]
 {end_of_chorus}
 
@@ -34,6 +34,6 @@ já [C]viděl, jak to [D]hříbě [G]umírá, [C7][H7]
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-spálil na [H7]troud [D7] [Emi]
+spálil na [H7]troud [D7][Emi]
 {end_of_variant}
 {chorus}

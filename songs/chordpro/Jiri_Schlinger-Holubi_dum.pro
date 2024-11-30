@@ -9,12 +9,12 @@
 {range: a1-h2}
 {start_melody: h}
 {start_of_verse}
-[Hmi]Zpí[A]vám [Gmaj]ptákům 
+[Hmi]Zpí[A]vám [Gmaj]ptákům
 a [F#mi7]zvlášť holub[Hmi]ům,
-[Hmi]stá[A]val [Gmaj]v údolí 
+[Hmi]stá[A]val [Gmaj]v údolí
 [F#mi7]mém starý [Hmi]dům.
 [D]Ptá[A]ků [D]houf zalé[A]tal ke kro[D]vům,
-[Hmi]měl [A]jsem [Gmaj]rád 
+[Hmi]měl [A]jsem [Gmaj]rád
 holu[F#mi7]bích křídel [Hmi]šum.
 {end_of_verse}
 
@@ -26,12 +26,12 @@ měl jsem rád starý dům jeho práh
 {end_of_verse}
 
 {start_of_chorus}
-Hledám [Emi7]dům holu[A7]bí, 
+Hledám [Emi7]dům holu[A7]bí,
 kdopak [D]z vás cestu [Hmi]ví,
 míval [Emi7]stáj roube[A7]nou, bílý [D]štít.
-Kde je [Emi7]dům holu[A7]bí 
+Kde je [Emi7]dům holu[A7]bí
 a ta [D]dívka kde [Hmi]spí,
-vždyť to [Emi7]ví, 
+vždyť to [Emi7]ví,
 že jsem [F#mi7]chtěl pro ni [Hmi]žít. [A][Hmi]
 {end_of_chorus}
 
@@ -50,6 +50,6 @@ nespatříš ztracené údolí.
 {end_of_verse}
 
 {start_of_chorus}
-Zpívám ptákům a zvlášť holubům, 
+Zpívám ptákům a zvlášť holubům,
 stával v údolí mém starý dům.
 {end_of_chorus}

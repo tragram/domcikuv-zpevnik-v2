@@ -79,6 +79,6 @@ Now has [G]fifteen nations [D]orbiting to[Cadd9]gether here.[D]
 {chorus}
 
 {start_of_bridge: Outro}
-|: [G]You'd know why I [D]want to get back soon[Cadd9]:| (3x)
+𝄆 [G]You'd know why I [D]want to get back soon[Cadd9] 𝄇 (3x)
 [G]You'd know why I [D]want to get back soon[Cmaj7].
 {end_of_bridge}

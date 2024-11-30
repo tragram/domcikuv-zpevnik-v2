@@ -27,13 +27,13 @@ I will be there, I will be there.
 {end_of_verse}
 
 {start_of_chorus}
-[Gmi]If we'd [Eb]go again 
+[Gmi]If we'd [Eb]go again
 [B]all the way from the [F]start.
-[Gmi]I would [Eb]try to change 
+[Gmi]I would [Eb]try to change
 [B]the things that killed our [F]love.
-[Gmi]Your pride has [Cmi]build a wall, 
+[Gmi]Your pride has [Cmi]build a wall,
 so [D]strong that I can't get [Gmi]through.
-Is there [Eb]really no chance 
+Is there [Eb]really no chance
 to [F]start once again? I'm loving [Gmi]you.
 {end_of_chorus}
 
@@ -49,7 +49,7 @@ I will be there, I will be there.
 {chorus}
 
 {start_of_bridge}
-[Gmi]Yes [F]I've [Gmi]hurt [Cmi]your pride, 
+[Gmi]Yes [F]I've [Gmi]hurt [Cmi]your pride,
 [D]and [C]I [D]know
 What you've been [Gmi]through.
 You should [Eb]give me a chance

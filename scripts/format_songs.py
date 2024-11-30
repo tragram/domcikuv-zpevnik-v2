@@ -5,22 +5,35 @@ from pathlib import Path
 from utils import extract_metadata, filename_stem, songs_path
 
 
-def remove_whitespaces(file_path: Path):
-    with open(file_path, "r", encoding="utf-8") as file:
-        cleaned_lines = [
-            re.sub(" +", " ", l.strip()).replace("] ", "]") for l in file.readlines()
-        ]
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.writelines("\n".join(cleaned_lines))
+def remove_whitespaces(chordpro_lines: str):
+    return [re.sub(" +", " ", l.strip()).replace("] ", "]") for l in chordpro_lines]
+
+
+def replace_repetitions(chordpro_content: str):
+    pattern = r"\|:([^{}]+?):\|"
+
+    # Function to replace matches with the repetition symbols
+    def replacer(match):
+        content = match.group(1).strip()
+        return f"𝄆 {content} 𝄇"
+
+    # Replace all occurrences within the content
+    return re.sub(pattern, replacer, chordpro_content)
 
 
 def rename_file_in_directory(
     directory: Path, old_stem: str, new_stem: str, extension: str
 ):
+    def is_empty(path):
+        return not any(Path(path).iterdir())
+
     old_path = directory / (old_stem + extension)
+    new_path = directory / (new_stem + extension)
+    if new_path.is_dir() and is_empty(new_path):
+        new_path.rmdir()
     if old_path.exists():
         print(f"Renaming in {directory}: {old_stem+extension} --> {new_stem+extension}")
-        old_path.rename(directory / (new_stem + extension))
+        old_path.rename(new_path)
     else:
         f"Path {old_path} does not exist"
 
@@ -32,8 +45,14 @@ def format_chordpro_files(
     directory = song_directory / chordpro_folder
     for file_path in directory.glob("*.pro"):
         # Extract artist and title from the file
-        remove_whitespaces(file_path)
         artist, title, _ = extract_metadata(file_path)
+
+        with open(file_path, "r", encoding="utf-8") as file:
+            chordpro_lines = file.readlines()
+            chordpro_content = "\n".join(remove_whitespaces(chordpro_lines))
+            chordpro_content = replace_repetitions(chordpro_content)
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.writelines(chordpro_content)
 
         # Only rename if both artist and title are found
         if artist and title:
@@ -57,6 +76,7 @@ def format_chordpro_files(
 songs_directory = songs_path()
 other_folders = [
     ("illustrations", ""),
+    ("illustrations_thumbnails", ""),
     ("image_prompts", ".yaml"),
     ("scraped", ".txt"),
 ]

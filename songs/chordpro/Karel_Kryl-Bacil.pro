@@ -11,7 +11,7 @@
 
 {start_of_chorus}
 [Ami][G][C][E]
-|: Ta ta ta... :|
+𝄆 Ta ta ta... 𝄇
 {end_of_chorus}
 
 {start_of_verse}

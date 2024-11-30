@@ -30,10 +30,10 @@ jdem zpátky do [Am7]lesů [C]za nějaký [G]čas.
 {end_of_verse}
 
 {start_of_verse}
-[Am7]Už tě vidím z dálky, jak [D7]máváš na mě [G]korunou,  
-[Am7]a jestli nám to bude stačit, [D7]zatleskáme [G]na druhou,  
-[Am7]zabalíme všechny, co si [D7]dávaj' rande za [G]branou,  
-[Am7]v ráji není místa, možná [D7]v pekle se nás [G]zastanou.  
+[Am7]Už tě vidím z dálky, jak [D7]máváš na mě [G]korunou,
+[Am7]a jestli nám to bude stačit, [D7]zatleskáme [G]na druhou,
+[Am7]zabalíme všechny, co si [D7]dávaj' rande za [G]branou,
+[Am7]v ráji není místa, možná [D7]v pekle se nás [G]zastanou.
 {end_of_verse}
 
 {chorus}

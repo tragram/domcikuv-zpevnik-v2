@@ -12,23 +12,23 @@
 Can anybody [Emi]hear me?
 Am I [C]talking to my[D]self?
 My mind is running empty
-In the search for someone else 
+In the search for someone else
 who doesn't look right through me.
 It's all just static in my head
-Can anybody [C]tell me [Emi]why 
+Can anybody [C]tell me [Emi]why
 I'm lonely like a [Ami]satel[D]lite?
 {end_of_verse}
 
 {start_of_chorus: R1}
-[Emi]Cause tonight 
+[Emi]Cause tonight
 I'm feeling like an [C]astronaut
 Sending [Ami]SOS from this [D]tiny box
 [Emi]And I lost all signal
 when I [C]lifted up
-Now I'm [Ami]stuck out here 
+Now I'm [Ami]stuck out here
 and the [D]world forgot
-[Emi]Can I [C]please come [D]down, 
-cause I'm [Emi]tired of drifting 
+[Emi]Can I [C]please come [D]down,
+cause I'm [Emi]tired of drifting
 [C]round and [D]round
 Can I [Emi]please [D]come [C]down?
 {end_of_chorus}
@@ -37,17 +37,17 @@ Can I [Emi]please [D]come [C]down?
 I'm deaf from all the silence
 Is it something that I've done?
 I know that there are millions
-I can't be the only one 
+I can't be the only one
 who's so disconnected
 It's so different in my head.
-Can anybody tell me why 
+Can anybody tell me why
 I'm lonely like a satellite?
 {end_of_verse}
 
 {chorus}
 
 {start_of_bridge}
-Now I [D]lie awake and scream 
+Now I [D]lie awake and scream
 in a [C]zero gravity
 And it's [D]starting to weigh down on [C]me.
 Let's a[D]bort this mission now

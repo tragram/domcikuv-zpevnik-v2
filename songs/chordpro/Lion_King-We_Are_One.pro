@@ -17,11 +17,11 @@ is things don't always [C]go the way we [G]planned.
 {end_of_verse}
 
 {start_of_bridge: Pre}
-But you'll [G]see every [Am]day 
+But you'll [G]see every [Am]day
 that we'll [F]never turn [C]away,
 when it [Em]seems all your [C]dreams come [D]undone.
 
-We will [G]stand by your [Am]side, 
+We will [G]stand by your [Am]side,
 filled with [F]hope and filled with [C]pride,
 we are [Em]more than we [D]are, we are [G]one.
 {end_of_bridge}
@@ -38,11 +38,11 @@ Or am I just one [C]part, of some big [G]plan?
 {end_of_verse}
 
 {start_of_bridge: Pre}
-Even [G]those who are [Am]gone 
+Even [G]those who are [Am]gone
 are with [F]us as we go [C]on,
 your jo[Em]urney has [C]only be[D]gun.
 
-Tears of [G]pain, tears of [Am]joy, 
+Tears of [G]pain, tears of [Am]joy,
 one thing not[F]hing can des[C]troy
 is our p[Em]ride, deep in[D]side, we are [G]one.
 {end_of_bridge}
@@ -50,11 +50,11 @@ is our p[Em]ride, deep in[D]side, we are [G]one.
 {chorus}
 
 {start_of_bridge: Pre}
-We are [G]one, you and [Am]I, 
+We are [G]one, you and [Am]I,
 we are [F]like the earth and [C]sky,
 one f[Em]amily [C]under the [D]sun.
 
-All the [G]wisdom to [Am]lead, 
+All the [G]wisdom to [Am]lead,
 all the co[F]urage that you [C]need,
 you will f[Em]ind when you [D]see, we are [G]one.
 {end_of_bridge}

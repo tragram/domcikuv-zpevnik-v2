@@ -93,7 +93,8 @@ function chordToGerman(chord: string) {
 
 function convertHTMLChordToGerman(songText: string) {
     const parser = new DOMParser();
-    const doc = parser.parseFromString(songText, 'text/html');
+    let doc = parser.parseFromString(songText, 'text/html');
+    doc = highlightRepetition(doc)
     const chords = doc.querySelectorAll(`.chord`);
     // TODO: this should be separate from German conversion
     chords.forEach((chord) => {
@@ -101,6 +102,30 @@ function convertHTMLChordToGerman(songText: string) {
         chord.innerHTML = chord.textContent.replace("b", "♭").replace("#", "♯").replace(/([♯♭67])/, "<sup>$1</sup>");
     })
     return doc.body.innerHTML;
+}
+
+function highlightRepetition(doc: Document) {
+    // Find all divs with the class "section"
+    const sections = doc.querySelectorAll("div.section");
+
+
+    sections.forEach((section) => {
+        // Find all lyrics spans containing 𝄆 or 𝄇
+        const repetitionSpans = section.querySelectorAll("span.lyrics");
+
+        repetitionSpans.forEach((span) => {
+            if (span.textContent?.includes("𝄆") || span.textContent?.includes("𝄇")) {
+                // Create a wrapping div with class "repetition"
+                const repetitionDiv = document.createElement("div");
+                repetitionDiv.className = "repetition";
+
+                // Wrap the current span
+                span.replaceWith(repetitionDiv);
+                repetitionDiv.appendChild(span);
+            }
+        });
+    });
+    return doc;
 }
 
 function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey: Key, transposeSteps: number) {

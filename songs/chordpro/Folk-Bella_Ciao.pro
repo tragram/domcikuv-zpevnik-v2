@@ -52,6 +52,6 @@ Ti dir[E7]anno «Che bel fi[Am]or!»
 [Am]«È questo il fiore del partigiano»,
 O bella, ciao! Bella, ciao!
 Bella, c[Am7]iao, ciao, ciao!
-|: «È questo il [Dm]fiore del partig[Am]iano
-morto [E7]per la liber[Am]tà!» :|
+𝄆 «È questo il [Dm]fiore del partig[Am]iano
+morto [E7]per la liber[Am]tà!» 𝄇
 {end_of_verse}

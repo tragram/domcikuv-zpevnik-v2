@@ -10,7 +10,7 @@
 {start_melody: c a}
 
 {start_of_bridge: Intro}
-|: Ma-ia-[F]hii Ma-ia-[C]huu Ma-ia-[G]hoo Ma-ia-[Am]haha :| (3x)
+𝄆 Ma-ia-[F]hii Ma-ia-[C]huu Ma-ia-[G]hoo Ma-ia-[Am]haha 𝄇 (3x)
 {end_of_bridge}
 
 {start_of_verse: Verse 1}

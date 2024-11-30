@@ -20,7 +20,7 @@
 [D]Tak neplač můj [A]kamaráde,
 náhoda je [Emi]blbec, když [G]krade
 [D]Je tuhý jak [A]veka
-a [Emi]řeka ho [G]splaví, 
+a [Emi]řeka ho [G]splaví,
 máme ho rádi
 {end_of_verse}
 
@@ -52,8 +52,8 @@ a [Emi]slzy tečou a já [G]šeptám
 {end_of_verse}
 
 {start_of_verse}
-|: [D]Vysyp ten [A]popel, kamaráde, 
-[Emi]do bílé [G]vody, vody / Heja hej... :|
-[D]Vyhasnul [A]kotel a [Emi]náhoda 
+𝄆 [D]Vysyp ten [A]popel, kamaráde,
+[Emi]do bílé [G]vody, vody / Heja hej... 𝄇
+[D]Vyhasnul [A]kotel a [Emi]náhoda
 je [G]štěstí od podko[G/F#]vy. [G],[G/F#]
 {end_of_verse}

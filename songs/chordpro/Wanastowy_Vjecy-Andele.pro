@@ -40,6 +40,6 @@ na kolenou lásce pomož vstát.
 
 
 {start_of_variant: append_content}
-|: Svět je mami dokonalej kraj. :|
+𝄆 Svět je mami dokonalej kraj. 𝄇
 {end_of_variant}
 {chorus}

@@ -61,5 +61,5 @@ Vaid si[G]is teeb rõ[Hm]õmu see õis,
 [F#m]Läidame küü[E]nlad ja ka[D]minap[A]uud –
 [A]jälle on[D]valge ja[E]soe.
 [E]Täidame klaasid ja kastame suud,
-|: [D]koos olles[A]mured ei[E]loe :| (3x)
+𝄆 [D]koos olles[A]mured ei[E]loe 𝄇 (3x)
 {end_of_verse}

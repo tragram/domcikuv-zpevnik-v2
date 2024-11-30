@@ -23,11 +23,11 @@ první [G]jarní ruku semafor [A]zved'.
 {end_of_verse}
 
 {start_of_chorus}
-Ještě je [Emi]mráz 
+Ještě je [Emi]mráz
 a v noci studí tě, když nemůžeš spát,
-pár vloček [Hmi]zas spadne ti 
+pár vloček [Hmi]zas spadne ti
 [Hmi/A]do očí a [Hmi/G]donutí vstát,
-a [Emi]sbírat větve s jehličím 
+a [Emi]sbírat větve s jehličím
 a [F#7]přikrejt ten tvůj promrzlej [Hmi]dům.
 {end_of_chorus}
 

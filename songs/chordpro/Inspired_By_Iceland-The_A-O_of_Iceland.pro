@@ -17,30 +17,30 @@ This is the [G]A-Ö of [C]Iceland,
 {end_of_chorus}
 
 {start_of_verse}
-I [G]start my day with coffee 
+I [G]start my day with coffee
 or [C]kaffi is what we [G]say
-I [Em]pour a little mjólk in 
+I [Em]pour a little mjólk in
 and [D]feed my horse some hey ( hey )
 {start_of_verse}
 
 {end_of_verse}
-I [G]look out the window 
+I [G]look out the window
 to [C]see if there is [G]sól.
-I [Em]eat my morgunmatur 
+I [Em]eat my morgunmatur
 and [D]sit down in my stól.
 {end_of_verse}
 
 {start_of_verse}
-This [G]eyja is kind of awesome 
+This [G]eyja is kind of awesome
 no [C]matter what you[G]see,
 There's [Em]hverir, list, and jöklar
 [D]And vinir you can meet. Skál!
 {end_of_verse}
 
 {start_of_bridge: Prechorus}
-So pack your[C]töskur 
+So pack your[C]töskur
 Iceland [G]has it [D]all.
-austur to [Em]vestur 
+austur to [Em]vestur
 Just don't look for [D]elves.
 (You don't even exist!)
 {end_of_bridge}
@@ -48,16 +48,16 @@ Just don't look for [D]elves.
 {chorus}
 
 {start_of_verse}
-Our [G]sundlaugar are cosy. 
+Our [G]sundlaugar are cosy.
 Af[C]klæðast all the[G]way.
-But [Em]don't forget sundskýla, 
+But [Em]don't forget sundskýla,
 [D]Before you go and play. ( OK )
 {end_of_verse}
 
 {start_of_verse}
-[G]You might see a torfbær 
+[G]You might see a torfbær
 Or[C]hike in the þjóð[G]garð
-And you [Em]must say hi to Villi 
+And you [Em]must say hi to Villi
 Because[D]that is my dad? Pabbi!
 {end_of_verse}
 
@@ -66,20 +66,20 @@ And you can [C]rent a bíla[G]leigu[D]bíll
 Enjoy the [C]drive on hring[G]vegur[D]inn
 Be mindful [C]of mal[G]arveg[D]ir
 And don't traðka on the[Am]moss -
-It grows back so [D]slow! 
+It grows back so [D]slow!
 Like seventy years!
 {end_of_bridge}
 
 {chorus}
 
 {start_of_bridge}
-[Em]Since the upphaf alda, 
+[Em]Since the upphaf alda,
 the [C]sheep has been around.
-[D]Vinaleg and gracious, 
+[D]Vinaleg and gracious,
 [Am]Every man's best friend.
-We[C]cuddle them and klappa 
+We[C]cuddle them and klappa
 And then take all their ull.
-We[D]wear them like the kappar 
+We[D]wear them like the kappar
 And they've always kept us… Full!
 {end_of_bridge}
 

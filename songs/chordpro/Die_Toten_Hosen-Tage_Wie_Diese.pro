@@ -17,9 +17,9 @@ Dass mich immer [C]weiter durch die Straßen zieht
 {end_of_verse}
 
 {start_of_bridge: Pre-Chorus}
-Komm dir ent[Fadd9]gegen, 
+Komm dir ent[Fadd9]gegen,
 dich abzu[C]holen, wie ausge[G]macht
-Zu der selben [Fadd9]Uhrzeit, 
+Zu der selben [Fadd9]Uhrzeit,
 am selben [C]Treffpunkt, wie letztes [G]Mal
 {end_of_bridge}
 
@@ -31,16 +31,16 @@ Entlang der [Em7]Gassen zu den Rheinterrassen
 {end_of_verse}
 
 {start_of_bridge: Pre-Chorus}
-Wo alles [Fadd9]laut ist, 
+Wo alles [Fadd9]laut ist,
 wo alle [C]drauf sind, um durchzu[G]dreh'n
-Wo die Anderen [Fadd9]warten, 
+Wo die Anderen [Fadd9]warten,
 um mit uns zu [C]starten und abzug[G]eh'n
 {end_of_bridge}
 
 {start_of_chorus}
-An Tagen wie [G]diesen 
+An Tagen wie [G]diesen
 wünscht man sich Un[C]endlichkeit
-An Tagen wie [Am]diesen 
+An Tagen wie [Am]diesen
 haben wir noch [C]ewig Zeit
 Wünsch ich mir Un[G]endlichkeit
 {end_of_chorus}
@@ -53,17 +53,17 @@ Hab keine [C]Angst, ich gebe auf dich Acht
 {end_of_verse}
 
 {start_of_bridge: Pre-Chorus}
-Wir lassen uns [Fadd9]treiben, 
+Wir lassen uns [Fadd9]treiben,
 tauchen [C]unter, schwimmen mit dem [G]Strom
-Dreh'n unsere [Fadd9]Kreise, 
+Dreh'n unsere [Fadd9]Kreise,
 kommen nicht mehr ru[C]nter, sind schwerel[G]os
 {end_of_bridge}
 
 {chorus}
 {start_of_chorus: R2}
-In dieser Nacht der [Fadd9]Nächte, 
+In dieser Nacht der [Fadd9]Nächte,
 [C]die uns so viel vers[G]pricht
-Erleben wir das [Fadd9]Beste, 
+Erleben wir das [Fadd9]Beste,
 [C]kein Ende ist in Si[G]cht
 {end_of_chorus}
 
@@ -76,7 +76,7 @@ Kein Ende in Sic[C]ht [D]
 {chorus}
 
 {start_of_variant: append_content}
-Erleben wir das [Fadd9]Beste, 
+Erleben wir das [Fadd9]Beste,
 [C]und kein Ende in [G]Sicht
 Kein Ende in Si[C]cht [D][G]
 {end_of_variant}

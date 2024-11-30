@@ -38,6 +38,6 @@ have been home [A]yesterday, yester[A7]day.
 {end_of_bridge}
 
 {start_of_variant: append_content}
-|: country [A]roads take me [D]home :|
+𝄆 country [A]roads take me [D]home 𝄇
 {end_of_variant}
 {chorus}

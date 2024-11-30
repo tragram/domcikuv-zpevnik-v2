@@ -32,7 +32,7 @@ tys [F]naučil [C]mě [G]polovinu [Ami]pouhou [G]
 kterej umí [G]sto divnejch snů [C]žít,
 má [F]píseň [C]bude [G]růst jak [Ami]křehkej [G]krápník
 [C]a já prosím: [F]nechte zvony [G]znít,
-|: [C]a já prosím: [F]nechte zvony [G]znít. :|
+𝄆 [C]a já prosím: [F]nechte zvony [G]znít. 𝄇
 {end_of_verse}
 
 {chorus}
