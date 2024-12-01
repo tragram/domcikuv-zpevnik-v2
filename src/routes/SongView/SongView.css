@@ -85,6 +85,7 @@
     /* Allows vertical scrolling but blocks zoom */
     /* touch-action: pan-y; */
     max-width: 100%;
+    font-weight: 600;
 }
 
 #auto-text-size-wrapper>div {
