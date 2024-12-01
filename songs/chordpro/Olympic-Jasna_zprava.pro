@@ -21,9 +21,11 @@
 {end_of_verse}
 
 {start_of_chorus}
-[Emi]Pěnu s vůní [Hmi]jablečnou, [Emi]vyvanulý [Hmi]sprej,
+[Emi]Pěnu s vůní [Hmi]jablečnou, 
+[Emi]vyvanulý [Hmi]sprej,
 [Emi]telefon, cos [G]ustřihla mu [D]šňůru,
-[Emi]knížku krásně [Hmi]zbytečnou, [Emi]co má lživý [Hmi]děj,
+[Emi]knížku krásně [Hmi]zbytečnou, 
+[Emi]co má lživý [Hmi]děj,
 [Emi]píše se v ní, [G]jak se lítá [D]vzhůru,
 lítá [Ami]vzhůru, ve dvou [D]vzhůru.
 {end_of_chorus}
@@ -34,13 +36,7 @@ lítá [Ami]vzhůru, ve dvou [D]vzhůru.
 [Ami]kam se kouknu, [C]kousek tebe [G]mám.
 {end_of_verse}
 
-{start_of_chorus}
-[Emi]Pěnu s vůní [Hmi]jablečnou, [Emi]vyvanulý [Hmi]sprej,
-[Emi]telefon, cos [G]ustřihla mu [D]šňůru,
-[Emi]knížku krásně [Hmi]zbytečnou, [Emi]co má lživý [Hmi]děj,
-[Emi]píše se v ní, [G]jak se lítá [D]vzhůru,
-lítá [Ami]vzhůru, ve dvou [D]vzhůru.
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [G]Skončili jsme jasná zpráva,

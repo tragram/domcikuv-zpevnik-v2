@@ -38,8 +38,10 @@ rozdávaj mi lajky z lásky.
 {end_of_verse}
 
 {start_of_bridge}
-[F]Nosit slečnám [Ami]kytky, to se [B]dneska neno [Bmi]sí,
-a [Bmi]v tramvaji je pouštím sednout, [C]jen když poprosí...
+[F]Nosit slečnám [Ami]kytky, 
+to se [B]dneska neno [Bmi]sí,
+a [Bmi]v tramvaji je pouštím sednout, 
+[C]jen když poprosí...
 {end_of_bridge}
 
 {start_of_chorus: R2}
@@ -80,8 +82,10 @@ všechno o ní už vím z asku.
 {end_of_verse}
 
 {start_of_bridge}
-Že tě rád mám,snad už víš, tvým klukem bych byl rád,
-ale nač to uspěchat, když můžem dál jen, chatovat
+Že tě rád mám,snad už víš, 
+tvým klukem bych byl rád,
+ale nač to uspěchat, 
+když můžem dál jen, chatovat
 {end_of_bridge}
 
 {chorus: R1}

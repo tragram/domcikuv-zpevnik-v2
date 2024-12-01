@@ -16,7 +16,8 @@ zůstaly na hladi[Cmi]ně.
 {end_of_verse}
 
 {start_of_chorus}
-[Cmi]𝄆 rýbaroba, [Es]rýbaroba, [Fmi]rýbaroba [Gm7]ču ču 𝄇
+𝄆 [Cmi]rýbaroba, [Es]rýbaroba, 
+[Fmi]rýbaroba [Gm7]ču ču 𝄇
 zůstaly na hladině[Cmi].
 {end_of_chorus}
 

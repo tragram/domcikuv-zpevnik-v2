@@ -24,7 +24,7 @@ jaktě[G]živ nikdo z vás nenadál
 {start_of_chorus: R1}
 [Hmi]Třeba ta naše [A]kapela
 je [G]možná ta, co se [D]nikdy nepropadne
-nebo [G]jo kdo [D]ví
+ nebo [G]jo kdo [D]ví
 [A]a to je na tom [Hmi]to hezký a tutový,
 [D]že každej ví [A]kulový.
 {end_of_chorus}
@@ -59,8 +59,8 @@ pod knutou [G]rock'n'rollu.
 
 {start_of_chorus: R2}
 [Hmi]Slyšel jsem včer[A]a kapelu
-dobro[G]u tak, že [D]vypadly mi málem uši
-[G]z důlků [D]
+dobro[G]u tak, že [D]vypadly mi
+málem uši [G]z důlků [D]
 [A]a to jsem slyšel jeno[Hmi]m půlku
 [G]Takže [D]vím kulo[A]vý. [G]
 [G]Zase [D]vím kulový[A].
