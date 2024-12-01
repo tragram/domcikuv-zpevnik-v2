@@ -4,7 +4,7 @@ import { DropdownIconStart, DropdownMenuItem, DropdownMenuCheckboxItem, Dropdown
 import FancySwitch from "@/components/ui/fancy-switch";
 import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
 // import { LoopNoteIcon } from "@/components/ui/loop-note-icon";
-import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat, UserCog, PencilRuler, MoveVertical } from "lucide-react";
+import { AArrowDown, Ruler, AArrowUp, CaseSensitive, Plus, Minus, MoveDiagonal, MoveHorizontal, Guitar, Columns2, Repeat, UserCog, PencilRuler, MoveVertical, Expand, Maximize, Fullscreen } from "lucide-react";
 import { useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
@@ -20,6 +20,7 @@ interface LayoutSettings {
     repeatParts: boolean;
     repeatPartsChords: boolean;
     twoColumns: boolean;
+    compactInFullScreen: boolean;
 }
 
 type LayoutPreset = "compact" | "maximizeFontSize" | "custom";
@@ -43,14 +44,15 @@ const presetModesValues = {
     },
 };
 
-const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords"]
+const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"]
 const layoutSettingsValues = {
     "twoColumns": { icon: <Columns2 />, label: "View as two columns" },
     "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
     "repeatPartsChords": { icon: <LoopNoteIcon />, label: "Show chords in repeated parts" },
+    "compactInFullScreen": { icon: <Maximize />, label: "Auto fullscreen in compact view" }
 }
 
-function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset }) {
+function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset, fullScreenHandle }) {
     const toggleSettingLayout = toggleSettingFactory(layoutSettings, setLayoutSettings);
     const toggleSettingCustomLayout = toggleSettingFactory(customLayoutPreset, setCustomLayoutPreset);
     const toggleSetting = (params) => { toggleSettingLayout(params); toggleSettingCustomLayout(params); }
@@ -92,22 +94,28 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayout
             setLayoutSettings(customLayoutPreset);
         }
     }
+    function possiblyEnterFullScreen(value) {
+        if (value == "compact" && layoutSettings.compactInFullScreen) { fullScreenHandle.enter() }
+    }
     return (
         <>
             <Button size="icon" variant="circular" className="max-sm:hidden" isActive={layoutSettings.twoColumns} onClick={() => { toggleSetting("twoColumns"); }}>
                 {layoutSettingsValues["twoColumns"].icon}
             </Button>
+            <Button size="icon" variant="circular" className="max-[620px]:hidden" isActive={false} onClick={() => { fullScreenHandle.enter() }}>
+                {<Fullscreen />}
+            </Button>
             <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label max-xsm:hidden'>
-                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"} />
+                <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => { applyLayoutPreset(value); possiblyEnterFullScreen(value); }} selectedOption={layoutPreset} roundedClass={"rounded-full"} />
             </div>
             <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label xsm:hidden'>
-                <FancySwitch options={presetModes.filter(m => m != "custom").map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => applyLayoutPreset(value)} selectedOption={layoutPreset} roundedClass={"rounded-full"} hiddenHighlightOnOther={true} />
+                <FancySwitch options={presetModes.filter(m => m != "custom").map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => { applyLayoutPreset(value); possiblyEnterFullScreen(value); }} selectedOption={layoutPreset} roundedClass={"rounded-full"} hiddenHighlightOnOther={true} />
             </div>
         </>
     )
 }
 
-function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset }) {
+function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings, customLayoutPreset, setCustomLayoutPreset, fullScreenHandle }) {
     // TODO: once JS stops being buggy (https://github.com/jsdom/jsdom/issues/2160), make it so that fontSize is read from the autoresizer, so there's not a jump when moving from auto to manual
     function setBothSettings(modifiedSettings) {
         setLayoutSettings({ ...layoutSettings, ...modifiedSettings });
@@ -148,6 +156,10 @@ function LayoutSettingsDropdownSection({ layoutSettings, setLayoutSettings, cust
             onSelect={e => e.preventDefault()} >
             <DropdownIconStart icon={<AArrowDown />} />
             Decrease font size
+        </DropdownMenuItem >
+        <DropdownMenuItem onClick={() => { fullScreenHandle.enter() }}>
+            <DropdownIconStart icon={<Fullscreen />} />
+            Enter fullscreen
         </DropdownMenuItem >
         <DropdownMenuLabel>Contents</DropdownMenuLabel>
         <DropdownMenuSeparator />

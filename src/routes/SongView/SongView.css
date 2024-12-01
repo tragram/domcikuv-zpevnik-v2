@@ -175,3 +175,7 @@
     /* font-size:larger; */
     font-weight: 100;
 }
+
+.fullscreen #inner-background-image {
+    display: block;
+}

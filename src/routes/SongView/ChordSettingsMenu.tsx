@@ -41,9 +41,15 @@ function ChordSettingsMenu({ chordSettings, setChordSettings }) {
 
 function ChordSettingsButtons({ chordSettings, setChordSettings }) {
     const toggleSetting = toggleSettingFactory(chordSettings, setChordSettings);
-    return <Button size="icon" variant="circular"  isActive={chordSettings.showChords} className="hidden sm:flex" onClick={() => { toggleSetting("showChords") }}>
-        {chordSettingsValues["showChords"].icon}
-    </Button >
+    return <>
+        <Button size="icon" variant="circular" isActive={chordSettings.showChords} className="hidden sm:flex" onClick={() => { toggleSetting("showChords") }}>
+            {chordSettingsValues["showChords"].icon}
+        </Button >
+
+        <Button size="icon" variant="circular" className="max-[620px]:hidden" isActive={chordSettings.inlineChords} onClick={() => { toggleSetting("inlineChords") }}>
+            {chordSettingsValues.inlineChords.icon}
+        </Button>
+    </>
 }
 
 export { ChordSettingsMenu, ChordSettingsButtons };

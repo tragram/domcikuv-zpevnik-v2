@@ -20,7 +20,8 @@ import { parse } from 'path';
 import { ModeToggleInner } from '@/components/mode-toggle';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useGesture } from '@use-gesture/react';
-
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { cn } from '@/lib/utils';
 
 function SongView() {
     const { songDB, songData } = useLoaderData() as DataForSongView;
@@ -34,6 +35,7 @@ function SongView() {
         repeatParts: true,
         repeatPartsChords: true,
         twoColumns: false,
+        compactInFullScreen: true,
     }
 
     const tabletPreset: LayoutSettings = {
@@ -42,6 +44,7 @@ function SongView() {
         repeatParts: false,
         repeatPartsChords: false,
         twoColumns: true,
+        compactInFullScreen: false,
     }
 
     const [customLayoutPreset, setCustomLayoutPreset] = useLocalStorageState<LayoutSettings>("settings/SongView/CustomLayoutPreset", {
@@ -69,6 +72,7 @@ function SongView() {
     }, [songData.id]);
 
     const navigate = useNavigate();
+    const fullScreenHandle = useFullScreenHandle();
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visibleToolbar, setVisibleToolbar] = useState(true);
@@ -77,11 +81,13 @@ function SongView() {
     const handleScroll = () => {
         const currentScrollPos = window.scrollY
         if (currentScrollPos > prevScrollPos) {
-            setVisibleToolbar(false)
+            if (layoutSettings.fitScreenMode != "fitXY") {
+                setVisibleToolbar(false);
+            }
             setPrevScrollPos(currentScrollPos);
         } else if (currentScrollPos < prevScrollPos - 10) {
             // -10 to "debounce" weird stuttering
-            setVisibleToolbar(true)
+            setVisibleToolbar(true);
             setAtBottom(false);
             setPrevScrollPos(currentScrollPos);
         }
@@ -198,23 +204,18 @@ function SongView() {
             return memo; // Return updated memo
         },
         onPinchEnd: () => setPinching(false),
-        onDrag: ({ movement, direction: [dx, dy], swipe: [x, y], down, last }) => {
-            if (pinching) {
-                return;
-            }
-            if (dy < 0 && (layoutSettings.fitScreenMode != "none" || screen.height < document.body.scrollHeight)) {
-                // Update while dragging 
-                setVisibleToolbar(false);
-            } else if (dy > 0) {
-                // Update while dragging downward
-                setVisibleToolbar(true);
-            }
-        },
     }, {
-        drag: { threshold: 0.5 }, // Adjust threshold for easier detection}
     });
+
+    function BackgroundImage({ songData, id, className }) {
+        return (
+            <div className={cn("absolute top-0 left-0 h-full w-full bg-image -z-20 blur-lg overflow-hidden  transition-all duration-1000 ease-in-out", className)} id={id} style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}>
+                <div className='w-full h-full bg-glass/60 dark:bg-glass/50'></div>
+            </div>
+        )
+    }
     return (
-        <div className={"flex flex-col relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh" : " min-h-dvh") + (visibleToolbar || layoutSettings.fitScreenMode == "fitX" ? " sm:pt-[80px] pt-[72px]" : "")}
+        <div className={"flex flex-col relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh " : " min-h-dvh ") + (visibleToolbar || layoutSettings.fitScreenMode == "fitX" ? " sm:pt-[80px] pt-[72px]" : "")}
             {...bind()} // Bind gesture handlers
             style={{
                 touchAction: 'pan-y', // Prevent default pinch-to-zoom behavior
@@ -223,21 +224,19 @@ function SongView() {
                 transition: 'font-size 0.2s ease',
             }}
         >
-            <div className='absolute top-0 left-0 h-full w-full bg-image -z-20 blur-lg overflow-hidden  transition-all duration-1000 ease-in-out ' style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}>
-                <div className='w-full h-full bg-glass/60 dark:bg-glass/50'></div>
-            </div>
+            <BackgroundImage songData={songData} id="outer-background-image" />
             <div className='absolute top-0'>
                 <ToolbarBase showToolbar={visibleToolbar}>
                     <Button size="icon" variant="circular" onClick={() => navigate("/")}>{<Undo2 />}</Button>
                     <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
-                    <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} />
+                    <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} fullScreenHandle={fullScreenHandle} />
                     <TransposeSettings songOriginalKey={songData.key} transposeSteps={transposeSteps} setTransposeSteps={setTransposeSteps} />
                     <DropdownMenu modal={false}>
                         <DropdownMenuTrigger asChild>
                             <Button size="icon" variant="circular"><Settings2 size={32} /></Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 max-h-[80vh] overflow-y-scroll">
-                            {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} />)}
+                            {React.Children.toArray(<LayoutSettingsDropdownSection layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} fullScreenHandle={fullScreenHandle} />)}
                             {React.Children.toArray(<ChordSettingsMenu chordSettings={chordSettings} setChordSettings={setChordSettings} />)}
                             <DropdownMenuLabel>Theme</DropdownMenuLabel>
                             <DropdownMenuSeparator />
@@ -269,36 +268,38 @@ function SongView() {
                 <Button className={'absolute top-0 right-0 ' + (atBottom ? "flex" : "hidden")} size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
                 <Button className={'absolute bottom-0 right-0 ' + (atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
             </div>
-
-            <div id="auto-text-size-wrapper" className={'w-full z-10 lg:p-16 p-4 sm:p-8' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? " mb-8" : "")}
-            >
-                <AutoTextSize
-                    mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
-                    minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
-                    maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
-                    <div className='flex w-full justify-between gap-2'>
-                        {layoutSettings.fitScreenMode === "fitXY" ?
-                            <h1 className='self-center font-bold text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
-                            :
-                            <div className='flex flex-col justify-start mb-4'>
-                                <h2 className='font-medium text-nowrap uppercase'>{songData.artist}</h2>
-                                <h2 className='font-bold text-nowrap'>{songData.title}</h2>
-                            </div>}
-                        <div className='flex flex-col text-right'>
-                            <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {(songData.capo - transposeSteps + 12) % 12}</h2>
-                            <h2 className='text-[0.75em] text-muted-foreground sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
+            <FullScreen handle={fullScreenHandle} className='w-full h-full'>
+                <BackgroundImage songData={songData} className="hidden" id="inner-background-image" />
+                <div id="auto-text-size-wrapper" className={'w-full z-10 lg:px-16 p-4 sm:p-8' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? " mb-8" : "")}
+                >
+                    <AutoTextSize
+                        mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
+                        minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
+                        maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
+                        <div className='flex w-full justify-between gap-2'>
+                            {layoutSettings.fitScreenMode === "fitXY" ?
+                                <h1 className='self-center font-bold text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
+                                :
+                                <div className='flex flex-col justify-start mb-4'>
+                                    <h2 className='font-medium text-nowrap uppercase'>{songData.artist}</h2>
+                                    <h2 className='font-bold text-nowrap'>{songData.title}</h2>
+                                </div>}
+                            <div className='flex flex-col text-right'>
+                                <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {(songData.capo - transposeSteps + 12) % 12}</h2>
+                                <h2 className='text-[0.75em] text-muted-foreground sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div className={`flex flex-col max-w-screen overflow-clip 
+                        <div className={`flex flex-col max-w-screen overflow-clip 
                     ${chordSettings.inlineChords ? ' chords-inline ' : ' '}
                     ${chordSettings.showChords ? '' : ' chords-hidden '}
                     fit-screen-${layoutSettings.fitScreenMode}
                     ${layoutSettings.repeatPartsChords ? '' : ' repeated-chords-hidden '}
                     ${layoutSettings.twoColumns ? " song-content-columns " : ""}`}
-                        dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper">
-                    </div>
-                </AutoTextSize>
-            </div>
+                            dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper">
+                        </div>
+                    </AutoTextSize>
+                </div>
+            </FullScreen>
         </div >
     );
 };
