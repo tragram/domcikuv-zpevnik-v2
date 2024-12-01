@@ -61,7 +61,7 @@ function CardThatHides({ song }) {
                             <p className='text-white text-wrap max-h-full w-full text-shadow'>{promptContent}</p>
                         </AutoTextSize>
                     </div>
-                    <Button onClick={() => navigate(song.url())} className="w-full rounded-t-none bg-primary text-white text-md backdrop-blur-sm hover:bg-background hover:text-primary">View</Button>
+                    <Button onClick={() => navigate(song.url())} className={"w-full rounded-t-none bg-primary text-white text-md backdrop-blur-sm hover:bg-background hover:text-primary" + (showingContent ? "" : " hidden")}>View</Button>
                 </div>
             </div>
         </div>
