@@ -7,7 +7,7 @@ import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, La
 import { renderSong, guessKey } from './songRendering';
 import { Events, animateScroll as scroll } from 'react-scroll';
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano, Dices, Trash } from 'lucide-react';
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ToolbarBase from '@/components/ui/toolbar-base';
 import PdfView from './pdfView';
 import { Button } from '@/components/ui/button';
@@ -214,6 +214,28 @@ function SongView() {
             </div>
         )
     }
+    const songWrapperRef = useRef(null);
+
+    useEffect(() => {
+        async function updateFontSize() {
+            const targetElement = songWrapperRef.current;
+            if (!targetElement) {
+                console.error("Element not found!");
+                return;
+            }
+            // Wait for a minimal delay to ensure styles are updated
+            await new Promise((resolve) => setTimeout(resolve, 10));
+            // Fetch and log the updated font size
+            const fontSize = getComputedStyle(targetElement).fontSize;
+            setLayoutSettings((prevSettings) => ({
+                ...prevSettings,
+                fontSize: parseInt(fontSize, 10)
+            }));
+        }
+        updateFontSize();
+    }, [layoutSettings.fitScreenMode, layoutSettings.repeatParts, layoutSettings.repeatPartsChords, layoutSettings.twoColumns, chordSettings, setLayoutSettings]);
+
+
     return (
         <div className={"flex flex-col relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh " : " min-h-dvh ") + (visibleToolbar || layoutSettings.fitScreenMode == "fitX" ? " sm:pt-[80px] pt-[72px]" : "")}
             {...bind()} // Bind gesture handlers
@@ -295,7 +317,8 @@ function SongView() {
                     fit-screen-${layoutSettings.fitScreenMode}
                     ${layoutSettings.repeatPartsChords ? '' : ' repeated-chords-hidden '}
                     ${layoutSettings.twoColumns ? " song-content-columns " : ""}`}
-                            dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper">
+                            dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper"
+                            ref={songWrapperRef}>
                         </div>
                     </AutoTextSize>
                 </div>
