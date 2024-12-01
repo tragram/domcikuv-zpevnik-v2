@@ -108,18 +108,10 @@ async function fetchSongContent({ params }): Promise<DataForSongView> {
 }
 
 async function fetchIllustrationPrompt(id: string): Promise<object> {
-    const songDB = await fetchSongs();
-    const songData = songDB.songs.find(song => song.id === id);
-
-    if (!songData) {
-        console.log(`Could not find song ${id}`);
-        throw new Response("Song not Found", { status: 404 });
-    }
-    const promptFilename = songData.chordproFile.split(".").slice(0, -1) + ".yaml"
-    const promptKey = `songDB/${promptFilename}`;
+    const promptKey = `songs/image_prompts/${id}`;
     let promptContent = localStorage.getItem(promptKey);
     if (!promptContent) {
-        const response = await fetch(`${import.meta.env.BASE_URL}/songs/image_prompts/${promptFilename}`);
+        const response = await fetch(SongData.promptURL(id));
         promptContent = await response.text();
         localStorage.setItem(promptKey, promptContent);
     }

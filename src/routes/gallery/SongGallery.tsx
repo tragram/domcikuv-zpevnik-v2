@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 // import LazyLoad from 'react-lazyload';
 // import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import { Masonry } from "masonic";
+import { IllustrationPrompt } from '@/components/IllustrationPrompt';
 
 const getShuffledArr = arr => {
     const newArr = arr.slice()
@@ -25,12 +26,12 @@ const imageHeight = (normalHeight: number, variability: number) => {
     return normalHeight * (1 - variability + variability * Math.random());
 }
 
+
 function CardThatHides({ song }) {
     const navigate = useNavigate();
     const [hidden, setHidden] = useState(false);
     const [showingContent, setShowingContent] = useState(false);
     const onError = () => { console.log("Error showing image in gallery!"); setHidden(true) };
-    const [promptContent, setPromptContent] = useState(null);
     const [imageHeightGen, setImageHeightGen] = useState(null);
     const [overlayOpacity, setOverlayOpacity] = useState(0);
 
@@ -38,14 +39,6 @@ function CardThatHides({ song }) {
         setImageHeightGen(imageHeight(512, 0.3));
     }, [])
 
-    useEffect(() => {
-        const fetchPrompt = async () => {
-            const promptContent = await fetchIllustrationPrompt(song.id);
-            // console.log(promptContent)
-            setPromptContent(promptContent[0].response);
-        }
-        if (showingContent && !promptContent) { fetchPrompt(); }
-    }, [showingContent]);
     return (<>
         <div className={"w-full relative " + (hidden ? 'hidden' : 'flex')} style={{ height: imageHeightGen }} >
             <div className="background-image flex w-full rounded-lg" onError={onError} style={{ backgroundImage: `url("${song.illustrationURL()}")` }}>
@@ -56,11 +49,7 @@ function CardThatHides({ song }) {
                     <CircleX className='absolute top-4 right-4 w-8 h-8 text-white/80 hover:text-white' onClick={() => setOverlayOpacity(0)} />
                     <h2 className="text-tiny text-white/90 font-bold uppercase text-shadow">{song.artist}</h2>
                     <h2 className="text-white font-bold text-shadow">{song.title}</h2>
-                    <div className='px-4 flex flex-grow h-32 my-4 w-full'>
-                        <AutoTextSize mode="boxoneline">
-                            <p className='text-white text-wrap max-h-full w-full text-shadow'>{promptContent}</p>
-                        </AutoTextSize>
-                    </div>
+                    <IllustrationPrompt song={song} show={showingContent} className={"text-white h-32"}/>
                     <Button onClick={() => navigate(song.url())} className={"w-full rounded-t-none bg-primary text-white text-md backdrop-blur-sm hover:bg-background hover:text-primary" + (showingContent ? "" : " hidden")}>View</Button>
                 </div>
             </div>

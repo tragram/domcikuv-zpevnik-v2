@@ -220,6 +220,15 @@ class SongData {
     illustrationURL(model: string | null = null): string {
         return this.imageURLFactory("illustrations", model);
     }
+
+    static promptURL(id: string) {
+        // for faster async USE
+        return `${import.meta.env.BASE_URL}/songs/image_prompts/${id}.yaml`
+    }
+
+    promptURL() {
+        return `${import.meta.env.BASE_URL}/songs/image_prompts/${this.id}.yaml`
+    }
 }
 
 
