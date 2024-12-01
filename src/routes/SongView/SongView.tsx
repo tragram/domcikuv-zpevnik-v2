@@ -101,26 +101,7 @@ function SongView() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll)
     })
-
-    // react-scroll is buggy, so this is an ugly work-around (no way to cancel animation directly)
-    useEffect(() => {
-        // Registering the 'begin' event and logging it to the console when triggered.
-        Events.scrollEvent.register('begin', () => {
-            setscrollInProgress(true);
-        });
-
-        // Registering the 'end' event and logging it to the console when triggered.
-        Events.scrollEvent.register('end', () => {
-            setscrollInProgress(false);
-        });
-
-        // Returning a cleanup function to remove the registered events when the component unmounts.
-        return () => {
-            Events.scrollEvent.remove('begin');
-            Events.scrollEvent.remove('end');
-        };
-    }, []);
-
+    
     useMemo(() => {
         const renderedSong = renderSong(songData, transposeSteps, layoutSettings.repeatParts, chordSettings.czechChordNames);
         setParsedContent(renderedSong);
@@ -137,14 +118,14 @@ function SongView() {
         if (scrollInProgress) return;
         // if the rest can fit on the next screen --> scroll all the way
         const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
-        const scrollSpeed = screen.height / 3000 // whole screen in 3s 
+        const scrollSpeed = screen.height / 2000 // whole screen in 3s 
         if (remainingContent < 0) {
             return;
         }
         if (remainingContent < 0.8 * screen.height) {
             scroll.scrollToBottom({
                 // why *10? IDK, the same scroll speed looks bad, possibly due to the easings...
-                duration: remainingContent / scrollSpeed * 10, onComplete: () => {
+                duration: remainingContent / (scrollSpeed), onComplete: () => {
                     // Trigger a tiny native scroll to hide the UI in Firefox Mobile
                     window.scrollBy(0, -1);
                 }
@@ -196,9 +177,9 @@ function SongView() {
                 fontSize: newFontSize
             })
             setPinching(true); // Track whether pinching is active
-            if (screen.height > document.body.scrollHeight) {
+            if (screen.height > 50 + document.body.scrollHeight) {
                 setVisibleToolbar(true);
-            } else {
+            } else if (screen.height < document.body.scrollHeight && window.scrollY > 0) {
                 setVisibleToolbar(false);
             }
             return memo; // Return updated memo
@@ -237,13 +218,12 @@ function SongView() {
 
 
     return (
-        <div className={"flex flex-col relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh " : " min-h-dvh ") + (visibleToolbar || layoutSettings.fitScreenMode == "fitX" ? " sm:pt-[80px] pt-[72px]" : "")}
+        <div className={"flex flex-col sm:pt-[80px] pt-[72px] relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh " : " min-h-dvh ")}
             {...bind()} // Bind gesture handlers
             style={{
                 touchAction: 'pan-y', // Prevent default pinch-to-zoom behavior
-                // touchAction: 'none', // Prevent default pinch-to-zoom behavior
-                userSelect: 'none',  // Prevent text selection
-                transition: 'font-size 0.2s ease',
+                // userSelect: 'none',  // Prevent text selection
+                // transition: 'font-size 0.2s ease',
             }}
         >
             <BackgroundImage songData={songData} id="outer-background-image" />
@@ -292,7 +272,7 @@ function SongView() {
             </div>
             <FullScreen handle={fullScreenHandle} className='w-full h-full'>
                 <BackgroundImage songData={songData} className="hidden" id="inner-background-image" />
-                <div id="auto-text-size-wrapper" className={'w-full z-10 lg:px-16 p-4 sm:p-8' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode === "fitX" ? " mb-8" : "")}
+                <div id="auto-text-size-wrapper" className={'w-full z-10 lg:px-16 p-4 sm:p-8' + (layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ") + (layoutSettings.fitScreenMode !== "fitXY" ? " mb-10" : "")}
                 >
                     <AutoTextSize
                         mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
@@ -311,7 +291,7 @@ function SongView() {
                                 <h2 className='text-[0.75em] text-muted-foreground sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
                             </div>
                         </div>
-                        <div className={`flex flex-col max-w-screen overflow-clip 
+                        <div className={`flex flex-col max-w-screen 
                     ${chordSettings.inlineChords ? ' chords-inline ' : ' '}
                     ${chordSettings.showChords ? '' : ' chords-hidden '}
                     fit-screen-${layoutSettings.fitScreenMode}
