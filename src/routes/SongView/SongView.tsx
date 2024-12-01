@@ -196,7 +196,7 @@ function SongView() {
                 fontSize: newFontSize
             })
             setPinching(true); // Track whether pinching is active
-            if (screen.height < document.body.scrollHeight) {
+            if (screen.height > document.body.scrollHeight) {
                 setVisibleToolbar(true);
             } else {
                 setVisibleToolbar(false);
