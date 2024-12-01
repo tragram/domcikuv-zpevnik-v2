@@ -46,7 +46,7 @@ function ChordSettingsButtons({ chordSettings, setChordSettings }) {
             {chordSettingsValues["showChords"].icon}
         </Button >
 
-        <Button size="icon" variant="circular" className="max-[620px]:hidden" isActive={chordSettings.inlineChords} onClick={() => { toggleSetting("inlineChords") }}>
+        <Button size="icon" variant="circular" className="max-[620px]:hidden" isActive={chordSettings.inlineChords} disabled={!chordSettings.showChords} onClick={() => { toggleSetting("inlineChords") }}>
             {chordSettingsValues.inlineChords.icon}
         </Button>
     </>
