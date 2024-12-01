@@ -7,14 +7,15 @@
 {range: d1-e2}
 {start_melody: e h}
 
-{start_of_chorus}
-Ô [Em7]sol, Vê se não [D9]esquece e me [Am7]ilumina
+{start_of_verse}
+Ô [Em7]sol, Vê se não [D9]esquece 
+e me [Am7]ilumina
 Pre[Em7]ciso de [D9]você [Am7]aqui
 
-Ô sol
-Vê se enriquece a minha melanina
+Ô sol Vê se enriquece 
+a minha melanina
 Só você me faz sorrir
-{end_of_chorus}
+{end_of_verse}
 
 {start_of_bridge}
 [Cmaj7]Quando você vem
@@ -35,10 +36,11 @@ E toda vez que você sai
 O mundo se distrai
 Quem fica, ficou
 Quem foi, vai vai [Cmaj7]vai
-{end_of_chorus}
 
 [Am7]Quem foi, vai vai [Em7]vai
 [D4]Quem foi
+{end_of_chorus}
+
 
 {start_of_bridge}
 𝄆 [Cmaj7](sol) Vem aquece a minha alma

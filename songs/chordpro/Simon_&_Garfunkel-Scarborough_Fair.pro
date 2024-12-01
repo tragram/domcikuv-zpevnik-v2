@@ -8,7 +8,7 @@
 {tempo: }
 {range: g1-a2}
 {start_melody: a e}
-{start_of_verse}
+{start_of_verse: V1}
 [Ami]Are you going to [G]Scar[Gsus4]bo[G]rough [Ami]Fair
 [C]parsley [Ami]sage rose[C]ma[D]ry and [Ami]thyme
 [Ami]remember [C]me to one [Hmi]who [Ami]lives [G]there[Gsus4][G]
@@ -46,6 +46,4 @@ and to fight for a cause they've long ago forgotten
 then she'll be a true love of mine.
 {end_of_verse}
 
-{start_of_verse}
-5.=1.
-{end_of_verse}
+{verse: V1}

@@ -44,6 +44,6 @@ fantazie, snů a přání,
 nám všem zůstanou, Luisi
 {end_of_verse}
 
-{start_of_chorus}
-2x
-{end_of_chorus}
+{chorus}
+
+{chorus}

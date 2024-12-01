@@ -36,5 +36,4 @@ Modrá je [B]dobrá - [F]už je to [C]tak
 Modrý [B]oko [F]má i černej [C]šerif
 {end_of_verse}
 
-2x
 {chorus}

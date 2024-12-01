@@ -19,8 +19,7 @@ Just a [A]man and his will to sur[Hmi]vive
 [Hmi]So many times it [G]happens too fast
 [A]You trade your passion for [Hmi]glory
 [Hmi]Don't lose your [G]grip on the dreams of the past
-You must [A]fight just to keep them
-[Hmi]alive
+You must [A]fight just to keep them [Hmi]alive
 {end_of_verse}
 
 {start_of_chorus}

@@ -42,7 +42,8 @@ v tobě nechávat víru
 ale kdybych byl gay
 hned bych ti nastavil dí…ky
 že ve mně dělá se ti v rozkroku boule
-Jenže nejsem gay, tak nešahej mi prosím…na ruku
+Jenže nejsem gay, tak nešahej mi prosím
+…na ruku
 {end_of_chorus}
 
 {start_of_verse}

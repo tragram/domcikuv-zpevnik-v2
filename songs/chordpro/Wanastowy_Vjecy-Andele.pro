@@ -9,7 +9,7 @@
 {range: h1-a1}
 {start_melody: f#}
 {start_of_verse}
-[H]Co Tě to hne[C#mi]d po ránu [E]napadá [E]
+[H]Co Tě to [C#mi]hned po ránu [E]napadá
 [H]nohy, ruce, [C#mi]komu je chceš [E]dát,
 [H]je to v krvi [C#mi]co Tvou hlavu [E]přepadá
 [H]chtělas padnou[C#mi]t do hrobu a [E]spát
