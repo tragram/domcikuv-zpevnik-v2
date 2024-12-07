@@ -3,7 +3,7 @@ import {
     chordRendererFactory,
 } from 'chord-symbol/lib/chord-symbol.js'; // bundled version
 import { hasExactly } from 'chord-symbol/src/helpers/hasElement';
-import { MusicNote, MusicAccidental, Key as SongKey } from "chordproject-parser";
+import { Key as SongKey } from "chordproject-parser";
 const validVariationValues = ["replace_last_line", "replace_last_lines", "append_content", "replace_first_line", "prepend_content"] as const;
 type validVariation = (typeof validVariationValues)[number]
 
@@ -184,10 +184,7 @@ export function czechToEnglish(song: string) {
 }
 
 export function transposeChordPro(song: string, songKey: SongKey, transposeSteps: number) {
-    // chordpro-js appears to have a bug when transposing a semitone lower when in A-scale --> need to use a different library
-    const CHROMATIC_SCALE: { [key: string]: number } = {
-        "c": 0, "c#": 1, "db": 1, "des": 1, "d": 2, "d#": 3, "eb": 3, "es": 3, "e": 4, "f": 5, "f#": 6, "gb": 6, "g": 7, "g#": 8, "ab": 8, "as": 8, "a": 9, "a#": 10, "bb": 10, "b": 11
-    };
+    // chordproject appears to have a bug when transposing a semitone lower when in A-scale --> need to use a different library
     const canTranspose = songKey && transposeSteps;
     if (!canTranspose) {
         return song;

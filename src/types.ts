@@ -1,4 +1,5 @@
-import { Key, MusicNote, Key as SongKey } from 'chordproject-parser';
+import { MusicNote, Key as SongKey } from 'chordproject-parser';
+import { Dice1Icon } from 'lucide-react';
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range"
 interface SortSettings {
@@ -6,7 +7,7 @@ interface SortSettings {
     field: SortField
 }
 
-type int = number; // dumb JS doesn't have int...
+type int = number; // dumb TS doesn't have int...
 
 interface FilterSettings {
     language: string,
@@ -14,79 +15,143 @@ interface FilterSettings {
     capo: boolean
 }
 
-class SongRange {
-    // TODO: tohle by se taky asi melo predelat na anglickou variantu, ne?
-    static chromaticScale = {
-        "c": 0,
-        "c#": 1,
-        "db": 1,
-        "d": 2,
-        "d#": 3,
-        "eb": 3,
-        "e": 4,
-        "f": 5,
-        "f#": 6,
-        "gb": 6,
-        "g": 7,
-        "g#": 8,
-        "ab": 8,
-        "a": 9,
-        "a#": 10,
-        "bb": 10,
-        "b": 10,
-        "h": 11
-    };
-    min: string | null;
-    max: string | null;
-    semitones: int | null;
-    // TODO: base tone+semitones is a full description, no need to save the rest...
-    constructor(song_range_str: string) {
-        if (!song_range_str || !song_range_str.includes("-")) {
-            this.min = null;
-            this.max = null;
-            this.semitones = null;
-            return; // Exit early to reduce nesting
+class Note {
+    private static readonly sharpDictionary = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    private static readonly flatDictionary = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+    private static readonly sharpDictionaryCZ = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"];
+    private static readonly flatDictionaryCZ = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "H"];
+
+    private value: number; // Internal representation: semitone offset (0–11)
+
+    constructor(letter: string, accidental: "" | "#" | "b" = "", czech: boolean = true) {
+        const noteIndex = Note.getIndexFromLetter(letter, accidental, czech);
+        if (noteIndex === null) {
+            throw new Error(`Invalid note: ${letter}${accidental}`);
         }
 
-        let [minRange, maxRange] = song_range_str.split("-");
-        // songs with multiple voices may be written as e.g. e1/g1-e2/c3 --> just take the base voice
-        minRange = minRange.split("/")[0]
-        maxRange = maxRange.split("/")[0]
-        const lowestTone = minRange.slice(0, -1).toLowerCase();
-        const highestTone = maxRange.slice(0, -1).toLowerCase();
-        const octaves = parseInt(maxRange.slice(-1)) - parseInt(minRange.slice(-1));
-        const withinOctave = (12 + SongRange.chromaticScale[highestTone] - SongRange.chromaticScale[lowestTone]) % 12;
+        this.value = noteIndex;
+    }
 
-        this.min = minRange;
-        this.max = maxRange;
-        this.semitones = 12 * octaves + withinOctave;
+    // Parse a note string (e.g., "C#", "Db", "A") into a Note instance
+    static parse(noteString: string, czech: boolean = true): Note {
+        // Match the note string with a regex
+        const regex = czech ? new RegExp("^([A-Ha-h])([#b]?)$") : new RegExp("^([A-Ga-g])([#b]?)$")
+        const match = regex.exec(noteString);
+        if (!match) {
+            throw new Error(`Invalid note format: ${noteString}`);
+        }
+
+        const letter = match[1].toUpperCase(); // Normalize to uppercase
+        const accidental = match[2] as "" | "#" | "b";
+
+        return new Note(letter, accidental, czech);
+    }
+
+    static fromValue(value: number): Note {
+        const note = new Note("C");
+        note.value = (value + 12) % 12;
+        return note;
+    }
+
+    // Converts note letter and accidental to an index
+    private static getIndexFromLetter(letter: string, accidental: string, czech: boolean): number | null {
+        const selectedSharpDict = czech ? Note.sharpDictionaryCZ : Note.sharpDictionary;
+        const selectedFlatDict = czech ? Note.flatDictionaryCZ : Note.flatDictionary;
+        const sharpIndex = selectedSharpDict.indexOf(letter + accidental);
+        const flatIndex = selectedFlatDict.indexOf(letter + accidental);
+
+        return sharpIndex !== -1 ? sharpIndex : flatIndex !== -1 ? flatIndex : null;
+    }
+
+    // Converts internal value to a string representation using the specified dictionary
+    private static getNoteFromValue(value: number, dictionary: string[]): string {
+        const noteIndex = (value % 12 + 12) % 12; // Ensure proper wrapping
+        return dictionary[noteIndex];
+    }
+
+    // Transpose the note up or down by a given number of semitones
+    transpose(semitones: number): void {
+        this.value = (this.value + semitones + 12) % 12; // Wrap around within 0–11
+    }
+
+    transposed(semitones: number): Note {
+        return Note.fromValue((this.value + semitones + 12) % 12);
+    }
+
+
+    // Convert the note to a string representation
+    toString(preference: "sharp" | "flat" = "sharp", czech: boolean = true): string {
+        let dictionary;
+        if (czech) {
+            dictionary = preference === "sharp" ? Note.sharpDictionaryCZ : Note.flatDictionaryCZ;
+        } else {
+            dictionary = preference === "sharp" ? Note.sharpDictionary : Note.flatDictionary;
+        }
+        return Note.getNoteFromValue(this.value, dictionary);
+    }
+
+    // Get the semitone value (useful for debugging or other calculations)
+    getSemitoneValue(): number {
+        return this.value;
+    }
+
+    semitonesBetween(higher: Note) {
+        return (higher.getSemitoneValue() - this.value + 12) % 12;
+    }
+}
+
+
+class SongRange {
+    min: Note | undefined;
+    max: Note | undefined;
+    semitones: int | undefined;
+
+    constructor(song_range_str: string) {
+        const rangeRegex = new RegExp("([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?-([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?");
+        const regexMatch = song_range_str.match(rangeRegex);
+        if (!regexMatch) {
+            console.log("Error while parsing song: Invalid song range!");
+            this.min = undefined;
+            this.max = undefined;
+            this.semitones = undefined;
+            return;
+        }
+        const [match, lowerTone, lowerToneOctave, lowerToneVoice2, lowerToneVoice2Octave, higherTone, higherToneOctave, higherToneVoice2, higherToneVoice2Octave] = regexMatch;
+        this.min = Note.parse(lowerTone);
+        this.max = Note.parse(higherTone);
+        const notesDefined = this.min && this.max;
+        this.semitones = notesDefined ? this.min.semitonesBetween(this.max) + 12 * (parseInt(higherToneOctave) - parseInt(lowerToneOctave)) : undefined;
     }
 
     static fromJSON(json: any): SongRange {
         const instance = Object.create(SongRange.prototype);
-
         // Directly assign all fields without running constructor logic
-        instance.min = json.min;
-        instance.max = json.max;
+        instance.min = Note.fromValue(json.min.value);
+        instance.max = Note.fromValue(json.max.value);
         instance.semitones = json.semitones;
+
         return instance;
     }
 
     transposed(semitones: number): SongRange {
-        function transposeTone(tone: string, semitones: number) {
-            const chromaticScale = SongRange.chromaticScale;
-            const transposedNr = (chromaticScale[tone.replace(/[0-9]/g, '')] + semitones + 12) % 12;
-            return Object.keys(chromaticScale).find(key => chromaticScale[key] === transposedNr);
+        if (semitones == 0) {
+            return this;
         }
         return SongRange.fromJSON({
-            min: this.min ? `${transposeTone(this.min, semitones)}${this.min?.slice(-1)[0]}` : "",
-            max: this.max ? `${transposeTone(this.max, semitones)}${this.max?.slice(-1)[0]}` : "",
+            min: this.min?.transposed(semitones),
+            max: this.max?.transposed(semitones),
             semitones: this.semitones,
-        })
+        });
     }
     toString(transpose_semitones: number) {
+        if (!(this.min && this.max && this.semitones)) {
+            return "";
+        }
         const transposedRange = this.transposed(transpose_semitones);
-        return `${transposedRange.min} - ${transposedRange.max}`
+        const octaves = Math.floor(this.semitones / 12) + 1;
+        const lowerNote = transposedRange.min?.toString().toLowerCase();
+        const higherNote = transposedRange.max?.toString().toLowerCase();
+        return `${lowerNote}1 - ${higherNote}${octaves} `;
     }
 }
 
@@ -138,6 +203,7 @@ class SongData {
         this.language = song.language || "other";
         this.tempo = parseInt(song.tempo as string);
         this.capo = parseInt(song.capo as string) || 0;
+        console.log(this.title)
         this.range = new SongRange(song.range || "");
         this.illustration_author = song.illustration_author || "FLUX.1-dev";
 
@@ -240,5 +306,5 @@ interface SongDB {
 interface LanguageCount extends Record<SongLanguage, int> { }
 
 export type { SongDB, SortSettings, FilterSettings, SongKey, SongLanguage, LanguageCount, SortOrder, SortField };
-export { SongData };
+export { SongData, Note };
 

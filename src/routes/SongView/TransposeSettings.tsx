@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/select"
 import ToolbarBase from "@/components/ui/toolbar-base";
 import { useEffect, useRef, useState } from "react";
-import { MusicNoteHelper } from './MusicNoteHelper';
-import { MusicNote } from "chordproject-parser";
+import { Note } from "@/types";
 const renderKeys = ["C", "C#", "D", "Es", "E", "F", "F#", "G", "As", "A", "B", "H"];
 
 function useComponentVisible(initialIsVisible) {
@@ -36,15 +35,9 @@ function useComponentVisible(initialIsVisible) {
     return { ref, isComponentVisible, setIsComponentVisible };
 }
 
-// function findTransposeSteps(originalKey: string, newKey: string): number {
-//     const chromaticIndex = (key: string) => CHROMATIC_SCALE[key];
-//     const transposeSteps = originalKey && newKey ? (chromaticIndex(newKey) - chromaticIndex(originalKey)) % 12 : 0;
-//     return transposeSteps;
-// }
-
 function TransposeButtons({ transposeValues, transposeSteps, setTransposeSteps, vertical = false }) {
     return (
-        <FancySwitch options={renderKeys.map((k, index) => { return { "label": k, "value": transposeValues[index] } })} selectedOption={transposeSteps} setSelectedOption={key => {setTransposeSteps(key)}} vertical={vertical} roundedClass={"rounded-full"} full={true} />
+        <FancySwitch options={renderKeys.map((k, index) => { return { "label": k, "value": transposeValues[index] } })} selectedOption={transposeSteps} setSelectedOption={key => { setTransposeSteps(key) }} vertical={vertical} roundedClass={"rounded-full"} full={true} />
     )
 }
 
@@ -53,7 +46,7 @@ function TransposeSettings({ songOriginalKey, transposeSteps, setTransposeSteps 
     // const safeSongRenderKey = makeKeySafe(songRenderKey)
     // setTransposeSteps(findTransposeSteps(makeKeySafe(songOriginalKey), safeSongRenderKey));
     const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
-    const originalKeyIndex = MusicNoteHelper.semiTonesBetween(MusicNote.parse("C"), songOriginalKey.note);
+    const originalKeyIndex = Note.parse("C").semitonesBetween(Note.parse(songOriginalKey.note.toString(), false));
     const transposeValues = [...Array(12).keys()].map(v => v - originalKeyIndex);
     return (<>
         <div className='hidden xl:flex h-full'>
@@ -77,7 +70,7 @@ function TransposeSettings({ songOriginalKey, transposeSteps, setTransposeSteps 
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-12">
                     {renderKeys.map((k, index) => (
-                        <DropdownMenuCheckboxItem checked={transposeSteps == index - originalKeyIndex} key={k} onSelect={e=>e.preventDefault()}onCheckedChange={() => setTransposeSteps(index - originalKeyIndex)}>{k}</DropdownMenuCheckboxItem>
+                        <DropdownMenuCheckboxItem checked={transposeSteps == index - originalKeyIndex} key={k} onSelect={e => e.preventDefault()} onCheckedChange={() => setTransposeSteps(index - originalKeyIndex)}>{k}</DropdownMenuCheckboxItem>
                     ))}
                 </DropdownMenuContent>
             </DropdownMenu>

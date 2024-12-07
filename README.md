@@ -27,6 +27,11 @@ A song should have the following preamble (tempo may be left empty - it's curren
 
 To exclude a file from the database, simply insert `{disabled: true}` in the preamble.
 
+#### Song range
+The behavior of the range is parameter can feel a bit strange. The numbers don't mean the traditional octaves as you might expect but are rather relative to the lower note (which is always a '1'). For example, transposing "c1-d2" (14 semitones) down by one semitone yields "h1-c#2". I know this is confusing but it's been like this in my songbook for many years and did not feel like changing this part too. Maybe in the future. :-)
+
+You can also include an additional voice with a backslash, such as "c1/e1-d2/c3". Currently, the range is determined by the first voice. The regex against which it will be matched is `([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?-([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?`. [Here's the railroad diagram](https://regexper.com/#%28%5BA-Ha-h%5D%5B%23b%5D%7B0%2C2%7D%291%28%3F%3A%5C%2F%28%5BA-Ha-h%5D%5B%23b%5D%7B0%2C2%7D%29%28%5B1-9%5D%29%29%3F-%28%5BA-Ha-h%5D%5B%23b%5D%7B0%2C2%7D%29%28%5B1-9%5D%29%28%3F%3A%5C%2F%28%5BA-Ha-h%5D%5B%23b%5D%7B0%2C2%7D%29%28%5B1-9%5D%29%29%3F) if you're interested. :-)
+
 ### Extensions of the ChordPro format
 Despite the ChordPro format being the only widely used, the specification lacks many nice-to-have features and even when they do exist, JS parsers do not implement them. For convenience, I have added the following:
 

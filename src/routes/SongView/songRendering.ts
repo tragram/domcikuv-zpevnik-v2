@@ -4,7 +4,7 @@ import {
     chordParserFactory,
     chordRendererFactory,
 } from 'chord-symbol/lib/chord-symbol.js'; // bundled version
-import { ChordProParser, FormatterSettings, HtmlFormatter, Key, MusicLetter, MusicNote, Song, Transposer } from "chordproject-parser";
+import { ChordProParser, FormatterSettings, HtmlFormatter, Key } from "chordproject-parser";
 import { czechToEnglish, replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
 import memoize from 'memoize-one';
 
