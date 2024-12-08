@@ -142,6 +142,7 @@
 .song-content .literal, .song-content .tab-section {
     color: hsl(var("--text-foreground"));
     font-family: monospace;
+    font-size: 0.9em;
 }
 
 
