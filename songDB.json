@@ -812,7 +812,7 @@
     "start_melody": "a",
     "chordpro_file": "Fesaci-Jaro.pro",
     "pdf_filenames": "['fesaci_jaro-sken.pdf', 'fesaci_jaro-comp.pdf']",
-    "content_hash": "5ca060b9b06a649b6cfec993c624f8996794717d",
+    "content_hash": "c845743aa3f43e35261f2a1bf520405f99eb35b6",
     "disabled": false
   },
   {
@@ -988,7 +988,7 @@
     "start_melody": "d e",
     "chordpro_file": "Fools_Garden-Lemon_Tree.pro",
     "pdf_filenames": "['fools_garden_lemon_tree-sken.pdf', 'fools_garden_lemon_tree-comp.pdf', 'fools_garden_lemon_tree-gen.pdf']",
-    "content_hash": "c7e171cfd0336824f59886fcb0df10af459f9836",
+    "content_hash": "2f1b87281334fb1d7a9b7fab7b3a636d0b3554f5",
     "disabled": false
   },
   {
@@ -1116,7 +1116,7 @@
     "start_melody": "e",
     "chordpro_file": "Honza_Jicha-Dotace.pro",
     "pdf_filenames": "['honza_jicha_dotace-sken.pdf', 'honza_jicha_dotace-comp.pdf']",
-    "content_hash": "29ffdcbbcd16c4fa977e25d614a06609eb1c49dd",
+    "content_hash": "a197f3fe0d390e82d64bb2d2c0a8ae80cef76806",
     "disabled": false
   },
   {
@@ -1228,7 +1228,7 @@
     "start_melody": "e",
     "chordpro_file": "Honza_Jicha-Vlastizradce.pro",
     "pdf_filenames": "['honza_jicha_vlastizradce-sken.pdf', 'honza_jicha_vlastizradce-comp.pdf']",
-    "content_hash": "af37614961066e65e12fe5e7078b01bf8ecf9d75",
+    "content_hash": "3b7196b0d09a5c96186c538a86a8849281da0d9c",
     "disabled": false
   },
   {
@@ -1244,7 +1244,7 @@
     "start_melody": "e g h",
     "chordpro_file": "Hop_Trop-Lodnikuv_lament.pro",
     "pdf_filenames": "",
-    "content_hash": "d63013760159e555b3b4678ac2fd9cf983d0368c",
+    "content_hash": "fe34694d4cf4c47373ad1f2a61be94f849b5adca",
     "disabled": false
   },
   {
@@ -1260,7 +1260,7 @@
     "start_melody": "d d a",
     "chordpro_file": "Hop_Trop-Tri_krize.pro",
     "pdf_filenames": "['hop_trop_tri_krize-sken.pdf', 'hop_trop_tri_krize-comp.pdf']",
-    "content_hash": "431e09cc7d79998ff576b1c2ab23be1a8c7ba786",
+    "content_hash": "db4d67c92fc2ceb5234de0b70e4f60335cae010b",
     "disabled": false
   },
   {
@@ -1580,7 +1580,7 @@
     "start_melody": "a a a g",
     "chordpro_file": "Jaromir_Nohavica-Pritel.pro",
     "pdf_filenames": "['jaromir_nohavica_pritel-sken.pdf', 'jaromir_nohavica_pritel-comp.pdf']",
-    "content_hash": "665032be86229d227380c7b22df31e2631852c11",
+    "content_hash": "eb28a5c1ccea1833d498d05f1be2656599b0ed69",
     "disabled": false
   },
   {
@@ -1596,7 +1596,7 @@
     "start_melody": "g",
     "chordpro_file": "Jaromir_Nohavica-V_mori_je_mista_dost.pro",
     "pdf_filenames": "['jaromir_nohavica_v_mori_je_mista_dost-sken.pdf', 'jaromir_nohavica_v_mori_je_mista_dost-comp.pdf']",
-    "content_hash": "90f6871f54dba0f1db84954d9a5e75f863e96a95",
+    "content_hash": "a3f614af0283a592f30f7de87c76f2b81c16c668",
     "disabled": false
   },
   {
@@ -1628,7 +1628,7 @@
     "start_melody": "e",
     "chordpro_file": "Jaromir_Nohavica-Zitra_rano_v_pet.pro",
     "pdf_filenames": "['jaromir_nohavica_zitra_rano_v_pet-sken.pdf', 'jaromir_nohavica_zitra_rano_v_pet-comp.pdf']",
-    "content_hash": "9a91003f595b9fdea864cd74c7a26fdef6c4432e",
+    "content_hash": "af17eace3a309beeed3c531fd172915d61c8ec47",
     "disabled": false
   },
   {
@@ -1756,7 +1756,7 @@
     "start_melody": "e e g g",
     "chordpro_file": "Jezek_+_Voskovec_+_Werich-Ezop_a_brabenec.pro",
     "pdf_filenames": "['jezek__voskovec__werich_ezop_a_brabenec-sken.pdf', 'jezek__voskovec__werich_ezop_a_brabenec-comp.pdf', 'jezek__voskovec__werich_ezop_a_brabenec-gen.pdf']",
-    "content_hash": "fdac2638d46189e0e98789cd02fba356d07bcde6",
+    "content_hash": "0cb87cac1f70a168acf08f97bbbb53266455c72c",
     "disabled": false
   },
   {
@@ -1948,7 +1948,7 @@
     "start_melody": "e d c d",
     "chordpro_file": "Kabat-Bara.pro",
     "pdf_filenames": "['kabat_bara-sken.pdf', 'kabat_bara-comp.pdf']",
-    "content_hash": "99b5465394ea4f82978216032853ad090026e508",
+    "content_hash": "eb58f8389bdd47c0e8df783ee73682ecbe4ce343",
     "disabled": false
   },
   {
@@ -2428,7 +2428,7 @@
     "start_melody": "f#",
     "chordpro_file": "Karel_Kryl-Vasil.pro",
     "pdf_filenames": "['karel_kryl_vasil-sken.pdf', 'karel_kryl_vasil-comp.pdf']",
-    "content_hash": "7d5e37ddde230bbc122208e1f23a68e981ed7af3",
+    "content_hash": "dc6a2fa20351f81ae3435c1eadc8576e0639ca4e",
     "disabled": false
   },
   {
@@ -2444,7 +2444,7 @@
     "start_melody": "",
     "chordpro_file": "Karel_Kryl-Velicenstvo_kat.pro",
     "pdf_filenames": "['karel_kryl_velicenstvo_kat-sken.pdf', 'karel_kryl_velicenstvo_kat-comp.pdf']",
-    "content_hash": "7eaf87faf2f256cdb758e9a8d7ae0fab4b1cf953",
+    "content_hash": "3ac38a14f27a4d1bfa59cb14da680716bb8251e6",
     "disabled": false
   },
   {
@@ -2972,7 +2972,7 @@
     "start_melody": "d d d c#",
     "chordpro_file": "Michal_Hruza-Zakazane_uvolneni.pro",
     "pdf_filenames": "['michal_hruza_zakazane_uvolneni-sken.pdf', 'michal_hruza_zakazane_uvolneni-comp.pdf', 'michal_hruza_zakazane_uvolneni-gen.pdf']",
-    "content_hash": "8eec9312d572834b67a4523f3884f95901a1f25a",
+    "content_hash": "dc95faaba276c722457959ce2728d03713be69be",
     "disabled": false
   },
   {
@@ -3004,7 +3004,7 @@
     "start_melody": "e e e c e",
     "chordpro_file": "Michal_Tucny-Poveste_ho_vejs.pro",
     "pdf_filenames": "['michal_tucny_poveste_ho_vejs-sken.pdf', 'michal_tucny_poveste_ho_vejs-comp.pdf', 'michal_tucny_poveste_ho_vejs-gen.pdf']",
-    "content_hash": "f45f28bf941eabe87ef6d5832c12c74b542f04a5",
+    "content_hash": "55d191c1c1b5aade00a964df6462bd1ba6dac169",
     "disabled": false
   },
   {
@@ -3036,7 +3036,7 @@
     "start_melody": "h g#",
     "chordpro_file": "Miki_Ryvola-Tunel_jmenem_cas.pro",
     "pdf_filenames": "",
-    "content_hash": "b9ff77db1e066b61330eb283957abf8a68065cc2",
+    "content_hash": "5c1f7eece1d2ec9983931afd8bfd10e6a2e26493",
     "disabled": false
   },
   {
@@ -3388,7 +3388,7 @@
     "start_melody": "h",
     "chordpro_file": "Olympic-Taky_jsem_se_narodil_bos.pro",
     "pdf_filenames": "['olympic_taky_jsem_se_narodil_bos-sken.pdf', 'olympic_taky_jsem_se_narodil_bos-comp.pdf']",
-    "content_hash": "cf787de4219bf46ce0b4e80a38a5cd376612f352",
+    "content_hash": "060ff3c61d237700d1ed21f575822c5831a49118",
     "disabled": false
   },
   {
@@ -3404,7 +3404,7 @@
     "start_melody": "h",
     "chordpro_file": "Ondrej_Ruml-Hadej.pro",
     "pdf_filenames": "[]",
-    "content_hash": "3ea801b4836272ae077aa99dd691c903e3434c52",
+    "content_hash": "7e9e730a022808155f5ef20ab106459e4f07ff0a",
     "disabled": false
   },
   {
@@ -3468,7 +3468,7 @@
     "start_melody": "e",
     "chordpro_file": "Pacifik-Mississippi_blues.pro",
     "pdf_filenames": "['pacifik_mississippi_blues-sken.pdf', 'pacifik_mississippi_blues-comp.pdf']",
-    "content_hash": "b3ded8293d1ac8bd15c50769e9cde2a001c78d4e",
+    "content_hash": "b5c9d166f361af55fbed6a1db207d927a02ab8c5",
     "disabled": false
   },
   {
@@ -3660,7 +3660,7 @@
     "start_melody": "e",
     "chordpro_file": "Pokac-26.pro",
     "pdf_filenames": "['pokac_26_-sken.pdf', 'pokac_26_-comp.pdf']",
-    "content_hash": "8bcff1d26becaf2ae99e3f840dc9d6fe5c7204ef",
+    "content_hash": "f50dc250781910336a0300272e91ba378286a5d8",
     "disabled": false
   },
   {
@@ -3804,7 +3804,7 @@
     "start_melody": "e d c#",
     "chordpro_file": "Poupata-Toulavy_boty.pro",
     "pdf_filenames": "['poupata_toulavy_boty-sken.pdf', 'poupata_toulavy_boty-comp.pdf']",
-    "content_hash": "2b24fd87d53fecde66e13bcb0a3c267253eb3b43",
+    "content_hash": "a72537c83f634d897aa150d03d23cb674c549d5c",
     "disabled": false
   },
   {
@@ -3884,7 +3884,7 @@
     "start_melody": "h d",
     "chordpro_file": "Ready_Kirken-Zejtra_mam.pro",
     "pdf_filenames": "['ready_kirken_zejtra_mam-sken.pdf', 'ready_kirken_zejtra_mam-comp.pdf']",
-    "content_hash": "c863055240c41ab7e4c607114713635898396339",
+    "content_hash": "99f6f687a6fd4d290234b990ba8177fd1340fbab",
     "disabled": false
   },
   {
@@ -4028,7 +4028,7 @@
     "start_melody": "a",
     "chordpro_file": "Spiritual_kvintet-Batalion.pro",
     "pdf_filenames": "['spiritual_kvintet_batalion-sken.pdf', 'spiritual_kvintet_batalion-comp.pdf']",
-    "content_hash": "ee1b23ab8d6c5ca8034359a8c01887b680e67644",
+    "content_hash": "88171db4343bf4eafe6a6d3b06cf00b597761460",
     "disabled": false
   },
   {
@@ -4172,7 +4172,7 @@
     "start_melody": "e",
     "chordpro_file": "The_Barenaked_Ladies_&_Chris_Hadfield-I.S.S_Is_Somebody_Singing.pro",
     "pdf_filenames": "['the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-sken.pdf', 'the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-comp.pdf']",
-    "content_hash": "7650c9b02539fb2969f94054692ab0e2f81524be",
+    "content_hash": "bb00302fe988aa2b09ffa178bedbe798ece19963",
     "disabled": false
   },
   {
@@ -4252,7 +4252,7 @@
     "start_melody": "g",
     "chordpro_file": "The_Witcher-Toss_a_Coin_to_Your_Witcher.pro",
     "pdf_filenames": "",
-    "content_hash": "cb15129aabae8577695430a33cdc410ad77cd160",
+    "content_hash": "9c26fcaf2d4d39e947546f6dcf7ea854db0408bf",
     "disabled": false
   },
   {
@@ -4428,7 +4428,7 @@
     "start_melody": "d",
     "chordpro_file": "UDG-Hvezdar.pro",
     "pdf_filenames": "['udg_hvezdar-sken.pdf', 'udg_hvezdar-comp.pdf']",
-    "content_hash": "d9b1b1dbc0db6657121e6f2bc0ed83311ceca3dd",
+    "content_hash": "3e554fd7e57a9644f64e994b196d842acfbaabee",
     "disabled": false
   },
   {
@@ -4748,7 +4748,7 @@
     "start_melody": "",
     "chordpro_file": "Wohnout-Svaz_ceskych_bohemu.pro",
     "pdf_filenames": "['wohnout_svaz_ceskych_bohemu-sken.pdf', 'wohnout_svaz_ceskych_bohemu-comp.pdf', 'wohnout_svaz_ceskych_bohemu-gen.pdf']",
-    "content_hash": "8269f059dc0bb88b3c4b20441cdf3f4389ad0ec2",
+    "content_hash": "1838f7bd72684d584ee2a72d27d1dabedcb0c0e1",
     "disabled": false
   },
   {
@@ -4796,7 +4796,7 @@
     "start_melody": "g",
     "chordpro_file": "Xindl_X-Od_mozku_k_srdci.pro",
     "pdf_filenames": "[]",
-    "content_hash": "aa206e0525c652e90edcad83903484496bab3c77",
+    "content_hash": "0e5223c5e07f9501a5b2e7384b126507eeb1b3c3",
     "disabled": false
   },
   {
@@ -4828,7 +4828,7 @@
     "start_melody": "e d#",
     "chordpro_file": "Yvonne_Prenosilova-Boty_proti_lasce.pro",
     "pdf_filenames": "[]",
-    "content_hash": "e44cf49ecd72e2485cc4eaf53c3130ac2ec512ae",
+    "content_hash": "005183f37c115730eb776b3401c8800fa3591521",
     "disabled": false
   },
   {

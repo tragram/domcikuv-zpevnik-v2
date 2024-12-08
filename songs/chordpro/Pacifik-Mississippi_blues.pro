@@ -20,8 +20,10 @@ nikdo [Ami]neplakal a [G]nikdo nepro[Ami]sil.
 {end_of_verse}
 
 {start_of_chorus}
-Missis[C]sippi, Missis[Ami]sippi, [F]černý tělo [G]nese říční [C]proud,
-Missis[C]sippi, Missis[Ami]sippi, [F]po ní bude [G]jeho duše [C]plout. [Ami]
+Missis[C]sippi, Missis[Ami]sippi, 
+[F]černý tělo [G]nese říční [C]proud,
+Missis[C]sippi, Missis[Ami]sippi, 
+[F]po ní bude [G]jeho duše [C]plout. [Ami]
 {end_of_chorus}
 
 {start_of_verse}

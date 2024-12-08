@@ -35,4 +35,6 @@ V těch botách ráda šlapu a to se mi prý mstí,
 prý v těchto botách jdu a tak si šlapu po štěstí.
 {end_of_verse}
 
-Rec.: Pozor, boty! Pochodem vchod!
+{start_of_verse: Rec.}
+Pozor, boty! Pochodem vchod!
+{end_of_verse}
