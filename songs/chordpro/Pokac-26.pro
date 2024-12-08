@@ -30,10 +30,14 @@ a teď [G7]ujíždí mi vlak.
 {end_of_bridge}
 
 {start_of_chorus}
-[C]Ať dělám [E]co dělám, [Am]tak roky [F]nezastavím.
-[C]Dnes je mi [E]26 a [Am]víc truchlím [F]něž slavím.
-[C]Na hlavě [E]sotva vlas, [Am]ztrácím i [A]sluch a hlas.
-[Dm]Dřív jsem lítal ke hvězdám a [G]teď jsem rád že trefím domů sám.
+[C]Ať dělám [E]co dělám, 
+[Am]tak roky [F]nezastavím.
+[C]Dnes je mi [E]26 
+a [Am]víc truchlím [F]něž slavím.
+[C]Na hlavě [E]sotva vlas, 
+[Am]ztrácím i [A]sluch a hlas.
+[Dm]Dřív jsem lítal ke hvězdám 
+a [G]teď jsem rád že trefím domů sám.
 {end_of_chorus}
 
 {start_of_verse}
@@ -70,6 +74,6 @@ cože čtrnáct? No to si dělaj prdel snad.
 
 {start_of_variant: replace_last_line}
 [Dm]Dřív jsem lítal ke hvězdám
-a [G]teď jsem rád že trefím domů (aspoň za světla) sám
+a [G]teď jsem rád, že trefím domů (aspoň za světla) sám
 {end_of_variant}
 {chorus}

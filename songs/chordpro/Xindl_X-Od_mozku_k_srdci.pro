@@ -36,7 +36,7 @@ a [Em]čeká-li mě dn[Am]eska pád
 [F]pocit letu budu při tom [G]mít
 Běžím [F]od mozku k [G]srdci
 a při [Em]tom si říkám kru[Am]ci
-snad to [F]není rozhod [G]nutí pito [C]mý
+snad to [F]není rozhod [G]nutí pito[C]mý
 {end_of_chorus}
 
 {start_of_chorus: R2}
@@ -51,11 +51,11 @@ i [F]číslo mý ne by[G]lo pito mý[C]
 {start_of_verse}
 [C]Na Slapech [C/H]de dna k hladi[Am]ně [Am/G]
 [F]je to yardů víc než pade sá[G]t
-A my [C]dál s tou loutkou [C/H]boje svádí me[Am], [Am/G]
+A my [C]dál s tou loutkou [C/H]boje svádíme[Am], [Am/G]
 [F]vždyť dolů stačil jeden volnej pád[G]
 
-[F]A od porod[G]nice ke hřb[C]tovu [Am]
-je to [F]třicet šest za[G]stávek tramva je[C]
+[F]A od porod[G]nice ke hřbi[C]tovu [Am]
+je to [F]třicet šest za[G]stávek tramvaje[C]
 I [C]kdo přestoupil [C/H]stokrát věří tomu[Am], [Am/G]
 [F]že ta cesta [G]příliš krátká je [C]
 {end_of_verse}
@@ -76,6 +76,7 @@ na poplach [Em]metrů [Am]
 [F]pá pá [G]p pa pá pá[Em]pa pá p[Am]á
 [F]vpřed do dalších es[Gsus4]kapád [G]
 [F]pá pá [G]pá pa pá pá[Em]pa pá p[Am]á
-[F]s předsevzetím [C]nezkapat
+[F]s předsevzetím [G]nezkapat
 [F]pá pá [G]pá pa pá pá[Em]pa pá p[Am]á
+[F]s předsevzetím [C]nezkapat
 {end_of_verse}

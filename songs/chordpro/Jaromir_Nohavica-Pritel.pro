@@ -9,64 +9,72 @@
 {range: g1-h2}
 {start_melody: a a a g}
 
-TBD: akordy
-
 {start_of_verse}
 Jestlipak [G]vzpomínáš si ještě na ten [D/F#]čas,
 táhlo nám [C]na dvacet a slunko bylo v [D]nás,
-[Ami]vrabci nám jedli z ruky, [C]život šel bez záruky,
+[Ami]vrabci nám jedli z ruky, 
+[C]život šel bez záruky,
 [G]ale taky bez příkras.[D/F#]
 {end_of_verse}
 
 {start_of_verse}
 Možná, že hloupý, ale krásný byl náš svět,
 zdál se nám opojný jak dvacka cigaret
-a všechna tajná přání plnila se na počkání
+a všechna tajná přání 
+plnila se na počkání
 anebo rovnou hned.
 {end_of_verse}
 
 {start_of_chorus}
-[Ami]Kam jsme se poděli, [C]kam jsme se to poděli,
-[G]kde je ti [D]konec, můj [Emi]jediný příteli,
+[Ami]Kam jsme se poděli, 
+[C]kam jsme se to poděli,
+[G]kde je ti [D]konec, 
+můj [Emi]jediný příteli,
 [Ami]zmizels' mi, nevím [D]kam,
-[Emi]sám, [Cadd9?]sám, [C]sám, [Cmaj7?]jsem tady [G]sám.
+[Emi]sám, sám, [C]sám, jsem tady [G]sám.
 {end_of_chorus}
 
 {start_of_verse}
 Jestlipak vzpomínáš si ještě na tu noc,
 jich bylo pět a tys' mi přišel na pomoc,
-jó, tehdy, nebýt tebe, tak z mých dvanácti žeber
+jó, tehdy, nebýt tebe, 
+tak z mých dvanácti žeber
 nezůstalo příliš moc.
 {end_of_verse}
 
 {start_of_verse}
 Dneska už nevím, jestli přiběh' by jsi zas,
 jak tě tak slyším, máš už trochu vyšší hlas
-a vlasy, vlasy kratší, jó, bývali jsme mladší,
+a vlasy, vlasy kratší, 
+jó, bývali jsme mladší,
 no a co, vem to ďas.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+nejlepší) [Emi]sám, [Cadd9?]sám, [C]sám, [Cmaj7?]peru se teď [G]sám.
+(+nejlepší) [Emi]sám, sám, [C]sám, 
+peru se teď [G]sám.
 {end_of_variant}
 {chorus}
 
 {start_of_verse}
 Jestlipak vzpomínáš si ještě na ten rok,
 každá naše píseň měla nejmíň třicet slok
-a my dva jako jeden ze starých reprobeden
+a my dva jako jeden 
+ze starých reprobeden
 přes moře jak přes potok.
 {end_of_verse}
 
 {start_of_verse}
 Tvůj děda říkal: ono se to uklidní,
 měl pravdu, přišla potom spousta malých dní
-a byla velká voda, vzala nám, co jí kdo dal,
+a byla velká voda, 
+vzala nám, co jí kdo dal,
 a tobě i to poslední.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+nejlepší) [Emi]sám, [Cadd9?]sám, [C]sám, [Cmaj7?]zpívám tady [G]sám.
+(+nejlepší) [Emi]sám, sám, 
+[C]sám, zpívám tady [G]sám.
 {end_of_variant}
 {chorus}
 
@@ -85,6 +93,7 @@ společný slunko nesvítí.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+ztracený) [Emi]sám, [Cadd9?]sám, [C]sám, [Cmaj7?]dýchám se teď [G]sám.
+(+ztracený) [Emi]sám, sám, 
+[C]sám, dýchám se teď [G]sám.
 {end_of_variant}
 {chorus}

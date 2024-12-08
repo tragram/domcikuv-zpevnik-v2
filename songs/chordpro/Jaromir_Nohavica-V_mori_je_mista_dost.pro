@@ -9,8 +9,10 @@
 {range: a1-a2}
 {start_melody: g}
 {start_of_chorus}
-V [C]moři je místa dost, v [Dmi]moři je místa [G7]dost,
-v [C]moři je místa, [Ami7]místa, ach, místa, v [Dmi7]moři je [G7]místa [C]dost
+V [C]moři je místa dost, 
+v [Dmi]moři je místa [G7]dost,
+v [C]moři je místa, [Ami7]místa, ach, místa, 
+v [Dmi7]moři je [G7]místa [C]dost
 {end_of_chorus}
 
 {start_of_verse}
