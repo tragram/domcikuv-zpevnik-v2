@@ -280,15 +280,15 @@ function SongView() {
                         maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
                         <div className='flex w-full justify-between gap-2'>
                             {layoutSettings.fitScreenMode === "fitXY" ?
-                                <h1 className='self-center font-bold text-nowrap mb-2'>{songData.artist}: {songData.title}</h1>
+                                <h1 className='self-center font-bold text-wrap mb-2'>{songData.artist}: {songData.title}</h1>
                                 :
                                 <div className='flex flex-col justify-start mb-4'>
-                                    <h2 className='font-medium text-nowrap uppercase'>{songData.artist}</h2>
+                                    <h2 className='font-semibold text-white/80 text-nowrap uppercase'>{songData.artist}</h2>
                                     <h2 className='font-bold text-nowrap'>{songData.title}</h2>
                                 </div>}
                             <div className='flex flex-col text-right'>
-                                <h2 className='text-[0.75em] text-muted-foreground text-nowrap'>Capo: {(songData.capo - transposeSteps + 12) % 12}</h2>
-                                <h2 className='text-[0.75em] text-muted-foreground sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
+                                <h2 className='text-[0.75em] text-white/70 text-nowrap'>Capo: {(songData.capo - transposeSteps + 12) % 12}</h2>
+                                <h2 className='text-[0.75em] text-white/70 sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
                             </div>
                         </div>
                         <div className={`flex flex-col max-w-screen 
