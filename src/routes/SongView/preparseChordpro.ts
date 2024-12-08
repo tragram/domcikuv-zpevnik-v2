@@ -68,9 +68,9 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
     const directiveRegexes = directives.map((directive, i) => ({
         directive,
         shortHand: shortHands[i],
-        startRegex: new RegExp(`^\\{start_of_${directive}(?::\\s*([\\w\\-_+]+))?\\}`),
+        startRegex: new RegExp(`^\\{start_of_${directive}(?::\\s*([\\w\\-_+ ]+))?\\}`),
         endRegex: new RegExp(`^\\{end_of_${directive}\\}`),
-        callRegex: new RegExp(`^\\{${directive}(?::\\s*([\\w\\-_+]+))?\\}`)
+        callRegex: new RegExp(`^\\{${directive}(?::\\s*([\\w\\-_+ ]+))?\\}`)
     }));
 
     let currentDirective: string | null = null;         // To store current directive lines
