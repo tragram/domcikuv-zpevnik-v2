@@ -99,16 +99,18 @@ function LayoutSettingsToolbar({ layoutSettings, setLayoutSettings, customLayout
     }
     return (
         <>
-            <Button size="icon" variant="circular" className="max-sm:hidden" isActive={layoutSettings.twoColumns} onClick={() => { toggleSetting("twoColumns"); }}>
+            <Button id="two-cols-button" size="icon" variant="circular" className="max-sm:hidden" isActive={layoutSettings.twoColumns} onClick={() => { toggleSetting("twoColumns"); }}>
                 {layoutSettingsValues["twoColumns"].icon}
             </Button>
             <Button size="icon" variant="circular" className="max-[620px]:hidden" isActive={false} onClick={() => { fullScreenHandle.enter() }}>
                 {<Fullscreen />}
             </Button>
-            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label max-xsm:hidden'>
+            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label max-xsm:hidden'
+                id="preset-selector-large">
                 <FancySwitch options={presetModes.map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => { applyLayoutPreset(value); possiblyEnterFullScreen(value); }} selectedOption={layoutPreset} roundedClass={"rounded-full"} />
             </div>
-            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label xsm:hidden'>
+            <div className='flex flex-grow h-full align-center justify-center hide-fancy-switch-label xsm:hidden'
+                id="preset-selector-small">
                 <FancySwitch options={presetModes.filter(m => m != "custom").map(mode => { return { "icon": presetModesValues[mode].icon, label: presetModesValues[mode].label, "value": mode } })} setSelectedOption={(value: LayoutPreset) => { applyLayoutPreset(value); possiblyEnterFullScreen(value); }} selectedOption={layoutPreset} roundedClass={"rounded-full"} hiddenHighlightOnOther={true} />
             </div>
         </>
