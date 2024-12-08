@@ -32,9 +32,11 @@ export function IllustrationPopup({ avatarClassName, song }: IllustrationPopupPr
         >
           <div className="relative flex justify-center max-h-[512px] shadow-lg">
             <img
+              style={{ backgroundImage: `url(${song.thumbnailURL()})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}
               src={song.illustrationURL()}
-              alt={"song illustration"}
-              className="object-scale-down "
+              width={512}
+              height={512}
+              className="object-scale-down z-50"
             />
           </div>
           <IllustrationPrompt song={song} show={isOpen} className={"text-center text-white font-bold !items-center min-h-32 max-h-48 [@media(max-height:600px)]:!hidden"} />
