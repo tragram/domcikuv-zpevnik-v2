@@ -1,10 +1,6 @@
 
-import { SongData } from '../../types';
-import {
-    chordParserFactory,
-    chordRendererFactory,
-} from 'chord-symbol/lib/chord-symbol.js'; // bundled version
-import { ChordProParser, FormatterSettings, HtmlFormatter, Key } from "chordproject-parser";
+import { Key, SongData } from '../../types';
+import { ChordProParser, FormatterSettings, HtmlFormatter } from "chordproject-parser";
 import { czechToEnglish, replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
 import memoize from 'memoize-one';
 
@@ -138,10 +134,9 @@ function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey: 
     return song;
 }
 
-export function guessKey(chordProContent: string) {
+export function guessKey(chordProContent: string): Key | undefined {
     const song = parseChordPro(chordProContent, false, null, null);
-    console.log(song.getPossibleKey())
-    return song.getPossibleKey();
+    return Key.parse(song.getPossibleKey()?.toString() || "");
 }
 
 export function renderSong(songData: SongData, transposeSteps: number, repeatChorus: boolean, czechChordNames: boolean): string {

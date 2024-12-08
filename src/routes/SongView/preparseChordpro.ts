@@ -1,9 +1,9 @@
+import { Key } from '@/types';
 import {
     chordParserFactory,
     chordRendererFactory,
 } from 'chord-symbol/lib/chord-symbol.js'; // bundled version
 import { hasExactly } from 'chord-symbol/src/helpers/hasElement';
-import { Key as SongKey } from "chordproject-parser";
 const validVariationValues = ["replace_last_line", "replace_last_lines", "append_content", "replace_first_line", "prepend_content"] as const;
 type validVariation = (typeof validVariationValues)[number]
 
@@ -183,19 +183,15 @@ export function czechToEnglish(song: string) {
     return song;
 }
 
-export function transposeChordPro(song: string, songKey: SongKey, transposeSteps: number) {
+export function transposeChordPro(song: string, songKey: Key, transposeSteps: number) {
     // chordproject appears to have a bug when transposing a semitone lower when in A-scale --> need to use a different library
     const canTranspose = songKey && transposeSteps;
     if (!canTranspose) {
         return song;
     }
-    // TODO: select flat or sharp again
-    // const songMinorKey = songKey.includes("m");
-    // const flatKey = newKey && (newKey.includes("b") || newKey.includes("s") || newKey == "Dm" || (newKey == "D" && songMinorKey) || (newKey == "F" && !songMinorKey))
-
+    const newKey = songKey.transposed(transposeSteps);
     const parseChord = chordParserFactory({ key: songKey.note.toString() });
-    // const chromaticIndex = (chord: string) => CHROMATIC_SCALE[parseChord(chord).normalized.rootNote.toLowerCase()]
-    // const transposeValue = chromaticIndex(newKey) - chromaticIndex(songKey);
+
     const keepSus2Maj7 = (chord) => {
         // the library renames sus2 to (omit3, add9) by default --> avoid
         function overwriteDescriptor(chord, descriptor) {
@@ -227,7 +223,7 @@ export function transposeChordPro(song: string, songKey: SongKey, transposeSteps
         chord.formatted.symbol = chord.formatted.symbol.replace("(", "").replace(")", "")
         return chord;
     }
-    const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeSteps, customFilters: [keepSus2Maj7, hideParentheses] });
+    const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeSteps, accidental: newKey.isFlat() ? "flat" : "sharp", customFilters: [keepSus2Maj7, hideParentheses] });
     // const renderChord = chordRendererFactory({ notationSystem: "english", transposeValue: transposeValue, accidental: flatKey ? "flat" : "sharp", customFilters: [keepSus2Maj7, hideParentheses] });
 
     const convertChordBracket = (match: string, chord: string) => `[${renderChord(parseChord(chord))}]`

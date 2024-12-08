@@ -18,7 +18,7 @@ interface FilterSettings {
 class Note {
     private static readonly sharpDictionary = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     private static readonly flatDictionary = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
-    private static readonly sharpDictionaryCZ = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"];
+    private static readonly sharpDictionaryCZ = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "B", "H"];
     private static readonly flatDictionaryCZ = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "H"];
 
     private value: number; // Internal representation: semitone offset (0–11)
@@ -33,12 +33,12 @@ class Note {
     }
 
     // Parse a note string (e.g., "C#", "Db", "A") into a Note instance
-    static parse(noteString: string, czech: boolean = true): Note {
+    static parse(noteString: string, czech: boolean = true): Note | undefined {
         // Match the note string with a regex
         const regex = czech ? new RegExp("^([A-Ha-h])([#b]?)$") : new RegExp("^([A-Ga-g])([#b]?)$")
         const match = regex.exec(noteString);
         if (!match) {
-            throw new Error(`Invalid note format: ${noteString}`);
+            return undefined;
         }
 
         const letter = match[1].toUpperCase(); // Normalize to uppercase
@@ -78,6 +78,9 @@ class Note {
         return Note.fromValue((this.value + semitones + 12) % 12);
     }
 
+    clone(): Note {
+        return Note.fromValue(this.value);
+    }
 
     // Convert the note to a string representation
     toString(preference: "sharp" | "flat" = "sharp", czech: boolean = true): string {
@@ -100,6 +103,62 @@ class Note {
     }
 }
 
+export enum KeyMode {
+    Major,
+    Minor,
+}
+
+export class Key {
+    note: Note;
+    mode: KeyMode;
+
+    // keys that are flat (in Czech)
+    private static readonly flatKeys = ["Eb", "F", "Ab", "Dm", "D#", "G#", "Gm", "Fm", "Cm", "Bm", "A#mi"];
+
+    constructor(note: Note, mode: KeyMode = KeyMode.Major) {
+        this.note = note;
+        this.mode = mode;
+    }
+
+    clone(): Key {
+        return new Key(this.note.clone(), this.mode);
+    }
+    public static parse(text: string | null, czech: boolean = true): Key | undefined {
+        if (!text) {
+            return undefined;
+        }
+
+        const regex = /^(?<note>[A-H](#{1,2}|b{1,2}|x)?)(?<mode>m?)$/;
+        const matches = text.trim().match(regex);
+
+        if (!matches || !matches.groups) {
+            return undefined;
+        }
+
+        const note = Note.parse(matches.groups["note"], czech);
+        if (note == undefined) {
+            return undefined;
+        }
+        const mode = matches.groups["mode"] === "m" ? KeyMode.Minor : KeyMode.Major;
+        return new Key(note, mode);
+    }
+
+    public toString(): string {
+        return this.note.toString() + (this.mode == KeyMode.Major ? "" : "m");
+    }
+
+    public equals(key: Key): boolean {
+        return this.toString() == key.toString();
+    }
+
+    public isFlat(): boolean {
+        return Key.flatKeys.includes(this.toString())
+    }
+
+    public transposed(semitones: number): Key {
+        return new Key(this.note.transposed(semitones), this.mode);
+    }
+}
 
 class SongRange {
     min: Note | undefined;
@@ -129,7 +188,6 @@ class SongRange {
         instance.min = Note.fromValue(json.min.value);
         instance.max = Note.fromValue(json.max.value);
         instance.semitones = json.semitones;
-
         return instance;
     }
 
@@ -176,7 +234,7 @@ interface SongRawData {
 class SongData {
     title: string;
     artist: string;
-    key?: SongKey;
+    key?: Key;
     dateAdded: {
         month: int;
         year: int;
@@ -195,7 +253,7 @@ class SongData {
     constructor(song: SongRawData) {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.key = SongKey.parse(song.key?.replace("B", "Bb").replace("H", "B") || "");
+        this.key = Key.parse(song.key, true);
         const [month, year] = song.date_added.split("-");
         this.dateAdded = { month: parseInt(month), year: parseInt(year) };
 
@@ -203,7 +261,6 @@ class SongData {
         this.language = song.language || "other";
         this.tempo = parseInt(song.tempo as string);
         this.capo = parseInt(song.capo as string) || 0;
-        console.log(this.title)
         this.range = new SongRange(song.range || "");
         this.illustration_author = song.illustration_author || "FLUX.1-dev";
 
@@ -238,7 +295,7 @@ class SongData {
         // Directly assign all fields without running constructor logic
         instance.title = json.title;
         instance.artist = json.artist;
-        instance.key = json.key ? new SongKey(new MusicNote(json.key.note.letter, json.key.note.accidental), json.key.mode) : null;
+        instance.key = json.key ? new Key(Note.fromValue(json.key.note.value), json.key.mode) : null;
         instance.dateAdded = json.dateAdded;
         instance.startMelody = json.startMelody;
         instance.language = json.language;
