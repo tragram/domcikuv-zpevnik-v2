@@ -1,7 +1,7 @@
 
 import { LanguageCount, SongData, SongDB } from '../types'
 import * as yaml from 'js-yaml';
-
+import {version} from '@/../package.json';
 function loadFromLocalStorage(key: string): any {
     const item = localStorage.getItem(key);
     return item ? JSON.parse(item) : null;
@@ -12,14 +12,23 @@ function saveToLocalStorage(key: string, value: any): void {
 }
 
 function clearSongDBFromLocalStorage() {
-    localStorage.removeItem("songDB")
-    localStorage.removeItem("songDB.hash")
-    // Object.keys(localStorage)
-    //     .filter(key => key.startsWith('songDB'))
-    //     .forEach(key => localStorage.removeItem(key));
+    localStorage.removeItem("songDB");
+    localStorage.removeItem("songDB.hash");
+}
+
+function checkVersion() {
+    const currentVersion = version;
+    const savedVersion = localStorage.getItem("version");
+    if (currentVersion != savedVersion) {
+        console.log(`New version ${currentVersion} (installed ${savedVersion}). Clearing local storage!`)
+        localStorage.clear();
+    }
+    localStorage.setItem("version", currentVersion);
 }
 
 async function fetchSongs(): Promise<SongDB> {
+    checkVersion();
+
     const savedSongDB = loadFromLocalStorage("songDB");
     const savedHash = localStorage.getItem("songDB.hash");
     const timeOut = savedSongDB ? 1000 : 3000;
