@@ -12,35 +12,40 @@
 Tvůj [C]krok je lehký jako [Emi]dech,
 kudy [F]jdeš, tam začíná [G]bál,
 šaty [C]tvé, ty šila tvá [Emi]máma,
-nemáš [F]prsten, kdo by ti jej [G]dal, nevím [G7]sám. [Emi][G]
+nemáš [F]prsten, kdo by ti jej [G]dal,
+nevím [G7]sám. [Emi][G]
 {end_of_verse}
 
 {start_of_verse}
 Tvým [C]bytem je studentská [Emi]kolej,
 jedna [F]postel, gramo[G]fon,
 Ringo [C]Starr se z obrázku [Emi]dívá,
-já bych [F]snad, co vidí jen [G]on, viděl [G7]rád. [Emi][G]
+já bych [F]snad, co vidí jen [G]on,
+viděl [G7]rád. [Emi][G]
 {end_of_verse}
 
 {start_of_chorus}
 Kdo [C]vchází do tvých snů, má [Emi]lásko,
 [F]když nemůžeš v noci [G]spát,
 komu [C]patří ty kroky, co [Emi]slýcháš,
-a [F]myšlenky tvé chtěl bych [G]znát jeden[G7]krát. [Emi][G]
+a [F]myšlenky tvé chtěl bych [G]znát
+jeden[G7]krát. [Emi][G]
 {end_of_chorus}
 
 {start_of_verse}
 Co [C]znám, to jsou známky z tvých [Emi]zkoušek,
 a [F]vím, že máš ráda [G]beat
 a [C]líbí se ti Salvátor [Emi]Dalí,
-jen [F]pro lásku chtěla bys [G]žít, milo[G7]vat. [Emi][G]
+jen [F]pro lásku chtěla bys [G]žít,
+milo[G7]vat. [Emi][G]
 {end_of_verse}
 
 {start_of_verse}
 Poje[C]deš na prázdniny k [Emi]moři,
 až [F]tam, kde slunce má [G]chrám,
 jeho [C]paprskům dáš svoje [Emi]tělo
-a [F]dál se jen věnuješ [G]hrám milost[G7]ným, a ty já [Emi]znám. [G]
+a [F]dál se jen věnuješ [G]hrám
+milost[G7]ným, a ty já [Emi]znám. [G]
 {end_of_verse}
 
 {start_of_verse}
@@ -79,7 +84,8 @@ a vítr nikdo nespoutal, ani já.
 Pojď jednou ke mně blíž, jedenkrát,
 a já ti povím, kdo vlastně jsem,
 vypni gramofon, nech té hry, zanech přátel,
-slétni z oblak na pevnou zem, tiše stůj a poslouchej.
+slétni z oblak na pevnou zem,
+tiše stůj a poslouchej.
 {end_of_verse}
 
 {start_of_chorus}

@@ -13,7 +13,7 @@
 [D]Daleko [Emi]na severu [A]je Grónská [D]zem,
 [D]žije tam [Emi]Eskymačka s [A]Eskymákem, [D]
 𝄆 my bychom [Emi]umrzli, jim [G]není [D]zima,
-snídají [Emi]nanuky a [A]eskima. [D] 𝄇
+snídají [Emi]nanuky a [A]eskima. [D]𝄇
 {end_of_verse}
 
 {start_of_verse}

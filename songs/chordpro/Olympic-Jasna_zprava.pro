@@ -21,10 +21,10 @@
 {end_of_verse}
 
 {start_of_chorus}
-[Emi]Pěnu s vůní [Hmi]jablečnou, 
+[Emi]Pěnu s vůní [Hmi]jablečnou,
 [Emi]vyvanulý [Hmi]sprej,
 [Emi]telefon, cos [G]ustřihla mu [D]šňůru,
-[Emi]knížku krásně [Hmi]zbytečnou, 
+[Emi]knížku krásně [Hmi]zbytečnou,
 [Emi]co má lživý [Hmi]děj,
 [Emi]píše se v ní, [G]jak se lítá [D]vzhůru,
 lítá [Ami]vzhůru, ve dvou [D]vzhůru.

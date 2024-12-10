@@ -89,7 +89,7 @@ make it [G]worth a try? [F]
 𝄆 [C]My love's the type of [F]thing
 that [C]you have to earn [G]
 And when you [C]earn [F]it
-you won'[C]t need it [G] 𝄇
+you won'[C]t need it [G]𝄇
 {end_of_chorus}
 
 {start_of_bridge}

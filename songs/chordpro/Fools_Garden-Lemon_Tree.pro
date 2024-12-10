@@ -14,7 +14,7 @@ I'm [Ami]sitting here in a [Emi]boring room,
 it's [Ami]just another rainy sunday [Emi]afternoon
 I'm [Ami]wasting my time I got [Emi]nothing to do,
 I'm [Ami]hanging around I'm [Emi]waiting for you
-But [Dmi]nothing ever [E]happens 
+But [Dmi]nothing ever [E]happens
 and I [Ami]wonder. [Emi][Ami]
 {end_of_verse}
 
@@ -28,14 +28,14 @@ But nothing ever happens - and I wonder.
 
 {start_of_chorus}
 I [C]wonder how I [G]wonder why
-[Ami]yesterday you told me 
+[Ami]yesterday you told me
 'bout the [Emi]blue blue sky
-and [F]all that I can [G]see 
+and [F]all that I can [G]see
 is just a yellow [C]lemon-tree. [G7]
 I'm [C]turning my head [G]up and down
-I'm [Ami]turning turning turning 
+I'm [Ami]turning turning turning
 turning [Emi]turning around
-And [F]all that I can [G]see 
+And [F]all that I can [G]see
 is just a yellow lemon[C]-tree. [G7]
 {end_of_chorus}
 
@@ -54,19 +54,19 @@ Where nothing ever happens - and I wonder
 
 {start_of_bridge}
 [E]Isolation - [Ami]is not good for me
-[G]Isolation - [C]I don't want to 
+[G]Isolation - [C]I don't want to
 [E]sit on a lemon-tree
 {end_of_bridge}
 
 {start_of_verse}
 I'm [Ami]steppin' around in a [Emi]desert of joy,
 [Ami]baby anyhow I'll get [Emi]another toy
-and [Dmi]everything will [Emi]happen 
+and [Dmi]everything will [Emi]happen
 and [Ami]I will wond[Emi]er [Ami]
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-|: And [F]all that I can [G]see :| (3x)
+𝄆 And [F]all that I can [G]see 𝄇 (3x)
 is just a yellow [C]lemon tree.
 {end_of_variant}
 {chorus}

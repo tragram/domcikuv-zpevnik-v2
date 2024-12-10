@@ -24,7 +24,7 @@ jaktě[G]živ nikdo z vás nenadál
 {start_of_chorus: R1}
 [Hmi]Třeba ta naše [A]kapela
 je [G]možná ta, co se [D]nikdy nepropadne
- nebo [G]jo kdo [D]ví
+nebo [G]jo kdo [D]ví
 [A]a to je na tom [Hmi]to hezký a tutový,
 [D]že každej ví [A]kulový.
 {end_of_chorus}

@@ -34,7 +34,8 @@ proč se mnou nikdo nechce rozebírat
 jakou nejlíp koupit maringotku,
 chtěl bych běžet letním šerem
 nafukovat její čtyři kola
-Zapřáhnout koně a pak zmizet někam do daleka jižním směrem
+Zapřáhnout koně a pak zmizet
+někam do daleka jižním směrem
 kde se jedí banány
 {end_of_verse}
 

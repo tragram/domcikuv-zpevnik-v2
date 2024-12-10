@@ -11,12 +11,12 @@
 {artist: Milan Prouza}
 
 {start_of_verse}
-[G]Přišla za mnou moje holka, 
+[G]Přišla za mnou moje holka,
 [D]že se prej chce mazlit,
-[Am]já jí na to řekl, 
+[Am]já jí na to řekl,
 hele [C]neměj mi to [D]za zlý,
 ale já [G]nemám na blbosti [D]čas,
-dneska totiž [Am]dělám úkol na ARI 
+dneska totiž [Am]dělám úkol na ARI
 a [D]zejtra budu zas.
 {end_of_verse}
 
@@ -26,12 +26,12 @@ a [D]zejtra budu zas.
 {end_of_chorus}
 
 {start_of_verse}
-Já [G]matlám patlám v Matlabu, 
+Já [G]matlám patlám v Matlabu,
 [D]už jsem z toho na hlavu,
-[Am]v Simulinku budu 
+[Am]v Simulinku budu
 za [C]chvilinku i [G]bydlet,
 [G]ARI mi zničilo [D]život,
-[Am]holky už mě neberou 
+[Am]holky už mě neberou
 a [D]nechutná mi pivo.
 {end_of_verse}
 
@@ -43,7 +43,7 @@ No jen si mě zkuste vyhodit!
 páč [Am]nejhorší nepřítel je [C]ten,
 kterej nemá už co [G]ztratit.
 [G]Úúú, vyrobím si v Matlabu
-[D]ňákou pěknou 
+[D]ňákou pěknou
 [C]ko[C/H]so[C/A]čtver[C]co[C/D]vou
 [D]ma[Am]ti[G]ci.
 {end_of_verse}

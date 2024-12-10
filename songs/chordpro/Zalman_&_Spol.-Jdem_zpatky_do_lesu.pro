@@ -9,31 +9,48 @@
 {range: d1-h1}
 {start_melody: g}
 {start_of_verse}
-[Am7]Sedím na kolejích, [D7]které nikam neved[G]ou,
-[Am7]koukám na kopretinu, jak [D7]miluje se s lebed[G]ou,
-[Am7]mraky vzaly slunce [D7]zase pod svou ochran[G]u, [Emi]
-[Am7]jen ty nejdeš, holka zlatá, [D7]kdypak já tě dostan[G]u? [D7]
+[Am7]Sedím na kolejích,
+[D7]které nikam neved[G]ou,
+[Am7]koukám na kopretinu,
+jak [D7]miluje se s lebed[G]ou,
+
+[Am7]mraky vzaly slunce
+[D7]zase pod svou ochran[G]u, [Emi]
+[Am7]jen ty nejdeš, holka zlatá,
+[D7]kdypak já tě dostan[G]u? [D7]
 {end_of_verse}
 
 {start_of_chorus}
 [G]Z ráje, my vyhnaní [Emi]z ráje,
-kde není už [Am7]místa, [C]prej něco se [G]chystá, [D7]
+kde není už [Am7]místa,
+[C]prej něco se [G]chystá, [D7]
 [G]z ráje nablýskaných [Emi]plesů,
-jdem zpátky do [Am7]lesů [C]za nějaký [G]čas.
+jdem zpátky do [Am7]lesů
+[C]za nějaký [G]čas.
 {end_of_chorus}
 
 {start_of_verse}
-[Am7]Vlak nám včera ujel [D7]ze stanice do neb[G]e,
-[Am7]málo jsi se snažil, [D7]málo šel jsi do seb[G]e,
-[Am7]šel jsi vlastní cestou, [D7]a to se zrovna nenos[G]í, [Emi]
-[Am7]i pes, kterej chce přízeň, napřed [D7]svýho pána popros[G]í. [D7]
+[Am7]Vlak nám včera ujel
+[D7]ze stanice do neb[G]e,
+[Am7]málo jsi se snažil,
+[D7]málo šel jsi do seb[G]e,
+
+[Am7]šel jsi vlastní cestou,
+[D7]a to se zrovna nenos[G]í, [Emi]
+[Am7]i pes, kterej chce přízeň,
+napřed [D7]svýho pána popros[G]í. [D7]
 {end_of_verse}
 
 {start_of_verse}
-[Am7]Už tě vidím z dálky, jak [D7]máváš na mě [G]korunou,
-[Am7]a jestli nám to bude stačit, [D7]zatleskáme [G]na druhou,
-[Am7]zabalíme všechny, co si [D7]dávaj' rande za [G]branou,
-[Am7]v ráji není místa, možná [D7]v pekle se nás [G]zastanou.
+[Am7]Už tě vidím z dálky,
+jak [D7]máváš na mě [G]korunou,
+[Am7]a jestli nám to bude stačit,
+[D7]zatleskáme [G]na druhou,
+
+[Am7]zabalíme všechny,
+co si [D7]dávaj' rande za [G]branou,[Emi]
+[Am7]v ráji není místa,
+možná [D7]v pekle se nás [G]zastanou.
 {end_of_verse}
 
 {chorus}

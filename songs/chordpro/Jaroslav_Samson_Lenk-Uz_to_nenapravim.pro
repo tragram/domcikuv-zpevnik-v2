@@ -10,7 +10,7 @@
 {start_melody: a}
 {start_of_chorus}
 𝄆 [Ami]Vap tada dap...
-[D][F][E][Ami][E][F][F#][G] 𝄇
+[D][F][E][Ami][E][F][F#][G]𝄇
 {end_of_chorus}
 
 {start_of_verse}

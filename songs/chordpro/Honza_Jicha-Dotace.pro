@@ -21,7 +21,7 @@ maj tam totiž nejlevnější vodku v celý Praze.
 [F]Doma na mě čeká žena u šicího stro[G]je
 [C]a myslí si, [C/H]že se někde [Ami]věnuju svý prá[G]ci,
 [F]a já přitom nejsem schopnej vyhrabat se z hno[G]je
-a [C]jen já dobře [C/H]vím, kam se nám 
+a [C]jen já dobře [C/H]vím, kam se nám
 [Ami]všecky prachy ztrá[G]cí.[F][G][E]
 {end_of_chorus}
 

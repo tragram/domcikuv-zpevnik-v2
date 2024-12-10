@@ -13,7 +13,7 @@
 [A]jako každý chlap
 [C]a kromě dvou [D]půlek neměl [G]nic
 [G]Taky jsem se narodil bos
- [A]když mě přines čáp
+[A]když mě přines čáp
 [C]a spustil jsem [D]rámus z plných [G]plic
 {end_of_verse}
 
@@ -29,7 +29,7 @@ a [C]rozum až s [D]léty začal [G]brát
 {start_of_bridge}
 [Emi]My měli roucha stejně [Hmi]průhledná
 [Emi]když jsme jen sáli z mléčných [Hmi]žláz
-A [C]náš [C/H]bosý [Ami]věk 
+A [C]náš [C/H]bosý [Ami]věk
 [C]měl [C/H]to bych [Ami]řek - tisíc [D]krás
 {end_of_bridge}
 
@@ -76,8 +76,8 @@ A [C]náš [C/H]bosý [Ami]věk
 {end_of_chorus}
 
 {start_of_verse}
-Ó-ou [G]jsou - snad [A]jsou 
+Ó-ou [G]jsou - snad [A]jsou
 snad [C]jsou [D]- někde [G]jsou,
-někde jsou - ano jsou - 
+někde jsou - ano jsou -
 někde jsou - snad jsou.
 {end_of_verse}

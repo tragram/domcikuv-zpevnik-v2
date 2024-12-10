@@ -62,7 +62,7 @@ While deep inside you're bleeding
 {start_of_bridge}
 [F]No one ever lied straight to your face
 And [Ami]no one ever stabbed you in the back
-[F]You might think I'm happy 
+[F]You might think I'm happy
 but I'm [C]not gonna be [G]okay
 
 [F]Everybody always gave you what you wanted

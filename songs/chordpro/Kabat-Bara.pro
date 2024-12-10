@@ -18,10 +18,10 @@ A [C]kdo při tobě bude [B]stát
 {end_of_verse}
 
 {start_of_chorus}
-Víš já [F]mám spoustu 
+Víš já [F]mám spoustu
 [Ami]známejch v podz[Dmi]emí
 A divá [B]Bára se mnou spí
-Když je [F]noc všechno 
+Když je [F]noc všechno
 [Ami]krásný zdá se [Dmi]mi
 To sme my [B]dávno prokle[Ami]tý
 {end_of_chorus}

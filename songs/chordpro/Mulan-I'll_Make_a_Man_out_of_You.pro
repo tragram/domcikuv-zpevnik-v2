@@ -34,25 +34,36 @@ out of [Am]you [G][Am]
 {end_of_verse}
 
 {start_of_bridge}
-[Fsus2]I'm never gonna [G]catch my breath
-[E/G#]Say good-bye to those who [Am]knew me
-[G/H]Boy, was I a fool in [C]school for cutting [Fsus2]gym
-[Fsus2]This guy's got 'em [G]scared to death
-[E/G#]Hope he doesn't see right [Am]through me
-[G/H]Now I really wish that [C]I knew how to [F]swim
+[Fsus2]I'm never gonna
+[G]catch my breath
+[E/G#]Say good-bye to
+those who [Am]knew me
+[G/H]Boy, was I a fool
+in [C]school for cutting [Fsus2]gym
+[Fsus2]This guy's got 'em
+[G]scared to death
+[E/G#]Hope he doesn't see
+right [Am]through me
+[G/H]Now I really wish that
+[C]I knew how to [F]swim
 {end_of_bridge}
 
 {start_of_chorus}
 [G]Be a [F/A]man
-We must be [G/H]swift as the [E7]coursing [Am]river
+We must be [G/H]swift as the
+[E7]coursing [Am]river
 [G]Be a [F/A]man
-[F]With all the [G]force [E7]of a great ty[Am]phoon
+[F]With all the [G]force
+of a [E7]great ty[Am]phoon
 [G]Be a [F/A]man
-[F]With all the [G]strength of a [E7]raging [Am]fire
-[F]Mysterious as the [G]dark side of the [Asus2]moon [G][Asus2]
+[F]With all the [G]strength
+of a [E7]raging [Am]fire
+[F]Mysterious as the [G]dark side
+of the [Asus2]moon [G][Asus2]
 {end_of_chorus}
 
 {comment: Capo++}
+
 {start_of_verse}
 Time is racing toward us
 till the Huns arrive

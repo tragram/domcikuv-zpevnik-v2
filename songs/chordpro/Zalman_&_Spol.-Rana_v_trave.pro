@@ -9,14 +9,14 @@
 {range: g1-g2}
 {start_melody: e}
 {start_of_chorus}
-[Ami]Každý ráno boty [G]zouval, 
+[Ami]Každý ráno boty [G]zouval,
 [Ami]orosil si nohy v [G]trávě,
-[Ami]že se lidi mají rádi [G]doufal 
+[Ami]že se lidi mají rádi [G]doufal
 [Ami]a proc[Emi]itli [Ami]právě.
 
-[Ami]Každy ráno dlouze [G]zíval, 
+[Ami]Každy ráno dlouze [G]zíval,
 [Ami]utřel čelo do ruk[G]ávu,
-[Ami]a při chůzi tělem semtam [G]kýval, 
+[Ami]a při chůzi tělem semtam [G]kýval,
 [Ami]před seb[Emi]ou sta [Ami]sáhů.
 {end_of_chorus}
 
