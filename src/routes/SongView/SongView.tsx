@@ -262,7 +262,7 @@ function SongView() {
                 <Button className={cn('absolute top-0 right-0 ', atBottom ? "flex" : "hidden")} size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
                 <Button className={cn('absolute bottom-0 right-0 ', atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
             </div>
-            <FullScreen handle={fullScreenHandle} className={cn('w-full', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit overflow-y-scroll")}>
+            <FullScreen handle={fullScreenHandle} className={cn('w-full overflow-x-clip', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit overflow-y-scroll")}>
                 <BackgroundImage songData={songData} className="hidden" id="inner-background-image" />
                 <div id="auto-text-size-wrapper" className={cn('w-full z-10 lg:px-16 p-4 sm:p-8', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ", layoutSettings.fitScreenMode !== "fitXY" ? " mb-10" : "")}
                 >
