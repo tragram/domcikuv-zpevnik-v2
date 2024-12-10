@@ -22,6 +22,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { useGesture } from '@use-gesture/react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { cn } from '@/lib/utils';
+import SongHeading from './SongHeading';
 
 function SongView() {
     const { songDB, songData } = useLoaderData() as DataForSongView;
@@ -101,7 +102,7 @@ function SongView() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll)
     })
-    
+
     useMemo(() => {
         const renderedSong = renderSong(songData, transposeSteps, layoutSettings.repeatParts, chordSettings.czechChordNames);
         setParsedContent(renderedSong);
@@ -156,16 +157,6 @@ function SongView() {
         return PdfView(songData.pdfFilenames);
     };
 
-    function formatChords(data) {
-        return data.split(/(\d|[#b])/).map((part, index) => {
-            if (/\d/.test(part)) {
-                return <sub key={index}>{part}</sub>; // Render numbers as superscripts
-            } else if (/[#b]/.test(part)) {
-                return <sup key={index}>{part}</sup>; // Render # or b as superscripts
-            }
-            return part; // Render other parts as plain text
-        });
-    }
     const [pinching, setPinching] = useState(false);
     const bind = useGesture({
         onPinch: ({ offset: [scale], movement: [dScale], memo }) => {
@@ -210,7 +201,8 @@ function SongView() {
             const fontSize = getComputedStyle(targetElement).fontSize;
             setLayoutSettings((prevSettings) => ({
                 ...prevSettings,
-                fontSize: parseInt(fontSize, 10)
+                fontSize: parseInt(fontSize, 10),
+                // fitScreenMode: "none"
             }));
         }
         updateFontSize();
@@ -278,19 +270,7 @@ function SongView() {
                         mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
                         minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
                         maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
-                        <div className='flex w-full justify-between gap-2'>
-                            {layoutSettings.fitScreenMode === "fitXY" ?
-                                <h1 className='self-center font-bold text-wrap mb-2'>{songData.artist}: {songData.title}</h1>
-                                :
-                                <div className='flex flex-col justify-start mb-4'>
-                                    <h2 className='font-semibold text-white/80 text-nowrap uppercase'>{songData.artist}</h2>
-                                    <h2 className='font-bold text-nowrap'>{songData.title}</h2>
-                                </div>}
-                            <div className='flex flex-col text-right'>
-                                <h2 className='text-[0.75em] text-white/70 text-nowrap'>Capo: {(songData.capo - transposeSteps + 12) % 12}</h2>
-                                <h2 className='text-[0.75em] text-white/70 sub-sup-container'>{formatChords(songData.range.toString(transposeSteps))}</h2>
-                            </div>
-                        </div>
+                        <SongHeading songData={songData} layoutSettings={layoutSettings} transposeSteps={transposeSteps} />
                         <div className={`flex flex-col max-w-screen 
                     ${chordSettings.inlineChords ? ' chords-inline ' : ' '}
                     ${chordSettings.showChords ? '' : ' chords-hidden '}
