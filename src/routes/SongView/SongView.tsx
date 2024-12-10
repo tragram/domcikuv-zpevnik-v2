@@ -210,7 +210,7 @@ function SongView() {
 
 
     return (
-        <div className={"flex flex-col sm:pt-[80px] pt-[72px] relative" + (layoutSettings.fitScreenMode === "fitXY" ? " h-dvh " : " min-h-dvh ")}
+        <div className={cn("flex flex-col sm:pt-[80px] pt-[72px] relative", layoutSettings.fitScreenMode === "fitXY" ? " h-dvh " : " min-h-dvh ")}
             {...bind()} // Bind gesture handlers
             style={{
                 touchAction: 'pan-y', // Prevent default pinch-to-zoom behavior
@@ -258,9 +258,9 @@ function SongView() {
                     </div>
                 </ToolbarBase>
             </div>
-            <div className={"fixed bottom-10 right-10 z-50 h-24 " + (showScrollButtons ? "flex" : "hidden")}>
-                <Button className={'absolute top-0 right-0 ' + (atBottom ? "flex" : "hidden")} size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
-                <Button className={'absolute bottom-0 right-0 ' + (atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
+            <div className={cn("fixed bottom-10 right-10 z-50 h-24 ", showScrollButtons ? "flex" : "hidden")}>
+                <Button className={cn('absolute top-0 right-0 ', atBottom ? "flex" : "hidden")} size="icon" variant="circular" onClick={scrollUp}><ArrowBigUpDash /></Button>
+                <Button className={cn('absolute bottom-0 right-0 ', atBottom ? "hidden" : "flex")} size="icon" variant="circular" onClick={scrollDown}><ArrowBigDown /></Button>
             </div>
             <FullScreen handle={fullScreenHandle} className={cn('w-full', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit overflow-y-scroll")}>
                 <BackgroundImage songData={songData} className="hidden" id="inner-background-image" />
@@ -271,12 +271,12 @@ function SongView() {
                         minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
                         maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
                         <SongHeading songData={songData} layoutSettings={layoutSettings} transposeSteps={transposeSteps} />
-                        <div className={`flex flex-col max-w-screen 
-                    ${chordSettings.inlineChords ? ' chords-inline ' : ' '}
-                    ${chordSettings.showChords ? '' : ' chords-hidden '}
-                    fit-screen-${layoutSettings.fitScreenMode}
-                    ${layoutSettings.repeatPartsChords ? '' : ' repeated-chords-hidden '}
-                    ${layoutSettings.twoColumns ? " song-content-columns " : ""}`}
+                        <div className={cn("flex flex-col max-w-screen",
+                            chordSettings.inlineChords ? ' chords-inline ' : ' ',
+                            chordSettings.showChords ? '' : ' chords-hidden ',
+                            `fit-screen-${layoutSettings.fitScreenMode}`,
+                            layoutSettings.repeatPartsChords ? '' : ' repeated-chords-hidden ',
+                            layoutSettings.twoColumns ? " song-content-columns " : "")}
                             dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper"
                             ref={songWrapperRef}>
                         </div>
