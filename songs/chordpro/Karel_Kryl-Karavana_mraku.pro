@@ -19,7 +19,7 @@
 [C7]Dopředu [F]jít s tou [G]karavanou [Ami]mraků,
 schovat svou [F]tvář pod [G]stetson děr[Ami]avý,
 𝄆 jen kousek [Dmi]jít, jen [G7]chvíli, [Ami]do soumr[Dmi]aku,
-až tam, kde [Ami]svítí město, [E]město běl[Ami]avý. [A7] 𝄇
+až tam, kde [Ami]svítí město, [E]město běl[Ami]avý. [A7]𝄇
 {end_of_chorus}
 
 {start_of_verse}
@@ -40,7 +40,7 @@ až tam, kde [Ami]svítí město, [E]město běl[Ami]avý. [A7] 𝄇
 [C7]V městě [F]je řád a [G]pro každého prá[Ami]ce,
 buď ještě [F]rád, když [G]huba voněm[Ami]í,
 𝄆 může tě [Dmi]hřát, že [G7]nejsi [Ami]na voprá[Dmi]tce
-nebo že [Ami]neležíš pár [E]inchů pod [Ami]zemí. [A7] 𝄇
+nebo že [Ami]neležíš pár [E]inchů pod [Ami]zemí. [A7]𝄇
 {end_of_chorus}
 
 {start_of_verse}
@@ -54,5 +54,5 @@ nebo že [Ami]neležíš pár [E]inchů pod [Ami]zemí. [A7] 𝄇
 [C7]Pryč odtud [F]jít s tou [G]karavanou [Ami]mraků,
 kde tichej [F]dům a [G]pušky reza[Ami]vý,
 𝄆 orat a [Dmi]sít od [G7]rána [Ami]do soumrak[Dmi]u
-a nechat [Ami]zapomenout [E]srdce [Ami]bolavý. [A7] 𝄇
+a nechat [Ami]zapomenout [E]srdce [Ami]bolavý. [A7]𝄇
 {end_of_chorus}

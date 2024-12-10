@@ -12,7 +12,7 @@
 {start_of_verse}
 Jestlipak [G]vzpomínáš si ještě na ten [D/F#]čas,
 táhlo nám [C]na dvacet a slunko bylo v [D]nás,
-[Ami]vrabci nám jedli z ruky, 
+[Ami]vrabci nám jedli z ruky,
 [C]život šel bez záruky,
 [G]ale taky bez příkras.[D/F#]
 {end_of_verse}
@@ -20,15 +20,15 @@ táhlo nám [C]na dvacet a slunko bylo v [D]nás,
 {start_of_verse}
 Možná, že hloupý, ale krásný byl náš svět,
 zdál se nám opojný jak dvacka cigaret
-a všechna tajná přání 
+a všechna tajná přání
 plnila se na počkání
 anebo rovnou hned.
 {end_of_verse}
 
 {start_of_chorus}
-[Ami]Kam jsme se poděli, 
+[Ami]Kam jsme se poděli,
 [C]kam jsme se to poděli,
-[G]kde je ti [D]konec, 
+[G]kde je ti [D]konec,
 můj [Emi]jediný příteli,
 [Ami]zmizels' mi, nevím [D]kam,
 [Emi]sám, sám, [C]sám, jsem tady [G]sám.
@@ -37,7 +37,7 @@ můj [Emi]jediný příteli,
 {start_of_verse}
 Jestlipak vzpomínáš si ještě na tu noc,
 jich bylo pět a tys' mi přišel na pomoc,
-jó, tehdy, nebýt tebe, 
+jó, tehdy, nebýt tebe,
 tak z mých dvanácti žeber
 nezůstalo příliš moc.
 {end_of_verse}
@@ -45,13 +45,13 @@ nezůstalo příliš moc.
 {start_of_verse}
 Dneska už nevím, jestli přiběh' by jsi zas,
 jak tě tak slyším, máš už trochu vyšší hlas
-a vlasy, vlasy kratší, 
+a vlasy, vlasy kratší,
 jó, bývali jsme mladší,
 no a co, vem to ďas.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+nejlepší) [Emi]sám, sám, [C]sám, 
+(+nejlepší) [Emi]sám, sám, [C]sám,
 peru se teď [G]sám.
 {end_of_variant}
 {chorus}
@@ -59,7 +59,7 @@ peru se teď [G]sám.
 {start_of_verse}
 Jestlipak vzpomínáš si ještě na ten rok,
 každá naše píseň měla nejmíň třicet slok
-a my dva jako jeden 
+a my dva jako jeden
 ze starých reprobeden
 přes moře jak přes potok.
 {end_of_verse}
@@ -67,13 +67,13 @@ přes moře jak přes potok.
 {start_of_verse}
 Tvůj děda říkal: ono se to uklidní,
 měl pravdu, přišla potom spousta malých dní
-a byla velká voda, 
+a byla velká voda,
 vzala nám, co jí kdo dal,
 a tobě i to poslední.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+nejlepší) [Emi]sám, sám, 
+(+nejlepší) [Emi]sám, sám,
 [C]sám, zpívám tady [G]sám.
 {end_of_variant}
 {chorus}
@@ -93,7 +93,7 @@ společný slunko nesvítí.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+ztracený) [Emi]sám, sám, 
+(+ztracený) [Emi]sám, sám,
 [C]sám, dýchám se teď [G]sám.
 {end_of_variant}
 {chorus}

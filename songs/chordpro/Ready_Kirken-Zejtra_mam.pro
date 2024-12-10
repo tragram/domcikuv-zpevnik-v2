@@ -39,7 +39,7 @@ všude [G]tam kam se [Hm]podívám něco z tebe [Em]mám [D]
 {end_of_verse}
 
 {start_of_bridge}
-poslední [C]den jednou vyspím se [Hm]jen 
+poslední [C]den jednou vyspím se [Hm]jen
 a pak už [Am]nikdy nebudu [D]sám
 {end_of_bridge}
 

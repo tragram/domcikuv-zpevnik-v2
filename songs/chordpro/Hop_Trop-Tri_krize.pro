@@ -10,69 +10,69 @@
 {start_melody: d d a}
 
 {start_of_verse}
-[Dm]Dávám sbohem 
+[Dm]Dávám sbohem
 [C]břehům prokla[Am]tejm,
-který v [Dm]drápech 
+který v [Dm]drápech
 má [C]ďábel [Dm]sám.
 
-[Dm]Bílou přídí 
-[C]šalupa “My [Am]grave” 
+[Dm]Bílou přídí
+[C]šalupa “My [Am]grave”
 míří k [Dm]útesům,
 [C]který [Dm]znám.
 {end_of_verse}
 
 {start_of_chorus}
 Jen tři [F]kříže
-z [C]bílýho kame[Am]ní 
-někdo [Dm]do písku 
+z [C]bílýho kame[Am]ní
+někdo [Dm]do písku
 [C]poskládal. [Dm]
 
-Slzy v [F]očích měl 
-a v [C]ruce znav[Am]ený 
-lodní[Dm]deník, 
+Slzy v [F]očích měl
+a v [C]ruce znav[Am]ený
+lodní[Dm]deník,
 co [C]sám do něj [Dm]psal.
 {end_of_chorus}
 
 {start_of_verse}
-[Dm]První kříž má 
+[Dm]První kříž má
 [C]pod sebou jen [Am]hřích,
-samý [Dm]pití 
+samý [Dm]pití
 a [C]rvačky [Dm]jen.
 
-Chřestot nožů, 
+Chřestot nožů,
 při [C]kterým přejde [Am]smích,
-srdce [Dm]kámen 
+srdce [Dm]kámen
 a [C]jméno [Dm]“Sten.”
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-[Dm]Já, Bob Green, 
+[Dm]Já, Bob Green,
 mám [C]tváře zjizv[Am]ený,
-štěkot [Dm]psa zněl, 
+štěkot [Dm]psa zněl,
 když [C]jsem se [Dm]smál.
 
-Druhej kříž mám 
+Druhej kříž mám
 a [C]spím pod [Am]zemí,
-že jsem fal[Dmi]ešný 
+že jsem fal[Dmi]ešný
 [C]karty [Dm]hrál.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-[Dm]Třetí kříž 
+[Dm]Třetí kříž
 snad [C]vyvolá jen [Am]vztek,
-Fatty [Dm]Rodgers těm 
+Fatty [Dm]Rodgers těm
 [C]dvoum život [Dm]vzal.
-Svědomí měl, 
+Svědomí měl,
 vedle [C]nich si [Am]klek…
 {end_of_verse}
 
 {start_of_bridge}
 Rec: Vím, trestat je lidský,
-ale odpouštět božský. 
+ale odpouštět božský.
 snad mi tedy Bůh odpustí.
 {end_of_bridge}
 
@@ -80,8 +80,8 @@ snad mi tedy Bůh odpustí.
 [F]Jen tři kříže
 z [C]bílýho kame[Am]ní jsem jim
 [Dm]do písku [C]poskládal. [Dm]
-Slzy v [F]očích měl 
-a [C]v ruce zna[Am]vený 
-lodní [Dm]deník a 
+Slzy v [F]očích měl
+a [C]v ruce zna[Am]vený
+lodní [Dm]deník a
 v [C]něm co jsem [Dm]psal.
 {end_of_chorus}

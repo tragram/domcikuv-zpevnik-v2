@@ -23,21 +23,21 @@ chce to ako[G]rát realiz[A]ovat. [D]
 {end_of_verse}
 
 {start_of_bridge}
-[Hmi][A]Na chvíli [G]zavřít [Emi]oči, 
+[Hmi][A]Na chvíli [G]zavřít [Emi]oči,
 [Hmi][A]vesmír [G]se poo[Em]točí,
 [Hmi]taky [A]můžeš [G]mít, [Emi]
 [F#]co si budeš přát a co budeš [D]chtít!
 {end_of_bridge}
 
 {start_of_chorus: R1}
-[D]Nad hla[F#]vou je můj [Hmi]svět, 
+[D]Nad hla[F#]vou je můj [Hmi]svět,
 prosím [G]vás, odpusťte [D]mi.
-[D]Teď zůstat [F#]ležet na zá[Hmi]dech, 
+[D]Teď zůstat [F#]ležet na zá[Hmi]dech,
 dejchat [G]vzduch pod hvězda[D]mi.
 
-[D]Moje [F#]aura a můj [Hmi]bůh 
+[D]Moje [F#]aura a můj [Hmi]bůh
 ve mně [G]hoří, zdá se [D]mi.
-[D]Je to [F#]pravda, bludnej [Hmi]kruh, 
+[D]Je to [F#]pravda, bludnej [Hmi]kruh,
 zakáza[G]né uvolně[D]ní.
 {end_of_chorus}
 
@@ -46,7 +46,7 @@ zakáza[G]né uvolně[D]ní.
 {bridge}
 
 {start_of_variant: replace_last_line}
-já se chci [G]vznášet nad ze[D]mí. 
+já se chci [G]vznášet nad ze[D]mí.
 {end_of_variant}
 {chorus}
 

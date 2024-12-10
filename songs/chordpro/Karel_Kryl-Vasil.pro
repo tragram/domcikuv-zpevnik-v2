@@ -9,44 +9,44 @@
 {range: d1-f#2}
 {start_melody: f#}
 {start_of_verse}
-V [D]botičkách z kozinky 
+V [D]botičkách z kozinky
 [Hmi]vybírám rozinky z [G]koláčků, [A]
-[D]vybírám zběsile 
+[D]vybírám zběsile
 [Hmi]pro tebe, Vasile, [G]miláčku, [A]
 [D]šičky už došily
 [Hmi]svatební košili z [G]batistu, [A]
-[Hmi]krmení zvěře je, když vrznou veřeje 
+[Hmi]krmení zvěře je, když vrznou veřeje
 [Emi]a tys [F#]tu, a tys [Hmi]tu. [A7]
 {end_of_verse}
 
 {start_of_verse}
 Mé oči nevěří
 přišel jsi se zvěří k obědu,
-neseš mi křepelky, 
+neseš mi křepelky,
 v botičkách Popelky, k tobě jdu,
-na mojí košilce 
+na mojí košilce
 šič z Košic vyšil "C" zdvojené,
-že nejsem komtesou, starosti moje jsou, 
+že nejsem komtesou, starosti moje jsou,
 tvoje ne, tvoje ne.
 {end_of_verse}
 
 {start_of_verse}
-Na rtech máš enzymy, 
+Na rtech máš enzymy,
 to asi od zimy třeskuté,
-proti tvé nechuti 
+proti tvé nechuti
 na tácku nesu ti misku thé,
-v čaji jsem zkvasila 
+v čaji jsem zkvasila
 dva vlasy Vasila-hippieho,
-jsou v něm i nějaká afrodiziaka, 
+jsou v něm i nějaká afrodiziaka,
 vypij ho, vypij ho!
 {end_of_verse}
 
 {start_of_verse}
-Čaj, který vypiješ, 
+Čaj, který vypiješ,
 zanechá stopy, jež trvají,
-tisícem kilowatt 
+tisícem kilowatt
 budem se milovat, šohaji,
-v milostném zátiší 
+v milostném zátiší
 vášeň pak nejvyšší vybuchne
 tiše a všestranně
 tvá láska ke straně!

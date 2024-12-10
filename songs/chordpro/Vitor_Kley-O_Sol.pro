@@ -8,11 +8,11 @@
 {start_melody: e h}
 
 {start_of_verse}
-Ô [Em7]sol, Vê se não [D9]esquece 
+Ô [Em7]sol, Vê se não [D9]esquece
 e me [Am7]ilumina
 Pre[Em7]ciso de [D9]você [Am7]aqui
 
-Ô sol Vê se enriquece 
+Ô sol Vê se enriquece
 a minha melanina
 Só você me faz sorrir
 {end_of_verse}
