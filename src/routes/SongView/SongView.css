@@ -101,6 +101,15 @@
     margin-top: 1.5em;
 }
 
+.song-content>.comment-line {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-style: italic;
+    color: hsl(var(--primary));
+    opacity: 80%;
+}
+
+
 .section {
     display: flex;
     flex-direction: column;
