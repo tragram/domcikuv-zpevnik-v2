@@ -53,7 +53,7 @@ function SongHeading({ songData, layoutSettings, transposeSteps }) {
     const isWrapped = wrappedIndices.length > 0;
 
     return (
-        <div className={cn('flex w-full justify-between flex-wrap',isWrapped?"":"gap-4")} ref={containerRef}>
+        <div className={cn('flex w-full justify-between flex-wrap gap-4', isWrapped ? "" : "")} ref={containerRef}>
             {layoutSettings.fitScreenMode === "fitXY" || layoutSettings.twoColumns ?
                 <h1 className='self-center font-bold text-wrap mb-2'>{songData.artist}: {songData.title}</h1>
                 :
