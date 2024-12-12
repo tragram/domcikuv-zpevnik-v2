@@ -28,7 +28,7 @@
     "start_melody": "a c",
     "chordpro_file": "Akaty-Vdovy_z_Cordoby.pro",
     "pdf_filenames": "['akaty_vdovy_z_cordoby-sken.pdf', 'akaty_vdovy_z_cordoby-comp.pdf']",
-    "content_hash": "cdcaaa9ab486dd447f59c7fe6a7b51eb534d20d9",
+    "content_hash": "a2ca5c81614eaa7fd64d34f0603c17f68a4f84a3",
     "disabled": false
   },
   {
@@ -60,7 +60,7 @@
     "start_melody": "g",
     "chordpro_file": "Alphaville-Mel_jmeno_Jan.pro",
     "pdf_filenames": "['alphaville_mel_jmeno_jan-sken.pdf', 'alphaville_mel_jmeno_jan-comp.pdf']",
-    "content_hash": "9963b1988825cb93954676c976f158a3a3d15e9a",
+    "content_hash": "0342b547e47abdd605961b351f9e651fc5b60ab5",
     "disabled": false
   },
   {
@@ -3228,7 +3228,7 @@
     "start_melody": "e",
     "chordpro_file": "Nightwork-Cekam_na_signal.pro",
     "pdf_filenames": "['nightwork_cekam_na_signal-sken.pdf', 'nightwork_cekam_na_signal-comp.pdf']",
-    "content_hash": "977485f92de9dd30fe8fa3972e02fba8f22b6b0d",
+    "content_hash": "206b7578e92d9a281c0ceb1d1a7d2dd1ede7c693",
     "disabled": false
   },
   {
@@ -3244,7 +3244,7 @@
     "start_melody": "e",
     "chordpro_file": "Nightwork-Maja.pro",
     "pdf_filenames": "['nightwork_maja-sken.pdf', 'nightwork_maja-comp.pdf']",
-    "content_hash": "214445c491db0236bb5b3b2ba46238a155abb3e5",
+    "content_hash": "78ccbc20dacb32a04c6f8dae2b74f7c4ce6868d1",
     "disabled": false
   },
   {
@@ -3932,7 +3932,7 @@
     "start_melody": "d",
     "chordpro_file": "Scorpions-Still_Loving_You.pro",
     "pdf_filenames": "['scorpions_still_loving_you-sken.pdf', 'scorpions_still_loving_you-comp.pdf']",
-    "content_hash": "aea9d5e41a12b869e84957dc11f08c84f9d1285b",
+    "content_hash": "884501e5766ce4cb5e9e2491391b4b34752f02f9",
     "disabled": false
   },
   {
@@ -4012,7 +4012,7 @@
     "start_melody": "c d e",
     "chordpro_file": "Simple_Plan-Welcome_to_My_Life.pro",
     "pdf_filenames": "['simple_plan_welcome_to_my_life-sken.pdf', 'simple_plan_welcome_to_my_life-comp.pdf', 'simple_plan_welcome_to_my_life-gen.pdf']",
-    "content_hash": "ca0c4f3aa752eae273db32e8a2bda58bf78e1ead",
+    "content_hash": "a933e73571722356b2f1f9f8e102a36dd54d0869",
     "disabled": false
   },
   {
@@ -4108,7 +4108,7 @@
     "start_melody": "f# a",
     "chordpro_file": "Survivor-Eye_Of_The_Tiger.pro",
     "pdf_filenames": "['survivor_eye_of_the_tiger-sken.pdf', 'survivor_eye_of_the_tiger-comp.pdf']",
-    "content_hash": "2ee18b2a3a8386efb0607d854b2139a834998276",
+    "content_hash": "1b0a405db2e0518124440b34535c868e20490408",
     "disabled": false
   },
   {

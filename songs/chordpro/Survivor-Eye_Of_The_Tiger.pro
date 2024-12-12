@@ -34,19 +34,19 @@ Stalks his [D]prey in the [A]night
 {end_of_chorus}
 
 {start_of_verse}
-Face to face, out in the heat
-Hanging tough, staying hungry
-They stack the odds still we take to the street
-For the kill with the skill to survive
+[Hmi]Face to face, [G]out in the heat
+[A]Hanging tough, [Hmi]staying hungry
+[Hmi]They stack the odds still we [G]take to the street
+For the [A]kill with the skill to sur[Hmi]vive
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Rising up, straight to the top
-Had the guts, got the glory
-Went the distance, now I'm not gonna stop
-Just a man and his will to survive
+[Hmi]Rising up, [G]straight to the top
+[A]Had the guts, [Hmi]got the glory
+[Hmi]Went the distance, now I'm [G]not gonna stop
+Just a [A]man and his will to sur[Hmi]vive
 {end_of_verse}
 
 {chorus}

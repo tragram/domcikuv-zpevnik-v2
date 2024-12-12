@@ -18,12 +18,12 @@ I will be [A]there, I will be [D]there.
 {end_of_verse}
 
 {start_of_verse}
-Fight, babe, I'll fight
+[Gmi]Fight, babe, I'll fight
 To win back your love again.
-I will be there, I will be there.
-Love, only love
+I will be [A]there, I will be [D]there.
+[Gmi]Love, only love
 Can break down the walls someday.
-I will be there, I will be there.
+I will be [A]there, I will be [D]there.
 {end_of_verse}
 
 {start_of_chorus}
@@ -38,16 +38,15 @@ to [F]start once again? I'm loving [Gmi]you.
 {end_of_chorus}
 
 {start_of_verse}
-Try, baby try
+[Gmi]Try, baby try
 To trust in my love again.
-I will be there, I will be there.
-Love, only love
+I will be [A]there, I will be [D]there.
+[Gmi]Love, only love
 Just shouldn't be thrown away.
-I will be there, I will be there.
+I will be [A]there, I will be [D]there.
 {end_of_verse}
 
 {chorus}
-
 {start_of_bridge}
 [Gmi]Yes [F]I've [Gmi]hurt [Cmi]your pride,
 [D]and [C]I [D]know
@@ -55,5 +54,4 @@ What you've been [Gmi]through.
 You should [Eb]give me a chance
 This [F]can't be the end.
 {end_of_bridge}
-
 {chorus}
