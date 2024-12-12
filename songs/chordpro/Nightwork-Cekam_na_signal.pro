@@ -8,15 +8,13 @@
 {tempo: }
 {range: a1-g2}
 {start_melody: e}
-
 {start_of_chorus}
 [C]Čekám [Emi]na sig[Ami]nál,
 ten z nebe [Dmi]nepřichází a
 [G]tak čekám [C]dál [G]
-
-Hledím ke hvězdám,
-ve dne je nevidím
-a v noci nevnímám.
+[C]Hledím [Emi]ke hvěz[Ami]dám,
+ve dne je [Dmi]nevidím
+a [G]v noci ne[C]vnímám.[G]
 {end_of_chorus}
 
 {start_of_bridge}
@@ -38,10 +36,10 @@ No [Hmi]my tu nebudem [E]nikomu dělat [A]debily. [F#mi]
 {end_of_verse}
 
 {start_of_verse}
-Proražme sloup střechou kostela,
-vždyť ten lemra farář stejně nic nedělá.
-Zbourejme radši starou zvonici,
-ať signál zalije naši vesnici.
+Proražme sloup střechou [A]koste[F#mi]la,
+[Hmi]vždyť ten lemra [E]farář stejně [A]nic [F#mi]nedělá.
+[Hmi]Zbourejme [E]radši starou [A]zvonici,[F#mi]
+[Hmi]ať signál [E]zalije naší [A]vesnici.[F#mi][D][E]
 {end_of_verse}
 
 {chorus}

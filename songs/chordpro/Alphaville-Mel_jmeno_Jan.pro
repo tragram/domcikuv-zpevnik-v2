@@ -8,6 +8,7 @@
 {tempo: }
 {range: a1-a2}
 {start_melody: g}
+
 {start_of_verse}
 [C]Chtěl by [G]žít a přitom nemůže dýcha[Ami]t
 oheň mu [F]spaluje šaty i [G]tvář.
@@ -16,10 +17,10 @@ Ta příšerná chv[F]íle zdá se nekonečně dlouhá.
 {end_of_verse}
 
 {start_of_verse}
-Chtěl by žít a znovu se dívat.
-Už ví, co znamená světlo i stín.
-Všude cítí žár.
-Jak dlouhá bude chvíle, kdy se tělo ohni vzpírá.
+[C]Chtěl by [G]žít a znovu se díva[Ami]t.
+Už ví, co [F]znamená světlo i [G]stín.
+Všude cítí [Dmi]žár.
+Jak dlouhá bude chv[F]íle, kdy se tělo ohni vzpírá.
 {end_of_verse}
 
 {start_of_chorus}
@@ -32,33 +33,33 @@ Měl jméno [F]Jan, [G]jak požár zemi zac[Dmi]hvátí,
 {end_of_chorus}
 
 {start_of_verse}
-Chtěl by žít a znovu pravdu svou hlásat
-řetězy spoutaný u kůlu sám.
-Všude cítí žár.
-A stačilo říct obyčejné slovo: "Odvolávám".
+[C]Chtěl by [G]žít a znovu pravdu svou hlása[Ami]t
+řetězy [F]spoutaný u kůlu [G]sám.
+Všude cítí [Dmi]žár.
+A stačilo říct [F]obyčejné slovo: "Odvolávám".
 {end_of_verse}
 
 {start_of_verse}
-Jak snadné je žít a zapřít svou pravou víru,
-do konce života sám sobě lhát.
-Je těžší cítit žár
-a čekat, že i smrt je někdy nekonečně spásná
+[C]Jak snadné [G]je žít a zapřít svou pravou ví[Ami]ru,
+do konce [F]života sám sobě [G]lhát.
+Je těžší cítit [Dmi]žár
+a čekat, že i [F]smrt je někdy nekonečně spásná
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Plameny vyšlehnou výš a všechno v kouři se ztrácí
-pak zvolna hranice dohořívá
-Kat má v ruce rýč
-a jeho popel do kalných vod cizí řeky hází.
+[C]Plameny [G]vyšlehnou výš a všechno v kouři se ztrá[Ami]cí
+pak zvolna [F]hranice dohoří[G]vá
+Kat má v ruce [Dmi]rýč
+a jeho popel [F]do kalných vod cizí řeky hází.
 {end_of_verse}
 
 {start_of_verse}
-A soudci spěchají pryč, něco přece jim schází
-kdo ani pařed ohněm neztratí tvář,
-vždycky vyhrává
-a jeho jméno v celé zemi symbolem se stává.
+[C]A soudci [G]spěchají pryč, něco přece jim schá[Ami]zí
+kdo ani [F]pařed ohněm neztratí [G]tvář,
+vždycky vyhrá[Dmi]vá
+a jeho jméno [F]v celé zemi symbolem se stává.
 {end_of_verse}
 
 {chorus}
