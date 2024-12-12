@@ -12,9 +12,7 @@
 [C]To the rush of [G]day
 [C]When the heat of a [G]rolling wind
 [Ami]Can be turned a[D]way
-{end_of_verse}
 
-{start_of_verse}
 [C]An enchanted [G]moment
 [C]And it sees me [G]through
 [C]It's enough for this [Emi]restless warrior
@@ -38,11 +36,15 @@ Be[Ami]lieve [G]the [D]very [C]best[G]
 {end_of_chorus}
 
 {start_of_verse}
-There's a time for everyone if they only learn
-That the twisting kaleidoscope moves us all in turn
-There's a rhyme and reason to the wild outdoors
-When the heart of this star-crossed voyager
-beats in time with yours
+[C]There's a time for [G]everyone
+[C]if they only [G]learn
+[C]That the twisting [G]kaleidoscope
+[Ami]moves us all in [D]turn
+
+[C]There's a rhyme and [G]reason
+[C]to the wild out[G]doors
+[C]When the heart of this [Emi]star-crossed voyager
+[F]beats in time with [D]yours
 {end_of_verse}
 
 {chorus: R1}

@@ -12,14 +12,14 @@
 Jsem [E]kutil mám malou
 [F#mi]dílnu víc [A]mě nezají[E]má
 mý hobby je moje práce šťastnej
-člověk každej kdo to tak má
+[F#mi]člověk každej [A]kdo to tak [E]má
 {end_of_verse}
 
 {start_of_verse}
 Mám [E]ženu, je mladá
 [F#mi]krásná chytrá [A]přívěti[E]vá,
 má jednu malinkatou chybu,
-že si se mnou vůbec nepovídá
+[F#mi]že si se mnou [A]vůbec nepoví[E]dá
 {end_of_verse}
 
 {start_of_chorus}
@@ -29,17 +29,17 @@ co by chtěla kluka s dílnou
 {end_of_chorus}
 
 {start_of_verse}
-Jsem kutil mám malou
-dílnu víc mě nezajímá
+Jsem [E]kutil mám malou
+[F#mi]dílnu víc [A]mě nezají[E]má
 má práce je moje hobby šťastnej
-člověk každej kdo to tak má
+[F#mi]člověk každej [A]kdo to tak [E]má
 {end_of_verse}
 
 {start_of_verse}
-Mám ženu, je mladá
-krásná chytrá přívětivá, má jednu malinkatou
-chybu, že si
-se mnou vůbec nepovídá
+Mám [E]ženu, je mladá
+[F#mi]krásná chytrá [A]přívěti[E]vá, 
+má jednu malinkatou [F#mi]chybu,
+že si [A]se mnou vůbec nepovídá[E]
 {end_of_verse}
 
 {chorus}

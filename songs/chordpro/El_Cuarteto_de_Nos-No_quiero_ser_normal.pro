@@ -8,16 +8,14 @@
 {tempo: }
 {range: d1-e2}
 {start_melody: f#-a}
-
 {start_of_verse}
 ¿Por [D]qué tienen la teoría
 [F#]que siempre la mayoría
-[Hm]de la gente tie[G9]ne razón?
-
-[Hm]Si en una isla abandonado
-quedo con tr[E]es retardados
-y entre ellos [F#]un líder votan,
-yo no voy a[F#7/E]dar pelota.
+[Hm]de la gente tiene ra[G9]zón?
+Si en una [Hm]isla abandonado
+quedo [E]con tres retardados
+y entre el[F#]los un líder votan,
+yo no [F#7/E]voy adar pelota.
 {end_of_verse}
 
 {start_of_bridge}
@@ -36,32 +34,32 @@ no [D]quiero [A]ser nor[Hm]mal. [G]
 {end_of_chorus}
 
 {start_of_verse}
-Hice un curso de croata
-y mi mascota es una rata
-y odio ir a una manifestación.
+[D]Hice un curso de croata
+y [F#]mi mascota es una rata
+y [Hm]odio ir a una manifesta[G9]ción.
 
-A ningún héroe glorifico,
-con nadie me identifico
-porque lamentablemente
-no me gusta la gente.
+A ningún [Hm]héroe glorifico,
+con na[E]die me identifico
+porque [F#]lamentablemente
+no [F#7/E]me gusta la gente.
 {end_of_verse}
 
 {start_of_bridge}
-Ay, no, no quiero ser igual
-a los del comercial
-y sólo sé que lo que es moda me incomoda.
-Ay, no, no puedo imitar,
-y por ser como todos no ser nadie.
+Ay, [D]no, no quiero ser i[E]gual
+a los del comer[G]cial
+y sólo sé que [Hm]lo que es moda me [A]incomoda.
+Ay, [D]no, no puedo imi[E]tar,
+y por ser como todos no ser na[G]die.
 {end_of_bridge}
 
 {chorus}
 
 {start_of_bridge}
-Y no sé por qué será
-si algo me entra a gustar
-nunca está en el ranking, rating ni el top twenty.
-Y si se vuelve popular
-a mí me aburre y ya no me interesa.
+Y [D]no sé por qué se[E]rá
+si algo me en[G]tra a gustar
+nunca está en el [Hm]ranking, rating ni el [A]top twenty.
+Y [D]si se vuelve popu[E]lar
+a mí me a[G]burre y ya no me interesa.
 {end_of_bridge}
 
 {start_of_variant: replace_first_line}
