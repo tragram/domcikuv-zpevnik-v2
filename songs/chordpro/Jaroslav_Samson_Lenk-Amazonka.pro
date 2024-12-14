@@ -16,10 +16,10 @@ byla jsi můj celej [Hmi]svět,[Bmi][Ami]
 {end_of_verse}
 
 {start_of_verse}
-Tenkrát byly děti malý,
-ale život utíká,
-už na "táto" slyší jinej,
-i když si tak neříká.
+Tenkrát byly děti [G]malý,
+byla jsi můj celej [Hmi]svět,[Bmi][Ami]
+už na "táto" slyší [G]jinej,
+[Ami]i když si tak neří[D]ká.
 {end_of_verse}
 
 {start_of_chorus}
@@ -30,32 +30,32 @@ stejnou barvu jako [G]měly
 {end_of_chorus}
 
 {start_of_verse}
-Kluci tenkrát, co tě znali,
-všude, kde jsem s tebou byl,
-Amazonka říkávali a já hrdě
-přisvědčil.
+Kluci tenkrát, co tě [G]znali,
+všude, kde jsem s tebou [Hmi]byl,[Bmi][Ami]
+Amazonka říká[G]vali
+a já [Ami]hrdě přisvěd[D]čil.
 {end_of_verse}
 
 {start_of_verse}
-Tvoje strachy, že ti mládí
-pod rukama utíká
-vedly k tomu, že ti nikdo
-"Amazonka" neříká.
+Tvoje strachy, že ti [G]mládí
+pod rukama utí[Hmi]ká[Bmi][Ami]
+vedly k tomu, že ti [G]nikdo
+[Ami]"Amazonka" neří[D]ká.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Zlatý kráse cingrlátek,
-jak sis časem myslela
-vadil možná trampskej šátek,
-nosit dáls' ho nechtěla.
+Zlatý kráse cingr[G]látek,
+jak sis časem mys[Hmi]lela[Bmi][Ami]
+vadil možná trampskej [G]šátek,
+[Ami]nosit dáls' ho nechtě[D]la.
 {end_of_verse}
 
 {start_of_chorus}
 Teď jsi víla z pan[G]eláku,
-[E7]samá dečka, samej [Ami]krám,
+[E7]samá dečka, samej [Ami]krám, [Asus2][Ami]
 já si přál jen, abys [G]byla
 [Ami]pořád stejná, přísa[D]hám,
-[Ami]pořád stejná, přísa-[G]hám.
+[Ami]pořád stejná, přísa[G]hám.
 {end_of_chorus}

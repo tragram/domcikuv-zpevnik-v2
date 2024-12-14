@@ -15,9 +15,9 @@
 {end_of_verse}
 
 {start_of_verse}
-nech si to projít palicí
-a nevracej se s vopicí,
-snaž se mě hochu trochu pochopit.
+[A]nech si to projít [A7]palicí
+a [D]nevracej se s [D7]vopicí,
+[E]snaž se mě hochu [E7]trochu pocho[A]pit.
 {end_of_verse}
 
 {start_of_chorus}
@@ -28,29 +28,29 @@ na [A]každý divný hranici, na [D7]policejní stanici
 {end_of_chorus}
 
 {start_of_verse}
-Přiletěl se mnou černej čáp,
-zobákem dělal rockin' klap
-a nad kolíbkou Elvis Presley stál,
+[A]Přiletěl se mnou [A7]černej čáp,
+[D]zobákem dělal [D7]rockin' klap
+a [E]nad kolíbkou [E7]Elvis Presley [A]stál,
 {end_of_verse}
 
 {start_of_verse}
-obrovskej bourák v ulici,
-po boku krásnou slepici
-a lidi šeptaj: přijel ňákej král.
+[A]obrovskej bourák [A7]v ulici,
+po [D]boku krásnou [D7]slepici
+a [E]lidi šeptaj: [E7]přijel ňákej [A]král.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Pořád tak ňák nemohu,
-chytit štěstí za nohu
-a nemůžu si najít klidnej kout,
+[A]Pořád tak ňák [A7]nemohu,
+[D]chytit štěstí [D7]za nohu
+a [E]nemůžu si [E7]najít klidnej [A]kout,
 {end_of_verse}
 
 {start_of_verse}
-bláznivý ptáci začnou řvát
-a nový ráno šacovat
-a do mě vždycky pustí silnej proud.
+[A]bláznivý ptáci [A7]začnou řvát
+a [D]nový ráno [D7]šacovat
+a [E]do mě vždycky [E7]pustí silnej [A]proud.
 {end_of_verse}
 
 {chorus}

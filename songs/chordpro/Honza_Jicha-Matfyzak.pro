@@ -19,7 +19,7 @@ tohle [Cdim]všechno vím, ale [E7]nemám s kým
 [C]Křivky mého [G]IQ
 jsou [F]neskutečně [C]příkré
 [Dmi]a v testech inte [Ami]ligence
-ne [Cdim]nalézám kon [E7]kurence
+ne [Cdim]nalézám kon[E7]kurence
 [C]Vypočítám s [G]přehledem
 [F]kdy z A do B [C]dojedem
 [Dmi]neskejsnem-li [Ami]cestou v C
@@ -29,27 +29,30 @@ ne [Cdim]nalézám kon [E7]kurence
 {chorus}
 
 {start_of_verse}
-Vztahy s holkou či s dámou
-jsou pro mě velkou neznámou
-rád bych sbalil některou
-zatím se o mě neperou
-Až vyjdu jednou se slečnou
-ať tečnou, nebo netečnou
-jí pod mostem či pod duhou
-vysvětlím πr2
+[C]Vztahy s holkou [G]či s dámou
+jsou [F]pro mě velkou [C]neznámou
+[Dmi]rád bych sbalil [Ami]některou
+za[Cdim]tím se o mě [E7]neperou
+[C]Až vyjdu jednou [G]se slečnou
+ať [F]tečnou, nebo [G]netečnou
+jí p[Dmi]od mostem či [Ami]pod duhou
+vys[Cdim]větlím [E]πr2 [Ami]
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Až najdu svou Dorotu
-tak průsečník dvou životů
-vynesem do souřadnic
-na sobě v tu chvíli už nic!
-Tak nebojte se slečinky
-až dojde u mě na činky
-budete tu mít borce
-co nevejde se do vzorce
+Až [C]najdu svou [G]Dorotu
+tak [F]průsečník dvou [C]životů
+[Dmi]vynesem do [Ami]souřadnic
+na [Cdim]sobě v tu chví[E7]li už nic!
+Tak [C]nebojte se [G]slečinky
+až [F]dojde u mě [C]na činky
+[Dmi]budete tu [Ami]mít borce
+co [Cdim]nevej[E]de se [Ami]do vzorce
 {end_of_verse}
 
+{start_of_variant: append_content}
+ale nemám [Ami]s kým!
+{end_of_variant}
 {chorus}

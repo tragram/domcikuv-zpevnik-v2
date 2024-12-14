@@ -49,7 +49,7 @@ hey Jude begin
 you're waiting for someone
 to perform with
 
-and don't you know that
+And don't you know that
 it's just you hey Jude you'll do
 the movement you need
 is on your shoulders

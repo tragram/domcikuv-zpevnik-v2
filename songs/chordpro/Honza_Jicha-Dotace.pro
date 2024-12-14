@@ -9,7 +9,6 @@
 {range: a1-e2}
 {start_melody: e}
 
-
 {start_of_verse}
 [Ami]Po cestě [Ami/G]z Alberta jsem [D7/F#]zakop o že[E]bráka,
 povídám mu: vadíš mi v mojí životní dráze!
@@ -33,14 +32,15 @@ a hrubými urážkami pustil se tam do mě
 {end_of_verse}
 
 {start_of_chorus}
-Co prej jsem to za vyžírku a proč nechci makat
-a proč si aspoň občas nenajdu nějakou práci?
-Mám vrozenej syndrom, kterej nutí mě se flákat,
-a na život s ním už jsem zažádal o dotaci.
+[F]Co prej jsem to za vyžírku a proč nechci ma[G]kat
+[C]a proč si aspoň [C/H]občas nenajdu [Ami]nějakou prá[G]ci?
+[F]Mám vrozenej syndrom, kterej nutí mě se flá[G]kat,
+a [C]na život [C/H]s ním už jsem
+za[Ami]žádal o dota[G]ci.[F][G][E]
 {end_of_chorus}
 
 {start_of_verse}
-Přiklepli mi dva melouny z Fondu Stability,
+[Ami]Přiklepli mi [Ami/G]dva melouny z [D7/F#]Fondu Stabi[E]lity,
 a stejně jsem se nestabilní vrátil v noci domů.
 Já i Pepa jsme teď každej večer děsně zlitý,
 chtěli bysme poděkovat, jenže není komu.

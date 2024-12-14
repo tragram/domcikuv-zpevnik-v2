@@ -19,11 +19,12 @@ and I [Ami]wonder. [Emi][Ami]
 {end_of_verse}
 
 {start_of_verse}
-I'm driving around in my car,
-I'm driving too fast I'm driving too far
-I'd like to change my point of view,
-I feel so lonely I'm waiting for you
-But nothing ever happens - and I wonder.
+I'm [Ami]driving around in my [Emi]car,
+I'm [Ami]driving too fast I'm driving too [Emi]far
+I'd [Ami]like to change my point of [Emi]view,
+I [Ami]feel so lonely I'm waiting for [Emi]you
+But [Dmi]nothing ever [E]happens
+and I [Ami]wonder. [Emi][Ami]
 {end_of_verse}
 
 {start_of_chorus}
@@ -45,11 +46,12 @@ di dap di di [Emi]... [Dmi][Emi][Ami][Emi][Ami]
 {end_of_bridge}
 
 {start_of_verse}
-I'm sitting here I miss the power,
-I'd like to go out taking a shower
-But there's a heavy cloud inside my head,
-I feel so tired put myself into bed
-Where nothing ever happens - and I wonder
+I'm [Ami]sitting here I miss the [Emi]power,
+I'd [Ami]like to go out taking a [Emi]shower
+But [Ami]there's a heavy cloud inside my [Emi]head,
+I [Ami]feel so tired put myself into [Emi]bed
+Where [Dmi]nothing ever [E]happens
+and I [Ami]wonder [Emi][Ami]
 {end_of_verse}
 
 {start_of_bridge}

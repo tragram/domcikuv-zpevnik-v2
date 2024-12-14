@@ -16,24 +16,24 @@ a [G]kastaněty [E]zní
 {end_of_verse}
 
 {start_of_verse}
-Kde víno tebou proteče
-jak voda dobrý člověče
-no vida? Corrida
-tě taky rozpálí
+Kde [Hmi]víno tebou proteče
+jak [G]voda dobrý [E]člověče
+no [Hmi]vida? Corrida
+tě [G]taky rozpá[E]lí
 {end_of_verse}
 
 {start_of_verse}
-Holky jak růže a řemeny z kůže
-a každej si dělá jen co chce a může
-a noci, horký noci
-ti vaří v žilách krev
+[Hmi]Holky jak růže a řemeny z kůže
+a [G]každej si dělá jen [E]co chce a může
+a [Hmi]noci, horký noci
+ti [G]vaří v žilách [E]krev
 {end_of_verse}
 
 {start_of_verse}
-Sangríe maňana vod rána do rána
-jedna jak druhá by chtěla bejt provdána
-za mě, ale hlavně
-víno, ženy zpěv
+[Hmi]Sangríe maňana vod rána do rána
+[G]jedna jak druhá by [E]chtěla bejt provdána
+za [Hmi]mě, ale hlavně
+ví[G]no, ženy [E]zpěv
 {end_of_verse}
 
 {start_of_bridge}
@@ -51,17 +51,17 @@ teplý [D]tony mají [C]zvony v Caste[G]lon
 {end_of_chorus}
 
 {start_of_verse}
-Víno stáčí Sancho Pancha,
-jedno slovo stačí
-a jdem slavit - to nás bavit!
-V tom jsme sakra dobrej tým
+[Hmi]Víno stáčí Sancho Pancha,
+[G]jedno slovo [E]stačí
+a [Hmi]jdem slavit - to nás bavit!
+V [G]tom jsme sakra [E]dobrej tým
 {end_of_verse}
 
 {start_of_verse}
-Divadlo končí tou jedinou ranou,
-my za všechny bejky tu držíme
-minutu ticha, stejky stranou!
-Toreadore co s tím?
+[Hmi]Divadlo končí tou jedinou ranou,
+[G]my za všechny bejky tu [E]držíme
+[Hmi]minutu ticha, stejky stranou!
+Tore[G]adore co s [E]tím?
 {end_of_verse}
 
 {bridge}

@@ -46,7 +46,7 @@ a ke kafi si ráno dát tři cukry a hrst léků
 {chorus}
 
 {start_of_verse}
-uo o o o co z tebe bude
+Uo o o o co z tebe bude
 uo o o o co z tebe bude
 uo o o o co z tebe bude
 uo o o o

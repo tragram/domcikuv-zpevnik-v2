@@ -16,10 +16,10 @@
 {end_of_verse}
 
 {start_of_verse}
-Na frekvenci naděje se vysílá
-Jak jim vrazit ránu přímo do týla
-Orlice jim sama oči vyklove
-Za to svinstvo ve sprchách, za cyklon B
+[Hmi]Na frekvenci [A]naděje se [Hmi]vysílá [A]
+[Hmi]Jak jim vrazit [A]ránu přímo [G]do tý[E]la
+[Emi]Orlice jim [G]sama oči [F#mi]vyklo[Hmi]ve
+[Hmi]Za to svinstvo [A]ve sprchách, [F#mi]za cyklon [Hmi]B
 {end_of_verse}
 
 {start_of_chorus}
@@ -30,17 +30,17 @@ Za to svinstvo ve sprchách, za cyklon B
 {end_of_chorus}
 
 {start_of_verse}
-Nadřazená rasa myši porobí
-Krysy ale zůstávají v odboji
-Zatemnělé město sevřel chladný strach
-Krvácejí cíle našich střelných drah
+[Hmi]Nadřazená [A]rasa myši [Hmi]porobí [A]
+[Hmi]Krysy ale [A]zůstávají [G]v odbo[E]ji
+[Emi]Zatemnělé [G]město sevřel [F#mi]chladný [Hmi]strach
+[Hmi]Krvácejí [A]cíle našich [F#mi]střelných [Hmi]drah
 {end_of_verse}
 
 {start_of_verse}
-V týhle zemi budou naše děti žít
-pro ně taky složili jsme pevný slib
-Do poslední chvíle budeme se prát
-Kralové se lůze prostě neumí vzdát.
+[Hmi]V týhle zemi [A]budou naše [Hmi]děti žít [A]
+[Hmi]pro ně taky [A]složili jsme [G]pevný [E]slib
+[Emi]Do poslední [G]chvíle budeme [F#mi]se [Hmi]prát
+[Hmi]Kralové se [A]lůze prostě [F#mi]neumí [Hmi]vzdát
 {end_of_verse}
 
 {start_of_variant: replace_last_line}

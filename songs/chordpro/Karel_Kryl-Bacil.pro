@@ -27,23 +27,25 @@ vzt[G]eklý na ptáka, [Dmi]který zpíval [E]Třešňáka,
 {end_of_verse}
 
 {start_of_verse}
-V běsu zavilém kopli Hutku za Krylem,
-že snad v exilu vymaní se bacilu,
-Charlie Soukupe, vsadili tě do kupé,
-Vláďu Veita s Třešňákem poslali hitlákem.
-Jó, aby čistka neskončila v půlce,
-přibalili Karáska i Vokatou i Schultze,
-pro klid soudruhů Benýška a Neduhu,
-zatočili s bacilem Gusta s Vasilem.
+[Ami]V běsu zavilém kopli Hutku za Krylem,
+[G]že snad v exilu [Dmi]vymaní se [E]z bacilu,
+[Ami]Charlie Soukupe, vsadili tě do kupé,
+[C]Vláďu Veita s Třešňákem [G]poslali hit[C]lákem.
+[E]Jó, [Ami]aby čistka neskončila v půlce,
+[G]přibalili Karáska
+i [Dmi]Vokatou i [E]Schultze,
+[Ami]pro klid soudruhů Benýška a Neduhu,
+[C]zatočili s bacilem [G]Gusta s Vasi[C]lem. [E]
 {end_of_verse}
 
 {start_of_verse}
-Mikeš z dědiny rve si dneska šediny,
-neb vrabci na střeše cvrlikají Dobeše,
-v tónu nedbalém Nohavicu s Plíhalem,
-celou scénu folkovou, Nose i Voňkovou.
-Jó, znějí Lutka (Hoffman), Jahelka i Merta,
-Paleček i Janík, ba i skřeky Jima Čerta,
-Vasil s Gustavem před pohřebním ústavem
-unaveně zafuní - bacil byl imunní.
+[Ami]Mikeš z dědiny rve si dneska šediny,
+neb [G]vrabci na střeše [Dmi]cvrlikají [E]Dobeše,
+[Ami]v tónu nedbalém Nohavicu s Plíhalem,
+[C]celou scénu folkovou, [G]Nose i Voň[C]kovou.
+[E]Jó, [Ami]znějí Lutka, Jahelka i Merta,
+[G]Paleček i Janík, ba i
+[Dmi]skřeky Jima [E]Čerta,
+[Ami]Vasil s Gustavem před pohřebním ústavem
+[C]unaveně zafuní - [G]bacil byl i[C]munní.
 {end_of_verse}

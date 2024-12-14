@@ -36,7 +36,6 @@ a [A7]byla tak krátká
 [E]zadní otevře[E7]ná
 {end_of_verse}
 
-
 {start_of_verse}
 Já [A]naposled tě viděl,
 [A7]když ti bylo dvacet
@@ -49,35 +48,35 @@ Já [A]naposled tě viděl,
 {chorus}
 
 {start_of_verse}
-Já čekala jsem hlavu jako střep,
-zdálo se, že dlouho
-může za to vinný sklep,
-že člověk často sleví
+Já [Ami]čekala jsem hlavu jako střep,
+[D]zdálo se, že dlouho
+[F]může za to vinný sklep,
+že člověk [E]často [E7]sleví
 {end_of_verse}
 
 {start_of_verse}
-Já čekala jsem hlavu jako střep,
-s podvědomou touhou
-já čekala jsem dobu dlouhou
-víc než dost kolik přesně nevím
+Já [Ami]čekala jsem hlavu jako střep,
+[D]s podvědomou touhou
+já [F]čekala jsem dobu dlouhou
+víc než [E]dost kolik [E7]přesně nevím
 {end_of_verse}
 
 {start_of_verse}
-Pak jedenáctá bila
-a už to bylo pasé
-já měla vědět dřív,
+Tvá [A]jedenáctá bila
+a [A7]už to bylo pasé
+já [Dmi]měla vědět dřív,
 že vidět chci tě zase
-láska nerezaví,
-láska nerezaví
+[G]láska nerezaví,
+[E]láska nereza[E7]ví
 {end_of_verse}
 
 {start_of_verse}
-Ten list co jsem ti psala
-byl dozajista hloupý
-byl odměřený moc,
+Ten [A]list co jsem ti psala
+byl [A7]dozajista hloupý
+byl [Dmi]odměřený moc,
 na vlídný slovo skoupý
-už to nenapravím,
-už to nenapravím
+[G]už to nenapravím,
+[E]už to nenapra[E7]vím
 {end_of_verse}
 
 {chorus}

@@ -24,25 +24,28 @@ naposl[D]ed, naposl[G]ed.
 {end_of_chorus}
 
 {start_of_verse}
-Já z dálky viděl město v slunci stát
-a dál jsem se jen s hrůzou mohl ptát,
-proč vítr mlátí spoustou okenic,
-proč jsou v ulici auta, jinak nic?
-R:
+Já [C]z dálky viděl [D]město v slunci [G]stát
+a [C]dál jsem se jen [D]s hrůzou mohl [Emi]ptát,
+proč [C]vítr mlátí [D]spoustou oken[G]ic,
+proč [C]jsou v ulici [D]auta, jinak [E]nic?
 {end_of_verse}
 
-{start_of_verse}
-Do prázdnejch beden zotvíranejch aut
-zaznívá odněkud něžný tón flaut
-a v závěji starýho papíru
-válej' se černý klapky z klavíru.
-R:
-{end_of_verse}
+{chorus}
 
 {start_of_verse}
-Tak loudám se tím hrozným městem sám
-a vím, že Terezu už nepotkám,
-jen já tu zůstal s prázdnou ulicí
-a vosamělý město mlčící.
-R:
+Do [C]prázdnejch beden [D]zotvíranejch [G]aut
+za[C]znívá odněkud [D]něžný tón [Emi]flaut
+a v [C]závěji sta[D]rýho papí[G]ru
+vá[C]lej' se černý [D]klapky z klaví[E]ru.
 {end_of_verse}
+
+{chorus}
+
+{start_of_verse}
+Tak [C]loudám se tím [D]hrozným městem [G]sám
+a [C]vím, že Terezu [D]už nepot[Emi]kám,
+jen [C]já tu zůstal [D]s prázdnou uli[G]cí
+a [C]vosamělý [D]město mlčí[E]cí.
+{end_of_verse}
+
+{chorus}

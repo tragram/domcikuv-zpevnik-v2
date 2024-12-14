@@ -16,12 +16,11 @@ já [Ami]poprvé tehdy jsem [G]Satana [Ami]potkal.
 {end_of_verse}
 
 {start_of_verse}
-Ten Satan měl líbeznou postavu panny
-a nepáchla síra, však voněly květy,
-a v úsměvu něha bez jediné hany,
-jen z úst jako hadi mu syčely věty:
+Ten [Ami]Satan měl [G]líbeznou [Ami]postavu [F]panny
+a [Ami]nepáchla [G]síra, však [Ami]voněly [G]květy,
+a v [Ami]úsměvu [G]něha bez [Ami]jediné [F]hany,
+jen z [Ami]úst jako hadi mu [G]syčely [Ami]věty:
 {end_of_verse}
-
 
 {start_of_chorus: R1}
 "Jen [C]nech si svou duši, ta k ničemu [G]není,
@@ -31,36 +30,36 @@ a [Ami]dobře se platí - to [G]beze všech [Ami]žertů!"
 {end_of_chorus}
 
 {start_of_chorus: R2}
-"Já pro ten tvůj hlas jsem si ohlávku uvil
-a stráž mi ho do klece vsadí,
-a kdybys pak stokrát i andělsky mluvil,
-tvůj hlas tě zradí!"
+"Já [C]pro ten tvůj hlas jsem si [G]ohlávku uvil
+a [Ami]stráž mi ho [G]do klece [Ami]vsadí, [E]
+a [Ami]kdybys pak [G]stokrát i [Ami]andělsky [F]mluvil,
+[Ami]tvůj [G]hlas tě [Ami]zradí!"
 {end_of_chorus}
 
 {start_of_verse}
-Dnes jako kníže si v paláci žiji,
-mám ve stájích koně a v zahradách pávy,
-jím ze zlaté mísy a z křišťálu piji,
-jen rádio nemám a nesnáším zprávy.
+Dnes [Ami]jako [G]kníže si v [Ami]paláci [F]žiji,
+mám [Ami]ve stájích [G]koně a v [Ami]zahradách [G]pávy,
+jím [Ami]ze zlaté [G]mísy a z [Ami]křišťálu [F]piji,
+jen [Ami]rádio nemám a [G]nesnáším [Ami]zprávy.
 {end_of_verse}
 
 {start_of_verse}
-Neb kdykoli válkou se o lásce bájí,
-když slaví se vrazi a obchody s časem,
-když svatými slovy se bezpráví hájí,
-když hlásá se lež - tedy vždycky mým hlasem.
+Neb [Ami]kdykoli [G]válkou se o [Ami]lásce [F]bájí,
+když [Ami]slaví se [G]vrazi a [Ami]obchody s [G]časem,
+když [Ami]svatými [G]slovy se [Ami]bezpráví [F]hájí,
+když [Ami]hlásá se lež - tedy [G]vždycky mým [Ami]hlasem.
 {end_of_verse}
 
 {start_of_chorus}
-Mé lůžko je měkké, však propíjím noci,
-mám z démantů bazén a ze zlata ryby,
-mám přebytek všeho, i pýchy, i moci,
-mám v paláci všechno, jen lidé tu chybí!
+Mé [C]lůžko je měkké, však [G]propíjím noci,
+mám [Ami]z démantů [G]bazén a ze [Ami]zlata [E]ryby,
+mám [Ami]přebytek [G]všeho, i [Ami]pýchy, i [F]moci,
+mám v [Ami]paláci všechno, jen [G]lidé tu [Ami]chybí!
 {end_of_chorus}
 
 {start_of_chorus}
-Dnes podruhé oko mé Satana spatří,
-je krásný, byť s úsměvem krysím,
-vždyť jemu dnes s hlasem i duše má patří,
-když na větvi visím.
+Dnes [C]podruhé oko mé [G]Satana spatří,
+je [Ami]krásný, byť [G]s úsměvem [Ami]krysím, [E]
+vždyť [Ami]jemu dnes [G]s hlasem i [Ami]duše má [F]patří,
+[Ami]když [G]na větvi [Ami]visím.
 {end_of_chorus}

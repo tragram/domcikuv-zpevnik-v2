@@ -44,16 +44,16 @@ po [Dmi]chodbě furt někdo [Ami]chodil,
 {end_of_verse}
 
 {start_of_verse}
-Major nosí velkou hvězdu, před branou ho potkala,
-řek' jí, že má zrovna volnej kvartýr,
-tak se sbalit nechala, -la, -la, -la,
-tak se sbalit nechala.
+[Ami]Major nosí velkou [C]hvězdu, [G]před branou ho pot[C]kala,
+[Dmi]řek' jí, že má zrovna [Ami]volnej kvartýr,
+[E]tak se sbalit necha[F]la, [G]-la, [C]-la, [G]-la,
+[Ami]tak se sbalit [E]nechala. [Ami]
 {end_of_verse}
 
 {start_of_verse}
-Co je komu do vojáčka, když ho holka zradila,
-na shledanou, pane Fráňo Šrámku,
-písnička už skončila, -la, -la, -la,
+[Ami]Co je komu do vo[C]jáčka, [G]když ho holka zra[C]dila,
+[Dmi]na shledanou, pane Fráňo [Ami]Šrámku,
+[E]písnička už skonči[F]la, [G]-la, [C]-la, [G]-la,
 [Ami]jakpak se vám [Emi]líbi[F]la, [G]-la, [C]-la, [G]-la?
 No [Ami]nic moc extra [Emi]neby[Ami]la.
 {end_of_verse}

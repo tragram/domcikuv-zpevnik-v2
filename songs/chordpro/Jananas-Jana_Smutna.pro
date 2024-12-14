@@ -17,10 +17,10 @@ když [Dm]starou paní záchranka před [G]domem [B]porazí
 {end_of_verse}
 
 {start_of_verse}
-Je tuze smutné, když se bílý kůň stane lidskou potravou
-když manželství zabíjí duši toulavou
-když Waka waka eh eh je textem písňovým
-když hygienik otráví se sýrem plísňovým
+[Dm]Je tuze smutné, když se bílý kůň stane lidskou potravou
+[Dm]když manželství zabíjí duši toulavou
+[G]když Waka waka eh eh je [B]textem písňovým
+když [Dm]hygienik otráví se [G]sýrem [B]plísňovým
 {end_of_verse}
 
 {start_of_chorus: R1}
@@ -29,45 +29,45 @@ ale [Gm]nejsmutnější [C]na světě jsem [Dm]já
 {end_of_chorus}
 
 {start_of_verse}
-Je smutné, když ti bratr řekne, že jsi jeho syn
-a když se po neštovicích fotíš do novin
-když půlku českých obrazů odváží si Švéd
-a když tě tvůj kluk z Plzně už vůbec nemá réd
+[Dm]Je smutné, když ti bratr řekne, že jsi jeho syn
+[Dm]a když se po neštovicích fotíš do novin
+[G]když půlku českých obrazů [B]odváží si Švéd
+a když [Dm]tě tvůj kluk z Plzně už [G]vůbec nemá [B]réd
 {end_of_verse}
 
 {start_of_verse}
-Je smutné, když se na konečné ráno probudíš
-a v podstatě vzato lituješ, že bdíš
-když slabý, křehký racek zmírá pod naftou
-když na Slovensku přestane se blýskat nad Tatrou
+[Dm]Je smutné, když se na konečné ráno probudíš
+[Dm]a v podstatě vzato lituješ, že bdíš
+[G]když slabý, křehký racek [B]zmírá pod naftou
+když na [Dm]Slovensku přestane se [G]blýskat nad [B]Tatrou
 {end_of_verse}
 
 {chorus: R1}
 {chorus: R1}
 
 {start_of_verse}
-Je smutné, když se banjo večer naladí
-a ty zjistíš, že už ti to vlastně nevadí
-když tě kamarádi na párty nepozvou
-a ani nepřijdou, když máš párty svou
+[Dm]Je smutné, když se banjo večer naladí
+[Dm]a ty zjistíš, že už ti to vlastně nevadí
+[G]když tě kamarádi [B]na párty nepozvou
+a ani [Dm]nepřijdou, když máš [G]párty [B]svou
 {end_of_verse}
 
 {start_of_verse}
-Když fotbalista modelce dá náhle kopačky
-a modelka pak před přehlídkou snídá kapačky
-a s Karlem Gottem naopak když nikdo nesnídá
-tak to se smutné zdá, ale nejvíc trpím já
+[Dm]Když fotbalista modelce dá náhle kopačky
+[Dm]a modelka pak před přehlídkou snídá kapačky
+[G]a s Karlem Gottem naopak když [B]nikdo nesnídá
+tak to [Dm]se smutné zdá, ale [G]nejvíc trpím [B]já
 {end_of_verse}
 
 {chorus: R1}
 {chorus: R1}
 
 {start_of_chorus: R2}
-Ať se nikdo nezlobí, smůla má se násobí
-já mám prostě těžší období
+Ať se [Dm]nikdo nezlo[C]bí, smůla [B]má se náso[Dm]bí
+[Gm]já mám prostě [C]těžší obdo[Dm]bí
 
-Ať se nikdo nediví, svět je nespravedlivý
-já jsem ten, kdo tohle nejlíp ví
+[Dm]Ať se nikdo nedi[C]ví, svět je [B]nespravedli[Dm]vý
+[Gm]já jsem ten, kdo [C]tohle nejlíp [Dm]ví
 {end_of_chorus}
 
 {chorus: R1}

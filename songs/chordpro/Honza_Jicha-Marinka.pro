@@ -34,10 +34,10 @@ i [Hmi]Svatojánský [E]proud.
 
 
 {start_of_verse}
-Kolik jí tak může být?
-Prý má krásný nový byt
-hned za rohem
-od Prozatímního divadla.
+[Ami]Kolik jí tak [D]může být?
+[C]Prý má krásný [F]nový byt
+[B]hned za rohem
+[F]od Prozatí[Hmi]mního divad[E]la.
 
 Chová světlou památku
 na svoji kamarádku
@@ -47,23 +47,23 @@ co prý už odpadla.
 
 
 {start_of_chorus}
-Ptala se mě taky kdysi,
-jestli věřím v Rukopisy,
-jestli ne, tak ona
-to prý na mě nepoví.
+[G#]Ptala se mě [Cm]taky kdysi,
+[D#7]jestli věřím [G#]v Rukopisy,
+[C#7]jestli ne, tak [G#]ona
+to prý [D#7]na mě nepo[C7]ví.
 
-Kdypak asi dovím se,
-kolik je mé Márince
-a proč pořád vykládá
-o Karlu Máchovi?
+[G#]Kdypak asi [Cm]dovím se,
+[D#7]kolik je mé [G#]Márince
+a proč po[C#7]řád vyklá[G#]dá
+o [Hmi]Karlu Má[E]chovi?
 {end_of_chorus}
 
 
 {start_of_verse}
-Má dívka je spanilá,
-jen kdyby tak prozradila,
-kolik jí je roků
-a jak vysoký má věk?
+[Ami]Má dívka [D]je spanilá,
+jen [C]kdyby tak [F]prozradila,
+[B]kolik jí je ro[F]ků
+a [Hmi]jak vysoký má [E]věk?
 
 Její první nápadník
 byl nějaký Jáchym Ondřej Šlik,
@@ -73,23 +73,23 @@ hlavu na špalek.
 
 
 {start_of_chorus}
-Děvče je to půvabné
-a má historky zábavné,
-jako malá nejradši si
-hrála s kalichem.
+[G#]Děvče je to [Cm]půvabné
+a [D#7]má historky [G#]zábavné,
+[C#7]jako malá [G#]nejradši si
+[D#7]hrála s kali[C7]chem.
 
-Její táta není žádný vůl,
-má v Kutných Horách pěkný důl
-a ve všech krizích zatím ho
-uhájil proti všem.
+[G#]Její táta není [Cm]žádný vůl,
+má v [D#7]Kutných Horách [G#]pěkný důl
+a [C#7]ve všech krizích [G#]zatím ho
+[Hmi]uhájil proti [E]všem.
 {end_of_chorus}
 
 
 {start_of_verse}
-Je krasavice po mámě,
-leč informaci nedá mně,
-v kterém roce porodila
-ji na tuto zem.
+[Ami]Je krasavice [D]po mámě,
+leč [C]informaci [F]nedá mně,
+v [B]kterém roce [F]porodila
+[Hmi]ji na tuto [E]zem.
 
 Byla z rodu Slavníků,
 a než tam čekat na dýku,
@@ -99,23 +99,23 @@ už před tím masakrem.
 
 
 {start_of_chorus}
-Mám dívku jako obrázek
-a neznám sice její věk,
-ale myslím, že to
-není žádná apokalypsa.
+[G#]Mám dívku [Cm]jako obrázek
+a [D#7]neznám sice [G#]její věk,
+ale [C#7]myslím, že to
+[G#]není žádná [D#7]apokalyp[C7]sa.
 
-Když nad kraj se snese tma,
-tak nechce zůstat samotná
-a prosí mě, abych prý
-zkusil jí ochočit psa.
+[G#]Když nad kraj [Cm]se snese tma,
+tak [D#7]nechce zůstat [G#]samotná
+a [C#7]prosí mě, [G#]abych prý
+zkusil [Hmi]jí ochočit [E]psa.
 {end_of_chorus}
 
 
 {start_of_verse}
-Umí navléct korálky
-a vždycky, když jdu do války,
-nakreslí mě na jeskyni
-hroudou hliněnou,
+[Ami]Umí navléct [D]korálky
+a [C]vždycky, když jdu [F]do války,
+[B]nakreslí mě [F]na jeskyni
+[Hmi]hroudou hlině[E]nou,
 
 Umí oheň rozdělat,
 tak proč bych se měl vlastně ptát,

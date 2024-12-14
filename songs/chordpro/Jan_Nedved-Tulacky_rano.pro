@@ -24,19 +24,19 @@ Tulácký [Dmi]ráno na kemp se snáší,
 {end_of_chorus}
 
 {start_of_verse}
-Posvátný je můj každý večer,
-když oči k ohni vždy vrací se zpět,
+[Dmi]Posvátný je můj každý večer,
+[Ami]když oči k ohni vždy vrací se [Dmi]zpět,
 tam mnohý z pánů měl by se kouknout
-a hned by věděl, jakej chcem svět.
+[Ami]a hned by věděl, jakej chcem [Dmi]svět.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Posvátný je mi každý slovo,
-když lesní moudrost a přírodu zná,
+[Dmi]Posvátný je mi každý slovo,
+[Ami]když lesní moudrost a přírodu [Dmi]zná,
 bobříků sílu a odvahu touhy,
-kolik v tom pravdy, však kdo nám ji dá?
+[Ami]kolik v tom pravdy, však kdo nám ji [Dmi]dá?
 {end_of_verse}
 
 {chorus}

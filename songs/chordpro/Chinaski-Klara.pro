@@ -26,13 +26,13 @@ jsem ten tvůj vysněný [E]pán [Emi]
 {chorus}
 
 {start_of_verse}
-[H]Já se prostě [D#mi]nekontroluju 
+[H]Já se prostě [D#mi]nekontroluju
 a [C#mi]plácám a [Emi]plácám
 jsi vážně [H]úžasná já tě [D#mi]nejspíš miluju,
 [C#mi]no ty mi dáváš .. [Emi]jééé
 [H]Zabalit, vyrazit, rychle [D#mi]frčíme dál
 [C#mi]bereme čáru [Emi]šup do kočáru
-[H]Já jenom [G#mi]já jsem ten tvůj vysněný [E]pán 
+[H]Já jenom [G#mi]já jsem ten tvůj vysněný [E]pán
 Inže[Emi]nýr šarlatán
 {end_of_verse}
 

@@ -25,19 +25,19 @@ když [D]namísto [Emi]daně jim [H7]dají kus [Emi]žvance.
 {end_of_chorus}
 
 {start_of_verse}
-Pohleď, jak s vervou tu do sebe mlátí,
-než hrdlo si servou a život si zkrátí,
-tak s křikem se boulují s tupostí mezků
-a páni se radují, utáhnou přezku.
+Tak [Emi]pohleď, jak s [D]vervou tu [Emi]do sebe [D]mlátí,
+než [Emi]hrdlo si [D]servou a [G]život si [Ami]zkrátí,
+tak [Emi]s křikem se [C]boulují [D]s tupostí [Emi]mezků
+a [D]páni se [Emi]radují, [H7]utáhnou [Emi]přezku.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Když v hospodě pijí, tak pozor dej na ně
-jak na klubko zmijí, jež zabíjí laně,
-tak pozor dej na ně v té podivné době,
-vždyť při této hraně jde o krk i tobě!
+Když [Emi]v hospodě [D]pijí, tak [Emi]pozor dej [D]na ně
+jak [Emi]na klubko [D]zmijí, jež [G]zabíjí [Ami]laně,
+tak [Emi]pozor dej [C]na ně v té [D]podivné [Emi]době,
+vždyť [D]při této [Emi]hraně jde [H7]o krk i [Emi]tobě!
 {end_of_verse}
 
 {chorus}

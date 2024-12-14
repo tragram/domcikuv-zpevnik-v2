@@ -49,7 +49,7 @@ A [D]tak s velkým [A]ohňostrojem
 pomalu [G]mizí hvězdy
 [D]minulé [A]dekády [G]
 
-[D]důležitý je [A]co bude dál
+[D]Důležitý je [A]co bude dál
 snad [Hmi]pět kaťáků v kulturáku a [G]v léťě festival
 [D]už navždy [A]spolu
 pod knutou [G]rock'n'rollu.

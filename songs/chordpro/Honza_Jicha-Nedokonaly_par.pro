@@ -20,10 +20,10 @@ a pět kolem [G7]pasu přebýv[C]á,
 {end_of_verse}
 
 {start_of_verse}
-Z křídového magazínu koukal na něj
-rambo, co mu patří svět,
-co neví, co se svalama
-a o ženských moh' by román vyprávět.
+[G]Z křídového magazínu koukal na něj
+rambo, co mu [Ami]patří svět,
+[D]co neví, co se svalama
+[D7]a o ženských moh' by román [G]vyprávět.
 Jestli nejsi jako on,
 tak sbal si švestky a nalož se do lihu,
 prohráváš to, kamaráde,
@@ -40,10 +40,10 @@ kdo [D7]poradí, jak to [G]zpeněžit?
 {end_of_chorus}
 
 {start_of_verse}
-Potkali se v autobuse,
-který ani jednomu z nich nepatřil,
-neudělal dvě stě třicet,
-i kdybys mu šlapal na krk ze všech sil,
+[G]Potkali se v autobuse,
+který jednomu z nich [Ami]nepatřil,
+[D]neudělal dvě stě třicet,
+[D7]i kdybys mu šlapal na krk ze všech [G]sil,
 obyčejná městská linka
 od dvou kafí přes kino na plovárnu,
 ona by prý chtěla synka,
@@ -51,10 +51,10 @@ on že za komančů sloužil v Komárnu.
 {end_of_verse}
 
 {start_of_verse}
-Jak tak srdce bušila
-a přišel večer, ruce se jim potkaly
-a zapomněli na kila a na mejkap,
-na poršata a na svaly,
+[G]Jak tak srdce bušila
+a přišel večer, ruce se jim [Ami]potkaly
+[D]a zapomněli na kila a na mejkap,
+[D7]na poršata a na [G]svaly,
 jak to potom bylo dál,
 to v žádném magazínu už se nepíše,
 on ji nejspíš miloval

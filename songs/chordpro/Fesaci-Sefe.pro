@@ -25,19 +25,19 @@ tak nech mě [D]na start jít.
 {end_of_chorus}
 
 {start_of_verse}
-Tuhle trať mám dávno projetou
-a znovu jsem začal s dietou.
-Proč se musím trápit před stájí,
-kde jiní mého koně sedlají?
+[D]Tuhle trať mám dávno [G]projetou
+a znovu jsem začal s [D]dietou.
+Proč se musím trápit před [G]stájí,
+kde jiní mého koně [D]sedlají?
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Když se Démon zabil na proutí,
-říkali mi, svět se nezhroutí.
-ale já ten pocit nemoh' snést.,
-že jsem ho měl tenkrát jinak vést.
+[D]Když se Démon zabil na [G]proutí,
+říkali mi, svět se ne[D]zhroutí.
+ale já ten pocit nemoh' [G]snést.,
+že jsem ho měl tenkrát jinak [D]vést.
 {end_of_verse}
 
 {chorus}

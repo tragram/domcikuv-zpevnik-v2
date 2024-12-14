@@ -16,73 +16,73 @@ to se přesně nikdy nedov[C]ím.
 {end_of_verse}
 
 {start_of_verse}
-Já vím jen, že jsem spěchal
-a řek si tenkrát tak si cestu zkrať
-spodem kolem jezera,
-kde cestu kříží železniční trať.
+Já [C]vím jen, že jsem spěchal
+a [F]řek si tenkrát tak si cestu zkrať
+[G7]spodem kolem jezera,
+kde cestu kříží železniční [C]trať.
 {end_of_verse}
 
 {start_of_verse}
-Tam v záři bílých světel
-vidím dívku u přejezdu stát,
-asi něco se jí přihodilo,
-je to v jejím obličeji znát.
+Tam [C]v záři bílých světel
+[F]vidím dívku u přejezdu stát,
+[G7]asi něco se jí přihodilo,
+je to v jejím obličeji [C]znát.
 {end_of_verse}
 
 {start_of_verse}
-Už dlouho tady čekám
-a ještě nikdo mi nazastavil,
-odvezte mě, prosím, domů,
-je to odtud necelých pět mil.
+Už [C]dlouho tady čekám
+a [F]ještě nikdo mi nazastavil,
+[G7]odvezte mě, prosím, domů,
+je to odtud necelých pět [C]mil.
 {end_of_verse}
 
 {start_of_verse}
-Tvář má bílou jako sníh
-a paže jako mramor šedavý,
-proč stála tam na kolejích
-tak sama v černé noci, kdopak ví.
+Tvář [C]má bílou jako sníh
+a [F]paže jako mramor šedavý,
+[G7]proč stála tam na kolejích
+tak sama v černé noci, kdopak [C]ví.
 {end_of_verse}
 
 {start_of_verse}
-Tam před tím domem zastavte,
-já za tátou teď musím domů jít,
-tak zmáčknu klakson, zastavím
-a čekám, až ji přijdou otevřít
+Tam [C]před tím domem zastavte,
+já [F]za tátou teď musím domů jít,
+[G7]tak zmáčknu klakson, zastavím
+a čekám, až ji přijdou [C]otevřít
 {end_of_verse}
 
 {start_of_verse}
-Z chodby v nočním šeru
-vrhá lampa na silnici zář,
-pane, já vám vezu dceru,
-proč máte tedy zamračenou tvář?
+Z [C]chodby v nočním šeru
+[F]vrhá lampa na silnici zář,
+[G7]pane, já vám vezu dceru,
+proč máte tedy zamračenou [C]tvář?
 {end_of_verse}
 
 {start_of_verse}
-Po dívce pohled stáčím
-a marně kolem rozhlížím se tmou,
-vedle mě je místo prázdné
-stejně jako cesta přede mnou.
+Po [C]dívce pohled stáčím
+a [F]marně kolem rozhlížím se tmou,
+[G7]vedle mě je místo prázdné
+stejně jako cesta přede [C]mnou.
 {end_of_verse}
 
 {start_of_verse}
-Ten muž se nejdřív diví,
-zřejmě tomu, co se dovídá,
-a zblízka na mě civí,
-když tichým hlasem ke mě povídá.
+Ten [C]muž se nejdřív diví,
+[F]zřejmě tomu, co se dovídá,
+a [G7]zblízka na mě civí,
+když tichým hlasem ke mě [C]povídá.
 {end_of_verse}
 
 {start_of_verse}
-Já nevím, milej pane,
-zda je to mejlka nebo krutej žert,
-tak nastartujte ten svůj bourák,
-zmizte odtud, ať vás vezme čert.
+Já [C]nevím, milej pane,
+[F]zda je to mejlka nebo krutej žert,
+[G7]tak nastartujte ten svůj bourák,
+zmizte odtud, ať vás vezme [C]čert.
 {end_of_verse}
 
 {start_of_verse}
-Předevčírem moje dcera
-zabila se, tak se radši ztrať,
-pět mil odtud u jezera,
-kde cestu kříží železniční trať!
+Předevčírem [C]moje dcera
+[F]zabila se, tak se radši ztrať,
+[G7]pět mil odtud u jezera,
+kde cestu kříží železniční [C]trať!
 {end_of_verse}
 
 {start_of_verse}

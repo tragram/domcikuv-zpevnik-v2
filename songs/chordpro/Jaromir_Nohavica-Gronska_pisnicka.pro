@@ -8,45 +8,44 @@
 {tempo: }
 {range: a1-h2}
 {start_melody: a}
-
 {start_of_verse}
 [D]Daleko [Emi]na severu [A]je Grónská [D]zem,
 [D]žije tam [Emi]Eskymačka s [A]Eskymákem, [D]
-𝄆 my bychom [Emi]umrzli, jim [G]není [D]zima,
+𝄆 [D]my bychom [Emi]umrzli, jim [G]není [D]zima,
 snídají [Emi]nanuky a [A]eskima. [D]𝄇
 {end_of_verse}
 
 {start_of_verse}
-Mají se bezvadně, vyspí se moc,
-půl roku trvá tam polární noc,
-𝄆 na jaře vzbudí se a vyběhnou ven,
-půl roku trvá tam polární den. 𝄇
+[D]Mají se [Emi]bezvadně, [A]vyspí se [D]moc,
+[D]půl roku [Emi]trvá tam [A]polární [D]noc,
+𝄆 [D]na jaře [Emi]vzbudí se a [G]vyběhnou [D]ven,
+[D]půl roku [Emi]trvá tam [A]polární den. [D]𝄇
 {end_of_verse}
 
 {start_of_verse}
-Když sněhu napadne nad kotníky,
-hrávají s medvědy na četníky,
-𝄆 medvědi těžko jsou k poražení,
-neboť medvědy ve sněhu vidět není. 𝄇
+[D]Když sněhu [Emi]napadne [A]nad kotní[D]ky,
+[D]hrávají [Emi]s medvědy [A]na četníky, [D]
+𝄆 [D]medvědi [Emi]těžko jsou k [G]poraže[D]ní,
+[D]neboť medvě[Emi]dy ve sněhu [A]vidět není. [D]𝄇
 {end_of_verse}
 
 {start_of_verse}
-Pokaždé ve středu, přesně ve dvě
-zaklepe na na íglů hlavní medvěd:
-𝄆 "Dobrý den, mohu dál na vteřinu?
-Nesu vám trochu ryb na svačinu." 𝄇
+[D]Pokaždé [Emi]ve středu, [A]přesně ve [D]dvě
+[D]zaklepe [Emi]na na íglů [A]hlavní medvěd: [D]
+𝄆 [D]"Dobrý den, [Emi]mohu dál na [G]vteři[D]nu?
+[D]Nesu vám [Emi]trochu ryb na [A]svačinu." [D]𝄇
 {end_of_verse}
 
 {start_of_verse}
-V kotlíku bublá čaj, kamna hřejí,
-psi venku hlídají před zloději,
-𝄆 smíchem se otřásá celé íglů,
-neboť medvěd jim předvádí spoustu fíglů. 𝄇
+[D]V kotlíku [Emi]bublá čaj, [A]kamna hře[D]jí,
+[D]psi venku [Emi]hlídají [A]před zloději, [D]
+𝄆 [D]smíchem se [Emi]otřásá [G]celé íg[D]lů,
+[D]neboť medvě[Emi]d jim předvádí [A]spoustu fíglů. [D]𝄇
 {end_of_verse}
 
 {start_of_verse}
-Tak žijou vesele na severu,
-srandu si dělají z teploměrů,
-𝄆 my bychom umrzli, jim není zima,
-neboť jsou doma a mezi svýma. 𝄇
+[D]Tak žijou [Emi]vesele [A]na severu, [D]
+[D]srandu si [Emi]dělají [A]z teploměrů, [D]
+𝄆 [D]my bychom [Emi]umrzli, jim [G]není [D]zima,
+[D]neboť jsou [Emi]doma a [A]mezi svýma. [D]𝄇
 {end_of_verse}

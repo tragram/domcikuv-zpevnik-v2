@@ -25,10 +25,10 @@ a pozhasínám, co bude [H7]dál?
 {end_of_verse}
 
 {start_of_verse}
-Pod polštář dopisů pár,
-co poslalas, dávám,
-píšeš, že ráda mě máš
-a trápí tě stesk,
+[Emi]Pod polštář dopisů pár,
+co poslalas, [Ami]dávám,
+[D]píšeš, že ráda mě máš
+a trápí tě [G]stesk,[C][G]
 {end_of_verse}
 
 {verse: V2}

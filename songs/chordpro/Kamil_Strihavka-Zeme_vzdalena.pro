@@ -11,19 +11,19 @@
 
 {start_of_verse}
 [C]Smutnej déšť a [G]město v kouři,
-[Dmi]ticho prázdnejch rán. [F]
+[Dmi]ticho prázdnejch rán.
 [Ami]Noční můry [G]pijou silnej čaj[D].
 {end_of_verse}
 
 {start_of_verse}
 [C]Smutnej déšť, [G]oči mhouříš,
-[Dmi]už v nich nejsem sám, [F]
+[Dmi]už v nich nejsem sám,
 [Ami]ještě málo [G]žijou, když se [D]ptaj.
 {end_of_verse}
 
 {start_of_chorus}
-[C]Znám tě mnohem [G]víc, země [Dmi]vzdálená, [F]
-[Ami]spát s tajemn[G]ou závra[D]tí. [D]
+[C]Znám tě mnohem [G]víc, země [Dmi]vzdálená,
+[Ami]spát s tajemn[G]ou závra[D]tí.
 {end_of_chorus}
 
 {start_of_verse}
@@ -35,7 +35,7 @@
 {start_of_verse}
 [C]Pod správnou [G]hvězdou
 v malým [Dmi]ráji chtěl jsem říct:
-[Ami]Still my guit[G]ar gently [D]weeps. [D]
+[Ami]Still my guit[G]ar gently [D]weeps.
 {end_of_verse}
 
 {start_of_bridge}
@@ -51,6 +51,10 @@ v malým [Dmi]ráji chtěl jsem říct:
 že jsi mou, že jsi [G]mou. [A]
 {end_of_bridge}
 
-{chorus}
+{start_of_chorus}
+[D]Znám tě mnohem [A]víc, země [Emi]vzdálená,
+[Hmi]spát s tajemn[A]ou závra[E]tí.
+{end_of_chorus}
+
 
 {chorus}

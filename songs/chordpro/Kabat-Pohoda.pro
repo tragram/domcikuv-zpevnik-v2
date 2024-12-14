@@ -15,9 +15,9 @@
 {end_of_verse}
 
 {start_of_verse}
-Máme kino máme hospodu
-V obci všeobecnou pohodu
-Máme hujer, žito, chléb i sůl
+[Ami]Máme kino máme [Emi]hospodu
+[Ami]V obci všeobecnou [Emi]pohodu
+[Ami]Máme hujer, [G]žito, chléb i [Dmi]sůl
 {end_of_verse}
 
 {start_of_chorus}
@@ -31,29 +31,29 @@ My máme [Dmi]čas!
 {end_of_chorus}
 
 {start_of_verse}
-Chlapi někdy trochu prudký jsou
-Holky s motykama tancujou
-S ranní rosou táhnou do polí
+[Ami]Chlapi někdy trochu [Emi]prudký jsou
+[Ami]Holky s motykama [Emi]tancujou
+[Ami]S ranní rosou [G]táhnou do [Dmi]polí
 {end_of_verse}
 
 {start_of_verse}
-Nikdo se tam nikam nežene
-Máme traktory a ne že ne
-Až to spatříš, ledy povolí
+[Ami]Nikdo se tam nikam [Emi]nežene
+[Ami]Máme traktory a [Emi]ne že ne
+[Ami]Až to spatříš, [G]ledy po[Dmi]volí
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Hoří les a hoří rodnej dům
-Hoří velkostatek sousedům
-To je smůla, drahá podívej
+[Ami]Hoří les a hoří [Emi]rodnej dům
+[Ami]Hoří velkostatek [Emi]sousedům
+[Ami]To je smůla, [G]drahá po[Dmi]dívej
 {end_of_verse}
 
 {start_of_verse}
-Hasiči to stejně přejedou
-Hlavně si moc dobře nevedou
-Schovej sirky, ať je neviděj!
+[Ami]Hasiči to stejně [Emi]přejedou
+[Ami]Hlavně si moc dobře [Emi]nevedou
+[Ami]Schovej sirky, [G]ať je ne[Dmi]viděj!
 {end_of_verse}
 
 {chorus}

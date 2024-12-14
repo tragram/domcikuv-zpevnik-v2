@@ -23,15 +23,15 @@
 {end_of_chorus}
 
 {start_of_verse}
-Nevěř, že zrada nepřebolí,
-ten zázrak už se stokrát stal,
-ať se trápíš pro cokoli,
-život půjde dál.
+[G]Nevěř, že zrada [Emi]nepřebolí,
+[C]ten zázrak už se [D7]stokrát stal,
+[Hmi]ať se trápíš [Emi]pro cokoli,
+[Ami7]život půjde [D7]dál.
 {end_of_verse}
 
 {start_of_verse}
-I pro tvé oči, moje milá,
-čas dávno lék svůj uchystal,
-kdyby sis oči vyplakala,
-slepý bych tu stál.
+[G]I pro tvé oči, [Emi]moje milá,
+[C]čas dávno lék svůj [D7]uchystal,
+[Hmi]kdyby sis oči [Emi]vyplakala,
+[Ami7]slepý bych tu [D7]stál.
 {end_of_verse}

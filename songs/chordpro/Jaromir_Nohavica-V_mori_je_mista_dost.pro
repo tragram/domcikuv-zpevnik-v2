@@ -25,28 +25,28 @@ na pravo v Golfském proudu [G7]už vidí Afriku.
 {chorus}
 
 {start_of_verse}
-V chaluhách pod hladinou perou se chobotnice,
-na každém chapadle boxerská rukavice,
-perou se, perou se, vstávají, padají
-a všechny ryby kolem ploutvemi tleskají.
+[C]V chaluhách pod hladinou perou se chobotnice,
+[F]na každém chapadle boxerská rukavice,
+[C]perou se, perou se, vstávají, pada[F]jí
+a všechny ryby kolem [G7]ploutvemi tleskají.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Medúzy průhledné jak výkladní skříň,
-čím blíž jsou k hladině, tím vidět jsou míň,
-na vlnách houpají se a když je nikdo nevidí,
-šťouchají do lehátek, vrážejí do lidí.
+[C]Medúzy průhledné jak výkladní skříň,
+[F]čím blíž jsou k hladině, tím vidět jsou míň,
+[C]na vlnách houpají se a když je nikdo nevi[F]dí,
+šťouchají do lehátek, [G7]vrážejí do lidí.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Rejnoci placatí jak kuchyňské utěrky
-šestého každý měsíc dobijou baterky,
-na mořských křižovatkách blikají světlama,
-aby se nesrazily ryby s rybama.
+[C]Rejnoci placatí jak kuchyňské utěrky
+[F]šestého každý měsíc dobijou baterky,
+[C]na mořských křižovatkách blikají svět[F]lama,
+aby se nesrazily [G7]ryby s rybama.
 {end_of_verse}
 
 {chorus}

@@ -10,32 +10,34 @@
 {start_melody: a}
 {start_of_verse}
 [A]Rumělku ve tvá[D]řích,
-ležím v polšt[Emi7]ářích,
+ležím v polšt[E7]ářích,
 to mě právě bav[A]í,
 
-nic mě netí[D]ží,
-jen si prohlí[Emi7]žím
+Nic mě netí[D]ží,
+jen si prohlí[E7]žím
 všechny šperky, co [A]mám.
 
-A svět mi radosti [D]chystá
-a v kra[Emi7]mflecích jsem si [A]jistá,
+[A7]A svět mi radosti [D]chystá
+a v [E7]kramflecích jsem si [A]jistá,
 [F#mi]když se načan[D]čám,
-když se nača[Emi7]nčám,
+když se nača[E7]nčám,
 když se nača[A]nčám.
 {end_of_verse}
 
 {start_of_verse}
-Po drahých kobercích
-chodit ve špercích
-to mi zkrátka sluší,
+[A]Po drahých kober[D]cích
+chodit ve šper[E7]cích
+to mi zkrátka [A]sluší,
 
-hosty přijímám,
-jen se zajímám,
-copak ušít si dám.
+Hosty přijí[D]mám,
+jen se zají[E7]mám,
+copak ušít si [A]dám.
 
-A svět mi rukama tleská,
-jsem roztomilá a hezká,
-𝄆 když se načančám 𝄇 (3x)
+[A7]A svět mi rukama [D]tleská,
+jsem [E7]roztomilá a [A]hezká,
+[F#mi]když se načan[D]čám,
+když se nača[E7]nčám,
+když se nača[A]nčám.
 {end_of_verse}
 
 {start_of_chorus}
@@ -55,11 +57,11 @@ když se načan[A]čá
 [D]že sním-li či bdím[E7],
 tak stále jsem švar[A]ná,
 
-příčinu [D]znej,
+Příčinu [D]znej,
 já ze všech jsem [E7]nej,
 já na sebe [A]dbám.
 
-Ať projdu zámkem či [D]smrčím,
+[A7]Ať projdu zámkem či [D]smrčím,
 jsem [E7]dokonalá a [A]frčím,
 [A]když se načan[D]čám,
 když se načan[E7]čám,
