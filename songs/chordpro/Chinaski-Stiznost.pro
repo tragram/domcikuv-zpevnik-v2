@@ -41,7 +41,7 @@ a [Dmi]rodnej list tam odevzdám
 [F]chci vymazat svou [C]evidenci
 a [G]vobčanku jim taky [F]dám
 
-[C]přidám taky [G]řidičák,
+[C]Přidám taky [G]řidičák,
 [Dmi]dřív než vyhraju nějaký body
 [F]kašlu na ty vaše [C]závody,
 kde se [G]hraje o ná[F]hody

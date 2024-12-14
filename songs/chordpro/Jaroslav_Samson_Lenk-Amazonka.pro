@@ -32,7 +32,7 @@ stejnou barvu jako [G]měly
 {start_of_verse}
 Kluci tenkrát, co tě [G]znali,
 všude, kde jsem s tebou [Hmi]byl,[Bmi][Ami]
-Amazonka říká[G]vali 
+Amazonka říká[G]vali
 a já [Ami]hrdě přisvěd[D]čil.
 {end_of_verse}
 

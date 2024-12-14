@@ -24,8 +24,8 @@ chtěl bych být hadem, abych vysvlékl se ze své kůže
 {end_of_verse}
 
 {start_of_chorus}
-|: www [G]iDnes, dvaa[Hmi]dvacátého května
-dva tisíce devět černá [C]kronika, a j[D]á :|
+𝄆 www [G]iDnes, dvaa[Hmi]dvacátého května
+dva tisíce devět černá [C]kronika, a j[D]á 𝄇
 {end_of_chorus}
 
 {start_of_verse}

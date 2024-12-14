@@ -33,7 +33,7 @@
 [Dmi]dnem i tmou víš, [Emi]po čem toužíš,
 [F]hádej po čem [G]jen,
 
-[C]jaká síla hýbá [G]vším,
+[C]Jaká síla hýbá [G]vším,
 [F]co i hory přená [Emi]ší,
 [Dmi]co je lék [Emi]čím vše se [F]léčí,
 vždyť [G]víš přeci [C]jen – láskou.

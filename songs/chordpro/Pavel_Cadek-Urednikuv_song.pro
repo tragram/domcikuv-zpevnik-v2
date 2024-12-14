@@ -63,7 +63,7 @@ Však v tomhle ofisu mě oslovujte "králi".
 {chorus}
 
 {start_of_chorus}
-jó já mám štempl
+Jó já mám štempl
 a ty si odnes prázdný papír,
 ty to zvládneš, však jsme chlapi.
 Nejsem lempl,

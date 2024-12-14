@@ -18,7 +18,7 @@ odkrývá [G]mojí vinu. 𝄇
 {start_of_chorus: R1}
 𝄆 Ve vínu [D]dávno nic,
 ve [A]vínu dávno nic
-nehle[Emi]dám. [G] 𝄇
+nehle[Emi]dám. [G]𝄇
 {end_of_chorus}
 
 {start_of_verse}
@@ -31,7 +31,7 @@ jen ať je [G]den noc ne. 𝄇
 {start_of_chorus: R2}
 𝄆 Od proseb [D]dávno nic,
 od pro[A]seb dávno nic
-neče[Emi]kám. [G] 𝄇
+neče[Emi]kám. [G]𝄇
 {end_of_chorus}
 
 {start_of_verse}

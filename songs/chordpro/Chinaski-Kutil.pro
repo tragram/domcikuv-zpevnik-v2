@@ -37,7 +37,7 @@ má práce je moje hobby šťastnej
 
 {start_of_verse}
 Mám [E]ženu, je mladá
-[F#mi]krásná chytrá [A]přívěti[E]vá, 
+[F#mi]krásná chytrá [A]přívěti[E]vá,
 má jednu malinkatou [F#mi]chybu,
 že si [A]se mnou vůbec nepovídá[E]
 {end_of_verse}

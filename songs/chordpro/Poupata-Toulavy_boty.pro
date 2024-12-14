@@ -13,7 +13,7 @@ Každý [A]den dál a [E]dál,
 vprostřed [F#mi]cesty jako krá[C#mi]l
 chodil [D]tulák, boty [Hmi]starý na noh[E]ou,
 
-ať byl [F#mi]déšť, nebo mrá[D]z,
+Ať byl [F#mi]déšť, nebo mrá[D]z,
 chodil po [E]těch cestách [C#mi]zas,
 cílem [Hmi]byl mu obzor
 stř[C#mi]etlý s obloho[E]u.

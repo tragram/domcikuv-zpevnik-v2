@@ -35,6 +35,6 @@
 [F]třetí pro [C]světlo[G]noše.
 [Emi]Až budeš una[Ami]vená,
 [F]pírka ti pofouká [G]Máří Magdaléna,
-|: [C]vlaštovko, leť, [Ami]nás, chudé, veď, [F][G][C] :|
+𝄆 [C]vlaštovko, leť, [Ami]nás, chudé, veď, [F][G][C]𝄇
 [C]vlaštovko leť....
 {end_of_verse}

@@ -21,6 +21,40 @@ def replace_repetitions(chordpro_content: str):
     return re.sub(pattern, replacer, chordpro_content)
 
 
+def capitalize_lyrics(text):
+    def capitalize_paragraph(match):
+        # Match group 1 contains the chords or directives, group 2 contains the lyrics
+        directive_or_emptyline = match.group(1) or ""  # Ensure it's a string
+        chord = match.group(2) or ""  # Ensure it's a string
+        lyrics = match.group(3) or ""  # Ensure it's a string
+
+        # Capitalize the first non-whitespace letter in the lyrics
+        capitalized_lyrics = re.sub(
+            r"(?<!\S)(\S)", lambda m: m.group(1).upper(), lyrics, count=1
+        )
+
+        return directive_or_emptyline + chord + capitalized_lyrics
+
+    def skip_tabs(match):
+        # Return the entire match unmodified
+        return match.group(0)
+
+    # Regex matches chords/directives at the start of a line and lyrics afterward
+    pattern = re.compile(
+        r"((?:^|\n)\s*(?:\{[^}]*\}\s*|\n)\s*)(\[[A-Ha-h0-9#mi\s]\])?([^\n]*)"
+    )
+
+    # TODO: this does not work yet...
+    # Match anything within {start_of_tab} and {end_of_tab}
+    tab_pattern = re.compile(r"\{start_of_tab\}.*?\{end_of_tab\}", re.DOTALL)
+
+    # First, protect tab sections from being modified
+    text = tab_pattern.sub(skip_tabs, text)
+
+    # Process the text to capitalize the lyrics for each paragraph
+    return pattern.sub(capitalize_paragraph, text)
+
+
 def rename_file_in_directory(
     directory: Path, old_stem: str, new_stem: str, extension: str
 ):
@@ -51,6 +85,7 @@ def format_chordpro_files(
             chordpro_lines = file.readlines()
             chordpro_content = "\n".join(remove_whitespaces(chordpro_lines))
             chordpro_content = replace_repetitions(chordpro_content)
+            chordpro_content = capitalize_lyrics(chordpro_content)
         with open(file_path, "w", encoding="utf-8") as f:
             f.writelines(chordpro_content)
 

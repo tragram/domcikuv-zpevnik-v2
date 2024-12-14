@@ -14,7 +14,7 @@
 [G]škrtl jsem [Gmaj7]sirkou, co [G]jediná [Gmaj7]zbyla,
 [C]cigaretu [Cmaj7]vyklepanou, [C][Cmaj7]
 
-z lesa [Ami]vyletěl [Ami/G]pták a [Ami]krákoral [Ami/G]tak,
+Z lesa [Ami]vyletěl [Ami/G]pták a [Ami]krákoral [Ami/G]tak,
 že [D]vzpomínky mé rozjitřil,
 na [Ami]znak [Ami/G]pavouků, [Ami]co do klo[Ami/G]bouku
 mi [D]vyšila holka z kusu mé šály
@@ -34,7 +34,7 @@ ty [C]pevně drží [Cmi]čas a s [Emi]nimi i nás. [D7]
 [G]najednou [Gmaj7]kdosi [G]dlaně ote[Gmaj7]vřel,
 [C]z prstů mi [Cmaj7]tiše vy[C]pad', [Cmaj7]
 
-za[Ami]hořel [Ami/G]jako [Ami]vích a z let [Ami/G]bláhových
+Za[Ami]hořel [Ami/G]jako [Ami]vích a z let [Ami/G]bláhových
 [D]stal se plamenící rej
 a [Ami]dívky [Ami/G]té tvář mi [Ami]zjevila [Ami/G]zář,
 mi [D]rudých plamenů na konci léta,

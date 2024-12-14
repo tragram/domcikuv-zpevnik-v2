@@ -32,7 +32,7 @@ vzt[G]eklý na ptáka, [Dmi]který zpíval [E]Třešňáka,
 [Ami]Charlie Soukupe, vsadili tě do kupé,
 [C]Vláďu Veita s Třešňákem [G]poslali hit[C]lákem.
 [E]Jó, [Ami]aby čistka neskončila v půlce,
-[G]přibalili Karáska 
+[G]přibalili Karáska
 i [Dmi]Vokatou i [E]Schultze,
 [Ami]pro klid soudruhů Benýška a Neduhu,
 [C]zatočili s bacilem [G]Gusta s Vasi[C]lem. [E]
@@ -44,8 +44,8 @@ neb [G]vrabci na střeše [Dmi]cvrlikají [E]Dobeše,
 [Ami]v tónu nedbalém Nohavicu s Plíhalem,
 [C]celou scénu folkovou, [G]Nose i Voň[C]kovou.
 [E]Jó, [Ami]znějí Lutka, Jahelka i Merta,
-[G]Paleček i Janík, ba i 
+[G]Paleček i Janík, ba i
 [Dmi]skřeky Jima [E]Čerta,
 [Ami]Vasil s Gustavem před pohřebním ústavem
-[C]unaveně zafuní - [G]bacil byl i[C]munní. 
+[C]unaveně zafuní - [G]bacil byl i[C]munní.
 {end_of_verse}

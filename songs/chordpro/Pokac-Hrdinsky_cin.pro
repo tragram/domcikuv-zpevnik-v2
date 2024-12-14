@@ -72,7 +72,7 @@ a tak zatočil s cizákem násilnickým
 {chorus}
 
 {start_of_verse}
-a tak končí příběh, který se stal
+A tak končí příběh, který se stal
 a přísahám že jsem vám fakt nekecal
 jednou se budou psát písně to už teď vím
 oslavující můj hrdinský čin

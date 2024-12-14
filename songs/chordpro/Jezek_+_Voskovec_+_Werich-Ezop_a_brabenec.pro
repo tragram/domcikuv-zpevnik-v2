@@ -13,7 +13,7 @@
 [Ami]domů se [Ami7]nesa
 [F]moudrý [G7]Ezop, [C][G7]
 
-[C]potkal [Emi]brabce,
+[C]Potkal [Emi]brabce,
 [Ami]který bra[Ami7]bence
 [F]málem [G7]sezob [A7]
 

@@ -32,7 +32,7 @@ ne [Cdim]nalézám kon[E7]kurence
 [C]Vztahy s holkou [G]či s dámou
 jsou [F]pro mě velkou [C]neznámou
 [Dmi]rád bych sbalil [Ami]některou
-za[Cdim]tím se o mě [E7]neperou 
+za[Cdim]tím se o mě [E7]neperou
 [C]Až vyjdu jednou [G]se slečnou
 ať [F]tečnou, nebo [G]netečnou
 jí p[Dmi]od mostem či [Ami]pod duhou

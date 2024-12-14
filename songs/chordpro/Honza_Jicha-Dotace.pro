@@ -35,7 +35,7 @@ a hrubými urážkami pustil se tam do mě
 [F]Co prej jsem to za vyžírku a proč nechci ma[G]kat
 [C]a proč si aspoň [C/H]občas nenajdu [Ami]nějakou prá[G]ci?
 [F]Mám vrozenej syndrom, kterej nutí mě se flá[G]kat,
-a [C]na život [C/H]s ním už jsem 
+a [C]na život [C/H]s ním už jsem
 za[Ami]žádal o dota[G]ci.[F][G][E]
 {end_of_chorus}
 

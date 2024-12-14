@@ -48,11 +48,11 @@ Jenže [G]nejsem gay, tak [F]nešahej mi [G]prosím
 
 {start_of_verse}
 [C]Nikdy jsem [G]nechutnal [F]
-tvůj [G]jazyk na mém 
-[C] z tvé [G]pěsti ve [F]mně
-nikdy [G]nešlehl plamen 
+tvůj [G]jazyk na mém
+[C]z tvé [G]pěsti ve [F]mně
+nikdy [G]nešlehl plamen
 [C]Ale [G]nové [F]cesty
-jsou teď [G]otevřené 
+jsou teď [G]otevřené
 [C]a tak [G]gatě [F]dolů
-[G] a pojď ke mně!
+[G]a pojď ke mně!
 {end_of_verse}

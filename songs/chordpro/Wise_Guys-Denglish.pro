@@ -78,7 +78,7 @@ Ich [F]will, dass beim Coffee-Shop
 [F]oder dass beim Auto-Crash
 die “[C]Lufttasche” aufgeht,
 
-und [F]schön wär's, wenn wir Bodybuilder
+Und [F]schön wär's, wenn wir Bodybuilder
 “[C]Muskel-Mäster” [C7]nennen
 [D]und wenn nur noch “Nordisch Geher”
 [G]durch die Landschaft rennen…

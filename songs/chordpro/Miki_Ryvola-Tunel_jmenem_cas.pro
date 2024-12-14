@@ -48,7 +48,7 @@ i [E7]vítr na tra[A]tích
 a [Am]honky tonky [E]piáno
 a [F#]uplakanej [H7]smích
 
-a [E]písničky a [G#m]šťastný míle
+A [E]písničky a [G#m]šťastný míle
 [E7]na tuláckej [A]pas
 už [Am]spolkla díra [E]kamenná
 [Fmaj7]tunel jménem[E]čas.

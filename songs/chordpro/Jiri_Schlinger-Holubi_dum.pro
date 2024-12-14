@@ -39,9 +39,9 @@ vždyť to [Emi7]ví,
 {end_of_chorus}
 
 {start_of_verse}
-[Hmi]Sdíl[A]ný [Gmaj]déšť 
+[Hmi]Sdíl[A]ný [Gmaj]déšť
 vyprá[F#mi7]ví oka[Hmi]pům,
-[Hmi]blá[A]ho[Gmaj]vý, 
+[Hmi]blá[A]ho[Gmaj]vý,
 kdo hle[F#mi7]dá tenhle [Hmi]dům.
 [D]Od[A]růs[D]táš chlapec[A]kým střeví[D]cům,
 [Hmi]ne[A]sly[Gmaj]šíš
@@ -49,9 +49,9 @@ holu[F#mi7]bích křídel [Hmi]šum.
 {end_of_verse}
 
 {start_of_verse}
-[Hmi]Na[A]bí[Gmaj]zej 
+[Hmi]Na[A]bí[Gmaj]zej
 úpla[F#mi7]tou coko[Hmi]li,
-[Hmi]ne[A]po[Gmaj]jíš 
+[Hmi]ne[A]po[Gmaj]jíš
 cukro[F#mi7]vých homo[Hmi]lí.
 [D]Mů[A]žeš [D]mít třeba [A]zrak soko[D]lí,
 [Hmi]ne[A]spa[Gmaj]tříš

@@ -15,7 +15,7 @@ a [G]zatím přišel [Am]mráz,
 tak strašlivou [C]zimu
 [G]nezažil nikdo z [Am]nás,
 
-z těžkých černých [C]mraků
+Z těžkých černých [C]mraků
 se [G]stále sypal [Am]sníh
 a vánice [C]sílí
 v [G]poryvech ledo[Am]vých.
@@ -27,7 +27,7 @@ a [G]mouky ubývá,
 [Dm]do sýpek se raději
 už [G]nikdo nedívá,
 
-[C]zvěř z okolních lesů
+[C]Zvěř z okolních lesů
 nám [G]stála u dveří
 [Dm]a hladoví ptáci
 při[G]létli za zvěří,
@@ -65,7 +65,7 @@ dnes [G]nerad vzpomí[Am]nám,
 na tu strašnou [C]chvíli,
 když [G]kůň se vrátil [Am]sám,
 
-trvalo to [C]dlouho,
+Trvalo to [C]dlouho,
 než [G]se vítr uti[Am]šil,
 na sněhové [C]pláně
 si [G]každý pospí[Am]šil.
@@ -77,7 +77,7 @@ až k [G]místu, které znám,
 [Dm]kterým bych v té bouři
 [G]nejel ani sám,
 
-[C]a pak ho někdo spatřil,
+[C]A pak ho někdo spatřil,
 [G]jak tam leží pod srázem,
 [Dm]krev nám tuhla v žilách
 [G]nad tím obrazem,
