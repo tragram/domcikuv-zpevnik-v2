@@ -16,10 +16,10 @@ V [C]zahradě [Dmi]za cihlovou [C]zídkou, [Dmi]
 {end_of_verse}
 
 {start_of_verse}
-Pohádku o mluvícím ptáku
-nechá si přečíst z notesu,
-pak pošle polibek po chmýří na bodláku
-na vymyšlenou adresu.
+[C]Pohádku [Dmi]o mluvícím [C]ptáku [Dmi]
+[C]nechá si [Dmi]přečíst z note[C]su, [Dmi]
+[C]pak pošle [Dmi]polibek [E]po chmýří [Ami]na bodláku
+[F]na vymyš[G]lenou ad[E]resu.
 {end_of_verse}
 
 {start_of_chorus}
@@ -31,26 +31,26 @@ Prosím vás, [Ami]nechte ji, ach, [Dmi]nechte ji,
 {end_of_chorus}
 
 {start_of_verse}
-Pohádku o mluvícím ptáku
-a o třech zlatejch jabloních,
-a taky o lásce, již v černých květech máku,
-přivezou jezdci na koních.
+[C]Pohádku [Dmi]o mluvícím [C]ptáku [Dmi]
+[C]a o třech [Dmi]zlatejch jablo[C]ních, [Dmi]
+[C]a taky [Dmi]o lásce, [E]již v černých [Ami]květech máku,
+[F]přivezou [G]jezdci na [E]koních.
 {end_of_verse}
 
 {start_of_verse}
-Pohádku o kouzelném slůvku,
-jež vzbudí všechny zakleté,
-pohádku o duze, jež spává na ostrůvku,
-na kterém poklad najdete.
+[C]Pohádku [Dmi]o kouzelném [C]slůvku, [Dmi]
+[C]jež vzbudí [Dmi]všechny zakle[C]té, [Dmi]
+[C]pohádku [Dmi]o duze, [E]jež spává [Ami]na ostrůvku,
+[F]na kterém [G]poklad naj[E]dete.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Rukama dotýká se květů
-a neruší ji motýli,
-jen trochu hraje si s řetízkem amuletu,
-jen na chvíli.
+[C]Rukama [Dmi]dotýká se [C]květů [Dmi]
+[C]a neruší [Dmi]ji motý[C]li, [Dmi]
+[C]jen trochu [Dmi]hraje si [E]s řetízkem [Ami]amuletu,
+[F]jen na [G]chví[E]li.
 {end_of_verse}
 
 {chorus}

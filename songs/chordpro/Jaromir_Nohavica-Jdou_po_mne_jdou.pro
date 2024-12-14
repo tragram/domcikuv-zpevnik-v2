@@ -46,15 +46,15 @@ tobě došlo [F#mi]zlato, mně [Hmi]trpělivost, [A7]
 {chorus}
 
 {start_of_verse}
-Teď ve státě Utah žiju spokojen,
-pípu jsem utáh' a straním se žen,
-𝄆 kladou mi pasti a do pastí špek,
-já na ně mastím, jen ať mají vztek. 𝄇
+Teď ve státě [D]Utah žiju [G]spoko[D]jen,
+pípu jsem [F#mi]utáh' a [Hmi]straním se [A7]žen,
+𝄆 [G]kladou mi [D]pasti a [A7]do pastí [Hmi]špek,
+[G]já na ně [D]mastím, jen [G]ať mají [D]vztek. 𝄇
 {end_of_verse}
 
 {start_of_chorus}
-Jdou po mně jdou, jdou, jdou,
-na nočních stolcích mají fotku mou,
-kdyby mě klofly, jó, byl by ring,
-žít pod pantoflí je hůř než v Sing-sing. Jé, Jé...
+Jdou po mně [D]jdou, [G]jdou, [D]jdou,
+na nočních [F#mi]stolcích [Hmi]mají fotku [A7]mou,
+[G]kdyby mě [D]klofly, [A]jó, byl by [Hmi]ring,
+[G]žít pod pan[D]toflí je [C]hůř než v Sing-[G]sing. [A]Jé, [D]Jé... [G][D]
 {end_of_chorus}

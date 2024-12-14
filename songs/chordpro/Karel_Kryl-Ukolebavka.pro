@@ -30,22 +30,22 @@ u trochu jiné skl[Dmi]enky. [B][A]
 {end_of_verse}
 
 {start_of_chorus}
-A že zlé chvíle jdou, k vojsku tě odvedou,
-zbraň dají místo dláta,
-chlast místo náručí couvat tě naučí
-a budeš jako táta.
+[Dmi]A že zlé chvíle [B]jdou, k vojsku tě odve[C]dou,
+zbraň dají místo [Gmi]dláta,
+[A]chlast místo náru[Dmi]čí couvat tě nau[C]čí
+a [A]budeš jako [Dmi]táta. [B][A]
 {end_of_chorus}
 
 {start_of_verse}
-Spinkáš, synáčku, spíš, nouze vyžrala spíž
-a v sklepě bydlí bída,
-v jeslích na nároží máma tě odloží,
-když noc se s ránem střídá.
+[Dmi]Spinkáš, synáčku, spíš, nouze vyžrala [C]spíž
+a v [A]sklepě bydlí [Dmi]bída, [B][A]
+[Dmi]v jeslích na nároží máma tě odlo[C]ží,
+když noc se s ránem [Dmi]střídá. [B][A]
 {end_of_verse}
 
 {start_of_chorus}
-Recepis na lhaní dají ti na hraní
-a nález bude ztráta,
-kompromis, z života zbude ti samota
-a budeš jako táta.
+[Dmi]Recepis na lha[B]ní dají ti na hra[C]ní
+a nález bude [Gmi]ztráta,
+[A]kompromis, z živo[Dmi]ta zbude ti samo[C]ta
+a [A]budeš jako [Dmi]táta. [B][A]
 {end_of_chorus}

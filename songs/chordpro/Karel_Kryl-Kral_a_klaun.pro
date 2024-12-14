@@ -23,37 +23,37 @@ král [G]do boje [D]táh, [G][D]do [G]veliké [D]dálky,[G][D]
 {end_of_chorus}
 
 {start_of_verse}
-Král do boje táh a sotva se vzdálil
-tak vesnice pálil a dobýval měst
+[A]Král [G]do boje [D]táh [G][D]a [G]sotva se [D]vzdálil[G][D]
+tak [G]vesnice [D]pálil [A7]a dobýval [D]měst
 Klaun v očích měl hněv když sledoval žháře
 jak smývali v páře prach z rukou a krev
 {end_of_verse}
 
 {start_of_verse}
-Král do boje táh, s tou vraždící lůzou
-klaun třásl se hrůzou a odvetu kul,
+[A]Král [G]do boje [D]táh, [G][D]s tou [G]vraždící [D]lůzou[G][D]
+klaun [G]třásl se [D]hrůzou [A7]a odvetu [D]kul,
 když v noci byl klid, tak oklamal stráže
 a, nemaje páže, sám burcoval lid.
 {end_of_verse}
 
 {start_of_chorus}
-Všude křičel do té hrůzy, ve válce že mlčí Múzy,
-muži by však mlčet neměli,
-král do boje táh, s tou vraždící lůzou
-klaun třásl se hrůzou a odvetu kul.
+[A7]Všude křičel do té hrůzy, [D]ve válce že mlčí Múzy,
+[E]muži by však mlčet nemě[A7]li, [As7][A7]
+král [G]do boje [D]táh, [G][D]s tou [G]vraždící [D]lůzou[G][D]
+klaun [G]třásl se [D]hrůzou [A7]a odvetu [D]kul. [F#][G][D][E7]
 {end_of_chorus}
 
 {start_of_verse}
-Král do boje táh, a v červáncích vlídných
-zřel, na čele bídných jak vstříc jde mu klaun,
+[A]Král [G]do boje [D]táh, [G][D]a v [G]červáncích [D]vlídných[G][D]
+zřel, [G]na čele [D]bídných [A7]jak vstříc jde mu [D]klaun,
 když západ pak vzplál, tok potoků temněl,
 klaun tušení neměl jak zahynul král:
 {end_of_verse}
 
 {start_of_chorus}
-Kdekdo křičel při té hrůze:"Inter arma silent musae,"
-krále z toho strachu trefil šlak,
-klaun tiše se smál a zem žila dále
-a neměla krále, klaun na loutnu hrál,
-klaun na loutnu hrál, klaun na loutnu hrál ...
+[A7]Kdekdo křičel při té hrůze:"[D]Inter arma silent musae,"
+[E]krále z toho strachu trefil [A7]šlak, [As7][A7]
+klaun [G]tiše se [D]smál, [G][D]a [G]zem žila [D]dále[G][D]
+a [G]neměla [D]krále, [A7]klaun na loutnu [D]hrál,
+[A7]klaun na loutnu [D]hrál, [A7]klaun na loutnu [D]hrál ...
 {end_of_chorus}

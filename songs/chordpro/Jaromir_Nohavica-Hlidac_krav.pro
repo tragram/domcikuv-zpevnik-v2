@@ -29,27 +29,27 @@ zpívat si: pam pam pam [G]... [A][D]
 {end_of_chorus}
 
 {start_of_verse}
-K vánocům mi kupovali hromady knih,
+[D]K vánocům mi kupovali hromady knih,
 co jsem ale vědět chtěl, to nevyčet' jsem z nich:
-nikde jsem se nedozvěděl, jak se hlídají krávy,
+[G]nikde jsem se nedozvěděl, [A]jak se hlídají [D]krávy,
 {end_of_verse}
 {start_of_verse}
-ptal jsem se starších a ptal jsem se všech,
+[D]ptal jsem se starších a ptal jsem se všech,
 každý na mě hleděl jako na pytel blech,
-každý se mě opatrně tázal na moje zdraví.
+[G]každý se mě opatrně [A]tázal na moje [D]zdraví.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Dnes už jsem starší a vím, co vím,
+[D]Dnes už jsem starší a vím, co vím,
 mnohé věci nemůžu a mnohé smím,
-a když je mi velmi smutno, lehnu si do mokré trávy,
+[G]a když je mi velmi smutno, [A]lehnu si do mokré [D]trávy,
 {end_of_verse}
 {start_of_verse}
-s nohama křížem a s rukama za hlavou
+[D]s nohama křížem a s rukama za hlavou
 koukám nahoru na oblohu modravou,
-kde se mezi mraky honí moje strakaté krávy.
+[G]kde se mezi mraky honí [A]moje strakaté [D]krávy.
 {end_of_verse}
 
 {chorus}

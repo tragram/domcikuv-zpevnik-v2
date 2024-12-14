@@ -23,19 +23,19 @@
 {end_of_chorus}
 
 {start_of_verse}
-Pak hlídali jsme oblohu, pozorujíce ptáky,
-debatujíce o Bohu a hraní na vojáky,
-do tváře jsem mu neviděl, pokoušel se ji schovat,
-to asi ptákům záviděl, že mohou poletovat.
+[G]Pak hlídali [Emi]jsme oblohu, [G]pozorujíce [D7]ptáky,
+[G]debatujíce [Emi]o Bohu a [G]hraní [D7]na vo[G]jáky,
+[G]do tváře [Emi]jsem mu neviděl, [G]pokoušel se [D7]ji schovat,
+[G]to asi [Emi]ptákům záviděl, [G]že mohou [D7]poletovat.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Když novinky mi sděloval u okna do ložnice,
-já křídla jsem mu ukoval z mosazný nábojnice,
-a tak jsem pozbyl anděla, on oknem odletěl mi,
-však přítel prý mi udělá novýho z mojí helmy.
+[G]Když novinky [Emi]mi sděloval [G]u okna do [D7]ložnice,
+[G]já křídla [Emi]jsem mu ukoval [G]z mosazný [D7]náboj[G]nice,
+[G]a tak jsem [Emi]pozbyl anděla, [G]on oknem [D7]odletěl mi,
+[G]však přítel [Emi]prý mi udělá [G]novýho z [D7]mojí helmy.
 {end_of_verse}
 
 {chorus}

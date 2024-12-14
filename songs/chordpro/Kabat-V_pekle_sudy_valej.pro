@@ -11,7 +11,7 @@
 {start_of_chorus}
 [C]V pekle sudy válej
 [G]Z kotle pára [Dmi]stoupá
-Na stůl nám [Bmi]to dávej
+Na stůl nám [B]to dávej
 Ať to s náma [F]houpá
 {end_of_chorus}
 
@@ -25,10 +25,10 @@ Kdo ví zda to [F]přežijem
 {chorus}
 
 {start_of_verse}
-Zastavit na to není čas
-Musíme jet na doraz
-Připoutat nekecat
-Kdesi protrhla se hráz
+[C]Zastavit na to není čas
+[G]Musíme jet na [Dmi]doraz
+Připoutat [B]nekecat
+Kdesi protrhla se [F]hráz
 {end_of_verse}
 
 {chorus}
@@ -41,26 +41,26 @@ A zatím neví [G]o ničem
 {end_of_bridge}
 
 {start_of_verse}
-Strojvůdce je starej satanáš
-Zve nás všechny na guláš
-Vítám vás jedem dál
-Ty nemáš tak tady máš
+[C]Strojvůdce je starej satanáš
+[G]Zve nás všechny na [Dmi]guláš
+Vítám vás [B]jedem dál
+Ty nemáš tak tady [F]máš
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Máme tu houby sušený
-A odvar z hlavy makový
-Jídelní vůz narvanej
-No prostě věci takový
+[C]Máme tu houby sušený
+[G]A odvar z hlavy [Dmi]makový
+Jídelní vůz [B]narvanej
+No prostě věci [F]takový
 {end_of_verse}
 
 {start_of_verse}
-Každej z nás to jinak má
-Tenhle spí ten pospíchá
-Záleží na každym
-Kdo jak si to namíchá
+[C]Každej z nás to jinak má
+[G]Tenhle spí ten [Dmi]pospíchá
+Záleží na [B]každym
+Kdo jak si to [F]namíchá
 {end_of_verse}
 
 {chorus}

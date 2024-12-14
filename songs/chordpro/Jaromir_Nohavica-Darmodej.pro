@@ -10,19 +10,31 @@
 {start_melody: a}
 
 {start_of_verse}
-[Ami]Šel včera městem [Emi]muž a šel po hlavní [Ami]třídě, [Emi]
-[Ami]šel včera městem [Emi]muž a já ho z okna [Ami]viděl, [Emi]
-[C]na flétnu chorál [G]hrál, znělo to jako [Ami]zvon
-a byl v tom všechen [Emi]žal, ten krásný dlouhý [F]tón,
-a já jsem náhle [F#dim]věděl: ano, to je [E7]on, to je [Ami]on.
+[Ami]Šel včera městem [Emi]muž 
+a šel po hlavní [Ami]třídě, [Emi]
+[Ami]šel včera městem [Emi]muž 
+a já ho z okna [Ami]viděl, [Emi]
+
+[C]na flétnu chorál [G]hrál, 
+znělo to jako [Ami]zvon
+a byl v tom všechen [Emi]žal, 
+ten krásný dlouhý [F]tón,
+a já jsem náhle [F#dim]věděl: 
+ano, to je [E7]on, to je [Ami]on.
 {end_of_verse}
 
 {start_of_verse}
-Vyběh' jsem do ulic jen v noční košili,
-v odpadcích z popelnic krysy se honily
-a v teplých postelích lásky i nelásky
-tiše se vrtěly rodinné obrázky,
-a já chtěl odpověď na svoje otázky, otázky.
+[Ami]Vyběh' jsem do [Emi]ulic 
+jen v noční koši[Ami]li, [Emi]
+[Ami]v odpadcích z popel[Emi]nic 
+krysy se honi[Ami]ly [Emi]
+
+[C]a v teplých poste[G]lích 
+lásky i nelás[Ami]ky
+tiše se vrtě[Emi]ly 
+rodinné obráz[F]ky,
+a já chtěl [F#dim]odpověď 
+na svoje [E7]otázky, otáz[Ami]ky.
 {end_of_verse}
 
 {start_of_chorus: R1}
@@ -31,35 +43,60 @@ a já chtěl odpověď na svoje otázky, otázky.
 {end_of_chorus}
 
 {start_of_verse}
-Dohnal jsem toho muže a chytl za kabát,
-měl kabát z hadí kůže, šel z něho divný chlad,
-a on se otočil, a oči plné vran,
-a jizvy u očí, celý byl pobodán,
-a já jsem náhle věděl, kdo je onen pán, onen pán.
+[Ami]Dohnal jsem toho [Emi]muže
+a chytl [Ami]za kabát, [Emi]
+[Ami]měl kabát z hadí [Emi]kůže, 
+šel z něho divný [Ami]chlad, [Emi]
+
+[C]a on se oto[G]čil, 
+a oči plné [Ami]vran,
+a jizvy u o[Emi]čí, 
+celý byl pobo[F]dán,
+a já jsem náhle [F#dim]věděl, 
+kdo je [E7]onen pán, onen [Ami]pán.
 {end_of_verse}
 
 {start_of_verse}
-Celý se strachem chvěl, když jsem tak k němu došel,
-a v ústech flétnu měl od Hieronyma Bosche,
-stál měsíc nad domy jak čírka ve vodě,
-jak moje svědomí, když zvrací v záchodě,
-a já jsem náhle věděl: to je Darmoděj, můj Darmoděj.
+[Ami]Celý se strachem [Emi]chvěl, 
+když jsem tak k němu [Ami]došel, [Emi]
+[Ami]a v ústech flétnu [Emi]měl 
+od Hieronyma [Ami]Bosche, [Emi]
+
+[C]stál měsíc nad do[G]my 
+jak čírka ve vo[Ami]dě,
+jak moje svědo[Emi]mí, 
+když zvrací v zácho[F]dě,
+a já jsem náhle [F#dim]věděl: 
+to je Darmo[E7]děj, můj Darmo[Ami]děj.
 {end_of_verse}
 
 {start_of_chorus: R2}
-Můj Darmoděj, vagabund osudů a lásek,
-jenž prochází všemi sny, ale dnům vyhýbá se,
-můj Darmoděj, krásné zlo, jed má pod jazykem,
-když prodává po domech jehly se slovníkem.
+[Ami]Můj [Emi]Darmoděj, 
+[C]vagabund osudů a [G]lásek,
+[Ami]jenž prochá[F]zí všemi [F#dim]sny, 
+ale dnům [E7]vyhýbá se, 
+
+[Ami]můj [Emi]Darmoděj, 
+[C]krásné zlo, jed má pod [G]jazykem,
+[Ami]když prodá[F]vá po [F#dim]domech 
+jehly [E7]se slovníkem.
 {end_of_chorus}
 
 {start_of_verse}
-Šel včera městem muž, podomní obchodník,
-šel, ale nejde už, krev skápla na chodník,
-já jeho flétnu vzal a zněla jako zvon
-a byl v tom všechen žal, ten krásný dlouhý tón,
-a já jsem náhle věděl: ano, já jsem on, já jsem on.
+[Ami]Šel včera městem [Emi]muž, 
+podomní obchod[Ami]ník, [Emi]
+[Ami]šel, ale nejde [Emi]už, 
+krev skápla na chod[Ami]ník, [Emi]
+
+[C]já jeho flétnu [G]vzal 
+a zněla jako [Ami]zvon
+a byl v tom všechen [Emi]žal, 
+ten krásný dlouhý [F]tón,
+a já jsem náhle [F#dim]věděl: 
+ano, [E7]já jsem on, já jsem [Ami]on.
 {end_of_verse}
 
-Váš
+{start_of_variant: replace_first_line}
+[Ami]Váš [Emi]Darmoděj, 
+{end_of_variant}
 {chorus: R2}

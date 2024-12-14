@@ -17,10 +17,10 @@
 {end_of_verse}
 
 {start_of_verse}
-Přešli jsme pól - věčnej led a sníh
-chaldná jak nůž byla polární zář
-přešli jsme pól - na rtech zamrznul smích
-co chránilo nás se mě ptáš.
+[G]Přešli jsme pól - věčnej [Emi]led a sníh
+[C]chladná jak nůž byla [G]polární [D]zář
+[G]přešli jsme pól - na rtech [Emi]zamrznul smích
+[C]co chránilo nás se mě [D]ptáš.
 {end_of_verse}
 
 {start_of_chorus}
@@ -32,10 +32,10 @@ drží [D]nás nechá plout nenechá nás zestárnout.
 {end_of_chorus}
 
 {start_of_verse}
-Prošli jsme svět - odpověď hledali dál
-bludiště slov vítr zavál stopy
-prošli jsme svět kdekdo se nám smál
-kdo hledá dál pochopí.
+[G]Prošli jsme svět - odpověď [Emi]hledali dál
+[C]bludiště slov vítr [G]zavál [D]stopy
+[G]prošli jsme svět kdekdo se [Emi]nám smál
+[C]kdo hledá dál [D]pochopí.
 {end_of_verse}
 
 {chorus}

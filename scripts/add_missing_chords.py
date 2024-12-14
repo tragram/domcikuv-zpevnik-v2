@@ -13,7 +13,21 @@ client = anthropic.Anthropic(
     api_key=secrets["anthropic"]["api_key"],
 )
 
-system_message = 'Add the missing chords in repeated parts of the following song in the Chordpro format. They will be the same as in the previous occurence of the same part type, unless you notice a modulation, in which case they will stay modulated. Do not replace directives such as "{chorus}" with their contents defined elsewhere - only add the missing chords where lyrics are already present! Only answer with the update chordpro file contents. '
+system_message = """When presented with a song in ChordPro format that has repeated sections with missing chords, complete the following tasks:
+
+* Add chord annotations only where lyrics already exist and chords are missing.
+* For repeated sections (verse/chorus/bridge etc.), copy the chord progression from the first occurrence of that section type
+* If you detect a key change/modulation, transpose the chords appropriately while maintaining the same relative chord progression
+* Preserve all existing ChordPro directives (e.g. {chorus}, {verse}) without expanding or modifying them
+* Only output the updated ChordPro file contents with no additional commentary
+
+Important notes:
+* Do not add or modify any lyrics
+* Do not expand section directives
+* Only add chords where there are existing lyrics missing chord annotations
+* Maintain the original formatting and structure
+* If unsure about a chord progression, flag it for review"""
+
 model_id = "claude-3-5-sonnet-20241022"
 batches_folder = Path(__file__).parent.resolve() / "batches"
 
@@ -64,7 +78,7 @@ def generate_chords_batch_api(chordpro_contents: Mapping[str, str]):
     return message_batch
 
 
-def find_incomplete_chordpro_files(folder_path, skipping, max_songs=1, batch_api=True):
+def find_incomplete_chordpro_files(folder_path, skipping, max_songs=5, batch_api=True):
     """
     Finds all ChordPro files in a folder where some verses lack chords.
 
@@ -182,7 +196,7 @@ def check_all_past_batches():
 
 if __name__ == "__main__":
     skipping = check_all_past_batches()
-
+    quit()
     folder_path = songs_path() / "chordpro"
 
     if not os.path.exists(folder_path):

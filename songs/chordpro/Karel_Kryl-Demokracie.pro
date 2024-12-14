@@ -16,29 +16,29 @@ a z [C]těch, kdo pravdu [F]zpíva[C]li, dnes nadě[G7]lali [C]zrádce. 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Demokracie prospívá bez nás a pragmaticky,
-brbláme spolu u píva, jak brblali jsme vždycky,
-𝄆 farář nám slíbil nebesa a čeká na majetky,
-my nakrmíme forbesa za dvě či za tři pětky. 𝄇
+[C]Demokracie [F]prospí[C]vá bez nás a [G7]pragma[C]ticky,
+brbláme spolu [F]u pí[C]va, jak brbla[G7]li jsme [C]vždycky,
+𝄆 [F]farář nám slíbil [C]nebesa, [D7]a čeká na ma[G7]jetky,
+my [C]nakrmíme [F]forbe[C]sa za dvě či [G7]za tři [C]pětky. 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Demokracie zavládla, zpívá nám Gott i Walda,
-zbaštíme sóju bez sádla u strejdy McDonalda,
-𝄆 král Václav jedna parta je se šmelinářským šmejdem,
-pod střechou jedné partaje se u koryta sejdem. 𝄇
+[C]Demokracie [F]zavlád[C]la, zpívá nám [G7]Gott i [C]Walda,
+zbaštíme sóju [F]bez sád[C]la u strejdy [G7]McDo[C]nalda,
+𝄆 [F]král Václav jedna [C]parta je [D7]se šmelinářským [G7]šmejdem,
+pod [C]střechou jedné [F]parta[C]je se u ko[G7]ryta [C]sejdem. 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Demokracie panuje od Aše po Humenné,
-samet i něha v pánu je a zuby vylomené,
-𝄆 dali nám nové postroje a, ač nás chomout pálí,
-zaujímáme postoje, místo abychom stáli. 𝄇
+[C]Demokracie [F]panu[C]je od Aše [G7]po Hu[C]menné,
+samet i něha [F]v pánu [C]je a zuby [G7]vylo[C]mené,
+𝄆 [F]dali nám nové [C]postroje [D7]a, ač nás chomout [G7]pálí,
+za[C]ujímáme [F]posto[C]je, místo a[G7]bychom [C]stáli. 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Demokracie dozrává do žaludečních vředů,
-bez poctivosti, bez práva a hlavně bez ohledů,
-𝄆 a je to mýlka soukromá, snad z optického klamu,
-že místo srdce břicho má a místo duše tlamu. 𝄇
+[C]Demokracie [F]dozrá[C]vá do žalu[G7]dečních [C]vředů,
+bez poctivosti, [F]bez prá[C]va a hlavně [G7]bez oh[C]ledů,
+𝄆 [F]a je to mýlka [C]soukromá, [D7]snad z optického [G7]klamu,
+že [C]místo srdce [F]břicho [C]má a místo [G7]duše [C]tlamu. 𝄇
 {end_of_verse}

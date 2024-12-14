@@ -32,12 +32,12 @@ vyzvu ji k [E]tanci a to [F]netančím [Ami]
 {end_of_chorus}
 
 {start_of_verse}
-Tam za tratí svý doupě má
-mince po kašnách posbírá
-a pak je skládá na kolej
-Staví si chrám, plechovej most
-už po něm kráčí první host,
-tak ať ho nohy nebolej.
+[Ami]Tam za tratí svý doupě [Dmi]má
+mince po kašnách posbí[F]rá
+a pak je [E]skládá na ko[Ami]lej
+[Ami]Staví si chrám, plechovej [Dmi]most
+už po něm kráčí první [F]host,
+tak ať ho [E]nohy nebo[Ami]lej.
 {end_of_verse}
 
 {start_of_bridge}

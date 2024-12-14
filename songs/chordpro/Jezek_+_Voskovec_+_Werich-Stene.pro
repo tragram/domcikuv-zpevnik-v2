@@ -15,37 +15,37 @@
 {end_of_verse}
 
 {start_of_verse}
-A když povyrostlo víc, protáhlo si nohy,
-𝄆 rozběhlo se do ulic, do vesnic
-očuchávat rohy. 𝄇
+[C]A když povyrostlo víc, protáhlo si [F]nohy,[C]
+𝄆 [F]rozběhlo se [C]do ulic, [F]do vesnic
+[C]očuchá[G]vat ro[C]hy. 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Čuchá tady, čuchá tam a ocáskem vrtí.
-𝄆 uviděl to jeho pán - grobián,
-rozzlobil se k smrti. 𝄇
+[C]Čuchá tady, čuchá tam a ocáskem [F]vrtí.[C]
+𝄆 [F]uviděl to [C]jeho pán - [F]grobián,
+[C]rozzlo[G]bil se k smr[C]ti. 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Aby pes znal celou ves, to jsou ňáký mravy,
-𝄆 takový všetečný pes na řetěz,
-to mu mravy spraví. 𝄇
+[C]Aby pes znal celou ves, to jsou ňáký [F]mravy,[C]
+𝄆 [F]takový vše[C]tečný pes [F]na řetěz,
+[C]to mu [G]mravy spra[C]ví. 𝄇
 {end_of_verse}
 
 {start_of_verse}
-A tak na řetěze rost', až z něj vyrost' hafan,
-𝄆 jednou mu pán dával kost pro radost
-a byl zle porafán. 𝄇
+[C]A tak na řetěze rost', až z něj vyrost' [F]hafan,[C]
+𝄆 [F]jednou mu pán [C]dával kost [F]pro radost
+[C]a byl [G]zle pora[C]fán. 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Jak to, že ten pes kouše, sám sebe se tázal,
-𝄆 dřív neublížil mouše, proč kouše,
-když jsem ho uvázal? 𝄇
+[C]Jak to, že ten pes kouše, sám sebe se [F]tázal,[C]
+𝄆 [F]dřív neublí[C]žil mouše, [F]proč kouše,
+[C]když jsem [G]ho uvá[C]zal? 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Seběhla se celá ves a pánovi praví:
-𝄆 celý svět to ví už dnes, že řetěz
-mravy nenapraví. 𝄇
+[C]Seběhla se celá ves a pánovi [F]praví:[C]
+𝄆 [F]celý svět to [C]ví už dnes, [F]že řetěz
+[C]mravy [G]nenapra[C]ví. 𝄇
 {end_of_verse}

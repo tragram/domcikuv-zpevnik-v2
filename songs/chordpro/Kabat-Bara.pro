@@ -22,28 +22,28 @@ Víš já [F]mám spoustu
 [Ami]známejch v podz[Dmi]emí
 A divá [B]Bára se mnou spí
 Když je [F]noc všechno
-[Ami]krásný zdá se [Dmi]mi
+[Ami]krásný zdá se [G]mi
 To sme my [B]dávno prokle[Ami]tý
 {end_of_chorus}
 
 {start_of_verse}
-Ještě je čas
-Jak tě nestvůra kouše
-Schovej nohy do peřin
-Okolo nás
-Je toho tolik co zkoušet
-Na jedno zdraví nevěřím
+[Ami]Ještě je [Dmi]čas
+Jak tě [F]nestvůra kouše
+Tak [C]schovej nohy do pe[B]řin
+[Ami]Okolo [Dmi]nás
+Je toho [F]tolik co zkoušet
+Na [C]jedno zdraví nevě[B]řím
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Kdopak tě zval
-Vem si do dlaně růži
-Sevři ji a krve pij
-Pojď jenom dál
-Obleč si moji kůži
-Vysaj mě a použij..
+[Ami]Kdopak tě [Dmi]zval
+Vem si [F]do dlaně růži
+Se[C]vři ji a krve [B]pij
+[Ami]Pojď jenom [Dmi]dál
+Obleč si [F]moji kůži
+Vy[C]saj mě a pou[B]žij..
 {end_of_verse}
 
 {chorus}

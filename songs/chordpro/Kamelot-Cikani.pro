@@ -23,10 +23,10 @@ a [F]lidí, co [G]povídají [Ami]"amen".
 {end_of_chorus}
 
 {start_of_verse}
-S roztouženým srdcem, bijícím
-o hrany dýk a bílých koňských hřív,
-šel jsem vstříc tvářím pálícím,
-zapomněl na rány, co bolely mě dřív.
+[Ami]S roztouženým srdcem, bijí[G]cím
+o hrany [F]dýk a bílých koňských [E7]hřív,
+[Ami]šel jsem vstříc tvářím pálí[G]cím,
+zapomněl [F]na rány, co bolely mě [E7]dřív.
 {end_of_verse}
 
 {chorus}

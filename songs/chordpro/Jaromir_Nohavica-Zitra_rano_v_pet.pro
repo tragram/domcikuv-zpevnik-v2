@@ -23,39 +23,43 @@ a [Dmi]pak vzpomenu [E7]si na teb[Ami]e.
 {end_of_verse}
 
 {start_of_verse}
-Až zítra ráno v pět
-přijde ke mně kněz,
-řeknu mu, že se splet',
-že mně se nechce do nebes,
+Až [Ami]zítra ráno v pět
+[C]přijde ke mně kněz,
+[F]řeknu mu, že se [G7]splet',
+že [C]mně se nechce do [Ami7]nebes,
 
-Že žil jsem, jak jsem žil,
-a stejně tak i dožiju
-a co jsem si nadrobil, to si i vypiju,
-a co jsem si nadrobil, si i vypiju.
+Že [Dmi]žil jsem, jak jsem [G]žil,
+a stejně [C]tak i [Emi]doži[Ami]ju
+a [Dmi]co jsem si nadro[E7]bil,
+to [Ami]si i vypi[Ami7]ju,
+Na na[Dmi]ná[G]ná[C]ná [Emi]ná[Ami]
+a [Dmi]co jsem si nadro[E7]bil, si i vypi[Ami]ju.
 {end_of_verse}
 
 {start_of_verse}
-Až zítra ráno v pět
-poručík řekne:"Pal!",
-škoda bude těch let,
-kdy jsem tě nelíbal,
+Až [Ami]zítra ráno v pět
+[C]poručík řekne:"Pal!",
+[F]škoda bude těch [G7]let,
+kdy [C]jsem tě nelí[Ami7]bal,
 
-Ještě slunci zamávám,
-a potom líto přijde mi,
-že tě, lásko, nechávám,
-samotnou tady na zemi,
-že tě, lásko, nechávám, na zemi.
+Ještě [Dmi]slunci zamá[G]vám,
+a potom [C]líto [Emi]přijde [Ami]mi,
+že tě, [Dmi]lásko, nechá[E7]vám,
+samo[Ami]tnou tady na [Ami7]zemi,
+Na na[Dmi]ná[G]ná[C]ná [Emi]ná[Ami]
+že tě, [Dmi]lásko, nechá[E7]vám, na ze[Ami]mi.
 {end_of_verse}
 
 {start_of_verse}
-Až zítra ráno v pět
-prádlo půjdeš prát
-a seno obracet,
-já u zdi budu stát,
+Až [Ami]zítra ráno v pět
+[C]prádlo půjdeš prát
+a [F]seno obra[G7]cet,
+já [C]u zdi budu [Ami7]stát,
 
-Tak přilož na oheň
-a smutek v sobě skryj,
-prosím, nezapomeň,
-nezapomeň a žij,
-na mě nezapomeň a žij.
+Tak [Dmi]přilož na o[G]heň
+a [C]smutek [Emi]v sobě [Ami]skryj,
+pro[Dmi]sím, nezapo[E7]meň,
+ne[Ami]zapomeň a [Ami7]žij,
+Na na[Dmi]ná[G]ná[C]ná [Emi]ná[Ami]
+na [Dmi]mě nezapo[E7]meň a [Ami]žij.
 {end_of_verse}

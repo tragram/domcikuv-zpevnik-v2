@@ -27,27 +27,27 @@ a [Ami]pro každého koupil pytlík [G]arašidů, [C].
 {chorus}
 
 {start_of_verse}
-Na jižním pólu je nehezky
-a tak lachtani si vyjeli na grotesky,
-těšili se, jak bude veselo,
-když zazněl gong a v sále se setmělo,
-co to ale vidí jejich lachtaní zraky:
-sníh a mráz a sněhové mraky,
-pro veliký úspěch změna programu,
-dnes dáváme film ze života lachtanů, ó.
+[C]Na jižním pólu je [F]nehezky [C]
+[Ami]a tak lachtani si vyjeli na [G]grotes[C]ky,
+jeli [C]těšili se, jak bude [F]veselo, [C]
+když [Ami]zazněl gong a v sále se [G]setmělo, [C]
+[G]co to ale vidí jejich [C]lachtaní zraky:
+[G]sníh a mráz a [C]sněhové [G]mraky,
+[C]pro veliký úspěch změna [F]progra[C]mu,
+dnes [Ami]dáváme film ze života [G]lachtanů, [C]ó.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Táta lachtan vyskočil ze sedadla
-nevídaná zlost ho popadla
-"Proto jsem se netrmácel přes celý svět,
-abych tady v kině mrznul jako turecký med,
-tady zima, doma zima, všude jen chlad,
-kde má chudák lachtan relaxovat?"
-Nedivte se té lachtaní rodině,
-že pak rozšlapala arašidy po kině, jé.
+[C]Táta lachtan vyskočil [F]ze sedad[C]la
+[Ami]nevídaná zlost ho [G]popad[C]la
+"Proto [C]jsem se netrmácel [F]přes celý [C]svět,
+abych [Ami]tady v kině mrznul jako [G]turecký [C]med,
+[G]tady zima, doma zima, [C]všude jen chlad,
+[G]kde má chudák lachtan [C]relaxo[G]vat?"
+[C]Nedivte se té lachtaní [F]rodi[C]ně,
+že pak [Ami]rozšlapala arašidy [G]po kině, [C]jé.
 {end_of_verse}
 
 {chorus}
