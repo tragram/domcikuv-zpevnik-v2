@@ -8,10 +8,9 @@ from huggingface_hub import errors as hugging_errors
 from huggingface_hub import login
 from openai import OpenAI
 from PIL import Image
-from utils import get_lyrics, songs_path
+from utils import get_lyrics, load_secrets, songs_path
 
-with open(Path(__file__).parent.parent / "secrets.yaml", "r") as f:
-    secrets = yaml.safe_load(f)
+secrets = load_secrets()
 login(token=secrets["hugging_face_token"])
 
 

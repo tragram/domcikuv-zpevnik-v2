@@ -8,7 +8,7 @@
 {tempo: }
 {range: h1-h2}
 {start_melody: d d h}
-{start_of_chorus}
+{start_of_chorus: R1}
 [G]Obyčejné fotky [Hm]na stole leží,
 [Em]samí mladí lidé [C]jako jsem [D]já,
 možná [G]jsou mi podobní a já [Hm]dýchám jen stěží,
@@ -22,36 +22,36 @@ když [G]sepnula spoušt [Hm]z nábojových pásů
 [C]začal psát dějiny [D]devětatřicátý [G]rok. [D][C][G]
 {end_of_verse}
 
-{start_of_verse}
-Minulá doba se začala ztrácet,
-křížené háky musely vlát,
-železný vlak směr nucené práce
-a jak umíral Mnichov víc nešlo se bát.
-{end_of_verse}
+{start_of_chorus}
+[G]Minulá doba se [Hm]začala ztrácet,
+[Em]křížené háky [C]musely [D]vlát,
+[G]železný vlak směr [Hm]nucené práce
+a [C]jak umíral Mnichov [D]víc nešlo se bát.
+{end_of_chorus}
 
 {start_of_verse}
-Bláznivý útěk z koberců smrti,
-pět malých holek běží za další val,
-ve čtrnácti letech už to nebyly děti,
-jen náhoda určila, kdo dostane se dál.
+[G]Bláznivý útěk [Hm]z koberců smrti,
+[Em]pět malých holek [C]běží za [D]další val,
+[G]ve čtrnácti letech [Hm]už to nebyly děti,
+jen [C]náhoda určila, [D]kdo dostane se [G]dál. [D][C][G]
 {end_of_verse}
 
-{start_of_verse}
-Dvojitým bleskům nechtěl se vzdát,
-a samotná smrtka mu chránila tvář,
-chtěl střemhlavě létat, za útesy stát,
-jako zlá kočka seknout tu šedou svatozář.
-{end_of_verse}
+{start_of_chorus}
+[G]Dvojitým bleskům [Hm]nechtěl se vzdát,
+a [Em]samotná smrtka [C]mu chránila [D]tvář,
+[G]chtěl střemhlavě létat, [Hm]za útesy stát,
+jako [C]zlá kočka seknout [D]tu šedou svatozář.
+{end_of_chorus}
 
 {start_of_verse}
-Ale namísto toho své piloty fotil
-a kolikrát nestih je živé vyvolat,
-a tak nebylo nutné zachytávat hrůzy,
-jejich oči byly filmem, co se točí dokola.
+[G]Ale namísto toho [Hm]své piloty fotil
+a [Em]kolikrát nestih [C]je živé [D]vyvolat,
+a [G]tak nebylo nutné [Hm]zachytávat hrůzy,
+jejich [C]oči byly filmem, [D]co se točí doko[G]la. [D][C][G]
 {end_of_verse}
 
 {start_of_variant: append_content}
 [G]Á [D]na [C]na [G]na ...
 [G]Á [D]na [C]na [G]na ...
 {end_of_variant}
-{chorus}
+{chorus: R1}

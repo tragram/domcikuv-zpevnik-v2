@@ -23,10 +23,10 @@ To by se [Ami]krásně žilo, [D]to by byl [G]ráj.
 {end_of_chorus}
 
 {start_of_verse}
-Kde není muzika, tam duše naříká,
-tam je neveselo, tam je truchlivo.
-Chtěla bych dvůr pestrý, kde znějí orchestry,
-pěkně na veselo, žádné truchlivo.
+[G]Kde není muzika, [Dmi]tam duše naříká,
+[C]tam je neveselo, tam je [G]truchlivo.
+Chtěla bych dvůr pestrý, [Dmi]kde znějí orchestry,
+[C]pěkně na veselo, žádné [G]truchlivo.
 {end_of_verse}
 
 {chorus}

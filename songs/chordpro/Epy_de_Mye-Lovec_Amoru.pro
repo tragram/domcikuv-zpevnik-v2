@@ -23,28 +23,28 @@ navěs[C]í je [D]nad betl[G]ém.
 {end_of_chorus}
 
 {start_of_verse}
-Jestli máte na ňákou zrovna teďka spadeno
-ale cítíte že příliš na srdce je kladeno
-a kariera volá stoupat nahoru
-je tu pro vás lovec Amorů.
+[G]Jestli máte na ňákou [D]zrovna teďka spade[Emi]no [C][D]
+[G]ale cítíte že příliš [D]na srdce je klade[Emi]no [C][D]
+[C]a kariera volá [C/H]stoupat na[Emi]horu
+[F]je tu pro vás [B]lovec Amo[G]rů.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Měl sem třeba kámoše co tři roky to s jednou táh
-luxoval a umejval a málokdy si na ni sáh
-a pak jednou při žehlení došel k názoru
-že objedná si lovce Amorů.
+[G]Měl sem třeba kámoše co [D]tři roky to s jednou [Emi]táh [C][D]
+[G]luxoval a umejval a [D]málokdy si na ni [Emi]sáh [C][D]
+[C]a pak jednou při [C/H]žehlení došel k [Emi]názoru
+[F]že objedná si [B]lovce Amo[G]rů.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-A jesti si mysíš že ty máš svou ženu zvládnutou
-miluje tě nežárlí na televizi zapnutou
-tak to máš doma nejspíš pěknou potvoru
-a vyléčí tě lovec Amorů.
+[G]A jesti si mysíš že ty [D]máš svou ženu zvládnu[Emi]tou [C][D]
+[G]miluje tě nežárlí na [D]televizi zapnu[Emi]tou [C][D]
+[C]tak to máš doma [C/H]nejspíš pěknou pot[Emi]voru
+[F]a vyléčí tě [B]lovec Amo[G]rů.
 {end_of_verse}
 
 {chorus}

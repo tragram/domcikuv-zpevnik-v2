@@ -24,58 +24,62 @@ co [Hmi]ještě [F#mi]všechno
 {end_of_chorus}
 
 {start_of_verse}
-Ke skále denně přikován
-a na barevných nitkách svět
-těžký vrchol je překonán
-do sbírky další květ.
+[D]Ke skále denně [G]přikován
+a [D]na barevných [A]nitkách svět
+[D]těžký vrchol je [G]překonán
+do [D]sbírky [A]další [D]květ.
 {end_of_verse}
 
 {start_of_chorus}
-Čekající dole na zemi
-umět tak pevná lana plést
-co ještě všechno musí snést?
-ženy mužů lezoucích.
+Čeka[G]jící dole na [D]zemi
+[Hmi]umět tak pevná [A]lana plést
+co [Hmi]ještě [F#mi]všechno
+[G]musí [F#mi]snést?
+ženy [G]mužů [A]lezou[D]cích.
 {end_of_chorus}
 
 {start_of_verse}
-Oporu svou mít ve zbrani
-a domů dálka celý svět
-jenom se zítra ubránit
-a pak se vrátit zpět.
+[D]Oporu svou mít [G]ve zbrani
+a [D]domů dálka [A]celý svět
+[D]jenom se zítra [G]ubránit
+a [D]pak se [A]vrátit [D]zpět.
 {end_of_verse}
 
 {start_of_chorus}
-Čekající denně na návrat,
-umět tak zahnat černou zvěst
-co ještě všechno musí snést?
-ženy mužů statečných.
+Čeka[G]jící denně na [D]návrat,
+[Hmi]umět tak zahnat [A]černou zvěst
+co [Hmi]ještě [F#mi]všechno
+[G]musí [F#mi]snést?
+ženy [G]mužů [A]stateč[D]ných.
 {end_of_chorus}
 
 {start_of_verse}
-Svůj svět mít doma v komoře
-a ze snů z dětství stavět hrad
-točí se vláčky v oboře
-až večer cítit hlad.
+[D]Svůj svět mít doma [G]v komoře
+a [D]ze snů z dětství [A]stavět hrad
+[D]točí se vláčky [G]v oboře
+až [D]večer [A]cítit [D]hlad.
 {end_of_verse}
 
 {start_of_chorus}
-Čekající doma v kuchyni,
-umět tak nudu prostě smést
-co ještě všechno musí snést?
-ženy mužů domácích.
+Čeka[G]jící doma v [D]kuchyni,
+[Hmi]umět tak nudu [A]prostě smést
+co [Hmi]ještě [F#mi]všechno
+[G]musí [F#mi]snést?
+ženy [G]mužů [A]domá[D]cích.
 {end_of_chorus}
 
 {start_of_verse}
-Domů se po schodech potácet
-a nadávat už i na sebe
-před zraky ženy se vytrácet,
-zamčené postele.
+[D]Domů se po schodech [G]potácet
+a [D]nadávat už i [A]na sebe
+[D]před zraky ženy [G]se vytrácet,
+[D]zamčené [A]poste[D]le.
 {end_of_verse}
 
 {start_of_chorus}
-Čekající s pláčem v předsíni,
-umět tak znovu chlapa svést
-co ještě všechno musí snést ...
+Čeka[G]jící s pláčem v [D]předsíni,
+[Hmi]umět tak znovu [A]chlapa svést
+co [Hmi]ještě [F#mi]všechno
+[G]musí [F#mi]snést ...
 [D]ženy mužů [G]létavých
 [D]ženy mužů [A]lezoucích
 [D]ženy mužů [G]statečných
@@ -83,8 +87,9 @@ co ještě všechno musí snést ...
 {end_of_chorus}
 
 {start_of_chorus}
-Čekající s pláčem v předsíni,
-umět tak znovu chlapa svést
-co ještě všechno musí snést?
-ženy mužů ztracených
+Čeka[G]jící s pláčem v [D]předsíni,
+[Hmi]umět tak znovu [A]chlapa svést
+co [Hmi]ještě [F#mi]všechno
+[G]musí [F#mi]snést?
+ženy [G]mužů [A]ztra[D]cených
 {end_of_chorus}

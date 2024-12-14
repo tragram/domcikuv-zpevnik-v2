@@ -23,11 +23,11 @@ tak ten si [A7]říká [D]o malér.
 {end_of_verse}
 
 {start_of_verse}
-Moudrý král princeznin bratranec,
-když vdával svých pět dcer.
-Řek: "To dál nesnesu" a prchnul do lesů,
-žádný ženich nemá er,
-kdo nemá er, ztrácí charakter.
+[D]Moudrý král princeznin bratranec,
+když vdával svých pět [A7]dcer.
+[D]Řek: "To dál nesnesu" a [G]prchnul do lesů,
+[D]žádný [A7]ženich [D]nemá er,
+kdo nemá [A7]er, ztrácí [D]charakter.
 {end_of_verse}
 
 {start_of_chorus}
@@ -39,20 +39,20 @@ kdo nemá er, ztrácí charakter.
 {bridge: Umbaba}
 
 {start_of_verse}
-Ten, kdo chce mít pravou princeznu,
-musí být z vyšších sfér.
-Kdo prosí o ruku, musí mít záruku,
-tou je jeho ryčné er.
-Pouze ten může být premiér
-a kdo nemá er, tak je amatér.
+[D]Ten, kdo chce mít pravou princeznu,
+musí být z vyšších [A7]sfér.
+[D]Kdo prosí o ruku, musí [G]mít záruku,
+[D]tou je [A7]jeho [D]ryčné er.
+Pouze ten [A7]může být [D]premiér
+a kdo nemá [A7]er, tak je [D]amatér.
 {end_of_verse}
 
 {start_of_verse}
-Mějte, prosím, trochu strpení,
-rozhodně všechno je fér.
-Tak proč ty trampoty, příšerné drahoty,
-přece slyšíš to mé er,
-které mě pasovalo nad průměr.
+[D]Mějte, prosím, trochu strpení,
+rozhodně všechno je [A7]fér.
+[D]Tak proč ty trampoty, [G]příšerné drahoty,
+[D]přece [A7]slyšíš [D]to mé er,
+které mě [A7]pasovalo [D]nad průměr.
 {end_of_verse}
 
 {chorus}

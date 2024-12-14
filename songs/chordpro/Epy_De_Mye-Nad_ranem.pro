@@ -8,7 +8,6 @@
 {tempo: }
 {range: e1-c1}
 {start_melody: h}
-
 {start_of_verse}
 Zaplatil jsem [Emi]papír abych mohl [G]makat
 vydělávat [A]prachy splácet dluhy nad [Emi]ránem.
@@ -24,19 +23,19 @@ takový [C]temno nad [Emi]ránem.
 {end_of_chorus}
 
 {start_of_verse}
-Zaplatil jsem holku za nevěrný služby
-za vybitý touhy za to že hned zmizí nad ránem.
+Zaplatil jsem [Emi]holku za nevěrný [G]služby
+za vybitý [A]touhy za to že hned zmizí nad [Emi]ránem.
 Zaplatil jsem pistol na poslední chvíli
-to mě probudili divný zvuky nad ránem.
+to mě probudily divný zvuky nad [Esus2]ránem.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Zaplatil jsem lidi za pochybnou přízeň
-za kus živýho těla proti střelám nad ránem.
+Zaplatil jsem [Emi]lidi za pochybnou [G]přízeň
+za kus živýho [A]těla proti střelám nad [Emi]ránem.
 Zaplatil jsem život a nebylo to drahý
-vidět svoje vrahy klesat dolů nad ránem.
+vidět svoje vrahy klesat dolů nad [Esus2]ránem.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}

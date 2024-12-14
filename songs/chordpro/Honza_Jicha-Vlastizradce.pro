@@ -21,49 +21,49 @@ a [Dmi]ty jsme potom [Ami]strkali
 {end_of_verse}
 
 {start_of_verse}
-Přikládám do ohně
-Benešovy dekrety
-a bavím se o hovně
-a spolu se mnou i ty
+[Ami]Přikládám [Dmi]do ohně
+[Ami]Benešovy [E]dekre[Ami]ty
+a [Ami]bavím se [Dmi]o hovně
+a [Ami]spo[E]lu se [Ami]mnou i ty
 
-Přemejšlíme jestli by
-tyhle slavný dekrety
-nehořely líp jako
-slisovaný brikety
+[Dmi]Přemejšlíme [Ami]jestli by
+[E]tyhle slavný [Ami]dekrety
+[Dmi]nehořely [Ami]líp jako
+[E]slisovaný [Ami]brikety
 {end_of_verse}
 
 {start_of_verse}
-Přikládám do ohně
-scénář Fidlovačky
-nechtějte už po mně
-číst takový… skvosty
+[Ami]Přikládám [Dmi]do ohně
+[Ami]scénář [E]Fidlo[Ami]vačky
+[Ami]nechtějte [Dmi]už po mně
+[Ami]číst [E]takový… skvo[Ami]sty
 
-Ačkoliv si vzpomínám,
-že říkala mi babička
-že tam někde veprostřed
-je nějaká pěkná písnička
+[Dmi]Ačkoliv si [Ami]vzpomínám,
+že [E]říkala mi [Ami]babička
+[Dmi]že tam někde [Ami]veprostřed
+je [E]nějaká pěkná [Ami]písnička
 {end_of_verse}
 
 {start_of_verse}
-Přikládám do ohně
-Zlatou bulu sicilskou
-pak Malou dohodu
-a nakonec jdu na Velkou
-Přikládám do ohně
+[Ami]Přikládám [Dmi]do ohně
+[Ami]Zlatou [E]bulu [Ami]sicilskou
+[Ami]pak Malou [Dmi]dohodu
+a [Ami]nako[E]nec jdu [Ami]na velkou
 
-všechno co je z papíru
-a co nám během staletí
-vždycky lhalo o míru
+[Dmi]Přikládám [Ami]do ohně
+[E]všechno co je [Ami]z papíru
+a [Dmi]co nám během [Ami]staletí
+[E]vždycky lhalo [Ami]o míru
 {end_of_verse}
 
 {start_of_verse}
-Nějak rychle dohořel
-ten náklad dokumentů
-a já tu mrznu u kamen
-a -5 je venku
+[Ami]Nějak rychle [Dmi]dohořel
+[Ami]ten náklad [E]doku[Ami]mentů
+a [Ami]já tu mrznu u [Dmi]kamen
+a [Ami]mínus [E]pět je [Ami]venku
 
-Papír je jenom papír,
-tak co se budu vztekat
-radši půjdu zase ven
-kácet, řezat sekat
+[Dmi]Papír je [Ami]jenom papír,
+[E]tak co se [Ami]budu vztekat
+[Dmi]radši půjdu [Ami]zase ven
+[E]kácet, řezat [Ami]sekat
 {end_of_verse}

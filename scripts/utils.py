@@ -2,6 +2,14 @@ import re
 import unicodedata
 from pathlib import Path
 
+import yaml
+
+
+def load_secrets():
+    with open(Path(__file__).parent.parent / "secrets.yaml", "r") as f:
+        secrets = yaml.safe_load(f)
+    return secrets
+
 
 def songs_path():
     return Path(__file__).parent / "../songs"

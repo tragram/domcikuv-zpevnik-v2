@@ -26,32 +26,33 @@ a tak [F]dej tu ruku [G]pryč z mýho [C]stehna!
 {end_of_chorus}
 
 {start_of_verse}
-Ne, že bych tě neměl rád
-jen tohle pro mě není
-Až někdy jindy snad
-budeme naladění
-Tak hrozně rád
-bych ti dovolil víc
-Já bych za tebou stál
-snad chápeš co tím chci říct
+[C]Ne, že bych tě [G]neměl [F]rád
+jen tohle [G]pro mě není
+[C]Až někdy [G]jindy [F]snad
+budeme [G]naladění
+[C]Tak [G]hrozně [F]rád
+[G]bych ti dovolil víc
+[C]Já bych za [G]tebou stál [F]
+snad chápeš [G]co tím chci [C]říct
 {end_of_verse}
 
 {start_of_chorus}
-Takhle však nechci
-v tobě nechávat víru
+[C]Takhle však [G]nechci
+[Ami]v tobě nechávat [F]víru
 ale kdybych byl gay
 hned bych ti nastavil dí…ky
 že ve mně dělá se ti v rozkroku boule
-Jenže nejsem gay, tak nešahej mi prosím
-…na ruku
+Jenže [G]nejsem gay, tak [F]nešahej mi [G]prosím
+[C]…na ruku
 {end_of_chorus}
 
 {start_of_verse}
-Nikdy jsem nechutnal
-tvůj jazyk na mém
-a z tvé pěsti ve mně
-nikdy nešlehl plamen
-Ale nové cesty
-jsou teď otevřené
-a tak gatě dolů
+[C]Nikdy jsem [G]nechutnal [F]
+tvůj [G]jazyk na mém 
+[C] z tvé [G]pěsti ve [F]mně
+nikdy [G]nešlehl plamen 
+[C]Ale [G]nové [F]cesty
+jsou teď [G]otevřené 
+[C]a tak [G]gatě [F]dolů
+[G] a pojď ke mně!
 {end_of_verse}
