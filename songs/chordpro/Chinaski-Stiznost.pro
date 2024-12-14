@@ -8,8 +8,6 @@
 {tempo: }
 {range: a1-d2}
 {start_melody: g}
-
-
 {start_of_chorus: R1}
 [C]Dva večery sepisuju
 [G]dlouhou stížnost [Dmi]na život
@@ -20,17 +18,16 @@ chci [F]zrušit svoji existenci
 {start_of_verse}
 [C]Zalepím jim do [G]obálky
 a [Dmi]nad příslušnou adresu
-[F]nalepim hned čtyry [C]známky
-s tím [G]chlapem co ho nesnes[F]u
-
-Prohledávám doklady
-a chci v nich najít rodnej list
-všechny stopy, data, důkazy
-toužím zničit, jsem si jist
+nale[F]pim hned čtyry [C]známky
+s tím [G]chlapem co ho nesnesu[F]
+[C]Prohledávám doklady
+a [G]chci v nich najít rodnej [Dmi]list
+[F]všechny stopy, data, [C]důkazy
+toužím [G]zničit, jsem si [F]jist
 {end_of_verse}
 
-
 {chorus: R1}
+
 {start_of_chorus: R2}
 [C]Do deseti let čekám
 [G]odpověď úřední [Dmi]oznámení
@@ -39,18 +36,19 @@ toužím zničit, jsem si jist
 {end_of_chorus}
 
 {start_of_verse}
-Půjdu někam na matriku
-a rodnej list tam odevzdám
-chci vymazat svou evidenci
-a vobčanku jim taky dám
+[C]Půjdu někam na [G]matriku
+a [Dmi]rodnej list tam odevzdám
+[F]chci vymazat svou [C]evidenci
+a [G]vobčanku jim taky [F]dám
 
-přidám taky řidičák,
-dřív než vyhraju nějaký body
-kašlu na ty vaše závody,
-kde se hraje o náhody
+[C]přidám taky [G]řidičák,
+[Dmi]dřív než vyhraju nějaký body
+[F]kašlu na ty vaše [C]závody,
+kde se [G]hraje o ná[F]hody
 {end_of_verse}
 
 {chorus: R1}
+
 {chorus: R2}
 
 {start_of_chorus: R3}
@@ -61,4 +59,5 @@ soud [G]uzná, že sem [F]nepatřím
 {end_of_chorus}
 
 {chorus: R1}
+
 {chorus: R2}

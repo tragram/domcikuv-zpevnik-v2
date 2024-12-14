@@ -8,7 +8,6 @@
 {tempo: }
 {range: h1-d#2}
 {start_melody: f#}
-
 {start_of_chorus}
 𝄆 [H]Ná nanana[G#mi]nananaá aáá[E]aáa[Emi]ná 𝄇
 {end_of_chorus}
@@ -27,13 +26,14 @@ jsem ten tvůj vysněný [E]pán [Emi]
 {chorus}
 
 {start_of_verse}
-Já se prostě nekontroluju a plácám a plácám
-si vážně úžasná já tě nejspíš miluju,
-no ty mi dáváš .. jééé
-Zabalit, vyrazit, rychle frčíme dál
-bereme čáru šup do kočáru
-Já jenom já jsem ten tvůj vysněný pán
-Inženýr šarlatán
+[H]Já se prostě [D#mi]nekontroluju 
+a [C#mi]plácám a [Emi]plácám
+jsi vážně [H]úžasná já tě [D#mi]nejspíš miluju,
+[C#mi]no ty mi dáváš .. [Emi]jééé
+[H]Zabalit, vyrazit, rychle [D#mi]frčíme dál
+[C#mi]bereme čáru [Emi]šup do kočáru
+[H]Já jenom [G#mi]já jsem ten tvůj vysněný [E]pán 
+Inže[Emi]nýr šarlatán
 {end_of_verse}
 
 {start_of_verse}

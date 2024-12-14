@@ -31,10 +31,10 @@ Ta [G]stará [D]dobrá hra je [A]okoukaná.
 {end_of_chorus}
 
 {start_of_verse}
-Snad nevěříš na tajný znamení.
-Všechno to harampádí - balábile - mámení.
-Vážení platící, jak všeobecně ví se,
-včera i dneska, stále ta samá píseň.
+[G]Snad nevě[D]říš na tajný zname[A]ní.
+[G]Všechno to harampádí - [D]balábile - [A]mámení.
+[G]Vážení platící, [D]jak všeobecně [A]ví se,
+[G]včera i dneska, [D]stále ta samá [A]píseň.
 {end_of_verse}
 
 {chorus}

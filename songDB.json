@@ -396,7 +396,7 @@
     "start_melody": "h d",
     "chordpro_file": "Chinaski-Drobna_paralela.pro",
     "pdf_filenames": "['chinaski_drobna_paralela-sken.pdf', 'chinaski_drobna_paralela-comp.pdf', 'chinaski_drobna_paralela-gen.pdf']",
-    "content_hash": "18e88c9ea3f6191de256d144047eed14fb44fd0c",
+    "content_hash": "15999654ebf7c20dbfa4d432c7e5319fd7712a9e",
     "disabled": false
   },
   {
@@ -444,7 +444,7 @@
     "start_melody": "f#",
     "chordpro_file": "Chinaski-Klara.pro",
     "pdf_filenames": "['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']",
-    "content_hash": "a7f57338dfbce5e0d1c5e61330944408074b17df",
+    "content_hash": "2b8b028aabe4039258088ceeb90e92da5500f9b9",
     "disabled": false
   },
   {
@@ -476,7 +476,7 @@
     "start_melody": "e f#",
     "chordpro_file": "Chinaski-Kutil.pro",
     "pdf_filenames": "['chinaski_kutil-sken.pdf', 'chinaski_kutil-comp.pdf']",
-    "content_hash": "f9d92074d3fdc1f583bd8f19855f11e067815869",
+    "content_hash": "1b854904f4649bfde698ec27d00496fc1b81f47c",
     "disabled": false
   },
   {
@@ -508,7 +508,7 @@
     "start_melody": "g",
     "chordpro_file": "Chinaski-Stiznost.pro",
     "pdf_filenames": "['chinaski_stiznost-sken.pdf', 'chinaski_stiznost-comp.pdf', 'chinaski_stiznost-gen.pdf']",
-    "content_hash": "62ff59afdea6d881e1e474c1c543348f45c56fb5",
+    "content_hash": "a488365e30b3e639de7de7349216f16a5bd7ba81",
     "disabled": false
   },
   {
@@ -588,7 +588,7 @@
     "start_melody": "a a g f#",
     "chordpro_file": "Devitka-Burcak.pro",
     "pdf_filenames": "['devitka_burcak-sken.pdf', 'devitka_burcak-comp.pdf', 'devitka_burcak-gen.pdf']",
-    "content_hash": "5b8ce82c56db87f9f773927a3346f27bd4adede8",
+    "content_hash": "a2f54584aa9deb4f9def921abec588505960ffbc",
     "disabled": false
   },
   {
@@ -652,7 +652,7 @@
     "start_melody": "f#-a",
     "chordpro_file": "El_Cuarteto_de_Nos-No_quiero_ser_normal.pro",
     "pdf_filenames": "[]",
-    "content_hash": "4b11ff032abbcbaf680e93caaf59472f886e4dcf",
+    "content_hash": "8aa063a8595a58364b142d9f938d1a2ebd9cd0cb",
     "disabled": false
   },
   {
@@ -668,7 +668,7 @@
     "start_melody": "e f# g",
     "chordpro_file": "Elton_John-Can_You_Feel_The_Love_Tonight.pro",
     "pdf_filenames": "",
-    "content_hash": "f46c7c17a2af196ed0dbc178b751fb252d5ff453",
+    "content_hash": "6dddb7a47a73642ff94202c64866b2afc2ffad53",
     "disabled": false
   },
   {
@@ -684,7 +684,7 @@
     "start_melody": "c g",
     "chordpro_file": "Elvis_Presley-I_Can't_Help_Falling_In_Love_With_You.pro",
     "pdf_filenames": "",
-    "content_hash": "03795d229219608df2676f82b518ba4a0ed2dfab",
+    "content_hash": "04c9af81b6816fa837212f1bd4d3408de66223eb",
     "disabled": false
   },
   {
@@ -700,7 +700,7 @@
     "start_melody": "a",
     "chordpro_file": "Elvis_Presley-In_The_Ghetto.pro",
     "pdf_filenames": "['elvis_presley_in_the_ghetto-sken.pdf', 'elvis_presley_in_the_ghetto-comp.pdf']",
-    "content_hash": "62d9572016b750c3a554c76505882d4669af07b4",
+    "content_hash": "ae46d444cdaffbae247e6321ad869d43ca69a7d8",
     "disabled": false
   },
   {

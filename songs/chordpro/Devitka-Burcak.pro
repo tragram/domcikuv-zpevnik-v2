@@ -8,7 +8,6 @@
 {tempo: }
 {range: h1-h2}
 {start_melody: a a g f#}
-
 {start_of_verse}
 Přiběh' mi na [D]zahradu černý kůň
 Nechal mi [Emi7]bílý pramen ve vlasech
@@ -17,10 +16,10 @@ A z jeho [D]hřívy se mi tajil [A7sus]dech
 {end_of_verse}
 
 {start_of_verse}
-Přišel s ním Shakespeare Mácha i lord Byron
-Přišla s ním Rusalka i holka od koní
-Líc a rub mince co se nepotkaj
-Růže co kvete ale nevoní
+Přišel s ním [D]Shakespeare Mácha i lord Byron
+Přišla s ním [Emi7]Rusalka i holka od koní
+Líc a rub [Gadd9]mince co se nepotkaj
+Růže co [D]kvete ale nevo[A7sus]ní
 {end_of_verse}
 
 {start_of_chorus}
@@ -39,17 +38,17 @@ A ty to [C]nevděčníku dobře [A7sus]víš
 {end_of_chorus}
 
 {start_of_verse}
-Kopal jsem do spadaných kaštanů
-Polykal svítání a v duchu tiše klel
-Proč má rok jenom třistapětašedesát dnů
-A proč se Charón opřel do vesel
+Kopal jsem [D]do spadaných kaštanů
+Polykal [Emi7]svítání a v duchu tiše klel
+Proč má rok [Gadd9]jenom třistapětašedesát dnů
+A proč se [D]Charón opřel do ve[A7sus]sel
 {end_of_verse}
 
 {start_of_verse}
-Proč zrovna tuhle krásnou letní noc
-Musel's mě hřebečku tak pokopat
-A proč jsi utekl když já tak moc
-Chtěl aspoň na chvíli zas společný stát
+Proč zrovna [D]tuhle krásnou letní noc
+Musel's mě [Emi7]hřebečku tak pokopat
+A proč jsi [Gadd9]utekl když já tak moc
+Chtěl aspoň [D]na chvíli zas společný [A7sus]stát
 {end_of_verse}
 
 {chorus}
