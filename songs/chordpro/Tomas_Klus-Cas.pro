@@ -29,44 +29,44 @@ mý sle[C]pý rány bez odvety.
 {end_of_chorus}
 
 {start_of_verse}
-Když má člověk svý usměvavý stavy
-celej svět se baví s ním.
-Zatímco chceš-li brečet,
-musíš,člověče, sám
+[Emi]Když má člověk svý usměvavý stavy
+[C]celej svět se baví s ním.
+[G]Zatímco chceš-li brečet,
+[D]musíš,člověče, sám
 {end_of_verse}
 
 {start_of_verse}
-Mám strach, že mezi náma
-hloubíš propast do neznáma,
-že se někde ve mně snažíš nadechnout
-Raději shořet, než vyhasnout!
+[Emi]Mám strach, že mezi náma
+[C]hloubíš propast do neznáma,
+[G]že se někde ve mně snažíš nadechnout
+[D]Raději shořet, než vyhasnout!
 {end_of_verse}
 
 {start_of_verse}
-Za oknem do dvora kouř cigarety,
-malý útěk před tím co ještě přežívá.
-Stačí slovo, proč dlouhý věty, když víš,
-že se Bůh stejně nedívá.
+[Emi]Za oknem do dvora kouř cigarety,
+[C]malý útěk před tím co ještě přežívá.
+[G]Stačí slovo, proč dlouhý věty, když víš,
+[D]že se Bůh stejně nedívá.
 {end_of_verse}
 
 {start_of_verse}
-A tak se kolem nás stahuje neúprosný čas.
-A střepy loňských lét poskládám a chci zpět,
-ale už nemůžu se hnout
-Raději shořet, než vyhasnout!
+[Emi]A tak se kolem nás stahuje neúprosný čas.
+[C]A střepy loňských lét poskládám a chci zpět,
+[G]ale už nemůžu se hnout
+[D]Raději shořet, než vyhasnout!
 {end_of_verse}
 
 {start_of_verse}
-Bojim se malých zaváhání
-a všeho, co se očekává
-V dlani se uložit k spánku
-a k ránu vstát.
+[Emi]Bojim se malých zaváhání
+[C]a všeho, co se očekává
+[G]V dlani se uložit k spánku
+[D]a k ránu vstát.
 {end_of_verse}
 
 {start_of_verse}
-Schovat se všemu a všem,
-jen tak probloudit se osudem
-Oslněn, být na chvíli sám sebou
+[Emi]Schovat se všemu a všem,
+[C]jen tak probloudit se osudem
+[G]Oslněn, být na chvíli sám sebou
 {end_of_verse}
 
 {chorus}

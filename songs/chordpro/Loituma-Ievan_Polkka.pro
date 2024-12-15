@@ -24,40 +24,41 @@ sillä [F]ei meitä silloin kiellot haittaa
 {end_of_chorus}
 
 {start_of_verse}
-Ievan suu oli vehnäsellä
-ko immeiset onnee toevotti.
-Peä oli märkänä jokaisella
-ja viulu se vinku ja voevotti.
-Ei tätä poikoo märkyys haittaa
-sillon ko laskoo laiasta laitaan.
+[Dmi]Ievan suu oli vehnäsellä
+[C]ko immeiset onnee [Dmi]toevotti.
+[Dmi]Peä oli märkänä jokaisella
+ja [Ami7]viulu se vinku ja [Dmi]voevotti.
+Ei [F]tätä poikoo märkyys haittaa
+[Ami7]sillon ko laskoo [Dmi]laiasta laitaan.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Ievan äiti se kammarissa
-virsiä veisata huijjuutti,
-kun tämä poika naapurissa
-ämmän tyttöä nuijjuutti.
-Eikä tätä poikoo ämmät haittaa
-sillon ko laskoo laiasta laitaan.
+[Dmi]Ievan äiti se kammarissa
+[C]virsiä veisata [Dmi]huijjuutti,
+[Dmi]kun tämä poika naapurissa
+[Ami7]ämmän tyttöä [Dmi]nuijjuutti.
+[F]Eikä tätä poikoo ämmät haittaa
+[Ami7]sillon ko laskoo [Dmi]laiasta laitaan.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Roli lorda Rolfa hrál Vladimír Leraus,
-hrál Vladimír Leraus celkem rád
-Roli lorda Rolfa hrál Vladimír Leraus,
-hrál Vladimír Leraus celkem rád
+[Dmi]Roli lorda Rolfa hrál Vladimír Leraus,
+[C]hrál Vladimír Leraus [Dmi]celkem rád
+[Dmi]Roli lorda Rolfa hrál Vladimír Leraus,
+[Ami7]hrál Vladimír Leraus [Dmi]celkem rád
 
-Nenaolejuje-li ji Julie,
-já naolejuju jí s chutí sama
-však naolejuje-li ji Julie,
-já nenaolejuju jí víc večerát.
+[F]Nenaolejuje-li ji Julie,
+[Ami7]já naolejuju jí [Dmi]s chutí sama
+[F]však naolejuje-li ji Julie,
+[Ami7]já nenaolejuju jí [Dmi]víc večerát.
 {end_of_verse}
 
 {start_of_verse}
+[Dmi][C][Dmi][Ami7][Dmi][F][Ami7][Dmi][Ami7][Dmi]
 4x Strč prst skrz krk
 
 4x Nezaželezilo-li se železo

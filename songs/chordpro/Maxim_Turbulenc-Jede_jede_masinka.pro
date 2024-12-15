@@ -34,7 +34,7 @@ praštím s [F]tebou do tráv[C]y 𝄇
 {start_of_verse: Recitativ}
 Pozor hlášení:
 Vlak do dáli opustí z první
-koleje druhé nástupiště ve 13 hodin!
+koleje druhé nástupiště ve 13 hodin![C]
 {end_of_verse}
 
 {chorus}

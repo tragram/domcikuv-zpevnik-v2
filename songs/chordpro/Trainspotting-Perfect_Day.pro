@@ -16,10 +16,10 @@ We go [E]home.
 {end_of_verse}
 
 {start_of_verse}
-Just a perfect day,
-Feed animals in the zoo
-Then later, a movie, too,
-And then home.
+[Am]Just a [D]perfect day,
+[G]Feed animals [C]in the zoo
+[F]Then later, a [Dm]movie, too,
+We go [E]home.
 {end_of_verse}
 
 {start_of_chorus}
@@ -30,17 +30,17 @@ I'm [C#m]glad I spent it with [D]you. [D/C#][D/H]
 {end_of_chorus}
 
 {start_of_verse}
-Just a perfect day,
-Problems all left alone,
-Weekenders on our own.
-It's such fun.
+[Am]Just a [D]perfect day,
+[G]Problems all [C]left alone,
+[F]Weekenders [Dm]on our own.
+It's such [E]fun.
 {end_of_verse}
 
 {start_of_verse}
-Just a perfect day,
-You made me forget myself.
-I thought I was someone else,
-Someone good.
+[Am]Just a [D]perfect day,
+[G]You made me [C]forget myself.
+[F]I thought I was [Dm]someone else,
+Someone [E]good.
 {end_of_verse}
 
 {chorus}

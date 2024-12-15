@@ -49,43 +49,47 @@ milost[G7]ným, a ty já [Emi]znám. [G]
 {end_of_verse}
 
 {start_of_verse}
-Když pak napadne sníh, pojedeš do hor
-se svou partou ze školních let,
-přátel máš víc, než bývá zvykem,
-ale žádný z nich nezná tvůj svět, netuší.
+Když [C]pak napadne sníh, pojedeš do [Emi]hor
+se svou [F]partou ze školních [G]let,
+přátel [C]máš víc, než bývá [Emi]zvykem,
+ale [F]žádný z nich nezná tvůj [G]svět,
+netu[G7]ší. [Emi][G]
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Tvůj stín, to je stín něžných písní,
-tvá dlaň je tajemství víl,
-kdo slýchá tvůj hlas, ten je ztracen,
-ten se navždy polapil, úsměv tvůj, to je ta past.
+Tvůj [C]stín, to je stín něžných [Emi]písní,
+tvá [F]dlaň je tajemství [G]víl,
+kdo [C]slýchá tvůj hlas, ten je [Emi]ztracen,
+ten se [F]navždy pola[G]pil,
+úsměv [G7]tvůj, to je ta [Emi]past. [G]
 {end_of_verse}
 
 {start_of_verse}
-Ten pán, co prý si tě vezme,
-musí být multimilionář,
-říkáš to všem tak vážně, že ti věří,
-jen já stále pročítám snář a hledám v něm.
+Ten [C]pán, co prý si tě [Emi]vezme,
+musí [F]být multilio[G]nář,
+říkáš [C]to všem tak vážně, že ti [Emi]věří,
+jen [F]já stále pročítám [G]snář
+a hle[G7]dám v něm. [Emi][G]
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Já tu čekám, až vrátíš se z toulek,
-ty dálky nevedou dál,
-ať chceš nebo nechceš, tak končí,
-a vítr nikdo nespoutal, ani já.
+Já tu [C]čekám, až vrátíš se z [Emi]toulek,
+ty [F]dálky nevedou [G]dál,
+ať [C]chceš nebo nechceš, tak [Emi]končí,
+a [F]vítr nikdo nespou[G]tal,
+ani [G7]já. [Emi][G]
 {end_of_verse}
 
 {start_of_verse}
-Pojď jednou ke mně blíž, jedenkrát,
-a já ti povím, kdo vlastně jsem,
-vypni gramofon, nech té hry, zanech přátel,
-slétni z oblak na pevnou zem,
-tiše stůj a poslouchej.
+Pojď [C]jednou ke mně blíž, jeden[Emi]krát,
+a já ti [F]povím, kdo vlastně [G]jsem,
+vypni [C]gramofon, nech té hry, zanech [Emi]přátel,
+slétni [F]z oblak na pevnou [G]zem,
+tiše [G7]stůj a poslou[Emi]chej. [G]
 {end_of_verse}
 
 {start_of_chorus}

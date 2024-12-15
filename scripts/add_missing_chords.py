@@ -78,7 +78,7 @@ def generate_chords_batch_api(chordpro_contents: Mapping[str, str]):
     return message_batch
 
 
-def find_incomplete_chordpro_files(folder_path, skipping, max_songs=5, batch_api=True):
+def find_incomplete_chordpro_files(folder_path, skipping, max_songs=10, batch_api=True):
     """
     Finds all ChordPro files in a folder where some verses lack chords.
 
@@ -196,7 +196,7 @@ def check_all_past_batches():
 
 if __name__ == "__main__":
     skipping = check_all_past_batches()
-    quit()
+    # quit()
     folder_path = songs_path() / "chordpro"
 
     if not os.path.exists(folder_path):

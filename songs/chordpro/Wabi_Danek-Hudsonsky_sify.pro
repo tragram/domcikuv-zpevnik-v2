@@ -19,13 +19,13 @@ najmout [Ami]dá, [G]jo-[G#]ho-[Ami]ho.
 {end_of_verse}
 
 {start_of_verse}
-Ten, kdo nepřekládal uhlí,
-šíf když na mělčinu vjel,
-málo zná, málo zná,
-ten, kdo neměl tělo ztuhlý,
-až se nočním chladem chvěl,
-ať se na Hudsonský šífy
-najmout dá, johoho.
+Ten, kdo [Ami]nepřekládal uhlí,
+šíf když na [C]mělčinu vjel,
+málo [G]zná, jó málo [Ami]zná,
+ten, kdo [Ami]neměl tělo ztuhlý,
+až se [G]nočním chladem chvěl,
+ať se [Ami]na Hudsonský [G]šífy
+najmout [Ami]dá, [G]jo-[G#]ho-[Ami]ho.
 {end_of_verse}
 
 {start_of_chorus}
@@ -35,47 +35,46 @@ ať [G]do pekla se dříve dohra[Ami]bem,
 {end_of_chorus}
 
 {start_of_verse}
-Ten, kdo nezná noční zpěvy
-zarostenejch lodníků
-jako já, jó jako já,
-ten, kdo cejtí se bejt chlapem,
-umí dělat rotyku,
-ať se na Hudsonský šífy
-najmout dá, johoho.
+Ten, kdo [Ami]nezná noční zpěvy
+zaroste[C]nejch lodníků
+jako [G]já, jó jako [Ami]já,
+ten, kdo [Ami]cejtí se bejt chlapem,
+umí [G]dělat rotyku,
+ať se [Ami]na Hudsonský [G]šífy
+najmout [Ami]dá, [G]jo-[G#]ho-[Ami]ho.
 {end_of_verse}
 
 {start_of_verse}
-Ten, kdo má na bradě mlíko,
-kdo se rumem neopil,
-málo zná, jó málo zná,
-kdo necejtil hrůzu z vody,
-kde se málem utopil,
-ať se na Hudsonský šífy
-najmout dá, johoho.
+Ten, kdo [Ami]má na bradě mlíko,
+kdo se [C]rumem neopil,
+málo [G]zná, jó málo [Ami]zná,
+kdo ne[Ami]cejtil hrůzu z vody,
+kde se [G]málem utopil,
+ať se [Ami]na Hudsonský [G]šífy
+najmout [Ami]dá, [G]jo-[G#]ho-[Ami]ho.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Kdo má roztrhaný boty,
-kdo má pořád jenom hlad
-jako já, jó jako já,
-kdo chce celý noci čuchat
-pekelnýho vohně smrad,
-ať se na Hudsonský šífy
-najmout dá, johoho.
+Kdo má [Ami]roztrhaný boty,
+kdo má [C]pořád jenom hlad
+jako [G]já, jó jako [Ami]já,
+kdo chce [Ami]celý noci čuchat
+pekeln[G]ýho vohně smrad,
+ať se [Ami]na Hudsonský [G]šífy
+najmout [Ami]dá, [G]jo-[G#]ho-[Ami]ho.
 {end_of_verse}
 
 {start_of_verse}
-Kdo chce zhebnout třeba zejtra,
-komu je to všechno fuk,
-kdo je sám, jó jako já,
-kdo má srdce v správným místě,
-kdo je prostě príma kluk,
-ať se na Hudsonský šífy
-najmout dá, johoho.
+Kdo chce [Ami]zhebnout třeba zejtra,
+komu [C]je to všechno fuk,
+kdo je [G]sám, jó jako [Ami]já,
+kdo má [Ami]srdce v správným místě,
+kdo je [G]prostě príma kluk,
+ať se [Ami]na Hudsonský [G]šífy
+najmout [Ami]dá, [G]jo-[G#]ho-[Ami]ho.
 {end_of_verse}
-
 
 {start_of_variant: append_content}
 [G]jo[G#]ho[A]ho.

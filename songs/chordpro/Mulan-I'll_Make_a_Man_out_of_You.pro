@@ -1,14 +1,3 @@
-{title: I'll Make a Man out of You}
-{artist: Mulan}
-{date_added: 08-2015}
-{language: english}
-{pdf_filenames: ['mulan_ill_make_a_man_out_of_you-sken.pdf', 'mulan_ill_make_a_man_out_of_you-comp.pdf', 'mulan_ill_make_a_man_out_of_you-gen.pdf']}
-{capo: 3}
-{key: C}
-{tempo: }
-{range: g1-c#2}
-{start_melody: a e}
-
 {start_of_verse}
 [Am]Let's get [G/H]down to [C]business
 [G/H]To [C]de[Dm]feat the [G]Huns
@@ -65,15 +54,15 @@ of the [Asus2]moon [G][Asus2]
 {comment: Capo++}
 
 {start_of_verse}
-Time is racing toward us
-till the Huns arrive
-Heed my every order
-and you might survive
+[Ami]Time is [G/H]racing [C]toward us
+[G/H]till [C]the [Dmi]Huns [G]arrive
+[Ami]Heed my [G/H]every [C]order
+[G/H]and [C]you [Dmi]might [G/H]survive
 
-You're unsuited for the rage of war
-So pack up, go home you're through
-How could I make a man
-out of you?
+You're un[F/A]suited for the [G/H]rage of war
+So pack [C]up, go home you're [F]through
+[F]How [F/E]could [F]I make a [G]man
+out of [Am]you? [G][Am]
 {end_of_verse}
 
 {chorus}

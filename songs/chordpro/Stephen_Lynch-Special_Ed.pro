@@ -18,53 +18,59 @@ I [D]had a [Dsus2]very [D]special [Dsus2]friend
 
 {start_of_chorus}
 Oh, [D]special [G]Ed
-[Emi]his Mama mama [A]dropped him dropped him
-[D]on his [G]head
+[Emi]his Mama mama [A]dropped him
+dropped him [D]on his [G]head
 [Emi]Now he's [A]not so [D]bright [G]instead
 [Emi]He's a [A]little bit [D]special [Dsus4]
 [D]Just a [Dsus4]little [D]bit [Dsus4]special
 {end_of_chorus}
 
 {start_of_verse}
-We'd play tag, and he'd get hurt
-I'd play soldier, he'd eat dirt
-I liked math, and the spelling bee
-Ed liked talking to a tree
+[D]We'd play [Dsus2]tag, and [D]he'd get [Dsus2]hurt
+I'd [D]play [Dsus2]soldier, [D]he'd eat [Dsus2]dirt
+[D]I liked [Dsus2]math, and the [D]spelling [Dsus2]bee
+[Em]Ed liked talking to a [A]tree
 {end_of_verse}
 
 {start_of_chorus}
-Oh, special Ed...
-Now she keeps him (where?) in the shed
-Cause he's a little bit special
-Just a little bit special
+Oh, [D]special [G]Ed
+[Emi]his Mama mama [A]dropped him
+dropped him [D]on his [G]head
+[Emi]Now she keeps him [A](where?) [D]in the shed [G]
+[Emi]Cause he's a [A]little bit [D]special [Dsus4]
+[D]Just a [Dsus4]little [D]bit [Dsus4]special
 {end_of_chorus}
 
 {start_of_verse}
-I ran track, hung out in malls
-Ed ran headfirst into walls
-I had girly girls, and lots of clothes
-Ed had names for all his toes
+[D]I ran [Dsus2]track, hung [D]out in [Dsus2]malls
+[D]Ed ran [Dsus2]headfirst [D]into [Dsus2]walls
+[D]I had [Dsus2]girly girls, and [D]lots of [Dsus2]clothes
+[Em]Ed had names for all his [A]toes
 {end_of_verse}
 
 {start_of_chorus}
-Oh, special Ed...
-...Now he thinks he's a piece of bread
-Cause he's a little bit special
-Just a little bit special
+Oh, [D]special [G]Ed
+[Emi]his Mama mama [A]dropped him
+dropped him [D]on his [G]head
+[Emi]Now he thinks [A]he's a [D]piece of [G]bread
+[Emi]Cause he's a [A]little bit [D]special [Dsus4]
+[D]Just a [Dsus4]little [D]bit [Dsus4]special
 {end_of_chorus}
 
 {start_of_verse}
-I thought college life was great
-Ed could count from one to... two,
-I liked people and the party scene
-Ed was scared of the vacuum cleaner
+[D]I thought [Dsus2]college [D]life was [Dsus2]great
+[D]Ed could [Dsus2]count from [D]one to... [Dsus2]two,
+[D]I liked [Dsus2]people and the [D]party [Dsus2]scene
+[Em]Ed was scared of the vacuum [A]cleaner
 {end_of_verse}
 
 {start_of_chorus}
-Oh special Ed...
-...now he thinks he can drive his bed
-cause he's a little bit special
-just a little bit...
+Oh [D]special [G]Ed
+[Emi]his Mama mama [A]dropped him
+dropped him [D]on his [G]head
+[Emi]Now he [A]thinks he can [D]drive his [G]bed
+[Emi]cause he's a [A]little bit [D]special [Dsus4]
+[D]just a [Dsus4]little [D]bit... [Dsus4]
 {end_of_chorus}
 
 {start_of_bridge}
@@ -75,17 +81,17 @@ That special [G]Ed just made me [A]special [D]too
 {end_of_bridge}
 
 {start_of_verse}
-Now I laugh as I count bugs
-I give strangers great big hugs
-Next to me Ed is fine
-Yeah he's a f---ing Einstein
+[D]Now I [Dsus2]laugh as [D]I count [Dsus2]bugs
+I [D]give [Dsus2]strangers [D]great big [Dsus2]hugs
+[D]Next to [Dsus2]me Ed [D]is [Dsus2]fine
+[Em]Yeah he's a f---ing Ein[A]stein
 {end_of_verse}
 
 {start_of_chorus}
-Oh, Special Ed (and me)
-Now we're not right in the head (you see)
-Now we're not so (not so) bright instead
-We're a little bit special
+Oh, [D]Special [G]Ed (and me)
+[Emi]Now we're [A]not right [D]in the [G]head (you see)
+[Emi]Now we're not so (not so) [D]bright instead[G]
+[Emi]We're a [A]little bit [D]special
 [Emi]Just a [A]little bit [D]special [G]
 [Emi]That bastard [A]Ed made me [D]special [G]
 [Emi]Just [A]a little bit [G]

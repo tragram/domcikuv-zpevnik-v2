@@ -23,10 +23,10 @@
 {end_of_chorus}
 
 {start_of_verse}
-Tři kámošky, psycholožky, uzavřely sázku,
-která suchou nohou řeku překročí.
-Dvě tam spadly, třetí asi zlomila si nohu,
-teď válejí se smíchy po jehličí.
+[G]Tři kámošky, psycholožky, uzavřely [Emi]sázku,
+[G]která suchou nohou řeku překro[Emi]čí.
+[G]Dvě tam spadly, třetí asi zlomila si [Emi]nohu,
+[G]teď válejí se smíchy [D]po jehlič[G]í.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
@@ -35,10 +35,10 @@ a tak si [D]zpívají, když ždímají si prádlo krajkový.
 {chorus}
 
 {start_of_verse}
-Tři kámošky, psycholožky, zapomněly, že se
-tento rok strašně moc urodilo v lese.
-A tři kámošky, no, holky fajnový,
-Teď utíkaj, když je píchaj svině pruhovaný.
+[G]Tři kámošky, psycholožky, zapomněly, [Emi]že se
+[G]tento rok strašně moc urodilo v [Emi]lese.
+[G]A tři kámošky, no, holky fajno[Emi]vý,
+[G]Teď utíkaj, když je píchaj [D]svině pruho[G]vaný.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
@@ -47,10 +47,10 @@ a tak si [D]zpívají a jsou šťastný i když jsou napuchlý.
 {chorus}
 
 {start_of_verse}
-Tři kámošky, psycholožky, vrátily se domů,
-a městem se právě rozednívalo.
-Než usnuly, slíbily si, že zítra půjdou znovu
-a budou dělat, že se nic nestalo.
+[G]Tři kámošky, psycholožky, vrátily se [Emi]domů,
+[G]a městem se právě rozední[Emi]valo.
+[G]Než usnuly, slíbily si, že zítra půjdou [Emi]znovu
+[G]a budou dělat, že se [D]nic nesta[G]lo.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}

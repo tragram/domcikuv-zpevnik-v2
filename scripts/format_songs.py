@@ -22,37 +22,44 @@ def replace_repetitions(chordpro_content: str):
 
 
 def capitalize_lyrics(text):
-    def capitalize_paragraph(match):
-        # Match group 1 contains the chords or directives, group 2 contains the lyrics
-        directive_or_emptyline = match.group(1) or ""  # Ensure it's a string
-        chord = match.group(2) or ""  # Ensure it's a string
-        lyrics = match.group(3) or ""  # Ensure it's a string
+    import re
 
-        # Capitalize the first non-whitespace letter in the lyrics
+    # Pattern to match the tab sections
+    tab_pattern = re.compile(r"\{start_of_tab\}.*?\{end_of_tab\}", re.DOTALL)
+    # Pattern to match chords/directives and lyrics
+    pattern = re.compile(
+        r"((?:^|\n)\s*(?:\{[^}]*\}\s*|\n)\s*)(\[[A-Ha-h0-9#mi\s]*\])?([^\n]*)"
+    )
+
+    # Protect tab sections by replacing them with placeholders
+    tabs = {}
+    for i, match in enumerate(tab_pattern.finditer(text)):
+        placeholder = f"__TAB_SECTION_{i}__"
+        tabs[placeholder] = match.group(0)  # Store the tab content
+        text = text.replace(match.group(0), placeholder)  # Replace with placeholder
+
+    # Function to capitalize the first letter of lyrics
+    def capitalize_paragraph(match):
+        directive_or_emptyline = (
+            match.group(1) or ""
+        )  # ChordPro directives or empty lines
+        chord = match.group(2) or ""  # Chords
+        lyrics = match.group(3) or ""  # Lyrics
+
+        # Capitalize the first non-whitespace character in the lyrics
         capitalized_lyrics = re.sub(
             r"(?<!\S)(\S)", lambda m: m.group(1).upper(), lyrics, count=1
         )
-
         return directive_or_emptyline + chord + capitalized_lyrics
 
-    def skip_tabs(match):
-        # Return the entire match unmodified
-        return match.group(0)
+    # Apply capitalization to the lyrics
+    text = pattern.sub(capitalize_paragraph, text)
 
-    # Regex matches chords/directives at the start of a line and lyrics afterward
-    pattern = re.compile(
-        r"((?:^|\n)\s*(?:\{[^}]*\}\s*|\n)\s*)(\[[A-Ha-h0-9#mi\s]\])?([^\n]*)"
-    )
+    # Restore the tab sections
+    for placeholder, original_tab in tabs.items():
+        text = text.replace(placeholder, original_tab)
 
-    # TODO: this does not work yet...
-    # Match anything within {start_of_tab} and {end_of_tab}
-    tab_pattern = re.compile(r"\{start_of_tab\}.*?\{end_of_tab\}", re.DOTALL)
-
-    # First, protect tab sections from being modified
-    text = tab_pattern.sub(skip_tabs, text)
-
-    # Process the text to capitalize the lyrics for each paragraph
-    return pattern.sub(capitalize_paragraph, text)
+    return text
 
 
 def rename_file_in_directory(

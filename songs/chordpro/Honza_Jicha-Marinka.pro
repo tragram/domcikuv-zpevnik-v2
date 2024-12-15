@@ -26,7 +26,7 @@ vyvinutý cit!
 a [C#7]rozkládá si [G#]vějířek
 a [D#7]odhaduju [C7]její věk
 
-[G#]z muziky - no [Cm]nádhera,
+[G#]Z muziky - no [Cm]nádhera,
 má [D#7]ráda Karla [G#]Hašlera
 a [C#7]chce se mnou [G#]obeplout
 i [Hmi]Svatojánský [E]proud.

@@ -16,10 +16,10 @@ maják [Bb7maj]bílým světlem varuje
 {end_of_verse}
 
 {start_of_verse}
-Vítr proniká až pod kosti
-jeho chlad se v duši rozhostí
-tam, kde není žádné milosti
-jenom rozbouřené moře.
+[Dmi]Vítr proniká až pod kosti
+moře [Dmi/C]zuří, bouře blízko je
+maják [Bb7maj]bílým světlem varuje
+[C]jenom rozbouřené moře.
 {end_of_verse}
 
 {start_of_chorus}
@@ -30,42 +30,42 @@ přečkat bouře [Dmi]čas.
 {end_of_chorus}
 
 {start_of_verse}
-Odpusť, Pane, o čem sním
-proč vždy, když ti to předložím
-já sebe znovu uvidím
-jak pluju mořem sama.
+[Dmi]Odpusť, Pane, o čem sním
+moře [Dmi/C]zuří, bouře blízko je
+maják [Bb7maj]bílým světlem varuje
+[C]jak pluju mořem sama.
 {end_of_verse}
 
 {start_of_verse}
-Teď tvou ruku blízko mám
-tvou velkou lásku poznávám
-jen nevím, proč se obávám
-plout bouří, když jsi se mnou.
+[Dmi]Teď tvou ruku blízko mám
+moře [Dmi/C]zuří, bouře blízko je
+maják [Bb7maj]bílým světlem varuje
+[C]plout bouří, když jsi se mnou.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Až vzdálenost nás rozdělí
-a pohltí mě čas
-věř, nakonec se uvidí
-že i ten mě nese k tobě.
+[Dmi]Až vzdálenost nás rozdělí
+moře [Dmi/C]zuří, bouře blízko je
+maják [Bb7maj]bílým světlem varuje
+[C]že i ten mě nese k tobě.
 {end_of_verse}
 
 {start_of_verse}
-Zář slunce nebe vyjasní
-to světlo můj strach rozpustí
-zas můžu plakat radostí
-láskou, kterou dals mi.
+[Dmi]Zář slunce nebe vyjasní
+moře [Dmi/C]zuří, bouře blízko je
+maják [Bb7maj]bílým světlem varuje
+[C]láskou, kterou dals mi.
 {end_of_verse}
 
 {start_of_chorus}
-Já mám přečkat bouře čas
+[Dmi]Já mám [B]přečkat bouře [Ami]čas
+[Ami]ano Pane
+já [Dmi]mám [B]přečkat bouře [Ami]čas
 ano Pane
-já mám přečkat bouře čas
-ano Pane
-já chci v bouři vytrvat
+já [Dmi]chci v [B]bouři vytr[Ami]vat
 s tebou Pane
-já chci v bouři vytrvat
-s tebou vytrvat.
+já [Dmi]chci v [B]bouři vytr[Ami]vat
+s tebou vytr[Dmi]vat.
 {end_of_chorus}

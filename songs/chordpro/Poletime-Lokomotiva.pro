@@ -23,28 +23,28 @@ jestli [Emi]nechceš se mnou tahat ze ze[C]mě rezavej drát.
 {end_of_chorus}
 
 {start_of_verse}
-Přines jsem ti kytku, no co koukáš, to se má
-je to koruna žvejkačkou ke špejli přilepená,
-a dva kelímky vod jogurtu, co je mezi nima niť,
-můžeme si takhle vždycky volat, když budeme chtít.
+[G]Přines jsem ti kytku, no co [D]koukáš, to se má
+[Emi]je to koruna žvejkačkou ke [C]špejli přilepená,
+a dva [G]kelímky vod jogurtu, co je [D]mezi nima niť,
+[Emi]můžeme si takhle vždycky volat, [C]když budeme chtít.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Každej příběh má svůj konec, ale né ten náš,
-nám to bude navždy dojit všude, kam se podíváš,
-naše kachny budou zlato nosit a krmit se popcornem,
-já to každej večer spláchnu půlnočním expresem.
+[G]Každej příběh má svůj konec, [D]ale né ten náš,
+[Emi]nám to bude navždy dojit [C]všude, kam se podíváš,
+naše [G]kachny budou zlato nosit a [D]krmit se popcornem,
+já to [Emi]každej večer spláchnu půl[C]nočním expresem.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Dětem dáme jména Jessie, Jared, Jack a John,
-ve stopadesáti letech ho budu mít stále jako slon,
-a ty neztratíš svoji krásu, stále štíhlá kolem pasu,
-stále dokážeš mě chytit lasem a přitáhnout na terasu.
+[G]Dětem dáme jména Jessie, [D]Jared, Jack a John,
+ve [Emi]stopadesáti letech ho budu [C]mít stále jako slon,
+a ty [G]neztratíš svoji krásu, stále [D]štíhlá kolem pasu,
+stále [Emi]dokážeš mě chytit lasem [C]a přitáhnout na terasu.
 {end_of_verse}
 
 {start_of_variant: append_content}

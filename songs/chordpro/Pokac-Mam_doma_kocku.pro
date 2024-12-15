@@ -13,41 +13,44 @@
 [C]Já na to, že chci spíš psa [D]a jeli jsme pro kočku
 [G]V útulku v Měcholupech [Emi]maj dobrej výběr, zdá se
 [C]Kočky jsou zcela zdarma [D]jen očkování za patnáct set
+
 [G]Po dlouhým vybírání [Emi]diskuzích a dvou hádkách
 [C]Jedno z koťátek jemně sevře [D]můj prst ve svých drápkách
-Tak volba byla jasná má drahá slzy suší
-Co si však vezem domů to ani jeden z nás netuší
+[G]Tak volba byla jasná [Emi]má drahá slzy suší
+[C]Co si však vezem domů [D]to ani jeden z nás netuší
 {end_of_verse}
 
 {start_of_chorus}
-Mám doma kočku, mám ji rád je to skvělý kamarád
-Jen od tý doby, co ji znám mám ruce nohy samej šrám
-Dávno už se nemazlí žít s ní je pro zdraví fakt zlý
-Každý den projdu terorem mám nejspíš kočku s errorem
+[G]Mám doma kočku, [Emi]mám ji rád je to [C]skvělý kama[D]rád
+[G]Jen od tý doby, [Emi]co ji znám mám [C]ruce nohy [D]samej šrám
+[G]Dávno už se [Emi]nemazlí žít [C]s ní je pro zdra[D]ví fakt zlý
+[G]Každý den pro[Emi]jdu terorem mám [C]nejspíš kočku [D]s errorem
 {end_of_chorus}
 
 {start_of_verse}
-Po pár dnech soužití vše vypadá nevinně
-Koťátko v náručí spí a pak zkadí půlku kuchyně
-Prostě nic, co nečekáš když útulek zaručí
-Že kočička se za pár týdnů na záchůdek naučí
-Jenže pár měsíců je pryč záchod zeje prázdnotou
-Bytem čpí příšernej smrad za kočkou lítám s lopatou
-Když jí zkusím pomoct sám na záchod ji přemístit
-Zvládne mi dlaně rozdrásat a ještě potřísnit
+[G]Po pár dnech soužití [Emi]vše vypadá nevinně
+[C]Koťátko v náručí spí [D]a pak zkadí půlku kuchyně
+[G]Prostě nic, co nečekáš [Emi]když útulek zaručí
+[C]Že kočička se za pár týdnů [D]na záchůdek naučí
+
+[G]Jenže pár měsíců je pryč [Emi]záchod zeje prázdnotou
+[C]Bytem čpí příšernej smrad [D]za kočkou lítám s lopatou
+[G]Když jí zkusím pomoct sám [Emi]na záchod ji přemístit
+[C]Zvládne mi dlaně rozdrásat [D]a ještě potřísnit
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Za noc nejmíň pětkrát jí okno otevřít jdu
-Pak práci šéf se zeptá proč vždy tak ospalý přijdu
-Že občas hrdě nám donese zakouslou myš
-Poznáš až ráno když se s torzem myši v ústech vzbouzíš
-Tak jsme si dobrovolně pořídili katastrofu
-Stálo nás to patnáct stovek a jednu zbrusu novou sofu
-Kouše, škrábe, drásá no prostě je to krása
-Tváří se tak roztomile zvlášť, když se mi rejpe v žíle
+[G]Za noc nejmíň pětkrát [Emi]jí okno otevřít jdu
+[C]Pak práci šéf se zeptá [D]proč vždy tak ospalý přijdu
+[G]Že občas hrdě nám [Emi]donese zakouslou myš
+[C]Poznáš až ráno když se [D]s torzem myši v ústech vzbouzíš
+
+[G]Tak jsme si dobrovolně [Emi]pořídili katastrofu
+[C]Stálo nás to patnáct stovek [D]a jednu zbrusu novou sofu
+[G]Kouše, škrábe, drásá [Emi]no prostě je to krása
+[C]Tváří se tak roztomile [D]zvlášť, když se mi rejpe v žíle
 {end_of_verse}
 
 {chorus}

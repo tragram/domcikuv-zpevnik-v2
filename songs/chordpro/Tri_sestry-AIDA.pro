@@ -16,10 +16,10 @@
 {end_of_verse}
 
 {start_of_verse}
-Doktor Josef Goebbels na terasu pajdá
-Na vaně jsou bílý myši mezi nima Aida
-Možná Caligula přijde s Messalinou
-Doufám, že se zula a nepoškrábe lino
+[Ami]Doktor Josef Goebbels na [Dmi]terasu pajdá
+[G]Na vaně jsou bílý myši [Emi]mezi nima Aida
+[C]Možná Caligula [F]přijde s Messalinou
+[Dmi]Doufám, že se zula a [G]nepoškrábe lino
 {end_of_verse}
 
 {start_of_chorus}
@@ -32,17 +32,17 @@ Vylezu [G]na poušti, ráno mě nenajdou [Emi][Ami]
 {end_of_chorus}
 
 {start_of_verse}
-Cinká moje tramvaj a stydne ranní káva
-A na dveře marně buší domácí, ta kráva
-Policie hledá, nenachází stopy
-Moje dívka bledá zatím sbírá zátky od piv
+[Ami]Cinká moje tramvaj a [Dmi]stydne ranní káva
+[G]A na dveře marně buší [Emi]domácí, ta kráva
+[C]Policie hledá, [F]nenachází stopy
+[Dmi]Moje dívka bledá zatím [G]sbírá zátky od piv
 {end_of_verse}
 
 {start_of_verse}
-Asi něco tuší, vždyť ta holka není hloupá
-Právě jsem se narodil a pára k nebi stoupá
-Možná budu písař anebo lámat kámen
-Sedmnáctý císař na hradbách zpívat Ámen
+[Ami]Asi něco tuší, vždyť [Dmi]ta holka není hloupá
+[G]Právě jsem se narodil a [Emi]pára k nebi stoupá
+[C]Možná budu písař [F]anebo lámat kámen
+[Dmi]Sedmnáctý císař na [G]hradbách zpívat Ámen
 {end_of_verse}
 
 {chorus}

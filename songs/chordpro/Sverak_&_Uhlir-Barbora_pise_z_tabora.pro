@@ -15,21 +15,21 @@ z letního tábora, jistě víte,
 {end_of_verse}
 
 {start_of_verse}
-Strava se nedá jíst, dneska byl jen zelný list
+[D]Strava se nedá jíst, dneska byl jen [A]zelný list
 polívka studená, co v ní plavou
-místo nudlí číslice a písmena
+místo nudlí číslice a písme[D]na
 {end_of_verse}
 
 {start_of_verse}
-Myslela jsem prostě, že budou různé soutěže
+[D]Myslela jsem prostě, že budou různé [A]soutěže
 Slíbili bojovku, pak jsme hráli
-vybíjendu, na ovce a na schovku
+vybíjendu, na ovce a na schov[D]ku
 {end_of_verse}
 
 {start_of_verse}
-Štefan, hlavní vedoucí, chodí s naší vedoucí
+[D]Štefan, hlavní vedoucí, chodí s naší [A]vedoucí
 která je příšera, scházejí se,
-líbají se u totemu za šera
+líbají se u totemu za še[D]ra
 {end_of_verse}
 
 {start_of_chorus}
@@ -44,29 +44,29 @@ Proč jste mě [Em7]prostě neměli
 {end_of_chorus}
 
 {start_of_verse}
-Závěrem dopisu ještě trochu popisu
+[D]Závěrem dopisu ještě trochu [A]popisu
 ta bréca vedoucí, je tlustá jak
-dvě normální oddílové vedoucí
+dvě normální oddílové vedou[D]cí
 {end_of_verse}
 
 {start_of_verse}
-Když běží po lese, všechno na ní třese se
+[D]Když běží po lese, všechno na ní [A]třese se
 Užívá make-upu, co na ní ten
-Štefan vidí, to já prostě nechápu
+Štefan vidí, to já prostě nechá[D]pu
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-PS: Pošlete dvě tři sta, jsem bez peněz dočista
+[D]PS: Pošlete dvě tři sta, jsem bez peněz [A]dočista
 Pojedem do Písku, máme v plánu
-zastavit se v jitexovém středisku
+zastavit se v jitexovém středis[D]ku
 {end_of_verse}
 
 {start_of_verse}
-Když jsme se koupali, všichni na mě koukali
+[D]Když jsme se koupali, všichni na mě [A]koukali
 Je to tím, že možná, v jednodílných plavkách
-už jsem už jsem prostě nemožná
+už jsem už jsem prostě nemož[D]ná
 {end_of_verse}
 
 {chorus}

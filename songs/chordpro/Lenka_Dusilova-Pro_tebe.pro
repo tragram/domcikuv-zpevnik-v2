@@ -37,11 +37,11 @@ Myslím na tebe Večer se [G]vrátil
 {end_of_verse}
 
 {start_of_chorus}
-Jak se to může jenom stát (2x)
-Jak se to může jenom stát
+[F]Jak se to [C]může jenom [Dmi]stát (2x)
+[F]Jak se to [C]může jenom [Dmi]stát
 {end_of_chorus}
 
 {start_of_verse}
-Jsi světlo mojí duše
-Jsi světlo mojí lásky - proč se trápit
+[Dmi]Jsi světlo mojí duše
+Jsi světlo mojí lásky - proč se [G]trápit
 {end_of_verse}

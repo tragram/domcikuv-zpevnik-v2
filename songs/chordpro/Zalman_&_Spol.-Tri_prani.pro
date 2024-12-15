@@ -16,10 +16,11 @@ a [F]já mám v zádech [Gmi]mrazení
 {end_of_verse}
 
 {start_of_verse}
-Tři lístky házím do louží
-své hříchy zaklínám
-tři přání prstem naznačím
-když na slámě usínám.
+Tři [Dmi]lístky házím do louží
+své hříchy zaklí[Ami]nám
+tři [F]přání prstem [Gmi]naznačím
+když na [Dmi]slámě [C]usí[B]nám.[Ami][Dmi]
+
 {end_of_verse}
 
 {start_of_chorus}
@@ -30,31 +31,31 @@ ten kdo [Dmi]lásku [C]nemiloval. [B][Ami][Dmi]
 {end_of_chorus}
 
 {start_of_verse}
-A zdává se mi o jezdcích
-jak jedou krajinou
-tak hořce drsnou po předcích
-jak já čistou a nevinnou.
+A [Dmi]zdává se mi o jezdcích
+jak jedou kraji[Ami]nou
+tak [F]hořce drsnou [Gmi]po předcích
+jak já [Dmi]čistou [C]a nevin[B]nou. [Ami][Dmi]
 {end_of_verse}
 
 {start_of_verse}
-První jezdec nevidí
-ten druhý že je král
-a třetí spoután na nohou
-nese v rukách svatý grál.
+První [Dmi]jezdec nevidí
+ten druhý že je [Ami]král
+a [F]třetí spoután [Gmi]na nohou
+nese v [Dmi]rukách [C]svatý [B]grál. [Ami][Dmi]
 {end_of_verse}
 
 {start_of_verse}
-Když nápoj lásky spolyká
-mě v zádech zamrazí
-tři přání jezdcům vyplní
-a zpitá se odplazí.
+Když [Dmi]nápoj lásky spolyká
+mě v zádech zamra[Ami]zí
+tři [F]přání jezdcům [Gmi]vyplní
+a [Dmi]zpitá [C]se odpla[B]zí. [Ami][Dmi]
 {end_of_verse}
 
 {start_of_verse}
-Nad ránem jen tak bez šatů
-jen slámu objímám
-tři jezdci mizí za obzor
-tři pouta u nohou mám.
+Nad [Dmi]ránem jen tak bez šatů
+jen slámu objí[Ami]mám
+tři [F]jezdci mizí [Gmi]za obzor
+tři [Dmi]pouta [C]u nohou [B]mám. [Ami][Dmi]
 {end_of_verse}
 
 {chorus}

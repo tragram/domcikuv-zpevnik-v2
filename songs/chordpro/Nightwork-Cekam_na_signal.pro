@@ -28,7 +28,7 @@ krom naší [Dmi]vsi je všude moderní [E]svět.
 {end_of_bridge}
 
 {start_of_verse}
-Přestaňme pěstovat [A]už, [F#mi]obilí,
+Přestaňme pěstovat už [A]obi[F#mi]lí,
 [Hmi]radši si [E]kupme všichni [A]mobily. [F#mi]
 No [Hmi]my tu nebudem [E]nikomu dělat [A]debily. [F#mi]
 [Hmi]My u nás [E]postavíme [A]sloup,
@@ -55,29 +55,29 @@ A Tom [Dmi]sváří, pájí,
 {end_of_bridge}
 
 {start_of_verse}
-Připojme na kostel v naší vesnici,
-tuhletu prapodivnou krabici.
-Vyšlem signál na všechny družice,
-ať rozšíříme obzory i hranice.
+Připojme na kostel v naší [A]vesni[F#mi]ci,
+[Hmi]tuhletu [E]prapodivnou [A]krabi[F#mi]ci.
+[Hmi]Vyšlem si[E]gnál na všechny [A]druži[F#mi]ce,
+ať [Hmi]rozšíříme [E]obzory i [A]hrani[F#mi]ce. [Hmi][E]
 {end_of_verse}
 
 {start_of_verse}
-Nikdo však u nás neměl tušení,
-že globální způsobíme rušení.
-Že způsobíme těžké časy, no co.
-Opět budem pěstovati klasy, no co.
+Nikdo však u nás neměl [A]tuše[F#mi]ní,
+že [Hmi]globální [E]způsobíme [A]ruše[F#mi]ní.
+Že [Hmi]způsobíme [E]těžké [A]časy, [F#mi]no co.
+[Hmi]Opět budem [E]pěstovati [A]klasy, [F#mi]no co. [Hmi][E]
 {end_of_verse}
 
 {start_of_verse}
-Tohle je vzkaz pro všechny [H]kutily, [G#mi]
-[E]kde bychom [F#]byli, kdybyste [H]nebyli. [G#mi]
-Vždyť vaše výtvory jsou báječné,
-progresivní, ba i bezpečné.
+[F#]Tohle je vzkaz pro všechny [H]kuti[G#mi]ly,
+[E]kde bychom [F#]byli, kdybyste [H]neby[G#mi]li.
+[E]Vždyť vaše [F#]výtvory jsou [H]báječ[G#mi]né,
+[E]progresi[F#]vní, ba i [H]bezpeč[G#mi]né. [E][F#]
 {end_of_verse}
 
 {start_of_verse}
-Osmý div světa byste stvořili,
-kdyby však vodiče víc vodily.
-Dočkej času jako husa klasu,
-zejtra tu bude stát i stroj času.
+[F#]Osmý div světa byste [H]stvoři[G#mi]li,
+[E]kdyby však [F#]vodiče víc [H]vodi[G#mi]ly.
+[E]Dočkej času [F#]jako [H]husa [G#mi]klasu,
+[E]zejtra tu bude [F#]stát i stroj [H]času.[G#mi][E][F#]
 {end_of_verse}

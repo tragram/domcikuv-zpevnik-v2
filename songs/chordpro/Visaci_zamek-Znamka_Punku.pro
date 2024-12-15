@@ -20,16 +20,16 @@
 {start_of_chorus}
 [E][F#][E]Ale [D]holky [A]říkaly [E][F#][E]
 Že [D]punk [A]je [E]jinde
-Ale holky říkaly
-To snad není možný
+[E][F#][E]Ale [D]holky [A]říkaly [E][F#][E]
+Že [D]to snad [A]není [E]možný
 {end_of_chorus}
 
 {start_of_verse}
-Přeplněnej autobus nechával vždycky ujet
-Kytky v jeho zahradě mohly volně bujet
-Uznával jen kapely co neuměly hrát
-Kolem pasu nosil umělohmotnej drát
-Myslel že je to známka punku
+[E]Přeplněnej [D]autobus [A]nechával [G]vždycky u[F#]jet
+[E]Kytky v jeho [D]zahradě [A]mohly volně [G]bujet[F#]
+[E]Uznával jen [D]kapely [A]co neuměly [G]hrát[F#]
+[E]Kolem pasu [D]nosil [A]umělohmotnej [G]drát[F#]
+[E]Myslel že [D]je to [A]známka [G]punku[F#]
 {end_of_verse}
 
 {chorus}
@@ -42,11 +42,11 @@ Myslel že je to známka punku
 {end_of_bridge}
 
 {start_of_verse}
-Křivák nosila vždycky naruby
-Rtěnku si nanášela rovnou na zuby
-Smála se jenom smutným věcem
-Hrála v kapele s Jardou Švecem
-Myslela že je to známka punku
+[E]Křivák no[D]sila [A]vždycky [G]naruby[F#]
+[E]Rtěnku si [D]nanášela [A]rovnou na [G]zuby[F#]
+[E]Smála se [D]jenom [A]smutným [G]věcem[F#]
+[E]Hrála v ka[D]pele s [A]Jardou [G]Švecem[F#]
+[E]Myslela že [D]je to [A]známka [G]punku[F#]
 {end_of_verse}
 
 {chorus}

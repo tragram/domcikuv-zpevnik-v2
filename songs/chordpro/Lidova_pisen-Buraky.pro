@@ -23,19 +23,19 @@ je lepší doma sedět a [A]louskat [D7]buráky [G]
 {end_of_chorus}
 
 {start_of_verse}
-Plukovník sedí v sedle volá: Yankeeové jdou !
-ale mužstvo leží v trávě, prý dál už nemohou.
-Tak plukovník se otočí a vzhlédne do dálky
-a vidí slavnou armádu jak louská buráky.
+[G]Plukovník sedí v sedle volá: [C]Yankeeové [G]jdou !
+ale mužstvo leží v trávě, [A]prý dál už nemo[D7]hou.
+Tak [G]plukovník se otočí a [C]vzhlédne do dál[G]ky
+a vidí slavnou armádu jak [D7]louská burá[G]ky.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Až táhle válka skončí a my zas budem žít
-svý milenky a ženy pak půjdem políbit.
-A když se mě zeptají: hrdino, cos dělal za války?
-No, flákal jsem se s kvérem a louskal buráky.
+[G]Až táhle válka skončí a [C]my zas budem [G]žít
+svý milenky a ženy pak [A]půjdem políb[D7]it.
+A [G]když se mě zeptají: hrdi[C]no, cos dělal za vál[G]ky?
+No, flákal jsem se s kvérem a [D7]louskal burá[G]ky.
 {end_of_verse}
 
 {chorus}

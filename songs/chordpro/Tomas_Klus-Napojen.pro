@@ -13,48 +13,49 @@
 [E]hleděl na letící ptá[H]ky,
 [E]jak krásné bylo být na svě[A]tě
 [E]s vědomím, že umíš to [H]taky.
-[F#]Dnes už nelétáš, neboť [A]okolí
-[F#]zmátlo Tě strachem, že pády [A]bolí.[H]
+Dnes už [F#]nelétáš, neboť [A]okolí
+zmátlo Tě [F#]strachem, že pády [A]bolí.[H]
 {end_of_verse}
 
 {start_of_verse}
-Zastav se, čas nikam nespěchá,
-jen rozum nutí ho k běhu.
-věř však Ty, synu člověka,
-že's nedílná součást příběhu.
-Ty jsi já, jako já Tebou jsem,
-společná je nám planeta Zem.
+[E]Zastav se, čas nikam nespě[A]chá,
+[E]jen rozum nutí ho k bě[H]hu.
+[E]věř však Ty, synu člově[A]ka,
+[E]že's nedílná součást příbě[H]hu.
+Ty jsi já,[F#]jako já Tebou [A]jsem,
+společ[F#]ná je nám planeta [A]Zem.[H]
 {end_of_verse}
 
 {start_of_chorus}
-Ničeho nelituj,
-Život, co máš, je Tvůj,
-žij a měj rád, co je.
-Nechť srdce se rozbijí
-láskou, tak přijmi ji.
-cítíš, jak jsi napojen,
-jak jsi napojen.
-Přes všechny pochyby život je krásný.
-Jsi napojen
-a svět je Tvá továrna na sny.
+[E]Ničeho nelituj,
+[A]Život, co máš, je Tvůj,
+[E]žij a měj rád, co [H]je.
+[E]Nechť srdce se rozbijí
+[A]láskou, tak přijmi ji.
+[E]cítíš, jak jsi napo[H]jen,
+
+Jak jsi napo[E]jen.
+[E]Přes všechny pochyby [A]život je [E]krásný.
+Jsi napo[H]jen[A]
+a svět je [E]Tvá továrna [H]na sny.
 {end_of_chorus}
 
 {start_of_verse}
-Nebe až najde jas ve vodní hladině,
-až měsíc opře se o břeh
-a padne hvězda, zkus si přát jediné,
-to aby dopadla dobře.
-Ztiš se a poprvé k sobě se obrať,
-bez zbraní a krve porazíš obra.
+[E]Nebe až najde jas ve vodní hladi[A]ně,
+[E]až měsíc opře se o [H]břeh
+[E]a padne hvězda, zkus si přát jedi[A]né,
+[E]to aby dopadla [H]dobře.
+Ztiš se a [F#]poprvé k sobě se [A]obrať,
+bez zbraní [F#]a krve porazíš [A]obra.[H]
 {end_of_verse}
 
 {start_of_verse}
-Obra, co založil duhy stín,
-když před léty zotročil Zem.
-A člověka Bůh ví proč znejistil
-v otázce, kdo vlastně jsem.
-Poznej, že být je jednoduché,
-ucítíš klid, že vše jedno je duchem.
+[E]Obra, co založil duhy [A]stín,
+[E]když před léty zotročil [H]Zem.
+[E]A člověka Bůh ví proč znejis[A]til
+[E]v otázce, kdo vlastně [H]jsem.
+Poznej, že [F#]být je jednodu[A]ché,
+ucítíš [F#]klid, že vše jedno je jedním [A]duchem.[H]
 {end_of_verse}
 
 {chorus}

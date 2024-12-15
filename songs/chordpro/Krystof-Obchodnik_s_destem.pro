@@ -16,10 +16,10 @@ jako nad talířem [D]večer, mi mizíš
 {end_of_verse}
 
 {start_of_verse}
-A mizíš někde v dávnu,
-jsi láska, co mě škrtí
-já na pokraji smrti, ve svém paralelním
-světě, toužím po odvetě a křičím
+A [G]mizíš někde v [Emi]dávnu,
+jsi láska, co mě [G]škrtí, já na pokraji [Emi]smrti
+ve svém paralelním [C]světě,
+toužím po [D]odvetě a křičím
 {end_of_verse}
 
 {start_of_chorus}
@@ -32,17 +32,17 @@ a ty voláš ať prším ještě
 {end_of_chorus}
 
 {start_of_verse}
-Jako touha, sklem, co neprorazí,
-nekonečné břehy s kufry plných něhy,
-zvu obchodníky s deštěm
-chci koupit to tvé ještě a slyším
+Jako [G]touha, sklem, co nepro[Emi]razí,
+nekonečné [G]břehy s kufry [Emi]plných něhy,
+zvu obchodníky s [C]deštěm
+chci koupit to tvé [D]ještě a slyším
 {end_of_verse}
 
 {start_of_verse}
-V rozestlaném tichu,
-zvuky autoplánů, co unáší tě ránům,
-jsi tečka v kalendáři
-co nadosmrti září a křičí.
+V [G]rozestlaném [Emi]tichu,
+zvuky auto[G]plánů, co unáší tě [Emi]ránům,
+jsi tečka v kalen[C]dáři
+co nadosmrti [D]září a křičí.
 {end_of_verse}
 
 {chorus}
