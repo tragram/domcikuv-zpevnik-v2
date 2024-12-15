@@ -25,19 +25,19 @@ na hřbi[C]tově obu[G]tých.
 {end_of_chorus}
 
 {start_of_verse}
-Na Moravě z demižónu dobré víno pila,
-pak mezi námi žila spoustu hezkejch dní,
-až jeden pán v limuzíně začal po ní toužit,
-budeš mi, holka, sloužit, a oženil se s ní.
+Na [G]Moravě z demižónu [Fmaj7]dobré víno [G]pila,
+pak [Fmaj7]mezi námi [G]žila [Fmaj7]spoustu hezkejch [G]dní,
+až [G]jeden pán v limuzíně [Fmaj7]začal po ní [G]toužit,
+[Fmaj7]budeš mi, holka, [G]sloužit, a [Fmaj7]oženil se s [Emi]ní.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Každou noc po milování skládala mu hity
-a kašlala na city, na obyčejnej lid,
-za pár let tahle můza, dneska služka Mici
-skončila na ulici a pod mostem má byt.
+Každou [G]noc po milování [Fmaj7]skládala mu [G]hity
+a [Fmaj7]kašlala na [G]city, na [Fmaj7]obyčejnej [G]lid,
+za [G]pár let tahle můza, [Fmaj7]dneska služka [G]Mici
+[Fmaj7]skončila na [G]ulici a [Fmaj7]pod mostem má [Emi]byt.
 {end_of_verse}
 
 {chorus}

@@ -14,7 +14,7 @@
 [Am7]koukám na kopretinu,
 jak [D7]miluje se s lebed[G]ou,
 
-[Am7]mraky vzaly slunce
+[Am7]Mraky vzaly slunce
 [D7]zase pod svou ochran[G]u, [Emi]
 [Am7]jen ty nejdeš, holka zlatá,
 [D7]kdypak já tě dostan[G]u? [D7]
@@ -35,7 +35,7 @@ jdem zpátky do [Am7]lesů
 [Am7]málo jsi se snažil,
 [D7]málo šel jsi do seb[G]e,
 
-[Am7]šel jsi vlastní cestou,
+[Am7]Šel jsi vlastní cestou,
 [D7]a to se zrovna nenos[G]í, [Emi]
 [Am7]i pes, kterej chce přízeň,
 napřed [D7]svýho pána popros[G]í. [D7]
@@ -47,7 +47,7 @@ jak [D7]máváš na mě [G]korunou,
 [Am7]a jestli nám to bude stačit,
 [D7]zatleskáme [G]na druhou,
 
-[Am7]zabalíme všechny,
+[Am7]Zabalíme všechny,
 co si [D7]dávaj' rande za [G]branou,[Emi]
 [Am7]v ráji není místa,
 možná [D7]v pekle se nás [G]zastanou.

@@ -1,3 +1,5 @@
+Here's the song with missing chords filled in, following the established patterns:
+
 {title: Hrdinský čin}
 {artist: Pokáč}
 {date_added: 10-2018}
@@ -9,31 +11,31 @@
 {range: e1-c2}
 {start_melody: e g a}
 {start_of_verse}
-[Am]řeknu vám [C]příběh, [E]který se [Am]stal
+[Am]Řeknu vám [C]příběh, [E]který se [Am]stal
 [Am]sním klidně [C]svůj klobouk, [E]kdybych vám [C]lhal
 jak [Dm]zpívá pan [C]Tučný a [G]snad to [E]není
 [Am]autorské[C]ho práva [E]poruše[Am]ní
 {end_of_verse}
 
 {start_of_verse}
-tak si to hasim po václaváku
-nahoře u pod koněm jdu z hlaváku
-když na rameni ucítím ruku něčí
-a neznámý muž spustí cizí řečí
+[Am]tak si to [C]hasim po [E]václavá[Am]ku
+[Am]nahoře u [C]pod koněm [E]jdu z hlav[C]áku
+když [Dm]na rameni [C]ucítím [G]ruku ně[E]čí
+[Am]a neznámý [C]muž spustí [E]cizí ře[Am]čí
 {end_of_verse}
 
 {start_of_verse}
-hello my friend i think i am lost
-you know how i can get to "Karlův most"
-i've never been here and my phone is dead
-could you please help me 'cause i've got no map
+[Am]hello my [C]friend i [E]think i am [Am]lost
+[Am]you know how i [C]can get to [E]"Karlův [C]most"
+i've [Dm]never been [C]here and my [G]phone is [E]dead
+[Am]could you please [C]help me 'cause i've [E]got no [Am]map
 {end_of_verse}
 
 {start_of_verse}
-chvíli jen je zírám - nevěřícně
-co-se-to ten podivín snazší říct mně
-pak povídám hele já nerozumim
-já tou tvojí hatmatilkou nemluvim
+[Am]chvíli jen [C]je zírám - [E]nevěříc[Am]ně
+[Am]co-se-to ten [C]podivín [E]snazší říct [C]mně
+pak [Dm]povídám [C]hele já [G]nerozu[E]mim
+[Am]já tou tvojí [C]hatmatilkou [E]nemlu[Am]vim
 {end_of_verse}
 
 {start_of_chorus}
@@ -42,41 +44,41 @@ já tou tvojí hatmatilkou nemluvim
 {end_of_chorus}
 
 {start_of_verse}
-sorry i don't speak czech not a single word
-or maybe just one - the one i just heard
-from this nice young man that i passed by
-i think he said "nečum" and i guess it means "hi"
+[Am]sorry i don't [C]speak czech not a [E]single [Am]word
+[Am]or maybe just [C]one - the one [E]i just [C]heard
+from [Dm]this nice young [C]man that i [G]passed [E]by
+[Am]i think he said [C]"nečum" and i [E]guess it means [Am]"hi"
 {end_of_verse}
 
 {start_of_verse}
-jak to se mnou mluvíš (ty) zmetku cizí
-říkám - uděláš nejlíp když vodsaď zmizíš
-jsem na výsost pohoršen smutno je mi
-co za lůzu běhá po naší zemi
+[Am]jak to se [C]mnou mluvíš (ty) [E]zmetku ci[Am]zí
+[Am]říkám - uděláš [C]nejlíp když [E]vodsaď zmi[C]zíš
+jsem [Dm]na výsost po[C]horšen [G]smutno je [E]mi
+[Am]co za lůzu [C]běhá po [E]naší ze[Am]mi
 {end_of_verse}
 
 {start_of_verse}
-okay i think that i'll try this way
-thanks for your time and have a nice day
-you know today it's the birthday of my lovely wife
-as a present i got her this beautiful knife
+[Am]okay i [C]think that i'll [E]try this [Am]way
+[Am]thanks for your [C]time and have a [E]nice [C]day
+you [Dm]know today it's the [C]birthday of my [G]lovely [E]wife
+[Am]as a present i [C]got her this [E]beautiful [Am]knife
 {end_of_verse}
 
 {start_of_verse}
-v tu chvíli na mě ten cizí muž
-bez oka mrknutí vytasil nuž
-já však zachoval klid a o zem švih s nim
-a tak zatočil s cizákem násilnickým
+[Am]v tu chvíli [C]na mě ten [E]cizí [Am]muž
+[Am]bez oka [C]mrknutí [E]vytasil [C]nuž
+já [Dm]však zachoval [C]klid a o [G]zem švih s [E]nim
+[Am]a tak zatočil s [C]cizákem [E]násilnic[Am]kým
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-A tak končí příběh, který se stal
-a přísahám že jsem vám fakt nekecal
-jednou se budou psát písně to už teď vím
-oslavující můj hrdinský čin
-a nejeden film jistě půjde do kin
+[Am]A tak končí [C]příběh, [E]který se [Am]stal
+[Am]a přísahám [C]že jsem vám [E]fakt neke[C]cal
+[Dm]jednou se budou [C]psát písně to [G]už teď [E]vím
+[Am]oslavující [C]můj hrdinský [E]čin
+[Am]a nejeden [C]film jistě [E]půjde do [Am]kin
 {end_of_verse}
 
 {chorus}

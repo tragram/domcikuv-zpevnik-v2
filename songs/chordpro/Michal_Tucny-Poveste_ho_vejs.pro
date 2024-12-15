@@ -40,28 +40,28 @@ a do [Dmi]uší mi stále zní
 {end_of_chorus}
 
 {start_of_verse}
-Pověste ho za tu banku,
-v který zruinoval svůj vklad,
-za to, že nikdy nevydržel
-na jednom místě stát.
+Pově[Ami]ste ho za tu banku,
+v který [C]zruinoval svůj [G]vklad,
+za to, že [Dmi]nikdy nevydr[Ami]žel
+na jednom [G]místě [Ami]stát.
 {end_of_verse}
 
 {chorus: R2}
 {chorus: R1}
 
 {start_of_verse}
-Pověste ho za tu jistou,
-který nesplnil svůj slib,
-že byl zarputilým optimistou,
-a tak dělal spoustu chyb
+Pově[Ami]ste ho za tu jistou,
+který [C]nesplnil svůj [G]slib,
+že byl [Dmi]zarputilým [Ami]optimistou,
+a tak [G]dělal spoustu [Ami]chyb
 {end_of_verse}
 
 {start_of_verse}
-Pověste ho, že se koukal
-a že hodně jed a hodně pil,
-že dal přednost jarním loukám
-a pak se oženil
-a pak se usadil a žil
+Pově[Ami]ste ho, že se koukal
+a že [C]hodně jed a hodně [G]pil,
+že dal [Dmi]přednost jarním [Ami]loukám
+a pak se [F]oženil
+a pak se [E7]usadil a [Ami]žil
 {end_of_verse}
 
 {chorus: R2}

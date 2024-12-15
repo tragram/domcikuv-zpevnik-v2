@@ -33,21 +33,21 @@ But his [H]body [H/F#]never was [E5]found
 {end_of_verse}
 
 {start_of_verse}
-My girl, my girl, don't lie to me
-Tell me where did you sleep last night
-In the pines, in the pines,
-where the sun don't ever shine
-I would shiver the whole night through
+[E5]My girl, my girl, don'[A]t lie [G]to me
+Tell me [H]where did you [H/F#]sleep last [E5]night
+[E5]In the pines, in the pines,
+where the [A]sun don't ever [G]shine
+I would [H]shiver the [H/F#]whole night [E5]through
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-My girl, my girl, don't lie to me
-Tell me where did you sleep last night
-In the pines, in the pines,
-where the sun don't ever shine
-I would shiver the whole night through
+[E5]My girl, my girl, don'[A]t lie [G]to me
+Tell me [H]where did you [H/F#]sleep last [E5]night
+[E5]In the pines, in the pines,
+where the [A]sun don't ever [G]shine
+I would [H]shiver the [H/F#]whole night [E5]through
 {end_of_verse}
 
 {chorus}

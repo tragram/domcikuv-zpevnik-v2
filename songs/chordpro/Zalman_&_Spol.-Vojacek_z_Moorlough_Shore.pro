@@ -27,20 +27,20 @@ dal nám [G]celou krásnou [Emi]zemi Moorlough [Hmi]Shore
 {end_of_chorus}
 
 {start_of_verse}
-Krákání černých vran vzalo srdcím klid
-bubny rozvířily prach nad ostrovem
+Krákání [Hmi]černých vran vzalo [A]srdcím klid
+bubny [G]rozvířily [Emi]prach nad ostro[Hmi]vem
 {end_of_verse}
 
 {start_of_verse}
-Tvůj hlas do mých ran, plakal chci tě mít
-takhle mladí přece ještě neumřem
+Tvůj [Hmi]hlas do mých ran, plakal [A]chci tě mít
+takhle [G]mladí přece [Emi]ještě neumř[Hmi]em
 {end_of_verse}
 
 {start_of_chorus}
-Má lásko můj malý sladký irský vojáčku
-kam mi odplouváš po vlnách moře Maine
-z tvých slov, cos chtěl říct, sroubím pevný vor
-co nás donese do země Moorlough Shore
+Má lásko můj malý sladký [A]irský vojáčku
+kam mi [Hmi]odplouváš po [A]vlnách moře [Gmaj7]Maine
+z tvých [Hmi]slov, cos chtěl [Emi]říct, srou[A]bím pevný [F#mi]vor
+co nás [G]donese do [Emi]země Moorlough [Hmi]Shore
 {end_of_chorus}
 
 {start_of_verse}
@@ -61,18 +61,18 @@ vrať se [A]domů ke své [F#mi]lásce z Moorlough [Hmi]Shore
 {end_of_chorus}
 
 {start_of_verse}
-Můj pán bájný kůň zmizel v kouři střel
-tráva řekla už se domů nevrátí
+Můj [Hmi]pán bájný kůň zmizel v [A]kouři střel
+tráva [G]řekla už se [Emi]domů nevrá[Hmi]tí
 {end_of_verse}
 
 {start_of_verse}
-Blý kraj útesů náhle osiřel
-vyschly řeky zmlkli ptáci v úvratích
+Blý [Hmi]kraj útesů náhle [A]osiřel
+vyschly [G]řeky zmlkli [Emi]ptáci v úvra[Hmi]tích
 {end_of_verse}
 
 {start_of_chorus}
-Má lásko na bílých slaných březích moře Maine
-budu čekat sedm dlouhých pustých let
-ne můj stín, lásko já volám z výšky hor
-pošli smrt i pro mě sem do Moorlough Shore
+Má lásko na bílých sladká [A]březích moře Maine
+budu [Hmi]čekat sedm [A]dlouhých pustých [Gmaj7]let
+ne můj [Hmi]stín, lásko [Emi]já vo[A]lám z výšky [F#mi]hor
+pošli [G]smrt i pro mě [Emi]sem do Moorlough [Hmi]Shore
 {end_of_chorus}

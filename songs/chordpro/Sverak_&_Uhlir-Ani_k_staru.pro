@@ -27,11 +27,11 @@ třeba [F]s vámi, třeba [Emi]s vámi, chcete - [C]li.
 {end_of_chorus}
 
 {start_of_verse}
-Už dlouho šlapu po světě a čekám, co se ještě stane,
-mám pořád duši dítěte a říkají mi starý pane.
-Já citově jsem založen, při smutných filmech slzy roním
-a měl jsem taky málo žen, teď už to asi nedohoním,
-už to nedohoním.
+Už dlouho [C]šlapu po světě a čekám, [F]co se ještě stane,
+mám [Ami]pořád duši dítěte a říka[G]jí mi starý pane.
+Já [C]citově jsem založen, při smutných [F]filmech slzy roním
+a měl jsem [Ami]taky málo žen, teď už to [G]asi nedohoním,
+už to nedo[C]honím.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}

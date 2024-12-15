@@ -22,28 +22,28 @@ zůstaly na hladině[Cmi].
 {end_of_chorus}
 
 {start_of_verse}
-Jeden z nich povídá přátelé:
-netvařte se tak kysele!
-vždyť je to přece veselé,
-že nám patří moře celé.
+[Cmi]Jeden z nich [Es]povídá [Fmi]přátelé: [Gm7]
+[Cmi]netvařte se [Es]tak ky[Fmi]sele! [Gm7]
+[Cmi]vždyť je to [Es]přece [Fmi]veselé, [Gm7]
+že nám patří moře ce[Cmi]lé.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-A tak se citrónky plavily dál,
-jeden jim k tomu na kytaru hrál
-A tak se plavily do dáli,
-až na ostrov korálový
+[Cmi]A tak se [Es]citrónky [Fmi]plavily [Gm7]dál,
+[Cmi]jeden jim [Es]k tomu na [Fmi]kytaru [Gm7]hrál
+[Cmi]A tak se [Es]plavily [Fmi]do dáli, [Gm7]
+až na ostrov korá[Cmi]lový
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Tam je však stihla nehoda zlá,
-byla to mořská kravizna (tedy kapustňák).
-Sežrala citrónky i s kůrou,
-zakončila tak baladu mou.
+[Cmi]Tam je však [Es]stihla ne[Fmi]hoda [Gm7]zlá,
+[Cmi]byla to [Es]mořská [Fmi]kravizna [Gm7]
+[Cmi]Sežrala [Es]citrónky [Fmi]i s kůrou, [Gm7]
+zakončila tak baladu [Cmi]mou.
 {end_of_verse}
 
 {chorus}

@@ -28,10 +28,10 @@ než [Gmi]budem litovat
 {end_of_chorus}
 
 {start_of_verse}
-Vnímám jsem nový Winston Smith
-ve zdech Londýna už nejsem tolik sám
-Vnímám pohyb tvých rukou divých tanečnic
-jsi krásná má Julie chci všechno nebo nic
+[C]Vnímám jsem [F]nový Winston Smith
+[C]ve zdech Londýna už [F]nejsem tolik sám
+[C]Vnímám pohyb [F]tvých rukou divých tanečnic
+jsi [C]krásná má Julie chci [F]všechno nebo nic
 {end_of_verse}
 
 {bridge}

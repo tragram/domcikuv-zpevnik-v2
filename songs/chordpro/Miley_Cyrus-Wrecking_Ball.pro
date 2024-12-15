@@ -33,10 +33,10 @@ Yeah, you [Em]wreck [C]me
 {end_of_chorus}
 
 {start_of_verse}
-I put you high up in the sky
-And now, you're not coming down
-It slowly turned, you let me burn
-And now, we're ashes on the ground
+I [Em]put you high up in the [G]sky
+And [D]now, you're not coming [C]down
+It [Em]slowly turned, you let me [G]burn
+And [D]now, we're ashes on the [C]ground
 {end_of_verse}
 
 {chorus: Prechorus}

@@ -16,35 +16,35 @@ a můj [Ami]kůň i já jsme [D7]cestou znaveni.
 {end_of_verse}
 
 {start_of_chorus: R1}
-Těch tisíc mil, těch tisíc mil
-má jeden směr a jeden cíl,
-bílej dům, to malý bílý stavení.
+[G]Těch tisíc mil, těch tisíc [Emi]mil
+má [Ami]jeden směr a jeden [C]cíl,
+bílej [Ami]dům, to malý [D7]bílý stavení.
 {end_of_chorus}
 
 {start_of_verse}
-Je tam stráň a příkrej sráz,
-modrá tůň a bobří hráz,
-táta s mámou, kteří věřej' dětskejm snům.
+[G]Je tam stráň a příkrej [Emi]sráz,
+modrá [Ami]tůň a bobří [C]hráz,
+táta [Ami]s mámou, kteří [D7]věřej' dětskejm snům.
 {end_of_verse}
 
 {start_of_chorus: R2}
-Těch tisíc mil, těch tisíc mil
-má jeden směr a jeden cíl,
-jeden cíl, ten starej známej bílej dům.
+[G]Těch tisíc mil, těch tisíc [Emi]mil
+má [Ami]jeden směr a jeden [C]cíl,
+jeden [Ami]cíl, ten starej [D7]známej bílej dům.
 {end_of_chorus}
 
 {start_of_verse}
-V nohách mám už tisíc mil,
-teď mi zbejvá jen pár chvil,
-cestu znám, a ta se tam k nám nemění.
+[G]V nohách mám už tisíc [Emi]mil,
+teď mi [Ami]zbejvá jen pár [C]chvil,
+cestu [Ami]znám, a ta se [D7]tam k nám nemění.
 {end_of_verse}
 
 {chorus: R1}
 
 {start_of_verse}
-Kousek dál, a já to vím,
-uvidím už stoupat dým
-šikmej štít střechy čnít k nebesům.
+[G]Kousek dál, a já to [Emi]vím,
+uvidím [Ami]už stoupat [C]dým
+šikmej [Ami]štít střechy [D7]čnít k nebesům.
 {end_of_verse}
 
 {chorus: R2}

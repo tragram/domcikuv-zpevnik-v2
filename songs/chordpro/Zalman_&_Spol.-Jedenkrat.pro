@@ -31,33 +31,33 @@ jak posel [Gmaj7]naděje. [A][Hmi]
 {end_of_chorus}
 
 {start_of_verse}
-Je těžké lézt pro modré do nebe,
-každý mi říká, tam cesta nevede,
-no tak se ptám, proč bych vlastně žil,
-kdybych uvěřil:
+Je těžké [Hmi]lézt pro modré [A]do nebe,
+každý mi [Emi]říká, tam cesta [G]nevede,
+no tak se [D]ptám, proč bych vlastně [A]žil,
+[Gmaj7]kdybych uvěřil:
 {end_of_verse}
 
 {start_of_verse}
-Že slovo chlapa už dávno nedělá,
-a přátelství je už jen pověra,
-no a láska, ta se včera někde válela,
-vždyť za prachy jde dnes i důvěra.
+Že slovo [Hmi]chlapa už dávno [A]nedělá,
+a přátel[Emi]ství je už jen [G]pověra,
+no a [D]láska, ta se včera někde [A]válela,
+[Gmaj7]vždyť za prachy jde dnes i důvěra.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Ještě pár chvil, než se rozední
-já vím, naděje umírá poslední,
-na vzdušné zámky zvolna usedá prach,
-často mívám v noci strach
+Ještě pár [Hmi]chvil, než se [A]rozední
+já [Emi]vím, naděje umírá [G]poslední,
+na vzdušné [D]zámky zvolna usedá [A]prach,
+[Gmaj7]často mívám v noci strach
 {end_of_verse}
 
 {start_of_verse}
-Vzít tě tak pryč daleko od lidí,
-kam ani měsíc moc dobře nevidí,
-abych byl sám až tě budu objímat,
-víc ti nemůžu dát
+Vzít tě tak [Hmi]pryč daleko od [A]lidí,
+kam ani [Emi]měsíc moc dobře [G]nevidí,
+abych byl [D]sám až tě budu [A]objímat,
+[Gmaj7]víc ti nemůžu dát
 {end_of_verse}
 
 {chorus}

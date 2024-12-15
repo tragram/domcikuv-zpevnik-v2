@@ -10,11 +10,9 @@
 {start_melody: a h c d}
 {start_of_verse}
 [Am]I was scared of [G]dentists and the [C]dark
-I was scared of pretty girls
-and starting conversations
-Oh, all my friends are turning green
-You're the magician's
-assistant in their dream
+[Am]I was scared of [G]pretty girls and [C]starting conversations
+[Am]Oh, all my friends [G]are turning [C]green
+[Am]You're the magician's [G]assistant in their [C]dream
 {end_of_verse}
 
 {start_of_bridge}
@@ -26,17 +24,16 @@ assistant in their dream
 Lad[Am]y, run[G]ning down to the rip[C]tide,
 taken away to the [Am]dark side,
 [G]I wanna be your [C]left hand man
-I love you when you're singing that song
-And I got a lump in my throat,
-'Cause you're gonna sing the words wrong
+[Am]I love you [G]when you're singing that [C]song
+And I got a lump in my [Ami]throat,
+'Cause [G]you're gonna sing the [C]words wrong
 {end_of_chorus}
 
 {start_of_verse}
-There's this movie that I think you'll like
-This guy decides to quit his job
-and heads to New York City
-This cowboy's running from himself
-And she's been living on the highest shelf
+[Am]There's this movie that [G]I think you'll [C]like
+[Am]This guy decides to [G]quit his job and [C]heads to New York City
+[Am]This cowboy's [G]running from him[C]self
+[Am]And she's been living [G]on the highest [C]shelf
 {end_of_verse}
 
 {bridge}

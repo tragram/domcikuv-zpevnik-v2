@@ -20,11 +20,11 @@ Jo [G]všichni žvaně[C]j [G][Ami][F][G][C]
 {end_of_verse}
 
 {start_of_verse}
-Na palubě Titanicu zas se hází vinou
-Někteří z nás mají trefu a někteří minou
-Počítáme svoje skóre a pod náma moře
-Chystá si, že udělí nám lekci o pokoře
-Jo o pokoře
+[C]Na palubě Titani[G]cu zas se hází [Ami]vinou [G]
+[C]Někteří z nás mají [G]trefu a někteří [Ami]minou [G]
+[F]Počítáme svoje skóre a pod náma [G]moře
+Chystá [C]si, že udě[G]lí nám lekci o [Ami]pokoře
+Jo [G]o poko[C]ře [G][Ami][F][G][C]
 {end_of_verse}
 
 {start_of_chorus}
@@ -39,37 +39,37 @@ na [G]Titanic[C]u [G][Ami][F][G][C]
 {end_of_chorus}
 
 {start_of_verse}
-Na palubě Titanicu bojuje se o vliv
-Všechny dosud známý fakta tisickrát se ohly
-Když se oháníme zájmy generací příšítích
-Přes vlastní křik neslyšíme, že se náš trup tříští
-Jo že se tříští
+[C]Na palubě Titani[G]cu bojuje se o [Ami]vliv [G]
+[C]Všechny dosud známý [G]fakta tisickrát se [Ami]ohly [G]
+[F]Když se oháníme zájmy generací [G]příšítích
+Přes [C]vlastní křik ne[G]slyšíme, že se náš trup [Ami]tříští
+Jo [G]že se tříš[C]tí [G][Ami][F][G][C]
 {end_of_verse}
 
 {start_of_verse}
-Na palubě Titanicu vedem chytrý řeči
-Každej má tu svou pravdu, co ostatní předčí
-Voda ta si myslí svoje a navzdory řečem
-Nehodlá nic měnit na tom, že do lodi teče
-Jo že tam teče..
+[C]Na palubě Titani[G]cu vedem chytrý [Ami]řeči [G]
+[C]Každej má tu svou [G]pravdu, co ostatní [Ami]předčí [G]
+[F]Voda ta si myslí svoje a navzdory [G]řečem
+Ne[C]hodlá nic mě[G]nit na tom, že do lodi [Ami]teče
+Jo [G]že tam te[C]če.. [G][Ami][F][G][C]
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Na palubě Titanicu volíme si strany
-Byť všechny záchranný čluny už jsou rozebraný
-Rveme se ač důvod dávno bůh ví kam se poděl
-Rozum nás spolu se slušností pustil k vodě
-Jo pustil k vodě
+[C]Na palubě Titani[G]cu volíme si [Ami]strany [G]
+[C]Byť všechny záchran[G]ný čluny už jsou roze[Ami]braný [G]
+[F]Rveme se ač důvod dávno bůh ví kam se [G]poděl
+Roz[C]um nás spolu se [G]slušností pustil k [Ami]vodě
+Jo [G]pustil k vo[C]dě [G][Ami][F][G][C]
 {end_of_verse}
 
 {start_of_verse}
-Na palubě Titanicu zraňujem svý blízký
-Hold když se kácí stožár tak lítají třísky
-Pánbůh ale z našich sporů nechce dělat vědu
-Vždyť i s náma je co nevidět uloží k ledu
-Jo pěkně k ledu
+[C]Na palubě Titani[G]cu zraňujem svý [Ami]blízký [G]
+[C]Hold když se kácí [G]stožár tak lítají [Ami]třísky [G]
+[F]Pánbůh ale z našich sporů nechce dělat [G]vědu
+Vždyť [C]i s náma je co [G]nevidět uloží k [Ami]ledu
+Jo [G]pěkně k le[C]du [G][Ami][F][G][C]
 {end_of_verse}
 
 {chorus}

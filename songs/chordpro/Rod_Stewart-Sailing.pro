@@ -16,29 +16,29 @@ To be [Dmi]near you to be [C]free. [G7]
 {end_of_verse}
 
 {start_of_verse}
-I am flying, I am flying,
-like a bird, cross the sky.
-I am flying, passing high clouds
-to be with you, to be free.
+[C]I am flying, I am [Ami]flying,
+like a [F]bird, cross the [C]sky.
+I am [D7]flying, passing [Ami]high clouds
+to be [Dmi]with you to be [C]free. [G7]
 {end_of_verse}
 
 {start_of_verse}
-Can you hear me, can you hear me?
-Thro' the dark night, far away.
-I am dying, forever trying
-to be with you who can say.
+[C]Can you hear me, can you [Ami]hear me?
+Thro' the [F]dark night, far [C]away.
+I am [D7]dying, forever [Ami]trying
+to be [Dmi]with you who can [C]say. [G7]
 {end_of_verse}
 
 {start_of_verse}
-We are sailing, We are sailing
-Home again. Cross the sea.
-We are sailing, stormy waters,
-To be near you to be free.
+[C]We are sailing, We are [Ami]sailing
+Home [F]again. Cross the [C]sea.
+We are [D7]sailing, stormy [Ami]waters,
+To be [Dmi]near you to be [C]free. [G7]
 {end_of_verse}
 
 {start_of_bridge}
 Oh Lord, to be [Dmi]near you, [C]to be [G7]free.
-Oh Lord, to be near you, to be free,
-Oh Lord, to be near you, to be free,
+Oh Lord, to be [Dmi]near you, [C]to be [G7]free,
+Oh Lord, to be [Dmi]near you, [C]to be [G7]free,
 [G#maj7]Oh [Cmaj7]Lord.
 {end_of_bridge}

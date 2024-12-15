@@ -11,10 +11,10 @@
 {start_of_verse}
 [C]Na malém plácku [G]děti si hrají
 [Ami]hrají si na válku [E]všechno už mají
-Stejnokroj z tepláků větší než na míru
-dřevěný pistole, čepice z papíru
-A bitva za bitvou, tak to jde dokola
-až potom najednou něčí hlas zavolá:
+[C]Stejnokroj z tepláků [G]větší než na míru
+[Ami]dřevěný pistole, [E]čepice z papíru
+[C]A bitva za bitvou, [G]tak to jde dokola
+[Ami]až potom najednou [E]něčí hlas zavolá:
 {end_of_verse}
 
 {start_of_chorus}
@@ -22,27 +22,27 @@ až potom najednou něčí hlas zavolá:
 [G]Maruška brečí
 [Ami]dostala kamenem
 [E]při naší zteči
-Co jste to za vojsko
-když místo střílení
-do svých nepřátel
-házíte kamení
-Na to my nehrajem
-vy nám to kazíte
-nedbáte pravidel
-a pak se divíte
+[C]Co jste to za vojsko
+[G]když místo střílení
+[Ami]do svých nepřátel
+[E]házíte kamení
+[C]Na to my nehrajem
+[G]vy nám to kazíte
+[Ami]nedbáte pravidel
+[E]a pak se divíte
 {end_of_chorus}
 
 {start_of_verse}
-Na velkém plácků hrají si dospělí
-jen místo dřevěných hračky maj z oceli
-ocel se zarývá do kůry stromů
-desítky jizviček a blesky hromů
-Některým na duši, některým do těla
-pálí znamení, proč nikdo nevolá?
+[C]Na velkém plácků [G]hrají si dospělí
+[Ami]jen místo dřevěných [E]hračky maj z oceli
+[C]ocel se zarývá [G]do kůry stromů
+[Ami]desítky jizviček [E]a blesky hromů
+[C]Některým na duši, [G]některým do těla
+[Ami]pálí znamení, [E]proč nikdo nevolá?
 {end_of_verse}
 
 {start_of_chorus}
-Zastav[C]te válku
+[C]Zastavte válku
 [G]Maruška brečí
 [Ami]dostala kamenem
 [E]při naší zteči

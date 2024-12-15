@@ -16,17 +16,17 @@ Jsem jako [A]vítr kterej zfoukne pírko ze tvejch dlaní,
 {end_of_verse}
 
 {start_of_verse}
-Narovnám ti páteř, poškrábu ti záda,
-pofoukám ti srdce, zrada kamaráda
-lásky účel světí prostředky a smetí,
-špínu jedný noci, který neuletíš
+Narovnám ti [A]páteř, poškrábu ti záda,
+[E]pofoukám ti srdce, zrada kamaráda
+[Hmi]lásky účel světí prostředky a smetí,
+[Dmi]špínu jedný noci, [F]který neuletíš
 {end_of_verse}
 
 {start_of_verse}
-Otevřená zlomenina srdečního svalu,
-trápení a kocovina, vůně tvýho žalu
-vypustíš svou hříšnou duši do slanýho moře,
-neumírej děvče moje, chci ti říct, že
+Otevřená [A]zlomenina srdečního svalu,
+[E]trápení a kocovina, vůně tvýho žalu
+[Hmi]vypustíš svou hříšnou duši do slanýho moře,
+[Dmi]neumírej děvče moje, [F]chci ti říct, že
 {end_of_verse}
 
 {start_of_chorus}
@@ -39,24 +39,24 @@ už asi nedou[G]fám. [E]
 {end_of_chorus}
 
 {start_of_verse}
-Pláčem solíš otevřený rány, co se hojí,
-tvoji krev i tělo příjímám pod obojí
-stejný lidi se soumrakem mají stejný stíny,
-zmizelas jak před přízrakem, padám do hlubiny
+Pláčem solíš [A]otevřený rány, co se hojí,
+[E]tvoji krev i tělo příjímám pod obojí
+[Hmi]stejný lidi se soumrakem mají stejný stíny,
+[Dmi]zmizelas jak před přízrakem, [F]padám do hlubiny
 {end_of_verse}
 
 {start_of_verse}
-Tvůj pramínek vlasů zaliju včelím voskem,
-koukám na tu krásu a nechápu to mozkem
+Tvůj pramínek [A]vlasů zaliju včelím voskem,
+[E]koukám na tu krásu a nechápu to mozkem
 [Hmi]to, co jsi mi dala, já [Hmi]nikomu už nedám,
 [Dmi]tak mi řekni, má opičko, [F]proč tě marně hledám
 {end_of_verse}
 
 {start_of_verse}
-Otevřená zlomenina srdečního svalu,
-trápení a kocovina, vůně tvýho žalu
-vypustíš svou hříšnou duši do slanýno moře,
-neumírej děvče moje, chci ti říct, že
+Otevřená [A]zlomenina srdečního svalu,
+[E]trápení a kocovina, vůně tvýho žalu
+[Hmi]vypustíš svou hříšnou duši do slanýno moře,
+[Dmi]neumírej děvče moje, [F]chci ti říct, že
 {end_of_verse}
 
 {chorus}

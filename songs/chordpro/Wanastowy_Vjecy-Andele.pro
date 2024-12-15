@@ -23,23 +23,22 @@
 {end_of_chorus}
 
 {start_of_verse}
-Po ránu princezna je ospalá
-na nebi nemusí se bát.
-V ulicích doba zlá ji spoutala
-polykač nálezů a ztrát.
+[H]Po ránu prin[C#mi]cezna je os[E]palá
+[H]na nebi ne[C#mi]musí se [E]bát.
+[H]V ulicích [C#mi]doba zlá ji [E]spoutala
+[H]polykač ná[C#mi]lezů a [E]ztrát.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Co Tě zas po ránu napadá
-za zrcadlem nezkoušej si lhát,
-miluju Tě, chci Tě to Ti přísahám,
-na kolenou lásce pomož vstát.
+[H]Co Tě zas [C#mi]po ránu na[E]padá
+[H]za zrcadlem [C#mi]nezkoušej si [E]lhát,
+[H]miluju Tě, [C#mi]chci Tě to Ti [E]přísahám,
+[H]na kolenou [C#mi]lásce pomož [E]vstát.
 {end_of_verse}
 
-
 {start_of_variant: append_content}
-𝄆 Svět je mami dokonalej kraj. 𝄇
+𝄆 [D]Svět je mami [A]dokonalej [G]kraj. 𝄇
 {end_of_variant}
 {chorus}

@@ -17,24 +17,24 @@ hlavu ti čistí, no a ty jsi bystřejší.
 {start_of_chorus}
 [A]Pašuješ zážitky, [E]pašuješ všechno co se [F#mi]dá,
 sáčky suchý pažitky, [D]tomu se říká dobrá nálada.
-Pašuješ zážitky, pašuješ všechno co se dá,
-sáčky suchý pažitky, tomu se říká dobrá nálada.
+[A]Pašuješ zážitky, [E]pašuješ všechno co se [F#mi]dá,
+sáčky suchý pažitky, [D]tomu se říká dobrá nálada.
 {end_of_chorus}
 
 {start_of_verse}
-Hladina tůní pomalu vychladá,
-je konec vůním a léto uvadá.
-Na stehna fenek dopadl dlouhý stín,
-skončil čas trenek, ale já zas něco vymyslím.
+Hladina [A]tůní pomalu [C#mi]vychladá,
+je konec [F#mi]vůním a léto [D]uvadá.
+Na stehna [A]fenek dopadl [C#mi]dlouhý stín,
+skončil čas [F#mi]trenek, ale já zas něco [D]vymyslím.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Kochám se chcaje, překvapen výdrží,
-té co mi ho saje a co mi podrží.
-malinký flíček na kalhotách vydržím
-kalhot dost maje, tyto poté vydražím.
+Kochám se [A]chcaje, překvapen [C#mi]výdrží,
+té co mi [F#mi]ho saje a co mi [D]podrží.
+malinký [A]flíček na kalhotách [C#mi]vydržím
+kalhot dost [F#mi]maje, tyto poté [D]vydražím.
 {end_of_verse}
 
 {chorus}

@@ -13,10 +13,10 @@ Já doufám jen, že máte [Gmi]všechno [B]připraveno,
 [Dmi]ó pé i dé pé pé, jak [Gmi]že bylo to [A7]jméno?
 {end_of_verse}
 {start_of_verse}
-Čé, čé, čé, nemám vás tu, nemám, člověče.
+[Dmi]Čé, čé, čé, nemám vás tu, nemám, člověče.
 Tik tak čas běží, tak mi život uteče.
-Nesnáším lidi, co tu jen tak na blint chodí,
-když zbývá deset minut do úředních hodin.
+Nesnáším lidi, co tu [Gmi]jen tak na blint [B]chodí,
+[Dmi]když zbývá deset minut [Gmi]do úředních [A7]hodin.
 {end_of_verse}
 
 {start_of_chorus}
@@ -31,44 +31,44 @@ otec [Gmi]přes koleno bral a teď mám
 {end_of_chorus}
 
 {start_of_verse}
-To, co chceš vědět, na vé vé vé najdi si.
+[Dmi]To, co chceš vědět, na vé vé vé najdi si.
 Od mala dodržuju všechny předpisy.
-Parkuju na značce, přecházím na zelenou.
-Já nejsem jako ty, jak že bylo to jméno?
+Parkuju na značce, pře[Gmi]cházím na ze[B]lenou.
+[Dmi]Já nejsem jako ty, jak [Gmi]že bylo to [A7]jméno?
 {end_of_verse}
 
 {start_of_verse}
-Dé, dé, dé, nemám tě tu, nemám, sousede.
+[Dmi]Dé, dé, dé, nemám tě tu, nemám, sousede.
 Tik tak čas běží, tak mi rychlík ujede.
-Je ti jen dvacet pět, co ty víš o životě?
-Proháníš sukně, já jsem sám jako kůl v plotě.
+Je ti jen dvacet pět, co ty víš o [Gmi]životě?[B]
+[Dmi]Proháníš sukně, já jsem [Gmi]sám jako kůl v [A7]plotě.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Ťuk, ťuk, hrajeme ping pong zleva doprava.
+[Dmi]Ťuk, ťuk, hrajeme ping pong zleva doprava.
 Panáčkuj jako zajíc, ať je zábava!
-To pravé ucho zdá se špatně zakřiveno -
-pět bodů z deseti. Jak že bylo to jméno?
+To pravé ucho zdá se [Gmi]špatně [B]zakřiveno -
+[Dmi]pět bodů z deseti. Jak [Gmi]že bylo to [A7]jméno?
 {end_of_verse}
 
 {start_of_verse}
-Bé, bé, bé, nemám tě tu, volám do nebe.
+[Dmi]Bé, bé, bé, nemám tě tu, volám do nebe.
 Tik tak, čas běží, nemám chvíli pro sebe.
-Od lidí seshora se všechno na mě valí.
-Však v tomhle ofisu mě oslovujte "králi".
+Od lidí seshora se [Gmi]všechno [B]na mě valí.
+[Dmi]Však v tomhle ofisu mě [Gmi]oslovujte "[A7]králi".
 {end_of_verse}
 
 {chorus}
 
 {start_of_chorus}
-Jó já mám štempl
-a ty si odnes prázdný papír,
-ty to zvládneš, však jsme chlapi.
-Nejsem lempl,
+Jó já mám [Dmi]štempl
+a ty si [F]odnes prázdný papír,
+ty to [Gmi]zvládneš, však jsme chlapi.
+[Dmi]Nejsem lempl,
 já nejsem lempl.
-Dobroděj, spása lidských duší,
-co jsou druzí zač, jen těžko tušíš,
-tak si nestěžuj.
+Dobroděj, [F]spása lidských duší,
+co jsou [Gmi]druzí zač, jen těžko tušíš,
+tak si [Dmi]nestěžuj.
 {end_of_chorus}

@@ -16,13 +16,13 @@ Tak mi teď za to vyna[G]dej
 {end_of_verse}
 
 {start_of_verse}
-Zima a promarněný touhy
-Do vrásek stromů padá déšť
-Zbejvaj roky asi ne moc dlouhý
+[G]Zima a [D]promarněný [Ami]touhy
+Do vrásek stromů padá [G]déšť
+[G]Zbejvaj roky [D]asi ne moc [Ami]dlouhý
+Do vlasů mi zabrouk[C]e, pa pa pa [G]pá
 {end_of_verse}
 
 {start_of_chorus}
-Do vlasů mi zabrouk[C]e, pa pa pa [G]pá
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá
 {end_of_chorus}
@@ -31,14 +31,10 @@ Do vlasů mi zabrouk[C]e, pa pa pa [G]pá
 [G]Tvoje oči [D]jenom žhavý [Ami]tóny
 Dotek slunce zapa[G]dá
 Horkej vítr [D]rozezní mý [Ami]zvony
+Do vlasů ti zabrouká[C]m, pá pa pá [G]pá
 {end_of_verse}
 
-{start_of_chorus}
-Do vlasů ti zabrouká[C]m, pá pa pá [G]pá
-[G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
-[G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá
-{end_of_chorus}
-
+{chorus}
 {start_of_verse}
 [G]Na obloze [D]křídla tažnej[Ami]ch ptáků
 Tak už na svý bráchy zavol[G]ej
@@ -47,9 +43,10 @@ A Bůh nám sebral beznadě[G]j
 {end_of_verse}
 
 {start_of_verse}
-V duši zbylo světlo z jedný holky
-Do vrásek stromů padá déšť
-Poslední dny hodiny a roky
+[G]V duši zbylo [D]světlo z jedný [Ami]holky
+Do vrásek stromů padá [G]déšť
+[G]Poslední dny [D]hodiny a [Ami]roky
+Do vlasů ti zabrouká[C]m, pá pa pá [G]pá
 {end_of_verse}
 
 {chorus}

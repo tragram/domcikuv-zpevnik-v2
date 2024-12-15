@@ -25,28 +25,28 @@ ač [C]zbraně stále [G]burácí a [C]bitva zuří v [D]nich.
 {chorus}
 
 {start_of_verse}
-Vévoda v zámku čeká na balkóně
-až přivedou mu koně, pak mává na pozdrav
-Srdcová dáma má v každé ruce růže,
-tak snadno pohřbít může sto urozených hlav.
+[Emi]Vévoda v [Hmi]zámku [C]čeká na bal[G]kóně
+až [C]přivedou mu [G]koně, pak [C]mává na poz[D]drav
+[Emi]Srdcová [Hmi]dáma má v [C]každé ruce [G]růže,
+tak [C]snadno pohřbít [G]může sto [C]urozených [D]hlav.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Královnin šašek s pusou od povidel
-sbírá zbytky jídel a myslí na útěk
-A v podzemí skrytí slepí alchymisté
-už objevili jistě proti povinnosti lék
+[Emi]Královnin [Hmi]šašek s [C]pusou od po[G]videl
+[C]sbírá zbytky [G]jídel a [C]myslí na ú[D]těk
+[Emi]A v podze[Hmi]mí skrytí [C]slepí alchy[G]misté
+už [C]objevili [G]jistě proti [C]povinnosti [D]lék
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Páv pod tvým oknem zpívá sotva procit
-o tajemstvích noci ve tvých zahradách
-A já, potulný kejklíř, co svázali mu ruce,
-teď hraju o tvé srdce a chci mít tě nadosah!
+[Emi]Páv pod tvým [Hmi]oknem [C]zpívá sotva [G]procit
+o [C]tajemstvích [G]noci ve tvých [C]zahra[D]dách
+[Emi]A já, po[Hmi]tulný [C]kejklíř, co svá[G]zali mu ruce,
+teď [C]hraju o tvé [G]srdce a chci [C]mít tě nado[D]sah!
 {end_of_verse}
 
 {start_of_chorus}

@@ -76,7 +76,7 @@ to je Darmo[E7]děj, můj Darmo[Ami]děj.
 [Ami]jenž prochá[F]zí všemi [F#dim]sny,
 ale dnům [E7]vyhýbá se,
 
-[Ami]můj [Emi]Darmoděj,
+[Ami]Můj [Emi]Darmoděj,
 [C]krásné zlo, jed má pod [G]jazykem,
 [Ami]když prodá[F]vá po [F#dim]domech
 jehly [E7]se slovníkem.

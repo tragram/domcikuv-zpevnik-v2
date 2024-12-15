@@ -18,23 +18,23 @@ a to něco, to prý láska je.
 {end_of_verse}
 
 {start_of_verse}
-Žiju sama díky těmto botám,
+[E]Žiju sama díky těmto botám,
 žiju sama zásluhou těch bot,
-často sice klukům hlavy motám,
-botám ale city nejsou vhod.
-V těch botách ráda šlapu, zvlášť po lásce nás dvou,
-ty boty vždycky jdou a všechno hezké pošlapou.
+[A]často sice klukům hlavy motám,
+[E]botám ale city nejsou vhod.
+[G]V těch botách ráda [E]šlapu, zvlášť [G]po lásce nás [E]dvou,
+[G]ty boty vždycky [E]jdou a všechno hezké pošlapou.
 {end_of_verse}
 
 {start_of_verse}
-Tyhle boty nosím někde v duši,
+[E]Tyhle boty nosím někde v duši,
 někde v duši, ne však na nohou.
-Jsou tam dole, kde mi srdce buší,
-od bušení mu však pomohou.
-V těch botách ráda šlapu a to se mi prý mstí,
-prý v těchto botách jdu a tak si šlapu po štěstí.
+[A]Jsou tam dole, kde mi srdce buší,
+[E]od bušení mu však pomohou.
+[G]V těch botách ráda [E]šlapu a [G]to se mi prý [E]mstí,
+[G]prý v těchto botách [E]jdou a tak si šlapu po štěstí.
 {end_of_verse}
 
 {start_of_verse: Rec.}
-Pozor, boty! Pochodem vchod!
+Pozor, boty! Pochodem [E]vchod!
 {end_of_verse}

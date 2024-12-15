@@ -22,14 +22,14 @@ však [F]jsou se zemí [C]spjatí
 {end_of_verse}
 
 {start_of_verse}
-Na ústavní půdě stojí Ikaros
-s amputací křídel
-a k posteli přivázanej Koperník,
-co na stropě hvězdu viděl
-a za nimi v řade stojí Kolumbus,
-co objevil Ameriku
-dneska ráno na trávníku před domem,
-když vedli ho ven
+[C]Na ústavní půdě [D]stojí Ikaros
+s [F]amputací [C]křídel
+[C]a k posteli přivázanej [D]Koperník,
+co na [F]stropě hvězdu [C]viděl
+[Ami]a za nimi v řade stojí [G]Kolumbus,
+co [F]objevil Ame[C]riku
+[Ami]dneska ráno na trávníku [G]před domem,
+když [F]vedli ho [C]ven
 {end_of_verse}
 
 {start_of_chorus}
@@ -53,9 +53,9 @@ já jsem [C]tady
 {end_of_verse}
 
 {start_of_chorus}
-Kam teda plout, a kam letět
-komu zpívat, a pro koho brečet
+Kam teda [C]plout, a kam [Emi]letět
+komu [F]zpívat, a pro koho [G]brečet
 lehnout si pod zem, a zůstat sám
 tebe lásko tady nenechám
-tady nenechám
+tady nene[C]chám [D][F][G]
 {end_of_chorus}

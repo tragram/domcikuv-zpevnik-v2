@@ -16,10 +16,10 @@
 {end_of_verse}
 
 {start_of_verse}
-Moje teta, tvoje teta, parole
-dvaatřicet karet křepčí na stole
-měsíc svítí sám a chleba nežere
-Ty to ale koukej trefit frajere, protože
+[F]Moje teta, tvoje teta, [C]parole
+[Ami]dvaatřicet karet křepčí [G]na stole
+[F]měsíc svítí sám a chleba [C]nežere
+[Ami]Ty to ale koukej trefit [G]frajere, protože
 {end_of_verse}
 
 {start_of_chorus: R1}
@@ -30,38 +30,38 @@ Ty to ale koukej trefit frajere, protože
 {end_of_chorus}
 
 {start_of_verse}
-Ať jsi přes den docent nebo tunelář
-herold svatý pravdy nebo jinej lhář
-tady na to každej kašle zvysoka
-pravda je jen jedna - slova proroka říkaj, že:
+[F]Ať jsi přes den docent nebo [C]tunelář
+[Ami]herold svatý pravdy nebo [G]jinej lhář
+[F]tady na to každej kašle [C]zvysoka
+[Ami]pravda je jen jedna - slova [G]proroka říkaj, že:
 {end_of_verse}
 
 {start_of_chorus: R2}
-Když je valcha u starýho Růžičky
-budou v celku nanic všechny řečičky
-buď to trefa nebo kufr, smůla nebo šnit
-jen to srdce jako Rohan musíš mít.
+[F]Když je valcha u starýho [C]Růžičky
+[Ami]budou v celku nanic všechny [G]řečičky
+[F]buď to trefa nebo kufr, [C]smůla nebo šnit
+[Ami]jen to srdce jako Rohan [G]musíš mít.
 {end_of_chorus}
 
 {start_of_verse}
-Kdo se bojí má jen hnědý kaliko
-možná občas nebudeš mít na mlíko
-jistě ale poznáš, co jsi vlastně zač,
-svět nepatřil nikomu, kdo nebyl hráč a proto
+[F]Kdo se bojí má jen hnědý [C]kaliko
+[Ami]možná občas nebudeš mít [G]na mlíko
+[F]jistě ale poznáš, co jsi [C]vlastně zač,
+[Ami]svět nepatřil nikomu, kdo [G]nebyl hráč a proto
 {end_of_verse}
 
 {start_of_chorus: R3}
-Ať je valcha u starýho Růžičky
-nebo pouť až k tváři Boží rodičky
-ať je válka, červen, mlha, bouřka nebo klid,
-srdce jako kníže Rohan musíš mít.
+[F]Ať je valcha u starýho [C]Růžičky
+[Ami]nebo pouť až k tváři Boží [G]rodičky
+[F]ať je válka, červen, mlha, [C]bouřka nebo klid,
+[Ami]srdce jako kníže Rohan [G]musíš mít.
 {end_of_chorus}
 
 {start_of_chorus: R4}
-Dnes je valcha u starýho Růžičky
-když jsi malej tak si stoupni na špičky
-malej nebo nachlapenej, cikán, brňák, žid
-srdce jako kníže Rohan musíš mít.
+[F]Dnes je valcha u starýho [C]Růžičky
+[Ami]když jsi malej tak si stoupni [G]na špičky
+[F]malej nebo nachlapenej, [C]cikán, brňák, žid
+[Ami]srdce jako kníže Rohan [G]musíš mít.
 {end_of_chorus}
 
 {chorus: R1}

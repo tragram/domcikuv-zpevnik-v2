@@ -27,27 +27,27 @@ Missis[C]sippi, Missis[Ami]sippi,
 {end_of_chorus}
 
 {start_of_verse}
-Říkali mu Charlie a jako každej kluk
-na trubku chtěl ve smokingu hrát,
-v kapse nosil kudlu a knoflíkovej pluk,
-uměl se i policajtům smát,
-odmalička dobře věděl, kam se nesmí jít,
-který věci jinejm patří a co sám může mít,
-že si do něj někdo střelí jak do hejna hus,
-netušil, a neví, řeka zpívá blues.
+[Ami]Říkali mu Charlie a [Dmi]jako každej kluk
+[Ami]na trubku chtěl [G]ve smokingu [Ami]hrát,
+v kapse nosil kudlu a [Dmi]knoflíkovej pluk,
+[Ami]uměl se i [G]policajtům [Ami]smát,
+[C]odmalička dobře věděl, [F]kam se nesmí jít,
+[Dmi]který věci jinejm patří [E]a co sám může mít,
+[Ami]že si do něj někdo střelí [Dmi]jak do hejna hus,
+nikdo [Ami]netušil, a [G]neví, řeka [Ami]zpívá blues.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Chlapec jménem Charlie, a jemu patří blues,
-ve kterým mu táta sbohem dal,
-chlapec jménem Charlie snad došel cesty kus,
-jako slepý na kolejích stál,
-nepochopí jeho oči, jak se může stát,
-jeden že má ležet v blátě, druhej klidně spát,
-jeho blues se naposledy řekou rozletí,
-kdo vyléčí rány, smaže prokletí.
+[Ami]Chlapec jménem Charlie, a [Dmi]jemu patří blues,
+[Ami]ve kterým mu [G]táta sbohem [Ami]dal,
+chlapec jménem Charlie [Dmi]snad došel cesty kus,
+[Ami]jako slepý [G]na kolejích [Ami]stál,
+[C]nepochopí jeho oči, [F]jak se může stát,
+[Dmi]jeden že má ležet v blátě, [E]druhej klidně spát,
+[Ami]jeho blues se naposledy [Dmi]řekou rozletí,
+kdo vy[Ami]léčí rány, [G]smaže prokle[Ami]tí.
 {end_of_verse}
 
 {start_of_variant: append_content}

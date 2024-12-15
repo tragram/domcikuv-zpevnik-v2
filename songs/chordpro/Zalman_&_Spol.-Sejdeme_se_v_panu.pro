@@ -44,15 +44,15 @@ ještě [C]nechci s tebou z kola [G]ven.
 {chorus}
 
 {start_of_verse}
-To dobré, co jsi v létě prožil,
-ukládám do košíku pro tebe,
-abys pod peřinou v zimě ožil,
-až povedou tě rájem do nebe,
-nejsi hrdina ani blázen,
-raděj vrať se mi zpátky na zem,
-jsem tu bez tebe Dívčí kámen na holé pláni,
-k rukám bys mi svoje tělo složil,
-samé hlouposti mi říkal jen.
+[Emi]To dobré, co jsi v létě [A]prožil,
+ukládám [C]do košíku [G]pro tebe,
+[Emi]abys pod peřinou v zimě [A]ožil,
+až povedou tě [C]rájem do ne[G]be,
+nejsi [Hmi]hrdina ani blázen,
+raděj [Ami]vrať se mi zpátky na zem,
+jsem tu bez [Hmi]tebe Dívčí kámen na holé [C]pláni, [D][Hmi]
+[Emi]k rukám bys mi svoje tělo [A]složil,
+samé [C]hlouposti mi říkal [G]jen.
 {end_of_verse}
 
 {chorus}

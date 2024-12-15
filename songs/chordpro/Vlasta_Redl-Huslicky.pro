@@ -17,25 +17,25 @@
 {end_of_verse}
 
 {start_of_verse}
-𝄆 A kdože tu trávu tak zválal,
-aj modré fialy 𝄇
-že ste husličky samé,
-že ste husličky samé,
-na světě zostaly?
+𝄆 [D]A kdože tu trávu tak [G]zvá[D]lal,
+[Emi]aj modré [Hmi]fialy [A]𝄇
+[Emi]že ste hu[A]sličky [D]samé[G],
+[Emi]že ste hu[A]sličky [D]samé[G],
+[Emi]na světě [Hmi]zosta[A]ly? [Emi][Hmi][A]
 {end_of_verse}
 
 {start_of_verse}
-𝄆 A kerý tu muzikant usnul
-a co sa mu přišlo zdát 𝄇
-co sa mu v noci zdálo,
-bože, co sa mu enem zdálo,
-že už vjec nechtěl hrát?
+𝄆 [D]A kerý tu muzikant [G]us[D]nul
+[Emi]a co sa [Hmi]mu přišlo [A]zdát 𝄇
+[Emi]co sa mu [A]v noci [D]zdálo[G],
+[Emi]bože, co [A]sa mu [D]enem zdálo[G],
+[Emi]že už vjec [Hmi]nechtěl [A]hrát? [Emi][Hmi][A]
 {end_of_verse}
 
 {start_of_verse}
-𝄆 Zahrajte, husličky, samy,
-zahrajte zvesela 𝄇
-až sa tá bude trápit,
-až sa tá bude trápit,
-která ho nechtěla.
+𝄆 [D]Zahrajte, husličky, [G]sa[D]my,
+[Emi]zahrajte [Hmi]zvesela [A]𝄇
+[Emi]až sa tá [A]bude [D]trápit[G],
+[Emi]až sa tá [A]bude [D]trápit[G],
+[Emi]která ho [Hmi]nechtě[A]la. [Emi][Hmi][A]
 {end_of_verse}

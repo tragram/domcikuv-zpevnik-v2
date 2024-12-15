@@ -24,22 +24,22 @@
 {end_of_verse}
 
 {start_of_verse}
-Se svou image alfa samce,
-balím buchty na seznamce,
-nevadí mi když se mračí,
-pošlou smajlík, a to stačí.
+[F]Se svou image alfa samce,
+[A]balím buchty na seznamce,
+[Dmi]nevadí mi když se mračí,
+[B]pošlou smajlík, a to stačí.
 {end_of_verse}
 
 {start_of_verse}
-Z posilovny, v cuku letu,
-fotku mou máš na snapchatu,
-z instagramu moje krásky,
-rozdávaj mi lajky z lásky.
+[F]Z posilovny, v cuku letu,
+[A]fotku mou máš na snapchatu,
+[Dmi]z instagramu moje krásky,
+[B]rozdávaj mi lajky z lásky.
 {end_of_verse}
 
 {start_of_bridge}
 [F]Nosit slečnám [Ami]kytky,
-to se [B]dneska neno [Bmi]sí,
+to se [B]dneska neno[Bmi]sí,
 a [Bmi]v tramvaji je pouštím sednout,
 [C]jen když poprosí...
 {end_of_bridge}
@@ -52,40 +52,40 @@ No tak..[F]. ať se na mě klidně zlobí,
 {end_of_chorus}
 
 {start_of_verse}
-Vaše lajky zeď mou zdobí,
-sbírám si je do zásoby,
-jistě na vás zapůsobí,
-tenhle balič novodobý,
+[F]Vaše lajky zeď mou zdobí,
+[A]sbírám si je do zásoby,
+[Dmi]jistě na vás zapůsobí,
+[B]tenhle balič novodobý,
 {end_of_verse}
 
 {chorus: R1}
 
 {start_of_verse}
-Dnešní lásce pubertální,
-něžnost stačí virtuální,
-na co dívce hladit ruku,
-stačí šťouchat na facebooku.
+[F]Dnešní lásce pubertální,
+[A]něžnost stačí virtuální,
+[Dmi]na co dívce hladit ruku,
+[B]stačí šťouchat na facebooku.
 {end_of_verse}
 
 {start_of_verse}
-Co maj holky nejvíc rády,
-číst můj twitter, moje rady,
-budu rád když lajkneš kotě,
-mý statusy o životě.
+[F]Co maj holky nejvíc rády,
+[A]číst můj twitter, moje rady,
+[Dmi]budu rád když lajkneš kotě,
+[B]mý statusy o životě.
 {end_of_verse}
 
 {start_of_verse}
-Holky se se mnou randit bojí,
-když jsme venku, tak řeč stojí,
-nevím jakou říct otázku,
-všechno o ní už vím z asku.
+[F]Holky se se mnou randit bojí,
+[A]když jsme venku, tak řeč stojí,
+[Dmi]nevím jakou říct otázku,
+[B]všechno o ní už vím z asku.
 {end_of_verse}
 
 {start_of_bridge}
-Že tě rád mám,snad už víš,
-tvým klukem bych byl rád,
-ale nač to uspěchat,
-když můžem dál jen, chatovat
+[F]Že tě rád mám,[Ami]snad už víš,
+to se [B]dneska neno[Bmi]sí,
+a [Bmi]v tramvaji je pouštím sednout,
+[C]když můžem dál jen, chatovat
 {end_of_bridge}
 
 {chorus: R1}

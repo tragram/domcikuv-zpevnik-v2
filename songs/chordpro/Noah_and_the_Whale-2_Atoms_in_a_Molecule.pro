@@ -21,32 +21,32 @@ E|--------------------------------------|
 {start_of_verse}
 Last [D]night I had a [Em]dream
 We were in[G]separably en[A]twined
-Like a piece of rope made out of
-two pieces of vine
-Held together holding each other
-With no one else in mind
-Like two atoms in a molecule
-Inseparably combined
+Like a [D]piece of rope [Em]made out of
+Two [G]pieces of [A]vine
+Held to[D]gether holding [Em]each other
+With [G]no one else in [A]mind
+Like two [D]atoms in a [Em]molecule
+In[G]separably com[A]bined
 {end_of_verse}
 
 {start_of_verse}
-But then I woke from the dream
-To realise I was alone
-A tragic event I must admit
-But let's not be overblown
-I'm not trying to write a love song
-Just a sad pathetic moan
-And maybe I just need change
-Maybe I just need a new cologne
+But then I [D]woke from the [Em]dream
+To re[G]alise I was a[A]lone
+A [D]tragic event I [Em]must admit
+But [G]let's not be over[A]blown
+I'm not [D]trying to write a [Em]love song
+Just a [G]sad pathetic [A]moan
+And [D]maybe I just need [Em]change
+Maybe I [G]just need a new co[A]logne
 {end_of_verse}
 
 {start_of_verse}
-But now I look at love
-Like being stabbed in the heart
-You torture each other from day to day
-And then one day you part
-Most of the time it's misery
-But there's some joy at the start
-And for that I'd say it's worth it
-Just use a blade that's short and sharp on me
+But now I [D]look at [Em]love
+Like being [G]stabbed in the [A]heart
+You [D]torture each other [Em]from day to day
+And [G]then one day you [A]part
+Most of the [D]time it's [Em]misery
+But there's [G]some joy at the [A]start
+And for [D]that I'd say it's [Em]worth it
+Just use a [G]blade that's short and [A]sharp on me
 {end_of_verse}
