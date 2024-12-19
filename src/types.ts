@@ -185,8 +185,8 @@ class SongRange {
     static fromJSON(json: any): SongRange {
         const instance = Object.create(SongRange.prototype);
         // Directly assign all fields without running constructor logic
-        instance.min = Note.fromValue(json.min.value);
-        instance.max = Note.fromValue(json.max.value);
+        instance.min = Note.fromValue(json.min?.value);
+        instance.max = Note.fromValue(json.max?.value);
         instance.semitones = json.semitones;
         return instance;
     }
