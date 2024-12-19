@@ -1,45 +1,44 @@
-import './App.css'
-import { ThemeProvider } from "@/components/theme-provider"
-
-import {
-  createHashRouter,
-  RouterProvider,
-} from "react-router-dom";
+import './App.css';
+import { ThemeProvider } from "@/components/theme-provider";
+import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import SongList from './routes/SongList/SongList';
 import { fetchSongContent, fetchSongs } from './components/song_loader';
 import SongView from './routes/SongView/SongView';
 import SongGallery from './routes/gallery/SongGallery';
+import { RouteErrorBoundary, RenderErrorBoundary } from './components/UnifiedErrorBoundary';
+
 
 const router = createHashRouter([
   {
-    path: "/",
-    // element: <SongsList />,
-    element: <SongList />,
-    // errorElement: <ErrorPage />,
-    loader: fetchSongs
-  },
-  {
-    // path: "/song",
-    path: "/song/:id",
-    element: <SongView />,
-    // errorElement: <ErrorPage />,
-    loader: fetchSongContent
-  },
-  {
-    path: "/gallery",
-    element: <SongGallery />,
-    // errorElement: <ErrorPage />,
-    loader: fetchSongs
+    element: <RenderErrorBoundary><Outlet /></RenderErrorBoundary>, // Render errors
+    errorElement: <RouteErrorBoundary />, // Loader errors
+    children: [
+      {
+        path: "/",
+        element: <SongList />,
+        loader: fetchSongs,
+      },
+      {
+        path: "/song/:id",
+        element: <SongView />,
+        loader: fetchSongContent,
+      },
+      {
+        path: "/gallery",
+        element: <SongGallery />,
+        loader: fetchSongs,
+      }
+    ]
   }
 ]);
 
 function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;
