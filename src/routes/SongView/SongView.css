@@ -142,11 +142,6 @@
     /*border: 1px solid red;*/
 }
 
-/* this class is added when user toggles the two-column layout */
-.song-content-columns>* {
-    columns: 2;
-}
-
 /* misc */
 .song-content .literal, .song-content .tab-section {
     color: hsl(var("--text-foreground"));

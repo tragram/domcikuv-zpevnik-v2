@@ -3,7 +3,7 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import useLocalStorageState from 'use-local-storage-state'
 import { AutoTextSize } from 'auto-text-size'
 import './SongView.css'
-import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, LayoutSettingsDropdownSection } from './LayoutSettings';
+import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, LayoutSettingsDropdownSection, maxColFit } from './LayoutSettings';
 import { renderSong, guessKey } from './songRendering';
 import { Events, animateScroll as scroll } from 'react-scroll';
 import { AArrowDown, AArrowUp, Strikethrough, Repeat, ReceiptText, SlidersHorizontal, Undo2, CaseSensitive, Plus, Minus, ArrowUpDown, Check, Github, Ruler, Guitar, ArrowDownFromLine, ArrowUpFromLine, ArrowBigUpDash, ArrowBigDown, ChevronDown, Settings2, Piano, Dices, Trash } from 'lucide-react';
@@ -35,7 +35,7 @@ function SongView() {
         fontSize: 12,
         repeatParts: true,
         repeatPartsChords: true,
-        twoColumns: false,
+        multiColumnNr: 1,
         compactInFullScreen: true,
     }
 
@@ -44,7 +44,7 @@ function SongView() {
         fontSize: 12,
         repeatParts: false,
         repeatPartsChords: false,
-        twoColumns: true,
+        multiColumnNr: 2,
         compactInFullScreen: false,
     }
 
@@ -206,7 +206,7 @@ function SongView() {
             }));
         }
         updateFontSize();
-    }, [layoutSettings.fitScreenMode, layoutSettings.repeatParts, layoutSettings.repeatPartsChords, layoutSettings.twoColumns, chordSettings, setLayoutSettings]);
+    }, [layoutSettings.fitScreenMode, layoutSettings.repeatParts, layoutSettings.repeatPartsChords, layoutSettings.multiColumnNr, chordSettings, setLayoutSettings]);
 
 
     return (
@@ -276,7 +276,7 @@ function SongView() {
                             chordSettings.showChords ? '' : ' chords-hidden ',
                             `fit-screen-${layoutSettings.fitScreenMode}`,
                             layoutSettings.repeatPartsChords ? '' : ' repeated-chords-hidden ',
-                            layoutSettings.twoColumns ? " song-content-columns " : "")}
+                            `[&>*]:columns-${layoutSettings.multiColumnNr}`)}
                             dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper"
                             ref={songWrapperRef}>
                         </div>
