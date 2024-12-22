@@ -86,6 +86,7 @@
     /* touch-action: pan-y; */
     max-width: 100%;
     font-weight: 600;
+    display: flex;
 }
 
 #auto-text-size-wrapper>div {

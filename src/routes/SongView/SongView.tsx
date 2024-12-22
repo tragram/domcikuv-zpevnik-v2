@@ -1,7 +1,6 @@
 import { SongData } from '../../types';
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import useLocalStorageState from 'use-local-storage-state'
-import { AutoTextSize } from 'auto-text-size'
 import './SongView.css'
 import { minFontSizePx, maxFontSizePx, LayoutSettingsToolbar, LayoutSettings, LayoutSettingsDropdownSection } from './LayoutSettings';
 import { renderSong, guessKey } from './songRendering';
@@ -23,8 +22,12 @@ import { useGesture } from '@use-gesture/react';
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { cn } from '@/lib/utils';
 import SongHeading from './SongHeading';
+import { CustomAutoTextSize } from './CustomAutoTextSize';
+
+
 
 function SongView() {
+
     const { songDB, songData } = useLoaderData() as DataForSongView;
     if (!songData.key) {
         songData.key = guessKey(songData.content);
@@ -78,6 +81,8 @@ function SongView() {
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visibleToolbar, setVisibleToolbar] = useState(true);
     const [scrollInProgress, setscrollInProgress] = useState(false);
+    const songWrapperRef = useRef(null);
+    const viewRef = useRef(null);
 
     const handleScroll = () => {
         const currentScrollPos = window.scrollY;
@@ -160,6 +165,7 @@ function SongView() {
     const [pinching, setPinching] = useState(false);
     const bind = useGesture({
         onPinch: ({ offset: [scale], movement: [dScale], memo }) => {
+
             if (!memo) memo = layoutSettings.fontSize; // Use memo to preserve initial state
             const newFontSize = Math.max(8, Math.min(memo * dScale, 50)); // Clamp between 12px and 50px
             setLayoutSettings({
@@ -177,7 +183,24 @@ function SongView() {
         },
         onPinchEnd: () => setPinching(false),
     }, {
+        target: viewRef,
     });
+    const autoTextSizeProps = useMemo(() => ({
+        fitMode: layoutSettings.fitScreenMode,
+        minFontSizePx,
+        maxFontSizePx,
+        fontSize: layoutSettings.fontSize,
+        setFontSize: (fontSize: number) => {
+            setLayoutSettings(prev => ({
+                ...prev,
+                fontSize
+            }));
+        }
+    }), [layoutSettings.fitScreenMode, layoutSettings.fontSize, setLayoutSettings]);
+
+    // avoid default behavior on safari (hopefully both macbook and iOS)
+    document.addEventListener('gesturestart', (e) => e.preventDefault())
+    document.addEventListener('gesturechange', (e) => e.preventDefault())
 
     function BackgroundImage({ songData, id, className }) {
         return (
@@ -186,32 +209,10 @@ function SongView() {
             </div>
         )
     }
-    const songWrapperRef = useRef(null);
-
-    useEffect(() => {
-        async function updateFontSize() {
-            const targetElement = songWrapperRef.current;
-            if (!targetElement) {
-                console.error("Element not found!");
-                return;
-            }
-            // Wait for a minimal delay to ensure styles are updated
-            await new Promise((resolve) => setTimeout(resolve, 10));
-            // Fetch and log the updated font size
-            const fontSize = getComputedStyle(targetElement).fontSize;
-            setLayoutSettings((prevSettings) => ({
-                ...prevSettings,
-                fontSize: parseInt(fontSize, 10),
-                // fitScreenMode: "none"
-            }));
-        }
-        updateFontSize();
-    }, [layoutSettings.fitScreenMode, layoutSettings.repeatParts, layoutSettings.repeatPartsChords, layoutSettings.twoColumns, chordSettings, setLayoutSettings]);
-
 
     return (
         <div className={cn("flex flex-col sm:pt-[80px] pt-[72px] relative", layoutSettings.fitScreenMode === "fitXY" ? " h-dvh " : " min-h-dvh ")}
-            {...bind()} // Bind gesture handlers
+            ref={viewRef}
             style={{
                 touchAction: 'pan-y', // Prevent default pinch-to-zoom behavior
                 // userSelect: 'none',  // Prevent text selection
@@ -264,12 +265,10 @@ function SongView() {
             </div>
             <FullScreen handle={fullScreenHandle} className={cn('w-full overflow-x-clip', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit overflow-y-scroll")}>
                 <BackgroundImage songData={songData} className="hidden" id="inner-background-image" />
-                <div id="auto-text-size-wrapper" className={cn('w-full z-10 lg:px-16 p-4 sm:p-8', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit ", layoutSettings.fitScreenMode !== "fitXY" ? " mb-10" : "")}
+                <div id="auto-text-size-wrapper" className={cn('w-full z-10 lg:px-16 p-4 sm:p-8', layoutSettings.fitScreenMode == "fitXY" ? "h-full " : "h-fit ", layoutSettings.fitScreenMode !== "fitXY" ? "mb-10" : "")}
                 >
-                    <AutoTextSize
-                        mode={layoutSettings.fitScreenMode === "fitXY" ? "boxoneline" : "oneline"}
-                        minFontSizePx={layoutSettings.fitScreenMode !== "none" ? minFontSizePx : layoutSettings.fontSize}
-                        maxFontSizePx={layoutSettings.fitScreenMode !== "none" ? maxFontSizePx : layoutSettings.fontSize}>
+                    <CustomAutoTextSize
+                        {...autoTextSizeProps}>
                         <SongHeading songData={songData} layoutSettings={layoutSettings} transposeSteps={transposeSteps} />
                         <div className={cn("flex flex-col max-w-screen",
                             chordSettings.inlineChords ? ' chords-inline ' : ' ',
@@ -280,7 +279,7 @@ function SongView() {
                             dangerouslySetInnerHTML={{ __html: parsedContent }} id="song-content-wrapper"
                             ref={songWrapperRef}>
                         </div>
-                    </AutoTextSize>
+                    </CustomAutoTextSize>
                 </div>
             </FullScreen>
         </div >
