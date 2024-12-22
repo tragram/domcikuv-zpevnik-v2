@@ -118,8 +118,6 @@ function SongView() {
         setParsedContent(renderedSong);
     }, [transposeSteps, layoutSettings.repeatParts, songData, chordSettings.czechChordNames])
 
-    useEffect(() => {
-    })
     const resizeObserver = new ResizeObserver((entries) => {
         setShowScrollButtons(document.body.scrollHeight > screen.height && layoutSettings.fitScreenMode != "fitXY");
     })

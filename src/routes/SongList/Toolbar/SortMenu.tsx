@@ -10,7 +10,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import FancySwitch from "@/components/ui/fancy-switch"
 import { SortField, SortOrder, SortSettings } from "@/types"
-import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownUp, ArrowDownZA, AudioLines, CalendarPlus, MicVocal, Music } from "lucide-react"
+import { 
+    ArrowDown01, 
+    ArrowDown10, 
+    ArrowDownAZ, 
+    ArrowDownUp, 
+    ArrowDownZA, 
+    AudioLines, 
+    CalendarPlus, 
+    MicVocal, 
+    Music 
+} from "lucide-react"
 import { ReactElement } from "react"
 
 interface SortingIcons {
@@ -18,12 +28,9 @@ interface SortingIcons {
     descending: ReactElement;
 }
 
-const letterSortingIcons: SortingIcons = {
-    ascending: <ArrowDownAZ />, descending: <ArrowDownZA />
-}
-
-const numberSortingIcons: SortingIcons = {
-    ascending: <ArrowDown01 />, descending: <ArrowDown10 />
+interface SortingLabels {
+    ascending: string;
+    descending: string;
 }
 
 interface Category {
@@ -31,98 +38,177 @@ interface Category {
     title: string;
     icon: ReactElement;
     sorting_icons: SortingIcons;
-    sorting_labels: {
-        ascending: string,
-        descending: string,
-    }
-}
-
-const categories: Category[] = [
-    { field: "title", title: "Title", icon: <AudioLines />, sorting_icons: letterSortingIcons, sorting_labels: { ascending: "Ascending", descending: "Descending" } },
-    { field: "artist", title: "Artist", icon: <MicVocal />, sorting_icons: letterSortingIcons, sorting_labels: { ascending: "Ascending", descending: "Descending" } },
-    { field: "dateAdded", title: "Date Added", icon: <CalendarPlus />, sorting_icons: numberSortingIcons, sorting_labels: { ascending: "Lucie Bílá → Vivaldi", descending: "Vivaldi → Lucie Bílá" } },
-    { field: "range", title: "Range", icon: <Music />, sorting_icons: numberSortingIcons, sorting_labels: { ascending: "Me → Freddie", descending: "Freddie → Me" } },
-]
-
-
-function isActive(sortingField: SortField, buttonField: SortField) {
-    return sortingField === buttonField;
-}
-
-function toggleSortOrder(sortOrder: SortOrder): SortOrder {
-    return sortOrder === "descending" ? "ascending" : "descending";
-}
-
-function activeCategory(sortingField: SortField): Category {
-    return categories.find((cat) => cat.field === sortingField)
+    sorting_labels: SortingLabels;
 }
 
 interface SortMenuProps {
     sortSettings: SortSettings;
-    setSortSettings: React.Dispatch<React.SetStateAction<SortSettings>>
+    setSortSettings: (settings: SortSettings) => void;
 }
 
-function SortMenu({ sortSettings, setSortSettings }: SortMenuProps) {
+interface SwitchOption {
+    label: string;
+    value: SortField;
+}
+
+const letterSortingIcons: SortingIcons = {
+    ascending: <ArrowDownAZ />,
+    descending: <ArrowDownZA />
+};
+
+const numberSortingIcons: SortingIcons = {
+    ascending: <ArrowDown01 />,
+    descending: <ArrowDown10 />
+};
+
+const categories: Category[] = [
+    { 
+        field: "title", 
+        title: "Title", 
+        icon: <AudioLines />, 
+        sorting_icons: letterSortingIcons, 
+        sorting_labels: { 
+            ascending: "Ascending", 
+            descending: "Descending" 
+        } 
+    },
+    { 
+        field: "artist", 
+        title: "Artist", 
+        icon: <MicVocal />, 
+        sorting_icons: letterSortingIcons, 
+        sorting_labels: { 
+            ascending: "Ascending", 
+            descending: "Descending" 
+        } 
+    },
+    { 
+        field: "dateAdded", 
+        title: "Date Added", 
+        icon: <CalendarPlus />, 
+        sorting_icons: numberSortingIcons, 
+        sorting_labels: { 
+            ascending: "Lucie Bílá → Vivaldi", 
+            descending: "Vivaldi → Lucie Bílá" 
+        } 
+    },
+    { 
+        field: "range", 
+        title: "Range", 
+        icon: <Music />, 
+        sorting_icons: numberSortingIcons, 
+        sorting_labels: { 
+            ascending: "Me → Freddie", 
+            descending: "Freddie → Me" 
+        } 
+    },
+];
+
+const isActive = (sortingField: SortField, buttonField: SortField): boolean => {
+    return sortingField === buttonField;
+};
+
+const toggleSortOrder = (sortOrder: SortOrder): SortOrder => {
+    return sortOrder === "descending" ? "ascending" : "descending";
+};
+
+const getActiveCategory = (sortingField: SortField): Category => {
+    const category = categories.find((cat) => cat.field === sortingField);
+    if (!category) {
+        throw new Error(`Invalid sorting field: ${sortingField}`);
+    }
+    return category;
+};
+
+const SortMenu = ({ sortSettings, setSortSettings }: SortMenuProps): JSX.Element => {
     // just convenience functions to make inline specs shorter
-    function setSortField(field: SortField) {
+    const { field: sortByField, order: sortOrder } = sortSettings;
+
+    const setSortField = (field: SortField): void => {
         setSortSettings({
             ...sortSettings,
-            field: field
-        })
-    }
-    const sortByField = sortSettings.field;
-    const sortOrder = sortSettings.order;
+            field
+        });
+    };
 
-    function setSortOrder(order: SortOrder) {
-        setSortSettings({ ...sortSettings, order: order })
-    }
+    const setSortOrder = (order: SortOrder): void => {
+        setSortSettings({ 
+            ...sortSettings, 
+            order 
+        });
+    };
 
-    return (<>
-        <div className="flex md:hidden">
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button size="icon" variant="circular"><ArrowDownUp size={32} /></Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>Sorting method</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    {categories.map(category => (
-                        <DropdownMenuCheckboxItem key={category.field}
-                            onSelect={e => e.preventDefault()}
-                            checked={isActive(sortByField, category.field)}
-                            onCheckedChange={() => setSortField(category.field)}>
-                            <DropdownIconStart icon={category.icon} />
-                            {category.title}
-                        </DropdownMenuCheckboxItem>
-                    ))}
-                    <DropdownMenuLabel>Direction</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
-                        key="ascending_sort"
-                        checked={sortOrder === "ascending"}
-                        onCheckedChange={() => setSortOrder("ascending")}
+    const switchOptions: SwitchOption[] = categories.map(c => ({
+        label: c.title,
+        value: c.field
+    }));
+
+    const activeCategory = getActiveCategory(sortByField);
+
+    return (
+        <>
+            {/* Mobile View */}
+            <div className="flex md:hidden">
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button 
+                            size="icon" 
+                            variant="circular"
+                        >
+                            <ArrowDownUp size={32} />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56">
+                        <DropdownMenuLabel>Sorting method</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {categories.map(category => (
+                            <DropdownMenuCheckboxItem 
+                                key={category.field}
+                                onSelect={(e) => e.preventDefault()}
+                                checked={isActive(sortByField, category.field)}
+                                onCheckedChange={() => setSortField(category.field)}
+                            >
+                                <DropdownIconStart icon={category.icon} />
+                                {category.title}
+                            </DropdownMenuCheckboxItem>
+                        ))}
+                        <DropdownMenuLabel>Direction</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {(['ascending', 'descending'] as const).map((direction) => (
+                            <DropdownMenuCheckboxItem
+                                key={`${direction}_sort`}
+                                checked={sortOrder === direction}
+                                onSelect={(e) => e.preventDefault()}
+                                onCheckedChange={() => setSortOrder(direction)}
+                            >
+                                <DropdownIconStart 
+                                    icon={activeCategory.sorting_icons[direction]} 
+                                />
+                                {activeCategory.sorting_labels[direction]}
+                            </DropdownMenuCheckboxItem>
+                        ))}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
+
+            {/* Desktop View */}
+            <div className="hidden md:flex h-full w-fit">
+                <FancySwitch 
+                    options={switchOptions}
+                    setSelectedOption={setSortField}
+                    selectedOption={sortByField}
+                    roundedClass="rounded-l-full"
+                >
+                    <Button 
+                        className="rounded-r-full"
+                        onClick={() => setSortOrder(toggleSortOrder(sortOrder))}
                     >
-                        <DropdownIconStart icon={activeCategory(sortByField).sorting_icons.ascending} />
-                        {activeCategory(sortByField).sorting_labels.ascending}
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                        key="descending_sort"
-                        checked={sortOrder === "descending"}
-                        onCheckedChange={() => setSortOrder("descending")}
-                    >
-                        <DropdownIconStart icon={activeCategory(sortByField).sorting_icons.descending} />
-                        {activeCategory(sortByField).sorting_labels.descending}
-                    </DropdownMenuCheckboxItem>
-                </DropdownMenuContent>
-            </DropdownMenu>
-        </div>
-        <div className="hidden md:flex h-full w-fit">
-            <FancySwitch options={categories.map(c => { return { "label": c.title, "value": c.field } })} setSelectedOption={(value: SortField) => { setSortField(value) }} selectedOption={sortByField} roundedClass={"rounded-l-full"} >
-                <Button className="rounded-r-full" onClick={() => setSortOrder(toggleSortOrder(sortOrder))}>{activeCategory(sortByField).sorting_icons[sortOrder]}</Button>
-            </FancySwitch>
-        </div>
-    </>
-    )
-}
+                        {activeCategory.sorting_icons[sortOrder]}
+                    </Button>
+                </FancySwitch>
+            </div>
+        </>
+    );
+};
 
 export default SortMenu;

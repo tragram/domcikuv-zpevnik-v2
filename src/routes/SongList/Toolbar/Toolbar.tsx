@@ -11,29 +11,49 @@ import Filtering from "./filters/Filters";
 import SearchBar from './SearchBar';
 import SortMenu from "./SortMenu";
 
-function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, showToolbar, scrollOffset, fakeScroll = false, maxRange, languages }) {
-    const [searchResults, setSearchResults] = useState(songs);
-    const [query, setQuery] = useState("");
+interface ToolbarProps {
+    songs: SongData[];
+    filteredAndSortedSongs: SongData[];
+    setFilteredAndSortedSongs: (songs: SongData[]) => void;
+    showToolbar: boolean;
+    scrollOffset: number;
+    fakeScroll?: boolean;
+    maxRange: number;
+    languages: string[];
+}
+
+function Toolbar({
+    songs,
+    filteredAndSortedSongs,
+    setFilteredAndSortedSongs,
+    showToolbar,
+    scrollOffset,
+    fakeScroll = false,
+    maxRange,
+    languages
+}: ToolbarProps) {
+    const [searchResults, setSearchResults] = useState<SongData[]>(songs);
+    const [query, setQuery] = useState<string>("");
     const [sortSettings, setSortSettings] = useLocalStorageState<SortSettings>("settings/sortSettings", {
         defaultValue: {
-            order: "ascending",
-            field: "title",
+            order: "ascending" as SortOrder,
+            field: "title" as SortField,
         }
-    })
+    });
     const [filterSettings, setFilterSettings] = useLocalStorageState<FilterSettings>("settings/filterSettings", {
         defaultValue: {
             language: "all",
             vocalRange: "all",
             capo: true
         }
-    })
+    });
 
-    useEffect(
-        function removeQuery() {
-            setQuery("");
-            setSearchResults(songs);
-        }, [sortSettings]
-    );
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setQuery("");
+        setSearchResults(songs);
+    }, [sortSettings, songs]);
 
     useEffect(() => {
         let results = filterCapo(searchResults, filterSettings.capo);
@@ -45,71 +65,86 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
             results = sortFunc(results, sortSettings.field, sortSettings.order);
         }
         setFilteredAndSortedSongs(results);
-    }, [sortSettings, filterSettings, searchResults, query]);
+    }, [sortSettings, filterSettings, searchResults, query, setFilteredAndSortedSongs]);
 
-    function sortFunc(results: Array<SongData>, sortByField: SortField, sortOrder: SortOrder): Array<SongData> {
+    const sortFunc = (results: SongData[], sortByField: SortField, sortOrder: SortOrder): SongData[] => {
         const compare = (a: SongData, b: SongData): number => {
             if (sortByField === "range") {
-                const aSemi = a.range?.semitones || -Infinity;
-                const bSemi = b.range?.semitones || -Infinity;
+                const aSemi = a.range?.semitones ?? -Infinity;
+                const bSemi = b.range?.semitones ?? -Infinity;
                 return aSemi === bSemi ? a.title.localeCompare(b.title) : aSemi - bSemi;
             }
 
             if (sortByField === "dateAdded") {
-                const aDate = a.dateAdded?.year * 12 + a.dateAdded?.month;
-                const bDate = b.dateAdded?.year * 12 + b.dateAdded?.month;
+                const aDate = (a.dateAdded?.year ?? 0) * 12 + (a.dateAdded?.month ?? 0);
+                const bDate = (b.dateAdded?.year ?? 0) * 12 + (b.dateAdded?.month ?? 0);
                 return aDate === bDate ? a.title.localeCompare(b.title) : aDate - bDate;
             }
 
-            return a[sortByField].localeCompare(b[sortByField]);
+            return (a[sortByField] ?? "").localeCompare(b[sortByField] ?? "");
         };
 
-        const sortedResults = results.slice().sort(compare);
+        const sortedResults = [...results].sort(compare);
         return sortOrder === "ascending" ? sortedResults : sortedResults.reverse();
-    }
+    };
 
-
-    function filterLanguage(songs, selectedLanguage) {
-        if (selectedLanguage != "all") {
-            return songs.filter((song) => song.language === selectedLanguage)
-        } else {
-            return songs;
+    const filterLanguage = (songs: SongData[], selectedLanguage: string): SongData[] => {
+        if (selectedLanguage !== "all") {
+            return songs.filter((song) => song.language === selectedLanguage);
         }
-    }
+        return songs;
+    };
 
-    function filterCapo(songs, allowCapo) {
+    const filterCapo = (songs: SongData[], allowCapo: boolean): SongData[] => {
         if (allowCapo) {
             return songs;
-        } else {
-            return songs.filter((song) => song.capo == 0)
         }
-    }
+        return songs.filter((song) => song.capo === 0);
+    };
 
-    function filterVocalRange(songs, vocalRange) {
-        function inRange(x, min, max) {
-            return ((x - min) * (x - max) <= 0);
-        }
+    const filterVocalRange = (songs: SongData[], vocalRange: "all" | [number, number]): SongData[] => {
+        const inRange = (x: number, min: number, max: number): boolean => {
+            return (x - min) * (x - max) <= 0;
+        };
+
         if (vocalRange === "all") {
             return songs;
-        } else {
-            return songs.filter(song => inRange(song.range.semitones, vocalRange[0], vocalRange[1]));
         }
-    }
-    const navigate = useNavigate();
+
+        return songs.filter(song =>
+            song.range?.semitones !== undefined &&
+            inRange(song.range.semitones, vocalRange[0], vocalRange[1])
+        );
+    };
+
     return (
         <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll}>
             <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings} />
-            <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
-            <Filtering languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
+            <SearchBar
+                songs={songs}
+                setSearchResults={setSearchResults}
+                query={query}
+                setQuery={setQuery}
+            />
+            <Filtering
+                languages={languages}
+                filterSettings={filterSettings}
+                setFilterSettings={setFilterSettings}
+                maxRange={maxRange}
+            />
             <div className="hidden h-full w-fit sm:flex">
                 <ModeToggle />
             </div>
             <RandomSong songs={filteredAndSortedSongs} />
-            <Button size="icon" variant="circular" onClick={() => navigate("gallery")}>
+            <Button
+                size="icon"
+                variant="circular"
+                onClick={() => navigate("gallery")}
+            >
                 <ImagesIcon />
             </Button>
         </ToolbarBase>
-    )
+    );
 }
 
 export default Toolbar;

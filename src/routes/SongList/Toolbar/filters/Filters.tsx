@@ -1,57 +1,165 @@
-
 import { Filter, Handshake } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { LanguageFilter, LanguageFilterDropdownSection } from "./LanguageFilter";
 import { VocalRangeDropdownSection, VocalRangeFilter } from "./VocalRangeFilter";
 
-function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange }) {
-    const iconOnly = useMediaQuery(
-        "only screen and (min-width : 1000px)"
-    );
-    return (
-        <div className="flex outline outline-primary dark:outline-primary/30 rounded-full outline-2">
-            <LanguageFilter languages={languages} selectedLanguage={filterSettings.language} setSelectedLanguage={(language: string) => setFilterSettings({ ...filterSettings, language: language })} iconOnly={iconOnly} />
-            <Button variant="circular" isActive={filterSettings.capo} className={"font-bold rounded-none outline-0 shadow-none"}
-                // variant={filterSettings.capo ? "solid" : "bordered"}
-                onClick={() => { setFilterSettings({ ...filterSettings, capo: !filterSettings.capo }) }}><Handshake /> Capo</Button>
-            <VocalRangeFilter maxRange={maxRange} vocalRangeFilter={filterSettings.vocalRange} setVocalRangeFilter={(range) => setFilterSettings({ ...filterSettings, vocalRange: range })} iconOnly={iconOnly} />
-        </div>
-    )
+type VocalRangeType = "all" | [number, number];
+
+interface FilterSettings {
+    language: string;
+    vocalRange: VocalRangeType;
+    capo: boolean;
 }
 
-function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
-    // TODO: this is actually filter inactive...
-    const filterInactive = filterSettings.language === "all" && (filterSettings.vocalRange === "all" || (filterSettings.vocalRange[0] == 0 && filterSettings.vocalRange[1] == maxRange)) && filterSettings.capo;
-    const setVocalRange = (range) => setFilterSettings({ ...filterSettings, vocalRange: range });
-    const flipCapoSetting = () => setFilterSettings({ ...filterSettings, capo: !filterSettings.capo })
-    const setSelectedLanguage = (language) => setFilterSettings({ ...filterSettings, language: language })
+interface FilterProps {
+    languages: string[];
+    filterSettings: FilterSettings;
+    setFilterSettings: (settings: FilterSettings) => void;
+    maxRange: number;
+}
+
+interface FilterButtonsProps extends FilterProps {
+    iconOnly: boolean;
+}
+
+const FilterButtons = ({
+    languages,
+    filterSettings,
+    setFilterSettings,
+    maxRange,
+    iconOnly
+}: FilterButtonsProps): JSX.Element => {
+    const updateFilterSetting = <K extends keyof FilterSettings>(
+        key: K,
+        value: FilterSettings[K]
+    ): void => {
+        setFilterSettings({
+            ...filterSettings,
+            [key]: value
+        });
+    };
+
+    return (
+        <div className="flex outline outline-primary dark:outline-primary/30 rounded-full outline-2">
+            <LanguageFilter
+                languages={languages}
+                selectedLanguage={filterSettings.language}
+                setSelectedLanguage={(language: string) =>
+                    updateFilterSetting('language', language)
+                }
+                iconOnly={iconOnly}
+            />
+            <Button
+                variant="circular"
+                isActive={filterSettings.capo}
+                className="font-bold rounded-none outline-0 shadow-none"
+                onClick={() => updateFilterSetting('capo', !filterSettings.capo)}
+            >
+                <Handshake />
+                {!iconOnly && "Capo"}
+            </Button>
+            <VocalRangeFilter
+                maxRange={maxRange}
+                vocalRangeFilter={filterSettings.vocalRange}
+                setVocalRangeFilter={(range: VocalRangeType) =>
+                    updateFilterSetting('vocalRange', range)
+                }
+                iconOnly={iconOnly}
+            />
+        </div>
+    );
+};
+
+const Filtering = ({
+    languages,
+    filterSettings,
+    setFilterSettings,
+    maxRange
+}: FilterProps): JSX.Element => {
+    const isLargeScreen = useMediaQuery("only screen and (min-width : 1000px)");
+
+    const isFilterInactive = (
+        filterSettings.language === "all" &&
+        (filterSettings.vocalRange === "all" || (
+            Array.isArray(filterSettings.vocalRange) &&
+            filterSettings.vocalRange[0] === 0 &&
+            filterSettings.vocalRange[1] === maxRange
+        )) &&
+        filterSettings.capo
+    );
+
+    const updateFilterSetting = <K extends keyof FilterSettings>(
+        key: K,
+        value: FilterSettings[K]
+    ): void => {
+        setFilterSettings({
+            ...filterSettings,
+            [key]: value
+        });
+    };
+
     return (
         <>
-            <div className='hidden lg:flex'>
-                <FilterButtons languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />
+            {/* Desktop View */}
+            <div className="hidden lg:flex">
+                <FilterButtons
+                    languages={languages}
+                    filterSettings={filterSettings}
+                    setFilterSettings={setFilterSettings}
+                    maxRange={maxRange}
+                    iconOnly={isLargeScreen}
+                />
             </div>
-            <div className='lg:hidden'>
+
+            {/* Mobile View */}
+            <div className="lg:hidden">
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>
-                        <Button size="icon" variant="circular" isActive={!filterInactive}>
+                        <Button
+                            size="icon"
+                            variant="circular"
+                            isActive={!isFilterInactive}
+                        >
                             <Filter />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent aria-label="Filtering" className="dropdown-scroll no-scrollbar w-52  max-h-[80vh] overflow-y-scroll">
-                        <DropdownMenuCheckboxItem onClick={flipCapoSetting} key="slider" onSelect={e => e.preventDefault()} checked={filterSettings.capo}>
+                    <DropdownMenuContent
+                        aria-label="Filtering"
+                        className="dropdown-scroll no-scrollbar w-52 max-h-[80vh] overflow-y-scroll"
+                    >
+                        <DropdownMenuCheckboxItem
+                            onClick={() => updateFilterSetting('capo', !filterSettings.capo)}
+                            onSelect={e => e.preventDefault()}
+                            checked={filterSettings.capo}
+                        >
                             Allow capo
                         </DropdownMenuCheckboxItem>
 
-                        {VocalRangeDropdownSection(maxRange, filterSettings.vocalRange, setVocalRange)}
-                        {LanguageFilterDropdownSection(languages, filterSettings.language, setSelectedLanguage)}
+                        {VocalRangeDropdownSection(
+                            maxRange,
+                            filterSettings.vocalRange,
+                            (range: VocalRangeType) =>
+                                updateFilterSetting('vocalRange', range)
+                        )}
+                        {LanguageFilterDropdownSection(
+                            languages,
+                            filterSettings.language,
+                            (language: string) =>
+                                updateFilterSetting('language', language),
+
+                        )}
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
         </>
-    )
-}
+    );
+};
 
 export default Filtering;
