@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input'
+import { Input } from '@/components/ui/input';
 import Fuse from "fuse.js";
 import { Search as SearchIcon, XIcon } from "lucide-react";
 import { useEffect, useRef, useState } from 'react';
-import { SongData } from '@/types';
 
 function SearchBar({ songs, setSearchResults, query, setQuery }) {
     const options = {

@@ -1,28 +1,11 @@
-import { Avatar } from "@/components/ui/avatar";
-import { SongData } from "../../types";
-import { Instagram } from "lucide-react";
-import { AvatarImage } from "@radix-ui/react-avatar";
-const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-import {
-    useHref,
-    useLinkClickHandler,
-} from "react-router-dom";
+import { IllustrationPopup } from "@/components/IllustrationPopup";
 import LanguageFlag from "@/components/LanguageFlag";
 import CircularProgress from "@/components/ui/circular-progress";
-import { AvatarWithModal, IllustrationPopup } from "@/components/IllustrationPopup";
-
-function progressColor(range) {
-    if (!range) {
-        return "default";
-    }
-    if (range < 12) {
-        return "var(--google-dark-green)";
-    } else if (range < 18) {
-        return "var(--google-dark-yellow)";
-    } else {
-        return "var(--google-dark-red)";
-    }
-}
+import {
+    useLinkClickHandler
+} from "react-router-dom";
+import { SongData } from "../../types";
+const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 
 interface VocalRangeIndicatorProps {
@@ -35,7 +18,6 @@ function VocalRangeIndicator({ song, maxRange }: VocalRangeIndicatorProps) {
     return (
         <CircularProgress
             value={songRangeSemitones} maxValue={maxRange}
-        // color={progressColor(songRangeSemitones)}
         />
     )
 }

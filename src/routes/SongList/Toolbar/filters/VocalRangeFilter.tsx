@@ -1,8 +1,8 @@
 
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { RangeSlider } from "@/components/ui/slider";
 import { Music } from "lucide-react";
-import { RangeSlider } from "@/components/ui/slider"
 
 function VocalRangeSlider({ maxRange, vocalRangeFilter, setVocalRangeFilter }) {
     return (
@@ -52,4 +52,4 @@ function VocalRangeDropdownSection(maxRange: number, vocalRangeFilter, setVocalR
     )
 }
 
-export { VocalRangeFilter, VocalRangeDropdownSection };
+export { VocalRangeDropdownSection, VocalRangeFilter };

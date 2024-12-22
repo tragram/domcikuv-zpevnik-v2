@@ -1,15 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
-import SearchBar from './SearchBar'
-import { SortSettings, FilterSettings, SongData, SortField, SortOrder } from "@/types";
-import useLocalStorageState from "use-local-storage-state";
-import SortMenu from "./SortMenu";
 import { ModeToggle } from "@/components/mode-toggle";
-import ToolbarBase from "@/components/ui/toolbar-base";
 import RandomSong from "@/components/RandomSong";
-import Filtering from "./filters/Filters";
-import { ImagesIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ToolbarBase from "@/components/ui/toolbar-base";
+import { FilterSettings, SongData, SortField, SortOrder, SortSettings } from "@/types";
+import { ImagesIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useLocalStorageState from "use-local-storage-state";
+import Filtering from "./filters/Filters";
+import SearchBar from './SearchBar';
+import SortMenu from "./SortMenu";
 
 function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, showToolbar, maxRange, languages }) {
     const [searchResults, setSearchResults] = useState(songs);

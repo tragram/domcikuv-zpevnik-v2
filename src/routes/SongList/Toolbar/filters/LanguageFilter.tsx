@@ -1,7 +1,5 @@
 import LanguageFlag from "@/components/LanguageFlag";
 import { Button } from "@/components/ui/button";
-import { SongLanguage } from "@/types";
-import { Languages } from "lucide-react";
 import {
     DropdownIconStart,
     DropdownMenu,
@@ -10,8 +8,9 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { activeClass, inactiveClass } from "./Filters";
+} from "@/components/ui/dropdown-menu";
+import { SongLanguage } from "@/types";
+import { Languages } from "lucide-react";
 
 function languageChoices(languages: Array<SongLanguage>, selectedLanguage: SongLanguage, setSelectedLanguage) {
     function capitalizeFirstLetter(str: string) {

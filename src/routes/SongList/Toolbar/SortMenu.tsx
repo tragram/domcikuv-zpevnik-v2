@@ -8,11 +8,10 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu"
-import { ReactElement, useState } from "react"
 import FancySwitch from "@/components/ui/fancy-switch"
 import { SortField, SortOrder, SortSettings } from "@/types"
-import { ArrowDownAZ, ArrowDownZA, ArrowDown01, ArrowDown10, AudioLines, MicVocal, CalendarPlus, Music, ArrowDownUp } from "lucide-react"
+import { ArrowDown01, ArrowDown10, ArrowDownAZ, ArrowDownUp, ArrowDownZA, AudioLines, CalendarPlus, MicVocal, Music } from "lucide-react"
+import { ReactElement } from "react"
 
 interface SortingIcons {
     ascending: ReactElement;

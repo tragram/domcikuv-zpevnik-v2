@@ -1,13 +1,11 @@
 
-import { Check, Filter, Handshake } from "lucide-react";
+import { Filter, Handshake } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { LanguageFilter, LanguageFilterDropdownSection } from "./LanguageFilter";
 import { VocalRangeDropdownSection, VocalRangeFilter } from "./VocalRangeFilter";
-import { Button } from "@/components/ui/button";
-import LanguageFlag from "@/components/LanguageFlag";
-import { SongLanguage } from "@/types";
-import { DropdownMenuItem, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
 
 function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange }) {
     const iconOnly = useMediaQuery(

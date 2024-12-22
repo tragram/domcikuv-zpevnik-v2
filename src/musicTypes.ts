@@ -208,11 +208,11 @@ export class SongRange {
         });
     }
 
-    toString(transpose_semitones: number = 0): string {
+    toString(transposeSemitones: number = 0): string {
         if (!(this.min && this.max && this.semitones)) {
             return "";
         }
-        const transposedRange = this.transposed(transpose_semitones);
+        const transposedRange = this.transposed(transposeSemitones);
         const octaves = Math.floor(this.semitones / SEMITONES_IN_OCTAVE) + 1;
         const lowerNote = transposedRange.min?.toString().toLowerCase();
         const higherNote = transposedRange.max?.toString().toLowerCase();

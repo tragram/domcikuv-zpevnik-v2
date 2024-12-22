@@ -101,6 +101,9 @@ class SongData {
                 json.key.mode
             );
         }
+        if (json.range) {
+            instance.range = SongRange.fromJSON(instance.range);
+        }
         return instance;
     }
 

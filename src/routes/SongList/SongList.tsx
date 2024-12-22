@@ -1,17 +1,14 @@
 
-import { ModeToggle } from '@/components/mode-toggle'
-import { ArrowLeftIcon, Search, SearchIcon } from 'lucide-react'
-import './SongList.css'
-import AutoSizer from 'react-virtualized-auto-sizer';
-import Toolbar from './Toolbar/Toolbar'
-import { useLoaderData } from 'react-router-dom'
-import { SongDB } from '@/types'
-import { Button } from "@/components/ui/button"
+import { SongDB } from '@/types';
 import memoize from 'memoize-one';
+import { memo, useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import { areEqual, VariableSizeList as List } from 'react-window';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import theme from 'tailwindcss/defaultTheme';
+import './SongList.css';
 import SongRow from './SongRow';
-import theme from 'tailwindcss/defaultTheme'
+import Toolbar from './Toolbar/Toolbar';
 
 function getCurrentBreakpoints() {
     return Object.keys(theme.screens).filter((key) => window.innerWidth > parseInt(theme.screens[key], 10));
