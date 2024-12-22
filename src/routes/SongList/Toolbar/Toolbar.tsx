@@ -23,7 +23,7 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
     const [filterSettings, setFilterSettings] = useLocalStorageState<FilterSettings>("settings/filterSettings", {
         defaultValue: {
             language: "all",
-            vocal_range: "all",
+            vocalRange: "all",
             capo: true
         }
     })
@@ -37,7 +37,7 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
 
     useEffect(() => {
         let results = filterCapo(searchResults, filterSettings.capo);
-        results = filterVocalRange(results, filterSettings.vocal_range);
+        results = filterVocalRange(results, filterSettings.vocalRange);
         results = filterLanguage(results, filterSettings.language);
 
         if (query === "") {

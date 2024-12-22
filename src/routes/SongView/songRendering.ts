@@ -1,8 +1,9 @@
 
-import { Key, SongData } from '../../types';
+import { SongData } from '../../types';
 import { ChordProParser, FormatterSettings, HtmlFormatter } from "chordproject-parser";
 import { czechToEnglish, replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
 import memoize from 'memoize-one';
+import { Key } from '@/musicTypes';
 
 function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"], useLabels = false) {
     const defaultKey = "a4c0d35c95a63a805915367dcfe6b751"

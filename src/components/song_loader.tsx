@@ -52,7 +52,7 @@ async function fetchSongs(): Promise<SongDB> {
         return savedSongDB;
     }
 
-    console.log("New DB detected -> Clearing LocalStorage!");
+    console.log("New DB detected -> Removing old SongDB from LocalStorage!");
     clearSongDBFromLocalStorage();
 
     const response = await fetch(`${import.meta.env.BASE_URL}/songDB.json`);

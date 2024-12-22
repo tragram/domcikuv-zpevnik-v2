@@ -46,7 +46,7 @@ function TransposeSettings({ songOriginalKey, transposeSteps, setTransposeSteps 
     // const safeSongRenderKey = makeKeySafe(songRenderKey)
     // setTransposeSteps(findTransposeSteps(makeKeySafe(songOriginalKey), safeSongRenderKey));
     const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
-    const originalKeyIndex = (new Note("C")).semitonesBetween(songOriginalKey.note);
+    const originalKeyIndex = (new Note("C", "")).semitonesBetween(songOriginalKey.note);
     const transposeValues = [...Array(12).keys()].map(v => v - originalKeyIndex);
     return (<>
         <div className='hidden xl:flex h-full'>

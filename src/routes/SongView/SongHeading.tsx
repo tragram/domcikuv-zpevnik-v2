@@ -57,7 +57,7 @@ function SongHeading({ songData, layoutSettings, transposeSteps }) {
             {layoutSettings.fitScreenMode === "fitXY" || layoutSettings.twoColumns ?
                 <h1 className='self-center font-bold text-wrap mb-2'>{songData.artist}: {songData.title}</h1>
                 :
-                <div className={cn('flex flex-col flex-grow', isWrapped ? "text-center" : "justify-start mb-8")}>
+                <div className={cn('flex flex-col flex-grow', isWrapped ? "text-center" : "justify-start mb-4")}>
                     <h2 className='font-semibold text-white/80 text-wrap uppercase'>{songData.artist}</h2>
                     <h2 className='font-bold text-wrap'>{songData.title}</h2>
                 </div>}

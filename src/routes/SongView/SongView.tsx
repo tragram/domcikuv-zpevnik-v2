@@ -87,7 +87,8 @@ function SongView() {
     const handleScroll = () => {
         const currentScrollPos = window.scrollY;
         // Check if within the scrollable range
-        if (currentScrollPos < 0 || currentScrollPos > document.documentElement.scrollHeight - window.innerHeight) {
+        if (currentScrollPos < 0) {
+            setVisibleToolbar(true);
             return; // Ignore elastic scroll or scroll beyond bounds (Safari...)
         }
         if (currentScrollPos > prevScrollPos) {

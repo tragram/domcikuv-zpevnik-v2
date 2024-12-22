@@ -19,15 +19,15 @@ function FilterButtons({ languages, filterSettings, setFilterSettings, maxRange 
             <Button variant="circular" isActive={filterSettings.capo} className={"font-bold rounded-none outline-0 shadow-none"}
                 // variant={filterSettings.capo ? "solid" : "bordered"}
                 onClick={() => { setFilterSettings({ ...filterSettings, capo: !filterSettings.capo }) }}><Handshake /> Capo</Button>
-            <VocalRangeFilter maxRange={maxRange} vocalRangeFilter={filterSettings.vocal_range} setVocalRangeFilter={(range) => setFilterSettings({ ...filterSettings, vocal_range: range })} iconOnly={iconOnly} />
+            <VocalRangeFilter maxRange={maxRange} vocalRangeFilter={filterSettings.vocalRange} setVocalRangeFilter={(range) => setFilterSettings({ ...filterSettings, vocalRange: range })} iconOnly={iconOnly} />
         </div>
     )
 }
 
 function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
     // TODO: this is actually filter inactive...
-    const filterInactive = filterSettings.language === "all" && (filterSettings.vocal_range === "all" || (filterSettings.vocal_range[0] == 0 && filterSettings.vocal_range[1] == maxRange)) && filterSettings.capo;
-    const setVocalRange = (range) => setFilterSettings({ ...filterSettings, vocal_range: range });
+    const filterInactive = filterSettings.language === "all" && (filterSettings.vocalRange === "all" || (filterSettings.vocalRange[0] == 0 && filterSettings.vocalRange[1] == maxRange)) && filterSettings.capo;
+    const setVocalRange = (range) => setFilterSettings({ ...filterSettings, vocalRange: range });
     const flipCapoSetting = () => setFilterSettings({ ...filterSettings, capo: !filterSettings.capo })
     const setSelectedLanguage = (language) => setFilterSettings({ ...filterSettings, language: language })
     return (
@@ -47,7 +47,7 @@ function Filtering({ languages, filterSettings, setFilterSettings, maxRange }) {
                             Allow capo
                         </DropdownMenuCheckboxItem>
 
-                        {VocalRangeDropdownSection(maxRange, filterSettings.vocal_range, setVocalRange)}
+                        {VocalRangeDropdownSection(maxRange, filterSettings.vocalRange, setVocalRange)}
                         {LanguageFilterDropdownSection(languages, filterSettings.language, setSelectedLanguage)}
                     </DropdownMenuContent>
                 </DropdownMenu>
