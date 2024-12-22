@@ -11,7 +11,7 @@ import Filtering from "./filters/Filters";
 import SearchBar from './SearchBar';
 import SortMenu from "./SortMenu";
 
-function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, showToolbar, maxRange, languages }) {
+function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, showToolbar, scrollOffset, fakeScroll = false, maxRange, languages }) {
     const [searchResults, setSearchResults] = useState(songs);
     const [query, setQuery] = useState("");
     const [sortSettings, setSortSettings] = useLocalStorageState<SortSettings>("settings/sortSettings", {
@@ -97,7 +97,7 @@ function Toolbar({ songs, filteredAndSortedSongs, setFilteredAndSortedSongs, sho
     }
     const navigate = useNavigate();
     return (
-        <ToolbarBase showToolbar={showToolbar}>
+        <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll}>
             <SortMenu sortSettings={sortSettings} setSortSettings={setSortSettings} />
             <SearchBar songs={songs} setSearchResults={setSearchResults} query={query} setQuery={setQuery} />
             <Filtering languages={languages} filterSettings={filterSettings} setFilterSettings={setFilterSettings} maxRange={maxRange} />

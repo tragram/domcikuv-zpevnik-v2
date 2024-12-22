@@ -12,20 +12,6 @@
     /* Firefox */
 }
 
-.toolbar {
-    /* transition: transform 0.3s ease; */
-    will-change: transform;
-    transition: all 500ms cubic-bezier(0.165, 0.840, 0.250, 1.040);
-}
-
-.visible-toolbar {
-    transform: translateY(0);
-}
-
-.hidden-toolbar {
-    transform: translateY(-100%);
-}
-
 .song-row-bg-image {
     /* the top of the image is actually nicer to get color */
     /* background-position: center;  */

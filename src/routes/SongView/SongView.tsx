@@ -225,8 +225,8 @@ function SongView() {
             }}
         >
             <BackgroundImage songData={songData} id="outer-background-image" />
-            <div className='absolute top-0'>
-                <ToolbarBase showToolbar={visibleToolbar}>
+            <div className='absolute top-0 w-full'>
+                <ToolbarBase showToolbar={visibleToolbar} scrollOffset={window.scrollY}>
                     <Button size="icon" variant="circular" onClick={() => navigate("/")}>{<Undo2 />}</Button>
                     <ChordSettingsButtons chordSettings={chordSettings} setChordSettings={setChordSettings} />
                     <LayoutSettingsToolbar layoutSettings={layoutSettings} setLayoutSettings={setLayoutSettings} customLayoutPreset={customLayoutPreset} setCustomLayoutPreset={setCustomLayoutPreset} fullScreenHandle={fullScreenHandle} />
