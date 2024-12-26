@@ -1,17 +1,14 @@
 
 import React, { forwardRef } from 'react'
 import { cn } from '@/lib/utils'
-import BackgroundImage from './BackgroundImage'
-import { SongData } from '@/types'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 
 interface SongViewLayoutProps {
     children: React.ReactNode
-    songData: SongData
 }
 
 export const SongViewLayout = forwardRef<HTMLDivElement, SongViewLayoutProps>(
-    ({ children, songData }, ref) => {
+    ({ children }, ref) => {
         const { layout } = useViewSettingsStore()
 
         return (
@@ -27,14 +24,7 @@ export const SongViewLayout = forwardRef<HTMLDivElement, SongViewLayoutProps>(
                     // transition: 'font-size 0.2s ease',
                 }}
             >
-                {/* <BackgroundImage
-                    songData={songData}
-                    id="outer-background-image"
-                /> */}
-
-                {/* <div className="relative z-10"> */}
                 {children}
-                {/* </div> */}
             </div>
         )
     }

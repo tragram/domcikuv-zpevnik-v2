@@ -11,7 +11,7 @@ import PdfView from './pdfView'
 import { useViewSettingsStore } from './hooks/viewSettingsStore'
 import { SongViewLayout } from './components/SongViewLayout'
 import { SongContent } from './components/SongContent'
-import { FullScreen, FullScreenHandle } from 'react-full-screen'
+import { FullScreen } from 'react-full-screen'
 import ScrollButtons from './components/ScrollButtons'
 import './SongView.css'
 import { useScrollHandler } from './hooks/useScrollHandler'
@@ -64,8 +64,8 @@ export const SongView = () => {
     ])
 
     // Handle pinch gesture
-    const bind = useGesture({
-        onPinch: ({ offset: [scale], movement: [dScale], memo }) => {
+    useGesture({
+        onPinch: ({ movement: [dScale], memo }) => {
             if (!memo) memo = layoutSettings.fontSize
             const newFontSize = Math.max(8, Math.min(memo * dScale, 50))
 
@@ -107,7 +107,6 @@ export const SongView = () => {
     return (
         <SongViewLayout
             ref={viewRef}
-            songData={songData}
         >
             <Toolbar
                 visible={visibleToolbar}
@@ -119,7 +118,6 @@ export const SongView = () => {
             <FullScreen handle={fullScreenHandle} className={cn('w-full overflow-x-clip', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit overflow-y-scroll")}>
                 <ScrollButtons
                     fitScreenMode={layoutSettings.fitScreenMode}
-                    setVisibleToolbar={setVisibleToolbar}
                     atBottom={atBottom}
                 />
                 <SongContent

@@ -67,7 +67,7 @@ export const LayoutSettingsToolbar: React.FC<{
           setSelectedOption={(preset: LayoutPreset) => {
             actions.applyPreset(preset);
             // console.log(layout.compactInFullScreen)
-            if (preset === 'compact' && layout.compactInFullScreen && false) {
+            if (preset === 'compact' && layout.compactInFullScreen) {
               fullScreenHandle.enter();
             }
           }}

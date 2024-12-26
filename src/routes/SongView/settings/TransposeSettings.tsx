@@ -12,7 +12,6 @@ const RENDER_KEYS = ['C', 'C#', 'D', 'Es', 'E', 'F', 'F#', 'G', 'As', 'A', 'B', 
 
 const TransposeSettings: React.FC = () => {
   const { transpose, actions } = useViewSettingsStore();
-  const [isOpen, setIsOpen] = useState(false);
   const originalKeyIndex = transpose.originalKey?.note
     ? new Note('C').semitonesBetween(transpose.originalKey?.note)
     : 0;
@@ -34,8 +33,6 @@ const TransposeSettings: React.FC = () => {
 
       <div className="xl:hidden h-full">
         <TransposeDropdown
-          isOpen={isOpen}
-          onOpenChange={setIsOpen}
           values={transposeValues}
           selected={transpose.steps}
           onChange={actions.setTransposeSteps}
@@ -81,20 +78,17 @@ const TransposeButtons: React.FC<TransposeButtonsProps> = ({ values, selected, o
       vertical={vertical}
       roundedClass={"rounded-full"}
       full={true}
-      className="h-full"
     />
   );
 };
 
 interface TransposeDropdownProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
   values: number[];
   selected: number;
   onChange: (steps: number) => void;
 }
 
-const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ isOpen, onOpenChange, values, selected, onChange }) => {
+const TransposeDropdown: React.FC<TransposeDropdownProps> = ({values, selected, onChange }) => {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
 
   return (

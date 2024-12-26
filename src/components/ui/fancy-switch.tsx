@@ -1,14 +1,14 @@
 import { FancySwitch as FancySwitchBase } from '@omit/react-fancy-switch';
 import { useEffect, useState, ReactNode } from 'react';
 
-interface Option<T extends string = string> {
+interface Option<T extends string | number = string> {
     value: T;
     label: string;
     icon?: ReactNode;
 }
 
-interface FancySwitchProps<T extends string> {
-    options: Array<Option & { value: T }>;
+interface FancySwitchProps<T extends string | number> {
+    options: Array<Option<T>>;
     selectedOption: T;
     setSelectedOption: (value: T) => void;
     roundedClass: string;
@@ -18,7 +18,7 @@ interface FancySwitchProps<T extends string> {
     hiddenHighlightOnOther?: boolean;
 }
 
-export default function FancySwitch<T extends string>({
+export default function FancySwitch<T extends string | number>({
     options,
     selectedOption,
     setSelectedOption,

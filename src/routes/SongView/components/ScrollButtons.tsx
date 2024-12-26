@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { useScrollHandler } from "../hooks/useScrollHandler";
-import { ArrowBigDown, ArrowBigUpDash } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ArrowBigDown, ArrowBigUpDash } from "lucide-react";
+import { useState } from "react";
 import { animateScroll as scroll } from 'react-scroll';
 import { FitScreenMode } from "../hooks/viewSettingsStore";
 
-const ScrollButtons: React.FC<{ fitScreenMode: FitScreenMode, setVisibleToolbar: (value: boolean) => void, atBottom: boolean }> = ({ fitScreenMode, setVisibleToolbar, atBottom }) => {
+const ScrollButtons: React.FC<{ fitScreenMode: FitScreenMode, atBottom: boolean }> = ({ fitScreenMode, atBottom }) => {
     const [showScrollButtons, setShowScrollButtons] = useState(false);
-    
-    const resizeObserver = new ResizeObserver((entries) => {
+
+    const resizeObserver = new ResizeObserver(() => {
         setShowScrollButtons(document.body.scrollHeight > screen.height && fitScreenMode != "fitXY");
     })
     resizeObserver.observe(document.body);

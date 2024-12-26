@@ -1,5 +1,5 @@
 
-import React, { forwardRef, useCallback, useMemo } from 'react'
+import { forwardRef, useCallback, useMemo } from 'react'
 import { cn } from '@/lib/utils'
 import { CustomAutoTextSize } from '../CustomAutoTextSize'
 import SongHeading from '../SongHeading'

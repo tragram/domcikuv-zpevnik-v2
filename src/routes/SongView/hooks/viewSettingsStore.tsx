@@ -135,7 +135,7 @@ export const useViewSettingsStore = create<SettingsState>()(
           set((state) => ({
             transpose: {
               ...state.transpose,
-              originalKey: key,
+              originalKey: key || undefined,
             },
           })),
         applyPreset: (preset) => {
