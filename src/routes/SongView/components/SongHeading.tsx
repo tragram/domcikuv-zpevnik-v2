@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { SongData } from "@/types";
 import { useEffect, useRef, useState } from "react";
-import { LayoutSettings } from "./hooks/viewSettingsStore";
+import { LayoutSettings } from "../hooks/viewSettingsStore";
 
 
 interface SongHeadingProps {

@@ -8,7 +8,6 @@ export const useScrollHandler = (fitScreenMode: FitScreenMode, setVisibleToolbar
         const handleScroll = () => {
             const currentScrollPos = window.scrollY;
             // Check if within the scrollable range
-            console.log(currentScrollPos)
             if (currentScrollPos < 0) {
                 setVisibleToolbar(true);
                 return; // Ignore elastic scroll or scroll beyond bounds (Safari...)
