@@ -8,15 +8,11 @@ import { FitScreenMode } from "../hooks/viewSettingsStore";
 
 const ScrollButtons: React.FC<{ fitScreenMode: FitScreenMode, setVisibleToolbar: (value: boolean) => void, atBottom: boolean }> = ({ fitScreenMode, setVisibleToolbar, atBottom }) => {
     const [showScrollButtons, setShowScrollButtons] = useState(false);
-
-    useEffect(() => {
-        const resizeObserver = new ResizeObserver((entries) => {
-            setShowScrollButtons(document.body.scrollHeight > screen.height && fitScreenMode != "fitXY");
-        })
-        resizeObserver.observe(document.body);
-        return resizeObserver.disconnect();
-    }, [fitScreenMode]);
-
+    
+    const resizeObserver = new ResizeObserver((entries) => {
+        setShowScrollButtons(document.body.scrollHeight > screen.height && fitScreenMode != "fitXY");
+    })
+    resizeObserver.observe(document.body);
 
     const scrollDown = () => {
         // if (scrollInProgress) return;

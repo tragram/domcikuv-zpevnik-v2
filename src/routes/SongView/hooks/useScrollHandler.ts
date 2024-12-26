@@ -7,13 +7,18 @@ export const useScrollHandler = (fitScreenMode: FitScreenMode, setVisibleToolbar
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollPos = window.scrollY;
-            // TODO: this is different
-            if (currentScrollPos > prevScrollPos) {
+            // Check if within the scrollable range
+            console.log(currentScrollPos)
+            if (currentScrollPos < 0) {
+                setVisibleToolbar(true);
+                return; // Ignore elastic scroll or scroll beyond bounds (Safari...)
+            }
+            else if (currentScrollPos > prevScrollPos) {
                 if (fitScreenMode !== "fitXY") {
                     setVisibleToolbar(false);
                 }
             } else if (currentScrollPos < prevScrollPos - 10) {
-                 // -10 to "debounce" weird stuttering
+                // -10 to "debounce" weird stuttering
                 setVisibleToolbar(true);
                 setAtBottom(false);
             }
