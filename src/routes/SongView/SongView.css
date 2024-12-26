@@ -1,3 +1,5 @@
+@tailwind utilities;
+
 .bg-image {
     /* the top of the image is actually nicer to get color */
     background-position: center;
@@ -5,7 +7,7 @@
     background-size: cover;
 }
 
-@media (max-width: 768px) {
+@responsive {
     .hide-fancy-switch-label .fancy-switch-label {
         display: none;
     }

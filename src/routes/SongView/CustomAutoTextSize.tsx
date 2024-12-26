@@ -29,7 +29,7 @@ export function CustomAutoTextSize({
     useEffect(() => {
         updateTextSizeRef.current?.disconnect();
         updateTextSizeRef.current = undefined;
-    }, []); // Empty dependency array means this runs on mount/unmount
+    }, []);
 
 
 

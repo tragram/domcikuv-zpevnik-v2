@@ -46,7 +46,8 @@
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
     "use-local-storage-state": "^19.4.1",
-    "vite-plugin-static-copy": "^2.0.0"
+    "vite-plugin-static-copy": "^2.0.0",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

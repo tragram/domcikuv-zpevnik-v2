@@ -13,7 +13,7 @@ export class Note implements Clonable<Note> {
     private static readonly flatDictionaryCZ = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "H"];
     private value: number; // Internal representation: semitone offset (0–11)
 
-    constructor(letter: string, accidental: Accidental, czech: boolean = true) {
+    constructor(letter: string, accidental: Accidental = "", czech: boolean = true) {
         const noteIndex = Note.getIndexFromLetter(letter, accidental, czech);
         if (noteIndex === null) {
             throw new Error(`Invalid note: ${letter}${accidental}`);
@@ -22,14 +22,21 @@ export class Note implements Clonable<Note> {
         this.value = noteIndex;
     }
 
+    static normalizedValue(value: number, steps: number = SEMITONES_IN_OCTAVE): number {
+        if (!Number.isInteger(value) || !Number.isInteger(steps)) {
+            throw new Error('Note value must be an integer');
+        }
+
+        return (value + steps) % SEMITONES_IN_OCTAVE;
+    }
+
     static fromValue(value: number): Note {
         if (!Number.isInteger(value)) {
             throw new Error('Note value must be an integer');
         }
-        const normalizedValue = (value + SEMITONES_IN_OCTAVE) % SEMITONES_IN_OCTAVE;
         const note = new Note("C", "");
         Object.defineProperty(note, 'value', {
-            value: normalizedValue,
+            value: Note.normalizedValue(value),
             writable: false
         });
         return note;
@@ -68,11 +75,11 @@ export class Note implements Clonable<Note> {
 
     // Transpose the note up or down by a given number of semitones
     transpose(semitones: number): void {
-        this.value = (this.value + semitones + 12) % 12; // Wrap around within 0–11
+        this.value = Note.normalizedValue(this.value, semitones); // Wrap around within 0–11
     }
 
     transposed(semitones: number): Note {
-        return Note.fromValue((this.value + semitones + 12) % 12);
+        return Note.fromValue(Note.normalizedValue(this.value, semitones));
     }
 
     clone(): Note {
@@ -96,7 +103,7 @@ export class Note implements Clonable<Note> {
     }
 
     semitonesBetween(higher: Note) {
-        return (higher.getSemitoneValue() - this.value + 12) % 12;
+        return Note.normalizedValue(higher.getSemitoneValue() - this.value);
     }
 }
 
@@ -112,8 +119,8 @@ export class Key implements Clonable<Key> {
     ]);
 
     constructor(
-        private readonly note: Note,
-        private readonly mode: KeyMode = KeyMode.Major
+        readonly note: Note,
+        readonly mode: KeyMode = KeyMode.Major
     ) { }
 
     clone(): Key {
