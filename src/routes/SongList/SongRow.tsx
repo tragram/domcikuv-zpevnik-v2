@@ -18,7 +18,7 @@ interface VocalRangeIndicatorProps {
 }
 
 const VocalRangeIndicator = memo(({ songRangeSemitones, maxRange }: VocalRangeIndicatorProps) => (
-    <CircularProgress value={songRangeSemitones} maxValue={maxRange} />
+    <CircularProgress value={songRangeSemitones || maxRange} maxValue={maxRange} />
 ));
 
 
@@ -79,37 +79,37 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
 
     return (
         <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-2 sm:px-4 song-row-wrapper">
-            <div 
-                className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image" 
+            <div
+                className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image"
                 style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
                 onClick={handleClick}
             >
                 <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow">
-                    <IllustrationPopup 
-                        avatarClassName="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large" 
+                    <IllustrationPopup
+                        avatarClassName="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
                         song={song}
                     />
                     <div className="flex relative h-12 song-row w-full backdrop-blur-lg bg-glass/60 hover:bg-glass/90 rounded-full">
                         <div className="flex basis-[12%] min-w-[72px] rounded-l-full content-center justify-center relative" />
-                        
+
                         <SongInfo title={song.title} artist={song.artist} />
-                        
-                        <DateDisplay 
-                            month={song.dateAdded.month} 
-                            year={song.dateAdded.year} 
+
+                        <DateDisplay
+                            month={song.dateAdded.month}
+                            year={song.dateAdded.year}
                         />
-                        
+
                         <CapoDisplay capo={song.capo} />
-                        
+
                         <div className="hidden basis-[13%] min-w-12 sm:flex content-center justify-center">
                             <div className="flex items-center">
-                                <VocalRangeIndicator 
-                                    songRangeSemitones={song.range.semitones} 
-                                    maxRange={maxRange} 
+                                <VocalRangeIndicator
+                                    songRangeSemitones={song.range.semitones}
+                                    maxRange={maxRange}
                                 />
                             </div>
                         </div>
-                        
+
                         <div className="flex basis-1/12 min-w-12 items-center justify-end p-2">
                             <LanguageFlag language={song.language} />
                         </div>
