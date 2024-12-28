@@ -1,11 +1,12 @@
 import './App.css';
 import { ThemeProvider } from "@/components/theme-provider";
 import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
+import React from 'react';
 
-import SongList from './routes/SongList/SongList';
 import { fetchSongContent, fetchSongs } from './components/song_loader';
-import SongView from './routes/SongView/SongView';
-import SongGallery from './routes/gallery/SongGallery';
+const SongList = React.lazy(() => import('./routes/SongList/SongList'));
+const SongView = React.lazy(() => import('./routes/SongView/SongView'));
+const SongGallery = React.lazy(() => import('./routes/gallery/SongGallery'));
 import { RouteErrorBoundary, RenderErrorBoundary } from './components/UnifiedErrorBoundary';
 
 
