@@ -8,6 +8,10 @@ const validVariationValues = ["replace_last_line", "replace_last_lines", "append
 type validVariation = (typeof validVariationValues)[number]
 
 function partVariation(originalLines: string[], variantType: validVariation, variantContent: string[], repeat: boolean, repeatKey: string): string[] {
+    if(!originalLines){
+        console.log("No original lines found!");
+        return [""];
+    }
     if (variantContent.length > 1) {
         variantContent = [variantContent.join('\n').trim()];
     }
@@ -82,7 +86,7 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
     let variantActive = false;
     const variantStartRegex = new RegExp("^\\{start_of_variant: ([\\w\\-_+]+)\\}")
     const variantEndRegex = new RegExp("^\\{end_of_variant\\}")
-    // make the deafault key hopefully weird enough that no chorpro file will include it
+    // make the deafault key hopefully weird enough that no chordpro file will include it
     const defaultKey = "a4c0d35c95a63a805915367dcfe6b751"
 
     // Process each line of the song
