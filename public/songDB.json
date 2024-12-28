@@ -316,7 +316,7 @@
     "startMelody": "d",
     "chordproFile": "Chinaski-1._signalni.pro",
     "pdfFilenames": "['chinaski_1_signalni-sken.pdf', 'chinaski_1_signalni-comp.pdf']",
-    "contentHash": "d1746fbfce31f67a7b5cccfd4c99d02866def88b",
+    "contentHash": "480492da8c5129c4b226c60b7e56a5b32a8aab01",
     "disabled": false
   },
   {
@@ -4236,7 +4236,7 @@
     "startMelody": "f# g a h",
     "chordproFile": "The_Proclaimers-500_Miles.pro",
     "pdfFilenames": "",
-    "contentHash": "6fd7bf3b1c73d1061a9754f09af1bc9edbce55d7",
+    "contentHash": "d671acba684a012a08ff55200689674149d47d66",
     "disabled": false
   },
   {
@@ -4629,14 +4629,14 @@
     "key": "C",
     "language": "czech",
     "dateAdded": "11-2024",
-    "capo": "0",
+    "capo": "2",
     "tempo": "",
     "range": "a1-a2",
     "illustrationAuthor": "",
     "startMelody": "g g a c a",
     "chordproFile": "Wabi_Danek-Rosa_na_kolejich.pro",
     "pdfFilenames": "",
-    "contentHash": "f0614e6f70ac90acca029878151dccaa5905835d",
+    "contentHash": "f1211e46d91ef1e5fe561191716499c2c9ad6d6a",
     "disabled": false
   },
   {
@@ -4796,7 +4796,7 @@
     "startMelody": "g",
     "chordproFile": "Xindl_X-Od_mozku_k_srdci.pro",
     "pdfFilenames": "[]",
-    "contentHash": "17e00464cbac127cb068e1e9706a35ee9e0fd67b",
+    "contentHash": "191fd972e683eaa68d170e128b4218035a3f318b",
     "disabled": false
   },
   {

@@ -51,15 +51,15 @@ Vaid si[G]is teeb rõ[Hm]õmu see õis,
 {end_of_verse}
 
 {start_of_chorus}
-[A]Sõbrad, mu [E]kallid, ma ig[F#m]atsen[A]teid,
+[A]Sõbrad, mu [E]kallid, ma ig[F#m]atsen[C#m]teid,
 [D]jagatult su[A]urem on[E]rõõm.
-[A]Jagatud kur[E]busest ri[F#m]ismed vaid[A]jäid,
+[A]Jagatud kur[E]busest ri[F#m]ismed vaid[C#m]jäid,
 [D]murest jäi väi[A]kene[E]sõõm.
 {end_of_chorus}
 
 {start_of_verse}
 [F#m]Läidame küü[E]nlad ja ka[D]minap[A]uud –
-[A]jälle on[D]valge ja[E]soe.
+[F#m]jälle on[D]valge ja[E]soe.
 [E]Täidame klaasid ja kastame suud,
 𝄆 [D]koos olles[A]mured ei[E]loe 𝄇 (3x)
 {end_of_verse}

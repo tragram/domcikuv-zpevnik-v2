@@ -18,9 +18,12 @@ když za všechno si můžu vlastně sám.
 {end_of_verse}
 
 {start_of_chorus}
-Za [Em7]spoustu dní, možná za [G]spoustu let,
-až se mi [D]rozední, budu ti [A]vyprávět,
-na první signální, jak jsem obletěl svět,
+Za [Em7]spoustu dní,
+možná za [G]spoustu let,
+až se mi [D]rozední,
+budu ti [A]vyprávět,
+na první signální,
+jak jsem obletěl svět,
 jak tě to omámí a nepustí zpět.
 Jaký si to [C]uděláš - [F]takový to [Ami]máš,
 jaký si to uděláš - takový to máš.
