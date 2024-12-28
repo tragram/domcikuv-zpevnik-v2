@@ -12,7 +12,7 @@
 {start_of_verse}
 [C]Od povrchu [C/H]Marsu k [Am]Venuši [Am/G]
 [F]je to na sto miliónů [G]mil
-[C]Proto když to [C/H]v hrudi zabu[Am]ší, [Am/G]
+[C]Proto když to [C/H]v hrudi zabu[Am]ší [Am/G]
 [F]tak vršíme omyl na [G]omyl
 
 [F]Tři tisíce [G]tři sta třicet [C]čtyři [Am]
@@ -45,18 +45,18 @@ a [Em]čeká-li mě dn[Am]eska pád
 [F]pocit letu budu při tom [G]mít
 A když to [F]přijde fakt [G]dneska
 snad i [Em]smrtka bude [Am]tleskat mi,
-i [F]číslo mý ne by[G]lo pito mý[C]
+i [F]číslo mý neby[G]lo pitomý[C]
 {end_of_chorus}
 
 {start_of_verse}
 [C]Na Slapech [C/H]de dna k hladi[Am]ně [Am/G]
-[F]je to yardů víc než pade sá[G]t
-A my [C]dál s tou loutkou [C/H]boje svádíme[Am], [Am/G]
+[F]je to yardů víc než pade[G]sát
+A my [C]dál s tou loutkou [C/H]boje svádíme[Am][Am/G]
 [F]vždyť dolů stačil jeden volnej pád[G]
 
 [F]A od porod[G]nice ke hřbi[C]tovu [Am]
 je to [F]třicet šest za[G]stávek tramvaje[C]
-I [C]kdo přestoupil [C/H]stokrát věří tomu[Am], [Am/G]
+I [C]kdo přestoupil [C/H]stokrát věří tomu[Am][Am/G]
 [F]že ta cesta [G]příliš krátká je [C]
 {end_of_verse}
 

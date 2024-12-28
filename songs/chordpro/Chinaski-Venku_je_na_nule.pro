@@ -30,6 +30,8 @@
 [Em]On stále [C]stejný já [D]těžší o své hříchy.
 {end_of_verse}
 
+{chorus}
+
 {start_of_bridge: B1}
 [Em]Je šedivé sychravo,
 [D]Údolí tiše [A]zalehl chlad.

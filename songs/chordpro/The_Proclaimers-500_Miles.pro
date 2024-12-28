@@ -9,7 +9,7 @@
 {start_melody: f# g a h}
 
 {start_of_verse}
-When I [H]wake up,
+When I [D]wake up,
 yeah, I [D]know I'm gonna be,
 I'm gonna [G5]be the man
 who [A]wakes up next to [D]you.

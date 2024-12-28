@@ -1,6 +1,6 @@
 {language: czech}
 {date_added: 11-2024}
-{capo: 0}
+{capo: 3}
 {key: C}
 {tempo: }
 {title: Rosa na kolejích}
@@ -40,4 +40,8 @@ a na [Ami]špagátě [Cdim]nosí
 celej svůj [F6]dům[F#6], [G6]deku a [C]rum.
 {end_of_verse}
 
+{start_of_variant: append_content}
+Nohama [F6]stí[F#6]ráš
+[G6]rosu na [F#6]ko[F6]le[C]jích.
+{end_of_variant}
 {chorus}
