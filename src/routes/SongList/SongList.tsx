@@ -70,7 +70,7 @@ function SongList() {
     const [showToolbar, setShowToolbar] = useState(true);
     const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(SCROLL_OFFSET_KEY, { defaultValue: 0, storageSync: false })
     const [initialRenderDone, setInitialRenderDone] = useState(false);
-
+    console.log(scrollOffset)
     const handleScroll = useCallback(({
         scrollDirection,
         scrollOffset,
@@ -101,11 +101,7 @@ function SongList() {
     }, [filteredAndSortedSongs]);
 
     const songRowData = createSongRowData(filteredAndSortedSongs, songDB);
-    const initialScrollOffset = parseInt(
-        sessionStorage.getItem(SCROLL_OFFSET_KEY) || '0',
-        10
-    );
-
+    
     return (
         <div className="h-dvh">
             <Toolbar
@@ -131,7 +127,7 @@ function SongList() {
                             itemData={songRowData}
                             itemKey={getItemKey}
                             overscanCount={10}
-                            initialScrollOffset={initialScrollOffset}
+                            initialScrollOffset={scrollOffset}
                         >
                             {SongRowMemo}
                         </List>
