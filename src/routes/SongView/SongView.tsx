@@ -4,7 +4,6 @@ import { useNavigate, useLoaderData } from 'react-router-dom'
 import { useFullScreenHandle } from 'react-full-screen'
 import { useGesture } from '@use-gesture/react'
 import { cn } from '@/lib/utils'
-import { guessKey } from './songRendering'
 import { DataForSongView } from '@/components/song_loader'
 import { Toolbar } from './settings/Toolbar'
 import PdfView from './components/pdfView'
@@ -15,6 +14,7 @@ import { FullScreen } from 'react-full-screen'
 import ScrollButtons from './components/ScrollButtons'
 import './SongView.css'
 import { useToolbarVisibility } from './hooks/useToolbarVisibility'
+import useLocalStorageState from 'use-local-storage-state'
 
 
 export const SongView = () => {
@@ -27,20 +27,10 @@ export const SongView = () => {
         actions: settingsActions,
     } = useViewSettingsStore()
     const { updateVisibility } = useToolbarVisibility();
-    // Initialize song key if not present
-    useEffect(() => {
-        // TODO: does this really need to be inside of a hook?
-        if (!songData.key) {
-            songData.key = guessKey(songData.content || '')
-        }
-        settingsActions.setOriginalKey(songData.key || null);
-    }, [songData, settingsActions]);
+    const [transposeSteps, setTransposeSteps] = useLocalStorageState(`transposeSteps/${songData.id}`, { defaultValue: 0 });
 
-    // avoids an annoying bug when user goes directly from one song to another, where the key stays the same
-    useEffect(() => {
-        settingsActions.resetTranspose();
-    }, [songData.id, settingsActions])
 
+    console.log("render")
 
     // Handle pinch gesture
     useGesture({
@@ -92,6 +82,9 @@ export const SongView = () => {
                 songDB={songDB}
                 songData={songData}
                 fullScreenHandle={fullScreenHandle}
+                originalKey={songData.key}
+                transposeSteps={transposeSteps}
+                setTransposeSteps={setTransposeSteps}
             />
             <FullScreen handle={fullScreenHandle} className={cn('w-full overflow-x-clip', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit overflow-y-scroll")}>
                 <ScrollButtons
@@ -99,6 +92,7 @@ export const SongView = () => {
                 />
                 <SongContent
                     songData={songData}
+                    transposeSteps={transposeSteps}
                 />
             </FullScreen>
         </SongViewLayout>

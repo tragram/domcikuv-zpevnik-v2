@@ -1,6 +1,7 @@
 import { LanguageCount, SongData, SongDB } from '../types'
 import * as yaml from 'js-yaml';
 import { version } from '@/../package.json';
+import { guessKey } from '@/routes/SongView/songRendering';
 
 // Cache keys
 const CACHE_KEYS = {
@@ -28,7 +29,6 @@ function fileURL(filename: string): string {
     if (filename.startsWith('http://') || filename.startsWith('https://')) {
         return filename
     }
-    // console.log(resolveAssetPath(filename))
     return resolveAssetPath(filename)
 }
 
@@ -147,6 +147,10 @@ async function fetchSongContent({ params }): Promise<DataForSongView> {
     }
 
     songData.content = songContent;
+    // TODO: guess
+    if (!songData.key) {
+        songData.key = guessKey(songData.content || '')
+    }
     return { songDB: songDB, songData: songData };
 }
 

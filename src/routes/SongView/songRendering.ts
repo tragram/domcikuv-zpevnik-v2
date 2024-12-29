@@ -137,7 +137,7 @@ function parseChordPro(chordProContent: string, repeatChorus: boolean, songKey: 
 
 export function guessKey(chordProContent: string): Key | undefined {
     const song = parseChordPro(chordProContent, false, null, null);
-    return Key.parse(song.getPossibleKey()?.toString() || "");
+    return Key.parse(song.getPossibleKey()?.toString() || "", false);
 }
 
 export function renderSong(songData: SongData, transposeSteps: number, repeatChorus: boolean, czechChordNames: boolean): string {

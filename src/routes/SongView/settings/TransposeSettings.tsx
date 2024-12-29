@@ -6,14 +6,23 @@ import { ArrowUpDown } from "lucide-react";
 import ToolbarBase from "@/components/ui/toolbar-base";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Note } from "@/types";
-import { useViewSettingsStore } from "../hooks/viewSettingsStore";
+import { Key } from "@/musicTypes";
 
 const RENDER_KEYS = ['C', 'C#', 'D', 'Es', 'E', 'F', 'F#', 'G', 'As', 'A', 'B', 'H'];
 
-const TransposeSettings: React.FC = () => {
-  const { transpose, actions } = useViewSettingsStore();
-  const originalKeyIndex = transpose.originalKey?.note
-    ? new Note('C').semitonesBetween(transpose.originalKey?.note)
+
+interface TransposeSettingsProps {
+  originalKey: Key | undefined;
+  transposeSteps: number
+  setTransposeSteps: (value: number) => void
+}
+
+const TransposeSettings: React.FC<TransposeSettingsProps> = ({ originalKey, transposeSteps, setTransposeSteps }) => {
+
+
+  console.log(originalKey?.toString(), transposeSteps)
+  const originalKeyIndex = originalKey?.note
+    ? new Note('C').semitonesBetween(originalKey?.note)
     : 0;
 
   const transposeValues = useMemo(
@@ -26,16 +35,16 @@ const TransposeSettings: React.FC = () => {
       <div className="hidden xl:block h-full">
         <TransposeButtons
           values={transposeValues}
-          selected={transpose.steps}
-          onChange={actions.setTransposeSteps}
+          selected={transposeSteps}
+          onChange={setTransposeSteps}
         />
       </div>
 
       <div className="xl:hidden h-full">
         <TransposeDropdown
           values={transposeValues}
-          selected={transpose.steps}
-          onChange={actions.setTransposeSteps}
+          selected={transposeSteps}
+          onChange={setTransposeSteps}
         />
       </div>
     </div>
@@ -88,7 +97,7 @@ interface TransposeDropdownProps {
   onChange: (steps: number) => void;
 }
 
-const TransposeDropdown: React.FC<TransposeDropdownProps> = ({values, selected, onChange }) => {
+const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected, onChange }) => {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
 
   return (

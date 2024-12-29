@@ -1,4 +1,3 @@
-import { Key } from '@/musicTypes'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -23,11 +22,6 @@ export interface ChordSettings {
   inlineChords: boolean
 }
 
-export interface TransposeSettings {
-  steps: number
-  originalKey: Key | undefined
-}
-
 // Constants and preset configurations
 export const LAYOUT_PRESETS = {
   compact: {
@@ -35,7 +29,6 @@ export const LAYOUT_PRESETS = {
     repeatParts: false,
     repeatPartsChords: false,
     twoColumns: false,
-    compactInFullScreen: true,
     fontSize: 12,
   },
   maximizeFontSize: {
@@ -43,7 +36,6 @@ export const LAYOUT_PRESETS = {
     repeatParts: true,
     repeatPartsChords: true,
     twoColumns: false,
-    compactInFullScreen: false,
     fontSize: 12,
   },
 } as const
@@ -67,23 +59,18 @@ const defaultLayoutSettings: LayoutSettings = isSmallScreen()
     compactInFullScreen: false,
   };
 
-
 // Store interface
 interface SettingsState {
   layout: LayoutSettings
   customLayoutPreset: LayoutSettings
   layoutPreset: LayoutPreset
   chords: ChordSettings
-  transpose: TransposeSettings
   actions: {
     setLayoutSettings: (settings: Partial<LayoutSettings>) => void
     setCustomLayoutPreset: (settings: Partial<LayoutSettings>) => void
     setLayoutPreset: (preset: LayoutPreset) => void
     setChordSettings: (settings: Partial<ChordSettings>) => void
-    setTransposeSteps: (steps: number) => void
-    setOriginalKey: (key: Key | null) => void
     applyPreset: (preset: LayoutPreset) => void
-    resetTranspose: () => void
   }
 }
 
@@ -100,17 +87,13 @@ export const useViewSettingsStore = create<SettingsState>()(
       layout: defaultLayoutSettings,
       customLayoutPreset: {
         ...LAYOUT_PRESETS.compact,
-        fontSize: 12,
+        compactInFullScreen: isSmallScreen() ? true : false,
       },
       layoutPreset: isSmallScreen() ? 'maximizeFontSize' : 'compact',
       chords: {
         showChords: true,
         czechChordNames: true,
         inlineChords: true,
-      },
-      transpose: {
-        steps: 0,
-        originalKey: undefined,
       },
       actions: {
         setLayoutSettings: (settings) =>
@@ -141,20 +124,6 @@ export const useViewSettingsStore = create<SettingsState>()(
               ...settings,
             },
           })),
-        setTransposeSteps: (steps) =>
-          set((state) => ({
-            transpose: {
-              ...state.transpose,
-              steps,
-            },
-          })),
-        setOriginalKey: (key) =>
-          set((state) => ({
-            transpose: {
-              ...state.transpose,
-              originalKey: key || undefined,
-            },
-          })),
         applyPreset: (preset) => {
           const { actions, customLayoutPreset } = get()
           if (preset === 'custom') {
@@ -167,13 +136,6 @@ export const useViewSettingsStore = create<SettingsState>()(
           }
           actions.setLayoutPreset(preset)
         },
-        resetTranspose: () =>
-          set((state) => ({
-            transpose: {
-              ...state.transpose,
-              steps: 0,
-            },
-          })),
       },
     }),
     {
@@ -185,22 +147,7 @@ export const useViewSettingsStore = create<SettingsState>()(
         customLayoutPreset: state.customLayoutPreset,
         layoutPreset: state.layoutPreset,
         chords: state.chords,
-        transpose: {
-          originalKey: state.transpose.originalKey?.toString(),
-          steps: 0
-        },
       }),
-
-      // onRehydrateStorage: (state) => {
-      //   console.log(state)
-      //   state.transpose.originalKey = Key.parse(state.transpose.originalKey || null);
-      //   // set((state) => ({
-      //   //   transpose: {
-      //   //     ...state.transpose,
-      //   //     originalKey: Key.parse(state.transpose.originalKey),
-      //   //   }
-      //   // }))
-      // }
     }
   )
 )

@@ -14,12 +14,16 @@ import TransposeSettings from './TransposeSettings'
 import { FullScreenHandle } from 'react-full-screen'
 import { useScrollHandler } from '../hooks/useScrollHandler'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
+import { Key } from '@/musicTypes'
 
 interface ToolbarProps {
     navigate: (path: string) => void
     songDB: DataForSongView['songDB']
     songData: DataForSongView['songData']
     fullScreenHandle: FullScreenHandle
+    originalKey: Key | undefined
+    transposeSteps: number
+    setTransposeSteps: (value: number) => void
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
@@ -27,6 +31,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     songDB,
     songData,
     fullScreenHandle,
+    originalKey,
+    transposeSteps,
+    setTransposeSteps
 }) => {
     const { layout } = useViewSettingsStore();
     const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
@@ -40,7 +47,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
                 <ChordSettingsButtons />
                 <LayoutSettingsToolbar fullScreenHandle={fullScreenHandle} />
-                <TransposeSettings />
+                <TransposeSettings
+                    originalKey={originalKey}
+                    transposeSteps={transposeSteps}
+                    setTransposeSteps={setTransposeSteps} />
 
                 <DropdownMenu modal={false}>
                     <DropdownMenuTrigger asChild>

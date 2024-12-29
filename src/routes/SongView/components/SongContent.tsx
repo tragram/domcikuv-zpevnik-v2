@@ -7,18 +7,20 @@ import { SongData } from '@/types'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import BackgroundImage from './BackgroundImage'
 import { renderSong } from '../songRendering'
+import { useTranposeStore } from '../settings/TransposeSettings'
 
 interface SongContentProps {
     songData: SongData
+    transposeSteps: number
 }
 
 export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-    ({ songData }, ref) => {
-        const { layout, chords: chordSettings, transpose: transposeSettings, actions } = useViewSettingsStore();
+    ({ songData, transposeSteps }, ref) => {
+        const { layout, chords: chordSettings, actions } = useViewSettingsStore();
 
         const parsedContent = renderSong(
             songData,
-            transposeSettings.steps,
+            transposeSteps,
             layout.repeatParts,
             chordSettings.czechChordNames
         );
@@ -34,7 +36,6 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
             fontSize: layout.fontSize,
             setFontSize,
         }), [layout.fitScreenMode, layout.fontSize, setFontSize]);
-
         return (
             <>
                 <BackgroundImage songData={songData} className="hidden" id="inner-background-image" />
@@ -44,7 +45,7 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
                         <SongHeading
                             songData={songData}
                             layoutSettings={layout}
-                            transposeSteps={transposeSettings.steps}
+                            transposeSteps={transposeSteps}
                         />
 
                         <div

@@ -3,12 +3,12 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Search as SearchIcon, XIcon } from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { create } from 'zustand';
 
 interface QueryState {
     query: string;
     setQuery: (query: string) => void;
 }
-import { create } from 'zustand';
 
 export const useQueryStore = create<QueryState>()(
     (set) => ({
