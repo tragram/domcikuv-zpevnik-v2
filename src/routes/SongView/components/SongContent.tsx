@@ -1,20 +1,27 @@
 
-import { forwardRef, useCallback, useMemo } from 'react'
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { CustomAutoTextSize } from './CustomAutoTextSize'
 import SongHeading from './SongHeading'
 import { SongData } from '@/types'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import BackgroundImage from './BackgroundImage'
+import { renderSong } from '../songRendering'
 
 interface SongContentProps {
     songData: SongData
-    parsedContent: string
 }
 
 export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-    ({ songData, parsedContent }, ref) => {
-        const { layout, chords, transpose, actions } = useViewSettingsStore();
+    ({ songData }, ref) => {
+        const { layout, chords: chordSettings, transpose: transposeSettings, actions } = useViewSettingsStore();
+
+        const parsedContent = renderSong(
+            songData,
+            transposeSettings.steps,
+            layout.repeatParts,
+            chordSettings.czechChordNames
+        );
 
         const setFontSize = useCallback((fontSize: number) => {
             actions.setLayoutSettings({ fontSize })
@@ -37,15 +44,15 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
                         <SongHeading
                             songData={songData}
                             layoutSettings={layout}
-                            transposeSteps={transpose.steps}
+                            transposeSteps={transposeSettings.steps}
                         />
 
                         <div
                             ref={ref} id="song-content-wrapper"
                             className={cn(
                                 'flex flex-col max-w-screen',
-                                chords.inlineChords ? 'chords-inline' : '',
-                                chords.showChords ? '' : 'chords-hidden',
+                                chordSettings.inlineChords ? 'chords-inline' : '',
+                                chordSettings.showChords ? '' : 'chords-hidden',
                                 `fit-screen-${layout.fitScreenMode}`,
                                 layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
                                 layout.twoColumns ? 'song-content-columns' : ''

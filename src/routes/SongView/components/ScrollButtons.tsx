@@ -1,58 +1,72 @@
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowBigDown, ArrowBigUpDash } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { animateScroll as scroll } from 'react-scroll';
 import { FitScreenMode } from "../hooks/viewSettingsStore";
+import { useScrollHandler } from "../hooks/useScrollHandler";
 
-const ScrollButtons: React.FC<{ fitScreenMode: FitScreenMode, atBottom: boolean }> = ({ fitScreenMode, atBottom }) => {
+interface ScrollButtonsProps {
+    fitScreenMode: FitScreenMode;
+}
+
+const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
     const [showScrollButtons, setShowScrollButtons] = useState(false);
+    const { atBottom } = useScrollHandler(fitScreenMode);
 
-    const resizeObserver = new ResizeObserver(() => {
-        setShowScrollButtons(document.body.scrollHeight > screen.height && fitScreenMode != "fitXY");
-    })
-    resizeObserver.observe(document.body);
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver(() => {
+            setShowScrollButtons(
+                document.body.scrollHeight > screen.height && 
+                fitScreenMode != "fitXY"
+            );
+        });
+        
+        resizeObserver.observe(document.body);
+        return () => resizeObserver.disconnect();
+    }, [fitScreenMode]);
 
     const scrollDown = () => {
-        // if (scrollInProgress) return;
-        // if the rest can fit on the next screen --> scroll all the way
         const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
-        const scrollSpeed = screen.height / 2000 // whole screen in 2s 
-        if (remainingContent < 0) {
-            return;
-        }
+        const scrollSpeed = screen.height / 2000; // whole screen in 2s 
+        
+        if (remainingContent < 0) return;
+        
         if (remainingContent < 0.8 * screen.height) {
             scroll.scrollToBottom({
-                // why *10? IDK, the same scroll speed looks bad, possibly due to the easings...
-                duration: remainingContent / (scrollSpeed), onComplete: () => {
+                duration: remainingContent / scrollSpeed,
+                onComplete: () => {
                     // Trigger a tiny native scroll to hide the UI in Firefox Mobile
                     window.scrollBy(0, -1);
                 }
             });
             return;
         }
+        
         const sections = document.querySelectorAll('.section');
-        // Find the next container that is not fully visible
         for (const container of sections) {
             const rect = container.getBoundingClientRect();
-            // Check if the container is not fully visible within the viewport
             if (rect.bottom >= screen.height) {
-                // Scroll this container into view and exit the loop
                 const offset = Math.max(100, 0.2 * screen.height);
                 const scrollDist = rect.top - offset;
-                scroll.scrollTo(rect.top + window.scrollY - offset, { duration: scrollDist / scrollSpeed });
+                scroll.scrollTo(
+                    rect.top + window.scrollY - offset, 
+                    { duration: scrollDist / scrollSpeed }
+                );
                 break;
             }
         }
     };
-    // return "scroll-down" animation is still running (even when it's scrolled down - buggy library)
+
     const scrollUp = () => {
-        // if (scrollInProgress) return;
         scroll.scrollTo(0, { duration: 200 });
     };
 
+    if (!showScrollButtons) return null;
+
     return (
-        <div className={cn("fixed bottom-10 right-10 z-50 h-24 ", showScrollButtons ? "flex" : "hidden")}>
+        <div className="fixed bottom-10 right-10 z-50 h-24 flex">
             {!atBottom && (
                 <Button
                     size="icon"
@@ -75,6 +89,6 @@ const ScrollButtons: React.FC<{ fitScreenMode: FitScreenMode, atBottom: boolean 
             )}
         </div>
     );
-};
+});
 
 export default ScrollButtons;

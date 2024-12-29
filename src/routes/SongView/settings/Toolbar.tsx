@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownIconStart, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
@@ -11,9 +12,10 @@ import { ChordSettingsButtons, ChordSettingsDropdownMenu } from './ChordSettings
 import { LayoutSettingsDropdownSection, LayoutSettingsToolbar } from './LayoutSettings'
 import TransposeSettings from './TransposeSettings'
 import { FullScreenHandle } from 'react-full-screen'
+import { useScrollHandler } from '../hooks/useScrollHandler'
+import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 
 interface ToolbarProps {
-    visible: boolean
     navigate: (path: string) => void
     songDB: DataForSongView['songDB']
     songData: DataForSongView['songData']
@@ -21,15 +23,17 @@ interface ToolbarProps {
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
-    visible,
     navigate,
     songDB,
     songData,
     fullScreenHandle,
 }) => {
+    const { layout } = useViewSettingsStore();
+    const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
+
     return (
         <div className="absolute top-0 w-full">
-            <ToolbarBase showToolbar={visible} scrollOffset={window.scrollY}>
+            <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
                 <Button size="icon" variant="circular" onClick={() => navigate("/")}>
                     <Undo2 />
                 </Button>
@@ -45,7 +49,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 max-h-[80vh] overflow-y-scroll">
-
                         {React.Children.toArray(<LayoutSettingsDropdownSection fullScreenHandle={fullScreenHandle} />)}
                         {React.Children.toArray(<ChordSettingsDropdownMenu />)}
                         <DropdownMenuLabel>Theme</DropdownMenuLabel>

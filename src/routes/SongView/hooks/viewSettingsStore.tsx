@@ -5,6 +5,7 @@ import { persist } from 'zustand/middleware'
 // Shared types across settings
 export type FitScreenMode = 'none' | 'fitX' | 'fitXY'
 export type LayoutPreset = 'compact' | 'maximizeFontSize' | 'custom'
+export const isSmallScreen = () => window.matchMedia('(max-width: 768px)').matches;
 
 // Core settings interfaces
 export interface LayoutSettings {
@@ -47,6 +48,26 @@ export const LAYOUT_PRESETS = {
   },
 } as const
 
+const defaultLayoutSettings: LayoutSettings = isSmallScreen()
+  ? {
+    fitScreenMode: 'fitX',
+    fontSize: 12,
+    repeatParts: true,
+    repeatPartsChords: true,
+    twoColumns: false,
+    compactInFullScreen: true,
+  }
+  :
+  {
+    fitScreenMode: 'fitXY',
+    fontSize: 12,
+    repeatParts: false,
+    repeatPartsChords: false,
+    twoColumns: true,
+    compactInFullScreen: false,
+  };
+
+
 // Store interface
 interface SettingsState {
   layout: LayoutSettings
@@ -77,15 +98,12 @@ const getFontSizeInRange = (size: number) => {
 export const useViewSettingsStore = create<SettingsState>()(
   persist(
     (set, get) => ({
-      layout: {
-        ...LAYOUT_PRESETS.compact,
-        fontSize: 12,
-      },
+      layout: defaultLayoutSettings,
       customLayoutPreset: {
         ...LAYOUT_PRESETS.compact,
         fontSize: 12,
       },
-      layoutPreset: 'compact',
+      layoutPreset: isSmallScreen() ? 'maximizeFontSize' : 'compact',
       chords: {
         showChords: true,
         czechChordNames: true,

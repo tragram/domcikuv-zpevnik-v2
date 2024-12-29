@@ -1,35 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { FitScreenMode } from "./viewSettingsStore";
 
-export const useScrollHandler = (fitScreenMode: FitScreenMode, setVisibleToolbar: (value: boolean) => void) => {
-    const [prevScrollPos, setPrevScrollPos] = useState(0);
+export const useScrollHandler = (fitScreenMode: FitScreenMode) => {
+    const prevScrollPos = useRef(0);
     const [atBottom, setAtBottom] = useState(false);
+    const [isToolbarVisible, setIsToolbarVisible] = useState(true);
+
+    const handleScroll = useCallback(() => {
+        const currentScrollPos = window.scrollY;
+
+        if (currentScrollPos < 0) {
+            setIsToolbarVisible(true);
+            return;
+        }
+
+        if (currentScrollPos > prevScrollPos.current) {
+            if (fitScreenMode !== "fitXY") {
+                setIsToolbarVisible(false);
+            }
+        } else if (currentScrollPos < prevScrollPos.current - 10) {
+            setIsToolbarVisible(true);
+            setAtBottom(false);
+        }
+
+        prevScrollPos.current = currentScrollPos;
+
+        const remainingContent = document.body.scrollHeight - window.scrollY - window.innerHeight;
+        setAtBottom(remainingContent <= 0);
+    }, [fitScreenMode]);
+
     useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.scrollY;
-            // Check if within the scrollable range
-            if (currentScrollPos < 0) {
-                setVisibleToolbar(true);
-                return; // Ignore elastic scroll or scroll beyond bounds (Safari...)
-            }
-            else if (currentScrollPos > prevScrollPos) {
-                if (fitScreenMode !== "fitXY") {
-                    setVisibleToolbar(false);
-                }
-            } else if (currentScrollPos < prevScrollPos - 10) {
-                // -10 to "debounce" weird stuttering
-                setVisibleToolbar(true);
-                setAtBottom(false);
-            }
-            setPrevScrollPos(currentScrollPos);
-
-            const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
-            setAtBottom(remainingContent <= 0);
-        };
-
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, [fitScreenMode, prevScrollPos, setVisibleToolbar]);
+    }, [handleScroll]);
 
-    return { atBottom };
+    return { atBottom, isToolbarVisible };
 };

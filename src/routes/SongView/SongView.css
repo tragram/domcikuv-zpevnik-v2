@@ -7,7 +7,7 @@
     background-size: cover;
 }
 
-@responsive {
+@layer utilities {
     .hide-fancy-switch-label .fancy-switch-label {
         display: none;
     }
