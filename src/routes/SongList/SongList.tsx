@@ -69,20 +69,24 @@ function SongList() {
     const [filteredAndSortedSongs, setFilteredAndSortedSongs] = useState(songDB.songs);
     const [showToolbar, setShowToolbar] = useState(true);
     const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(SCROLL_OFFSET_KEY, { defaultValue: 0, storageSync: false })
-    const [initialRenderDone, setInitialRenderDone] = useState(false);
-    console.log(scrollOffset)
+
     const handleScroll = useCallback(({
         scrollDirection,
         scrollOffset,
         scrollUpdateWasRequested
+    }: {
+        scrollDirection: 'forward' | 'backward';
+        scrollOffset: number;
+        scrollUpdateWasRequested: boolean;
     }) => {
-        if (!initialRenderDone) {
-            setInitialRenderDone(true);
-            return;
+        if (!scrollUpdateWasRequested) {
+            // user scrolling
+            setScrollOffset(scrollOffset);
+            setShowToolbar(scrollDirection === 'backward');
+        } else {
+            setShowToolbar(true);
         }
-        setScrollOffset(scrollOffset);
-        setShowToolbar(scrollDirection === 'backward');
-    }, [initialRenderDone]);
+    }, [setScrollOffset]);
 
     const getItemSize = useCallback((index: number) => {
         if (index === 0) {
@@ -101,9 +105,9 @@ function SongList() {
     }, [filteredAndSortedSongs]);
 
     const songRowData = createSongRowData(filteredAndSortedSongs, songDB);
-    
+
     return (
-        <div className="h-dvh">
+        <div className="h-dvh w-full no-scrollbar block">
             <Toolbar
                 songs={songDB.songs}
                 setFilteredAndSortedSongs={setFilteredAndSortedSongs}
@@ -114,26 +118,24 @@ function SongList() {
                 maxRange={songDB.maxRange}
                 languages={songDB.languages}
             />
-            <div className="flex w-full h-full no-scrollbar">
-                <AutoSizer>
-                    {({ height, width }) => (
-                        <List
-                            ref={listRef}
-                            height={height}
-                            width={width}
-                            itemCount={filteredAndSortedSongs.length + 1}
-                            itemSize={getItemSize}
-                            onScroll={handleScroll}
-                            itemData={songRowData}
-                            itemKey={getItemKey}
-                            overscanCount={10}
-                            initialScrollOffset={scrollOffset}
-                        >
-                            {SongRowMemo}
-                        </List>
-                    )}
-                </AutoSizer>
-            </div>
+            <AutoSizer>
+                {({ height, width }) => (
+                    <List
+                        ref={listRef}
+                        height={height}
+                        width={width}
+                        itemCount={filteredAndSortedSongs.length + 1}
+                        itemSize={getItemSize}
+                        onScroll={handleScroll}
+                        itemData={songRowData}
+                        itemKey={getItemKey}
+                        overscanCount={10}
+                        initialScrollOffset={scrollOffset}
+                    >
+                        {SongRowMemo}
+                    </List>
+                )}
+            </AutoSizer>
         </div>
     );
 };

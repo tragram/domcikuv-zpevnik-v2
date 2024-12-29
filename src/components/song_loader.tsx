@@ -10,11 +10,6 @@ const CACHE_KEYS = {
 };
 
 export function getBasePath(): string {
-    // if (import.meta.env.DEV) {
-    //     return '/'
-    // }
-    
-    // For production - ensure trailing slash consistency
     const baseUrl = import.meta.env.BASE_URL
     return baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`
 }
@@ -33,7 +28,7 @@ function fileURL(filename: string): string {
     if (filename.startsWith('http://') || filename.startsWith('https://')) {
         return filename
     }
-    console.log(resolveAssetPath(filename))
+    // console.log(resolveAssetPath(filename))
     return resolveAssetPath(filename)
 }
 

@@ -151,7 +151,7 @@ class SongData {
 
 interface SongDB {
     maxRange: int,
-    languages: LanguageCount, // counts the occurences of each language
+    languages: string[], // counts the occurences of each language
     songs: Array<SongData>
 }
 interface LanguageCount extends Record<SongLanguage, int> { }
