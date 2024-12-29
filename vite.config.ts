@@ -6,9 +6,10 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 import Unfonts from 'unplugin-fonts/vite'
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa"
 
-// Only use the /domcikuv-zpevnik-v2/ base path for GitHub Pages deployment
-const isGitHubPages = process.env.NODE_ENV === "production" && process.env.DEPLOY === "gh-pages";
-const basePath = isGitHubPages ? "/domcikuv-zpevnik-v2/" : "/";
+// Helper to determine if we're deploying to GitHub Pages
+const isGitHubPages = process.env.DEPLOY === "gh-pages";
+const repoName = "domcikuv-zpevnik-v2";
+const basePath = isGitHubPages ? `/${repoName}/` : "/";
 
 const pwaManifest: Partial<VitePWAOptions> = {
   registerType: 'autoUpdate',
@@ -54,7 +55,8 @@ const pwaManifest: Partial<VitePWAOptions> = {
           }
         }
       }
-    ]
+    ],
+    cleanupOutdatedCaches: true
   },
   manifest: {
     name: "Domčíkův zpěvník v2",
@@ -160,7 +162,19 @@ export default defineConfig({
   base: basePath,
   build: {
     outDir: "dist",
-    emptyOutDir: true
+    emptyOutDir: true,
+    sourcemap: true,
+    assetsDir: "assets",
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+      },
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
+      }
+    }
   },
   // server: {
   //   https: true,
