@@ -304,6 +304,22 @@
     "disabled": false
   },
   {
+    "title": "Lucie",
+    "artist": "Černí andělé",
+    "key": "A",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Cerni_andele-Lucie.pro",
+    "pdfFilenames": "",
+    "contentHash": "bb727907fb0fbc2bfd67e7012ddb31fa68e72e32",
+    "disabled": false
+  },
+  {
     "title": "1. signální",
     "artist": "Chinaski",
     "key": "D",
@@ -316,7 +332,7 @@
     "startMelody": "d",
     "chordproFile": "Chinaski-1._signalni.pro",
     "pdfFilenames": "['chinaski_1_signalni-sken.pdf', 'chinaski_1_signalni-comp.pdf']",
-    "contentHash": "480492da8c5129c4b226c60b7e56a5b32a8aab01",
+    "contentHash": "ee9485ca546f8c025c0e97f0eba85aadb5d86b5b",
     "disabled": false
   },
   {
@@ -524,7 +540,7 @@
     "startMelody": "g e",
     "chordproFile": "Chinaski-Venku_je_na_nule.pro",
     "pdfFilenames": "['chinaski_venku_je_na_nule-sken.pdf', 'chinaski_venku_je_na_nule-comp.pdf']",
-    "contentHash": "a8ba70fe1cc32b92d26659c355bd3c34727d1a87",
+    "contentHash": "49bbc0a9c575abafc47a0f51f699570d2351a8a4",
     "disabled": false
   },
   {
@@ -572,7 +588,23 @@
     "startMelody": "h",
     "chordproFile": "Curly_Strings-Sobrad_Mu_Kallid.pro",
     "pdfFilenames": "",
-    "contentHash": "6093d3dcd40fccf2c3073c477f0f78db1cc657c3",
+    "contentHash": "7d64dd10c73bf9464006fad012b62bced58fb797",
+    "disabled": false
+  },
+  {
+    "title": "Jan Werich, Jiří Voskovec",
+    "artist": "David a Goliáš",
+    "key": "C",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "David_a_Golias-Jan_Werich,_Jiri_Voskovec.pro",
+    "pdfFilenames": "",
+    "contentHash": "993b0fc4426a480e460544b559209b0ad13b6671",
     "disabled": false
   },
   {
@@ -1277,6 +1309,22 @@
     "chordproFile": "Howard_Goodall-Red_Dwarf_Theme.pro",
     "pdfFilenames": "['howard_goodall_red_dwarf_theme-sken.pdf', 'howard_goodall_red_dwarf_theme-comp.pdf', 'howard_goodall_red_dwarf_theme-gen.pdf']",
     "contentHash": "b1ec615641b577812f547a1dc999c3eb4a5f5c4c",
+    "disabled": false
+  },
+  {
+    "title": "Čechomor",
+    "artist": "Hruška",
+    "key": "D",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Hruska-Cechomor.pro",
+    "pdfFilenames": "",
+    "contentHash": "4b1cdd671e5edeedfb0a89478f1e25f4b08d7834",
     "disabled": false
   },
   {
@@ -2972,7 +3020,7 @@
     "startMelody": "d d d c#",
     "chordproFile": "Michal_Hruza-Zakazane_uvolneni.pro",
     "pdfFilenames": "['michal_hruza_zakazane_uvolneni-sken.pdf', 'michal_hruza_zakazane_uvolneni-comp.pdf', 'michal_hruza_zakazane_uvolneni-gen.pdf']",
-    "contentHash": "43cef2736f254d46f71666eb8787af5dc6011eea",
+    "contentHash": "647866717fd635dd99ec76c627aafc77e515fa69",
     "disabled": false
   },
   {
@@ -3101,6 +3149,22 @@
     "chordproFile": "Mulan-I'll_Make_a_Man_out_of_You.pro",
     "pdfFilenames": "['mulan_ill_make_a_man_out_of_you-sken.pdf', 'mulan_ill_make_a_man_out_of_you-comp.pdf', 'mulan_ill_make_a_man_out_of_you-gen.pdf']",
     "contentHash": "304f76babd9c50984d6469176456cb8456880bad",
+    "disabled": false
+  },
+  {
+    "title": "Petr Hapka",
+    "artist": "Na Hotelu v Olomouci",
+    "key": "D",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Na_Hotelu_v_Olomouci-Petr_Hapka.pro",
+    "pdfFilenames": "",
+    "contentHash": "04a827cc463388f948b38133d6d1015fd5263754",
     "disabled": false
   },
   {
@@ -3824,6 +3888,22 @@
     "disabled": false
   },
   {
+    "title": "Karel Plíhal",
+    "artist": "Ráda se miluje",
+    "key": "H",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Rada_se_miluje-Karel_Plihal.pro",
+    "pdfFilenames": "",
+    "contentHash": "4e0d65a99405eeb448a6c29b4f1dd838527836e4",
+    "disabled": false
+  },
+  {
     "title": "1+1",
     "artist": "Ready Kirken",
     "key": "Am",
@@ -3917,6 +3997,22 @@
     "chordproFile": "Rod_Stewart-Sailing.pro",
     "pdfFilenames": "['rod_stewart_sailing-sken.pdf', 'rod_stewart_sailing-comp.pdf']",
     "contentHash": "075e6754ecfed5faa014a833b6469dd2f87ae1a1",
+    "disabled": false
+  },
+  {
+    "title": "Méďové-Kolíbaná",
+    "artist": "Samson",
+    "key": "C",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Samson-Medove-Kolibana.pro",
+    "pdfFilenames": "",
+    "contentHash": "f6409a712e44fafd37859170e912d4343560b70f",
     "disabled": false
   },
   {
@@ -4384,6 +4480,22 @@
     "disabled": false
   },
   {
+    "title": "Iveta Bartošová",
+    "artist": "Tři oříšky",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Tri_orisky-Iveta_Bartosova.pro",
+    "pdfFilenames": "",
+    "contentHash": "9047872a0417db406e9f4f1166a4f518449ff7cd",
+    "disabled": false
+  },
+  {
     "title": "AIDA",
     "artist": "Tři sestry",
     "key": "A",
@@ -4413,6 +4525,22 @@
     "chordproFile": "Tri_Sestry-Pumpa.pro",
     "pdfFilenames": "['tri_sestry_pumpa-sken.pdf', 'tri_sestry_pumpa-comp.pdf']",
     "contentHash": "5915993eb6c88801300cc690add31a84a04b4420",
+    "disabled": false
+  },
+  {
+    "title": "Sovy v mazutu",
+    "artist": "Tři sestry",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Tri_sestry-Sovy_v_mazutu.pro",
+    "pdfFilenames": "",
+    "contentHash": "78dceb0a42869a2e2b96c77a86839eecd6c4ae99",
     "disabled": false
   },
   {
@@ -4629,14 +4757,14 @@
     "key": "C",
     "language": "czech",
     "dateAdded": "11-2024",
-    "capo": "2",
+    "capo": "3",
     "tempo": "",
     "range": "a1-a2",
     "illustrationAuthor": "",
     "startMelody": "g g a c a",
     "chordproFile": "Wabi_Danek-Rosa_na_kolejich.pro",
     "pdfFilenames": "",
-    "contentHash": "f1211e46d91ef1e5fe561191716499c2c9ad6d6a",
+    "contentHash": "74215c9441bb2affa3cbfae2a80c590a567f352e",
     "disabled": false
   },
   {
@@ -4796,7 +4924,7 @@
     "startMelody": "g",
     "chordproFile": "Xindl_X-Od_mozku_k_srdci.pro",
     "pdfFilenames": "[]",
-    "contentHash": "191fd972e683eaa68d170e128b4218035a3f318b",
+    "contentHash": "333f4fa930bc1a6df9dd7078debd14cafd703a3c",
     "disabled": false
   },
   {
@@ -4973,6 +5101,22 @@
     "chordproFile": "Zalman_&_Spol.-Vsech_vandraku_muza.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_vsech_vandraku_muza-sken.pdf', 'pavel_lohonka_zalman_vsech_vandraku_muza-comp.pdf']",
     "contentHash": "625ef0914c5313881d63aac02cf978a0c4a769cf",
+    "disabled": false
+  },
+  {
+    "title": "Jaromír Nohavica",
+    "artist": "Zatanči",
+    "key": "E",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Zatanci-Jaromir_Nohavice.pro",
+    "pdfFilenames": "",
+    "contentHash": "a0b80f4ddcbb52039f8629913d5ac10b45e76504",
     "disabled": false
   },
   {

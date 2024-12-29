@@ -1,3 +1,4 @@
+import { fileURL } from "./components/song_loader";
 import { Key, Note, SongRange } from "./musicTypes";
 
 type SortOrder = "descending" | "ascending";
@@ -66,9 +67,8 @@ class SongData {
         this.capo = parseInt(song.capo as string) || 0;
         this.range = new SongRange(song.range || "");
         this.illustrationAuthor = song.illustrationAuthor || "FLUX.1-dev";
-
         this.pdfFilenames = song.pdfFilenames
-            ? JSON.parse(song.pdfFilenames.replace(/'/g, '"')).map((f: string) => import.meta.env.BASE_URL + "/songs/pdfs/" + f)
+            ? JSON.parse(song.pdfFilenames.replace(/'/g, '"')).map((f: string) => fileURL("songs/pdfs/" + f))
             : [];
 
         this.chordproFile = song.chordproFile || "";
@@ -127,7 +127,7 @@ class SongData {
 
     private imageURLFactory(folder: string, model: string | null = null): string {
         model = model || this.illustrationAuthor;
-        return `${import.meta.env.BASE_URL}/songs/${folder}/${this.id}/${model}.webp`;
+        return fileURL(`songs/${folder}/${this.id}/${model}.webp`);
     }
 
     thumbnailURL(model: string | null = null): string {
@@ -140,11 +140,11 @@ class SongData {
 
     static promptURL(id: string) {
         // for faster async USE
-        return `${import.meta.env.BASE_URL}/songs/image_prompts/${id}.yaml`
+        return fileURL(`songs/image_prompts/${id}.yaml`)
     }
 
     promptURL() {
-        return `${import.meta.env.BASE_URL}/songs/image_prompts/${this.id}.yaml`
+        return fileURL(`songs/image_prompts/${this.id}.yaml`)
     }
 }
 
