@@ -6,7 +6,8 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 import Unfonts from 'unplugin-fonts/vite'
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa"
 
-const basePath = "/domcikuv-zpevnik-v2/";
+// const basePath = "/domcikuv-zpevnik-v2/";
+const basePath = "./";
 
 const pwaManifest: Partial<VitePWAOptions> = {
   registerType: 'autoUpdate',
@@ -57,6 +58,7 @@ const pwaManifest: Partial<VitePWAOptions> = {
   },
   manifest: {
     name: "Domčíkův zpěvník v2",
+    short_name: "Domčíkův zpěvník",
     description: "Druhá verze mého báječného zpěvníku - nyní offline!",
     icons: [
       {
@@ -82,6 +84,12 @@ const pwaManifest: Partial<VitePWAOptions> = {
         sizes: '512x512',
         type: 'image/png',
         purpose: 'any'
+      },
+      {
+        src: "./assets/icons/android-chrome-512x512.png",
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable'
       },
       {
         src: "./assets/icons/apple-touch-icon.png",
@@ -165,11 +173,11 @@ export default defineConfig({
       input: {
         main: path.resolve(__dirname, 'index.html'),
       },
-      output: {
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
-      }
+      // output: {
+      //   entryFileNames: 'assets/[name]-[hash].js',
+      //   chunkFileNames: 'assets/[name]-[hash].js',
+      //   assetFileNames: 'assets/[name]-[hash].[ext]'
+      // }
     }
   },
   resolve: {
