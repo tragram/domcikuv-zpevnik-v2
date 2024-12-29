@@ -3,11 +3,11 @@
 {date_added: 12-2024}
 {language: czech}
 {pdf_filenames: }
-{capo: 0}
+{capo: 3}
 {key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody: d d}
 {start_of_verse}
 [G]Marně se vlastního [C/G]osudu ptáš, 
 co [G]dnes a zítra [D]schystá
@@ -40,7 +40,7 @@ kdo jen to [G]pozná, [D]pozná, [G]pozná
 [G]Na na na... [G][D]
 [G]Na na na... [G][D]
 [Ami]snad ti to [C/G]může [D/F#]znít, 
-dne[Bmi]s jako blá[D/A]znovství [G]
+[Hmi]dnes jako blá[D/A]znovství [G]
 {end_of_verse}
 
 {chorus}

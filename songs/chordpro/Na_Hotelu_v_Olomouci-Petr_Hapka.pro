@@ -4,10 +4,10 @@
 {language: czech}
 {pdf_filenames: }
 {capo: 0}
-{key: D}
+{key: Dm}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-g3}
+{start_melody: f}
 {start_of_verse}
 [Dmi]V půlce ledna, ve tmě [Ami]tmoucí, 
 [C]na hotelu v Olo[G]mouci.
@@ -23,8 +23,8 @@ na hotelu [C]v Olomou[G]ci.
 {end_of_verse}
 
 {start_of_chorus}
-[: [Dmi]Na, [Ami]na, na…[C]:] 
-[G]3x [Dmi]Na, na, [F]na… [C][G]
+3x |: [Dmi]Na, [Ami]na, na…[C] [G] :|
+[Dmi]Na, na, [F]na… [C][G]
 {end_of_chorus}
 
 {start_of_verse}
@@ -57,7 +57,10 @@ Budu totiž [C]vším, čím chce[G]te.
 na hotelu [C]v Olomou[G]ci. 
 {end_of_verse}
 
+{comment: Capo+=2}
+
 {chorus}
+
 
 {start_of_verse}
 [Dmi]Ztěžka dýchám, byls jak [Ami]zvíře.
