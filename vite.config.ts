@@ -6,10 +6,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 import Unfonts from 'unplugin-fonts/vite'
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa"
 
-// Helper to determine if we're deploying to GitHub Pages
-const isGitHubPages = process.env.DEPLOY === "gh-pages";
-const repoName = "domcikuv-zpevnik-v2";
-const basePath = isGitHubPages ? `/${repoName}/` : "/";
+const basePath = "/domcikuv-zpevnik-v2/";
 
 const pwaManifest: Partial<VitePWAOptions> = {
   registerType: 'autoUpdate',
@@ -164,7 +161,6 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     sourcemap: true,
-    assetsDir: "assets",
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
@@ -176,14 +172,6 @@ export default defineConfig({
       }
     }
   },
-  // server: {
-  //   https: true,
-  //   port: 443
-  // },
-  // preview: {
-  //   https: true,
-  //   port: 443
-  // },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

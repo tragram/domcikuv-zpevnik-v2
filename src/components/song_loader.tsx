@@ -10,9 +10,9 @@ const CACHE_KEYS = {
 };
 
 export function getBasePath(): string {
-    if (import.meta.env.DEV) {
-        return '/'
-    }
+    // if (import.meta.env.DEV) {
+    //     return '/'
+    // }
     
     // For production - ensure trailing slash consistency
     const baseUrl = import.meta.env.BASE_URL

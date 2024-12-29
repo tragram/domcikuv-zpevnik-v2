@@ -1,7 +1,7 @@
 import './App.css';
 import { ThemeProvider } from "@/components/theme-provider";
 import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
 import { fetchSongContent, fetchSongs } from './components/song_loader';
