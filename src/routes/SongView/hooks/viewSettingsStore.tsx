@@ -94,7 +94,6 @@ const getFontSizeInRange = (size: number) => {
   return Math.min(Math.max(MIN_FONT_SIZE, size), MAX_FONT_SIZE)
 }
 
-// Create store
 export const useViewSettingsStore = create<SettingsState>()(
   persist(
     (set, get) => ({

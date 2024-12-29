@@ -1,49 +1,32 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { SongData } from '@/types';
-import Fuse from "fuse.js";
 import { Search as SearchIcon, XIcon } from "lucide-react";
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-interface SearchBarProps {
-    songs: SongData[];
-    setSearchResults: (results: SongData[]) => void;
+interface QueryState {
     query: string;
     setQuery: (query: string) => void;
 }
+import { create } from 'zustand';
 
-interface SearchOptions {
-    includeScore: boolean;
-    keys: (keyof SongData)[];
-    ignoreLocation: boolean;
-    threshold: number;
-}
+export const useQueryStore = create<QueryState>()(
+    (set) => ({
+        query: "",
+        setQuery: (query: string) => set({ query: query })
+    })
+)
 
-function SearchBar({ songs, setSearchResults, query, setQuery }: SearchBarProps) {
-    const options: SearchOptions = {
-        includeScore: true,
-        keys: ["artist", "title", "ascii_title", "ascii_artist"],
-        ignoreLocation: true,
-        threshold: 0.4,
-    };
-
-    const fuse = new Fuse(songs, options);
+function SearchBar() {
     const [isExpanded, setIsExpanded] = useState(false);
     const [expandedWidth, setExpandedWidth] = useState(248);
     const inputRef = useRef<HTMLInputElement>(null);
+    const { query, setQuery } = useQueryStore();
+    
 
     const search = (e: ChangeEvent<HTMLInputElement>) => {
         const newQuery = e.target.value;
         setQuery(newQuery);
-
-        if (newQuery != "") {
-            const searchResults = fuse.search(newQuery);
-            setSearchResults(searchResults.map((r) => r.item));
-        } else {
-            console.log("here");
-            setSearchResults(songs);
-        }
     };
 
     useEffect(() => {

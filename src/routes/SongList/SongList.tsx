@@ -10,6 +10,7 @@ import './SongList.css';
 import SongRow from './SongRow';
 import Toolbar from './Toolbar/Toolbar';
 import useLocalStorageState from 'use-local-storage-state';
+import { useFilteredSongs } from './useFilteredSongs';
 
 const SCROLL_OFFSET_KEY = 'scrollOffset';
 const TOOLBAR_HEIGHT = {
@@ -66,7 +67,7 @@ function SongList() {
     const songDB = useLoaderData() as SongDB;
     const listRef = useRef<List>(null);
 
-    const [filteredAndSortedSongs, setFilteredAndSortedSongs] = useState(songDB.songs);
+    const {songs} = useFilteredSongs(songDB.songs);
     const [showToolbar, setShowToolbar] = useState(true);
     const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(SCROLL_OFFSET_KEY, { defaultValue: 0, storageSync: false })
 
@@ -101,20 +102,18 @@ function SongList() {
     const getItemKey = useCallback((index: number) => {
         return index === 0
             ? "toolbar-spacer"
-            : filteredAndSortedSongs[index - 1].id;
-    }, [filteredAndSortedSongs]);
+            : songs[index - 1].id;
+    }, [songs]);
 
-    const songRowData = createSongRowData(filteredAndSortedSongs, songDB);
+    const songRowData = createSongRowData(songs, songDB);
 
     return (
         <div className="h-dvh w-full no-scrollbar block">
             <Toolbar
-                songs={songDB.songs}
-                setFilteredAndSortedSongs={setFilteredAndSortedSongs}
+                songs={songs}
                 showToolbar={showToolbar}
                 scrollOffset={scrollOffset}
                 fakeScroll={true}
-                filteredAndSortedSongs={filteredAndSortedSongs}
                 maxRange={songDB.maxRange}
                 languages={songDB.languages}
             />
@@ -124,7 +123,7 @@ function SongList() {
                         ref={listRef}
                         height={height}
                         width={width}
-                        itemCount={filteredAndSortedSongs.length + 1}
+                        itemCount={songs.length + 1}
                         itemSize={getItemSize}
                         onScroll={handleScroll}
                         itemData={songRowData}

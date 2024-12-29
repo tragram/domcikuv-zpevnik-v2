@@ -10,18 +10,44 @@ import {
 } from "@/components/ui/dropdown-menu"
 import FancySwitch from "@/components/ui/fancy-switch"
 import { SortField, SortOrder, SortSettings } from "@/types"
-import { 
-    ArrowDown01, 
-    ArrowDown10, 
-    ArrowDownAZ, 
-    ArrowDownUp, 
-    ArrowDownZA, 
-    AudioLines, 
-    CalendarPlus, 
-    MicVocal, 
-    Music 
+import {
+    ArrowDown01,
+    ArrowDown10,
+    ArrowDownAZ,
+    ArrowDownUp,
+    ArrowDownZA,
+    AudioLines,
+    CalendarPlus,
+    MicVocal,
+    Music
 } from "lucide-react"
 import { ReactElement } from "react"
+import { create } from 'zustand'
+import { persist } from "zustand/middleware"
+
+interface SortSettingsState extends SortSettings {
+    setSortOrder: (sortOrder: SortOrder) => void;
+    setSortField: (sortField: SortField) => void;
+}
+
+export const useSortSettingsStore = create<SortSettingsState>()(
+    persist(
+        (set) => ({
+            order: "ascending" as SortOrder,
+            field: "title" as SortField,
+            setSortOrder: (sortOrder: SortOrder) => set({
+                order: sortOrder
+            }),
+            setSortField: (sortField: SortField) => set({
+                field: sortField
+            })
+
+        }),
+        {
+            name: 'sort-settings-store'
+        }
+    )
+)
 
 interface SortingIcons {
     ascending: ReactElement;
@@ -41,11 +67,6 @@ interface Category {
     sorting_labels: SortingLabels;
 }
 
-interface SortMenuProps {
-    sortSettings: SortSettings;
-    setSortSettings: (settings: SortSettings) => void;
-}
-
 interface SwitchOption {
     label: string;
     value: SortField;
@@ -62,45 +83,45 @@ const numberSortingIcons: SortingIcons = {
 };
 
 const categories: Category[] = [
-    { 
-        field: "title", 
-        title: "Title", 
-        icon: <AudioLines />, 
-        sorting_icons: letterSortingIcons, 
-        sorting_labels: { 
-            ascending: "Ascending", 
-            descending: "Descending" 
-        } 
+    {
+        field: "title",
+        title: "Title",
+        icon: <AudioLines />,
+        sorting_icons: letterSortingIcons,
+        sorting_labels: {
+            ascending: "Ascending",
+            descending: "Descending"
+        }
     },
-    { 
-        field: "artist", 
-        title: "Artist", 
-        icon: <MicVocal />, 
-        sorting_icons: letterSortingIcons, 
-        sorting_labels: { 
-            ascending: "Ascending", 
-            descending: "Descending" 
-        } 
+    {
+        field: "artist",
+        title: "Artist",
+        icon: <MicVocal />,
+        sorting_icons: letterSortingIcons,
+        sorting_labels: {
+            ascending: "Ascending",
+            descending: "Descending"
+        }
     },
-    { 
-        field: "dateAdded", 
-        title: "Date Added", 
-        icon: <CalendarPlus />, 
-        sorting_icons: numberSortingIcons, 
-        sorting_labels: { 
-            ascending: "Lucie Bílá → Vivaldi", 
-            descending: "Vivaldi → Lucie Bílá" 
-        } 
+    {
+        field: "dateAdded",
+        title: "Date Added",
+        icon: <CalendarPlus />,
+        sorting_icons: numberSortingIcons,
+        sorting_labels: {
+            ascending: "Lucie Bílá → Vivaldi",
+            descending: "Vivaldi → Lucie Bílá"
+        }
     },
-    { 
-        field: "range", 
-        title: "Range", 
-        icon: <Music />, 
-        sorting_icons: numberSortingIcons, 
-        sorting_labels: { 
-            ascending: "Me → Freddie", 
-            descending: "Freddie → Me" 
-        } 
+    {
+        field: "range",
+        title: "Range",
+        icon: <Music />,
+        sorting_icons: numberSortingIcons,
+        sorting_labels: {
+            ascending: "Me → Freddie",
+            descending: "Freddie → Me"
+        }
     },
 ];
 
@@ -120,23 +141,8 @@ const getActiveCategory = (sortingField: SortField): Category => {
     return category;
 };
 
-const SortMenu = ({ sortSettings, setSortSettings }: SortMenuProps): JSX.Element => {
-    // just convenience functions to make inline specs shorter
-    const { field: sortByField, order: sortOrder } = sortSettings;
-
-    const setSortField = (field: SortField): void => {
-        setSortSettings({
-            ...sortSettings,
-            field
-        });
-    };
-
-    const setSortOrder = (order: SortOrder): void => {
-        setSortSettings({ 
-            ...sortSettings, 
-            order 
-        });
-    };
+const SortMenu = (): JSX.Element => {
+    const { field: sortByField, order: sortOrder, setSortField, setSortOrder } = useSortSettingsStore();
 
     const switchOptions: SwitchOption[] = categories.map(c => ({
         label: c.title,
@@ -151,8 +157,8 @@ const SortMenu = ({ sortSettings, setSortSettings }: SortMenuProps): JSX.Element
             <div className="flex md:hidden">
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button 
-                            size="icon" 
+                        <Button
+                            size="icon"
                             variant="circular"
                         >
                             <ArrowDownUp size={32} />
@@ -162,7 +168,7 @@ const SortMenu = ({ sortSettings, setSortSettings }: SortMenuProps): JSX.Element
                         <DropdownMenuLabel>Sorting method</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {categories.map(category => (
-                            <DropdownMenuCheckboxItem 
+                            <DropdownMenuCheckboxItem
                                 key={category.field}
                                 onSelect={(e) => e.preventDefault()}
                                 checked={isActive(sortByField, category.field)}
@@ -181,8 +187,8 @@ const SortMenu = ({ sortSettings, setSortSettings }: SortMenuProps): JSX.Element
                                 onSelect={(e) => e.preventDefault()}
                                 onCheckedChange={() => setSortOrder(direction)}
                             >
-                                <DropdownIconStart 
-                                    icon={activeCategory.sorting_icons[direction]} 
+                                <DropdownIconStart
+                                    icon={activeCategory.sorting_icons[direction]}
                                 />
                                 {activeCategory.sorting_labels[direction]}
                             </DropdownMenuCheckboxItem>
@@ -193,13 +199,13 @@ const SortMenu = ({ sortSettings, setSortSettings }: SortMenuProps): JSX.Element
 
             {/* Desktop View */}
             <div className="hidden md:flex h-full w-fit">
-                <FancySwitch 
+                <FancySwitch
                     options={switchOptions}
                     setSelectedOption={setSortField}
                     selectedOption={sortByField}
                     roundedClass="rounded-l-full"
                 >
-                    <Button 
+                    <Button
                         className="rounded-r-full"
                         onClick={() => setSortOrder(toggleSortOrder(sortOrder))}
                     >
