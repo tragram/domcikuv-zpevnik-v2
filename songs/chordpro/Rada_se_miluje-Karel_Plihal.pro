@@ -6,8 +6,8 @@
 {capo: 0}
 {key: H}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-c#2}
+{start_melody: h f# f# f# e d}
 {start_of_chorus}
 [Hmi]Ráda se miluje, [A]ráda [D]jí, 
 [G]ráda si [F#mi]jenom tak [Hmi]zpívá,

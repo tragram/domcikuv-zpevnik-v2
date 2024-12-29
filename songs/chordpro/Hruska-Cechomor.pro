@@ -6,8 +6,8 @@
 {capo: 0}
 {key: D}
 {tempo: }
-{range: }
-{start_melody: }
+{range: f#1-g2}
+{start_melody: a d }
 {start_of_verse}
 Sto[D]jí hruška v [A]širém poli
 vrš[D]ek se jí [G]zelená [A]
