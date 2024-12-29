@@ -31,11 +31,22 @@ const pwaManifest: Partial<VitePWAOptions> = {
         urlPattern: ({ url }) => {
           const pathWithoutBase = url.pathname.replace("./", '');
           return pathWithoutBase.startsWith('songs/') ||
-            pathWithoutBase.startsWith('assets/') ||
-            pathWithoutBase === 'songDB.json' ||
-            pathWithoutBase === 'songDB.hash';
+            pathWithoutBase.startsWith('assets/');
         },
         handler: 'CacheFirst',
+        options: {
+          cacheName: 'app-content',
+          cacheableResponse: {
+            statuses: [0, 200]
+          }
+        }
+      },
+      {
+        urlPattern: ({ url }) => {
+          return url.pathname === 'songDB.json' ||
+            url.pathname === 'songDB.hash';
+        },
+        handler: 'NetworkFirst',
         options: {
           cacheName: 'app-content',
           cacheableResponse: {
