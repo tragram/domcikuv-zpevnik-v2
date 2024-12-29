@@ -5,21 +5,21 @@
 {pdf_filenames: }
 {capo: 0}
 {key: E}
-{tempo: }
-{range: }
-{start_melody: }
+{tempo: } 
+{range: e1-h2}
+{start_melody: e h h}
 {start_of_verse}
 [Emi]Zatanči, [G]má milá, [D]zatanči [Emi]pro mé oči,
-zatanč[G]i a vetkni [D]nůž do mých [Emi]zad, 
-ať tvůj [G]šat, má milá, [D]ať tvůj šat [Emi]na zemi skončí, 
-ať tvůj [G]šat, má milá, [D]rázem je [Emi]sňat. 
+[Emi]zatanči [G]a vetkni [D]nůž do mých [Emi]zad, 
+[Emi]ať tvůj [G]šat, má milá, [D]ať tvůj šat [Emi]na zemi skončí, 
+[Emi]ať tvůj [G]šat, má milá, [D]rázem je [Emi]sňat. 
 {end_of_verse}
 
 {start_of_chorus}
 [Emi]Zatanči, [G]jako se [D]okolo [Emi]ohně tančí,
-zatanč[G]i jako [D]na vodě [Emi]loď, 
-zatanč[G]i jako to [D]slunce mezi [Emi]pomeranči, 
-zatanč[G]i, a [D]pak ke mně [Emi]pojď. 
+[Emi]zatanči [G]jako [D]na vodě [Emi]loď, 
+[Emi]zatanči [G]jako to [D]slunce mezi [Emi]pomeranči, 
+[Emi]zatanči, [G]a [D]pak ke mně [Emi]pojď. 
 {end_of_chorus}
 
 {start_of_verse}
@@ -40,4 +40,5 @@ zata[G]nči, má milá, [D]pro moje oči [Emi]lačné,
 
 {chorus}
 
+{comment: Melodie jako sloka}
 {chorus}
