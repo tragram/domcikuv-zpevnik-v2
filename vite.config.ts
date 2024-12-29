@@ -29,7 +29,7 @@ const pwaManifest: Partial<VitePWAOptions> = {
     runtimeCaching: [
       {
         urlPattern: ({ url }) => {
-          const pathWithoutBase = url.pathname.replace(basePath, '');
+          const pathWithoutBase = url.pathname.replace("./", '');
           return pathWithoutBase.startsWith('songs/') ||
             pathWithoutBase.startsWith('assets/') ||
             pathWithoutBase === 'songDB.json' ||
@@ -44,7 +44,7 @@ const pwaManifest: Partial<VitePWAOptions> = {
         }
       },
       {
-        urlPattern: ({ url }) => !url.pathname.startsWith(basePath),
+        urlPattern: ({ url }) => !url.pathname.startsWith("./"),
         handler: 'NetworkFirst',
         options: {
           cacheName: 'external-content',
