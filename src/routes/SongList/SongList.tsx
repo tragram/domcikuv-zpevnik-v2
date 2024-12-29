@@ -67,27 +67,30 @@ function SongList() {
     const songDB = useLoaderData() as SongDB;
     const listRef = useRef<List>(null);
 
-    const {songs} = useFilteredSongs(songDB.songs);
+    const { songs } = useFilteredSongs(songDB.songs);
     const [showToolbar, setShowToolbar] = useState(true);
+    const [initialRenderDone, setInitialRenderDone] = useState(false);
     const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(SCROLL_OFFSET_KEY, { defaultValue: 0, storageSync: false })
 
     const handleScroll = useCallback(({
         scrollDirection,
         scrollOffset,
-        scrollUpdateWasRequested
     }: {
         scrollDirection: 'forward' | 'backward';
         scrollOffset: number;
-        scrollUpdateWasRequested: boolean;
     }) => {
-        if (!scrollUpdateWasRequested) {
-            // user scrolling
-            setScrollOffset(scrollOffset);
-            setShowToolbar(scrollDirection === 'backward');
-        } else {
+        if (!initialRenderDone) {
+            // ensure the navbar is shown on initial render
+            setInitialRenderDone(true);
+            return;
+        }
+        setScrollOffset(scrollOffset);
+        if (scrollDirection === 'forward') {
+            setShowToolbar(false);
+        } else if (scrollDirection === 'backward') {
             setShowToolbar(true);
         }
-    }, [setScrollOffset]);
+    }, [initialRenderDone, setScrollOffset]);
 
     const getItemSize = useCallback((index: number) => {
         if (index === 0) {

@@ -57,7 +57,6 @@ export function useFilteredSongs(
     const { field: sortByField, order: sortOrder } = useSortSettingsStore();
     const { query, setQuery } = useQueryStore();
     const { language, vocalRange, capo } = useFilterSettingsStore();
-
     // Reset search when sort settings change
     useEffect(() => {
         setQuery("");
