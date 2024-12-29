@@ -48,6 +48,6 @@ zakáza[G]né uvolně[D]ní.
 {start_of_variant: replace_last_line}
 já se chci [G]vznášet nad ze[D]mí.
 {end_of_variant}
-{chorus}
+{chorus: R1}
 
-{chorus}
+{chorus: R1}

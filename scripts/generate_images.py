@@ -132,4 +132,6 @@ def generate_missing_images(
 
 
 generate_missing_prompts()
-generate_missing_images(model="stabilityai/stable-diffusion-3.5-large")
+model = "stabilityai/stable-diffusion-3.5-large"
+model = "black-forest-labs/FLUX.1-dev"
+generate_missing_images(model=model)
