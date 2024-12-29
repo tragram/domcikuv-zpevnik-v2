@@ -30,10 +30,10 @@ const pwaManifest: Partial<VitePWAOptions> = {
       {
         urlPattern: ({ url }) => {
           const pathWithoutBase = url.pathname.replace(basePath, '');
-          return pathWithoutBase.startsWith('songs/') || 
-                 pathWithoutBase.startsWith('assets/') ||
-                 pathWithoutBase === 'songDB.json' ||
-                 pathWithoutBase === 'songDB.hash';
+          return pathWithoutBase.startsWith('songs/') ||
+            pathWithoutBase.startsWith('assets/') ||
+            pathWithoutBase === 'songDB.json' ||
+            pathWithoutBase === 'songDB.hash';
         },
         handler: 'CacheFirst',
         options: {
@@ -58,45 +58,52 @@ const pwaManifest: Partial<VitePWAOptions> = {
   },
   manifest: {
     name: "Domčíkův zpěvník v2",
-    short_name: "Domčíkův zpěvník",
+    id: "cz.hodandom.domcikuv-zpevnik-v2",
+    short_name: "Zpěvník",
     description: "Druhá verze mého báječného zpěvníku - nyní offline!",
     icons: [
       {
-        src: "./assets/icons/favicon-16x16.png",
-        sizes: "16x16",
-        type: "image/png",
-        purpose: "any"
+        src: "./assets/icons/icon-48x48.png",
+        sizes: '48x48',
+        type: 'image/png',
+        purpose: 'any'
       },
       {
-        src: "./assets/icons/favicon-32x32.png",
-        sizes: "32x32",
-        type: "image/png",
-        purpose: "any"
+        src: "./assets/icons/favicon.svg",
+        sizes: 'any',
+        type: 'image/svg+xml',
+        purpose: 'any'
       },
       {
-        src: "./assets/icons/android-chrome-192x192.png",
+        src: "./assets/icons/icon-72x72.png",
+        sizes: '72x72',
+        type: 'image/png',
+        purpose: 'any'
+      },
+      {
+        src: "./assets/icons/icon-192x192.png",
         sizes: '192x192',
         type: 'image/png',
         purpose: 'any'
       },
       {
-        src: "./assets/icons/android-chrome-512x512.png",
+        src: "./assets/icons/icon-512x512.png",
         sizes: '512x512',
         type: 'image/png',
         purpose: 'any'
       },
       {
-        src: "./assets/icons/android-chrome-512x512.png",
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'maskable'
-      },
-      {
-        src: "./assets/icons/apple-touch-icon.png",
+        src: "./assets/icons/icon-180x180.png",
         sizes: '180x180',
         type: 'image/png',
         purpose: 'apple touch icon',
       },
+      {
+        purpose: "maskable",
+        sizes: "1024x1024",
+        src: "./assets/icons/maskable_icon.png",
+        type: "image/png"
+      }
     ],
     screenshots: [
       {
@@ -129,7 +136,7 @@ const pwaManifest: Partial<VitePWAOptions> = {
       }
     ],
     theme_color: '#F28C28',
-    background_color: '#ffffff',
+    background_color: '#fff2e5',
     display: "standalone",
     scope: basePath,
     start_url: basePath,
