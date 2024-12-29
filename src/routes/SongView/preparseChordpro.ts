@@ -8,7 +8,7 @@ const validVariationValues = ["replace_last_line", "replace_last_lines", "append
 type validVariation = (typeof validVariationValues)[number]
 
 function partVariation(originalLines: string[], variantType: validVariation, variantContent: string[], repeat: boolean, repeatKey: string): string[] {
-    if(!originalLines){
+    if (!originalLines) {
         console.log("No original lines found!");
         return [""];
     }
@@ -194,7 +194,7 @@ export function transposeChordPro(song: string, songKey: Key, transposeSteps: nu
         return song;
     }
     const newKey = songKey.transposed(transposeSteps);
-    const parseChord = chordParserFactory({ key: songKey.note.toString() });
+    const parseChord = chordParserFactory({ key: songKey.note.toString().replace("B", "Bb").replace("H", "B") });
 
     const keepSus2Maj7 = (chord) => {
         // the library renames sus2 to (omit3, add9) by default --> avoid
