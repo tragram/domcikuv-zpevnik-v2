@@ -1,89 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
-<svg
-   width="512"
-   height="512"
-   viewBox="0 0 135.46667 135.46667"
-   version="1.1"
-   id="svg1"
-   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
-   sodipodi:docname="favicon.svg"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     inkscape:document-units="mm"
-     inkscape:zoom="0.7"
-     inkscape:cx="-20.714286"
-     inkscape:cy="226.42857"
-     inkscape:window-width="2560"
-     inkscape:window-height="1369"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="layer2"
-     showgrid="false" />
-  <defs
-     id="defs1" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Layer 2">
-    <rect
-       style="fill:#fff2e5;fill-opacity:1;stroke:none;stroke-width:0.529167;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect13"
-       width="135.46666"
-       height="135.46666"
-       x="3.5603841e-06"
-       y="3.5603841e-06"
-       rx="26.458334"
-       ry="26.458334"
-       inkscape:label="rect13" />
-  </g>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1">
-    <path
-       style="display:none;fill:none;stroke:#000000;stroke-width:5.29167;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.26087"
-       d="M 49.4727,30.090001 V 104.94856"
-       id="path2"
-       inkscape:label="vertical line D" />
-    <rect
-       style="fill:none;stroke:#000000;stroke-width:5.29167;stroke-dasharray:none"
-       id="rect1"
-       width="116.41666"
-       height="116.41666"
-       x="9.7892179"
-       y="10.372043"
-       rx="42.333332"
-       inkscape:label="outer shape" />
-    <path
-       id="path2-1"
-       style="display:inline;fill:none;stroke:#000000;stroke-width:4.94947;stroke-dasharray:none"
-       d="m 80.80401,104.97038 -33.948365,0.11608 M 81.446526,30.49628 H 46.801678 m 33.499566,0.05947 c 17.840256,-5.2e-5 32.302666,16.637032 32.302666,37.159934 0,20.522903 -14.462409,37.159986 -32.302666,37.159936"
-       sodipodi:nodetypes="cccccsc"
-       inkscape:label="most of D" />
-    <path
-       style="fill:#f28c28;stroke:#f28c28;stroke-width:1.75493;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;fill-opacity:1"
-       d="m 182.16769,468.00129 c -24.32776,-2.54298 -47.8412,-10.97973 -67.80362,-24.32834 -33.248435,-22.23276 -55.180884,-54.78386 -64.127979,-95.17569 -1.969773,-8.89257 -1.975594,-9.15542 -1.975594,-89.20677 v -80.28792 l 2.02394,-9.21337 C 63.717635,108.63869 109.03955,64.075199 170.04764,52.030125 c 9.5604,-1.887548 11.78639,-1.949899 80.46821,-2.253961 73.24879,-0.32428 82.39217,-0.01683 98.07448,3.297762 55.10743,11.647452 99.27628,54.400954 113.41631,109.781994 4.13008,16.17595 4.33212,20.61599 4.34918,95.58012 0.0101,44.27916 -0.32883,73.43477 -0.90776,78.09426 -3.02975,24.38458 -10.85884,45.64007 -24.06945,65.34702 -25.58237,38.16257 -64.71839,61.52914 -110.88717,66.20638 -11.0178,1.11619 -137.52966,1.04589 -148.32375,-0.0824 z m 130.06536,-62.22612 c 45.43257,-3.98564 84.01075,-31.63464 105.83062,-75.84886 19.42294,-39.35726 22.58226,-84.99748 8.791,-126.99655 -8.1868,-24.93162 -24.18658,-49.87202 -41.93373,-65.36617 -13.68639,-11.94892 -32.55587,-22.60163 -47.70205,-26.93008 -16.41422,-4.69082 -20.3764,-4.89915 -93.17726,-4.89915 h -67.23272 v 150.48501 150.485 l 62.51928,-0.009 c 35.88051,-0.005 66.94446,-0.39725 72.90486,-0.92014 z"
-       id="path12"
-       transform="scale(0.26458333)"
-       inkscape:label="color fill" />
-    <path
-       id="path5"
-       style="display:inline;fill:none;stroke:#000000;stroke-width:3.175;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 108.48461,82.788284 H 10.744306 M 109.07862,52.678383 H 9.7131777 m 0.037636,15.054951 H 111.43787"
-       inkscape:label="strings" />
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 511" width="512" height="511"><defs></defs><g transform="matrix(1,0,0,1,0.044256145,0)">
+<g>
+	<g>
+		<path d="M253.986973,64.000000C253.986973,64.000000 49.000000,64.000000 49.000000,64.000000 C49.000000,64.000000 49.000000,448.000000 49.000000,448.000000 C49.000000,448.000000 253.986973,448.000000 253.986973,448.000000 C253.986973,448.000000 264.771186,448.000000 264.771186,448.000000 C264.771186,448.000000 264.771186,447.656381 264.771186,447.656381 C358.537964,441.664415 432.999999,358.059346 432.999999,256.000000 C432.999999,153.940654 358.537964,70.335585 264.771186,64.343619 C264.771186,64.343619 264.771186,64.000000 264.771186,64.000000 C264.771186,64.000000 253.986973,64.000000 253.986973,64.000000 L 253.986973,64.000000 Z" transform="matrix(1.333333333,0,0,1.333333333,-65.333333333,-85.333333333)" fill="#f28c28"/>
+		<path d="M256.000000,79.000000C256.000000,79.000000 79.000000,79.000000 79.000000,79.000000 C79.000000,79.000000 79.000000,256.000000 79.000000,256.000000 C79.000000,256.000000 79.000000,433.000000 79.000000,433.000000 C79.000000,433.000000 256.000000,433.000000 256.000000,433.000000 C353.665906,433.000000 433.000000,353.665906 433.000000,256.000000 C433.000000,158.334094 353.665906,79.000000 256.000000,79.000000 L 256.000000,79.000000 Z" transform="matrix(1,0,0,1,-2,0)" fill="#fff2e5" stroke="#000000" stroke-width="40"/>
+		<path d="M392.576059,360.000000C392.576059,360.000000 -0.044256,360.000000 -0.044256,360.000000 " transform="matrix(1,0,0,1,0,0)" fill="none" stroke="#000000" stroke-width="25"/>
+		<path d="M417.050796,289.663631C417.050796,289.663631 -0.044256,291.728333 -0.044256,291.728333 " transform="matrix(1,0,0,1,0,0)" fill="none" stroke="#000000" stroke-width="25"/>
+		<path d="M425.000000,220.000000C425.000000,220.000000 -0.044256,220.000000 -0.044256,220.000000 " transform="matrix(1,0,0,1,0,0)" fill="none" stroke="#000000" stroke-width="25"/>
+		<path d="M392.576059,150.000000C392.576059,150.000000 -0.044256,150.000000 -0.044256,150.000000 " transform="matrix(1,0,0,1,0,0)" fill="none" stroke="#000000" stroke-width="25"/>
+	</g>
+</g></g></svg>
