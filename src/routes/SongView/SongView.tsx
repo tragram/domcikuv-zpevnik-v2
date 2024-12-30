@@ -39,6 +39,11 @@ export const SongView = () => {
                 fitScreenMode: 'none',
                 fontSize: newFontSize,
             })
+            settingsActions.setCustomLayoutPreset({
+                fitScreenMode: 'none',
+                fontSize: newFontSize,
+            })
+            settingsActions.applyPreset("custom");
 
             // Update toolbar visibility based on scroll position
             // TODO: this is a different state than the one used in toolbar -- does this even do anything?
