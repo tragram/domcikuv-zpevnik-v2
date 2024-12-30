@@ -2,11 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import FancySwitch from "@/components/ui/fancy-switch";
-import { ArrowUpDown } from "lucide-react";
 import ToolbarBase from "@/components/ui/toolbar-base";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Note } from "@/types";
-import { Key } from "@/musicTypes";
+import { Note } from "@/types/types";
+import { Key } from "@/types/musicTypes";
+import TransposeIcon from "./transpose_icon"
 
 const RENDER_KEYS = ['C', 'C#', 'D', 'Es', 'E', 'F', 'F#', 'G', 'As', 'A', 'B', 'H'];
 
@@ -104,7 +104,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected,
       </div>
       <div className='xl:hidden max-sm:hidden'>
         <Button size="icon" variant="circular" onClick={() => setIsComponentVisible(!isComponentVisible)}>
-          <ArrowUpDown />
+          <TransposeIcon />
         </Button>
         <div className={"absolute top-14 w-fit left-0"} ref={ref}>
           {isComponentVisible &&
@@ -119,7 +119,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected,
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="circular" onClick={() => setIsComponentVisible(!isComponentVisible)}>
-              <ArrowUpDown />
+              <TransposeIcon />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-12">
