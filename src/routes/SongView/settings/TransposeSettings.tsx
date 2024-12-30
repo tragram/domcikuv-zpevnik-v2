@@ -116,7 +116,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected,
         </div>
       </div>
       <div className='sm:hidden xl:hidden flex'>
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="circular" onClick={() => setIsComponentVisible(!isComponentVisible)}>
               <TransposeIcon />
