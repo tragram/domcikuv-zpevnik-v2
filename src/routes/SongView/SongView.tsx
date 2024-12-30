@@ -41,6 +41,7 @@ export const SongView = () => {
             })
 
             // Update toolbar visibility based on scroll position
+            // TODO: this is a different state than the one used in toolbar -- does this even do anything?
             if (screen.height > 50 + document.body.scrollHeight) {
                 updateVisibility(true);
             } else if (screen.height < document.body.scrollHeight && window.scrollY > 0) {

@@ -7,7 +7,7 @@ import { Instagram, X } from 'lucide-react'
 import { Button } from "./ui/button"
 import { Description } from "@radix-ui/react-dialog"
 import { IllustrationPrompt } from "./IllustrationPrompt"
-import { SongData } from "@/types"
+import { SongData } from "@/types/types"
 
 interface IllustrationPopupProps {
   avatarClassName: string

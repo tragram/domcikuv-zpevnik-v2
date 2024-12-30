@@ -1,5 +1,5 @@
 
-import { SongData, SongDB } from '@/types';
+import { SongData, SongDB } from '@/types/types';
 import memoize from 'memoize-one';
 import { memo, useCallback, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';

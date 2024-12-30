@@ -1,4 +1,4 @@
-import { fileURL } from "./components/song_loader";
+import { fileURL } from "../components/song_loader";
 import { Key, Note, SongRange } from "./musicTypes";
 
 type SortOrder = "descending" | "ascending";

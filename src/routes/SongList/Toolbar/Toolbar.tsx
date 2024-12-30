@@ -2,7 +2,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 import RandomSong from "@/components/RandomSong";
 import { Button } from "@/components/ui/button";
 import ToolbarBase from "@/components/ui/toolbar-base";
-import { SongData } from "@/types";
+import { SongData } from "@/types/types";
 import { ImagesIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Filtering from "./filters/Filters";

@@ -4,7 +4,7 @@ import CircularProgress from "@/components/ui/circular-progress";
 import {
     useLinkClickHandler
 } from "react-router-dom";
-import { SongData } from "../../types";
+import { SongData } from "../../types/types";
 import { memo } from "react";
 
 const MONTH_NAMES = [

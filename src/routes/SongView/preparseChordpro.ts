@@ -1,4 +1,4 @@
-import { Key } from '@/types';
+import { Key } from '@/types/types';
 import {
     chordParserFactory,
     chordRendererFactory,

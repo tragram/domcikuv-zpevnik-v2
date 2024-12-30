@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import FancySwitch from "@/components/ui/fancy-switch"
-import { SortField, SortOrder, SortSettings } from "@/types"
+import { SortField, SortOrder, SortSettings } from "@/types/types"
 import {
     ArrowDown01,
     ArrowDown10,

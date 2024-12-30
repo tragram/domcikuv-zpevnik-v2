@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { SongData } from "@/types";
+import { SongData } from "@/types/types";
 import { useEffect, useRef, useState } from "react";
 import { LayoutSettings } from "../hooks/viewSettingsStore";
 

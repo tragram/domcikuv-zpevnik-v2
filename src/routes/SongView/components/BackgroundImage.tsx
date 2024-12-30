@@ -1,6 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { SongData } from "@/types";
+import { SongData } from "@/types/types";
 
 interface BackgroundImageProps {
   songData: SongData;

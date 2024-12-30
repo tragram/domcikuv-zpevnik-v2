@@ -2,7 +2,7 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useNavigate } from "react-router-dom";
 import AutoSizer from 'react-virtualized-auto-sizer';
 import useLocalStorageState from 'use-local-storage-state';
-import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types';
+import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types/types';
 import { fetchIllustrationPrompt } from '../../components/song_loader';
 import { AutoTextSize } from 'auto-text-size';
 import { CircleX } from 'lucide-react';

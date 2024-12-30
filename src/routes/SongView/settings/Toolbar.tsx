@@ -14,7 +14,7 @@ import TransposeSettings from './TransposeSettings'
 import { FullScreenHandle } from 'react-full-screen'
 import { useScrollHandler } from '../hooks/useScrollHandler'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
-import { Key } from '@/musicTypes'
+import { Key } from '@/types/musicTypes'
 
 interface ToolbarProps {
     navigate: (path: string) => void
