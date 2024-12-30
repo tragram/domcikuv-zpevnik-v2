@@ -18,9 +18,6 @@ interface TransposeSettingsProps {
 }
 
 const TransposeSettings: React.FC<TransposeSettingsProps> = ({ originalKey, transposeSteps, setTransposeSteps }) => {
-
-
-  console.log(originalKey?.toString(), transposeSteps)
   const originalKeyIndex = originalKey?.note
     ? new Note('C').semitonesBetween(originalKey?.note)
     : 0;

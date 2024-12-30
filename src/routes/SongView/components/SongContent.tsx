@@ -7,7 +7,6 @@ import { SongData } from '@/types'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import BackgroundImage from './BackgroundImage'
 import { renderSong } from '../songRendering'
-import { useTranposeStore } from '../settings/TransposeSettings'
 
 interface SongContentProps {
     songData: SongData

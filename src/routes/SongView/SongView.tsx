@@ -29,9 +29,6 @@ export const SongView = () => {
     const { updateVisibility } = useToolbarVisibility();
     const [transposeSteps, setTransposeSteps] = useLocalStorageState(`transposeSteps/${songData.id}`, { defaultValue: 0 });
 
-
-    console.log("render")
-
     // Handle pinch gesture
     useGesture({
         onPinch: ({ movement: [dScale], memo }) => {
