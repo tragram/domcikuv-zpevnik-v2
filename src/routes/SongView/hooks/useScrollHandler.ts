@@ -26,7 +26,8 @@ export const useScrollHandler = (fitScreenMode: FitScreenMode) => {
         prevScrollPos.current = currentScrollPos;
 
         const remainingContent = document.body.scrollHeight - window.scrollY - window.innerHeight;
-        setAtBottom(remainingContent <= 0);
+        // Firefox on Android sometimes scrolls so that the remaining content is like 0.6, so checking against 0 does not work...
+        setAtBottom(remainingContent <= 10);
     }, [fitScreenMode]);
 
     useEffect(() => {
