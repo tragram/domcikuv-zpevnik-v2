@@ -1,12 +1,12 @@
 
 import { Button } from "@/components/ui/button";
-import { 
-    DropdownMenu, 
-    DropdownMenuContent, 
-    DropdownMenuItem, 
-    DropdownMenuLabel, 
-    DropdownMenuSeparator, 
-    DropdownMenuTrigger 
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { RangeSlider } from "@/components/ui/slider";
 import { Music } from "lucide-react";
@@ -23,10 +23,10 @@ interface VocalRangeFilterProps extends VocalRangeSliderProps {
     iconOnly: boolean;
 }
 
-const VocalRangeSlider = ({ 
-    maxRange, 
-    vocalRangeFilter, 
-    setVocalRangeFilter 
+const VocalRangeSlider = ({
+    maxRange,
+    vocalRangeFilter,
+    setVocalRangeFilter
 }: VocalRangeSliderProps): JSX.Element => {
     const currentValue = vocalRangeFilter === "all" ? [0, maxRange] : vocalRangeFilter;
 
@@ -44,39 +44,40 @@ const VocalRangeSlider = ({
     );
 };
 
-export const VocalRangeFilter = ({ 
-    maxRange, 
-    vocalRangeFilter, 
-    setVocalRangeFilter, 
-    iconOnly 
+export const VocalRangeFilter = ({
+    maxRange,
+    vocalRangeFilter,
+    setVocalRangeFilter,
+    iconOnly
 }: VocalRangeFilterProps): JSX.Element => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button 
-                    variant="circular" 
+                <Button
+                    variant="circular"
                     className="shadow-none outline-0 font-bold rounded-l-none"
                 >
                     <Music />
                     {!iconOnly && "Range"}
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent 
-                aria-label="Vocal range filter slider" 
+            <DropdownMenuContent
+                aria-label="Vocal range filter slider"
                 className="w-80"
+                sideOffset={15}
             >
-                <DropdownMenuItem 
-                    key="slider" 
+                <DropdownMenuItem
+                    key="slider"
                     onSelect={(e) => e.preventDefault()}
                 >
-                    <VocalRangeSlider 
+                    <VocalRangeSlider
                         maxRange={maxRange}
                         vocalRangeFilter={vocalRangeFilter}
                         setVocalRangeFilter={setVocalRangeFilter}
                     />
                 </DropdownMenuItem>
-                <DropdownMenuItem 
-                    key="reset" 
+                <DropdownMenuItem
+                    key="reset"
                     onClick={() => setVocalRangeFilter("all")}
                 >
                     Reset
@@ -95,18 +96,18 @@ export const VocalRangeDropdownSection = (
         <>
             <DropdownMenuLabel>Select song range</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem 
-                key="slider" 
+            <DropdownMenuItem
+                key="slider"
                 onSelect={(e) => e.preventDefault()}
             >
-                <VocalRangeSlider 
+                <VocalRangeSlider
                     maxRange={maxRange}
                     vocalRangeFilter={vocalRangeFilter}
                     setVocalRangeFilter={setVocalRangeFilter}
                 />
             </DropdownMenuItem>
-            <DropdownMenuItem 
-                key="reset" 
+            <DropdownMenuItem
+                key="reset"
                 onClick={() => setVocalRangeFilter("all")}
                 onSelect={(e) => e.preventDefault()}
             >

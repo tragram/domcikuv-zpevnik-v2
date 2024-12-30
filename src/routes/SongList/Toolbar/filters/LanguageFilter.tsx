@@ -41,15 +41,15 @@ const createLanguageChoices = (
     setSelectedLanguage: (language: SongLanguage) => void
 ): JSX.Element[] => {
     const languageChoices: LanguageChoice[] = Object.keys(languages)
-        .map((language) => ({ 
-            text: capitalizeFirstLetter(language), 
-            value: language 
+        .map((language) => ({
+            text: capitalizeFirstLetter(language),
+            value: language
         }));
 
     languageChoices.unshift({ text: "All", value: "all" });
 
     return languageChoices.map((choice) => (
-        <DropdownMenuCheckboxItem 
+        <DropdownMenuCheckboxItem
             key={choice.value}
             onSelect={(e) => e.preventDefault()}
             checked={selectedLanguage === choice.value}
@@ -72,7 +72,7 @@ export const LanguageFilter = ({
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button 
+                <Button
                     variant="circular"
                     isActive={active}
                     className="outline-0 rounded-r-none font-bold"
@@ -81,7 +81,7 @@ export const LanguageFilter = ({
                     {!iconOnly && "Languages"}
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent aria-label="Language Choices">
+            <DropdownMenuContent aria-label="Language Choices" sideOffset={15}>
                 {createLanguageChoices(languages, selectedLanguage, setSelectedLanguage)}
             </DropdownMenuContent>
         </DropdownMenu>

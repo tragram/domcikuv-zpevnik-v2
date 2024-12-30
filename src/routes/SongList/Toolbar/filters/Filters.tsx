@@ -117,7 +117,7 @@ const Filtering = ({
 
             {/* Mobile View */}
             <div className="lg:hidden">
-                <DropdownMenu modal={false}>
+                <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button
                             size="icon"
@@ -130,6 +130,7 @@ const Filtering = ({
                     <DropdownMenuContent
                         aria-label="Filtering"
                         className="dropdown-scroll no-scrollbar w-52 max-h-[80vh] overflow-y-scroll"
+                        sideOffset={15}
                     >
                         <DropdownMenuCheckboxItem
                             onClick={toggleCapo}

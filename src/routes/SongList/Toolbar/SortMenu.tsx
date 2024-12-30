@@ -164,7 +164,8 @@ const SortMenu = (): JSX.Element => {
                             <ArrowDownUp size={32} />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56">
+                    <DropdownMenuContent className="w-56"
+                        sideOffset={15}>
                         <DropdownMenuLabel>Sorting method</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {categories.map(category => (
