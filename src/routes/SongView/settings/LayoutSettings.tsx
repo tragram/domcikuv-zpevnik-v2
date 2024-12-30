@@ -8,12 +8,12 @@ import { FullScreenHandle } from 'react-full-screen'
 import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { LoopNoteIcon } from '@/components/ui/loop-note-icon'
 
-const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"]  as const satisfies ReadonlyArray<keyof LayoutSettings>;
+const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"] as const satisfies ReadonlyArray<keyof LayoutSettings>;
 const layoutSettingsValues = {
-    "twoColumns": { icon: <Columns2 />, label: "View as two columns" },
-    "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
-    "repeatPartsChords": { icon: <LoopNoteIcon />, label: "Show chords in repeated parts" },
-    "compactInFullScreen": { icon: <Maximize />, label: "Auto fullscreen in compact view" }
+  "twoColumns": { icon: <Columns2 />, label: "View as two columns" },
+  "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
+  "repeatPartsChords": { icon: <LoopNoteIcon />, label: "Show chords in repeated parts" },
+  "compactInFullScreen": { icon: <Maximize />, label: "Auto fullscreen in compact view" }
 }
 
 
@@ -66,7 +66,6 @@ export const LayoutSettingsToolbar: React.FC<{
           options={presetOptions}
           setSelectedOption={(preset: LayoutPreset) => {
             actions.applyPreset(preset);
-            // console.log(layout.compactInFullScreen)
             if (preset === 'compact' && layout.compactInFullScreen) {
               fullScreenHandle.enter();
             }
@@ -157,7 +156,7 @@ export const LayoutSettingsDropdownSection: React.FC<{
         <DropdownMenuCheckboxItem
           key={k}
           checked={layoutSettings[k]}
-          onCheckedChange={() => setBothSettings({[k]: !layoutSettings[k]})}
+          onCheckedChange={() => setBothSettings({ [k]: !layoutSettings[k] })}
           onSelect={e => e.preventDefault()}
         >
           <DropdownIconStart icon={layoutSettingsValues[k].icon} />

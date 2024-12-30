@@ -11,6 +11,8 @@ import SongRow from './SongRow';
 import Toolbar from './Toolbar/Toolbar';
 import useLocalStorageState from 'use-local-storage-state';
 import { useFilteredSongs } from './useFilteredSongs';
+import PWAPrompt from 'react-ios-pwa-prompt';
+import { resolveAssetPath } from '@/components/song_loader';
 
 const SCROLL_OFFSET_KEY = 'scrollOffset';
 const TOOLBAR_HEIGHT = {
@@ -120,6 +122,7 @@ function SongList() {
                 maxRange={songDB.maxRange}
                 languages={songDB.languages}
             />
+            <PWAPrompt timesToShow={1} promptOnVisit={2} copySubtitle="Domčíkův Zpěvník" appIconPath={resolveAssetPath('assets/icons/maskable_icon.png')} />
             <AutoSizer>
                 {({ height, width }) => (
                     <List

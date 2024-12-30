@@ -1,12 +1,12 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownIconStart, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import ToolbarBase from '@/components/ui/toolbar-base'
-import { Settings2, Github, Undo2 } from 'lucide-react'
+import { Settings2, Github, Undo2, Save } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import RandomSong from '@/components/RandomSong'
-import { DataForSongView } from '@/components/song_loader'
+import { DataForSongView, resolveAssetPath } from '@/components/song_loader'
 import { ModeToggleInner } from '@/components/mode-toggle'
 import { ChordSettingsButtons, ChordSettingsDropdownMenu } from './ChordSettingsMenu'
 import { LayoutSettingsDropdownSection, LayoutSettingsToolbar } from './LayoutSettings'
@@ -15,6 +15,9 @@ import { FullScreenHandle } from 'react-full-screen'
 import { useScrollHandler } from '../hooks/useScrollHandler'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import { Key } from '@/types/musicTypes'
+import { usePWAInstall } from 'react-use-pwa-install'
+
+import PWAPrompt from 'react-ios-pwa-prompt'
 
 interface ToolbarProps {
     navigate: (path: string) => void
@@ -37,6 +40,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
     const { layout } = useViewSettingsStore();
     const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
+    const [showiOSPWAPrompt, setShowiOSPWAPrompt] = useState(false); //iOS
+    const install = usePWAInstall() // normal OS
+    console.log(install)
 
     return (
         <div className="absolute top-0 w-full">
@@ -73,11 +79,24 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                                 Edit on GitHub
                             </Link>
                         </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => {
+                                if (install) {
+                                    install();
+                                } else {
+                                    setShowiOSPWAPrompt(true);
+                                }
+                            }}>
+                            <DropdownIconStart icon={<Save />} />
+                            Install app
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-
                 <RandomSong songs={songDB.songs} />
             </ToolbarBase>
+            <div className='absolte h-screen w-screen'>
+                <PWAPrompt appIconPath={resolveAssetPath('assets/icons/maskable_icon.png')} copySubtitle="Domčíkův Zpěvník" isShown={showiOSPWAPrompt} onClose={() => setShowiOSPWAPrompt(false)} />
+            </div>
         </div>
     )
 }
