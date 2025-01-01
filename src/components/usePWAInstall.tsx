@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import PWAInstall from '@khmyznikov/pwa-install/react-legacy';
 import { PWAInstallElement } from '@khmyznikov/pwa-install';
 import { resolveAssetPath } from './song_loader';
+import { DropdownIconStart, DropdownMenuItem } from './ui/dropdown-menu';
+import { Save } from 'lucide-react';
 export const usePWAInstall = () => {
     const pwaInstallRef = useRef<PWAInstallElement>(null);
     const [installAvailable, setInstallAvailable] = useState(false);
@@ -29,12 +31,47 @@ export const usePWAInstall = () => {
             />
         </>
     );
+
+    let installItem;
+    if (pwaInstallRef.current) {
+        const PWAInstall = pwaInstallRef.current;
+        if (PWAInstall.isAppleDesktopPlatform || PWAInstall.isAppleMobilePlatform) {
+            // Safari on iOS/MacOS
+            installItem = (
+                <DropdownMenuItem
+                    onClick={showInstallPrompt}
+                >
+                    <DropdownIconStart icon={<Save />} />
+                    How to install
+                </DropdownMenuItem>
+            )
+        } else if (PWAInstall.isInstallAvailable) {
+            // Chrome on Android/Windows(/maybe Linux)
+            installItem = (
+                <DropdownMenuItem
+                    onClick={installNative}
+                >
+                    <DropdownIconStart icon={<Save />} />
+                    Install app
+                </DropdownMenuItem>
+            )
+        } else {
+            installItem = (
+                <DropdownMenuItem
+                >
+                    <DropdownIconStart icon={<Save />} />
+                        <p className='text-[0.7em] leading-tight'>Use Safari (Apple devices) or Chrome (Android/Windows) to install the app.</p>
+                </DropdownMenuItem>
+            )
+        }
+    }
     return {
         showInstallPrompt,
         installNative,
         installAvailable,
         PWAInstallComponent,
         pwaInstallRef,
+        installItem
     };
 };
 

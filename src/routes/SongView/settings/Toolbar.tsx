@@ -1,21 +1,21 @@
 
-import React, { useRef, useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownIconStart, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
-import ToolbarBase from '@/components/ui/toolbar-base'
-import { Settings2, Github, Undo2, Save } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import RandomSong from '@/components/RandomSong'
-import { DataForSongView, resolveAssetPath } from '@/components/song_loader'
 import { ModeToggleInner } from '@/components/mode-toggle'
+import RandomSong from '@/components/RandomSong'
+import { DataForSongView } from '@/components/song_loader'
+import { Button } from '@/components/ui/button'
+import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import ToolbarBase from '@/components/ui/toolbar-base'
+import usePWAInstall from '@/components/usePWAInstall'
+import { Key } from '@/types/musicTypes'
+import { Github, Settings2, Undo2 } from 'lucide-react'
+import React from 'react'
+import { FullScreenHandle } from 'react-full-screen'
+import { Link } from 'react-router-dom'
+import { useScrollHandler } from '../hooks/useScrollHandler'
+import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import { ChordSettingsButtons, ChordSettingsDropdownMenu } from './ChordSettingsMenu'
 import { LayoutSettingsDropdownSection, LayoutSettingsToolbar } from './LayoutSettings'
 import TransposeSettings from './TransposeSettings'
-import { FullScreenHandle } from 'react-full-screen'
-import { useScrollHandler } from '../hooks/useScrollHandler'
-import { useViewSettingsStore } from '../hooks/viewSettingsStore'
-import { Key } from '@/types/musicTypes'
-import usePWAInstall from '@/components/usePWAInstall'
 
 interface ToolbarProps {
     navigate: (path: string) => void
@@ -39,8 +39,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     const { layout } = useViewSettingsStore();
     const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
-    const { showInstallPrompt, PWAInstallComponent, installNative } = usePWAInstall();
-
+    const { PWAInstallComponent, installItem } = usePWAInstall();
     return (
         <div className="absolute top-0 w-full">
             <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
@@ -76,21 +75,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                                 Edit on GitHub
                             </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem
-                            onClick={installNative}
-                        >
-                            <DropdownIconStart icon={<Save />} />
-                            Install app
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                            onClick={showInstallPrompt}
-                        >
-                            <DropdownIconStart icon={<Save />} />
-                            <div>Show Prompt
-                                <p className='text-[0.7rem] leading-tight'>Works on Safari (Apple devices) and Chrome (Android/Windows)</p>
-                            </div>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
+                        {installItem}
+                    </DropdownMenuContent >
                 </DropdownMenu>
                 <RandomSong songs={songDB.songs} />
             </ToolbarBase>

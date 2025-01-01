@@ -6,8 +6,9 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 import Unfonts from 'unplugin-fonts/vite'
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa"
 
-// const basePath = "/domcikuv-zpevnik-v2/";
-const basePath = "./";
+const isGitHubPages = process.env.VITE_GH_PAGES === 'true'
+const basePath = isGitHubPages ? "/domcikuv-zpevnik-v2/" : "";
+// const basePath = "./";
 
 const pwaManifest: Partial<VitePWAOptions> = {
   registerType: 'autoUpdate',

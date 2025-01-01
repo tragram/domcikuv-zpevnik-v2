@@ -10,7 +10,7 @@
     "serve": "serve dist",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "NODE_ENV=production vite build && gh-pages -d dist"
+    "deploy": "VITE_GH_PAGES=true vite build && gh-pages -d dist"
   },
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.4.8",
