@@ -81,7 +81,7 @@ const pwaManifest: Partial<VitePWAOptions> = {
         purpose: 'any'
       },
       {
-        purpose: "maskable",
+        purpose: "any maskable",
         sizes: "1024x1024",
         src: "./assets/icons/maskable_icon.png",
         type: "image/png"

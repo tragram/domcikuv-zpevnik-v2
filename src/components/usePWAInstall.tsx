@@ -63,7 +63,7 @@ export const usePWAInstall = () => {
                 <DropdownMenuItem
                 >
                     <DropdownIconStart icon={<Save />} />
-                        <p className='text-[0.7em] leading-tight'>Use Safari (Apple devices) or Chrome (Android/Windows) to install the app.</p>
+                        <p className='text-[0.7em] leading-tight'>Use Safari (iOS) or Chrome (otherwise) to install the app.</p>
                 </DropdownMenuItem>
             )
         }
