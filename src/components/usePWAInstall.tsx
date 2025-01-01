@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
-import PWAInstall from '@khmyznikov/pwa-install/react-legacy';
 import { PWAInstallElement } from '@khmyznikov/pwa-install';
+import PWAInstall from '@khmyznikov/pwa-install/react-legacy';
+import { Save } from 'lucide-react';
+import { useRef, useState } from 'react';
 import { resolveAssetPath } from './song_loader';
 import { DropdownIconStart, DropdownMenuItem } from './ui/dropdown-menu';
-import { Save } from 'lucide-react';
 export const usePWAInstall = () => {
     const pwaInstallRef = useRef<PWAInstallElement>(null);
     const [installAvailable, setInstallAvailable] = useState(false);
@@ -26,14 +26,14 @@ export const usePWAInstall = () => {
                 disableChrome={false}
                 disableClose={false}
                 ref={pwaInstallRef}
-                manifestUrl={resolveAssetPath('manifest.json')}
+                // manifestUrl={resolveAssetPath('manifest.json')} // this appears to be currently broken...
+                icon={resolveAssetPath("assets/icons/")}
+                name={"Domčíkův Zpěvník"}
+                description='Druhá verze mého báječného zpěvníku - nyní offline!'
                 onPwaInstallAvailableEvent={(event) => { console.log(event); setInstallAvailable(true) }}
             />
         </>
     );
-    console.log(import.meta.env.BASE_URL)
-    console.log(resolveAssetPath('manifest.json'))
-    console.log(resolveAssetPath('songs/'))
 
     let installItem;
     if (pwaInstallRef.current) {

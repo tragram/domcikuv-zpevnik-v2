@@ -154,7 +154,6 @@ const pwaManifest: Partial<VitePWAOptions> = {
     start_url: basePath,
     orientation: 'portrait',
   },
-  manifestFilename: 'manifest.json', // @khmyznikov/pwa-install cannot load .webmanifest for some reason...
 }
 
 export default defineConfig({
