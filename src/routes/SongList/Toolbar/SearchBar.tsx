@@ -20,9 +20,9 @@ export const useQueryStore = create<QueryState>()(
 function SearchBar() {
     const [isExpanded, setIsExpanded] = useState(false);
     const [expandedWidth, setExpandedWidth] = useState(248);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const mobileInputRef = useRef<HTMLInputElement>(null);
     const { query, setQuery } = useQueryStore();
-    
+
 
     const search = (e: ChangeEvent<HTMLInputElement>) => {
         const newQuery = e.target.value;
@@ -30,8 +30,8 @@ function SearchBar() {
     };
 
     useEffect(() => {
-        if (isExpanded && inputRef.current) {
-            inputRef.current.focus();
+        if (isExpanded && mobileInputRef.current) {
+            mobileInputRef.current.focus();
         }
     }, [isExpanded]);
 
@@ -70,8 +70,7 @@ function SearchBar() {
                         type="button"
                         variant="circular"
                         size="icon"
-                        isActive={Boolean(query)}
-                        className={cn("relative z-10 transition-all duration-300 ease-in-out", isExpanded ? 'bg-background rounded-r-none text-primary' : '')}
+                        className={cn("relative z-10 transition-all duration-300 ease-in-out", isExpanded ? 'bg-background rounded-r-none text-primary dark:outline-primary' : '', query ? "bg-primary text-white dark:bg-background dark:text-primary" : "")}
                         onClick={handleToggle}
                         aria-label={isExpanded ? "Close search" : "Open search"}
                         aria-expanded={isExpanded}
@@ -94,13 +93,12 @@ function SearchBar() {
                             <SearchIcon className="h-4 w-4" />
                         </Button>
                         <Input
-                            ref={inputRef}
+                            ref={mobileInputRef}
                             onChange={search}
-                            type="search"
                             value={query}
                             placeholder="Search..."
                             className={cn("pl-10 pr-4 text-sm font-medium placeholder:font-normal border-none rounded-full rounded-l-none peer bg-background text-primary placeholder:text-primary dark:placeholder:text-primary/30",
-                                query ? "bg-background" : "")}
+                                query ? "bg-background " : "")}
                         />
                         <ClearButton />
                     </div>
@@ -113,8 +111,8 @@ function SearchBar() {
                     onChange={search}
                     value={query}
                     placeholder="Search..."
-                    className={cn("pl-10 pr-4 text-sm font-medium placeholder:font-normal border-none rounded-full peer dark:bg-background focus:bg-background text-primary placeholder:text-primary dark:placeholder:text-primary/30",
-                        query ? "bg-background dark:bg-primary/30" : "dark:bg-background")}
+                    className={cn("pl-10 pr-4 text-sm font-medium placeholder:font-normal border-none rounded-full peer hover:bg-background dark:bg-background focus:bg-background text-primary placeholder:text-primary dark:placeholder:text-primary/30",
+                        query ? "bg-background dark:bg-primary/30" : "bg-white dark:bg-background")}
                 />
                 <ClearButton />
                 <div className={cn("absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none peer-focus:scale-110 peer-focus:text-primary duration-300 ease-in-out transform", query ? "scale-110 text-primary" : "")}>
