@@ -20,7 +20,8 @@ const layoutSettingsValues = {
 export const LayoutSettingsToolbar: React.FC<{
   fullScreenHandle: FullScreenHandle
 }> = ({ fullScreenHandle }) => {
-  const { layout, layoutPreset, actions } = useViewSettingsStore();
+  const { layout, actions } = useViewSettingsStore();
+  const layoutPreset = actions.getCurrentPreset();
   const presetOptions = [
     {
       icon: <MoveDiagonal />,

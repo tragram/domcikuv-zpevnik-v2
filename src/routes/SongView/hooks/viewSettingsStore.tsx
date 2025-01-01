@@ -6,15 +6,20 @@ export type FitScreenMode = 'none' | 'fitX' | 'fitXY'
 export type LayoutPreset = 'compact' | 'maximizeFontSize' | 'custom'
 export const isSmallScreen = () => window.matchMedia('(max-width: 768px)').matches;
 
-// Core settings interfaces
-export interface LayoutSettings {
+// Separate interfaces for preset fields vs independent settings
+export interface PresetSettings {
   fitScreenMode: FitScreenMode
-  fontSize: number
   repeatParts: boolean
   repeatPartsChords: boolean
+}
+
+export interface IndependentLayoutSettings {
+  fontSize: number
   twoColumns: boolean
   compactInFullScreen: boolean
 }
+
+export interface LayoutSettings extends PresetSettings, IndependentLayoutSettings { }
 
 export interface ChordSettings {
   showChords: boolean
@@ -28,49 +33,58 @@ export const LAYOUT_PRESETS = {
     fitScreenMode: 'fitXY' as FitScreenMode,
     repeatParts: false,
     repeatPartsChords: false,
-    twoColumns: false,
-    fontSize: 12,
   },
   maximizeFontSize: {
     fitScreenMode: 'fitX' as FitScreenMode,
     repeatParts: true,
     repeatPartsChords: true,
-    twoColumns: false,
-    fontSize: 12,
   },
 } as const
 
-const defaultLayoutSettings: LayoutSettings = isSmallScreen()
+const defaultIndependentSettings: IndependentLayoutSettings = isSmallScreen()
   ? {
-    fitScreenMode: 'fitX',
     fontSize: 12,
-    repeatParts: true,
-    repeatPartsChords: true,
     twoColumns: false,
     compactInFullScreen: true,
   }
-  :
-  {
-    fitScreenMode: 'fitXY',
+  : {
     fontSize: 12,
-    repeatParts: false,
-    repeatPartsChords: false,
     twoColumns: true,
     compactInFullScreen: false,
   };
 
+const defaultPresetSettings: PresetSettings = isSmallScreen()
+  ? LAYOUT_PRESETS.maximizeFontSize
+  : LAYOUT_PRESETS.compact;
+
+// Function to determine which preset matches current settings
+const getCurrentPreset = (settings: PresetSettings, customPreset: PresetSettings): LayoutPreset => {
+  const presetEntries = Object.entries(LAYOUT_PRESETS) as [LayoutPreset, PresetSettings][];
+
+  for (const [presetName, presetSettings] of presetEntries) {
+    if (
+      presetSettings.fitScreenMode === settings.fitScreenMode &&
+      presetSettings.repeatParts === settings.repeatParts &&
+      presetSettings.repeatPartsChords === settings.repeatPartsChords
+    ) {
+      return presetName;
+    }
+  }
+
+  return 'custom'; // If no match found, it must be custom
+};
+
 // Store interface
 interface SettingsState {
   layout: LayoutSettings
-  customLayoutPreset: LayoutSettings
-  layoutPreset: LayoutPreset
+  customLayoutPreset: PresetSettings
   chords: ChordSettings
   actions: {
     setLayoutSettings: (settings: Partial<LayoutSettings>) => void
-    setCustomLayoutPreset: (settings: Partial<LayoutSettings>) => void
-    setLayoutPreset: (preset: LayoutPreset) => void
+    setCustomLayoutPreset: (settings: Partial<PresetSettings>) => void
     setChordSettings: (settings: Partial<ChordSettings>) => void
     applyPreset: (preset: LayoutPreset) => void
+    getCurrentPreset: () => LayoutPreset
   }
 }
 
@@ -84,12 +98,13 @@ const getFontSizeInRange = (size: number) => {
 export const useViewSettingsStore = create<SettingsState>()(
   persist(
     (set, get) => ({
-      layout: defaultLayoutSettings,
-      customLayoutPreset: {
-        ...LAYOUT_PRESETS.compact,
-        compactInFullScreen: isSmallScreen() ? true : false,
+      layout: {
+        ...defaultPresetSettings,
+        ...defaultIndependentSettings,
       },
-      layoutPreset: isSmallScreen() ? 'maximizeFontSize' : 'compact',
+      customLayoutPreset: {
+        ...defaultPresetSettings,
+      },
       chords: {
         showChords: true,
         czechChordNames: true,
@@ -97,25 +112,42 @@ export const useViewSettingsStore = create<SettingsState>()(
       },
       actions: {
         setLayoutSettings: (settings) =>
-          set((state) => ({
-            layout: {
+          set((state) => {
+            const newLayout = {
               ...state.layout,
               ...settings,
               fontSize: settings.fontSize
                 ? getFontSizeInRange(settings.fontSize)
                 : state.layout.fontSize,
-            },
-          })),
+            };
+
+            // If current settings match custom preset and preset fields were changed,
+            // update the custom preset
+            if (getCurrentPreset(state.layout, state.customLayoutPreset) === 'custom') {
+              const presetFields: Partial<PresetSettings> = {};
+              if ('fitScreenMode' in settings) presetFields.fitScreenMode = settings.fitScreenMode;
+              if ('repeatParts' in settings) presetFields.repeatParts = settings.repeatParts;
+              if ('repeatPartsChords' in settings) presetFields.repeatPartsChords = settings.repeatPartsChords;
+
+              if (Object.keys(presetFields).length > 0) {
+                return {
+                  layout: newLayout,
+                  customLayoutPreset: {
+                    ...state.customLayoutPreset,
+                    ...presetFields,
+                  },
+                };
+              }
+            }
+
+            return { layout: newLayout };
+          }),
         setCustomLayoutPreset: (settings) =>
           set((state) => ({
             customLayoutPreset: {
               ...state.customLayoutPreset,
               ...settings,
             },
-          })),
-        setLayoutPreset: (preset) =>
-          set(() => ({
-            layoutPreset: preset,
           })),
         setChordSettings: (settings) =>
           set((state) => ({
@@ -126,26 +158,23 @@ export const useViewSettingsStore = create<SettingsState>()(
           })),
         applyPreset: (preset) => {
           const { actions, customLayoutPreset } = get()
-          if (preset === 'custom') {
-            actions.setLayoutSettings(customLayoutPreset)
-          } else {
-            actions.setLayoutSettings({
-              ...LAYOUT_PRESETS[preset],
-              compactInFullScreen: customLayoutPreset.compactInFullScreen
-            })
-          }
-          actions.setLayoutPreset(preset)
+          const presetSettings = preset === 'custom'
+            ? customLayoutPreset
+            : LAYOUT_PRESETS[preset];
+
+          actions.setLayoutSettings(presetSettings);
+        },
+        getCurrentPreset: () => {
+          const state = get();
+          return getCurrentPreset(state.layout, state.customLayoutPreset);
         },
       },
     }),
     {
       name: 'songview-settings-store',
-
       partialize: (state) => ({
-        // Only persist the data state, not the actions
         layout: state.layout,
         customLayoutPreset: state.customLayoutPreset,
-        layoutPreset: state.layoutPreset,
         chords: state.chords,
       }),
     }
