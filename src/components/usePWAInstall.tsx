@@ -24,7 +24,7 @@ export const usePWAInstall = () => {
                 disableChrome={false}
                 disableClose={false}
                 ref={pwaInstallRef}
-                manifestUrl={resolveAssetPath('/manifest.json')}
+                manifestUrl={resolveAssetPath('./manifest.json')}
                 onPwaInstallAvailableEvent={(event) => { console.log(event); setInstallAvailable(true) }}
             />
         </>
