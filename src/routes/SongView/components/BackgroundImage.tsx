@@ -18,7 +18,7 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({ songData, id, classNa
       id={id}
       style={{ backgroundImage: `url(${songData.thumbnailURL()})` }}
     >
-      <div className="w-full h-full bg-glass/60 dark:bg-glass/50"></div>
+      <div className="w-full h-full bg-glass/85 dark:bg-glass/50"></div>
     </div>
   );
 };

@@ -50,7 +50,7 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
                         <div
                             ref={ref} id="song-content-wrapper"
                             className={cn(
-                                'flex flex-col max-w-screen',
+                                'flex flex-col max-w-screen dark:text-white/95',
                                 chordSettings.inlineChords ? 'chords-inline' : '',
                                 chordSettings.showChords ? '' : 'chords-hidden',
                                 `fit-screen-${layout.fitScreenMode}`,
