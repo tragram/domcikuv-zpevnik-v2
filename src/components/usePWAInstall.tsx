@@ -31,6 +31,9 @@ export const usePWAInstall = () => {
             />
         </>
     );
+    console.log(import.meta.env.BASE_URL)
+    console.log(resolveAssetPath('manifest.json'))
+    console.log(resolveAssetPath('songs/'))
 
     let installItem;
     if (pwaInstallRef.current) {
