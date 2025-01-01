@@ -13,7 +13,8 @@ export default {
     		screens: {
     			xs: '350px',
     			xsm: '400px',
-    			sm: '500px'
+    			sm: '500px',
+				md: '810px'
     		},
     		borderRadius: {
     			lg: 'var(--radius)',

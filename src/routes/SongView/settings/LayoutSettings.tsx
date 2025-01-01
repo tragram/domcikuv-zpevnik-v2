@@ -44,7 +44,7 @@ export const LayoutSettingsToolbar: React.FC<{
       <Button
         size="icon"
         variant="circular"
-        className="max-sm:hidden"
+        className="max-[525px]:hidden"
         isActive={layout.twoColumns}
         onClick={() => actions.setLayoutSettings({ twoColumns: !layout.twoColumns })}
       >
@@ -60,7 +60,7 @@ export const LayoutSettingsToolbar: React.FC<{
         <Fullscreen />
       </Button>
 
-      <div className='flex flex-grow h-full align-center justify-center max-xsm:hidden  max-md:hide-fancy-switch-label '
+      <div className='flex flex-grow h-full align-center justify-center max-xsm:hidden max-md:hide-fancy-switch-label '
         id="preset-selector-large">
         <FancySwitch
           options={presetOptions}
