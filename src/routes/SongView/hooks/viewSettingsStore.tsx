@@ -58,7 +58,7 @@ const defaultPresetSettings: PresetSettings = isSmallScreen()
   : LAYOUT_PRESETS.compact;
 
 // Function to determine which preset matches current settings
-const getCurrentPreset = (settings: PresetSettings, customPreset: PresetSettings): LayoutPreset => {
+const getCurrentPreset = (settings: PresetSettings): LayoutPreset => {
   const presetEntries = Object.entries(LAYOUT_PRESETS) as [LayoutPreset, PresetSettings][];
 
   for (const [presetName, presetSettings] of presetEntries) {
@@ -123,7 +123,7 @@ export const useViewSettingsStore = create<SettingsState>()(
 
             // If current settings match custom preset and preset fields were changed,
             // update the custom preset
-            if (getCurrentPreset(state.layout, state.customLayoutPreset) === 'custom') {
+            if (getCurrentPreset(state.layout) === 'custom') {
               const presetFields: Partial<PresetSettings> = {};
               if ('fitScreenMode' in settings) presetFields.fitScreenMode = settings.fitScreenMode;
               if ('repeatParts' in settings) presetFields.repeatParts = settings.repeatParts;
@@ -166,7 +166,7 @@ export const useViewSettingsStore = create<SettingsState>()(
         },
         getCurrentPreset: () => {
           const state = get();
-          return getCurrentPreset(state.layout, state.customLayoutPreset);
+          return getCurrentPreset(state.layout);
         },
       },
     }),

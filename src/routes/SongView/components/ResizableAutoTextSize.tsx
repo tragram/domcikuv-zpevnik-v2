@@ -4,19 +4,21 @@ import {
     useLayoutEffect,
     useRef
 } from "react";
+import { useViewSettingsStore } from "../hooks/viewSettingsStore";
+import { useDebounce } from "@uidotdev/usehooks";
 
-/**
- * Make text fit container, prevent overflow and underflow.
- */
-export function CustomAutoTextSize({
+
+function AutoTextSizeComputer({
     fitMode,
+    twoColumns,
+    repeatParts,
+    repeatPartsChords,
+    chordSettings,
     minFontSizePx,
     maxFontSizePx,
     fontSizePrecisionPx = 0.1,
-    fontSize,
     setFontSize,
     children,
-    ...rest
 }) {
     const innerElRef = useRef(null);
     const updateSize = useCallback(() => {
@@ -41,7 +43,6 @@ export function CustomAutoTextSize({
 
 
     useLayoutEffect(() => {
-        updateSize();
         // Set up the resize observer
         const containerEl = (innerElRef.current as HTMLElement | null)?.parentElement;
         if (!containerEl) return;
@@ -55,12 +56,49 @@ export function CustomAutoTextSize({
         return () => {
             resizeObserver.disconnect();
         };
-    }, [updateSize]);
+    }, [updateSize, twoColumns, repeatParts, repeatPartsChords, chordSettings]);
 
 
     return (
-        <div ref={innerElRef} style={{ fontSize: fontSize }}{...rest}>
+        <div ref={innerElRef} className="invisible absolute">
             {children}
         </div>
     );
 }
+
+
+export function ResizableAutoTextSize({
+    minFontSizePx,
+    maxFontSizePx,
+    children,
+}) {
+    const { layout, chords: chordSettings, actions } = useViewSettingsStore();
+    const setFontSize = useCallback((fontSize: number) => {
+        actions.setLayoutSettings({ fontSize })
+    }, [actions]);
+
+    return (
+        <>
+            {layout.fitScreenMode !== "none" && (
+                <AutoTextSizeComputer
+                    fitMode={layout.fitScreenMode}
+                    twoColumns={layout.twoColumns}
+                    repeatParts={layout.repeatParts}
+                    repeatPartsChords={layout.repeatPartsChords}
+                    chordSettings={chordSettings}
+                    setFontSize={setFontSize}
+                    minFontSizePx={minFontSizePx}
+                    maxFontSizePx={maxFontSizePx}
+                >
+                    {children}
+                </AutoTextSizeComputer>
+            )}
+            <div style={{ fontSize: layout.fontSize }}>
+                {children}
+            </div>
+        </>
+    );
+};
+
+
+export default ResizableAutoTextSize;

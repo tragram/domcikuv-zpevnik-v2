@@ -65,7 +65,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({ songData, layoutSettings, tra
                 </h1>
             ) : (
                 <div className={cn('flex flex-col flex-grow', isWrapped ? "text-center" : "justify-start mb-4")}>
-                    <h2 className='font-semibold text-primary dark:text-white/80 text-wrap uppercase'>{songData.artist}</h2>
+                    <h2 className='font-semibold text-primary dark:text-primary text-wrap uppercase'>{songData.artist}</h2>
                     <h2 className='font-bold text-wrap'>{songData.title}</h2>
                 </div>
             )}

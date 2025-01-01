@@ -101,7 +101,6 @@ export const LayoutSettingsDropdownSection: React.FC<{
   function setBothSettings(modifiedSettings: Partial<LayoutSettings>) {
     actions.setLayoutSettings({ ...modifiedSettings });
     actions.setCustomLayoutPreset({ ...modifiedSettings });
-    actions.setLayoutPreset('custom'); // Switch to custom preset when modifying settings
   }
   const FONT_SIZE_STEP = 1.2;
   return (<>
