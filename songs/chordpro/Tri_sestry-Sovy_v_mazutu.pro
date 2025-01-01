@@ -12,7 +12,8 @@
 [G]Tak jsme byli [D]včera na Portě[C], [D]
 [G]a když jsme se vraceli [D]cestou domů 
 [D]tak jsme viděli [G]dřevorubce 
-jak porážej [D]strom [C]a ten strom [D]plakal [G][D][C][D]
+jak porážej [D]strom 
+[C]a ten strom [D]plakal [G][D][C][D]
 {end_of_verse}
 
 {start_of_verse}
