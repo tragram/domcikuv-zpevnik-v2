@@ -428,7 +428,7 @@
     "startMelody": "g",
     "chordproFile": "Chinaski-Hlavolam.pro",
     "pdfFilenames": "['chinaski_hlavolam-sken.pdf', 'chinaski_hlavolam-comp.pdf', 'chinaski_hlavolam-gen.pdf']",
-    "contentHash": "a716690eba45099d302e8085201c18dfa8d17dee",
+    "contentHash": "12ab8d51345358cd5bf38adf391a8980c894d43b",
     "disabled": false
   },
   {
@@ -3372,7 +3372,7 @@
     "startMelody": "e",
     "chordproFile": "Olympic-Bon_soir_mademoiselle_Paris.pro",
     "pdfFilenames": "['olympic_bon_soir_mademoiselle_paris-sken.pdf', 'olympic_bon_soir_mademoiselle_paris-comp.pdf']",
-    "contentHash": "726dcfb970a65f06cbaa840154105aa182ada3d6",
+    "contentHash": "4bb365b6983059a7adc1e439f0d1648ee328859a",
     "disabled": false
   },
   {
@@ -4012,7 +4012,7 @@
     "startMelody": "c",
     "chordproFile": "Samson-Medove-Kolibana.pro",
     "pdfFilenames": "",
-    "contentHash": "14ecfcfaf51156592d2484a61d2304b2469cd087",
+    "contentHash": "b0adbfece7863ad868e2468215cf63ecc3e3996f",
     "disabled": false
   },
   {
@@ -4524,7 +4524,7 @@
     "startMelody": "e d c",
     "chordproFile": "Tri_sestry-AIDA.pro",
     "pdfFilenames": "['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']",
-    "contentHash": "5927c194dbcdf02822635ee4580fd8255395f1a1",
+    "contentHash": "1a4659a40a0a0ef02d71ff4c2af245b62a648096",
     "disabled": false
   },
   {
@@ -4540,7 +4540,7 @@
     "startMelody": "g h h a f#",
     "chordproFile": "Tri_sestry-Sovy_v_mazutu.pro",
     "pdfFilenames": "",
-    "contentHash": "622dab5077dc62164bb04f9e65f0576033193141",
+    "contentHash": "b5a37c9c5567c88b6542546dd22a56f5d7318316",
     "disabled": false
   },
   {

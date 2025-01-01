@@ -16,7 +16,8 @@ a [G7]stíny Sacre-[C]Coeur nade [E7]mnou.
 {end_of_verse}
 
 {start_of_chorus}
-[F]Láska je [G]úděl [C]tvůj, [Dmi]pánbůh tě [E7]opa[Ami]truj,
+[F]Láska je [G]úděl [C]tvůj, 
+[Dmi]pánbůh tě [E7]opa[Ami]truj,
 bonso[F]ir, mademoi[G]selle [Ami]Paris,
 bonso[F]ir, mademoi[G]selle [Ami]Paris.
 {end_of_chorus}
