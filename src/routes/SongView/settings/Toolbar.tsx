@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownIconStart, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import ToolbarBase from '@/components/ui/toolbar-base'
@@ -15,9 +15,7 @@ import { FullScreenHandle } from 'react-full-screen'
 import { useScrollHandler } from '../hooks/useScrollHandler'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import { Key } from '@/types/musicTypes'
-import { usePWAInstall } from 'react-use-pwa-install'
-
-import PWAPrompt from 'react-ios-pwa-prompt'
+import usePWAInstall from '@/components/usePWAInstall'
 
 interface ToolbarProps {
     navigate: (path: string) => void
@@ -40,9 +38,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
     const { layout } = useViewSettingsStore();
     const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
-    const [showiOSPWAPrompt, setShowiOSPWAPrompt] = useState(false); //iOS
-    const install = usePWAInstall() // normal OS
-    console.log(install)
+
+    const { showInstallPrompt, PWAInstallComponent, installNative } = usePWAInstall();
 
     return (
         <div className="absolute top-0 w-full">
@@ -64,7 +61,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                             <Settings2 size={32} />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 max-h-[80vh] overflow-y-scroll">
+                    <DropdownMenuContent className="w-56 max-h-[90vh] overflow-y-scroll">
                         {React.Children.toArray(<LayoutSettingsDropdownSection fullScreenHandle={fullScreenHandle} />)}
                         {React.Children.toArray(<ChordSettingsDropdownMenu />)}
                         <DropdownMenuLabel>Theme</DropdownMenuLabel>
@@ -80,23 +77,24 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                            onClick={() => {
-                                if (install) {
-                                    install();
-                                } else {
-                                    setShowiOSPWAPrompt(true);
-                                }
-                            }}>
+                            onClick={installNative}
+                        >
                             <DropdownIconStart icon={<Save />} />
                             Install app
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={showInstallPrompt}
+                        >
+                            <DropdownIconStart icon={<Save />} />
+                            <div>Show Prompt
+                                <p className='text-[0.7rem] leading-tight'>Works on Safari (Apple devices) and Chrome (Android/Windows)</p>
+                            </div>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <RandomSong songs={songDB.songs} />
             </ToolbarBase>
-            <div className='absolte h-screen w-screen'>
-                <PWAPrompt appIconPath={resolveAssetPath('assets/icons/maskable_icon.png')} copySubtitle="Domčíkův Zpěvník" isShown={showiOSPWAPrompt} onClose={() => setShowiOSPWAPrompt(false)} />
-            </div>
+            {PWAInstallComponent}
         </div>
     )
 }
