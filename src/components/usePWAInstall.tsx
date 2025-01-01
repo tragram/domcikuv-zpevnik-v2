@@ -27,7 +27,7 @@ export const usePWAInstall = () => {
                 disableClose={false}
                 ref={pwaInstallRef}
                 // manifestUrl={resolveAssetPath('manifest.json')} // this appears to be currently broken...
-                icon={resolveAssetPath("assets/icons/")}
+                icon={resolveAssetPath("assets/icons/favicon.svg")}
                 name={"Domčíkův Zpěvník"}
                 description='Druhá verze mého báječného zpěvníku - nyní offline!'
                 onPwaInstallAvailableEvent={(event) => { console.log(event); setInstallAvailable(true) }}
