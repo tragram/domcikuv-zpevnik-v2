@@ -5,13 +5,11 @@ import { memo, useCallback, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { areEqual, VariableSizeList as List } from 'react-window';
-import theme from 'tailwindcss/defaultTheme';
 import './SongList.css';
 import SongRow from './SongRow';
 import Toolbar from './Toolbar/Toolbar';
 import useLocalStorageState from 'use-local-storage-state';
 import { useFilteredSongs } from './useFilteredSongs';
-import { resolveAssetPath } from '@/components/song_loader';
 
 const SCROLL_OFFSET_KEY = 'scrollOffset';
 const TOOLBAR_HEIGHT = {
@@ -19,15 +17,19 @@ const TOOLBAR_HEIGHT = {
     default: 72
 };
 
-interface Breakpoint {
-    [key: string]: string;
-}
+// interface Breakpoint {
+//     [key: string]: string;
+// }
 
-const getCurrentBreakpoints = (): string[] => {
-    return Object.entries(theme.screens as Breakpoint)
-        .filter(([_, value]) => window.innerWidth > parseInt(value, 10))
-        .map(([key]) => key);
-};
+
+// const getCurrentBreakpoints = (): string[] => {
+//     import theme from 'tailwindcss/defaultTheme';
+//     const fullConfig = resolveConfig(tailwindConfig);
+//     const screens = fullConfig.theme?.screens as Breakpoint;
+//     return Object.entries(screens)
+//         .filter(([_, value]) => window.innerWidth > parseInt(value, 10))
+//         .map(([key]) => key);
+// };
 
 interface SongRowData {
     songDB: SongDB;
@@ -95,9 +97,13 @@ function SongList() {
 
     const getItemSize = useCallback((index: number) => {
         if (index === 0) {
-            const currentBreakpoints = getCurrentBreakpoints();
-            return currentBreakpoints.includes("sm")
-                ? TOOLBAR_HEIGHT.sm
+            // TODO: I cannot get tailwind config to load, so this is an ugly workaround
+            // const currentBreakpoints = getCurrentBreakpoints();
+            // return currentBreakpoints.includes("sm")
+            //     ? TOOLBAR_HEIGHT.sm
+            //     : TOOLBAR_HEIGHT.default;
+            return window.innerWidth >= 500 ?
+                TOOLBAR_HEIGHT.sm
                 : TOOLBAR_HEIGHT.default;
         }
         return 70;
