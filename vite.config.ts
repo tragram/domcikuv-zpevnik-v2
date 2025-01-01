@@ -75,47 +75,47 @@ const pwaManifest: Partial<VitePWAOptions> = {
     description: "Druhá verze mého báječného zpěvníku - nyní offline!",
     icons: [
       {
-        src: "./assets/icons/icon-48x48.png",
-        sizes: '48x48',
-        type: 'image/png',
-        purpose: 'any'
-      },
-      {
         src: "./assets/icons/favicon.svg",
         sizes: 'any',
         type: 'image/svg+xml',
         purpose: 'any'
       },
       {
-        src: "./assets/icons/icon-72x72.png",
-        sizes: '72x72',
-        type: 'image/png',
-        purpose: 'any'
-      },
-      {
-        src: "./assets/icons/icon-192x192.png",
-        sizes: '192x192',
-        type: 'image/png',
-        purpose: 'any'
-      },
-      {
-        src: "./assets/icons/icon-512x512.png",
-        sizes: '512x512',
-        type: 'image/png',
-        purpose: 'any'
-      },
-      {
-        src: "./assets/icons/icon-180x180.png",
-        sizes: '180x180',
-        type: 'image/png',
-        purpose: 'apple touch icon',
-      },
-      {
         purpose: "maskable",
         sizes: "1024x1024",
         src: "./assets/icons/maskable_icon.png",
         type: "image/png"
-      }
+      },
+      {
+        src: "./assets/icons/android-launchericon-144-144.png",
+        sizes: "144x144",
+        type: "image/png",
+        purpose: "any"
+      },
+      {
+        src: "./assets/icons/android-launchericon-192-192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any"
+      },
+      {
+        src: "./assets/icons/android-launchericon-512-512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any"
+      },
+      {
+        src: "./assets/icons/120.png",
+        sizes: '120x120',
+        type: 'image/png',
+        purpose: 'apple touch icon',
+      },
+      {
+        src: "./assets/icons/180.png",
+        sizes: '180x180',
+        type: 'image/png',
+        purpose: 'apple touch icon',
+      },
     ],
     screenshots: [
       {
