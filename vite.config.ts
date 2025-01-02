@@ -81,10 +81,10 @@ const pwaManifest: Partial<VitePWAOptions> = {
         purpose: 'any'
       },
       {
-        purpose: "any maskable",
         sizes: "1024x1024",
         src: "./assets/icons/maskable_icon.png",
-        type: "image/png"
+        type: "image/png",
+        purpose: "any",
       },
       {
         src: "./assets/icons/android-launchericon-144-144.png",
