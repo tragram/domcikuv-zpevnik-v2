@@ -19,14 +19,11 @@ import useLocalStorageState from 'use-local-storage-state'
 
 export const SongView = () => {
     const { songDB, songData } = useLoaderData() as DataForSongView;
-    const navigate = useNavigate();
     const fullScreenHandle = useFullScreenHandle();
     const viewRef = useRef<HTMLDivElement>(null);
     const {
         layout: layoutSettings,
-        actions: settingsActions,
     } = useViewSettingsStore()
-    const { updateVisibility } = useToolbarVisibility();
     const [transposeSteps, setTransposeSteps] = useLocalStorageState(`transposeSteps/${songData.id}`, { defaultValue: 0 });
 
     // Handle pinch gesture
@@ -80,7 +77,6 @@ export const SongView = () => {
             ref={viewRef}
         >
             <Toolbar
-                navigate={navigate}
                 songDB={songDB}
                 songData={songData}
                 fullScreenHandle={fullScreenHandle}

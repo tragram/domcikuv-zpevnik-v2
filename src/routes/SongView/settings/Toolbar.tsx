@@ -10,7 +10,7 @@ import { Key } from '@/types/musicTypes'
 import { Github, Settings2, Undo2 } from 'lucide-react'
 import React from 'react'
 import { FullScreenHandle } from 'react-full-screen'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useScrollHandler } from '../hooks/useScrollHandler'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import { ChordSettingsButtons, ChordSettingsDropdownMenu } from './ChordSettingsMenu'
@@ -18,7 +18,6 @@ import { LayoutSettingsDropdownSection, LayoutSettingsToolbar } from './LayoutSe
 import TransposeSettings from './TransposeSettings'
 
 interface ToolbarProps {
-    navigate: (path: string) => void
     songDB: DataForSongView['songDB']
     songData: DataForSongView['songData']
     fullScreenHandle: FullScreenHandle
@@ -28,7 +27,6 @@ interface ToolbarProps {
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
-    navigate,
     songDB,
     songData,
     fullScreenHandle,
@@ -37,6 +35,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     setTransposeSteps
 }) => {
     const { layout } = useViewSettingsStore();
+    const navigate = useNavigate();
     const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
     const { PWAInstallComponent, installItem } = usePWAInstall();
