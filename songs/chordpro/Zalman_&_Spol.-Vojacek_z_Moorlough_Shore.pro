@@ -10,7 +10,7 @@
 {start_melody: f# a h}
 
 {start_of_verse}
-Tvůj [Hmi]dům měl sto bran. krásný [A]bílý štít
+Tvůj [Hmi]dům měl sto bran, krásný [A]bílý štít
 kde se [G]potkávalo [Emi]slunce s měsí[Hmi]cem
 {end_of_verse}
 
