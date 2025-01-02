@@ -76,3 +76,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+body {
+  touch-action: pan-y;
+}
