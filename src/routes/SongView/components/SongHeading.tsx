@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { SongData } from "@/types/types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { LayoutSettings } from "../hooks/viewSettingsStore";
 
 
@@ -51,7 +51,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({ songData, layoutSettings, tra
         };
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         detectWrapping();
     }, [layoutSettings]);
 

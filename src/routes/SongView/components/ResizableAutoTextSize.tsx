@@ -1,104 +1,102 @@
+import { useGesture } from '@use-gesture/react'
 import { updateTextSize } from "auto-text-size";
 import {
     useCallback,
+    useEffect,
     useLayoutEffect,
-    useRef
+    useRef,
+    useState
 } from "react";
-import { useViewSettingsStore } from "../hooks/viewSettingsStore";
-import { useDebounce } from "@uidotdev/usehooks";
+import { getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
 
+interface ResizableAutoTextSizeProps {
+    minFontSizePx: number
+    maxFontSizePx: number
+    children: React.ReactNode
+    containerRef: React.RefObject<HTMLDivElement>  // Pass the container ref from parent
+}
 
-function AutoTextSizeComputer({
-    fitMode,
-    twoColumns,
-    repeatParts,
-    repeatPartsChords,
-    chordSettings,
+export function ResizableAutoTextSize({
     minFontSizePx,
     maxFontSizePx,
-    fontSizePrecisionPx = 0.1,
-    setFontSize,
     children,
-}) {
-    const innerElRef = useRef(null);
-    const updateSize = useCallback(() => {
-        const innerEl = innerElRef.current as HTMLElement | null;
-        const containerEl = innerEl?.parentElement;
-        if (!innerEl || !containerEl || fitMode === "none") return;
+    containerRef
+}: ResizableAutoTextSizeProps) {
+    console.log("render")
+    const { layout, actions } = useViewSettingsStore();
+    // using Zustand for fontSize was extremely laggy on Safari --> using local state and debounced sync with Zustand instead
+    const [fontSize, setFontSize] = useState(layout.fontSize);
+    const [pinching, setPinching] = useState(false);
+    useEffect(() => {
+        if (layout.fontSize === fontSize) return;
+        const timeoutId = setTimeout(() => {
+            actions.setLayoutSettings({ fontSize });
+            // if (fontSize !== layout.fontSize) {
+            // }
+        }, 100);
+        return () => clearTimeout(timeoutId);
+    }, [fontSize, actions, layout.fontSize]);
 
-        const autoTextMode = fitMode === "fitXY" ? "boxoneline" : "oneline";
+    useLayoutEffect(() => {
+        if (pinching) return; // avoid loop
+        // if (layout.fontSize === fontSize) return;
+        setFontSize(layout.fontSize);
+    }, [layout.fontSize, pinching])
+
+    // Gesture handling
+    useGesture({
+        onPinchStart: () => { setPinching(true) },
+        onPinchEnd: () => { setPinching(false) },
+        onPinch: ({ movement: [dScale], memo, first }) => {
+            if (!memo) memo = fontSize;
+            if (first) actions.setLayoutSettings({ fitScreenMode: "none" })
+            const newFontSize = getFontSizeInRange(memo * dScale, minFontSizePx, maxFontSizePx);
+            setFontSize(newFontSize);
+            return memo;
+        },
+    }, {
+        target: containerRef,
+        eventOptions: { passive: true },
+    })
+
+    // Auto-sizing logic (if needed)
+    const innerElRef = useRef<HTMLDivElement>(null);
+    const updateSize = useCallback(() => {
+        const innerEl = innerElRef.current;
+        const containerEl = innerEl?.parentElement;
+        if (!innerEl || !containerEl || layout.fitScreenMode === "none") return;
+
+        const autoTextMode = layout.fitScreenMode === "fitXY" ? "boxoneline" : "oneline";
         updateTextSize({
             innerEl,
             containerEl,
             mode: autoTextMode,
             minFontSizePx,
             maxFontSizePx,
-            fontSizePrecisionPx,
+            fontSizePrecisionPx: 0.1,
         });
 
-        // Update the fontSize state with the computed value
         const computedFontSize = getComputedStyle(innerEl).fontSize;
         setFontSize(parseFloat(computedFontSize));
-    }, [fitMode, fontSizePrecisionPx, maxFontSizePx, minFontSizePx, setFontSize]);
-
+    }, [layout.fitScreenMode, minFontSizePx, maxFontSizePx]);
 
     useLayoutEffect(() => {
-        // Set up the resize observer
-        const containerEl = (innerElRef.current as HTMLElement | null)?.parentElement;
+        const containerEl = containerRef.current;
         if (!containerEl) return;
 
-        const resizeObserver = new ResizeObserver(() => {
-            updateSize();
-        });
-
+        const resizeObserver = new ResizeObserver(updateSize);
         resizeObserver.observe(containerEl);
 
         return () => {
             resizeObserver.disconnect();
         };
-    }, [updateSize, twoColumns, repeatParts, repeatPartsChords, chordSettings]);
-
+    }, [updateSize, containerRef]);
 
     return (
-        <div ref={innerElRef} className="invisible absolute">
+        <div ref={innerElRef} style={{ fontSize }}>
             {children}
         </div>
     );
 }
-
-
-export function ResizableAutoTextSize({
-    minFontSizePx,
-    maxFontSizePx,
-    children,
-}) {
-    const { layout, chords: chordSettings, actions } = useViewSettingsStore();
-    const setFontSize = useCallback((fontSize: number) => {
-        actions.setLayoutSettings({ fontSize })
-    }, [actions]);
-
-    return (
-        <>
-            {layout.fitScreenMode !== "none" && (
-                <AutoTextSizeComputer
-                    fitMode={layout.fitScreenMode}
-                    twoColumns={layout.twoColumns}
-                    repeatParts={layout.repeatParts}
-                    repeatPartsChords={layout.repeatPartsChords}
-                    chordSettings={chordSettings}
-                    setFontSize={setFontSize}
-                    minFontSizePx={minFontSizePx}
-                    maxFontSizePx={maxFontSizePx}
-                >
-                    {children}
-                </AutoTextSizeComputer>
-            )}
-            <div style={{ fontSize: layout.fontSize }}>
-                {children}
-            </div>
-        </>
-    );
-};
-
 
 export default ResizableAutoTextSize;

@@ -89,10 +89,10 @@ interface SettingsState {
 }
 
 // Utility functions
-const getFontSizeInRange = (size: number) => {
-  const MIN_FONT_SIZE = 4
-  const MAX_FONT_SIZE = 160
-  return Math.min(Math.max(MIN_FONT_SIZE, size), MAX_FONT_SIZE)
+const MIN_FONT_SIZE = 4
+const MAX_FONT_SIZE = 80
+export const getFontSizeInRange = (size: number, min: number = MIN_FONT_SIZE, max: number = MAX_FONT_SIZE) => {
+  return Math.min(Math.max(min, size), max)
 }
 
 export const useViewSettingsStore = create<SettingsState>()(
@@ -113,6 +113,16 @@ export const useViewSettingsStore = create<SettingsState>()(
       actions: {
         setLayoutSettings: (settings) =>
           set((state) => {
+            // If we're just updating fontSize, do it directly without any other logic
+            if (Object.keys(settings).length === 1 && 'fontSize' in settings) {
+              return {
+                layout: {
+                  ...state.layout,
+                  fontSize: getFontSizeInRange(settings.fontSize!)
+                }
+              };
+            }
+
             const newLayout = {
               ...state.layout,
               ...settings,
@@ -121,8 +131,7 @@ export const useViewSettingsStore = create<SettingsState>()(
                 : state.layout.fontSize,
             };
 
-            // If current settings match custom preset and preset fields were changed,
-            // update the custom preset
+            // Only update custom preset if preset-related fields changed
             if (getCurrentPreset(state.layout) === 'custom') {
               const presetFields: Partial<PresetSettings> = {};
               if ('fitScreenMode' in settings) presetFields.fitScreenMode = settings.fitScreenMode;
