@@ -33,7 +33,8 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
                     <ResizableAutoTextSize
                         containerRef={containerRef}
                         minFontSizePx={4}
-                        maxFontSizePx={160}>
+                        maxFontSizePx={160}
+                        excludeSelector='.comment-line, .tab-section'>
                         <SongHeading
                             songData={songData}
                             layoutSettings={layout}

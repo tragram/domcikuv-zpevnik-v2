@@ -92,7 +92,11 @@
 }
 
 #auto-text-size-wrapper>div {
-    /* max-width: 100%; */
+    max-width: 100%;
+}
+
+.comment-line{
+    line-height: normal;
 }
 
 .song-content {
