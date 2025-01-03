@@ -9,11 +9,11 @@
 {range: d1-e2}
 {start_melody: g h h a f#}
 {start_of_verse: Rec}
-[G]Tak jsme byli [D]včera na Portě[C], [D]
-[G]a když jsme se vraceli [D]cestou domů 
-[D]tak jsme viděli [G]dřevorubce 
-jak porážej [D]strom 
-[C]a ten strom [D]plakal [G][D][C][D]
+[G]Tak jsme byli [D]včera na Portě,[C][D]
+[G]a když jsme se vraceli [D]cestou domů
+[D]tak jsme viděli [G]dřevorubce
+jak porážej [D]strom
+[C]a ten strom [D]plakal
 {end_of_verse}
 
 {start_of_verse}
@@ -24,7 +24,7 @@ trenýrky, sekyru, prezervativy, spacák.
 {end_of_verse}
 
 {start_of_chorus}
-Protože [G]hů a [D]hů [C]a hů 
+Protože [G]hů a [D]hů [C]a hů
 sovy [D]v mazutu [G]houkaj [D][C][D]
 hů a hů a hů, úplně blbě koukaj
 hů a hů a hů sovy v mazutu houkaj
@@ -42,4 +42,3 @@ jestli jsou to zmije nebo schizofrénie.
 hů a hů a hů, úplně blbě čuměj!
 {end_of_variant}
 {chorus}
-

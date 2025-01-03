@@ -48,6 +48,6 @@ Vylezu [G]na poušti, ráno mě nenajdou [Emi][Ami]
 {chorus}
 
 {start_of_bridge: Outro}
-|: [Dmi]Ledaže by moje 
-[Emi]holka chtěla brzo [Ami]vstát :|
+𝄆 [Dmi]Ledaže by moje
+[Emi]holka chtěla brzo [Ami]vstát 𝄇
 {end_of_bridge}
