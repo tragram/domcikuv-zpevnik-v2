@@ -84,14 +84,6 @@ export function ResizableAutoTextSize({
         };
     }, [excludeSelector, overflowClasses]);
 
-    useEffect(() => {
-        if (layout.fontSize === fontSize) return;
-        const timeoutId = setTimeout(() => {
-            actions.setLayoutSettings({ fontSize });
-        }, 100);
-        return () => clearTimeout(timeoutId);
-    }, [fontSize, actions, layout.fontSize]);
-
     useLayoutEffect(() => {
         if (pinching) return; // avoid loop
         // if (layout.fontSize === fontSize) return;
@@ -100,7 +92,7 @@ export function ResizableAutoTextSize({
 
     useGesture({
         onPinchStart: () => { setPinching(true) },
-        onPinchEnd: () => { setPinching(false) },
+        onPinchEnd: () => { actions.setLayoutSettings({ fontSize }); setPinching(false); },
         onPinch: ({ movement: [dScale], memo, first }) => {
             if (!memo) memo = fontSize;
             if (first) actions.setLayoutSettings({ fitScreenMode: "none" })
