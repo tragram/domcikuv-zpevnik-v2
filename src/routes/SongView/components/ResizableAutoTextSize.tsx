@@ -96,7 +96,7 @@ export function ResizableAutoTextSize({
         onPinch: ({ movement: [dScale], memo, first }) => {
             if (!memo) memo = fontSize;
             if (first) actions.setLayoutSettings({ fitScreenMode: "none" })
-            const newFontSize = getFontSizeInRange(memo * dScale, minFontSizePx, maxFontSizePx);
+            const newFontSize = getFontSizeInRange(memo * dScale);
             setFontSize(newFontSize);
             return memo;
         },
@@ -108,7 +108,6 @@ export function ResizableAutoTextSize({
     const innerElRef = useRef<HTMLDivElement>(null);
 
     const updateSize = useCallback(() => {
-        console.log("update size")
         const innerEl = innerElRef.current;
         const containerEl = innerEl?.parentElement;
         if (!innerEl || !containerEl || layout.fitScreenMode === "none") return;
