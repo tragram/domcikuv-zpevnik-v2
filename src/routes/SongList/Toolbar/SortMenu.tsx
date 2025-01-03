@@ -109,8 +109,8 @@ const categories: Category[] = [
         icon: <CalendarPlus />,
         sorting_icons: numberSortingIcons,
         sorting_labels: {
-            ascending: "Lucie Bílá → Vivaldi",
-            descending: "Vivaldi → Lucie Bílá"
+            ascending: "Vivaldi → Lucie Bílá",
+            descending: "Lucie Bílá → Vivaldi",
         }
     },
     {
