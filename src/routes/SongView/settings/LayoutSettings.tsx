@@ -110,7 +110,7 @@ export const LayoutSettingsDropdownSection: React.FC<{
       key="fitXY"
       checked={layoutSettings.fitScreenMode === "fitXY"}
       onSelect={e => e.preventDefault()}
-      onCheckedChange={() => setBothSettings({ fitScreenMode: "fitXY" })}
+      onCheckedChange={() => actions.setLayoutSettings({ fitScreenMode: "fitXY" })}
     >
       <DropdownIconStart icon={<MoveDiagonal />} />
       Fit screen
@@ -119,7 +119,7 @@ export const LayoutSettingsDropdownSection: React.FC<{
       key="fitX"
       checked={layoutSettings.fitScreenMode === "fitX"}
       onSelect={e => e.preventDefault()}
-      onCheckedChange={() => setBothSettings({ fitScreenMode: "fitX" })}
+      onCheckedChange={() => actions.setLayoutSettings({ fitScreenMode: "fitX" })}
     >
       <DropdownIconStart icon={<MoveHorizontal />} />
       Fit screen width
@@ -156,7 +156,7 @@ export const LayoutSettingsDropdownSection: React.FC<{
         <DropdownMenuCheckboxItem
           key={k}
           checked={layoutSettings[k]}
-          onCheckedChange={() => setBothSettings({ [k]: !layoutSettings[k] })}
+          onCheckedChange={() => ["repeatParts", "repeatPartsChords"].includes(k) ? setBothSettings({ [k]: !layoutSettings[k] }) : actions.setLayoutSettings({ [k]: !layoutSettings[k] })}
           onSelect={e => e.preventDefault()}
         >
           <DropdownIconStart icon={layoutSettingsValues[k].icon} />

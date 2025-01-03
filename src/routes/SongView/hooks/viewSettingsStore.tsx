@@ -59,19 +59,13 @@ const defaultPresetSettings: PresetSettings = isSmallScreen()
 
 // Function to determine which preset matches current settings
 const getCurrentPreset = (settings: PresetSettings): LayoutPreset => {
-  const presetEntries = Object.entries(LAYOUT_PRESETS) as [LayoutPreset, PresetSettings][];
-
-  for (const [presetName, presetSettings] of presetEntries) {
-    if (
-      presetSettings.fitScreenMode === settings.fitScreenMode &&
-      presetSettings.repeatParts === settings.repeatParts &&
-      presetSettings.repeatPartsChords === settings.repeatPartsChords
-    ) {
-      return presetName;
-    }
+  if (settings.fitScreenMode === "fitXY") {
+    return "compact";
+  } else if (settings.fitScreenMode === "fitX") {
+    return "maximizeFontSize";
+  } else {
+    return "custom";
   }
-
-  return 'custom'; // If no match found, it must be custom
 };
 
 // Store interface
@@ -122,7 +116,6 @@ export const useViewSettingsStore = create<SettingsState>()(
                 }
               };
             }
-
             const newLayout = {
               ...state.layout,
               ...settings,
@@ -130,25 +123,6 @@ export const useViewSettingsStore = create<SettingsState>()(
                 ? getFontSizeInRange(settings.fontSize)
                 : state.layout.fontSize,
             };
-
-            // Only update custom preset if preset-related fields changed
-            if (getCurrentPreset(state.layout) === 'custom') {
-              const presetFields: Partial<PresetSettings> = {};
-              if ('fitScreenMode' in settings) presetFields.fitScreenMode = settings.fitScreenMode;
-              if ('repeatParts' in settings) presetFields.repeatParts = settings.repeatParts;
-              if ('repeatPartsChords' in settings) presetFields.repeatPartsChords = settings.repeatPartsChords;
-
-              if (Object.keys(presetFields).length > 0) {
-                return {
-                  layout: newLayout,
-                  customLayoutPreset: {
-                    ...state.customLayoutPreset,
-                    ...presetFields,
-                  },
-                };
-              }
-            }
-
             return { layout: newLayout };
           }),
         setCustomLayoutPreset: (settings) =>
@@ -167,10 +141,12 @@ export const useViewSettingsStore = create<SettingsState>()(
           })),
         applyPreset: (preset) => {
           const { actions, customLayoutPreset } = get()
-          const presetSettings = preset === 'custom'
+          let presetSettings = preset === 'custom'
             ? customLayoutPreset
             : LAYOUT_PRESETS[preset];
-
+          if (preset === "custom") {
+            presetSettings = {...presetSettings, fitScreenMode: "none" };
+          }
           actions.setLayoutSettings(presetSettings);
         },
         getCurrentPreset: () => {
