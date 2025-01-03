@@ -129,7 +129,7 @@ const Filtering = ({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                         aria-label="Filtering"
-                        className="dropdown-scroll no-scrollbar w-52 max-h-[80vh] overflow-y-scroll"
+                        className="dropdown-scroll no-scrollbar w-52 max-h-[80dvh] overflow-y-scroll"
                         sideOffset={15}
                     >
                         <DropdownMenuCheckboxItem
