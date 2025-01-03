@@ -1,190 +1,133 @@
 import { useGesture } from '@use-gesture/react'
-import { updateTextSize } from "auto-text-size";
 import {
     useCallback,
     useEffect,
     useLayoutEffect,
-    useMemo,
-    useRef,
-    useState
+    useState,
+    useRef
 } from "react";
 import { getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
-
-/**
- * Ensures that `func` is not called more than once per animation frame.
- * taken from https://github.com/sanalabs/auto-text-size/blob/main/src/auto-text-size-standalone.ts
- * Using requestAnimationFrame in this way ensures that we render as often as
- * possible without excessively blocking the UI.
- */
-function throttleAnimationFrame(func: () => void): () => void {
-    let wait = false;
-
-    return () => {
-        if (!wait) {
-            wait = true;
-            requestAnimationFrame(() => {
-                func();
-                wait = false;
-            });
-        }
-    };
-}
-
-const getContentDimensions = (element: HTMLElement): [number, number] => {
-    const computedStyle = getComputedStyle(element);
-    return [
-        element.clientWidth -
-        parseFloat(computedStyle.paddingLeft) -
-        parseFloat(computedStyle.paddingRight),
-
-        element.clientHeight -
-        parseFloat(computedStyle.paddingTop) -
-        parseFloat(computedStyle.paddingBottom)
-    ];
-};
+import { useMeasure } from '@uidotdev/usehooks';
+import React from 'react';
 
 interface ResizableAutoTextSizeProps {
-    minFontSizePx: number
-    maxFontSizePx: number
     children: React.ReactNode
-    containerRef: React.RefObject<HTMLDivElement>  // container ref for gestures
-    excludeSelector?: string // ignored in autosizing
-    overflowClasses?: string // added to the excluded elements
+    gestureContainerRef: React.RefObject<HTMLDivElement>
+    excludeSelector?: string
+    overflowClasses?: string
 }
 
+const DUMMY_FONT_SIZE_PX = 16;
+
 export function ResizableAutoTextSize({
-    minFontSizePx,
-    maxFontSizePx,
     children,
-    containerRef,
+    gestureContainerRef,
     excludeSelector,
     overflowClasses = "no-scrollbar overflow-x-auto overflow-y-clip",
 }: ResizableAutoTextSizeProps) {
     const { layout, actions } = useViewSettingsStore();
     const [fontSize, setFontSize] = useState(layout.fontSize);
+    console.log(fontSize)
     const [pinching, setPinching] = useState(false);
-    const [containerDimensions, setContainerDimensions] = useState<[number, number] | undefined>(undefined);
+
+    const [containerDivRef, containerDimensions] = useMeasure();
+    const [hiddenDivRef, measuredDimensions] = useMeasure();
 
     // Setup overflow management
-    useEffect(() => {
-        const innerEl = innerElRef.current;
-        if (!innerEl) return;
-
-        const elements = innerEl.querySelectorAll(excludeSelector ?? "");
+    useLayoutEffect(() => {
+        const elements = document.querySelectorAll(excludeSelector ?? "");
         elements.forEach((element) => {
             const classesToAdd = overflowClasses.split(" ");
             element.classList.add(...classesToAdd);
         });
 
-        return () => {
-            elements.forEach((element) => {
-                const classesToRemove = overflowClasses.split(" ");
-                element.classList.remove(...classesToRemove);
-            });
-        };
+        const excludedElements = document.querySelectorAll(excludeSelector ? `#dummy-contents ${excludeSelector}` : "")
+        excludedElements.forEach((element) => {
+            (element as HTMLElement).style.width = '0';
+        });
     }, [excludeSelector, overflowClasses]);
 
     useLayoutEffect(() => {
-        if (pinching) return; // avoid loop
-        // if (layout.fontSize === fontSize) return;
+        if (pinching) return;
         setFontSize(layout.fontSize);
-    }, [layout.fontSize, pinching])
+    }, [layout.fontSize, pinching]);
 
     useGesture({
-        onPinchStart: () => { setPinching(true) },
-        onPinchEnd: () => { actions.setLayoutSettings({ fontSize }); setPinching(false); },
-        onPinch: ({ movement: [dScale], memo, first }) => {
+        onPinchStart: () => { actions.setLayoutSettings({ fitScreenMode: "none" }); setPinching(true) },
+        onPinchEnd: () => {
+            actions.setLayoutSettings({ fontSize });
+            setPinching(false);
+        },
+        onPinch: ({ movement: [dScale], memo }) => {
             if (!memo) memo = fontSize;
-            if (first) actions.setLayoutSettings({ fitScreenMode: "none" })
             const newFontSize = getFontSizeInRange(memo * dScale);
             setFontSize(newFontSize);
             return memo;
         },
     }, {
-        target: containerRef,
+        target: gestureContainerRef,
         eventOptions: { passive: true },
-    })
+    });
 
-    const innerElRef = useRef<HTMLDivElement>(null);
+    const calculateFontSize = useCallback(() => {
+        const widthAvailable = containerDimensions.width || measuredDimensions.width;
+        const heightAvailable = containerDimensions.height || measuredDimensions.height;
+        if (layout.fitScreenMode === "none" || !widthAvailable) return;
+        let scaleFactor;
+        if (layout.fitScreenMode === "fitXY") {
+            if (!heightAvailable) return;
+            const widthScale = containerDimensions.width / measuredDimensions.width * DUMMY_FONT_SIZE_PX;
+            const heightScale = containerDimensions.height / measuredDimensions.height * DUMMY_FONT_SIZE_PX;
+            scaleFactor = Math.min(widthScale, heightScale);
+            console.log("container:", containerDimensions)
+            console.log("text:", measuredDimensions)
+            console.log("scale:", scaleFactor)
+        } else if (layout.fitScreenMode === "fitX") {
+            scaleFactor = containerDimensions.width / measuredDimensions.width * DUMMY_FONT_SIZE_PX;
+        } else {
+            throw Error("Invalid fitScreenMode");
+        }
 
-    const updateSize = useCallback(() => {
-        const innerEl = innerElRef.current;
-        const containerEl = innerEl?.parentElement;
-        if (!innerEl || !containerEl || layout.fitScreenMode === "none") return;
-
-        // Temporarily set width of excluded elements to 0 during measurement
-        const excludedElements = innerEl.querySelectorAll(excludeSelector ?? "");
-        excludedElements.forEach((element) => {
-            (element as HTMLElement).style.width = '0';
-        });
-
-        const autoTextMode = layout.fitScreenMode === "fitXY" ? "boxoneline" : "oneline";
-        updateTextSize({
-            innerEl,
-            containerEl,
-            mode: autoTextMode,
-            minFontSizePx,
-            maxFontSizePx,
-            fontSizePrecisionPx: 0.1,
-        });
-
-        // restore width
-        excludedElements.forEach((element) => {
-            (element as HTMLElement).style.width = '100%';
-        });
-
-        const computedFontSize = getComputedStyle(innerEl).fontSize;
-        setFontSize(parseFloat(computedFontSize));
-    }, [layout.fitScreenMode, minFontSizePx, maxFontSizePx, excludeSelector]);
-
-    const containerElement = () => {
-        const innerEl = innerElRef.current;
-        if (!innerEl) return;
-        return innerEl.parentElement;
-    }
-
-    const getParentDimensions = useCallback(() => {
-        const containerEl = containerElement();
-        return getContentDimensions(containerEl);
-    }, [])
-
-    const throttledUpdateSize: any = useMemo(() => throttleAnimationFrame(() => {
-        updateSize();
-
-        const innerEl = innerElRef.current;
-        if (!innerEl) return;
-        setContainerDimensions(getParentDimensions())
-    }), [getParentDimensions, updateSize])
+        const newFontSize = getFontSizeInRange(scaleFactor);
+        setFontSize(newFontSize);
+    }, [containerDimensions, measuredDimensions, layout.fitScreenMode]);
 
     useLayoutEffect(() => {
-        const resizeObserver = new ResizeObserver(() => {
-            const prevContainerDimensions = containerDimensions;
-            const currentContainerDimensions = getParentDimensions();
-
-            if (
-                prevContainerDimensions?.[0] !== currentContainerDimensions[0] ||
-                prevContainerDimensions?.[1] !== currentContainerDimensions[1]
-            ) {
-                throttledUpdateSize();
-            }
-        });
-        const containerEl = containerRef.current;
-        if (!containerEl) return;
-
-        resizeObserver.observe(containerEl);
-
-        return () => {
-            resizeObserver.disconnect();
-        };
-    }, [updateSize, containerRef, throttledUpdateSize, containerDimensions, getParentDimensions]);
-
-    useLayoutEffect(() => {
-        throttledUpdateSize();
-    }, [layout.fitScreenMode, layout.repeatParts, layout.repeatPartsChords, layout.twoColumns, throttledUpdateSize])
+        calculateFontSize();
+    }, [
+        calculateFontSize,
+        layout.fitScreenMode,
+        layout.repeatParts,
+        layout.repeatPartsChords,
+        layout.twoColumns
+    ]);
 
     return (
-        <div ref={innerElRef} style={{ fontSize }}>
-            {children}
+        <div className='relative flex h-full w-full max-w-full'
+            ref={containerDivRef}
+        >
+            <div id="actual-contents" className='max-w-full'
+                style={{
+                    fontSize: `${fontSize}px`,
+                }}
+            >
+                {children}
+            </div>
+            <div
+                id="dummy-contents"
+                ref={hiddenDivRef}
+                style={{
+                    position: 'fixed',
+                    left: '-9999px',
+                    visibility: 'hidden',
+                    fontSize: `${DUMMY_FONT_SIZE_PX}px`,
+                    whiteSpace: layout.fitScreenMode === "fitX" ? 'nowrap' : 'normal',
+                    pointerEvents: 'none'
+                }}
+                aria-hidden="true"
+            >
+                {children}
+            </div>
         </div>
     );
 }

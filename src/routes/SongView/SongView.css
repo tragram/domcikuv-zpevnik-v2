@@ -82,20 +82,15 @@
 
 /* layout */
 
-#auto-text-size-wrapper {
+#auto-text-size-wrapper>div {
     justify-content: safe center;
     /* Allows vertical scrolling but blocks zoom */
     /* touch-action: pan-y; */
     max-width: 100%;
     font-weight: 600;
-    display: flex;
 }
 
-#auto-text-size-wrapper>div {
-    max-width: 100%;
-}
-
-.comment-line{
+.comment-line {
     line-height: normal;
 }
 
@@ -122,7 +117,9 @@
     flex-direction: column;
     gap: 0.1em;
     break-inside: avoid-column;
-    /* max-width: 100%; */
+    width: fit-content;
+    /* width: fit-content;
+    max-width: 100%; */
 }
 
 .lyrics-line {

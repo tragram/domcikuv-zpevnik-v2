@@ -30,7 +30,8 @@ export const usePWAInstall = () => {
                 icon={resolveAssetPath("assets/icons/favicon.svg")}
                 name={"Domčíkův Zpěvník"}
                 description='Druhá verze mého báječného zpěvníku - nyní offline!'
-                onPwaInstallAvailableEvent={(event) => { console.log(event); setInstallAvailable(true) }}
+                // onPwaInstallAvailableEvent={(event) => { console.log(event); setInstallAvailable(true) }}
+                onPwaInstallAvailableEvent={() => { setInstallAvailable(true) }}
             />
         </>
     );
