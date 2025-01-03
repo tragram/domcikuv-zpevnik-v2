@@ -84,7 +84,7 @@ const pwaManifest: Partial<VitePWAOptions> = {
         sizes: "1024x1024",
         src: "./assets/icons/maskable_icon.png",
         type: "image/png",
-        purpose: "any",
+        purpose: "maskable",
       },
       {
         src: "./assets/icons/android-launchericon-144-144.png",
