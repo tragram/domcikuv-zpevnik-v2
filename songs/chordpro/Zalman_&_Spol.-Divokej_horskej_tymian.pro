@@ -25,9 +25,9 @@ z hor [C]divokej [F]tymián. [C]
 {end_of_verse}
 
 {start_of_chorus}
-[C7]Podí[F]vej, jak málo [C]stačí, 
+[C7]Podí[F]vej, jak málo [C]stačí,
 když do [F]vázy natr[Emi]hám
-bílou [Dmi]nocí k milov[F]ání 
+bílou [Dmi]nocí k milov[F]ání
 z hor di[C]vokej [F]tymián. [C]
 {end_of_chorus}
 

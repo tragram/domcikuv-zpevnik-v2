@@ -12,7 +12,7 @@
 {start_of_verse}
 [G]Tisíce [Ami]nocí tisíc [C]slov a dní,
 [G]hlavolam [Ami]první a [C]poslední
-[G]za oknem [Ami]svítání 
+[G]za oknem [Ami]svítání
 a v [C]hlavě otázku odkud [D]kudy a kam.
 {end_of_verse}
 
@@ -27,7 +27,7 @@ chci líbat tě na tvoje [Emi]ústa.
 {start_of_verse}
 Že [G]byl jsem jak [Ami]blázen, že [C]byl se mnou kříž,
 [G]jen ty mě [Ami]znáš, jen ty [C]jediná víš,
-[G]tu správnou [Ami]odpověď 
+[G]tu správnou [Ami]odpověď
 [C]na otázku, odkud [D]kudy a kam.
 {end_of_verse}
 

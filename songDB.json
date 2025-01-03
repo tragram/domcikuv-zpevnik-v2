@@ -316,7 +316,7 @@
     "startMelody": "c a",
     "chordproFile": "Cerni_andele-Lucie.pro",
     "pdfFilenames": "",
-    "contentHash": "191c2f4a574315301ef01073906bec525d165ac8",
+    "contentHash": "af253d823448058018c4c13b913ead2e19c20acb",
     "disabled": false
   },
   {
@@ -428,7 +428,7 @@
     "startMelody": "g",
     "chordproFile": "Chinaski-Hlavolam.pro",
     "pdfFilenames": "['chinaski_hlavolam-sken.pdf', 'chinaski_hlavolam-comp.pdf', 'chinaski_hlavolam-gen.pdf']",
-    "contentHash": "12ab8d51345358cd5bf38adf391a8980c894d43b",
+    "contentHash": "1bc8d6caea3776ed7c608062962bc65c95e3729e",
     "disabled": false
   },
   {
@@ -604,7 +604,7 @@
     "startMelody": "c",
     "chordproFile": "David_a_Golias-Jan_Werich,_Jiri_Voskovec.pro",
     "pdfFilenames": "",
-    "contentHash": "1afe83aa9b8b314119fbe108dc52296c8c966ff0",
+    "contentHash": "42cc68f2b34370e7ce62ff0db4d51a73c7d15b41",
     "disabled": false
   },
   {
@@ -1180,7 +1180,7 @@
     "startMelody": "g a g h",
     "chordproFile": "Honza_Jicha-Malicky_knirek.pro",
     "pdfFilenames": "['honza_jicha_malicky_knirek-sken.pdf', 'honza_jicha_malicky_knirek-comp.pdf', 'honza_jicha_malicky_knirek-gen.pdf']",
-    "contentHash": "2375497d2301763996a09be601c81d11f3c1baf3",
+    "contentHash": "7faa7dd3e2ddc56d7edf22e1f05ce1151874873f",
     "disabled": false
   },
   {
@@ -1292,7 +1292,7 @@
     "startMelody": "d d a",
     "chordproFile": "Hop_Trop-Tri_krize.pro",
     "pdfFilenames": "['hop_trop_tri_krize-sken.pdf', 'hop_trop_tri_krize-comp.pdf']",
-    "contentHash": "a860103477853609ea754505f512d1b0ae9a09d4",
+    "contentHash": "f438b0e411041a1f68bac4eead7f0ceade5d19e6",
     "disabled": false
   },
   {
@@ -1324,7 +1324,7 @@
     "startMelody": "a d",
     "chordproFile": "Hruska-Cechomor.pro",
     "pdfFilenames": "",
-    "contentHash": "7dba86d67fdce9f284b692c00054f46fed070d08",
+    "contentHash": "9f284cb055289524a45efee7caa817943de7a3cf",
     "disabled": false
   },
   {
@@ -3164,7 +3164,7 @@
     "startMelody": "f",
     "chordproFile": "Na_Hotelu_v_Olomouci-Petr_Hapka.pro",
     "pdfFilenames": "",
-    "contentHash": "6d5c32fa96dd395a0950d53e6406c20e73e24942",
+    "contentHash": "fd21b150877f231d8b458903f9af582f33e46da0",
     "disabled": false
   },
   {
@@ -3372,7 +3372,7 @@
     "startMelody": "e",
     "chordproFile": "Olympic-Bon_soir_mademoiselle_Paris.pro",
     "pdfFilenames": "['olympic_bon_soir_mademoiselle_paris-sken.pdf', 'olympic_bon_soir_mademoiselle_paris-comp.pdf']",
-    "contentHash": "4bb365b6983059a7adc1e439f0d1648ee328859a",
+    "contentHash": "b59e1dd2c8945bf5724881341f9e2ca0fe739708",
     "disabled": false
   },
   {
@@ -3900,7 +3900,7 @@
     "startMelody": "h f# f# f# e d",
     "chordproFile": "Rada_se_miluje-Karel_Plihal.pro",
     "pdfFilenames": "",
-    "contentHash": "130b0d0d07151d21dd0ba5e4a9aa943e3d1fcb5c",
+    "contentHash": "01881a3912566c566b005a19cd427480e44f1ef0",
     "disabled": false
   },
   {
@@ -4012,7 +4012,7 @@
     "startMelody": "c",
     "chordproFile": "Samson-Medove-Kolibana.pro",
     "pdfFilenames": "",
-    "contentHash": "b0adbfece7863ad868e2468215cf63ecc3e3996f",
+    "contentHash": "de520946952f935bac4bb357680504973ca0f113",
     "disabled": false
   },
   {
@@ -4508,7 +4508,7 @@
     "startMelody": "d d",
     "chordproFile": "Tri_orisky-Iveta_Bartosova.pro",
     "pdfFilenames": "",
-    "contentHash": "109cad20710f7220bc926b38013e364f0582fe09",
+    "contentHash": "a0df0a7fc0de796407e05e350defc33c4a747d56",
     "disabled": false
   },
   {
@@ -4524,7 +4524,7 @@
     "startMelody": "e d c",
     "chordproFile": "Tri_sestry-AIDA.pro",
     "pdfFilenames": "['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']",
-    "contentHash": "1a4659a40a0a0ef02d71ff4c2af245b62a648096",
+    "contentHash": "011a1afd1055db9f2697a0dcebed4d1bd5184ac3",
     "disabled": false
   },
   {
@@ -4540,7 +4540,7 @@
     "startMelody": "g h h a f#",
     "chordproFile": "Tri_sestry-Sovy_v_mazutu.pro",
     "pdfFilenames": "",
-    "contentHash": "b5a37c9c5567c88b6542546dd22a56f5d7318316",
+    "contentHash": "740e367ded919bdb6a9918695b3c2ef8d0a723b9",
     "disabled": false
   },
   {
@@ -4956,7 +4956,7 @@
     "startMelody": "e d#",
     "chordproFile": "Yvonne_Prenosilova-Boty_proti_lasce.pro",
     "pdfFilenames": "[]",
-    "contentHash": "16bc3d58c8ad5ca7ed549fe7631b42eeffc7f4ca",
+    "contentHash": "cf1a1ca2dda8a32919c85736eec710ef62aeaf35",
     "disabled": false
   },
   {
@@ -4972,7 +4972,7 @@
     "startMelody": "c",
     "chordproFile": "Zalman_&_Spol.-Divokej_horskej_tymian.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf', 'pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf']",
-    "contentHash": "adb64b9c644e81efc3b335a3d52802c6e976fcf0",
+    "contentHash": "c8a0334b5c974ee080bd76a24f553bc6cc72e697",
     "disabled": false
   },
   {
@@ -5114,9 +5114,9 @@
     "range": "e1-h2",
     "illustrationAuthor": "",
     "startMelody": "e h h",
-    "chordproFile": "Zatanci-Jaromir_Nohavice.pro",
+    "chordproFile": "Zatanci-Jaromir_Nohavica.pro",
     "pdfFilenames": "",
-    "contentHash": "88c76943923dadbb391a90bb879e94d619790474",
+    "contentHash": "3a676f9165796d97f6892d7693cb880e6241d8c2",
     "disabled": false
   },
   {
