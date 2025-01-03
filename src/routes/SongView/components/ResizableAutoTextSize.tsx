@@ -180,7 +180,7 @@ export function ResizableAutoTextSize({
 
     useLayoutEffect(() => {
         throttledUpdateSize();
-    }, [layout.fitScreenMode, throttledUpdateSize])
+    }, [layout.fitScreenMode, layout.repeatParts, layout.repeatPartsChords, layout.twoColumns, throttledUpdateSize])
 
     return (
         <div ref={innerElRef} style={{ fontSize }}>
