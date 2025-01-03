@@ -10,6 +10,26 @@ import { getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsS
 import { useMeasure } from '@uidotdev/usehooks';
 import React from 'react';
 
+/**
+ * Ensures that `func` is not called more than once per animation frame.
+ * taken from https://github.com/sanalabs/auto-text-size/blob/main/src/auto-text-size-standalone.ts
+ * Using requestAnimationFrame in this way ensures that we render as often as
+ * possible without excessively blocking the UI.
+ */
+// function throttleAnimationFrame(func: () => void): () => void {
+//     let wait = false;
+
+//     return () => {
+//         if (!wait) {
+//             wait = true;
+//             requestAnimationFrame(() => {
+//                 func();
+//                 wait = false;
+//             });
+//         }
+//     };
+// }
+
 interface ResizableAutoTextSizeProps {
     children: React.ReactNode
     gestureContainerRef: React.RefObject<HTMLDivElement>
@@ -27,8 +47,9 @@ export function ResizableAutoTextSize({
 }: ResizableAutoTextSizeProps) {
     const { layout, actions } = useViewSettingsStore();
     const [fontSize, setFontSize] = useState(layout.fontSize);
-    console.log(fontSize)
     const [pinching, setPinching] = useState(false);
+    const [initialized, setInitialized] = useState(false);
+    const [emptyDimensions, setEmptyDimensions] = useState<{ width: number | null, height: number | null }>({ width: null, height: null });
 
     const [containerDivRef, containerDimensions] = useMeasure();
     const [hiddenDivRef, measuredDimensions] = useMeasure();
@@ -52,6 +73,12 @@ export function ResizableAutoTextSize({
         setFontSize(layout.fontSize);
     }, [layout.fontSize, pinching]);
 
+    useEffect(() => {
+        if (initialized || !containerDimensions.width || !measuredDimensions.width) return;
+        setEmptyDimensions({ width: containerDimensions.width, height: containerDimensions.height })
+        setInitialized(true);
+    }, [containerDimensions, initialized, measuredDimensions])
+
     useGesture({
         onPinchStart: () => { actions.setLayoutSettings({ fitScreenMode: "none" }); setPinching(true) },
         onPinchEnd: () => {
@@ -69,37 +96,38 @@ export function ResizableAutoTextSize({
         eventOptions: { passive: true },
     });
 
-    const calculateFontSize = useCallback(() => {
-        const widthAvailable = containerDimensions.width || measuredDimensions.width;
-        const heightAvailable = containerDimensions.height || measuredDimensions.height;
+    const updateFontSize = useCallback(() => {
+        const widthAvailable = emptyDimensions.width || measuredDimensions.width;
+        const heightAvailable = emptyDimensions.height || measuredDimensions.height;
         if (layout.fitScreenMode === "none" || !widthAvailable) return;
         let scaleFactor;
         if (layout.fitScreenMode === "fitXY") {
             if (!heightAvailable) return;
-            const widthScale = containerDimensions.width / measuredDimensions.width * DUMMY_FONT_SIZE_PX;
-            const heightScale = containerDimensions.height / measuredDimensions.height * DUMMY_FONT_SIZE_PX;
+            const widthScale = emptyDimensions.width / measuredDimensions.width * DUMMY_FONT_SIZE_PX;
+            const heightScale = emptyDimensions.height / measuredDimensions.height * DUMMY_FONT_SIZE_PX;
             scaleFactor = Math.min(widthScale, heightScale);
-            console.log("container:", containerDimensions)
-            console.log("text:", measuredDimensions)
-            console.log("scale:", scaleFactor)
         } else if (layout.fitScreenMode === "fitX") {
-            scaleFactor = containerDimensions.width / measuredDimensions.width * DUMMY_FONT_SIZE_PX;
+            scaleFactor = emptyDimensions.width / measuredDimensions.width * DUMMY_FONT_SIZE_PX;
         } else {
             throw Error("Invalid fitScreenMode");
         }
 
         const newFontSize = getFontSizeInRange(scaleFactor);
         setFontSize(newFontSize);
-    }, [containerDimensions, measuredDimensions, layout.fitScreenMode]);
+        // while this depends on fitScreenMode, I do not want it to be updated when it changes (only when measuredDimensions, which is also dependent on it, changes)
+        // maybe this could be split in two functions to make this OK for React?
+    }, [emptyDimensions, measuredDimensions]);
+
+    // const throttleUpdateFontSize = throttleAnimationFrame(updateFontSize);
 
     useLayoutEffect(() => {
-        calculateFontSize();
+        updateFontSize();
     }, [
-        calculateFontSize,
-        layout.fitScreenMode,
-        layout.repeatParts,
-        layout.repeatPartsChords,
-        layout.twoColumns
+        updateFontSize,
+        // layout.fitScreenMode,
+        // layout.repeatParts,
+        // layout.repeatPartsChords,
+        // layout.twoColumns
     ]);
 
     return (
@@ -111,7 +139,7 @@ export function ResizableAutoTextSize({
                     fontSize: `${fontSize}px`,
                 }}
             >
-                {children}
+                {initialized && children}
             </div>
             <div
                 id="dummy-contents"
