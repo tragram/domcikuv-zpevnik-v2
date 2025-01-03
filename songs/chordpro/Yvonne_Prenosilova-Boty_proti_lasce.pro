@@ -36,5 +36,5 @@ někde v duši, ne však na nohou.
 {end_of_verse}
 
 {start_of_verse: Rec.}
-Pozor, boty! Pochodem [E]vchod!
+Pozor, boty! Pochodem vchod!
 {end_of_verse}

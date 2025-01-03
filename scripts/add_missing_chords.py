@@ -9,33 +9,30 @@ from utils import load_secrets, songs_path
 
 secrets = load_secrets()
 client = anthropic.Anthropic(
-    # defaults to os.environ.get("ANTHROPIC_API_KEY")
     api_key=secrets["anthropic"]["api_key"],
 )
 
 system_message = """When presented with a song in ChordPro format that has repeated sections with missing chords, complete the following tasks:
 
 * Add chord annotations only where lyrics already exist and chords are missing.
-* For repeated sections (verse/chorus/bridge etc.), copy the chord progression from the first occurrence of that section type
-* If you detect a key change/modulation, transpose the chords appropriately while maintaining the same relative chord progression
-* Preserve all existing ChordPro directives (e.g. {chorus}, {verse}) without expanding or modifying them
-* Only output the updated ChordPro file contents with no additional commentary
+* For repeated sections (verse/chorus/bridge etc.), copy the chord progression from the first occurrence of that section type.
+* If you detect a key change/modulation, transpose the chords appropriately while maintaining the same relative chord progression.
+* Preserve all existing ChordPro directives (e.g. {chorus}, {verse}) without expanding or modifying them.
+* Only output the updated ChordPro file contents with no additional commentary.
 
 Important notes:
-* Do not add or modify any lyrics
-* Do not expand section directives
-* Only add chords where there are existing lyrics missing chord annotations
-* Maintain the original formatting and structure
-* If unsure about a chord progression, flag it for review"""
+* Do not add or modify any lyrics.
+* Do not expand section directives.
+* Only add chords where there are existing lyrics missing chord annotations.
+* Maintain the original formatting and structure.
+* If unsure about a chord progression, flag it for review."""
 
 model_id = "claude-3-5-sonnet-20241022"
 batches_folder = Path(__file__).parent.resolve() / "batches"
 
 
 def antropic_id_sanitization(input_string):
-    # Replace any character not matching the allowed pattern
     sanitized = re.sub(r"[^a-zA-Z0-9_-]", "", input_string)
-    # Truncate to a maximum of 64 characters
     return sanitized[:64]
 
 
@@ -54,7 +51,6 @@ def generate_chords(chordpro_content: str):
 
 def generate_chords_batch_api(chordpro_contents: Mapping[str, str]):
     chordpro_contents = [(d["antropic_id"], d["content"]) for d in chordpro_contents]
-    print(chordpro_contents)
     message_batch = client.beta.messages.batches.create(
         requests=[
             {
@@ -90,14 +86,16 @@ def find_incomplete_chordpro_files(folder_path, skipping, max_songs=10, batch_ap
     """
     incomplete_files = []
 
-    # Regular expressions to identify chords and verses
+    # Regular expressions to identify chords and section labels
     chord_pattern = re.compile(r"\[.+\]")
-    verse_start_pattern = re.compile(r"\{start_of_verse(:[^}]*)?\}")
-    verse_end_pattern = re.compile(r"\{end_of_verse\}")
+    section_start_pattern = re.compile(r"\{start_of_(verse|chorus|bridge)(:[^}]*)?\}")
+    section_end_pattern = re.compile(r"\{end_of_(verse|chorus|bridge)\}")
+    rec_label_pattern = re.compile(r":\s*rec\.", re.IGNORECASE)
+
     processed_songs = 0
     for file_name in os.listdir(folder_path):
         if file_name in skipping:
-            print(f"Skipping {file_name} - already in batch api queue...")
+            print(f"Skipping {file_name} - already in batch API queue...")
             continue
         if processed_songs >= max_songs:
             break
@@ -107,18 +105,23 @@ def find_incomplete_chordpro_files(folder_path, skipping, max_songs=10, batch_ap
             with open(file_path, "r", encoding="utf-8") as file:
                 content = file.read()
 
-            # Find all verse blocks
-            verses = []
-            start_positions = [m.end() for m in verse_start_pattern.finditer(content)]
-            end_positions = [m.start() for m in verse_end_pattern.finditer(content)]
+            # Find all sections (start and end markers)
+            sections = []
+            start_matches = list(section_start_pattern.finditer(content))
+            end_matches = list(section_end_pattern.finditer(content))
 
-            if len(start_positions) == len(end_positions):
-                for start, end in zip(start_positions, end_positions):
-                    verses.append(content[start:end])
+            if len(start_matches) == len(end_matches):
+                for start_match, end_match in zip(start_matches, end_matches):
+                    label = start_match.group(0)  # e.g., "{start_of_verse: Rec.}"
+                    if rec_label_pattern.search(label):  # Skip sections with "Rec."
+                        print(f"Skipping section in {file_name} due to 'Rec.' label.")
+                        continue
+                    sections.append(content[start_match.end() : end_match.start()])
 
-            # Check if any verse lacks chords
-            for verse in verses:
-                if not chord_pattern.search(verse):
+            # Check if any section lacks chords and process it
+            for section in sections:
+                if not chord_pattern.search(section):  # Check if chords are missing
+                    print("Would like to add chords to ", file_name)
                     incomplete_files.append(
                         {
                             "file_name": file_name,
@@ -130,11 +133,11 @@ def find_incomplete_chordpro_files(folder_path, skipping, max_songs=10, batch_ap
                         pass
                     else:
                         updated_content = generate_chords(content)
-                        # Write the updated content back to the file
                         with open(file_path, "w", encoding="utf-8") as file:
                             file.write(updated_content)
                     processed_songs += 1
                     break
+
     message_batch = generate_chords_batch_api(incomplete_files)
     print(message_batch)
     with open(
@@ -176,10 +179,8 @@ def check_all_past_batches():
                             f.write(result.result.message.content[0].text)
                     case "errored":
                         if result.result.error.type == "invalid_request":
-                            # Request body must be fixed before re-sending request
                             print(f"Validation error {result.custom_id}")
                         else:
-                            # Request can be retried directly
                             print(f"Server error {result.custom_id}")
                         should_delete = False
                     case "expired":
@@ -196,7 +197,6 @@ def check_all_past_batches():
 
 if __name__ == "__main__":
     skipping = check_all_past_batches()
-    # quit()
     folder_path = songs_path() / "chordpro"
 
     if not os.path.exists(folder_path):

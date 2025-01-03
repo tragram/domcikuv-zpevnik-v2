@@ -107,7 +107,9 @@ anthropic:
 ```
 and run `scripts/add_missing.chords.py`. Remember to run it again within 24hrs to retrieve the results! 
 
-The output should be acceptable as long as the incomplete verses follow the same structure (line breaks etc.) but it's still worth checking. The main thing to look out for is Haiku making "typos" when chords are inserted within words. It may also occasionally delete a repeated part (such as `{chorus}`).
+The output should be acceptable as long as the incomplete verses follow the same structure (line breaks etc.) but it's still worth checking. The main thing to look out for is AI making "typos" when chords are inserted within words. It may also occasionally delete a repeated part (such as `{chorus}`).
+
+To skip a part from having chords filled in, use the "Rec." label (e.g. `{start_of_verse: Rec.}`).
 
 ### Web scraping for lyrics & chords
 When moving from the old PDF-based songbook, there was a need to recreate almost 300 songs in ChordPro. Naturally, some automation had to be done in order not to spend the rest of my life on this step.

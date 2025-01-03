@@ -45,8 +45,8 @@ Takhle [G7]Goliáš ho [E7]provokuje,
 [C]A jakej byl [D7]Go[G7]li[C]áš.
 {end_of_verse}
 
-{start_of_verse: Rec}
-[C]Vcelku, to co jsme dnes slyšeli,
+{start_of_verse: Rec.}
+Vcelku, to co jsme dnes slyšeli,
 to není nic nového, to je stará příhoda,
 ale zajímavá věc - ono to má pokračování!
 {end_of_verse}
@@ -56,7 +56,7 @@ ale zajímavá věc - ono to má pokračování!
 [C]a zůstanou [Ami]ještě pár let [Dmi7]pasívní [G7]
 [C]stanou se pak [Ami]tyto masy
 [F]asi už na [Fmi]věčné časy
-[C]radioaktí[G7]vní
+[C]radio[As]aktí[G7]vní
 
 [C]Víte co je [Ami]zapotřebí [Dmi7]nápa[G7]dů
 [C]jak se zbavit [Ami]nukleárních [Dmi7]odpa[G7]dů

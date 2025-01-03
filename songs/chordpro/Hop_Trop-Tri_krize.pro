@@ -70,8 +70,8 @@ Svědomí měl,
 vedle [C]nich si [Am]klek…
 {end_of_verse}
 
-{start_of_bridge}
-Rec: Vím, trestat je lidský,
+{start_of_bridge: Rec.}
+Vím, trestat je lidský,
 ale odpouštět božský.
 snad mi tedy Bůh odpustí.
 {end_of_bridge}
