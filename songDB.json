@@ -1324,7 +1324,7 @@
     "startMelody": "a d",
     "chordproFile": "Hruska-Cechomor.pro",
     "pdfFilenames": "",
-    "contentHash": "9f284cb055289524a45efee7caa817943de7a3cf",
+    "contentHash": "67d76ac3bede809929780f8da7e0219b77f6d7ed",
     "disabled": false
   },
   {
@@ -3136,6 +3136,38 @@
     "disabled": false
   },
   {
+    "title": "Nagasaki Hirošima",
+    "artist": "Mňága a Žďorp",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "01-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Mnaga_a_Zdorp-Nagasaki_Hirosima.pro",
+    "pdfFilenames": "",
+    "contentHash": "ab2db8973fbaca1c0fdd631b691f0198e7612e2d",
+    "disabled": false
+  },
+  {
+    "title": "Něgdy",
+    "artist": "Mňága a Žďorp",
+    "key": "B",
+    "language": "czech",
+    "dateAdded": "01-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Mnaga_a_Zdorp-Negdy.pro",
+    "pdfFilenames": "",
+    "contentHash": "51f796700ba50d0a82fb00bc4be969c8754e9721",
+    "disabled": false
+  },
+  {
     "title": "I'll Make a Man out of You",
     "artist": "Mulan",
     "key": "C",
@@ -3164,7 +3196,7 @@
     "startMelody": "f",
     "chordproFile": "Na_Hotelu_v_Olomouci-Petr_Hapka.pro",
     "pdfFilenames": "",
-    "contentHash": "fd21b150877f231d8b458903f9af582f33e46da0",
+    "contentHash": "63baf860abd0e1b71adbd5cf63f6572f01b0286b",
     "disabled": false
   },
   {
@@ -3900,7 +3932,7 @@
     "startMelody": "h f# f# f# e d",
     "chordproFile": "Rada_se_miluje-Karel_Plihal.pro",
     "pdfFilenames": "",
-    "contentHash": "01881a3912566c566b005a19cd427480e44f1ef0",
+    "contentHash": "185db0d1d00b6eddcac9b90816892314c339f1dd",
     "disabled": false
   },
   {
@@ -4540,7 +4572,7 @@
     "startMelody": "g h h a f#",
     "chordproFile": "Tri_sestry-Sovy_v_mazutu.pro",
     "pdfFilenames": "",
-    "contentHash": "740e367ded919bdb6a9918695b3c2ef8d0a723b9",
+    "contentHash": "80db9e7f446d818f56a5c250373e5084214a5c37",
     "disabled": false
   },
   {

@@ -23,7 +23,7 @@ na hotelu [C]v Olomou[G]ci.
 {end_of_verse}
 
 {start_of_chorus}
-3x 𝄆 [Dmi]Na, [Ami]na, na…[C][G] 𝄇
+3x 𝄆 [Dmi]Na, [Ami]na, na…[C][G]𝄇
 [Dmi]Na, na, [F]na… [C][G]
 {end_of_chorus}
 
