@@ -4,12 +4,12 @@ import { cn } from "@/lib/utils";
 interface ToolbarBaseProps {
     children: React.ReactNode;
     className?: string;
-    showToolbar?: boolean; // Controls whether the toolbar is visible
-    scrollOffset?: number; // Current scroll offset
-    fakeScroll?: boolean; // If true, fakes scrolling via translateY (for virtualized views)
+    showToolbar?: boolean;
+    scrollOffset?: number;
+    fakeScroll?: boolean;
 }
 
-const TOOLBAR_CONTAINER_H = 72; // Toolbar height in pixels
+const TOOLBAR_CONTAINER_H = 72;
 
 const ToolbarBase: React.FC<ToolbarBaseProps> = ({
     children,
@@ -18,7 +18,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
     scrollOffset = 100,
     fakeScroll = false,
 }) => {
-    const partiallyVisible = scrollOffset <= TOOLBAR_CONTAINER_H; // Check if toolbar is partially visible
+    const partiallyVisible = scrollOffset <= TOOLBAR_CONTAINER_H;
     let translateYPx: number = 0;
     let position: "fixed" | "relative" = "fixed";
     let opacity: string = "opacity-100";
@@ -33,10 +33,15 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
     } else {
         translateYPx = TOOLBAR_CONTAINER_H;
         if (scrollOffset <= 2 * TOOLBAR_CONTAINER_H && !fakeScroll) {
-            opacity = "opacity-0"; // avoid toolbar briefly appearing on top
+            opacity = "opacity-0";
         }
     }
 
+    // Only apply transition when:
+    // 1. Toggling toolbar visibility (showToolbar changes)
+    // 2. Not during active scrolling (either fake or real)
+    const shouldTransition = (showToolbar || !partiallyVisible) && position === "fixed";
+    
     return (
         <div
             className={cn(
@@ -49,9 +54,9 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
             style={{
                 willChange: "transform",
                 transform: `translateY(-${translateYPx}px)`,
-                transition: partiallyVisible
-                    ? "none" 
-                    : "transform 500ms cubic-bezier(0.165, 0.840, 0.250, 1.040)", 
+                transition: shouldTransition 
+                    ? "transform 500ms cubic-bezier(0.165, 0.840, 0.250, 1.040), opacity 300ms ease"
+                    : "none",
             }}
         >
             <div
