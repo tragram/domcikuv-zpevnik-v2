@@ -51,6 +51,10 @@
     display: none;
 }
 
+.chords-hidden .tab-section {
+    display: none;
+}
+
 .chord-lyrics {
     display: flex;
     flex-direction: column;
@@ -89,7 +93,7 @@
     font-weight: 600;
 }
 
-#actual-contents{
+#actual-contents {
     max-width: 100%;
 }
 
@@ -103,6 +107,16 @@
 }
 
 .song-content>.section+.section {
+    margin-top: 1.5em;
+}
+
+/* Remove margin-top when chords are hidden */
+.chords-hidden .song-content > .section:not(.tab-section) + .tab-section,
+.chords-hidden .song-content > .tab-section + .section {
+    margin-top: 0;
+}
+/* Restore margin when sections aren't adjacent and there's a hidden section between */
+.chords-hidden .song-content > .section:not(.tab-section) ~ .section:not(.tab-section) {
     margin-top: 1.5em;
 }
 
