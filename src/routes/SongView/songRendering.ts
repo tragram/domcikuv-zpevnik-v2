@@ -96,7 +96,7 @@ function convertHTMLChordToGerman(songText: string) {
     // TODO: this should be separate from German conversion
     chords.forEach((chord) => {
         chord.textContent = chordToGerman(chord.textContent);
-        chord.innerHTML = chord.textContent.replace("b", "♭").replace("#", "♯").replace(/([♯♭67])/, "<sup>$1</sup>");
+        chord.innerHTML = chord.textContent.replace(/b/g, "♭").replace(/#/g, "♯").replace(/(♯|♭|2|4|6|7|maj|sus)/g, "<sup>$1</sup>");
     })
     return doc.body.innerHTML;
 }
