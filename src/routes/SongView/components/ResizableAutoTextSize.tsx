@@ -150,7 +150,9 @@ export function ResizableAutoTextSize({
                     visibleClasses,
                     fitState.status === 'not-initialized' ? "invisible" : "visible"
                 )}
-                style={{ fontSize: `${fontSize}px`, columnWidth: visibleClasses?.includes("song-content-columns") ? (containerRef.current?.getBoundingClientRect().width) : undefined }}
+                style={{ fontSize: `${fontSize}px`, 
+                // columnWidth: visibleClasses?.includes("song-content-columns") ? (containerRef.current?.getBoundingClientRect().width) : undefined 
+            }}
             >
                 {children}
             </div>

@@ -104,6 +104,8 @@
 .song-content {
     line-height: 1.1;
     white-space: nowrap;
+    display: flex;
+    flex-direction: column;
 }
 
 .song-content>.section+.section {
