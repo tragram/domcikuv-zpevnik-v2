@@ -1,6 +1,9 @@
 # Domčíkův Zpěvník v2
 Welcome to the source code of my songbook, [available on Github Pages](https://tragram.github.io/domcikuv-zpevnik-v2/). It shows most of the songs I will play for you (without complaining :-)) and provides features like searching, filtering and sorting, as well as random song generation, transpositions etc.
 
+### PWA
+The app is a progressive web application (PWA), which means you can install it on your device and use it completely offline. This feature is best supported by Chrome, unless you're using iOS, in which case Safari is likely your best bet. Other browser/OS configurations may work (especially in the future) but are not recommended.
+
 ### Previous version
 The original songbook was my high-school graduation project, consisting of an [Android app](https://github.com/tragram/DomcikuvZpevnik) and a [PHP server](https://github.com/tragram/DomcikuvZpevnik-Server) is [hosted here](https://appelt.cz/domcikuvzpevnik/). Unfortunately, due to lack of updates, the app was taken down from Google Play in 2024 and the website was not mobile-friendly, which is the main use-case of the songbook. Since I no longer code in Java or PHP, I started building this new version to have something to do on the long train journey to the Tatra mountains!
 
@@ -51,7 +54,7 @@ and them later recall them by
 {chorus: R2}
 {chorus: R1}
 ```
-The labels may contains letters, numbers, and the following special characters: `+_-/`. In short, they must match `[\w\-_+]+`.
+The labels may contain letters, numbers, and the following special characters: `+_-/`. In short, they must match `[\w\-_+]+`.
 
 #### Part variants
 It is very common that a chorus is repeated with only a minor modification at the end. To avoid these repetitions, you can define a variant of the chorus as follows:
@@ -130,13 +133,15 @@ Because most viewing is done using the `fitXY` feature, it is important to keep 
 This is done via Selenium again, so expect it to take a while. Also, do not expect it to work at all in fact, since it's prone to breaking with any future changes! :-)
 
 ## Tech
-Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) and (heavily modified) [shadcn](https://ui.shadcn.com/) and uses the following libraries:
+Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) and (heavily modified) [shadcn](https://ui.shadcn.com/) and uses (mainly) the following libraries:
+* [react-window](https://github.com/bvaughn/react-window): optimized scrolling and load for the list of songs
 * [Lucide](https://lucide.dev/): icons
 * [chordpro-parser](https://github.com/chordproject/chorpro-parser/): parsing Chordpro in JS
 * [Fuse.js](https://www.fusejs.io/): fuzzy search
 * [auto-text-size](https://www.npmjs.com/package/auto-text-size): automatic sizing of chords & lyrics
 * [country-flag-icons](https://www.npmjs.com/package/country-flag-icons)
+* [Zustand](https://github.com/pmndrs/zustand): easier state management
+* [@khmyznikov/pwa-install](https://github.com/khmyznikov/pwa-install): managing PWA popups and installation
 
 ## TODO:
-A lot ATM. The major feature to add is:
-* Make the website a [PWA](https://en.wikipedia.org/wiki/Progressive_web_app) to make it available 100 % offline.
+* dynamically compute the optimal number of columns and apply (theoretically, only the CSS value needs to be adjusted)
