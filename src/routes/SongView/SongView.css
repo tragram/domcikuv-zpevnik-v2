@@ -89,6 +89,10 @@
     font-weight: 600;
 }
 
+#actual-contents{
+    max-width: 100%;
+}
+
 .comment-line {
     line-height: normal;
 }
