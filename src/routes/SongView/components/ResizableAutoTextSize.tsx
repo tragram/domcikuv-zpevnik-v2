@@ -57,7 +57,7 @@ export function ResizableAutoTextSize({
             chords.showChords ? '' : 'chords-hidden',
             `fit-screen-${layout.fitScreenMode}`,
             layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
-            layout.twoColumns ? 'song-content-columns' : ''
+            layout.twoColumns ? 'song-content-columns' : '',
         );
         return newClasses;
     }, [className, chords.inlineChords, chords.showChords, layout.fitScreenMode, layout.repeatPartsChords, layout.twoColumns]);
@@ -137,7 +137,6 @@ export function ResizableAutoTextSize({
         target: gestureContainerRef,
         eventOptions: { passive: true },
     });
-
     return (
         <div
             className="relative flex h-full w-full max-w-full"
@@ -149,7 +148,7 @@ export function ResizableAutoTextSize({
                     visibleClasses,
                     fitState.status === 'not-initialized' ? "invisible" : "visible"
                 )}
-                style={{ fontSize: `${fontSize}px` }}
+                style={{ fontSize: `${fontSize}px`, columnWidth: visibleClasses?.includes("song-content-columns") ? (containerRef.current?.getBoundingClientRect().width) : undefined }}
             >
                 {children}
             </div>

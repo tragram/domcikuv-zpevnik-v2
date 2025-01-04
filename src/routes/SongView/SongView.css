@@ -148,6 +148,7 @@
 /* this class is added when user toggles the two-column layout */
 .song-content-columns>* {
     columns: 2;
+    @apply gap-4 sm:gap-8 lg:gap-16;
 }
 
 /* misc */
@@ -158,7 +159,7 @@
     scrollbar-width: none;
 }
 
-/* autosizing of tabs and comments */ 
+/* autosizing of tabs and comments */
 #dummy-contents .comment-line, #dummy-contents .tab-section {
     width: 0;
 }
