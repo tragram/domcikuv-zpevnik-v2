@@ -18,7 +18,7 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
             setShowScrollButtons(
-                document.body.scrollHeight > screen.height && 
+                document.body.scrollHeight > window.innerHeight && 
                 fitScreenMode != "fitXY"
             );
         });
@@ -26,14 +26,14 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
         resizeObserver.observe(document.body);
         return () => resizeObserver.disconnect();
     }, [fitScreenMode]);
-
     const scrollDown = () => {
-        const remainingContent = document.body.scrollHeight - window.scrollY - screen.height;
-        const scrollSpeed = screen.height / 2000; // whole screen in 2s 
-        
+        const remainingContent = document.body.scrollHeight - window.scrollY - window.innerHeight;
+        console.log(document.body.scrollHeight, window.scrollY, window.innerHeight)
+        const scrollSpeed = window.innerHeight / 2000; // whole screen in 2s 
+        console.log(remainingContent)
         if (remainingContent < 0) return;
         
-        if (remainingContent < 0.8 * screen.height) {
+        if (remainingContent < 0.8 * window.innerHeight) {
             scroll.scrollToBottom({
                 duration: remainingContent / scrollSpeed,
                 onComplete: () => {
@@ -47,8 +47,8 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
         const sections = document.querySelectorAll('.section');
         for (const container of sections) {
             const rect = container.getBoundingClientRect();
-            if (rect.bottom >= screen.height) {
-                const offset = Math.max(100, 0.2 * screen.height);
+            if (rect.bottom >= window.innerHeight) {
+                const offset = Math.max(100, 0.2 * window.innerHeight);
                 const scrollDist = rect.top - offset;
                 scroll.scrollTo(
                     rect.top + window.scrollY - offset, 
