@@ -45,4 +45,5 @@ Someone [E]good.
 
 {chorus}
 
-4x [C#m]You're going to [G]reap just what you [D]sow. [D/C#][D/H][A]
+4x |: [C#m]You're going to [G]reap 
+just what you [D]sow. [D/C#][D/H][A] :|

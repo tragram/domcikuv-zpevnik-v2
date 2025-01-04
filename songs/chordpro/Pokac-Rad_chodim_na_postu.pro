@@ -23,20 +23,30 @@ tam je tolik lidí, že
 {end_of_chorus}
 
 {start_of_verse}
-[G]za přepážkou [D]paní v letech [G]má razítko [D]gumové
-[G]a občas tiskne [Hmi]tiskárnou z dob [Emi]první války [A]světové
-každému kdo spílá jí že zas na poště pros*al den
-nabídne los stírací ať uklidní se hazardem
+[G]za přepážkou [D]paní v letech 
+[G]má razítko [D]gumové
+[G]a občas tiskne [Hmi]tiskárnou 
+z dob [Emi]první války [A]světové
+
+každému kdo spílá jí 
+že zas na poště prosral den
+nabídne los stírací 
+ať uklidní se hazardem
 {end_of_verse}
 
 {chorus: R1}
 {chorus: R2}
 
 {start_of_verse}
-proč je vždy jen jedna z pěti přepážek otevřená
-je záhada co navždy zůstat má tajemstvím zastřená
-má nejoblíbenější služba je balíček do ruky
-znamená to totiž že zas budu moct jít na poštu
+proč je vždy jen jedna 
+z pěti přepážek otevřená
+je záhada co navždy zůstat 
+má tajemstvím zastřená
+
+má nejoblíbenější služba 
+je balíček do ruky
+znamená to totiž že zas 
+budu moct jít na poštu
 [A]jestli ho vůbec doručej
 [A]to už je bez záruky
 {end_of_verse}
