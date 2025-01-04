@@ -81,7 +81,6 @@
 
 
 /* layout */
-
 #auto-text-size-wrapper>div {
     justify-content: safe center;
     /* Allows vertical scrolling but blocks zoom */
@@ -156,8 +155,20 @@
     color: hsl(var("--text-foreground"));
     font-family: monospace;
     font-size: 0.9em;
+    scrollbar-width: none;
 }
 
+/* autosizing of tabs and comments */ 
+#dummy-contents .comment-line, #dummy-contents .tab-section {
+    width: 0;
+}
+
+.comment-line, .tab-section {
+    overflow-x: auto;
+    overflow-y: clip;
+    max-width: 100%;
+
+}
 
 /* make subscript appear under superscript */
 .sub-sup-container {

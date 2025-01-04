@@ -1,86 +1,125 @@
 import { useGesture } from '@use-gesture/react'
-import {
-    useCallback,
-    useEffect,
-    useLayoutEffect,
-    useState,
-    useRef
-} from "react";
-import { getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
-import { useMeasure } from '@uidotdev/usehooks';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { FitScreenMode, getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
 import React from 'react';
+import { cn } from '@/lib/utils';
 
-/**
- * Ensures that `func` is not called more than once per animation frame.
- * taken from https://github.com/sanalabs/auto-text-size/blob/main/src/auto-text-size-standalone.ts
- * Using requestAnimationFrame in this way ensures that we render as often as
- * possible without excessively blocking the UI.
- */
-// function throttleAnimationFrame(func: () => void): () => void {
-//     let wait = false;
-
-//     return () => {
-//         if (!wait) {
-//             wait = true;
-//             requestAnimationFrame(() => {
-//                 func();
-//                 wait = false;
-//             });
-//         }
-//     };
-// }
 
 interface ResizableAutoTextSizeProps {
     children: React.ReactNode
     gestureContainerRef: React.RefObject<HTMLDivElement>
-    excludeSelector?: string
-    overflowClasses?: string
 }
 
-const DUMMY_FONT_SIZE_PX = 16;
+const DUMMY_FONT_SIZE = 16;
+
+type FitState = {
+    status: 'not-initialized' | 'idle' | 'preparing-measurement' | 'ready-to-measure';
+    targetMode: FitScreenMode;
+}
+
+function computeFontSize(dummyEl: HTMLElement, containerEl: HTMLElement, targetMode: FitScreenMode) {
+    const dummyRect = dummyEl.getBoundingClientRect();
+    const containerSize = containerEl.getBoundingClientRect();
+    let newFontSize;
+
+    const widthScale = containerSize.width / dummyRect.width * DUMMY_FONT_SIZE;
+    if (targetMode === 'fitXY') {
+        const heightScale = containerSize.height / dummyRect.height * DUMMY_FONT_SIZE;
+        newFontSize = getFontSizeInRange(Math.min(widthScale, heightScale));
+    } else if (targetMode === 'fitX') {
+        newFontSize = getFontSizeInRange(widthScale);
+    } else {
+        throw new Error("Invalid fit mode");
+    }
+    return newFontSize;
+}
 
 export function ResizableAutoTextSize({
     children,
     gestureContainerRef,
-    excludeSelector,
-    overflowClasses = "no-scrollbar overflow-x-auto overflow-y-clip",
 }: ResizableAutoTextSizeProps) {
     const { layout, actions } = useViewSettingsStore();
     const [fontSize, setFontSize] = useState(layout.fontSize);
     const [pinching, setPinching] = useState(false);
-    const [initialized, setInitialized] = useState(false);
-    const [emptyDimensions, setEmptyDimensions] = useState<{ width: number | null, height: number | null }>({ width: null, height: null });
-
-    const [containerDivRef, containerDimensions] = useMeasure();
-    const [hiddenDivRef, measuredDimensions] = useMeasure();
+    const containerRef = useRef<HTMLDivElement>(null);
+    const dummyRef = useRef<HTMLDivElement>(null);
+    const resizeObserverRef = useRef<ResizeObserver | null>(null);
+    const [fitState, setFitState] = useState<FitState>({
+        status: 'not-initialized',
+        targetMode: layout.fitScreenMode
+    });
 
     // Setup overflow management
-    useLayoutEffect(() => {
-        const elements = document.querySelectorAll(excludeSelector ?? "");
-        elements.forEach((element) => {
-            const classesToAdd = overflowClasses.split(" ");
-            element.classList.add(...classesToAdd);
+    // useLayoutEffect(() => {
+    //     if (!excludeSelector) return;
+    //     const elements = document.querySelectorAll(excludeSelector);
+    //     elements.forEach((element) => {
+    //         const classesToAdd = overflowClasses.split(" ");
+    //         element.classList.add(...classesToAdd);
+    //     });
+    // }, [excludeSelector, overflowClasses]);
+
+    // wait for the dummy element to load before fitting
+    useEffect(() => {
+        if (fitState.status === "not-initialized" && dummyRef.current && containerRef.current) {
+            const dummyEl = dummyRef.current;
+            const containerEl = containerRef.current
+            requestAnimationFrame(() => {
+                const newFontSize = fitState.targetMode === "none" ? layout.fontSize : computeFontSize(dummyEl, containerEl, fitState.targetMode);
+                setFontSize(newFontSize);
+                setFitState({ status: 'idle', targetMode: fitState.targetMode });
+            });
+        }
+    }, [fitState, layout.fontSize]);
+
+    // Handle fit mode changes
+    useEffect(() => {
+        if (layout.fitScreenMode === fitState.targetMode || layout.fitScreenMode === "none") return;
+        // avoid observer interfering with the fit
+        resizeObserverRef.current?.disconnect()
+
+        // Start measurement cycle
+        setFitState({
+            status: 'preparing-measurement',
+            targetMode: layout.fitScreenMode
         });
 
-        const excludedElements = document.querySelectorAll(excludeSelector ? `#dummy-contents ${excludeSelector}` : "")
-        excludedElements.forEach((element) => {
-            (element as HTMLElement).style.width = '0';
+        // Give React time to update dummy element
+        requestAnimationFrame(() => {
+            setFitState(prev => ({
+                status: 'ready-to-measure',
+                targetMode: prev.targetMode
+            }));
+            if (containerRef.current) {
+                resizeObserverRef.current = new ResizeObserver(() => setFitState(prev => ({ status: "ready-to-measure", targetMode: prev.targetMode })));
+                resizeObserverRef.current.observe(containerRef.current);
+            }
         });
-    }, [excludeSelector, overflowClasses]);
+    }, [layout.fitScreenMode, layout.twoColumns, layout.repeatParts, layout.repeatPartsChords, fitState.targetMode]);
 
-    useLayoutEffect(() => {
-        if (pinching) return;
-        setFontSize(layout.fontSize);
+
+
+    // Handle measurements
+    useEffect(() => {
+        if (fitState.status !== 'ready-to-measure' || fitState.targetMode === "none" || !containerRef.current || !dummyRef.current) return;
+        const newFontSize = computeFontSize(dummyRef.current, containerRef.current, fitState.targetMode);
+        setFontSize(newFontSize);
+        setFitState({ status: 'idle', targetMode: fitState.targetMode });
+    }, [fitState, containerRef]);
+
+    // Sync fontSize with layout when not pinching
+    useEffect(() => {
+        if (!pinching) {
+            setFontSize(layout.fontSize);
+        }
     }, [layout.fontSize, pinching]);
 
-    useEffect(() => {
-        if (initialized || !containerDimensions.width || !measuredDimensions.width) return;
-        setEmptyDimensions({ width: containerDimensions.width, height: containerDimensions.height })
-        setInitialized(true);
-    }, [containerDimensions, initialized, measuredDimensions])
-
+    // Handle pinch gestures
     useGesture({
-        onPinchStart: () => { actions.setLayoutSettings({ fitScreenMode: "none" }); setPinching(true) },
+        onPinchStart: () => {
+            actions.setLayoutSettings({ fitScreenMode: "none" });
+            setPinching(true);
+        },
         onPinchEnd: () => {
             actions.setLayoutSettings({ fontSize });
             setPinching(false);
@@ -96,60 +135,29 @@ export function ResizableAutoTextSize({
         eventOptions: { passive: true },
     });
 
-    const updateFontSize = useCallback(() => {
-        const widthAvailable = emptyDimensions.width || measuredDimensions.width;
-        const heightAvailable = emptyDimensions.height || measuredDimensions.height;
-        if (layout.fitScreenMode === "none" || !widthAvailable) return;
-        let scaleFactor;
-        if (layout.fitScreenMode === "fitXY") {
-            if (!heightAvailable) return;
-            const widthScale = emptyDimensions.width / measuredDimensions.width * DUMMY_FONT_SIZE_PX;
-            const heightScale = emptyDimensions.height / measuredDimensions.height * DUMMY_FONT_SIZE_PX;
-            scaleFactor = Math.min(widthScale, heightScale);
-        } else if (layout.fitScreenMode === "fitX") {
-            scaleFactor = emptyDimensions.width / measuredDimensions.width * DUMMY_FONT_SIZE_PX;
-        } else {
-            throw Error("Invalid fitScreenMode");
-        }
-
-        const newFontSize = getFontSizeInRange(scaleFactor);
-        setFontSize(newFontSize);
-        // while this depends on fitScreenMode, I do not want it to be updated when it changes (only when measuredDimensions, which is also dependent on it, changes)
-        // maybe this could be split in two functions to make this OK for React?
-    }, [emptyDimensions, measuredDimensions]);
-
-    // const throttleUpdateFontSize = throttleAnimationFrame(updateFontSize);
-
-    useLayoutEffect(() => {
-        updateFontSize();
-    }, [
-        updateFontSize,
-        // layout.fitScreenMode,
-        // layout.repeatParts,
-        // layout.repeatPartsChords,
-        // layout.twoColumns
-    ]);
-
     return (
-        <div className='relative flex h-full w-full max-w-full'
-            ref={containerDivRef}
+        <div
+            className="relative flex h-full w-full max-w-full"
+            ref={containerRef}
         >
-            <div id="actual-contents" className='max-w-full'
-                style={{
-                    fontSize: `${fontSize}px`,
-                }}
+            <div
+                id="actual-contents"
+                className={cn(
+                    "max-w-full",
+                    fitState.status === 'not-initialized' ? "invisible" : "visible"
+                )}
+                style={{ fontSize: `${fontSize}px` }}
             >
-                {initialized && children}
+                {children}
             </div>
             <div
                 id="dummy-contents"
-                ref={hiddenDivRef}
+                ref={dummyRef}
                 style={{
                     position: 'fixed',
                     left: '-9999px',
                     visibility: 'hidden',
-                    fontSize: `${DUMMY_FONT_SIZE_PX}px`,
-                    whiteSpace: layout.fitScreenMode === "fitX" ? 'nowrap' : 'normal',
+                    fontSize: `${DUMMY_FONT_SIZE}px`,
                     pointerEvents: 'none'
                 }}
                 aria-hidden="true"

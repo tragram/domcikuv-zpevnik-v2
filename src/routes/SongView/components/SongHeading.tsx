@@ -59,7 +59,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({ songData, layoutSettings, tra
 
     return (
         <div className={cn('flex w-full justify-between flex-wrap gap-4 text-primary dark:text-white')} ref={containerRef}>
-            {layoutSettings.fitScreenMode === "fitXY" || layoutSettings.twoColumns ? (
+            {/* {layoutSettings.fitScreenMode === "fitXY" || layoutSettings.twoColumns ? (
                 <h1 className='self-center font-bold text-wrap mb-2'>
                     {songData.artist}: {songData.title}
                 </h1>
@@ -68,7 +68,11 @@ const SongHeading: React.FC<SongHeadingProps> = ({ songData, layoutSettings, tra
                     <h2 className='font-semibold text-primary text-wrap uppercase  dark:text-foreground'>{songData.artist}</h2>
                     <h2 className='font-bold text-wrap  dark:text-white'>{songData.title}</h2>
                 </div>
-            )}
+            )} */}
+            <div className={cn('flex flex-col flex-grow', isWrapped ? "text-center" : "justify-start mb-4")}>
+                <h2 className='font-semibold text-primary text-wrap uppercase  dark:text-foreground'>{songData.artist}</h2>
+                <h2 className='font-bold text-wrap  dark:text-white'>{songData.title}</h2>
+            </div>
             <div className={cn('flex flex-col flex-grow text-muted-foreground dark:text-white/70 ', isWrapped ? "text-center mb-4" : "text-right")}>
                 <h2 className='text-[0.75em] text-nowrap'>
                     Capo: {(songData.capo - transposeSteps + 12) % 12}

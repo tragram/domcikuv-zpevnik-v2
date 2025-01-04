@@ -11,11 +11,11 @@ import SongHeading from './SongHeading'
 interface SongContentProps {
     songData: SongData
     transposeSteps: number
-    containerRef: React.RefObject<HTMLDivElement>
+    gestureContainerRef: React.RefObject<HTMLDivElement>
 }
 
 export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-    ({ songData, transposeSteps, containerRef }, ref) => {
+    ({ songData, transposeSteps, gestureContainerRef }, ref) => {
         const { layout, chords: chordSettings } = useViewSettingsStore();
 
         const parsedContent = renderSong(
@@ -30,8 +30,7 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
                 <div id="auto-text-size-wrapper" className={cn('flex w-full z-10 lg:px-16 p-4 sm:p-8  ', layout.fitScreenMode == "fitXY" ? "h-full" : "h-fit ", layout.fitScreenMode !== "fitXY" ? "mb-10" : "")}
                 >
                     <ResizableAutoTextSize
-                        gestureContainerRef={containerRef}
-                        excludeSelector='.comment-line, .tab-section'>
+                        gestureContainerRef={gestureContainerRef}>
                         <SongHeading
                             songData={songData}
                             layoutSettings={layout}

@@ -17,7 +17,7 @@ import './SongView.css'
 export const SongView = () => {
     const { songDB, songData } = useLoaderData() as DataForSongView;
     const fullScreenHandle = useFullScreenHandle();
-    const viewRef = useRef<HTMLDivElement>(null);
+    const gestureContainerRef = useRef<HTMLDivElement>(null);
     const {
         layout: layoutSettings,
     } = useViewSettingsStore()
@@ -43,7 +43,7 @@ export const SongView = () => {
 
     return (
         <SongViewLayout
-            ref={viewRef}
+            ref={gestureContainerRef}
         >
             <Toolbar
                 songDB={songDB}
@@ -60,7 +60,7 @@ export const SongView = () => {
                 <SongContent
                     songData={songData}
                     transposeSteps={transposeSteps}
-                    containerRef={viewRef}
+                    gestureContainerRef={gestureContainerRef}
                 />
             </FullScreen>
         </SongViewLayout>
