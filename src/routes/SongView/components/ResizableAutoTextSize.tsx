@@ -148,11 +148,13 @@ export function ResizableAutoTextSize({
                 id="actual-contents"
                 className={cn(
                     visibleClasses,
-                    fitState.status === 'not-initialized' ? "invisible" : "visible"
+                    fitState.status === 'not-initialized' ? "invisible" : "visible",
+                    fitState.targetMode === "none" ? "fit-screen-none" : "",
                 )}
-                style={{ fontSize: `${fontSize}px`, 
-                // columnWidth: visibleClasses?.includes("song-content-columns") ? (containerRef.current?.getBoundingClientRect().width) : undefined 
-            }}
+                style={{
+                    fontSize: `${fontSize}px`,
+                    // columnWidth: visibleClasses?.includes("song-content-columns") ? (containerRef.current?.getBoundingClientRect().width) : undefined 
+                }}
             >
                 {children}
             </div>
