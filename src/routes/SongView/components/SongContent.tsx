@@ -1,4 +1,3 @@
-
 import { cn } from '@/lib/utils'
 import { SongData } from '@/types/types'
 import { forwardRef } from 'react'
@@ -24,13 +23,16 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
             layout.repeatParts,
             chordSettings.czechChordNames
         );
+
         return (
             <>
                 <BackgroundImage songData={songData} className="hidden" id="inner-background-image"/>
                 <div id="auto-text-size-wrapper" className={cn('flex w-full z-10 lg:px-16 p-4 sm:p-8  ', layout.fitScreenMode == "fitXY" ? "h-full" : "h-fit ", layout.fitScreenMode !== "fitXY" ? "mb-10" : "")}
                 >
                     <ResizableAutoTextSize
-                        gestureContainerRef={gestureContainerRef}>
+                        gestureContainerRef={gestureContainerRef}
+                        className="max-w-screen dark:text-white/95"
+                    >
                         <SongHeading
                             songData={songData}
                             layoutSettings={layout}
@@ -38,19 +40,12 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
                         />
 
                         <div
-                            ref={ref} id="song-content-wrapper"
-                            className={cn(
-                                'max-w-screen dark:text-white/95',
-                                chordSettings.inlineChords ? 'chords-inline' : '',
-                                chordSettings.showChords ? '' : 'chords-hidden',
-                                `fit-screen-${layout.fitScreenMode}`,
-                                layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
-                                layout.twoColumns ? 'song-content-columns' : ''
-                            )}
+                            ref={ref}
+                            id="song-content-wrapper"
                             dangerouslySetInnerHTML={{ __html: parsedContent }}
                         />
                     </ResizableAutoTextSize>
-                </div >
+                </div>
             </>
         )
     }

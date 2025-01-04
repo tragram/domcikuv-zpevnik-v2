@@ -1,20 +1,21 @@
 import { useGesture } from '@use-gesture/react'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { FitScreenMode, getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-
 interface ResizableAutoTextSizeProps {
     children: React.ReactNode
     gestureContainerRef: React.RefObject<HTMLDivElement>
+    className?: string
 }
 
 const DUMMY_FONT_SIZE = 16;
 
 type FitState = {
-    status: 'not-initialized' | 'idle' | 'preparing-measurement' | 'ready-to-measure';
+    status: 'not-initialized' | 'idle' | 'preparing-measurement' | 'measuring' | 'applying-changes';
     targetMode: FitScreenMode;
+    pendingClasses?: string;
 }
 
 function computeFontSize(dummyEl: HTMLElement, containerEl: HTMLElement, targetMode: FitScreenMode) {
@@ -37,6 +38,7 @@ function computeFontSize(dummyEl: HTMLElement, containerEl: HTMLElement, targetM
 export function ResizableAutoTextSize({
     children,
     gestureContainerRef,
+    className
 }: ResizableAutoTextSizeProps) {
     const { layout, chords, actions } = useViewSettingsStore();
     const [fontSize, setFontSize] = useState(layout.fontSize);
@@ -44,58 +46,69 @@ export function ResizableAutoTextSize({
     const containerRef = useRef<HTMLDivElement>(null);
     const dummyRef = useRef<HTMLDivElement>(null);
     const resizeObserverRef = useRef<ResizeObserver | null>(null);
+    const [visibleClasses, setVisibleClasses] = useState(className);
+
+    // Compute new classes when dependencies change
+    const classNames = useMemo(() => {
+        const newClasses = cn(
+            className,
+            'max-w-screen dark:text-white/95',
+            chords.inlineChords ? 'chords-inline' : '',
+            chords.showChords ? '' : 'chords-hidden',
+            `fit-screen-${layout.fitScreenMode}`,
+            layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
+            layout.twoColumns ? 'song-content-columns' : ''
+        );
+        return newClasses;
+    }, [className, chords.inlineChords, chords.showChords, layout.fitScreenMode, layout.repeatPartsChords, layout.twoColumns]);
+
     const [fitState, setFitState] = useState<FitState>({
         status: 'not-initialized',
-        targetMode: layout.fitScreenMode
+        targetMode: layout.fitScreenMode,
+        pendingClasses: classNames
     });
 
-    // wait for the dummy element to load before fitting
+    // Update classes sequence
     useEffect(() => {
-        if (fitState.status === "not-initialized" && dummyRef.current && containerRef.current) {
-            const dummyEl = dummyRef.current;
-            const containerEl = containerRef.current
-            requestAnimationFrame(() => {
-                const newFontSize = fitState.targetMode === "none" ? layout.fontSize : computeFontSize(dummyEl, containerEl, fitState.targetMode);
-                setFontSize(newFontSize);
-                setFitState({ status: 'idle', targetMode: fitState.targetMode });
-            });
-        }
-    }, [fitState, layout.fontSize]);
-
-    // Handle fit mode changes
-    useEffect(() => {
-        if (layout.fitScreenMode === "none") return;
-        // avoid observer interfering with the fit
-        resizeObserverRef.current?.disconnect()
-
-        // Start measurement cycle
-        setFitState({
+        // Step 1: Update dummy element classes and prepare for measurement
+        setFitState(prev => ({
             status: 'preparing-measurement',
-            targetMode: layout.fitScreenMode
-        });
+            targetMode: layout.fitScreenMode,
+            pendingClasses: classNames
+        }));
 
-        // Give React time to update dummy element
+        resizeObserverRef.current?.disconnect();
+        // Step 2: Schedule measurement after dummy update
         requestAnimationFrame(() => {
             setFitState(prev => ({
-                status: 'ready-to-measure',
-                targetMode: prev.targetMode
+                ...prev,
+                status: 'measuring'
             }));
             if (containerRef.current) {
-                resizeObserverRef.current = new ResizeObserver(() => setFitState(prev => ({ status: "ready-to-measure", targetMode: prev.targetMode })));
+                resizeObserverRef.current = new ResizeObserver(() => setFitState(prev => ({ status: "measuring", targetMode: prev.targetMode, pendingClasses: classNames })));
                 resizeObserverRef.current.observe(containerRef.current);
             }
         });
-    }, [layout.fitScreenMode, layout.twoColumns, layout.repeatParts, layout.repeatPartsChords, fitState.targetMode,chords]);
+    }, [classNames, layout.fitScreenMode, layout.twoColumns, layout.repeatParts, layout.repeatPartsChords, fitState.targetMode, chords]);
 
-
-
-    // Handle measurements
+    // Handle measurements and class updates
     useEffect(() => {
-        if (fitState.status !== 'ready-to-measure' || fitState.targetMode === "none" || !containerRef.current || !dummyRef.current) return;
-        const newFontSize = computeFontSize(dummyRef.current, containerRef.current, fitState.targetMode);
+        if (fitState.status !== 'measuring' || !containerRef.current || !dummyRef.current) return;
+
+        // Perform measurement
+        const newFontSize = fitState.targetMode === "none" ?
+            layout.fontSize :
+            computeFontSize(dummyRef.current, containerRef.current, fitState.targetMode);
+
+        // Step 3: Apply changes to visible element
         setFontSize(newFontSize);
-        setFitState({ status: 'idle', targetMode: fitState.targetMode });
-    }, [fitState, containerRef]);
+        setVisibleClasses(fitState.pendingClasses);
+
+        setFitState(prev => ({
+            ...prev,
+            status: 'idle',
+        }));
+    }, [fitState, layout.fontSize]);
 
     // Sync fontSize with layout when not pinching
     useEffect(() => {
@@ -124,7 +137,7 @@ export function ResizableAutoTextSize({
         target: gestureContainerRef,
         eventOptions: { passive: true },
     });
-    
+
     return (
         <div
             className="relative flex h-full w-full max-w-full"
@@ -133,7 +146,7 @@ export function ResizableAutoTextSize({
             <div
                 id="actual-contents"
                 className={cn(
-                    "max-w-full",
+                    visibleClasses,
                     fitState.status === 'not-initialized' ? "invisible" : "visible"
                 )}
                 style={{ fontSize: `${fontSize}px` }}
@@ -143,6 +156,7 @@ export function ResizableAutoTextSize({
             <div
                 id="dummy-contents"
                 ref={dummyRef}
+                className={fitState.pendingClasses}
                 style={{
                     position: 'fixed',
                     left: '-9999px',
