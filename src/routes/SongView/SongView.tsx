@@ -53,7 +53,7 @@ export const SongView = () => {
                 transposeSteps={transposeSteps}
                 setTransposeSteps={setTransposeSteps}
             />
-            <FullScreen handle={fullScreenHandle} className={cn('w-full overflow-x-clip', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit")}>
+            <FullScreen handle={fullScreenHandle} className={cn('w-full overflow-x-clip', layoutSettings.fitScreenMode == "fitXY" ? " h-full " : " h-fit overflow-y-scroll")}>
                 <ScrollButtons
                     fitScreenMode={layoutSettings.fitScreenMode}
                 />
