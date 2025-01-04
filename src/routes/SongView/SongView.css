@@ -138,14 +138,14 @@
     gap: 0.1em;
     break-inside: avoid-column;
     width: fit-content;
-    /* width: fit-content;
-    max-width: 100%; */
+    /* width: fit-content;*/
+    max-width: 100%; 
 }
 
 .lyrics-line {
     display: flex;
     align-items: flex-end;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     max-width: 100%;
 }
 
