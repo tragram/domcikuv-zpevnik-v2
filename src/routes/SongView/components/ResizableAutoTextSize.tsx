@@ -84,7 +84,7 @@ export function ResizableAutoTextSize({
                 ...prev,
                 status: 'measuring'
             }));
-            if (containerRef.current) {
+            if (containerRef.current && layout.fitScreenMode !== "none") {
                 resizeObserverRef.current = new ResizeObserver(() => setFitState(prev => ({ status: "measuring", targetMode: prev.targetMode, pendingClasses: classNames })));
                 resizeObserverRef.current.observe(containerRef.current);
             }
@@ -96,19 +96,21 @@ export function ResizableAutoTextSize({
         if (fitState.status !== 'measuring' || !containerRef.current || !dummyRef.current) return;
 
         // Perform measurement
-        const newFontSize = fitState.targetMode === "none" ?
-            layout.fontSize :
-            computeFontSize(dummyRef.current, containerRef.current, fitState.targetMode);
+        if (!pinching) {
+            const newFontSize = fitState.targetMode === "none" ?
+                layout.fontSize :
+                computeFontSize(dummyRef.current, containerRef.current, fitState.targetMode);
 
-        // Step 3: Apply changes to visible element
-        setFontSize(newFontSize);
-        setVisibleClasses(fitState.pendingClasses);
+            // Step 3: Apply changes to visible element
+            setFontSize(newFontSize);
+            setVisibleClasses(fitState.pendingClasses);
+        }
 
         setFitState(prev => ({
             ...prev,
             status: 'idle',
         }));
-    }, [fitState, layout.fontSize]);
+    }, [fitState, layout.fontSize, pinching]);
 
     // Sync fontSize with layout when not pinching
     useEffect(() => {
