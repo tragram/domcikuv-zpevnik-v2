@@ -16,37 +16,33 @@ function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"]
         seen[className] = { defaultKey: false };
     });
 
-    // Loop over all elements in the document that match any of the specified classNames
+    // First pass: Mark repeated sections (unchanged)
     doc.querySelectorAll(classNames.map(className => `.${className}`).join(',')).forEach((element) => {
         const elementClass = classNames.find(className => element.classList.contains(className));
         if (elementClass) {
-            // Extract label or use defaultKey if no label is found
             const labelElement = element.querySelector('.section-title');
             const label = labelElement && useLabels ? labelElement.textContent.trim() : defaultKey;
 
-            // Get a unique chord string representation for the element
             const chordsWElements = Array.from(element.querySelectorAll('.chord'))
                 .map(el => { return { "element": el, "chord": el.textContent.trim() } })
                 .filter(el => el.chord)
             const onlyChords = chordsWElements.map(c => c.chord);
 
-            // Initialize storage for chords of this label if not already set
             if (!seen[elementClass][label]) {
                 seen[elementClass][label] = [];
             }
 
-            // Check for repetition and add class if repeated
             const chordMatches = (chords1, chords2) => {
                 const zip = (a, b) => Array.from(Array(Math.max(b.length, a.length)), (_, i) => [a[i], b[i]]);
                 const matches = zip(chords1, chords2).map(c => c[0] === c[1])
                 const distance = matches.reduce((a, b) => a + (b ? 0 : 1), 0)
                 return { "matches": matches, "distance": distance };
             }
-            // find previous elementClass with most similar chords
+
             const matches = seen[elementClass][label].map((chordList) => chordMatches(chordList, onlyChords))
             const minIndex = matches.reduce((minIdx, match, idx) =>
                 match.distance < matches[minIdx].distance ? idx : minIdx, 0);
-            // allow at most 3 deviations
+
             if (seen[elementClass][label].length === 0 || matches[minIndex].distance > 3) {
                 seen[elementClass][label].push(onlyChords);
             } else {
@@ -54,26 +50,79 @@ function addRepeatClasses(htmlString, classNames = ["verse", "chorus", "bridge"]
                     seen[elementClass][label].push(onlyChords);
                 }
                 element.classList.add('repeated-chords');
-                // force show chords that are different
                 matches[minIndex].matches.forEach((match, index) => {
-                    if (index >= chordsWElements.length) {
-                        return;
-                    }
+                    if (index >= chordsWElements.length) return;
                     if (!match) {
                         chordsWElements[index].element.classList.add("force-shown");
                     }
                 })
                 if (matches[minIndex].matches.length < chordsWElements.length) {
-                    // in case there is e.g. an extra chord in the chorus at the end
-
-                    chordsWElements.slice(-(chordsWElements.length - matches[minIndex].matches.length)).forEach(cwe => cwe.element.classList.add("force-shown"));
+                    chordsWElements.slice(-(chordsWElements.length - matches[minIndex].matches.length))
+                        .forEach(cwe => cwe.element.classList.add("force-shown"));
                 }
             }
         }
     });
 
-    return doc.body.innerHTML; // Convert the document back to an HTML string
+    // Second pass: Collapse truly consecutive repeated sections
+    const allSections = Array.from(doc.querySelectorAll('.section'));
+    let i = 0;
+
+    while (i < allSections.length) {
+        const current = allSections[i];
+        const currentClass = classNames.find(className => current.classList.contains(className));
+
+        if (!currentClass || !current.classList.contains('repeated-chords')) {
+            i++;
+            continue;
+        }
+
+        // Find how many consecutive identical sections we have
+        let repeatCount = 1;
+        while (i + repeatCount < allSections.length) {
+            const next = allSections[i + repeatCount];
+
+            // Check if the next section is immediately adjacent in the DOM
+            if (next.previousElementSibling !== allSections[i + repeatCount - 1]) {
+                break;
+            }
+
+            // Check if it's the same type of section and has the same content
+            if (!next.classList.contains(currentClass) ||
+                !next.classList.contains('repeated-chords') ||
+                next.innerHTML !== current.innerHTML) {
+                break;
+            }
+
+            repeatCount++;
+        }
+
+        if (repeatCount > 1) {
+            // Create repetition indicator
+            const repetitionLabel = doc.createElement('span');
+            repetitionLabel.className = 'repetition-count';
+            repetitionLabel.textContent = `(${repeatCount}×)`;
+
+            // Insert before the first section
+            const firstLine = current.querySelector(".lyrics-line");
+            if (!firstLine) return;
+            firstLine.insertBefore(repetitionLabel, firstLine.firstChild);
+
+            // Remove the subsequent repeated sections
+            for (let j = 1; j < repeatCount; j++) {
+                allSections[i + j].remove();
+            }
+
+            // Skip the sections we've processed
+            i += repeatCount;
+        } else {
+            i++;
+        }
+    }
+
+    return doc.body.innerHTML;
 }
+
 function chordToGerman(chord: string) {
     const trimmedChord = chord.trim()
     if (trimmedChord.startsWith("Bb")) {

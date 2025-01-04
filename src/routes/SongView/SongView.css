@@ -111,12 +111,13 @@
 }
 
 /* Remove margin-top when chords are hidden */
-.chords-hidden .song-content > .section:not(.tab-section) + .tab-section,
-.chords-hidden .song-content > .tab-section + .section {
+.chords-hidden .song-content>.section:not(.tab-section)+.tab-section,
+.chords-hidden .song-content>.tab-section+.section {
     margin-top: 0;
 }
+
 /* Restore margin when sections aren't adjacent and there's a hidden section between */
-.chords-hidden .song-content > .section:not(.tab-section) ~ .section:not(.tab-section) {
+.chords-hidden .song-content>.section:not(.tab-section)~.section:not(.tab-section) {
     margin-top: 1.5em;
 }
 
@@ -175,6 +176,26 @@
     font-family: monospace;
     font-size: 0.9em;
     scrollbar-width: none;
+}
+
+.repetition-count {
+    color:hsl(var(--primary));
+    /* font-size: 0.8em; */
+}
+
+.repetition-count + .word{
+    color:hsl(var(--primary));
+    /* font-size: 0.8em; */
+}
+
+.section-title + .lyrics-line>.word:first-child {
+    color: hsl(var(--primary));
+    /* font-size: 0.8em; */
+}
+
+
+.repetition-count::after {
+    content:"\00a0"
 }
 
 /* autosizing of tabs and comments */
