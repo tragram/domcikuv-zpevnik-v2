@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { FitScreenMode } from "./viewSettingsStore";
+import { MAGICAL_FIREFOX_CONSTANT_PX } from "../components/ScrollButtons";
 
 export const useScrollHandler = (fitScreenMode: FitScreenMode) => {
     const prevScrollPos = useRef(0);
@@ -27,7 +28,7 @@ export const useScrollHandler = (fitScreenMode: FitScreenMode) => {
 
         const remainingContent = document.body.scrollHeight - window.scrollY - window.innerHeight;
         // Firefox on Android sometimes scrolls so that the remaining content is like 0.6, so checking against 0 does not work...
-        setAtBottom(remainingContent <= 10);
+        setAtBottom(remainingContent <= MAGICAL_FIREFOX_CONSTANT_PX);
     }, [fitScreenMode]);
 
     useEffect(() => {

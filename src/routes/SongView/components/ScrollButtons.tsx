@@ -10,6 +10,9 @@ interface ScrollButtonsProps {
     fitScreenMode: FitScreenMode;
 }
 
+// for some reason, this is barely
+export const MAGICAL_FIREFOX_CONSTANT_PX = 10;
+
 const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
     const [showScrollButtons, setShowScrollButtons] = useState(false);
     const { atBottom } = useScrollHandler(fitScreenMode);
@@ -17,23 +20,23 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
             setShowScrollButtons(
-                document.body.scrollHeight > window.innerHeight &&
-                fitScreenMode != "fitXY"
+                document.body.scrollHeight - MAGICAL_FIREFOX_CONSTANT_PX > window.outerHeight &&
+                fitScreenMode !== "fitXY"
             );
         });
-
+        console.log(document.body.scrollHeight, window.outerHeight)
         resizeObserver.observe(document.body);
         return () => resizeObserver.disconnect();
     }, [fitScreenMode]);
 
     const scrollDown = () => {
-        const remainingContent = document.body.scrollHeight - window.scrollY - window.innerHeight;
-        const scrollSpeed = window.innerHeight / 2000; // whole screen in 2s 
+        const remainingContent = document.body.scrollHeight - window.scrollY - window.outerHeight;
+        const scrollSpeed = window.outerHeight / 2000; // whole screen in 2s 
 
         if (remainingContent <= 0) return;
 
         // If we're close to the bottom, scroll all the way
-        if (remainingContent < 0.8 * window.innerHeight) {
+        if (remainingContent < 0.8 * window.outerHeight) {
             scroll.scrollToBottom({
                 duration: remainingContent / scrollSpeed,
                 onComplete: () => {
@@ -48,11 +51,11 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
         const sections = document.querySelectorAll('.section');
         for (const container of sections) {
             const rect = container.getBoundingClientRect();
-            console.log(rect.bottom, window.innerHeight)
-            if (rect.bottom >= window.innerHeight) {
-                const offset = Math.max(100, 0.2 * window.innerHeight);
+            console.log(rect.bottom, window.outerHeight)
+            if (rect.bottom >= window.outerHeight) {
+                const offset = Math.max(100, 0.2 * window.outerHeight);
                 const scrollDist = rect.top - offset;
-                if (scrollDist < 0.2 * window.innerHeight) {
+                if (scrollDist < 0.2 * window.outerHeight) {
                     break;
                 }
                 scroll.scrollTo(
@@ -64,7 +67,7 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
         }
 
         // If no section was found, scroll by viewport height
-        const scrollDist = Math.min(window.innerHeight * 0.8, remainingContent);
+        const scrollDist = Math.min(window.outerHeight * 0.8, remainingContent);
         scroll.scrollTo(
             window.scrollY + scrollDist,
             { duration: scrollDist / scrollSpeed }
