@@ -572,7 +572,7 @@
     "startMelody": "",
     "chordproFile": "Curly_Strings-Kauges_Kulas.pro",
     "pdfFilenames": "",
-    "contentHash": "261dbf7d3e7324de6d38249551153e0844bfddb1",
+    "contentHash": "aec5251a4094cca202386b70a93ecd61e6e89010",
     "disabled": false
   },
   {
@@ -604,7 +604,7 @@
     "startMelody": "c",
     "chordproFile": "David_a_Golias-Jan_Werich,_Jiri_Voskovec.pro",
     "pdfFilenames": "",
-    "contentHash": "fd876440c85ebaafc528eb70d89a765a835887da",
+    "contentHash": "3224cd52f8c4273f7aebc4ed2664a8f56ad069b0",
     "disabled": false
   },
   {
@@ -924,7 +924,7 @@
     "startMelody": "d",
     "chordproFile": "Filmova_hudba-Kralovske_reggae.pro",
     "pdfFilenames": "['filmova_hudba_kralovske_reggae-sken.pdf', 'filmova_hudba_kralovske_reggae-comp.pdf']",
-    "contentHash": "e1d174949ee1ea3a5de2a0e18a44ff365b62ac7b",
+    "contentHash": "8f79585ca560ad9d50c7a33db9b4bf0e6c9ca713",
     "disabled": false
   },
   {
@@ -1292,7 +1292,7 @@
     "startMelody": "d d a",
     "chordproFile": "Hop_Trop-Tri_krize.pro",
     "pdfFilenames": "['hop_trop_tri_krize-sken.pdf', 'hop_trop_tri_krize-comp.pdf']",
-    "contentHash": "7edb44210ffe7d9b2c03bedef09ec045c260c534",
+    "contentHash": "258c7d1453b77b73cd1ae52dbdea3101be83ba29",
     "disabled": false
   },
   {
@@ -1324,7 +1324,7 @@
     "startMelody": "a d",
     "chordproFile": "Hruska-Cechomor.pro",
     "pdfFilenames": "",
-    "contentHash": "e5a95c467d9d02fb625c5bf24f68b0158d107c7c",
+    "contentHash": "f1c692ea76c6a553a5ed9f6561824cd6e130e5cb",
     "disabled": false
   },
   {
@@ -3136,6 +3136,38 @@
     "disabled": false
   },
   {
+    "title": "Nagasaki Hirošima",
+    "artist": "Mňága a Žďorp",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "01-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Mnaga_a_Zdorp-Nagasaki_Hirosima.pro",
+    "pdfFilenames": "",
+    "contentHash": "e3f830c8138bb237ccadddec1a66dbd6bb638c96",
+    "disabled": false
+  },
+  {
+    "title": "Něgdy",
+    "artist": "Mňága a Žďorp",
+    "key": "B",
+    "language": "czech",
+    "dateAdded": "01-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Mnaga_a_Zdorp-Negdy.pro",
+    "pdfFilenames": "",
+    "contentHash": "7f5610b2afd099b69e3595cf9a70c8ed0baf2ad5",
+    "disabled": false
+  },
+  {
     "title": "I'll Make a Man out of You",
     "artist": "Mulan",
     "key": "C",
@@ -3164,7 +3196,7 @@
     "startMelody": "f",
     "chordproFile": "Na_Hotelu_v_Olomouci-Petr_Hapka.pro",
     "pdfFilenames": "",
-    "contentHash": "c44c44874c865df4c3dcff8974014b4daa50ff7f",
+    "contentHash": "720c95c3b176f8e276c3b3421a00d72e8820bab3",
     "disabled": false
   },
   {
@@ -3900,7 +3932,7 @@
     "startMelody": "h f# f# f# e d",
     "chordproFile": "Rada_se_miluje-Karel_Plihal.pro",
     "pdfFilenames": "",
-    "contentHash": "5ccc66cb34c5c64b543f39ee704062a2065817d5",
+    "contentHash": "71ffa1429028d85d2e3e703e12fd86ebc1ff6815",
     "disabled": false
   },
   {
@@ -4540,7 +4572,7 @@
     "startMelody": "g h h a f#",
     "chordproFile": "Tri_sestry-Sovy_v_mazutu.pro",
     "pdfFilenames": "",
-    "contentHash": "7dacfbf85f82b3dddfc5b356578bdee6e59767ed",
+    "contentHash": "a2455da95ed7ab059d81a7b4f65d85d1380cccfb",
     "disabled": false
   },
   {
@@ -4956,7 +4988,7 @@
     "startMelody": "e d#",
     "chordproFile": "Yvonne_Prenosilova-Boty_proti_lasce.pro",
     "pdfFilenames": "[]",
-    "contentHash": "d0fdb7f608e2427a13ab987e04ac0aada8cd4320",
+    "contentHash": "b6acaee18d4c7eade862febe46da2a642826f190",
     "disabled": false
   },
   {

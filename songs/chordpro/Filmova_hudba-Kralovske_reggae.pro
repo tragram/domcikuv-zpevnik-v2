@@ -35,7 +35,8 @@ kdo nemá [A7]er, ztrácí [D]charakter.
 [G]královské reggae, [A7]královské reggae,
 {end_of_chorus}
 
-2x
+
+{bridge: Umbaba}
 {bridge: Umbaba}
 
 {start_of_verse}
@@ -57,5 +58,6 @@ které mě [A7]pasovalo [D]nad průměr.
 
 {chorus}
 
-3x
+{bridge: Umbaba}
+{bridge: Umbaba}
 {bridge: Umbaba}
