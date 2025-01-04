@@ -1,7 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ArrowBigDown, ArrowBigUpDash } from "lucide-react";
+import { ArrowBigDown, ArrowBigUpDash, Beaker } from "lucide-react";
 import { useEffect, useState, memo } from "react";
 import { animateScroll as scroll } from 'react-scroll';
 import { FitScreenMode } from "../hooks/viewSettingsStore";
@@ -18,21 +17,22 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => {
             setShowScrollButtons(
-                document.body.scrollHeight > window.innerHeight && 
+                document.body.scrollHeight > window.innerHeight &&
                 fitScreenMode != "fitXY"
             );
         });
-        
+
         resizeObserver.observe(document.body);
         return () => resizeObserver.disconnect();
     }, [fitScreenMode]);
+
     const scrollDown = () => {
         const remainingContent = document.body.scrollHeight - window.scrollY - window.innerHeight;
-        console.log(document.body.scrollHeight, window.scrollY, window.innerHeight)
         const scrollSpeed = window.innerHeight / 2000; // whole screen in 2s 
-        console.log(remainingContent)
-        if (remainingContent < 0) return;
-        
+
+        if (remainingContent <= 0) return;
+
+        // If we're close to the bottom, scroll all the way
         if (remainingContent < 0.8 * window.innerHeight) {
             scroll.scrollToBottom({
                 duration: remainingContent / scrollSpeed,
@@ -43,20 +43,32 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
             });
             return;
         }
-        
+
+        // Try to find the next section first
         const sections = document.querySelectorAll('.section');
         for (const container of sections) {
             const rect = container.getBoundingClientRect();
+            console.log(rect.bottom, window.innerHeight)
             if (rect.bottom >= window.innerHeight) {
                 const offset = Math.max(100, 0.2 * window.innerHeight);
                 const scrollDist = rect.top - offset;
+                if (scrollDist < 0.2 * window.innerHeight) {
+                    break;
+                }
                 scroll.scrollTo(
-                    rect.top + window.scrollY - offset, 
+                    rect.top + window.scrollY - offset,
                     { duration: scrollDist / scrollSpeed }
                 );
-                break;
+                return;
             }
         }
+
+        // If no section was found, scroll by viewport height
+        const scrollDist = Math.min(window.innerHeight * 0.8, remainingContent);
+        scroll.scrollTo(
+            window.scrollY + scrollDist,
+            { duration: scrollDist / scrollSpeed }
+        );
     };
 
     const scrollUp = () => {
