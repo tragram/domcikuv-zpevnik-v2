@@ -38,7 +38,7 @@ export function ResizableAutoTextSize({
     children,
     gestureContainerRef,
 }: ResizableAutoTextSizeProps) {
-    const { layout, actions } = useViewSettingsStore();
+    const { layout, chords, actions } = useViewSettingsStore();
     const [fontSize, setFontSize] = useState(layout.fontSize);
     const [pinching, setPinching] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -48,16 +48,6 @@ export function ResizableAutoTextSize({
         status: 'not-initialized',
         targetMode: layout.fitScreenMode
     });
-
-    // Setup overflow management
-    // useLayoutEffect(() => {
-    //     if (!excludeSelector) return;
-    //     const elements = document.querySelectorAll(excludeSelector);
-    //     elements.forEach((element) => {
-    //         const classesToAdd = overflowClasses.split(" ");
-    //         element.classList.add(...classesToAdd);
-    //     });
-    // }, [excludeSelector, overflowClasses]);
 
     // wait for the dummy element to load before fitting
     useEffect(() => {
@@ -74,7 +64,7 @@ export function ResizableAutoTextSize({
 
     // Handle fit mode changes
     useEffect(() => {
-        if (layout.fitScreenMode === fitState.targetMode || layout.fitScreenMode === "none") return;
+        if (layout.fitScreenMode === "none") return;
         // avoid observer interfering with the fit
         resizeObserverRef.current?.disconnect()
 
@@ -95,7 +85,7 @@ export function ResizableAutoTextSize({
                 resizeObserverRef.current.observe(containerRef.current);
             }
         });
-    }, [layout.fitScreenMode, layout.twoColumns, layout.repeatParts, layout.repeatPartsChords, fitState.targetMode]);
+    }, [layout.fitScreenMode, layout.twoColumns, layout.repeatParts, layout.repeatPartsChords, fitState.targetMode,chords]);
 
 
 
@@ -134,7 +124,7 @@ export function ResizableAutoTextSize({
         target: gestureContainerRef,
         eventOptions: { passive: true },
     });
-
+    
     return (
         <div
             className="relative flex h-full w-full max-w-full"
