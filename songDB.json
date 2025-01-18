@@ -2572,7 +2572,7 @@
     "startMelody": "c g",
     "chordproFile": "Krystof-Cesta.pro",
     "pdfFilenames": "['krystof_cesta-sken.pdf', 'krystof_cesta-comp.pdf']",
-    "contentHash": "bdde5ff0dfac15dfcd81f068eb769965a278e68a",
+    "contentHash": "25f21a15bd93993a5726a3f6baad8296f3c3bb92",
     "disabled": false
   },
   {
@@ -4156,7 +4156,7 @@
     "startMelody": "a",
     "chordproFile": "Spiritual_kvintet-Batalion.pro",
     "pdfFilenames": "['spiritual_kvintet_batalion-sken.pdf', 'spiritual_kvintet_batalion-comp.pdf']",
-    "contentHash": "41e70df9732fe5f82159184c3210a0a0dd6a7fbe",
+    "contentHash": "a79e4130ff506fa839efcbb6e26f16a994de5896",
     "disabled": false
   },
   {
