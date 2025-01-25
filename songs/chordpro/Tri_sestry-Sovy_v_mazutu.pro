@@ -10,7 +10,7 @@
 {start_melody: g h h a f#}
 {start_of_verse: Rec}
 [G]Tak jsme byli [D]včera na Portě,[C][D]
-[G]a když jsme se vraceli [D]cestou domů
+[G]a když jsme se vraceli [D]cestou domů[C]
 [D]tak jsme viděli [G]dřevorubce
 jak porážej [D]strom
 [C]a ten strom [D]plakal

@@ -22,7 +22,7 @@ rannas on vaid ük[Am]s võrku paikav [F]papi.
 {end_of_verse}
 
 {start_of_chorus}
-Siin kauges [Dm]külas, 
+Siin kauges [Dm]külas,
 teisi näinud pole [G]veel.
 Tühi [Dm]rand ja nõmmeliiva[G]tee.
 {end_of_chorus}
@@ -44,7 +44,7 @@ Seal on [Am]noored, teised [F]noored
 {chorus}
 
 {start_of_chorus: Outro}
-(2x) Korraks [Dm]vaatan, 
+(2x) Korraks [Dm]vaatan,
 seljataha [G]veel
 Tühi [Dm]rand ja nõmmeliivat[G]ee
 {end_of_chorus}

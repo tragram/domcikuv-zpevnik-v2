@@ -23,14 +23,14 @@ tam je tolik lidí, že
 {end_of_chorus}
 
 {start_of_verse}
-[G]za přepážkou [D]paní v letech 
+[G]za přepážkou [D]paní v letech
 [G]má razítko [D]gumové
-[G]a občas tiskne [Hmi]tiskárnou 
+[G]a občas tiskne [Hmi]tiskárnou
 z dob [Emi]první války [A]světové
 
-každému kdo spílá jí 
+Každému kdo spílá jí
 že zas na poště prosral den
-nabídne los stírací 
+nabídne los stírací
 ať uklidní se hazardem
 {end_of_verse}
 
@@ -38,14 +38,14 @@ ať uklidní se hazardem
 {chorus: R2}
 
 {start_of_verse}
-proč je vždy jen jedna 
+proč je vždy jen jedna
 z pěti přepážek otevřená
-je záhada co navždy zůstat 
+je záhada co navždy zůstat
 má tajemstvím zastřená
 
-má nejoblíbenější služba 
+Má nejoblíbenější služba
 je balíček do ruky
-znamená to totiž že zas 
+znamená to totiž že zas
 budu moct jít na poštu
 [A]jestli ho vůbec doručej
 [A]to už je bez záruky
