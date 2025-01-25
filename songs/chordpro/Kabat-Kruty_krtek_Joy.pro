@@ -9,14 +9,14 @@
 {range: a1-g1}
 {start_melody: a c e}
 {start_of_verse}
-[Ami]Když nemám co na práci 
+[Ami]Když nemám co na práci
 tak pozoruju [G]krtky
-jak marně čas utrácí, 
+jak marně čas utrácí,
 když dělaj ty svý [Ami]hrudky
 
-svařím plnou konvici 
+Svařím plnou konvici
 tou zmařím jejich [G]píli
-už se těším za chvíli, 
+už se těším za chvíli,
 jak krtkům dojdou [Ami]síly
 {end_of_verse}
 
@@ -28,14 +28,14 @@ s [G]nakloněnou [Ami]hlavou
 {end_of_chorus}
 
 {start_of_verse}
-[Ami]Posekej celou zahradu 
+[Ami]Posekej celou zahradu
 a všechno luční [G]kvítí
-to se potom černej krtek 
+to se potom černej krtek
 mnohem, lépe [Ami]chytí
 
-najdi správnou díru, 
+Najdi správnou díru,
 do který se voda [G]leje
-jestli to nezabere, 
+jestli to nezabere,
 vim, co se ti tam [Ami]děje
 {end_of_verse}
 
