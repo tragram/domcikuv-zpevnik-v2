@@ -145,3 +145,4 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 
 ## TODO:
 * dynamically compute the optimal number of columns and apply (theoretically, only the CSS value needs to be adjusted)
+* DB only updates when index is loaded, so links of newly added songs don't work...
