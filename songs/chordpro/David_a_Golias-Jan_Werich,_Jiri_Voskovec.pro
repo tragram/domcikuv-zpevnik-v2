@@ -20,7 +20,7 @@
 [G]čtěme bibli, [G7]tam to všechno je.
 {end_of_verse}
 
-{start_of_verse}
+{start_of_verse: V}
 [C]Samuelova [Ami]kniha nám [Dmi7]povídá, [G7]
 [C]jak na žida [Ami]přišla veliká bíd[Dmi7]a, [G7]
 [C]jak ti bídní [Ami]Filištíni
@@ -51,7 +51,7 @@ to není nic nového, to je stará příhoda,
 ale zajímavá věc - ono to má pokračování!
 {end_of_verse}
 
-{start_of_verse}
+{start_of_verse: V}
 [C]Jestli masy [Ami]nebudou dost [Dmi7]masívní [G7]
 [C]a zůstanou [Ami]ještě pár let [Dmi7]pasívní [G7]
 [C]stanou se pak [Ami]tyto masy

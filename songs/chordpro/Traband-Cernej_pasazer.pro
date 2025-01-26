@@ -21,7 +21,7 @@ a moje jízdenka je dávno nepla[Ami]tná.
 {end_of_bridge}
 
 {start_of_verse}
-Někde [Ami]ve vzpomínkách stojí [E]dům,
+Někde [Ami]ve vzpomínkách stojí můj [E]dům,
 ještě vidím, jak se kouří z komí[Ami]na.
 V tom [Ami]domě pro mě prostřený [E]stůl,
 tam já a moje rodi[Ami]na.
@@ -47,7 +47,7 @@ vezu se [F]odnikud [G]nikam a [E]nevím, kde skončím.
 [Ami]Mám to všechno na barevný [E]fotce,
 někdy z minulýho stole[Ami]tí.
 Tu [Ami]jedinou a pocit bezdo[E]movce
-si sebou nesu stále v pamě[Ami]ti.
+si nesu s sebou jako prokle[Ami]tí.
 {end_of_verse}
 
 {bridge}
