@@ -34,7 +34,7 @@ const pwaManifest: Partial<VitePWAOptions> = {
           return pathWithoutBase.startsWith('songs/') ||
             pathWithoutBase.startsWith('assets/');
         },
-        handler: 'CacheFirst',
+        handler: 'NetworkFirst',
         options: {
           cacheName: 'app-content',
           cacheableResponse: {
