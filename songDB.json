@@ -604,7 +604,7 @@
     "startMelody": "c",
     "chordproFile": "David_a_Golias-Jan_Werich,_Jiri_Voskovec.pro",
     "pdfFilenames": "",
-    "contentHash": "42cc68f2b34370e7ce62ff0db4d51a73c7d15b41",
+    "contentHash": "8d5e69220d927d3dbbdf895499db08dade7d2dd7",
     "disabled": false
   },
   {
@@ -4460,7 +4460,7 @@
     "startMelody": "e a",
     "chordproFile": "Traband-Cernej_pasazer.pro",
     "pdfFilenames": "['traband_cernej_pasazer-sken.pdf', 'traband_cernej_pasazer-comp.pdf']",
-    "contentHash": "70a39a73dde916162363cb2b289c75d8e6ef28bd",
+    "contentHash": "1d054131c065e86788d7c6bff84b23be04832ac7",
     "disabled": false
   },
   {
