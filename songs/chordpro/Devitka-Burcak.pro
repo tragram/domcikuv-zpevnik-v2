@@ -18,7 +18,7 @@ A z jeho [D]hřívy se mi tajil [A7sus]dech
 {start_of_verse}
 Přišel s ním [D]Shakespeare Mácha i lord Byron
 Přišla s ním [Emi7]Rusalka i holka od koní
-Líc a rub [Gadd9]mince co se nepotkaj
+Byl z jedné [Gadd9]strany panna z druhé lev,
 Růže co [D]kvete ale nevo[A7sus]ní
 {end_of_verse}
 
@@ -46,7 +46,7 @@ A proč se [D]Charón opřel do ve[A7sus]sel
 
 {start_of_verse}
 Proč zrovna [D]tuhle krásnou letní noc
-Musel's mě [Emi7]hřebečku tak pokopat
+Musels mě [Emi7]hřebečku tak pokopat
 A proč jsi [Gadd9]utekl když já tak moc
 Chtěl aspoň [D]na chvíli zas společný [A7sus]stát
 {end_of_verse}
