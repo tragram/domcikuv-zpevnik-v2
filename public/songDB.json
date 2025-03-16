@@ -272,6 +272,22 @@
     "disabled": false
   },
   {
+    "title": "Gorale",
+    "artist": "Čechomor",
+    "key": "D",
+    "language": "czech",
+    "dateAdded": "03-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Cechomor-Gorale.pro",
+    "pdfFilenames": "[]",
+    "contentHash": "c4aa85fd72dae82e215523231448bb3ef7f42011",
+    "disabled": false
+  },
+  {
     "title": "Mezi horami",
     "artist": "Čechomor",
     "key": "Am",
@@ -604,7 +620,7 @@
     "startMelody": "c",
     "chordproFile": "David_a_Golias-Jan_Werich,_Jiri_Voskovec.pro",
     "pdfFilenames": "",
-    "contentHash": "3224cd52f8c4273f7aebc4ed2664a8f56ad069b0",
+    "contentHash": "20d3892bc6432bcea98830e7fc10247ae3cbb9ab",
     "disabled": false
   },
   {
@@ -620,7 +636,7 @@
     "startMelody": "a a g f#",
     "chordproFile": "Devitka-Burcak.pro",
     "pdfFilenames": "['devitka_burcak-sken.pdf', 'devitka_burcak-comp.pdf', 'devitka_burcak-gen.pdf']",
-    "contentHash": "9603ed86172c2cf0e2eede3c28e5fdf3e520cf23",
+    "contentHash": "4fe2c3969753caa2c94684d444d36c32889233fa",
     "disabled": false
   },
   {
@@ -1040,6 +1056,22 @@
     "disabled": false
   },
   {
+    "title": "Let It Go",
+    "artist": "Frozen",
+    "key": "Em",
+    "language": "english",
+    "dateAdded": "03-2025",
+    "capo": "3",
+    "tempo": "",
+    "range": "e1-d2",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Frozen-Let_It_Go.pro",
+    "pdfFilenames": "",
+    "contentHash": "db0a018ff03660880bdd638136889e0d50bfab36",
+    "disabled": false
+  },
+  {
     "title": "Dívka s vlasem medovým",
     "artist": "Greenhorns",
     "key": "C",
@@ -1373,6 +1405,22 @@
     "chordproFile": "Irish_Rovers-Drunken_Sailor.pro",
     "pdfFilenames": "['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']",
     "contentHash": "8969a09b0325839a0788aa41eabebcf3f43aa7eb",
+    "disabled": false
+  },
+  {
+    "title": "Tři oříšky",
+    "artist": "Iveta Bartošová",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "3",
+    "tempo": "",
+    "range": "a1-a2",
+    "illustrationAuthor": "",
+    "startMelody": "d d",
+    "chordproFile": "Iveta_Bartosova-Tri_orisky.pro",
+    "pdfFilenames": "",
+    "contentHash": "4b1257b077b8a353c94d7a18f7bb2e66d2eb191b",
     "disabled": false
   },
   {
@@ -3008,6 +3056,22 @@
     "disabled": false
   },
   {
+    "title": "Prsa",
+    "artist": "Michal Horák",
+    "key": "Dm",
+    "language": "czech",
+    "dateAdded": "03-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Michal_Horak-Prsa.pro",
+    "pdfFilenames": "",
+    "contentHash": "9af866a3c9180897b50598a852f09a6f811944f0",
+    "disabled": false
+  },
+  {
     "title": "Zakázané uvolnění",
     "artist": "Michal Hrůza",
     "key": "D",
@@ -3069,6 +3133,22 @@
     "chordproFile": "Michal_Tucny-Prodavac.pro",
     "pdfFilenames": "['michal_tucny_prodavac-sken.pdf', 'michal_tucny_prodavac-comp.pdf']",
     "contentHash": "45c3d39834597f82401563f4aa3b6e69d7c4d896",
+    "disabled": false
+  },
+  {
+    "title": "Jarní kurýr",
+    "artist": "Miki Ryvola",
+    "key": "C",
+    "language": "czech",
+    "dateAdded": "03-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Miki_Ryvola-Jarni_kuryr.pro",
+    "pdfFilenames": "",
+    "contentHash": "670e8c567ee62f7aefbfb830f4a1f2e3aec8e120",
     "disabled": false
   },
   {
@@ -3580,7 +3660,7 @@
     "startMelody": "e e e e f# f#",
     "chordproFile": "Pauli_Hanhiniemi-Muutkin_Mokaa.pro",
     "pdfFilenames": "",
-    "contentHash": "eec72704652e849a0c4325a20853f0b569175ec1",
+    "contentHash": "7f51e6c58046b9f45ae350ff783379aacfbc0754",
     "disabled": false
   },
   {
@@ -4460,7 +4540,7 @@
     "startMelody": "e a",
     "chordproFile": "Traband-Cernej_pasazer.pro",
     "pdfFilenames": "['traband_cernej_pasazer-sken.pdf', 'traband_cernej_pasazer-comp.pdf']",
-    "contentHash": "3ad53ec94a0d00b3e83f79551e08aaab3c3249d9",
+    "contentHash": "854ce6fb5882687fc5054f57d675615f4428bd11",
     "disabled": false
   },
   {
@@ -4508,7 +4588,7 @@
     "startMelody": "a e",
     "chordproFile": "Trainspotting-Perfect_Day.pro",
     "pdfFilenames": "['trainspotting_perfect_day-sken.pdf', 'trainspotting_perfect_day-comp.pdf']",
-    "contentHash": "78f5cf378668e5f2e5773d42111577379319f377",
+    "contentHash": "d31229fce5063493ee9282060db54413b6799209",
     "disabled": false
   },
   {
@@ -4525,22 +4605,6 @@
     "chordproFile": "Treasure_Planet-I'm_Still_Here.pro",
     "pdfFilenames": "",
     "contentHash": "b286e5479ca54c38313199684bdb3573e9d8d689",
-    "disabled": false
-  },
-  {
-    "title": "Iveta Bartošová",
-    "artist": "Tři oříšky",
-    "key": "G",
-    "language": "czech",
-    "dateAdded": "12-2024",
-    "capo": "3",
-    "tempo": "",
-    "range": "a1-a2",
-    "illustrationAuthor": "",
-    "startMelody": "d d",
-    "chordproFile": "Tri_orisky-Iveta_Bartosova.pro",
-    "pdfFilenames": "",
-    "contentHash": "3c57cf1e9e6300b442631578db2b83f4adfb3fc3",
     "disabled": false
   },
   {

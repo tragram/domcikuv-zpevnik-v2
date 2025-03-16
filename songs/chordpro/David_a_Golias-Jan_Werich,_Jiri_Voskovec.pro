@@ -72,6 +72,6 @@ Mějme [G7]hlavy v písku, [E7]jako pštrosy,
 [C]Jenže lidem [Ami]nejde jenom [Dmi7]o šo[G7]sy
 [C]ale o krk i o [Ami]značný [Dmi7]obnosy[G7]
 [C]a proto by [Ami]měly masy,
-[F]říct své slovo [Fmi]všemy hlasy,
+[F]říct své slovo [Fmi]všemi hlasy,
 [C]dřív neš nás smrt [D7]po[G7]ko[C]sí
 {end_of_verse}
