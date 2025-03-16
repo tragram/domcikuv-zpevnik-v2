@@ -12,8 +12,8 @@ from selenium.webdriver.common.by import By
 from utils import check_if_lyrics_present, extract_metadata, get_lyrics, songs_path
 from webdriver_manager.chrome import ChromeDriverManager
 
+# Set up the Chrome WebDriver using the webdriver manager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-
 
 def process_chordpro_file(filepath):
     """
@@ -35,19 +35,18 @@ def process_chordpro_file(filepath):
 
 
 def scrape_akordy_pisnicky(url, key="D"):
-    # Set up the Chrome WebDriver using the webdriver manager
-
     # Navigate to the page
     driver.get(url)
 
     # transpose
     transpose_element = driver.find_element(By.ID, "trans")
-    key_button = transpose_element.find_element(By.LINK_TEXT, key)
+    key_button = transpose_element.find_element(By.LINK_TEXT, key.replace("m",""))
     key_button.click()
     time.sleep(2)
 
     # Find the element containing the song (by its id 'songtext')
     song_element = driver.find_element(By.ID, "songtext")
+    print(song_element)
     # Extract the full text content as rendered (with spacing)
     rendered_text = song_element.text
 
@@ -66,7 +65,7 @@ def process_chordpro_folder(
     # Random shuffle to avoid wasting available searches before error 429 on the start of the list.
     random.shuffle(chordpro_files)
     for filepath in chordpro_files:
-        print("-" * 40)
+        # print("-" * 40)
         scraped_path = Path(songs_path / scrape_folder / f"{filepath.stem}.txt")
         lyrics = get_lyrics(filepath)
         if scraped_path.exists():
@@ -92,7 +91,7 @@ def process_chordpro_folder(
         else:
             pisnicky_akordy_url = pisnicky_akordy_url[0]
             try:
-                song_text = scrape_akordy_pisnicky(pisnicky_akordy_url, key.title())
+                song_text = scrape_akordy_pisnicky(pisnicky_akordy_url, key)
             except NoSuchElementException:
                 print(
                     "Didn't find chords for",
