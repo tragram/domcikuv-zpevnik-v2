@@ -26,13 +26,13 @@ paine[F]lin, [G]tieten[Am]kin.
 {end_of_verse}
 
 {start_of_bridge}
-[F]Typeryyttään on niin [C]vaikee myöntää, 
+[F]Typeryyttään on niin [C]vaikee myöntää,
 [G]myönnän sen.
 {end_of_bridge}
 
 {start_of_chorus}
 Tää ei [F]oo ihan [C]haudan vakavaa,
- [G]muutkin [Am]mokaa.
+[G]muutkin [Am]mokaa.
 Mua [F]saa, mua [C]täytyy valistaa,
 [G]muutkin [Am]mokaa.
 {end_of_chorus}

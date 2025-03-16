@@ -272,6 +272,22 @@
     "disabled": false
   },
   {
+    "title": "Gorale",
+    "artist": "Čechomor",
+    "key": "D",
+    "language": "czech",
+    "dateAdded": "03-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Cechomor-Gorale.pro",
+    "pdfFilenames": "[]",
+    "contentHash": "5b32120bf58c55d635d605152c83a0305831615d",
+    "disabled": false
+  },
+  {
     "title": "Mezi horami",
     "artist": "Čechomor",
     "key": "Am",
@@ -604,7 +620,7 @@
     "startMelody": "c",
     "chordproFile": "David_a_Golias-Jan_Werich,_Jiri_Voskovec.pro",
     "pdfFilenames": "",
-    "contentHash": "8d5e69220d927d3dbbdf895499db08dade7d2dd7",
+    "contentHash": "20ba14ba3ad1d69df27ad4d0850a7d791fa1fd67",
     "disabled": false
   },
   {
@@ -1040,6 +1056,22 @@
     "disabled": false
   },
   {
+    "title": "Let It Go",
+    "artist": "Frozen",
+    "key": "Em",
+    "language": "english",
+    "dateAdded": "03-2025",
+    "capo": "3",
+    "tempo": "",
+    "range": "e1-d2",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Frozen-Let_It_Go.pro",
+    "pdfFilenames": "",
+    "contentHash": "ef4fc9176295faf52e146d0027c9d7b32baaf470",
+    "disabled": false
+  },
+  {
     "title": "Boulevard of Broken Dreams",
     "artist": "Green Day",
     "key": "Dm",
@@ -1373,6 +1405,22 @@
     "chordproFile": "Irish_Rovers-Drunken_Sailor.pro",
     "pdfFilenames": "['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']",
     "contentHash": "d646196eb34552071de324bdbd5d52edeebb2292",
+    "disabled": false
+  },
+  {
+    "title": "Tři oříšky",
+    "artist": "Iveta Bartošová",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "12-2024",
+    "capo": "3",
+    "tempo": "",
+    "range": "a1-a2",
+    "illustrationAuthor": "",
+    "startMelody": "d d",
+    "chordproFile": "Iveta_Bartosova-Tri_orisky.pro",
+    "pdfFilenames": "",
+    "contentHash": "220ec878254d646c241d2ade882815ae88137516",
     "disabled": false
   },
   {
@@ -3008,6 +3056,22 @@
     "disabled": false
   },
   {
+    "title": "Prsa",
+    "artist": "Michal Horák",
+    "key": "Dm",
+    "language": "czech",
+    "dateAdded": "03-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Michal_Horak-Prsa.pro",
+    "pdfFilenames": "",
+    "contentHash": "2ca66dfa626b2ab2312ecc15d58131fc6410bd08",
+    "disabled": false
+  },
+  {
     "title": "Zakázané uvolnění",
     "artist": "Michal Hrůza",
     "key": "D",
@@ -3069,6 +3133,22 @@
     "chordproFile": "Michal_Tucny-Prodavac.pro",
     "pdfFilenames": "['michal_tucny_prodavac-sken.pdf', 'michal_tucny_prodavac-comp.pdf']",
     "contentHash": "47bddf1cda4e08e7e7edb6ee7367a20d887b3ab8",
+    "disabled": false
+  },
+  {
+    "title": "Jarní kurýr",
+    "artist": "Miki Ryvola",
+    "key": "C",
+    "language": "czech",
+    "dateAdded": "03-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Miki_Ryvola-Jarni_kuryr.pro",
+    "pdfFilenames": "",
+    "contentHash": "0dfa7115d66b0f91e1e97901725df34fd3c52228",
     "disabled": false
   },
   {
@@ -3580,7 +3660,7 @@
     "startMelody": "e e e e f# f#",
     "chordproFile": "Pauli_Hanhiniemi-Muutkin_Mokaa.pro",
     "pdfFilenames": "",
-    "contentHash": "58d171d898ccf97ea13004e47d151679b3904f8b",
+    "contentHash": "16ddc42d59133524cd395f0eca9d4efd38ccab9a",
     "disabled": false
   },
   {
@@ -4508,7 +4588,7 @@
     "startMelody": "a e",
     "chordproFile": "Trainspotting-Perfect_Day.pro",
     "pdfFilenames": "['trainspotting_perfect_day-sken.pdf', 'trainspotting_perfect_day-comp.pdf']",
-    "contentHash": "6bfb0948eb4e178350553e614dbe7c9e5e032ebc",
+    "contentHash": "99866ced58dcdc389f0abfbb36477e73fc29bfa9",
     "disabled": false
   },
   {
@@ -4541,22 +4621,6 @@
     "chordproFile": "Tri_Sestry-Pumpa.pro",
     "pdfFilenames": "['tri_sestry_pumpa-sken.pdf', 'tri_sestry_pumpa-comp.pdf']",
     "contentHash": "658b01fe281aaddce7461a8da637a0132461fff8",
-    "disabled": false
-  },
-  {
-    "title": "Iveta Bartošová",
-    "artist": "Tři oříšky",
-    "key": "G",
-    "language": "czech",
-    "dateAdded": "12-2024",
-    "capo": "3",
-    "tempo": "",
-    "range": "a1-a2",
-    "illustrationAuthor": "",
-    "startMelody": "d d",
-    "chordproFile": "Tri_orisky-Iveta_Bartosova.pro",
-    "pdfFilenames": "",
-    "contentHash": "a0df0a7fc0de796407e05e350defc33c4a747d56",
     "disabled": false
   },
   {
