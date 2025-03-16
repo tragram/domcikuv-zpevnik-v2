@@ -25,7 +25,8 @@ Important notes:
 * Do not expand section directives.
 * Only add chords where there are existing lyrics missing chord annotations.
 * Maintain the original formatting and structure.
-* If unsure about a chord progression, flag it for review."""
+* If unsure about a chord progression, flag it for review.
+* Do not abbreviate the output. Replacing parts of the song with e.g. "[the same chords here]" is unacceptable."""
 
 model_id = "claude-3-5-sonnet-20241022"
 batches_folder = Path(__file__).parent.resolve() / "batches"
