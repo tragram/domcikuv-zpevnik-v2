@@ -20,7 +20,7 @@ plot [Gmi]probíjí a [A]voly bolí [Dmi]na [A]ší[Dmi]ji.
 a z [E7]krokodýlích dílů dělat [A]velký kabelky 
 Ony [Gmi]přitakaj a odpoví, že [Dmi]odsuzují klecový [A]chov 
 A z jejich slov vím hravě, [Dmi]že maj v hlavě [Cdim7]logi[D7]ku 
-a [E7]srdce buší vlevo v hrudníku. 
+a [E7]srdce buší vlevo v hrudní[A]ku. 
 {end_of_verse}
 
 {start_of_bridge}
@@ -36,7 +36,7 @@ A [Dmi]taky, [Dmi7+]na těch dámách,
 {end_of_chorus}
 
 {start_of_chorus}
-[A7]Prsa, jsou vážně [D]prima, 
+[A]Prsa, jsou vážně [D]prima, 
 přijdou mi [G]vhod, ať už jsem [Gdim7]pod, vedle či [D]snad nad [H7]nima. 
 [G]Naživo či [Gm]z telky, [D]vždycky mě [H7]baví, 
 [E7]jedno jak velký, [A7]hlavně že pravý! 
@@ -44,80 +44,83 @@ přijdou mi [G]vhod, ať už jsem [Gdim7]pod, vedle či [D]snad nad [H7]nima.
 {end_of_chorus}
 
 {start_of_verse}
-Náš rozhovor jde plíživě směrem k zdravé výživě,
-napočítat kalorie prý je zcela nezbytné.
-Kdo spásá prase na rožni,
-ten tloustne tukem podkožním,
-a je to v háji, stěží běží k tramvaji.
+[Dmi]Náš rozhovor jde [Dmi7+]plíživě [Dmi7]směrem k zdravé [Dmi6]výživě,
+[E7]napočítat kalorie prý je [A]zcela nezbytné.
+Kdo [Gmi]spásá prase na rožni,
+ten [Dmi]tloustne tukem podkožním,
+a [Gmi]je to v háji, [A]stěží běží k [Dmi]tram[A]va[Dmi]ji.
 
-Tak hledím dívkám na pusu, jak koušou kusy kus-kusu
-a přikusují celozrnou housku z ubrousku.
-Říkaj, že jedí věci bez éček a že je pro ně blbeček ten,
-kdo den co den jde na pivo a kupuje jen pečivo 
-shodných tvarů ze zmražených polotovarů.
+Tak [Dmi]hledím dívkám [Dmi7+]na pusu, jak [Dmi7]koušou kusy [Dmi6]kus-kusu
+a [E7]přikusují celozrnou housku [A]z ubrousku.
+Říkaj, že [Gmi]jedí věci bez éček a [Dmi]že je pro ně blbeček [A]ten,
+kdo den co den jde na pivo a [Dmi]kupuje jen [Cdim7]peči[D7]vo 
+a [E7]shodných tvarů ze zmražených [A]polotovarů.
 {end_of_verse}
 
 {start_of_bridge}
-A proto mám rád dámy, které uvažují samy,
-co kde která potravina provede s tělem.
-Mám rád jejich povahy, mám rád jejich úvahy,
-a vždy se těším, až pak s nimi půjdu večerem.
+[B]A proto mám rád [F]dámy, které [C]uvažují [Dmi]samy,
+jsou [B]co kde která [F]potravina [C]provede s tělem.
+Mám [B]rád jejich [F]povahy, mám [C]rád [A7]jejich [Dmi]úvahy,
+a [B]vždy se těším, [F]až pak s nimi [C]půjdu [A7]veče[Dmi]rem.
 {end_of_bridge}
 
 {chorus: Pre}
 
 {start_of_chorus}
-Prsa. Jsou vážně prima.
-Jsou hodně hravé, levé, pravé i ten prostor mezi nima.
-Dívkám se prý musím dívat do očí, ale
-vždy, když to zkusím, pohled se stočí.
-Zní poznatky z cest, prsa jsou the best.
+[A]Prsa. Jsou vážně [D]prima.
+Jsou [G]hodně hravé, [Gdim7]levé, pravé i [D]ten prostor [H7]mezi nima.
+[G]Dívkám se [Gm]prý musím [D]dívat do [H7]očí, 
+ale [E7]vždy, když to zkusím, [A7]pohled se stočí.
+[G]Zní [Gdim]poznatky [D/A]z cest, [A7]prsa jsou the [D]best.
 {end_of_chorus}
 
 {start_of_chorus}
-Mám rád prsa už od porodu.
-Klidně mě suď, mléko má chuť, já ještě dnes odmítám vodu.
-Chvilička stačí a zvednou mne ze dna,
-na prsa koukám radši než na ČT1!
-Prokázal to test, prsa jsou the [D]best.
+[A]Mám rád prsa [D]už od porodu.
+[G]Klidně mě suď, [Gdim7]mléko má chuť, [D]já ještě dnes [H7]odmítám vodu.
+[G]Chvilička [Gm]stačí a [D]zvednou mne [H7]ze dna,
+[E7]na prsa koukám [A7]radši než na ČT1!
+[G]Proká[Gdim]zal to [D/A]test, [A7]prsa jsou the [D]best.
 {end_of_chorus}
 
 {start_of_chorus}
-Jó prsa - podívej na ně.
-Odpověď daj, proč muži maj, zrovna takhle velké dlaně,
-jenom mezi druhým a dvanáctým rokem,
-jdou v životě chlapa prsa trochu bokem.
-Není žádná lest, prsa jsou the best.
+[A]Jó prsa - [D]podívej na ně.
+[G]Odpověď daj, [Gdim7]proč muži maj, [D]zrovna takhle [H7]velké dlaně,
+[G]jenom mezi [Gm]druhým a [D]dvanáctým [H7]rokem,
+[E7]jdou v životě [A7]chlapa prsa trochu bokem.
+[G]Není [Gdim]žádná [D/A]lest, [A7]prsa jsou the [Dmi]best.
 {end_of_chorus}
 
 {start_of_verse}
-A když se blíží desátá, rozhodnou se děvčata,
-že mi poví dvěma slovy o nejlepším koupání.
-Že v bazénech nešlo to, tak založily biotopy
-beze stopy chemie, lidí jezdí hromady, vycachtat se tady s žábami a ovády.
-
-A proto mám rád dámy, které nebojí se samy
-vzít to do svých rukou a dělat dobrou věc.
-Mám rád jejich pohledy, když setkají se s mým, tehdy
-vím, že večer s nimi bude skvělý nakonec.
+A [Dmi]když se blíží [Dmi7+]desátá, [Dmi7]rozhodnou se [Dmi6]děvčata,
+[E7]že mi poví dvěma slovy o [A]nejlepším koupání.
+Že v [Gmi]bazénech nešlo to, tak [Dmi]založily bioto[A]py
+beze stopy chemie, [Dmi]lidí jezdí [Cdmi7]hroma[D7]dy, 
+[E7]vycachtat se tady s žába[A]mi a ovády.
 {end_of_verse}
+
+{start_of_bridge}
+[B]A proto mám rád [F]dámy, které [C]nebojí se [Dmi]samy
+[B]vzít to do svých [F]rukou a [C]dělat dobrou věc.
+Mám [B]rád jejich [F]pohledy, když [C]set[A7]kají se [Dmi]s mým, tehdy
+[B]vím, že večer [F]s nimi bude [C]skvělý [A7]nako[Dmi]nec.
+{end_of_bridge}
 
 {chorus: Pre}
 
 {start_of_chorus}
-Zadek, vážně ho žeru,
-je stejně hezký, ať je český, čínský, či černošky z Peru.
-Jak se krásně třese, když na disku trsá,
-sáhnout na něj chce se, ale já mám radši prsa!
-Bez zbytečných gest, prsa jsou the [D]best.
+[A]Zadek, vážně [D]ho žeru,
+je [G]stejně hezký, [Gdim7]ať je český, [D]čínský, či [H7]černošky z Peru.
+[G]Jak se krásně [Gm]třese, [D]když na disku [H7]trsá,
+[E7]sáhnout na něj chce se, ale [A7]já mám radši prsa!
+[G]Bez [Gdim]zbytečných [D/A]gest, [A7]prsa jsou the [D]best.
 {end_of_chorus}
 
 {start_of_chorus}
-Jó prsa. Já vážně chci je,
-velikosti A, B, C, D, E, F, G, H, I, J
-ať už to jsou jedničky, dvojky, trojky nebo
-velký tak, že při řízení dotýkaj se spojky!
-Pravdou nech se vést, prsa jsou the [D]best.
+[A]Jó prsa. [D]Já vážně chci je,
+[G]velikosti A, [Gdim7]B, C, D, E, [D]F, G, H, I, [H7]J
+[G]ať už to jsou [Gm]jedničky, [D]dvojky, trojky [H7]nebo
+[E7]velký tak, že [A7]při řízení dotýkaj se spojky!
+[G]Pravdou [Gdim]nech se [D/A]vést, [A7]prsa jsou the [D]best.
 {end_of_chorus}
 
 {start_of_chorus: Outro}
