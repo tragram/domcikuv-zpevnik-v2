@@ -17,9 +17,9 @@
 {end_of_verse}
 
 {start_of_chorus}
-[Ami]Zafúkané, [G]zafúkané[C],
+[Ami]Zafúka[C]né, [G]zafúkané[C],
 [F]kolem mňa [C]všecko je [Dmi]zafúkané. [E]
-[Ami]Zafúkané, [G]zafúkané[C],
+[Ami]Zafúka[C]né, [G]zafúkané[C],
 [F]kolem mňa [C]všecko je [E]zafúkané. [Ami]
 {end_of_chorus}
 
