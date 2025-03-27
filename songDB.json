@@ -284,7 +284,7 @@
     "startMelody": "",
     "chordproFile": "Cechomor-Gorale.pro",
     "pdfFilenames": "[]",
-    "contentHash": "5b32120bf58c55d635d605152c83a0305831615d",
+    "contentHash": "9b2caac5904a148cbf82a317aa0095f6f09f8085",
     "disabled": false
   },
   {
@@ -1068,7 +1068,7 @@
     "startMelody": "",
     "chordproFile": "Frozen-Let_It_Go.pro",
     "pdfFilenames": "",
-    "contentHash": "ef4fc9176295faf52e146d0027c9d7b32baaf470",
+    "contentHash": "7a14cfdd82cc21e6dd7fadaa0c78e8971e01564d",
     "disabled": false
   },
   {
@@ -2778,9 +2778,9 @@
     "range": "d1-d2",
     "illustrationAuthor": "",
     "startMelody": "d",
-    "chordproFile": "Lidova_pisen-To_ta_Hel'pa.pro",
+    "chordproFile": "Lidova_pisen-To_ta_Helpa.pro",
     "pdfFilenames": "['lidova_piesen_to_ta_helpa-sken.pdf', 'lidova_piesen_to_ta_helpa-comp.pdf']",
-    "contentHash": "b02184266d736453164447ffffaa3683287bbe00",
+    "contentHash": "c49e74cf92b514bdbcaab9cc9351b793c1614d48",
     "disabled": false
   },
   {
@@ -3068,7 +3068,7 @@
     "startMelody": "",
     "chordproFile": "Michal_Horak-Prsa.pro",
     "pdfFilenames": "",
-    "contentHash": "c6285999ceb7f19e1c9d5b2f049981bc89da16da",
+    "contentHash": "bd05789a742899b498c2051b69c4fda0b491e2ba",
     "disabled": false
   },
   {
@@ -3148,7 +3148,7 @@
     "startMelody": "",
     "chordproFile": "Miki_Ryvola-Jarni_kuryr.pro",
     "pdfFilenames": "",
-    "contentHash": "0dfa7115d66b0f91e1e97901725df34fd3c52228",
+    "contentHash": "976a854f6854b1836a0a4a1da3bf0982f1c50d3a",
     "disabled": false
   },
   {

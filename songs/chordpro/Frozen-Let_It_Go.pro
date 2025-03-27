@@ -40,9 +40,9 @@ The [C]cold never bothered me anyway
 {end_of_chorus}
 
 {start_of_verse}
-[Em]It's funny how some [C]distance 
+[Em]It's funny how some [C]distance
 makes [D]everything seem [Am]small
-And the [Em]fears that once con[D]trolled me 
+And the [Em]fears that once con[D]trolled me
 can't [Asus4]get to me at [A]all
 {end_of_verse}
 

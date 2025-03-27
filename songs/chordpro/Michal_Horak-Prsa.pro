@@ -10,37 +10,37 @@
 {start_melody: }
 
 {start_of_verse}
-[Dmi]Po večerech [Dmi7+]s děvčaty [Dmi7]často vedu [Dmi6]debaty 
-[E7]o tom, zda má kráva práva [A]na pořádnou pastvinu. 
-Skot [Gmi]ve stáji je nešťasten 
-a [Dmi]přes plot hledá cestu ven 
-plot [Gmi]probíjí a [A]voly bolí [Dmi]na [A]ší[Dmi]ji. 
+[Dmi]Po večerech [Dmi7+]s děvčaty [Dmi7]často vedu [Dmi6]debaty
+[E7]o tom, zda má kráva práva [A]na pořádnou pastvinu.
+Skot [Gmi]ve stáji je nešťasten
+a [Dmi]přes plot hledá cestu ven
+plot [Gmi]probíjí a [A]voly bolí [Dmi]na [A]ší[Dmi]ji.
 
-Říkám [Dmi]dívkám, že se [Dmi7+]nemůže [Dmi7]chovat vydry [Dmi6]pro kůže 
-a z [E7]krokodýlích dílů dělat [A]velký kabelky 
-Ony [Gmi]přitakaj a odpoví, že [Dmi]odsuzují klecový [A]chov 
-A z jejich slov vím hravě, [Dmi]že maj v hlavě [Cdim7]logi[D7]ku 
-a [E7]srdce buší vlevo v hrudní[A]ku. 
+Říkám [Dmi]dívkám, že se [Dmi7+]nemůže [Dmi7]chovat vydry [Dmi6]pro kůže
+a z [E7]krokodýlích dílů dělat [A]velký kabelky
+Ony [Gmi]přitakaj a odpoví, že [Dmi]odsuzují klecový [A]chov
+A z jejich slov vím hravě, [Dmi]že maj v hlavě [Cdim7]logi[D7]ku
+a [E7]srdce buší vlevo v hrudní[A]ku.
 {end_of_verse}
 
 {start_of_bridge}
-[B]A proto mám rád [F]dámy, které [C]umí myslet [Dmi]samy, 
-jsou [B]citlivé i [F]ve chvílích, kdy [C]jiní barbaří. 
-Mám [B]rád jejich [F]vzdělání, mám [C]rád [A7]srdce [Dmi]na dlani 
-a [B]vždycky doufám, [F]že se večer [C]s nimi [A7]vyda[Dmi]ří. 
+[B]A proto mám rád [F]dámy, které [C]umí myslet [Dmi]samy,
+jsou [B]citlivé i [F]ve chvílích, kdy [C]jiní barbaří.
+Mám [B]rád jejich [F]vzdělání, mám [C]rád [A7]srdce [Dmi]na dlani
+a [B]vždycky doufám, [F]že se večer [C]s nimi [A7]vyda[Dmi]ří.
 {end_of_bridge}
 
 {start_of_chorus: Pre}
-A [Dmi]taky, [Dmi7+]na těch dámách, 
-[Dmi7]taky trochu, [Dmi6]taky mám rád ... 
+A [Dmi]taky, [Dmi7+]na těch dámách,
+[Dmi7]taky trochu, [Dmi6]taky mám rád ...
 {end_of_chorus}
 
 {start_of_chorus}
-[A]Prsa, jsou vážně [D]prima, 
-přijdou mi [G]vhod, ať už jsem [Gdim7]pod, vedle či [D]snad nad [H7]nima. 
-[G]Naživo či [Gm]z telky, [D]vždycky mě [H7]baví, 
-[E7]jedno jak velký, [A7]hlavně že pravý! 
-[G]Říkám [Gdim]na svou [D/A]čest, [A7]prsa jsou the [Dmi]best. 
+[A]Prsa, jsou vážně [D]prima,
+přijdou mi [G]vhod, ať už jsem [Gdim7]pod, vedle či [D]snad nad [H7]nima.
+[G]Naživo či [Gm]z telky, [D]vždycky mě [H7]baví,
+[E7]jedno jak velký, [A7]hlavně že pravý!
+[G]Říkám [Gdim]na svou [D/A]čest, [A7]prsa jsou the [Dmi]best.
 {end_of_chorus}
 
 {start_of_verse}
@@ -53,7 +53,7 @@ a [Gmi]je to v háji, [A]stěží běží k [Dmi]tram[A]va[Dmi]ji.
 Tak [Dmi]hledím dívkám [Dmi7+]na pusu, jak [Dmi7]koušou kusy [Dmi6]kus-kusu
 a [E7]přikusují celozrnou housku [A]z ubrousku.
 Říkaj, že [Gmi]jedí věci bez éček a [Dmi]že je pro ně blbeček [A]ten,
-kdo den co den jde na pivo a [Dmi]kupuje jen [Cdim7]peči[D7]vo 
+kdo den co den jde na pivo a [Dmi]kupuje jen [Cdim7]peči[D7]vo
 a [E7]shodných tvarů ze zmražených [A]polotovarů.
 {end_of_verse}
 
@@ -69,7 +69,7 @@ a [B]vždy se těším, [F]až pak s nimi [C]půjdu [A7]veče[Dmi]rem.
 {start_of_chorus}
 [A]Prsa. Jsou vážně [D]prima.
 Jsou [G]hodně hravé, [Gdim7]levé, pravé i [D]ten prostor [H7]mezi nima.
-[G]Dívkám se [Gm]prý musím [D]dívat do [H7]očí, 
+[G]Dívkám se [Gm]prý musím [D]dívat do [H7]očí,
 ale [E7]vždy, když to zkusím, [A7]pohled se stočí.
 [G]Zní [Gdim]poznatky [D/A]z cest, [A7]prsa jsou the [D]best.
 {end_of_chorus}
@@ -94,7 +94,7 @@ ale [E7]vždy, když to zkusím, [A7]pohled se stočí.
 A [Dmi]když se blíží [Dmi7+]desátá, [Dmi7]rozhodnou se [Dmi6]děvčata,
 [E7]že mi poví dvěma slovy o [A]nejlepším koupání.
 Že v [Gmi]bazénech nešlo to, tak [Dmi]založily bioto[A]py
-beze stopy chemie, [Dmi]lidí jezdí [Cdmi7]hroma[D7]dy, 
+beze stopy chemie, [Dmi]lidí jezdí [Cdmi7]hroma[D7]dy,
 [E7]vycachtat se tady s žába[A]mi a ovády.
 {end_of_verse}
 
