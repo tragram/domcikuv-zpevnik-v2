@@ -963,7 +963,7 @@
     "title": "Zafúkané",
     "artist": "Fleret",
     "key": "Am",
-    "language": "slovak",
+    "language": "czech",
     "dateAdded": "07-2015",
     "capo": "2",
     "tempo": "",
@@ -972,7 +972,7 @@
     "startMelody": "c",
     "chordproFile": "Fleret-Zafukane.pro",
     "pdfFilenames": "['fkeret_zafukane-sken.pdf', 'fkeret_zafukane-comp.pdf']",
-    "contentHash": "2996d464c6d2b513c71ce700e5aeeedff64ad7c1",
+    "contentHash": "fc61d6516eb5bbb0ffac35b0fed58b0b4f842fab",
     "disabled": false
   },
   {
@@ -2768,7 +2768,7 @@
     "disabled": false
   },
   {
-    "title": "To ta Hel'pa",
+    "title": "To ta Heľpa",
     "artist": "Lidová píseň",
     "key": "Dm",
     "language": "slovak",
@@ -2779,8 +2779,8 @@
     "illustrationAuthor": "",
     "startMelody": "d",
     "chordproFile": "Lidova_pisen-To_ta_Hel'pa.pro",
-    "pdfFilenames": "['lidova_pisen_to_ta_helpa-sken.pdf', 'lidova_pisen_to_ta_helpa-comp.pdf']",
-    "contentHash": "c7e816464e33aa54b23aaf1bb8d8169f06e192a0",
+    "pdfFilenames": "['lidova_piesen_to_ta_helpa-sken.pdf', 'lidova_piesen_to_ta_helpa-comp.pdf']",
+    "contentHash": "b02184266d736453164447ffffaa3683287bbe00",
     "disabled": false
   },
   {
