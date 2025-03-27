@@ -128,19 +128,19 @@
     "disabled": false
   },
   {
-    "title": "Friends Theme in minor",
+    "title": "Friends Theme in Minor",
     "artist": "Barenaked Ladies/Chase Holfelder",
     "key": "Em",
     "language": "english",
     "dateAdded": "03-2025",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "a1-d2",
     "illustrationAuthor": "",
-    "startMelody": "",
+    "startMelody": "h e",
     "chordproFile": "Barenaked_LadiesChase_Holfelder-Friends_Theme_in_minor.pro",
     "pdfFilenames": "",
-    "contentHash": "c9c7d69faa444eac4a7c8ce59978f83ae7409c52",
+    "contentHash": "9474fc758bb70eccb53944165a5c364fe139a5ab",
     "disabled": false
   },
   {
@@ -1081,10 +1081,10 @@
     "tempo": "",
     "range": "e1-d2",
     "illustrationAuthor": "",
-    "startMelody": "",
+    "startMelody": "e h",
     "chordproFile": "Frozen-Let_It_Go.pro",
     "pdfFilenames": "",
-    "contentHash": "7a14cfdd82cc21e6dd7fadaa0c78e8971e01564d",
+    "contentHash": "3e831c6a744925f6d87eaaa67b04fbc004394c1b",
     "disabled": false
   },
   {
@@ -4508,7 +4508,7 @@
     "startMelody": "",
     "chordproFile": "Tim_Minchin-F_Sharp.pro",
     "pdfFilenames": "",
-    "contentHash": "789c8bbd72c813d8b3d1fe30664aa27b0e1ab336",
+    "contentHash": "08a7cddd51f31b810c0dbb9a80d05133687795d0",
     "disabled": false
   },
   {
