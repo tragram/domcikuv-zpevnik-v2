@@ -128,6 +128,22 @@
     "disabled": false
   },
   {
+    "title": "Friends Theme in minor",
+    "artist": "Barenaked Ladies/Chase Holfelder",
+    "key": "Em",
+    "language": "english",
+    "dateAdded": "03-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Barenaked_LadiesChase_Holfelder-Friends_Theme_in_minor.pro",
+    "pdfFilenames": "",
+    "contentHash": "c9c7d69faa444eac4a7c8ce59978f83ae7409c52",
+    "disabled": false
+  },
+  {
     "title": "All the Small Things",
     "artist": "Blink-182",
     "key": "C",
@@ -4477,6 +4493,22 @@
     "chordproFile": "The_Witcher-Toss_a_Coin_to_Your_Witcher.pro",
     "pdfFilenames": "",
     "contentHash": "ee61bc3fab2846ee64ee3f0722807e9f6838fff1",
+    "disabled": false
+  },
+  {
+    "title": "F Sharp",
+    "artist": "Tim Minchin",
+    "key": "B",
+    "language": "english",
+    "dateAdded": "03-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "illustrationAuthor": "",
+    "startMelody": "",
+    "chordproFile": "Tim_Minchin-F_Sharp.pro",
+    "pdfFilenames": "",
+    "contentHash": "789c8bbd72c813d8b3d1fe30664aa27b0e1ab336",
     "disabled": false
   },
   {
