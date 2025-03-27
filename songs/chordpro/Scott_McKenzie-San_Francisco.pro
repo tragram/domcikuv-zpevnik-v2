@@ -23,9 +23,9 @@
 {end_of_verse}
 
 {start_of_bridge}
-[F]All across the [Dm]nation [F]such a strange vib[Dm]ration
+[F]All across the nation [F]such a strange vibration
 [G]People in motion
-[F]There's a whole gener[Dm]ation [F]with a new expl[Dm]anation
+[F]There's a whole generation [F]with a new explanation
 [G]People in motion, [D]people in motion
 {end_of_bridge}
 

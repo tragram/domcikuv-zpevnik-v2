@@ -252,7 +252,7 @@
     "startMelody": "a",
     "chordproFile": "Buty-Nad_stadem_koni.pro",
     "pdfFilenames": "['buty_nad_stadem_koni-sken.pdf', 'buty_nad_stadem_koni-comp.pdf']",
-    "contentHash": "e9f9166042253d086697ede43830b68f5b47c2f0",
+    "contentHash": "f43ac46f505e241644a71ca5a5f5608bc79b7577",
     "disabled": false
   },
   {
@@ -4188,7 +4188,7 @@
     "startMelody": "d",
     "chordproFile": "Scott_McKenzie-San_Francisco.pro",
     "pdfFilenames": "['scott_mckenzie_san_francisco-sken.pdf', 'scott_mckenzie_san_francisco-comp.pdf']",
-    "contentHash": "547bd8731e5ff789fd890393b9d72aff2fb46cbc",
+    "contentHash": "479620ba1a6085a3e5d186e2065e9cfaf715ab1a",
     "disabled": false
   },
   {

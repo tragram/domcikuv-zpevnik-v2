@@ -52,8 +52,8 @@ a [Emi]slzy tečou a já [G]šeptám
 {end_of_verse}
 
 {start_of_verse}
-𝄆 [D]Vysyp ten [A]popel, kamaráde,
-[Emi]do bílé [G]vody, vody / Heja hej... 𝄇
-[D]Vyhasnul [A]kotel a [Emi]náhoda
-je [G]štěstí od podko[G/F#]vy. [G],[G/F#]
+𝄆 [D]Vysyp ten [A]popel, kamará[G]de,
+do bílé [D]vody, [A]vo[G]dy / Heja hej... 𝄇
+Vyhasnul [D]kotel a [A]náhoda
+[Emi]je štěstí od podko[G]vy. [G/F#][G]
 {end_of_verse}
