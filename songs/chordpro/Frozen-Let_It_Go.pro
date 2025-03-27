@@ -7,7 +7,7 @@
 {key: Em}
 {tempo: }
 {range: e1-d2}
-{start_melody: }
+{start_melody: e h}
 
 {start_of_verse}
 The [Em]snow glows white on the [C]mountain tonight
