@@ -6,6 +6,8 @@
 {capo: 0}
 {key: B}
 {tempo: }
+{range: a1-g2}
+{start_melody: a a h}
 {start_of_verse: Intro}
 I've been [B]having a little [A7]problem recent[Dm]ly
 Which is [Gm/E]quite disturbing [A7]musicallical[Dm]ly

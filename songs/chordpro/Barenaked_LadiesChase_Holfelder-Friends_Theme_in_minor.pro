@@ -6,8 +6,8 @@
 {capo: 0}
 {key: Em}
 {tempo: }
-{start_melody: h e}
-{range: a1-d2}
+{start_melody: h e f# a}
+{range: h1-d2}
 
 {start_of_verse}
 [Em]So no one [C]told you life was 
