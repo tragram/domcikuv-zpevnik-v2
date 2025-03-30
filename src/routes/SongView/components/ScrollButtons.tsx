@@ -24,7 +24,6 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
                 fitScreenMode !== "fitXY"
             );
         });
-        console.log(document.body.scrollHeight, window.outerHeight)
         resizeObserver.observe(document.body);
         return () => resizeObserver.disconnect();
     }, [fitScreenMode]);
