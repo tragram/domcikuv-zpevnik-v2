@@ -1,5 +1,5 @@
 import { useGesture } from '@use-gesture/react'
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FitScreenMode, getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
 import React from 'react';
 import { cn } from '@/lib/utils';
@@ -8,116 +8,219 @@ interface ResizableAutoTextSizeProps {
     children: React.ReactNode
     gestureContainerRef: React.RefObject<HTMLDivElement>
     className?: string
+    autoColumns?: boolean
 }
 
-const DUMMY_FONT_SIZE = 16;
+const INITIAL_FONT_SIZE = 16;
 
-type FitState = {
-    status: 'not-initialized' | 'idle' | 'preparing-measurement' | 'measuring' | 'applying-changes';
-    targetMode: FitScreenMode;
-    pendingClasses?: string;
-}
+/**
+ * Computes font size and optimal columns using a temporary offscreen clone
+ */
+function computeOptimalLayout(
+    originalEl: HTMLElement,
+    containerEl: HTMLElement,
+    fitMode: FitScreenMode,
+    minColumns: number = 1,
+    maxColumns: number = 4,
+    shouldOptimizeColumns: boolean = false
+): { fontSize: number; columns: number } {
+    // Create a clone for measurement to avoid any visual flickering
+    const clone = originalEl.cloneNode(true) as HTMLElement;
+    clone.style.position = 'absolute';
+    clone.style.top = '-9999px';
+    clone.style.left = '-9999px';
+    clone.style.visibility = 'hidden';
+    clone.style.pointerEvents = 'none';
+    clone.style.width = 'auto';
+    clone.style.height = 'auto';
+    clone.style.fontSize = `${INITIAL_FONT_SIZE}px`;
+    clone.style.maxWidth = 'none';
+    clone.style.maxHeight = 'none';
+    clone.style.overflow = 'visible';
+    clone.ariaHidden = 'true';
 
-function computeFontSize(dummyEl: HTMLElement, containerEl: HTMLElement, targetMode: FitScreenMode) {
-    const dummyRect = dummyEl.getBoundingClientRect();
-    const containerSize = containerEl.getBoundingClientRect();
-    let newFontSize;
+    // Add to document for measurement
+    document.body.appendChild(clone);
 
-    const widthScale = containerSize.width / dummyRect.width * DUMMY_FONT_SIZE;
-    if (targetMode === 'fitXY') {
-        const heightScale = containerSize.height / dummyRect.height * DUMMY_FONT_SIZE;
-        newFontSize = getFontSizeInRange(Math.min(widthScale, heightScale));
-    } else if (targetMode === 'fitX') {
-        newFontSize = getFontSizeInRange(widthScale);
-    } else {
-        throw new Error("Invalid fit mode");
+    const containerRect = containerEl.getBoundingClientRect();
+    let bestFontSize = 0;
+    let bestColumns = 1;
+
+    try {
+        if (shouldOptimizeColumns) {
+            // Try different column counts
+            for (let cols = minColumns; cols <= maxColumns; cols++) {
+                const child = clone.querySelector('#song-content-wrapper');
+                if (child) {
+                    (child as HTMLElement).style.columnCount = `${cols}`;
+                }
+                clone.style.columnGap = '1em'; // TODO: this should be the same as on the real one
+
+                // Get content size at reference font size
+                const contentRect = clone.getBoundingClientRect();
+
+                // Calculate font scaling factors
+                let calculatedFontSize;
+
+                if (fitMode === 'fitXY') {
+                    const widthScale = containerRect.width / contentRect.width * INITIAL_FONT_SIZE;
+                    const heightScale = containerRect.height / contentRect.height * INITIAL_FONT_SIZE;
+                    calculatedFontSize = getFontSizeInRange(Math.min(widthScale, heightScale));
+                } else if (fitMode === 'fitX') {
+                    const widthScale = containerRect.width / contentRect.width * INITIAL_FONT_SIZE;
+                    calculatedFontSize = getFontSizeInRange(widthScale);
+                } else {
+                    calculatedFontSize = INITIAL_FONT_SIZE; // Default for 'none'
+                }
+                console.log(cols, " cols: ", calculatedFontSize, "px")
+
+                // Update if this configuration allows a larger font size
+                if (calculatedFontSize > bestFontSize) {
+                    bestFontSize = calculatedFontSize;
+                    bestColumns = cols;
+                } else {
+                    // expect only one local maximum
+                    break;
+                }
+            }
+            console.log(bestFontSize, bestColumns)
+        } else {
+            // Just calculate font size for current column setting
+            const contentRect = clone.getBoundingClientRect();
+
+            if (fitMode === 'fitXY') {
+                const widthScale = containerRect.width / contentRect.width * INITIAL_FONT_SIZE;
+                const heightScale = containerRect.height / contentRect.height * INITIAL_FONT_SIZE;
+                bestFontSize = getFontSizeInRange(Math.min(widthScale, heightScale));
+            } else if (fitMode === 'fitX') {
+                const widthScale = containerRect.width / contentRect.width * INITIAL_FONT_SIZE;
+                bestFontSize = getFontSizeInRange(widthScale);
+            }
+        }
+    } finally {
+        // Always clean up the clone
+        document.body.removeChild(clone);
     }
-    return newFontSize;
+
+    return {
+        fontSize: bestFontSize,
+        columns: bestColumns
+    };
 }
 
 export function ResizableAutoTextSize({
     children,
     gestureContainerRef,
-    className
+    className,
 }: ResizableAutoTextSizeProps) {
     const { layout, chords, actions } = useViewSettingsStore();
     const [fontSize, setFontSize] = useState(layout.fontSize);
+    const [columnCount, setColumnCount] = useState(1);
     const [pinching, setPinching] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
-    const dummyRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
     const resizeObserverRef = useRef<ResizeObserver | null>(null);
-    const [visibleClasses, setVisibleClasses] = useState(className);
 
-    // Compute new classes when dependencies change
-    const classNames = useMemo(() => {
-        const newClasses = cn(
-            className,
-            'max-w-screen dark:text-white/95',
-            chords.inlineChords ? 'chords-inline' : '',
-            chords.showChords ? '' : 'chords-hidden',
-            `fit-screen-${layout.fitScreenMode}`,
-            layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
-            layout.twoColumns ? 'song-content-columns' : '',
-        );
-        return newClasses;
-    }, [className, chords.inlineChords, chords.showChords, layout.fitScreenMode, layout.repeatPartsChords, layout.twoColumns]);
+    // Combine classes
+    const classNames = cn(
+        className,
+        'max-w-screen dark:text-white/95',
+        chords.inlineChords ? 'chords-inline' : '',
+        chords.showChords ? '' : 'chords-hidden',
+        `fit-screen-${layout.fitScreenMode}`,
+        layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
+        // Only add column class if not using autoColumns
+        (layout.multiColumns) ? 'song-content-columns' : '',
+    );
 
-    const [fitState, setFitState] = useState<FitState>({
-        status: 'not-initialized',
-        targetMode: layout.fitScreenMode,
-        pendingClasses: classNames
-    });
-
-    // Update classes sequence
-    useEffect(() => {
-        // Step 1: Update dummy element classes and prepare for measurement
-        setFitState(prev => ({
-            status: 'preparing-measurement',
-            targetMode: layout.fitScreenMode,
-            pendingClasses: classNames
-        }));
-
-        resizeObserverRef.current?.disconnect();
-        // Step 2: Schedule measurement after dummy update
-        requestAnimationFrame(() => {
-            setFitState(prev => ({
-                ...prev,
-                status: 'measuring'
-            }));
-            if (containerRef.current && layout.fitScreenMode !== "none") {
-                resizeObserverRef.current = new ResizeObserver(() => setFitState(prev => ({ status: "measuring", targetMode: prev.targetMode, pendingClasses: classNames })));
-                resizeObserverRef.current.observe(containerRef.current);
+    // Function to measure and update layout
+    const updateLayout = useCallback(() => {
+        if (!containerRef.current || !contentRef.current || pinching || layout.fitScreenMode === 'none') {
+            if (layout.fitScreenMode === 'none') {
+                setFontSize(layout.fontSize);
+                setColumnCount(layout.multiColumns ? 2 : 1); // TODO: this should probably respect previously selected col #..?
             }
-        });
-    }, [classNames, layout.fitScreenMode, layout.twoColumns, layout.repeatParts, layout.repeatPartsChords, fitState.targetMode, chords]);
-
-    // Handle measurements and class updates
-    useEffect(() => {
-        if (fitState.status !== 'measuring' || !containerRef.current || !dummyRef.current) return;
-
-        // Perform measurement
-        if (!pinching) {
-            const newFontSize = fitState.targetMode === "none" ?
-                layout.fontSize :
-                computeFontSize(dummyRef.current, containerRef.current, fitState.targetMode);
-
-            // Step 3: Apply changes to visible element
-            setFontSize(newFontSize);
-            setVisibleClasses(fitState.pendingClasses);
+            return;
         }
 
-        setFitState(prev => ({
-            ...prev,
-            status: 'idle',
-        }));
-    }, [fitState, layout.fontSize, pinching]);
+        // Calculate optimal layout using the clone technique
+        const { fontSize: newFontSize, columns: newColumnCount } = computeOptimalLayout(
+            contentRef.current,
+            containerRef.current,
+            layout.fitScreenMode,
+            1, // TODO: this should be in settings
+            4,
+            layout.multiColumns
+        );
+
+        setFontSize(newFontSize);
+        if (layout.multiColumns) {
+            setColumnCount(newColumnCount);
+        } else {
+            setColumnCount(1);
+        }
+    }, [layout.fitScreenMode, layout.fontSize, layout.multiColumns, pinching]);
+
+    // Initial setup and resize observer
+    useLayoutEffect(() => {
+        if (!containerRef.current || !contentRef.current) return;
+
+        if (!isInitialized) {
+            // Hide content until first measurement is done
+            contentRef.current.style.visibility = 'hidden';
+        }
+
+        updateLayout();
+
+        if (!isInitialized) {
+            // Show content after first measurement
+            if (contentRef.current) {
+                contentRef.current.style.visibility = 'visible';
+                setIsInitialized(true);
+            }
+        }
+
+        // Set up resize observer for subsequent updates
+        if (layout.fitScreenMode !== 'none') {
+            resizeObserverRef.current = new ResizeObserver(() => {
+                if (contentRef.current && isInitialized) {
+                    // For resize events, we don't hide the content
+                    // as that would cause flickering
+                    updateLayout();
+                }
+            });
+
+            resizeObserverRef.current.observe(containerRef.current);
+        }
+
+        return () => {
+            resizeObserverRef.current?.disconnect();
+        };
+    }, [layout.fitScreenMode, isInitialized, updateLayout]);
+
+    // Update when dependencies change
+    useLayoutEffect(() => {
+        if (isInitialized) {
+            updateLayout();
+        }
+    }, [
+        layout.fitScreenMode,
+        layout.multiColumns,
+        layout.repeatParts,
+        layout.repeatPartsChords,
+        chords.inlineChords,
+        chords.showChords,
+        isInitialized,
+        updateLayout
+    ]);
 
     // Sync fontSize with layout when not pinching
     useEffect(() => {
-        if (!pinching) {
+        if (!pinching && layout.fitScreenMode === 'none') {
             setFontSize(layout.fontSize);
         }
-    }, [layout.fontSize, pinching]);
+    }, [layout.fontSize, layout.fitScreenMode, pinching]);
 
     // Handle pinch gestures
     useGesture({
@@ -145,31 +248,19 @@ export function ResizableAutoTextSize({
             ref={containerRef}
         >
             <div
-                id="actual-contents"
+                ref={contentRef}
                 className={cn(
-                    visibleClasses,
-                    fitState.status === 'not-initialized' ? "invisible" : "visible",
-                    fitState.targetMode === "none" ? "fit-screen-none" : "",
+                    classNames,
+                    !isInitialized ? "invisible" : "visible",
+                    layout.fitScreenMode === "none" ? "fit-screen-none" : "",
+                    // TODO: this is dumb but I cannot come up with anything simple that's more elegant...
+                    columnCount == 2 ? `[&>*]:columns-2` : "",
+                    columnCount == 3 ? `[&>*]:columns-3` : "",
+                    columnCount == 4 ? `[&>*]:columns-4` : "",
                 )}
                 style={{
                     fontSize: `${fontSize}px`,
-                    // columnWidth: visibleClasses?.includes("song-content-columns") ? (containerRef.current?.getBoundingClientRect().width) : undefined 
                 }}
-            >
-                {children}
-            </div>
-            <div
-                id="dummy-contents"
-                ref={dummyRef}
-                className={fitState.pendingClasses}
-                style={{
-                    position: 'fixed',
-                    left: '-9999px',
-                    visibility: 'hidden',
-                    fontSize: `${DUMMY_FONT_SIZE}px`,
-                    pointerEvents: 'none'
-                }}
-                aria-hidden="true"
             >
                 {children}
             </div>

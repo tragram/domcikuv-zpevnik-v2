@@ -167,10 +167,10 @@
 }
 
 /* this class is added when user toggles the two-column layout */
-.song-content-columns>* {
+/* .song-content-columns>* {
     columns: 2;
     @apply gap-4 sm:gap-8 lg:gap-16;
-}
+} */
 
 /* misc */
 .song-content .literal, .song-content .tab-section {

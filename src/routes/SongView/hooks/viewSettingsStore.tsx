@@ -15,7 +15,7 @@ export interface PresetSettings {
 
 export interface IndependentLayoutSettings {
   fontSize: number
-  twoColumns: boolean
+  multiColumns: boolean
   compactInFullScreen: boolean
 }
 
@@ -44,12 +44,12 @@ export const LAYOUT_PRESETS = {
 const defaultIndependentSettings: IndependentLayoutSettings = isSmallScreen()
   ? {
     fontSize: 12,
-    twoColumns: false,
+    multiColumns: false,
     compactInFullScreen: true,
   }
   : {
     fontSize: 12,
-    twoColumns: true,
+    multiColumns: true,
     compactInFullScreen: false,
   };
 
