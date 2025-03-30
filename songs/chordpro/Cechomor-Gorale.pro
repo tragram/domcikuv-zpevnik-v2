@@ -6,8 +6,8 @@
 {capo: 0}
 {key: D}
 {tempo: }
-{range:}
-{start_melody:}
+{range: c#1-h1}
+{start_melody: d e f#}
 {start_of_verse}
 [D]Za lasami [G]za gorami [A]za dolina[D]mi
 pobiłi [G]się dwaj gora[A]le ciup[D]agami

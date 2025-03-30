@@ -6,8 +6,8 @@
 {capo: 0}
 {key: Dm}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-d2}
+{start_melody: d}
 
 {start_of_verse}
 [Dmi]Po večerech [Dmi7+]s děvčaty [Dmi7]často vedu [Dmi6]debaty

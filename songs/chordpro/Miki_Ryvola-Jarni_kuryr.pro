@@ -4,8 +4,8 @@
 {language: czech}
 {date_added: 03-2025}
 {key: C}
-{range: }
-{start_melody: }
+{range: c1-c2/e2}
+{start_melody: e d c}
 {start_of_verse}
 Duně[C]ní kopyt [F]večer slýchá[C]vám,
 údolím jarní [Emi]kurýr jede k [E]nám.

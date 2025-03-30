@@ -6,8 +6,8 @@
 {capo: 0}
 {key: B}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-d2}
+{start_melody: a g a f}
 
 
 {start_of_verse}
