@@ -49,6 +49,8 @@ function computeOptimalLayout(
     try {
         if (shouldOptimizeColumns) {
             // Try different column counts
+            // TODO: can we just make an approximation? it takes a long time to do this for every render...
+            // or perhaps save the ratio of width/height of each column combination so that it's not necessary to do this on every layout update
             for (let cols = minColumns; cols <= maxColumns; cols++) {
                 const child = clone.querySelector('#song-content-wrapper');
                 if (child) {

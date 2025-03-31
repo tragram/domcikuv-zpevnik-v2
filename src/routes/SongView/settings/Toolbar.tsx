@@ -59,7 +59,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                             <Settings2 size={32} />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-scroll">
+                    <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
                         {React.Children.toArray(<LayoutSettingsDropdownSection fullScreenHandle={fullScreenHandle} />)}
                         {React.Children.toArray(<ChordSettingsDropdownMenu />)}
                         <DropdownMenuLabel>Theme</DropdownMenuLabel>
