@@ -146,3 +146,4 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 
 ## TODO:
 * the smart ScrollButtons sometimes misbehave (TBD both why and how to fix)
+* make the light theme look better (or at least look less bad, lol)

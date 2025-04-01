@@ -60,7 +60,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
             }}
         >
             <div
-                className="w-fit xs:w-full xl:w-fit h-14 bg-glass/10 backdrop-blur-md rounded-full shadow-md flex gap-2 p-2 items-center outline-primary dark:outline-primary/30 outline outline-2 justify-left"
+                className="w-fit xs:w-full xl:w-fit h-14 bg-glass/30 dark:bg-glass/10 backdrop-blur-md rounded-full shadow-md flex gap-2 p-2 items-center outline-primary dark:outline-primary/30 outline outline-2 justify-left"
                 id="toolbar"
             >
                 {children}
