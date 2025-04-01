@@ -1,16 +1,17 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { MoveDiagonal, MoveHorizontal, Columns2, Fullscreen, AArrowDown, AArrowUp, PencilRuler, Repeat, Maximize } from 'lucide-react'
+import { MoveDiagonal, MoveHorizontal, Columns2, Fullscreen, AArrowDown, AArrowUp, PencilRuler, Repeat, Maximize, BrainCircuit } from 'lucide-react'
 import FancySwitch from '@/components/ui/fancy-switch'
 import { LayoutPreset, LayoutSettings, useViewSettingsStore } from '../hooks/viewSettingsStore'
 import { FullScreenHandle } from 'react-full-screen'
 import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { LoopNoteIcon } from '@/components/ui/loop-note-icon'
 
-const layouSettingsBoolsKeys = ["twoColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"] as const satisfies ReadonlyArray<keyof LayoutSettings>;
+const layouSettingsBoolsKeys = ["multiColumns","smartColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"] as const satisfies ReadonlyArray<keyof LayoutSettings>;
 const layoutSettingsValues = {
-  "twoColumns": { icon: <Columns2 />, label: "View as two columns" },
+  "multiColumns": { icon: <Columns2 />, label: "Multicolumn view" },
+  "smartColumns": { icon: <BrainCircuit />, label: "Smart columns" },
   "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
   "repeatPartsChords": { icon: <LoopNoteIcon />, label: "Show chords in repeated parts" },
   "compactInFullScreen": { icon: <Maximize />, label: "Auto fullscreen in compact view" }
@@ -46,8 +47,8 @@ export const LayoutSettingsToolbar: React.FC<{
         size="icon"
         variant="circular"
         className="max-[525px]:hidden"
-        isActive={layout.twoColumns}
-        onClick={() => actions.setLayoutSettings({ twoColumns: !layout.twoColumns })}
+        isActive={layout.multiColumns}
+        onClick={() => actions.setLayoutSettings({ multiColumns: !layout.multiColumns })}
       >
         <Columns2 />
       </Button>

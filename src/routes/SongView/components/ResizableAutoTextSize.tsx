@@ -1,180 +1,127 @@
-import { useGesture } from '@use-gesture/react'
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { FitScreenMode, getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
+// src/components/ResizableAutoTextSize.tsx
+import { useGesture } from '@use-gesture/react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { setFontSize, setOptimalColumnCount } from '../utils/columnLayout';
+import { getElementFontSize, setElementFontSize } from '../utils/fontSize';
 
 interface ResizableAutoTextSizeProps {
-    children: React.ReactNode
-    gestureContainerRef: React.RefObject<HTMLDivElement>
-    className?: string
-}
-
-const DUMMY_FONT_SIZE = 16;
-
-type FitState = {
-    status: 'not-initialized' | 'idle' | 'preparing-measurement' | 'measuring' | 'applying-changes';
-    targetMode: FitScreenMode;
-    pendingClasses?: string;
-}
-
-function computeFontSize(dummyEl: HTMLElement, containerEl: HTMLElement, targetMode: FitScreenMode) {
-    const dummyRect = dummyEl.getBoundingClientRect();
-    const containerSize = containerEl.getBoundingClientRect();
-    let newFontSize;
-
-    const widthScale = containerSize.width / dummyRect.width * DUMMY_FONT_SIZE;
-    if (targetMode === 'fitXY') {
-        const heightScale = containerSize.height / dummyRect.height * DUMMY_FONT_SIZE;
-        newFontSize = getFontSizeInRange(Math.min(widthScale, heightScale));
-    } else if (targetMode === 'fitX') {
-        newFontSize = getFontSizeInRange(widthScale);
-    } else {
-        throw new Error("Invalid fit mode");
-    }
-    return newFontSize;
+  children: React.ReactNode;
+  gestureContainerRef: React.RefObject<HTMLDivElement>;
+  className?: string;
+  autoColumns?: boolean;
 }
 
 export function ResizableAutoTextSize({
-    children,
-    gestureContainerRef,
-    className
+  children,
+  gestureContainerRef,
+  className,
 }: ResizableAutoTextSizeProps) {
-    const { layout, chords, actions } = useViewSettingsStore();
-    const [fontSize, setFontSize] = useState(layout.fontSize);
-    const [pinching, setPinching] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const dummyRef = useRef<HTMLDivElement>(null);
-    const resizeObserverRef = useRef<ResizeObserver | null>(null);
-    const [visibleClasses, setVisibleClasses] = useState(className);
+  const { layout, chords, actions } = useViewSettingsStore();
 
-    // Compute new classes when dependencies change
-    const classNames = useMemo(() => {
-        const newClasses = cn(
+  // States that need to trigger re-renders
+  const [pinching, setPinching] = useState(false);
+
+  // Refs
+  const contentRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
+
+  const updateLayout = useCallback(() => {
+    if (!contentRef.current || !wrapperRef.current) return;
+
+    setOptimalColumnCount(
+      contentRef.current,
+      wrapperRef.current,
+      layout
+    );
+
+    if (layout.fitScreenMode !== "none") {
+      setFontSize(
+        contentRef.current,
+        wrapperRef.current,
+        layout.fitScreenMode,
+      );
+    }
+  }, [layout, chords]);
+
+  // Initialize ResizeObserver
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+
+    // Create a simple resize observer
+    resizeObserverRef.current = new ResizeObserver(() => {
+      if (!pinching) {
+        updateLayout();
+      }
+    });
+
+    // Start observing the container
+    resizeObserverRef.current.observe(wrapperRef.current);
+
+    // Cleanup function
+    return () => {
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect();
+      }
+    };
+  }, [updateLayout, pinching]);
+
+  // Initial layout update
+  useLayoutEffect(() => {
+    updateLayout();
+  }, [updateLayout]);
+
+  // Handle pinch gestures
+  useGesture({
+    onPinchStart: () => {
+      actions.setLayoutSettings({ fitScreenMode: "none" });
+      setPinching(true);
+    },
+    onPinchEnd: () => {
+      actions.setLayoutSettings({ fontSize: getElementFontSize(contentRef.current) });
+      setPinching(false);
+    },
+    onPinch: ({ movement: [dScale], memo }) => {
+      if (!memo) memo = getElementFontSize(contentRef.current);
+      const newFontSize = getFontSizeInRange(memo * dScale);
+      if (contentRef.current) {
+        setElementFontSize(contentRef.current, newFontSize);
+      }
+      return memo;
+    },
+  }, {
+    target: gestureContainerRef,
+    eventOptions: { passive: true },
+  });
+
+  return (
+    <div id="auto-text-size-wrapper" className={cn('w-full z-10 lg:px-16 p-4 sm:p-8', layout.fitScreenMode == "fitXY" ? "h-full" : "h-fit ", layout.fitScreenMode !== "fitXY" ? "mb-10" : "")}
+    >
+      <div className='flex h-full w-full justify-center' ref={wrapperRef}>
+        {/* this "extra" div is here so that the target width & height can be found easily (otherwise, the padding of auto-text-size-wrapper makes it difficult) */}
+        <div
+          ref={contentRef}
+          className={cn(
             className,
-            'max-w-screen dark:text-white/95',
+            'dark:text-white/95 h-fit',
             chords.inlineChords ? 'chords-inline' : '',
             chords.showChords ? '' : 'chords-hidden',
-            `fit-screen-${layout.fitScreenMode}`,
             layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
-            layout.twoColumns ? 'song-content-columns' : '',
-        );
-        return newClasses;
-    }, [className, chords.inlineChords, chords.showChords, layout.fitScreenMode, layout.repeatPartsChords, layout.twoColumns]);
-
-    const [fitState, setFitState] = useState<FitState>({
-        status: 'not-initialized',
-        targetMode: layout.fitScreenMode,
-        pendingClasses: classNames
-    });
-
-    // Update classes sequence
-    useEffect(() => {
-        // Step 1: Update dummy element classes and prepare for measurement
-        setFitState(prev => ({
-            status: 'preparing-measurement',
-            targetMode: layout.fitScreenMode,
-            pendingClasses: classNames
-        }));
-
-        resizeObserverRef.current?.disconnect();
-        // Step 2: Schedule measurement after dummy update
-        requestAnimationFrame(() => {
-            setFitState(prev => ({
-                ...prev,
-                status: 'measuring'
-            }));
-            if (containerRef.current && layout.fitScreenMode !== "none") {
-                resizeObserverRef.current = new ResizeObserver(() => setFitState(prev => ({ status: "measuring", targetMode: prev.targetMode, pendingClasses: classNames })));
-                resizeObserverRef.current.observe(containerRef.current);
-            }
-        });
-    }, [classNames, layout.fitScreenMode, layout.twoColumns, layout.repeatParts, layout.repeatPartsChords, fitState.targetMode, chords]);
-
-    // Handle measurements and class updates
-    useEffect(() => {
-        if (fitState.status !== 'measuring' || !containerRef.current || !dummyRef.current) return;
-
-        // Perform measurement
-        if (!pinching) {
-            const newFontSize = fitState.targetMode === "none" ?
-                layout.fontSize :
-                computeFontSize(dummyRef.current, containerRef.current, fitState.targetMode);
-
-            // Step 3: Apply changes to visible element
-            setFontSize(newFontSize);
-            setVisibleClasses(fitState.pendingClasses);
-        }
-
-        setFitState(prev => ({
-            ...prev,
-            status: 'idle',
-        }));
-    }, [fitState, layout.fontSize, pinching]);
-
-    // Sync fontSize with layout when not pinching
-    useEffect(() => {
-        if (!pinching) {
-            setFontSize(layout.fontSize);
-        }
-    }, [layout.fontSize, pinching]);
-
-    // Handle pinch gestures
-    useGesture({
-        onPinchStart: () => {
-            actions.setLayoutSettings({ fitScreenMode: "none" });
-            setPinching(true);
-        },
-        onPinchEnd: () => {
-            actions.setLayoutSettings({ fontSize });
-            setPinching(false);
-        },
-        onPinch: ({ movement: [dScale], memo }) => {
-            if (!memo) memo = fontSize;
-            const newFontSize = getFontSizeInRange(memo * dScale);
-            setFontSize(newFontSize);
-            return memo;
-        },
-    }, {
-        target: gestureContainerRef,
-        eventOptions: { passive: true },
-    });
-    return (
-        <div
-            className="relative flex h-full w-full max-w-full"
-            ref={containerRef}
+            `fit-screen-${layout.fitScreenMode}`,
+            layout.fitScreenMode === "none" ? "max-w-full" : ""
+          )}
+          style={{
+            fontSize: `${layout.fontSize}px`,
+          }}
         >
-            <div
-                id="actual-contents"
-                className={cn(
-                    visibleClasses,
-                    fitState.status === 'not-initialized' ? "invisible" : "visible",
-                    fitState.targetMode === "none" ? "fit-screen-none" : "",
-                )}
-                style={{
-                    fontSize: `${fontSize}px`,
-                    // columnWidth: visibleClasses?.includes("song-content-columns") ? (containerRef.current?.getBoundingClientRect().width) : undefined 
-                }}
-            >
-                {children}
-            </div>
-            <div
-                id="dummy-contents"
-                ref={dummyRef}
-                className={fitState.pendingClasses}
-                style={{
-                    position: 'fixed',
-                    left: '-9999px',
-                    visibility: 'hidden',
-                    fontSize: `${DUMMY_FONT_SIZE}px`,
-                    pointerEvents: 'none'
-                }}
-                aria-hidden="true"
-            >
-                {children}
-            </div>
+          {children}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default ResizableAutoTextSize;

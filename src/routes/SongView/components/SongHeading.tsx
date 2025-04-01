@@ -56,19 +56,8 @@ const SongHeading: React.FC<SongHeadingProps> = ({ songData, layoutSettings, tra
     }, [layoutSettings]);
 
     const isWrapped = wrappedIndices.length > 0;
-
     return (
         <div className={cn('flex w-full justify-between flex-wrap gap-4 text-primary dark:text-white')} ref={containerRef}>
-            {/* {layoutSettings.fitScreenMode === "fitXY" || layoutSettings.twoColumns ? (
-                <h1 className='self-center font-bold text-wrap mb-2'>
-                    {songData.artist}: {songData.title}
-                </h1>
-            ) : (
-                <div className={cn('flex flex-col flex-grow', isWrapped ? "text-center" : "justify-start mb-4")}>
-                    <h2 className='font-semibold text-primary text-wrap uppercase  dark:text-foreground'>{songData.artist}</h2>
-                    <h2 className='font-bold text-wrap  dark:text-white'>{songData.title}</h2>
-                </div>
-            )} */}
             <div className={cn('flex flex-col flex-grow', isWrapped ? "text-center" : "justify-start mb-4")}>
                 <h2 className='font-semibold text-primary text-wrap uppercase  dark:text-foreground'>{songData.artist}</h2>
                 <h2 className='font-bold text-wrap  dark:text-white'>{songData.title}</h2>

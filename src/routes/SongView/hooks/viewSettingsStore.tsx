@@ -15,7 +15,8 @@ export interface PresetSettings {
 
 export interface IndependentLayoutSettings {
   fontSize: number
-  twoColumns: boolean
+  multiColumns: boolean
+  smartColumns: boolean
   compactInFullScreen: boolean
 }
 
@@ -44,12 +45,14 @@ export const LAYOUT_PRESETS = {
 const defaultIndependentSettings: IndependentLayoutSettings = isSmallScreen()
   ? {
     fontSize: 12,
-    twoColumns: false,
+    multiColumns: false,
+    smartColumns: false,
     compactInFullScreen: true,
   }
   : {
     fontSize: 12,
-    twoColumns: true,
+    multiColumns: true, 
+    smartColumns: true,
     compactInFullScreen: false,
   };
 
@@ -145,7 +148,7 @@ export const useViewSettingsStore = create<SettingsState>()(
             ? customLayoutPreset
             : LAYOUT_PRESETS[preset];
           if (preset === "custom") {
-            presetSettings = {...presetSettings, fitScreenMode: "none" };
+            presetSettings = { ...presetSettings, fitScreenMode: "none" };
           }
           actions.setLayoutSettings(presetSettings);
         },
