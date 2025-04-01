@@ -1,6 +1,6 @@
 import { useGesture } from '@use-gesture/react'
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { FitScreenMode, getFontSizeInRange, useViewSettingsStore } from "../hooks/viewSettingsStore";
+import { FitScreenMode, getFontSizeInRange, LayoutSettings, useViewSettingsStore } from "../hooks/viewSettingsStore";
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -16,27 +16,6 @@ const INITIAL_FONT_SIZE = 16;
 const COLUMN_GAP = '1em';
 const COLUMN_GAP_PX = 16; // Approximate pixel equivalent of 1em
 const HIGHER_COL_RATIO = 1.1; // How many times larger font size needs to be in more columns to justify the switch
-
-/**
- * Creates a clone element for measurement purposes
- */
-function createMeasurementClone(originalEl: HTMLElement): HTMLElement {
-    const clone = originalEl.cloneNode(true) as HTMLElement;
-    clone.style.position = 'absolute';
-    clone.style.top = '-9999px';
-    clone.style.left = '-9999px';
-    clone.style.visibility = 'hidden';
-    clone.style.pointerEvents = 'none';
-    clone.style.width = 'auto';
-    clone.style.height = 'auto';
-    clone.style.fontSize = `${INITIAL_FONT_SIZE}px`;
-    clone.style.maxWidth = 'none';
-    clone.style.maxHeight = 'none';
-    clone.style.overflow = 'visible';
-    clone.style.columnGap = COLUMN_GAP;
-    clone.ariaHidden = 'true';
-    return clone;
-}
 
 /**
  * Calculates font size based on content dimensions and container dimensions
@@ -61,43 +40,47 @@ function calculateFontSize(
 /**
  * Finds the optimal number of columns for content layout
  */
-function optimalColumnCount(
-    originalEl: HTMLElement | null,
+function findOptimalColumnCount(
+    cloneEl: HTMLElement | null,
     containerRect: DOMRect | undefined,
-    fitMode: FitScreenMode,
-    multiColumns: boolean,
-    smartColumns: boolean,
+    layout: LayoutSettings,
     minColumns: number = 1,
     maxColumns: number = 4
 ): number {
     // Safety checks for null elements
-    if (!originalEl || !containerRect) {
+    if (!cloneEl || !containerRect) {
         return 1;
     }
-    
-    if (!multiColumns) {
+
+    if (!layout.multiColumns || layout.fitScreenMode === "fitX" || layout.fitScreenMode === "none") {
+        // fitX always has the optimal solution as zero
+        // ideally, this function would not be called if fit mode is 'none' but if it is, it makes most sense to return 1
         return 1;
-    } else if (!smartColumns) {
+    } else if (!layout.smartColumns) {
         return 2;
     }
-    
-    // Create a clone for measurement
-    const clone = createMeasurementClone(originalEl);
-    document.body.appendChild(clone);
+
+    if (layout.fitScreenMode !== "fitXY") {
+        console.error("Error: Unknown fit screen mode!")
+        return 1;
+    }
+
     let bestFontSize = 0;
     let bestColumns = 1;
 
     try {
         // First measure single-column layout to establish baseline
-        const child = clone.querySelector('#song-content-wrapper');
+        const child = cloneEl.querySelector('#song-content-wrapper');
         if (child) {
             (child as HTMLElement).style.columnCount = '1';
+        } else {
+            cloneEl.style.columnCount = '1';
         }
 
-        const singleColRect = clone.getBoundingClientRect();
+        const singleColRect = cloneEl.getBoundingClientRect();
         const baseWidth = singleColRect.width;
         const baseHeight = singleColRect.height;
-        
+
         // Skip further calculations if we have invalid measurements
         if (baseWidth <= 0 || baseHeight <= 0) {
             return 1;
@@ -114,17 +97,9 @@ function optimalColumnCount(
             const approxHeight = Math.ceil(baseHeight / cols);
 
             // Calculate font size based on approximated dimensions
-            let calculatedFontSize;
-            if (fitMode === 'fitXY') {
-                const widthScale = containerRect.width / approxWidth;
-                const heightScale = containerRect.height / approxHeight;
-                calculatedFontSize = getFontSizeInRange(Math.min(widthScale, heightScale) * INITIAL_FONT_SIZE);
-            } else if (fitMode === 'fitX') {
-                const widthScale = containerRect.width / approxWidth;
-                calculatedFontSize = getFontSizeInRange(widthScale * INITIAL_FONT_SIZE);
-            } else {
-                calculatedFontSize = INITIAL_FONT_SIZE; // Default for 'none'
-            }
+            const widthScale = containerRect.width / approxWidth;
+            const heightScale = containerRect.height / approxHeight;
+            const calculatedFontSize = getFontSizeInRange(Math.min(widthScale, heightScale) * INITIAL_FONT_SIZE);
 
             // Update if this configuration allows a larger font size
             if (calculatedFontSize > HIGHER_COL_RATIO * bestFontSize) {
@@ -138,11 +113,6 @@ function optimalColumnCount(
     } catch (error) {
         console.error("Error calculating optimal column count:", error);
         return 1; // Default to 1 column in case of error
-    } finally {
-        // Always clean up the clone
-        if (clone.parentNode) {
-            document.body.removeChild(clone);
-        }
     }
 
     return bestColumns;
@@ -152,177 +122,108 @@ function optimalColumnCount(
  * Calculates the precise font size for a given column count
  */
 function calculatePreciseFontSize(
-    originalEl: HTMLElement | null,
+    cloneEl: HTMLElement | null,
     containerRect: DOMRect | undefined,
     fitMode: FitScreenMode,
     columnCount: number
 ): number {
     // Safety checks
-    if (!originalEl || !containerRect) {
+    if (!cloneEl || !containerRect) {
         return INITIAL_FONT_SIZE;
     }
 
-    // Create a clone for measurement
-    const clone = createMeasurementClone(originalEl);
-    document.body.appendChild(clone);
-    let fontSize = INITIAL_FONT_SIZE;
-
     try {
         // Set the column count for precise measurement
-        const child = clone.querySelector('#song-content-wrapper');
+        const child = cloneEl.querySelector('#song-content-wrapper');
         if (child) {
             (child as HTMLElement).style.columnCount = `${columnCount}`;
+        } else {
+            cloneEl.style.columnCount = `${columnCount}`;
         }
 
         // Get precise content size for the selected column count
-        const preciseRect = clone.getBoundingClientRect();
+        const preciseRect = cloneEl.getBoundingClientRect();
 
         // Calculate font size with precise measurements
-        fontSize = calculateFontSize(preciseRect, containerRect, fitMode);
+        return calculateFontSize(preciseRect, containerRect, fitMode);
     } catch (error) {
         console.error("Error calculating precise font size:", error);
         return INITIAL_FONT_SIZE; // Default in case of error
-    } finally {
-        // Always clean up the clone
-        if (clone.parentNode) {
-            document.body.removeChild(clone);
-        }
     }
-
-    return fontSize;
 }
+
+let renderCount = 0;
 
 export function ResizableAutoTextSize({
     children,
     gestureContainerRef,
     className,
 }: ResizableAutoTextSizeProps) {
+    renderCount++;
+    console.log(`Render #${renderCount} - Component rendering`);
+
     const { layout, chords, actions } = useViewSettingsStore();
+
+    // States that need to trigger re-renders
     const [fontSize, setFontSize] = useState(layout.fontSize);
     const [pinching, setPinching] = useState(false);
-    const [isInitialized, setIsInitialized] = useState(false);
+    const [columnCount, setColumnCount] = useState(1);
+
+    // Refs
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const cloneRef = useRef<HTMLDivElement>(null);
     const resizeObserverRef = useRef<ResizeObserver | null>(null);
-    const [columnCount, setColumnCount] = useState(1); // Default to 1 column
 
-    // Combine classes
-    const classNames = cn(
-        className,
-        'max-w-screen dark:text-white/95',
-        chords.inlineChords ? 'chords-inline' : '',
-        chords.showChords ? '' : 'chords-hidden',
-        `fit-screen-${layout.fitScreenMode}`,
-        layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
-        // Only add column class if not using autoColumns
-        (layout.multiColumns) ? 'song-content-columns' : '',
-    );
-
-    // Calculate optimal column count
-    const calculateOptimalColumns = useCallback(() => {
-        if (!contentRef.current || !containerRef.current) return 1;
-        
-        return optimalColumnCount(
-            contentRef.current,
-            containerRef.current.getBoundingClientRect(),
-            layout.fitScreenMode,
-            layout.multiColumns,
-            layout.smartColumns
-        );
-    }, [layout.fitScreenMode, layout.multiColumns, layout.smartColumns]);
-
-    // Function to measure and update layout
     const updateLayout = useCallback(() => {
-        if (!containerRef.current || !contentRef.current || pinching || layout.fitScreenMode === 'none') {
-            if (layout.fitScreenMode === 'none') {
-                setFontSize(layout.fontSize);
-            }
-            return;
-        }
-        
-        const newFontSize = calculatePreciseFontSize(
-            contentRef.current,
-            containerRef.current.getBoundingClientRect(),
-            layout.fitScreenMode,
-            columnCount
+        if (!cloneRef.current || !containerRef.current || layout.fitScreenMode === "none") return;
+
+        const containerRect = containerRef.current.getBoundingClientRect();
+
+        const optimalColumnCount = findOptimalColumnCount(
+            cloneRef.current,
+            containerRect,
+            layout
         );
-        
+
+        setColumnCount(optimalColumnCount);
+
+        const newFontSize = calculatePreciseFontSize(
+            cloneRef.current,
+            containerRect,
+            layout.fitScreenMode,
+            optimalColumnCount
+        );
+
         setFontSize(newFontSize);
-    }, [layout.fitScreenMode, layout.fontSize, pinching, columnCount]);
+    }, [chords, layout]);
 
-    // Update column count when dependencies change
-    useLayoutEffect(() => {
-        if (isInitialized && contentRef.current && containerRef.current) {
-            const newColumnCount = calculateOptimalColumns();
-            setColumnCount(newColumnCount);
-        }
-    }, [
-        isInitialized,
-        calculateOptimalColumns,
-        layout.multiColumns,
-        layout.smartColumns,
-    ]);
+    // Initialize ResizeObserver
+    useEffect(() => {
+        if (!containerRef.current) return;
 
-    // Update font size when dependencies change
-    useLayoutEffect(() => {
-        if (isInitialized) {
-            updateLayout();
-        }
-    }, [
-        isInitialized,
-        updateLayout,
-        columnCount,
-        layout.fitScreenMode,
-        children
-    ]);
-
-    // Initial setup and resize observer
-    useLayoutEffect(() => {
-        if (!containerRef.current || !contentRef.current) return;
-
-        if (!isInitialized) {
-            // Hide content until first measurement is done
-            contentRef.current.style.visibility = 'hidden';
-            
-            // Initial column count calculation
-            const initialColumnCount = calculateOptimalColumns();
-            setColumnCount(initialColumnCount);
-        }
-
-        updateLayout();
-
-        if (!isInitialized) {
-            // Show content after first measurement
-            if (contentRef.current) {
-                contentRef.current.style.visibility = 'visible';
-                setIsInitialized(true);
+        // Create a simple resize observer
+        resizeObserverRef.current = new ResizeObserver(() => {
+            if (!pinching) {
+                updateLayout();
             }
-        }
+        });
 
-        // Set up resize observer for subsequent updates
-        if (layout.fitScreenMode !== 'none') {
-            resizeObserverRef.current = new ResizeObserver(() => {
-                if (contentRef.current && isInitialized && !pinching) {
-                    // Recalculate columns on resize
-                    const newColumnCount = calculateOptimalColumns();
-                    if (newColumnCount !== columnCount) {
-                        setColumnCount(newColumnCount);
-                    }
-                    
-                    // Update font size
-                    updateLayout();
-                }
-            });
+        // Start observing the container
+        resizeObserverRef.current.observe(containerRef.current);
 
-            resizeObserverRef.current.observe(containerRef.current);
-        }
-
+        // Cleanup function
         return () => {
             if (resizeObserverRef.current) {
                 resizeObserverRef.current.disconnect();
             }
         };
-    }, [layout.fitScreenMode, isInitialized, updateLayout, calculateOptimalColumns, columnCount, pinching]);
+    }, [updateLayout, pinching]);
+
+    // Initial layout update
+    useLayoutEffect(() => {
+        updateLayout();
+    }, [updateLayout]);
 
     // Sync fontSize with layout when not pinching
     useEffect(() => {
@@ -352,30 +253,62 @@ export function ResizableAutoTextSize({
         eventOptions: { passive: true },
     });
 
+    const contentClasses = cn(
+        className,
+        'max-w-screen dark:text-white/95',
+        chords.inlineChords ? 'chords-inline' : '',
+        chords.showChords ? '' : 'chords-hidden',
+        `fit-screen-${layout.fitScreenMode}`,
+        layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
+        (layout.multiColumns) ? 'song-content-columns' : '',
+        layout.fitScreenMode === "none" ? "fit-screen-none" : "",
+        // Apply column count dynamically
+        columnCount === 2 ? `[&>*]:columns-2` : "",
+        columnCount === 3 ? `[&>*]:columns-3` : "",
+        columnCount === 4 ? `[&>*]:columns-4` : "",
+        `[&>*]:gap-[${COLUMN_GAP}]`
+    );
+
     return (
-        <div
-            className="relative flex h-full w-full max-w-full"
-            ref={containerRef}
-        >
+        <>
+            {/* Main visible content */}
             <div
-                ref={contentRef}
-                className={cn(
-                    classNames,
-                    !isInitialized ? "invisible" : "visible",
-                    layout.fitScreenMode === "none" ? "fit-screen-none" : "",
-                    // Apply column count dynamically
-                    columnCount === 2 ? `[&>*]:columns-2` : "",
-                    columnCount === 3 ? `[&>*]:columns-3` : "",
-                    columnCount === 4 ? `[&>*]:columns-4` : "",
-                )}
-                style={{
-                    fontSize: `${fontSize}px`,
-                    columnGap: COLUMN_GAP, // Consistent column gap styling
-                }}
+                className="relative flex h-full w-full max-w-full"
+                ref={containerRef}
             >
-                {children}
+                <div
+                    ref={contentRef}
+                    className={contentClasses}
+                    style={{
+                        fontSize: `${fontSize}px`,
+                        columnGap: COLUMN_GAP,
+                    }}
+                >
+                    {children}
+                </div>
             </div>
-        </div>
+
+            {/* Hidden clone for measurements (always present) */}
+            <div
+                className="absolute -left-[9999px] -top-[9999px] invisible pointer-events-none"
+                aria-hidden="true"
+            >
+                <div
+                    ref={cloneRef}
+                    className={contentClasses}
+                    style={{
+                        fontSize: `${INITIAL_FONT_SIZE}px`,
+                        width: 'auto',
+                        height: 'auto',
+                        maxWidth: 'none',
+                        maxHeight: 'none',
+                        overflow: 'visible',
+                    }}
+                >
+                    {children}
+                </div>
+            </div>
+        </>
     );
 }
 
