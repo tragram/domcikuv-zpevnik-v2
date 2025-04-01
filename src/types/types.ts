@@ -88,7 +88,7 @@ class SongData {
     }
 
     get id() {
-        return `${this.ascii_artist}-${this.ascii_title}`.replace(/ /g, "_").replace("?", "").replace("/", "");
+        return `${this.ascii_artist}-${this.ascii_title}`.replace(/ /g, "_").replace(/[^A-Za-z0-9-_]+/g, '').replace(/_+/g, '_');
     }
 
     // Static method to restore an instance from a plain object (after JSON.parse)

@@ -21,7 +21,7 @@ def normalize_string(input_str):
     nfkd_form = unicodedata.normalize("NFD", input_str)
     ascii_str = re.sub(r"[\u0300-\u036f]", "", nfkd_form)
     # Replace spaces with underscores
-    ascii_str = ascii_str.replace(" ", "_").replace("?", "").replace("/", "")
+    ascii_str = re.sub(r'_+', '_',re.sub(r"[^A-Za-z0-9-_]+", "", ascii_str.replace(" ", "_")))
     return ascii_str
 
 
