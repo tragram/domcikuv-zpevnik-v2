@@ -8,7 +8,7 @@ import { FullScreenHandle } from 'react-full-screen'
 import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { LoopNoteIcon } from '@/components/ui/loop-note-icon'
 
-const layouSettingsBoolsKeys = ["multiColumns","smartColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"] as const satisfies ReadonlyArray<keyof LayoutSettings>;
+const layouSettingsBoolsKeys = ["multiColumns", "smartColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"] as const satisfies ReadonlyArray<keyof LayoutSettings>;
 const layoutSettingsValues = {
   "multiColumns": { icon: <Columns2 />, label: "Multicolumn view" },
   "smartColumns": { icon: <BrainCircuit />, label: "Smart columns" },
@@ -148,10 +148,6 @@ export const LayoutSettingsDropdownSection: React.FC<{
 
     <DropdownMenuLabel>Contents</DropdownMenuLabel>
     <DropdownMenuSeparator />
-    <DropdownMenuItem onClick={() => { fullScreenHandle.enter() }}>
-      <DropdownIconStart icon={<Fullscreen />} />
-      Enter fullscreen
-    </DropdownMenuItem >
     {
       layouSettingsBoolsKeys.map(k => (
         <DropdownMenuCheckboxItem
@@ -165,6 +161,10 @@ export const LayoutSettingsDropdownSection: React.FC<{
         </DropdownMenuCheckboxItem>
       ))
     }
+    <DropdownMenuItem onClick={() => { fullScreenHandle.enter() }}>
+      <DropdownIconStart icon={<Fullscreen />} />
+      Enter fullscreen
+    </DropdownMenuItem >
   </>
   );
 }
