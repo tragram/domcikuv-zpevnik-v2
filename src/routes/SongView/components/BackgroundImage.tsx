@@ -12,7 +12,7 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({ songData, id, classNa
   return (
     <div
       className={cn(
-        "absolute top-0 left-0 min-h-lvh h-full w-full bg-image -z-20 blur-lg overflow-hidden transition-all duration-1000 ease-in-out",
+        "absolute top-0 left-0 min-h-lvh h-full w-full bg-image -z-20 blur-lg overflow-hidden transition-all duration-500 ease-in-out",
         className
       )}
       id={id}
