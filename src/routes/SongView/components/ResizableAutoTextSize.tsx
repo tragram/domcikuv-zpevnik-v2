@@ -28,15 +28,20 @@ function setOptimalColumnCount(
     colElId: string = '#song-content-wrapper'
 ): number {
     let columnCount;
+    const child = content?.querySelector(colElId) as HTMLElement;
+    if (!child) {
+        throw Error("Song content wrapper not found!")
+    }
     // Safety checks for null elements
     if (!content || !container) {
         columnCount = 1;
-    } else if (!layout.multiColumns || layout.fitScreenMode === "fitX" || layout.fitScreenMode === "none") {
-        // fitX always has the optimal solution as zero
-        // ideally, this function would not be called if fit mode is 'none' but if it is, it makes most sense to return 1
+    } else if (!layout.multiColumns || layout.fitScreenMode === "fitX") {
+        // fitX always has the optimal solution as one
         columnCount = 1;
     } else if (!layout.smartColumns) {
         columnCount = 2;
+    } else if (layout.fitScreenMode === "none") {
+        return parseFloat(child.style.columnCount);
     } else if (layout.fitScreenMode !== "fitXY") {
         console.error("Error: Unknown fit screen mode!")
         columnCount = 1;
@@ -47,10 +52,6 @@ function setOptimalColumnCount(
 
         try {
             // First measure single-column layout to establish baseline
-            const child = content.querySelector(colElId) as HTMLElement;
-            if (!child) {
-                throw Error("Song content wrapper not found!")
-            }
             child.style.columnCount = '1';
 
             const singleColRect = content.getBoundingClientRect();
@@ -91,14 +92,10 @@ function setOptimalColumnCount(
             columnCount = bestColumns;
         } catch (error) {
             console.error("Error calculating optimal column count:", error);
-            return 1; // Default to 1 column in case of error
+            columnCount = 1; // Default to 1 column in case of error
         }
     }
-    const child = content?.querySelector(colElId) as HTMLElement;
-    if (child) {
-        child.style.columnCount = columnCount.toString();
-    }
-    console.log(columnCount)
+    child.style.columnCount = columnCount.toString();
     return columnCount;
 }
 
@@ -191,19 +188,20 @@ export function ResizableAutoTextSize({
     const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
     const updateLayout = useCallback(() => {
-        if (!contentRef.current || !containerRef.current || layout.fitScreenMode === "none") return;
+        if (!contentRef.current || !containerRef.current) return;
 
         setOptimalColumnCount(
             contentRef.current,
             containerRef.current,
             layout
         );
-
-        setFontSize(
-            contentRef.current,
-            containerRef.current,
-            layout.fitScreenMode,
-        );
+        if (layout.fitScreenMode !== "none") {
+            setFontSize(
+                contentRef.current,
+                containerRef.current,
+                layout.fitScreenMode,
+            );
+        }
         // console.log("found newFontSize", newFontSize)
         // setFontSize(newFontSize);
     }, [chords, layout]);
