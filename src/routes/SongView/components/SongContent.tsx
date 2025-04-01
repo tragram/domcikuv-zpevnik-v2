@@ -27,26 +27,23 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
         return (
             <>
                 <BackgroundImage songData={songData} className="hidden" id="inner-background-image" />
-                <div id="auto-text-size-wrapper" className={cn('flex w-full z-10 lg:px-16 p-4 sm:p-8  ', layout.fitScreenMode == "fitXY" ? "h-full" : "h-fit ", layout.fitScreenMode !== "fitXY" ? "mb-10" : "")}
+                <ResizableAutoTextSize
+                    key={songData.id} // force a complete rerender on song change
+                    gestureContainerRef={gestureContainerRef}
+                    className=" dark:text-white/95"
                 >
-                    <ResizableAutoTextSize
-                        key={songData.id} // force a complete rerender on song change
-                        gestureContainerRef={gestureContainerRef}
-                        className="max-w-screen dark:text-white/95"
-                    >
-                        <SongHeading
-                            songData={songData}
-                            layoutSettings={layout}
-                            transposeSteps={transposeSteps}
-                        />
+                    <SongHeading
+                        songData={songData}
+                        layoutSettings={layout}
+                        transposeSteps={transposeSteps}
+                    />
 
-                        <div
-                            ref={ref}
-                            id="song-content-wrapper"
-                            dangerouslySetInnerHTML={{ __html: parsedContent }}
-                        />
-                    </ResizableAutoTextSize>
-                </div>
+                    <div
+                        ref={ref}
+                        id="song-content-wrapper"
+                        dangerouslySetInnerHTML={{ __html: parsedContent }}
+                    />
+                </ResizableAutoTextSize>
             </>
         )
     }

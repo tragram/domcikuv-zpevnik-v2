@@ -13,6 +13,7 @@ export const SongViewLayout = forwardRef<HTMLDivElement, SongViewLayoutProps>(
 
         return (
             <div
+                id="song-view-layout"
                 className={cn(
                     'flex flex-col sm:pt-[80px] pt-[72px] relative',
                     layout.fitScreenMode === 'fitXY' ? 'h-dvh' : 'min-h-dvh'

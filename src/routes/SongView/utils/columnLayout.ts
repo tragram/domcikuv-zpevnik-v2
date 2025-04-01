@@ -127,12 +127,13 @@ export function setFontSize(
 
   try {
     // Get precise content size for the selected column count
-    const preciseRect = content.getBoundingClientRect();
+    const contentRect = content.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
+    console.log(contentRect,containerRect)
 
     // Calculate font size with precise measurements
     const currentFontSize = getElementFontSize(content);
-    const newFontSize = calculateFontSize(preciseRect, containerRect, fitMode, currentFontSize);
+    const newFontSize = calculateFontSize(contentRect, containerRect, fitMode, currentFontSize);
     setElementFontSize(content, newFontSize);
     return newFontSize;
   } catch (error) {

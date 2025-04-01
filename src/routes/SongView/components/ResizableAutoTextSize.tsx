@@ -25,31 +25,31 @@ export function ResizableAutoTextSize({
   const [pinching, setPinching] = useState(false);
 
   // Refs
-  const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
   const updateLayout = useCallback(() => {
-    if (!contentRef.current || !containerRef.current) return;
+    if (!contentRef.current || !wrapperRef.current) return;
 
     setOptimalColumnCount(
       contentRef.current,
-      containerRef.current,
+      wrapperRef.current,
       layout
     );
-    
+
     if (layout.fitScreenMode !== "none") {
       setFontSize(
         contentRef.current,
-        containerRef.current,
+        wrapperRef.current,
         layout.fitScreenMode,
       );
     }
-  }, [layout]);
+  }, [layout, chords]);
 
   // Initialize ResizeObserver
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!wrapperRef.current) return;
 
     // Create a simple resize observer
     resizeObserverRef.current = new ResizeObserver(() => {
@@ -59,7 +59,7 @@ export function ResizableAutoTextSize({
     });
 
     // Start observing the container
-    resizeObserverRef.current.observe(containerRef.current);
+    resizeObserverRef.current.observe(wrapperRef.current);
 
     // Cleanup function
     return () => {
@@ -98,26 +98,26 @@ export function ResizableAutoTextSize({
   });
 
   return (
-    <div
-      className="relative flex h-full w-full max-w-full"
-      ref={containerRef}
+    <div id="auto-text-size-wrapper" className={cn('w-full z-10 lg:px-16 p-4 sm:p-8', layout.fitScreenMode == "fitXY" ? "h-full" : "h-fit ", layout.fitScreenMode !== "fitXY" ? "mb-10" : "")}
     >
-      <div
-        ref={contentRef}
-        className={cn(
-          className,
-          'max-w-screen dark:text-white/95 h-fit',
-          chords.inlineChords ? 'chords-inline' : '',
-          chords.showChords ? '' : 'chords-hidden',
-          `fit-screen-${layout.fitScreenMode}`,
-          layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
-          layout.fitScreenMode === "none" ? "fit-screen-none" : "",
-        )}
-        style={{
-          fontSize: `${layout.fontSize}px`,
-        }}
-      >
-        {children}
+      <div className='flex h-full w-full justify-center' ref={wrapperRef}>
+        {/* this "extra" div is here so that the target width & height can be found easily (otherwise, the padding of auto-text-size-wrapper makes it difficult) */}
+        <div
+          ref={contentRef}
+          className={cn(
+            className,
+            'dark:text-white/95 h-fit',
+            chords.inlineChords ? 'chords-inline' : '',
+            chords.showChords ? '' : 'chords-hidden',
+            layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
+            `fit-screen-${layout.fitScreenMode}`,
+          )}
+          style={{
+            fontSize: `${layout.fontSize}px`,
+          }}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

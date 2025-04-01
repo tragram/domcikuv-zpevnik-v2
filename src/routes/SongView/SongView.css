@@ -244,6 +244,7 @@
 
 #song-content-wrapper {
     column-gap: 1rem;
+    /* max-width: 100%; */
 }
 
 @media (min-width: theme('screens.sm')) {
