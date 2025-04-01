@@ -11,9 +11,7 @@ interface ResizableAutoTextSizeProps {
     autoColumns?: boolean
 }
 
-const INITIAL_FONT_SIZE = 16;
-// Define a consistent column gap value to use both in calculations and styling
-const COLUMN_GAP_PX = 16; // Approximate pixel equivalent of 1em
+const DEFAULT_FONT_SIZE = 16;
 const HIGHER_COL_RATIO = 1.1; // How many times larger font size needs to be in more columns to justify the switch
 
 /**
@@ -63,13 +61,13 @@ function setOptimalColumnCount(
                 return 1;
             }
 
-            console.log("gap:", content.style.columnGap, child.style.columnGap)
+            const columnGap = parseFloat(getComputedStyle(child).getPropertyValue("column-gap"));
             const containerRect = container.getBoundingClientRect();
             // Use approximation to estimate multi-column layouts
             for (let cols = minColumns; cols <= maxColumns; cols++) {
                 // Approximate dimensions for this column count
                 // Width increases roughly linearly with column count (accounting for gaps)
-                const approxWidth = baseWidth * cols + (COLUMN_GAP_PX * (cols - 1));
+                const approxWidth = baseWidth * cols + (columnGap * (cols - 1));
 
                 // Height decreases roughly proportionally with column count
                 // This approximation assumes content distributes fairly evenly
@@ -78,7 +76,7 @@ function setOptimalColumnCount(
                 // Calculate font size based on approximated dimensions
                 const widthScale = containerRect.width / approxWidth;
                 const heightScale = containerRect.height / approxHeight;
-                const calculatedFontSize = getFontSizeInRange(Math.min(widthScale, heightScale) * INITIAL_FONT_SIZE);
+                const calculatedFontSize = getFontSizeInRange(Math.min(widthScale, heightScale) * getElementFontSize(content));
 
                 // Update if this configuration allows a larger font size
                 if (calculatedFontSize > HIGHER_COL_RATIO * bestFontSize) {
@@ -102,7 +100,7 @@ function setOptimalColumnCount(
 const getElementFontSize = (
     element: HTMLElement | null
 ): number => {
-    return element ? parseFloat(element.style.fontSize) || INITIAL_FONT_SIZE : INITIAL_FONT_SIZE;
+    return element ? parseFloat(element.style.fontSize) || DEFAULT_FONT_SIZE : DEFAULT_FONT_SIZE;
 }
 
 const setElementFontSize = (
@@ -143,7 +141,7 @@ function setFontSize(
 ): number {
     // Safety checks
     if (!content || !container) {
-        return INITIAL_FONT_SIZE;
+        return DEFAULT_FONT_SIZE;
     }
 
     try {
@@ -158,20 +156,15 @@ function setFontSize(
         return newFontSize;
     } catch (error) {
         console.error("Error calculating precise font size:", error);
-        return INITIAL_FONT_SIZE; // Default in case of error
+        return DEFAULT_FONT_SIZE; // Default in case of error
     }
 }
-
-let renderCount = 0;
 
 export function ResizableAutoTextSize({
     children,
     gestureContainerRef,
     className,
 }: ResizableAutoTextSizeProps) {
-    renderCount++;
-    console.log(`Render #${renderCount} - Component rendering`);
-
     const { layout, chords, actions } = useViewSettingsStore();
 
     // States that need to trigger re-renders
@@ -197,8 +190,6 @@ export function ResizableAutoTextSize({
                 layout.fitScreenMode,
             );
         }
-        // console.log("found newFontSize", newFontSize)
-        // setFontSize(newFontSize);
     }, [chords, layout]);
 
     // Initialize ResizeObserver
@@ -236,7 +227,6 @@ export function ResizableAutoTextSize({
         },
         onPinchEnd: () => {
             actions.setLayoutSettings({ fontSize: getElementFontSize(contentRef.current) });
-            console.log("setting pinch size to ", getElementFontSize(contentRef.current))
             setPinching(false);
         },
         onPinch: ({ movement: [dScale], memo }) => {
@@ -262,17 +252,16 @@ export function ResizableAutoTextSize({
                 className={
                     cn(
                         className,
-                        'max-w-full dark:text-white/95 h-fit',
+                        'max-w-screen dark:text-white/95 h-fit',
                         chords.inlineChords ? 'chords-inline' : '',
                         chords.showChords ? '' : 'chords-hidden',
                         `fit-screen-${layout.fitScreenMode}`,
                         layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
                         layout.fitScreenMode === "none" ? "fit-screen-none" : "",
-                        `[&>*]:gap-4`, `sm:[&>*]:gap-8`, `lg:[&>*]:gap-16`,
                     )}
-            style={{
-                fontSize: `${layout.fontSize}px`,
-            }}
+                style={{
+                    fontSize: `${layout.fontSize}px`,
+                }}
             >
                 {children}
             </div>
