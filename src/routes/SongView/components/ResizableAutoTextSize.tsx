@@ -191,7 +191,6 @@ export function ResizableAutoTextSize({
             layout
         );
         if (layout.fitScreenMode !== "none") {
-            console.log("here")
             setFontSize(
                 contentRef.current,
                 containerRef.current,
@@ -263,7 +262,7 @@ export function ResizableAutoTextSize({
                 className={
                     cn(
                         className,
-                        'max-w-screen dark:text-white/95 h-fit',
+                        'max-w-full dark:text-white/95 h-fit',
                         chords.inlineChords ? 'chords-inline' : '',
                         chords.showChords ? '' : 'chords-hidden',
                         `fit-screen-${layout.fitScreenMode}`,
