@@ -10,13 +10,13 @@
 {range: h1-d2}
 
 {start_of_verse}
-[Em]So no one [C]told you life was 
+[Em]So no one [C]told you life was
 [Am]gonna be this [H]way
 [Em]Your job's a [C]joke, you're broke
 Your [Am]love life's D.O.[H]A
 
 [C]It's like you're always stuck in se[H]cond gear
-[C]When it hasn't been your day, 
+[C]When it hasn't been your day,
 your week, your [Hm]month
 Or even your [H]year,
 {end_of_verse}
@@ -36,9 +36,9 @@ And [Am]work began at [H]eight
 [Em]You've burned your [C]breakfast, so far
 [Am]Things are going [H]great
 
-[C]Your mother warned you 
+[C]Your mother warned you
 there'd be [H]days like these
-[C]But she didn't tell you 
+[C]But she didn't tell you
 when the world has [Hm]brought
 You down to your [H]knees and
 {end_of_verse}
