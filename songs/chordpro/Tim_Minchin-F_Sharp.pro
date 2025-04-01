@@ -44,7 +44,7 @@ You see I like [Gm/E]playing in F major
 
 {start_of_bridge}
 I re[B]fuse to be beholden to my [F]hands
-I [Gm/E]don't see why my larynx 
+I [Gm/E]don't see why my larynx
 should give [A7]in to their demands
 I'll [B]not be forced to compromise my [F]art
 And[Gm/E]so I'll just keep playing in F major and [A7]singing in F-

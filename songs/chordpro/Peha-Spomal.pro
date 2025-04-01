@@ -1,4 +1,4 @@
-{title: Spomal'}
+{title: Spomaľ}
 {artist: Peha}
 {date_added: 07-2015}
 {language: slovak}

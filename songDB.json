@@ -140,7 +140,7 @@
     "startMelody": "h e f# a",
     "chordproFile": "Barenaked_LadiesChase_Holfelder-Friends_Theme_in_minor.pro",
     "pdfFilenames": "",
-    "contentHash": "ef58b2f04289644e518df60346f1561695c851a6",
+    "contentHash": "87f2eec343de3cab2b8a61bab67d53852203eb3f",
     "disabled": false
   },
   {
@@ -170,7 +170,7 @@
     "range": "a1-c2",
     "illustrationAuthor": "",
     "startMelody": "e a",
-    "chordproFile": "Bo_Burnham-From_God's_Perspective.pro",
+    "chordproFile": "Bo_Burnham-From_Gods_Perspective.pro",
     "pdfFilenames": "['bo_burnham_from_gods_perspective-sken.pdf', 'bo_burnham_from_gods_perspective-comp.pdf']",
     "contentHash": "da1c8becd68d3ae0b78c3d787e847ea9111926e2",
     "disabled": false
@@ -202,7 +202,7 @@
     "range": "e1-c2",
     "illustrationAuthor": "",
     "startMelody": "h",
-    "chordproFile": "Bob_Dylan-Knocking_On_Heaven's_Door.pro",
+    "chordproFile": "Bob_Dylan-Knocking_On_Heavens_Door.pro",
     "pdfFilenames": "",
     "contentHash": "e68c5f1f4c5ed16865b2e562c9b322037bfcd0b5",
     "disabled": false
@@ -218,7 +218,7 @@
     "range": "d1-d2",
     "illustrationAuthor": "",
     "startMelody": "d",
-    "chordproFile": "Bob_Dylan-Mr._Tambourine_Man.pro",
+    "chordproFile": "Bob_Dylan-Mr_Tambourine_Man.pro",
     "pdfFilenames": "['bob_dylan_mr_tambourine_man-sken.pdf', 'bob_dylan_mr_tambourine_man-comp.pdf']",
     "contentHash": "df14c591b443e96fb24d518dc36a3182ee3f45d1",
     "disabled": false
@@ -352,22 +352,6 @@
     "disabled": false
   },
   {
-    "title": "1. signální",
-    "artist": "Chinaski",
-    "key": "D",
-    "language": "czech",
-    "dateAdded": "07-2009",
-    "capo": "3",
-    "tempo": "",
-    "range": "a1-a2",
-    "illustrationAuthor": "",
-    "startMelody": "d",
-    "chordproFile": "Chinaski-1._signalni.pro",
-    "pdfFilenames": "['chinaski_1_signalni-sken.pdf', 'chinaski_1_signalni-comp.pdf']",
-    "contentHash": "4d129200b0bced1011423c9df519b7f6ab008776",
-    "disabled": false
-  },
-  {
     "title": "1970",
     "artist": "Chinaski",
     "key": "D",
@@ -381,6 +365,22 @@
     "chordproFile": "Chinaski-1970.pro",
     "pdfFilenames": "[]",
     "contentHash": "322eebe22aa6898f0982f27442db566ef14c9829",
+    "disabled": false
+  },
+  {
+    "title": "1. signální",
+    "artist": "Chinaski",
+    "key": "D",
+    "language": "czech",
+    "dateAdded": "07-2009",
+    "capo": "3",
+    "tempo": "",
+    "range": "a1-a2",
+    "illustrationAuthor": "",
+    "startMelody": "d",
+    "chordproFile": "Chinaski-1_signalni.pro",
+    "pdfFilenames": "['chinaski_1_signalni-sken.pdf', 'chinaski_1_signalni-comp.pdf']",
+    "contentHash": "4d129200b0bced1011423c9df519b7f6ab008776",
     "disabled": false
   },
   {
@@ -634,7 +634,7 @@
     "range": "c1-e2",
     "illustrationAuthor": "",
     "startMelody": "c",
-    "chordproFile": "David_a_Golias-Jan_Werich,_Jiri_Voskovec.pro",
+    "chordproFile": "David_a_Golias-Jan_Werich_Jiri_Voskovec.pro",
     "pdfFilenames": "",
     "contentHash": "20ba14ba3ad1d69df27ad4d0850a7d791fa1fd67",
     "disabled": false
@@ -746,7 +746,7 @@
     "range": "g1-h2",
     "illustrationAuthor": "",
     "startMelody": "c g",
-    "chordproFile": "Elvis_Presley-I_Can't_Help_Falling_In_Love_With_You.pro",
+    "chordproFile": "Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You.pro",
     "pdfFilenames": "",
     "contentHash": "d34529611f563d01c9d3123c5709f615f6575fdc",
     "disabled": false
@@ -970,7 +970,7 @@
     "range": "a1-h2/e2",
     "illustrationAuthor": "",
     "startMelody": "f#",
-    "chordproFile": "Filmova_hudba-Zabili,_zabili,_balada_pro_banditu.pro",
+    "chordproFile": "Filmova_hudba-Zabili_zabili_balada_pro_banditu.pro",
     "pdfFilenames": "['filmova_hudba_zabili_zabili_balada_pro_banditu-sken.pdf', 'filmova_hudba_zabili_zabili_balada_pro_banditu-comp.pdf']",
     "contentHash": "5143ed0a13e7d077739870e3e46299526fdf9da2",
     "disabled": false
@@ -1018,7 +1018,7 @@
     "range": "e1-a2",
     "illustrationAuthor": "",
     "startMelody": "a c a c e",
-    "chordproFile": "Folk-Hej_sokoły.pro",
+    "chordproFile": "Folk-Hej_sokoy.pro",
     "pdfFilenames": "",
     "contentHash": "c3cd74848bb9f6dc143ca0abbaaac2b0f68c65a2",
     "disabled": false
@@ -1130,7 +1130,7 @@
     "range": "h1-h2",
     "illustrationAuthor": "",
     "startMelody": "f#",
-    "chordproFile": "Haloo_Helsinki!-Ei_Suomalaiset_Tanssi.pro",
+    "chordproFile": "Haloo_Helsinki-Ei_Suomalaiset_Tanssi.pro",
     "pdfFilenames": "",
     "contentHash": "3ccce6e30afc7e0dca431108dff8abd6a412d765",
     "disabled": false
@@ -1146,7 +1146,7 @@
     "range": "a1-a2",
     "illustrationAuthor": "",
     "startMelody": "c",
-    "chordproFile": "Hansard_&_Irglova-Falling_Slowly.pro",
+    "chordproFile": "Hansard_Irglova-Falling_Slowly.pro",
     "pdfFilenames": "['hansard__irglova_falling_slowly-sken.pdf', 'hansard__irglova_falling_slowly-comp.pdf']",
     "contentHash": "7de73c25e82af49fd5d87e8e126b86c62489d240",
     "disabled": false
@@ -1754,7 +1754,7 @@
     "range": "d1-g1",
     "illustrationAuthor": "",
     "startMelody": "g",
-    "chordproFile": "Jaromir_Nohavica-iDnes.cz.pro",
+    "chordproFile": "Jaromir_Nohavica-iDnescz.pro",
     "pdfFilenames": "['jaromir_nohavica_idnescz-sken.pdf', 'jaromir_nohavica_idnescz-comp.pdf']",
     "contentHash": "469122e6436d3dc46d4ddeb70bbe630f7226835c",
     "disabled": false
@@ -1850,7 +1850,7 @@
     "range": "g1-g2",
     "illustrationAuthor": "",
     "startMelody": "a a e e",
-    "chordproFile": "Jezek_+_Voskovec_+_Werich-Babicka_Mary.pro",
+    "chordproFile": "Jezek_Voskovec_Werich-Babicka_Mary.pro",
     "pdfFilenames": "['jezek__voskovec__werich_babicka_mary-sken.pdf', 'jezek__voskovec__werich_babicka_mary-comp.pdf', 'jezek__voskovec__werich_babicka_mary-gen.pdf']",
     "contentHash": "a8cafa0a1df12de0b108b4058656a3df3ec31b64",
     "disabled": false
@@ -1866,7 +1866,7 @@
     "range": "g1-a2",
     "illustrationAuthor": "",
     "startMelody": "e e g g",
-    "chordproFile": "Jezek_+_Voskovec_+_Werich-Ezop_a_brabenec.pro",
+    "chordproFile": "Jezek_Voskovec_Werich-Ezop_a_brabenec.pro",
     "pdfFilenames": "['jezek__voskovec__werich_ezop_a_brabenec-sken.pdf', 'jezek__voskovec__werich_ezop_a_brabenec-comp.pdf', 'jezek__voskovec__werich_ezop_a_brabenec-gen.pdf']",
     "contentHash": "6dfab8d74d0c145fc71db33a9a566364cdfc814e",
     "disabled": false
@@ -1882,7 +1882,7 @@
     "range": "g1-d2",
     "illustrationAuthor": "",
     "startMelody": "d e f#",
-    "chordproFile": "Jezek_+_Voskovec_+_Werich-Holduj_tanci,_pohybu.pro",
+    "chordproFile": "Jezek_Voskovec_Werich-Holduj_tanci_pohybu.pro",
     "pdfFilenames": "['jezek__voskovec__werich_holduj_tanci_pohybu-sken.pdf', 'jezek__voskovec__werich_holduj_tanci_pohybu-comp.pdf', 'jezek__voskovec__werich_holduj_tanci_pohybu-gen.pdf']",
     "contentHash": "574933808b3da67059df439fe7bd2e2c9596459f",
     "disabled": false
@@ -1898,7 +1898,7 @@
     "range": "c1-c2",
     "illustrationAuthor": "",
     "startMelody": "c e g",
-    "chordproFile": "Jezek_+_Voskovec_+_Werich-Stene.pro",
+    "chordproFile": "Jezek_Voskovec_Werich-Stene.pro",
     "pdfFilenames": "['jezek__voskovec__werich_stene-sken.pdf', 'jezek__voskovec__werich_stene-comp.pdf', 'jezek__voskovec__werich_stene-gen.pdf']",
     "contentHash": "53725e8b96c994c98f12c2efd62d278e7be60c12",
     "disabled": false
@@ -1914,7 +1914,7 @@
     "range": "d1-d2",
     "illustrationAuthor": "",
     "startMelody": "a f d",
-    "chordproFile": "Jezek_+_Voskovec_+_Werich-V_dome_strasi_duch.pro",
+    "chordproFile": "Jezek_Voskovec_Werich-V_dome_strasi_duch.pro",
     "pdfFilenames": "['jezek__voskovec__werich_v_dome_strasi_duch-sken.pdf', 'jezek__voskovec__werich_v_dome_strasi_duch-comp.pdf']",
     "contentHash": "2a3d9db2b315b1a83b0ae4573754a7f329eb6d50",
     "disabled": false
@@ -1946,7 +1946,7 @@
     "range": "g1-h2",
     "illustrationAuthor": "",
     "startMelody": "h c",
-    "chordproFile": "Jiri_Wabi_Rivola-Tereza_(Osamely_mesto).pro",
+    "chordproFile": "Jiri_Wabi_Rivola-Tereza_Osamely_mesto.pro",
     "pdfFilenames": "['jiri_wabi_rivola_tereza_osamely_mesto-sken.pdf', 'jiri_wabi_rivola_tereza_osamely_mesto-comp.pdf']",
     "contentHash": "33e856a48ffe4cb573211175dd410def36f2837c",
     "disabled": false
@@ -2029,22 +2029,6 @@
     "chordproFile": "Johnny_CashNIN-Hurt.pro",
     "pdfFilenames": "['johnny_cashnin_hurt-sken.pdf', 'johnny_cashnin_hurt-comp.pdf']",
     "contentHash": "293f221d0b99abacd9bd87b5b38658fe0fb1c564",
-    "disabled": false
-  },
-  {
-    "title": "Wavin' flag",
-    "artist": "K'naan",
-    "key": "C",
-    "language": "spanish",
-    "dateAdded": "07-2018",
-    "capo": "3",
-    "tempo": "",
-    "range": "g1-a2",
-    "illustrationAuthor": "",
-    "startMelody": "e",
-    "chordproFile": "K'naan-Wavin'_flag.pro",
-    "pdfFilenames": "[]",
-    "contentHash": "9dd86c19f8358ea9a1e89ec684ae2ff2ffca30b5",
     "disabled": false
   },
   {
@@ -2410,7 +2394,7 @@
     "range": "d1-e2",
     "illustrationAuthor": "",
     "startMelody": "h e",
-    "chordproFile": "Karel_Kryl-Hle,_jak_se_perou.pro",
+    "chordproFile": "Karel_Kryl-Hle_jak_se_perou.pro",
     "pdfFilenames": "['karel_kryl_hle_jak_se_perou-sken.pdf', 'karel_kryl_hle_jak_se_perou-comp.pdf', 'karel_kryl_hle_jak_se_perou-gen.pdf']",
     "contentHash": "f01432a9f40a342c2934095ce7bb1361a218bfca",
     "disabled": false
@@ -2621,6 +2605,22 @@
     "chordproFile": "Klus-Panu_Bohu_do_oken.pro",
     "pdfFilenames": "['klus_panu_bohu_do_oken-sken.pdf', 'klus_panu_bohu_do_oken-comp.pdf']",
     "contentHash": "4f5988989a061fec3d060a264650bd5c90d9efb2",
+    "disabled": false
+  },
+  {
+    "title": "Wavin' flag",
+    "artist": "K'naan",
+    "key": "C",
+    "language": "spanish",
+    "dateAdded": "07-2018",
+    "capo": "3",
+    "tempo": "",
+    "range": "g1-a2",
+    "illustrationAuthor": "",
+    "startMelody": "e",
+    "chordproFile": "Knaan-Wavin_flag.pro",
+    "pdfFilenames": "[]",
+    "contentHash": "9dd86c19f8358ea9a1e89ec684ae2ff2ffca30b5",
     "disabled": false
   },
   {
@@ -3244,7 +3244,7 @@
     "startMelody": "d d d",
     "chordproFile": "Mnaga_a_Zdorp-Nagasaki_Hirosima.pro",
     "pdfFilenames": "",
-    "contentHash": "40123383fd6bb0916cf04bac35a87c08d8043f73",
+    "contentHash": "6d13074d0ac89f636a11778eb8e48d597693a8d6",
     "disabled": false
   },
   {
@@ -3274,7 +3274,7 @@
     "range": "g1-c#2",
     "illustrationAuthor": "",
     "startMelody": "a e",
-    "chordproFile": "Mulan-I'll_Make_a_Man_out_of_You.pro",
+    "chordproFile": "Mulan-Ill_Make_a_Man_out_of_You.pro",
     "pdfFilenames": "['mulan_ill_make_a_man_out_of_you-sken.pdf', 'mulan_ill_make_a_man_out_of_you-comp.pdf', 'mulan_ill_make_a_man_out_of_you-gen.pdf']",
     "contentHash": "dd7ab1e913981ce0a90097c90ee30a897c1bbc55",
     "disabled": false
@@ -3744,7 +3744,7 @@
     "disabled": false
   },
   {
-    "title": "Spomal'",
+    "title": "Spomaľ",
     "artist": "Peha",
     "key": "D",
     "language": "slovak",
@@ -3754,9 +3754,9 @@
     "range": "g1-a2",
     "illustrationAuthor": "",
     "startMelody": "d",
-    "chordproFile": "Peha-Spomal'.pro",
+    "chordproFile": "Peha-Spomal.pro",
     "pdfFilenames": "['peha_spomal-sken.pdf', 'peha_spomal-comp.pdf']",
-    "contentHash": "ca1692f5dab9bed85d7e4d25d4b8a28b676e58b9",
+    "contentHash": "7fda796e06f7cf2e55050f0a803c804993575b53",
     "disabled": false
   },
   {
@@ -3786,7 +3786,7 @@
     "range": "f#1-a#2",
     "illustrationAuthor": "",
     "startMelody": "e",
-    "chordproFile": "Penk_&_Pergner-O_blaznech.pro",
+    "chordproFile": "Penk_Pergner-O_blaznech.pro",
     "pdfFilenames": "['penk__pergner_o_blaznech-sken.pdf', 'penk__pergner_o_blaznech-comp.pdf']",
     "contentHash": "290d107c35203817d62c68d5f603c2bec77043fa",
     "disabled": false
@@ -3962,7 +3962,7 @@
     "range": "g1-c2",
     "illustrationAuthor": "",
     "startMelody": "e",
-    "chordproFile": "Pokemon-Gotta_Catch_'em_all!.pro",
+    "chordproFile": "Pokemon-Gotta_Catch_em_all.pro",
     "pdfFilenames": "",
     "contentHash": "f8020c544b6a1ff37b4ef87f9d49e7e194b32ed1",
     "disabled": false
@@ -4058,7 +4058,7 @@
     "range": "d1-g2",
     "illustrationAuthor": "",
     "startMelody": "a",
-    "chordproFile": "Ready_Kirken-1+1.pro",
+    "chordproFile": "Ready_Kirken-11.pro",
     "pdfFilenames": "['ready_kirken_11-sken.pdf', 'ready_kirken_11-comp.pdf']",
     "contentHash": "48573a621831ed884577e91305ad72f4130d6556",
     "disabled": false
@@ -4218,7 +4218,7 @@
     "range": "g1-a2",
     "illustrationAuthor": "",
     "startMelody": "a e",
-    "chordproFile": "Simon_&_Garfunkel-Scarborough_Fair.pro",
+    "chordproFile": "Simon_Garfunkel-Scarborough_Fair.pro",
     "pdfFilenames": "['simon__garfunkel_scarborough_fair-sken.pdf', 'simon__garfunkel_scarborough_fair-comp.pdf']",
     "contentHash": "6d9d0ff802c026555bb7cb25557eef0533145202",
     "disabled": false
@@ -4362,7 +4362,7 @@
     "range": "c1-a1",
     "illustrationAuthor": "",
     "startMelody": "e f g",
-    "chordproFile": "Sverak_&_Uhlir-Ani_k_staru.pro",
+    "chordproFile": "Sverak_Uhlir-Ani_k_staru.pro",
     "pdfFilenames": "['filmova_hudba_ani_k_staru-sken.pdf', 'filmova_hudba_ani_k_staru-comp.pdf']",
     "contentHash": "d7523a8779a4d3d049f3118cf625e35f75a0dfd2",
     "disabled": false
@@ -4378,7 +4378,7 @@
     "range": "c1-a1",
     "illustrationAuthor": "",
     "startMelody": "a",
-    "chordproFile": "Sverak_&_Uhlir-Barbora_pise_z_tabora.pro",
+    "chordproFile": "Sverak_Uhlir-Barbora_pise_z_tabora.pro",
     "pdfFilenames": "['uhlir_barbora_pise_z_tabora-sken.pdf', 'uhlir_barbora_pise_z_tabora-comp.pdf']",
     "contentHash": "a5d4e288202549a66f16e542b0a5ac393ae821f8",
     "disabled": false
@@ -4410,7 +4410,7 @@
     "range": "d1-e2",
     "illustrationAuthor": "",
     "startMelody": "e",
-    "chordproFile": "The_Barenaked_Ladies_&_Chris_Hadfield-I.S.S_Is_Somebody_Singing.pro",
+    "chordproFile": "The_Barenaked_Ladies_Chris_Hadfield-ISS_Is_Somebody_Singing.pro",
     "pdfFilenames": "['the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-sken.pdf', 'the_barenaked_ladies__chris_hadfield_iss_is_somebody_singing-comp.pdf']",
     "contentHash": "32e808b90f047004cef795604fa9c1901695530a",
     "disabled": false
@@ -4508,7 +4508,7 @@
     "startMelody": "a a h",
     "chordproFile": "Tim_Minchin-F_Sharp.pro",
     "pdfFilenames": "",
-    "contentHash": "ac1a7695b5c5c0d5ccbb29748e8ad4a0dcec2098",
+    "contentHash": "e6a14189073389ea18725751252dac5683544e62",
     "disabled": false
   },
   {
@@ -4634,7 +4634,7 @@
     "range": "g1-e2",
     "illustrationAuthor": "",
     "startMelody": "g d",
-    "chordproFile": "Treasure_Planet-I'm_Still_Here.pro",
+    "chordproFile": "Treasure_Planet-Im_Still_Here.pro",
     "pdfFilenames": "",
     "contentHash": "75118f38b2e989a92fbb552249b359007df788c2",
     "disabled": false
@@ -5114,7 +5114,7 @@
     "range": "g1-a2",
     "illustrationAuthor": "",
     "startMelody": "c",
-    "chordproFile": "Zalman_&_Spol.-Divokej_horskej_tymian.pro",
+    "chordproFile": "Zalman_Spol-Divokej_horskej_tymian.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf', 'pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf']",
     "contentHash": "c8a0334b5c974ee080bd76a24f553bc6cc72e697",
     "disabled": false
@@ -5130,7 +5130,7 @@
     "range": "g1-a2",
     "illustrationAuthor": "",
     "startMelody": "a a e f e",
-    "chordproFile": "Zalman_&_Spol.-Ja_pisnicka.pro",
+    "chordproFile": "Zalman_Spol-Ja_pisnicka.pro",
     "pdfFilenames": "",
     "contentHash": "c34adf6682a4e9bcafbe0db039cea70fff5e29b0",
     "disabled": false
@@ -5146,7 +5146,7 @@
     "range": "d1-h1",
     "illustrationAuthor": "",
     "startMelody": "g",
-    "chordproFile": "Zalman_&_Spol.-Jdem_zpatky_do_lesu.pro",
+    "chordproFile": "Zalman_Spol-Jdem_zpatky_do_lesu.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf', 'pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf']",
     "contentHash": "42bf161a3b2dd21539e551cd3b5c8398cd26fa0d",
     "disabled": false
@@ -5162,7 +5162,7 @@
     "range": "a1-h2",
     "illustrationAuthor": "",
     "startMelody": "h",
-    "chordproFile": "Zalman_&_Spol.-Jedenkrat.pro",
+    "chordproFile": "Zalman_Spol-Jedenkrat.pro",
     "pdfFilenames": "['vojta_zicha_jedenkrat-sken.pdf', 'vojta_zicha_jedenkrat-comp.pdf']",
     "contentHash": "2a34c950a4b71b2e029fd689a1645c5f33d64d5a",
     "disabled": false
@@ -5178,7 +5178,7 @@
     "range": "g1-g2",
     "illustrationAuthor": "",
     "startMelody": "e",
-    "chordproFile": "Zalman_&_Spol.-Rana_v_trave.pro",
+    "chordproFile": "Zalman_Spol-Rana_v_trave.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_rana_v_trave-sken.pdf', 'pavel_lohonka_zalman_rana_v_trave-comp.pdf']",
     "contentHash": "87255edc304e7f181e092be00bb8b16f5d497325",
     "disabled": false
@@ -5194,7 +5194,7 @@
     "range": "d1-c2",
     "illustrationAuthor": "",
     "startMelody": "d e g",
-    "chordproFile": "Zalman_&_Spol.-Sejdeme_se_v_panu.pro",
+    "chordproFile": "Zalman_Spol-Sejdeme_se_v_panu.pro",
     "pdfFilenames": "[]",
     "contentHash": "03ae64baf842c9c1579969f24046dcc79e0aaff7",
     "disabled": false
@@ -5210,7 +5210,7 @@
     "range": "a1-c2",
     "illustrationAuthor": "",
     "startMelody": "a d",
-    "chordproFile": "Zalman_&_Spol.-Tri_prani.pro",
+    "chordproFile": "Zalman_Spol-Tri_prani.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_tri_prani-sken.pdf', 'pavel_lohonka_zalman_tri_prani-comp.pdf']",
     "contentHash": "b95219b6fe5e3c2182f18ad04d942336f70f4278",
     "disabled": false
@@ -5226,7 +5226,7 @@
     "range": "a1-c#2",
     "illustrationAuthor": "",
     "startMelody": "f# a h",
-    "chordproFile": "Zalman_&_Spol.-Vojacek_z_Moorlough_Shore.pro",
+    "chordproFile": "Zalman_Spol-Vojacek_z_Moorlough_Shore.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf']",
     "contentHash": "88a7fc0e81d16266422ca7fa2dc7273af1280a5f",
     "disabled": false
@@ -5242,7 +5242,7 @@
     "range": "g1-g2",
     "illustrationAuthor": "",
     "startMelody": "h c d",
-    "chordproFile": "Zalman_&_Spol.-Vsech_vandraku_muza.pro",
+    "chordproFile": "Zalman_Spol-Vsech_vandraku_muza.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_vsech_vandraku_muza-sken.pdf', 'pavel_lohonka_zalman_vsech_vandraku_muza-comp.pdf']",
     "contentHash": "32bd82f41ebf9cd4ad3cb9e57101f54f2563ba23",
     "disabled": false

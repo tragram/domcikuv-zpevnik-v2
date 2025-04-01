@@ -18,8 +18,8 @@ a dvě - [G]spálený [D]srdce – [C]Nagasaki, [D]Hirošima. [G][D][C][D]
 
 {start_of_verse}
 [G]Jsou jistý [D]věci, [C]co bych tesal [D]do kame[G]ne, [D][C][D]
-[G]tam, kde je [D]láska, [C]tam je všechno [D]dovole[Emi]né, 
-[C]a tam, kde [G]není, [C]tam mě to [G]nezají[D]má, 
+[G]tam, kde je [D]láska, [C]tam je všechno [D]dovole[Emi]né,
+[C]a tam, kde [G]není, [C]tam mě to [G]nezají[D]má,
 jó, dvě [G]spálený [D]srdce – [C]Nagasaki, [D]Hirošima. [G][D][C][D]
 {end_of_verse}
 
