@@ -98,8 +98,21 @@ function setOptimalColumnCount(
     if (child) {
         child.style.columnCount = columnCount.toString();
     }
-
+    console.log(columnCount)
     return columnCount;
+}
+
+const getElementFontSize = (
+    element: HTMLElement | null
+): number => {
+    return element ? parseFloat(element.style.fontSize) || INITIAL_FONT_SIZE : INITIAL_FONT_SIZE;
+}
+
+const setElementFontSize = (
+    element: HTMLElement,
+    fontSize: number
+) => {
+    element.style.fontSize = fontSize.toString() + "px";
 }
 
 /**
@@ -111,12 +124,12 @@ function calculateFontSize(
     fitMode: FitScreenMode,
     fontSize: number,
 ): number {
-    console.log(`Content dimensions: width=${contentRect.width.toFixed(2)}px, height=${contentRect.height.toFixed(2)}px`);
-    console.log(`Container dimensions: width=${containerRect.width.toFixed(2)}px, height=${containerRect.height.toFixed(2)}px`);
+    // console.log(`Content dimensions: width=${contentRect.width.toFixed(2)}px, height=${contentRect.height.toFixed(2)}px`);
+    // console.log(`Container dimensions: width=${containerRect.width.toFixed(2)}px, height=${containerRect.height.toFixed(2)}px`);
     if (fitMode === 'fitXY') {
         const widthScale = containerRect.width / contentRect.width * fontSize;
         const heightScale = containerRect.height / contentRect.height * fontSize;
-        console.log("Width scale:", widthScale, "Height scale:", heightScale, "starting fontSize:", fontSize);
+        // console.log("Width scale:", widthScale, "Height scale:", heightScale, "starting fontSize:", fontSize);
         return getFontSizeInRange(Math.min(widthScale, heightScale));
     } else if (fitMode === 'fitX') {
         const widthScale = containerRect.width / contentRect.width * fontSize;
@@ -129,14 +142,13 @@ function calculateFontSize(
 /**
  * Calculates the precise font size for a given column count
  */
-function calculatePreciseFontSize(
+function setFontSize(
     content: HTMLElement | null,
     container: HTMLElement | null,
     fitMode: FitScreenMode,
 ): number {
     // Safety checks
     if (!content || !container) {
-        console.log("calculatePreciseFontSize cannot work")
         return INITIAL_FONT_SIZE;
     }
 
@@ -146,15 +158,11 @@ function calculatePreciseFontSize(
         const containerRect = container.getBoundingClientRect();
 
         // Calculate font size with precise measurements
-        const currentFontSize = parseFloat(content.style.fontSize) || INITIAL_FONT_SIZE;
-        console.log("calculatePreciseFontSize found current font size", currentFontSize, "px")
+        const currentFontSize = getElementFontSize(content);
+        // console.log("calculatePreciseFontSize found current font size", currentFontSize, "px")
         const newFontSize = calculateFontSize(preciseRect, containerRect, fitMode, currentFontSize);
-        if (Math.abs(newFontSize - currentFontSize) < 0.5) {
-            // avoid flickering
-            return currentFontSize;
-        } else {
-            return newFontSize;
-        }
+        setElementFontSize(content, newFontSize);
+        return newFontSize;
     } catch (error) {
         console.error("Error calculating precise font size:", error);
         return INITIAL_FONT_SIZE; // Default in case of error
@@ -174,7 +182,7 @@ export function ResizableAutoTextSize({
     const { layout, chords, actions } = useViewSettingsStore();
 
     // States that need to trigger re-renders
-    const [fontSize, setFontSize] = useState(layout.fontSize);
+    // const [fontSize, setFontSize] = useState(layout.fontSize);
     const [pinching, setPinching] = useState(false);
 
     // Refs
@@ -191,13 +199,13 @@ export function ResizableAutoTextSize({
             layout
         );
 
-        const newFontSize = calculatePreciseFontSize(
+        setFontSize(
             contentRef.current,
             containerRef.current,
             layout.fitScreenMode,
         );
-        console.log("found newFontSize", newFontSize)
-        setFontSize(newFontSize);
+        // console.log("found newFontSize", newFontSize)
+        // setFontSize(newFontSize);
     }, [chords, layout]);
 
     // Initialize ResizeObserver
@@ -234,13 +242,15 @@ export function ResizableAutoTextSize({
             setPinching(true);
         },
         onPinchEnd: () => {
-            actions.setLayoutSettings({ fontSize });
+            actions.setLayoutSettings({ fontSize: getElementFontSize(contentRef.current) });
             setPinching(false);
         },
         onPinch: ({ movement: [dScale], memo }) => {
-            if (!memo) memo = fontSize;
+            if (!memo) memo = getElementFontSize(contentRef.current);
             const newFontSize = getFontSizeInRange(memo * dScale);
-            setFontSize(newFontSize);
+            if (contentRef.current) {
+                setElementFontSize(contentRef.current, newFontSize);
+            }
             return memo;
         },
     }, {
@@ -248,12 +258,13 @@ export function ResizableAutoTextSize({
         eventOptions: { passive: true },
     });
 
+    // TODO: after reload, font size is not kept...
     // Sync fontSize with layout when not pinching
-    useLayoutEffect(() => {
-        if (!pinching && layout.fitScreenMode === 'none') {
-            setFontSize(layout.fontSize);
-        }
-    }, [layout.fontSize, layout.fitScreenMode, pinching]);
+    // useLayoutEffect(() => {
+    //     if (!pinching && layout.fitScreenMode === 'none') {
+    //         setFontSize(layout.fontSize);
+    //     }
+    // }, [layout.fontSize, layout.fitScreenMode, pinching]);
 
 
     return (
@@ -274,9 +285,9 @@ export function ResizableAutoTextSize({
                         layout.fitScreenMode === "none" ? "fit-screen-none" : "",
                         `[&>*]:gap-4`, `sm:[&>*]:gap-8`, `lg:[&>*]:gap-16`,
                     )}
-                style={{
-                    fontSize: `${fontSize}px`,
-                }}
+            // style={{
+            //     fontSize: `${fontSize}px`,
+            // }}
             >
                 {children}
             </div>
