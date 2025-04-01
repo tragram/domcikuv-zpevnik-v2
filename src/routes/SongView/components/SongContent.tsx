@@ -30,7 +30,7 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
                 <div id="auto-text-size-wrapper" className={cn('flex w-full z-10 lg:px-16 p-4 sm:p-8  ', layout.fitScreenMode == "fitXY" ? "h-full" : "h-fit ", layout.fitScreenMode !== "fitXY" ? "mb-10" : "")}
                 >
                     <ResizableAutoTextSize
-                        key={songData.id} // force a complete rerender
+                        key={songData.id} // force a complete rerender on song change
                         gestureContainerRef={gestureContainerRef}
                         className="max-w-screen dark:text-white/95"
                     >

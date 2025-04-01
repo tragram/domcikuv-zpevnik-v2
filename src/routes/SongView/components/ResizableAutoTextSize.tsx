@@ -13,9 +13,93 @@ interface ResizableAutoTextSizeProps {
 
 const INITIAL_FONT_SIZE = 16;
 // Define a consistent column gap value to use both in calculations and styling
-const COLUMN_GAP = '1em';
 const COLUMN_GAP_PX = 16; // Approximate pixel equivalent of 1em
 const HIGHER_COL_RATIO = 1.1; // How many times larger font size needs to be in more columns to justify the switch
+
+/**
+ * Finds the optimal number of columns for content layout
+ */
+function setOptimalColumnCount(
+    content: HTMLElement | null,
+    containerRect: DOMRect | undefined,
+    layout: LayoutSettings,
+    minColumns: number = 1,
+    maxColumns: number = 4,
+    colElId: string = '#song-content-wrapper'
+): number {
+    let columnCount;
+    // Safety checks for null elements
+    if (!content || !containerRect) {
+        columnCount = 1;
+    } else if (!layout.multiColumns || layout.fitScreenMode === "fitX" || layout.fitScreenMode === "none") {
+        // fitX always has the optimal solution as zero
+        // ideally, this function would not be called if fit mode is 'none' but if it is, it makes most sense to return 1
+        columnCount = 1;
+    } else if (!layout.smartColumns) {
+        columnCount = 2;
+    } else if (layout.fitScreenMode !== "fitXY") {
+        console.error("Error: Unknown fit screen mode!")
+        columnCount = 1;
+    }
+    else {
+        let bestFontSize = 0;
+        let bestColumns = 1;
+
+        try {
+            // First measure single-column layout to establish baseline
+            const child = content.querySelector(colElId) as HTMLElement;
+            if (!child) {
+                throw Error("Song content wrapper not found!")
+            }
+            child.style.columnCount = '1';
+
+            const singleColRect = content.getBoundingClientRect();
+            const baseWidth = singleColRect.width;
+            const baseHeight = singleColRect.height;
+
+            // Skip further calculations if we have invalid measurements
+            if (baseWidth <= 0 || baseHeight <= 0) {
+                return 1;
+            }
+
+            console.log("gap:", content.style.columnGap, child.style.columnGap)
+            // Use approximation to estimate multi-column layouts
+            for (let cols = minColumns; cols <= maxColumns; cols++) {
+                // Approximate dimensions for this column count
+                // Width increases roughly linearly with column count (accounting for gaps)
+                const approxWidth = baseWidth * cols + (COLUMN_GAP_PX * (cols - 1));
+
+                // Height decreases roughly proportionally with column count
+                // This approximation assumes content distributes fairly evenly
+                const approxHeight = Math.ceil(baseHeight / cols);
+
+                // Calculate font size based on approximated dimensions
+                const widthScale = containerRect.width / approxWidth;
+                const heightScale = containerRect.height / approxHeight;
+                const calculatedFontSize = getFontSizeInRange(Math.min(widthScale, heightScale) * INITIAL_FONT_SIZE);
+
+                // Update if this configuration allows a larger font size
+                if (calculatedFontSize > HIGHER_COL_RATIO * bestFontSize) {
+                    bestFontSize = calculatedFontSize;
+                    bestColumns = cols;
+                } else {
+                    // If font size is decreasing, we've found the optimal column count
+                    break;
+                }
+            }
+            columnCount = bestColumns;
+        } catch (error) {
+            console.error("Error calculating optimal column count:", error);
+            return 1; // Default to 1 column in case of error
+        }
+    }
+    const child = content.querySelector(colElId) as HTMLElement;
+    if (child) {
+        child.style.columnCount = columnCount.toString();
+    }
+
+    return columnCount;
+}
 
 /**
  * Calculates font size based on content dimensions and container dimensions
@@ -23,129 +107,43 @@ const HIGHER_COL_RATIO = 1.1; // How many times larger font size needs to be in 
 function calculateFontSize(
     contentRect: DOMRect,
     containerRect: DOMRect,
-    fitMode: FitScreenMode
+    fitMode: FitScreenMode,
+    fontSize: number,
 ): number {
+    console.log("content", contentRect, "container", containerRect)
     if (fitMode === 'fitXY') {
-        const widthScale = containerRect.width / contentRect.width * INITIAL_FONT_SIZE;
-        const heightScale = containerRect.height / contentRect.height * INITIAL_FONT_SIZE;
+        const widthScale = containerRect.width / contentRect.width * fontSize;
+        const heightScale = containerRect.height / contentRect.height * fontSize;
         return getFontSizeInRange(Math.min(widthScale, heightScale));
     } else if (fitMode === 'fitX') {
-        const widthScale = containerRect.width / contentRect.width * INITIAL_FONT_SIZE;
+        const widthScale = containerRect.width / contentRect.width * fontSize;
         return getFontSizeInRange(widthScale);
     }
-
-    return INITIAL_FONT_SIZE; // Default for 'none'
-}
-
-/**
- * Finds the optimal number of columns for content layout
- */
-function findOptimalColumnCount(
-    cloneEl: HTMLElement | null,
-    containerRect: DOMRect | undefined,
-    layout: LayoutSettings,
-    minColumns: number = 1,
-    maxColumns: number = 4
-): number {
-    // Safety checks for null elements
-    if (!cloneEl || !containerRect) {
-        return 1;
-    }
-
-    if (!layout.multiColumns || layout.fitScreenMode === "fitX" || layout.fitScreenMode === "none") {
-        // fitX always has the optimal solution as zero
-        // ideally, this function would not be called if fit mode is 'none' but if it is, it makes most sense to return 1
-        return 1;
-    } else if (!layout.smartColumns) {
-        return 2;
-    }
-
-    if (layout.fitScreenMode !== "fitXY") {
-        console.error("Error: Unknown fit screen mode!")
-        return 1;
-    }
-
-    let bestFontSize = 0;
-    let bestColumns = 1;
-
-    try {
-        // First measure single-column layout to establish baseline
-        const child = cloneEl.querySelector('#song-content-wrapper');
-        if (child) {
-            (child as HTMLElement).style.columnCount = '1';
-        } else {
-            cloneEl.style.columnCount = '1';
-        }
-
-        const singleColRect = cloneEl.getBoundingClientRect();
-        const baseWidth = singleColRect.width;
-        const baseHeight = singleColRect.height;
-
-        // Skip further calculations if we have invalid measurements
-        if (baseWidth <= 0 || baseHeight <= 0) {
-            return 1;
-        }
-
-        // Use approximation to estimate multi-column layouts
-        for (let cols = minColumns; cols <= maxColumns; cols++) {
-            // Approximate dimensions for this column count
-            // Width increases roughly linearly with column count (accounting for gaps)
-            const approxWidth = baseWidth * cols + (COLUMN_GAP_PX * (cols - 1));
-
-            // Height decreases roughly proportionally with column count
-            // This approximation assumes content distributes fairly evenly
-            const approxHeight = Math.ceil(baseHeight / cols);
-
-            // Calculate font size based on approximated dimensions
-            const widthScale = containerRect.width / approxWidth;
-            const heightScale = containerRect.height / approxHeight;
-            const calculatedFontSize = getFontSizeInRange(Math.min(widthScale, heightScale) * INITIAL_FONT_SIZE);
-
-            // Update if this configuration allows a larger font size
-            if (calculatedFontSize > HIGHER_COL_RATIO * bestFontSize) {
-                bestFontSize = calculatedFontSize;
-                bestColumns = cols;
-            } else {
-                // If font size is decreasing, we've found the optimal column count
-                break;
-            }
-        }
-    } catch (error) {
-        console.error("Error calculating optimal column count:", error);
-        return 1; // Default to 1 column in case of error
-    }
-
-    return bestColumns;
+    // no change for fitMode 'none'
+    return fontSize;
 }
 
 /**
  * Calculates the precise font size for a given column count
  */
 function calculatePreciseFontSize(
-    cloneEl: HTMLElement | null,
+    content: HTMLElement | null,
     containerRect: DOMRect | undefined,
     fitMode: FitScreenMode,
-    columnCount: number
 ): number {
     // Safety checks
-    if (!cloneEl || !containerRect) {
+    if (!content || !containerRect) {
         return INITIAL_FONT_SIZE;
     }
 
     try {
-        // Set the column count for precise measurement
-        const child = cloneEl.querySelector('#song-content-wrapper');
-        if (child) {
-            (child as HTMLElement).style.columnCount = `${columnCount}`;
-        } else {
-            cloneEl.style.columnCount = `${columnCount}`;
-        }
-
         // Get precise content size for the selected column count
-        const preciseRect = cloneEl.getBoundingClientRect();
+        const preciseRect = content.getBoundingClientRect();
 
         // Calculate font size with precise measurements
-        return calculateFontSize(preciseRect, containerRect, fitMode);
+        const currentFontSize = parseFloat(content.style.fontSize) || INITIAL_FONT_SIZE;
+        console.log(currentFontSize)
+        return calculateFontSize(preciseRect, containerRect, fitMode, currentFontSize);
     } catch (error) {
         console.error("Error calculating precise font size:", error);
         return INITIAL_FONT_SIZE; // Default in case of error
@@ -167,32 +165,28 @@ export function ResizableAutoTextSize({
     // States that need to trigger re-renders
     const [fontSize, setFontSize] = useState(layout.fontSize);
     const [pinching, setPinching] = useState(false);
-    const [columnCount, setColumnCount] = useState(1);
 
     // Refs
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
-    const cloneRef = useRef<HTMLDivElement>(null);
+    // const cloneRef = useRef<HTMLDivElement>(null);
     const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
     const updateLayout = useCallback(() => {
-        if (!cloneRef.current || !containerRef.current || layout.fitScreenMode === "none") return;
+        if (!containerRef.current || layout.fitScreenMode === "none") return;
 
         const containerRect = containerRef.current.getBoundingClientRect();
 
-        const optimalColumnCount = findOptimalColumnCount(
-            cloneRef.current,
+        setOptimalColumnCount(
+            contentRef.current,
             containerRect,
             layout
         );
 
-        setColumnCount(optimalColumnCount);
-
         const newFontSize = calculatePreciseFontSize(
-            cloneRef.current,
+            contentRef.current,
             containerRect,
             layout.fitScreenMode,
-            optimalColumnCount
         );
 
         setFontSize(newFontSize);
@@ -262,16 +256,13 @@ export function ResizableAutoTextSize({
         layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
         (layout.multiColumns) ? 'song-content-columns' : '',
         layout.fitScreenMode === "none" ? "fit-screen-none" : "",
-        // Apply column count dynamically
-        columnCount === 2 ? `[&>*]:columns-2` : "",
-        columnCount === 3 ? `[&>*]:columns-3` : "",
-        columnCount === 4 ? `[&>*]:columns-4` : "",
-        `[&>*]:gap-[${COLUMN_GAP}]`
+        // Apply column count dynamically 
+        `[&>*]:gap-4`, `sm:[&>*]:gap-8`, `lg:[&>*]:gap-16`,
+        "h-fit"
     );
 
     return (
         <>
-            {/* Main visible content */}
             <div
                 className="relative flex h-full w-full max-w-full"
                 ref={containerRef}
@@ -281,28 +272,6 @@ export function ResizableAutoTextSize({
                     className={contentClasses}
                     style={{
                         fontSize: `${fontSize}px`,
-                        columnGap: COLUMN_GAP,
-                    }}
-                >
-                    {children}
-                </div>
-            </div>
-
-            {/* Hidden clone for measurements (always present) */}
-            <div
-                className="absolute -left-[9999px] -top-[9999px] invisible pointer-events-none"
-                aria-hidden="true"
-            >
-                <div
-                    ref={cloneRef}
-                    className={contentClasses}
-                    style={{
-                        fontSize: `${INITIAL_FONT_SIZE}px`,
-                        width: 'auto',
-                        height: 'auto',
-                        maxWidth: 'none',
-                        maxHeight: 'none',
-                        overflow: 'visible',
                     }}
                 >
                     {children}
