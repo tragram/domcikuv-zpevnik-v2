@@ -129,7 +129,6 @@ export function setFontSize(
     // Get precise content size for the selected column count
     const contentRect = content.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
-    console.log(contentRect,containerRect)
 
     // Calculate font size with precise measurements
     const currentFontSize = getElementFontSize(content);

@@ -50,7 +50,6 @@ const ScrollButtons = memo(({ fitScreenMode }: ScrollButtonsProps) => {
         const sections = document.querySelectorAll('.section');
         for (const container of sections) {
             const rect = container.getBoundingClientRect();
-            console.log(rect.bottom, window.outerHeight)
             if (rect.bottom >= window.outerHeight) {
                 const offset = Math.max(100, 0.2 * window.outerHeight);
                 const scrollDist = rect.top - offset;
