@@ -121,12 +121,9 @@ function calculateFontSize(
     fitMode: FitScreenMode,
     fontSize: number,
 ): number {
-    // console.log(`Content dimensions: width=${contentRect.width.toFixed(2)}px, height=${contentRect.height.toFixed(2)}px`);
-    // console.log(`Container dimensions: width=${containerRect.width.toFixed(2)}px, height=${containerRect.height.toFixed(2)}px`);
     if (fitMode === 'fitXY') {
         const widthScale = containerRect.width / contentRect.width * fontSize;
         const heightScale = containerRect.height / contentRect.height * fontSize;
-        // console.log("Width scale:", widthScale, "Height scale:", heightScale, "starting fontSize:", fontSize);
         return getFontSizeInRange(Math.min(widthScale, heightScale));
     } else if (fitMode === 'fitX') {
         const widthScale = containerRect.width / contentRect.width * fontSize;
@@ -156,7 +153,6 @@ function setFontSize(
 
         // Calculate font size with precise measurements
         const currentFontSize = getElementFontSize(content);
-        // console.log("calculatePreciseFontSize found current font size", currentFontSize, "px")
         const newFontSize = calculateFontSize(preciseRect, containerRect, fitMode, currentFontSize);
         setElementFontSize(content, newFontSize);
         return newFontSize;
@@ -179,7 +175,6 @@ export function ResizableAutoTextSize({
     const { layout, chords, actions } = useViewSettingsStore();
 
     // States that need to trigger re-renders
-    // const [fontSize, setFontSize] = useState(layout.fontSize);
     const [pinching, setPinching] = useState(false);
 
     // Refs
@@ -196,6 +191,7 @@ export function ResizableAutoTextSize({
             layout
         );
         if (layout.fitScreenMode !== "none") {
+            console.log("here")
             setFontSize(
                 contentRef.current,
                 containerRef.current,
@@ -241,6 +237,7 @@ export function ResizableAutoTextSize({
         },
         onPinchEnd: () => {
             actions.setLayoutSettings({ fontSize: getElementFontSize(contentRef.current) });
+            console.log("setting pinch size to ", getElementFontSize(contentRef.current))
             setPinching(false);
         },
         onPinch: ({ movement: [dScale], memo }) => {
@@ -255,15 +252,6 @@ export function ResizableAutoTextSize({
         target: gestureContainerRef,
         eventOptions: { passive: true },
     });
-
-    // TODO: after reload, font size is not kept...
-    // Sync fontSize with layout when not pinching
-    // useLayoutEffect(() => {
-    //     if (!pinching && layout.fitScreenMode === 'none') {
-    //         setFontSize(layout.fontSize);
-    //     }
-    // }, [layout.fontSize, layout.fitScreenMode, pinching]);
-
 
     return (
         <div
@@ -283,9 +271,9 @@ export function ResizableAutoTextSize({
                         layout.fitScreenMode === "none" ? "fit-screen-none" : "",
                         `[&>*]:gap-4`, `sm:[&>*]:gap-8`, `lg:[&>*]:gap-16`,
                     )}
-            // style={{
-            //     fontSize: `${fontSize}px`,
-            // }}
+            style={{
+                fontSize: `${layout.fontSize}px`,
+            }}
             >
                 {children}
             </div>
