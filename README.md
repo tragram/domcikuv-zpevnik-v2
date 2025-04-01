@@ -145,4 +145,4 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 * [@khmyznikov/pwa-install](https://github.com/khmyznikov/pwa-install): managing PWA popups and installation
 
 ## TODO:
-* dynamically compute the optimal number of columns and apply (theoretically, only the CSS value needs to be adjusted)
+* the smart ScrollButtons sometimes misbehave (TBD both why and how to fix)
