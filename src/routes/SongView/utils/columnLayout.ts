@@ -2,6 +2,7 @@ import { FitScreenMode, LayoutSettings, getFontSizeInRange } from "../hooks/view
 import { getElementFontSize, setElementFontSize } from "./fontSize";
 
 const HIGHER_COL_RATIO = 1.1; // How many times larger font size needs to be in more columns to justify the switch
+const IGNORE_DIFF_PX = 0.2;  // due to text not scaling exactly, resize may lead to a different optimal font size and that could lead to an infinite loop --> ignore these tiny changes
 
 /**
  * Finds the optimal number of columns for content layout
@@ -133,7 +134,9 @@ export function setFontSize(
     // Calculate font size with precise measurements
     const currentFontSize = getElementFontSize(content);
     const newFontSize = calculateFontSize(contentRect, containerRect, fitMode, currentFontSize);
-    setElementFontSize(content, newFontSize);
+    if (Math.abs(currentFontSize - newFontSize) > IGNORE_DIFF_PX) {
+      setElementFontSize(content, newFontSize);
+    }
     return newFontSize;
   } catch (error) {
     console.error("Error calculating precise font size:", error);
