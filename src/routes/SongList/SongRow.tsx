@@ -1,11 +1,13 @@
 import { IllustrationPopup } from "@/components/IllustrationPopup";
 import LanguageFlag from "@/components/LanguageFlag";
 import CircularProgress from "@/components/ui/circular-progress";
-import {
-    useLinkClickHandler
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SongData } from "../../types/types";
 import { memo } from "react";
+import { cn } from "@/lib/utils";
+
+
+export const SONG_ROW_HEIGHT_PX = 70;
 
 const MONTH_NAMES = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -53,20 +55,18 @@ interface SongInfoProps {
 
 const SongInfo = memo(({ title, artist }: SongInfoProps) => (
     <div className="flex-auto min-w-40 flex-col text-left content-center">
-        <h2 className="text-sm font-bold truncate">{title}</h2>
-        <h3 className="text-sm opacity-50 truncate">{artist}</h3>
+        <h2 className="text-sm font-bold truncate song-title">{title}</h2>
+        <h3 className="text-sm opacity-50 truncate song-artist">{artist}</h3>
     </div>
 ));
-
 
 interface SongRowProps {
     song: SongData;
     maxRange: number;
+    loadImage?: boolean;
 }
 
-
 const SongRow = memo(({ song, maxRange }: SongRowProps) => {
-    const handleClick = useLinkClickHandler(song.url(), {});
 
     if (!song) {
         console.error("Invalid song provided to SongRow");
@@ -78,12 +78,10 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
     }
 
     return (
-        <div className="h-[70px] flex items-center container max-w-2xl mx-auto px-2 sm:px-4 song-row-wrapper">
-            <div
+        <div className={cn(`h-[${SONG_ROW_HEIGHT_PX}px]`, "flex items-center container max-w-2xl mx-auto px-2 sm:px-4 song-row-wrapper")}>
+            <Link to={song.url()}
                 className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image"
-                style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
-                onClick={handleClick}
-            >
+                style={{ backgroundImage: `url(${song.thumbnailURL()})` }}>
                 <div className="flex relative h-full w-full items-center rounded-full p-1 backdrop-blur-md song-row-bg-image shadow-black row-text-shadow">
                     <IllustrationPopup
                         avatarClassName="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
@@ -115,7 +113,7 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 });

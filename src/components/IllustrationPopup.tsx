@@ -14,13 +14,13 @@ interface IllustrationPopupProps {
   song: SongData
 }
 
-export function IllustrationPopup({ avatarClassName, song }: IllustrationPopupProps) {
+export function IllustrationPopup({ avatarClassName, song = true }: IllustrationPopupProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <Avatar className={"cursor-pointer " + avatarClassName} onClick={(e) => { e.stopPropagation(); setIsOpen(true) }}>
-        <AvatarImage src={song.thumbnailURL()} alt={"song illustration thumbnail"} />
+        <AvatarImage src={song.thumbnailURL()} loading="lazy" alt={"song illustration thumbnail"} />
         {/* <AvatarFallback><Instagram></AvatarFallback> */}
       </Avatar>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -34,6 +34,7 @@ export function IllustrationPopup({ avatarClassName, song }: IllustrationPopupPr
             <img
               style={{ backgroundImage: `url(${song.thumbnailURL()})`, backgroundRepeat: "no-repeat", backgroundSize: "cover" }}
               src={song.illustrationURL()}
+              loading="lazy"
               width={512}
               height={512}
               className="object-scale-down z-50"

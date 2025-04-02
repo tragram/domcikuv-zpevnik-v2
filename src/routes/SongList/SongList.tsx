@@ -8,8 +8,6 @@ import useLocalStorageState from 'use-local-storage-state';
 import { useFilteredSongs } from './useFilteredSongs';
 
 const SCROLL_OFFSET_KEY = 'scrollOffset';
-const INITIAL_LOAD_COUNT = 30;
-const LOAD_MORE_COUNT = 20;
 
 function SongList() {
     const songDB = useLoaderData() as SongDB;
@@ -17,9 +15,7 @@ function SongList() {
     const listRef = useRef<HTMLDivElement>(null);
     const [showToolbar, setShowToolbar] = useState(true);
     const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(SCROLL_OFFSET_KEY, { defaultValue: 0, storageSync: false });
-    const [visibleSongs, setVisibleSongs] = useState(() => songs.slice(0, INITIAL_LOAD_COUNT));
-    const observerRef = useRef<IntersectionObserver | null>(null);
-    
+
     useEffect(() => {
         if (listRef.current) {
             requestAnimationFrame(() => {
@@ -27,24 +23,6 @@ function SongList() {
             });
         }
     }, [scrollOffset]);
-
-    useEffect(() => {
-        if (!songs.length) return;
-        
-        observerRef.current = new IntersectionObserver((entries) => {
-            const lastEntry = entries[0];
-            if (lastEntry.isIntersecting) {
-                setVisibleSongs((prev) => songs.slice(0, prev.length + LOAD_MORE_COUNT));
-            }
-        }, { root: listRef.current, threshold: 1.0 });
-        
-        const lastSongElement = document.querySelector('.song-row:last-child');
-        if (lastSongElement) {
-            observerRef.current.observe(lastSongElement);
-        }
-        
-        return () => observerRef.current?.disconnect();
-    }, [songs, visibleSongs]);
 
     const handleScroll = () => {
         if (!listRef.current) return;
@@ -68,8 +46,9 @@ function SongList() {
                 className="sm:pt-20 pt-[72px] pb-4 overflow-auto h-full"
                 onScroll={handleScroll}
             >
-                {visibleSongs.map((song) => (
-                    <SongRow key={song.id} song={song} maxRange={songDB.maxRange} />
+                {songs.map((song) => (
+                    <SongRow key={song.id} song={song} maxRange={songDB.maxRange}
+                    />
                 ))}
             </div>
         </div>
