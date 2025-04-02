@@ -104,14 +104,14 @@ export function ResizableAutoTextSize({
         {/* this "extra" div is here so that the target width & height can be found easily (otherwise, the padding of auto-text-size-wrapper makes it difficult) */}
         <div
           ref={contentRef}
+          id="content-wrapper"
           className={cn(
             className,
-            'dark:text-white/95 h-fit',
+            'dark:text-white/95 h-fit max-w-full',
             chords.inlineChords ? 'chords-inline' : '',
             chords.showChords ? '' : 'chords-hidden',
             layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
             `fit-screen-${layout.fitScreenMode}`,
-            layout.fitScreenMode === "none" ? "max-w-full" : ""
           )}
           style={{
             fontSize: `${layout.fontSize}px`,

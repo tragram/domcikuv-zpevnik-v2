@@ -41,10 +41,12 @@ export function setOptimalColumnCount(
     try {
       // First measure single-column layout to establish baseline
       child.style.columnCount = '1';
+      content.classList.add("measuring-container")
 
       const singleColRect = content.getBoundingClientRect();
       const baseWidth = singleColRect.width;
       const baseHeight = singleColRect.height;
+      content.classList.remove("measuring-container")
 
       // Skip further calculations if we have invalid measurements
       if (baseWidth <= 0 || baseHeight <= 0) {
@@ -125,11 +127,12 @@ export function setFontSize(
   if (!content || !container) {
     return getElementFontSize(null);
   }
-
+  content.classList.add("measuring-container")
   try {
     // Get precise content size for the selected column count
     const contentRect = content.getBoundingClientRect();
     const containerRect = container.getBoundingClientRect();
+    content.classList.remove("measuring-container")
 
     // Calculate font size with precise measurements
     const currentFontSize = getElementFontSize(content);

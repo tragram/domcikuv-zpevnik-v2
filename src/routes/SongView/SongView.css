@@ -199,15 +199,19 @@
 }
 
 /* autosizing of tabs and comments */
-#dummy-contents .comment-line, #dummy-contents .tab-section {
+.measuring-container .comment-line, .measuring-container .tab-section {
     width: 0;
+}
+
+.measuring-container#content-wrapper {
+    /* allow the content wrapper grow too large so that a correction can be made */
+    max-width: none !important;
 }
 
 .comment-line, .tab-section {
     overflow-x: auto;
     overflow-y: clip;
     max-width: 100%;
-
 }
 
 /* make subscript appear under superscript */
