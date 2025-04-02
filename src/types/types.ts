@@ -157,16 +157,16 @@ class SongData {
     }
 
 
-    private imageURLFactory(folder: string, prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined): string {
+    private imageURLFactory(folder: string, prompt_model?: string | undefined, prompt_id?: string | undefined, image_model?: string | undefined): string {
         const stem = this.illustrationData.toFilenameStem(prompt_model, prompt_id, image_model)
         return fileURL(`songs/${folder}/${this.id}/${stem}.webp`);
     }
 
-    thumbnailURL(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined): string {
+    thumbnailURL(prompt_model?: string | undefined, prompt_id?: string | undefined, image_model?: string | undefined): string {
         return this.imageURLFactory("illustrations_thumbnails", prompt_model, prompt_id, image_model);
     }
 
-    illustrationURL(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined): string {
+    illustrationURL(prompt_model?: string | undefined, prompt_id?: string | undefined, image_model?: string | undefined): string {
         return this.imageURLFactory("illustrations", prompt_model, prompt_id, image_model);
     }
 
