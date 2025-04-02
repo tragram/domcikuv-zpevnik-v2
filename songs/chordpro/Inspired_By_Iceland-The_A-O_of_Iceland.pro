@@ -86,8 +86,8 @@ And they've always kept us… Full!
 {chorus}
 
 {start_of_chorus}
-This is the[G]A-Ö of[C]Ísland[G]
-So[C]reyndu að[G]syngja[D]með
-This is the[G]A-Ö of[C]Ísland[G]
-Now[C]memor[G]ise this[D]lag
+This is the [G]A-Ö of [C]Ísland[G]
+So [C]reyndu að [G]syngja [D]með
+This is the [G]A-Ö of [C]Ísland[G]
+Now [C]memo[G]rise this [D]lag
 {end_of_chorus}

@@ -1,5 +1,3 @@
-Here's the song with missing chords filled in, following the established patterns:
-
 {title: Hrdinský čin}
 {artist: Pokáč}
 {date_added: 10-2018}

@@ -20,10 +20,14 @@ Můžu jen [C]já [D]
 {end_of_verse}
 
 {start_of_chorus}
-Tahat tě [G]za vlasy, dýchat ti [D]do tváře,
-Dělat si [Ami]nároky na tvoje [C]polštáře
-Sahat ti [G]pod sukni, kousat tě [D]na ruce
-Dělat ti [Ami]snídani, říkat ti [C]opice.
+Tahat tě [G]za vlasy,
+dýchat ti [D]do tváře,
+Dělat si [Ami]nároky
+na tvoje [C]polštáře
+Sahat ti [G]pod sukni,
+kousat tě [D]na ruce
+Dělat ti [Ami]snídani,
+říkat ti [C]opice.
 {end_of_chorus}
 
 {start_of_verse}
@@ -40,10 +44,14 @@ kdy můžu jen [C]sám [D]
 {chorus}
 
 {start_of_chorus}
-Platit ti [G]výdaje, prdět si vě [D]vaně
-Kvůli tvé [Ami]pověsti porvat [C]se v hospodě
-nosit ti [G]lekníny, vrtat ti poli[D]ce.
-Jsme čase[Ami]m kalený šrouby a [C]matice (2x)
+Platit ti [G]výdaje,
+prdět si vě [D]vaně
+Kvůli tvé [Ami]pověsti
+porvat [C]se v hospodě
+nosit ti [G]lekníny,
+vrtat ti poli[D]ce.
+Jsme čase[Ami]m kalený
+šrouby a [C]matice (2x)
 {end_of_chorus}
 
 {start_of_chorus}

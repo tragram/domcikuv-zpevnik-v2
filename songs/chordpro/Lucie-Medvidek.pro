@@ -25,9 +25,12 @@ ti [D]posílá lásku co v [E]bříšku má.
 {end_of_verse}
 
 {start_of_chorus}
-[F]Medvídek z Bogoty [A]usnul a sní [F]na kříži z Golgoty [A]spí.
-Za třicet [Hm]stříbrných z medvídka [E]padá sníh
-no a ti [D]římští psi ho sjížděj[E]í na saních o Váno[A]cích.
+[F]Medvídek z Bogoty [A]usnul a sní
+[F]na kříži z Golgoty [A]spí.
+Za třicet [Hm]stříbrných
+z medvídka [E]padá sníh
+no a ti [D]římští psi
+ho sjíždě[E]jí na saních o Váno[A]cích.
 {end_of_chorus}
 
 {start_of_verse}
