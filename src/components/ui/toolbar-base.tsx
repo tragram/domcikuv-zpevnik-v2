@@ -55,7 +55,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
                 willChange: "transform",
                 transform: `translateY(-${translateYPx}px)`,
                 transition: shouldTransition 
-                    ? "transform 500ms cubic-bezier(0.165, 0.840, 0.250, 1.040), opacity 300ms ease"
+                    ? "transform 500ms cubic-bezier(0.165, 0.840, 0.250, 1.040)"
                     : "none",
             }}
         >
