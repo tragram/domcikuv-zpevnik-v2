@@ -11,7 +11,7 @@ const SCROLL_OFFSET_KEY = 'scrollOffset';
 
 function SongList() {
     const songDB = useLoaderData() as SongDB;
-    const { songs } = useFilteredSongs(songDB.songs);
+    const { songs } = useFilteredSongs(songDB.songs,songDB.languages);
     const listRef = useRef<HTMLDivElement>(null);
     const [showToolbar, setShowToolbar] = useState(true);
     const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(SCROLL_OFFSET_KEY, { defaultValue: 0, storageSync: false });

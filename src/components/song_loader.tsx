@@ -100,10 +100,10 @@ async function fetchSongs(): Promise<SongDB> {
         const data = await response.json();
         const songs = data.map(d => new SongData(d));
 
-        const languages: LanguageCount = {};
-        songs.forEach(song => {
-            languages[song.language] = (languages[song.language] || 0) + 1;
-        });
+        const languages: LanguageCount = songs.map(s=> s.language).reduce((acc: Record<string, number>, lang: string) => {
+            acc[lang] = (acc[lang] || 0) + 1;
+            return acc;
+        }, {});
 
         const songRanges = songs.map(s => s.range?.semitones).filter(Boolean);
         const songDB = {

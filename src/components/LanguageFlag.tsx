@@ -1,7 +1,8 @@
 
 import { FlagOff } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-const language2iso = {
+import { SongLanguage } from '@/types/types';
+const language2iso: Record<SongLanguage, string> = {
     "czech": "cz",
     "english": "gb",
     "german": "de",
@@ -16,11 +17,10 @@ const language2iso = {
     "portuguese": "br",
     "icelandic": "is",
     "all": "un",
-    "other": "un",
+    "other": "eu",
 }
 
-function convert2flag(language: string): string {
-    language = language.toLowerCase()
+function convert2flag(language: SongLanguage): string {
     if (language in language2iso) {
         return "https://flagcdn.com/" + language2iso[language] + ".svg";
     } else if (language === "russian") {

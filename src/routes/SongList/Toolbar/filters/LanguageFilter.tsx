@@ -9,17 +9,18 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { LanguageCount, SongLanguage } from "@/types/types";
 import { Languages } from "lucide-react";
 
-export type SongLanguage = string;
+export const RARE_LANGUAGE_THRESHOLD = 3
 
 interface LanguageChoice {
     text: string;
-    value: string;
+    value: SongLanguage;
 }
 
 interface LanguageFilterProps {
-    languages: SongLanguage[];
+    languages: LanguageCount;
     selectedLanguage: SongLanguage;
     setSelectedLanguage: (language: SongLanguage) => void;
     iconOnly: boolean;
@@ -36,17 +37,35 @@ const capitalizeFirstLetter = (str: string): string => {
 };
 
 const createLanguageChoices = (
-    languages: SongLanguage[],
+    languages: LanguageCount,
     selectedLanguage: SongLanguage,
     setSelectedLanguage: (language: SongLanguage) => void
 ): JSX.Element[] => {
-    const languageChoices: LanguageChoice[] = Object.keys(languages)
-        .map((language) => ({
+    // Filter languages with count >= RARE_LANGUAGE_THRESHOLD
+    const commonLanguages = Object.entries(languages)
+        .filter(([_, count]) => count >= RARE_LANGUAGE_THRESHOLD)
+        .map(([language]) => ({
             text: capitalizeFirstLetter(language),
-            value: language
+            value: language as SongLanguage
         }));
 
+    // Create an "Other" option that includes all languages with count < RARE_LANGUAGE_THRESHOLD
+    const rareLanguages = Object.entries(languages)
+        .filter(([_, count]) => count < RARE_LANGUAGE_THRESHOLD)
+        .map(([language]) => language);
+    // Create final language choices array
+    const languageChoices: LanguageChoice[] = commonLanguages;
+
+    // Sort alphabetically
+    languageChoices.sort((a, b) => a.text.localeCompare(b.text));
+
+    // Add "All" at the beginning
     languageChoices.unshift({ text: "All", value: "all" });
+
+    // Add "Other" option if there are any rare languages
+    if (rareLanguages.length > 0) {
+        languageChoices.push({ text: "Other", value: "other" });
+    }
 
     return languageChoices.map((choice) => (
         <DropdownMenuCheckboxItem
@@ -55,7 +74,7 @@ const createLanguageChoices = (
             checked={selectedLanguage === choice.value}
             onClick={() => setSelectedLanguage(choice.value)}
         >
-            <DropdownIconStart icon={<LanguageFlag language={choice.text} />} />
+            <DropdownIconStart icon={<LanguageFlag language={choice.value} />} />
             {choice.text}
         </DropdownMenuCheckboxItem>
     ));
@@ -67,7 +86,7 @@ export const LanguageFilter = ({
     setSelectedLanguage,
     iconOnly
 }: LanguageFilterProps): JSX.Element => {
-    const active = selectedLanguage === "all";
+    const active = selectedLanguage !== "all";
 
     return (
         <DropdownMenu>
@@ -89,7 +108,7 @@ export const LanguageFilter = ({
 };
 
 export const LanguageFilterDropdownSection = (
-    languages: SongLanguage[],
+    languages: LanguageCount,
     selectedLanguage: SongLanguage,
     setSelectedLanguage: (language: SongLanguage) => void
 ): JSX.Element => {

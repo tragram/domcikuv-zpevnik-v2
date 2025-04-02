@@ -11,17 +11,18 @@ import { LanguageFilter, LanguageFilterDropdownSection } from "./LanguageFilter"
 import { VocalRangeDropdownSection, VocalRangeFilter } from "./VocalRangeFilter";
 import { create } from 'zustand'
 import { persist } from "zustand/middleware"
+import { LanguageCount, SongLanguage } from "@/types/types";
 
 type VocalRangeType = "all" | [number, number];
 
 interface FilterSettings {
-    language: string;
+    language: SongLanguage;
     vocalRange: VocalRangeType;
     capo: boolean;
 }
 
 interface FilterProps {
-    languages: string[];
+    languages: LanguageCount
     maxRange: number;
 }
 
@@ -149,7 +150,6 @@ const Filtering = ({
                             languages,
                             language,
                             setLanguage
-
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>

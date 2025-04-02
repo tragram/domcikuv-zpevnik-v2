@@ -1,16 +1,28 @@
-
-import { SongData, SortField, SortOrder } from '@/types/types';
+import { LanguageCount, SongData, SortField, SortOrder } from '@/types/types';
 import Fuse from 'fuse.js';
 import { useEffect, useMemo } from 'react';
 import { useFilterSettingsStore } from './Toolbar/filters/Filters';
 import { useQueryStore } from './Toolbar/SearchBar';
 import { useSortSettingsStore } from './Toolbar/SortMenu';
+import { RARE_LANGUAGE_THRESHOLD } from './Toolbar/filters/LanguageFilter';
 
-const filterLanguage = (songs: SongData[], selectedLanguage: string): SongData[] => {
-    if (selectedLanguage !== "all") {
-        return songs.filter((song) => song.language === selectedLanguage);
+const filterLanguage = (songs: SongData[], selectedLanguage: string, languageCounts: LanguageCount): SongData[] => {
+    if (selectedLanguage === "all") {
+        return songs;
     }
-    return songs;
+
+    if (selectedLanguage === "other") {
+        // Count all languages across the song database
+
+        // Return songs with languages that have fewer than x songs
+        return songs.filter((song) => {
+            const lang = song.language || 'other';
+            return languageCounts[lang] < RARE_LANGUAGE_THRESHOLD;
+        });
+    }
+
+    // Standard language filtering
+    return songs.filter((song) => song.language === selectedLanguage);
 };
 
 const filterCapo = (songs: SongData[], allowCapo: boolean): SongData[] => {
@@ -52,7 +64,8 @@ const getSortCompareFunction = (sortByField: SortField, sortOrder: SortOrder) =>
 };
 
 export function useFilteredSongs(
-    songs: SongData[]
+    songs: SongData[],
+    languageCounts: LanguageCount
 ) {
     const { field: sortByField, order: sortOrder } = useSortSettingsStore();
     const { query, setQuery } = useQueryStore();
@@ -77,7 +90,7 @@ export function useFilteredSongs(
     // Apply filters
     let results = filterCapo(searchResults, capo);
     results = filterVocalRange(results, vocalRange);
-    results = filterLanguage(results, language);
+    results = filterLanguage(results, language, languageCounts);
 
     // Only sort if there's no search query
     if (!query) {

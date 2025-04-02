@@ -16,8 +16,7 @@ interface FilterSettings {
     capo: boolean
 }
 
-
-type SongLanguage = "czech" | "english" | "german" | "slovak" | "polish" | "spanish" | "romanian" | "finnish" | "estonian" | "french" | "italian" | "portuguese" | "other"
+type SongLanguage = "all" | "czech" | "english" | "german" | "icelandic" | "slovak" | "polish" | "spanish" | "romanian" | "finnish" | "estonian" | "french" | "italian" | "portuguese" | "russian" | "other"
 
 class IllustrationData {
     prompt_id: string;
@@ -181,12 +180,12 @@ class SongData {
 }
 
 
+type LanguageCount = Record<SongLanguage, number>
 interface SongDB {
     maxRange: int,
-    languages: string[], // counts the occurences of each language
+    languages: LanguageCount, // counts the occurences of each language
     songs: Array<SongData>
 }
-interface LanguageCount extends Record<SongLanguage, int> { }
 
 export type { SongDB, SortSettings, FilterSettings, SongLanguage, LanguageCount, SortOrder, SortField };
 export { SongData, Note };
