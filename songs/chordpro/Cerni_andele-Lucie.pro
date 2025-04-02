@@ -12,8 +12,8 @@
 {start_of_verse}
 [Asus2]Sex je náš dělá [G]dobře mně i [D]tobě
 [Asus2]Otčenáš bejby [G]odříkej až v [D]hrobě
-[Asus2]Středověk neskončil [D]středověk [G]trvá
-[Asus2]Jsme černí andělé a [D]ty jsi byla [G]prvá
+[A]Středověk neskončil [D]středověk [G]trvá
+[A]Jsme černí andělé a [D]ty jsi byla [G]prvá
 {end_of_verse}
 
 {start_of_verse}

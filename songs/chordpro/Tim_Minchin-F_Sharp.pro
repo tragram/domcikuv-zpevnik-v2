@@ -54,6 +54,5 @@ And[Gm/E]so I'll just keep playing in F major and [A7]singing in F-
 
 {start_of_chorus: Outro}
 I'll keep [Gm6]playing in F major
-[C7sus4]But I'll keep singing in F-
-[F]Sharp
+[C7sus4]But I'll keep singing in F-[F]Sharp
 {end_of_chorus}

@@ -1,0 +1,7 @@
+- model: gpt-4o-mini
+  prompt_id: v2
+  response: Create an illustration of a romantic scene by the Rio Grande at night.
+    A cowboy, leaning against his horse, gazes at a beautiful girl holding a bouquet
+    of yellow roses. The moonlight reflects on the river, and a serene ranch is visible
+    in the background. The atmosphere should convey a sense of longing and connection,
+    capturing the essence of love and the beauty of the moment.
