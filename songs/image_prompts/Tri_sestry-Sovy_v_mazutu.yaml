@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical forest scene featuring a lumberjack
     cutting down a tree that appears to be crying. Include a melancholic bear peeking
     out from a hollow tree, depressed squirrels sitting in thorny bushes, and wilting

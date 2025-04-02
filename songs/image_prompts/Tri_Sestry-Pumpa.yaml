@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: 'Create an illustration of a quiet roadside gas station at midnight, surrounded
     by a dark forest. Include a vintage car parked slowly, a small diner with a neon
     sign, and a few characters: a man leaning on beer bottles, another pondering a

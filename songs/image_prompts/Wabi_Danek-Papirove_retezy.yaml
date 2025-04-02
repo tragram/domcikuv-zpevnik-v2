@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: 'Create an illustration of a melancholic Christmas scene: a dimly lit
     room decorated with paper chains, where a woman prepares a festive dinner, her
     face reflecting a sense of longing and sadness. Outside the window, children play,

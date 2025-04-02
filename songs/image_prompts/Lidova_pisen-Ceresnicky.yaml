@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, vibrant scene featuring cherry
     blossoms scattered along a winding path. In the foreground, a playful girl dances
     joyfully, surrounded by roses, symbolizing love and flirtation. She wears a floral

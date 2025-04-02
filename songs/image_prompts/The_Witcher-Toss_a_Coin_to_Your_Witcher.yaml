@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a heroic scene featuring Geralt of Rivia, a
     rugged monster hunter with white hair, wielding a sword against a backdrop of
     a dark forest. Include a group of elves in the distance, and a bard with a lute,

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a melancholic train journey through a
     dark, expansive tunnel named "Time." The scene should feature a vintage steam
     locomotive disappearing into the shadowy entrance of the tunnel, with faint stars

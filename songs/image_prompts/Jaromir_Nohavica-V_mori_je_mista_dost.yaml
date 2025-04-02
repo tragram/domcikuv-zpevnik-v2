@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an underwater scene featuring a tired seahorse carrying sea foam,
     surrounded by playful octopuses wearing boxing gloves, applauding fish, and transparent
     jellyfish floating near the surface. Include flat manta rays illuminated by glowing

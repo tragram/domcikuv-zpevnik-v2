@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a chaotic scene on the Titanic's deck, capturing
     a mix of humor and tension. Show crew members arguing and playing cards amidst
     a backdrop of the majestic ship, with the ocean ominously surrounding them. Include

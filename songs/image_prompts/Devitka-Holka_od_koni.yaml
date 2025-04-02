@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, dreamlike landscape featuring wild
     horses galloping towards a setting sun, with a girl wearing a halo of flowers,
     lost in thought. The scene should evoke a sense of freedom, nostalgia, and longing,

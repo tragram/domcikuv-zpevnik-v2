@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a vibrant cityscape filled with diverse people,
     colorful buildings, and swirling smoke. The scene should capture a sense of resilience
     and growth amidst urban chaos, with elements like a person flying or whistling

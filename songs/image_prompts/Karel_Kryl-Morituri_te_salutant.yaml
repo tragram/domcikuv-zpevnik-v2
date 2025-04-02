@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a rugged, winding path made of dirt and gravel,
     with a mystical atmosphere. Include gray streaks swirling through the air and
     a starry sky with a Pegasus soaring above. Add elements like delicate red gladiolus

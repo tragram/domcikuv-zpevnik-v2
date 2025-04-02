@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a nostalgic childhood scene depicting a young
     boy running barefoot through a sunny meadow, surrounded by wildflowers and buzzing
     bees. Include elements that represent freedom and innocence, such as a clear blue

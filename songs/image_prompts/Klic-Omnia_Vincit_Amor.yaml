@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a lively tavern scene where a diverse group
     of people is gathered around a table, raising their mugs in celebration. In the
     background, a warm glow emanates from the hearth, and a sense of camaraderie fills

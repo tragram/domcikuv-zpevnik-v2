@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a dimly lit, empty room with wilted roses scattered
     on the floor. In the background, a shadowy figure sits with a letter in hand,
     their expression somber. Outside the window, the transition from day to night

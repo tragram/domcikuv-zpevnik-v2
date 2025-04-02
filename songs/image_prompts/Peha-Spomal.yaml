@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a surreal garden with vibrant flowers and twisting
     paths, symbolizing a journey towards something beautiful and elusive. Include
     a figure rushing through the garden, looking both enchanted and overwhelmed, with

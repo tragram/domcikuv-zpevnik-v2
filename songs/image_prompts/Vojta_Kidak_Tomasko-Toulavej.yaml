@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a nostalgic musician standing by a dusty roadside
     on a Saturday morning, surrounded by old friends. The scene should capture a sense
     of longing and reflection, with a hint of melancholy. Include elements like an

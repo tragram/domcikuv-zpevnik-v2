@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a dreamy, surreal landscape at dawn, featuring
     a sleepy princess in a whimsical setting. Include elements like wounded angels
     walking through fields, a mysterious figure representing the "swallower of finds

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a medieval battlefield scene at dusk, featuring
     a regal king in armor leading a charge on horseback, alongside a jester riding
     a donkey. The jester's expression reflects a mix of fear and defiance, holding

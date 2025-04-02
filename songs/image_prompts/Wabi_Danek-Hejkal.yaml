@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create a dark, eerie forest scene illuminated by a pale moonlight. In
     the foreground, depict a shadowy figure with glowing red eyes and sharp claws,
     embodying the mythical "hejkal." Surround it with twisted trees and a misty atmosphere,

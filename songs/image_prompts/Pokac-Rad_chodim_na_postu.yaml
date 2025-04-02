@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical post office scene filled with diverse
     people standing in a long queue. In the foreground, depict an elderly woman at
     the counter with a vintage rubber stamp and an old-fashioned printer. Include

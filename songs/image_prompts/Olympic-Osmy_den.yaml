@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a melancholic scene of two people separated
     by a week, with a calendar showing the days passing. Include imagery that symbolizes
     longing and silence, such as a pencil lying unused and a clock with its hands

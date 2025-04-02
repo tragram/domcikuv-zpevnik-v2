@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene landscape where a child gazes up at
     colorful birds soaring in a bright sky. The scene should convey a sense of wonder
     and connection to nature, with soft, flowing elements representing dreams and

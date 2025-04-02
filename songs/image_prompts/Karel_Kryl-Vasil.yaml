@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, romantic scene featuring a woman
     in vintage fairy tale-style shoes, playfully picking raisins from pastries in
     a cozy kitchen. Include elements like a wedding shirt being sewn, a table set

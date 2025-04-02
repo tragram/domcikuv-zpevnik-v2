@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an ethereal landscape depicting Scarborough Fair, featuring a serene
     hill surrounded by deep forest green. Include elements like parsley, sage, rosemary,
     and thyme, a sparrow tracing patterns in the snow, and a soldier polishing a gun

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: 'Create an illustration of a cozy, intimate evening scene: a table set
     with a plate of heart-shaped snacks, a lit candle casting a warm glow, and a glass
     of wine. Outside, gentle rain falls, while two figures share a moment, one reaching

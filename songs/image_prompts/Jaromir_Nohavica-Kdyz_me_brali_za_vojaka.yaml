@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a young soldier in a military barracks, looking
     contemplative with a shaved head, surrounded by a sense of nostalgia and longing.
     In the background, depict a faint image of a young woman, symbolizing love and

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a fierce, elderly woman named Mary, dressed
     in rugged cowboy attire, with two revolvers at her waist and a lasso overhead.
     She stands confidently in a lively tavern, surrounded by cowboys and a chaotic

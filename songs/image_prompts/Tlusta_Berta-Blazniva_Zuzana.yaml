@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, surreal scene featuring a character
     named Zuzana, who is playfully exploring the world through a barred window. In
     the background, depict a scene with Icarus missing his wings and Copernicus tied

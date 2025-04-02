@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration that captures the essence of longing and introspection.
     Visualize a sinking boat in a serene yet melancholic setting, with a hopeful light
     breaking through dark clouds. Include a figure standing at the helm, gazing towards

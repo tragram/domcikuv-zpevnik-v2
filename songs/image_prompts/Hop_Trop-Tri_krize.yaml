@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a somber seascape featuring a small white ship
     named "My grave" sailing toward rocky cliffs under a stormy sky. In the foreground,
     depict three white stone crosses arranged in the sand, each representing a troubled

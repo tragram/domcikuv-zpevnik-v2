@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, introspective character wandering
     through a surreal landscape that blends elements of the Nile and the Vltava River.
     The character, with a childlike spirit yet a hint of age, reflects on life's uncertainties.

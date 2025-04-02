@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a snowy landscape featuring a traveler trudging
     through deep snow, with distant hills and a quaint village in the background.
     The scene should convey a sense of longing and solitude, with snow-covered paths

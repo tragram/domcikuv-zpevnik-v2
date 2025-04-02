@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a cheerful cartoon bee named Maja, flying through
     a vibrant flower meadow filled with colorful blossoms. The scene should convey
     a sense of adventure and joy, with Maja showcasing her playful and clever personality.

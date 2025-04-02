@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical family of seals at a cinema, looking
     shocked and frustrated as they watch a movie about their own chilly lives. The
     scene should depict the seals in their seats, with spilled peanuts around them,

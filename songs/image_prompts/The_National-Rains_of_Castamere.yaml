@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a proud, regal lion with sharp claws, standing
     in a desolate castle hall. The atmosphere is somber, with rain pouring down and
     dark clouds looming overhead, symbolizing loss and solitude. The lion should be

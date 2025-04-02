@@ -23,8 +23,10 @@ a dar patadas a [Hm]mi propio malesta[G]r.
 {end_of_verse}
 
 {start_of_bridge}
-[D]Va a des[Em]cubrir porque [F#m]ahora no[G]quiero[A]pensar
-[D]y me va a[Em]reprimir la [F#m]locura a[G]punto de [A]empezar.
+[D]Va a des[Em]cubrir porque 
+[F#m]ahora no[G]quiero[A]pensar
+[D]y me va a[Em]reprimir la 
+[F#m]locura a[G]punto de [A]empezar.
 {end_of_bridge}
 
 {start_of_verse}

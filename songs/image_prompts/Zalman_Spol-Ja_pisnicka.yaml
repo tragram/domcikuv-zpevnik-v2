@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a melancholic woman, embodying the spirit of a song,
     surrounded by shadows of poets and lovers. She is dressed in a wedding gown, with
     a sense of vulnerability, sitting in a dimly lit tavern filled with echoes of

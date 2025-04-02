@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a cheerful Eskimo couple living in a snowy Greenland
     landscape, surrounded by playful polar bears. The scene should depict their cozy
     igloo with a bubbling pot of tea, while the sun shines brightly in a polar day

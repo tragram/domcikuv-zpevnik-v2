@@ -6,7 +6,7 @@
 {capo: 0}
 {key: A}
 {tempo: }
-{illustration_author: dalle3}
+{image_model: dalle3}
 {range: e1-c#2}
 {start_melody: a}
 

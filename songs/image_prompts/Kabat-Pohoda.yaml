@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a rural village scene with lush meadows and
     forests, featuring a couple walking together. Include elements like cows, crows,
     and a cozy village with a cinema and pub. Show men with tools, women dancing with

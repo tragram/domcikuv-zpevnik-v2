@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration that captures a bustling train station scene with
     a sense of confusion and longing. Include a character looking frustrated, surrounded
     by signs in multiple languages, a clock showing "after eight," and a mix of modern

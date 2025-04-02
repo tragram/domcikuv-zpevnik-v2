@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a carefree rider on a moped, racing down a winding
     asphalt road with the wind in their hair. The scene should capture a vibrant city
     backdrop with a mix of urban elements and nature, emphasizing speed and safety.

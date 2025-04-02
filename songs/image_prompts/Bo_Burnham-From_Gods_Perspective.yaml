@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration that captures a satirical and bold interpretation
     of a modern, irreverent deity. The scene should depict a cosmic figure lounging
     in a chaotic universe, surrounded by a mix of alien beings and earthly symbols

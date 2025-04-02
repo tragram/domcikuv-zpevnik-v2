@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a vibrant, carefree journey through the Czech
     countryside, showcasing a lively car ride towards Moravia. Include scenic vineyards,
     sunlit hills, and a joyful atmosphere, capturing the essence of wine, music, and

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical train journey through a vibrant
     night scene, featuring a playful train with smoke billowing from its chimney,
     carrying cheerful, slightly tipsy passengers. Include a lively atmosphere with

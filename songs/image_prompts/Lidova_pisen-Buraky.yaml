@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a peaceful countryside scene disrupted
     by the remnants of war. In the foreground, soldiers lazily lounging in a field,
     cracking peanuts, while in the background, a colonel looks out towards a distant

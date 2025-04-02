@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a harsh winter scene featuring a snow-covered landscape
     with heavy, dark clouds. In the foreground, depict a worried figure looking out
     from a rustic cabin, while a horse stands nearby, symbolizing a journey taken.

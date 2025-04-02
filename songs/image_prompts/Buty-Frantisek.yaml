@@ -1,6 +1,7 @@
-- model: gpt-4o-mini-2024-07-18
-  response: "Create an illustration of a serene pond reflecting the sun, surrounded\
-    \ by a dense circle of tall poplar trees. In the foreground, depict a kind man,\
-    \ Franti\u0161ek Dobrota, planting saplings with children nearby, while an elderly\
-    \ woman\u2019s spirit watches over them. The scene should convey tranquility and\
-    \ the warmth of family and nature."
+- model: gpt-4o-mini
+  prompt_id: v1
+  response: Create an illustration of a serene pond reflecting the sun, surrounded
+    by a dense circle of tall poplar trees. In the foreground, depict a kind man,
+    František Dobrota, planting saplings with children nearby, while an elderly woman’s
+    spirit watches over them. The scene should convey tranquility and the warmth of
+    family and nature.

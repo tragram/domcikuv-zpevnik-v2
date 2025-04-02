@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a passionate teacher in a vibrant classroom,
     surrounded by attentive students of diverse backgrounds. The teacher, with a heartwarming
     smile, is engaged in a lively discussion, using creative teaching methods. The

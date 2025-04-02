@@ -1,5 +1,14 @@
-- model: gpt-4o-mini-2024-07-18
-  response: "Create an illustration of a classic brewery standing proudly by a road,\
-    \ surrounded by lush greenery. Include elements like frothy beer mugs, glistening\
-    \ bottles, and hops. Capture a sense of nostalgia and community, reflecting the\
-    \ warmth and tradition of Jaro\u0161ov's brewing heritage."
+- model: gpt-4o-mini
+  prompt_id: v1
+  response: Create an illustration of a classic brewery standing proudly by a road,
+    surrounded by lush greenery. Include elements like frothy beer mugs, glistening
+    bottles, and hops. Capture a sense of nostalgia and community, reflecting the
+    warmth and tradition of Jarošov's brewing heritage.
+- model: gpt-4o-mini
+  prompt_id: v2
+  response: Create an illustration of a charming, rustic brewery standing proudly
+    by a winding country road. The scene should feature a frothy pint of beer with
+    condensation on the glass, surrounded by lush greenery. In the background, the
+    brewery's historic architecture is visible, evoking a sense of tradition and community.
+    Add a hint of nostalgia with warm sunlight filtering through the trees, suggesting
+    a joyful gathering of friends enjoying a drink together.

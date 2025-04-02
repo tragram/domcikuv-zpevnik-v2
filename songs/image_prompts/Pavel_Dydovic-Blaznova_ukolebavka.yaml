@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene, moonlit bedroom scene with a sheep
     peacefully sleeping on a bed. Outside the window, a curious moth gazes in, while
     the room is softly illuminated by a gentle glow. A white cloak hangs nearby, hinting

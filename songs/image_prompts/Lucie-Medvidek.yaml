@@ -1,9 +1,13 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a plush teddy bear traveling through a snowy
     landscape, carrying a small gift. The bear is depicted on a cross, dreaming peacefully,
     while Roman dogs in festive attire play nearby. The scene is set during a magical
     Christmas night, with a glowing sunrise in the background and a crown made of
     thorns subtly present.
-
 - model: chatgpt-2024-10-20
-  response: A haunting and symbolic scene of a plush teddy bear pinned to a cross, lying in the snow under a dark sky. The bear's soft, innocent appearance contrasts with the grim metaphor of snow symbolizing cocaine. Roman soldiers lurk in the background, while the scene radiates the tragedy of corruption and sacrifice, adding a layer of darkness to the holiday atmosphere.
+  response: A haunting and symbolic scene of a plush teddy bear pinned to a cross,
+    lying in the snow under a dark sky. The bear's soft, innocent appearance contrasts
+    with the grim metaphor of snow symbolizing cocaine. Roman soldiers lurk in the
+    background, while the scene radiates the tragedy of corruption and sacrifice,
+    adding a layer of darkness to the holiday atmosphere.

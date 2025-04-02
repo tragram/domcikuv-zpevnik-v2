@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a sunlit summer landscape with a winding dirt
     path, where a couple walks hand in hand, surrounded by wild thyme flowers blooming
     on the hills. Capture the essence of warmth and tranquility, with a vintage wagon

@@ -3,7 +3,7 @@
 {date_added: 12-2016}
 {language: czech}
 {pdf_filenames: ['michal_david_nonstop-sken.pdf', 'michal_david_nonstop-comp.pdf', 'michal_david_nonstop-gen.pdf']}
-{illustration_author: dalle3}
+{image_model: dalle3}
 {capo: 0}
 {key: D}
 {tempo: }

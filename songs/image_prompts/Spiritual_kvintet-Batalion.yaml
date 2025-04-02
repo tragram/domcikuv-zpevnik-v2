@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a lively, romantic scene set in a rustic
     tavern at night. Include a soldier sharing a bottle of wine with a beautiful woman,
     surrounded by the warm glow of candlelight. In the background, suggest a sense

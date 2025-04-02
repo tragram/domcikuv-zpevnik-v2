@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a solitary astronaut floating in the vastness
     of space, surrounded by stars and distant planets. The astronaut is inside a small,
     transparent capsule, looking out with a longing expression. There are faint signals

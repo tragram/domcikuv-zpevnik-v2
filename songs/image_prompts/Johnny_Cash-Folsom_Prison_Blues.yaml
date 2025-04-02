@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a somber scene at Folsom Prison, featuring a
     weathered man gazing longingly at a distant train rolling past under a blue sky.
     Include elements like prison bars, a faded sunset, and a faint silhouette of a

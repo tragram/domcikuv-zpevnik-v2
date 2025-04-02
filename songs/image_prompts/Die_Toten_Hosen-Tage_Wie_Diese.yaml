@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a vibrant city nightlife scene, capturing a
     joyful couple dancing on the asphalt, surrounded by a lively crowd. The backdrop
     should feature illuminated streets, bridges, and music notes floating in the air,

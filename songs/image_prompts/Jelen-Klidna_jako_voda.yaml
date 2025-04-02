@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a serene, enchanting landscape where
     a person dances barefoot on smooth stones by a flowing river, embodying both calmness
     and strength. The scene should evoke feelings of love and companionship, with

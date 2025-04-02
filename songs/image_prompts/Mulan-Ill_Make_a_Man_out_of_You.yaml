@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a fierce military training scene in a lush,
     tranquil forest, where a determined mentor is coaching a group of hesitant recruits.
     The mentor embodies strength and confidence, while the recruits display a mix

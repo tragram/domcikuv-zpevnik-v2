@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a solemn man dressed in black, standing against
     a backdrop of a stark urban landscape. His expression is thoughtful and compassionate,
     reflecting the struggles of the poor, the lonely, and the oppressed. Surround

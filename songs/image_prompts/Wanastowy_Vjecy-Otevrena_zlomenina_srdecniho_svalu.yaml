@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a surreal landscape at twilight, featuring a broken
     heart symbol entwined with vines and flowers, surrounded by a misty sea. In the
     foreground, a vintage car sits abandoned, with a starry sky above and a gentle

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration featuring a green-topped pear tree standing alone
     in a vast field, with a dark horse grazing beneath it. In the background, depict
     a serene landscape with deep waters and a hint of a journey, conveying a sense

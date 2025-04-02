@@ -8,6 +8,7 @@
 {tempo: }
 {range: a1-a2}
 {start_melody: g}
+{prompt_id: v2}
 
 {start_of_verse}
 [C]Chtěl by [G]žít a přitom nemůže dýcha[Ami]t

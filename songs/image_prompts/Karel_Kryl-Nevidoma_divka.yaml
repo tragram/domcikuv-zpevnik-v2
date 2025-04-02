@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an enchanting autumn scene featuring a blind girl sitting on the
     grass in a garden behind a brick wall. She has a blindfold and is reading a fairy
     tale from a notebook. Surround her with vibrant flowers and butterflies, capturing

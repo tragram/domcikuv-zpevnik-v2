@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a cozy late-night scene featuring a dimly lit
     room with a staircase adorned with roses. Include a nostalgic vibe with a small
     windmill in the background, symbolizing true care and companionship. Capture the

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene outdoor scene featuring a grassy area
     at the base of a large walnut tree. Scatter blue violets among the grass, and
     include a pair of abandoned violins resting on the ground. In the background,

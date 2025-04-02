@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a mystical night scene featuring a bright full
     moon illuminating a vast sky filled with stars. Below, depict a rugged landscape
     with thorny bushes and a winding path leading into the unknown. Include a solitary

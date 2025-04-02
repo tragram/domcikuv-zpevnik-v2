@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a cozy, chaotic home scene featuring a playful
     kitten causing mischief. The kitten should be depicted playfully clawing at a
     person's hand while a couple looks on, amused yet exasperated. Include elements

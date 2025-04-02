@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: "**Prompt for AI Image Generator:** \n\nCreate a somber, introspective\
     \ scene depicting a person sitting alone in a dimly lit room, surrounded by shadows.\
     \ The room should have a radio blaring, casting flickering light. The character\

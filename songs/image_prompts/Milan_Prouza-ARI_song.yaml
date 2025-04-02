@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a stressed student surrounded by computer screens
     displaying code and graphs, with a humorous twist of a girl playfully trying to
     distract him. The setting is a cluttered study room filled with textbooks and

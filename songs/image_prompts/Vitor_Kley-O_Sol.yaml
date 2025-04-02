@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a vibrant sun shining brightly in a serene landscape,
     with warm golden rays illuminating a peaceful figure who is smiling and relaxed.
     The scene should evoke feelings of warmth, tranquility, and joy, symbolizing the

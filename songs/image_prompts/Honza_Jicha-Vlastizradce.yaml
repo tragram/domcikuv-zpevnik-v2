@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical bonfire scene where various historical
     documents, like the Czech constitution and decrees, are being playfully tossed
     into the flames. Surround the fire with a group of people, laughing and reminiscing,

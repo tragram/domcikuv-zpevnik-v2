@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image that captures the essence of love and light amidst darkness.
     Depict a serene scene with a glowing figure symbolizing "light" surrounded by
     shadows, representing the struggle between love and despair. Include ethereal

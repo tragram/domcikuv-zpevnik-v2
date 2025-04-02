@@ -1,9 +1,13 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene summer landscape featuring a winding
     dirt road, where two figures walk together, surrounded by wild thyme blooming
     on the hills. Capture the essence of warmth and nostalgia, with sunlight filtering
     through the trees and a vase filled with thyme nearby. The atmosphere should evoke
     a sense of peace and connection to nature.
-
 - model: chatgpt-2024-10-20
-  reponse: A serene and nostalgic atmosphere with nature playing a central role, specifically referencing wild thyme ("divokej tymián") from the mountains, a warm summer, and a journey. I'll generate an image that captures the essence of these lyrics a summer landscape with mountains, wild thyme in bloom, a gentle road behind a wagon, and a sense of peace and connection with nature.
+  reponse: A serene and nostalgic atmosphere with nature playing a central role, specifically
+    referencing wild thyme ("divokej tymián") from the mountains, a warm summer, and
+    a journey. I'll generate an image that captures the essence of these lyrics a
+    summer landscape with mountains, wild thyme in bloom, a gentle road behind a wagon,
+    and a sense of peace and connection with nature.

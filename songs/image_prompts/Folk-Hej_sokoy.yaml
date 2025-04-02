@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a young Cossack on horseback, bidding farewell
     to his beloved against a backdrop of the Ukrainian landscape. Include elements
     like rolling hills, green fields, and a distant skyline. Incorporate a soaring

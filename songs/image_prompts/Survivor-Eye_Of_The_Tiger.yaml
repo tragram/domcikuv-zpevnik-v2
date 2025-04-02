@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a determined man standing strong on a city street at
     dawn, symbolizing resilience and the will to survive. He should have an intense
     gaze, reminiscent of a tiger, with a backdrop of urban challenges. Incorporate
