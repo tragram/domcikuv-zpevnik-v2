@@ -1,5 +1,5 @@
 
-import { SongData } from '../../types/types';
+import { SongData } from '../../../types/types';
 import { ChordProParser, FormatterSettings, HtmlFormatter } from "chordproject-parser";
 import { czechToEnglish, replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
 import memoize from 'memoize-one';
