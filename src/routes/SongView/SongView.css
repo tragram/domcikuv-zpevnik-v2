@@ -7,6 +7,10 @@
     background-size: cover;
 }
 
+.fullscreen-enabled .bg-image {
+    position: fixed;
+}
+
 @layer utilities {
     .hide-fancy-switch-label .fancy-switch-label {
         display: none;
