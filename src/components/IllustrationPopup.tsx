@@ -24,7 +24,11 @@ export function IllustrationPopup({ avatarClassName, song }: IllustrationPopupPr
         <DialogTitle className="hidden">Illustration image view</DialogTitle>
         {/* DialogDescription is here just so that accessibility does not complain */}
         <DialogDescription className="hidden">Illustration</DialogDescription>
-        <DialogContent className="max-w-[512px] max-h-[calc(100vh)] h-fit rounded-lg backdrop-blur-sm p-0 avatar-modal-dialog overflow-clip content-radix bg-glass/50 gap-0 flex flex-col">
+        <DialogContent className="max-w-[512px] max-h-[calc(100vh)] h-fit rounded-lg backdrop-blur-sm p-0 avatar-modal-dialog overflow-clip content-radix bg-glass/50 gap-0 flex flex-col"
+         /* @ts-expect-error "removing this breaks it"*/ 
+         close={() => setIsOpen(false)}
+        >
+
           <div className="h-full w-full relative">
             <div className="relative flex justify-center max-h-[512px] h-[70%] shadow-lg">
               <img
