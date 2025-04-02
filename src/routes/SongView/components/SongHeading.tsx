@@ -57,12 +57,12 @@ const SongHeading: React.FC<SongHeadingProps> = ({ songData, layoutSettings, tra
 
     const isWrapped = wrappedIndices.length > 0;
     return (
-        <div className={cn('flex w-full justify-between flex-wrap gap-4 text-primary dark:text-white')} ref={containerRef}>
-            <div className={cn('flex flex-col flex-grow', isWrapped ? "text-center" : "justify-start mb-4")}>
-                <h2 className='font-semibold text-primary text-wrap uppercase  dark:text-foreground'>{songData.artist}</h2>
+        <div className={cn('flex w-full justify-between flex-wrap gap-4 text-primary dark:text-white rounded-2xl dark:rounded-none mb-4')} ref={containerRef}>
+            <div className={cn('flex flex-col flex-grow align-middle', isWrapped ? "text-center" : "justify-start")}>
+                <h2 className='font-semibold text-wrap uppercase dark:text-foreground'>{songData.artist}</h2>
                 <h2 className='font-bold text-wrap  dark:text-white'>{songData.title}</h2>
             </div>
-            <div className={cn('flex flex-col flex-grow text-foreground dark:text-white/70 ', isWrapped ? "text-center mb-4" : "text-right")}>
+            <div className={cn('flex flex-col flex-grow  dark:text-white/70 ', isWrapped ? "text-center mb-4" : "text-right")}>
                 <h2 className='text-[0.75em] text-nowrap'>
                     Capo: {(songData.capo - transposeSteps + 12) % 12}
                 </h2>
