@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a cozy bar scene on a Saturday night. A man
     sits at the bar, looking surprised and intrigued as a stylish woman enters. The
     ambiance is warm and inviting, with soft lighting and vintage decor. The man appears

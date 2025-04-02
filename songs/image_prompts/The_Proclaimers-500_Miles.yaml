@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a romantic scene depicting a man walking a long,
     winding path through various landscapes (fields, forests, and city streets) with
     a loving expression, symbolizing his dedication and journey to be with his partner.

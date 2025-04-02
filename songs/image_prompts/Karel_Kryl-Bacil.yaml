@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, nostalgic scene featuring a group
     of folk musicians gathered outside a quaint funeral home. Include a vibrant, singing
     bird perched on a birdhouse, surrounded by colorful tablets scattered on a breakfast

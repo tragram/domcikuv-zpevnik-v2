@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a weary traveler standing on a train platform,
     holding a worn suitcase filled with clutter and a canvas-wrapped map. In the background,
     depict a train moving away, symbolizing lost direction. Include a nostalgic house

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a solitary wanderer with worn-out shoes, walking
     along a winding path under a vast sky where the horizon meets the clouds. The
     scene captures a sense of nostalgia and longing, with a hint of a summer landscape,

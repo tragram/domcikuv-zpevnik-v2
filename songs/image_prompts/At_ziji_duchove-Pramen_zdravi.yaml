@@ -1,6 +1,13 @@
-- model: gpt-4o-mini-2024-07-18
-  response: "Create an illustration of a picturesque landscape in Pos\xE1zav\xED,\
-    \ featuring a serene spring surrounded by lush greenery. Include a cheerful child\
-    \ drinking from the spring, with a backdrop of dairy products like cheese and\
-    \ milk, symbolizing health and vitality. The scene should evoke a sense of wellness\
-    \ and nature's bounty."
+- model: gpt-4o-mini
+  prompt_id: v1
+  response: Create an illustration of a picturesque landscape in Posázaví, featuring
+    a serene spring surrounded by lush greenery. Include a cheerful child drinking
+    from the spring, with a backdrop of dairy products like cheese and milk, symbolizing
+    health and vitality. The scene should evoke a sense of wellness and nature's bounty.
+- model: gpt-4o-mini
+  prompt_id: v2
+  response: Create an illustration of a serene landscape in Posázaví, featuring a
+    clear spring surrounded by lush greenery. In the foreground, a cheerful child
+    is joyfully drinking from the spring, while a basket of dairy products sits nearby,
+    symbolizing health and vitality. The scene should evoke a sense of natural wellness
+    and happiness.

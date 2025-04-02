@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a vibrant, chaotic scene of a late-night
     gathering among friends, set in a cozy yet disheveled living room. Include a group
     of bohemian characters laughing and toasting with glasses of wine, surrounded
@@ -7,4 +8,8 @@
     the essence of friendship and the carefree spirit of youth, with a touch of whimsy
     and a hint of introspection.
 - model: chatgpt-2024-10-20
-  response: A chaotic and lively scene depicting a group of Czech bohemians celebrating in the early morning hours. Empty bottles and the remnants of a wild party are strewn across a room, while friends laugh, drink, and discuss life. The atmosphere is full of energy, with vivid colors and a sense of camaraderie as they reflect on their unconventional lives.
+  response: A chaotic and lively scene depicting a group of Czech bohemians celebrating
+    in the early morning hours. Empty bottles and the remnants of a wild party are
+    strewn across a room, while friends laugh, drink, and discuss life. The atmosphere
+    is full of energy, with vivid colors and a sense of camaraderie as they reflect
+    on their unconventional lives.

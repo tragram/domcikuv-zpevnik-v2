@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a lively indoor party scene, featuring a group
     of friends enjoying themselves with red mulled wine, festive decorations, and
     a vintage record player playing music. The atmosphere should be warm and inviting,

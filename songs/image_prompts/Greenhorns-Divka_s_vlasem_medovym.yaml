@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an eerie, atmospheric scene set at night near a train crossing
     by a lake. Feature a girl with honey-colored hair standing alone on the tracks,
     her face pale and expression haunting. In the background, a car with its headlights

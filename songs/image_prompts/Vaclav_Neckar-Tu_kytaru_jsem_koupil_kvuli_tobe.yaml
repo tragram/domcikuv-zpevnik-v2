@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a musician standing outside a house, holding
     a beautiful guitar made from maple wood, with a wistful expression. The background
     features a maple forest with gentle winds, symbolizing the connection between

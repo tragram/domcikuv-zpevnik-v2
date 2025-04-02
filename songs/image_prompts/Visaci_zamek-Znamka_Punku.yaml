@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a quirky punk scene featuring a character wearing
     clothes inside out, with a rooster in their mouth, and a vibrant garden filled
     with wildflowers. Include a crowded bus in the background and a female punk rocker

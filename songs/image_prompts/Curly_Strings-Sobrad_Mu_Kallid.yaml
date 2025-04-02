@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: The song expresses feelings of loneliness and longing for friends during
     difficult times. It contrasts the grayness of solitary days with the joy of shared
     moments and laughter. The imagery includes a cold, dull environment, and a desire

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a vibrant spring landscape featuring a winding
     river with gentle waves, blooming flowers, and a distant figure on horseback,
     symbolizing the arrival of spring. Include a pair of well-worn, wandering shoes

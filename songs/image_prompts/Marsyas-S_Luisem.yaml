@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an ethereal scene depicting a person lying barefoot in lush green
     grass, gazing up at a starry sky filled with the Milky Way. The atmosphere should
     blend elements of fantasy, with swirling lights and shadows, and a sense of connection

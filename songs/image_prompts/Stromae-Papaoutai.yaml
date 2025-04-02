@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration that captures the essence of a child searching
     for their father, blending themes of curiosity, longing, and the wisdom of a mother.
     The scene should depict a young child looking up at a distant horizon, symbolizing

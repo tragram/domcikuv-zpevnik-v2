@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a person standing resiliently on a sandy beach,
     with grains of sand slipping through their fingers, symbolizing the passage of
     time and unfulfilled desires. In the background, depict a large stone blocking

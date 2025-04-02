@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a solitary shaman sitting in a dark, mystical
     landscape, surrounded by swirling smoke and faint stars. The shaman, with a serene
     expression, is holding a worn-out pipe instead of a knife. In the background,

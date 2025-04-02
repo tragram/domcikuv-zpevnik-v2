@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a post-apocalyptic landscape with a person
     standing amidst ash and dust. They are sweating and surrounded by a mix of vibrant
     colors representing revolution, with flags raised and clothes dyed red. In the

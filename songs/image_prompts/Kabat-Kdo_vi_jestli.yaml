@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a surreal landscape featuring a vibrant, colorful
     moon with mysterious footprints leading away from it. In the foreground, depict
     a girl struggling for breath, surrounded by abstract representations of truth

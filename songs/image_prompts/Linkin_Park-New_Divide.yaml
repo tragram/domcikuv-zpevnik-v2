@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create a dark, atmospheric scene depicting a stormy landscape with black
     skies and flashes of lightning illuminating a desolate area. In the foreground,
     include a figure standing amidst falling ashes, symbolizing memories and loss.

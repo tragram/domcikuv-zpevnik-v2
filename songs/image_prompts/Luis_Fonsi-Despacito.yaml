@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a romantic beach scene at sunset, featuring
     a couple dancing closely, surrounded by gentle waves and soft sand. The atmosphere
     should evoke passion and intimacy, with warm colors and a sense of rhythm in their

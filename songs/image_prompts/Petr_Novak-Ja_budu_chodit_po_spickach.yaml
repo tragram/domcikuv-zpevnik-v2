@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene bedroom scene at dawn, with a person
     gently tiptoeing across a soft carpet towards a sleeping figure. The room is softly
     illuminated by the first light of day, casting a warm glow. The sleeping figure

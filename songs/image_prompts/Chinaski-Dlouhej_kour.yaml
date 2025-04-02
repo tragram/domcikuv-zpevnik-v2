@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a dreamy, starry night scene with a couple walking
     hand-in-hand through a velvety black landscape. Include elements like paper wings
     floating in the air, hints of jazz music notes, and a gentle southern breeze.

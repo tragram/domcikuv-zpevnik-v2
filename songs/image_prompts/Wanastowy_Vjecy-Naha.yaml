@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create a whimsical and colorful illustration depicting a surreal dreamscape
     where a butterfly floats above a shimmering body of water, surrounded by vibrant
     colors and glowing fireflies. Include elements like a magical fish swimming beneath

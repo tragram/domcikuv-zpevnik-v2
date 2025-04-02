@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a modern Cinderella, dressed in a whimsical
     nightgown, sitting alone in a dimly lit room filled with remnants of a party.
     She has a painted smile on her face, surrounded by scattered shoes and a clock

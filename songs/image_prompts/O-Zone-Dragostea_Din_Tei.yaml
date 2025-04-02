@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create a vibrant and whimsical illustration featuring a charismatic, adventurous
     character resembling a modern-day haiduc (outlaw) in a lush, sunlit landscape.
     Include elements of joy and romance, like blooming flowers and a hint of a love

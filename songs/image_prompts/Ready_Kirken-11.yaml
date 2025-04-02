@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a solitary figure in a small, cozy apartment
     filled with sunlight and plants, symbolizing a hidden world of dreams and tranquility.
     The scene should convey a sense of introspection and hope, with shadows hinting

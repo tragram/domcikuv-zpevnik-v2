@@ -1,8 +1,9 @@
-- model: gpt-4o-mini-2024-07-18
-  response: "Create an enchanting scene featuring three celestial angels dining at\
-    \ a rustic table in a moonlit garden. Surround them with elements of mystery:\
-    \ a group of silent monks in the background, a duke waving from a castle balcony,\
-    \ and a jester gathering food scraps nearby. Include a peacock singing outside\
-    \ a window, while a wandering juggler plays for the heart of a sleeping beauty\
-    \ named S\xE1ro, who rests with her head on a rose-covered lap. The atmosphere\
-    \ should be dreamlike and serene, capturing the essence of longing and magic."
+- model: gpt-4o-mini
+  prompt_id: v1
+  response: 'Create an enchanting scene featuring three celestial angels dining at
+    a rustic table in a moonlit garden. Surround them with elements of mystery: a
+    group of silent monks in the background, a duke waving from a castle balcony,
+    and a jester gathering food scraps nearby. Include a peacock singing outside a
+    window, while a wandering juggler plays for the heart of a sleeping beauty named
+    Sáro, who rests with her head on a rose-covered lap. The atmosphere should be
+    dreamlike and serene, capturing the essence of longing and magic.'

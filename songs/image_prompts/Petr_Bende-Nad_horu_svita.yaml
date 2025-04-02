@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene dawn in the mountains, with a young
     man in a white shirt tending to his horses by a river. In the background, a contrasting
     scene of impending war looms, with a hint of red in the sky symbolizing bloodshed.

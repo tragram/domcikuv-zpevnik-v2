@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a modern-day "gentleman" in a cozy bedroom,
     taking a selfie in a bathrobe, surrounded by social media icons like hearts and
     likes floating around. Include a smartphone displaying a dating app and a laptop

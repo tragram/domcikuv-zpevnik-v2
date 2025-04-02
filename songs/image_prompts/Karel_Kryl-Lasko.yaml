@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration inspired by the lyrics of a gritty, nostalgic song.
     Depict a dimly lit room with a table holding a bowl of leftover food for rats,
     a deck of cards, and a couple of love letters. In the background, show a weary

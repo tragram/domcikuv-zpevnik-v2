@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create a dark, surreal illustration that captures the themes of pain,
     loss, and societal issues reflected in the song lyrics. Include elements like
     a shadowy figure representing heartbreak, a train crashing into a tree, and a

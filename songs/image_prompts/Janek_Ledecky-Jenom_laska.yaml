@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a vast desert landscape under a starry night
     sky, with a couple walking hand in hand, their faces reflecting determination
     and love. In the background, depict a frozen polar landscape with shimmering auroras,

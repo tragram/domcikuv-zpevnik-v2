@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a desolate, sunlit landscape featuring a weathered
     cowboy on a worn-out horse, with broken boots and calloused hands. In the background,
     a distant white city looms under a golden sun, while ominous clouds gather. The

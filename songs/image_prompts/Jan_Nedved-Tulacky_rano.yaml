@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene campsite at dawn, surrounded by a lush,
     whispering forest. A gentle stream flows nearby, with a campfire crackling softly.
     In the foreground, a figure stands with a guitar, embodying a spirit of wanderlust

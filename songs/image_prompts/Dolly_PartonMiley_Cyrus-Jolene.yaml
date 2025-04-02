@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a heartbroken woman with long, flowing hair, standing
     in a lush, vibrant field. In the background, depict a stunningly beautiful woman
     with auburn hair and emerald green eyes, radiating confidence. The scene should

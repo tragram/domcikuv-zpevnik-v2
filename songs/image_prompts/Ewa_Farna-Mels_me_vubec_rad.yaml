@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration that captures the emotional turmoil of longing
     and uncertainty in a relationship. Depict a solitary figure standing on a dimly
     lit street, looking up at a starry sky, with a mix of hope and despair in their

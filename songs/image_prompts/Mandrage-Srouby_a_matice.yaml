@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a whimsical scene between earth and sky,
     featuring a couple playfully interacting. Include elements like floating flowers,
     a cozy bedroom with pillows, and abstract representations of time, symbolized

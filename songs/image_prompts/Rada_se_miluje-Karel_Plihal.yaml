@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration featuring a whimsical scene of a woman joyfully
     singing, surrounded by playful sparrows arguing on a fence. In the background,
     depict a quirky little boat being pushed by the wind towards a cliff. Include

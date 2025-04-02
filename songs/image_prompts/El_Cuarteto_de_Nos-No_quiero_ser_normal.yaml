@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a lone figure standing on a deserted island,
     surrounded by chaotic symbols of conformity like crowds and popular trends. The
     figure looks disinterested and defiant, holding a sign that says "No to Democracy"

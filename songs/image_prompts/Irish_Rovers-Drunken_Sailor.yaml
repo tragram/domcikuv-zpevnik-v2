@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a lively maritime scene at dawn, featuring a
     group of sailors playfully dealing with a drunken crew member. Include elements
     like a rustic longboat, a playful atmosphere, and a whimsical touch with the captain's

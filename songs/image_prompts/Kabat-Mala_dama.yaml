@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a mysterious, enchanting woman from the suburbs playing
     a violin at dawn, surrounded by curious cats. She has an air of magic and wisdom,
     with deep eyes that seem to hold secrets. In the background, a makeshift shrine

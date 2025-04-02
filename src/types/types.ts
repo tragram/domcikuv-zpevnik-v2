@@ -19,6 +19,32 @@ interface FilterSettings {
 
 type SongLanguage = "czech" | "english" | "german" | "slovak" | "polish" | "spanish" | "romanian" | "finnish" | "estonian" | "french" | "italian" | "portuguese" | "other"
 
+class IllustrationData {
+    prompt_id: string;
+    prompt_model: string;
+    image_model: string;
+
+    constructor(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined) {
+        this.prompt_model = prompt_model || "gpt-4o-mini";
+        this.prompt_id = prompt_id || "v1";
+        this.image_model = image_model || "FLUX.1-dev";
+    }
+
+    toFilenameStem(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined): string {
+        return IllustrationData.toFilenameStemFactory(prompt_model || this.prompt_model, prompt_id || this.prompt_id, image_model || this.image_model)
+    }
+
+    static toFilenameStemFactory(prompt_model: string, prompt_id: string, image_model: string): string {
+        return prompt_model + "_" + prompt_id + "_" + image_model
+    }
+
+    static fromJSON(json: any): IllustrationData {
+        const instance = new IllustrationData(json.prompt_model, json.prompt_id, json.image_model)
+        return instance;
+    }
+
+}
+
 interface SongRawData {
     title?: string;
     artist?: string;
@@ -33,6 +59,9 @@ interface SongRawData {
     pdfFilenames?: string;
     chordproFile?: string;
     contentHash?: string;
+    prompt_model?: string;
+    prompt_id?: string;
+    image_model?: string;
 }
 
 class SongData {
@@ -48,7 +77,7 @@ class SongData {
     tempo: int;
     capo: int;
     range: SongRange;
-    illustrationAuthor: string;
+    illustrationData: IllustrationData;
     chordproFile: string;
     pdfFilenames: Array<string>;
     content?: string;
@@ -66,7 +95,7 @@ class SongData {
         this.tempo = parseInt(song.tempo as string);
         this.capo = parseInt(song.capo as string) || 0;
         this.range = new SongRange(song.range || "");
-        this.illustrationAuthor = song.illustrationAuthor || "FLUX.1-dev";
+        this.illustrationData = new IllustrationData(song.prompt_model, song.prompt_id, song.image_model);
         this.pdfFilenames = song.pdfFilenames
             ? JSON.parse(song.pdfFilenames.replace(/'/g, '"')).map((f: string) => fileURL("songs/pdfs/" + f))
             : [];
@@ -104,6 +133,9 @@ class SongData {
         if (json.range) {
             instance.range = SongRange.fromJSON(instance.range);
         }
+        if (json.illustrationData) {
+            instance.illustrationData = IllustrationData.fromJSON(instance.illustrationData)
+        }
         return instance;
     }
 
@@ -125,17 +157,17 @@ class SongData {
     }
 
 
-    private imageURLFactory(folder: string, model: string | null = null): string {
-        model = model || this.illustrationAuthor;
-        return fileURL(`songs/${folder}/${this.id}/${model}.webp`);
+    private imageURLFactory(folder: string, prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined): string {
+        const stem = this.illustrationData.toFilenameStem(prompt_model, prompt_id, image_model)
+        return fileURL(`songs/${folder}/${this.id}/${stem}.webp`);
     }
 
-    thumbnailURL(model: string | null = null): string {
-        return this.imageURLFactory("illustrations_thumbnails", model);
+    thumbnailURL(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined): string {
+        return this.imageURLFactory("illustrations_thumbnails", prompt_model, prompt_id, image_model);
     }
 
-    illustrationURL(model: string | null = null): string {
-        return this.imageURLFactory("illustrations", model);
+    illustrationURL(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined): string {
+        return this.imageURLFactory("illustrations", prompt_model, prompt_id, image_model);
     }
 
     static promptURL(id: string) {

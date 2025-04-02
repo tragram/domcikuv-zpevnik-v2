@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a dark, moody scene featuring a silhouette of
     a couple, one person gently embracing the other, set against a backdrop of a shadowy,
     dimly lit room. The atmosphere should convey a mix of intimacy and tension, with

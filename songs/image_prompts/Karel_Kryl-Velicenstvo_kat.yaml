@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a dark, gothic hall filled with terrified merchants
     reading from missals. In the foreground, a grim executioner, dressed in a red
     hooded cloak, stands imposing. Surrounding him are ominous figures, a priest with

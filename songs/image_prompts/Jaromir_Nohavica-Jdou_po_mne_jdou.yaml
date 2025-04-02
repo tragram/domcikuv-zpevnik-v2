@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a rugged, determined man in a dimly lit alley,
     clutching a bag of stolen money, with wanted posters featuring his face plastered
     on the walls. In the background, a glimpse of a bank and a shadowy figure lurking.

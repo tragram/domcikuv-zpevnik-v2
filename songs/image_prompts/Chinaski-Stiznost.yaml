@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image that captures a sense of existential struggle and desire
     for erasure. Visualize a figure sitting at a desk surrounded by papers, envelopes,
     and stamps, looking contemplative and frustrated. The background should be dark

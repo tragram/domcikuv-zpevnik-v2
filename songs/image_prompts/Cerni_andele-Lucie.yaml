@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of dark, ethereal angels with black wings, surrounded
     by a medieval backdrop. The scene should evoke a sense of forbidden love and sensuality,
     with drops of something resembling blood falling from their wings. Include hints

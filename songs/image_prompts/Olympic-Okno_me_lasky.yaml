@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a wistful, nostalgic scene featuring a closed
     ground-floor window with soft, warm light spilling out, symbolizing love and longing.
     Include a silhouette of a young couple outside, one gazing longingly through the

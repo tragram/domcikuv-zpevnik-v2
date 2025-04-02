@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a beautifully adorned gate opening into a lush
     green garden, surrounded by a birch grove and pine forest. The scene should evoke
     a sense of tranquility and nostalgia, with soft sunlight filtering through the

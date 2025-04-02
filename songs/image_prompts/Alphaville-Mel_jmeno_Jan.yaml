@@ -1,7 +1,17 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: '"Create a dramatic scene depicting a figure named Jan standing defiantly
     amidst raging flames, his clothes and face scorched, embodying both suffering
     and resilience. The background should feature smoke and shadows, symbolizing the
     struggle between light and dark, with an ethereal glow representing hope. Include
     elements that suggest chains and a distant judge, emphasizing themes of truth,
     sacrifice, and the quest for freedom."'
+- model: gpt-4o-mini
+  prompt_id: v2
+  response: Create an illustration of a man named Jan standing defiantly amidst roaring
+    flames, his clothes burning and face illuminated by the intense heat. He is chained
+    to a wooden stake, yet his expression reflects a fierce determination to uphold
+    his truth. The background is filled with swirling smoke and shadows, symbolizing
+    the struggle between light and darkness, as judges in the distance hurriedly retreat.
+    Capture the tension of this moment, where courage meets despair, in a dramatic and
+    vivid style.

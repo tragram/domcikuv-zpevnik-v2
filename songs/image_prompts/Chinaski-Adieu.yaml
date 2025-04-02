@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a cozy, dimly lit bar scene where a melancholic
     man sits at the counter, reminiscing. In front of him are two wine glasses, one
     filled with deep red Cabernet and the other with bright Sauvignon. The atmosphere

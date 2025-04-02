@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, dreamy scene featuring a mysterious
     lady running toward a vibrant riptide under a starry night sky. Include elements
     like a magician's assistant in a flowing dress, a cowboy silhouette in the background,

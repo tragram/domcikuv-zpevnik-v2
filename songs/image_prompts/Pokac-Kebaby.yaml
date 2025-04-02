@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a humorous and frustrated traveler standing
     in front of a kebab stand in a foreign land, surrounded by colorful street food
     stalls. The traveler, looking bewildered, holds a menu with confusing options,

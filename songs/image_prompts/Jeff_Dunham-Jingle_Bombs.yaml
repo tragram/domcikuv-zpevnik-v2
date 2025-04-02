@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a comically exaggerated, cartoonish character
     in a desert setting, wearing a towel on their head and a bomb strapped to their
     back. The character looks bewildered and slightly defeated, with a humorous expression,

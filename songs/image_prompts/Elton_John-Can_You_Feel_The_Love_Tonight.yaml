@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene night scene featuring a starry sky
     over a tranquil landscape. Include a couple, a restless warrior and a wide-eyed
     wanderer, sharing a peaceful moment together, surrounded by nature's beauty. Emphasize

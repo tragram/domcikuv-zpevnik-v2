@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a powerful ice queen standing on a snowy mountain peak,
     surrounded by swirling snowflakes and a fierce winter storm. She exudes strength
     and freedom, with a determined expression, as the cold winds whip around her.

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a joyful, dreamy scene featuring a person standing
     in a vibrant, colorful landscape filled with symbols of hope and fulfillment.
     The person looks excited and hopeful, anticipating a special day ahead. Include

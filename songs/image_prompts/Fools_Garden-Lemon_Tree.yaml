@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a lonely figure sitting on a lemon tree in a
     dull, rainy room. The background should depict a heavy cloud, symbolizing isolation,
     while the foreground features a bright yellow lemon tree contrasting with the

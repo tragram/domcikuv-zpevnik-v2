@@ -1,7 +1,7 @@
-- model: gpt-4o-mini-2024-07-18
-  response: "Create an illustration of two boys playing together in a whimsical, colorful\
-    \ backyard. One boy, \"Special Ed,\" is depicted with playful, quirky features,\
-    \ engaging with nature\u2014perhaps talking to a tree or counting bugs. The other\
-    \ boy is laughing, showcasing their bond. Include elements like a shed in the\
-    \ background and a playful, slightly chaotic atmosphere that captures their unique\
-    \ friendship and innocence."
+- model: gpt-4o-mini
+  prompt_id: v1
+  response: Create an illustration of two boys playing together in a whimsical, colorful
+    backyard. One boy, "Special Ed," is depicted with playful, quirky features, engaging
+    with nature—perhaps talking to a tree or counting bugs. The other boy is laughing,
+    showcasing their bond. Include elements like a shed in the background and a playful,
+    slightly chaotic atmosphere that captures their unique friendship and innocence.

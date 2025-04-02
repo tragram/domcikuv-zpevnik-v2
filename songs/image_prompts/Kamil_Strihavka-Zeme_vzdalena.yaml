@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a melancholic cityscape under a rainy sky, shrouded
     in smoke. Include shadowy figures and a pair of wandering cats, with hints of
     mystery and longing in the atmosphere. Incorporate elements like a guitar gently

@@ -5,7 +5,7 @@
 {pdf_filenames: ['lucie_medvidek-sken.pdf', 'lucie_medvidek-comp.pdf']}
 {capo: 0}
 {key: A}
-{illustration_author: dalle3}
+{image_model: dalle3}
 {tempo: }
 {range: a1-c#2}
 {start_melody: e}

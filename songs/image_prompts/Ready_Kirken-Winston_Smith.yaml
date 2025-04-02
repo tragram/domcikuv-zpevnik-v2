@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a romantic, dreamy scene featuring a couple
     lying together in a cozy, dimly lit room, surrounded by abstract representations
     of coordinates and movement. The atmosphere should evoke a sense of longing and

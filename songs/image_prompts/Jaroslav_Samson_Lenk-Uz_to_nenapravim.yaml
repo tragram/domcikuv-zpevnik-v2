@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a wistful scene of a deserted train station
     at 9:25, with a lone figure waiting on the platform, looking down the tracks.
     The atmosphere should convey a sense of longing and nostalgia, with an open gate

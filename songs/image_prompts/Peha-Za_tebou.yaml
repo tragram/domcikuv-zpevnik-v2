@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a stormy landscape at dusk, featuring a river
     flowing through it. In the foreground, a solitary figure stands with tears in
     their eyes, surrounded by swirling leaves and sand. Above, a starry sky reflects

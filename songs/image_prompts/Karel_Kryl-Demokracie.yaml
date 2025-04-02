@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a satirical view of democracy, featuring
     a vibrant yet chaotic scene. Include elements like a bar filled with people grumbling
     over beers, politicians shaking hands under a shady roof, and a symbolic representation

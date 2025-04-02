@@ -13,12 +13,14 @@ let metadata = files.map(chordproFile => {
   const tempo = content.match(/{tempo:\s*(.+?)}/i)?.[1].trim() || "";
   const capo = content.match(/{capo:\s*(.+?)}/i)?.[1].trim() || "";
   const range = content.match(/{range:\s*(.+?)}/i)?.[1].trim() || "";
-  const illustrationAuthor = content.match(/{illustration_author:\s*(.+?)}/i)?.[1].trim() || "";
+  const prompt_model = content.match(/{prompt_model:\s*(.+?)}/i)?.[1].trim() || "";
+  const prompt_id = content.match(/{prompt_id:\s*(.+?)}/i)?.[1].trim() || "";
+  const image_model = content.match(/{image_model:\s*(.+?)}/i)?.[1].trim() || "";
   const startMelody = content.match(/{start_melody:\s*(.+?)}/i)?.[1].trim() || "";
   const pdfFilenames = content.match(/{pdf_filenames:\s*(.+?)}/i)?.[1].trim() || "";
   const contentHash = makeHash(content);
   const disabled = (content.match(/{disabled:\s*(.+?)}/i)?.[1].trim() === 'true') || false;
-  return { title, artist, key, language, dateAdded, capo, tempo, range, illustrationAuthor, startMelody, chordproFile, pdfFilenames, contentHash, disabled };
+  return { title, artist, key, language, dateAdded, capo, tempo, range, prompt_model, prompt_id, image_model, startMelody, chordproFile, pdfFilenames, contentHash, disabled };
 });
 metadata = metadata.filter(m => !m.disabled);
 const hash = makeHash(metadata);

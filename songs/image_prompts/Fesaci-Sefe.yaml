@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a determined horse racer standing at the starting
     line, looking longingly at the racecourse. The scene captures a mix of hope and
     nostalgia, with horses in the background and a stable nearby. The atmosphere conveys

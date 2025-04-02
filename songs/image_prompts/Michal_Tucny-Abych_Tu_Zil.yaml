@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a solitary figure sitting under a vast blue
     sky, surrounded by meadows and forests. The person wears worn-out clothes with
     pockets, showing signs of summer dust. In the background, a river flows gently,

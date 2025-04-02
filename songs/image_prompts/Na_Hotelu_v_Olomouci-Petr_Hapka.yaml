@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a dimly lit hotel room in Olomouc, featuring
     a mysterious figure resembling a classic film star, with a backdrop of a heartbeat
     pulse visual. The atmosphere should evoke a sense of melancholy and intrigue,

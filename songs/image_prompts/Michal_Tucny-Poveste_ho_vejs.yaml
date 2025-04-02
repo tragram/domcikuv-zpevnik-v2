@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration inspired by a whimsical and melancholic country
     scene, featuring a figure hanging from a tree branch, swaying gently. The background
     should depict a sunny landscape with rolling fields and a distant horizon. Include

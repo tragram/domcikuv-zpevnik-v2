@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration capturing a whimsical summer camp scene, featuring
     a young girl named Barbora writing a letter. Include elements like a campfire,
     a group of kids playing games, and a humorous depiction of a chubby camp leader.

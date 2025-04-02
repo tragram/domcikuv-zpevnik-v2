@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a cheerful handyman in a cozy workshop filled
     with tools and projects, looking contemplative. Include a beautiful, young woman
     nearby, absorbed in her own thoughts, with a hint of distance between them. The

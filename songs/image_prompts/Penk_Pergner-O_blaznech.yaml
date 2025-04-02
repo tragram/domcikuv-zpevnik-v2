@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a surreal landscape featuring a bridge made
     of colorful, whimsical elements, symbolizing the folly of building connections
     for others' happiness. In the background, depict shadowy figures resembling dogs

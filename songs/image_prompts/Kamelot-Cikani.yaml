@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a vibrant, lively crowd in a festive atmosphere,
     with a lone figure walking through, surrounded by women, music notes, and wine.
     Include a dark-haired girl tenderly wiping the figure's tears, while hints of

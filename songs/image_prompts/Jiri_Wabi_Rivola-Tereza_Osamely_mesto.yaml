@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a lonely city street at sunset, with a distant
     silhouette of a person wandering alone. The scene should evoke feelings of nostalgia
     and melancholy, featuring empty cars and fluttering leaves caught in the wind.

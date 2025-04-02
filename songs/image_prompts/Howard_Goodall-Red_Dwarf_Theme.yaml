@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a tropical paradise scene featuring a serene
     beach with golden sand, clear blue waters, and a bright sun shining in a clear
     sky. Include a person lounging on the beach with a tropical drink in hand, surrounded

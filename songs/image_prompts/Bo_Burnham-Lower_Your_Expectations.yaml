@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, colorful scene depicting the contrast
     between idealized relationships and the reality of love. Include a dreamy landscape
     with a "Prince Charming" figure who looks perplexed, surrounded by exaggerated

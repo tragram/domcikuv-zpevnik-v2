@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a serene West Virginia landscape featuring the Blue
     Ridge Mountains and the Shenandoah River. Include a winding country road leading
     into the mountains, with a nostalgic feel, capturing the essence of home. Add

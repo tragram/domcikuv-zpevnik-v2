@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a serene, old church with a tall steeple and ringing
     bells, surrounded by a dreamlike landscape filled with ethereal, swirling dreams
     and shadows of solitude. Include elements like delicate stalactites resembling

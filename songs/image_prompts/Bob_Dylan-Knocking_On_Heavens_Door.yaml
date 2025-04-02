@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: The song depicts a somber and introspective scene where the narrator is
     expressing a sense of surrender and approaching the end of life. They ask their
     mother to remove their badge, symbolizing a loss of purpose or identity, and mention

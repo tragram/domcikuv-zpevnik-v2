@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration that captures the nostalgic essence of friendship
     and lost moments. Depict two young friends in a sunlit park, surrounded by birds,
     reminiscing about their carefree youth. Include elements like an old record player,

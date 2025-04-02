@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a 26-year-old man reflecting on life, surrounded
     by a chaotic urban environment. He appears contemplative, with hints of nostalgia
     and a touch of humor. Include elements like a train speeding away in the background,

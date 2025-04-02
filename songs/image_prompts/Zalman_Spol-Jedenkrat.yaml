@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a dreamlike landscape featuring a man lost in
     thought, gazing at clouds. Include a serene woman sitting on a distant shore,
     embodying hope and innocence. The scene should evoke a sense of longing, with

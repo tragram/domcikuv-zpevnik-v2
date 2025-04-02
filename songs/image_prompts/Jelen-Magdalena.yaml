@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a serene morning scene on a balcony, with two
     figures sitting together. One has sparkling eyes, symbolizing hope and warmth,
     while the other looks contemplative. Include elements like a distant clock showing

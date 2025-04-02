@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a dramatic scene depicting a heart-shaped wrecking
     ball crashing through a wall made of bricks, surrounded by ashes and flames. In
     the background, a silhouette of a couple stands apart, one looking regretful and

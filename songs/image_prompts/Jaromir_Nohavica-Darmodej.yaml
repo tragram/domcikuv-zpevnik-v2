@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an image of a mysterious man walking through a dimly lit city street
     at night, wearing a snake-skin coat and playing a haunting melody on a flute.
     The scene should evoke a sense of melancholy and introspection, with shadows of

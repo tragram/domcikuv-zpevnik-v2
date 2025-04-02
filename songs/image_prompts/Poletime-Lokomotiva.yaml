@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, romantic landscape featuring a
     vintage train rushing through a dark, starry night. Include playful elements like
     a couple riding alongside cartoonish donkeys, a flower made of chewing gum on

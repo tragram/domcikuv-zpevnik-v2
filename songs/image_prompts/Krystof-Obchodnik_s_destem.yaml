@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration that captures the essence of longing and loss,
     featuring a figure standing in a rain-soaked cityscape, surrounded by blurred
     lights reminiscent of distant stars. The scene should evoke a sense of passion

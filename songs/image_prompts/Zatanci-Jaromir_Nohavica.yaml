@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a passionate dance scene under a glowing sunset,
     with a couple intertwined in movement. The woman is wearing a flowing dress that
     seems to drift to the ground, symbolizing freedom and intimacy. Surround them

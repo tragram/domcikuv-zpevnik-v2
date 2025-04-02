@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration depicting a chaotic scene in a dimly lit tavern
     where rowdy figures engage in a fierce brawl, their expressions a mix of anger
     and intoxication. Include elements of greed, such as coins and bottles scattered

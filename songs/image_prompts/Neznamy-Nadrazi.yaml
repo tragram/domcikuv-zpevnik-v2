@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a train approaching a quaint station surrounded
     by mountains and greenery. Include a dreamy sunset sky, with a figure looking
     out the train window, lost in thought. Capture the essence of adventure and nostalgia,

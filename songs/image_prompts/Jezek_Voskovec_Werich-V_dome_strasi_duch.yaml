@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an eerie illustration of an ancient castle at night, shrouded in
     mist. Include a ghostly figure of a white lady wandering through dark hallways,
     with flickering candlelight casting shadows. Capture the sense of fear with a

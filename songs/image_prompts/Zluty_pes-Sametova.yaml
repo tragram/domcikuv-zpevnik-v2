@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration that captures a nostalgic scene from the past,
     featuring a vibrant rock 'n' roll atmosphere with saxophones, electric guitars,
     and people in Swedish shirts enjoying music. Include elements like a schoolyard

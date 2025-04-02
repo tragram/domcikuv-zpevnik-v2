@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a playful puppy in a village setting, happily
     exploring and sniffing around, with a shadow on the wall. In the background, depict
     a frustrated owner watching as the puppy's spirit is stifled by a chain. Capture

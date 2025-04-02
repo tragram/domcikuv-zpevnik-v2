@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical village scene where a group of enthusiastic
     villagers is building a large, modern communication tower that breaks through
     the roof of a traditional church. The setting is a mix of rural charm and futuristic

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a mysterious and enchanting night scene in September,
     where a beautiful figure resembling a maiden with an alluring smile embodies temptation.
     The moonlight casts a soft glow over ripe apples, and the atmosphere is filled

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a dramatic naval battle scene featuring a ship
     with a black flag and a skull emblem. The ship is engaged in fierce combat, with
     cannon fire and smoke surrounding it. The captain, determined and defiant, stands

@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: Create an illustration of a whimsical, futuristic scene featuring a sad
     computer and a vintage floppy disk under a full moon. The computer should have
     tiny, cartoonish tears, symbolizing its struggles, while the floppy disk appears

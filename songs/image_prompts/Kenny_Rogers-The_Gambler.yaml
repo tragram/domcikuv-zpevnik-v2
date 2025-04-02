@@ -1,4 +1,5 @@
-- model: gpt-4o-mini-2024-07-18
+- model: gpt-4o-mini
+  prompt_id: v1
   response: 'Create an illustration of a warm summer evening on a train bound for
     nowhere. Show two weary travelers: one, an old gambler with a thoughtful expression,
     and the other, a young man, both gazing out a window into the dark night. Include
