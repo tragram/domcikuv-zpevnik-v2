@@ -63,12 +63,12 @@
     "tempo": "",
     "range": "a1-a2",
     "prompt_model": "",
-    "prompt_id": "",
+    "prompt_id": "v2",
     "image_model": "",
     "startMelody": "g",
     "chordproFile": "Alphaville-Mel_jmeno_Jan.pro",
     "pdfFilenames": "['alphaville_mel_jmeno_jan-sken.pdf', 'alphaville_mel_jmeno_jan-comp.pdf']",
-    "contentHash": "ba8deedac5df3f2cfc9a6ade68034c9a9184c9be",
+    "contentHash": "1a46e424cea523c905215f096e434fd48e6c687a",
     "disabled": false
   },
   {
@@ -392,7 +392,7 @@
     "startMelody": "c a",
     "chordproFile": "Cerni_andele-Lucie.pro",
     "pdfFilenames": "",
-    "contentHash": "b99cac70802ac39ec0985d9f766da0474a4f574a",
+    "contentHash": "af9cbca79c44a3c83b9ff9b32205f8e42fa70c30",
     "disabled": false
   },
   {
@@ -771,6 +771,42 @@
     "chordproFile": "Die_Toten_Hosen-Tage_Wie_Diese.pro",
     "pdfFilenames": "['die_toten_hosen_tage_wie_diese-sken.pdf', 'die_toten_hosen_tage_wie_diese-comp.pdf', 'die_toten_hosen_tage_wie_diese-gen.pdf']",
     "contentHash": "a63666bbb9543f25acd16668c8e63912c1650ef7",
+    "disabled": false
+  },
+  {
+    "title": "Malování",
+    "artist": "Divokej Bill",
+    "key": "Em",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Divokej_Bill-Malovani.pro",
+    "pdfFilenames": "",
+    "contentHash": "087b9e64057f24f7476b0bfd7665439eb225196a",
+    "disabled": false
+  },
+  {
+    "title": "Plakala",
+    "artist": "Divokej Bill",
+    "key": "Am",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Divokej_Bill-Plakala.pro",
+    "pdfFilenames": "",
+    "contentHash": "ee21e581cac534077421e131b007c17140c0a52a",
     "disabled": false
   },
   {
@@ -1580,7 +1616,7 @@
     "startMelody": "g g g",
     "chordproFile": "Inspired_By_Iceland-The_A-O_of_Iceland.pro",
     "pdfFilenames": "['inspired_by_island_the_ao_of_island-sken.pdf', 'inspired_by_island_the_ao_of_island-comp.pdf']",
-    "contentHash": "4dc5f63a4dd2e138affa0c0d6073a8b328be1ecd",
+    "contentHash": "000b116edbcb4bdf0bbcb0259f23293da059801f",
     "disabled": false
   },
   {
@@ -1599,6 +1635,24 @@
     "chordproFile": "Irish_Rovers-Drunken_Sailor.pro",
     "pdfFilenames": "['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']",
     "contentHash": "8969a09b0325839a0788aa41eabebcf3f43aa7eb",
+    "disabled": false
+  },
+  {
+    "title": "Zkratky",
+    "artist": "Ivan Mládek",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Ivan_Mladek-Zkratky.pro",
+    "pdfFilenames": "",
+    "contentHash": "7469cac83a60767c7155a3d9eb2e4096e5edd8e8",
     "disabled": false
   },
   {
@@ -2610,6 +2664,24 @@
     "disabled": false
   },
   {
+    "title": "Na Pankráci",
+    "artist": "Karel Hašler",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Karel_Hasler-Na_Pankraci.pro",
+    "pdfFilenames": "",
+    "contentHash": "07bf4ec6225444fe45d30e9cff485764102fcd06",
+    "disabled": false
+  },
+  {
     "title": "Anděl",
     "artist": "Karel Kryl",
     "key": "G",
@@ -3020,7 +3092,7 @@
     "startMelody": "a f#",
     "chordproFile": "La_Vela_Puerca-De_Atar.pro",
     "pdfFilenames": "['la_vela_puerca_de_atar-sken.pdf', 'la_vela_puerca_de_atar-comp.pdf', 'la_vela_puerca_de_atar-gen.pdf']",
-    "contentHash": "07b48a805568c3d30259841f8800a524fece9da1",
+    "contentHash": "1a717330062aaf5747a24cc16dfd44bc6f1cccad",
     "disabled": false
   },
   {
@@ -3254,7 +3326,7 @@
     "startMelody": "e",
     "chordproFile": "Lucie-Medvidek.pro",
     "pdfFilenames": "['lucie_medvidek-sken.pdf', 'lucie_medvidek-comp.pdf']",
-    "contentHash": "f7ddee8f7d18d9fe129f5ee489fcc3f135761b35",
+    "contentHash": "73fb6705a5e7c281a832182b243214f26349f2e1",
     "disabled": false
   },
   {
@@ -3326,7 +3398,7 @@
     "startMelody": "h",
     "chordproFile": "Mandrage-Srouby_a_matice.pro",
     "pdfFilenames": "['mandrage_srouby_a_matice-sken.pdf', 'mandrage_srouby_a_matice-comp.pdf']",
-    "contentHash": "df488c456dfc3242807e6cc3895de3cab3b66b1f",
+    "contentHash": "0b48dd85384f5340e3a72e7eb2e7449a7663c107",
     "disabled": false
   },
   {
@@ -3506,7 +3578,7 @@
     "startMelody": "e",
     "chordproFile": "Michal_Tucny-Abych_Tu_Zil.pro",
     "pdfFilenames": "['michal_tucny_abych_tu_zil-sken.pdf', 'michal_tucny_abych_tu_zil-comp.pdf']",
-    "contentHash": "aa58b65a9ef440edc8551c62ba75670dadb10711",
+    "contentHash": "d57d0f114c04aba0112b6f5331e332e47ba140bd",
     "disabled": false
   },
   {
@@ -4388,7 +4460,7 @@
     "startMelody": "e g a",
     "chordproFile": "Pokac-Hrdinsky_cin.pro",
     "pdfFilenames": "['pokac_hrdinsky_cin-sken.pdf', 'pokac_hrdinsky_cin-comp.pdf']",
-    "contentHash": "d3f2d648d75e80234d637b2c2c0b6d142fcf7a35",
+    "contentHash": "3e6aea1c0044dfd631bc23e751ccb27efac811a5",
     "disabled": false
   },
   {
@@ -5072,7 +5144,7 @@
     "startMelody": "a a h",
     "chordproFile": "Tim_Minchin-F_Sharp.pro",
     "pdfFilenames": "",
-    "contentHash": "e6ca904e702430a88c5203f712ed94a0ffe87f42",
+    "contentHash": "bc2ab21abeb1c7bea35f6409280b9548fd7b042c",
     "disabled": false
   },
   {
@@ -5235,6 +5307,24 @@
     "chordproFile": "Tri_sestry-AIDA.pro",
     "pdfFilenames": "['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']",
     "contentHash": "613b0c5648aacbedf85945ca40c66e2bc6f1cb57",
+    "disabled": false
+  },
+  {
+    "title": "Mexiko",
+    "artist": "Tři sestry",
+    "key": "Am",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Tri_sestry-Mexiko.pro",
+    "pdfFilenames": "",
+    "contentHash": "5e23cb900ebd0efa3c0b555ba90d178c24bf9086",
     "disabled": false
   },
   {
@@ -5454,6 +5544,24 @@
     "disabled": false
   },
   {
+    "title": "Alkoholická",
+    "artist": "Vojtěch Dyk",
+    "key": "Am",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Vojtech_Dyk-Alkoholicka.pro",
+    "pdfFilenames": "",
+    "contentHash": "8c3727a24226ff92d81fce16d3fb3406bf513825",
+    "disabled": false
+  },
+  {
     "title": "Hejkal",
     "artist": "Wabi Daněk",
     "key": "Am",
@@ -5541,6 +5649,24 @@
     "chordproFile": "Waldemar_Matuska-Mile.pro",
     "pdfFilenames": "['waldemar_matuska_mile-sken.pdf', 'waldemar_matuska_mile-comp.pdf']",
     "contentHash": "1a3ba520182e614689fffe60985f48a8eaf0549c",
+    "disabled": false
+  },
+  {
+    "title": "Růže z Texasu",
+    "artist": "Waldemar Matuška",
+    "key": "C",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Waldemar_Matuska-Ruze_z_Texasu.pro",
+    "pdfFilenames": "",
+    "contentHash": "d69b0c81157bdc299785bc162bb43046993b9153",
     "disabled": false
   },
   {
