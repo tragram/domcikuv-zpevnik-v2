@@ -2979,12 +2979,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "",
-    "image_model": "",
+    "prompt_id": "v2",
+    "image_model": "dalle3",
     "startMelody": "",
     "chordproFile": "Kingdom_Come_Deliverance-Poverty_And_Famine.pro",
     "pdfFilenames": "[]",
-    "contentHash": "d9065c65f64cff2ee7d71e22058188b246e20702",
+    "contentHash": "9067e71934c1b24b92911529e0da2f631fa8a4a3",
     "disabled": false
   },
   {
