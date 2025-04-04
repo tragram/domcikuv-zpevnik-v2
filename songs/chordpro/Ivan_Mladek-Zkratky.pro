@@ -11,9 +11,9 @@
 
 
 {start_of_verse}
-[G]Z PLR[Em] do [Am]MLR[D7] 
+[G]Z PLR[Em]do [Am]MLR[D7]
 [G]jel jsem [Em]přes Č[Am]SS[D7]R,
-[C]SNB mé [G]DKW[Em] si [A7]stoplo na T[D7]K.
+[C]SNB mé [G]DKW[Em]si [A7]stoplo na T[D7]K.
 {end_of_verse}
 
 {start_of_chorus}
@@ -22,8 +22,8 @@ Mé [G7]DKW S[C]PZ AB[E7]T dvacet pět [Am]padesát [D7]
 {end_of_chorus}
 
 {start_of_verse}
-[G]OHC [Em]či O[Am]HV 
-[D7]či [G]co má to [Em]DKW[D7]
+[G]OHC [Em]či O[Am]HV[D7]
+či [G]co má to [Em]DKW[D7]
 [C]potřebuje z [G]ND[Em]R nová [A7]šoupátka, [D7]
 {end_of_verse}
 
@@ -40,7 +40,7 @@ BMW a NSU, KDF i MG
 {end_of_bridge}
 
 {start_of_verse}
-Kelblová z OPBH 
+Kelblová z OPBH
 mistrovi ČSAO
 dá do bytu PVC a teplou H2O.
 {end_of_verse}
@@ -51,7 +51,7 @@ skladníkovi DKP šofér V3S.
 {end_of_chorus}
 
 {start_of_verse}
-Všechno dopadne OK 
+Všechno dopadne OK
 za lístky na FOK,
 šofér ČSAD má o Schumanna zájem.
 {end_of_verse}
@@ -69,11 +69,11 @@ musí na RTG, EKG a EEG.
 
 {start_of_chorus}
 Spojení ČSAO-ČVUT-OPBH-
--ČSAD-FOK přerušilo se. 
+-ČSAD-FOK přerušilo se.
 {end_of_chorus}
 
 {start_of_verse}
-RNDr. CSc. 
+RNDr. CSc.
 z ČVUT dá DKW
 SPZ ABT 25-50 do šrotu.
 {end_of_verse}

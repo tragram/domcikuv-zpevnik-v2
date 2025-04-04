@@ -6,6 +6,7 @@
 {capo: 0}
 {key: A}
 {tempo: }
+{image_model: FLUX.1-pro}
 {range: e1-c#1}
 {start_melody: a}
 

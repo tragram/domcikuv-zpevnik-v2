@@ -604,11 +604,11 @@
     "range": "e1-c#1",
     "prompt_model": "",
     "prompt_id": "",
-    "image_model": "",
+    "image_model": "FLUX.1-pro",
     "startMelody": "a",
     "chordproFile": "Chinaski-Moc_toho_nevim.pro",
     "pdfFilenames": "['chinaski_moc_toho_nevim-sken.pdf', 'chinaski_moc_toho_nevim-comp.pdf']",
-    "contentHash": "c0667c58fe1e41ee0270b889032b009c3bdd6611",
+    "contentHash": "6e83e110f8c3b53fd7f974b331698f5c930ad4dc",
     "disabled": false
   },
   {
@@ -2448,6 +2448,24 @@
     "disabled": false
   },
   {
+    "title": "Poverty And Famine",
+    "artist": "Kingdom Come Deliverance",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Kabat-Mala_dama copy.pro",
+    "pdfFilenames": "[]",
+    "contentHash": "3edba8a08ee4b88d656197a07fc8dbedd45361d5",
+    "disabled": false
+  },
+  {
     "title": "Malá dáma",
     "artist": "Kabát",
     "key": "Am",
@@ -2462,7 +2480,7 @@
     "startMelody": "e",
     "chordproFile": "Kabat-Mala_dama.pro",
     "pdfFilenames": "['kabat_mala_dama-sken.pdf', 'kabat_mala_dama-comp.pdf']",
-    "contentHash": "e4f86d382a14b32e3ccff4eba30851236a8e8f2d",
+    "contentHash": "3f42bc96694db95ea1dd1c7719c90f850cbe78ec",
     "disabled": false
   },
   {
@@ -5306,7 +5324,7 @@
     "startMelody": "e d c",
     "chordproFile": "Tri_sestry-AIDA.pro",
     "pdfFilenames": "['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']",
-    "contentHash": "613b0c5648aacbedf85945ca40c66e2bc6f1cb57",
+    "contentHash": "e5fa5e07acfc90fca918454c8e99346017d876f2",
     "disabled": false
   },
   {
@@ -5918,7 +5936,7 @@
     "startMelody": "g",
     "chordproFile": "Zalman_Spol-Jdem_zpatky_do_lesu.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf', 'pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf']",
-    "contentHash": "9c0d4b98ac81e0d7c5ebef2ff57289a9d087aafc",
+    "contentHash": "2979a030e0e39cce1db06a5cabc5a7b344023b5b",
     "disabled": false
   },
   {
