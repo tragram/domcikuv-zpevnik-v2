@@ -788,7 +788,7 @@
     "startMelody": "",
     "chordproFile": "Divokej_Bill-Malovani.pro",
     "pdfFilenames": "",
-    "contentHash": "087b9e64057f24f7476b0bfd7665439eb225196a",
+    "contentHash": "8641f00b72415e5f41d2f65aaa0f42875070cc36",
     "disabled": false
   },
   {
@@ -1652,7 +1652,7 @@
     "startMelody": "",
     "chordproFile": "Ivan_Mladek-Zkratky.pro",
     "pdfFilenames": "",
-    "contentHash": "7469cac83a60767c7155a3d9eb2e4096e5edd8e8",
+    "contentHash": "32de97fed75c1e565e915353816e2da15962d52c",
     "disabled": false
   },
   {
@@ -2448,24 +2448,6 @@
     "disabled": false
   },
   {
-    "title": "Poverty And Famine",
-    "artist": "Kingdom Come Deliverance",
-    "key": "G",
-    "language": "czech",
-    "dateAdded": "04-2025",
-    "capo": "0",
-    "tempo": "",
-    "range": "",
-    "prompt_model": "",
-    "prompt_id": "",
-    "image_model": "",
-    "startMelody": "",
-    "chordproFile": "Kabat-Mala_dama copy.pro",
-    "pdfFilenames": "[]",
-    "contentHash": "3edba8a08ee4b88d656197a07fc8dbedd45361d5",
-    "disabled": false
-  },
-  {
     "title": "Malá dáma",
     "artist": "Kabát",
     "key": "Am",
@@ -2480,7 +2462,7 @@
     "startMelody": "e",
     "chordproFile": "Kabat-Mala_dama.pro",
     "pdfFilenames": "['kabat_mala_dama-sken.pdf', 'kabat_mala_dama-comp.pdf']",
-    "contentHash": "3f42bc96694db95ea1dd1c7719c90f850cbe78ec",
+    "contentHash": "c12a147a53beea61bcf745bd9aaacc37f8a7a742",
     "disabled": false
   },
   {
@@ -2696,7 +2678,7 @@
     "startMelody": "",
     "chordproFile": "Karel_Hasler-Na_Pankraci.pro",
     "pdfFilenames": "",
-    "contentHash": "07bf4ec6225444fe45d30e9cff485764102fcd06",
+    "contentHash": "62d5722b9162a2089c470e41a534decd085c2062",
     "disabled": false
   },
   {
@@ -2985,6 +2967,24 @@
     "chordproFile": "Kenny_Rogers-The_Gambler.pro",
     "pdfFilenames": "['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']",
     "contentHash": "d892d8c4647e2d10cd5ebea7f421b4cfa70d3384",
+    "disabled": false
+  },
+  {
+    "title": "Poverty And Famine",
+    "artist": "Kingdom Come Deliverance",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "dalle3",
+    "startMelody": "",
+    "chordproFile": "Kingdom_Come_Deliverance-Poverty_And_Famine.pro",
+    "pdfFilenames": "[]",
+    "contentHash": "356e074bdc39febf9d674bf197d422da7da95032",
     "disabled": false
   },
   {
