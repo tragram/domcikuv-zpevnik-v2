@@ -28,7 +28,7 @@ s touhle [E]jedinou bych [Ami]zemřel
 S touhle bych [F]zemřel v jedinej [C]den
 a jestli [E]vám to nesta[Ami]čí
 kdyby tam [F]stála stovka [C]žen,
-vyzvu ji k [E]tanci a to [F]netančím [Ami]
+vyzvu ji k [E]tanci a to netan[Ami]čím
 {end_of_chorus}
 
 {start_of_verse}

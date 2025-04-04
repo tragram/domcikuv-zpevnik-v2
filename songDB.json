@@ -604,11 +604,11 @@
     "range": "e1-c#1",
     "prompt_model": "",
     "prompt_id": "",
-    "image_model": "",
+    "image_model": "FLUX.1-pro",
     "startMelody": "a",
     "chordproFile": "Chinaski-Moc_toho_nevim.pro",
     "pdfFilenames": "['chinaski_moc_toho_nevim-sken.pdf', 'chinaski_moc_toho_nevim-comp.pdf']",
-    "contentHash": "90a28518dfc0d5c112cbc0b037beab1878c853c5",
+    "contentHash": "fe3b3a6b6f1b211c67286097afc8505a8a667f55",
     "disabled": false
   },
   {
@@ -788,7 +788,7 @@
     "startMelody": "",
     "chordproFile": "Divokej_Bill-Malovani.pro",
     "pdfFilenames": "",
-    "contentHash": "eed4fabbffc298077277db498622208ce170136e",
+    "contentHash": "971b60334dfb5f6e7b7cda2e168dcfe0a21c6040",
     "disabled": false
   },
   {
@@ -1652,7 +1652,7 @@
     "startMelody": "",
     "chordproFile": "Ivan_Mladek-Zkratky.pro",
     "pdfFilenames": "",
-    "contentHash": "7b35a1740e7334b37a2d402c8704298cdb37b77d",
+    "contentHash": "383ca5a42085862b06b69e1def72561784590813",
     "disabled": false
   },
   {
@@ -2462,7 +2462,7 @@
     "startMelody": "e",
     "chordproFile": "Kabat-Mala_dama.pro",
     "pdfFilenames": "['kabat_mala_dama-sken.pdf', 'kabat_mala_dama-comp.pdf']",
-    "contentHash": "e59a2d84e308be49b40eb0b235f174cfaad93557",
+    "contentHash": "0348e58976be673228e326402687f13bdc2d24e5",
     "disabled": false
   },
   {
@@ -2678,7 +2678,7 @@
     "startMelody": "",
     "chordproFile": "Karel_Hasler-Na_Pankraci.pro",
     "pdfFilenames": "",
-    "contentHash": "b8c01c9194225b4bac2822d38ebf0f9fee558671",
+    "contentHash": "e3d7bb06803ddb5144f6ab12d580bfc85ff904cb",
     "disabled": false
   },
   {
@@ -2967,6 +2967,24 @@
     "chordproFile": "Kenny_Rogers-The_Gambler.pro",
     "pdfFilenames": "['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']",
     "contentHash": "0eea1c4a52d081bc2dd09bb67d4803153f288f01",
+    "disabled": false
+  },
+  {
+    "title": "Poverty And Famine",
+    "artist": "Kingdom Come Deliverance",
+    "key": "G",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Kingdom_Come_Deliverance-Poverty_And_Famine.pro",
+    "pdfFilenames": "[]",
+    "contentHash": "d9065c65f64cff2ee7d71e22058188b246e20702",
     "disabled": false
   },
   {
@@ -5324,7 +5342,7 @@
     "startMelody": "e d c",
     "chordproFile": "Tri_sestry-AIDA.pro",
     "pdfFilenames": "['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']",
-    "contentHash": "011a1afd1055db9f2697a0dcebed4d1bd5184ac3",
+    "contentHash": "fafcac382630e5b67fa2c8e5e4ac00a6b8d8a1cb",
     "disabled": false
   },
   {
@@ -5918,7 +5936,7 @@
     "startMelody": "g",
     "chordproFile": "Zalman_Spol-Jdem_zpatky_do_lesu.pro",
     "pdfFilenames": "['pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf', 'pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf']",
-    "contentHash": "42bf161a3b2dd21539e551cd3b5c8398cd26fa0d",
+    "contentHash": "ec0cfdd39c56a75766a24b7a659bf2e2f322e18b",
     "disabled": false
   },
   {

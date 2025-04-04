@@ -10,7 +10,7 @@
 {start_melody: g}
 {start_of_verse}
 [Am7]Sedím na kolejích,
-[D7]které nikam neved[G]ou,
+[D7]které nikam neved[G]ou,[C][G]
 [Am7]koukám na kopretinu,
 jak [D7]miluje se s lebed[G]ou,
 
@@ -31,7 +31,7 @@ jdem zpátky do [Am7]lesů
 
 {start_of_verse}
 [Am7]Vlak nám včera ujel
-[D7]ze stanice do neb[G]e,
+[D7]ze stanice do neb[G]e,[C][G]
 [Am7]málo jsi se snažil,
 [D7]málo šel jsi do seb[G]e,
 
@@ -43,7 +43,7 @@ napřed [D7]svýho pána popros[G]í. [D7]
 
 {start_of_verse}
 [Am7]Už tě vidím z dálky,
-jak [D7]máváš na mě [G]korunou,
+jak [D7]máváš na mě [G]korunou,[C][G]
 [Am7]a jestli nám to bude stačit,
 [D7]zatleskáme [G]na druhou,
 

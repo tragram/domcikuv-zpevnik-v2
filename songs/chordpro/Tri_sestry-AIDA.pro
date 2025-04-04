@@ -28,7 +28,7 @@ Koktejl je [G]namíchán a myši diví se
 Je konec [C]pásmu dní, ráno už [F]nespatřím
 Prstýnek [G]zásnubní na můj prst nepatří
 Vanu si [C]napouštím a skočím [F]za Aidou
-Vylezu [G]na poušti, ráno mě nenajdou [Emi][Ami]
+Vylezu [G]na poušti, ráno mě nenajdou [Dmi][Emi][Ami]
 {end_of_chorus}
 
 {start_of_verse}
