@@ -1,17 +1,18 @@
 
 import React from 'react'
 import { Button } from '@/components/ui/button'
-import { MoveDiagonal, MoveHorizontal, Columns2, Fullscreen, AArrowDown, AArrowUp, PencilRuler, Repeat, Maximize, BrainCircuit } from 'lucide-react'
+import { MoveDiagonal, MoveHorizontal, Columns2, Fullscreen, AArrowDown, AArrowUp, PencilRuler, Repeat, Maximize, Brain } from 'lucide-react'
 import FancySwitch from '@/components/ui/fancy-switch'
 import { LayoutPreset, LayoutSettings, useViewSettingsStore } from '../hooks/viewSettingsStore'
 import { FullScreenHandle } from 'react-full-screen'
 import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { LoopNoteIcon } from '@/components/ui/loop-note-icon'
+import SmartColumnIcon from "./smart_columns_icon"
 
 const layouSettingsBoolsKeys = ["multiColumns", "smartColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"] as const satisfies ReadonlyArray<keyof LayoutSettings>;
 const layoutSettingsValues = {
   "multiColumns": { icon: <Columns2 />, label: "Multicolumn view" },
-  "smartColumns": { icon: <BrainCircuit />, label: "Smart columns" },
+  "smartColumns": { icon: <Brain />, label: "Smart columns" },
   "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
   "repeatPartsChords": { icon: <LoopNoteIcon />, label: "Show chords in repeated parts" },
   "compactInFullScreen": { icon: <Maximize />, label: "Auto fullscreen in compact view" }
@@ -50,7 +51,7 @@ export const LayoutSettingsToolbar: React.FC<{
         isActive={layout.multiColumns}
         onClick={() => actions.setLayoutSettings({ multiColumns: !layout.multiColumns })}
       >
-        <Columns2 />
+        {layout.smartColumns ? <SmartColumnIcon /> : <Columns2 />}
       </Button>
 
       <Button
