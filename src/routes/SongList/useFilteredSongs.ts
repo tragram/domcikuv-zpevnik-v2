@@ -54,7 +54,7 @@ const getSortCompareFunction = (sortByField: SortField, sortOrder: SortOrder) =>
         } else if (sortByField === "dateAdded") {
             const aDate = (a.dateAdded?.year ?? 0) * 12 + (a.dateAdded?.month ?? 0);
             const bDate = (b.dateAdded?.year ?? 0) * 12 + (b.dateAdded?.month ?? 0);
-            comparison = aDate === bDate ? a.title.localeCompare(b.title) : aDate - bDate;
+            comparison = aDate === bDate ? a.title.localeCompare(b.title) : bDate - aDate;
         } else {
             comparison = (a[sortByField] ?? "").localeCompare(b[sortByField] ?? "");
         }
