@@ -3789,12 +3789,12 @@
     "tempo": "",
     "range": "a1-c2",
     "prompt_model": "",
-    "prompt_id": "",
+    "prompt_id": "v2",
     "image_model": "",
     "startMelody": "a",
     "chordproFile": "Mumford_Sons-Little_Lion_Man.pro",
     "pdfFilenames": "",
-    "contentHash": "e885f9dfbb5ffe35ac0d61ce6d9369d49dd2d5fe",
+    "contentHash": "f140e699164dd50407d2ed60cdf230922315a714",
     "disabled": false
   },
   {
