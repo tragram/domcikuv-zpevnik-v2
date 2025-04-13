@@ -20,13 +20,13 @@ ma mám v Porto Pueblo rande
 {end_of_verse}
 
 {start_of_verse}
-Snad má mě ráda
+[Ami]Snad má mě ráda
 A piňacoláda
-Na cestu neškodí když je chlap macho
+Na cestu neškodí když je chlap [G]macho [As]
 
-Do kapsy tortilly
+[Ami]Do kapsy tortilly
 A láhev tequilly
-Má milá mi přihřeje nachos
+Má milá mi přihřeje [G]nachos [As]
 {end_of_verse}
 
 {start_of_chorus}
@@ -37,35 +37,35 @@ sombrero grande [G]tequilla
 {end_of_chorus}
 
 {start_of_verse}
-Strašlivý vedro
+[Ami]Strašlivý vedro
 A můj mezek Pedro
-Klopýtá okolo malého ranče
+Klopýtá okolo malého [G]ranče [As]
 
-A to není celý
+[Ami]A to není celý
 Taky je skvělý
-Že tu slyším výt Komanče
+Že tu slyším výt [G]Komanče [As]
 {end_of_verse}
 
 {start_of_verse}
-Jsem speedy Gonzalez
+[Ami]Jsem speedy Gonzalez
 Však radši bych zalez
-Tam kde je nejbližší kojotí nora
+Tam kde je nejbližší kojotí [G]nora [As]
 
-Však nehledě k tomu
+[Ami]Však nehledě k tomu
 Že pospíchám domu
-Mě vyhlíží krásná seňora
+Mě vyhlíží krásná [G]seňora [As]
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Vylétla kulka
+[Ami]Vylétla kulka
 Z mé hlavy je půlka
-Než jsem spad už bylo od krve poncho
+Než jsem spad už bylo od krve [G]poncho [As]
 
-Teď nade mnou stojí
+[Ami]Teď nade mnou stojí
 Už pět neděl svoji
-Má milá a sousedů Pancho
+Má milá a sousedů [G]Pancho [As]
 {end_of_verse}
 
 {chorus}

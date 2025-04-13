@@ -26,7 +26,8 @@ Important notes:
 * Only add chords where there are existing lyrics missing chord annotations.
 * Maintain the original formatting and structure.
 * If unsure about a chord progression, flag it for review.
-* Do not abbreviate the output. Replacing parts of the song with e.g. "[the same chords here]" is unacceptable."""
+* Do not abbreviate the output. Replacing parts of the song with e.g. "[the same chords here]" is unacceptable.
+* I repeat, output the full songs with new chords. Do not shorten the output. Never ever, please."""
 
 model_id = "claude-3-5-sonnet-20241022"
 batches_folder = Path(__file__).parent.resolve() / "batches"
@@ -165,28 +166,32 @@ def check_all_past_batches():
             file_path.stem,
         )
         should_delete = True
+        print(message_batch)
         if message_batch.processing_status == "ended":
-            for result in client.beta.messages.batches.results(
-                file_path.stem,
-            ):
-                match result.result.type:
-                    case "succeeded":
-                        song = find_song_with_id(songs, result.custom_id)
-                        with open(
-                            songs_path() / "chordpro" / song["file_name"],
-                            "w",
-                            encoding="utf-8",
-                        ) as f:
-                            f.write(result.result.message.content[0].text)
-                    case "errored":
-                        if result.result.error.type == "invalid_request":
-                            print(f"Validation error {result.custom_id}")
-                        else:
-                            print(f"Server error {result.custom_id}")
-                        should_delete = False
-                    case "expired":
-                        print(f"Request expired {result.custom_id}")
-                        should_delete = False
+            try:
+                for result in client.beta.messages.batches.results(
+                    file_path.stem,
+                ):
+                    match result.result.type:
+                        case "succeeded":
+                            song = find_song_with_id(songs, result.custom_id)
+                            with open(
+                                songs_path() / "chordpro" / song["file_name"],
+                                "w",
+                                encoding="utf-8",
+                            ) as f:
+                                f.write(result.result.message.content[0].text)
+                        case "errored":
+                            if result.result.error.type == "invalid_request":
+                                print(f"Validation error {result.custom_id}")
+                            else:
+                                print(f"Server error {result.custom_id}")
+                            should_delete = False
+                        case "expired":
+                            print(f"Request expired {result.custom_id}")
+                            should_delete = False
+            except Exception as e:
+                print(e)
             if should_delete:
                 Path.unlink(file_path)
         else:
