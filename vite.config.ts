@@ -152,7 +152,7 @@ const pwaManifest: Partial<VitePWAOptions> = {
     display: "standalone",
     scope: basePath,
     start_url: basePath,
-    orientation: 'portrait',
+    orientation: 'any',
   },
 }
 
