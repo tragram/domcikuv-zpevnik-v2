@@ -20,7 +20,7 @@ interface VocalRangeIndicatorProps {
 }
 
 const VocalRangeIndicator = memo(({ songRangeSemitones, maxRange }: VocalRangeIndicatorProps) => (
-    <CircularProgress value={songRangeSemitones || maxRange} maxValue={maxRange} />
+    songRangeSemitones ? <CircularProgress value={songRangeSemitones || maxRange} maxValue={maxRange} /> : <></>
 ));
 
 
