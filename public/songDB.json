@@ -806,7 +806,7 @@
     "startMelody": "",
     "chordproFile": "Divokej_Bill-Plakala.pro",
     "pdfFilenames": "",
-    "contentHash": "ee21e581cac534077421e131b007c17140c0a52a",
+    "contentHash": "bbc054ac6ac06e3a43d4af2ae43afb55e544ed1b",
     "disabled": false
   },
   {
@@ -1652,7 +1652,7 @@
     "startMelody": "",
     "chordproFile": "Ivan_Mladek-Zkratky.pro",
     "pdfFilenames": "",
-    "contentHash": "32de97fed75c1e565e915353816e2da15962d52c",
+    "contentHash": "c3dd170d12bbebc254da77f7d1d8220ef46b420a",
     "disabled": false
   },
   {
@@ -3780,6 +3780,24 @@
     "disabled": false
   },
   {
+    "title": "Little Lion Man",
+    "artist": "Mumford & Sons",
+    "key": "Am",
+    "language": "english",
+    "dateAdded": "04-2025",
+    "capo": "5",
+    "tempo": "",
+    "range": "a1-c2",
+    "prompt_model": "",
+    "prompt_id": "",
+    "image_model": "",
+    "startMelody": "a",
+    "chordproFile": "Mumford_Sons-Little_Lion_Man.pro",
+    "pdfFilenames": "",
+    "contentHash": "cb444a0386643fc9febf8547a1f1871b49fbbfe9",
+    "disabled": false
+  },
+  {
     "title": "Petr Hapka",
     "artist": "Na Hotelu v Olomouci",
     "key": "Dm",
@@ -5342,7 +5360,7 @@
     "startMelody": "",
     "chordproFile": "Tri_sestry-Mexiko.pro",
     "pdfFilenames": "",
-    "contentHash": "5e23cb900ebd0efa3c0b555ba90d178c24bf9086",
+    "contentHash": "38f7b948ea4e5528d89444088461f3cf090ec1c3",
     "disabled": false
   },
   {
@@ -5576,7 +5594,7 @@
     "startMelody": "",
     "chordproFile": "Vojtech_Dyk-Alkoholicka.pro",
     "pdfFilenames": "",
-    "contentHash": "8c3727a24226ff92d81fce16d3fb3406bf513825",
+    "contentHash": "7cadc5dc7de4e1fcd5adc6e342fabc841c7c7ae4",
     "disabled": false
   },
   {
