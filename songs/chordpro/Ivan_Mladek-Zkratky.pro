@@ -40,45 +40,45 @@ BMW a NSU, KDF i MG
 {end_of_bridge}
 
 {start_of_verse}
-Kelblová z OPBH
-mistrovi ČSAO
-dá do bytu PVC a teplou H2O.
+[G]Kelblová z [Em]OP[Am]BH[D7]
+[G]mistrovi [Em]ČSA[D7]O
+[C]dá do bytu [G]PV[Em]C a [A7]teplou H2[D7]O.
 {end_of_verse}
 
 {start_of_chorus}
-Vystavené na LVT PVC však přiveze
-skladníkovi DKP šofér V3S.
+Mé [G7]DKW S[C]PZ vysta[E7]vené na [Am]LVT [D7]
+[G]PVC [Em]však při[Am]ve[D7]ze [A7]skla[D7]dní[G]kovi. [D7]
 {end_of_chorus}
 
 {start_of_verse}
-Všechno dopadne OK
-za lístky na FOK,
-šofér ČSAD má o Schumanna zájem.
+[G]Všechno [Em]dopadne [Am]OK[D7]
+[G]za lístky [Em]na F[D7]OK,
+[C]šofér ČSAD [G]má o [Em]Schu[A7]manna zá[D7]jem.
 {end_of_verse}
 
 {start_of_chorus}
-Mistr od ČSAO známou má na PKO,
-její bratr v OÚNZ dělá sestřičku.
+Mé [G7]DKW [C]SPZ mi[E7]str od Č[Am]SAO [D7]
+[G]známou [Em]má na [Am]P[D7]KO [A7]dělá [D7]ses[G]třičku. [D7]
 {end_of_chorus}
 
 {start_of_verse}
-V OÚNZ na WC
-mistr chytil TBC,
-musí na RTG, EKG a EEG.
+[G]V OÚNZ [Em]na W[Am]C[D7]
+[G]mistr chy[Em]til T[D7]BC,
+[C]musí na RT[G]G, E[Em]KG a [A7]EEG. [D7]
 {end_of_verse}
 
 {start_of_chorus}
-Spojení ČSAO-ČVUT-OPBH-
--ČSAD-FOK přerušilo se.
+Mé [G7]DKW [C]SPZ spo[E7]jení Č[Am]SAO [D7]
+[G]ČVUT [Em]OPBH [Am]pře[D7]ru[A7]ši[D7]lo [G]se. [D7]
 {end_of_chorus}
 
 {start_of_verse}
-RNDr. CSc.
-z ČVUT dá DKW
-SPZ ABT 25-50 do šrotu.
+[G]RNDr. [Em]CSc.[Am][D7]
+[G]z ČVUT dá [Em]DKW[D7]
+[C]SPZ ABT [G]25-[Em]50 do [A7]šrotu. [D7]
 {end_of_verse}
 
 {start_of_chorus}
-Z ČSSR do MLR z ČVUT RNDr.
-musí chudák s ČSAD nebo s ČSD.
+Mé [G7]DKW [C]SPZ z [E7]ČSSR do [Am]MLR [D7]
+[G]musí [Em]chudák [Am]s Č[D7]SAD [A7]nebo [D7]s Č[G]SD. [D7]
 {end_of_chorus}

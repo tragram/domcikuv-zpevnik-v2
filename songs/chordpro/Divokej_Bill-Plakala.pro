@@ -17,17 +17,17 @@
 {end_of_verse}
 
 {start_of_verse}
-Utíkala pryč nevěděla kam
-pletla na mě bič, já byl na to sám
-poháněná chtíčem vrněla jak káča
-moje milá plakala-a
+[Ami]Utíkala pryč nevěděla kam
+[Ami]pletla na mě bič, já byl na to sám
+[Ami]poháněná chtíčem vrněla jak káča
+[Ami]moje milá [C]plakala-a [G]
 {end_of_verse}
 
 {start_of_verse}
-Modlila se, hlásila se vo svý práva
-motala se na mý trase, byla to tráva
-poháněná chtíčem vrněla jak káča
-moje milá plakala
+[Ami]Modlila se, hlásila se vo svý práva
+[Ami]motala se na mý trase, byla to tráva
+[Ami]poháněná chtíčem vrněla jak káča
+[Ami]moje milá [C]plakala [G]
 {end_of_verse}
 
 {start_of_chorus}
