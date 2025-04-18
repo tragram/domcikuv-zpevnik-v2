@@ -14,7 +14,9 @@ import {
     ArrowDown01,
     ArrowDown10,
     ArrowDownAZ,
+    ArrowDownNarrowWide,
     ArrowDownUp,
+    ArrowDownWideNarrow,
     ArrowDownZA,
     AudioLines,
     CalendarPlus,
@@ -33,8 +35,9 @@ interface SortSettingsState extends SortSettings {
 export const useSortSettingsStore = create<SortSettingsState>()(
     persist(
         (set) => ({
-            order: "ascending" as SortOrder,
-            field: "title" as SortField,
+            // Changed default order to descending for dates
+            order: "descending" as SortOrder,
+            field: "dateAdded" as SortField,
             setSortOrder: (sortOrder: SortOrder) => set({
                 order: sortOrder
             }),
@@ -65,6 +68,7 @@ interface Category {
     icon: ReactElement;
     sorting_icons: SortingIcons;
     sorting_labels: SortingLabels;
+    defaultOrder: SortOrder;
 }
 
 interface SwitchOption {
@@ -82,6 +86,11 @@ const numberSortingIcons: SortingIcons = {
     descending: <ArrowDown10 />
 };
 
+const rangeSortingIcons: SortingIcons = {
+    ascending: <ArrowDownNarrowWide/>,
+    descending: <ArrowDownWideNarrow/>
+}
+
 const categories: Category[] = [
     {
         field: "title",
@@ -91,7 +100,8 @@ const categories: Category[] = [
         sorting_labels: {
             ascending: "Ascending",
             descending: "Descending"
-        }
+        },
+        defaultOrder: "ascending"
     },
     {
         field: "artist",
@@ -101,7 +111,8 @@ const categories: Category[] = [
         sorting_labels: {
             ascending: "Ascending",
             descending: "Descending"
-        }
+        },
+        defaultOrder: "ascending"
     },
     {
         field: "dateAdded",
@@ -109,19 +120,21 @@ const categories: Category[] = [
         icon: <CalendarPlus />,
         sorting_icons: numberSortingIcons,
         sorting_labels: {
-            ascending: "Vivaldi → Lucie Bílá",
-            descending: "Lucie Bílá → Vivaldi",
-        }
+            ascending: "Old → New",
+            descending: "New → Old",
+        },
+        defaultOrder: "descending"
     },
     {
         field: "range",
         title: "Range",
         icon: <Music />,
-        sorting_icons: numberSortingIcons,
+        sorting_icons: rangeSortingIcons,
         sorting_labels: {
-            ascending: "Me → Freddie",
-            descending: "Freddie → Me"
-        }
+            ascending: "XS → XXL",
+            descending: "XXL → XS"
+        },
+        defaultOrder: "ascending"
     },
 ];
 
@@ -141,6 +154,11 @@ const getActiveCategory = (sortingField: SortField): Category => {
     return category;
 };
 
+const getDefaultOrderForField = (field: SortField): SortOrder => {
+    const category = categories.find(cat => cat.field === field);
+    return category?.defaultOrder || "ascending";
+};
+
 const SortMenu = (): JSX.Element => {
     const { field: sortByField, order: sortOrder, setSortField, setSortOrder } = useSortSettingsStore();
 
@@ -150,6 +168,14 @@ const SortMenu = (): JSX.Element => {
     }));
 
     const activeCategory = getActiveCategory(sortByField);
+
+    // Handle field change with smart default order
+    const handleFieldChange = (newField: SortField) => {
+        if (newField !== sortByField) {
+            setSortField(newField);
+            setSortOrder(getDefaultOrderForField(newField));
+        }
+    };
 
     return (
         <>
@@ -173,7 +199,7 @@ const SortMenu = (): JSX.Element => {
                                 key={category.field}
                                 onSelect={(e) => e.preventDefault()}
                                 checked={isActive(sortByField, category.field)}
-                                onCheckedChange={() => setSortField(category.field)}
+                                onCheckedChange={() => handleFieldChange(category.field)}
                             >
                                 <DropdownIconStart icon={category.icon} />
                                 {category.title}
@@ -202,7 +228,7 @@ const SortMenu = (): JSX.Element => {
             <div className="hidden md:flex h-full w-fit">
                 <FancySwitch
                     options={switchOptions}
-                    setSelectedOption={setSortField}
+                    setSelectedOption={handleFieldChange}
                     selectedOption={sortByField}
                     roundedClass="rounded-l-full"
                 >
