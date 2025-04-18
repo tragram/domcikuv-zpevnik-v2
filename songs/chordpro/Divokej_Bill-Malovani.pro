@@ -5,14 +5,14 @@
 {capo: 0}
 {key: Em}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-e2}
+{start_melody: e e e g e}
 {prompt_id: v2}
 
 {start_of_verse}
 [Emi]Nesnaž se, znáš se, [C]řekni mi [D]co je jiný,
 jak v kleci máš [C]se [D]pro nevinný
-noci dlouhý [C]jsou plný [D]touhy a [Emi]lásky nás dvou
+[Emi]noci dlouhý [C]jsou plný [D]touhy a [Emi]lásky nás dvou
 {end_of_verse}
 
 {start_of_bridge}

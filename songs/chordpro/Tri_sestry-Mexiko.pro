@@ -2,11 +2,11 @@
 {artist: Tři sestry}
 {date_added: 04-2025}
 {language: czech}
-{capo: 0}
+{capo: 5}
 {key: Am}
 {tempo: }
-{range: }
-{start_melody: }
+{range: h1-g1}
+{start_melody: e}
 {prompt_id: v2}
 
 {start_of_verse}
@@ -14,9 +14,9 @@
 Je horko tak to si
 Na hlavu nasadím sombrero [G]grande [As]
 
-Viva Zapata
+[Ami]Viva Zapata
 Mě hoří za pata-
-ma mám v Porto Pueblo rande
+ma mám v Porto Pueblo [G]rande [As]
 {end_of_verse}
 
 {start_of_verse}
