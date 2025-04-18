@@ -31,7 +31,7 @@ A song shall have the following preamble (tempo may be left empty - it's current
 To exclude a file from the database, simply insert `{disabled: true}` in the preamble.
 
 #### Song range
-The behavior of the range is parameter can feel a bit strange. The numbers don't mean the traditional octaves as you might expect but are rather relative to the lower note (which is typically a '1'). For example, transposing "c1-d2" (14 semitones) down by one semitone yields "h1-c#2". I know this is confusing but it's been like this in my songbook for many years and did not feel like changing this part too. Maybe in the future. :-)
+The behavior of the range parameter can feel a bit strange. The numbers don't mean the traditional octaves as you might expect but are rather relative to the lower note (which is typically a '1'). For example, transposing "c1-d2" (14 semitones) down by one semitone yields "h1-c#2". I know this is confusing but it's been like this in my songbook for many years and did not feel like changing this part too. Maybe in the future. :-)
 
 You can also include an additional voice with a backslash, such as "c1/e1-d2/c3". Currently, the range is determined by the first voice. The regex against which it will be matched is `([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?-([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?`. [Here's the railroad diagram](https://regexper.com/#%28%5BA-Ha-h%5D%5B%23b%5D%7B0%2C2%7D%29%28%5B1-9%5D%29%28%3F%3A%5C%2F%28%5BA-Ha-h%5D%5B%23b%5D%7B0%2C2%7D%29%28%5B1-9%5D%29%29%3F-%28%5BA-Ha-h%5D%5B%23b%5D%7B0%2C2%7D%29%28%5B1-9%5D%29%28%3F%3A%5C%2F%28%5BA-Ha-h%5D%5B%23b%5D%7B0%2C2%7D%29%28%5B1-9%5D%29%29%3F) if you're interested. :-)
 
@@ -79,7 +79,7 @@ Since it's 2024, I decided to use AI for tasks other than helping me code this t
 
 Because the songs have lyrics in many languages, it is currently (October 2024) necessary to use GPT-4o to generate the prompt based on the lyrics, as it has by far the best multilingual capabilities for tiny languages like Czech, Slovak, Finnish or Estonian. By default, the script uses GPT-4o-mini which still provides very satisfactory results (you can see for yourself in `songs/image_prompts`) at a fraction of the cost (around 0.01USD/50 songs).
 
-Generating the prompt in English allows us to use any "old image" generation network. Because DALL-E 3 is pretty expensive (0.040-0.080$/image) and can only generate images that are 1024×1024 (which is too large/detailed for the thumbnails), I decided to just use the free [Hugging Face](https://huggingface.co/) API. In particular, I landed on the [FLUX.1-dev](https://huggingface.co/black-forest-labs/FLUX.1-dev) model for most of the illustrations. 
+Generating the prompt in English allows us to use "any old" image generation network. Because DALL-E 3 is pretty expensive (0.040-0.080$/image) and can only generate images that are 1024×1024 (which is too large/detailed for the thumbnails), I decided to just use the free [Hugging Face](https://huggingface.co/) API. In particular, I landed on the [FLUX.1-dev](https://huggingface.co/black-forest-labs/FLUX.1-dev) model for most of the illustrations. 
 
 To generate prompts and images, you need to provide your own `secrets.yaml` file with your API keys in the following format:
 ```yaml
@@ -143,7 +143,6 @@ This is done via Selenium again, so expect it to take a while. Also, do not expe
 
 ## Tech
 Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) and (heavily modified) [shadcn](https://ui.shadcn.com/) and uses (mainly) the following libraries:
-* [react-window](https://github.com/bvaughn/react-window): optimized scrolling and load for the list of songs
 * [Lucide](https://lucide.dev/): icons
 * [chordpro-parser](https://github.com/chordproject/chorpro-parser/): parsing Chordpro in JS
 * [Fuse.js](https://www.fusejs.io/): fuzzy search
