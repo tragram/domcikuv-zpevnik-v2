@@ -482,7 +482,7 @@
     "startMelody": "f#",
     "chordproFile": "Chinaski-Dobrak_od_kosti.pro",
     "pdfFilenames": "['chinaski_dobrak_od_kosti-sken.pdf', 'chinaski_dobrak_od_kosti-comp.pdf']",
-    "contentHash": "631e0ba60d039dc3bd818d20cd04217dd26cdfa1",
+    "contentHash": "029efb7cebf438776695c81c3caf4acea8e2a941",
     "disabled": false
   },
   {
@@ -3668,7 +3668,7 @@
     "startMelody": "h g#",
     "chordproFile": "Miki_Ryvola-Tunel_jmenem_cas.pro",
     "pdfFilenames": "",
-    "contentHash": "5a878f412acb86ac4ba221af8a96e6b74448acc7",
+    "contentHash": "0cc497cb28f958a2ac40f7030d5847e6bdf12c0d",
     "disabled": false
   },
   {
@@ -3884,7 +3884,7 @@
     "startMelody": "h",
     "chordproFile": "Nerez-Ja_s_tebou_zit_nebudu.pro",
     "pdfFilenames": "['nerez_ja_s_tebou_zit_nebudu-sken.pdf', 'nerez_ja_s_tebou_zit_nebudu-comp.pdf']",
-    "contentHash": "c4a3d5658d781663450cd0a24ba41c4ae641777d",
+    "contentHash": "79e10f6b742e8a9e338c1808faf74f489cba28a5",
     "disabled": false
   },
   {

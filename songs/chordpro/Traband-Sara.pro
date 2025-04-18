@@ -52,8 +52,8 @@ teď [C]hraju o tvé [G]srdce a chci [C]mít tě nado[D]sah!
 {start_of_chorus}
 [Emi]Sáro, [Hmi]Sáro, [C]pomalu a [G]líně
 [C]s hlavou na tvém [G]klíně [C]chci se probou[D]zet
-[C]Sáro, Sáro, [G]Sáro, [C]rosa padá [G]ráno
+[Emi]Sáro, Sáro, [Hmi]Sáro, Sáro, [C]rosa padá [G]ráno
 a [C]v poledne už [G]možná [C]bude jiný [D]svět
-[C]Sáro, [G]Sáro, [C]vstávej, milá [G]Sáro!
+[Emi]Sáro, [Hmi]Sáro, [C]vstávej, milá [G]Sáro!
 [C]Andělé k nám [Ami]přišli na [Gmaj7]oběd
 {end_of_chorus}
