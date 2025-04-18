@@ -8,8 +8,8 @@
 {capo: 0}
 {key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: c1-h1}
+{start_melody: g}
 
 {start_of_verse: Intro}
 [G5]Přišla bída, mor a hlad
@@ -28,10 +28,10 @@ Nechtěl bych bejt v jejich kůži
 {start_of_verse}
 [D]Nám je to jedno
 [C]A tak si dáme jedno
-[D]A vožerem si huby jako v[C]poslední den
+[D]A vožerem si huby jako v[C]poslední [D]den
 [D]Budem se bavit
 [C]A do rána slavit
-[D]A tak vyval sudy a [C]posaď se mi sem
+[D]A tak vyval sudy a [C]posaď se mi [D]sem
 {end_of_verse}
 
 {start_of_chorus}
