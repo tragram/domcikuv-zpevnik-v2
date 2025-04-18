@@ -30,12 +30,14 @@
 
 {start_of_verse}
 [Emi]Zejtra tě potkám za svým [F#7]stínem,
-[H7]neznámí známí v tramvaj[Emi]i, [Gdim][H7]
+[H7]neznámí známí v tramva[Emi]ji, [Gdim][H7]
 [Emi]v cukrárně kávu s harle[F#7]kýnem,
 [H7]hořká a sladká splýva[Emi]jí. [Gdim][H7]
 {end_of_verse}
 
 {chorus}
+
+{bridge}
 
 {start_of_verse}
 [Emi]Bylas' jak poslední hlt [F#7]vína,
@@ -44,11 +46,14 @@
 [H7]a trapný průchod bana[Emi]lit. [Gdim][H7]
 {end_of_verse}
 
+{start_of_variant: replace_first_line}
+[G]Co my tři z lásky vlastně [H7]máme,
+{end_of_variant}
 {chorus}
 
 {bridge}
 
 {start_of_chorus}
-[Emi]navrch má vždycky těžký [F#7]kámen
-[H7]a my jsme v koncích čím dál [Emi]blíž. [Gdim][H7]
+𝄆 [Emi]Navrch má vždycky těžký [F#7]kámen
+[H7]a my jsme v koncích čím dál [Emi]blíž. [Gdim][H7] 𝄇
 {end_of_chorus}

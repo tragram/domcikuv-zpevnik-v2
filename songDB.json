@@ -482,7 +482,7 @@
     "startMelody": "f#",
     "chordproFile": "Chinaski-Dobrak_od_kosti.pro",
     "pdfFilenames": "['chinaski_dobrak_od_kosti-sken.pdf', 'chinaski_dobrak_od_kosti-comp.pdf']",
-    "contentHash": "8d8c0f654dc0dcf824555c5da536ed5ec63045ff",
+    "contentHash": "b38f4306467fb9cd2b05564e36a0d3ef0a79b851",
     "disabled": false
   },
   {
@@ -3668,7 +3668,7 @@
     "startMelody": "h g#",
     "chordproFile": "Miki_Ryvola-Tunel_jmenem_cas.pro",
     "pdfFilenames": "",
-    "contentHash": "aa935cf03e322bcad1fdb8618e42f86c09efacf2",
+    "contentHash": "a5bfbcfe2e71b48f051b34b519712c26cac68c11",
     "disabled": false
   },
   {
@@ -3884,7 +3884,7 @@
     "startMelody": "h",
     "chordproFile": "Nerez-Ja_s_tebou_zit_nebudu.pro",
     "pdfFilenames": "['nerez_ja_s_tebou_zit_nebudu-sken.pdf', 'nerez_ja_s_tebou_zit_nebudu-comp.pdf']",
-    "contentHash": "571f1bd0fa4addbf8c23cc51670dc142509ba97e",
+    "contentHash": "18074683ca033df6b6fa9ad096e380dc124bab5f",
     "disabled": false
   },
   {
@@ -5288,7 +5288,7 @@
     "startMelody": "",
     "chordproFile": "Traband-Sara.pro",
     "pdfFilenames": "['traband_sara-sken.pdf', 'traband_sara-comp.pdf']",
-    "contentHash": "da29f1a3410631798412b5a5662867601517aac2",
+    "contentHash": "02f304260ebf31db63851a86d10d152afad84dfb",
     "disabled": false
   },
   {

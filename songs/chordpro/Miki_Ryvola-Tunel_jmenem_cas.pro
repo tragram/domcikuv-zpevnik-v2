@@ -15,7 +15,7 @@ těch [Am]asi už se [E]nezbavíš
 A [E]hvězdy žhavejch [G#m]uhlíků
 ti [E7]nikdy nedaj [A]spát,
 tvá [Am]dráha míří [E]k tunelu
-a [Fmaj7]tunel ten má [E]hlad.[E]
+a [Esusb6(b9)]tunel ten má [E]hlad.[E]
 {end_of_verse}
 
 {start_of_verse}
@@ -27,7 +27,7 @@ do [F#]vozů naklá[H7]dat.
 Proč [E]vlaky, co si [G#m]každou
 noc pod [E7]voknem laděj [A]hlas,
 po[Am]lyká díra [E]kamenná
-[Fmaj7]tunel jménem [E]čas.
+[Esusb6(b9)]tunel jménem [E]čas.
 {end_of_verse}
 
 {start_of_verse}
@@ -39,7 +39,7 @@ a [F#]slova bláho[H7]vý.
 A [E]po kolejích [G#m]zmizela
 a [E7]spadla za ní [A]klec,
 co [Am]bez tebe žít [E]nechtěla
-a [Fmaj7]žila nako[E]nec.[E]
+a [Esusb6(b9)]žila nako[E]nec.[E]
 {end_of_verse}
 
 {start_of_verse}
@@ -51,7 +51,7 @@ a [F#]uplakanej [H7]smích
 A [E]písničky a [G#m]šťastný míle
 [E7]na tuláckej [A]pas
 už [Am]spolkla díra [E]kamenná
-[Fmaj7]tunel jménem[E]čas.
+[Esusb6(b9)]tunel jménem[E]čas.
 {end_of_verse}
 
 {start_of_verse}
@@ -62,7 +62,7 @@ ten [F#]tunel zava[H7]lí.
 A [E]veksl zpátky [G#m]přehodí
 v tý [E7]chvíli ako[A]rát,
 i [Am]kapela se [E]probudí
-a [Fmaj7]začne zase [E]hrát.[E]
+a [Esusb6(b9)]začne zase [E]hrát.[E]
 {end_of_verse}
 
 {start_of_verse}
@@ -74,5 +74,5 @@ mi[Am]nér svou práci [E]nestačí dřív,
 Ten [E]konec moh' bejt [G#m]veselej,
 jen [E7]nemít tenhle [A]kaz,
 tu [Am]černou díru [E]kamennou
-[Fmaj7]tunel jménem [E]čas.[Fmaj7][E]
+[Esusb6(b9)]tunel jménem [E]čas.[Esusb6(b9)][E]
 {end_of_verse}

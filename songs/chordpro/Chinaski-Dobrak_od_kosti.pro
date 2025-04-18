@@ -18,9 +18,9 @@
 
 {start_of_verse}
 [D]Jsi budoucí [A]krev v mojí [G]posteli
-[D]Jsem ten, kdo tě [A]jednou jisto[G]jistě zastřelí[D]
+[D]Jsem ten, kdo tě [A]jednou jisto[G]jistě zastřelí[C]
 [D]Jsem ten, kdo ty [A]tvoje krásný oči jednou [G]zatlačí
-[D]jsi moje všec[A]hno a mě to [G]nestačí
+[D]jsi moje [A]všechno a mě to [G]nestačí
 {end_of_verse}
 
 {start_of_chorus}
@@ -31,16 +31,16 @@ jak [A]jsi hebká na dotek, [G]krásná a nedospělá
 {end_of_chorus}
 
 {start_of_verse}
-[D]Víš,všechno [A]má aspoň [G]malý kaz
-[D]jsem ten, kdo ti [A]jednou [G]zlomí vaz [D]
+[D]Víš, [A]všechno má aspoň [G]malý kaz
+[D]jsem ten, kdo ti [A]jednou [G]zlomí vaz [C]
 [D]Má milá vždyť [A]mě znáš jsem dobrák [G]od kosti
-[D]a ty jsi ta co [A]mi to jednou všec[G]hno odpustí
+[D]a ty jsi ta co [A]mi to jednou [G]všechno odpustí
 {end_of_verse}
 
 {start_of_bridge}
 [D]Sejde z očí sejde z mysli
 jenom [A]blázen věří na nesmysly
-[A7]láska je čaroděj a ticho prý léčí,
+[G7]láska je čaroděj a ticho prý léčí,
 ale zákon hovoří jasnou řečí
 {end_of_bridge}
 
@@ -48,5 +48,5 @@ ale zákon hovoří jasnou řečí
 
 {start_of_verse}
 [D]Má milá jak [A]ti je, tak jak [G]ti je?
-[D]Jsem ten, kdo [A]jednou tvý tělo [G]zakryje. [G]
+[D]Jsem ten, kdo [A]jednou tvý tělo [G]zakryje.
 {end_of_verse}
