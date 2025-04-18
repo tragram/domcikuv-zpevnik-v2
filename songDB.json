@@ -828,6 +828,24 @@
     "disabled": false
   },
   {
+    "title": "Ještě jedno kafe",
+    "artist": "Druhá tráva",
+    "key": "Am",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Druha_trava-Jeste_jedno_kafe.pro",
+    "pdfFilenames": "",
+    "contentHash": "db286dac6b4c8f50fb250ae671b1c2a2224cb0a9",
+    "disabled": false
+  },
+  {
     "title": "No quiero ser normal",
     "artist": "El Cuarteto de Nos",
     "key": "D",
@@ -3884,7 +3902,7 @@
     "startMelody": "h",
     "chordproFile": "Nerez-Ja_s_tebou_zit_nebudu.pro",
     "pdfFilenames": "['nerez_ja_s_tebou_zit_nebudu-sken.pdf', 'nerez_ja_s_tebou_zit_nebudu-comp.pdf']",
-    "contentHash": "18074683ca033df6b6fa9ad096e380dc124bab5f",
+    "contentHash": "32d4b727b2a32fd74c58ef2700b19b9fb92e1963",
     "disabled": false
   },
   {

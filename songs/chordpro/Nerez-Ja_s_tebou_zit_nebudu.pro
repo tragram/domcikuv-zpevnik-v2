@@ -55,5 +55,5 @@
 
 {start_of_chorus}
 𝄆 [Emi]Navrch má vždycky těžký [F#7]kámen
-[H7]a my jsme v koncích čím dál [Emi]blíž. [Gdim][H7] 𝄇
+[H7]a my jsme v koncích čím dál [Emi]blíž. [Gdim][H7]𝄇
 {end_of_chorus}
