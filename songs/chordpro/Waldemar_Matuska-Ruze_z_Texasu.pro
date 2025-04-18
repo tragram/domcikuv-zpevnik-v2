@@ -5,8 +5,8 @@
 {capo: 0}
 {key: C}
 {tempo: }
-{range: }
-{start_melody: }
+{range: a1-a2}
+{start_melody: c g}
 {prompt_id: v2}
 
 {start_of_verse}
@@ -17,7 +17,7 @@ znám plno hezkejch [A7]ženskejch k světu, ale [Dmi]tahle [G7]hraje [C]prim. [
 {end_of_verse}
 
 {start_of_chorus}
-Kdo si kaz[F]íš smysl pro krásu, ať s [C]tou a nebo s tou,
+Kdo si [F]kazí smysl pro krásu, ať s [C]tou a nebo s tou,
 dej si říct, že kromě [Ami]Texasu, tyhle [D7]růže neros[G7]tou.
 Ať máš [C]kolťák nízko [C7]u pasu, ať jsi [F]třeba zloděj [C]stád,
 tyhle žlutý růže z [A7]Texasu budeš [Dmi]pořád [G7]mít už [C]rád.

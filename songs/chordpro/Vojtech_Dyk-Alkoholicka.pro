@@ -5,8 +5,8 @@
 {capo: 0}
 {key: Am}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-f2}
+{start_melody: e c d h}
 {prompt_id: v2}
 
 {start_of_chorus}
@@ -39,7 +39,7 @@ punč a grog a pivo a [Am]rum
 [Am]radši dám všechny svý [E7]zisky
 [E7]za jednu dvojitou [Am]whisky
 [Am]radší dám celej svůj [E7]dům
-[E7]za jeden trojtej [Am]rum
+[E7]za jeden trojitej [Am]rum
 [Am]pak prodám použitý [E7]zátky
 [E7]koupím si slivku na [Am]splátky
 {end_of_verse}

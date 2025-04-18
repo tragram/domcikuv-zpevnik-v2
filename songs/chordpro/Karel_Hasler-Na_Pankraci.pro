@@ -5,8 +5,8 @@
 {capo: 0}
 {key: G}
 {tempo: }
-{range: }
-{start_melody: }
+{range: e1-d1}
+{start_melody: g g f e}
 {prompt_id: v2}
 
 
