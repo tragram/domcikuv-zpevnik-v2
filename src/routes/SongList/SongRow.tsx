@@ -20,7 +20,7 @@ interface VocalRangeIndicatorProps {
 }
 
 const VocalRangeIndicator = memo(({ songRangeSemitones, maxRange }: VocalRangeIndicatorProps) => (
-    songRangeSemitones ? <CircularProgress value={songRangeSemitones || maxRange} maxValue={maxRange} /> : <></>
+    songRangeSemitones ? <CircularProgress value={songRangeSemitones || maxRange} maxValue={maxRange} /> : <div><CircularProgress value={songRangeSemitones || maxRange} maxValue={maxRange} /></div >
 ));
 
 
@@ -54,7 +54,7 @@ interface SongInfoProps {
 }
 
 const SongInfo = memo(({ title, artist }: SongInfoProps) => (
-    <div className="flex-auto min-w-40 flex-col text-left content-center">
+    <div className="flex-auto basis-1/2 min-w-40 flex-col text-left content-center">
         <h2 className="text-sm font-bold truncate song-title">{title}</h2>
         <h3 className="text-sm opacity-50 truncate song-artist">{artist}</h3>
     </div>
@@ -88,8 +88,7 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
                         song={song}
                     />
                     <Link to={song.url()} className="flex relative h-12 song-row w-full backdrop-blur-lg bg-glass/60 hover:bg-glass/90 rounded-full">
-                        <div className="flex basis-[12%] min-w-[72px] rounded-l-full content-center justify-center relative" />
-
+                        <div className="flex min-w-[72px] rounded-l-full content-center justify-center relative" />
                         <SongInfo title={song.title} artist={song.artist} />
 
                         <DateDisplay
