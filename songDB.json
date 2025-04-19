@@ -1663,14 +1663,14 @@
     "dateAdded": "04-2025",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-d2",
     "prompt_model": "",
     "prompt_id": "v2",
     "image_model": "",
-    "startMelody": "",
+    "startMelody": "h h a h",
     "chordproFile": "Ivan_Mladek-Zkratky.pro",
     "pdfFilenames": "",
-    "contentHash": "9838abf25a291f845a5f64c59d3dd556aa4b96a8",
+    "contentHash": "6aa584d644ba23380af59733406b98b12720878f",
     "disabled": false
   },
   {
