@@ -4914,6 +4914,24 @@
     "disabled": false
   },
   {
+    "title": "Krávokluk",
+    "artist": "Hitmaker Šrája and his fabulous Šmitcový kvartet",
+    "key": "E",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Smitcovy_kvartet-Kravokluk.pro",
+    "pdfFilenames": "",
+    "contentHash": "c34242d90338f9bdfe3e1ab675f5e0e97309f76b",
+    "disabled": false
+  },
+  {
     "title": "Batalion",
     "artist": "Spirituál kvintet",
     "key": "Am",
