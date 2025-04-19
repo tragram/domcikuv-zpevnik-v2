@@ -4,6 +4,7 @@
 {language: czech}
 {capo: 0}
 {key: E}
+{prompt_id: v2}
 
 {start_of_chorus}
 Cesta [E]trpaslíka někdy [G]dlouhá,

@@ -1386,6 +1386,24 @@
     "disabled": false
   },
   {
+    "title": "Cesta trpaslíka",
+    "artist": "Hitmaker Šrája and his fabulous Šmitcový kvartet",
+    "key": "E",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika.pro",
+    "pdfFilenames": "",
+    "contentHash": "4d17fd79dc20939b58b9fa7238dec3d04f85b426",
+    "disabled": false
+  },
+  {
     "title": "Krávokluk",
     "artist": "Hitmaker Šrája and his fabulous Šmitcový kvartet",
     "key": "E",
@@ -1400,7 +1418,7 @@
     "startMelody": "",
     "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Kravokluk.pro",
     "pdfFilenames": "",
-    "contentHash": "d504b05fb342d341c5eeec8ca7739de9f281ce41",
+    "contentHash": "7456b164861ad6fbaf57b710839d50b0081e860c",
     "disabled": false
   },
   {

@@ -36,12 +36,7 @@ Připa[G]dám si jak ve westernu
 Opilej[D]kauboj, kau[E]boj nananana
 {end_of_verse}
 
-{start_of_chorus}
-[E]Jó, je to [G]boj
-[D]Bejt dneska kau[E]boj nananana
-[E]Jó, je to [G]boj
-[D]Bejt kau[E]boj
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 Já [E]mívám fakt skvělej nápad
@@ -55,9 +50,7 @@ Zas[G]jdu pomáhat manželce
 Loupat[D]brambor...kau[E]boj nananana
 {end_of_verse}
 
-{start_of_chorus}
-[E]Jó, je to [G]boj
-[D]Bejt dneska kau[E]boj nananana
-[E]Jó, je to [G]boj
+{start_of_variant: replace_last_line}
 [D]Béééééééééjt kau[E]boj
-{end_of_chorus}
+{end_of_variant}
+{chorus}
