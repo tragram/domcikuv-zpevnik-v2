@@ -4,6 +4,7 @@
 {language: czech}
 {capo: 0}
 {key: Ami}
+{prompt_id: v2}
 
 {start_of_verse}
 [Ami]Dneska už mi [C]fóry ńák [Ami]nejdou přes py[E]sky,

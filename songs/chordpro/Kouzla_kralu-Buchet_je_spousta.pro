@@ -4,6 +4,7 @@
 {language: czech}
 {capo: 0}
 {key: C}
+{prompt_id: v2}
 
 {start_of_verse}
 [C]Z pekárny světa kraj za [F]láskou [G]svou,

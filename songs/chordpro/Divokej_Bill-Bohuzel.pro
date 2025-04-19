@@ -4,6 +4,7 @@
 {language: czech}
 {capo: 0}
 {key: A}
+{prompt_id: v2}
 
 {start_of_verse}
 [A]Jsou prokle[E]tý u[D]psali duši [A]ďáblu

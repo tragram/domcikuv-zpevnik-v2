@@ -4,6 +4,7 @@
 {language: czech}
 {capo: 0}
 {key: Ami}
+{prompt_id: v2}
 
 {start_of_verse}
 [Ami]Bylo nebylo, kde se to tu vzalo,
