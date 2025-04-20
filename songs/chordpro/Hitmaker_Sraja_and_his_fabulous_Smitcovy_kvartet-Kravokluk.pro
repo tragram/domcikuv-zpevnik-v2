@@ -5,6 +5,9 @@
 {capo: 0}
 {key: E}
 {prompt_id: v2}
+{range: }
+{tempo: }
+
 {start_of_verse}
 Já[E]nosim stetson koženej
 Drs[G]ně do čela vraženej

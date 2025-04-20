@@ -5,6 +5,8 @@
 {capo: 0}
 {key: Ami}
 {prompt_id: v2}
+{range: }
+{tempo: }
 
 {start_of_verse}
 [Ami]Dneska už mi [C]fóry ńák [Ami]nejdou přes py[E]sky,
@@ -27,12 +29,7 @@ tak [A]kopni do tý [D]bedny, ať [E]na cestu se [A]dám. [Ami]
 [Ami]chlastal bych tam [C]s Bilem a [Ami]chlastal [E]by tam [Ami]Ben. [A]
 {end_of_verse}
 
-{start_of_chorus}
-Tak [A]kopni do tý [D]bedny, ať [E]panstvo neče[A]ká,
-jsou [A]dlouhý schody [D]do nebe a [E]štreka dale[A]ká.
-Do [A]nebeskýho [D]baru, já [E]sucho v krku [A]mám,
-tak [A]kopni do tý [D]bedny, ať [E]na cestu se [A]dám. [Ami]
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Ami]Kdyby jsi se [C]hochu jen [Ami]pořád nechtěl [E]rvát,
@@ -41,12 +38,7 @@ tak [A]kopni do tý [D]bedny, ať [E]na cestu se [A]dám. [Ami]
 [Ami]nemusel jsi [C]dneska na [Ami]krku [E]laso [Ami]mít. [A]
 {end_of_verse}
 
-{start_of_chorus}
-Tak [A]kopni do tý [D]bedny, ať [E]panstvo neče[A]ká,
-jsou [A]dlouhý schody [D]do nebe a [E]štreka dale[A]ká.
-Do [A]nebeskýho [D]baru, já [E]sucho v krku [A]mám,
-tak [A]kopni do tý [D]bedny, ať [E]na cestu se [A]dám. [Ami]
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Ami]Když jsem štípnul [C]koně a [Ami]ujel jen pár [E]mil,
@@ -55,12 +47,7 @@ tak [A]kopni do tý [D]bedny, ať [E]na cestu se [A]dám. [Ami]
 [Ami]když kůň cucá [C]whisku jak [Ami]u po[E]toka [Ami]mech. [A]
 {end_of_verse}
 
-{start_of_chorus}
-Tak [A]kopni do tý [D]bedny, ať [E]panstvo neče[A]ká,
-jsou [A]dlouhý schody [D]do nebe a [E]štreka dale[A]ká.
-Do [A]nebeskýho [D]baru, já [E]sucho v krku [A]mám,
-tak [A]kopni do tý [D]bedny, ať [E]na cestu se [A]dám. [Ami]
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Ami]Až kopneš do tý [C]bedny, jak [Ami]se to dělá[E]vá,
@@ -69,9 +56,7 @@ tak [A]kopni do tý [D]bedny, ať [E]na cestu se [A]dám. [Ami]
 [Ami]má to smutnej [C]konec a [Ami]whisky [E]ani [Ami]lok. [A]
 {end_of_verse}
 
-{start_of_chorus}
-Tak [A]kopni do tý [D]bedny, ať [E]panstvo neče[A]ká,
-jsou [A]dlouhý schody [D]do nebe a [E]štreka dale[A]ká.
-Do [A]nebeskýho [D]baru, já [E]sucho v krku [A]mám,
+{start_of_variant: replace_last_line}
 tak [A]kopni do tý [D]bedny... A blbec zpívá dál!
-{end_of_chorus}
+{end_of_variant}
+{chorus}

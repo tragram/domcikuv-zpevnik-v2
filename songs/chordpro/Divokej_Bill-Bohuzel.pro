@@ -5,6 +5,8 @@
 {capo: 0}
 {key: A}
 {prompt_id: v2}
+{range: }
+{tempo: }
 
 {start_of_verse}
 [A]Jsou prokle[E]tý u[D]psali duši [A]ďáblu
@@ -24,9 +26,7 @@
 já je[D]dinou jistotu [A]mám totiž že [E]ke dnu nepůjdu [A]sám
 {end_of_verse}
 
-{start_of_chorus}
-[D]Ale už si [A]bohužel [E]nepomů[A]žou
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [A]Převozník na [E]řece to se [D]přece může [A]stát
@@ -35,6 +35,4 @@ pak [A]potřebuješ [E]přes vodu na [D]cestě dale[A]ký
 [D]usneš chla[A]pík vyskočí a [E]jsi tu na vě[A]ky
 {end_of_verse}
 
-{start_of_chorus}
-[D]Ale už si [A]bohužel [E]nepomů[A]žou
-{end_of_chorus}
+{chorus}

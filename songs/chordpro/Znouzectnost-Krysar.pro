@@ -5,6 +5,10 @@
 {capo: 0}
 {key: Ami}
 {prompt_id: v2}
+{range: }
+{tempo: }
+
+{comment: Začít pomalu zlehka a postupně zrychlovat a gradovat.}
 
 {start_of_verse}
 [Ami]Bylo nebylo, kde se to tu vzalo,
@@ -32,10 +36,7 @@ a [G]tou kouzelnou muzikou [F]štěstí rozdá[Ami]vali.
 [G]atmosféra, kdo tam nebyl [F]nevěřil by tomu.
 {end_of_verse}
 
-{start_of_chorus}
-[Ami]Bylo nebylo, bylo nebylo, [G]bylo nebylo, [F]bylo neby[Ami]lo.
-Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Ami]Bylo nebylo, uplynul nějakej čas
@@ -44,10 +45,7 @@ a [G]plakáty na nároží [F]visely tu [Ami]zas.
 [G]bez rozdílu názorů zas [F]to kouzlo pro[Ami]žít.
 {end_of_verse}
 
-{start_of_chorus}
-[Ami]Bylo nebylo, bylo nebylo, [G]bylo nebylo, [F]bylo neby[Ami]lo.
-Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Ami]Bylo nebylo, prošli divný zprávy,
@@ -56,10 +54,7 @@ Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
 [G]a na radnici krysaře zvou [F]si páni rad[Ami]ní.
 {end_of_verse}
 
-{start_of_chorus}
-[Ami]Bylo nebylo, bylo nebylo, [G]bylo nebylo, [F]bylo neby[Ami]lo.
-Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Ami]Bylo nebylo, řekli: "To by teda nešlo,
@@ -68,10 +63,7 @@ Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
 [G]my jsme tady vod toho, [F]jejich mysl [Ami]chránit."
 {end_of_verse}
 
-{start_of_chorus}
-[Ami]Bylo nebylo, bylo nebylo, [G]bylo nebylo, [F]bylo neby[Ami]lo.
-Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
-{end_of_chorus}
+{chorus}
 
 {start_of_verse}
 [Ami]Bylo nebylo, tak, jak v té pohádce,
@@ -80,7 +72,4 @@ Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
 [G]a hodně dlouho v tomhle městě [F]byl cítit vzduch [Ami]křivdou!
 {end_of_verse}
 
-{start_of_chorus}
-[Ami]Bylo nebylo, bylo nebylo, [G]bylo nebylo, [F]bylo neby[Ami]lo.
-Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
-{end_of_chorus}
+{chorus}

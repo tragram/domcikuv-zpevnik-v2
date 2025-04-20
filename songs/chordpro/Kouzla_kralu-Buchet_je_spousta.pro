@@ -5,6 +5,8 @@
 {capo: 0}
 {key: C}
 {prompt_id: v2}
+{range: }
+{tempo: }
 
 {start_of_verse}
 [C]Z pekárny světa kraj za [F]láskou [G]svou,
@@ -41,17 +43,11 @@ a [F]pevná jako [G]brány [C]trám.
 [F]starý král novému vždy [G]má jej dát.
 {end_of_verse}
 
-# TODO: tohle nějak označit jako bridge nebo takové to před refrénem prostě xD
-{start_of_chorus}
+{start_of_bridge}
 [C]Ta naše dvojice je [F]překvapi[G]vá,
 [Emi]a dle všech [Ami]známek [Dmi]pekárna - [G]zámek.
 [C]Je trasa která někdy [F]krátce tr[G]vá,
 a [F]já ji dobře [G]lásko [C]znám.
-{end_of_chorus}
+{end_of_bridge}
 
-{start_of_chorus}
-[C]Oslava veliká ať [F]už se chy[G]stá,
-[Emi]buchet je [Ami]spousta, [Dmi]lahodná [G]sousta.
-[C]Ať naše láska je vždy [F]stejně či[G]stá,
-a [F]pevná jako [G]brány [C]trám.
-{end_of_chorus}
+{chorus}
