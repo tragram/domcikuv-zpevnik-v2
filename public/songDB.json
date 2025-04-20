@@ -788,7 +788,7 @@
     "startMelody": "",
     "chordproFile": "Divokej_Bill-Bohuzel.pro",
     "pdfFilenames": "",
-    "contentHash": "c6223960101551b6322c27c2c4301b0ba7df389a",
+    "contentHash": "e79c95f431f523605b1c543227f6b7b084dd308a",
     "disabled": false
   },
   {
@@ -1400,7 +1400,7 @@
     "startMelody": "",
     "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika.pro",
     "pdfFilenames": "",
-    "contentHash": "4d17fd79dc20939b58b9fa7238dec3d04f85b426",
+    "contentHash": "16620279e0330b360e002970f855c9802c5cbd36",
     "disabled": false
   },
   {
@@ -1418,7 +1418,7 @@
     "startMelody": "",
     "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Kravokluk.pro",
     "pdfFilenames": "",
-    "contentHash": "7456b164861ad6fbaf57b710839d50b0081e860c",
+    "contentHash": "1fef1d922bd59f00fadaa21494086d130464a078",
     "disabled": false
   },
   {
@@ -1717,14 +1717,14 @@
     "dateAdded": "04-2025",
     "capo": "0",
     "tempo": "",
-    "range": "",
+    "range": "d1-d2",
     "prompt_model": "",
     "prompt_id": "v2",
     "image_model": "",
-    "startMelody": "",
+    "startMelody": "h h a h",
     "chordproFile": "Ivan_Mladek-Zkratky.pro",
     "pdfFilenames": "",
-    "contentHash": "c3dd170d12bbebc254da77f7d1d8220ef46b420a",
+    "contentHash": "96aa175d0c396769a3be379435ecb915e27e7eac",
     "disabled": false
   },
   {
@@ -2682,6 +2682,24 @@
     "disabled": false
   },
   {
+    "title": "Kozel",
+    "artist": "Karcoolka",
+    "key": "D",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Karcoolka-Kozel.pro",
+    "pdfFilenames": "",
+    "contentHash": "caf88891342c1ab5e7ca5873b799c8fe9f5b7b5c",
+    "disabled": false
+  },
+  {
     "title": "Die Biene Maja",
     "artist": "Karel Gott",
     "key": "D",
@@ -3128,7 +3146,7 @@
     "startMelody": "",
     "chordproFile": "Kouzla_kralu-Buchet_je_spousta.pro",
     "pdfFilenames": "",
-    "contentHash": "c944f5e7aae6b31d7ea63b0df535a55ba2c7cba7",
+    "contentHash": "6d82852be60d6f866b13819aaf9ea971ad9ae6ba",
     "disabled": false
   },
   {
@@ -3740,7 +3758,7 @@
     "startMelody": "",
     "chordproFile": "Miki_Ryvola-Bedna_od_whiskey.pro",
     "pdfFilenames": "",
-    "contentHash": "9c87a056e0383d94432d26ed522c96fe9e942d25",
+    "contentHash": "4110b5db0b2c2fc30461a9d96ad75a6fd6e0811c",
     "disabled": false
   },
   {
@@ -6260,7 +6278,7 @@
     "startMelody": "",
     "chordproFile": "Znouzectnost-Krysar.pro",
     "pdfFilenames": "",
-    "contentHash": "adc9829d27e6afca90d17c9c227204802c1db4b1",
+    "contentHash": "2b7bb738997c3b463855dcf4b8870983833a7c53",
     "disabled": false
   }
 ]
