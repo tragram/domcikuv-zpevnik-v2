@@ -2691,12 +2691,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "",
+    "prompt_id": "v2",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Karcoolka-Kozel.pro",
     "pdfFilenames": "",
-    "contentHash": "6f02a1df4072a5d8b4f0ed91b4c449de701b46ba",
+    "contentHash": "2967654261aa38a5baeab9770ad9e70520326144",
     "disabled": false
   },
   {
