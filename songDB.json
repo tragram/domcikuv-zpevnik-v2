@@ -774,6 +774,24 @@
     "disabled": false
   },
   {
+    "title": "Bohužel",
+    "artist": "Divokej Bill",
+    "key": "A",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Divokej_Bill-Bohuzel.pro",
+    "pdfFilenames": "",
+    "contentHash": "ca1f956b9fa89da2f01419a25edfa52ef73dcee3",
+    "disabled": false
+  },
+  {
     "title": "Malování",
     "artist": "Divokej Bill",
     "key": "Em",
@@ -842,7 +860,7 @@
     "startMelody": "a e d c",
     "chordproFile": "Druha_trava-Jeste_jedno_kafe.pro",
     "pdfFilenames": "",
-    "contentHash": "47c78538018fb4dcc3b334c4d372c5b325b4ecb2",
+    "contentHash": "1fb96f468b31a6812a507b24af9d6fc7bd5b89f4",
     "disabled": false
   },
   {
@@ -1365,6 +1383,42 @@
     "chordproFile": "Harlej-Svarak.pro",
     "pdfFilenames": "",
     "contentHash": "ce55412dacde4bfae61a295fb988441ff326e09d",
+    "disabled": false
+  },
+  {
+    "title": "Cesta trpaslíka",
+    "artist": "Hitmaker Šrája and his fabulous Šmitcový kvartet",
+    "key": "E",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika.pro",
+    "pdfFilenames": "",
+    "contentHash": "e3fcfabac549fccffbe7c2e4db367b1ba4b76584",
+    "disabled": false
+  },
+  {
+    "title": "Krávokluk",
+    "artist": "Hitmaker Šrája and his fabulous Šmitcový kvartet",
+    "key": "E",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Kravokluk.pro",
+    "pdfFilenames": "",
+    "contentHash": "432e71ba02958c61751afa6abb57a6ced679c078",
     "disabled": false
   },
   {
@@ -2628,6 +2682,24 @@
     "disabled": false
   },
   {
+    "title": "Kozel",
+    "artist": "Karcoolka",
+    "key": "D",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Karcoolka-Kozel.pro",
+    "pdfFilenames": "",
+    "contentHash": "6f02a1df4072a5d8b4f0ed91b4c449de701b46ba",
+    "disabled": false
+  },
+  {
     "title": "Die Biene Maja",
     "artist": "Karel Gott",
     "key": "D",
@@ -3057,6 +3129,24 @@
     "chordproFile": "Knaan-Wavin_flag.pro",
     "pdfFilenames": "[]",
     "contentHash": "9dd86c19f8358ea9a1e89ec684ae2ff2ffca30b5",
+    "disabled": false
+  },
+  {
+    "title": "Buchet je spousta",
+    "artist": "Kouzla králů",
+    "key": "C",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Kouzla_kralu-Buchet_je_spousta.pro",
+    "pdfFilenames": "",
+    "contentHash": "ef8f6712f7368f6d90da36c32af346a47c5b2017",
     "disabled": false
   },
   {
@@ -3651,6 +3741,24 @@
     "chordproFile": "Michal_Tucny-Prodavac.pro",
     "pdfFilenames": "['michal_tucny_prodavac-sken.pdf', 'michal_tucny_prodavac-comp.pdf']",
     "contentHash": "47bddf1cda4e08e7e7edb6ee7367a20d887b3ab8",
+    "disabled": false
+  },
+  {
+    "title": "Bedna od whiskey",
+    "artist": "Miki Ryvola",
+    "key": "Ami",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Miki_Ryvola-Bedna_od_whiskey.pro",
+    "pdfFilenames": "",
+    "contentHash": "ad98afeabc97fc8d0381bad0f9837850e98817d0",
     "disabled": false
   },
   {
@@ -4914,24 +5022,6 @@
     "disabled": false
   },
   {
-    "title": "Krávokluk",
-    "artist": "Hitmaker Šrája and his fabulous Šmitcový kvartet",
-    "key": "E",
-    "language": "czech",
-    "dateAdded": "04-2025",
-    "capo": "0",
-    "tempo": "",
-    "range": "",
-    "prompt_model": "",
-    "prompt_id": "",
-    "image_model": "",
-    "startMelody": "",
-    "chordproFile": "Smitcovy_kvartet-Kravokluk.pro",
-    "pdfFilenames": "",
-    "contentHash": "c34242d90338f9bdfe3e1ab675f5e0e97309f76b",
-    "disabled": false
-  },
-  {
     "title": "Batalion",
     "artist": "Spirituál kvintet",
     "key": "Am",
@@ -6171,6 +6261,24 @@
     "chordproFile": "Zluty_pes-Sametova.pro",
     "pdfFilenames": "['zluty_pes_sametova-sken.pdf', 'zluty_pes_sametova-comp.pdf']",
     "contentHash": "9ae600549d8528df1e8d49e7b3cbebc67fc2b5c8",
+    "disabled": false
+  },
+  {
+    "title": "Krysař",
+    "artist": "Znouzectnost",
+    "key": "Ami",
+    "language": "czech",
+    "dateAdded": "04-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "v2",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Znouzectnost-Krysar.pro",
+    "pdfFilenames": "",
+    "contentHash": "98996d5b378c65bf04596d61aa8839854a9bbe7a",
     "disabled": false
   }
 ]
