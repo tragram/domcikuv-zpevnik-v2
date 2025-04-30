@@ -63,8 +63,9 @@ function partVariation(originalLines: string[], variantType: validVariation, var
     }
 }
 
-export function replaceRepeatedDirectives(song: string, directives: string[] = ["chorus"], shortHands: string[] = ["R"], repeat: boolean = true): string {
-    // Takes care of replacing the shorthand directives ({chorus}) that aren't supported by the parsers by whatever's appropriate. Supports custom extensions to the ChordPro format as defined in the README.md file.
+export function replaceRepeatedDirectives(song: string, directives: string[] = ["chorus"], shortHands: string[] = ["R"]): string {
+    // Takes care of adding the shorthand directives (e.g. {chorus}) by whatever's appropriate. 
+    // Supports custom extensions to the ChordPro format as defined in the README.md file.
     if (directives.length !== shortHands.length) {
         throw new Error("Directives and shortHands must be the same length.");
     }
@@ -148,7 +149,7 @@ export function replaceRepeatedDirectives(song: string, directives: string[] = [
                 let contentToInsert = directiveMaps[directive][directiveKey];
                 const repeatKey = `${directiveKey === defaultKey ? '' : `${directiveKey}:`}`
                 if (currentVariationContent) {
-                    contentToInsert = partVariation(contentToInsert, currentVariationType, currentVariationContent, repeat, repeatKey,);
+                    contentToInsert = partVariation(contentToInsert, currentVariationType, currentVariationContent, false, repeatKey,);
                     currentVariationType = null;
                     currentVariationContent = null;
                 } else if (!repeat) {
