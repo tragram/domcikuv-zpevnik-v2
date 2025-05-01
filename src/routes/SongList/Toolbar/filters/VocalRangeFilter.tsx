@@ -30,6 +30,15 @@ const VocalRangeSlider = ({
 }: VocalRangeSliderProps): JSX.Element => {
     const currentValue = vocalRangeFilter === "all" ? [0, maxRange] : vocalRangeFilter;
 
+    const setValue = (value: number[]) => {
+        console.log(value)
+        if (value[0] === 0 && value[1] === maxRange) {
+            setVocalRangeFilter("all");
+        } else {
+            setVocalRangeFilter(value as [number, number]);
+        }
+    }
+
     return (
         <RangeSlider
             label="Semitones"
@@ -39,7 +48,7 @@ const VocalRangeSlider = ({
             defaultValue={currentValue}
             value={currentValue}
             className="max-w-md"
-            onValueChange={(value) => setVocalRangeFilter(value as [number, number])}
+            onValueChange={value => setValue(value)}
         />
     );
 };
@@ -55,6 +64,7 @@ export const VocalRangeFilter = ({
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="circular"
+                    isActive={vocalRangeFilter !== "all"}
                     className="shadow-none outline-0 font-bold rounded-l-none"
                 >
                     <Music />
