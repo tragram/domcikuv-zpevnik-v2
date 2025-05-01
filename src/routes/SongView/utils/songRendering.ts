@@ -1,6 +1,6 @@
 import { SongData } from '../../../types/types';
 import { ChordProParser, FormatterSettings, HtmlFormatter } from "chordproject-parser";
-import { czechToEnglish, replaceRepeatedDirectives, transposeChordPro } from './preparseChordpro';
+import { czechToEnglish, preparseDirectives, transposeChordPro } from './preparseChordpro';
 import memoize from 'memoize-one';
 import { Key } from '@/types/musicTypes';
 
@@ -422,7 +422,6 @@ const DEFAULT_SECTION_LABELS = ["R", "B", ""];
  */
 function parseChordPro(
     chordProContent: string, 
-    repeatChorus: boolean, 
     songKey: Key | null, 
     transposeSteps: number | null
 ) {
@@ -430,17 +429,15 @@ function parseChordPro(
     const memoizedCzechToEnglish = memoize(czechToEnglish);
     const withEnglishChords = memoizedCzechToEnglish(chordProContent);
     
-    // TODO: this should be only called after 
     // Process the directive sections
-    const preparsedContent = replaceRepeatedDirectives(
+    const preparsedContent = preparseDirectives(
         withEnglishChords, 
         DEFAULT_SECTION_DIRECTIVES, 
         DEFAULT_SECTION_LABELS, 
-        repeatChorus,
     );
     
     // Transpose the song if needed
-    const transposedContent = transposeChordPro(preparsedContent, songKey, transposeSteps);
+    const transposedContent = transposeChordPro(preparsedContent, songKey, transposeSteps ?? 0);
     
     // Parse the processed content
     const parser = new ChordProParser();
@@ -478,7 +475,10 @@ export function renderSong(
     centralEuropeanNotation: boolean
 ): string {
     // Parse and process the chord pro content
-    const song = parseChordPro(songData.content, repeatChorus, songData.key, transposeSteps);
+    if (!songData.content) {
+        throw new Error("songData.content is undefined");
+    }
+    const song = parseChordPro(songData.content, repeatChorus, songData.key ?? null, transposeSteps);
     
     // Configure formatter settings
     const settings = new FormatterSettings();

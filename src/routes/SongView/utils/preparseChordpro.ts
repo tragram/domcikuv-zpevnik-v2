@@ -21,10 +21,10 @@ import { hasExactly } from 'chord-symbol/src/helpers/hasElement';
  * Valid variation types for part variants
  */
 const validVariationValues = [
-    "replace_last_line", 
-    "replace_last_lines", 
-    "append_content", 
-    "replace_first_line", 
+    "replace_last_line",
+    "replace_last_lines",
+    "append_content",
+    "replace_first_line",
     "prepend_content"
 ] as const;
 
@@ -43,15 +43,15 @@ type validVariation = (typeof validVariationValues)[number];
  * @returns Modified array of content lines
  */
 function partVariation(
-    originalLines: string[], 
-    variantType: validVariation, 
-    variantContent: string[], 
-    repeat: boolean, 
+    originalLines: string[],
+    variantType: validVariation,
+    variantContent: string[],
+    repeat: boolean,
     repeatKey: string
 ): string[] {
     // Validate inputs
     if (!originalLines) {
-        console.log("No original lines found!");
+        console.log("Error: No original lines found!");
         return [""];
     }
 
@@ -63,10 +63,10 @@ function partVariation(
     // Skip if content is too short
     if (originalLines.length < 3) {
         console.log(
-            "Ignoring part variant", 
-            variantType, 
-            "on", 
-            originalLines, 
+            "Error: Ignoring part variant",
+            variantType,
+            "on",
+            originalLines,
             "- originalLines content too short!"
         );
         return originalLines;
@@ -77,33 +77,33 @@ function partVariation(
         case "replace_last_line":
             if (repeat) {
                 return [
-                    ...originalLines.slice(0, -2), 
-                    ...variantContent, 
+                    ...originalLines.slice(0, -2),
+                    ...variantContent,
                     ...originalLines.slice(-1)
                 ];
             } else {
                 return [
-                    originalLines[0], 
-                    repeatKey + " ..." + variantContent, 
+                    originalLines[0],
+                    repeatKey + " ..." + variantContent,
                     ...originalLines.slice(-1)
                 ];
             }
 
         case "replace_last_lines":
-            throw new Error("Replace last lines not yet supported!");
+            throw new Error("Error: Replace last lines not yet supported!");
 
         case "append_content":
             if (repeat) {
                 // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
                 return [
-                    ...originalLines.slice(0, -1), 
-                    ...variantContent, 
+                    ...originalLines.slice(0, -1),
+                    ...variantContent,
                     ...originalLines.slice(-1)
                 ];
             } else {
                 return [
-                    originalLines[0], 
-                    repeatKey + " + " + variantContent, 
+                    originalLines[0],
+                    repeatKey + " + " + variantContent,
                     ...originalLines.slice(-1)
                 ];
             }
@@ -112,39 +112,40 @@ function partVariation(
             if (repeat) {
                 // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
                 return [
-                    ...originalLines.slice(0, 1), 
-                    repeatKey + " " + variantContent[0], 
+                    ...originalLines.slice(0, 1),
+                    repeatKey + " " + variantContent[0],
                     ...originalLines.slice(2, -1)
                 ];
             } else {
                 return [
-                    originalLines[0], 
-                    repeatKey + " " + variantContent[0] + "...", 
+                    originalLines[0],
+                    repeatKey + " " + variantContent[0] + "...",
                     ...originalLines.slice(-1)
                 ];
             }
 
-        case "prepend_content":
+        case "prepend_content": {
             const replaceRegex = new RegExp("^" + repeatKey, "g");
             if (repeat) {
                 // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
                 const replacedLines = [
-                    ...originalLines.slice(0, 1), 
-                    repeatKey + " " + variantContent[0], 
+                    ...originalLines.slice(0, 1),
+                    repeatKey + " " + variantContent[0],
                     ...originalLines.slice(1, -1).map(l => l.replace(replaceRegex, ""))
                 ];
                 console.log(replacedLines);
                 return replacedLines;
             } else {
                 const replacedLines = [
-                    originalLines[0], 
-                    repeatKey + " " + variantContent[0] + "...", 
-                    originalLines[1].replace(replaceRegex, ""), 
+                    originalLines[0],
+                    repeatKey + " " + variantContent[0] + "...",
+                    originalLines[1].replace(replaceRegex, ""),
                     ...originalLines.slice(-1)
                 ];
                 console.log(replacedLines, replaceRegex);
                 return replacedLines;
             }
+        }
 
         default:
             return originalLines;
@@ -154,19 +155,20 @@ function partVariation(
 // ==================== DIRECTIVE PROCESSING ====================
 
 /**
- * Replaces shorthand directives with their full content
- * Supports custom extensions to the ChordPro format
+ * Replaces shorthand directives with both their full content and shorthand version
+ * This means that postprocessing needs to be applied to the HTML after parsing by the chordpro parser to hide either one.
+ * 
+ * Also replaces custom extensions to the ChordPro format with stuff that can be parsed by a regular ChordPro parser.
  * 
  * @param song - The ChordPro song content
  * @param directives - Array of directive names to process
  * @param shortHands - Array of shorthand identifiers corresponding to directives - these will be shown
  * @returns Processed song with expanded directives
  */
-export function replaceRepeatedDirectives(
-    song: string, 
-    directives: string[] = ["chorus"], 
+export function preparseDirectives(
+    song: string,
+    directives: string[] = ["chorus"],
     shortHands: string[] = ["R"],
-    repeat: boolean
 ): string {
     // Validate inputs
     if (directives.length !== shortHands.length) {
@@ -175,7 +177,7 @@ export function replaceRepeatedDirectives(
 
     // Maps to store directive content by key
     const directiveMaps: { [directive: string]: { [key: string]: string[] } } = {};
-    
+
     // Create regex patterns for each directive
     const directiveRegexes = directives.map((directive, i) => ({
         directive,
@@ -196,7 +198,7 @@ export function replaceRepeatedDirectives(
     let currentVariationType: validVariation | null = null;
     let currentVariationContent: string[] | null = null;
     let variantActive = false;
-    
+
     // Regex for variants
     const variantStartRegex = new RegExp("^\\{start_of_variant: ([\\w\\-_+]+)\\}");
     const variantEndRegex = new RegExp("^\\{end_of_variant\\}");
@@ -215,14 +217,14 @@ export function replaceRepeatedDirectives(
             variantActive = true;
             return;
         }
-        
+
         // Check for variant end
         const variantEndMatch = line.match(variantEndRegex);
         if (variantEndMatch) {
             variantActive = false;
             return;
         }
-        
+
         // Collect variant content
         if (variantActive) {
             currentVariationContent.push(line);
@@ -246,7 +248,7 @@ export function replaceRepeatedDirectives(
             if (endMatch && currentContent && currentDirective === directive) {
                 currentContent.push(line);
                 directiveMaps[directive][currentKey] = currentContent;
-                
+
                 if (currentKey !== defaultKey) {
                     currentContent[1] = currentKey + ": " + currentContent[1];
                 }
@@ -258,27 +260,46 @@ export function replaceRepeatedDirectives(
                 return currentBlock.join('\n');
             }
 
-            // Check for directive call
+            // Check for directive recall
             const callMatch = line.match(callRegex);
             if (callMatch) {
                 const directiveKey = callMatch[1] || shortHand || defaultKey;
                 let contentToInsert = directiveMaps[directive][directiveKey];
                 const repeatKey = `${directiveKey === defaultKey ? '' : `${directiveKey}:`}`;
-                
+
                 if (currentVariationContent) {
-                    contentToInsert = partVariation(
-                        contentToInsert, 
-                        currentVariationType, 
-                        currentVariationContent, 
-                        false, 
-                        repeatKey
-                    );
-                    currentVariationType = null;
-                    currentVariationContent = null;
-                } else if (!repeat) {
+                    // insert variation if applicable
+                    if (!currentVariationType) {
+                        console.log("Error: currentVariationType null unexpectedly - skipping part variation!")
+                    } else {
+                        // insert the expanded version...
+                        contentToInsert = partVariation(
+                            contentToInsert,
+                            currentVariationType,
+                            currentVariationContent,
+                            true,
+                            repeatKey
+                        );
+                        // ...as well as the short-hand version
+                        contentToInsert.push(...partVariation(
+                            contentToInsert,
+                            currentVariationType,
+                            currentVariationContent,
+                            false,
+                            repeatKey)
+                        )
+                        currentVariationType = null;
+                        currentVariationContent = null;
+                    }
+                } else {
+                    // or just recall the contents
                     contentToInsert = [
-                        `{start_of_${directive}}`, 
-                        repeatKey, 
+                        `{start_of_${directive}}`,
+                        ...contentToInsert,
+                        `{end_of_${directive}}`,
+                    
+                        `{start_of_${directive}}`,
+                        repeatKey,
                         `{end_of_${directive}}`
                     ];
                 }
@@ -320,11 +341,11 @@ export function czechToEnglish(song: string): string {
     // Convert key directive
     song = song.replace(/\{key: B([ieasm#b]){0,5}\}/g, "{key: Bb$1}");
     song = song.replace(/\{key: H([ieasm#b]){0,5}\}/g, "{key: B$1}");
-    
+
     // Convert chords with bass notes
     song = song.replace(/\[([A-Za-z\d#b,\s/]{0,10})\/B\]/g, "[$1/Bb]");
     song = song.replace(/\[([A-Za-z\d#b,\s/]{0,10})\/H\]/g, "[$1/B]");
-    
+
     // Convert regular chords
     song = song.replace(/\[B([A-Za-z\d#b,\s/]{0,10})\]/g, "[Bb$1]");
     song = song.replace(/\[H([A-Za-z\d#b,\s/]{0,10})\]/g, "[B$1]");
@@ -353,7 +374,7 @@ export function transposeChordPro(song: string, songKey: Key, transposeSteps: nu
     const normalizedKey = songKey.note.toString()
         .replace("B", "Bb")
         .replace("H", "B");
-    
+
     const parseChord = chordParserFactory({ key: normalizedKey });
 
     /**
@@ -374,11 +395,11 @@ export function transposeChordPro(song: string, songKey: Key, transposeSteps: nu
         // Fix sus2 notation (library renames sus2 to (omit3,add9) by default)
         if (hasExactly(chord.normalized.intervals, ['1', '5', '9'])) {
             chord = overwriteDescriptor(chord, "sus2");
-        } 
+        }
         // Fix maj7 notation (library uses ma7)
         else if (chord.formatted.descriptor == "ma7") {
             chord = overwriteDescriptor(chord, "maj7");
-        } 
+        }
         // Fix sus4 notation (library uses just sus)
         else if (chord.formatted.descriptor == "sus") {
             chord = overwriteDescriptor(chord, "sus4");
@@ -396,12 +417,12 @@ export function transposeChordPro(song: string, songKey: Key, transposeSteps: nu
         if (chord.formatted.symbol.includes(",")) {
             return chord;
         }
-        
+
         // Remove parentheses for single modifiers
         chord.formatted.symbol = chord.formatted.symbol
             .replace("(", "")
             .replace(")", "");
-            
+
         return chord;
     };
 
@@ -414,8 +435,8 @@ export function transposeChordPro(song: string, songKey: Key, transposeSteps: nu
     });
 
     // Process all chord brackets
-    const convertChordBracket = (match: string, chord: string) => 
+    const convertChordBracket = (match: string, chord: string) =>
         `[${renderChord(parseChord(chord))}]`;
-        
+
     return song.replace(/\[([A-Ha-h][A-Za-z\d#b,\s/]{0,10})\]/g, convertChordBracket);
 }
