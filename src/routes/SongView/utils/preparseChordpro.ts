@@ -35,6 +35,8 @@ const validVariationValues = [
 
 type validVariation = (typeof validVariationValues)[number];
 
+// Detect successive recalls (e.g. {chorus}\n{chorus}) and replace them in shorthand version by e.g. `(2x) shorthand` (depending on the number of successive calls) and likewise in expanded form. Take care to only shorten this when it's really one after another with no variations.
+
 // ==================== PART VARIATIONS ====================
 
 /**
@@ -325,7 +327,8 @@ export function preparseDirectives(
                         ...contentToInsert.slice(1),
                         `{start_of_${directive}}`,
                         SHORTHAND_SECTION_DIRECTIVE,
-                        repeatKey,
+                        // include the recalled part even in shorthand if it's only a single line
+                        contentToInsert.length === 3 ? contentToInsert[1] : repeatKey,
                         `{end_of_${directive}}`
                     ];
                 }
