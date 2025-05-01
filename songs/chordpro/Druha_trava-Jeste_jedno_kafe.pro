@@ -7,7 +7,7 @@
 {tempo: }
 {range: a1-g#1}
 {start_melody: a e d c}
-{prompt_id: v2}
+
 {start_of_verse}
 [Ami]Máš sladkej dech a oči, [G]kterým patří svatozář,
 a [F]vlasy máš jak hedvábí, když je [E7]vhodíš na polštář,

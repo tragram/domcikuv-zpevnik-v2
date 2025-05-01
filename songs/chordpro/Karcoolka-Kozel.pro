@@ -6,7 +6,7 @@
 {key: D}
 {range: }
 {tempo: }
-{prompt_id: v2}
+
 
 {start_of_verse}
 To [D]strašný prokletí, už [G]trvá stovky [D]dní,

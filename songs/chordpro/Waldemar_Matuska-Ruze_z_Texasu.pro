@@ -7,7 +7,7 @@
 {tempo: }
 {range: a1-a2}
 {start_melody: c g}
-{prompt_id: v2}
+
 
 {start_of_verse}
 [C]Jedu Vám takh[C7]le stezkou [F]dát koňům v [C]řece pít

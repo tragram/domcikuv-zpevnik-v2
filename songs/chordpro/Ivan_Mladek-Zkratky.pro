@@ -7,7 +7,7 @@
 {tempo: }
 {range: d1-d2}
 {start_melody: h h a h}
-{prompt_id: v2}
+
 
 {start_of_verse}
 [G]Z PL[Em]R do [Am]ML[D7]R

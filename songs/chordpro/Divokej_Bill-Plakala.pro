@@ -7,7 +7,7 @@
 {tempo: }
 {range: }
 {start_melody: }
-{prompt_id: v2}
+
 
 {start_of_verse}
 [Ami]Toužila, kroužila, kryla mi záda
