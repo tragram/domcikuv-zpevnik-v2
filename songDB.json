@@ -104,7 +104,7 @@
     "startMelody": "h",
     "chordproFile": "Argema-Jarosovsky_pivovar.pro",
     "pdfFilenames": "['argema_jarosovsky_pivovar-sken.pdf', 'argema_jarosovsky_pivovar-comp.pdf']",
-    "contentHash": "ac22027d70dc0d5a6c8644e606c6f3a174fe7522",
+    "contentHash": "d35c5b64ce31cae8fcf641f55c26ad1cae2a160b",
     "disabled": false
   },
   {
@@ -1238,7 +1238,7 @@
     "startMelody": "e a",
     "chordproFile": "Folk-Sakkijarven_Polkka.pro",
     "pdfFilenames": "",
-    "contentHash": "5e23d2a3ab4e832e9e33532d25fc51445e9d1db8",
+    "contentHash": "ee14eb1fee123930b5f8245f42f7674a83567d2e",
     "disabled": false
   },
   {
@@ -5720,7 +5720,7 @@
     "startMelody": "e c d h",
     "chordproFile": "Vojtech_Dyk-Alkoholicka.pro",
     "pdfFilenames": "",
-    "contentHash": "edfe3d6ac7abe34d33d9867db243299799b5ea84",
+    "contentHash": "1090afea175e2c511f5c51d634b15642be04d034",
     "disabled": false
   },
   {
@@ -5882,7 +5882,7 @@
     "startMelody": "d#",
     "chordproFile": "Wanastowy_Vjecy-Naha.pro",
     "pdfFilenames": "['wanastowy_vjecy_naha-sken.pdf', 'wanastowy_vjecy_naha-comp.pdf']",
-    "contentHash": "d097dd43393cd5d40937157eb106065e6b7d0aea",
+    "contentHash": "205fff3db7bdca03d6e7022a813cc4b2fc3f13ed",
     "disabled": false
   },
   {
@@ -6206,7 +6206,7 @@
     "startMelody": "e h h",
     "chordproFile": "Zatanci-Jaromir_Nohavica.pro",
     "pdfFilenames": "",
-    "contentHash": "3a676f9165796d97f6892d7693cb880e6241d8c2",
+    "contentHash": "5f802938148234ce6597317729067fc8cbd08973",
     "disabled": false
   },
   {
