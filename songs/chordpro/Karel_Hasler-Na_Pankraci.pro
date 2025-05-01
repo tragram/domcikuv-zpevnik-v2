@@ -7,7 +7,7 @@
 {tempo: }
 {range: e1-d1}
 {start_melody: g g f e}
-{prompt_id: v2}
+
 
 
 {start_of_verse}

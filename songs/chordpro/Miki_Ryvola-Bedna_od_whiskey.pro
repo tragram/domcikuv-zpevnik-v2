@@ -4,7 +4,7 @@
 {language: czech}
 {capo: 0}
 {key: Ami}
-{prompt_id: v2}
+
 {range: }
 {tempo: }
 

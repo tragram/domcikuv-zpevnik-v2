@@ -6,7 +6,7 @@
 {capo: 5}
 {key: Am}
 {tempo: }
-{prompt_id: v2}
+
 {range: a1-c2}
 {start_melody: a}
 

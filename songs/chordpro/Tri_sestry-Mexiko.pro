@@ -7,7 +7,7 @@
 {tempo: }
 {range: h1-g1}
 {start_melody: e}
-{prompt_id: v2}
+
 
 {start_of_verse}
 [Ami]Kolem kaktusy

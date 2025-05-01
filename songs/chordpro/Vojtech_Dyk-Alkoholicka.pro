@@ -7,7 +7,7 @@
 {tempo: }
 {range: e1-f2}
 {start_melody: e c d h}
-{prompt_id: v2}
+
 
 {start_of_chorus}
 [Am]Calvados, víno, [E7]porto

@@ -4,7 +4,7 @@
 {language: czech}
 {capo: 0}
 {key: C}
-{prompt_id: v2}
+
 {range: }
 {tempo: }
 

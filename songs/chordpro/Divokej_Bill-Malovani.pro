@@ -7,7 +7,7 @@
 {tempo: }
 {range: e1-e2}
 {start_melody: e e e g e}
-{prompt_id: v2}
+
 
 {start_of_verse}
 [Emi]Nesnaž se, znáš se, [C]řekni mi [D]co je jiný,
