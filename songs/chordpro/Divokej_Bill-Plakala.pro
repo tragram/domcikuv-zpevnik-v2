@@ -31,7 +31,7 @@
 {end_of_verse}
 
 {start_of_chorus}
-𝄆 [Ami]Moje milá [C]plakala-a-a [G]𝄇 (4x)
+𝄆 [Ami]Moje milá [C]plakala-a-a [G] 𝄇 (4x)
 {end_of_chorus}
 
 {start_of_bridge}
