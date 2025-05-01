@@ -1,3 +1,4 @@
+import { Regex } from "lucide-react";
 import { EXPANDED_SECTION_DIRECTIVE, SHORTHAND_SECTION_DIRECTIVE } from "./preparseChordpro";
 
 // TypeScript interfaces for better type safety and code documentation
@@ -233,15 +234,71 @@ function processExpandedSections(
     return doc;
 }
 
+function processSectionTitles(
+    doc: Document
+): Document {
+    // Find comment elements containing our directives
+    const commentElements = Array.from(doc.querySelectorAll('.comment-line'));
+    // Process each comment element
+    commentElements.forEach(element => {
+        if (!element.textContent) return;
+        const commentText = element.textContent.trim();
+        const sectionTitlePattern = new RegExp("%\\s*section_title:\\s*(.*?)\\s*%");
+        const match = commentText.match(sectionTitlePattern);
+        
+        if (match) {
+            // Find the next lyrics-line element after the comment
+            let lyricsLineElement = element.nextElementSibling;
+            while (lyricsLineElement) {
+                if (lyricsLineElement instanceof HTMLDivElement && 
+                    lyricsLineElement.classList.contains('lyrics-line')) {
+                    break;
+                }
+                lyricsLineElement = lyricsLineElement.nextElementSibling;
+            }
+            
+            // Create the section title div
+            const sectionTitleDiv = doc.createElement('div');
+            sectionTitleDiv.className = 'section-title';
+            sectionTitleDiv.textContent = match[1] + ": ";
+            
+            // Create the word div that will contain the section title
+            const wordDiv = doc.createElement('div');
+            wordDiv.className = 'word';
+            wordDiv.appendChild(sectionTitleDiv);
+            
+            if (lyricsLineElement && lyricsLineElement instanceof HTMLDivElement) {
+                // Insert the word div as the first child of the lyrics-line div
+                lyricsLineElement.insertBefore(wordDiv, lyricsLineElement.firstChild);
+            } else {
+                // If no lyrics-line div exists, create one
+                const newLyricsDiv = doc.createElement('div');
+                newLyricsDiv.className = 'lyrics-line';
+                
+                // Add the word div containing the section title as its first child
+                newLyricsDiv.appendChild(wordDiv);
+                
+                // Insert the new lyrics-line div after the comment
+                const parent = element.parentNode;
+                if (parent) {
+                    parent.insertBefore(newLyricsDiv, element.nextSibling);
+                }
+            }
+            element.remove()
+        }
+    });
+
+    return doc;
+}
 
 /**
- * Adds repeat classes to chord sections and processes repetitions
+ * Adds repeat classes to chord sections and processes repetitions etc.
  * @param htmlString - HTML string to process
  * @param classNames - Section class names to process
  * @param useLabels - Whether to use section labels for matching
  * @returns Processed HTML string
  */
-export function addRepeatClasses(
+export function postProcessChordPro(
     htmlString: string,
     classNames = DEFAULT_SECTION_TYPES,
     useLabels = false
@@ -251,7 +308,7 @@ export function addRepeatClasses(
     let doc = parser.parseFromString(htmlString, 'text/html');
 
     doc = processExpandedSections(doc);
-
+    doc = processSectionTitles(doc);
     // Process the document
     const processedDoc = detectRepeatedChordPatterns(doc, classNames, useLabels);
 

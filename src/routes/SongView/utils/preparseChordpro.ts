@@ -17,8 +17,9 @@ import { hasExactly } from 'chord-symbol/src/helpers/hasElement';
 
 // these are used to pass information about collapsed/shorthand sections to post-processing
 // this is an ugly solution but the alternative appears to be writing my own parser
-export const EXPANDED_SECTION_DIRECTIVE = "{comment: expanded_section}";
-export const SHORTHAND_SECTION_DIRECTIVE = "{comment: shorthand_section}";
+export const EXPANDED_SECTION_DIRECTIVE = "{comment: %expanded_section%}";
+export const SHORTHAND_SECTION_DIRECTIVE = "{comment: %shorthand_section%}";
+export const SECTION_TITLE_COMMENT = (repeatKey: string | null, consecutiveModifier: string | null) => repeatKey || consecutiveModifier ? `{comment: %section_title: ${consecutiveModifier}${repeatKey}%}` : null;
 
 // ==================== TYPES ====================
 
@@ -44,7 +45,7 @@ type validVariation = (typeof validVariationValues)[number];
  * @param variantType - The type of variation to apply
  * @param variantContent - The content to use in the variation
  * @param repeat - Whether to include the full content or a placeholder
- * @param repeatKey - Key identifier for the section
+ * @param sectionTitle - Key identifier for the section
  * @returns Modified array of content lines
  */
 function partVariation(
@@ -52,7 +53,7 @@ function partVariation(
     variantType: validVariation,
     variantContent: string[],
     repeat: boolean,
-    repeatKey: string
+    sectionTitle: string
 ): string[] {
     // Validate inputs
     if (!originalLines) {
@@ -89,7 +90,7 @@ function partVariation(
             } else {
                 return [
                     originalLines[0],
-                    repeatKey + " ..." + variantContent,
+                    sectionTitle, " ..." + variantContent,
                     ...originalLines.slice(-1)
                 ];
             }
@@ -108,7 +109,7 @@ function partVariation(
             } else {
                 return [
                     originalLines[0],
-                    repeatKey + " + " + variantContent,
+                    sectionTitle, " + " + variantContent,
                     ...originalLines.slice(-1)
                 ];
             }
@@ -118,31 +119,31 @@ function partVariation(
                 // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
                 return [
                     ...originalLines.slice(0, 1),
-                    repeatKey + " " + variantContent[0],
+                    sectionTitle, " " + variantContent[0],
                     ...originalLines.slice(2, -1)
                 ];
             } else {
                 return [
                     originalLines[0],
-                    repeatKey + " " + variantContent[0] + "...",
+                    sectionTitle, " " + variantContent[0] + "...",
                     ...originalLines.slice(-1)
                 ];
             }
 
         case "prepend_content": {
-            const replaceRegex = new RegExp("^" + repeatKey, "g");
+            const replaceRegex = new RegExp("^" + sectionTitle, "g");
             if (repeat) {
                 // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
                 const replacedLines = [
                     ...originalLines.slice(0, 1),
-                    repeatKey + " " + variantContent[0],
+                    sectionTitle, " " + variantContent[0],
                     ...originalLines.slice(1, -1).map(l => l.replace(replaceRegex, ""))
                 ];
                 return replacedLines;
             } else {
                 const replacedLines = [
                     originalLines[0],
-                    repeatKey + " " + variantContent[0] + "...",
+                    sectionTitle, " " + variantContent[0] + "...",
                     originalLines[1].replace(replaceRegex, ""),
                     ...originalLines.slice(-1)
                 ];
@@ -163,7 +164,7 @@ function partVariation(
  * @param variantType - The type of variation to apply
  * @param variantContent - The content to use in the variation
  * @param repeat - Whether to include the full content or a placeholder
- * @param repeatKey - Key identifier for the section
+ * @param sectionTitle - Key identifier for the section
  * @returns Modified array of content lines
  */
 function partVariationWithMetaInfo(
@@ -171,9 +172,9 @@ function partVariationWithMetaInfo(
     variantType: validVariation,
     variantContent: string[],
     repeat: boolean,
-    repeatKey: string
+    sectionTitle: string
 ): string[] {
-    const variation = partVariation(originalLines, variantType, variantContent, repeat, repeatKey);
+    const variation = partVariation(originalLines, variantType, variantContent, repeat, sectionTitle);
     variation.splice(1, 0, repeat ? EXPANDED_SECTION_DIRECTIVE : SHORTHAND_SECTION_DIRECTIVE)
     return variation;
 }
@@ -343,11 +344,9 @@ export function preparseDirectives(
                     currentKey = defaultKey;
                 }
                 directiveMaps[directive][currentKey] = currentContent;
-
                 if (currentKey !== defaultKey) {
-                    currentContent[1] = currentKey + ": " + currentContent[1];
+                    currentContent.splice(1, 0, SECTION_TITLE_COMMENT(currentKey, "") ?? "");
                 }
-
                 processedLines.push(currentContent.join('\n'));
                 currentDirective = null;
                 currentContent = null;
@@ -373,7 +372,7 @@ export function preparseDirectives(
 
                 const directiveKey = callMatch[1] || shortHand || defaultKey;
                 let contentToInsert = directiveMaps[directive][directiveKey];
-                const repeatKey = `${directiveKey === defaultKey ? `${consecutiveModifier}` : `${consecutiveModifier}${directiveKey}:`}`;
+                const sectionTitle = SECTION_TITLE_COMMENT(directiveKey === defaultKey ? "" : directiveKey, consecutiveModifier);
 
                 if (currentVariationContent) {
                     // insert variation if applicable
@@ -386,7 +385,7 @@ export function preparseDirectives(
                             currentVariationType,
                             currentVariationContent,
                             true,
-                            repeatKey
+                            sectionTitle ?? ""
                         );
                         // ...as well as the short-hand version
                         contentToInsert.push(...partVariationWithMetaInfo(
@@ -394,8 +393,8 @@ export function preparseDirectives(
                             currentVariationType,
                             currentVariationContent,
                             false,
-                            repeatKey)
-                        )
+                            sectionTitle ?? ""
+                        ));
                         currentVariationType = null;
                         currentVariationContent = null;
                     }
@@ -404,18 +403,20 @@ export function preparseDirectives(
                     contentToInsert = [
                         contentToInsert[0],
                         EXPANDED_SECTION_DIRECTIVE,
-                        consecutiveModifier + contentToInsert[1],
+                        contentToInsert[1],
                         ...contentToInsert.slice(2),
+
                         `{start_of_${directive}}`,
                         SHORTHAND_SECTION_DIRECTIVE,
+                        sectionTitle ?? "",
                         // include the recalled part even in shorthand if it's only a single line
-                        contentToInsert.length === 3 ? contentToInsert[1] : repeatKey,
+                        contentToInsert.length === 3 ? contentToInsert[1] : "",
                         `{end_of_${directive}}`
                     ];
                 }
 
                 if (contentToInsert) {
-                    processedLines.push(contentToInsert.join('\n'));
+                    processedLines.push(contentToInsert.filter(c => c).join('\n'));
                     directiveMatched = true;
                 }
             }
@@ -425,7 +426,9 @@ export function preparseDirectives(
             // If inside a directive, add to current content
             if (currentContent !== null) {
                 currentContent.push(line);
-            } else { processedLines.push(line); }
+            } else if (line) {
+                processedLines.push(line);
+            }
 
         }
         i++;

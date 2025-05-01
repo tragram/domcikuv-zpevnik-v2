@@ -1,4 +1,4 @@
-import { highlightRepetition } from './repetitionProcessor';
+import { highlightRepetition } from './postProcessing';
 
 /**
  * Maps for chord name conversion and substitution

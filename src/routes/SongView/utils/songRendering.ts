@@ -4,7 +4,7 @@ import { czechToEnglish, preparseDirectives, transposeChordPro } from './prepars
 import memoize from 'memoize-one';
 import { Key } from '@/types/musicTypes';
 import { convertHTMLChordNotation } from './chordNotation';
-import { addRepeatClasses } from './repetitionProcessor';
+import { postProcessChordPro } from './postProcessing';
 
 /**
  * Default section directives
@@ -88,5 +88,5 @@ export function renderSong(
     songText = convertHTMLChordNotation(songText, centralEuropeanNotation);
 
     // Process repetitions
-    return addRepeatClasses(songText, DEFAULT_RENDERED_SECTIONS);
+    return postProcessChordPro(songText, DEFAULT_RENDERED_SECTIONS);
 }
