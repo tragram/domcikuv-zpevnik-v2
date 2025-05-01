@@ -39,7 +39,6 @@ function parseChordPro(
         DEFAULT_SECTION_DIRECTIVES,
         DEFAULT_SECTION_LABELS,
     );
-
     // Transpose the song if needed
     const transposedContent = transposeChordPro(preparsedContent, songKey, transposeSteps ?? 0);
 
@@ -77,7 +76,6 @@ export function renderSong(
         throw new Error("songData.content is undefined");
     }
     const song = parseChordPro(songData.content, songData.key ?? null, transposeSteps);
-
     // Configure formatter settings
     const settings = new FormatterSettings();
     settings.showMetadata = false;
@@ -88,7 +86,6 @@ export function renderSong(
 
     // Apply Central European notation if requested
     songText = convertHTMLChordNotation(songText, centralEuropeanNotation);
-    
 
     // Process repetitions
     return addRepeatClasses(songText, DEFAULT_RENDERED_SECTIONS);

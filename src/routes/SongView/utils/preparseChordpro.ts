@@ -15,6 +15,11 @@ import {
 } from 'chord-symbol/lib/chord-symbol.js';
 import { hasExactly } from 'chord-symbol/src/helpers/hasElement';
 
+// these are used to pass information about collapsed/shorthand sections to post-processing
+// this is an ugly solution but the alternative appears to be writing my own parser
+export const EXPANDED_SECTION_DIRECTIVE = "{comment: expanded_section}";
+export const SHORTHAND_SECTION_DIRECTIVE = "{comment: shorthand_section}";
+
 // ==================== TYPES ====================
 
 /**
@@ -133,7 +138,6 @@ function partVariation(
                     repeatKey + " " + variantContent[0],
                     ...originalLines.slice(1, -1).map(l => l.replace(replaceRegex, ""))
                 ];
-                console.log(replacedLines);
                 return replacedLines;
             } else {
                 const replacedLines = [
@@ -142,7 +146,6 @@ function partVariation(
                     originalLines[1].replace(replaceRegex, ""),
                     ...originalLines.slice(-1)
                 ];
-                console.log(replacedLines, replaceRegex);
                 return replacedLines;
             }
         }
@@ -150,6 +153,29 @@ function partVariation(
         default:
             return originalLines;
     }
+}
+
+/**
+ * Applies variations to a section of chord content.
+ * Wrapper to partVariation that adds a meta information tag about whether it's expanded or not.
+ * 
+ * @param originalLines - The original content lines
+ * @param variantType - The type of variation to apply
+ * @param variantContent - The content to use in the variation
+ * @param repeat - Whether to include the full content or a placeholder
+ * @param repeatKey - Key identifier for the section
+ * @returns Modified array of content lines
+ */
+function partVariationWithMetaInfo(
+    originalLines: string[],
+    variantType: validVariation,
+    variantContent: string[],
+    repeat: boolean,
+    repeatKey: string
+): string[] {
+    const variation = partVariation(originalLines, variantType, variantContent, repeat, repeatKey);
+    variation.splice(1, 0, repeat ? EXPANDED_SECTION_DIRECTIVE : SHORTHAND_SECTION_DIRECTIVE)
+    return variation;
 }
 
 // ==================== DIRECTIVE PROCESSING ====================
@@ -273,7 +299,7 @@ export function preparseDirectives(
                         console.log("Error: currentVariationType null unexpectedly - skipping part variation!")
                     } else {
                         // insert the expanded version...
-                        contentToInsert = partVariation(
+                        contentToInsert = partVariationWithMetaInfo(
                             contentToInsert,
                             currentVariationType,
                             currentVariationContent,
@@ -281,7 +307,7 @@ export function preparseDirectives(
                             repeatKey
                         );
                         // ...as well as the short-hand version
-                        contentToInsert.push(...partVariation(
+                        contentToInsert.push(...partVariationWithMetaInfo(
                             contentToInsert,
                             currentVariationType,
                             currentVariationContent,
@@ -292,13 +318,13 @@ export function preparseDirectives(
                         currentVariationContent = null;
                     }
                 } else {
-                    // or just recall the contents
+                    // or just recall the contents - both expanded and shorthand
                     contentToInsert = [
+                        contentToInsert[0],
+                        EXPANDED_SECTION_DIRECTIVE,
+                        ...contentToInsert.slice(1),
                         `{start_of_${directive}}`,
-                        ...contentToInsert,
-                        `{end_of_${directive}}`,
-                    
-                        `{start_of_${directive}}`,
+                        SHORTHAND_SECTION_DIRECTIVE,
                         repeatKey,
                         `{end_of_${directive}}`
                     ];
@@ -309,7 +335,6 @@ export function preparseDirectives(
                 }
             }
         }
-
         // If inside a directive, add line to current content
         if (currentContent !== null) {
             currentContent.push(line);

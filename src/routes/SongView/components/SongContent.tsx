@@ -19,7 +19,6 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
         const parsedContent = renderSong(
             songData,
             transposeSteps,
-            layout.repeatParts,
             chordSettings.czechChordNames
         );
 

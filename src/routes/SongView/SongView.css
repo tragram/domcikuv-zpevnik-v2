@@ -87,7 +87,6 @@
     align-content: end;
 }
 
-
 /* layout */
 #auto-text-size-wrapper>div {
     justify-content: safe center;
@@ -168,6 +167,15 @@
     align-items: flex-end;
     margin-right: 0.33em;
     /*border: 1px solid red;*/
+}
+
+/* hiding and showing parts */
+.repeated-parts-shown .shorthand-section{
+    display: none;
+}
+
+.repeated-parts-hidden .expanded-section{
+    display: none;
 }
 
 /* misc */

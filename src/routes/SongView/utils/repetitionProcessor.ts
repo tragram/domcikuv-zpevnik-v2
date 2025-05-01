@@ -1,18 +1,20 @@
+import { EXPANDED_SECTION_DIRECTIVE, SHORTHAND_SECTION_DIRECTIVE } from "./preparseChordpro";
+
 // TypeScript interfaces for better type safety and code documentation
 interface ChordElement {
-  element: Element;
-  chord: string;
+    element: Element;
+    chord: string;
 }
 
 interface ChordMatch {
-  matches: boolean[];
-  distance: number;
+    matches: boolean[];
+    distance: number;
 }
 
 interface PatternCollection {
-  [sectionType: string]: {
-    [label: string]: string[][];
-  };
+    [sectionType: string]: {
+        [label: string]: string[][];
+    };
 }
 
 const MAX_CHORD_MATCH_DISTANCE = 3;
@@ -33,8 +35,8 @@ const DEFAULT_SECTION_TYPES = ["verse", "chorus", "bridge"];
  */
 function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION_TYPES, useLabels = false): Document {
     const DEFAULT_KEY = "a4c0d35c95a63a805915367dcfe6b751";
-    const seen: PatternCollection = {}; 
-    
+    const seen: PatternCollection = {};
+
     // Initialize tracking object for each className
     classNames.forEach(className => {
         seen[className] = { [DEFAULT_KEY]: [] };
@@ -43,22 +45,22 @@ function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION
     const selector = classNames.map(className => `.${className}`).join(',');
     // Create a document fragment to batch DOM operations
     const sections = Array.from(doc.querySelectorAll(selector));
-    
+
     // Process all sections in a single pass
     sections.forEach((element) => {
         const elementClass = classNames.find(className => element.classList.contains(className));
         if (!elementClass) return;
-        
+
         // Cache label info
         const labelElement = element.querySelector('.section-title');
         const label = labelElement && useLabels ? labelElement.textContent?.trim() || DEFAULT_KEY : DEFAULT_KEY;
 
         // Get all chord elements
         const chordElements = Array.from(element.querySelectorAll('.chord'));
-        
+
         // keep track of elements as well as chords to be able to highlight changes later
         const chordsWElements: ChordElement[] = [];
-        
+
         // Process chord data with minimal DOM access
         for (let i = 0; i < chordElements.length; i++) {
             const chord = chordElements[i].textContent?.trim();
@@ -69,7 +71,7 @@ function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION
                 });
             }
         }
-        
+
         const onlyChords = chordsWElements.map(c => c.chord);
 
         if (!seen[elementClass][label]) {
@@ -83,13 +85,13 @@ function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION
             if (matchResult.distance > 0) {
                 seen[elementClass][label].push(onlyChords);
             }
-            
+
             // Minimize DOM operations by batching class additions
             element.classList.add('repeated-chords');
-            
+
             // Create a list of elements that need the force-shown class
             const elementsToHighlight = [];
-            
+
             // Find chords that differ from the pattern
             matchResult.matches.forEach((match, index) => {
                 if (index >= chordsWElements.length) return;
@@ -97,19 +99,19 @@ function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION
                     elementsToHighlight.push(chordsWElements[index].element);
                 }
             });
-            
+
             // Add any extra chords
             if (matchResult.matches.length < chordsWElements.length) {
                 for (let i = matchResult.matches.length; i < chordsWElements.length; i++) {
                     elementsToHighlight.push(chordsWElements[i].element);
                 }
             }
-            
+
             // Add the class to all elements at once
             elementsToHighlight.forEach(el => el.classList.add("force-shown"));
         }
     });
-    
+
     return doc;
 }
 
@@ -123,17 +125,17 @@ function findBestChordPatternMatch(currentChords: string[], knownPatterns: strin
     if (knownPatterns.length === 0) {
         return { matches: [], distance: Infinity };
     }
-    
+
     // Use reduce instead of map+reduce for better performance
     let bestMatch: ChordMatch = { matches: [], distance: Infinity };
-    
+
     for (let i = 0; i < knownPatterns.length; i++) {
         const match = compareChordLists(knownPatterns[i], currentChords);
         if (match.distance < bestMatch.distance) {
             bestMatch = match;
         }
     }
-    
+
     return bestMatch;
 }
 
@@ -148,13 +150,13 @@ function compareChordLists(chords1: string[], chords2: string[]): ChordMatch {
     const maxLength = Math.max(chords1.length, chords2.length);
     const matches: boolean[] = new Array(maxLength);
     let distance = 0;
-    
+
     for (let i = 0; i < maxLength; i++) {
         const match = i < chords1.length && i < chords2.length && chords1[i] === chords2[i];
         matches[i] = match;
         if (!match) distance++;
     }
-    
+
     return { matches, distance };
 }
 
@@ -168,11 +170,11 @@ function compareChordLists(chords1: string[], chords2: string[]): ChordMatch {
 function collapseConsecutiveRepeatedSections(doc: Document, classNames = DEFAULT_SECTION_TYPES): Document {
     // Cache section elements to avoid repeated DOM queries
     const allSections = Array.from(doc.querySelectorAll('.section'));
-    
+
     // Track sections to remove in one batch at the end
     const sectionsToRemove: Element[] = [];
     const labelsToAdd: { section: Element, count: number }[] = [];
-    
+
     let i = 0;
     while (i < allSections.length) {
         const current = allSections[i];
@@ -186,7 +188,7 @@ function collapseConsecutiveRepeatedSections(doc: Document, classNames = DEFAULT
         // Find how many consecutive identical sections we have
         let repeatCount = 1;
         let j = i + 1;
-        
+
         // Use cached elements to avoid DOM traversal
         while (j < allSections.length) {
             const next = allSections[j];
@@ -197,7 +199,6 @@ function collapseConsecutiveRepeatedSections(doc: Document, classNames = DEFAULT
             }
 
             // Check if it's the same type of section and has the same content
-            // Using isEqualNode is more accurate than comparing innerHTML
             if (!next.classList.contains(currentClass) ||
                 !next.classList.contains('repeated-chords') ||
                 !next.isEqualNode(current)) {
@@ -211,7 +212,7 @@ function collapseConsecutiveRepeatedSections(doc: Document, classNames = DEFAULT
         if (repeatCount > 1) {
             // Track sections to modify later (reduces DOM operations)
             labelsToAdd.push({ section: current, count: repeatCount });
-            
+
             // Queue repeated sections for removal
             for (let k = i + 1; k < i + repeatCount; k++) {
                 sectionsToRemove.push(allSections[k]);
@@ -223,7 +224,7 @@ function collapseConsecutiveRepeatedSections(doc: Document, classNames = DEFAULT
             i++;
         }
     }
-    
+
     // Batch process all labels
     labelsToAdd.forEach(({ section, count }) => {
         const repetitionLabel = doc.createElement('span');
@@ -236,7 +237,7 @@ function collapseConsecutiveRepeatedSections(doc: Document, classNames = DEFAULT
             firstLine.insertBefore(repetitionLabel, firstLine.firstChild);
         }
     });
-    
+
     // Batch remove all sections at once
     sectionsToRemove.forEach(section => section.remove());
 
@@ -252,7 +253,7 @@ export function highlightRepetition(doc: Document): Document {
     // Find all lyrics spans in one batch query
     const lyricsSpans = doc.querySelectorAll("span.lyrics");
     const spansToWrap: Element[] = [];
-    
+
     // First identify which spans need wrapping (avoids unnecessary DOM operations)
     lyricsSpans.forEach(span => {
         const text = span.textContent || '';
@@ -260,7 +261,7 @@ export function highlightRepetition(doc: Document): Document {
             spansToWrap.push(span);
         }
     });
-    
+
     // Then do the wrapping in a single batch
     spansToWrap.forEach(span => {
         const repetitionDiv = doc.createElement("div");
@@ -268,9 +269,54 @@ export function highlightRepetition(doc: Document): Document {
         span.replaceWith(repetitionDiv);
         repetitionDiv.appendChild(span);
     });
-    
+
     return doc;
 }
+
+/**
+ * Processes HTML content to handle expanded/shorthand section directives
+ * 
+ * @param htmlString - The HTML string to process
+ * @returns Processed HTML with appropriate classes added and comments removed
+ */
+function processExpandedSections(
+    doc: Document,
+): Document {
+    // Find comment elements containing our directives
+    const commentElements = Array.from(doc.querySelectorAll('.comment-line'));
+    // Process each comment element
+    commentElements.forEach(element => {
+        if (!element.textContent) return;
+
+        const commentText = element.textContent.trim();
+
+        // Check if it's one of our directive comments
+        const isExpandedDirective = `{comment: ${commentText}}` === EXPANDED_SECTION_DIRECTIVE;
+        const isShorthandDirective = `{comment: ${commentText}}` === SHORTHAND_SECTION_DIRECTIVE;
+
+        if (isExpandedDirective || isShorthandDirective) {
+            // Find the parent section element
+            let section = element.parentElement;
+            while (section && !section.classList.contains('section')) {
+                section = section.parentElement;
+            }
+
+            if (section) {
+                // Add appropriate CSS class
+                if (isExpandedDirective) {
+                    section.classList.add('expanded-section');
+                } else {
+                    section.classList.add('shorthand-section');
+                }
+            }
+
+            // Remove the directive comment element
+            element.remove();
+        }
+    });
+    return doc;
+}
+
 
 /**
  * Adds repeat classes to chord sections and processes repetitions
@@ -280,13 +326,15 @@ export function highlightRepetition(doc: Document): Document {
  * @returns Processed HTML string
  */
 export function addRepeatClasses(
-    htmlString: string, 
-    classNames = DEFAULT_SECTION_TYPES, 
+    htmlString: string,
+    classNames = DEFAULT_SECTION_TYPES,
     useLabels = false
 ): string {
     // Parse HTML only once
     const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, 'text/html');
+    let doc = parser.parseFromString(htmlString, 'text/html');
+
+    doc = processExpandedSections(doc);
 
     // Process the document
     const processedDoc = collapseConsecutiveRepeatedSections(
