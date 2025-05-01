@@ -35,8 +35,6 @@ const validVariationValues = [
 
 type validVariation = (typeof validVariationValues)[number];
 
-// Detect successive recalls (e.g. {chorus}\n{chorus}) and replace them in shorthand version by e.g. `(2x) shorthand` (depending on the number of successive calls) and likewise in expanded form. Take care to only shorten this when it's really one after another with no variations.
-
 // ==================== PART VARIATIONS ====================
 
 /**
@@ -183,15 +181,66 @@ function partVariationWithMetaInfo(
 // ==================== DIRECTIVE PROCESSING ====================
 
 /**
- * Replaces shorthand directives with both their full content and shorthand version
+ * Detects sequences of consecutive identical directive recalls and returns information
+ * about them for compression
+ * 
+ * @param content - Content lines to analyze
+ * @param position - Current position in content
+ * @param callRegex - Regular expression to match directive calls
+ * @returns Object with information about consecutive recalls, or null if none found
+ */
+function detectConsecutiveRecalls(
+    content: string[],
+    position: number,
+    callRegex: RegExp
+): { count: number, key: string, lastIndex: number } {
+    let consecutiveRecalls = 0;
+    let currentKey = '';
+    let lastIndex = position;
+
+    // Look ahead for consecutive recalls of the same directive
+    while (lastIndex < content.length) {
+        if (!content[lastIndex].trim()) {
+            // ignore empty lines
+            lastIndex++;
+            continue;
+        }
+        const callMatch = content[lastIndex].match(callRegex);
+        if (!callMatch) break;
+
+        const matchKey = callMatch[1] || '';
+
+        // First recall or keys match
+        if (consecutiveRecalls === 0 || matchKey === currentKey) {
+            consecutiveRecalls++;
+            currentKey = matchKey;
+            lastIndex++;
+        } else {
+            break; // Different key, end the streak
+        }
+    }
+
+    return {
+        count: consecutiveRecalls,
+        key: currentKey,
+        lastIndex: lastIndex - 1
+    };
+}
+
+
+/**
+ * Replaces shorthand directives with both their full content and shorthand version.
  * This means that postprocessing needs to be applied to the HTML after parsing by the chordpro parser to hide either one.
+ * 
+ * Compresses consecutive directive recalls.
  * 
  * Also replaces custom extensions to the ChordPro format with stuff that can be parsed by a regular ChordPro parser.
  * 
+ * 
  * @param song - The ChordPro song content
  * @param directives - Array of directive names to process
- * @param shortHands - Array of shorthand identifiers corresponding to directives - these will be shown
- * @returns Processed song with expanded directives
+ * @param shortHands - Array of shorthand identifiers corresponding to directives
+ * @returns Processed song with expanded directives and compressed recalls
  */
 export function preparseDirectives(
     song: string,
@@ -232,34 +281,48 @@ export function preparseDirectives(
     const variantEndRegex = new RegExp("^\\{end_of_variant\\}");
 
     // Process each line of the song
-    const processedContent: string[] = song.split('\n').map(line => {
+    const processedLines: string[] = [];
+    const songLines = song.split('\n');
+    let i = 0;
+    while (i < songLines.length) {
+        const line = songLines[i];
+
         // Check for variant start
         const variantStartMatch = line.match(variantStartRegex);
         if (variantStartMatch) {
             if (!validVariationValues.includes(variantStartMatch[1] as validVariation)) {
                 console.log("Invalid variant type:", variantStartMatch[1], "--> Skipping...");
-                return;
+                i++;
+                continue;
             }
             currentVariationType = variantStartMatch[1] as validVariation;
             currentVariationContent = [];
             variantActive = true;
-            return;
+            i++;
+            continue;
         }
 
         // Check for variant end
         const variantEndMatch = line.match(variantEndRegex);
         if (variantEndMatch) {
             variantActive = false;
-            return;
+            i++;
+            continue;
         }
 
         // Collect variant content
         if (variantActive) {
+            if (!currentVariationContent) {
+                currentVariationContent = [];
+                console.log("Warning: variantActive but currentVariationContent is null!")
+            }
             currentVariationContent.push(line);
-            return;
+            i++;
+            continue;
         }
 
-        // Process directive patterns
+        // Process directive start/end
+        let directiveMatched = false;
         for (const { directive, shortHand, startRegex, endRegex, callRegex } of directiveRegexes) {
             // Check for directive start
             const startMatch = line.match(startRegex);
@@ -268,32 +331,49 @@ export function preparseDirectives(
                 currentKey = startMatch[1] || shortHand || defaultKey;
                 currentContent = [line];
                 directiveMaps[directive] = directiveMaps[directive] || {};
-                return;
+                directiveMatched = true;
+                break;
             }
-
             // Check for directive end
             const endMatch = line.match(endRegex);
             if (endMatch && currentContent && currentDirective === directive) {
                 currentContent.push(line);
+                if (!currentKey) {
+                    console.log("Error: Directive key not found!");
+                    currentKey = defaultKey;
+                }
                 directiveMaps[directive][currentKey] = currentContent;
 
                 if (currentKey !== defaultKey) {
                     currentContent[1] = currentKey + ": " + currentContent[1];
                 }
 
-                const currentBlock = currentContent;
+                processedLines.push(currentContent.join('\n'));
                 currentDirective = null;
                 currentContent = null;
                 currentKey = null;
-                return currentBlock.join('\n');
+                directiveMatched = true;
+                break;
             }
 
-            // Check for directive recall
+            // Check for (consecutive) directive recalls
             const callMatch = line.match(callRegex);
+            let consecutiveModifier = "";
             if (callMatch) {
+                const consecutiveInfo = detectConsecutiveRecalls(
+                    songLines,
+                    i,
+                    callRegex
+                );
+                if (consecutiveInfo.count > 1) {
+                    // We found consecutive recalls of the same directive
+                    consecutiveModifier = `(${consecutiveInfo.count}x) `;
+                    i = consecutiveInfo.lastIndex;
+                }
+
                 const directiveKey = callMatch[1] || shortHand || defaultKey;
                 let contentToInsert = directiveMaps[directive][directiveKey];
-                const repeatKey = `${directiveKey === defaultKey ? '' : `${directiveKey}:`}`;
+                const repeatKey = `${directiveKey === defaultKey ? `${consecutiveModifier}` : `${consecutiveModifier}${directiveKey}:`}`;
 
                 if (currentVariationContent) {
                     // insert variation if applicable
@@ -324,7 +404,8 @@ export function preparseDirectives(
                     contentToInsert = [
                         contentToInsert[0],
                         EXPANDED_SECTION_DIRECTIVE,
-                        ...contentToInsert.slice(1),
+                        consecutiveModifier + contentToInsert[1],
+                        ...contentToInsert.slice(2),
                         `{start_of_${directive}}`,
                         SHORTHAND_SECTION_DIRECTIVE,
                         // include the recalled part even in shorthand if it's only a single line
@@ -334,27 +415,29 @@ export function preparseDirectives(
                 }
 
                 if (contentToInsert) {
-                    return contentToInsert.join('\n');
+                    processedLines.push(contentToInsert.join('\n'));
+                    directiveMatched = true;
                 }
             }
         }
-        // If inside a directive, add line to current content
-        if (currentContent !== null) {
-            currentContent.push(line);
-            return;
+        // If no directive matched, add as regular line
+        if (!directiveMatched) {
+            // If inside a directive, add to current content
+            if (currentContent !== null) {
+                currentContent.push(line);
+            } else { processedLines.push(line); }
+
         }
-
-        // Regular line
-        return line;
-    });
-
-    // Filter out nulls and join the processed content
-    return processedContent
+        i++;
+    }
+    // Join the processed lines
+    return processedLines
         .map(l => l ? l.trim() : null)
         .filter(p => p)
         .join('\n')
         .trim();
 }
+
 
 // ==================== NOTATION CONVERSION ====================
 

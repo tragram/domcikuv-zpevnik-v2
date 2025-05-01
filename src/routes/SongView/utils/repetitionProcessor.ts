@@ -161,90 +161,6 @@ function compareChordLists(chords1: string[], chords2: string[]): ChordMatch {
 }
 
 /**
- * Collapses consecutive identical sections with repetition indicators
- * Optimized for fewer DOM operations
- * @param doc - Document to process
- * @param classNames - Section class names to look for
- * @returns Processed document
- */
-function collapseConsecutiveRepeatedSections(doc: Document, classNames = DEFAULT_SECTION_TYPES): Document {
-    // Cache section elements to avoid repeated DOM queries
-    const allSections = Array.from(doc.querySelectorAll('.section'));
-
-    // Track sections to remove in one batch at the end
-    const sectionsToRemove: Element[] = [];
-    const labelsToAdd: { section: Element, count: number }[] = [];
-
-    let i = 0;
-    while (i < allSections.length) {
-        const current = allSections[i];
-        const currentClass = classNames.find(className => current.classList.contains(className));
-
-        if (!currentClass || !current.classList.contains('repeated-chords')) {
-            i++;
-            continue;
-        }
-
-        // Find how many consecutive identical sections we have
-        let repeatCount = 1;
-        let j = i + 1;
-
-        // Use cached elements to avoid DOM traversal
-        while (j < allSections.length) {
-            const next = allSections[j];
-
-            // Check if the next section is immediately adjacent (using cached array order)
-            if (j > i + repeatCount) {
-                break;
-            }
-
-            // Check if it's the same type of section and has the same content
-            if (!next.classList.contains(currentClass) ||
-                !next.classList.contains('repeated-chords') ||
-                !next.isEqualNode(current)) {
-                break;
-            }
-
-            repeatCount++;
-            j++;
-        }
-
-        if (repeatCount > 1) {
-            // Track sections to modify later (reduces DOM operations)
-            labelsToAdd.push({ section: current, count: repeatCount });
-
-            // Queue repeated sections for removal
-            for (let k = i + 1; k < i + repeatCount; k++) {
-                sectionsToRemove.push(allSections[k]);
-            }
-
-            // Skip the sections we've processed
-            i += repeatCount;
-        } else {
-            i++;
-        }
-    }
-
-    // Batch process all labels
-    labelsToAdd.forEach(({ section, count }) => {
-        const repetitionLabel = doc.createElement('span');
-        repetitionLabel.className = 'repetition-count';
-        repetitionLabel.textContent = `(${count}×)`;
-
-        // Insert before the first section
-        const firstLine = section.querySelector(".lyrics-line");
-        if (firstLine) {
-            firstLine.insertBefore(repetitionLabel, firstLine.firstChild);
-        }
-    });
-
-    // Batch remove all sections at once
-    sectionsToRemove.forEach(section => section.remove());
-
-    return doc;
-}
-
-/**
  * Efficiently highlights repetition marks in the music notation
  * @param doc - Document to process
  * @returns Processed document
@@ -337,10 +253,7 @@ export function addRepeatClasses(
     doc = processExpandedSections(doc);
 
     // Process the document
-    const processedDoc = collapseConsecutiveRepeatedSections(
-        detectRepeatedChordPatterns(doc, classNames, useLabels),
-        classNames
-    );
+    const processedDoc = detectRepeatedChordPatterns(doc, classNames, useLabels);
 
     // Extract HTML once
     return processedDoc.body.innerHTML;
