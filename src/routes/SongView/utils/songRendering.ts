@@ -436,7 +436,7 @@ function parseChordPro(
         withEnglishChords, 
         DEFAULT_SECTION_DIRECTIVES, 
         DEFAULT_SECTION_LABELS, 
-        repeatChorus
+        repeatChorus,
     );
     
     // Transpose the song if needed
