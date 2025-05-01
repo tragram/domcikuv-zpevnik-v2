@@ -40,5 +40,5 @@ tak [F]dokud se [G]zpívá, [F]ještě se [G]neumřelo [C][Emi][Dm7][G]
 [C]Z Těšína [Emi]vyjíždí [Dm7]vlaky až na [G]kraj svět[C]a, [Emi][Dm7][G]
 [C]zvedl jsem [Emi]telefon a [Dm7]ptám se: [G]"Lidi, [C]jste [Emi]tam?" [Dm7][G]
 [F]A z [G]veliké dálky [C]do uší mi [Ami]zazně[G]lo,
-𝄆 že [F]dokud se [G]zpívá, [F]ještě se [G]neumřelo. [C]𝄇 [Emi][Dm7][G]
+𝄆 že [F]dokud se [G]zpívá, [F]ještě se [G]neumřelo. [C] 𝄇 [Emi][Dm7][G]
 {end_of_verse}

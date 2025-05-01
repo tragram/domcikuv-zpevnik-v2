@@ -31,7 +31,7 @@ má skrytej význam [H]asi. [H7]
 𝄆 [C]Zdálo, zdálo, zdálo,
 asi se mi [Emi]zdálo, [Asus2][Emi][Asus2]
 [G]málo, málo, málo,
-že chybí už tak [Hmi]málo. [H7]𝄇
+že chybí už tak [Hmi]málo. [H7] 𝄇
 {end_of_chorus}
 
 {start_of_verse}

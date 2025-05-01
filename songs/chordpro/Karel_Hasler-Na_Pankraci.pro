@@ -21,7 +21,7 @@ ale [C]jiný mi za [G]ní cho[C]dí 𝄇
 𝄆 [C]Vy mládenci, kteří jste [F]jako já
 [C]nemilujte doopravd[G]y 𝄇
 𝄆 [G]pomilujte, [F]pošpásujte, [C]
-ale [C]lásku jí [G]neslibujte [C]𝄇
+ale [C]lásku jí [G]neslibujte [C] 𝄇
 {end_of_verse}
 
 {start_of_verse}

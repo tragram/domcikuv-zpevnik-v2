@@ -16,7 +16,7 @@
 {end_of_verse}
 
 {start_of_bridge}
-Mé [G7]DKW S[C]PZ AB[E7]T dvacet pět [Am]pade[D7]sát 
+Mé [G7]DKW S[C]PZ AB[E7]T dvacet pět [Am]pade[D7]sát
 [G]musí [Em]teďka [Am]na G[D7]O [A7]do Č[D7]SA[G]O. [D7]
 {end_of_bridge}
 
@@ -34,7 +34,7 @@ Jse[G7]m RND[C]r. CSC. [E7]z ČVUT v [Am]Praze [D7]dvě
 {start_of_chorus}
 [D]Tohle I.A. [A7]VHJ dělá kromě [D]DKW
 BMW a [A7]NSU, KDF i [D]MG
-[G]za dvě [Em]LP [Am]KT[D7]O 
+[G]za dvě [Em]LP [Am]KT[D7]O
 [G]DK[Em]W mám [Am]na G[D7]O,
 [C]když dosta[C#dim]nu na [G]ČV[Em]UT [A7]syna [D7]Kelblo[G]vé. [D7]
 {end_of_chorus}
@@ -53,7 +53,7 @@ BMW a [A7]NSU, KDF i [D]MG
 {start_of_chorus}
 [D]Všechno dopad[A7]ne OK za lístky na [D]FOK
 Šofér ČS[A7]AD má o Šumana [D]zájem.
-[G]Mistr [Emi]od Č[Ami]SA[D7]O 
+[G]Mistr [Emi]od Č[Ami]SA[D7]O
 [G]známou [Emi]má na [Ami]PK[D7]O,
 [C]její [C#dim]bratr v [G]OU[Emi]NZ [A7]dělá [D7]sestřič[G]ku. [D7]
 {end_of_chorus}
@@ -61,18 +61,18 @@ BMW a [A7]NSU, KDF i [D]MG
 {start_of_verse}
 [G]V OÚ[Em]NZ na [Am]W[D7]C
 [G]mistr [Em]chytil [Ami]TB[D7]C,
-[C]musí na R[G]TG, E[Em]KG a [A7]EE[D7]G. 
+[C]musí na R[G]TG, E[Em]KG a [A7]EE[D7]G.
 {end_of_verse}
 
 {start_of_bridge}
-[G7]Spojení Č[C]SAO Č[E7]VUT O[A7]PB[D7]H 
+[G7]Spojení Č[C]SAO Č[E7]VUT O[A7]PB[D7]H
 [G]ČS[Emi]AD [Ami]FO[D7]K [A7]přeru[D7]šilo [G]se. [D7]
 {end_of_bridge}
 
 {start_of_chorus}
-[D]RNDr. [A7]CSc. z ČVUT dá [D]DKW 
+[D]RNDr. [A7]CSc. z ČVUT dá [D]DKW
 SPZ AB[A7]T 25-50 do [D]šrotu.
-[G]Z ČS[Emi]SR [Ami]do M[D7]LR 
-[G]z ČV[Emi]UT [Ami]RN[D7]Dr. 
+[G]Z ČS[Emi]SR [Ami]do M[D7]LR
+[G]z ČV[Emi]UT [Ami]RN[D7]Dr.
 [C]musí [C#dim]chudák [G]s ČS[Emi]AD [A7]nebo [D7]s ČS[G]D!
 {end_of_chorus}

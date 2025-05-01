@@ -39,7 +39,7 @@ Ei [Hm]tanssi Mikä [D]boogie-boog?
 Mä [G]osaan vetää vaan [A]valssimood
 Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi [A]
 
-𝄆 Ei suomalaiset [Hm]tanssi [G][D][A]𝄇
+𝄆 Ei suomalaiset [Hm]tanssi [G][D][A] 𝄇
 {end_of_chorus}
 
 {start_of_verse}
@@ -74,7 +74,7 @@ Ei [Hm]tanssi Mikä [D]boogie-boog?
 Mä [G]osaan vetää vaan [A]valssimood
 Ei [Hm]tanssi, ei [G]tanssi, ei [D]tanssi [A]
 
-𝄆 Ei suomalaiset [Hm]tanssi [G][D][A]𝄇
+𝄆 Ei suomalaiset [Hm]tanssi [G][D][A] 𝄇
 {end_of_chorus}
 
 {start_of_chorus}
