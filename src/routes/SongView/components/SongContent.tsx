@@ -1,5 +1,5 @@
 import { SongData } from '@/types/types'
-import { forwardRef } from 'react'
+import { forwardRef, useMemo } from 'react'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import { renderSong } from '../utils/songRendering'
 import BackgroundImage from './BackgroundImage'
@@ -16,11 +16,13 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
     ({ songData, transposeSteps, gestureContainerRef }, ref) => {
         const { layout, chords: chordSettings } = useViewSettingsStore();
 
-        const parsedContent = renderSong(
+        const parsedContent = useMemo(() => 
+            renderSong(
             songData,
             transposeSteps,
-            layout.repeatParts,
             chordSettings.czechChordNames
+            ), 
+            [songData, transposeSteps, chordSettings.czechChordNames]
         );
 
         return (
