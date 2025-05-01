@@ -65,9 +65,9 @@ Säkkijärven [Am]polkka
 ei sille polkalle [Am]vertaa lie
 Sen kanssa on vaikka [E7]mierontie
 Säkkijärven [Am]polkkaa
-{start_of_verse}
-
 {end_of_verse}
+
+{start_of_verse}
 [Am]Siinä on liplatus [E7]laineitten
 siinä on huojunta [Am]honkien
 Karjala soi, kaikki [E7]tietää sen

@@ -55,8 +55,8 @@ punč a grog a pivo a [Am]rum
 [E7]vodvezou mě na zá[Am]chytku
 {end_of_verse}
 
-{start_of_bridge: Recitativ}
-[Ami]𝄆 Do putyky 𝄇 (4x)
+{start_of_bridge: Rec.}
+𝄆 Do putyky 𝄇 (4x)
 𝄆 Jdu 𝄇 (5x)
 𝄆 Do putyky 𝄇 (4x)
 𝄆 Jdu 𝄇 (5x)

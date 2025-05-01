@@ -38,7 +38,8 @@
 [Emi]zatan[G]či a já [D]budu ti [Emi]hrát.
 {end_of_verse}
 
+{comment: Druhý refrén - melodie jako sloka}
+
 {chorus}
 
-{comment: Melodie jako sloka}
 {chorus}
