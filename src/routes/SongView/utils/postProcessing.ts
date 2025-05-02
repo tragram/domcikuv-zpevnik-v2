@@ -1,4 +1,3 @@
-import { Regex } from "lucide-react";
 import { EXPANDED_SECTION_DIRECTIVE, SHORTHAND_SECTION_DIRECTIVE } from "./preparseChordpro";
 
 // TypeScript interfaces for better type safety and code documentation
@@ -19,11 +18,6 @@ interface PatternCollection {
 }
 
 const MAX_CHORD_MATCH_DISTANCE = 3;
-
-/**
- * Musical repetition symbols
- */
-const REPETITION_SYMBOLS = ['𝄆', '𝄇'];
 
 /**
  * Default section types to process for repetitions
@@ -159,35 +153,6 @@ function compareChordLists(chords1: string[], chords2: string[]): ChordMatch {
     }
 
     return { matches, distance };
-}
-
-/**
- * Efficiently highlights repetition marks in the music notation
- * @param doc - Document to process
- * @returns Processed document
- */
-export function highlightRepetition(doc: Document): Document {
-    // Find all lyrics spans in one batch query
-    const lyricsSpans = doc.querySelectorAll("span.lyrics");
-    const spansToWrap: Element[] = [];
-
-    // First identify which spans need wrapping (avoids unnecessary DOM operations)
-    lyricsSpans.forEach(span => {
-        const text = span.textContent || '';
-        if (REPETITION_SYMBOLS.some(symbol => text.includes(symbol))) {
-            spansToWrap.push(span);
-        }
-    });
-
-    // Then do the wrapping in a single batch
-    spansToWrap.forEach(span => {
-        const repetitionDiv = doc.createElement("div");
-        repetitionDiv.className = "repetition";
-        span.replaceWith(repetitionDiv);
-        repetitionDiv.appendChild(span);
-    });
-
-    return doc;
 }
 
 /**

@@ -1,5 +1,37 @@
-import { highlightRepetition } from './postProcessing';
 
+/**
+ * Musical repetition symbols
+ */
+const REPETITION_SYMBOLS = ['𝄆', '𝄇'];
+
+/**
+ * Efficiently highlights repetition marks in the music notation
+ * @param doc - Document to process
+ * @returns Processed document
+ */
+function highlightRepetition(doc: Document): Document {
+    // Find all lyrics spans in one batch query
+    const lyricsSpans = doc.querySelectorAll("span.lyrics");
+    const spansToWrap: Element[] = [];
+
+    // First identify which spans need wrapping (avoids unnecessary DOM operations)
+    lyricsSpans.forEach(span => {
+        const text = span.textContent || '';
+        if (REPETITION_SYMBOLS.some(symbol => text.includes(symbol))) {
+            spansToWrap.push(span);
+        }
+    });
+
+    // Then do the wrapping in a single batch
+    spansToWrap.forEach(span => {
+        const repetitionDiv = doc.createElement("div");
+        repetitionDiv.className = "repetition";
+        span.replaceWith(repetitionDiv);
+        repetitionDiv.appendChild(span);
+    });
+
+    return doc;
+}
 /**
  * Maps for chord name conversion and substitution
  */
