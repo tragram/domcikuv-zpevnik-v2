@@ -4,8 +4,7 @@
 {language: czech}
 {capo: 0}
 {key: Ami}
-
-{range: }
+{range: e1-e2}
 {tempo: }
 
 {comment: Začít pomalu zlehka a postupně zrychlovat a gradovat.}
