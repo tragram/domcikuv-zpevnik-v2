@@ -77,7 +77,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                         {installItem}
                     </DropdownMenuContent >
                 </DropdownMenu>
-                <RandomSong songs={songDB.songs} />
+                <RandomSong songs={songDB.songs} currentSong={songData}/>
             </ToolbarBase>
             {PWAInstallComponent}
         </div>

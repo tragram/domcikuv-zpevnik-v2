@@ -46,7 +46,14 @@ function shouldResetBanList(lastResetDate: string | null): boolean {
     return now >= resetTime && lastReset < resetTime;
 }
 
-function RandomSong({ songs }) {
+interface RandomSongProps {
+    songs: SongData[];
+    // currentSong - when shown in SongView, this allows us to ban songs not entered via the shuffle button
+    currentSong?: SongData | null;
+}
+
+function RandomSong({ songs, currentSong = null }: RandomSongProps) {
+    console.log(currentSong)
     const navigate = useNavigate();
     const [bannedSongs, setBannedSongs] = useLocalStorageState<string[]>("songsBannedFromRandom", { defaultValue: [] });
     const [lastResetDate, setLastResetDate] = useLocalStorageState<string | null>("lastBanListResetDate", { defaultValue: null });
@@ -69,8 +76,13 @@ function RandomSong({ songs }) {
 
     const selectSong = () => {
         try {
-            const chosenSong = randomSong(songs, bannedSongs);
-            setBannedSongs([...bannedSongs, chosenSong.id]);
+            // Create a temporary ban list including the current song if it exists and isn't already banned
+            const tempBannedSongs = currentSong && !bannedSongs.includes(currentSong.id)
+                ? [...bannedSongs, currentSong.id]
+                : bannedSongs;
+
+            const chosenSong = randomSong(songs, tempBannedSongs);
+            setBannedSongs(prev => [...prev, chosenSong.id]);
             return chosenSong;
         } catch (error) {
             // Show the dialog when no songs are available
@@ -102,7 +114,7 @@ function RandomSong({ songs }) {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogAction onClick={resetBanList}>
-                            Reset banned songs
+                            Reset bans
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
