@@ -2,7 +2,7 @@ import { Dices } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
-import { SongData } from '@/types/types';
+import { SongData, SongDB } from '@/types/types';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -12,6 +12,8 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { DropdownIconStart, DropdownMenuItem } from './ui/dropdown-menu';
+import useLocalStorageState from 'use-local-storage-state';
 
 const BAN_LIST_KEY = "songsBannedFromRandom";
 
@@ -31,6 +33,23 @@ export const resetBanList = () => {
     setLocalStorageItem(BAN_LIST_KEY, []);
     setLocalStorageItem("lastBanListResetDate", new Date().toISOString());
 };
+
+export function ResetBanListDropdownItem({ songDB }: { songDB: SongDB }) {
+    const [bannedSongs, setBannedSongs] = useLocalStorageState<string[]>("songsBannedFromRandom", { defaultValue: [] });
+    console.log(bannedSongs)
+    return (
+        <DropdownMenuItem
+            onClick={() => setBannedSongs([])}
+            onSelect={(e) => e.preventDefault()}
+        >
+            <DropdownIconStart icon={<Dices />} />
+            <div>
+                Reset ban list
+                <p className='text-[0.7em] leading-tight'>{bannedSongs.length}/{songDB.songs.length} songs marked seen</p>
+            </div>
+        </DropdownMenuItem>
+    );
+}
 
 function randomSong(songs: SongData[], bannedSongs: string[]): SongData {
     console.log(bannedSongs);
@@ -78,9 +97,7 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
     useEffect(() => {
         const lastResetDate = getLocalStorageItem("lastBanListResetDate", null);
         if (shouldResetBanList(lastResetDate)) {
-            console.log("Resetting banned songs list at", new Date().toISOString());
-            setLocalStorageItem(BAN_LIST_KEY, []);
-            setLocalStorageItem("lastBanListResetDate", new Date().toISOString());
+            resetBanList();
         }
     }, []);
 
