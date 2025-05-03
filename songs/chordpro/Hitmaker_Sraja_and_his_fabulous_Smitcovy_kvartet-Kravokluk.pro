@@ -31,7 +31,7 @@ Kau[D]boj, kau[E]boj nananana
 V práci [E]říkají mi Buffalo
 Což je [G]rozhodně lepší než Tvoje jméno
 Jsem [D]kauboj, kau[E]boj nananana
-{end_of_chorus}
+{end_of_verse}
 
 {start_of_verse}
 A [E]když opouštím v šest hernu
