@@ -2,7 +2,6 @@ import { Dices } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
-import useLocalStorageState from 'use-local-storage-state';
 import { SongData } from '@/types/types';
 import {
     AlertDialog,
@@ -13,6 +12,25 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+
+const BAN_LIST_KEY = "songsBannedFromRandom";
+
+// LocalStorage Helper Functions
+const getLocalStorageItem = (key, defaultValue) => {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+};
+
+const setLocalStorageItem = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+};
+
+export const retrieveBanList = () => getLocalStorageItem(BAN_LIST_KEY, []);
+
+export const resetBanList = () => {
+    setLocalStorageItem(BAN_LIST_KEY, []);
+    setLocalStorageItem("lastBanListResetDate", new Date().toISOString());
+};
 
 function randomSong(songs: SongData[], bannedSongs: string[]): SongData {
     console.log(bannedSongs);
@@ -53,36 +71,39 @@ interface RandomSongProps {
 }
 
 function RandomSong({ songs, currentSong = null }: RandomSongProps) {
-    console.log(currentSong)
     const navigate = useNavigate();
-    const [bannedSongs, setBannedSongs] = useLocalStorageState<string[]>("songsBannedFromRandom", { defaultValue: [] });
-    const [lastResetDate, setLastResetDate] = useLocalStorageState<string | null>("lastBanListResetDate", { defaultValue: null });
     const [isNoSongsDialogOpen, setIsNoSongsDialogOpen] = useState(false);
 
     // Check and reset ban list on component mount
     useEffect(() => {
+        const lastResetDate = getLocalStorageItem("lastBanListResetDate", null);
         if (shouldResetBanList(lastResetDate)) {
             console.log("Resetting banned songs list at", new Date().toISOString());
-            setBannedSongs([]);
-            setLastResetDate(new Date().toISOString());
+            setLocalStorageItem(BAN_LIST_KEY, []);
+            setLocalStorageItem("lastBanListResetDate", new Date().toISOString());
         }
-    }, [lastResetDate, setBannedSongs, setLastResetDate]);
+    }, []);
 
-    const resetBanList = () => {
-        setBannedSongs([]);
-        setLastResetDate(new Date().toISOString());
-        setIsNoSongsDialogOpen(false);
-    };
+    // Handle current song ban
+    useEffect(() => {
+        if (!currentSong) return;
+        const bannedSongs = retrieveBanList();
+
+        // Skip if song is already in banned list
+        if (bannedSongs.includes(currentSong.id)) return;
+
+        // Add current song to banned songs
+        setLocalStorageItem(BAN_LIST_KEY, [...bannedSongs, currentSong.id]);
+    }, [currentSong]);
 
     const selectSong = () => {
         try {
-            // Create a temporary ban list including the current song if it exists and isn't already banned
-            const tempBannedSongs = currentSong && !bannedSongs.includes(currentSong.id)
-                ? [...bannedSongs, currentSong.id]
-                : bannedSongs;
+            const bannedSongs = retrieveBanList();
+            const chosenSong = randomSong(songs, bannedSongs);
 
-            const chosenSong = randomSong(songs, tempBannedSongs);
-            setBannedSongs(prev => [...prev, chosenSong.id]);
+            // Add chosen song to banned list
+            setLocalStorageItem(BAN_LIST_KEY, [...bannedSongs, chosenSong.id]);
+
             return chosenSong;
         } catch (error) {
             // Show the dialog when no songs are available
@@ -113,7 +134,7 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogAction onClick={resetBanList}>
+                        <AlertDialogAction onClick={() => { resetBanList(); setIsNoSongsDialogOpen(false) }}>
                             Reset bans
                         </AlertDialogAction>
                     </AlertDialogFooter>
