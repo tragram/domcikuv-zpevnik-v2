@@ -255,6 +255,7 @@ export function preparseDirectives(
 
     // Maps to store directive content by key
     const directiveMaps: { [directive: string]: { [key: string]: string[] } } = {};
+    const directivesAdded: { [directive: string]: string[] } = {};
 
     // Create regex patterns for each directive
     const directiveRegexes = directives.map((directive, i) => ({
@@ -332,6 +333,7 @@ export function preparseDirectives(
                 currentKey = startMatch[1] || shortHand || defaultKey;
                 currentContent = [line];
                 directiveMaps[directive] = directiveMaps[directive] || {};
+                directivesAdded[directive] = directivesAdded[directive] || [];
                 directiveMatched = true;
                 break;
             }
@@ -344,6 +346,7 @@ export function preparseDirectives(
                     currentKey = defaultKey;
                 }
                 directiveMaps[directive][currentKey] = currentContent;
+                directivesAdded[directive].push(currentKey);
                 if (currentKey !== defaultKey) {
                     currentContent.splice(1, 0, SECTION_TITLE_COMMENT(currentKey, "") ?? "");
                 }
@@ -370,8 +373,22 @@ export function preparseDirectives(
                     i = consecutiveInfo.lastIndex;
                 }
 
-                const directiveKey = callMatch[1] || shortHand || defaultKey;
-                let contentToInsert = directiveMaps[directive][directiveKey];
+                let directiveKey = callMatch[1] || shortHand || defaultKey;
+                let contentToInsert;
+                if (directivesAdded[directive].includes(directiveKey)) {
+                    contentToInsert = directiveMaps[directive][directiveKey];
+                }
+                else {
+                    if (directivesAdded[directive]) {
+                        const newDirectiveKey = directivesAdded[directive].slice(-1)[0];
+                        console.log(`Warning: Recalled part "${directiveKey}" not found! Recalling the last section of the same type (${directive}) - ${newDirectiveKey}!`);
+                        directiveKey = newDirectiveKey;
+                        contentToInsert = directiveMaps[directive][directiveKey];
+                    } else {
+                        console.log(`Warning: Recalled part "${directive}" not found! No section of the same type has been recorded --> ignoring...`);
+                        break;
+                    }
+                }
                 const sectionTitle = SECTION_TITLE_COMMENT(directiveKey === defaultKey ? "" : directiveKey, consecutiveModifier);
 
                 if (currentVariationContent) {
