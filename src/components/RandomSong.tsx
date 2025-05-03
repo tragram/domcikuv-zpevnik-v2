@@ -1,4 +1,4 @@
-import { Dices } from 'lucide-react';
+import { Dices, ListRestart } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -6,13 +6,14 @@ import { SongData, SongDB } from '@/types/types';
 import {
     AlertDialog,
     AlertDialogAction,
+    AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { DropdownIconStart, DropdownMenuItem } from './ui/dropdown-menu';
+import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuItem } from './ui/dropdown-menu';
 import useLocalStorageState from 'use-local-storage-state';
 
 const BAN_LIST_KEY = "songsBannedFromRandom";
@@ -34,26 +35,38 @@ export const resetBanList = () => {
     setLocalStorageItem("lastBanListResetDate", new Date().toISOString());
 };
 
-export function ResetBanListDropdownItem({ songDB }: { songDB: SongDB }) {
+export function ResetBanListDropdownItems({ songDB }: { songDB: SongDB }) {
     const [bannedSongs, setBannedSongs] = useLocalStorageState<string[]>("songsBannedFromRandom", { defaultValue: [] });
-    console.log(bannedSongs)
+    const [ignoreSeenSongs, setIgnoreSeenSongs] = useLocalStorageState<boolean>("ignoreSeenSongs", { defaultValue: true });
     return (
-        <DropdownMenuItem
-            onClick={() => setBannedSongs([])}
-            onSelect={(e) => e.preventDefault()}
-        >
-            <DropdownIconStart icon={<Dices />} />
-            <div>
-                Reset ban list
-                <p className='text-[0.7em] leading-tight'>{bannedSongs.length}/{songDB.songs.length} songs marked seen</p>
-            </div>
-        </DropdownMenuItem>
+        <>
+            <DropdownMenuCheckboxItem
+                onSelect={(e) => e.preventDefault()}
+                checked={ignoreSeenSongs}
+                onCheckedChange={() => setIgnoreSeenSongs(!ignoreSeenSongs)}
+            >
+                <DropdownIconStart icon={<Dices />} />
+                <div>
+                    Ban seen songs from random
+                    <p className='text-[0.7em] leading-tight'>Bans reset at 3AM</p>
+                </div>
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuItem
+                onClick={() => setBannedSongs([])}
+                onSelect={(e) => e.preventDefault()}
+            >
+                <DropdownIconStart icon={<ListRestart />} />
+                <div>
+                    Reset ban list
+                    <p className='text-[0.7em] leading-tight'>{bannedSongs.length}/{songDB.songs.length} songs marked seen</p>
+                </div>
+            </DropdownMenuItem>
+        </>
     );
 }
 
 function randomSong(songs: SongData[], bannedSongs: string[]): SongData {
-    console.log(bannedSongs);
-    if (songs.length === bannedSongs.length) {
+    if (songs.length <= bannedSongs.length) {
         throw Error("No more random songs available!");
     }
     while (true) {
@@ -92,6 +105,7 @@ interface RandomSongProps {
 function RandomSong({ songs, currentSong = null }: RandomSongProps) {
     const navigate = useNavigate();
     const [isNoSongsDialogOpen, setIsNoSongsDialogOpen] = useState(false);
+    const [ignoreSeenSongs, setIgnoreSeenSongs] = useLocalStorageState<boolean>("ignoreSeenSongs", { defaultValue: true });
 
     // Check and reset ban list on component mount
     useEffect(() => {
@@ -116,10 +130,12 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
     const selectSong = () => {
         try {
             const bannedSongs = retrieveBanList();
-            const chosenSong = randomSong(songs, bannedSongs);
+            const chosenSong = randomSong(songs, ignoreSeenSongs ? bannedSongs : []);
 
-            // Add chosen song to banned list
-            setLocalStorageItem(BAN_LIST_KEY, [...bannedSongs, chosenSong.id]);
+            // Add chosen song to banned list if not in the list (or when using banned songs, in which case this is guaranteed)
+            if (ignoreSeenSongs || !bannedSongs.includes(chosenSong.id)) {
+                setLocalStorageItem(BAN_LIST_KEY, [...bannedSongs, chosenSong.id]);
+            }
 
             return chosenSong;
         } catch (error) {
@@ -151,7 +167,13 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogAction onClick={() => { resetBanList(); setIsNoSongsDialogOpen(false) }}>
+                        <AlertDialogCancel onClick={() => { setIsNoSongsDialogOpen(false) }}
+                        >
+                            I'm good
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={() => { resetBanList(); setIsNoSongsDialogOpen(false) }}
+                        >
                             Reset bans
                         </AlertDialogAction>
                     </AlertDialogFooter>

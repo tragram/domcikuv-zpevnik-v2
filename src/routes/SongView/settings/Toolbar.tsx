@@ -1,6 +1,6 @@
 
 import { ModeToggleInner } from '@/components/mode-toggle'
-import RandomSong, { ResetBanListDropdownItem } from '@/components/RandomSong'
+import RandomSong, { ResetBanListDropdownItems } from '@/components/RandomSong'
 import { DataForSongView } from '@/components/song_loader'
 import { Button } from '@/components/ui/button'
 import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -67,7 +67,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                         {React.Children.toArray(<ModeToggleInner />)}
                         <DropdownMenuLabel>Misc</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <ResetBanListDropdownItem songDB={songDB}/>
+                        {React.Children.toArray(<ResetBanListDropdownItems songDB={songDB} />)}
                         <DropdownMenuItem>
                             <DropdownIconStart icon={<Github />} />
                             <Link
