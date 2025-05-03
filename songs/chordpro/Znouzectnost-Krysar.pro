@@ -25,8 +25,8 @@ a [G]do copánku spletený [F]vlasy barvy [Ami]havranů.
 {end_of_verse}
 
 {start_of_chorus}
-[Ami]Bylo nebylo, bylo nebylo, [G]bylo nebylo, [F]bylo neby[Ami]lo.
-Bylo nebylo, bylo nebylo, bylo nebylo, bylo nebylo.
+𝄆 [Ami]Bylo nebylo, bylo nebylo,
+[G]bylo nebylo, [F]bylo neby[Ami]lo. 𝄇
 {end_of_chorus}
 
 {start_of_verse}
