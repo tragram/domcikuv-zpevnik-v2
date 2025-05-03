@@ -331,7 +331,6 @@ export function preparseDirectives(
             if (startMatch) {
                 currentDirective = directive;
                 currentKey = startMatch[1] || shortHand || defaultKey;
-                console.log(currentKey)
                 currentContent = [line];
                 directiveMaps[directive] = directiveMaps[directive] || {};
                 directivesAdded[directive] = directivesAdded[directive] || [];
