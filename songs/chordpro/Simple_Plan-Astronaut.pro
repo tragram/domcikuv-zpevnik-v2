@@ -44,7 +44,7 @@ Can anybody [C]tell me [Emi]why
 I'm lonely like a [Ami]satel[D]lite?
 {end_of_verse}
 
-{chorus}
+{chorus: R1}
 
 {start_of_bridge}
 Now I [D]lie awake and scream
@@ -62,4 +62,4 @@ Are you [Ami]out there?
 Cause you're [D]all I've got!
 {end_of_chorus}
 
-{chorus}
+{chorus: R1}

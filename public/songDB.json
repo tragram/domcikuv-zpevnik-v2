@@ -9,12 +9,12 @@
     "tempo": "",
     "range": "g1-g2",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "c d e",
     "chordproFile": "AG_Flek-Carpe_diem.pro",
     "pdfFilenames": "['ag_flek_carpe_diem-sken.pdf', 'ag_flek_carpe_diem-comp.pdf', 'ag_flek_carpe_diem-gen.pdf']",
-    "contentHash": "505108790c8f3d8d5f751891494759cf89521c8f",
+    "contentHash": "604120c2739fc532791ea2420d49cacfb10faeb4",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev",
@@ -78,12 +78,12 @@
     "tempo": "",
     "range": "a1-a2",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "g",
     "chordproFile": "Alphaville-Mel_jmeno_Jan.pro",
     "pdfFilenames": "['alphaville_mel_jmeno_jan-sken.pdf', 'alphaville_mel_jmeno_jan-comp.pdf']",
-    "contentHash": "1a46e424cea523c905215f096e434fd48e6c687a",
+    "contentHash": "14fe8e5da8870a29e9e55c323035413f21f8dc53",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev",
@@ -371,7 +371,7 @@
     "startMelody": "a",
     "chordproFile": "Buty-Nad_stadem_koni.pro",
     "pdfFilenames": "['buty_nad_stadem_koni-sken.pdf', 'buty_nad_stadem_koni-comp.pdf']",
-    "contentHash": "7e854752f37397779d96d2857602f0663a4e6b9f",
+    "contentHash": "74f4a2522c123fc9a0290cf176e1824de6df6f31",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev",
@@ -941,12 +941,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Divokej_Bill-Bohuzel.pro",
     "pdfFilenames": "",
-    "contentHash": "e79c95f431f523605b1c543227f6b7b084dd308a",
+    "contentHash": "5edbb1bfcbef72944654ce62b857518bd6d77f45",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -962,12 +962,12 @@
     "tempo": "",
     "range": "e1-e2",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "e e e g e",
     "chordproFile": "Divokej_Bill-Malovani.pro",
     "pdfFilenames": "",
-    "contentHash": "370cb677afb16c6a47089bfbb673afe797e163f5",
+    "contentHash": "507c28e573d02de102706d6978aa3a8e87406ecd",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -983,12 +983,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Divokej_Bill-Plakala.pro",
     "pdfFilenames": "",
-    "contentHash": "18c8e3473d5ba626579c311a89f391cfdefc5f46",
+    "contentHash": "2857b5137e87cc1124e01d9f63ad43adde7da2a4",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -1025,12 +1025,12 @@
     "tempo": "",
     "range": "a1-g#1",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "a e d c",
     "chordproFile": "Druha_trava-Jeste_jedno_kafe.pro",
     "pdfFilenames": "",
-    "contentHash": "2677a10ee9e87c86838f9a55e100337da5db0c8f",
+    "contentHash": "6496421a100e04ea421edae21d68724d5ab3c36b",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -1656,12 +1656,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika.pro",
     "pdfFilenames": "",
-    "contentHash": "16620279e0330b360e002970f855c9802c5cbd36",
+    "contentHash": "e362bdfd9628c1725fe0b3e7ce29848b6911a4f4",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -1677,12 +1677,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Kravokluk.pro",
     "pdfFilenames": "",
-    "contentHash": "1fef1d922bd59f00fadaa21494086d130464a078",
+    "contentHash": "7062c758325f77ca964b5cb99a1f9b5f33ee3f5c",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -2035,12 +2035,12 @@
     "tempo": "",
     "range": "d1-d2",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "h h a h",
     "chordproFile": "Ivan_Mladek-Zkratky.pro",
     "pdfFilenames": "",
-    "contentHash": "05ef8a40bb75b12f4be80ef0fd12c77332a83744",
+    "contentHash": "86124c0ad80de11719c86200231dce252ec00a6f",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -2947,7 +2947,7 @@
     "startMelody": "e g a g",
     "chordproFile": "Kabat-Kdo_vi_jestli.pro",
     "pdfFilenames": "['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']",
-    "contentHash": "f9dbefd5eb355ae3eb98c6f3a605cae6292956d0",
+    "contentHash": "ade8cc180dceaf1319c3fb61124f09716a2f987e",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev"
@@ -3173,12 +3173,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Karcoolka-Kozel.pro",
     "pdfFilenames": "",
-    "contentHash": "bee944aa37ade29a2cf98e79fcfbcdab0408da2e",
+    "contentHash": "146f694a9026bf40e54f12b07b86b694b05cf3b8",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -3259,12 +3259,12 @@
     "tempo": "",
     "range": "e1-d1",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "g g f e",
     "chordproFile": "Karel_Hasler-Na_Pankraci.pro",
     "pdfFilenames": "",
-    "contentHash": "b5706d5c30465324c80ce25388337762d64fe0ea",
+    "contentHash": "184065ce9f2e617a09676ee172d3374969127193",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -3616,12 +3616,12 @@
     "tempo": "",
     "range": "c1-h1",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "dalle3",
     "startMelody": "g",
     "chordproFile": "Kingdom_Come_Deliverance-Poverty_And_Famine.pro",
     "pdfFilenames": "[]",
-    "contentHash": "ffe3016fc81ae1f2926b8166f5f664e270903698",
+    "contentHash": "e22ae4fcca885cda9dd6c0593a543472fbd7c7b0",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_dalle3",
@@ -3702,12 +3702,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Kouzla_kralu-Buchet_je_spousta.pro",
     "pdfFilenames": "",
-    "contentHash": "6d82852be60d6f866b13819aaf9ea971ad9ae6ba",
+    "contentHash": "7b517ddc167b54184506a1415683a64cf074feb4",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -4419,12 +4419,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Miki_Ryvola-Bedna_od_whiskey.pro",
     "pdfFilenames": "",
-    "contentHash": "4110b5db0b2c2fc30461a9d96ad75a6fd6e0811c",
+    "contentHash": "57ed831af6a718a317cc30bad47d23aeb81c3817",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -4608,12 +4608,12 @@
     "tempo": "",
     "range": "a1-c2",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "a",
     "chordproFile": "Mumford_Sons-Little_Lion_Man.pro",
     "pdfFilenames": "",
-    "contentHash": "babd95155e6c84edad63a1fe936a43252fa62f18",
+    "contentHash": "754f4e33be50f3a63a5ad8167defd5836fb806a3",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -5873,7 +5873,7 @@
     "startMelody": "f#",
     "chordproFile": "Simple_Plan-Astronaut.pro",
     "pdfFilenames": "['simple_plan_astronaut-sken.pdf', 'simple_plan_astronaut-comp.pdf', 'simple_plan_astronaut-gen.pdf']",
-    "contentHash": "469afc696b134e2ff1f2376adb086a680769672b",
+    "contentHash": "ac1316740af961fc14c8559aa8783a56e4d60092",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev"
@@ -6435,12 +6435,12 @@
     "tempo": "",
     "range": "h1-g1",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "e",
     "chordproFile": "Tri_sestry-Mexiko.pro",
     "pdfFilenames": "",
-    "contentHash": "df6b7f549a73823c38841bb00dcee7e54a4baa3c",
+    "contentHash": "c855ce9b53e87a94537a162499975015c25a3486",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -6708,12 +6708,12 @@
     "tempo": "",
     "range": "e1-f2",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "e c d h",
     "chordproFile": "Vojtech_Dyk-Alkoholicka.pro",
     "pdfFilenames": "",
-    "contentHash": "340eff0954ea76aaba00060b671e81860cf2356e",
+    "contentHash": "227a0e17d498a2f9dede0bcb4b648e60bc9c5831",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -6834,12 +6834,12 @@
     "tempo": "",
     "range": "a1-a2",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "c g",
     "chordproFile": "Waldemar_Matuska-Ruze_z_Texasu.pro",
     "pdfFilenames": "",
-    "contentHash": "598739c4effad0b74f0bb54ee03dee4adfe7a308",
+    "contentHash": "d490ac2b160f4e09acad87669acbb1432c22f5ee",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -7362,12 +7362,12 @@
     "tempo": "",
     "range": "",
     "prompt_model": "",
-    "prompt_id": "v2",
+    "prompt_id": "",
     "image_model": "",
     "startMelody": "",
     "chordproFile": "Znouzectnost-Krysar.pro",
     "pdfFilenames": "",
-    "contentHash": "2b7bb738997c3b463855dcf4b8870983833a7c53",
+    "contentHash": "369d109fcad2de08f0dd8b52fd1733abbb951a44",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
