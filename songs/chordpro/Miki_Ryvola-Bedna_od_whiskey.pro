@@ -4,8 +4,9 @@
 {language: czech}
 {capo: 0}
 {key: Ami}
-{range: }
+{range: a1-c#2}
 {tempo: }
+{start_melody: a c e a}
 
 {start_of_verse}
 [Ami]Dneska už mi [C]fóry ňák 

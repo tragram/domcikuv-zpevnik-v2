@@ -4,7 +4,8 @@
 {language: czech}
 {capo: 0}
 {key: D}
-{range: }
+{range: a1-d2}
+{start_melody: a d}
 {tempo: }
 
 {start_of_verse: V1}
@@ -18,14 +19,14 @@ tak [E]zpívám z plných [A]plic,
 [G]a když pořád [D]zpíváš,
 tak [G]to mu[A]síš žít [Hmi]sám,
 [Hmi]na samotě [D]v horách žiju,
-co s tím [A]nadělám?
+[A]co s tím nadělám?
 {end_of_verse}
 
 {start_of_verse: V2}
 Když [G]žiješ tady [D]v horách,
 vždy [G]je če[A]ho se [Hmi]bát,
-jenže [Hmi]starej kozel [D]ví,
-nač si pozor [A]dát.
+[Hmi]jenže starej [D]kozel ví,
+[A]nač si pozor dát.
 {end_of_verse}
 
 {start_of_chorus}

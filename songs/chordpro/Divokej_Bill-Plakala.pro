@@ -5,8 +5,8 @@
 {capo: 0}
 {key: Am}
 {tempo: }
-{range: }
-{start_melody: }
+{range: g1-g2}
+{start_melody: a a a h c d}
 
 
 {start_of_verse}

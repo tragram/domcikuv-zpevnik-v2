@@ -4,9 +4,9 @@
 {language: czech}
 {capo: 0}
 {key: E}
-
-{range: }
+{range: e1-g2}
 {tempo: }
+{start_melody: }
 
 {start_of_verse}
 Já [E]nosim stetson koženej
