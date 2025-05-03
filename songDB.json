@@ -2947,7 +2947,7 @@
     "startMelody": "e g a g",
     "chordproFile": "Kabat-Kdo_vi_jestli.pro",
     "pdfFilenames": "['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']",
-    "contentHash": "2ebef2f5d3432a961b3ff8d3a170a143b087e200",
+    "contentHash": "aea4cc970abddb6ceff94060971ce1f1d9814961",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev"
@@ -5873,7 +5873,7 @@
     "startMelody": "f#",
     "chordproFile": "Simple_Plan-Astronaut.pro",
     "pdfFilenames": "['simple_plan_astronaut-sken.pdf', 'simple_plan_astronaut-comp.pdf', 'simple_plan_astronaut-gen.pdf']",
-    "contentHash": "f65f69dc3d408299f8c04f1e8a1b55261c643b0b",
+    "contentHash": "b51ee90681aa37b681aef2d09dc7ea91e57bd4d0",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev"
