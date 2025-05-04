@@ -16,7 +16,7 @@ Překladem z angličtiny a vyprávěním tohoto příběhu se však název kři�
 Protože ale vzdáváme holt odvážným námořníkům na lodi, musíme si při každém refrénu ťuknout s lidmi v našem okolí a připít na uctění památky padlých.
 {end_of_verse}
 
-{start_of_verse: V1}
+{start_of_verse}
 [D]Na moři se potácí [G]křižník Obr[D]džes,
 na stožáru vlajka jak [A]nebe plné hvězd.
 [D]Všichni ti muži, kte[G]ří na něm [D]jsou,
@@ -28,7 +28,7 @@ netuší o smrti, [A]kterou zahy[D]nou.
 padlejm námořníkům z [A]lodi Obrdžes. 𝄇
 {end_of_chorus}
 
-{start_of_verse: V1}
+{start_of_verse}
 [D]Na moři se potácí [G]osamělý [D]člun,
 námořník nehrábne už [A]nikdy do svejch strun.
 [D]Cizí torpédo [G]našlo si svůj [D]cíl,
@@ -37,11 +37,11 @@ námořník nehrábne už [A]nikdy do svejch strun.
 
 {chorus}
 
-{start_of_verse: V1}
+{start_of_verse}
 [D]Někde ve Státech [G]máma má sy[D]na,
 milenka pláče, když [A]dopis posílá.
 [D]Zbytečné je plakat, [G]zbytečné je [D]lkát,
 za Spojený státy v [A]Pacifiku [D]pad.
-{start_of_verse}
+{end_of_verse}
 
 {chorus}
