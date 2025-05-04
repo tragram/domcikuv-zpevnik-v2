@@ -13,7 +13,7 @@ Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/ch
 For local editing, you will need to optionally start the server (`npm install` and `npm run dev`) and to see newly added songs, manually run `npm run prebuild` to recreate the "database".
 
 ### File format
-The songs shall be named `artist_name-song_name.pro` (any special characters converted to ASCII). Use `scripts/format_songs.py` to rename files (and fix common whitespace issues) automatically.
+The songs shall be named `artist_name-song_name.pro` (any special characters converted to ASCII). Use `scripts/format_songs.py` to rename files (and fix common whitespace issues) automatically. It also converts repetition symbols (`|:` and `:|` to `𝄆` and `𝄇`) which are then highlighted in the HTML.
 
 A song shall have the following preamble (tempo may be left empty - it's currently not used):
 ```chordpro
@@ -54,7 +54,7 @@ and them later recall them by
 {chorus: R2}
 {chorus: R1}
 ```
-The labels may contain letters, numbers, and the following special characters: `+_-/`. In short, they must match `[\w\-_+]+`.
+The labels may contain letters, numbers, spaces and the following special characters: `+_-/.`. In short, they must match `[\w\-_+ .]+`.
 
 #### Part variants
 It is very common that a chorus is repeated with only a minor modification at the end. To avoid these repetitions, you can define a variant of the chorus as follows:

@@ -6,7 +6,10 @@ from utils import extract_metadata, filename_stem, songs_path
 
 
 def remove_whitespaces(chordpro_lines: str):
-    return [re.sub(" +", " ", l.strip()).replace("] ", "]") for l in chordpro_lines]
+    return [
+        re.sub(" +", " ", l.strip()).replace("] ", "]").replace("]𝄇", "] 𝄇")
+        for l in chordpro_lines
+    ]
 
 
 def replace_repetitions(chordpro_content: str):

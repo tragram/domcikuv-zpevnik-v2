@@ -111,6 +111,7 @@ export function ResizableAutoTextSize({
             chords.inlineChords ? 'chords-inline' : '',
             chords.showChords ? '' : 'chords-hidden',
             layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
+            layout.repeatParts ? 'repeated-parts-shown' : 'repeated-parts-hidden',
             `fit-screen-${layout.fitScreenMode}`,
           )}
           style={{

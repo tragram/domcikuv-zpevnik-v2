@@ -4,7 +4,7 @@
 {language: czech}
 {pdf_filenames: []}
 {image_model: dalle3}
-{prompt_id: v2}
+
 {capo: 0}
 {key: G}
 {tempo: }

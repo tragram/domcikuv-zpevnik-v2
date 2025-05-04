@@ -4,9 +4,9 @@
 {language: czech}
 {capo: 0}
 {key: E}
-{prompt_id: v2}
-{range: }
+{range: e1-g2}
 {tempo: }
+{start_melody: }
 
 {start_of_verse}
 Já [E]nosim stetson koženej
@@ -31,7 +31,7 @@ Kau[D]boj, kau[E]boj nananana
 V práci [E]říkají mi Buffalo
 Což je [G]rozhodně lepší než Tvoje jméno
 Jsem [D]kauboj, kau[E]boj nananana
-{end_of_chorus}
+{end_of_verse}
 
 {start_of_verse}
 A [E]když opouštím v šest hernu

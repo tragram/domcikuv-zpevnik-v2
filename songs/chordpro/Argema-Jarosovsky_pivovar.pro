@@ -31,4 +31,7 @@
 
 {chorus}
 
+{start_of_variant: append_content}
 [C]Jarošovský [D]pivovar. [G]
+{end_of_variant}
+{chorus}

@@ -10,7 +10,7 @@
 {start_melody: e}
 
 {start_of_chorus: Ooo}
-𝄆 [C]oooo,[F]ooo,[Am]ooooo[G]𝄇
+𝄆 [C]oooo,[F]ooo,[Am]ooooo[G] 𝄇
 {end_of_chorus}
 
 {start_of_verse}

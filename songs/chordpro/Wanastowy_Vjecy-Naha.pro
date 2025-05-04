@@ -80,6 +80,6 @@ P.B.CH. s [E]rybou kouzelnou,
 [H]Andělé svícny [E]pozvednou,
 [A]světlo proudí [E]tmou,
 [H]dní je třistatřiatřicet,
-[H]cesty jsou [E]ústí v jedi[A]nou končí
+cesty jsou [E]ústí v jedi[A]nou končí
 nirvá[E]nou jó jó [E]jóu, b b b b bua.
 {end_of_verse}

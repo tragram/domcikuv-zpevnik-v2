@@ -5,9 +5,9 @@
 {capo: 0}
 {key: Am}
 {tempo: }
-{range: }
-{start_melody: }
-{prompt_id: v2}
+{range: g1-g2}
+{start_melody: a a a h c d}
+
 
 {start_of_verse}
 [Ami]Toužila, kroužila, kryla mi záda
@@ -31,7 +31,7 @@
 {end_of_verse}
 
 {start_of_chorus}
-𝄆 [Ami]Moje milá [C]plakala-a-a [G]𝄇 (4x)
+𝄆 [Ami]Moje milá [C]plakala-a-a [G] 𝄇 (4x)
 {end_of_chorus}
 
 {start_of_bridge}

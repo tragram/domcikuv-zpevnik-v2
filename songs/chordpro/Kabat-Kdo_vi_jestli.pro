@@ -58,4 +58,4 @@ bude to chvíli a nebo [C]pár let.
 
 {verse: V1}
 {verse: V2}
-{verse: R1}
+{chorus: R1}

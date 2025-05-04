@@ -81,5 +81,5 @@ a [C]nikdo se kvůli tomu [F]nevěšel
 𝄆 [C]Vzpomínáš, jak jsi se [G]měla,
 [Ami]když jsi nic nevěděl[F]a,
 byla to [C]taková krásná [G]cela
-a byla [F]celá [G]𝄇 sametová [C]
+a byla [F]celá [G] 𝄇 sametová [C]
 {end_of_chorus}

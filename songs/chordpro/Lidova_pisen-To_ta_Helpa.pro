@@ -33,5 +33,5 @@ nie po [F]mojej [A7]vôli,
 𝄆 [B]Dunaj, [C7]Dunaj, [F]Dunaj, Dunaj,
 [C]aj to širé [F]pole, [A7],
 [Dmi]len za [G]jedným, [Dmi]len za [G]jedným,
-[Dmi]potešenie [A7]moje. [Dmi]𝄇
+[Dmi]potešenie [A7]moje. [Dmi] 𝄇
 {end_of_chorus}

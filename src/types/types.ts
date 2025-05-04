@@ -22,14 +22,42 @@ class IllustrationData {
     prompt_id: string;
     prompt_model: string;
     image_model: string;
+    available_illustrations: string[];
 
-    constructor(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined) {
+    constructor(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined,
+        available_illustrations: string[] | undefined) {
         this.prompt_model = prompt_model || "gpt-4o-mini";
-        this.prompt_id = prompt_id || "v1";
+        this.prompt_id = prompt_id || "v2";
         this.image_model = image_model || "FLUX.1-dev";
+        this.available_illustrations = available_illustrations || [];
     }
 
-    toFilenameStem(prompt_model: string | undefined, prompt_id: string | undefined, image_model: string | undefined): string {
+    preferredFilenameStem(): string {
+        if (this.available_illustrations.length == 0) {
+            console.log("Warning: Missing image")
+            return "";
+        }
+        const preferredFilenameStem = this.toFilenameStem();
+        if (this.available_illustrations.includes(preferredFilenameStem)) {
+            return preferredFilenameStem;
+        } else {
+            // select closest image with criteria image_model > prompt_id > prompt_model
+            const filters = [this.image_model, this.prompt_id, this.prompt_model]
+            let old_results = this.available_illustrations;
+            filters.forEach(f => {
+                const new_results = this.available_illustrations.filter(il => il.includes(f));
+                if (new_results.length > 0) {
+                    old_results = new_results;
+                } else {
+                    return old_results[0];
+                }
+
+            })
+            return old_results[0];
+        }
+    }
+
+    toFilenameStem(prompt_model?: string, prompt_id?: string, image_model?: string): string {
         return IllustrationData.toFilenameStemFactory(prompt_model || this.prompt_model, prompt_id || this.prompt_id, image_model || this.image_model)
     }
 
@@ -38,7 +66,7 @@ class IllustrationData {
     }
 
     static fromJSON(json: any): IllustrationData {
-        const instance = new IllustrationData(json.prompt_model, json.prompt_id, json.image_model)
+        const instance = new IllustrationData(json.prompt_model, json.prompt_id, json.image_model, json.available_illustrations)
         return instance;
     }
 
@@ -61,6 +89,7 @@ interface SongRawData {
     prompt_model?: string;
     prompt_id?: string;
     image_model?: string;
+    illustrations?: string[];
 }
 
 class SongData {
@@ -94,7 +123,7 @@ class SongData {
         this.tempo = parseInt(song.tempo as string);
         this.capo = parseInt(song.capo as string) || 0;
         this.range = new SongRange(song.range || "");
-        this.illustrationData = new IllustrationData(song.prompt_model, song.prompt_id, song.image_model);
+        this.illustrationData = new IllustrationData(song.prompt_model, song.prompt_id, song.image_model, song.illustrations);
         this.pdfFilenames = song.pdfFilenames
             ? JSON.parse(song.pdfFilenames.replace(/'/g, '"')).map((f: string) => fileURL("songs/pdfs/" + f))
             : [];
@@ -157,7 +186,13 @@ class SongData {
 
 
     private imageURLFactory(folder: string, prompt_model?: string | undefined, prompt_id?: string | undefined, image_model?: string | undefined): string {
-        const stem = this.illustrationData.toFilenameStem(prompt_model, prompt_id, image_model)
+        let stem;
+        if (prompt_model || prompt_id || image_model) {
+            stem = this.illustrationData.toFilenameStem(prompt_model, prompt_id, image_model)
+        }
+        else {
+            stem = this.illustrationData.preferredFilenameStem()
+        }
         return fileURL(`songs/${folder}/${this.id}/${stem}.webp`);
     }
 

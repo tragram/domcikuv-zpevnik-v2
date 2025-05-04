@@ -6,12 +6,13 @@
 {capo: 5}
 {key: Am}
 {tempo: }
-{prompt_id: v2}
+
 {range: a1-c2}
 {start_melody: a}
 
-{comment: Intro}
-[Am][C][Am][C][x2]
+{start_of_verse: Intro}
+𝄆 [Am][C][Am][C] 𝄇
+{end_of_verse}
 
 {start_of_verse}
 [Am]Weep for yourself, my man
