@@ -211,6 +211,10 @@
     width: 0;
 }
 
+.song-heading {
+    max-width: 100vw;
+}
+
 .measuring-container#content-wrapper {
     /* allow the content wrapper grow too large so that a correction can be made */
     max-width: none !important;
@@ -276,6 +280,6 @@
 }
 
 /* make space between comments smaller */
-.comment-line ~ .comment-line {
+.comment-line~.comment-line {
     margin-top: 0 !important;
 }
