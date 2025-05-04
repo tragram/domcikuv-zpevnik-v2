@@ -1661,7 +1661,7 @@
     "startMelody": "",
     "chordproFile": "Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika.pro",
     "pdfFilenames": "",
-    "contentHash": "1836a1fb1dda719946b206140b6906a1b963a58e",
+    "contentHash": "4c14f30d6fd45d77ab63e2e1de7a292a886bee7a",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -3178,7 +3178,7 @@
     "startMelody": "a d",
     "chordproFile": "Karcoolka-Kozel.pro",
     "pdfFilenames": "",
-    "contentHash": "81a6e21feba885a01a5fef91e889b1be8fec5fd1",
+    "contentHash": "5c14fd373a6f7f29cacceb71ae7120a650bd0bcf",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -4765,6 +4765,25 @@
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev"
     ]
+  },
+  {
+    "title": "Křižník Obrdžes (Reuben James)",
+    "artist": "Neznámý",
+    "key": "D",
+    "language": "czech",
+    "dateAdded": "05-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Neznamy-Kriznik_Obrdzes.pro",
+    "pdfFilenames": "",
+    "contentHash": "5f1f6d769fd72b0eaffabdc09de29b36d1125b14",
+    "disabled": false,
+    "illustrations": []
   },
   {
     "title": "Nádraží",
@@ -7372,5 +7391,24 @@
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
     ]
+  },
+  {
+    "title": "Zlatý hřebík noci",
+    "artist": "Znouzectnost",
+    "key": "Emi",
+    "language": "czech",
+    "dateAdded": "05-2025",
+    "capo": "0",
+    "tempo": "",
+    "range": "",
+    "prompt_model": "",
+    "prompt_id": "",
+    "image_model": "",
+    "startMelody": "",
+    "chordproFile": "Znouzectnost-Zlaty_hrebik_noci.pro",
+    "pdfFilenames": "",
+    "contentHash": "d1fea41cafe6527eaa2f494c01bf8c83d47a7b70",
+    "disabled": false,
+    "illustrations": []
   }
 ]

@@ -29,6 +29,7 @@ Muž se [E]prokopá do jámy [G]lvové,
 zlo tam [A]číhá, nejsou zprávy [E]nové.
 Světlo [E]zhasne, ghůlové se [G]řítí,
 trpa[A]slík je [G]pěkně [E]v řiti.
+{end_of_verse}
 
 {chorus}
 
@@ -41,12 +42,7 @@ smrtka [A]sápe [G]se mu [E]po krku.
 
 {comment: pozn. autora: Zvolni tempo, prde!}
 
-{start_of_chorus}
-Cesta [E]trpaslíka někdy [G]dlouhá,
-někdy [A]krátká, jó tak to [E]bejvá.
-Žílu [E]zlatou ostrouhat až [G]na kost,
-trpa[A]slík ne[G]má ni[E]kdy dost.
-{end_of_chorus}
+{chorus}
 
 {start_of_bridge}
 Cesta [E]trpaslíka někdy [G]dlouhááá,
