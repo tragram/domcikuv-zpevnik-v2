@@ -23,12 +23,19 @@ papírový kří[G]dla vzduchem [D]víří
 {end_of_verse}
 
 {start_of_chorus}
-Půjdem [C]nekonečně dlouhou [G]sametově černou [D]tmou
-Půjdem [C]nekonečně dlouhou [G]sametově černou
-[D]Pam pam tyda pam - [C]dám si ruce [G]do kapes
-[D]pam pam tyda pam - [C]dlouhej kouř a [G]pohoda jazz
-[D]pam pam tyda pam - [C]neštěkne po mě [G]ani pes
-[D]padám a nevím kam - [C]nečekej, že ti [G]zavolám [D]
+Půjdem [C]nekonečně dlouhou 
+[G]sametově černou [D]tmou
+Půjdem [C]nekonečně dlouhou 
+[G]sametově černou
+
+[D]Pam pam tyda pam
+[C]dám si ruce [G]do kapes
+[D]pam pam tyda pam
+[C]dlouhej kouř a [G]pohoda jazz
+[D]pam pam tyda pam
+[C]neštěkne po mě [G]ani pes
+[D]padám a nevím kam
+[C]nečekej, že ti [G]zavolám [D]
 {end_of_chorus}
 
 {start_of_verse}

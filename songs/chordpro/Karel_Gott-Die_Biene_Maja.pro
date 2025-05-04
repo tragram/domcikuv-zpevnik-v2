@@ -18,14 +18,18 @@ war eine Biene sehr be[A]kannt, [A][G#][A]
 {end_of_verse}
 
 {start_of_chorus}
-[A]Und diese [D]Biene, die ich meine, nennt sich [Em]Maja,
-[A]kleine, freche, schl[A7]aue Biene [D]Maja.
+[A]Und diese 
+[D]Biene, die ich meine, nennt sich [Em]Maja,
+[A]kleine, freche, [A7]schlaue Biene [D]Maja.
 Maja fliegt durch ihre [A]Welt,
 [A7]zeigt uns das, was ihr ge[D]fällt.
-[A]Wir treffen [D]heute unsre Freundin, Biene [Em]Maja,
+
+[A]Wir treffen 
+[D]heute unsre Freundin, Biene [Em]Maja,
 [A]diese kleine, [A7]freche Biene [Hm]Maja.[E]
 [D]Maja, alle lieben [G]Maja!
-[D/A]Maja! [D/A]Maja! [D/A]Maja! Erz[A]ähle uns von [D]dir!
+[D/A]Maja! [D/A]Maja! 
+[D/A]Maja! Erz[A]ähle uns von [D]dir!
 {end_of_chorus}
 
 {start_of_verse}

@@ -566,7 +566,7 @@
     "startMelody": "f#",
     "chordproFile": "Chinaski-Dlouhej_kour.pro",
     "pdfFilenames": "['chinaski_dlouhej_kour-sken.pdf', 'chinaski_dlouhej_kour-comp.pdf']",
-    "contentHash": "2ca168eb47c13b0224e7d640d189ddcc54c6c6ec",
+    "contentHash": "6295402e7ef5cdc83b8e18e1f6c541523b285612",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev"
@@ -3178,7 +3178,7 @@
     "startMelody": "a d",
     "chordproFile": "Karcoolka-Kozel.pro",
     "pdfFilenames": "",
-    "contentHash": "5c14fd373a6f7f29cacceb71ae7120a650bd0bcf",
+    "contentHash": "fc1adcd4c66623214ea2e679680b78cdc47a5971",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -3199,7 +3199,7 @@
     "startMelody": "a d f# h",
     "chordproFile": "Karel_Gott-Die_Biene_Maja.pro",
     "pdfFilenames": "['karel_gott_die_biene_maja-sken.pdf', 'karel_gott_die_biene_maja-comp.pdf']",
-    "contentHash": "5b390e81b8df518ab3416e29b7a30f2db037005e",
+    "contentHash": "4012a87b6824bab69139c5bbf2354dab79c0fc3e",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev",
