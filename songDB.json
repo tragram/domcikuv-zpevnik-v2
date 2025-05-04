@@ -4783,7 +4783,9 @@
     "pdfFilenames": "",
     "contentHash": "5f1f6d769fd72b0eaffabdc09de29b36d1125b14",
     "disabled": false,
-    "illustrations": []
+    "illustrations": [
+      "gpt-4o-mini_v2_FLUX.1-dev"
+    ]
   },
   {
     "title": "Nádraží",
@@ -7409,6 +7411,8 @@
     "pdfFilenames": "",
     "contentHash": "d1fea41cafe6527eaa2f494c01bf8c83d47a7b70",
     "disabled": false,
-    "illustrations": []
+    "illustrations": [
+      "gpt-4o-mini_v2_FLUX.1-dev"
+    ]
   }
 ]
