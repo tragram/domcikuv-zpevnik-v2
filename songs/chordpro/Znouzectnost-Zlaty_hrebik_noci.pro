@@ -20,7 +20,7 @@
 {end_of_verse}
 
 {start_of_chorus}
-[D]Na zámku se dneska [G]tančí [C] a pod kopcem v hospodě
+[D]Na zámku se dneska [G]tančí [C]a pod kopcem v hospodě
 [D]bodaj nože do stolu, na zámku se dneska [G]tančí
 [C]a pod lesem v chalupách se [D]asi něco chystá.
 Co asi, co asi, [G]co asi, [D]co asi, co asi, [G]co asi,

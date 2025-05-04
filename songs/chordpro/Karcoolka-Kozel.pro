@@ -71,14 +71,14 @@ Jedééém…
 
 
 {start_of_verse: V3}
-[D]Lavina se řítí, 
+[D]Lavina se řítí,
 já [G]slyším její [D]řev,
-[D]začínám mít pocit, 
+[D]začínám mít pocit,
 že mi [A]v žilách tuhne krev,
 {end_of_verse}
 
 {start_of_verse: V2}
-[G]já jsem kozel [D]prokletej, 
+[G]já jsem kozel [D]prokletej,
 ne[G]můžu [A]strachy [Hmi]řvát,
 [Hmi]proto místo [D]toho musím [A]jódlovat…
 {end_of_verse}

@@ -566,7 +566,7 @@
     "startMelody": "f#",
     "chordproFile": "Chinaski-Dlouhej_kour.pro",
     "pdfFilenames": "['chinaski_dlouhej_kour-sken.pdf', 'chinaski_dlouhej_kour-comp.pdf']",
-    "contentHash": "6295402e7ef5cdc83b8e18e1f6c541523b285612",
+    "contentHash": "74727f1703d87f0d7fcfaa20898df27518463064",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev"
@@ -1030,7 +1030,7 @@
     "startMelody": "a e d c",
     "chordproFile": "Druha_trava-Jeste_jedno_kafe.pro",
     "pdfFilenames": "",
-    "contentHash": "36c6d34439e73169a9f13dc73a23939b57bb2d2d",
+    "contentHash": "5d191fb6043167715c0411f6d9e58d9841ee7341",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -3178,7 +3178,7 @@
     "startMelody": "a d",
     "chordproFile": "Karcoolka-Kozel.pro",
     "pdfFilenames": "",
-    "contentHash": "fc1adcd4c66623214ea2e679680b78cdc47a5971",
+    "contentHash": "f8a46969ab92c0ad5ec3ac4e83d8a7cbf9adebf3",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -3199,7 +3199,7 @@
     "startMelody": "a d f# h",
     "chordproFile": "Karel_Gott-Die_Biene_Maja.pro",
     "pdfFilenames": "['karel_gott_die_biene_maja-sken.pdf', 'karel_gott_die_biene_maja-comp.pdf']",
-    "contentHash": "4012a87b6824bab69139c5bbf2354dab79c0fc3e",
+    "contentHash": "edd3ba040a1a01267de6539e5e99a73622e67caa",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v1_FLUX.1-dev",
@@ -4424,7 +4424,7 @@
     "startMelody": "a c e a",
     "chordproFile": "Miki_Ryvola-Bedna_od_whiskey.pro",
     "pdfFilenames": "",
-    "contentHash": "61849523de9d7bca27d3260d8553383c26b526ff",
+    "contentHash": "f15d0f5f5c7d30979317f604b848878ef92beeb4",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -4779,7 +4779,7 @@
     "prompt_id": "",
     "image_model": "",
     "startMelody": "",
-    "chordproFile": "Neznamy-Kriznik_Obrdzes.pro",
+    "chordproFile": "Neznamy-Kriznik_Obrdzes_Reuben_James.pro",
     "pdfFilenames": "",
     "contentHash": "b19e379869cb95f74d1afb0c3a5a95368c3eef6e",
     "disabled": false,
@@ -7409,7 +7409,7 @@
     "startMelody": "",
     "chordproFile": "Znouzectnost-Zlaty_hrebik_noci.pro",
     "pdfFilenames": "",
-    "contentHash": "d1fea41cafe6527eaa2f494c01bf8c83d47a7b70",
+    "contentHash": "ee9264097b18994e8d1f5702651c1c060b52c650",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
