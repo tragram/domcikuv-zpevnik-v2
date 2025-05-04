@@ -27,3 +27,7 @@ dist-ssr
 secrets.yaml
 *.ipynb
 __pycache__
+
+# DB gets rebuilt on both dev and build
+public/songDB.hash
+public/songDB.json

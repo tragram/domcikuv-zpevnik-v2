@@ -4,8 +4,8 @@
   "version": "1.3.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "prebuild": "node load_songs.mjs",
+    "dev": "npm run prebuild && vite",
     "build": "vite build",
     "serve": "serve dist",
     "lint": "eslint .",
