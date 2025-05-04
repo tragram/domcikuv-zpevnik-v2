@@ -9,11 +9,31 @@
 {tempo: }
 
 {start_of_verse: Rec.}
-Kdysi během druhé světové války kdesi v Pacifiku se plavila obrovská americká loď plná... všeho!
-A proti této obrovsky naložené lodi, na jejíž plavbyschopnosti závisel úspěch a neúspěch americké armády, bylo vystřeleno japonské torpédo.
-Na posádce křížníku Reuben James však byli pohotoví muži, kteří se rozhodli postavit svoji loď do trajektorie tohoto torpéda, a zachránit tak průběh války.
-Překladem z angličtiny a vyprávěním tohoto příběhu se však název křižníku zkomolil na "Křižní Obrdžes", o které je následující písnička.
-Protože ale vzdáváme holt odvážným námořníkům na lodi, musíme si při každém refrénu ťuknout s lidmi v našem okolí a připít na uctění památky padlých.
+Kdysi během druhé světové války
+se kdesi v Pacifiku plavila
+obrovská americká loď plná... všeho!
+
+A proti této obrovsky naložené lodi,
+na jejíž plavbyschopnosti závisel
+úspěch a neúspěch americké armády,
+bylo vystřeleno japonské torpédo...
+
+Na posádce křížníku Reuben James
+však byli pohotoví muži, kteří
+se rozhodli postavit svoji loď
+do trajektorie tohoto torpéda,
+a zvrátit tak průběh války.
+
+Překladem z angličtiny a vyprávěním
+tohoto příběhu se však název
+křižníku zkomolil na "Křižník Obrdžes",
+o kterém je následující písnička.
+
+Protože ale vzdáváme holt odvážným
+námořníkům na lodi, musíme si
+při každém refrénu ťuknout
+s lidmi v našem okolí a pak
+připít na uctění památky padlých.
 {end_of_verse}
 
 {start_of_verse}
