@@ -266,7 +266,7 @@ function processSectionTitles(
 export function postProcessChordPro(
     htmlString: string,
     classNames = DEFAULT_SECTION_TYPES,
-    useLabels = false
+    useLabels = true
 ): string {
     // Parse HTML only once
     const parser = new DOMParser();
