@@ -65,15 +65,12 @@ Jedééém…
 
 {chorus}
 
-{comment: Pohoda, klídeček tichoučko...}
-
-{comment: Nádech --> Lavina se řítí rychle!!!}
-
-{start_of_verse: V3}
-[D]Lavina se řítí, já [G]slyším její [D]řev,
-[D]začínám mít pocit, že mi [A]v žilách tuhne krev,
-[G]já jsem kozel [D]prokletej, ne[G]můžu [A]strachy [Hmi]řvát,
-[Hmi]proto místo [D]toho musím [A]jódlovat…
+{comment: TODO: @kvitek to be fixed with guitar in the hand}
+{start_of_verse}
+Lavina se řítí, já slyším její řev,
+začínám mít pocit, že mi v žilách tuhne krev,
+já jsem kozel prokletej, nemůžu strachy řvát,
+proto musím místo toho jódlovat…
 {end_of_verse}
 
 {chorus}
