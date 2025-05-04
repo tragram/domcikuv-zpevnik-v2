@@ -1,4 +1,4 @@
-name: Generate Images
+name: Format songs & Generate Images
 
 permissions:
   contents: write
@@ -58,6 +58,9 @@ jobs:
           echo "  organization_id: ${{ secrets.OPENAI_ORGANIZATION_ID }}" >> secrets.yaml
           echo "  project_id: ${{ secrets.OPENAI_PROJECT_ID }}" >> secrets.yaml
       
+      - name: Run formatting script
+        run: python scripts/format_songs.py
+
       - name: Run image generation script
         run: python scripts/generate_images.py
         
