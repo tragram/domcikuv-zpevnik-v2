@@ -23,9 +23,9 @@ papírový kří[G]dla vzduchem [D]víří
 {end_of_verse}
 
 {start_of_chorus}
-Půjdem [C]nekonečně dlouhou 
+Půjdem [C]nekonečně dlouhou
 [G]sametově černou [D]tmou
-Půjdem [C]nekonečně dlouhou 
+Půjdem [C]nekonečně dlouhou
 [G]sametově černou
 
 [D]Pam pam tyda pam
