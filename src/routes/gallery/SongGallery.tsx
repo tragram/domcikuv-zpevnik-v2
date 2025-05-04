@@ -1,18 +1,13 @@
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { useLoaderData, useNavigate } from "react-router-dom";
-import AutoSizer from 'react-virtualized-auto-sizer';
-import useLocalStorageState from 'use-local-storage-state';
+import { useLoaderData, useNavigate, useLocation } from "react-router-dom";
 import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types/types';
-import { fetchIllustrationPrompt } from '../../components/song_loader';
-import { AutoTextSize } from 'auto-text-size';
 import { CircleX } from 'lucide-react';
 import './SongGallery.css'
 import { Button } from '@/components/ui/button';
-// import LazyLoad from 'react-lazyload';
-// import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import { Masonry } from "masonic";
 import { IllustrationPrompt } from '@/components/IllustrationPrompt';
 
+// Move shuffle function outside component to avoid re-shuffling on every render
 const getShuffledArr = arr => {
     const newArr = arr.slice()
     for (let i = newArr.length - 1; i > 0; i--) {
@@ -25,7 +20,6 @@ const getShuffledArr = arr => {
 const imageHeight = (normalHeight: number, variability: number) => {
     return normalHeight * (1 - variability + variability * Math.random());
 }
-
 
 function CardThatHides({ song }) {
     const navigate = useNavigate();
@@ -58,37 +52,60 @@ function CardThatHides({ song }) {
     )
 }
 
-
-// <Card isFooterBlurredHoverable isFooterBlurred 
-// >
-// </Card>
-
-const SongGallery = () => {
+const SongGallery = memo(() => {
     const songDB = useLoaderData() as SongDB;
-    const songs = getShuffledArr(songDB.songs) as Array<SongData>;
-
-    const [windowSize, setWindowSize] = useState(null)
-
-    const MasonryCard = ({ index, data, width }) => (
-        <CardThatHides song={data} />
-    );
-
-    const columnWidth = () => {
-        const breakpoints = [700, 1200, 1800];
-        const windowWidth = window.innerWidth;
-        for (const i of Array(3).keys()) {
-            console.log(i, windowWidth, window.innerWidth)
-            if (windowWidth < breakpoints[i]) {
-                return windowWidth / (i + 2);
-            }
+    const location = useLocation();
+    
+    // Use useMemo to prevent reshuffling on every render
+    const shuffledSongs = useMemo(() => {
+        // Create a stable key for the current route to ensure consistent shuffling
+        // This is important when navigating back to this page
+        const key = location.key || 'default';
+        
+        // Use sessionStorage to persist the shuffled order during the session
+        const cachedSongs = sessionStorage.getItem(`shuffled-songs-${key}`);
+        if (cachedSongs) {
+            // Properly recreate SongData objects with their methods
+            return JSON.parse(cachedSongs).map(songJson => SongData.fromJSON(songJson));
         }
-    }
+        
+        const shuffled = getShuffledArr(songDB.songs);
+        sessionStorage.setItem(`shuffled-songs-${key}`, JSON.stringify(shuffled));
+        return shuffled;
+    }, [songDB.songs, location.key]);
+
+    // Memoize the column width calculation to prevent unnecessary recalculations
+    const getColumnWidth = useMemo(() => {
+        return () => {
+            const breakpoints = [700, 1200, 1800];
+            const windowWidth = window.innerWidth;
+            for (const i of Array(3).keys()) {
+                if (windowWidth < breakpoints[i]) {
+                    return windowWidth / (i + 2);
+                }
+            }
+            return windowWidth / 5; // Default for large screens
+        };
+    }, []);
+
+    // Memoize the card renderer to prevent unnecessary recreations
+    const MasonryCard = useMemo(() => {
+        return ({ index, data, width }) => (
+            <CardThatHides song={data} />
+        );
+    }, []);
 
     return (
         <div className='max-w-full m-[10px]'>
-            <Masonry items={songs} render={MasonryCard} columnGutter={10} rowGutter={10} columnWidth={columnWidth()} />
+            <Masonry 
+                items={shuffledSongs} 
+                render={MasonryCard} 
+                columnGutter={10} 
+                rowGutter={10} 
+                columnWidth={getColumnWidth()} 
+            />
         </div>
     );
-};
+});
 
 export default SongGallery;
