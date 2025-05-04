@@ -1,13 +1,36 @@
 name: Generate Images
 
 on:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
+    paths:
+      - 'songs/chordpro/**'
   workflow_dispatch:  # Allows manual triggering
 
 jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.filter.outputs.chordpro }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          
+      - name: Check for changes in chordpro directory
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            chordpro:
+              - added: 'songs/chordpro/**'
+
   generate-images:
+    needs: check-changes
+    if: ${{ needs.check-changes.outputs.should_run == 'true' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     
     steps:
@@ -46,6 +69,7 @@ jobs:
         run: |
           git config --global user.name $user_name
           git config --global user.email $user_email
+          git remote set-url origin https://${github_token}@github.com/${repository}
           git commit -m "Update song illustrations [skip ci]"
           git push
         env:
