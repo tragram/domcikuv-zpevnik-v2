@@ -30,7 +30,8 @@ vždy [G]je če[A]ho se [Hmi]bát,
 {end_of_verse}
 
 {start_of_chorus}
-𝄆 [G]Lej lej lej [D]lej lej lej [A]lej lej lej [Hmi]lééj
+𝄆 [G]Lej lej lej [D]lej lej lej
+[A]lej lej lej [Hmi]lééj
 [G]Lej lej lej [D]lej lej lej [A]léééj 𝄇
 {end_of_chorus}
 
@@ -66,13 +67,19 @@ Jedééém…
 {chorus}
 
 {comment: Pohoda, klídeček tichoučko...}
-
 {comment: Nádech --> Lavina se řítí rychle!!!}
 
+
 {start_of_verse: V3}
-[D]Lavina se řítí, já [G]slyším její [D]řev,
-[D]začínám mít pocit, že mi [A]v žilách tuhne krev,
-[G]já jsem kozel [D]prokletej, ne[G]můžu [A]strachy [Hmi]řvát,
+[D]Lavina se řítí, 
+já [G]slyším její [D]řev,
+[D]začínám mít pocit, 
+že mi [A]v žilách tuhne krev,
+{end_of_verse}
+
+{start_of_verse: V2}
+[G]já jsem kozel [D]prokletej, 
+ne[G]můžu [A]strachy [Hmi]řvát,
 [Hmi]proto místo [D]toho musím [A]jódlovat…
 {end_of_verse}
 
