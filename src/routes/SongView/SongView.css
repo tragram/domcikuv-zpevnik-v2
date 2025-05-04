@@ -274,3 +274,8 @@
         column-gap: 4rem;
     }
 }
+
+/* make space between comments smaller */
+.comment-line ~ .comment-line {
+    margin-top: 0 !important;
+}
