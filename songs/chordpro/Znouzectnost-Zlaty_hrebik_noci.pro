@@ -3,7 +3,7 @@
 {date_added: 05-2025}
 {language: czech}
 {capo: 0}
-{key: Emi}
+{key: Em}
 {range: }
 {start_melody: }
 {tempo: }
