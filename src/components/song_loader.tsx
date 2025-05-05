@@ -147,7 +147,6 @@ async function fetchSongContent({ params }): Promise<DataForSongView> {
     }
 
     songData.content = songContent;
-    // TODO: guess
     if (!songData.key) {
         songData.key = guessKey(songData.content || '')
     }

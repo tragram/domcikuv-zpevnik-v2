@@ -131,7 +131,7 @@ export class Key implements Clonable<Key> {
             return undefined;
         }
 
-        const regex = /^(?<note>[A-H](#{1,2}|b{1,2}|x)?)(?<mode>m?)$/;
+        const regex = /^(?<note>[A-H](#{1,2}|b{1,2}|x)?)(?<mode>mi|m?)$/;
         const matches = text.trim().match(regex);
 
         if (!matches?.groups) {
