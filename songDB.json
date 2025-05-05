@@ -7397,7 +7397,7 @@
   {
     "title": "Zlatý hřebík noci",
     "artist": "Znouzectnost",
-    "key": "Emi",
+    "key": "Em",
     "language": "czech",
     "dateAdded": "05-2025",
     "capo": "0",
@@ -7409,7 +7409,7 @@
     "startMelody": "",
     "chordproFile": "Znouzectnost-Zlaty_hrebik_noci.pro",
     "pdfFilenames": "",
-    "contentHash": "ee9264097b18994e8d1f5702651c1c060b52c650",
+    "contentHash": "248d4571e8ea497b4f100f7801bf7bf5fdae140b",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
