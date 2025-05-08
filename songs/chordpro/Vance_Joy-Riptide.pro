@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['vance_joy_riptide-sken.pdf', 'vance_joy_riptide-comp.pdf']}
+{pdf_filenames: ["vance_joy_riptide-sken.pdf", "vance_joy_riptide-comp.pdf"]}
 {capo: 4}
 {key: Am}
 {tempo: }

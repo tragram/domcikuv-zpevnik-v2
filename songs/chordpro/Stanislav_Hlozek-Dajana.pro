@@ -3,7 +3,7 @@
 {date_added: 09-2010}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['stanislav_hlozek_dajana-sken.pdf', 'stanislav_hlozek_dajana-comp.pdf']}
+{pdf_filenames: ["stanislav_hlozek_dajana-sken.pdf", "stanislav_hlozek_dajana-comp.pdf"]}
 {capo: 3}
 {key: G}
 {tempo: }

@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['honza_jicha_nekvalifikovany_ucitel-sken.pdf', 'honza_jicha_nekvalifikovany_ucitel-comp.pdf']}
+{pdf_filenames: ["honza_jicha_nekvalifikovany_ucitel-sken.pdf", "honza_jicha_nekvalifikovany_ucitel-comp.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

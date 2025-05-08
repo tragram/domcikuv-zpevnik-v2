@@ -3,7 +3,7 @@
 {date_added: 07-2009}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['zluty_pes_modra-sken.pdf', 'zluty_pes_modra-comp.pdf']}
+{pdf_filenames: ["zluty_pes_modra-sken.pdf", "zluty_pes_modra-comp.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

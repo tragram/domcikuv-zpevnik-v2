@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['kabat_pohoda-sken.pdf', 'kabat_pohoda-comp.pdf']}
+{pdf_filenames: ["kabat_pohoda-sken.pdf", "kabat_pohoda-comp.pdf"]}
 {capo: 3}
 {key: Am}
 {tempo: }

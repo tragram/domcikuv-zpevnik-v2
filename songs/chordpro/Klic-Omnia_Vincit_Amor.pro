@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['klic_omnia_vincit_amor-sken.pdf', 'klic_omnia_vincit_amor-comp.pdf']}
+{pdf_filenames: ["klic_omnia_vincit_amor-sken.pdf", "klic_omnia_vincit_amor-comp.pdf"]}
 {capo: 0}
 {key: G}
 {tempo: }

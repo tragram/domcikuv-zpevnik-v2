@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['waldemar_matuska_mile-sken.pdf', 'waldemar_matuska_mile-comp.pdf']}
+{pdf_filenames: ["waldemar_matuska_mile-sken.pdf", "waldemar_matuska_mile-comp.pdf"]}
 {capo: 7}
 {key: G}
 {tempo: }

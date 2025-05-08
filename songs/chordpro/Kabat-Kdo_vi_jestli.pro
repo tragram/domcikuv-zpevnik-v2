@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['kabat_kdo_vi_jestli-sken.pdf', 'kabat_kdo_vi_jestli-comp.pdf']}
+{pdf_filenames: ["kabat_kdo_vi_jestli-sken.pdf", "kabat_kdo_vi_jestli-comp.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

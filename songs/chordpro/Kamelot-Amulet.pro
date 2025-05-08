@@ -3,7 +3,7 @@
 {date_added: 01-2011}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['kamelot_amulet-sken.pdf', 'kamelot_amulet-comp.pdf']}
+{pdf_filenames: ["kamelot_amulet-sken.pdf", "kamelot_amulet-comp.pdf"]}
 {capo: 2}
 {key: G}
 {tempo: }

@@ -3,7 +3,7 @@
 {date_added: 11-2024}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['michal_hruza_zakazane_uvolneni-sken.pdf', 'michal_hruza_zakazane_uvolneni-comp.pdf', 'michal_hruza_zakazane_uvolneni-gen.pdf']}
+{pdf_filenames: ["michal_hruza_zakazane_uvolneni-sken.pdf", "michal_hruza_zakazane_uvolneni-comp.pdf", "michal_hruza_zakazane_uvolneni-gen.pdf"]}
 {capo: 5}
 {key: D}
 {tempo: }

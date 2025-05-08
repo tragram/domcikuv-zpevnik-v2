@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['ready_kirken_11-sken.pdf', 'ready_kirken_11-comp.pdf']}
+{pdf_filenames: ["ready_kirken_11-sken.pdf", "ready_kirken_11-comp.pdf"]}
 {capo: 7}
 {key: Am}
 {tempo: }

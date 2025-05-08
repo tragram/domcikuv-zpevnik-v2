@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: slovak}
-{pdf_filenames: ['peha_spomal-sken.pdf', 'peha_spomal-comp.pdf']}
+{pdf_filenames: ["peha_spomal-sken.pdf", "peha_spomal-comp.pdf"]}
 {capo: 4}
 {key: D}
 {tempo: }

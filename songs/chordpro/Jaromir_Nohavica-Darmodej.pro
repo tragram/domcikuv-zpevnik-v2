@@ -3,7 +3,7 @@
 {date_added: 06-2011}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['jaromir_nohavica_darmodej-sken.pdf', 'jaromir_nohavica_darmodej-comp.pdf']}
+{pdf_filenames: ["jaromir_nohavica_darmodej-sken.pdf", "jaromir_nohavica_darmodej-comp.pdf"]}
 {capo: 5}
 {key: Am}
 {tempo: }

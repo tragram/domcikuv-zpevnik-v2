@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['nedvedi_skladanka-sken.pdf', 'nedvedi_skladanka-comp.pdf']}
+{pdf_filenames: ["nedvedi_skladanka-sken.pdf", "nedvedi_skladanka-comp.pdf"]}
 {capo: 5}
 {key: G}
 {tempo: }

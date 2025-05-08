@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['kamil_strihavka_zeme_vzdalena-sken.pdf', 'kamil_strihavka_zeme_vzdalena-comp.pdf']}
+{pdf_filenames: ["kamil_strihavka_zeme_vzdalena-sken.pdf", "kamil_strihavka_zeme_vzdalena-comp.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

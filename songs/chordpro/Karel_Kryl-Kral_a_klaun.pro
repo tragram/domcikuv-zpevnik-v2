@@ -3,7 +3,7 @@
 {date_added: 07-2016}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['karel_kryl_kral_a_klaun-sken.pdf', 'karel_kryl_kral_a_klaun-comp.pdf', 'karel_kryl_kral_a_klaun-gen.pdf']}
+{pdf_filenames: ["karel_kryl_kral_a_klaun-sken.pdf", "karel_kryl_kral_a_klaun-comp.pdf", "karel_kryl_kral_a_klaun-gen.pdf"]}
 {capo: 0}
 {key: D}
 {tempo: }

@@ -127,7 +127,7 @@ class SongData {
         this.range = new SongRange(song.range || "");
         this.illustrationData = new IllustrationData(song.prompt_model, song.prompt_id, song.image_model, song.illustrations);
         this.pdfFilenames = song.pdfFilenames
-            ? JSON.parse(song.pdfFilenames.replace(/'/g, '"')).map((f: string) => fileURL("songs/pdfs/" + f))
+            ? JSON.parse(song.pdfFilenames).map((f: string) => fileURL("songs/pdfs/" + f))
             : [];
 
         this.chordproFile = song.chordproFile || "";
@@ -222,6 +222,7 @@ interface SongDB {
     maxRange: int,
     languages: LanguageCount, // counts the occurences of each language
     songs: Array<SongData>
+    songbooks: string[]; // tracks all songbooks defined in the DB
 }
 
 export type { SongDB, SortSettings, FilterSettings, SongLanguage, LanguageCount, SortOrder, SortField };

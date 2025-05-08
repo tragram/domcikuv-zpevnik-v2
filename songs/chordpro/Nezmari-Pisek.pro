@@ -3,7 +3,7 @@
 {date_added: 02-2012}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['nezmari_pisek-sken.pdf', 'nezmari_pisek-comp.pdf']}
+{pdf_filenames: ["nezmari_pisek-sken.pdf", "nezmari_pisek-comp.pdf"]}
 {capo: 5}
 {key: Am}
 {tempo: }

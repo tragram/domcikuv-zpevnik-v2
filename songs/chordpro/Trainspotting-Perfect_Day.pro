@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['trainspotting_perfect_day-sken.pdf', 'trainspotting_perfect_day-comp.pdf']}
+{pdf_filenames: ["trainspotting_perfect_day-sken.pdf", "trainspotting_perfect_day-comp.pdf"]}
 {capo: 2}
 {key: Am}
 {tempo: }

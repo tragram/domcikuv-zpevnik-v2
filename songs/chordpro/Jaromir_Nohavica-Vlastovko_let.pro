@@ -3,7 +3,7 @@
 {date_added: 10-2011}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['jaromir_nohavica_vlastovko_let-sken.pdf', 'jaromir_nohavica_vlastovko_let-comp.pdf']}
+{pdf_filenames: ["jaromir_nohavica_vlastovko_let-sken.pdf", "jaromir_nohavica_vlastovko_let-comp.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

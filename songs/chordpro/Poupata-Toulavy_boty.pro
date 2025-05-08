@@ -3,7 +3,7 @@
 {date_added: 10-2011}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['poupata_toulavy_boty-sken.pdf', 'poupata_toulavy_boty-comp.pdf']}
+{pdf_filenames: ["poupata_toulavy_boty-sken.pdf", "poupata_toulavy_boty-comp.pdf"]}
 {capo: 0}
 {key: A}
 {tempo: }

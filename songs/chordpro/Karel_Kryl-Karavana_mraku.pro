@@ -3,7 +3,7 @@
 {date_added: 12-2010}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['karel_kryl_karavana_mraku-sken.pdf', 'karel_kryl_karavana_mraku-comp.pdf']}
+{pdf_filenames: ["karel_kryl_karavana_mraku-sken.pdf", "karel_kryl_karavana_mraku-comp.pdf"]}
 {capo: 2}
 {key: C}
 {tempo: }

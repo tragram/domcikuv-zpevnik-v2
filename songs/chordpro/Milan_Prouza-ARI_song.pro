@@ -1,7 +1,7 @@
 {date_added: 08-2018}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['______________ari_song-sken.pdf', '______________ari_song-comp.pdf']}
+{pdf_filenames: ["______________ari_song-sken.pdf", "______________ari_song-comp.pdf"]}
 {capo: 5}
 {key: G}
 {tempo: }

@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['jeff_dunham_jingle_bombs-sken.pdf', 'jeff_dunham_jingle_bombs-comp.pdf']}
+{pdf_filenames: ["jeff_dunham_jingle_bombs-sken.pdf", "jeff_dunham_jingle_bombs-comp.pdf"]}
 {capo: 2}
 {key: C}
 {tempo: }

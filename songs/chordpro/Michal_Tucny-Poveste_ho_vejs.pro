@@ -3,7 +3,7 @@
 {date_added: 02-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['michal_tucny_poveste_ho_vejs-sken.pdf', 'michal_tucny_poveste_ho_vejs-comp.pdf', 'michal_tucny_poveste_ho_vejs-gen.pdf']}
+{pdf_filenames: ["michal_tucny_poveste_ho_vejs-sken.pdf", "michal_tucny_poveste_ho_vejs-comp.pdf", "michal_tucny_poveste_ho_vejs-gen.pdf"]}
 {capo: 0}
 {key: Am}
 {tempo: }

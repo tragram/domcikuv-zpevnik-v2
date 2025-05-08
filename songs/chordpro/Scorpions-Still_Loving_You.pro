@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['scorpions_still_loving_you-sken.pdf', 'scorpions_still_loving_you-comp.pdf']}
+{pdf_filenames: ["scorpions_still_loving_you-sken.pdf", "scorpions_still_loving_you-comp.pdf"]}
 {capo: 2}
 {key: Gm}
 {tempo: }

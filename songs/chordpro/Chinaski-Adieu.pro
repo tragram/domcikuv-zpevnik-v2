@@ -3,7 +3,7 @@
 {date_added: 10-2024}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['chinaski_adieu-sken.pdf', 'chinaski_adieu-comp.pdf']}
+{pdf_filenames: ["chinaski_adieu-sken.pdf", "chinaski_adieu-comp.pdf"]}
 {capo: 0}
 {key: Am}
 {tempo: }

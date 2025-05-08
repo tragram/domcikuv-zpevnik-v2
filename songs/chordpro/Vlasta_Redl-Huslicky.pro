@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['vlasta_redl_huslicky-sken.pdf', 'vlasta_redl_huslicky-comp.pdf']}
+{pdf_filenames: ["vlasta_redl_huslicky-sken.pdf", "vlasta_redl_huslicky-comp.pdf"]}
 {capo: 2}
 {key: D}
 {tempo: }

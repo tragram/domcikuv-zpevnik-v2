@@ -3,7 +3,7 @@
 {date_added: 12-2016}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['jezek__voskovec__werich_stene-sken.pdf', 'jezek__voskovec__werich_stene-comp.pdf', 'jezek__voskovec__werich_stene-gen.pdf']}
+{pdf_filenames: ["jezek__voskovec__werich_stene-sken.pdf", "jezek__voskovec__werich_stene-comp.pdf", "jezek__voskovec__werich_stene-gen.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

@@ -3,7 +3,7 @@
 {date_added: 07-2017}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['stephen_lynch_special_ed_-sken.pdf', 'stephen_lynch_special_ed_-comp.pdf']}
+{pdf_filenames: ["stephen_lynch_special_ed_-sken.pdf", "stephen_lynch_special_ed_-comp.pdf"]}
 {capo: 2}
 {key: D}
 {tempo: }

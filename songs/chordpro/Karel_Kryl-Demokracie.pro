@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['karel_kryl_demokracie-sken.pdf', 'karel_kryl_demokracie-comp.pdf']}
+{pdf_filenames: ["karel_kryl_demokracie-sken.pdf", "karel_kryl_demokracie-comp.pdf"]}
 {capo: 4}
 {key: C}
 {tempo: }

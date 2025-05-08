@@ -3,7 +3,7 @@
 {date_added: 10-2011}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['tri_sestry_aida-sken.pdf', 'tri_sestry_aida-comp.pdf']}
+{pdf_filenames: ["tri_sestry_aida-sken.pdf", "tri_sestry_aida-comp.pdf"]}
 {capo: 3}
 {key: A}
 {tempo: }

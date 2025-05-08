@@ -3,7 +3,7 @@
 {date_added: 07-2017}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['chinaski_kompy-sken.pdf', 'chinaski_kompy-comp.pdf']}
+{pdf_filenames: ["chinaski_kompy-sken.pdf", "chinaski_kompy-comp.pdf"]}
 {capo: 0}
 {key: F#m}
 {tempo: }

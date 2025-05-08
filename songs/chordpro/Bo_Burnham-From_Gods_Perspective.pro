@@ -3,7 +3,7 @@
 {date_added: 07-2018}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['bo_burnham_from_gods_perspective-sken.pdf', 'bo_burnham_from_gods_perspective-comp.pdf']}
+{pdf_filenames: ["bo_burnham_from_gods_perspective-sken.pdf", "bo_burnham_from_gods_perspective-comp.pdf"]}
 {capo: 2}
 {key: Am}
 {tempo: }

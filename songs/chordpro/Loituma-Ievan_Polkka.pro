@@ -3,7 +3,7 @@
 {date_added: 03-2018}
 {songbooks: ["domcik"]}
 {language: finnish}
-{pdf_filenames: ['loituma_ievan_polkka-sken.pdf', 'loituma_ievan_polkka-comp.pdf']}
+{pdf_filenames: ["loituma_ievan_polkka-sken.pdf", "loituma_ievan_polkka-comp.pdf"]}
 {capo: 3}
 {key: Dm}
 {tempo: }

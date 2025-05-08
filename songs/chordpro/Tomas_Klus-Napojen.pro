@@ -3,7 +3,7 @@
 {date_added: 01-2017}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['tomas_klus_napojen-sken.pdf', 'tomas_klus_napojen-comp.pdf']}
+{pdf_filenames: ["tomas_klus_napojen-sken.pdf", "tomas_klus_napojen-comp.pdf"]}
 {capo: 0}
 {key: E}
 {tempo: }

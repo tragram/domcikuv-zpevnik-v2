@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf', 'pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf']}
+{pdf_filenames: ["pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf", "pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf"]}
 {capo: 0}
 {key: G}
 {tempo: }

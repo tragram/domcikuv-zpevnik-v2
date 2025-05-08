@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['janek_ledecky_proklinam-sken.pdf', 'janek_ledecky_proklinam-comp.pdf']}
+{pdf_filenames: ["janek_ledecky_proklinam-sken.pdf", "janek_ledecky_proklinam-comp.pdf"]}
 {capo: 3}
 {key: Em}
 {tempo: }

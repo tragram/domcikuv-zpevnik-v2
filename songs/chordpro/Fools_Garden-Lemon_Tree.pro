@@ -3,7 +3,7 @@
 {date_added: 07-2016}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['fools_garden_lemon_tree-sken.pdf', 'fools_garden_lemon_tree-comp.pdf', 'fools_garden_lemon_tree-gen.pdf']}
+{pdf_filenames: ["fools_garden_lemon_tree-sken.pdf", "fools_garden_lemon_tree-comp.pdf", "fools_garden_lemon_tree-gen.pdf"]}
 {capo: 2}
 {key: Am}
 {tempo: }

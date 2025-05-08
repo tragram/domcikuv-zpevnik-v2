@@ -3,7 +3,7 @@
 {date_added: 02-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['chinaski_vinari-sken.pdf', 'chinaski_vinari-comp.pdf', 'chinaski_vinari-gen.pdf']}
+{pdf_filenames: ["chinaski_vinari-sken.pdf", "chinaski_vinari-comp.pdf", "chinaski_vinari-gen.pdf"]}
 {capo: 0}
 {key: A}
 {tempo: }

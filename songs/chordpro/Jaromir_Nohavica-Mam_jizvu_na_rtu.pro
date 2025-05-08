@@ -3,7 +3,7 @@
 {date_added: 02-2017}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['jaromir_nohavica_mam_jizvu_na_rtu-sken.pdf', 'jaromir_nohavica_mam_jizvu_na_rtu-comp.pdf', 'jaromir_nohavica_mam_jizvu_na_rtu-gen.pdf']}
+{pdf_filenames: ["jaromir_nohavica_mam_jizvu_na_rtu-sken.pdf", "jaromir_nohavica_mam_jizvu_na_rtu-comp.pdf", "jaromir_nohavica_mam_jizvu_na_rtu-gen.pdf"]}
 {capo: 2}
 {key: C}
 {tempo: }

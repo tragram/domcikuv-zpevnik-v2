@@ -3,7 +3,7 @@
 {date_added: 11-2024}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['chinaski_venku_je_na_nule-sken.pdf', 'chinaski_venku_je_na_nule-comp.pdf']}
+{pdf_filenames: ["chinaski_venku_je_na_nule-sken.pdf", "chinaski_venku_je_na_nule-comp.pdf"]}
 {capo: 0}
 {key: Em}
 {tempo: }

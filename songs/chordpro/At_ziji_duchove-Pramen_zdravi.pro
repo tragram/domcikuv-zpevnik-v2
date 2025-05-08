@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['at_ziji_duchove_pramen_zdravi-sken.pdf', 'at_ziji_duchove_pramen_zdravi-comp.pdf']}
+{pdf_filenames: ["at_ziji_duchove_pramen_zdravi-sken.pdf", "at_ziji_duchove_pramen_zdravi-comp.pdf"]}
 {capo: 5}
 {key: G}
 {tempo: }

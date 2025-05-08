@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['olympic_bon_soir_mademoiselle_paris-sken.pdf', 'olympic_bon_soir_mademoiselle_paris-comp.pdf']}
+{pdf_filenames: ["olympic_bon_soir_mademoiselle_paris-sken.pdf", "olympic_bon_soir_mademoiselle_paris-comp.pdf"]}
 {capo: 0}
 {key: Am}
 {tempo: }

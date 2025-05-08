@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['wanastowy_vjecy_andele-sken.pdf', 'wanastowy_vjecy_andele-comp.pdf']}
+{pdf_filenames: ["wanastowy_vjecy_andele-sken.pdf", "wanastowy_vjecy_andele-comp.pdf"]}
 {capo: 3}
 {key: H}
 {tempo: }

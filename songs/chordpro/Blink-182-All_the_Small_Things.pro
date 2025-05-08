@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['blink_182_all_the_small_things-sken.pdf', 'blink_182_all_the_small_things-comp.pdf']}
+{pdf_filenames: ["blink_182_all_the_small_things-sken.pdf", "blink_182_all_the_small_things-comp.pdf"]}
 {capo: 5}
 {key: C}
 {tempo: }

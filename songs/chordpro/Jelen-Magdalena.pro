@@ -3,7 +3,7 @@
 {date_added: 01-2017}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['jelen_magdalena-sken.pdf', 'jelen_magdalena-comp.pdf']}
+{pdf_filenames: ["jelen_magdalena-sken.pdf", "jelen_magdalena-comp.pdf"]}
 {capo: 5}
 {key: D}
 {tempo: }

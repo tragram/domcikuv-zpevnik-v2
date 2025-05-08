@@ -3,7 +3,7 @@
 {date_added: 08-2013}
 {songbooks: ["domcik"]}
 {language: english}
-{pdf_filenames: ['irish_rovers_drunken_sailor-sken.pdf', 'irish_rovers_drunken_sailor-comp.pdf']}
+{pdf_filenames: ["irish_rovers_drunken_sailor-sken.pdf", "irish_rovers_drunken_sailor-comp.pdf"]}
 {capo: 0}
 {key: Dm}
 {tempo: }

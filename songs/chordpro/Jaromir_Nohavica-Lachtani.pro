@@ -3,7 +3,7 @@
 {date_added: 08-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['jaromir_nohavica_lachtani-sken.pdf', 'jaromir_nohavica_lachtani-comp.pdf', 'jaromir_nohavica_lachtani-gen.pdf']}
+{pdf_filenames: ["jaromir_nohavica_lachtani-sken.pdf", "jaromir_nohavica_lachtani-comp.pdf", "jaromir_nohavica_lachtani-gen.pdf"]}
 {capo: 3}
 {key: C}
 {tempo: }

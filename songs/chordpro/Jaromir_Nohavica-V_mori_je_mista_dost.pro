@@ -3,7 +3,7 @@
 {date_added: 01-2017}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['jaromir_nohavica_v_mori_je_mista_dost-sken.pdf', 'jaromir_nohavica_v_mori_je_mista_dost-comp.pdf']}
+{pdf_filenames: ["jaromir_nohavica_v_mori_je_mista_dost-sken.pdf", "jaromir_nohavica_v_mori_je_mista_dost-comp.pdf"]}
 {capo: 3}
 {key: C}
 {tempo: }

@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["domcik"]}
 {language: czech}
-{pdf_filenames: ['pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf', 'pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf']}
+{pdf_filenames: ["pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf", "pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf"]}
 {capo: 5}
 {key: C}
 {tempo: }
