@@ -8,6 +8,7 @@ let metadata = files.map(chordproFile => {
   const content = fs.readFileSync(`${songsPath}/${chordproFile}`, 'utf8') || "";
   const title = content.match(/{title:\s*(.+?)}/i)?.[1].trim() || "";
   const artist = content.match(/{artist:\s*(.+?)}/i)?.[1].trim() || "";
+  const songbooks = content.match(/{songbooks:\s*(.+?)}/i)?.[1].trim() || "";
   const key = content.match(/{key:\s*(.+?)}/i)?.[1].trim() || "";
   const dateAdded = content.match(/{date_added:\s*(.+?)}/i)?.[1].trim() || "";
   const language = content.match(/{language:\s*(.+?)}/i)?.[1].trim() || "";
@@ -21,42 +22,43 @@ let metadata = files.map(chordproFile => {
   const pdfFilenames = content.match(/{pdf_filenames:\s*(.+?)}/i)?.[1].trim() || "";
   const contentHash = makeHash(content);
   const disabled = (content.match(/{disabled:\s*(.+?)}/i)?.[1].trim() === 'true') || false;
-  
+
   // Get the filename without extension for illustrations folder check
   const filenameWithoutExt = chordproFile.replace(/\.(pro|chordpro)$/, '');
-  
+
   // Check for illustrations in the corresponding folder
   const illustrationsPath = `./songs/illustrations/${filenameWithoutExt}`;
   let illustrations = [];
-  
+
   // Check if the illustrations directory exists
   if (fs.existsSync(illustrationsPath) && fs.statSync(illustrationsPath).isDirectory()) {
     // Get all files in the illustrations directory
     const illustrationFiles = fs.readdirSync(illustrationsPath);
-    
+
     // Extract filenames without extensions
     illustrations = illustrationFiles.map(file => {
       const ext = path.extname(file);
       return file.substring(0, file.length - ext.length);
     });
   }
-  
-  return { 
-    title, 
-    artist, 
-    key, 
-    language, 
-    dateAdded, 
-    capo, 
-    tempo, 
-    range, 
-    prompt_model, 
-    prompt_id, 
-    image_model, 
-    startMelody, 
-    chordproFile, 
-    pdfFilenames, 
-    contentHash, 
+
+  return {
+    title,
+    artist,
+    key,
+    language,
+    dateAdded,
+    songbooks,
+    capo,
+    tempo,
+    range,
+    prompt_model,
+    prompt_id,
+    image_model,
+    startMelody,
+    chordproFile,
+    pdfFilenames,
+    contentHash,
     disabled,
     illustrations // Add the illustrations array to the metadata
   };

@@ -76,7 +76,8 @@ interface SongRawData {
     title?: string;
     artist?: string;
     key?: string;
-    dateAdded: string;
+    dateAdded?: string;
+    songbooks?: string;
     startMelody?: string;
     language?: SongLanguage;
     tempo?: string | number;
@@ -101,6 +102,7 @@ class SongData {
         year: int;
     };
     startMelody?: string;
+    songbooks: string[];
     language: SongLanguage;
     tempo: int;
     capo: int;
@@ -115,9 +117,9 @@ class SongData {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
         this.key = Key.parse(song.key || null, true);
-        const [month, year] = song.dateAdded.split("-");
+        const [month, year] = (song.dateAdded || "0-12").split("-");
         this.dateAdded = { month: parseInt(month), year: parseInt(year) };
-
+        this.songbooks = song.songbooks ? JSON.parse(song.songbooks) : [];
         this.startMelody = song.startMelody;
         this.language = song.language || "other";
         this.tempo = parseInt(song.tempo as string);
