@@ -12,6 +12,7 @@ import { VocalRangeDropdownSection, VocalRangeFilter } from "./VocalRangeFilter"
 import { create } from 'zustand'
 import { persist } from "zustand/middleware"
 import { LanguageCount, SongLanguage } from "@/types/types";
+import { SongBookFilter, SongBookFilterDropdownSection } from "./SongbookFilter";
 
 type VocalRangeType = "all" | [number, number];
 
@@ -19,11 +20,13 @@ interface FilterSettings {
     language: SongLanguage;
     vocalRange: VocalRangeType;
     capo: boolean;
+    songbook: string;
 }
 
 interface FilterProps {
     languages: LanguageCount
     maxRange: number;
+    songbooks: string[];
 }
 
 interface FilterButtonsProps extends FilterProps {
@@ -31,7 +34,8 @@ interface FilterButtonsProps extends FilterProps {
 }
 
 interface FilterSettingsState extends FilterSettings {
-    setLanguage: (language: string) => void;
+    setLanguage: (language: SongLanguage) => void;
+    setSongbook: (songbook: string) => void;
     setVocalRange: (range: VocalRangeType) => void;
     setCapo: (capo: boolean) => void;
     toggleCapo: () => void;
@@ -42,8 +46,10 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
         (set) => ({
             language: "all",
             vocalRange: "all",
+            songbook: "all",
             capo: true,
-            setLanguage: (language: string) => set({ language: language }),
+            setLanguage: (language: SongLanguage) => set({ language: language }),
+            setSongbook: (songbook: string) => set({ songbook: songbook }),
             setVocalRange: (range: VocalRangeType) => set({ vocalRange: range }),
             setCapo: (capo: boolean) => set({ capo: capo }),
             toggleCapo: () => set((state) => ({ capo: !state.capo }))
@@ -57,16 +63,23 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
 const FilterButtons = ({
     languages,
     maxRange,
-    iconOnly
+    iconOnly,
+    songbooks,
 }: FilterButtonsProps): JSX.Element => {
-    const { language, vocalRange, capo, setLanguage, setVocalRange, toggleCapo } = useFilterSettingsStore();
-
+    const { language, songbook, vocalRange, capo, setLanguage, setSongbook, setVocalRange, toggleCapo } = useFilterSettingsStore();
+    console.log(songbook)
     return (
         <div className="flex outline outline-primary dark:outline-primary/30 rounded-full outline-2">
             <LanguageFilter
                 languages={languages}
                 selectedLanguage={language}
                 setSelectedLanguage={setLanguage}
+                iconOnly={iconOnly}
+            />
+            <SongBookFilter
+                songbooks={songbooks}
+                selectedSongbook={songbook}
+                setSelectedSongbook={setSongbook}
                 iconOnly={iconOnly}
             />
             <Button
@@ -84,15 +97,17 @@ const FilterButtons = ({
                 setVocalRangeFilter={setVocalRange}
                 iconOnly={iconOnly}
             />
+
         </div>
     );
 };
 
 const Filtering = ({
     languages,
-    maxRange
+    maxRange,
+    songbooks
 }: FilterProps): JSX.Element => {
-    const { language, vocalRange, capo, setLanguage, setVocalRange, toggleCapo } = useFilterSettingsStore();
+    const { language, songbook, vocalRange, capo, setLanguage, setSongbook, setVocalRange, toggleCapo } = useFilterSettingsStore();
     const isLargeScreen = useMediaQuery("only screen and (min-width : 1000px)");
 
     const isFilterInactive = (
@@ -111,6 +126,7 @@ const Filtering = ({
             <div className="hidden lg:flex">
                 <FilterButtons
                     languages={languages}
+                    songbooks={songbooks}
                     maxRange={maxRange}
                     iconOnly={isLargeScreen}
                 />
@@ -150,6 +166,11 @@ const Filtering = ({
                             languages,
                             language,
                             setLanguage
+                        )}
+                        {SongBookFilterDropdownSection(
+                            songbooks,
+                            songbook,
+                            setSongbook
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>

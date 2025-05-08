@@ -16,6 +16,7 @@ interface ToolbarProps {
     fakeScroll?: boolean;
     maxRange: number;
     languages: LanguageCount;
+    songbooks: string[];
 }
 
 function Toolbar({
@@ -24,7 +25,8 @@ function Toolbar({
     scrollOffset,
     fakeScroll = false,
     maxRange,
-    languages
+    languages,
+    songbooks,
 }: ToolbarProps) {
 
     const navigate = useNavigate();
@@ -36,6 +38,7 @@ function Toolbar({
             <Filtering
                 languages={languages}
                 maxRange={maxRange}
+                songbooks={songbooks}
             />
             <div className="hidden h-full w-fit sm:flex">
                 <ModeToggle />
