@@ -1,7 +1,7 @@
 {title: Jede jede mašinka}
 {artist: Maxim Turbulenc}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["maxim_turbulenc_jede_jede_masinka-sken.pdf", "maxim_turbulenc_jede_jede_masinka-comp.pdf"]}
 {capo: 0}

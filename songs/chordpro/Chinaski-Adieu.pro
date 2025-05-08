@@ -1,7 +1,7 @@
 {title: Adieu}
 {artist: Chinaski}
 {date_added: 10-2024}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["chinaski_adieu-sken.pdf", "chinaski_adieu-comp.pdf"]}
 {capo: 0}

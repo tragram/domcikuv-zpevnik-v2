@@ -2,7 +2,7 @@
 {artist: Haloo Helsinki!}
 {language: finnish}
 {date_added: 09-2020}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {capo: 0}
 {key: Hm}
 {range: h1-h2}

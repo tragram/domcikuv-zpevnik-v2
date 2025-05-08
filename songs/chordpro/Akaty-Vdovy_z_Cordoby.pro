@@ -1,7 +1,7 @@
 {title: Vdovy z Cordoby}
 {artist: Akáty}
 {date_added: 08-2013}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["akaty_vdovy_z_cordoby-sken.pdf", "akaty_vdovy_z_cordoby-comp.pdf"]}
 {capo: 0}

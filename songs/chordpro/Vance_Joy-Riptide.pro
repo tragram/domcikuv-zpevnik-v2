@@ -1,7 +1,7 @@
 {title: Riptide}
 {artist: Vance Joy}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: ["vance_joy_riptide-sken.pdf", "vance_joy_riptide-comp.pdf"]}
 {capo: 4}

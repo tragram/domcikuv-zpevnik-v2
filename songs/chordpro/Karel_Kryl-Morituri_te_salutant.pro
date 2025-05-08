@@ -1,7 +1,7 @@
 {title: Morituri te salutant}
 {artist: Karel Kryl}
 {date_added: 12-2010}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["karel_kryl_morituri_te_salutant-sken.pdf", "karel_kryl_morituri_te_salutant-comp.pdf"]}
 {capo: 3}

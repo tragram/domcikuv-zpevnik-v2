@@ -1,7 +1,7 @@
 {title: Černý brejle}
 {artist: Ready Kirken}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["ready_kirken_cerny_brejle-sken.pdf", "ready_kirken_cerny_brejle-comp.pdf"]}
 {capo: 2}

@@ -1,7 +1,7 @@
 {title: Hlídač krav}
 {artist: Jaromír Nohavica}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["jaromir_nohavica_hlidac_krav-sken.pdf", "jaromir_nohavica_hlidac_krav-comp.pdf"]}
 {capo: 4}

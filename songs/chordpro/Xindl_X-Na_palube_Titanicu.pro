@@ -1,7 +1,7 @@
 {title: Na palubě Titanicu}
 {artist: Xindl X}
 {date_added: 12-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: []}
 {capo: 0}

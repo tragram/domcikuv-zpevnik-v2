@@ -1,7 +1,7 @@
 {title: Kozel}
 {artist: Karcoolka}
 {date_added: 04-2025}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {capo: 0}
 {key: D}

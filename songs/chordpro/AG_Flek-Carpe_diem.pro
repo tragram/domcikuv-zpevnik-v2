@@ -1,7 +1,7 @@
 {title: Carpe diem}
 {artist: AG Flek}
 {date_added: 02-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["ag_flek_carpe_diem-sken.pdf", "ag_flek_carpe_diem-comp.pdf", "ag_flek_carpe_diem-gen.pdf"]}
 {capo: 3}

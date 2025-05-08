@@ -44,7 +44,7 @@ const filterVocalRange = (songs: SongData[], vocalRange: "all" | [number, number
 };
 
 const filterSongbook = (songs: SongData[], selectedSongbook: string) => {
-    if (selectedSongbook === "all") {
+    if (selectedSongbook === "All") {
         return songs;
     }
     return songs.filter(s => s.songbooks.includes(selectedSongbook));

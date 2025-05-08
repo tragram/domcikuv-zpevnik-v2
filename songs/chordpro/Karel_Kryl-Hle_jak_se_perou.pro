@@ -1,7 +1,7 @@
 {title: Hle, jak se perou}
 {artist: Karel Kryl}
 {date_added: 07-2016}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["karel_kryl_hle_jak_se_perou-sken.pdf", "karel_kryl_hle_jak_se_perou-comp.pdf", "karel_kryl_hle_jak_se_perou-gen.pdf"]}
 {capo: 0}

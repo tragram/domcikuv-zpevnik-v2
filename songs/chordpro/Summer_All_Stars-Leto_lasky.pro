@@ -1,7 +1,7 @@
 {title: Léto lásky}
 {artist: Summer All Stars}
 {date_added: 10-2016}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["summer_all_stars_leto_lasky-sken.pdf", "summer_all_stars_leto_lasky-comp.pdf", "summer_all_stars_leto_lasky-gen.pdf"]}
 {capo: 0}

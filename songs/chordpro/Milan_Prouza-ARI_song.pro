@@ -1,5 +1,5 @@
 {date_added: 08-2018}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["______________ari_song-sken.pdf", "______________ari_song-comp.pdf"]}
 {capo: 5}

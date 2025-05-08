@@ -1,7 +1,7 @@
 {title: Dobrák od kosti}
 {artist: Chinaski}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["chinaski_dobrak_od_kosti-sken.pdf", "chinaski_dobrak_od_kosti-comp.pdf"]}
 {capo: 2}

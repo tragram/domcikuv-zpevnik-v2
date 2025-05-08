@@ -1,7 +1,7 @@
 {title: Mississippi blues}
 {artist: Pacifik}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["pacifik_mississippi_blues-sken.pdf", "pacifik_mississippi_blues-comp.pdf"]}
 {capo: 3}

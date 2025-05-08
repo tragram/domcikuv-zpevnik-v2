@@ -1,7 +1,7 @@
 {title: Lucie}
 {artist: Černí andělé}
 {date_added: 12-2024}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: }
 {capo: 0}

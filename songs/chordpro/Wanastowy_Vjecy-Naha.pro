@@ -1,7 +1,7 @@
 {title: Nahá}
 {artist: Wanastowy Vjecy}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["wanastowy_vjecy_naha-sken.pdf", "wanastowy_vjecy_naha-comp.pdf"]}
 {capo: 3}

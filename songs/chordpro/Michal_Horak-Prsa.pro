@@ -1,7 +1,7 @@
 {title: Prsa}
 {artist: Michal Horák}
 {date_added: 03-2025}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames:}
 {capo: 0}

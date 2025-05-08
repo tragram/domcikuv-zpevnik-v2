@@ -1,7 +1,7 @@
 {title: Čekám na signál}
 {artist: Nightwork}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["nightwork_cekam_na_signal-sken.pdf", "nightwork_cekam_na_signal-comp.pdf"]}
 {capo: 4}

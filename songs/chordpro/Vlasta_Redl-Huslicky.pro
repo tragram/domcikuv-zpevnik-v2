@@ -1,7 +1,7 @@
 {title: Husličky}
 {artist: Vlasta Redl}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["vlasta_redl_huslicky-sken.pdf", "vlasta_redl_huslicky-comp.pdf"]}
 {capo: 2}

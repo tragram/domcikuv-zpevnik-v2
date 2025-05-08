@@ -1,7 +1,7 @@
 {title: New Divide}
 {artist: Linkin Park}
 {date_added: 11-2024}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: ["linkin_park_new_divide-sken.pdf", "linkin_park_new_divide-comp.pdf", "linkin_park_new_divide-gen.pdf"]}
 {capo: 5}

@@ -12,7 +12,6 @@ import {
 import { BookUser } from "lucide-react";
 
 interface SongBook {
-    text: string;
     value: string;
     avatar: string;
 }
@@ -29,15 +28,15 @@ const createSongbookChoices = (
     selectedSongbook: string,
     setSelectedSongbook: (songbook: string) => void,
 ): JSX.Element[] => {
-    const betterSongbooks: SongBook[] = songbooks.map(s => ({ text: s, value: s, avatar: "" }))
+    const songBookWithAvatar: SongBook[] = songbooks.map(s => ({ text: s, value: s, avatar: "" }))
 
     // Sort alphabetically
-    betterSongbooks.sort((a, b) => a.text.localeCompare(b.text));
-
+    songBookWithAvatar.sort((a, b) => a.value === "Domčík" ? -1 : a.value.localeCompare(b.value));
+    console.log(songBookWithAvatar)
     // Add "All" at the beginning
-    betterSongbooks.unshift({ text: "All", value: "all", avatar: "" });
+    songBookWithAvatar.unshift({ value: "All", avatar: "" });
 
-    return betterSongbooks.map((songbook) => (
+    return songBookWithAvatar.map((songbook) => (
         <DropdownMenuCheckboxItem
             key={songbook.value}
             onSelect={(e) => e.preventDefault()}
@@ -46,11 +45,11 @@ const createSongbookChoices = (
         >
             <DropdownIconStart icon={
                 <Avatar className="h-5 w-5">
-                    <AvatarImage src={songbook.avatar } />
-                    <AvatarFallback>{songbook.text.charAt(0).toUpperCase()}</AvatarFallback>
+                    <AvatarImage src={songbook.avatar} />
+                    <AvatarFallback>{songbook.value.charAt(0).toUpperCase()}</AvatarFallback>
                 </Avatar>
             } />
-            {songbook.text}
+            {songbook.value}
         </DropdownMenuCheckboxItem>
     ));
 };

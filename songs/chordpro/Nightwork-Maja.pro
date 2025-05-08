@@ -1,7 +1,7 @@
 {title: Maja}
 {artist: Nightwork}
 {date_added: 09-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["nightwork_maja-sken.pdf", "nightwork_maja-comp.pdf"]}
 {capo: 4}

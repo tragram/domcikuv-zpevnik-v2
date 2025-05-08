@@ -3,7 +3,7 @@
 {subtitle: }
 {language: english}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {pdf_filename: bob_dylan_knocking_on_heavens_door.pdf}
 {capo: 3}
 {range: e1-c2}

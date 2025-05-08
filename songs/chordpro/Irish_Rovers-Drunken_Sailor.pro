@@ -1,7 +1,7 @@
 {title: Drunken Sailor}
 {artist: Irish Rovers}
 {date_added: 08-2013}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: ["irish_rovers_drunken_sailor-sken.pdf", "irish_rovers_drunken_sailor-comp.pdf"]}
 {capo: 0}

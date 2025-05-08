@@ -1,7 +1,7 @@
 {title: Let It Be}
 {artist: The Beatles}
 {date_added: 02-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: ["the_beatles_let_it_be-sken.pdf", "the_beatles_let_it_be-comp.pdf", "the_beatles_let_it_be-gen.pdf"]}
 {capo: 6}

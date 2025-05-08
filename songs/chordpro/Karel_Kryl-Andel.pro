@@ -1,7 +1,7 @@
 {title: Anděl}
 {artist: Karel Kryl}
 {date_added: 10-2010}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["karel_kryl_andel-sken.pdf", "karel_kryl_andel-comp.pdf"]}
 {capo: 4}

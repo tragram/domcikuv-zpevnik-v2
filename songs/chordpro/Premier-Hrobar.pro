@@ -1,7 +1,7 @@
 {title: Hrobař}
 {artist: Premiér}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["premier_hrobar-sken.pdf", "premier_hrobar-comp.pdf"]}
 {capo: 5}

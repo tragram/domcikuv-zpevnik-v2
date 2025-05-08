@@ -1,7 +1,7 @@
 {title: San Francisco}
 {artist: Scott McKenzie}
 {date_added: 08-2013}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: ["scott_mckenzie_san_francisco-sken.pdf", "scott_mckenzie_san_francisco-comp.pdf"]}
 {capo: 2}

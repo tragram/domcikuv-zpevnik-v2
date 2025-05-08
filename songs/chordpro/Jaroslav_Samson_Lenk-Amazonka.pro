@@ -1,7 +1,7 @@
 {title: Amazonka}
 {artist: Jaroslav Samson Lenk}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["jaroslav_samson_lenk_amazonka-sken.pdf", "jaroslav_samson_lenk_amazonka-comp.pdf"]}
 {capo: 3}

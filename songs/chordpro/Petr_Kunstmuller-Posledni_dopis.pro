@@ -1,7 +1,7 @@
 {title: Poslední dopis}
 {artist: Petr Kunstmüller}
 {date_added: 07-2018}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: []}
 {capo: 0}

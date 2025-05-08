@@ -1,7 +1,7 @@
 {title: Šéfe}
 {artist: Fešáci}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["fesaci_sefe-sken.pdf", "fesaci_sefe-comp.pdf"]}
 {capo: 4}

@@ -1,7 +1,7 @@
 {title: Poverty And Famine}
 {artist: Kingdom Come Deliverance}
 {date_added: 04-2025}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: []}
 {image_model: dalle3}

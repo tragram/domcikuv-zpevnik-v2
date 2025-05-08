@@ -1,7 +1,7 @@
 {title: Falling Slowly}
 {artist: Hansard & Irglová}
 {date_added: 06-2013}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: ["hansard__irglova_falling_slowly-sken.pdf", "hansard__irglova_falling_slowly-comp.pdf"]}
 {capo: 3}

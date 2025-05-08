@@ -1,7 +1,7 @@
 {title: No quiero ser normal}
 {artist: El Cuarteto de Nos}
 {date_added: 03-2016}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: spanish}
 {pdf_filenames: []}
 {capo: 0}

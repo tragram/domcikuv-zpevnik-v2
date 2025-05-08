@@ -1,7 +1,7 @@
 {title: Astronaut}
 {artist: Simple Plan}
 {date_added: 08-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: ["simple_plan_astronaut-sken.pdf", "simple_plan_astronaut-comp.pdf", "simple_plan_astronaut-gen.pdf"]}
 {capo: 0}

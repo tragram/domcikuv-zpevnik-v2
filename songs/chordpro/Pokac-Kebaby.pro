@@ -1,7 +1,7 @@
 {title: Kebaby}
 {artist: Pokáč}
 {date_added: 12-2018}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["pokac_kebaby-sken.pdf", "pokac_kebaby-comp.pdf"]}
 {capo: 3}

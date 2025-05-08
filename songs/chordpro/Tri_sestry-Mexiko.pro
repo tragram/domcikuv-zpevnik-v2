@@ -1,7 +1,7 @@
 {title: Mexiko}
 {artist: Tři sestry}
 {date_added: 04-2025}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {capo: 5}
 {key: Am}

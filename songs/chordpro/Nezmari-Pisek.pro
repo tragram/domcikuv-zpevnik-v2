@@ -1,7 +1,7 @@
 {title: Písek}
 {artist: Nezmaři}
 {date_added: 02-2012}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["nezmari_pisek-sken.pdf", "nezmari_pisek-comp.pdf"]}
 {capo: 5}

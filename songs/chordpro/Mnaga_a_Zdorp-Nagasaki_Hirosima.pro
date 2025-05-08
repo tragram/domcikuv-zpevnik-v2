@@ -1,7 +1,7 @@
 {title: Nagasaki Hirošima}
 {artist: Mňága a Žďorp}
 {date_added: 01-2025}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: }
 {capo: 0}

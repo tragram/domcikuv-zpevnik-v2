@@ -1,7 +1,7 @@
 {title: Známka Punku}
 {artist: Visací zámek}
 {date_added: 11-2024}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: []}
 {capo: 0}

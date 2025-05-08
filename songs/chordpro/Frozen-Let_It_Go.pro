@@ -1,7 +1,7 @@
 {title: Let It Go}
 {artist: Frozen}
 {date_added: 03-2025}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames:}
 {capo: 3}

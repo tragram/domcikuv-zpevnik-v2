@@ -1,7 +1,7 @@
 {title: Mama}
 {artist: Ozzy Osbourne}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: ["ozzy_osbourne_mama-sken.pdf", "ozzy_osbourne_mama-comp.pdf"]}
 {capo: 5}

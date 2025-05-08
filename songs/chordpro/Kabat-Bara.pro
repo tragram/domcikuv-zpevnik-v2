@@ -1,7 +1,7 @@
 {title: Bára}
 {artist: Kabát}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["kabat_bara-sken.pdf", "kabat_bara-comp.pdf"]}
 {capo: 0}

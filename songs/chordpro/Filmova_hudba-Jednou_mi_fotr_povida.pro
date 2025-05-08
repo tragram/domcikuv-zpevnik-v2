@@ -1,7 +1,7 @@
 {title: Jednou mi fotr povídá}
 {artist: Filmová hudba}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["filmova_hudba_jednou_mi_fotr_povida-sken.pdf", "filmova_hudba_jednou_mi_fotr_povida-comp.pdf"]}
 {capo: 0}

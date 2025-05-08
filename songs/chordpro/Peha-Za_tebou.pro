@@ -1,7 +1,7 @@
 {title: Za tebou}
 {artist: Peha}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: slovak}
 {pdf_filenames: ["peha_za_tebou-sken.pdf", "peha_za_tebou-comp.pdf"]}
 {capo: 3}

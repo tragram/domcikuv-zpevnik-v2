@@ -1,6 +1,6 @@
 {language: estonian}
 {date_added: 05-2019}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {capo: 3}
 {key: C}
 {artist: Curly Strings}

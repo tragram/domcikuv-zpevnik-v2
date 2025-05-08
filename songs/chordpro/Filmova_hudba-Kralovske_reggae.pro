@@ -1,7 +1,7 @@
 {title: Královské reggae}
 {artist: Filmová hudba}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["filmova_hudba_kralovske_reggae-sken.pdf", "filmova_hudba_kralovske_reggae-comp.pdf"]}
 {capo: 0}

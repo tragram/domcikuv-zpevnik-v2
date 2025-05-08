@@ -1,7 +1,7 @@
 {title: iDnes.cz}
 {artist: Jaromír Nohavica}
 {date_added: 08-2018}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["jaromir_nohavica_idnescz-sken.pdf", "jaromir_nohavica_idnescz-comp.pdf"]}
 {capo: 0}

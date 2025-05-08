@@ -1,7 +1,7 @@
 {title: Jdou po mně jdou}
 {artist: Jaromír Nohavica}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["jaromir_nohavica_jdou_po_me_jdou-sken.pdf", "jaromir_nohavica_jdou_po_me_jdou-comp.pdf"]}
 {capo: 3}

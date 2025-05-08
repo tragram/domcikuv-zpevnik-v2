@@ -1,7 +1,7 @@
 {title: Můj grál}
 {artist: Karel Plíhal}
 {date_added: 07-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["karel_plihal_muj_gral-sken.pdf", "karel_plihal_muj_gral-comp.pdf"]}
 {capo: 2}

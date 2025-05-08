@@ -3,7 +3,7 @@
 {capo: 2}
 {language: czech}
 {date_added: 09-2024}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {range: g1-d2}
 {start_melody: a c e}
 

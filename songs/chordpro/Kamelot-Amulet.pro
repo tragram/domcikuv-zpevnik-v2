@@ -1,7 +1,7 @@
 {title: Amulet}
 {artist: Kamelot}
 {date_added: 01-2011}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["kamelot_amulet-sken.pdf", "kamelot_amulet-comp.pdf"]}
 {capo: 2}

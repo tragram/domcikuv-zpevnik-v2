@@ -1,7 +1,7 @@
 {title: Pověste ho vejš}
 {artist: Michal Tučný}
 {date_added: 02-2015}
-{songbooks: ["domcik"]}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: ["michal_tucny_poveste_ho_vejs-sken.pdf", "michal_tucny_poveste_ho_vejs-comp.pdf", "michal_tucny_poveste_ho_vejs-gen.pdf"]}
 {capo: 0}
