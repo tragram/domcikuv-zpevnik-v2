@@ -67,7 +67,6 @@ const FilterButtons = ({
     songbooks,
 }: FilterButtonsProps): JSX.Element => {
     const { language, songbook, vocalRange, capo, setLanguage, setSongbook, setVocalRange, toggleCapo } = useFilterSettingsStore();
-    console.log(songbook)
     return (
         <div className="flex outline outline-primary dark:outline-primary/30 rounded-full outline-2">
             <LanguageFilter

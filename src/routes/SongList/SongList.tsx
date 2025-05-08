@@ -30,7 +30,6 @@ function SongList() {
         setScrollOffset(offset);
         setShowToolbar(offset === 0 || offset < scrollOffset);
     };
-    console.log(songDB)
     return (
         <div className="h-dvh w-full no-scrollbar block">
             <Toolbar
