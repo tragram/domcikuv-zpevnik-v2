@@ -1,6 +1,7 @@
 {title: Jaro}
 {artist: Fešáci}
 {date_added: 07-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['fesaci_jaro-sken.pdf', 'fesaci_jaro-comp.pdf']}
 {capo: 5}

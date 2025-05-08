@@ -1,6 +1,7 @@
 {title: Sovy v mazutu}
 {artist: Tři sestry}
 {date_added: 12-2024}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: }
 {capo: 0}

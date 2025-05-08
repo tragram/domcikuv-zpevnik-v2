@@ -1,6 +1,7 @@
 {title: Vlastizrádce}
 {artist: Honza Jícha}
 {date_added: 07-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['honza_jicha_vlastizradce-sken.pdf', 'honza_jicha_vlastizradce-comp.pdf']}
 {capo: 4}

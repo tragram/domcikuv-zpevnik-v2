@@ -1,6 +1,7 @@
 {title: F Sharp}
 {artist: Tim Minchin}
 {date_added: 03-2025}
+{songbooks: ["domcik"]}
 {language: english}
 {pdf_filenames: }
 {capo: 0}

@@ -1,6 +1,7 @@
 {title: The Gambler}
 {artist: Kenny Rogers}
 {date_added: 02-2015}
+{songbooks: ["domcik"]}
 {language: english}
 {pdf_filenames: ['kenny_rogers_the_gambler-sken.pdf', 'kenny_rogers_the_gambler-comp.pdf', 'kenny_rogers_the_gambler-gen.pdf']}
 {capo: 0}

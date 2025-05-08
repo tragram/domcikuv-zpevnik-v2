@@ -1,6 +1,7 @@
 {title: Nothing Else Matters}
 {artist: Metallica}
 {date_added: 07-2015}
+{songbooks: ["domcik"]}
 {language: english}
 {pdf_filenames: ['metallica_nothing_else_matters-sken.pdf', 'metallica_nothing_else_matters-comp.pdf']}
 {capo: 0}

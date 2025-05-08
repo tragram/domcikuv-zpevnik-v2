@@ -1,6 +1,7 @@
 {title: Přítel}
 {artist: Jaromír Nohavica}
 {date_added: 07-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['jaromir_nohavica_pritel-sken.pdf', 'jaromir_nohavica_pritel-comp.pdf']}
 {capo: 2}

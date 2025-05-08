@@ -1,6 +1,7 @@
 {title: Alkoholická}
 {artist: Vojtěch Dyk}
 {date_added: 04-2025}
+{songbooks: ["domcik"]}
 {language: czech}
 {capo: 0}
 {key: Am}

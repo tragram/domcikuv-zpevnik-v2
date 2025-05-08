@@ -1,6 +1,7 @@
 {title: Od mozku k srdci}
 {artist: Xindl X}
 {date_added: 12-2024}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: []}
 {capo: 2}

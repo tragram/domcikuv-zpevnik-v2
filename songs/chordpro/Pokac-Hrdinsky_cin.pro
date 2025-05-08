@@ -1,6 +1,7 @@
 {title: Hrdinský čin}
 {artist: Pokáč}
 {date_added: 10-2018}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['pokac_hrdinsky_cin-sken.pdf', 'pokac_hrdinsky_cin-comp.pdf']}
 {capo: 3}

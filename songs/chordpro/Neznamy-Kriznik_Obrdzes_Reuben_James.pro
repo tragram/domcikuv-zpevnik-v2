@@ -1,6 +1,7 @@
 {title: Křižník Obrdžes (Reuben James)}
 {artist: Neznámý}
 {date_added: 05-2025}
+{songbooks: ["kvitek"]}
 {language: czech}
 {capo: 0}
 {key: D}

@@ -2,6 +2,7 @@
 {artist: Poletíme?}
 {language: czech}
 {date_added: 09-2024}
+{songbooks: ["domcik"]}
 {capo: 2}
 {range: g1-h2}
 {start_melody: g g g h d d h g}

@@ -1,6 +1,7 @@
 {title: Dajána}
 {artist: Stanislav Hložek}
 {date_added: 09-2010}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['stanislav_hlozek_dajana-sken.pdf', 'stanislav_hlozek_dajana-comp.pdf']}
 {capo: 3}

@@ -1,6 +1,7 @@
 {title: Zlatý hřebík noci}
 {artist: Znouzectnost}
 {date_added: 05-2025}
+{songbooks: ["kvitek"]}
 {language: czech}
 {capo: 0}
 {key: Em}

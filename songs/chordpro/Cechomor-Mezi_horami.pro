@@ -1,6 +1,7 @@
 {title: Mezi horami}
 {artist: Čechomor}
 {date_added: 07-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['cechomor_mezi_horami-sken.pdf', 'cechomor_mezi_horami-comp.pdf']}
 {capo: 4}

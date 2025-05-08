@@ -1,6 +1,7 @@
 {title: Malování}
 {artist: Divokej Bill}
 {date_added: 04-2025}
+{songbooks: ["domcik"]}
 {language: czech}
 {capo: 0}
 {key: Em}

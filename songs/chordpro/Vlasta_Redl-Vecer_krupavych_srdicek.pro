@@ -1,6 +1,7 @@
 {title: Večer křupavých srdíček}
 {artist: Vlasta Redl}
 {date_added: 02-2017}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['vlasta_redl_vecer_krupavych_srdicek-sken.pdf', 'vlasta_redl_vecer_krupavych_srdicek-comp.pdf', 'vlasta_redl_vecer_krupavych_srdicek-gen.pdf']}
 {capo: 0}

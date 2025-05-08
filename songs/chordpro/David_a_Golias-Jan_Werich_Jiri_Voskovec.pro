@@ -1,6 +1,7 @@
 {title: Jan Werich, Jiří Voskovec}
 {artist: David a Goliáš}
 {date_added: 12-2024}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: }
 {capo: 0}

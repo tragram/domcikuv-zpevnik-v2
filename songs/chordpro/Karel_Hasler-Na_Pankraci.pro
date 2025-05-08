@@ -1,6 +1,7 @@
 {title: Na Pankráci}
 {artist: Karel Hašler}
 {date_added: 04-2025}
+{songbooks: ["domcik"]}
 {language: czech}
 {capo: 0}
 {key: G}

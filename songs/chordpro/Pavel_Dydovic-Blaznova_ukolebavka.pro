@@ -1,6 +1,7 @@
 {title: Bláznova ukolébavka}
 {artist: Pavel Dydovič}
 {date_added: 09-2010}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['pavel_dydovic_blaznova_ukolebavka-sken.pdf', 'pavel_dydovic_blaznova_ukolebavka-comp.pdf']}
 {capo: 2}

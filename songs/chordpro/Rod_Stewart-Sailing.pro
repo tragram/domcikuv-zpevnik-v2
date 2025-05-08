@@ -1,6 +1,7 @@
 {title: Sailing}
 {artist: Rod Stewart}
 {date_added: 05-2021}
+{songbooks: ["domcik"]}
 {language: english}
 {pdf_filenames: ['rod_stewart_sailing-sken.pdf', 'rod_stewart_sailing-comp.pdf']}
 {capo: 4}

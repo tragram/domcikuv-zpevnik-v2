@@ -1,6 +1,7 @@
 {title: Jasná zpráva}
 {artist: Olympic}
 {date_added: 10-2011}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['olympic_jasna_zprava-sken.pdf', 'olympic_jasna_zprava-comp.pdf']}
 {capo: 0}

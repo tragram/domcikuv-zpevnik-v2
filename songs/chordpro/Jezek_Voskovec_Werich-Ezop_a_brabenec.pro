@@ -1,6 +1,7 @@
 {title: Ezop a brabenec}
 {artist: Ježek + Voskovec + Werich}
 {date_added: 08-2016}
+{songbooks: ["domcik"]}
 {language: czech}
 {image_model: FLUX.1-schnell}
 {pdf_filenames: ['jezek__voskovec__werich_ezop_a_brabenec-sken.pdf', 'jezek__voskovec__werich_ezop_a_brabenec-comp.pdf', 'jezek__voskovec__werich_ezop_a_brabenec-gen.pdf']}

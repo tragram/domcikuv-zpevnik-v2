@@ -1,6 +1,7 @@
 {title: František}
 {artist: Buty}
 {date_added: 07-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['buty_frantisek-sken.pdf', 'buty_frantisek-comp.pdf']}
 {capo: 0}

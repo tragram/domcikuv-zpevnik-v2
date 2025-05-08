@@ -4,6 +4,7 @@
 {tempo: 120}
 {language: czech}
 {date_added: 09-2024}
+{songbooks: ["domcik"]}
 {range: d1-c1}
 {start_melody: e g h}
 {key: G}

@@ -1,6 +1,7 @@
 {title: 1970}
 {artist: Chinaski}
 {date_added: 06-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: []}
 {capo: 0}

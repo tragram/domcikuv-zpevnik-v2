@@ -1,6 +1,7 @@
 {title: Bohužel}
 {artist: Divokej Bill}
 {date_added: 04-2025}
+{songbooks: ["kvitek"]}
 {language: czech}
 {capo: 0}
 {key: A}

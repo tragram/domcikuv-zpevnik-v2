@@ -1,6 +1,7 @@
 {title: Ty a já}
 {artist: Kryštof}
 {date_added: 10-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['krystof_ty_a_ja-sken.pdf', 'krystof_ty_a_ja-comp.pdf']}
 {capo: 0}

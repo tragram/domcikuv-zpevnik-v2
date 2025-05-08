@@ -2,6 +2,7 @@
 {artist: Pavel Čadek}
 {language: czech}
 {date_added: 09-2020}
+{songbooks: ["domcik"]}
 {capo: 0}
 {key: Dm}
 {range: d1-a1}

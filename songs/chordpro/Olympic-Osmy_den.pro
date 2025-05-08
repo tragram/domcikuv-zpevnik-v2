@@ -1,6 +1,7 @@
 {title: Osmý den}
 {artist: Olympic}
 {date_added: 12-2014}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: []}
 {capo: 3}

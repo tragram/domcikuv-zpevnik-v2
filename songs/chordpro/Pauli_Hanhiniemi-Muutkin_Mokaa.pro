@@ -2,6 +2,7 @@
 {artist: Pauli Hanhiniemi}
 {language: finnish}
 {date_added: 02-2025}
+{songbooks: ["domcik"]}
 {capo: 2}
 {key: Am}
 {range: a1-c2}

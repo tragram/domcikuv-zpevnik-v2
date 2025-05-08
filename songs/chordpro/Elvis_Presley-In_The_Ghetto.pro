@@ -1,6 +1,7 @@
 {title: In The Ghetto}
 {artist: Elvis Presley}
 {date_added: 03-2018}
+{songbooks: ["domcik"]}
 {language: english}
 {pdf_filenames: ['elvis_presley_in_the_ghetto-sken.pdf', 'elvis_presley_in_the_ghetto-comp.pdf']}
 {capo: 2}

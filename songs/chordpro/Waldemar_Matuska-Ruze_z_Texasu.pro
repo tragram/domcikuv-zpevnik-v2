@@ -1,6 +1,7 @@
 {title: Růže z Texasu}
 {artist: Waldemar Matuška}
 {date_added: 04-2025}
+{songbooks: ["domcik"]}
 {language: czech}
 {capo: 0}
 {key: C}

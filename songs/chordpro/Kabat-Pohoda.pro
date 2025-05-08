@@ -1,6 +1,7 @@
 {title: Pohoda}
 {artist: Kabát}
 {date_added: 07-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['kabat_pohoda-sken.pdf', 'kabat_pohoda-comp.pdf']}
 {capo: 3}

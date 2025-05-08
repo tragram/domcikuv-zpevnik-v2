@@ -1,6 +1,7 @@
 {title: Colorado}
 {artist: Kabát}
 {date_added: 07-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['kabat_colorado-sken.pdf', 'kabat_colorado-comp.pdf']}
 {capo: 0}

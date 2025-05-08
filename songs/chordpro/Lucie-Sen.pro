@@ -1,6 +1,7 @@
 {title: Sen}
 {artist: Lucie}
 {date_added: 09-2015}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: ['lucie_sen-sken.pdf', 'lucie_sen-comp.pdf']}
 {capo: 0}

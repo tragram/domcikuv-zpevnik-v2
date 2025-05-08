@@ -1,6 +1,7 @@
 {title: Márinka}
 {artist: Honza Jícha}
 {date_added: 07-2018}
+{songbooks: ["domcik"]}
 {language: czech}
 {pdf_filenames: []}
 {capo: 0}
