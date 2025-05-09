@@ -46,7 +46,7 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
         (set) => ({
             language: "all",
             vocalRange: "all",
-            songbook: "all",
+            songbook: "All",
             capo: true,
             setLanguage: (language: SongLanguage) => set({ language: language }),
             setSongbook: (songbook: string) => set({ songbook: songbook }),
