@@ -102,7 +102,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected,
       <div className='hidden xl:flex h-full'>
         <TransposeButtons values={values} selected={selected} onChange={onChange} />
       </div>
-      <div className='xl:hidden max-sm:hidden'>
+      <div className='xl:hidden flex max-[600px]:hidden'>
         <Button size="icon" variant="circular" onClick={() => setIsComponentVisible(!isComponentVisible)}>
           <TransposeIcon />
         </Button>
@@ -115,7 +115,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected,
             </ToolbarBase>}
         </div>
       </div>
-      <div className='sm:hidden xl:hidden flex'>
+      <div className='max-sm:hidden flex min-[600px]:hidden'> 
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="circular" onClick={() => setIsComponentVisible(!isComponentVisible)}>
