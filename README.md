@@ -19,6 +19,7 @@ A song shall have the following preamble (tempo may be left empty - it's current
 ```chordpro
 {artist: František Vomáčka}
 {title: Svíčková}
+{songbooks: ["Domčík","Kvítek"]}
 {language: english}
 {date_added: 02-2020}
 {capo: 0}
@@ -29,6 +30,11 @@ A song shall have the following preamble (tempo may be left empty - it's current
 **Note that the chords need to use the Czech/German note names (H:=B, B:=Bb).**
 
 To exclude a file from the database, simply insert `{disabled: true}` in the preamble.
+
+#### Songbooks
+Users can filter by songbook. Each song has a list of songbooks in which it is included. Care must be taken to type the name properly, there's no autocorrect. ;-) Also, make sure to use double quotes.
+
+All songbook names will be collected and used for filters. To define an avatar of the songbook (that will be shown in the filter and in the list on wide screens), define the URL in `src\components\songbookAvatars.tsx`. I know, not a very elegant solution, but it works for now since probably not that many people will be adding songs. Alternatively, the system will try to locate the file `/public/avatars/[songbook].png`. The fallback will be the first letter of the songbook, so not all is lost if you don't have your avatar.
 
 #### Song range
 The behavior of the range parameter can feel a bit strange. The numbers don't mean the traditional octaves as you might expect but are rather relative to the lower note (which is typically a '1'). For example, transposing "c1-d2" (14 semitones) down by one semitone yields "h1-c#2". I know this is confusing but it's been like this in my songbook for many years and did not feel like changing this part too. Maybe in the future. :-)
