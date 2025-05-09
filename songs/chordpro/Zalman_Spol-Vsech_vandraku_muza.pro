@@ -1,8 +1,9 @@
 {title: Všech vandráků můza}
 {artist: Žalman & Spol.}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['pavel_lohonka_zalman_vsech_vandraku_muza-sken.pdf', 'pavel_lohonka_zalman_vsech_vandraku_muza-comp.pdf']}
+{pdf_filenames: ["pavel_lohonka_zalman_vsech_vandraku_muza-sken.pdf", "pavel_lohonka_zalman_vsech_vandraku_muza-comp.pdf"]}
 {capo: 3}
 {key: G}
 {tempo: }

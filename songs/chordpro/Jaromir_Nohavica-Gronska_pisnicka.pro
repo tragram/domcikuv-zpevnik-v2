@@ -1,8 +1,9 @@
 {title: Grónská písnička}
 {artist: Jaromír Nohavica}
 {date_added: 06-2010}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['jaromir_nohavica_gronska_pisnicka-sken.pdf', 'jaromir_nohavica_gronska_pisnicka-comp.pdf']}
+{pdf_filenames: ["jaromir_nohavica_gronska_pisnicka-sken.pdf", "jaromir_nohavica_gronska_pisnicka-comp.pdf"]}
 {capo: 3}
 {key: D}
 {tempo: }

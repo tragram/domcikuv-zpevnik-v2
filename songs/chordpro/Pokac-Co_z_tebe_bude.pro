@@ -1,8 +1,9 @@
 {title: Co z tebe bude}
 {artist: Pokáč}
 {date_added: 12-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['pokac_co_z_tebe_bude-sken.pdf', 'pokac_co_z_tebe_bude-comp.pdf']}
+{pdf_filenames: ["pokac_co_z_tebe_bude-sken.pdf", "pokac_co_z_tebe_bude-comp.pdf"]}
 {capo: 0}
 {key: D}
 {tempo: }

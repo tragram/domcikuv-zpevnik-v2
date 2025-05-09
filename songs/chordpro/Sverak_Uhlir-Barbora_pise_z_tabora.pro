@@ -1,8 +1,9 @@
 {title: Barbora píše z tábora}
 {artist: Svěrák & Uhlíř}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['uhlir_barbora_pise_z_tabora-sken.pdf', 'uhlir_barbora_pise_z_tabora-comp.pdf']}
+{pdf_filenames: ["uhlir_barbora_pise_z_tabora-sken.pdf", "uhlir_barbora_pise_z_tabora-comp.pdf"]}
 {capo: 0}
 {key: D}
 {tempo: }

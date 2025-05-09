@@ -1,8 +1,9 @@
 {title: Burčák}
 {artist: Devítka}
 {date_added: 08-2016}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['devitka_burcak-sken.pdf', 'devitka_burcak-comp.pdf', 'devitka_burcak-gen.pdf']}
+{pdf_filenames: ["devitka_burcak-sken.pdf", "devitka_burcak-comp.pdf", "devitka_burcak-gen.pdf"]}
 {capo: 0}
 {key: D}
 {tempo: }

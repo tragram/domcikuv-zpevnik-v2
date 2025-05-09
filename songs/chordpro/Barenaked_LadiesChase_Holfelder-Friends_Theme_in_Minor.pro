@@ -1,6 +1,7 @@
 {title: Friends Theme in Minor}
 {artist: Barenaked Ladies/Chase Holfelder}
 {date_added: 03-2025}
+{songbooks: ["Domčík"]}
 {language: english}
 {pdf_filenames: }
 {capo: 0}

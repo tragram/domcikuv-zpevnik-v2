@@ -1,8 +1,9 @@
 {title: Taky jsem se narodil bos}
 {artist: Olympic}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['olympic_taky_jsem_se_narodil_bos-sken.pdf', 'olympic_taky_jsem_se_narodil_bos-comp.pdf']}
+{pdf_filenames: ["olympic_taky_jsem_se_narodil_bos-sken.pdf", "olympic_taky_jsem_se_narodil_bos-comp.pdf"]}
 {capo: 0}
 {key: G}
 {tempo: }

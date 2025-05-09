@@ -1,8 +1,9 @@
 {title: Zafúkané}
 {artist: Fleret}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['fkeret_zafukane-sken.pdf', 'fkeret_zafukane-comp.pdf']}
+{pdf_filenames: ["fkeret_zafukane-sken.pdf", "fkeret_zafukane-comp.pdf"]}
 {capo: 2}
 {key: Am}
 {tempo: }

@@ -1,8 +1,9 @@
 {title: Mám doma kočku}
 {artist: Pokáč}
 {date_added: 11-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['pokac_mam_doma_kocku-sken.pdf', 'pokac_mam_doma_kocku-comp.pdf']}
+{pdf_filenames: ["pokac_mam_doma_kocku-sken.pdf", "pokac_mam_doma_kocku-comp.pdf"]}
 {capo: 3}
 {key: G}
 {tempo: }

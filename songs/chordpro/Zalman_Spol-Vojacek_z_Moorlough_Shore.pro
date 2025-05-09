@@ -1,8 +1,9 @@
 {title: Vojáček z Moorlough Shore}
 {artist: Žalman & Spol.}
 {date_added: 08-2016}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf', 'pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf']}
+{pdf_filenames: ["pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf", "pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf", "pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf"]}
 {capo: 0}
 {key: Hm}
 {tempo: }

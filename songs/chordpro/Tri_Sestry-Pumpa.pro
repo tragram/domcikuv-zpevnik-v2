@@ -1,8 +1,9 @@
 {title: Pumpa}
 {artist: Tři Sestry}
 {date_added: 10-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['tri_sestry_pumpa-sken.pdf', 'tri_sestry_pumpa-comp.pdf']}
+{pdf_filenames: ["tri_sestry_pumpa-sken.pdf", "tri_sestry_pumpa-comp.pdf"]}
 {capo: 3}
 {key: Hm}
 {tempo: }

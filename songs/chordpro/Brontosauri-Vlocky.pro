@@ -1,8 +1,9 @@
 {title: Vločky}
 {artist: Brontosauři}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['brontosauri_vlocky-sken.pdf', 'brontosauri_vlocky-comp.pdf']}
+{pdf_filenames: ["brontosauri_vlocky-sken.pdf", "brontosauri_vlocky-comp.pdf"]}
 {capo: 3}
 {key: D}
 {tempo: }

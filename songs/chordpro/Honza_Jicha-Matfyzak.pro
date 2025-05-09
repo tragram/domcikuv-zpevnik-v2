@@ -1,8 +1,9 @@
 {title: Matfyzák}
 {artist: Honza Jícha}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['honza_jicha_matfyzak-sken.pdf', 'honza_jicha_matfyzak-comp.pdf']}
+{pdf_filenames: ["honza_jicha_matfyzak-sken.pdf", "honza_jicha_matfyzak-comp.pdf"]}
 {capo: 3}
 {key: Am}
 {tempo: }

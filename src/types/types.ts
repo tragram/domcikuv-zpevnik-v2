@@ -76,7 +76,8 @@ interface SongRawData {
     title?: string;
     artist?: string;
     key?: string;
-    dateAdded: string;
+    dateAdded?: string;
+    songbooks?: string;
     startMelody?: string;
     language?: SongLanguage;
     tempo?: string | number;
@@ -101,6 +102,7 @@ class SongData {
         year: int;
     };
     startMelody?: string;
+    songbooks: string[];
     language: SongLanguage;
     tempo: int;
     capo: int;
@@ -115,19 +117,28 @@ class SongData {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
         this.key = Key.parse(song.key || null, true);
-        const [month, year] = song.dateAdded.split("-");
+        const [month, year] = (song.dateAdded || "0-12").split("-");
         this.dateAdded = { month: parseInt(month), year: parseInt(year) };
-
+        try {
+            this.songbooks = song.songbooks ? JSON.parse(song.songbooks) : [];
+        } catch (error) {
+            console.log(`Error parsing songbooks for ${this.artist}: ${this.title}`, error);
+            this.songbooks = [];
+        }
         this.startMelody = song.startMelody;
         this.language = song.language || "other";
         this.tempo = parseInt(song.tempo as string);
         this.capo = parseInt(song.capo as string) || 0;
         this.range = new SongRange(song.range || "");
         this.illustrationData = new IllustrationData(song.prompt_model, song.prompt_id, song.image_model, song.illustrations);
-        this.pdfFilenames = song.pdfFilenames
-            ? JSON.parse(song.pdfFilenames.replace(/'/g, '"')).map((f: string) => fileURL("songs/pdfs/" + f))
-            : [];
-
+        try {
+            this.pdfFilenames = song.pdfFilenames
+                ? JSON.parse(song.pdfFilenames).map((f: string) => fileURL("songs/pdfs/" + f))
+                : [];
+        } catch (error) {
+            console.log(`Error parsing pdf filenames for ${this.artist}: ${this.title}`, error);
+            this.pdfFilenames = [];
+        }
         this.chordproFile = song.chordproFile || "";
         this.contentHash = song.contentHash || "";
     }
@@ -220,6 +231,7 @@ interface SongDB {
     maxRange: int,
     languages: LanguageCount, // counts the occurences of each language
     songs: Array<SongData>
+    songbooks: string[]; // tracks all songbooks defined in the DB
 }
 
 export type { SongDB, SortSettings, FilterSettings, SongLanguage, LanguageCount, SortOrder, SortField };

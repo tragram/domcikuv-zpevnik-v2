@@ -1,8 +1,9 @@
 {title: Hurt}
 {artist: Johnny Cash/NIN}
 {date_added: 03-2018}
+{songbooks: ["Domčík"]}
 {language: english}
-{pdf_filenames: ['johnny_cashnin_hurt-sken.pdf', 'johnny_cashnin_hurt-comp.pdf']}
+{pdf_filenames: ["johnny_cashnin_hurt-sken.pdf", "johnny_cashnin_hurt-comp.pdf"]}
 {capo: 0}
 {key: Am}
 {tempo: }

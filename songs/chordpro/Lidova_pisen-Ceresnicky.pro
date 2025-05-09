@@ -1,8 +1,9 @@
 {title: Čerešničky}
 {artist: Lidová píseň}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['lidova_pisen_ceresnicky-sken.pdf', 'lidova_pisen_ceresnicky-comp.pdf']}
+{pdf_filenames: ["lidova_pisen_ceresnicky-sken.pdf", "lidova_pisen_ceresnicky-comp.pdf"]}
 {capo: 3}
 {key: G}
 {tempo: }

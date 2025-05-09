@@ -1,8 +1,9 @@
 {title: Jedenkrát}
 {artist: Žalman & Spol.}
 {date_added: 07-2013}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['vojta_zicha_jedenkrat-sken.pdf', 'vojta_zicha_jedenkrat-comp.pdf']}
+{pdf_filenames: ["vojta_zicha_jedenkrat-sken.pdf", "vojta_zicha_jedenkrat-comp.pdf"]}
 {capo: 2}
 {key: Hm}
 {tempo: }

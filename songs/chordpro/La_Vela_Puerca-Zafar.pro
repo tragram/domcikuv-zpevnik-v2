@@ -1,6 +1,7 @@
 {title: Zafar}
 {artist: La Vela Puerca}
 {date_added: 10-2020}
+{songbooks: ["Domčík"]}
 {language: spanish}
 {pdf_filenames: []}
 {capo: 0}
