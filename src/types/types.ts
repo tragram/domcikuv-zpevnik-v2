@@ -119,17 +119,26 @@ class SongData {
         this.key = Key.parse(song.key || null, true);
         const [month, year] = (song.dateAdded || "0-12").split("-");
         this.dateAdded = { month: parseInt(month), year: parseInt(year) };
-        this.songbooks = song.songbooks ? JSON.parse(song.songbooks) : [];
+        try {
+            this.songbooks = song.songbooks ? JSON.parse(song.songbooks) : [];
+        } catch (error) {
+            console.log(`Error parsing songbooks for ${this.artist}: ${this.title}`, error);
+            this.songbooks = [];
+        }
         this.startMelody = song.startMelody;
         this.language = song.language || "other";
         this.tempo = parseInt(song.tempo as string);
         this.capo = parseInt(song.capo as string) || 0;
         this.range = new SongRange(song.range || "");
         this.illustrationData = new IllustrationData(song.prompt_model, song.prompt_id, song.image_model, song.illustrations);
-        this.pdfFilenames = song.pdfFilenames
-            ? JSON.parse(song.pdfFilenames).map((f: string) => fileURL("songs/pdfs/" + f))
-            : [];
-
+        try {
+            this.pdfFilenames = song.pdfFilenames
+                ? JSON.parse(song.pdfFilenames).map((f: string) => fileURL("songs/pdfs/" + f))
+                : [];
+        } catch (error) {
+            console.log(`Error parsing pdf filenames for ${this.artist}: ${this.title}`, error);
+            this.pdfFilenames = [];
+        }
         this.chordproFile = song.chordproFile || "";
         this.contentHash = song.contentHash || "";
     }
