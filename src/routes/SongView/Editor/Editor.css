@@ -1,0 +1,19 @@
+.main-container{
+    border-color: hsl(var(--primary));
+    border-width: 4px;
+    border-radius: calc(var(--radius) - 2px);
+    padding: 1rem;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+
+}
+
+.main-container-title{
+    font-weight: 800;
+    font-size: 1.875rem /* 30px */;
+    line-height: 2.25rem /* 36px */;
+    text-align: center;
+    color: hsl(var(--primary));
+
+}
