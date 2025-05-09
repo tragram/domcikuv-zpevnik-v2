@@ -1,3 +1,4 @@
+import { songBooksWAvatars } from "@/components/songbookAvatars";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,23 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { BookUser } from "lucide-react";
 
-interface SongBook {
-    value: string;
-    avatar: string | undefined;
-}
-
-const songBook2Avatar = (songbook: string) => {
-    const avatarMap: Record<string, string> = {
-        "Domčík": "avatars/domcik.png",
-        "Kvítek": "avatars/kvitek.jpeg",
-    };
-    if (songbook in avatarMap) {
-        return avatarMap[songbook];
-    } else {
-        return undefined;
-    }
-}
-
 interface SongBookFilterProps {
     songbooks: string[];
     selectedSongbook: string;
@@ -40,23 +24,8 @@ const createSongbookChoices = (
     selectedSongbook: string,
     setSelectedSongbook: (songbook: string) => void,
 ): JSX.Element[] => {
-    const songBookWithAvatar: SongBook[] = songbooks.map(s => ({ value: s, avatar: songBook2Avatar(s) }))
 
-    // Sort alphabetically (putting Domčík at the start ;-))
-    const sortFn = (a: SongBook, b: SongBook) => {
-        if (a.value === "Domčík") {
-            return -1;
-        } else if (b.value === "Domčík") {
-            return 1;
-        } else {
-            return a.value.localeCompare(b.value);
-        }
-    }
-    songBookWithAvatar.sort(sortFn);
-    
-    // Add "All" at the beginning
-    songBookWithAvatar.unshift({ value: "All", avatar: "avatars/all_songbooks.png" });
-    return songBookWithAvatar.map((songbook) => (
+    return songBooksWAvatars(songbooks).map((songbook) => (
         <DropdownMenuCheckboxItem
             key={songbook.value}
             onSelect={(e) => e.preventDefault()}
@@ -66,7 +35,7 @@ const createSongbookChoices = (
             <DropdownIconStart icon={
                 <Avatar className="h-6 w-6">
                     <AvatarImage src={songbook.avatar} />
-                    <AvatarFallback>{songbook.value.charAt(0).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback>{songbook.avatar_fallback}</AvatarFallback>
                 </Avatar>
             } />
             {songbook.value}
@@ -80,7 +49,7 @@ export const SongBookFilter = ({
     setSelectedSongbook,
     iconOnly
 }: SongBookFilterProps): JSX.Element => {
-    const active = selectedSongbook !== "all";
+    const active = selectedSongbook !== "All";
 
     return (
         <DropdownMenu>
