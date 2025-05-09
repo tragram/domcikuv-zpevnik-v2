@@ -116,50 +116,84 @@ class SongData {
     constructor(song: SongRawData) {
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
-        this.key = Key.parse(song.key || null, true);
-        const [month, year] = (song.dateAdded || "0-12").split("-");
-        this.dateAdded = { month: parseInt(month), year: parseInt(year) };
-        try {
-            this.songbooks = song.songbooks ? JSON.parse(song.songbooks) : [];
-        } catch (error) {
-            console.log(`Error parsing songbooks for ${this.artist}: ${this.title}`, error);
-            this.songbooks = [];
-        }
+        this.key = SongData.parseKey(song.key);
+        this.dateAdded = SongData.parseDateAdded(song.dateAdded);
+        this.songbooks = SongData.parseSongbooks(song.songbooks, this.artist, this.title);
         this.startMelody = song.startMelody;
         this.language = song.language || "other";
-        this.tempo = parseInt(song.tempo as string);
-        this.capo = parseInt(song.capo as string) || 0;
-        this.range = new SongRange(song.range || "");
-        this.illustrationData = new IllustrationData(song.prompt_model, song.prompt_id, song.image_model, song.illustrations);
-        try {
-            this.pdfFilenames = song.pdfFilenames
-                ? JSON.parse(song.pdfFilenames).map((f: string) => fileURL("songs/pdfs/" + f))
-                : [];
-        } catch (error) {
-            console.log(`Error parsing pdf filenames for ${this.artist}: ${this.title}`, error);
-            this.pdfFilenames = [];
-        }
+        this.tempo = SongData.parseTempo(song.tempo);
+        this.capo = SongData.parseCapo(song.capo);
+        this.range = SongData.parseRange(song.range);
+        this.illustrationData = SongData.parseIllustrationData(song);
+        this.pdfFilenames = SongData.parsePdfFilenames(song.pdfFilenames, this.artist, this.title);
         this.chordproFile = song.chordproFile || "";
         this.contentHash = song.contentHash || "";
     }
 
+    static parseKey(key?: string) {
+        return Key.parse(key || null, true);
+    }
+
+    static parseDateAdded(dateAdded?: string) {
+        const [month, year] = (dateAdded || "0-12").split("-");
+        return { month: parseInt(month), year: parseInt(year) };
+    }
+
+    static parseSongbooks(songbooks?: string, artist?: string, title?: string): string[] {
+        try {
+            return songbooks ? JSON.parse(songbooks) : [];
+        } catch (error) {
+            console.log(`Error parsing songbooks for "${artist}: ${title}"`, error);
+            return [];
+        }
+    }
+
+    static parseTempo(tempo?: string | number): int {
+        return parseInt(tempo as string) || 0;
+    }
+
+    static parseCapo(capo?: string | number): int {
+        return parseInt(capo as string) || 0;
+    }
+
+    static parseRange(range?: string): SongRange {
+        return new SongRange(range || "");
+    }
+
+    static parseIllustrationData(song: SongRawData): IllustrationData {
+        return new IllustrationData(song.prompt_model, song.prompt_id, song.image_model, song.illustrations);
+    }
+
+    static parsePdfFilenames(pdfFilenames?: string, artist?: string, title?: string): Array<string> {
+        try {
+            return pdfFilenames
+                ? JSON.parse(pdfFilenames).map((f: string) => fileURL("songs/pdfs/" + f))
+                : [];
+        } catch (error) {
+            console.log(`Error parsing pdf filenames for "${artist}: ${title}"`, error);
+            return [];
+        }
+    }
+
     static to_ascii(text: string) {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
     get ascii_title() {
-        return SongData.to_ascii(this.title)
+        return SongData.to_ascii(this.title);
     }
 
     get ascii_artist() {
-        return SongData.to_ascii(this.artist)
+        return SongData.to_ascii(this.artist);
     }
 
     get id() {
-        return `${this.ascii_artist}-${this.ascii_title}`.replace(/ /g, "_").replace(/[^A-Za-z0-9-_]+/g, '').replace(/_+/g, '_');
+        return `${this.ascii_artist}-${this.ascii_title}`
+            .replace(/ /g, "_")
+            .replace(/[^A-Za-z0-9-_]+/g, "")
+            .replace(/_+/g, "_");
     }
 
-    // Static method to restore an instance from a plain object (after JSON.parse)
     static fromJSON(json: Partial<SongData>): SongData {
         const instance = Object.create(SongData.prototype);
         Object.assign(instance, json);
@@ -173,7 +207,7 @@ class SongData {
             instance.range = SongRange.fromJSON(instance.range);
         }
         if (json.illustrationData) {
-            instance.illustrationData = IllustrationData.fromJSON(instance.illustrationData)
+            instance.illustrationData = IllustrationData.fromJSON(instance.illustrationData);
         }
         return instance;
     }
@@ -195,33 +229,27 @@ class SongData {
         return `/song/${this.id}`;
     }
 
-
-    private imageURLFactory(folder: string, prompt_model?: string | undefined, prompt_id?: string | undefined, image_model?: string | undefined): string {
-        let stem;
-        if (prompt_model || prompt_id || image_model) {
-            stem = this.illustrationData.toFilenameStem(prompt_model, prompt_id, image_model)
-        }
-        else {
-            stem = this.illustrationData.preferredFilenameStem()
-        }
+    private imageURLFactory(folder: string, prompt_model?: string, prompt_id?: string, image_model?: string): string {
+        const stem = prompt_model || prompt_id || image_model
+            ? this.illustrationData.toFilenameStem(prompt_model, prompt_id, image_model)
+            : this.illustrationData.preferredFilenameStem();
         return fileURL(`songs/${folder}/${this.id}/${stem}.webp`);
     }
 
-    thumbnailURL(prompt_model?: string | undefined, prompt_id?: string | undefined, image_model?: string | undefined): string {
+    thumbnailURL(prompt_model?: string, prompt_id?: string, image_model?: string): string {
         return this.imageURLFactory("illustrations_thumbnails", prompt_model, prompt_id, image_model);
     }
 
-    illustrationURL(prompt_model?: string | undefined, prompt_id?: string | undefined, image_model?: string | undefined): string {
+    illustrationURL(prompt_model?: string, prompt_id?: string, image_model?: string): string {
         return this.imageURLFactory("illustrations", prompt_model, prompt_id, image_model);
     }
 
     static promptURL(id: string) {
-        // for faster async USE
-        return fileURL(`songs/image_prompts/${id}.yaml`)
+        return fileURL(`songs/image_prompts/${id}.yaml`);
     }
 
     promptURL() {
-        return fileURL(`songs/image_prompts/${this.id}.yaml`)
+        return fileURL(`songs/image_prompts/${this.id}.yaml`);
     }
 }
 
