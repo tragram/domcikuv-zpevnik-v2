@@ -1,8 +1,9 @@
 {title: Vinaři}
 {artist: Chinaski}
 {date_added: 02-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['chinaski_vinari-sken.pdf', 'chinaski_vinari-comp.pdf', 'chinaski_vinari-gen.pdf']}
+{pdf_filenames: ["chinaski_vinari-sken.pdf", "chinaski_vinari-comp.pdf", "chinaski_vinari-gen.pdf"]}
 {capo: 0}
 {key: A}
 {tempo: }

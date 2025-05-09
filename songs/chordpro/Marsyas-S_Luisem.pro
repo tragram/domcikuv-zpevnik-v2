@@ -1,8 +1,9 @@
 {title: S Luisem}
 {artist: Marsyas}
 {date_added: 08-2013}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['marsyas_s_luisem-sken.pdf', 'marsyas_s_luisem-comp.pdf']}
+{pdf_filenames: ["marsyas_s_luisem-sken.pdf", "marsyas_s_luisem-comp.pdf"]}
 {capo: 2}
 {key: G}
 {tempo: }

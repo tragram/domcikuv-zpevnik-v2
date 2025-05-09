@@ -1,8 +1,9 @@
 {title: Medvídek}
 {artist: Lucie}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['lucie_medvidek-sken.pdf', 'lucie_medvidek-comp.pdf']}
+{pdf_filenames: ["lucie_medvidek-sken.pdf", "lucie_medvidek-comp.pdf"]}
 {capo: 0}
 {key: A}
 {image_model: dalle3}

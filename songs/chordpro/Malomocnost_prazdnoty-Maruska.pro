@@ -1,8 +1,9 @@
 {title: Maruška}
 {artist: Malomocnost prázdnoty}
 {date_added: 08-2013}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['malomocnost_pazdnoty_maruska-sken.pdf', 'malomocnost_pazdnoty_maruska-comp.pdf']}
+{pdf_filenames: ["malomocnost_pazdnoty_maruska-sken.pdf", "malomocnost_pazdnoty_maruska-comp.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

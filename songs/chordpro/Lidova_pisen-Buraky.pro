@@ -1,8 +1,9 @@
 {title: Buráky}
 {artist: Lidová píseň}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['lidova_pisen_buraky-sken.pdf', 'lidova_pisen_buraky-comp.pdf']}
+{pdf_filenames: ["lidova_pisen_buraky-sken.pdf", "lidova_pisen_buraky-comp.pdf"]}
 {capo: 7}
 {key: D}
 {tempo: }

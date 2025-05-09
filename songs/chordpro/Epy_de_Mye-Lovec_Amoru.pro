@@ -1,8 +1,9 @@
 {title: Lovec Amorů}
 {artist: Epy de Mye}
 {date_added: 08-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['epy_de_mye_lovec_amoru-sken.pdf', 'epy_de_mye_lovec_amoru-comp.pdf']}
+{pdf_filenames: ["epy_de_mye_lovec_amoru-sken.pdf", "epy_de_mye_lovec_amoru-comp.pdf"]}
 {capo: 0}
 {key: G}
 {tempo: }

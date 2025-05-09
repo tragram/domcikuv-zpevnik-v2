@@ -1,8 +1,9 @@
 {title: Obchodník s deštěm}
 {artist: Kryštof}
 {date_added: 09-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['krstof_obchodnik_s_destem-sken.pdf', 'krstof_obchodnik_s_destem-comp.pdf']}
+{pdf_filenames: ["krstof_obchodnik_s_destem-sken.pdf", "krstof_obchodnik_s_destem-comp.pdf"]}
 {capo: 2}
 {key: G}
 {tempo: }

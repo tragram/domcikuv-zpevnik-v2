@@ -1,8 +1,9 @@
 {title: Burlaci}
 {artist: Kabát}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['kabat_burlaci-sken.pdf', 'kabat_burlaci-comp.pdf']}
+{pdf_filenames: ["kabat_burlaci-sken.pdf", "kabat_burlaci-comp.pdf"]}
 {capo: 0}
 {key: Em}
 {tempo: }

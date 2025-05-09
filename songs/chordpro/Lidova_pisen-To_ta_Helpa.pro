@@ -1,8 +1,9 @@
 {title: To ta Heľpa}
 {artist: Lidová píseň}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: slovak}
-{pdf_filenames: ['lidova_piesen_to_ta_helpa-sken.pdf', 'lidova_piesen_to_ta_helpa-comp.pdf']}
+{pdf_filenames: ["lidova_piesen_to_ta_helpa-sken.pdf", "lidova_piesen_to_ta_helpa-comp.pdf"]}
 {capo: 0}
 {key: Dm}
 {tempo: }

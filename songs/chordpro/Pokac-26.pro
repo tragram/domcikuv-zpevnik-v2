@@ -1,8 +1,9 @@
 {title: 26}
 {artist: Pokáč}
 {date_added: 12-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['pokac_26_-sken.pdf', 'pokac_26_-comp.pdf']}
+{pdf_filenames: ["pokac_26_-sken.pdf", "pokac_26_-comp.pdf"]}
 {capo: 3}
 {key: C}
 {tempo: }

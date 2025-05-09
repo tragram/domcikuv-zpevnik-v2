@@ -1,8 +1,9 @@
 {title: Klára}
 {artist: Chinaski}
 {date_added: 10-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['chinaski_klara-sken.pdf', 'chinaski_klara-comp.pdf']}
+{pdf_filenames: ["chinaski_klara-sken.pdf", "chinaski_klara-comp.pdf"]}
 {capo: 0}
 {key: H}
 {tempo: }

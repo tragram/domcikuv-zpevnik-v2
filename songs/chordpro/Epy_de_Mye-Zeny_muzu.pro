@@ -1,8 +1,9 @@
 {title: Ženy mužů}
 {artist: Epy de Mye}
 {date_added: 11-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['epy_de_mye_zeny_muzu-sken.pdf', 'epy_de_mye_zeny_muzu-comp.pdf']}
+{pdf_filenames: ["epy_de_mye_zeny_muzu-sken.pdf", "epy_de_mye_zeny_muzu-comp.pdf"]}
 {capo: 2}
 {key: D}
 {tempo: }

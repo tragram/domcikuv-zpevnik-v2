@@ -1,8 +1,9 @@
 {title: Skládanka}
 {artist: Nedvědi}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['nedvedi_skladanka-sken.pdf', 'nedvedi_skladanka-comp.pdf']}
+{pdf_filenames: ["nedvedi_skladanka-sken.pdf", "nedvedi_skladanka-comp.pdf"]}
 {capo: 5}
 {key: G}
 {tempo: }

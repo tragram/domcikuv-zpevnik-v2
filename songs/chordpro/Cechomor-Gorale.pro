@@ -1,6 +1,7 @@
 {title: Gorale}
 {artist: Čechomor}
 {date_added: 03-2025}
+{songbooks: ["Domčík"]}
 {language: czech}
 {pdf_filenames: []}
 {capo: 0}

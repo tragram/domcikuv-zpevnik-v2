@@ -1,8 +1,9 @@
 {title: Rána v trávě}
 {artist: Žalman & Spol.}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['pavel_lohonka_zalman_rana_v_trave-sken.pdf', 'pavel_lohonka_zalman_rana_v_trave-comp.pdf']}
+{pdf_filenames: ["pavel_lohonka_zalman_rana_v_trave-sken.pdf", "pavel_lohonka_zalman_rana_v_trave-comp.pdf"]}
 {capo: 5}
 {key: Am}
 {tempo: }

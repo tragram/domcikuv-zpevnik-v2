@@ -1,8 +1,9 @@
 {title: Batalion}
 {artist: Spirituál kvintet}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['spiritual_kvintet_batalion-sken.pdf', 'spiritual_kvintet_batalion-comp.pdf']}
+{pdf_filenames: ["spiritual_kvintet_batalion-sken.pdf", "spiritual_kvintet_batalion-comp.pdf"]}
 {capo: 5}
 {key: Am}
 {tempo: }

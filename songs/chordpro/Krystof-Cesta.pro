@@ -1,8 +1,9 @@
 {title: Cesta}
 {artist: Kryštof}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['krystof_cesta-sken.pdf', 'krystof_cesta-comp.pdf']}
+{pdf_filenames: ["krystof_cesta-sken.pdf", "krystof_cesta-comp.pdf"]}
 {capo: 5}
 {key: C}
 {tempo: }

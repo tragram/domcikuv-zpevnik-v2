@@ -1,5 +1,6 @@
 {language: estonian}
 {date_added: 11-2024}
+{songbooks: ["Domčík"]}
 {capo: 3}
 {key: G}
 {title: Sõbrad Mu Kallid}

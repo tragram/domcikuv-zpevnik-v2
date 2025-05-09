@@ -1,8 +1,9 @@
 {title: Já chci poezii}
 {artist: Jaromír Nohavica}
 {date_added: 08-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['jaromir_nohavica_ja_chci_poezii-sken.pdf', 'jaromir_nohavica_ja_chci_poezii-comp.pdf']}
+{pdf_filenames: ["jaromir_nohavica_ja_chci_poezii-sken.pdf", "jaromir_nohavica_ja_chci_poezii-comp.pdf"]}
 {capo: 2}
 {key: Em}
 {tempo: }

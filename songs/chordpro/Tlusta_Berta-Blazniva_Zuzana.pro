@@ -1,8 +1,9 @@
 {title: Bláznivá Zuzana}
 {artist: Tlustá Berta}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['tlusta_berta_blazniva_zuzana-sken.pdf', 'tlusta_berta_blazniva_zuzana-comp.pdf']}
+{pdf_filenames: ["tlusta_berta_blazniva_zuzana-sken.pdf", "tlusta_berta_blazniva_zuzana-comp.pdf"]}
 {capo: 6}
 {key: C}
 {tempo: }

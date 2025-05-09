@@ -1,8 +1,9 @@
 {title: Corrida}
 {artist: Kabát}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['kabat_corrida-sken.pdf', 'kabat_corrida-comp.pdf']}
+{pdf_filenames: ["kabat_corrida-sken.pdf", "kabat_corrida-comp.pdf"]}
 {capo: 0}
 {key: Hm}
 {tempo: }

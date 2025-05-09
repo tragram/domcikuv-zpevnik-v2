@@ -1,8 +1,9 @@
 {title: Kometa}
 {artist: Jaromír Nohavica}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['jaromir_nohavica_kometa-sken.pdf', 'jaromir_nohavica_kometa-comp.pdf']}
+{pdf_filenames: ["jaromir_nohavica_kometa-sken.pdf", "jaromir_nohavica_kometa-comp.pdf"]}
 {capo: 3}
 {key: Am}
 {tempo: }

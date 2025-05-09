@@ -1,8 +1,9 @@
 {title: 1. signální}
 {artist: Chinaski}
 {date_added: 07-2009}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['chinaski_1_signalni-sken.pdf', 'chinaski_1_signalni-comp.pdf']}
+{pdf_filenames: ["chinaski_1_signalni-sken.pdf", "chinaski_1_signalni-comp.pdf"]}
 {capo: 3}
 {key: D}
 {tempo: }

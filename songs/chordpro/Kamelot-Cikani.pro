@@ -1,8 +1,9 @@
 {title: Cikáni}
 {artist: Kamelot}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['kamelot_cikani-sken.pdf', 'kamelot_cikani-comp.pdf']}
+{pdf_filenames: ["kamelot_cikani-sken.pdf", "kamelot_cikani-comp.pdf"]}
 {capo: 5}
 {key: Am}
 {tempo: }

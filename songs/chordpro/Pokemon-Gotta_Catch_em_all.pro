@@ -1,5 +1,6 @@
 {language: english}
 {date_added: 02-2020}
+{songbooks: ["Domčík"]}
 {capo: 0}
 {key: Am}
 {title: Gotta Catch 'em all!}

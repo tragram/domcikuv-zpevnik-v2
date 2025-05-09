@@ -1,8 +1,9 @@
 {title: Toulavý boty}
 {artist: Poupata}
 {date_added: 10-2011}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['poupata_toulavy_boty-sken.pdf', 'poupata_toulavy_boty-comp.pdf']}
+{pdf_filenames: ["poupata_toulavy_boty-sken.pdf", "poupata_toulavy_boty-comp.pdf"]}
 {capo: 0}
 {key: A}
 {tempo: }

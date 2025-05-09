@@ -1,8 +1,9 @@
 {title: Dlouhej kouř}
 {artist: Chinaski}
 {date_added: 04-2017}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['chinaski_dlouhej_kour-sken.pdf', 'chinaski_dlouhej_kour-comp.pdf']}
+{pdf_filenames: ["chinaski_dlouhej_kour-sken.pdf", "chinaski_dlouhej_kour-comp.pdf"]}
 {capo: 0}
 {key: D}
 {tempo: }

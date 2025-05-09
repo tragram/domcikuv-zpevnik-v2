@@ -1,8 +1,9 @@
 {title: Divokej horskej tymián}
 {artist: Žalman & Spol.}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf', 'pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf']}
+{pdf_filenames: ["pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf", "pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf"]}
 {capo: 5}
 {key: C}
 {tempo: }

@@ -1,8 +1,9 @@
 {title: Karavana mraků}
 {artist: Karel Kryl}
 {date_added: 12-2010}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['karel_kryl_karavana_mraku-sken.pdf', 'karel_kryl_karavana_mraku-comp.pdf']}
+{pdf_filenames: ["karel_kryl_karavana_mraku-sken.pdf", "karel_kryl_karavana_mraku-comp.pdf"]}
 {capo: 2}
 {key: C}
 {tempo: }

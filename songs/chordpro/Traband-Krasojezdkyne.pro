@@ -3,6 +3,7 @@
 {capo: 0}
 {language: czech}
 {date_added: 09-2024}
+{songbooks: ["Domčík"]}
 {tempo: 110}
 {range: h1-d2}
 {key: f#}

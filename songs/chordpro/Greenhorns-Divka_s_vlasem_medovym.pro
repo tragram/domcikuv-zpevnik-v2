@@ -1,8 +1,9 @@
 {title: Dívka s vlasem medovým}
 {artist: Greenhorns}
 {date_added: 07-2015}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['greenhorns_divka_s_vlasem_medovym-sken.pdf', 'greenhorns_divka_s_vlasem_medovym-comp.pdf']}
+{pdf_filenames: ["greenhorns_divka_s_vlasem_medovym-sken.pdf", "greenhorns_divka_s_vlasem_medovym-comp.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

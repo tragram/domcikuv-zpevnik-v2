@@ -1,8 +1,9 @@
 {title: Kutil}
 {artist: Chinaski}
 {date_added: 06-2018}
+{songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ['chinaski_kutil-sken.pdf', 'chinaski_kutil-comp.pdf']}
+{pdf_filenames: ["chinaski_kutil-sken.pdf", "chinaski_kutil-comp.pdf"]}
 {capo: 0}
 {key: E}
 {tempo: }
