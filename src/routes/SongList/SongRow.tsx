@@ -8,9 +8,6 @@ import { cn } from "@/lib/utils";
 import { songBooksWAvatars } from "@/components/songbookAvatars";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-
-export const SONG_ROW_HEIGHT_PX = 70;
-
 interface SongInfoProps {
     title: string;
     artist: string;
@@ -79,22 +76,21 @@ const VocalRangeIndicator = memo(({ songRangeSemitones, maxRange, className = ""
 interface SongbookAvatarsProps {
     songbooks: string[];
     maxAvatars?: number;
-    overlapPercent?: number;
     className?: string;
 }
 
-const SongBookAvatars = memo(({ songbooks, maxAvatars = 3, overlapPercent = 50, className = "" }: SongbookAvatarsProps) => {
-    const songbooksWithAvatars = songBooksWAvatars(songbooks);
+const SongBookAvatars = memo(({ songbooks, maxAvatars = 3, className = "" }: SongbookAvatarsProps) => {
+    const songbooksWithAvatars = songBooksWAvatars(songbooks).filter(s => s.value !== "All");
     const displaySongbooks = songbooksWithAvatars.slice(0, maxAvatars)
     const remainingCount = songbooksWithAvatars.length - maxAvatars
 
     return (
-        <div className={cn("min-w-20 items-center justify-center", className)}>
-            <div className="flex w-full h-full items-center">
+        <div className={cn("flex items-center justify-end", className)}>
+            <div className="flex items-center justify-end w-fit -space-x-5">
                 {displaySongbooks.map((songbook, index) => (
                     <div
                         key={index}
-                        className={cn("relative h-10 w-10 rounded-full border-2 border-background", index > 0 ? " -ms-4" : "")}
+                        className={cn("h-10 w-10 rounded-full border-2 border-background hover:z-10")}
                     >
                         <Avatar className={"h-full w-full"}>
                             <AvatarImage src={songbook.avatar} alt={songbook.value + " avatar"} />
@@ -104,7 +100,7 @@ const SongBookAvatars = memo(({ songbooks, maxAvatars = 3, overlapPercent = 50, 
                 ))}
                 {remainingCount > 0 && (
                     <div
-                        className="relative rounded-full border-2 border-background flex items-center justify-center bg-muted -ms-2"
+                        className="relative rounded-full border-2 border-background flex items-center justify-center bg-muted hover:z-10"
                     >
                         <Avatar className={""}>
                             <AvatarFallback>+{remainingCount}</AvatarFallback>
@@ -134,7 +130,7 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
     }
 
     return (
-        <div className={cn(`h-[${SONG_ROW_HEIGHT_PX}px]`, "flex items-center container max-w-3xl mx-auto px-2 sm:px-4 song-row-wrapper")}>
+        <div className="h-[70px] flex items-center container max-w-3xl mx-auto px-2 sm:px-4 song-row-wrapper">
             <div
                 className="flex h-14 min-w-72 w-full rounded-full song-row-bg-image"
                 style={{ backgroundImage: `url(${song.thumbnailURL()})` }}>
@@ -148,7 +144,7 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
 
                         <SongInfo title={song.title} artist={song.artist} className="flex-auto" />
 
-                        <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex basis-[13%] shrink-0" />
+                        <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" />
                         <DateDisplay
                             month={song.dateAdded.month}
                             year={song.dateAdded.year}
