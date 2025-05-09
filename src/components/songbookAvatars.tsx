@@ -12,7 +12,7 @@ const songBook2Avatar = (songbook: string) => {
     if (songbook in avatarMap) {
         return avatarMap[songbook];
     } else {
-        return undefined;
+        return "avatars/" + songbook + ".png";
     }
 }
 
@@ -32,6 +32,6 @@ export const songBooksWAvatars = (songbooks: string[]) => {
     songBookWithAvatar.sort(sortFn);
 
     // Add "All" at the beginning
-    songBookWithAvatar.unshift({ value: "All", avatar: "avatars/all_songbooks.png", avatar_fallback: "A" });
+    songBookWithAvatar.unshift({ value: "All", avatar: "avatars/all.png", avatar_fallback: "A" });
     return songBookWithAvatar;
 }
