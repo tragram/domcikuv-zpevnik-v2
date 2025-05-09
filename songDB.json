@@ -3318,7 +3318,7 @@
     "key": "D",
     "language": "czech",
     "dateAdded": "04-2025",
-    "songbooks": "[\"Domčík\"]",
+    "songbooks": "[\"Kvítek\"]",
     "capo": "0",
     "tempo": "",
     "range": "a1-d2",
@@ -3328,7 +3328,7 @@
     "startMelody": "a d",
     "chordproFile": "Karcoolka-Kozel.pro",
     "pdfFilenames": "",
-    "contentHash": "4478c8d183fd1ced09abd004e98043b619caf99c",
+    "contentHash": "e7a4039b0e5c1962c36559e16c0798ffcfe60e12",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
@@ -7728,7 +7728,7 @@
     "key": "Ami",
     "language": "czech",
     "dateAdded": "04-2025",
-    "songbooks": "[\"Domčík\"]",
+    "songbooks": "[\"Kvítek\"]",
     "capo": "0",
     "tempo": "",
     "range": "e1-e2",
@@ -7738,7 +7738,7 @@
     "startMelody": "",
     "chordproFile": "Znouzectnost-Krysar.pro",
     "pdfFilenames": "",
-    "contentHash": "86772867cb622924b375e1f845246687ec2572ee",
+    "contentHash": "6e8a75ee4f502a0f34f13aaa4f4f8ccea0dfc5c8",
     "disabled": false,
     "illustrations": [
       "gpt-4o-mini_v2_FLUX.1-dev"
