@@ -15,7 +15,7 @@ type EditorProps = {
 const HeaderField: React.FC<{ label: string; value: string; onChange: (value: string) => void; placeholder?: string }> = ({ label, value, onChange, placeholder }) => (
     <div className="grid w-full max-w-sm items-center gap-1.5 mt-2">
         <Label>{label}</Label>
-        <Input placeholder={value ? placeholder || label : null} value={value} onChange={(e) => { onChange(e.target.value) }} className='border-muted border-2 p-1' />
+        <Input placeholder={value ? placeholder || label : null} value={value} onChange={(e) => { onChange(e.target.value) }} className='border-muted border-2 p-1 focus:border-primary focus:bg-primary/30' />
     </div>
 );
 
@@ -53,7 +53,7 @@ const Editor: React.FC<EditorProps> = ({ }) => {
     return (
         <div className='flex h-screen w-screen'>
             <div className='flex flex-col basis-[20%] p-8 pr-4 gap-4'>
-                <ContainerTitle title="Header" />
+                <ContainerTitle title="Metadata" />
                 <div className='main-container'>
                     <HeaderField label="Artist" onChange={setArtist} placeholder="František Omáčka" value={artist} />
                     <HeaderField label="Title" onChange={setTitle} placeholder="Apassionata v F" value={title} />
