@@ -9,6 +9,7 @@ const SongList = React.lazy(() => import('./routes/SongList/SongList'));
 const SongView = React.lazy(() => import('./routes/SongView/SongView'));
 const SongGallery = React.lazy(() => import('./routes/gallery/SongGallery'));
 import { RouteErrorBoundary, RenderErrorBoundary } from './components/UnifiedErrorBoundary';
+import Editor from './routes/SongView/Editor/Editor';
 
 
 const router = createHashRouter([
@@ -30,6 +31,10 @@ const router = createHashRouter([
         path: "/gallery",
         element: <SongGallery />,
         loader: fetchSongs,
+      },
+      {
+        path: "/editor",
+        element: <Editor />,
       }
     ]
   }
