@@ -2,7 +2,7 @@ import fs from 'fs';
 import makeHash from 'object-hash';
 import path from 'path';
 // Update the path to the correct location of the types module
-import {preambleKeywords} from "./src/types/preambleKeywords.js";
+import {preambleKeywords,chordpro2JSKeywords} from "./src/types/preambleKeywords.js";
 
 const songsPath = './songs/chordpro/';
 const files = fs.readdirSync(songsPath).filter(file => (file.endsWith('.pro') || file.endsWith('.chordpro')));
@@ -11,7 +11,7 @@ const extractPreamble = (content, keywords) => {
   const preamble = {};
   keywords.forEach(keyword => {
     const match = content.match(new RegExp(`{${keyword}:\\s*(.+?)}`, 'i'));
-    preamble[keyword] = match?.[1].trim() || "";
+    preamble[chordpro2JSKeywords[keyword]] = match?.[1].trim() || "";
   });
   return preamble;
 };

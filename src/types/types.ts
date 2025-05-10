@@ -83,7 +83,6 @@ interface SongRawData {
     tempo?: string | number;
     capo?: string | number;
     range?: string;
-    illustrationAuthor?: string;
     pdfFilenames?: string;
     chordproFile?: string;
     contentHash?: string;
