@@ -12,6 +12,7 @@ import MetadataField from './components/MetadataField';
 import ContentEditor from './ContentEditor';
 import { DataForSongView } from '@/components/song_loader';
 import { useLoaderData } from 'react-router-dom';
+import DownloadButton from './components/DownloadButton';
 
 interface EditorState {
     content: string;
@@ -26,6 +27,7 @@ interface EditorState {
         tempo: string;
         capo: string;
         range: string;
+        pdfFilenames: string;
     };
 }
 
@@ -41,7 +43,8 @@ const defaultEditorState: EditorState = {
         language: "",
         tempo: "",
         capo: "",
-        range: ""
+        range: "",
+        pdfFilenames: ""
     }
 };
 
@@ -64,13 +67,14 @@ const Editor: React.FC<EditorProps> = () => {
                     title: songDataURL.title.toString(),
                     artist: songDataURL.artist.toString(),
                     key: songDataURL.key?.toString() || "",
-                    dateAdded: `${songDataURL.dateAdded.year % 100}-${songDataURL.dateAdded.month.toString().padStart(2, "0")}`,
+                    dateAdded: `${songDataURL.dateAdded.month.toString().padStart(2, "0")}-${songDataURL.dateAdded.year}`,
                     songbooks: songDataURL.songbooks.toString(),
                     startMelody: songDataURL.startMelody?.toString() || "",
                     language: songDataURL.language.toString(),
                     tempo: songDataURL.tempo.toString(),
                     capo: songDataURL.capo.toString(),
-                    range: songDataURL.range.toString()
+                    range: songDataURL.range.toString().replace(/ /g, ""),
+                    pdfFilenames: songDataURL.pdfFilenames.toString()
                 }
             })
         }
@@ -148,9 +152,9 @@ const Editor: React.FC<EditorProps> = () => {
                         <MetadataField
                             label="Date Added"
                             onChange={(value) => updateMetadata('dateAdded', value)}
-                            placeholder="25-02"
+                            placeholder="02-2025"
                             value={editorState.metadata.dateAdded}
-                            description="Use YY-MM format."
+                            description="Use MM-YYYY format."
                         />
                         <MetadataField
                             label="Language"
@@ -213,6 +217,7 @@ const Editor: React.FC<EditorProps> = () => {
                             id="song-content-wrapper"
                             dangerouslySetInnerHTML={{ __html: renderedResult }}
                         />
+                        <DownloadButton metadata={editorState.metadata} content={editorState.content} />
                     </div>
                 </CollapsibleMainArea>
             </div>

@@ -1,6 +1,6 @@
 import { fileURL } from "../components/song_loader";
 import { Key, Note, SongRange } from "./musicTypes";
-import {preambleKeywords} from "./preambleKeywords"
+import { preambleKeywords } from "./preambleKeywords"
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range"
 interface SortSettings {
@@ -178,6 +178,13 @@ class SongData {
         return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
+    static id(title: string, artist: string) {
+        return `${SongData.to_ascii(artist)}-${SongData.to_ascii(title)}`
+            .replace(/ /g, "_")
+            .replace(/[^A-Za-z0-9-_]+/g, "")
+            .replace(/_+/g, "_");
+    }
+
     get ascii_title() {
         return SongData.to_ascii(this.title);
     }
@@ -187,10 +194,7 @@ class SongData {
     }
 
     get id() {
-        return `${this.ascii_artist}-${this.ascii_title}`
-            .replace(/ /g, "_")
-            .replace(/[^A-Za-z0-9-_]+/g, "")
-            .replace(/_+/g, "_");
+        return SongData.id(this.title, this.artist);
     }
 
     static fromJSON(json: Partial<SongData>): SongData {
