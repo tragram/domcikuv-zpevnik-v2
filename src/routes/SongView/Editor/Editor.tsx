@@ -1,5 +1,5 @@
 import { SongData } from '@/types/types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import SongHeading from '../components/SongHeading';
 import { LayoutSettings } from '../hooks/viewSettingsStore';
 import '../SongView.css';
@@ -10,8 +10,9 @@ import useLocalStorageState from 'use-local-storage-state';
 import CollapsibleMainArea from './components/CollapsibleMainArea';
 import MetadataField from './components/MetadataField';
 import ContentEditor from './ContentEditor';
+import { DataForSongView } from '@/components/song_loader';
+import { useLoaderData } from 'react-router-dom';
 
-// Define the complex state interface
 interface EditorState {
     content: string;
     metadata: {
@@ -28,7 +29,6 @@ interface EditorState {
     };
 }
 
-// Default state
 const defaultEditorState: EditorState = {
     content: "",
     metadata: {
@@ -48,11 +48,33 @@ const defaultEditorState: EditorState = {
 type EditorProps = {};
 
 const Editor: React.FC<EditorProps> = () => {
-    // Use a single state object with useLocalStorageState
+    const { songDB, songData: songDataURL } = useLoaderData() as DataForSongView;
+
+    //TODO: perhaps the editors on different URLs should have different 
     const [editorState, setEditorState] = useLocalStorageState<EditorState>(
         "editor/state",
         { defaultValue: defaultEditorState }
     );
+
+    useLayoutEffect(() => {
+        if (songDataURL) {
+            setEditorState({
+                content: songDataURL.content || "Nothing to show... ;-)",
+                metadata: {
+                    title: songDataURL.title.toString(),
+                    artist: songDataURL.artist.toString(),
+                    key: songDataURL.key?.toString() || "",
+                    dateAdded: `${songDataURL.dateAdded.year % 100}-${songDataURL.dateAdded.month.toString().padStart(2, "0")}`,
+                    songbooks: songDataURL.songbooks.toString(),
+                    startMelody: songDataURL.startMelody?.toString() || "",
+                    language: songDataURL.language.toString(),
+                    tempo: songDataURL.tempo.toString(),
+                    capo: songDataURL.capo.toString(),
+                    range: songDataURL.range.toString()
+                }
+            })
+        }
+    }, [setEditorState, songDataURL])
 
     const [renderedResult, setRenderedResult] = useState("");
 

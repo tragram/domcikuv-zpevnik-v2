@@ -128,6 +128,11 @@ interface DataForSongView {
     songData: SongData
 }
 
+interface DataForEditor {
+    songDB: SongDB,
+    songData?: SongData
+}
+
 async function fetchSongContent({ params }): Promise<DataForSongView> {
     const songDB = await fetchSongs();
     const songData = songDB.songs.find(song => song.id === params.id);
@@ -155,6 +160,10 @@ async function fetchSongContent({ params }): Promise<DataForSongView> {
     return { songDB: songDB, songData: songData };
 }
 
+async function fetchCleanEditorData(): Promise<DataForEditor> {
+    return { songDB: await fetchSongs(), songData: undefined };
+}
+
 async function fetchIllustrationPrompt(id: string): Promise<object> {
     const promptKey = `songs/image_prompts/${id}`;
     let promptContent = localStorage.getItem(promptKey);
@@ -168,4 +177,4 @@ async function fetchIllustrationPrompt(id: string): Promise<object> {
     return yaml.load(promptContent);
 }
 
-export { fileURL, fetchSongs, fetchSongContent, fetchIllustrationPrompt, DataForSongView };
+export { fileURL, fetchSongs, fetchSongContent, fetchCleanEditorData, fetchIllustrationPrompt, DataForSongView };

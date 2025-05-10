@@ -170,7 +170,7 @@ export class SongRange {
 
     constructor(songRangeStr: string) {
         const rangeRegex = new RegExp("([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?-([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?");
-        const regexMatch = songRangeStr.match(rangeRegex);
+        const regexMatch = songRangeStr.replace(/\s+/g, '').match(rangeRegex);
         if (!regexMatch) {
             console.log("Error while parsing song: Invalid song range:", songRangeStr);
             return;
