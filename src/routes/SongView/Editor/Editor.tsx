@@ -8,7 +8,7 @@ import './Editor.css';
 
 import useLocalStorageState from 'use-local-storage-state';
 import CollapsibleMainArea from './components/CollapsibleMainArea';
-import HeaderField from './components/HeaderField';
+import MetadataField from './components/MetadataField';
 import ContentEditor from './ContentEditor';
 
 // Define the complex state interface
@@ -101,90 +101,92 @@ const Editor: React.FC<EditorProps> = () => {
     }, [editorState, songData]);
 
     return (
-        <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen gap-4 p-4 lg:gap-8 lg:p-8'>
-            <CollapsibleMainArea title={"Metadata"} className={"basis-[20%]"}>
-                <div className='main-container'>
-                    <HeaderField
-                        label="Title"
-                        onChange={(value) => updateMetadata('title', value)}
-                        placeholder="Apassionata v F"
-                        value={editorState.metadata.title}
+        <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen overflow-hidden'>
+            <div className='flex flex-col md:flex-row h-full w-full gap-4 p-4 lg:gap-8 lg:p-8 overflow-auto'>
+                <CollapsibleMainArea title={"Metadata"} className={"basis-[20%]"}>
+                    <div className='main-container space-y-2'>
+                        <MetadataField
+                            label="Title"
+                            onChange={(value) => updateMetadata('title', value)}
+                            placeholder="Apassionata v F"
+                            value={editorState.metadata.title}
+                        />
+                        <MetadataField
+                            label="Artist"
+                            onChange={(value) => updateMetadata('artist', value)}
+                            placeholder="František Omáčka"
+                            value={editorState.metadata.artist}
+                        />
+                        <MetadataField
+                            label="Key"
+                            onChange={(value) => updateMetadata('key', value)}
+                            placeholder="Dm"
+                            value={editorState.metadata.key}
+                        />
+                        <MetadataField
+                            label="Date Added [YY-MM]"
+                            onChange={(value) => updateMetadata('dateAdded', value)}
+                            placeholder="25-02"
+                            value={editorState.metadata.dateAdded}
+                        />
+                        <MetadataField
+                            label="Songbooks"
+                            onChange={(value) => updateMetadata('songbooks', value)}
+                            placeholder='["Domčík", "Kvítek"]'
+                            value={editorState.metadata.songbooks}
+                        />
+                        <MetadataField
+                            label="Start Melody"
+                            onChange={(value) => updateMetadata('startMelody', value)}
+                            placeholder="c# d e"
+                            value={editorState.metadata.startMelody}
+                        />
+                        <MetadataField
+                            label="Language"
+                            onChange={(value) => updateMetadata('language', value)}
+                            placeholder="czech"
+                            value={editorState.metadata.language}
+                        />
+                        <MetadataField
+                            label="Tempo [bpm]"
+                            onChange={(value) => updateMetadata('tempo', value)}
+                            placeholder="123"
+                            value={editorState.metadata.tempo}
+                        />
+                        <MetadataField
+                            label="Range"
+                            onChange={(value) => updateMetadata('range', value)}
+                            placeholder="e.g. c1-g2"
+                            value={editorState.metadata.range}
+                        />
+                        <MetadataField
+                            label="Capo"
+                            onChange={(value) => updateMetadata('capo', value)}
+                            placeholder="0"
+                            value={editorState.metadata.capo}
+                        />
+                    </div>
+                </CollapsibleMainArea>
+                <CollapsibleMainArea title={"Editor"} className={"basis-[40%]"} isEditor={true}>
+                    <ContentEditor
+                        editorContent={editorState.content}
+                        setEditorContent={updateContent}
                     />
-                    <HeaderField
-                        label="Artist"
-                        onChange={(value) => updateMetadata('artist', value)}
-                        placeholder="František Omáčka"
-                        value={editorState.metadata.artist}
-                    />
-                    <HeaderField
-                        label="Key"
-                        onChange={(value) => updateMetadata('key', value)}
-                        placeholder="Dm"
-                        value={editorState.metadata.key}
-                    />
-                    <HeaderField
-                        label="Date Added [YY-MM]"
-                        onChange={(value) => updateMetadata('dateAdded', value)}
-                        placeholder="25-02"
-                        value={editorState.metadata.dateAdded}
-                    />
-                    <HeaderField
-                        label="Songbooks"
-                        onChange={(value) => updateMetadata('songbooks', value)}
-                        placeholder='["Domčík", "Kvítek"]'
-                        value={editorState.metadata.songbooks}
-                    />
-                    <HeaderField
-                        label="Start Melody"
-                        onChange={(value) => updateMetadata('startMelody', value)}
-                        placeholder="c# d e"
-                        value={editorState.metadata.startMelody}
-                    />
-                    <HeaderField
-                        label="Language"
-                        onChange={(value) => updateMetadata('language', value)}
-                        placeholder="czech"
-                        value={editorState.metadata.language}
-                    />
-                    <HeaderField
-                        label="Tempo [bpm]"
-                        onChange={(value) => updateMetadata('tempo', value)}
-                        placeholder="123"
-                        value={editorState.metadata.tempo}
-                    />
-                    <HeaderField
-                        label="Range"
-                        onChange={(value) => updateMetadata('range', value)}
-                        placeholder="e.g. c1-g2"
-                        value={editorState.metadata.range}
-                    />
-                    <HeaderField
-                        label="Capo"
-                        onChange={(value) => updateMetadata('capo', value)}
-                        placeholder="0"
-                        value={editorState.metadata.capo}
-                    />
-                </div>
-            </CollapsibleMainArea>
-            <CollapsibleMainArea title={"Editor"} className={"basis-[40%]"} isEditor={true}>
-                <ContentEditor
-                    editorContent={editorState.content}
-                    setEditorContent={updateContent}
-                />
-            </CollapsibleMainArea>
-            <CollapsibleMainArea title={"Result"} className={"basis-[40%]"}>
-                <div className='main-container'>
-                    <SongHeading
-                        songData={songData}
-                        layoutSettings={layout}
-                        transposeSteps={transposeSteps}
-                    />
-                    <div
-                        id="song-content-wrapper"
-                        dangerouslySetInnerHTML={{ __html: renderedResult }}
-                    />
-                </div>
-            </CollapsibleMainArea>
+                </CollapsibleMainArea>
+                <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
+                    <div className='main-container editor-preview-container'>
+                        <SongHeading
+                            songData={songData}
+                            layoutSettings={layout}
+                            transposeSteps={transposeSteps}
+                        />
+                        <div
+                            id="song-content-wrapper"
+                            dangerouslySetInnerHTML={{ __html: renderedResult }}
+                        />
+                    </div>
+                </CollapsibleMainArea>
+            </div>
         </div>
     );
 };

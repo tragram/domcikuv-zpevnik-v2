@@ -158,8 +158,8 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
   };
 
   return (
-    <>
-      <div className='w-full -mb-4 flex flex-wrap gap-2 p-2 bg-gray-100'>
+    <div className="flex flex-col h-full">
+      <div className='w-full flex flex-wrap gap-2 p-2 bg-gray-100'>
         <TemplateButton templateKey="chorus" text="Chorus" onInsert={insertTemplate} />
         <TemplateButton templateKey="verse" text="Verse" onInsert={insertTemplate} />
         <TemplateButton templateKey="bridge" text="Bridge" onInsert={insertTemplate} />
@@ -168,7 +168,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
       </div>
       <Textarea
         ref={textareaRef}
-        className='resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full auto-resize-textarea'
+        className='resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea'
         style={{ minHeight: '300px' }}
         onInput={(e) => {
           // Adjust height on mobile
@@ -180,7 +180,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
           onEditorChange(e);
         }}
         value={editorContent} />
-    </>
+    </div>
   )
 }
 
