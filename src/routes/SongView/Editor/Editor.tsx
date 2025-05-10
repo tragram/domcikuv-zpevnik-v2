@@ -9,7 +9,7 @@ import './Editor.css'
 
 // Add a new CSS rule to make the textarea adjust to its content
 const textareaAutoSizeStyles = `
-@media (max-width: 768px) {
+@media (max-width: 810px) {
   .auto-resize-textarea {
     overflow-y: hidden;
   }
@@ -68,7 +68,7 @@ const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, classN
             {/* TODO: the title should not move when collapsed in mobile view */}
             <div className='md:h-9'></div>
             <div className='flex h-full font-extrabold p-2 border-primary border-4 rounded-md hover:bg-primary/30'>
-                <h1 className="font-extrabold w-full text-2xl text-center text-primary md:[writing-mode:vertical-rl] md:rotate-180" onClick={() => {setIsCollapsed(false);setIsHovered(false)}}>
+                <h1 className="font-extrabold w-full text-2xl text-center text-primary md:[writing-mode:vertical-rl] md:rotate-180" onClick={() => { setIsCollapsed(false); setIsHovered(false) }}>
                     {title}
                 </h1>
             </div>
@@ -93,14 +93,37 @@ const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, classN
 };
 
 const Editor: React.FC<EditorProps> = ({ }) => {
-    // Add the stylesheet to the document head
+    // Add the stylesheet to the document head and set up resize listener
     useEffect(() => {
         const style = document.createElement('style');
         style.innerHTML = textareaAutoSizeStyles;
         document.head.appendChild(style);
-        
+
+        // Function to adjust textarea height based on screen size
+        const adjustTextareaHeight = () => {
+            if (!textareaRef.current) return;
+
+            const textarea = textareaRef.current;
+
+            if (window.innerWidth < 810) {
+                // Mobile: Auto-height based on content
+                textarea.style.height = 'auto';
+                textarea.style.height = `${textarea.scrollHeight}px`;
+            } else {
+                // Desktop: Reset to use container height
+                textarea.style.height = '';
+            }
+        };
+
+        // Adjust height on window resize
+        window.addEventListener('resize', adjustTextareaHeight);
+
+        // Initial adjustment
+        adjustTextareaHeight();
+
         return () => {
             document.head.removeChild(style);
+            window.removeEventListener('resize', adjustTextareaHeight);
         };
     }, []);
     const [editorContent, setEditorContent] = useLocalStorageState<string>("editor/editorContent", { defaultValue: "" });
@@ -217,7 +240,7 @@ const Editor: React.FC<EditorProps> = ({ }) => {
             true
         )
         setRenderedResult(result);
-        
+
         // Adjust textarea height when content changes (for mobile)
         if (textareaRef.current && window.innerWidth < 768) {
             const textarea = textareaRef.current;
