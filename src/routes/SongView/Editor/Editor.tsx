@@ -59,7 +59,7 @@ const Editor: React.FC<EditorProps> = () => {
     useLayoutEffect(() => {
         if (songDataURL) {
             setEditorState({
-                content: songDataURL.content || "Nothing to show... ;-)",
+                content: songDataURL.withoutMetadata() || "Nothing to show... ;-)",
                 metadata: {
                     title: songDataURL.title.toString(),
                     artist: songDataURL.artist.toString(),

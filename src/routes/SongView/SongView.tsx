@@ -22,7 +22,7 @@ export const SongView = () => {
         layout: layoutSettings,
     } = useViewSettingsStore()
     const [transposeSteps, setTransposeSteps] = useLocalStorageState(`transposeSteps/${songData.id}`, { defaultValue: 0 });
-
+    console.log(songDB,songData)
 
     // Prevent default gesture behavior
     useEffect(() => {

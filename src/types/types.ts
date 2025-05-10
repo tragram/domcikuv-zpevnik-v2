@@ -1,6 +1,6 @@
 import { fileURL } from "../components/song_loader";
 import { Key, Note, SongRange } from "./musicTypes";
-
+import {preambleKeywords} from "./preambleKeywords"
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range"
 interface SortSettings {
@@ -227,6 +227,16 @@ class SongData {
 
     url(): string {
         return `/song/${this.id}`;
+    }
+
+    withoutMetadata(content?: string) {
+        if (!content) {
+            content = this.content;
+        }
+        preambleKeywords.forEach(keyword => {
+            content = content?.replace(new RegExp(`{${keyword}:\\s*(.+?)}`, "g"), "");
+        });
+        return content?.trim();
     }
 
     private imageURLFactory(folder: string, prompt_model?: string, prompt_id?: string, image_model?: string): string {
