@@ -6,6 +6,8 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { setFontSize, setOptimalColumnCount } from '../utils/columnLayout';
 import { getElementFontSize, setElementFontSize } from '../utils/fontSize';
+import { chordSettingsClassNames } from '../settings/ChordSettingsMenu';
+import { layoutSettingsClassNames } from '../settings/LayoutSettings';
 
 interface ResizableAutoTextSizeProps {
   children: React.ReactNode;
@@ -106,13 +108,8 @@ export function ResizableAutoTextSize({
           ref={contentRef}
           id="content-wrapper"
           className={cn(
-            className,
+            className, chordSettingsClassNames(chords), layoutSettingsClassNames(layout),
             'dark:text-white/95 h-fit max-w-full',
-            chords.inlineChords ? 'chords-inline' : '',
-            chords.showChords ? '' : 'chords-hidden',
-            layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
-            layout.repeatParts ? 'repeated-parts-shown' : 'repeated-parts-hidden',
-            `fit-screen-${layout.fitScreenMode}`,
           )}
           style={{
             fontSize: `${layout.fontSize}px`,

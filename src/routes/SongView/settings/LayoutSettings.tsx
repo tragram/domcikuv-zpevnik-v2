@@ -18,6 +18,11 @@ const layoutSettingsValues = {
   "compactInFullScreen": { icon: <Maximize />, label: "Auto fullscreen in compact view" }
 }
 
+export const layoutSettingsClassNames = (layout: LayoutSettings) => {
+  return [layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
+  layout.repeatParts ? 'repeated-parts-shown' : 'repeated-parts-hidden',
+  `fit-screen-${layout.fitScreenMode}`]
+}
 
 export const LayoutSettingsToolbar: React.FC<{
   fullScreenHandle: FullScreenHandle
@@ -96,9 +101,7 @@ export const LayoutSettingsToolbar: React.FC<{
   )
 }
 
-export const LayoutSettingsDropdownSection: React.FC<{
-  fullScreenHandle: FullScreenHandle
-}> = ({ fullScreenHandle }) => {
+export const LayoutSettingsDropdownSection: React.FC = () => {
   const { layout: layoutSettings, actions } = useViewSettingsStore();
   function setBothSettings(modifiedSettings: Partial<LayoutSettings>) {
     actions.setLayoutSettings({ ...modifiedSettings });
@@ -162,10 +165,6 @@ export const LayoutSettingsDropdownSection: React.FC<{
         </DropdownMenuCheckboxItem>
       ))
     }
-    <DropdownMenuItem onClick={() => { fullScreenHandle.enter() }}>
-      <DropdownIconStart icon={<Fullscreen />} />
-      Enter fullscreen
-    </DropdownMenuItem >
   </>
   );
 }
