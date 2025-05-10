@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@radix-ui/react-label';
 import { Button } from "@/components/ui/button";
 import useLocalStorageState from 'use-local-storage-state';
+import { cn } from '@/lib/utils';
 
 type EditorProps = {
 };
@@ -19,12 +20,6 @@ const HeaderField: React.FC<{ label: string; value: string; onChange: (value: st
         <Label>{label}</Label>
         <Input placeholder={value ? undefined : placeholder || label} value={value} onChange={(e) => { onChange(e.target.value) }} className='border-muted border-2 p-1 focus:border-primary focus:bg-primary/30' />
     </div>
-);
-
-const ContainerTitle = ({ title }) => (
-    <h1 className='main-container-title'>
-        {title}
-    </h1>
 );
 
 interface TemplateButtonProps {
@@ -47,6 +42,44 @@ const TemplateButton: React.FC<TemplateButtonProps> = ({
         {text}
     </Button>
 );
+interface CollapsibleMainAreaProps {
+    title: string;
+    className?: string;
+    children: React.ReactNode;
+}
+
+const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, className, children }) => {
+    const [isCollapsed, setIsCollapsed] = useLocalStorageState<boolean>(`editor/${title}-collapsed`, { defaultValue: false });
+    const [isHovered, setIsHovered] = useState(false);
+    // TODO: these should be uncollapsed when reloaded on a large screen
+    return (isCollapsed ?
+        <div className='flex font-extrabold m-2 p-2 border-primary border-4 mb-8 mt-[5.25rem] rounded-md hover:bg-primary/30'>
+            <h1 className="font-extrabold text-2xl text-center text-primary [writing-mode:vertical-rl] rotate-180" onClick={() => setIsCollapsed(false)}>
+                {title}
+            </h1>
+        </div>
+        :
+        <div className={cn('flex flex-col p-8 gap-4', className)}>
+            <h1
+                className="font-extrabold text-3xl relative text-center text-primary cursor-pointer"
+                onClick={() => setIsCollapsed(true)}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
+                <div className="flex items-center justify-center">
+                    {isHovered && (
+                        <div className="w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-primary ml-2" />
+                    )}
+                    <span className='mx-4'>{title}</span>
+                    {isHovered && (
+                        <div className="w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-primary mr-2" />
+                    )}
+                </div>
+            </h1>
+            {children}
+        </div >
+    );
+};
 
 const Editor: React.FC<EditorProps> = ({ }) => {
     const [editorContent, setEditorContent] = useLocalStorageState<string>("editor/editorContent", { defaultValue: "" });
@@ -167,8 +200,7 @@ const Editor: React.FC<EditorProps> = ({ }) => {
 
     return (
         <div className='flex h-screen w-screen'>
-            <div className='flex flex-col basis-[20%] p-8 pr-4 gap-4'>
-                <ContainerTitle title="Metadata" />
+            <CollapsibleMainArea title={"Metadata"} className={"basis-[20%] pr-4"}>
                 <div className='main-container'>
                     <HeaderField label="Title" onChange={setTitle} placeholder="Apassionata v F" value={title} />
                     <HeaderField label="Artist" onChange={setArtist} placeholder="František Omáčka" value={artist} />
@@ -181,9 +213,8 @@ const Editor: React.FC<EditorProps> = ({ }) => {
                     <HeaderField label="Range" onChange={setRange} placeholder="e.g. c1-g2" value={range} />
                     <HeaderField label="Capo" onChange={setCapo} placeholder="0" value={capo} />
                 </div>
-            </div>
-            <div className='flex flex-col basis-[40%] p-8 px-4 gap-4'>
-                <ContainerTitle title="Editor" />
+            </CollapsibleMainArea>
+            <CollapsibleMainArea title={"Editor"} className={"basis-[40%] px-4"}>
                 <div className='w-full -mb-4 flex flex-wrap gap-2 p-2 bg-gray-100'>
                     <TemplateButton templateKey="chorus" text="Chorus" onInsert={insertTemplate} />
                     <TemplateButton templateKey="verse" text="Verse" onInsert={insertTemplate} />
@@ -197,9 +228,8 @@ const Editor: React.FC<EditorProps> = ({ }) => {
                     onInput={e => onEditorChange(e)}
                     value={editorContent}
                 />
-            </div>
-            <div className='flex flex-col basis-[40%] p-8 pl-4 gap-4 max-h-full'>
-                <ContainerTitle title="Result" />
+            </CollapsibleMainArea>
+            <CollapsibleMainArea title={"Result"} className={"basis-[40%] pl-4"}>
                 <div className='main-container'>
 
                     <SongHeading
@@ -213,7 +243,7 @@ const Editor: React.FC<EditorProps> = ({ }) => {
                         dangerouslySetInnerHTML={{ __html: renderedResult }}
                     />
                 </div>
-            </div>
+            </CollapsibleMainArea>
         </div>
     );
 };

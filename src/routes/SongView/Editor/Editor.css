@@ -8,12 +8,3 @@
     width: 100%;
 
 }
-
-.main-container-title{
-    font-weight: 800;
-    font-size: 1.875rem /* 30px */;
-    line-height: 2.25rem /* 36px */;
-    text-align: center;
-    color: hsl(var(--primary));
-
-}
