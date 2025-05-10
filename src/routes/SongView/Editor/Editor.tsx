@@ -103,7 +103,7 @@ const Editor: React.FC<EditorProps> = () => {
     return (
         <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen overflow-hidden'>
             <div className='flex flex-col md:flex-row h-full w-full gap-4 p-4 lg:gap-8 lg:p-8 overflow-auto'>
-                <CollapsibleMainArea title={"Metadata"} className={"basis-[20%] 2xl:basis-[15%]"}>
+                <CollapsibleMainArea title={"Metadata"} className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}>
                     <div className='main-container space-y-2'>
                         <MetadataField
                             label="Title"
