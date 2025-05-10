@@ -1,7 +1,7 @@
 import { SongData } from '@/types/types';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import SongHeading from '../components/SongHeading';
-import { LayoutSettings } from '../hooks/viewSettingsStore';
+import { LayoutSettings, useViewSettingsStore } from '../hooks/viewSettingsStore';
 import '../SongView.css';
 import { renderSong } from '../utils/songRendering';
 import './Editor.css';
@@ -13,6 +13,12 @@ import ContentEditor from './ContentEditor';
 import { DataForSongView } from '@/components/song_loader';
 import { useLoaderData } from 'react-router-dom';
 import DownloadButton from './components/DownloadButton';
+import { DropdownIconStart, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Settings2 } from 'lucide-react';
+import { chordSettingsClassNames, ChordSettingsDropdownMenu } from '../settings/ChordSettingsMenu';
+import { layoutSettingsClassNames, LayoutSettingsDropdownSection, layoutSettingsValues } from '../settings/LayoutSettings';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface EditorState {
     content: string;
@@ -114,7 +120,6 @@ const Editor: React.FC<EditorProps> = () => {
         content: editorState.content || "Nothing to show... ;-)"
     } as unknown as SongData), [editorState]);
 
-    const layout = {} as LayoutSettings;
     const transposeSteps = 0;
 
     useEffect(() => {
@@ -125,6 +130,8 @@ const Editor: React.FC<EditorProps> = () => {
         );
         setRenderedResult(result);
     }, [editorState, songData]);
+
+    const { layout, chords, actions } = useViewSettingsStore();
 
     return (
         <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen overflow-hidden'>
@@ -207,7 +214,33 @@ const Editor: React.FC<EditorProps> = () => {
                     />
                 </CollapsibleMainArea>
                 <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
-                    <div className='main-container editor-preview-container'>
+                    <div className='absolute bottom-8 right-8'>
+                        <DropdownMenu modal={false}>
+                            <DropdownMenuTrigger asChild>
+                                <Button size="icon" variant="circular">
+                                    <Settings2 size={32} />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
+                                <DropdownMenuLabel>Contents</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                {["repeatParts", "repeatPartsChords"].map(k => (
+                                    <DropdownMenuCheckboxItem
+                                        key={k}
+                                        checked={layout[k]}
+                                        onCheckedChange={() => actions.setLayoutSettings({ [k]: !layout[k] }
+                                        )}
+                                        onSelect={e => e.preventDefault()}
+                                    >
+                                        <DropdownIconStart icon={layoutSettingsValues[k].icon} />
+                                        {layoutSettingsValues[k].label}
+                                    </DropdownMenuCheckboxItem>
+                                ))}
+                                {React.Children.toArray(<ChordSettingsDropdownMenu />)}
+                            </DropdownMenuContent >
+                        </DropdownMenu>
+                    </div>
+                    <div className={cn('main-container editor-preview-container', chordSettingsClassNames(chords), layoutSettingsClassNames(layout))}>
                         <SongHeading
                             songData={songData}
                             layoutSettings={layout}

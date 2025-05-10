@@ -10,7 +10,7 @@ import { LoopNoteIcon } from '@/components/ui/loop-note-icon'
 import SmartColumnIcon from "./smart_columns_icon"
 
 const layouSettingsBoolsKeys = ["multiColumns", "smartColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"] as const satisfies ReadonlyArray<keyof LayoutSettings>;
-const layoutSettingsValues = {
+export const layoutSettingsValues = {
   "multiColumns": { icon: <Columns2 />, label: "Multicolumn view" },
   "smartColumns": { icon: <Brain />, label: "Smart columns" },
   "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
