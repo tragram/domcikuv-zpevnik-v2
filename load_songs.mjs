@@ -1,25 +1,11 @@
 import fs from 'fs';
 import makeHash from 'object-hash';
 import path from 'path';
+// Update the path to the correct location of the types module
+import {preambleKeywords} from "./src/types/preambleKeywords.js";
 
 const songsPath = './songs/chordpro/';
 const files = fs.readdirSync(songsPath).filter(file => (file.endsWith('.pro') || file.endsWith('.chordpro')));
-export const preambleKeywords = [
-  "title",
-  "artist",
-  "songbooks",
-  "key",
-  "date_added",
-  "language",
-  "tempo",
-  "capo",
-  "range",
-  "prompt_model",
-  "prompt_id",
-  "image_model",
-  "start_melody",
-  "pdf_filenames",
-];
 
 const extractPreamble = (content, keywords) => {
   const preamble = {};
