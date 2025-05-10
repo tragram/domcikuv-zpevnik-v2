@@ -103,7 +103,7 @@ const Editor: React.FC<EditorProps> = () => {
     return (
         <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen overflow-hidden'>
             <div className='flex flex-col md:flex-row h-full w-full gap-4 p-4 lg:gap-8 lg:p-8 overflow-auto'>
-                <CollapsibleMainArea title={"Metadata"} className={"basis-[20%]"}>
+                <CollapsibleMainArea title={"Metadata"} className={"basis-[20%] 2xl:basis-[15%]"}>
                     <div className='main-container space-y-2'>
                         <MetadataField
                             label="Title"
@@ -118,52 +118,59 @@ const Editor: React.FC<EditorProps> = () => {
                             value={editorState.metadata.artist}
                         />
                         <MetadataField
-                            label="Key"
-                            onChange={(value) => updateMetadata('key', value)}
-                            placeholder="Dm"
-                            value={editorState.metadata.key}
+                            label="Capo"
+                            onChange={(value) => updateMetadata('capo', value)}
+                            placeholder="0"
+                            value={editorState.metadata.capo}
                         />
                         <MetadataField
-                            label="Date Added [YY-MM]"
+                            label="Date Added"
                             onChange={(value) => updateMetadata('dateAdded', value)}
                             placeholder="25-02"
                             value={editorState.metadata.dateAdded}
-                        />
-                        <MetadataField
-                            label="Songbooks"
-                            onChange={(value) => updateMetadata('songbooks', value)}
-                            placeholder='["Domčík", "Kvítek"]'
-                            value={editorState.metadata.songbooks}
-                        />
-                        <MetadataField
-                            label="Start Melody"
-                            onChange={(value) => updateMetadata('startMelody', value)}
-                            placeholder="c# d e"
-                            value={editorState.metadata.startMelody}
+                            description="Use YY-MM format."
                         />
                         <MetadataField
                             label="Language"
                             onChange={(value) => updateMetadata('language', value)}
                             placeholder="czech"
                             value={editorState.metadata.language}
+                            description="If language not already present in some other song, flag might not be shown."
                         />
                         <MetadataField
-                            label="Tempo [bpm]"
-                            onChange={(value) => updateMetadata('tempo', value)}
-                            placeholder="123"
-                            value={editorState.metadata.tempo}
+                            label="Key"
+                            onChange={(value) => updateMetadata('key', value)}
+                            placeholder="Dm"
+                            value={editorState.metadata.key}
+                            description="Use note name (with #/b into denote sharp/flat) for major key and append 'm' or 'mi' to indicate minor key."
+                        />
+                        <MetadataField
+                            label="Songbooks"
+                            onChange={(value) => updateMetadata('songbooks', value)}
+                            placeholder='["Domčík", "Kvítek"]'
+                            value={editorState.metadata.songbooks}
+                            description="Comma separated list with names in double quotes."
                         />
                         <MetadataField
                             label="Range"
                             onChange={(value) => updateMetadata('range', value)}
                             placeholder="e.g. c1-g2"
                             value={editorState.metadata.range}
+                            description="Also used for vocal range. See README. ;-)"
                         />
                         <MetadataField
-                            label="Capo"
-                            onChange={(value) => updateMetadata('capo', value)}
-                            placeholder="0"
-                            value={editorState.metadata.capo}
+                            label="Start Melody"
+                            onChange={(value) => updateMetadata('startMelody', value)}
+                            placeholder="c# d e"
+                            value={editorState.metadata.startMelody}
+                            description="Currently not used so not very standardized across the songs."
+                        />
+                        <MetadataField
+                            label="Tempo"
+                            onChange={(value) => updateMetadata('tempo', value)}
+                            placeholder="123"
+                            value={editorState.metadata.tempo}
+                            description="In BPM. Currently not used and very few songs have it."
                         />
                     </div>
                 </CollapsibleMainArea>

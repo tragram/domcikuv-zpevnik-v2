@@ -168,7 +168,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
       </div>
       <Textarea
         ref={textareaRef}
-        className='resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea'
+        className='resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto'
         style={{ minHeight: '300px' }}
         onInput={(e) => {
           // Adjust height on mobile
