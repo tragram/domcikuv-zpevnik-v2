@@ -9,7 +9,6 @@
 {range: a1-a2}
 {start_melody: c g}
 
-
 {start_of_verse}
 [C]Jedu Vám takh[C7]le stezkou
 [F]dát koňům v [C]řece pít
@@ -32,7 +31,6 @@ Ať máš [C]kolťák nízko [C7]u pasu,
 ať jsi [F]třeba zloděj [C]stád,
 tyhle žlutý růže z [A7]Texasu
 budeš [Dmi]pořád [G7]mít už [C]rád.
-{end_of_verse}
 {end_of_chorus}
 
 {start_of_verse}
