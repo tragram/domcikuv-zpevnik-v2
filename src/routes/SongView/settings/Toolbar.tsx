@@ -7,7 +7,7 @@ import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem,
 import ToolbarBase from '@/components/ui/toolbar-base'
 import usePWAInstall from '@/components/usePWAInstall'
 import { Key } from '@/types/musicTypes'
-import { Github, Settings2, Undo2 } from 'lucide-react'
+import { Github, Pencil, Settings2, Undo2 } from 'lucide-react'
 import React from 'react'
 import { FullScreenHandle } from 'react-full-screen'
 import { Link, useNavigate } from 'react-router-dom'
@@ -68,6 +68,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                         <DropdownMenuLabel>Misc</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {React.Children.toArray(<ResetBanListDropdownItems songDB={songDB} />)}
+                        <DropdownMenuItem>
+                            <DropdownIconStart icon={<Pencil />} />
+                            <Link
+                                to={"/editor/" + songData.id}>
+                                Edit here
+                            </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem>
                             <DropdownIconStart icon={<Github />} />
                             <Link
