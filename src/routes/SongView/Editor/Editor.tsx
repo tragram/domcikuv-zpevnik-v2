@@ -10,64 +10,175 @@ import useLocalStorageState from 'use-local-storage-state';
 import CollapsibleMainArea from './components/CollapsibleMainArea';
 import HeaderField from './components/HeaderField';
 import ContentEditor from './ContentEditor';
-type EditorProps = {
+
+// Define the complex state interface
+interface EditorState {
+    content: string;
+    metadata: {
+        title: string;
+        artist: string;
+        key: string;
+        dateAdded: string;
+        songbooks: string;
+        startMelody: string;
+        language: string;
+        tempo: string;
+        capo: string;
+        range: string;
+    };
+}
+
+// Default state
+const defaultEditorState: EditorState = {
+    content: "",
+    metadata: {
+        title: "",
+        artist: "",
+        key: "",
+        dateAdded: "",
+        songbooks: "",
+        startMelody: "",
+        language: "",
+        tempo: "",
+        capo: "",
+        range: ""
+    }
 };
 
-const Editor: React.FC<EditorProps> = ({ }) => {
-    const [editorContent, setEditorContent] = useLocalStorageState<string>("editor/editorContent", { defaultValue: "" });
-    const [renderedResult, setRenderedResult] = useState("");
-    const [title, setTitle] = useLocalStorageState<string>("editor/title", { defaultValue: "" });
-    const [artist, setArtist] = useLocalStorageState<string>("editor/artist", { defaultValue: "" });
-    const [key, setKey] = useLocalStorageState<string>("editor/key", { defaultValue: "" });
-    const [dateAdded, setDateAdded] = useLocalStorageState<string>("editor/dateAdded", { defaultValue: "" });
-    const [songbooks, setSongbooks] = useLocalStorageState<string>("editor/songbooks", { defaultValue: "" });
-    const [startMelody, setStartMelody] = useLocalStorageState<string>("editor/startMelody", { defaultValue: "" });
-    const [language, setLanguage] = useLocalStorageState<string>("editor/language", { defaultValue: "" });
-    const [tempo, setTempo] = useLocalStorageState<string>("editor/tempo", { defaultValue: "" });
-    const [capo, setCapo] = useLocalStorageState<string>("editor/capo", { defaultValue: "" });
-    const [range, setRange] = useLocalStorageState<string>("editor/range", { defaultValue: "" });
+type EditorProps = {};
 
-    const songData = { title: title, artist: artist, capo: capo, range: SongData.parseRange(range) } as SongData;
+const Editor: React.FC<EditorProps> = () => {
+    // Use a single state object with useLocalStorageState
+    const [editorState, setEditorState] = useLocalStorageState<EditorState>(
+        "editor/state",
+        { defaultValue: defaultEditorState }
+    );
+
+    const [renderedResult, setRenderedResult] = useState("");
+
+    // Helper function to update individual metadata fields
+    const updateMetadata = (field: keyof EditorState['metadata'], value: string) => {
+        setEditorState({
+            ...editorState,
+            metadata: {
+                ...editorState.metadata,
+                [field]: value
+            }
+        });
+    };
+
+    // Helper function to update the content
+    const updateContent = (content: string) => {
+        setEditorState({
+            ...editorState,
+            content
+        });
+    };
+
+    // Create song data object from the metadata using useMemo
+    const songData = React.useMemo(() => ({
+        title: editorState.metadata.title,
+        artist: editorState.metadata.artist,
+        capo: editorState.metadata.capo,
+        range: SongData.parseRange(editorState.metadata.range),
+        dateAdded: editorState.metadata.dateAdded,
+        songbooks: editorState.metadata.songbooks,
+        language: editorState.metadata.language,
+        tempo: editorState.metadata.tempo,
+        content: editorState.content || "Nothing to show... ;-)"
+    } as unknown as SongData), [editorState]);
+
     const layout = {} as LayoutSettings;
     const transposeSteps = 0;
 
     useEffect(() => {
         const result = renderSong(
-            { ...songData, content: editorContent || "Nothing to show... ;-)" },
+            songData,
             transposeSteps,
             true
-        )
+        );
         setRenderedResult(result);
-    }, [editorContent, songData])
+    }, [editorState, songData]);
 
     return (
         <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen gap-4 p-4 lg:gap-8 lg:p-8'>
             <CollapsibleMainArea title={"Metadata"} className={"basis-[20%]"}>
                 <div className='main-container'>
-                    <HeaderField label="Title" onChange={setTitle} placeholder="Apassionata v F" value={title} />
-                    <HeaderField label="Artist" onChange={setArtist} placeholder="František Omáčka" value={artist} />
-                    <HeaderField label="Key" onChange={setKey} placeholder="Dm" value={key} />
-                    <HeaderField label="Date Added [YY-MM]" onChange={setDateAdded} placeholder="25-02" value={dateAdded} />
-                    <HeaderField label="Songbooks" onChange={setSongbooks} placeholder='["Domčík", "Kvítek"]' value={songbooks} />
-                    <HeaderField label="Start Melody" onChange={setStartMelody} placeholder="c# d e" value={startMelody} />
-                    <HeaderField label="Language" onChange={setLanguage} placeholder="czech" value={language} />
-                    <HeaderField label="Tempo [bpm]" onChange={setTempo} placeholder="123" value={tempo} />
-                    <HeaderField label="Range" onChange={setRange} placeholder="e.g. c1-g2" value={range} />
-                    <HeaderField label="Capo" onChange={setCapo} placeholder="0" value={capo} />
+                    <HeaderField
+                        label="Title"
+                        onChange={(value) => updateMetadata('title', value)}
+                        placeholder="Apassionata v F"
+                        value={editorState.metadata.title}
+                    />
+                    <HeaderField
+                        label="Artist"
+                        onChange={(value) => updateMetadata('artist', value)}
+                        placeholder="František Omáčka"
+                        value={editorState.metadata.artist}
+                    />
+                    <HeaderField
+                        label="Key"
+                        onChange={(value) => updateMetadata('key', value)}
+                        placeholder="Dm"
+                        value={editorState.metadata.key}
+                    />
+                    <HeaderField
+                        label="Date Added [YY-MM]"
+                        onChange={(value) => updateMetadata('dateAdded', value)}
+                        placeholder="25-02"
+                        value={editorState.metadata.dateAdded}
+                    />
+                    <HeaderField
+                        label="Songbooks"
+                        onChange={(value) => updateMetadata('songbooks', value)}
+                        placeholder='["Domčík", "Kvítek"]'
+                        value={editorState.metadata.songbooks}
+                    />
+                    <HeaderField
+                        label="Start Melody"
+                        onChange={(value) => updateMetadata('startMelody', value)}
+                        placeholder="c# d e"
+                        value={editorState.metadata.startMelody}
+                    />
+                    <HeaderField
+                        label="Language"
+                        onChange={(value) => updateMetadata('language', value)}
+                        placeholder="czech"
+                        value={editorState.metadata.language}
+                    />
+                    <HeaderField
+                        label="Tempo [bpm]"
+                        onChange={(value) => updateMetadata('tempo', value)}
+                        placeholder="123"
+                        value={editorState.metadata.tempo}
+                    />
+                    <HeaderField
+                        label="Range"
+                        onChange={(value) => updateMetadata('range', value)}
+                        placeholder="e.g. c1-g2"
+                        value={editorState.metadata.range}
+                    />
+                    <HeaderField
+                        label="Capo"
+                        onChange={(value) => updateMetadata('capo', value)}
+                        placeholder="0"
+                        value={editorState.metadata.capo}
+                    />
                 </div>
             </CollapsibleMainArea>
             <CollapsibleMainArea title={"Editor"} className={"basis-[40%]"} isEditor={true}>
-                <ContentEditor editorContent={editorContent} setEditorContent={setEditorContent} />
+                <ContentEditor
+                    editorContent={editorState.content}
+                    setEditorContent={updateContent}
+                />
             </CollapsibleMainArea>
             <CollapsibleMainArea title={"Result"} className={"basis-[40%]"}>
                 <div className='main-container'>
-
                     <SongHeading
                         songData={songData}
                         layoutSettings={layout}
                         transposeSteps={transposeSteps}
                     />
-
                     <div
                         id="song-content-wrapper"
                         dangerouslySetInnerHTML={{ __html: renderedResult }}
