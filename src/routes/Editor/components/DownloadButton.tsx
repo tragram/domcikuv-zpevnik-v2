@@ -36,10 +36,9 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ metadata, content }) =>
             <Button
                 onClick={handleDownload}
                 variant="default"
-                className="border-primary/30 border-2"
             >
-                <Download />
                 Download ChordPro
+                <Download />
             </Button>
         </div>
     )
