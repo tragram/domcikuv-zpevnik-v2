@@ -1,5 +1,5 @@
 
-import { preambleKeywords, generatedFields, chordpro2JSKeywords } from "./preambleKeywords";
+import { preambleKeywords, generatedFields, chordpro2JSKeywords, JS2chordproKeywords } from "./preambleKeywords";
 import { fileURL } from "../components/song_loader";
 import { Key, Note, SongRange } from "./musicTypes";
 import { int, SongLanguage } from "./types";
@@ -55,9 +55,12 @@ class IllustrationData {
         const instance = new IllustrationData(json.promptModel, json.promptId, json.imageModel, json.availableIllustrations)
         return instance;
     }
-
-    reconstructPreamble() {
-        return `{prompt_id: ${this.promptId}}\n{prompt_model: ${this.promptModel}}\n{image_model: ${this.imageModel}}\n`
+    reconstructPreamble(): Record<string, string> {
+        return {
+            promptId: this.promptId,
+            promptModel: this.promptModel,
+            imageModel: this.imageModel
+        };
     }
 }
 
@@ -69,9 +72,9 @@ interface SongMetadata {
     dateAdded?: string;
     songbooks?: string;
     startMelody?: string;
-    language?: SongLanguage;
-    tempo?: string | number;
-    capo?: string | number;
+    language?: string;
+    tempo?: string;
+    capo?: string;
     range?: string;
     pdfFilenames?: string;
     promptModel?: string;
@@ -84,6 +87,28 @@ interface SongMetadata {
     availableIllustrations?: string[];
 }
 
+export const emptySongMetadata = (): SongMetadata => {
+    return {
+        title: "",
+        artist: "",
+        key: "",
+        dateAdded: "",
+        songbooks: "",
+        startMelody: "",
+        language: "",
+        tempo: "",
+        capo: "",
+        range: "",
+        pdfFilenames: "",
+        promptModel: "",
+        promptId: "",
+        imageModel: "",
+        chordproFile: "",
+        contentHash: "",
+        availableIllustrations: []
+    };
+};
+
 class SongData {
     title: string;
     artist: string;
@@ -95,7 +120,7 @@ class SongData {
     startMelody?: string;
     songbooks: string[];
     language: SongLanguage;
-    tempo: int;
+    tempo?: int;
     capo: int;
     range: SongRange;
     illustrationData: IllustrationData;
@@ -114,7 +139,7 @@ class SongData {
         this.dateAdded = SongData.parseDateAdded(song.dateAdded);
         this.songbooks = SongData.parseSongbooks(song.songbooks, this.artist, this.title);
         this.startMelody = song.startMelody;
-        this.language = song.language || "other";
+        this.language = song.language as SongLanguage || "other";
         this.tempo = SongData.parseTempo(song.tempo);
         this.capo = SongData.parseCapo(song.capo);
         this.range = SongData.parseRange(song.range);
@@ -122,7 +147,6 @@ class SongData {
         this.pdfFilenames = SongData.parsePdfFilenames(song.pdfFilenames, this.artist, this.title);
         this.chordproFile = song.chordproFile || "";
         this.contentHash = song.contentHash || "";
-        //TODO: where is content initialized?!
     }
 
     /**
@@ -173,8 +197,8 @@ class SongData {
         }
     }
 
-    static parseTempo(tempo?: string | number): int {
-        return parseInt(tempo as string) || 0;
+    static parseTempo(tempo?: string | number): int | undefined {
+        return tempo ? (parseInt(tempo as string) || undefined) : undefined;
     }
 
     static parseCapo(capo?: string | number): int {
@@ -273,35 +297,51 @@ class SongData {
         this.content = SongData.withoutMetadata(content);
     }
 
-    toChordpro() {
-        const directives: string[] = [];
+
+    extractMetadata(): Record<string, string> {
+        const metadata: Record<string, string> = this.illustrationData.reconstructPreamble();
         preambleKeywords.forEach((k: string) => {
             const JSKey = chordpro2JSKeywords[k];
             if (JSKey in this) {
-                const value = this[JSKey as keyof SongData];
+                const value = this[JSKey as keyof SongData] ?? "";
                 if (["string", "number"].includes(typeof value)) {
-                    directives.push(`{${k}: ${value || ""}}`);
+                    metadata[JSKey] = `${value ?? ""}`;
+
                 } else if (JSKey === "dateAdded") {
                     const date = this.dateAdded;
-                    directives.push(`{${k}: ${date ? date.month + "-" + date.year : ""}}`)
+                    metadata[JSKey] = date ? date.month.toString().padStart(2, "0") + "-" + date.year : "";
                 } else if (["songbooks", "pdfFilenames"].includes(JSKey)) {
-                    directives.push(`{${k}: ${JSON.stringify(value) || ""}}`)
+                    metadata[JSKey] = JSON.stringify(value) ?? "";
                 } else if (["key", "range"].includes(JSKey)) {
-                    directives.push(`{${k}: ${(value) || ""}}`)
+                    metadata[JSKey] = `${value ?? ""}`;
                 }
             }
         });
-        directives.push(this.illustrationData.reconstructPreamble());
-        const preamble = directives.join("\n");
-        const missing = preambleKeywords.filter((keyword: string) => {
-            const regex = new RegExp(`^\\{${keyword}:\\s*.+?\\}$`, "m");
-            return !regex.test(directives.join("\n"));
-        });
-
-        if (missing.length > 0) {
-            console.warn(`Missing fields for chordpro preamble: ${missing.join(', ')}`);
+        if (process.env.NODE_ENV !== 'production') {
+            const missing = preambleKeywords.map(k => chordpro2JSKeywords[k]).filter(k => !Object.keys(metadata).includes(k));
+            if (missing.length > 0) {
+                console.warn(`Missing fields for Extracted Metadata: ${missing.join(', ')}`);
+            }
         }
-        return preamble;
+        return metadata;
+    }
+
+    toChordpro(): string {
+        const metadata = this.extractMetadata();
+        const directives = Object.entries(metadata).map(([key, value]) => `{${JS2chordproKeywords[key]}: ${value}}`);
+        const preamble = directives.join("\n");
+
+        if (process.env.NODE_ENV !== 'production') {
+            const missing = preambleKeywords.filter((keyword: string) => {
+                const regex = new RegExp(`^\\{${keyword}:\\s*.+?\\}$`, "m");
+                return !regex.test(directives.join("\n"));
+            });
+
+            if (missing.length > 0) {
+                console.warn(`Missing fields for chordpro preamble: ${missing.join(', ')}`);
+            }
+        }
+        return preamble + "\n\n" + (this.content ?? "");
     }
 
     private imageURLFactory(folder: string, promptModel?: string, promptId?: string, imageModel?: string): string {

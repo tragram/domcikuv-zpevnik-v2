@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 interface MetadataFieldProps {
     label: string;
-    value: string;
+    value?: string;
     placeholder?: string;
     description?: string;
     onChange: (value: string) => void;
@@ -42,11 +42,11 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
             </Label>
             <Input
                 placeholder={value ? undefined : placeholder || label}
-                value={value}
+                value={value??""}
                 onChange={(e) => { onChange(e.target.value) }}
                 className={`border-2 p-1 ${displayError
-                        ? 'border-red-500'
-                        : 'border-muted focus:border-primary focus:bg-primary/30'
+                    ? 'border-red-500'
+                    : 'border-muted focus:border-primary focus:bg-primary/30'
                     }`}
             />
             {description && <p className="text-xs text-primary/50">{description}</p>}

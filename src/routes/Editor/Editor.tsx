@@ -1,4 +1,4 @@
-import { SongData } from '@/types/songData';
+import { emptySongMetadata, SongData, SongMetadata } from '@/types/songData';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 import { useLoaderData } from 'react-router-dom';
@@ -13,44 +13,19 @@ import { renderSong } from '../SongView/utils/songRendering';
 
 export interface EditorState {
     content: string;
-    metadata: {
-        title: string;
-        artist: string;
-        key: string;
-        dateAdded: string;
-        songbooks: string;
-        startMelody: string;
-        language: string;
-        tempo: string;
-        capo: string;
-        range: string;
-        pdfFilenames: string;
-    };
+    metadata: SongMetadata
 }
 
 const defaultEditorState: EditorState = {
     content: "",
-    metadata: {
-        title: "",
-        artist: "",
-        key: "",
-        dateAdded: "",
-        songbooks: "",
-        startMelody: "",
-        language: "",
-        tempo: "",
-        capo: "",
-        range: "",
-        pdfFilenames: ""
-    }
+    metadata: emptySongMetadata()
 };
 
-type EditorProps = {};
-
-const Editor: React.FC<EditorProps> = () => {
+const Editor: React.FC = () => {
     const { songDB, songData: songDataURL } = useLoaderData() as DataForSongView;
 
     //TODO: perhaps the editors on different URLs should have different states
+    // YES and there should be a button: 'reset' if songDataURL defined and 'clear' if not
     const [editorState, setEditorState] = useLocalStorageState<EditorState>(
         "editor/state",
         { defaultValue: defaultEditorState }
@@ -61,20 +36,8 @@ const Editor: React.FC<EditorProps> = () => {
     useLayoutEffect(() => {
         if (songDataURL) {
             setEditorState({
-                content: songDataURL.withoutMetadata() || "Nothing to show... ;-)",
-                metadata: {
-                    title: songDataURL.title.toString(),
-                    artist: songDataURL.artist.toString(),
-                    key: songDataURL.key?.toString() || "",
-                    dateAdded: `${songDataURL.dateAdded.month.toString().padStart(2, "0")}-${songDataURL.dateAdded.year}`,
-                    songbooks: songDataURL.songbooks.toString(),
-                    startMelody: songDataURL.startMelody?.toString() || "",
-                    language: songDataURL.language.toString(),
-                    tempo: songDataURL.tempo.toString(),
-                    capo: songDataURL.capo.toString(),
-                    range: songDataURL.range.toString().replace(/ /g, ""),
-                    pdfFilenames: songDataURL.pdfFilenames.toString()
-                }
+                content: songDataURL.content || "Nothing to show... ;-)",
+                metadata: songDataURL.extractMetadata()
             })
         }
     }, [setEditorState, songDataURL]);
@@ -123,7 +86,7 @@ const Editor: React.FC<EditorProps> = () => {
         <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen overflow-hidden'>
             <div className='flex flex-col md:flex-row h-full w-full gap-4 p-4 lg:gap-8 lg:p-8 overflow-auto'>
                 <CollapsibleMainArea title={"Metadata"} className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}>
-                    <Metadata 
+                    <Metadata
                         metadata={editorState.metadata}
                         updateMetadata={updateMetadata}
                     />
@@ -135,7 +98,7 @@ const Editor: React.FC<EditorProps> = () => {
                     />
                 </CollapsibleMainArea>
                 <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
-                    <Preview 
+                    <Preview
                         songData={songData}
                         renderedContent={renderedResult}
                         metadata={editorState.metadata}

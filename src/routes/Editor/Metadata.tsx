@@ -2,21 +2,10 @@ import React from 'react';
 import MetadataField from './components/MetadataField';
 import { metadataValidators } from './components/validationUtils';
 import { EditorState } from './Editor';
+import { SongMetadata } from '@/types/songData';
 
 interface MetadataProps {
-  metadata: {
-    title: string;
-    artist: string;
-    key: string;
-    dateAdded: string;
-    songbooks: string;
-    startMelody: string;
-    language: string;
-    tempo: string;
-    capo: string;
-    range: string;
-    pdfFilenames: string;
-  };
+  metadata: SongMetadata
   updateMetadata: (field: keyof EditorState["metadata"], value: string) => void;
   onValidationChange?: (isValid: boolean) => void;
 }
@@ -103,7 +92,7 @@ const Metadata: React.FC<MetadataProps> = ({
         onChange={(value) => updateMetadata('tempo', value)}
         placeholder="123"
         value={metadata.tempo}
-        description="In BPM. Currently not used and very few songs have it."
+        description="In BPM. Currently not used and very few songs define it."
         validator={metadataValidators.tempo}
       />
     </div>
