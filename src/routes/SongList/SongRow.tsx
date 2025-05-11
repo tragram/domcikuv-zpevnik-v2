@@ -28,16 +28,17 @@ const MONTH_NAMES = [
 
 
 interface DateDisplayProps {
-    month: number;
-    year: number;
+    month?: number;
+    year?: number;
     className?: string;
 }
 
 const DateDisplay = memo(({ month, year, className = "" }: DateDisplayProps) => (
     <div className={cn("min-w-20 flex-col content-center justify-center text-center", className)}>
-        <h3 className="text-xs opacity-70">{MONTH_NAMES[month - 1]}</h3>
-        <h2 className="text-sm opacity-70">{year}</h2>
-    </div>
+        {month && year &&
+        <><h3 className="text-xs opacity-70">{MONTH_NAMES[month - 1]}</h3><h2 className="text-sm opacity-70">{year}</h2></>
+        }
+    </div >
 ));
 
 interface VocalRangeIndicatorProps {
@@ -146,15 +147,15 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
 
                         <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" />
                         <DateDisplay
-                            month={song.dateAdded.month}
-                            year={song.dateAdded.year}
+                            month={song.dateAdded?.month}
+                            year={song.dateAdded?.year}
                             className="hidden xsm:flex md:basis-1/12 shrink-0 basis-[2/12]"
                         />
 
                         <CapoDisplay capo={song.capo} className="hidden lg:flex basis-1/12 shrink-0" />
 
                         <VocalRangeIndicator
-                            songRangeSemitones={song.range.semitones}
+                            songRangeSemitones={song.range?.semitones}
                             maxRange={maxRange}
                             className="hidden md:flex basis-1/12 shrink-0"
                         />

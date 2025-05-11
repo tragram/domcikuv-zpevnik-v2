@@ -122,7 +122,7 @@ export const emptySongMetadata = (): SongMetadata => {
 class SongData {
     title: string;
     artist: string;
-    dateAdded: {
+    dateAdded?: {
         month: int;
         year: int;
     };
@@ -194,8 +194,16 @@ class SongData {
     }
 
     static parseDateAdded(dateAdded?: string) {
-        const [month, year] = (dateAdded || "0-12").split("-");
-        return { month: parseInt(month), year: parseInt(year) };
+        if (!dateAdded) {
+            return undefined;
+        }
+        try {
+            const [month, year] = (dateAdded).split("-");
+            return { month: parseInt(month), year: parseInt(year) };
+        } catch (error) {
+            console.error("Invalid dateAdded!");
+            return undefined
+        }
     }
 
     static parseSongbooks(songbooks?: string, artist?: string, title?: string): string[] {

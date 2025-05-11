@@ -1,6 +1,7 @@
 import { Textarea } from "@/components/ui/textarea";
 import React, { useEffect, useRef } from 'react';
 import './Editor.css';
+import { SnippetButtonSection, SnippetButton ,snippets } from "./components/Snippets";
 
 // Add a new CSS rule to make the textarea adjust to its content
 const textareaAutoSizeStyles = `
@@ -11,8 +12,6 @@ const textareaAutoSizeStyles = `
 }
 `;
 
-import TemplateButton from './components/TemplateButton';
-
 type ContentEditorProps = {
   editorContent;
   setEditorContent;
@@ -20,8 +19,8 @@ type ContentEditorProps = {
 
 const MD_WIDTH = 810;
 
-const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorContent }) => {
 
+const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorContent }) => {
   // Reference to the textarea element
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -75,10 +74,10 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
   }
 
   // Insert template at current cursor position
-  const insertTemplate = (templateKey: string) => {
-    if (!textareaRef.current || !templates[templateKey]) return;
+  const insertSnippet = (snippetKey: string) => {
+    if (!textareaRef.current || !snippets[snippetKey]) return;
 
-    const template = templates[templateKey];
+    const template = snippets[snippetKey];
     const textarea = textareaRef.current;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
@@ -127,43 +126,30 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
     }, 0);
   };
 
-  // Various template options
-  const templates = {
-    chorus: {
-      name: "Chorus",
-      template: "{start_of_chorus}\n\n{end_of_chorus}\n\n",
-      cursorOffset: 1 // Position after first \n\n
-    },
-    verse: {
-      name: "Verse",
-      template: "{start_of_verse}\n\n{end_of_verse}\n\n",
-      cursorOffset: 1
-    },
-    bridge: {
-      name: "Bridge",
-      template: "{start_of_bridge}\n\n{end_of_bridge}\n\n",
-      cursorOffset: 1
-    },
-    comment: {
-      name: "Comment",
-      template: "{Comment: }\n",
-      cursorOffset: -2
-    },
-    chords: {
-      name: "Chord",
-      template: "[]",
-      cursorOffset: -1
-    }
-  };
 
   return (
     <div className="flex flex-col h-full">
-      <div className='w-full flex flex-wrap gap-2 p-2 bg-gray-100'>
-        <TemplateButton templateKey="chorus" text="Chorus" onInsert={insertTemplate} />
-        <TemplateButton templateKey="verse" text="Verse" onInsert={insertTemplate} />
-        <TemplateButton templateKey="bridge" text="Bridge" onInsert={insertTemplate} />
-        <TemplateButton templateKey="comment" text="Comment" onInsert={insertTemplate} />
-        <TemplateButton templateKey="chords" text="Chord" onInsert={insertTemplate} />
+      <div className='w-full flex flex-wrap gap-1 border-primary border-4 border-b-0'>
+        <SnippetButtonSection label="Environments">
+          <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="bridge_env" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="chorus_env" onInsert={insertSnippet} />
+        </SnippetButtonSection>
+        <SnippetButtonSection label="Recalls">
+          <SnippetButton snippetKey="verse_recall" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="bridge_recall" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="chorus_recall" onInsert={insertSnippet} />
+        </SnippetButtonSection>
+        <SnippetButtonSection label="Variants">
+          <SnippetButton snippetKey="prepend_content" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="replace_first_line" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="replace_last_line" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="append_content" onInsert={insertSnippet} />
+        </SnippetButtonSection>
+        <SnippetButtonSection label="Misc">
+          <SnippetButton snippetKey="comment" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="chords"  onInsert={insertSnippet} />
+        </SnippetButtonSection>
       </div>
       <Textarea
         ref={textareaRef}

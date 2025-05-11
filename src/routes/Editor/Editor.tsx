@@ -37,16 +37,20 @@ const Editor: React.FC = () => {
         if (songDataURL) {
             return songData2State(songDataURL);
         } else {
+            const metadata = emptySongMetadata();
+            const currentDate = new Date();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+            const year = currentDate.getFullYear();
+            metadata.dateAdded = `${month}-${year}`;
             return {
                 content: "",
-                metadata: emptySongMetadata()
+                metadata: metadata
             } as EditorState;
         }
     }, [songDataURL]);
 
     const [editorState, setEditorState] = useLocalStorageState<EditorState>(
         editorStateKey, { defaultValue: () => defaultEditorState });
-
 
     const initializeEditor = useCallback(() => {
         setEditorState(defaultEditorState);
@@ -59,7 +63,10 @@ const Editor: React.FC = () => {
     }, [defaultEditorState, editorStateKey])
 
     const loadBackupState = useCallback(() => {
-        setEditorState(JSON.parse(localStorage.getItem(editorStateKey + "-backup") ?? ""));
+        const backup = localStorage.getItem(editorStateKey + "-backup");
+        if (backup) {
+            setEditorState(JSON.parse(backup));
+        }
     }, [editorStateKey, setEditorState])
 
     // Helper function to update individual metadata fields
