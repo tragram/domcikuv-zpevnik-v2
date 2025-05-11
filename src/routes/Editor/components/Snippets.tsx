@@ -107,7 +107,7 @@ export const SnippetButton: React.FC<SnippetButtonProps> = ({
                 <TooltipTrigger asChild>
                     <button
                         onClick={() => onInsert(snippetKey)}
-                        className={cn("text-base font-semibold py-1 px-2 text-white rounded-md hover:bg-background", className)}
+                        className={cn("text-base font-semibold py-1 px-2 text-white rounded-md hover:bg-background grow max-w-16", className)}
                     >
                         {snippet.letter}
                     </button>
