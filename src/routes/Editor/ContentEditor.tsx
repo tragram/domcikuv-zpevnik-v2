@@ -129,9 +129,9 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
 
   return (
     <div className="flex flex-col h-full">
-      <div className='w-full flex flex-wrap gap-1 border-primary border-4 border-b-0'>
+      <div className='w-full flex flex-wrap gap-1 border-primary border-4 border-b-0 rounded-t-md'>
         <SnippetButtonSection label="Environments">
-          <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="verse_env" onInsert={insertSnippet}/>
           <SnippetButton snippetKey="bridge_env" onInsert={insertSnippet} />
           <SnippetButton snippetKey="chorus_env" onInsert={insertSnippet} />
         </SnippetButtonSection>
