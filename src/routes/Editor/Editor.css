@@ -12,6 +12,10 @@
     flex-wrap: wrap;
 }
 
-.lyrics-line:not(.section > .lyrics-line) {
-    color: red;
+.editor-content-empty .lyrics-line:not(.section > .lyrics-line) {
+    color: inherit;
+}
+
+.lyrics-line:not(.section > .lyrics-line):not(.editor-content-empty .lyrics-line) {
+    color: hsl(var(--destructive));
 }

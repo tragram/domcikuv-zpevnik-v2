@@ -2,6 +2,7 @@ import { Textarea } from "@/components/ui/textarea";
 import React, { useEffect, useRef } from 'react';
 import './Editor.css';
 import { SnippetButtonSection, SnippetButton, snippets } from "./components/Snippets";
+import { cn } from "@/lib/utils";
 
 // Add a new CSS rule to make the textarea adjust to its content
 const textareaAutoSizeStyles = `
@@ -138,7 +139,6 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
       }, 0);
     }
   };
-
   return (
     <div className="flex flex-col h-full">
       <div className='w-full flex flex-wrap gap-1 border-primary border-4 border-b-0 rounded-t-md'>
@@ -165,7 +165,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
       </div>
       <Textarea
         ref={textareaRef}
-        className='resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto'
+        className={cn('resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto')}
         style={{ minHeight: '300px' }}
         onInput={(e) => {
           // Adjust height on mobile

@@ -61,7 +61,7 @@ const Preview: React.FC<PreviewProps> = ({
         </DropdownMenu>
         <DownloadButton metadata={metadata} content={content} />
       </div>
-      <div className={cn('main-container editor-preview-container', chordSettingsClassNames(chords), layoutSettingsClassNames(layout))}>
+      <div className={cn('main-container editor-preview-container', chordSettingsClassNames(chords), layoutSettingsClassNames(layout), content.length === 0 ? "editor-content-empty" : "")}>
         <SongHeading
           songData={songData}
           layoutSettings={layout}
