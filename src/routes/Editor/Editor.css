@@ -1,4 +1,4 @@
-.main-container{
+.main-container {
     border-color: hsl(var(--primary));
     border-width: 4px;
     border-radius: calc(var(--radius) - 2px);
@@ -8,6 +8,10 @@
     width: 100%;
 }
 
-.editor-preview-container .lyrics-line{
+.editor-preview-container .lyrics-line {
     flex-wrap: wrap;
+}
+
+.lyrics-line:not(.section > .lyrics-line) {
+    color: red;
 }
