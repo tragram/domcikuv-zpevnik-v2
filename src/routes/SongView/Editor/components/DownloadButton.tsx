@@ -1,5 +1,7 @@
 import { fileURL } from "@/components/song_loader";
+import { Button } from "@/components/ui/button";
 import { SongData } from "@/types/types";
+import { Download } from "lucide-react";
 
 
 
@@ -95,16 +97,15 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ metadata, content }) =>
         }, 0);
     };
     return (
-        <div className="flex justify-end mb-4">
-            <button
+        <div className="flex justify-end">
+            <Button
                 onClick={handleDownload}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md flex items-center"
+                variant="default"
+                className="border-primary/30 border-2"
             >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                </svg>
+                <Download/>
                 Download ChordPro
-            </button>
+            </Button>
         </div>
     )
 }

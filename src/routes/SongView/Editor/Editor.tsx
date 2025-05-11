@@ -213,8 +213,8 @@ const Editor: React.FC<EditorProps> = () => {
                         setEditorContent={updateContent}
                     />
                 </CollapsibleMainArea>
-                <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
-                    <div className='absolute bottom-8 right-8'>
+                <CollapsibleMainArea title={"Preview"} className={"basis-[40%] relative"}>
+                    <div className='absolute w-full bottom-0 left-0 p-4 flex flex-row justify-between h-fit items-center'>
                         <DropdownMenu modal={false}>
                             <DropdownMenuTrigger asChild>
                                 <Button size="icon" variant="circular">
@@ -239,6 +239,7 @@ const Editor: React.FC<EditorProps> = () => {
                                 {React.Children.toArray(<ChordSettingsDropdownMenu />)}
                             </DropdownMenuContent >
                         </DropdownMenu>
+                        <DownloadButton metadata={editorState.metadata} content={editorState.content} />
                     </div>
                     <div className={cn('main-container editor-preview-container', chordSettingsClassNames(chords), layoutSettingsClassNames(layout))}>
                         <SongHeading
@@ -250,7 +251,6 @@ const Editor: React.FC<EditorProps> = () => {
                             id="song-content-wrapper"
                             dangerouslySetInnerHTML={{ __html: renderedResult }}
                         />
-                        <DownloadButton metadata={editorState.metadata} content={editorState.content} />
                     </div>
                 </CollapsibleMainArea>
             </div>
