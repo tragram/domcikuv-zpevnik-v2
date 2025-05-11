@@ -74,14 +74,14 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                         {React.Children.toArray(<ResetBanListDropdownItems songDB={songDB} />)}
                         <DropdownMenuItem>
                             <DropdownIconStart icon={<Pencil />} />
-                            <Link
+                            <Link className='w-full h-full'
                                 to={"/editor/" + songData.id}>
                                 Edit here
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <DropdownIconStart icon={<Github />} />
-                            <Link
+                            <Link className='w-full h-full'
                                 to={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile}>
                                 Edit on GitHub
                             </Link>
