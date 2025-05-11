@@ -93,42 +93,42 @@ const Editor: React.FC = () => {
     };
 
     return (
-    <div className='flex flex-col relative h-fit md:h-dvh gap-2 lg:gap-4'>
-        <div className='flex flex-wrap w-auto mx-4 lg:mx-8 mt-4 border-4 border-primary rounded-md'>
-            <Button onClick={() => { backupEditorState(editorState); initializeEditor() }}>
-                {songDataURL ? "Reload song" : "Clear"}
-                <RefreshCcw />
+        <div className='flex flex-col relative h-fit md:h-dvh gap-2 lg:gap-4 min-w-[250px]'>
+            <div className='flex flex-wrap w-auto mx-4 lg:mx-8 mt-4 border-4 border-primary rounded-md'>
+                <Button onClick={() => { backupEditorState(editorState); initializeEditor() }}>
+                    {songDataURL ? "Reload song" : "Clear"}
+                    <RefreshCcw />
                 </Button>
-            <Button onClick={() => { loadBackupState() }}>
-                Undo reload
-                <Undo />
+                <Button onClick={() => { loadBackupState() }}>
+                    Undo reload
+                    <Undo />
                 </Button>
-            <SettingsDropdown/>
-            <DownloadButton metadata={editorState.metadata} content={editorState.content} />
-        </div>
-        <div className={cn('flex flex-col md:flex-row w-screen h-fit md:h-full overflow-hidden')}>
-            <div className={cn('flex flex-col md:flex-row h-full w-full gap-4 p-4 lg:gap-8 lg:p-8 !pt-0 overflow-auto')}>
-                <CollapsibleMainArea title={"Metadata"} className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}>
-                    <MetadataEditor
-                        metadata={editorState.metadata}
-                        updateMetadata={updateMetadata}
-                    />
-                </CollapsibleMainArea>
-                <CollapsibleMainArea title={"Editor"} className={"basis-[40%]"} isEditor={true}>
-                    <ContentEditor
-                        editorContent={editorState.content}
-                        setEditorContent={updateContent}
-                    />
-                </CollapsibleMainArea>
-                <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
-                    <Preview
-                        metadata={editorState.metadata}
-                        content={editorState.content}
-                    />
-                </CollapsibleMainArea>
+                <SettingsDropdown />
+                <DownloadButton metadata={editorState.metadata} content={editorState.content} />
+            </div>
+            <div className={cn('flex flex-col md:flex-row w-full h-fit md:h-full overflow-hidden')}>
+                <div className={cn('flex flex-col md:flex-row h-full w-full gap-4 p-4 lg:gap-8 lg:p-8 !pt-0 overflow-auto')}>
+                    <CollapsibleMainArea title={"Metadata"} className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}>
+                        <MetadataEditor
+                            metadata={editorState.metadata}
+                            updateMetadata={updateMetadata}
+                        />
+                    </CollapsibleMainArea>
+                    <CollapsibleMainArea title={"Editor"} className={"basis-[40%]"} isEditor={true}>
+                        <ContentEditor
+                            editorContent={editorState.content}
+                            setEditorContent={updateContent}
+                        />
+                    </CollapsibleMainArea>
+                    <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
+                        <Preview
+                            metadata={editorState.metadata}
+                            content={editorState.content}
+                        />
+                    </CollapsibleMainArea>
+                </div>
             </div>
         </div>
-    </div>
     );
 };
 
