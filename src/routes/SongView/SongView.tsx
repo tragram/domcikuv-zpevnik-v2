@@ -16,14 +16,12 @@ import './SongView.css'
 
 export const SongView = () => {
     const { songDB, songData } = useLoaderData() as DataForSongView;
-    console.log(songData.toChordpro())
     const fullScreenHandle = useFullScreenHandle();
     const gestureContainerRef = useRef<HTMLDivElement>(null);
     const {
         layout: layoutSettings,
     } = useViewSettingsStore()
     const [transposeSteps, setTransposeSteps] = useLocalStorageState(`transposeSteps/${songData.id}`, { defaultValue: 0 });
-    console.log(songDB,songData)
 
     // Prevent default gesture behavior
     useEffect(() => {
