@@ -67,7 +67,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({ songData, layoutSettings, tra
                     Capo: {(songData.capo - transposeSteps + 12) % 12}
                 </h2>
                 <h2 className='text-[0.75em] sub-sup-container'>
-                    {formatChords(songData.range.toString(transposeSteps, true))}
+                    {songData.range ? formatChords(songData.range.toString(transposeSteps, true)) : ""}
                 </h2>
             </div>
         </div>

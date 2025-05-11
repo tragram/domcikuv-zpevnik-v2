@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Settings2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
@@ -10,21 +10,27 @@ import SongHeading from '../SongView/components/SongHeading';
 import { LayoutSettings, useViewSettingsStore } from '../SongView/hooks/viewSettingsStore';
 import { ChordSettingsDropdownMenu, chordSettingsClassNames } from '../SongView/settings/ChordSettingsMenu';
 import { layoutSettingsValues, layoutSettingsClassNames } from '../SongView/settings/LayoutSettings';
+import { renderSong } from '../SongView/utils/songRendering';
 
 interface PreviewProps {
-  songData: SongData;
-  renderedContent: string;
   metadata: SongMetadata;
   content: string;
 }
 
 const Preview: React.FC<PreviewProps> = ({
-  songData,
-  renderedContent,
   metadata,
   content
 }) => {
+  const songData = new SongData(metadata);
+  songData.content = content;
+  const renderedContent = renderSong(
+    songData,
+    0, // transposeSteps
+    true
+  );
+
   const { layout, chords, actions } = useViewSettingsStore();
+
   const transposeSteps = 0;
 
   return (

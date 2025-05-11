@@ -1,16 +1,15 @@
-import { emptySongMetadata, SongData, SongMetadata } from '@/types/songData';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import useLocalStorageState from 'use-local-storage-state';
+import { DataForSongView } from '@/components/song_loader';
+import { Button } from '@/components/ui/button';
+import { emptySongMetadata, SongData, SongMetadata, songMetadataEqual } from '@/types/songData';
+import React, { useCallback, useMemo } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import useLocalStorageState from 'use-local-storage-state';
 import '../Songview/SongView.css';
-import './Editor.css';
 import CollapsibleMainArea from './components/CollapsibleMainArea';
 import ContentEditor from './ContentEditor';
-import Preview from './Preview';
+import './Editor.css';
 import MetadataEditor from './MetadataEditor';
-import { DataForSongView } from '@/components/song_loader';
-import { renderSong } from '../SongView/utils/songRendering';
-import { Button } from '@/components/ui/button';
+import Preview from './Preview';
 
 export interface EditorState {
     content: string;
@@ -21,22 +20,14 @@ const editorStatesEqual = (a: EditorState, b: EditorState) => {
     if (a.content !== b.content) {
         return false;
     }
-
-    const aMetadataKeys = Object.keys(a.metadata).sort();
-    const bMetadataKeys = Object.keys(b.metadata).sort();
-
-    if (aMetadataKeys.length !== bMetadataKeys.length) {
-        return false;
-    }
-    return aMetadataKeys.every((key) => a.metadata[key as keyof SongMetadata] == b.metadata[key as keyof SongMetadata]);
+    return songMetadataEqual(a.metadata, b.metadata);
 };
-
 
 const songData2State = (songData: SongData) => {
     return {
-        content: songData.content || "Nothing to show... ;-)",
+        content: songData.content,
         metadata: songData.extractMetadata()
-    }
+    } as EditorState
 }
 
 const Editor: React.FC = () => {
@@ -49,12 +40,12 @@ const Editor: React.FC = () => {
             return {
                 content: "",
                 metadata: emptySongMetadata()
-            };
+            } as EditorState;
         }
     }, [songDataURL]);
 
     const [editorState, setEditorState] = useLocalStorageState<EditorState>(
-        editorStateKey, { defaultValue: defaultEditorState });
+        editorStateKey, { defaultValue: () => defaultEditorState });
 
 
     const initializeEditor = useCallback(() => {
@@ -62,10 +53,8 @@ const Editor: React.FC = () => {
     }, [setEditorState, defaultEditorState]);
 
     const backupEditorState = useCallback((editorState: EditorState) => {
-        if (!editorStatesEqual(editorState, defaultEditorState)) {
+        if (!editorStatesEqual(editorState, defaultEditorState as EditorState)) {
             localStorage.setItem(editorStateKey + "-backup", JSON.stringify(editorState));
-        } else {
-            console.log("Backup not done, current state is equal to default!")
         }
     }, [defaultEditorState, editorStateKey])
 
@@ -73,7 +62,6 @@ const Editor: React.FC = () => {
         setEditorState(JSON.parse(localStorage.getItem(editorStateKey + "-backup") ?? ""));
     }, [editorStateKey, setEditorState])
 
-    const [renderedResult, setRenderedResult] = useState("");
     // Helper function to update individual metadata fields
     const updateMetadata = (field: keyof EditorState['metadata'], value: string) => {
         setEditorState({
@@ -92,27 +80,6 @@ const Editor: React.FC = () => {
             content
         });
     };
-    // Create song data object from the metadata using useMemo
-    const songData = React.useMemo(() => ({
-        title: editorState.metadata.title,
-        artist: editorState.metadata.artist,
-        capo: editorState.metadata.capo,
-        range: SongData.parseRange(editorState.metadata.range),
-        dateAdded: editorState.metadata.dateAdded,
-        songbooks: editorState.metadata.songbooks,
-        language: editorState.metadata.language,
-        tempo: editorState.metadata.tempo,
-        content: editorState.content || "Nothing to show... ;-)"
-    } as unknown as SongData), [editorState]);
-
-    useEffect(() => {
-        const result = renderSong(
-            songData,
-            0, // transposeSteps
-            true
-        );
-        setRenderedResult(result);
-    }, [editorState, songData]);
 
     return (
         <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen overflow-hidden'>
@@ -135,8 +102,6 @@ const Editor: React.FC = () => {
                 </CollapsibleMainArea>
                 <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
                     <Preview
-                        songData={songData}
-                        renderedContent={renderedResult}
                         metadata={editorState.metadata}
                         content={editorState.content}
                     />

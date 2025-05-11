@@ -87,6 +87,16 @@ interface SongMetadata {
     availableIllustrations?: string;
 }
 
+export const songMetadataEqual = (a: SongMetadata, b: SongMetadata) => {
+    const aMetadataKeys = Object.keys(a).sort();
+    const bMetadataKeys = Object.keys(b).sort();
+
+    if (aMetadataKeys.length !== bMetadataKeys.length) {
+        return false;
+    }
+    return aMetadataKeys.every((key) => a[key as keyof SongMetadata] == b[key as keyof SongMetadata]);
+}
+
 export const emptySongMetadata = (): SongMetadata => {
     return {
         title: "",
@@ -112,17 +122,17 @@ export const emptySongMetadata = (): SongMetadata => {
 class SongData {
     title: string;
     artist: string;
-    key?: Key;
     dateAdded: {
         month: int;
         year: int;
     };
+    key?: Key;
     startMelody?: string;
     songbooks: string[];
     language: SongLanguage;
     tempo?: int;
     capo: int;
-    range: SongRange;
+    range?: SongRange;
     illustrationData: IllustrationData;
     chordproFile: string;
     pdfFilenames: Array<string>;
@@ -180,7 +190,7 @@ class SongData {
     }
 
     static parseKey(key?: string) {
-        return Key.parse(key || null, true);
+        return key ? Key.parse(key, true) : undefined;
     }
 
     static parseDateAdded(dateAdded?: string) {
@@ -206,13 +216,15 @@ class SongData {
     }
 
     static parseRange(range?: string): SongRange {
-        return new SongRange(range || "");
+        return range ? new SongRange(range) : undefined;
     }
 
     static parseIllustrationData(song: SongMetadata): IllustrationData {
         let availableIllustrations = [];
-        try { availableIllustrations = JSON.parse(song.availableIllustrations) }
-        catch (error) { console.log(`Error parsing pdf filenames for "${song.artist}: ${song.title}"`, error); }
+        try {
+            availableIllustrations = song.availableIllustrations ? JSON.parse(song.availableIllustrations) : [];
+        }
+        catch (error) { console.warn(`Error parsing pdf filenames for "${song.artist}: ${song.title}"`, error); }
         return new IllustrationData(song.promptModel, song.promptId, song.imageModel, availableIllustrations);
     }
 
@@ -222,7 +234,7 @@ class SongData {
                 ? JSON.parse(pdfFilenames)
                 : [];
         } catch (error) {
-            console.log(`Error parsing pdf filenames for "${artist}: ${title}"`, error);
+            console.warn(`Error parsing pdf filenames for "${artist}: ${title}"`, error);
             return [];
         }
     }
