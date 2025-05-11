@@ -1,24 +1,15 @@
 import { SongData } from '@/types/types';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
-import SongHeading from '../components/SongHeading';
-import { LayoutSettings, useViewSettingsStore } from '../hooks/viewSettingsStore';
-import '../SongView.css';
-import { renderSong } from '../utils/songRendering';
-import './Editor.css';
-
 import useLocalStorageState from 'use-local-storage-state';
-import CollapsibleMainArea from './components/CollapsibleMainArea';
-import MetadataField from './components/MetadataField';
-import ContentEditor from './ContentEditor';
-import { DataForSongView } from '@/components/song_loader';
 import { useLoaderData } from 'react-router-dom';
-import DownloadButton from './components/DownloadButton';
-import { DropdownIconStart, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Settings2 } from 'lucide-react';
-import { chordSettingsClassNames, ChordSettingsDropdownMenu } from '../settings/ChordSettingsMenu';
-import { layoutSettingsClassNames, LayoutSettingsDropdownSection, layoutSettingsValues } from '../settings/LayoutSettings';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import '../SongView.css';
+import './Editor.css';
+import { renderSong } from '../utils/songRendering';
+import CollapsibleMainArea from './components/CollapsibleMainArea';
+import ContentEditor from './ContentEditor';
+import Preview from './Preview';
+import Metadata from './Metadata';
+import { DataForSongView } from '@/components/song_loader';
 
 interface EditorState {
     content: string;
@@ -59,7 +50,7 @@ type EditorProps = {};
 const Editor: React.FC<EditorProps> = () => {
     const { songDB, songData: songDataURL } = useLoaderData() as DataForSongView;
 
-    //TODO: perhaps the editors on different URLs should have different 
+    //TODO: perhaps the editors on different URLs should have different states
     const [editorState, setEditorState] = useLocalStorageState<EditorState>(
         "editor/state",
         { defaultValue: defaultEditorState }
@@ -84,7 +75,7 @@ const Editor: React.FC<EditorProps> = () => {
                 }
             })
         }
-    }, [setEditorState, songDataURL])
+    }, [setEditorState, songDataURL]);
 
     const [renderedResult, setRenderedResult] = useState("");
 
@@ -120,92 +111,23 @@ const Editor: React.FC<EditorProps> = () => {
         content: editorState.content || "Nothing to show... ;-)"
     } as unknown as SongData), [editorState]);
 
-    const transposeSteps = 0;
-
     useEffect(() => {
         const result = renderSong(
             songData,
-            transposeSteps,
+            0, // transposeSteps
             true
         );
         setRenderedResult(result);
     }, [editorState, songData]);
 
-    const { layout, chords, actions } = useViewSettingsStore();
-
     return (
         <div className='flex flex-col md:flex-row h-fit md:h-dvh w-screen overflow-hidden'>
             <div className='flex flex-col md:flex-row h-full w-full gap-4 p-4 lg:gap-8 lg:p-8 overflow-auto'>
                 <CollapsibleMainArea title={"Metadata"} className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}>
-                    <div className='main-container space-y-2'>
-                        <MetadataField
-                            label="Title"
-                            onChange={(value) => updateMetadata('title', value)}
-                            placeholder="Apassionata v F"
-                            value={editorState.metadata.title}
-                        />
-                        <MetadataField
-                            label="Artist"
-                            onChange={(value) => updateMetadata('artist', value)}
-                            placeholder="František Omáčka"
-                            value={editorState.metadata.artist}
-                        />
-                        <MetadataField
-                            label="Capo"
-                            onChange={(value) => updateMetadata('capo', value)}
-                            placeholder="0"
-                            value={editorState.metadata.capo}
-                        />
-                        <MetadataField
-                            label="Date Added"
-                            onChange={(value) => updateMetadata('dateAdded', value)}
-                            placeholder="02-2025"
-                            value={editorState.metadata.dateAdded}
-                            description="Use MM-YYYY format."
-                        />
-                        <MetadataField
-                            label="Language"
-                            onChange={(value) => updateMetadata('language', value)}
-                            placeholder="czech"
-                            value={editorState.metadata.language}
-                            description="If language not already present in some other song, flag might not be shown."
-                        />
-                        <MetadataField
-                            label="Key"
-                            onChange={(value) => updateMetadata('key', value)}
-                            placeholder="Dm"
-                            value={editorState.metadata.key}
-                            description="Use note name (with #/b into denote sharp/flat) for major key and append 'm' or 'mi' to indicate minor key."
-                        />
-                        <MetadataField
-                            label="Songbooks"
-                            onChange={(value) => updateMetadata('songbooks', value)}
-                            placeholder='["Domčík", "Kvítek"]'
-                            value={editorState.metadata.songbooks}
-                            description="Comma separated list with names in double quotes."
-                        />
-                        <MetadataField
-                            label="Range"
-                            onChange={(value) => updateMetadata('range', value)}
-                            placeholder="e.g. c1-g2"
-                            value={editorState.metadata.range}
-                            description="Also used for vocal range. See README. ;-)"
-                        />
-                        <MetadataField
-                            label="Start Melody"
-                            onChange={(value) => updateMetadata('startMelody', value)}
-                            placeholder="c# d e"
-                            value={editorState.metadata.startMelody}
-                            description="Currently not used so not very standardized across the songs."
-                        />
-                        <MetadataField
-                            label="Tempo"
-                            onChange={(value) => updateMetadata('tempo', value)}
-                            placeholder="123"
-                            value={editorState.metadata.tempo}
-                            description="In BPM. Currently not used and very few songs have it."
-                        />
-                    </div>
+                    <Metadata 
+                        metadata={editorState.metadata}
+                        updateMetadata={updateMetadata}
+                    />
                 </CollapsibleMainArea>
                 <CollapsibleMainArea title={"Editor"} className={"basis-[40%]"} isEditor={true}>
                     <ContentEditor
@@ -213,45 +135,13 @@ const Editor: React.FC<EditorProps> = () => {
                         setEditorContent={updateContent}
                     />
                 </CollapsibleMainArea>
-                <CollapsibleMainArea title={"Preview"} className={"basis-[40%] relative"}>
-                    <div className='absolute w-full bottom-0 left-0 p-4 flex flex-row justify-between h-fit items-center'>
-                        <DropdownMenu modal={false}>
-                            <DropdownMenuTrigger asChild>
-                                <Button size="icon" variant="circular">
-                                    <Settings2 size={32} />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
-                                <DropdownMenuLabel>Contents</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                {["repeatParts", "repeatPartsChords"].map(k => (
-                                    <DropdownMenuCheckboxItem
-                                        key={k}
-                                        checked={layout[k]}
-                                        onCheckedChange={() => actions.setLayoutSettings({ [k]: !layout[k] }
-                                        )}
-                                        onSelect={e => e.preventDefault()}
-                                    >
-                                        <DropdownIconStart icon={layoutSettingsValues[k].icon} />
-                                        {layoutSettingsValues[k].label}
-                                    </DropdownMenuCheckboxItem>
-                                ))}
-                                {React.Children.toArray(<ChordSettingsDropdownMenu />)}
-                            </DropdownMenuContent >
-                        </DropdownMenu>
-                        <DownloadButton metadata={editorState.metadata} content={editorState.content} />
-                    </div>
-                    <div className={cn('main-container editor-preview-container', chordSettingsClassNames(chords), layoutSettingsClassNames(layout))}>
-                        <SongHeading
-                            songData={songData}
-                            layoutSettings={layout}
-                            transposeSteps={transposeSteps}
-                        />
-                        <div
-                            id="song-content-wrapper"
-                            dangerouslySetInnerHTML={{ __html: renderedResult }}
-                        />
-                    </div>
+                <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
+                    <Preview 
+                        songData={songData}
+                        renderedContent={renderedResult}
+                        metadata={editorState.metadata}
+                        content={editorState.content}
+                    />
                 </CollapsibleMainArea>
             </div>
         </div>
