@@ -417,19 +417,24 @@ export function preparseDirectives(
                     }
                 } else {
                     // or just recall the contents - both expanded and shorthand
-                    contentToInsert = [
-                        contentToInsert[0],
-                        EXPANDED_SECTION_DIRECTIVE,
-                        contentToInsert[1],
-                        ...contentToInsert.slice(2),
+                    try {
+                        contentToInsert = [
+                            contentToInsert[0],
+                            EXPANDED_SECTION_DIRECTIVE,
+                            contentToInsert[1],
+                            ...contentToInsert.slice(2),
 
-                        `{start_of_${directive}}`,
-                        SHORTHAND_SECTION_DIRECTIVE,
-                        sectionTitle ?? "",
-                        // include the recalled part even in shorthand if it's only a single line
-                        contentToInsert.length === 3 ? contentToInsert[1] : "",
-                        `{end_of_${directive}}`
-                    ];
+                            `{start_of_${directive}}`,
+                            SHORTHAND_SECTION_DIRECTIVE,
+                            sectionTitle ?? "",
+                            // include the recalled part even in shorthand if it's only a single line
+                            contentToInsert.length === 3 ? contentToInsert[1] : "",
+                            `{end_of_${directive}}`
+                        ];
+                    }
+                    catch(error){
+                        console.log(error)
+                    }
                 }
 
                 if (contentToInsert) {
