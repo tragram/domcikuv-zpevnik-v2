@@ -94,8 +94,8 @@ const Editor: React.FC = () => {
     };
 
     return (
-        <div className='flex flex-col relative h-fit md:h-dvh gap-2 lg:gap-4 min-w-[250px]'>
-            <div className='flex flex-wrap w-auto mx-4 lg:mx-8 mt-4 border-4 border-primary rounded-md'>
+        <div className='flex flex-col relative h-fit md:h-dvh gap-2 md:gap-4 min-w-[250px]'>
+            <div className='flex flex-wrap w-auto mx-4 lg:mx-8 mt-4 border-4 border-primary rounded-md max-md:justify-around'>
                 <Button onClick={() => { backupEditorState(editorState); initializeEditor() }}>
                     {songDataURL ? "Reload song" : "Clear"}
                     <RefreshCcw />
