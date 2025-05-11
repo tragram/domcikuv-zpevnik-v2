@@ -9,7 +9,7 @@ const SongList = React.lazy(() => import('./routes/SongList/SongList'));
 const SongView = React.lazy(() => import('./routes/SongView/SongView'));
 const SongGallery = React.lazy(() => import('./routes/gallery/SongGallery'));
 import { RouteErrorBoundary, RenderErrorBoundary } from './components/UnifiedErrorBoundary';
-import Editor from './routes/SongView/Editor/Editor';
+import Editor from './routes/Editor/Editor';
 
 
 const router = createHashRouter([

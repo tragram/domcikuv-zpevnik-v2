@@ -1,6 +1,5 @@
 import { Textarea } from "@/components/ui/textarea";
 import React, { useEffect, useRef } from 'react';
-import '../SongView.css';
 import './Editor.css';
 
 // Add a new CSS rule to make the textarea adjust to its content

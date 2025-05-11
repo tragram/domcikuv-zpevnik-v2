@@ -4,12 +4,12 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { DropdownIconStart } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import SongHeading from '../components/SongHeading';
-import { chordSettingsClassNames, ChordSettingsDropdownMenu } from '../settings/ChordSettingsMenu';
-import { layoutSettingsClassNames, layoutSettingsValues } from '../settings/LayoutSettings';
-import { useViewSettingsStore } from '../hooks/viewSettingsStore';
 import { SongData } from '@/types/types';
 import DownloadButton from './components/DownloadButton';
+import SongHeading from '../SongView/components/SongHeading';
+import { useViewSettingsStore } from '../SongView/hooks/viewSettingsStore';
+import { ChordSettingsDropdownMenu, chordSettingsClassNames } from '../SongView/settings/ChordSettingsMenu';
+import { layoutSettingsValues, layoutSettingsClassNames } from '../SongView/settings/LayoutSettings';
 
 interface PreviewProps {
   songData: SongData;

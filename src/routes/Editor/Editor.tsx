@@ -2,14 +2,14 @@ import { SongData } from '@/types/types';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 import { useLoaderData } from 'react-router-dom';
-import '../SongView.css';
+import '../Songview/SongView.css';
 import './Editor.css';
-import { renderSong } from '../utils/songRendering';
 import CollapsibleMainArea from './components/CollapsibleMainArea';
 import ContentEditor from './ContentEditor';
 import Preview from './Preview';
 import Metadata from './Metadata';
 import { DataForSongView } from '@/components/song_loader';
+import { renderSong } from '../SongView/utils/songRendering';
 
 interface EditorState {
     content: string;
