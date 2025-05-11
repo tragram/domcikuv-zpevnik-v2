@@ -375,7 +375,7 @@ export function preparseDirectives(
 
                 let directiveKey = callMatch[1] || shortHand || defaultKey;
                 let contentToInsert;
-                if (directivesAdded[directive].includes(directiveKey)) {
+                if (directivesAdded[directive]?.includes(directiveKey)) {
                     contentToInsert = directiveMaps[directive][directiveKey];
                 }
                 else {
