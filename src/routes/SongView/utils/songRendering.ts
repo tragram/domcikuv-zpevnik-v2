@@ -1,4 +1,4 @@
-import { SongData } from '../../../types/types';
+import { SongData } from '@/types/songData';
 import { ChordProParser, FormatterSettings, HtmlFormatter } from "chordproject-parser";
 import { czechToEnglish, preparseDirectives, transposeChordPro } from './preparseChordpro';
 import memoize from 'memoize-one';

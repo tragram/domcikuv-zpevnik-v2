@@ -2,7 +2,7 @@ import { IllustrationPopup } from "@/components/IllustrationPopup";
 import LanguageFlag from "@/components/LanguageFlag";
 import CircularProgress from "@/components/ui/circular-progress";
 import { Link } from "react-router-dom";
-import { SongData } from "../../types/types";
+import { SongData } from '@/types/songData';
 import { memo } from "react";
 import { cn } from "@/lib/utils";
 import { songBooksWAvatars } from "@/components/songbookAvatars";

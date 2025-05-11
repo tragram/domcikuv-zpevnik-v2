@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { DropdownIconStart } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { SongData } from '@/types/types';
+import { SongData } from '@/types/songData';
 import DownloadButton from './components/DownloadButton';
 import SongHeading from '../SongView/components/SongHeading';
 import { useViewSettingsStore } from '../SongView/hooks/viewSettingsStore';

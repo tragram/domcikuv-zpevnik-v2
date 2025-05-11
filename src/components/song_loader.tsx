@@ -1,4 +1,5 @@
-import { LanguageCount, SongData, SongDB } from '../types/types'
+import { LanguageCount, SongDB } from '../types/types'
+import { SongData } from '@/types/songData';
 import * as yaml from 'js-yaml';
 import { version } from '@/../package.json';
 import { guessKey } from '@/routes/SongView/utils/songRendering';

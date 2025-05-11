@@ -1,6 +1,6 @@
 import { fileURL } from "@/components/song_loader";
 import { Button } from "@/components/ui/button";
-import { SongData } from "@/types/types";
+import { SongData } from '@/types/songData';
 import { Download } from "lucide-react";
 
 

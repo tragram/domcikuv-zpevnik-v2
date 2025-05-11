@@ -1,4 +1,4 @@
-import { SongData } from '@/types/types'
+import { SongData } from '@/types/songData'
 import { forwardRef, useMemo } from 'react'
 import { useViewSettingsStore } from '../hooks/viewSettingsStore'
 import { renderSong } from '../utils/songRendering'

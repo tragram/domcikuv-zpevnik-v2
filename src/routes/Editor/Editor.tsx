@@ -1,4 +1,4 @@
-import { SongData } from '@/types/types';
+import { SongData } from '@/types/songData';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 import { useLoaderData } from 'react-router-dom';
