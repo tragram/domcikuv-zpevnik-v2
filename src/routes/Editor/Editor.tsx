@@ -36,6 +36,7 @@ const songData2State = (songData: SongData) => {
 
 const Editor: React.FC = () => {
     const { songDB, songData: songDataURL } = useLoaderData() as DataForSongView;
+    // TODO: use songDB for better songbook picker (dropdown)
     const editorStateKey = songDataURL ? `editor/state/${songDataURL.id}` : "editor/state";
     const defaultEditorState = useMemo(() => {
         if (songDataURL) {

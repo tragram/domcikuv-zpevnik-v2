@@ -89,8 +89,8 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
     textarea.focus();
 
     // Determine what text to insert and where the cursor should end up
-    const textToInsert = snippet.template(selectedText ?? "\n");
-    const finalCursorPos = start + textToInsert.length;
+    const textToInsert = snippet.template(selectedText ?? "");
+    const finalCursorPos = selectedText ? start + textToInsert.length : start + snippet.cursorOffset;
 
     // Use the Document execCommand API for undo support
     // This modifies the document in a way that registers with the browser's undo stack

@@ -6,74 +6,74 @@ export const snippets = {
     chorus_env: {
         name: "Chorus",
         letter: "C",
-        template: (selection: string = "\n") => `{start_of_chorus}\n${selection}{end_of_chorus}\n\n`,
-        cursorOffset: 1 // Position after first \n\n
+        template: (selection?: string) => `{start_of_chorus}\n${selection}\n{end_of_chorus}\n\n`,
+        cursorOffset: "{start_of_chorus}\n".length
     },
     verse_env: {
         name: "Verse",
         letter: "V",
-        template: (selection: string = "\n") => `{start_of_verse}\n${selection}{end_of_verse}\n\n`,
-        cursorOffset: 1
+        template: (selection?: string) => `{start_of_verse}\n${selection}\n{end_of_verse}\n\n`,
+        cursorOffset: "{start_of_verse}\n".length
     },
     bridge_env: {
         name: "Bridge",
         letter: "B",
-        template: (selection: string = "\n") => `{start_of_bridge}\n${selection}{end_of_bridge}\n\n`,
-        cursorOffset: 1
+        template: (selection?: string) => `{start_of_bridge}\n${selection}\n{end_of_bridge}\n\n`,
+        cursorOffset: "{start_of_bridge}".length
     },
     chorus_recall: {
         name: "Chorus",
         letter: "C",
-        template: (selection: string = "\n") => `{chorus}\n`,
-        cursorOffset: 1
+        template: (selection?: string) => `{chorus}\n`,
+        cursorOffset: "{chorus}\n".length
     },
     verse_recall: {
         name: "Verse",
         letter: "V",
-        template: (selection: string = "\n") => `{verse}\n`,
-        cursorOffset: 0
+        template: (selection?: string) => `{verse}\n`,
+        cursorOffset: "{verse}\n".length
     },
     bridge_recall: {
         name: "Bridge",
         letter: "B",
-        template: (selection: string = "\n") => `{bridge}\n`,
-        cursorOffset: 1
+        template: (selection?: string) => `{bridge}\n`,
+        cursorOffset: "{bridge}\n".length
     },
     prepend_content: {
         name: "Variant: Prepend content",
         letter: "P",
-        template: (selection: string = "\n") => `{start_of_variant: prepend_content}\n${selection}{end_of_variant}`,
-        cursorOffset: 1
+        template: (selection?: string) => `{start_of_variant: prepend_content}\n${selection}\n{end_of_variant}`,
+        cursorOffset: "{start_of_variant: prepend_content}\n".length
     },
     replace_first_line: {
         name: "Variant: Replace first line",
         letter: "F",
-        template: (selection: string = "\n") => `{start_of_variant: replace_first_line}\n${selection}{end_of_variant}`,
-        cursorOffset: 1
+        template: (selection?: string) => `{start_of_variant: replace_first_line}\n${selection}\n{end_of_variant}`,
+        cursorOffset: "{start_of_variant: replace_first_line}\n".length
     },
     replace_last_line: {
         name: "Variant: Replace last line",
         letter: "L",
-        template: (selection: string = "\n") => `{start_of_variant: replace_last_line}\n${selection}{end_of_variant}`,
-        cursorOffset: 1
+        template: (selection?: string) => `{start_of_variant: replace_last_line}\n${selection}{end_of_variant}`,
+        cursorOffset: "{start_of_variant: replace_last_line}\n".length
     },
     append_content: {
         name: "Variant: Append content",
         letter: "A",
-        template: (selection: string = "\n") => `{start_of_variant: append_content}\n${selection}{end_of_variant}`,
-        cursorOffset: 1
+        template: (selection?: string) => `{start_of_variant: append_content}\n${selection}{end_of_variant}`,
+        cursorOffset: "{start_of_variant: append_content}\n".length
     },
     comment: {
         name: "Comment",
         letter: "CO",
-        template: (selection: string = "\n") => `{Comment: ${selection}}\n`,
-        cursorOffset: -2
+        template: (selection?: string) => `{Comment: ${selection}}\n`,
+        cursorOffset: "{Comment: ".length
     },
     chords: {
         name: "Chord",
         letter: "CH",
-        template: (selection: string = "\n") => `[${selection}]`,
-        cursorOffset: -1
+        template: (selection?: string) => `[${selection}]`,
+        cursorOffset: 1
     }
 };
 
