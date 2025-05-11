@@ -215,7 +215,7 @@ export class SongRange {
         });
     }
 
-    toString(transposeSemitones: number = 0): string {
+    toString(transposeSemitones: number = 0, prettyPrint: boolean = false): string {
         if (!(this.min && this.max && this.semitones)) {
             return "";
         }
@@ -223,6 +223,6 @@ export class SongRange {
         const octaves = Math.floor(this.semitones / SEMITONES_IN_OCTAVE) + 1;
         const lowerNote = transposedRange.min?.toString().toLowerCase();
         const higherNote = transposedRange.max?.toString().toLowerCase();
-        return `${lowerNote}1 - ${higherNote}${octaves} `;
+        return `${lowerNote}1${prettyPrint ? " - " : "-"}${higherNote}${octaves}`;
     }
 }
