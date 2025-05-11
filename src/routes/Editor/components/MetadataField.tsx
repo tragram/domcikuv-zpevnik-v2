@@ -31,7 +31,6 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
         }
     }, [value, validator]);
 
-    console.log(label)
     const displayError = !validationResult.isValid;
 
     return (

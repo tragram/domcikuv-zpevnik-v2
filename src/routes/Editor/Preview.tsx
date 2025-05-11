@@ -4,37 +4,25 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from '@/components/ui/dropdown-menu';
 import { DropdownIconStart } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { SongData } from '@/types/songData';
+import { SongData, SongMetadata } from '@/types/songData';
 import DownloadButton from './components/DownloadButton';
 import SongHeading from '../SongView/components/SongHeading';
-import { useViewSettingsStore } from '../SongView/hooks/viewSettingsStore';
+import { LayoutSettings, useViewSettingsStore } from '../SongView/hooks/viewSettingsStore';
 import { ChordSettingsDropdownMenu, chordSettingsClassNames } from '../SongView/settings/ChordSettingsMenu';
 import { layoutSettingsValues, layoutSettingsClassNames } from '../SongView/settings/LayoutSettings';
 
 interface PreviewProps {
   songData: SongData;
   renderedContent: string;
-  metadata: {
-    title: string;
-    artist: string;
-    key: string;
-    dateAdded: string;
-    songbooks: string;
-    startMelody: string;
-    language: string;
-    tempo: string;
-    capo: string;
-    range: string;
-    pdfFilenames: string;
-  };
+  metadata: SongMetadata;
   content: string;
 }
 
-const Preview: React.FC<PreviewProps> = ({ 
-  songData, 
-  renderedContent, 
-  metadata, 
-  content 
+const Preview: React.FC<PreviewProps> = ({
+  songData,
+  renderedContent,
+  metadata,
+  content
 }) => {
   const { layout, chords, actions } = useViewSettingsStore();
   const transposeSteps = 0;
@@ -51,10 +39,10 @@ const Preview: React.FC<PreviewProps> = ({
           <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
             <DropdownMenuLabel>Contents</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {["repeatParts", "repeatPartsChords"].map(k => (
+            {(["repeatParts", "repeatPartsChords"] as (keyof LayoutSettings)[]).map(k => (
               <DropdownMenuCheckboxItem
                 key={k}
-                checked={layout[k]}
+                checked={layout[k] as boolean}
                 onCheckedChange={() => actions.setLayoutSettings({ [k]: !layout[k] })}
                 onSelect={e => e.preventDefault()}
               >

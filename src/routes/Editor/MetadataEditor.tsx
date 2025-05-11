@@ -4,13 +4,13 @@ import { metadataValidators } from './components/validationUtils';
 import { EditorState } from './Editor';
 import { SongMetadata } from '@/types/songData';
 
-interface MetadataProps {
+interface MetadataEditorProps {
   metadata: SongMetadata
   updateMetadata: (field: keyof EditorState["metadata"], value: string) => void;
   onValidationChange?: (isValid: boolean) => void;
 }
 
-const Metadata: React.FC<MetadataProps> = ({
+const MetadataEditor: React.FC<MetadataEditorProps> = ({
   metadata,
   updateMetadata
 }) => {
@@ -99,4 +99,4 @@ const Metadata: React.FC<MetadataProps> = ({
   );
 };
 
-export default Metadata;
+export default MetadataEditor;
