@@ -113,6 +113,7 @@ const Editor: React.FC = () => {
                         <MetadataEditor
                             metadata={editorState.metadata}
                             updateMetadata={updateMetadata}
+                            availableSongbooks={songDB.songbooks}
                         />
                     </CollapsibleMainArea>
                     <CollapsibleMainArea title={"Editor"} className={"basis-[40%]"} isEditor={true}>
