@@ -11,7 +11,7 @@ import Metadata from './Metadata';
 import { DataForSongView } from '@/components/song_loader';
 import { renderSong } from '../SongView/utils/songRendering';
 
-interface EditorState {
+export interface EditorState {
     content: string;
     metadata: {
         title: string;
@@ -56,6 +56,8 @@ const Editor: React.FC<EditorProps> = () => {
         { defaultValue: defaultEditorState }
     );
 
+    const [renderedResult, setRenderedResult] = useState("");
+
     useLayoutEffect(() => {
         if (songDataURL) {
             setEditorState({
@@ -77,8 +79,6 @@ const Editor: React.FC<EditorProps> = () => {
         }
     }, [setEditorState, songDataURL]);
 
-    const [renderedResult, setRenderedResult] = useState("");
-
     // Helper function to update individual metadata fields
     const updateMetadata = (field: keyof EditorState['metadata'], value: string) => {
         setEditorState({
@@ -97,7 +97,6 @@ const Editor: React.FC<EditorProps> = () => {
             content
         });
     };
-
     // Create song data object from the metadata using useMemo
     const songData = React.useMemo(() => ({
         title: editorState.metadata.title,

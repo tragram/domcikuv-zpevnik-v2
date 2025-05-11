@@ -298,7 +298,7 @@ class SongData {
                     directives.push(`{${k}: ${value || ""}}`);
                 } else if (JSKey === "dateAdded") {
                     const date = this.dateAdded;
-                    directives.push(`{${k}: ${date ? date.year + "-" + date.month : ""}}`)
+                    directives.push(`{${k}: ${date ? date.month + "-" + date.year : ""}}`)
                 } else if (["songbooks", "pdfFilenames"].includes(JSKey)) {
                     directives.push(`{${k}: ${JSON.stringify(value) || ""}}`)
                 } else if (["key", "range"].includes(JSKey)) {
