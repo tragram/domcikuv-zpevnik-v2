@@ -46,10 +46,10 @@ let songDB = files.map(chordproFile => {
     const illustrationFiles = fs.readdirSync(illustrationsPath);
 
     // Extract filenames without extensions
-    availableIllustrations = illustrationFiles.map(file => {
+    availableIllustrations = JSON.stringify(illustrationFiles.map(file => {
       const ext = path.extname(file);
       return file.substring(0, file.length - ext.length);
-    });
+    }));
   }
 
   const songData = {

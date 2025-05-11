@@ -84,7 +84,7 @@ interface SongMetadata {
     // Generated fields from generatedFields
     chordproFile?: string;
     contentHash?: string;
-    availableIllustrations?: string[];
+    availableIllustrations?: string;
 }
 
 export const emptySongMetadata = (): SongMetadata => {
@@ -105,7 +105,7 @@ export const emptySongMetadata = (): SongMetadata => {
         imageModel: "",
         chordproFile: "",
         contentHash: "",
-        availableIllustrations: []
+        availableIllustrations: ""
     };
 };
 
@@ -210,7 +210,10 @@ class SongData {
     }
 
     static parseIllustrationData(song: SongMetadata): IllustrationData {
-        return new IllustrationData(song.promptModel, song.promptId, song.imageModel, song.availableIllustrations);
+        let availableIllustrations = [];
+        try { availableIllustrations = JSON.parse(song.availableIllustrations) }
+        catch (error) { console.log(`Error parsing pdf filenames for "${song.artist}: ${song.title}"`, error); }
+        return new IllustrationData(song.promptModel, song.promptId, song.imageModel, availableIllustrations);
     }
 
     static parsePdfFilenames(pdfFilenames?: string, artist?: string, title?: string): Array<string> {
