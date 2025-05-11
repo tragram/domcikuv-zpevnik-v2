@@ -1,7 +1,7 @@
 import { Textarea } from "@/components/ui/textarea";
 import React, { useEffect, useRef } from 'react';
 import './Editor.css';
-import { SnippetButtonSection, SnippetButton ,snippets } from "./components/Snippets";
+import { SnippetButtonSection, SnippetButton, snippets } from "./components/Snippets";
 
 // Add a new CSS rule to make the textarea adjust to its content
 const textareaAutoSizeStyles = `
@@ -18,7 +18,6 @@ type ContentEditorProps = {
 };
 
 const MD_WIDTH = 810;
-
 
 const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorContent }) => {
   // Reference to the textarea element
@@ -73,65 +72,78 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
     setEditorContent(newContent);
   }
 
-  // Insert template at current cursor position
+  // Insert template at current cursor position with undo/redo support
   const insertSnippet = (snippetKey: string) => {
     if (!textareaRef.current || !snippets[snippetKey]) return;
 
-    const template = snippets[snippetKey];
+    const snippet = snippets[snippetKey];
     const textarea = textareaRef.current;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    const scrollTop = textarea.scrollTop; // Store current scroll position
 
     // Get selected text
     const selectedText = editorContent.substring(start, end);
 
-    // If there's selected text and the template has placeholder points (with \n\n),
-    // we'll place the selected text at that position
-    let newContent;
-    let newCursorPos;
+    // Focus the textarea to make it the active element
+    textarea.focus();
 
-    if (selectedText && template.template.includes("\n\n")) {
-      // Place selected text between the tags
-      const parts = template.template.split("\n\n");
-      newContent =
+    // Determine what text to insert and where the cursor should end up
+    const textToInsert = snippet.template(selectedText ?? "\n");
+    const finalCursorPos = start + textToInsert.length;
+
+    // Use the Document execCommand API for undo support
+    // This modifies the document in a way that registers with the browser's undo stack
+    try {
+      // For modern browsers, try using InputEvent
+      if (typeof InputEvent === 'function') {
+        // First delete any selected text (this will be undoable)
+        if (start !== end) {
+          document.execCommand('delete', false);
+        }
+
+        // Then insert our text (this will be undoable)
+        document.execCommand('insertText', false, textToInsert);
+
+        // Position cursor where needed
+        textarea.setSelectionRange(finalCursorPos, finalCursorPos);
+      } else {
+        // Fallback for older browsers - this won't be undoable as a single action
+        // but we ensure content is updated in state
+        const newContent =
+          editorContent.substring(0, start) +
+          textToInsert +
+          editorContent.substring(end);
+
+        setEditorContent(newContent);
+
+        // Position cursor
+        setTimeout(() => {
+          textarea.setSelectionRange(finalCursorPos, finalCursorPos);
+        }, 0);
+      }
+    } catch (e) {
+      console.error("Error using execCommand for undo-friendly insertion:", e);
+
+      // Fallback method if execCommand fails
+      const newContent =
         editorContent.substring(0, start) +
-        parts[0] + "\n" + selectedText + "\n" + parts[1] +
+        textToInsert +
         editorContent.substring(end);
 
-      // Position cursor at the end of the inserted text
-      newCursorPos = start + parts[0].length + 1 + selectedText.length;
-    } else {
-      // Normal insertion
-      newContent =
-        editorContent.substring(0, start) +
-        template.template +
-        editorContent.substring(end);
+      setEditorContent(newContent);
 
-      // Calculate cursor position
-      const basePos = start + template.template.indexOf("\n\n");
-      newCursorPos = template.cursorOffset >= 0
-        ? basePos + template.cursorOffset
-        : start + template.template.length + template.cursorOffset;
+      // Position cursor
+      setTimeout(() => {
+        textarea.setSelectionRange(finalCursorPos, finalCursorPos);
+      }, 0);
     }
-
-    // Update the content
-    setEditorContent(newContent);
-
-    // Set the cursor position and restore scroll position
-    setTimeout(() => {
-      textarea.focus();
-      textarea.setSelectionRange(newCursorPos, newCursorPos);
-      textarea.scrollTop = scrollTop; // Restore the scroll position
-    }, 0);
   };
-
 
   return (
     <div className="flex flex-col h-full">
       <div className='w-full flex flex-wrap gap-1 border-primary border-4 border-b-0 rounded-t-md'>
         <SnippetButtonSection label="Environments">
-          <SnippetButton snippetKey="verse_env" onInsert={insertSnippet}/>
+          <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
           <SnippetButton snippetKey="bridge_env" onInsert={insertSnippet} />
           <SnippetButton snippetKey="chorus_env" onInsert={insertSnippet} />
         </SnippetButtonSection>
@@ -148,7 +160,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
         </SnippetButtonSection>
         <SnippetButtonSection label="Misc">
           <SnippetButton snippetKey="comment" onInsert={insertSnippet} />
-          <SnippetButton snippetKey="chords"  onInsert={insertSnippet} />
+          <SnippetButton snippetKey="chords" onInsert={insertSnippet} />
         </SnippetButtonSection>
       </div>
       <Textarea

@@ -6,73 +6,73 @@ export const snippets = {
     chorus_env: {
         name: "Chorus",
         letter: "C",
-        template: "{start_of_chorus}\n\n{end_of_chorus}\n\n",
+        template: (selection: string = "\n") => `{start_of_chorus}\n${selection}{end_of_chorus}\n\n`,
         cursorOffset: 1 // Position after first \n\n
     },
     verse_env: {
         name: "Verse",
         letter: "V",
-        template: "{start_of_verse}\n\n{end_of_verse}\n\n",
+        template: (selection: string = "\n") => `{start_of_verse}\n${selection}{end_of_verse}\n\n`,
         cursorOffset: 1
     },
     bridge_env: {
         name: "Bridge",
         letter: "B",
-        template: "{start_of_bridge}\n\n{end_of_bridge}\n\n",
+        template: (selection: string = "\n") => `{start_of_bridge}\n${selection}{end_of_bridge}\n\n`,
         cursorOffset: 1
     },
     chorus_recall: {
         name: "Chorus",
         letter: "C",
-        template: "{chorus}\n",
+        template: (selection: string = "\n") => `{chorus}\n`,
         cursorOffset: 1
     },
     verse_recall: {
         name: "Verse",
         letter: "V",
-        template: "{verse}\n",
+        template: (selection: string = "\n") => `{verse}\n`,
         cursorOffset: 0
     },
     bridge_recall: {
         name: "Bridge",
         letter: "B",
-        template: "{bridge}\n",
+        template: (selection: string = "\n") => `{bridge}\n`,
         cursorOffset: 1
     },
     prepend_content: {
         name: "Variant: Prepend content",
         letter: "P",
-        template: "{start_of_variant: prepend_content}\n\n{end_of_variant}",
+        template: (selection: string = "\n") => `{start_of_variant: prepend_content}\n${selection}{end_of_variant}`,
         cursorOffset: 1
     },
     replace_first_line: {
         name: "Variant: Replace first line",
         letter: "F",
-        template: "{start_of_variant: replace_first_line}\n\n{end_of_variant}",
+        template: (selection: string = "\n") => `{start_of_variant: replace_first_line}\n${selection}{end_of_variant}`,
         cursorOffset: 1
     },
     replace_last_line: {
         name: "Variant: Replace last line",
         letter: "L",
-        template: "{start_of_variant: replace_last_line}\n\n{end_of_variant}",
+        template: (selection: string = "\n") => `{start_of_variant: replace_last_line}\n${selection}{end_of_variant}`,
         cursorOffset: 1
     },
     append_content: {
         name: "Variant: Append content",
         letter: "A",
-        template: "{start_of_variant: append_content}\n\n{end_of_variant}",
+        template: (selection: string = "\n") => `{start_of_variant: append_content}\n${selection}{end_of_variant}`,
         cursorOffset: 1
     },
     comment: {
         name: "Comment",
         letter: "CO",
-        template: "{Comment: }\n",
+        template: (selection: string = "\n") => `{Comment: ${selection}}\n`,
         cursorOffset: -2
     },
     chords: {
         name: "Chord",
         letter: "CH",
-        template: "[]",
+        template: (selection: string = "\n") => `[${selection}]`,
         cursorOffset: -1
     }
 };
