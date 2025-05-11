@@ -61,7 +61,7 @@ class IllustrationData {
     }
 }
 
-interface SongRawData {
+interface SongMetadata {
     // File-based fields from preambleKeywords
     title?: string;
     artist?: string;
@@ -82,7 +82,6 @@ interface SongRawData {
     chordproFile?: string;
     contentHash?: string;
     availableIllustrations?: string[];
-    disabled?: boolean;
 }
 
 class SongData {
@@ -105,9 +104,9 @@ class SongData {
     content?: string;
     contentHash: string;
 
-    constructor(song: SongRawData) {
-        // Verification that SongRawData has all required fields
-        this.validateSongRawData(song);
+    constructor(song: SongMetadata) {
+        // Verification that SongMetadata has all required fields
+        this.validateSongMetadata(song);
 
         this.title = song.title || "Unknown title";
         this.artist = song.artist || "Unknown artist";
@@ -123,13 +122,14 @@ class SongData {
         this.pdfFilenames = SongData.parsePdfFilenames(song.pdfFilenames, this.artist, this.title);
         this.chordproFile = song.chordproFile || "";
         this.contentHash = song.contentHash || "";
+        //TODO: where is content initialized?!
     }
 
     /**
-     * Validates that SongRawData interface aligns with the expected fields
+     * Validates that SongMetadata interface aligns with the expected fields
      * This serves as a runtime check that our types are in sync
      */
-    private validateSongRawData(song: SongRawData): void {
+    private validateSongMetadata(song: SongMetadata): void {
         // Only run validation in development
         if (process.env.NODE_ENV !== 'production') {
             // Get all known fields from imported lists
@@ -138,19 +138,19 @@ class SongData {
             // Compare with expected fields
             const expectedFields = new Set([...preambleKeywords.map(f => chordpro2JSKeywords[f]), ...generatedFields]);
 
-            // Check for missing fields in SongRawData
+            // Check for missing fields in SongMetadata
             const missingFields = [...expectedFields].filter(field => !knownFields.has(field));
 
-            // Check for extra fields in SongRawData that aren't in our lists
+            // Check for extra fields in SongMetadata that aren't in our lists
             const extraFields = [...knownFields].filter(field =>
                 !expectedFields.has(field) && field !== 'content' && field !== 'disabled');
 
             // Log warnings for any discrepancies
             if (missingFields.length > 0) {
-                console.warn(`Warning: SongRawData is missing expected fields: ${missingFields.join(', ')}`);
+                console.warn(`Warning: SongMetadata is missing expected fields: ${missingFields.join(', ')}`);
             }
             if (extraFields.length > 0) {
-                console.warn(`Warning: SongRawData has extra fields not in metadata lists: ${extraFields.join(', ')}`);
+                console.warn(`Warning: SongMetadata has extra fields not in metadata lists: ${extraFields.join(', ')}`);
             }
         }
     }
@@ -185,7 +185,7 @@ class SongData {
         return new SongRange(range || "");
     }
 
-    static parseIllustrationData(song: SongRawData): IllustrationData {
+    static parseIllustrationData(song: SongMetadata): IllustrationData {
         return new IllustrationData(song.promptModel, song.promptId, song.imageModel, song.availableIllustrations);
     }
 
@@ -262,14 +262,15 @@ class SongData {
         return `/song/${this.id}`;
     }
 
-    withoutMetadata(content?: string) {
-        if (!content) {
-            content = this.content;
-        }
+    static withoutMetadata(content: string) {
         preambleKeywords.forEach((keyword: string) => {
             content = content?.replace(new RegExp(`{${keyword}:\\s*(.+?)}`, "g"), "");
         });
         return content?.trim();
+    }
+
+    addContent(content: string) {
+        this.content = SongData.withoutMetadata(content);
     }
 
     toChordpro() {
@@ -328,4 +329,4 @@ class SongData {
 }
 
 export { SongData }
-export type { SongRawData }
+export type { SongMetadata }

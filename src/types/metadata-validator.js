@@ -6,7 +6,7 @@ import { preambleKeywords, generatedFields, JS2chordproKeywords } from './preamb
 /**
  * Validates that all metadata definitions are in sync:
  * - preambleKeywords contains all fields in JS2chordproKeywords
- * - SongRawData interface has all necessary fields
+ * - SongMetadata interface has all necessary fields
  */
 export function validateMetadataDefinitions() {
   const errors = [];
@@ -36,7 +36,7 @@ export function validateMetadataDefinitions() {
 }
 
 /**
- * Utility to check a specific SongRawData object
+ * Utility to check a specific SongMetadata object
  * against the expected fields from our definitions
  */
 export function validateSongObject(songObject) {

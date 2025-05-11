@@ -154,7 +154,7 @@ async function fetchSongContent({ params }): Promise<DataForSongView> {
         localStorage.setItem(contentKey + ".hash", songData.contentHash);
     }
 
-    songData.content = songContent;
+    songData.addContent(songContent);
     if (!songData.key) {
         songData.key = guessKey(songData.content || '')
     }
