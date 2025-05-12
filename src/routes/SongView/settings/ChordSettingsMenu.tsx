@@ -17,6 +17,11 @@ const chordSettingsValues = {
   inlineChords: { icon: <ChevronsLeftRightEllipsis />, label: "Chords inline", description: "" }
 };
 
+export const chordSettingsClassNames = (chords: ChordSettings) => {
+  return [chords.inlineChords ? 'chords-inline' : '',
+  chords.showChords ? '' : 'chords-hidden']
+}
+
 export const ChordSettingsDropdownMenu: React.FC = () => {
   const { chords: chordSettings, actions } = useViewSettingsStore();
 

@@ -4,11 +4,12 @@ import { createHashRouter, Outlet, RouterProvider } from "react-router-dom";
 import React from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
-import { fetchSongContent, fetchSongs } from './components/song_loader';
+import { fetchCleanEditorData, fetchSongContent, fetchSongs } from './components/song_loader';
 const SongList = React.lazy(() => import('./routes/SongList/SongList'));
 const SongView = React.lazy(() => import('./routes/SongView/SongView'));
 const SongGallery = React.lazy(() => import('./routes/gallery/SongGallery'));
 import { RouteErrorBoundary, RenderErrorBoundary } from './components/UnifiedErrorBoundary';
+import Editor from './routes/Editor/Editor';
 
 
 const router = createHashRouter([
@@ -30,6 +31,16 @@ const router = createHashRouter([
         path: "/gallery",
         element: <SongGallery />,
         loader: fetchSongs,
+      },
+      {
+        path: "/editor",
+        element: <Editor />,
+        loader: fetchCleanEditorData,
+      },
+      {
+        path: "/editor/:id",
+        element: <Editor />,
+        loader: fetchSongContent,
       }
     ]
   }

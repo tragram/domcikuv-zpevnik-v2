@@ -1,4 +1,5 @@
-import { LanguageCount, SongData, SortField, SortOrder } from '@/types/types';
+import { LanguageCount,  SortField, SortOrder } from '@/types/types';
+import { SongData } from '@/types/songData';
 import Fuse from 'fuse.js';
 import { useEffect, useMemo } from 'react';
 import { useFilterSettingsStore } from './Toolbar/filters/Filters';

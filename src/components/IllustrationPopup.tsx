@@ -3,7 +3,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog-custom"
 import { cn } from "@/lib/utils"
-import { SongData } from "@/types/types"
+import { SongData } from "@/types/songData"
 import { useState } from "react"
 import { IllustrationPrompt } from "./IllustrationPrompt"
 

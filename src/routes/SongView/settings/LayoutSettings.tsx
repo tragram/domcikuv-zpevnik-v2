@@ -10,7 +10,7 @@ import { LoopNoteIcon } from '@/components/ui/loop-note-icon'
 import SmartColumnIcon from "./smart_columns_icon"
 
 const layouSettingsBoolsKeys = ["multiColumns", "smartColumns", "repeatParts", "repeatPartsChords", "compactInFullScreen"] as const satisfies ReadonlyArray<keyof LayoutSettings>;
-const layoutSettingsValues = {
+export const layoutSettingsValues = {
   "multiColumns": { icon: <Columns2 />, label: "Multicolumn view" },
   "smartColumns": { icon: <Brain />, label: "Smart columns" },
   "repeatParts": { icon: <Repeat />, label: "Show repeated parts" },
@@ -18,6 +18,11 @@ const layoutSettingsValues = {
   "compactInFullScreen": { icon: <Maximize />, label: "Auto fullscreen in compact view" }
 }
 
+export const layoutSettingsClassNames = (layout: LayoutSettings) => {
+  return [layout.repeatPartsChords ? '' : 'repeated-chords-hidden',
+  layout.repeatParts ? 'repeated-parts-shown' : 'repeated-parts-hidden',
+  `fit-screen-${layout.fitScreenMode}`]
+}
 
 export const LayoutSettingsToolbar: React.FC<{
   fullScreenHandle: FullScreenHandle
@@ -96,9 +101,7 @@ export const LayoutSettingsToolbar: React.FC<{
   )
 }
 
-export const LayoutSettingsDropdownSection: React.FC<{
-  fullScreenHandle: FullScreenHandle
-}> = ({ fullScreenHandle }) => {
+export const LayoutSettingsDropdownSection: React.FC = () => {
   const { layout: layoutSettings, actions } = useViewSettingsStore();
   function setBothSettings(modifiedSettings: Partial<LayoutSettings>) {
     actions.setLayoutSettings({ ...modifiedSettings });
@@ -162,10 +165,6 @@ export const LayoutSettingsDropdownSection: React.FC<{
         </DropdownMenuCheckboxItem>
       ))
     }
-    <DropdownMenuItem onClick={() => { fullScreenHandle.enter() }}>
-      <DropdownIconStart icon={<Fullscreen />} />
-      Enter fullscreen
-    </DropdownMenuItem >
   </>
   );
 }

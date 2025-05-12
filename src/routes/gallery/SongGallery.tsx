@@ -1,6 +1,7 @@
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useNavigate, useLocation } from "react-router-dom";
-import { FilterSettings, SongData, SongDB, SortField, SortOrder, SortSettings } from '../../types/types';
+import { FilterSettings, SongDB, SortField, SortOrder, SortSettings } from '../../types/types';
+import { SongData } from '@/types/songData';
 import { CircleX } from 'lucide-react';
 import './SongGallery.css'
 import { Button } from '@/components/ui/button';

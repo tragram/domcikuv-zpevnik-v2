@@ -1,4 +1,4 @@
-import { SongData, SongDB } from '@/types/types';
+import { SongDB } from '@/types/types';
 import { memo, useEffect, useRef, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import './SongList.css';

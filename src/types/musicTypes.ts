@@ -170,7 +170,7 @@ export class SongRange {
 
     constructor(songRangeStr: string) {
         const rangeRegex = new RegExp("([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?-([A-Ha-h][#b]{0,2})([1-9])(?:/([A-Ha-h][#b]{0,2})([1-9]))?");
-        const regexMatch = songRangeStr.match(rangeRegex);
+        const regexMatch = songRangeStr.replace(/\s+/g, '').match(rangeRegex);
         if (!regexMatch) {
             console.log("Error while parsing song: Invalid song range:", songRangeStr);
             return;
@@ -215,7 +215,7 @@ export class SongRange {
         });
     }
 
-    toString(transposeSemitones: number = 0): string {
+    toString(transposeSemitones: number = 0, prettyPrint: boolean = false): string {
         if (!(this.min && this.max && this.semitones)) {
             return "";
         }
@@ -223,6 +223,6 @@ export class SongRange {
         const octaves = Math.floor(this.semitones / SEMITONES_IN_OCTAVE) + 1;
         const lowerNote = transposedRange.min?.toString().toLowerCase();
         const higherNote = transposedRange.max?.toString().toLowerCase();
-        return `${lowerNote}1 - ${higherNote}${octaves} `;
+        return `${lowerNote}1${prettyPrint ? " - " : "-"}${higherNote}${octaves}`;
     }
 }

@@ -2,7 +2,8 @@ import { Dices, ListRestart } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
-import { SongData, SongDB } from '@/types/types';
+import { SongDB } from '@/types/types';
+import { SongData } from '@/types/songData';
 import {
     AlertDialog,
     AlertDialogAction,

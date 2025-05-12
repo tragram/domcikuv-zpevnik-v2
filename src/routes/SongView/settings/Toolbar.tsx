@@ -7,7 +7,7 @@ import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem,
 import ToolbarBase from '@/components/ui/toolbar-base'
 import usePWAInstall from '@/components/usePWAInstall'
 import { Key } from '@/types/musicTypes'
-import { Github, Settings2, Undo2 } from 'lucide-react'
+import { Fullscreen, Github, Pencil, Settings2, Undo2 } from 'lucide-react'
 import React from 'react'
 import { FullScreenHandle } from 'react-full-screen'
 import { Link, useNavigate } from 'react-router-dom'
@@ -60,17 +60,28 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
-                        {React.Children.toArray(<LayoutSettingsDropdownSection fullScreenHandle={fullScreenHandle} />)}
+                        {React.Children.toArray(<LayoutSettingsDropdownSection/>)}
                         {React.Children.toArray(<ChordSettingsDropdownMenu />)}
                         <DropdownMenuLabel>Theme</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {React.Children.toArray(<ModeToggleInner />)}
                         <DropdownMenuLabel>Misc</DropdownMenuLabel>
                         <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={() => { fullScreenHandle.enter() }}>
+                            <DropdownIconStart icon={<Fullscreen />} />
+                            Enter fullscreen
+                        </DropdownMenuItem >
                         {React.Children.toArray(<ResetBanListDropdownItems songDB={songDB} />)}
                         <DropdownMenuItem>
+                            <DropdownIconStart icon={<Pencil />} />
+                            <Link className='w-full h-full'
+                                to={"/editor/" + songData.id}>
+                                Edit here
+                            </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
                             <DropdownIconStart icon={<Github />} />
-                            <Link
+                            <Link className='w-full h-full'
                                 to={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile}>
                                 Edit on GitHub
                             </Link>

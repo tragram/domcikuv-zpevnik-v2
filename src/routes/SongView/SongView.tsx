@@ -23,7 +23,6 @@ export const SongView = () => {
     } = useViewSettingsStore()
     const [transposeSteps, setTransposeSteps] = useLocalStorageState(`transposeSteps/${songData.id}`, { defaultValue: 0 });
 
-
     // Prevent default gesture behavior
     useEffect(() => {
         const preventDefault = (e: Event) => e.preventDefault()
@@ -38,7 +37,7 @@ export const SongView = () => {
 
     // Render PDF view for short songs
     if (songData.lyricsLength() < 50) {
-        return <PdfView pdfFilenames={songData.pdfFilenames} />
+        return <PdfView pdfFilenames={songData.pdfURLs} />
     }
 
     return (

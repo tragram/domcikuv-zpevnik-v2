@@ -1,4 +1,4 @@
-import { SongData } from '../../../types/types';
+import { SongData } from '@/types/songData';
 import { ChordProParser, FormatterSettings, HtmlFormatter } from "chordproject-parser";
 import { czechToEnglish, preparseDirectives, transposeChordPro } from './preparseChordpro';
 import memoize from 'memoize-one';
@@ -73,9 +73,9 @@ export function renderSong(
 ): string {
     // Parse and process the chord pro content
     if (!songData.content) {
-        throw new Error("songData.content is undefined");
+        console.log("songData.content is undefined");
     }
-    const song = parseChordPro(songData.content, songData.key ?? null, transposeSteps);
+    const song = parseChordPro(songData.content || "Nothing to show... ;-)", songData.key ?? null, transposeSteps);
     // Configure formatter settings
     const settings = new FormatterSettings();
     settings.showMetadata = false;

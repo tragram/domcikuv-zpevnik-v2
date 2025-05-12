@@ -1,0 +1,18 @@
+.main-container {
+    padding: 1rem;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+}
+
+.editor-preview-container .lyrics-line {
+    flex-wrap: wrap;
+}
+
+.editor-content-empty .lyrics-line:not(.section > .lyrics-line) {
+    color: inherit;
+}
+
+.lyrics-line:not(.section > .lyrics-line):not(.editor-content-empty .lyrics-line) {
+    color: rgb(220, 38, 38);
+}

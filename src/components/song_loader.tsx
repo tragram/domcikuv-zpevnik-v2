@@ -1,4 +1,5 @@
-import { LanguageCount, SongData, SongDB } from '../types/types'
+import { LanguageCount, SongDB } from '../types/types'
+import { SongData } from '@/types/songData';
 import * as yaml from 'js-yaml';
 import { version } from '@/../package.json';
 import { guessKey } from '@/routes/SongView/utils/songRendering';
@@ -128,6 +129,11 @@ interface DataForSongView {
     songData: SongData
 }
 
+interface DataForEditor {
+    songDB: SongDB,
+    songData?: SongData
+}
+
 async function fetchSongContent({ params }): Promise<DataForSongView> {
     const songDB = await fetchSongs();
     const songData = songDB.songs.find(song => song.id === params.id);
@@ -148,11 +154,15 @@ async function fetchSongContent({ params }): Promise<DataForSongView> {
         localStorage.setItem(contentKey + ".hash", songData.contentHash);
     }
 
-    songData.content = songContent;
+    songData.addContent(songContent);
     if (!songData.key) {
         songData.key = guessKey(songData.content || '')
     }
     return { songDB: songDB, songData: songData };
+}
+
+async function fetchCleanEditorData(): Promise<DataForEditor> {
+    return { songDB: await fetchSongs(), songData: undefined };
 }
 
 async function fetchIllustrationPrompt(id: string): Promise<object> {
@@ -168,4 +178,4 @@ async function fetchIllustrationPrompt(id: string): Promise<object> {
     return yaml.load(promptContent);
 }
 
-export { fileURL, fetchSongs, fetchSongContent, fetchIllustrationPrompt, DataForSongView };
+export { fileURL, fetchSongs, fetchSongContent, fetchCleanEditorData, fetchIllustrationPrompt, DataForSongView };
