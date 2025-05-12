@@ -19,7 +19,7 @@ export const useQueryStore = create<QueryState>()(
 
 function SearchBar() {
     const [isExpanded, setIsExpanded] = useState(false);
-    const [expandedWidth, setExpandedWidth] = useState(248);
+    const [expandedWidth, setExpandedWidth] = useState(298);
     const mobileInputRef = useRef<HTMLInputElement>(null);
     const { query, setQuery } = useQueryStore();
 
@@ -64,7 +64,7 @@ function SearchBar() {
     return (
         <>
             {/* Mobile Search */}
-            <div className="flex xs:hidden items-center gap-2">
+            <div className="flex sm:hidden items-center gap-2">
                 <div className={cn("relative flex transition-all duration-300 ease-in-out items-center z-50", isExpanded ? "-translate-x-12" : "")}>
                     <Button
                         type="button"
@@ -106,7 +106,7 @@ function SearchBar() {
             </div >
 
             {/* Desktop Search */}
-            < div className={cn("relative hidden xs:flex items-center h-full text-primary dark:text-primary/30 transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 outline-primary dark:outline-primary/30 outline outline-2")}>
+            < div className={cn("relative hidden sm:flex items-center h-full text-primary dark:text-primary/30 transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 outline-primary dark:outline-primary/30 outline outline-2")}>
                 <Input
                     onChange={search}
                     value={query}

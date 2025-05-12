@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 interface ToolbarBaseProps {
     children: React.ReactNode;
     className?: string;
+    childContainerClassName?: string;
     showToolbar?: boolean;
     scrollOffset?: number;
     fakeScroll?: boolean;
@@ -14,6 +15,7 @@ const TOOLBAR_CONTAINER_H = 72;
 const ToolbarBase: React.FC<ToolbarBaseProps> = ({
     children,
     className = "",
+    childContainerClassName = "",
     showToolbar = true,
     scrollOffset = 100,
     fakeScroll = false,
@@ -41,7 +43,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
     // 1. Toggling toolbar visibility (showToolbar changes)
     // 2. Not during active scrolling (either fake or real)
     const shouldTransition = (showToolbar || !partiallyVisible) && position === "fixed";
-    
+
     return (
         <div
             className={cn(
@@ -54,16 +56,18 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
             style={{
                 willChange: "transform",
                 transform: `translateY(-${translateYPx}px)`,
-                transition: shouldTransition 
+                transition: shouldTransition
                     ? "transform 500ms cubic-bezier(0.165, 0.840, 0.250, 1.040)"
                     : "none",
             }}
         >
             <div
-                className="w-fit xs:w-full xl:w-fit h-14 bg-glass/30 dark:bg-glass/10 backdrop-blur-md rounded-full shadow-md flex gap-2 p-2 items-center outline-primary dark:outline-primary/30 outline outline-2 justify-left"
+                className="w-fit xs:w-full xl:w-fit bg-glass/30 dark:bg-glass/10 backdrop-blur-md rounded-full shadow-md flex gap-2 p-2 items-center outline-primary dark:outline-primary/30 outline outline-2 justify-center"
                 id="toolbar"
             >
-                {children}
+                <div className={cn("flex flex-row gap-2 w-full h-full justify-left", childContainerClassName)}>
+                    {children}
+                </div>
             </div>
         </div>
     );

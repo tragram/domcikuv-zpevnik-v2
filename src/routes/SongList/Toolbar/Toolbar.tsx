@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import ToolbarBase from "@/components/ui/toolbar-base";
 import { LanguageCount } from "@/types/types";
 import { SongData } from '@/types/songData';
-import { ImagesIcon } from "lucide-react";
+import { ImagesIcon, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Filtering from "./filters/Filters";
 import SearchBar from './SearchBar';
@@ -33,7 +33,7 @@ function Toolbar({
     const navigate = useNavigate();
 
     return (
-        <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll}>
+        <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll} childContainerClassName="max-sm:max-w-[310px] max-sm:justify-center">
             <SortMenu />
             <SearchBar />
             <Filtering
@@ -43,6 +43,15 @@ function Toolbar({
             />
             <div className="hidden h-full w-fit sm:flex">
                 <ModeToggle />
+            </div>
+            <div className="max:-md:hidden">
+                <Button
+                    size="icon"
+                    variant="circular"
+                    onClick={() => navigate("editor")}
+                >
+                    <Pencil />
+                </Button>
             </div>
             <Button
                 size="icon"
