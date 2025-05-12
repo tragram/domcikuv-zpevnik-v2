@@ -153,7 +153,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        <p className="text-xs text-primary/50">Describes who will play the song for you.</p>
+        <p className="text-xs text-primary/80 dark:text-primary/50">Describes who will play the song for you.</p>
       </div>
       <MetadataField
         label="Range"

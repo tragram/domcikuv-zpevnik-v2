@@ -1,7 +1,4 @@
 .main-container {
-    border-color: hsl(var(--primary));
-    border-width: 4px;
-    border-radius: calc(var(--radius) - 2px);
     padding: 1rem;
     overflow-y: auto;
     height: 100%;
@@ -17,5 +14,5 @@
 }
 
 .lyrics-line:not(.section > .lyrics-line):not(.editor-content-empty .lyrics-line) {
-    color: hsl(var(--destructive));
+    color: rgb(220, 38, 38);
 }

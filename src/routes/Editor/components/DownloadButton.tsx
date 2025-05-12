@@ -32,15 +32,13 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ metadata, content }) =>
         }, 0);
     };
     return (
-        <div className="flex justify-end">
-            <Button
-                onClick={handleDownload}
-                variant="default"
-            >
-                Download ChordPro
-                <Download />
-            </Button>
-        </div>
+        <Button
+            onClick={handleDownload}
+            variant="default"
+        >
+            Download ChordPro
+            <Download />
+        </Button>
     )
 }
 

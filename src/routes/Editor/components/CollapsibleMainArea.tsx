@@ -24,23 +24,26 @@ const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, classN
             </div>
         </div>
         :
-        <div className={cn('flex flex-col gap-2 md:gap-4 overflow-hidden', 
-                          isEditor ? 'min-h-fit md:min-h-0' : '', 
-                          'w-full md:w-0 md:flex-grow',
-                          className)}>
+        <div className={cn('flex flex-col overflow-hidden min-w-52 border-4 border-primary rounded-md',
+            isEditor ? 'min-h-fit md:min-h-0' : '',
+            'w-full md:w-0 md:flex-grow',
+            className)}>
+            <div className="max-md:hidden overflow-y-auto flex-grow">
+                {children}
+            </div>
             <h1
-                className="font-extrabold text-2xl md:text-3xl relative text-center text-primary cursor-pointer"
+                className="font-extrabold text-2xl md:text-3xl relative text-center text-white cursor-pointer bg-primary md:pt-2 md:pb-1 pb-2 pt-1"
                 onClick={() => setIsCollapsed(true)}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
                 <div className="flex items-center justify-center">
-                    <div className={cn("w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-primary ml-2", isHovered ? "" : "opacity-0 select-none")}></div>
+                    <div className={cn("w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-white ml-2", isHovered ? "" : "opacity-0 select-none")}></div>
                     <span className='mx-4'>{title}</span>
-                    <div className={cn("w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-primary mr-2", isHovered ? "" : "opacity-0 select-none")}></div>
+                    <div className={cn("w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-white mr-2", isHovered ? "" : "opacity-0 select-none")}></div>
                 </div>
             </h1>
-            <div className="overflow-y-auto flex-grow">
+            <div className="md:hidden overflow-y-auto flex-grow">
                 {children}
             </div>
         </div >
