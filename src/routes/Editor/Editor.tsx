@@ -4,7 +4,7 @@ import { emptySongMetadata, SongData, SongMetadata, songMetadataEqual } from '@/
 import React, { useCallback, useMemo } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import useLocalStorageState from 'use-local-storage-state';
-import '../Songview/SongView.css';
+import '../SongView/SongView.css';
 import CollapsibleMainArea from './components/CollapsibleMainArea';
 import ContentEditor from './ContentEditor';
 import './Editor.css';
