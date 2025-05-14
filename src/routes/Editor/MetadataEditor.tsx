@@ -24,7 +24,14 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   const [isAddingCustomSongbook, setIsAddingCustomSongbook] = useState(false);
   const [customSongbookName, setCustomSongbookName] = useState('');
   // this do be ugly but it's late and it's a lot of work to do more elegantly (extension of SongMetadata???)
-  const currentSongbooks = JSON.parse(metadata.songbooks ?? "[]");
+  const currentSongbooks = React.useMemo(() => {
+    try {
+      return JSON.parse(metadata.songbooks ?? "[]");
+    } catch (error) {
+      console.error("Failed to parse songbooks metadata:", error);
+      return [];
+    }
+  }, [metadata.songbooks]);
   availableSongbooks = [...new Set([...availableSongbooks, ...currentSongbooks])]
   const toggleSongbook = useCallback((songbook: string) => {
     let newSongbooks;
@@ -105,7 +112,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
             {availableSongbooks.map(a => (
               <DropdownMenuCheckboxItem
                 key={a}
-                checked={JSON.parse(metadata.songbooks ?? "[]")?.includes(a)}
+                checked={currentSongbooks.includes(a)}
                 onCheckedChange={() => toggleSongbook(a)}
                 onSelect={e => e.preventDefault()}
               >

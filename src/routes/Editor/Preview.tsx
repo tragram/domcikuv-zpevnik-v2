@@ -19,11 +19,17 @@ const Preview: React.FC<PreviewProps> = ({
 }) => {
   const songData = new SongData(metadata);
   songData.content = content;
-  const renderedContent = renderSong(
-    songData,
-    0, // transposeSteps
-    true
-  );
+  let renderedContent = '';
+  try {
+    renderedContent = renderSong(
+      songData,
+      0, // transposeSteps
+      true
+    );
+  } catch (error) {
+    console.error('Error rendering song:', error);
+    renderedContent = '<p>Error rendering song content.</p>';
+  }
 
   const { layout, chords } = useViewSettingsStore();
 
