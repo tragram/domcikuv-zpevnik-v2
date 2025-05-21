@@ -33,7 +33,7 @@ function Toolbar({
     const navigate = useNavigate();
 
     return (
-        <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll} childContainerClassName="max-sm:justify-center">
+        <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll} childContainerClassName="max-sm:justify-around">
             <SortMenu />
             <SearchBar />
             <Filtering
