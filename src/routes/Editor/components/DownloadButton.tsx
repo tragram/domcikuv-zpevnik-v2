@@ -11,6 +11,12 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ metadata, content }) =>
     // Function to handle the download
     const handleDownload = () => {
         const songData = new SongData(metadata);
+        // remove trailing and starting spaces and multiple empty lines
+        content = content
+            .split('\n')
+            .map(line => line.trim())
+            .filter((line, index, arr) => line !== '' || arr[index - 1] !== '')
+            .join('\n');
         songData.content = content;
         const filename = `${songData.id || 'song'}.pro`;
         const chordProContent = songData.toChordpro();

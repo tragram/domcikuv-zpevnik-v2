@@ -143,8 +143,8 @@ class SongData {
         // Verification that SongMetadata has all required fields
         this.validateSongMetadata(song);
 
-        this.title = song.title || "Unknown title";
-        this.artist = song.artist || "Unknown artist";
+        this.title = song.title?.trim() || "Unknown title";
+        this.artist = song.artist?.trim() || "Unknown artist";
         this.key = SongData.parseKey(song.key);
         this.dateAdded = SongData.parseDateAdded(song.dateAdded);
         this.songbooks = SongData.parseSongbooks(song.songbooks, this.artist, this.title);
