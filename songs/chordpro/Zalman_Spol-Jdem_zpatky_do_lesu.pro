@@ -27,7 +27,7 @@ kde není už [Am7]místa,
 [C]prej něco se [G]chystá, [D7]
 [G]z ráje nablýskaných [Emi]plesů,
 jdem zpátky do [Am7]lesů
-[C]za nějaký [G]čas.
+[C]za nějaký [G]čas. [D7]
 {end_of_chorus}
 
 {start_of_verse}
