@@ -17,9 +17,9 @@ V ostatních královstvích, [Dmi]nezní tak málo smích,
 {end_of_verse}
 
 {start_of_chorus}
-[G7]Kdyby se v [C]komnatách, běhoun jak [G]hrom natáh,
+[G7]Kdyby se v [C]komnatách, běhoun jak [Hmi]hrom natáh,
 a na něm [Ami]akrobati, [D]začali [G]kejklovati.
-[G7]Kdyby nám v [C]paláci, pištěli [G]dudáci,
+[G7]Kdyby nám v [C]paláci, pištěli [Hmi]dudáci,
 To by se [Ami]krásně žilo, [D]to by byl [G]ráj.
 {end_of_chorus}
 
