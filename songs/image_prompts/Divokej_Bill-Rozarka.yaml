@@ -1,0 +1,8 @@
+- model: gpt-4o-mini
+  prompt_id: v2
+  response: Create an illustration of a dark, atmospheric scene featuring a somber
+    figure holding a scythe in one hand, with a glass of red wine in the other. The
+    background should depict a shadowy, moonlit landscape, suggesting a sense of foreboding.
+    The figure, named Rozárko, should be surrounded by ghostly silhouettes that evoke
+    a feeling of melancholy and reflection, as if they are toasting to both the living
+    and the lost.
