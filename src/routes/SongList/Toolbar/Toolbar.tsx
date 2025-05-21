@@ -33,7 +33,7 @@ function Toolbar({
     const navigate = useNavigate();
 
     return (
-        <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll} childContainerClassName="max-sm:max-w-[310px] max-sm:justify-center">
+        <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll} childContainerClassName="max-sm:justify-center">
             <SortMenu />
             <SearchBar />
             <Filtering
@@ -44,7 +44,7 @@ function Toolbar({
             <div className="hidden h-full w-fit sm:flex">
                 <ModeToggle />
             </div>
-            <div className="max:-md:hidden">
+            <div className="max-md:hidden">
                 <Button
                     size="icon"
                     variant="circular"
