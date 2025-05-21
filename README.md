@@ -157,6 +157,10 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 * [Zustand](https://github.com/pmndrs/zustand): easier state management
 * [@khmyznikov/pwa-install](https://github.com/khmyznikov/pwa-install): managing PWA popups and installation
 
+### Notes
+* minimum target width is 320px (essentially no devices have a narrow screen than that)
+
 ## TODO:
 * the smart ScrollButtons sometimes misbehave (TBD both why and how to fix)
 * make the light theme look better (or at least look less bad, lol)
+* create a proper backend or at least make editing possible without Git knowledge
