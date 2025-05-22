@@ -40,7 +40,7 @@ const CHORD_NOTATION_MAP = {
     '#': '♯'
 };
 
-const CHORD_MODIFIER_REGEX = /(♯|♭|2|4|6|7|9|maj|sus|\+|\([^()]*\))/g;
+const CHORD_MODIFIER_REGEX = /(♯|♭|2|4|6|7|9|maj|sus|dim|\+|\([^()]*\))/g;
 
 /**
  * Converts English chord names to Central European notation (H/B system)
