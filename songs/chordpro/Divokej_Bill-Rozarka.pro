@@ -17,14 +17,14 @@
 [Ami]Nikdy [F]neřikej, že víš jak mi [Emi]je, s prázdnym
 [Ami]žaludkem, v žilách víc [Dmi]vína než [Emi]krve.
 [Ami]Píšu tvůj [F]osud, [G]propustku [Ami]do pekel.
-Pálim ti [Dmi]cejch a v rukou mám [Emi]kosu, Rozárk[Ami]o.
+Pálim ti [Dmi]cejch a v rukou mám [Emi]kosu, Rozár[Ami]ko.
 {end_of_verse}
 
 {start_of_bridge}
-[F]Řikej, víš jak mi [Emi]jes prázdnym
+[F]Řikej, víš jak mi [Emi]je s prázdnym
 [Ami]žaludkem, v žilách víc [Dmi]vína než [Emi]krve.
 [Ami]Píšu tvůj [F]osud, [G]propustku [Ami]do pekel.
-Pálim ti [Dmi]cejch a v rukou mám [Emi]kosu, Rozárk[Ami]o.
+Pálim ti [Dmi]cejch a v rukou mám [Emi]kosu, Rozár[Ami]ko.
 {end_of_bridge}
 
 {start_of_verse}
@@ -42,7 +42,8 @@ To v [F]noci budí ze [Emi]spaní zlej
 {end_of_bridge}
 
 {start_of_chorus}
-[Ami]Pijem na zdra[F]ví [G]i na ty [Ami]bolavý z [Emi]nás, Rozár[Ami]ko.
+[Ami]Pijem na zdra[F]ví 
+[G]i na ty [Ami]bolavý z nás, [Emi]Rozár[Ami]ko.
 {end_of_chorus}
 
 {chorus}

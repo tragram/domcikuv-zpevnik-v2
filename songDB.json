@@ -889,7 +889,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Divokej_Bill-Rozarka.pro",
-    "contentHash": "b017849d73a41231a09fd10295bdf7dca84ffb5b",
+    "contentHash": "a5672936a05b258950baf34e329697ffc1e3a747",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -1729,22 +1729,22 @@
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
   },
   {
-    "title": "Vodácká holka",
-    "artist": "Hop Trop",
-    "songbooks": "[]",
-    "key": "D",
-    "dateAdded": "05-2025",
-    "language": "czech",
+    "title": "",
+    "artist": "",
+    "songbooks": "",
+    "key": "",
+    "dateAdded": "",
+    "language": "",
     "tempo": "",
-    "capo": "0",
+    "capo": "",
     "range": "",
     "startMelody": "",
-    "promptModel": "gpt-4o-mini",
-    "promptId": "v2",
-    "imageModel": "FLUX.1-dev",
-    "pdfFilenames": "[]",
+    "promptModel": "",
+    "promptId": "",
+    "imageModel": "",
+    "pdfFilenames": "",
     "chordproFile": "Hop_Trop-Vodacka_holka.pro",
-    "contentHash": "81febdc3e249dda512490f245bdf9fa00fec02ed",
+    "contentHash": "a880ac832f5f39cb3396f67601200a455422c908",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -2454,7 +2454,7 @@
     "title": "Ještě tě mám plnou náruč",
     "artist": "Jiří Korn",
     "songbooks": "[]",
-    "key": "Fm",
+    "key": "Em",
     "dateAdded": "05-2025",
     "language": "czech",
     "tempo": "",
@@ -2466,7 +2466,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Jiri_Korn-Jeste_te_mam_plnou_naruc.pro",
-    "contentHash": "7bb57e5e6a845283139278cfdff3c5ab84dbfdd7",
+    "contentHash": "e7ba8d1205093b4833556a55cef4d1063ff52a9c",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -2789,7 +2789,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Kabat-Raci_v_praci_sro.pro",
-    "contentHash": "3521aae7d3975952618ffa4f3f28fa1a7614b288",
+    "contentHash": "9ebcb0d45da366f7a9166fcf06bb855e034f937b",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -5240,7 +5240,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Richard_Muller-Baroko.pro",
-    "contentHash": "424833d56b592521cdcff792831956b789317957",
+    "contentHash": "5077b723a9f7c85ba4a1914a1d3f7dea1c98b6c2",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -5867,7 +5867,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Traband-Vlastovky.pro",
-    "contentHash": "a1d78b3f314c7083fa028aaebf7a6c5fa40c9a44",
+    "contentHash": "8572cefc4ac1e1c4f87819d8ea1ea4f841ebd670",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -6209,7 +6209,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Vrata_Hosek-Letecky_most.pro",
-    "contentHash": "19a1481a1b3f9b042fce3cafa0d9dbdab97a1e00",
+    "contentHash": "82fae0ed39be99c13e58b7882662679149dd5f45",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -6760,7 +6760,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Zelva-Olympic.pro",
-    "contentHash": "cd33d4bb8fccf2b63fb41a3e92331dd2cf5602de",
+    "contentHash": "fd8f57d5f192054616c08e6c4de73e81979fa8fb",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
