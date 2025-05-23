@@ -66,12 +66,13 @@
 [F]Zem, která [C/E]nemá své [Dmi]nebe [B]
 [F]Ztratila [C/E]všechno, i [Dmi]sebe [B]
 [F]Zarůstá [C/E]pastvou jen [Dmi]pro oko [B]
-[F]Proč jsi tak [C/E]vzdálené - v perutích [Dmi]oděné - ba[B]roko?
+[F]Proč jsi tak [C/E]vzdálené, 
+v perutích [Dmi]oděné, ba[B]roko?
 {end_of_chorus}
 
 {start_of_chorus}
-[F]Zem, která [C/E]nemá své [Dmi]nebe [B]
+|: [F]Zem, která [C/E]nemá své [Dmi]nebe [B]
 [F]Ztratila [C/E]všechno, i [Dmi]sebe [B]
 [F]Zarůstá [C/E]pastvou jen [Dmi]pro oko [B]
-[F]Proč jsi tak [C/E]vzdálené [Dmi]baroko? 2x [B]
+[F]Proč jsi tak [C/E]vzdálené [Dmi]baroko?[B] :|
 {end_of_chorus}

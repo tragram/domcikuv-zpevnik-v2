@@ -24,7 +24,7 @@ Operace Barbarossa
 [F]Přijde [C]letecký most
 a [Dmi]budeme mít zas [Ami]zásob dost
 [F]naší [C]budoucnost
-má [E]v rukou Hermann [Ami]Goring
+má [E]v rukou Hermann [Ami]Göring
 {end_of_chorus}
 
 {start_of_verse}
@@ -40,13 +40,13 @@ on zamyšleně mne si bradu
 [Ami]Sověti nám ústup utli
 [Dmi]mrzneme tu [Ami]jako trotli
 tak jako v Děmjanském kotli
-[E]nás spasí Hermann [Ami]Goring
+[E]nás spasí Hermann [Ami]Göring
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-[Ami]Goring říká, to nic není,
+[Ami]Göring říká, to nic není,
 [Dmi]že jste takhle [Ami]obklíčení,
 mám nápad co vás zachrání,
 [E]letecké zásobo[Ami]vání
@@ -79,11 +79,11 @@ loučení s kamarády
 je [E]konec šesté [Ami]armády
 {end_of_verse}
 
-{start_of_chorus: R2}
+{start_of_chorus: Závěr}
 [F]žádný le[C]tecký most
 a [Dmi]neměli jsme [Ami]zásob dost
 [F]naší [C]budoucnost
-ne[E]spasil Hermann [Ami]Goring
+ne[E]spasil Hermann [Ami]Göring
 {end_of_chorus}
 
-{chorus: R2}
+{chorus: Závěr}

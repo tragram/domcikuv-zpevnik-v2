@@ -30,8 +30,8 @@
 {start_of_chorus}
 [G]Když si [D]někdo [C]pozor [G]nedá, 
 jak se [D]vlastně [C]želva hle[G]dá,
-[C]ona ho na něco nachyt[D]á-á, 
-[D7]i [C]když si to později vyčít[D]á-á [D7]
+[C]ona ho na něco nachyt[D]á[D7]á,
+[D7]i [C]když si to později vyčít[D]á[D7]á
 {end_of_chorus}
 
 {start_of_verse}
@@ -40,5 +40,3 @@ jak se [D]vlastně [C]želva hle[G]dá,
 [D]Jeho úsměv se vytratí, a [Emi]to se mu nevyplatí,
 [G]Má se [C]nebát [G]želev a [C]spousty [G]vodní. [C][G][C]
 {end_of_verse}
-
-{chorus}
