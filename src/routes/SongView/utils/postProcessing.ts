@@ -29,12 +29,18 @@ const DEFAULT_SECTION_TYPES = ["verse", "chorus", "bridge"];
  * Optimized to minimize DOM operations
  */
 function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION_TYPES, useLabels = false): Document {
-    const DEFAULT_KEY = "a4c0d35c95a63a805915367dcfe6b751";
+    const DEFAULT_KEYS = {
+        "verse-section": "V:",
+        "bridge-section": "B:",
+        "chorus-section": "R:"
+    };
+
+    const getDefaultKey = (key: string): string => DEFAULT_KEYS[key] || "a4c0d35c95a63a805915367dcfe6b751";
     const seen: PatternCollection = {};
 
     // Initialize tracking object for each className
     classNames.forEach(className => {
-        seen[className] = { [DEFAULT_KEY]: [] };
+        seen[className] = {};
     });
 
     const selector = classNames.map(className => `.${className}`).join(',');
@@ -48,8 +54,8 @@ function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION
 
         // Cache label info
         const labelElement = element.querySelector('.section-title');
-        const label = labelElement && useLabels ? labelElement.textContent?.trim() || DEFAULT_KEY : DEFAULT_KEY;
-
+        const defaultKey = getDefaultKey(elementClass);
+        const label = labelElement && useLabels ? labelElement.textContent?.trim() || defaultKey : defaultKey;
         // Get all chord elements
         const chordElements = Array.from(element.querySelectorAll('.chord'));
 
@@ -72,7 +78,6 @@ function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION
         if (!seen[elementClass][label]) {
             seen[elementClass][label] = [];
         }
-
         const matchResult = findBestChordPatternMatch(onlyChords, seen[elementClass][label]);
         if (seen[elementClass][label].length === 0 || matchResult.distance > MAX_CHORD_MATCH_DISTANCE) {
             seen[elementClass][label].push(onlyChords);
@@ -105,6 +110,9 @@ function detectRepeatedChordPatterns(doc: Document, classNames = DEFAULT_SECTION
             // Add the class to all elements at once
             elementsToHighlight.forEach(el => el.classList.add("force-shown"));
         }
+        if (!seen[elementClass][defaultKey]) {
+            seen[elementClass][defaultKey] = [...seen[elementClass][label]];
+        }
     });
 
     return doc;
@@ -123,7 +131,6 @@ function findBestChordPatternMatch(currentChords: string[], knownPatterns: strin
 
     // Use reduce instead of map+reduce for better performance
     let bestMatch: ChordMatch = { matches: [], distance: Infinity };
-
     for (let i = 0; i < knownPatterns.length; i++) {
         const match = compareChordLists(knownPatterns[i], currentChords);
         if (match.distance < bestMatch.distance) {
@@ -210,28 +217,28 @@ function processSectionTitles(
         const commentText = element.textContent.trim();
         const sectionTitlePattern = new RegExp("%\\s*section_title:\\s*(.*?)\\s*%");
         const match = commentText.match(sectionTitlePattern);
-        
+
         if (match) {
             // Find the next lyrics-line element after the comment
             let lyricsLineElement = element.nextElementSibling;
             while (lyricsLineElement) {
-                if (lyricsLineElement instanceof HTMLDivElement && 
+                if (lyricsLineElement instanceof HTMLDivElement &&
                     lyricsLineElement.classList.contains('lyrics-line')) {
                     break;
                 }
                 lyricsLineElement = lyricsLineElement.nextElementSibling;
             }
-            
+
             // Create the section title div
             const sectionTitleDiv = doc.createElement('div');
             sectionTitleDiv.className = 'section-title';
             sectionTitleDiv.textContent = match[1] + ": ";
-            
+
             // Create the word div that will contain the section title
             const wordDiv = doc.createElement('div');
             wordDiv.className = 'word';
             wordDiv.appendChild(sectionTitleDiv);
-            
+
             if (lyricsLineElement && lyricsLineElement instanceof HTMLDivElement) {
                 // Insert the word div as the first child of the lyrics-line div
                 lyricsLineElement.insertBefore(wordDiv, lyricsLineElement.firstChild);
@@ -239,10 +246,10 @@ function processSectionTitles(
                 // If no lyrics-line div exists, create one
                 const newLyricsDiv = doc.createElement('div');
                 newLyricsDiv.className = 'lyrics-line';
-                
+
                 // Add the word div containing the section title as its first child
                 newLyricsDiv.appendChild(wordDiv);
-                
+
                 // Insert the new lyrics-line div after the comment
                 const parent = element.parentNode;
                 if (parent) {
