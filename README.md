@@ -60,7 +60,7 @@ and them later recall them by
 {chorus: R2}
 {chorus: R1}
 ```
-The labels may contain letters, numbers, spaces and the following special characters: `+_-/.`. In short, they must match `[\w\-_+ .]+`.
+The labels may contain letters, numbers, spaces and the following special characters: `+_-/.`. In short, they must match `[\w\-_+ .\p{L}]+`.
 
 #### Part variants
 It is very common that a chorus is repeated with only a minor modification at the end. To avoid these repetitions, you can define a variant of the chorus as follows:

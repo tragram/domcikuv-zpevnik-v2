@@ -261,9 +261,9 @@ export function preparseDirectives(
     const directiveRegexes = directives.map((directive, i) => ({
         directive,
         shortHand: shortHands[i],
-        startRegex: new RegExp(`^\\{start_of_${directive}(?::\\s*([\\w\\-_+. ]+))?\\}`),
-        endRegex: new RegExp(`^\\{end_of_${directive}\\}`),
-        callRegex: new RegExp(`^\\{${directive}(?::\\s*([\\w\\-_+. ]+))?\\}`)
+        startRegex: new RegExp(`^\\{start_of_${directive}(?::\\s*([\\w\\-_+. \\p{L}]+))?\\}`, 'u'),
+        endRegex: new RegExp(`^\\{end_of_${directive}\\}`, 'u'),
+        callRegex: new RegExp(`^\\{${directive}(?::\\s*([\\w\\-_+. \\p{L}]+))?\\}`, 'u')
     }));
 
     // Default key for when none is specified
