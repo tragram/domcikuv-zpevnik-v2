@@ -9,8 +9,8 @@
 {language: czech}
 {tempo: }
 {capo: 0}
-{range: }
-{start_melody: }
+{range: c1-f2}
+{start_melody: a b a}
 {pdf_filenames: []}
 
 {start_of_verse}
@@ -66,7 +66,7 @@
 [F]Zem, která [C/E]nemá své [Dmi]nebe [B]
 [F]Ztratila [C/E]všechno, i [Dmi]sebe [B]
 [F]Zarůstá [C/E]pastvou jen [Dmi]pro oko [B]
-[F]Proč jsi tak [C/E]vzdálené, 
+[F]Proč jsi tak [C/E]vzdálené,
 v perutích [Dmi]oděné, ba[B]roko?
 {end_of_chorus}
 

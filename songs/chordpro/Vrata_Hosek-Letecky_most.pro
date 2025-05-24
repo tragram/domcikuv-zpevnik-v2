@@ -8,9 +8,9 @@
 {date_added: 05-2025}
 {language: czech}
 {tempo: }
-{capo: 0}
-{range: }
-{start_melody: }
+{capo: 5}
+{range: a1-a2}
+{start_melody: e a}
 {pdf_filenames: []}
 
 {start_of_verse}

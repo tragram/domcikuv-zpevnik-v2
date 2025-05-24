@@ -9,8 +9,8 @@
 {language: czech}
 {tempo: }
 {capo: 0}
-{range: }
-{start_melody: }
+{range: e1-f2}
+{start_melody: a a h c c}
 {pdf_filenames: []}
 
 {start_of_verse}
@@ -42,10 +42,13 @@ To v [F]noci budí ze [Emi]spaní zlej
 {end_of_bridge}
 
 {start_of_chorus}
-[Ami]Pijem na zdra[F]ví 
+[Ami]Pijem na zdra[F]ví
 [G]i na ty [Ami]bolavý z nás, [Emi]Rozár[Ami]ko.
 {end_of_chorus}
 
 {chorus}
 {chorus}
-{chorus}
+
+{start_of_chorus}
+[Ami]Pijem na zdra[F]ví, [G]i na ty [Ami]bolavý z nás.
+{end_of_chorus}
