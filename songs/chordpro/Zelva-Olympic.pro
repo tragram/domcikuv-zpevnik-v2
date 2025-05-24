@@ -9,8 +9,8 @@
 {language: czech}
 {tempo: }
 {capo: 0}
-{range: }
-{start_melody: }
+{range: h1-e2}
+{start_melody: h d}
 {pdf_filenames: []}
 
 {start_of_verse}
@@ -28,10 +28,10 @@
 {end_of_verse}
 
 {start_of_chorus}
-[G]Když si [D]někdo [C]pozor [G]nedá, 
+[G]Když si [D]někdo [C]pozor [G]nedá,
 jak se [D]vlastně [C]želva hle[G]dá,
 [C]ona ho na něco nachyt[D]á[D7]á,
-[D7]i [C]když si to později vyčít[D]á[D7]á
+i [C]když si to později vyčít[D]á[D7]á
 {end_of_chorus}
 
 {start_of_verse}

@@ -1,13 +1,17 @@
+{prompt_id: v2}
+{prompt_model: gpt-4o-mini}
+{image_model: FLUX.1-dev}
 {title: Buchet je spousta}
 {artist: Kouzla králů}
-{date_added: 04-2025}
 {songbooks: ["Kvítek"]}
-{language: czech}
-{capo: 0}
 {key: C}
-
-{range: }
+{date_added: 04-2025}
+{language: czech}
 {tempo: }
+{capo: 3}
+{range: g1-g2}
+{start_melody: c c}
+{pdf_filenames: []}
 
 {start_of_verse}
 [C]Z pekárny světa kraj za [F]láskou [G]svou,

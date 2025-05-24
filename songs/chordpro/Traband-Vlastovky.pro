@@ -9,8 +9,8 @@
 {language: czech}
 {tempo: }
 {capo: 0}
-{range: }
-{start_melody: }
+{range: a1-f2}
+{start_melody: d d c a}
 {pdf_filenames: []}
 
 {start_of_verse: Intro}
@@ -31,16 +31,18 @@
 {end_of_verse}
 
 {start_of_chorus: R1}
-[Dmi]O dalekých [Ami]krajích, 
+[Dmi]O dalekých [Ami]krajích,
 hlubokých [B]mořích, divokých [F]řekách,
-o vysokých [Dmi]horách, 
+o vysokých [Dmi]horách,
 které je [C]nutné přelét[Ami]nout.
 
-[Dmi]o nebeských [Ami]stezkách, 
+[Dmi]o nebeských [Ami]stezkách,
 zářících [B]hvězdách, o cestách [F]domů,
-o korunách [Dmi]stromů, 
+o korunách [Dmi]stromů,
 kde je [C]možné odpoči[Ami]nout.
 {end_of_chorus}
+
+{verse: Intro}
 
 {start_of_verse}
 [Dmi]Jsme z míst, která [Ami]jsme zabydlili,
@@ -55,28 +57,33 @@ kde je [C]možné odpoči[Ami]nout.
 {end_of_verse}
 
 {start_of_chorus}
-[Dmi]Jsme jako ti [Ami]ptáci, 
+[Dmi]Jsme jako ti [Ami]ptáci,
 z papíru [B]draci, létáme v [F]mracích
-a pak se [Dmi]vracíme zpátky 
+a pak se [Dmi]vracíme zpátky
 tam, kde při[C]poutaní [Ami]jsme.
 
-[Dmi]Jsme lidské by[Ami]tosti 
+[Dmi]Jsme lidské by[Ami]tosti
 z masa a [B]kostí, jsme jenom [F]hosti
-na tomhle [Dmi]světě, 
+na tomhle [Dmi]světě,
 přicházíme, [C]odchází[Ami]me.
 {end_of_chorus}
 
 {start_of_chorus}
-[Dmi]A chceme mít [Ami]jisto, 
+[Dmi]A chceme mít [Ami]jisto,
 že někde [B]místo, že někde je [F]hnízdo,
 odkud jsme [Dmi]přišli
 a kam zas [C]potom půjdeme [Ami]spát,
 
-[Dmi]že někde je [Ami]domov, 
+[Dmi]že někde je [Ami]domov,
 že někde je [B]hnízdo, útulno [F]čisto,
-že někde je [Dmi]někdo, 
+že někde je [Dmi]někdo,
 kdo čeká na [C]nás, na ná[Ami]vrat.
 {end_of_chorus}
 
+{start_of_variant: replace_first_line}
+[Dmi]Tam v dalekých [Ami]krajích,
+{end_of_variant}
 {chorus: R1}
 {chorus: R1}
+
+{verse: Intro}
