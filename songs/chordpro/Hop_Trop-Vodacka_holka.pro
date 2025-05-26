@@ -30,7 +30,7 @@ co [E]za každý cvaknutí můž[A]e.
 {start_of_verse}
 [D]Je pěkná jak [Emi]ráno a [G]voní jak [A]les,[C]
 když [D]na dřevo [Emi]u ohně [G]hrává, [A]
-loď [D]zrádná jak [Emi]kočka a [G]věrná jak [A]pes,
+je [D]zrádná jak [Emi]kočka a [G]věrná jak [A]pes,
 ta [D]holka, co [Emi]při tobě [A]spává. [D]
 {end_of_verse}
 

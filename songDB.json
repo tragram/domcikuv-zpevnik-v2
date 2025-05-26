@@ -1744,7 +1744,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Hop_Trop-Vodacka_holka.pro",
-    "contentHash": "385ba1b32f771d01adeebca8b222d403d1d53905",
+    "contentHash": "1933b3bd6c8ffade4053746d1d4c2496b481238b",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -5574,7 +5574,7 @@
     "dateAdded": "05-2025",
     "language": "czech",
     "tempo": "",
-    "capo": "0",
+    "capo": "3",
     "range": "g#1-a2",
     "startMelody": "a a a",
     "promptModel": "gpt-4o-mini",
@@ -5582,7 +5582,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Sverak_Uhlir-Pod_dubem_za_dubem.pro",
-    "contentHash": "04040d91a00a7a315fd042992de3a9bf941035fc",
+    "contentHash": "6bbf8e142cb2c177d758312deda74c6573170f01",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {

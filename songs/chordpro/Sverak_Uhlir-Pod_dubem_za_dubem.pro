@@ -8,7 +8,7 @@
 {date_added: 05-2025}
 {language: czech}
 {tempo: }
-{capo: 0}
+{capo: 3}
 {range: g#1-a2}
 {start_melody: a a a}
 {pdf_filenames: []}
