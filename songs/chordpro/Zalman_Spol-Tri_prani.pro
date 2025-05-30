@@ -21,14 +21,13 @@ Tři [Dmi]lístky házím do louží
 své hříchy zaklí[Ami]nám
 tři [F]přání prstem [Gmi]naznačím
 když na [Dmi]slámě [C]usí[B]nám.[Ami][Dmi]
-
 {end_of_verse}
 
 {start_of_chorus}
 A [F]vítr co s ní [Gmi]ve skalách
 na [F]flétnu dlouze [Gmi]hrál [C]
 tak [F]dlouho až se [Gmi]strachy třás'
-ten kdo [Dmi]lásku [C]nemiloval. [B][Ami][Dmi]
+ten kdo [Dmi]lásku [C]nemilo[B]val. [Ami][Dmi]
 {end_of_chorus}
 
 {start_of_verse}
