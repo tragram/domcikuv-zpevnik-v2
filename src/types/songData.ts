@@ -1,8 +1,8 @@
 
 import { preambleKeywords, generatedFields, chordpro2JSKeywords, JS2chordproKeywords } from "./preambleKeywords";
-import { fileURL } from "../components/song_loader";
+import { fileURL } from "@/lib/songLoader";
 import { Key, Note, SongRange } from "./musicTypes";
-import { int, SongLanguage } from "./types";
+import type { int, SongLanguage } from "./types";
 
 class IllustrationData {
     promptId: string;

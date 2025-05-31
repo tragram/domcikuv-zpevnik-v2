@@ -9,8 +9,9 @@ lerna-debug.log*
 
 node_modules
 dist
-dev-dist
 dist-ssr
+dev-dist
+scripts/__pycache__/*
 *.local
 
 # Editor directories and files
@@ -24,10 +25,12 @@ dist-ssr
 *.sln
 *.sw?
 
+# wrangler files
+.wrangler
+.dev.vars*
+
 secrets.yaml
-*.ipynb
-__pycache__
 
 # DB gets rebuilt on both dev and build
-public/songDB.hash
 public/songDB.json
+public/songDB.hash
