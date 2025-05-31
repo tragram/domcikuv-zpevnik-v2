@@ -31,7 +31,6 @@ const VocalRangeSlider = ({
     const currentValue = vocalRangeFilter === "all" ? [0, maxRange] : vocalRangeFilter;
 
     const setValue = (value: number[]) => {
-        console.log(value)
         if (value[0] === 0 && value[1] === maxRange) {
             setVocalRangeFilter("all");
         } else {
