@@ -119,69 +119,69 @@ function SongLoaderWrapper({ songId, Child }: { songId: string, Child: React.FC 
 }
 
 const Router = () => {
-  const [songDB, setSongDB] = useState<SongDB | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [songDB, setSongDB] = useState<SongDB | null>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const loadSongs = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchSongs();
-        setSongDB(data);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load songs');
-        console.error('Error fetching songs:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const loadSongs = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const data = await fetchSongs();
+  //       setSongDB(data);
+  //       setError(null);
+  //     } catch (err) {
+  //       setError(err instanceof Error ? err.message : 'Failed to load songs');
+  //       console.error('Error fetching songs:', err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    loadSongs();
-  }, []);
+  //   loadSongs();
+  // }, []);
 
-  // Loading state
-  if (loading) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-gray-100 mx-auto mb-2"></div>
-          <p>Loading songs...</p>
-        </div>
-      </div>
-    );
-  }
+  // // Loading state
+  // if (loading) {
+  //   return (
+  //     <div className="h-screen w-full flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-gray-100 mx-auto mb-2"></div>
+  //         <p>Loading songs...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-  // Error state
-  if (error) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center">
-        <div className="text-center text-red-600 dark:text-red-400">
-          <p className="mb-2">Error loading songs:</p>
-          <p className="text-sm">{error}</p>
-        </div>
-      </div>
-    );
-  }
+  // // Error state
+  // if (error) {
+  //   return (
+  //     <div className="h-screen w-full flex items-center justify-center">
+  //       <div className="text-center text-red-600 dark:text-red-400">
+  //         <p className="mb-2">Error loading songs:</p>
+  //         <p className="text-sm">{error}</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
-  // No data state
-  if (!songDB) {
-    return (
-      <div className="h-screen w-full flex items-center justify-center">
-        <p>No song data available</p>
-      </div>
-    );
-  }
+  // // No data state
+  // if (!songDB) {
+  //   return (
+  //     <div className="h-screen w-full flex items-center justify-center">
+  //       <p>No song data available</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
-      <Route path="/"><SongList songDB={songDB} /></Route>
-      <Route path="/gallery"><SongGallery songDB={songDB} /></Route>
+      <Route path="/"><SongList /></Route>
+      {/* <Route path="/gallery"><SongGallery songDB={songDB} /></Route> */}
       <Route path="/demo"><App /></Route>
       <Route path="/song/:id" >{params => <SongLoaderWrapper songId={params.id} Child={SongView} />}</Route>
       <Switch>
-        <Route path="/edit"  ><Editor songDB={songDB} /></Route>
+        {/* <Route path="/edit"  ><Editor songDB={songDB} /></Route> */}
         <Route path="/edit/:id" >{params => <SongLoaderWrapper songId={params.id} Child={Editor} />}</Route>
       </Switch>
     </>
