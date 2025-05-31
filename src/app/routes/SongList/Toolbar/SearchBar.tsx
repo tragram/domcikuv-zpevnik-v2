@@ -60,17 +60,20 @@ function SearchBar() {
             <span className="sr-only">Clear</span>
         </Button>
     );
-
     return (
         <>
             {/* Mobile Search */}
             <div className="flex xs:hidden items-center gap-2">
-                <div className={cn("relative flex transition-all duration-300 ease-in-out items-center z-50", isExpanded ? "-translate-x-12" : "")}>
+                <div className={cn("flex transition-all duration-300 ease-in-out items-center z-50")}
+                    style={{
+                        translate: isExpanded ? "calc((-100vw + 32px + 40px) / 4)" : ""
+                    }}
+                >
                     <Button
                         type="button"
                         variant="circular"
                         size="icon"
-                        className={cn("relative z-10 transition-all duration-300 ease-in-out", isExpanded ? 'bg-background rounded-r-none text-primary dark:outline-primary' : '', query ? "bg-primary text-white dark:bg-background dark:text-primary" : "")}
+                        className={cn("z-10 transition-all duration-300 ease-in-out", isExpanded ? 'bg-background rounded-r-none text-primary dark:outline-primary' : '', query ? "bg-primary text-white dark:bg-background dark:text-primary" : "")}
                         onClick={handleToggle}
                         aria-label={isExpanded ? "Close search" : "Open search"}
                         aria-expanded={isExpanded}
@@ -80,7 +83,7 @@ function SearchBar() {
                     <div
                         className={cn("absolute left-0 top-0 flex h-full items-center overflow-hidden transition-all duration-300 ease-in-out outline-primary outline-2 bg-background",
                             isExpanded ? 'opacity-100 rounded-full' : 'opacity-0', query ? ' outline-primary' : '')}
-                        style={{ width: isExpanded ? `calc(${expandedWidth}px - 1rem)` : '0' }}
+                        style={{ width: isExpanded ? `calc(100vw - 32px)` : '0' }}
                     >
                         <Button
                             type="button"
