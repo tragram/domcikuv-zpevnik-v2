@@ -53,10 +53,17 @@ function SongList({ songDB }: { songDB: SongDB }) {
                 className="sm:pt-20 pt-[72px] pb-4 overflow-auto h-full"
                 onScroll={handleScroll}
             >
-                {songs.map((song) => (
+                {songs.length ? songs.map((song) => (
                     <SongRow key={song.id} song={song} maxRange={songDB.maxRange}
                     />
-                ))}
+                )) : (
+                    <div className='w-full h-full text-xl sm:text-2xl flex items-center justify-center text-center text-primary font-bold'>
+                        <p>
+                            No songs fulfill all the filters set!
+                        </p>
+                    </div>
+                )}
+
             </div>
         </div>
     );
