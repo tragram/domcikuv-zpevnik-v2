@@ -9,7 +9,6 @@
 {range: d1-d2}
 {start_melody: h h a h}
 
-
 {start_of_verse}
 [G]Z PL[Em]R do [Am]ML[D7]R
 [G]jel jsem [Em]přes Č[Am]SS[D7]R,
@@ -17,7 +16,7 @@
 {end_of_verse}
 
 {start_of_bridge}
-Mé [G7]DKW S[C]PZ AB[E7]T dvacet pět [Am]pade[D7]sát
+Mé [G7]DKW S[C]PZ AB[E7]T dvacet pět [A7]pade[D7]sát
 [G]musí [Em]teďka [Am]na G[D7]O [A7]do Č[D7]SA[G]O. [D7]
 {end_of_bridge}
 
@@ -28,7 +27,7 @@ Mé [G7]DKW S[C]PZ AB[E7]T dvacet pět [Am]pade[D7]sát
 {end_of_verse}
 
 {start_of_bridge}
-Jse[G7]m RND[C]r. CSC. [E7]z ČVUT v [Am]Praze [D7]dvě
+Jse[G7]m RND[C]r. CSC. [E7]z ČVUT v [A7]Praze [D7]dvě
 [G]v ČS[Em]AO [Am]v Praze [D7]tři [A7]já mám [D7]tlačen[G]ku. [D7]
 {end_of_bridge}
 
