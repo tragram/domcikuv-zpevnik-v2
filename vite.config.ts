@@ -24,6 +24,7 @@ export default defineConfig({
         enabled: false,
       },
       workbox: {
+        disableDevLogs: true,
         globDirectory: 'dist/client',
         globPatterns: [
           '**/*.{js,css,html,ico,png,svg,yaml,json}',
