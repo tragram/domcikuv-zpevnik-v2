@@ -64,17 +64,34 @@ function generateRefreshToken(): string {
 
 const isProduction = (c: Context) => { return !(c.env.IS_LOCAL_MODE && c.env.IS_LOCAL_MODE === "1") }
 
-function setRefreshToken(c: Context) {
+function setAuthCookies(c: Context) {
     const refreshToken = generateRefreshToken();
-    // Set refresh token as HttpOnly cookie
+    
+    // Set HttpOnly refresh token cookie
     setCookie(c, 'refreshToken', refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: isProduction(c) ? 'Strict' : 'Lax',
-        maxAge: 30 * 24 * 60 * 60,
+        maxAge: 30 * 24 * 60 * 60, // 30 days
         path: '/api',
     })
+    
+    // Set visible auth indicator cookie (no sensitive data)
+    setCookie(c, 'auth_status', 'authenticated', {
+        httpOnly: false, // Client can read this
+        secure: true,
+        sameSite: isProduction(c) ? 'Strict' : 'Lax',
+        maxAge: 30 * 24 * 60 * 60, // Same expiry as refresh token
+        path: '/', // Available to entire app
+    })
+    
     return refreshToken;
+}
+
+function clearAuthCookies(c: Context) {
+    // Clear both cookies
+    deleteCookie(c, 'refreshToken', { path: '/api' })
+    deleteCookie(c, 'auth_status', { path: '/' })
 }
 
 type Bindings = {
@@ -91,7 +108,6 @@ type Variables = {
 }
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
-
 
 // CORS middleware with credentials support
 // app.use('*', cors({
@@ -177,8 +193,8 @@ app.post('/api/login', async (c) => {
 
         const accessToken = await sign(accessTokenPayload, c.env.JWT_SECRET)
 
-        // Generate refresh token
-        const refreshToken = setRefreshToken(c)
+        // Set both auth cookies
+        const refreshToken = setAuthCookies(c)
         const refreshTokenExpiry = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)) // 30 days
 
         // Store refresh token in database
@@ -208,6 +224,8 @@ app.post('/api/refresh', async (c) => {
         // Get refresh token from cookie
         const refreshToken = c.req.header('cookie')?.match(/refreshToken=([^;]+)/)?.[1]
         if (!refreshToken) {
+            // Clear auth status cookie if refresh token is missing
+            clearAuthCookies(c)
             return c.json({ error: 'Refresh token not found' }, 401)
         }
 
@@ -215,9 +233,10 @@ app.post('/api/refresh', async (c) => {
         const tokenRecord = await c.env.DB.prepare(
             'SELECT * FROM refresh_tokens WHERE token = ? AND expires_at > datetime("now")'
         ).bind(refreshToken).first() as any
+        
         if (!tokenRecord) {
-            // Delete invalid cookie
-            deleteCookie(c, 'refreshToken', { path: '/api' })
+            // Clear both cookies if token is invalid
+            clearAuthCookies(c)
             return c.json({ error: 'Invalid or expired refresh token' }, 401)
         }
 
@@ -227,6 +246,7 @@ app.post('/api/refresh', async (c) => {
         ).bind(tokenRecord.user_id).first() as any
 
         if (!user) {
+            clearAuthCookies(c)
             return c.json({ error: 'User not found' }, 404)
         }
 
@@ -239,15 +259,15 @@ app.post('/api/refresh', async (c) => {
 
         const newAccessToken = await sign(accessTokenPayload, c.env.JWT_SECRET)
 
-        // Generate new refresh token for rotation
-        const newRefreshToken = setRefreshToken(c);
-
+        // Generate new refresh token for rotation and update auth cookies
+        const newRefreshToken = setAuthCookies(c)
         const newRefreshTokenExpiry = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)) // 30 days
 
         // Update refresh token in database (token rotation)
         await c.env.DB.prepare(
             'UPDATE refresh_tokens SET token = ?, expires_at = ? WHERE id = ?'
         ).bind(newRefreshToken, newRefreshTokenExpiry.toISOString(), tokenRecord.id).run()
+        
         return c.json({
             accessToken: newAccessToken,
             user: {
@@ -259,6 +279,7 @@ app.post('/api/refresh', async (c) => {
 
     } catch (error) {
         console.error('Refresh token error:', error)
+        clearAuthCookies(c)
         return c.json({ error: 'Internal server error' }, 500)
     }
 })
@@ -276,13 +297,15 @@ app.post('/api/logout', async (c) => {
             ).bind(refreshToken).run()
         }
 
-        // Delete the cookie
-        deleteCookie(c, 'refreshToken', { path: '/api' })
+        // Clear both cookies
+        clearAuthCookies(c)
 
         return c.json({ message: 'Logged out successfully' })
 
     } catch (error) {
         console.error('Logout error:', error)
+        // Still clear cookies even if there's an error
+        clearAuthCookies(c)
         return c.json({ error: 'Internal server error' }, 500)
     }
 })

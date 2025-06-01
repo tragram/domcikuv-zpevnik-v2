@@ -26,12 +26,18 @@ interface AuthProviderProps {
     children: ReactNode;
 }
 
+// Helper function to check for auth status cookie
+const hasAuthCookie = (): boolean => {
+    return document.cookie.includes('auth_status=authenticated');
+};
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<LoggedUser | null>(null);
-    const [token, setToken] = useState<string | null>(null); // Stored in memory only
+    const [token, setToken] = useState<string | null>(null);
     const [favorites, setFavorites] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const loggedIn = user != null;
+    
     const clearAuth = () => {
         setUser(null);
         setToken(null);
@@ -39,10 +45,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     const refreshAccessToken = useCallback(async (): Promise<boolean> => {
+        // Don't attempt refresh if no auth cookie is present
+        if (!hasAuthCookie()) {
+            console.debug('No auth cookie found, skipping token refresh');
+            clearAuth();
+            return false;
+        }
+
         try {
             const response = await fetch('/api/refresh', {
                 method: 'POST',
-                credentials: 'include', // Include cookies
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -71,7 +84,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             throw new Error('No access token available');
         }
 
-        // Add authorization header
         const headers = {
             ...options.headers,
             'Authorization': `Bearer ${token}`,
@@ -80,15 +92,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const response = await fetch(url, {
             ...options,
             headers,
-            credentials: 'include', // Include cookies for potential refresh
+            credentials: 'include',
         });
 
-        // If token expired, try to refresh and retry
-        if (response.status === 401) {
+        // If token expired, try to refresh and retry only if auth cookie exists
+        if (response.status === 401 && hasAuthCookie()) {
             const refreshed = await refreshAccessToken();
-            console.log(refreshed)
             if (refreshed && token) {
-                // Retry the request with new token
                 return fetch(url, {
                     ...options,
                     headers: {
@@ -103,17 +113,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return response;
     }, [refreshAccessToken, token]);
 
-    /* FAVORITES */
     const loadFavorites = useCallback(async () => {
-        console.log(token)
-        if (!token) return;
+        // Only load favorites if we have a token AND auth cookie
+        if (!token || !hasAuthCookie()) {
+            console.log('No token or auth cookie, skipping favorites load');
+            return;
+        }
 
         try {
             const response = await makeAuthenticatedRequest('/api/favorites');
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data.favorites)
                 setFavorites(data.favorites);
             }
         } catch (error) {
@@ -121,15 +132,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     }, [makeAuthenticatedRequest, token]);
 
-
-    // Try to restore session on mount by checking if refresh token exists
+    // Initialize auth only if cookies suggest we might be authenticated
     useEffect(() => {
         const initializeAuth = async () => {
             try {
-                // Try to refresh token on app start
-                const refreshed = await refreshAccessToken();
-                if (refreshed) {
-                    await loadFavorites();
+                // Only attempt refresh if auth cookie is present
+                if (hasAuthCookie()) {
+                    console.log('Auth cookie found, attempting to restore session');
+                    const refreshed = await refreshAccessToken();
+                    if (refreshed) {
+                        await loadFavorites();
+                    }
+                } else {
+                    console.log('No auth cookie found, skipping session restore');
                 }
             } catch (error) {
                 console.error('Error initializing auth:', error);
@@ -141,27 +156,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         initializeAuth();
     }, [loadFavorites, refreshAccessToken]);
 
-    // Set up automatic token refresh
+    // Set up automatic token refresh only when we have both token and auth cookie
     useEffect(() => {
-        if (!token) return;
+        if (!token || !hasAuthCookie()) return;
 
-        // Calculate time until token expires (tokens expire in 15 minutes)
-        // We'll refresh 2 minutes before expiry
-        const refreshInterval = 13 * 60 * 1000; // 13 minutes in milliseconds
+        const refreshInterval = 13 * 60 * 1000; // 13 minutes
 
         const intervalId = setInterval(() => {
-            refreshAccessToken();
+            // Double-check auth cookie still exists before refreshing
+            if (hasAuthCookie()) {
+                refreshAccessToken();
+            } else {
+                console.log('Auth cookie no longer present, clearing auth state');
+                clearAuth();
+            }
         }, refreshInterval);
 
         return () => clearInterval(intervalId);
     }, [refreshAccessToken, token]);
 
-
     const login = async (email: string, password: string): Promise<boolean> => {
         try {
             const response = await fetch('/api/login', {
                 method: 'POST',
-                credentials: 'include', // Include cookies
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -172,8 +190,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
             if (response.ok) {
                 setUser(data.user);
-                setToken(data.accessToken); // Store in memory only
-
+                setToken(data.accessToken);
                 await loadFavorites();
                 return true;
             } else {
@@ -188,14 +205,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const logout = async () => {
         try {
-            // Notify server to invalidate refresh token and clear cookie
-            await fetch('/api/logout', {
-                method: 'POST',
-                credentials: 'include', // Include cookies
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            // Only call logout API if we have auth cookie
+            if (hasAuthCookie()) {
+                await fetch('/api/logout', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+            }
         } catch (error) {
             console.error('Logout error:', error);
         } finally {
@@ -204,7 +223,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     const addToFavorites = async (songId: string): Promise<boolean> => {
-        if (!token) return false;
+        if (!token || !hasAuthCookie()) {
+            toast.error('Please log in to add favorites');
+            return false;
+        }
 
         try {
             const response = await makeAuthenticatedRequest(`/api/favorites/${songId}`, {
@@ -226,7 +248,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     const removeFromFavorites = async (songId: string): Promise<boolean> => {
-        if (!token) return false;
+        if (!token || !hasAuthCookie()) {
+            toast.error('Please log in to manage favorites');
+            return false;
+        }
 
         try {
             const response = await makeAuthenticatedRequest(`/api/favorites/${songId}`, {
