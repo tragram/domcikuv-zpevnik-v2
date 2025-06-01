@@ -63,10 +63,10 @@ function SearchBar() {
     return (
         <>
             {/* Mobile Search */}
-            <div className="flex xs:hidden items-center gap-2">
+            <div className="flex min-[400px]:hidden items-center gap-2">
                 <div className={cn("flex transition-all duration-300 ease-in-out items-center z-50")}
                     style={{
-                        translate: isExpanded ? "calc((-100vw + 32px + 40px) / 4)" : ""
+                        translate: isExpanded ? "calc((-100vw + 32px + 40px) / 5)" : ""
                     }}
                 >
                     <Button
@@ -109,7 +109,7 @@ function SearchBar() {
             </div >
 
             {/* Desktop Search */}
-            < div className={cn("relative hidden xs:flex items-center h-full text-primary dark:text-primary/30 transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 outline-primary dark:outline-primary/30 outline-2")}>
+            < div className={cn("relative hidden min-[400px]:flex items-center h-full text-primary dark:text-primary/30 transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 outline-primary dark:outline-primary/30 outline-2")}>
                 <Input
                     onChange={search}
                     value={query}
