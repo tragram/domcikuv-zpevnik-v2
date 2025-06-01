@@ -9,59 +9,59 @@
 {language: czech}
 {tempo: }
 {capo: 0}
-{range: }
-{start_melody: }
+{range: a1-h2}
+{start_melody: a d e f#}
 {pdf_filenames: []}
 
 {start_of_verse}
-[D]Když vlny [Emi]se valí [G]a peřej[A]e řvou [C]
-a [D]šutry z nich [Emi]civí jak [G]sůvy, [A]
+[D]Když vlny [Emi]se valí [G]a peřej[A]e řvou
+a [D]šutry z nich [Emi]civí jak [G]sů[A]vy, 
 loď [D]praská a [Emi]umrlčí [G]zvon bije [A]tmou,
 tak [D]řekni, kdo [Emi]pomoct ti [A]umí. [D]
 {end_of_verse}
 
 {start_of_bridge}
 Kdo [Hmi]pádlem jen [F#mi]kmitne a [G]převrátí [D]loď,
-kdo [Hmi]ječí jak [F#mi]staženej z [A]kůže, [D]
+pak [Hmi]ječí jak [F#mi]staženej z [A]ků[D]že,
 že [Hmi]ty jseš ta [F#mi]atrapa, [G]ty jseš ten [D]cvok,
-co [E]za každý cvaknutí můž[A]e.
+co [E]za každý cvaknutí mů[A]že.
 {end_of_bridge}
 
 {start_of_verse}
-[D]Je pěkná jak [Emi]ráno a [G]voní jak [A]les,[C]
-když [D]na dřevo [Emi]u ohně [G]hrává, [A]
+[D]Je pěkná jak [Emi]ráno a [G]voní jak [A]les,
+když [D]na dřevo [Emi]u ohně [G]hrá[A]vá, 
 je [D]zrádná jak [Emi]kočka a [G]věrná jak [A]pes,
-ta [D]holka, co [Emi]při tobě [A]spává. [D]
+ta [D]holka, co [Emi]při tobě [A]spá[D]vá.
 {end_of_verse}
 
 {start_of_chorus}
 Tu [G]vodáckou [Hmi]holku si [A]navěky [D]nech,
-[G]netop ji, [Hmi]nezaháněj, [A][D]
+[G]netop ji, [Hmi]neza[A]há[D]něj,
 svou [Emi]víru, svou [Hmi]sílu, svý [F#mi]štěstí i [Hmi]pech,
 svý [Emi]strachy, svý [D]prachy, svůj [E]poslední [A]dech
-jí [D]poctivě [Emi]odevzdávej [A]
-[D]a lásku [Emi]za lásku [G]dávej. [A][D]
+jí [D]poctivě [Emi]odevzdá[A]vej 
+[D]a lásku [Emi]za lásku [G]dá[A][D]vej.
 {end_of_chorus}
 
 {start_of_verse}
 [D]Kdo připálí [Emi]rejži a [G]přesolí [A]čaj,
-kdo [D]sůl nechá [Emi]v posledním [G]kempu, [A]
+kdo [D]sůl nechá [Emi]v posledním [G]kem[A]pu, 
 kdo [D]ráj změní [Emi]v peklo a [G]peklo zas [A]v ráj,
-kdo [D]zná všechny [Emi]písničky [A]trempů. [D]
+kdo [D]zná všechny [Emi]písničky [A]trem[D]pů. 
 {end_of_verse}
 
 {start_of_bridge}
-Kdo [Hmi]pádlem jen [F#mi]kmitne a [G]převrátí [D]loď,
-kdo [Hmi]ječí jak [F#mi]staženej z [A]kůže, [D]
-že [Hmi]ty jseš ta [F#mi]atrapa, [G]ty jseš ten [D]cvok,
-co [E]za každý cvaknutí můž[A]e.
+Kdo [Hmi]přeje ti [F#mi]štěstí a [G]kope ti [D]hrob,
+kdo [Hmi]sladce hned [F#mi]šeptá, hned [A]vřís[D]ká,
+a [Hmi]koho bys [F#mi]roztrh' a [G]praštil a [D]kop'
+a [E]po kom se celej den stýs[A]ká
 {end_of_bridge}
 
 {start_of_verse}
 [D]Až vlasy nám [Emi]odbarví [G]nebeskej [A]král
-a [D]vrásky nám [Emi]počmáraj' [G]kůži, [A]
+a [D]vrásky nám [Emi]počmáraj' [G]ků[A]ži, 
 svý [D]holce dej [Emi]pusu a [G]řekni "jdem [A]dál"
-a na [D]pádlo [Emi]polož jí [A]růži. [D]
+a na [D]pádlo [Emi]polož jí [A]rů[D]ži.
 {end_of_verse}
 
 {chorus}
