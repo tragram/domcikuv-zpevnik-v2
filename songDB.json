@@ -5154,7 +5154,7 @@
     "songbooks": "[]",
     "key": "E",
     "dateAdded": "06-2025",
-    "language": "other",
+    "language": "czech",
     "tempo": "",
     "capo": "0",
     "range": "h1-f2",
@@ -5164,8 +5164,8 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[]",
     "chordproFile": "Rangers_-_Plavci-Inzenyrska.pro",
-    "contentHash": "1bd9dad4b442b8724fb478503774974867c31111",
-    "availableIllustrations": []
+    "contentHash": "b361c907119e4274c9ec6972720a4e32326dba0c",
+    "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
     "title": "1+1",
