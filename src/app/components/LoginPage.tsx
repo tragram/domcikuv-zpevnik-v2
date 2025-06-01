@@ -15,24 +15,41 @@ import { useAuth } from "@/components/contexts/AuthContext"
 export default function AuthComponent() {
     const [location, setLocation] = useLocation();
     const [isLoading, setIsLoading] = useState(false)
-    const { login } = useAuth();
+    const { login, loggedIn } = useAuth();
+    const [tab, setTab] = useState("login");
+    const onTabChange = (value) => {
+        setTab(value);
+    }
+
+    const [forgotPasswordContent, setForgotPasswordContent] = useState("Forgot password?");
+
+    // TODO: uncomment when profile page done
+    // if (loggedIn) {
+    //     setLocation("/profile")
+    // }
+
 
     // Login form state
     const [loginData, setLoginData] = useState({
-        email: "d@x.com",
-        password: "d@x.com",
+        email: "",
+        password: "",
         remember: false,
     })
 
     // Register form state
     const [registerData, setRegisterData] = useState({
-        firstName: "Dominik",
-        lastName: "Hodan",
-        email: "d@x.com",
-        password: "d@x.com",
-        confirmPassword: "d@x.com",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
         terms: true,
     })
+
+    const rememberMeEl = loginData.remember ? <p className="text-[10px]">LMAO, this doesn't do anything</p> :
+        <Label htmlFor="remember" className="text-sm">
+            Remember me
+        </Label>;
 
     // Handle login form input changes
     const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,10 +76,10 @@ export default function AuthComponent() {
 
         try {
             const success = await login(loginData.email, loginData.password);
-            
+
             if (success) {
                 toast.success("You have been logged in successfully.")
-                // setLocation("/")
+                setLocation("/")
             }
         } catch (error) {
             toast.error("Failed to login. Please try again.")
@@ -103,9 +120,7 @@ export default function AuthComponent() {
             }
 
             toast.success("Your account has been created successfully. Please log in.")
-
-            // Switch to login tab
-            document.querySelector('[data-value="login"]')?.click()
+            setTab("login");
         } catch (error) {
             toast.error(error instanceof Error ? error.message : "Failed to register. Please try again.")
         } finally {
@@ -115,8 +130,8 @@ export default function AuthComponent() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-background/70 p-4">
-            <Card className="w-full max-w-md">
-                <Tabs defaultValue="login" className="w-full">
+            <Card className="w-full max-w-md  border-4 border-primary">
+                <Tabs value={tab} onValueChange={onTabChange} className="w-full">
                     <CardHeader className="space-y-1">
                         <TabsList className="grid w-full grid-cols-2">
                             <TabsTrigger value="login">Login</TabsTrigger>
@@ -137,7 +152,7 @@ export default function AuthComponent() {
                                         id="login-email"
                                         name="email"
                                         type="email"
-                                        placeholder="m@example.com"
+                                        placeholder="wonderland@ali.ce"
                                         value={loginData.email}
                                         onChange={handleLoginChange}
                                         required
@@ -164,12 +179,10 @@ export default function AuthComponent() {
                                             onChange={handleLoginChange}
                                             className="h-4 w-4 rounded border-gray-300"
                                         />
-                                        <Label htmlFor="remember" className="text-sm">
-                                            Remember me
-                                        </Label>
+                                        {rememberMeEl}
                                     </div>
-                                    <Button variant="link" className="px-0 text-sm" type="button">
-                                        Forgot password?
+                                    <Button variant="link" className="px-0 text-sm" type="button" onClick={() => setForgotPasswordContent("Tought luck, no way to reset it!")}>
+                                        {forgotPasswordContent}
                                     </Button>
                                 </div>
                             </CardContent>
@@ -211,7 +224,7 @@ export default function AuthComponent() {
                     </TabsContent>
 
                     <TabsContent value="register">
-                        <CardHeader className="space-y-1  pt-4 pb-8">
+                        <CardHeader className="space-y-1 pt-4 pb-8">
                             <CardTitle className="text-2xl text-center">Create account</CardTitle>
                             <CardDescription className="text-center">Enter your information to create a new account</CardDescription>
                         </CardHeader>
@@ -223,7 +236,7 @@ export default function AuthComponent() {
                                         <Input
                                             id="first-name"
                                             name="firstName"
-                                            placeholder="John"
+                                            placeholder="Alenka"
                                             value={registerData.firstName}
                                             onChange={handleRegisterChange}
                                             required
@@ -234,7 +247,7 @@ export default function AuthComponent() {
                                         <Input
                                             id="last-name"
                                             name="lastName"
-                                            placeholder="Doe"
+                                            placeholder="Vříšidivů"
                                             value={registerData.lastName}
                                             onChange={handleRegisterChange}
                                             required
@@ -247,7 +260,7 @@ export default function AuthComponent() {
                                         id="register-email"
                                         name="email"
                                         type="email"
-                                        placeholder="m@example.com"
+                                        placeholder="wonderland@ali.ce"
                                         value={registerData.email}
                                         onChange={handleRegisterChange}
                                         required
