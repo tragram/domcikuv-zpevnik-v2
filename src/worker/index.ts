@@ -1,8 +1,9 @@
-// src/index.ts
-import { Hono } from 'hono'
-import { cors } from 'hono/cors'
+import { Context, Hono } from 'hono'
+// import { cors } from 'hono/cors'
 import { jwt } from 'hono/jwt'
 import { sign } from 'hono/jwt'
+import { setCookie, deleteCookie } from 'hono/cookie'
+
 // Password hashing utilities using Web Crypto API
 async function hashPassword(password: string, saltHex?: string): Promise<{ saltHex: string, hashHex: string }> {
     const encoder = new TextEncoder()
@@ -54,9 +55,32 @@ async function verifyPassword(storedHash: string, passwordAttempt: string): Prom
     return attemptHash === originalHash
 }
 
+// Generate a secure random refresh token
+function generateRefreshToken(): string {
+    const array = new Uint8Array(32)
+    crypto.getRandomValues(array)
+    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('')
+}
+
+const isProduction = (c: Context) => { return !(c.env.IS_LOCAL_MODE && c.env.IS_LOCAL_MODE === "1") }
+
+function setRefreshToken(c: Context) {
+    const refreshToken = generateRefreshToken();
+    // Set refresh token as HttpOnly cookie
+    setCookie(c, 'refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: isProduction(c) ? 'Strict' : 'Lax',
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/api',
+    })
+    return refreshToken;
+}
+
 type Bindings = {
     DB: D1Database
     JWT_SECRET: string
+    IS_LOCAL_MODE: string
 }
 
 type Variables = {
@@ -68,12 +92,14 @@ type Variables = {
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// CORS middleware
-app.use('*', cors({
-    origin: ['http://localhost:5173', 'https://domcikuv-zpevnik-v2.domho108.workers.dev/'],
-    allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowHeaders: ['Content-Type', 'Authorization'],
-}))
+
+// CORS middleware with credentials support
+// app.use('*', cors({
+//     origin: ['http://localhost:5173', 'https://domcikuv-zpevnik-v2.domho108.workers.dev'],
+//     allowMethods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     allowHeaders: ['Content-Type', 'Authorization'],
+//     credentials: true, // Allow cookies
+// }))
 
 // User registration
 app.post('/api/register', async (c) => {
@@ -121,6 +147,7 @@ app.post('/api/register', async (c) => {
 app.post('/api/login', async (c) => {
     try {
         const { email, password } = await c.req.json()
+
         // Validation
         if (!email || !password) {
             return c.json({ error: 'Email and password are required' }, 400)
@@ -140,18 +167,29 @@ app.post('/api/login', async (c) => {
         if (!isValid) {
             return c.json({ error: 'Invalid credentials' }, 401)
         }
-        // Generate JWT token
-        const payload = {
+
+        // Generate JWT token (15 minutes)
+        const accessTokenPayload = {
             id: user.id,
             email: user.email,
-            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7) // 7 days
+            exp: Math.floor(Date.now() / 1000) + (15 * 60) // 15 minutes
         }
-        
-        const token = await sign(payload, c.env.JWT_SECRET)
+
+        const accessToken = await sign(accessTokenPayload, c.env.JWT_SECRET)
+
+        // Generate refresh token
+        const refreshToken = setRefreshToken(c)
+        console.log("saving refreshToken on login", refreshToken)
+        const refreshTokenExpiry = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)) // 30 days
+
+        // Store refresh token in database
+        await c.env.DB.prepare(
+            'INSERT INTO refresh_tokens (user_id, token, expires_at) VALUES (?, ?, ?)'
+        ).bind(user.id, refreshToken, refreshTokenExpiry.toISOString()).run()
 
         return c.json({
             message: 'Login successful',
-            token,
+            accessToken,
             user: {
                 id: user.id,
                 name: user.name,
@@ -165,10 +203,102 @@ app.post('/api/login', async (c) => {
     }
 })
 
-// Protected route middleware
-const authMiddleware = jwt({
-    secret: async (c) => c.env.JWT_SECRET,
+// Refresh token endpoint
+app.post('/api/refresh', async (c) => {
+    try {
+        // Get refresh token from cookie
+        const refreshToken = c.req.header('cookie')?.match(/refreshToken=([^;]+)/)?.[1]
+        console.log("on refresh, found refreshtoken:", refreshToken)
+        if (!refreshToken) {
+            return c.json({ error: 'Refresh token not found' }, 401)
+        }
+
+        // Find and validate refresh token
+        const tokenRecord = await c.env.DB.prepare(
+            'SELECT * FROM refresh_tokens WHERE token = ? AND expires_at > datetime("now")'
+        ).bind(refreshToken).first() as any
+        console.log("on refresh, tokenRecord is", tokenRecord)
+        if (!tokenRecord) {
+            // Delete invalid cookie
+            deleteCookie(c, 'refreshToken', { path: '/api' })
+            return c.json({ error: 'Invalid or expired refresh token' }, 401)
+        }
+
+        // Get user info
+        const user = await c.env.DB.prepare(
+            'SELECT id, name, email FROM users WHERE id = ?'
+        ).bind(tokenRecord.user_id).first() as any
+
+        if (!user) {
+            return c.json({ error: 'User not found' }, 404)
+        }
+
+        // Generate new access token (15 minutes)
+        const accessTokenPayload = {
+            id: user.id,
+            email: user.email,
+            exp: Math.floor(Date.now() / 1000) + (15 * 60) // 15 minutes
+        }
+
+        const newAccessToken = await sign(accessTokenPayload, c.env.JWT_SECRET)
+
+        // Generate new refresh token for rotation
+        const newRefreshToken = setRefreshToken(c);
+
+        console.log("saving new refreshToken on refresh", newRefreshToken)
+        const newRefreshTokenExpiry = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)) // 30 days
+
+        // Update refresh token in database (token rotation)
+        await c.env.DB.prepare(
+            'UPDATE refresh_tokens SET token = ?, expires_at = ? WHERE id = ?'
+        ).bind(newRefreshToken, newRefreshTokenExpiry.toISOString(), tokenRecord.id).run()
+        console.log("saving new accestoken on refresh", newAccessToken)
+        return c.json({
+            accessToken: newAccessToken,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email
+            }
+        })
+
+    } catch (error) {
+        console.error('Refresh token error:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+    }
 })
+
+// Logout endpoint (invalidate refresh token)
+app.post('/api/logout', async (c) => {
+    try {
+        // Get refresh token from cookie
+        const refreshToken = c.req.header('cookie')?.match(/refreshToken=([^;]+)/)?.[1]
+
+        if (refreshToken) {
+            // Remove refresh token from database
+            await c.env.DB.prepare(
+                'DELETE FROM refresh_tokens WHERE token = ?'
+            ).bind(refreshToken).run()
+        }
+
+        // Delete the cookie
+        deleteCookie(c, 'refreshToken', { path: '/api' })
+
+        return c.json({ message: 'Logged out successfully' })
+
+    } catch (error) {
+        console.error('Logout error:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+    }
+})
+
+// Protected route middleware
+const authMiddleware = (c, next) => {
+    const jwtMiddleware = jwt({
+        secret: c.env.JWT_SECRET,
+    })
+    return jwtMiddleware(c, next)
+}
 
 // Get user profile (protected)
 app.get('/api/profile', authMiddleware, async (c) => {
@@ -209,6 +339,99 @@ app.put('/api/profile', authMiddleware, async (c) => {
 
     } catch (error) {
         console.error('Update profile error:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+    }
+})
+
+// Get user's favorite songs (protected)
+app.get('/api/favorites', authMiddleware, async (c) => {
+    try {
+        const payload = c.get('jwtPayload')
+
+        const favorites = await c.env.DB.prepare(
+            'SELECT song_id FROM user_favorites WHERE user_id = ?'
+        ).bind(payload.id).all()
+
+        const songIds = favorites.results.map((fav: any) => fav.song_id)
+
+        return c.json({ favorites: songIds })
+
+    } catch (error) {
+        console.error('Get favorites error:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+    }
+})
+
+// Add song to favorites (protected)
+app.post('/api/favorites/:songId', authMiddleware, async (c) => {
+    try {
+        const payload = c.get('jwtPayload')
+        const songId = c.req.param('songId')
+
+        if (!songId) {
+            return c.json({ error: 'Song ID is required' }, 400)
+        }
+
+        // Check if already favorited
+        const existing = await c.env.DB.prepare(
+            'SELECT song_id FROM user_favorites WHERE user_id = ? AND song_id = ?'
+        ).bind(payload.id, songId).first()
+        console.log(existing)
+        if (existing) {
+            return c.json({ error: 'Song is already in favorites' }, 409)
+        }
+
+        // Add to favorites
+        await c.env.DB.prepare(
+            'INSERT INTO user_favorites (user_id, song_id) VALUES (?, ?)'
+        ).bind(payload.id, songId).run()
+
+        return c.json({ message: 'Song added to favorites' }, 201)
+
+    } catch (error) {
+        console.error('Add favorite error:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+    }
+})
+
+// Remove song from favorites (protected)
+app.delete('/api/favorites/:songId', authMiddleware, async (c) => {
+    try {
+        const payload = c.get('jwtPayload')
+        const songId = c.req.param('songId')
+
+        if (!songId) {
+            return c.json({ error: 'Song ID is required' }, 400)
+        }
+
+        // Remove from favorites
+        const result = await c.env.DB.prepare(
+            'DELETE FROM user_favorites WHERE user_id = ? AND song_id = ?'
+        ).bind(payload.id, songId).run()
+
+        if (result.changes === 0) {
+            return c.json({ error: 'Song not found in favorites' }, 404)
+        }
+
+        return c.json({ message: 'Song removed from favorites' })
+
+    } catch (error) {
+        console.error('Remove favorite error:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+    }
+})
+
+// Clean up expired refresh tokens (utility endpoint)
+app.post('/api/cleanup-tokens', async (c) => {
+    try {
+        await c.env.DB.prepare(
+            'DELETE FROM refresh_tokens WHERE expires_at < datetime("now")'
+        ).run()
+
+        return c.json({ message: 'Expired tokens cleaned up' })
+
+    } catch (error) {
+        console.error('Token cleanup error:', error)
         return c.json({ error: 'Internal server error' }, 500)
     }
 })

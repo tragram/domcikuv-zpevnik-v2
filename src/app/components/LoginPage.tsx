@@ -10,10 +10,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "sonner"
 import { useLocation } from "wouter"
+import { useAuth } from "@/components/contexts/AuthContext"
 
 export default function AuthComponent() {
     const [location, setLocation] = useLocation();
     const [isLoading, setIsLoading] = useState(false)
+    const { login } = useAuth();
 
     // Login form state
     const [loginData, setLoginData] = useState({
@@ -56,29 +58,14 @@ export default function AuthComponent() {
         setIsLoading(true)
 
         try {
-            const response = await fetch("/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: loginData.email,
-                    password: loginData.password,
-                }),
-            })
-
-            const data = await response.json()
-
-            if (!response.ok) {
-                throw new Error(data.error || "Login failed")
+            const success = await login(loginData.email, loginData.password);
+            
+            if (success) {
+                toast.success("You have been logged in successfully.")
+                // setLocation("/")
             }
-
-            toast.success("You have been logged in successfully.")
-
-            // Redirect to home page
-            setLocation("/")
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Failed to login. Please try again.")
+            toast.error("Failed to login. Please try again.")
         } finally {
             setIsLoading(false)
         }

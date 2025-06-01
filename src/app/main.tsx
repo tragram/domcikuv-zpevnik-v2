@@ -13,6 +13,7 @@ import { SongDB } from "src/types/types.ts";
 import { SongData } from "src/types/songData.ts";
 import LoginPage from "./components/LoginPage.tsx";
 import { Toaster } from "sonner";
+import { AuthProvider } from "./components/contexts/AuthContext.tsx";
 const SongList = lazy(() => import("./routes/SongList/SongList.tsx"));
 const Editor = lazy(() => import("./routes/Editor/Editor.tsx"));
 const SongView = lazy(() => import("./routes/SongView/SongView.tsx"));
@@ -192,10 +193,12 @@ const Router = () => {
 };
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  <AuthProvider>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <Router />
-      <Toaster />
+      <StrictMode>
+        <Router />
+        <Toaster />
+      </StrictMode >,
     </ThemeProvider>
-  </StrictMode>,
+  </AuthProvider>
 );

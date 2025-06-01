@@ -4,7 +4,7 @@ import { Button } from "@/components/custom-ui/button";
 import ToolbarBase from "@/components/ToolbarBase";
 import type { LanguageCount } from "@/../types";
 import { SongData } from '@/../types/songData';
-import { ImagesIcon, Pencil } from "lucide-react";
+import { CircleUserRound, ImagesIcon, Pencil, User } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 import Filtering from "./filters/Filters";
 import SearchBar from './SearchBar';
@@ -51,6 +51,13 @@ function Toolbar({
                     variant="circular"
                 >
                     <Pencil />
+                </Button>
+            </Link>
+            <Link to="/login">
+                <Button
+                    size="icon"
+                    variant="circular"
+                ><User />
                 </Button>
             </Link>
             <Link to="/gallery">

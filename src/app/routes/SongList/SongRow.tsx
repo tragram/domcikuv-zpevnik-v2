@@ -1,13 +1,14 @@
 import { IllustrationPopup } from "@/components/IllustrationPopup";
 import LanguageFlag from "@/components/LanguageFlag";
 import CircularProgress from "@/components/custom-ui/circular-progress";
-// import { Link } from "react-router-dom";
 import { SongData } from '@/../types/songData';
 import { memo } from "react";
 import { cn } from "@/lib/utils";
 import { songBooksWAvatars } from "@/components/songbookAvatars";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "wouter";
+import { Heart } from "lucide-react";
+import { useAuth } from "@/components/contexts/AuthContext";
 
 interface SongInfoProps {
     title: string;
@@ -26,7 +27,6 @@ const MONTH_NAMES = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ] as const;
-
 
 interface DateDisplayProps {
     month?: number;
@@ -60,20 +60,16 @@ const CapoDisplay = memo(({ capo, className = "" }: CapoDisplayProps) => (
     </div>
 ));
 
-
 const VocalRangeIndicator = memo(({ songRangeSemitones, maxRange, className = "" }: VocalRangeIndicatorProps) => {
     const innerHTML = songRangeSemitones ? <CircularProgress value={songRangeSemitones || maxRange} maxValue={maxRange} /> : <></>;
     return (
-
         <div className={cn("min-w-12 content-center justify-center", className)}>
             <div className="flex items-center">
                 {innerHTML}
             </div>
         </div>
-
     )
 });
-
 
 interface SongbookAvatarsProps {
     songbooks: string[];
@@ -101,9 +97,7 @@ const SongBookAvatars = memo(({ songbooks, maxAvatars = 3, className = "" }: Son
                     </div>
                 ))}
                 {remainingCount > 0 && (
-                    <div
-                        className="relative rounded-full border-2 border-background flex items-center justify-center bg-muted hover:z-10"
-                    >
+                    <div className="relative rounded-full border-2 border-background flex items-center justify-center bg-muted hover:z-10">
                         <Avatar className={""}>
                             <AvatarFallback>+{remainingCount}</AvatarFallback>
                         </Avatar>
@@ -114,6 +108,47 @@ const SongBookAvatars = memo(({ songbooks, maxAvatars = 3, className = "" }: Son
     )
 })
 
+interface FavoriteButtonProps {
+    songId: string;
+    className?: string;
+}
+
+const FavoriteButton = memo(({ songId, className = "" }: FavoriteButtonProps) => {
+    const { user, isFavorite, addToFavorites, removeFromFavorites } = useAuth();
+    if (!user) return null;
+
+    const handleClick = async (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (isFavorite(songId)) {
+            await removeFromFavorites(songId);
+        } else {
+            await addToFavorites(songId);
+        }
+    };
+
+    return (
+        <button
+            onClick={handleClick}
+            className={cn(
+                "flex favorite-button items-center justify-center p-2 hover:scale-110 transition-transform",
+                className
+            )}
+            title={isFavorite(songId) ? "Remove from favorites" : "Add to favorites"}
+        >
+            <Heart
+                className={cn(
+                    "w-6 h-6 transition-colors",
+                    isFavorite(songId)
+                        ? "fill-primary text-primary"
+                        : "text-white/70 hover:text-primary"
+                )}
+            />
+        </button>
+    );
+});
+
 interface SongRowProps {
     song: SongData;
     maxRange: number;
@@ -121,7 +156,6 @@ interface SongRowProps {
 }
 
 const SongRow = memo(({ song, maxRange }: SongRowProps) => {
-
     if (!song) {
         console.error("Invalid song provided to SongRow");
         return (
@@ -146,7 +180,10 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
 
                         <SongInfo title={song.title} artist={song.artist} className="flex-auto" />
 
-                        <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" />
+                        {/* <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" /> */}
+
+                        <FavoriteButton songId={song.id} className="hidden sm:flex basis-1/12 shrink-0" />
+                        
                         <DateDisplay
                             month={song.dateAdded?.month}
                             year={song.dateAdded?.year}
@@ -161,6 +198,7 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
                             className="hidden md:flex basis-1/12 shrink-0"
                         />
 
+
                         <div className="flex basis-[5%] min-w-10 shrink-0 items-center justify-end p-2">
                             <LanguageFlag language={song.language} />
                         </div>
@@ -170,6 +208,5 @@ const SongRow = memo(({ song, maxRange }: SongRowProps) => {
         </div >
     );
 });
-
 
 export default SongRow;
