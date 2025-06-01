@@ -11,6 +11,8 @@ import { Route, Switch } from "wouter";
 import { fetchSongContent, fetchSongs } from "./lib/songLoader.tsx";
 import { SongDB } from "src/types/types.ts";
 import { SongData } from "src/types/songData.ts";
+import LoginPage from "./components/LoginPage.tsx";
+import { Toaster } from "sonner";
 const SongList = lazy(() => import("./routes/SongList/SongList.tsx"));
 const Editor = lazy(() => import("./routes/Editor/Editor.tsx"));
 const SongView = lazy(() => import("./routes/SongView/SongView.tsx"));
@@ -177,6 +179,7 @@ const Router = () => {
   return (
     <>
       <Route path="/"><SongList /></Route>
+      <Route path="/login"><LoginPage /></Route>
       {/* <Route path="/gallery"><SongGallery songDB={songDB} /></Route> */}
       <Route path="/demo"><App /></Route>
       <Route path="/song/:id" >{params => <SongLoaderWrapper songId={params.id} Child={SongView} />}</Route>
@@ -192,6 +195,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router />
+      <Toaster />
     </ThemeProvider>
   </StrictMode>,
 );
