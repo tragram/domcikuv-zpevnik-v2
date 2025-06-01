@@ -6,7 +6,7 @@
 {songbooks: []}
 {key: E}
 {date_added: 06-2025}
-{language: other}
+{language: czech}
 {tempo: }
 {capo: 0}
 {range: h1-f2}
