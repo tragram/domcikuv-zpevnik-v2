@@ -179,7 +179,6 @@ app.post('/api/login', async (c) => {
 
         // Generate refresh token
         const refreshToken = setRefreshToken(c)
-        console.log("saving refreshToken on login", refreshToken)
         const refreshTokenExpiry = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)) // 30 days
 
         // Store refresh token in database
@@ -208,7 +207,6 @@ app.post('/api/refresh', async (c) => {
     try {
         // Get refresh token from cookie
         const refreshToken = c.req.header('cookie')?.match(/refreshToken=([^;]+)/)?.[1]
-        console.log("on refresh, found refreshtoken:", refreshToken)
         if (!refreshToken) {
             return c.json({ error: 'Refresh token not found' }, 401)
         }
@@ -217,7 +215,6 @@ app.post('/api/refresh', async (c) => {
         const tokenRecord = await c.env.DB.prepare(
             'SELECT * FROM refresh_tokens WHERE token = ? AND expires_at > datetime("now")'
         ).bind(refreshToken).first() as any
-        console.log("on refresh, tokenRecord is", tokenRecord)
         if (!tokenRecord) {
             // Delete invalid cookie
             deleteCookie(c, 'refreshToken', { path: '/api' })
@@ -245,14 +242,12 @@ app.post('/api/refresh', async (c) => {
         // Generate new refresh token for rotation
         const newRefreshToken = setRefreshToken(c);
 
-        console.log("saving new refreshToken on refresh", newRefreshToken)
         const newRefreshTokenExpiry = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000)) // 30 days
 
         // Update refresh token in database (token rotation)
         await c.env.DB.prepare(
             'UPDATE refresh_tokens SET token = ?, expires_at = ? WHERE id = ?'
         ).bind(newRefreshToken, newRefreshTokenExpiry.toISOString(), tokenRecord.id).run()
-        console.log("saving new accestoken on refresh", newAccessToken)
         return c.json({
             accessToken: newAccessToken,
             user: {
@@ -376,7 +371,6 @@ app.post('/api/favorites/:songId', authMiddleware, async (c) => {
         const existing = await c.env.DB.prepare(
             'SELECT song_id FROM user_favorites WHERE user_id = ? AND song_id = ?'
         ).bind(payload.id, songId).first()
-        console.log(existing)
         if (existing) {
             return c.json({ error: 'Song is already in favorites' }, 409)
         }
