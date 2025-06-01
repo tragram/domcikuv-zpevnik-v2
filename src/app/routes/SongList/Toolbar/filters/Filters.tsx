@@ -1,4 +1,4 @@
-import { Filter, Handshake } from "lucide-react";
+import { Filter, Handshake, Heart } from "lucide-react";
 import { Button } from "@/components/custom-ui/button";
 import {
     DropdownMenu,
@@ -13,6 +13,7 @@ import { create } from 'zustand'
 import { persist } from "zustand/middleware"
 import type { LanguageCount, SongLanguage } from "@/../types";
 import { SongBookFilter, SongBookFilterDropdownSection } from "./SongbookFilter";
+import { useAuth } from "@/components/contexts/AuthContext";
 
 type VocalRangeType = "all" | [number, number];
 
@@ -20,6 +21,7 @@ interface FilterSettings {
     language: SongLanguage;
     vocalRange: VocalRangeType;
     capo: boolean;
+    onlyFavorites: boolean;
     songbook: string;
 }
 
@@ -31,6 +33,7 @@ interface FilterProps {
 
 interface FilterButtonsProps extends FilterProps {
     iconOnly: boolean;
+    userFavorites?: string[];
 }
 
 interface FilterSettingsState extends FilterSettings {
@@ -39,6 +42,7 @@ interface FilterSettingsState extends FilterSettings {
     setVocalRange: (range: VocalRangeType) => void;
     setCapo: (capo: boolean) => void;
     toggleCapo: () => void;
+    toggleFavorites: () => void;
 }
 
 export const useFilterSettingsStore = create<FilterSettingsState>()(
@@ -48,11 +52,13 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
             vocalRange: "all",
             songbook: "All",
             capo: true,
+            onlyFavorites: false,
             setLanguage: (language: SongLanguage) => set({ language: language }),
             setSongbook: (songbook: string) => set({ songbook: songbook }),
             setVocalRange: (range: VocalRangeType) => set({ vocalRange: range }),
             setCapo: (capo: boolean) => set({ capo: capo }),
-            toggleCapo: () => set((state) => ({ capo: !state.capo }))
+            toggleCapo: () => set((state) => ({ capo: !state.capo })),
+            toggleFavorites: () => set((state) => ({ onlyFavorites: !state.onlyFavorites }))
         }),
         {
             name: 'filter-settings-store'
@@ -66,7 +72,8 @@ const FilterButtons = ({
     iconOnly,
     songbooks,
 }: FilterButtonsProps): JSX.Element => {
-    const { language, songbook, vocalRange, capo, setLanguage, setSongbook, setVocalRange, toggleCapo } = useFilterSettingsStore();
+    const { language, songbook, vocalRange, capo, onlyFavorites, setLanguage, setSongbook, setVocalRange, toggleCapo, toggleFavorites } = useFilterSettingsStore();
+    const { loggedIn } = useAuth();
     return (
         <div className="flex outline-primary dark:outline-primary/30 rounded-full outline-2">
             <LanguageFilter
@@ -90,6 +97,17 @@ const FilterButtons = ({
                 <Handshake />
                 {!iconOnly && "Capo"}
             </Button>
+            {loggedIn &&
+                <Button
+                    variant="circular"
+                    isActive={onlyFavorites}
+                    className="font-bold rounded-none outline-0 shadow-none"
+                    onClick={toggleFavorites}
+                >
+                    <Heart />
+                    {!iconOnly && "Favorites only"}
+                </Button>
+            }
             <VocalRangeFilter
                 maxRange={maxRange}
                 vocalRangeFilter={vocalRange}
@@ -106,7 +124,8 @@ const Filtering = ({
     maxRange,
     songbooks
 }: FilterProps): JSX.Element => {
-    const { language, songbook, vocalRange, capo, setLanguage, setSongbook, setVocalRange, toggleCapo } = useFilterSettingsStore();
+    const { language, songbook, vocalRange, capo, onlyFavorites, setLanguage, setSongbook, setVocalRange, toggleCapo, toggleFavorites } = useFilterSettingsStore();
+    const { loggedIn } = useAuth();
     const isLargeScreen = useMediaQuery("only screen and (min-width : 1000px)");
 
     const isFilterInactive = (
@@ -148,6 +167,13 @@ const Filtering = ({
                         className="dropdown-scroll no-scrollbar w-52 max-h-[80dvh] overflow-y-scroll"
                         sideOffset={15}
                     >
+                        {loggedIn && <DropdownMenuCheckboxItem
+                            onClick={toggleFavorites}
+                            onSelect={e => e.preventDefault()}
+                            checked={onlyFavorites}
+                        >
+                            Show only favorites
+                        </DropdownMenuCheckboxItem>}
                         <DropdownMenuCheckboxItem
                             onClick={toggleCapo}
                             onSelect={e => e.preventDefault()}

@@ -6,6 +6,7 @@ import { useFilterSettingsStore } from './Toolbar/filters/Filters';
 import { useQueryStore } from './Toolbar/SearchBar';
 import { useSortSettingsStore } from './Toolbar/SortMenu';
 import { RARE_LANGUAGE_THRESHOLD } from './Toolbar/filters/LanguageFilter';
+import { useAuth } from '@/components/contexts/AuthContext';
 
 const filterLanguage = (songs: SongData[], selectedLanguage: string, languageCounts: LanguageCount): SongData[] => {
     if (selectedLanguage === "all") {
@@ -25,6 +26,12 @@ const filterLanguage = (songs: SongData[], selectedLanguage: string, languageCou
     // Standard language filtering
     return songs.filter((song) => song.language === selectedLanguage);
 };
+
+const filterFavorites = (songs: SongData[], loggedIn: boolean, userFavorites: string[], onlyFavorites: boolean) => {
+    if (loggedIn && onlyFavorites) {
+        return songs.filter((song) => userFavorites.includes(song.id));
+    } else { return songs; }
+}
 
 const filterCapo = (songs: SongData[], allowCapo: boolean): SongData[] => {
     if (allowCapo) {
@@ -77,7 +84,8 @@ export function useFilteredSongs(
 ) {
     const { field: sortByField, order: sortOrder } = useSortSettingsStore();
     const { query, setQuery } = useQueryStore();
-    const { language, songbook, vocalRange, capo } = useFilterSettingsStore();
+    const { loggedIn, favorites } = useAuth();
+    const { language, songbook, vocalRange, capo, onlyFavorites } = useFilterSettingsStore();
     // Reset search when sort settings change
     useEffect(() => {
         setQuery("");
@@ -100,7 +108,7 @@ export function useFilteredSongs(
     results = filterVocalRange(results, vocalRange);
     results = filterSongbook(results, songbook);
     results = filterLanguage(results, language, languageCounts);
-
+    results = filterFavorites(results, loggedIn, favorites, onlyFavorites)
     // Only sort if there's no search query
     if (!query) {
         results = [...results].sort(getSortCompareFunction(

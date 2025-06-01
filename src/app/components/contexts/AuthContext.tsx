@@ -1,16 +1,17 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { toast } from 'sonner';
 
-interface User {
+interface LoggedUser {
     id: string;
     name: string;
     email: string;
 }
 
 interface AuthContextType {
-    user: User | null;
+    user: LoggedUser | null;
     token: string | null;
     favorites: string[];
+    loggedIn: boolean;
     login: (email: string, password: string) => Promise<boolean>;
     logout: () => void;
     addToFavorites: (songId: string) => Promise<boolean>;
@@ -26,11 +27,11 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<LoggedUser | null>(null);
     const [token, setToken] = useState<string | null>(null); // Stored in memory only
     const [favorites, setFavorites] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const loggedIn = user != null;
     const clearAuth = () => {
         setUser(null);
         setToken(null);
@@ -81,8 +82,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             headers,
             credentials: 'include', // Include cookies for potential refresh
         });
-
-        console.log(response)
 
         // If token expired, try to refresh and retry
         if (response.status === 401) {
@@ -258,6 +257,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         user,
         token,
         favorites,
+        loggedIn,
         login,
         logout,
         addToFavorites,
