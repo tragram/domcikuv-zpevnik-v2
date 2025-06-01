@@ -213,7 +213,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
             if (response.ok) {
                 setFavorites(prev => [...prev, songId]);
-                toast.success('Song added to favorites');
                 return true;
             } else {
                 const data = await response.json();
@@ -236,7 +235,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
             if (response.ok) {
                 setFavorites(prev => prev.filter(id => id !== songId));
-                toast.success('Song removed from favorites');
                 return true;
             } else {
                 const data = await response.json();
