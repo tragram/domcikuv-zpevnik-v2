@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 interface LoggedUser {
     id: string;
-    name: string;
+    nickname: string;
     email: string;
 }
 

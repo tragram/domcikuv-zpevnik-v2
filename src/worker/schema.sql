@@ -11,21 +11,23 @@ DROP VIEW IF EXISTS active_sessions;
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     email TEXT NOT NULL UNIQUE COLLATE NOCASE,
-    name TEXT NOT NULL,
+    nickname TEXT NOT NULL,
     password_hash TEXT NOT NULL, 
     created_at INTEGER NOT NULL DEFAULT (unixepoch()), -- Unix timestamp for D1 compatibility
     updated_at INTEGER NOT NULL DEFAULT (unixepoch()),
     is_admin BOOLEAN NOT NULL DEFAULT 0,
     is_verified BOOLEAN NOT NULL DEFAULT 0,
-    avatar_url TEXT,
+    avatar TEXT,
     last_login_at INTEGER,
+    is_favorites_public BOOLEAN NOT NULL DEFAULT 0,
     
     -- Constraints
     CHECK (length(email) >= 3 AND length(email) <= 254),
-    CHECK (length(name) >= 1 AND length(name) <= 100),
+    CHECK (length(nickname) >= 1 AND length(nickname) <= 100),
     CHECK (password_hash != ''),
     CHECK (is_admin IN (0, 1)),
-    CHECK (is_verified IN (0, 1))
+    CHECK (is_verified IN (0, 1)),
+    CHECK (is_favorites_public IN (0, 1))
 );
 
 -- Indexes for users table
@@ -100,7 +102,7 @@ CREATE TRIGGER update_users_timestamp
 
 -- Sample data (commented out - uncomment to use)
 
-INSERT OR IGNORE INTO users (id, name, email, password_hash, is_admin, is_verified) 
+INSERT OR IGNORE INTO users (id, nickname, email, password_hash, is_admin, is_verified) 
 VALUES (
     1,
     'Demo User',

@@ -14,6 +14,7 @@ import { SongData } from "src/types/songData.ts";
 import LoginPage from "./components/LoginPage.tsx";
 import { Toaster } from "sonner";
 import { AuthProvider } from "./components/contexts/AuthContext.tsx";
+import UserProfile from "./routes/UserProfile/UserProfile.tsx";
 const SongList = lazy(() => import("./routes/SongList/SongList.tsx"));
 const Editor = lazy(() => import("./routes/Editor/Editor.tsx"));
 const SongView = lazy(() => import("./routes/SongView/SongView.tsx"));
@@ -183,6 +184,7 @@ const Router = () => {
       <Route path="/login"><LoginPage /></Route>
       {/* <Route path="/gallery"><SongGallery songDB={songDB} /></Route> */}
       <Route path="/demo"><App /></Route>
+      <Route path="/profile"><UserProfile /></Route>
       <Route path="/song/:id" >{params => <SongLoaderWrapper songId={params.id} Child={SongView} />}</Route>
       <Switch>
         {/* <Route path="/edit"  ><Editor songDB={songDB} /></Route> */}

@@ -96,6 +96,7 @@ function clearAuthCookies(c: Context) {
 
 type Bindings = {
     DB: D1Database
+    R2_BUCKET: R2Bucket
     JWT_SECRET: string
     IS_LOCAL_MODE: string
 }
@@ -145,7 +146,7 @@ app.post('/api/register', async (c) => {
 
         // Create user
         await c.env.DB.prepare(
-            'INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)'
+            'INSERT INTO users (nickname, email, password_hash) VALUES (?, ?, ?)'
         ).bind(name, email, `${saltHex}:${hashHex}`).run()
 
         return c.json({
@@ -207,7 +208,7 @@ app.post('/api/login', async (c) => {
             accessToken,
             user: {
                 id: user.id,
-                name: user.name,
+                nickname: user.nickname,
                 email: user.email
             }
         })
@@ -242,7 +243,7 @@ app.post('/api/refresh', async (c) => {
 
         // Get user info
         const user = await c.env.DB.prepare(
-            'SELECT id, name, email FROM users WHERE id = ?'
+            'SELECT id, nickname, email FROM users WHERE id = ?'
         ).bind(tokenRecord.user_id).first() as any
 
         if (!user) {
@@ -324,7 +325,7 @@ app.get('/api/profile', authMiddleware, async (c) => {
         const payload = c.get('jwtPayload')
 
         const user = await c.env.DB.prepare(
-            'SELECT id, name, email, created_at, updated_at FROM users WHERE id = ?'
+            'SELECT id, nickname, email, avatar, is_favorites_public FROM users WHERE id = ?'
         ).bind(payload.id).first()
 
         if (!user) {
@@ -343,20 +344,93 @@ app.get('/api/profile', authMiddleware, async (c) => {
 app.put('/api/profile', authMiddleware, async (c) => {
     try {
         const payload = c.get('jwtPayload')
-        const { name } = await c.req.json()
+        const { nickname, is_favorites_public } = await c.req.json()
 
-        if (!name) {
-            return c.json({ error: 'Name is required' }, 400)
+        if (!nickname || nickname.trim() === '') {
+            return c.json({ error: 'Nickname is required' }, 400)
         }
 
+        // Update both nickname and favorites privacy setting
         await c.env.DB.prepare(
-            'UPDATE users SET name = ? WHERE id = ?'
-        ).bind(name, payload.id).run()
+            'UPDATE users SET nickname = ?, is_favorites_public = ? WHERE id = ?'
+        ).bind(nickname.trim(), is_favorites_public || false, payload.id).run()
 
         return c.json({ message: 'Profile updated successfully' })
-
     } catch (error) {
         console.error('Update profile error:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+    }
+})
+
+// Upload avatar (protected)
+app.put('/api/profile/avatar', authMiddleware, async (c) => {
+    try {
+        const payload = c.get('jwtPayload')
+        const formData = await c.req.formData()
+        const avatarFile = formData.get('avatar') as File
+
+        if (!avatarFile) {
+            return c.json({ error: 'No avatar file provided' }, 400)
+        }
+
+        // Validate file type
+        if (!avatarFile.type.startsWith('image/')) {
+            return c.json({ error: 'File must be an image' }, 400)
+        }
+
+        // Validate file size (5MB max)
+        if (avatarFile.size > 5 * 1024 * 1024) {
+            return c.json({ error: 'File size must be less than 5MB' }, 400)
+        }
+
+        // Here you'd typically:
+        // 1. Upload to cloud storage (Cloudflare R2, AWS S3, etc.)
+        // 2. Or save to local storage if using traditional hosting
+        // 3. Get the URL of the uploaded file
+        
+        // Example for Cloudflare R2:
+        const fileName = `avatars/${payload.id}-${Date.now()}.${avatarFile.name.split('.').pop()}`
+        await c.env.R2_BUCKET.put(fileName, avatarFile.stream())
+        const avatarUrl = `https://your-domain.com/${fileName}`
+
+        // Update user's avatar URL in database
+        await c.env.DB.prepare(
+            'UPDATE users SET avatar = ? WHERE id = ?'
+        ).bind(avatarUrl, payload.id).run()
+
+        return c.json({ 
+            message: 'Avatar updated successfully',
+            avatar: avatarUrl 
+        })
+    } catch (error) {
+        console.error('Avatar upload error:', error)
+        return c.json({ error: 'Internal server error' }, 500)
+    }
+})
+
+app.delete('/api/profile/avatar', authMiddleware, async (c) => {
+    try {
+        const payload = c.get('jwtPayload')
+        
+        // Get current avatar to delete from storage
+        const user = await c.env.DB.prepare(
+            'SELECT avatar FROM users WHERE id = ?'
+        ).bind(payload.id).first()
+
+        if (user?.avatar) {
+            // Delete from cloud storage
+            const fileName = user.avatar.split('/').pop()
+            await c.env.R2_BUCKET.delete(`avatars/${fileName}`)
+        }
+
+        // Remove avatar URL from database
+        await c.env.DB.prepare(
+            'UPDATE users SET avatar = NULL WHERE id = ?'
+        ).bind(payload.id).run()
+
+        return c.json({ message: 'Avatar deleted successfully' })
+    } catch (error) {
+        console.error('Avatar deletion error:', error)
         return c.json({ error: 'Internal server error' }, 500)
     }
 })

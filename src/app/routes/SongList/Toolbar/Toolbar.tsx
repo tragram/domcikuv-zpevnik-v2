@@ -10,6 +10,7 @@ import Filtering from "./filters/Filters";
 import SearchBar from './SearchBar';
 import SortMenu from "./SortMenu";
 import { Link } from "wouter";
+import { useAuth } from "@/components/contexts/AuthContext";
 
 interface ToolbarProps {
     songs: SongData[];
@@ -32,7 +33,7 @@ function Toolbar({
 }: ToolbarProps) {
 
     // const navigate = useNavigate();
-
+    const { loggedIn } = useAuth();
     return (
         <ToolbarBase showToolbar={showToolbar} scrollOffset={scrollOffset} fakeScroll={fakeScroll} childContainerClassName="max-sm:justify-between">
             <SortMenu />
@@ -53,7 +54,7 @@ function Toolbar({
                     <Pencil />
                 </Button>
             </Link>
-            <Link to="/login">
+            <Link to={loggedIn ? "/profile" : "/login"}>
                 <Button
                     size="icon"
                     variant="circular"
@@ -69,7 +70,7 @@ function Toolbar({
                 </Button>
             </Link>
             <RandomSong songs={songs} />
-        </ToolbarBase>
+        </ToolbarBase >
     );
 }
 

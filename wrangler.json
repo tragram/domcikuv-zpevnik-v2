@@ -20,4 +20,10 @@
       "database_id": "ad724839-99ce-4abb-86c6-165f9ed0c2de"
     }
   ],
+  "r2_buckets": [
+    {
+      "binding": "R2_BUCKET",
+      "bucket_name": "zpevnik"
+    }
+  ]
 }
