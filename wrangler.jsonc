@@ -6,7 +6,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "domcikuv-zpevnik-v2",
   "main": "./src/worker/index.ts",
-  "compatibility_date": "2025-06-01",
+  "compatibility_date": "2025-06-20",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true
@@ -21,7 +21,7 @@
    * Smart Placement
    * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
    */
-  "placement": { "mode": "smart" },
+  // "placement": { "mode": "smart" },
 
   /**
    * Bindings
