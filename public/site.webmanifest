@@ -1,0 +1,79 @@
+{
+  "name": "Domčíkův zpěvník v2",
+  "id": "cz.hodandom.domcikuv-zpevnik-v2",
+  "short_name": "Zpěvník",
+  "description": "Druhá verze mého báječného zpěvníku - nyní offline!",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/icons/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "sizes": "1024x1024",
+      "src": "/icons/maskable_icon.png",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/android-launchericon-144-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-launchericon-192-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/android-launchericon-512-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/120.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/songlist_wide.png",
+      "sizes": "2560x1600",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Song list"
+    },
+    {
+      "src": "/screenshots/songlist_iphone_xr.png",
+      "sizes": "828x1792",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Song list"
+    },
+    {
+      "src": "/screenshots/songview_wide.png",
+      "sizes": "2560x1600",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Song view"
+    },
+    {
+      "src": "/screenshots/songview_iphone_xr.png",
+      "sizes": "828x1792",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Song view"
+    }
+  ],
+  "theme_color": "#F28C28",
+  "background_color": "#fff2e5",
+  "display": "standalone",
+  "orientation": "any"
+}

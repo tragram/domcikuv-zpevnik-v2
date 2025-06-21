@@ -2,9 +2,9 @@ import fs from 'fs';
 import makeHash from 'object-hash';
 import path from 'path';
 // Update the path to match your project structure
-import { preambleKeywords, chordpro2JSKeywords } from "./src/types/preambleKeywords.js";
+import { preambleKeywords, chordpro2JSKeywords } from "./src/web/types/preambleKeywords.js";
 // Import the validator
-import { validateMetadataDefinitions, validateSongObject } from './src/types/metadata-validator.js';
+import { validateMetadataDefinitions, validateSongObject } from './src/web/types/metadata-validator.js';
 
 // Validate that metadata definitions are in sync before proceeding
 const validationResult = validateMetadataDefinitions();

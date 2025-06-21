@@ -21,15 +21,11 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
-    /* TW+shadcn */
-    
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/app/*"
-      ]
-    }
+      "~/*": ["./src/web/*"]
+    },
+    "types": ["dom-chromium-installation-events", "web-app-manifest"]
   },
-  "include": ["src/app", "src/types/vite-env.d.ts"]
+  "include": ["src/web"]
 }

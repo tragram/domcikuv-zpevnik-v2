@@ -18,7 +18,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/web/*"]
+    },
   },
-  "include": ["vite.config.ts"]
+  "include": ["vite.config.ts", "drizzle.config.ts"]
 }
