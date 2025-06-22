@@ -3,7 +3,7 @@
 {date_added: 08-2016}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["jezek__voskovec__werich_babicka_mary-sken.pdf", "jezek__voskovec__werich_babicka_mary-comp.pdf", "jezek__voskovec__werich_babicka_mary-gen.pdf"]}
+
 {capo: 4}
 {key: Am}
 {tempo: }

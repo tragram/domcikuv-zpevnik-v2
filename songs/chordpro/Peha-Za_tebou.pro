@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: slovak}
-{pdf_filenames: ["peha_za_tebou-sken.pdf", "peha_za_tebou-comp.pdf"]}
+
 {capo: 3}
 {key: Em}
 {tempo: }

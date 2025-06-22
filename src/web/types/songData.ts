@@ -102,7 +102,6 @@ interface SongMetadata {
   tempo?: string;
   capo?: string;
   range?: string;
-  pdfFilenames?: string;
   promptModel?: string;
   promptId?: string;
   imageModel?: string;
@@ -137,7 +136,6 @@ export const emptySongMetadata = (): SongMetadata => {
     tempo: "",
     capo: "",
     range: "",
-    pdfFilenames: "",
     promptModel: "",
     promptId: "",
     imageModel: "",
@@ -163,7 +161,6 @@ class SongData {
   range?: SongRange;
   illustrationData: IllustrationData;
   chordproFile: string;
-  pdfFilenames: Array<string>;
   content?: string;
   contentHash: string;
 
@@ -185,11 +182,6 @@ class SongData {
     this.capo = SongData.parseCapo(song.capo);
     this.range = SongData.parseRange(song.range);
     this.illustrationData = SongData.parseIllustrationData(song);
-    this.pdfFilenames = SongData.parsePdfFilenames(
-      song.pdfFilenames,
-      this.artist,
-      this.title
-    );
     this.chordproFile = song.chordproFile || "";
     this.contentHash = song.contentHash || "";
   }
@@ -294,7 +286,7 @@ class SongData {
           : [];
       } catch (error) {
         console.warn(
-          `Error parsing pdf filenames for "${song.artist}: ${song.title}"`,
+          `Error parsing illustrations for "${song.artist}: ${song.title}"`,
           error
         );
       }
@@ -305,22 +297,6 @@ class SongData {
       song.imageModel,
       availableIllustrations
     );
-  }
-
-  static parsePdfFilenames(
-    pdfFilenames?: string,
-    artist?: string,
-    title?: string
-  ): Array<string> {
-    try {
-      return pdfFilenames ? JSON.parse(pdfFilenames) : [];
-    } catch (error) {
-      console.warn(
-        `Error parsing pdf filenames for "${artist}: ${title}"`,
-        error
-      );
-      return [];
-    }
   }
 
   static to_ascii(text: string) {
@@ -344,10 +320,6 @@ class SongData {
 
   get id() {
     return SongData.id(this.title, this.artist);
-  }
-
-  get pdfURLs() {
-    return this.pdfFilenames.map((f: string) => fileURL("songs/pdfs/" + f));
   }
 
   static fromJSON(json: Partial<SongData>): SongData {
@@ -433,7 +405,7 @@ class SongData {
           metadata[JSKey] = date
             ? date.month.toString().padStart(2, "0") + "-" + date.year
             : "";
-        } else if (["songbooks", "pdfFilenames"].includes(JSKey)) {
+        } else if (["songbooks"].includes(JSKey)) {
           metadata[JSKey] = JSON.stringify(value) ?? "";
         } else if (["key", "range"].includes(JSKey)) {
           metadata[JSKey] = `${value ?? ""}`;

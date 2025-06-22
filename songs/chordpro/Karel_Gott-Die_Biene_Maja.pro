@@ -3,7 +3,7 @@
 {date_added: 07-2018}
 {songbooks: ["Domčík"]}
 {language: german}
-{pdf_filenames: ["karel_gott_die_biene_maja-sken.pdf", "karel_gott_die_biene_maja-comp.pdf"]}
+
 {image_model: FLUX.1-schnell}
 {capo: 0}
 {key: D}

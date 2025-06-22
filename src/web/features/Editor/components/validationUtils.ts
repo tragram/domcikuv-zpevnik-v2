@@ -95,7 +95,6 @@ export type ValidationResult = {
     // Simple validators for remaining fields (optional text fields)
     language: (value) => ({ isValid: true }),
     startMelody: (value) => ({ isValid: true }),
-    pdfFilenames: (value) => ({ isValid: true }),
   };
   
   // Function to validate all metadata at once

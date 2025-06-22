@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["kabat_bara-sken.pdf", "kabat_bara-comp.pdf"]}
+
 {capo: 0}
 {key: Am}
 {tempo: }

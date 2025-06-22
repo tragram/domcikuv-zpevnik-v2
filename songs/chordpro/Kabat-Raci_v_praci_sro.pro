@@ -11,7 +11,7 @@
 {capo: 3}
 {range: a1-e2}
 {start_melody: c# c# c#}
-{pdf_filenames: []}
+
 
 {start_of_verse}
 [A]Na našem [Amaj7]rybníku,

@@ -3,7 +3,7 @@
 {date_added: 08-2013}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["jiri_schlinger_holubi_dum-sken.pdf", "jiri_schlinger_holubi_dum-comp.pdf"]}
+
 {capo: 3}
 {key: Hm}
 {tempo: }

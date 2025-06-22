@@ -3,7 +3,7 @@
 {date_added: 04-2025}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: []}
+
 {image_model: dalle3}
 
 {capo: 0}

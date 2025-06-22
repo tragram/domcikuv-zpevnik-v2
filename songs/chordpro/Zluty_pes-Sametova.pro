@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["zluty_pes_sametova-sken.pdf", "zluty_pes_sametova-comp.pdf"]}
+
 {capo: 2}
 {key: C}
 {tempo: }

@@ -2,7 +2,6 @@ import { cn } from '~/lib/utils'
 import { useEffect, useRef } from 'react'
 import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import useLocalStorageState from 'use-local-storage-state'
-import PdfView from './components/pdfView'
 import ScrollButtons from './components/ScrollButtons'
 import { SongContent } from './components/SongContent'
 import { SongViewLayout } from './components/SongViewLayout'
@@ -37,11 +36,6 @@ export const SongView = ({ songDB, songData }: DataForSongView) => {
             document.removeEventListener('gesturechange', preventDefault)
         }
     }, [])
-
-    // Render PDF view for short songs
-    if (songData.lyricsLength() < 50) {
-        return <PdfView pdfFilenames={songData.pdfURLs} />
-    }
 
     return (
         <SongViewLayout
