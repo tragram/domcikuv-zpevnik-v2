@@ -12,6 +12,7 @@ export const usePWAInstall = () => {
     const isDevelopment = import.meta.env.DEV;
 
     // Function to show the install prompt
+    // TODO: only show install prompt once or twice - now it shows up 5 times
     const showInstallPrompt = () => {
         if (isDevelopment) {
             console.log('PWA install disabled in development mode');

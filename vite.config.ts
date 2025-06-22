@@ -5,7 +5,7 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import copy from "rollup-plugin-copy";
 import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
-import { VitePWA } from 'vite-plugin-pwa'
+import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
   plugins: [
@@ -38,13 +38,14 @@ export default defineConfig({
       workbox: {
         disableDevLogs: true,
         globDirectory: "dist/client",
+        navigateFallbackDenylist: [/^\/api\//],
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,yaml,json}",
           "songs/illustrations_thumbnails/**/*.webp",
           "songs/chordpro/**/*.pro",
           "songs/image_prompts/**/*.yaml",
           "songDB.{json,hash}",
-          "site.webmanifest"
+          "site.webmanifest",
         ],
         navigateFallback: "/index.html",
         // only cache the illlustrations when they are loaded fully

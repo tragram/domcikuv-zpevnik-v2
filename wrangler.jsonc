@@ -6,7 +6,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "domcikuv-zpevnik-v2",
   "main": "./src/worker/index.ts",
-  "compatibility_date": "2025-06-20",
+  "compatibility_date": "2025-06-17",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true
