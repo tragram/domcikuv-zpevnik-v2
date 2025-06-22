@@ -165,6 +165,7 @@ const FavoriteButton = ({
   userData,
   className = "",
 }: FavoriteButtonProps) => {
+  // TODO: add "offline" message
   const [isFavorite, setIsFavorite] = useState(userData.favorites.has(songId));
   const routeApi = getRouteApi("/");
   const context = routeApi.useRouteContext()

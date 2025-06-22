@@ -28,7 +28,6 @@ export default defineConfig({
       ],
       hook: "writeBundle",
     }),
-    // TODO: it appears to work but somehow takes up 120 MB in cache which is an order of magnitude more than expected
     VitePWA({
       registerType: "autoUpdate",
       devOptions: {
@@ -37,17 +36,18 @@ export default defineConfig({
       manifest: false,
       workbox: {
         disableDevLogs: true,
-        globDirectory: "dist/client",
+        navigateFallback: "/index.html",
         navigateFallbackDenylist: [/^\/api\//],
+
+        globDirectory: "dist/client/",
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,yaml,json}",
+          "songs/chordpro/*.pro",
           "songs/illustrations_thumbnails/**/*.webp",
-          "songs/chordpro/**/*.pro",
           "songs/image_prompts/**/*.yaml",
-          "songDB.{json,hash}",
           "site.webmanifest",
+          "songDB.json",
         ],
-        navigateFallback: "/index.html",
         // only cache the illlustrations when they are loaded fully
         runtimeCaching: [
           {
@@ -62,16 +62,40 @@ export default defineConfig({
               },
             },
           },
+          // Cache API responses for offline use
           {
-            urlPattern: ({ url }) => !url.pathname.startsWith("./"),
-            handler: "NetworkFirst",
+            urlPattern: ({ url }) => {
+              return url.pathname.startsWith("/api/");
+            },
+            handler: "NetworkFirst" as const,
             options: {
-              cacheName: "external-content",
+              cacheName: "api-cache",
               cacheableResponse: {
                 statuses: [0, 200],
               },
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24, // 24 hours
+              },
             },
           },
+          // TODO: it appears that this takes up ~100 MB in cache which is an order of magnitude more than expected
+          //
+          // {
+          //   urlPattern: ({ url }) => {
+          //     return (
+          //       !url.pathname.startsWith("./") &&
+          //       url.pathname.match(/\.(png|jpg|jpeg|webp|gif|svg|ico)$/i)
+          //     );
+          //   },
+          //   handler: "NetworkFirst",
+          //   options: {
+          //     cacheName: "external-images",
+          //     cacheableResponse: {
+          //       statuses: [0, 200],
+          //     },
+          //   },
+          // },
         ],
       },
     }),

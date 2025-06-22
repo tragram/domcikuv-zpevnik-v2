@@ -1,6 +1,7 @@
 import { Outlet, redirect, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(auth)")({
+  // TODO: disable when offline
   component: RouteComponent,
   beforeLoad: async ({ context, location }) => {
     const PROFILE_URL = "/profile";
