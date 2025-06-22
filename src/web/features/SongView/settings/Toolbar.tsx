@@ -66,6 +66,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                         {React.Children.toArray(<ChordSettingsDropdownMenu />)}
                         <DropdownMenuLabel>Theme</DropdownMenuLabel>
                         <DropdownMenuSeparator />
+                        {/* TODO: this is a broken circle */}
                         {React.Children.toArray(<ThemeToggle />)}
                         <DropdownMenuLabel>Misc</DropdownMenuLabel>
                         <DropdownMenuSeparator />
