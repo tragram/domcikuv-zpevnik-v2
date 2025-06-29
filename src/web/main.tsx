@@ -1,5 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import {
+  createHashHistory,
+  createRouter,
+  RouterProvider,
+} from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import client from "../worker/api-client";
@@ -19,9 +23,11 @@ const queryClient = new QueryClient({
   },
 });
 
+const hashHistory = createHashHistory();
+
 export interface RouterContext {
-  queryClient: QueryClient; // Replace with your actual QueryClient type
-  api: typeof client.api; // Replace with your actual API client type
+  queryClient: QueryClient;
+  api: typeof client.api;
 }
 
 // Create the router
@@ -34,6 +40,7 @@ const router = createRouter({
   defaultPreload: "intent",
   defaultPreloadStaleTime: 0,
   scrollRestoration: false,
+  history: hashHistory,
 });
 
 // Register the router instance for type safety
