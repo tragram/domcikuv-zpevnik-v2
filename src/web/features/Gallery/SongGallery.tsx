@@ -30,7 +30,6 @@ function CardThatHides({ song }: { song: SongData }) {
     console.log("Error showing image in gallery!");
     setHidden(true);
   };
-  // TODO: dark mode has terrible contrast on hover
   const [overlayOpacity, setOverlayOpacity] = useState(0);
   return (
     <>
@@ -67,7 +66,7 @@ function CardThatHides({ song }: { song: SongData }) {
             <Button
               asChild
               className={
-                "w-full rounded-t-none bg-primary text-white text-md backdrop-blur-sm hover:bg-background hover:text-primary" +
+                "w-full rounded-t-none bg-primary text-white text-md backdrop-blur-sm hover:bg-background hover:text-primary hover:dark:text-white" +
                 (showingContent ? "" : " hidden")
               }
             >
