@@ -10,6 +10,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { useMediaQuery } from 'usehooks-ts'
 import type { LanguageCount, SongLanguage } from "~/types/types";
 import { LanguageFilter, LanguageFilterDropdownSection } from "./LanguageFilter";
 import { SongBookFilter, SongBookFilterDropdownSection } from "./SongbookFilter";
@@ -145,7 +146,7 @@ const Filtering = ({ languages, maxRange, songbooks }: FilterProps): JSX.Element
   } = useFilterSettingsStore();
   const routeApi = getRouteApi("/");
   const { userData } = routeApi.useLoaderData();
-  const isLargeScreen = true; // useMediaQuery("only screen and (min-width : 1000px)"); //TODO:
+  const isLargeScreen = useMediaQuery("only screen and (min-width : 1000px)");
 
   const isFilterInactive =
     language === "all" &&

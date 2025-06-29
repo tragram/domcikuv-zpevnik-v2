@@ -140,6 +140,9 @@ importers:
       use-local-storage-state:
         specifier: ^19.5.0
         version: 19.5.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      usehooks-ts:
+        specifier: ^3.1.1
+        version: 3.1.1(react@19.1.0)
       zod:
         specifier: ^3.25.64
         version: 3.25.67
@@ -4536,6 +4539,12 @@ packages:
     resolution: {integrity: sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  usehooks-ts@3.1.1:
+    resolution: {integrity: sha512-I4diPp9Cq6ieSUH2wu+fDAVQO43xwtulo+fKEidHUwZPnYImbtkTjzIJYcDcJqxgmX31GVqNFURodvcgHcW0pA==}
+    engines: {node: '>=16.15.0'}
+    peerDependencies:
+      react: ^16.8.0  || ^17 || ^18 || ^19 || ^19.0.0-rc
 
   vite-plugin-pwa@1.0.0:
     resolution: {integrity: sha512-X77jo0AOd5OcxmWj3WnVti8n7Kw2tBgV1c8MCXFclrSlDV23ePzv2eTDIALXI2Qo6nJ5pZJeZAuX0AawvRfoeA==}
@@ -9047,6 +9056,11 @@ snapshots:
 
   use-sync-external-store@1.5.0(react@19.1.0):
     dependencies:
+      react: 19.1.0
+
+  usehooks-ts@3.1.1(react@19.1.0):
+    dependencies:
+      lodash.debounce: 4.0.8
       react: 19.1.0
 
   vite-plugin-pwa@1.0.0(vite@6.3.5(@types/node@22.15.32)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.43.1)(tsx@4.20.3))(workbox-build@7.3.0(@types/babel__core@7.20.5))(workbox-window@7.3.0):
