@@ -15,11 +15,7 @@ export const setLocalStorageItem = (key: string, value: any) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
 
-// TODO: delete this ugly baseURL (when proper client-side rendering is available - https://github.com/TanStack/router/discussions/3264)
 export const fileURL = (url: string) => {
-  // if (typeof window === "undefined") {
-  //   console.log("server :(");
-  // } else console.log("client! :)");
-  const base = ""; //import.meta.env.DEV ? "http://localhost:3000" : "";
-  return base + url;
+  // this is partially a relic of the past but also might be reused in the future should a full-stack framework be used
+  return url;
 };
