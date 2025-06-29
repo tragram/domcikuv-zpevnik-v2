@@ -15,7 +15,6 @@ const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, classN
     // TODO: these should be uncollapsed when reloaded on a large screen
     return (isCollapsed ?
         <div className='flex flex-col  w-full h-fit md:h-full md:w-fit '>
-            <div className='md:h-9'></div>
             <div className='flex h-full font-extrabold p-2 border-primary border-4 rounded-md hover:bg-primary/30'>
                 <h1 className="font-extrabold w-full text-2xl text-center text-primary md:[writing-mode:vertical-rl] md:rotate-180" onClick={() => { setIsCollapsed(false); setIsHovered(false) }}>
                     {title}

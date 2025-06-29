@@ -113,7 +113,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
     );
 
     return (
-        <div className='flex flex-col relative h-fit md:h-dvh gap-4 min-w-[250px]'>
+        <div className='flex flex-col relative h-fit md:h-dvh gap-4 xl:gap-8 min-w-[250px]'>
             {toolbarTop && <Toolbar />}
             <div className={cn('flex flex-col md:flex-row w-full h-fit md:h-full overflow-hidden')}>
                 <div className={cn('flex flex-col md:flex-row h-full w-full gap-4 p-4 xl:gap-8 xl:p-8 overflow-auto', toolbarTop ? "!pt-0" : "!pb-0")}>
