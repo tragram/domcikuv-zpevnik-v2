@@ -36,9 +36,11 @@ export default defineConfig({
       manifest: false,
       workbox: {
         disableDevLogs: true,
-        navigateFallback: "/index.html",
+        navigateFallback: "index.html",
         navigateFallbackDenylist: [/^\/api\//],
-
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
         globDirectory: "dist/client/",
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,yaml,json}",
@@ -54,7 +56,7 @@ export default defineConfig({
             urlPattern: ({ url }) => {
               return url.pathname.startsWith("/songs/illustrations/");
             },
-            handler: "NetworkFirst" as const,
+            handler: "CacheFirst" as const,
             options: {
               cacheName: "full-illustration-cache",
               cacheableResponse: {
@@ -67,7 +69,7 @@ export default defineConfig({
             urlPattern: ({ url }) => {
               return url.pathname.startsWith("/api/");
             },
-            handler: "NetworkFirst" as const,
+            handler: "CacheFirst" as const,
             options: {
               cacheName: "api-cache",
               cacheableResponse: {
@@ -75,6 +77,7 @@ export default defineConfig({
               },
               expiration: {
                 maxEntries: 100,
+                // TODO: shouldn't API responses be kept forever
                 maxAgeSeconds: 60 * 60 * 24, // 24 hours
               },
             },
