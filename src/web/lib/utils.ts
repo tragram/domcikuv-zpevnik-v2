@@ -19,3 +19,11 @@ export const fileURL = (url: string) => {
   // this is partially a relic of the past but also might be reused in the future should a full-stack framework be used
   return url;
 };
+
+export const tailwindBreakpoint = (
+  breakpoint: "xs" | "xsm" | "sm" | "md" | "lg" | "xl"
+) => {
+  const styles = getComputedStyle(document.documentElement);
+  const value = styles.getPropertyValue(`--breakpoint-${breakpoint}`);
+  return parseInt(value, 10);
+};

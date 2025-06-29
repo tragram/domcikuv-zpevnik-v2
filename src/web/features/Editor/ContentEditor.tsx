@@ -1,10 +1,13 @@
 import { Textarea } from "~/components/ui/textarea";
-import React, { useEffect, useRef } from 'react';
-import './Editor.css';
-import { SnippetButtonSection, SnippetButton, snippets } from "./components/Snippets";
-import { cn } from "~/lib/utils";
+import React, { useEffect, useRef } from "react";
+import "./Editor.css";
+import {
+  SnippetButtonSection,
+  SnippetButton,
+  snippets,
+} from "./components/Snippets";
+import { cn, tailwindBreakpoint } from "~/lib/utils";
 
-// Add a new CSS rule to make the textarea adjust to its content
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {
   .auto-resize-textarea {
@@ -18,24 +21,25 @@ interface ContentEditorProps {
   setEditorContent: (content: string) => void;
 }
 
-const MD_WIDTH = 810;
-
-const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorContent }) => {
+const ContentEditor: React.FC<ContentEditorProps> = ({
+  editorContent,
+  setEditorContent,
+}) => {
   // Reference to the textarea element
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     // Adjust textarea height when content changes (for mobile)
-    if (textareaRef.current && window.innerWidth < MD_WIDTH) {
+    if (textareaRef.current && window.innerWidth < tailwindBreakpoint("md")) {
       const textarea = textareaRef.current;
-      textarea.style.height = 'auto';
+      textarea.style.height = "auto";
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
-  }, [editorContent])
+  }, [editorContent]);
 
   // Add the stylesheet to the document head and set up resize listener
   useEffect(() => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.innerHTML = textareaAutoSizeStyles;
     document.head.appendChild(style);
 
@@ -44,34 +48,33 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
       if (!textareaRef.current) return;
 
       const textarea = textareaRef.current;
-
-      if (window.innerWidth < 810) {
+      if (window.innerWidth < tailwindBreakpoint("md")) {
         // TODO: this should actually refernce the Tailwind variable
         // Mobile: Auto-height based on content
-        textarea.style.height = 'auto';
+        textarea.style.height = "auto";
         textarea.style.height = `${textarea.scrollHeight}px`;
       } else {
         // Desktop: Reset to use container height
-        textarea.style.height = '';
+        textarea.style.height = "";
       }
     };
 
     // Adjust height on window resize
-    window.addEventListener('resize', adjustTextareaHeight);
+    window.addEventListener("resize", adjustTextareaHeight);
 
     // Initial adjustment
     adjustTextareaHeight();
 
     return () => {
       document.head.removeChild(style);
-      window.removeEventListener('resize', adjustTextareaHeight);
+      window.removeEventListener("resize", adjustTextareaHeight);
     };
   }, []);
 
   const onEditorChange = (e) => {
     const newContent = e.target.value;
     setEditorContent(newContent);
-  }
+  };
 
   // Insert template at current cursor position with undo/redo support
   const insertSnippet = (snippetKey: string) => {
@@ -90,20 +93,22 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
 
     // Determine what text to insert and where the cursor should end up
     const textToInsert = snippet.template(selectedText ?? "");
-    const finalCursorPos = selectedText ? start + textToInsert.length : start + snippet.cursorOffset;
+    const finalCursorPos = selectedText
+      ? start + textToInsert.length
+      : start + snippet.cursorOffset;
 
     // Use the Document execCommand API for undo support
     // This modifies the document in a way that registers with the browser's undo stack
     try {
       // For modern browsers, try using InputEvent
-      if (typeof InputEvent === 'function') {
+      if (typeof InputEvent === "function") {
         // First delete any selected text (this will be undoable)
         if (start !== end) {
-          document.execCommand('delete', false);
+          document.execCommand("delete", false);
         }
 
         // Then insert our text (this will be undoable)
-        document.execCommand('insertText', false, textToInsert);
+        document.execCommand("insertText", false, textToInsert);
 
         // Position cursor where needed
         textarea.setSelectionRange(finalCursorPos, finalCursorPos);
@@ -141,7 +146,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
   };
   return (
     <div className="flex flex-col h-full">
-      <div className='w-full flex flex-wrap gap-1 border-b-4 md:border-b-8 border-primary mt-1 md:mt-0'>
+      <div className="w-full flex flex-wrap gap-1 border-b-4 md:border-b-8 border-primary mt-1 md:mt-0">
         <SnippetButtonSection label="Environments">
           <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
           <SnippetButton snippetKey="bridge_env" onInsert={insertSnippet} />
@@ -153,9 +158,18 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
           <SnippetButton snippetKey="chorus_recall" onInsert={insertSnippet} />
         </SnippetButtonSection>
         <SnippetButtonSection label="Variants">
-          <SnippetButton snippetKey="prepend_content" onInsert={insertSnippet} />
-          <SnippetButton snippetKey="replace_first_line" onInsert={insertSnippet} />
-          <SnippetButton snippetKey="replace_last_line" onInsert={insertSnippet} />
+          <SnippetButton
+            snippetKey="prepend_content"
+            onInsert={insertSnippet}
+          />
+          <SnippetButton
+            snippetKey="replace_first_line"
+            onInsert={insertSnippet}
+          />
+          <SnippetButton
+            snippetKey="replace_last_line"
+            onInsert={insertSnippet}
+          />
           <SnippetButton snippetKey="append_content" onInsert={insertSnippet} />
         </SnippetButtonSection>
         <SnippetButtonSection label="Misc">
@@ -165,20 +179,23 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ editorContent, setEditorC
       </div>
       <Textarea
         ref={textareaRef}
-        className={cn('resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto !rounded-b-none border-none')}
-        style={{ minHeight: '300px' }}
+        className={cn(
+          "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto !rounded-b-none border-none"
+        )}
+        style={{ minHeight: "300px" }}
         onInput={(e) => {
           // Adjust height on mobile
-          if (window.innerWidth < MD_WIDTH) {
+          if (window.innerWidth < tailwindBreakpoint("md")) {
             const target = e.target as HTMLTextAreaElement;
-            target.style.height = 'auto';
+            target.style.height = "auto";
             target.style.height = `${target.scrollHeight}px`;
           }
           onEditorChange(e);
         }}
-        value={editorContent} />
+        value={editorContent}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default ContentEditor;
