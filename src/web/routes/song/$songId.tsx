@@ -13,6 +13,7 @@ export const Route = createFileRoute("/song/$songId")({
     const songData = await context.queryClient.fetchQuery({
       queryKey: ["song", songId],
       queryFn: () => fetchSong(songId, songDB),
+      staleTime: "static"
     });
 
     // TODO: show error song

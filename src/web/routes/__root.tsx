@@ -13,12 +13,13 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const userProfile = await context.queryClient.fetchQuery({
       queryKey: ["userProfile"],
       queryFn: async () => (await context.api.profile.$get()).json(),
+      staleTime: Infinity,
     });
     if (userProfile) {
-      console.log(userProfile)
       const favoritesData = await context.queryClient.fetchQuery({
         queryKey: ["favorites", userProfile.id],
         queryFn: async () => (await context.api.favorites.$get()).json(),
+        staleTime: 1000 * 60 * 5 // five minutes should be enough in case there are multiple sessions in parallel
       });
       userData = {
         ...userProfile,
