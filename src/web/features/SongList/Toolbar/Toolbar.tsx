@@ -2,7 +2,7 @@ import { ImagesIcon, Pencil, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import ToolbarBase from "~/components/ToolbarBase";
 import { Button } from "~/components/ui/button";
-import ThemeToggle from "~/components/ThemeToggle"
+import {ThemeToggle} from "~/components/ThemeToggle"
 import { SongData } from "~/types/songData";
 import type { LanguageCount } from "~/types/types";
 import { Link } from "@tanstack/react-router";

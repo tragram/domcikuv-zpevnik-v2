@@ -14,7 +14,7 @@ import { LayoutSettingsDropdownSection, LayoutSettingsToolbar } from './LayoutSe
 import TransposeSettings from './TransposeSettings'
 import ToolbarBase from '~/components/ToolbarBase'
 import { Link }from "@tanstack/react-router"
-import ThemeToggle from '~/components/ThemeToggle'
+import {DropdownThemeToggle} from '~/components/ThemeToggle'
 import { SongDB } from '~/types/types'
 import { SongData } from '~/types/songData'
 
@@ -64,12 +64,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                     <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
                         {React.Children.toArray(<LayoutSettingsDropdownSection />)}
                         {React.Children.toArray(<ChordSettingsDropdownMenu />)}
-                        <DropdownMenuLabel>Theme</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {/* TODO: this is a broken circle */}
-                        {React.Children.toArray(<ThemeToggle />)}
                         <DropdownMenuLabel>Misc</DropdownMenuLabel>
                         <DropdownMenuSeparator />
+                        <DropdownThemeToggle />
                         <DropdownMenuItem onClick={() => { fullScreenHandle.enter() }}>
                             <DropdownIconStart icon={<Fullscreen />} />
                             Enter fullscreen
