@@ -5,6 +5,7 @@ import { buildApp } from "./api/utils";
 import favoritesApp from "./api/favorites";
 import profileApp from "./api/userProfile";
 import authApp from "./api/auth";
+import editorApp from "./api/editor";
 
 const app = buildApp();
 
@@ -22,6 +23,7 @@ export const route = app
   })
   .route("/auth", authApp)
   .route("/favorites", favoritesApp)
+  .route("/editor", editorApp)
   .route("/profile", profileApp);
 
 export default route;

@@ -49,7 +49,6 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
 
       const textarea = textareaRef.current;
       if (window.innerWidth < tailwindBreakpoint("md")) {
-        // TODO: this should actually refernce the Tailwind variable
         // Mobile: Auto-height based on content
         textarea.style.height = "auto";
         textarea.style.height = `${textarea.scrollHeight}px`;

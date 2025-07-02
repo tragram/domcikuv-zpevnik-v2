@@ -12,6 +12,7 @@ import { cn } from '~/lib/utils';
 import SettingsDropdown from './components/SettingsDropdown';
 import DownloadButton from './components/DownloadButton';
 import { RefreshCcw, Undo } from 'lucide-react';
+import PullRequestButton from './components/PullRequestButton';
 
 export interface EditorState {
     content: string;
@@ -39,7 +40,6 @@ interface EditorProps {
 
 const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
     const editorStateKey = songDataURL ? `editor/state/${songDataURL.id}` : "editor/state";
-    console.log(editorStateKey)
     const defaultEditorState = useMemo(() => {
         if (songDataURL) {
             return songData2State(songDataURL);
@@ -109,6 +109,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
             </Button>
             <SettingsDropdown />
             <DownloadButton metadata={editorState.metadata} content={editorState.content} />
+            <PullRequestButton metadata={editorState.metadata} content={editorState.content} />
         </div>
     );
 
