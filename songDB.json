@@ -5606,7 +5606,7 @@
   },
   {
     "title": "Test",
-    "artist": "Testovník2",
+    "artist": "Testovn�k",
     "songbooks": "[]",
     "key": "",
     "dateAdded": "06-2025",
@@ -5619,8 +5619,8 @@
     "promptId": "v2",
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "",
-    "chordproFile": "Testovnik2-Test.pro",
-    "contentHash": "2f0844baf03214a53f87762a3982effb8a3d64c8",
+    "chordproFile": "Testovnik-Test.pro",
+    "contentHash": "a602f8f830a5cc854843f005b5069b1f0bb57938",
     "availableIllustrations": []
   },
   {

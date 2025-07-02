@@ -2,7 +2,7 @@
 {prompt_model: gpt-4o-mini}
 {image_model: FLUX.1-dev}
 {title: Test}
-{artist: TestovnÃ­k2}
+{artist: Testovník}
 {songbooks: []}
 {key: }
 {date_added: 06-2025}
