@@ -1,58 +1,18 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
+import type { SongMetadata } from '~/types/songData';
 import MetadataField from './components/MetadataField';
 import { metadataValidators } from './components/validationUtils';
 import type { EditorState } from './Editor';
-import type { SongMetadata } from '~/types/songData';
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '~/components/ui/dropdown-menu';
-import { DropdownMenuLabel, DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
-import { Input } from '~/components/ui/input';
-import { Button } from '~/components/ui/button';
-import { PlusCircle } from 'lucide-react';
 
 interface MetadataEditorProps {
   metadata: SongMetadata
   updateMetadata: (field: keyof EditorState["metadata"], value: string) => void;
-  availableSongbooks: string[];
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({
   metadata,
   updateMetadata,
-  availableSongbooks,
 }) => {
-  const [isAddingCustomSongbook, setIsAddingCustomSongbook] = useState(false);
-  const [customSongbookName, setCustomSongbookName] = useState('');
-  // this do be ugly but it's late and it's a lot of work to do more elegantly (extension of SongMetadata???)
-  const currentSongbooks = React.useMemo(() => {
-    try {
-      return JSON.parse(metadata.songbooks ?? "[]");
-    } catch (error) {
-      console.error("Failed to parse songbooks metadata:", error);
-      return [];
-    }
-  }, [metadata.songbooks]);
-  availableSongbooks = [...new Set([...availableSongbooks, ...currentSongbooks])]
-  const toggleSongbook = useCallback((songbook: string) => {
-    let newSongbooks;
-    if (currentSongbooks?.includes(songbook)) {
-      newSongbooks = currentSongbooks?.filter((sb: string) => sb !== songbook);
-    } else {
-      newSongbooks = [...currentSongbooks, songbook];
-    }
-    updateMetadata("songbooks", JSON.stringify(newSongbooks));
-  }, [currentSongbooks, updateMetadata]);
-
-  const addCustomSongbook = useCallback(() => {
-    if (customSongbookName.trim()) {
-      if (!currentSongbooks.includes(customSongbookName)) {
-        const newSongbooks = [...currentSongbooks, customSongbookName];
-        updateMetadata("songbooks", JSON.stringify(newSongbooks));
-      }
-      setCustomSongbookName('');
-      setIsAddingCustomSongbook(false);
-    }
-  }, [customSongbookName, currentSongbooks, updateMetadata])
-
   return (
     <div className='main-container space-y-2'>
       <MetadataField
@@ -102,65 +62,6 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
         description="Use note name (with #/b into denote sharp/flat) for major key and append 'm' or 'mi' to indicate minor key."
         validator={metadataValidators.key}
       />
-      <div className="w-full items-center space-y-0.5">
-        <DropdownMenu>
-          <DropdownMenuTrigger className="text-sm hover:bg-primary/30 w-full border-1 border-primary/30 text-start rounded-md h-8">
-            Songbooks
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {availableSongbooks.map(a => (
-              <DropdownMenuCheckboxItem
-                key={a}
-                checked={currentSongbooks.includes(a)}
-                onCheckedChange={() => toggleSongbook(a)}
-                onSelect={e => e.preventDefault()}
-              >
-                {a}
-              </DropdownMenuCheckboxItem>
-            ))}
-            <DropdownMenuSeparator />
-
-            {isAddingCustomSongbook ? (
-              <div className="flex items-center gap-2 px-2 py-1.5">
-                <Input
-                  value={customSongbookName}
-                  onChange={(e) => setCustomSongbookName(e.target.value)}
-                  placeholder="Enter songbook name"
-                  className="h-8 w-full"
-                  autoFocus
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      addCustomSongbook();
-                    } else if (e.key === 'Escape') {
-                      setIsAddingCustomSongbook(false);
-                      setCustomSongbookName('');
-                    }
-                  }}
-                />
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={addCustomSongbook}
-                  className="h-8"
-                >
-                  Add
-                </Button>
-              </div>
-            ) : (
-              <DropdownMenuItem
-                onSelect={(e) => {
-                  e.preventDefault();
-                  setIsAddingCustomSongbook(true);
-                }}
-              >
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add custom songbook
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <p className="text-xs text-primary/80 dark:text-primary/50">Describes who will play the song for you.</p>
-      </div>
       <MetadataField
         label="Range"
         onChange={(value) => updateMetadata('range', value)}
