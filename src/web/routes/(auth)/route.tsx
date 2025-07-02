@@ -3,24 +3,37 @@ import { Outlet, redirect, createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/(auth)")({
   // TODO: disable when offline
   component: RouteComponent,
-  beforeLoad: async ({ context, location }) => {
+  beforeLoad: async ({ context, location, search }) => {
     const PROFILE_URL = "/profile";
     const LOGIN_URL = "/login";
     const SIGNUP_URL = "/signup";
-    // If user is not logged in and not on login page, redirect to login
+    
+    // Get the redirect URL from search params or default to "/"
+    const redirectURL = (search as any)?.redirect || "/";
+    
+    // If user is not logged in and not on login/signup page, redirect to login
     if (!context.userData.loggedIn && location.pathname === PROFILE_URL) {
       throw redirect({
         to: LOGIN_URL,
+        search: { redirect: redirectURL }
       });
     }
 
-    // If user is logged in and on login page, redirect to profile
+    // If user is logged in and on login page, redirect to the intended destination
     if (context.userData.loggedIn && location.pathname === LOGIN_URL) {
       throw redirect({
-        to: PROFILE_URL,
+        to: redirectURL
       });
     }
-    return { redirectURL: "/" };
+    
+    // If user is logged in and on signup page, redirect to the intended destination
+    if (context.userData.loggedIn && location.pathname === SIGNUP_URL) {
+      throw redirect({
+        to: redirectURL
+      });
+    }
+    
+    return { redirectURL };
   },
 });
 

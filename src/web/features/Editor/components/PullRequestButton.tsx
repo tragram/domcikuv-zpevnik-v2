@@ -1,12 +1,20 @@
+import {
+  useLocation,
+  useNavigate,
+  useRouteContext,
+} from "@tanstack/react-router";
+import { CloudUpload } from "lucide-react";
 import { useState } from "react";
-import { Button } from "~/components/ui/button";
-import { type SongMetadata } from "~/types/songData";
-import { Download } from "lucide-react";
-import { editorToChordPro } from "./utils";
 import { toast } from "sonner";
-import { useRouteContext } from "@tanstack/react-router";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
-
+import { Button } from "~/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
+import { type SongMetadata } from "~/types/songData";
+import { editorToChordPro } from "./utils";
 type PullRequestButtonProps = {
   metadata: SongMetadata;
   content: string;
@@ -16,8 +24,17 @@ const PullRequestButton: React.FC<PullRequestButtonProps> = ({
   metadata,
   content,
 }) => {
-  const loggedIn = useRouteContext({from: "__root__"}).userData
-    .loggedIn;
+  const loggedIn = useRouteContext({ from: "__root__" }).userData.loggedIn;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleLoginRedirect = () => {
+    navigate({
+      to: "/login",
+      search: {
+        redirect: location.pathname,
+      },
+    });
+  };
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
@@ -59,19 +76,25 @@ const PullRequestButton: React.FC<PullRequestButtonProps> = ({
         <Tooltip>
           <TooltipTrigger asChild>
             <div>
-              <Button 
-                onClick={handleSubmit} 
-                disabled={isSubmitting || !loggedIn} 
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting || !loggedIn}
                 variant="default"
               >
                 {isSubmitting ? "Submitting..." : "Submit song (pull request)"}
-                <Download className="ml-2 h-4 w-4" />
+                <CloudUpload className="h-4 w-4" />
               </Button>
             </div>
           </TooltipTrigger>
           {!loggedIn && (
             <TooltipContent>
-              <p>Please log in to submit songs</p>
+              <p>
+                Please{" "}
+                <button onClick={handleLoginRedirect} className="underline">
+                  log in
+                </button>{" "}
+                to submit songs
+              </p>
             </TooltipContent>
           )}
         </Tooltip>
