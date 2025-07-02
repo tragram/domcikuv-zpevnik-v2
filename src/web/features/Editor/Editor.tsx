@@ -16,7 +16,7 @@ import Preview from "./Preview";
 import { cn } from "~/lib/utils";
 import SettingsDropdown from "./components/SettingsDropdown";
 import DownloadButton from "./components/DownloadButton";
-import { RefreshCcw, Undo, User } from "lucide-react";
+import { RefreshCcw, Trash, Undo, User } from "lucide-react";
 import PullRequestButton from "./components/PullRequestButton";
 import {
   useLocation,
@@ -145,15 +145,22 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
             initializeEditor();
           }}
         >
-          {songDataURL ? "Reload song" : "Clear"}
-          <RefreshCcw />
+          {songDataURL ? (
+            <>
+              Reload song <RefreshCcw />
+            </>
+          ) : (
+            <>
+              Clear <Trash />
+            </>
+          )}
         </Button>
         <Button
           onClick={() => {
             loadBackupState();
           }}
         >
-          Undo reload
+          Undo {songDataURL ? "reload" : "clear"}
           <Undo />
         </Button>
         <SettingsDropdown />
@@ -196,7 +203,6 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
             <MetadataEditor
               metadata={editorState.metadata}
               updateMetadata={updateMetadata}
-              availableSongbooks={songDB.songbooks}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea
