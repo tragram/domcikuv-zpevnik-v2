@@ -5151,7 +5151,7 @@
   {
     "title": "Inženýrská",
     "artist": "Rangers - Plavci",
-    "songbooks": "[]",
+    "songbooks": "[\"Domčík\"]",
     "key": "E",
     "dateAdded": "06-2025",
     "language": "czech",
@@ -5162,9 +5162,9 @@
     "promptModel": "gpt-4o-mini",
     "promptId": "v2",
     "imageModel": "FLUX.1-dev",
-    "pdfFilenames": "[]",
+    "pdfFilenames": "",
     "chordproFile": "Rangers_-_Plavci-Inzenyrska.pro",
-    "contentHash": "b361c907119e4274c9ec6972720a4e32326dba0c",
+    "contentHash": "9d8780b04cd93c0fcbb4af0d78e00ad277b1e730",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -5603,25 +5603,6 @@
     "chordproFile": "Sverak_Uhlir-Pod_dubem_za_dubem.pro",
     "contentHash": "6bbf8e142cb2c177d758312deda74c6573170f01",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
-  },
-  {
-    "title": "Test",
-    "artist": "Testovn�k",
-    "songbooks": "[]",
-    "key": "",
-    "dateAdded": "06-2025",
-    "language": "other",
-    "tempo": "",
-    "capo": "0",
-    "range": "",
-    "startMelody": "",
-    "promptModel": "gpt-4o-mini",
-    "promptId": "v2",
-    "imageModel": "FLUX.1-dev",
-    "pdfFilenames": "",
-    "chordproFile": "Testovnik-Test.pro",
-    "contentHash": "a602f8f830a5cc854843f005b5069b1f0bb57938",
-    "availableIllustrations": []
   },
   {
     "title": "Dům u vycházejícího slunce",
