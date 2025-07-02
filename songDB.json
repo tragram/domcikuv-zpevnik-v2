@@ -912,25 +912,6 @@
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
   },
   {
-    "title": "Test z webísku",
-    "artist": "Dominuníček Testíček",
-    "songbooks": "[]",
-    "key": "",
-    "dateAdded": "07-2025",
-    "language": "other",
-    "tempo": "",
-    "capo": "0",
-    "range": "",
-    "startMelody": "",
-    "promptModel": "gpt-4o-mini",
-    "promptId": "v2",
-    "imageModel": "FLUX.1-dev",
-    "pdfFilenames": "",
-    "chordproFile": "Dominunicek_Testicek-Test_z_webisku.pro",
-    "contentHash": "1a3585672cd47f5296343e78b9514442c1598e55",
-    "availableIllustrations": []
-  },
-  {
     "title": "Ještě jedno kafe",
     "artist": "Druhá tráva",
     "songbooks": "[\"Domčík\"]",
@@ -1761,9 +1742,9 @@
     "promptModel": "gpt-4o-mini",
     "promptId": "v2",
     "imageModel": "FLUX.1-dev",
-    "pdfFilenames": "[]",
+    "pdfFilenames": "",
     "chordproFile": "Hop_Trop-Vodacka_holka.pro",
-    "contentHash": "ddb28af51835b25ee986874dbc78aeae488e1363",
+    "contentHash": "051ce1a72b92ee5fdbdc2f232b0281d72527a299",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
