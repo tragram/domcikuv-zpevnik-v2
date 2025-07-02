@@ -5605,6 +5605,25 @@
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
+    "title": "Test",
+    "artist": "Testovník2",
+    "songbooks": "[]",
+    "key": "",
+    "dateAdded": "06-2025",
+    "language": "other",
+    "tempo": "",
+    "capo": "0",
+    "range": "",
+    "startMelody": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
+    "pdfFilenames": "",
+    "chordproFile": "Testovnik2-Test.pro",
+    "contentHash": "2f0844baf03214a53f87762a3982effb8a3d64c8",
+    "availableIllustrations": []
+  },
+  {
     "title": "Dům u vycházejícího slunce",
     "artist": "The Animals",
     "songbooks": "[\"Domčík\"]",
