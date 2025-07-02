@@ -11,11 +11,10 @@
 {capo: 0}
 {range: a1-h2}
 {start_melody: a d e f#}
-{pdf_filenames: []}
 
 {start_of_verse}
 [D]Když vlny [Emi]se valí [G]a peřej[A]e řvou
-a [D]šutry z nich [Emi]civí jak [G]sů[A]vy, 
+a [D]šutry z nich [Emi]civí jak [G]sů[A]vy,
 loď [D]praská a [Emi]umrlčí [G]zvon bije [A]tmou,
 tak [D]řekni, kdo [Emi]pomoct ti [A]umí. [D]
 {end_of_verse}
@@ -29,7 +28,7 @@ co [E]za každý cvaknutí mů[A]že.
 
 {start_of_verse}
 [D]Je pěkná jak [Emi]ráno a [G]voní jak [A]les,
-když [D]na dřevo [Emi]u ohně [G]hrá[A]vá, 
+když [D]na dřevo [Emi]u ohně [G]hrá[A]vá,
 je [D]zrádná jak [Emi]kočka a [G]věrná jak [A]pes,
 ta [D]holka, co [Emi]při tobě [A]spá[D]vá.
 {end_of_verse}
@@ -39,15 +38,15 @@ Tu [G]vodáckou [Hmi]holku si [A]navěky [D]nech,
 [G]netop ji, [Hmi]neza[A]há[D]něj,
 svou [Emi]víru, svou [Hmi]sílu, svý [F#mi]štěstí i [Hmi]pech,
 svý [Emi]strachy, svý [D]prachy, svůj [E]poslední [A]dech
-jí [D]poctivě [Emi]odevzdá[A]vej 
+jí [D]poctivě [Emi]odevzdá[A]vej
 [D]a lásku [Emi]za lásku [G]dá[A][D]vej.
 {end_of_chorus}
 
 {start_of_verse}
 [D]Kdo připálí [Emi]rejži a [G]přesolí [A]čaj,
-kdo [D]sůl nechá [Emi]v posledním [G]kem[A]pu, 
+kdo [D]sůl nechá [Emi]v posledním [G]kem[A]pu,
 kdo [D]ráj změní [Emi]v peklo a [G]peklo zas [A]v ráj,
-kdo [D]zná všechny [Emi]písničky [A]trem[D]pů. 
+kdo [D]zná všechny [Emi]písničky [A]trem[D]pů.
 {end_of_verse}
 
 {start_of_bridge}
@@ -59,9 +58,11 @@ a [E]po kom se celej den stýs[A]ká
 
 {start_of_verse}
 [D]Až vlasy nám [Emi]odbarví [G]nebeskej [A]král
-a [D]vrásky nám [Emi]počmáraj' [G]ků[A]ži, 
+a [D]vrásky nám [Emi]počmáraj' [G]ků[A]ži,
 svý [D]holce dej [Emi]pusu a [G]řekni "jdem [A]dál"
 a na [D]pádlo [Emi]polož jí [A]rů[D]ži.
 {end_of_verse}
 
 {chorus}
+
+EDITACE Z WEBíSKU
