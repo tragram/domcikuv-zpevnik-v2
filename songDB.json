@@ -1742,9 +1742,9 @@
     "promptModel": "gpt-4o-mini",
     "promptId": "v2",
     "imageModel": "FLUX.1-dev",
-    "pdfFilenames": "",
+    "pdfFilenames": "[]",
     "chordproFile": "Hop_Trop-Vodacka_holka.pro",
-    "contentHash": "051ce1a72b92ee5fdbdc2f232b0281d72527a299",
+    "contentHash": "ddb28af51835b25ee986874dbc78aeae488e1363",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
@@ -6850,12 +6850,12 @@
     "capo": "0",
     "range": "",
     "startMelody": "",
-    "promptModel": "",
-    "promptId": "",
-    "imageModel": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
     "pdfFilenames": "",
     "chordproFile": "Znouzectnost-Zlaty_hrebik_noci.pro",
-    "contentHash": "c3876d83ce9b30c8747d68611ccaee7be08b90a9",
+    "contentHash": "19ac91b5a5cb6a8aea059abad95abb5fd8846ae4",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   }
 ]
