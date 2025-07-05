@@ -24,9 +24,21 @@ jobs:
       run: |
         git checkout cf-workers || git checkout -b cf-workers
     
-    - name: Merge main into cf-workers
+    - name: Copy songs directory from main
       run: |
-        git merge origin/main --no-ff -m "Auto-sync: Merge main into cf-workers"
+        # Remove existing songs directory if it exists
+        rm -rf songs/
+        
+        # Copy songs directory from main branch
+        git checkout origin/main -- songs/
+        
+        # Check if there are any changes to commit
+        if ! git diff --quiet --cached; then
+          git add songs/
+          git commit -m "Auto-sync: Update songs directory from main"
+        else
+          echo "No changes to sync in songs directory"
+        fi
     
     - name: Push changes to cf-workers
       run: |
