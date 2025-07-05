@@ -3,7 +3,7 @@
 {date_added: 02-2017}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["vlasta_redl_vecer_krupavych_srdicek-sken.pdf", "vlasta_redl_vecer_krupavych_srdicek-comp.pdf", "vlasta_redl_vecer_krupavych_srdicek-gen.pdf"]}
 {capo: 0}
 {key: D}
 {tempo: }

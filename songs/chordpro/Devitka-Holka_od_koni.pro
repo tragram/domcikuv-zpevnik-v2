@@ -3,7 +3,7 @@
 {date_added: 08-2016}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["devitka_holka_od_koni-sken.pdf", "devitka_holka_od_koni-comp.pdf", "devitka_holka_od_koni-gen.pdf"]}
 {capo: 2}
 {key: Em}
 {tempo: }

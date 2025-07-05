@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["olympic_dej_mi_vic_sve_lasky-sken.pdf", "olympic_dej_mi_vic_sve_lasky-comp.pdf"]}
 {capo: 1}
 {key: Am}
 {tempo: }

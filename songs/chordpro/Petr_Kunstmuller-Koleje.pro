@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["petr_muller_koleje-sken.pdf", "petr_muller_koleje-comp.pdf"]}
 {capo: 3}
 {key: Am}
 {tempo: }

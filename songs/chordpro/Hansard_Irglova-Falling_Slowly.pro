@@ -3,7 +3,7 @@
 {date_added: 06-2013}
 {songbooks: ["Domčík"]}
 {language: english}
-
+{pdf_filenames: ["hansard__irglova_falling_slowly-sken.pdf", "hansard__irglova_falling_slowly-comp.pdf"]}
 {capo: 3}
 {key: C}
 {tempo: }

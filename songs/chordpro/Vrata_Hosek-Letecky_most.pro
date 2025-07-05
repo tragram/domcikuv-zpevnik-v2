@@ -11,7 +11,7 @@
 {capo: 5}
 {range: a1-a2}
 {start_melody: e a}
-
+{pdf_filenames: []}
 
 {start_of_verse}
 [Ami]My jsme Němci, my jsme z Osy

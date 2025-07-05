@@ -3,7 +3,7 @@
 {date_added: 07-2016}
 {songbooks: ["Domčík"]}
 {language: english}
-
+{pdf_filenames: ["howard_goodall_red_dwarf_theme-sken.pdf", "howard_goodall_red_dwarf_theme-comp.pdf", "howard_goodall_red_dwarf_theme-gen.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

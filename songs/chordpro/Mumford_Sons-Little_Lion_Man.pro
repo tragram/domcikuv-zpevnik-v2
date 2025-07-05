@@ -3,6 +3,7 @@
 {date_added: 04-2025}
 {songbooks: ["Domčík"]}
 {language: english}
+{pdf_filenames:}
 {capo: 5}
 {key: Am}
 {tempo: }

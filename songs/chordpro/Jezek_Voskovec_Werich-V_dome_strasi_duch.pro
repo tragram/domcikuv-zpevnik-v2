@@ -3,7 +3,7 @@
 {date_added: 01-2017}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["jezek__voskovec__werich_v_dome_strasi_duch-sken.pdf", "jezek__voskovec__werich_v_dome_strasi_duch-comp.pdf"]}
 {capo: 0}
 {key: Dm}
 {tempo: }

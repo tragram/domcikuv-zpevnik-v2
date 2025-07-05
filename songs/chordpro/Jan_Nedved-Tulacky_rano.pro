@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["jan_nedved_tulacky_rano-sken.pdf", "jan_nedved_tulacky_rano-comp.pdf"]}
 {capo: 0}
 {key: Dm}
 {tempo: }
