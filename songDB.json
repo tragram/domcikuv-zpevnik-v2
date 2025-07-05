@@ -4256,6 +4256,25 @@
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
   },
   {
+    "title": "Credo",
+    "artist": "Nahoře",
+    "songbooks": "[]",
+    "key": "",
+    "dateAdded": "07-2025",
+    "language": "other",
+    "tempo": "",
+    "capo": "2",
+    "range": "",
+    "startMelody": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
+    "pdfFilenames": "",
+    "chordproFile": "Nahore-Credo.pro",
+    "contentHash": "2c4550cd6fa2d7cdf78e7230e1dcb4b574c96d05",
+    "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
+  },
+  {
     "title": "Igelit",
     "artist": "Nedvědi",
     "songbooks": "[\"Domčík\"]",
