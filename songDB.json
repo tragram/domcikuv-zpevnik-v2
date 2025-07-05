@@ -4259,7 +4259,7 @@
     "title": "Credo",
     "artist": "Nahoře",
     "songbooks": "[]",
-    "key": "",
+    "key": "E",
     "dateAdded": "07-2025",
     "language": "other",
     "tempo": "",
@@ -4271,7 +4271,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "",
     "chordproFile": "Nahore-Credo.pro",
-    "contentHash": "2c4550cd6fa2d7cdf78e7230e1dcb4b574c96d05",
+    "contentHash": "4f87998082c822069dd41bb44e0762ccd77a6781",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
