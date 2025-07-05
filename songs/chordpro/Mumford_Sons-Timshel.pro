@@ -14,7 +14,7 @@
 
 {start_of_verse}
 [G]Cold is the water
-It freezes your al[F]ready cold mind
+It freezes your al[C]ready cold mind
 Already cold, [G]cold mind
 And death is at your doorstep
 And it will [C]steal your innocence
