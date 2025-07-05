@@ -5833,6 +5833,25 @@
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
   },
   {
+    "title": "Kalná Řeka",
+    "artist": "Traband",
+    "songbooks": "[]",
+    "key": "H",
+    "dateAdded": "07-2025",
+    "language": "Czech",
+    "tempo": "",
+    "capo": "0",
+    "range": "",
+    "startMelody": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
+    "pdfFilenames": "",
+    "chordproFile": "Traband-Kalna_Reka.pro",
+    "contentHash": "29c85f36cc1fd1875815a25de8a0f95f75ddff78",
+    "availableIllustrations": []
+  },
+  {
     "title": "Krasojezdkyně",
     "artist": "Traband",
     "songbooks": "[\"Domčík\"]",
@@ -6021,25 +6040,6 @@
     "chordproFile": "UDG-Hvezdar.pro",
     "contentHash": "381602c46fb2d07406faba721027729b736c403e",
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
-  },
-  {
-    "title": "Unknown title",
-    "artist": "Unknown artist",
-    "songbooks": "[]",
-    "key": "",
-    "dateAdded": "07-2025",
-    "language": "other",
-    "tempo": "",
-    "capo": "0",
-    "range": "",
-    "startMelody": "",
-    "promptModel": "gpt-4o-mini",
-    "promptId": "v2",
-    "imageModel": "FLUX.1-dev",
-    "pdfFilenames": "",
-    "chordproFile": "Unknown_artist-Unknown_title.pro",
-    "contentHash": "77643a6a65c20237d5a8c4de00e18b0db1e53609",
-    "availableIllustrations": []
   },
   {
     "title": "Kdo vchází do tvých snů",
