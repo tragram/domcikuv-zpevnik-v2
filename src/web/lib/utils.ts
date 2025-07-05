@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { useRouteContext } from "@tanstack/react-router";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -27,3 +28,7 @@ export const tailwindBreakpoint = (
   const value = styles.getPropertyValue(`--breakpoint-${breakpoint}`);
   return parseInt(value, 10);
 };
+export function useLoggedIn() {
+  const routeContext = useRouteContext({ from: "__root__" });
+  return routeContext.userData.loggedIn;
+}

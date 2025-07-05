@@ -13,7 +13,7 @@ import ContentEditor from "./ContentEditor";
 import "./Editor.css";
 import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
-import { cn } from "~/lib/utils";
+import { cn, useLoggedIn } from "~/lib/utils";
 import SettingsDropdown from "./components/SettingsDropdown";
 import DownloadButton from "./components/DownloadButton";
 import { RefreshCcw, Trash, Undo, User } from "lucide-react";
@@ -131,7 +131,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
         },
       });
     };
-    const loggedIn = useRouteContext({ from: "__root__" }).userData.loggedIn;
+    const loggedIn = useLoggedIn();
     return (
       <div
         className={cn(

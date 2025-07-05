@@ -1,7 +1,6 @@
 import {
   useLocation,
   useNavigate,
-  useRouteContext,
 } from "@tanstack/react-router";
 import { CloudUpload } from "lucide-react";
 import { useState } from "react";
@@ -15,6 +14,7 @@ import {
 } from "~/components/ui/tooltip";
 import { type SongMetadata } from "~/types/songData";
 import { editorToChordPro } from "./utils";
+import { useLoggedIn } from "~/lib/utils";
 type PullRequestButtonProps = {
   metadata: SongMetadata;
   content: string;
@@ -24,7 +24,7 @@ const PullRequestButton: React.FC<PullRequestButtonProps> = ({
   metadata,
   content,
 }) => {
-  const loggedIn = useRouteContext({ from: "__root__" }).userData.loggedIn;
+  const loggedIn = useLoggedIn();
   const navigate = useNavigate();
   const location = useLocation();
   const handleLoginRedirect = () => {
