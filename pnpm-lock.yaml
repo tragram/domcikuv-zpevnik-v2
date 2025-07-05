@@ -143,21 +143,6 @@ importers:
       usehooks-ts:
         specifier: ^3.1.1
         version: 3.1.1(react@19.1.0)
-      workbox-cacheable-response:
-        specifier: ^7.3.0
-        version: 7.3.0
-      workbox-core:
-        specifier: ^7.3.0
-        version: 7.3.0
-      workbox-precaching:
-        specifier: ^7.3.0
-        version: 7.3.0
-      workbox-routing:
-        specifier: ^7.3.0
-        version: 7.3.0
-      workbox-strategies:
-        specifier: ^7.3.0
-        version: 7.3.0
       zod:
         specifier: ^3.25.64
         version: 3.25.67
@@ -240,6 +225,21 @@ importers:
       vite-tsconfig-paths:
         specifier: ^5.1.4
         version: 5.1.4(typescript@5.8.2)(vite@6.3.5(@types/node@22.15.32)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.43.1)(tsx@4.20.3))
+      workbox-cacheable-response:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-core:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-precaching:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-routing:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-strategies:
+        specifier: ^7.3.0
+        version: 7.3.0
       wrangler:
         specifier: 4.20.5
         version: 4.20.5
