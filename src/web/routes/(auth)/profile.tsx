@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Camera, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -32,9 +32,10 @@ export const Route = createFileRoute("/(auth)/profile")({
 
 function RouteComponent() {
   const { userProfile } = Route.useLoaderData();
-  const { queryClient } = Route.useRouteContext();
+  const { queryClient, redirectURL } = Route.useRouteContext();
 
   const navigate = Route.useNavigate();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Create initial state object matching userProfile structure
@@ -47,7 +48,6 @@ function RouteComponent() {
   };
   // Current state (what user is editing)
   const [currentData, setCurrentData] = useState(initialState);
-  const { api } = Route.useRouteContext();
   // Saved state (baseline for comparison)
   const [savedData, setSavedData] = useState(initialState);
 
@@ -59,10 +59,15 @@ function RouteComponent() {
 
   const handleLogout = async () => {
     try {
-      await signOut();
-      await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
-      toast.success("Logged out successfully");
-      navigate({ to: "/" });
+      await signOut({
+        fetchOptions: {
+          onSuccess: async () => {
+            await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+            toast.success("Logged out successfully");
+            navigate({ to: redirectURL });
+          },
+        },
+      });
     } catch (err) {
       toast.error("Error during logout");
       console.error("Logout error:", err);

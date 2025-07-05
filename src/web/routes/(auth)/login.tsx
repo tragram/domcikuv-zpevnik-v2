@@ -1,9 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
-import {
-  signIn,
-} from "~/../lib/auth/client";
+import { signIn } from "~/../lib/auth/client";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -16,6 +14,7 @@ export const Route = createFileRoute("/(auth)/login")({
 function LoginForm() {
   const { redirectURL, queryClient } = Route.useRouteContext();
   const navigate = useNavigate();
+  console.log(redirectURL)
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -44,7 +43,7 @@ function LoginForm() {
         },
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
-          navigate({ to: "/" });
+          navigate({ to: redirectURL });
         },
       }
     );

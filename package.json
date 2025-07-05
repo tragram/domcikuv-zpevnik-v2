@@ -80,7 +80,12 @@
     "vite": "^6.3.5",
     "vite-plugin-pwa": "^1.0.0",
     "vite-tsconfig-paths": "^5.1.4",
-    "wrangler": "4.20.5"
+    "wrangler": "4.20.5",
+    "workbox-cacheable-response": "^7.3.0",
+    "workbox-core": "^7.3.0",
+    "workbox-precaching": "^7.3.0",
+    "workbox-routing": "^7.3.0",
+    "workbox-strategies": "^7.3.0"
   },
   "scripts": {
     "prebuild": "node load_songs.mjs",

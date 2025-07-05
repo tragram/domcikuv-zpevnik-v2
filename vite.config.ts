@@ -30,17 +30,11 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: "autoUpdate",
-      devOptions: {
-        enabled: false,
-      },
+      strategies: "injectManifest",
+      srcDir: "src/worker",
+      filename: "sw.ts",
       manifest: false,
-      workbox: {
-        disableDevLogs: true,
-        navigateFallback: "index.html",
-        navigateFallbackDenylist: [/^\/api\//],
-        cleanupOutdatedCaches: true,
-        skipWaiting: true,
-        clientsClaim: true,
+      injectManifest: {
         globDirectory: "dist/client/",
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,yaml,json}",
@@ -50,56 +44,11 @@ export default defineConfig({
           "site.webmanifest",
           "songDB.json",
         ],
-        // only cache the illlustrations when they are loaded fully
-        runtimeCaching: [
-          {
-            urlPattern: ({ url }) => {
-              return url.pathname.startsWith("/songs/illustrations/");
-            },
-            handler: "CacheFirst" as const,
-            options: {
-              cacheName: "full-illustration-cache",
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-            },
-          },
-          // Cache API responses for offline use
-          {
-            urlPattern: ({ url }) => {
-              return url.pathname.startsWith("/api/");
-            },
-            handler: "CacheFirst" as const,
-            options: {
-              cacheName: "api-cache",
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
-              expiration: {
-                maxEntries: 100,
-                // TODO: shouldn't API responses be kept forever
-                maxAgeSeconds: 60 * 60 * 24, // 24 hours
-              },
-            },
-          },
-          // TODO: it appears that this takes up ~100 MB in cache which is an order of magnitude more than expected
-          //
-          // {
-          //   urlPattern: ({ url }) => {
-          //     return (
-          //       !url.pathname.startsWith("./") &&
-          //       url.pathname.match(/\.(png|jpg|jpeg|webp|gif|svg|ico)$/i)
-          //     );
-          //   },
-          //   handler: "NetworkFirst",
-          //   options: {
-          //     cacheName: "external-images",
-          //     cacheableResponse: {
-          //       statuses: [0, 200],
-          //     },
-          //   },
-          // },
-        ],
+      },
+      devOptions: {
+        enabled: true,
+        type: "module",
+        navigateFallback: "/",
       },
     }),
   ],

@@ -143,6 +143,21 @@ importers:
       usehooks-ts:
         specifier: ^3.1.1
         version: 3.1.1(react@19.1.0)
+      workbox-cacheable-response:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-core:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-precaching:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-routing:
+        specifier: ^7.3.0
+        version: 7.3.0
+      workbox-strategies:
+        specifier: ^7.3.0
+        version: 7.3.0
       zod:
         specifier: ^3.25.64
         version: 3.25.67
