@@ -4218,6 +4218,25 @@
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
+    "title": "Timshel",
+    "artist": "Mumford & Sons",
+    "songbooks": "[]",
+    "key": "G",
+    "dateAdded": "07-2025",
+    "language": "english",
+    "tempo": "",
+    "capo": "0",
+    "range": "",
+    "startMelody": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
+    "pdfFilenames": "",
+    "chordproFile": "Mumford_Sons-Timshel.pro",
+    "contentHash": "dab76de4febd2298c5b1ac5f525fb44172b8655d",
+    "availableIllustrations": []
+  },
+  {
     "title": "Petr Hapka",
     "artist": "Na Hotelu v Olomouci",
     "songbooks": "[\"Domčík\"]",
@@ -5849,7 +5868,7 @@
     "pdfFilenames": "",
     "chordproFile": "Traband-Kalna_Reka.pro",
     "contentHash": "709a44f56712596f6bcf3234bd10c90cdda13240",
-    "availableIllustrations": []
+    "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
     "title": "Krasojezdkyně",
