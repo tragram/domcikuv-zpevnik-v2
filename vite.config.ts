@@ -31,7 +31,7 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       strategies: "injectManifest",
-      srcDir: "src/worker",
+      srcDir: "src/web",
       filename: "sw.ts",
       manifest: false,
       injectManifest: {
@@ -46,7 +46,7 @@ export default defineConfig({
         ],
       },
       devOptions: {
-        enabled: true,
+        enabled: false,
         type: "module",
         navigateFallback: "/",
       },
