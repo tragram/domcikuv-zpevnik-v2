@@ -4,7 +4,7 @@
 {title: Kalná Řeka}
 {artist: Traband}
 {songbooks: []}
-{key: H}
+{key: Hm}
 {date_added: 07-2025}
 {language: Czech}
 {tempo: }
@@ -34,13 +34,9 @@ Všechno [G]zničit, [Emi]zabít, na dně uto[D]pit
 {end_of_verse}
 
 {start_of_chorus}
-C     D    Emi
 Jenom [C]kalná [D]řeka [Emi]ví
-Ami  D    G
 Kam nás [Ami]vlny [D]vypla[G]ví
-C      D     Emi
 A kde [C]najdem [D]přísta[Emi]vy
-Ami   D   G
 Pro svý [Ami]srdce [D]bola[G]vý
 {end_of_chorus}
 
@@ -75,21 +71,19 @@ A já [G]potají ji [Emi]chodil [D]krást
 {end_of_verse}
 
 {chorus}
+
 {start_of_verse}
 [Hmi]A pak přišlo léto devadesát [D]sedm
 [Hmi]A velká voda smetla půlku [D]kraje
 Já v tom [G]viděl [Emi]zname[D]ní
 Když [G]zaplavila [Emi]naše stave[D]ní
-
 {end_of_verse}
 
 {start_of_verse}
-
 [Hmi]Jsem snad jedinej, kdo se tenkrát [D]smál
 [Hmi]Když si řeka brala naše [D]domy
 A s nimi ty [G]roky [Emi]ztrace[D]ný
 A [G]životy bez [Emi]snění a bez ce[D]ny
-
 {end_of_verse}
 
 {start_of_verse}
@@ -98,8 +92,8 @@ A [G]životy bez [Emi]snění a bez ce[D]ny
 A pak jsme [G]tajně [Emi]přešli [D]most
 A za [G]sebou nechali svý [Emi]rodiny a [D]minulost
 {end_of_verse}
-{start_of_verse}
 
+{start_of_verse}
 [Hmi]Tak to je příběh můj a Magdy ze sousední [D]vsi
 [Hmi]A vy, jestli dokážete, [D]suďte
 Kdo je [G]vinen [Emi]za zlo[D]čin:
