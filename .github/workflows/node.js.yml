@@ -4,10 +4,11 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["Format songs & Generate Images"]
+    types:
+      - completed
+    branches: [ main ]
 
 jobs:
   build:
