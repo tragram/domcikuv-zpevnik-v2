@@ -1,16 +1,13 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Zlatý hřebík noci}
 {artist: Znouzectnost}
-{songbooks: ["Kvítek"]}
-{key: Em}
 {date_added: 05-2025}
+{songbooks: ["Kvítek"]}
 {language: czech}
-{tempo: }
 {capo: 0}
+{key: Em}
 {range: }
 {start_melody: }
+{tempo: }
 
 {start_of_verse}
 [Emi]Na zámek se [C]sjeli [G]hosté [D]vzácní,

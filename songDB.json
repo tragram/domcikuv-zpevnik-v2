@@ -6023,6 +6023,25 @@
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
   },
   {
+    "title": "Unknown title",
+    "artist": "Unknown artist",
+    "songbooks": "[]",
+    "key": "",
+    "dateAdded": "07-2025",
+    "language": "other",
+    "tempo": "",
+    "capo": "0",
+    "range": "",
+    "startMelody": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
+    "pdfFilenames": "",
+    "chordproFile": "Unknown_artist-Unknown_title.pro",
+    "contentHash": "77643a6a65c20237d5a8c4de00e18b0db1e53609",
+    "availableIllustrations": []
+  },
+  {
     "title": "Kdo vchází do tvých snů",
     "artist": "Václav Neckář",
     "songbooks": "[\"Domčík\"]",
@@ -6850,12 +6869,12 @@
     "capo": "0",
     "range": "",
     "startMelody": "",
-    "promptModel": "gpt-4o-mini",
-    "promptId": "v2",
-    "imageModel": "FLUX.1-dev",
+    "promptModel": "",
+    "promptId": "",
+    "imageModel": "",
     "pdfFilenames": "",
     "chordproFile": "Znouzectnost-Zlaty_hrebik_noci.pro",
-    "contentHash": "19ac91b5a5cb6a8aea059abad95abb5fd8846ae4",
+    "contentHash": "c3876d83ce9b30c8747d68611ccaee7be08b90a9",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   }
 ]
