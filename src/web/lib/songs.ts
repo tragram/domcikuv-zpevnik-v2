@@ -17,12 +17,10 @@ export const fetchSongDB = async () => {
       acc[lang] = (acc[lang] || 0) + 1;
       return acc;
     }, {});
-  const songbooks = [...new Set(songs.map((s) => s.songbooks).flat())];
 
   const songRanges = songs.map((s) => s.range?.semitones).filter(Boolean);
   const songDB = {
     maxRange: Math.max(...songRanges),
-    songbooks: songbooks,
     languages,
     songs,
   };

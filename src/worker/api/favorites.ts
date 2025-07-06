@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
-import { and, eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/d1";
+import { and, count, eq } from "drizzle-orm";
+import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import { user, userFavoriteSongs } from "src/lib/db/schema";
 import { z } from "zod/v4";
 import { buildApp } from "./utils";
@@ -8,7 +8,6 @@ import { buildApp } from "./utils";
 const SongSchema = z.object({
   songId: z.string(),
 });
-
 const favoritesApp = buildApp()
   .get("/", async (c) => {
     try {
@@ -91,22 +90,55 @@ const favoritesApp = buildApp()
       );
     }
   })
-  .get("/public", async (c) => {
-    try {
-      const userData = c.get("USER");
-      if (!userData) {
-        return c.json({ error: "User not found" }, 404);
-      }
-
-      const db = drizzle(c.env.DB);
-      const result = await db
-        .select({ isFavoritesPublic: user.isFavoritesPublic })
+  .get("/publicSongbooks", async (c) => {
+    async function getPublicSongbooks(db: DrizzleD1Database) {
+      return await db
+        .select({
+          user: user,
+          userId: user.id,
+          userName: user.name,
+          userNickname: user.nickname,
+          userImage: user.image,
+          songId: userFavoriteSongs.songId,
+        })
         .from(user)
-        .where(eq(user.id, userData.id));
+        .innerJoin(userFavoriteSongs, eq(user.id, userFavoriteSongs.userId))
+        .where(eq(user.isFavoritesPublic, true))
+        .orderBy(user.name, userFavoriteSongs.id);
+    }
 
-      return c.json(result);
+    try {
+      const db = drizzle(c.env.DB);
+      const result = await getPublicSongbooks(db);
+      const userSongMap = new Map<
+        string,
+        {
+          user: string;
+          image: string;
+          name: string;
+          songIds: string[];
+        }
+      >();
+
+      result.forEach((row) => {
+        const userId = row.userId;
+
+        if (!userSongMap.has(userId)) {
+          userSongMap.set(userId, {
+            user: userId,
+            image: row.userImage || "", // handle null image
+            name: row.userNickname ?? row.userName,
+            songIds: [],
+          });
+        }
+
+        userSongMap.get(userId)!.songIds.push(row.songId);
+      });
+
+      return c.json(Array.from(userSongMap.values()));
     } catch (error) {
-      return c.json({ error: "Failed to fetch user preferences" }, 500);
+      console.error(error);
+      return c.json({ error: "Failed to fetch public songbooks!" }, 500);
     }
   });
 export default favoritesApp;

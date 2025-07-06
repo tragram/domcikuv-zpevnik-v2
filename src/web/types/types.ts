@@ -11,12 +11,6 @@ interface SortSettings {
 
 type int = number; // dumb TS doesn't have int...
 
-interface FilterSettings {
-  language: string;
-  vocalRange: "all" | [int, int];
-  capo: boolean;
-}
-
 type SongLanguage =
   | "all"
   | "czech"
@@ -52,7 +46,6 @@ export const songDBFromJSON = (songDBJSON) => {
 
 export { Note };
 export type {
-  FilterSettings,
   int,
   LanguageCount,
   SongDB,
@@ -65,4 +58,11 @@ export type {
 export interface UserData extends User {
   loggedIn: boolean;
   favorites: Set<string>;
+}
+
+export interface Songbook {
+  user: string;
+  image: string;
+  name: string;
+  songIds: string[];
 }

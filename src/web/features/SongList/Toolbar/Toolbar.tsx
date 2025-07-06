@@ -2,9 +2,9 @@ import { ImagesIcon, Pencil, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import ToolbarBase from "~/components/ToolbarBase";
 import { Button } from "~/components/ui/button";
-import {ThemeToggle} from "~/components/ThemeToggle"
+import { ThemeToggle } from "~/components/ThemeToggle";
 import { SongData } from "~/types/songData";
-import type { LanguageCount } from "~/types/types";
+import type { LanguageCount, Songbook } from "~/types/types";
 import { Link } from "@tanstack/react-router";
 import Filtering from "./filters/Filters";
 import SearchBar from "./SearchBar";
@@ -17,7 +17,6 @@ interface ToolbarProps {
   fakeScroll?: boolean;
   maxRange: number;
   languages: LanguageCount;
-  songbooks: string[];
 }
 
 function Toolbar({
@@ -27,7 +26,6 @@ function Toolbar({
   fakeScroll = false,
   maxRange,
   languages,
-  songbooks,
 }: ToolbarProps) {
   return (
     <ToolbarBase
@@ -38,7 +36,7 @@ function Toolbar({
     >
       <SortMenu />
       <SearchBar />
-      <Filtering languages={languages} maxRange={maxRange} songbooks={songbooks} />
+      <Filtering languages={languages} maxRange={maxRange} />
       <div className="hidden h-full w-fit sm:flex">
         <ThemeToggle />
       </div>

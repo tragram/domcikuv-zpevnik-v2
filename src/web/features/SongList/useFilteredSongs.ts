@@ -1,11 +1,17 @@
-import type { LanguageCount, SortField, SortOrder, UserData } from "~/types/types";
+import type {
+  LanguageCount,
+  Songbook,
+  SortField,
+  SortOrder,
+  UserData,
+} from "~/types/types";
 import { SongData } from "~/types/songData";
 import Fuse from "fuse.js";
 import { useEffect, useMemo } from "react";
-import { useFilterSettingsStore } from "./Toolbar/filters/Filters";
 import { useQueryStore } from "./Toolbar/SearchBar";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
+import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 
 const filterLanguage = (
   songs: SongData[],
@@ -65,11 +71,24 @@ const filterVocalRange = (
   );
 };
 
-const filterSongbook = (songs: SongData[], selectedSongbook: string) => {
-  if (selectedSongbook === "All") {
+const filterSongbook = (
+  songs: SongData[],
+  availableSongbooks: Set<Songbook>,
+  selectedSongbooks: Set<string>
+) => {
+  console.log(availableSongbooks,selectedSongbooks)
+  if (availableSongbooks.size === selectedSongbooks.size) {
     return songs;
   }
-  return songs.filter((s) => s.songbooks.includes(selectedSongbook));
+  let contentsOfSelectedSongbooks = new Set<string>();
+  availableSongbooks.forEach((s) => {
+    if (selectedSongbooks.has(s.user)) {
+      contentsOfSelectedSongbooks = contentsOfSelectedSongbooks.union(
+        s.songIds
+      );
+    }
+  });
+  return songs.filter((s) => contentsOfSelectedSongbooks.has(s.id));
 };
 
 const getSortCompareFunction = (
@@ -100,11 +119,12 @@ const getSortCompareFunction = (
 export function useFilteredSongs(
   songs: SongData[],
   languageCounts: LanguageCount,
-  userData: UserData
+  userData: UserData,
+  availableSongbooks: Set<Songbook>,
 ) {
-const { field: sortByField, order: sortOrder } = useSortSettingsStore();
+  const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
-  const { language, songbook, vocalRange, capo, onlyFavorites } =
+  const { language, selectedSongbooks, vocalRange, capo, onlyFavorites } =
     useFilterSettingsStore();
   // Reset search when sort settings change
   useEffect(() => {
@@ -129,9 +149,14 @@ const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   // Apply filters
   let results = filterCapo(searchResults, capo);
   results = filterVocalRange(results, vocalRange);
-  results = filterSongbook(results, songbook);
+  results = filterSongbook(results, availableSongbooks, selectedSongbooks);
   results = filterLanguage(results, language, languageCounts);
-  results = filterFavorites(results, userData.loggedIn, userData.favorites, onlyFavorites)
+  results = filterFavorites(
+    results,
+    userData.loggedIn,
+    userData.favorites,
+    onlyFavorites
+  );
   // Only sort if there's no search query
   if (!query) {
     results = [...results].sort(getSortCompareFunction(sortByField, sortOrder));

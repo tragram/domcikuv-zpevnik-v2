@@ -2,7 +2,6 @@
 export const preambleKeywords = [
     "title",
     "artist",
-    "songbooks",
     "key",
     "date_added",
     "language",
@@ -25,7 +24,6 @@ export const generatedFields = [
 export const JS2chordproKeywords = {
     title: "title",
     artist: "artist",
-    songbooks: "songbooks",
     key: "key",
     dateAdded: "date_added",
     language: "language",

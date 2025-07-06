@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SongDB, UserData } from "~/types/types";
+import { Songbook, SongDB, UserData } from "~/types/types";
 import useLocalStorageState from "use-local-storage-state";
 import "~/features/SongList/SongList.css";
 import SongRow from "./SongRow";
@@ -12,11 +12,18 @@ const SCROLL_OFFSET_KEY = "scrollOffset";
 function SongList({
   songDB,
   userData,
+  availableSongbooks,
 }: {
   songDB: SongDB;
   userData: UserData;
+  availableSongbooks: Set<Songbook>;
 }) {
-  const { songs } = useFilteredSongs(songDB.songs, songDB.languages, userData);
+  const { songs } = useFilteredSongs(
+    songDB.songs,
+    songDB.languages,
+    userData,
+    availableSongbooks
+  );
   const [showToolbar, setShowToolbar] = useState(true);
   const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
     SCROLL_OFFSET_KEY,
@@ -49,7 +56,6 @@ function SongList({
         fakeScroll={true}
         maxRange={songDB.maxRange}
         languages={songDB.languages}
-        songbooks={songDB.songbooks}
       />
       {songs.length > 0 ? (
         <div className="List pt-[72px] sm:pt-20 pb-2">

@@ -106,6 +106,7 @@ const chooseRandomSong = (
   currentSong: SongData | null,
   ignoreSeenSongs: boolean
 ) => {
+  // TODO: acknowledge current filters
   const bannedSongs = ignoreSeenSongs ? new Set(retrieveBanList()) : new Set();
   if (currentSong) {
     bannedSongs.add(currentSong.id);

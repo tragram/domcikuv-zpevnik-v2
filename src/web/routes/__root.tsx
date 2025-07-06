@@ -4,6 +4,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
 import { fetchSongDB } from "~/lib/songs";
 import { RouterContext } from "~/main";
+import { Songbook } from "~/types/types";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: () => <div>Not Found</div>,
@@ -19,7 +20,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       const favoritesData = await context.queryClient.fetchQuery({
         queryKey: ["favorites", userProfile.id],
         queryFn: async () => (await context.api.favorites.$get()).json(),
-        staleTime: 1000 * 60 * 5 // five minutes should be enough in case there are multiple sessions in parallel
+        staleTime: 1000 * 60 * 5, // five minutes should be enough in case there are multiple sessions in parallel
       });
       userData = {
         ...userProfile,
@@ -37,10 +38,26 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       queryKey: ["songDB"],
       queryFn: fetchSongDB,
     });
+    let publicSongbooks;
+    try {
+      publicSongbooks = await context.queryClient.fetchQuery({
+        queryKey: ["publicSongbooks"],
+        queryFn: async () =>
+          (await context.api.favorites.publicSongbooks.$get()).json(),
+        staleTime: 1000 * 60 * 60, // one hour
+      });
+      publicSongbooks.map((s) => {
+        return { ...s, songIds: new Set(s.songIds) };
+      });
+    } catch (error) {
+      console.error(error);
+      publicSongbooks = [];
+    }
 
     return {
       userData,
       songDB,
+      availableSongbooks: new Set(publicSongbooks) as Set<Songbook>,
     };
   },
   component: () => (

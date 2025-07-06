@@ -5,20 +5,24 @@ export const user = sqliteTable("user", {
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   emailVerified: integer("email_verified", { mode: "boolean" })
-  .$defaultFn(() => false)
-  .notNull(),
+    .$defaultFn(() => false)
+    .notNull(),
   image: text("image"),
   createdAt: integer("created_at", { mode: "timestamp" })
-  .$defaultFn(() => /* @__PURE__ */ new Date())
-  .notNull(),
+    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp" })
-  .$defaultFn(() => /* @__PURE__ */ new Date())
-  .notNull(),
+    .$defaultFn(() => /* @__PURE__ */ new Date())
+    .notNull(),
   // below stuff not used by better-auth
   nickname: text("nickname"),
   isTrusted: integer("is_trusted", { mode: "boolean" })
     .$defaultFn(() => false)
     .notNull(),
+  // TODO: migrate to isAdmin
+  // isAdmin: integer("is_admin", { mode: "boolean" })
+  //   .$defaultFn(() => false)
+  //   .notNull(),
   isFavoritesPublic: integer("is_favorites_public", { mode: "boolean" })
     .$defaultFn(() => false)
     .notNull(),
@@ -51,8 +55,12 @@ export const account = sqliteTable("account", {
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
   idToken: text("id_token"),
-  accessTokenExpiresAt: integer("access_token_expires_at", { mode: "timestamp" }),
-  refreshTokenExpiresAt: integer("refresh_token_expires_at", { mode: "timestamp" }),
+  accessTokenExpiresAt: integer("access_token_expires_at", {
+    mode: "timestamp",
+  }),
+  refreshTokenExpiresAt: integer("refresh_token_expires_at", {
+    mode: "timestamp",
+  }),
   scope: text("scope"),
   password: text("password"),
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
@@ -65,9 +73,9 @@ export const verification = sqliteTable("verification", {
   value: text("value").notNull(),
   expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
-    () => /* @__PURE__ */ new Date(),
+    () => /* @__PURE__ */ new Date()
   ),
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(
-    () => /* @__PURE__ */ new Date(),
+    () => /* @__PURE__ */ new Date()
   ),
 });

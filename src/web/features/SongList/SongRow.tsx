@@ -5,7 +5,6 @@ import { memo, useState } from "react";
 import { toast } from "sonner";
 import { IllustrationPopup } from "~/components/IllustrationPopup";
 import LanguageFlag from "~/components/LanguageFlag";
-import { songBooksWAvatars } from "~/components/songbookAvatars";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import CircularProgress from "~/components/circular-progress";
 import { cn } from "~/lib/utils";
@@ -115,45 +114,45 @@ interface SongbookAvatarsProps {
   className?: string;
 }
 
-const SongBookAvatars = memo(
-  ({ songbooks, maxAvatars = 3, className = "" }: SongbookAvatarsProps) => {
-    const songbooksWithAvatars = songBooksWAvatars(songbooks).filter(
-      (s) => s.value !== "All"
-    );
-    const displaySongbooks = songbooksWithAvatars.slice(0, maxAvatars);
-    const remainingCount = songbooksWithAvatars.length - maxAvatars;
+// const SongBookAvatars = memo(
+//   ({ songbooks, maxAvatars = 3, className = "" }: SongbookAvatarsProps) => {
+//     const songbooksWithAvatars = songBooksWAvatars(songbooks).filter(
+//       (s) => s.value !== "All"
+//     );
+//     const displaySongbooks = songbooksWithAvatars.slice(0, maxAvatars);
+//     const remainingCount = songbooksWithAvatars.length - maxAvatars;
 
-    return (
-      <div className={cn("flex items-center justify-end", className)}>
-        <div className="flex w-fit items-center justify-end -space-x-5">
-          {displaySongbooks.map((songbook, index) => (
-            <div
-              key={index}
-              className={cn(
-                "border-background h-10 w-10 rounded-full border-2 hover:z-10"
-              )}
-            >
-              <Avatar className={"h-full w-full"}>
-                <AvatarImage
-                  src={songbook.avatar}
-                  alt={songbook.value + " avatar"}
-                />
-                <AvatarFallback>{songbook.avatar_fallback}</AvatarFallback>
-              </Avatar>
-            </div>
-          ))}
-          {remainingCount > 0 && (
-            <div className="border-background bg-muted relative flex items-center justify-center rounded-full border-2 hover:z-10">
-              <Avatar className={""}>
-                <AvatarFallback>+{remainingCount}</AvatarFallback>
-              </Avatar>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-);
+//     return (
+//       <div className={cn("flex items-center justify-end", className)}>
+//         <div className="flex w-fit items-center justify-end -space-x-5">
+//           {displaySongbooks.map((songbook, index) => (
+//             <div
+//               key={index}
+//               className={cn(
+//                 "border-background h-10 w-10 rounded-full border-2 hover:z-10"
+//               )}
+//             >
+//               <Avatar className={"h-full w-full"}>
+//                 <AvatarImage
+//                   src={songbook.avatar}
+//                   alt={songbook.value + " avatar"}
+//                 />
+//                 <AvatarFallback>{songbook.avatar_fallback}</AvatarFallback>
+//               </Avatar>
+//             </div>
+//           ))}
+//           {remainingCount > 0 && (
+//             <div className="border-background bg-muted relative flex items-center justify-center rounded-full border-2 hover:z-10">
+//               <Avatar className={""}>
+//                 <AvatarFallback>+{remainingCount}</AvatarFallback>
+//               </Avatar>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     );
+//   }
+// );
 interface FavoriteButtonProps {
   songId: string;
   userData: UserData;
