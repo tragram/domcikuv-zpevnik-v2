@@ -156,7 +156,8 @@ const FilterControls = ({
           vocalRange[0] === 0 &&
           vocalRange[1] === maxRange)) &&
       capo &&
-      selectedSongbooks.size === availableSongbooks.size,
+      selectedSongbooks.size === availableSongbooks.size
+      && !onlyFavorites,
   };
 };
 
