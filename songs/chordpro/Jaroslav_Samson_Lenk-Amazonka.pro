@@ -10,9 +10,7 @@
 {capo: 3}
 {range: h1-h2}
 {start_melody: h c d}
-
 {songbooks: ["Domčík"]}
-
 {pdf_filenames: ["jaroslav_samson_lenk_amazonka-sken.pdf", "jaroslav_samson_lenk_amazonka-comp.pdf"]}
 
 {start_of_verse}
@@ -24,7 +22,7 @@ byla jsi můj celej [Hmi]svět,[Bmi][Ami]
 
 {start_of_verse}
 Tenkrát byly děti [G]malý,
-byla jsi můj celej [Hmi]svět,[Bmi][Ami]
+ale život utí[Hmi]ká,[Bmi][Ami]
 už na "táto" slyší [G]jinej,
 [Ami]i když si tak neří[D]ká.
 {end_of_verse}
