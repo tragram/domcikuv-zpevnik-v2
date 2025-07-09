@@ -2271,12 +2271,12 @@
     "capo": "3",
     "range": "h1-h2",
     "startMelody": "h c d",
-    "promptModel": "",
-    "promptId": "",
-    "imageModel": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
     "pdfFilenames": "[\"jaroslav_samson_lenk_amazonka-sken.pdf\", \"jaroslav_samson_lenk_amazonka-comp.pdf\"]",
     "chordproFile": "Jaroslav_Samson_Lenk-Amazonka.pro",
-    "contentHash": "7819ca38549737a505cf1a3954c5aff7dfe12cf0",
+    "contentHash": "4b80234045a88e7cc029393d597cb9a44212a28f",
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
   },
   {
