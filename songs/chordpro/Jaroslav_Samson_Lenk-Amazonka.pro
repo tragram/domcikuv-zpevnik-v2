@@ -1,14 +1,18 @@
+{prompt_id: v2}
+{prompt_model: gpt-4o-mini}
+{image_model: FLUX.1-dev}
 {title: Amazonka}
 {artist: Jaroslav Samson Lenk}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaroslav_samson_lenk_amazonka-sken.pdf", "jaroslav_samson_lenk_amazonka-comp.pdf"]}
-{capo: 3}
 {key: G}
+{date_added: 07-2015}
+{language: czech}
 {tempo: }
+{capo: 3}
 {range: h1-h2}
 {start_melody: h c d}
+{songbooks: ["Domčík"]}
+{pdf_filenames: ["jaroslav_samson_lenk_amazonka-sken.pdf", "jaroslav_samson_lenk_amazonka-comp.pdf"]}
+
 {start_of_verse}
 Byly krásný naše [G]plány,
 byla jsi můj celej [Hmi]svět,[Bmi][Ami]
@@ -18,7 +22,7 @@ byla jsi můj celej [Hmi]svět,[Bmi][Ami]
 
 {start_of_verse}
 Tenkrát byly děti [G]malý,
-byla jsi můj celej [Hmi]svět,[Bmi][Ami]
+ale život utí[Hmi]ká,[Bmi][Ami]
 už na "táto" slyší [G]jinej,
 [Ami]i když si tak neří[D]ká.
 {end_of_verse}
