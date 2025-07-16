@@ -16,9 +16,10 @@ import Preview from "./Preview";
 import { cn, useLoggedIn } from "~/lib/utils";
 import SettingsDropdown from "./components/SettingsDropdown";
 import DownloadButton from "./components/DownloadButton";
-import { RefreshCcw, Trash, Undo, User } from "lucide-react";
+import { Home, RefreshCcw, Trash, Undo, User } from "lucide-react";
 import PullRequestButton from "./components/PullRequestButton";
 import {
+  Link,
   useLocation,
   useNavigate,
   useRouteContext,
@@ -162,6 +163,12 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
         >
           Undo {songDataURL ? "reload" : "clear"}
           <Undo />
+        </Button>
+        <Button asChild>
+          <Link to="/">
+            <Home />
+            Home
+          </Link>
         </Button>
         <SettingsDropdown />
         <DownloadButton
