@@ -215,7 +215,6 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
           <CollapsibleMainArea
             title={"Editor"}
             className={"basis-[40%] "}
-            isEditor={true}
           >
             <ContentEditor
               editorContent={editorState.content}

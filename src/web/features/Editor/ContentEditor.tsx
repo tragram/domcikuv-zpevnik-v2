@@ -144,7 +144,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     }
   };
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full min-h-fit">
       <div className="w-full flex flex-wrap gap-1 border-b-4 md:border-b-8 border-primary mt-1 md:mt-0">
         <SnippetButtonSection label="Environments">
           <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
@@ -181,14 +181,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
         className={cn(
           "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto !rounded-b-none border-none"
         )}
-        style={{ minHeight: "300px" }}
         onInput={(e) => {
-          // Adjust height on mobile
-          if (window.innerWidth < tailwindBreakpoint("md")) {
-            const target = e.target as HTMLTextAreaElement;
-            target.style.height = "auto";
-            target.style.height = `${target.scrollHeight}px`;
-          }
           onEditorChange(e);
         }}
         value={editorContent}

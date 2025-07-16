@@ -6,10 +6,9 @@ interface CollapsibleMainAreaProps {
     title: string;
     className?: string;
     children: React.ReactNode;
-    isEditor?: boolean;
 }
 
-const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, className, children, isEditor = false }) => {
+const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, className, children}) => {
     const [isCollapsed, setIsCollapsed] = useLocalStorageState<boolean>(`editor/${title}-collapsed`, { defaultValue: false });
     const [isHovered, setIsHovered] = useState(false);
     // TODO: these should be uncollapsed when reloaded on a large screen
@@ -23,7 +22,6 @@ const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, classN
         </div>
         :
         <div className={cn('flex flex-col overflow-hidden min-w-52 border-4 border-primary rounded-md',
-            isEditor ? 'min-h-fit md:min-h-0' : '',
             'w-full md:w-0 md:flex-grow',
             className)}>
             <div className="max-md:hidden overflow-y-auto flex-grow">
