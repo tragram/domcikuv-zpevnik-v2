@@ -3,7 +3,7 @@
 {date_added: 08-2016}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["ozvena_strom-sken.pdf", "ozvena_strom-comp.pdf", "ozvena_strom-gen.pdf"]}
+
 {capo: 5}
 {key: Am}
 {tempo: }

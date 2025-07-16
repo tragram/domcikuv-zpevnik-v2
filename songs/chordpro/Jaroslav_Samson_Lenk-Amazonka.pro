@@ -11,7 +11,7 @@
 {range: h1-h2}
 {start_melody: h c d}
 {songbooks: ["Domčík"]}
-{pdf_filenames: ["jaroslav_samson_lenk_amazonka-sken.pdf", "jaroslav_samson_lenk_amazonka-comp.pdf"]}
+
 
 {start_of_verse}
 Byly krásný naše [G]plány,

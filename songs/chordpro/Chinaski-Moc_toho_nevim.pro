@@ -3,7 +3,7 @@
 {date_added: 10-2018}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["chinaski_moc_toho_nevim-sken.pdf", "chinaski_moc_toho_nevim-comp.pdf"]}
+
 {capo: 0}
 {key: A}
 {tempo: }

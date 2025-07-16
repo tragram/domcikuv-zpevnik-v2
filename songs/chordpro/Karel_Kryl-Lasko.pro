@@ -3,7 +3,7 @@
 {date_added: 07-2016}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["karel_kryl_lasko-sken.pdf", "karel_kryl_lasko-comp.pdf", "karel_kryl_lasko-gen.pdf"]}
+
 {capo: 0}
 {key: Dm}
 {tempo: }

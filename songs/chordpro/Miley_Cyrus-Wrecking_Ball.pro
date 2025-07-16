@@ -3,7 +3,7 @@
 {date_added: 07-2018}
 {songbooks: ["Domčík"]}
 {language: english}
-{pdf_filenames: ["miley_cyrus_wrecking_ball-sken.pdf", "miley_cyrus_wrecking_ball-comp.pdf"]}
+
 {capo: 0}
 {key: Em}
 {tempo: }

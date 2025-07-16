@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["ready_kirken_cerny_brejle-sken.pdf", "ready_kirken_cerny_brejle-comp.pdf"]}
+
 {capo: 2}
 {key: A}
 {tempo: }

@@ -3,7 +3,7 @@
 {date_added: 09-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-{pdf_filenames: ["vaclav_neckar_tu_kytaru_jsem_koupil_kvuli_tobe-sken.pdf", "vaclav_neckar_tu_kytaru_jsem_koupil_kvuli_tobe-comp.pdf"]}
+
 {capo: 2}
 {key: C}
 {tempo: }

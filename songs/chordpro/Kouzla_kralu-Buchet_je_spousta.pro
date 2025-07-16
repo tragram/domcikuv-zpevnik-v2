@@ -11,7 +11,7 @@
 {capo: 3}
 {range: g1-g2}
 {start_melody: c c}
-{pdf_filenames: []}
+
 
 {start_of_verse}
 [C]Z pekárny světa kraj za [F]láskou [G]svou,

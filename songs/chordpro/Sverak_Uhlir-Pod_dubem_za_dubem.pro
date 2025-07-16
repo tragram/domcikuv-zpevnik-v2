@@ -11,7 +11,7 @@
 {capo: 3}
 {range: g#1-a2}
 {start_melody: a a a}
-{pdf_filenames: []}
+
 
 {start_of_chorus}
 [Ami]Pod dubem, za dubem
