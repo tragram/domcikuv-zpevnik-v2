@@ -214,6 +214,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
             className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}
           >
             <MetadataEditor
+              defaultMetadata={defaultEditorState.metadata}
               metadata={editorState.metadata}
               updateMetadata={updateMetadata}
             />
