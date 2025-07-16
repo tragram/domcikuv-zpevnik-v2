@@ -12,7 +12,7 @@
 {start_melody: }
 
 
-{comment: } C6/9: prostředíček se v akordu C přesouvá na strunu G:druhý pražec v mezihře se dá místo F hrát Csus, capo 2 je originální tónina, doporučuji bez capa
+{comment:  C6/9: prostředíček se v akordu C přesouvá na strunu G:druhý pražec v mezihře se dá místo F hrát Csus, capo 2 je originální tónina, doporučuji bez capa}
 
 {start_of_verse}
 
