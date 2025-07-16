@@ -1,5 +1,10 @@
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { Camera, LogOut, Save, Shield, User } from "lucide-react";
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  useRouter,
+} from "@tanstack/react-router";
+import { Camera, Home, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "src/lib/auth/client";
@@ -528,8 +533,14 @@ function ActionButtons({
 }: ActionButtonsProps) {
   return (
     <div className="flex flex-col sm:flex-row gap-3 justify-between">
+      <Button asChild variant="outline" className="sm:w-auto">
+        <Link to="/">
+          <Home/>
+          Home
+        </Link>
+      </Button>
       <Button variant="outline" onClick={onLogout} className="sm:w-auto">
-        <LogOut className="h-4 w-4 mr-2" />
+        <LogOut/>
         Logout
       </Button>
       <Button
@@ -544,7 +555,7 @@ function ActionButtons({
           </>
         ) : (
           <>
-            <Save className="h-4 w-4 mr-2" />
+            <Save/>
             Save Changes
           </>
         )}
