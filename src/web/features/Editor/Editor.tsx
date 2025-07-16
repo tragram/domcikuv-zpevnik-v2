@@ -121,6 +121,17 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
 
   const toolbarTop = true;
 
+  const canBeSubmitted =
+    !editorStatesEqual(editorState, defaultEditorState) &&
+    editorState.metadata.artist &&
+    editorState.metadata.title &&
+    editorState.content;
+  console.log(
+    !editorStatesEqual(editorState, defaultEditorState),
+    editorState.metadata.artist,
+    editorState.metadata.title,
+    editorState.content
+  );
   const Toolbar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -178,6 +189,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
         <PullRequestButton
           metadata={editorState.metadata}
           content={editorState.content}
+          disabled={!canBeSubmitted}
         />
         {!loggedIn && (
           <Button onClick={handleLoginRedirect}>
@@ -212,10 +224,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
               updateMetadata={updateMetadata}
             />
           </CollapsibleMainArea>
-          <CollapsibleMainArea
-            title={"Editor"}
-            className={"basis-[40%] "}
-          >
+          <CollapsibleMainArea title={"Editor"} className={"basis-[40%] "}>
             <ContentEditor
               editorContent={editorState.content}
               setEditorContent={updateContent}

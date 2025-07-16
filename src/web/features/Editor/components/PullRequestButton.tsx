@@ -1,7 +1,4 @@
-import {
-  useLocation,
-  useNavigate,
-} from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { CloudUpload } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -18,11 +15,13 @@ import { useLoggedIn } from "~/lib/utils";
 type PullRequestButtonProps = {
   metadata: SongMetadata;
   content: string;
+  disabled: boolean;
 };
 
 const PullRequestButton: React.FC<PullRequestButtonProps> = ({
   metadata,
   content,
+  disabled,
 }) => {
   const loggedIn = useLoggedIn();
   const navigate = useNavigate();
@@ -69,6 +68,7 @@ const PullRequestButton: React.FC<PullRequestButtonProps> = ({
     } else toast.error(data.error || "Submission failed");
     setIsSubmitting(false);
   };
+  console.log(disabled)
 
   return (
     <div className="space-y-2">
@@ -78,7 +78,7 @@ const PullRequestButton: React.FC<PullRequestButtonProps> = ({
             <div>
               <Button
                 onClick={handleSubmit}
-                disabled={isSubmitting || !loggedIn}
+                disabled={disabled || isSubmitting || !loggedIn}
                 variant="default"
               >
                 {isSubmitting ? "Submitting..." : "Submit song (pull request)"}
