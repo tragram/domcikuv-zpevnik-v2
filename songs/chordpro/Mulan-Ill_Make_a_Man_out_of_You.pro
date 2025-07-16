@@ -3,7 +3,7 @@
 {date_added: 08-2015}
 {songbooks: ["Domčík"]}
 {language: english}
-
+{pdf_filenames: ["mulan_ill_make_a_man_out_of_you-sken.pdf", "mulan_ill_make_a_man_out_of_you-comp.pdf", "mulan_ill_make_a_man_out_of_you-gen.pdf"]}
 {capo: 3}
 {key: C}
 {tempo: }

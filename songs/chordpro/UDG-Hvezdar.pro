@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["udg_hvezdar-sken.pdf", "udg_hvezdar-comp.pdf"]}
 {capo: 2}
 {key: D}
 {tempo: }

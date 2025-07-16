@@ -11,7 +11,7 @@
 {capo: 0}
 {range: a1-f2}
 {start_melody: d d c a}
-
+{pdf_filenames: []}
 
 {start_of_verse: Intro}
 Óóó[Dmi][Ami][B][F][Dmi][Ami][B][F]

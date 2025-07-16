@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["nerez_ja_s_tebou_zit_nebudu-sken.pdf", "nerez_ja_s_tebou_zit_nebudu-comp.pdf"]}
 {capo: 0}
 {key: Em}
 {tempo: }

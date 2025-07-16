@@ -3,7 +3,7 @@
 {date_added: 10-2011}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["buty_nad_stadem_koni-sken.pdf", "buty_nad_stadem_koni-comp.pdf"]}
 {capo: 2}
 {key: D}
 {tempo: }

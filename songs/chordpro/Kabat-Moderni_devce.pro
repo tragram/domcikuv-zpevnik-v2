@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["kabat_moderni_devce-sken.pdf", "kabat_moderni_devce-comp.pdf"]}
 {capo: 0}
 {key: C}
 {tempo: }

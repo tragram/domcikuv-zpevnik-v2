@@ -11,7 +11,7 @@
 {capo: 0}
 {range: c1-f2}
 {start_melody: a b a}
-
+{pdf_filenames: []}
 
 {start_of_verse}
 [Dmi]Schoulené holky [C]spí nahé

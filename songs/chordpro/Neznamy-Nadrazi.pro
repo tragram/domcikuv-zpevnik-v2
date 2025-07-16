@@ -3,7 +3,7 @@
 {date_added: 08-2013}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["neznamy_nadrazi-sken.pdf", "neznamy_nadrazi-comp.pdf"]}
 {capo: 2}
 {key: D}
 {tempo: }

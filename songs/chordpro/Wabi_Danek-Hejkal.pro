@@ -3,7 +3,7 @@
 {date_added: 02-2012}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["wabi_danek_hejkal-sken.pdf", "wabi_danek_hejkal-comp.pdf"]}
 {capo: 2}
 {key: Am}
 {tempo: }

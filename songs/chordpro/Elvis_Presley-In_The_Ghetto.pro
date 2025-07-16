@@ -3,7 +3,7 @@
 {date_added: 03-2018}
 {songbooks: ["Domčík"]}
 {language: english}
-
+{pdf_filenames: ["elvis_presley_in_the_ghetto-sken.pdf", "elvis_presley_in_the_ghetto-comp.pdf"]}
 {capo: 2}
 {key: A}
 {tempo: }

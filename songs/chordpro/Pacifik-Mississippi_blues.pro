@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["pacifik_mississippi_blues-sken.pdf", "pacifik_mississippi_blues-comp.pdf"]}
 {capo: 3}
 {key: Am}
 {tempo: }

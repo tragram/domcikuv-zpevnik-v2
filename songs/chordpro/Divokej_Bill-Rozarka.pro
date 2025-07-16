@@ -11,7 +11,7 @@
 {capo: 0}
 {range: e1-f2}
 {start_melody: a a h c c}
-
+{pdf_filenames: []}
 
 {start_of_verse}
 [Ami]Nikdy [F]neřikej, že víš jak mi [Emi]je, s prázdnym

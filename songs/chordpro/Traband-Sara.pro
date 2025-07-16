@@ -3,7 +3,7 @@
 {date_added: 09-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["traband_sara-sken.pdf", "traband_sara-comp.pdf"]}
 {capo: 4}
 {key: Em}
 {tempo: }

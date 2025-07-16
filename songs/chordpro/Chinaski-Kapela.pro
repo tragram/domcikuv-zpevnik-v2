@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["chinaski_kapela-sken.pdf", "chinaski_kapela-comp.pdf", "chinaski_kapela-gen.pdf"]}
 {capo: 3}
 {key: D}
 {tempo: }

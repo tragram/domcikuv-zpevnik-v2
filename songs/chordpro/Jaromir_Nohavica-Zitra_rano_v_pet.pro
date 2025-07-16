@@ -3,7 +3,7 @@
 {date_added: 07-2015}
 {songbooks: ["Domčík"]}
 {language: czech}
-
+{pdf_filenames: ["jaromir_nohavica_zitra_rano_v_pet-sken.pdf", "jaromir_nohavica_zitra_rano_v_pet-comp.pdf"]}
 {capo: 3}
 {key: Am}
 {tempo: }

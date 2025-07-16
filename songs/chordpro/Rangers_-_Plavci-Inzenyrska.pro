@@ -11,7 +11,7 @@
 {capo: 0}
 {range: h1-f2}
 {start_melody: e h g# h}
-
+{pdf_filenames: []}
 
 {start_of_verse}
 Já [E]studoval a studoval a budoucnost si budoval
