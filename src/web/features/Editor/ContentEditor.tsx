@@ -144,7 +144,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     }
   };
   return (
-    <div className="flex flex-col h-full min-h-fit">
+    <div className="flex flex-col h-full">
       <div className="w-full flex flex-wrap gap-1 border-b-4 md:border-b-8 border-primary mt-1 md:mt-0">
         <SnippetButtonSection label="Environments">
           <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
