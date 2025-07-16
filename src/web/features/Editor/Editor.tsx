@@ -126,12 +126,6 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
     editorState.metadata.artist &&
     editorState.metadata.title &&
     editorState.content;
-  console.log(
-    !editorStatesEqual(editorState, defaultEditorState),
-    editorState.metadata.artist,
-    editorState.metadata.title,
-    editorState.content
-  );
   const Toolbar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();

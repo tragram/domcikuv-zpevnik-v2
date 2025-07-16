@@ -68,7 +68,6 @@ const PullRequestButton: React.FC<PullRequestButtonProps> = ({
     } else toast.error(data.error || "Submission failed");
     setIsSubmitting(false);
   };
-  console.log(disabled)
 
   return (
     <div className="space-y-2">
