@@ -76,8 +76,7 @@ const filterSongbook = (
   availableSongbooks: Set<Songbook>,
   selectedSongbooks: Set<string>
 ) => {
-  console.log(availableSongbooks,selectedSongbooks)
-  if (availableSongbooks.size === selectedSongbooks.size) {
+  if (availableSongbooks.size <= selectedSongbooks.size) {
     return songs;
   }
   let contentsOfSelectedSongbooks = new Set<string>();
@@ -120,7 +119,7 @@ export function useFilteredSongs(
   songs: SongData[],
   languageCounts: LanguageCount,
   userData: UserData,
-  availableSongbooks: Set<Songbook>,
+  availableSongbooks: Set<Songbook>
 ) {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
