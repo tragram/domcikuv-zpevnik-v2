@@ -1,0 +1,9 @@
+- model: gpt-4o-mini
+  prompt_id: v2
+  response: Create an illustration of a serene dawn scene where a lone figure stands
+    in a field, holding a heart-shaped pendant and a cross, gazing towards the horizon
+    where two rays of sunlight break through the clouds. In the background, a fishing
+    boat battles stormy seas, symbolizing struggle and resilience. The atmosphere
+    should convey a sense of hope and tranquility amidst the chaos, with soft colors
+    and gentle light illuminating the figure's face, reflecting a moment of introspection
+    and acceptance.
