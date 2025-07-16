@@ -3211,6 +3211,25 @@
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
   },
   {
+    "title": "Srdce a Kříž",
+    "artist": "Karel Kryl",
+    "songbooks": "",
+    "key": "",
+    "dateAdded": "07-2025",
+    "language": "other",
+    "tempo": "",
+    "capo": "0",
+    "range": "",
+    "startMelody": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
+    "pdfFilenames": "",
+    "chordproFile": "Karel_Kryl-Srdce_a_Kriz.pro",
+    "contentHash": "dd59c7ff5c0993441c296613fbbd453c5f11a175",
+    "availableIllustrations": []
+  },
+  {
     "title": "Ukolébavka",
     "artist": "Karel Kryl",
     "songbooks": "[\"Domčík\"]",
@@ -4197,6 +4216,25 @@
     "chordproFile": "Mulan-Ill_Make_a_Man_out_of_You.pro",
     "contentHash": "e612c95b191ae01e7bad79f007a90c3e31a62671",
     "availableIllustrations": "[\"gpt-4o-mini_v1_FLUX.1-dev\"]"
+  },
+  {
+    "title": "Babel",
+    "artist": "Mumford &  Sons",
+    "songbooks": "",
+    "key": "Am",
+    "dateAdded": "07-2025",
+    "language": "other",
+    "tempo": "",
+    "capo": "2",
+    "range": "",
+    "startMelody": "",
+    "promptModel": "gpt-4o-mini",
+    "promptId": "v2",
+    "imageModel": "FLUX.1-dev",
+    "pdfFilenames": "",
+    "chordproFile": "Mumford_Sons-Babel.pro",
+    "contentHash": "92cd4376a49d8e4252ae1ad8204497d08e815568",
+    "availableIllustrations": []
   },
   {
     "title": "Little Lion Man",
