@@ -55,7 +55,7 @@ function RouteComponent() {
   return (
     <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="w-full max-w-2xl">
-        <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-8 md:p-16">
+        <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-4 md:p-8">
           <Outlet />
         </div>
       </div>

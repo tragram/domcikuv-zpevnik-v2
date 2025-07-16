@@ -201,7 +201,7 @@ function RouteComponent() {
   };
 
   return (
-    <div className="container max-w-4xl mx-auto py-8 px-4">
+    <div className="container max-w-4xl mx-auto">
       <div className="space-y-8">
         <ProfileHeader />
 
