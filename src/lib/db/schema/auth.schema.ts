@@ -17,14 +17,13 @@ export const user = sqliteTable("user", {
   // below stuff not used by better-auth
   nickname: text("nickname"),
   isTrusted: integer("is_trusted", { mode: "boolean" })
-    .$defaultFn(() => false)
+    .default(false)
     .notNull(),
-  // TODO: migrate to isAdmin
-  // isAdmin: integer("is_admin", { mode: "boolean" })
-  //   .$defaultFn(() => false)
-  //   .notNull(),
+  isAdmin: integer("is_admin", { mode: "boolean" })
+    .default(false)
+    .notNull(),
   isFavoritesPublic: integer("is_favorites_public", { mode: "boolean" })
-    .$defaultFn(() => false)
+    .default(false)
     .notNull(),
   // TODO: this is not updated
   lastLogin: integer("last_login", { mode: "timestamp" })
