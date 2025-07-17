@@ -1,4 +1,6 @@
 import { z } from "zod/v4";
+import { drizzle } from "drizzle-orm/d1";
+import { userFavoriteSongs } from "../../lib/db/schema";
 
 import { buildApp } from "./utils";
 import { SongData } from "../../web/types/songData";
@@ -130,11 +132,30 @@ const editorApp = buildApp().post("/submit", async (c) => {
       return c.json({ error: "Failed to create PR", detail: pr }, 500);
     }
 
+    // 6. Automatically add song to user's favorites if user is logged in
+    if (userData) {
+      try {
+        const db = drizzle(c.env.DB);
+        const songId = SongData.id(title, artist);
+        
+        // Insert into favorites, but ignore if it already exists (ON CONFLICT IGNORE equivalent)
+        await db.insert(userFavoriteSongs).values({
+          userId: userData.id,
+          songId,
+        }).onConflictDoNothing();
+        
+        console.log(`Added song ${songId} to favorites for user ${userData.id}`);
+      } catch (favoriteError) {
+        // Don't fail the entire request if adding to favorites fails
+        console.error("Failed to add song to favorites:", favoriteError);
+      }
+    }
+
     return c.json({ 
       success: true, 
       prUrl: pr.html_url,
       action: isUpdate ? 'updated' : 'created',
-      message: `Song ${isUpdate ? 'updated' : 'submitted'} successfully`
+      message: `Song ${isUpdate ? 'updated' : 'submitted'} successfully${userData ? ' and added to your favorites' : ''}`
     });
 
   } catch (error) {
