@@ -3,14 +3,19 @@ import type { SongMetadata } from "~/types/songData";
 import MetadataField from "./components/MetadataField";
 import { metadataValidators } from "./components/validationUtils";
 import type { EditorState } from "./Editor";
+import SelectOrEditList from "~/components/SelectOrEditList";
+import { SongDB } from "~/types/types";
+import { cn } from "~/lib/utils";
 
 interface MetadataEditorProps {
+  songDB: SongDB;
   defaultMetadata: SongMetadata;
   metadata: SongMetadata;
   updateMetadata: (field: keyof EditorState["metadata"], value: string) => void;
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({
+  songDB,
   defaultMetadata,
   metadata,
   updateMetadata,
@@ -60,6 +65,23 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
         modified={defaultMetadata.language !== metadata.language}
         description="If language not already present in some other song, flag might not be shown."
         validator={metadataValidators.language}
+        customInput={
+          <SelectOrEditList
+            options={Object.keys(songDB.languages)}
+            value={metadata.language}
+            onValueChange={(value) => updateMetadata("language", value)}
+            placeholderCollapsed="Select language"
+            placeholderSearch="Find or add language"
+            noOptionsFoundText="No language found."
+            addNewText="Add new language"
+            className={cn(
+              "border-2 border-primary/50 dark:border-muted",
+              defaultMetadata.language !== metadata.language
+                ? "text-foreground !bg-primary/30"
+                : "text-foreground/70 !bg-input/30"
+            )}
+          />
+        }
       />
       <MetadataField
         label="Key"

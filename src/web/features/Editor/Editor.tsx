@@ -1,4 +1,4 @@
-import { Button } from "~/components/ui/button";
+import { Button } from "~/components/shadcn-ui/button";
 import {
   emptySongMetadata,
   SongData,
@@ -22,7 +22,6 @@ import {
   Link,
   useLocation,
   useNavigate,
-  useRouteContext,
 } from "@tanstack/react-router";
 
 export interface EditorState {
@@ -214,6 +213,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
             className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}
           >
             <MetadataEditor
+              songDB={songDB}
               defaultMetadata={defaultEditorState.metadata}
               metadata={editorState.metadata}
               updateMetadata={updateMetadata}
