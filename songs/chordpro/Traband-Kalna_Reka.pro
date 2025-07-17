@@ -3,14 +3,15 @@
 {image_model: FLUX.1-dev}
 {title: Kalná Řeka}
 {artist: Traband}
-{songbooks: []}
 {key: Hm}
 {date_added: 07-2025}
-{language: Czech}
+{language: czech}
 {tempo: }
 {capo: 0}
 {range: }
 {start_melody: }
+
+{songbooks: []}
 
 {start_of_verse}
 [Hmi]Miloval jsem holku ze sou[D]sední vsi

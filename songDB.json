@@ -5914,7 +5914,7 @@
     "songbooks": "[]",
     "key": "Hm",
     "dateAdded": "07-2025",
-    "language": "Czech",
+    "language": "czech",
     "tempo": "",
     "capo": "0",
     "range": "",
@@ -5924,7 +5924,7 @@
     "imageModel": "FLUX.1-dev",
     "pdfFilenames": "",
     "chordproFile": "Traband-Kalna_Reka.pro",
-    "contentHash": "709a44f56712596f6bcf3234bd10c90cdda13240",
+    "contentHash": "2b593e74f44674aa146c9085b7cb4e8a615e79f1",
     "availableIllustrations": "[\"gpt-4o-mini_v2_FLUX.1-dev\"]"
   },
   {
