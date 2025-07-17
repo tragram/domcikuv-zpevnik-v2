@@ -120,7 +120,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected,
             </ToolbarBase>}
         </div>
       </div>
-      <div className='max-sm:hidden flex min-[600px]:hidden'>
+      <div className='flex min-[600px]:hidden'>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="circular">
