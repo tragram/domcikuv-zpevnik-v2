@@ -5,7 +5,7 @@ import { memo, useState } from "react";
 import { toast } from "sonner";
 import { IllustrationPopup } from "~/components/IllustrationPopup";
 import LanguageFlag from "~/components/LanguageFlag";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/shadcn-ui/avatar";
 import CircularProgress from "~/components/circular-progress";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";

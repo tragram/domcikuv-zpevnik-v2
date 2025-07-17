@@ -2,9 +2,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { signIn } from "~/../lib/auth/client";
-import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import { Button } from "~/components/shadcn-ui/button";
+import { Input } from "~/components/shadcn-ui/input";
+import { Label } from "~/components/shadcn-ui/label";
 import { AuthHeader } from "./route";
 
 export const Route = createFileRoute("/(auth)/login")({

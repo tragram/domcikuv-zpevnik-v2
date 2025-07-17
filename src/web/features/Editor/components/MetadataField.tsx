@@ -1,5 +1,5 @@
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
+import { Input } from "~/components/shadcn-ui/input";
+import { Label } from "~/components/shadcn-ui/label";
 import type { ValidationResult } from "./validationUtils";
 import { useEffect, useState } from "react";
 import { cn } from "~/lib/utils";
@@ -12,6 +12,7 @@ interface MetadataFieldProps {
   onChange: (value: string) => void;
   validator?: (value: string) => ValidationResult;
   required?: boolean;
+  customInput?: React.ReactElement;
   modified: boolean;
 }
 
@@ -23,12 +24,13 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   onChange,
   validator,
   required = false,
+  customInput = null,
   modified,
 }) => {
   const [validationResult, setValidationResult] = useState<ValidationResult>({
     isValid: true,
   });
-  
+
   // Run validation when value changes
   useEffect(() => {
     if (validator && value) {
@@ -37,27 +39,29 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   }, [value, validator]);
 
   const displayError = !validationResult.isValid;
-
+  const inputField = customInput ?? (
+    <Input
+      placeholder={value ? undefined : placeholder || label}
+      value={value ?? ""}
+      onChange={(e) => {
+        onChange(e.target.value);
+      }}
+      className={cn(
+        "border-2 p-1",
+        displayError
+          ? "border-red-600"
+          : "border-primary/50 dark:border-muted focus:border-primary focus:bg-primary/30",
+        modified ? "!bg-primary/30" : ""
+      )}
+    />
+  );
   return (
     <div className="w-full items-center space-y-0.5">
       <Label className="text-sm">
         {label}
         {required && <span className="text-primary ml-1">*</span>}
       </Label>
-      <Input
-        placeholder={value ? undefined : placeholder || label}
-        value={value ?? ""}
-        onChange={(e) => {
-          onChange(e.target.value);
-        }}
-        className={cn(
-          "border-2 p-1",
-          displayError
-            ? "border-red-600"
-            : "border-primary/50 dark:border-muted focus:border-primary focus:bg-primary/30",
-          modified ? "!bg-primary/30" : ""
-        )}
-      />
+      {inputField}
       {description && (
         <p className="text-xs text-primary/80 dark:text-primary/50">
           {description}

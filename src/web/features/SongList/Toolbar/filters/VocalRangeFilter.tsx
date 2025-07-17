@@ -1,5 +1,5 @@
 
-import { Button } from "~/components/ui/button";
+import { Button } from "~/components/shadcn-ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,8 +7,8 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger
-} from "~/components/ui/dropdown-menu";
-import { RangeSlider } from "~/components/ui/slider";
+} from "~/components/shadcn-ui/dropdown-menu";
+import { RangeSlider } from "~/components/shadcn-ui/slider";
 import { Music } from "lucide-react";
 
 export type VocalRangeValue = "all" | [number, number];

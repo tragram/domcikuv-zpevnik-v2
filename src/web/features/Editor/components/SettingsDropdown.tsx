@@ -1,5 +1,5 @@
-import { Button } from '~/components/ui/button';
-import { DropdownIconStart, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/components/ui/dropdown-menu';
+import { Button } from '~/components/shadcn-ui/button';
+import { DropdownIconStart, DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/components/shadcn-ui/dropdown-menu';
 import { Settings2 } from 'lucide-react';
 import React from 'react';
 import { type LayoutSettings, useViewSettingsStore } from '../../SongView/hooks/viewSettingsStore';

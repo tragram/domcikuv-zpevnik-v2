@@ -1,5 +1,5 @@
-import { Avatar, AvatarImage } from "~/components/ui/avatar"
-import { Dialog, DialogContent, DialogDescription, DialogTitle } from "~/components/ui/dialog-custom"
+import { Avatar, AvatarImage } from "~/components/shadcn-ui/avatar"
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "~/components/shadcn-ui/dialog-custom"
 import { cn } from "~/lib/utils"
 import { SongData } from "~/types/songData"
 import { useState, useCallback } from "react"

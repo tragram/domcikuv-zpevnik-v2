@@ -1,7 +1,7 @@
 
 import RandomSong, { ResetBanListDropdownItems } from '~/components/RandomSong'
-import { Button } from '~/components/ui/button'
-import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/components/ui/dropdown-menu'
+import { Button } from '~/components/shadcn-ui/button'
+import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/components/shadcn-ui/dropdown-menu'
 import usePWAInstall from '~/components/usePWAInstall'
 import { Key } from '~/types/musicTypes'
 import { Fullscreen, Github, Pencil, Settings2, Undo2 } from 'lucide-react'

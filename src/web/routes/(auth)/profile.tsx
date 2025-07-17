@@ -8,19 +8,19 @@ import { Camera, Home, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "src/lib/auth/client";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Button } from "~/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/shadcn-ui/avatar";
+import { Button } from "~/components/shadcn-ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { Separator } from "~/components/ui/separator";
-import { Switch } from "~/components/ui/switch";
+} from "~/components/shadcn-ui/card";
+import { Input } from "~/components/shadcn-ui/input";
+import { Label } from "~/components/shadcn-ui/label";
+import { Separator } from "~/components/shadcn-ui/separator";
+import { Switch } from "~/components/shadcn-ui/switch";
 
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,

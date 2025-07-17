@@ -1,6 +1,6 @@
 
 import { FlagOff } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from './shadcn-ui/avatar';
 import type { SongLanguage } from '~/types/types';
 const language2iso: Record<SongLanguage, string> = {
     "czech": "cz",

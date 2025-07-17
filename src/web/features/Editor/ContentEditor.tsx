@@ -1,4 +1,4 @@
-import { Textarea } from "~/components/ui/textarea";
+import { Textarea } from "~/components/shadcn-ui/textarea";
 import React, { useEffect, useRef } from "react";
 import "./Editor.css";
 import {

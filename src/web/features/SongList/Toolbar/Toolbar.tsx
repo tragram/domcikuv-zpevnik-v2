@@ -1,7 +1,7 @@
 import { ImagesIcon, Pencil, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import ToolbarBase from "~/components/ToolbarBase";
-import { Button } from "~/components/ui/button";
+import { Button } from "~/components/shadcn-ui/button";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { SongData } from "~/types/songData";
 import type { LanguageCount, Songbook } from "~/types/types";

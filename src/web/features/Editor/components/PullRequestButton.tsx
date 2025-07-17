@@ -2,13 +2,13 @@ import { useLocation, useNavigate } from "@tanstack/react-router";
 import { CloudUpload } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "~/components/ui/button";
+import { Button } from "~/components/shadcn-ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "~/components/ui/tooltip";
+} from "~/components/shadcn-ui/tooltip";
 import { type SongMetadata } from "~/types/songData";
 import { editorToChordPro } from "./utils";
 import { useLoggedIn } from "~/lib/utils";

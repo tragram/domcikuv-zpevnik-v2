@@ -2,7 +2,7 @@ import { PWAInstallElement } from '@khmyznikov/pwa-install';
 import PWAInstall from '@khmyznikov/pwa-install/react-legacy';
 import { Save } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { DropdownIconStart, DropdownMenuItem } from './ui/dropdown-menu';
+import { DropdownIconStart, DropdownMenuItem } from './shadcn-ui/dropdown-menu';
 
 export const usePWAInstall = () => {
     const pwaInstallRef = useRef<PWAInstallElement>(null);

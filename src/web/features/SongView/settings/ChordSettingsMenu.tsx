@@ -1,6 +1,6 @@
 import { Guitar, Piano, ChevronsLeftRightEllipsis } from 'lucide-react';
-import { Button } from '~/components/ui/button';
-import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuLabel, DropdownMenuSeparator } from '~/components/ui/dropdown-menu';
+import { Button } from '~/components/shadcn-ui/button';
+import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuLabel, DropdownMenuSeparator } from '~/components/shadcn-ui/dropdown-menu';
 import { useViewSettingsStore } from '../hooks/viewSettingsStore';
 
 export interface ChordSettings {

@@ -11,15 +11,15 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "~/components/ui/alert-dialog";
+} from "~/components/shadcn-ui/alert-dialog";
 import { SongData } from "~/types/songData";
 import type { SongDB } from "~/types/types";
-import { Button } from "./ui/button";
+import { Button } from "./shadcn-ui/button";
 import {
   DropdownIconStart,
   DropdownMenuCheckboxItem,
   DropdownMenuItem,
-} from "./ui/dropdown-menu";
+} from "./shadcn-ui/dropdown-menu";
 import { getLocalStorageItem, setLocalStorageItem } from "~/lib/utils";
 
 const BAN_LIST_KEY = "songsBannedFromRandom";

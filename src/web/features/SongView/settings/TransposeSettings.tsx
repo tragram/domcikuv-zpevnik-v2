@@ -1,6 +1,6 @@
 // import { ButtonGroup, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
-import { Button } from "~/components/ui/button";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
+import { Button } from "~/components/shadcn-ui/button";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "~/components/shadcn-ui/dropdown-menu";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Note } from "~/types/musicTypes";
 import { Key } from "~/types/musicTypes";

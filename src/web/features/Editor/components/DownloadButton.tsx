@@ -1,4 +1,4 @@
-import { Button } from "~/components/ui/button";
+import { Button } from "~/components/shadcn-ui/button";
 import { type SongMetadata } from "~/types/songData";
 import { Download } from "lucide-react";
 import { editorToChordPro } from "./utils";

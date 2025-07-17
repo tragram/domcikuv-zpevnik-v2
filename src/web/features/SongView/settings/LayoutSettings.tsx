@@ -1,11 +1,11 @@
 
 import React from 'react'
-import { Button } from '~/components/ui/button'
+import { Button } from '~/components/shadcn-ui/button'
 import { MoveDiagonal, MoveHorizontal, Columns2, Fullscreen, AArrowDown, AArrowUp, PencilRuler, Repeat, Maximize, Brain } from 'lucide-react'
 import { type LayoutPreset, type LayoutSettings, useViewSettingsStore } from '../hooks/viewSettingsStore'
 import type { FullScreenHandle } from 'react-full-screen'
-import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '~/components/ui/dropdown-menu'
-import { LoopNoteIcon } from '~/components/ui/loop-note-icon'
+import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from '~/components/shadcn-ui/dropdown-menu'
+import { LoopNoteIcon } from '~/components/shadcn-ui/loop-note-icon'
 import SmartColumnIcon from "./smart_columns_icon"
 import FancySwitch from '~/components/FancySwitch'
 

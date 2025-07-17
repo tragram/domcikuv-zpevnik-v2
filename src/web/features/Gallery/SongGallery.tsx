@@ -1,5 +1,5 @@
 import { IllustrationPrompt } from "~/components/IllustrationPrompt";
-import { Button } from "~/components/ui/button";
+import { Button } from "~/components/shadcn-ui/button";
 import { SongData } from "~/types/songData";
 import { CircleX } from "lucide-react";
 import { memo, useEffect, useMemo, useState, useRef } from "react";
