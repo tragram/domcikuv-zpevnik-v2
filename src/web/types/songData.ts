@@ -234,7 +234,13 @@ class SongData {
   }
 
   static parseKey(key?: string) {
-    return key ? Key.parse(key, true) : undefined;
+    if (!key) return undefined;
+    try {
+      return Key.parse(key, true);
+    } catch (error) {
+      console.error("Error parsing key:", key, error);
+      return undefined;
+    }
   }
 
   static parseDateAdded(dateAdded?: string) {
