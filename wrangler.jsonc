@@ -50,7 +50,7 @@
    */
   "vars": {
     "VITE_BASE_URL": "http://localhost:5173",
-    "PROD_BASE_URL": "https://domcikuv-zpevnik-v2.domho108.workers.dev",
+    "PROD_BASE_URL": "https://zpevnik.hodan.page",
     "CLOUDFLARE_R2_URL": "https://pub-331c64d6b1714cc99d68580dc52a8d90.r2.dev",
     "GITHUB_REPO": "tragram/domcikuv-zpevnik-v2"
   }
