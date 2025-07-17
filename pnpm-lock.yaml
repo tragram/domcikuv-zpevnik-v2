@@ -128,6 +128,9 @@ importers:
       react-full-screen:
         specifier: ^1.1.1
         version: 1.1.1(react@19.1.0)
+      react-screen-wake-lock:
+        specifier: ^3.1.1
+        version: 3.1.1(react@19.1.0)
       react-scroll:
         specifier: ^1.9.3
         version: 1.9.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -4103,6 +4106,12 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react-screen-wake-lock@3.1.1:
+    resolution: {integrity: sha512-aZqFSh1uHhdeeNHknvCuw9pZO9hP1Ul7Z1Cc26WJaOH52ZbnLSPS01GEeHarARSmOIdLwJoSMRyfSAW0a946bA==}
+    engines: {node: '>=v14.21.3'}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   react-scroll@1.9.3:
     resolution: {integrity: sha512-xv7FXqF3k63aSLNu4/NjFvRNI0ge7DmmmsbeGarP7LZVAlJMSjUuW3dTtLxp1Afijyv0lS2qwC0GiFHvx1KBHQ==}
@@ -8572,6 +8581,10 @@ snapshots:
       use-sidecar: 1.1.3(@types/react@19.1.8)(react@19.1.0)
     optionalDependencies:
       '@types/react': 19.1.8
+
+  react-screen-wake-lock@3.1.1(react@19.1.0):
+    dependencies:
+      react: 19.1.0
 
   react-scroll@1.9.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:

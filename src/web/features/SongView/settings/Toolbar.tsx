@@ -1,97 +1,154 @@
-
-import RandomSong, { ResetBanListDropdownItems } from '~/components/RandomSong'
-import { Button } from '~/components/shadcn-ui/button'
-import { DropdownIconStart, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '~/components/shadcn-ui/dropdown-menu'
-import usePWAInstall from '~/components/usePWAInstall'
-import { Key } from '~/types/musicTypes'
-import { Fullscreen, Github, Pencil, Settings2, Undo2 } from 'lucide-react'
-import React from 'react'
-import type { FullScreenHandle } from 'react-full-screen'
-import { useScrollHandler } from '../hooks/useScrollHandler'
-import { useViewSettingsStore } from '../hooks/viewSettingsStore'
-import { ChordSettingsButtons, ChordSettingsDropdownMenu } from './ChordSettingsMenu'
-import { LayoutSettingsDropdownSection, LayoutSettingsToolbar } from './LayoutSettings'
-import TransposeSettings from './TransposeSettings'
-import ToolbarBase from '~/components/ToolbarBase'
-import { Link }from "@tanstack/react-router"
-import {DropdownThemeToggle} from '~/components/ThemeToggle'
-import { SongDB } from '~/types/types'
-import { SongData } from '~/types/songData'
+import RandomSong, { ResetBanListDropdownItems } from "~/components/RandomSong";
+import { Button } from "~/components/shadcn-ui/button";
+import {
+  DropdownIconStart,
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/shadcn-ui/dropdown-menu";
+import usePWAInstall from "~/components/usePWAInstall";
+import { Key } from "~/types/musicTypes";
+import {
+  Coffee,
+  Fullscreen,
+  Github,
+  Pencil,
+  Settings2,
+  Undo2,
+} from "lucide-react";
+import React, { useEffect } from "react";
+import type { FullScreenHandle } from "react-full-screen";
+import { useScrollHandler } from "../hooks/useScrollHandler";
+import { useViewSettingsStore } from "../hooks/viewSettingsStore";
+import {
+  ChordSettingsButtons,
+  ChordSettingsDropdownMenu,
+} from "./ChordSettingsMenu";
+import {
+  LayoutSettingsDropdownSection,
+  LayoutSettingsToolbar,
+} from "./LayoutSettings";
+import TransposeSettings from "./TransposeSettings";
+import ToolbarBase from "~/components/ToolbarBase";
+import { Link } from "@tanstack/react-router";
+import { DropdownThemeToggle } from "~/components/ThemeToggle";
+import { SongDB } from "~/types/types";
+import { SongData } from "~/types/songData";
+import { useWakeLock } from "react-screen-wake-lock";
+import useLocalStorageState from "use-local-storage-state";
 
 interface ToolbarProps {
-    songDB: SongDB
-    songData: SongData
-    fullScreenHandle: FullScreenHandle
-    originalKey: Key | undefined
-    transposeSteps: number
-    setTransposeSteps: (value: number) => void
+  songDB: SongDB;
+  songData: SongData;
+  fullScreenHandle: FullScreenHandle;
+  originalKey: Key | undefined;
+  transposeSteps: number;
+  setTransposeSteps: (value: number) => void;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
-    songDB,
-    songData,
-    fullScreenHandle,
-    originalKey,
-    transposeSteps,
-    setTransposeSteps
+  songDB,
+  songData,
+  fullScreenHandle,
+  originalKey,
+  transposeSteps,
+  setTransposeSteps,
 }) => {
-    const { layout } = useViewSettingsStore();
-    const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
+  const { layout } = useViewSettingsStore();
+  const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
-    const { PWAInstallComponent, installItem } = usePWAInstall();
-    return (
-        <div className="absolute top-0 w-full">
-            <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
-                <Button size="icon" variant="circular" asChild>
-                    <Link to="/">
-                        <Undo2 />
-                    </Link>
-                </Button>
+  const { PWAInstallComponent, installItem } = usePWAInstall();
+  const wakelock = useWakeLock({
+    reacquireOnPageVisible: true,
+  });
+  const [wakeLockEnabled, setWakeLockEnabled] = useLocalStorageState<boolean>(
+    "wakeLockEnabled",
+    { defaultValue: true }
+  );
+  useEffect(() => {
+    if (wakelock.isSupported && wakeLockEnabled) {
+      wakelock.request();
+    }
+  }, [wakelock, wakeLockEnabled]);
 
-                <ChordSettingsButtons />
-                <LayoutSettingsToolbar fullScreenHandle={fullScreenHandle} />
-                <TransposeSettings
-                    originalKey={originalKey}
-                    transposeSteps={transposeSteps}
-                    setTransposeSteps={setTransposeSteps} />
+  return (
+    <div className="absolute top-0 w-full">
+      <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
+        <Button size="icon" variant="circular" asChild>
+          <Link to="/">
+            <Undo2 />
+          </Link>
+        </Button>
 
-                <DropdownMenu modal={false}>
-                    <DropdownMenuTrigger asChild>
-                        <Button size="icon" variant="circular">
-                            <Settings2 size={32} />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
-                        {React.Children.toArray(<LayoutSettingsDropdownSection />)}
-                        {React.Children.toArray(<ChordSettingsDropdownMenu />)}
-                        <DropdownMenuLabel>Misc</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownThemeToggle />
-                        <DropdownMenuItem onClick={() => { fullScreenHandle.enter() }}>
-                            <DropdownIconStart icon={<Fullscreen />} />
-                            Enter fullscreen
-                        </DropdownMenuItem >
-                        {React.Children.toArray(<ResetBanListDropdownItems songDB={songDB} />)}
-                        <DropdownMenuItem>
-                            <DropdownIconStart icon={<Pencil />} />
-                            <Link className='w-full h-full'
-                                to={"/edit/" + songData.id}>
-                                View in Editor
-                            </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <DropdownIconStart icon={<Github />} />
-                            <Link className='w-full h-full'
-                                to={"https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" + songData.chordproFile}>
-                                Edit on GitHub
-                            </Link>
-                        </DropdownMenuItem>
-                        {installItem}
-                    </DropdownMenuContent >
-                </DropdownMenu>
-                <RandomSong songs={songDB.songs} currentSong={songData} />
-            </ToolbarBase>
-            {PWAInstallComponent}
-        </div>
-    )
-}
+        <ChordSettingsButtons />
+        <LayoutSettingsToolbar fullScreenHandle={fullScreenHandle} />
+        <TransposeSettings
+          originalKey={originalKey}
+          transposeSteps={transposeSteps}
+          setTransposeSteps={setTransposeSteps}
+        />
+
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild>
+            <Button size="icon" variant="circular">
+              <Settings2 size={32} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
+            {React.Children.toArray(<LayoutSettingsDropdownSection />)}
+            {React.Children.toArray(<ChordSettingsDropdownMenu />)}
+            <DropdownMenuLabel>Misc</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownThemeToggle />
+            <DropdownMenuItem
+              onClick={() => {
+                fullScreenHandle.enter();
+              }}
+            >
+              <DropdownIconStart icon={<Fullscreen />} />
+              Enter fullscreen
+            </DropdownMenuItem>
+            {React.Children.toArray(
+              <ResetBanListDropdownItems songDB={songDB} />
+            )}
+            {wakelock.isSupported && (
+              <DropdownMenuCheckboxItem
+                onSelect={(e) => e.preventDefault()}
+                checked={wakeLockEnabled}
+                onCheckedChange={() => setWakeLockEnabled(!wakeLockEnabled)}
+              >
+                <DropdownIconStart icon={<Coffee />} />
+                Keep screen on
+              </DropdownMenuCheckboxItem>
+            )}
+            <DropdownMenuItem>
+              <DropdownIconStart icon={<Pencil />} />
+              <Link className="w-full h-full" to={"/edit/" + songData.id}>
+                View in Editor
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <DropdownIconStart icon={<Github />} />
+              <Link
+                className="w-full h-full"
+                to={
+                  "https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" +
+                  songData.chordproFile
+                }
+              >
+                Edit on GitHub
+              </Link>
+            </DropdownMenuItem>
+            {installItem}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <RandomSong songs={songDB.songs} currentSong={songData} />
+      </ToolbarBase>
+      {PWAInstallComponent}
+    </div>
+  );
+};
