@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UserRouteImport } from './routes/user'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EditIndexRouteImport } from './routes/edit/index'
@@ -28,6 +29,11 @@ const UserRoute = UserRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authRouteRoute = authRouteRouteImport.update({
@@ -72,6 +78,7 @@ const authLoginRoute = authLoginRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof authRouteRouteWithChildren
+  '/admin': typeof AdminRoute
   '/gallery': typeof GalleryRoute
   '/user': typeof UserRoute
   '/login': typeof authLoginRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof authRouteRouteWithChildren
+  '/admin': typeof AdminRoute
   '/gallery': typeof GalleryRoute
   '/user': typeof UserRoute
   '/login': typeof authLoginRoute
@@ -96,6 +104,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(auth)': typeof authRouteRouteWithChildren
+  '/admin': typeof AdminRoute
   '/gallery': typeof GalleryRoute
   '/user': typeof UserRoute
   '/(auth)/login': typeof authLoginRoute
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/gallery'
     | '/user'
     | '/login'
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/admin'
     | '/gallery'
     | '/user'
     | '/login'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/(auth)'
+    | '/admin'
     | '/gallery'
     | '/user'
     | '/(auth)/login'
@@ -145,6 +157,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   authRouteRoute: typeof authRouteRouteWithChildren
+  AdminRoute: typeof AdminRoute
   GalleryRoute: typeof GalleryRoute
   UserRoute: typeof UserRoute
   EditSongIdRoute: typeof EditSongIdRoute
@@ -166,6 +179,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)': {
@@ -246,6 +266,7 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   authRouteRoute: authRouteRouteWithChildren,
+  AdminRoute: AdminRoute,
   GalleryRoute: GalleryRoute,
   UserRoute: UserRoute,
   EditSongIdRoute: EditSongIdRoute,
