@@ -54,16 +54,16 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       publicSongbooks = [];
     }
 
-    const songDBAdmin = await context.queryClient.fetchQuery({
-      queryKey: ["songDBAdmin"],
-      queryFn: () => fetchSongDBAdmin(context.api.admin),
-      staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
-    });
+    // const songDBAdmin = await context.queryClient.fetchQuery({
+    //   queryKey: ["songDBAdmin"],
+    //   queryFn: () => fetchSongDBAdmin(context.api.admin),
+    //   staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
+    // });
 
     return {
       userData,
       songDB,
-      songDBAdmin,
+      // songDBAdmin,
       availableSongbooks: new Set(publicSongbooks) as Set<Songbook>,
     };
   },
