@@ -14,6 +14,9 @@ importers:
       '@libsql/client':
         specifier: ^0.15.9
         version: 0.15.9
+      '@nerdfolio/drizzle-d1-helpers':
+        specifier: ^0.1.4
+        version: 0.1.4(@libsql/client@0.15.9)(cloudflare@4.4.1)(kysely@0.28.2)
       '@omit/react-fancy-switch':
         specifier: ^1.0.4
         version: 1.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -168,9 +171,6 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.7.0
         version: 0.7.0(hono@4.7.5)(zod@3.25.67)
-      '@nerdfolio/drizzle-d1-helpers':
-        specifier: ^0.1.4
-        version: 0.1.4(@libsql/client@0.15.9)(cloudflare@4.4.1)(kysely@0.28.2)
       '@tailwindcss/postcss':
         specifier: ^4.1.10
         version: 4.1.10
@@ -225,9 +225,6 @@ importers:
       tsx:
         specifier: ^4.20.3
         version: 4.20.3
-      typescript:
-        specifier: 5.8.2
-        version: 5.8.2
       typescript-eslint:
         specifier: 8.29.0
         version: 8.29.0(eslint@9.23.0(jiti@2.4.2))(typescript@5.8.2)
