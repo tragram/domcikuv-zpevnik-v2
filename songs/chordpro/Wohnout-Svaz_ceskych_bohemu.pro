@@ -5,6 +5,7 @@
 {language: czech}
 {pdf_filenames: ["wohnout_svaz_ceskych_bohemu-sken.pdf", "wohnout_svaz_ceskych_bohemu-comp.pdf", "wohnout_svaz_ceskych_bohemu-gen.pdf"]}
 {image_model: dalle3}
+{prompt_id: v1}
 {capo: 0}
 {key: G}
 {tempo: }

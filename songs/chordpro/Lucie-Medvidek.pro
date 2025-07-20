@@ -7,6 +7,7 @@
 {capo: 0}
 {key: A}
 {image_model: dalle3}
+{prompt_id: v1}
 {tempo: }
 {range: a1-c#2}
 {start_melody: e}

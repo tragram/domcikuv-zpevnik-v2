@@ -6,6 +6,7 @@
 {pdf_filenames: ["lucie_chci_zas_v_tobe_spat-sken.pdf", "lucie_chci_zas_v_tobe_spat-comp.pdf"]}
 {capo: 6}
 {image_model: dalle3}
+{prompt_id: v1}
 {key: G}
 {tempo: }
 {range: d1-g2}

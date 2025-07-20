@@ -5,6 +5,7 @@
 {language: czech}
 {pdf_filenames: ["michal_david_nonstop-sken.pdf", "michal_david_nonstop-comp.pdf", "michal_david_nonstop-gen.pdf"]}
 {image_model: dalle3}
+{prompt_id: v1}
 {capo: 0}
 {key: D}
 {tempo: }

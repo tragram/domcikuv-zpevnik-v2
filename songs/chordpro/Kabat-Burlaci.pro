@@ -8,6 +8,7 @@
 {key: Em}
 {tempo: }
 {image_model: dalle3}
+{prompt_id: v1}
 {range: c1-c2/g2}
 {start_melody: e}
 
