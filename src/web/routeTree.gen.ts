@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UserRouteImport } from './routes/user'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
@@ -21,11 +20,6 @@ import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authProfileRouteImport } from './routes/(auth)/profile'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 
-const UserRoute = UserRouteImport.update({
-  id: '/user',
-  path: '/user',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
@@ -80,7 +74,6 @@ export interface FileRoutesByFullPath {
   '/': typeof authRouteRouteWithChildren
   '/admin': typeof AdminRoute
   '/gallery': typeof GalleryRoute
-  '/user': typeof UserRoute
   '/login': typeof authLoginRoute
   '/profile': typeof authProfileRoute
   '/signup': typeof authSignupRoute
@@ -92,7 +85,6 @@ export interface FileRoutesByTo {
   '/': typeof authRouteRouteWithChildren
   '/admin': typeof AdminRoute
   '/gallery': typeof GalleryRoute
-  '/user': typeof UserRoute
   '/login': typeof authLoginRoute
   '/profile': typeof authProfileRoute
   '/signup': typeof authSignupRoute
@@ -106,7 +98,6 @@ export interface FileRoutesById {
   '/(auth)': typeof authRouteRouteWithChildren
   '/admin': typeof AdminRoute
   '/gallery': typeof GalleryRoute
-  '/user': typeof UserRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/profile': typeof authProfileRoute
   '/(auth)/signup': typeof authSignupRoute
@@ -120,7 +111,6 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/gallery'
-    | '/user'
     | '/login'
     | '/profile'
     | '/signup'
@@ -132,7 +122,6 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/gallery'
-    | '/user'
     | '/login'
     | '/profile'
     | '/signup'
@@ -145,7 +134,6 @@ export interface FileRouteTypes {
     | '/(auth)'
     | '/admin'
     | '/gallery'
-    | '/user'
     | '/(auth)/login'
     | '/(auth)/profile'
     | '/(auth)/signup'
@@ -159,7 +147,6 @@ export interface RootRouteChildren {
   authRouteRoute: typeof authRouteRouteWithChildren
   AdminRoute: typeof AdminRoute
   GalleryRoute: typeof GalleryRoute
-  UserRoute: typeof UserRoute
   EditSongIdRoute: typeof EditSongIdRoute
   SongSongIdRoute: typeof SongSongIdRoute
   EditIndexRoute: typeof EditIndexRoute
@@ -167,13 +154,6 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/user': {
-      id: '/user'
-      path: '/user'
-      fullPath: '/user'
-      preLoaderRoute: typeof UserRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/gallery': {
       id: '/gallery'
       path: '/gallery'
@@ -268,7 +248,6 @@ const rootRouteChildren: RootRouteChildren = {
   authRouteRoute: authRouteRouteWithChildren,
   AdminRoute: AdminRoute,
   GalleryRoute: GalleryRoute,
-  UserRoute: UserRoute,
   EditSongIdRoute: EditSongIdRoute,
   SongSongIdRoute: SongSongIdRoute,
   EditIndexRoute: EditIndexRoute,

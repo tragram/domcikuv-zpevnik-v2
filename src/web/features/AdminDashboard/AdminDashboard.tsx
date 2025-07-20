@@ -1,29 +1,33 @@
+import { useState } from "react";
+import { AdminSidebar } from "./components/admin-sidebar";
+import { UsersTable } from "./components/users-table";
+import { IllustrationsTable } from "./components/illustrations-table";
+import { ChangesTable } from "./components/changes-table";
+import { SidebarProvider, SidebarInset } from "~/components/shadcn-ui/sidebar";
+import { SongDB } from "~/types/types";
+import SongsTable from "./components/songs-table";
 
-import { useState } from "react"
-import { AdminSidebar } from "./components/admin-sidebar"
-import { UsersTable } from "./components/users-table"
-import { SongsTable } from "./components/songs-table"
-import { IllustrationsTable } from "./components/illustrations-table"
-import { ChangesTable } from "./components/changes-table"
-import { SidebarProvider, SidebarInset } from "~/components/shadcn-ui/sidebar"
+interface AdminDashboardProps {
+  songDB: SongDB; // Replace 'any' with a more specific type if available
+}
 
-export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState("users")
+export default function AdminDashboard({ songDB }: AdminDashboardProps) {
+  const [activeTab, setActiveTab] = useState("users");
 
   const renderContent = () => {
     switch (activeTab) {
       case "users":
-        return <UsersTable />
+        return <UsersTable />;
       case "songs":
-        return <SongsTable />
+        return <SongsTable songDB={songDB} />;
       case "illustrations":
-        return <IllustrationsTable />
+        return <IllustrationsTable />;
       case "changes":
-        return <ChangesTable />
+        return <ChangesTable />;
       default:
-        return <UsersTable />
+        return <UsersTable />;
     }
-  }
+  };
 
   return (
     <SidebarProvider>
@@ -31,11 +35,13 @@ export default function AdminDashboard() {
       <SidebarInset>
         <div className="flex-1 space-y-4 p-8 pt-6">
           <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">Admin Dashboard</h2>
+            <h2 className="text-3xl font-bold tracking-tight">
+              Admin Dashboard
+            </h2>
           </div>
           {renderContent()}
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

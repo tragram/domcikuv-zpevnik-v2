@@ -19,6 +19,8 @@ export const song = sqliteTable("song", {
   capo: integer("capo"),
   range: text("range"),
   chordproURL: text("chordproURL").notNull(),
+  // verified if either added by a trusted user or manually by an admin
+  verified: integer("verified", { mode: "boolean" }).default(true).notNull(),
   // illustrationId: text("illustration_id").references(() => songIllustration.id),
 });
 

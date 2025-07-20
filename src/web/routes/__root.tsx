@@ -2,7 +2,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
-import { fetchSongDB } from "~/lib/songs";
+import { fetchSongDB, fetchSongDBAdmin } from "~/lib/songs";
 import { RouterContext } from "~/main";
 import { Songbook } from "~/types/types";
 
@@ -54,9 +54,16 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       publicSongbooks = [];
     }
 
+    const songDBAdmin = await context.queryClient.fetchQuery({
+      queryKey: ["songDBAdmin"],
+      queryFn: () => fetchSongDBAdmin(context.api.admin),
+      staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
+    });
+
     return {
       userData,
       songDB,
+      songDBAdmin,
       availableSongbooks: new Set(publicSongbooks) as Set<Songbook>,
     };
   },

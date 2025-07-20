@@ -9,7 +9,6 @@ export const Route = createFileRoute("/admin")({
 });
 
 function Home() {
-  const { userData, songDB } = Route.useLoaderData();
-
-  return <AdminDashboard />;
+  const { songDBAdmin } = Route.useLoaderData();
+  return <AdminDashboard songDB={songDBAdmin} />;
 }

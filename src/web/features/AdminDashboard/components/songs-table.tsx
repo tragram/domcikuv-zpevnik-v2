@@ -1,95 +1,67 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "~/components/shadcn-ui/button"
-import { Input } from "~/components/shadcn-ui/input"
-import { Badge } from "~/components/shadcn-ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/shadcn-ui/table"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/components/shadcn-ui/dialog"
-import { Label } from "~/components/shadcn-ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/shadcn-ui/select"
-import { Plus, Edit, Search, ExternalLink } from "lucide-react"
+import { useState } from "react";
+import { Button } from "~/components/shadcn-ui/button";
+import { Input } from "~/components/shadcn-ui/input";
+import { Badge } from "~/components/shadcn-ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/shadcn-ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/shadcn-ui/dialog";
+import { Label } from "~/components/shadcn-ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/shadcn-ui/select";
+import { Plus, Edit, Search, ExternalLink } from "lucide-react";
+import { SongDB } from "~/types/types";
+import { SongData } from "~/types/songData";
 
-interface Song {
-  id: string
-  title: string
-  artist: string
-  key: string
-  dateAdded: Date
-  dateModified: Date
-  startMelody?: string
-  language: string
-  tempo?: string
-  capo?: number
-  range?: string
-  chordproURL: string
+interface SongsTableProps {
+  songDB: SongDB; // Replace 'any' with a more specific type if available
 }
 
-const mockSongs: Song[] = [
-  {
-    id: "1",
-    title: "Amazing Grace",
-    artist: "John Newton",
-    key: "G",
-    dateAdded: new Date("2024-01-15"),
-    dateModified: new Date("2024-01-15"),
-    startMelody: "G-B-D",
-    language: "English",
-    tempo: "Slow",
-    capo: 0,
-    range: "G3-D5",
-    chordproURL: "https://example.com/amazing-grace.cho",
-  },
-  {
-    id: "2",
-    title: "How Great Thou Art",
-    artist: "Carl Boberg",
-    key: "C",
-    dateAdded: new Date("2024-01-10"),
-    dateModified: new Date("2024-01-12"),
-    startMelody: "C-E-G",
-    language: "English",
-    tempo: "Medium",
-    capo: 2,
-    range: "C3-G5",
-    chordproURL: "https://example.com/how-great-thou-art.cho",
-  },
-  {
-    id: "3",
-    title: "Be Thou My Vision",
-    artist: "Traditional Irish",
-    key: "D",
-    dateAdded: new Date("2024-01-08"),
-    dateModified: new Date("2024-01-10"),
-    language: "English",
-    tempo: "Medium",
-    range: "D3-A5",
-    chordproURL: "https://example.com/be-thou-my-vision.cho",
-  },
-]
-
-export function SongsTable() {
-  const [songs, setSongs] = useState<Song[]>(mockSongs)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [editingSong, setEditingSong] = useState<Song | null>(null)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+export default function SongsTable({ songDB }: SongsTableProps) {
+  const [songs, setSongs] = useState<SongData[]>(songDB.songs);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [editingSong, setEditingSong] = useState<SongData | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const filteredSongs = songs.filter(
     (song) =>
       song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       song.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      song.key.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+      song.key?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const handleSaveSong = (songData: Partial<Song>) => {
+  const handleSaveSong = (songData: Partial<SongData>) => {
+    // TODO: 
     if (editingSong) {
       setSongs(
-        songs.map((song) => (song.id === editingSong.id ? { ...song, ...songData, dateModified: new Date() } : song)),
-      )
+        songs.map((song) =>
+          song.id === editingSong.id
+            ? { ...song, ...songData, dateModified: new Date() }
+            : song
+        )
+      );
     } else {
-      const newSong: Song = {
+      const newSong: SongData = {
         id: Date.now().toString(),
         title: songData.title || "",
         artist: songData.artist || "",
@@ -102,12 +74,12 @@ export function SongsTable() {
         capo: songData.capo,
         range: songData.range,
         chordproURL: songData.chordproURL || "",
-      }
-      setSongs([...songs, newSong])
+      };
+      setSongs([...songs, newSong]);
     }
-    setIsDialogOpen(false)
-    setEditingSong(null)
-  }
+    setIsDialogOpen(false);
+    setEditingSong(null);
+  };
 
   return (
     <div className="space-y-4">
@@ -122,7 +94,9 @@ export function SongsTable() {
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>{editingSong ? "Edit Song" : "Add New Song"}</DialogTitle>
+              <DialogTitle>
+                {editingSong ? "Edit Song" : "Add New Song"}
+              </DialogTitle>
             </DialogHeader>
             <SongForm song={editingSong} onSave={handleSaveSong} />
           </DialogContent>
@@ -159,25 +133,29 @@ export function SongsTable() {
                 <TableCell className="font-medium">{song.title}</TableCell>
                 <TableCell>{song.artist}</TableCell>
                 <TableCell>
-                  <Badge variant="outline">{song.key}</Badge>
+                  <Badge variant="outline">{song.key?.toString()}</Badge>
                 </TableCell>
                 <TableCell>{song.language}</TableCell>
                 <TableCell>{song.tempo || "-"}</TableCell>
                 <TableCell>{song.capo || "-"}</TableCell>
-                <TableCell>{song.dateModified.toLocaleDateString()}</TableCell>
+                <TableCell>{song.dateModified?.toLocaleDateString()}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => {
-                        setEditingSong(song)
-                        setIsDialogOpen(true)
+                        setEditingSong(song);
+                        setIsDialogOpen(true);
                       }}
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={() => window.open(song.chordproURL, "_blank")}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.open(song.chordproURL, "_blank")}
+                    >
                       <ExternalLink className="h-4 w-4" />
                     </Button>
                   </div>
@@ -188,10 +166,16 @@ export function SongsTable() {
         </Table>
       </div>
     </div>
-  )
+  );
 }
 
-function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<Song>) => void }) {
+function SongForm({
+  song,
+  onSave,
+}: {
+  song: Song | null;
+  onSave: (data: Partial<Song>) => void;
+}) {
   const [formData, setFormData] = useState({
     title: song?.title || "",
     artist: song?.artist || "",
@@ -202,12 +186,12 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
     capo: song?.capo || 0,
     range: song?.range || "",
     chordproURL: song?.chordproURL || "",
-  })
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSave(formData)
-  }
+    e.preventDefault();
+    onSave(formData);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -217,7 +201,9 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
           <Input
             id="title"
             value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
             required
           />
         </div>
@@ -226,7 +212,9 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
           <Input
             id="artist"
             value={formData.artist}
-            onChange={(e) => setFormData({ ...formData, artist: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, artist: e.target.value })
+            }
             required
           />
         </div>
@@ -235,12 +223,28 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
       <div className="grid grid-cols-3 gap-4">
         <div className="space-y-2">
           <Label htmlFor="key">Key</Label>
-          <Select value={formData.key} onValueChange={(value) => setFormData({ ...formData, key: value })}>
+          <Select
+            value={formData.key}
+            onValueChange={(value) => setFormData({ ...formData, key: value })}
+          >
             <SelectTrigger>
               <SelectValue placeholder="Select key" />
             </SelectTrigger>
             <SelectContent>
-              {["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"].map((key) => (
+              {[
+                "C",
+                "C#",
+                "D",
+                "D#",
+                "E",
+                "F",
+                "F#",
+                "G",
+                "G#",
+                "A",
+                "B",
+                "H",
+              ].map((key) => (
                 <SelectItem key={key} value={key}>
                   {key}
                 </SelectItem>
@@ -250,7 +254,12 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
         </div>
         <div className="space-y-2">
           <Label htmlFor="language">Language</Label>
-          <Select value={formData.language} onValueChange={(value) => setFormData({ ...formData, language: value })}>
+          <Select
+            value={formData.language}
+            onValueChange={(value) =>
+              setFormData({ ...formData, language: value })
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="Select language" />
             </SelectTrigger>
@@ -264,7 +273,12 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
         </div>
         <div className="space-y-2">
           <Label htmlFor="tempo">Tempo</Label>
-          <Select value={formData.tempo} onValueChange={(value) => setFormData({ ...formData, tempo: value })}>
+          <Select
+            value={formData.tempo}
+            onValueChange={(value) =>
+              setFormData({ ...formData, tempo: value })
+            }
+          >
             <SelectTrigger>
               <SelectValue placeholder="Select tempo" />
             </SelectTrigger>
@@ -286,7 +300,12 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
             min="0"
             max="12"
             value={formData.capo}
-            onChange={(e) => setFormData({ ...formData, capo: Number.parseInt(e.target.value) || 0 })}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                capo: Number.parseInt(e.target.value) || 0,
+              })
+            }
           />
         </div>
         <div className="space-y-2">
@@ -294,7 +313,9 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
           <Input
             id="range"
             value={formData.range}
-            onChange={(e) => setFormData({ ...formData, range: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, range: e.target.value })
+            }
             placeholder="e.g., C3-G5"
           />
         </div>
@@ -303,7 +324,9 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
           <Input
             id="startMelody"
             value={formData.startMelody}
-            onChange={(e) => setFormData({ ...formData, startMelody: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, startMelody: e.target.value })
+            }
             placeholder="e.g., C-E-G"
           />
         </div>
@@ -315,7 +338,9 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
           id="chordproURL"
           type="url"
           value={formData.chordproURL}
-          onChange={(e) => setFormData({ ...formData, chordproURL: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, chordproURL: e.target.value })
+          }
           required
         />
       </div>
@@ -324,5 +349,5 @@ function SongForm({ song, onSave }: { song: Song | null; onSave: (data: Partial<
         {song ? "Update Song" : "Create Song"}
       </Button>
     </form>
-  )
+  );
 }

@@ -3,9 +3,32 @@ import { LanguageCount, SongDB } from "~/types/types";
 import yaml from "js-yaml";
 import { fileURL } from "./utils";
 import { guessKey } from "~/features/SongView/utils/songRendering";
+import client from "~/../worker/api-client";
 
 export const fetchSongDB = async () => {
   const response = await fetch(fileURL("/songDB.json"));
+  if (!response.ok)
+    throw new Error("Failed to fetch songDB!", { cause: response });
+  const songDBData = await response.json();
+  const songs = songDBData.map((d) => new SongData(d));
+
+  const languages: LanguageCount = songs
+    .map((s) => s.language)
+    .reduce((acc: Record<string, number>, lang: string) => {
+      acc[lang] = (acc[lang] || 0) + 1;
+      return acc;
+    }, {});
+
+  const songRanges = songs.map((s) => s.range?.semitones).filter(Boolean);
+  const songDB = {
+    maxRange: Math.max(...songRanges),
+    languages,
+    songs,
+  };
+  return songDB;
+};
+export const fetchSongDBAdmin = async (adminApi: typeof client.api.admin) => {
+  const response = await adminApi.songDB.$get();
   if (!response.ok)
     throw new Error("Failed to fetch songDB!", { cause: response });
   const songDBData = await response.json();
@@ -53,7 +76,7 @@ export const fetchSong = async (songId: string, songDB: SongDB) => {
   const availableIllustrations = songIdsAndIllustrations.find(
     (song) => song.id === songId
   )?.availableIllustrations;
-  
+
   const songData = SongData.fromChordpro(songRawData, availableIllustrations);
 
   if (!songData.key) {
