@@ -1,7 +1,7 @@
 import { z } from "zod/v4";
 import { drizzle } from "drizzle-orm/d1";
-import { song, user, userFavoriteSongs, songIllustration } from "../../lib/db/schema";
-import { eq } from "drizzle-orm";
+import { song, user, userFavoriteSongs, songIllustration, songChange } from "../../lib/db/schema";
+import { eq, desc } from "drizzle-orm";
 import { buildApp } from "./utils";
 import { SongData } from "../../web/types/songData";
 import { createInsertSchema } from "drizzle-zod";
@@ -98,16 +98,41 @@ const adminApp = buildApp()
       return c.json({ success: true });
     }
   )
-  .delete("/illustration/:id", async (c) => {
-    const id = c.req.param("id");
+  .get("/changes", async (c) => {
     const db = drizzle(c.env.DB);
+    const changes = await db
+      .select({
+        id: songChange.id,
+        songId: songChange.songId,
+        songTitle: song.title,
+        userId: songChange.userId,
+        userName: user.name,
+        timestamp: songChange.timestamp,
+        chordproURL: songChange.chordproURL,
+        verified: songChange.verified,
+      })
+      .from(songChange)
+      .leftJoin(song, eq(songChange.songId, song.id))
+      .leftJoin(user, eq(songChange.userId, user.id))
+      .orderBy(desc(songChange.timestamp));
     
-    await db
-      .delete(songIllustration)
-      .where(eq(songIllustration.id, id));
-    
-    return c.json({ success: true });
+    return c.json(changes);
   })
+  .post(
+    "/change/verify",
+    zValidator("json", z.object({ id: z.string(), verified: z.boolean() })),
+    async (c) => {
+      const { id, verified } = c.req.valid("json");
+      const db = drizzle(c.env.DB);
+      
+      await db
+        .update(songChange)
+        .set({ verified })
+        .where(eq(songChange.id, id));
+      
+      return c.json({ success: true });
+    }
+  )
   .post(
     "/song/modify",
     zValidator(

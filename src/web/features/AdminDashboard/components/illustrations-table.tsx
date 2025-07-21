@@ -27,7 +27,6 @@ import {
   updateIllustration,
   deleteIllustration,
 } from "~/lib/songs";
-import { useApi } from "~/lib/api";
 import { toast } from "sonner";
 import { useRouteContext } from "@tanstack/react-router";
 

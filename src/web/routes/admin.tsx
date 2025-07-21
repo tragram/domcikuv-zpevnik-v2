@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import AdminDashboard from "~/features/AdminDashboard/AdminDashboard";
-import { fetchSongDBAdmin, fetchIllustrationsAdmin } from "~/lib/songs";
+import { fetchSongDBAdmin, fetchIllustrationsAdmin, fetchChangesAdmin } from "~/lib/songs";
 
 export const Route = createFileRoute("/admin")({
   component: Home,
@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin")({
     return context;
   },
   loader: async ({ context }) => {
-    const [songDBAdmin, illustrations] = await Promise.all([
+    const [songDBAdmin, illustrations, changes] = await Promise.all([
       context.queryClient.fetchQuery({
         queryKey: ["songDBAdmin"],
         queryFn: () => fetchSongDBAdmin(context.api.admin),
@@ -23,15 +23,20 @@ export const Route = createFileRoute("/admin")({
         queryKey: ["illustrationsAdmin"],
         queryFn: () => fetchIllustrationsAdmin(context.api.admin),
         staleTime: 1000 * 60 * 5, // five minutes
+      }),
+      context.queryClient.fetchQuery({
+        queryKey: ["changesAdmin"],
+        queryFn: () => fetchChangesAdmin(context.api.admin),
+        staleTime: 1000 * 60 * 5, // five minutes
       })
     ]);
     
-    return { ...context, songDBAdmin, illustrations };
+    return { ...context, songDBAdmin, illustrations, changes };
   },
   ssr: false,
 });
 
 function Home() {
-  const { songDBAdmin, illustrations } = Route.useLoaderData();
-  return <AdminDashboard songDB={songDBAdmin} illustrations={illustrations} />;
+  const { songDBAdmin, illustrations, changes } = Route.useLoaderData();
+  return <AdminDashboard songDB={songDBAdmin} illustrations={illustrations} changes={changes} />;
 }

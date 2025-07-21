@@ -1,9 +1,13 @@
 import { useState } from "react"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Input } from "~/components/shadcn-ui/input"
 import { Badge } from "~/components/shadcn-ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/shadcn-ui/table"
 import { Button } from "~/components/shadcn-ui/button"
-import { Search, ExternalLink, User } from "lucide-react"
+import { Search, ExternalLink, User, CheckCircle, XCircle } from "lucide-react"
+import { verifyChange } from "~/lib/songs"
+import { toast } from "sonner";
+import { useRouteContext } from "@tanstack/react-router"
 
 interface SongChange {
   id: string
@@ -13,75 +17,75 @@ interface SongChange {
   userName: string
   timestamp: Date
   chordproURL: string
+  verified: boolean
 }
 
-const mockChanges: SongChange[] = [
-  {
-    id: "1",
-    songId: "1",
-    songTitle: "Amazing Grace",
-    userId: "1",
-    userName: "John Doe",
-    timestamp: new Date("2024-01-20T10:30:00"),
-    chordproURL: "https://example.com/amazing-grace-v2.cho",
-  },
-  {
-    id: "2",
-    songId: "2",
-    songTitle: "How Great Thou Art",
-    userId: "2",
-    userName: "Jane Smith",
-    timestamp: new Date("2024-01-19T14:15:00"),
-    chordproURL: "https://example.com/how-great-thou-art-v3.cho",
-  },
-  {
-    id: "3",
-    songId: "1",
-    songTitle: "Amazing Grace",
-    userId: "1",
-    userName: "John Doe",
-    timestamp: new Date("2024-01-18T09:45:00"),
-    chordproURL: "https://example.com/amazing-grace-v1.cho",
-  },
-  {
-    id: "4",
-    songId: "3",
-    songTitle: "Be Thou My Vision",
-    userId: "3",
-    userName: "Bob Wilson",
-    timestamp: new Date("2024-01-17T16:20:00"),
-    chordproURL: "https://example.com/be-thou-my-vision-v1.cho",
-  },
-  {
-    id: "5",
-    songId: "2",
-    songTitle: "How Great Thou Art",
-    userId: "1",
-    userName: "John Doe",
-    timestamp: new Date("2024-01-16T11:10:00"),
-    chordproURL: "https://example.com/how-great-thou-art-v2.cho",
-  },
-]
+interface ChangesTableProps {
+  initialChanges: SongChange[]
+}
 
-export function ChangesTable() {
-  const [changes] = useState<SongChange[]>(mockChanges)
+export function ChangesTable({ initialChanges }: ChangesTableProps) {
+  const [changes, setChanges] = useState<SongChange[]>(
+    initialChanges.map(change => ({
+      ...change,
+      timestamp: new Date(change.timestamp)
+    }))
+  )
   const [searchTerm, setSearchTerm] = useState("")
+  
+  const api = useRouteContext({ from: "/admin" }).api;
+  const queryClient = useQueryClient()
+
+  const verifyMutation = useMutation({
+    mutationFn: ({ id, verified }: { id: string; verified: boolean }) => 
+      verifyChange(api.admin, id, verified),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["changesAdmin"] })
+      toast({
+        title: "Success",
+        description: "Change verification updated successfully",
+      })
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to update change verification",
+        variant: "destructive",
+      })
+    }
+  })
 
   const filteredChanges = changes.filter(
     (change) =>
-      change.songTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      change.userName.toLowerCase().includes(searchTerm.toLowerCase()),
+      change.songTitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      change.userName?.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   const sortedChanges = filteredChanges.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
+
+  const handleVerifyChange = async (id: string, verified: boolean) => {
+    await verifyMutation.mutateAsync({ id, verified })
+    setChanges(changes.map(change => 
+      change.id === id ? { ...change, verified } : change
+    ))
+  }
+
+  const unverifiedCount = changes.filter(change => !change.verified).length
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium">Song Changes</h3>
-        <Badge variant="outline" className="text-sm">
-          {changes.length} total changes
-        </Badge>
+        <div className="flex gap-2">
+          {unverifiedCount > 0 && (
+            <Badge variant="destructive" className="text-sm">
+              {unverifiedCount} unverified
+            </Badge>
+          )}
+          <Badge variant="outline" className="text-sm">
+            {changes.length} total changes
+          </Badge>
+        </div>
       </div>
 
       <div className="flex items-center space-x-2">
@@ -102,17 +106,20 @@ export function ChangesTable() {
               <TableHead>User</TableHead>
               <TableHead>Timestamp</TableHead>
               <TableHead>Time Ago</TableHead>
+              <TableHead>Status</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {sortedChanges.map((change) => (
               <TableRow key={change.id}>
-                <TableCell className="font-medium">{change.songTitle}</TableCell>
+                <TableCell className="font-medium">
+                  {change.songTitle || "Unknown Song"}
+                </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4 text-muted-foreground" />
-                    {change.userName}
+                    {change.userName || "Unknown User"}
                   </div>
                 </TableCell>
                 <TableCell>{change.timestamp.toLocaleString()}</TableCell>
@@ -120,13 +127,63 @@ export function ChangesTable() {
                   <Badge variant="secondary">{getTimeAgo(change.timestamp)}</Badge>
                 </TableCell>
                 <TableCell>
-                  <Button variant="ghost" size="sm" onClick={() => window.open(change.chordproURL, "_blank")}>
-                    <ExternalLink className="h-4 w-4" />
-                    View Version
-                  </Button>
+                  <Badge variant={change.verified ? "default" : "destructive"}>
+                    {change.verified ? (
+                      <div className="flex items-center gap-1">
+                        <CheckCircle className="h-3 w-3" />
+                        Verified
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-1">
+                        <XCircle className="h-3 w-3" />
+                        Unverified
+                      </div>
+                    )}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => window.open(change.chordproURL, "_blank")}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      View Version
+                    </Button>
+                    {!change.verified && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleVerifyChange(change.id, true)}
+                        disabled={verifyMutation.isPending}
+                      >
+                        <CheckCircle className="h-4 w-4" />
+                        Verify
+                      </Button>
+                    )}
+                    {change.verified && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleVerifyChange(change.id, false)}
+                        disabled={verifyMutation.isPending}
+                      >
+                        <XCircle className="h-4 w-4" />
+                        Unverify
+                      </Button>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
+            {sortedChanges.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
+                  No changes found
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div>

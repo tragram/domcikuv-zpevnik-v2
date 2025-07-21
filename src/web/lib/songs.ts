@@ -86,6 +86,26 @@ export const fetchSong = async (songId: string, songDB: SongDB) => {
   return songData;
 };
 
+export const fetchChangesAdmin = async (adminApi: any) => {
+  const response = await adminApi.changes.$get();
+  if (!response.ok) {
+    throw new Error("Failed to fetch changes");
+  }
+  return response.json();
+};
+
+export const verifyChange = async (adminApi: any, id: string, verified: boolean) => {
+  const response = await adminApi.change.verify.$post({
+    json: { id, verified }
+  });
+  if (!response.ok) {
+    throw new Error("Failed to verify change");
+  }
+  return response.json();
+};
+
+// Add this to your existing songs.ts file
+
 export const fetchIllustrationsAdmin = async (adminApi: any) => {
   const response = await adminApi.illustrations.$get();
   if (!response.ok) {

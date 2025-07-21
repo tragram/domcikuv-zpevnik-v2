@@ -20,12 +20,24 @@ interface SongIllustration {
   createdAt: Date;
 }
 
+interface SongChange {
+  id: string;
+  songId: string;
+  songTitle: string;
+  userId: string;
+  userName: string;
+  timestamp: Date;
+  chordproURL: string;
+  verified: boolean;
+}
+
 interface AdminDashboardProps {
   songDB: SongDB;
   illustrations: SongIllustration[];
+  changes: SongChange[];
 }
 
-export default function AdminDashboard({ songDB, illustrations }: AdminDashboardProps) {
+export default function AdminDashboard({ songDB, illustrations, changes }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState("songs");
 
   const renderContent = () => {
@@ -35,7 +47,7 @@ export default function AdminDashboard({ songDB, illustrations }: AdminDashboard
       case "illustrations":
         return <IllustrationsTable initialIllustrations={illustrations} />;
       case "changes":
-        return <ChangesTable />;
+        return <ChangesTable initialChanges={changes} />;
       case "users":
         return <UsersTable />;
       default:
