@@ -20,11 +20,6 @@ interface AdminSidebarProps {
 
 const menuItems = [
   {
-    title: "Users",
-    icon: Users,
-    id: "users",
-  },
-  {
     title: "Songs",
     icon: Music,
     id: "songs",
@@ -38,6 +33,11 @@ const menuItems = [
     title: "Changes",
     icon: History,
     id: "changes",
+  },
+  {
+    title: "Users",
+    icon: Users,
+    id: "users",
   },
 ]
 

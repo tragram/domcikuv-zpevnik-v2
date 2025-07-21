@@ -12,20 +12,20 @@ interface AdminDashboardProps {
 }
 
 export default function AdminDashboard({ songDB }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState("users");
+  const [activeTab, setActiveTab] = useState("songs");
 
   const renderContent = () => {
     switch (activeTab) {
-      case "users":
-        return <UsersTable />;
       case "songs":
         return <SongsTable songDB={songDB} />;
       case "illustrations":
         return <IllustrationsTable />;
       case "changes":
         return <ChangesTable />;
-      default:
+      case "users":
         return <UsersTable />;
+      default:
+        return <SongsTable songDB={songDB} />;
     }
   };
 

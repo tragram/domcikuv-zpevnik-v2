@@ -30,22 +30,28 @@ async function songDB2D1(
   for (const entry of entries) {
     const id = songId(entry.title, entry.artist);
     try {
-      await db.insert(song).values({
-        id,
-        title: entry.title,
-        artist: entry.artist,
-        key: entry.key ?? "C",
-        language: entry.language ?? "unknown",
-        chordproURL: `/songs/chordpro/${entry.chordproFile}`,
-        startMelody: entry.startMelody || null,
-        tempo: entry.tempo || null,
-        capo: entry.capo ? parseInt(entry.capo) : 0,
-        range: entry.range || null,
-        dateAdded: entry.dateAdded
-          ? parseDateToTimestamp(entry.dateAdded)
-          : now,
-        dateModified: now,
-      });
+      await db
+        .insert(song)
+        .values({
+          id,
+          title: entry.title,
+          artist: entry.artist,
+          key: entry.key ?? "C",
+          language: entry.language ?? "unknown",
+          chordproURL: `/songs/chordpro/${entry.chordproFile}`,
+          startMelody: entry.startMelody || null,
+          tempo: entry.tempo || null,
+          capo: entry.capo ? parseInt(entry.capo) : 0,
+          range: entry.range || null,
+          dateAdded: entry.dateAdded
+            ? parseDateToTimestamp(entry.dateAdded)
+            : now,
+          dateModified: now,
+        })
+        .onConflictDoUpdate({
+          target: song.id,
+          set: { ...entry },
+        });
     } catch (err) {
       console.error(
         `Failed to insert illustrations for song "${entry.title}" by ${entry.artist}:`,

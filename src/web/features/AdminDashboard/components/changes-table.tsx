@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { Input } from "~/components/shadcn-ui/input"
 import { Badge } from "~/components/shadcn-ui/badge"

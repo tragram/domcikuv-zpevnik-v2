@@ -163,6 +163,7 @@ class SongData {
   chordproFile: string;
   content?: string;
   contentHash: string;
+  hidden: boolean;
 
   constructor(song: SongMetadata) {
     // Verification that SongMetadata has all required fields
@@ -184,6 +185,7 @@ class SongData {
     this.illustrationData = SongData.parseIllustrationData(song);
     this.chordproFile = song.chordproFile || "";
     this.contentHash = song.contentHash || "";
+    this.hidden = song.hidden || false;
   }
 
   /**

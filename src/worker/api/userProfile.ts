@@ -31,6 +31,7 @@ const profileApp = buildApp()
           email: user.email,
           image: user.image,
           isFavoritesPublic: user.isFavoritesPublic,
+          isAdmin: user.isAdmin,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
         })

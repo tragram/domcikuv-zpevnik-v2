@@ -4,6 +4,8 @@ import { song, user, userFavoriteSongs } from "../../lib/db/schema";
 import { eq } from "drizzle-orm";
 import { buildApp } from "./utils";
 import { SongData } from "../../web/types/songData";
+import { createInsertSchema } from "drizzle-zod";
+import { zValidator } from "@hono/zod-validator";
 
 const adminApp = buildApp()
   .use(async (c, next) => {
@@ -36,6 +38,23 @@ const adminApp = buildApp()
     const db = drizzle(c.env.DB);
     const songDB = await db.select().from(song);
     return c.json(songDB);
-  });
+  })
+  .post(
+    "/song/modify",
+    zValidator(
+      "json",
+      createInsertSchema(song).partial().required({ id: true })
+    ),
+    async (c) => {
+      const modifiedSong = c.req.valid("json");
+      console.log(modifiedSong);
+      const db = drizzle(c.env.DB);
+      await db
+        .update(song)
+        .set({ ...modifiedSong, dateModified: new Date() })
+        .where(eq(song.id, modifiedSong.id));
+      return c.json({ success: true });
+    }
+  );
 
 export default adminApp;

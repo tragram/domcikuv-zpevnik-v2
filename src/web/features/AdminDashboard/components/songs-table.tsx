@@ -1,11 +1,10 @@
-"use client";
-
 import type React from "react";
 
 import { useState } from "react";
 import { Button } from "~/components/shadcn-ui/button";
 import { Input } from "~/components/shadcn-ui/input";
 import { Badge } from "~/components/shadcn-ui/badge";
+import { Switch } from "~/components/shadcn-ui/switch";
 import {
   Table,
   TableBody,
@@ -29,9 +28,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/shadcn-ui/select";
-import { Plus, Edit, Search, ExternalLink } from "lucide-react";
+import { Plus, Edit, Search, ExternalLink, Eye, EyeOff } from "lucide-react";
 import { SongDB } from "~/types/types";
 import { SongData } from "~/types/songData";
+import { useRouteContext } from "@tanstack/react-router";
 
 interface SongsTableProps {
   songDB: SongDB; // Replace 'any' with a more specific type if available
@@ -42,6 +42,9 @@ export default function SongsTable({ songDB }: SongsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [editingSong, setEditingSong] = useState<SongData | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const context = useRouteContext({ from: "/admin" });
+  const adminApi = context.api.admin;
 
   const filteredSongs = songs.filter(
     (song) =>
@@ -50,35 +53,89 @@ export default function SongsTable({ songDB }: SongsTableProps) {
       song.key?.toString().toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSaveSong = (songData: Partial<SongData>) => {
-    // TODO: 
-    if (editingSong) {
-      setSongs(
-        songs.map((song) =>
-          song.id === editingSong.id
-            ? { ...song, ...songData, dateModified: new Date() }
-            : song
-        )
-      );
-    } else {
-      const newSong: SongData = {
-        id: Date.now().toString(),
-        title: songData.title || "",
-        artist: songData.artist || "",
-        key: songData.key || "",
-        dateAdded: new Date(),
-        dateModified: new Date(),
-        startMelody: songData.startMelody,
-        language: songData.language || "English",
-        tempo: songData.tempo,
-        capo: songData.capo,
-        range: songData.range,
-        chordproURL: songData.chordproURL || "",
-      };
-      setSongs([...songs, newSong]);
+  const handleSaveSong = async (songData: Partial<SongData>) => {
+    setIsLoading(true);
+    try {
+      if (editingSong) {
+        // Update existing song
+        const updatedSong = {
+          ...songData,
+          id: editingSong.id,
+          dateModified: new Date(),
+        };
+
+        // Post to server
+        await adminApi.song.modify.$post({
+          json: updatedSong,
+        });
+
+        // Update local state
+        setSongs(
+          songs.map((song) =>
+            song.id === editingSong.id ? { ...song, ...updatedSong } : song
+          )
+        );
+      } else {
+        // Create new song - you might need to add a create endpoint to the admin API
+        const newSong: SongData = {
+          id: Date.now().toString(),
+          title: songData.title || "",
+          artist: songData.artist || "",
+          key: songData.key || "",
+          dateAdded: new Date(),
+          dateModified: new Date(),
+          startMelody: songData.startMelody,
+          language: songData.language || "English",
+          tempo: songData.tempo,
+          capo: songData.capo,
+          range: songData.range,
+          chordproURL: songData.chordproURL || "",
+          hidden: false,
+        };
+
+        // TODO: Add create endpoint to admin API
+        // await adminApi.song.create.$post({ json: newSong });
+
+        setSongs([...songs, newSong]);
+      }
+
+      setIsDialogOpen(false);
+      setEditingSong(null);
+    } catch (error) {
+      console.error("Error saving song:", error);
+      // You might want to add proper error handling/toast notifications here
+    } finally {
+      setIsLoading(false);
     }
-    setIsDialogOpen(false);
-    setEditingSong(null);
+  };
+  const handleVisibilityToggle = async (songId: string, hidden: boolean) => {
+    try {
+      const updatedSong = {
+        id: songId,
+        hidden: hidden,
+        // dateModified: new Date()
+      };
+      console.log(updatedSong);
+      // Post to server
+      await adminApi.song.modify.$post({
+        json: updatedSong,
+      });
+      // Update local state
+      setSongs(
+        // TODO: should be this but songdata only has a getter on ID now
+        // songs.map((s) => (s.id === songId ? SongData.fromJSON({ ...s.extractMetadata(), ...updatedSong }) : s))
+        // TODO: add date modified
+        songs.map((s) => {
+          if (s.id === songId) {
+            s.hidden = hidden;
+            console.log(s)
+          }
+          return s;
+        })
+      );
+    } catch (error) {
+      console.error("Error toggling song visibility:", error);
+    }
   };
 
   return (
@@ -98,7 +155,11 @@ export default function SongsTable({ songDB }: SongsTableProps) {
                 {editingSong ? "Edit Song" : "Add New Song"}
               </DialogTitle>
             </DialogHeader>
-            <SongForm song={editingSong} onSave={handleSaveSong} />
+            <SongForm
+              song={editingSong}
+              onSave={handleSaveSong}
+              isLoading={isLoading}
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -123,6 +184,7 @@ export default function SongsTable({ songDB }: SongsTableProps) {
               <TableHead>Language</TableHead>
               <TableHead>Tempo</TableHead>
               <TableHead>Capo</TableHead>
+              <TableHead>Visible</TableHead>
               <TableHead>Modified</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
@@ -138,6 +200,16 @@ export default function SongsTable({ songDB }: SongsTableProps) {
                 <TableCell>{song.language}</TableCell>
                 <TableCell>{song.tempo || "-"}</TableCell>
                 <TableCell>{song.capo || "-"}</TableCell>
+                <TableCell>
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      checked={!song.hidden}
+                      onCheckedChange={(e) => {
+                        handleVisibilityToggle(song.id, !e);
+                      }}
+                    />
+                  </div>
+                </TableCell>
                 <TableCell>{song.dateModified?.toLocaleDateString()}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
@@ -172,9 +244,11 @@ export default function SongsTable({ songDB }: SongsTableProps) {
 function SongForm({
   song,
   onSave,
+  isLoading,
 }: {
-  song: Song | null;
-  onSave: (data: Partial<Song>) => void;
+  song: SongData | null;
+  onSave: (data: Partial<SongData>) => void;
+  isLoading: boolean;
 }) {
   const [formData, setFormData] = useState({
     title: song?.title || "",
@@ -186,6 +260,7 @@ function SongForm({
     capo: song?.capo || 0,
     range: song?.range || "",
     chordproURL: song?.chordproURL || "",
+    hidden: song?.hidden || false,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -345,8 +420,19 @@ function SongForm({
         />
       </div>
 
-      <Button type="submit" className="w-full">
-        {song ? "Update Song" : "Create Song"}
+      <div className="flex items-center space-x-2">
+        <Switch
+          id="hidden"
+          checked={!formData.hidden}
+          onCheckedChange={(checked) =>
+            setFormData({ ...formData, hidden: !checked })
+          }
+        />
+        <Label htmlFor="hidden">Song is visible</Label>
+      </div>
+
+      <Button type="submit" className="w-full" disabled={isLoading}>
+        {isLoading ? "Saving..." : song ? "Update Song" : "Create Song"}
       </Button>
     </form>
   );
