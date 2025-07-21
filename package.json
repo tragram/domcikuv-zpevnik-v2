@@ -61,6 +61,7 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.7.4",
     "@eslint/js": "9.23.0",
+    "@faker-js/faker": "^9.9.0",
     "@hono/zod-validator": "^0.7.0",
     "@tailwindcss/postcss": "^4.1.10",
     "@tanstack/react-query-devtools": "^5.81.0",
