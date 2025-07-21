@@ -1,6 +1,6 @@
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "~/components/shadcn-ui/button"
 import { Input } from "~/components/shadcn-ui/input"
 import { Badge } from "~/components/shadcn-ui/badge"
@@ -8,92 +8,158 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/components/shadcn-ui/dialog"
 import { Label } from "~/components/shadcn-ui/label"
 import { Switch } from "~/components/shadcn-ui/switch"
-import { Plus, Edit, Search } from "lucide-react"
+import { Plus, Edit, Search, Trash2, ChevronLeft, ChevronRight } from "lucide-react"
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { useRouteContext } from "@tanstack/react-router"
+import { 
+  fetchUsersAdmin, 
+  createUserAdmin, 
+  updateUserAdmin, 
+  deleteUserAdmin 
+} from "~/lib/user" // Adjust import path as needed
+import { toast } from "sonner" // Assuming you're using sonner for toasts
 
 interface User {
   id: string
   name: string
   email: string
   emailVerified: boolean
+  image?: string
   nickname?: string
   isTrusted: boolean
   isAdmin: boolean
   isFavoritesPublic: boolean
   createdAt: Date
+  updatedAt: Date
   lastLogin: Date
 }
 
-const mockUsers: User[] = [
-  {
-    id: "1",
-    name: "John Doe",
-    email: "john@example.com",
-    emailVerified: true,
-    nickname: "johnny",
-    isTrusted: true,
-    isAdmin: true,
-    isFavoritesPublic: false,
-    createdAt: new Date("2024-01-15"),
-    lastLogin: new Date("2024-01-20"),
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    emailVerified: true,
-    nickname: "janes",
-    isTrusted: false,
-    isAdmin: false,
-    isFavoritesPublic: true,
-    createdAt: new Date("2024-01-10"),
-    lastLogin: new Date("2024-01-19"),
-  },
-  {
-    id: "3",
-    name: "Bob Wilson",
-    email: "bob@example.com",
-    emailVerified: false,
-    nickname: "bobby",
-    isTrusted: false,
-    isAdmin: false,
-    isFavoritesPublic: false,
-    createdAt: new Date("2024-01-12"),
-    lastLogin: new Date("2024-01-18"),
-  },
-]
+interface UsersResponse {
+  users: User[];
+  pagination: {
+    total: number;
+    limit: number;
+    offset: number;
+    hasMore: boolean;
+  };
+}
 
-export function UsersTable() {
-  const [users, setUsers] = useState<User[]>(mockUsers)
+interface UsersTableProps {
+  initialUsers?: UsersResponse;
+}
+
+export function UsersTable({ initialUsers }: UsersTableProps) {
+  const { api } = useRouteContext({ from: "/admin" })
+  const queryClient = useQueryClient()
+  
   const [searchTerm, setSearchTerm] = useState("")
+  const [currentPage, setCurrentPage] = useState(0)
   const [editingUser, setEditingUser] = useState<User | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false)
+  const [userToDelete, setUserToDelete] = useState<User | null>(null)
+  
+  const pageSize = 20
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  // Fetch users with search and pagination
+  const { data: usersData, isLoading, error } = useQuery({
+    queryKey: ['users', searchTerm, currentPage],
+    queryFn: () => fetchUsersAdmin(api.admin, {
+      search: searchTerm || undefined,
+      limit: pageSize,
+      offset: currentPage * pageSize,
+    }),
+    initialData: currentPage === 0 && !searchTerm ? initialUsers : undefined,
+    staleTime: 1000 * 60 * 2, // 2 minutes
+  })
+
+  // Create user mutation
+  const createUserMutation = useMutation({
+    mutationFn: (userData: Parameters<typeof createUserAdmin>[1]) => 
+      createUserAdmin(api.admin, userData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+      toast.success('User created successfully')
+      setIsDialogOpen(false)
+      setEditingUser(null)
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to create user')
+    },
+  })
+
+  // Update user mutation
+  const updateUserMutation = useMutation({
+    mutationFn: ({ userId, userData }: { userId: string; userData: Parameters<typeof updateUserAdmin>[2] }) =>
+      updateUserAdmin(api.admin, userId, userData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+      toast.success('User updated successfully')
+      setIsDialogOpen(false)
+      setEditingUser(null)
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to update user')
+    },
+  })
+
+  // Delete user mutation
+  const deleteUserMutation = useMutation({
+    mutationFn: (userId: string) => deleteUserAdmin(api.admin, userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+      toast.success('User deleted successfully')
+      setIsDeleteConfirmOpen(false)
+      setUserToDelete(null)
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to delete user')
+    },
+  })
+
+  // Reset page when search changes
+  useEffect(() => {
+    setCurrentPage(0)
+  }, [searchTerm])
 
   const handleSaveUser = (userData: Partial<User>) => {
     if (editingUser) {
-      setUsers(users.map((user) => (user.id === editingUser.id ? { ...user, ...userData } : user)))
+      updateUserMutation.mutate({ 
+        userId: editingUser.id, 
+        userData 
+      })
     } else {
-      const newUser: User = {
-        id: Date.now().toString(),
-        name: userData.name || "",
-        email: userData.email || "",
-        emailVerified: userData.emailVerified || false,
-        nickname: userData.nickname,
-        isTrusted: userData.isTrusted || false,
-        isAdmin: userData.isAdmin || false,
-        isFavoritesPublic: userData.isFavoritesPublic || false,
-        createdAt: new Date(),
-        lastLogin: new Date(),
-      }
-      setUsers([...users, newUser])
+      createUserMutation.mutate(userData as Parameters<typeof createUserAdmin>[1])
     }
-    setIsDialogOpen(false)
-    setEditingUser(null)
+  }
+
+  const handleDeleteUser = (user: User) => {
+    setUserToDelete(user)
+    setIsDeleteConfirmOpen(true)
+  }
+
+  const confirmDeleteUser = () => {
+    if (userToDelete) {
+      deleteUserMutation.mutate(userToDelete.id)
+    }
+  }
+
+  const users = usersData?.users || []
+  const totalPages = Math.ceil((usersData?.pagination.total || 0) / pageSize)
+  const hasNextPage = usersData?.pagination.hasMore || false
+  const hasPrevPage = currentPage > 0
+
+  if (error) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium">Users</h3>
+        </div>
+        <div className="text-center text-red-500 py-8">
+          Failed to load users: {error instanceof Error ? error.message : 'Unknown error'}
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -111,7 +177,11 @@ export function UsersTable() {
             <DialogHeader>
               <DialogTitle>{editingUser ? "Edit User" : "Add New User"}</DialogTitle>
             </DialogHeader>
-            <UserForm user={editingUser} onSave={handleSaveUser} />
+            <UserForm 
+              user={editingUser} 
+              onSave={handleSaveUser}
+              isLoading={createUserMutation.isPending || updateUserMutation.isPending}
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -140,45 +210,141 @@ export function UsersTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>{user.nickname || "-"}</TableCell>
-                <TableCell>
-                  <Badge variant={user.emailVerified ? "default" : "secondary"}>
-                    {user.emailVerified ? "Verified" : "Unverified"}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-1">
-                    {user.isAdmin && <Badge variant="destructive">Admin</Badge>}
-                    {user.isTrusted && <Badge variant="default">Trusted</Badge>}
-                  </div>
-                </TableCell>
-                <TableCell>{user.createdAt.toLocaleDateString()}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      setEditingUser(user)
-                      setIsDialogOpen(true)
-                    }}
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center py-8">
+                  Loading users...
                 </TableCell>
               </TableRow>
-            ))}
+            ) : users.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="text-center py-8">
+                  No users found
+                </TableCell>
+              </TableRow>
+            ) : (
+              users.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell className="font-medium">{user.name}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.nickname || "-"}</TableCell>
+                  <TableCell>
+                    <Badge variant={user.emailVerified ? "default" : "secondary"}>
+                      {user.emailVerified ? "Verified" : "Unverified"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-1">
+                      {user.isAdmin && <Badge variant="destructive">Admin</Badge>}
+                      {user.isTrusted && <Badge variant="default">Trusted</Badge>}
+                    </div>
+                  </TableCell>
+                  <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell>
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setEditingUser(user)
+                          setIsDialogOpen(true)
+                        }}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteUser(user)}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-muted-foreground">
+            Showing {currentPage * pageSize + 1} to{' '}
+            {Math.min((currentPage + 1) * pageSize, usersData?.pagination.total || 0)} of{' '}
+            {usersData?.pagination.total || 0} users
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={!hasPrevPage}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Previous
+            </Button>
+            <span className="text-sm">
+              Page {currentPage + 1} of {totalPages}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={!hasNextPage}
+            >
+              Next
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Delete confirmation dialog */}
+      <Dialog open={isDeleteConfirmOpen} onOpenChange={setIsDeleteConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete User</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p>Are you sure you want to delete user "{userToDelete?.name}"?</p>
+            <p className="text-sm text-muted-foreground">
+              This action cannot be undone. All user data will be permanently deleted.
+            </p>
+            <div className="flex justify-end gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setIsDeleteConfirmOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={confirmDeleteUser}
+                disabled={deleteUserMutation.isPending}
+              >
+                {deleteUserMutation.isPending ? "Deleting..." : "Delete"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
 
-function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<User>) => void }) {
+function UserForm({ 
+  user, 
+  onSave, 
+  isLoading 
+}: { 
+  user: User | null
+  onSave: (data: Partial<User>) => void
+  isLoading?: boolean
+}) {
   const [formData, setFormData] = useState({
     name: user?.name || "",
     email: user?.email || "",
@@ -188,6 +354,31 @@ function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<
     isAdmin: user?.isAdmin || false,
     isFavoritesPublic: user?.isFavoritesPublic || false,
   })
+
+  // Update form data when user prop changes
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name,
+        email: user.email,
+        nickname: user.nickname || "",
+        emailVerified: user.emailVerified,
+        isTrusted: user.isTrusted,
+        isAdmin: user.isAdmin,
+        isFavoritesPublic: user.isFavoritesPublic,
+      })
+    } else {
+      setFormData({
+        name: "",
+        email: "",
+        nickname: "",
+        emailVerified: false,
+        isTrusted: false,
+        isAdmin: false,
+        isFavoritesPublic: false,
+      })
+    }
+  }, [user])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -204,6 +395,7 @@ function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
+            disabled={isLoading}
           />
         </div>
         <div className="space-y-2">
@@ -214,6 +406,7 @@ function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
+            disabled={isLoading}
           />
         </div>
       </div>
@@ -224,6 +417,7 @@ function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<
           id="nickname"
           value={formData.nickname}
           onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
+          disabled={isLoading}
         />
       </div>
 
@@ -233,6 +427,7 @@ function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<
             id="emailVerified"
             checked={formData.emailVerified}
             onCheckedChange={(checked) => setFormData({ ...formData, emailVerified: checked })}
+            disabled={isLoading}
           />
           <Label htmlFor="emailVerified">Email Verified</Label>
         </div>
@@ -242,6 +437,7 @@ function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<
             id="isTrusted"
             checked={formData.isTrusted}
             onCheckedChange={(checked) => setFormData({ ...formData, isTrusted: checked })}
+            disabled={isLoading}
           />
           <Label htmlFor="isTrusted">Trusted User</Label>
         </div>
@@ -251,6 +447,7 @@ function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<
             id="isAdmin"
             checked={formData.isAdmin}
             onCheckedChange={(checked) => setFormData({ ...formData, isAdmin: checked })}
+            disabled={isLoading}
           />
           <Label htmlFor="isAdmin">Admin</Label>
         </div>
@@ -260,13 +457,14 @@ function UserForm({ user, onSave }: { user: User | null; onSave: (data: Partial<
             id="isFavoritesPublic"
             checked={formData.isFavoritesPublic}
             onCheckedChange={(checked) => setFormData({ ...formData, isFavoritesPublic: checked })}
+            disabled={isLoading}
           />
           <Label htmlFor="isFavoritesPublic">Public Favorites</Label>
         </div>
       </div>
 
-      <Button type="submit" className="w-full">
-        {user ? "Update User" : "Create User"}
+      <Button type="submit" className="w-full" disabled={isLoading}>
+        {isLoading ? (user ? "Updating..." : "Creating...") : (user ? "Update User" : "Create User")}
       </Button>
     </form>
   )

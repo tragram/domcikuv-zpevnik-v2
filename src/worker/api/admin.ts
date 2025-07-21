@@ -1,11 +1,26 @@
 import { z } from "zod/v4";
 import { drizzle } from "drizzle-orm/d1";
 import { song, user, userFavoriteSongs, songIllustration, songChange } from "../../lib/db/schema";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, like, or, sql } from "drizzle-orm"; 
 import { buildApp } from "./utils";
-import { SongData } from "../../web/types/songData";
 import { createInsertSchema } from "drizzle-zod";
 import { zValidator } from "@hono/zod-validator";
+
+// User schema for validation
+const userSchema = createInsertSchema(user);
+const createUserSchema = userSchema.omit({ 
+  id: true, 
+  createdAt: true, 
+  updatedAt: true 
+});
+const updateUserSchema = userSchema.partial();
+
+// Search schema
+const userSearchSchema = z.object({
+  search: z.string().optional(),
+  limit: z.coerce.number().min(1).max(100).default(50),
+  offset: z.coerce.number().min(0).default(0),
+});
 
 const adminApp = buildApp()
   .use(async (c, next) => {
@@ -149,6 +164,205 @@ const adminApp = buildApp()
         .where(eq(song.id, modifiedSong.id));
       return c.json({ success: true });
     }
-  );
+  )
+  // Users endpoints
+  .get("/users", zValidator("query", userSearchSchema), async (c) => {
+    const { search, limit, offset } = c.req.valid("query");
+    const db = drizzle(c.env.DB);
+    
+    let query = db.select().from(user);
+    let countQuery = db.select({ count: sql`count(*)` }).from(user);
+    
+    // Add search filter if provided
+    if (search) {
+      const searchCondition = or(
+        like(user.name, `%${search}%`),
+        like(user.email, `%${search}%`),
+        like(user.nickname, `%${search}%`)
+      );
+      query = query.where(searchCondition);
+      countQuery = countQuery.where(searchCondition);
+    }
+    
+    // Add pagination and ordering
+    const users = await query
+      .orderBy(desc(user.createdAt))
+      .limit(limit)
+      .offset(offset);
+    
+    // Get total count for pagination
+    const totalCountResult = await countQuery;
+    const totalCount = Number(totalCountResult[0]?.count || 0);
+    
+    return c.json({
+      users,
+      pagination: {
+        total: totalCount,
+        limit,
+        offset,
+        hasMore: offset + limit < totalCount
+      }
+    });
+  })
+  
+  .post(
+    "/users",
+    zValidator("json", createUserSchema),
+    async (c) => {
+      const userData = c.req.valid("json");
+      const db = drizzle(c.env.DB);
+      
+      // Check if email already exists
+      const existingUser = await db
+        .select({ id: user.id })
+        .from(user)
+        .where(eq(user.email, userData.email))
+        .limit(1);
+        
+      if (existingUser.length > 0) {
+        return c.json(
+          { error: "A user with this email already exists" },
+          400
+        );
+      }
+      
+      const newId = crypto.randomUUID();
+      const now = new Date();
+      
+      await db.insert(user).values({
+        id: newId,
+        ...userData,
+        createdAt: now,
+        updatedAt: now,
+        lastLogin: now,
+      });
+      
+      // Return the created user
+      const createdUser = await db
+        .select()
+        .from(user)
+        .where(eq(user.id, newId))
+        .limit(1);
+      
+      return c.json({ 
+        success: true, 
+        user: createdUser[0] 
+      });
+    }
+  )
+  
+  .get("/users/:id", async (c) => {
+    const userId = c.req.param("id");
+    const db = drizzle(c.env.DB);
+    
+    const userData = await db
+      .select()
+      .from(user)
+      .where(eq(user.id, userId))
+      .limit(1);
+      
+    if (userData.length === 0) {
+      return c.json(
+        { error: "User not found" },
+        404
+      );
+    }
+    
+    return c.json(userData[0]);
+  })
+  
+  .put(
+    "/users/:id",
+    zValidator("json", updateUserSchema),
+    async (c) => {
+      const userId = c.req.param("id");
+      const userData = c.req.valid("json");
+      const db = drizzle(c.env.DB);
+      
+      // Check if user exists
+      const existingUser = await db
+        .select({ id: user.id })
+        .from(user)
+        .where(eq(user.id, userId))
+        .limit(1);
+        
+      if (existingUser.length === 0) {
+        return c.json(
+          { error: "User not found" },
+          404
+        );
+      }
+      
+      // If email is being updated, check for duplicates
+      if (userData.email) {
+        const emailExists = await db
+          .select({ id: user.id })
+          .from(user)
+          .where(eq(user.email, userData.email))
+          .limit(1);
+          
+        if (emailExists.length > 0 && emailExists[0].id !== userId) {
+          return c.json(
+            { error: "A user with this email already exists" },
+            400
+          );
+        }
+      }
+      
+      await db
+        .update(user)
+        .set({ 
+          ...userData, 
+          updatedAt: new Date() 
+        })
+        .where(eq(user.id, userId));
+      
+      // Return the updated user
+      const updatedUser = await db
+        .select()
+        .from(user)
+        .where(eq(user.id, userId))
+        .limit(1);
+      
+      return c.json({ 
+        success: true, 
+        user: updatedUser[0] 
+      });
+    }
+  )
+  
+  .delete("/users/:id", async (c) => {
+    const userId = c.req.param("id");
+    const db = drizzle(c.env.DB);
+    const currentUserId = c.get("USER")?.id;
+    
+    // Prevent self-deletion
+    if (userId === currentUserId) {
+      return c.json(
+        { error: "You cannot delete your own account" },
+        400
+      );
+    }
+    
+    // Check if user exists
+    const existingUser = await db
+      .select({ id: user.id })
+      .from(user)
+      .where(eq(user.id, userId))
+      .limit(1);
+      
+    if (existingUser.length === 0) {
+      return c.json(
+        { error: "User not found" },
+        404
+      );
+    }
+    
+    await db
+      .delete(user)
+      .where(eq(user.id, userId));
+    
+    return c.json({ success: true });
+  });
 
 export default adminApp;
