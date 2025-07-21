@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { drizzle } from "drizzle-orm/d1";
-import { song, user, userFavoriteSongs } from "../../lib/db/schema";
+import { song, user, userFavoriteSongs, songIllustration } from "../../lib/db/schema";
 import { eq } from "drizzle-orm";
 import { buildApp } from "./utils";
 import { SongData } from "../../web/types/songData";
@@ -38,6 +38,75 @@ const adminApp = buildApp()
     const db = drizzle(c.env.DB);
     const songDB = await db.select().from(song);
     return c.json(songDB);
+  })
+  .get("/illustrations", async (c) => {
+    const db = drizzle(c.env.DB);
+    const illustrations = await db
+      .select({
+        id: songIllustration.id,
+        songId: songIllustration.songId,
+        songTitle: song.title,
+        promptId: songIllustration.promptId,
+        promptModel: songIllustration.promptModel,
+        imageModel: songIllustration.imageModel,
+        imageURL: songIllustration.imageURL,
+        thumbnailURL: songIllustration.thumbnailURL,
+        isActive: songIllustration.isActive,
+        createdAt: songIllustration.createdAt,
+      })
+      .from(songIllustration)
+      .leftJoin(song, eq(songIllustration.songId, song.id))
+      .orderBy(songIllustration.createdAt);
+    
+    return c.json(illustrations);
+  })
+  .post(
+    "/illustration/create",
+    zValidator(
+      "json",
+      createInsertSchema(songIllustration).omit({ id: true, createdAt: true })
+    ),
+    async (c) => {
+      const illustrationData = c.req.valid("json");
+      const db = drizzle(c.env.DB);
+      
+      const newId = crypto.randomUUID();
+      await db.insert(songIllustration).values({
+        id: newId,
+        ...illustrationData,
+        createdAt: new Date(),
+      });
+      
+      return c.json({ success: true, id: newId });
+    }
+  )
+  .post(
+    "/illustration/modify",
+    zValidator(
+      "json",
+      createInsertSchema(songIllustration).partial().required({ id: true })
+    ),
+    async (c) => {
+      const modifiedIllustration = c.req.valid("json");
+      const db = drizzle(c.env.DB);
+      
+      await db
+        .update(songIllustration)
+        .set(modifiedIllustration)
+        .where(eq(songIllustration.id, modifiedIllustration.id));
+      
+      return c.json({ success: true });
+    }
+  )
+  .delete("/illustration/:id", async (c) => {
+    const id = c.req.param("id");
+    const db = drizzle(c.env.DB);
+    
+    await db
+      .delete(songIllustration)
+      .where(eq(songIllustration.id, id));
+    
+    return c.json({ success: true });
   })
   .post(
     "/song/modify",

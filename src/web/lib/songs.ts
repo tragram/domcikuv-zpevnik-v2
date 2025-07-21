@@ -85,3 +85,41 @@ export const fetchSong = async (songId: string, songDB: SongDB) => {
 
   return songData;
 };
+
+export const fetchIllustrationsAdmin = async (adminApi: any) => {
+  const response = await adminApi.illustrations.$get();
+  if (!response.ok) {
+    throw new Error("Failed to fetch illustrations");
+  }
+  return response.json();
+};
+
+export const createIllustration = async (adminApi: any, illustrationData: any) => {
+  const response = await adminApi.illustration.create.$post({
+    json: illustrationData
+  });
+  if (!response.ok) {
+    throw new Error("Failed to create illustration");
+  }
+  return response.json();
+};
+
+export const updateIllustration = async (adminApi: any, illustrationData: any) => {
+  const response = await adminApi.illustration.modify.$post({
+    json: illustrationData
+  });
+  if (!response.ok) {
+    throw new Error("Failed to update illustration");
+  }
+  return response.json();
+};
+
+export const deleteIllustration = async (adminApi: any, id: string) => {
+  const response = await adminApi.illustration[":id"].$delete({
+    param: { id }
+  });
+  if (!response.ok) {
+    throw new Error("Failed to delete illustration");
+  }
+  return response.json();
+};

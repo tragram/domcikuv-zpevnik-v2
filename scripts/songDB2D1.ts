@@ -94,19 +94,25 @@ async function songDB2D1(
 
       const compositeName = `${promptModel}_${promptId}_${imageModel}`;
       const illustrationId = `${id}_${compositeName}`;
-
+      const illustrationData = {
+        id: illustrationId,
+        songId: id,
+        promptModel,
+        promptId,
+        imageModel,
+        imageURL: `/songs/illustrations/${id}/${compositeName}.webp`,
+        thumbnailURL: `/songs/illustrations_thumbnails/${id}/${compositeName}.webp`,
+        isActive: model === activeModel,
+        createdAt: now,
+      };
       try {
-        await db.insert(songIllustration).values({
-          id: illustrationId,
-          songId: id,
-          promptModel,
-          promptId,
-          imageModel,
-          imageURL: `/songs/illustrations/${id}/${compositeName}.webp`,
-          thumbnailURL: `/songs/illustrations/thumbnails/${id}/${compositeName}.webp`,
-          isActive: model === activeModel,
-          createdAt: now,
-        });
+        await db
+          .insert(songIllustration)
+          .values(illustrationData)
+          .onConflictDoUpdate({
+            target: songIllustration.id,
+            set: { ...illustrationData },
+          });
       } catch (err) {
         console.error(
           `Failed to insert illustrations for song "${entry.title}" by ${entry.artist}:`,

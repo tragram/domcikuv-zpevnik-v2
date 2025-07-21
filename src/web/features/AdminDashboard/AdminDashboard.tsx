@@ -7,11 +7,25 @@ import { SidebarProvider, SidebarInset } from "~/components/shadcn-ui/sidebar";
 import { SongDB } from "~/types/types";
 import SongsTable from "./components/songs-table";
 
-interface AdminDashboardProps {
-  songDB: SongDB; // Replace 'any' with a more specific type if available
+interface SongIllustration {
+  id: string;
+  songId: string;
+  songTitle: string;
+  promptId: string;
+  promptModel: string;
+  imageModel: string;
+  imageURL: string;
+  thumbnailURL: string;
+  isActive: boolean;
+  createdAt: Date;
 }
 
-export default function AdminDashboard({ songDB }: AdminDashboardProps) {
+interface AdminDashboardProps {
+  songDB: SongDB;
+  illustrations: SongIllustration[];
+}
+
+export default function AdminDashboard({ songDB, illustrations }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState("songs");
 
   const renderContent = () => {
@@ -19,7 +33,7 @@ export default function AdminDashboard({ songDB }: AdminDashboardProps) {
       case "songs":
         return <SongsTable songDB={songDB} />;
       case "illustrations":
-        return <IllustrationsTable />;
+        return <IllustrationsTable initialIllustrations={illustrations} />;
       case "changes":
         return <ChangesTable />;
       case "users":

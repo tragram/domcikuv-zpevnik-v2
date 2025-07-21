@@ -1,91 +1,161 @@
-import type React from "react"
-
-import { useState } from "react"
-import { Button } from "~/components/shadcn-ui/button"
-import { Input } from "~/components/shadcn-ui/input"
-import { Badge } from "~/components/shadcn-ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/shadcn-ui/table"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/components/shadcn-ui/dialog"
-import { Label } from "~/components/shadcn-ui/label"
-import { Switch } from "~/components/shadcn-ui/switch"
-import { Plus, Edit, Search, ExternalLink, Eye } from "lucide-react"
+import type React from "react";
+import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from "~/components/shadcn-ui/button";
+import { Input } from "~/components/shadcn-ui/input";
+import { Badge } from "~/components/shadcn-ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/shadcn-ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/shadcn-ui/dialog";
+import { Label } from "~/components/shadcn-ui/label";
+import { Switch } from "~/components/shadcn-ui/switch";
+import { Plus, Edit, Search, ExternalLink, Eye, Trash2 } from "lucide-react";
+import {
+  createIllustration,
+  updateIllustration,
+  deleteIllustration,
+} from "~/lib/songs";
+import { useApi } from "~/lib/api";
+import { toast } from "sonner";
+import { useRouteContext } from "@tanstack/react-router";
 
 interface SongIllustration {
-  id: string
-  songId: string
-  songTitle: string
-  promptId: string
-  promptModel: string
-  imageModel: string
-  imageURL: string
-  thumbnailURL: string
-  isActive: boolean
-  createdAt: Date
+  id: string;
+  songId: string;
+  songTitle: string;
+  promptId: string;
+  promptModel: string;
+  imageModel: string;
+  imageURL: string;
+  thumbnailURL: string;
+  isActive: boolean;
+  createdAt: Date;
 }
 
-const mockIllustrations: SongIllustration[] = [
-  {
-    id: "1",
-    songId: "1",
-    songTitle: "Amazing Grace",
-    promptId: "prompt-1",
-    promptModel: "gpt-4",
-    imageModel: "dall-e-3",
-    imageURL: "/placeholder.svg?height=400&width=400",
-    thumbnailURL: "/placeholder.svg?height=150&width=150",
-    isActive: true,
-    createdAt: new Date("2024-01-15"),
-  },
-  {
-    id: "2",
-    songId: "2",
-    songTitle: "How Great Thou Art",
-    promptId: "prompt-2",
-    promptModel: "gpt-4",
-    imageModel: "dall-e-3",
-    imageURL: "/placeholder.svg?height=400&width=400",
-    thumbnailURL: "/placeholder.svg?height=150&width=150",
-    isActive: true,
-    createdAt: new Date("2024-01-10"),
-  },
-  {
-    id: "3",
-    songId: "1",
-    songTitle: "Amazing Grace",
-    promptId: "prompt-3",
-    promptModel: "gpt-3.5",
-    imageModel: "dall-e-2",
-    imageURL: "/placeholder.svg?height=400&width=400",
-    thumbnailURL: "/placeholder.svg?height=150&width=150",
-    isActive: false,
-    createdAt: new Date("2024-01-12"),
-  },
-]
+interface IllustrationsTableProps {
+  initialIllustrations: SongIllustration[];
+}
 
-export function IllustrationsTable() {
-  const [illustrations, setIllustrations] = useState<SongIllustration[]>(mockIllustrations)
-  const [searchTerm, setSearchTerm] = useState("")
-  const [editingIllustration, setEditingIllustration] = useState<SongIllustration | null>(null)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [previewImage, setPreviewImage] = useState<string | null>(null)
+export function IllustrationsTable({
+  initialIllustrations,
+}: IllustrationsTableProps) {
+  const [illustrations, setIllustrations] = useState<SongIllustration[]>(
+    initialIllustrations.map((ill) => ({
+      ...ill,
+      createdAt: new Date(ill.createdAt),
+    }))
+  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [editingIllustration, setEditingIllustration] =
+    useState<SongIllustration | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  const api = useRouteContext({ from: "/admin" }).api;
+  const queryClient = useQueryClient();
+
+  const createMutation = useMutation({
+    mutationFn: (data: Omit<SongIllustration, "id" | "createdAt">) =>
+      createIllustration(api.admin, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      toast({
+        title: "Success",
+        description: "Illustration created successfully",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to create illustration",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (data: Partial<SongIllustration> & { id: string }) =>
+      updateIllustration(api.admin, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      toast({
+        title: "Success",
+        description: "Illustration updated successfully",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to update illustration",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteIllustration(api.admin, id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      toast({
+        title: "Success",
+        description: "Illustration deleted successfully",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete illustration",
+        variant: "destructive",
+      });
+    },
+  });
 
   const filteredIllustrations = illustrations.filter(
     (illustration) =>
-      illustration.songTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      illustration.promptModel.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      illustration.imageModel.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+      illustration.songTitle
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      illustration.promptModel
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      illustration.imageModel.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const handleSaveIllustration = (illustrationData: Partial<SongIllustration>) => {
+  const handleSaveIllustration = async (
+    illustrationData: Partial<SongIllustration>
+  ) => {
     if (editingIllustration) {
+      // Update existing illustration
+      await updateMutation.mutateAsync({
+        ...illustrationData,
+        id: editingIllustration.id,
+      });
       setIllustrations(
         illustrations.map((illustration) =>
-          illustration.id === editingIllustration.id ? { ...illustration, ...illustrationData } : illustration,
-        ),
-      )
+          illustration.id === editingIllustration.id
+            ? { ...illustration, ...illustrationData }
+            : illustration
+        )
+      );
     } else {
+      // Create new illustration
+      const response = await createMutation.mutateAsync(
+        illustrationData as Omit<SongIllustration, "id" | "createdAt">
+      );
       const newIllustration: SongIllustration = {
-        id: Date.now().toString(),
+        id: response.id,
         songId: illustrationData.songId || "",
         songTitle: illustrationData.songTitle || "",
         promptId: illustrationData.promptId || "",
@@ -95,12 +165,19 @@ export function IllustrationsTable() {
         thumbnailURL: illustrationData.thumbnailURL || "",
         isActive: illustrationData.isActive || false,
         createdAt: new Date(),
-      }
-      setIllustrations([...illustrations, newIllustration])
+      };
+      setIllustrations([...illustrations, newIllustration]);
     }
-    setIsDialogOpen(false)
-    setEditingIllustration(null)
-  }
+    setIsDialogOpen(false);
+    setEditingIllustration(null);
+  };
+
+  const handleDeleteIllustration = async (id: string) => {
+    if (confirm("Are you sure you want to delete this illustration?")) {
+      await deleteMutation.mutateAsync(id);
+      setIllustrations(illustrations.filter((ill) => ill.id !== id));
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -115,9 +192,17 @@ export function IllustrationsTable() {
           </DialogTrigger>
           <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>{editingIllustration ? "Edit Illustration" : "Add New Illustration"}</DialogTitle>
+              <DialogTitle>
+                {editingIllustration
+                  ? "Edit Illustration"
+                  : "Add New Illustration"}
+              </DialogTitle>
             </DialogHeader>
-            <IllustrationForm illustration={editingIllustration} onSave={handleSaveIllustration} />
+            <IllustrationForm
+              illustration={editingIllustration}
+              onSave={handleSaveIllustration}
+              isLoading={createMutation.isPending || updateMutation.isPending}
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -148,11 +233,13 @@ export function IllustrationsTable() {
           <TableBody>
             {filteredIllustrations.map((illustration) => (
               <TableRow key={illustration.id}>
-                <TableCell className="font-medium">{illustration.songTitle}</TableCell>
+                <TableCell className="font-medium">
+                  {illustration.songTitle || "Unknown Song"}
+                </TableCell>
                 <TableCell>
                   <img
                     src={illustration.thumbnailURL || "/placeholder.svg"}
-                    alt={`${illustration.songTitle} thumbnail`}
+                    alt={`${illustration.songTitle || "Unknown"} thumbnail`}
                     className="w-12 h-12 rounded object-cover cursor-pointer"
                     onClick={() => setPreviewImage(illustration.imageURL)}
                   />
@@ -160,28 +247,50 @@ export function IllustrationsTable() {
                 <TableCell>{illustration.promptModel}</TableCell>
                 <TableCell>{illustration.imageModel}</TableCell>
                 <TableCell>
-                  <Badge variant={illustration.isActive ? "default" : "secondary"}>
+                  <Badge
+                    variant={illustration.isActive ? "default" : "secondary"}
+                  >
                     {illustration.isActive ? "Active" : "Inactive"}
                   </Badge>
                 </TableCell>
-                <TableCell>{illustration.createdAt.toLocaleDateString()}</TableCell>
+                <TableCell>
+                  {illustration.createdAt.toLocaleDateString()}
+                </TableCell>
                 <TableCell>
                   <div className="flex gap-2">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => {
-                        setEditingIllustration(illustration)
-                        setIsDialogOpen(true)
+                        setEditingIllustration(illustration);
+                        setIsDialogOpen(true);
                       }}
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={() => setPreviewImage(illustration.imageURL)}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setPreviewImage(illustration.imageURL)}
+                    >
                       <Eye className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" onClick={() => window.open(illustration.imageURL, "_blank")}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        window.open(illustration.imageURL, "_blank")
+                      }
+                    >
                       <ExternalLink className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDeleteIllustration(illustration.id)}
+                      disabled={deleteMutation.isPending}
+                    >
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </TableCell>
@@ -192,7 +301,10 @@ export function IllustrationsTable() {
       </div>
 
       {previewImage && (
-        <Dialog open={!!previewImage} onOpenChange={() => setPreviewImage(null)}>
+        <Dialog
+          open={!!previewImage}
+          onOpenChange={() => setPreviewImage(null)}
+        >
           <DialogContent className="max-w-3xl">
             <DialogHeader>
               <DialogTitle>Image Preview</DialogTitle>
@@ -208,13 +320,18 @@ export function IllustrationsTable() {
         </Dialog>
       )}
     </div>
-  )
+  );
 }
 
 function IllustrationForm({
   illustration,
   onSave,
-}: { illustration: SongIllustration | null; onSave: (data: Partial<SongIllustration>) => void }) {
+  isLoading,
+}: {
+  illustration: SongIllustration | null;
+  onSave: (data: Partial<SongIllustration>) => void;
+  isLoading?: boolean;
+}) {
   const [formData, setFormData] = useState({
     songId: illustration?.songId || "",
     songTitle: illustration?.songTitle || "",
@@ -224,12 +341,12 @@ function IllustrationForm({
     imageURL: illustration?.imageURL || "",
     thumbnailURL: illustration?.thumbnailURL || "",
     isActive: illustration?.isActive || false,
-  })
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSave(formData)
-  }
+    e.preventDefault();
+    onSave(formData);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -239,7 +356,9 @@ function IllustrationForm({
           <Input
             id="songId"
             value={formData.songId}
-            onChange={(e) => setFormData({ ...formData, songId: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, songId: e.target.value })
+            }
             required
           />
         </div>
@@ -248,7 +367,9 @@ function IllustrationForm({
           <Input
             id="songTitle"
             value={formData.songTitle}
-            onChange={(e) => setFormData({ ...formData, songTitle: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, songTitle: e.target.value })
+            }
             required
           />
         </div>
@@ -260,7 +381,9 @@ function IllustrationForm({
           <Input
             id="promptModel"
             value={formData.promptModel}
-            onChange={(e) => setFormData({ ...formData, promptModel: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, promptModel: e.target.value })
+            }
             required
           />
         </div>
@@ -269,7 +392,9 @@ function IllustrationForm({
           <Input
             id="imageModel"
             value={formData.imageModel}
-            onChange={(e) => setFormData({ ...formData, imageModel: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, imageModel: e.target.value })
+            }
             required
           />
         </div>
@@ -280,7 +405,9 @@ function IllustrationForm({
         <Input
           id="promptId"
           value={formData.promptId}
-          onChange={(e) => setFormData({ ...formData, promptId: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, promptId: e.target.value })
+          }
           required
         />
       </div>
@@ -291,7 +418,9 @@ function IllustrationForm({
           id="imageURL"
           type="url"
           value={formData.imageURL}
-          onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, imageURL: e.target.value })
+          }
           required
         />
       </div>
@@ -302,7 +431,9 @@ function IllustrationForm({
           id="thumbnailURL"
           type="url"
           value={formData.thumbnailURL}
-          onChange={(e) => setFormData({ ...formData, thumbnailURL: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, thumbnailURL: e.target.value })
+          }
           required
         />
       </div>
@@ -311,14 +442,20 @@ function IllustrationForm({
         <Switch
           id="isActive"
           checked={formData.isActive}
-          onCheckedChange={(checked) => setFormData({ ...formData, isActive: checked })}
+          onCheckedChange={(checked) =>
+            setFormData({ ...formData, isActive: checked })
+          }
         />
         <Label htmlFor="isActive">Active</Label>
       </div>
 
-      <Button type="submit" className="w-full">
-        {illustration ? "Update Illustration" : "Create Illustration"}
+      <Button type="submit" className="w-full" disabled={isLoading}>
+        {isLoading
+          ? "Saving..."
+          : illustration
+          ? "Update Illustration"
+          : "Create Illustration"}
       </Button>
     </form>
-  )
+  );
 }
