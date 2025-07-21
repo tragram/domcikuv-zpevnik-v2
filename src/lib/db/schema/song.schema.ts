@@ -19,9 +19,7 @@ export const song = sqliteTable("song", {
   capo: integer("capo"),
   range: text("range"),
   chordproURL: text("chordproURL").notNull(),
-  // verified if either added by a trusted user or manually by an admin
-  verified: integer("verified", { mode: "boolean" }).default(true).notNull(),
-  // illustrationId: text("illustration_id").references(() => songIllustration.id),
+  hidden: integer("hidden", { mode: "boolean" }).default(false).notNull(),
 });
 
 export const songIllustration = sqliteTable("songIllustration", {
@@ -52,6 +50,8 @@ export const songChange = sqliteTable("songChange", {
     .$defaultFn(() => new Date())
     .notNull(),
   chordproURL: text("chordproURL").notNull(),
+  // verified if either made by a trusted user or manually by an admin
+  verified: integer("verified", { mode: "boolean" }).default(true).notNull(),
 });
 
 // Relations for efficient querying

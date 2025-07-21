@@ -39,7 +39,7 @@ async function songDB2D1(
         chordproURL: `/songs/chordpro/${entry.chordproFile}`,
         startMelody: entry.startMelody || null,
         tempo: entry.tempo || null,
-        capo: entry.capo ? parseInt(entry.capo) : null,
+        capo: entry.capo ? parseInt(entry.capo) : 0,
         range: entry.range || null,
         dateAdded: entry.dateAdded
           ? parseDateToTimestamp(entry.dateAdded)
@@ -64,7 +64,9 @@ async function songDB2D1(
     let activeModel: string | undefined;
 
     if (entry.promptModel || entry.promptId || entry.imageModel) {
-      const composite = `${entry.promptModel || "gpt-4o-mini"}_${entry.promptId || "v1"}_${entry.imageModel || "FLUX.1-dev"}`;
+      const composite = `${entry.promptModel || "gpt-4o-mini"}_${
+        entry.promptId || "v1"
+      }_${entry.imageModel || "FLUX.1-dev"}`;
       activeModel = illustrations.find((m) => m === composite);
     } else {
       if (illustrations.includes("gpt-4o-mini_v2_FLUX.1-dev")) {
