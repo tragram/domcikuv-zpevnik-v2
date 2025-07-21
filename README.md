@@ -1,5 +1,5 @@
 # Domčíkův Zpěvník v2
-Welcome to the source code of my songbook, [available on Github Pages](https://tragram.github.io/domcikuv-zpevnik-v2/). It shows most of the songs I will play for you (without complaining :-)) and provides features like searching, filtering and sorting, as well as random song generation, transpositions etc.
+Welcome to the source code of my songbook, [hosted here](https://hodan.page/zpevnik). It shows most of the songs I will play for you (without complaining :-)) and provides features like searching, filtering and sorting, as well as random song generation, transpositions etc.
 
 ### PWA
 The app is a progressive web application (PWA), which means you can install it on your device and use it completely offline. This feature is best supported by Chrome, unless you're using iOS, in which case Safari is likely your best bet. Other browser/OS configurations may work (especially in the future) but are not recommended.
@@ -7,10 +7,17 @@ The app is a progressive web application (PWA), which means you can install it o
 ### Previous version
 The original songbook was my high-school graduation project, consisting of an [Android app](https://github.com/tragram/DomcikuvZpevnik) and a [PHP server](https://github.com/tragram/DomcikuvZpevnik-Server) is [hosted here](https://appelt.cz/domcikuvzpevnik/). Unfortunately, due to lack of updates, the app was taken down from Google Play in 2024 and the website was not mobile-friendly, which is the main use-case of the songbook. Since I no longer code in Java or PHP, I started building this new version to have something to do on the long train journey to the Tatra mountains!
 
+## Running locally
+You can run the page fully locally by
+* installing the dependencies: `pnpm i`
+* creating a CF Worker account (TODO: allow local build without this step)
+* building the database: `pnpm db:create` (if you haven't run it yet)
+* generating the migrations: `pnpm db:generate`
+* migrating the DB: `pnpm db:migrate:local`
+* starting the server: `pnpm dev`
+
 ## Editing songs
 Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/` directory. Pushes to the main branch trigger automatic updates (live in a few minutes). If you don't have edit rights, submit a pull request or let me know. 😉
-
-For local editing, you will need to optionally start the server (`npm install` and `npm run dev`) and to see newly added songs, manually run `npm run prebuild` to recreate the "database".
 
 ### File format
 The songs shall be named `artist_name-song_name.pro` (any special characters converted to ASCII). Use `scripts/format_songs.py` to rename files (and fix common whitespace issues) automatically. It also converts repetition symbols (`|:` and `:|` to `𝄆` and `𝄇`) which are then highlighted in the HTML.
@@ -19,7 +26,6 @@ A song shall have the following preamble (tempo may be left empty - it's current
 ```chordpro
 {artist: František Vomáčka}
 {title: Svíčková}
-{songbooks: ["Domčík","Kvítek"]}
 {language: english}
 {date_added: 02-2020}
 {capo: 0}
@@ -163,4 +169,3 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 ## TODO:
 * the smart ScrollButtons sometimes misbehave (TBD both why and how to fix)
 * make the light theme look better (or at least look less bad, lol)
-* create a proper backend or at least make editing possible without Git knowledge
