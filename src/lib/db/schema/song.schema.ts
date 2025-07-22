@@ -22,6 +22,8 @@ export const song = sqliteTable("song", {
   hidden: integer("hidden", { mode: "boolean" }).default(false).notNull(),
 });
 
+export type SongDataDB = typeof song.$inferSelect;
+
 export const songIllustration = sqliteTable("songIllustration", {
   id: text("id").primaryKey(),
   songId: text("song_id")
@@ -37,6 +39,8 @@ export const songIllustration = sqliteTable("songIllustration", {
     .$defaultFn(() => new Date())
     .notNull(),
 });
+
+export type SongIllustrationDB = typeof songIllustration.$inferSelect;
 
 export const songChange = sqliteTable("songChange", {
   id: text("id").primaryKey(),
@@ -54,6 +58,8 @@ export const songChange = sqliteTable("songChange", {
   verified: integer("verified", { mode: "boolean" }).default(true).notNull(),
 });
 
+export type SongChangeDB = typeof songChange.$inferInsert;
+
 // Relations for efficient querying
 export const songRelations = relations(song, ({ one, many }) => ({
   // Get the current active illustration (only one per song)
@@ -67,12 +73,15 @@ export const songRelations = relations(song, ({ one, many }) => ({
   changes: many(songChange),
 }));
 
-export const songIllustrationRelations = relations(songIllustration, ({ one }) => ({
-  song: one(song, {
-    fields: [songIllustration.songId],
-    references: [song.id],
-  }),
-}));
+export const songIllustrationRelations = relations(
+  songIllustration,
+  ({ one }) => ({
+    song: one(song, {
+      fields: [songIllustration.songId],
+      references: [song.id],
+    }),
+  })
+);
 
 export const songChangeRelations = relations(songChange, ({ one }) => ({
   song: one(song, {

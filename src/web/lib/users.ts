@@ -1,21 +1,8 @@
+import { UserDB } from "src/lib/db/schema/auth.schema";
 import client from "../../worker/api-client";
+import { handleApiResponse } from "./apiHelpers";
 
-type UsersApi = typeof client.api.admin.users;
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  image?: string;
-  nickname?: string;
-  isTrusted: boolean;
-  isAdmin: boolean;
-  isFavoritesPublic: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  lastLogin: Date;
-}
+export type UsersApi = typeof client.api.admin.users;
 
 interface UserSearchParams {
   search?: string;
@@ -24,7 +11,7 @@ interface UserSearchParams {
 }
 
 interface UsersResponse {
-  users: User[];
+  users: UserDB[];
   pagination: {
     total: number;
     limit: number;
@@ -44,76 +31,95 @@ interface CreateUserData {
   isFavoritesPublic?: boolean;
 }
 
-interface UpdateUserData extends Partial<CreateUserData> {}
+type UpdateUserData = Partial<CreateUserData>
 
+/**
+ * Fetches all users with optional search and pagination
+ * @param api - The users API client
+ * @param params - Search and pagination parameters
+ * @returns Promise with users and pagination info
+ * @throws {ApiError} When the request fails
+ */
 export async function fetchUsersAdmin(
   api: UsersApi,
   params?: UserSearchParams
 ): Promise<UsersResponse> {
-  try {
-    const response = await api.$get({
-      query: {
-        search: params?.search,
-        limit: params?.limit?.toString(),
-        offset: params?.offset?.toString(),
-      },
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
-      throw new Error(errorData.error || "Failed to fetch users");
-    }
-    
-    return response.json();
-  } catch (error) {
-    console.error("Error in fetchUsersAdmin:", error);
-    throw error;
-  }
+  const response = await api.$get({
+    query: {
+      search: params?.search,
+      limit: params?.limit?.toString(),
+      offset: params?.offset?.toString(),
+    },
+  });
+  
+  await handleApiResponse(response);
+  return response.json();
 }
 
+/**
+ * Fetches a single user by ID
+ * @param api - The users API client
+ * @param userId - The ID of the user to fetch
+ * @returns Promise containing the user data
+ * @throws {ApiError} When the user cannot be found or request fails
+ */
 export async function fetchUserAdmin(
   api: UsersApi,
   userId: string
-): Promise<User> {
+): Promise<UserDB> {
   const response = await api[':id'].$get({
     param: { id: userId },
   });
-  if (!response.ok) {
-    throw new Error("Failed to fetch user");
-  }
+  await handleApiResponse(response);
   return response.json();
 }
 
+/**
+ * Creates a new user
+ * @param api - The users API client
+ * @param userData - The user data to create
+ * @returns Promise containing the creation result and user data
+ * @throws {ApiError} When user creation fails (e.g., email already exists)
+ */
 export async function createUserAdmin(
   api: UsersApi,
   userData: CreateUserData
-): Promise<{ success: boolean; user: User }> {
+): Promise<{ success: boolean; user: UserDB }> {
   const response = await api.$post({
     json: userData,
   });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || "Failed to create user");
-  }
+  await handleApiResponse(response);
   return response.json();
 }
 
+/**
+ * Updates an existing user
+ * @param api - The users API client
+ * @param userId - The ID of the user to update
+ * @param userData - The user data to update
+ * @returns Promise containing the update result and user data
+ * @throws {ApiError} When user update fails or user not found
+ */
 export async function updateUserAdmin(
   api: UsersApi,
   userId: string,
   userData: UpdateUserData
-): Promise<{ success: boolean; user: User }> {
+): Promise<{ success: boolean; user: UserDB }> {
   const response = await api[':id'].$put({
     param: { id: userId },
     json: userData,
   });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || "Failed to update user");
-  }
+  await handleApiResponse(response);
   return response.json();
 }
 
+/**
+ * Deletes a user
+ * @param api - The users API client
+ * @param userId - The ID of the user to delete
+ * @returns Promise containing the deletion result
+ * @throws {ApiError} When user deletion fails or user not found
+ */
 export async function deleteUserAdmin(
   api: UsersApi,
   userId: string
@@ -121,9 +127,6 @@ export async function deleteUserAdmin(
   const response = await api[':id'].$delete({
     param: { id: userId },
   });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || "Failed to delete user");
-  }
+  await handleApiResponse(response);
   return response.json();
 }

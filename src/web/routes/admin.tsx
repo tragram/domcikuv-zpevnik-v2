@@ -27,18 +27,18 @@ export const Route = createFileRoute("/admin")({
       context.queryClient.fetchQuery({
         queryKey: ["illustrationsAdmin"],
         queryFn: () => fetchIllustrationsAdmin(context.api.admin),
-        staleTime: 1000 * 60 * 5, // five minutes
+        staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
       }),
       context.queryClient.fetchQuery({
         queryKey: ["changesAdmin"],
         queryFn: () => fetchChangesAdmin(context.api.admin),
-        staleTime: 1000 * 60 * 5, // five minutes
+        staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
       }),
       // Add users data fetching
       context.queryClient.fetchQuery({
         queryKey: ["usersAdmin"],
         queryFn: () => fetchUsersAdmin(context.api.admin.users, { limit: 20, offset: 0 }),
-        staleTime: 1000 * 60 * 2, // two minutes
+        staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
       })
     ]);
     
@@ -52,8 +52,8 @@ function Home() {
   return (
     <AdminDashboard 
       songDB={songDBAdmin} 
-      illustrations={illustrations} 
-      changes={changes}
+      illustrations={illustrations.illustrations} 
+      changes={changes.changes}
       users={users}
     />
   );

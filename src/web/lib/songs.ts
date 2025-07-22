@@ -4,12 +4,20 @@ import yaml from "js-yaml";
 import { fileURL } from "./utils";
 import { guessKey } from "~/features/SongView/utils/songRendering";
 import client from "~/../worker/api-client";
+import { handleApiResponse, makeApiRequest } from "./apiHelpers";
 
-export const fetchSongDB = async () => {
-  const response = await fetch(fileURL("/songDB.json"));
-  if (!response.ok)
-    throw new Error("Failed to fetch songDB!", { cause: response });
-  const songDBData = await response.json();
+export type AdminApi = typeof client.api.admin;
+
+/**
+ * Fetches the complete song database with language statistics and range data
+ * @returns Promise containing songs, language counts, and max vocal range
+ * @throws {ApiError} When the songDB cannot be fetched or parsed
+ */
+export const fetchSongDB = async (): Promise<SongDB> => {
+  const songDBData = await makeApiRequest<any[]>(
+    () => fetch(fileURL("/songDB.json")),
+    "Failed to fetch songDB"
+  );
   const songs = songDBData.map((d) => new SongData(d));
 
   const languages: LanguageCount = songs
@@ -27,12 +35,18 @@ export const fetchSongDB = async () => {
   };
   return songDB;
 };
-export const fetchSongDBAdmin = async (adminApi: typeof client.api.admin) => {
+
+/**
+ * Fetches the song database using admin API
+ * @param adminApi - The admin API client
+ * @returns Promise containing songs, language counts, and max vocal range
+ * @throws {ApiError} When the songDB cannot be fetched or parsed
+ */
+export const fetchSongDBAdmin = async (adminApi: AdminApi): Promise<SongDB> => {
   const response = await adminApi.songDB.$get();
-  if (!response.ok)
-    throw new Error("Failed to fetch songDB!", { cause: response });
+  await handleApiResponse(response);
   const songDBData = await response.json();
-  const songs = songDBData.map((d) => new SongData(d));
+  const songs = songDBData.songs.map((d) => new SongData(d));
 
   const languages: LanguageCount = songs
     .map((s) => s.language)
@@ -50,22 +64,30 @@ export const fetchSongDBAdmin = async (adminApi: typeof client.api.admin) => {
   return songDB;
 };
 
-export const fetchIllustrationPrompt = async (songId: string) => {
+/**
+ * Fetches the illustration prompt for a specific song
+ * @param songId - The ID of the song
+ * @returns Promise containing the prompt response
+ * @throws {ApiError} When the prompt cannot be loaded
+ */
+export const fetchIllustrationPrompt = async (songId: string): Promise<any> => {
   const response = await fetch(SongData.promptURL(songId));
-  if (response.ok) {
-    const promptContent = await response.text();
-    // TODO: this probably is not always the correct prompt...
-    return yaml.load(promptContent)[0].response;
-  } else {
-    throw Error("Could not load image prompt!");
-  }
+  await handleApiResponse(response);
+  const promptContent = await response.text();
+  // TODO: this probably is not always the correct prompt...
+  return yaml.load(promptContent)[0].response;
 };
 
-export const fetchSong = async (songId: string, songDB: SongDB) => {
+/**
+ * Fetches song data including chordpro content and available illustrations
+ * @param songId - The ID of the song to fetch
+ * @param songDB - The complete song database for illustration lookup
+ * @returns Promise containing the parsed song data
+ * @throws {ApiError} When song data cannot be fetched
+ */
+export const fetchSong = async (songId: string, songDB: SongDB): Promise<SongData> => {
   const response = await fetch(SongData.chordproURL(songId));
-  if (!response.ok) {
-    throw Error("Could not fetch song data!");
-  }
+  await handleApiResponse(response);
   const songRawData = await response.text();
 
   // TODO: this should be preparsed...
@@ -86,60 +108,100 @@ export const fetchSong = async (songId: string, songDB: SongDB) => {
   return songData;
 };
 
-export const fetchChangesAdmin = async (adminApi: any) => {
+/**
+ * Fetches all pending changes requiring admin review
+ * @param adminApi - The admin API client
+ * @returns Promise containing the list of changes
+ * @throws {ApiError} When changes cannot be fetched
+ */
+export const fetchChangesAdmin = async (adminApi: AdminApi): Promise<any> => {
   const response = await adminApi.changes.$get();
-  if (!response.ok) {
-    throw new Error("Failed to fetch changes");
-  }
+  await handleApiResponse(response);
   return response.json();
 };
 
-export const verifyChange = async (adminApi: any, id: string, verified: boolean) => {
+/**
+ * Verifies or rejects a pending change
+ * @param adminApi - The admin API client
+ * @param id - The change ID to verify
+ * @param verified - Whether to verify (true) or reject (false) the change
+ * @returns Promise containing the verification result
+ * @throws {ApiError} When verification fails
+ */
+export const verifyChange = async (
+  adminApi: AdminApi, 
+  id: string, 
+  verified: boolean
+): Promise<any> => {
   const response = await adminApi.change.verify.$post({
     json: { id, verified }
   });
-  if (!response.ok) {
-    throw new Error("Failed to verify change");
-  }
+  await handleApiResponse(response);
   return response.json();
 };
 
-// Add this to your existing songs.ts file
-
-export const fetchIllustrationsAdmin = async (adminApi: any) => {
+/**
+ * Fetches all illustrations with song information
+ * @param adminApi - The admin API client
+ * @returns Promise containing the list of illustrations
+ * @throws {ApiError} When illustrations cannot be fetched
+ */
+export const fetchIllustrationsAdmin = async (adminApi: AdminApi): Promise<any> => {
   const response = await adminApi.illustrations.$get();
-  if (!response.ok) {
-    throw new Error("Failed to fetch illustrations");
-  }
+  await handleApiResponse(response);
   return response.json();
 };
 
-export const createIllustration = async (adminApi: any, illustrationData: any) => {
+/**
+ * Creates a new illustration
+ * @param adminApi - The admin API client
+ * @param illustrationData - The illustration data to create
+ * @returns Promise containing the creation result
+ * @throws {ApiError} When illustration creation fails
+ */
+export const createIllustration = async (
+  adminApi: AdminApi, 
+  illustrationData: any
+): Promise<any> => {
   const response = await adminApi.illustration.create.$post({
     json: illustrationData
   });
-  if (!response.ok) {
-    throw new Error("Failed to create illustration");
-  }
+  await handleApiResponse(response);
   return response.json();
 };
 
-export const updateIllustration = async (adminApi: any, illustrationData: any) => {
+/**
+ * Updates an existing illustration
+ * @param adminApi - The admin API client
+ * @param illustrationData - The illustration data to update (must include id)
+ * @returns Promise containing the update result
+ * @throws {ApiError} When illustration update fails
+ */
+export const updateIllustration = async (
+  adminApi: AdminApi, 
+  illustrationData: any
+): Promise<any> => {
   const response = await adminApi.illustration.modify.$post({
     json: illustrationData
   });
-  if (!response.ok) {
-    throw new Error("Failed to update illustration");
-  }
+  await handleApiResponse(response);
   return response.json();
 };
 
-export const deleteIllustration = async (adminApi: any, id: string) => {
+/**
+ * Deletes an illustration
+ * @param adminApi - The admin API client
+ * @param id - The ID of the illustration to delete
+ * @returns Promise containing the deletion result
+ * @throws {ApiError} When illustration deletion fails
+ */
+export const deleteIllustration = async (
+  adminApi: AdminApi, 
+  id: string
+): Promise<any> => {
   const response = await adminApi.illustration[":id"].$delete({
     param: { id }
   });
-  if (!response.ok) {
-    throw new Error("Failed to delete illustration");
-  }
+  await handleApiResponse(response);
   return response.json();
 };
