@@ -16,7 +16,7 @@ import {
   createUserAdmin, 
   updateUserAdmin, 
   deleteUserAdmin 
-} from "~/lib/user" // Adjust import path as needed
+} from "~/lib/users" // Adjust import path as needed
 import { toast } from "sonner" // Assuming you're using sonner for toasts
 
 interface User {

@@ -5,7 +5,7 @@ import {
   fetchIllustrationsAdmin, 
   fetchChangesAdmin 
 } from "~/lib/songs";
-import { fetchUsersAdmin } from "~/lib/user"; // Add this import
+import { fetchUsersAdmin } from "~/lib/users"; // Add this import
 
 export const Route = createFileRoute("/admin")({
   component: Home,
