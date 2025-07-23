@@ -107,7 +107,6 @@ export const fetchSong = async (
   songDB: SongDB
 ): Promise<SongData> => {
   const response = await fetch(SongData.chordproURL(songId));
-  await handleApiResponse(response);
   const songRawData = await response.text();
 
   const songIdsAndIllustrations = songDB.songs.map((s) => ({
