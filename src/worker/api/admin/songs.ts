@@ -1,4 +1,4 @@
-import { drizzle } from "drizzle-orm/d1";
+import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import { song } from "../../../lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { buildApp } from "../utils";
@@ -13,6 +13,18 @@ const songModificationSchema = createInsertSchema(song)
   .omit({ updatedAt: true, createdAt: true }); // Prevent modifying creation date
 
 export type SongModificationSchema = z.infer<typeof songModificationSchema>;
+
+export const findSong = async (db: DrizzleD1Database, songId: string) => {
+  const possiblySong = await db
+    .select()
+    .from(song)
+    .where(eq(song.id, songId))
+    .limit(1);
+  if (possiblySong.length === 0) {
+    throw new Error("Referenced song not found!");
+  }
+  return possiblySong[0];
+};
 
 export const songRoutes = buildApp()
   .get("/songs", async (c) => {
@@ -59,7 +71,7 @@ export const songRoutes = buildApp()
           return c.json(
             {
               status: "fail",
-              data: {
+              failData: {
                 illustrationId: "Song not found",
                 code: "SONG_NOT_FOUND",
               },

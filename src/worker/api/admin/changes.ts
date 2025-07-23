@@ -77,7 +77,7 @@ export const changeRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               illustrationId: "Change not found",
               code: "CHANGE_NOT_FOUND",
             },

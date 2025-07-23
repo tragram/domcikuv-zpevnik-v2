@@ -151,7 +151,7 @@ export const userRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               "user.id": "Invalid user ID format (must be >=10 characters)",
             },
           },
@@ -170,7 +170,7 @@ export const userRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               illustrationId: "User not found",
               code: "USER_NOT_FOUND",
             },
@@ -205,7 +205,7 @@ export const userRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: { "user.id": "Invalid user ID format", code: "INVALID_ID" },
+            failData: { "user.id": "Invalid user ID format", code: "INVALID_ID" },
           },
           400
         );
@@ -235,7 +235,7 @@ export const userRoutes = buildApp()
           return c.json(
             {
               status: "fail",
-              data: {
+              failData: {
                 "user.isAdmin": "Cannot remove your own admin priviledges!",
                 code: "REMOVE_SELF_ADMIN_FORBIDDEN",
               },
@@ -257,7 +257,7 @@ export const userRoutes = buildApp()
           return c.json(
             {
               status: "fail",
-              data: {
+              failData: {
                 "user.email": "A user with this email already exists",
                 code: "EMAIL_EXISTS",
               },
@@ -310,7 +310,7 @@ export const userRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               "user.id": "Invalid user ID format",
               code: "INVALID_ID",
             },
@@ -324,7 +324,7 @@ export const userRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               "user.id": "You cannot delete your own account",
               code: "SELF_DELETE_FORBIDDEN",
             },
@@ -348,7 +348,7 @@ export const userRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               "user.id": "User not found",
               code: "USER_NOT_FOUND",
             },
@@ -362,7 +362,7 @@ export const userRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               "user.isAdmin":
                 "Cannot delete an administrator. Please remove admin priviledges first",
               code: "CANNOT_DELETE_ADMIN",

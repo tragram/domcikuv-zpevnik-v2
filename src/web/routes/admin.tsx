@@ -52,7 +52,7 @@ function Home() {
     <AdminDashboard 
       songDB={songDBAdmin} 
       illustrations={illustrations} 
-      changes={changes}
+      changes={changes.changes}
       users={users}
     />
   );

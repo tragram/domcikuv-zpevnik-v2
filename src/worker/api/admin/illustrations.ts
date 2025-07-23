@@ -1,10 +1,16 @@
 import { drizzle } from "drizzle-orm/d1";
-import { song, songIllustration } from "../../../lib/db/schema";
+import {
+  song,
+  SongDataDB,
+  songIllustration,
+  SongIllustrationDB,
+} from "../../../lib/db/schema";
 import { eq, desc, and } from "drizzle-orm";
 import { buildApp } from "../utils";
 import { createInsertSchema } from "drizzle-zod";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod/v4";
+import { findSong } from "./songs";
 
 // Illustration validation schemas
 const illustrationCreateSchema = createInsertSchema(songIllustration).omit({
@@ -22,34 +28,33 @@ const illustrationModifySchema = createInsertSchema(songIllustration)
 export type IllustrationModifySchema = z.infer<typeof illustrationModifySchema>;
 export type IllustrationCreateSchema = z.infer<typeof illustrationCreateSchema>;
 
+const responseData = (song: SongDataDB, illustration: SongIllustrationDB) => {
+  return {
+    song: {
+      title: song.title,
+      artist: song.artist,
+    },
+    ...illustration,
+  };
+};
+
+export type IllustrationApiResponse = ReturnType<typeof responseData>;
+
 export const illustrationRoutes = buildApp()
   .get("/illustrations", async (c) => {
     try {
       const db = drizzle(c.env.DB);
       const illustrations = await db
-        .select({
-          song: {
-            title: song.title,
-            artist: song.artist,
-          },
-          id: songIllustration.id,
-          songId: songIllustration.songId,
-          promptId: songIllustration.promptId,
-          promptModel: songIllustration.promptModel,
-          imageModel: songIllustration.imageModel,
-          imageURL: songIllustration.imageURL,
-          thumbnailURL: songIllustration.thumbnailURL,
-          isActive: songIllustration.isActive,
-          createdAt: songIllustration.createdAt,
-          updatedAt: songIllustration.updatedAt,
-        })
+        .select({ song, songIllustration })
         .from(songIllustration)
         .innerJoin(song, eq(songIllustration.songId, song.id))
         .orderBy(desc(songIllustration.createdAt));
       return c.json({
         status: "success",
         data: {
-          illustrations,
+          illustrations: illustrations.map((i) =>
+            responseData(i.song, i.songIllustration)
+          ) as IllustrationApiResponse[],
           count: illustrations.length,
         },
       });
@@ -75,17 +80,14 @@ export const illustrationRoutes = buildApp()
         const db = drizzle(c.env.DB);
 
         // Verify the song exists
-        const songExists = await db
-          .select({ id: song.id })
-          .from(song)
-          .where(eq(song.id, illustrationData.songId))
-          .limit(1);
-
-        if (songExists.length === 0) {
+        let illustrationSong;
+        try {
+          illustrationSong = await findSong(db, illustrationData.songId);
+        } catch {
           return c.json(
             {
               status: "fail",
-              data: { "song.id": "Referenced song not found" },
+              failData: { "songId": "Referenced song not found" },
             },
             400
           );
@@ -98,15 +100,28 @@ export const illustrationRoutes = buildApp()
             .set({ isActive: false })
             .where(eq(songIllustration.songId, illustrationData.songId));
         }
+        
+        // TODO: onConflict
+        const newId = `${illustrationData.songId}_${illustrationData.promptModel}_${illustrationData.promptId}_${illustrationData.imageModel}`;
+        const newIllustration = await db
+          .insert(songIllustration)
+          .values({
+            id: newId,
+            ...illustrationData,
+            createdAt: new Date(),
+          })
+          .returning();
 
-        const newId = crypto.randomUUID();
-        await db.insert(songIllustration).values({
-          id: newId,
-          ...illustrationData,
-          createdAt: new Date(),
-        });
-
-        return c.json({ status: "success", data: { id: newId } }, 201);
+        return c.json(
+          {
+            status: "success",
+            data: responseData(
+              illustrationSong,
+              newIllustration[0]
+            ) as IllustrationApiResponse,
+          },
+          201
+        );
       } catch (error) {
         console.error("Error creating illustration:", error);
         return c.json(
@@ -143,7 +158,7 @@ export const illustrationRoutes = buildApp()
           return c.json(
             {
               status: "fail",
-              data: {
+              failData: {
                 illustrationId: "Illustration not found",
                 code: "ILLUSTRATION_NOT_FOUND",
               },
@@ -171,10 +186,25 @@ export const illustrationRoutes = buildApp()
           .set(modifiedIllustration)
           .where(eq(songIllustration.id, modifiedIllustration.id))
           .returning();
+        let illustrationSong;
+        try {
+          illustrationSong = await findSong(db, songId);
+        } catch {
+          return c.json(
+            {
+              status: "fail",
+              failData: { "song.id": "Referenced song not found" },
+            },
+            400
+          );
+        }
 
         return c.json({
           status: "success",
-          data: updatedIllustration,
+          data: responseData(
+            illustrationSong,
+            updatedIllustration[0]
+          ) as IllustrationApiResponse,
         });
       } catch (error) {
         console.error("Error modifying illustration:", error);
@@ -200,7 +230,7 @@ export const illustrationRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               illustrationId: "Invalid illustration ID format",
               code: "INVALID_ID",
             },
@@ -220,7 +250,7 @@ export const illustrationRoutes = buildApp()
         return c.json(
           {
             status: "fail",
-            data: {
+            failData: {
               illustrationId: "Illustration not found",
               code: "ILLUSTRATION_NOT_FOUND",
             },

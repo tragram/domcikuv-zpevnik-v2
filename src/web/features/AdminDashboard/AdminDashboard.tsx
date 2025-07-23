@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { AdminSidebar } from "./components/admin-sidebar";
 import { UsersTable } from "./components/users-table";
-import { IllustrationsTable } from "./components/illustrations-table";
 import { ChangesTable } from "./components/changes-table";
 import { SidebarProvider, SidebarInset } from "~/components/shadcn-ui/sidebar";
 import { SongDB } from "~/types/types";
 import SongsTable from "./components/songs-table";
-import { SongIllustrationData } from "~/services/songs";
+import { IllustrationApiResponse } from "src/worker/api/admin/illustrations";
+import { IllustrationsTable } from "./components/illustrations-table/illustrations-table";
 
 interface SongChange {
   id: string;
@@ -46,7 +46,7 @@ interface UsersResponse {
 
 interface AdminDashboardProps {
   songDB: SongDB;
-  illustrations: SongIllustrationData[];
+  illustrations: IllustrationApiResponse[];
   changes: SongChange[];
   users: UsersResponse;
 }

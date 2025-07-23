@@ -43,14 +43,14 @@ export async function handleApiResponse<T>(response: Response): Promise<ExtractJ
       "Request failed",
       response.status,
       undefined,
-      json.data
+      json.failData
     );
   }
 
   if (json.status === "error") {
     const message =
       typeof json.message === "string" ? json.message : "Unknown error";
-    throw new ApiException(message, response.status, json.code, json.data);
+    throw new ApiException(message, response.status, json.code, json.errorData);
   }
 
   throw new ApiException("Unknown JSend status", response.status);

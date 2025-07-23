@@ -11,18 +11,27 @@ import {
   SongIllustrationDB,
 } from "src/lib/db/schema";
 import {
+  IllustrationApiResponse,
   IllustrationCreateSchema,
   IllustrationModifySchema,
 } from "src/worker/api/admin/illustrations";
 
 export type AdminApi = typeof client.api.admin;
 
-export interface SongIllustrationData extends SongIllustrationDB {
-  song: {
-    title: string;
-    artist: string;
-  };
+interface Timestamped {
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
+
+type WithTimestamps<T> = T & Timestamped;
+
+const parseDBDates = <T>(o: WithTimestamps<T>) => {
+  return {
+    ...o,
+    createdAt: new Date(o.createdAt),
+    updatedAt: new Date(o.updatedAt),
+  };
+};
 
 /**
  * Fetches the complete song database with language statistics and range data
@@ -158,13 +167,10 @@ export const verifyChange = async (
  */
 export const fetchIllustrationsAdmin = async (
   adminApi: AdminApi
-): Promise<SongIllustrationData[]> => {
-  const illustrations = (await makeApiRequest(adminApi.illustrations.$get))
-    .illustrations;
-  for (const i in illustrations) {
-    illustrations[i].createdAt = new Date(illustrations[i].createdAt);
-    illustrations[i].updatedAt = new Date(illustrations[i].updatedAt);
-  }
+): Promise<IllustrationApiResponse[]> => {
+  const illustrations = (
+    await makeApiRequest(adminApi.illustrations.$get)
+  ).illustrations.map(parseDBDates);
   return illustrations;
 };
 
@@ -178,11 +184,11 @@ export const fetchIllustrationsAdmin = async (
 export const createIllustration = async (
   adminApi: AdminApi,
   illustrationData: IllustrationCreateSchema
-): Promise<any> => {
+): Promise<IllustrationApiResponse> => {
   const response = await makeApiRequest(() =>
     adminApi.illustration.create.$post({ json: illustrationData })
   );
-  return response;
+  return parseDBDates(response);
 };
 
 /**
@@ -195,11 +201,11 @@ export const createIllustration = async (
 export const updateIllustration = async (
   adminApi: AdminApi,
   illustrationData: IllustrationModifySchema
-): Promise<any> => {
+): Promise<IllustrationApiResponse> => {
   const response = await makeApiRequest(() =>
     adminApi.illustration.modify.$post({ json: illustrationData })
   );
-  return response;
+  return parseDBDates(response);
 };
 
 /**
