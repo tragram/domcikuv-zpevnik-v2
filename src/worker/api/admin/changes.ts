@@ -32,11 +32,18 @@ export const changeRoutes = buildApp()
         .leftJoin(user, eq(songChange.userId, user.id))
         .orderBy(desc(songChange.timestamp));
 
-      return c.json({ changes, count: changes.length });
+      return c.json({
+        status: "success",
+        data: { changes, count: changes.length },
+      });
     } catch (error) {
       console.error("Error fetching changes:", error);
       return c.json(
-        { error: "Failed to fetch changes", code: "FETCH_ERROR" },
+        {
+          status: "error",
+          message: "Failed to fetch illustrations",
+          code: "FETCH_ERROR",
+        },
         500
       );
     }
@@ -45,6 +52,18 @@ export const changeRoutes = buildApp()
   .post("/change/verify", zValidator("json", verifyChangeSchema), async (c) => {
     try {
       const { id, verified } = c.req.valid("json");
+      const user = c.get("USER");
+      if (!user) {
+        // this should've been checked before, so this is mostly for TS...
+        return c.json(
+          {
+            status: "error",
+            message: "User not found",
+            code: "USER_NOT_FOUND",
+          },
+          404
+        );
+      }
       const db = drizzle(c.env.DB);
 
       // Check if change exists
@@ -56,21 +75,35 @@ export const changeRoutes = buildApp()
 
       if (existingChange.length === 0) {
         return c.json(
-          { error: "Change not found", code: "CHANGE_NOT_FOUND" },
+          {
+            status: "fail",
+            data: {
+              illustrationId: "Change not found",
+              code: "CHANGE_NOT_FOUND",
+            },
+          },
           404
         );
       }
 
-      await db
+      const verifiedChange = await db
         .update(songChange)
-        .set({ verified })
-        .where(eq(songChange.id, id));
+        .set({ verified, verifiedAt: new Date(), verifiedByUser: user.id })
+        .where(eq(songChange.id, id))
+        .returning();
 
-      return c.json({ success: true });
+      return c.json({
+        status: "success",
+        data: verifiedChange,
+      });
     } catch (error) {
       console.error("Error verifying change:", error);
       return c.json(
-        { error: "Failed to verify change", code: "UPDATE_ERROR" },
+        {
+          status: "error",
+          message: "Failed to modify illustration",
+          code: "UPDATE_ERROR",
+        },
         500
       );
     }

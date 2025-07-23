@@ -4,27 +4,37 @@ import { eq, desc } from "drizzle-orm";
 import { buildApp } from "../utils";
 import { createInsertSchema } from "drizzle-zod";
 import { zValidator } from "@hono/zod-validator";
+import z from "zod/v4";
 
 // Song validation schemas
 const songModificationSchema = createInsertSchema(song)
   .partial()
   .required({ id: true })
-  .omit({ dateAdded: true }); // Prevent modifying creation date
+  .omit({ updatedAt: true, createdAt: true }); // Prevent modifying creation date
+
+export type SongModificationSchema = z.infer<typeof songModificationSchema>;
 
 export const songRoutes = buildApp()
-  .get("/songDB", async (c) => {
+  .get("/songs", async (c) => {
     try {
       const db = drizzle(c.env.DB);
-      const songs = await db
-        .select()
-        .from(song)
-        .orderBy(desc(song.dateModified));
+      const songs = await db.select().from(song).orderBy(desc(song.updatedAt));
 
-      return c.json({ songs, count: songs.length });
+      return c.json({
+        status: "success",
+        data: {
+          songs,
+          count: songs.length,
+        },
+      });
     } catch (error) {
       console.error("Error fetching songs:", error);
       return c.json(
-        { error: "Failed to fetch songs", code: "FETCH_ERROR" },
+        {
+          status: "error",
+          message: "Failed to fetch songs",
+          code: "FETCH_ERROR",
+        },
         500
       );
     }
@@ -47,21 +57,34 @@ export const songRoutes = buildApp()
 
         if (existingSong.length === 0) {
           return c.json(
-            { error: "Song not found", code: "SONG_NOT_FOUND" },
+            {
+              status: "fail",
+              data: {
+                illustrationId: "Song not found",
+                code: "SONG_NOT_FOUND",
+              },
+            },
             404
           );
         }
-
-        await db
+        const updatedSong = await db
           .update(song)
-          .set({ ...modifiedSong, dateModified: new Date() })
-          .where(eq(song.id, modifiedSong.id));
+          .set({ ...modifiedSong, updatedAt: new Date() })
+          .where(eq(song.id, modifiedSong.id))
+          .returning();
 
-        return c.json({ success: true });
+        return c.json({
+          status: "success",
+          data: updatedSong,
+        });
       } catch (error) {
         console.error("Error modifying song:", error);
         return c.json(
-          { error: "Failed to modify song", code: "UPDATE_ERROR" },
+          {
+            status: "error",
+            message: "Failed to modify song",
+            code: "UPDATE_ERROR",
+          },
           500
         );
       }

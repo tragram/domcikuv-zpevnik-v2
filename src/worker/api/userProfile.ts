@@ -357,7 +357,10 @@ const profileApp = buildApp()
         })
         .where(eq(user.id, userData.id));
 
-      return c.json({ success: true });
+      return c.json({
+    status : "success",
+    data : null
+})
     } catch (error) {
       console.error("Avatar deletion error:", error);
       return c.json(

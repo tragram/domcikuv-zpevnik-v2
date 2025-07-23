@@ -46,7 +46,10 @@ const favoritesApp = buildApp()
         songId,
       });
 
-      return c.json({ success: true });
+      return c.json({
+    status : "success",
+    data : null
+})
     } catch (error) {
       return c.json(
         {
@@ -79,7 +82,10 @@ const favoritesApp = buildApp()
           )
         );
 
-      return c.json({ success: true });
+      return c.json({
+    status : "success",
+    data : null
+})
     } catch (error) {
       return c.json(
         {

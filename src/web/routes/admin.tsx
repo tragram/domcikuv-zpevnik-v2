@@ -4,8 +4,8 @@ import {
   fetchSongDBAdmin, 
   fetchIllustrationsAdmin, 
   fetchChangesAdmin 
-} from "~/lib/songs";
-import { fetchUsersAdmin } from "~/lib/users"; // Add this import
+} from "~/services/songs";
+import { fetchUsersAdmin } from "~/services/users"; // Add this import
 
 export const Route = createFileRoute("/admin")({
   component: Home,
@@ -51,8 +51,8 @@ function Home() {
   return (
     <AdminDashboard 
       songDB={songDBAdmin} 
-      illustrations={illustrations.illustrations} 
-      changes={changes.changes}
+      illustrations={illustrations} 
+      changes={changes}
       users={users}
     />
   );

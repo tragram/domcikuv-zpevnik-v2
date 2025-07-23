@@ -5,7 +5,7 @@ import { Badge } from "~/components/shadcn-ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/shadcn-ui/table"
 import { Button } from "~/components/shadcn-ui/button"
 import { Search, ExternalLink, User, CheckCircle, XCircle } from "lucide-react"
-import { verifyChange } from "~/lib/songs"
+import { verifyChange } from "~/services/songs"
 import { toast } from "sonner";
 import { useRouteContext } from "@tanstack/react-router"
 

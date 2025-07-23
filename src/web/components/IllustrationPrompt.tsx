@@ -1,6 +1,6 @@
 import { AutoTextSize } from "auto-text-size";
 import { cn } from "~/lib/utils";
-import { fetchIllustrationPrompt } from "~/lib/songs";
+import { fetchIllustrationPrompt } from "~/services/songs";
 import { useQuery } from "@tanstack/react-query";
 
 interface IllustrationPromptProps {

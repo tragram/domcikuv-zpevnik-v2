@@ -1,5 +1,5 @@
 import { z } from "zod/v4";
-import { drizzle } from "drizzle-orm/d1";
+import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import { user } from "../../../lib/db/schema";
 import { eq, desc, like, or, count } from "drizzle-orm";
 import { buildApp } from "../utils";
@@ -17,7 +17,11 @@ const createUserSchema = userSchema.omit({
 const updateUserSchema = userSchema.partial().omit({
   id: true,
   createdAt: true, // Prevent updating creation date
+  updatedAt: true,
 });
+
+export type CreateUserSchema = z.infer<typeof createUserSchema>;
+export type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 
 // Search schema
 const userSearchSchema = z.object({
@@ -54,22 +58,28 @@ export const userRoutes = buildApp()
       ]);
 
       const totalCount = totalCountResult[0]?.count ?? 0;
-
       return c.json({
-        users,
-        pagination: {
-          total: totalCount,
-          limit,
-          offset,
-          hasMore: offset + limit < totalCount,
-          currentPage: Math.floor(offset / limit) + 1,
-          totalPages: Math.ceil(totalCount / limit),
+        status: "success",
+        data: {
+          users,
+          pagination: {
+            total: totalCount,
+            limit,
+            offset,
+            hasMore: offset + limit < totalCount,
+            currentPage: Math.floor(offset / limit) + 1,
+            totalPages: Math.ceil(totalCount / limit),
+          },
         },
       });
     } catch (error) {
       console.error("Error fetching users:", error);
       return c.json(
-        { error: "Failed to fetch users", code: "FETCH_ERROR" },
+        {
+          status: "error",
+          message: "Failed to fetch users",
+          code: "FETCH_ERROR",
+        },
         500
       );
     }
@@ -90,7 +100,8 @@ export const userRoutes = buildApp()
       if (existingUser.length > 0) {
         return c.json(
           {
-            error: "A user with this email already exists",
+            status: "error",
+            message: "A user with this email already exists",
             code: "EMAIL_EXISTS",
           },
           409
@@ -100,32 +111,32 @@ export const userRoutes = buildApp()
       const newId = crypto.randomUUID();
       const now = new Date();
 
-      await db.insert(user).values({
-        id: newId,
-        ...userData,
-        createdAt: now,
-        updatedAt: now,
-        lastLogin: now,
-      });
-
-      // Return the created user (without sensitive data if any)
-      const createdUser = await db
-        .select()
-        .from(user)
-        .where(eq(user.id, newId))
-        .limit(1);
+      const newUser = await db
+        .insert(user)
+        .values({
+          id: newId,
+          ...userData,
+          createdAt: now,
+          updatedAt: now,
+          lastLogin: now,
+        })
+        .returning();
 
       return c.json(
         {
           success: true,
-          user: createdUser[0],
+          user: newUser,
         },
         201
       );
     } catch (error) {
       console.error("Error creating user:", error);
       return c.json(
-        { error: "Failed to create user", code: "CREATE_ERROR" },
+        {
+          status: "error",
+          message: "Failed to create user",
+          code: "CREATE_ERROR",
+        },
         500
       );
     }
@@ -138,7 +149,12 @@ export const userRoutes = buildApp()
       // Basic UUID validation
       if (!userId || userId.length < 10) {
         return c.json(
-          { error: "Invalid user ID format", code: "INVALID_ID" },
+          {
+            status: "fail",
+            data: {
+              "user.id": "Invalid user ID format (must be >=10 characters)",
+            },
+          },
           400
         );
       }
@@ -151,14 +167,27 @@ export const userRoutes = buildApp()
         .limit(1);
 
       if (userData.length === 0) {
-        return c.json({ error: "User not found", code: "USER_NOT_FOUND" }, 404);
+        return c.json(
+          {
+            status: "fail",
+            data: {
+              illustrationId: "User not found",
+              code: "USER_NOT_FOUND",
+            },
+          },
+          404
+        );
       }
 
       return c.json(userData[0]);
     } catch (error) {
       console.error("Error fetching user:", error);
       return c.json(
-        { error: "Failed to fetch user", code: "FETCH_ERROR" },
+        {
+          status: "error",
+          message: "Failed to fetch user",
+          code: "FETCH_ERROR",
+        },
         500
       );
     }
@@ -168,12 +197,16 @@ export const userRoutes = buildApp()
     try {
       const userId = c.req.param("id");
       const userData = c.req.valid("json");
+      const currentUserId = c.get("USER")?.id;
       const db = drizzle(c.env.DB);
 
       // Basic UUID validation
       if (!userId || userId.length < 10) {
         return c.json(
-          { error: "Invalid user ID format", code: "INVALID_ID" },
+          {
+            status: "fail",
+            data: { "user.id": "Invalid user ID format", code: "INVALID_ID" },
+          },
           400
         );
       }
@@ -186,7 +219,30 @@ export const userRoutes = buildApp()
         .limit(1);
 
       if (existingUser.length === 0) {
-        return c.json({ error: "User not found", code: "USER_NOT_FOUND" }, 404);
+        return c.json(
+          {
+            status: "error",
+            message: "User not found",
+            code: "USER_NOT_FOUND",
+          },
+          404
+        );
+      }
+
+      // be careful about changing the user themselves
+      if (userId === currentUserId) {
+        if (userData.isAdmin !== undefined && !userData.isAdmin) {
+          return c.json(
+            {
+              status: "fail",
+              data: {
+                "user.isAdmin": "Cannot remove your own admin priviledges!",
+                code: "REMOVE_SELF_ADMIN_FORBIDDEN",
+              },
+            },
+            400
+          );
+        }
       }
 
       // If email is being updated, check for duplicates
@@ -200,8 +256,11 @@ export const userRoutes = buildApp()
         if (emailExists.length > 0 && emailExists[0].id !== userId) {
           return c.json(
             {
-              error: "A user with this email already exists",
-              code: "EMAIL_EXISTS",
+              status: "fail",
+              data: {
+                "user.email": "A user with this email already exists",
+                code: "EMAIL_EXISTS",
+              },
             },
             409
           );
@@ -230,7 +289,11 @@ export const userRoutes = buildApp()
     } catch (error) {
       console.error("Error updating user:", error);
       return c.json(
-        { error: "Failed to update user", code: "UPDATE_ERROR" },
+        {
+          status: "error",
+          message: "Failed to update user",
+          code: "UPDATE_ERROR",
+        },
         500
       );
     }
@@ -245,7 +308,13 @@ export const userRoutes = buildApp()
       // Basic UUID validation
       if (!userId || userId.length < 10) {
         return c.json(
-          { error: "Invalid user ID format", code: "INVALID_ID" },
+          {
+            status: "fail",
+            data: {
+              "user.id": "Invalid user ID format",
+              code: "INVALID_ID",
+            },
+          },
           400
         );
       }
@@ -254,8 +323,11 @@ export const userRoutes = buildApp()
       if (userId === currentUserId) {
         return c.json(
           {
-            error: "You cannot delete your own account",
-            code: "SELF_DELETE_FORBIDDEN",
+            status: "fail",
+            data: {
+              "user.id": "You cannot delete your own account",
+              code: "SELF_DELETE_FORBIDDEN",
+            },
           },
           400
         );
@@ -273,14 +345,38 @@ export const userRoutes = buildApp()
         .limit(1);
 
       if (existingUser.length === 0) {
-        return c.json({ error: "User not found", code: "USER_NOT_FOUND" }, 404);
+        return c.json(
+          {
+            status: "fail",
+            data: {
+              "user.id": "User not found",
+              code: "USER_NOT_FOUND",
+            },
+          },
+          404
+        );
+      }
+
+      // disallow deletion of admins
+      if (existingUser[0].isAdmin) {
+        return c.json(
+          {
+            status: "fail",
+            data: {
+              "user.isAdmin":
+                "Cannot delete an administrator. Please remove admin priviledges first",
+              code: "CANNOT_DELETE_ADMIN",
+            },
+          },
+          404
+        );
       }
 
       await db.delete(user).where(eq(user.id, userId));
 
       return c.json({
-        success: true,
-        deletedUser: {
+        status: "success",
+        data: {
           id: userId,
           name: existingUser[0].name,
         },
@@ -288,7 +384,11 @@ export const userRoutes = buildApp()
     } catch (error) {
       console.error("Error deleting user:", error);
       return c.json(
-        { error: "Failed to delete user", code: "DELETE_ERROR" },
+        {
+          status: "error",
+          message: "Failed to delete user",
+          code: "DELETE_ERROR",
+        },
         500
       );
     }

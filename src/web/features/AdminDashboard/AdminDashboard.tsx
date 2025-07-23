@@ -6,19 +6,7 @@ import { ChangesTable } from "./components/changes-table";
 import { SidebarProvider, SidebarInset } from "~/components/shadcn-ui/sidebar";
 import { SongDB } from "~/types/types";
 import SongsTable from "./components/songs-table";
-
-interface SongIllustration {
-  id: string;
-  songId: string;
-  songTitle: string;
-  promptId: string;
-  promptModel: string;
-  imageModel: string;
-  imageURL: string;
-  thumbnailURL: string;
-  isActive: boolean;
-  createdAt: Date;
-}
+import { SongIllustrationData } from "~/services/songs";
 
 interface SongChange {
   id: string;
@@ -58,7 +46,7 @@ interface UsersResponse {
 
 interface AdminDashboardProps {
   songDB: SongDB;
-  illustrations: SongIllustration[];
+  illustrations: SongIllustrationData[];
   changes: SongChange[];
   users: UsersResponse;
 }
@@ -70,7 +58,7 @@ export default function AdminDashboard({
   users 
 }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState("illustrations");
-
+  
   const renderContent = () => {
     switch (activeTab) {
       case "songs":

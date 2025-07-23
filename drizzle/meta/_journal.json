@@ -36,6 +36,34 @@
       "when": 1753123242694,
       "tag": "0004_hot_betty_ross",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1753268809640,
+      "tag": "0005_burly_gideon",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1753269233051,
+      "tag": "0006_certain_nekra",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1753269828184,
+      "tag": "0007_minor_harrier",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1753273905280,
+      "tag": "0008_lonely_hobgoblin",
+      "breakpoints": true
     }
   ]
 }

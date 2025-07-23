@@ -1,20 +1,26 @@
 import { drizzle } from "drizzle-orm/d1";
 import { song, songIllustration } from "../../../lib/db/schema";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 import { buildApp } from "../utils";
 import { createInsertSchema } from "drizzle-zod";
 import { zValidator } from "@hono/zod-validator";
+import z from "zod/v4";
 
 // Illustration validation schemas
 const illustrationCreateSchema = createInsertSchema(songIllustration).omit({
   id: true,
   createdAt: true,
+  updatedAt: true,
 });
 
 const illustrationModifySchema = createInsertSchema(songIllustration)
   .partial()
   .required({ id: true })
-  .omit({ createdAt: true }); // Prevent modifying creation date
+  // Prevent modifying creation date and referenced song
+  .omit({ createdAt: true, songId: true, updatedAt: true });
+
+export type IllustrationModifySchema = z.infer<typeof illustrationModifySchema>;
+export type IllustrationCreateSchema = z.infer<typeof illustrationCreateSchema>;
 
 export const illustrationRoutes = buildApp()
   .get("/illustrations", async (c) => {
@@ -22,9 +28,12 @@ export const illustrationRoutes = buildApp()
       const db = drizzle(c.env.DB);
       const illustrations = await db
         .select({
+          song: {
+            title: song.title,
+            artist: song.artist,
+          },
           id: songIllustration.id,
           songId: songIllustration.songId,
-          songTitle: song.title,
           promptId: songIllustration.promptId,
           promptModel: songIllustration.promptModel,
           imageModel: songIllustration.imageModel,
@@ -32,16 +41,26 @@ export const illustrationRoutes = buildApp()
           thumbnailURL: songIllustration.thumbnailURL,
           isActive: songIllustration.isActive,
           createdAt: songIllustration.createdAt,
+          updatedAt: songIllustration.updatedAt,
         })
         .from(songIllustration)
-        .leftJoin(song, eq(songIllustration.songId, song.id))
+        .innerJoin(song, eq(songIllustration.songId, song.id))
         .orderBy(desc(songIllustration.createdAt));
-
-      return c.json({ illustrations, count: illustrations.length });
+      return c.json({
+        status: "success",
+        data: {
+          illustrations,
+          count: illustrations.length,
+        },
+      });
     } catch (error) {
       console.error("Error fetching illustrations:", error);
       return c.json(
-        { error: "Failed to fetch illustrations", code: "FETCH_ERROR" },
+        {
+          status: "error",
+          message: "Failed to fetch illustrations",
+          code: "FETCH_ERROR",
+        },
         500
       );
     }
@@ -64,7 +83,10 @@ export const illustrationRoutes = buildApp()
 
         if (songExists.length === 0) {
           return c.json(
-            { error: "Referenced song not found", code: "SONG_NOT_FOUND" },
+            {
+              status: "fail",
+              data: { "song.id": "Referenced song not found" },
+            },
             400
           );
         }
@@ -84,11 +106,15 @@ export const illustrationRoutes = buildApp()
           createdAt: new Date(),
         });
 
-        return c.json({ success: true, id: newId }, 201);
+        return c.json({ status: "success", data: { id: newId } }, 201);
       } catch (error) {
         console.error("Error creating illustration:", error);
         return c.json(
-          { error: "Failed to create illustration", code: "CREATE_ERROR" },
+          {
+            status: "error",
+            message: "Failed to create illustration",
+            code: "CREATE_ERROR",
+          },
           500
         );
       }
@@ -115,32 +141,49 @@ export const illustrationRoutes = buildApp()
 
         if (existingIllustration.length === 0) {
           return c.json(
-            { error: "Illustration not found", code: "ILLUSTRATION_NOT_FOUND" },
+            {
+              status: "fail",
+              data: {
+                illustrationId: "Illustration not found",
+                code: "ILLUSTRATION_NOT_FOUND",
+              },
+            },
             404
           );
         }
 
         const songId = existingIllustration[0].songId;
-        console.log(modifiedIllustration);
-        
         // If this illustration is being set as active, deactivate all other illustrations for this song
         if (modifiedIllustration.isActive === true) {
           await db
             .update(songIllustration)
-            .set({ isActive: false })
-            .where(eq(songIllustration.songId, songId));
+            .set({ isActive: false, updatedAt: new Date() })
+            .where(
+              and(
+                eq(songIllustration.songId, songId),
+                eq(songIllustration.isActive, true)
+              )
+            );
         }
 
-        await db
+        const updatedIllustration = await db
           .update(songIllustration)
           .set(modifiedIllustration)
-          .where(eq(songIllustration.id, modifiedIllustration.id));
+          .where(eq(songIllustration.id, modifiedIllustration.id))
+          .returning();
 
-        return c.json({ success: true });
+        return c.json({
+          status: "success",
+          data: updatedIllustration,
+        });
       } catch (error) {
         console.error("Error modifying illustration:", error);
         return c.json(
-          { error: "Failed to modify illustration", code: "UPDATE_ERROR" },
+          {
+            status: "error",
+            message: "Failed to modify illustration",
+            code: "UPDATE_ERROR",
+          },
           500
         );
       }
@@ -155,7 +198,13 @@ export const illustrationRoutes = buildApp()
       // Basic UUID validation
       if (!illustrationId || illustrationId.length < 10) {
         return c.json(
-          { error: "Invalid illustration ID format", code: "INVALID_ID" },
+          {
+            status: "fail",
+            data: {
+              illustrationId: "Invalid illustration ID format",
+              code: "INVALID_ID",
+            },
+          },
           400
         );
       }
@@ -169,7 +218,13 @@ export const illustrationRoutes = buildApp()
 
       if (existingIllustration.length === 0) {
         return c.json(
-          { error: "Illustration not found", code: "ILLUSTRATION_NOT_FOUND" },
+          {
+            status: "fail",
+            data: {
+              illustrationId: "Illustration not found",
+              code: "ILLUSTRATION_NOT_FOUND",
+            },
+          },
           404
         );
       }
@@ -178,11 +233,18 @@ export const illustrationRoutes = buildApp()
         .delete(songIllustration)
         .where(eq(songIllustration.id, illustrationId));
 
-      return c.json({ success: true });
+      return c.json({
+        status: "success",
+        data: null,
+      });
     } catch (error) {
       console.error("Error deleting illustration:", error);
       return c.json(
-        { error: "Failed to delete illustration", code: "DELETE_ERROR" },
+        {
+          status: "error",
+          message: "Failed to delete illustration",
+          code: "DELETE_ERROR",
+        },
         500
       );
     }

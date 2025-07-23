@@ -1,5 +1,6 @@
 import type React from "react";
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "~/components/shadcn-ui/button";
 import { Input } from "~/components/shadcn-ui/input";
 import { Badge } from "~/components/shadcn-ui/badge";
@@ -32,70 +33,72 @@ import { useRouteContext } from "@tanstack/react-router";
 import {
   createIllustration,
   deleteIllustration,
+  SongIllustrationData,
   updateIllustration,
-} from "~/lib/songs";
+} from "~/services/songs";
 import { cn } from "~/lib/utils";
-import { SongIllustrationDB } from "src/lib/db/schema";
 
 interface IllustrationsTableProps {
-  illustrations: SongIllustrationDB[];
+  illustrations: SongIllustrationData[];
 }
 
 export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [editingIllustration, setEditingIllustration] =
-    useState<SongIllustrationDB | null>(null);
+    useState<SongIllustrationData | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
+  const queryClient = useQueryClient();
 
-  const createMutation = {
-    mutateAsync: async (data: Omit<SongIllustrationDB, "id" | "createdAt">) => {
-      try {
-        const result = await createIllustration(adminApi, data);
-        toast.success("Illustration created successfully");
-        return result;
-      } catch (error) {
-        toast.error("Failed to create illustration");
-        throw error;
-      }
+  // TanStack Query mutations
+  const createMutation = useMutation({
+    mutationFn: async (data: Omit<SongIllustrationData, "id" | "createdAt">) => {
+      return await createIllustration(adminApi, data);
     },
-    isPending: false,
-  };
-
-  const updateMutation = {
-    mutateAsync: async (data: Partial<SongIllustrationDB> & { id: string }) => {
-      try {
-        const result = await updateIllustration(adminApi, data);
-        toast.success("Illustration updated successfully");
-        return result;
-      } catch (error) {
-        toast.error("Failed to update illustration");
-        throw error;
-      }
+    onSuccess: () => {
+      toast.success("Illustration created successfully");
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      setIsDialogOpen(false);
+      setEditingIllustration(null);
     },
-    isPending: false,
-  };
-
-  const deleteMutation = {
-    mutateAsync: async (id: string) => {
-      try {
-        const result = await deleteIllustration(adminApi, id);
-        toast.success("Illustration deleted successfully");
-        return result;
-      } catch (error) {
-        toast.error("Failed to delete illustration");
-        throw error;
-      }
+    onError: () => {
+      toast.error("Failed to create illustration");
     },
-    isPending: false,
-  };
+  });
 
+  const updateMutation = useMutation({
+    mutationFn: async (data: Partial<SongIllustrationData> & { id: string }) => {
+      return await updateIllustration(adminApi, data);
+    },
+    onSuccess: () => {
+      toast.success("Illustration updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      setIsDialogOpen(false);
+      setEditingIllustration(null);
+    },
+    onError: () => {
+      toast.error("Failed to update illustration");
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      return await deleteIllustration(adminApi, id);
+    },
+    onSuccess: () => {
+      toast.success("Illustration deleted successfully");
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+    },
+    onError: () => {
+      toast.error("Failed to delete illustration");
+    },
+  });
   const filteredIllustrations = illustrations.filter(
     (illustration) =>
-      illustration.songTitle
+      illustration.song?.title
         ?.toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
       illustration.promptModel
@@ -105,46 +108,23 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
   );
 
   const handleSaveIllustration = async (
-    illustrationData: Partial<SongIllustrationDB>
+    illustrationData: Partial<SongIllustrationData>
   ) => {
     if (editingIllustration) {
       await updateMutation.mutateAsync({
         ...illustrationData,
         id: editingIllustration.id,
       });
-      setIllustrations(
-        illustrations.map((illustration) =>
-          illustration.id === editingIllustration.id
-            ? { ...illustration, ...illustrationData }
-            : illustration
-        )
-      );
     } else {
-      const response = await createMutation.mutateAsync(
-        illustrationData as Omit<SongIllustrationDB, "id" | "createdAt">
+      await createMutation.mutateAsync(
+        illustrationData as Omit<SongIllustrationData, "id" | "createdAt">
       );
-      const newIllustration: SongIllustrationDB = {
-        id: response.id,
-        songId: illustrationData.songId || "",
-        songTitle: illustrationData.songTitle || "",
-        promptId: illustrationData.promptId || "",
-        promptModel: illustrationData.promptModel || "",
-        imageModel: illustrationData.imageModel || "",
-        imageURL: illustrationData.imageURL || "",
-        thumbnailURL: illustrationData.thumbnailURL || "",
-        isActive: illustrationData.isActive || false,
-        createdAt: new Date(),
-      };
-      setIllustrations([...illustrations, newIllustration]);
     }
-    setIsDialogOpen(false);
-    setEditingIllustration(null);
   };
 
   const handleDeleteIllustration = async (id: string) => {
     if (confirm("Are you sure you want to delete this illustration?")) {
       await deleteMutation.mutateAsync(id);
-      setIllustrations(illustrations.filter((ill) => ill.id !== id));
     }
   };
 
@@ -168,14 +148,14 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
       groups[songId].push(illustration);
       return groups;
     },
-    {} as Record<string, SongIllustrationDB[]>
+    {} as Record<string, SongIllustrationData[]>
   );
 
   // Sort groups by song title
   const sortedGroups = Object.entries(groupedIllustrations).sort(
     ([, a], [, b]) => {
-      const titleA = a[0]?.songTitle || "Unknown Song";
-      const titleB = b[0]?.songTitle || "Unknown Song";
+      const titleA = a[0]?.song.title || "Unknown Song";
+      const titleB = b[0]?.song.title || "Unknown Song";
       return titleA.localeCompare(titleB);
     }
   );
@@ -247,9 +227,6 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
       <div className="space-y-2">
         {sortedGroups.map(([songId, illustrations]) => {
           const isExpanded = expandedGroups.has(songId);
-          const activeCount = illustrations.filter(
-            (ill) => ill.isActive
-          ).length;
 
           return (
             <Collapsible
@@ -267,10 +244,10 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
                     )}
                     <div className="text-left flex-shrink-0">
                       <h4 className="font-medium">
-                        {illustrations[0]?.songTitle || "Unknown Song"}
+                        {illustrations[0].song.title || "Unknown Song"}
                       </h4>
                       <p className="text-sm text-muted-foreground">
-                        ID: {songId}
+                        {illustrations[0].song.artist}
                       </p>
                     </div>
 
@@ -283,7 +260,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
                               illustration.thumbnailURL ||
                               "/placeholder.svg?height=48&width=48"
                             }
-                            alt={`${illustration.songTitle} preview ${
+                            alt={`${illustration.song?.title} preview ${
                               index + 1
                             }`}
                             className={cn(
@@ -330,7 +307,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
                               "/placeholder.svg?height=60&width=60"
                             }
                             alt={`${
-                              illustration.songTitle || "Unknown"
+                              illustration.song?.title || "Unknown"
                             } thumbnail`}
                             className="w-full rounded object-cover cursor-pointer"
                             onClick={() =>
@@ -348,7 +325,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
                             {illustration.imageModel}
                           </p>
                           <p className="text-xs text-muted-foreground">
-                            {illustration.createdAt}
+                            {illustration.createdAt.toLocaleDateString()}
                           </p>
                         </div>
                         <div className="flex gap-1">
@@ -398,7 +375,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
                             variant={
                               illustration.isActive ? "default" : "secondary"
                             }
-                            className="text-xs"
+                            className="text-xs cursor-pointer"
                             onClick={() => {
                               handleSaveIllustration({
                                 id: illustration.id,
@@ -453,13 +430,12 @@ function IllustrationForm({
   onSave,
   isLoading,
 }: {
-  illustration: SongIllustrationDB | null;
-  onSave: (data: Partial<SongIllustrationDB>) => void;
+  illustration: SongIllustrationData | null;
+  onSave: (data: Partial<SongIllustrationData>) => void;
   isLoading?: boolean;
 }) {
   const [formData, setFormData] = useState({
     songId: illustration?.songId || "",
-    songTitle: illustration?.songTitle || "",
     promptId: illustration?.promptId || "",
     promptModel: illustration?.promptModel || "",
     imageModel: illustration?.imageModel || "",
@@ -475,29 +451,17 @@ function IllustrationForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="songId">Song ID</Label>
-          <Input
-            id="songId"
-            value={formData.songId}
-            onChange={(e) =>
-              setFormData({ ...formData, songId: e.target.value })
-            }
-            required
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="songTitle">Song Title</Label>
-          <Input
-            id="songTitle"
-            value={formData.songTitle}
-            onChange={(e) =>
-              setFormData({ ...formData, songTitle: e.target.value })
-            }
-            required
-          />
-        </div>
+      <div className="space-y-2">
+        <Label htmlFor="songId">Song ID</Label>
+        <Input
+          id="songId"
+          value={formData.songId}
+          onChange={(e) =>
+            setFormData({ ...formData, songId: e.target.value })
+          }
+          required
+          disabled={!!illustration} // Don't allow changing song ID when editing
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-4">

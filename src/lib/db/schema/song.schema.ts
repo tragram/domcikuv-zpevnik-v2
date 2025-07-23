@@ -1,5 +1,5 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { user } from "./auth.schema";
 
 export const song = sqliteTable("song", {
@@ -7,15 +7,15 @@ export const song = sqliteTable("song", {
   title: text("title").notNull(),
   artist: text("artist").notNull(),
   key: text("key").notNull(),
-  dateAdded: integer("date_added", { mode: "timestamp" })
+  createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
     .notNull(),
-  dateModified: integer("date_modified", { mode: "timestamp" })
+  updatedAt: integer("updated_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
     .notNull(),
   startMelody: text("start_melody"),
   language: text("language").notNull(),
-  tempo: text("tempo"),
+  tempo: integer("tempo"),
   capo: integer("capo"),
   range: text("range"),
   chordproURL: text("chordproURL").notNull(),
@@ -38,6 +38,10 @@ export const songIllustration = sqliteTable("songIllustration", {
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
     .notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .default(sql`(current_timestamp)`)
+    .notNull(),
 });
 
 export type SongIllustrationDB = typeof songIllustration.$inferSelect;
@@ -55,7 +59,10 @@ export const songChange = sqliteTable("songChange", {
     .notNull(),
   chordproURL: text("chordproURL").notNull(),
   // verified if either made by a trusted user or manually by an admin
+  // this should probably be a separate table but oh well
   verified: integer("verified", { mode: "boolean" }).default(true).notNull(),
+  verifiedAt: integer("verified_at", { mode: "timestamp" }),
+  verifiedByUser: text("verified_by_user").references(() => user.id),
 });
 
 export type SongChangeDB = typeof songChange.$inferInsert;

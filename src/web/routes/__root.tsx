@@ -2,7 +2,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
-import { fetchSongDB, fetchSongDBAdmin } from "~/lib/songs";
+import { fetchSongDB, fetchSongDBAdmin } from "~/services/songs";
 import { RouterContext } from "~/main";
 import { Songbook } from "~/types/types";
 

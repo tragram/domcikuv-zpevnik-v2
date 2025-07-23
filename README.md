@@ -162,6 +162,7 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 * [country-flag-icons](https://www.npmjs.com/package/country-flag-icons)
 * [Zustand](https://github.com/pmndrs/zustand): easier state management
 * [@khmyznikov/pwa-install](https://github.com/khmyznikov/pwa-install): managing PWA popups and installation
+* the API is modeled after [jsend](https://github.com/omniti-labs/jsend)
 
 ### Notes
 * minimum target width is 320px (essentially no devices have a narrow screen than that)

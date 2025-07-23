@@ -1,24 +1,36 @@
 import { SongData } from "~/types/songData";
 import { LanguageCount, SongDB } from "~/types/types";
 import yaml from "js-yaml";
-import { fileURL } from "./utils";
+import { fileURL } from "../lib/utils";
 import { guessKey } from "~/features/SongView/utils/songRendering";
 import client from "~/../worker/api-client";
-import { handleApiResponse, makeApiRequest } from "./apiHelpers";
-import { SongChangeDB } from "src/lib/db/schema";
+import { handleApiResponse, makeApiRequest, ApiException } from "./apiHelpers";
+import {
+  SongChangeDB,
+  SongDataDB,
+  SongIllustrationDB,
+} from "src/lib/db/schema";
+import {
+  IllustrationCreateSchema,
+  IllustrationModifySchema,
+} from "src/worker/api/admin/illustrations";
 
 export type AdminApi = typeof client.api.admin;
+
+export interface SongIllustrationData extends SongIllustrationDB {
+  song: {
+    title: string;
+    artist: string;
+  };
+}
 
 /**
  * Fetches the complete song database with language statistics and range data
  * @returns Promise containing songs, language counts, and max vocal range
- * @throws {ApiError} When the songDB cannot be fetched or parsed
+ * @throws {ApiException} When the songDB cannot be fetched or parsed
  */
 export const fetchSongDB = async (): Promise<SongDB> => {
-  const songDBData = await makeApiRequest<any[]>(
-    () => fetch(fileURL("/songDB.json")),
-    "Failed to fetch songDB"
-  );
+  const songDBData = await (await fetch(fileURL("/songDB.json"))).json();
   const songs = songDBData.map((d) => new SongData(d));
 
   const languages: LanguageCount = songs
@@ -29,25 +41,22 @@ export const fetchSongDB = async (): Promise<SongDB> => {
     }, {});
 
   const songRanges = songs.map((s) => s.range?.semitones).filter(Boolean);
-  const songDB = {
+  return {
     maxRange: Math.max(...songRanges),
     languages,
     songs,
   };
-  return songDB;
 };
 
 /**
  * Fetches the song database using admin API
  * @param adminApi - The admin API client
  * @returns Promise containing songs, language counts, and max vocal range
- * @throws {ApiError} When the songDB cannot be fetched or parsed
+ * @throws {ApiException} When the songDB cannot be fetched or parsed
  */
 export const fetchSongDBAdmin = async (adminApi: AdminApi): Promise<SongDB> => {
-  const response = await adminApi.songDB.$get();
-  await handleApiResponse(response);
-  const songDBData = await response.json();
-  const songs = songDBData.songs.map((d) => new SongData(d));
+  const json = await handleApiResponse<SongDataDB>(await adminApi.songs.$get());
+  const songs = json.songs.map((d) => new SongData(d));
 
   const languages: LanguageCount = songs
     .map((s) => s.language)
@@ -57,25 +66,23 @@ export const fetchSongDBAdmin = async (adminApi: AdminApi): Promise<SongDB> => {
     }, {});
 
   const songRanges = songs.map((s) => s.range?.semitones).filter(Boolean);
-  const songDB = {
+  return {
     maxRange: Math.max(...songRanges),
     languages,
     songs,
   };
-  return songDB;
 };
 
 /**
  * Fetches the illustration prompt for a specific song
  * @param songId - The ID of the song
  * @returns Promise containing the prompt response
- * @throws {ApiError} When the prompt cannot be loaded
+ * @throws {ApiException} When the prompt cannot be loaded or parsed
  */
 export const fetchIllustrationPrompt = async (songId: string): Promise<any> => {
   const response = await fetch(SongData.promptURL(songId));
-  await handleApiResponse(response);
+  await handleApiResponse(response); // validate JSend
   const promptContent = await response.text();
-  // TODO: this probably is not always the correct prompt...
   return yaml.load(promptContent)[0].response;
 };
 
@@ -84,14 +91,16 @@ export const fetchIllustrationPrompt = async (songId: string): Promise<any> => {
  * @param songId - The ID of the song to fetch
  * @param songDB - The complete song database for illustration lookup
  * @returns Promise containing the parsed song data
- * @throws {ApiError} When song data cannot be fetched
+ * @throws {ApiException} When song data cannot be fetched
  */
-export const fetchSong = async (songId: string, songDB: SongDB): Promise<SongData> => {
+export const fetchSong = async (
+  songId: string,
+  songDB: SongDB
+): Promise<SongData> => {
   const response = await fetch(SongData.chordproURL(songId));
   await handleApiResponse(response);
   const songRawData = await response.text();
 
-  // TODO: this should be preparsed...
   const songIdsAndIllustrations = songDB.songs.map((s) => ({
     id: SongData.id(s.title, s.artist),
     availableIllustrations: s.illustrationData.availableIllustrations,
@@ -113,12 +122,13 @@ export const fetchSong = async (songId: string, songDB: SongDB): Promise<SongDat
  * Fetches all pending changes requiring admin review
  * @param adminApi - The admin API client
  * @returns Promise containing the list of changes
- * @throws {ApiError} When changes cannot be fetched
+ * @throws {ApiException} When changes cannot be fetched
  */
-export const fetchChangesAdmin = async (adminApi: AdminApi): Promise<SongChangeDB> => {
-  const response = await adminApi.changes.$get();
-  await handleApiResponse(response);
-  return response.json();
+export const fetchChangesAdmin = async (
+  adminApi: AdminApi
+): Promise<SongChangeDB[]> => {
+  const response = await makeApiRequest(adminApi.changes.$get);
+  return response.changes;
 };
 
 /**
@@ -127,30 +137,35 @@ export const fetchChangesAdmin = async (adminApi: AdminApi): Promise<SongChangeD
  * @param id - The change ID to verify
  * @param verified - Whether to verify (true) or reject (false) the change
  * @returns Promise containing the verification result
- * @throws {ApiError} When verification fails
+ * @throws {ApiException} When verification fails
  */
 export const verifyChange = async (
-  adminApi: AdminApi, 
-  id: string, 
+  adminApi: AdminApi,
+  id: string,
   verified: boolean
 ): Promise<any> => {
-  const response = await adminApi.change.verify.$post({
-    json: { id, verified }
-  });
-  await handleApiResponse(response);
-  return response.json();
+  const response = await makeApiRequest(() =>
+    adminApi.change.verify.$post({ json: { id, verified } })
+  );
+  return response;
 };
 
 /**
  * Fetches all illustrations with song information
  * @param adminApi - The admin API client
  * @returns Promise containing the list of illustrations
- * @throws {ApiError} When illustrations cannot be fetched
+ * @throws {ApiException} When illustrations cannot be fetched
  */
-export const fetchIllustrationsAdmin = async (adminApi: AdminApi): Promise<any> => {
-  const response = await adminApi.illustrations.$get();
-  await handleApiResponse(response);
-  return response.json();
+export const fetchIllustrationsAdmin = async (
+  adminApi: AdminApi
+): Promise<SongIllustrationData[]> => {
+  const illustrations = (await makeApiRequest(adminApi.illustrations.$get))
+    .illustrations;
+  for (const i in illustrations) {
+    illustrations[i].createdAt = new Date(illustrations[i].createdAt);
+    illustrations[i].updatedAt = new Date(illustrations[i].updatedAt);
+  }
+  return illustrations;
 };
 
 /**
@@ -158,17 +173,16 @@ export const fetchIllustrationsAdmin = async (adminApi: AdminApi): Promise<any> 
  * @param adminApi - The admin API client
  * @param illustrationData - The illustration data to create
  * @returns Promise containing the creation result
- * @throws {ApiError} When illustration creation fails
+ * @throws {ApiException} When illustration creation fails
  */
 export const createIllustration = async (
-  adminApi: AdminApi, 
-  illustrationData: any
+  adminApi: AdminApi,
+  illustrationData: IllustrationCreateSchema
 ): Promise<any> => {
-  const response = await adminApi.illustration.create.$post({
-    json: illustrationData
-  });
-  await handleApiResponse(response);
-  return response.json();
+  const response = await makeApiRequest(() =>
+    adminApi.illustration.create.$post({ json: illustrationData })
+  );
+  return response;
 };
 
 /**
@@ -176,17 +190,16 @@ export const createIllustration = async (
  * @param adminApi - The admin API client
  * @param illustrationData - The illustration data to update (must include id)
  * @returns Promise containing the update result
- * @throws {ApiError} When illustration update fails
+ * @throws {ApiException} When illustration update fails
  */
 export const updateIllustration = async (
-  adminApi: AdminApi, 
-  illustrationData: any
+  adminApi: AdminApi,
+  illustrationData: IllustrationModifySchema
 ): Promise<any> => {
-  const response = await adminApi.illustration.modify.$post({
-    json: illustrationData
-  });
-  await handleApiResponse(response);
-  return response.json();
+  const response = await makeApiRequest(() =>
+    adminApi.illustration.modify.$post({ json: illustrationData })
+  );
+  return response;
 };
 
 /**
@@ -194,15 +207,14 @@ export const updateIllustration = async (
  * @param adminApi - The admin API client
  * @param id - The ID of the illustration to delete
  * @returns Promise containing the deletion result
- * @throws {ApiError} When illustration deletion fails
+ * @throws {ApiException} When illustration deletion fails
  */
 export const deleteIllustration = async (
-  adminApi: AdminApi, 
+  adminApi: AdminApi,
   id: string
 ): Promise<any> => {
-  const response = await adminApi.illustration[":id"].$delete({
-    param: { id }
-  });
-  await handleApiResponse(response);
-  return response.json();
+  const response = await makeApiRequest(() =>
+    adminApi.illustration[":id"].$delete({ param: { id } })
+  );
+  return response;
 };

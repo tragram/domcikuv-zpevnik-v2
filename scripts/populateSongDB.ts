@@ -114,14 +114,15 @@ async function insertSongRecord(db: DrizzleD1Database, entry: SongEntry, id: str
     title: entry.title,
     artist: entry.artist,
     key: entry.key ?? "C",
-    language: entry.language ?? "unknown",
-    chordproURL: `/songs/chordpro/${entry.chordproFile}`,
+    createdAt: entry.dateAdded ? parseDateToTimestamp(entry.dateAdded) : now,
+    modifiedAt: now,
     startMelody: entry.startMelody || null,
+    language: entry.language ?? "unknown",
     tempo: entry.tempo || null,
     capo: entry.capo ? parseInt(entry.capo.toString()) : 0,
     range: entry.range || null,
-    dateAdded: entry.dateAdded ? parseDateToTimestamp(entry.dateAdded) : now,
-    dateModified: now,
+    chordproURL: `/songs/chordpro/${entry.chordproFile}`,
+    hidden: false
   };
 
   await db
