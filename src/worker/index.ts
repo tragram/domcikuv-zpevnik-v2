@@ -7,6 +7,8 @@ import profileApp from "./api/userProfile";
 import authApp from "./api/auth";
 import editorApp from "./api/editor";
 import adminApp from "./api/admin/admin";
+import { user } from "src/lib/db/schema/auth.schema";
+import { eq } from "drizzle-orm";
 
 const app = buildApp();
 
@@ -19,6 +21,10 @@ export const route = app
     if (session?.session) {
       c.set("SESSION", session.session);
       c.set("USER", session.user);
+      await db
+        .update(user)
+        .set({ lastLogin: new Date() })
+        .where(eq(user.id, session.user.id));
     }
     return next();
   })

@@ -25,7 +25,6 @@ export const user = sqliteTable("user", {
   isFavoritesPublic: integer("is_favorites_public", { mode: "boolean" })
     .default(false)
     .notNull(),
-  // TODO: this is not updated
   lastLogin: integer("last_login", { mode: "timestamp" })
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
