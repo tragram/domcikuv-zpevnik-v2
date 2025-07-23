@@ -218,20 +218,20 @@ class SongData {
       );
 
       // Log warnings for any discrepancies
-      if (missingFields.length > 0) {
-        console.warn(
-          `Warning: SongMetadata is missing expected fields: ${missingFields.join(
-            ", "
-          )}`
-        );
-      }
-      if (extraFields.length > 0) {
-        console.warn(
-          `Warning: SongMetadata has extra fields not in metadata lists: ${extraFields.join(
-            ", "
-          )}`
-        );
-      }
+      // if (missingFields.length > 0) {
+      //   console.warn(
+      //     `Warning: SongMetadata is missing expected fields: ${missingFields.join(
+      //       ", "
+      //     )}`
+      //   );
+      // }
+      // if (extraFields.length > 0) {
+      //   console.warn(
+      //     `Warning: SongMetadata has extra fields not in metadata lists: ${extraFields.join(
+      //       ", "
+      //     )}`
+      //   );
+      // }
     }
   }
 

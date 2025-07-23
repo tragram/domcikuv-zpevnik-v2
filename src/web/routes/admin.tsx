@@ -34,7 +34,6 @@ export const Route = createFileRoute("/admin")({
         queryFn: () => fetchChangesAdmin(context.api.admin),
         staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
       }),
-      // Add users data fetching
       context.queryClient.fetchQuery({
         queryKey: ["usersAdmin"],
         queryFn: () => fetchUsersAdmin(context.api.admin.users, { limit: 20, offset: 0 }),

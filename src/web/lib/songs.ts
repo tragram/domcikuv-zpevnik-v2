@@ -5,6 +5,7 @@ import { fileURL } from "./utils";
 import { guessKey } from "~/features/SongView/utils/songRendering";
 import client from "~/../worker/api-client";
 import { handleApiResponse, makeApiRequest } from "./apiHelpers";
+import { SongChangeDB } from "src/lib/db/schema";
 
 export type AdminApi = typeof client.api.admin;
 
@@ -114,7 +115,7 @@ export const fetchSong = async (songId: string, songDB: SongDB): Promise<SongDat
  * @returns Promise containing the list of changes
  * @throws {ApiError} When changes cannot be fetched
  */
-export const fetchChangesAdmin = async (adminApi: AdminApi): Promise<any> => {
+export const fetchChangesAdmin = async (adminApi: AdminApi): Promise<SongChangeDB> => {
   const response = await adminApi.changes.$get();
   await handleApiResponse(response);
   return response.json();
