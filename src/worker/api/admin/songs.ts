@@ -56,6 +56,8 @@ export const songRoutes = buildApp()
     "/song/modify",
     zValidator("json", songModificationSchema),
     async (c) => {
+      // TODO: this should add a song version
+      // TODO: shouldn't this be a put method?
       try {
         const modifiedSong = c.req.valid("json");
         const db = drizzle(c.env.DB);

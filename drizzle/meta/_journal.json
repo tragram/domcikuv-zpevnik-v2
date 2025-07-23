@@ -64,6 +64,13 @@
       "when": 1753273905280,
       "tag": "0008_lonely_hobgoblin",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1753304022802,
+      "tag": "0009_acoustic_gunslinger",
+      "breakpoints": true
     }
   ]
 }

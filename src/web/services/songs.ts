@@ -6,7 +6,7 @@ import { guessKey } from "~/features/SongView/utils/songRendering";
 import client from "~/../worker/api-client";
 import { handleApiResponse, makeApiRequest, ApiException } from "./apiHelpers";
 import {
-  SongChangeDB,
+  SongVersionDB,
   SongDataDB,
   SongIllustrationDB,
 } from "src/lib/db/schema";
@@ -127,33 +127,33 @@ export const fetchSong = async (
 };
 
 /**
- * Fetches all pending changes requiring admin review
+ * Fetches all pending versions requiring admin review
  * @param adminApi - The admin API client
- * @returns Promise containing the list of changes
- * @throws {ApiException} When changes cannot be fetched
+ * @returns Promise containing the list of versions
+ * @throws {ApiException} When versions cannot be fetched
  */
-export const fetchChangesAdmin = async (
+export const fetchVersionsAdmin = async (
   adminApi: AdminApi
-): Promise<SongChangeDB[]> => {
-  const response = await makeApiRequest(adminApi.changes.$get);
-  return response.changes;
+): Promise<SongVersionDB[]> => {
+  const response = await makeApiRequest(adminApi.versions.$get);
+  return response.versions;
 };
 
 /**
- * Verifies or rejects a pending change
+ * Verifies or rejects a pending version
  * @param adminApi - The admin API client
- * @param id - The change ID to verify
- * @param verified - Whether to verify (true) or reject (false) the change
+ * @param id - The version ID to verify
+ * @param verified - Whether to verify (true) or reject (false) the version
  * @returns Promise containing the verification result
  * @throws {ApiException} When verification fails
  */
-export const verifyChange = async (
+export const verifyVersion = async (
   adminApi: AdminApi,
   id: string,
   verified: boolean
 ): Promise<any> => {
   const response = await makeApiRequest(() =>
-    adminApi.change.verify.$post({ json: { id, verified } })
+    adminApi.version.verify.$post({ json: { id, verified } })
   );
   return response;
 };

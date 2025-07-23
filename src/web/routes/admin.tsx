@@ -3,7 +3,7 @@ import AdminDashboard from "~/features/AdminDashboard/AdminDashboard";
 import { 
   fetchSongDBAdmin, 
   fetchIllustrationsAdmin, 
-  fetchChangesAdmin 
+  fetchVersionsAdmin 
 } from "~/services/songs";
 import { fetchUsersAdmin } from "~/services/users"; // Add this import
 
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/admin")({
     return context;
   },
   loader: async ({ context }) => {
-    const [songDBAdmin, illustrations, changes, users] = await Promise.all([
+    const [songDBAdmin, illustrations, versions, users] = await Promise.all([
       context.queryClient.fetchQuery({
         queryKey: ["songDBAdmin"],
         queryFn: () => fetchSongDBAdmin(context.api.admin),
@@ -30,8 +30,8 @@ export const Route = createFileRoute("/admin")({
         staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
       }),
       context.queryClient.fetchQuery({
-        queryKey: ["changesAdmin"],
-        queryFn: () => fetchChangesAdmin(context.api.admin),
+        queryKey: ["versionsAdmin"],
+        queryFn: () => fetchVersionsAdmin(context.api.admin),
         staleTime: 1000 * 60 * 60 * 24 * 7, // seven days
       }),
       context.queryClient.fetchQuery({
@@ -41,18 +41,18 @@ export const Route = createFileRoute("/admin")({
       })
     ]);
     
-    return { ...context, songDBAdmin, illustrations, changes, users };
+    return { ...context, songDBAdmin, illustrations, versions, users };
   },
   ssr: false,
 });
 
 function Home() {
-  const { songDBAdmin, illustrations, changes, users } = Route.useLoaderData();
+  const { songDBAdmin, illustrations, versions, users } = Route.useLoaderData();
   return (
     <AdminDashboard 
       songDB={songDBAdmin} 
       illustrations={illustrations} 
-      changes={changes.changes}
+      versions={versions}
       users={users}
     />
   );

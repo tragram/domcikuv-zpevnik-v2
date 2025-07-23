@@ -1,43 +1,42 @@
-// admin/changes.ts - Change management routes and validators
 import { z } from "zod/v4";
 import { drizzle } from "drizzle-orm/d1";
-import { song, user, songChange } from "../../../lib/db/schema";
+import { song, user, songVersion } from "../../../lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { buildApp } from "../utils";
 import { zValidator } from "@hono/zod-validator";
 
-// Change validation schemas
-const verifyChangeSchema = z.object({
+// Version validation schemas
+const verifyVersionSchema = z.object({
   id: z.string().uuid("Invalid change ID format"),
   verified: z.boolean(),
 });
 
 export const changeRoutes = buildApp()
-  .get("/changes", async (c) => {
+  .get("/versions", async (c) => {
     try {
       const db = drizzle(c.env.DB);
-      const changes = await db
+      const versions = await db
         .select({
-          id: songChange.id,
-          songId: songChange.songId,
+          id: songVersion.id,
+          songId: songVersion.songId,
           songTitle: song.title,
-          userId: songChange.userId,
+          userId: songVersion.userId,
           userName: user.name,
-          timestamp: songChange.timestamp,
-          chordproURL: songChange.chordproURL,
-          verified: songChange.verified,
+          timestamp: songVersion.timestamp,
+          chordproURL: songVersion.chordproURL,
+          verified: songVersion.verified,
         })
-        .from(songChange)
-        .leftJoin(song, eq(songChange.songId, song.id))
-        .leftJoin(user, eq(songChange.userId, user.id))
-        .orderBy(desc(songChange.timestamp));
+        .from(songVersion)
+        .leftJoin(song, eq(songVersion.songId, song.id))
+        .leftJoin(user, eq(songVersion.userId, user.id))
+        .orderBy(desc(songVersion.timestamp));
 
       return c.json({
         status: "success",
-        data: { changes, count: changes.length },
+        data: { versions, count: versions.length },
       });
     } catch (error) {
-      console.error("Error fetching changes:", error);
+      console.error("Error fetching versions:", error);
       return c.json(
         {
           status: "error",
@@ -49,7 +48,7 @@ export const changeRoutes = buildApp()
     }
   })
 
-  .post("/change/verify", zValidator("json", verifyChangeSchema), async (c) => {
+  .post("/change/verify", zValidator("json", verifyVersionSchema), async (c) => {
     try {
       const { id, verified } = c.req.valid("json");
       const user = c.get("USER");
@@ -67,18 +66,18 @@ export const changeRoutes = buildApp()
       const db = drizzle(c.env.DB);
 
       // Check if change exists
-      const existingChange = await db
-        .select({ id: songChange.id })
-        .from(songChange)
-        .where(eq(songChange.id, id))
+      const existingVersion = await db
+        .select({ id: songVersion.id })
+        .from(songVersion)
+        .where(eq(songVersion.id, id))
         .limit(1);
 
-      if (existingChange.length === 0) {
+      if (existingVersion.length === 0) {
         return c.json(
           {
             status: "fail",
             failData: {
-              illustrationId: "Change not found",
+              illustrationId: "Version not found",
               code: "CHANGE_NOT_FOUND",
             },
           },
@@ -86,15 +85,15 @@ export const changeRoutes = buildApp()
         );
       }
 
-      const verifiedChange = await db
-        .update(songChange)
+      const verifiedVersion = await db
+        .update(songVersion)
         .set({ verified, verifiedAt: new Date(), verifiedByUser: user.id })
-        .where(eq(songChange.id, id))
+        .where(eq(songVersion.id, id))
         .returning();
 
       return c.json({
         status: "success",
-        data: verifiedChange,
+        data: verifiedVersion,
       });
     } catch (error) {
       console.error("Error verifying change:", error);

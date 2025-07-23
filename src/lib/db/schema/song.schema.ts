@@ -46,7 +46,7 @@ export const songIllustration = sqliteTable("songIllustration", {
 
 export type SongIllustrationDB = typeof songIllustration.$inferSelect;
 
-export const songChange = sqliteTable("songChange", {
+export const songVersion = sqliteTable("song_version", {
   id: text("id").primaryKey(),
   songId: text("song_id")
     .notNull()
@@ -65,7 +65,7 @@ export const songChange = sqliteTable("songChange", {
   verifiedByUser: text("verified_by_user").references(() => user.id),
 });
 
-export type SongChangeDB = typeof songChange.$inferInsert;
+export type SongVersionDB = typeof songVersion.$inferInsert;
 
 // Relations for efficient querying
 export const songRelations = relations(song, ({ one, many }) => ({
@@ -77,7 +77,7 @@ export const songRelations = relations(song, ({ one, many }) => ({
   // Get all illustrations for this song
   illustrations: many(songIllustration),
   // Get all changes for this song
-  changes: many(songChange),
+  changes: many(songVersion),
 }));
 
 export const songIllustrationRelations = relations(
@@ -90,13 +90,13 @@ export const songIllustrationRelations = relations(
   })
 );
 
-export const songChangeRelations = relations(songChange, ({ one }) => ({
+export const songVersionRelations = relations(songVersion, ({ one }) => ({
   song: one(song, {
-    fields: [songChange.songId],
+    fields: [songVersion.songId],
     references: [song.id],
   }),
   user: one(user, {
-    fields: [songChange.userId],
+    fields: [songVersion.userId],
     references: [user.id],
   }),
 }));

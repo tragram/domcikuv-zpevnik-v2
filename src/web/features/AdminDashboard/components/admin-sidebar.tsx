@@ -30,9 +30,9 @@ const menuItems = [
     id: "illustrations",
   },
   {
-    title: "Changes",
+    title: "Versions",
     icon: History,
-    id: "changes",
+    id: "versions",
   },
   {
     title: "Users",

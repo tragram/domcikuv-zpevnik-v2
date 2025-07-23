@@ -5,11 +5,11 @@ import { Badge } from "~/components/shadcn-ui/badge"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/shadcn-ui/table"
 import { Button } from "~/components/shadcn-ui/button"
 import { Search, ExternalLink, User, CheckCircle, XCircle } from "lucide-react"
-import { verifyChange } from "~/services/songs"
+import { verifyVersion } from "~/services/songs"
 import { toast } from "sonner";
 import { useRouteContext } from "@tanstack/react-router"
 
-interface SongChange {
+interface SongVersion {
   id: string
   songId: string
   songTitle: string
@@ -20,13 +20,13 @@ interface SongChange {
   verified: boolean
 }
 
-interface ChangesTableProps {
-  initialChanges: SongChange[]
+interface VersionsTableProps {
+  initialVersions: SongVersion[]
 }
 
-export function ChangesTable({ initialChanges }: ChangesTableProps) {
-  const [changes, setChanges] = useState<SongChange[]>(
-    initialChanges.map(change => ({
+export function VersionsTable({ initialVersions }: VersionsTableProps) {
+  const [versions, setVersions] = useState<SongVersion[]>(
+    initialVersions.map(change => ({
       ...change,
       timestamp: new Date(change.timestamp)
     }))
@@ -38,9 +38,9 @@ export function ChangesTable({ initialChanges }: ChangesTableProps) {
 
   const verifyMutation = useMutation({
     mutationFn: ({ id, verified }: { id: string; verified: boolean }) => 
-      verifyChange(api.admin, id, verified),
+      verifyVersion(api.admin, id, verified),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["changesAdmin"] })
+      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] })
       toast({
         title: "Success",
         description: "Change verification updated successfully",
@@ -55,27 +55,27 @@ export function ChangesTable({ initialChanges }: ChangesTableProps) {
     }
   })
 
-  const filteredChanges = changes.filter(
-    (change) =>
-      change.songTitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      change.userName?.toLowerCase().includes(searchTerm.toLowerCase()),
+  const filteredVersions = versions.filter(
+    (version) =>
+      version.songTitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      version.userName?.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  const sortedChanges = filteredChanges.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
+  const sortedVersions = filteredVersions.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
 
   const handleVerifyChange = async (id: string, verified: boolean) => {
     await verifyMutation.mutateAsync({ id, verified })
-    setChanges(changes.map(change => 
+    setVersions(versions.map(change => 
       change.id === id ? { ...change, verified } : change
     ))
   }
 
-  const unverifiedCount = changes.filter(change => !change.verified).length
+  const unverifiedCount = versions.filter(change => !change.verified).length
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">Song Changes</h3>
+        <h3 className="text-lg font-medium">Song Versions</h3>
         <div className="flex gap-2">
           {unverifiedCount > 0 && (
             <Badge variant="destructive" className="text-sm">
@@ -83,7 +83,7 @@ export function ChangesTable({ initialChanges }: ChangesTableProps) {
             </Badge>
           )}
           <Badge variant="outline" className="text-sm">
-            {changes.length} total changes
+            {versions.length} total versions
           </Badge>
         </div>
       </div>
@@ -91,7 +91,7 @@ export function ChangesTable({ initialChanges }: ChangesTableProps) {
       <div className="flex items-center space-x-2">
         <Search className="h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Search changes..."
+          placeholder="Search versions..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="max-w-sm"
@@ -111,7 +111,7 @@ export function ChangesTable({ initialChanges }: ChangesTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sortedChanges.map((change) => (
+            {sortedVersions.map((change) => (
               <TableRow key={change.id}>
                 <TableCell className="font-medium">
                   {change.songTitle || "Unknown Song"}
@@ -177,10 +177,10 @@ export function ChangesTable({ initialChanges }: ChangesTableProps) {
                 </TableCell>
               </TableRow>
             ))}
-            {sortedChanges.length === 0 && (
+            {sortedVersions.length === 0 && (
               <TableRow>
                 <TableCell colSpan={6} className="text-center text-muted-foreground py-8">
-                  No changes found
+                  No versions found
                 </TableCell>
               </TableRow>
             )}

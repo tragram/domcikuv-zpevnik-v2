@@ -5,7 +5,7 @@ import { eq } from "drizzle-orm";
 import { buildApp } from "../utils";
 import { userRoutes } from "./users";
 import { songRoutes } from "./songs";
-import { changeRoutes } from "./changes";
+import { changeRoutes } from "./versions";
 import { illustrationRoutes } from "./illustrations";
 
 const adminMiddleware = async (c: Context, next: Next) => {

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { AdminSidebar } from "./components/admin-sidebar";
 import { UsersTable } from "./components/users-table";
-import { ChangesTable } from "./components/changes-table";
+import { VersionsTable } from "./components/versions-table";
 import { SidebarProvider, SidebarInset } from "~/components/shadcn-ui/sidebar";
 import { SongDB } from "~/types/types";
 import SongsTable from "./components/songs-table";
 import { IllustrationApiResponse } from "src/worker/api/admin/illustrations";
 import { IllustrationsTable } from "./components/illustrations-table/illustrations-table";
 
-interface SongChange {
+interface SongVersion {
   id: string;
   songId: string;
   songTitle: string;
@@ -47,26 +47,26 @@ interface UsersResponse {
 interface AdminDashboardProps {
   songDB: SongDB;
   illustrations: IllustrationApiResponse[];
-  changes: SongChange[];
+  versions: SongVersion[];
   users: UsersResponse;
 }
 
-export default function AdminDashboard({ 
-  songDB, 
-  illustrations, 
-  changes, 
-  users 
+export default function AdminDashboard({
+  songDB,
+  illustrations,
+  versions,
+  users,
 }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState("illustrations");
-  
+
   const renderContent = () => {
     switch (activeTab) {
       case "songs":
         return <SongsTable songDB={songDB} />;
       case "illustrations":
         return <IllustrationsTable illustrations={illustrations} />;
-      case "changes":
-        return <ChangesTable initialChanges={changes} />;
+      case "versions":
+        return <VersionsTable initialVersions={versions} />;
       case "users":
         return <UsersTable initialUsers={users} />;
       default:
