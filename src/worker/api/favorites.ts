@@ -40,17 +40,22 @@ const favoritesApp = buildApp()
 
       const { songId } = c.req.valid("json");
       const db = drizzle(c.env.DB);
-
+      console.log("favorites post", {
+        userId: userData.id,
+        songId,
+      },await db.select().from(userFavoriteSongs));
+      
       await db.insert(userFavoriteSongs).values({
         userId: userData.id,
         songId,
       });
 
       return c.json({
-    status : "success",
-    data : null
-})
+        status: "success",
+        data: null,
+      });
     } catch (error) {
+      console.log(error)
       return c.json(
         {
           success: false,
@@ -83,9 +88,9 @@ const favoritesApp = buildApp()
         );
 
       return c.json({
-    status : "success",
-    data : null
-})
+        status: "success",
+        data: null,
+      });
     } catch (error) {
       return c.json(
         {
@@ -97,6 +102,7 @@ const favoritesApp = buildApp()
     }
   })
   .get("/publicSongbooks", async (c) => {
+    // TODO: remove endpoint when songDB is fully backend-based
     async function getPublicSongbooks(db: DrizzleD1Database) {
       return await db
         .select({

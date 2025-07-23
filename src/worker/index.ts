@@ -9,6 +9,7 @@ import editorApp from "./api/editor";
 import adminApp from "./api/admin/admin";
 import { user } from "src/lib/db/schema/auth.schema";
 import { eq } from "drizzle-orm";
+import songDBRoutes from "./api/songDB";
 
 const app = buildApp();
 
@@ -29,6 +30,7 @@ export const route = app
     return next();
   })
   .route("/auth", authApp)
+  .route("/songs", songDBRoutes)
   .route("/favorites", favoritesApp)
   .route("/editor", editorApp)
   .route("/profile", profileApp)
