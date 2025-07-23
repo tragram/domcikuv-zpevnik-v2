@@ -6,7 +6,7 @@ import favoritesApp from "./api/favorites";
 import profileApp from "./api/userProfile";
 import authApp from "./api/auth";
 import editorApp from "./api/editor";
-import adminApp from "./api/admin";
+import adminApp from "./api/admin/admin";
 
 const app = buildApp();
 
