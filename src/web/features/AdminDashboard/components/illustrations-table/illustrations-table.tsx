@@ -36,6 +36,9 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
       illustration.song?.title
         ?.toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
+      illustration.song?.artist
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
       illustration.promptModel
         .toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
