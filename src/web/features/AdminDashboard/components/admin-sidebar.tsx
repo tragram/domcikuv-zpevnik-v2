@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
+  SidebarRail,
 } from "~/components/shadcn-ui/sidebar"
 
 interface AdminSidebarProps {
@@ -43,11 +44,16 @@ const menuItems = [
 
 export function AdminSidebar({ activeTab, setActiveTab }: AdminSidebarProps) {
   return (
-    <Sidebar>
+    <Sidebar collapsible="offcanvas">
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-4 py-2">
-          <Database className="h-6 w-6" />
-          <span className="font-semibold">Song DB Admin</span>
+        <div className="flex items-center gap-2 px-2 py-2">
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground bg-primary">
+            <Database className="size-4" />
+          </div>
+          <div className="flex flex-col gap-0.5 leading-none">
+            <span className="font-semibold">Admin Panel</span>
+            <span className="text-xs text-sidebar-foreground/70">Domčíkův Zpěvník</span>
+          </div>
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -57,8 +63,11 @@ export function AdminSidebar({ activeTab, setActiveTab }: AdminSidebarProps) {
             <SidebarMenu>
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton onClick={() => setActiveTab(item.id)} isActive={activeTab === item.id}>
-                    <item.icon className="h-4 w-4" />
+                  <SidebarMenuButton
+                    onClick={() => setActiveTab(item.id)}
+                    isActive={activeTab === item.id}
+                  >
+                    <item.icon className="size-4" />
                     <span>{item.title}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -67,6 +76,7 @@ export function AdminSidebar({ activeTab, setActiveTab }: AdminSidebarProps) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarRail />
     </Sidebar>
   )
 }

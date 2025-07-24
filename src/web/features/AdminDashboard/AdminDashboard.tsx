@@ -1,11 +1,24 @@
+"use client";
+
 import { useState } from "react";
 import { AdminSidebar } from "./components/admin-sidebar";
 import { UsersTable } from "./components/users-table";
 import { VersionsTable } from "./components/versions-table";
-import { SidebarProvider, SidebarInset } from "~/components/shadcn-ui/sidebar";
-import { SongDB } from "~/types/types";
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger,
+} from "~/components/shadcn-ui/sidebar";
+import { Separator } from "~/components/shadcn-ui/separator";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "~/components/shadcn-ui/breadcrumb";
+import type { SongDB } from "~/types/types";
 import SongsTable from "./components/songs-table";
-import { IllustrationApiResponse } from "src/worker/api/admin/illustrations";
+import type { IllustrationApiResponse } from "src/worker/api/admin/illustrations";
 import { IllustrationsTable } from "./components/illustrations-table/illustrations-table";
 
 interface SongVersion {
@@ -59,6 +72,21 @@ export default function AdminDashboard({
 }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState("illustrations");
 
+  const getTabTitle = (tab: string) => {
+    switch (tab) {
+      case "songs":
+        return "Songs";
+      case "illustrations":
+        return "Illustrations";
+      case "versions":
+        return "Versions";
+      case "users":
+        return "Users";
+      default:
+        return "Dashboard";
+    }
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case "songs":
@@ -78,14 +106,20 @@ export default function AdminDashboard({
     <SidebarProvider>
       <AdminSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       <SidebarInset>
-        <div className="flex-1 space-y-4 p-8 pt-6">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-3xl font-bold tracking-tight">
-              Admin Dashboard
-            </h2>
-          </div>
-          {renderContent()}
-        </div>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbPage className="font-semibold">
+                  Admin Dashboard - {getTabTitle(activeTab)}
+                </BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </header>
+        <div className="p-2 md:p-4 w-full">{renderContent()}</div>
       </SidebarInset>
     </SidebarProvider>
   );

@@ -1,7 +1,5 @@
-// illustrations-table.tsx
-import type React from "react";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "~/components/shadcn-ui/button";
 import { Input } from "~/components/shadcn-ui/input";
 import {
@@ -13,7 +11,7 @@ import {
 } from "~/components/shadcn-ui/dialog";
 import { Plus, Search } from "lucide-react";
 import { toast } from "sonner";
-import { useRouteContext, useRouter } from "@tanstack/react-router";
+import { useRouteContext } from "@tanstack/react-router";
 import { createIllustration } from "~/services/songs";
 import {
   IllustrationApiResponse,
@@ -46,7 +44,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
   );
 
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
-  
+
   const createMutation = useMutation({
     mutationFn: async (data: IllustrationCreateSchema) => {
       return await createIllustration(adminApi, data);
@@ -103,9 +101,9 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
   );
 
   return (
-    <div className="space-y-4 p-6">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="space-y-4 p-4 w-full">
+      <div className="flex flex-col sm:flex-row items-center justify-between">
+        <div className="text-center sm:text-left">
           <h3 className="text-lg font-medium">Song Illustrations</h3>
           <p className="text-sm text-muted-foreground">
             {sortedGroups.length} songs • {filteredIllustrations.length}{" "}
@@ -132,14 +130,14 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
         </Dialog>
       </div>
 
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center space-x-2 flex-1">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center space-x-2 flex-1 w-full">
           <Search className="h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search songs or illustrations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="max-w-sm"
+            className="text-xs sm:text-sm md:text-base"
           />
         </div>
         <div className="flex gap-2">

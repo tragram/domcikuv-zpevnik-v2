@@ -115,7 +115,7 @@ export function IllustrationCard({
     <>
       <div
         className={cn(
-          "border-2 rounded-lg p-3 space-y-2",
+          "border-2 rounded-lg p-1 md:p-3 space-y-2",
           illustration.isActive ? "border-primary" : ""
         )}
       >
@@ -133,10 +133,15 @@ export function IllustrationCard({
             {illustration.promptModel}
           </p>
           <p className="text-xs text-muted-foreground">
+            <span className="font-medium">Prompt ID:</span>{" "}
+            {illustration.promptId}
+          </p>
+          <p className="text-xs text-muted-foreground">
             <span className="font-medium">Image:</span>{" "}
             {illustration.imageModel}
           </p>
           <p className="text-xs text-muted-foreground">
+            <span className="font-medium">Created:</span>{" "}
             {illustration.createdAt.toLocaleDateString()}
           </p>
         </div>
