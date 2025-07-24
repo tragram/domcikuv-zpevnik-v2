@@ -17,6 +17,7 @@ export const Route = createFileRoute("/admin")({
     }
     return context;
   },
+  loader: ({ context }) => context,
   // Remove loader entirely for mutable data
   ssr: false,
 });

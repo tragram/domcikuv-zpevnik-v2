@@ -44,7 +44,7 @@ export function IllustrationForm({
           value={formData.songId}
           onChange={(e) => setFormData({ ...formData, songId: e.target.value })}
           required
-          disabled={!!illustration} // Don't allow changing song ID when editing
+          disabled
         />
       </div>
 

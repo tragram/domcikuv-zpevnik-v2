@@ -1,24 +1,13 @@
+import { getRouteApi } from "@tanstack/react-router";
+import { Search } from "lucide-react";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { IllustrationApiResponse } from "src/worker/api/admin/illustrations";
 import { Button } from "~/components/shadcn-ui/button";
 import { Input } from "~/components/shadcn-ui/input";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "~/components/shadcn-ui/dialog";
-import { Plus, Search } from "lucide-react";
-import { toast } from "sonner";
-import { useRouteContext } from "@tanstack/react-router";
-import { createIllustration } from "~/services/songs";
-import {
-  IllustrationApiResponse,
-  IllustrationCreateSchema,
-} from "src/worker/api/admin/illustrations";
-import { SongIllustrationsGroup } from "./illustration-group";
-import { IllustrationForm } from "./illustration-form";
+  SongIllustrationsGroup,
+  SongWithIllustrations,
+} from "./illustration-group";
 
 interface IllustrationsTableProps {
   illustrations: IllustrationApiResponse[];
@@ -26,9 +15,11 @@ interface IllustrationsTableProps {
 
 export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
+  // TODO: this will change when songDB source changes
+  const { songDB } = getRouteApi("/admin").useLoaderData();
+  // TODO: separate search for songs and illustrations
   const filteredIllustrations = illustrations.filter(
     (illustration) =>
       illustration.song?.title
@@ -43,31 +34,6 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
       illustration.imageModel.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
-
-  const createMutation = useMutation({
-    mutationFn: async (data: IllustrationCreateSchema) => {
-      return await createIllustration(adminApi, data);
-    },
-    onSuccess: () => {
-      toast.success("Illustration created successfully");
-      setIsDialogOpen(false);
-    },
-    onError: () => {
-      toast.error("Failed to create illustration");
-    },
-  });
-
-  const handleCreateIllustration = async (
-    illustrationData: IllustrationCreateSchema
-  ) => {
-    try {
-      await createMutation.mutateAsync(illustrationData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const toggleGroup = (songId: string) => {
     const newExpanded = new Set(expandedGroups);
     if (newExpanded.has(songId)) {
@@ -78,28 +44,31 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
     setExpandedGroups(newExpanded);
   };
 
-  // Group illustrations by songId
-  const groupedIllustrations = filteredIllustrations.reduce(
-    (groups, illustration) => {
-      const songId = illustration.songId;
-      if (!groups[songId]) {
-        groups[songId] = [];
-      }
-      groups[songId].push(illustration);
-      return groups;
-    },
-    {} as Record<string, IllustrationApiResponse[]>
+  const groupedIllustrations = songDB.songs.reduce((acc, s) => {
+    acc[s.id] = {
+      song: {
+        title: s.title,
+        artist: s.artist,
+      },
+      illustrations: [],
+    } as SongWithIllustrations;
+
+    return acc;
+  }, {} as Record<string, SongWithIllustrations>);
+
+  illustrations.forEach((il) =>
+    groupedIllustrations[il.songId].illustrations.push(il)
   );
 
   // Sort groups by song title
   const sortedGroups = Object.entries(groupedIllustrations).sort(
-    ([, illustrationsA], [, illustrationsB]) => {
+    ([, songA], [, songB]) => {
       const activeSum = (illustrations: IllustrationApiResponse[]) =>
         illustrations
           .map((i) => i.isActive)
           .reduce((a: number, c: boolean) => a + Number(c), 0);
-      const activeA = activeSum(illustrationsA);
-      const activeB = activeSum(illustrationsB);
+      const activeA = activeSum(songA.illustrations);
+      const activeB = activeSum(songB.illustrations);
       if (activeA + activeB !== 0) {
         if (activeA === 0) {
           return -1;
@@ -108,9 +77,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
           return 1;
         }
       }
-      return illustrationsA[0].song.title.localeCompare(
-        illustrationsB[0].song.title
-      );
+      return songA.song.title.localeCompare(songB.song.title);
     }
   );
 
@@ -124,24 +91,6 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
             illustrations
           </p>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Illustration
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>Add New Illustration</DialogTitle>
-            </DialogHeader>
-            <IllustrationForm
-              illustration={null}
-              onSave={handleCreateIllustration}
-              isLoading={createMutation.isPending}
-            />
-          </DialogContent>
-        </Dialog>
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -175,10 +124,10 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
       </div>
 
       <div className="space-y-2">
-        {sortedGroups.map(([songId, illustrations]) => (
+        {sortedGroups.map(([songId, song]) => (
           <SongIllustrationsGroup
             key={songId}
-            illustrations={illustrations}
+            song={song}
             isExpanded={expandedGroups.has(songId)}
             onToggleExpanded={() => toggleGroup(songId)}
           />
