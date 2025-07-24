@@ -47,6 +47,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
   const groupedIllustrations = songDB.songs.reduce((acc, s) => {
     acc[s.id] = {
       song: {
+        id: s.id,
         title: s.title,
         artist: s.artist,
       },

@@ -10,7 +10,7 @@ import { Label } from "~/components/shadcn-ui/label";
 import { Switch } from "~/components/shadcn-ui/switch";
 
 interface IllustrationFormProps {
-  illustration: IllustrationApiResponse | null;
+  illustration: Partial<IllustrationApiResponse>;
   onSave: (data: IllustrationCreateSchema) => void;
   isLoading?: boolean;
 }

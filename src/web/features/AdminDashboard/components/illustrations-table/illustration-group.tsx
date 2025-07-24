@@ -1,6 +1,14 @@
-import type React from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
+import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import {
+  IllustrationApiResponse,
+  IllustrationCreateSchema,
+} from "src/worker/api/admin/illustrations";
 import { Badge } from "~/components/shadcn-ui/badge";
+import { Button } from "~/components/shadcn-ui/button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -13,22 +21,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/shadcn-ui/dialog";
-import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { cn } from "~/lib/utils";
-import { IllustrationCard } from "./illustration-card";
-import {
-  IllustrationApiResponse,
-  IllustrationCreateSchema,
-} from "src/worker/api/admin/illustrations";
-import { Button } from "~/components/shadcn-ui/button";
-import { useMutation } from "@tanstack/react-query";
-import { useRouteContext } from "@tanstack/react-router";
-import { toast } from "sonner";
 import { createIllustration } from "~/services/songs";
+import { IllustrationCard } from "./illustration-card";
 import { IllustrationForm } from "./illustration-form";
 
 export interface SongWithIllustrations {
   song: {
+    id: string;
     title: string;
     artist: string;
   };
@@ -165,7 +165,7 @@ export function SongIllustrationsGroup({
                     <DialogTitle>Add New Illustration</DialogTitle>
                   </DialogHeader>
                   <IllustrationForm
-                    illustration={null}
+                    illustration={{ songId: song.song.id }}
                     onSave={handleCreateIllustration}
                     isLoading={createMutation.isPending}
                   />
