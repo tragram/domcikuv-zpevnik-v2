@@ -1,4 +1,3 @@
-
 import type React from "react";
 import { useState } from "react";
 import { Badge } from "~/components/shadcn-ui/badge";
@@ -30,12 +29,18 @@ export function SongIllustrationsGroup({
   onToggleExpanded,
 }: SongIllustrationsGroupProps) {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-
+  const someActive =
+    illustrations.map((i) => i.isActive).reduce((a, c) => a + Number(c), 0) > 0;
   return (
     <>
       <Collapsible open={isExpanded} onOpenChange={onToggleExpanded}>
         <CollapsibleTrigger className="w-full">
-          <div className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors">
+          <div
+            className={cn(
+              "flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors",
+              someActive ? "" : "border-red-900 border-2"
+            )}
+          >
             <div className="flex items-center gap-3 flex-1">
               {isExpanded ? (
                 <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0" />
@@ -81,6 +86,11 @@ export function SongIllustrationsGroup({
             </div>
 
             <div className="flex items-center gap-2 flex-shrink-0">
+              {!someActive && (
+                <Badge variant="secondary" className="text-xs bg-red-900">
+                  none active
+                </Badge>
+              )}
               <Badge variant="secondary" className="text-xs">
                 {illustrations.length} total
               </Badge>
@@ -88,7 +98,7 @@ export function SongIllustrationsGroup({
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="px-3 pb-3">
+          <div className="px-1 md:px-3 pb-3">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
               {illustrations.map((illustration) => (
                 <IllustrationCard
@@ -103,7 +113,10 @@ export function SongIllustrationsGroup({
       </Collapsible>
 
       {previewImage && (
-        <Dialog open={!!previewImage} onOpenChange={() => setPreviewImage(null)}>
+        <Dialog
+          open={!!previewImage}
+          onOpenChange={() => setPreviewImage(null)}
+        >
           <DialogContent className="max-w-3xl">
             <DialogHeader>
               <DialogTitle>Image Preview</DialogTitle>
