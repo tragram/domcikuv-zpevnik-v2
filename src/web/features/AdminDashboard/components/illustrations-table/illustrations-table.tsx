@@ -93,10 +93,24 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
 
   // Sort groups by song title
   const sortedGroups = Object.entries(groupedIllustrations).sort(
-    ([, a], [, b]) => {
-      const titleA = a[0]?.song.title || "Unknown Song";
-      const titleB = b[0]?.song.title || "Unknown Song";
-      return titleA.localeCompare(titleB);
+    ([, illustrationsA], [, illustrationsB]) => {
+      const activeSum = (illustrations: IllustrationApiResponse[]) =>
+        illustrations
+          .map((i) => i.isActive)
+          .reduce((a: number, c: boolean) => a + Number(c), 0);
+      const activeA = activeSum(illustrationsA);
+      const activeB = activeSum(illustrationsB);
+      if (activeA + activeB !== 0) {
+        if (activeA === 0) {
+          return -1;
+        }
+        if (activeB === 0) {
+          return 1;
+        }
+      }
+      return illustrationsA[0].song.title.localeCompare(
+        illustrationsB[0].song.title
+      );
     }
   );
 
