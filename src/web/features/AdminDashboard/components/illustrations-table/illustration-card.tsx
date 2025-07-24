@@ -1,6 +1,6 @@
 import type React from "react";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "~/components/shadcn-ui/button";
 import { Badge } from "~/components/shadcn-ui/badge";
 import {
@@ -11,11 +11,12 @@ import {
 } from "~/components/shadcn-ui/dialog";
 import { Edit, Eye, ExternalLink, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { useRouteContext } from "@tanstack/react-router";
+import { useRouteContext, useRouter } from "@tanstack/react-router";
 import { deleteIllustration, updateIllustration } from "~/services/songs";
 import { cn } from "~/lib/utils";
 import {
   IllustrationApiResponse,
+  IllustrationCreateSchema,
   IllustrationModifySchema,
 } from "src/worker/api/admin/illustrations";
 import { IllustrationForm } from "./illustration-form";
@@ -32,37 +33,48 @@ export function IllustrationCard({
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const routeContext = useRouteContext({ from: "/admin" });
   const adminApi = routeContext.api.admin;
-  const queryClient = routeContext.queryClient;
+  const queryClient = useQueryClient();
+
+  const createToModifySchema = (
+    create: IllustrationCreateSchema
+  ): IllustrationModifySchema => {
+    return {
+      id: illustration.id,
+      promptId: create.promptId,
+      promptModel: create.promptModel,
+      imageModel: create.imageModel,
+      imageURL: create.imageURL,
+      thumbnailURL: create.thumbnailURL,
+      isActive: create.isActive
+    };
+  };
 
   const updateMutation = useMutation({
     mutationFn: async (data: IllustrationModifySchema) =>
       updateIllustration(adminApi, data),
-    onMutate: async (data: IllustrationModifySchema) => {
-      const previousIllustrations: IllustrationApiResponse[] =
-        queryClient.getQueryData(["illustrationsAdmin"]);
-      queryClient.setQueryData(
-        ["illustrationsAdmin"],
-        previousIllustrations.map((ill) =>
-          ill.id === data.id ? { ...ill, ...data } : ill
-        )
-      );
-      return { previousIllustrations };
-    },
     onSuccess: (responseData) => {
-      queryClient.setQueryData(
+      // Update the cache with the returned data from the API
+      queryClient.setQueryData<IllustrationApiResponse[]>(
         ["illustrationsAdmin"],
-        (old: IllustrationApiResponse[]) =>
-          old.map((ill) => (ill.id === responseData.id ? responseData : ill))
+        (old) => {
+          if (!old) return old;
+          if (responseData.isActive) {
+            old = old.map((ill) => {
+              ill.isActive = false;
+              return ill;
+            });
+          }
+          return old.map((ill) =>
+            ill.id === responseData.id ? responseData : ill
+          );
+        }
       );
+      // router.invalidate();
       toast.success("Illustration updated successfully");
       setIsEditDialogOpen(false);
     },
-    onError: (err, variables, context) => {
+    onError: () => {
       toast.error("Failed to update illustration");
-      queryClient.setQueryData(
-        ["illustrationsAdmin"],
-        context.previousIllustrations
-      );
     },
   });
 
@@ -71,12 +83,15 @@ export function IllustrationCard({
       return await deleteIllustration(adminApi, id);
     },
     onSuccess: (responseData) => {
-      toast.success("Illustration deleted successfully");
-      queryClient.setQueryData(
+      // Remove the deleted item from cache
+      queryClient.setQueryData<IllustrationApiResponse[]>(
         ["illustrationsAdmin"],
-        (old: IllustrationApiResponse[]) =>
-          old.filter((ill) => ill.id !== responseData.id)
+        (old) => {
+          if (!old) return old;
+          return old.filter((ill) => ill.id !== responseData.id);
+        }
       );
+      toast.success("Illustration deleted successfully");
     },
     onError: () => {
       toast.error("Failed to delete illustration");
@@ -86,16 +101,13 @@ export function IllustrationCard({
   const handleUpdateIllustration = (
     illustrationData: IllustrationModifySchema
   ) => {
-    try {
-      updateMutation.mutateAsync(illustrationData);
-    } catch (error) {
-      console.error(error);
-    }
+    console.log(illustrationData);
+    updateMutation.mutate(illustrationData);
   };
 
   const handleDeleteIllustration = () => {
     if (confirm("Are you sure you want to delete this illustration?")) {
-      deleteMutation.mutateAsync(illustration.id);
+      deleteMutation.mutate(illustration.id);
     }
   };
 
@@ -134,6 +146,7 @@ export function IllustrationCard({
             size="sm"
             className="h-7 w-7 p-0"
             onClick={() => setIsEditDialogOpen(true)}
+            disabled={updateMutation.isPending}
           >
             <Edit className="h-3 w-3" />
           </Button>
@@ -184,7 +197,9 @@ export function IllustrationCard({
           </DialogHeader>
           <IllustrationForm
             illustration={illustration}
-            onSave={handleUpdateIllustration}
+            onSave={(data: IllustrationCreateSchema) =>
+              handleUpdateIllustration(createToModifySchema(data))
+            }
             isLoading={updateMutation.isPending}
           />
         </DialogContent>

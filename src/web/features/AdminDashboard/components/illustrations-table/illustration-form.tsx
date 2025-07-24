@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
   IllustrationApiResponse,
   IllustrationCreateSchema,
-  IllustrationModifySchema,
 } from "src/worker/api/admin/illustrations";
 import { Button } from "~/components/shadcn-ui/button";
 import { Input } from "~/components/shadcn-ui/input";
@@ -12,7 +11,7 @@ import { Switch } from "~/components/shadcn-ui/switch";
 
 interface IllustrationFormProps {
   illustration: IllustrationApiResponse | null;
-  onSave: (data: IllustrationCreateSchema | IllustrationModifySchema) => void;
+  onSave: (data: IllustrationCreateSchema) => void;
   isLoading?: boolean;
 }
 
@@ -21,7 +20,7 @@ export function IllustrationForm({
   onSave,
   isLoading,
 }: IllustrationFormProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<IllustrationCreateSchema>({
     songId: illustration?.songId || "",
     promptId: illustration?.promptId || "",
     promptModel: illustration?.promptModel || "",

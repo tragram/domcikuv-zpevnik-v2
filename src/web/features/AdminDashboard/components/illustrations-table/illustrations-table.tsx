@@ -13,7 +13,7 @@ import {
 } from "~/components/shadcn-ui/dialog";
 import { Plus, Search } from "lucide-react";
 import { toast } from "sonner";
-import { useRouteContext } from "@tanstack/react-router";
+import { useRouteContext, useRouter } from "@tanstack/react-router";
 import { createIllustration } from "~/services/songs";
 import {
   IllustrationApiResponse,
@@ -46,7 +46,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
   );
 
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
-
+  
   const createMutation = useMutation({
     mutationFn: async (data: IllustrationCreateSchema) => {
       return await createIllustration(adminApi, data);
