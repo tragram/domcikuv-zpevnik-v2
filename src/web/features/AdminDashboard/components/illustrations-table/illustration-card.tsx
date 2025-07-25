@@ -45,7 +45,7 @@ export function IllustrationCard({
       imageModel: create.imageModel,
       imageURL: create.imageURL,
       thumbnailURL: create.thumbnailURL,
-      isActive: create.isActive
+      isActive: create.isActive,
     };
   };
 
@@ -58,18 +58,16 @@ export function IllustrationCard({
         ["illustrationsAdmin"],
         (old) => {
           if (!old) return old;
-          if (responseData.isActive) {
-            old = old.map((ill) => {
+          old = old.map((ill) => {
+            if (responseData.isActive && ill.songId === responseData.songId) {
               ill.isActive = false;
-              return ill;
-            });
-          }
-          return old.map((ill) =>
-            ill.id === responseData.id ? responseData : ill
-          );
+              console.log(ill)
+            }
+            return ill.id === responseData.id ? responseData : ill;
+          });
+          return old;
         }
       );
-      // router.invalidate();
       toast.success("Illustration updated successfully");
       setIsEditDialogOpen(false);
     },
@@ -101,7 +99,6 @@ export function IllustrationCard({
   const handleUpdateIllustration = (
     illustrationData: IllustrationModifySchema
   ) => {
-    console.log(illustrationData);
     updateMutation.mutate(illustrationData);
   };
 
