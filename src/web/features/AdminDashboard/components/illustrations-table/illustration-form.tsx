@@ -14,7 +14,7 @@ import { Upload, X } from "lucide-react"
 // in manual mode, it should let the user add a prompt too or select from a dropdown out of existing prompts
 
 // Type definitions
-interface IllustrationApiResponse {
+interface SongWithIllustrationsAndPrompts {
   songId?: string
   promptId?: string
   promptModel?: string
@@ -41,7 +41,7 @@ interface DropdownOptions {
 }
 
 interface IllustrationFormProps {
-  illustration: Partial<IllustrationApiResponse>
+  illustration: Partial<SongWithIllustrationsAndPrompts>
   onSave: (data: IllustrationCreateSchema, mode: "ai" | "manual") => void
   isLoading?: boolean
   dropdownOptions: DropdownOptions

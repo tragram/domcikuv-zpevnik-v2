@@ -3,10 +3,7 @@ import { useRouteContext } from "@tanstack/react-router";
 import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import {
-  IllustrationApiResponse,
-  IllustrationCreateSchema,
-} from "src/worker/api/admin/illustrations";
+import { IllustrationCreateSchema } from "src/worker/api/admin/illustrations";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -25,52 +22,49 @@ import { cn } from "~/lib/utils";
 import { createIllustration } from "~/services/songs";
 import { IllustrationCard } from "./illustration-card";
 import { IllustrationForm } from "./illustration-form";
+import {
+  IMAGE_MODELS_API,
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_IDS,
+} from "~/../worker/api/admin/image-generation";
+import { _ } from "node_modules/better-auth/dist/shared/better-auth.CQXg7f-2";
+import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 
-export interface SongWithIllustrations {
+interface SongIllustrationsGroupProps {
   song: {
     id: string;
     title: string;
     artist: string;
   };
-  illustrations: IllustrationApiResponse[];
-}
-
-interface SongIllustrationsGroupProps {
-  song: SongWithIllustrations;
+  illustrations: SongIllustrationDB[];
+  prompts: Record<string, IllustrationPromptDB>;
   isExpanded: boolean;
   onToggleExpanded: () => void;
 }
 
 const dummyDropdownOptions = {
-  promptIds: [
-    { value: "prompt-1", label: "Creative Abstract" },
-    { value: "prompt-2", label: "Realistic Portrait" },
-    { value: "prompt-3", label: "Surreal Landscape" },
-  ],
-  promptModels: [
-    { value: "gpt-4", label: "GPT-4" },
-    { value: "gpt-3.5", label: "GPT-3.5" },
-    { value: "claude", label: "Claude" },
-  ],
-  imageModels: [
-    { value: "dall-e-3", label: "DALL-E 3" },
-    { value: "dall-e-2", label: "DALL-E 2" },
-    { value: "midjourney", label: "Midjourney" },
-    { value: "stable-diffusion", label: "Stable Diffusion" },
-  ],
+  promptIds: SUMMARY_PROMPT_IDS.map((spi) => {
+    return { value: spi, label: spi };
+  }),
+  promptModels: SUMMARY_MODELS_API.map((smi) => {
+    return { value: smi, label: smi };
+  }),
+  imageModels: IMAGE_MODELS_API.map((im) => {
+    return { value: im, label: im };
+  }),
 };
 
 export function SongIllustrationsGroup({
   song,
+  illustrations,
+  prompts,
   isExpanded,
   onToggleExpanded,
 }: SongIllustrationsGroupProps) {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const someActive =
-    song.illustrations
-      .map((i) => i.isActive)
-      .reduce((a, c) => a + Number(c), 0) > 0;
+    illustrations.map((i) => i.isActive).reduce((a, c) => a + Number(c), 0) > 0;
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
 
   const createMutation = useMutation({
@@ -114,25 +108,25 @@ export function SongIllustrationsGroup({
             <div className="flex-shrink-0 min-w-0 max-w-[200px] sm:max-w-none">
               <h4
                 className="font-medium truncate"
-                title={song.song.title || "Unknown Song"}
+                title={song.title || "Unknown Song"}
               >
-                {song.song.title || "Unknown Song"}
+                {song.title || "Unknown Song"}
               </h4>
               <p
                 className="text-sm text-muted-foreground truncate"
-                title={song.song.artist}
+                title={song.artist}
               >
-                {song.song.artist}
+                {song.artist}
               </p>
             </div>
 
             {/* Thumbnail Preview Row - Hidden on mobile, shown on larger screens */}
             <div className="hidden sm:flex items-center gap-2 ml-4 flex-1 overflow-hidden">
-              {song.illustrations.slice(0, 3).map((illustration, index) => (
+              {illustrations.slice(0, 3).map((illustration, index) => (
                 <div key={illustration.id} className="relative flex-shrink-0">
                   <img
                     src={illustration.thumbnailURL}
-                    alt={`${illustration.song?.title} preview ${index + 1}`}
+                    alt={`${song.title} preview ${index + 1}`}
                     className={cn(
                       "w-10 h-10 sm:w-12 sm:h-12 rounded object-cover border-2 shadow-sm hover:shadow-md transition-shadow cursor-pointer",
                       illustration.isActive ? "border-primary" : ""
@@ -144,9 +138,9 @@ export function SongIllustrationsGroup({
                   />
                 </div>
               ))}
-              {song.illustrations.length > 3 && (
+              {illustrations.length > 3 && (
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded bg-muted border shadow-sm flex items-center justify-center text-xs font-medium text-muted-foreground flex-shrink-0">
-                  +{song.illustrations.length - 3}
+                  +{illustrations.length - 3}
                 </div>
               )}
             </div>
@@ -166,13 +160,13 @@ export function SongIllustrationsGroup({
               variant="secondary"
               className={cn(
                 "text-xs px-1 sm:px-2",
-                song.illustrations.length === 0 ? "bg-red-900" : ""
+                illustrations.length === 0 ? "bg-red-900" : ""
               )}
             >
               <span className="hidden sm:inline">
-                {song.illustrations.length} total
+                {illustrations.length} total
               </span>
-              <span className="sm:hidden">{song.illustrations.length}</span>
+              <span className="sm:hidden">{illustrations.length}</span>
             </Badge>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
@@ -190,7 +184,7 @@ export function SongIllustrationsGroup({
                   <DialogTitle>Add New Illustration</DialogTitle>
                 </DialogHeader>
                 <IllustrationForm
-                  illustration={{ songId: song.song.id }}
+                  illustration={{ songId: song.id }}
                   onSave={handleCreateIllustration}
                   isLoading={createMutation.isPending}
                   dropdownOptions={dummyDropdownOptions}
@@ -203,11 +197,13 @@ export function SongIllustrationsGroup({
         <CollapsibleContent>
           <div className="px-1 md:px-3 pb-3">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
-              {song.illustrations.map((illustration) => (
+              {illustrations.map((illustration) => (
                 <IllustrationCard
                   key={illustration.id}
+                  song={song}
                   illustration={illustration}
                   onPreview={setPreviewImage}
+                  prompt={prompts[illustration.promptId]}
                 />
               ))}
             </div>

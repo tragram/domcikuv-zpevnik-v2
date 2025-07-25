@@ -15,19 +15,23 @@ import { useRouteContext, useRouter } from "@tanstack/react-router";
 import { deleteIllustration, updateIllustration } from "~/services/songs";
 import { cn } from "~/lib/utils";
 import {
-  IllustrationApiResponse,
   IllustrationCreateSchema,
   IllustrationModifySchema,
 } from "src/worker/api/admin/illustrations";
 import { IllustrationForm } from "./illustration-form";
+import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 
 interface IllustrationCardProps {
-  illustration: IllustrationApiResponse;
+  song: { id: string; title: string; artist: string };
+  illustration: SongIllustrationDB;
+  prompt: IllustrationPromptDB;
   onPreview: (imageUrl: string) => void;
 }
 
 export function IllustrationCard({
+  song,
   illustration,
+  prompt,
   onPreview,
 }: IllustrationCardProps) {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -40,7 +44,6 @@ export function IllustrationCard({
   ): IllustrationModifySchema => {
     return {
       id: illustration.id,
-      promptId: create.promptId,
       imageModel: create.imageModel,
       imageURL: create.imageURL,
       thumbnailURL: create.thumbnailURL,
@@ -53,18 +56,25 @@ export function IllustrationCard({
       updateIllustration(adminApi, data),
     onSuccess: (responseData) => {
       // Update the cache with the returned data from the API
-      queryClient.setQueryData<IllustrationApiResponse[]>(
+      queryClient.setQueryData<SongIllustrationDB[]>(
         ["illustrationsAdmin"],
-        (old) => {
-          if (!old) return old;
-          old = old.map((ill) => {
-            if (responseData.isActive && ill.songId === responseData.songId) {
+        (oldIlls) => {
+          if (!oldIlls) return oldIlls;
+          oldIlls = oldIlls.map((ill) => {
+            if (
+              responseData.illustration.isActive &&
+              ill.songId === responseData.song.id
+            ) {
               ill.isActive = false;
-              console.log(ill);
             }
-            return ill.id === responseData.id ? responseData : ill;
+            if (ill.id === responseData.illustration.id) {
+              console.log(responseData.illustration);
+            }
+            return ill.id === responseData.illustration.id
+              ? responseData.illustration
+              : ill;
           });
-          return old;
+          return oldIlls;
         }
       );
       toast.success("Illustration updated successfully");
@@ -81,7 +91,7 @@ export function IllustrationCard({
     },
     onSuccess: (responseData) => {
       // Remove the deleted item from cache
-      queryClient.setQueryData<IllustrationApiResponse[]>(
+      queryClient.setQueryData<SongIllustrationDB[]>(
         ["illustrationsAdmin"],
         (old) => {
           if (!old) return old;
@@ -117,8 +127,8 @@ export function IllustrationCard({
       >
         <div className="flex items-start justify-between">
           <img
-            src={illustration.imageURL || "/placeholder.svg?height=60&width=60"}
-            alt={`${illustration.song?.title || "Unknown"} thumbnail`}
+            src={illustration.imageURL}
+            alt={`${illustration.imageURL} thumbnail`}
             className="w-full rounded object-cover cursor-pointer"
             onClick={() => onPreview(illustration.imageURL)}
           />
@@ -126,11 +136,11 @@ export function IllustrationCard({
         <div className="space-y-1">
           <p className="text-xs text-muted-foreground">
             <span className="font-medium">Summary prompt ID:</span>{" "}
-            {illustration.illustrationPrompt.summaryPromptId}
+            {prompt.summaryPromptId}
           </p>
           <p className="text-xs text-muted-foreground">
             <span className="font-medium">Lyrics summary:</span>{" "}
-            {illustration.illustrationPrompt.summaryModel}
+            {prompt.summaryModel}
           </p>
           <p className="text-xs text-muted-foreground">
             <span className="font-medium">Image:</span>{" "}

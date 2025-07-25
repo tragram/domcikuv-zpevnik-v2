@@ -5,6 +5,7 @@ import {
   fetchSongDBAdmin,
   fetchIllustrationsAdmin,
   fetchVersionsAdmin,
+  fetchPromptsAdmin,
 } from "~/services/songs";
 import { fetchUsersAdmin } from "~/services/users";
 
@@ -37,6 +38,11 @@ function Home() {
     queryFn: () => fetchIllustrationsAdmin(api.admin),
     staleTime: 1000 * 60 * 60 * 24 * 7,
   });
+  const { data: prompts } = useQuery({
+    queryKey: ["promptsAdmin"],
+    queryFn: () => fetchPromptsAdmin(api.admin),
+    staleTime: 1000 * 60 * 60 * 24 * 7,
+  });
 
   const { data: versions } = useQuery({
     queryKey: ["versionsAdmin"],
@@ -54,11 +60,12 @@ function Home() {
   if (!songDBAdmin || !illustrations || !versions || !users) {
     return <div>Loading...</div>;
   }
-
+  
   return (
     <AdminDashboard
       songDB={songDBAdmin}
       illustrations={illustrations}
+      prompts={prompts}
       versions={versions}
       users={users}
     />

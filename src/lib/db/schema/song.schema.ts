@@ -112,3 +112,10 @@ export const songVersionRelations = relations(songVersion, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+export const illustrationPromptRelations = relations(illustrationPrompt, ({ one }) => ({
+  song: one(song, {
+    fields: [illustrationPrompt.songId],
+    references: [song.id],
+  }),
+}));

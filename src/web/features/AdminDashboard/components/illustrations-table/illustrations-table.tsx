@@ -1,38 +1,39 @@
-import { getRouteApi } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { IllustrationApiResponse } from "src/worker/api/admin/illustrations";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { SongIllustrationsGroup } from "./illustration-group";
 import {
-  SongIllustrationsGroup,
-  SongWithIllustrations,
-} from "./illustration-group";
+  IllustrationPromptDB,
+  SongDataDB,
+  SongIllustrationDB,
+} from "src/lib/db/schema";
+import { songsWithIllustrationsAndPrompts } from "~/services/songs";
 
 interface IllustrationsTableProps {
-  illustrations: IllustrationApiResponse[];
+  songs: SongDataDB[];
+  illustrations: SongIllustrationDB[];
+  prompts: IllustrationPromptDB[];
 }
 
-export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
+export function IllustrationsTable({
+  songs,
+  illustrations,
+  prompts,
+}: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
-
-  // TODO: this will change when songDB source changes
-  const { songDB } = getRouteApi("/admin").useLoaderData();
   // TODO: separate search for songs and illustrations
-  const filteredIllustrations = illustrations.filter(
-    (illustration) =>
-      illustration.song?.title
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      illustration.song?.artist
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      illustration.promptModel
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      illustration.imageModel.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredIllustrations = songsWithIllustrationsAndPrompts.filter(
+  //   (sip) =>
+  //     sip.song.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     sip.song.artist?.toLowerCase().includes(searchTerm.toLowerCase())
+  //   ||
+  // illustration.promptModel
+  //   .toLowerCase()
+  //   .includes(searchTerm.toLowerCase()) ||
+  // illustration.imageModel.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   const toggleGroup = (songId: string) => {
     const newExpanded = new Set(expandedGroups);
@@ -43,31 +44,19 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
     }
     setExpandedGroups(newExpanded);
   };
-
-  const groupedIllustrations = songDB.songs.reduce((acc, s) => {
-    acc[s.id] = {
-      song: {
-        id: s.id,
-        title: s.title,
-        artist: s.artist,
-      },
-      illustrations: [],
-    } as SongWithIllustrations;
-
-    return acc;
-  }, {} as Record<string, SongWithIllustrations>);
-
-  illustrations.forEach((il) =>
-    groupedIllustrations[il.songId].illustrations.push(il)
+  const songsIllustrationsAndPrompts = songsWithIllustrationsAndPrompts(
+    songs,
+    illustrations,
+    prompts
   );
-
   // Sort groups by song title
-  const sortedGroups = Object.entries(groupedIllustrations).sort(
+  const sortedGroups = Object.entries(songsIllustrationsAndPrompts).sort(
     ([, songA], [, songB]) => {
-      const activeSum = (illustrations: IllustrationApiResponse[]) =>
-        illustrations
+      const activeSum = (si: SongIllustrationDB[]) =>
+        si
           .map((i) => i.isActive)
           .reduce((a: number, c: boolean) => a + Number(c), 0);
+
       const activeA = activeSum(songA.illustrations);
       const activeB = activeSum(songB.illustrations);
       if (activeA + activeB !== 0) {
@@ -88,7 +77,7 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
         <div className="text-center sm:text-left">
           <h3 className="text-lg font-medium">Song Illustrations</h3>
           <p className="text-sm text-muted-foreground">
-            {sortedGroups.length} songs • {filteredIllustrations.length}{" "}
+            {sortedGroups.length} songs • {songsIllustrationsAndPrompts.length}{" "}
             illustrations
           </p>
         </div>
@@ -128,7 +117,9 @@ export function IllustrationsTable({ illustrations }: IllustrationsTableProps) {
         {sortedGroups.map(([songId, song]) => (
           <SongIllustrationsGroup
             key={songId}
-            song={song}
+            song={song.song}
+            illustrations={song.illustrations}
+            prompts={song.prompts}
             isExpanded={expandedGroups.has(songId)}
             onToggleExpanded={() => toggleGroup(songId)}
           />

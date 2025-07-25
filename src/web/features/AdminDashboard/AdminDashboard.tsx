@@ -18,8 +18,9 @@ import {
 } from "~/components/ui/breadcrumb";
 import type { SongDB } from "~/types/types";
 import SongsTable from "./components/songs-table";
-import type { IllustrationApiResponse } from "src/worker/api/admin/illustrations";
+import type { SongWithIllustrationsAndPrompts } from "src/worker/api/admin/illustrations";
 import { IllustrationsTable } from "./components/illustrations-table/illustrations-table";
+import { IllustrationPromptDB } from "src/lib/db/schema";
 
 interface SongVersion {
   id: string;
@@ -59,7 +60,8 @@ interface UsersResponse {
 
 interface AdminDashboardProps {
   songDB: SongDB;
-  illustrations: IllustrationApiResponse[];
+  illustrations: SongWithIllustrationsAndPrompts[];
+  prompts: IllustrationPromptDB[];
   versions: SongVersion[];
   users: UsersResponse;
 }
@@ -67,11 +69,11 @@ interface AdminDashboardProps {
 export default function AdminDashboard({
   songDB,
   illustrations,
+  prompts,
   versions,
   users,
 }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState("illustrations");
-
   const getTabTitle = (tab: string) => {
     switch (tab) {
       case "songs":
@@ -92,7 +94,13 @@ export default function AdminDashboard({
       case "songs":
         return <SongsTable songDB={songDB} />;
       case "illustrations":
-        return <IllustrationsTable illustrations={illustrations} />;
+        return (
+          <IllustrationsTable
+            illustrations={illustrations}
+            prompts={prompts}
+            songs={songDB.songs}
+          />
+        );
       case "versions":
         return <VersionsTable initialVersions={versions} />;
       case "users":

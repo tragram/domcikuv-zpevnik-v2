@@ -83,7 +83,7 @@ const adminApp = buildApp()
   .use(adminMiddleware)
   .route("/", userRoutes)
   .route("/", songRoutes)
-  .route("/", illustrationRoutes)
+  .route("/illustrations", illustrationRoutes)
   .route("/", versionRoutes);
 
 export default adminApp;
