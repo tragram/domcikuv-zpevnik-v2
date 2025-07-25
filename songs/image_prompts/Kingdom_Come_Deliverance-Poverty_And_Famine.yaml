@@ -1,4 +1,4 @@
-- model: gpt-40-mini
+- model: gpt-4o-mini
   prompt_id: v2
   response: Create an illustration of a lively tavern scene filled with a mix of joy
     and despair. In the foreground, a group of people are laughing and toasting with
@@ -7,4 +7,8 @@
     amidst chaos, with hints of fear and uncertainty in the expressions of some characters.
 - model: gpt-4o
   prompt_id: v2
-  response: This prompt was lost to the many migrations my zpěvník has endured. :-)
+  response: Create an illustration of a lively tavern scene filled with a mix of joy
+    and despair. In the foreground, a group of people are laughing and toasting with
+    mugs of beer, while in the background, shadows of a desolate town loom, hinting
+    at a recent calamity. The atmosphere should capture a juxtaposition of celebration
+    amidst chaos, with hints of fear and uncertainty in the expressions of some characters.

@@ -9,11 +9,13 @@ import {
   SongVersionDB,
   SongDataDB,
   SongIllustrationDB,
+  IllustrationPromptDB,
 } from "src/lib/db/schema";
 import {
   IllustrationApiResponse,
   IllustrationCreateSchema,
   IllustrationModifySchema,
+  IllustrationPromptCreateSchema,
 } from "src/worker/api/admin/illustrations";
 
 export type AdminApi = typeof client.api.admin;
@@ -83,10 +85,11 @@ export const fetchSongDBAdmin = async (adminApi: AdminApi): Promise<SongDB> => {
 };
 
 /**
- * Fetches the illustration prompt for a specific song
+ * Fetches the illustration prompt for a specific song (legacy method)
  * @param songId - The ID of the song
  * @returns Promise containing the prompt response
  * @throws {ApiException} When the prompt cannot be loaded or parsed
+ * @deprecated Use fetchIllustrationPromptsAdmin for new prompt system
  */
 export const fetchIllustrationPrompt = async (songId: string): Promise<any> => {
   const response = await fetch(SongData.promptURL(songId));
@@ -159,9 +162,9 @@ export const verifyVersion = async (
 };
 
 /**
- * Fetches all illustrations with song information
+ * Fetches all illustrations with song information and prompt data
  * @param adminApi - The admin API client
- * @returns Promise containing the list of illustrations
+ * @returns Promise containing the list of illustrations with prompts
  * @throws {ApiException} When illustrations cannot be fetched
  */
 export const fetchIllustrationsAdmin = async (
@@ -174,7 +177,24 @@ export const fetchIllustrationsAdmin = async (
 };
 
 /**
- * Creates a new illustration
+ * Creates a new illustration prompt
+ * @param adminApi - The admin API client
+ * @param promptData - The prompt data to create
+ * @returns Promise containing the creation result
+ * @throws {ApiException} When prompt creation fails
+ */
+export const createIllustrationPrompt = async (
+  adminApi: AdminApi,
+  promptData: IllustrationPromptCreateSchema
+): Promise<IllustrationPromptDB> => {
+  const response = await makeApiRequest(() =>
+    adminApi["illustration-prompt"].create.$post({ json: promptData })
+  );
+  return response;
+};
+
+/**
+ * Creates a new illustration (summary-based or direct)
  * @param adminApi - The admin API client
  * @param illustrationData - The illustration data to create
  * @returns Promise containing the creation result
@@ -217,9 +237,60 @@ export const updateIllustration = async (
 export const deleteIllustration = async (
   adminApi: AdminApi,
   id: string
-): Promise<any> => {
+): Promise<null> => {
   const response = await makeApiRequest(() =>
     adminApi.illustration[":id"].$delete({ param: { id } })
   );
   return response;
+};
+
+/**
+ * Deletes an illustration prompt
+ * @param adminApi - The admin API client
+ * @param id - The ID of the prompt to delete
+ * @returns Promise containing the deletion result
+ * @throws {ApiException} When prompt deletion fails
+ */
+export const deleteIllustrationPrompt = async (
+  adminApi: AdminApi,
+  id: string
+): Promise<null> => {
+  const response = await makeApiRequest(() =>
+    adminApi["illustration-prompt"][":id"].$delete({ param: { id } })
+  );
+  return response;
+};
+
+/**
+ * Fetches illustrations for a specific song
+ * @param adminApi - The admin API client
+ * @param songId - The ID of the song
+ * @returns Promise containing song-specific illustrations
+ * @throws {ApiException} When illustrations cannot be fetched
+ */
+export const fetchSongIllustrations = async (
+  adminApi: AdminApi,
+  songId: string
+): Promise<IllustrationApiResponse[]> => {
+  const allIllustrations = await fetchIllustrationsAdmin(adminApi);
+  return allIllustrations.filter(
+    (illustration) => illustration.songId === songId
+  );
+};
+
+/**
+ * Sets an illustration as active (deactivates others for the same song)
+ * @param adminApi - The admin API client
+ * @param illustrationId - The ID of the illustration to activate
+ * @returns Promise containing the updated illustration
+ * @throws {ApiException} When activation fails
+ */
+export const setActiveIllustration = async (
+  adminApi: AdminApi,
+  illustrationId: string
+): Promise<IllustrationApiResponse> => {
+  return updateIllustration(adminApi, {
+    id: illustrationId,
+    isActive: true,
+  });
 };

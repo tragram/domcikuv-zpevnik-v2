@@ -41,7 +41,6 @@ export function IllustrationCard({
     return {
       id: illustration.id,
       promptId: create.promptId,
-      promptModel: create.promptModel,
       imageModel: create.imageModel,
       imageURL: create.imageURL,
       thumbnailURL: create.thumbnailURL,
@@ -126,12 +125,12 @@ export function IllustrationCard({
         </div>
         <div className="space-y-1">
           <p className="text-xs text-muted-foreground">
-            <span className="font-medium">Prompt:</span>{" "}
-            {illustration.promptModel}
+            <span className="font-medium">Summary prompt ID:</span>{" "}
+            {illustration.illustrationPrompt.summaryPromptId}
           </p>
           <p className="text-xs text-muted-foreground">
-            <span className="font-medium">Prompt ID:</span>{" "}
-            {illustration.promptId}
+            <span className="font-medium">Lyrics summary:</span>{" "}
+            {illustration.illustrationPrompt.summaryModel}
           </p>
           <p className="text-xs text-muted-foreground">
             <span className="font-medium">Image:</span>{" "}

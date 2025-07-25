@@ -10,6 +10,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select"
 import { Upload, X } from "lucide-react"
 
+// TODO: update this to conform with new API & DB
+// in manual mode, it should let the user add a prompt too or select from a dropdown out of existing prompts
+
 // Type definitions
 interface IllustrationApiResponse {
   songId?: string

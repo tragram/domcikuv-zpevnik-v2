@@ -288,25 +288,19 @@ async function insertIllustrations(
     const matchingPrompt = prompts.find(
       (p) => p.model === promptModel && p.prompt_id === promptId
     );
+    if (!matchingPrompt) {
+      console.error("Matching prompt not found for", model, modelInfo, prompts);
+    }
 
     // Determine source type and prompt reference
-    let sourceType: "summary" | "lyricsDirectly";
-    let promptRef: string | null;
     const compositeName = `${promptModel}_${promptId}_${imageModel}`;
     const illustrationId = `${songId}_${compositeName}`;
-    if (matchingPrompt) {
-      sourceType = "summary";
-      promptRef = `${songId}_${promptModel}_${promptId}`;
-    } else {
-      sourceType = "lyricsDirectly";
-      promptRef = null;
-    }
+    const promptRef = `${songId}_${promptModel}_${promptId}`;
 
     const illustrationData = {
       id: illustrationId,
       songId,
       promptId: promptRef,
-      sourceType,
       imageModel,
       imageURL: `/songs/illustrations/${songId}/${compositeName}.webp`,
       thumbnailURL: `/songs/illustrations_thumbnails/${songId}/${compositeName}.webp`,
@@ -325,7 +319,7 @@ async function insertIllustrations(
         });
     } catch (err) {
       console.error(
-        `Failed to insert illustration ${illustrationId} for song ${songId}:`,
+        `Failed to insert illustration ${illustrationId} for song ${songId}\n`,
         illustrationData,
         err
       );

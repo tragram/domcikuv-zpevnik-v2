@@ -35,51 +35,28 @@ export const illustrationPrompt = sqliteTable("illustration_prompt", {
 });
 export type IllustrationPromptDB = typeof illustrationPrompt.$inferSelect;
 
-export const songIllustration = sqliteTable(
-  "song_illustration",
-  {
-    id: text("id").primaryKey(),
-    songId: text("song_id")
-      .notNull()
-      .references(() => song.id),
-    promptId: text("prompt_id").references(() => illustrationPrompt.id),
-    // whether the illustration was generated directly from the lyrics or with a summary intermediate step
-    sourceType: text("source_type", { enum: ["summary", "lyricsDirectly"] }).notNull(),
-    imageModel: text("image_model").notNull(),
-    imageURL: text("image_url").notNull(),
-    thumbnailURL: text("thumbnail_url").notNull(),
-    isActive: integer("is_active", { mode: "boolean" })
-      .default(false)
-      .notNull(),
-    createdAt: integer("created_at", { mode: "timestamp" })
-      .$defaultFn(() => new Date())
-      .notNull(),
-    updatedAt: integer("updated_at", { mode: "timestamp" })
-      .$defaultFn(() => new Date())
-      .default(sql`(current_timestamp)`)
-      .notNull(),
-  },
-  // ensure either there's a prompt_id or it's generated directly from an image
-  (table) => [
-    check(
-      "prompt_constraint",
-      sql`(source_type = 'lyricsDirectly') OR (source_type = 'summary' AND prompt_id IS NOT NULL)`
-    ),
-  ]
-);
+export const songIllustration = sqliteTable("song_illustration", {
+  id: text("id").primaryKey(),
+  songId: text("song_id")
+    .notNull()
+    .references(() => song.id),
+  promptId: text("prompt_id")
+    .references(() => illustrationPrompt.id)
+    .notNull(),
+  imageModel: text("image_model").notNull(),
+  imageURL: text("image_url").notNull(),
+  thumbnailURL: text("thumbnail_url").notNull(),
+  isActive: integer("is_active", { mode: "boolean" }).default(false).notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .default(sql`(current_timestamp)`)
+    .notNull(),
+});
 
-// Create discriminated union types
-export type SummaryBasedIllustration = typeof songIllustration.$inferSelect & {
-  sourceType: "summary";
-  promptId: string;
-};
-
-export type DirectIllustration = typeof songIllustration.$inferSelect & {
-  sourceType: "lyricsDirectly";
-  promptId: null;
-};
-
-export type SongIllustrationDB = SummaryBasedIllustration | DirectIllustration;
+export type SongIllustrationDB = typeof songIllustration.$inferSelect;
 
 export const songVersion = sqliteTable("song_version", {
   id: text("id").primaryKey(),
