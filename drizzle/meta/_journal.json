@@ -71,6 +71,34 @@
       "when": 1753304022802,
       "tag": "0009_acoustic_gunslinger",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1753433518190,
+      "tag": "0010_wealthy_blur",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1753434226074,
+      "tag": "0011_sour_namorita",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1753434743116,
+      "tag": "0012_outgoing_smasher",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "6",
+      "when": 1753434747816,
+      "tag": "0013_reflective_morgan_stark",
+      "breakpoints": true
     }
   ]
 }

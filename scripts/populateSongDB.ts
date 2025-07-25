@@ -381,5 +381,5 @@ async function main(): Promise<void> {
 
 main();
 // ro run, use: npx tsx scripts/populateSongDB.ts --songs-path="songs"
-// to delete previous data run: npx wrangler d1 execute zpevnik --local --command "DELETE FROM songIllustration;DELETE FROM songChange;DELETE FROM song;"
+// to delete previous data run: npx wrangler d1 execute zpevnik --local --command "DELETE FROM song_illustration;DELETE FROM song_version;DELETE FROM song;"
 export { processAndMigrateSongs, loadSongData };

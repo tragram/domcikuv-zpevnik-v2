@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { check, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
 import { user } from "./auth.schema";
 
@@ -24,27 +24,62 @@ export const song = sqliteTable("song", {
 
 export type SongDataDB = typeof song.$inferSelect;
 
-export const songIllustration = sqliteTable("songIllustration", {
+export const illustrationPrompt = sqliteTable("illustration_prompt", {
   id: text("id").primaryKey(),
   songId: text("song_id")
     .notNull()
     .references(() => song.id),
-  promptId: text("prompt_id").notNull(),
-  promptModel: text("prompt_model").notNull(),
-  imageModel: text("image_model").notNull(),
-  imageURL: text("image_url").notNull(),
-  thumbnailURL: text("thumbnail_url").notNull(),
-  isActive: integer("is_active", { mode: "boolean" }).default(false).notNull(),
-  createdAt: integer("created_at", { mode: "timestamp" })
-    .$defaultFn(() => new Date())
-    .notNull(),
-  updatedAt: integer("updated_at", { mode: "timestamp" })
-    .$defaultFn(() => new Date())
-    .default(sql`(current_timestamp)`)
-    .notNull(),
+  summaryPromptId: text("prompt_id").notNull(),
+  summaryModel: text("summary_model").notNull(),
+  text: text("text").notNull(),
 });
+export type IllustrationPromptDB = typeof illustrationPrompt.$inferSelect;
 
-export type SongIllustrationDB = typeof songIllustration.$inferSelect;
+export const songIllustration = sqliteTable(
+  "song_illustration",
+  {
+    id: text("id").primaryKey(),
+    songId: text("song_id")
+      .notNull()
+      .references(() => song.id),
+    promptId: text("prompt_id").references(() => illustrationPrompt.id),
+    // whether the illustration was generated directly from the lyrics or with a summary intermediate step
+    sourceType: text("source_type", { enum: ["summary", "lyricsDirectly"] }).notNull(),
+    imageModel: text("image_model").notNull(),
+    imageURL: text("image_url").notNull(),
+    thumbnailURL: text("thumbnail_url").notNull(),
+    isActive: integer("is_active", { mode: "boolean" })
+      .default(false)
+      .notNull(),
+    createdAt: integer("created_at", { mode: "timestamp" })
+      .$defaultFn(() => new Date())
+      .notNull(),
+    updatedAt: integer("updated_at", { mode: "timestamp" })
+      .$defaultFn(() => new Date())
+      .default(sql`(current_timestamp)`)
+      .notNull(),
+  },
+  // ensure either there's a prompt_id or it's generated directly from an image
+  (table) => [
+    check(
+      "prompt_constraint",
+      sql`(source_type = 'lyricsDirectly') OR (source_type = 'summary' AND prompt_id IS NOT NULL)`
+    ),
+  ]
+);
+
+// Create discriminated union types
+export type SummaryBasedIllustration = typeof songIllustration.$inferSelect & {
+  sourceType: "summary";
+  promptId: string;
+};
+
+export type DirectIllustration = typeof songIllustration.$inferSelect & {
+  sourceType: "lyricsDirectly";
+  promptId: null;
+};
+
+export type SongIllustrationDB = SummaryBasedIllustration | DirectIllustration;
 
 export const songVersion = sqliteTable("song_version", {
   id: text("id").primaryKey(),
