@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/shadcn-ui/avatar";
-import { Button } from "~/components/shadcn-ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Button } from "~/components/ui/button";
 import {
   DropdownIconStart,
   DropdownMenu,
@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/shadcn-ui/dropdown-menu";
+} from "~/components/ui/dropdown-menu";
 import { BookUser } from "lucide-react";
 import type { JSX } from "react";
 import { Songbook } from "~/types/types";

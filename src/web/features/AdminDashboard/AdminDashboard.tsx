@@ -8,14 +8,14 @@ import {
   SidebarProvider,
   SidebarInset,
   SidebarTrigger,
-} from "~/components/shadcn-ui/sidebar";
-import { Separator } from "~/components/shadcn-ui/separator";
+} from "~/components/ui/sidebar";
+import { Separator } from "~/components/ui/separator";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
-} from "~/components/shadcn-ui/breadcrumb";
+} from "~/components/ui/breadcrumb";
 import type { SongDB } from "~/types/types";
 import SongsTable from "./components/songs-table";
 import type { IllustrationApiResponse } from "src/worker/api/admin/illustrations";

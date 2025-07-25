@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { Input } from "~/components/shadcn-ui/input"
-import { Badge } from "~/components/shadcn-ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/shadcn-ui/table"
-import { Button } from "~/components/shadcn-ui/button"
+import { Input } from "~/components/ui/input"
+import { Badge } from "~/components/ui/badge"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table"
+import { Button } from "~/components/ui/button"
 import { Search, ExternalLink, User, CheckCircle, XCircle } from "lucide-react"
 import { verifyVersion } from "~/services/songs"
 import { toast } from "sonner";

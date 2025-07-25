@@ -1,7 +1,7 @@
 import { MoonIcon, SunIcon } from "lucide-react";
-import { Button } from "~/components/shadcn-ui/button";
+import { Button } from "~/components/ui/button";
 import { useTheme } from "./ThemeProvider";
-import { DropdownMenuItem } from "./shadcn-ui/dropdown-menu";
+import { DropdownMenuItem } from "./ui/dropdown-menu";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();

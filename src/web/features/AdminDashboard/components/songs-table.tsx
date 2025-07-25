@@ -1,10 +1,10 @@
 import type React from "react";
 
 import { useState } from "react";
-import { Button } from "~/components/shadcn-ui/button";
-import { Input } from "~/components/shadcn-ui/input";
-import { Badge } from "~/components/shadcn-ui/badge";
-import { Switch } from "~/components/shadcn-ui/switch";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Badge } from "~/components/ui/badge";
+import { Switch } from "~/components/ui/switch";
 import {
   Table,
   TableBody,
@@ -12,22 +12,22 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/components/shadcn-ui/table";
+} from "~/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/shadcn-ui/dialog";
-import { Label } from "~/components/shadcn-ui/label";
+} from "~/components/ui/dialog";
+import { Label } from "~/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/shadcn-ui/select";
+} from "~/components/ui/select";
 import { Plus, Edit, Search, ExternalLink, Eye, EyeOff } from "lucide-react";
 import { SongDB } from "~/types/types";
 import { SongData } from "~/types/songData";

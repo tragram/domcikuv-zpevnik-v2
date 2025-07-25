@@ -2,8 +2,8 @@ import { getRouteApi } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { IllustrationApiResponse } from "src/worker/api/admin/illustrations";
-import { Button } from "~/components/shadcn-ui/button";
-import { Input } from "~/components/shadcn-ui/input";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import {
   SongIllustrationsGroup,
   SongWithIllustrations,

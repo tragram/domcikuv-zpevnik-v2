@@ -1,5 +1,5 @@
 import LanguageFlag from "~/components/LanguageFlag";
-import { Button } from "~/components/shadcn-ui/button";
+import { Button } from "~/components/ui/button";
 import {
     DropdownIconStart,
     DropdownMenu,
@@ -8,7 +8,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "~/components/shadcn-ui/dropdown-menu";
+} from "~/components/ui/dropdown-menu";
 import type { LanguageCount, SongLanguage } from "~/types";
 import { Languages } from "lucide-react";
 import type { JSX } from "react";

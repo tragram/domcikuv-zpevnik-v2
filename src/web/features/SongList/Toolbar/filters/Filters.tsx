@@ -1,13 +1,13 @@
 import { getRouteApi } from "@tanstack/react-router";
 import { Filter, Handshake, Heart } from "lucide-react";
 import { JSX } from "react";
-import { Button } from "~/components/shadcn-ui/button";
+import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "~/components/shadcn-ui/dropdown-menu";
+} from "~/components/ui/dropdown-menu";
 import { useMediaQuery } from "usehooks-ts";
 import type { LanguageCount, SongLanguage } from "~/types/types";
 import {

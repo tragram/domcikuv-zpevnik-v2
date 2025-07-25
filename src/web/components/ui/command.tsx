@@ -9,7 +9,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "~/components/shadcn-ui/dialog"
+} from "~/components/ui/dialog"
 
 function Command({
   className,

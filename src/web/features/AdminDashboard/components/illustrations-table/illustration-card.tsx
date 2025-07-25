@@ -1,14 +1,14 @@
 import type React from "react";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button } from "~/components/shadcn-ui/button";
-import { Badge } from "~/components/shadcn-ui/badge";
+import { Button } from "~/components/ui/button";
+import { Badge } from "~/components/ui/badge";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "~/components/shadcn-ui/dialog";
+} from "~/components/ui/dialog";
 import { Edit, Eye, ExternalLink, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouteContext, useRouter } from "@tanstack/react-router";

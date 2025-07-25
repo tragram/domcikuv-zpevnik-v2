@@ -7,20 +7,20 @@ import {
   IllustrationApiResponse,
   IllustrationCreateSchema,
 } from "src/worker/api/admin/illustrations";
-import { Badge } from "~/components/shadcn-ui/badge";
-import { Button } from "~/components/shadcn-ui/button";
+import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "~/components/shadcn-ui/collapsible";
+} from "~/components/ui/collapsible";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/shadcn-ui/dialog";
+} from "~/components/ui/dialog";
 import { cn } from "~/lib/utils";
 import { createIllustration } from "~/services/songs";
 import { IllustrationCard } from "./illustration-card";

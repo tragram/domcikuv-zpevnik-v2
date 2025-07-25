@@ -1,4 +1,4 @@
-import { Button } from "~/components/shadcn-ui/button"
+import { Button } from "~/components/ui/button"
 import {
     DropdownIconStart,
     DropdownMenu,
@@ -7,7 +7,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "~/components/shadcn-ui/dropdown-menu"
+} from "~/components/ui/dropdown-menu"
 import FancySwitch from "~/components/FancySwitch"
 import type { SortField, SortOrder, SortSettings } from "~/types"
 import {

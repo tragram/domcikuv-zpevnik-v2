@@ -1,5 +1,5 @@
 import RandomSong, { ResetBanListDropdownItems } from "~/components/RandomSong";
-import { Button } from "~/components/shadcn-ui/button";
+import { Button } from "~/components/ui/button";
 import {
   DropdownIconStart,
   DropdownMenu,
@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/shadcn-ui/dropdown-menu";
+} from "~/components/ui/dropdown-menu";
 import usePWAInstall from "~/components/usePWAInstall";
 import { Key } from "~/types/musicTypes";
 import {

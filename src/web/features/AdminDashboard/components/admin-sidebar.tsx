@@ -12,7 +12,7 @@ import {
   SidebarMenuItem,
   SidebarHeader,
   SidebarRail,
-} from "~/components/shadcn-ui/sidebar"
+} from "~/components/ui/sidebar"
 
 interface AdminSidebarProps {
   activeTab: string

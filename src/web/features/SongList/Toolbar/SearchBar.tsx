@@ -1,5 +1,5 @@
-import { Button } from '~/components/shadcn-ui/button';
-import { Input } from '~/components/shadcn-ui/input';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
 import { cn } from '~/lib/utils';
 import { Search as SearchIcon, XIcon } from "lucide-react";
 import { type ChangeEvent, useEffect, useRef, useState } from 'react';

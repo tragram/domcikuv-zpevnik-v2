@@ -1,5 +1,5 @@
-import { Input } from "~/components/shadcn-ui/input";
-import { Label } from "~/components/shadcn-ui/label";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 import type { ValidationResult } from "./validationUtils";
 import { useEffect, useState } from "react";
 import { cn } from "~/lib/utils";

@@ -4,10 +4,10 @@ import {
   IllustrationApiResponse,
   IllustrationCreateSchema,
 } from "src/worker/api/admin/illustrations";
-import { Button } from "~/components/shadcn-ui/button";
-import { Input } from "~/components/shadcn-ui/input";
-import { Label } from "~/components/shadcn-ui/label";
-import { Switch } from "~/components/shadcn-ui/switch";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { Switch } from "~/components/ui/switch";
 
 interface IllustrationFormProps {
   illustration: Partial<IllustrationApiResponse>;

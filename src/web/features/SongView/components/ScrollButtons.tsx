@@ -1,4 +1,4 @@
-import { Button } from "~/components/shadcn-ui/button";
+import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import { ArrowBigDown, ArrowBigUpDash, Beaker } from "lucide-react";
 import { useEffect, useState, memo } from "react";
