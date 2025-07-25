@@ -5,8 +5,8 @@ import { eq } from "drizzle-orm";
 import { buildApp } from "../utils";
 import { userRoutes } from "./users";
 import { songRoutes } from "./songs";
-import { changeRoutes } from "./versions";
 import { illustrationRoutes } from "./illustrations";
+import { versionRoutes } from "./versions";
 
 const adminMiddleware = async (c: Context, next: Next) => {
   try {
@@ -84,6 +84,6 @@ const adminApp = buildApp()
   .route("/", userRoutes)
   .route("/", songRoutes)
   .route("/", illustrationRoutes)
-  .route("/", changeRoutes);
+  .route("/", versionRoutes);
 
 export default adminApp;

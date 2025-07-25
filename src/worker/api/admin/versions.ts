@@ -7,11 +7,11 @@ import { zValidator } from "@hono/zod-validator";
 
 // Version validation schemas
 const verifyVersionSchema = z.object({
-  id: z.string().uuid("Invalid change ID format"),
+  id: z.uuid("Invalid version ID format"),
   verified: z.boolean(),
 });
 
-export const changeRoutes = buildApp()
+export const versionRoutes = buildApp()
   .get("/versions", async (c) => {
     try {
       const db = drizzle(c.env.DB);
@@ -48,7 +48,7 @@ export const changeRoutes = buildApp()
     }
   })
 
-  .post("/change/verify", zValidator("json", verifyVersionSchema), async (c) => {
+  .post("/version/verify", zValidator("json", verifyVersionSchema), async (c) => {
     try {
       const { id, verified } = c.req.valid("json");
       const user = c.get("USER");
@@ -65,7 +65,7 @@ export const changeRoutes = buildApp()
       }
       const db = drizzle(c.env.DB);
 
-      // Check if change exists
+      // Check if version exists
       const existingVersion = await db
         .select({ id: songVersion.id })
         .from(songVersion)
@@ -78,7 +78,7 @@ export const changeRoutes = buildApp()
             status: "fail",
             failData: {
               illustrationId: "Version not found",
-              code: "CHANGE_NOT_FOUND",
+              code: "VERSION_NOT_FOUND",
             },
           },
           404
@@ -96,7 +96,7 @@ export const changeRoutes = buildApp()
         data: verifiedVersion,
       });
     } catch (error) {
-      console.error("Error verifying change:", error);
+      console.error("Error verifying version:", error);
       return c.json(
         {
           status: "error",
