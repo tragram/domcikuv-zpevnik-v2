@@ -6,7 +6,8 @@
     live life fully and authentically. Include hints of family dynamics in the background,
     like shadowy figures of a father and brother, contrasting with the character's
     bold individuality.
-- model: chatgpt-2024-10-20
+- model: gpt-4o
+  prompt_id: v1
   response: An energetic and rebellious scene of a young man standing alone, defiant,
     looking towards an open road. He is dressed in casual clothes, capturing a youthful
     and independent spirit, set against a backdrop of the open sky and city lights.

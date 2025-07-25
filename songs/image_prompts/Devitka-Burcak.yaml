@@ -6,7 +6,8 @@
     and Lord Byron mingle with a water nymph and a girl with horses. The scene is
     infused with a sense of nostalgia and longing, with fallen chestnuts scattered
     on the ground and the scent of rain in the air.
-- model: chatgpt-2024-10-20
+- model: gpt-4o
+  prompt_id: v1
   response: An ethereal scene in a misty garden where a mysterious black horse with
     deep, alluring eyes approaches. Its mane flows as if it holds a dream-like energy,
     representing the poetic and romantic vision of Shakespeare, Byron, and Mácha.

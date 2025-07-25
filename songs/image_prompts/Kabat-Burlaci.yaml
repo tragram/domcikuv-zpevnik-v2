@@ -6,8 +6,9 @@
     dancing with death, while hints of harmony emerge from an accordion playing on
     the riverbank. The atmosphere should blend tension and beauty, reflecting the
     themes of longing and the passage of time.
-- model: chatgpt-2024-10-20
-  reponse: A dramatic and gritty scene of men, dressed in rugged clothes, pulling
+- model: gpt-4o
+  prompt_id: v1
+  response: A dramatic and gritty scene of men, dressed in rugged clothes, pulling
     heavy wooden boats against the powerful river's current. The men strain as they
     drag the boats with thick ropes, battling the flow of water. Above them, the sky
     is dark and overcast, adding to the intense, somber atmosphere. The riverbank
