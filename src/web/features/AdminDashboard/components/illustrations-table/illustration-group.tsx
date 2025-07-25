@@ -41,6 +41,25 @@ interface SongIllustrationsGroupProps {
   onToggleExpanded: () => void;
 }
 
+const dummyDropdownOptions = {
+  promptIds: [
+    { value: "prompt-1", label: "Creative Abstract" },
+    { value: "prompt-2", label: "Realistic Portrait" },
+    { value: "prompt-3", label: "Surreal Landscape" },
+  ],
+  promptModels: [
+    { value: "gpt-4", label: "GPT-4" },
+    { value: "gpt-3.5", label: "GPT-3.5" },
+    { value: "claude", label: "Claude" },
+  ],
+  imageModels: [
+    { value: "dall-e-3", label: "DALL-E 3" },
+    { value: "dall-e-2", label: "DALL-E 2" },
+    { value: "midjourney", label: "Midjourney" },
+    { value: "stable-diffusion", label: "Stable Diffusion" },
+  ],
+};
+
 export function SongIllustrationsGroup({
   song,
   isExpanded,
@@ -174,6 +193,7 @@ export function SongIllustrationsGroup({
                   illustration={{ songId: song.song.id }}
                   onSave={handleCreateIllustration}
                   isLoading={createMutation.isPending}
+                  dropdownOptions={dummyDropdownOptions}
                 />
               </DialogContent>
             </Dialog>

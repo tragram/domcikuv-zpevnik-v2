@@ -61,7 +61,7 @@ export function IllustrationCard({
           old = old.map((ill) => {
             if (responseData.isActive && ill.songId === responseData.songId) {
               ill.isActive = false;
-              console.log(ill)
+              console.log(ill);
             }
             return ill.id === responseData.id ? responseData : ill;
           });
@@ -203,6 +203,8 @@ export function IllustrationCard({
               handleUpdateIllustration(createToModifySchema(data))
             }
             isLoading={updateMutation.isPending}
+            dropdownOptions={undefined}
+            manualOnly
           />
         </DialogContent>
       </Dialog>
