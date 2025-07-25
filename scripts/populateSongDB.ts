@@ -1,8 +1,13 @@
 import fs from "fs";
 import makeHash from "object-hash";
 import path from "path";
+import yaml from "js-yaml";
 import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
-import { song, songIllustration } from "../src/lib/db/schema/song.schema";
+import {
+  song,
+  songIllustration,
+  illustrationPrompt,
+} from "../src/lib/db/schema/song.schema";
 import { D1Helper } from "@nerdfolio/drizzle-d1-helpers";
 import {
   preambleKeywords,
@@ -30,6 +35,12 @@ interface SongEntry {
   promptId?: string;
   imageModel?: string;
   [key: string]: any; // For other preamble fields
+}
+
+interface PromptEntry {
+  model: string;
+  prompt_id: string;
+  response: string;
 }
 
 function to_ascii(text: string): string {
@@ -68,6 +79,29 @@ function extractPreamble(
     preamble[chordpro2JSKeywords[keyword]] = match?.[1].trim() || "";
   });
   return preamble;
+}
+
+function loadPromptData(songsPath: string, songId: string): PromptEntry[] {
+  const promptFilePath = `${songsPath}/image_prompts/${songId}.yaml`;
+
+  if (!fs.existsSync(promptFilePath)) {
+    return [];
+  }
+
+  try {
+    const content = fs.readFileSync(promptFilePath, "utf8");
+    const prompts = yaml.load(content) as PromptEntry[];
+
+    if (!Array.isArray(prompts)) {
+      console.warn(`Invalid prompt file format for ${songId}: expected array`);
+      return [];
+    }
+
+    return prompts;
+  } catch (error) {
+    console.warn(`Failed to load prompt file for ${songId}:`, error);
+    return [];
+  }
 }
 
 function loadSongData(songsPath = "../songs"): SongEntry[] {
@@ -122,6 +156,7 @@ function loadSongData(songsPath = "../songs"): SongEntry[] {
   // Remove the disabled field from all song objects
   return songDB.map(({ disabled, ...rest }) => rest as SongEntry);
 }
+
 import { SongData } from "../src/web/types/songData";
 
 async function insertSongRecord(
@@ -136,7 +171,7 @@ async function insertSongRecord(
     artist: entry.artist,
     key: entry.key ?? "C",
     createdAt: entry.dateAdded ? parseDateToTimestamp(entry.dateAdded) : now,
-    modifiedAt: now,
+    updatedAt: now,
     startMelody: entry.startMelody || null,
     language: entry.language ?? "unknown",
     tempo: entry.tempo || null,
@@ -145,11 +180,39 @@ async function insertSongRecord(
     chordproURL: `/songs/chordpro/${id}.pro`,
     hidden: false,
   };
-
   await db.insert(song).values(songData).onConflictDoUpdate({
     target: song.id,
     set: songData,
   });
+}
+
+async function insertIllustrationPrompts(
+  db: DrizzleD1Database,
+  songId: string,
+  prompts: PromptEntry[]
+): Promise<void> {
+  for (const prompt of prompts) {
+    const promptId = `${songId}_${prompt.model}_${prompt.prompt_id}`;
+
+    const promptData = {
+      id: promptId,
+      songId,
+      summaryPromptId: prompt.prompt_id,
+      summaryModel: prompt.model,
+      text: prompt.response,
+    };
+    try {
+      await db
+        .insert(illustrationPrompt)
+        .values(promptData)
+        .onConflictDoUpdate({
+          target: illustrationPrompt.id,
+          set: promptData,
+        });
+    } catch (err) {
+      console.error(`Failed to insert prompt ${promptId}:`, err);
+    }
+  }
 }
 
 function parseIllustrations(illustrationsStr: string): string[] {
@@ -212,6 +275,7 @@ async function insertIllustrations(
   songId: string,
   illustrations: string[],
   activeModel: string | undefined,
+  prompts: PromptEntry[],
   now: Date
 ): Promise<void> {
   for (const model of illustrations) {
@@ -219,19 +283,36 @@ async function insertIllustrations(
     if (!modelInfo) continue;
 
     const { promptModel, promptId, imageModel } = modelInfo;
+
+    // Find matching prompt if it exists
+    const matchingPrompt = prompts.find(
+      (p) => p.model === promptModel && p.prompt_id === promptId
+    );
+
+    // Determine source type and prompt reference
+    let sourceType: "summary" | "lyricsDirectly";
+    let promptRef: string | null;
     const compositeName = `${promptModel}_${promptId}_${imageModel}`;
     const illustrationId = `${songId}_${compositeName}`;
+    if (matchingPrompt) {
+      sourceType = "summary";
+      promptRef = `${songId}_${promptModel}_${promptId}`;
+    } else {
+      sourceType = "lyricsDirectly";
+      promptRef = null;
+    }
 
     const illustrationData = {
       id: illustrationId,
       songId,
-      promptModel,
-      promptId,
+      promptId: promptRef,
+      sourceType,
       imageModel,
       imageURL: `/songs/illustrations/${songId}/${compositeName}.webp`,
       thumbnailURL: `/songs/illustrations_thumbnails/${songId}/${compositeName}.webp`,
       isActive: model === activeModel,
       createdAt: now,
+      updatedAt: now,
     };
 
     try {
@@ -244,7 +325,8 @@ async function insertIllustrations(
         });
     } catch (err) {
       console.error(
-        `Failed to insert illustration ${compositeName} for song ${songId}:`,
+        `Failed to insert illustration ${illustrationId} for song ${songId}:`,
+        illustrationData,
         err
       );
     }
@@ -281,9 +363,7 @@ async function processAndMigrateSongs(
   });
 
   if (validationWarnings > 0) {
-    console.warn(
-      `\n⚠️'  ${validationWarnings} songs had validation warnings\n`
-    );
+    console.warn(`\n⚠️  ${validationWarnings} songs had validation warnings\n`);
   }
 
   // Optionally save backup files
@@ -325,6 +405,14 @@ async function processAndMigrateSongs(
     try {
       await insertSongRecord(db, entry, id, now);
 
+      // Load prompts for this song
+      const prompts = loadPromptData(songsPath, id);
+
+      // Insert prompts into database
+      if (prompts.length > 0) {
+        await insertIllustrationPrompts(db, id, prompts);
+      }
+
       const illustrations = parseIllustrations(entry.availableIllustrations);
 
       if (illustrations.length > 0) {
@@ -336,7 +424,14 @@ async function processAndMigrateSongs(
           );
         }
 
-        await insertIllustrations(db, id, illustrations, activeModel, now);
+        await insertIllustrations(
+          db,
+          id,
+          illustrations,
+          activeModel,
+          prompts,
+          now
+        );
       }
 
       successCount++;
@@ -380,6 +475,7 @@ async function main(): Promise<void> {
 }
 
 main();
-// ro run, use: npx tsx scripts/populateSongDB.ts --songs-path="songs"
-// to delete previous data run: npx wrangler d1 execute zpevnik --local --command "DELETE FROM song_illustration;DELETE FROM song_version;DELETE FROM song;"
+// To run, use: npx tsx scripts/populateSongDB.ts --songs-path="songs"
+// To delete previous data run: npx wrangler d1 execute zpevnik --local --command "DELETE FROM song_illustration;DELETE FROM illustration_prompt;DELETE FROM song_version;"
+
 export { processAndMigrateSongs, loadSongData };
