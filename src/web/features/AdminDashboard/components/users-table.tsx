@@ -1,37 +1,48 @@
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "~/components/ui/button"
-import { Input } from "~/components/ui/input"
-import { Badge } from "~/components/ui/badge"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog"
-import { Label } from "~/components/ui/label"
-import { Switch } from "~/components/ui/switch"
-import { Plus, Edit, Search, Trash2, ChevronLeft, ChevronRight } from "lucide-react"
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
-import { useRouteContext } from "@tanstack/react-router"
-import { 
-  fetchUsersAdmin, 
-  createUserAdmin, 
-  updateUserAdmin, 
-  deleteUserAdmin 
-} from "~/services/users" // Adjust import path as needed
-import { toast } from "sonner" // Assuming you're using sonner for toasts
+import { useState, useEffect } from "react";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { Badge } from "~/components/ui/badge";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
+import { Label } from "~/components/ui/label";
+import { Switch } from "~/components/ui/switch";
+import { Edit, Search, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
+import {
+  fetchUsersAdmin,
+  updateUserAdmin,
+  deleteUserAdmin,
+} from "~/services/users"; // Adjust import path as needed
+import { toast } from "sonner"; // Assuming you're using sonner for toasts
 
 interface User {
-  id: string
-  name: string
-  email: string
-  emailVerified: boolean
-  image?: string
-  nickname?: string
-  isTrusted: boolean
-  isAdmin: boolean
-  isFavoritesPublic: boolean
-  createdAt: Date
-  updatedAt: Date
-  lastLogin: Date
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  image?: string;
+  nickname?: string;
+  isTrusted: boolean;
+  isAdmin: boolean;
+  isFavoritesPublic: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  lastLogin: Date;
 }
 
 interface UsersResponse {
@@ -49,105 +60,98 @@ interface UsersTableProps {
 }
 
 export function UsersTable({ initialUsers }: UsersTableProps) {
-  const { api } = useRouteContext({ from: "/admin" })
-  const queryClient = useQueryClient()
-  
-  const [searchTerm, setSearchTerm] = useState("")
-  const [currentPage, setCurrentPage] = useState(0)
-  const [editingUser, setEditingUser] = useState<User | null>(null)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false)
-  const [userToDelete, setUserToDelete] = useState<User | null>(null)
-  
-  const pageSize = 20
+  const { api } = useRouteContext({ from: "/admin" });
+  const queryClient = useQueryClient();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+
+  const pageSize = 20;
 
   // Fetch users with search and pagination
-  const { data: usersData, isLoading, error } = useQuery({
-    queryKey: ['users', searchTerm, currentPage],
-    queryFn: () => fetchUsersAdmin(api.admin, {
-      search: searchTerm || undefined,
-      limit: pageSize,
-      offset: currentPage * pageSize,
-    }),
+  const {
+    data: usersData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["users", searchTerm, currentPage],
+    queryFn: () =>
+      fetchUsersAdmin(api.admin.users, {
+        search: searchTerm || undefined,
+        limit: pageSize,
+        offset: currentPage * pageSize,
+      }),
     initialData: currentPage === 0 && !searchTerm ? initialUsers : undefined,
     staleTime: 1000 * 60 * 2, // 2 minutes
-  })
-
-  // Create user mutation
-  const createUserMutation = useMutation({
-    mutationFn: (userData: Parameters<typeof createUserAdmin>[1]) => 
-      createUserAdmin(api.admin, userData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] })
-      toast.success('User created successfully')
-      setIsDialogOpen(false)
-      setEditingUser(null)
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || 'Failed to create user')
-    },
-  })
+  });
 
   // Update user mutation
   const updateUserMutation = useMutation({
-    mutationFn: ({ userId, userData }: { userId: string; userData: Parameters<typeof updateUserAdmin>[2] }) =>
-      updateUserAdmin(api.admin, userId, userData),
+    mutationFn: ({
+      userId,
+      userData,
+    }: {
+      userId: string;
+      userData: Parameters<typeof updateUserAdmin>[2];
+    }) => updateUserAdmin(api.admin.users, userId, userData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] })
-      toast.success('User updated successfully')
-      setIsDialogOpen(false)
-      setEditingUser(null)
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      toast.success("User updated successfully");
+      setIsDialogOpen(false);
+      setEditingUser(null);
     },
     onError: (error: Error) => {
-      toast.error(error.message || 'Failed to update user')
+      toast.error(error.message || "Failed to update user");
     },
-  })
+  });
 
   // Delete user mutation
   const deleteUserMutation = useMutation({
-    mutationFn: (userId: string) => deleteUserAdmin(api.admin, userId),
+    mutationFn: (userId: string) => deleteUserAdmin(api.admin.users, userId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] })
-      toast.success('User deleted successfully')
-      setIsDeleteConfirmOpen(false)
-      setUserToDelete(null)
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      toast.success("User deleted successfully");
+      setIsDeleteConfirmOpen(false);
+      setUserToDelete(null);
     },
     onError: (error: Error) => {
-      toast.error(error.message || 'Failed to delete user')
+      toast.error(error.message || "Failed to delete user");
     },
-  })
+  });
 
   // Reset page when search changes
   useEffect(() => {
-    setCurrentPage(0)
-  }, [searchTerm])
+    setCurrentPage(0);
+  }, [searchTerm]);
 
   const handleSaveUser = (userData: Partial<User>) => {
     if (editingUser) {
-      updateUserMutation.mutate({ 
-        userId: editingUser.id, 
-        userData 
-      })
-    } else {
-      createUserMutation.mutate(userData as Parameters<typeof createUserAdmin>[1])
+      updateUserMutation.mutate({
+        userId: editingUser.id,
+        userData,
+      });
     }
-  }
+  };
 
   const handleDeleteUser = (user: User) => {
-    setUserToDelete(user)
-    setIsDeleteConfirmOpen(true)
-  }
+    setUserToDelete(user);
+    setIsDeleteConfirmOpen(true);
+  };
 
   const confirmDeleteUser = () => {
     if (userToDelete) {
-      deleteUserMutation.mutate(userToDelete.id)
+      deleteUserMutation.mutate(userToDelete.id);
     }
-  }
+  };
 
-  const users = usersData?.users || []
-  const totalPages = Math.ceil((usersData?.pagination.total || 0) / pageSize)
-  const hasNextPage = usersData?.pagination.hasMore || false
-  const hasPrevPage = currentPage > 0
+  const users = usersData?.users || [];
+  const totalPages = Math.ceil((usersData?.pagination.total || 0) / pageSize);
+  const hasNextPage = usersData?.pagination.hasMore || false;
+  const hasPrevPage = currentPage > 0;
 
   if (error) {
     return (
@@ -156,36 +160,15 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
           <h3 className="text-lg font-medium">Users</h3>
         </div>
         <div className="text-center text-red-500 py-8">
-          Failed to load users: {error instanceof Error ? error.message : 'Unknown error'}
+          Failed to load users:{" "}
+          {error instanceof Error ? error.message : "Unknown error"}
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">Users</h3>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => setEditingUser(null)}>
-              <Plus className="mr-2 h-4 w-4" />
-              Add User
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>{editingUser ? "Edit User" : "Add New User"}</DialogTitle>
-            </DialogHeader>
-            <UserForm 
-              user={editingUser} 
-              onSave={handleSaveUser}
-              isLoading={createUserMutation.isPending || updateUserMutation.isPending}
-            />
-          </DialogContent>
-        </Dialog>
-      </div>
-
       <div className="flex items-center space-x-2">
         <Search className="h-4 w-4 text-muted-foreground" />
         <Input
@@ -206,6 +189,7 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
               <TableHead>Status</TableHead>
               <TableHead>Roles</TableHead>
               <TableHead>Created</TableHead>
+              <TableHead>Last login</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -229,25 +213,36 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.nickname || "-"}</TableCell>
                   <TableCell>
-                    <Badge variant={user.emailVerified ? "default" : "secondary"}>
+                    <Badge
+                      variant={user.emailVerified ? "default" : "secondary"}
+                    >
                       {user.emailVerified ? "Verified" : "Unverified"}
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-1">
-                      {user.isAdmin && <Badge variant="destructive">Admin</Badge>}
-                      {user.isTrusted && <Badge variant="default">Trusted</Badge>}
+                      {user.isAdmin && (
+                        <Badge variant="destructive">Admin</Badge>
+                      )}
+                      {user.isTrusted && (
+                        <Badge variant="default">Trusted</Badge>
+                      )}
                     </div>
                   </TableCell>
-                  <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell>
+                    {new Date(user.createdAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>
+                    {new Date(user.lastLogin).toLocaleDateString()}
+                  </TableCell>
                   <TableCell>
                     <div className="flex gap-1">
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => {
-                          setEditingUser(user)
-                          setIsDialogOpen(true)
+                          setEditingUser(user);
+                          setIsDialogOpen(true);
                         }}
                       >
                         <Edit className="h-4 w-4" />
@@ -273,9 +268,12 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
       {totalPages > 1 && (
         <div className="flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
-            Showing {currentPage * pageSize + 1} to{' '}
-            {Math.min((currentPage + 1) * pageSize, usersData?.pagination.total || 0)} of{' '}
-            {usersData?.pagination.total || 0} users
+            Showing {currentPage * pageSize + 1} to{" "}
+            {Math.min(
+              (currentPage + 1) * pageSize,
+              usersData?.pagination.total || 0
+            )}{" "}
+            of {usersData?.pagination.total || 0} users
           </div>
           <div className="flex items-center gap-2">
             <Button
@@ -303,6 +301,20 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
         </div>
       )}
 
+      {/* Edit user dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit User</DialogTitle>
+          </DialogHeader>
+          <UserForm
+            user={editingUser}
+            onSave={handleSaveUser}
+            isLoading={updateUserMutation.isPending}
+          />
+        </DialogContent>
+      </Dialog>
+
       {/* Delete confirmation dialog */}
       <Dialog open={isDeleteConfirmOpen} onOpenChange={setIsDeleteConfirmOpen}>
         <DialogContent>
@@ -312,7 +324,8 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
           <div className="space-y-4">
             <p>Are you sure you want to delete user "{userToDelete?.name}"?</p>
             <p className="text-sm text-muted-foreground">
-              This action cannot be undone. All user data will be permanently deleted.
+              This action cannot be undone. All user data will be permanently
+              deleted.
             </p>
             <div className="flex justify-end gap-2">
               <Button
@@ -333,17 +346,17 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
 
-function UserForm({ 
-  user, 
-  onSave, 
-  isLoading 
-}: { 
-  user: User | null
-  onSave: (data: Partial<User>) => void
-  isLoading?: boolean
+function UserForm({
+  user,
+  onSave,
+  isLoading,
+}: {
+  user: User | null;
+  onSave: (data: Partial<User>) => void;
+  isLoading?: boolean;
 }) {
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -353,7 +366,7 @@ function UserForm({
     isTrusted: user?.isTrusted || false,
     isAdmin: user?.isAdmin || false,
     isFavoritesPublic: user?.isFavoritesPublic || false,
-  })
+  });
 
   // Update form data when user prop changes
   useEffect(() => {
@@ -366,24 +379,14 @@ function UserForm({
         isTrusted: user.isTrusted,
         isAdmin: user.isAdmin,
         isFavoritesPublic: user.isFavoritesPublic,
-      })
-    } else {
-      setFormData({
-        name: "",
-        email: "",
-        nickname: "",
-        emailVerified: false,
-        isTrusted: false,
-        isAdmin: false,
-        isFavoritesPublic: false,
-      })
+      });
     }
-  }, [user])
+  }, [user]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    onSave(formData)
-  }
+    e.preventDefault();
+    onSave(formData);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -404,7 +407,9 @@ function UserForm({
             id="email"
             type="email"
             value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             required
             disabled={isLoading}
           />
@@ -416,7 +421,9 @@ function UserForm({
         <Input
           id="nickname"
           value={formData.nickname}
-          onChange={(e) => setFormData({ ...formData, nickname: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, nickname: e.target.value })
+          }
           disabled={isLoading}
         />
       </div>
@@ -426,7 +433,9 @@ function UserForm({
           <Switch
             id="emailVerified"
             checked={formData.emailVerified}
-            onCheckedChange={(checked) => setFormData({ ...formData, emailVerified: checked })}
+            onCheckedChange={(checked) =>
+              setFormData({ ...formData, emailVerified: checked })
+            }
             disabled={isLoading}
           />
           <Label htmlFor="emailVerified">Email Verified</Label>
@@ -436,7 +445,9 @@ function UserForm({
           <Switch
             id="isTrusted"
             checked={formData.isTrusted}
-            onCheckedChange={(checked) => setFormData({ ...formData, isTrusted: checked })}
+            onCheckedChange={(checked) =>
+              setFormData({ ...formData, isTrusted: checked })
+            }
             disabled={isLoading}
           />
           <Label htmlFor="isTrusted">Trusted User</Label>
@@ -446,7 +457,9 @@ function UserForm({
           <Switch
             id="isAdmin"
             checked={formData.isAdmin}
-            onCheckedChange={(checked) => setFormData({ ...formData, isAdmin: checked })}
+            onCheckedChange={(checked) =>
+              setFormData({ ...formData, isAdmin: checked })
+            }
             disabled={isLoading}
           />
           <Label htmlFor="isAdmin">Admin</Label>
@@ -456,7 +469,9 @@ function UserForm({
           <Switch
             id="isFavoritesPublic"
             checked={formData.isFavoritesPublic}
-            onCheckedChange={(checked) => setFormData({ ...formData, isFavoritesPublic: checked })}
+            onCheckedChange={(checked) =>
+              setFormData({ ...formData, isFavoritesPublic: checked })
+            }
             disabled={isLoading}
           />
           <Label htmlFor="isFavoritesPublic">Public Favorites</Label>
@@ -464,8 +479,8 @@ function UserForm({
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? (user ? "Updating..." : "Creating...") : (user ? "Update User" : "Create User")}
+        {isLoading ? "Updating..." : "Update User"}
       </Button>
     </form>
-  )
+  );
 }

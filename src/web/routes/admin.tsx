@@ -13,7 +13,7 @@ export const Route = createFileRoute("/admin")({
   component: Home,
   beforeLoad: async ({ context }) => {
     const userProfile = context.queryClient.getQueryData(["userProfile"]);
-    if (!(import.meta.env.DEV || userProfile?.isAdmin)) {
+    if (!(userProfile?.isAdmin)) {
       throw redirect({ to: "/" });
     }
     return context;

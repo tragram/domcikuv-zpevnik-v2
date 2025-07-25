@@ -28,7 +28,7 @@ interface Timestamped {
 
 type WithTimestamps<T> = T & Timestamped;
 
-const parseDBDates = <T>(o: WithTimestamps<T>) => {
+export const parseDBDates = <T>(o: WithTimestamps<T>) => {
   return {
     ...o,
     createdAt: new Date(o.createdAt),

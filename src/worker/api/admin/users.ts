@@ -1,8 +1,8 @@
 import { z } from "zod/v4";
 import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
-import { user } from "../../../lib/db/schema";
+import { user, UserDB } from "../../../lib/db/schema";
 import { eq, desc, like, or, count } from "drizzle-orm";
-import { buildApp } from "../utils";
+import { buildApp, PaginatedResponse } from "../utils";
 import { createInsertSchema } from "drizzle-zod";
 import { zValidator } from "@hono/zod-validator";
 
@@ -30,31 +30,47 @@ const userSearchSchema = z.object({
   offset: z.coerce.number().min(0).default(0),
 });
 
+export type UsersResponse = PaginatedResponse<UserDB[], "users">;
+
 export const userRoutes = buildApp()
-  .get("/users", zValidator("query", userSearchSchema), async (c) => {
+  .get("/", zValidator("query", userSearchSchema), async (c) => {
     try {
       const { search, limit, offset } = c.req.valid("query");
       const db = drizzle(c.env.DB);
 
-      const searchTerm = `%${search?.trim()}%`;
+      // Build where clause for search
+      let whereClause = undefined;
+      if (search && search.trim()) {
+        const searchTerm = `%${search.trim()}%`;
+        whereClause = or(
+          like(user.name, searchTerm),
+          like(user.email, searchTerm),
+          like(user.nickname, searchTerm)
+        );
+      }
 
-      // TODO: the where clause is ignored
-      const whereClause = or(
-        like(user.name, searchTerm),
-        like(user.email, searchTerm),
-        like(user.nickname, searchTerm)
-      );
-
+      // Execute queries with proper where clause handling
       const [users, totalCountResult] = await Promise.all([
-        db
-          .select()
-          .from(user)
-          // .where(whereClause)
-          .orderBy(desc(user.createdAt))
-          .limit(limit)
-          .offset(offset),
+        // Users query with conditional where clause
+        whereClause 
+          ? db
+              .select()
+              .from(user)
+              .where(whereClause)
+              .orderBy(desc(user.createdAt))
+              .limit(limit)
+              .offset(offset)
+          : db
+              .select()
+              .from(user)
+              .orderBy(desc(user.createdAt))
+              .limit(limit)
+              .offset(offset),
 
-        db.select({ count: count() }).from(user), //.where(whereClause),
+        // Count query with conditional where clause
+        whereClause
+          ? db.select({ count: count() }).from(user).where(whereClause)
+          : db.select({ count: count() }).from(user),
       ]);
 
       const totalCount = totalCountResult[0]?.count ?? 0;
@@ -85,64 +101,7 @@ export const userRoutes = buildApp()
     }
   })
 
-  .post("/users", zValidator("json", createUserSchema), async (c) => {
-    try {
-      const userData = c.req.valid("json");
-      const db = drizzle(c.env.DB);
-
-      // Check if email already exists
-      const existingUser = await db
-        .select({ id: user.id })
-        .from(user)
-        .where(eq(user.email, userData.email))
-        .limit(1);
-
-      if (existingUser.length > 0) {
-        return c.json(
-          {
-            status: "error",
-            message: "A user with this email already exists",
-            code: "EMAIL_EXISTS",
-          },
-          409
-        );
-      }
-
-      const newId = crypto.randomUUID();
-      const now = new Date();
-
-      const newUser = await db
-        .insert(user)
-        .values({
-          id: newId,
-          ...userData,
-          createdAt: now,
-          updatedAt: now,
-          lastLogin: now,
-        })
-        .returning();
-
-      return c.json(
-        {
-          success: true,
-          user: newUser,
-        },
-        201
-      );
-    } catch (error) {
-      console.error("Error creating user:", error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to create user",
-          code: "CREATE_ERROR",
-        },
-        500
-      );
-    }
-  })
-
-  .get("/users/:id", async (c) => {
+  .get("/:id", async (c) => {
     try {
       const userId = c.req.param("id");
 
@@ -152,7 +111,7 @@ export const userRoutes = buildApp()
           {
             status: "fail",
             failData: {
-              "user.id": "Invalid user ID format (must be >=10 characters)",
+              message: "Invalid user ID format (must be >=10 characters)",
             },
           },
           400
@@ -193,19 +152,21 @@ export const userRoutes = buildApp()
     }
   })
 
-  .put("/users/:id", zValidator("json", updateUserSchema), async (c) => {
+  .put("/:id", zValidator("json", updateUserSchema), async (c) => {
     try {
       const userId = c.req.param("id");
       const userData = c.req.valid("json");
       const currentUserId = c.get("USER")?.id;
       const db = drizzle(c.env.DB);
-
       // Basic UUID validation
       if (!userId || userId.length < 10) {
         return c.json(
           {
             status: "fail",
-            failData: { "user.id": "Invalid user ID format", code: "INVALID_ID" },
+            failData: {
+              message: "Invalid user ID format",
+              code: "INVALID_ID",
+            },
           },
           400
         );
@@ -236,7 +197,7 @@ export const userRoutes = buildApp()
             {
               status: "fail",
               failData: {
-                "user.isAdmin": "Cannot remove your own admin priviledges!",
+                message: "Cannot remove your own admin priviledges!",
                 code: "REMOVE_SELF_ADMIN_FORBIDDEN",
               },
             },
@@ -258,7 +219,7 @@ export const userRoutes = buildApp()
             {
               status: "fail",
               failData: {
-                "user.email": "A user with this email already exists",
+                message: "A user with this email already exists",
                 code: "EMAIL_EXISTS",
               },
             },
@@ -281,10 +242,9 @@ export const userRoutes = buildApp()
         .from(user)
         .where(eq(user.id, userId))
         .limit(1);
-
       return c.json({
-        success: true,
-        user: updatedUser[0],
+        status: "success",
+        data: updatedUser[0],
       });
     } catch (error) {
       console.error("Error updating user:", error);
@@ -299,7 +259,7 @@ export const userRoutes = buildApp()
     }
   })
 
-  .delete("/users/:id", async (c) => {
+  .delete("/:id", async (c) => {
     try {
       const userId = c.req.param("id");
       const db = drizzle(c.env.DB);
@@ -325,7 +285,7 @@ export const userRoutes = buildApp()
           {
             status: "fail",
             failData: {
-              "user.id": "You cannot delete your own account",
+              message: "You cannot delete your own account",
               code: "SELF_DELETE_FORBIDDEN",
             },
           },
@@ -349,7 +309,7 @@ export const userRoutes = buildApp()
           {
             status: "fail",
             failData: {
-              "user.id": "User not found",
+              message: "User not found",
               code: "USER_NOT_FOUND",
             },
           },
@@ -363,7 +323,7 @@ export const userRoutes = buildApp()
           {
             status: "fail",
             failData: {
-              "user.isAdmin":
+              message:
                 "Cannot delete an administrator. Please remove admin priviledges first",
               code: "CANNOT_DELETE_ADMIN",
             },
@@ -371,7 +331,6 @@ export const userRoutes = buildApp()
           404
         );
       }
-
       await db.delete(user).where(eq(user.id, userId));
 
       return c.json({

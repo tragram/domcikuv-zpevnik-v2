@@ -73,7 +73,7 @@ export default function AdminDashboard({
   versions,
   users,
 }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState("illustrations");
+  const [activeTab, setActiveTab] = useState("users");
   const getTabTitle = (tab: string) => {
     switch (tab) {
       case "songs":

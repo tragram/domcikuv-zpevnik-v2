@@ -16,13 +16,15 @@ export class ApiException extends Error {
 
 // Extract the data type from a JSend success response
 // Handle the case where status is inferred as string rather than literal "success"
-type ExtractJSendData<T> = T extends { status: string; data: infer U } 
-  ? U 
+type ExtractJSendData<T> = T extends { status: string; data: infer U }
+  ? U
   : T extends { data: infer U }
   ? U
   : never;
 
-export async function handleApiResponse<T>(response: Response): Promise<ExtractJSendData<T>> {
+export async function handleApiResponse<T>(
+  response: Response
+): Promise<ExtractJSendData<T>> {
   let json: any;
   try {
     json = await response.json();
@@ -40,7 +42,7 @@ export async function handleApiResponse<T>(response: Response): Promise<ExtractJ
 
   if (json.status === "fail") {
     throw new ApiException(
-      "Request failed",
+      json.failData?.message ?? "Request failed",
       response.status,
       undefined,
       json.failData

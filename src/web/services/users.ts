@@ -1,7 +1,12 @@
 import { UserDB } from "src/lib/db/schema/auth.schema";
 import client from "../../worker/api-client";
 import { handleApiResponse, makeApiRequest } from "./apiHelpers";
-import { CreateUserSchema, UpdateUserSchema } from "src/worker/api/admin/users";
+import {
+  CreateUserSchema,
+  UpdateUserSchema,
+  UsersResponse,
+} from "src/worker/api/admin/users";
+import { parseDBDates } from "./songs";
 
 export type UsersApi = typeof client.api.admin.users;
 
@@ -9,18 +14,6 @@ interface UserSearchParams {
   search?: string;
   limit?: number;
   offset?: number;
-}
-
-interface UsersResponse {
-  users: UserDB[];
-  pagination: {
-    total: number;
-    limit: number;
-    offset: number;
-    hasMore: boolean;
-    currentPage: number;
-    totalPages: number;
-  };
 }
 
 /**
@@ -43,6 +36,7 @@ export async function fetchUsersAdmin(
       },
     })
   );
+  response.users = response.users.map(parseDBDates);
   return response;
 }
 
@@ -97,6 +91,7 @@ export async function updateUserAdmin(
   userId: string,
   userData: UpdateUserSchema
 ): Promise<{ success: boolean; user: UserDB }> {
+  console.log(userId, userData);
   const response = await makeApiRequest(() =>
     api[":id"].$put({
       param: { id: userId },
