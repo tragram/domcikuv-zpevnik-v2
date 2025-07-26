@@ -14,7 +14,6 @@ export const Route = createFileRoute("/(auth)/login")({
 function LoginForm() {
   const { redirectURL, queryClient } = Route.useRouteContext();
   const navigate = useNavigate();
-  console.log(redirectURL)
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");

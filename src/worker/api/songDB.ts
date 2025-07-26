@@ -43,51 +43,78 @@ export const songDBRoutes = buildApp()
     const userId = c.get("USER")?.id;
 
     try {
-      const songsRaw = await db
-        .select({
-          id: song.id,
-          title: song.title,
-          artist: song.artist,
-          key: song.key,
-          createdAt: song.createdAt,
-          updatedAt: song.updatedAt,
-          startMelody: song.startMelody,
-          language: song.language,
-          tempo: song.tempo,
-          capo: song.capo || 0,
-          range: song.range,
-          chordproURL: song.chordproURL,
-          currentIllustration: {
-            promptId: songIllustration.promptId,
-            imageModel: songIllustration.imageModel,
-            imageURL: songIllustration.imageURL,
-            thumbnailURL: songIllustration.thumbnailURL,
-          },
-          isFavoriteByCurrentUser: userFavoriteSongs.userId,
-        })
-        .from(song)
-        .where(eq(song.hidden, false))
-        .leftJoin(
-          songIllustration,
-          and(
-            eq(songIllustration.songId, song.id),
-            eq(songIllustration.isActive, true)
+      const baseSelectFields = {
+        id: song.id,
+        title: song.title,
+        artist: song.artist,
+        key: song.key,
+        createdAt: song.createdAt,
+        updatedAt: song.updatedAt,
+        startMelody: song.startMelody,
+        language: song.language,
+        tempo: song.tempo,
+        capo: song.capo || 0,
+        range: song.range,
+        chordproURL: song.chordproURL,
+        currentIllustration: {
+          promptId: songIllustration.promptId,
+          imageModel: songIllustration.imageModel,
+          imageURL: songIllustration.imageURL,
+          thumbnailURL: songIllustration.thumbnailURL,
+        },
+      };
+
+      let songsRaw;
+
+      if (userId) {
+        // User is logged in - include favorites join and field
+        songsRaw = await db
+          .select({
+            ...baseSelectFields,
+            isFavoriteByCurrentUser: userFavoriteSongs.userId,
+          })
+          .from(song)
+          .where(eq(song.hidden, false))
+          .leftJoin(
+            songIllustration,
+            and(
+              eq(songIllustration.songId, song.id),
+              eq(songIllustration.isActive, true)
+            )
           )
-        )
-        .leftJoin(
-          userFavoriteSongs,
-          userId
-            ? and(
-                eq(userFavoriteSongs.songId, song.id),
-                eq(userFavoriteSongs.userId, userId)
-              )
-            : undefined
-        );
+          .leftJoin(
+            userFavoriteSongs,
+            and(
+              eq(userFavoriteSongs.songId, song.id),
+              eq(userFavoriteSongs.userId, userId)
+            )
+          );
+      } else {
+        // No user logged in - exclude favorites entirely
+        const rawResults = await db
+          .select(baseSelectFields)
+          .from(song)
+          .where(eq(song.hidden, false))
+          .leftJoin(
+            songIllustration,
+            and(
+              eq(songIllustration.songId, song.id),
+              eq(songIllustration.isActive, true)
+            )
+          );
+        
+        // Add the missing field with default value
+        songsRaw = rawResults.map(song => ({
+          ...song,
+          isFavoriteByCurrentUser: null,
+        }));
+      }
 
       const songs = songsRaw.map((song) => ({
         ...song,
         isFavoriteByCurrentUser: !!song.isFavoriteByCurrentUser,
       }));
+      
       return c.json({
         status: "success",
         data: songs as SongDataApi[],
