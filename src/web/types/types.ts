@@ -61,3 +61,5 @@ export interface UserData extends User {
   loggedIn: boolean;
   favorites: Set<string>;
 }
+
+export type ChordPro = string;

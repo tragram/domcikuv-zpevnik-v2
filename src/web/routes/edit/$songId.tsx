@@ -1,29 +1,34 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Editor from "~/features/Editor/Editor";
-import { fetchSong } from "~/services/songs";
+import { fetchSongContent } from "~/services/songs";
 
 export const Route = createFileRoute("/edit/$songId")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
     const songDB = context.songDB;
     const songId = params.songId;
+    const songData = songDB.songs.find((s) => (s.id = songId));
 
-    const songData = await context.queryClient.fetchQuery({
+    // TODO: show error song if not found
+    const songContent = await context.queryClient.fetchQuery({
       queryKey: ["song", songId],
-      queryFn: () => fetchSong(songId, songDB),
-      staleTime: "static"
+      queryFn: () => fetchSongContent(songData),
+      staleTime: "static",
     });
 
     // TODO: show error song
     return {
-      userData: context.userData,
+      user: context.user,
       songDB,
       songData,
+      songContent,
     };
   },
 });
 
 function RouteComponent() {
-  const { userData, songDB, songData } = Route.useLoaderData();
-  return <Editor songDB={songDB} songData={songData} />;
+  const { user, songDB, songData, songContent } = Route.useLoaderData();
+  return (
+    <Editor songDB={songDB} songData={songData} songContent={songContent} />
+  );
 }

@@ -123,7 +123,6 @@ function partVariation(
       }
 
     case "replace_first_line":
-      console.log(originalLines, sectionTitle, variantContent);
       if (repeat) {
         // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
         return [

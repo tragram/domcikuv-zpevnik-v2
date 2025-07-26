@@ -1,11 +1,20 @@
-import { SongData } from '~/types/songData';
-import { ChordProParser, FormatterSettings, HtmlFormatter } from "chordproject-parser";
-import { czechToEnglish, preparseDirectives, transposeChordPro } from './preparseChordpro';
-import { Key } from '~/types/musicTypes';
-import { convertHTMLChordNotation } from './chordNotation';
-import { postProcessChordPro } from './postProcessing';
-import { useMemo } from 'react';
-import memoize from 'memoize-one';
+import { SongData } from "~/types/songData";
+import {
+  ChordProParser,
+  FormatterSettings,
+  HtmlFormatter,
+} from "chordproject-parser";
+import {
+  czechToEnglish,
+  preparseDirectives,
+  transposeChordPro,
+} from "./preparseChordpro";
+import { Key } from "~/types/musicTypes";
+import { convertHTMLChordNotation } from "./chordNotation";
+import { postProcessChordPro } from "./postProcessing";
+import { useMemo } from "react";
+import memoize from "memoize-one";
+import { ChordPro } from "~/types/types";
 /**
  * Default section directives
  */
@@ -15,7 +24,11 @@ const DEFAULT_SECTION_LABELS = ["R", "B", ""];
 /**
  * Default section classes used in rendering
  */
-const DEFAULT_RENDERED_SECTIONS = ["verse-section", "chorus-section", "bridge-section"];
+const DEFAULT_RENDERED_SECTIONS = [
+  "verse-section",
+  "chorus-section",
+  "bridge-section",
+];
 
 /**
  * Parses ChordPro format content with various transformations
@@ -25,26 +38,30 @@ const DEFAULT_RENDERED_SECTIONS = ["verse-section", "chorus-section", "bridge-se
  * @returns Parsed song object
  */
 function parseChordPro(
-    chordProContent: string,
-    songKey: Key | null,
-    transposeSteps: number | null
+  chordProContent: string,
+  songKey: Key | null,
+  transposeSteps: number | null
 ) {
-    // Use memoized function to avoid repeated processing
-    const memoizedCzechToEnglish = memoize(czechToEnglish);
-    const withEnglishChords = memoizedCzechToEnglish(chordProContent);
+  // Use memoized function to avoid repeated processing
+  const memoizedCzechToEnglish = memoize(czechToEnglish);
+  const withEnglishChords = memoizedCzechToEnglish(chordProContent);
 
-    // Process the directive sections
-    const preparsedContent = preparseDirectives(
-        withEnglishChords,
-        DEFAULT_SECTION_DIRECTIVES,
-        DEFAULT_SECTION_LABELS,
-    );
-    // Transpose the song if needed
-    const transposedContent = transposeChordPro(preparsedContent, songKey, transposeSteps ?? 0);
+  // Process the directive sections
+  const preparsedContent = preparseDirectives(
+    withEnglishChords,
+    DEFAULT_SECTION_DIRECTIVES,
+    DEFAULT_SECTION_LABELS
+  );
+  // Transpose the song if needed
+  const transposedContent = transposeChordPro(
+    preparsedContent,
+    songKey,
+    transposeSteps ?? 0
+  );
 
-    // Parse the processed content
-    const parser = new ChordProParser();
-    return parser.parse(transposedContent);
+  // Parse the processed content
+  const parser = new ChordProParser();
+  return parser.parse(transposedContent);
 }
 
 /**
@@ -53,9 +70,9 @@ function parseChordPro(
  * @returns Detected key or undefined
  */
 export function guessKey(chordProContent: string): Key | undefined {
-    const song = parseChordPro(chordProContent, null, 0);
-    const possibleKey = song.getPossibleKey()?.toString() || "";
-    return Key.parse(possibleKey, false);
+  const song = parseChordPro(chordProContent, null, 0);
+  const possibleKey = song.getPossibleKey()?.toString() || "";
+  return Key.parse(possibleKey, false);
 }
 
 /**
@@ -67,26 +84,31 @@ export function guessKey(chordProContent: string): Key | undefined {
  * @returns Rendered HTML
  */
 export function renderSong(
-    songData: SongData,
-    transposeSteps: number,
-    centralEuropeanNotation: boolean
+  songData: SongData,
+  songContent: ChordPro,
+  transposeSteps: number,
+  centralEuropeanNotation: boolean
 ): string {
-    // Parse and process the chord pro content
-    if (!songData.content) {
-        console.log("songData.content is undefined");
-    }
-    const song = parseChordPro(songData.content || "Nothing to show... ;-)", songData.key ?? null, transposeSteps);
-    // Configure formatter settings
-    const settings = new FormatterSettings();
-    settings.showMetadata = false;
+  // Parse and process the chord pro content
+  if (!songContent) {
+    console.log("songContent is undefined");
+  }
+  const song = parseChordPro(
+    songContent || "Nothing to show... ;-)",
+    songData.key ?? null,
+    transposeSteps
+  );
+  // Configure formatter settings
+  const settings = new FormatterSettings();
+  settings.showMetadata = false;
 
-    // Format the song to HTML
-    const formatter = new HtmlFormatter(settings);
-    let songText = formatter.format(song).join('\n');
+  // Format the song to HTML
+  const formatter = new HtmlFormatter(settings);
+  let songText = formatter.format(song).join("\n");
 
-    // Apply Central European notation if requested
-    songText = convertHTMLChordNotation(songText, centralEuropeanNotation);
+  // Apply Central European notation if requested
+  songText = convertHTMLChordNotation(songText, centralEuropeanNotation);
 
-    // Process repetitions
-    return postProcessChordPro(songText, DEFAULT_RENDERED_SECTIONS);
+  // Process repetitions
+  return postProcessChordPro(songText, DEFAULT_RENDERED_SECTIONS);
 }

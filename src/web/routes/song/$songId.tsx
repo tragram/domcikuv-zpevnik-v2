@@ -1,29 +1,33 @@
 import { createFileRoute } from "@tanstack/react-router";
 import SongView from "~/features/SongView/SongView";
-import { fetchSong } from "~/services/songs";
+import { fetchSongContent } from "~/services/songs";
 
 export const Route = createFileRoute("/song/$songId")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
     const songDB = context.songDB;
     const songId = params.songId;
+    const songData = songDB.songs.find((s) => s.id === songId);
 
-    const songData = await context.queryClient.fetchQuery({
+    // TODO: show error song if not found
+    const songContent = await context.queryClient.fetchQuery({
       queryKey: ["song", songId],
-      queryFn: () => fetchSong(songId, songDB),
-      staleTime: "static"
+      queryFn: () => fetchSongContent(songData),
+      staleTime: "static",
     });
 
-    // TODO: show error song
     return {
-      userData: context.userData,
+      user: context.user,
       songDB,
       songData,
+      songContent,
     };
   },
 });
 
 function RouteComponent() {
-  const { userData, songDB, songData } = Route.useLoaderData();
-  return <SongView songDB={songDB} songData={songData} />;
+  const { songDB, songData, songContent } = Route.useLoaderData();
+  return (
+    <SongView songDB={songDB} songData={songData} songContent={songContent} />
+  );
 }

@@ -16,6 +16,7 @@ import client from "~/../worker/api-client";
 import { guessKey } from "~/features/SongView/utils/songRendering";
 import { SongData } from "~/types/songData";
 import {
+  ChordPro,
   isValidSongLanguage,
   LanguageCount,
   SongDB,
@@ -143,28 +144,21 @@ export const fetchIllustrationPrompt = async (songId: string): Promise<any> => {
  * @returns Promise containing the parsed song data
  * @throws {ApiException} When song data cannot be fetched
  */
-export const fetchSong = async (
+export const fetchSongContent = async (
+  songData: SongData
+): Promise<ChordPro> => {
+  const response = await fetch(songData.chordproURL);
+  const songContent = await response.text();
+  return songContent;
+};
+
+export const fetchSongFromId = async (
   songId: string,
   songDB: SongDB
-): Promise<SongData> => {
-  const response = await fetch(SongData.chordproURL(songId));
-  const songRawData = await response.text();
-
-  const songIdsAndIllustrations = songDB.songs.map((s) => ({
-    id: SongData.id(s.title, s.artist),
-    availableIllustrations: s.illustrationData.availableIllustrations,
-  }));
-  const availableIllustrations = songIdsAndIllustrations.find(
-    (song) => song.id === songId
-  )?.availableIllustrations;
-
-  const songData = SongData.fromChordpro(songRawData, availableIllustrations);
-
-  if (!songData.key) {
-    songData.key = guessKey(songData.content || "");
-  }
-
-  return songData;
+): Promise<ChordPro> => {
+  const songData = songDB.songs.find((s) => (s.id = songId));
+  const songContent = await fetchSongContent(songData);
+  return songContent;
 };
 
 /**
