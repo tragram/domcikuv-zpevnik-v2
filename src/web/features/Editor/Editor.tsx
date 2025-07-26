@@ -1,10 +1,4 @@
 import { Button } from "~/components/ui/button";
-import {
-  emptySongMetadata,
-  SongData,
-  type SongMetadata,
-  songMetadataEqual,
-} from "~/types/songData";
 import React, { useCallback, useMemo } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import "../SongView/SongView.css";
@@ -30,10 +24,12 @@ export interface EditorState {
 }
 
 const editorStatesEqual = (a: EditorState, b: EditorState) => {
+  // TODO:
+  return true;
   if (a.content !== b.content) {
     return false;
   }
-  return songMetadataEqual(a.metadata, b.metadata);
+  // return songMetadataEqual(a.metadata, b.metadata);
 };
 
 const songData2State = (songData: SongData) => {
