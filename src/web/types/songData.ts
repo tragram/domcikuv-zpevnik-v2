@@ -1,241 +1,53 @@
 import { fileURL } from "~/lib/utils";
 import { Key, Note, SongRange } from "./musicTypes";
-import {
-  chordpro2JSKeywords,
-  generatedFields,
-  JS2chordproKeywords,
-  preambleKeywords,
-} from "./preambleKeywords";
 import type { int, SongLanguage } from "./types";
+import { SongDataDB } from "src/lib/db/schema";
+import { SongDataApi } from "src/worker/api/songDB";
 
-class IllustrationData {
-  promptId: string;
-  promptModel: string;
-  imageModel: string;
-  availableIllustrations: string[];
-
-  constructor(
-    promptModel: string | undefined,
-    promptId: string | undefined,
-    imageModel: string | undefined,
-    availableIllustrations: string[] | undefined
-  ) {
-    this.promptModel = promptModel || "gpt-4o-mini";
-    this.promptId = promptId || "v2";
-    this.imageModel = imageModel || "FLUX.1-dev";
-    this.availableIllustrations = availableIllustrations || [];
-  }
-
-  preferredFilenameStem(): string {
-    if (this.availableIllustrations.length == 0) {
-      console.warn("Warning: Missing image");
-      return "";
-    }
-    const preferredFilenameStem = this.toFilenameStem();
-    if (this.availableIllustrations.includes(preferredFilenameStem)) {
-      return preferredFilenameStem;
-    } else {
-      // select closest image with criteria imageModel > promptId > promptModel
-      const filters = [this.imageModel, this.promptId, this.promptModel];
-      let oldResults = this.availableIllustrations;
-      filters.forEach((f) => {
-        const newResults = this.availableIllustrations.filter((il) =>
-          il.includes(f)
-        );
-        if (newResults.length > 0) {
-          oldResults = newResults;
-        } else {
-          return oldResults[0];
-        }
-      });
-      return oldResults[0];
-    }
-  }
-
-  toFilenameStem(
-    promptModel?: string,
-    promptId?: string,
-    imageModel?: string
-  ): string {
-    return IllustrationData.toFilenameStemFactory(
-      promptModel || this.promptModel,
-      promptId || this.promptId,
-      imageModel || this.imageModel
-    );
-  }
-
-  static toFilenameStemFactory(
-    promptModel: string,
-    promptId: string,
-    imageModel: string
-  ): string {
-    return promptModel + "_" + promptId + "_" + imageModel;
-  }
-
-  static fromJSON(json: any): IllustrationData {
-    const instance = new IllustrationData(
-      json.promptModel,
-      json.promptId,
-      json.imageModel,
-      json.availableIllustrations
-    );
-    return instance;
-  }
-  reconstructPreamble(): Record<string, string> {
-    return {
-      promptId: this.promptId,
-      promptModel: this.promptModel,
-      imageModel: this.imageModel,
-    };
-  }
+interface CurrentIllustration {
+  promptId: string | null;
+  imageModel: string | null;
+  imageURL: string | null;
+  thumbnailURL: string | null;
 }
 
-interface SongMetadata {
-  // File-based fields from preambleKeywords
-  title?: string;
-  artist?: string;
-  key?: string;
-  dateAdded?: string;
-  songbooks?: string;
-  startMelody?: string;
-  language?: string;
-  tempo?: string;
-  capo?: string;
-  range?: string;
-  promptModel?: string;
-  promptId?: string;
-  imageModel?: string;
-
-  // Generated fields from generatedFields
-  chordproFile?: string;
-  contentHash?: string;
-  availableIllustrations?: string;
-}
-
-export const songMetadataEqual = (a: SongMetadata, b: SongMetadata) => {
-  const aMetadataKeys = Object.keys(a).sort();
-  const bMetadataKeys = Object.keys(b).sort();
-
-  if (aMetadataKeys.length !== bMetadataKeys.length) {
-    return false;
-  }
-  return aMetadataKeys.every(
-    (key) => a[key as keyof SongMetadata] == b[key as keyof SongMetadata]
-  );
-};
-
-export const emptySongMetadata = (): SongMetadata => {
-  return {
-    title: "",
-    artist: "",
-    key: "",
-    dateAdded: "",
-    songbooks: "",
-    startMelody: "",
-    language: "",
-    tempo: "",
-    capo: "",
-    range: "",
-    promptModel: "",
-    promptId: "",
-    imageModel: "",
-    chordproFile: "",
-    contentHash: "",
-    availableIllustrations: "",
-  };
-};
-
-class SongData {
+export class SongData {
+  id: string;
   title: string;
   artist: string;
-  dateAdded?: {
-    month: int;
-    year: int;
-  };
   key?: Key;
+  createdAt: Date;
+  updatedAt: Date;
   startMelody?: string;
-  songbooks: string[];
   language: SongLanguage;
   tempo?: int;
   capo: int;
   range?: SongRange;
-  illustrationData: IllustrationData;
-  chordproFile: string;
-  content?: string;
-  contentHash: string;
-  hidden: boolean;
+  chordproURL: string;
 
-  constructor(song: SongMetadata) {
-    // Verification that SongMetadata has all required fields
-    this.validateSongMetadata(song);
-    this.title = song.title?.trim() || "Unknown title";
-    this.artist = song.artist?.trim() || "Unknown artist";
-    this.key = SongData.parseKey(song.key);
-    this.dateAdded = SongData.parseDateAdded(song.dateAdded);
-    this.songbooks = SongData.parseSongbooks(
-      song.songbooks,
-      this.artist,
-      this.title
-    );
-    this.startMelody = song.startMelody;
-    this.language = (song.language as SongLanguage) || "other";
-    this.tempo = SongData.parseTempo(song.tempo);
-    this.capo = SongData.parseCapo(song.capo);
-    this.range = SongData.parseRange(song.range);
-    this.illustrationData = SongData.parseIllustrationData(song);
-    this.chordproFile = song.chordproFile || "";
-    this.contentHash = song.contentHash || "";
-    this.hidden = song.hidden || false;
+  // UI-specific fields
+  currentIllustration: CurrentIllustration;
+  isFavorite: boolean;
+
+  constructor(songFromDB: SongDataApi) {
+    this.id = songFromDB.id;
+    this.title = songFromDB.title;
+    this.artist = songFromDB.artist;
+    this.key = this.parseKey(songFromDB.key);
+    this.createdAt = new Date(songFromDB.createdAt);
+    this.updatedAt = new Date(songFromDB.updatedAt);
+    this.startMelody = songFromDB.startMelody || undefined;
+    this.language = (songFromDB.language as SongLanguage) || "other";
+    this.tempo = songFromDB.tempo || undefined;
+    this.capo = songFromDB.capo || 0;
+    this.range = this.parseRange(songFromDB.range);
+    this.chordproURL = songFromDB.chordproURL;
+
+    this.currentIllustration = songFromDB.currentIllustration;
+    this.isFavorite = songFromDB.isFavoriteByCurrentUser;
   }
 
-  /**
-   * Validates that SongMetadata interface aligns with the expected fields
-   * This serves as a runtime check that our types are in sync
-   */
-  private validateSongMetadata(song: SongMetadata): void {
-    // Only run validation in development
-    if (process.env.NODE_ENV !== "production") {
-      // Get all known fields from imported lists
-      const knownFields = new Set([...Object.keys(song)]);
-
-      // Compare with expected fields
-      const expectedFields = new Set([
-        ...preambleKeywords.map((f) => chordpro2JSKeywords[f]),
-        ...generatedFields,
-      ]);
-
-      // Check for missing fields in SongMetadata
-      const missingFields = [...expectedFields].filter(
-        (field) => !knownFields.has(field)
-      );
-
-      // Check for extra fields in SongMetadata that aren't in our lists
-      const extraFields = [...knownFields].filter(
-        (field) =>
-          !expectedFields.has(field) &&
-          field !== "content" &&
-          field !== "disabled"
-      );
-
-      // Log warnings for any discrepancies
-      // if (missingFields.length > 0) {
-      //   console.warn(
-      //     `Warning: SongMetadata is missing expected fields: ${missingFields.join(
-      //       ", "
-      //     )}`
-      //   );
-      // }
-      // if (extraFields.length > 0) {
-      //   console.warn(
-      //     `Warning: SongMetadata has extra fields not in metadata lists: ${extraFields.join(
-      //       ", "
-      //     )}`
-      //   );
-      // }
-    }
-  }
-
-  static parseKey(key?: string) {
+  private parseKey(key: string): Key | undefined {
     if (!key) return undefined;
     try {
       return Key.parse(key, true);
@@ -245,271 +57,85 @@ class SongData {
     }
   }
 
-  static parseDateAdded(dateAdded?: string) {
-    if (!dateAdded) {
-      return undefined;
-    }
-    try {
-      const [month, year] = dateAdded.split("-");
-      return { month: parseInt(month), year: parseInt(year) };
-    } catch (error) {
-      console.error("Invalid dateAdded!");
-      return undefined;
-    }
-  }
-
-  static parseSongbooks(
-    songbooks?: string,
-    artist?: string,
-    title?: string
-  ): string[] {
-    try {
-      return songbooks ? JSON.parse(songbooks) : [];
-    } catch (error) {
-      console.error(`Error parsing songbooks for "${artist}: ${title}"`, error);
-      return [];
-    }
-  }
-
-  static parseTempo(tempo?: string | number): int | undefined {
-    return tempo ? parseInt(tempo as string) || undefined : undefined;
-  }
-
-  static parseCapo(capo?: string | number): int {
-    return parseInt(capo as string) || 0;
-  }
-
-  static parseRange(range?: string): SongRange {
+  private parseRange(range: string | null): SongRange | undefined {
     return range ? new SongRange(range) : undefined;
   }
 
-  static parseIllustrationData(song: SongMetadata): IllustrationData {
-    let availableIllustrations = [];
-    if (Array.isArray(song.availableIllustrations)) {
-      availableIllustrations = song.availableIllustrations;
-    } else {
-      try {
-        availableIllustrations = song.availableIllustrations
-          ? JSON.parse(song.availableIllustrations)
-          : [];
-      } catch (error) {
-        console.warn(
-          `Error parsing illustrations for "${song.artist}: ${song.title}"`,
-          error
-        );
-      }
-    }
-    return new IllustrationData(
-      song.promptModel,
-      song.promptId,
-      song.imageModel,
-      availableIllustrations
-    );
-  }
-
-  static to_ascii(text: string) {
+  // Utility methods
+  static to_ascii(text: string): string {
     return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 
-  static id(title: string, artist: string) {
-    return `${SongData.to_ascii(artist)}-${SongData.to_ascii(title)}`
-      .replace(/ /g, "_")
-      .replace(/[^A-Za-z0-9-_]+/g, "")
-      .replace(/_+/g, "_");
-  }
+  // static generateId(title: string, artist: string): string {
+  //   return `${SongData.to_ascii(artist)}-${SongData.to_ascii(title)}`
+  //     .replace(/ /g, "_")
+  //     .replace(/[^A-Za-z0-9-_]+/g, "")
+  //     .replace(/_+/g, "_");
+  // }
 
-  get ascii_title() {
+  get ascii_title(): string {
     return SongData.to_ascii(this.title);
   }
 
-  get ascii_artist() {
+  get ascii_artist(): string {
     return SongData.to_ascii(this.artist);
-  }
-
-  get id() {
-    return SongData.id(this.title, this.artist);
-  }
-
-  static fromJSON(json: Partial<SongData>): SongData {
-    const instance = Object.create(SongData.prototype);
-    Object.assign(instance, json);
-    if (json.key) {
-      instance.key = new Key(
-        Note.fromValue(json.key.note.value),
-        json.key.mode
-      );
-    }
-    if (json.range) {
-      instance.range = SongRange.fromJSON(instance.range);
-    }
-    if (json.illustrationData) {
-      instance.illustrationData = IllustrationData.fromJSON(
-        instance.illustrationData
-      );
-    }
-    return instance;
-  }
-
-  static fromChordpro(
-    chordproContent: string,
-    availableIllustrations?: string[]
-  ): SongData {
-    const extractPreamble = (content: string, keywords: string[]) => {
-      const preamble: { [key: string]: string } = {};
-      keywords.forEach((keyword) => {
-        const match = content.match(new RegExp(`{${keyword}:\\s*(.+?)}`, "i"));
-        preamble[chordpro2JSKeywords[keyword]] = match?.[1].trim() || "";
-      });
-      return preamble;
-    };
-    const preamble = extractPreamble(chordproContent, preambleKeywords);
-    preamble.availableIllustrations = availableIllustrations ?? [];
-    const songData = new SongData(preamble);
-    // TODO: preamble should be deleted from content?
-    // TODO: available images
-    songData.addContent(chordproContent);
-    return songData;
-  }
-
-  lyricsLength(): int {
-    if (!this.content) {
-      return 0;
-    }
-    // remove chordpro directives
-    let lyricsOnly = this.content.replace(/\{.*?\}/g, "");
-    // remove chords (e.g., [C], [Am], etc.)
-    lyricsOnly = lyricsOnly.replace(/\[.*?\]/g, "");
-    // remove extra whitespace (e.g., multiple spaces, newlines)
-    lyricsOnly = lyricsOnly.replace(/\s+/g, " ").trim();
-    return lyricsOnly.length;
   }
 
   url(): string {
     return `/song/${this.id}`;
   }
 
-  static withoutMetadata(content: string) {
-    preambleKeywords.forEach((keyword: string) => {
-      content = content?.replace(new RegExp(`{${keyword}:\\s*(.+?)}`, "g"), "");
-    });
-    return content?.trim();
+  // Image URL methods
+  thumbnailURL(): string {
+    return this.currentIllustration.thumbnailURL || this.defaultThumbnailURL();
   }
 
-  addContent(content: string) {
-    this.content = SongData.withoutMetadata(content);
+  illustrationURL(): string {
+    return this.currentIllustration.imageURL || this.defaultIllustrationURL();
   }
 
-  extractMetadata(): Record<string, string> {
-    const metadata: Record<string, string> =
-      this.illustrationData.reconstructPreamble();
-    preambleKeywords.forEach((k: string) => {
-      const JSKey = chordpro2JSKeywords[k];
-      if (JSKey in this) {
-        const value = this[JSKey as keyof SongData] ?? "";
-        if (["string", "number"].includes(typeof value)) {
-          metadata[JSKey] = `${value ?? ""}`;
-        } else if (JSKey === "dateAdded") {
-          const date = this.dateAdded;
-          metadata[JSKey] = date
-            ? date.month.toString().padStart(2, "0") + "-" + date.year
-            : "";
-        } else if (["songbooks"].includes(JSKey)) {
-          metadata[JSKey] = JSON.stringify(value) ?? "";
-        } else if (["key", "range"].includes(JSKey)) {
-          metadata[JSKey] = `${value ?? ""}`;
-        }
-      }
-    });
-    if (process.env.NODE_ENV !== "production") {
-      const missing = preambleKeywords
-        .map((k) => chordpro2JSKeywords[k])
-        .filter((k) => !Object.keys(metadata).includes(k));
-      if (missing.length > 0) {
-        console.warn(
-          `Missing fields for Extracted Metadata: ${missing.join(", ")}`
-        );
-      }
-    }
-    return metadata;
+  private defaultThumbnailURL(): string {
+    return fileURL(`/songs/illustrations_thumbnails/${this.id}/default.webp`);
   }
 
-  toChordpro(): string {
-    const metadata = this.extractMetadata();
-    const directives = Object.entries(metadata).map(
-      ([key, value]) => `{${JS2chordproKeywords[key]}: ${value}}`
-    );
-    const preamble = directives.join("\n");
-
-    if (process.env.NODE_ENV !== "production") {
-      const missing = preambleKeywords.filter((keyword: string) => {
-        const regex = new RegExp(`^\\{${keyword}:\\s*.+?\\}$`, "m");
-        return !regex.test(directives.join("\n"));
-      });
-
-      if (missing.length > 0) {
-        console.warn(
-          `Missing fields for chordpro preamble: ${missing.join(", ")}`
-        );
-      }
-    }
-    return preamble + "\n\n" + (this.content ?? "");
+  private defaultIllustrationURL(): string {
+    return fileURL(`/songs/illustrations/${this.id}/default.webp`);
   }
 
-  private imageURLFactory(
-    folder: string,
-    promptModel?: string,
-    promptId?: string,
-    imageModel?: string
-  ): string {
-    const stem =
-      promptModel || promptId || imageModel
-        ? this.illustrationData.toFilenameStem(
-            promptModel,
-            promptId,
-            imageModel
-          )
-        : this.illustrationData.preferredFilenameStem();
-    return fileURL(`/songs/${folder}/${this.id}/${stem}.webp`);
-  }
-
-  thumbnailURL(
-    promptModel?: string,
-    promptId?: string,
-    imageModel?: string
-  ): string {
-    return this.imageURLFactory(
-      "illustrations_thumbnails",
-      promptModel,
-      promptId,
-      imageModel
-    );
-  }
-
-  illustrationURL(
-    promptModel?: string,
-    promptId?: string,
-    imageModel?: string
-  ): string {
-    return this.imageURLFactory(
-      "illustrations",
-      promptModel,
-      promptId,
-      imageModel
-    );
-  }
-
-  static promptURL(id: string) {
-    return fileURL(`/songs/image_prompts/${id}.yaml`);
-  }
-
-  promptURL() {
-    return fileURL(`/songs/image_prompts/${this.id}.yaml`);
-  }
-
-  static chordproURL(id: string) {
+  static defaultChordproURL(id: string): string {
     return fileURL(`/songs/chordpro/${id}.pro`);
   }
-}
 
-export { SongData };
-export type { SongMetadata };
+  // Static factory methods
+  static fromDB(songFromDB: SongFromDB): SongData {
+    return new SongData(songFromDB);
+  }
+
+  static fromDBArray(songsFromDB: SongFromDB[]): SongData[] {
+    return songsFromDB.map((song) => new SongData(song));
+  }
+
+  // JSON serialization for API responses
+  toJSON() {
+    return {
+      id: this.id,
+      title: this.title,
+      artist: this.artist,
+      key: this.key?.toString(),
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      startMelody: this.startMelody,
+      language: this.language,
+      tempo: this.tempo,
+      capo: this.capo,
+      range: this.range?.toString(),
+      chordproURL: this.chordproURL,
+      hidden: this.hidden,
+      currentIllustration: this.currentIllustration,
+      isFavorite: this.isFavorite,
+      url: this.url(),
+      thumbnailURL: this.thumbnailURL(),
+      illustrationURL: this.illustrationURL(),
+    };
+  }
+}

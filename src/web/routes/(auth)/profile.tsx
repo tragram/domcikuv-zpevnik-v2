@@ -104,7 +104,7 @@ function RouteComponent() {
       // TODO: hono RPC does not support files yet
       const result = await (
         await fetch("/api/profile", {
-          method: "POST",
+          method: "PUT",
           body: formData,
         })
       ).json();

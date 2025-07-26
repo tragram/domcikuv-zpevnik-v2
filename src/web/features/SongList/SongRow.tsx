@@ -3,13 +3,12 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { memo, useState } from "react";
 import { toast } from "sonner";
+import { UserProfileData } from "src/worker/api/userProfile";
+import CircularProgress from "~/components/circular-progress";
 import { IllustrationPopup } from "~/components/IllustrationPopup";
 import LanguageFlag from "~/components/LanguageFlag";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import CircularProgress from "~/components/circular-progress";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
-import { UserData } from "~/types/types";
 
 interface SongInfoProps {
   title: string;
@@ -65,7 +64,7 @@ const DateDisplay = memo(
 
 interface VocalRangeIndicatorProps {
   songRangeSemitones: number | undefined;
-  maxRange: number;
+  maxRange: number | undefined;
   className?: string;
 }
 
@@ -92,14 +91,15 @@ const VocalRangeIndicator = memo(
     maxRange,
     className = "",
   }: VocalRangeIndicatorProps) => {
-    const innerHTML = songRangeSemitones ? (
-      <CircularProgress
-        value={songRangeSemitones || maxRange}
-        maxValue={maxRange}
-      />
-    ) : (
-      <></>
-    );
+    const innerHTML =
+      songRangeSemitones && maxRange ? (
+        <CircularProgress
+          value={songRangeSemitones || maxRange}
+          maxValue={maxRange}
+        />
+      ) : (
+        <></>
+      );
     return (
       <div className={cn("min-w-12 content-center justify-center", className)}>
         <div className="flex items-center">{innerHTML}</div>
@@ -154,28 +154,24 @@ interface SongbookAvatarsProps {
 //   }
 // );
 interface FavoriteButtonProps {
-  songId: string;
-  userData: UserData;
+  song: SongData;
   className?: string;
 }
 
-const FavoriteButton = ({
-  songId,
-  userData,
-  className = "",
-}: FavoriteButtonProps) => {
+const FavoriteButton = ({ song, className = "" }: FavoriteButtonProps) => {
   // TODO: add "offline" message
-  const [isFavorite, setIsFavorite] = useState(userData.favorites.has(songId));
+  const [isFavorite, setIsFavorite] = useState(song.isFavorite);
   const routeApi = getRouteApi("/");
-  const context = routeApi.useRouteContext()
+  const context = routeApi.useRouteContext();
 
   // Mutation for adding favorite
   const addFavoriteMutation = useMutation({
-    mutationFn: () => context.api.favorites.$post({ json: { songId } }),
+    mutationFn: () =>
+      context.api.favorites.$post({ json: { songId: song.id } }),
     onMutate: async () => {
       setIsFavorite(true);
     },
-    onError: (error, variables, context) => {
+    onError: () => {
       setIsFavorite(false);
       toast.error("Failed to add favorite");
     },
@@ -183,11 +179,12 @@ const FavoriteButton = ({
 
   // Mutation for removing favorite
   const removeFavoriteMutation = useMutation({
-    mutationFn: () => context.api.favorites.$delete({ json: { songId } }),
+    mutationFn: () =>
+      context.api.favorites.$delete({ json: { songId: song.id } }),
     onMutate: async () => {
       setIsFavorite(false);
     },
-    onError: (error, variables, context) => {
+    onError: () => {
       // If the mutation fails, use the context returned from onMutate to roll back
       setIsFavorite(true);
       toast.error("Failed to remove favorite");
@@ -235,12 +232,11 @@ const FavoriteButton = ({
 
 interface SongRowProps {
   song: SongData;
-  maxRange: number;
-  userData: UserData;
+  maxRange?: number | undefined;
+  user: UserProfileData;
 }
 
-const SongRow = memo(({ song, maxRange, userData }: SongRowProps) => {
-  song = SongData.fromJSON(song);
+const SongRow = memo(({ song, maxRange, user }: SongRowProps) => {
   if (!song) {
     console.error("Invalid song provided to SongRow");
     return (
@@ -274,17 +270,16 @@ const SongRow = memo(({ song, maxRange, userData }: SongRowProps) => {
             />
 
             {/* <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" /> */}
-            {userData.loggedIn && (
+            {user.loggedIn && (
               <FavoriteButton
-                songId={song.id}
-                userData={userData}
+                song={song}
                 className="hidden shrink-0 basis-1/12 xs:flex"
               />
             )}
 
             <DateDisplay
-              month={song.dateAdded?.month}
-              year={song.dateAdded?.year}
+              month={song.createdAt.getMonth()+1}
+              year={song.createdAt.getFullYear()}
               className="xsm:flex hidden shrink-0 basis-[2/12] md:basis-1/12"
             />
 

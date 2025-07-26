@@ -2,62 +2,42 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "sonner";
-import { fetchSongDB, fetchSongDBAdmin } from "~/services/songs";
+import {
+  buildSongDB,
+  fetchPublicSongbooks,
+  fetchSongs,
+} from "~/services/songs";
 import { RouterContext } from "~/main";
-import { Songbook } from "~/types/types";
+import { fetchProfile } from "~/services/users";
+import { UserProfileData } from "src/worker/api/userProfile";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: () => <div>Not Found</div>,
   errorComponent: () => <div>Error</div>,
   beforeLoad: async ({ context }) => {
-    let userData;
-    const userProfile = await context.queryClient.fetchQuery({
+    const user = await context.queryClient.fetchQuery({
       queryKey: ["userProfile"],
-      queryFn: async () => (await context.api.profile.$get()).json(),
+      queryFn: () => fetchProfile(context.api),
       staleTime: Infinity,
     });
-    if (userProfile) {
-      const favoritesData = await context.queryClient.fetchQuery({
-        queryKey: ["favorites", userProfile.id],
-        queryFn: async () => (await context.api.favorites.$get()).json(),
-        staleTime: 1000 * 60 * 5, // five minutes should be enough in case there are multiple sessions in parallel
-      });
-      userData = {
-        ...userProfile,
-        favorites: new Set(favoritesData),
-        loggedIn: true,
-      };
-    } else {
-      userData = {
-        loggedIn: false,
-        favorites: new Set([]),
-      };
-    }
 
-    const songDB = await context.queryClient.fetchQuery({
-      queryKey: ["songDB"],
-      queryFn: fetchSongDB,
+    const songs = await context.queryClient.fetchQuery({
+      queryKey: ["songs"],
+      queryFn: () => fetchSongs(context.api),
+      staleTime: 1000 * 60 * 60 * 24, // one day
     });
-    let publicSongbooks;
-    try {
-      publicSongbooks = await context.queryClient.fetchQuery({
-        queryKey: ["publicSongbooks"],
-        queryFn: async () =>
-          (await context.api.favorites.publicSongbooks.$get()).json(),
-        staleTime: 1000 * 60 * 60, // one hour
-      });
-      publicSongbooks.map((s) => {
-        return { ...s, songIds: new Set(s.songIds) };
-      });
-    } catch (error) {
-      console.error(error);
-      publicSongbooks = [];
-    }
+
+    const publicSongbooks = await context.queryClient.fetchQuery({
+      queryKey: ["publicSongbooks"],
+      queryFn: () => fetchPublicSongbooks(context.api),
+      staleTime: 1000 * 60 * 60, // one hour
+    });
+
+    const songDB = buildSongDB(songs, publicSongbooks);
 
     return {
-      userData,
+      user: user as UserProfileData,
       songDB,
-      availableSongbooks: new Set(publicSongbooks) as Set<Songbook>,
     };
   },
   component: () => (

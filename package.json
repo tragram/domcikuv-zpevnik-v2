@@ -96,11 +96,10 @@
     "wrangler": "4.20.5"
   },
   "scripts": {
-    "prebuild": "node load_songs.mjs",
-    "build": "pnpm run prebuild && vite build",
+    "build": "vite build",
     "check": "tsc && vite build && wrangler deploy --dry-run",
     "deploy": "pnpm run build && wrangler deploy",
-    "dev": "pnpm run prebuild && vite",
+    "dev": "vite",
     "lint": "eslint .",
     "preview": "pnpm run build && vite preview",
     "types": "wrangler types",

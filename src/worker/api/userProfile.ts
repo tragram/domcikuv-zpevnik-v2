@@ -14,12 +14,35 @@ const UpdateUserProfileSchema = z.object({
   isFavoritesPublic: z.boolean(),
 });
 
+export type UserProfileData =
+  | {
+      loggedIn: false;
+      profile?: undefined;
+    }
+  | {
+      loggedIn: true;
+      profile: {
+        id: string;
+        name: string;
+        nickname: string | null;
+        email: string;
+        image: string | null;
+        isFavoritesPublic: boolean;
+        isAdmin: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+      };
+    };
+
 const profileApp = buildApp()
   .get("/", async (c) => {
     try {
       const userData = c.get("USER");
       if (!userData) {
-        return c.json(null);
+        return c.json({
+          status: "success",
+          data: { loggedIn: false, profile: undefined } as UserProfileData,
+        });
       }
 
       const db = drizzle(c.env.DB);
@@ -39,12 +62,23 @@ const profileApp = buildApp()
         .where(eq(user.id, userData.id))
         .limit(1);
 
-      return c.json(result[0] || null);
+      return c.json({
+        status: "success",
+        data: { loggedIn: true, profile: result[0] } as UserProfileData,
+      });
     } catch (error) {
-      return c.json({ error: "Failed to fetch user profile" }, 500);
+      console.error(error);
+      return c.json(
+        {
+          status: "error",
+          message: "Failed to user profile",
+          code: "FETCH_ERROR",
+        },
+        500
+      );
     }
   })
-  .post("/", async (c) => {
+  .put("/", async (c) => {
     try {
       const userData = c.get("USER");
       if (!userData) {
@@ -358,9 +392,9 @@ const profileApp = buildApp()
         .where(eq(user.id, userData.id));
 
       return c.json({
-    status : "success",
-    data : null
-})
+        status: "success",
+        data: null,
+      });
     } catch (error) {
       console.error("Avatar deletion error:", error);
       return c.json(

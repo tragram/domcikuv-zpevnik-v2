@@ -1,28 +1,21 @@
 import { useState } from "react";
-import { Songbook, SongDB, UserData } from "~/types/types";
+import { SongDB } from "~/types/types";
 import useLocalStorageState from "use-local-storage-state";
 import "~/features/SongList/SongList.css";
 import SongRow from "./SongRow";
 import Toolbar from "./Toolbar/Toolbar";
 import { useFilteredSongs } from "./useFilteredSongs";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
+import { UserProfileData } from "src/worker/api/userProfile";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
-function SongList({
-  songDB,
-  userData,
-  availableSongbooks,
-}: {
-  songDB: SongDB;
-  userData: UserData;
-  availableSongbooks: Set<Songbook>;
-}) {
+function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
   const { songs } = useFilteredSongs(
     songDB.songs,
     songDB.languages,
-    userData,
-    availableSongbooks
+    user,
+    songDB.songbooks
   );
   const [showToolbar, setShowToolbar] = useState(true);
   const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
@@ -50,12 +43,10 @@ function SongList({
   return (
     <div className="no-scrollbar w-full">
       <Toolbar
-        songs={songs}
+        songDB={songDB}
         showToolbar={showToolbar}
         scrollOffset={scrollOffset}
         fakeScroll={true}
-        maxRange={songDB.maxRange}
-        languages={songDB.languages}
       />
       {songs.length > 0 ? (
         <div className="List pt-[72px] sm:pt-20 pb-2">
@@ -83,7 +74,7 @@ function SongList({
                 <SongRow
                   song={songs[item.index]}
                   maxRange={songDB.maxRange}
-                  userData={userData}
+                  user={user}
                 />
               </div>
             ))}

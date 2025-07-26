@@ -16,6 +16,11 @@ interface UserSearchParams {
   offset?: number;
 }
 
+export async function fetchProfile(api: typeof client.api) {
+  const response = await makeApiRequest(api.profile.$get);
+  return response;
+}
+
 /**
  * Fetches all users with optional search and pagination
  * @param api - The users API client

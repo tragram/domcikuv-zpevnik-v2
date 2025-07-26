@@ -10,14 +10,10 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { songDB, userData, availableSongbooks } = Route.useLoaderData();
+  const { songDB, user } = Route.useLoaderData();
   return (
-    <FilterStoreProvider availableSongbooks={availableSongbooks}>
-      <SongList
-        songDB={songDB}
-        userData={userData}
-        availableSongbooks={availableSongbooks}
-      />
+    <FilterStoreProvider availableSongbooks={songDB.songbooks}>
+      <SongList songDB={songDB} user={user} />
     </FilterStoreProvider>
   );
 }

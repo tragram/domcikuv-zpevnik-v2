@@ -1,10 +1,4 @@
-import type {
-  LanguageCount,
-  Songbook,
-  SortField,
-  SortOrder,
-  UserData,
-} from "~/types/types";
+import type { LanguageCount, SortField, SortOrder } from "~/types/types";
 import { SongData } from "~/types/songData";
 import Fuse from "fuse.js";
 import { useEffect, useMemo } from "react";
@@ -12,6 +6,8 @@ import { useQueryStore } from "./Toolbar/SearchBar";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
+import { UserProfileData } from "src/worker/api/userProfile";
+import { Songbook } from "~/services/songs";
 
 const filterLanguage = (
   songs: SongData[],
@@ -39,11 +35,10 @@ const filterLanguage = (
 const filterFavorites = (
   songs: SongData[],
   loggedIn: boolean,
-  userFavorites: Set<string>,
   onlyFavorites: boolean
 ) => {
   if (loggedIn && onlyFavorites) {
-    return songs.filter((song) => userFavorites.has(song.id));
+    return songs.filter((song) => song.isFavorite);
   } else {
     return songs;
   }
@@ -71,21 +66,20 @@ const filterVocalRange = (
   );
 };
 
-const filterSongbook = (
+export const filterSongbook = (
   songs: SongData[],
-  availableSongbooks: Set<Songbook>,
-  selectedSongbooks: Set<string>
+  availableSongbooks: Songbook[],
+  selectedSongbooks: Songbook[]
 ) => {
-  if (availableSongbooks.size <= selectedSongbooks.size) {
+  if (availableSongbooks.length === 0 || selectedSongbooks.length === 0) {
     return songs;
   }
+
   let contentsOfSelectedSongbooks = new Set<string>();
-  availableSongbooks.forEach((s) => {
-    if (selectedSongbooks.has(s.user)) {
-      contentsOfSelectedSongbooks = contentsOfSelectedSongbooks.union(
-        s.songIds
-      );
-    }
+  selectedSongbooks.forEach((s) => {
+    contentsOfSelectedSongbooks = contentsOfSelectedSongbooks.union(
+      new Set(s.songIds)
+    );
   });
   return songs.filter((s) => contentsOfSelectedSongbooks.has(s.id));
 };
@@ -103,8 +97,8 @@ const getSortCompareFunction = (
       comparison =
         aSemi === bSemi ? a.title.localeCompare(b.title) : aSemi - bSemi;
     } else if (sortByField === "dateAdded") {
-      const aDate = (a.dateAdded?.year ?? 0) * 12 + (a.dateAdded?.month ?? 0);
-      const bDate = (b.dateAdded?.year ?? 0) * 12 + (b.dateAdded?.month ?? 0);
+      const aDate = a.createdAt.getDate();
+      const bDate = b.createdAt.getDate();
       comparison =
         aDate === bDate ? a.title.localeCompare(b.title) : aDate - bDate;
     } else {
@@ -118,8 +112,8 @@ const getSortCompareFunction = (
 export function useFilteredSongs(
   songs: SongData[],
   languageCounts: LanguageCount,
-  userData: UserData,
-  availableSongbooks: Set<Songbook>
+  user: UserProfileData,
+  availableSongbooks: Songbook[]
 ) {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
@@ -148,14 +142,9 @@ export function useFilteredSongs(
   // Apply filters
   let results = filterCapo(searchResults, capo);
   results = filterVocalRange(results, vocalRange);
-  results = filterSongbook(results, availableSongbooks, selectedSongbooks);
   results = filterLanguage(results, language, languageCounts);
-  results = filterFavorites(
-    results,
-    userData.loggedIn,
-    userData.favorites,
-    onlyFavorites
-  );
+  results = filterFavorites(results, user.loggedIn, onlyFavorites);
+  results = filterSongbook(results, availableSongbooks, selectedSongbooks);
   // Only sort if there's no search query
   if (!query) {
     results = [...results].sort(getSortCompareFunction(sortByField, sortOrder));

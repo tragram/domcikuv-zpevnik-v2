@@ -5,14 +5,15 @@ import {
   FilterSettings,
   VocalRangeType,
 } from "~/features/SongList/Toolbar/filters/Filters";
-import { Songbook, SongLanguage } from "~/types/types";
+import { Songbook } from "~/services/songs";
+import { SongLanguage } from "~/types/types";
 
 interface FilterSettingsState extends FilterSettings {
-  selectedSongbooks: Set<string>;
+  selectedSongbooks: Songbook[];
   setLanguage: (language: SongLanguage) => void;
   addSongbook: (songbook: Songbook) => void;
   removeSongbook: (songbook: Songbook) => void;
-  setSelectedSongbooks: (songbooks: Set<Songbook>) => void;
+  setSelectedSongbooks: (songbooks: Songbook[]) => void;
   clearSongbooks: () => void;
   setVocalRange: (range: VocalRangeType) => void;
   setCapo: (capo: boolean) => void;
@@ -21,13 +22,15 @@ interface FilterSettingsState extends FilterSettings {
 }
 
 interface FilterStoreProps {
-  availableSongbooks: Set<Songbook>;
+  availableSongbooks: Songbook[];
 }
-
-function deleteFromSet<T>(set: Set<T>, value: T) {
-  set.delete(value);
-  return set;
-}
+const safeAddSongbook = (songbooks: Songbook[], songbook: Songbook) => {
+  if (songbooks.map((s) => s.name).includes(songbook.name)) {
+    return songbooks;
+  }
+  songbooks.push(songbook);
+  return songbooks;
+};
 
 const createFilterSettingsStore = (initProps: FilterStoreProps) =>
   create<FilterSettingsState>()(
@@ -35,31 +38,28 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
       (set) => ({
         language: "all",
         vocalRange: "all",
-        // selectedSongbooks only stores the users, this might not be optimal
-        selectedSongbooks: new Set(
-          Array.from(initProps.availableSongbooks).map((s) => s.user)
-        ),
+        selectedSongbooks: initProps.availableSongbooks,
         capo: true,
         onlyFavorites: false,
         setLanguage: (language: SongLanguage) => set({ language: language }),
-        setSelectedSongbooks: (songbooks: Set<Songbook>) =>
+        setSelectedSongbooks: (songbooks: Songbook[]) =>
           set({
-            selectedSongbooks: new Set(
-              Array.from(songbooks).map((s) => s.user)
-            ),
+            selectedSongbooks: songbooks,
           }),
         addSongbook: (songbook: Songbook) =>
           set((state) => ({
-            selectedSongbooks: state.selectedSongbooks.add(songbook.user),
-          })),
-        removeSongbook: (songbook: Songbook) =>
-          set((state) => ({
-            selectedSongbooks: deleteFromSet(
+            selectedSongbooks: safeAddSongbook(
               state.selectedSongbooks,
-              songbook.user
+              songbook
             ),
           })),
-        clearSongbooks: () => set({ selectedSongbooks: new Set() }),
+        removeSongbook: (deletedSongbook: Songbook) =>
+          set((state) => ({
+            selectedSongbooks: state.selectedSongbooks.filter(
+              (s) => s.name != deletedSongbook.name
+            ),
+          })),
+        clearSongbooks: () => set({ selectedSongbooks: [] }),
         setVocalRange: (range: VocalRangeType) => set({ vocalRange: range }),
         setCapo: (capo: boolean) => set({ capo: capo }),
         toggleCapo: () => set((state) => ({ capo: !state.capo })),
@@ -74,22 +74,16 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
             if (!str) return null;
             const parsed = JSON.parse(str);
 
-            // Convert selectedSongbooks array back to Set
-            if (
-              parsed.state?.selectedSongbooks &&
-              Array.isArray(parsed.state.selectedSongbooks)
-            ) {
-              if (parsed.state.selectedSongbooks.length === 0) {
-                parsed.state.selectedSongbooks = new Set(
-                  Array.from(initProps.availableSongbooks).map((s) => s.user)
+            // ensure we do not have selected songbooks that are not available anymore
+            if (parsed.state?.selectedSongbooks) {
+              const availableSongbookNames = new Set(
+                initProps.availableSongbooks.map((s) => s.name)
+              );
+              parsed.state.selectedSongbooks =
+                parsed.state.selectedSongbooks.filter((s: Songbook) =>
+                  availableSongbookNames.has(s.name)
                 );
-              } else {
-                parsed.state.selectedSongbooks = new Set(
-                  parsed.state.selectedSongbooks
-                );
-              }
             }
-
             return parsed;
           },
           setItem: (name, value) => {
@@ -130,10 +124,12 @@ export const FilterStoreProvider = ({
   availableSongbooks,
 }: {
   children: React.ReactNode;
-  availableSongbooks: Set<Songbook>;
+  availableSongbooks: Songbook[];
 }) => {
   const [store] = React.useState(() =>
-    createFilterSettingsStore({ availableSongbooks })
+    createFilterSettingsStore({
+      availableSongbooks: availableSongbooks,
+    })
   );
 
   return (

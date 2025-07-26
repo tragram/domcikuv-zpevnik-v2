@@ -4,28 +4,24 @@ import ToolbarBase from "~/components/ToolbarBase";
 import { Button } from "~/components/ui/button";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import { SongData } from "~/types/songData";
-import type { LanguageCount, Songbook } from "~/types/types";
+import type { LanguageCount, SongDB } from "~/types/types";
 import { Link } from "@tanstack/react-router";
 import Filtering from "./filters/Filters";
 import SearchBar from "./SearchBar";
 import SortMenu from "./SortMenu";
 
 interface ToolbarProps {
-  songs: SongData[];
   showToolbar: boolean;
   scrollOffset: number;
   fakeScroll?: boolean;
-  maxRange: number;
-  languages: LanguageCount;
+  songDB: SongDB;
 }
 
 function Toolbar({
-  songs,
+  songDB,
   showToolbar,
   scrollOffset,
   fakeScroll = false,
-  maxRange,
-  languages,
 }: ToolbarProps) {
   return (
     <ToolbarBase
@@ -36,7 +32,7 @@ function Toolbar({
     >
       <SortMenu />
       <SearchBar />
-      <Filtering languages={languages} maxRange={maxRange} />
+      <Filtering songDB={songDB} />
       <div className="hidden h-full w-fit sm:flex">
         <ThemeToggle />
       </div>
@@ -55,7 +51,7 @@ function Toolbar({
           <ImagesIcon />
         </Button>
       </Link>
-      <RandomSong songs={songs} />
+      <RandomSong songs={songDB.songs} />
     </ToolbarBase>
   );
 }

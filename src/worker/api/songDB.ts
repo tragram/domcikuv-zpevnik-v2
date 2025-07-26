@@ -1,139 +1,164 @@
-import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
+import { and, eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/d1";
 import {
   song,
   songIllustration,
-  userFavoriteSongs,
   user,
+  userFavoriteSongs,
 } from "../../lib/db/schema";
-import { eq, and } from "drizzle-orm";
 import { buildApp } from "./utils";
-import { SongData } from "../../lib/songData";
 
-export const songDBRoutes = buildApp().get("/", async (c) => {
-  const db = drizzle(c.env.DB);
-  const userId = c.get("USER")?.id;
+export interface SongbookDataApi {
+  user: string;
+  image: string;
+  name: string;
+  songIds: string[];
+}
 
-  try {
-    const [rawSongs, publicSongbooks] = await Promise.all([
-      fetchSongsWithFavorites(db, userId),
-      getPublicSongbooks(db)
-    ]);
+export type SongDataApi = {
+  id: string;
+  title: string;
+  artist: string;
+  key: string;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  startMelody: string | null;
+  language: string;
+  tempo: number | null;
+  capo: number;
+  range: string | null;
+  chordproURL: string;
+  currentIllustration: {
+    promptId: string;
+    imageModel: string;
+    imageURL: string;
+    thumbnailURL: string;
+  };
+  isFavoriteByCurrentUser: boolean;
+};
 
-    // Convert raw database results to SongData instances
-    const songs = SongData.fromDBArray(rawSongs);
+export const songDBRoutes = buildApp()
+  .get("/", async (c) => {
+    const db = drizzle(c.env.DB);
+    const userId = c.get("USER")?.id;
 
-    console.log(
-      `Loaded ${songs.length} songs and ${publicSongbooks.length} public songbooks`
-    );
-
-    return c.json({
-      status: "success",
-      data: {
-        songDB: songs.map(song => song.toJSON()),
-        publicSongbooks,
-      },
-    });
-  } catch (error) {
-    console.error("Database error:", error);
-    return c.json(
-      {
-        status: "error",
-        message: "Failed to fetch songs and songbooks",
-      },
-      500
-    );
-  }
-});
-
-async function fetchSongsWithFavorites(db: DrizzleD1Database, userId?: string) {
-  const songsData = await db
-    .select({
-      id: song.id,
-      title: song.title,
-      artist: song.artist,
-      key: song.key,
-      createdAt: song.createdAt,
-      updatedAt: song.updatedAt,
-      startMelody: song.startMelody,
-      language: song.language,
-      tempo: song.tempo,
-      capo: song.capo,
-      range: song.range,
-      chordproURL: song.chordproURL,
-      hidden: song.hidden,
-      currentIllustration: {
-        promptId: songIllustration.promptId,
-        imageModel: songIllustration.imageModel,
-        imageURL: songIllustration.imageURL,
-        thumbnailURL: songIllustration.thumbnailURL,
-      },
-      isFavorite: userFavoriteSongs.userId,
-    })
-    .from(song)
-    .leftJoin(
-      songIllustration,
-      and(
-        eq(songIllustration.songId, song.id),
-        eq(songIllustration.isActive, true)
-      )
-    )
-    .leftJoin(
-      userFavoriteSongs,
-      userId
-        ? and(
-            eq(userFavoriteSongs.songId, song.id),
-            eq(userFavoriteSongs.userId, userId)
+    try {
+      const songsRaw = await db
+        .select({
+          id: song.id,
+          title: song.title,
+          artist: song.artist,
+          key: song.key,
+          createdAt: song.createdAt,
+          updatedAt: song.updatedAt,
+          startMelody: song.startMelody,
+          language: song.language,
+          tempo: song.tempo,
+          capo: song.capo || 0,
+          range: song.range,
+          chordproURL: song.chordproURL,
+          currentIllustration: {
+            promptId: songIllustration.promptId,
+            imageModel: songIllustration.imageModel,
+            imageURL: songIllustration.imageURL,
+            thumbnailURL: songIllustration.thumbnailURL,
+          },
+          isFavoriteByCurrentUser: userFavoriteSongs.userId,
+        })
+        .from(song)
+        .where(eq(song.hidden, false))
+        .leftJoin(
+          songIllustration,
+          and(
+            eq(songIllustration.songId, song.id),
+            eq(songIllustration.isActive, true)
           )
-        : undefined
-    )
-    .where(eq(song.hidden, false));
+        )
+        .leftJoin(
+          userFavoriteSongs,
+          userId
+            ? and(
+                eq(userFavoriteSongs.songId, song.id),
+                eq(userFavoriteSongs.userId, userId)
+              )
+            : undefined
+        );
 
-  return songsData.map((song) => ({
-    ...song,
-    isFavorite: !!song.isFavorite,
-  }));
-}
-
-async function getPublicSongbooks(db: DrizzleD1Database) {
-  const result = await db
-    .select({
-      userId: user.id,
-      userName: user.name,
-      userNickname: user.nickname,
-      userImage: user.image,
-      songId: userFavoriteSongs.songId,
-    })
-    .from(user)
-    .innerJoin(userFavoriteSongs, eq(user.id, userFavoriteSongs.userId))
-    .where(eq(user.isFavoritesPublic, true))
-    .orderBy(user.name, userFavoriteSongs.id);
-
-  const userSongMap = new Map<
-    string,
-    {
-      user: string;
-      image: string;
-      name: string;
-      songIds: string[];
-    }
-  >();
-
-  result.forEach((row) => {
-    const userId = row.userId;
-
-    if (!userSongMap.has(userId)) {
-      userSongMap.set(userId, {
-        user: userId,
-        image: row.userImage || "",
-        name: row.userNickname ?? row.userName,
-        songIds: [],
+      const songs = songsRaw.map((song) => ({
+        ...song,
+        isFavoriteByCurrentUser: !!song.isFavoriteByCurrentUser,
+      }));
+      return c.json({
+        status: "success",
+        data: songs as SongDataApi[],
       });
+    } catch (error) {
+      console.error("Database error:", error);
+      return c.json(
+        {
+          status: "error",
+          message: "Failed to fetch songs and songbooks",
+        },
+        500
+      );
     }
+  })
 
-    userSongMap.get(userId)!.songIds.push(row.songId);
+  .get("/songbooks", async (c) => {
+    const db = drizzle(c.env.DB);
+    // TODO: perhaps ignore self-songbook?
+    try {
+      const result = await db
+        .select({
+          userId: user.id,
+          userName: user.name,
+          userNickname: user.nickname,
+          userImage: user.image,
+          songId: userFavoriteSongs.songId,
+        })
+        .from(user)
+        .innerJoin(userFavoriteSongs, eq(user.id, userFavoriteSongs.userId))
+        .where(eq(user.isFavoritesPublic, true))
+        .orderBy(user.name, userFavoriteSongs.id);
+
+      const userSongMap = new Map<
+        string,
+        {
+          user: string;
+          image: string;
+          name: string;
+          songIds: string[];
+        }
+      >();
+
+      result.forEach((row) => {
+        const userId = row.userId;
+
+        if (!userSongMap.has(userId)) {
+          userSongMap.set(userId, {
+            user: userId,
+            image: row.userImage || "",
+            name: row.userNickname ?? row.userName,
+            songIds: [],
+          });
+        }
+
+        userSongMap.get(userId)!.songIds.push(row.songId);
+      });
+
+      return c.json({
+        status: "success",
+        data: Array.from(userSongMap.values()) as SongbookDataApi[],
+      });
+    } catch (error) {
+      console.error("Database error:", error);
+      return c.json(
+        {
+          status: "error",
+          message: "Failed to fetch songs and songbooks",
+        },
+        500
+      );
+    }
   });
-
-  return Array.from(userSongMap.values());
-}
-
 export default songDBRoutes;

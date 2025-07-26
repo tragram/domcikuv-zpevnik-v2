@@ -1,23 +1,27 @@
-import { SongData } from "~/types/songData";
-import { LanguageCount, SongDB } from "~/types/types";
 import yaml from "js-yaml";
-import { fileURL } from "../lib/utils";
-import { guessKey } from "~/features/SongView/utils/songRendering";
-import client from "~/../worker/api-client";
-import { handleApiResponse, makeApiRequest, ApiException } from "./apiHelpers";
 import {
-  SongVersionDB,
-  SongDataDB,
   IllustrationPromptDB,
+  SongDataDB,
   SongIllustrationDB,
+  SongVersionDB,
 } from "src/lib/db/schema";
+import { IllustrationPromptCreateSchema } from "src/worker/api/admin/illustration-prompts";
 import {
-  SongWithIllustrationsAndPrompts,
+  adminIllustrationResponse,
   IllustrationCreateSchema,
   IllustrationModifySchema,
-  IllustrationPromptCreateSchema,
-  adminIllustrationResponse,
 } from "src/worker/api/admin/illustrations";
+import { SongDataApi } from "src/worker/api/songDB";
+import client from "~/../worker/api-client";
+import { guessKey } from "~/features/SongView/utils/songRendering";
+import { SongData } from "~/types/songData";
+import {
+  isValidSongLanguage,
+  LanguageCount,
+  SongDB,
+  SongLanguage,
+} from "~/types/types";
+import { ApiException, handleApiResponse, makeApiRequest } from "./apiHelpers";
 
 export type AdminApi = typeof client.api.admin;
 
@@ -28,6 +32,13 @@ interface Timestamped {
 
 type WithTimestamps<T> = T & Timestamped;
 
+export interface Songbook {
+  user: string;
+  image: string;
+  name: string;
+  songIds: Set<string>;
+}
+
 export const parseDBDates = <T>(o: WithTimestamps<T>) => {
   return {
     ...o,
@@ -37,26 +48,52 @@ export const parseDBDates = <T>(o: WithTimestamps<T>) => {
 };
 
 /**
- * Fetches the complete song database with language statistics and range data
+ * Fetches the songs
  * @returns Promise containing songs, language counts, and max vocal range
  * @throws {ApiException} When the songDB cannot be fetched or parsed
  */
-export const fetchSongDB = async (): Promise<SongDB> => {
-  const songDBData = await (await fetch(fileURL("/songDB.json"))).json();
-  const songs = songDBData.map((d) => new SongData(d));
+export const fetchSongs = async (
+  api: typeof client.api
+): Promise<SongDataApi[]> => {
+  const response = await makeApiRequest(api.songs.$get);
+  return response;
+};
 
-  const languages: LanguageCount = songs
+export const fetchPublicSongbooks = async (
+  api: typeof client.api
+): Promise<Songbook[]> => {
+  const response = await makeApiRequest(api.songs.songbooks.$get);
+  return response.map((s) => {
+    const newS = { ...s, songIds: new Set(s.songIds) } as Songbook;
+    return newS;
+  });
+};
+
+export const buildSongDB = (
+  songs: SongDataApi[],
+  songbooks: Songbook[]
+): SongDB => {
+  const songDatas = songs.map((d) => new SongData(d));
+
+  const languages: LanguageCount = songDatas
     .map((s) => s.language)
-    .reduce((acc: Record<string, number>, lang: string) => {
-      acc[lang] = (acc[lang] || 0) + 1;
+    .reduce((acc: LanguageCount, lang: string) => {
+      const validLang: SongLanguage = isValidSongLanguage(lang)
+        ? lang
+        : "other";
+      acc[validLang] = (acc[validLang] || 0) + 1;
       return acc;
-    }, {});
+    }, {} as LanguageCount);
 
-  const songRanges = songs.map((s) => s.range?.semitones).filter(Boolean);
+  const songRanges = songDatas
+    .map((s) => s.range?.semitones)
+    .filter(Boolean) as Array<number>;
+
   return {
-    maxRange: Math.max(...songRanges),
+    maxRange: songRanges.length > 0 ? Math.max(...songRanges) : undefined,
     languages,
-    songs,
+    songs: songDatas,
+    songbooks: songbooks.filter((s) => s.songIds.size > 0),
   };
 };
 
@@ -272,7 +309,7 @@ export const deleteIllustrationPrompt = async (
   id: string
 ): Promise<null> => {
   const response = await makeApiRequest(() =>
-    adminApi["illustration-prompt"][":id"].$delete({ param: { id } })
+    adminApi.illustrations.prompts[":id"].$delete({ param: { id } })
   );
   return response;
 };

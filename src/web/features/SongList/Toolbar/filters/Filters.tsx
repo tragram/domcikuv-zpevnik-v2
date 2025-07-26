@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { useMediaQuery } from "usehooks-ts";
-import type { LanguageCount, SongLanguage } from "~/types/types";
+import type { LanguageCount, SongDB, SongLanguage } from "~/types/types";
 import {
   LanguageFilter,
   LanguageFilterDropdownSection,
@@ -21,6 +21,7 @@ import {
 } from "./VocalRangeFilter";
 import React from "react";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
+import { SongData } from "~/types/songData";
 
 export type VocalRangeType = "all" | [number, number];
 
@@ -31,20 +32,17 @@ export interface FilterSettings {
   onlyFavorites: boolean;
 }
 
-interface FilterProps {
-  languages: LanguageCount;
-  maxRange: number;
-}
-
 // Common filter buttons used by both desktop and mobile views
 const FilterControls = ({
   languages,
   maxRange,
   iconOnly,
+  songs,
 }: {
   languages: LanguageCount;
-  maxRange: number;
+  maxRange: number | undefined;
   iconOnly: boolean;
+  songs: SongData[];
 }) => {
   const filterStore = useFilterSettingsStore();
   const {
@@ -64,7 +62,8 @@ const FilterControls = ({
   } = filterStore;
 
   const routeApi = getRouteApi("/");
-  const { userData, availableSongbooks } = routeApi.useLoaderData();
+  const { user, songDB } = routeApi.useLoaderData();
+  const availableSongbooks = songDB.songbooks;
   return {
     controls: (
       <>
@@ -74,10 +73,11 @@ const FilterControls = ({
           setSelectedLanguage={setLanguage}
           iconOnly={iconOnly}
         />
-        {availableSongbooks.size > 0 && (
+        {availableSongbooks.length > 0 && (
           <SongBookFilter
             availableSongbooks={availableSongbooks}
             selectedSongbooks={selectedSongbooks}
+            availableSongs={songs}
             addSongbook={addSongbook}
             removeSongbook={removeSongbook}
             setSelectedSongbooks={setSelectedSongbooks}
@@ -95,7 +95,7 @@ const FilterControls = ({
           <Handshake />
           {!iconOnly && "Capo"}
         </Button>
-        {userData.loggedIn && (
+        {user.loggedIn && (
           <Button
             variant="circular"
             isActive={onlyFavorites}
@@ -106,17 +106,19 @@ const FilterControls = ({
             {!iconOnly && "Favorites only"}
           </Button>
         )}
-        <VocalRangeFilter
-          maxRange={maxRange}
-          vocalRangeFilter={vocalRange}
-          setVocalRangeFilter={setVocalRange}
-          iconOnly={iconOnly}
-        />
+        {maxRange && (
+          <VocalRangeFilter
+            maxRange={maxRange}
+            vocalRangeFilter={vocalRange}
+            setVocalRangeFilter={setVocalRange}
+            iconOnly={iconOnly}
+          />
+        )}
       </>
     ),
     dropdownSections: (
       <>
-        {userData && (
+        {user && (
           <DropdownMenuCheckboxItem
             onClick={toggleFavorites}
             onSelect={(e) => e.preventDefault()}
@@ -132,13 +134,15 @@ const FilterControls = ({
         >
           Allow capo
         </DropdownMenuCheckboxItem>
-        {VocalRangeDropdownSection(maxRange, vocalRange, setVocalRange)}
+        {maxRange &&
+          VocalRangeDropdownSection(maxRange, vocalRange, setVocalRange)}
         {LanguageFilterDropdownSection(languages, language, setLanguage)}
-        {availableSongbooks.size > 0 &&
+        {availableSongbooks.length > 0 &&
           React.Children.toArray(
             <SongBookFilter
               availableSongbooks={availableSongbooks}
               selectedSongbooks={selectedSongbooks}
+              availableSongs={songs}
               addSongbook={addSongbook}
               removeSongbook={removeSongbook}
               setSelectedSongbooks={setSelectedSongbooks}
@@ -156,16 +160,17 @@ const FilterControls = ({
           vocalRange[0] === 0 &&
           vocalRange[1] === maxRange)) &&
       capo &&
-      selectedSongbooks.size === availableSongbooks.size
-      && !onlyFavorites,
+      selectedSongbooks.length === availableSongbooks.length &&
+      !onlyFavorites,
   };
 };
 
-const Filtering = ({ languages, maxRange }: FilterProps): JSX.Element => {
+const Filtering = ({ songDB }: { songDB: SongDB }): JSX.Element => {
   const isLargeScreen = useMediaQuery("only screen and (min-width : 1000px)");
   const { controls, dropdownSections, isFilterInactive } = FilterControls({
-    languages,
-    maxRange,
+    languages: songDB.languages,
+    maxRange: songDB.maxRange,
+    songs: songDB.songs,
     iconOnly: isLargeScreen,
   });
 
@@ -186,7 +191,7 @@ const Filtering = ({ languages, maxRange }: FilterProps): JSX.Element => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             aria-label="Filtering"
-            className="dropdown-scroll no-scrollbar max-h-[80dvh] w-52 overflow-y-scroll"
+            className="dropdown-scroll no-scrollbar max-h-[80dvh] overflow-y-scroll"
             sideOffset={15}
           >
             {dropdownSections}

@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import SongView from "~/features/SongView/SongView";
 import { fetchSong } from "~/services/songs";
-import { SongData } from "~/types/songData";
-import { songDBFromJSON } from "~/types/types";
 
 export const Route = createFileRoute("/song/$songId")({
   component: RouteComponent,

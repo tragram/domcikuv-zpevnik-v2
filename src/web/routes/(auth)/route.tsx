@@ -12,7 +12,7 @@ export const Route = createFileRoute("/(auth)")({
     const redirectURL = (search as any)?.redirect || "/";
     
     // If user is not logged in and not on login/signup page, redirect to login
-    if (!context.userData.loggedIn && location.pathname === PROFILE_URL) {
+    if (!context.user.loggedIn && location.pathname === PROFILE_URL) {
       throw redirect({
         to: LOGIN_URL,
         search: { redirect: redirectURL }
@@ -20,14 +20,14 @@ export const Route = createFileRoute("/(auth)")({
     }
 
     // If user is logged in and on login page, redirect to the intended destination
-    if (context.userData.loggedIn && location.pathname === LOGIN_URL) {
+    if (context.user.loggedIn && location.pathname === LOGIN_URL) {
       throw redirect({
         to: redirectURL
       });
     }
     
     // If user is logged in and on signup page, redirect to the intended destination
-    if (context.userData.loggedIn && location.pathname === SIGNUP_URL) {
+    if (context.user.loggedIn && location.pathname === SIGNUP_URL) {
       throw redirect({
         to: redirectURL
       });

@@ -30,5 +30,5 @@ export const tailwindBreakpoint = (
 };
 export function useLoggedIn() {
   const routeContext = useRouteContext({ from: "__root__" });
-  return routeContext.userData.loggedIn;
+  return routeContext.user.loggedIn;
 }
