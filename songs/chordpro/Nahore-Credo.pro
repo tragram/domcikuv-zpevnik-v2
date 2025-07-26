@@ -14,9 +14,9 @@
 
 {start_of_verse: Intro}
 [Ami][H][E][Ami]
-[F] [Ami] [Ddim][C#]
+[F][Ami][Ddim][C#]
 [Ami][H][E][Ami]
-[F] [E] [Ami]
+[F][E][Ami]
 {end_of_verse}
 
 {start_of_verse}
@@ -43,12 +43,12 @@
 {start_of_verse}
 [Ami]Dokud se do [H]mě [E]nedá [Ami]zima,
 [F]zůstanu [Ami]hledět [Ddim]do [E]oblak.
-[Ami]Snad jsem tu [H]správně,[E] mezi [Ami]svýma.
+[Ami]Snad jsem tu [H]správně,[E]mezi [Ami]svýma.
 [F]Nebo mi [E]dávno ujel [Ami]vlak?
 
 [E]Vždyť je to jedno, už se [Ami]stmívá
 [G]a každá [C]cesta je [E]šedá teď.
-[Dmi]Rozcestích [E]nikdy[Ami] neu[D]bývá
+[Dmi]Rozcestích [E]nikdy[Ami]neu[D]bývá
 [F]a všechny [E]znám je [Ami]nazpaměť.
 {end_of_verse}
 

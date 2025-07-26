@@ -42,7 +42,7 @@ Pro svý [Ami]srdce [D]bola[G]vý
 {end_of_chorus}
 
 {start_of_verse}
-Ale[Hmi] žít se musí a čas rány [D]zajizví
+Ale[Hmi]žít se musí a čas rány [D]zajizví
 A taky [Hmi]kořalka, práce a [D]kamarádi
 Jo a taky [G]jsem se [Emi]ože[D]nil
 A Magdě [G]ze sousední [Emi]vsi odpu[D]stil

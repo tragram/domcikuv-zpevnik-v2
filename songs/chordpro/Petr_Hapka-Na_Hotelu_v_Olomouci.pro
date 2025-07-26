@@ -1,5 +1,5 @@
-{title: Petr Hapka}
-{artist: Na Hotelu v Olomouci}
+{title: Na Hotelu v Olomouci}
+{artist: Petr Hapka}
 {date_added: 12-2024}
 {songbooks: ["Domčík"]}
 {language: czech}

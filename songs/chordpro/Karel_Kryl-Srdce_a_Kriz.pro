@@ -21,14 +21,14 @@
 [Ami]Nad horizontem dva paprsky slunce až [G7]zaplanou,
 [Dmi]na krku srdce a [E7]nad sebou kříž budu mít,
 potom [Ami]neplač, Kami[G7]lo, potom [Ami]neplač, Kami[Dmi]lo,
-[Ami]najdi si někoho, [E7]kdo tě snad nežli já [Ami]víc [E7]bude [Ami]chtít. [Dmi] [Ami] [E7]
+[Ami]najdi si někoho, [E7]kdo tě snad nežli já [Ami]víc [E7]bude [Ami]chtít. [Dmi][Ami][E7]
 {end_of_chorus}
 
 {start_of_verse}
 [Ami]Viděl jsem rybáře, [E7]nad člunem [Ami]stál
-[G7] za bouře na moři, [Dmi]kotva šla ke [E7]dnu,
+[G7]za bouře na moři, [Dmi]kotva šla ke [E7]dnu,
 [Ami]z řetízku [G7]zpod tváře [Dmi]kotvu jsem [E7]sňal,
-[Ami] svět se snad [G7]nezboří, [Dmi]vždyť měl jen [E7]jednu.
+[Ami]svět se snad [G7]nezboří, [Dmi]vždyť měl jen [E7]jednu.
 {end_of_verse}
 
 {chorus}

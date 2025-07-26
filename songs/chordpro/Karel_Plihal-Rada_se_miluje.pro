@@ -1,5 +1,5 @@
-{title: Karel Plíhal}
-{artist: Ráda se miluje}
+{title: Ráda se miluje}
+{artist: Karel Plíhal}
 {date_added: 12-2024}
 {songbooks: ["Domčík"]}
 {language: czech}

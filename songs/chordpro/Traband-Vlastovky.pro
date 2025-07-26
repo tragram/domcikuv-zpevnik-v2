@@ -36,7 +36,7 @@ hlubokých [B]mořích, divokých [F]řekách,
 o vysokých [Dmi]horách,
 které je [C]nutné přelét[Ami]nout.
 
-[Dmi]o nebeských [Ami]stezkách,
+[Dmi]O nebeských [Ami]stezkách,
 zářících [B]hvězdách, o cestách [F]domů,
 o korunách [Dmi]stromů,
 kde je [C]možné odpoči[Ami]nout.
@@ -74,7 +74,7 @@ přicházíme, [C]odchází[Ami]me.
 odkud jsme [Dmi]přišli
 a kam zas [C]potom půjdeme [Ami]spát,
 
-[Dmi]že někde je [Ami]domov,
+[Dmi]Že někde je [Ami]domov,
 že někde je [B]hnízdo, útulno [F]čisto,
 že někde je [Dmi]někdo,
 kdo čeká na [C]nás, na ná[Ami]vrat.

@@ -7,70 +7,29 @@ import {
 } from "../../lib/db/schema";
 import { eq, and } from "drizzle-orm";
 import { buildApp } from "./utils";
+import { SongData } from "../../lib/songData";
 
 export const songDBRoutes = buildApp().get("/", async (c) => {
   const db = drizzle(c.env.DB);
   const userId = c.get("USER")?.id;
 
   try {
-    // Get songs with illustrations and current user favorites
-    const songs = await db
-      .select({
-        id: song.id,
-        title: song.title,
-        artist: song.artist,
-        key: song.key,
-        createdAt: song.createdAt,
-        updatedAt: song.updatedAt,
-        startMelody: song.startMelody,
-        language: song.language,
-        tempo: song.tempo,
-        capo: song.capo,
-        range: song.range,
-        chordproURL: song.chordproURL,
-        currentIllustration: {
-          promptId: songIllustration.promptId,
-          promptModel: songIllustration.promptModel,
-          imageModel: songIllustration.imageModel,
-          imageURL: songIllustration.imageURL,
-          thumbnailURL: songIllustration.thumbnailURL,
-        },
-        isFavoriteByCurrentUser: userFavoriteSongs.userId,
-      })
-      .from(song)
-      .leftJoin(
-        songIllustration,
-        and(
-          eq(songIllustration.songId, song.id),
-          eq(songIllustration.isActive, true)
-        )
-      )
-      .leftJoin(
-        userFavoriteSongs,
-        userId
-          ? and(
-              eq(userFavoriteSongs.songId, song.id),
-              eq(userFavoriteSongs.userId, userId)
-            )
-          : undefined
-      )
-      .where(eq(song.hidden, false));
-    const publicSongbooks = await getPublicSongbooks(db);
+    const [rawSongs, publicSongbooks] = await Promise.all([
+      fetchSongsWithFavorites(db, userId),
+      getPublicSongbooks(db)
+    ]);
 
-    // Process songs with favorites
-    const songDB = songs.map((song) => ({
-      ...song,
-      isFavorite: !!song.isFavoriteByCurrentUser,
-    }));
+    // Convert raw database results to SongData instances
+    const songs = SongData.fromDBArray(rawSongs);
 
     console.log(
-      `Loaded ${songDB.length} songs and ${publicSongbooks.length} public songbooks`
+      `Loaded ${songs.length} songs and ${publicSongbooks.length} public songbooks`
     );
 
     return c.json({
       status: "success",
       data: {
-        songDB,
+        songDB: songs.map(song => song.toJSON()),
         publicSongbooks,
       },
     });
@@ -86,6 +45,55 @@ export const songDBRoutes = buildApp().get("/", async (c) => {
   }
 });
 
+async function fetchSongsWithFavorites(db: DrizzleD1Database, userId?: string) {
+  const songsData = await db
+    .select({
+      id: song.id,
+      title: song.title,
+      artist: song.artist,
+      key: song.key,
+      createdAt: song.createdAt,
+      updatedAt: song.updatedAt,
+      startMelody: song.startMelody,
+      language: song.language,
+      tempo: song.tempo,
+      capo: song.capo,
+      range: song.range,
+      chordproURL: song.chordproURL,
+      hidden: song.hidden,
+      currentIllustration: {
+        promptId: songIllustration.promptId,
+        imageModel: songIllustration.imageModel,
+        imageURL: songIllustration.imageURL,
+        thumbnailURL: songIllustration.thumbnailURL,
+      },
+      isFavorite: userFavoriteSongs.userId,
+    })
+    .from(song)
+    .leftJoin(
+      songIllustration,
+      and(
+        eq(songIllustration.songId, song.id),
+        eq(songIllustration.isActive, true)
+      )
+    )
+    .leftJoin(
+      userFavoriteSongs,
+      userId
+        ? and(
+            eq(userFavoriteSongs.songId, song.id),
+            eq(userFavoriteSongs.userId, userId)
+          )
+        : undefined
+    )
+    .where(eq(song.hidden, false));
+
+  return songsData.map((song) => ({
+    ...song,
+    isFavorite: !!song.isFavorite,
+  }));
+}
+
 async function getPublicSongbooks(db: DrizzleD1Database) {
   const result = await db
     .select({
@@ -99,7 +107,7 @@ async function getPublicSongbooks(db: DrizzleD1Database) {
     .innerJoin(userFavoriteSongs, eq(user.id, userFavoriteSongs.userId))
     .where(eq(user.isFavoritesPublic, true))
     .orderBy(user.name, userFavoriteSongs.id);
-  console.log(result);
+
   const userSongMap = new Map<
     string,
     {

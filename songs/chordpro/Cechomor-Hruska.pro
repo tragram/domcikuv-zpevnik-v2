@@ -1,5 +1,5 @@
-{title: Čechomor}
-{artist: Hruška}
+{title: Hruška}
+{artist: Čechomor}
 {date_added: 12-2024}
 {songbooks: ["Domčík"]}
 {language: czech}
