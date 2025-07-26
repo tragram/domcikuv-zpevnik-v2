@@ -1,5 +1,6 @@
 import {
   createFileRoute,
+  getRouteApi,
   Link,
   redirect,
   useRouter,
@@ -8,6 +9,7 @@ import { Camera, Home, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "src/lib/auth/client";
+import { UserProfileData } from "src/worker/api/userProfile";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
@@ -25,31 +27,34 @@ import { Switch } from "~/components/ui/switch";
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,
   loader: async ({ context }) => {
-    const userProfile = context.queryClient.getQueryData(["userProfile"]);
-    if (!userProfile) {
+    const userProfileData = context.queryClient.getQueryData([
+      "userProfile",
+    ]) as UserProfileData;
+    if (!userProfileData.loggedIn) {
       throw redirect({ to: "/login" });
     }
     return {
-      userProfile,
+      userProfileData,
     };
   },
 });
 
 function RouteComponent() {
-  const { userProfile } = Route.useLoaderData();
+  const { userProfileData } = Route.useLoaderData();
+  const profile = userProfileData.profile;
   const { queryClient, redirectURL } = Route.useRouteContext();
 
   const navigate = Route.useNavigate();
+  const router = useRouter();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   // Create initial state object matching userProfile structure
   const initialState = {
-    name: userProfile.name,
-    nickname: userProfile?.nickname || "",
-    email: userProfile.email,
-    image: userProfile?.image || null,
-    isFavoritesPublic: userProfile.isFavoritesPublic,
+    name: profile.name,
+    nickname: profile?.nickname || "",
+    email: profile.email,
+    image: profile?.image || null,
+    isFavoritesPublic: profile.isFavoritesPublic,
   };
   // Current state (what user is editing)
   const [currentData, setCurrentData] = useState(initialState);
@@ -123,6 +128,8 @@ function RouteComponent() {
 
         // Update saved state
         setSavedData(updatedData);
+        // TODO: this does not appear to be enough
+        router.invalidate();
 
         toast.success("Profile updated successfully");
       } else {
@@ -201,7 +208,6 @@ function RouteComponent() {
     field: K,
     value: (typeof currentData)[K]
   ) => {
-    console.log(field, value);
     setCurrentData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -212,7 +218,7 @@ function RouteComponent() {
 
         <div className="grid gap-6">
           <ProfilePictureSection
-            userProfile={userProfile}
+            userProfile={profile}
             currentAvatar={currentData.image}
             avatarPreview={avatarPreview}
             avatarToDelete={avatarToDelete}
@@ -535,12 +541,12 @@ function ActionButtons({
     <div className="flex flex-col sm:flex-row gap-3 justify-between">
       <Button asChild variant="outline" className="sm:w-auto">
         <Link to="/">
-          <Home/>
+          <Home />
           Home
         </Link>
       </Button>
       <Button variant="outline" onClick={onLogout} className="sm:w-auto">
-        <LogOut/>
+        <LogOut />
         Logout
       </Button>
       <Button
@@ -555,7 +561,7 @@ function ActionButtons({
           </>
         ) : (
           <>
-            <Save/>
+            <Save />
             Save Changes
           </>
         )}
