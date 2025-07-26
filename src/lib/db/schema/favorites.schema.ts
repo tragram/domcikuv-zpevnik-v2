@@ -9,7 +9,7 @@ export const userFavoriteSongs = sqliteTable("favorites", {
     .references(() => user.id, { onDelete: "cascade" }),
   songId: text("song_id")
     .notNull()
-    .references(() => song.id),
+    .references(() => song.id, { onDelete: "cascade" }),
   addedAt: integer("added_at", { mode: "timestamp" })
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),

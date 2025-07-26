@@ -26,7 +26,7 @@ export class SongData {
   chordproURL: string;
 
   // UI-specific fields
-  currentIllustration: CurrentIllustration;
+  currentIllustration?: CurrentIllustration;
   isFavorite: boolean;
 
   constructor(songFromDB: SongDataApi) {
@@ -81,17 +81,24 @@ export class SongData {
     return SongData.to_ascii(this.artist);
   }
 
+  static default_id(title: string, artist: string) {
+    return `${SongData.to_ascii(artist)}-${SongData.to_ascii(title)}`
+      .replace(/ /g, "_")
+      .replace(/[^A-Za-z0-9-_]+/g, "")
+      .replace(/_+/g, "_");
+  }
+
   url(): string {
     return `/song/${this.id}`;
   }
 
   // Image URL methods
   thumbnailURL(): string {
-    return this.currentIllustration.thumbnailURL || this.defaultThumbnailURL();
+    return this.currentIllustration?.thumbnailURL || this.defaultThumbnailURL();
   }
 
   illustrationURL(): string {
-    return this.currentIllustration.imageURL || this.defaultIllustrationURL();
+    return this.currentIllustration?.imageURL || this.defaultIllustrationURL();
   }
 
   private defaultThumbnailURL(): string {

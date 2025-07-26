@@ -278,7 +278,7 @@ const SongRow = memo(({ song, maxRange, user }: SongRowProps) => {
             )}
 
             <DateDisplay
-              month={song.createdAt.getMonth()+1}
+              month={song.createdAt.getMonth() + 1}
               year={song.createdAt.getFullYear()}
               className="xsm:flex hidden shrink-0 basis-[2/12] md:basis-1/12"
             />

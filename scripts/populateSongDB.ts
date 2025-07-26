@@ -9,14 +9,42 @@ import {
   illustrationPrompt,
 } from "../src/lib/db/schema/song.schema";
 import { D1Helper } from "@nerdfolio/drizzle-d1-helpers";
-import {
-  preambleKeywords,
-  chordpro2JSKeywords,
-} from "../src/web/types/preambleKeywords.js";
-import {
-  validateMetadataDefinitions,
-  validateSongObject,
-} from "../src/web/types/metadata-validator.js";
+export const preambleKeywords = [
+  "title",
+  "artist",
+  "songbooks",
+  "key",
+  "date_added",
+  "language",
+  "tempo",
+  "capo",
+  "range",
+  "start_melody",
+  "prompt_model",
+  "prompt_id",
+  "image_model",
+  "pdf_filenames",
+];
+
+export const JS2chordproKeywords = {
+  title: "title",
+  artist: "artist",
+  songbooks: "songbooks",
+  key: "key",
+  dateAdded: "date_added",
+  language: "language",
+  tempo: "tempo",
+  capo: "capo",
+  range: "range",
+  startMelody: "start_melody",
+  promptModel: "prompt_model",
+  promptId: "prompt_id",
+  imageModel: "image_model",
+  pdfFilenames: "pdf_filenames",
+};
+export const chordpro2JSKeywords = Object.fromEntries(
+  Object.entries(JS2chordproKeywords).map(([key, value]) => [value, key])
+);
 
 interface SongEntry {
   title: string;
@@ -48,7 +76,7 @@ function to_ascii(text: string): string {
 }
 
 function songId(title: string, artist: string): string {
-  return SongData.id(title, artist);
+  return SongData.default_id(title, artist);
 }
 
 function parseDateToTimestamp(dateStr: string): Date {
@@ -332,33 +360,9 @@ async function processAndMigrateSongs(
   songsPath = "../songs",
   saveBackup = false
 ): Promise<void> {
-  // Validate metadata definitions first
-  const validationResult = validateMetadataDefinitions();
-  if (!validationResult.isValid) {
-    console.error("METADATA DEFINITION ERRORS:");
-    validationResult.errors.forEach((error) => console.error(`- ${error}`));
-    console.error("\nFix these errors before continuing!");
-    throw new Error("Metadata validation failed");
-  }
-
   console.log("Loading song data from files...");
   const songDB = loadSongData(songsPath);
   console.log(`Loaded ${songDB.length} songs from files`);
-
-  // Validate each song object
-  let validationWarnings = 0;
-  songDB.forEach((songData) => {
-    const songValidation = validateSongObject(songData);
-    if (!songValidation.isValid) {
-      console.warn(`Warning: Issues with song "${songData.chordproFile}":`);
-      songValidation.errors.forEach((error) => console.warn(`  - ${error}`));
-      validationWarnings++;
-    }
-  });
-
-  if (validationWarnings > 0) {
-    console.warn(`\n⚠️  ${validationWarnings} songs had validation warnings\n`);
-  }
 
   // Optionally save backup files
   if (saveBackup) {
@@ -470,6 +474,14 @@ async function main(): Promise<void> {
 
 main();
 // To run, use: npx tsx scripts/populateSongDB.ts --songs-path="songs"
-// To delete previous data run: npx wrangler d1 execute zpevnik --local --command "DELETE FROM song_illustration;DELETE FROM illustration_prompt;DELETE FROM song_version;"
+// To delete previous data run: npx wrangler d1 execute zpevnik --local --command "DELETE FROM song_illustration;DELETE FROM illustration_prompt;DELETE FROM song_version;DELETE FROM song;"
 
+// to get it to prod:
+// npx wrangler d1 export zpevnik --local --table=song --output=songs.sql
+// npx wrangler d1 export zpevnik --local --table=illustration_prompt --output=prompts.sql
+// npx wrangler d1 export zpevnik --local --table=song_illustration --output=illustrations.sql
+
+// npx wrangler d1 execute zpevnik --remote --file=songs.sql
+// npx wrangler d1 execute zpevnik --remote --file=prompts.sql
+// npx wrangler d1 execute zpevnik --remote --file=illustrations.sql
 export { processAndMigrateSongs, loadSongData };
