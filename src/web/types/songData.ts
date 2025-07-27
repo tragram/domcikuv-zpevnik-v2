@@ -5,10 +5,11 @@ import { SongDataDB } from "src/lib/db/schema";
 import { SongDataApi } from "src/worker/api/songDB";
 
 interface CurrentIllustration {
-  promptId: string | null;
-  imageModel: string | null;
-  imageURL: string | null;
-  thumbnailURL: string | null;
+  promptId: string;
+  imageModel: string;
+  imageURL: string;
+  thumbnailURL: string;
+  promptURL: string;
 }
 
 export class SongData {
@@ -26,7 +27,7 @@ export class SongData {
   chordproURL: string;
 
   // UI-specific fields
-  currentIllustration?: CurrentIllustration;
+  currentIllustration: CurrentIllustration | undefined;
   isFavorite: boolean;
 
   constructor(songFromDB: SongDataApi) {
@@ -65,13 +66,6 @@ export class SongData {
   static to_ascii(text: string): string {
     return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
-
-  // static generateId(title: string, artist: string): string {
-  //   return `${SongData.to_ascii(artist)}-${SongData.to_ascii(title)}`
-  //     .replace(/ /g, "_")
-  //     .replace(/[^A-Za-z0-9-_]+/g, "")
-  //     .replace(/_+/g, "_");
-  // }
 
   get ascii_title(): string {
     return SongData.to_ascii(this.title);
@@ -113,15 +107,6 @@ export class SongData {
     return fileURL(`/songs/chordpro/${id}.pro`);
   }
 
-  // Static factory methods
-  static fromDB(songFromDB: SongFromDB): SongData {
-    return new SongData(songFromDB);
-  }
-
-  static fromDBArray(songsFromDB: SongFromDB[]): SongData[] {
-    return songsFromDB.map((song) => new SongData(song));
-  }
-
   // JSON serialization for API responses
   toJSON() {
     return {
@@ -137,7 +122,6 @@ export class SongData {
       capo: this.capo,
       range: this.range?.toString(),
       chordproURL: this.chordproURL,
-      hidden: this.hidden,
       currentIllustration: this.currentIllustration,
       isFavorite: this.isFavorite,
       url: this.url(),

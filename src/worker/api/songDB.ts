@@ -28,12 +28,15 @@ export type SongDataApi = {
   capo: number;
   range: string | null;
   chordproURL: string;
-  currentIllustration: {
-    promptId: string;
-    imageModel: string;
-    imageURL: string;
-    thumbnailURL: string;
-  };
+  currentIllustration:
+    | {
+        imageModel: string;
+        imageURL: string;
+        thumbnailURL: string;
+        promptId: string;
+        promptURL: string;
+      }
+    | undefined;
   isFavoriteByCurrentUser: boolean;
 };
 
@@ -102,19 +105,25 @@ export const songDBRoutes = buildApp()
               eq(songIllustration.isActive, true)
             )
           );
-        
+
         // Add the missing field with default value
-        songsRaw = rawResults.map(song => ({
+        songsRaw = rawResults.map((song) => ({
           ...song,
           isFavoriteByCurrentUser: null,
         }));
       }
 
-      const songs = songsRaw.map((song) => ({
-        ...song,
-        isFavoriteByCurrentUser: !!song.isFavoriteByCurrentUser,
+      const songs = songsRaw.map((songItem) => ({
+        ...songItem,
+        isFavoriteByCurrentUser: !!songItem.isFavoriteByCurrentUser,
+        currentIllustration: songItem.currentIllustration
+          ? {
+              ...songItem.currentIllustration,
+              promptURL: `/songs/image_prompts/${songItem.id}.yaml`,
+            }
+          : undefined,
       }));
-      
+
       return c.json({
         status: "success",
         data: songs as SongDataApi[],

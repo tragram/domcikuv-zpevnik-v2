@@ -128,11 +128,14 @@ export const fetchSongDBAdmin = async (adminApi: AdminApi): Promise<SongDB> => {
  * @param songId - The ID of the song
  * @returns Promise containing the prompt response
  * @throws {ApiException} When the prompt cannot be loaded or parsed
- * @deprecated Use fetchIllustrationPromptsAdmin for new prompt system
  */
-export const fetchIllustrationPrompt = async (songId: string): Promise<any> => {
-  const response = await fetch(SongData.promptURL(songId));
-  await handleApiResponse(response); // validate JSend
+export const fetchIllustrationPrompt = async (
+  song: SongData
+): Promise<string> => {
+  if (!song.currentIllustration) {
+    throw Error("Illustration missing --> no prompt available.");
+  }
+  const response = await fetch(song.currentIllustration?.promptURL);
   const promptContent = await response.text();
   return yaml.load(promptContent)[0].response;
 };
