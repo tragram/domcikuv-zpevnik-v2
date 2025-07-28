@@ -28,6 +28,7 @@ export const findSong = async (db: DrizzleD1Database, songId: string) => {
 
 export const songRoutes = buildApp()
   .get("/songs", async (c) => {
+    // TODO: only show songs that are not deleted
     try {
       const db = drizzle(c.env.DB);
       const songs = await db.select().from(song).orderBy(desc(song.updatedAt));
@@ -103,4 +104,15 @@ export const songRoutes = buildApp()
         );
       }
     }
-  );
+  )
+
+  // TODO: delete should only set the delete flag to true, no actual deletion done
+
+  .put("/songs/reset-songDB-version", async (c) => {
+    const newVersion = new Date().getTime().toString();
+    await c.env.KV.put("songDB-version", newVersion);
+    return c.json({
+      status: "success",
+      data: newVersion,
+    });
+  });

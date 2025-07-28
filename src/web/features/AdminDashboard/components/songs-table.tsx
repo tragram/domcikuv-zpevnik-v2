@@ -28,7 +28,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { Plus, Edit, Search, ExternalLink, Eye, EyeOff } from "lucide-react";
+import {
+  Plus,
+  Edit,
+  Search,
+  ExternalLink,
+  Eye,
+  EyeOff,
+  ListRestart,
+} from "lucide-react";
 import { SongDB } from "~/types/types";
 import { SongData } from "~/types/songData";
 import { useRouteContext } from "@tanstack/react-router";
@@ -128,7 +136,7 @@ export default function SongsTable({ songDB }: SongsTableProps) {
         songs.map((s) => {
           if (s.id === songId) {
             s.hidden = hidden;
-            console.log(s)
+            console.log(s);
           }
           return s;
         })
@@ -163,6 +171,13 @@ export default function SongsTable({ songDB }: SongsTableProps) {
           </DialogContent>
         </Dialog>
       </div>
+      <Button onClick={() => adminApi.songs["reset-songDB-version"].$put()}>
+        <ListRestart /> Update DB version
+        {/*
+         TODO: add a warning dialog that this will force all clients to download the whole DB again and should only be done when the schema changes
+        TODO: is there a way to do this automatically on migration?
+        */}
+      </Button>
 
       <div className="flex items-center space-x-2">
         <Search className="h-4 w-4 text-muted-foreground" />

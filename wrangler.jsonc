@@ -43,6 +43,12 @@
       "bucket_name": "zpevnik"
     }
   ],
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "072c47d0d304449caaf16f44a3886499"
+    }
+  ],
 
   /**
    * Environment Variables
@@ -51,7 +57,7 @@
   "vars": {
     "VITE_BASE_URL": "http://localhost:5173",
     "PROD_BASE_URL": "https://zpevnik.hodan.page",
-    "CLOUDFLARE_R2_URL": "https://pub-331c64d6b1714cc99d68580dc52a8d90.r2.dev",
+    "CLOUDFLARE_R2_URL": "kyblik.zpevnik.hodan.page",
     "GITHUB_REPO": "tragram/domcikuv-zpevnik-v2"
   }
   /**
