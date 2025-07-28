@@ -1,5 +1,5 @@
-import { and, eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/d1";
+import { and, eq, gte, or } from "drizzle-orm";
+import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import {
   song,
   songIllustration,
@@ -7,6 +7,14 @@ import {
   userFavoriteSongs,
 } from "../../lib/db/schema";
 import { buildApp } from "./utils";
+import { z } from "zod/v4";
+import { zValidator } from "@hono/zod-validator";
+
+// Change to query parameters for GET request
+const incrementalUpdateSchema = z.object({
+  songDBVersion: z.string(),
+  lastUpdateAt: z.string().transform((str) => new Date(str)),
+});
 
 export interface SongbookDataApi {
   user: string;
@@ -22,11 +30,11 @@ export type SongDataApi = {
   key: string;
   createdAt: string | Date;
   updatedAt: string | Date;
-  startMelody: string | null;
+  startMelody: string | undefined;
   language: string;
-  tempo: number | null;
-  capo: number;
-  range: string | null;
+  tempo: number | undefined;
+  capo: number | undefined;
+  range: string | undefined;
   chordproURL: string;
   currentIllustration:
     | {
@@ -40,105 +48,198 @@ export type SongDataApi = {
   isFavoriteByCurrentUser: boolean;
 };
 
+export type SongDBResponseData = {
+  songs: SongDataApi[];
+  songDBVersion: string;
+  lastUpdateAt: string;
+  isIncremental: boolean;
+};
+
+async function retrieveSongs(
+  db: DrizzleD1Database,
+  userId?: string,
+  updatedSince?: Date,
+  includeHidden = false,
+  includeDeleted = false
+) {
+  const baseSelectFields = {
+    id: song.id,
+    title: song.title,
+    artist: song.artist,
+    key: song.key,
+    createdAt: song.createdAt,
+    updatedAt: song.updatedAt,
+    startMelody: song.startMelody,
+    language: song.language,
+    tempo: song.tempo,
+    capo: song.capo || 0,
+    range: song.range,
+    chordproURL: song.chordproURL,
+    hidden: song.hidden,
+    deleted: song.deleted,
+    currentIllustration: {
+      promptId: songIllustration.promptId,
+      imageModel: songIllustration.imageModel,
+      imageURL: songIllustration.imageURL,
+      thumbnailURL: songIllustration.thumbnailURL,
+    },
+  };
+
+  let query;
+  if (userId) {
+    query = db
+      .select({
+        ...baseSelectFields,
+        isFavoriteByCurrentUser: userFavoriteSongs.userId,
+      })
+      .from(song)
+      .leftJoin(
+        songIllustration,
+        and(
+          eq(songIllustration.songId, song.id),
+          eq(songIllustration.isActive, true)
+        )
+      )
+      .leftJoin(
+        userFavoriteSongs,
+        and(
+          eq(userFavoriteSongs.songId, song.id),
+          eq(userFavoriteSongs.userId, userId)
+        )
+      );
+  } else {
+    query = db
+      .select(baseSelectFields)
+      .from(song)
+      .leftJoin(
+        songIllustration,
+        and(
+          eq(songIllustration.songId, song.id),
+          eq(songIllustration.isActive, true)
+        )
+      );
+  }
+
+  // add .where conditions based on params
+  const conditions = [];
+  if (!includeHidden) {
+    if (includeDeleted) {
+      // deleted songs need to be shown regardless of hidden state so SW cache can be properly updated
+      conditions.push(or(eq(song.hidden, false), eq(song.deleted, true)));
+    } else {
+      conditions.push(eq(song.hidden, false));
+    }
+  }
+
+  if (!includeDeleted) {
+    conditions.push(eq(song.deleted, false));
+  }
+
+  if (updatedSince) {
+    conditions.push(gte(song.updatedAt, updatedSince));
+  }
+
+  if (conditions.length > 0) {
+    query = query.where(and(...conditions));
+  }
+
+  const songsRaw = await query;
+  return songsRaw.map(
+    (songItem): SongDataApi => ({
+      id: songItem.id,
+      title: songItem.title,
+      artist: songItem.artist,
+      key: songItem.key,
+      createdAt: songItem.createdAt,
+      updatedAt: songItem.updatedAt,
+      startMelody: songItem.startMelody ?? undefined,
+      language: songItem.language,
+      tempo: songItem.tempo ?? undefined,
+      capo: songItem.capo ?? undefined,
+      range: songItem.range ?? undefined,
+      chordproURL: songItem.chordproURL,
+      // Convert userId presence to boolean
+      isFavoriteByCurrentUser: !!(songItem as any).isFavoriteByCurrentUser,
+      currentIllustration:
+        songItem.currentIllustration?.promptId &&
+        songItem.currentIllustration?.imageModel &&
+        songItem.currentIllustration?.imageURL &&
+        songItem.currentIllustration?.thumbnailURL
+          ? {
+              promptId: songItem.currentIllustration.promptId,
+              imageModel: songItem.currentIllustration.imageModel,
+              imageURL: songItem.currentIllustration.imageURL,
+              thumbnailURL: songItem.currentIllustration.thumbnailURL,
+              promptURL: `/songs/image_prompts/${songItem.id}.yaml`,
+            }
+          : undefined,
+    })
+  );
+}
+
 export const songDBRoutes = buildApp()
   .get("/", async (c) => {
     const db = drizzle(c.env.DB);
     const userId = c.get("USER")?.id;
 
     try {
-      const baseSelectFields = {
-        id: song.id,
-        title: song.title,
-        artist: song.artist,
-        key: song.key,
-        createdAt: song.createdAt,
-        updatedAt: song.updatedAt,
-        startMelody: song.startMelody,
-        language: song.language,
-        tempo: song.tempo,
-        capo: song.capo || 0,
-        range: song.range,
-        chordproURL: song.chordproURL,
-        currentIllustration: {
-          promptId: songIllustration.promptId,
-          imageModel: songIllustration.imageModel,
-          imageURL: songIllustration.imageURL,
-          thumbnailURL: songIllustration.thumbnailURL,
-        },
-      };
-
-      let songsRaw;
-
-      if (userId) {
-        // User is logged in - include favorites join and field
-        songsRaw = await db
-          .select({
-            ...baseSelectFields,
-            isFavoriteByCurrentUser: userFavoriteSongs.userId,
-          })
-          .from(song)
-          .where(eq(song.hidden, false))
-          .leftJoin(
-            songIllustration,
-            and(
-              eq(songIllustration.songId, song.id),
-              eq(songIllustration.isActive, true)
-            )
-          )
-          .leftJoin(
-            userFavoriteSongs,
-            and(
-              eq(userFavoriteSongs.songId, song.id),
-              eq(userFavoriteSongs.userId, userId)
-            )
-          );
-      } else {
-        // No user logged in - exclude favorites entirely
-        const rawResults = await db
-          .select(baseSelectFields)
-          .from(song)
-          .where(eq(song.hidden, false))
-          .leftJoin(
-            songIllustration,
-            and(
-              eq(songIllustration.songId, song.id),
-              eq(songIllustration.isActive, true)
-            )
-          );
-
-        // Add the missing field with default value
-        songsRaw = rawResults.map((song) => ({
-          ...song,
-          isFavoriteByCurrentUser: null,
-        }));
-      }
-
-      const songs = songsRaw.map((songItem) => ({
-        ...songItem,
-        isFavoriteByCurrentUser: !!songItem.isFavoriteByCurrentUser,
-        currentIllustration: songItem.currentIllustration
-          ? {
-              ...songItem.currentIllustration,
-              promptURL: `/songs/image_prompts/${songItem.id}.yaml`,
-            }
-          : undefined,
-      }));
+      const songs = await retrieveSongs(db, userId);
 
       return c.json({
         status: "success",
-        data: songs as SongDataApi[],
+        data: {
+          songs,
+          songDBVersion: await c.env.KV.get("songDB-version"),
+          lastUpdateAt: new Date().toISOString(),
+          isIncremental: false,
+        } as SongDBResponseData,
       });
     } catch (error) {
       console.error("Database error:", error);
       return c.json(
         {
           status: "error",
-          message: "Failed to fetch songs and songbooks",
+          message: "Failed to fetch songs",
         },
         500
       );
     }
   })
+
+  // Changed to use query parameters instead of JSON body
+  .get(
+    "/incremental",
+    zValidator("query", incrementalUpdateSchema),
+    async (c) => {
+      const { lastUpdateAt, songDBVersion } = c.req.valid("query");
+      const db = drizzle(c.env.DB);
+      const userId = c.get("USER")?.id;
+      let songs;
+      let isIncremental;
+
+      const currentDBVersion = await c.env.KV.get("songDB-version");
+
+      if (songDBVersion !== currentDBVersion) {
+        // Full refresh needed
+        songs = await retrieveSongs(db, userId);
+        isIncremental = false;
+      } else {
+        // Incremental update
+        songs = await retrieveSongs(db, userId, lastUpdateAt, false, true);
+        isIncremental = true;
+      }
+
+      return c.json({
+        status: "success",
+        data: {
+          songs,
+          songDBVersion: currentDBVersion,
+          lastUpdateAt: new Date().toISOString(),
+          isIncremental: isIncremental,
+        } as SongDBResponseData,
+      });
+    }
+  )
 
   .get("/songbooks", async (c) => {
     const db = drizzle(c.env.DB);
@@ -197,4 +298,5 @@ export const songDBRoutes = buildApp()
       );
     }
   });
+
 export default songDBRoutes;

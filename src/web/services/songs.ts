@@ -57,7 +57,7 @@ export const fetchSongs = async (
   api: typeof client.api
 ): Promise<SongDataApi[]> => {
   const response = await makeApiRequest(api.songs.$get);
-  return response;
+  return response.songs;
 };
 
 export const fetchPublicSongbooks = async (

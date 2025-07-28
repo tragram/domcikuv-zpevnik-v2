@@ -109,7 +109,7 @@ export const songRoutes = buildApp()
   // TODO: delete should only set the delete flag to true, no actual deletion done
 
   .put("/songs/reset-songDB-version", async (c) => {
-    const newVersion = new Date().getTime().toString();
+    const newVersion = new Date().toISOString();
     await c.env.KV.put("songDB-version", newVersion);
     return c.json({
       status: "success",
