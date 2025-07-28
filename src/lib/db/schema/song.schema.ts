@@ -20,6 +20,7 @@ export const song = sqliteTable("song", {
   range: text("range"),
   chordproURL: text("chordproURL").notNull(),
   hidden: integer("hidden", { mode: "boolean" }).default(false).notNull(),
+  deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
 });
 
 export type SongDataDB = typeof song.$inferSelect;
@@ -88,8 +89,8 @@ export const songRelations = relations(song, ({ one, many }) => ({
   }),
   // Get all illustrations for this song
   illustrations: many(songIllustration),
-  // Get all changes for this song
-  changes: many(songVersion),
+  // Get all versions for this song
+  versions: many(songVersion),
 }));
 
 export const songIllustrationRelations = relations(
@@ -113,9 +114,12 @@ export const songVersionRelations = relations(songVersion, ({ one }) => ({
   }),
 }));
 
-export const illustrationPromptRelations = relations(illustrationPrompt, ({ one }) => ({
-  song: one(song, {
-    fields: [illustrationPrompt.songId],
-    references: [song.id],
-  }),
-}));
+export const illustrationPromptRelations = relations(
+  illustrationPrompt,
+  ({ one }) => ({
+    song: one(song, {
+      fields: [illustrationPrompt.songId],
+      references: [song.id],
+    }),
+  })
+);
