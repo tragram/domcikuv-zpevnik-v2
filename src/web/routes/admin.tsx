@@ -12,8 +12,8 @@ import { fetchUsersAdmin } from "~/services/users";
 export const Route = createFileRoute("/admin")({
   component: Home,
   beforeLoad: async ({ context }) => {
-    const userProfile = context.queryClient.getQueryData(["userProfile"]);
-    if (!(userProfile?.isAdmin)) {
+    const user = context.queryClient.getQueryData(["userProfile"]);
+    if (!user?.profile.isAdmin) {
       throw redirect({ to: "/" });
     }
     return context;
@@ -60,7 +60,7 @@ function Home() {
   if (!songDBAdmin || !illustrations || !versions || !users) {
     return <div>Loading...</div>;
   }
-  
+
   return (
     <AdminDashboard
       songDB={songDBAdmin}
