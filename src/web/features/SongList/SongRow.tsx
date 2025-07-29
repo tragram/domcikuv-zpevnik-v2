@@ -209,7 +209,7 @@ const FavoriteButton = ({ song, className = "" }: FavoriteButtonProps) => {
     <button
       type="button"
       onClick={handleClick}
-      disabled={isLoading}
+      disabled={isLoading || !window.navigator.onLine}
       className={cn(
         "favorite-button flex items-center justify-center p-2 transition-transform hover:scale-110",
         "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100",

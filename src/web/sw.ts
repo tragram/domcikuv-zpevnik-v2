@@ -32,11 +32,10 @@ cleanupOutdatedCaches();
 self.skipWaiting();
 clientsClaim();
 
-// Fallback for SPA routes
+// Fallback for SPA routes - handle offline
 let allowlist: undefined | RegExp[];
 if (import.meta.env.DEV) allowlist = [/^\/$/];
 
-// to allow work offline
 registerRoute(
   new NavigationRoute(createHandlerBoundToURL("index.html"), { allowlist })
 );
@@ -157,16 +156,26 @@ async function applyIncrementalUpdates(
   return updatedSongs;
 }
 
-// Custom handler for /api/songs endpoint that does not fetch the whole DB every time
+// Custom handler for /api/songs endpoint
 async function handleSongsRequest(request: Request): Promise<Response> {
-  // TODO: if offline, return what we have
-  // TODO: automatically precache songs in R2 bucket and DB prompts in D1
   try {
     const cachedData = await getCachedMetadata();
+
+    // If offline and we have cached data, return it
+    if (!navigator.onLine && cachedData?.songs) {
+      console.debug("PWA: Offline, serving cached songs data");
+      const responseData = {
+        songs: Array.from(cachedData.songs.values()),
+        songDBVersion: cachedData.songDBVersion,
+        lastUpdateAt: cachedData.lastUpdateAt,
+        isIncremental: false,
+      } as SongDBResponseData;
+      return successJSendResponse(responseData);
+    }
+
     // If no cached data, fetch full dataset
     if (
-      !cachedData ||
-      !cachedData.songs ||
+      !cachedData?.songs ||
       !cachedData.songDBVersion ||
       !cachedData.lastUpdateAt
     ) {
@@ -192,8 +201,6 @@ async function handleSongsRequest(request: Request): Promise<Response> {
         );
         const songsMap = new Map(data.songs.map((song) => [song.id, song]));
         await setCachedData(data.songDBVersion, data.lastUpdateAt, songsMap);
-
-        // Return response in the format expected by the original endpoint
         return successJSendResponse(data);
       }
 
@@ -216,10 +223,20 @@ async function handleSongsRequest(request: Request): Promise<Response> {
       } as SongDBResponseData;
       return successJSendResponse(responseData);
     } catch (error) {
-      console.warn(
-        "PWA: Incremental update failed, falling back to full dataset:",
-        error
-      );
+      console.warn("PWA: Incremental update failed, falling back:", error);
+
+      // If we have cached data, serve it
+      if (cachedData?.songs) {
+        console.debug("PWA: Serving cached data as fallback");
+        const responseData = {
+          songs: Array.from(cachedData.songs.values()),
+          songDBVersion: cachedData.songDBVersion,
+          lastUpdateAt: cachedData.lastUpdateAt,
+          isIncremental: false,
+        } as SongDBResponseData;
+        return successJSendResponse(responseData);
+      }
+
       return fetchFullDataset();
     }
   } catch (error) {
@@ -230,32 +247,33 @@ async function handleSongsRequest(request: Request): Promise<Response> {
 }
 
 async function fetchFullDataset(): Promise<Response> {
-  const response = await client.api.songs.$get();
+  try {
+    const response = await client.api.songs.$get();
+    const data = (await handleApiResponse(
+      response.clone()
+    )) as SongDBResponseData;
 
-  const data = (await handleApiResponse(
-    response.clone()
-  )) as SongDBResponseData;
-  // Cache the full dataset
-  const songsMap = new Map(data.songs.map((song) => [song.id, song]));
+    // Cache the full dataset
+    const songsMap = new Map(data.songs.map((song) => [song.id, song]));
+    await setCachedData(data.songDBVersion, data.lastUpdateAt, songsMap);
 
-  await setCachedData(data.songDBVersion, data.lastUpdateAt, songsMap);
-  return response;
+    return response;
+  } catch (error) {
+    console.error("PWA: Failed to fetch full dataset:", error);
+
+    // Try to serve cached data if available
+    const cachedData = await getCachedMetadata();
+    if (cachedData?.songs) {
+      console.debug("PWA: Network failed, serving cached data");
+      const responseData = {
+        songs: Array.from(cachedData.songs.values()),
+        songDBVersion: cachedData.songDBVersion,
+        lastUpdateAt: cachedData.lastUpdateAt,
+        isIncremental: false,
+      } as SongDBResponseData;
+      return successJSendResponse(responseData);
+    }
+
+    throw error;
+  }
 }
-
-// // Add message handler for manual cache refresh from client
-// // TODO: add on error localStorage + worker cache cleanup
-// self.addEventListener("message", async (event) => {
-//   if (event.data && event.data.type === "REFRESH_SONGS_CACHE") {
-//     try {
-//       // Clear songs cache
-//       const cache = await caches.open(SONGS_CACHE);
-//       await cache.delete(SONGS_METADATA_KEY);
-
-//       // Notify client
-//       event.ports[0]?.postMessage({ success: true });
-//     } catch (error) {
-//       console.error("Error refreshing songs cache:", error);
-//       event.ports[0]?.postMessage({ success: false, error: error.message });
-//     }
-//   }
-// });

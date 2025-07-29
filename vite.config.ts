@@ -42,7 +42,6 @@ export default defineConfig({
           "songs/illustrations_thumbnails/**/*.webp",
           "songs/image_prompts/**/*.yaml",
           "site.webmanifest",
-          "songDB.json",
         ],
       },
       devOptions: {

@@ -42,7 +42,11 @@ function Toolbar({
         </Button>
       </Link>
       <Link to="/profile">
-        <Button size="icon" variant="circular">
+        <Button
+          size="icon"
+          variant="circular"
+          disabled={!window.navigator.onLine}
+        >
           <User />
         </Button>
       </Link>

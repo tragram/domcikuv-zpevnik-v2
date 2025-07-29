@@ -548,7 +548,12 @@ function ActionButtons({
           Home
         </Link>
       </Button>
-      <Button variant="outline" onClick={onLogout} className="sm:w-auto">
+      <Button
+        variant="outline"
+        onClick={onLogout}
+        className="sm:w-auto"
+        disabled={!window.navigator.onLine}
+      >
         <LogOut />
         Logout
       </Button>
@@ -562,7 +567,7 @@ function ActionButtons({
       )}
       <Button
         onClick={onSave}
-        disabled={saving || !hasChanges}
+        disabled={saving || !hasChanges || !window.navigator.onLine}
         className="sm:w-auto"
       >
         {saving ? (

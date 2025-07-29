@@ -46,6 +46,8 @@ export type SongDataApi = {
       }
     | undefined;
   isFavoriteByCurrentUser: boolean;
+  // incremental update status
+  updateStatus?: "added" | "modified" | "deleted";
 };
 
 export type SongDBResponseData = {
@@ -173,6 +175,13 @@ async function retrieveSongs(
               promptURL: `/songs/image_prompts/${songItem.id}.yaml`,
             }
           : undefined,
+      updateStatus: updatedSince
+        ? songItem.deleted
+          ? "deleted"
+          : new Date(songItem.createdAt) >= updatedSince
+          ? "added"
+          : "modified"
+        : undefined,
     })
   );
 }
@@ -225,7 +234,7 @@ export const songDBRoutes = buildApp()
         isIncremental = false;
       } else {
         // Incremental update
-        songs = await retrieveSongs(db, userId, lastUpdateAt, false, true);
+        songs = await retrieveSongs(db, userId, lastUpdateAt, true, true);
         isIncremental = true;
       }
 
