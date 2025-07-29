@@ -116,7 +116,7 @@ export default function SongsTable({ songData }: SongsTableProps) {
 
       // Update local state
       setSongs(songs.map((song) => (song.id === songId ? modifiedSong : song)));
-      toast.success(`Song ${hidden ? 'hidden' : 'shown'} successfully`);
+      toast.success(`Song ${hidden ? "hidden" : "shown"} successfully`);
     } catch (error) {
       console.error("Error toggling song visibility:", error);
       toast.error("Error toggling song visibility");
@@ -129,10 +129,10 @@ export default function SongsTable({ songData }: SongsTableProps) {
         deleted: true,
       };
       const modifiedSong = await putSongAdmin(adminApi, songId, updatedSong);
-      
+
       // Update local state
       setSongs(songs.map((song) => (song.id === songId ? modifiedSong : song)));
-      
+
       toast.success("Song deleted successfully");
     } catch (error) {
       console.error("Error deleting song:", error);
@@ -146,10 +146,10 @@ export default function SongsTable({ songData }: SongsTableProps) {
         deleted: false,
       };
       const modifiedSong = await putSongAdmin(adminApi, songId, updatedSong);
-      
+
       // Update local state
       setSongs(songs.map((song) => (song.id === songId ? modifiedSong : song)));
-      
+
       toast.success("Song restored successfully");
     } catch (error) {
       console.error("Error restoring song:", error);
@@ -160,7 +160,7 @@ export default function SongsTable({ songData }: SongsTableProps) {
   const handleResetDB = async () => {
     setIsResettingDB(true);
     try {
-      await adminApi.songs["reset-songDB-version"].$put();
+      await adminApi.songs["reset-songDB-version"].$get();
       toast.success("Database version reset successfully");
     } catch (error) {
       console.error("Error resetting database version:", error);
@@ -188,19 +188,15 @@ export default function SongsTable({ songData }: SongsTableProps) {
                 Reset Database Version
               </AlertDialogTitle>
               <AlertDialogDescription className="space-y-2">
-                <p>
-                  This will force all clients to download the entire song
-                  database again.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  <strong>Warning:</strong> This should only be done when the
-                  database schema changes or when there are significant
-                  structural updates that require a full sync.
-                </p>
-                <p className="text-sm">
-                  Are you sure you want to proceed? This action cannot be
-                  undone.
-                </p>
+                <strong>Warning:</strong> This will force all clients to
+                redownload the entire song database.
+                <br /><br />
+                This should only be done when the database schema changes or
+                when there are significant structural updates that require a
+                full sync. 
+                <br /><br />
+                Are you sure you want to proceed? This action cannot
+                be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -259,7 +255,10 @@ export default function SongsTable({ songData }: SongsTableProps) {
           </TableHeader>
           <TableBody>
             {filteredSongs.map((song) => (
-              <TableRow key={song.id} className={song.deleted ? "opacity-50" : ""}>
+              <TableRow
+                key={song.id}
+                className={song.deleted ? "opacity-50" : ""}
+              >
                 <TableCell className="font-medium">{song.title}</TableCell>
                 <TableCell>{song.artist}</TableCell>
                 <TableCell>
@@ -318,7 +317,9 @@ export default function SongsTable({ songData }: SongsTableProps) {
                               Restore Song
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                              Are you sure you want to restore <strong>"{song.title}"</strong> by <strong>{song.artist}</strong>?
+                              Are you sure you want to restore{" "}
+                              <strong>"{song.title}"</strong> by{" "}
+                              <strong>{song.artist}</strong>?
                               <br />
                               <br />
                               This will make the song visible to users again.
@@ -353,10 +354,14 @@ export default function SongsTable({ songData }: SongsTableProps) {
                               Delete Song
                             </AlertDialogTitle>
                             <AlertDialogDescription>
-                              Are you sure you want to delete <strong>"{song.title}"</strong> by <strong>{song.artist}</strong>?
+                              Are you sure you want to delete{" "}
+                              <strong>"{song.title}"</strong> by{" "}
+                              <strong>{song.artist}</strong>?
                               <br />
                               <br />
-                              This action will mark the song as deleted and it will no longer be visible to users. This action can be undone by using the restore function.
+                              This action will mark the song as deleted and it
+                              will no longer be visible to users. This action
+                              can be undone by using the restore function.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
