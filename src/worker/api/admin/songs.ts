@@ -129,7 +129,7 @@ export const songRoutes = buildApp()
     }
   })
 
-  .get("/reset-songDB-version", async (c) => {
+  .post("/reset-songDB-version", async (c) => {
     const newVersion = new Date().toISOString();
     await c.env.KV.put("songDB-version", newVersion);
     return c.json({

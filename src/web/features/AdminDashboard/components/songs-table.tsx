@@ -160,7 +160,7 @@ export default function SongsTable({ songData }: SongsTableProps) {
   const handleResetDB = async () => {
     setIsResettingDB(true);
     try {
-      await adminApi.songs["reset-songDB-version"].$get();
+      await adminApi.songs["reset-songDB-version"].$post();
       toast.success("Database version reset successfully");
     } catch (error) {
       console.error("Error resetting database version:", error);
