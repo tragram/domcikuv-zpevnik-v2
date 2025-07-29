@@ -77,7 +77,7 @@ export function IllustrationsTable({
         <div className="text-center sm:text-left">
           <h3 className="text-lg font-medium">Song Illustrations</h3>
           <p className="text-sm text-muted-foreground">
-            {sortedGroups.length} songs • {songsIllustrationsAndPrompts.length}{" "}
+            {sortedGroups.length} songs • {illustrations.length}{" "}
             illustrations
           </p>
         </div>
