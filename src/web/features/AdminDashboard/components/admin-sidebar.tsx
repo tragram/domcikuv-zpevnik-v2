@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
-import { Users, Music, ImageIcon, History, Database } from "lucide-react"
+import { Link } from "@tanstack/react-router";
+import { Users, Music, ImageIcon, History, Database, Home, Pencil, User } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -12,11 +13,12 @@ import {
   SidebarMenuItem,
   SidebarHeader,
   SidebarRail,
-} from "~/components/ui/sidebar"
+  SidebarSeparator,
+} from "~/components/ui/sidebar";
 
 interface AdminSidebarProps {
-  activeTab: string
-  setActiveTab: (tab: string) => void
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
 }
 
 const menuItems = [
@@ -40,7 +42,7 @@ const menuItems = [
     icon: Users,
     id: "users",
   },
-]
+];
 
 export function AdminSidebar({ activeTab, setActiveTab }: AdminSidebarProps) {
   return (
@@ -52,7 +54,9 @@ export function AdminSidebar({ activeTab, setActiveTab }: AdminSidebarProps) {
           </div>
           <div className="flex flex-col gap-0.5 leading-none">
             <span className="font-semibold">Admin Panel</span>
-            <span className="text-xs text-sidebar-foreground/70">Domčíkův Zpěvník</span>
+            <span className="text-xs text-sidebar-foreground/70">
+              Domčíkův Zpěvník
+            </span>
           </div>
         </div>
       </SidebarHeader>
@@ -72,11 +76,34 @@ export function AdminSidebar({ activeTab, setActiveTab }: AdminSidebarProps) {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarSeparator />
+              <SidebarGroupLabel>Site navigation</SidebarGroupLabel>
+              <SidebarMenuItem key="Home">
+                <Link to="/">
+                  <SidebarMenuButton>
+                    <Home className="size-4" /> Home
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+              <SidebarMenuItem key="Editor">
+                <Link to="/edit">
+                  <SidebarMenuButton>
+                    <Pencil className="size-4" /> Editor
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+              <SidebarMenuItem key="Profile">
+                <Link to="/profile">
+                  <SidebarMenuButton>
+                    <User className="size-4" /> Profile
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

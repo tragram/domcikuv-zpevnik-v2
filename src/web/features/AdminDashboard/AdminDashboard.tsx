@@ -21,34 +21,23 @@ import { IllustrationsTable } from "./components/illustrations-table/illustratio
 import SongsTable from "./components/songs-table";
 import { UsersTable } from "./components/users-table";
 import { VersionsTable } from "./components/versions-table";
+import { useQuery } from "@tanstack/react-query";
 import { UsersResponse } from "src/worker/api/admin/users";
-interface SongVersion {
-  id: string;
-  songId: string;
-  songTitle: string;
-  userId: string;
-  userName: string;
-  timestamp: Date;
-  chordproURL: string;
-  verified: boolean;
-}
+import {
+  fetchIllustrationsAdmin,
+  fetchVersionsAdmin,
+  fetchPromptsAdmin,
+  getSongsAdmin,
+  AdminApi,
+} from "~/services/songs";
+import { fetchUsersAdmin } from "~/services/users";
 
 interface AdminDashboardProps {
-  songs: SongDataDB[];
-  illustrations: SongIllustrationDB[];
-  prompts: IllustrationPromptDB[];
-  versions: SongVersion[];
-  users: UsersResponse;
+  adminApi: AdminApi;
 }
 
-export default function AdminDashboard({
-  songs,
-  illustrations,
-  prompts,
-  versions,
-  users,
-}: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState("users");
+export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
+  const [activeTab, setActiveTab] = useState("songs");
   const getTabTitle = (tab: string) => {
     switch (tab) {
       case "songs":
@@ -64,24 +53,66 @@ export default function AdminDashboard({
     }
   };
 
-  const renderContent = () => {
+  // Use query hooks instead of loader data
+  const { data: songs } = useQuery({
+    queryKey: ["songsAdmin"],
+    queryFn: () => getSongsAdmin(adminApi),
+    staleTime: 1000 * 60 * 60, // minute
+  });
+
+  const { data: illustrations } = useQuery({
+    queryKey: ["illustrationsAdmin"],
+    queryFn: () => fetchIllustrationsAdmin(adminApi),
+    staleTime: 1000 * 60 * 60,
+  });
+  const { data: prompts } = useQuery({
+    queryKey: ["promptsAdmin"],
+    queryFn: () => fetchPromptsAdmin(adminApi),
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: versions } = useQuery({
+    queryKey: ["versionsAdmin"],
+    queryFn: () => fetchVersionsAdmin(adminApi),
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const { data: users } = useQuery({
+    queryKey: ["usersAdmin"],
+    queryFn: () => fetchUsersAdmin(adminApi.users, { limit: 20, offset: 0 }),
+    staleTime: 1000 * 60 * 60,
+  });
+
+  const renderContent = (
+    songs?: SongDataDB[],
+    illustrations?: SongIllustrationDB[],
+    prompts?: IllustrationPromptDB[],
+    versions?: any,
+    users?: UsersResponse
+  ) => {
     switch (activeTab) {
       case "songs":
-        return <SongsTable songData={songs} />;
+        return songs ? <SongsTable songData={songs} /> : "Loading...";
       case "illustrations":
-        return (
+        return illustrations && prompts && songs ? (
           <IllustrationsTable
             illustrations={illustrations}
             prompts={prompts}
             songs={songs}
           />
+        ) : (
+          "Loading..."
         );
       case "versions":
-        return <VersionsTable initialVersions={versions} />;
+        return versions ? (
+          <VersionsTable initialVersions={versions} />
+        ) : (
+          "Loading..."
+        );
       case "users":
-        return <UsersTable initialUsers={users} />;
+        return users ? <UsersTable initialUsers={users} /> : "Loading...";
       default:
-        return <SongsTable songData={songs} />;
+        return songs ? <SongsTable songData={songs} /> : "Loading...";
     }
   };
 
@@ -102,7 +133,11 @@ export default function AdminDashboard({
             </BreadcrumbList>
           </Breadcrumb>
         </header>
-        <div className="p-2 md:p-4 w-full">{renderContent()}</div>
+        {
+          <div className="p-2 md:p-4 w-full">
+            {renderContent(songs, illustrations, prompts, versions, users)}
+          </div>
+        }
       </SidebarInset>
     </SidebarProvider>
   );

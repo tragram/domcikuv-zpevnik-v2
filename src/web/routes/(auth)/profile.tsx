@@ -251,6 +251,7 @@ function RouteComponent() {
         <ActionButtons
           saving={saving}
           hasChanges={hasChanges()}
+          isAdmin={userProfileData.loggedIn && userProfileData.profile.isAdmin}
           onSave={handleSaveProfile}
           onLogout={handleLogout}
         />
@@ -527,6 +528,7 @@ function PrivacySection({
 interface ActionButtonsProps {
   saving: boolean;
   hasChanges: boolean;
+  isAdmin: boolean;
   onSave: () => void;
   onLogout: () => void;
 }
@@ -534,6 +536,7 @@ interface ActionButtonsProps {
 function ActionButtons({
   saving,
   hasChanges,
+  isAdmin,
   onSave,
   onLogout,
 }: ActionButtonsProps) {
@@ -549,6 +552,14 @@ function ActionButtons({
         <LogOut />
         Logout
       </Button>
+      {isAdmin && (
+        <Button asChild variant="outline" className="sm:w-auto">
+          <Link to="/admin">
+            <Shield />
+            Admin
+          </Link>
+        </Button>
+      )}
       <Button
         onClick={onSave}
         disabled={saving || !hasChanges}
