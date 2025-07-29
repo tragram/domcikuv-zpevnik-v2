@@ -82,7 +82,7 @@ const adminMiddleware = async (c: Context, next: Next) => {
 const adminApp = buildApp()
   .use(adminMiddleware)
   .route("/users", userRoutes)
-  .route("/", songRoutes)
+  .route("/songs", songRoutes)
   .route("/illustrations", illustrationRoutes)
   .route("/", versionRoutes);
 

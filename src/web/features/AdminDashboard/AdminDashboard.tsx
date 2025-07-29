@@ -1,27 +1,27 @@
-"use client";
-
 import { useState } from "react";
-import { AdminSidebar } from "./components/admin-sidebar";
-import { UsersTable } from "./components/users-table";
-import { VersionsTable } from "./components/versions-table";
 import {
-  SidebarProvider,
-  SidebarInset,
-  SidebarTrigger,
-} from "~/components/ui/sidebar";
-import { Separator } from "~/components/ui/separator";
+  IllustrationPromptDB,
+  SongDataDB,
+  SongIllustrationDB,
+} from "src/lib/db/schema";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
 } from "~/components/ui/breadcrumb";
-import type { SongDB } from "~/types/types";
-import SongsTable from "./components/songs-table";
-import type { SongWithIllustrationsAndPrompts } from "src/worker/api/admin/illustrations";
+import { Separator } from "~/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "~/components/ui/sidebar";
+import { AdminSidebar } from "./components/admin-sidebar";
 import { IllustrationsTable } from "./components/illustrations-table/illustrations-table";
-import { IllustrationPromptDB } from "src/lib/db/schema";
-
+import SongsTable from "./components/songs-table";
+import { UsersTable } from "./components/users-table";
+import { VersionsTable } from "./components/versions-table";
+import { UsersResponse } from "src/worker/api/admin/users";
 interface SongVersion {
   id: string;
   songId: string;
@@ -33,41 +33,16 @@ interface SongVersion {
   verified: boolean;
 }
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  image?: string;
-  nickname?: string;
-  isTrusted: boolean;
-  isAdmin: boolean;
-  isFavoritesPublic: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  lastLogin: Date;
-}
-
-interface UsersResponse {
-  users: User[];
-  pagination: {
-    total: number;
-    limit: number;
-    offset: number;
-    hasMore: boolean;
-  };
-}
-
 interface AdminDashboardProps {
-  songDB: SongDB;
-  illustrations: SongWithIllustrationsAndPrompts[];
+  songs: SongDataDB[];
+  illustrations: SongIllustrationDB[];
   prompts: IllustrationPromptDB[];
   versions: SongVersion[];
   users: UsersResponse;
 }
 
 export default function AdminDashboard({
-  songDB,
+  songs,
   illustrations,
   prompts,
   versions,
@@ -92,13 +67,13 @@ export default function AdminDashboard({
   const renderContent = () => {
     switch (activeTab) {
       case "songs":
-        return <SongsTable songDB={songDB} />;
+        return <SongsTable songData={songs} />;
       case "illustrations":
         return (
           <IllustrationsTable
             illustrations={illustrations}
             prompts={prompts}
-            songs={songDB.songs}
+            songs={songs}
           />
         );
       case "versions":
@@ -106,7 +81,7 @@ export default function AdminDashboard({
       case "users":
         return <UsersTable initialUsers={users} />;
       default:
-        return <SongsTable songDB={songDB} />;
+        return <SongsTable songData={songs} />;
     }
   };
 

@@ -18,9 +18,20 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "~/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "~/components/ui/alert-dialog";
 import { Label } from "~/components/ui/label";
+import { Checkbox } from "~/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -29,120 +40,133 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import {
-  Plus,
   Edit,
   Search,
   ExternalLink,
-  Eye,
-  EyeOff,
   ListRestart,
+  AlertTriangle,
+  Trash2,
+  RotateCcw,
 } from "lucide-react";
-import { SongDB } from "~/types/types";
-import { SongData } from "~/types/songData";
 import { useRouteContext } from "@tanstack/react-router";
+import { deleteSongAdmin, putSongAdmin } from "~/services/songs";
+import { SongDataDB } from "src/lib/db/schema";
+import { toast } from "sonner";
 
 interface SongsTableProps {
-  songDB: SongDB; // Replace 'any' with a more specific type if available
+  songData: SongDataDB[];
 }
 
-export default function SongsTable({ songDB }: SongsTableProps) {
-  const [songs, setSongs] = useState<SongData[]>(songDB.songs);
+export default function SongsTable({ songData }: SongsTableProps) {
+  const [songs, setSongs] = useState<SongDataDB[]>(songData);
   const [searchTerm, setSearchTerm] = useState("");
-  const [editingSong, setEditingSong] = useState<SongData | null>(null);
+  const [editingSong, setEditingSong] = useState<SongDataDB | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isResettingDB, setIsResettingDB] = useState(false);
+  const [showDeleted, setShowDeleted] = useState(false);
   const context = useRouteContext({ from: "/admin" });
   const adminApi = context.api.admin;
 
   const filteredSongs = songs.filter(
     (song) =>
-      song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      song.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      song.key?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      (song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        song.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        song.key
+          ?.toString()
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())) &&
+      (showDeleted || !song.deleted)
   );
 
-  const handleSaveSong = async (songData: Partial<SongData>) => {
+  const handleSaveSong = async (songData: Partial<SongDataDB>) => {
+    if (!editingSong) return;
+
     setIsLoading(true);
     try {
-      if (editingSong) {
-        // Update existing song
-        const updatedSong = {
-          ...songData,
-          id: editingSong.id,
-          dateModified: new Date(),
-        };
+      // Post to server
+      const modifiedSong = await putSongAdmin(
+        adminApi,
+        editingSong.id,
+        songData
+      );
 
-        // Post to server
-        await adminApi.song.modify.$post({
-          json: updatedSong,
-        });
-
-        // Update local state
-        setSongs(
-          songs.map((song) =>
-            song.id === editingSong.id ? { ...song, ...updatedSong } : song
-          )
-        );
-      } else {
-        // Create new song - you might need to add a create endpoint to the admin API
-        const newSong: SongData = {
-          id: Date.now().toString(),
-          title: songData.title || "",
-          artist: songData.artist || "",
-          key: songData.key || "",
-          dateAdded: new Date(),
-          dateModified: new Date(),
-          startMelody: songData.startMelody,
-          language: songData.language || "English",
-          tempo: songData.tempo,
-          capo: songData.capo,
-          range: songData.range,
-          chordproURL: songData.chordproURL || "",
-          hidden: false,
-        };
-
-        // TODO: Add create endpoint to admin API
-        // await adminApi.song.create.$post({ json: newSong });
-
-        setSongs([...songs, newSong]);
-      }
+      // Update local state
+      setSongs(
+        songs.map((song) => (song.id === editingSong.id ? modifiedSong : song))
+      );
 
       setIsDialogOpen(false);
       setEditingSong(null);
+      toast.success("Song updated successfully");
     } catch (error) {
       console.error("Error saving song:", error);
-      // You might want to add proper error handling/toast notifications here
+      toast.error("Error saving song");
     } finally {
       setIsLoading(false);
     }
   };
+
   const handleVisibilityToggle = async (songId: string, hidden: boolean) => {
     try {
       const updatedSong = {
-        id: songId,
         hidden: hidden,
-        // dateModified: new Date()
       };
-      console.log(updatedSong);
-      // Post to server
-      await adminApi.song.modify.$post({
-        json: updatedSong,
-      });
+      const modifiedSong = await putSongAdmin(adminApi, songId, updatedSong);
+
       // Update local state
-      setSongs(
-        // TODO: should be this but songdata only has a getter on ID now
-        // songs.map((s) => (s.id === songId ? SongData.fromJSON({ ...s.extractMetadata(), ...updatedSong }) : s))
-        // TODO: add date modified
-        songs.map((s) => {
-          if (s.id === songId) {
-            s.hidden = hidden;
-            console.log(s);
-          }
-          return s;
-        })
-      );
+      setSongs(songs.map((song) => (song.id === songId ? modifiedSong : song)));
+      toast.success(`Song ${hidden ? 'hidden' : 'shown'} successfully`);
     } catch (error) {
       console.error("Error toggling song visibility:", error);
+      toast.error("Error toggling song visibility");
+    }
+  };
+
+  const handleDelete = async (songId: string) => {
+    try {
+      const updatedSong = {
+        deleted: true,
+      };
+      const modifiedSong = await putSongAdmin(adminApi, songId, updatedSong);
+      
+      // Update local state
+      setSongs(songs.map((song) => (song.id === songId ? modifiedSong : song)));
+      
+      toast.success("Song deleted successfully");
+    } catch (error) {
+      console.error("Error deleting song:", error);
+      toast.error("Error deleting song");
+    }
+  };
+
+  const handleRestore = async (songId: string) => {
+    try {
+      const updatedSong = {
+        deleted: false,
+      };
+      const modifiedSong = await putSongAdmin(adminApi, songId, updatedSong);
+      
+      // Update local state
+      setSongs(songs.map((song) => (song.id === songId ? modifiedSong : song)));
+      
+      toast.success("Song restored successfully");
+    } catch (error) {
+      console.error("Error restoring song:", error);
+      toast.error("Error restoring song");
+    }
+  };
+
+  const handleResetDB = async () => {
+    setIsResettingDB(true);
+    try {
+      await adminApi.songs["reset-songDB-version"].$put();
+      toast.success("Database version reset successfully");
+    } catch (error) {
+      console.error("Error resetting database version:", error);
+      toast.error("Error resetting database version");
+    } finally {
+      setIsResettingDB(false);
     }
   };
 
@@ -150,43 +174,72 @@ export default function SongsTable({ songDB }: SongsTableProps) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="text-lg font-medium">Songs</h3>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={() => setEditingSong(null)}>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Song
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" disabled={isResettingDB}>
+              <ListRestart className="mr-2 h-4 w-4" />
+              {isResettingDB ? "Resetting..." : "Reset DB Version"}
             </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>
-                {editingSong ? "Edit Song" : "Add New Song"}
-              </DialogTitle>
-            </DialogHeader>
-            <SongForm
-              song={editingSong}
-              onSave={handleSaveSong}
-              isLoading={isLoading}
-            />
-          </DialogContent>
-        </Dialog>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-amber-500" />
+                Reset Database Version
+              </AlertDialogTitle>
+              <AlertDialogDescription className="space-y-2">
+                <p>
+                  This will force all clients to download the entire song
+                  database again.
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  <strong>Warning:</strong> This should only be done when the
+                  database schema changes or when there are significant
+                  structural updates that require a full sync.
+                </p>
+                <p className="text-sm">
+                  Are you sure you want to proceed? This action cannot be
+                  undone.
+                </p>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleResetDB}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Reset Database Version
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
-      <Button onClick={() => adminApi.songs["reset-songDB-version"].$put()}>
-        <ListRestart /> Update DB version
-        {/*
-         TODO: add a warning dialog that this will force all clients to download the whole DB again and should only be done when the schema changes
-        TODO: is there a way to do this automatically on migration?
-        */}
-      </Button>
 
-      <div className="flex items-center space-x-2">
-        <Search className="h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search songs..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="max-w-sm"
-        />
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Search className="h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search songs..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="max-w-sm"
+          />
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="show-deleted"
+            checked={showDeleted}
+            onCheckedChange={() => setShowDeleted(!showDeleted)}
+          />
+          <Label
+            htmlFor="show-deleted"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            {"Show deleted"}
+          </Label>
+        </div>
       </div>
 
       <div className="rounded-md border">
@@ -206,7 +259,7 @@ export default function SongsTable({ songDB }: SongsTableProps) {
           </TableHeader>
           <TableBody>
             {filteredSongs.map((song) => (
-              <TableRow key={song.id}>
+              <TableRow key={song.id} className={song.deleted ? "opacity-50" : ""}>
                 <TableCell className="font-medium">{song.title}</TableCell>
                 <TableCell>{song.artist}</TableCell>
                 <TableCell>
@@ -222,10 +275,11 @@ export default function SongsTable({ songDB }: SongsTableProps) {
                       onCheckedChange={(e) => {
                         handleVisibilityToggle(song.id, !e);
                       }}
+                      disabled={song.deleted}
                     />
                   </div>
                 </TableCell>
-                <TableCell>{song.dateModified?.toLocaleDateString()}</TableCell>
+                <TableCell>{song.updatedAt?.toLocaleDateString()}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
                     <Button
@@ -235,6 +289,7 @@ export default function SongsTable({ songDB }: SongsTableProps) {
                         setEditingSong(song);
                         setIsDialogOpen(true);
                       }}
+                      disabled={song.deleted}
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
@@ -245,6 +300,77 @@ export default function SongsTable({ songDB }: SongsTableProps) {
                     >
                       <ExternalLink className="h-4 w-4" />
                     </Button>
+                    {song.deleted ? (
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                          >
+                            <RotateCcw className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="flex items-center gap-2">
+                              <RotateCcw className="h-5 w-5 text-green-600" />
+                              Restore Song
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to restore <strong>"{song.title}"</strong> by <strong>{song.artist}</strong>?
+                              <br />
+                              <br />
+                              This will make the song visible to users again.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleRestore(song.id)}
+                              className="bg-green-600 text-white hover:bg-green-700"
+                            >
+                              Restore Song
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    ) : (
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="flex items-center gap-2">
+                              <AlertTriangle className="h-5 w-5 text-amber-500" />
+                              Delete Song
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete <strong>"{song.title}"</strong> by <strong>{song.artist}</strong>?
+                              <br />
+                              <br />
+                              This action will mark the song as deleted and it will no longer be visible to users. This action can be undone by using the restore function.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(song.id)}
+                              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                              Delete Song
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    )}
                   </div>
                 </TableCell>
               </TableRow>
@@ -252,6 +378,21 @@ export default function SongsTable({ songDB }: SongsTableProps) {
           </TableBody>
         </Table>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Edit Song</DialogTitle>
+          </DialogHeader>
+          {editingSong && (
+            <SongForm
+              song={editingSong}
+              onSave={handleSaveSong}
+              isLoading={isLoading}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
@@ -261,28 +402,18 @@ function SongForm({
   onSave,
   isLoading,
 }: {
-  song: SongData | null;
-  onSave: (data: Partial<SongData>) => void;
+  song: SongDataDB;
+  onSave: (data: Partial<SongDataDB>) => void;
   isLoading: boolean;
 }) {
-  const [formData, setFormData] = useState({
-    title: song?.title || "",
-    artist: song?.artist || "",
-    key: song?.key || "",
-    startMelody: song?.startMelody || "",
-    language: song?.language || "English",
-    tempo: song?.tempo || "",
-    capo: song?.capo || 0,
-    range: song?.range || "",
-    chordproURL: song?.chordproURL || "",
-    hidden: song?.hidden || false,
-  });
+  const [formData, setFormData] = useState(song);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(formData);
   };
 
+  // TODO: this should just be an imported component from Editor
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
@@ -314,7 +445,7 @@ function SongForm({
         <div className="space-y-2">
           <Label htmlFor="key">Key</Label>
           <Select
-            value={formData.key}
+            value={formData.key || ""}
             onValueChange={(value) => setFormData({ ...formData, key: value })}
           >
             <SelectTrigger>
@@ -345,7 +476,7 @@ function SongForm({
         <div className="space-y-2">
           <Label htmlFor="language">Language</Label>
           <Select
-            value={formData.language}
+            value={formData.language || ""}
             onValueChange={(value) =>
               setFormData({ ...formData, language: value })
             }
@@ -364,7 +495,7 @@ function SongForm({
         <div className="space-y-2">
           <Label htmlFor="tempo">Tempo</Label>
           <Select
-            value={formData.tempo}
+            value={formData.tempo || ""}
             onValueChange={(value) =>
               setFormData({ ...formData, tempo: value })
             }
@@ -389,7 +520,7 @@ function SongForm({
             type="number"
             min="0"
             max="12"
-            value={formData.capo}
+            value={formData.capo || ""}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -402,7 +533,7 @@ function SongForm({
           <Label htmlFor="range">Range</Label>
           <Input
             id="range"
-            value={formData.range}
+            value={formData.range || ""}
             onChange={(e) =>
               setFormData({ ...formData, range: e.target.value })
             }
@@ -413,7 +544,7 @@ function SongForm({
           <Label htmlFor="startMelody">Start Melody</Label>
           <Input
             id="startMelody"
-            value={formData.startMelody}
+            value={formData.startMelody || ""}
             onChange={(e) =>
               setFormData({ ...formData, startMelody: e.target.value })
             }
@@ -426,7 +557,6 @@ function SongForm({
         <Label htmlFor="chordproURL">ChordPro URL</Label>
         <Input
           id="chordproURL"
-          type="url"
           value={formData.chordproURL}
           onChange={(e) =>
             setFormData({ ...formData, chordproURL: e.target.value })
@@ -447,7 +577,7 @@ function SongForm({
       </div>
 
       <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Saving..." : song ? "Update Song" : "Create Song"}
+        {isLoading ? "Saving..." : "Update Song"}
       </Button>
     </form>
   );

@@ -9,8 +9,7 @@ import z from "zod/v4";
 // Song validation schemas
 const songModificationSchema = createInsertSchema(song)
   .partial()
-  .required({ id: true })
-  .omit({ updatedAt: true, createdAt: true }); // Prevent modifying creation date
+  .omit({ id: true, updatedAt: true, createdAt: true }); // Prevent modifying creation date
 
 export type SongModificationSchema = z.infer<typeof songModificationSchema>;
 
@@ -27,7 +26,7 @@ export const findSong = async (db: DrizzleD1Database, songId: string) => {
 };
 
 export const songRoutes = buildApp()
-  .get("/songs", async (c) => {
+  .get("/", async (c) => {
     // TODO: only show songs that are not deleted
     try {
       const db = drizzle(c.env.DB);
@@ -53,62 +52,86 @@ export const songRoutes = buildApp()
     }
   })
 
-  .post(
-    "/song/modify",
-    zValidator("json", songModificationSchema),
-    async (c) => {
-      // TODO: this should add a song version
-      // TODO: shouldn't this be a put method?
-      try {
-        const modifiedSong = c.req.valid("json");
-        const db = drizzle(c.env.DB);
+  .put("/:id", zValidator("json", songModificationSchema), async (c) => {
+    // TODO: this should add a song version
+    try {
+      const modifiedSong = c.req.valid("json");
+      const songId = c.req.param("id");
+      const db = drizzle(c.env.DB);
 
-        // Check if song exists
-        const existingSong = await db
-          .select({ id: song.id })
-          .from(song)
-          .where(eq(song.id, modifiedSong.id))
-          .limit(1);
+      // Check if song exists
+      const existingSong = await db
+        .select({ id: song.id })
+        .from(song)
+        .where(eq(song.id, songId))
+        .limit(1);
 
-        if (existingSong.length === 0) {
-          return c.json(
-            {
-              status: "fail",
-              failData: {
-                illustrationId: "Song not found",
-                code: "SONG_NOT_FOUND",
-              },
-            },
-            404
-          );
-        }
-        const updatedSong = await db
-          .update(song)
-          .set({ ...modifiedSong, updatedAt: new Date() })
-          .where(eq(song.id, modifiedSong.id))
-          .returning();
-
-        return c.json({
-          status: "success",
-          data: updatedSong,
-        });
-      } catch (error) {
-        console.error("Error modifying song:", error);
+      if (existingSong.length === 0) {
         return c.json(
           {
-            status: "error",
-            message: "Failed to modify song",
-            code: "UPDATE_ERROR",
+            status: "fail",
+            failData: {
+              illustrationId: "Song not found",
+              code: "SONG_NOT_FOUND",
+            },
           },
-          500
+          404
         );
       }
+      const updatedSong = await db
+        .update(song)
+        .set({ ...modifiedSong, updatedAt: new Date() })
+        .where(eq(song.id, songId))
+        .returning();
+
+      return c.json({
+        status: "success",
+        data: updatedSong[0],
+      });
+    } catch (error) {
+      console.error("Error modifying song:", error);
+      return c.json(
+        {
+          status: "error",
+          message: "Failed to modify song",
+          code: "UPDATE_ERROR",
+        },
+        500
+      );
     }
-  )
+  })
+
+  .delete("/:id", async (c) => {
+    const db = drizzle(c.env.DB);
+    const songId = c.req.param("id");
+    try {
+      findSong(db, songId);
+      const deletedSong = await db
+        .update(song)
+        .set({ deleted: true })
+        .where(eq(song.id, songId))
+        .returning();
+      return c.json({
+        status: "success",
+        data: deletedSong[0],
+      });
+    } catch {
+      return c.json(
+        {
+          status: "fail",
+          failData: {
+            message: "Failed to delete song",
+            code: "SONG_NOT_EXISTS",
+          },
+        },
+        500
+      );
+    }
+  })
 
   // TODO: delete should only set the delete flag to true, no actual deletion done
 
-  .put("/songs/reset-songDB-version", async (c) => {
+  .put("/reset-songDB-version", async (c) => {
     const newVersion = new Date().toISOString();
     await c.env.KV.put("songDB-version", newVersion);
     return c.json({

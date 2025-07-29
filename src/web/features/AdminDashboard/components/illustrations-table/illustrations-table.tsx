@@ -8,7 +8,7 @@ import {
   SongDataDB,
   SongIllustrationDB,
 } from "src/lib/db/schema";
-import { songsWithIllustrationsAndPrompts } from "~/services/songs";
+import { songsWithIllustrationsAndPrompts } from "~/services/illustrations";
 
 interface IllustrationsTableProps {
   songs: SongDataDB[];

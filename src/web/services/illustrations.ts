@@ -123,7 +123,7 @@ export const deleteIllustration = async (
   id: string
 ): Promise<null> => {
   const response = await makeApiRequest(() =>
-    adminApi.illustration[":id"].$delete({ param: { id } })
+    adminApi.illustrations[":id"].$delete({ param: { id } })
   );
   return response;
 };

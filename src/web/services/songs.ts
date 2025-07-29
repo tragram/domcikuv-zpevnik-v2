@@ -1,7 +1,4 @@
-import {
-  SongDataDB,
-  SongVersionDB
-} from "src/lib/db/schema";
+import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
 import { SongDataApi } from "src/worker/api/songDB";
 import client from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
@@ -13,7 +10,8 @@ import {
   SongLanguage,
 } from "~/types/types";
 import { ApiException, handleApiResponse, makeApiRequest } from "./apiHelpers";
-export * from "./illustrations"
+import { SongModificationSchema } from "src/worker/api/admin/songs";
+export * from "./illustrations";
 
 export type AdminApi = typeof client.api.admin;
 
@@ -90,6 +88,30 @@ export const buildSongDB = (
 };
 
 /**
+ * Fetches song data including chordpro content and available illustrations
+ * @param songId - The ID of the song to fetch
+ * @param songDB - The complete song database for illustration lookup
+ * @returns Promise containing the parsed song data
+ * @throws {ApiException} When song data cannot be fetched
+ */
+export const fetchSongContent = async (
+  songData: SongData
+): Promise<ChordPro> => {
+  const response = await fetch(songData.chordproURL);
+  const songContent = await response.text();
+  return songContent;
+};
+
+export const fetchSongFromId = async (
+  songId: string,
+  songDB: SongDB
+): Promise<ChordPro> => {
+  const songData = songDB.songs.find((s) => (s.id = songId));
+  const songContent = await fetchSongContent(songData);
+  return songContent;
+};
+
+/**
  * Fetches the song database using admin API
  * @param adminApi - The admin API client
  * @returns Promise containing songs, language counts, and max vocal range
@@ -112,30 +134,6 @@ export const fetchSongDBAdmin = async (adminApi: AdminApi): Promise<SongDB> => {
     languages,
     songs,
   };
-};
-
-/**
- * Fetches song data including chordpro content and available illustrations
- * @param songId - The ID of the song to fetch
- * @param songDB - The complete song database for illustration lookup
- * @returns Promise containing the parsed song data
- * @throws {ApiException} When song data cannot be fetched
- */
-export const fetchSongContent = async (
-  songData: SongData
-): Promise<ChordPro> => {
-  const response = await fetch(songData.chordproURL);
-  const songContent = await response.text();
-  return songContent;
-};
-
-export const fetchSongFromId = async (
-  songId: string,
-  songDB: SongDB
-): Promise<ChordPro> => {
-  const songData = songDB.songs.find((s) => (s.id = songId));
-  const songContent = await fetchSongContent(songData);
-  return songContent;
 };
 
 /**
@@ -168,4 +166,37 @@ export const verifyVersion = async (
     adminApi.version.verify.$post({ json: { id, verified } })
   );
   return response;
+};
+
+export const getSongsAdmin = async (
+  adminApi: AdminApi
+): Promise<SongDataDB[]> => {
+  const response = await makeApiRequest(adminApi.songs.$get);
+  return response.songs.map(parseDBDates);
+};
+
+export const putSongAdmin = async (
+  adminApi: AdminApi,
+  songId: string,
+  songData: SongModificationSchema
+): Promise<SongDataDB> => {
+  const modifiedSong = await makeApiRequest(() =>
+    adminApi.songs[":id"].$put({
+      param: { id: songId },
+      json: songData,
+    })
+  );
+  return parseDBDates(modifiedSong);
+};
+
+export const deleteSongAdmin = async (
+  adminApi: AdminApi,
+  songId: string
+): Promise<SongDataDB> => {
+  const deletedSong = await makeApiRequest(() =>
+    adminApi.songs[":id"].$delete({
+      param: { id: songId },
+    })
+  );
+  return parseDBDates(deletedSong);
 };

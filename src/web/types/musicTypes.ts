@@ -7,10 +7,10 @@ interface Clonable<T> {
 const SEMITONES_IN_OCTAVE = 12
 
 export class Note implements Clonable<Note> {
-    private static readonly sharpDictionary = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-    private static readonly flatDictionary = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
-    private static readonly sharpDictionaryCZ = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"];
-    private static readonly flatDictionaryCZ = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "H"];
+    static readonly sharpDictionary = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    static readonly flatDictionary = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+    static readonly sharpDictionaryCZ = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H"];
+    static readonly flatDictionaryCZ = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "B", "H"];
     private value: number; // Internal representation: semitone offset (0–11)
 
     constructor(letter: string, accidental: Accidental = "", czech: boolean = true) {
