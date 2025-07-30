@@ -199,7 +199,7 @@ export const songDBRoutes = buildApp()
         data: {
           songs,
           songDBVersion: await c.env.KV.get("songDB-version"),
-          lastUpdateAt: Date.now(),
+          lastUpdateAt: Date.now().toString(),
           isIncremental: false,
         } as SongDBResponseData,
       });
@@ -243,7 +243,7 @@ export const songDBRoutes = buildApp()
         data: {
           songs,
           songDBVersion: currentDBVersion,
-          lastUpdateAt: Date.now(),
+          lastUpdateAt: Date.now().toString(),
           isIncremental: isIncremental,
         } as SongDBResponseData,
       });
