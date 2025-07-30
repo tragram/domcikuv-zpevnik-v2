@@ -21,6 +21,7 @@ export function IllustrationsTable({
   illustrations,
   prompts,
 }: IllustrationsTableProps) {
+
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   // TODO: separate search for songs and illustrations

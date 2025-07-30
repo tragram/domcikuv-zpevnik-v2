@@ -1,14 +1,15 @@
 import yaml from "js-yaml";
 import {
-    IllustrationPromptDB,
-    SongDataDB,
-    SongIllustrationDB
+  IllustrationPromptDB,
+  SongDataDB,
+  SongIllustrationDB,
 } from "src/lib/db/schema";
 import { IllustrationPromptCreateSchema } from "src/worker/api/admin/illustration-prompts";
 import {
-    adminIllustrationResponse,
-    IllustrationCreateSchema,
-    IllustrationModifySchema,
+  adminIllustrationResponse,
+  IllustrationCreateSchema,
+  IllustrationGenerateSchema,
+  IllustrationModifySchema,
 } from "src/worker/api/admin/illustrations";
 import { SongData } from "~/types/songData";
 import { ApiException, makeApiRequest } from "./apiHelpers";
@@ -84,13 +85,49 @@ export const createIllustrationPrompt = async (
  */
 export const createIllustration = async (
   adminApi: AdminApi,
-  illustrationData: IllustrationCreateSchema
+  data: IllustrationCreateSchema
 ): Promise<adminIllustrationResponse> => {
+  const formData = new FormData();
+  formData.append("songId", data.songId);
+  if (data.summaryPromptId && data.summaryPromptId.trim()) {
+    formData.append("summaryPromptId", data.summaryPromptId.trim());
+  }
+  formData.append("imageModel", data.imageModel);
+  formData.append("isActive", data.isActive.toString());
+  // Add URLs if provided
+  if (data.imageURL) {
+    formData.append("imageURL", data.imageURL);
+  }
+  if (data.thumbnailURL) {
+    formData.append("thumbnailURL", data.thumbnailURL);
+  }
+
+  // Add files if provided
+  if (data.imageFile) {
+    formData.append("imageFile", data.imageFile);
+  }
+  if (data.thumbnailFile) {
+    formData.append("thumbnailFile", data.thumbnailFile);
+  }
   const response = await makeApiRequest(() =>
-    adminApi.illustrations.create.$post({ json: illustrationData })
+    fetch("/api/admin/illustrations/create", {
+      method: "POST",
+      body: formData,
+    })
   );
   response.illustration = parseDBDates(response.illustration);
-  return parseDBDates(response);
+  return response;
+};
+
+export const generateIllustration = async (
+  adminApi: AdminApi,
+  illustrationData: IllustrationGenerateSchema
+): Promise<adminIllustrationResponse> => {
+  const response = await makeApiRequest(() =>
+    adminApi.illustrations.generate.$post({ json: illustrationData })
+  );
+  response.illustration = parseDBDates(response.illustration);
+  return response;
 };
 
 /**
@@ -140,7 +177,7 @@ export const deleteIllustrationPrompt = async (
   id: string
 ): Promise<null> => {
   const response = await makeApiRequest(() =>
-    adminApi.illustrations.prompts[":id"].$delete({ param: { id } })
+    adminApi.prompts[":id"].$delete({ param: { id } })
   );
   return response;
 };

@@ -12,6 +12,27 @@ interface CurrentIllustration {
   promptURL: string;
 }
 
+const to_ascii = (text: string): string => {
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
+
+const sanitizeId = (id: string) => {
+  return to_ascii(id)
+    .replace(/ /g, "_")
+    .replace(/\//, "-")
+    .replace(/[^A-Za-z0-9-_]+/g, "")
+    .replace(/_+/g, "_");
+};
+
+export const illustrationBaseId = (
+  illustration: { imageModel: string },
+  prompt: { promptVersion: string; summaryModel: string }
+) => {
+  return sanitizeId(
+    `${prompt.summaryModel}_${prompt.promptVersion}_${illustration.imageModel}`
+  );
+};
+
 export class SongData {
   id: string;
   title: string;
@@ -62,24 +83,16 @@ export class SongData {
     return range ? new SongRange(range) : undefined;
   }
 
-  // Utility methods
-  static to_ascii(text: string): string {
-    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  }
-
   get ascii_title(): string {
-    return SongData.to_ascii(this.title);
+    return to_ascii(this.title);
   }
 
   get ascii_artist(): string {
-    return SongData.to_ascii(this.artist);
+    return to_ascii(this.artist);
   }
 
-  static default_id(title: string, artist: string) {
-    return `${SongData.to_ascii(artist)}-${SongData.to_ascii(title)}`
-      .replace(/ /g, "_")
-      .replace(/[^A-Za-z0-9-_]+/g, "")
-      .replace(/_+/g, "_");
+  static baseId(title: string, artist: string) {
+    return sanitizeId(`${to_ascii(artist)}-${to_ascii(title)}`);
   }
 
   url(): string {

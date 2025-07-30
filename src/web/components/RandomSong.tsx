@@ -28,7 +28,7 @@ export const retrieveBanList = () => getLocalStorageItem(BAN_LIST_KEY, []);
 
 export const resetBanList = () => {
   setLocalStorageItem(BAN_LIST_KEY, []);
-  setLocalStorageItem("lastBanListResetDate", new Date().toISOString());
+  setLocalStorageItem("lastBanListResetDate", Date.now());
 };
 
 export function ResetBanListDropdownItems({ songDB }: { songDB: SongDB }) {

@@ -8,5 +8,5 @@
       "~/*": ["./src/web/*"]
     },
   },
-  "include": ["src/worker"]
+  "include": ["src/worker", "src/web/components/ImageGeneratorTest.tsx"]
 }

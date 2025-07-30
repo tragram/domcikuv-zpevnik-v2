@@ -3,7 +3,15 @@ import { useRouteContext } from "@tanstack/react-router";
 import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { IllustrationCreateSchema } from "src/worker/api/admin/illustrations";
+import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
+import {
+  IllustrationCreateSchema
+} from "src/worker/api/admin/illustrations";
+import {
+  IMAGE_MODELS_API,
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_VERSIONS
+} from "~/../worker/api/admin/image-generator";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -19,16 +27,12 @@ import {
   DialogTrigger,
 } from "~/components/ui/dialog";
 import { cn } from "~/lib/utils";
-import { createIllustration } from "~/services/songs";
+import { createIllustration, generateIllustration } from "~/services/songs";
 import { IllustrationCard } from "./illustration-card";
-import { IllustrationForm } from "./illustration-form";
 import {
-  IMAGE_MODELS_API,
-  SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_IDS,
-} from "~/../worker/api/admin/image-generation";
-import { _ } from "node_modules/better-auth/dist/shared/better-auth.CQXg7f-2";
-import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
+  IllustrationForm,
+  IllustrationSubmitData,
+} from "./illustration-form/illustration-form";
 
 interface SongIllustrationsGroupProps {
   song: {
@@ -42,16 +46,25 @@ interface SongIllustrationsGroupProps {
   onToggleExpanded: () => void;
 }
 
-const dummyDropdownOptions = {
-  promptIds: SUMMARY_PROMPT_IDS.map((spi) => {
-    return { value: spi, label: spi };
-  }),
-  promptModels: SUMMARY_MODELS_API.map((smi) => {
-    return { value: smi, label: smi };
-  }),
-  imageModels: IMAGE_MODELS_API.map((im) => {
-    return { value: im, label: im };
-  }),
+const backendDropdownOptions = {
+  promptVersions: {
+    data: SUMMARY_PROMPT_VERSIONS.map((spi) => {
+      return { value: spi, label: spi };
+    }),
+    default: "v2",
+  },
+  summaryModels: {
+    data: SUMMARY_MODELS_API.map((smi) => {
+      return { value: smi, label: smi };
+    }),
+    default: "gpt-4o-mini",
+  },
+  imageModels: {
+    data: IMAGE_MODELS_API.map((im) => {
+      return { value: im, label: im };
+    }),
+    default: "FLUX.1-dev",
+  },
 };
 
 export function SongIllustrationsGroup({
@@ -80,11 +93,29 @@ export function SongIllustrationsGroup({
     },
   });
 
-  const handleCreateIllustration = async (
-    illustrationData: IllustrationCreateSchema
-  ) => {
+  const generateMutation = useMutation({
+    mutationFn: async (data: IllustrationCreateSchema) => {
+      return await generateIllustration(adminApi, data);
+    },
+    onSuccess: () => {
+      toast.success("Illustration created successfully");
+      setIsDialogOpen(false);
+    },
+    onError: () => {
+      toast.error("Failed to create illustration");
+    },
+  });
+
+  const handleCreateIllustration = async ({
+    illustrationData,
+    mode,
+  }: IllustrationSubmitData) => {
     try {
-      await createMutation.mutateAsync(illustrationData);
+      if (mode === "manual") {
+        await createMutation.mutateAsync(illustrationData);
+      } else {
+        await generateMutation.mutateAsync(illustrationData);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -186,8 +217,10 @@ export function SongIllustrationsGroup({
                 <IllustrationForm
                   illustration={{ songId: song.id }}
                   onSave={handleCreateIllustration}
-                  isLoading={createMutation.isPending}
-                  dropdownOptions={dummyDropdownOptions}
+                  isLoading={
+                    createMutation.isPending || generateMutation.isPending
+                  }
+                  dropdownOptions={backendDropdownOptions}
                 />
               </DialogContent>
             </Dialog>

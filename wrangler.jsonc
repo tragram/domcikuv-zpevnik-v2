@@ -57,7 +57,7 @@
   "vars": {
     "VITE_BASE_URL": "http://localhost:5173",
     "PROD_BASE_URL": "https://zpevnik.hodan.page",
-    "CLOUDFLARE_R2_URL": "kyblik.zpevnik.hodan.page",
+    "CLOUDFLARE_R2_URL": "https://kyblik.zpevnik.hodan.page",
     "GITHUB_REPO": "tragram/domcikuv-zpevnik-v2"
   }
   /**

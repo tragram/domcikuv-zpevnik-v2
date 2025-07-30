@@ -5,6 +5,7 @@
   "version": "2.1.0",
   "type": "module",
   "dependencies": {
+    "@huggingface/inference": "^4.6.1",
     "@khmyznikov/pwa-install": "^0.5.6",
     "@libsql/client": "^0.15.9",
     "@nerdfolio/drizzle-d1-helpers": "^0.1.4",
@@ -47,6 +48,7 @@
     "lucide-react": "^0.515.0",
     "memoize-one": "^6.0.0",
     "next-themes": "^0.4.6",
+    "openai": "^5.10.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-full-screen": "^1.1.1",

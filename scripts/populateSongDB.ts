@@ -60,7 +60,7 @@ interface SongEntry {
   dateAdded?: string;
   availableIllustrations: string;
   promptModel?: string;
-  promptId?: string;
+  promptVersion?: string;
   imageModel?: string;
   [key: string]: any; // For other preamble fields
 }
@@ -76,7 +76,7 @@ function to_ascii(text: string): string {
 }
 
 function songId(title: string, artist: string): string {
-  return SongData.default_id(title, artist);
+  return SongData.baseId(title, artist);
 }
 
 function parseDateToTimestamp(dateStr: string): Date {
@@ -225,7 +225,7 @@ async function insertIllustrationPrompts(
     const promptData = {
       id: promptId,
       songId,
-      summaryPromptId: prompt.prompt_id,
+      summaryPromptVersion: prompt.prompt_id,
       summaryModel: prompt.model,
       text: prompt.response,
     };
@@ -259,9 +259,9 @@ function determineActiveModel(
   entry: SongEntry,
   illustrations: string[]
 ): string | undefined {
-  if (entry.promptModel || entry.promptId || entry.imageModel) {
+  if (entry.promptModel || entry.promptVersion || entry.imageModel) {
     const composite = `${entry.promptModel || "gpt-4o-mini"}_${
-      entry.promptId || "v1"
+      entry.promptVersion || "v1"
     }_${entry.imageModel || "FLUX.1-dev"}`;
 
     const found = illustrations.find((m) => m === composite);
@@ -284,7 +284,7 @@ function determineActiveModel(
 
 function parseModelString(
   model: string
-): { promptModel: string; promptId: string; imageModel: string } | null {
+): { promptModel: string; promptVersion: string; imageModel: string } | null {
   const parts = model.split("_");
   if (parts.length !== 3) {
     console.warn(`Invalid model format: ${model}`);
@@ -293,7 +293,7 @@ function parseModelString(
 
   return {
     promptModel: parts[0],
-    promptId: parts[1],
+    promptVersion: parts[1],
     imageModel: parts[2],
   };
 }
@@ -310,25 +310,25 @@ async function insertIllustrations(
     const modelInfo = parseModelString(model);
     if (!modelInfo) continue;
 
-    const { promptModel, promptId, imageModel } = modelInfo;
+    const { promptModel, promptVersion, imageModel } = modelInfo;
 
     // Find matching prompt if it exists
     const matchingPrompt = prompts.find(
-      (p) => p.model === promptModel && p.prompt_id === promptId
+      (p) => p.model === promptModel && p.prompt_id === promptVersion
     );
     if (!matchingPrompt) {
       console.error("Matching prompt not found for", model, modelInfo, prompts);
     }
 
     // Determine source type and prompt reference
-    const compositeName = `${promptModel}_${promptId}_${imageModel}`;
+    const compositeName = `${promptModel}_${promptVersion}_${imageModel}`;
     const illustrationId = `${songId}_${compositeName}`;
-    const promptRef = `${songId}_${promptModel}_${promptId}`;
+    const promptRef = `${songId}_${promptModel}_${promptVersion}`;
 
     const illustrationData = {
       id: illustrationId,
       songId,
-      promptId: promptRef,
+      promptVersion: promptRef,
       imageModel,
       imageURL: `/songs/illustrations/${songId}/${compositeName}.webp`,
       thumbnailURL: `/songs/illustrations_thumbnails/${songId}/${compositeName}.webp`,

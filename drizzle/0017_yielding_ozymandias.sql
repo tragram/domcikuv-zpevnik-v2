@@ -1,0 +1,1 @@
+ALTER TABLE `illustration_prompt` RENAME COLUMN "prompt_id" TO "prompt_version";

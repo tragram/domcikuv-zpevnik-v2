@@ -30,7 +30,7 @@ export const illustrationPrompt = sqliteTable("illustration_prompt", {
   songId: text("song_id")
     .notNull()
     .references(() => song.id),
-  summaryPromptId: text("prompt_id").notNull(),
+  summaryPromptVersion: text("prompt_version").notNull(),
   summaryModel: text("summary_model").notNull(),
   text: text("text").notNull(),
 });

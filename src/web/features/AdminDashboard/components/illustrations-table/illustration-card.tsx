@@ -1,25 +1,40 @@
-import type React from "react";
-import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Button } from "~/components/ui/button";
+import { useRouteContext } from "@tanstack/react-router";
+import { Edit, ExternalLink, Eye, Trash2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { Edit, Eye, ExternalLink, Trash2 } from "lucide-react";
-import { toast } from "sonner";
-import { useRouteContext, useRouter } from "@tanstack/react-router";
-import { deleteIllustration, updateIllustration } from "~/services/songs";
 import { cn } from "~/lib/utils";
-import {
-  IllustrationCreateSchema,
-  IllustrationModifySchema,
-} from "src/worker/api/admin/illustrations";
-import { IllustrationForm } from "./illustration-form";
-import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
+import { deleteIllustration, updateIllustration } from "~/services/songs";
+import { IllustrationForm } from "./illustration-form/illustration-form";
+
+// Updated interfaces to match backend
+interface IllustrationCreateSchema {
+  songId: string;
+  summaryPromptVersion: string;
+  imageModel: string;
+  imageURL?: string;
+  thumbnailURL?: string;
+  isActive: boolean;
+  imageFile?: File;
+  thumbnailFile?: File;
+}
+
+interface IllustrationModifySchema {
+  id: string;
+  imageModel?: string;
+  imageURL?: string;
+  thumbnailURL?: string;
+  isActive?: boolean;
+}
 
 interface IllustrationCardProps {
   song: { id: string; title: string; artist: string };
@@ -117,6 +132,17 @@ export function IllustrationCard({
     }
   };
 
+  // Transform illustration data to match form expectations
+  const transformedIllustration = {
+    songId: illustration.songId,
+    summaryPromptVersion: prompt.summaryPromptVersion,
+    summaryModel: prompt.summaryModel,
+    imageModel: illustration.imageModel,
+    imageURL: illustration.imageURL,
+    thumbnailURL: illustration.thumbnailURL,
+    isActive: illustration.isActive,
+  };
+
   return (
     <>
       <div
@@ -135,15 +161,15 @@ export function IllustrationCard({
         </div>
         <div className="space-y-1">
           <p className="text-xs text-muted-foreground">
-            <span className="font-medium">Summary prompt ID:</span>{" "}
-            {prompt.summaryPromptId}
+            <span className="font-medium">Summary prompt version:</span>{" "}
+            {prompt.summaryPromptVersion}
           </p>
           <p className="text-xs text-muted-foreground">
-            <span className="font-medium">Lyrics summary:</span>{" "}
+            <span className="font-medium">Lyrics summary by:</span>{" "}
             {prompt.summaryModel}
           </p>
           <p className="text-xs text-muted-foreground">
-            <span className="font-medium">Image:</span>{" "}
+            <span className="font-medium">Image by:</span>{" "}
             {illustration.imageModel}
           </p>
           <p className="text-xs text-muted-foreground">
@@ -207,12 +233,16 @@ export function IllustrationCard({
             <DialogTitle>Edit Illustration</DialogTitle>
           </DialogHeader>
           <IllustrationForm
-            illustration={illustration}
+            illustration={transformedIllustration}
             onSave={(data: IllustrationCreateSchema) =>
               handleUpdateIllustration(createToModifySchema(data))
             }
             isLoading={updateMutation.isPending}
-            dropdownOptions={undefined}
+            dropdownOptions={{
+              promptVersions: [],
+              summaryModels: [],
+              imageModels: [],
+            }}
             manualOnly
           />
         </DialogContent>

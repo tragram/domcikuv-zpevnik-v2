@@ -1,17 +1,17 @@
-import { drizzle } from "drizzle-orm/d1";
+import { zValidator } from "@hono/zod-validator";
+import { and, eq } from "drizzle-orm";
+import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
+import { createInsertSchema } from "drizzle-zod";
+import { Context } from "hono";
+import z from "zod/v4";
 import {
-  song,
-  SongDataDB,
-  songIllustration,
-  SongIllustrationDB,
   illustrationPrompt,
   IllustrationPromptDB,
+  SongDataDB,
+  songIllustration
 } from "../../../lib/db/schema";
-import { eq, desc, and } from "drizzle-orm";
 import { buildApp } from "../utils";
-import { createInsertSchema } from "drizzle-zod";
-import { zValidator } from "@hono/zod-validator";
-import z from "zod/v4";
+import { ImageGenerator } from "./image-generator";
 import { findSong } from "./songs";
 
 const illustrationPromptCreateSchema = createInsertSchema(
@@ -24,7 +24,117 @@ export type IllustrationPromptCreateSchema = z.infer<
   typeof illustrationPromptCreateSchema
 >;
 
-export type IllustrationPromptRecords = Record<string,IllustrationPromptDB>;
+export type IllustrationPromptRecords = Record<string, IllustrationPromptDB>;
+
+/**
+ * Helper function to find or create a prompt
+ */
+export async function findOrCreatePrompt(
+  db: DrizzleD1Database,
+  c: Context,
+  songId: string,
+  promptVersion: string,
+  promptModel: string,
+  generator: ImageGenerator,
+  songData?: SongDataDB
+): Promise<IllustrationPromptDB> {
+  // Check if prompt already exists
+  const existingPrompt = await db
+    .select()
+    .from(illustrationPrompt)
+    .where(
+      and(
+        eq(illustrationPrompt.id, songId),
+        eq(illustrationPrompt.summaryPromptVersion, promptVersion),
+        eq(illustrationPrompt.summaryModel, promptModel)
+      )
+    )
+    .limit(1);
+
+  if (existingPrompt.length > 0) {
+    return existingPrompt[0];
+  }
+
+  // Need to generate new prompt
+  let song = songData;
+  if (!song) {
+    song = await findSong(db, songId);
+  }
+
+  let chordproURL = song.chordproURL;
+  if (song.chordproURL.match(/^\/*songs/)) {
+    // static file
+    chordproURL =
+      (import.meta.env.DEV ? c.env.VITE_BASE_URL : c.env.PROD_BASE_URL) +
+      chordproURL;
+  }
+  const chordproContentResponse = await fetch(chordproURL);
+  if (!chordproContentResponse.ok) {
+    throw Error("Failed to fetch ChordPro content, cannot generate prompt.");
+  }
+  const chordproContent = await chordproContentResponse.text();
+  console.log("ChProContent:", chordproContent);
+
+  const promptText = await generator.generatePrompt(
+    ImageGenerator.extractLyricsFromChordPro(chordproContent)
+  );
+  console.log("Prompt Text:", promptText);
+  // Create new prompt record
+  const newPrompt = await db
+    .insert(illustrationPrompt)
+    .values({
+      id: `${songId}_${promptVersion}_${promptModel}_${Date.now()}`,
+      songId,
+      summaryPromptVersion: promptVersion,
+      summaryModel: promptModel,
+      text: promptText,
+    })
+    .returning();
+
+  return newPrompt[0];
+}
+
+/**
+ * Helper function to create or find a manual prompt
+ */
+export async function createOrFindManualPrompt(
+  db: DrizzleD1Database,
+  songId: string,
+  providedPromptId?: string
+): Promise<IllustrationPromptDB> {
+  // If a specific prompt ID is provided, try to find it
+  if (providedPromptId && providedPromptId.trim()) {
+    const existingPrompt = await db
+      .select()
+      .from(illustrationPrompt)
+      .where(eq(illustrationPrompt.id, providedPromptId.trim()))
+      .limit(1);
+
+    if (existingPrompt.length > 0) {
+      return existingPrompt[0];
+    }
+
+    // If the provided prompt ID doesn't exist, throw an error
+    throw new Error(`Prompt with ID "${providedPromptId}" not found`);
+  }
+
+  // Create a new manual prompt
+  const promptId = `manual_${songId}_${Date.now()}`;
+  const promptData = {
+    id: promptId,
+    songId: songId,
+    summaryPromptVersion: "manual",
+    summaryModel: "manual",
+    text: "Manual upload - no generated prompt",
+  };
+
+  const newPrompt = await db
+    .insert(illustrationPrompt)
+    .values(promptData)
+    .returning();
+
+  return newPrompt[0];
+}
 
 export const illustrationPromptRoutes = buildApp()
   .get("/", async (c) => {
@@ -61,9 +171,9 @@ export const illustrationPromptRoutes = buildApp()
         }
 
         // Generate unique ID for the prompt
-        const newId = `${promptData.songId}_${promptData.summaryPromptId}_${
-          promptData.summaryModel
-        }_${Date.now()}`;
+        const newId = `${promptData.songId}_${
+          promptData.summaryPromptVersion
+        }_${promptData.summaryModel}_${Date.now()}`;
 
         const newPrompt = await db
           .insert(illustrationPrompt)
