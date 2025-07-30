@@ -1,20 +1,18 @@
-import { SongData } from "~/types/songData";
 import {
   ChordProParser,
   FormatterSettings,
   HtmlFormatter,
 } from "chordproject-parser";
+import memoize from "memoize-one";
+import { Key } from "~/types/musicTypes";
+import { SongData } from "~/types/songData";
+import { convertHTMLChordNotation } from "./chordNotation";
+import { postProcessChordPro } from "./postProcessing";
 import {
   czechToEnglish,
   preparseDirectives,
   transposeChordPro,
 } from "./preparseChordpro";
-import { Key } from "~/types/musicTypes";
-import { convertHTMLChordNotation } from "./chordNotation";
-import { postProcessChordPro } from "./postProcessing";
-import { useMemo } from "react";
-import memoize from "memoize-one";
-import { ChordPro } from "~/types/types";
 /**
  * Default section directives
  */
@@ -39,8 +37,8 @@ const DEFAULT_RENDERED_SECTIONS = [
  */
 function parseChordPro(
   chordProContent: string,
-  songKey: Key | null,
-  transposeSteps: number | null
+  songKey?: Key,
+  transposeSteps?: number
 ) {
   // Use memoized function to avoid repeated processing
   const memoizedCzechToEnglish = memoize(czechToEnglish);
@@ -70,7 +68,7 @@ function parseChordPro(
  * @returns Detected key or undefined
  */
 export function guessKey(chordProContent: string): Key | undefined {
-  const song = parseChordPro(chordProContent, null, 0);
+  const song = parseChordPro(chordProContent, undefined, 0);
   const possibleKey = song.getPossibleKey()?.toString() || "";
   return Key.parse(possibleKey, false);
 }
@@ -85,19 +83,12 @@ export function guessKey(chordProContent: string): Key | undefined {
  */
 export function renderSong(
   songData: SongData,
-  songContent: ChordPro,
   transposeSteps: number,
   centralEuropeanNotation: boolean
 ): string {
+  console.log(songData.chordpro)
   // Parse and process the chord pro content
-  if (!songContent) {
-    console.log("songContent is undefined");
-  }
-  const song = parseChordPro(
-    songContent || "Nothing to show... ;-)",
-    songData.key ?? null,
-    transposeSteps
-  );
+  const song = parseChordPro(songData.chordpro, songData.key, transposeSteps);
   // Configure formatter settings
   const settings = new FormatterSettings();
   settings.showMetadata = false;

@@ -62,19 +62,25 @@ export async function findOrCreatePrompt(
   }
 
   let chordproURL = song.chordproURL;
-  if (song.chordproURL.match(/^\/*songs/)) {
-    // static file
-    chordproURL =
-      (import.meta.env.DEV ? c.env.VITE_BASE_URL : c.env.PROD_BASE_URL) +
-      chordproURL;
+  let chordproContent;
+  if (song.chordproR2Key) {
+    // TODO: is this correct?
+    chordproContent = c.env.R2_BUCKET.get(song.chordproR2Key);
+  } else {
+    if (song.chordproURL.match(/^\/*songs/)) {
+      // static file
+      chordproURL =
+        (import.meta.env.DEV ? c.env.VITE_BASE_URL : c.env.PROD_BASE_URL) +
+        chordproURL;
+    }
+    const chordproContentResponse = await c.env.ASSETS.fetch(chordproURL);
+    if (!chordproContentResponse.ok) {
+      throw Error(
+        `Failed to fetch ChordPro content at ${chordproURL}, cannot generate prompt.`
+      );
+    }
+    const chordproContent = await chordproContentResponse.text();
   }
-  const chordproContentResponse = await fetch(chordproURL);
-  if (!chordproContentResponse.ok) {
-    throw Error(
-      `Failed to fetch ChordPro content at ${chordproURL}, cannot generate prompt.`
-    );
-  }
-  const chordproContent = await chordproContentResponse.text();
   console.log("ChProContent:", chordproContent);
 
   const promptText = await generator.generatePrompt(

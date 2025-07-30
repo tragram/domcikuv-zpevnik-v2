@@ -1,6 +1,6 @@
 import { fileURL } from "~/lib/utils";
 import { Key, Note, SongRange } from "./musicTypes";
-import type { int, SongLanguage } from "./types";
+import type { ChordPro, int, SongLanguage } from "./types";
 import { SongDataDB } from "src/lib/db/schema";
 import { SongDataApi } from "src/worker/api/songDB";
 
@@ -19,7 +19,6 @@ const to_ascii = (text: string): string => {
 const sanitizeId = (id: string) => {
   return to_ascii(id)
     .replace(/ /g, "_")
-    .replace(/\//, "-")
     .replace(/[^A-Za-z0-9-_]+/g, "")
     .replace(/_+/g, "_");
 };
@@ -45,7 +44,7 @@ export class SongData {
   tempo?: int;
   capo: int;
   range?: SongRange;
-  chordproURL: string;
+  chordpro: ChordPro;
 
   // UI-specific fields
   currentIllustration: CurrentIllustration | undefined;
@@ -63,7 +62,7 @@ export class SongData {
     this.tempo = songFromDB.tempo || undefined;
     this.capo = songFromDB.capo || 0;
     this.range = this.parseRange(songFromDB.range);
-    this.chordproURL = songFromDB.chordproURL;
+    this.chordpro = songFromDB.chordpro;
 
     this.currentIllustration = songFromDB.currentIllustration;
     this.isFavorite = songFromDB.isFavoriteByCurrentUser;
@@ -79,7 +78,7 @@ export class SongData {
     }
   }
 
-  private parseRange(range: string | null): SongRange | undefined {
+  private parseRange(range?: string): SongRange | undefined {
     return range ? new SongRange(range) : undefined;
   }
 
@@ -135,7 +134,7 @@ export class SongData {
       tempo: this.tempo,
       capo: this.capo,
       range: this.range?.toString(),
-      chordproURL: this.chordproURL,
+      chordpro: this.chordpro,
       currentIllustration: this.currentIllustration,
       isFavorite: this.isFavorite,
       url: this.url(),

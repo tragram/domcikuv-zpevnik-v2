@@ -1,32 +1,29 @@
-import { SongData } from "~/types/songData";
 import { forwardRef, useMemo } from "react";
+import { SongData } from "~/types/songData";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { renderSong } from "../utils/songRendering";
 import BackgroundImage from "./BackgroundImage";
 import ResizableAutoTextSize from "./ResizableAutoTextSize";
 import SongHeading from "./SongHeading";
-import { ChordPro } from "~/types/types";
 
 interface SongContentProps {
   songData: SongData;
-  songContent: ChordPro;
   transposeSteps: number;
   gestureContainerRef: React.RefObject<HTMLDivElement>;
 }
 
 export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-  ({ songData, songContent, transposeSteps, gestureContainerRef }, ref) => {
+  ({ songData, transposeSteps, gestureContainerRef }, ref) => {
     const { layout, chords: chordSettings } = useViewSettingsStore();
 
     const parsedContent = useMemo(
       () =>
         renderSong(
           songData,
-          songContent,
           transposeSteps,
           chordSettings.czechChordNames
         ),
-      [songData, songContent, transposeSteps, chordSettings.czechChordNames]
+      [songData, transposeSteps, chordSettings.czechChordNames]
     );
 
     return (

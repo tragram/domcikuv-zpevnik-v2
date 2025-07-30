@@ -38,9 +38,9 @@ export default defineConfig({
         globDirectory: "dist/client/",
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,yaml,json}",
-          "songs/chordpro/*.pro",
+          // "songs/chordpro/*.pro",
           "songs/illustrations_thumbnails/**/*.webp",
-          "songs/image_prompts/**/*.yaml",
+          // "songs/image_prompts/**/*.yaml",
           "site.webmanifest",
         ],
       },

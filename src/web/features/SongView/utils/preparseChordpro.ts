@@ -8,12 +8,12 @@
  * - Transposes chords between musical keys
  */
 
-import type { Key } from "~/types/musicTypes";
 import {
   chordParserFactory,
   chordRendererFactory,
 } from "chord-symbol/lib/chord-symbol.js";
 import { hasExactly } from "chord-symbol/src/helpers/hasElement";
+import type { Key } from "~/types/musicTypes";
 
 // these are used to pass information about collapsed/shorthand sections to post-processing
 // this is an ugly solution but the alternative appears to be writing my own parser
@@ -562,8 +562,8 @@ export function czechToEnglish(song: string): string {
  */
 export function transposeChordPro(
   song: string,
-  songKey: Key,
-  transposeSteps: number
+  songKey?: Key,
+  transposeSteps?: number
 ): string {
   // Skip if can't transpose
   if (!songKey || !transposeSteps) {

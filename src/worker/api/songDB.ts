@@ -1,8 +1,9 @@
-import { and, eq, gte, or } from "drizzle-orm";
+import { and, eq, gte, or, isNotNull } from "drizzle-orm";
 import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import {
   song,
   songIllustration,
+  songVersion,
   user,
   userFavoriteSongs,
 } from "../../lib/db/schema";
@@ -16,7 +17,7 @@ const incrementalUpdateSchema = z.object({
   lastUpdateAt: z.string().transform((str) => new Date(str)),
 });
 
-export interface SongbookDataApi {
+export interface SongbookDataAwpi {
   user: string;
   image: string;
   name: string;
@@ -35,7 +36,7 @@ export type SongDataApi = {
   tempo: number | undefined;
   capo: number | undefined;
   range: string | undefined;
-  chordproURL: string;
+  chordpro: string;
   currentIllustration:
     | {
         imageModel: string;
@@ -65,20 +66,25 @@ async function retrieveSongs(
   includeDeleted = false
 ) {
   const baseSelectFields = {
+    // Song table fields
     id: song.id,
-    title: song.title,
-    artist: song.artist,
-    key: song.key,
     createdAt: song.createdAt,
     updatedAt: song.updatedAt,
-    startMelody: song.startMelody,
-    language: song.language,
-    tempo: song.tempo,
-    capo: song.capo || 0,
-    range: song.range,
-    chordproURL: song.chordproURL,
     hidden: song.hidden,
     deleted: song.deleted,
+
+    // Current version fields (song metadata)
+    title: songVersion.title,
+    artist: songVersion.artist,
+    key: songVersion.key,
+    startMelody: songVersion.startMelody,
+    language: songVersion.language,
+    tempo: songVersion.tempo,
+    capo: songVersion.capo,
+    range: songVersion.range,
+    chordpro: songVersion.chordpro,
+
+    // Current illustration fields
     currentIllustration: {
       promptId: songIllustration.promptId,
       imageModel: songIllustration.imageModel,
@@ -95,13 +101,14 @@ async function retrieveSongs(
         isFavoriteByCurrentUser: userFavoriteSongs.userId,
       })
       .from(song)
+      // Join with current version to get song metadata
+      .leftJoin(songVersion, eq(songVersion.id, song.currentVersionId))
+      // Join with current illustration
       .leftJoin(
         songIllustration,
-        and(
-          eq(songIllustration.songId, song.id),
-          eq(songIllustration.isActive, true)
-        )
+        eq(songIllustration.id, song.currentIllustrationId)
       )
+      // Join with user favorites
       .leftJoin(
         userFavoriteSongs,
         and(
@@ -113,12 +120,12 @@ async function retrieveSongs(
     query = db
       .select(baseSelectFields)
       .from(song)
+      // Join with current version to get song metadata
+      .leftJoin(songVersion, eq(songVersion.id, song.currentVersionId))
+      // Join with current illustration
       .leftJoin(
         songIllustration,
-        and(
-          eq(songIllustration.songId, song.id),
-          eq(songIllustration.isActive, true)
-        )
+        eq(songIllustration.id, song.currentIllustrationId)
       );
   }
 
@@ -135,6 +142,7 @@ async function retrieveSongs(
 
   if (!includeDeleted) {
     conditions.push(eq(song.deleted, false));
+    conditions.push(isNotNull(song.currentVersionId));
   }
 
   if (updatedSince) {
@@ -149,17 +157,17 @@ async function retrieveSongs(
   return songsRaw.map(
     (songItem): SongDataApi => ({
       id: songItem.id,
-      title: songItem.title,
-      artist: songItem.artist,
-      key: songItem.key,
+      title: songItem.title ?? "Unknown title",
+      artist: songItem.artist ?? "Unknown artist",
+      key: songItem.key ?? "",
       createdAt: songItem.createdAt,
       updatedAt: songItem.updatedAt,
       startMelody: songItem.startMelody ?? undefined,
-      language: songItem.language,
-      tempo: songItem.tempo ?? undefined,
+      language: songItem.language ?? "unknown",
+      tempo: songItem.tempo ? parseInt(songItem.tempo) : undefined,
       capo: songItem.capo ?? undefined,
       range: songItem.range ?? undefined,
-      chordproURL: songItem.chordproURL,
+      chordpro: songItem.chordpro ?? "Not uploaded",
       // Convert userId presence to boolean
       isFavoriteByCurrentUser: !!(songItem as any).isFavoriteByCurrentUser,
       currentIllustration:

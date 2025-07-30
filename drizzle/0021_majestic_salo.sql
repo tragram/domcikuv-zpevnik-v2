@@ -1,0 +1,1 @@
+ALTER TABLE `song_version` ADD `chordpro` text NOT NULL;

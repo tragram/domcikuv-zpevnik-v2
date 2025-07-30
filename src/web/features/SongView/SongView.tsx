@@ -1,26 +1,24 @@
-import { cn } from "~/lib/utils";
 import { useEffect, useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import useLocalStorageState from "use-local-storage-state";
+import { cn } from "~/lib/utils";
+import { SongData } from "~/types/songData";
+import { SongDB } from "~/types/types";
 import ScrollButtons from "./components/ScrollButtons";
 import { SongContent } from "./components/SongContent";
 import { SongViewLayout } from "./components/SongViewLayout";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
 import "./SongView.css";
-import { ChordPro, SongDB } from "~/types/types";
-import { SongData } from "~/types/songData";
 
 type DataForSongView = {
   songDB: SongDB;
   songData: SongData;
-  songContent: ChordPro;
 };
 
 export const SongView = ({
   songDB,
   songData,
-  songContent,
 }: DataForSongView) => {
   const fullScreenHandle = useFullScreenHandle();
   const gestureContainerRef = useRef<HTMLDivElement>(null);
@@ -64,7 +62,6 @@ export const SongView = ({
         <ScrollButtons fitScreenMode={layoutSettings.fitScreenMode} />
         <SongContent
           songData={songData}
-          songContent={songContent}
           transposeSteps={transposeSteps}
           gestureContainerRef={gestureContainerRef}
         />
