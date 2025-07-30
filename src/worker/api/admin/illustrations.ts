@@ -1,6 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { and, eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/d1";
+import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import z from "zod/v4";
 import { illustrationBaseId, SongData } from "~/types/songData";
 import {
@@ -8,7 +8,7 @@ import {
   IllustrationPromptDB,
   SongDataDB,
   songIllustration,
-  SongIllustrationDB
+  SongIllustrationDB,
 } from "../../../lib/db/schema";
 import { buildApp } from "../utils";
 import {
@@ -52,7 +52,7 @@ const illustrationModifySchema = z.object({
   isActive: z.boolean().optional(),
 });
 
-const CFImagesThumnailURL = (imageURL: string) => {
+const CFImagesThumbnailURL = (imageURL: string) => {
   return "/cdn-cgi/image/width=128/" + imageURL;
 };
 
@@ -67,6 +67,12 @@ export type adminIllustrationResponse = {
   prompt: IllustrationPromptDB;
 };
 
+const commonR2Key2Folder = (commonR2Key: string, thumbnail: boolean) => {
+  return `songs/${
+    thumbnail ? "illustration_thumbnails" : "illustrations"
+  }/${commonR2Key}`;
+};
+
 /**
  * Helper function to upload image buffers to storage and return URLs
  */
@@ -74,15 +80,34 @@ async function uploadImageBuffer(
   imageBuffer: ArrayBuffer,
   song: SongDataDB,
   filename: string,
-  env: any
-): Promise<string> {
-  const imageKey = `illustrations/${SongData.baseId(
-    song.artist,
-    song.title
-  )}/${filename}`;
+  env: any,
+  thumbnail: boolean = false
+) {
+  const commonR2Key = `${SongData.baseId(song.artist, song.title)}/${filename}`;
+  const imageKey = commonR2Key2Folder(commonR2Key, thumbnail);
   await env.R2_BUCKET.put(imageKey, imageBuffer);
   const imageURL = `${env.CLOUDFLARE_R2_URL}/${imageKey}`;
-  return imageURL;
+  return { imageURL, commonR2Key };
+}
+
+async function sameParametersExist(
+  db: DrizzleD1Database,
+  songId: string,
+  summaryPromptId: string,
+  imageModel: string
+) {
+  const result = db
+    .select()
+    .from(songIllustration)
+    .where(
+      and(
+        eq(songIllustration.songId, songId),
+        eq(songIllustration.promptId, summaryPromptId),
+        eq(songIllustration.imageModel, imageModel)
+      )
+    )
+    .limit(1);
+  return (await result).length > 0;
 }
 
 export const illustrationRoutes = buildApp()
@@ -128,34 +153,35 @@ export const illustrationRoutes = buildApp()
 
       let imageURL = validatedData.imageURL || "";
       let thumbnailURL = validatedData.thumbnailURL || "";
+      let commonR2Key;
 
       // Handle file uploads with proper validation
       if (imageFile && imageFile instanceof File) {
         const imageBuffer = await imageFile.arrayBuffer();
         const filename = `manual_${Date.now()}_${imageFile.name || "image"}`;
-        imageURL = await uploadImageBuffer(
+        ({ imageURL, commonR2Key } = await uploadImageBuffer(
           imageBuffer,
           illustrationSong,
           filename,
           c.env
-        );
+        ));
       }
-      console.log(imageURL);
 
       if (thumbnailFile && thumbnailFile instanceof File) {
         const thumbnailBuffer = await thumbnailFile.arrayBuffer();
-        const thumbnailFilename = `thumb_${Date.now()}_${
+        const thumbnailFilename = `${Date.now()}_${
           thumbnailFile.name || "thumbnail"
         }`;
-        thumbnailURL = await uploadImageBuffer(
+        ({ imageURL: thumbnailURL } = await uploadImageBuffer(
           thumbnailBuffer,
           illustrationSong,
           thumbnailFilename,
-          c.env
-        );
+          c.env,
+          true
+        ));
       } else if (imageURL && !thumbnailURL) {
         // Use Cloudflare Images to generate thumbnail from main image
-        thumbnailURL = CFImagesThumnailURL(imageURL);
+        thumbnailURL = CFImagesThumbnailURL(imageURL);
       }
 
       // Validate that we have both URLs
@@ -171,7 +197,6 @@ export const illustrationRoutes = buildApp()
           400
         );
       }
-
       // Create or find the prompt
       let prompt;
       try {
@@ -193,8 +218,26 @@ export const illustrationRoutes = buildApp()
         );
       }
 
-      // If this illustration is being set as active, deactivate all other illustrations for this song
+      if (
+        await sameParametersExist(
+          db,
+          validatedData.songId,
+          prompt.id,
+          validatedData.imageModel
+        )
+      ) {
+        return c.json(
+          {
+            status: "fail",
+            failData: {
+              message: "Illustration with the same parameters already exists.",
+            },
+          },
+          400
+        );
+      }
       if (validatedData.isActive) {
+        // If this illustration is being set as active, deactivate all other illustrations for this song
         await db
           .update(songIllustration)
           .set({ isActive: false })
@@ -212,6 +255,7 @@ export const illustrationRoutes = buildApp()
         imageModel: validatedData.imageModel,
         imageURL: imageURL,
         thumbnailURL: thumbnailURL,
+        commonR2Key,
         isActive: validatedData.isActive,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -306,6 +350,26 @@ export const illustrationRoutes = buildApp()
           illustrationSong
         );
 
+        if (
+          await sameParametersExist(
+            db,
+            illustrationData.songId,
+            prompt.id,
+            illustrationData.imageModel
+          )
+        ) {
+          return c.json(
+            {
+              status: "fail",
+              failData: {
+                message:
+                  "Illustration with the same parameters already exists.",
+              },
+            },
+            400
+          );
+        }
+
         const imageBuffer = await generator.generateImage(prompt.text);
         console.log(imageBuffer);
         const filename = illustrationBaseId(
@@ -317,13 +381,13 @@ export const illustrationRoutes = buildApp()
         );
         console.log(filename);
 
-        const imageURL = await uploadImageBuffer(
+        const { imageURL, commonR2Key } = await uploadImageBuffer(
           imageBuffer,
           illustrationSong,
           filename,
           c.env
         );
-        console.log(imageURL);
+        console.log(imageURL, commonR2Key);
 
         // If this illustration is being set as active, deactivate all other illustrations for this song
         if (illustrationData.isActive) {
@@ -343,7 +407,8 @@ export const illustrationRoutes = buildApp()
           songId: illustrationData.songId,
           imageModel: illustrationData.imageModel,
           imageURL: imageURL,
-          thumbnailURL: CFImagesThumnailURL(imageURL),
+          thumbnailURL: CFImagesThumbnailURL(imageURL),
+          commonR2Key,
           isActive: illustrationData.isActive,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -500,6 +565,7 @@ export const illustrationRoutes = buildApp()
           id: songIllustration.id,
           imageURL: songIllustration.imageURL,
           thumbnailURL: songIllustration.thumbnailURL,
+          commonR2Key: songIllustration.commonR2Key,
         })
         .from(songIllustration)
         .where(eq(songIllustration.id, illustrationId))
@@ -517,11 +583,15 @@ export const illustrationRoutes = buildApp()
           404
         );
       }
-
-      // TODO: Delete associated files from storage
-      // const illustration = existingIllustration[0];
-      // await deleteFromStorage(illustration.imageURL, c.env);
-      // await deleteFromStorage(illustration.thumbnailURL, c.env);
+      // delete associated files from R2 storage (if stored there)
+      if (existingIllustration[0].commonR2Key) {
+        c.env.R2_BUCKET.delete(
+          commonR2Key2Folder(existingIllustration[0].commonR2Key, false)
+        );
+        c.env.R2_BUCKET.delete(
+          commonR2Key2Folder(existingIllustration[0].commonR2Key, true)
+        );
+      }
 
       await db
         .delete(songIllustration)

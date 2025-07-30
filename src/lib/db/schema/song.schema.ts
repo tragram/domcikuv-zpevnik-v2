@@ -47,6 +47,8 @@ export const songIllustration = sqliteTable("song_illustration", {
   imageModel: text("image_model").notNull(),
   imageURL: text("image_url").notNull(),
   thumbnailURL: text("thumbnail_url").notNull(),
+  // commonR2Key non null --> stored dynamically
+  commonR2Key: text("common_r2_key"), // only the part that's common for imageURL and thumnailURL
   isActive: integer("is_active", { mode: "boolean" }).default(false).notNull(),
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())

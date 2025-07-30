@@ -1,0 +1,1 @@
+ALTER TABLE `song_illustration` ADD `common_r2_key` text;

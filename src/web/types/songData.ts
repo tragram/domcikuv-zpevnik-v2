@@ -102,6 +102,7 @@ export class SongData {
   // Image URL methods
   thumbnailURL(): string {
     return this.currentIllustration?.thumbnailURL || this.defaultThumbnailURL();
+    // return this.currentIllustration?.thumbnailURL || this.defaultThumbnailURL();
   }
 
   illustrationURL(): string {
