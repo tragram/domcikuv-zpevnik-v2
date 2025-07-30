@@ -8,7 +8,7 @@ import {
   illustrationPrompt,
   IllustrationPromptDB,
   SongDataDB,
-  songIllustration
+  songIllustration,
 } from "../../../lib/db/schema";
 import { buildApp } from "../utils";
 import { ImageGenerator } from "./image-generator";
@@ -70,7 +70,9 @@ export async function findOrCreatePrompt(
   }
   const chordproContentResponse = await fetch(chordproURL);
   if (!chordproContentResponse.ok) {
-    throw Error("Failed to fetch ChordPro content, cannot generate prompt.");
+    throw Error(
+      `Failed to fetch ChordPro content at ${chordproURL}, cannot generate prompt.`
+    );
   }
   const chordproContent = await chordproContentResponse.text();
   console.log("ChProContent:", chordproContent);
