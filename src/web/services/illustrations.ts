@@ -14,6 +14,7 @@ import {
 import { SongData } from "~/types/songData";
 import { ApiException, makeApiRequest } from "./apiHelpers";
 import { AdminApi, parseDBDates } from "./songs";
+import { SongWithCurrentVersion } from "src/worker/api/admin/songs";
 /**
  * Fetches the illustration prompt for a specific song (legacy method)
  * @param songId - The ID of the song
@@ -56,7 +57,7 @@ export const fetchPromptsAdmin = async (
   adminApi: AdminApi
 ): Promise<IllustrationPromptDB[]> => {
   const prompts = await makeApiRequest(adminApi.illustrations.prompts.$get);
-  return prompts;
+  return prompts.map(parseDBDates);
 };
 
 /**
@@ -73,7 +74,7 @@ export const createIllustrationPrompt = async (
   const response = await makeApiRequest(() =>
     adminApi.illustrations.prompts.create.$post({ json: promptData })
   );
-  return response;
+  return parseDBDates(response);
 };
 
 /**
@@ -93,7 +94,7 @@ export const createIllustration = async (
     formData.append("summaryPromptId", data.summaryPromptId.trim());
   }
   formData.append("imageModel", data.imageModel);
-  formData.append("isActive", data.isActive.toString());
+  formData.append("setAsActive", data.setAsActive.toString());
   // Add URLs if provided
   if (data.imageURL) {
     formData.append("imageURL", data.imageURL);
@@ -109,6 +110,7 @@ export const createIllustration = async (
   if (data.thumbnailFile) {
     formData.append("thumbnailFile", data.thumbnailFile);
   }
+  // formData cannot be sent via Hono's RPC
   const response = await makeApiRequest(() =>
     fetch("/api/admin/illustrations/create", {
       method: "POST",
@@ -139,10 +141,14 @@ export const generateIllustration = async (
  */
 export const updateIllustration = async (
   adminApi: AdminApi,
+  illustrationId: string,
   illustrationData: IllustrationModifySchema
 ): Promise<adminIllustrationResponse> => {
   const response = await makeApiRequest(() =>
-    adminApi.illustrations.modify.$post({ json: illustrationData })
+    adminApi.illustrations[":id"].$put({
+      param: { id: illustrationId },
+      json: illustrationData,
+    })
   );
   response.illustration = parseDBDates(response.illustration);
   return response;
@@ -208,36 +214,31 @@ export const fetchSongIllustrations = async (
  */
 export const setActiveIllustration = async (
   adminApi: AdminApi,
+  songId: string,
   illustrationId: string
-): Promise<SongWithIllustrationsAndPrompts> => {
-  return updateIllustration(adminApi, {
-    id: illustrationId,
-    isActive: true,
-  });
+): Promise<SongDataDB> => {
+  const response = await makeApiRequest(() =>
+    adminApi.songs[":songId"]["current-illustration"][":illustrationId"].$put({
+      param: { songId, illustrationId },
+    })
+  );
+  return parseDBDates(response);
 };
 
 export type SongWithIllustrationsAndPrompts = {
-  song: {
-    id: string;
-    title: string;
-    artist: string;
-  };
+  song: SongWithCurrentVersion;
   illustrations: SongIllustrationDB[];
   prompts: Record<string, IllustrationPromptDB>;
 };
 
 export const songsWithIllustrationsAndPrompts = (
-  songs: SongDataDB[],
+  songs: SongWithCurrentVersion[],
   illustrations: SongIllustrationDB[],
   prompts: IllustrationPromptDB[]
 ) => {
   const songIllustrationsPrompts = songs.reduce((acc, s) => {
     acc[s.id] = {
-      song: {
-        id: s.id,
-        title: s.title,
-        artist: s.artist,
-      },
+      song: s,
       illustrations: [],
       prompts: {},
     } as SongWithIllustrationsAndPrompts;

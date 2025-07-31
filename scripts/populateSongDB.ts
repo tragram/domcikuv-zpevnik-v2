@@ -124,7 +124,6 @@ function removePreamble(content: string, keywords: string[]): string {
     .join("")
     .slice(0, -1);
   const keywordRegex = new RegExp(`{(${keywordRegexPart}):\\s*(.+?)}`, "i");
-  console.log(keywordRegexPart, keywordRegex);
   return content
     .split("\n")
     .filter((line) => !line.trim().match(keywordRegex))

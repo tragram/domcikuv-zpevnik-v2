@@ -3,15 +3,12 @@ import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { SongIllustrationsGroup } from "./illustration-group";
-import {
-  IllustrationPromptDB,
-  SongDataDB,
-  SongIllustrationDB,
-} from "src/lib/db/schema";
+import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 import { songsWithIllustrationsAndPrompts } from "~/services/illustrations";
+import { SongWithCurrentVersion } from "src/worker/api/admin/songs";
 
 interface IllustrationsTableProps {
-  songs: SongDataDB[];
+  songs: SongWithCurrentVersion[];
   illustrations: SongIllustrationDB[];
   prompts: IllustrationPromptDB[];
 }
@@ -21,9 +18,9 @@ export function IllustrationsTable({
   illustrations,
   prompts,
 }: IllustrationsTableProps) {
-
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
+
   // TODO: separate search for songs and illustrations
   // const filteredIllustrations = songsWithIllustrationsAndPrompts.filter(
   //   (sip) =>
@@ -53,18 +50,13 @@ export function IllustrationsTable({
   // Sort groups by song title
   const sortedGroups = Object.entries(songsIllustrationsAndPrompts).sort(
     ([, songA], [, songB]) => {
-      const activeSum = (si: SongIllustrationDB[]) =>
-        si
-          .map((i) => i.isActive)
-          .reduce((a: number, c: boolean) => a + Number(c), 0);
-
-      const activeA = activeSum(songA.illustrations);
-      const activeB = activeSum(songB.illustrations);
-      if (activeA + activeB !== 0) {
-        if (activeA === 0) {
+      const activeA = Boolean(songA.song.currentIllustrationId);
+      const activeB = Boolean(songB.song.currentIllustrationId);
+      if (!activeA || !activeB) {
+        if (!activeA) {
           return -1;
         }
-        if (activeB === 0) {
+        if (!activeB) {
           return 1;
         }
       }
@@ -78,8 +70,7 @@ export function IllustrationsTable({
         <div className="text-center sm:text-left">
           <h3 className="text-lg font-medium">Song Illustrations</h3>
           <p className="text-sm text-muted-foreground">
-            {sortedGroups.length} songs • {illustrations.length}{" "}
-            illustrations
+            {sortedGroups.length} songs • {illustrations.length} illustrations
           </p>
         </div>
       </div>

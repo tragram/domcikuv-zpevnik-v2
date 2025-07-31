@@ -1,0 +1,1 @@
+ALTER TABLE `song_version` ADD `deleted` integer DEFAULT false NOT NULL;

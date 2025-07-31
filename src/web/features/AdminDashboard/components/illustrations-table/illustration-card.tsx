@@ -15,29 +15,14 @@ import {
 import { cn } from "~/lib/utils";
 import { deleteIllustration, updateIllustration } from "~/services/songs";
 import { IllustrationForm } from "./illustration-form/illustration-form";
-
-// Updated interfaces to match backend
-interface IllustrationCreateSchema {
-  songId: string;
-  summaryPromptVersion: string;
-  imageModel: string;
-  imageURL?: string;
-  thumbnailURL?: string;
-  isActive: boolean;
-  imageFile?: File;
-  thumbnailFile?: File;
-}
-
-interface IllustrationModifySchema {
-  id: string;
-  imageModel?: string;
-  imageURL?: string;
-  thumbnailURL?: string;
-  isActive?: boolean;
-}
+import { SongWithCurrentVersion } from "src/worker/api/admin/songs";
+import {
+  IllustrationCreateSchema,
+  IllustrationModifySchema,
+} from "src/worker/api/admin/illustrations";
 
 interface IllustrationCardProps {
-  song: { id: string; title: string; artist: string };
+  song: SongWithCurrentVersion;
   illustration: SongIllustrationDB;
   prompt: IllustrationPromptDB;
   onPreview: (imageUrl: string) => void;
@@ -53,22 +38,22 @@ export function IllustrationCard({
   const routeContext = useRouteContext({ from: "/admin" });
   const adminApi = routeContext.api.admin;
   const queryClient = useQueryClient();
+  const isActive = illustration.id === song.currentIllustrationId;
 
   const createToModifySchema = (
     create: IllustrationCreateSchema
   ): IllustrationModifySchema => {
     return {
-      id: illustration.id,
       imageModel: create.imageModel,
       imageURL: create.imageURL,
       thumbnailURL: create.thumbnailURL,
-      isActive: create.isActive,
+      setAsActive: create.setAsActive,
     };
   };
 
   const updateMutation = useMutation({
-    mutationFn: async (data: IllustrationModifySchema) =>
-      updateIllustration(adminApi, data),
+    mutationFn: async (id: string, data: IllustrationModifySchema) =>
+      updateIllustration(adminApi, id, data),
     onSuccess: (responseData) => {
       // Update the cache with the returned data from the API
       queryClient.setQueryData<SongIllustrationDB[]>(
@@ -77,10 +62,10 @@ export function IllustrationCard({
           if (!oldIlls) return oldIlls;
           oldIlls = oldIlls.map((ill) => {
             if (
-              responseData.illustration.isActive &&
+              responseData.illustration.setAsActive &&
               ill.songId === responseData.song.id
             ) {
-              ill.isActive = false;
+              ill.setAsActive = false;
             }
             if (ill.id === responseData.illustration.id) {
               console.log(responseData.illustration);
@@ -121,9 +106,10 @@ export function IllustrationCard({
   });
 
   const handleUpdateIllustration = (
+    id: string,
     illustrationData: IllustrationModifySchema
   ) => {
-    updateMutation.mutate(illustrationData);
+    updateMutation.mutate(id, illustrationData);
   };
 
   const handleDeleteIllustration = () => {
@@ -140,7 +126,7 @@ export function IllustrationCard({
     imageModel: illustration.imageModel,
     imageURL: illustration.imageURL,
     thumbnailURL: illustration.thumbnailURL,
-    isActive: illustration.isActive,
+    setAsActive: illustration.setAsActive,
   };
 
   return (
@@ -148,7 +134,7 @@ export function IllustrationCard({
       <div
         className={cn(
           "border-2 rounded-lg p-1 md:p-3 space-y-2",
-          illustration.isActive ? "border-primary" : ""
+          isActive ? "border-primary" : ""
         )}
       >
         <div className="flex items-start justify-between">
@@ -213,16 +199,16 @@ export function IllustrationCard({
             <Trash2 className="h-3 w-3" />
           </Button>
           <Badge
-            variant={illustration.isActive ? "default" : "secondary"}
+            variant={isActive ? "default" : "secondary"}
             className="text-xs cursor-pointer"
             onClick={() => {
               handleUpdateIllustration({
                 id: illustration.id,
-                isActive: !illustration.isActive,
+                isActive: !isActive,
               });
             }}
           >
-            {illustration.isActive ? "Active" : "Inactive"}
+            {isActive ? "Active" : "Inactive"}
           </Badge>
         </div>
       </div>

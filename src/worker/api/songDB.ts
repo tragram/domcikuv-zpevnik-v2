@@ -28,7 +28,7 @@ export type SongDataApi = {
   id: string;
   title: string;
   artist: string;
-  key: string;
+  key: string | undefined;
   createdAt: string | Date;
   updatedAt: string | Date;
   startMelody: string | undefined;

@@ -33,11 +33,6 @@ const menuItems = [
     id: "illustrations",
   },
   {
-    title: "Versions",
-    icon: History,
-    id: "versions",
-  },
-  {
     title: "Users",
     icon: Users,
     id: "users",

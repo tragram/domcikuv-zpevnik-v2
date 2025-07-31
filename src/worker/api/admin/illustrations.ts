@@ -9,6 +9,7 @@ import {
   SongDataDB,
   songIllustration,
   SongIllustrationDB,
+  song,
 } from "../../../lib/db/schema";
 import { buildApp } from "../utils";
 import {
@@ -23,13 +24,13 @@ import {
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "./image-generator";
-import { findSong } from "./songs";
+import { findSong, SongWithCurrentVersion } from "./songs";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),
   summaryPromptId: z.string().optional(),
   imageModel: z.string(),
-  isActive: z.string().transform((val) => val === "true"), // FormData sends as string
+  setAsActive: z.string().transform((val) => val === "true"), // FormData sends as string
   imageFile: z.any().optional(),
   thumbnailFile: z.any().optional(),
   imageURL: z.string().optional(),
@@ -38,18 +39,17 @@ const illustrationCreateSchema = z.object({
 
 const illustrationGenerateSchema = z.object({
   songId: z.string(),
-  isActive: z.boolean().default(false),
+  setAsActive: z.boolean().default(false),
   imageModel: z.enum(IMAGE_MODELS_API),
   promptVersion: z.enum(SUMMARY_PROMPT_VERSIONS),
   summaryModel: z.enum(SUMMARY_MODELS_API),
 });
 
 const illustrationModifySchema = z.object({
-  id: z.string(),
   imageModel: z.string().optional(),
   imageURL: z.string().optional(),
   thumbnailURL: z.string().optional(),
-  isActive: z.boolean().optional(),
+  setAsActive: z.boolean().optional(),
 });
 
 const CFImagesThumbnailURL = (imageURL: string) => {
@@ -62,7 +62,7 @@ export type IllustrationGenerateSchema = z.infer<
 >;
 export type IllustrationModifySchema = z.infer<typeof illustrationModifySchema>;
 export type adminIllustrationResponse = {
-  song: SongDataDB;
+  song: SongWithCurrentVersion;
   illustration: SongIllustrationDB;
   prompt: IllustrationPromptDB;
 };
@@ -73,17 +73,41 @@ const commonR2Key2Folder = (commonR2Key: string, thumbnail: boolean) => {
   }/${commonR2Key}`;
 };
 
+const fakeDeleteR2 = async (R2_BUCKET: R2Bucket, commonR2Key: string) => {
+  const thumbnails = [false, true];
+  const results = { imageURL: "", thumbnailURL: "null" };
+  for (const thumb of thumbnails) {
+    const folder = commonR2Key2Folder(commonR2Key, thumb);
+    const file = await R2_BUCKET.get(folder);
+    await R2_BUCKET.delete(folder);
+    if (!file) {
+      throw Error("Failed to retrieve R2 file when deleting!");
+    }
+    const deletedFolder = "deleted/" + folder;
+    if (thumb) {
+      results.thumbnailURL = deletedFolder;
+    } else {
+      results.imageURL = deletedFolder;
+    }
+    await R2_BUCKET.put(deletedFolder, file.body);
+  }
+  return results;
+};
+
 /**
  * Helper function to upload image buffers to storage and return URLs
  */
 async function uploadImageBuffer(
   imageBuffer: ArrayBuffer,
-  song: SongDataDB,
+  songData: SongWithCurrentVersion,
   filename: string,
   env: any,
   thumbnail: boolean = false
 ) {
-  const commonR2Key = `${SongData.baseId(song.artist, song.title)}/${filename}`;
+  const commonR2Key = `${SongData.baseId(
+    songData.artist,
+    songData.title
+  )}/${filename}`;
   const imageKey = commonR2Key2Folder(commonR2Key, thumbnail);
   await env.R2_BUCKET.put(imageKey, imageBuffer);
   const imageURL = `${env.CLOUDFLARE_R2_URL}/${imageKey}`;
@@ -103,11 +127,42 @@ async function sameParametersExist(
       and(
         eq(songIllustration.songId, songId),
         eq(songIllustration.promptId, summaryPromptId),
-        eq(songIllustration.imageModel, imageModel)
+        eq(songIllustration.imageModel, imageModel),
+        eq(songIllustration.deleted, false)
       )
     )
     .limit(1);
   return (await result).length > 0;
+}
+
+/**
+ * Helper function to set an illustration as the current active one for a song
+ */
+async function setCurrentIllustration(
+  db: DrizzleD1Database,
+  songId: string,
+  illustrationId: string
+) {
+  await db
+    .update(song)
+    .set({
+      currentIllustrationId: illustrationId,
+      updatedAt: new Date(),
+    })
+    .where(eq(song.id, songId));
+}
+
+/**
+ * Helper function to clear current illustration for a song
+ */
+async function clearCurrentIllustration(db: DrizzleD1Database, songId: string) {
+  await db
+    .update(song)
+    .set({
+      currentIllustrationId: null,
+      updatedAt: new Date(),
+    })
+    .where(eq(song.id, songId));
 }
 
 export const illustrationRoutes = buildApp()
@@ -191,12 +246,13 @@ export const illustrationRoutes = buildApp()
             status: "fail",
             failData: {
               files:
-                "Either provide URLs or upload files for both image a nd thumbnail",
+                "Either provide URLs or upload files for both image and thumbnail",
             },
           },
           400
         );
       }
+
       // Create or find the prompt
       let prompt;
       try {
@@ -236,13 +292,6 @@ export const illustrationRoutes = buildApp()
           400
         );
       }
-      if (validatedData.isActive) {
-        // If this illustration is being set as active, deactivate all other illustrations for this song
-        await db
-          .update(songIllustration)
-          .set({ isActive: false })
-          .where(eq(songIllustration.songId, validatedData.songId));
-      }
 
       // Generate unique ID
       const newId = `${validatedData.songId}_${prompt.id}_${
@@ -256,9 +305,9 @@ export const illustrationRoutes = buildApp()
         imageURL: imageURL,
         thumbnailURL: thumbnailURL,
         commonR2Key,
-        isActive: validatedData.isActive,
         createdAt: new Date(),
         updatedAt: new Date(),
+        deleted: false,
         promptId: prompt.id,
       };
 
@@ -266,6 +315,11 @@ export const illustrationRoutes = buildApp()
         .insert(songIllustration)
         .values(insertData)
         .returning();
+
+      // If this illustration should be set as active, update the song's currentIllustrationId
+      if (validatedData.setAsActive) {
+        await setCurrentIllustration(db, validatedData.songId, newId);
+      }
 
       return c.json(
         {
@@ -291,6 +345,7 @@ export const illustrationRoutes = buildApp()
       );
     }
   })
+
   .post(
     "/generate",
     zValidator("json", illustrationGenerateSchema),
@@ -299,6 +354,7 @@ export const illustrationRoutes = buildApp()
         const illustrationData = c.req.valid("json");
         const db = drizzle(c.env.DB);
         console.log(illustrationData);
+
         // Verify the song exists
         let illustrationSong;
         try {
@@ -389,14 +445,6 @@ export const illustrationRoutes = buildApp()
         );
         console.log(imageURL, commonR2Key);
 
-        // If this illustration is being set as active, deactivate all other illustrations for this song
-        if (illustrationData.isActive) {
-          await db
-            .update(songIllustration)
-            .set({ isActive: false })
-            .where(eq(songIllustration.songId, illustrationData.songId));
-        }
-
         // Generate unique ID
         const newId = `${illustrationData.songId}_${prompt.id}_${
           illustrationData.imageModel
@@ -409,9 +457,9 @@ export const illustrationRoutes = buildApp()
           imageURL: imageURL,
           thumbnailURL: CFImagesThumbnailURL(imageURL),
           commonR2Key,
-          isActive: illustrationData.isActive,
           createdAt: new Date(),
           updatedAt: new Date(),
+          deleted: false,
           promptId: prompt.id,
         };
 
@@ -419,6 +467,12 @@ export const illustrationRoutes = buildApp()
           .insert(songIllustration)
           .values(insertData)
           .returning();
+
+        // If this illustration should be set as active, update the song's currentIllustrationId
+        if (illustrationData.setAsActive) {
+          await setCurrentIllustration(db, illustrationData.songId, newId);
+        }
+
         console.log(newIllustration);
         return c.json(
           {
@@ -446,10 +500,11 @@ export const illustrationRoutes = buildApp()
     }
   )
 
-  .post("/modify", zValidator("json", illustrationModifySchema), async (c) => {
+  .put("/:id", zValidator("json", illustrationModifySchema), async (c) => {
     try {
       const modifiedIllustration = c.req.valid("json");
       const db = drizzle(c.env.DB);
+      const illustrationId = c.req.param("id");
 
       // Check if illustration exists and get its song ID
       const existingIllustration = await db
@@ -459,7 +514,12 @@ export const illustrationRoutes = buildApp()
           promptId: songIllustration.promptId,
         })
         .from(songIllustration)
-        .where(eq(songIllustration.id, modifiedIllustration.id))
+        .where(
+          and(
+            eq(songIllustration.id, illustrationId),
+            eq(songIllustration.deleted, false)
+          )
+        )
         .limit(1);
 
       if (existingIllustration.length === 0) {
@@ -476,27 +536,33 @@ export const illustrationRoutes = buildApp()
       }
       const songId = existingIllustration[0].songId;
 
-      // If this illustration is being set as active, deactivate all other illustrations for this song
-      if (modifiedIllustration.isActive === true) {
-        await db
-          .update(songIllustration)
-          .set({ isActive: false, updatedAt: new Date() })
-          .where(
-            and(
-              eq(songIllustration.songId, songId),
-              eq(songIllustration.isActive, true)
-            )
-          );
-      }
+      // Prepare update data (excluding setAsActive which we handle separately)
+      const { setAsActive, ...updateData } = modifiedIllustration;
 
       const updatedIllustration = await db
         .update(songIllustration)
         .set({
-          ...modifiedIllustration,
+          ...updateData,
           updatedAt: new Date(),
         })
-        .where(eq(songIllustration.id, modifiedIllustration.id))
+        .where(eq(songIllustration.id, illustrationId))
         .returning();
+
+      // Handle setting as active illustration
+      if (setAsActive === true) {
+        await setCurrentIllustration(db, songId, illustrationId);
+      } else if (setAsActive === false) {
+        // Check if this illustration is currently active and clear it if so
+        const currentSong = await db
+          .select({ currentIllustrationId: song.currentIllustrationId })
+          .from(song)
+          .where(eq(song.id, songId))
+          .limit(1);
+
+        if (currentSong[0]?.currentIllustrationId === illustrationId) {
+          await clearCurrentIllustration(db, songId);
+        }
+      }
 
       let illustrationSong;
       try {
@@ -563,12 +629,18 @@ export const illustrationRoutes = buildApp()
       const existingIllustration = await db
         .select({
           id: songIllustration.id,
+          songId: songIllustration.songId,
           imageURL: songIllustration.imageURL,
           thumbnailURL: songIllustration.thumbnailURL,
           commonR2Key: songIllustration.commonR2Key,
         })
         .from(songIllustration)
-        .where(eq(songIllustration.id, illustrationId))
+        .where(
+          and(
+            eq(songIllustration.id, illustrationId),
+            eq(songIllustration.deleted, false)
+          )
+        )
         .limit(1);
 
       if (existingIllustration.length === 0) {
@@ -583,18 +655,35 @@ export const illustrationRoutes = buildApp()
           404
         );
       }
-      // delete associated files from R2 storage (if stored there)
+
+      const songId = existingIllustration[0].songId;
+
+      // Check if this illustration is currently active and clear it if so
+      const currentSong = await db
+        .select({ currentIllustrationId: song.currentIllustrationId })
+        .from(song)
+        .where(eq(song.id, songId))
+        .limit(1);
+
+      if (currentSong[0]?.currentIllustrationId === illustrationId) {
+        await clearCurrentIllustration(db, songId);
+      }
+
+      // Delete associated files from R2 storage (if stored there)
       if (existingIllustration[0].commonR2Key) {
-        c.env.R2_BUCKET.delete(
-          commonR2Key2Folder(existingIllustration[0].commonR2Key, false)
-        );
-        c.env.R2_BUCKET.delete(
-          commonR2Key2Folder(existingIllustration[0].commonR2Key, true)
+        await fakeDeleteR2(
+          c.env.R2_BUCKET,
+          existingIllustration[0].commonR2Key
         );
       }
 
+      // Soft delete the illustration instead of hard delete
       await db
-        .delete(songIllustration)
+        .update(songIllustration)
+        .set({
+          deleted: true,
+          updatedAt: new Date(),
+        })
         .where(eq(songIllustration.id, illustrationId));
 
       return c.json({

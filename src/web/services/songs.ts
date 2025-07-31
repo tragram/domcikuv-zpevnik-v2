@@ -10,7 +10,10 @@ import {
   SongLanguage,
 } from "~/types/types";
 import { ApiException, handleApiResponse, makeApiRequest } from "./apiHelpers";
-import { SongModificationSchema } from "src/worker/api/admin/songs";
+import {
+  ModifySongVersionSchema,
+  SongModificationSchema,
+} from "src/worker/api/admin/songs";
 export * from "./illustrations";
 
 export type AdminApi = typeof client.api.admin;
@@ -87,87 +90,6 @@ export const buildSongDB = (
   };
 };
 
-/**
- * Fetches song data including chordpro content and available illustrations
- * @param songId - The ID of the song to fetch
- * @param songDB - The complete song database for illustration lookup
- * @returns Promise containing the parsed song data
- * @throws {ApiException} When song data cannot be fetched
- */
-export const fetchSongContent = async (
-  songData: SongData
-): Promise<ChordPro> => {
-  const response = await fetch(songData.chordproURL);
-  const songContent = await response.text();
-  return songContent;
-};
-
-export const fetchSongFromId = async (
-  songId: string,
-  songDB: SongDB
-): Promise<ChordPro> => {
-  const songData = songDB.songs.find((s) => (s.id = songId));
-  const songContent = await fetchSongContent(songData);
-  return songContent;
-};
-
-/**
- * Fetches the song database using admin API
- * @param adminApi - The admin API client
- * @returns Promise containing songs, language counts, and max vocal range
- * @throws {ApiException} When the songDB cannot be fetched or parsed
- */
-export const fetchSongDBAdmin = async (adminApi: AdminApi): Promise<SongDB> => {
-  const json = await handleApiResponse<SongDataDB>(await adminApi.songs.$get());
-  const songs = json.songs.map((d) => new SongData(d));
-
-  const languages: LanguageCount = songs
-    .map((s) => s.language)
-    .reduce((acc: Record<string, number>, lang: string) => {
-      acc[lang] = (acc[lang] || 0) + 1;
-      return acc;
-    }, {});
-
-  const songRanges = songs.map((s) => s.range?.semitones).filter(Boolean);
-  return {
-    maxRange: Math.max(...songRanges),
-    languages,
-    songs,
-  };
-};
-
-/**
- * Fetches all pending versions requiring admin review
- * @param adminApi - The admin API client
- * @returns Promise containing the list of versions
- * @throws {ApiException} When versions cannot be fetched
- */
-export const fetchVersionsAdmin = async (
-  adminApi: AdminApi
-): Promise<SongVersionDB[]> => {
-  const response = await makeApiRequest(adminApi.versions.$get);
-  return response.versions;
-};
-
-/**
- * Verifies or rejects a pending version
- * @param adminApi - The admin API client
- * @param id - The version ID to verify
- * @param verified - Whether to verify (true) or reject (false) the version
- * @returns Promise containing the verification result
- * @throws {ApiException} When verification fails
- */
-export const verifyVersion = async (
-  adminApi: AdminApi,
-  id: string,
-  verified: boolean
-): Promise<any> => {
-  const response = await makeApiRequest(() =>
-    adminApi.version.verify.$post({ json: { id, verified } })
-  );
-  return response;
-};
-
 export const getSongsAdmin = async (
   adminApi: AdminApi
 ): Promise<SongDataDB[]> => {
@@ -175,6 +97,13 @@ export const getSongsAdmin = async (
   return response.songs.map(parseDBDates);
 };
 
+export const getVersionsAdmin = async (
+  adminApi: AdminApi
+): Promise<SongVersionDB[]> => {
+  const response = await makeApiRequest(adminApi.songs.versions.$get);
+  console.log(response)
+  return response.versions.map(parseDBDates);
+};
 export const putSongAdmin = async (
   adminApi: AdminApi,
   songId: string,
@@ -184,6 +113,19 @@ export const putSongAdmin = async (
     adminApi.songs[":id"].$put({
       param: { id: songId },
       json: songData,
+    })
+  );
+  return parseDBDates(modifiedSong);
+};
+
+export const setCurrentVersionAdmin = async (
+  adminApi: AdminApi,
+  songId: string,
+  versionId: string
+): Promise<SongDataDB> => {
+  const modifiedSong = await makeApiRequest(() =>
+    adminApi.songs[":songId"]["current-version"][":versionId"].$put({
+      param: { songId, versionId },
     })
   );
   return parseDBDates(modifiedSong);
@@ -199,4 +141,44 @@ export const deleteSongAdmin = async (
     })
   );
   return parseDBDates(deletedSong);
+};
+
+export const songsWithCurrentVersionAdmin = async (adminApi: AdminApi) => {
+  const songs = await makeApiRequest(adminApi.songs.withCurrentVersion.$get);
+  return songs.songs.map(parseDBDates);
+};
+
+export const putVersionAdmin = async (
+  adminApi: AdminApi,
+  songId: string,
+  versionId: string,
+  versionData: ModifySongVersionSchema
+): Promise<SongVersionDB> => {
+  const updatedVersion = await makeApiRequest(() =>
+    adminApi.songs[":songId"].versions[":versionId"].$put({
+      param: { songId, versionId },
+      json: { ...versionData },
+    })
+  );
+  return parseDBDates(updatedVersion);
+};
+
+export const deleteVersionAdmin = async (
+  adminApi: AdminApi,
+  songId: string,
+  versionId: string
+): Promise<SongVersionDB> => {
+  const deletedVersion = await makeApiRequest(() =>
+    adminApi.songs[":songId"].versions[":versionId"].$delete({
+      param: { songId, versionId },
+    })
+  );
+  return parseDBDates(deletedVersion);
+};
+
+export const resetVersionDB = async (adminApi: AdminApi) => {
+  const newVersion = await makeApiRequest(
+    adminApi.songs["reset-songDB-version"].$post
+  );
+  return newVersion;
 };

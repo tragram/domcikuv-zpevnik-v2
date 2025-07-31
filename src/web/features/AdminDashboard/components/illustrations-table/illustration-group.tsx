@@ -4,13 +4,11 @@ import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
-import {
-  IllustrationCreateSchema
-} from "src/worker/api/admin/illustrations";
+import { IllustrationCreateSchema } from "src/worker/api/admin/illustrations";
 import {
   IMAGE_MODELS_API,
   SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS
+  SUMMARY_PROMPT_VERSIONS,
 } from "~/../worker/api/admin/image-generator";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -33,13 +31,10 @@ import {
   IllustrationForm,
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
+import { SongWithCurrentVersion } from "src/worker/api/admin/songs";
 
 interface SongIllustrationsGroupProps {
-  song: {
-    id: string;
-    title: string;
-    artist: string;
-  };
+  song: SongWithCurrentVersion;
   illustrations: SongIllustrationDB[];
   prompts: Record<string, IllustrationPromptDB>;
   isExpanded: boolean;
@@ -76,8 +71,7 @@ export function SongIllustrationsGroup({
 }: SongIllustrationsGroupProps) {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const someActive =
-    illustrations.map((i) => i.isActive).reduce((a, c) => a + Number(c), 0) > 0;
+  const someActive = Boolean(song.currentVersionId);
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
 
   const createMutation = useMutation({
@@ -160,7 +154,9 @@ export function SongIllustrationsGroup({
                     alt={`${song.title} preview ${index + 1}`}
                     className={cn(
                       "w-10 h-10 sm:w-12 sm:h-12 rounded object-cover border-2 shadow-sm hover:shadow-md transition-shadow cursor-pointer",
-                      illustration.isActive ? "border-primary" : ""
+                      illustration.id === song.currentIllustrationId
+                        ? "border-primary"
+                        : ""
                     )}
                     onClick={(e) => {
                       e.stopPropagation();

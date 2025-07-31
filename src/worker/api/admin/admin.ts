@@ -6,7 +6,6 @@ import { buildApp } from "../utils";
 import { userRoutes } from "./users";
 import { songRoutes } from "./songs";
 import { illustrationRoutes } from "./illustrations";
-import { versionRoutes } from "./versions";
 
 const adminMiddleware = async (c: Context, next: Next) => {
   try {
@@ -84,6 +83,5 @@ const adminApp = buildApp()
   .route("/users", userRoutes)
   .route("/songs", songRoutes)
   .route("/illustrations", illustrationRoutes)
-  .route("/", versionRoutes);
 
 export default adminApp;

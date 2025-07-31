@@ -3,6 +3,7 @@ import {
   IllustrationPromptDB,
   SongDataDB,
   SongIllustrationDB,
+  SongVersionDB,
 } from "src/lib/db/schema";
 import {
   Breadcrumb,
@@ -20,15 +21,20 @@ import { AdminSidebar } from "./components/admin-sidebar";
 import { IllustrationsTable } from "./components/illustrations-table/illustrations-table";
 import SongsTable from "./components/songs-table";
 import { UsersTable } from "./components/users-table";
-import { VersionsTable } from "./components/versions-table";
 import { useQuery } from "@tanstack/react-query";
 import { UsersResponse } from "src/worker/api/admin/users";
 import {
   fetchIllustrationsAdmin,
-  fetchVersionsAdmin,
   fetchPromptsAdmin,
   getSongsAdmin,
   AdminApi,
+  getVersionsAdmin,
+  putSongAdmin,
+  putVersionAdmin,
+  deleteVersionAdmin,
+  setCurrentVersionAdmin,
+  resetVersionDB,
+  songsWithCurrentVersionAdmin,
 } from "~/services/songs";
 import { fetchUsersAdmin } from "~/services/users";
 
@@ -44,8 +50,6 @@ export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
         return "Songs";
       case "illustrations":
         return "Illustrations";
-      case "versions":
-        return "Versions";
       case "users":
         return "Users";
       default:
@@ -53,10 +57,15 @@ export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
     }
   };
 
-  // Use query hooks instead of loader data
   const { data: songs } = useQuery({
     queryKey: ["songsAdmin"],
     queryFn: () => getSongsAdmin(adminApi),
+    staleTime: 1000 * 60 * 60, // minute
+  });
+
+  const { data: songDBAdmin } = useQuery({
+    queryKey: ["songDBAdmin"],
+    queryFn: () => songsWithCurrentVersionAdmin(adminApi),
     staleTime: 1000 * 60 * 60, // minute
   });
 
@@ -73,7 +82,7 @@ export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
 
   const { data: versions } = useQuery({
     queryKey: ["versionsAdmin"],
-    queryFn: () => fetchVersionsAdmin(adminApi),
+    queryFn: () => getVersionsAdmin(adminApi),
     staleTime: 1000 * 60 * 60,
   });
 
@@ -87,32 +96,42 @@ export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
     songs?: SongDataDB[],
     illustrations?: SongIllustrationDB[],
     prompts?: IllustrationPromptDB[],
-    versions?: any,
+    versions?: SongVersionDB[],
     users?: UsersResponse
   ) => {
     switch (activeTab) {
       case "songs":
-        return songs ? <SongsTable songData={songs} /> : "Loading...";
+        return songs ? (
+          <SongsTable
+            songs={songs}
+            versions={versions}
+            songService={{
+              updateSong: putSongAdmin,
+              resetDB: resetVersionDB,
+            }}
+            versionService={{
+              updateVersion: putVersionAdmin,
+              deleteVersion: deleteVersionAdmin,
+              setCurrentVersion: setCurrentVersionAdmin,
+            }}
+          />
+        ) : (
+          "Loading..."
+        );
       case "illustrations":
         return illustrations && prompts && songs ? (
           <IllustrationsTable
             illustrations={illustrations}
             prompts={prompts}
-            songs={songs}
+            songs={songDBAdmin}
           />
-        ) : (
-          "Loading..."
-        );
-      case "versions":
-        return versions ? (
-          <VersionsTable initialVersions={versions} />
         ) : (
           "Loading..."
         );
       case "users":
         return users ? <UsersTable initialUsers={users} /> : "Loading...";
       default:
-        return songs ? <SongsTable songData={songs} /> : "Loading...";
+        return "Unknown table...";
     }
   };
 

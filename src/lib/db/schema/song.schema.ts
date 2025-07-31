@@ -27,7 +27,7 @@ export const song = sqliteTable("song", {
   deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
 });
 
-export type SongDB = typeof song.$inferSelect;
+export type SongDataDB = typeof song.$inferSelect;
 
 export const songVersion = sqliteTable("song_version", {
   id: text("id").primaryKey(),
@@ -59,6 +59,8 @@ export const songVersion = sqliteTable("song_version", {
     .notNull(),
 
   chordpro: text("chordpro").notNull(),
+
+  deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
 });
 
 export type SongVersionDB = typeof songVersion.$inferInsert;
@@ -71,6 +73,13 @@ export const illustrationPrompt = sqliteTable("illustration_prompt", {
   summaryPromptVersion: text("prompt_version").notNull(),
   summaryModel: text("summary_model").notNull(),
   text: text("text").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .notNull(),
+  deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
 });
 export type IllustrationPromptDB = typeof illustrationPrompt.$inferSelect;
 
@@ -90,6 +99,10 @@ export const songIllustration = sqliteTable("song_illustration", {
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
     .notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .notNull(),
+  deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
 });
 
 export type SongIllustrationDB = typeof songIllustration.$inferSelect;
