@@ -10,59 +10,55 @@ import Preview from "./Preview";
 import { cn, useLoggedIn } from "~/lib/utils";
 import SettingsDropdown from "./components/SettingsDropdown";
 import DownloadButton from "./components/DownloadButton";
-import { Home, RefreshCcw, Trash, Undo, User } from "lucide-react";
-import PullRequestButton from "./components/PullRequestButton";
+import { CloudUpload, Home, RefreshCcw, Trash, Undo, User } from "lucide-react";
 import {
   Link,
   useLocation,
   useNavigate,
+  useRouteContext,
 } from "@tanstack/react-router";
+import { SongDB } from "~/types/types";
+import { UserProfileData } from "src/worker/api/userProfile";
+import { SongData } from "~/types/songData";
+import { SongDataApi } from "src/worker/api/songDB";
 
-export interface EditorState {
-  content: string;
-  metadata: SongMetadata;
-}
+const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
+  const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
+  const bKeys = Object.keys(b).sort() as (keyof EditorState)[];
 
-const editorStatesEqual = (a: EditorState, b: EditorState) => {
-  // TODO:
-  return true;
-  if (a.content !== b.content) {
+  if (aKeys.length !== bKeys.length) {
     return false;
   }
-  // return songMetadataEqual(a.metadata, b.metadata);
-};
 
-const songData2State = (songData: SongData) => {
-  return {
-    content: songData.content,
-    metadata: songData.extractMetadata(),
-  } as EditorState;
+  return aKeys.every((key, index) => {
+    const objValue1 = a[key];
+    const objValue2 = b[bKeys[index]];
+    return objValue1 === objValue2;
+  });
 };
+export type EditorState = Omit<
+  SongDataApi,
+  | "createdAt"
+  | "updatedAt"
+  | "currentIllustration"
+  | "isFavoriteByCurrentUser"
+  | "updateStatus"
+>;
 
 interface EditorProps {
-  songDB: any;
+  songDB: SongDB;
   songData?: SongData;
+  user: UserProfileData;
 }
 
-const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
-  const editorStateKey = songDataURL
-    ? `editor/state/${songDataURL.id}`
+const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
+  const editorStateKey = songData
+    ? `editor/state/${songData.id}`
     : "editor/state";
-  const defaultEditorState = useMemo(() => {
-    if (songDataURL) {
-      return songData2State(songDataURL);
-    } else {
-      const metadata = emptySongMetadata();
-      const currentDate = new Date();
-      const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are 0-based
-      const year = currentDate.getFullYear();
-      metadata.dateAdded = `${month}-${year}`;
-      return {
-        content: "",
-        metadata: metadata,
-      } as EditorState;
-    }
-  }, [songDataURL]);
+  const defaultEditorState: EditorState = (
+    songData ? songData : SongData.empty()
+  ).toJSON();
+  const editorApi = useRouteContext({ from: "/edit/$songId" }).api.editor;
 
   const [editorState, setEditorState] = useLocalStorageState<EditorState>(
     editorStateKey,
@@ -93,16 +89,10 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
   }, [editorStateKey, setEditorState]);
 
   // Helper function to update individual metadata fields
-  const updateMetadata = (
-    field: keyof EditorState["metadata"],
-    value: string
-  ) => {
+  const updateMetadata = (field: keyof EditorState, value: string) => {
     setEditorState({
       ...editorState,
-      metadata: {
-        ...editorState.metadata,
-        [field]: value,
-      },
+      [field]: value,
     });
   };
 
@@ -110,17 +100,18 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
   const updateContent = (content: string) => {
     setEditorState({
       ...editorState,
-      content,
+      chordpro: content,
     });
   };
 
   const toolbarTop = true;
 
+  //TODO: this is broken
   const canBeSubmitted =
     !editorStatesEqual(editorState, defaultEditorState) &&
-    editorState.metadata.artist &&
-    editorState.metadata.title &&
-    editorState.content;
+    editorState.artist &&
+    editorState.title &&
+    editorState.chordpro;
   const Toolbar: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -146,7 +137,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
             initializeEditor();
           }}
         >
-          {songDataURL ? (
+          {songData ? (
             <>
               Reload song <RefreshCcw />
             </>
@@ -161,7 +152,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
             loadBackupState();
           }}
         >
-          Undo {songDataURL ? "reload" : "clear"}
+          Undo {songData ? "reload" : "clear"}
           <Undo />
         </Button>
         <Button asChild>
@@ -171,15 +162,29 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
           </Link>
         </Button>
         <SettingsDropdown />
-        <DownloadButton
-          metadata={editorState.metadata}
-          content={editorState.content}
-        />
-        <PullRequestButton
+        <DownloadButton editorState={editorState} />
+        {/* <PullRequestButton
           metadata={editorState.metadata}
           content={editorState.content}
           disabled={!canBeSubmitted}
-        />
+        /> */}
+        {loggedIn && (
+          <Button
+            onClick={
+              songData
+                ? () =>
+                    editorApi[":id"].$put({
+                      param: { id: songData.id },
+                      json: editorState,
+                    })
+                : () => editorApi.$post({ json: editorState })
+            }
+            disabled={!canBeSubmitted}
+          >
+            <CloudUpload />
+            Submit {songData ? "edit" : "new song"}
+          </Button>
+        )}
         {!loggedIn && (
           <Button onClick={handleLoginRedirect}>
             <User />
@@ -210,22 +215,19 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData: songDataURL }) => {
           >
             <MetadataEditor
               songDB={songDB}
-              defaultMetadata={defaultEditorState.metadata}
-              metadata={editorState.metadata}
+              defaultMetadata={defaultEditorState}
+              metadata={editorState}
               updateMetadata={updateMetadata}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Editor"} className={"basis-[40%] "}>
             <ContentEditor
-              editorContent={editorState.content}
+              editorContent={editorState.chordpro}
               setEditorContent={updateContent}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
-            <Preview
-              metadata={editorState.metadata}
-              content={editorState.content}
-            />
+            <Preview editorState={editorState} />
           </CollapsibleMainArea>
         </div>
       </div>

@@ -30,17 +30,30 @@ export type SongModificationSchema = z.infer<typeof songModificationSchema>;
 export type NewSongVersionSchema = z.infer<typeof newSongVersionSchema>;
 export type ModifySongVersionSchema = z.infer<typeof modifySongVersionSchema>;
 
-export const findSong = async (db: DrizzleD1Database, songId: string) => {
-  const possiblySong = await db
-    .select({
-      ...getTableColumns(song),
-      ...getTableColumns(songVersion),
-      id: song.id,
-    })
-    .from(song)
-    .innerJoin(songVersion, eq(songVersion.id, song.currentVersionId))
-    .where(eq(song.id, songId))
-    .limit(1);
+export const findSong = async (
+  db: DrizzleD1Database,
+  songId: string,
+  withVersion = true
+) => {
+  let possiblySong;
+  if (withVersion) {
+    possiblySong = await db
+      .select({
+        ...getTableColumns(song),
+        ...getTableColumns(songVersion),
+        id: song.id,
+      })
+      .from(song)
+      .innerJoin(songVersion, eq(songVersion.id, song.currentVersionId))
+      .where(eq(song.id, songId))
+      .limit(1);
+  } else {
+    possiblySong = await db
+      .select()
+      .from(song)
+      .where(eq(song.id, songId))
+      .limit(1);
+  }
   if (possiblySong.length === 0) {
     throw new Error("Referenced song not found!");
   }
@@ -283,7 +296,7 @@ export const songRoutes = buildApp()
         data: songWithVersions,
       });
     } catch (error) {
-      console.error("Error modifying song:", error);
+      console.error(error);
       return c.json(
         {
           status: "error",

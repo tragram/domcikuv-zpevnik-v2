@@ -18,5 +18,5 @@ export const Route = createFileRoute("/edit/$songId")({
 
 function RouteComponent() {
   const { user, songDB, songData } = Route.useLoaderData();
-  return <Editor songDB={songDB} songData={songData} />;
+  return <Editor songDB={songDB} songData={songData} user={user} />;
 }

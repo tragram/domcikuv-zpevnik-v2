@@ -1,5 +1,4 @@
 import React from "react";
-import type { SongMetadata } from "~/types/songData";
 import MetadataField from "./components/MetadataField";
 import { metadataValidators } from "./components/validationUtils";
 import type { EditorState } from "./Editor";
@@ -9,9 +8,9 @@ import { cn } from "~/lib/utils";
 
 interface MetadataEditorProps {
   songDB: SongDB;
-  defaultMetadata: SongMetadata;
-  metadata: SongMetadata;
-  updateMetadata: (field: keyof EditorState["metadata"], value: string) => void;
+  defaultMetadata: EditorState;
+  metadata: EditorState;
+  updateMetadata: (field: keyof EditorState, value: string) => void;
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({
@@ -44,18 +43,9 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
         label="Capo"
         onChange={(value) => updateMetadata("capo", value)}
         placeholder="0"
-        value={metadata.capo}
+        value={metadata.capo?.toString()}
         modified={defaultMetadata.capo !== metadata.capo}
         validator={metadataValidators.capo}
-      />
-      <MetadataField
-        label="Date Added"
-        onChange={(value) => updateMetadata("dateAdded", value)}
-        placeholder="02-2025"
-        value={metadata.dateAdded}
-        modified={defaultMetadata.dateAdded !== metadata.dateAdded}
-        description="Use MM-YYYY format."
-        validator={metadataValidators.dateAdded}
       />
       <MetadataField
         label="Language"
@@ -114,7 +104,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
         label="Tempo"
         onChange={(value) => updateMetadata("tempo", value)}
         placeholder="123"
-        value={metadata.tempo}
+        value={metadata.tempo?.toString()}
         modified={defaultMetadata.tempo !== metadata.tempo}
         description="In BPM. Currently not used and very few songs define it."
         validator={metadataValidators.tempo}

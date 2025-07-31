@@ -86,7 +86,6 @@ export function renderSong(
   transposeSteps: number,
   centralEuropeanNotation: boolean
 ): string {
-  console.log(songData.chordpro)
   // Parse and process the chord pro content
   const song = parseChordPro(songData.chordpro, songData.key, transposeSteps);
   // Configure formatter settings

@@ -1,25 +1,25 @@
 import { Button } from "~/components/ui/button";
-import { type SongMetadata } from "~/types/songData";
 import { Download } from "lucide-react";
 import { editorToChordPro } from "./utils";
 import { useEffect, useCallback } from "react";
+import { EditorState } from "../Editor";
+import { SongData } from "~/types/songData";
 
 type DownloadButtonProps = {
-  metadata: SongMetadata;
-  content: string;
+  editorState: EditorState;
 };
 
-const DownloadButton: React.FC<DownloadButtonProps> = ({
-  metadata,
-  content,
-}) => {
+const DownloadButton: React.FC<DownloadButtonProps> = ({ editorState }) => {
   // Function to handle the download
   const handleDownload = useCallback(() => {
-    const { filename, chordProContent } = editorToChordPro(metadata, content);
+    const songData = SongData.fromEditor(editorState);
     // Create a blob and download it
-    const blob = new Blob([chordProContent], { type: "text/plain" });
+    const blob = new Blob([songData.toChordpro()], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
-
+    const filename =
+      editorState.title && editorState.artist
+        ? SongData.baseId(editorState.title, editorState.artist) + ".pro"
+        : "artist-title.pro";
     const a = document.createElement("a");
     a.href = url;
     a.download = filename;
@@ -31,7 +31,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }, 0);
-  }, [metadata, content]);
+  }, [editorState]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

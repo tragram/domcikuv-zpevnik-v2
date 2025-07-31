@@ -3,6 +3,7 @@ import { Key, Note, SongRange } from "./musicTypes";
 import type { ChordPro, int, SongLanguage } from "./types";
 import { SongDataDB } from "src/lib/db/schema";
 import { SongDataApi } from "src/worker/api/songDB";
+import { EditorState } from "~/features/Editor/Editor";
 
 interface CurrentIllustration {
   promptId: string;
@@ -68,7 +69,17 @@ export class SongData {
     this.isFavorite = songFromDB.isFavoriteByCurrentUser;
   }
 
-  private parseKey(key: string): Key | undefined {
+  static fromEditor(data: EditorState): SongData {
+    return new SongData({
+      ...data,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      currentIllustration: undefined,
+      isFavoriteByCurrentUser: false,
+    });
+  }
+
+  private parseKey(key?: string): Key | undefined {
     if (!key) return undefined;
     try {
       return Key.parse(key, true);
@@ -92,6 +103,25 @@ export class SongData {
 
   static baseId(title: string, artist: string) {
     return sanitizeId(`${to_ascii(artist)}-${to_ascii(title)}`);
+  }
+
+  static empty() {
+    return new SongData({
+      id: "",
+      title: "",
+      artist: "",
+      createdAt: Date(),
+      updatedAt: new Date(),
+      key: undefined,
+      startMelody: "",
+      language: "",
+      capo: 0,
+      tempo: undefined,
+      range: "",
+      chordpro: "",
+      currentIllustration: undefined,
+      isFavoriteByCurrentUser: false,
+    });
   }
 
   url(): string {
@@ -141,5 +171,20 @@ export class SongData {
       thumbnailURL: this.thumbnailURL(),
       illustrationURL: this.illustrationURL(),
     };
+  }
+
+  toChordpro(): string {
+    const directives = [
+      "title",
+      "artist",
+      "key",
+      "capo",
+      "tempo",
+    ] as (keyof SongData)[];
+    const preamble = directives
+      .filter((d) => this[d])
+      .map((d) => `{${d}: ${this[d]}`)
+      .join("\n");
+    return preamble + "\n" + this.chordpro;
   }
 }

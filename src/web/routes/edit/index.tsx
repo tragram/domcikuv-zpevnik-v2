@@ -6,6 +6,6 @@ export const Route = createFileRoute("/edit/")({
 });
 
 function Home() {
-  const { userData, songDB } = Route.useLoaderData();
-  return <Editor songDB={songDB} />;
+  const { user, songDB } = Route.useLoaderData();
+  return <Editor songDB={songDB} user={user} />;
 }

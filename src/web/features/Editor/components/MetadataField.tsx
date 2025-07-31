@@ -30,7 +30,6 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   const [validationResult, setValidationResult] = useState<ValidationResult>({
     isValid: true,
   });
-
   // Run validation when value changes
   useEffect(() => {
     if (validator && value) {
