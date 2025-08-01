@@ -37,3 +37,5 @@ public/songDB.hash
 scripts/__pycache__/*
 
 src/web/routeTree.gen.ts
+
+/*.sql
