@@ -1,37 +1,41 @@
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { SongIllustrationsGroup } from "./illustration-group";
-import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 import { songsWithIllustrationsAndPrompts } from "~/services/illustrations";
-import { SongWithCurrentVersion } from "src/worker/api/admin/songs";
+import { AdminApi } from "~/services/songs";
+import {
+  useIllustrationsAdmin,
+  usePromptsAdmin,
+  useSongDBAdmin,
+} from "../../hooks";
 
 interface IllustrationsTableProps {
-  songs: SongWithCurrentVersion[];
-  illustrations: SongIllustrationDB[];
-  prompts: IllustrationPromptDB[];
+  adminApi: AdminApi;
 }
 
-export function IllustrationsTable({
-  songs,
-  illustrations,
-  prompts,
-}: IllustrationsTableProps) {
+export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleted, setShowDeleted] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
-  // TODO: separate search for songs and illustrations
-  // const filteredIllustrations = songsWithIllustrationsAndPrompts.filter(
-  //   (sip) =>
-  //     sip.song.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //     sip.song.artist?.toLowerCase().includes(searchTerm.toLowerCase())
-  //   ||
-  // illustration.promptModel
-  //   .toLowerCase()
-  //   .includes(searchTerm.toLowerCase()) ||
-  // illustration.imageModel.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
+  const { data: songs, isLoading: songsLoading } = useSongDBAdmin(adminApi);
+  console.log(songsLoading)
+  const { data: illustrations, isLoading: illustrationsLoading } =
+    useIllustrationsAdmin(adminApi);
+  const { data: prompts, isLoading: promptsLoading } =
+    usePromptsAdmin(adminApi);
+
+  if (songsLoading || illustrationsLoading || promptsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!songs || !illustrations || !prompts) {
+    return <div>Error loading data.</div>;
+  }
 
   const toggleGroup = (songId: string) => {
     const newExpanded = new Set(expandedGroups);
@@ -85,6 +89,21 @@ export function IllustrationsTable({
             className="text-xs sm:text-sm md:text-base"
           />
         </div>
+        <div className="flex items-center space-x-8">
+          <div className="flex flex-row gap-2">
+            <Checkbox
+              id="show-deleted"
+              checked={showDeleted}
+              onCheckedChange={() => setShowDeleted(!showDeleted)}
+            />
+            <Label
+              htmlFor="show-deleted"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Show deleted
+            </Label>
+          </div>
+        </div>
         <div className="flex gap-2">
           <Button
             variant="outline"
@@ -114,6 +133,7 @@ export function IllustrationsTable({
             prompts={song.prompts}
             isExpanded={expandedGroups.has(songId)}
             onToggleExpanded={() => toggleGroup(songId)}
+            showDeleted={showDeleted}
           />
         ))}
 

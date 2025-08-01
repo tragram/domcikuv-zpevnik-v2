@@ -4,12 +4,13 @@ import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
-import { IllustrationCreateSchema } from "src/worker/api/admin/illustrations";
 import {
+  IllustrationCreateSchema,
+  IllustrationGenerateSchema,
   IMAGE_MODELS_API,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
-} from "~/../worker/api/admin/image-generator";
+} from "src/worker/services/illustration-service";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -31,7 +32,7 @@ import {
   IllustrationForm,
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
-import { SongWithCurrentVersion } from "src/worker/api/admin/songs";
+import { SongWithCurrentVersion } from "src/worker/services/song-service";
 
 interface SongIllustrationsGroupProps {
   song: SongWithCurrentVersion;
@@ -39,6 +40,7 @@ interface SongIllustrationsGroupProps {
   prompts: Record<string, IllustrationPromptDB>;
   isExpanded: boolean;
   onToggleExpanded: () => void;
+  showDeleted: boolean;
 }
 
 const backendDropdownOptions = {
@@ -46,19 +48,19 @@ const backendDropdownOptions = {
     data: SUMMARY_PROMPT_VERSIONS.map((spi) => {
       return { value: spi, label: spi };
     }),
-    default: "v2",
+    default: "v2" as const,
   },
   summaryModels: {
     data: SUMMARY_MODELS_API.map((smi) => {
       return { value: smi, label: smi };
     }),
-    default: "gpt-4o-mini",
+    default: "gpt-4o-mini" as const,
   },
   imageModels: {
     data: IMAGE_MODELS_API.map((im) => {
       return { value: im, label: im };
     }),
-    default: "FLUX.1-dev",
+    default: "FLUX.1-dev" as const,
   },
 };
 
@@ -68,10 +70,18 @@ export function SongIllustrationsGroup({
   prompts,
   isExpanded,
   onToggleExpanded,
+  showDeleted,
 }: SongIllustrationsGroupProps) {
+  if (song.title == "1. signální") {
+    console.log(song);
+  }
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const someActive = Boolean(song.currentVersionId);
+  const someActive = Boolean(song.currentIllustrationId);
+
+  const filteredIllustrations = showDeleted
+    ? illustrations
+    : illustrations.filter((i) => !i.deleted);
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
 
   const createMutation = useMutation({
@@ -88,7 +98,7 @@ export function SongIllustrationsGroup({
   });
 
   const generateMutation = useMutation({
-    mutationFn: async (data: IllustrationCreateSchema) => {
+    mutationFn: async (data: IllustrationGenerateSchema) => {
       return await generateIllustration(adminApi, data);
     },
     onSuccess: () => {
@@ -106,9 +116,13 @@ export function SongIllustrationsGroup({
   }: IllustrationSubmitData) => {
     try {
       if (mode === "manual") {
-        await createMutation.mutateAsync(illustrationData);
+        await createMutation.mutateAsync(
+          illustrationData as IllustrationCreateSchema
+        );
       } else {
-        await generateMutation.mutateAsync(illustrationData);
+        await generateMutation.mutateAsync(
+          illustrationData as IllustrationGenerateSchema
+        );
       }
     } catch (error) {
       console.error(error);
@@ -147,7 +161,7 @@ export function SongIllustrationsGroup({
 
             {/* Thumbnail Preview Row - Hidden on mobile, shown on larger screens */}
             <div className="hidden sm:flex items-center gap-2 ml-4 flex-1 overflow-hidden">
-              {illustrations.slice(0, 3).map((illustration, index) => (
+              {filteredIllustrations.slice(0, 3).map((illustration, index) => (
                 <div key={illustration.id} className="relative flex-shrink-0">
                   <img
                     src={illustration.thumbnailURL}
@@ -165,9 +179,9 @@ export function SongIllustrationsGroup({
                   />
                 </div>
               ))}
-              {illustrations.length > 3 && (
+              {filteredIllustrations.length > 3 && (
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded bg-muted border shadow-sm flex items-center justify-center text-xs font-medium text-muted-foreground flex-shrink-0">
-                  +{illustrations.length - 3}
+                  +{filteredIllustrations.length - 3}
                 </div>
               )}
             </div>
@@ -187,13 +201,13 @@ export function SongIllustrationsGroup({
               variant="secondary"
               className={cn(
                 "text-xs px-1 sm:px-2",
-                illustrations.length === 0 ? "bg-red-900" : ""
+                filteredIllustrations.length === 0 ? "bg-red-900" : ""
               )}
             >
               <span className="hidden sm:inline">
-                {illustrations.length} total
+                {filteredIllustrations.length} total
               </span>
-              <span className="sm:hidden">{illustrations.length}</span>
+              <span className="sm:hidden">{filteredIllustrations.length}</span>
             </Badge>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
@@ -226,7 +240,7 @@ export function SongIllustrationsGroup({
         <CollapsibleContent>
           <div className="px-1 md:px-3 pb-3">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
-              {illustrations.map((illustration) => (
+              {filteredIllustrations.map((illustration) => (
                 <IllustrationCard
                   key={illustration.id}
                   song={song}

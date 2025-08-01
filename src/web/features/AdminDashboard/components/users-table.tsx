@@ -2,7 +2,7 @@ import type React from "react";
 
 import { useState, useEffect } from "react";
 import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
+import { Input } from '~/components/ui/input';
 import { Badge } from "~/components/ui/badge";
 import {
   Table,
@@ -12,6 +12,8 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { DeletePrompt } from "./shared/delete-prompt";
+import { ActionButtons } from "./shared/action-buttons";
 import {
   Dialog,
   DialogContent,
@@ -20,15 +22,17 @@ import {
 } from "~/components/ui/dialog";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
-import { Edit, Search, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouteContext } from "@tanstack/react-router";
+import { Edit } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { TableToolbar } from "./shared/table-toolbar";
+import { Pagination } from "./shared/pagination";
 import {
-  fetchUsersAdmin,
-  updateUserAdmin,
   deleteUserAdmin,
-} from "~/services/users"; // Adjust import path as needed
-import { toast } from "sonner"; // Assuming you're using sonner for toasts
+  updateUserAdmin,
+} from "~/services/users";
+import { toast } from "sonner";
+import { useUsersAdmin } from "../hooks";
+import { AdminApi } from "~/services/songs";
 
 interface User {
   id: string;
@@ -45,48 +49,27 @@ interface User {
   lastLogin: Date;
 }
 
-interface UsersResponse {
-  users: User[];
-  pagination: {
-    total: number;
-    limit: number;
-    offset: number;
-    hasMore: boolean;
-  };
-}
-
 interface UsersTableProps {
-  initialUsers?: UsersResponse;
+  adminApi: AdminApi;
 }
 
-export function UsersTable({ initialUsers }: UsersTableProps) {
-  const { api } = useRouteContext({ from: "/admin" });
+export function UsersTable({ adminApi }: UsersTableProps) {
   const queryClient = useQueryClient();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
-  const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
   const pageSize = 20;
 
-  // Fetch users with search and pagination
   const {
     data: usersData,
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ["users", searchTerm, currentPage],
-    queryFn: () =>
-      fetchUsersAdmin(api.admin.users, {
-        search: searchTerm || undefined,
-        limit: pageSize,
-        offset: currentPage * pageSize,
-      }),
-    initialData: currentPage === 0 && !searchTerm ? initialUsers : undefined,
-    staleTime: 1000 * 60 * 2, // 2 minutes
+  } = useUsersAdmin(adminApi, {
+    limit: pageSize,
+    offset: currentPage * pageSize,
   });
 
   // Update user mutation
@@ -97,7 +80,7 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
     }: {
       userId: string;
       userData: Parameters<typeof updateUserAdmin>[2];
-    }) => updateUserAdmin(api.admin.users, userId, userData),
+    }) => updateUserAdmin(adminApi.users, userId, userData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       toast.success("User updated successfully");
@@ -111,12 +94,10 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
 
   // Delete user mutation
   const deleteUserMutation = useMutation({
-    mutationFn: (userId: string) => deleteUserAdmin(api.admin.users, userId),
+    mutationFn: (userId: string) => deleteUserAdmin(adminApi.users, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
       toast.success("User deleted successfully");
-      setIsDeleteConfirmOpen(false);
-      setUserToDelete(null);
     },
     onError: (error: Error) => {
       toast.error(error.message || "Failed to delete user");
@@ -134,17 +115,6 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
         userId: editingUser.id,
         userData,
       });
-    }
-  };
-
-  const handleDeleteUser = (user: User) => {
-    setUserToDelete(user);
-    setIsDeleteConfirmOpen(true);
-  };
-
-  const confirmDeleteUser = () => {
-    if (userToDelete) {
-      deleteUserMutation.mutate(userToDelete.id);
     }
   };
 
@@ -169,15 +139,7 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center space-x-2">
-        <Search className="h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search users..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="max-w-sm"
-        />
-      </div>
+      <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
 
       <div className="rounded-md border">
         <Table>
@@ -207,7 +169,7 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
                 </TableCell>
               </TableRow>
             ) : (
-              users.map((user) => (
+              users.map((user: User) => (
                 <TableRow key={user.id}>
                   <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
@@ -236,7 +198,7 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
                     {new Date(user.lastLogin).toLocaleDateString()}
                   </TableCell>
                   <TableCell>
-                    <div className="flex gap-1">
+                    <ActionButtons>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -247,15 +209,14 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
                       >
                         <Edit className="h-4 w-4" />
                       </Button>
-                      <Button
+                      <DeletePrompt
+                        onDelete={() => deleteUserMutation.mutate(user.id)}
+                        title={`Are you sure you want to delete user "${user.name}"?`}
+                        description="This action cannot be undone. All user data will be permanently deleted."
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleDeleteUser(user)}
-                        className="text-red-600 hover:text-red-700"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
+                      />
+                    </ActionButtons>
                   </TableCell>
                 </TableRow>
               ))
@@ -264,41 +225,16 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
         </Table>
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-muted-foreground">
-            Showing {currentPage * pageSize + 1} to{" "}
-            {Math.min(
-              (currentPage + 1) * pageSize,
-              usersData?.pagination.total || 0
-            )}{" "}
-            of {usersData?.pagination.total || 0} users
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(currentPage - 1)}
-              disabled={!hasPrevPage}
-            >
-              <ChevronLeft className="h-4 w-4" />
-              Previous
-            </Button>
-            <span className="text-sm">
-              Page {currentPage + 1} of {totalPages}
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={!hasNextPage}
-            >
-              Next
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          hasNextPage={hasNextPage}
+          hasPrevPage={hasPrevPage}
+          onPageChange={setCurrentPage}
+          totalItems={usersData?.pagination.total || 0}
+          pageSize={pageSize}
+        />
       )}
 
       {/* Edit user dialog */}
@@ -312,37 +248,6 @@ export function UsersTable({ initialUsers }: UsersTableProps) {
             onSave={handleSaveUser}
             isLoading={updateUserMutation.isPending}
           />
-        </DialogContent>
-      </Dialog>
-
-      {/* Delete confirmation dialog */}
-      <Dialog open={isDeleteConfirmOpen} onOpenChange={setIsDeleteConfirmOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Delete User</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <p>Are you sure you want to delete user "{userToDelete?.name}"?</p>
-            <p className="text-sm text-muted-foreground">
-              This action cannot be undone. All user data will be permanently
-              deleted.
-            </p>
-            <div className="flex justify-end gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setIsDeleteConfirmOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={confirmDeleteUser}
-                disabled={deleteUserMutation.isPending}
-              >
-                {deleteUserMutation.isPending ? "Deleting..." : "Delete"}
-              </Button>
-            </div>
-          </div>
         </DialogContent>
       </Dialog>
     </div>

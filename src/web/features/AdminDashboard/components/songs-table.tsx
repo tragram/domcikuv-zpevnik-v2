@@ -1,8 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
 import { Badge } from "~/components/ui/badge";
 import { Switch } from "~/components/ui/switch";
 import {
@@ -19,6 +18,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
+import { DeletePrompt } from "./shared/delete-prompt";
+import { ActionButtons } from "./shared/action-buttons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,11 +35,9 @@ import { Label } from "~/components/ui/label";
 import { Checkbox } from "~/components/ui/checkbox";
 import {
   Edit,
-  Search,
   ExternalLink,
   ListRestart,
   AlertTriangle,
-  Trash2,
   RotateCcw,
   ChevronDown,
   ChevronRight,
@@ -49,74 +48,62 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
+import { AdminApi } from "~/services/songs";
+import {
+  useDeleteVersion,
+  useResetVersionDB,
+  useSetCurrentVersion,
+  useSongsAdmin,
+  useUpdateSong,
+  useUpdateVersion,
+  useVersionsAdmin,
+} from "../hooks";
+import { TableToolbar } from "./shared/table-toolbar";
 
 interface SongsTableProps {
-  songs: SongDataDB[];
-  versions: SongVersionDB[];
-  // Service functions for API calls
-  songService: {
-    updateSong: (
-      songId: string,
-      data: Partial<SongDataDB>
-    ) => Promise<SongDataDB>;
-    resetDB: () => Promise<void>;
-  };
-  versionService: {
-    updateVersion: (
-      songId: string,
-      versionId: string,
-      data: Partial<SongVersionDB>
-    ) => Promise<SongVersionDB>;
-    deleteVersion: (
-      songId: string,
-      versionId: string
-    ) => Promise<SongVersionDB>;
-    setCurrentVersion: (
-      songId: string,
-      versionId: string
-    ) => Promise<SongVersionDB>;
-  };
+  adminApi: AdminApi;
 }
 
-export default function SongsTable({
-  songs: initialSongs,
-  versions: initialVersions,
-  songService,
-  versionService,
-}: SongsTableProps) {
-  const [songs, setSongs] = useState<SongDataDB[]>(initialSongs);
-  const [versions, setVersions] = useState<SongVersionDB[]>(initialVersions);
+export default function SongsTable({ adminApi }: SongsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [editingSong, setEditingSong] = useState<SongDataDB | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showDeleted, setShowDeleted] = useState(false);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
 
-  const queryClient = useQueryClient();
+  const { data: songs, isLoading: songsLoading } = useSongsAdmin(adminApi);
+  const { data: versions, isLoading: versionsLoading } =
+    useVersionsAdmin(adminApi);
+
+  const updateSongMutation = useUpdateSong(adminApi);
+  const updateVersionMutation = useUpdateVersion(adminApi);
+  const deleteVersionMutation = useDeleteVersion(adminApi);
+  const setCurrentVersionMutation = useSetCurrentVersion(adminApi);
+  const resetDBMutation = useResetVersionDB(adminApi);
+
+  const handleMutationSuccess = (message: string) => {
+    toast.success(message);
+  };
+
+  const handleMutationError = (error: Error, message: string) => {
+    console.error(message, error);
+    toast.error(message);
+  };
 
   // TanStack Query mutations
-  const updateSongMutation = useMutation({
+  const updateSong = useMutation({
     mutationFn: ({
       songId,
       data,
     }: {
       songId: string;
       data: Partial<SongDataDB>;
-    }) => songService.updateSong(songId, data),
-    onSuccess: (updatedSong) => {
-      setSongs(
-        songs.map((song) => (song.id === updatedSong.id ? updatedSong : song))
-      );
-      toast.success("Song updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-    },
-    onError: (error) => {
-      console.error("Error updating song:", error);
-      toast.error("Error updating song");
-    },
+    }) => updateSongMutation.mutateAsync({ songId, song: data }),
+    onSuccess: () => handleMutationSuccess("Song updated successfully"),
+    onError: (error) => handleMutationError(error, "Error updating song"),
   });
 
-  const updateVersionMutation = useMutation({
+  const updateVersion = useMutation({
     mutationFn: ({
       songId,
       versionId,
@@ -125,84 +112,69 @@ export default function SongsTable({
       songId: string;
       versionId: string;
       data: Partial<SongVersionDB>;
-    }) => versionService.updateVersion(songId, versionId, data),
-    onSuccess: (updatedVersion) => {
-      setVersions(
-        versions.map((version) =>
-          version.id === updatedVersion.id ? updatedVersion : version
-        )
-      );
-      toast.success("Version updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["songVersions"] });
-    },
-    onError: (error) => {
-      console.error("Error updating version:", error);
-      toast.error("Error updating version");
-    },
+    }) =>
+      updateVersionMutation.mutateAsync({
+        songId,
+        versionId,
+        version: data as SongVersionDB,
+      }),
+    onSuccess: () => handleMutationSuccess("Version updated successfully"),
+    onError: (error) => handleMutationError(error, "Error updating version"),
   });
 
-  const deleteVersionMutation = useMutation({
+  const deleteVersion = useMutation({
     mutationFn: ({
       songId,
       versionId,
     }: {
       songId: string;
       versionId: string;
-    }) => versionService.deleteVersion(songId, versionId),
-    onSuccess: (_, { versionId }) => {
-      setVersions(versions.filter((version) => version.id !== versionId));
-      toast.success("Version deleted successfully");
-      queryClient.invalidateQueries({ queryKey: ["songVersions"] });
-    },
-    onError: (error) => {
-      console.error("Error deleting version:", error);
-      toast.error("Error deleting version");
-    },
+    }) => deleteVersionMutation.mutateAsync({ songId, versionId }),
+    onSuccess: () => handleMutationSuccess("Version deleted successfully"),
+    onError: (error) => handleMutationError(error, "Error deleting version"),
   });
 
-  const setCurrentVersionMutation = useMutation({
+  const setCurrentVersion = useMutation({
     mutationFn: ({
       songId,
       versionId,
     }: {
       songId: string;
       versionId: string;
-    }) => versionService.setCurrentVersion(songId, versionId),
-    onSuccess: (_, { songId, versionId }) => {
-      setSongs(
-        songs.map((song) =>
-          song.id === songId ? { ...song, currentVersionId: versionId } : song
-        )
-      );
-      toast.success("Current version updated successfully");
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-    },
-    onError: (error) => {
-      console.error("Error setting current version:", error);
-      toast.error("Error setting current version");
-    },
+    }) => setCurrentVersionMutation.mutateAsync({ songId, versionId }),
+    onSuccess: () =>
+      handleMutationSuccess("Current version updated successfully"),
+    onError: (error) =>
+      handleMutationError(error, "Error setting current version"),
   });
 
-  const resetDBMutation = useMutation({
-    mutationFn: () => songService.resetDB(),
-    onSuccess: () => {
-      toast.success("Database version reset successfully");
-      queryClient.invalidateQueries({ queryKey: ["songs", "songVersions"] });
-    },
-    onError: (error) => {
-      console.error("Error resetting database version:", error);
-      toast.error("Error resetting database version");
-    },
+  const resetDB = useMutation({
+    mutationFn: () => resetDBMutation.mutateAsync(),
+    onSuccess: () =>
+      handleMutationSuccess("Database version reset successfully"),
+    onError: (error) =>
+      handleMutationError(error, "Error resetting database version"),
   });
+
+  if (songsLoading || versionsLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!songs || !versions) {
+    return <div>Error loading data.</div>;
+  }
 
   // Create a map of versions by song ID for easy lookup
-  const versionsBySong = versions.reduce((acc, version) => {
-    if (!acc[version.songId]) {
-      acc[version.songId] = [];
-    }
-    acc[version.songId].push(version);
-    return acc;
-  }, {} as Record<string, SongVersionDB[]>);
+  const versionsBySong = versions.reduce(
+    (acc: Record<string, SongVersionDB[]>, version: SongVersionDB) => {
+      if (!acc[version.songId]) {
+        acc[version.songId] = [];
+      }
+      acc[version.songId].push(version);
+      return acc;
+    },
+    {}
+  );
 
   // Get current version for a song
   const getCurrentVersion = (song: SongDataDB): SongVersionDB | undefined => {
@@ -210,7 +182,7 @@ export default function SongsTable({
     return versions.find((v) => v.id === song.currentVersionId);
   };
 
-  const filteredSongs = songs.filter((song) => {
+  const filteredSongs = (songs || []).filter((song) => {
     const currentVersion = getCurrentVersion(song);
     const songVersions = versionsBySong[song.id] || [];
 
@@ -231,7 +203,7 @@ export default function SongsTable({
   });
 
   const handleSongUpdate = (songId: string, data: Partial<SongDataDB>) => {
-    updateSongMutation.mutate({ songId, data });
+    updateSong.mutate({ songId, data });
   };
 
   const handleVersionUpdate = (
@@ -239,31 +211,30 @@ export default function SongsTable({
     versionId: string,
     data: Partial<SongVersionDB>
   ) => {
-    updateVersionMutation.mutate({ songId, versionId, data });
+    updateVersion.mutate({ songId, versionId, data });
   };
 
   const handleVersionDelete = (songId: string, versionId: string) => {
-    deleteVersionMutation.mutate({ songId, versionId });
+    deleteVersion.mutate({ songId, versionId });
   };
 
   const handleSetCurrentVersion = (songId: string, versionId: string) => {
-    setCurrentVersionMutation.mutate({ songId, versionId });
+    setCurrentVersion.mutate({ songId, versionId });
   };
 
   const handleVisibilityToggle = (songId: string, hidden: boolean) => {
     handleSongUpdate(songId, { hidden });
   };
 
-  const handleDelete = (songId: string) => {
+  const handleDelete = (songId: string) =>
     handleSongUpdate(songId, { deleted: true });
-  };
 
   const handleRestore = (songId: string) => {
     handleSongUpdate(songId, { deleted: false });
   };
 
   const handleResetDB = () => {
-    resetDBMutation.mutate();
+    resetDB.mutate();
   };
 
   const toggleSongExpansion = (songId: string) => {
@@ -278,16 +249,26 @@ export default function SongsTable({
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">Songs</h3>
-        {
+      <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm}>
+        <div className="flex items-center space-x-8">
+          <div className="flex flex-row gap-2">
+            <Checkbox
+              id="show-deleted"
+              checked={showDeleted}
+              onCheckedChange={() => setShowDeleted(!showDeleted)}
+            />
+            <Label
+              htmlFor="show-deleted"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Show deleted
+            </Label>
+          </div>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="outline" disabled={resetDBMutation.isPending}>
+              <Button variant="outline" disabled={resetDB.isPending}>
                 <ListRestart className="mr-2 h-4 w-4" />
-                {resetDBMutation.isPending
-                  ? "Resetting..."
-                  : "Reset DB Version"}
+                {resetDB.isPending ? "Resetting..." : "Reset DB Version"}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -321,34 +302,8 @@ export default function SongsTable({
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-        }
-      </div>
-
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search songs..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="max-w-sm"
-          />
         </div>
-
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="show-deleted"
-            checked={showDeleted}
-            onCheckedChange={() => setShowDeleted(!showDeleted)}
-          />
-          <Label
-            htmlFor="show-deleted"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Show deleted
-          </Label>
-        </div>
-      </div>
+      </TableToolbar>
 
       <div className="rounded-md border">
         <Table>
@@ -426,7 +381,7 @@ export default function SongsTable({
                         onCheckedChange={(checked) =>
                           handleVisibilityToggle(song.id, !checked)
                         }
-                        disabled={song.deleted || updateSongMutation.isPending}
+                        disabled={song.deleted || updateSong.isPending}
                         onClick={(e) => e.stopPropagation()}
                       />
                     </TableCell>
@@ -434,7 +389,7 @@ export default function SongsTable({
                       {song.updatedAt?.toLocaleDateString()}
                     </TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
-                      <div className="flex gap-2">
+                      <ActionButtons>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -495,43 +450,15 @@ export default function SongsTable({
                             </AlertDialogContent>
                           </AlertDialog>
                         ) : (
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle className="flex items-center gap-2">
-                                  <AlertTriangle className="h-5 w-5 text-amber-500" />
-                                  Delete Song
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Are you sure you want to delete this song?
-                                  This action will mark the song as deleted and
-                                  it will no longer be visible to users. This
-                                  action can be undone by using the restore
-                                  function.
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction
-                                  onClick={() => handleDelete(song.id)}
-                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                >
-                                  Delete Song
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
+                          <DeletePrompt
+                            onDelete={() => handleDelete(song.id)}
+                            title="Are you sure you want to delete this song?"
+                            description="This action will mark the song as deleted and it will no longer be visible to users. This action can be undone by using the restore function."
+                            variant="ghost"
+                            size="sm"
+                          />
                         )}
-                      </div>
+                      </ActionButtons>
                     </TableCell>
                   </TableRow>
 
@@ -580,7 +507,7 @@ export default function SongsTable({
                                   </div>
                                 </div>
 
-                                <div className="flex items-center gap-2">
+                                <ActionButtons>
                                   {version.approved ? (
                                     <Button
                                       variant="outline"
@@ -593,7 +520,7 @@ export default function SongsTable({
                                         )
                                       }
                                       className="text-amber-600 hover:text-amber-700"
-                                      disabled={updateVersionMutation.isPending}
+                                      disabled={updateVersion.isPending}
                                     >
                                       <X className="h-4 w-4 mr-1" />
                                       Unapprove
@@ -610,7 +537,7 @@ export default function SongsTable({
                                         )
                                       }
                                       className="text-green-600 hover:text-green-700"
-                                      disabled={updateVersionMutation.isPending}
+                                      disabled={updateVersion.isPending}
                                     >
                                       <Check className="h-4 w-4 mr-1" />
                                       Approve
@@ -627,9 +554,7 @@ export default function SongsTable({
                                           version.id
                                         )
                                       }
-                                      disabled={
-                                        setCurrentVersionMutation.isPending
-                                      }
+                                      disabled={setCurrentVersion.isPending}
                                     >
                                       <Star className="h-4 w-4 mr-1" />
                                       Set Current
@@ -649,47 +574,16 @@ export default function SongsTable({
                                     <ExternalLink className="h-4 w-4" />
                                   </Button>
 
-                                  <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                      <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                                      >
-                                        <Trash2 className="h-4 w-4" />
-                                      </Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                      <AlertDialogHeader>
-                                        <AlertDialogTitle className="flex items-center gap-2">
-                                          <AlertTriangle className="h-5 w-5 text-amber-500" />
-                                          Delete Version
-                                        </AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                          Are you sure you want to delete this
-                                          version of "{version.title}"? This
-                                          action cannot be undone.
-                                        </AlertDialogDescription>
-                                      </AlertDialogHeader>
-                                      <AlertDialogFooter>
-                                        <AlertDialogCancel>
-                                          Cancel
-                                        </AlertDialogCancel>
-                                        <AlertDialogAction
-                                          onClick={() =>
-                                            handleVersionDelete(
-                                              song.id,
-                                              version.id
-                                            )
-                                          }
-                                          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                        >
-                                          Delete Version
-                                        </AlertDialogAction>
-                                      </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                  </AlertDialog>
-                                </div>
+                                  <DeletePrompt
+                                    onDelete={() =>
+                                      handleVersionDelete(song.id, version.id)
+                                    }
+                                    title={`Are you sure you want to delete this version of "${version.title}"?`}
+                                    description="This action cannot be undone."
+                                    variant="ghost"
+                                    size="sm"
+                                  />
+                                </ActionButtons>
                               </div>
                             ))}
 
@@ -720,7 +614,7 @@ export default function SongsTable({
               song={editingSong}
               currentVersion={getCurrentVersion(editingSong)}
               onSave={(data) => handleSongUpdate(editingSong.id, data)}
-              isLoading={updateSongMutation.isPending}
+              isLoading={updateSong.isPending}
             />
           )}
         </DialogContent>
