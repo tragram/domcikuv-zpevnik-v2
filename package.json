@@ -72,6 +72,7 @@
     "@tanstack/react-query-devtools": "^5.81.0",
     "@tanstack/react-router-devtools": "^1.116.0",
     "@tanstack/router-plugin": "^1.116.1",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.5.4",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",

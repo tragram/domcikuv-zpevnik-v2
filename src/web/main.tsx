@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
+import { Toaster } from "sonner";
 import client from "../worker/api-client";
 import { ThemeProvider } from "./components/ThemeProvider";
 import "./main.css";
@@ -53,6 +54,7 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <Toaster />
           <RouterProvider router={router} />
         </ThemeProvider>
       </QueryClientProvider>

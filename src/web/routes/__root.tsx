@@ -1,7 +1,6 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { Toaster } from "sonner";
 import {
   buildSongDB,
   fetchPublicSongbooks,
@@ -34,7 +33,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     });
 
     const songDB = buildSongDB(songs, publicSongbooks);
-
     return {
       user: user as UserProfileData,
       songDB,
@@ -45,7 +43,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       <Outlet />
       <ReactQueryDevtools buttonPosition="bottom-left" />
       <TanStackRouterDevtools position="bottom-right" />
-      <Toaster />
     </>
   ),
 });

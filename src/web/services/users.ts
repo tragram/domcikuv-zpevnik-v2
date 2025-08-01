@@ -1,14 +1,26 @@
 import { UserDB } from "src/lib/db/schema/auth.schema";
 import client from "../../worker/api-client";
-import { handleApiResponse, makeApiRequest } from "./apiHelpers";
+import { makeApiRequest } from "./apiHelpers";
 import {
   CreateUserSchema,
   UpdateUserSchema,
   UsersResponse,
-} from "src/worker/api/admin/users";
-import { parseDBDates } from "./songs";
+} from "src/worker/services/user-service";
 
 export type UsersApi = typeof client.api.admin.users;
+
+type UserFromAPI = Omit<UserDB, "createdAt" | "updatedAt" | "lastLogin"> & {
+  createdAt: string;
+  updatedAt: string;
+  lastLogin: string;
+};
+
+const parseUserDates = (user: UserFromAPI): UserDB => ({
+  ...user,
+  createdAt: new Date(user.createdAt),
+  updatedAt: new Date(user.updatedAt),
+  lastLogin: new Date(user.lastLogin),
+});
 
 interface UserSearchParams {
   search?: string;
@@ -41,8 +53,13 @@ export async function fetchUsersAdmin(
       },
     })
   );
-  response.users = response.users.map(parseDBDates);
-  return response;
+
+  const users = response.users.map(parseUserDates);
+
+  return {
+    ...response,
+    users,
+  };
 }
 
 /**
@@ -61,7 +78,7 @@ export async function fetchUserAdmin(
       param: { id: userId },
     })
   );
-  return response;
+  return parseUserDates(response);
 }
 
 /**
@@ -75,12 +92,15 @@ export async function createUserAdmin(
   api: UsersApi,
   userData: CreateUserSchema
 ): Promise<{ success: boolean; user: UserDB }> {
-  const response = await makeApiRequest(() =>
+  const createdUser = await makeApiRequest(() =>
     api.$post({
       json: userData,
     })
   );
-  return response;
+  return {
+    success: true,
+    user: parseUserDates(createdUser),
+  };
 }
 
 /**
@@ -96,14 +116,16 @@ export async function updateUserAdmin(
   userId: string,
   userData: UpdateUserSchema
 ): Promise<{ success: boolean; user: UserDB }> {
-  console.log(userId, userData);
-  const response = await makeApiRequest(() =>
+  const updatedUser = await makeApiRequest(() =>
     api[":id"].$put({
       param: { id: userId },
       json: userData,
     })
   );
-  return response;
+  return {
+    success: true,
+    user: parseUserDates(updatedUser),
+  };
 }
 
 /**
@@ -117,7 +139,7 @@ export async function deleteUserAdmin(
   api: UsersApi,
   userId: string
 ): Promise<{ success: boolean }> {
-  const response = await makeApiRequest(() =>
+  await makeApiRequest(() =>
     api[":id"].$delete({
       param: { id: userId },
     })

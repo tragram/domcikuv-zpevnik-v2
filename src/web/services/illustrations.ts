@@ -4,23 +4,19 @@ import {
   SongDataDB,
   SongIllustrationDB,
 } from "src/lib/db/schema";
-import { IllustrationPromptCreateSchema } from "src/worker/api/admin/illustration-prompts";
 import {
   adminIllustrationResponse,
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
   IllustrationModifySchema,
-} from "src/worker/api/admin/illustrations";
+  IllustrationPromptCreateSchema,
+} from "src/worker/services/illustration-service";
 import { SongData } from "~/types/songData";
-import { ApiException, makeApiRequest } from "./apiHelpers";
+import { makeApiRequest } from "./apiHelpers";
 import { AdminApi, parseDBDates } from "./songs";
-import { SongWithCurrentVersion } from "src/worker/api/admin/songs";
-/**
- * Fetches the illustration prompt for a specific song (legacy method)
- * @param songId - The ID of the song
- * @returns Promise containing the prompt response
- * @throws {ApiException} When the prompt cannot be loaded or parsed
- */
+import { SongWithCurrentVersion } from "src/worker/services/song-service";
+
+// Legacy
 export const fetchIllustrationPrompt = async (
   song: SongData
 ): Promise<string> => {
@@ -29,15 +25,14 @@ export const fetchIllustrationPrompt = async (
   }
   const response = await fetch(song.currentIllustration?.promptURL);
   const promptContent = await response.text();
-  return yaml.load(promptContent)[0].response;
+  const data = yaml.load(promptContent) as [{ response: string }];
+  if (!data?.[0]?.response) {
+    throw new Error("Invalid prompt file format");
+  }
+  return data[0].response;
 };
 
-/**
- * Fetches all illustrations with song information and prompt data
- * @param adminApi - The admin API client
- * @returns Promise containing the list of illustrations with prompts
- * @throws {ApiException} When illustrations cannot be fetched
- */
+// Admin API
 export const fetchIllustrationsAdmin = async (
   adminApi: AdminApi
 ): Promise<SongIllustrationDB[]> => {
@@ -47,43 +42,23 @@ export const fetchIllustrationsAdmin = async (
   return songWithIllustrationsAndPrompts.map(parseDBDates);
 };
 
-/**
- * Fetches all prompts with song information and prompt data
- * @param adminApi - The admin API client
- * @returns Promise containing the list of illustrations with prompts
- * @throws {ApiException} When illustrations cannot be fetched
- */
 export const fetchPromptsAdmin = async (
   adminApi: AdminApi
 ): Promise<IllustrationPromptDB[]> => {
-  const prompts = await makeApiRequest(adminApi.illustrations.prompts.$get);
+  const prompts = await makeApiRequest(adminApi.prompts.$get);
   return prompts.map(parseDBDates);
 };
 
-/**
- * Creates a new illustration prompt
- * @param adminApi - The admin API client
- * @param promptData - The prompt data to create
- * @returns Promise containing the creation result
- * @throws {ApiException} When prompt creation fails
- */
 export const createIllustrationPrompt = async (
   adminApi: AdminApi,
   promptData: IllustrationPromptCreateSchema
 ): Promise<IllustrationPromptDB> => {
   const response = await makeApiRequest(() =>
-    adminApi.illustrations.prompts.create.$post({ json: promptData })
+    adminApi.prompts.create.$post({ json: promptData })
   );
   return parseDBDates(response);
 };
 
-/**
- * Creates a new illustration
- * @param adminApi - The admin API client
- * @param illustrationData - The illustration data to create
- * @returns Promise containing the creation result
- * @throws {ApiException} When illustration creation fails
- */
 export const createIllustration = async (
   adminApi: AdminApi,
   data: IllustrationCreateSchema
@@ -112,13 +87,15 @@ export const createIllustration = async (
   }
   // formData cannot be sent via Hono's RPC
   const response = await makeApiRequest(() =>
-    fetch("/api/admin/illustrations/create", {
-      method: "POST",
-      body: formData,
+    adminApi.illustrations.create.$post({
+      form: data as unknown as Record<string, string | Blob>,
     })
   );
-  response.illustration = parseDBDates(response.illustration);
-  return response;
+  return {
+    illustration: parseDBDates(response.illustration),
+    song: parseDBDates(response.song),
+    prompt: parseDBDates(response.prompt),
+  };
 };
 
 export const generateIllustration = async (
@@ -128,17 +105,13 @@ export const generateIllustration = async (
   const response = await makeApiRequest(() =>
     adminApi.illustrations.generate.$post({ json: illustrationData })
   );
-  response.illustration = parseDBDates(response.illustration);
-  return response;
+  return {
+    illustration: parseDBDates(response.illustration),
+    song: parseDBDates(response.song),
+    prompt: parseDBDates(response.prompt),
+  };
 };
 
-/**
- * Updates an existing illustration
- * @param adminApi - The admin API client
- * @param illustrationData - The illustration data to update (must include id)
- * @returns Promise containing the update result
- * @throws {ApiException} When illustration update fails
- */
 export const updateIllustration = async (
   adminApi: AdminApi,
   illustrationId: string,
@@ -150,68 +123,46 @@ export const updateIllustration = async (
       json: illustrationData,
     })
   );
-  response.illustration = parseDBDates(response.illustration);
-  return response;
+  return {
+    illustration: parseDBDates(response.illustration),
+    song: parseDBDates(response.song),
+    prompt: parseDBDates(response.prompt),
+  };
 };
 
-/**
- * Deletes an illustration
- * @param adminApi - The admin API client
- * @param id - The ID of the illustration to delete
- * @returns Promise containing the deletion result
- * @throws {ApiException} When illustration deletion fails
- */
 export const deleteIllustration = async (
   adminApi: AdminApi,
   id: string
-): Promise<null> => {
-  const response = await makeApiRequest(() =>
-    adminApi.illustrations[":id"].$delete({ param: { id } })
+): Promise<void> => {
+  await makeApiRequest(() =>
+    adminApi.illustrations[":id"].$delete({
+      param: { id },
+    })
   );
-  return response;
 };
 
-/**
- * Deletes an illustration prompt
- * @param adminApi - The admin API client
- * @param id - The ID of the prompt to delete
- * @returns Promise containing the deletion result
- * @throws {ApiException} When prompt deletion fails
- */
+export const restoreIllustration = async (
+  adminApi: AdminApi,
+  id: string
+): Promise<void> => {
+  await makeApiRequest(() =>
+    adminApi.illustrations[":id"].restore.$post({
+      param: { id },
+    })
+  );
+};
+
 export const deleteIllustrationPrompt = async (
   adminApi: AdminApi,
   id: string
-): Promise<null> => {
-  const response = await makeApiRequest(() =>
-    adminApi.prompts[":id"].$delete({ param: { id } })
-  );
-  return response;
-};
-
-/**
- * Fetches illustrations for a specific song
- * @param adminApi - The admin API client
- * @param songId - The ID of the song
- * @returns Promise containing song-specific illustrations
- * @throws {ApiException} When illustrations cannot be fetched
- */
-export const fetchSongIllustrations = async (
-  adminApi: AdminApi,
-  songId: string
-): Promise<SongWithIllustrationsAndPrompts[]> => {
-  const allIllustrations = await fetchIllustrationsAdmin(adminApi);
-  return allIllustrations.filter(
-    (illustration) => illustration.songId === songId
+): Promise<void> => {
+  await makeApiRequest(() =>
+    adminApi.prompts[":id"].$delete({
+      param: { id },
+    })
   );
 };
 
-/**
- * Sets an illustration as active (deactivates others for the same song)
- * @param adminApi - The admin API client
- * @param illustrationId - The ID of the illustration to activate
- * @returns Promise containing the updated illustration
- * @throws {ApiException} When activation fails
- */
 export const setActiveIllustration = async (
   adminApi: AdminApi,
   songId: string,
@@ -219,12 +170,16 @@ export const setActiveIllustration = async (
 ): Promise<SongDataDB> => {
   const response = await makeApiRequest(() =>
     adminApi.songs[":songId"]["current-illustration"][":illustrationId"].$put({
-      param: { songId, illustrationId },
+      param: {
+        songId: songId,
+        illustrationId: illustrationId,
+      },
     })
   );
   return parseDBDates(response);
 };
 
+// Utility functions
 export type SongWithIllustrationsAndPrompts = {
   song: SongWithCurrentVersion;
   illustrations: SongIllustrationDB[];
@@ -245,13 +200,14 @@ export const songsWithIllustrationsAndPrompts = (
 
     return acc;
   }, {} as Record<string, SongWithIllustrationsAndPrompts>);
-
   illustrations.forEach((il) => {
-    songIllustrationsPrompts[il.songId].illustrations.push(il);
+    if (Object.hasOwn(songIllustrationsPrompts, il.songId))
+      songIllustrationsPrompts[il.songId].illustrations.push(il);
   });
 
   prompts.forEach((prompt) => {
-    songIllustrationsPrompts[prompt.songId].prompts[prompt.id] = prompt;
+    if (Object.hasOwn(songIllustrationsPrompts, prompt.songId))
+      songIllustrationsPrompts[prompt.songId].prompts[prompt.id] = prompt;
   });
   return songIllustrationsPrompts;
 };

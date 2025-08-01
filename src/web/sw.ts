@@ -10,9 +10,10 @@ import { registerRoute, NavigationRoute } from "workbox-routing";
 import { NetworkFirst, CacheFirst } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { clientsClaim } from "workbox-core";
-import { SongDataApi, SongDBResponseData } from "../worker/api/songDB";
+import { SongDBResponseData } from "../worker/api/songDB";
 import client from "../worker/api-client";
 import { handleApiResponse, makeApiRequest } from "./services/apiHelpers";
+import { SongDataApi } from "src/worker/services/song-service";
 
 // Cache names
 const SONGS_CACHE = "songs-db-cache";

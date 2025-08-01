@@ -8,6 +8,8 @@ import {
   deleteUser,
   updateUserSchema,
   userSearchSchema,
+  createUser,
+  createUserSchema,
 } from "../../services/user-service";
 import {
   errorFail,
@@ -27,6 +29,20 @@ export const userRoutes = buildApp()
     } catch (error) {
       console.error("Error fetching users:", error);
       return errorJSend(c, "Failed to fetch users", 500, "FETCH_ERROR");
+    }
+  })
+  .post("/", zValidator("json", createUserSchema), async (c) => {
+    try {
+      const userData = c.req.valid("json");
+      const db = drizzle(c.env.DB);
+      const newUser = await createUser(db, userData);
+      return successJSend(c, newUser, 201);
+    } catch (error) {
+      console.error("Error creating user:", error);
+      if (error instanceof Error) {
+        return failJSend(c, error.message, 400, error.cause?.toString());
+      }
+      return errorJSend(c, "Failed to create user", 500, "CREATE_ERROR");
     }
   })
   .get("/:id", async (c) => {

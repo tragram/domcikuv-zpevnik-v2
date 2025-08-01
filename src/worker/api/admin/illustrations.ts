@@ -20,9 +20,7 @@ import {
   fakeDeleteR2,
 } from "../../services/illustration-service";
 import {
-  GenerationConfig,
   IMAGE_MODELS_API,
-  ImageGenerator,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "../../services/illustration-service";
@@ -35,6 +33,7 @@ import {
   songNotFoundFail,
   successJSend,
 } from "../responses";
+import { GenerationConfig, ImageGenerator } from "./image-generator";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -69,7 +68,9 @@ const CFImagesThumbnailURL = (imageURL: string) => {
 export const illustrationRoutes = buildApp()
   .get("/", async (c) => {
     const db = drizzle(c.env.DB);
-    const illustrations = await db.select().from(songIllustration);
+    const illustrations: SongIllustrationDB[] = await db
+      .select()
+      .from(songIllustration);
     return successJSend(c, illustrations);
   })
 

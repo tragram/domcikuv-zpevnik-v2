@@ -3,9 +3,14 @@ import type { InferResponseType } from "hono/client";
 export class ApiException extends Error {
   status: number;
   code?: number;
-  data?: any;
+  data?: unknown;
 
-  constructor(message: string, status: number, code?: number, data?: any) {
+  constructor(
+    message: string,
+    status: number,
+    code?: number,
+    data?: unknown
+  ) {
     super(message);
     this.name = "ApiException";
     this.status = status;

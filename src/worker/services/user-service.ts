@@ -79,9 +79,39 @@ export const getUsers = async (
       offset,
       hasMore: offset + limit < totalCount,
       currentPage: Math.floor(offset / limit) + 1,
-      totalPages: Math.ceil(totalCount / limit),
+  totalPages: Math.ceil(totalCount / limit),
     },
   };
+};
+
+export const createUser = async (
+  db: DrizzleD1Database,
+  userData: CreateUserSchema
+): Promise<UserDB> => {
+  // If email is being updated, check for duplicates
+  if (userData.email) {
+    const emailExists = await db
+      .select({ id: user.id })
+      .from(user)
+      .where(eq(user.email, userData.email))
+      .limit(1);
+
+    if (emailExists.length > 0) {
+      throw new Error("A user with this email already exists");
+    }
+  }
+
+  const newUser = await db
+    .insert(user)
+    .values({
+      ...userData,
+      id: crypto.randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .returning();
+
+  return newUser[0];
 };
 
 export const getUser = async (

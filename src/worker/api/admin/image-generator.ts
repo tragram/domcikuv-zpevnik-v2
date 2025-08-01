@@ -105,10 +105,10 @@ export class ImageGenerator {
       throw new Error(`OpenAI API error: ${response.status} - ${error}`);
     }
 
-    const data = (await response.json()) as any;
+    const data = (await response.json()) as {
+      choices: { message: { content: string } }[];
+    };
     const prompt = data.choices?.[0]?.message?.content;
-
-    console.log(prompt);
 
     if (!prompt) {
       throw new Error("Failed to generate prompt from OpenAI");
@@ -133,9 +133,8 @@ export class ImageGenerator {
       },
     });
 
-    console.log(typeof imageBlob, imageBlob);
-
-    return await imageBlob.arrayBuffer();
+    // TS thinks it's a string even though the docs say it's a Blob, so double cast it to get rid of an error
+    return await (imageBlob as unknown as Blob).arrayBuffer();
   }
 
   /**

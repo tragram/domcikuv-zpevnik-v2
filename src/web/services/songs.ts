@@ -1,15 +1,17 @@
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
-import { SongDataApi } from "src/worker/api/songDB";
+import {
+  SongDataApi,
+  SongWithCurrentVersion,
+} from "src/worker/services/song-service";
 import client from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {
-  ChordPro,
   isValidSongLanguage,
   LanguageCount,
   SongDB,
   SongLanguage,
 } from "~/types/types";
-import { ApiException, handleApiResponse, makeApiRequest } from "./apiHelpers";
+import { makeApiRequest } from "./apiHelpers";
 import {
   ModifySongVersionSchema,
   SongModificationSchema,
@@ -19,11 +21,11 @@ export * from "./illustrations";
 export type AdminApi = typeof client.api.admin;
 
 interface Timestamped {
-  createdAt: Date | string;
-  updatedAt: Date | string;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  approvedAt?: Date | string | null;
+  lastLogin?: Date | string | null;
 }
-
-type WithTimestamps<T> = T & Timestamped;
 
 export interface Songbook {
   user: string;
@@ -32,19 +34,17 @@ export interface Songbook {
   songIds: Set<string>;
 }
 
-export const parseDBDates = <T>(o: WithTimestamps<T>) => {
+export const parseDBDates = <T extends Timestamped>(o: T) => {
   return {
     ...o,
-    createdAt: new Date(o.createdAt),
-    updatedAt: new Date(o.updatedAt),
+    createdAt: o.createdAt ? new Date(o.createdAt) : undefined,
+    updatedAt: o.updatedAt ? new Date(o.updatedAt) : undefined,
+    approvedAt: o.approvedAt ? new Date(o.approvedAt) : null,
+    lastLogin: o.lastLogin ? new Date(o.lastLogin) : null,
   };
 };
 
-/**
- * Fetches the songs
- * @returns Promise containing songs, language counts, and max vocal range
- * @throws {ApiException} When the songDB cannot be fetched or parsed
- */
+// Public API
 export const fetchSongs = async (
   api: typeof client.api
 ): Promise<SongDataApi[]> => {
@@ -62,34 +62,7 @@ export const fetchPublicSongbooks = async (
   });
 };
 
-export const buildSongDB = (
-  songs: SongDataApi[],
-  songbooks: Songbook[]
-): SongDB => {
-  const songDatas = songs.map((d) => new SongData(d));
-
-  const languages: LanguageCount = songDatas
-    .map((s) => s.language)
-    .reduce((acc: LanguageCount, lang: string) => {
-      const validLang: SongLanguage = isValidSongLanguage(lang)
-        ? lang
-        : "other";
-      acc[validLang] = (acc[validLang] || 0) + 1;
-      return acc;
-    }, {} as LanguageCount);
-
-  const songRanges = songDatas
-    .map((s) => s.range?.semitones)
-    .filter(Boolean) as Array<number>;
-
-  return {
-    maxRange: songRanges.length > 0 ? Math.max(...songRanges) : undefined,
-    languages,
-    songs: songDatas,
-    songbooks: songbooks.filter((s) => s.songIds.size > 0),
-  };
-};
-
+// Admin API
 export const getSongsAdmin = async (
   adminApi: AdminApi
 ): Promise<SongDataDB[]> => {
@@ -101,7 +74,6 @@ export const getVersionsAdmin = async (
   adminApi: AdminApi
 ): Promise<SongVersionDB[]> => {
   const response = await makeApiRequest(adminApi.songs.versions.$get);
-  console.log(response)
   return response.versions.map(parseDBDates);
 };
 export const putSongAdmin = async (
@@ -143,7 +115,9 @@ export const deleteSongAdmin = async (
   return parseDBDates(deletedSong);
 };
 
-export const songsWithCurrentVersionAdmin = async (adminApi: AdminApi) => {
+export const songsWithCurrentVersionAdmin = async (
+  adminApi: AdminApi
+): Promise<SongWithCurrentVersion[]> => {
   const songs = await makeApiRequest(adminApi.songs.withCurrentVersion.$get);
   return songs.songs.map(parseDBDates);
 };
@@ -181,4 +155,32 @@ export const resetVersionDB = async (adminApi: AdminApi) => {
     adminApi.songs["reset-songDB-version"].$post
   );
   return newVersion;
+};
+
+// Utility functions
+export const buildSongDB = (
+  songs: SongDataApi[],
+  songbooks: Songbook[]
+): SongDB => {
+  const songDatas = songs.map((d) => new SongData(d));
+  const languages: LanguageCount = songDatas
+    .map((s) => s.language)
+    .reduce((acc: LanguageCount, lang: string) => {
+      const validLang: SongLanguage = isValidSongLanguage(lang)
+        ? lang
+        : "other";
+      acc[validLang] = (acc[validLang] || 0) + 1;
+      return acc;
+    }, {} as LanguageCount);
+
+  const songRanges = songDatas
+    .map((s) => s.range?.semitones)
+    .filter(Boolean) as Array<number>;
+
+  return {
+    maxRange: songRanges.length > 0 ? Math.max(...songRanges) : undefined,
+    languages,
+    songs: songDatas,
+    songbooks: songbooks.filter((s) => s.songIds.size > 0),
+  };
 };
