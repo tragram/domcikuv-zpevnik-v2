@@ -7,7 +7,6 @@ export const Route = createFileRoute("/song/$songId")({
     const songDB = context.songDB;
     const songId = params.songId;
     const songData = songDB.songs.find((s) => s.id === songId);
-
     // TODO: show error song if not found
     return {
       user: context.user,

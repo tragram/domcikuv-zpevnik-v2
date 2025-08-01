@@ -5,7 +5,16 @@ import {
   redirect,
   useRouter,
 } from "@tanstack/react-router";
-import { Camera, Home, LogOut, Save, Shield, User } from "lucide-react";
+import {
+  Camera,
+  CloudUpload,
+  Edit,
+  Home,
+  LogOut,
+  Save,
+  Shield,
+  User,
+} from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "src/lib/auth/client";
@@ -541,13 +550,7 @@ function ActionButtons({
   onLogout,
 }: ActionButtonsProps) {
   return (
-    <div className="flex flex-col sm:flex-row gap-3 justify-between">
-      <Button asChild variant="outline" className="sm:w-auto">
-        <Link to="/">
-          <Home />
-          Home
-        </Link>
-      </Button>
+    <div className="flex flex-col flex-wrap sm:flex-row gap-3 justify-around">
       <Button
         variant="outline"
         onClick={onLogout}
@@ -557,14 +560,6 @@ function ActionButtons({
         <LogOut />
         Logout
       </Button>
-      {isAdmin && (
-        <Button asChild variant="outline" className="sm:w-auto">
-          <Link to="/admin">
-            <Shield />
-            Admin
-          </Link>
-        </Button>
-      )}
       <Button
         onClick={onSave}
         disabled={saving || !hasChanges || !window.navigator.onLine}

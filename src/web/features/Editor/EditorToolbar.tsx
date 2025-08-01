@@ -76,7 +76,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["my-edits"] });
-      navigate({ to: "/profile/my-edits" });
+      navigate({ to: "/submissions" });
     } catch (e) {
       toast.error("Something went wrong during submission", {
         description: e instanceof Error ? e.message : String(e),
@@ -109,7 +109,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         ) : (
           <>
             <Button asChild>
-              <Link to="/profile/my-edits">
+              <Link to="/submissions">
                 <User />
                 My edits
               </Link>

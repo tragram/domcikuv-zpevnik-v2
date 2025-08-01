@@ -113,7 +113,7 @@ const editorApp = buildApp()
       return errorJSend(c, "Failed to add song version", 500, "UPDATE_ERROR");
     }
   })
-  .get("/my-edits", async (c) => {
+  .get("/submissions", async (c) => {
     const userId = c.get("USER")?.id;
     if (!userId) {
       return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
@@ -126,7 +126,7 @@ const editorApp = buildApp()
       console.error(error);
       return errorJSend(
         c,
-        "Failed to retrieve your edits",
+        "Failed to retrieve your submissions",
         500,
         "GET_EDITS_ERROR"
       );
