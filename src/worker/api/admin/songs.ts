@@ -1,17 +1,27 @@
-import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
+import { drizzle } from "drizzle-orm/d1";
 import {
   song,
   songVersion,
   songIllustration,
   SongDataDB,
   SongVersionDB,
-  SongIllustrationDB,
 } from "../../../lib/db/schema";
 import { eq, desc, isNotNull, and, getTableColumns } from "drizzle-orm";
 import { buildApp } from "../utils";
 import { createInsertSchema } from "drizzle-zod";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod/v4";
+import {
+  findSong,
+  findSongWithVersions,
+  SongWithCurrentVersion,
+} from "../../services/song-service";
+import {
+  errorJSend,
+  failJSend,
+  songNotFoundFail,
+  successJSend,
+} from "../responses";
 
 // Song validation schemas
 const songModificationSchema = createInsertSchema(song)
@@ -30,111 +40,6 @@ export type SongModificationSchema = z.infer<typeof songModificationSchema>;
 export type NewSongVersionSchema = z.infer<typeof newSongVersionSchema>;
 export type ModifySongVersionSchema = z.infer<typeof modifySongVersionSchema>;
 
-export const findSong = async (
-  db: DrizzleD1Database,
-  songId: string,
-  withVersion = true
-) => {
-  let possiblySong;
-  if (withVersion) {
-    possiblySong = await db
-      .select({
-        ...getTableColumns(song),
-        ...getTableColumns(songVersion),
-        id: song.id,
-      })
-      .from(song)
-      .innerJoin(songVersion, eq(songVersion.id, song.currentVersionId))
-      .where(eq(song.id, songId))
-      .limit(1);
-  } else {
-    possiblySong = await db
-      .select()
-      .from(song)
-      .where(eq(song.id, songId))
-      .limit(1);
-  }
-  if (possiblySong.length === 0) {
-    throw new Error("Referenced song not found!");
-  }
-  return possiblySong[0];
-};
-
-export type SongWithCurrentVersion = {
-  id: string;
-  title: string;
-  artist: string;
-  key: string | undefined;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-  startMelody: string | undefined;
-  language: string;
-  tempo: number | undefined;
-  capo: number | undefined;
-  range: string | undefined;
-  chordpro: string;
-  currentIllustrationId: string;
-  currentVersionId: string;
-};
-
-export type SongWithDataDB = SongDataDB & {
-  currentVersion?: SongVersionDB;
-  versions: SongVersionDB[];
-  currentIllustration?: SongIllustrationDB;
-  illustrations: SongIllustrationDB[];
-};
-
-export const findSongWithVersions = async (
-  db: DrizzleD1Database,
-  songId: string
-): Promise<SongWithDataDB> => {
-  const songData = await findSong(db, songId);
-
-  // Get all versions for this song
-  const versions = await db
-    .select()
-    .from(songVersion)
-    .where(eq(songVersion.songId, songId))
-    .orderBy(desc(songVersion.createdAt));
-
-  // Get all illustrations for this song
-  const illustrations = await db
-    .select()
-    .from(songIllustration)
-    .where(eq(songIllustration.songId, songId))
-    .orderBy(desc(songIllustration.createdAt));
-
-  // Get current version if exists
-  let currentVersion;
-  if (songData.currentVersionId) {
-    const currentVersionResult = await db
-      .select()
-      .from(songVersion)
-      .where(eq(songVersion.id, songData.currentVersionId))
-      .limit(1);
-    currentVersion = currentVersionResult[0] || null;
-  }
-
-  // Get current illustration if exists
-  let currentIllustration;
-  if (songData.currentIllustrationId) {
-    const currentIllustrationResult = await db
-      .select()
-      .from(songIllustration)
-      .where(eq(songIllustration.id, songData.currentIllustrationId))
-      .limit(1);
-    currentIllustration = currentIllustrationResult[0] || null;
-  }
-
-  return {
-    ...songData,
-    currentVersion,
-    currentIllustration,
-    versions,
-    illustrations,
-  };
-};
-
 export const songRoutes = buildApp()
   .get("/", async (c) => {
     try {
@@ -144,23 +49,13 @@ export const songRoutes = buildApp()
         .from(song)
         .orderBy(desc(song.updatedAt));
 
-      return c.json({
-        status: "success",
-        data: {
-          songs,
-          count: songs.length,
-        },
+      return successJSend(c, {
+        songs,
+        count: songs.length,
       });
     } catch (error) {
       console.error("Error fetching songs:", error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to fetch songs",
-          code: "FETCH_ERROR",
-        },
-        500
-      );
+      return errorJSend(c, "Failed to fetch songs", 500, "FETCH_ERROR");
     }
   })
 
@@ -184,23 +79,13 @@ export const songRoutes = buildApp()
         .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
         .orderBy(desc(song.updatedAt));
 
-      return c.json({
-        status: "success",
-        data: {
-          songs,
-          count: songs.length,
-        },
+      return successJSend(c, {
+        songs,
+        count: songs.length,
       });
     } catch (error) {
       console.error("Error fetching songs:", error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to fetch songs",
-          code: "FETCH_ERROR",
-        },
-        500
-      );
+      return errorJSend(c, "Failed to fetch songs", 500, "FETCH_ERROR");
     }
   })
 
@@ -212,23 +97,13 @@ export const songRoutes = buildApp()
         .from(songVersion)
         .orderBy(desc(songVersion.updatedAt));
 
-      return c.json({
-        status: "success",
-        data: {
-          versions,
-          count: versions.length,
-        },
+      return successJSend(c, {
+        versions,
+        count: versions.length,
       });
     } catch (error) {
       console.error("Error fetching songs:", error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to fetch songs",
-          code: "FETCH_ERROR",
-        },
-        500
-      );
+      return errorJSend(c, "Failed to fetch songs", 500, "FETCH_ERROR");
     }
   })
 
@@ -239,20 +114,10 @@ export const songRoutes = buildApp()
 
       const songWithVersions = await findSongWithVersions(db, songId);
 
-      return c.json({
-        status: "success",
-        data: songWithVersions,
-      });
+      return successJSend(c, songWithVersions);
     } catch (error) {
       console.error("Error fetching song:", error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to fetch song",
-          code: "FETCH_ERROR",
-        },
-        404
-      );
+      return errorJSend(c, "Failed to fetch song", 404, "FETCH_ERROR");
     }
   })
 
@@ -263,24 +128,7 @@ export const songRoutes = buildApp()
       const db = drizzle(c.env.DB);
 
       // Check if song exists
-      const existingSong = await db
-        .select({ id: song.id })
-        .from(song)
-        .where(eq(song.id, songId))
-        .limit(1);
-
-      if (existingSong.length === 0) {
-        return c.json(
-          {
-            status: "fail",
-            failData: {
-              message: "Song not found",
-              code: "SONG_NOT_FOUND",
-            },
-          },
-          404
-        );
-      }
+      await findSong(db, songId);
 
       // Update the song record
       await db
@@ -291,20 +139,10 @@ export const songRoutes = buildApp()
       // Return the updated song with all versions and illustrations
       const songWithVersions = await findSongWithVersions(db, songId);
 
-      return c.json({
-        status: "success",
-        data: songWithVersions,
-      });
+      return successJSend(c, songWithVersions);
     } catch (error) {
       console.error(error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to modify song",
-          code: "UPDATE_ERROR",
-        },
-        500
-      );
+      return errorJSend(c, "Failed to modify song", 500, "UPDATE_ERROR");
     }
   })
 
@@ -333,19 +171,14 @@ export const songRoutes = buildApp()
           })
           .returning();
 
-        return c.json({
-          status: "success",
-          data: newVersion[0],
-        });
+        return successJSend(c, newVersion[0]);
       } catch (error) {
         console.error("Error creating song version:", error);
-        return c.json(
-          {
-            status: "error",
-            message: "Failed to create song version",
-            code: "VERSION_CREATE_ERROR",
-          },
-          500
+        return errorJSend(
+          c,
+          "Failed to create song version",
+          500,
+          "VERSION_CREATE_ERROR"
         );
       }
     }
@@ -369,15 +202,11 @@ export const songRoutes = buildApp()
           .limit(1);
 
         if (version.length === 0 || version[0].songId !== songId) {
-          return c.json(
-            {
-              status: "fail",
-              failData: {
-                message: "Version not found or doesn't belong to this song",
-                code: "VERSION_NOT_FOUND",
-              },
-            },
-            404
+          failJSend(
+            c,
+            "Version not found or doesn't belong to this song",
+            404,
+            "VERSION_NOT_FOUND"
           );
         }
 
@@ -391,19 +220,14 @@ export const songRoutes = buildApp()
           .where(eq(songVersion.id, versionId))
           .returning();
 
-        return c.json({
-          status: "success",
-          data: updatedVersion[0],
-        });
+        return successJSend(c, updatedVersion[0]);
       } catch (error) {
         console.error("Error setting current version:", error);
-        return c.json(
-          {
-            status: "error",
-            message: "Failed to modify song version",
-            code: "MODIFY_SONG_VERSION_ERROR",
-          },
-          500
+        return errorJSend(
+          c,
+          "Failed to modify song version",
+          500,
+          "MODIFY_SONG_VERSION_ERROR"
         );
       }
     }
@@ -426,15 +250,11 @@ export const songRoutes = buildApp()
         .limit(1);
 
       if (version.length === 0 || version[0].songId !== songId) {
-        return c.json(
-          {
-            status: "fail",
-            failData: {
-              message: "Version not found or doesn't belong to this song",
-              code: "VERSION_NOT_FOUND",
-            },
-          },
-          404
+        return failJSend(
+          c,
+          "Version not found or doesn't belong to this song",
+          404,
+          "VERSION_NOT_FOUND",
         );
       }
 
@@ -448,19 +268,14 @@ export const songRoutes = buildApp()
         .where(eq(song.id, songId))
         .returning();
 
-      return c.json({
-        status: "success",
-        data: updatedSong[0],
-      });
+      return successJSend(c, updatedSong[0]);
     } catch (error) {
       console.error("Error setting current version:", error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to set current version",
-          code: "SET_CURRENT_VERSION_ERROR",
-        },
-        500
+      return errorJSend(
+        c,
+        "Failed to set current version",
+        500,
+        "SET_CURRENT_VERSION_ERROR"
       );
     }
   })
@@ -479,15 +294,11 @@ export const songRoutes = buildApp()
         .limit(1);
 
       if (illustration.length === 0 || illustration[0].songId !== songId) {
-        return c.json(
-          {
-            status: "fail",
-            failData: {
-              message: "Illustration not found or doesn't belong to this song",
-              code: "ILLUSTRATION_NOT_FOUND",
-            },
-          },
-          404
+        return failJSend(
+          c,
+          "Illustration not found or doesn't belong to this song",
+          404,
+          "ILLUSTRATION_NOT_FOUND"
         );
       }
 
@@ -501,19 +312,14 @@ export const songRoutes = buildApp()
         .where(eq(song.id, songId))
         .returning();
 
-      return c.json({
-        status: "success",
-        data: updatedSong[0],
-      });
+      return successJSend(c, updatedSong[0]);
     } catch (error) {
       console.error("Error setting current illustration:", error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to set current illustration",
-          code: "SET_CURRENT_ILLUSTRATION_ERROR",
-        },
-        500
+      return errorJSend(
+        c,
+        "Failed to set current illustration",
+        500,
+        "SET_CURRENT_ILLUSTRATION_ERROR"
       );
     }
   })
@@ -528,21 +334,9 @@ export const songRoutes = buildApp()
         .set({ deleted: true, updatedAt: new Date() })
         .where(eq(song.id, songId))
         .returning();
-      return c.json({
-        status: "success",
-        data: deletedSong[0],
-      });
+      return successJSend(c, deletedSong[0]);
     } catch {
-      return c.json(
-        {
-          status: "fail",
-          failData: {
-            message: "Failed to delete song",
-            code: "SONG_NOT_EXISTS",
-          },
-        },
-        500
-      );
+      return songNotFoundFail(c);
     }
   })
 
@@ -560,15 +354,11 @@ export const songRoutes = buildApp()
         .limit(1);
 
       if (version.length === 0 || version[0].songId !== songId) {
-        return c.json(
-          {
-            status: "fail",
-            failData: {
-              message: "Version not found or doesn't belong to this song",
-              code: "VERSION_NOT_FOUND",
-            },
-          },
-          404
+        return failJSend(
+          c,
+          "Version not found or doesn't belong to this song",
+          404,
+          "VERSION_NOT_FOUND"
         );
       }
 
@@ -583,37 +373,22 @@ export const songRoutes = buildApp()
         .returning();
 
       // remove from currentVersion if it is selected
-      const songData = findSong(db, songId);
-      if ((await songData).currentVersionId === versionId) {
+      const songData = await findSong(db, songId);
+      if (songData.currentVersionId === versionId) {
         await db
           .update(song)
           .set({ currentVersionId: null, updatedAt: new Date() })
           .where(eq(song.id, songId));
       }
 
-      return c.json({
-        status: "success",
-        data: updatedVersion[0],
-      });
+      return successJSend(c, updatedVersion[0]);
     } catch {
-      return c.json(
-        {
-          status: "fail",
-          failData: {
-            message: "Failed to delete version",
-            code: "SONG_NOT_EXISTS",
-          },
-        },
-        500
-      );
+      return songNotFoundFail(c);
     }
   })
 
   .post("/reset-songDB-version", async (c) => {
     const newVersion = Date.now().toString();
     await c.env.KV.put("songDB-version", newVersion);
-    return c.json({
-      status: "success",
-      data: newVersion,
-    });
+    return successJSend(c, newVersion);
   });

@@ -1,11 +1,16 @@
-import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { user } from "src/lib/db/schema";
 import { z } from "zod/v4";
+import {
+  deleteAvatar,
+  getUserProfile,
+  updateAvatar,
+  updateUserProfile,
+} from "../services/user-service";
+import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 
 // Zod schemas for validation
-const UpdateUserProfileSchema = z.object({
+const updateUserProfileSchema = z.object({
   name: z
     .string()
     .min(1, "Display name is required")
@@ -39,76 +44,40 @@ const profileApp = buildApp()
     try {
       const userData = c.get("USER");
       if (!userData) {
-        return c.json({
-          status: "success",
-          data: { loggedIn: false, profile: undefined } as UserProfileData,
-        });
+        return successJSend(c, {
+          loggedIn: false,
+          profile: undefined,
+        } as UserProfileData);
       }
 
       const db = drizzle(c.env.DB);
-      const result = await db
-        .select({
-          id: user.id,
-          name: user.name,
-          nickname: user.nickname,
-          email: user.email,
-          image: user.image,
-          isFavoritesPublic: user.isFavoritesPublic,
-          isAdmin: user.isAdmin,
-          createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
-        })
-        .from(user)
-        .where(eq(user.id, userData.id))
-        .limit(1);
+      const profile = await getUserProfile(db, userData.id);
 
-      return c.json({
-        status: "success",
-        data: { loggedIn: true, profile: result[0] } as UserProfileData,
-      });
+      return successJSend(c, {
+        loggedIn: true,
+        profile,
+      } as UserProfileData);
     } catch (error) {
       console.error(error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to user profile",
-          code: "FETCH_ERROR",
-        },
-        500
-      );
+      return errorJSend(c, "Failed to user profile", 500, "FETCH_ERROR");
     }
   })
   .put("/", async (c) => {
     try {
       const userData = c.get("USER");
       if (!userData) {
-        return c.json({ success: false, error: "User not authenticated" }, 401);
+        return errorJSend(c, "User not authenticated", 401);
       }
 
       const formData = await c.req.formData();
 
-      // Debug logging
-      console.log("FormData entries:");
-      for (const [key, value] of formData.entries()) {
-        console.log(
-          `${key}:`,
-          value instanceof File
-            ? `File(${value.name}, ${value.size} bytes)`
-            : value
-        );
-      }
-
       const name = formData.get("name") as string;
       const nickname = formData.get("nickname") as string;
+
       const isFavoritesPublic = formData.get("isFavoritesPublic") === "true";
 
-      // Validate required fields
-      if (!name?.trim()) {
-        return c.json({ success: false, error: "Name is required" }, 400);
-      }
-
       // Validate input with Zod
-      const validated = UpdateUserProfileSchema.parse({
+      const validated = updateUserProfileSchema.parse({
         name: name.trim(),
         nickname: nickname?.trim() || undefined,
         isFavoritesPublic,
@@ -123,38 +92,26 @@ const profileApp = buildApp()
       const avatarFile = formData.get("avatarFile") as File | null;
       const shouldDeleteAvatar = formData.get("deleteAvatar") === "true";
 
-      console.log("Avatar processing:", {
-        hasAvatarFile: !!avatarFile,
-        avatarFileSize: avatarFile?.size || 0,
-        avatarFileName: avatarFile?.name || "none",
-        shouldDeleteAvatar,
-      });
-
       // Handle avatar upload
       if (avatarFile && avatarFile.size > 0) {
         // Validate file
         if (!avatarFile.type.startsWith("image/")) {
-          return c.json(
-            { success: false, error: "File must be an image" },
-            400
-          );
+          return failJSend(c, "File must be an image!", 400, "FILE_NOT_IMAGE");
         }
 
         if (avatarFile.size > 5 * 1024 * 1024) {
-          return c.json(
-            { success: false, error: "File size must be less than 5MB" },
-            400
+          return failJSend(
+            c,
+            "File size must be less than 5MB",
+            400,
+            "Image too large!"
           );
         }
 
         // Get current user data to check for existing avatar
-        const currentUserProfile = await db
-          .select({ image: user.image })
-          .from(user)
-          .where(eq(user.id, userData.id))
-          .limit(1);
+        const currentUserProfile = await getUserProfile(db, userData.id);
 
-        const currentImage = currentUserProfile[0]?.image;
+        const currentImage = currentUserProfile?.image;
 
         // Generate unique filename
         const fileExtension =
@@ -168,25 +125,15 @@ const profileApp = buildApp()
           const arrayBuffer = await avatarFile.arrayBuffer();
 
           // Upload new avatar to R2
-          const r2Response = await c.env.R2_BUCKET.put(fileName, arrayBuffer, {
+          await c.env.R2_BUCKET.put(fileName, arrayBuffer, {
             httpMetadata: {
               contentType: avatarFile.type,
             },
           });
 
-          if (!r2Response) {
-            console.error("R2 upload failed - no response");
-            return c.json(
-              { success: false, error: "Failed to upload image" },
-              500
-            );
-          }
-
           // Generate the public URL
           newImageUrl = `${c.env.CLOUDFLARE_R2_URL}/${fileName}`;
           imageChanged = true;
-
-          console.log("New image uploaded:", newImageUrl);
 
           // Delete old avatar if it exists (after successful upload)
           if (currentImage) {
@@ -194,7 +141,6 @@ const profileApp = buildApp()
               const oldFileName = currentImage.split("/").pop();
               if (oldFileName?.startsWith("avatars/")) {
                 await c.env.R2_BUCKET.delete(oldFileName);
-                console.log("Deleted old avatar:", oldFileName);
               }
             } catch (error) {
               console.error("Failed to delete old avatar:", error);
@@ -203,28 +149,20 @@ const profileApp = buildApp()
           }
         } catch (uploadError) {
           console.error("Avatar upload error:", uploadError);
-          return c.json(
-            { success: false, error: "Failed to upload image" },
-            500
-          );
+          return errorJSend(c, "Failed to upload image", 500);
         }
       }
       // Handle avatar deletion (only if no new file is being uploaded)
       else if (shouldDeleteAvatar) {
-        const currentUserProfile = await db
-          .select({ image: user.image })
-          .from(user)
-          .where(eq(user.id, userData.id))
-          .limit(1);
+        const currentUserProfile = await getUserProfile(db, userData.id);
 
-        const currentImage = currentUserProfile[0]?.image;
+        const currentImage = currentUserProfile?.image;
 
         if (currentImage) {
           try {
             const fileName = currentImage.split("/").pop();
             if (fileName?.startsWith("avatars/")) {
               await c.env.R2_BUCKET.delete(fileName);
-              console.log("Deleted avatar:", fileName);
             }
           } catch (r2Error) {
             console.error("R2 deletion error:", r2Error);
@@ -236,47 +174,32 @@ const profileApp = buildApp()
       }
 
       // Update user profile in database
-      const updateData: any = {
-        name: validated.name,
-        nickname: validated.nickname || null,
-        isFavoritesPublic: validated.isFavoritesPublic,
-        updatedAt: new Date(),
-      };
+      await updateUserProfile(
+        db,
+        userData.id,
+        validated,
+        imageChanged,
+        newImageUrl
+      );
 
-      // Only update image if it changed
-      if (imageChanged) {
-        updateData.image = newImageUrl;
-        console.log("Updating database with image:", newImageUrl);
-      }
-
-      await db.update(user).set(updateData).where(eq(user.id, userData.id));
-
-      console.log("Profile update successful");
-
-      return c.json({
-        success: true,
+      return successJSend(c, {
         imageUrl: imageChanged ? newImageUrl : undefined,
       });
     } catch (error) {
       console.error("Profile update error:", error);
 
       // Handle Zod validation errors
-      if (error.name === "ZodError") {
-        return c.json(
-          {
-            success: false,
-            error: error.errors?.[0]?.message || "Validation error",
-          },
+      if (error instanceof z.ZodError) {
+        return failJSend(
+          c,
+          error.flatten().formErrors[0] || "Validation error",
           400
         );
       }
 
-      return c.json(
-        {
-          success: false,
-          error:
-            error instanceof Error ? error.message : "Internal server error",
-        },
+      return errorJSend(
+        c,
+        error instanceof Error ? error.message : "Internal server error",
         500
       );
     }
@@ -285,25 +208,27 @@ const profileApp = buildApp()
     try {
       const userData = c.get("USER");
       if (!userData) {
-        return c.json({ success: false, error: "User not authenticated" }, 401);
+        return errorJSend(c, "User not authenticated", 401);
       }
 
       const formData = await c.req.formData();
       const file = formData.get("file") as File;
 
       if (!file) {
-        return c.json({ success: false, error: "No file provided" }, 400);
+        return failJSend(c, "No file provided", 400, "MISSING_FILE");
       }
 
       // Validate file
       if (!file.type.startsWith("image/")) {
-        return c.json({ success: false, error: "File must be an image" }, 400);
+        return failJSend(c, "File must be an image", 400, "FILE_NOT_IMAGE");
       }
 
       if (file.size > 5 * 1024 * 1024) {
-        return c.json(
-          { success: false, error: "File size must be less than 5MB" },
-          400
+        return failJSend(
+          c,
+          "File size must be less than 5MB",
+          400,
+          "IMAEG_TOO_LARGE"
         );
       }
 
@@ -315,37 +240,25 @@ const profileApp = buildApp()
       const arrayBuffer = await file.arrayBuffer();
 
       // Upload to R2
-      const r2Response = await c.env.R2_BUCKET.put(fileName, arrayBuffer, {
+      await c.env.R2_BUCKET.put(fileName, arrayBuffer, {
         httpMetadata: {
           contentType: file.type,
         },
       });
-
-      if (!r2Response) {
-        return c.json({ success: false, error: "Failed to upload image" }, 500);
-      }
 
       // Generate the public URL
       const imageUrl = `${c.env.CLOUDFLARE_R2_URL}/${fileName}`;
 
       // Update user's image URL in database
       const db = drizzle(c.env.DB);
-      await db
-        .update(user)
-        .set({
-          image: imageUrl,
-          updatedAt: new Date(),
-        })
-        .where(eq(user.id, userData.id));
+      await updateAvatar(db, userData.id, imageUrl);
 
-      return c.json({ success: true, imageUrl });
+      return successJSend(c, { imageUrl });
     } catch (error) {
       console.error("Avatar upload error:", error);
-      return c.json(
-        {
-          success: false,
-          error: (error as Error).message,
-        },
+      return errorJSend(
+        c,
+        error instanceof Error ? error.message : "Internal server error",
         500
       );
     }
@@ -354,19 +267,15 @@ const profileApp = buildApp()
     try {
       const userData = c.get("USER");
       if (!userData) {
-        return c.json({ success: false, error: "User not authenticated" }, 401);
+        return errorJSend(c, "User not authenticated", 401);
       }
 
       const db = drizzle(c.env.DB);
 
       // Get current image URL to delete from R2
-      const currentUserProfile = await db
-        .select({ image: user.image })
-        .from(user)
-        .where(eq(user.id, userData.id))
-        .limit(1);
+      const currentUserProfile = await getUserProfile(db, userData.id);
 
-      const currentImage = currentUserProfile[0]?.image;
+      const currentImage = currentUserProfile?.image;
 
       // Delete from R2 if exists
       if (currentImage) {
@@ -383,25 +292,14 @@ const profileApp = buildApp()
       }
 
       // Update database to remove image URL
-      await db
-        .update(user)
-        .set({
-          image: null,
-          updatedAt: new Date(),
-        })
-        .where(eq(user.id, userData.id));
+      await deleteAvatar(db, userData.id);
 
-      return c.json({
-        status: "success",
-        data: null,
-      });
+      return successJSend(c, null);
     } catch (error) {
       console.error("Avatar deletion error:", error);
-      return c.json(
-        {
-          success: false,
-          error: (error as Error).message,
-        },
+      return errorJSend(
+        c,
+        error instanceof Error ? error.message : "Internal server error",
         500
       );
     }

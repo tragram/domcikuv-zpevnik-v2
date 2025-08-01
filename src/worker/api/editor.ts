@@ -1,20 +1,19 @@
 import { z } from "zod/v4";
 import { drizzle } from "drizzle-orm/d1";
-import {
-  song,
-  songVersion,
-  user,
-  userFavoriteSongs,
-} from "../../lib/db/schema";
+import { user } from "../../lib/db/schema";
 
-import { eq, desc, isNotNull, and, getTableColumns, isNull } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { buildApp } from "./utils";
-import { SongData } from "../../web/types/songData";
-import { createInsertSchema } from "drizzle-zod";
 import { zValidator } from "@hono/zod-validator";
-import { findSong } from "./admin/songs";
+import {
+  createSong,
+  createSongVersion,
+  findSong,
+  getSongVersionsByUser,
+} from "../services/song-service";
+import { errorJSend, failJSend, successJSend } from "./responses";
 
-const editorSubmitSchema = z.object({
+export const editorSubmitSchema = z.object({
   title: z.string(),
   artist: z.string(),
   key: z
@@ -35,28 +34,21 @@ const editorSubmitSchema = z.object({
     .optional()
     .transform((x) => x ?? null),
   tempo: z
-    .string()
+    .union([z.string(), z.number()])
     .optional()
-    .transform((x) => x ?? null),
+    .transform((x) => (x ? String(x) : null)),
   chordpro: z.string(),
 });
 
 export type EditorSubmitSchema = z.infer<typeof editorSubmitSchema>;
+export type EditorSubmitSchemaInput = z.input<typeof editorSubmitSchema>;
 
 const editorApp = buildApp()
   .post("/", zValidator("json", editorSubmitSchema), async (c) => {
     const submission = c.req.valid("json");
     const userId = c.get("USER")?.id;
-
     if (!userId) {
-      return c.json(
-        {
-          status: "error",
-          message: "Authentication required",
-          code: "AUTH_REQUIRED",
-        },
-        401
-      );
+      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
     }
     try {
       const db = drizzle(c.env.DB);
@@ -65,68 +57,21 @@ const editorApp = buildApp()
         .from(user)
         .where(eq(user.id, userId))
         .limit(1);
-      const now = new Date();
 
       const isTrusted =
         userProfile && userProfile.length > 0 && userProfile[0].isTrusted;
-      let songId = SongData.baseId(submission.title, submission.artist);
-      const existingSong = await db
-        .select()
-        .from(song)
-        .where(eq(song.id, songId))
-        .limit(1);
-      if (existingSong.length > 0) {
-        // on conflict add a timestamp
-        songId = songId + "_" + now.getTime();
-      }
-      const versionId = songId + "_" + now.getTime();
-      let newSong;
-      let newVersion;
-      await db.transaction(async (tx) => {
-        newSong = await tx
-          .insert(song)
-          .values({
-            id: songId,
-            createdAt: now,
-            updatedAt: now,
-            hidden: isTrusted,
-            currentVersionId: versionId,
-          })
-          .returning();
 
-        newVersion = await tx
-          .insert(songVersion)
-          .values({
-            ...submission,
-            id: versionId,
-            songId: songId,
-            createdAt: now,
-            updatedAt: now,
-            userId: userId,
-            approved: isTrusted,
-            approvedBy: isTrusted ? userProfile[0].id : null,
-            approvedAt: isTrusted ? now : null,
-          })
-          .returning();
-      });
-      console.log(newSong, newVersion);
-      return c.json({
-        status: "success",
-        data: {
-          song: newSong,
-          version: newVersion,
-        },
+      const result = await createSong(db, submission, userId, isTrusted);
+      return successJSend(c, {
+        song: result.newSong,
+        version: result.newVersion,
       });
     } catch (error) {
       console.error(error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to add song",
-          code: "ADD_SONG_ERROR",
-        },
-        500
-      );
+      if (error instanceof Error) {
+        return errorJSend(c, error.message, 400, "SONG_CREATION_FAILED");
+      }
+      return errorJSend(c, "Failed to add song", 500, "ADD_SONG_ERROR");
     }
   })
   .put("/:id", zValidator("json", editorSubmitSchema), async (c) => {
@@ -135,14 +80,7 @@ const editorApp = buildApp()
     const songId = c.req.param("id");
 
     if (!userId) {
-      return c.json(
-        {
-          status: "error",
-          message: "Authentication required",
-          code: "AUTH_REQUIRED",
-        },
-        401
-      );
+      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
     }
     try {
       const db = drizzle(c.env.DB);
@@ -151,96 +89,46 @@ const editorApp = buildApp()
         .from(user)
         .where(eq(user.id, userId))
         .limit(1);
-      const now = new Date();
 
       const isTrusted =
         userProfile && userProfile.length > 0 && userProfile[0].isTrusted;
 
       // ensure a song with the same id exists...
-      let existingSong = await findSong(db, songId, false);
-      const versionId = songId + "_" + now.getTime();
+      const existingSong = await findSong(db, songId, false);
 
-      // make sure the same version does not exist yet (at least by the same user)
-      const sameVersion = await db
-        .select()
-        .from(songVersion)
-        .where(
-          and(
-            eq(songVersion.songId, songId),
-            eq(songVersion.artist, submission.artist),
-            eq(songVersion.title, submission.title),
-            eq(songVersion.language, submission.language),
-            eq(songVersion.userId, userId),
-            eq(songVersion.chordpro, submission.chordpro),
-            // handling nullable fields is ugly
-            submission.key === null
-              ? isNull(songVersion.key)
-              : eq(songVersion.key, submission.key),
-            submission.capo === null
-              ? isNull(songVersion.capo)
-              : eq(songVersion.capo, submission.capo),
-            submission.range === null
-              ? isNull(songVersion.range)
-              : eq(songVersion.range, submission.range),
-            submission.startMelody === null
-              ? isNull(songVersion.startMelody)
-              : eq(songVersion.startMelody, submission.startMelody),
-            submission.tempo === null
-              ? isNull(songVersion.tempo)
-              : eq(songVersion.tempo, submission.tempo)
-          )
-        )
-        .limit(1);
-      if (sameVersion.length > 0) {
-        return c.json(
-          {
-            status: "fail",
-            failData: {
-              message: "Version with the same ",
-              code: "SONG_NOT_FOUND",
-            },
-          },
-          400
-        );
-      }
+      const versionResult = await createSongVersion(
+        db,
+        submission,
+        songId,
+        userId,
+        isTrusted
+      );
 
-      const newVersion = await db
-        .insert(songVersion)
-        .values({
-          ...submission,
-          id: versionId,
-          songId: songId,
-          createdAt: now,
-          updatedAt: now,
-          userId: userId,
-          approved: isTrusted,
-          approvedBy: isTrusted ? userProfile[0].id : null,
-          approvedAt: isTrusted ? now : null,
-        })
-        .returning();
-      if (isTrusted) {
-        existingSong = (
-          await db
-            .update(song)
-            .set({ currentVersionId: versionId })
-            .where(eq(song.id, songId))
-            .returning()
-        )[0];
-      }
-      console.log(newVersion);
-      return c.json({
-        status: "success",
-        data: { song: existingSong, version: newVersion },
-      });
+      return successJSend(c, { song: existingSong, version: versionResult });
     } catch (error) {
       console.error(error);
-      return c.json(
-        {
-          status: "error",
-          message: "Failed to add song version",
-          code: "UPDATE_ERROR",
-        },
-        500
+      if (error instanceof Error) {
+        return failJSend(c, error.message, 400, "VERSION_EXISTS");
+      }
+      return errorJSend(c, "Failed to add song version", 500, "UPDATE_ERROR");
+    }
+  })
+  .get("/my-edits", async (c) => {
+    const userId = c.get("USER")?.id;
+    if (!userId) {
+      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
+    }
+    try {
+      const db = drizzle(c.env.DB);
+      const versions = await getSongVersionsByUser(db, userId);
+      return successJSend(c, versions);
+    } catch (error) {
+      console.error(error);
+      return errorJSend(
+        c,
+        "Failed to retrieve your edits",
+        500,
+        "GET_EDITS_ERROR"
       );
     }
   });

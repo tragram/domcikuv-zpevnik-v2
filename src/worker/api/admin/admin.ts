@@ -1,11 +1,12 @@
-import { Context, Next } from "hono";
-import { drizzle } from "drizzle-orm/d1";
-import { user } from "../../../lib/db/schema";
 import { eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/d1";
+import { Context, Next } from "hono";
+import { user } from "../../../lib/db/schema";
 import { buildApp } from "../utils";
-import { userRoutes } from "./users";
-import { songRoutes } from "./songs";
+import { illustrationPromptRoutes } from "./illustration-prompts";
 import { illustrationRoutes } from "./illustrations";
+import { songRoutes } from "./songs";
+import { userRoutes } from "./users";
 
 const adminMiddleware = async (c: Context, next: Next) => {
   try {
@@ -80,8 +81,9 @@ const adminMiddleware = async (c: Context, next: Next) => {
 
 const adminApp = buildApp()
   .use(adminMiddleware)
-  .route("/users", userRoutes)
   .route("/songs", songRoutes)
   .route("/illustrations", illustrationRoutes)
+  .route("/prompts", illustrationPromptRoutes)
+  .route("/users", userRoutes);
 
 export default adminApp;

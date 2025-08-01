@@ -2,14 +2,14 @@
 import { drizzle } from "drizzle-orm/d1";
 import { auth } from "../lib/auth/server";
 import { buildApp } from "./api/utils";
-import favoritesApp from "./api/favorites";
-import profileApp from "./api/userProfile";
+import { user } from "src/lib/db/schema/auth.schema";
+import adminApp from "./api/admin/admin";
 import authApp from "./api/auth";
 import editorApp from "./api/editor";
-import adminApp from "./api/admin/admin";
-import { user } from "src/lib/db/schema/auth.schema";
-import { eq } from "drizzle-orm";
+import favoritesApp from "./api/favorites";
+import profileApp from "./api/userProfile";
 import songDBRoutes from "./api/songDB";
+import { eq } from "drizzle-orm";
 
 const app = buildApp();
 
