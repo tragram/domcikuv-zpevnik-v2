@@ -1,26 +1,19 @@
-import { Button } from "~/components/ui/button";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
+import { UserProfileData } from "src/worker/api/userProfile";
 import useLocalStorageState from "use-local-storage-state";
+import { cn } from "~/lib/utils";
+import { SongData } from "~/types/songData";
+import { SongDB } from "~/types/types";
+import { type EditorSubmitSchemaInput } from "../../../worker/api/editor";
 import "../SongView/SongView.css";
 import CollapsibleMainArea from "./components/CollapsibleMainArea";
 import ContentEditor from "./ContentEditor";
 import "./Editor.css";
+import EditorToolbar from "./EditorToolbar";
 import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
-import { cn, useLoggedIn } from "~/lib/utils";
-import SettingsDropdown from "./components/SettingsDropdown";
-import DownloadButton from "./components/DownloadButton";
-import { CloudUpload, Home, RefreshCcw, Trash, Undo, User } from "lucide-react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useRouteContext,
-} from "@tanstack/react-router";
-import { SongDB } from "~/types/types";
-import { UserProfileData } from "src/worker/api/userProfile";
-import { SongData } from "~/types/songData";
-import { SongDataApi } from "src/worker/api/songDB";
+
+export type EditorState = EditorSubmitSchemaInput;
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -36,14 +29,6 @@ const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
     return objValue1 === objValue2;
   });
 };
-export type EditorState = Omit<
-  SongDataApi,
-  | "createdAt"
-  | "updatedAt"
-  | "currentIllustration"
-  | "isFavoriteByCurrentUser"
-  | "updateStatus"
->;
 
 interface EditorProps {
   songDB: SongDB;
@@ -51,14 +36,13 @@ interface EditorProps {
   user: UserProfileData;
 }
 
-const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
+const Editor: React.FC<EditorProps> = ({ songDB, songData }) => {
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
     : "editor/state";
   const defaultEditorState: EditorState = (
     songData ? songData : SongData.empty()
   ).toJSON();
-  const editorApi = useRouteContext({ from: "/edit/$songId" }).api.editor;
 
   const [editorState, setEditorState] = useLocalStorageState<EditorState>(
     editorStateKey,
@@ -88,6 +72,11 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
     }
   }, [editorStateKey, setEditorState]);
 
+  const handleBackupAndInitialize = useCallback(() => {
+    backupEditorState(editorState);
+    initializeEditor();
+  }, [backupEditorState, editorState, initializeEditor]);
+
   // Helper function to update individual metadata fields
   const updateMetadata = (field: keyof EditorState, value: string) => {
     setEditorState({
@@ -106,98 +95,25 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
 
   const toolbarTop = true;
 
-  //TODO: this is broken
   const canBeSubmitted =
     !editorStatesEqual(editorState, defaultEditorState) &&
     editorState.artist &&
     editorState.title &&
     editorState.chordpro;
-  const Toolbar: React.FC = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const handleLoginRedirect = () => {
-      navigate({
-        to: "/login",
-        search: {
-          redirect: location.pathname,
-        },
-      });
-    };
-    const loggedIn = useLoggedIn();
-    return (
-      <div
-        className={cn(
-          "flex flex-wrap w-auto mx-4 xl:mx-8 border-4 border-primary rounded-md max-md:justify-around [&>*]:bg-transparent [&>*]:rounded-none",
-          toolbarTop ? "mt-4 xl:mt-8" : "mb-4 xl:mb-8 "
-        )}
-      >
-        <Button
-          onClick={() => {
-            backupEditorState(editorState);
-            initializeEditor();
-          }}
-        >
-          {songData ? (
-            <>
-              Reload song <RefreshCcw />
-            </>
-          ) : (
-            <>
-              Clear <Trash />
-            </>
-          )}
-        </Button>
-        <Button
-          onClick={() => {
-            loadBackupState();
-          }}
-        >
-          Undo {songData ? "reload" : "clear"}
-          <Undo />
-        </Button>
-        <Button asChild>
-          <Link to="/">
-            <Home />
-            Home
-          </Link>
-        </Button>
-        <SettingsDropdown />
-        <DownloadButton editorState={editorState} />
-        {/* <PullRequestButton
-          metadata={editorState.metadata}
-          content={editorState.content}
-          disabled={!canBeSubmitted}
-        /> */}
-        {loggedIn && (
-          <Button
-            onClick={
-              songData
-                ? () =>
-                    editorApi[":id"].$put({
-                      param: { id: songData.id },
-                      json: editorState,
-                    })
-                : () => editorApi.$post({ json: editorState })
-            }
-            disabled={!canBeSubmitted}
-          >
-            <CloudUpload />
-            Submit {songData ? "edit" : "new song"}
-          </Button>
-        )}
-        {!loggedIn && (
-          <Button onClick={handleLoginRedirect}>
-            <User />
-            Login
-          </Button>
-        )}
-      </div>
-    );
-  };
 
   return (
     <div className="flex flex-col relative h-fit md:h-dvh gap-4 xl:gap-8 min-w-[250px]">
-      {toolbarTop && <Toolbar />}
+      {toolbarTop && (
+        <EditorToolbar
+          editorState={editorState}
+          songData={songData}
+          toolbarTop={toolbarTop}
+          canBeSubmitted={!!canBeSubmitted}
+          onBackupAndInitialize={handleBackupAndInitialize}
+          onLoadBackup={loadBackupState}
+          onInitializeEditor={initializeEditor}
+        />
+      )}
       <div
         className={cn(
           "flex flex-col md:flex-row w-full h-fit md:h-full overflow-hidden"
@@ -231,7 +147,17 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
           </CollapsibleMainArea>
         </div>
       </div>
-      {!toolbarTop && <Toolbar />}
+      {!toolbarTop && (
+        <EditorToolbar
+          editorState={editorState}
+          songData={songData}
+          toolbarTop={toolbarTop}
+          canBeSubmitted={!!canBeSubmitted}
+          onBackupAndInitialize={handleBackupAndInitialize}
+          onLoadBackup={loadBackupState}
+          onInitializeEditor={initializeEditor}
+        />
+      )}
     </div>
   );
 };

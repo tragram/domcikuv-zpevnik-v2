@@ -5,8 +5,7 @@ export const Route = createFileRoute("/edit/$songId")({
   loader: async ({ context, params }) => {
     const songDB = context.songDB;
     const songId = params.songId;
-    const songData = songDB.songs.find((s) => (s.id = songId));
-
+    const songData = songDB.songs.find((s) => s.id === songId);
     // TODO: show error song
     return {
       user: context.user,
