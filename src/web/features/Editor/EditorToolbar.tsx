@@ -15,6 +15,7 @@ import { cn, useLoggedIn } from "~/lib/utils";
 import SettingsDropdown from "./components/SettingsDropdown";
 import DownloadButton from "./components/DownloadButton";
 import { EditorState } from "./Editor";
+import { UserProfileData } from "src/worker/api/userProfile";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -23,7 +24,8 @@ interface EditorToolbarProps {
   canBeSubmitted: boolean;
   onBackupAndInitialize: () => void;
   onLoadBackup: () => void;
-  onInitializeEditor: () => void;
+  onSubmitSuccess?: () => void;
+  user: UserProfileData;
 }
 
 const EditorToolbar: React.FC<EditorToolbarProps> = ({
@@ -33,7 +35,8 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   canBeSubmitted,
   onBackupAndInitialize,
   onLoadBackup,
-  onInitializeEditor,
+  onSubmitSuccess,
+  user,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,14 +56,17 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
+
+    const submissionData: EditorState = { ...editorState };
+
     try {
       const response = await makeApiRequest(() =>
         songData
           ? editorApi[":id"].$put({
               param: { id: songData.id },
-              json: editorState,
+              json: submissionData,
             })
-          : editorApi.$post({ json: editorState })
+          : editorApi.$post({ json: submissionData })
       );
       const version = response.version;
       const isUpdate =
@@ -71,12 +77,18 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
           isUpdate ? "updated" : "submitted"
         } your version of the song!`
       );
-      onInitializeEditor();
+      onSubmitSuccess?.();
       queryClient.invalidateQueries({ queryKey: ["songs"] });
+      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["my-edits"] });
-      navigate({ to: "/submissions" });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+
+      if (user.profile && user.profile.isAdmin) {
+        navigate({ to: "/admin", search: { tab: "songs" } });
+      } else {
+        navigate({ to: "/submissions" });
+      }
     } catch (e) {
       toast.error("Something went wrong during submission", {
         description: e instanceof Error ? e.message : String(e),
@@ -95,20 +107,23 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     >
       {/* links */}
       <div className="flex editor-toolbar-links">
-        <Button className="hover:text-white bg-transparent"  asChild>
+        <Button className="hover:text-white bg-transparent" asChild>
           <Link to="/">
             <Home />
             Home
           </Link>
         </Button>
         {!loggedIn ? (
-          <Button className="hover:text-white bg-transparent"  onClick={handleLoginRedirect}>
+          <Button
+            className="hover:text-white bg-transparent"
+            onClick={handleLoginRedirect}
+          >
             <User />
             Login
           </Button>
         ) : (
           <>
-            <Button className="hover:text-white bg-transparent"  asChild>
+            <Button className="hover:text-white bg-transparent" asChild>
               <Link to="/submissions">
                 <User />
                 My edits
@@ -119,7 +134,10 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       </div>
       {/* editor actions */}
       <div className="flex editor-toolbar-actions">
-        <Button className="hover:text-white bg-transparent"  onClick={onBackupAndInitialize}>
+        <Button
+          className="hover:text-white bg-transparent"
+          onClick={onBackupAndInitialize}
+        >
           {songData ? (
             <>
               Reload song <RefreshCcw />
@@ -130,7 +148,10 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
             </>
           )}
         </Button>
-        <Button className="hover:text-white bg-transparent"  onClick={onLoadBackup}>
+        <Button
+          className="hover:text-white bg-transparent"
+          onClick={onLoadBackup}
+        >
           Undo {songData ? "reload" : "clear"}
           <Undo />
         </Button>
@@ -139,7 +160,8 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       {/* "final" actions */}
       <div className="flex justify-center max-lg:flex-wrap max-lg:w-full editor-toolbar-submit">
         <DownloadButton editorState={editorState} />
-        <Button className="bg-transparent"
+        <Button
+          className="bg-transparent"
           onClick={handleSubmit}
           disabled={!canBeSubmitted || isSubmitting}
         >

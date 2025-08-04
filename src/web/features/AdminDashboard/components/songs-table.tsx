@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "~/components/ui/button";
+import { useNavigate } from "@tanstack/react-router";
 import { Badge } from "~/components/ui/badge";
 import { Switch } from "~/components/ui/switch";
 import {
@@ -12,12 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "~/components/ui/dialog";
 import { DeletePrompt } from "./shared/delete-prompt";
 import { ActionButtons } from "./shared/action-buttons";
 import {
@@ -66,10 +61,9 @@ interface SongsTableProps {
 
 export default function SongsTable({ adminApi }: SongsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [editingSong, setEditingSong] = useState<SongDataDB | null>(null);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showDeleted, setShowDeleted] = useState(false);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
+  const navigate = useNavigate({ from: "/admin" });
 
   const { data: songs, isLoading: songsLoading } = useSongsAdmin(adminApi);
   const { data: versions, isLoading: versionsLoading } =
@@ -386,7 +380,7 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
                       />
                     </TableCell>
                     <TableCell>
-                      {song.updatedAt?.toLocaleDateString()}
+                      {song.updatedAt ? song.updatedAt.toLocaleDateString() : "-"}
                     </TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
                       <ActionButtons>
@@ -394,8 +388,7 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
                           variant="ghost"
                           size="sm"
                           onClick={() => {
-                            setEditingSong(song);
-                            setIsDialogOpen(true);
+                            navigate({ to: `/edit/${song.id}` });
                           }}
                           disabled={song.deleted}
                         >
@@ -491,9 +484,11 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
                                     <div className="text-sm text-muted-foreground">
                                       {version.key && `Key: ${version.key} • `}
                                       {version.language} • Created{" "}
-                                      {new Date(
-                                        version.createdAt
-                                      ).toLocaleDateString()}
+                                      {version.createdAt
+                                        ? new Date(
+                                            version.createdAt
+                                          ).toLocaleDateString()
+                                        : ""}
                                       {version.approved &&
                                         version.approvedAt && (
                                           <span className="text-green-600">
@@ -603,105 +598,6 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
           </TableBody>
         </Table>
       </div>
-
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Edit Song</DialogTitle>
-          </DialogHeader>
-          {editingSong && (
-            <SongForm
-              song={editingSong}
-              currentVersion={getCurrentVersion(editingSong)}
-              onSave={(data) => handleSongUpdate(editingSong.id, data)}
-              isLoading={updateSong.isPending}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
-  );
-}
-
-function SongForm({
-  song,
-  currentVersion,
-  onSave,
-  isLoading,
-}: {
-  song: SongDataDB;
-  currentVersion?: SongVersionDB;
-  onSave: (data: Partial<SongDataDB>) => void;
-  isLoading: boolean;
-}) {
-  const [formData, setFormData] = useState({
-    hidden: song.hidden,
-    deleted: song.deleted,
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(formData);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {currentVersion && (
-        <div className="p-4 bg-muted/50 rounded-lg">
-          <h4 className="font-medium mb-2">Current Version Info</h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div>
-              <span className="font-medium">Title:</span> {currentVersion.title}
-            </div>
-            <div>
-              <span className="font-medium">Artist:</span>{" "}
-              {currentVersion.artist}
-            </div>
-            <div>
-              <span className="font-medium">Key:</span>{" "}
-              {currentVersion.key || "N/A"}
-            </div>
-            <div>
-              <span className="font-medium">Language:</span>{" "}
-              {currentVersion.language}
-            </div>
-            <div>
-              <span className="font-medium">Status:</span>{" "}
-              <Badge
-                variant={currentVersion.approved ? "default" : "secondary"}
-              >
-                {currentVersion.approved ? "Approved" : "Pending"}
-              </Badge>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="flex items-center space-x-2">
-        <Switch
-          id="hidden"
-          checked={!formData.hidden}
-          onCheckedChange={(checked) =>
-            setFormData({ ...formData, hidden: !checked })
-          }
-        />
-        <Label htmlFor="hidden">Song is visible</Label>
-      </div>
-
-      <div className="flex items-center space-x-2">
-        <Switch
-          id="deleted"
-          checked={!formData.deleted}
-          onCheckedChange={(checked) =>
-            setFormData({ ...formData, deleted: !checked })
-          }
-        />
-        <Label htmlFor="deleted">Song is active (not deleted)</Label>
-      </div>
-
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Saving..." : "Update Song"}
-      </Button>
-    </form>
   );
 }

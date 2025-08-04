@@ -36,7 +36,7 @@ interface EditorProps {
   user: UserProfileData;
 }
 
-const Editor: React.FC<EditorProps> = ({ songDB, songData }) => {
+const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
     : "editor/state";
@@ -111,7 +111,8 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData }) => {
           canBeSubmitted={!!canBeSubmitted}
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
-          onInitializeEditor={initializeEditor}
+          onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
+          user={user}
         />
       )}
       <div
@@ -156,6 +157,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData }) => {
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
           onInitializeEditor={initializeEditor}
+          user={user}
         />
       )}
     </div>

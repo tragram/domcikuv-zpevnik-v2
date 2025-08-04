@@ -1,6 +1,10 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import AdminDashboard from "~/features/AdminDashboard/AdminDashboard";
+import { z } from "zod";
 export const Route = createFileRoute("/admin")({
+  validateSearch: z.object({
+    tab: z.string().optional(),
+  }),
   component: Home,
   beforeLoad: async ({ context }) => {
     const user = context.user;

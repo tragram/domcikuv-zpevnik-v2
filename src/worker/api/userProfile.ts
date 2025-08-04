@@ -34,6 +34,7 @@ export type UserProfileData =
         image: string | null;
         isFavoritesPublic: boolean;
         isAdmin: boolean;
+        isTrusted: boolean;
         createdAt: Date;
         updatedAt: Date;
       };

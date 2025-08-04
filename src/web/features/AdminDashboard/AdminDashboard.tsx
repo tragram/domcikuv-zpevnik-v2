@@ -1,3 +1,4 @@
+import { useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Breadcrumb,
@@ -22,7 +23,8 @@ interface AdminDashboardProps {
 }
 
 export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState("illustrations");
+  const { tab } = useSearch({ from: "/admin" });
+  const [activeTab, setActiveTab] = useState(tab || "illustrations");
   const getTabTitle = (tab: string) => {
     switch (tab) {
       case "songs":
