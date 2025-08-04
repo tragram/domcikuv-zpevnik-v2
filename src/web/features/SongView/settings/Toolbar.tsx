@@ -62,7 +62,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
   const { PWAInstallComponent, installItem } = usePWAInstall();
-  const wakelock = useWakeLock({
+  const {
+    request: wakeLockRequest,
+    release: wakeLockRelease,
+    isSupported: wakeLockSupported,
+  } = useWakeLock({
     reacquireOnPageVisible: true,
   });
   const [wakeLockEnabled, setWakeLockEnabled] = useLocalStorageState<boolean>(
@@ -70,10 +74,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     { defaultValue: true }
   );
   useEffect(() => {
-    if (wakelock.isSupported && wakeLockEnabled) {
-      wakelock.request();
+    if (wakeLockSupported && wakeLockEnabled) {
+      wakeLockRequest();
+    } else {
+      wakeLockRelease();
     }
-  }, [wakelock, wakeLockEnabled]);
+  }, [wakeLockSupported, wakeLockEnabled, wakeLockRequest, wakeLockRelease]);
 
   return (
     <div className="absolute top-0 w-full">
@@ -115,7 +121,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             {React.Children.toArray(
               <ResetBanListDropdownItems songDB={songDB} />
             )}
-            {wakelock.isSupported && (
+            {wakeLockSupported && (
               <DropdownMenuCheckboxItem
                 onSelect={(e) => e.preventDefault()}
                 checked={wakeLockEnabled}
@@ -137,7 +143,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 className="w-full h-full"
                 to={
                   "https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" +
-                  songData.chordproFile
+                  songData.id +
+                  ".pro"
                 }
               >
                 Edit on GitHub
