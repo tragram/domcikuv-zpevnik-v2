@@ -128,7 +128,7 @@ export const FilterStoreProvider = ({
 }) => {
   const [store] = React.useState(() =>
     createFilterSettingsStore({
-      availableSongbooks: availableSongbooks,
+      availableSongbooks: [],
     })
   );
 

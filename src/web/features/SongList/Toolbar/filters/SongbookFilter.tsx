@@ -78,7 +78,7 @@ const createSongbookChoices = (
               </AvatarFallback>
             </Avatar>
             <div className="truncate flex-1 text-sm">{label}</div>
-            <div className="text-xs text-muted-foreground flex-shrink-0">
+            <div className="text-xs text-primary/80 flex-shrink-0">
               {count} songs
             </div>
           </div>
@@ -125,7 +125,7 @@ export const SongBookFilter = ({
   const SelectAllButton = () => (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
-      checked={allSelected}
+      checked={false}
       onClick={handleSelectAll}
       className="py-2"
     >
@@ -134,9 +134,9 @@ export const SongBookFilter = ({
           <BookUser className="h-4 w-4 text-primary" />
         </div>
         <div className="truncate flex-1 text-sm">
-          {allSelected ? "Deselect All" : "Select All"}
+          {allSelected ? "All songs" : "Select all"}
         </div>
-        <div className="text-xs text-muted-foreground flex-shrink-0">
+        <div className="text-xs flex-shrink-0 text-primary/80 ">
           {allSelected
             ? `${availableSongs.length} songs`
             : `${totalSongsInSongbooks} songs`}
@@ -158,9 +158,9 @@ export const SongBookFilter = ({
     return selectedSongbooks.length > 0 ? (
       <>
         <DropdownMenuSeparator />
-        <div className="px-2 py-2 text-xs text-muted-foreground">
-          {` ${selectedSongbooks.length} of ${availableSongbooks.length} songbooks
-          selected • ${selectedSongs.length} of ${availableSongs.length} songs selected`}
+        <div className="px-2 py-2 text-xs text-primary/80 text-right">
+          {` ${selectedSongbooks.length}/${availableSongbooks.length} songbooks
+         • ${selectedSongs.length}/${availableSongs.length} songs`}
         </div>
       </>
     ) : (

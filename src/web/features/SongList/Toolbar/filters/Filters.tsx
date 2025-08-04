@@ -160,7 +160,7 @@ const FilterControls = ({
           vocalRange[0] === 0 &&
           vocalRange[1] === maxRange)) &&
       capo &&
-      selectedSongbooks.length === availableSongbooks.length &&
+      selectedSongbooks.length === 0 &&
       !onlyFavorites,
   };
 };
@@ -191,7 +191,7 @@ const Filtering = ({ songDB }: { songDB: SongDB }): JSX.Element => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             aria-label="Filtering"
-            className="dropdown-scroll no-scrollbar max-h-[80dvh] overflow-y-scroll"
+            className="dropdown-scroll no-scrollbar max-h-[80dvh] overflow-y-scroll w-72"
             sideOffset={15}
           >
             {dropdownSections}
