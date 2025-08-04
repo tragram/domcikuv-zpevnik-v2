@@ -22,9 +22,19 @@ interface FilterSettingsState extends FilterSettings {
   resetFilters: () => void;
 }
 
-interface FilterStoreProps {
+interface FilterDefaults {
+  language: SongLanguage;
+  vocalRange: VocalRangeType;
   selectedSongbooks: Songbook[];
+  capo: boolean;
+  onlyFavorites: boolean;
 }
+
+interface FilterStoreProps {
+  defaults: FilterDefaults;
+  availableSongbooks: Songbook[];
+}
+
 const safeAddSongbook = (songbooks: Songbook[], songbook: Songbook) => {
   if (songbooks.map((s) => s.name).includes(songbook.name)) {
     return songbooks;
@@ -37,11 +47,7 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
   create<FilterSettingsState>()(
     persist(
       (set) => ({
-        language: "all",
-        vocalRange: "all",
-        selectedSongbooks: initProps.selectedSongbooks,
-        capo: true,
-        onlyFavorites: false,
+        ...initProps.defaults,
         setLanguage: (language: SongLanguage) => set({ language: language }),
         setSelectedSongbooks: (songbooks: Songbook[]) =>
           set({
@@ -66,14 +72,7 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
         toggleCapo: () => set((state) => ({ capo: !state.capo })),
         toggleFavorites: () =>
           set((state) => ({ onlyFavorites: !state.onlyFavorites })),
-        resetFilters: () =>
-          set({
-            language: "all",
-            vocalRange: "all",
-            selectedSongbooks: initProps.selectedSongbooks,
-            capo: true,
-            onlyFavorites: false,
-          }),
+        resetFilters: () => set(initProps.defaults),
       }),
       {
         name: "filter-settings-store",
@@ -135,9 +134,18 @@ export const FilterStoreProvider = ({
   children: React.ReactNode;
   availableSongbooks: Songbook[];
 }) => {
+  const filterDefaults: FilterDefaults = {
+    language: "all",
+    vocalRange: "all",
+    selectedSongbooks: [],
+    capo: true,
+    onlyFavorites: false,
+  };
+
   const [store] = React.useState(() =>
     createFilterSettingsStore({
-      selectedSongbooks: [],
+      defaults: filterDefaults,
+      availableSongbooks,
     })
   );
 
