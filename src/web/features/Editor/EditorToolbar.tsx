@@ -95,20 +95,20 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     >
       {/* links */}
       <div className="flex editor-toolbar-links">
-        <Button asChild>
+        <Button className="hover:text-white bg-transparent"  asChild>
           <Link to="/">
             <Home />
             Home
           </Link>
         </Button>
         {!loggedIn ? (
-          <Button onClick={handleLoginRedirect}>
+          <Button className="hover:text-white bg-transparent"  onClick={handleLoginRedirect}>
             <User />
             Login
           </Button>
         ) : (
           <>
-            <Button asChild>
+            <Button className="hover:text-white bg-transparent"  asChild>
               <Link to="/submissions">
                 <User />
                 My edits
@@ -119,7 +119,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       </div>
       {/* editor actions */}
       <div className="flex editor-toolbar-actions">
-        <Button onClick={onBackupAndInitialize}>
+        <Button className="hover:text-white bg-transparent"  onClick={onBackupAndInitialize}>
           {songData ? (
             <>
               Reload song <RefreshCcw />
@@ -130,7 +130,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
             </>
           )}
         </Button>
-        <Button onClick={onLoadBackup}>
+        <Button className="hover:text-white bg-transparent"  onClick={onLoadBackup}>
           Undo {songData ? "reload" : "clear"}
           <Undo />
         </Button>
@@ -139,7 +139,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       {/* "final" actions */}
       <div className="flex justify-center max-lg:flex-wrap max-lg:w-full editor-toolbar-submit">
         <DownloadButton editorState={editorState} />
-        <Button
+        <Button className="bg-transparent"
           onClick={handleSubmit}
           disabled={!canBeSubmitted || isSubmitting}
         >
