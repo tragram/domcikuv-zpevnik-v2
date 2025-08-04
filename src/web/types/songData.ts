@@ -183,7 +183,7 @@ export class SongData {
     ] as (keyof SongData)[];
     const preamble = directives
       .filter((d) => this[d])
-      .map((d) => `{${d}: ${this[d]}`)
+      .map((d) => `{${d}: ${this[d]}}`)
       .join("\n");
     return preamble + "\n" + this.chordpro;
   }

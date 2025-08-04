@@ -18,10 +18,29 @@ import type { IllustrationSubmitData } from "./illustration-form";
 import { IllustrationGenerateSchema } from "src/worker/services/illustration-service";
 
 interface AIGeneratedFormProps {
-  illustration: any;
+  illustration: {
+    songId?: string;
+    summaryPromptVersion?: "v1" | "v2";
+    summaryModel?: "gpt-4o" | "gpt-4o-mini";
+    imageModel?: "FLUX.1-dev";
+    isActive?: boolean;
+  } | null;
   onSave: (data: IllustrationSubmitData) => void;
   isLoading?: boolean;
-  dropdownOptions: any;
+  dropdownOptions: {
+    promptVersions: {
+      default: string;
+      data: { value: string; label: string }[];
+    };
+    summaryModels: {
+      default: string;
+      data: { value: string; label: string }[];
+    };
+    imageModels: {
+      default: string;
+      data: { value: string; label: string }[];
+    };
+  };
   onSuccess?: () => void;
 }
 
@@ -36,12 +55,14 @@ export function AIGeneratedForm({
     {
       songId: illustration?.songId || "",
       promptVersion:
-        illustration?.summaryPromptVersion ||
-        dropdownOptions.promptVersions.default,
+        (illustration?.summaryPromptVersion ||
+          dropdownOptions.promptVersions.default) as "v1" | "v2",
       summaryModel:
-        illustration?.summaryModel || dropdownOptions.summaryModels.default,
+        (illustration?.summaryModel ||
+          dropdownOptions.summaryModels.default) as "gpt-4o" | "gpt-4o-mini",
       imageModel:
-        illustration?.imageModel || dropdownOptions.imageModels.default,
+        (illustration?.imageModel ||
+          dropdownOptions.imageModels.default) as "FLUX.1-dev",
       setAsActive: illustration?.isActive || false,
     }
   );
@@ -71,17 +92,21 @@ export function AIGeneratedForm({
         <Label>Prompt Version</Label>
         <Select
           value={formData.promptVersion}
-          onValueChange={(value) => updateFormData({ promptVersion: value })}
+          onValueChange={(value) =>
+            updateFormData({ promptVersion: value as "v1" | "v2" })
+          }
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a prompt version" />
           </SelectTrigger>
           <SelectContent>
-            {dropdownOptions.promptVersions.data.map((option: any) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
+            {dropdownOptions.promptVersions.data.map(
+              (option: { value: string; label: string }) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              )
+            )}
           </SelectContent>
         </Select>
       </div>
@@ -91,24 +116,30 @@ export function AIGeneratedForm({
           <Label>Summary Model</Label>
           <Select
             value={formData.summaryModel}
-            onValueChange={(value) => updateFormData({ summaryModel: value })}
+            onValueChange={(value) =>
+              updateFormData({ summaryModel: value as "gpt-4o" | "gpt-4o-mini" })
+            }
           >
             <SelectTrigger>
               <SelectValue placeholder="Select summary model" />
             </SelectTrigger>
             <SelectContent>
-              {dropdownOptions.summaryModels.data.map((option: any) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
+              {dropdownOptions.summaryModels.data.map(
+                (option: { value: string; label: string }) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                )
+              )}
             </SelectContent>
           </Select>
         </div>
 
         <ImageModelSelect
           value={formData.imageModel || ""}
-          onChange={(value) => updateFormData({ imageModel: value })}
+          onChange={(value) =>
+            updateFormData({ imageModel: value as "FLUX.1-dev" })
+          }
           options={dropdownOptions.imageModels.data}
         />
       </div>

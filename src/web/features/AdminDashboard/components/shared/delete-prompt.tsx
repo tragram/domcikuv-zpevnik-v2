@@ -18,8 +18,9 @@ type Props = {
   title: string;
   description: string;
   buttonText?: string;
-  variant?: VariantProps<typeof buttonVariants>['variant'];
-  size?: VariantProps<typeof buttonVariants>['size'];
+  variant?: VariantProps<typeof buttonVariants>["variant"];
+  size?: VariantProps<typeof buttonVariants>["size"];
+  disabled?: boolean;
 };
 
 export const DeletePrompt = ({
@@ -27,14 +28,20 @@ export const DeletePrompt = ({
   title,
   description,
   buttonText,
-  variant = 'destructive',
-  size = 'icon',
+  variant = "destructive",
+  size = "icon",
+  disabled,
 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <Button variant={variant} onClick={() => setIsOpen(true)} size={size}>
+      <Button
+        variant={variant}
+        onClick={() => setIsOpen(true)}
+        size={size}
+        disabled={disabled}
+      >
         {buttonText ? buttonText : <Trash2 />}
       </Button>
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -45,7 +52,9 @@ export const DeletePrompt = ({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={onDelete}>Continue</AlertDialogAction>
+            <AlertDialogAction onClick={onDelete} disabled={disabled}>
+              Continue
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

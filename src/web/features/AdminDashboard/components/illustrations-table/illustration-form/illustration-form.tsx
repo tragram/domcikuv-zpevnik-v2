@@ -14,9 +14,9 @@ import { ManualForm } from "./manual-form";
 
 interface IllustrationFormData {
   songId?: string;
-  summaryPromptVersion?: string;
-  summaryModel?: string;
-  imageModel?: string;
+  summaryPromptVersion?: SummaryPromptVersion;
+  summaryModel?: AvailableSummaryModel;
+  imageModel?: AvailableImageModel;
   imageURL?: string;
   thumbnailURL?: string;
   isActive?: boolean;

@@ -108,9 +108,9 @@ export function IllustrationCard({
   const transformedIllustration = {
     promptId: prompt.id,
     songId: illustration.songId,
-    summaryPromptVersion: prompt.summaryPromptVersion,
-    summaryModel: prompt.summaryModel,
-    imageModel: illustration.imageModel,
+    summaryPromptVersion: prompt.summaryPromptVersion as "v1" | "v2",
+    summaryModel: prompt.summaryModel as "gpt-4o" | "gpt-4o-mini",
+    imageModel: illustration.imageModel as "FLUX.1-dev",
     imageURL: illustration.imageURL,
     thumbnailURL: illustration.thumbnailURL,
     setAsActive: isActive,

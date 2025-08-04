@@ -1,6 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { UserProfileData } from "src/worker/api/userProfile";
 import useLocalStorageState from "use-local-storage-state";
+import { parseChordPro } from "../../../lib/chordpro";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import { SongDB } from "~/types/types";
@@ -77,7 +78,37 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
     initializeEditor();
   }, [backupEditorState, editorState, initializeEditor]);
 
-  // Helper function to update individual metadata fields
+  const handleChordproUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        if (!content) return;
+
+        const parsed = parseChordPro(content);
+        backupEditorState(editorState);
+        setEditorState((prevState) => ({
+          ...prevState,
+          title: parsed.title || prevState.title,
+          artist: parsed.artist || prevState.artist,
+          key: parsed.key || prevState.key,
+          capo: parsed.capo ? Number(parsed.capo) : prevState.capo,
+          tempo: parsed.tempo || prevState.tempo,
+          language: parsed.language || prevState.language,
+          chordpro: parsed.chordpro,
+        }));
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const onUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
   const updateMetadata = (field: keyof EditorState, value: string) => {
     setEditorState({
       ...editorState,
@@ -85,7 +116,6 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
     });
   };
 
-  // Helper function to update the content
   const updateContent = (content: string) => {
     setEditorState({
       ...editorState,
@@ -113,8 +143,16 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
           onLoadBackup={loadBackupState}
           onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
           user={user}
+          onUploadClick={onUploadClick}
         />
       )}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleChordproUpload}
+        className="hidden"
+        accept=".pro,.chordpro"
+      />
       <div
         className={cn(
           "flex flex-col md:flex-row w-full h-fit md:h-full overflow-hidden"
@@ -156,8 +194,9 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
           canBeSubmitted={!!canBeSubmitted}
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
-          onInitializeEditor={initializeEditor}
+          onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
           user={user}
+          onUploadClick={onUploadClick}
         />
       )}
     </div>

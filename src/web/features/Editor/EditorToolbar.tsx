@@ -1,7 +1,15 @@
 import { Button } from "~/components/ui/button";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import { CloudUpload, Home, RefreshCcw, Trash, Undo, User } from "lucide-react";
+import {
+  CloudUpload,
+  Home,
+  RefreshCcw,
+  Trash,
+  Undo,
+  Upload,
+  User,
+} from "lucide-react";
 import {
   Link,
   useLocation,
@@ -25,6 +33,7 @@ interface EditorToolbarProps {
   onBackupAndInitialize: () => void;
   onLoadBackup: () => void;
   onSubmitSuccess?: () => void;
+  onUploadClick: () => void;
   user: UserProfileData;
 }
 
@@ -36,6 +45,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   onBackupAndInitialize,
   onLoadBackup,
   onSubmitSuccess,
+  onUploadClick,
   user,
 }) => {
   const navigate = useNavigate();
@@ -134,6 +144,13 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       </div>
       {/* editor actions */}
       <div className="flex editor-toolbar-actions">
+        <Button
+          className="hover:text-white bg-transparent"
+          onClick={onUploadClick}
+        >
+          Upload ChordPro
+          <Upload />
+        </Button>
         <Button
           className="hover:text-white bg-transparent"
           onClick={onBackupAndInitialize}
