@@ -8,6 +8,7 @@ import { zValidator } from "@hono/zod-validator";
 import {
   createSong,
   createSongVersion,
+  deleteSongVersion,
   findSong,
   getSongVersionsByUser,
 } from "../services/song-service";
@@ -129,6 +130,30 @@ const editorApp = buildApp()
         "Failed to retrieve your submissions",
         500,
         "GET_EDITS_ERROR"
+      );
+    }
+  })
+  .delete("/:id", async (c) => {
+    const userId = c.get("USER")?.id;
+    const versionId = c.req.param("id");
+
+    if (!userId) {
+      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
+    }
+    try {
+      const db = drizzle(c.env.DB);
+      await deleteSongVersion(db, versionId, userId);
+      return successJSend(c, { message: "Version deleted successfully" });
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        return errorJSend(c, error.message, 400, "DELETE_VERSION_FAILED");
+      }
+      return errorJSend(
+        c,
+        "Failed to delete version",
+        500,
+        "DELETE_VERSION_ERROR"
       );
     }
   });

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { makeApiRequest } from "../../services/apiHelpers";
 import {
   Table,
@@ -9,8 +9,9 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { Button } from "~/components/ui/button";
-import { FilePenLine, GitMerge, Home, Trash2 } from "lucide-react";
-import { cn } from "~/lib/utils";
+import { FilePenLine, GitMerge } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { DeletePrompt } from "~/features/AdminDashboard/components/shared/delete-prompt";
 
 export const Route = createFileRoute("/(auth)/submissions")({
   component: UserSubmissions,
@@ -29,9 +30,23 @@ interface SongVersion {
 
 function UserSubmissions() {
   const versions = Route.useLoaderData();
+  const context = Route.useRouteContext();
+  const router = useRouter();
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) =>
+      makeApiRequest(() =>
+        context.api.editor[":id"].$delete({
+          param: { id },
+        })
+      ),
+    onSuccess: () => {
+      router.invalidate();
+    },
+  });
 
   return (
-    <div className="w-full">
+    <div className="max-w-3xl w-[80vw]">
       <Table>
         <TableHeader>
           <TableRow>
@@ -69,7 +84,7 @@ function UserSubmissions() {
                   ? new Date(version.createdAt).toLocaleDateString()
                   : "N/A"}
               </TableCell>
-              <TableCell>
+              <TableCell className="flex gap-1">
                 <Button asChild variant="ghost" size="icon">
                   <Link
                     to="/edit/$songId"
@@ -80,9 +95,13 @@ function UserSubmissions() {
                     <FilePenLine />
                   </Link>
                 </Button>
-                <Button variant="ghost" size="icon" disabled>
-                  <Trash2 />
-                </Button>
+                <DeletePrompt
+                  onDelete={() => deleteMutation.mutate(version.id)}
+                  title="Delete this version?"
+                  description="This action cannot be undone. This will permanently delete your version."
+                  variant="ghost"
+                  disabled={version.approved}
+                />
               </TableCell>
             </TableRow>
           ))}

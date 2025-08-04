@@ -6,7 +6,6 @@ import {
   isNotNull,
   getTableColumns,
   desc,
-  asc,
   sql,
 } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
@@ -456,4 +455,30 @@ export const getSongVersionsByUser = async (
     .orderBy(desc(songVersion.createdAt));
 
   return versions;
+};
+
+export const deleteSongVersion = async (
+  db: DrizzleD1Database,
+  versionId: string,
+  userId: string
+) => {
+  const version = await db
+    .select()
+    .from(songVersion)
+    .where(eq(songVersion.id, versionId))
+    .limit(1);
+
+  if (version.length === 0) {
+    throw new Error("Version not found");
+  }
+
+  if (version[0].userId !== userId) {
+    throw new Error("You are not authorized to delete this version");
+  }
+
+  if (version[0].approved) {
+    throw new Error("You cannot delete an approved version");
+  }
+
+  await db.delete(songVersion).where(eq(songVersion.id, versionId));
 };

@@ -380,7 +380,9 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
                       />
                     </TableCell>
                     <TableCell>
-                      {song.updatedAt ? song.updatedAt.toLocaleDateString() : "-"}
+                      {song.updatedAt
+                        ? song.updatedAt.toLocaleDateString()
+                        : "-"}
                     </TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
                       <ActionButtons>
@@ -503,6 +505,23 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
                                 </div>
 
                                 <ActionButtons>
+                                  {version.id !== song.currentVersionId && (
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() =>
+                                        handleSetCurrentVersion(
+                                          song.id,
+                                          version.id
+                                        )
+                                      }
+                                      className="mr-2"
+                                      disabled={setCurrentVersion.isPending}
+                                    >
+                                      <Star className="h-4 w-4 mr-1" />
+                                      Set Current
+                                    </Button>
+                                  )}
                                   {version.approved ? (
                                     <Button
                                       variant="outline"
@@ -536,23 +555,6 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
                                     >
                                       <Check className="h-4 w-4 mr-1" />
                                       Approve
-                                    </Button>
-                                  )}
-
-                                  {version.id !== song.currentVersionId && (
-                                    <Button
-                                      variant="outline"
-                                      size="sm"
-                                      onClick={() =>
-                                        handleSetCurrentVersion(
-                                          song.id,
-                                          version.id
-                                        )
-                                      }
-                                      disabled={setCurrentVersion.isPending}
-                                    >
-                                      <Star className="h-4 w-4 mr-1" />
-                                      Set Current
                                     </Button>
                                   )}
 
