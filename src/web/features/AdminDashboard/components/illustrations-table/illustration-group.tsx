@@ -72,9 +72,6 @@ export function SongIllustrationsGroup({
   onToggleExpanded,
   showDeleted,
 }: SongIllustrationsGroupProps) {
-  if (song.title == "1. signální") {
-    console.log(song);
-  }
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const someActive = Boolean(song.currentIllustrationId);
@@ -114,6 +111,7 @@ export function SongIllustrationsGroup({
     illustrationData,
     mode,
   }: IllustrationSubmitData) => {
+    console.log(illustrationData,mode)
     try {
       if (mode === "manual") {
         await createMutation.mutateAsync(

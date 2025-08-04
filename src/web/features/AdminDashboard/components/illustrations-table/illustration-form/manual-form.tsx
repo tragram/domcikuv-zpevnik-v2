@@ -5,9 +5,9 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Upload, X } from "lucide-react";
-import { IllustrationCreateSchema } from "src/worker/api/admin/illustrations";
 import { SongIdField, ActiveSwitch } from "./shared-form-fields";
 import type { IllustrationSubmitData } from "./illustration-form";
+import { IllustrationCreateSchema } from "src/worker/services/illustration-service";
 
 interface ManualFormProps {
   illustration: any;
@@ -60,7 +60,7 @@ export function ManualForm({
     imageModel: illustration?.imageModel || "",
     imageURL: illustration?.imageURL || "",
     thumbnailURL: illustration?.thumbnailURL || "",
-    isActive: illustration?.isActive || false,
+    setAsActive: illustration?.isActive || false,
   });
 
   const updateFormData = (updates: Partial<IllustrationCreateSchema>) => {
@@ -235,8 +235,8 @@ export function ManualForm({
       </div>
 
       <ActiveSwitch
-        isActive={formData.isActive}
-        onActiveChange={(checked) => updateFormData({ isActive: checked })}
+        isActive={formData.setAsActive}
+        onActiveChange={(checked) => updateFormData({ setAsActive: checked })}
         mode="manual"
       />
 

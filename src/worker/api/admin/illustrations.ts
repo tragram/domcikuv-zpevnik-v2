@@ -85,7 +85,7 @@ export const illustrationRoutes = buildApp()
       // Extract files separately since they don't convert well with Object.fromEntries
       const imageFile = formData.get("imageFile") as File | null;
       const thumbnailFile = formData.get("thumbnailFile") as File | null;
-
+      console.log(imageFile,thumbnailFile)
       const db = drizzle(c.env.DB);
 
       // Verify the song exists
