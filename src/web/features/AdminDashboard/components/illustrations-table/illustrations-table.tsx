@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
@@ -8,10 +8,17 @@ import { SongIllustrationsGroup } from "./illustration-group";
 import { songsWithIllustrationsAndPrompts } from "~/services/illustrations";
 import { AdminApi } from "~/services/songs";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import {
   useIllustrationsAdmin,
   usePromptsAdmin,
   useSongDBAdmin,
-} from "../../hooks";
+} from "../../adminHooks";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;
@@ -20,14 +27,113 @@ interface IllustrationsTableProps {
 export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleted, setShowDeleted] = useState(false);
+  const [imageModelFilter, setImageModelFilter] = useState<string>("all");
+  const [summaryModelFilter, setSummaryModelFilter] = useState<string>("all");
+  const [promptVersionFilter, setPromptVersionFilter] =
+    useState<string>("all");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
   const { data: songs, isLoading: songsLoading } = useSongDBAdmin(adminApi);
-  console.log(songsLoading)
   const { data: illustrations, isLoading: illustrationsLoading } =
     useIllustrationsAdmin(adminApi);
   const { data: prompts, isLoading: promptsLoading } =
     usePromptsAdmin(adminApi);
+
+  const songsIllustrationsAndPrompts = useMemo(() => {
+    if (!songs || !illustrations || !prompts) {
+      return {};
+    }
+    return songsWithIllustrationsAndPrompts(songs, illustrations, prompts);
+  }, [songs, illustrations, prompts]);
+
+  const imageModels = useMemo(() => {
+    if (!illustrations) return [];
+    return [...new Set(illustrations.map((i) => i.imageModel))];
+  }, [illustrations]);
+
+  const summaryModels = useMemo(() => {
+    if (!prompts) return [];
+    return [...new Set(prompts.map((p) => p.summaryModel))];
+  }, [prompts]);
+
+  const promptVersions = useMemo(() => {
+    if (!prompts) return [];
+    return [...new Set(prompts.map((p) => p.summaryPromptVersion))];
+  }, [prompts]);
+
+  const promptsById = useMemo(() => {
+    if (!prompts) return new Map();
+    return new Map(prompts.map((p) => [p.id, p]));
+  }, [prompts]);
+
+  const filteredAndSortedGroups = useMemo(() => {
+    let groups = Object.entries(songsIllustrationsAndPrompts);
+
+    // Filter by search term
+    if (searchTerm) {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+      groups = groups.filter(([, group]) => {
+        const { song } = group;
+        return (
+          song.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+          song.artist.toLowerCase().includes(lowerCaseSearchTerm)
+        );
+      });
+    }
+
+    // Filter by image model
+    if (imageModelFilter !== "all") {
+      groups = groups.filter(
+        ([, group]) =>
+          Array.isArray(group.illustrations) &&
+          group.illustrations.some((i) => i.imageModel === imageModelFilter)
+      );
+    }
+
+    // Filter by summary model
+    if (summaryModelFilter !== "all") {
+      groups = groups.filter(([, group]) => {
+        if (!Array.isArray(group.illustrations)) return false;
+        return group.illustrations.some((i) => {
+          const prompt = promptsById.get(i.promptId);
+          return prompt && prompt.summaryModel === summaryModelFilter;
+        });
+      });
+    }
+
+    // Filter by prompt version
+    if (promptVersionFilter !== "all") {
+      groups = groups.filter(([, group]) => {
+        if (!Array.isArray(group.illustrations)) return false;
+        return group.illustrations.some((i) => {
+          const prompt = promptsById.get(i.promptId);
+          return prompt && prompt.summaryPromptVersion === promptVersionFilter;
+        });
+      });
+    }
+
+    // Sort groups by song title
+    return groups.sort(([, songA], [, songB]) => {
+      const activeA = Boolean(songA.song.currentIllustrationId);
+      const activeB = Boolean(songB.song.currentIllustrationId);
+      if (!activeA || !activeB) {
+        if (!activeA) {
+          return -1;
+        }
+        if (!activeB) {
+          return 1;
+        }
+      }
+      return songA.song.title.localeCompare(songB.song.title);
+    });
+  }, [
+    songsIllustrationsAndPrompts,
+    searchTerm,
+    imageModelFilter,
+    summaryModelFilter,
+    promptVersionFilter,
+    promptsById,
+  ]);
 
   if (songsLoading || illustrationsLoading || promptsLoading) {
     return <div>Loading...</div>;
@@ -46,27 +152,6 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     }
     setExpandedGroups(newExpanded);
   };
-  const songsIllustrationsAndPrompts = songsWithIllustrationsAndPrompts(
-    songs,
-    illustrations,
-    prompts
-  );
-  // Sort groups by song title
-  const sortedGroups = Object.entries(songsIllustrationsAndPrompts).sort(
-    ([, songA], [, songB]) => {
-      const activeA = Boolean(songA.song.currentIllustrationId);
-      const activeB = Boolean(songB.song.currentIllustrationId);
-      if (!activeA || !activeB) {
-        if (!activeA) {
-          return -1;
-        }
-        if (!activeB) {
-          return 1;
-        }
-      }
-      return songA.song.title.localeCompare(songB.song.title);
-    }
-  );
 
   return (
     <div className="space-y-4 p-4 w-full">
@@ -74,7 +159,8 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
         <div className="text-center sm:text-left">
           <h3 className="text-lg font-medium">Song Illustrations</h3>
           <p className="text-sm text-muted-foreground">
-            {sortedGroups.length} songs • {illustrations.length} illustrations
+            {filteredAndSortedGroups.length} songs • {illustrations.length}{" "}
+            illustrations
           </p>
         </div>
       </div>
@@ -89,8 +175,53 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             className="text-xs sm:text-sm md:text-base"
           />
         </div>
-        <div className="flex items-center space-x-8">
-          <div className="flex flex-row gap-2">
+        <div className="flex items-center space-x-4">
+          <Select value={imageModelFilter} onValueChange={setImageModelFilter}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by image model" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Image Models</SelectItem>
+              {imageModels.map((model) => (
+                <SelectItem key={model} value={model}>
+                  {model}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select
+            value={summaryModelFilter}
+            onValueChange={setSummaryModelFilter}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by summary model" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Summary Models</SelectItem>
+              {summaryModels.map((model) => (
+                <SelectItem key={model} value={model}>
+                  {model}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select
+            value={promptVersionFilter}
+            onValueChange={setPromptVersionFilter}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by prompt version" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Prompt Versions</SelectItem>
+              {promptVersions.map((version) => (
+                <SelectItem key={version} value={version}>
+                  {version}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <div className="flex items-center space-x-2">
             <Checkbox
               id="show-deleted"
               checked={showDeleted}
@@ -109,7 +240,9 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             variant="outline"
             size="sm"
             onClick={() =>
-              setExpandedGroups(new Set(sortedGroups.map(([songId]) => songId)))
+              setExpandedGroups(
+                new Set(filteredAndSortedGroups.map(([songId]) => songId))
+              )
             }
           >
             Expand All
@@ -125,7 +258,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       </div>
 
       <div className="space-y-2">
-        {sortedGroups.map(([songId, song]) => (
+        {filteredAndSortedGroups.map(([songId, song]) => (
           <SongIllustrationsGroup
             key={songId}
             song={song.song}
@@ -137,7 +270,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
           />
         ))}
 
-        {sortedGroups.length === 0 && (
+        {filteredAndSortedGroups.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
             No illustrations found matching your search.
           </div>

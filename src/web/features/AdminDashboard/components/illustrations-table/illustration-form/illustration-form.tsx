@@ -62,6 +62,7 @@ interface IllustrationFormProps {
   isLoading?: boolean;
   dropdownOptions: DropdownOptions;
   manualOnly?: boolean;
+  onSuccess?: () => void;
 }
 
 export function IllustrationForm({
@@ -70,6 +71,7 @@ export function IllustrationForm({
   isLoading,
   dropdownOptions,
   manualOnly = false,
+  onSuccess = () => {},
 }: IllustrationFormProps) {
   const [activeTab, setActiveTab] = useState<"ai" | "manual">(
     manualOnly ? "manual" : "ai"
@@ -105,6 +107,7 @@ export function IllustrationForm({
             onSave={onSave}
             isLoading={isLoading}
             dropdownOptions={dropdownOptions}
+            onSuccess={onSuccess}
           />
         </TabsContent>
         <TabsContent value="manual" className="space-y-4 mt-6">
@@ -113,6 +116,7 @@ export function IllustrationForm({
             onSave={onSave}
             isLoading={isLoading}
             dropdownOptions={dropdownOptions}
+            onSuccess={onSuccess}
           />
         </TabsContent>
       </Tabs>

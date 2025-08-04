@@ -1,4 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
+// illustration-group.tsx
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
@@ -72,6 +73,7 @@ export function SongIllustrationsGroup({
   onToggleExpanded,
   showDeleted,
 }: SongIllustrationsGroupProps) {
+  const queryClient = useQueryClient();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const someActive = Boolean(song.currentIllustrationId);
@@ -88,8 +90,17 @@ export function SongIllustrationsGroup({
     onSuccess: () => {
       toast.success("Illustration created successfully");
       setIsDialogOpen(false);
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+
+      // Auto-expand the group to show the new illustration
+      if (!isExpanded) {
+        onToggleExpanded();
+      }
     },
-    onError: () => {
+    onError: (error) => {
+      console.error('Create illustration error:', error);
       toast.error("Failed to create illustration");
     },
   });
@@ -99,11 +110,20 @@ export function SongIllustrationsGroup({
       return await generateIllustration(adminApi, data);
     },
     onSuccess: () => {
-      toast.success("Illustration created successfully");
+      toast.success("Illustration generated successfully");
       setIsDialogOpen(false);
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+
+      // Auto-expand the group to show the new illustration
+      if (!isExpanded) {
+        onToggleExpanded();
+      }
     },
-    onError: () => {
-      toast.error("Failed to create illustration");
+    onError: (error) => {
+      console.error('Generate illustration error:', error);
+      toast.error("Failed to generate illustration");
     },
   });
 
@@ -111,7 +131,6 @@ export function SongIllustrationsGroup({
     illustrationData,
     mode,
   }: IllustrationSubmitData) => {
-    console.log(illustrationData,mode)
     try {
       if (mode === "manual") {
         await createMutation.mutateAsync(
@@ -123,9 +142,12 @@ export function SongIllustrationsGroup({
         );
       }
     } catch (error) {
-      console.error(error);
+      // Error handling is done in onError callbacks
+      console.error('Illustration creation/generation error:', error);
     }
   };
+
+  const isLoading = createMutation.isPending || generateMutation.isPending;
 
   return (
     <>
@@ -210,25 +232,28 @@ export function SongIllustrationsGroup({
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
                 <Button
-                  className="!bg-primary text-white size-5"
+                  size="sm"
+                  className="h-8 w-8 p-0 bg-primary hover:bg-primary/90 text-white shadow-sm"
                   onClick={(e) => {
                     e.stopPropagation();
                   }}
+                  disabled={isLoading}
                 >
-                  <Plus className="size-4" />
+                  <Plus className="h-4 w-4" />
                 </Button>
               </DialogTrigger>
               <DialogContent className="max-w-2xl">
                 <DialogHeader>
-                  <DialogTitle>Add New Illustration</DialogTitle>
+                  <DialogTitle>
+                    Add New Illustration for "{song.title}"
+                  </DialogTitle>
                 </DialogHeader>
                 <IllustrationForm
                   illustration={{ songId: song.id }}
                   onSave={handleCreateIllustration}
-                  isLoading={
-                    createMutation.isPending || generateMutation.isPending
-                  }
+                  isLoading={isLoading}
                   dropdownOptions={backendDropdownOptions}
+                  onSuccess={() => setIsDialogOpen(false)}
                 />
               </DialogContent>
             </Dialog>
@@ -237,17 +262,26 @@ export function SongIllustrationsGroup({
 
         <CollapsibleContent>
           <div className="px-1 md:px-3 pb-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
-              {filteredIllustrations.map((illustration) => (
-                <IllustrationCard
-                  key={illustration.id}
-                  song={song}
-                  illustration={illustration}
-                  onPreview={setPreviewImage}
-                  prompt={prompts[illustration.promptId]}
-                />
-              ))}
-            </div>
+            {filteredIllustrations.length === 0 ? (
+              <div className="mt-3 p-8 text-center text-muted-foreground border-2 border-dashed rounded-lg">
+                <p className="text-sm">No illustrations yet</p>
+                <p className="text-xs mt-1">Click the + button above to create one</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
+                {filteredIllustrations
+                  .filter((illustration) => prompts[illustration.promptId])
+                  .map((illustration) => (
+                    <IllustrationCard
+                      key={illustration.id}
+                      song={song}
+                      illustration={illustration}
+                      onPreview={setPreviewImage}
+                      prompt={prompts[illustration.promptId]}
+                    />
+                  ))}
+              </div>
+            )}
           </div>
         </CollapsibleContent>
       </Collapsible>
@@ -257,15 +291,15 @@ export function SongIllustrationsGroup({
           open={!!previewImage}
           onOpenChange={() => setPreviewImage(null)}
         >
-          <DialogContent className="max-w-3xl">
+          <DialogContent className="max-w-4xl">
             <DialogHeader>
-              <DialogTitle>Image Preview</DialogTitle>
+              <DialogTitle>Image Preview - {song.title}</DialogTitle>
             </DialogHeader>
             <div className="flex justify-center">
               <img
-                src={previewImage || "/placeholder.svg?height=400&width=600"}
-                alt="Preview"
-                className="max-w-full max-h-96 object-contain rounded"
+                src={previewImage}
+                alt="Full size preview"
+                className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-lg"
               />
             </div>
           </DialogContent>

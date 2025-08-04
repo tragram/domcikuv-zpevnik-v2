@@ -1,3 +1,4 @@
+// hooks.ts
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AdminApi,
@@ -90,6 +91,7 @@ export const useUpdateSong = (adminApi: AdminApi) => {
     }) => putSongAdmin(adminApi, songId, song),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
   });
 };
@@ -100,6 +102,7 @@ export const useDeleteSong = (adminApi: AdminApi) => {
     mutationFn: (songId: string) => deleteSongAdmin(adminApi, songId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
   });
 };
@@ -118,6 +121,7 @@ export const useUpdateVersion = (adminApi: AdminApi) => {
     }) => putVersionAdmin(adminApi, songId, versionId, version),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
   });
 };
@@ -134,6 +138,7 @@ export const useDeleteVersion = (adminApi: AdminApi) => {
     }) => deleteVersionAdmin(adminApi, songId, versionId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
   });
 };
@@ -177,8 +182,57 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
       id: string;
       data: IllustrationModifySchema;
     }) => updateIllustration(adminApi, id, data),
-    onSuccess: () => {
+    onMutate: async ({ id, data }) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: ["songDBAdmin"] });
+      await queryClient.cancelQueries({ queryKey: ["illustrationsAdmin"] });
+
+      // Snapshot previous values
+      const previousSongs = queryClient.getQueryData<SongWithCurrentVersion[]>(["songDBAdmin"]);
+      const previousIllustrations = queryClient.getQueryData<SongIllustrationDB[]>(["illustrationsAdmin"]);
+
+      // Optimistically update illustrations
+      if (previousIllustrations) {
+        queryClient.setQueryData<SongIllustrationDB[]>(["illustrationsAdmin"], (old) =>
+          old?.map(ill => 
+            ill.id === id 
+              ? { ...ill, imageModel: data.imageModel || ill.imageModel, imageURL: data.imageURL || ill.imageURL, thumbnailURL: data.thumbnailURL || ill.thumbnailURL }
+              : ill
+          ) || []
+        );
+      }
+
+      // Optimistically update songs if setAsActive is being changed
+      if (data.setAsActive !== undefined && previousSongs) {
+        queryClient.setQueryData<SongWithCurrentVersion[]>(["songDBAdmin"], (old) =>
+          old?.map(song => {
+            const illustration = previousIllustrations?.find(ill => ill.id === id);
+            if (illustration && illustration.songId === song.id) {
+              return {
+                ...song,
+                currentIllustrationId: data.setAsActive ? id : (song.currentIllustrationId === id ? null : song.currentIllustrationId)
+              };
+            }
+            return song;
+          }) || []
+        );
+      }
+
+      return { previousSongs, previousIllustrations };
+    },
+    onError: (err, variables, context) => {
+      // Rollback on error
+      if (context?.previousSongs) {
+        queryClient.setQueryData(["songDBAdmin"], context.previousSongs);
+      }
+      if (context?.previousIllustrations) {
+        queryClient.setQueryData(["illustrationsAdmin"], context.previousIllustrations);
+      }
+    },
+    onSettled: () => {
+      // Always refetch after success or error
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
     },
   });
 };
@@ -190,8 +244,26 @@ export const useDeleteIllustration = (adminApi: AdminApi) => {
       await deleteIllustration(adminApi, id);
       return id;
     },
-    onSuccess: () => {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["illustrationsAdmin"] });
+      
+      const previousIllustrations = queryClient.getQueryData<SongIllustrationDB[]>(["illustrationsAdmin"]);
+      
+      // Optimistically mark as deleted
+      queryClient.setQueryData<SongIllustrationDB[]>(["illustrationsAdmin"], (old) =>
+        old?.map(ill => ill.id === id ? { ...ill, deleted: true } : ill) || []
+      );
+
+      return { previousIllustrations };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousIllustrations) {
+        queryClient.setQueryData(["illustrationsAdmin"], context.previousIllustrations);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
   });
 };
@@ -203,8 +275,26 @@ export const useRestoreIllustration = (adminApi: AdminApi) => {
       await restoreIllustration(adminApi, id);
       return id;
     },
-    onSuccess: () => {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["illustrationsAdmin"] });
+      
+      const previousIllustrations = queryClient.getQueryData<SongIllustrationDB[]>(["illustrationsAdmin"]);
+      
+      // Optimistically mark as restored
+      queryClient.setQueryData<SongIllustrationDB[]>(["illustrationsAdmin"], (old) =>
+        old?.map(ill => ill.id === id ? { ...ill, deleted: false } : ill) || []
+      );
+
+      return { previousIllustrations };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousIllustrations) {
+        queryClient.setQueryData(["illustrationsAdmin"], context.previousIllustrations);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
   });
 };
@@ -215,14 +305,19 @@ export const useCreateIllustration = (adminApi: AdminApi) => {
     mutationFn: (data: IllustrationCreateSchema) =>
       createIllustration(adminApi, data),
     onSuccess: (response) => {
+      // Update all relevant queries
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      
+      // Optimistically add the new illustration
       queryClient.setQueryData<SongIllustrationDB[]>(
         ["illustrationsAdmin"],
-        (old) => (old ? [...old, response.illustration] : old)
+        (old) => (old ? [...old, response.illustration] : [response.illustration])
       );
+      
+      // Optimistically add the new prompt
       queryClient.setQueryData<IllustrationPromptDB[]>(
         ["promptsAdmin"],
-        (old) => (old ? [...old, response.prompt] : old)
+        (old) => (old ? [...old, response.prompt] : [response.prompt])
       );
     },
   });
@@ -234,14 +329,19 @@ export const useGenerateIllustration = (adminApi: AdminApi) => {
     mutationFn: (data: IllustrationGenerateSchema) =>
       generateIllustration(adminApi, data),
     onSuccess: (response) => {
+      // Update all relevant queries
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      
+      // Optimistically add the new illustration
       queryClient.setQueryData<SongIllustrationDB[]>(
         ["illustrationsAdmin"],
-        (old) => (old ? [...old, response.illustration] : old)
+        (old) => (old ? [...old, response.illustration] : [response.illustration])
       );
+      
+      // Optimistically add the new prompt
       queryClient.setQueryData<IllustrationPromptDB[]>(
         ["promptsAdmin"],
-        (old) => (old ? [...old, response.prompt] : old)
+        (old) => (old ? [...old, response.prompt] : [response.prompt])
       );
     },
   });
@@ -257,7 +357,28 @@ export const useSetActiveIllustration = (adminApi: AdminApi) => {
       songId: string;
       illustrationId: string;
     }) => setActiveIllustration(adminApi, songId, illustrationId),
-    onSuccess: () => {
+    onMutate: async ({ songId, illustrationId }) => {
+      await queryClient.cancelQueries({ queryKey: ["songDBAdmin"] });
+      
+      const previousSongs = queryClient.getQueryData<SongWithCurrentVersion[]>(["songDBAdmin"]);
+      
+      // Optimistically update the current illustration
+      queryClient.setQueryData<SongWithCurrentVersion[]>(["songDBAdmin"], (old) =>
+        old?.map(song => 
+          song.id === songId 
+            ? { ...song, currentIllustrationId: illustrationId }
+            : song
+        ) || []
+      );
+
+      return { previousSongs };
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousSongs) {
+        queryClient.setQueryData(["songDBAdmin"], context.previousSongs);
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
   });

@@ -31,7 +31,7 @@ import {
   updateUserAdmin,
 } from "~/services/users";
 import { toast } from "sonner";
-import { useUsersAdmin } from "../hooks";
+import { useUsersAdmin } from "../adminHooks";
 import { AdminApi } from "~/services/songs";
 
 interface User {

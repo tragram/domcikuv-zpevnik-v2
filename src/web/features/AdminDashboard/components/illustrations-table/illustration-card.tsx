@@ -1,6 +1,8 @@
+// illustration-card.tsx
 import { useRouteContext } from "@tanstack/react-router";
 import { Edit, ExternalLink, Eye, RotateCcw } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -31,7 +33,7 @@ import {
   useDeleteIllustration,
   useRestoreIllustration,
   useUpdateIllustration,
-} from "../../hooks";
+} from "../../adminHooks";
 
 interface IllustrationCardProps {
   song: SongWithCurrentVersion;
@@ -55,19 +57,51 @@ export function IllustrationCard({
   const deleteMutation = useDeleteIllustration(adminApi);
   const restoreMutation = useRestoreIllustration(adminApi);
 
-  const handleUpdateIllustration = (
+  const handleUpdateIllustration = async (
     id: string,
     illustrationData: IllustrationModifySchema
   ) => {
-    updateMutation.mutate({ id, data: illustrationData });
+    try {
+      await updateMutation.mutateAsync({ id, data: illustrationData });
+      toast.success("Illustration updated successfully");
+      setIsEditDialogOpen(false);
+    } catch (error) {
+      toast.error("Failed to update illustration");
+      console.error('Update error:', error);
+    }
   };
 
-  const handleDeleteIllustration = () => {
-    deleteMutation.mutate(illustration.id);
+  const handleDeleteIllustration = async () => {
+    try {
+      await deleteMutation.mutateAsync(illustration.id);
+      toast.success("Illustration deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete illustration");
+      console.error('Delete error:', error);
+    }
   };
 
-  const handleRestoreIllustration = () => {
-    restoreMutation.mutate(illustration.id);
+  const handleRestoreIllustration = async () => {
+    try {
+      await restoreMutation.mutateAsync(illustration.id);
+      toast.success("Illustration restored successfully");
+    } catch (error) {
+      toast.error("Failed to restore illustration");
+      console.error('Restore error:', error);
+    }
+  };
+
+  const handleToggleActive = async () => {
+    try {
+      await updateMutation.mutateAsync({
+        id: illustration.id,
+        data: { setAsActive: !isActive }
+      });
+      toast.success(isActive ? "Illustration deactivated" : "Illustration activated");
+    } catch (error) {
+      toast.error("Failed to update illustration status");
+      console.error('Toggle active error:', error);
+    }
   };
 
   // Transform illustration data to match form expectations
@@ -86,19 +120,28 @@ export function IllustrationCard({
     <>
       <div
         className={cn(
-          "border-2 rounded-lg p-1 md:p-3 space-y-2",
-          isActive ? "border-primary" : "",
-          illustration.deleted ? "opacity-50" : ""
+          "border-2 rounded-lg p-1 md:p-3 space-y-2 transition-all duration-200",
+          isActive ? "border-primary shadow-md" : "border-gray-200",
+          illustration.deleted ? "opacity-50" : "",
+          updateMutation.isPending ? "opacity-70" : ""
         )}
       >
         <div className="flex items-start justify-between">
-          <img
-            src={illustration.imageURL}
-            alt={`${illustration.imageURL} thumbnail`}
-            className="w-full rounded object-cover cursor-pointer"
-            onClick={() => onPreview(illustration.imageURL)}
-          />
+          <div className="relative w-full">
+            <img
+              src={illustration.imageURL}
+              alt={`Illustration for ${song.title}`}
+              className="w-full rounded object-cover cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={() => onPreview(illustration.imageURL)}
+            />
+            {updateMutation.isPending && (
+              <div className="absolute inset-0 bg-black/20 rounded flex items-center justify-center">
+                <div className="animate-spin h-6 w-6 border-2 border-white border-t-transparent rounded-full"></div>
+              </div>
+            )}
+          </div>
         </div>
+        
         <div className="space-y-1">
           <p className="text-xs text-muted-foreground">
             <span className="font-medium">Summary prompt version:</span>{" "}
@@ -117,6 +160,7 @@ export function IllustrationCard({
             {illustration.createdAt.toLocaleDateString()}
           </p>
         </div>
+        
         <ActionButtons>
           <Button
             variant="ghost"
@@ -143,6 +187,7 @@ export function IllustrationCard({
           >
             <ExternalLink className="h-3 w-3" />
           </Button>
+          
           {illustration.deleted ? (
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -150,6 +195,7 @@ export function IllustrationCard({
                   variant="ghost"
                   size="sm"
                   className="h-7 w-7 p-0 text-green-600 hover:text-green-700 hover:bg-green-50"
+                  disabled={restoreMutation.isPending}
                 >
                   <RotateCcw className="h-3 w-3" />
                 </Button>
@@ -169,8 +215,9 @@ export function IllustrationCard({
                   <AlertDialogAction
                     onClick={handleRestoreIllustration}
                     className="bg-green-600 text-white hover:bg-green-700"
+                    disabled={restoreMutation.isPending}
                   >
-                    Restore
+                    {restoreMutation.isPending ? "Restoring..." : "Restore"}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -182,19 +229,20 @@ export function IllustrationCard({
               description="This action cannot be undone."
               variant="ghost"
               size="sm"
+              disabled={deleteMutation.isPending}
             />
           )}
+          
           {!illustration.deleted && (
             <Badge
               variant={isActive ? "default" : "secondary"}
-              className="text-xs cursor-pointer h-7"
-              onClick={() => {
-                handleUpdateIllustration(illustration.id, {
-                  setAsActive: !isActive,
-                });
-              }}
+              className={cn(
+                "text-xs cursor-pointer h-7 transition-colors",
+                updateMutation.isPending ? "pointer-events-none opacity-50" : "hover:opacity-80"
+              )}
+              onClick={handleToggleActive}
             >
-              {isActive ? "Active" : "Inactive"}
+              {updateMutation.isPending ? "..." : (isActive ? "Active" : "Inactive")}
             </Badge>
           )}
         </ActionButtons>
@@ -207,8 +255,8 @@ export function IllustrationCard({
           </DialogHeader>
           <IllustrationForm
             illustration={transformedIllustration}
-            onSave={(data) =>
-              handleUpdateIllustration(illustration.id, data.illustrationData)
+            onSave={({ illustrationData }) =>
+              handleUpdateIllustration(illustration.id, illustrationData)
             }
             isLoading={updateMutation.isPending}
             dropdownOptions={{
@@ -217,6 +265,7 @@ export function IllustrationCard({
               imageModels: { data: [], default: "FLUX.1-dev" },
             }}
             manualOnly
+            onSuccess={() => setIsEditDialogOpen(false)}
           />
         </DialogContent>
       </Dialog>

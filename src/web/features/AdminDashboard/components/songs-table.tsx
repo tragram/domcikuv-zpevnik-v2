@@ -57,7 +57,7 @@ import {
   useUpdateSong,
   useUpdateVersion,
   useVersionsAdmin,
-} from "../hooks";
+} from "../adminHooks";
 import { TableToolbar } from "./shared/table-toolbar";
 
 interface SongsTableProps {

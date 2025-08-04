@@ -9,15 +9,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { IllustrationGenerateSchema } from "src/worker/api/admin/illustrations";
-import { SongIdField, ActiveSwitch, ImageModelSelect } from "./shared-form-fields";
+import {
+  SongIdField,
+  ActiveSwitch,
+  ImageModelSelect,
+} from "./shared-form-fields";
 import type { IllustrationSubmitData } from "./illustration-form";
+import { IllustrationGenerateSchema } from "src/worker/services/illustration-service";
 
 interface AIGeneratedFormProps {
   illustration: any;
   onSave: (data: IllustrationSubmitData) => void;
   isLoading?: boolean;
   dropdownOptions: any;
+  onSuccess?: () => void;
 }
 
 export function AIGeneratedForm({
@@ -25,14 +30,21 @@ export function AIGeneratedForm({
   onSave,
   isLoading,
   dropdownOptions,
+  onSuccess,
 }: AIGeneratedFormProps) {
-  const [formData, setFormData] = useState<Partial<IllustrationGenerateSchema>>({
-    songId: illustration?.songId || "",
-    promptVersion: illustration?.summaryPromptVersion || dropdownOptions.promptVersions.default,
-    summaryModel: illustration?.summaryModel || dropdownOptions.summaryModels.default,
-    imageModel: illustration?.imageModel || dropdownOptions.imageModels.default,
-    isActive: illustration?.isActive || false,
-  });
+  const [formData, setFormData] = useState<Partial<IllustrationGenerateSchema>>(
+    {
+      songId: illustration?.songId || "",
+      promptVersion:
+        illustration?.summaryPromptVersion ||
+        dropdownOptions.promptVersions.default,
+      summaryModel:
+        illustration?.summaryModel || dropdownOptions.summaryModels.default,
+      imageModel:
+        illustration?.imageModel || dropdownOptions.imageModels.default,
+      setAsActive: illustration?.isActive || false,
+    }
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,10 +52,11 @@ export function AIGeneratedForm({
       mode: "ai",
       illustrationData: formData as IllustrationGenerateSchema,
     });
+    onSuccess?.();
   };
 
   const updateFormData = (updates: Partial<IllustrationGenerateSchema>) => {
-    setFormData(prev => ({ ...prev, ...updates }));
+    setFormData((prev) => ({ ...prev, ...updates }));
   };
 
   return (
@@ -101,8 +114,8 @@ export function AIGeneratedForm({
       </div>
 
       <ActiveSwitch
-        isActive={formData.isActive || false}
-        onActiveChange={(checked) => updateFormData({ isActive: checked })}
+        isActive={formData.setAsActive || false}
+        onActiveChange={(checked) => updateFormData({ setAsActive: checked })}
         mode="ai"
       />
 

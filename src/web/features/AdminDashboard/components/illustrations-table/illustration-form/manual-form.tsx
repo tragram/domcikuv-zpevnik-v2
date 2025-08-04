@@ -1,10 +1,10 @@
 // manual-form.tsx
 import type React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Upload, X } from "lucide-react";
+import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
 import { SongIdField, ActiveSwitch } from "./shared-form-fields";
 import type { IllustrationSubmitData } from "./illustration-form";
 import { IllustrationCreateSchema } from "src/worker/services/illustration-service";
@@ -14,10 +14,11 @@ interface ManualFormProps {
   onSave: (data: IllustrationSubmitData) => void;
   isLoading?: boolean;
   dropdownOptions: any;
+  onSuccess?: () => void;
 }
 
 const resizeImageToThumbnail = (file: File): Promise<File> => {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d")!;
     const img = new Image();
@@ -35,6 +36,8 @@ const resizeImageToThumbnail = (file: File): Promise<File> => {
               lastModified: Date.now(),
             });
             resolve(thumbnailFile);
+          } else {
+            reject(new Error('Failed to generate thumbnail'));
           }
         },
         file.type,
@@ -42,6 +45,7 @@ const resizeImageToThumbnail = (file: File): Promise<File> => {
       );
     };
 
+    img.onerror = () => reject(new Error('Failed to load image'));
     img.crossOrigin = "anonymous";
     img.src = URL.createObjectURL(file);
   });
@@ -51,17 +55,31 @@ export function ManualForm({
   illustration,
   onSave,
   isLoading,
+  onSuccess,
 }: ManualFormProps) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [thumbnailPreview, setThumbnailPreview] = useState<string>("");
+  const [thumbnailGenerating, setThumbnailGenerating] = useState(false);
   const [formData, setFormData] = useState<IllustrationCreateSchema>({
     songId: illustration?.songId || "",
     summaryPromptId: illustration?.summaryPromptId || "",
     imageModel: illustration?.imageModel || "",
     imageURL: illustration?.imageURL || "",
     thumbnailURL: illustration?.thumbnailURL || "",
-    setAsActive: illustration?.isActive || false,
+    setAsActive: illustration?.setAsActive || false,
   });
+
+  // Set initial previews from existing data
+  useEffect(() => {
+    if (illustration?.imageURL && !imageFile) {
+      setImagePreview(illustration.imageURL);
+    }
+    if (illustration?.thumbnailURL && !thumbnailFile) {
+      setThumbnailPreview(illustration.thumbnailURL);
+    }
+  }, [illustration?.imageURL, illustration?.thumbnailURL, imageFile, thumbnailFile]);
 
   const updateFormData = (updates: Partial<IllustrationCreateSchema>) => {
     setFormData(prev => ({ ...prev, ...updates }));
@@ -71,12 +89,26 @@ export function ManualForm({
     const file = e.target.files?.[0];
     if (file) {
       setImageFile(file);
+      
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+      
+      // Generate thumbnail
+      setThumbnailGenerating(true);
       try {
         const thumbnailFile = await resizeImageToThumbnail(file);
         setThumbnailFile(thumbnailFile);
+        
+        const thumbnailPreviewUrl = URL.createObjectURL(thumbnailFile);
+        setThumbnailPreview(thumbnailPreviewUrl);
+        
         updateFormData({ imageURL: "", thumbnailURL: "" });
       } catch (error) {
         console.error("Error generating thumbnail:", error);
+        // Could add toast here for thumbnail generation failure
+      } finally {
+        setThumbnailGenerating(false);
       }
     }
   };
@@ -85,30 +117,78 @@ export function ManualForm({
     const file = e.target.files?.[0];
     if (file) {
       setThumbnailFile(file);
+      
+      const previewUrl = URL.createObjectURL(file);
+      setThumbnailPreview(previewUrl);
+      
       updateFormData({ thumbnailURL: "" });
     }
   };
 
   const clearImageFile = () => {
+    if (imagePreview && imagePreview.startsWith('blob:')) {
+      URL.revokeObjectURL(imagePreview);
+    }
+    if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(thumbnailPreview);
+    }
+    
     setImageFile(null);
     setThumbnailFile(null);
+    setImagePreview(illustration?.imageURL || "");
+    setThumbnailPreview(illustration?.thumbnailURL || "");
+    
     const imageInput = document.getElementById("image-upload") as HTMLInputElement;
     if (imageInput) imageInput.value = "";
   };
 
   const clearThumbnailFile = () => {
+    if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+      URL.revokeObjectURL(thumbnailPreview);
+    }
+    
     setThumbnailFile(null);
+    setThumbnailPreview(illustration?.thumbnailURL || "");
+    
     const thumbnailInput = document.getElementById("thumbnail-upload") as HTMLInputElement;
     if (thumbnailInput) thumbnailInput.value = "";
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const data = { ...formData };
     if (imageFile) data.imageFile = imageFile;
     if (thumbnailFile) data.thumbnailFile = thumbnailFile;
-    onSave({ mode: "manual", illustrationData: data });
+    
+    try {
+      await onSave({ mode: "manual", illustrationData: data });
+      
+      // Clean up blob URLs after successful submission
+      if (imagePreview && imagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(imagePreview);
+      }
+      if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(thumbnailPreview);
+      }
+      
+      onSuccess?.();
+    } catch (error) {
+      // Error handling is done in parent component
+      console.error('Form submission error:', error);
+    }
   };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (imagePreview && imagePreview.startsWith('blob:')) {
+        URL.revokeObjectURL(imagePreview);
+      }
+      if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+        URL.revokeObjectURL(thumbnailPreview);
+      }
+    };
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -179,6 +259,17 @@ export function ManualForm({
               </Button>
             )}
           </div>
+          
+          {/* Image Preview */}
+          {imagePreview && (
+            <div className="mt-2">
+              <img
+                src={imagePreview}
+                alt="Image preview"
+                className="w-full max-w-xs h-auto rounded border object-cover"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -192,12 +283,24 @@ export function ManualForm({
             onChange={(e) => updateFormData({ thumbnailURL: e.target.value })}
             disabled={!!thumbnailFile || !!imageFile}
           />
+          
           {imageFile && thumbnailFile ? (
             <div className="flex items-center gap-2 p-4 border-2 border-dashed border-green-200 rounded-md bg-green-50">
-              <div className="h-4 w-4 rounded-full bg-green-500"></div>
-              <span className="text-sm text-green-700">
-                Thumbnail auto-generated from uploaded image (128x128)
-              </span>
+              {thumbnailGenerating ? (
+                <>
+                  <div className="animate-spin h-4 w-4 border-2 border-green-500 border-t-transparent rounded-full"></div>
+                  <span className="text-sm text-green-700">
+                    Generating thumbnail...
+                  </span>
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="h-4 w-4 text-green-500" />
+                  <span className="text-sm text-green-700">
+                    Thumbnail auto-generated from uploaded image (128x128)
+                  </span>
+                </>
+              )}
             </div>
           ) : !imageFile ? (
             <>
@@ -231,6 +334,17 @@ export function ManualForm({
               </div>
             </>
           ) : null}
+          
+          {/* Thumbnail Preview */}
+          {thumbnailPreview && (
+            <div className="mt-2">
+              <img
+                src={thumbnailPreview}
+                alt="Thumbnail preview"
+                className="w-32 h-32 rounded border object-cover"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -240,7 +354,11 @@ export function ManualForm({
         mode="manual"
       />
 
-      <Button type="submit" className="w-full" disabled={isLoading}>
+      <Button 
+        type="submit" 
+        className="w-full" 
+        disabled={isLoading || thumbnailGenerating}
+      >
         {isLoading ? "Saving..." : illustration ? "Update Illustration" : "Create Illustration"}
       </Button>
     </form>
