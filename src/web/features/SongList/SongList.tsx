@@ -7,6 +7,8 @@ import Toolbar from "./Toolbar/Toolbar";
 import { useFilteredSongs } from "./useFilteredSongs";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { UserProfileData } from "src/worker/api/userProfile";
+import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
+import { Button } from "~/components/ui/button";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
@@ -17,6 +19,7 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
     user,
     songDB.songbooks
   );
+  const { resetFilters } = useFilterSettingsStore();
   const [showToolbar, setShowToolbar] = useState(true);
   const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
     SCROLL_OFFSET_KEY,
@@ -81,8 +84,11 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
           </div>
         </div>
       ) : (
-        <div className="pt-[50dvh] text-primary flex h-full w-full items-center justify-center text-center text-xl font-bold sm:text-2xl">
+        <div className="pt-[50dvh] text-primary flex flex-col h-full w-full items-center justify-center text-center text-xl font-bold sm:text-2xl gap-4">
           <p>No songs fulfill all the filters set!</p>
+          <Button variant={"outline"} onClick={resetFilters}>
+            Reset all filters
+          </Button>
         </div>
       )}
     </div>

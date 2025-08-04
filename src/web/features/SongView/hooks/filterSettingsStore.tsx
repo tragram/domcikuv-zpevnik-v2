@@ -19,10 +19,11 @@ interface FilterSettingsState extends FilterSettings {
   setCapo: (capo: boolean) => void;
   toggleCapo: () => void;
   toggleFavorites: () => void;
+  resetFilters: () => void;
 }
 
 interface FilterStoreProps {
-  availableSongbooks: Songbook[];
+  selectedSongbooks: Songbook[];
 }
 const safeAddSongbook = (songbooks: Songbook[], songbook: Songbook) => {
   if (songbooks.map((s) => s.name).includes(songbook.name)) {
@@ -38,7 +39,7 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
       (set) => ({
         language: "all",
         vocalRange: "all",
-        selectedSongbooks: initProps.availableSongbooks,
+        selectedSongbooks: initProps.selectedSongbooks,
         capo: true,
         onlyFavorites: false,
         setLanguage: (language: SongLanguage) => set({ language: language }),
@@ -65,6 +66,14 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
         toggleCapo: () => set((state) => ({ capo: !state.capo })),
         toggleFavorites: () =>
           set((state) => ({ onlyFavorites: !state.onlyFavorites })),
+        resetFilters: () =>
+          set({
+            language: "all",
+            vocalRange: "all",
+            selectedSongbooks: initProps.selectedSongbooks,
+            capo: true,
+            onlyFavorites: false,
+          }),
       }),
       {
         name: "filter-settings-store",
@@ -128,7 +137,7 @@ export const FilterStoreProvider = ({
 }) => {
   const [store] = React.useState(() =>
     createFilterSettingsStore({
-      availableSongbooks: [],
+      selectedSongbooks: [],
     })
   );
 
