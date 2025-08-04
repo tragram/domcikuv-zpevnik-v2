@@ -1,6 +1,7 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { CustomError } from "~/components/CustomError";
 import {
   buildSongDB,
   fetchPublicSongbooks,
@@ -12,7 +13,7 @@ import { UserProfileData } from "src/worker/api/userProfile";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: () => <div>Not Found</div>,
-  errorComponent: () => <div>Error</div>,
+  errorComponent: CustomError,
   beforeLoad: async ({ context }) => {
     const user = await context.queryClient.fetchQuery({
       queryKey: ["userProfile"],
