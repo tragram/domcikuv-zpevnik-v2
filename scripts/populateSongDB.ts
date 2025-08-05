@@ -101,7 +101,8 @@ function parseDateToTimestamp(dateStr: string): Date {
     return new Date();
   }
 
-  return new Date(parsedYear, parsedMonth - 1);
+  // day=14 ==> no issues with month due to timezones when showing month only
+  return new Date(parsedYear, parsedMonth - 1, 14);
 }
 
 function extractPreamble(
@@ -211,6 +212,7 @@ function loadSongData(songsPath = "../songs"): SongEntry[] {
 async function insertSongRecord(
   db: DrizzleD1Database,
   songId: string,
+  created: Date,
   now: Date
 ): Promise<void> {
   // Insert song record WITHOUT foreign key references initially
@@ -219,7 +221,7 @@ async function insertSongRecord(
     // Leave these null for now - will update after creating versions/illustrations
     currentVersionId: null as any, // Temporary null
     currentIllustrationId: null as any, // Temporary null
-    createdAt: now,
+    createdAt: created,
     updatedAt: now,
     hidden: false,
     deleted: false,
@@ -255,6 +257,7 @@ async function insertSongVersion(
   db: DrizzleD1Database,
   entry: SongEntry,
   songId: string,
+  created: Date,
   now: Date
 ): Promise<string> {
   const versionId = `${songId}_${Date.now()}`; // Initial version
@@ -274,7 +277,7 @@ async function insertSongVersion(
     approved: true, // Auto-approve system migrations
     approvedBy: SYSTEM_USER_ID,
     approvedAt: now,
-    createdAt: entry.dateAdded ? parseDateToTimestamp(entry.dateAdded) : now,
+    createdAt: created,
     updatedAt: now,
     chordpro: entry.chordproContent,
   };
@@ -503,10 +506,12 @@ async function processAndMigrateSongs(
     }
 
     const id = songId(entry.title, entry.artist);
-
+    const created = entry.dateAdded
+      ? parseDateToTimestamp(entry.dateAdded)
+      : now;
     try {
       // Step 1: Insert song record without foreign key references
-      await insertSongRecord(db, id, now);
+      await insertSongRecord(db, id, created, now);
 
       // Step 2: Load and insert prompts for this song
       const prompts = loadPromptData(songsPath, id);
@@ -515,7 +520,13 @@ async function processAndMigrateSongs(
       }
 
       // Step 3: Insert song version
-      const currentVersionId = await insertSongVersion(db, entry, id, now);
+      const currentVersionId = await insertSongVersion(
+        db,
+        entry,
+        id,
+        created,
+        now
+      );
 
       // Step 4: Handle illustrations
       let currentIllustrationId: string | null = null;
@@ -611,7 +622,7 @@ main();
 // npx wrangler d1 execute zpevnik --remote --file scripts/wipeSongs.sql --yes
 // npx wrangler d1 execute zpevnik --remote --file=songs.sql --yes
 // npx wrangler d1 execute zpevnik --remote --file=versions.sql --yes
-// // this one for some reason does not 
+// // this one for some reason does not
 // npx wrangler d1 execute zpevnik --remote --file=prompts.sql --yes
 // npx wrangler d1 execute zpevnik --remote --file=illustrations.sql --yes
 

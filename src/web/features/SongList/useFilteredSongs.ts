@@ -97,8 +97,8 @@ const getSortCompareFunction = (
       comparison =
         aSemi === bSemi ? a.title.localeCompare(b.title) : aSemi - bSemi;
     } else if (sortByField === "dateAdded") {
-      const aDate = a.createdAt.getDate();
-      const bDate = b.createdAt.getDate();
+      const aDate = a.createdAt.getTime();
+      const bDate = b.createdAt.getTime();
       comparison =
         aDate === bDate ? a.title.localeCompare(b.title) : aDate - bDate;
     } else {
