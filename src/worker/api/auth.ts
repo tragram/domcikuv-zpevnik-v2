@@ -4,7 +4,7 @@ import { auth } from "src/lib/auth/server";
 
 const authApp = buildApp().on(["POST", "GET"], "/*", (c) => {
   const db = drizzle(c.env.DB);
-  const authInstance = auth(db);
+  const authInstance = auth(c.env, db);
   return authInstance.handler(c.req.raw);
 });
 

@@ -69,7 +69,11 @@ registerRoute(
 // Handle other API routes with NetworkFirst strategy
 registerRoute(
   ({ url }) => {
-    return url.pathname.startsWith("/api/") && url.pathname !== "/api/songs";
+    return (
+      url.pathname.startsWith("/api/") &&
+      url.pathname !== "/api/songs" &&
+      url.pathname !== "/api/auth"
+    );
   },
   new NetworkFirst({
     cacheName: "api-cache",

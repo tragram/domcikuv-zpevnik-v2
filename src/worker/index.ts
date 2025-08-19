@@ -17,7 +17,7 @@ export const route = app
   .basePath("/api")
   .use(async (c, next) => {
     const db = drizzle(c.env.DB);
-    const authInstance = auth(db);
+    const authInstance = auth(c.env, db);
     const session = await authInstance.api.getSession(c.req.raw);
     if (session?.session) {
       c.set("SESSION", session.session);
