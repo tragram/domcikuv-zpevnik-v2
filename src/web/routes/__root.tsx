@@ -10,9 +10,10 @@ import {
 import { RouterContext } from "~/main";
 import { fetchProfile } from "~/services/users";
 import { UserProfileData } from "src/worker/api/userProfile";
+import { NotFound } from "~/components/NotFound";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
-  notFoundComponent: () => <div>Not Found</div>,
+  notFoundComponent: NotFound,
   errorComponent: CustomError,
   beforeLoad: async ({ context }) => {
     const user = await context.queryClient.fetchQuery({

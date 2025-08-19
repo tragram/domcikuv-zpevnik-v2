@@ -1,36 +1,37 @@
 import { ErrorComponent, Link, useRouter } from "@tanstack/react-router";
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import { Button } from "./ui/button";
+import { RotateCcw, House, RefreshCcw } from "lucide-react";
+
+export const clearCacheAndReload = async () => {
+  try {
+    // Clear local cache (e.g., localStorage, sessionStorage)
+    localStorage.clear();
+    sessionStorage.clear();
+
+    // Clear Service Worker cache
+    if ("serviceWorker" in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (const registration of registrations) {
+        await registration.unregister();
+      }
+    }
+
+    // Clear browser cache
+    if ("caches" in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((key) => caches.delete(key)));
+    }
+
+    // Reload the page
+    window.location.reload();
+  } catch (err) {
+    console.error("Failed to clear cache:", err);
+  }
+};
 
 export function CustomError({ error }: ErrorComponentProps) {
   const router = useRouter();
-
-  const clearCacheAndReload = async () => {
-    try {
-      // Clear local cache (e.g., localStorage, sessionStorage)
-      localStorage.clear();
-      sessionStorage.clear();
-
-      // Clear Service Worker cache
-      if ("serviceWorker" in navigator) {
-        const registrations = await navigator.serviceWorker.getRegistrations();
-        for (const registration of registrations) {
-          await registration.unregister();
-        }
-      }
-
-      // Clear browser cache
-      if ("caches" in window) {
-        const keys = await caches.keys();
-        await Promise.all(keys.map((key) => caches.delete(key)));
-      }
-
-      // Reload the page
-      window.location.reload();
-    } catch (err) {
-      console.error("Failed to clear cache:", err);
-    }
-  };
 
   console.error("CustomError Error:", error);
 
@@ -45,13 +46,18 @@ export function CustomError({ error }: ErrorComponentProps) {
             router.invalidate();
           }}
         >
+          <RefreshCcw />
           Try Again
         </Button>
         <Button variant="outline" onClick={clearCacheAndReload}>
+          <RotateCcw />
           Clear Cache & Reload
         </Button>
         <Button variant="outline" asChild>
-          <Link to="/">Go home</Link>
+          <Link to="/">
+            <House />
+            Go home
+          </Link>
         </Button>
       </div>
     </div>

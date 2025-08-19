@@ -622,7 +622,6 @@ main();
 // npx wrangler d1 execute zpevnik --remote --file scripts/wipeSongs.sql --yes
 // npx wrangler d1 execute zpevnik --remote --file=songs.sql --yes
 // npx wrangler d1 execute zpevnik --remote --file=versions.sql --yes
-// // this one for some reason does not
 // npx wrangler d1 execute zpevnik --remote --file=prompts.sql --yes
 // npx wrangler d1 execute zpevnik --remote --file=illustrations.sql --yes
 
