@@ -108,8 +108,8 @@ export async function uploadImageBuffer(
   thumbnail: boolean = false
 ) {
   const commonR2Key = `${SongData.baseId(
-    songData.artist,
-    songData.title
+    songData.title,
+    songData.artist
   )}/${filename}`;
   const imageKey = commonR2Key2Folder(commonR2Key, thumbnail);
   await env.R2_BUCKET.put(imageKey, imageBuffer);
