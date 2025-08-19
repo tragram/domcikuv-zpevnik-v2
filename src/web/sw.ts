@@ -38,7 +38,10 @@ let allowlist: undefined | RegExp[];
 if (import.meta.env.DEV) allowlist = [/^\/$/];
 
 registerRoute(
-  new NavigationRoute(createHandlerBoundToURL("index.html"), { allowlist })
+  new NavigationRoute(createHandlerBoundToURL("index.html"), {
+    allowlist,
+    denylist: [/^\/api\//],
+  })
 );
 
 // Runtime caching for illustrations
@@ -71,8 +74,8 @@ registerRoute(
   ({ url }) => {
     return (
       url.pathname.startsWith("/api/") &&
-      url.pathname !== "/api/songs" &&
-      url.pathname !== "/api/auth"
+      !url.pathname.startsWith("/api/songs") &&
+      !url.pathname.startsWith("/api/auth")
     );
   },
   new NetworkFirst({
