@@ -40,6 +40,10 @@ export type UserProfileData =
       };
     };
 
+export type ProfileUpdateData = {
+  imageUrl?: string | null;
+};
+
 const profileApp = buildApp()
   .get("/", async (c) => {
     try {
@@ -185,7 +189,7 @@ const profileApp = buildApp()
 
       return successJSend(c, {
         imageUrl: imageChanged ? newImageUrl : undefined,
-      });
+      } as ProfileUpdateResponse);
     } catch (error) {
       console.error("Profile update error:", error);
 

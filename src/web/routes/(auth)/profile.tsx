@@ -1,24 +1,12 @@
-import {
-  createFileRoute,
-  getRouteApi,
-  Link,
-  redirect,
-  useRouter,
-} from "@tanstack/react-router";
-import {
-  Camera,
-  CloudUpload,
-  Edit,
-  Home,
-  LogOut,
-  Save,
-  Shield,
-  User,
-} from "lucide-react";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { Camera, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "src/lib/auth/client";
-import { UserProfileData } from "src/worker/api/userProfile";
+import {
+  ProfileUpdateData,
+  UserProfileData,
+} from "src/worker/api/userProfile";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
@@ -32,6 +20,12 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
+import { ApiException, handleApiResponse } from "~/services/apiHelpers";
+
+type ProfileUpdateResponse = {
+  status: string;
+  data: ProfileUpdateData;
+};
 
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,
@@ -98,55 +92,46 @@ function RouteComponent() {
       const formData = new FormData();
       formData.append("name", currentData.name);
       formData.append("nickname", currentData.nickname || "");
-      // Remove this line - don't send image URL
-      // formData.append("image", currentData.image);
       formData.append(
         "isFavoritesPublic",
         String(currentData.isFavoritesPublic)
       );
 
-      // Only append file if there's a pending avatar file
       if (pendingAvatarFile) {
         formData.append("avatarFile", pendingAvatarFile);
       }
 
-      // Only append delete flag if we're deleting and not uploading new file
       if (avatarToDelete && !pendingAvatarFile) {
         formData.append("deleteAvatar", "true");
       }
 
-      // TODO: hono RPC does not support files yet
-      const result = await (
-        await fetch("/api/profile", {
-          method: "PUT",
-          body: formData,
-        })
-      ).json();
-      if (result.success) {
-        // Update current state with new image URL if provided
-        const updatedData = { ...currentData };
-        if (result.imageUrl !== undefined) {
-          updatedData.image = result.imageUrl;
-          setCurrentData(updatedData);
-        }
+      const response = await fetch("/api/profile", {
+        method: "PUT",
+        body: formData,
+      });
 
-        // Clear pending states
-        setPendingAvatarFile(null);
-        setAvatarPreview(null);
-        setAvatarToDelete(false);
+      const data = await handleApiResponse<ProfileUpdateResponse>(response);
 
-        // Update saved state
-        setSavedData(updatedData);
-        // TODO: this does not appear to be enough
-        router.invalidate();
-
-        toast.success("Profile updated successfully");
-      } else {
-        toast.error(result.error || "Failed to update profile");
+      const updatedData = { ...currentData };
+      if (data.imageUrl !== undefined) {
+        updatedData.image = data.imageUrl;
       }
+
+      setCurrentData(updatedData);
+      setPendingAvatarFile(null);
+      setAvatarPreview(null);
+      setAvatarToDelete(false);
+      setSavedData(updatedData);
+
+      router.invalidate();
+      toast.success("Profile updated successfully");
     } catch (err) {
-      console.error("Save error:", err);
-      toast.error("Failed to update profile");
+      if (err instanceof ApiException) {
+        toast.error(err.message || "Failed to update profile");
+      } else {
+        console.error("Save error:", err);
+        toast.error("An unexpected error occurred while updating profile.");
+      }
     } finally {
       setSaving(false);
     }
@@ -260,7 +245,6 @@ function RouteComponent() {
         <ActionButtons
           saving={saving}
           hasChanges={hasChanges()}
-          isAdmin={userProfileData.loggedIn && userProfileData.profile.isAdmin}
           onSave={handleSaveProfile}
           onLogout={handleLogout}
         />
@@ -281,7 +265,7 @@ function ProfileHeader() {
 }
 
 interface ProfilePictureSectionProps {
-  userProfile: any;
+  userProfile: UserProfileData["profile"];
   currentAvatar: string | null;
   avatarPreview: string | null;
   avatarToDelete: boolean;
@@ -290,7 +274,7 @@ interface ProfilePictureSectionProps {
   onRemoveAvatar: () => void;
   onAvatarClick: () => void;
   onCancelAvatarChange: () => void;
-  fileInputRef: React.RefObject<HTMLInputElement>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
 }
 
 function ProfilePictureSection({
@@ -306,6 +290,10 @@ function ProfilePictureSection({
   fileInputRef,
 }: ProfilePictureSectionProps) {
   const displayAvatar = avatarToDelete ? null : avatarPreview || currentAvatar;
+
+  if (!userProfile) {
+    return null;
+  }
 
   const getInitials = (name: string) => {
     return name
@@ -339,10 +327,10 @@ function ProfilePictureSection({
             <Avatar className="h-24 w-24 border-4 border-background shadow-lg transition-all group-hover:border-primary/50">
               <AvatarImage
                 src={displayAvatar || undefined}
-                alt={userProfile.name}
+                alt={userProfile.name || ""}
               />
               <AvatarFallback className="text-xl font-semibold">
-                {getInitials(userProfile.name)}
+                {getInitials(userProfile.name || "")}
               </AvatarFallback>
             </Avatar>
 
@@ -537,7 +525,6 @@ function PrivacySection({
 interface ActionButtonsProps {
   saving: boolean;
   hasChanges: boolean;
-  isAdmin: boolean;
   onSave: () => void;
   onLogout: () => void;
 }
@@ -545,12 +532,11 @@ interface ActionButtonsProps {
 function ActionButtons({
   saving,
   hasChanges,
-  isAdmin,
   onSave,
   onLogout,
 }: ActionButtonsProps) {
   return (
-    <div className="flex flex-col flex-wrap sm:flex-row gap-3 justify-around">
+    <div className="flex flex-col flex-wrap sm:flex-row gap-3 justify-between">
       <Button
         variant="outline"
         onClick={onLogout}
