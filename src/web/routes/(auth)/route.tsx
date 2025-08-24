@@ -106,7 +106,7 @@ function RouteComponent() {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-4 md:p-8 lg:p-16 w-full max-w-fit">
+        <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-2 md:p-4 lg:p-8 w-full max-w-fit">
           <Outlet />
         </div>
       </div>
