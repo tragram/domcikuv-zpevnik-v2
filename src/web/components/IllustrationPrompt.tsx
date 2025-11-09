@@ -20,7 +20,7 @@ export function IllustrationPrompt({
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["illustrationPrompt", song.id],
+    queryKey: ["illustrationPrompt", song.currentIllustration?.promptId],
     queryFn: () => fetchIllustrationPrompt(song),
     enabled: show,
     retry: 1,
