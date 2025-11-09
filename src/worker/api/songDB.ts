@@ -1,13 +1,15 @@
-import { drizzle } from "drizzle-orm/d1";
-import { buildApp } from "./utils";
-import { z } from "zod/v4";
 import { zValidator } from "@hono/zod-validator";
+import { eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/d1";
+import { illustrationPrompt } from "src/lib/db/schema";
+import { z } from "zod/v4";
 import {
   getSongbooks,
   retrieveSongs,
   SongDataApi,
 } from "../services/song-service";
-import { errorJSend, successJSend } from "./responses";
+import { errorJSend, failJSend, successJSend } from "./responses";
+import { buildApp } from "./utils";
 
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
@@ -80,6 +82,29 @@ export const songDBRoutes = buildApp()
     } catch (error) {
       console.error("Database error:", error);
       return errorJSend(c, "Failed to fetch songbooks", 500);
+    }
+  })
+
+  .get("prompts/:id", async (c) => {
+    try {
+      const db = drizzle(c.env.DB);
+      const existingPrompt = await db
+        .select()
+        .from(illustrationPrompt)
+        .where(eq(illustrationPrompt.id, c.req.param("id")))
+        .limit(1);
+
+      if (existingPrompt.length === 0) {
+        return failJSend(c, "Referenced song not found", 400, "VERSION_EXISTS");
+      }
+      return successJSend(c, existingPrompt[0]);
+    } catch {
+      return errorJSend(
+        c,
+        "Internal error finding prompt",
+        500,
+        "ERROR_FINDING_PROMPT"
+      );
     }
   });
 

@@ -3,6 +3,7 @@ import { cn } from "~/lib/utils";
 import { fetchIllustrationPrompt } from "~/services/songs";
 import { useQuery } from "@tanstack/react-query";
 import { SongData } from "~/types/songData";
+import { useRouteContext } from "@tanstack/react-router";
 
 interface IllustrationPromptProps {
   song: SongData;
@@ -15,13 +16,14 @@ export function IllustrationPrompt({
   show,
   className,
 }: IllustrationPromptProps) {
+  const routeContext = useRouteContext({ from: "/" });
   const {
     data: promptContent,
     isLoading,
     error,
   } = useQuery({
     queryKey: ["illustrationPrompt", song.currentIllustration?.promptId],
-    queryFn: () => fetchIllustrationPrompt(song),
+    queryFn: () => fetchIllustrationPrompt(routeContext.api.songs, song),
     enabled: show,
     retry: 1,
     staleTime: 5 * 60 * 1000,

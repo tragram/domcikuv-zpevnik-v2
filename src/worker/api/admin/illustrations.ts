@@ -28,7 +28,13 @@ import {
   songNotFoundFail,
   successJSend,
 } from "../responses";
-import { GenerationConfig, IMAGE_MODELS_API, ImageGenerator, SUMMARY_MODELS_API, SUMMARY_PROMPT_VERSIONS } from "./image-generator";
+import {
+  GenerationConfig,
+  IMAGE_MODELS_API,
+  ImageGenerator,
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_VERSIONS,
+} from "./image-generator";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -68,7 +74,7 @@ export const illustrationRoutes = buildApp()
       .from(songIllustration);
     return successJSend(c, illustrations);
   })
-
+  
   .post("/create", async (c) => {
     try {
       const formData = await c.req.formData();

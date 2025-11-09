@@ -11,7 +11,12 @@ import { findSong, SongWithCurrentVersion } from "./song-service";
 import { Context } from "hono";
 import { SongData } from "~/types/songData";
 import { z } from "zod";
-import { IMAGE_MODELS_API, ImageGenerator, SUMMARY_MODELS_API, SUMMARY_PROMPT_VERSIONS } from "../api/admin/image-generator";
+import {
+  IMAGE_MODELS_API,
+  ImageGenerator,
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_VERSIONS,
+} from "../api/admin/image-generator";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -182,7 +187,7 @@ export async function findOrCreatePrompt(
     .from(illustrationPrompt)
     .where(
       and(
-        eq(illustrationPrompt.id, songId),
+        eq(illustrationPrompt.songId, songId),
         eq(illustrationPrompt.summaryPromptVersion, promptVersion),
         eq(illustrationPrompt.summaryModel, promptModel)
       )

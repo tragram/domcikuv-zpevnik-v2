@@ -15,21 +15,24 @@ import { SongData } from "~/types/songData";
 import { makeApiRequest } from "./apiHelpers";
 import { AdminApi, parseDBDates } from "./songs";
 import { SongWithCurrentVersion } from "src/worker/services/song-service";
+import client from "src/worker/api-client";
 
-// Legacy
+export type SongDBApi = typeof client.api.songs;
+
 export const fetchIllustrationPrompt = async (
+  songDBApi: SongDBApi,
   song: SongData
 ): Promise<string> => {
-  if (!song.currentIllustration) {
-    throw Error("Illustration missing --> no prompt available.");
+  const promptId = song.currentIllustration?.promptId;
+  if (!promptId) {
+    return "Could not fetch prompt - currentIllustration?.promptId is empty.";
   }
-  const response = await fetch(song.currentIllustration?.promptURL);
-  const promptContent = await response.text();
-  const data = yaml.load(promptContent) as [{ response: string }];
-  if (!data?.[0]?.response) {
-    throw new Error("Invalid prompt file format");
-  }
-  return data[0].response;
+  const response = await makeApiRequest(() =>
+    songDBApi.prompts[":id"].$get({
+      param: { id: promptId },
+    })
+  );
+  return response.text;
 };
 
 // Admin API
