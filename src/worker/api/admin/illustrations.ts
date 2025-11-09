@@ -19,11 +19,6 @@ import {
   sameParametersExist,
   fakeDeleteR2,
 } from "../../services/illustration-service";
-import {
-  IMAGE_MODELS_API,
-  SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS,
-} from "../../services/illustration-service";
 import { findSong, SongWithCurrentVersion } from "../../services/song-service";
 import {
   errorFail,
@@ -33,7 +28,7 @@ import {
   songNotFoundFail,
   successJSend,
 } from "../responses";
-import { GenerationConfig, ImageGenerator } from "./image-generator";
+import { GenerationConfig, IMAGE_MODELS_API, ImageGenerator, SUMMARY_MODELS_API, SUMMARY_PROMPT_VERSIONS } from "./image-generator";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),

@@ -34,6 +34,11 @@ import {
   useRestoreIllustration,
   useUpdateIllustration,
 } from "../../adminHooks";
+import {
+  AvailableImageModel,
+  AvailableSummaryModel,
+  SummaryPromptVersion,
+} from "src/worker/api/admin/image-generator";
 
 interface IllustrationCardProps {
   song: SongWithCurrentVersion;
@@ -67,7 +72,7 @@ export function IllustrationCard({
       setIsEditDialogOpen(false);
     } catch (error) {
       toast.error("Failed to update illustration");
-      console.error('Update error:', error);
+      console.error("Update error:", error);
     }
   };
 
@@ -77,7 +82,7 @@ export function IllustrationCard({
       toast.success("Illustration deleted successfully");
     } catch (error) {
       toast.error("Failed to delete illustration");
-      console.error('Delete error:', error);
+      console.error("Delete error:", error);
     }
   };
 
@@ -87,7 +92,7 @@ export function IllustrationCard({
       toast.success("Illustration restored successfully");
     } catch (error) {
       toast.error("Failed to restore illustration");
-      console.error('Restore error:', error);
+      console.error("Restore error:", error);
     }
   };
 
@@ -95,12 +100,14 @@ export function IllustrationCard({
     try {
       await updateMutation.mutateAsync({
         id: illustration.id,
-        data: { setAsActive: !isActive }
+        data: { setAsActive: !isActive },
       });
-      toast.success(isActive ? "Illustration deactivated" : "Illustration activated");
+      toast.success(
+        isActive ? "Illustration deactivated" : "Illustration activated"
+      );
     } catch (error) {
       toast.error("Failed to update illustration status");
-      console.error('Toggle active error:', error);
+      console.error("Toggle active error:", error);
     }
   };
 
@@ -108,9 +115,9 @@ export function IllustrationCard({
   const transformedIllustration = {
     promptId: prompt.id,
     songId: illustration.songId,
-    summaryPromptVersion: prompt.summaryPromptVersion as "v1" | "v2",
-    summaryModel: prompt.summaryModel as "gpt-4o" | "gpt-4o-mini",
-    imageModel: illustration.imageModel as "FLUX.1-dev",
+    summaryPromptVersion: prompt.summaryPromptVersion as SummaryPromptVersion,
+    summaryModel: prompt.summaryModel as AvailableSummaryModel,
+    imageModel: illustration.imageModel as AvailableImageModel,
     imageURL: illustration.imageURL,
     thumbnailURL: illustration.thumbnailURL,
     setAsActive: isActive,
@@ -141,7 +148,7 @@ export function IllustrationCard({
             )}
           </div>
         </div>
-        
+
         <div className="space-y-1">
           <p className="text-xs text-muted-foreground">
             <span className="font-medium">Summary prompt version:</span>{" "}
@@ -160,7 +167,7 @@ export function IllustrationCard({
             {illustration.createdAt.toLocaleDateString()}
           </p>
         </div>
-        
+
         <ActionButtons>
           <Button
             variant="ghost"
@@ -187,7 +194,7 @@ export function IllustrationCard({
           >
             <ExternalLink className="h-3 w-3" />
           </Button>
-          
+
           {illustration.deleted ? (
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -232,17 +239,23 @@ export function IllustrationCard({
               disabled={deleteMutation.isPending}
             />
           )}
-          
+
           {!illustration.deleted && (
             <Badge
               variant={isActive ? "default" : "secondary"}
               className={cn(
                 "text-xs cursor-pointer h-7 transition-colors",
-                updateMutation.isPending ? "pointer-events-none opacity-50" : "hover:opacity-80"
+                updateMutation.isPending
+                  ? "pointer-events-none opacity-50"
+                  : "hover:opacity-80"
               )}
               onClick={handleToggleActive}
             >
-              {updateMutation.isPending ? "..." : (isActive ? "Active" : "Inactive")}
+              {updateMutation.isPending
+                ? "..."
+                : isActive
+                ? "Active"
+                : "Inactive"}
             </Badge>
           )}
         </ActionButtons>

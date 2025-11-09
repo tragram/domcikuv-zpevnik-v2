@@ -15,14 +15,17 @@ import {
   ImageModelSelect,
 } from "./shared-form-fields";
 import type { IllustrationSubmitData } from "./illustration-form";
-import { IllustrationGenerateSchema } from "src/worker/services/illustration-service";
+import {
+  IllustrationGenerateSchema,
+} from "src/worker/services/illustration-service";
+import { SummaryPromptVersion, AvailableSummaryModel, AvailableImageModel } from "src/worker/api/admin/image-generator";
 
 interface AIGeneratedFormProps {
   illustration: {
     songId?: string;
-    summaryPromptVersion?: "v1" | "v2";
-    summaryModel?: "gpt-4o" | "gpt-4o-mini";
-    imageModel?: "FLUX.1-dev";
+    summaryPromptVersion?: SummaryPromptVersion;
+    summaryModel?: AvailableSummaryModel;
+    imageModel?: AvailableImageModel;
     isActive?: boolean;
   } | null;
   onSave: (data: IllustrationSubmitData) => void;
@@ -54,15 +57,12 @@ export function AIGeneratedForm({
   const [formData, setFormData] = useState<Partial<IllustrationGenerateSchema>>(
     {
       songId: illustration?.songId || "",
-      promptVersion:
-        (illustration?.summaryPromptVersion ||
-          dropdownOptions.promptVersions.default) as "v1" | "v2",
-      summaryModel:
-        (illustration?.summaryModel ||
-          dropdownOptions.summaryModels.default) as "gpt-4o" | "gpt-4o-mini",
-      imageModel:
-        (illustration?.imageModel ||
-          dropdownOptions.imageModels.default) as "FLUX.1-dev",
+      promptVersion: (illustration?.summaryPromptVersion ||
+        dropdownOptions.promptVersions.default) as SummaryPromptVersion,
+      summaryModel: (illustration?.summaryModel ||
+        dropdownOptions.summaryModels.default) as AvailableSummaryModel,
+      imageModel: (illustration?.imageModel ||
+        dropdownOptions.imageModels.default) as AvailableImageModel,
       setAsActive: illustration?.isActive || false,
     }
   );
@@ -93,7 +93,7 @@ export function AIGeneratedForm({
         <Select
           value={formData.promptVersion}
           onValueChange={(value) =>
-            updateFormData({ promptVersion: value as "v1" | "v2" })
+            updateFormData({ promptVersion: value as SummaryPromptVersion })
           }
         >
           <SelectTrigger>
@@ -117,7 +117,9 @@ export function AIGeneratedForm({
           <Select
             value={formData.summaryModel}
             onValueChange={(value) =>
-              updateFormData({ summaryModel: value as "gpt-4o" | "gpt-4o-mini" })
+              updateFormData({
+                summaryModel: value as AvailableSummaryModel,
+              })
             }
           >
             <SelectTrigger>
@@ -138,7 +140,7 @@ export function AIGeneratedForm({
         <ImageModelSelect
           value={formData.imageModel || ""}
           onChange={(value) =>
-            updateFormData({ imageModel: value as "FLUX.1-dev" })
+            updateFormData({ imageModel: value as AvailableImageModel })
           }
           options={dropdownOptions.imageModels.data}
         />

@@ -8,9 +8,6 @@ import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 import {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
-  IMAGE_MODELS_API,
-  SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS,
 } from "src/worker/services/illustration-service";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -34,6 +31,7 @@ import {
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
 import { SongWithCurrentVersion } from "src/worker/services/song-service";
+import { SUMMARY_PROMPT_VERSIONS, SUMMARY_MODELS_API, IMAGE_MODELS_API } from "src/worker/api/admin/image-generator";
 
 interface SongIllustrationsGroupProps {
   song: SongWithCurrentVersion;

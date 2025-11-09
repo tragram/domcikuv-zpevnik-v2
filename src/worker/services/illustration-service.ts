@@ -11,14 +11,7 @@ import { findSong, SongWithCurrentVersion } from "./song-service";
 import { Context } from "hono";
 import { SongData } from "~/types/songData";
 import { z } from "zod";
-import { ImageGenerator } from "../api/admin/image-generator";
-
-export const SUMMARY_PROMPT_VERSIONS = ["v1", "v2"] as const;
-export const SUMMARY_MODELS_API = ["gpt-4o", "gpt-4o-mini"] as const;
-export const IMAGE_MODELS_API = ["FLUX.1-dev"] as const;
-export type SummaryPromptVersion = (typeof SUMMARY_PROMPT_VERSIONS)[number];
-export type AvailableSummaryModel = (typeof SUMMARY_MODELS_API)[number];
-export type AvailableImageModel = (typeof IMAGE_MODELS_API)[number];
+import { IMAGE_MODELS_API, ImageGenerator, SUMMARY_MODELS_API, SUMMARY_PROMPT_VERSIONS } from "../api/admin/image-generator";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
