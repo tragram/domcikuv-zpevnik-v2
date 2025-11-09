@@ -132,7 +132,6 @@ export class ImageGenerator {
         model: this.config.imageModel,
         prompt,
         size: "1024x1024",
-        response_format: "b64_json",
       }),
     });
 
