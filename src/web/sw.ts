@@ -68,13 +68,11 @@ registerRoute(
     return handleSongsRequest(request);
   }
 );
-
 // Handle other API routes with NetworkFirst strategy
 registerRoute(
   ({ url }) => {
     return (
       url.pathname.startsWith("/api/") &&
-      !url.pathname.startsWith("/api/songs") &&
       !url.pathname.startsWith("/api/auth")
     );
   },
