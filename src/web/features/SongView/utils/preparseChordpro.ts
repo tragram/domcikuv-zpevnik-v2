@@ -193,12 +193,11 @@ function partVariationWithMetaInfo(
     repeat,
     sectionTitle
   );
-  variation.splice(
+  return variation.toSpliced(
     1,
     0,
     repeat ? EXPANDED_SECTION_DIRECTIVE : SHORTHAND_SECTION_DIRECTIVE
   );
-  return variation;
 }
 
 // ==================== DIRECTIVE PROCESSING ====================
@@ -459,7 +458,7 @@ export function preparseDirectives(
             );
           } else {
             // insert the expanded version...
-            contentToInsert = partVariationWithMetaInfo(
+            const expandedContent = partVariationWithMetaInfo(
               contentToInsert,
               currentVariationType,
               currentVariationContent,
@@ -467,15 +466,14 @@ export function preparseDirectives(
               sectionTitle ?? ""
             );
             // ...as well as the short-hand version
-            contentToInsert.push(
-              ...partVariationWithMetaInfo(
-                contentToInsert,
-                currentVariationType,
-                currentVariationContent,
-                false,
-                sectionTitle ?? ""
-              )
+            const shorthandContent = partVariationWithMetaInfo(
+              contentToInsert,
+              currentVariationType,
+              currentVariationContent,
+              false,
+              sectionTitle ?? ""
             );
+            contentToInsert = expandedContent.concat(shorthandContent);
             currentVariationType = null;
             currentVariationContent = null;
           }
