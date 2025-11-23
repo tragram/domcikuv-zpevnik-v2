@@ -1,5 +1,6 @@
 import { Textarea } from "~/components/ui/textarea";
-import React, { useEffect, useRef } from "react";
+import { Button } from "~/components/ui/button";
+import React, { useEffect, useRef, useState } from "react";
 import "./Editor.css";
 import {
   SnippetButtonSection,
@@ -7,6 +8,7 @@ import {
   snippets,
 } from "./components/Snippets";
 import { cn, tailwindBreakpoint } from "~/lib/utils";
+import { convertToChordPro, isConvertibleFormat } from "./chords2chordpro";
 
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {
@@ -27,6 +29,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
 }) => {
   // Reference to the textarea element
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [showConvertButton, setShowConvertButton] = useState(isConvertibleFormat(editorContent));
 
   useEffect(() => {
     // Adjust textarea height when content changes (for mobile)
@@ -72,6 +75,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
 
   const onEditorChange = (e) => {
     const newContent = e.target.value;
+    setShowConvertButton(isConvertibleFormat(newContent));
     setEditorContent(newContent);
   };
 
@@ -143,6 +147,33 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
       }, 0);
     }
   };
+
+  const handleConvertToChordPro = () => {
+    if (!textareaRef.current) return;
+
+    const textarea = textareaRef.current;
+    const convertedContent = convertToChordPro(editorContent);
+
+    // Focus the textarea to make it the active element
+    textarea.focus();
+
+    try {
+      // Select all content
+      textarea.select();
+
+      // Use execCommand to replace all text (this will be undoable)
+      document.execCommand("insertText", false, convertedContent);
+
+      // Update state
+      setEditorContent(convertedContent);
+    } catch (e) {
+      console.error("Error using execCommand for conversion:", e);
+
+      // Fallback method
+      setEditorContent(convertedContent);
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       <div className="w-full flex flex-wrap gap-1 border-b-4 md:border-b-8 border-primary mt-1 md:mt-0">
@@ -179,13 +210,38 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
       <Textarea
         ref={textareaRef}
         className={cn(
-          "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto !rounded-b-none border-none"
+          "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto border-none font-mono",
+          showConvertButton ? "!rounded-b-none" : ""
         )}
         onInput={(e) => {
           onEditorChange(e);
         }}
         value={editorContent}
       />
+      {showConvertButton && (
+        <div className="relative group">
+          <div className="w-full overflow-hidden bg-muted border-t-2 border-primary px-4 text-xs hidden group-hover:visible group-hover:flex flex-col py-2">
+            Detected chords in separate lines above the lyrics. This will
+            attempt to insert them acording to the ChordPro format.
+            <br />
+            <br />
+            <strong>Tips for best results:</strong>
+            <ul className="list-disc pl-4">
+              <li>
+                Place chords precisely above the syllable where they belong.
+              </li>
+              <li>Indicate separate sections by blank lines.</li>
+              <li>Use Ctrl+Z to go back and adjust if necessary.</li>
+            </ul>
+          </div>
+          <Button
+            onClick={handleConvertToChordPro}
+            className="w-full rounded-none h-10 animate-in fade-in duration-300 transition-transform font-semibold !bg-muted border-t-2 border-primary group-hover:border-t-0"
+          >
+            Automatically convert to ChordPro
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
