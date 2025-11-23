@@ -5,23 +5,18 @@ interface Token {
   position: number;
 }
 
-interface PlaceChordResult {
-  text: string;
-  placed: boolean;
-}
-
 function isChordLine(line: string): boolean {
   /**
    * Detects if a line is likely to be a chord line.
    * Chord lines generally contain chord names like 'A', 'G#m', etc.
    * Excludes lines with ChordPro format chords ([C], [G#m], etc.)
    */
-  
+
   // First check if line contains ChordPro format chords
   if (/\[[A-H][#bs]?m?[mi]?[5-7]?\]/.test(line)) {
     return false;
   }
-  
+
   const chordPattern = /[A-H][#bs]?m?[mi]?[5-7]?/g;
 
   const chords = line.match(chordPattern) || [];
@@ -49,71 +44,73 @@ function tokenizeWithPositions(text: string): Token[] {
   return tokens;
 }
 
-function placeChord(chordToken: Token, lyricToken: Token): PlaceChordResult {
+function placeChords(lyricToken: Token, chordTokens: Token[]): string {
   /**
    * Returns the string and if it placed the chord
+   * If the chord position is within 2 characters of the word's start, the chord is placed before the word.
    */
-  const word = lyricToken.text;
-  const wordStartPos = lyricToken.position;
-  const chord = chordToken.text;
-  const chordPos = chordToken.position;
 
-  // Even if the word fits, force the chords in front of prepositions
-  if (chordPos - (wordStartPos + word.length) >= 0) {
-    return { text: `${word} `, placed: false };
+  let word = lyricToken.text;
+  const wordStartPos = lyricToken.position;
+  const adjustChordPosition = (chordToken: Token) => {
+    // heuristics to avoid minor misalignments at the start and end
+    const chordPos = chordToken.position;
+
+    // move to word start if after first letter or it's a short word
+    if (
+      chordPos - wordStartPos < 2 ||
+      (chordPos - wordStartPos === 2 && word.length === 2) ||
+      (chordPos - wordStartPos === 3 && word.length === 3)
+    ) {
+      chordToken.position = wordStartPos;
+    }
+    return chordToken;
+  };
+
+  // do not use heuristics when more than one chord is being inserted in a single word
+  if (chordTokens.length < 2)
+    chordTokens = chordTokens.map(adjustChordPosition);
+
+  // insert chords from back to front so that we do not mess up the alignment
+  for (const chordToken of chordTokens.toReversed()) {
+    const insertPos = chordToken.position - wordStartPos;
+    word = `${word.slice(0, insertPos)}[${chordToken.text}]${word.slice(
+      insertPos
+    )}`;
   }
-  // Move the chords at the start of word
-  else if (
-    chordPos - wordStartPos <= 2 ||
-    (chordPos - wordStartPos <= 3 && word.length === 3)
-  ) {
-    return { text: `[${chord}]${word} `, placed: true };
-  } else {
-    const wordSplitIdx = chordPos - wordStartPos;
-    return {
-      text: `${word.slice(0, wordSplitIdx)}[${chord}]${word.slice(
-        wordSplitIdx
-      )} `,
-      placed: true,
-    };
-  }
+  return word;
 }
 
 function insertChordsInLyrics(chordLine: string, lyricLine: string): string {
   /**
    * Inserts chords into the lyrics at the correct positions based on word boundaries.
-   * If the chord position is within 2 characters of the word's start, the chord is placed before the word.
    */
   const result: string[] = [];
 
   const lyricTokens = tokenizeWithPositions(lyricLine);
   const chordTokens = tokenizeWithPositions(chordLine);
 
-  let tokenIndex = 0;
-
-  for (const chordToken of chordTokens) {
-    if (tokenIndex >= lyricTokens.length) {
-      result.push(`[${chordToken.text}]`);
-      continue;
+  let chordTokenIndex = 0;
+  for (const lyricToken of lyricTokens) {
+    const chordsToInsert = [];
+    const lyricTokenEnd = lyricToken.position + lyricToken.text.length;
+    while (
+      chordTokenIndex < chordTokens.length &&
+      chordTokens[chordTokenIndex].position < lyricTokenEnd
+    ) {
+      chordsToInsert.push(chordTokens[chordTokenIndex]);
+      chordTokenIndex++;
     }
-
-    let chordPlaced = false;
-    while (!chordPlaced && tokenIndex < lyricTokens.length) {
-      const placeResult = placeChord(chordToken, lyricTokens[tokenIndex]);
-      tokenIndex++;
-      result.push(placeResult.text);
-      chordPlaced = placeResult.placed;
-    }
+    result.push(placeChords(lyricToken, chordsToInsert));
   }
 
-  // Add any remaining lyric tokens after all chords have been inserted
-  if (tokenIndex < lyricTokens.length) {
-    for (let i = tokenIndex; i < lyricTokens.length; i++) {
-      result.push(lyricTokens[i].text + " ");
-    }
+  // when we run out of lyrics, just print all the remaining chords
+  while (chordTokenIndex < chordTokens.length) {
+    result.push(`[${chordTokens[chordTokenIndex].text}]`);
+    chordTokenIndex++;
   }
 
-  return result.join("");
+  return result.join(" ");
 }
 
 function groupLinesIntoParagraphs(songLines: string[]): string[][] {
@@ -216,17 +213,17 @@ function processParagraph(songLines: string[]): string {
    * Processes an entire paragraph by detecting chord and lyric lines, inserting chords into the lyrics,
    * and adding ChordPro directives for verses and choruses.
    */
-  let chordLine: string | null = null;
+  let chordLineToInsert: string | null = null;
   const structuredSong: string[] = [];
 
   for (const line of songLines) {
     if (isChordLine(line)) {
-      chordLine = line;
+      chordLineToInsert = line;
     } else {
-      if (chordLine) {
-        const chordproLine = insertChordsInLyrics(chordLine, line);
+      if (chordLineToInsert) {
+        const chordproLine = insertChordsInLyrics(chordLineToInsert, line);
         structuredSong.push(chordproLine);
-        chordLine = null;
+        chordLineToInsert = null;
       } else {
         structuredSong.push(line.trim());
       }
@@ -263,14 +260,12 @@ function isConvertibleFormat(text: string): boolean {
     if (trimmed.length > 0) {
       nonEmptyLineCount++;
       if (isChordLine(line)) {
-        console.log(line)
         chordLineCount++;
       }
     }
   }
   // Consider it convertible if at least 10% of non-empty lines are chord lines
   // and there are at least 2 chord lines
-  console.log(chordLineCount)
   return chordLineCount >= 2 && chordLineCount / nonEmptyLineCount >= 0.1;
 }
 
@@ -283,21 +278,7 @@ function convertToChordPro(songText: string): string {
   return processSong(songLines);
 }
 
-// Example usage:
-// const songText = `...your song text here...`;
-// if (isConvertibleFormat(songText)) {
-//   const chordproOutput = convertToChordPro(songText);
-//   console.log(chordproOutput);
-// }
-
 export {
-  isChordLine,
-  tokenizeWithPositions,
-  placeChord,
-  insertChordsInLyrics,
-  groupLinesIntoParagraphs,
-  addChordproDirectives,
-  processParagraph,
   processSong,
   isConvertibleFormat,
   convertToChordPro,
