@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { memo, useState } from "react";
@@ -153,13 +153,13 @@ interface SongbookAvatarsProps {
 //     );
 //   }
 // );
+
 interface FavoriteButtonProps {
   song: SongData;
   className?: string;
 }
 
 const FavoriteButton = ({ song, className = "" }: FavoriteButtonProps) => {
-  // TODO: add "offline" message
   const [isFavorite, setIsFavorite] = useState(song.isFavorite);
   const routeApi = getRouteApi("/");
   const context = routeApi.useRouteContext();
@@ -168,11 +168,22 @@ const FavoriteButton = ({ song, className = "" }: FavoriteButtonProps) => {
   const addFavoriteMutation = useMutation({
     mutationFn: () =>
       context.api.favorites.$post({ json: { songId: song.id } }),
-    onMutate: async () => {
+    onMutate: () => {
+      // Store previous state for rollback
+      const previousState = song.isFavorite;
+
+      // Optimistically update
+      song.isFavorite = true;
       setIsFavorite(true);
+
+      return { previousState };
     },
-    onError: () => {
-      setIsFavorite(false);
+    onError: (_error, _variables, context) => {
+      // Rollback on error
+      if (context?.previousState !== undefined) {
+        song.isFavorite = context.previousState;
+        setIsFavorite(context.previousState);
+      }
       toast.error("Failed to add favorite");
     },
   });
@@ -181,12 +192,19 @@ const FavoriteButton = ({ song, className = "" }: FavoriteButtonProps) => {
   const removeFavoriteMutation = useMutation({
     mutationFn: () =>
       context.api.favorites.$delete({ json: { songId: song.id } }),
-    onMutate: async () => {
+    onMutate: () => {
+      const previousState = song.isFavorite;
+
+      song.isFavorite = false;
       setIsFavorite(false);
+
+      return { previousState };
     },
-    onError: () => {
-      // If the mutation fails, use the context returned from onMutate to roll back
-      setIsFavorite(true);
+    onError: (_error, _variables, context) => {
+      if (context?.previousState !== undefined) {
+        song.isFavorite = context.previousState;
+        setIsFavorite(context.previousState);
+      }
       toast.error("Failed to remove favorite");
     },
   });
