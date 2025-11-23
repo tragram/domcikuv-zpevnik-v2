@@ -81,6 +81,22 @@ function placeChords(lyricToken: Token, chordTokens: Token[]): string {
   return word;
 }
 
+export function normalizeChordTokens(tokens: Token[]): Token[] {
+  return tokens.map(token => {
+    let text = token.text.trim();
+
+    // Remove trailing comma or period (multiple if needed)
+    while (text.endsWith(",") || text.endsWith(".")) {
+      text = text.slice(0, -1).trimEnd();
+    }
+
+    return {
+      ...token,
+      text,
+    };
+  });
+}
+
 function insertChordsInLyrics(chordLine: string, lyricLine: string): string {
   /**
    * Inserts chords into the lyrics at the correct positions based on word boundaries.
@@ -88,8 +104,7 @@ function insertChordsInLyrics(chordLine: string, lyricLine: string): string {
   const result: string[] = [];
 
   const lyricTokens = tokenizeWithPositions(lyricLine);
-  const chordTokens = tokenizeWithPositions(chordLine);
-
+  const chordTokens = normalizeChordTokens(tokenizeWithPositions(chordLine));
   let chordTokenIndex = 0;
   for (const lyricToken of lyricTokens) {
     const chordsToInsert = [];
@@ -134,7 +149,6 @@ function groupLinesIntoParagraphs(songLines: string[]): string[][] {
   if (paragraph.length > 0) {
     paragraphs.push(paragraph);
   }
-
   return paragraphs;
 }
 
@@ -218,6 +232,10 @@ function processParagraph(songLines: string[]): string {
 
   for (const line of songLines) {
     if (isChordLine(line)) {
+      if (chordLineToInsert) {
+        // make sure chords are not deleted even if no lyrics are detected
+        structuredSong.push(insertChordsInLyrics(chordLineToInsert, ""));
+      }
       chordLineToInsert = line;
     } else {
       if (chordLineToInsert) {
@@ -228,6 +246,11 @@ function processParagraph(songLines: string[]): string {
         structuredSong.push(line.trim());
       }
     }
+  }
+
+  if (chordLineToInsert) {
+    // make sure chords are not deleted even if no lyrics are detected
+    structuredSong.push(insertChordsInLyrics(chordLineToInsert, ""));
   }
 
   const chordproResult = addChordproDirectives(structuredSong);
@@ -278,8 +301,4 @@ function convertToChordPro(songText: string): string {
   return processSong(songLines);
 }
 
-export {
-  processSong,
-  isConvertibleFormat,
-  convertToChordPro,
-};
+export { processSong, isConvertibleFormat, convertToChordPro };
