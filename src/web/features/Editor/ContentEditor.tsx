@@ -29,7 +29,9 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
 }) => {
   // Reference to the textarea element
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [showConvertButton, setShowConvertButton] = useState(isConvertibleFormat(editorContent));
+  const [showConvertButton, setShowConvertButton] = useState(
+    isConvertibleFormat(editorContent)
+  );
 
   useEffect(() => {
     // Adjust textarea height when content changes (for mobile)
@@ -210,7 +212,8 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
       <Textarea
         ref={textareaRef}
         className={cn(
-          "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto border-none font-mono",
+          "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto border-none",
+          showConvertButton ? "font-mono" : "",
           showConvertButton ? "!rounded-b-none" : ""
         )}
         onInput={(e) => {
@@ -222,7 +225,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
         <div className="relative group">
           <div className="w-full overflow-hidden bg-muted border-t-2 border-primary px-4 text-xs hidden group-hover:visible group-hover:flex flex-col py-2">
             Detected chords in separate lines above the lyrics. This will
-            attempt to insert them acording to the ChordPro format.
+            attempt to insert them acording to the ChordPro format. The song is now shown in a monospace font to help with proper alignment.
             <br />
             <br />
             <strong>Tips for best results:</strong>
