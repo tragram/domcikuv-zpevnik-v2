@@ -138,6 +138,7 @@ export class SongData {
     return this.currentIllustration?.imageURL || this.defaultIllustrationURL();
   }
 
+  // TODO: is this necessary?
   private defaultThumbnailURL(): string {
     return fileURL(`/songs/illustrations_thumbnails/${this.id}/default.webp`);
   }

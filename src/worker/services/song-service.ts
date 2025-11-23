@@ -187,6 +187,7 @@ export async function retrieveSongs(
               imageModel: songItem.currentIllustration.imageModel,
               imageURL: songItem.currentIllustration.imageURL,
               thumbnailURL: songItem.currentIllustration.thumbnailURL,
+              // TODO: this is not true anymore...
               promptURL: `/songs/image_prompts/${songItem.id}.yaml`,
             }
           : undefined,

@@ -414,7 +414,7 @@ async function insertIllustrations(
       imageModel,
       imageURL: `/songs/illustrations/${songId}/${compositeName}.webp`,
       thumbnailURL: `/songs/illustrations_thumbnails/${songId}/${compositeName}.webp`,
-      commonR2Key: null, // Set to null for file-based storage
+      commonR2Key: null, // Set to null for static file-based storage
       createdAt: now,
     };
 
