@@ -74,7 +74,7 @@ export const illustrationRoutes = buildApp()
       .from(songIllustration);
     return successJSend(c, illustrations);
   })
-  
+
   .post("/create", async (c) => {
     try {
       const formData = await c.req.formData();
@@ -106,7 +106,9 @@ export const illustrationRoutes = buildApp()
       // Handle file uploads with proper validation
       if (imageFile && imageFile instanceof File) {
         const imageBuffer = await imageFile.arrayBuffer();
-        const filename = `manual_${Date.now()}_${imageFile.name || "image"}`;
+        const filename = `manual_${Date.now()}_${
+          imageFile.name || validatedData.songId + "illustration"
+        }`;
         ({ imageURL, commonR2Key } = await uploadImageBuffer(
           imageBuffer,
           illustrationSong,
@@ -117,8 +119,8 @@ export const illustrationRoutes = buildApp()
 
       if (thumbnailFile && thumbnailFile instanceof File) {
         const thumbnailBuffer = await thumbnailFile.arrayBuffer();
-        const thumbnailFilename = `${Date.now()}_${
-          thumbnailFile.name || "thumbnail"
+        const thumbnailFilename = `manual_${Date.now()}_${
+          thumbnailFile.name || validatedData.songId + "thumbnail"
         }`;
         ({ imageURL: thumbnailURL } = await uploadImageBuffer(
           thumbnailBuffer,
