@@ -19,6 +19,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   metadata,
   updateMetadata,
 }) => {
+  console.log(metadata)
   return (
     <div className="main-container space-y-2">
       <MetadataField
