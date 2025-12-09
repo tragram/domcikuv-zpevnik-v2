@@ -17,13 +17,14 @@ import { errorJSend, failJSend, successJSend } from "./responses";
 export const editorSubmitSchema = z.object({
   title: z.string(),
   artist: z.string(),
+  language: z.string(),
+  chordpro: z.string(),
   key: z
     .string()
     .optional()
     .transform((x) => x ?? null),
-  language: z.string(),
   capo: z
-    .number()
+    .union([z.string(), z.number()])
     .optional()
     .transform((x) => x ?? null),
   range: z
@@ -38,7 +39,6 @@ export const editorSubmitSchema = z.object({
     .union([z.string(), z.number()])
     .optional()
     .transform((x) => (x ? String(x) : null)),
-  chordpro: z.string(),
 });
 
 export type EditorSubmitSchema = z.infer<typeof editorSubmitSchema>;
@@ -61,7 +61,6 @@ const editorApp = buildApp()
 
       const isTrusted =
         userProfile && userProfile.length > 0 && userProfile[0].isTrusted;
-
       const result = await createSong(db, submission, userId, isTrusted);
       return successJSend(c, {
         song: result.newSong,
