@@ -158,7 +158,7 @@ export async function retrieveSongs(
     conditions.length > 0 ? query.where(and(...conditions)) : query;
 
   const songsRaw = await finalQuery;
-  
+
   return songsRaw.map(
     (songItem): SongDataApi => ({
       id: songItem.id,
@@ -287,18 +287,8 @@ export const createSong = async (
     .from(song)
     .where(eq(song.id, songId))
     .limit(1);
-
-  if (existingSong.length > 0) {
-    const newVersion = await createSongVersion(
-      db,
-      submission,
-      songId,
-      userId,
-      isTrusted
-    );
-    return { newSong: existingSong[0], newVersion: newVersion };
-  } else {
-    const versionId = songId + "_" + now.getTime();
+  if (existingSong.length === 0) {
+    // create song if it does not exist
     await db.insert(song).values({
       id: songId,
       createdAt: now,
@@ -306,30 +296,19 @@ export const createSong = async (
       hidden: !isTrusted,
       currentVersionId: null,
     });
-
-    const newVersion = await db
-      .insert(songVersion)
-      .values({
-        ...submission,
-        id: versionId,
-        songId: songId,
-        createdAt: now,
-        updatedAt: now,
-        userId: userId,
-        approved: isTrusted,
-        approvedBy: isTrusted ? userId : null,
-        approvedAt: isTrusted ? now : null,
-      })
-      .returning();
-
-    const newSong = await db
-      .update(song)
-      .set({ currentVersionId: versionId })
-      .where(eq(song.id, songId))
-      .returning();
-
-    return { newSong: newSong[0], newVersion: newVersion[0] };
   }
+
+  const newVersion = await createSongVersion(
+    db,
+    submission,
+    songId,
+    userId,
+    isTrusted
+  );
+
+  const newSong = await db.select().from(song).where(eq(song.id, songId));
+
+  return { newSong: newSong[0], newVersion: newVersion };
 };
 
 export const createSongVersion = async (
