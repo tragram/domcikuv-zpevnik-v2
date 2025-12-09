@@ -213,7 +213,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
         ref={textareaRef}
         className={cn(
           "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto border-none",
-          showConvertButton ? "font-mono" : "",
+          showConvertButton ? "font-mono" : "font-normal",
           showConvertButton ? "!rounded-b-none" : ""
         )}
         onInput={(e) => {
