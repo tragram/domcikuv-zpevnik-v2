@@ -124,31 +124,18 @@ export class SongData {
     });
   }
 
-  url(): string {
-    return `/song/${this.id}`;
+  url(): string | undefined {
+    return this.id ? `/song/${this.id}` : undefined;
   }
 
   // Image URL methods
-  thumbnailURL(): string {
-    return this.currentIllustration?.thumbnailURL || this.defaultThumbnailURL();
+  thumbnailURL(): string | undefined {
+    return this.currentIllustration?.thumbnailURL;
     // return this.currentIllustration?.thumbnailURL || this.defaultThumbnailURL();
   }
 
-  illustrationURL(): string {
-    return this.currentIllustration?.imageURL || this.defaultIllustrationURL();
-  }
-
-  // TODO: is this necessary?
-  private defaultThumbnailURL(): string {
-    return fileURL(`/songs/illustrations_thumbnails/${this.id}/default.webp`);
-  }
-
-  private defaultIllustrationURL(): string {
-    return fileURL(`/songs/illustrations/${this.id}/default.webp`);
-  }
-
-  static defaultChordproURL(id: string): string {
-    return fileURL(`/songs/chordpro/${id}.pro`);
+  illustrationURL(): string | undefined {
+    return this.currentIllustration?.imageURL;
   }
 
   // JSON serialization for API responses
