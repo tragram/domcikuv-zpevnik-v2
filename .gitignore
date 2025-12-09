@@ -39,3 +39,5 @@ scripts/__pycache__/*
 src/web/routeTree.gen.ts
 
 /*.sql
+
+*.sql
