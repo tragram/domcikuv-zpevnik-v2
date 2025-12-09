@@ -10,7 +10,7 @@ interface MetadataEditorProps {
   songDB: SongDB;
   defaultMetadata: EditorState;
   metadata: EditorState;
-  updateMetadata: (field: keyof EditorState, value: string) => void;
+  updateMetadata: (field: keyof EditorState, value: string | number) => void;
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({
@@ -41,7 +41,9 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
       />
       <MetadataField
         label="Capo"
-        onChange={(value) => updateMetadata("capo", value)}
+        onChange={(value) =>
+          updateMetadata("capo", parseInt(value, 10) || value)
+        }
         placeholder="0"
         value={metadata.capo?.toString()}
         modified={defaultMetadata.capo !== metadata.capo}

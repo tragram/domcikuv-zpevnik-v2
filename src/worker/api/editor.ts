@@ -24,7 +24,7 @@ export const editorSubmitSchema = z.object({
     .optional()
     .transform((x) => x ?? null),
   capo: z
-    .union([z.string(), z.number()])
+    .number()
     .optional()
     .transform((x) => x ?? null),
   range: z

@@ -67,16 +67,14 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
-    const submissionData: EditorState = { ...editorState };
-
     try {
       const response = await makeApiRequest(() =>
         songData
           ? editorApi[":id"].$put({
               param: { id: songData.id },
-              json: submissionData,
+              json: editorState,
             })
-          : editorApi.$post({ json: submissionData })
+          : editorApi.$post({ json: editorState })
       );
       const version = response.version;
       const isUpdate =
