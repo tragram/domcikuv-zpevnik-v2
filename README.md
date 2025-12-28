@@ -14,7 +14,9 @@ You can run the page fully locally by
 * building the database: `pnpm db:create` (if you haven't run it yet)
 * generating the migrations: `pnpm db:generate`
 * migrating the DB: `pnpm db:migrate:local`
+* TODO: load the remote DB, for now I personally can use `scripts/copyRemoteDB.sh` but that won't work unless you have access to CF Workers
 * starting the server: `pnpm dev`
+* to make authentication and AI services work, you will need to supply your own credentials - see `secrets.yaml.sample`
 
 ## Editing songs
 Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/` directory. Pushes to the main branch trigger automatic updates (live in a few minutes). If you don't have edit rights, submit a pull request or let me know. 😉
