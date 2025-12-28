@@ -14,6 +14,7 @@ export interface SyncMessage {
 
 export class SessionSync extends DurableObject<Env> {
     currentSongId: string | null = null;
+    private masterWebSocket: WebSocket | null = null;
 
     constructor(ctx: DurableObjectState, env: Env) {
         super(ctx, env);
@@ -31,13 +32,38 @@ export class SessionSync extends DurableObject<Env> {
         const url = new URL(request.url);
         const isMaster = url.searchParams.get("role") === "master";
 
+        // If this is a master connection and we already have one, disconnect the old one FIRST
+        if (isMaster && this.masterWebSocket) {
+            const oldMaster = this.masterWebSocket;
+            this.masterWebSocket = null;
+            
+            try {
+                // Send a message to the old master informing them they're being replaced
+                oldMaster.send(JSON.stringify({
+                    type: "master-replaced",
+                    message: "Another master has connected"
+                }));
+                
+                // Close the old master connection
+                oldMaster.close(1000, "New master connected");
+            } catch (e) {
+                console.error("Error closing previous master:", e);
+            }
+        }
+
         const pair = new WebSocketPair();
         const [client, server] = Object.values(pair);
 
-        // Enable hibernation
-        this.ctx.acceptWebSocket(server);
-        // Attach the role to the socket so we know who's who when they speak or leave
+        // Attach the role to the socket BEFORE accepting it
         server.serializeAttachment({ isMaster });
+
+        // Enable hibernation - accept the new socket
+        this.ctx.acceptWebSocket(server);
+
+        // Track the master WebSocket AFTER accepting it
+        if (isMaster) {
+            this.masterWebSocket = server;
+        }
 
         // Initial Sync: 
         // If you are a follower and master is connected, get the song.
@@ -62,12 +88,14 @@ export class SessionSync extends DurableObject<Env> {
 
         const meta = ws.deserializeAttachment() as SocketMetadata;
 
-        // only process messages from the Master
-        if (!meta.isMaster) return;
+        // Only process messages from the current Master
+        // Also verify this socket IS the current master socket
+        if (!meta.isMaster || ws !== this.masterWebSocket) {
+            return;
+        }
 
         try {
             if (data.type === "update-song") {
-                // TODO: ensure only one master per session
                 this.currentSongId = data.songId;
                 await this.ctx.storage.put("state", { songId: data.songId });
 
@@ -76,6 +104,15 @@ export class SessionSync extends DurableObject<Env> {
             }
         } catch (e) {
             console.error("WS Message Error:", e);
+        }
+    }
+
+    async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
+        const meta = ws.deserializeAttachment() as SocketMetadata;
+        
+        // If the master disconnects, clear our reference
+        if (meta.isMaster && this.masterWebSocket === ws) {
+            this.masterWebSocket = null;
         }
     }
 

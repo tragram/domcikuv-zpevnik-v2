@@ -6,10 +6,12 @@ export function useSessionSync(masterId: string | undefined, isMaster: boolean) 
   const [isConnected, setIsConnected] = useState(false);
   const socketRef = useRef<WebSocket | null>(null);
   const isMasterRef = useRef(isMaster);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   if(masterId === undefined) {
     throw new Error("masterId is required for useSessionSync");
   }
+  
   // Update ref when isMaster changes
   useEffect(() => {
     isMasterRef.current = isMaster;
@@ -17,18 +19,23 @@ export function useSessionSync(masterId: string | undefined, isMaster: boolean) 
 
   useEffect(() => {
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    // TODO: replace with Hono API
     const ws = new WebSocket(`${protocol}//${window.location.host}/api/session/${masterId}`);
 
     ws.onopen = () => {
       setIsConnected(true);
-      console.log('WebSocket connected');
+      console.log('WebSocket connected as', isMaster ? 'master' : 'follower');
     };
 
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data) as SyncMessage;
+      const data = JSON.parse(event.data);
+      
       if (data.type === "sync") {
         setCurrentSongId(data.songId ?? undefined);
+      } else if (data.type === "master-replaced") {
+        console.warn("Master connection replaced:", data.message);
+        // The socket will be closed by the server shortly
+        setIsConnected(false);
+        // Optionally: show a notification to the user
       }
     };
 
@@ -37,11 +44,18 @@ export function useSessionSync(masterId: string | undefined, isMaster: boolean) 
       setIsConnected(false);
     };
 
-    ws.onclose = () => {
-      console.log('WebSocket closed');
+    ws.onclose = (event) => {
+      console.log('WebSocket closed', event.code, event.reason);
       setIsConnected(false);
+      
+      // If we're the master and got disconnected by another master, show a message
+      if (isMaster && event.reason === "New master connected") {
+        console.warn("Another master connection has taken over");
+        // Optionally: you could show a toast/notification to the user here
+      }
     };
-    // keep the WS alive - Cloudflare closes idle WS after 100s and opening a new one counts as another worker call
+    
+    // Keep the WS alive - Cloudflare closes idle WS after 100s
     const pingInterval = setInterval(() => {
       if (ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({ type: "ping" }));
@@ -52,13 +66,16 @@ export function useSessionSync(masterId: string | undefined, isMaster: boolean) 
 
     return () => {
       clearInterval(pingInterval);
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
       ws.close();
     };
-  }, [masterId]);
+  }, [masterId, isMaster]);
 
-  // only masters can set the song on their feed
+  // Only masters can set the song on their feed
   const updateSong = (songId: string) => {
-    if (isMaster && socketRef.current?.readyState === WebSocket.OPEN) {
+    if (isMasterRef.current && socketRef.current?.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify({ type: "update-song", songId }));
       setCurrentSongId(songId);
     }
