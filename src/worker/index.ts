@@ -10,6 +10,8 @@ import favoritesApp from "./api/favorites";
 import profileApp from "./api/userProfile";
 import songDBRoutes from "./api/songDB";
 import { eq } from "drizzle-orm";
+import sessionSyncApp from "./api/sessions";
+export { SessionSync } from './durable-objects/SessionSync';
 
 const app = buildApp();
 
@@ -34,6 +36,7 @@ export const route = app
   .route("/favorites", favoritesApp)
   .route("/editor", editorApp)
   .route("/profile", profileApp)
-  .route("/admin", adminApp);
+  .route("/admin", adminApp)
+  .route("/session", sessionSyncApp);
 
 export default route;

@@ -15,7 +15,7 @@ export const user = sqliteTable("user", {
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
   // below stuff not used by better-auth
-  nickname: text("nickname"),
+  nickname: text("nickname").unique(),
   isTrusted: integer("is_trusted", { mode: "boolean" })
     .default(false)
     .notNull(),

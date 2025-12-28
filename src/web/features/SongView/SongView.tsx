@@ -10,15 +10,21 @@ import { SongViewLayout } from "./components/SongViewLayout";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
 import "./SongView.css";
+import { useSessionSync } from "./hooks/useSessionSync";
+import { UserProfileData } from "src/worker/api/userProfile";
 
 type DataForSongView = {
   songDB: SongDB;
   songData: SongData;
+  user: UserProfileData
+  feed: boolean;
 };
 
 export const SongView = ({
   songDB,
   songData,
+  user,
+  feed = false
 }: DataForSongView) => {
   const fullScreenHandle = useFullScreenHandle();
   const gestureContainerRef = useRef<HTMLDivElement>(null);
@@ -39,6 +45,19 @@ export const SongView = ({
       document.removeEventListener("gesturechange", preventDefault);
     };
   }, []);
+
+  if (!feed && user.loggedIn) {
+    const { updateSong } = useSessionSync(
+      user.loggedIn ? user.profile.nickname ?? undefined : undefined,
+      user.loggedIn
+    );
+
+    useEffect(() => {
+      if (user.loggedIn && updateSong && songData.id) {
+        updateSong(songData.id);
+      }
+    }, [songData.id, user.loggedIn, updateSong]);
+  }
 
   return (
     <SongViewLayout ref={gestureContainerRef}>

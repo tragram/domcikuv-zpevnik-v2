@@ -176,6 +176,13 @@
       "when": 1753940373451,
       "tag": "0024_flippant_obadiah_stane",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "6",
+      "when": 1766945084328,
+      "tag": "0025_rare_argent",
+      "breakpoints": true
     }
   ]
 }

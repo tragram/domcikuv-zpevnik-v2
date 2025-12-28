@@ -17,6 +17,6 @@ export const Route = createFileRoute("/song/$songId")({
 });
 
 function RouteComponent() {
-  const { songDB, songData } = Route.useLoaderData();
-  return <SongView songDB={songDB} songData={songData} />;
+  const { songDB, songData, user } = Route.useLoaderData();
+  return <SongView songDB={songDB} songData={songData} user={user} feed={false} />;
 }
