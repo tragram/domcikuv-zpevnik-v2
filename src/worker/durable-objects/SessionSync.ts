@@ -1,129 +1,137 @@
 import { DurableObject } from "cloudflare:workers";
 
-interface Env { }
+interface Env {}
 
 // Data we stick to the WebSocket handle
 interface SocketMetadata {
-    isMaster: boolean;
+  isMaster: boolean;
 }
 
 export interface SyncMessage {
-    type: "sync";
-    songId: string | null;
+  type: "sync";
+  songId: string | null;
 }
 
 export class SessionSync extends DurableObject<Env> {
-    currentSongId: string | null = null;
-    private masterWebSocket: WebSocket | null = null;
+  currentSongId: string | null = null;
+  private masterWebSocket: WebSocket | null = null;
 
-    constructor(ctx: DurableObjectState, env: Env) {
-        super(ctx, env);
-        this.ctx.blockConcurrencyWhile(async () => {
-            const stored = await this.ctx.storage.get<{ songId: string }>("state");
-            this.currentSongId = stored?.songId || null;
-        });
+  constructor(ctx: DurableObjectState, env: Env) {
+    super(ctx, env);
+    this.ctx.blockConcurrencyWhile(async () => {
+      const stored = await this.ctx.storage.get<{ songId: string }>("state");
+      this.currentSongId = stored?.songId || null;
+    });
+  }
+
+  async fetch(request: Request) {
+    if (request.headers.get("Upgrade") !== "websocket") {
+      return new Response("Upgrade Required", { status: 426 });
     }
 
-    async fetch(request: Request) {
-        if (request.headers.get("Upgrade") !== "websocket") {
-            return new Response("Upgrade Required", { status: 426 });
-        }
+    const url = new URL(request.url);
+    const isMaster = url.searchParams.get("role") === "master";
 
-        const url = new URL(request.url);
-        const isMaster = url.searchParams.get("role") === "master";
+    // If this is a master connection and we already have one, disconnect the old one FIRST
+    if (isMaster && this.masterWebSocket) {
+      const oldMaster = this.masterWebSocket;
+      this.masterWebSocket = null;
 
-        // If this is a master connection and we already have one, disconnect the old one FIRST
-        if (isMaster && this.masterWebSocket) {
-            const oldMaster = this.masterWebSocket;
-            this.masterWebSocket = null;
-            
-            try {
-                // Send a message to the old master informing them they're being replaced
-                oldMaster.send(JSON.stringify({
-                    type: "master-replaced",
-                    message: "Another master has connected"
-                }));
-                
-                // Close the old master connection
-                oldMaster.close(1000, "New master connected");
-            } catch (e) {
-                console.error("Error closing previous master:", e);
-            }
-        }
+      try {
+        // Send a message to the old master informing them they're being replaced
+        oldMaster.send(
+          JSON.stringify({
+            type: "master-replaced",
+            message: "Another master has connected",
+          })
+        );
 
-        const pair = new WebSocketPair();
-        const [client, server] = Object.values(pair);
-
-        // Attach the role to the socket BEFORE accepting it
-        server.serializeAttachment({ isMaster });
-
-        // Enable hibernation - accept the new socket
-        this.ctx.acceptWebSocket(server);
-
-        // Track the master WebSocket AFTER accepting it
-        if (isMaster) {
-            this.masterWebSocket = server;
-        }
-
-        // Initial Sync: 
-        // If you are a follower and master is connected, get the song.
-        // If you are the master, get the last song you had (state recovery).
-        server.send(JSON.stringify({
-            type: "sync",
-            songId: this.currentSongId,
-            isMaster
-        } as SyncMessage));
-
-        return new Response(null, { status: 101, webSocket: client });
+        // Close the old master connection
+        oldMaster.close(1000, "New master connected");
+      } catch (e) {
+        console.error("Error closing previous master:", e);
+      }
     }
 
-    async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
-        const data = JSON.parse(message.toString());
-        // handle Ping
-        if (data.type === "ping") {
-            // We don't even need to reply. 
-            // The act of receiving data resets the Cloudflare idle timer.
-            return;
-        }
+    const pair = new WebSocketPair();
+    const [client, server] = Object.values(pair);
 
-        const meta = ws.deserializeAttachment() as SocketMetadata;
+    // Attach the role to the socket BEFORE accepting it
+    server.serializeAttachment({ isMaster });
 
-        // Only process messages from the current Master
-        // Also verify this socket IS the current master socket
-        if (!meta.isMaster || ws !== this.masterWebSocket) {
-            return;
-        }
+    // Enable hibernation - accept the new socket
+    this.ctx.acceptWebSocket(server);
 
-        try {
-            if (data.type === "update-song") {
-                this.currentSongId = data.songId;
-                await this.ctx.storage.put("state", { songId: data.songId });
-
-                // Broadcast to everyone
-                this.broadcast({ type: "sync", songId: this.currentSongId });
-            }
-        } catch (e) {
-            console.error("WS Message Error:", e);
-        }
+    // Track the master WebSocket AFTER accepting it
+    if (isMaster) {
+      this.masterWebSocket = server;
     }
 
-    async webSocketClose(ws: WebSocket, code: number, reason: string, wasClean: boolean) {
-        const meta = ws.deserializeAttachment() as SocketMetadata;
-        
-        // If the master disconnects, clear our reference
-        if (meta.isMaster && this.masterWebSocket === ws) {
-            this.masterWebSocket = null;
-        }
+    // Initial Sync:
+    // If you are a follower and master is connected, get the song.
+    // If you are the master, get the last song you had (state recovery).
+    server.send(
+      JSON.stringify({
+        type: "sync",
+        songId: this.currentSongId,
+        isMaster,
+      } as SyncMessage)
+    );
+
+    return new Response(null, { status: 101, webSocket: client });
+  }
+
+  async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+    const data = JSON.parse(message.toString());
+    // handle Ping
+    if (data.type === "ping") {
+      // We don't even need to reply.
+      // The act of receiving data resets the Cloudflare idle timer.
+      return;
     }
 
-    private broadcast(data: SyncMessage) {
-        const msg = JSON.stringify(data);
-        for (const ws of this.ctx.getWebSockets()) {
-            try {
-                ws.send(msg);
-            } catch (e) {
-                // Handle closed/stale sockets
-            }
-        }
+    const meta = ws.deserializeAttachment() as SocketMetadata;
+
+    // Only process messages from the current Master
+    // Also verify this socket IS the current master socket
+    if (!meta.isMaster || ws !== this.masterWebSocket) {
+      return;
     }
+
+    try {
+      if (data.type === "update-song") {
+        this.currentSongId = data.songId;
+        await this.ctx.storage.put("state", { songId: data.songId });
+
+        // Broadcast to everyone
+        this.broadcast({ type: "sync", songId: this.currentSongId });
+      }
+    } catch (e) {
+      console.error("WS Message Error:", e);
+    }
+  }
+
+  async webSocketClose(
+    ws: WebSocket,
+    code: number,
+    reason: string,
+    wasClean: boolean
+  ) {
+    const meta = ws.deserializeAttachment() as SocketMetadata;
+    // If the master disconnects, clear our reference
+    if (meta.isMaster && this.masterWebSocket === ws) {
+      this.masterWebSocket = null;
+    }
+  }
+
+  private broadcast(data: SyncMessage) {
+    const msg = JSON.stringify(data);
+    for (const ws of this.ctx.getWebSockets()) {
+      try {
+        ws.send(msg);
+      } catch (e) {
+        // Handle closed/stale sockets
+      }
+    }
+  }
 }
