@@ -90,7 +90,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     if (!user.loggedIn) {
       setShareSession(false);
     }
-  })
+  },[setShareSession, user.loggedIn])
 
   return (
     <div className="absolute top-0 w-full">
