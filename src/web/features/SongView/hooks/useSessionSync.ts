@@ -9,7 +9,6 @@ export function useSessionSync(
 ) {
   const [currentSongId, setCurrentSongId] = useState<string | undefined>();
   const [connectedClients, setConnectedClients] = useState<number>(0);
-  console.log(connectedClients)
   const [currentTransposeSteps, setCurrentTransposeSteps] = useState<
     number | undefined
   >();
@@ -32,6 +31,27 @@ export function useSessionSync(
   useEffect(() => {
     isMasterRef.current = isMaster;
   }, [isMaster]);
+
+  // Helper function to reset heartbeat timeout
+  const resetHeartbeat = useCallback((ws: WebSocket) => {
+    missedPongsRef.current = 0;
+    
+    if (pingIntervalRef.current) {
+      clearInterval(pingIntervalRef.current);
+    }
+
+    pingIntervalRef.current = window.setInterval(() => {
+      console.log("Beat")
+      if (ws.readyState !== WebSocket.OPEN) return;
+      if (missedPongsRef.current >= 1) { // no message since last ping (not even pong)
+        console.warn("[WS] Connection dead (no pong), forcing reconnect");
+        ws.close();
+        return;
+      }
+      ws.send(JSON.stringify({ type: "ping" }));
+      missedPongsRef.current += 1;
+    }, 90_000); // 90s - CF timeout is supposedly 100s (https://community.cloudflare.com/t/cloudflare-websocket-timeout/5865)
+  }, []);
 
   // ---- Public API ----
   const updateSong = useCallback((songId: string, transposeSteps: number) => {
@@ -75,7 +95,6 @@ export function useSessionSync(
       ws.onopen = () => {
         console.debug("[WS] Connected");
         setIsConnected(true);
-        missedPongsRef.current = 0;
 
         // If we reconnected because the user tried to change the song, flush that update now
         if (isMaster && pendingSongUpdateRef.current) {
@@ -89,24 +108,17 @@ export function useSessionSync(
           pendingSongUpdateRef.current = null;
         }
 
-        // Heartbeat
-        pingIntervalRef.current = window.setInterval(() => {
-          if (ws.readyState !== WebSocket.OPEN) return;
-          if (missedPongsRef.current >= 3) {
-            console.warn("[WS] Connection dead (no pong), forcing reconnect");
-            ws.close();
-            return;
-          }
-          ws.send(JSON.stringify({ type: "ping" }));
-          missedPongsRef.current += 1;
-        }, 90_000); // 90s - CF timeout is supposedly 100s (https://community.cloudflare.com/t/cloudflare-websocket-timeout/5865)
+        // Start heartbeat
+        resetHeartbeat(ws);
       };
 
       ws.onmessage = (event) => {
         const data: SesssionSyncWSMessage = JSON.parse(event.data);
 
+        // Reset heartbeat on ANY message received
+        resetHeartbeat(ws);
+
         if (data.type === "pong") {
-          missedPongsRef.current = 0;
           return;
         }
 
@@ -169,7 +181,7 @@ export function useSessionSync(
         pingIntervalRef.current = null;
       }
     };
-  }, [enabled, masterId, isMaster, retryTrigger]);
+  }, [enabled, masterId, isMaster, retryTrigger, resetHeartbeat]);
 
   // Online/Offline Detection
   useEffect(() => {

@@ -20,6 +20,8 @@ import {
   Settings2,
   Undo2,
   CloudSync,
+  CloudOff,
+  CloudCheck,
 } from "lucide-react";
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -42,11 +44,13 @@ import { SongData } from "~/types/songData";
 import { useWakeLock } from "react-screen-wake-lock";
 import useLocalStorageState from "use-local-storage-state";
 import { UserProfileData } from "src/worker/api/userProfile";
+import { FeedStatus } from "../SongView";
 
 interface ToolbarProps {
   songDB: SongDB;
   songData: SongData;
   user: UserProfileData;
+  feedStatus: FeedStatus | undefined;
   fullScreenHandle: FullScreenHandle;
   originalKey: Key | undefined;
   transposeSteps: number;
@@ -57,12 +61,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   songDB,
   songData,
   user,
+  feedStatus,
   fullScreenHandle,
   originalKey,
   transposeSteps,
   setTransposeSteps,
 }) => {
-  const { layout, shareSession , actions} = useViewSettingsStore();
+  const { layout, shareSession, actions } = useViewSettingsStore();
   const setShareSession = actions.setShareSession;
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
@@ -90,7 +95,19 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     if (!user.loggedIn) {
       setShareSession(false);
     }
-  },[setShareSession, user.loggedIn])
+  }, [setShareSession, user.loggedIn]);
+
+  useEffect(() => {
+    if (
+      feedStatus &&
+      !feedStatus.isMaster &&
+      feedStatus.enabled &&
+      feedStatus.transposeSteps
+    ) {
+      setTransposeSteps(feedStatus.transposeSteps);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedStatus?.transposeSteps]);
 
   return (
     <div className="absolute top-0 w-full">
@@ -147,24 +164,30 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               disabled={!user.loggedIn || !user.profile.nickname}
               checked={shareSession}
               onCheckedChange={() => setShareSession(!shareSession)}
-
             >
               <DropdownIconStart icon={<CloudSync />} />
 
               <div>
                 Share current song
-                {!user.loggedIn || !user.profile.nickname &&
-                  (
+                {!user.loggedIn ||
+                  (!user.profile.nickname && (
                     <p className="text-[0.7em] leading-tight">
                       You need to be logged in and have a nickname to use this.
                     </p>
-                  )}
-                  {shareSession && user.loggedIn && user.profile.nickname &&
-                  (
-                    <p className="text-[0.7em] leading-tight">
-                      Your session can be viewed at {window.location.host}/feed/{user.profile.nickname}
+                  ))}
+                {shareSession &&
+                  feedStatus &&
+                  feedStatus.connectedClients > 0 && (
+                    <p className="text-[0.7em] leading-tight mb-1">
+                      Connected clients: {feedStatus.connectedClients}
                     </p>
-                  ) }
+                  )}
+                {shareSession && user.loggedIn && user.profile.nickname && (
+                  <p className="text-[0.7em] leading-tight">
+                    Your session can be viewed at {window.location.host}/feed/
+                    {user.profile.nickname}
+                  </p>
+                )}
               </div>
             </DropdownMenuCheckboxItem>
             <DropdownMenuItem>
@@ -189,7 +212,19 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             {installItem}
           </DropdownMenuContent>
         </DropdownMenu>
-        <RandomSong songs={songDB.songs} currentSong={songData} />
+
+        {feedStatus?.isMaster ? (
+          <RandomSong songs={songDB.songs} currentSong={songData} />
+        ) : (
+          <Button
+            size="icon"
+            variant="circular"
+            disabled
+            className="!opacity-70"
+          >
+            {feedStatus.isConnected ? <CloudCheck /> : <CloudOff />}
+          </Button>
+        )}
       </ToolbarBase>
       {PWAInstallComponent}
     </div>
