@@ -82,6 +82,7 @@ const profileApp = buildApp()
       const isFavoritesPublic = formData.get("isFavoritesPublic") === "true";
 
       // TODO: gracefully manage nickname uniqueness (also in the frontend)
+      // TODO: ensure nickname does not use "/"
       // Validate input with Zod
       const validated = updateUserProfileSchema.parse({
         name: name.trim(),

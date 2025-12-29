@@ -183,6 +183,13 @@
       "when": 1766945084328,
       "tag": "0025_rare_argent",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "6",
+      "when": 1767035547269,
+      "tag": "0026_chief_human_fly",
+      "breakpoints": true
     }
   ]
 }
