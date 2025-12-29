@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+import useLocalStorageState from "use-local-storage-state";
 import SongView from "~/features/SongView/SongView";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore";
@@ -22,24 +23,31 @@ export const Route = createFileRoute("/song/$songId")({
 function RouteComponent() {
   const { songDB, songData, user } = Route.useLoaderData();
   const { shareSession } = useViewSettingsStore();
-  
+
   const shouldShare = user.loggedIn && shareSession;
-  const masterId = user.loggedIn ? user.profile.nickname ?? undefined : undefined;
-  
+  const masterId = user.loggedIn
+    ? user.profile.nickname ?? undefined
+    : undefined;
+
   const { updateSong } = useSessionSync(
     masterId,
     shouldShare, // isMaster
-    shouldShare  // enabled
+    shouldShare // enabled
+  );
+
+  const [transposeSteps] = useLocalStorageState(
+    `transposeSteps/${songData.id}`,
+    { defaultValue: 0 }
   );
 
   // push new songs to the server (if enabled)
   useEffect(() => {
     if (shouldShare && updateSong && songData?.id) {
       console.debug("Master updating song to:", songData.id);
-      updateSong(songData.id);
+      updateSong(songData.id, transposeSteps);
     }
-  }, [songData?.id, shouldShare, updateSong]);
+  }, [songData?.id, shouldShare, updateSong, transposeSteps]);
 
-    // TODO: show error song if not found
+  // TODO: show error song if not found
   return <SongView songDB={songDB} songData={songData} user={user} />;
 }

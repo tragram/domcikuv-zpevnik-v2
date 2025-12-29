@@ -7,6 +7,9 @@ export function useSessionSync(
   enabled: boolean = true
 ) {
   const [currentSongId, setCurrentSongId] = useState<string | undefined>();
+  const [currentTransposeSteps, setCurrentTransposeSteps] = useState<
+    number | undefined
+  >();
   const [isConnected, setIsConnected] = useState(false);
 
   // Changing this value forces the useEffect to restart the connection
@@ -28,14 +31,14 @@ export function useSessionSync(
   }, [isMaster]);
 
   // ---- Public API ----
-  const updateSong = useCallback((songId: string) => {
+  const updateSong = useCallback((songId: string, transposeSteps: number) => {
     if (!isMasterRef.current) return;
 
     const ws = socketRef.current;
 
     // If connected, send immediately
     if (ws && ws.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type: "update-song", songId }));
+      ws.send(JSON.stringify({ type: "update-song", songId, transposeSteps }));
       pendingSongUpdateRef.current = null;
     } else {
       // If disconnected (or previously kicked), queue this update and force a reconnect
@@ -109,6 +112,7 @@ export function useSessionSync(
           // ignore the server's old state so the UI doesn't flicker back.
           if (isMaster && pendingSongUpdateRef.current) return;
           setCurrentSongId(data.songId ?? undefined);
+          setCurrentTransposeSteps(data.transposeSteps ?? undefined);
         }
 
         if (data.type === "master-replaced") {
@@ -188,5 +192,5 @@ export function useSessionSync(
     };
   }, [enabled, masterId, isMaster]);
 
-  return { currentSongId, updateSong, isConnected };
+  return { currentSongId, currentTransposeSteps, updateSong, isConnected };
 }

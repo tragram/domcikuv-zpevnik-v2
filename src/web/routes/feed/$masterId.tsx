@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { UserProfileData } from "src/worker/api/userProfile";
+import useLocalStorageState from "use-local-storage-state";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
 import { SongDB } from "~/types/types";
@@ -30,7 +31,7 @@ type FeedViewProps = {
 
 function FeedView({ songDB, masterId, user }: FeedViewProps) {
   // Feed route manages session sync as follower (read-only)
-  const { currentSongId, isConnected } = useSessionSync(
+  const { currentSongId, isConnected, currentTransposeSteps } = useSessionSync(
     masterId,
     false, // isMaster = false (follower mode)
     true // enabled
@@ -42,6 +43,16 @@ function FeedView({ songDB, masterId, user }: FeedViewProps) {
       ? songDB.songs.find((s) => s.id === currentSongId)
       : null;
   }, [currentSongId, songDB.songs]);
+
+  const [transposeSteps, setTransposeSteps] = useLocalStorageState(
+    `transposeSteps/${currentSongId}`,
+    { defaultValue: 0 }
+  );
+  
+  useEffect(() => {
+    if (currentTransposeSteps !== undefined)
+      setTransposeSteps(currentTransposeSteps);
+  }, [currentTransposeSteps, setTransposeSteps]);
 
   if (!isConnected && !currentSongId) {
     return (

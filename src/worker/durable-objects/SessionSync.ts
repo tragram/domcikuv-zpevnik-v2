@@ -7,20 +7,26 @@ interface SocketMetadata {
   isMaster: boolean;
 }
 
-export interface SyncMessage {
-  type: "sync";
+interface SessionSyncState {
   songId: string | null;
+  transposeSteps: number | null;
+}
+
+export interface SyncMessage extends SessionSyncState {
+  type: "sync";
 }
 
 export class SessionSync extends DurableObject<Env> {
   currentSongId: string | null = null;
+  currentTransposeSteps: number | null = null;
   private masterWebSocket: WebSocket | null = null;
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
     this.ctx.blockConcurrencyWhile(async () => {
-      const stored = await this.ctx.storage.get<{ songId: string }>("state");
+      const stored = await this.ctx.storage.get<SessionSyncState>("state");
       this.currentSongId = stored?.songId || null;
+      this.currentTransposeSteps = stored?.transposeSteps || null;
     });
   }
 
@@ -77,6 +83,7 @@ export class SessionSync extends DurableObject<Env> {
       JSON.stringify({
         type: "sync",
         songId: this.currentSongId,
+        transposeSteps: this.currentTransposeSteps,
         isMaster,
       } as SyncMessage)
     );
@@ -103,10 +110,18 @@ export class SessionSync extends DurableObject<Env> {
     try {
       if (data.type === "update-song") {
         this.currentSongId = data.songId;
-        await this.ctx.storage.put("state", { songId: data.songId });
+        this.currentTransposeSteps = data.transposeSteps;
+        await this.ctx.storage.put("state", {
+          songId: data.songId,
+          transposeSteps: data.transposeSteps,
+        } as SessionSyncState);
 
         // Broadcast to everyone
-        this.broadcast({ type: "sync", songId: this.currentSongId });
+        this.broadcast({
+          type: "sync",
+          songId: this.currentSongId,
+          transposeSteps: this.currentTransposeSteps,
+        } as SyncMessage);
       }
     } catch (e) {
       console.error("WS Message Error:", e);
