@@ -16,6 +16,25 @@ export interface SyncMessage extends SessionSyncState {
   type: "sync";
 }
 
+export interface PongMessage {
+  type: "pong";
+}
+
+export interface UpdateOKMessage {
+  type: "update-ok";
+  connectedClients: number;
+}
+
+export interface MasterReplacedMessage {
+  type: "master-replaced";
+}
+
+export type SesssionSyncWSMessage =
+  | SyncMessage
+  | PongMessage
+  | UpdateOKMessage
+  | MasterReplacedMessage;
+
 export class SessionSync extends DurableObject<Env> {
   currentSongId: string | null = null;
   currentTransposeSteps: number | null = null;
@@ -127,6 +146,12 @@ export class SessionSync extends DurableObject<Env> {
           songId: this.currentSongId,
           transposeSteps: this.currentTransposeSteps,
         } as SyncMessage);
+        this.masterWebSocket.send(
+          JSON.stringify({
+            type: "update-ok",
+            connectedClients: this.ctx.getWebSockets().length - 1,
+          })
+        );
       }
     } catch (e) {
       console.error("WS Message Error:", e);

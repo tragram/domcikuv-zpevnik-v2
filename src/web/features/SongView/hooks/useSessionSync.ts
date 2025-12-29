@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { toast } from "sonner";
+import { SesssionSyncWSMessage } from "src/worker/durable-objects/SessionSync";
 
 export function useSessionSync(
   masterId: string | undefined,
@@ -7,6 +8,8 @@ export function useSessionSync(
   enabled: boolean = true
 ) {
   const [currentSongId, setCurrentSongId] = useState<string | undefined>();
+  const [connectedClients, setConnectedClients] = useState<number>(0);
+  console.log(connectedClients)
   const [currentTransposeSteps, setCurrentTransposeSteps] = useState<
     number | undefined
   >();
@@ -100,17 +103,20 @@ export function useSessionSync(
       };
 
       ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
+        const data: SesssionSyncWSMessage = JSON.parse(event.data);
 
         if (data.type === "pong") {
           missedPongsRef.current = 0;
           return;
         }
 
+        if (data.type === "update-ok") {
+          setConnectedClients(data.connectedClients);
+        }
+
         if (data.type === "sync") {
-          // If we have a pending update (user clicked something while connecting),
-          // ignore the server's old state so the UI doesn't flicker back.
-          if (isMaster && pendingSongUpdateRef.current) return;
+          // ignore sync message if isMaster
+          if (isMaster) return;
           setCurrentSongId(data.songId ?? undefined);
           setCurrentTransposeSteps(data.transposeSteps ?? undefined);
         }
@@ -192,5 +198,11 @@ export function useSessionSync(
     };
   }, [enabled, masterId, isMaster]);
 
-  return { currentSongId, currentTransposeSteps, updateSong, isConnected };
+  return {
+    currentSongId,
+    currentTransposeSteps,
+    connectedClients,
+    updateSong,
+    isConnected,
+  };
 }
