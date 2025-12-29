@@ -38,10 +38,12 @@ function FeedView({ songDB, masterId, user }: FeedViewProps) {
 
   // useMemo to prevent re-finding the song on every render
   const songData = React.useMemo(() => {
-    return currentSongId ? songDB.songs.find((s) => s.id === currentSongId) : null;
+    return currentSongId
+      ? songDB.songs.find((s) => s.id === currentSongId)
+      : null;
   }, [currentSongId, songDB.songs]);
 
-  if (!isConnected) {
+  if (!isConnected && !currentSongId) {
     return (
       <div className="flex items-center justify-center h-screen">
         <p>Connecting to feed...</p>

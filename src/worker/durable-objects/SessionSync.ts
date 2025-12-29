@@ -31,7 +31,7 @@ export class SessionSync extends DurableObject<Env> {
 
     const url = new URL(request.url);
     const roleParam = url.searchParams.get("role");
-    
+
     // Backend has already verified authorization, so we trust the role parameter
     const isMaster = roleParam === "master";
 
@@ -86,14 +86,12 @@ export class SessionSync extends DurableObject<Env> {
 
   async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
     const data = JSON.parse(message.toString());
-    
-    // Handle Ping
+
+    // Handle Ping - REPLY WITH PONG
     if (data.type === "ping") {
-      // We don't even need to reply.
-      // The act of receiving data resets the Cloudflare idle timer.
+      ws.send(JSON.stringify({ type: "pong" }));
       return;
     }
-
     const meta = ws.deserializeAttachment() as SocketMetadata;
 
     // Only process messages from the current Master
