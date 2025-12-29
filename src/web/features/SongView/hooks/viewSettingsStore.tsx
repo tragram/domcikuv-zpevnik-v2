@@ -53,7 +53,7 @@ const defaultIndependentSettings: IndependentLayoutSettings = isSmallScreen()
   }
   : {
     fontSize: 12,
-    multiColumns: true, 
+    multiColumns: true,
     smartColumns: true,
     compactInFullScreen: false,
   };
@@ -78,12 +78,14 @@ interface SettingsState {
   layout: LayoutSettings
   customLayoutPreset: PresetSettings
   chords: ChordSettings
+  shareSession: boolean
   actions: {
     setLayoutSettings: (settings: Partial<LayoutSettings>) => void
     setCustomLayoutPreset: (settings: Partial<PresetSettings>) => void
     setChordSettings: (settings: Partial<ChordSettings>) => void
     applyPreset: (preset: LayoutPreset) => void
     getCurrentPreset: () => LayoutPreset
+    setShareSession: (value: boolean) => void
   }
 }
 
@@ -109,6 +111,7 @@ export const useViewSettingsStore = create<SettingsState>()(
         czechChordNames: true,
         inlineChords: true,
       },
+      shareSession: false,
       actions: {
         setLayoutSettings: (settings) =>
           set((state) => {
@@ -158,6 +161,8 @@ export const useViewSettingsStore = create<SettingsState>()(
           const state = get();
           return getCurrentPreset(state.layout);
         },
+        setShareSession: (value: boolean) =>
+          set(() => ({ shareSession: value })),
       },
     }),
     {
@@ -166,6 +171,7 @@ export const useViewSettingsStore = create<SettingsState>()(
         layout: state.layout,
         customLayoutPreset: state.customLayoutPreset,
         chords: state.chords,
+        shareSession: state.shareSession,
       }),
     }
   )

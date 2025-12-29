@@ -28,7 +28,7 @@ export const SongView = ({
 }: DataForSongView) => {
   const fullScreenHandle = useFullScreenHandle();
   const gestureContainerRef = useRef<HTMLDivElement>(null);
-  const { layout: layoutSettings } = useViewSettingsStore();
+  const { layout: layoutSettings, shareSession } = useViewSettingsStore();
   const [transposeSteps, setTransposeSteps] = useLocalStorageState(
     `transposeSteps/${songData.id}`,
     { defaultValue: 0 }
@@ -46,7 +46,8 @@ export const SongView = ({
     };
   }, []);
 
-  if (!feed && user.loggedIn) {
+  //TODO: deal with offline mode
+  if (!feed && user.loggedIn && shareSession) {
     const { updateSong } = useSessionSync(
       user.loggedIn ? user.profile.nickname ?? undefined : undefined,
       user.loggedIn
@@ -64,7 +65,8 @@ export const SongView = ({
       <Toolbar
         songDB={songDB}
         songData={songData}
-        fullScreenHandle={fullScreenHandle}
+        user={user}
+        fullScreenHandle={fullScreenHandle} 
         originalKey={songData.key}
         transposeSteps={transposeSteps}
         setTransposeSteps={setTransposeSteps}

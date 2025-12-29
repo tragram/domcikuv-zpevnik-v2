@@ -19,6 +19,7 @@ import {
   Pencil,
   Settings2,
   Undo2,
+  CloudSync,
 } from "lucide-react";
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -40,10 +41,12 @@ import { SongDB } from "~/types/types";
 import { SongData } from "~/types/songData";
 import { useWakeLock } from "react-screen-wake-lock";
 import useLocalStorageState from "use-local-storage-state";
+import { UserProfileData } from "src/worker/api/userProfile";
 
 interface ToolbarProps {
   songDB: SongDB;
   songData: SongData;
+  user: UserProfileData;
   fullScreenHandle: FullScreenHandle;
   originalKey: Key | undefined;
   transposeSteps: number;
@@ -53,12 +56,14 @@ interface ToolbarProps {
 export const Toolbar: React.FC<ToolbarProps> = ({
   songDB,
   songData,
+  user,
   fullScreenHandle,
   originalKey,
   transposeSteps,
   setTransposeSteps,
 }) => {
-  const { layout } = useViewSettingsStore();
+  const { layout, shareSession , actions} = useViewSettingsStore();
+  const setShareSession = actions.setShareSession;
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
   const { PWAInstallComponent, installItem } = usePWAInstall();
@@ -80,6 +85,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       wakeLockRelease();
     }
   }, [wakeLockSupported, wakeLockEnabled, wakeLockRequest, wakeLockRelease]);
+
+  useEffect(() => {
+    if (!user.loggedIn) {
+      setShareSession(false);
+    }
+  })
 
   return (
     <div className="absolute top-0 w-full">
@@ -131,6 +142,31 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 Keep screen on
               </DropdownMenuCheckboxItem>
             )}
+            <DropdownMenuCheckboxItem
+              onSelect={(e) => e.preventDefault()}
+              disabled={!user.loggedIn || !user.profile.nickname}
+              checked={shareSession}
+              onCheckedChange={() => setShareSession(!shareSession)}
+
+            >
+              <DropdownIconStart icon={<CloudSync />} />
+
+              <div>
+                Share current song
+                {!user.loggedIn || !user.profile.nickname &&
+                  (
+                    <p className="text-[0.7em] leading-tight">
+                      You need to be logged in and have a nickname to use this.
+                    </p>
+                  )}
+                  {shareSession && user.loggedIn && user.profile.nickname &&
+                  (
+                    <p className="text-[0.7em] leading-tight">
+                      Your session can be viewed at {window.location.host}/feed/{user.profile.nickname}
+                    </p>
+                  ) }
+              </div>
+            </DropdownMenuCheckboxItem>
             <DropdownMenuItem>
               <DropdownIconStart icon={<Pencil />} />
               <Link className="w-full h-full" to={"/edit/" + songData.id}>
