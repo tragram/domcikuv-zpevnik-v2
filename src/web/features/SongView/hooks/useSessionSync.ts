@@ -8,13 +8,13 @@ export function useSessionSync(
 ) {
   const [currentSongId, setCurrentSongId] = useState<string | undefined>();
   const [isConnected, setIsConnected] = useState(false);
-  
+
   // Changing this value forces the useEffect to restart the connection
   const [retryTrigger, setRetryTrigger] = useState(0);
 
   const socketRef = useRef<WebSocket | null>(null);
   const isMasterRef = useRef(isMaster);
-  
+
   // Queue a song update to send immediately upon reconnection
   const pendingSongUpdateRef = useRef<string | null>(null);
 
@@ -31,9 +31,6 @@ export function useSessionSync(
   const updateSong = useCallback((songId: string) => {
     if (!isMasterRef.current) return;
 
-    // Optimistically update UI immediately (keeps the UI responsive)
-    setCurrentSongId(songId);
-
     const ws = socketRef.current;
 
     // If connected, send immediately
@@ -42,7 +39,9 @@ export function useSessionSync(
       pendingSongUpdateRef.current = null;
     } else {
       // If disconnected (or previously kicked), queue this update and force a reconnect
-      console.log("[WS] Disconnected/Kicked. Queuing update and reconnecting...");
+      console.log(
+        "[WS] Disconnected/Kicked. Queuing update and reconnecting..."
+      );
       pendingSongUpdateRef.current = songId;
       setRetryTrigger((prev) => prev + 1);
     }
@@ -52,94 +51,115 @@ export function useSessionSync(
   useEffect(() => {
     if (!enabled || !masterId) return;
 
-    // 1. Setup
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${protocol}//${
-      window.location.host
-    }/api/session/${masterId}?role=${isMaster ? "master" : "follower"}`;
+    // DEBOUNCE: Wait 100ms before connecting.
+    // This prevents "interrupted" errors during React Strict Mode double-mounts
+    // or rapid re-renders.
+    const connectTimer = setTimeout(() => {
+      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const url = new URL(
+        `${protocol}//${window.location.host}/api/session/${masterId}`
+      );
+      url.searchParams.set("role", isMaster ? "master" : "follower");
 
-    console.debug("[WS] Connecting...", retryTrigger);
-    const ws = new WebSocket(wsUrl);
-    socketRef.current = ws;
+      console.debug(`[WS] Connecting (Attempt ${retryTrigger})...`);
+      const ws = new WebSocket(url.toString());
+      socketRef.current = ws;
 
-    // 2. Handlers
-    ws.onopen = () => {
-      console.debug("[WS] Connected");
-      setIsConnected(true);
-      missedPongsRef.current = 0;
+      // handlers
+      ws.onopen = () => {
+        console.debug("[WS] Connected");
+        setIsConnected(true);
+        missedPongsRef.current = 0;
 
-      // If we reconnected because the user tried to change the song, flush that update now
-      if (isMaster && pendingSongUpdateRef.current) {
-        console.log("[WS] Flushing queued song update...");
-        ws.send(JSON.stringify({ type: "update-song", songId: pendingSongUpdateRef.current }));
-        pendingSongUpdateRef.current = null;
-      }
+        // If we reconnected because the user tried to change the song, flush that update now
+        if (isMaster && pendingSongUpdateRef.current) {
+          console.log("[WS] Flushing queued song update...");
+          ws.send(
+            JSON.stringify({
+              type: "update-song",
+              songId: pendingSongUpdateRef.current,
+            })
+          );
+          pendingSongUpdateRef.current = null;
+        }
 
-      // Start Heartbeat
-      pingIntervalRef.current = window.setInterval(() => {
-        if (ws.readyState !== WebSocket.OPEN) return;
+        // Heartbeat
+        pingIntervalRef.current = window.setInterval(() => {
+          if (ws.readyState !== WebSocket.OPEN) return;
+          if (missedPongsRef.current >= 3) {
+            console.warn("[WS] Connection dead (no pong), forcing reconnect");
+            ws.close();
+            return;
+          }
+          ws.send(JSON.stringify({ type: "ping" }));
+          missedPongsRef.current += 1;
+        }, 5000);
+      };
 
-        // If we missed too many pongs, connection is dead
-        if (missedPongsRef.current >= 3) {
-          console.warn("[WS] Connection dead (no pong), forcing reconnect");
-          ws.close();
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+
+        if (data.type === "pong") {
+          missedPongsRef.current = 0;
           return;
         }
 
-        ws.send(JSON.stringify({ type: "ping" }));
-        missedPongsRef.current += 1;
-      }, 5000);
-    };
+        if (data.type === "sync") {
+          // If we have a pending update (user clicked something while connecting),
+          // ignore the server's old state so the UI doesn't flicker back.
+          if (isMaster && pendingSongUpdateRef.current) return;
+          setCurrentSongId(data.songId ?? undefined);
+        }
 
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
+        if (data.type === "master-replaced") {
+          toast.info("Session taken over by another device.");
+          // We do NOT reconnect automatically here, preventing the "fighting" loop.
+          // We only reconnect if the user calls updateSong() again.
+        }
+      };
 
-      if (data.type === "pong") {
-        missedPongsRef.current = 0; // Reset counter, connection is alive
-        return;
-      }
+      ws.onclose = (event) => {
+        setIsConnected(false);
+        if (pingIntervalRef.current) {
+          clearInterval(pingIntervalRef.current);
+          pingIntervalRef.current = null;
+        }
 
-      if (data.type === "sync") {
-        // If we have a pending update (user clicked something while connecting),
-        // ignore the server's old state so the UI doesn't flicker back.
-        if (isMaster && pendingSongUpdateRef.current) return;
+        // Don't retry if replaced by another master or component is unmounting
+        if (event.reason === "New master connected") return;
 
-        setCurrentSongId(data.songId ?? undefined);
-      }
+        // Only trigger retry if this socket is still the "current" one
+        if (socketRef.current === ws) {
+          console.debug("[WS] Closed. Retrying in 3s...");
+          setTimeout(() => setRetryTrigger((prev) => prev + 1), 3000);
+        }
+      };
 
-      if (data.type === "master-replaced") {
-        toast.info("Session taken over by another device.");
-        // We do NOT reconnect automatically here, preventing the "fighting" loop.
-        // We only reconnect if the user calls updateSong() again.
-      }
-    };
+      ws.onerror = (error) => {
+        // We can't see the details of WS errors in JS, but we can log that it happened
+        console.error("[WS] Error occurred", error);
+        ws.close();
+      };
+    }, 100);
 
-    ws.onclose = (event) => {
-      setIsConnected(false);
-      if (pingIntervalRef.current) clearInterval(pingIntervalRef.current);
-
-      // If closed by server explicitly (e.g. master replaced), don't retry immediately
-      if (event.reason === "New master connected") return;
-
-      // Otherwise, retry after a delay
-      console.debug("[WS] Closed. Retrying in 3s...");
-      setTimeout(() => {
-        setRetryTrigger((prev) => prev + 1);
-      }, 3000);
-    };
-
-    ws.onerror = (err) => {
-      console.error("[WS] Error:", err);
-      ws.close(); 
-    };
-
-    // 3. Cleanup
+    // CLEANUP
     return () => {
-      ws.onclose = null;
-      ws.close();
-      if (pingIntervalRef.current) clearInterval(pingIntervalRef.current);
+      // 1. Clear the timer. If unmounted quickly, `new WebSocket` is never called.
+      clearTimeout(connectTimer);
+
+      // 2. Close existing socket if it exists
+      if (socketRef.current) {
+        socketRef.current.onclose = null; // Prevent retry triggering on cleanup
+        socketRef.current.close();
+        socketRef.current = null;
+      }
+
+      if (pingIntervalRef.current) {
+        clearInterval(pingIntervalRef.current);
+        pingIntervalRef.current = null;
+      }
     };
-  }, [enabled, masterId, isMaster, retryTrigger]); 
+  }, [enabled, masterId, isMaster, retryTrigger]);
 
   // Online/Offline Detection
   useEffect(() => {
@@ -147,7 +167,9 @@ export function useSessionSync(
 
     const handleOnline = () => {
       console.debug("[WS] Online detected, reconnecting immediately");
-      toast.info(`Reconnected: Attempting to ${isMaster ? "broadcast" : "reload feed!"}`);
+      toast.info(
+        `Reconnected: Attempting to ${isMaster ? "broadcast" : "reload feed!"}`
+      );
       setRetryTrigger((prev) => prev + 1);
     };
 
@@ -155,7 +177,6 @@ export function useSessionSync(
       setIsConnected(false);
       console.warn("[WS] Browser went offline");
       toast.warning("Connection to feed lost");
-      // Note: We do NOT clear currentSongId here, so the last song remains visible.
     };
 
     window.addEventListener("offline", handleOffline);
