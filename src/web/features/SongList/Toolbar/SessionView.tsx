@@ -1,26 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useRouteContext } from "@tanstack/react-router";
-import {
-    CloudSync
-} from "lucide-react";
+import { CloudSync } from "lucide-react";
 import { useState } from "react";
 import { SessionsResponseData } from "src/worker/api/sessions";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { makeApiRequest } from "~/services/apiHelpers";
+import { Songbook } from "~/services/songs";
 
 interface SessionViewProps {
   isOnline: boolean;
+  avatars: Songbook[];
 }
 
-const SessionView = ({ isOnline }: SessionViewProps) => {
+const SessionView = ({ isOnline, avatars }: SessionViewProps) => {
   const context = useRouteContext({ from: "/" });
   const [isOpen, setIsOpen] = useState(false);
 
@@ -71,7 +71,11 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
           <CloudSync />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-80 max-w-11/12" align="start" sideOffset={8}>
+      <DropdownMenuContent
+        className="w-80 max-w-11/12"
+        align="start"
+        sideOffset={8}
+      >
         <DropdownMenuLabel className="text-sm font-semibold">
           Active Sessions
         </DropdownMenuLabel>
@@ -103,7 +107,11 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
               >
                 <div className="flex items-center gap-3 w-full min-w-0 rounded-md px-2 py-2 hover:bg-accent transition-colors">
                   <Avatar className="h-7 w-7 flex-shrink-0">
-                    <AvatarImage src={undefined} />
+                    <AvatarImage
+                      src={
+                        avatars.find((a) => a.name === session.masterId)?.image
+                      }
+                    />
                     <AvatarFallback className="text-xs">
                       {getInitials(session.masterId)}
                     </AvatarFallback>

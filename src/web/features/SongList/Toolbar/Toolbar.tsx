@@ -92,7 +92,7 @@ function Toolbar({
       <SearchBar />
       <Filtering songDB={songDB} />
 
-      <SessionView isOnline={isOnline} />
+      <SessionView isOnline={isOnline} avatars={songDB.songbooks} />
 
       {/* Desktop View - Individual Buttons */}
       <div className="hidden min-[1100px]:flex h-full w-fit">

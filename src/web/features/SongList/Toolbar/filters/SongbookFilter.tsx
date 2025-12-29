@@ -13,7 +13,6 @@ import type { JSX } from "react";
 import { SongData } from "~/types/songData";
 import { filterSongbook } from "../../useFilteredSongs";
 
-// Mock types for the example
 interface Songbook {
   user: string;
   name: string;
