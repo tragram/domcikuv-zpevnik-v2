@@ -34,6 +34,14 @@ export const SongView = ({
     { defaultValue: 0 }
   );
 
+  // Always call the hook, but conditionally enable it
+  const shouldEnableSync = !feed && user.loggedIn && shareSession;
+  const { updateSong } = useSessionSync(
+    user.loggedIn ? user.profile.nickname ?? undefined : undefined,
+    user.loggedIn,
+    shouldEnableSync
+  );
+
   // Prevent default gesture behavior
   useEffect(() => {
     const preventDefault = (e: Event) => e.preventDefault();
@@ -46,19 +54,12 @@ export const SongView = ({
     };
   }, []);
 
-  //TODO: deal with offline mode
-  if (!feed && user.loggedIn && shareSession) {
-    const { updateSong } = useSessionSync(
-      user.loggedIn ? user.profile.nickname ?? undefined : undefined,
-      user.loggedIn
-    );
-
-    useEffect(() => {
-      if (user.loggedIn && updateSong && songData.id) {
-        updateSong(songData.id);
-      }
-    }, [songData.id, user.loggedIn, updateSong]);
-  }
+  // Update song when it changes (only if sync is enabled)
+  useEffect(() => {
+    if (shouldEnableSync && updateSong && songData.id) {
+      updateSong(songData.id);
+    }
+  }, [songData.id, shouldEnableSync, updateSong]);
 
   return (
     <SongViewLayout ref={gestureContainerRef}>
@@ -66,7 +67,7 @@ export const SongView = ({
         songDB={songDB}
         songData={songData}
         user={user}
-        fullScreenHandle={fullScreenHandle} 
+        fullScreenHandle={fullScreenHandle}
         originalKey={songData.key}
         transposeSteps={transposeSteps}
         setTransposeSteps={setTransposeSteps}

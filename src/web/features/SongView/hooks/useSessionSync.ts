@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
-import { SyncMessage } from 'src/worker/durable-objects/SessionSync';
+import { toast } from 'sonner';
 
-export function useSessionSync(masterId: string | undefined, isMaster: boolean) {
+export function useSessionSync(
+  masterId: string | undefined, 
+  isMaster: boolean,
+  enabled: boolean = true
+) {
   const [currentSongId, setCurrentSongId] = useState<string | undefined>(undefined);
   const [isConnected, setIsConnected] = useState(false);
   const socketRef = useRef<WebSocket | null>(null);
   const isMasterRef = useRef(isMaster);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  if(masterId === undefined) {
-    throw new Error("masterId is required for useSessionSync");
-  }
+  const reconnectTimeoutRef = useRef<number | null>(null);
   
   // Update ref when isMaster changes
   useEffect(() => {
@@ -18,6 +18,11 @@ export function useSessionSync(masterId: string | undefined, isMaster: boolean) 
   }, [isMaster]);
 
   useEffect(() => {
+    // Don't connect if disabled, no masterId, or offline
+    if (!enabled || !masterId || !navigator.onLine) {
+      return;
+    }
+
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const ws = new WebSocket(`${protocol}//${window.location.host}/api/session/${masterId}`);
 
@@ -33,25 +38,23 @@ export function useSessionSync(masterId: string | undefined, isMaster: boolean) 
         setCurrentSongId(data.songId ?? undefined);
       } else if (data.type === "master-replaced") {
         console.warn("Master connection replaced:", data.message);
-        // The socket will be closed by the server shortly
         setIsConnected(false);
-        // Optionally: show a notification to the user
+        toast.info("Your session has been taken over by another connection.");
       }
     };
 
     ws.onerror = (error) => {
       console.error('WebSocket error:', error);
       setIsConnected(false);
+      toast.error("Websocket error. Try reloading the page.");
     };
 
     ws.onclose = (event) => {
       console.log('WebSocket closed', event.code, event.reason);
       setIsConnected(false);
       
-      // If we're the master and got disconnected by another master, show a message
       if (isMaster && event.reason === "New master connected") {
         console.warn("Another master connection has taken over");
-        // Optionally: you could show a toast/notification to the user here
       }
     };
     
@@ -70,8 +73,40 @@ export function useSessionSync(masterId: string | undefined, isMaster: boolean) 
         clearTimeout(reconnectTimeoutRef.current);
       }
       ws.close();
+      socketRef.current = null;
     };
-  }, [masterId, isMaster]);
+  }, [masterId, isMaster, enabled]);
+
+  // Handle online/offline events
+  useEffect(() => {
+    if (!enabled || !masterId) {
+      return;
+    }
+
+    const handleOnline = () => {
+      console.log('Connection restored, reconnecting WebSocket...');
+      toast.info('Connection to feed restored')
+      // The main effect will handle reconnection via its dependencies
+    };
+
+    const handleOffline = () => {
+      console.log('Connection lost');
+      toast.warning('Connection to feed lost');
+      setIsConnected(false);
+      if (socketRef.current) {
+        socketRef.current.close();
+        socketRef.current = null;
+      }
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [enabled, masterId]);
 
   // Only masters can set the song on their feed
   const updateSong = (songId: string) => {
