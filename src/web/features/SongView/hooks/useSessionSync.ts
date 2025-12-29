@@ -83,7 +83,8 @@ export function useSessionSync(
     }
 
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${protocol}//${window.location.host}/api/session/${masterId}`;
+    // Pass isMaster as a query parameter - backend will verify permission
+    const wsUrl = `${protocol}//${window.location.host}/api/session/${masterId}?role=${isMaster ? "master" : "follower"}`;
     console.debug("[WS] Connecting to:", wsUrl);
     
     const ws = new WebSocket(wsUrl);
@@ -136,6 +137,12 @@ export function useSessionSync(
         setIsConnected(false);
         toast.info("Your session has been taken over by another connection.");
       }
+
+      if (data.type === "unauthorized") {
+        console.error("[WS] Not authorized to be master");
+        setIsConnected(false);
+        toast.error("You are not authorized to control this session.");
+      }
     };
 
     ws.onerror = (err) => {
@@ -156,9 +163,9 @@ export function useSessionSync(
 
       // Only attempt reconnect if this is still the current socket and we're still enabled
       if (socketRef.current === ws && enabled) {
-        // Don't reconnect if intentionally closed by new master
-        if (event.reason === "New master connected") {
-          console.warn("[WS] Not reconnecting - replaced by new master");
+        // Don't reconnect if intentionally closed by new master or unauthorized
+        if (event.reason === "New master connected" || event.reason === "Unauthorized") {
+          console.warn("[WS] Not reconnecting -", event.reason);
           return;
         }
 

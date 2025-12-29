@@ -30,7 +30,10 @@ export class SessionSync extends DurableObject<Env> {
     }
 
     const url = new URL(request.url);
-    const isMaster = url.searchParams.get("role") === "master";
+    const roleParam = url.searchParams.get("role");
+    
+    // Backend has already verified authorization, so we trust the role parameter
+    const isMaster = roleParam === "master";
 
     // If this is a master connection and we already have one, disconnect the old one FIRST
     if (isMaster && this.masterWebSocket) {
@@ -83,7 +86,8 @@ export class SessionSync extends DurableObject<Env> {
 
   async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
     const data = JSON.parse(message.toString());
-    // handle Ping
+    
+    // Handle Ping
     if (data.type === "ping") {
       // We don't even need to reply.
       // The act of receiving data resets the Cloudflare idle timer.
