@@ -29,7 +29,7 @@ function RouteComponent() {
     ? user.profile.nickname ?? undefined
     : undefined;
 
-  const { updateSong } = useSessionSync(
+  const { updateSong, isConnected, connectedClients } = useSessionSync(
     masterId,
     shouldShare, // isMaster
     shouldShare // enabled
@@ -49,5 +49,17 @@ function RouteComponent() {
   }, [songData?.id, shouldShare, updateSong, transposeSteps]);
 
   // TODO: show error song if not found
-  return <SongView songDB={songDB} songData={songData} user={user} />;
+  return (
+    <SongView
+      songDB={songDB}
+      songData={songData}
+      user={user}
+      feedStatus={{
+        enabled: shouldShare,
+        isConnected,
+        isMaster: true,
+        connectedClients,
+      }}
+    />
+  );
 }

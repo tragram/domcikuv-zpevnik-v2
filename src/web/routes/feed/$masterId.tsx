@@ -44,11 +44,12 @@ function FeedView({ songDB, masterId, user }: FeedViewProps) {
       : null;
   }, [currentSongId, songDB.songs]);
 
-  const [transposeSteps, setTransposeSteps] = useLocalStorageState(
+  // force transposeSteps (a bit hacky but passing it down feels even uglier - TODO: use Zustand)
+  const [, setTransposeSteps] = useLocalStorageState(
     `transposeSteps/${currentSongId}`,
     { defaultValue: 0 }
   );
-  
+
   useEffect(() => {
     if (currentTransposeSteps !== undefined)
       setTransposeSteps(currentTransposeSteps);
@@ -70,5 +71,17 @@ function FeedView({ songDB, masterId, user }: FeedViewProps) {
     );
   }
 
-  return <SongView songDB={songDB} songData={songData} user={user} />;
+  return (
+    <SongView
+      songDB={songDB}
+      songData={songData}
+      user={user}
+      feedStatus={{
+        enabled: true,
+        isConnected,
+        isMaster: false,
+        connectedClients: 0,
+      }}
+    />
+  );
 }

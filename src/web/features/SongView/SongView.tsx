@@ -12,16 +12,25 @@ import { Toolbar } from "./settings/Toolbar";
 import "./SongView.css";
 import { UserProfileData } from "src/worker/api/userProfile";
 
+type FeedStatus = {
+  isMaster: boolean;
+  enabled: boolean;
+  isConnected: boolean;
+  connectedClients: number;
+};
+
 type DataForSongView = {
   songDB: SongDB;
   songData: SongData;
   user: UserProfileData;
+  feedStatus?: FeedStatus;
 };
 
 export const SongView = ({
   songDB,
   songData,
   user,
+  feedStatus,
 }: DataForSongView) => {
   const fullScreenHandle = useFullScreenHandle();
   const gestureContainerRef = useRef<HTMLDivElement>(null);
@@ -51,6 +60,7 @@ export const SongView = ({
         user={user}
         fullScreenHandle={fullScreenHandle}
         originalKey={songData.key}
+        feedStatus={feedStatus}
         transposeSteps={transposeSteps}
         setTransposeSteps={setTransposeSteps}
       />

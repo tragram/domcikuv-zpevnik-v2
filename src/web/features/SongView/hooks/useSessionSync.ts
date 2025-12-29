@@ -41,7 +41,6 @@ export function useSessionSync(
     }
 
     pingIntervalRef.current = window.setInterval(() => {
-      console.log("Beat")
       if (ws.readyState !== WebSocket.OPEN) return;
       if (missedPongsRef.current >= 1) { // no message since last ping (not even pong)
         console.warn("[WS] Connection dead (no pong), forcing reconnect");
