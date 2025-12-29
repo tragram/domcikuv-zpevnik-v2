@@ -37,8 +37,8 @@ export function DropdownThemeToggle() {
       onClick={toggleTheme}
       onSelect={(e) => e.preventDefault()}
     >
-      <SunIcon className="mr-1 h-4 w-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-      <MoonIcon className="absolute mr-1 h-4 w-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+      <SunIcon className="h-4 w-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+      <MoonIcon className="absolute h-4 w-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
       <div className="inline dark:hidden">Light theme</div>
       <div className="hidden dark:inline">Dark theme</div>
     </DropdownMenuItem>
