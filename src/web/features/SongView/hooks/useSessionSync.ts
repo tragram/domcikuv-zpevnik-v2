@@ -96,7 +96,7 @@ export function useSessionSync(
           }
           ws.send(JSON.stringify({ type: "ping" }));
           missedPongsRef.current += 1;
-        }, 5000);
+        }, 90_000); // 90s - CF timeout is supposedly 100s (https://community.cloudflare.com/t/cloudflare-websocket-timeout/5865)
       };
 
       ws.onmessage = (event) => {

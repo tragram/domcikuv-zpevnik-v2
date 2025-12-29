@@ -25,6 +25,11 @@ export class SessionSync extends DurableObject<Env> {
     super(ctx, env);
     this.ctx.blockConcurrencyWhile(async () => {
       const stored = await this.ctx.storage.get<SessionSyncState>("state");
+      this.masterWebSocket =
+        this.ctx
+          .getWebSockets()
+          .find((webSocket) => webSocket.deserializeAttachment().isMaster) ||
+        null;
       this.currentSongId = stored?.songId || null;
       this.currentTransposeSteps = stored?.transposeSteps || null;
     });
