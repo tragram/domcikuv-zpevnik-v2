@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useState, useEffect } from 'react';
-import { UserProfileData } from 'src/worker/api/userProfile';
-import { useSessionSync } from '~/features/SongView/hooks/useSessionSync';
+import { createFileRoute } from "@tanstack/react-router";
+import React from "react";
+import { UserProfileData } from "src/worker/api/userProfile";
+import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
-import { SongDB } from '~/types/types';
+import { SongDB } from "~/types/types";
 
 export const Route = createFileRoute("/feed/$masterId")({
   component: RouteComponent,
@@ -28,19 +28,18 @@ type FeedViewProps = {
   user: UserProfileData;
 };
 
-export const FeedView = ({ songDB, masterId ,user}: FeedViewProps) => {
-  const { currentSongId, isConnected } = useSessionSync(masterId, false);
-  const [songData, setSongData] = useState(() =>
-    currentSongId ? songDB.songs.find((s) => s.id === currentSongId) : null
+function FeedView({ songDB, masterId, user }: FeedViewProps) {
+  // Feed route manages session sync as follower (read-only)
+  const { currentSongId, isConnected } = useSessionSync(
+    masterId,
+    false, // isMaster = false (follower mode)
+    true // enabled
   );
 
-  // Update songData when currentSongId changes
-  useEffect(() => {
-    if (currentSongId) {
-      const song = songDB.songs.find((s) => s.id === currentSongId);
-      setSongData(song || null);
-    }
-  }, [currentSongId, songDB]);
+  // useMemo to prevent re-finding the song on every render
+  const songData = React.useMemo(() => {
+    return currentSongId ? songDB.songs.find((s) => s.id === currentSongId) : null;
+  }, [currentSongId, songDB.songs]);
 
   if (!isConnected) {
     return (
@@ -53,10 +52,10 @@ export const FeedView = ({ songDB, masterId ,user}: FeedViewProps) => {
   if (!songData) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Waiting for master to select a song...</p>
+        <p>Waiting for {masterId} to select a song...</p>
       </div>
     );
   }
 
-  return <SongView songDB={songDB} songData={songData} feed={true} user={user} />;
-};
+  return <SongView songDB={songDB} songData={songData} user={user} />;
+}

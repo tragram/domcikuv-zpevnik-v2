@@ -10,36 +10,25 @@ import { SongViewLayout } from "./components/SongViewLayout";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
 import "./SongView.css";
-import { useSessionSync } from "./hooks/useSessionSync";
 import { UserProfileData } from "src/worker/api/userProfile";
 
 type DataForSongView = {
   songDB: SongDB;
   songData: SongData;
-  user: UserProfileData
-  feed: boolean;
+  user: UserProfileData;
 };
 
 export const SongView = ({
   songDB,
   songData,
   user,
-  feed = false
 }: DataForSongView) => {
   const fullScreenHandle = useFullScreenHandle();
   const gestureContainerRef = useRef<HTMLDivElement>(null);
-  const { layout: layoutSettings, shareSession } = useViewSettingsStore();
+  const { layout: layoutSettings } = useViewSettingsStore();
   const [transposeSteps, setTransposeSteps] = useLocalStorageState(
     `transposeSteps/${songData.id}`,
     { defaultValue: 0 }
-  );
-
-  // Always call the hook, but conditionally enable it
-  const shouldEnableSync = !feed && user.loggedIn && shareSession;
-  const { updateSong } = useSessionSync(
-    user.loggedIn ? user.profile.nickname ?? undefined : undefined,
-    user.loggedIn,
-    shouldEnableSync
   );
 
   // Prevent default gesture behavior
@@ -53,13 +42,6 @@ export const SongView = ({
       document.removeEventListener("gesturechange", preventDefault);
     };
   }, []);
-
-  // Update song when it changes (only if sync is enabled)
-  useEffect(() => {
-    if (shouldEnableSync && updateSong && songData.id) {
-      updateSong(songData.id);
-    }
-  }, [songData.id, shouldEnableSync, updateSong]);
 
   return (
     <SongViewLayout ref={gestureContainerRef}>
