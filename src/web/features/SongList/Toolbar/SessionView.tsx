@@ -1,8 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useRouteContext } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
-import { useState } from "react";
-import { SessionsResponseData } from "src/worker/api/sessions";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
@@ -12,34 +11,38 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { makeApiRequest } from "~/services/apiHelpers";
-import { Songbook } from "~/services/songs";
+import { fetchActiveSessions } from "~/services/users";
 
 interface SessionViewProps {
   isOnline: boolean;
-  avatars: Songbook[];
 }
 
-const SessionView = ({ isOnline, avatars }: SessionViewProps) => {
+const SessionView = ({ isOnline }: SessionViewProps) => {
   const context = useRouteContext({ from: "/" });
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 
-  const {
-    data: sessions,
-    isLoading,
-    error,
-  } = useQuery<SessionsResponseData>({
-    queryKey: ["sessions"],
-    queryFn: async () => {
-      const response = await makeApiRequest(context.api.session.$get);
-      return response.map((session) => ({
-        ...session,
-        createdAt: new Date(session.createdAt),
-      }));
-    },
-    enabled: isOpen && isOnline,
-    refetchInterval: isOpen ? 10000 : false,
+  // keep activeSessions more up to date when this is open
+  const { data: activeSessions, isLoading } = useQuery({
+    queryKey: ["activeSessions"],
+    queryFn: () => fetchActiveSessions(context.api),
+    staleTime: 1000 * 60 * 60 * 24,
+    initialData: context.activeSessions, // Use the preloaded data
   });
+
+  // Refetch when dropdown opens if data is older than 1 minute
+  useEffect(() => {
+    if (isOpen) {
+      const queryState = queryClient.getQueryState(["activeSessions"]);
+      
+      if (queryState?.dataUpdatedAt) {
+        const ageInMinutes = (Date.now() - queryState.dataUpdatedAt) / (1000 * 60);
+        if (ageInMinutes > 1) {
+          queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
+        }
+      }
+    }
+  }, [isOpen, queryClient]);
 
   const getTimeSince = (date: Date) => {
     const now = new Date();
@@ -57,7 +60,7 @@ const SessionView = ({ isOnline, avatars }: SessionViewProps) => {
     return masterId.slice(0, 2).toUpperCase();
   };
 
-  const active = sessions && sessions.length > 0;
+  const active = activeSessions && activeSessions.length > 0;
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -85,19 +88,19 @@ const SessionView = ({ isOnline, avatars }: SessionViewProps) => {
             Loading...
           </div>
         )}
-        {error && (
+        {!isLoading && !activeSessions && (
           <div className="px-2 py-2 text-sm text-destructive">
             Failed to load sessions
           </div>
         )}
-        {!isLoading && !error && sessions?.length === 0 && (
+        {!isLoading && activeSessions?.length === 0 && (
           <div className="px-2 py-2 text-sm text-muted-foreground">
             No active sessions
           </div>
         )}
-        {sessions && sessions.length > 0 && (
+        {activeSessions && activeSessions.length > 0 && (
           <div className="max-h-64 overflow-y-auto">
-            {sessions.map((session) => (
+            {activeSessions.map((session) => (
               <Link
                 key={session.masterId}
                 to="/feed/$masterId"
@@ -107,11 +110,7 @@ const SessionView = ({ isOnline, avatars }: SessionViewProps) => {
               >
                 <div className="flex items-center gap-3 w-full min-w-0 rounded-md px-2 py-2 hover:bg-accent transition-colors">
                   <Avatar className="h-7 w-7 flex-shrink-0">
-                    <AvatarImage
-                      src={
-                        avatars.find((a) => a.name === session.masterId)?.image
-                      }
-                    />
+                    <AvatarImage src={session.avatar} />
                     <AvatarFallback className="text-xs">
                       {getInitials(session.masterId)}
                     </AvatarFallback>

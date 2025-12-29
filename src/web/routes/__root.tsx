@@ -8,7 +8,7 @@ import {
   fetchSongs,
 } from "~/services/songs";
 import { RouterContext } from "~/main";
-import { fetchProfile } from "~/services/users";
+import { fetchActiveSessions, fetchProfile } from "~/services/users";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { NotFound } from "~/components/NotFound";
 
@@ -34,10 +34,17 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       staleTime: 1000 * 60 * 60, // one hour
     });
 
+    const activeSessions = await context.queryClient.fetchQuery({
+      queryKey: ["activeSessions"],
+      queryFn: () => fetchActiveSessions(context.api),
+      staleTime: 1000 * 60 * 60 * 24, // one day default - refetched when the list is open
+    });
+
     const songDB = buildSongDB(songs, publicSongbooks);
     return {
       user: user as UserProfileData,
       songDB,
+      activeSessions,
     };
   },
   component: () => (

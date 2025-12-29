@@ -1,6 +1,6 @@
 import { eq, gte, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { syncSessionTable, user as userTable } from "src/lib/db/schema";
+import { syncSessionTable, user, user as userTable } from "src/lib/db/schema";
 import { getUserProfile } from "../services/user-service";
 import { buildApp } from "./utils";
 import { errorJSend, successJSend } from "./responses";
@@ -10,6 +10,7 @@ export { SessionSync } from "../durable-objects/SessionSync";
 export type SyncSession = {
   masterId: string;
   createdAt: Date;
+  avatar: string | undefined;
 };
 
 export type SessionsResponseData = SyncSession[];
@@ -23,9 +24,11 @@ const sessionSyncApp = buildApp()
         .select({
           masterId: syncSessionTable.masterId,
           createdAt: syncSessionTable.createdAt,
+          avatar: user.image
         })
         .from(syncSessionTable)
         .where(gte(syncSessionTable.createdAt, latestLive))
+        .leftJoin(user, eq(user.id, syncSessionTable.userId))
         .all();
 
       // Filter to only the latest entry per masterId

@@ -313,7 +313,7 @@ function ProfilePictureSection({
         </CardTitle>
         <CardDescription>
           Upload a new avatar. It will be used as the icon of your songbook (if
-          you choose to have public favorites below).
+          you choose to have public favorites below) and in your feed (if you turn on sharing your feed).
         </CardDescription>
       </CardHeader>
       <CardContent>

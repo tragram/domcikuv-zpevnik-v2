@@ -6,6 +6,7 @@ import {
   UpdateUserSchema,
   UsersResponse,
 } from "src/worker/services/user-service";
+import { SessionsResponseData } from "src/worker/api/sessions";
 
 export type UsersApi = typeof client.api.admin.users;
 
@@ -31,6 +32,15 @@ interface UserSearchParams {
 export async function fetchProfile(api: typeof client.api) {
   const response = await makeApiRequest(api.profile.$get);
   return response;
+}
+
+export async function fetchActiveSessions(
+  api: typeof client.api
+): Promise<SessionsResponseData> {
+  const response = await makeApiRequest(api.session.$get);
+  return response.map((item) => {
+    return { ...item, createdAt: new Date(item.createdAt) };
+  });
 }
 
 /**
