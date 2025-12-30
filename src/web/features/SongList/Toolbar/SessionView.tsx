@@ -34,9 +34,10 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   useEffect(() => {
     if (isOpen) {
       const queryState = queryClient.getQueryState(["activeSessions"]);
-      
+
       if (queryState?.dataUpdatedAt) {
-        const ageInMinutes = (Date.now() - queryState.dataUpdatedAt) / (1000 * 60);
+        const ageInMinutes =
+          (Date.now() - queryState.dataUpdatedAt) / (1000 * 60);
         if (ageInMinutes > 1) {
           queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
         }
@@ -126,6 +127,11 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
             ))}
           </div>
         )}
+
+        <DropdownMenuSeparator />
+        <p className="px-2 py-2 text-xs">
+          To share your own sesion, just log in, pick a nickname and enable the feature in song settings!
+        </p>
       </DropdownMenuContent>
     </DropdownMenu>
   );
