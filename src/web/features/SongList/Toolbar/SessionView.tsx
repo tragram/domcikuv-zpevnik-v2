@@ -22,13 +22,18 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 
-  // keep activeSessions more up to date when this is open
-  const { data: activeSessions, isLoading } = useQuery({
-    queryKey: ["activeSessions"],
-    queryFn: () => fetchActiveSessions(context.api),
-    staleTime: 1000 * 60 * 60 * 24,
-    initialData: context.activeSessions, // Use the preloaded data
+  const songs = context.songDB.songs;
+  const activeSessions = context.activeSessions.map((as) => {
+    return { ...as, song: songs.find((s) => s.id === as.songId) };
   });
+
+  // keep activeSessions more up to date when this is open
+  // const { data: activeSessions, isLoading } = useQuery({
+  //   queryKey: ["activeSessions"],
+  //   queryFn: () => fetchActiveSessions(context.api),
+  //   staleTime: 1000 * 60 * 1,
+  //   initialData: context.activeSessions, // Use the preloaded data
+  // });
 
   // Refetch when dropdown opens if data is older than 1 minute
   useEffect(() => {
@@ -48,13 +53,17 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const getTimeSince = (date: Date) => {
     const now = new Date();
     const diff = now.getTime() - new Date(date).getTime();
-    const minutes = Math.floor(diff / 60000);
+    const seconds = Math.floor(diff / 1000);
+    const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
 
     if (hours > 0) {
       return `${hours}h ${minutes % 60}m ago`;
+    } else if (minutes > 0) {
+      return `${minutes}m ago`;
+    } else {
+      return `${seconds}s ago`;
     }
-    return `${minutes}m ago`;
   };
 
   const getInitials = (masterId: string) => {
@@ -76,7 +85,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-80 max-w-11/12"
+        className="w-80 xs:w-96 max-w-11/12"
         align="start"
         sideOffset={8}
       >
@@ -84,17 +93,12 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
           Active Sessions
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {isLoading && (
-          <div className="px-2 py-2 text-sm text-muted-foreground">
-            Loading...
-          </div>
-        )}
-        {!isLoading && !activeSessions && (
+        {!activeSessions && (
           <div className="px-2 py-2 text-sm text-destructive">
             Failed to load sessions
           </div>
         )}
-        {!isLoading && activeSessions?.length === 0 && (
+        {activeSessions?.length === 0 && (
           <div className="px-2 py-2 text-sm text-muted-foreground">
             No active sessions
           </div>
@@ -116,11 +120,25 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                       {getInitials(session.masterId)}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="truncate flex-1 text-sm ">
-                    {session.masterId}
-                  </div>
-                  <div className="text-xs text-primary/80 flex-shrink-0">
-                    {getTimeSince(session.createdAt)}
+                  <div className="flex items-center gap-3 min-w-0 flex-1 justify-between">
+                    <div className="truncate text-sm w-[8rem]">
+                      {session.masterId}
+                    </div>
+                    <div className="text-xs hidden xs:flex flex-col grow text-center">
+                      {session.song && (
+                        <>
+                          <div className="truncate text-primary/80 ">
+                            {session.song.artist}
+                          </div>
+                          <div className="truncate text-white/80 ">
+                            {session.song.title}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <div className="text-xs text-primary/80 w-[60px]">
+                      {getTimeSince(session.createdAt)}
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -130,7 +148,8 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
 
         <DropdownMenuSeparator />
         <p className="px-2 py-2 text-xs">
-          To share your own sesion, just log in, pick a nickname and enable the feature in song settings!
+          To share your own sesion, just log in, pick a nickname and enable the
+          feature in song settings!
         </p>
       </DropdownMenuContent>
     </DropdownMenu>

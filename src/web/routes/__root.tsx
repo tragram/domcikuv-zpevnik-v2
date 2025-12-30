@@ -37,7 +37,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const activeSessions = await context.queryClient.fetchQuery({
       queryKey: ["activeSessions"],
       queryFn: () => fetchActiveSessions(context.api),
-      staleTime: 1000 * 60 * 60 * 24, // one day default - refetched when the list is open
+      staleTime: 1000 * 60 * 60 * 24, // one day default - refetched when the list is open in the respective component
     });
 
     const songDB = buildSongDB(songs, publicSongbooks);

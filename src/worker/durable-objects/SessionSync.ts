@@ -44,8 +44,8 @@ export class SessionSync extends DurableObject<Env> {
   currentTransposeSteps: number | null = null;
   currentSongId: string | null = null;
 
-  private masterUserId: string | null = null; 
-  private masterId: string | null = null; 
+  private masterUserId: string | null = null;
+  private masterId: string | null = null;
   private pendingDbWrite: {
     userId: string;
     masterId: string;
@@ -53,7 +53,7 @@ export class SessionSync extends DurableObject<Env> {
   } | null = null;
 
   // DB-related
-  private readonly DB_WRITE_DEBOUNCE = 1000; // [ms]
+  private readonly DB_WRITE_DEBOUNCE = 5000; // [ms]
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
@@ -64,15 +64,21 @@ export class SessionSync extends DurableObject<Env> {
           .getWebSockets()
           .find((webSocket) => webSocket.deserializeAttachment().isMaster) ||
         null;
+      if (this.masterWebSocket) {
+        const meta = this.masterWebSocket.deserializeAttachment();
+        this.masterUserId = meta.masterUserId;
+        this.masterId = meta.masterId;
+      }
       this.currentSongId = stored?.songId || null;
       this.currentTransposeSteps = stored?.transposeSteps || null;
-      
+
       // Restore pending write if exists
-      this.pendingDbWrite = await this.ctx.storage.get<{
-        userId: string;
-        masterId: string;
-        songId: string;
-      }>("pendingDbWrite") || null;
+      this.pendingDbWrite =
+        (await this.ctx.storage.get<{
+          userId: string;
+          masterId: string;
+          songId: string;
+        }>("pendingDbWrite")) || null;
     });
   }
 
@@ -119,7 +125,11 @@ export class SessionSync extends DurableObject<Env> {
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair);
 
-    server.serializeAttachment({ isMaster });
+    server.serializeAttachment({
+      isMaster,
+      masterId: this.masterId,
+      masterUserId: this.masterUserId,
+    });
 
     // Enable hibernation - accept the new socket
     this.ctx.acceptWebSocket(server);
@@ -215,7 +225,6 @@ export class SessionSync extends DurableObject<Env> {
       masterId: data.masterId,
       songId: data.songId, // written like this to keep TS happy about songId
     };
-    
     await this.ctx.storage.put("pendingDbWrite", this.pendingDbWrite);
 
     // Schedule alarm (this persists across hibernation)
