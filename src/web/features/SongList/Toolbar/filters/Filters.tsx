@@ -191,8 +191,7 @@ const Filtering = ({ songDB }: { songDB: SongDB }): JSX.Element => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             aria-label="Filtering"
-            className="dropdown-scroll no-scrollbar max-h-[80dvh] overflow-y-scroll w-72"
-            sideOffset={15}
+            className="dropdown-scroll no-scrollbar max-h-[80dvh] overflow-y-scroll m-2 w-[calc(100dvw-1rem)] max-w-72"
           >
             {dropdownSections}
           </DropdownMenuContent>

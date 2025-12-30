@@ -193,7 +193,7 @@ const SortMenu = (): JSX.Element => {
               <ArrowDownUp size={32} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" sideOffset={15}>
+          <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56">
             <DropdownMenuLabel>Sorting method</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {categories.map((category) => (

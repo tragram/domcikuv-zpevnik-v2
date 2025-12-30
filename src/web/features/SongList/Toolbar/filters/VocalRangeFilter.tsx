@@ -74,7 +74,7 @@ export const VocalRangeFilter = ({
       <DropdownMenuContent
         aria-label="Vocal range filter slider"
         className="w-80"
-        sideOffset={15}
+        sideOffset={16}
       >
         <DropdownMenuItem key="slider" onSelect={(e) => e.preventDefault()}>
           <VocalRangeSlider

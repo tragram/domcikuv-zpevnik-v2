@@ -206,7 +206,7 @@ export const SongBookFilter = ({
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-80" align="start" sideOffset={8}>
+      <DropdownMenuContent className="w-80" align="start" sideOffset={16}>
         <DropdownMenuLabel className="text-sm font-semibold">
           Filter by Songbooks
         </DropdownMenuLabel>

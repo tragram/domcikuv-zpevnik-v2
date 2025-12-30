@@ -37,7 +37,9 @@ const CombinedMenu = ({ isOnline }: CombinedMenuProps) => {
           <MoreHorizontal />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="center" sideOffset={15}>
+      <DropdownMenuContent
+        className="m-2 w-[calc(100dvw-1rem)] max-w-56"
+      >
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownThemeToggle />
@@ -92,7 +94,7 @@ function Toolbar({
       <SearchBar />
       <Filtering songDB={songDB} />
 
-      <SessionView isOnline={isOnline}/>
+      <SessionView isOnline={isOnline} />
 
       {/* Desktop View - Individual Buttons */}
       <div className="hidden min-[1100px]:flex h-full w-fit">

@@ -108,7 +108,7 @@ export const LanguageFilter = ({
           {!iconOnly && "Languages"}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent aria-label="Language Choices" sideOffset={15}>
+      <DropdownMenuContent aria-label="Language Choices" sideOffset={16}>
         {createLanguageChoices(
           languages,
           selectedLanguage,

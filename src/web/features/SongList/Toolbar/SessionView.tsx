@@ -74,9 +74,8 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-80 xs:w-96 max-w-11/12"
+        className="m-2 w-[calc(100dvw-1rem)] sm:w-96"
         align="start"
-        sideOffset={8}
       >
         <DropdownMenuLabel className="text-sm font-semibold">
           Active Sessions
