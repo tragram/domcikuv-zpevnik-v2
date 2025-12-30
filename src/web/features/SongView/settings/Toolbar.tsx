@@ -108,7 +108,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [feedStatus?.transposeSteps]);
-
   return (
     <div className="absolute top-0 w-full">
       <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
@@ -132,7 +131,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               <Settings2 size={32} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
+          <DropdownMenuContent className="w-80 max-h-[85dvh] max-w-[80dvw] overflow-y-auto">
             {React.Children.toArray(<LayoutSettingsDropdownSection />)}
             {React.Children.toArray(<ChordSettingsDropdownMenu />)}
             <DropdownMenuLabel>Misc</DropdownMenuLabel>
@@ -169,12 +168,16 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
               <div>
                 Share current song
-                {!user.loggedIn ||
-                  (!user.profile.nickname && (
-                    <p className="text-[0.7em] leading-tight">
-                      You need to be logged in and have a nickname to use this.
-                    </p>
-                  ))}
+                {!shareSession && (
+                  <p className="text-[0.7em] leading-tight">
+                    Share your page with others - live.
+                  </p>
+                )}
+                {(!user.loggedIn || !user.profile.nickname) && (
+                  <p className="text-[0.7em] leading-tight">
+                    Log in and pick a nickname to use this feature.
+                  </p>
+                )}
                 {shareSession &&
                   feedStatus &&
                   feedStatus.connectedClients > 0 && (
