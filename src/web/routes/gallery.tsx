@@ -9,7 +9,7 @@ export const Route = createFileRoute("/gallery")({
 });
 
 function Home() {
-  const { userData, songDB } = Route.useLoaderData();
+  const { songDB } = Route.useLoaderData();
 
   return <SongGallery songDB={songDB} />;
 }

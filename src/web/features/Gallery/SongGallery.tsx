@@ -1,12 +1,12 @@
+import { Link } from "@tanstack/react-router";
+import { useWindowVirtualizer } from "@tanstack/react-virtual";
+import { CircleX } from "lucide-react";
+import { memo, useMemo, useState } from "react";
 import { IllustrationPrompt } from "~/components/IllustrationPrompt";
 import { Button } from "~/components/ui/button";
 import { SongData } from "~/types/songData";
-import { CircleX } from "lucide-react";
-import { memo, useEffect, useMemo, useState, useRef } from "react";
-import "./SongGallery.css";
-import { Link, useLocation } from "@tanstack/react-router";
 import { SongDB } from "~/types/types";
-import { useVirtualizer, useWindowVirtualizer } from "@tanstack/react-virtual";
+import "./SongGallery.css";
 
 const getShuffledArr = (arr: SongData[]) => {
   const newArr = arr.slice();
@@ -111,7 +111,7 @@ const SongGallery = memo(({ songDB }: SongGalleryProps) => {
       shuffledSongs.map(() =>
         imageHeight(Math.min(512, 1.5 * columnWidth), 0.3)
       ),
-    [shuffledSongs]
+    [columnWidth, shuffledSongs]
   );
 
   const rowVirtualizer = useWindowVirtualizer({

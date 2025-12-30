@@ -16,7 +16,7 @@ export function IllustrationPrompt({
   show,
   className,
 }: IllustrationPromptProps) {
-  const routeContext = useRouteContext({ from: "/" });
+  const routeContext = useRouteContext({ from: "/gallery" });
   const {
     data: promptContent,
     isLoading,
