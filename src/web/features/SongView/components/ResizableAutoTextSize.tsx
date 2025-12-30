@@ -145,7 +145,6 @@ export function ResizableAutoTextSize({
       target: gestureContainerRef,
       eventOptions: { passive: true },
       pinch: {
-        scaleBounds: { min: 0.5, max: 3 },
         rubberband: true,
         // modifierKey: null ensures we don't accidentally conflict with ctrl+wheel
         modifierKey: null 
