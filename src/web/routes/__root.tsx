@@ -12,6 +12,7 @@ import { fetchProfile } from "~/services/users";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { NotFound } from "~/components/NotFound";
 import { prefetchActiveSessions } from "~/hooks/use-active-sessions";
+import memoizeOne from "memoize-one";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFound,
@@ -40,7 +41,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       context.api
     );
 
-    const songDB = buildSongDB(songs, publicSongbooks);
+    const memoizedBuildSongDB = memoizeOne(buildSongDB);
+    const songDB = memoizedBuildSongDB(songs, publicSongbooks);
+    
     return {
       user: user as UserProfileData,
       songDB,
