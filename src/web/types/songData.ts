@@ -1,11 +1,10 @@
-import { fileURL } from "~/lib/utils";
-import { Key, Note, SongRange } from "./musicTypes";
-import type { ChordPro, int, SongLanguage } from "./types";
-import { SongDataDB } from "src/lib/db/schema";
-import { SongDataApi } from "src/worker/api/songDB";
 import { EditorState } from "~/features/Editor/Editor";
+import { Key, SongRange } from "./musicTypes";
+import type { ChordPro, int, SongLanguage } from "./types";
+import { SongDataApi } from "src/worker/services/song-service";
 
 interface CurrentIllustration {
+  illustrationId: string;
   promptId: string;
   imageModel: string;
   imageURL: string;
@@ -72,10 +71,17 @@ export class SongData {
   static fromEditor(data: EditorState): SongData {
     return new SongData({
       ...data,
+      id: SongData.baseId(data.title, data.artist),
       createdAt: new Date(),
       updatedAt: new Date(),
       currentIllustration: undefined,
+      tempo: Number(data.tempo) || undefined,
       isFavoriteByCurrentUser: false,
+      // these need to be here because of a minor type mismatch
+      key: data.key,
+      startMelody: data.startMelody,
+      capo: data.capo,
+      range: data.range,
     });
   }
 
@@ -174,5 +180,30 @@ export class SongData {
       .map((d) => `{${d}: ${this[d]}}`)
       .join("\n");
     return preamble + "\n" + this.chordpro;
+  }
+
+  toCustomChordpro(): string {
+    const directives = [
+      "title",
+      "artist",
+      "key",
+      "capo",
+      "tempo",
+      "range",
+      "language",
+      "startMelody",
+    ] as (keyof SongData)[];
+    const preamble = directives.map((d) =>
+      this[d] instanceof Date
+        ? `{${d}: ${this[d].getTime()}}`
+        : `{${d}: ${this[d] ?? ""}}`
+    );
+
+    preamble.push(`{createdAt: ${this.createdAt.getTime()}}`);
+    preamble.push(
+      `{illustrationId: ${this.currentIllustration?.illustrationId}}`
+    );
+    preamble.push(`{promptId: ${this.currentIllustration?.promptId}}`);
+    return preamble.join("\n") + "\n\n" + this.chordpro;
   }
 }

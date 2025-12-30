@@ -63,6 +63,7 @@ export type SongDataApi = {
   chordpro: string;
   currentIllustration:
     | {
+        illustrationId: string;
         imageModel: string;
         imageURL: string;
         thumbnailURL: string;
@@ -102,6 +103,7 @@ export async function retrieveSongs(
 
     // Current illustration fields
     currentIllustration: {
+      illustrationId: songIllustration.id,
       promptId: songIllustration.promptId,
       imageModel: songIllustration.imageModel,
       imageURL: songIllustration.imageURL,
@@ -178,11 +180,13 @@ export async function retrieveSongs(
         songItem as { isFavoriteByCurrentUser?: string | null }
       ).isFavoriteByCurrentUser,
       currentIllustration:
+        songItem.currentIllustration?.illustrationId &&
         songItem.currentIllustration?.promptId &&
         songItem.currentIllustration?.imageModel &&
         songItem.currentIllustration?.imageURL &&
         songItem.currentIllustration?.thumbnailURL
           ? {
+              illustrationId: songItem.currentIllustration.illustrationId,
               promptId: songItem.currentIllustration.promptId,
               imageModel: songItem.currentIllustration.imageModel,
               imageURL: songItem.currentIllustration.imageURL,

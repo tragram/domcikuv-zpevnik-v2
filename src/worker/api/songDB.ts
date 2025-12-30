@@ -1,7 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
-import { eq } from "drizzle-orm";
+import { eq, not } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { illustrationPrompt } from "src/lib/db/schema";
+import { illustrationPrompt, songIllustration } from "src/lib/db/schema";
 import { z } from "zod/v4";
 import {
   getSongbooks,
@@ -22,6 +22,27 @@ export type SongDBResponseData = {
   lastUpdateAt: string;
   isIncremental: boolean;
 };
+
+export type BasicIllustrationPromptDB = {
+  promptId: string;
+  songId: string;
+  createdAt: number;
+  summaryPromptVersion: string;
+  summaryModel: string;
+  text: string;
+};
+
+export type BasicSongIllustrationDB = {
+  promptId: string;
+  songId: string;
+  createdAt: number;
+  imageModel: string;
+  imageURL: string;
+  thumbnailURL: string;
+};
+
+export type AllIllustrationPromptsResponseData = BasicIllustrationPromptDB[];
+export type BasicSongIllustrationResponseData = BasicSongIllustrationDB[];
 
 export const songDBRoutes = buildApp()
   .get("/", async (c) => {
@@ -85,7 +106,68 @@ export const songDBRoutes = buildApp()
     }
   })
 
-  .get("prompts/:id", async (c) => {
+  .get("/illustrations", async (c) => {
+    try {
+      const db = drizzle(c.env.DB);
+      const allIlustrations = await db
+        .select({
+          // id: illustrationPrompt.id,
+          songId: songIllustration.songId,
+          promptId: songIllustration.promptId,
+          createdAt: songIllustration.createdAt,
+          imageModel: songIllustration.imageModel,
+          imageURL: songIllustration.imageURL,
+          thumbnailURL: songIllustration.thumbnailURL,
+        })
+        .from(songIllustration)
+        .where(not(songIllustration.deleted));
+      return successJSend(
+        c,
+        allIlustrations.map((ai) => {
+          return { ...ai, createdAt: ai.createdAt.getTime() };
+        }) as BasicSongIllustrationResponseData
+      );
+    } catch {
+      return errorJSend(
+        c,
+        "Internal error listing illustrations",
+        500,
+        "ERROR_FINDING_PROMPT"
+      );
+    }
+  })
+
+  .get("/prompts", async (c) => {
+    try {
+      const db = drizzle(c.env.DB);
+      const allPrompts = await db
+        .select({
+          promptId: illustrationPrompt.id,
+          songId: illustrationPrompt.songId,
+          createdAt: illustrationPrompt.createdAt,
+          summaryPromptVersion: illustrationPrompt.summaryPromptVersion,
+          summaryModel: illustrationPrompt.summaryModel,
+          text: illustrationPrompt.text,
+        })
+        .from(illustrationPrompt)
+        .where(not(illustrationPrompt.deleted));
+      return successJSend(
+        c,
+        allPrompts.map((ap) => {
+          return { ...ap, createdAt: ap.createdAt.getTime() };
+        }) as AllIllustrationPromptsResponseData
+      );
+    } catch {
+      return errorJSend(
+        c,
+        "Internal error listing prompts",
+        500,
+        "ERROR_FINDING_PROMPT"
+      );
+    }
+  })
+
+  .get("/prompts/:id", async (c) => {
     try {
       const db = drizzle(c.env.DB);
       const existingPrompt = await db
