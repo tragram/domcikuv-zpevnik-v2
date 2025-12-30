@@ -8,9 +8,10 @@ import {
   fetchSongs,
 } from "~/services/songs";
 import { RouterContext } from "~/main";
-import { fetchActiveSessions, fetchProfile } from "~/services/users";
+import { fetchProfile } from "~/services/users";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { NotFound } from "~/components/NotFound";
+import { prefetchActiveSessions } from "~/hooks/use-active-sessions";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFound,
@@ -34,11 +35,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       staleTime: 1000 * 60 * 60, // one hour
     });
 
-    const activeSessions = await context.queryClient.fetchQuery({
-      queryKey: ["activeSessions"],
-      queryFn: () => fetchActiveSessions(context.api),
-      staleTime: 1000 * 60 * 60 * 24, // one day default - refetched when the list is open in the respective component
-    });
+    const activeSessions = await prefetchActiveSessions(
+      context.queryClient,
+      context.api
+    );
 
     const songDB = buildSongDB(songs, publicSongbooks);
     return {

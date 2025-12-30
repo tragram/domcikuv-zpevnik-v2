@@ -1,5 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useRouteContext } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -11,60 +10,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { fetchActiveSessions } from "~/services/users";
+import { useActiveSessions } from "~/hooks/use-active-sessions";
 
 interface SessionViewProps {
   isOnline: boolean;
 }
 
 const SessionView = ({ isOnline }: SessionViewProps) => {
-  const context = useRouteContext({ from: "/" });
-  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(Date.now());
 
-  const songs = context.songDB.songs;
-
-  // Subscribe to the query to get live updates
-  const { data: activeSessionsData } = useQuery({
-    queryKey: ["activeSessions"],
-    queryFn: () => fetchActiveSessions(context.api),
-    staleTime: 1000 * 60 * 60 * 24, // Match the staleTime from root
-    initialData: context.activeSessions, // Use context data as initial value
-  });
-
-  const activeSessions = activeSessionsData?.map((as) => {
-    return { ...as, song: songs.find((s) => s.id === as.songId) };
-  });
+  const { activeSessions, refetchIfStale } = useActiveSessions();
 
   // Update time every second when dropdown is open
   useEffect(() => {
     if (isOpen) {
+      // Update time immediately when dropdown opens
+      setCurrentTime(Date.now());
+      refetchIfStale(0.1);
+
       const interval = setInterval(() => {
         setCurrentTime(Date.now());
+        refetchIfStale(0.1);
       }, 1000);
-
       return () => clearInterval(interval);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
-
-  // Refetch when dropdown opens if data is older than 1 minute
-  useEffect(() => {
-    if (isOpen) {
-      const queryState = queryClient.getQueryState(["activeSessions"]);
-
-      if (queryState?.dataUpdatedAt) {
-        const ageInMinutes =
-          (Date.now() - queryState.dataUpdatedAt) / (1000 * 60);
-        if (ageInMinutes > 1) {
-          queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
-        }
-      } else {
-        // If no data exists yet, invalidate to trigger fetch
-        queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
-      }
-    }
-  }, [isOpen, queryClient]);
 
   const getTimeSince = (date: Date) => {
     const diff = currentTime - new Date(date).getTime();
