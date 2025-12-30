@@ -1,5 +1,5 @@
 import { UserDB } from "src/lib/db/schema/auth.schema";
-import client from "../../worker/api-client";
+import { API } from "../../worker/api-client";
 import { makeApiRequest } from "./apiHelpers";
 import {
   CreateUserSchema,
@@ -29,13 +29,13 @@ interface UserSearchParams {
   offset?: number;
 }
 
-export async function fetchProfile(api: typeof client.api) {
+export async function fetchProfile(api: API) {
   const response = await makeApiRequest(api.profile.$get);
   return response;
 }
 
 export async function fetchActiveSessions(
-  api: typeof client.api
+  api: API
 ): Promise<SessionsResponseData> {
   const response = await makeApiRequest(api.session.$get);
   return response.map((item) => {

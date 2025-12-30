@@ -10,6 +10,7 @@ export { SessionSync } from "../durable-objects/SessionSync";
 export type SyncSession = {
   masterId: string;
   createdAt: Date;
+  songId: string;
   avatar: string | undefined;
 };
 
@@ -24,6 +25,7 @@ const sessionSyncApp = buildApp()
         .select({
           masterId: syncSessionTable.masterId,
           createdAt: syncSessionTable.createdAt,
+          songId: syncSessionTable.songId,
           avatar: user.image,
         })
         .from(syncSessionTable)

@@ -6,4 +6,5 @@ type AppType = typeof route;
 
 const client = hc<AppType>("/");
 
+export type API = typeof client.api;
 export default client;

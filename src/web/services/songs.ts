@@ -3,7 +3,7 @@ import {
   SongDataApi,
   SongWithCurrentVersion,
 } from "src/worker/services/song-service";
-import client from "~/../worker/api-client";
+import client, { API } from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {
   isValidSongLanguage,
@@ -46,14 +46,14 @@ export const parseDBDates = <T extends Timestamped>(o: T) => {
 
 // Public API
 export const fetchSongs = async (
-  api: typeof client.api
+  api: API
 ): Promise<SongDataApi[]> => {
   const response = await makeApiRequest(api.songs.$get);
   return response.songs;
 };
 
 export const fetchPublicSongbooks = async (
-  api: typeof client.api
+  api: API
 ): Promise<Songbook[]> => {
   const response = await makeApiRequest(api.songs.songbooks.$get);
   return response.map((s) => {

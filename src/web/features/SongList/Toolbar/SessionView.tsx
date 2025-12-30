@@ -21,19 +21,32 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const context = useRouteContext({ from: "/" });
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(Date.now());
 
   const songs = context.songDB.songs;
-  const activeSessions = context.activeSessions.map((as) => {
+
+  // Subscribe to the query to get live updates
+  const { data: activeSessionsData } = useQuery({
+    queryKey: ["activeSessions"],
+    queryFn: () => fetchActiveSessions(context.api),
+    staleTime: 1000 * 60 * 60 * 24, // Match the staleTime from root
+    initialData: context.activeSessions, // Use context data as initial value
+  });
+
+  const activeSessions = activeSessionsData?.map((as) => {
     return { ...as, song: songs.find((s) => s.id === as.songId) };
   });
 
-  // keep activeSessions more up to date when this is open
-  // const { data: activeSessions, isLoading } = useQuery({
-  //   queryKey: ["activeSessions"],
-  //   queryFn: () => fetchActiveSessions(context.api),
-  //   staleTime: 1000 * 60 * 1,
-  //   initialData: context.activeSessions, // Use the preloaded data
-  // });
+  // Update time every second when dropdown is open
+  useEffect(() => {
+    if (isOpen) {
+      const interval = setInterval(() => {
+        setCurrentTime(Date.now());
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isOpen]);
 
   // Refetch when dropdown opens if data is older than 1 minute
   useEffect(() => {
@@ -46,23 +59,25 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
         if (ageInMinutes > 1) {
           queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
         }
+      } else {
+        // If no data exists yet, invalidate to trigger fetch
+        queryClient.invalidateQueries({ queryKey: ["activeSessions"] });
       }
     }
   }, [isOpen, queryClient]);
 
   const getTimeSince = (date: Date) => {
-    const now = new Date();
-    const diff = now.getTime() - new Date(date).getTime();
+    const diff = currentTime - new Date(date).getTime();
     const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
 
     if (hours > 0) {
-      return `${hours}h ${minutes % 60}m ago`;
+      return `${hours}h ${minutes % 60}m`;
     } else if (minutes > 0) {
-      return `${minutes}m ago`;
+      return `${minutes}m`;
     } else {
-      return `${seconds}s ago`;
+      return `${seconds}s`;
     }
   };
 
@@ -121,23 +136,25 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex items-center gap-3 min-w-0 flex-1 justify-between">
-                    <div className="truncate text-sm w-[8rem]">
+                    <div className="truncate text-sm w-[4rem] flex-shrink-0">
                       {session.masterId}
                     </div>
-                    <div className="text-xs hidden xs:flex flex-col grow text-center">
+                    <div className="text-xs hidden xs:flex flex-col flex-1 min-w-0 text-center">
                       {session.song && (
                         <>
-                          <div className="truncate text-primary/80 ">
+                          <div className="truncate text-white/80">
                             {session.song.artist}
                           </div>
-                          <div className="truncate text-white/80 ">
+                          <div className="truncate text-white/80">
                             {session.song.title}
                           </div>
                         </>
                       )}
                     </div>
-                    <div className="text-xs text-primary/80 w-[60px]">
+                    <div className="text-xs text-primary/80 w-[2rem] flex-shrink-0 text-center">
                       {getTimeSince(session.createdAt)}
+                      <br />
+                      ago
                     </div>
                   </div>
                 </div>

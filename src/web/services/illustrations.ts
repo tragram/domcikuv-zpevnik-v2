@@ -1,9 +1,9 @@
-import yaml from "js-yaml";
 import {
   IllustrationPromptDB,
   SongDataDB,
   SongIllustrationDB,
 } from "src/lib/db/schema";
+import client from "src/worker/api-client";
 import {
   adminIllustrationResponse,
   IllustrationCreateSchema,
@@ -11,11 +11,10 @@ import {
   IllustrationModifySchema,
   IllustrationPromptCreateSchema,
 } from "src/worker/services/illustration-service";
+import { SongWithCurrentVersion } from "src/worker/services/song-service";
 import { SongData } from "~/types/songData";
 import { makeApiRequest } from "./apiHelpers";
 import { AdminApi, parseDBDates } from "./songs";
-import { SongWithCurrentVersion } from "src/worker/services/song-service";
-import client from "src/worker/api-client";
 
 export type SongDBApi = typeof client.api.songs;
 

@@ -6,7 +6,7 @@ import {
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { Toaster } from "sonner";
-import client from "../worker/api-client";
+import client, { API } from "../worker/api-client";
 import { ThemeProvider } from "./components/ThemeProvider";
 import "./main.css";
 import { routeTree } from "./routeTree.gen";
@@ -24,7 +24,7 @@ const queryClient = new QueryClient({
 
 export interface RouterContext {
   queryClient: QueryClient;
-  api: typeof client.api;
+  api: API;
 }
 
 // Create the router
