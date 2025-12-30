@@ -19,7 +19,6 @@ import {
   Pencil,
   Settings2,
   Undo2,
-  CloudSync,
   CloudOff,
   CloudCheck,
 } from "lucide-react";
@@ -45,6 +44,7 @@ import { useWakeLock } from "react-screen-wake-lock";
 import useLocalStorageState from "use-local-storage-state";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { FeedStatus } from "../SongView";
+import ShareSongButton from "../components/ShareSongButton";
 
 interface ToolbarProps {
   songDB: SongDB;
@@ -67,8 +67,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   transposeSteps,
   setTransposeSteps,
 }) => {
-  const { layout, shareSession, actions } = useViewSettingsStore();
-  const setShareSession = actions.setShareSession;
+  const { layout } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
   const { PWAInstallComponent, installItem } = usePWAInstall();
@@ -91,23 +90,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     }
   }, [wakeLockSupported, wakeLockEnabled, wakeLockRequest, wakeLockRelease]);
 
-  useEffect(() => {
-    if (!user.loggedIn) {
-      setShareSession(false);
-    }
-  }, [setShareSession, user.loggedIn]);
-
-  useEffect(() => {
-    if (
-      feedStatus &&
-      !feedStatus.isMaster &&
-      feedStatus.enabled &&
-      feedStatus.transposeSteps
-    ) {
-      setTransposeSteps(feedStatus.transposeSteps);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feedStatus?.transposeSteps]);
   return (
     <div className="absolute top-0 w-full">
       <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
@@ -158,41 +140,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 Keep screen on
               </DropdownMenuCheckboxItem>
             )}
-            <DropdownMenuCheckboxItem
-              onSelect={(e) => e.preventDefault()}
-              disabled={!user.loggedIn || !user.profile.nickname}
-              checked={shareSession}
-              onCheckedChange={() => setShareSession(!shareSession)}
-            >
-              <DropdownIconStart icon={<CloudSync />} />
-
-              <div>
-                Share current song
-                {!shareSession && (
-                  <p className="text-[0.7em] leading-tight">
-                    Share your page with others - live.
-                  </p>
-                )}
-                {(!user.loggedIn || !user.profile.nickname) && (
-                  <p className="text-[0.7em] leading-tight">
-                    Log in and pick a nickname to use this feature.
-                  </p>
-                )}
-                {shareSession &&
-                  feedStatus &&
-                  feedStatus.connectedClients > 0 && (
-                    <p className="text-[0.7em] leading-tight mb-1">
-                      Connected clients: {feedStatus.connectedClients}
-                    </p>
-                  )}
-                {shareSession && user.loggedIn && user.profile.nickname && (
-                  <p className="text-[0.7em] leading-tight">
-                    Your session can be viewed at {window.location.host}/feed/
-                    {user.profile.nickname}
-                  </p>
-                )}
-              </div>
-            </DropdownMenuCheckboxItem>
+            <ShareSongButton feedStatus={feedStatus} user={user} />
             <DropdownMenuItem>
               <DropdownIconStart icon={<Pencil />} />
               <Link className="w-full h-full" to={"/edit/" + songData.id}>
@@ -225,7 +173,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             disabled
             className="!opacity-70"
           >
-            {feedStatus.isConnected ? <CloudCheck /> : <CloudOff />}
+            {feedStatus?.isConnected ? <CloudCheck /> : <CloudOff />}
           </Button>
         )}
       </ToolbarBase>

@@ -12,7 +12,7 @@ import { Toolbar } from "./settings/Toolbar";
 import "./SongView.css";
 import { UserProfileData } from "src/worker/api/userProfile";
 
-type FeedStatus = {
+export type FeedStatus = {
   isMaster: boolean;
   enabled: boolean;
   isConnected: boolean;
