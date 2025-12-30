@@ -27,15 +27,17 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
     if (isOpen) {
       // Update time immediately when dropdown opens
       setCurrentTime(Date.now());
-      refetchIfStale(0.1);
+      refetchIfStale(0.5);
 
       const interval = setInterval(() => {
-        setCurrentTime(Date.now());
-        refetchIfStale(0.1);
+        if (isOpen) {
+          setCurrentTime(Date.now());
+          refetchIfStale(1);
+        }
       }, 1000);
       return () => clearInterval(interval);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   const getTimeSince = (date: Date) => {
