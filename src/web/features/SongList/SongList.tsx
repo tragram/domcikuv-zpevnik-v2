@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SongDB } from "~/types/types";
 import useLocalStorageState from "use-local-storage-state";
 import "~/features/SongList/SongList.css";
@@ -25,6 +25,7 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
     SCROLL_OFFSET_KEY,
     { defaultValue: 0, storageSync: false }
   );
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const virtualizer = useWindowVirtualizer({
     count: songs.length,
@@ -32,14 +33,22 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
     overscan: 10,
     initialOffset: scrollOffset,
     onChange: (instance) => {
-      setScrollOffset(instance.scrollOffset ?? 0);
-
+      // handle Toolbar visibility
       const isAtTop = (instance.scrollOffset ?? 0) === 0;
       if (instance.scrollDirection === "backward" || isAtTop) {
         setShowToolbar(true);
       } else if (instance.scrollDirection === "forward") {
         setShowToolbar(false);
       }
+
+      // debounced save to LocalStorage
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+
+      debounceRef.current = setTimeout(() => {
+        setScrollOffset(instance.scrollOffset ?? 0);
+      }, 200);
     },
   });
 
