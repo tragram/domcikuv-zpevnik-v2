@@ -24,7 +24,7 @@ const sessionSyncApp = buildApp()
         .select({
           masterId: syncSessionTable.masterId,
           createdAt: syncSessionTable.createdAt,
-          avatar: user.image
+          avatar: user.image,
         })
         .from(syncSessionTable)
         .where(gte(syncSessionTable.createdAt, latestLive))
@@ -51,6 +51,7 @@ const sessionSyncApp = buildApp()
   .get("/:masterId", async (c) => {
     const masterId = c.req.param("masterId");
     const requestedRole = new URL(c.req.url).searchParams.get("role");
+    let userId: string | null = null;
 
     const user = c.get("USER");
 
@@ -84,29 +85,7 @@ const sessionSyncApp = buildApp()
           403
         );
       }
-
-      // update session table for reference but only every 3 hours at most
-      // const latestCurrent = new Date(Date.now() - 3 * 60 * 60 * 1000);
-      // const currentMasterSessions = await db
-      //   .select()
-      //   .from(syncSessionTable)
-      //   .where(
-      //     and(
-      //       eq(syncSessionTable.masterId, masterId),
-      //       gte(syncSessionTable.createdAt, latestCurrent)
-      //     )
-      //   )
-      //   .limit(1);
-      // if (currentMasterSessions.length === 0) {
-      //   await db
-      //     .insert(syncSessionTable)
-      //     .values({ userId: masterProfile.id, masterId: masterId });
-      //   verifiedRole = "master";
-      // }
-      // TODO: either remove the version above or below based on real-life experience (if the tables get too full, the above is better)
-      await db
-        .insert(syncSessionTable)
-        .values({ userId: masterProfile.id, masterId: masterId });
+      userId = masterProfile.id;
       verifiedRole = "master";
     }
 
@@ -116,6 +95,10 @@ const sessionSyncApp = buildApp()
 
     const url = new URL(c.req.url);
     url.searchParams.set("role", verifiedRole);
+    if (userId) {
+      url.searchParams.set("userId", userId);
+    }
+    url.searchParams.set("masterId", masterId);
 
     return stub.fetch(url.toString(), c.req.raw);
   });

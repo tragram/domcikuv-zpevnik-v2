@@ -190,6 +190,13 @@
       "when": 1767035547269,
       "tag": "0026_chief_human_fly",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "6",
+      "when": 1767086598107,
+      "tag": "0027_volatile_captain_flint",
+      "breakpoints": true
     }
   ]
 }

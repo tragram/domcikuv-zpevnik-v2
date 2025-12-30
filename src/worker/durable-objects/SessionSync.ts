@@ -1,6 +1,10 @@
 import { DurableObject } from "cloudflare:workers";
+import { drizzle } from "drizzle-orm/d1";
+import { syncSessionTable } from "src/lib/db/schema";
 
-interface Env {}
+interface Env {
+  DB: D1Database;
+}
 
 // Data we stick to the WebSocket handle
 interface SocketMetadata {
@@ -34,11 +38,22 @@ export type SesssionSyncWSMessage =
   | PongMessage
   | UpdateOKMessage
   | MasterReplacedMessage;
-
 export class SessionSync extends DurableObject<Env> {
-  currentSongId: string | null = null;
-  currentTransposeSteps: number | null = null;
   private masterWebSocket: WebSocket | null = null;
+
+  currentTransposeSteps: number | null = null;
+  currentSongId: string | null = null;
+
+  private masterUserId: string | null = null; 
+  private masterId: string | null = null; 
+  private pendingDbWrite: {
+    userId: string;
+    masterId: string;
+    songId: string;
+  } | null = null;
+
+  // DB-related
+  private readonly DB_WRITE_DEBOUNCE = 1000; // [ms]
 
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
@@ -51,6 +66,13 @@ export class SessionSync extends DurableObject<Env> {
         null;
       this.currentSongId = stored?.songId || null;
       this.currentTransposeSteps = stored?.transposeSteps || null;
+      
+      // Restore pending write if exists
+      this.pendingDbWrite = await this.ctx.storage.get<{
+        userId: string;
+        masterId: string;
+        songId: string;
+      }>("pendingDbWrite") || null;
     });
   }
 
@@ -61,11 +83,19 @@ export class SessionSync extends DurableObject<Env> {
 
     const url = new URL(request.url);
     const roleParam = url.searchParams.get("role");
+    const userIdParam = url.searchParams.get("userId");
+    const masterIdParam = url.searchParams.get("masterId");
 
     // Backend has already verified authorization, so we trust the role parameter
     const isMaster = roleParam === "master";
 
-    // If this is a master connection and we already have one, disconnect the old one FIRST
+    // Store userId and masterId when master connects
+    if (isMaster && userIdParam && masterIdParam) {
+      this.masterUserId = userIdParam;
+      this.masterId = masterIdParam;
+    }
+
+    // If this is a master connection and we already have one, disconnect the old one
     if (isMaster && this.masterWebSocket) {
       const oldMaster = this.masterWebSocket;
       this.masterWebSocket = null;
@@ -89,20 +119,16 @@ export class SessionSync extends DurableObject<Env> {
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair);
 
-    // Attach the role to the socket BEFORE accepting it
     server.serializeAttachment({ isMaster });
 
     // Enable hibernation - accept the new socket
     this.ctx.acceptWebSocket(server);
 
-    // Track the master WebSocket AFTER accepting it
     if (isMaster) {
       this.masterWebSocket = server;
     }
 
-    // Initial Sync:
-    // If you are a follower and master is connected, get the song.
-    // If you are the master, get the last song you had (state recovery).
+    // initial sync
     server.send(
       JSON.stringify({
         type: "sync",
@@ -118,11 +144,11 @@ export class SessionSync extends DurableObject<Env> {
   async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
     const data = JSON.parse(message.toString());
 
-    // Handle Ping - REPLY WITH PONG
     if (data.type === "ping") {
       ws.send(JSON.stringify({ type: "pong" }));
       return;
     }
+
     const meta = ws.deserializeAttachment() as SocketMetadata;
 
     // Only process messages from the current Master
@@ -133,8 +159,22 @@ export class SessionSync extends DurableObject<Env> {
 
     try {
       if (data.type === "update-song") {
+        // Schedule debounced DB write using stored userId and masterId on new song
+        if (
+          this.masterUserId &&
+          this.masterId &&
+          data.songId &&
+          data.songId !== this.currentSongId
+        ) {
+          await this.scheduleDbWrite({
+            userId: this.masterUserId,
+            masterId: this.masterId,
+            songId: data.songId,
+          });
+        }
         this.currentSongId = data.songId;
         this.currentTransposeSteps = data.transposeSteps;
+
         await this.ctx.storage.put("state", {
           songId: data.songId,
           transposeSteps: data.transposeSteps,
@@ -146,6 +186,7 @@ export class SessionSync extends DurableObject<Env> {
           songId: this.currentSongId,
           transposeSteps: this.currentTransposeSteps,
         } as SyncMessage);
+
         this.masterWebSocket.send(
           JSON.stringify({
             type: "update-ok",
@@ -155,6 +196,54 @@ export class SessionSync extends DurableObject<Env> {
       }
     } catch (e) {
       console.error("WS Message Error:", e);
+    }
+  }
+
+  private async scheduleDbWrite(data: {
+    userId: string;
+    masterId: string;
+    songId: string | null;
+  }) {
+    // debounced DB write to minimze rows written during randomize
+    if (!data.songId) {
+      return;
+    }
+
+    // Store pending write
+    this.pendingDbWrite = {
+      userId: data.userId,
+      masterId: data.masterId,
+      songId: data.songId, // written like this to keep TS happy about songId
+    };
+    
+    await this.ctx.storage.put("pendingDbWrite", this.pendingDbWrite);
+
+    // Schedule alarm (this persists across hibernation)
+    const alarmTime = Date.now() + this.DB_WRITE_DEBOUNCE;
+    await this.ctx.storage.setAlarm(alarmTime);
+  }
+
+  async alarm() {
+    await this.flushDbWrite();
+  }
+
+  private async flushDbWrite() {
+    if (!this.pendingDbWrite) {
+      return;
+    }
+
+    try {
+      const db = drizzle(this.env.DB);
+      await db.insert(syncSessionTable).values({
+        userId: this.pendingDbWrite.userId,
+        masterId: this.pendingDbWrite.masterId,
+        songId: this.pendingDbWrite.songId,
+      });
+    } catch (e) {
+      console.error("Failed to write to D1:", e);
+    } finally {
+      this.pendingDbWrite = null;
+      await this.ctx.storage.delete("pendingDbWrite");
     }
   }
 
@@ -168,6 +257,8 @@ export class SessionSync extends DurableObject<Env> {
     // If the master disconnects, clear our reference
     if (meta.isMaster && this.masterWebSocket === ws) {
       this.masterWebSocket = null;
+      this.masterUserId = null;
+      this.masterId = null;
     }
   }
 
