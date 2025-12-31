@@ -1,4 +1,3 @@
-// src/components/ResizableAutoTextSize.tsx
 import { useGesture } from "@use-gesture/react";
 import {
   useCallback,
@@ -70,39 +69,36 @@ export function ResizableAutoTextSize({
     updateLayout();
   }, [updateLayout]);
 
-  // wheel handler
+  // --------------------------------------------------------------------------
+  // 1. Manual Wheel Handler (Handles Ctrl + Wheel for Zoom)
+  // --------------------------------------------------------------------------
   useEffect(() => {
     const container = gestureContainerRef.current;
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
-      // Only react if Ctrl is pressed (standard zoom behavior)
-      if (e.ctrlKey) {
-        e.preventDefault(); // Stop browser native zoom
+      // If Ctrl is NOT pressed, we return early. 
+      // This allows the event to bubble up and perform standard scrolling.
+      if (!e.ctrlKey) return;
 
-        if (!contentRef.current) return;
+      // If Ctrl IS pressed, we handle the zoom and stop the browser zoom.
+      e.preventDefault();
 
-        // 1. Get current concrete size
-        const currentFontSize = getElementFontSize(contentRef.current);
+      if (!contentRef.current) return;
 
-        // 2. Determine direction (negative deltaY is scrolling UP/Away from user)
-        // Adjust step size here (0.05 = 5% change per tick)
-        const step = 0.2; 
-        const direction = e.deltaY > 0 ? -1 : 1;
-        
-        // 3. Calculate new size directly
-        const newFontSize = getFontSizeInRange(currentFontSize * (1 + (direction * step)));
+      const currentFontSize = getElementFontSize(contentRef.current);
+      
+      // Negative deltaY is scrolling UP/Away (Zoom In)
+      const step = 0.2; 
+      const direction = e.deltaY > 0 ? -1 : 1;
+      
+      const newFontSize = getFontSizeInRange(currentFontSize * (1 + (direction * step)));
 
-        // 4. Update DOM immediately
-        setElementFontSize(contentRef.current, newFontSize);
-        
-        // 5. Sync with store (optional: debouncing this might be better for perf, 
-        // but setting it directly ensures state consistency)
-        actions.setLayoutSettings({ fontSize: newFontSize, fitScreenMode: "none" });
-      }
+      setElementFontSize(contentRef.current, newFontSize);
+      actions.setLayoutSettings({ fontSize: newFontSize, fitScreenMode: "none" });
     };
 
-    // { passive: false } is required to use e.preventDefault()
+    // { passive: false } allows us to call e.preventDefault()
     container.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
@@ -111,7 +107,9 @@ export function ResizableAutoTextSize({
   }, [gestureContainerRef, actions]);
 
 
-  // gesture handler
+  // --------------------------------------------------------------------------
+  // 2. Gesture Handler (Handles Touch Pinch)
+  // --------------------------------------------------------------------------
   useGesture(
     {
       onPinchStart: () => {
@@ -126,9 +124,9 @@ export function ResizableAutoTextSize({
         }
         setPinching(false);
       },
-      // We filter out wheel events here so this ONLY handles touch gestures
       onPinch: ({ movement: [dScale], memo, event }) => {
-        // If this somehow catches a wheel event, ignore it (handled by native listener above)
+        // Double safety: If a wheel event somehow gets here, ignore it 
+        // (your manual handler above takes care of it)
         if (event instanceof WheelEvent) return memo;
 
         const baseFontSize = memo || getElementFontSize(contentRef.current);
@@ -146,8 +144,6 @@ export function ResizableAutoTextSize({
       eventOptions: { passive: true },
       pinch: {
         rubberband: true,
-        // modifierKey: null ensures we don't accidentally conflict with ctrl+wheel
-        modifierKey: null 
       },
     }
   );
