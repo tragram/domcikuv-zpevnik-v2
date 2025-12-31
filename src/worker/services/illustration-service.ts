@@ -9,7 +9,7 @@ import {
 } from "src/lib/db/schema";
 import { findSong, SongWithCurrentVersion } from "./song-service";
 import { Context } from "hono";
-import { SongData } from "~/types/songData";
+import { promptFolder, SongData } from "~/types/songData";
 import { z } from "zod";
 import {
   IMAGE_MODELS_API,
@@ -65,32 +65,39 @@ export type IllustrationPromptCreateSchema = z.infer<
   typeof illustrationPromptCreateSchema
 >;
 
-const commonR2Key2Folder = (commonR2Key: string, thumbnail: boolean) => {
-  return `songs/${
+const imageFolder = (
+  songId: string,
+  promptId: string,
+  imageModel: string,
+  thumbnail: boolean
+) => {
+  return `songs/illustrations/${songId}/${promptFolder(songId, promptId)}/${
     thumbnail ? "illustration_thumbnails" : "illustrations"
-  }/${commonR2Key}`;
+  }/${imageModel}`;
 };
 
-export const fakeDeleteR2 = async (
+export const moveToTrashR2 = async (
   R2_BUCKET: R2Bucket,
-  commonR2Key: string
+  songId: string,
+  promptId: string,
+  imageModel: string
 ) => {
   const thumbnails = [false, true];
-  const results = { imageURL: "", thumbnailURL: "null" };
+  const results = { imageURL: "", thumbnailURL: "" };
   for (const thumb of thumbnails) {
-    const folder = commonR2Key2Folder(commonR2Key, thumb);
-    const file = await R2_BUCKET.get(folder);
-    await R2_BUCKET.delete(folder);
+    const imageKey = imageFolder(songId, promptId, imageModel, thumb);
+    const file = await R2_BUCKET.get(imageKey);
+    await R2_BUCKET.delete(imageKey);
     if (!file) {
       throw Error("Failed to retrieve R2 file when deleting!");
     }
-    const deletedFolder = "deleted/" + folder;
+    const trashFolder = "trash/" + imageKey;
     if (thumb) {
-      results.thumbnailURL = deletedFolder;
+      results.thumbnailURL = trashFolder;
     } else {
-      results.imageURL = deletedFolder;
+      results.imageURL = trashFolder;
     }
-    await R2_BUCKET.put(deletedFolder, file.body);
+    await R2_BUCKET.put(trashFolder, file.body);
   }
   return results;
 };
@@ -100,19 +107,16 @@ export const fakeDeleteR2 = async (
  */
 export async function uploadImageBuffer(
   imageBuffer: ArrayBuffer,
-  songData: SongWithCurrentVersion,
-  filename: string,
+  songId: string,
+  promptId: string,
+  imageModel: string,
   env: Env,
   thumbnail: boolean = false
 ) {
-  const commonR2Key = `${SongData.baseId(
-    songData.title,
-    songData.artist
-  )}/${filename}`;
-  const imageKey = commonR2Key2Folder(commonR2Key, thumbnail);
+  const imageKey = imageFolder(songId, promptId, imageModel, thumbnail);
   await env.R2_BUCKET.put(imageKey, imageBuffer);
   const imageURL = `${env.CLOUDFLARE_R2_URL}/${imageKey}`;
-  return { imageURL, commonR2Key };
+  return imageURL;
 }
 
 export async function sameParametersExist(
@@ -250,7 +254,7 @@ export async function createOrFindManualPrompt(
   }
 
   // Create a new manual prompt
-  const promptId = `manual_${songId}_${Date.now()}`;
+  const promptId = `${songId}_manual-${Date.now()}`;
   const promptData = {
     id: promptId,
     songId: songId,

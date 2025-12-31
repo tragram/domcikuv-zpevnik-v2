@@ -12,6 +12,7 @@ import {
   songNotFoundFail,
   successJSend,
 } from "../responses";
+import { defaultPromptId } from "~/types/songData";
 
 const illustrationPromptCreateSchema = createInsertSchema(
   illustrationPrompt
@@ -42,9 +43,25 @@ export const illustrationPromptRoutes = buildApp()
         }
 
         // Generate unique ID for the prompt
-        const newId = `${promptData.songId}_${
+        const newId = defaultPromptId(
+          promptData.songId,
+          promptData.summaryModel,
           promptData.summaryPromptVersion
-        }_${promptData.summaryModel}_${Date.now()}`;
+        );
+
+        // assume that a combination song-model-prompt fully defines the image prompt
+        const existingPrompt = await db
+          .select()
+          .from(illustrationPrompt)
+          .where(eq(illustrationPrompt.id, newId))
+          .limit(1);
+        if (existingPrompt.length !== 0) {
+          return errorJSend(
+            c,
+            "Prompt with the given combination songId-summaryModel-summaryPromptVersion already exists",
+            409
+          );
+        }
 
         const newPrompt = await db
           .insert(illustrationPrompt)

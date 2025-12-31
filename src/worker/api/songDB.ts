@@ -111,7 +111,6 @@ export const songDBRoutes = buildApp()
       const db = drizzle(c.env.DB);
       const allIlustrations = await db
         .select({
-          // id: illustrationPrompt.id,
           songId: songIllustration.songId,
           promptId: songIllustration.promptId,
           createdAt: songIllustration.createdAt,

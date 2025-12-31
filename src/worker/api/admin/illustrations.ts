@@ -2,7 +2,6 @@ import { zValidator } from "@hono/zod-validator";
 import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import z from "zod/v4";
-import { illustrationBaseId } from "~/types/songData";
 import {
   illustrationPrompt,
   song,
@@ -17,7 +16,7 @@ import {
   clearCurrentIllustration,
   uploadImageBuffer,
   sameParametersExist,
-  fakeDeleteR2,
+  moveToTrashR2,
 } from "../../services/illustration-service";
 import { findSong, SongWithCurrentVersion } from "../../services/song-service";
 import {
@@ -35,6 +34,7 @@ import {
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "./image-generator";
+import { defaultIllustrationId, defaultPromptId } from "~/types/songData";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -99,36 +99,47 @@ export const illustrationRoutes = buildApp()
         return failJSend(c, "Referenced song not found", 400, "SONG_NOT_FOUND");
       }
 
+      // TODO: copy these to R2
       let imageURL = validatedData.imageURL || "";
       let thumbnailURL = validatedData.thumbnailURL || "";
-      let commonR2Key;
+
+      // TODO: allow user to enter a custom prompt they used
+      // Create or find the prompt
+      let prompt;
+      try {
+        prompt = await createOrFindManualPrompt(
+          db,
+          validatedData.songId,
+          validatedData.summaryPromptId
+        );
+      } catch (error) {
+        return error instanceof Error
+          ? errorFail(c, error)
+          : failJSend(c, "Invalid prompt ID", 400, "INVALID_PROMPT_ID");
+      }
 
       // Handle file uploads with proper validation
       if (imageFile && imageFile instanceof File) {
         const imageBuffer = await imageFile.arrayBuffer();
-        const filename = `manual_${Date.now()}_${
-          imageFile.name || validatedData.songId + "illustration"
-        }`;
-        ({ imageURL, commonR2Key } = await uploadImageBuffer(
+        imageURL = await uploadImageBuffer(
           imageBuffer,
-          illustrationSong,
-          filename,
+          illustrationSong.id,
+          prompt.id,
+          validatedData.imageModel,
           c.env
-        ));
+        );
       }
 
       if (thumbnailFile && thumbnailFile instanceof File) {
         const thumbnailBuffer = await thumbnailFile.arrayBuffer();
-        const thumbnailFilename = `manual_${Date.now()}_${
-          thumbnailFile.name || validatedData.songId + "thumbnail"
-        }`;
-        ({ imageURL: thumbnailURL } = await uploadImageBuffer(
+        thumbnailURL = await uploadImageBuffer(
           thumbnailBuffer,
-          illustrationSong,
-          thumbnailFilename,
+          illustrationSong.id,
+          prompt.id,
+          validatedData.imageModel,
           c.env,
           true
-        ));
+        );
       } else if (imageURL && !thumbnailURL) {
         // Use Cloudflare Images to generate thumbnail from main image
         thumbnailURL = CFImagesThumbnailURL(imageURL);
@@ -142,20 +153,6 @@ export const illustrationRoutes = buildApp()
           400,
           "MISSING_IMAGE_DATA"
         );
-      }
-
-      // Create or find the prompt
-      let prompt;
-      try {
-        prompt = await createOrFindManualPrompt(
-          db,
-          validatedData.songId,
-          validatedData.summaryPromptId
-        );
-      } catch (error) {
-        return error instanceof Error
-          ? errorFail(c, error)
-          : failJSend(c, "Invalid prompt ID", 400, "INVALID_PROMPT_ID");
       }
 
       if (
@@ -174,18 +171,13 @@ export const illustrationRoutes = buildApp()
         );
       }
 
-      // Generate unique ID
-      const newId = `${validatedData.songId}_${prompt.id}_${
-        validatedData.imageModel
-      }_${Date.now()}`;
-
+      const newId = defaultIllustrationId(prompt.id, validatedData.imageModel);
       const insertData = {
         id: newId,
         songId: validatedData.songId,
         imageModel: validatedData.imageModel,
         imageURL: imageURL,
         thumbnailURL: thumbnailURL,
-        commonR2Key,
         createdAt: new Date(),
         updatedAt: new Date(),
         deleted: false,
@@ -293,33 +285,29 @@ export const illustrationRoutes = buildApp()
         }
 
         const imageBuffer = await generator.generateImage(prompt.text);
-        const filename = illustrationBaseId(
-          { imageModel: illustrationData.imageModel },
-          {
-            promptVersion: illustrationData.promptVersion,
-            summaryModel: illustrationData.summaryModel,
-          }
+        const promptId = defaultPromptId(
+          illustrationData.songId,
+          illustrationData.summaryModel,
+          illustrationData.promptVersion
         );
-
-        const { imageURL, commonR2Key } = await uploadImageBuffer(
+        const imageId = defaultIllustrationId(
+          promptId,
+          illustrationData.imageModel
+        );
+        const imageURL = await uploadImageBuffer(
           imageBuffer,
-          illustrationSong,
-          filename,
+          illustrationSong.id,
+          promptId,
+          illustrationData.imageModel,
           c.env
         );
 
-        // Generate unique ID
-        const newId = `${illustrationData.songId}_${prompt.id}_${
-          illustrationData.imageModel
-        }_${Date.now()}`;
-
         const insertData = {
-          id: newId,
+          id: imageId,
           songId: illustrationData.songId,
           imageModel: illustrationData.imageModel,
           imageURL: imageURL,
           thumbnailURL: CFImagesThumbnailURL(imageURL),
-          commonR2Key,
           createdAt: new Date(),
           updatedAt: new Date(),
           deleted: false,
@@ -333,7 +321,7 @@ export const illustrationRoutes = buildApp()
 
         // If this illustration should be set as active, update the song's currentIllustrationId
         if (illustrationData.setAsActive) {
-          await setCurrentIllustration(db, illustrationData.songId, newId);
+          await setCurrentIllustration(db, illustrationData.songId, imageId);
         }
 
         return successJSend(
@@ -467,8 +455,9 @@ export const illustrationRoutes = buildApp()
           id: songIllustration.id,
           songId: songIllustration.songId,
           imageURL: songIllustration.imageURL,
+          promptId: songIllustration.promptId,
           thumbnailURL: songIllustration.thumbnailURL,
-          commonR2Key: songIllustration.commonR2Key,
+          imageModel: songIllustration.imageModel,
         })
         .from(songIllustration)
         .where(
@@ -502,12 +491,14 @@ export const illustrationRoutes = buildApp()
       }
 
       // Delete associated files from R2 storage (if stored there)
-      if (existingIllustration[0].commonR2Key) {
-        await fakeDeleteR2(
+      try {
+        await moveToTrashR2(
           c.env.R2_BUCKET,
-          existingIllustration[0].commonR2Key
+          songId,
+          existingIllustration[0].promptId,
+          existingIllustration[0].imageModel
         );
-      }
+      } catch (e) {}
 
       // Soft delete the illustration instead of hard delete
       await db

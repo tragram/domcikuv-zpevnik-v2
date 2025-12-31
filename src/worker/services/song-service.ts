@@ -285,6 +285,7 @@ export const createSong = async (
   isTrusted: boolean
 ) => {
   const now = new Date();
+  // assume 1-to-1 relation between songs and IDs
   const songId = SongData.baseId(submission.title, submission.artist);
   const existingSong = await db
     .select()
@@ -324,12 +325,13 @@ export const createSongVersion = async (
 ) => {
   const now = new Date();
 
+  // only allowing one song version per user - TODO: this is ugly and random
   const userVersionResult = await db
-    .select()
-    .from(songVersion)
-    .where(and(eq(songVersion.songId, songId), eq(songVersion.userId, userId)))
-    .limit(1);
-
+  .select()
+  .from(songVersion)
+  .where(and(eq(songVersion.songId, songId), eq(songVersion.userId, userId)))
+  .limit(1);
+  
   if (userVersionResult.length > 0) {
     const existingVersion = userVersionResult[0];
     const updatedVersion = await db

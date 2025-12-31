@@ -23,14 +23,17 @@ const sanitizeId = (id: string) => {
     .replace(/_+/g, "_");
 };
 
-export const illustrationBaseId = (
-  illustration: { imageModel: string },
-  prompt: { promptVersion: string; summaryModel: string }
-) => {
-  return sanitizeId(
-    `${prompt.summaryModel}_${prompt.promptVersion}_${illustration.imageModel}`
-  );
-};
+export const defaultPromptId = (
+  songId: string,
+  summaryModel: string,
+  promptVersion: string
+) => sanitizeId(`${songId}_${summaryModel}_${promptVersion}`);
+
+export const promptFolder = (songId: string, promptId: string) =>
+  promptId.replace(songId + "_", "");
+
+export const defaultIllustrationId = (promptId: string, imageModel: string) =>
+  sanitizeId(`${promptId}_${imageModel}`);
 
 export class SongData {
   id: string;
@@ -137,7 +140,6 @@ export class SongData {
   // Image URL methods
   thumbnailURL(): string | undefined {
     return this.currentIllustration?.thumbnailURL;
-    // return this.currentIllustration?.thumbnailURL || this.defaultThumbnailURL();
   }
 
   illustrationURL(): string | undefined {
