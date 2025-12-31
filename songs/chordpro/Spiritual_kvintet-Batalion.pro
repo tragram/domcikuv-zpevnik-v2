@@ -1,14 +1,14 @@
 {title: Batalion}
 {artist: Spirituál kvintet}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["spiritual_kvintet_batalion-sken.pdf", "spiritual_kvintet_batalion-comp.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
-{range: g1-c2/e2}
-{start_melody: a}
+{range: g1-c2}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Spiritual_kvintet-Batalion_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Spiritual_kvintet-Batalion_gpt-4o-mini_v1}
 
 {start_of_chorus: Intro}
 [Ami]Víno [C]máš a [G]marky[Ami]tánku,
@@ -37,7 +37,7 @@ bata[G]lion [Ami]za[Emi]mí[Ami]ří.
 
 [Ami]Víno na [C]kuráž
 a [G]k ránu dvě hodiny [Ami]spánku,
-[Ami]díky, díky [C]vám
+[C]díky, díky vám
 králov[G]ští [Ami]ver[Emi]bí[Ami]ři.
 {end_of_chorus}
 

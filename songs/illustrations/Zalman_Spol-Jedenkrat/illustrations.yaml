@@ -1,0 +1,18 @@
+songId: Zalman_Spol-Jedenkrat
+prompts:
+  - promptId: Zalman_Spol-Jedenkrat_gpt-4o-mini_v1
+    songId: Zalman_Spol-Jedenkrat
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dreamlike landscape featuring a man lost in
+      thought, gazing at clouds. Include a serene woman sitting on a distant
+      shore, embodying hope and innocence. The scene should evoke a sense of
+      longing, with white birds flying in the sky, symbolizing messages of hope.
+      The atmosphere should be both melancholic and beautiful, capturing the
+      essence of love and introspection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

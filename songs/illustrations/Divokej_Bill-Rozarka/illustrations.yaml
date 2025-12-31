@@ -1,0 +1,18 @@
+songId: Divokej_Bill-Rozarka
+prompts:
+  - promptId: Divokej_Bill-Rozarka_gpt-4o-mini_v2
+    songId: Divokej_Bill-Rozarka
+    createdAt: 1754387144000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dark, atmospheric scene featuring a somber
+      figure holding a scythe in one hand, with a glass of red wine in the
+      other. The background should depict a shadowy, moonlit landscape,
+      suggesting a sense of foreboding. The figure, named Rozárko, should be
+      surrounded by ghostly silhouettes that evoke a feeling of melancholy and
+      reflection, as if they are toasting to both the living and the lost.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

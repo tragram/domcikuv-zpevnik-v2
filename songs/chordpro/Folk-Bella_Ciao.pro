@@ -1,13 +1,14 @@
-{language: italian}
-{date_added: 02-2020}
-{songbooks: ["Domčík"]}
-{capo: 3}
-{key: Am}
 {title: Bella Ciao}
 {artist: Folk}
+{key: Am}
+{capo: 3}
 {tempo: 115}
 {range: a1-a2}
-{start_melody: a a h c a}
+{language: italian}
+{startMelody: a a h c a}
+{createdAt: 1581634800000}
+{illustrationId: Folk-Bella_Ciao_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Folk-Bella_Ciao_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]Una mattina mi son svegliato,

@@ -1,0 +1,17 @@
+songId: Mnaga_a_Zdorp-Negdy
+prompts:
+  - promptId: Mnaga_a_Zdorp-Negdy_gpt-4o-mini_v1
+    songId: Mnaga_a_Zdorp-Negdy
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cityscape at dawn, featuring a solitary figure
+      wandering the streets with hands in pockets, lost in thought. The sun is
+      rising above a panelák (prefabricated apartment building), casting a warm
+      glow. The scene captures a mix of melancholy and hope, symbolizing
+      introspection and the desire for change amidst a quiet Sunday morning.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

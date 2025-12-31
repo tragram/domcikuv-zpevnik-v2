@@ -1,14 +1,14 @@
 {title: Země vzdálená}
 {artist: Kamil Střihavka}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kamil_strihavka_zeme_vzdalena-sken.pdf", "kamil_strihavka_zeme_vzdalena-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: g1-e2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Kamil_Strihavka-Zeme_vzdalena_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kamil_Strihavka-Zeme_vzdalena_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Smutnej déšť a [G]město v kouři,

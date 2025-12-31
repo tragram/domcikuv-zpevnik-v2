@@ -1,0 +1,19 @@
+songId: Michal_Tucny-Poveste_ho_vejs
+prompts:
+  - promptId: Michal_Tucny-Poveste_ho_vejs_gpt-4o-mini_v1
+    songId: Michal_Tucny-Poveste_ho_vejs
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration inspired by a whimsical and melancholic country
+      scene, featuring a figure hanging from a tree branch, swaying gently. The
+      background should depict a sunny landscape with rolling fields and a
+      distant horizon. Include elements like a bank building, a rustic country
+      home, and hints of a carefree lifestyle, such as flowers and a guitar, to
+      capture the essence of adventure, nostalgia, and the bittersweet nature of
+      life's choices.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

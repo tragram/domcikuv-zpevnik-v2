@@ -1,14 +1,15 @@
 {title: Tři Králové}
 {artist: Epy De Mye}
-{date_added: 11-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["epy_de_mye_tri_kralove-sken.pdf", "epy_de_mye_tri_kralove-comp.pdf"]}
-{capo: 2}
 {key: Hm}
+{capo: 2}
 {tempo: }
 {range: h1-h2}
-{start_melody: h a}
+{language: czech}
+{startMelody: h a}
+{createdAt: 1542150000000}
+{illustrationId: Epy_De_Mye-Tri_Kralove_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Epy_De_Mye-Tri_Kralove_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Hmi]Pistole a [A]stará Bible [Hmi]kralická [A]
 [Hmi]Říká že mou [A]zemi nikdy [G]nezí[E]ská

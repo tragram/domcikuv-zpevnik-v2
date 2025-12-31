@@ -1,14 +1,14 @@
 {title: De Atar}
 {artist: La Vela Puerca}
-{date_added: 10-2016}
-{songbooks: ["Domčík"]}
-{language: spanish}
-{pdf_filenames: ["la_vela_puerca_de_atar-sken.pdf", "la_vela_puerca_de_atar-comp.pdf", "la_vela_puerca_de_atar-gen.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: a1-d2}
-{start_melody: a f#}
+{language: spanish}
+{startMelody: a f#}
+{createdAt: 1476396000000}
+{illustrationId: La_Vela_Puerca-De_Atar_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: La_Vela_Puerca-De_Atar_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]Hay algo que ya no pu[A]edo contener

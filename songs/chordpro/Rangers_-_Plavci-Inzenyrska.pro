@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Inženýrská}
 {artist: Rangers - Plavci}
-{songbooks: []}
 {key: E}
-{date_added: 06-2025}
-{language: czech}
-{tempo: }
 {capo: 0}
+{tempo: }
 {range: h1-f2}
-{start_melody: e h g# h}
-{pdf_filenames: []}
+{language: czech}
+{startMelody: e h g# h}
+{createdAt: 1749852000000}
+{illustrationId: Rangers_-_Plavci-Inzenyrska_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Rangers_-_Plavci-Inzenyrska_gpt-4o-mini_v2}
 
 {start_of_verse}
 Já [E]studoval a studoval a budoucnost si budoval

@@ -1,0 +1,17 @@
+songId: Kouzla_kralu-Buchet_je_spousta
+prompts:
+  - promptId: Kouzla_kralu-Buchet_je_spousta_gpt-4o-mini_v2
+    songId: Kouzla_kralu-Buchet_je_spousta
+    createdAt: 1754387147000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical bakery castle filled with delicious
+      pastries and cakes, set against a dreamy sky where a couple holds hands,
+      gazing into each other's eyes with joy. The scene should convey a sense of
+      celebration and love, with hints of magical elements like floating clouds
+      and twinkling lights, capturing the essence of a fairytale romance.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

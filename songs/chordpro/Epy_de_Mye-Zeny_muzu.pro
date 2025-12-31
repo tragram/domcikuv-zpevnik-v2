@@ -1,14 +1,15 @@
 {title: Ženy mužů}
 {artist: Epy de Mye}
-{date_added: 11-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["epy_de_mye_zeny_muzu-sken.pdf", "epy_de_mye_zeny_muzu-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: a d}
+{language: czech}
+{startMelody: a d}
+{createdAt: 1542150000000}
+{illustrationId: Epy_de_Mye-Zeny_muzu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Epy_de_Mye-Zeny_muzu_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Svěřit se křídlům [G]falešným
 a [D]silou neči[A]stou se vznést

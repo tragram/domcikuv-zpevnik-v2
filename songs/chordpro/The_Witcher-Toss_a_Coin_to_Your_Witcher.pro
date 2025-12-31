@@ -1,12 +1,14 @@
 {title: Toss a Coin to Your Witcher}
 {artist: The Witcher}
-{language: english}
-{date_added: 09-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
+{tempo: }
 {range: d1-e2}
-{start_melody: g}
+{language: english}
+{startMelody: g}
+{createdAt: 1600034400000}
+{illustrationId: The_Witcher-Toss_a_Coin_to_Your_Witcher_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: The_Witcher-Toss_a_Coin_to_Your_Witcher_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Em]When a humble [A]bard

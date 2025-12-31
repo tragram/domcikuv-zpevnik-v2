@@ -1,0 +1,18 @@
+songId: Hop_Trop-Lodnikuv_lament
+prompts:
+  - promptId: Hop_Trop-Lodnikuv_lament_gpt-4o-mini_v1
+    songId: Hop_Trop-Lodnikuv_lament
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a rugged sailor on a stormy sea,
+      reflecting a sense of nostalgia and regret. Include elements like a small,
+      worn-out ship battling waves, a distant lighthouse flickering, and shadowy
+      sharks lurking beneath the water. The sailor should appear contemplative,
+      with memories of home and family hovering in the background, emphasizing
+      the contrast between adventure and longing for stability.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

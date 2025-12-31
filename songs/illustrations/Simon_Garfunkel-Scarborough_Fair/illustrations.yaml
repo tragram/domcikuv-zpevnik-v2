@@ -1,0 +1,18 @@
+songId: Simon_Garfunkel-Scarborough_Fair
+prompts:
+  - promptId: Simon_Garfunkel-Scarborough_Fair_gpt-4o-mini_v1
+    songId: Simon_Garfunkel-Scarborough_Fair
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an ethereal landscape depicting Scarborough Fair, featuring a
+      serene hill surrounded by deep forest green. Include elements like
+      parsley, sage, rosemary, and thyme, a sparrow tracing patterns in the
+      snow, and a soldier polishing a gun nearby. Capture a sense of nostalgia
+      and longing, with a backdrop of gentle leaves falling and a hint of war in
+      the distance.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

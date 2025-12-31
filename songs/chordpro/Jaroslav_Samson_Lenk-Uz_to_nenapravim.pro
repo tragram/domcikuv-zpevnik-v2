@@ -1,14 +1,15 @@
 {title: Už to nenapravím}
 {artist: Jaroslav Samson Lenk}
-{date_added: 09-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaroslav_samson_lenk_uz_to_nenapravim-sken.pdf", "jaroslav_samson_lenk_uz_to_nenapravim-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: a1-c2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1442181600000}
+{illustrationId: Jaroslav_Samson_Lenk-Uz_to_nenapravim_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaroslav_Samson_Lenk-Uz_to_nenapravim_gpt-4o-mini_v1}
+
 {start_of_chorus}
 𝄆 [Ami]Vap tada dap...
 [D][F][E][Ami][E][F][F#][G] 𝄇

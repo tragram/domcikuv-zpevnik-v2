@@ -1,0 +1,19 @@
+songId: Penk_Pergner-O_blaznech
+prompts:
+  - promptId: Penk_Pergner-O_blaznech_gpt-4o-mini_v1
+    songId: Penk_Pergner-O_blaznech
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a surreal landscape featuring a bridge made of
+      colorful, whimsical elements, symbolizing the folly of building
+      connections for others' happiness. In the background, depict shadowy
+      figures resembling dogs in kennels, representing deceit and false faith.
+      Include a central figure, a dreamer with a mix of joy and sorrow,
+      embodying the struggle between hope and disillusionment. Use vibrant
+      colors to contrast the darker themes.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

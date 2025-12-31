@@ -1,0 +1,17 @@
+songId: Kabat-Kruty_krtek_Joy
+prompts:
+  - promptId: Kabat-Kruty_krtek_Joy_gpt-4o-mini_v1
+    songId: Kabat-Kruty_krtek_Joy
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of playful moles swimming in a garden pond, with a
+      whimsical twist. Show them swimming with their heads tilted, using
+      different strokes like breaststroke and backstroke, surrounded by vibrant
+      flowers and a kettle steaming nearby. Capture a lighthearted and humorous
+      atmosphere.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

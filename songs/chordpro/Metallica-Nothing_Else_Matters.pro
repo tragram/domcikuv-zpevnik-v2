@@ -1,14 +1,14 @@
 {title: Nothing Else Matters}
 {artist: Metallica}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["metallica_nothing_else_matters-sken.pdf", "metallica_nothing_else_matters-comp.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: e}
+{language: english}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Metallica-Nothing_Else_Matters_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Metallica-Nothing_Else_Matters_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Em]So close, no matter [D]how [C]far

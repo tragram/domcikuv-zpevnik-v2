@@ -1,14 +1,15 @@
 {title: Jarošovský pivovar}
 {artist: Argema}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["argema_jarosovsky_pivovar-sken.pdf", "argema_jarosovsky_pivovar-comp.pdf"]}
-{capo: 7}
 {key: G}
+{capo: 7}
 {tempo: }
 {range: g1-d2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1436824800000}
+{illustrationId: Argema-Jarosovsky_pivovar_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Argema-Jarosovsky_pivovar_gpt-4o-mini_v2}
+
 {start_of_verse}
 [G]Léta tam [D]stál, [C]stojí tam [G]dál
 [G]pivovar [D]u cesty, [C]každý ho [D]znal, [D]

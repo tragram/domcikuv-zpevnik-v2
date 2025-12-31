@@ -1,0 +1,18 @@
+songId: David_a_Golias-Jan_Werich_Jiri_Voskovec
+prompts:
+  - promptId: David_a_Golias-Jan_Werich_Jiri_Voskovec_gpt-4o-mini_v1
+    songId: David_a_Golias-Jan_Werich_Jiri_Voskovec
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting the dramatic confrontation between David
+      and Goliath. Show David, a young shepherd with a slingshot, confidently
+      facing the towering giant Goliath, who is sneering down at him. Surround
+      them with a biblical landscape, including hints of ancient armor and
+      stones. Capture the tension and courage in David's expression as he
+      prepares to take his shot.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,15 @@
 {title: Zejtra mám}
 {artist: Ready Kirken}
-{date_added: 04-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["ready_kirken_zejtra_mam-sken.pdf", "ready_kirken_zejtra_mam-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: g1-g2}
-{start_melody: h d}
+{language: czech}
+{startMelody: h d}
+{createdAt: 1492120800000}
+{illustrationId: Ready_Kirken-Zejtra_mam_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Ready_Kirken-Zejtra_mam_gpt-4o-mini_v1}
+
 {start_of_verse}
 Zejtra [G]mám zejtra [Hm]mám svůj [Em]den [D]
 zejtra se mi [C]splní moje tajný [Hm]přání můj [Am]sen [D]

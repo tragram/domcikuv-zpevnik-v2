@@ -1,13 +1,14 @@
-{language: english}
-{date_added: 02-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
-{key: G}
 {title: I'm Still Here}
 {artist: Treasure Planet}
+{key: G}
+{capo: 0}
 {tempo: 74}
 {range: g1-e2}
-{start_melody: g d}
+{language: english}
+{startMelody: g d}
+{createdAt: 1581634800000}
+{illustrationId: Treasure_Planet-Im_Still_Here_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Treasure_Planet-Im_Still_Here_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]I am a qu[C]estion to the [G]world

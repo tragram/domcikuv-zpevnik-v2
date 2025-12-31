@@ -1,0 +1,18 @@
+songId: Poupata-Toulavy_boty
+prompts:
+  - promptId: Poupata-Toulavy_boty_gpt-4o-mini_v1
+    songId: Poupata-Toulavy_boty
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a solitary wanderer with worn-out shoes, walking
+      along a winding path under a vast sky where the horizon meets the clouds.
+      The scene captures a sense of nostalgia and longing, with a hint of a
+      summer landscape, evoking memories of a joyful past and a lost father.
+      Include elements like a distant mountain range and a soft, melancholic
+      light to reflect the themes of journey and remembrance.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

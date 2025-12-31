@@ -1,15 +1,15 @@
 {title: Ezop a brabenec}
 {artist: Ježek + Voskovec + Werich}
-{date_added: 08-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{image_model: FLUX.1-schnell}
-{pdf_filenames: ["jezek__voskovec__werich_ezop_a_brabenec-sken.pdf", "jezek__voskovec__werich_ezop_a_brabenec-comp.pdf", "jezek__voskovec__werich_ezop_a_brabenec-gen.pdf"]}
-{capo: 4}
 {key: C}
+{capo: 4}
 {tempo: }
 {range: g1-a2}
-{start_melody: e e g g}
+{language: czech}
+{startMelody: e e g g}
+{createdAt: 1471125600000}
+{illustrationId: Jezek_Voskovec_Werich-Ezop_a_brabenec_gpt-4o-mini_v1_FLUX.1-schnell}
+{promptId: Jezek_Voskovec_Werich-Ezop_a_brabenec_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Jednou [Emi]z lesa
 [Ami]domů se [Ami7]nesa

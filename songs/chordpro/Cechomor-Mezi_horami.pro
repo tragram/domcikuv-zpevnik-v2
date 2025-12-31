@@ -1,14 +1,14 @@
 {title: Mezi horami}
 {artist: Čechomor}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["cechomor_mezi_horami-sken.pdf", "cechomor_mezi_horami-comp.pdf"]}
-{capo: 4}
 {key: Am}
+{capo: 4}
 {tempo: }
 {range: a1-g1}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Cechomor-Mezi_horami_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Cechomor-Mezi_horami_gpt-4o-mini_v1}
 
 {start_of_verse}
 𝄆 [Ami]Mezi [E]hora[Ami]mi,

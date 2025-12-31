@@ -1,0 +1,19 @@
+songId: Kabat-Mala_dama
+prompts:
+  - promptId: Kabat-Mala_dama_gpt-4o-mini_v1
+    songId: Kabat-Mala_dama
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a mysterious, enchanting woman from the suburbs playing
+      a violin at dawn, surrounded by curious cats. She has an air of magic and
+      wisdom, with deep eyes that seem to hold secrets. In the background, a
+      makeshift shrine made of coins and a metal bridge can be seen, hinting at
+      her past struggles. The scene should evoke a sense of longing and romance,
+      capturing the essence of a soulful dance amidst a crowd of women, yet she
+      stands out uniquely.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

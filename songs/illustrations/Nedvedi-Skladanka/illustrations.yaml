@@ -1,0 +1,18 @@
+songId: Nedvedi-Skladanka
+prompts:
+  - promptId: Nedvedi-Skladanka_gpt-4o-mini_v1
+    songId: Nedvedi-Skladanka
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a tender night scene where a couple shares a
+      gentle kiss under soft, dim lighting. The atmosphere is intimate, with
+      curtains drawn, and a sense of nostalgia in the air. Include subtle
+      elements like a clock striking midnight, hints of cozy furniture, and a
+      feeling of warmth and longing. Capture the essence of love, vulnerability,
+      and magical moments shared together.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

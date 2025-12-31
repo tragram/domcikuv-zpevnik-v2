@@ -1,14 +1,15 @@
 {title: Vasil}
 {artist: Karel Kryl}
-{date_added: 11-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_vasil-sken.pdf", "karel_kryl_vasil-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: d1-f#2}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1542150000000}
+{illustrationId: Karel_Kryl-Vasil_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Vasil_gpt-4o-mini_v1}
+
 {start_of_verse}
 V [D]botičkách z kozinky
 [Hmi]vybírám rozinky z [G]koláčků, [A]

@@ -1,0 +1,18 @@
+songId: Jaromir_Nohavica-Pritel
+prompts:
+  - promptId: Jaromir_Nohavica-Pritel_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-Pritel
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the nostalgic essence of friendship
+      and lost moments. Depict two young friends in a sunlit park, surrounded by
+      birds, reminiscing about their carefree youth. Include elements like an
+      old record player, a faded photograph, and a distant horizon to symbolize
+      the passage of time and change. The atmosphere should evoke warmth and
+      bittersweet memories.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

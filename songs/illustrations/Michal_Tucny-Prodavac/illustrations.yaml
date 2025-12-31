@@ -1,0 +1,19 @@
+songId: Michal_Tucny-Prodavac
+prompts:
+  - promptId: Michal_Tucny-Prodavac_gpt-4o-mini_v1
+    songId: Michal_Tucny-Prodavac
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a nostalgic small-town shop filled with colorful
+      jars of candies, sausages, and cheeses, with a friendly shopkeeper behind
+      the counter. The scene should evoke a warm, inviting atmosphere, capturing
+      the essence of community and childhood memories, with a hint of music in
+      the air, symbolizing the transition from a shopkeeper to a performer.
+      Include details like a vintage gramophone and a sign that reads "Michal
+      Tučný, odpovědný vedoucí."
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

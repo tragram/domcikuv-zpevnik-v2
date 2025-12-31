@@ -1,14 +1,14 @@
 {title: Take Me Home Country Roads}
 {artist: John Denver}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["john_denver_take_me_home_country_roads-sken.pdf", "john_denver_take_me_home_country_roads-comp.pdf"]}
-{capo: 3}
 {key: D}
+{capo: 3}
 {tempo: }
 {range: a1-h2}
-{start_melody: a}
+{language: english}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: John_Denver-Take_Me_Home_Country_Roads_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: John_Denver-Take_Me_Home_Country_Roads_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]Almost heaven [Hmi]West Virginia

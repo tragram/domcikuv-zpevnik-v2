@@ -1,14 +1,15 @@
 {title: Jdou po mně jdou}
 {artist: Jaromír Nohavica}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_jdou_po_me_jdou-sken.pdf", "jaromir_nohavica_jdou_po_me_jdou-comp.pdf"]}
-{capo: 3}
 {key: D}
+{capo: 3}
 {tempo: }
 {range: a1-h2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Jaromir_Nohavica-Jdou_po_mne_jdou_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Jdou_po_mne_jdou_gpt-4o-mini_v1}
+
 {start_of_verse}
 Býval jsem [D]chudý jak [G]kostelní [D]myš,
 na půdě [F#mi]půdy jsem [Hmi]míval svou [A7]skrýš,

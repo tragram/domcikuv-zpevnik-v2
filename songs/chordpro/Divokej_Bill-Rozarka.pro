@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Rozárka}
 {artist: Divokej Bill}
-{songbooks: []}
 {key: Am}
-{date_added: 05-2025}
-{language: czech}
-{tempo: }
 {capo: 0}
+{tempo: }
 {range: e1-f2}
-{start_melody: a a h c c}
-{pdf_filenames: []}
+{language: czech}
+{startMelody: a a h c c}
+{createdAt: 1747173600000}
+{illustrationId: Divokej_Bill-Rozarka_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Divokej_Bill-Rozarka_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Ami]Nikdy [F]neřikej, že víš jak mi [Emi]je, s prázdnym

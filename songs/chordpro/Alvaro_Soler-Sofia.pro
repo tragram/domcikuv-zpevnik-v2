@@ -1,14 +1,14 @@
 {title: Sofia}
 {artist: Alvaro Soler}
-{date_added: 12-2016}
-{songbooks: ["Domčík"]}
-{language: spanish}
-{pdf_filenames: ["alvaro_soler_sofia-sken.pdf", "alvaro_soler_sofia-comp.pdf", "alvaro_soler_sofia-gen.pdf"]}
-{capo: 0}
 {key: F#m}
+{capo: 0}
 {tempo: }
 {range: a1-e2}
-{start_melody: c# e}
+{language: spanish}
+{startMelody: c# e}
+{createdAt: 1481670000000}
+{illustrationId: Alvaro_Soler-Sofia_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Alvaro_Soler-Sofia_gpt-4o-mini_v2}
 
 {start_of_verse}
 [F#m]Sueño cuando era pequeñ[A]o

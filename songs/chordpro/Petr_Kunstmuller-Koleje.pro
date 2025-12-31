@@ -1,14 +1,14 @@
 {title: Koleje}
 {artist: Petr Kunstmüller}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["petr_muller_koleje-sken.pdf", "petr_muller_koleje-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Petr_Kunstmuller-Koleje_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Petr_Kunstmuller-Koleje_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Ami]Vod někud nikam vedou tyhle [D]koleje

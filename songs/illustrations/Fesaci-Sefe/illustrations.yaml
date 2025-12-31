@@ -1,0 +1,17 @@
+songId: Fesaci-Sefe
+prompts:
+  - promptId: Fesaci-Sefe_gpt-4o-mini_v1
+    songId: Fesaci-Sefe
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a determined horse racer standing at the
+      starting line, looking longingly at the racecourse. The scene captures a
+      mix of hope and nostalgia, with horses in the background and a stable
+      nearby. The atmosphere conveys a sense of longing for a second chance,
+      featuring a dramatic sky and the subtle hint of a personal struggle.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

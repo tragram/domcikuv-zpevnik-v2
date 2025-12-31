@@ -1,14 +1,15 @@
 {title: Krutý krtek Joy}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_kruty_krtek_joy-sken.pdf", "kabat_kruty_krtek_joy-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: a1-g1}
-{start_melody: a c e}
+{language: czech}
+{startMelody: a c e}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Kruty_krtek_Joy_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Kruty_krtek_Joy_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Když nemám co na práci
 tak pozoruju [G]krtky

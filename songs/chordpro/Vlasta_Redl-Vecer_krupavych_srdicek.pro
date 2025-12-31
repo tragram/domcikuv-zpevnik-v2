@@ -1,14 +1,15 @@
 {title: Večer křupavých srdíček}
 {artist: Vlasta Redl}
-{date_added: 02-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["vlasta_redl_vecer_krupavych_srdicek-sken.pdf", "vlasta_redl_vecer_krupavych_srdicek-comp.pdf", "vlasta_redl_vecer_krupavych_srdicek-gen.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1487026800000}
+{illustrationId: Vlasta_Redl-Vecer_krupavych_srdicek_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Vlasta_Redl-Vecer_krupavych_srdicek_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Když jsi tehdy přinesla
 na [D9]talířku [H7]křupky,

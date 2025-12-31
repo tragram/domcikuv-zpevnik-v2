@@ -1,14 +1,15 @@
 {title: Kdo ví jestli}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_kdo_vi_jestli-sken.pdf", "kabat_kdo_vi_jestli-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-a1}
-{start_melody: e g a g}
+{language: czech}
+{startMelody: e g a g}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Kdo_vi_jestli_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Kdo_vi_jestli_gpt-4o-mini_v1}
+
 {start_of_verse: V1}
 Kdoví [C]jestli,
 jestli jsou na měsíci vůbec ňáký [F]stopy

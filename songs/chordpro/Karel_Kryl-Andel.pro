@@ -1,14 +1,15 @@
 {title: Anděl}
 {artist: Karel Kryl}
-{date_added: 10-2010}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_andel-sken.pdf", "karel_kryl_andel-comp.pdf"]}
-{capo: 4}
 {key: G}
+{capo: 4}
 {tempo: }
 {range: g1-h2}
-{start_melody: h h a g}
+{language: czech}
+{startMelody: h h a g}
+{createdAt: 1287007200000}
+{illustrationId: Karel_Kryl-Andel_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Andel_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Z rozmláce[Emi]nýho kostela
 [G]v krabici s [D7]kusem mýdla

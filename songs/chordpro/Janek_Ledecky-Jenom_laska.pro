@@ -1,14 +1,14 @@
 {title: Jenom láska}
 {artist: Janek Ledecký}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["janek_ledecky_jenom_laska-sken.pdf", "janek_ledecky_jenom_laska-comp.pdf"]}
-{capo: 7}
 {key: G}
+{capo: 7}
 {tempo: }
 {range: e1-g2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1436824800000}
+{illustrationId: Janek_Ledecky-Jenom_laska_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Janek_Ledecky-Jenom_laska_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]Prošli jsme poušť víme [Emi]co je žízeň

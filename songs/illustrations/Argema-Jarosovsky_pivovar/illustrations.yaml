@@ -1,0 +1,36 @@
+songId: Argema-Jarosovsky_pivovar
+prompts:
+  - promptId: Argema-Jarosovsky_pivovar_gpt-4o-mini_v1
+    songId: Argema-Jarosovsky_pivovar
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a classic brewery standing proudly by a road,
+      surrounded by lush greenery. Include elements like frothy beer mugs,
+      glistening bottles, and hops. Capture a sense of nostalgia and community,
+      reflecting the warmth and tradition of Jarošov's brewing heritage.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp
+  - promptId: Argema-Jarosovsky_pivovar_gpt-4o-mini_v2
+    songId: Argema-Jarosovsky_pivovar
+    createdAt: 1754387143000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a charming, rustic brewery standing proudly by a
+      winding country road. The scene should feature a frothy pint of beer with
+      condensation on the glass, surrounded by lush greenery. In the background,
+      the brewery's historic architecture is visible, evoking a sense of
+      tradition and community. Add a hint of nostalgia with warm sunlight
+      filtering through the trees, suggesting a joyful gathering of friends
+      enjoying a drink together.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

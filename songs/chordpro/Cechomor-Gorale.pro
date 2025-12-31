@@ -1,14 +1,15 @@
 {title: Gorale}
 {artist: Čechomor}
-{date_added: 03-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: c#1-h1}
-{start_melody: d e f#}
+{language: czech}
+{startMelody: d e f#}
+{createdAt: 1741906800000}
+{illustrationId: Cechomor-Gorale_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Cechomor-Gorale_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Za lasami [G]za gorami [A]za dolina[D]mi
 pobiłi [G]się dwaj gora[A]le ciup[D]agami

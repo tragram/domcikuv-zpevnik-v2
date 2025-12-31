@@ -1,16 +1,15 @@
 {title: Chci zas v tobě spát}
 {artist: Lucie}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["lucie_chci_zas_v_tobe_spat-sken.pdf", "lucie_chci_zas_v_tobe_spat-comp.pdf"]}
-{capo: 6}
-{image_model: dalle3}
-{prompt_id: v1}
 {key: G}
+{capo: 6}
 {tempo: }
 {range: d1-g2}
-{start_melody: a a g a}
+{language: czech}
+{startMelody: a a g a}
+{createdAt: 1436824800000}
+{illustrationId: Lucie-Chci_zas_v_tobe_spat_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Lucie-Chci_zas_v_tobe_spat_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Mlčíš a svět je funny[Hmi], záhadou,
 [Emi]stává se pro mě honey, když [C]dračí drápy tnou,

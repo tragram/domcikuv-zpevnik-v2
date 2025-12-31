@@ -1,14 +1,14 @@
 {title: Where Did You Sleep Last Night}
 {artist: Nirvana}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["nirvana_where_did_you_sleep_last_night-sken.pdf", "nirvana_where_did_you_sleep_last_night-comp.pdf"]}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: e1-h1}
-{start_melody: g# f# e}
+{language: english}
+{startMelody: g# f# e}
+{createdAt: 1436824800000}
+{illustrationId: Nirvana-Where_Did_You_Sleep_Last_Night_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nirvana-Where_Did_You_Sleep_Last_Night_gpt-4o-mini_v1}
 
 {start_of_verse}
 [E5]My girl, my girl, don'[A]t lie [G]to me

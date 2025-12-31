@@ -1,14 +1,15 @@
 {title: Sára}
 {artist: Traband}
-{date_added: 09-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["traband_sara-sken.pdf", "traband_sara-comp.pdf"]}
-{capo: 4}
 {key: Em}
+{capo: 4}
 {tempo: }
-{range: d1/g1-a1/e1}
-{start_melody: }
+{range: d1-a1}
+{language: czech}
+{startMelody: }
+{createdAt: 1442181600000}
+{illustrationId: Traband-Sara_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Traband-Sara_gpt-4o-mini_v1}
+
 {start_of_chorus}
 [Emi]Sáro, [Hmi]Sáro, [C]v noci se mi [G]zdálo,
 že [C]tři andělé [G]Boží k nám [C]přišli na [D]oběd.

@@ -1,0 +1,18 @@
+songId: Iveta_Bartosova-Tri_orisky
+prompts:
+  - promptId: Iveta_Bartosova-Tri_orisky_gpt-4o-mini_v1
+    songId: Iveta_Bartosova-Tri_orisky
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an enchanting illustration of a whimsical fairy tale scene
+      featuring three magical nuts in a pocket, symbolizing hope and potential.
+      Include a backdrop of a mystical kingdom with hints of love and wonder,
+      and an ethereal atmosphere that suggests the possibility of miracles. The
+      overall tone should be dreamy and inviting, capturing the essence of
+      believing in magic and the unexpected twists of life.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

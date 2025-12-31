@@ -1,0 +1,17 @@
+songId: Jaromir_Nohavica-Hlidac_krav
+prompts:
+  - promptId: Jaromir_Nohavica-Hlidac_krav_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-Hlidac_krav
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical scene featuring a cheerful cowherd
+      with a pom-pom hat, lying in lush green grass under a bright blue sky. The
+      cowherd is gazing up at fluffy clouds, imagining colorful cows playfully
+      roaming among them. Surround the scene with hints of childhood memories,
+      like books and chestnuts, to evoke a sense of nostalgia and simplicity.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

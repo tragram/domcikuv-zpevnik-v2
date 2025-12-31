@@ -1,12 +1,15 @@
 {title: Úředníkův song}
 {artist: Pavel Čadek}
-{language: czech}
-{date_added: 09-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
+{tempo: }
 {range: d1-a1}
-{start_melody: f}
+{language: czech}
+{startMelody: f}
+{createdAt: 1600034400000}
+{illustrationId: Pavel_Cadek-Urednikuv_song_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pavel_Cadek-Urednikuv_song_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Dmi]Vážený pane, na ty dveře klepe se.
 Nebojte vtipkuju, jen klidně pojďte sem.

@@ -1,14 +1,14 @@
 {title: Plakala}
 {artist: Divokej Bill}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: g1-g2}
-{start_melody: a a a h c d}
-
+{language: czech}
+{startMelody: a a a h c d}
+{createdAt: 1744581600000}
+{illustrationId: Divokej_Bill-Plakala_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Divokej_Bill-Plakala_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Ami]Toužila, kroužila, kryla mi záda

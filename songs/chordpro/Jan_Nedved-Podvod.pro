@@ -1,14 +1,14 @@
 {title: Podvod}
 {artist: Jan Nedvěd}
-{date_added: 01-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jan_nedved_podvod-sken.pdf", "jan_nedved_podvod-comp.pdf"]}
-{capo: 3}
 {key: Em}
+{capo: 3}
 {tempo: }
 {range: g1-h2}
-{start_melody: h g}
+{language: czech}
+{startMelody: h g}
+{createdAt: 1484348400000}
+{illustrationId: Jan_Nedved-Podvod_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jan_Nedved-Podvod_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Emi]Na dlani jednu z tvých řas,

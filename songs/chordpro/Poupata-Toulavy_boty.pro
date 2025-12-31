@@ -1,14 +1,15 @@
 {title: Toulavý boty}
 {artist: Poupata}
-{date_added: 10-2011}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["poupata_toulavy_boty-sken.pdf", "poupata_toulavy_boty-comp.pdf"]}
-{capo: 0}
 {key: A}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: e d c#}
+{language: czech}
+{startMelody: e d c#}
+{createdAt: 1318543200000}
+{illustrationId: Poupata-Toulavy_boty_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Poupata-Toulavy_boty_gpt-4o-mini_v1}
+
 {start_of_verse}
 Každý [A]den dál a [E]dál,
 vprostřed [F#mi]cesty jako krá[C#mi]l

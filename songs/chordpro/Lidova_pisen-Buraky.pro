@@ -1,14 +1,15 @@
 {title: Buráky}
 {artist: Lidová píseň}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["lidova_pisen_buraky-sken.pdf", "lidova_pisen_buraky-comp.pdf"]}
-{capo: 7}
 {key: D}
+{capo: 7}
 {tempo: }
 {range: a1-f#1}
-{start_melody: h a}
+{language: czech}
+{startMelody: h a}
+{createdAt: 1436824800000}
+{illustrationId: Lidova_pisen-Buraky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Lidova_pisen-Buraky_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Když sever válči s jihem a [C]zem jde do vál[G]ky
 v polích místo bavlny teď [A]rostou bodlá[D7]ky

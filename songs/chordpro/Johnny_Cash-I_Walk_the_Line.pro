@@ -1,14 +1,14 @@
 {title: I Walk the Line}
 {artist: Johnny Cash}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["johnny_cash_i_walk_the_line-sken.pdf", "johnny_cash_i_walk_the_line-comp.pdf"]}
-{capo: 3}
 {key: E}
+{capo: 3}
 {tempo: }
 {range: g#1-e2}
-{start_melody: e e e f#}
+{language: english}
+{startMelody: e e e f#}
+{createdAt: 1436824800000}
+{illustrationId: Johnny_Cash-I_Walk_the_Line_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Johnny_Cash-I_Walk_the_Line_gpt-4o-mini_v1}
 
 {start_of_verse}
 I keep a [E7]close watch on this heart of [A]mine

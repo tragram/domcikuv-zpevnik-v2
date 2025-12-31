@@ -1,0 +1,18 @@
+songId: Johnny_Cash-Folsom_Prison_Blues
+prompts:
+  - promptId: Johnny_Cash-Folsom_Prison_Blues_gpt-4o-mini_v1
+    songId: Johnny_Cash-Folsom_Prison_Blues
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a somber scene at Folsom Prison, featuring a
+      weathered man gazing longingly at a distant train rolling past under a
+      blue sky. Include elements like prison bars, a faded sunset, and a faint
+      silhouette of a dining car with wealthy passengers enjoying their lives.
+      The atmosphere should evoke feelings of longing, regret, and a desire for
+      freedom.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

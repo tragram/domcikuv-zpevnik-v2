@@ -1,0 +1,18 @@
+songId: Folk-Hej_sokoy
+prompts:
+  - promptId: Folk-Hej_sokoy_gpt-4o-mini_v1
+    songId: Folk-Hej_sokoy
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a young Cossack on horseback, bidding farewell
+      to his beloved against a backdrop of the Ukrainian landscape. Include
+      elements like rolling hills, green fields, and a distant skyline.
+      Incorporate a soaring falcon in the sky and a distant bell ringing,
+      symbolizing longing and connection. The scene should evoke a sense of
+      nostalgia and love for homeland.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

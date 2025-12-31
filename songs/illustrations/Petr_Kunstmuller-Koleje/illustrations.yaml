@@ -1,0 +1,18 @@
+songId: Petr_Kunstmuller-Koleje
+prompts:
+  - promptId: Petr_Kunstmuller-Koleje_gpt-4o-mini_v1
+    songId: Petr_Kunstmuller-Koleje
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a desolate train track leading into a foggy distance,
+      surrounded by fallen leaves and old wooden ties. In the background, faint
+      silhouettes of a distant city can be seen, with a melancholic atmosphere
+      reflecting lost love and the passage of time. Include hints of smoke
+      rising from an old train, merging with the snowy landscape, symbolizing
+      memories and hope fading away.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

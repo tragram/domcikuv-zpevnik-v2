@@ -1,14 +1,15 @@
 {title: Král a klaun}
 {artist: Karel Kryl}
-{date_added: 07-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_kral_a_klaun-sken.pdf", "karel_kryl_kral_a_klaun-comp.pdf", "karel_kryl_kral_a_klaun-gen.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: a1-h2}
-{start_melody: a h}
+{language: czech}
+{startMelody: a h}
+{createdAt: 1468447200000}
+{illustrationId: Karel_Kryl-Kral_a_klaun_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Kral_a_klaun_gpt-4o-mini_v1}
+
 {start_of_verse}
 [A]Král [G]do boje [D]táh, [G][D]do [G]veliké [D]dálky,[G][D]
 a s [G]ním do té [D]války [A7]jel na mezku [D]klaun,

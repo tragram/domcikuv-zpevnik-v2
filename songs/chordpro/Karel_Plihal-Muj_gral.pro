@@ -1,17 +1,14 @@
 {title: Můj grál}
 {artist: Karel Plíhal}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_plihal_muj_gral-sken.pdf", "karel_plihal_muj_gral-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: f# a}
-
-{title:Můj Grál}
-{artist:Karel Plíhal}
+{language: czech}
+{startMelody: f# a}
+{createdAt: 1436824800000}
+{illustrationId: Karel_Plihal-Muj_gral_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Plihal-Muj_gral_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]V dešti budu stát, rád a [A]sám

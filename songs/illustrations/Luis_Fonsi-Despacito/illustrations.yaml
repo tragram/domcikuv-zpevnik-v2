@@ -1,0 +1,17 @@
+songId: Luis_Fonsi-Despacito
+prompts:
+  - promptId: Luis_Fonsi-Despacito_gpt-4o-mini_v1
+    songId: Luis_Fonsi-Despacito
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a romantic beach scene at sunset, featuring a
+      couple dancing closely, surrounded by gentle waves and soft sand. The
+      atmosphere should evoke passion and intimacy, with warm colors and a sense
+      of rhythm in their movements. Include elements like flowing hair and
+      playful interactions to capture the essence of the song "Despacito."
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,12 +1,14 @@
-{language: estonian}
-{date_added: 11-2024}
-{songbooks: ["Domčík"]}
-{capo: 3}
-{key: G}
 {title: Sõbrad Mu Kallid}
 {artist: Curly Strings}
+{key: G}
+{capo: 3}
+{tempo: }
 {range: e1-c#2}
-{start_melody: h}
+{language: estonian}
+{startMelody: h}
+{createdAt: 1731538800000}
+{illustrationId: Curly_Strings-Sobrad_Mu_Kallid_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Curly_Strings-Sobrad_Mu_Kallid_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]Siis, kui ma üks[Hm]inda jään,

@@ -1,0 +1,17 @@
+songId: The_National-Rains_of_Castamere
+prompts:
+  - promptId: The_National-Rains_of_Castamere_gpt-4o-mini_v1
+    songId: The_National-Rains_of_Castamere
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a proud, regal lion with sharp claws, standing
+      in a desolate castle hall. The atmosphere is somber, with rain pouring
+      down and dark clouds looming overhead, symbolizing loss and solitude. The
+      lion should be depicted in a coat of gold, emphasizing its majesty amidst
+      the empty, mournful surroundings.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

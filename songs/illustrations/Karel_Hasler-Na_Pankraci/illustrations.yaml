@@ -1,0 +1,17 @@
+songId: Karel_Hasler-Na_Pankraci
+prompts:
+  - promptId: Karel_Hasler-Na_Pankraci_gpt-4o-mini_v2
+    songId: Karel_Hasler-Na_Pankraci
+    createdAt: 1754387146000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a small hill in a serene park setting, lined
+      with beautiful trees. In the foreground, depict a young man sitting on the
+      grass, looking contemplative and heartbroken, as he gazes at a distant
+      couple walking hand in hand. The scene captures a bittersweet feeling of
+      longing and unfulfilled love, with a hint of nostalgia in the air.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

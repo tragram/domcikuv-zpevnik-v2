@@ -1,0 +1,18 @@
+songId: Howard_Goodall-Red_Dwarf_Theme
+prompts:
+  - promptId: Howard_Goodall-Red_Dwarf_Theme_gpt-4o-mini_v1
+    songId: Howard_Goodall-Red_Dwarf_Theme
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a tropical paradise scene featuring a serene
+      beach with golden sand, clear blue waters, and a bright sun shining in a
+      clear sky. Include a person lounging on the beach with a tropical drink in
+      hand, surrounded by colorful fish swimming near their toes. The atmosphere
+      should evoke a sense of fun and relaxation, contrasting with a cold,
+      lonely environment.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,18 @@
+songId: The_Animals-Dum_u_vychazejiciho_slunce
+prompts:
+  - promptId: The_Animals-Dum_u_vychazejiciho_slunce_gpt-4o-mini_v1
+    songId: The_Animals-Dum_u_vychazejiciho_slunce
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a melancholic house in New Orleans with a sun
+      emblem on its gable. The scene should evoke a sense of longing and
+      despair, featuring shadows of young boys around the house, symbolizing
+      their struggles. Include elements of the city's atmosphere, such as
+      worn-down streets and hints of vibrant culture, contrasted with a feeling
+      of coldness and confinement.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

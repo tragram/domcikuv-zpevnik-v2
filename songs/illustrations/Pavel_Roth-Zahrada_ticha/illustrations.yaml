@@ -1,0 +1,19 @@
+songId: Pavel_Roth-Zahrada_ticha
+prompts:
+  - promptId: Pavel_Roth-Zahrada_ticha_gpt-4o-mini_v1
+    songId: Pavel_Roth-Zahrada_ticha
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a beautifully adorned gate opening into a lush
+      green garden, surrounded by a birch grove and pine forest. The scene
+      should evoke a sense of tranquility and nostalgia, with soft sunlight
+      filtering through the trees, a hint of mist in the air, and a pathway
+      leading into the serene space. Include subtle elements like birds in the
+      distance and a quiet atmosphere, reflecting the themes of solitude and the
+      passage of time.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

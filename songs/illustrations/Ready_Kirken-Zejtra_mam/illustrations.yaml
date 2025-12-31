@@ -1,0 +1,18 @@
+songId: Ready_Kirken-Zejtra_mam
+prompts:
+  - promptId: Ready_Kirken-Zejtra_mam_gpt-4o-mini_v1
+    songId: Ready_Kirken-Zejtra_mam
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a joyful, dreamy scene featuring a person
+      standing in a vibrant, colorful landscape filled with symbols of hope and
+      fulfillment. The person looks excited and hopeful, anticipating a special
+      day ahead. Include elements like a bright sun, floating wishes or dreams,
+      and hints of companionship in the background to represent the theme of not
+      being alone anymore.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

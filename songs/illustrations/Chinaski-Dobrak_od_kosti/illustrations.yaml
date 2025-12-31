@@ -1,0 +1,17 @@
+songId: Chinaski-Dobrak_od_kosti
+prompts:
+  - promptId: Chinaski-Dobrak_od_kosti_gpt-4o-mini_v1
+    songId: Chinaski-Dobrak_od_kosti
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dark, moody scene featuring a silhouette of a
+      couple, one person gently embracing the other, set against a backdrop of a
+      shadowy, dimly lit room. The atmosphere should convey a mix of intimacy
+      and tension, with subtle hints of vulnerability and foreboding,
+      symbolizing love intertwined with complexity and unease.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

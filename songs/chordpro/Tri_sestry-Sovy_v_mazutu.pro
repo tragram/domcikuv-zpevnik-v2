@@ -1,14 +1,15 @@
 {title: Sovy v mazutu}
 {artist: Tři sestry}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-e2}
-{start_melody: g h h a f#}
+{language: czech}
+{startMelody: g h h a f#}
+{createdAt: 1734130800000}
+{illustrationId: Tri_sestry-Sovy_v_mazutu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Tri_sestry-Sovy_v_mazutu_gpt-4o-mini_v1}
+
 {start_of_verse: Rec}
 [G]Tak jsme byli [D]včera na Portě,[C][D]
 [G]a když jsme se vraceli [D]cestou domů[C]

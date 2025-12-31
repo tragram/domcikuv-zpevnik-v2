@@ -1,0 +1,22 @@
+songId: Simple_Plan-Welcome_to_My_Life
+prompts:
+  - promptId: Simple_Plan-Welcome_to_My_Life_gpt-4o-mini_v1
+    songId: Simple_Plan-Welcome_to_My_Life
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      **Prompt for AI Image Generator:** 
+
+
+      Create a somber, introspective scene depicting a person sitting alone in a
+      dimly lit room, surrounded by shadows. The room should have a radio
+      blaring, casting flickering light. The character looks lost and
+      vulnerable, with a mix of emotions reflecting pain and longing. Outside
+      the window, a dark, stormy sky symbolizes the turmoil within, while faint
+      outlines of fake smiles linger in the background, representing societal
+      pressures.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

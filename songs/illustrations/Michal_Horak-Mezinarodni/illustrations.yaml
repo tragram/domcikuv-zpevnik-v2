@@ -1,0 +1,18 @@
+songId: Michal_Horak-Mezinarodni
+prompts:
+  - promptId: Michal_Horak-Mezinarodni_gpt-4o-mini_v1
+    songId: Michal_Horak-Mezinarodni
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cozy bar scene on a Saturday night. A man sits
+      at the bar, looking surprised and intrigued as a stylish woman enters. The
+      ambiance is warm and inviting, with soft lighting and vintage decor. The
+      man appears flustered yet hopeful, while the woman exudes confidence.
+      Include elements that suggest a language barrier, like a speech bubble
+      with a mix of German and Czech phrases.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

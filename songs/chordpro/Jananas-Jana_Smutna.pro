@@ -1,14 +1,14 @@
 {title: Jana Smutná}
 {artist: Jananas}
-{date_added: 08-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jananas_jana_smutna-sken.pdf", "jananas_jana_smutna-comp.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: c1-c2}
-{start_melody: d a}
+{language: czech}
+{startMelody: d a}
+{createdAt: 1534197600000}
+{illustrationId: Jananas-Jana_Smutna_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jananas-Jana_Smutna_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Dm]Je smutné, když štěňátko na nádor umírá

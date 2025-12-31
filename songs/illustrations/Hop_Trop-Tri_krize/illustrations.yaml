@@ -1,0 +1,19 @@
+songId: Hop_Trop-Tri_krize
+prompts:
+  - promptId: Hop_Trop-Tri_krize_gpt-4o-mini_v1
+    songId: Hop_Trop-Tri_krize
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a somber seascape featuring a small white ship
+      named "My grave" sailing toward rocky cliffs under a stormy sky. In the
+      foreground, depict three white stone crosses arranged in the sand, each
+      representing a troubled past. Include a weathered sailor holding a
+      tattered ship's log, with tears in his eyes, conveying a sense of loss and
+      reflection. The atmosphere should be melancholic, emphasizing themes of
+      regret and redemption.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

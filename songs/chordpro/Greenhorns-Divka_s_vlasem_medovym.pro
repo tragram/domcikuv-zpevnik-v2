@@ -1,14 +1,15 @@
 {title: Dívka s vlasem medovým}
 {artist: Greenhorns}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["greenhorns_divka_s_vlasem_medovym-sken.pdf", "greenhorns_divka_s_vlasem_medovym-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: h1-g1}
-{start_melody: c g}
+{language: czech}
+{startMelody: c g}
+{createdAt: 1436824800000}
+{illustrationId: Greenhorns-Divka_s_vlasem_medovym_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Greenhorns-Divka_s_vlasem_medovym_gpt-4o-mini_v1}
+
 {start_of_verse}
 Chci [C]vyprávět vám příběh
 o jedné dívce s vlasem medov[F]ým,

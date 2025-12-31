@@ -1,0 +1,37 @@
+songId: Alvaro_Soler-Sofia
+prompts:
+  - promptId: Alvaro_Soler-Sofia_gpt-4o-mini_v1
+    songId: Alvaro_Soler-Sofia
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures a nostalgic and bittersweet moment of
+      a young person reflecting on lost love. Include elements of childhood
+      innocence, like toys or a playground, contrasted with a sense of longing
+      and emptiness. Incorporate a figure named Sofia, depicted as a distant
+      presence, symbolizing the fading connection. Use soft, muted colors to
+      evoke a dreamlike quality.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp
+  - promptId: Alvaro_Soler-Sofia_gpt-4o-mini_v2
+    songId: Alvaro_Soler-Sofia
+    createdAt: 1754387143000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a nostalgic scene featuring a young boy gazing
+      out a window at a fading sunset, symbolizing lost childhood innocence. In
+      the foreground, include a shadowy figure of a girl named Sofia, with wings
+      that appear to be slowly disappearing, representing dreams and unfulfilled
+      wishes. The atmosphere should evoke a sense of longing and bittersweet
+      memories.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

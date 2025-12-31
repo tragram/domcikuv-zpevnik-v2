@@ -1,12 +1,14 @@
-{language: english}
-{date_added: 02-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
-{key: Em}
 {title: Pumped Up Kicks}
 {artist: Foster the People}
+{key: Em}
+{capo: 0}
+{tempo: }
 {range: f#1-f#2}
-{start_melody: h}
+{language: english}
+{startMelody: h}
+{createdAt: 1581634800000}
+{illustrationId: Foster_the_People-Pumped_Up_Kicks_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Foster_the_People-Pumped_Up_Kicks_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Em]Robert's got a quick hand[G]

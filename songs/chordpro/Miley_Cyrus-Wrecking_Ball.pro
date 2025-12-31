@@ -1,15 +1,14 @@
 {title: Wrecking Ball}
 {artist: Miley Cyrus}
-{date_added: 07-2018}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["miley_cyrus_wrecking_ball-sken.pdf", "miley_cyrus_wrecking_ball-comp.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: g1-c2}
-{start_melody: h e}
-
+{language: english}
+{startMelody: h e}
+{createdAt: 1531519200000}
+{illustrationId: Miley_Cyrus-Wrecking_Ball_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Miley_Cyrus-Wrecking_Ball_gpt-4o-mini_v1}
 
 {start_of_verse}
 We [Em]clawed, we chained our [G]hearts in vain

@@ -1,14 +1,15 @@
 {title: Rána v trávě}
 {artist: Žalman & Spol.}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_lohonka_zalman_rana_v_trave-sken.pdf", "pavel_lohonka_zalman_rana_v_trave-comp.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: g1-g2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Zalman_Spol-Rana_v_trave_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Rana_v_trave_gpt-4o-mini_v1}
+
 {start_of_chorus}
 [Ami]Každý ráno boty [G]zouval,
 [Ami]orosil si nohy v [G]trávě,

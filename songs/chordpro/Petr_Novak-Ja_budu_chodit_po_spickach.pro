@@ -1,14 +1,15 @@
 {title: Já budu chodit po špičkách}
 {artist: Petr Novák}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["petr_novak_ja_budu_chodit_po_spickach-sken.pdf", "petr_novak_ja_budu_chodit_po_spickach-comp.pdf"]}
-{capo: 0}
 {key: }
+{capo: 0}
 {tempo: }
 {range: d1-h1}
-{start_melody: a g f#}
+{language: czech}
+{startMelody: a g f#}
+{createdAt: 1436824800000}
+{illustrationId: Petr_Novak-Ja_budu_chodit_po_spickach_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Petr_Novak-Ja_budu_chodit_po_spickach_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Zavři pusu [C]a jdi spát,
 [Ami]vždyť už bude [D]brzo den,

@@ -1,14 +1,14 @@
 {title: Friends Theme in Minor}
 {artist: Barenaked Ladies/Chase Holfelder}
-{date_added: 03-2025}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: }
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
-{start_melody: h e f# a}
 {range: h1-d2}
+{language: english}
+{startMelody: h e f# a}
+{createdAt: 1741906800000}
+{illustrationId: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Em]So no one [C]told you life was

@@ -1,0 +1,35 @@
+songId: Argema-Tohle_je_raj
+prompts:
+  - promptId: Argema-Tohle_je_raj_gpt-4o-mini_v1
+    songId: Argema-Tohle_je_raj
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dreamy, romantic scene featuring a couple in a
+      mystical garden at night. The woman, with an air of mystery, hesitates at
+      a doorway surrounded by shadows, while the man, gentle and inviting,
+      reaches out to her with a hopeful expression. Soft, glowing lights and
+      ethereal flowers create a fairytale atmosphere, emphasizing the themes of
+      longing, love, and the allure of a paradise waiting to be explored
+      together.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp
+  - promptId: Argema-Tohle_je_raj_gpt-4o-mini_v2
+    songId: Argema-Tohle_je_raj
+    createdAt: 1754387143000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dreamy, romantic scene in a mystical garden at
+      twilight. A couple stands close together, with one person reaching out to
+      hold the other's hand, their eyes locked in a tender gaze. Surround them
+      with soft, glowing lights and vibrant flowers, capturing the essence of a
+      fairytale moment. The atmosphere should feel enchanting and inviting, as
+      if they are on the brink of a beautiful connection.
+    illustrations: []

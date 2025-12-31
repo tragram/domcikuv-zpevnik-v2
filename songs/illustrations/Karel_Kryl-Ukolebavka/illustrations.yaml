@@ -1,0 +1,19 @@
+songId: Karel_Kryl-Ukolebavka
+prompts:
+  - promptId: Karel_Kryl-Ukolebavka_gpt-4o-mini_v1
+    songId: Karel_Kryl-Ukolebavka
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a tender yet melancholic scene of a mother
+      gently tucking her sleeping child into bed, surrounded by blue flowers. In
+      the background, hints of a past era are visible, such as a vintage bar and
+      a shadowy figure of a father, evoking themes of nostalgia, loss, and the
+      passage of time. The atmosphere should blend warmth with a sense of
+      bittersweetness, capturing the essence of childhood innocence and the
+      looming realities of adulthood.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

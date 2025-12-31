@@ -1,15 +1,14 @@
 {title: Hádej}
 {artist: Ondřej Ruml}
-{date_added: 01-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: h1-e2}
-{start_melody: h}
-
+{language: czech}
+{startMelody: h}
+{createdAt: 1452726000000}
+{illustrationId: Ondrej_Ruml-Hadej_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Ondrej_Ruml-Hadej_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Měsíc na nebeskou [Emi]báň,

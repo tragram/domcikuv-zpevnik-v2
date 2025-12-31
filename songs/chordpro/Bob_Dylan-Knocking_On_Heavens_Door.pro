@@ -1,14 +1,17 @@
 {title: Knocking On Heaven's Door}
 {artist: Bob Dylan}
-{subtitle: }
-{language: english}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{pdf_filename: bob_dylan_knocking_on_heavens_door.pdf}
-{capo: 3}
-{range: e1-c2}
 {key: G}
-{start_melody: h}
+{capo: 3}
+{tempo: }
+{range: e1-c2}
+{language: english}
+{startMelody: h}
+{createdAt: 1436824800000}
+{illustrationId: Bob_Dylan-Knocking_On_Heavens_Door_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Bob_Dylan-Knocking_On_Heavens_Door_gpt-4o-mini_v1}
+
+{subtitle: }
+{pdf_filename: bob_dylan_knocking_on_heavens_door.pdf}
 
 {start_of_verse}
 [G]Mama take this [D]badge off of [Am7]me

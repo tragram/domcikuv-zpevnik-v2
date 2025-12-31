@@ -1,14 +1,15 @@
 {title: Veď mě dál cesto má}
 {artist: Pavel Bobek}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_bobek_ved_me_dal_cesto_ma-sken.pdf", "pavel_bobek_ved_me_dal_cesto_ma-comp.pdf"]}
-{capo: 5}
 {key: C}
+{capo: 5}
 {tempo: }
 {range: g1-a2}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1436824800000}
+{illustrationId: Pavel_Bobek-Ved_me_dal_cesto_ma_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pavel_Bobek-Ved_me_dal_cesto_ma_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Někde v dálce [Ami]cesty končí,
 [G]každá prý však [F]cíl svůj [C]skrývá,

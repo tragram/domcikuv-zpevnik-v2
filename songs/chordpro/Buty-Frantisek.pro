@@ -1,14 +1,14 @@
 {title: František}
 {artist: Buty}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["buty_frantisek-sken.pdf", "buty_frantisek-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: h1-g1}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Buty-Frantisek_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Buty-Frantisek_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]Na hladinu rybníka svítí sluníč[C]ko

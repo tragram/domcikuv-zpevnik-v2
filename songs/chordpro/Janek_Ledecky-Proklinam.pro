@@ -1,14 +1,14 @@
 {title: Proklínám}
 {artist: Janek Ledecký}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["janek_ledecky_proklinam-sken.pdf", "janek_ledecky_proklinam-comp.pdf"]}
-{capo: 3}
 {key: Em}
+{capo: 3}
 {tempo: }
 {range: f#1-c2}
-{start_melody: h c d}
+{language: czech}
+{startMelody: h c d}
+{createdAt: 1436824800000}
+{illustrationId: Janek_Ledecky-Proklinam_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Janek_Ledecky-Proklinam_gpt-4o-mini_v1}
 
 {start_of_verse}
 Prázdej [Em]byt je jako [C]past,

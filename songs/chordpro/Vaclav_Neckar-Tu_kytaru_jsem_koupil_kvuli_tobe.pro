@@ -1,14 +1,14 @@
 {title: Tu kytaru jsem koupil kvůli tobě}
 {artist: Václav Neckář}
-{date_added: 09-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["vaclav_neckar_tu_kytaru_jsem_koupil_kvuli_tobe-sken.pdf", "vaclav_neckar_tu_kytaru_jsem_koupil_kvuli_tobe-comp.pdf"]}
-{capo: 2}
 {key: C}
+{capo: 2}
 {tempo: }
 {range: g1-c#2}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1442181600000}
+{illustrationId: Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe_gpt-4o-mini_v1}
 
 {start_of_bridge: Intro}
 Jak může[C]š bejt tak krut[A7]á,

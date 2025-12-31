@@ -1,0 +1,20 @@
+songId: Blink-182-All_the_Small_Things
+prompts:
+  - promptId: Blink-182-All_the_Small_Things_gpt-4o-mini_v1
+    songId: Blink-182-All_the_Small_Things
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cozy late-night scene featuring a dimly lit
+      room with a staircase adorned with roses. Include a nostalgic vibe with a
+      small windmill in the background, symbolizing true care and companionship.
+      Capture the essence of waiting and watching, with a subtle hint of a live
+      music show atmosphere.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

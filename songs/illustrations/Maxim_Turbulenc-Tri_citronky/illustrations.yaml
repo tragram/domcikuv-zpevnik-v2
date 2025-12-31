@@ -1,0 +1,17 @@
+songId: Maxim_Turbulenc-Tri_citronky
+prompts:
+  - promptId: Maxim_Turbulenc-Tri_citronky_gpt-4o-mini_v1
+    songId: Maxim_Turbulenc-Tri_citronky
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of three cheerful lemons floating on the surface of
+      the ocean, with a vibrant coral island in the background. One lemon is
+      strumming a guitar, while a playful manatee lurks nearby, hinting at an
+      impending mischief. The scene should be colorful and whimsical, capturing
+      the light-hearted spirit of the song.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

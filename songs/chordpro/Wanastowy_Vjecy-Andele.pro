@@ -1,14 +1,15 @@
 {title: Andělé}
 {artist: Wanastowy Vjecy}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["wanastowy_vjecy_andele-sken.pdf", "wanastowy_vjecy_andele-comp.pdf"]}
-{capo: 3}
 {key: H}
+{capo: 3}
 {tempo: }
 {range: h1-a1}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1436824800000}
+{illustrationId: Wanastowy_Vjecy-Andele_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Wanastowy_Vjecy-Andele_gpt-4o-mini_v1}
+
 {start_of_verse}
 [H]Co Tě to [C#mi]hned po ránu [E]napadá
 [H]nohy, ruce, [C#mi]komu je chceš [E]dát,

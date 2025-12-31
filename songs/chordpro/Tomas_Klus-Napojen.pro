@@ -1,14 +1,15 @@
 {title: Napojen}
 {artist: Tomáš Klus}
-{date_added: 01-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["tomas_klus_napojen-sken.pdf", "tomas_klus_napojen-comp.pdf"]}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: e1-f#2}
-{start_melody: g# h}
+{language: czech}
+{startMelody: g# h}
+{createdAt: 1484348400000}
+{illustrationId: Tomas_Klus-Napojen_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Tomas_Klus-Napojen_gpt-4o-mini_v1}
+
 {start_of_verse}
 [E]Vzpomeň, jak's očima dítě[A]te
 [E]hleděl na letící ptá[H]ky,

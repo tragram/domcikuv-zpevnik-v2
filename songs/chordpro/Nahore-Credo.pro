@@ -1,16 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Credo}
 {artist: Nahoře}
-{songbooks: []}
 {key: E}
-{date_added: 07-2025}
-{language: other}
-{tempo: }
 {capo: 2}
+{tempo: }
 {range: }
-{start_melody: }
+{language: other}
+{startMelody: }
+{createdAt: 1752444000000}
+{illustrationId: Nahore-Credo_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Nahore-Credo_gpt-4o-mini_v2}
 
 {start_of_verse: Intro}
 [Ami][H][E][Ami]

@@ -1,0 +1,18 @@
+songId: Skwor-Sila_starejch_vin
+prompts:
+  - promptId: Skwor-Sila_starejch_vin_gpt-4o-mini_v2
+    songId: Skwor-Sila_starejch_vin
+    createdAt: 1763931494000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a person standing by a river at twilight,
+      reflecting on their life choices. The river symbolizes change and the
+      passage of time, while the surrounding trees represent the stability of
+      old roots. The atmosphere should convey a sense of introspection and
+      nostalgia, with hints of darkness suggesting uncertainty and fear of the
+      future.
+    illustrations:
+      - createdAt: 1763931499000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

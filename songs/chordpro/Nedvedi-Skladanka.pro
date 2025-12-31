@@ -1,14 +1,15 @@
 {title: Skládanka}
 {artist: Nedvědi}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["nedvedi_skladanka-sken.pdf", "nedvedi_skladanka-comp.pdf"]}
-{capo: 5}
 {key: G}
+{capo: 5}
 {tempo: }
 {range: d1-a2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Nedvedi-Skladanka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nedvedi-Skladanka_gpt-4o-mini_v1}
+
 {start_of_verse: V1}
 Tak od dneška [G]vím, jak zavíráš
 [Ami]oči, když pusu ti [G]dávám,

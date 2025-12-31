@@ -1,0 +1,19 @@
+songId: Epy_de_Mye-Zeny_muzu
+prompts:
+  - promptId: Epy_de_Mye-Zeny_muzu_gpt-4o-mini_v1
+    songId: Epy_de_Mye-Zeny_muzu
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the essence of longing and
+      resilience, featuring a woman standing in a cozy kitchen, looking out a
+      window with a mix of hope and sadness. The scene should convey the
+      contrast between the warmth of home and the struggles of the men who
+      venture out, symbolized by distant mountains and stormy skies. Include
+      elements that represent both the beauty and challenges of their journeys,
+      such as a collection of flowers and a pair of wings in the background.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

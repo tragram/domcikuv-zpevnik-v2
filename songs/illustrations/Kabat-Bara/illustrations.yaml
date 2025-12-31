@@ -1,0 +1,16 @@
+songId: Kabat-Bara
+prompts:
+  - promptId: Kabat-Bara_gpt-4o-mini_v1
+    songId: Kabat-Bara
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a mysterious, dark night scene featuring a
+      dancing flame surrounded by an eerie chill. Include a figure in a shadowy
+      setting, holding a rose and wearing a skin-like garment, with hints of a
+      surreal underworld and a sense of both beauty and danger.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,19 @@
+songId: Vojtech_Dyk-Alkoholicka
+prompts:
+  - promptId: Vojtech_Dyk-Alkoholicka_gpt-4o-mini_v2
+    songId: Vojtech_Dyk-Alkoholicka
+    createdAt: 1754387150000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lively, dimly lit tavern scene filled with a
+      diverse group of patrons enjoying a variety of drinks like whiskey, vodka,
+      and beer. In the foreground, a cheerful figure raises a beer mug, while in
+      the background, friends share laughter and music, with bottles lining the
+      bar. The atmosphere should be warm and inviting, capturing the essence of
+      camaraderie and revelry, with hints of playful mischief and a carefree
+      spirit.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

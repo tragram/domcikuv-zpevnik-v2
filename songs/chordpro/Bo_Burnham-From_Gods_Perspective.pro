@@ -1,14 +1,14 @@
 {title: From God's Perspective}
 {artist: Bo Burnham}
-{date_added: 07-2018}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["bo_burnham_from_gods_perspective-sken.pdf", "bo_burnham_from_gods_perspective-comp.pdf"]}
-{capo: 2}
 {key: Am}
+{capo: 2}
 {tempo: }
 {range: a1-c2}
-{start_melody: e a}
+{language: english}
+{startMelody: e a}
+{createdAt: 1531519200000}
+{illustrationId: Bo_Burnham-From_Gods_Perspective_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Bo_Burnham-From_Gods_Perspective_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]The books you think

@@ -1,15 +1,14 @@
-{date_added: 08-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["______________ari_song-sken.pdf", "______________ari_song-comp.pdf"]}
-{capo: 5}
-{key: G}
-{tempo: }
-{range: d1-a2}
-{start_melody: f#}
-
 {title: ARI song}
 {artist: Milan Prouza}
+{key: G}
+{capo: 5}
+{tempo: }
+{range: d1-a2}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1534197600000}
+{illustrationId: Milan_Prouza-ARI_song_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Milan_Prouza-ARI_song_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]Přišla za mnou moje holka,

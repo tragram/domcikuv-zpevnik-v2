@@ -1,14 +1,15 @@
 {title: Černej pasažér}
 {artist: Traband}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["traband_cernej_pasazer-sken.pdf", "traband_cernej_pasazer-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: e a}
+{language: czech}
+{startMelody: e a}
+{createdAt: 1436824800000}
+{illustrationId: Traband-Cernej_pasazer_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Traband-Cernej_pasazer_gpt-4o-mini_v1}
+
 {start_of_verse}
 Mám [Ami]kufr plnej přebytečnejch [E]krámů
 a mapu zabalenou do plát[Ami]na.

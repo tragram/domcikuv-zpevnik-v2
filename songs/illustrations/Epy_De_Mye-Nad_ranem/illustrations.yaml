@@ -1,0 +1,18 @@
+songId: Epy_De_Mye-Nad_ranem
+prompts:
+  - promptId: Epy_De_Mye-Nad_ranem_gpt-4o-mini_v1
+    songId: Epy_De_Mye-Nad_ranem
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a gritty urban scene at dawn, featuring a
+      weary figure surrounded by symbols of debt and struggle, such as papers,
+      money, and shadows of danger. The atmosphere should convey tension and
+      darkness, with hints of a neon-lit city in the background, reflecting the
+      weight of life's burdens and the fleeting nature of trust and
+      relationships.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

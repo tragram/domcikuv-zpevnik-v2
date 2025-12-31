@@ -1,0 +1,21 @@
+songId: Curly_Strings-Kauges_Kulas
+prompts:
+  - promptId: Curly_Strings-Kauges_Kulas_gpt-4o-mini_v1
+    songId: Curly_Strings-Kauges_Kulas
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      The song describes a nostalgic summer spent in a remote village at a
+      grandmother's house, highlighting the simplicity and isolation of rural
+      life. The narrator longs for youthful experiences, running to the beach to
+      sunbathe and play, but finds the beach deserted except for an old man. The
+      village lacks modern amenities and youth, creating a stark contrast to
+      city life. The narrator reflects on the emptiness of the beach and the
+      dirt road leading to it, but looks forward to a village party where they
+      hope to meet other young people. The imagery evokes a sense of longing for
+      connection and the bittersweet nature of rural solitude.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

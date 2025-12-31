@@ -1,0 +1,19 @@
+songId: Jaromir_Nohavica-Mam_jizvu_na_rtu
+prompts:
+  - promptId: Jaromir_Nohavica-Mam_jizvu_na_rtu_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-Mam_jizvu_na_rtu
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a weathered man with a scar on his lip, wearing
+      a soot-stained suit and a slightly worn-out hood. He stands in a bustling
+      urban environment, surrounded by hints of his past experiences: a vintage
+      tank, a newspaper with the word "l'Humanité," and a coffee cup from a
+      small café. In the background, wolves lurk in the forest, symbolizing the
+      struggles he has faced. The scene captures a mix of nostalgia, resilience,
+      and a hint of romance, reflecting the bittersweet tone of the song.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

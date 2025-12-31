@@ -1,14 +1,15 @@
 {title: Zakázané uvolnění}
 {artist: Michal Hrůza}
-{date_added: 11-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["michal_hruza_zakazane_uvolneni-sken.pdf", "michal_hruza_zakazane_uvolneni-comp.pdf", "michal_hruza_zakazane_uvolneni-gen.pdf"]}
-{capo: 5}
 {key: D}
+{capo: 5}
 {tempo: }
 {range: f#1-f#2}
-{start_melody: d d d c#}
+{language: czech}
+{startMelody: d d d c#}
+{createdAt: 1731538800000}
+{illustrationId: Michal_Hruza-Zakazane_uvolneni_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Michal_Hruza-Zakazane_uvolneni_gpt-4o-mini_v1}
+
 {start_of_verse: V1}
 [D]Někdy je to [F#]tak a nezmůžeš s tím [Hmi]nic,
 můžeš se jen [G]smát ze svých [A]plných [D]plic.

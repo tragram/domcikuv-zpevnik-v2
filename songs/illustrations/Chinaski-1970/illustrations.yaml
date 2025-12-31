@@ -1,0 +1,18 @@
+songId: Chinaski-1970
+prompts:
+  - promptId: Chinaski-1970_gpt-4o-mini_v1
+    songId: Chinaski-1970
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a nostalgic scene of a person reflecting
+      on their youth in the 1970s. Include elements symbolizing the era, such as
+      vintage clothing, retro objects, and a backdrop of a historical cityscape.
+      The atmosphere should evoke a sense of time passing, with a hint of
+      melancholy and resilience, capturing the essence of the lyrics about
+      growing up and the wisdom of past generations.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

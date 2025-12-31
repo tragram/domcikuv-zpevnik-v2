@@ -1,14 +1,15 @@
 {title: Burčák}
 {artist: Devítka}
-{date_added: 08-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["devitka_burcak-sken.pdf", "devitka_burcak-comp.pdf", "devitka_burcak-gen.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: a a g f#}
+{language: czech}
+{startMelody: a a g f#}
+{createdAt: 1471125600000}
+{illustrationId: Devitka-Burcak_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Devitka-Burcak_gpt-4o-mini_v1}
+
 {start_of_verse}
 Přiběh' mi na [D]zahradu černý kůň
 Nechal mi [Emi7]bílý pramen ve vlasech

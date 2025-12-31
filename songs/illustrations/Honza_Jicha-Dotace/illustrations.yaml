@@ -1,0 +1,20 @@
+songId: Honza_Jicha-Dotace
+prompts:
+  - promptId: Honza_Jicha-Dotace_gpt-4o-mini_v1
+    songId: Honza_Jicha-Dotace
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a gritty urban scene in Prague at night.
+      Show a weary man stumbling past a beggar on the street, with a backdrop of
+      a dimly lit bar advertising cheap vodka. In the foreground, convey a sense
+      of inner turmoil and frustration, capturing the man's conflicted emotions
+      as he thinks of his wife waiting at home, busy at her sewing machine.
+      Include elements that suggest a struggle with life’s challenges, like
+      shadows and subtle hints of money disappearing, to reflect the song's
+      themes of hardship and escapism.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,19 @@
+songId: Nezmari-Pisek
+prompts:
+  - promptId: Nezmari-Pisek_gpt-4o-mini_v1
+    songId: Nezmari-Pisek
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a person standing resiliently on a sandy beach,
+      with grains of sand slipping through their fingers, symbolizing the
+      passage of time and unfulfilled desires. In the background, depict a large
+      stone blocking a path, representing obstacles, while the ocean waves crash
+      gently, hinting at new beginnings and stories yet to unfold. The overall
+      mood should convey strength, determination, and the quest for a better
+      ending.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

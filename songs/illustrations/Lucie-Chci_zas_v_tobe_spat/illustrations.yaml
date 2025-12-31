@@ -1,0 +1,35 @@
+songId: Lucie-Chci_zas_v_tobe_spat
+prompts:
+  - promptId: Lucie-Chci_zas_v_tobe_spat_gpt-4o-mini_v1
+    songId: Lucie-Chci_zas_v_tobe_spat
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dreamy, surreal landscape where two figures
+      stand on the edge of a dark, mysterious water body, surrounded by ethereal
+      light and shadow. One figure reaches out to the other, symbolizing love
+      and longing, while dragon-like claws emerge from the depths, representing
+      hidden challenges. The sky above is filled with stars, and a sense of both
+      beauty and chaos permeates the scene, capturing the essence of love's
+      complexities and the struggle against the tides of life.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - promptId: Lucie-Chci_zas_v_tobe_spat_gpt-4o_v1
+    songId: Lucie-Chci_zas_v_tobe_spat
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o
+    text: >-
+      A surreal and intense scene, where a young couple floats through a
+      dream-like world, with wild, fantastical elements surrounding them. The
+      night sky swirls in vibrant colors, and mysterious figures loom in the
+      background. The couple is lost in each other's gaze, reflecting the
+      passionate and strange connection between them, as the world bends and
+      shifts.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: dalle3
+        filename: dalle3.webp

@@ -1,0 +1,19 @@
+songId: Jiri_Korn-Jeste_te_mam_plnou_naruc
+prompts:
+  - promptId: Jiri_Korn-Jeste_te_mam_plnou_naruc_gpt-4o-mini_v2
+    songId: Jiri_Korn-Jeste_te_mam_plnou_naruc
+    createdAt: 1754387145000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a dimly lit bedroom, where a person lies awake on a
+      bed, surrounded by soft pillows. They are holding a piece of clothing that
+      carries a faint, beautiful scent, reminiscent of a loved one. The
+      atmosphere is filled with a sense of longing and nostalgia, with shadows
+      playing on the walls, hinting at the presence of the beloved, even in
+      their absence. A window shows the first light of dawn, symbolizing hope
+      and the desire for their return.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

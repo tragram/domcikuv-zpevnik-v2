@@ -1,0 +1,19 @@
+songId: Krystof-Obchodnik_s_destem
+prompts:
+  - promptId: Krystof-Obchodnik_s_destem_gpt-4o-mini_v1
+    songId: Krystof-Obchodnik_s_destem
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the essence of longing and loss,
+      featuring a figure standing in a rain-soaked cityscape, surrounded by
+      blurred lights reminiscent of distant stars. The scene should evoke a
+      sense of passion fading away, with raindrops symbolizing lost words.
+      Include elements like suitcases filled with tenderness and hints of
+      vehicles in the background, emphasizing a journey through memory and
+      emotion.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

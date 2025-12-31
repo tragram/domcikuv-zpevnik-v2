@@ -1,14 +1,14 @@
 {title: Wind of Change}
 {artist: Scorpions}
-{date_added: 04-2017}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["scorpions_wind_of_change-sken.pdf", "scorpions_wind_of_change-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: e1-f2}
-{start_melody: g a h}
+{language: english}
+{startMelody: g a h}
+{createdAt: 1492120800000}
+{illustrationId: Scorpions-Wind_of_Change_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Scorpions-Wind_of_Change_gpt-4o-mini_v1}
 
 {start_of_verse}
 I [G]follow the [Ami]Moscow

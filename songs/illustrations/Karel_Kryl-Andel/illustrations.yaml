@@ -1,0 +1,18 @@
+songId: Karel_Kryl-Andel
+prompts:
+  - promptId: Karel_Kryl-Andel_gpt-4o-mini_v1
+    songId: Karel_Kryl-Andel
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a broken church with a box containing a damaged
+      angel, sitting beside a piece of soap. The angel gazes at a person with a
+      hint of nervousness, who holds a small perfume bottle in their hand. In
+      the background, a sky filled with birds symbolizes freedom, while the
+      person and the angel engage in a deep conversation about life and destiny.
+      The scene captures a blend of whimsy and introspection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

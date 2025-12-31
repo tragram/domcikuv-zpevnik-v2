@@ -1,14 +1,14 @@
 {title: Red Dwarf Theme}
 {artist: Howard Goodall}
-{date_added: 07-2016}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["howard_goodall_red_dwarf_theme-sken.pdf", "howard_goodall_red_dwarf_theme-comp.pdf", "howard_goodall_red_dwarf_theme-gen.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-d2}
-{start_melody: e c}
+{language: english}
+{startMelody: e c}
+{createdAt: 1468447200000}
+{illustrationId: Howard_Goodall-Red_Dwarf_Theme_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Howard_Goodall-Red_Dwarf_Theme_gpt-4o-mini_v1}
 
 {start_of_tab}
 |----------|----------|----------|

@@ -1,16 +1,14 @@
 {title: Burlaci}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_burlaci-sken.pdf", "kabat_burlaci-comp.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
-{image_model: dalle3}
-{prompt_id: v1}
-{range: c1-c2/g2}
-{start_melody: e}
+{range: c1-c2}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Burlaci_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Burlaci_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Emi]Konopný lana, tak ty už něco vyd[Hmi]rží,

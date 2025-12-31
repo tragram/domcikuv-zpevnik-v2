@@ -1,0 +1,17 @@
+songId: Waldemar_Matuska-Mile
+prompts:
+  - promptId: Waldemar_Matuska-Mile_gpt-4o-mini_v1
+    songId: Waldemar_Matuska-Mile
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a winding path through grassy fields and
+      rocky slopes, with a distant view of white crosses and faintly glowing
+      star-like lanterns in the twilight. Include elements of rain and wind
+      swirling around, symbolizing nature's mystery, alongside a figure holding
+      a flute, embodying hope and resilience amidst the journey.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

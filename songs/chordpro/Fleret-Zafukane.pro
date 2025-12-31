@@ -1,14 +1,14 @@
 {title: Zafúkané}
 {artist: Fleret}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["fkeret_zafukane-sken.pdf", "fkeret_zafukane-comp.pdf"]}
-{capo: 2}
 {key: Am}
+{capo: 2}
 {tempo: }
 {range: g1-f1}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1436824800000}
+{illustrationId: Fleret-Zafukane_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Fleret-Zafukane_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Ami]Větr sněh [Asus2]zanésl z [Ami]hor do [Asus2]polí,

@@ -1,14 +1,15 @@
 {title: Welcome to My Life}
 {artist: Simple Plan}
-{date_added: 02-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["simple_plan_welcome_to_my_life-sken.pdf", "simple_plan_welcome_to_my_life-comp.pdf", "simple_plan_welcome_to_my_life-gen.pdf"]}
-{capo: 5}
 {key: C}
+{capo: 5}
 {tempo: }
 {range: a1-g1}
-{start_melody: c d e}
+{language: english}
+{startMelody: c d e}
+{createdAt: 1423868400000}
+{illustrationId: Simple_Plan-Welcome_to_My_Life_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Simple_Plan-Welcome_to_My_Life_gpt-4o-mini_v1}
+
 {start_of_verse}
 Do you [C]ever feel like breaking down?
 Do you [Ami]ever feel out of place,

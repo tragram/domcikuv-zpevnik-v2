@@ -1,14 +1,15 @@
 {title: Hruška}
 {artist: Čechomor}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: f#1-g2}
-{start_melody: a d }
+{language: czech}
+{startMelody: a d}
+{createdAt: 1734130800000}
+{illustrationId: Cechomor-Hruska_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Cechomor-Hruska_gpt-4o-mini_v1}
+
 {start_of_verse}
 Sto[D]jí hruška v [A]širém poli
 vrš[D]ek se jí [G]zelená [A]

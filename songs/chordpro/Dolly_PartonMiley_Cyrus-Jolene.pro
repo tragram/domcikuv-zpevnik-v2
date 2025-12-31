@@ -1,14 +1,14 @@
 {title: Jolene}
 {artist: Dolly Parton/Miley Cyrus}
-{date_added: 07-2017}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["dolly_partonmiley_cyrus_jolene-sken.pdf", "dolly_partonmiley_cyrus_jolene-comp.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: 111}
 {range: c1-d2}
-{start_melody: a d}
+{language: english}
+{startMelody: a d}
+{createdAt: 1499983200000}
+{illustrationId: Dolly_PartonMiley_Cyrus-Jolene_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Dolly_PartonMiley_Cyrus-Jolene_gpt-4o-mini_v1}
 
 {start_of_chorus}
 Jo[Dm]lene, Jo[F]lene, Jo[C]lene, Jo[Dm]lene

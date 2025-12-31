@@ -1,14 +1,14 @@
 {title: Radioactive}
 {artist: Imagine Dragons}
-{date_added: 08-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["imagine_dragons_radioactive-sken.pdf", "imagine_dragons_radioactive-comp.pdf", "imagine_dragons_radioactive-gen.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: c1-d2}
-{start_melody: d a}
+{language: english}
+{startMelody: d a}
+{createdAt: 1439503200000}
+{illustrationId: Imagine_Dragons-Radioactive_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Imagine_Dragons-Radioactive_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Dmi]I'm waking [F]up to ash and [C]dust

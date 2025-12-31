@@ -1,0 +1,17 @@
+songId: Nirvana-Where_Did_You_Sleep_Last_Night
+prompts:
+  - promptId: Nirvana-Where_Did_You_Sleep_Last_Night_gpt-4o-mini_v1
+    songId: Nirvana-Where_Did_You_Sleep_Last_Night
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create a hauntingly beautiful scene set in a dark, shadowy pine forest at
+      night. Include a figure of a woman with a sorrowful expression, surrounded
+      by mist and cold winds. The atmosphere should evoke a sense of mystery and
+      melancholy, with moonlight filtering through the trees, casting eerie
+      shadows.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

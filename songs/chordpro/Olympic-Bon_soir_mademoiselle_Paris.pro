@@ -1,14 +1,15 @@
 {title: Bon soir mademoiselle Paris}
 {artist: Olympic}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["olympic_bon_soir_mademoiselle_paris-sken.pdf", "olympic_bon_soir_mademoiselle_paris-comp.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: h1-d2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Olympic-Bon_soir_mademoiselle_Paris_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Olympic-Bon_soir_mademoiselle_Paris_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Mám [E7]v kapse jeden [Ami]frank,
 jsem [G7]nejbohatší z [C]bank nad Sei[E7]nou,

@@ -1,14 +1,14 @@
-{title: Special Ed }
+{title: Special Ed}
 {artist: Stephen Lynch}
-{date_added: 07-2017}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["stephen_lynch_special_ed_-sken.pdf", "stephen_lynch_special_ed_-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: a d}
+{language: english}
+{startMelody: a d}
+{createdAt: 1499983200000}
+{illustrationId: Stephen_Lynch-Special_Ed_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Stephen_Lynch-Special_Ed_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]When I [Dsus2]was [D]a boy of [Dsus2]ten

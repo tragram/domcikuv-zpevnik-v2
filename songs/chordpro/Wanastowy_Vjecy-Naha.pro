@@ -1,14 +1,15 @@
 {title: Nahá}
 {artist: Wanastowy Vjecy}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["wanastowy_vjecy_naha-sken.pdf", "wanastowy_vjecy_naha-comp.pdf"]}
-{capo: 3}
 {key: H}
+{capo: 3}
 {tempo: }
 {range: g#1-f#1}
-{start_melody: d#}
+{language: czech}
+{startMelody: d#}
+{createdAt: 1436824800000}
+{illustrationId: Wanastowy_Vjecy-Naha_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Wanastowy_Vjecy-Naha_gpt-4o-mini_v1}
+
 {start_of_verse}
 [H]Najednou lítáš [E]nad vodou,
 [A]ne náho[E]dou a [H]včera jsi se chvěla,

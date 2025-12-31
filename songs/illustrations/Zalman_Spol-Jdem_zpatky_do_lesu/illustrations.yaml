@@ -1,0 +1,17 @@
+songId: Zalman_Spol-Jdem_zpatky_do_lesu
+prompts:
+  - promptId: Zalman_Spol-Jdem_zpatky_do_lesu_gpt-4o-mini_v1
+    songId: Zalman_Spol-Jdem_zpatky_do_lesu
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a lonely train track leading into a misty forest, with
+      a daisy and a wildflower intertwined beside the tracks. Above, clouds
+      obscure the sun, hinting at a sense of longing and nostalgia. In the
+      distance, a silhouette of a girl is seen walking away, symbolizing loss
+      and yearning for connection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,19 @@
+songId: Pokac-26
+prompts:
+  - promptId: Pokac-26_gpt-4o-mini_v1
+    songId: Pokac-26
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a 26-year-old man reflecting on life, surrounded
+      by a chaotic urban environment. He appears contemplative, with hints of
+      nostalgia and a touch of humor. Include elements like a train speeding
+      away in the background, a stack of books beside him, and a bar scene where
+      he awkwardly flirts with a bartender. The atmosphere should blend youthful
+      energy with a sense of growing up, capturing the tension between fun and
+      responsibility.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

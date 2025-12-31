@@ -1,0 +1,17 @@
+songId: Xavier_Baumaxa-Pazitka
+prompts:
+  - promptId: Xavier_Baumaxa-Pazitka_gpt-4o-mini_v1
+    songId: Xavier_Baumaxa-Pazitka
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant autumn landscape, featuring colorful
+      falling leaves and a serene pond reflecting the changing season. Include a
+      whimsical character enjoying a carefree adventure, surrounded by small
+      bags filled with herbs, symbolizing good vibes. Capture the essence of
+      nostalgia and youthful spontaneity in a warm, inviting color palette.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

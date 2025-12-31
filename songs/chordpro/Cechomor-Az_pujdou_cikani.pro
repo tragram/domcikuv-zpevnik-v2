@@ -1,17 +1,14 @@
 {title: Až půjdou cikáni}
 {artist: Čechomor}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["cechomor_az_pujdou_cikani-sken.pdf", "cechomor_az_pujdou_cikani-comp.pdf"]}
-{capo: 3}
 {key: G}
+{capo: 3}
 {tempo: }
 {range: g1-a2}
-{start_melody: h c h a}
-
-{title:Až pudou cikáni}
-{artist:Traditional}
+{language: czech}
+{startMelody: h c h a}
+{createdAt: 1436824800000}
+{illustrationId: Cechomor-Az_pujdou_cikani_gpt-4o-mini_v2_gpt-image-1-mini}
+{promptId: Cechomor-Az_pujdou_cikani_gpt-4o-mini_v2}
 
 {start_of_verse}
 [G]Až pudou [D]cikáni [G]seshora

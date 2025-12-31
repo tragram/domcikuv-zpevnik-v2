@@ -1,14 +1,15 @@
 {title: Colorado}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_colorado-sken.pdf", "kabat_colorado-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-a1}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Colorado_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Colorado_gpt-4o-mini_v1}
+
 {start_of_verse}
 Táta vžd[G]ycky říkal: hochu, žádný str[C]achy,
 jseš kovboj, v [G]Coloradu můžeš krávy [D]pást,

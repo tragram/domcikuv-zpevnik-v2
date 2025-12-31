@@ -1,14 +1,15 @@
 {title: Bára}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_bara-sken.pdf", "kabat_bara-comp.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: c1-g1}
-{start_melody: e d c d}
+{language: czech}
+{startMelody: e d c d}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Bara_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Bara_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Jenom se [Dmi]ptej
 Kolem [F]plameny tančí

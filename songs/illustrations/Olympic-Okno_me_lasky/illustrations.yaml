@@ -1,0 +1,18 @@
+songId: Olympic-Okno_me_lasky
+prompts:
+  - promptId: Olympic-Okno_me_lasky_gpt-4o-mini_v1
+    songId: Olympic-Okno_me_lasky
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a wistful, nostalgic scene featuring a closed
+      ground-floor window with soft, warm light spilling out, symbolizing love
+      and longing. Include a silhouette of a young couple outside, one gazing
+      longingly through the window, evoking themes of missed connections and
+      cherished memories. The atmosphere should be dreamy and romantic,
+      capturing the essence of youthful love.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

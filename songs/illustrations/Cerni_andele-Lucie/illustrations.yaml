@@ -1,0 +1,20 @@
+songId: Cerni_andele-Lucie
+prompts:
+  - promptId: Cerni_andele-Lucie_gpt-4o-mini_v1
+    songId: Cerni_andele-Lucie
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of dark, ethereal angels with black wings, surrounded by a
+      medieval backdrop. The scene should evoke a sense of forbidden love and
+      sensuality, with drops of something resembling blood falling from their
+      wings. Include hints of a gothic atmosphere, with shadows and a mysterious
+      aura, while featuring a central figure representing a captivating woman.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

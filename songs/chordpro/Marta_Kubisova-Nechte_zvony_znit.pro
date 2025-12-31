@@ -1,14 +1,15 @@
 {title: Nechte zvony znít}
 {artist: Marta Kubišová}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["marta_kubisova_nechte_zvony_znit-sken.pdf", "marta_kubisova_nechte_zvony_znit-comp.pdf"]}
-{capo: 5}
 {key: C}
+{capo: 5}
 {tempo: }
 {range: g1-g2}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1436824800000}
+{illustrationId: Marta_Kubisova-Nechte_zvony_znit_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Marta_Kubisova-Nechte_zvony_znit_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Bez tebe mám [G]jenom chvíli [C]dlouhou,
 naplněnou [G]spoustou divnejch [C]snů,

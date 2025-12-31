@@ -1,14 +1,15 @@
 {title: Co z tebe bude}
 {artist: Pokáč}
-{date_added: 12-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pokac_co_z_tebe_bude-sken.pdf", "pokac_co_z_tebe_bude-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: a1-a2}
-{start_melody: f# f# f# e d}
+{language: czech}
+{startMelody: f# f# f# e d}
+{createdAt: 1544742000000}
+{illustrationId: Pokac-Co_z_tebe_bude_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pokac-Co_z_tebe_bude_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Když jsem byl prcek, [Em]tak se mě všude
 [A]dospěláci ptali chlapče [D]co z tebe bude

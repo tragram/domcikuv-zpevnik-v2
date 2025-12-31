@@ -1,0 +1,18 @@
+songId: Waldemar_Matuska-Tisic_mil
+prompts:
+  - promptId: Waldemar_Matuska-Tisic_mil_gpt-4o-mini_v1
+    songId: Waldemar_Matuska-Tisic_mil
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a weary traveler on horseback, journeying
+      through a vast landscape with hints of rain and wind. In the distance,
+      depict a small, white house with a sloping roof, surrounded by a lush
+      green hillside and a serene blue pond. Include elements of nostalgia, such
+      as a faint trail of smoke rising from the chimney, symbolizing homecoming
+      and family.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

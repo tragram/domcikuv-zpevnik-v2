@@ -1,15 +1,14 @@
 {title: Ty a já}
 {artist: Kryštof}
-{date_added: 10-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["krystof_ty_a_ja-sken.pdf", "krystof_ty_a_ja-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-d3}
-{start_melody: g d}
-
+{language: czech}
+{startMelody: g d}
+{createdAt: 1444773600000}
+{illustrationId: Krystof-Ty_a_ja_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Krystof-Ty_a_ja_gpt-4o-mini_v1}
 
 {start_of_verse}
 Znám [G]milion blyštivých měst v nich milion [C]dveří

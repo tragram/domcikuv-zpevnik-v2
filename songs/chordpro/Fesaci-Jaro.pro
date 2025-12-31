@@ -1,14 +1,14 @@
 {title: Jaro}
 {artist: Fešáci}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["fesaci_jaro-sken.pdf", "fesaci_jaro-comp.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: g1-g2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Fesaci-Jaro_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Fesaci-Jaro_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]My čekali [C]jaro,

@@ -1,14 +1,15 @@
 {title: Čerešničky}
 {artist: Lidová píseň}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["lidova_pisen_ceresnicky-sken.pdf", "lidova_pisen_ceresnicky-comp.pdf"]}
-{capo: 3}
 {key: G}
+{capo: 3}
 {tempo: }
 {range: g1-a2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Lidova_pisen-Ceresnicky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Lidova_pisen-Ceresnicky_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Čerešničky, čerešničky, če[C]rešně, [G]
 vy ste sa ně [E]rozsypaly [Ami]na [G]ces[D]tě.

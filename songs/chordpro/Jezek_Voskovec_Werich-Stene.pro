@@ -1,14 +1,15 @@
 {title: Štěně}
 {artist: Ježek + Voskovec + Werich}
-{date_added: 12-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jezek__voskovec__werich_stene-sken.pdf", "jezek__voskovec__werich_stene-comp.pdf", "jezek__voskovec__werich_stene-gen.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-c2}
-{start_melody: c e g}
+{language: czech}
+{startMelody: c e g}
+{createdAt: 1481670000000}
+{illustrationId: Jezek_Voskovec_Werich-Stene_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jezek_Voskovec_Werich-Stene_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Narodilo se štěně, lidí [F]se nebál[C]o,
 𝄆 [F]se svým stínem [C]na stěně [F]to štěně

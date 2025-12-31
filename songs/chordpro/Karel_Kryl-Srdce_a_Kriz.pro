@@ -1,15 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Srdce a Kříž}
 {artist: Karel Kryl}
 {key: }
-{date_added: 07-2025}
-{language: other}
-{tempo: }
 {capo: 0}
+{tempo: }
 {range: }
-{start_melody: }
+{language: other}
+{startMelody: }
+{createdAt: 1752444000000}
+{illustrationId: Karel_Kryl-Srdce_a_Kriz_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Karel_Kryl-Srdce_a_Kriz_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Ami]Kotvu mi dala a [E7]srdce a [Ami]kříž,

@@ -1,14 +1,14 @@
 {title: Kebaby}
 {artist: Pokáč}
-{date_added: 12-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pokac_kebaby-sken.pdf", "pokac_kebaby-comp.pdf"]}
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: g1-a2}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1544742000000}
+{illustrationId: Pokac-Kebaby_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pokac-Kebaby_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]V zem křesťanů, kebaby sto[G]jí,

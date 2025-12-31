@@ -1,0 +1,18 @@
+songId: Krystof-Cesta
+prompts:
+  - promptId: Krystof-Cesta_gpt-4o-mini_v1
+    songId: Krystof-Cesta
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures a snowy, winding path leading towards
+      an uncertain destination, symbolizing the struggle between perseverance
+      and surrender. Include elements like fading footprints in the snow, a hint
+      of light breaking through clouds, and silhouettes of people in the
+      background—some following the path, others dancing joyfully, representing
+      the choice between following the crowd and pursuing individual dreams.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

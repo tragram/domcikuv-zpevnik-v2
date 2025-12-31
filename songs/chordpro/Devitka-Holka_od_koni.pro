@@ -1,14 +1,14 @@
 {title: Holka od koní}
 {artist: Devítka}
-{date_added: 08-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["devitka_holka_od_koni-sken.pdf", "devitka_holka_od_koni-comp.pdf", "devitka_holka_od_koni-gen.pdf"]}
-{capo: 2}
 {key: Em}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: g g a h}
+{language: czech}
+{startMelody: g g a h}
+{createdAt: 1471125600000}
+{illustrationId: Devitka-Holka_od_koni_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Devitka-Holka_od_koni_gpt-4o-mini_v1}
 
 {start_of_verse}
 Pro vlasy [Emi]rozcuchaný z naivních snů,

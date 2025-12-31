@@ -1,14 +1,15 @@
 {title: Papírové řetězy}
 {artist: Wabi Daněk}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["wabi_danek_papirove_retezy-sken.pdf", "wabi_danek_papirove_retezy-comp.pdf"]}
-{capo: 3}
 {key: A}
+{capo: 3}
 {tempo: }
 {range: f#1-h2}
-{start_melody: c# c# h c#}
+{language: czech}
+{startMelody: c# c# h c#}
+{createdAt: 1436824800000}
+{illustrationId: Wabi_Danek-Papirove_retezy_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Wabi_Danek-Papirove_retezy_gpt-4o-mini_v1}
+
 {start_of_verse}
 [A]Slepuje očko do očka,
 [Hmi]řetězy z papíru,

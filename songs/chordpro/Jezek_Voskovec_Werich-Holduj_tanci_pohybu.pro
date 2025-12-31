@@ -1,14 +1,14 @@
 {title: Holduj tanci, pohybu}
 {artist: Ježek + Voskovec + Werich}
-{date_added: 12-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jezek__voskovec__werich_holduj_tanci_pohybu-sken.pdf", "jezek__voskovec__werich_holduj_tanci_pohybu-comp.pdf", "jezek__voskovec__werich_holduj_tanci_pohybu-gen.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: g1-d2}
-{start_melody: d e f#}
+{language: czech}
+{startMelody: d e f#}
+{createdAt: 1481670000000}
+{illustrationId: Jezek_Voskovec_Werich-Holduj_tanci_pohybu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jezek_Voskovec_Werich-Holduj_tanci_pohybu_gpt-4o-mini_v1}
 
 {start_of_verse}
 Zhluboka [G]dýchat, zhluboka [Emi]dýchat

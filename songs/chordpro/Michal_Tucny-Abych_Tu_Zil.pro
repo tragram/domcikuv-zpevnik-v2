@@ -1,14 +1,14 @@
 {title: Abych Tu Žil}
 {artist: Michal Tučný}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["michal_tucny_abych_tu_zil-sken.pdf", "michal_tucny_abych_tu_zil-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: a1-d2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Michal_Tucny-Abych_Tu_Zil_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Michal_Tucny-Abych_Tu_Zil_gpt-4o-mini_v1}
 
 {start_of_verse: V1}
 Kapsy [C]mám, [F]abych v nich měl [C]díru

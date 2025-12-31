@@ -1,0 +1,18 @@
+songId: Jaromir_Nohavica-Vlastovko_let
+prompts:
+  - promptId: Jaromir_Nohavica-Vlastovko_let_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-Vlastovko_let
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a soaring swallow flying over the Great Wall of
+      China and the Gobi Desert, with a dreamy night sky filled with stars.
+      Incorporate elements of music, like notes or a silhouette of Beethoven,
+      and add whimsical touches like fish and flamingos in the clouds, alongside
+      a gentle figure of Mary Magdalene blowing on the swallow's feathers. The
+      scene should evoke a sense of adventure and hope.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

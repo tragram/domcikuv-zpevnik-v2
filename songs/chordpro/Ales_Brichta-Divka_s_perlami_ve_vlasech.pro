@@ -1,15 +1,14 @@
 {title: Dívka s perlami ve vlasech}
 {artist: Aleš Brichta}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["ales_brichta_divka_s_perlami_ve_vlasech-sken.pdf", "ales_brichta_divka_s_perlami_ve_vlasech-comp.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: a1-e1}
-{start_melody: e e c d}
-
+{language: czech}
+{startMelody: e e c d}
+{createdAt: 1436824800000}
+{illustrationId: Ales_Brichta-Divka_s_perlami_ve_vlasech_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Ales_Brichta-Divka_s_perlami_ve_vlasech_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Ami]Zas mě tu [G]máš,

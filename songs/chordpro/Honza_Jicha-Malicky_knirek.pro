@@ -1,17 +1,14 @@
 {title: Maličký knírek}
 {artist: Honza Jícha}
-{date_added: 08-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["honza_jicha_malicky_knirek-sken.pdf", "honza_jicha_malicky_knirek-comp.pdf", "honza_jicha_malicky_knirek-gen.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: g a g h}
-
-{title:Malíčký knírek}
-{artist:Honza Jícha}
+{language: czech}
+{startMelody: g a g h}
+{createdAt: 1471125600000}
+{illustrationId: Honza_Jicha-Malicky_knirek_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Malicky_knirek_gpt-4o-mini_v1}
 
 {start_of_tab}
 e|--------------------------------------------------------------------|

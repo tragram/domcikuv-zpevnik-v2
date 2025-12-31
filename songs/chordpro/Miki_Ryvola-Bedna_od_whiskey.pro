@@ -1,13 +1,14 @@
 {title: Bedna od whiskey}
 {artist: Miki Ryvola}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
+{key: A}
 {capo: 0}
-{key: Ami}
-{range: a1-c#2}
 {tempo: }
-{start_melody: a c e a}
+{range: a1-c#2}
+{language: czech}
+{startMelody: a c e a}
+{createdAt: 1744581600000}
+{illustrationId: Miki_Ryvola-Bedna_od_whiskey_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Miki_Ryvola-Bedna_od_whiskey_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Ami]Dneska už mi [C]fóry ňák

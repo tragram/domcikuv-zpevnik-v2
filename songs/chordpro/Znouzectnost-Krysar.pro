@@ -1,12 +1,14 @@
 {title: Krysař}
 {artist: Znouzectnost}
-{date_added: 04-2025}
-{songbooks: ["Kvítek"]}
-{language: czech}
+{key: A}
 {capo: 0}
-{key: Ami}
-{range: e1-e2}
 {tempo: }
+{range: e1-e2}
+{language: czech}
+{startMelody: }
+{createdAt: 1744581600000}
+{illustrationId: Znouzectnost-Krysar_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Znouzectnost-Krysar_gpt-4o-mini_v2}
 
 {comment: Začít pomalu zlehka a postupně zrychlovat a gradovat.}
 

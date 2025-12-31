@@ -1,14 +1,14 @@
 {title: Nagasaki Hirošima}
 {artist: Mňága a Žďorp}
-{date_added: 01-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-e2}
-{start_melody: d d d}
+{language: czech}
+{startMelody: d d d}
+{createdAt: 1736809200000}
+{illustrationId: Mnaga_a_Zdorp-Nagasaki_Hirosima_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Mnaga_a_Zdorp-Nagasaki_Hirosima_gpt-4o-mini_v1}
 
 {start_of_chorus}
 [G]Tramvají [D]dvojkou [C]jezdíval jsem - [D]do Židen[G]ic, [D][C][D]

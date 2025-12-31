@@ -1,14 +1,15 @@
 {title: Obchodník s deštěm}
 {artist: Kryštof}
-{date_added: 09-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["krstof_obchodnik_s_destem-sken.pdf", "krstof_obchodnik_s_destem-comp.pdf"]}
-{capo: 2}
 {key: G}
+{capo: 2}
 {tempo: }
 {range: h1-c2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1442181600000}
+{illustrationId: Krystof-Obchodnik_s_destem_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Krystof-Obchodnik_s_destem_gpt-4o-mini_v1}
+
 {start_of_verse}
 Jako [G]vášeň která hasne v [Emi]kouři
 namačkaná bez os[G]tychu, v zástup [Emi]živočichů

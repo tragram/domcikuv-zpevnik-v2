@@ -1,14 +1,15 @@
 {title: Jezdím bez nehod}
 {artist: Milan Chladil}
-{date_added: 04-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-d2}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1492120800000}
+{illustrationId: Milan_Chladil-Jezdim_bez_nehod_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Milan_Chladil-Jezdim_bez_nehod_gpt-4o-mini_v1}
+
 {start_of_verse}
 Dva roky [C]jezdím bez nehod,
 s větrem se honím [C#dim]o zá-[Dmi7]vod.

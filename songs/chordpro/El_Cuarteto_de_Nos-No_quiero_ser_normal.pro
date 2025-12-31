@@ -1,14 +1,15 @@
 {title: No quiero ser normal}
 {artist: El Cuarteto de Nos}
-{date_added: 03-2016}
-{songbooks: ["Domčík"]}
-{language: spanish}
-{pdf_filenames: []}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: d1-e2}
-{start_melody: f#-a}
+{language: spanish}
+{startMelody: f#-a}
+{createdAt: 1457910000000}
+{illustrationId: El_Cuarteto_de_Nos-No_quiero_ser_normal_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: El_Cuarteto_de_Nos-No_quiero_ser_normal_gpt-4o-mini_v1}
+
 {start_of_verse}
 ¿Por [D]qué tienen la teoría
 [F#]que siempre la mayoría

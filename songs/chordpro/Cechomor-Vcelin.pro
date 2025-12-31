@@ -1,14 +1,15 @@
 {title: Včelín}
 {artist: Čechomor}
-{date_added: 11-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: g1-g2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1731538800000}
+{illustrationId: Cechomor-Vcelin_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Cechomor-Vcelin_gpt-4o-mini_v1}
+
 {start_of_verse}
 𝄆 [Ami]Sousedovic Věra [G]má
 [Ami]jako žádná [G]jiná

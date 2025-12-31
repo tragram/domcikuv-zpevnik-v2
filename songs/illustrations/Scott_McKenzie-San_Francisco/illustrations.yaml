@@ -1,0 +1,17 @@
+songId: Scott_McKenzie-San_Francisco
+prompts:
+  - promptId: Scott_McKenzie-San_Francisco_gpt-4o-mini_v1
+    songId: Scott_McKenzie-San_Francisco
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant San Francisco scene in the summer,
+      featuring gentle people wearing flowers in their hair, colorful street
+      art, and a lively atmosphere filled with love and joy. Include iconic
+      landmarks like the Golden Gate Bridge in the background, with a warm,
+      sunny sky.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

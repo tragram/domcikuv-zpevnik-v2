@@ -1,14 +1,15 @@
 {title: Perfect Day}
 {artist: Trainspotting}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["trainspotting_perfect_day-sken.pdf", "trainspotting_perfect_day-comp.pdf"]}
-{capo: 2}
 {key: Am}
+{capo: 2}
 {tempo: }
 {range: g1-h2}
-{start_melody: a e}
+{language: english}
+{startMelody: a e}
+{createdAt: 1436824800000}
+{illustrationId: Trainspotting-Perfect_Day_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Trainspotting-Perfect_Day_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Am]Just a [D]perfect day,
 [G]Drink Sangria [C]in the park,

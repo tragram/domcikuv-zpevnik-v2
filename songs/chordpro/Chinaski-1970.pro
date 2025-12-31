@@ -1,14 +1,15 @@
 {title: 1970}
 {artist: Chinaski}
-{date_added: 06-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1434232800000}
+{illustrationId: Chinaski-1970_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-1970_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Nevím jestli je to [Emi]znát,
 možná by bylo lepší [F#mi]lhát,

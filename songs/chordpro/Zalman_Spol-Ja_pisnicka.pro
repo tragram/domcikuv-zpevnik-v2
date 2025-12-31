@@ -1,12 +1,14 @@
 {title: Já písnička}
 {artist: Žalman & Spol.}
-{capo: 4}
-{language: czech}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
-{range: g1-a2}
-{start_melody: a a e f e}
 {key: Am}
+{capo: 4}
+{tempo: }
+{range: g1-a2}
+{language: czech}
+{startMelody: a a e f e}
+{createdAt: 1726264800000}
+{illustrationId: Zalman_Spol-Ja_pisnicka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Ja_pisnicka_gpt-4o-mini_v1}
 
 {start_of_verse}
 To [Am]já, zrozená z nemoc[G]ných básníků,

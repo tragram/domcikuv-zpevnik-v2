@@ -1,14 +1,16 @@
 {title: I Can't Help Falling In Love With You}
 {artist: Elvis Presley}
-{language: english}
-{pdf_filename: elvis_presley_i_cant_help_falling_in_love.pdf}
-{date_added: 03-2018}
-{songbooks: ["Domčík"]}
-{capo: 2}
 {key: Cm}
-{range: g1-h2}
-{start_melody: c g}
+{capo: 2}
 {tempo: }
+{range: g1-h2}
+{language: english}
+{startMelody: c g}
+{createdAt: 1520982000000}
+{illustrationId: Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You_gpt-4o-mini_v1}
+
+{pdf_filename: elvis_presley_i_cant_help_falling_in_love.pdf}
 
 {start_of_verse}
 [C]Wise [Em]men [Am]say

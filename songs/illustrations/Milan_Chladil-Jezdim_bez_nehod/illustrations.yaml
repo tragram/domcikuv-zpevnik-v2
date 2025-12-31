@@ -1,0 +1,18 @@
+songId: Milan_Chladil-Jezdim_bez_nehod
+prompts:
+  - promptId: Milan_Chladil-Jezdim_bez_nehod_gpt-4o-mini_v1
+    songId: Milan_Chladil-Jezdim_bez_nehod
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a carefree rider on a moped, racing down a
+      winding asphalt road with the wind in their hair. The scene should capture
+      a vibrant city backdrop with a mix of urban elements and nature,
+      emphasizing speed and safety. Include details like the rider smiling,
+      navigating potholes, and a clear blue sky to evoke a sense of freedom and
+      joy.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

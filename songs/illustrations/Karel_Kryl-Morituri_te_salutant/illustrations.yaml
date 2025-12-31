@@ -1,0 +1,19 @@
+songId: Karel_Kryl-Morituri_te_salutant
+prompts:
+  - promptId: Karel_Kryl-Morituri_te_salutant_gpt-4o-mini_v1
+    songId: Karel_Kryl-Morituri_te_salutant
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a rugged, winding path made of dirt and gravel,
+      with a mystical atmosphere. Include gray streaks swirling through the air
+      and a starry sky with a Pegasus soaring above. Add elements like delicate
+      red gladiolus flowers scattered along the path, and a distant figure
+      resembling a soldier, evoking a sense of nostalgia and forgotten moments.
+      The scene should blend a sense of beauty and desolation, capturing the
+      essence of a journey through a surreal landscape.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

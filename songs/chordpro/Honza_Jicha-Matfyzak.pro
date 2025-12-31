@@ -1,14 +1,15 @@
 {title: Matfyzák}
 {artist: Honza Jícha}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["honza_jicha_matfyzak-sken.pdf", "honza_jicha_matfyzak-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Honza_Jicha-Matfyzak_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Matfyzak_gpt-4o-mini_v1}
+
 {start_of_chorus}
 Jsem [Ami]průměrný Matfyzák
 [Dmi]vím kolik, ale [Ami]nevím jak

@@ -1,14 +1,14 @@
 {title: Pramen zdraví}
 {artist: Ať žijí duchové}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["at_ziji_duchove_pramen_zdravi-sken.pdf", "at_ziji_duchove_pramen_zdravi-comp.pdf"]}
-{capo: 5}
 {key: G}
+{capo: 5}
 {tempo: }
 {range: g1-g2}
-{start_melody: d e g}
+{language: czech}
+{startMelody: d e g}
+{createdAt: 1436824800000}
+{illustrationId: At_ziji_duchove-Pramen_zdravi_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: At_ziji_duchove-Pramen_zdravi_gpt-4o-mini_v1}
 
 {start_of_verse}
 Každý [G]den, každý den,

@@ -1,0 +1,20 @@
+songId: Jezek_Voskovec_Werich-Ezop_a_brabenec
+prompts:
+  - promptId: Jezek_Voskovec_Werich-Ezop_a_brabenec_gpt-4o-mini_v1
+    songId: Jezek_Voskovec_Werich-Ezop_a_brabenec
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration featuring a wise fox named Ezop walking through a
+      vibrant forest, encountering a cheerful bird (brabenec) laughing on the
+      grass. The scene should convey a whimsical and playful atmosphere, with
+      bright colors and exaggerated expressions, capturing the essence of
+      laughter and joy amidst nature.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-schnell
+        filename: FLUX.1-schnell.webp

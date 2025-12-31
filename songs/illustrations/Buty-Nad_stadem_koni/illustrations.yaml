@@ -1,0 +1,22 @@
+songId: Buty-Nad_stadem_koni
+prompts:
+  - promptId: Buty-Nad_stadem_koni_gpt-4o-mini_v1
+    songId: Buty-Nad_stadem_koni
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a somber yet hopeful scene featuring a herd of
+      horses with their hooves ringing on the ground. In the foreground, a black
+      wagon is being pulled, with tears symbolizing loss flowing beside it. A
+      figure is whispering gently, surrounded by a serene landscape that hints
+      at a peaceful resting place by a river with a stone that cracks.
+      Incorporate elements of friendship and remembrance, evoking a sense of
+      both sorrow and love.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

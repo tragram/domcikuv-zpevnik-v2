@@ -1,14 +1,14 @@
 {title: 26}
 {artist: Pokáč}
-{date_added: 12-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pokac_26_-sken.pdf", "pokac_26_-comp.pdf"]}
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1544742000000}
+{illustrationId: Pokac-26_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pokac-26_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Právě mi odbilo 26,

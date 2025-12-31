@@ -1,14 +1,15 @@
 {title: Rád chodím na poštu}
 {artist: Pokáč}
-{date_added: 12-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pokac_rad_chodim_na_postu-sken.pdf", "pokac_rad_chodim_na_postu-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: f#1-g2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1544742000000}
+{illustrationId: Pokac-Rad_chodim_na_postu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pokac-Rad_chodim_na_postu_gpt-4o-mini_v1}
+
 {start_of_chorus: R1}
 [D]Rád chodím [A]na poštu,
 [G]nejsem tam jen [D]do počtu

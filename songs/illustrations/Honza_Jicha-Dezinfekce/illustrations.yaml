@@ -1,0 +1,17 @@
+songId: Honza_Jicha-Dezinfekce
+prompts:
+  - promptId: Honza_Jicha-Dezinfekce_gpt-4o-mini_v1
+    songId: Honza_Jicha-Dezinfekce
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant Prague skyline featuring Hradčany and
+      the Vltava River, with a surreal twist of the river flowing with cleansing
+      water. Include symbolic elements like a crown floating in the waves and
+      people in traditional attire engaging in batik art, representing hope and
+      change amidst chaos.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

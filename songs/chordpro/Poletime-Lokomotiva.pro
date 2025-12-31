@@ -1,13 +1,14 @@
 {title: Lokomotiva}
 {artist: Poletíme?}
-{language: czech}
-{capo: 0}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
-{range: h1-e2}
-{start_melody: h c d}
 {key: G}
-
+{capo: 0}
+{tempo: }
+{range: h1-e2}
+{language: czech}
+{startMelody: h c d}
+{createdAt: 1726264800000}
+{illustrationId: Poletime-Lokomotiva_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Poletime-Lokomotiva_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]Pokaždé když tě vidím, [D]vím, že by to šlo

@@ -1,0 +1,18 @@
+songId: Jaromir_Nohavica-Peterburg
+prompts:
+  - promptId: Jaromir_Nohavica-Peterburg_gpt-4o-mini_v2
+    songId: Jaromir_Nohavica-Peterburg
+    createdAt: 1765293866000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a melancholic night scene over the rooftops of
+      St. Petersburg, featuring a solitary figure sitting on a ledge with a
+      glass of vodka in hand, a revolver resting nearby. A raven perches
+      ominously above, while a stray dog searches for food below. The sky is
+      painted with the soft hues of dawn, hinting at the arrival of blind birds
+      flying in the distance, capturing a sense of sorrow and longing.
+    illustrations:
+      - createdAt: 1765293872000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,15 @@
 {title: Amerika}
 {artist: Lucie}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["lucie_amerika-sken.pdf", "lucie_amerika-comp.pdf"]}
-{capo: 3}
 {key: G}
+{capo: 3}
 {tempo: }
 {range: g1-a2}
-{start_melody: d h}
+{language: czech}
+{startMelody: d h}
+{createdAt: 1436824800000}
+{illustrationId: Lucie-Amerika_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Lucie-Amerika_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Nandej mi [D]do hlavy tvý [Ami]brouky
 A Bůh nám seber bezna[G]děj

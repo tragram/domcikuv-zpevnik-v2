@@ -1,14 +1,15 @@
 {title: Grónská písnička}
 {artist: Jaromír Nohavica}
-{date_added: 06-2010}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_gronska_pisnicka-sken.pdf", "jaromir_nohavica_gronska_pisnicka-comp.pdf"]}
-{capo: 3}
 {key: D}
+{capo: 3}
 {tempo: }
 {range: a1-h2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1276466400000}
+{illustrationId: Jaromir_Nohavica-Gronska_pisnicka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Gronska_pisnicka_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Daleko [Emi]na severu [A]je Grónská [D]zem,
 [D]žije tam [Emi]Eskymačka s [A]Eskymákem, [D]

@@ -1,0 +1,19 @@
+songId: Pokac-Mam_doma_kocku
+prompts:
+  - promptId: Pokac-Mam_doma_kocku_gpt-4o-mini_v1
+    songId: Pokac-Mam_doma_kocku
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cozy, chaotic home scene featuring a playful
+      kitten causing mischief. The kitten should be depicted playfully clawing
+      at a person's hand while a couple looks on, amused yet exasperated.
+      Include elements like a window with snow outside, a litter box in the
+      corner, and signs of a messy living space, like scattered toys and a
+      scratched-up sofa. The overall mood should be lighthearted and humorous,
+      capturing the joys and challenges of pet ownership.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

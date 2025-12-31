@@ -1,0 +1,19 @@
+songId: Zalman_Spol-Vojacek_z_Moorlough_Shore
+prompts:
+  - promptId: Zalman_Spol-Vojacek_z_Moorlough_Shore_gpt-4o-mini_v1
+    songId: Zalman_Spol-Vojacek_z_Moorlough_Shore
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a mystical Irish landscape at dawn, featuring a
+      white house with a hundred gates, where the sun meets the moon. Include
+      serene rivers, lush green grass, and distant mountains. In the foreground,
+      depict a young soldier with a longing expression, surrounded by crows,
+      symbolizing loss and hope. The scene should evoke a sense of love,
+      nostalgia, and the beauty of Moorlough Shore, with gentle waves of the
+      Maine sea in the background.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

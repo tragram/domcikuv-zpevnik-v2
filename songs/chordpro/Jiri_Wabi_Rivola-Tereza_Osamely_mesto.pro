@@ -1,14 +1,15 @@
 {title: Tereza (Osamělý město)}
 {artist: Jiří Wabi Rivola}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jiri_wabi_rivola_tereza_osamely_mesto-sken.pdf", "jiri_wabi_rivola_tereza_osamely_mesto-comp.pdf"]}
-{capo: 2}
 {key: C}
+{capo: 2}
 {tempo: }
 {range: g1-h2}
-{start_melody: h c}
+{language: czech}
+{startMelody: h c}
+{createdAt: 1436824800000}
+{illustrationId: Jiri_Wabi_Rivola-Tereza_Osamely_mesto_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jiri_Wabi_Rivola-Tereza_Osamely_mesto_gpt-4o-mini_v1}
+
 {start_of_verse}
 Ten [C]den, co vítr [D]listí z města [G]svál,
 můj [C]džíp se vracel, [D]jako by se [Emi]bál,

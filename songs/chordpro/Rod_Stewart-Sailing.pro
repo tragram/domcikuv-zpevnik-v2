@@ -1,14 +1,15 @@
 {title: Sailing}
 {artist: Rod Stewart}
-{date_added: 05-2021}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["rod_stewart_sailing-sken.pdf", "rod_stewart_sailing-comp.pdf"]}
-{capo: 4}
 {key: C}
+{capo: 4}
 {tempo: }
 {range: g1-a2}
-{start_melody: g}
+{language: english}
+{startMelody: g}
+{createdAt: 1620943200000}
+{illustrationId: Rod_Stewart-Sailing_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Rod_Stewart-Sailing_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]I am sailing, I am [Ami]sailing
 Home [F]again. Cross the [C]sea.

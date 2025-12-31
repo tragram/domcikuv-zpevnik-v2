@@ -1,12 +1,14 @@
 {title: Säkkijärven Polkka}
 {artist: Folk}
-{language: finnish}
-{date_added: 09-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
+{tempo: }
 {range: a1-c2}
-{start_melody: e a}
+{language: finnish}
+{startMelody: e a}
+{createdAt: 1600034400000}
+{illustrationId: Folk-Sakkijarven_Polkka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Folk-Sakkijarven_Polkka_gpt-4o-mini_v1}
 
 {start_of_verse}
 On [Am]kauniina muistona [E7]Karjalan maa

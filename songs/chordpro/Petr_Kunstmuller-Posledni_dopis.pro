@@ -1,14 +1,14 @@
 {title: Poslední dopis}
 {artist: Petr Kunstmüller}
-{date_added: 07-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: 5}
 {range: g1-e1}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1531519200000}
+{illustrationId: Petr_Kunstmuller-Posledni_dopis_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Petr_Kunstmuller-Posledni_dopis_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Až budeš můj poslední dopis v poště číst

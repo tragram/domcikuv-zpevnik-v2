@@ -1,14 +1,15 @@
 {title: Čas}
 {artist: Tomáš Klus}
-{date_added: 07-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["tomas_klus_cas-sken.pdf", "tomas_klus_cas-comp.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: d1-c1}
-{start_melody: g f#}
+{language: czech}
+{startMelody: g f#}
+{createdAt: 1499983200000}
+{illustrationId: Tomas_Klus-Cas_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Tomas_Klus-Cas_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Emi]V jednu chvíli oba zavřem oči,
 [C]asi protože už není víc co říct.

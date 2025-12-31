@@ -1,14 +1,14 @@
 {title: Mama}
 {artist: Ozzy Osbourne}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["ozzy_osbourne_mama-sken.pdf", "ozzy_osbourne_mama-comp.pdf"]}
-{capo: 5}
 {key: E}
+{capo: 5}
 {tempo: }
 {range: e1-g#2}
-{start_melody: h g#}
+{language: english}
+{startMelody: h g#}
+{createdAt: 1436824800000}
+{illustrationId: Ozzy_Osbourne-Mama_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Ozzy_Osbourne-Mama_gpt-4o-mini_v1}
 
 {start_of_verse}
 [E]Times have changed and times are strange

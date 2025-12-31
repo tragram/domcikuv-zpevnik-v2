@@ -1,14 +1,15 @@
 {title: Vinaři}
 {artist: Chinaski}
-{date_added: 02-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_vinari-sken.pdf", "chinaski_vinari-comp.pdf", "chinaski_vinari-gen.pdf"]}
-{capo: 0}
 {key: A}
+{capo: 0}
 {tempo: }
 {range: a1-d2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1423868400000}
+{illustrationId: Chinaski-Vinari_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Vinari_gpt-4o-mini_v1}
+
 {start_of_verse}
 [A]Zase je pátek a [E]mám toho dost
 tak beru [G]kramle za zády [D]Černý most

@@ -1,14 +1,14 @@
 {title: Léto lásky}
 {artist: Summer All Stars}
-{date_added: 10-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["summer_all_stars_leto_lasky-sken.pdf", "summer_all_stars_leto_lasky-comp.pdf", "summer_all_stars_leto_lasky-gen.pdf"]}
-{capo: 0}
 {key: F}
+{capo: 0}
 {tempo: }
 {range: a1-d2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1476396000000}
+{illustrationId: Summer_All_Stars-Leto_lasky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Summer_All_Stars-Leto_lasky_gpt-4o-mini_v1}
 
 {start_of_verse}
 [F]Zpěv tažnejch ptáků na [Dm]pouti za snem,

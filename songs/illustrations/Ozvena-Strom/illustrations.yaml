@@ -1,0 +1,18 @@
+songId: Ozvena-Strom
+prompts:
+  - promptId: Ozvena-Strom_gpt-4o-mini_v1
+    songId: Ozvena-Strom
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a majestic, old tree standing alone by a dusty
+      country road, with a crown of wild grass around its base. In the
+      background, depict a transition from a quaint village to a bustling city,
+      with a new asphalt road cutting through the landscape. Include a nostalgic
+      atmosphere, capturing the essence of time passing and the bittersweet
+      nature of change, while a gentle breeze rustles the leaves.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

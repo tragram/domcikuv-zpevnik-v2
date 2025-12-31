@@ -1,14 +1,15 @@
 {title: Hrdinský čin}
 {artist: Pokáč}
-{date_added: 10-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pokac_hrdinsky_cin-sken.pdf", "pokac_hrdinsky_cin-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: e1-c2}
-{start_melody: e g a}
+{language: czech}
+{startMelody: e g a}
+{createdAt: 1539468000000}
+{illustrationId: Pokac-Hrdinsky_cin_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pokac-Hrdinsky_cin_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Am]Řeknu vám [C]příběh, [E]který se [Am]stal
 [Am]sním klidně [C]svůj klobouk, [E]kdybych vám [C]lhal

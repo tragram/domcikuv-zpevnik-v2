@@ -1,14 +1,15 @@
 {title: Jede jede mašinka}
 {artist: Maxim Turbulenc}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["maxim_turbulenc_jede_jede_masinka-sken.pdf", "maxim_turbulenc_jede_jede_masinka-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-a1}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1436824800000}
+{illustrationId: Maxim_Turbulenc-Jede_jede_masinka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Maxim_Turbulenc-Jede_jede_masinka_gpt-4o-mini_v1}
+
 {start_of_chorus}
 [C]Jede jede mašinka
 kouří [F]se jí z komí[C]nka

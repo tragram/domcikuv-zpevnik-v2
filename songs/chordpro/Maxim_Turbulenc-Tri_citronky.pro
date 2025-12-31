@@ -1,14 +1,15 @@
 {title: Tři citrónky}
 {artist: Maxim Turbulenc}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["maxim_turbulenc_tri_citronky-sken.pdf", "maxim_turbulenc_tri_citronky-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-g1}
-{start_melody: c e f g}
+{language: czech}
+{startMelody: c e f g}
+{createdAt: 1436824800000}
+{illustrationId: Maxim_Turbulenc-Tri_citronky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Maxim_Turbulenc-Tri_citronky_gpt-4o-mini_v1}
+
 {start_of_verse}
 V [Cmi]jedné [Es]mořské [Fmi]pustině [Gm7]
 [Cmi]ztroskotal [Es]parník v [Fmi]hlubině. [Gm7]

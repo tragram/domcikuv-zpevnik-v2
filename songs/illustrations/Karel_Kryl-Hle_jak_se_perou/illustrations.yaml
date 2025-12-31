@@ -1,0 +1,19 @@
+songId: Karel_Kryl-Hle_jak_se_perou
+prompts:
+  - promptId: Karel_Kryl-Hle_jak_se_perou_gpt-4o-mini_v1
+    songId: Karel_Kryl-Hle_jak_se_perou
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a chaotic scene in a dimly lit tavern
+      where rowdy figures engage in a fierce brawl, their expressions a mix of
+      anger and intoxication. Include elements of greed, such as coins and
+      bottles scattered around, and a sense of danger, as if the atmosphere is
+      charged with tension. The background should hint at a dark, oppressive
+      ambiance, capturing the essence of recklessness and the consequences of
+      their actions.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

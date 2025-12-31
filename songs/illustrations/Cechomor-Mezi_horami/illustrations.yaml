@@ -1,0 +1,19 @@
+songId: Cechomor-Mezi_horami
+prompts:
+  - promptId: Cechomor-Mezi_horami_gpt-4o-mini_v1
+    songId: Cechomor-Mezi_horami
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration featuring a serene mountainous landscape with a
+      green linden tree, a somber grave marked by a cross, and a sorrowful
+      woman, Anička, kneeling by the grave of Janík, surrounded by a melancholic
+      atmosphere.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

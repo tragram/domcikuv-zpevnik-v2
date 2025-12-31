@@ -1,16 +1,15 @@
 {title: Kdybych byl gay}
 {artist: Honza Jícha}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["honza_jicha_kdybych_byl_gay-sken.pdf", "honza_jicha_kdybych_byl_gay-comp.pdf"]}
-{capo: 0}
 {key: F}
-{image_model: dalle3}
-{prompt_id: v1}
+{capo: 0}
 {tempo: }
 {range: c1-d2}
-{start_melody: f}
+{language: czech}
+{startMelody: f}
+{createdAt: 1436824800000}
+{illustrationId: Honza_Jicha-Kdybych_byl_gay_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Kdybych_byl_gay_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Sedíme [G]tu, [F]příteli [G]můj
 [C]na rtech se [G]leskne [F]jelení [G]lůj

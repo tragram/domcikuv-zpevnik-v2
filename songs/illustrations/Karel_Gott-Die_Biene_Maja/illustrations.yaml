@@ -1,0 +1,19 @@
+songId: Karel_Gott-Die_Biene_Maja
+prompts:
+  - promptId: Karel_Gott-Die_Biene_Maja_gpt-4o-mini_v1
+    songId: Karel_Gott-Die_Biene_Maja
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cheerful cartoon bee named Maja, flying
+      through a vibrant flower meadow filled with colorful blossoms. The scene
+      should convey a sense of adventure and joy, with Maja showcasing her
+      playful and clever personality.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-schnell
+        filename: FLUX.1-schnell.webp

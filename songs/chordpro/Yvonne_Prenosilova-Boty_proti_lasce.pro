@@ -1,14 +1,15 @@
 {title: Boty proti lásce}
 {artist: Yvonne Přenosilová}
-{date_added: 11-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: e1-e2}
-{start_melody: e d#}
+{language: czech}
+{startMelody: e d#}
+{createdAt: 1731538800000}
+{illustrationId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-4o-mini_v1}
+
 {start_of_verse}
 [E]Zas mi říkal, že má něco pro mne,
 a to něco, to prý láska je.

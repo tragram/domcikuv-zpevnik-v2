@@ -1,14 +1,15 @@
 {title: Cikáni}
 {artist: Kamelot}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kamelot_cikani-sken.pdf", "kamelot_cikani-comp.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: a1-g1}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Kamelot-Cikani_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kamelot-Cikani_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Rozjásaným davem kráčím [G]sám,
 staccato [F]Estacada zní mi do [E7]uší,

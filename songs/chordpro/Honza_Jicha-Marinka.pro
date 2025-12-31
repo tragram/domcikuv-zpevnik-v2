@@ -1,14 +1,15 @@
 {title: Márinka}
 {artist: Honza Jícha}
-{date_added: 07-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: a1-c2}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1531519200000}
+{illustrationId: Honza_Jicha-Marinka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Marinka_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Začal jsem [D]před pár dny
 [C]chodit s dívkou [F]z kavárny,

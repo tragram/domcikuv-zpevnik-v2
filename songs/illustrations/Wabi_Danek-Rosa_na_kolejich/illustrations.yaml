@@ -1,0 +1,17 @@
+songId: Wabi_Danek-Rosa_na_kolejich
+prompts:
+  - promptId: Wabi_Danek-Rosa_na_kolejich_gpt-4o-mini_v1
+    songId: Wabi_Danek-Rosa_na_kolejich
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a nostalgic train station at dawn, with shadows
+      creeping along the tracks. A mysterious bird or cloud hovers above, while
+      a lone traveler wipes dew from the railway. Include elements like
+      telegraph wires and a sense of journey, capturing the essence of wandering
+      and the blues of life.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

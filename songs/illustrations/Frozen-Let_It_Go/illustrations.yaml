@@ -1,0 +1,17 @@
+songId: Frozen-Let_It_Go
+prompts:
+  - promptId: Frozen-Let_It_Go_gpt-4o-mini_v1
+    songId: Frozen-Let_It_Go
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a powerful ice queen standing on a snowy mountain peak,
+      surrounded by swirling snowflakes and a fierce winter storm. She exudes
+      strength and freedom, with a determined expression, as the cold winds whip
+      around her. The backdrop features a vast, icy landscape under a starry
+      night sky, symbolizing her liberation from the past.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

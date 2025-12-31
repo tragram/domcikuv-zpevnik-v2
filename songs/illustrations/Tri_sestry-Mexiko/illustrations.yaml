@@ -1,0 +1,18 @@
+songId: Tri_sestry-Mexiko
+prompts:
+  - promptId: Tri_sestry-Mexiko_gpt-4o-mini_v2
+    songId: Tri_sestry-Mexiko
+    createdAt: 1754387149000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant Mexican landscape featuring a
+      sun-soaked ranch scene. In the foreground, depict a man wearing a large
+      sombrero, holding a piña colada, with a playful donkey named Pedro nearby.
+      Include cacti scattered around, and in the background, show a charming
+      adobe house with a beautiful woman waiting. Capture the essence of warmth,
+      adventure, and romance, with a hint of a lively fiesta atmosphere.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

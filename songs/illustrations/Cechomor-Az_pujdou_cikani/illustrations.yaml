@@ -1,0 +1,39 @@
+songId: Cechomor-Az_pujdou_cikani
+prompts:
+  - promptId: Cechomor-Az_pujdou_cikani_gpt-4o-mini_v1
+    songId: Cechomor-Az_pujdou_cikani
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a whimsical scene featuring a group of
+      colorful, traditional Romani characters playfully arguing over a unique
+      doll. In the background, a broken bridge symbolizes a sense of loss or
+      hardship, while a lively village setting hints at a wedding celebration in
+      the distance. The overall mood should be light-hearted and humorous,
+      capturing the playful essence of the song.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp
+  - promptId: Cechomor-Az_pujdou_cikani_gpt-4o-mini_v2
+    songId: Cechomor-Az_pujdou_cikani
+    createdAt: 1762721489000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant, colorful scene depicting a
+      traditional Romani gathering in a rural setting. In the foreground, a
+      playful character with a cheeky expression is holding a unique, whimsical
+      doll, while a group of Romani musicians play lively instruments nearby. In
+      the background, a rustic wooden bridge is partially broken, hinting at a
+      recent mishap, and the landscape features lush greenery and a serene
+      river, capturing a sense of community and celebration amidst the
+      challenges.
+    illustrations:
+      - createdAt: 1762721545000
+        imageModel: gpt-image-1-mini
+        filename: gpt-image-1-mini.webp

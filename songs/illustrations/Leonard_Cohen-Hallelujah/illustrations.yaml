@@ -1,0 +1,18 @@
+songId: Leonard_Cohen-Hallelujah
+prompts:
+  - promptId: Leonard_Cohen-Hallelujah_gpt-4o-mini_v1
+    songId: Leonard_Cohen-Hallelujah
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a melancholic king seated in a dimly lit room,
+      surrounded by broken musical instruments, with a faint glow of moonlight
+      shining through a window. Include a figure of a beautiful woman in the
+      shadows, symbolizing temptation and loss. The atmosphere should evoke a
+      sense of longing and spiritual struggle, with musical notes floating in
+      the air, representing the "Hallelujah" theme.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

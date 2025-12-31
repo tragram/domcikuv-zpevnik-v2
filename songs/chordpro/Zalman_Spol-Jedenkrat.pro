@@ -1,14 +1,14 @@
 {title: Jedenkrát}
 {artist: Žalman & Spol.}
-{date_added: 07-2013}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["vojta_zicha_jedenkrat-sken.pdf", "vojta_zicha_jedenkrat-comp.pdf"]}
-{capo: 2}
 {key: Hm}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1373752800000}
+{illustrationId: Zalman_Spol-Jedenkrat_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Jedenkrat_gpt-4o-mini_v1}
 
 {start_of_verse}
 Zase jsem [Hmi]nechal hlavu [A]bůhví kde,

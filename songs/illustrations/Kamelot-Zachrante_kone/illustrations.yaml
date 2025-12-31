@@ -1,0 +1,17 @@
+songId: Kamelot-Zachrante_kone
+prompts:
+  - promptId: Kamelot-Zachrante_kone_gpt-4o-mini_v1
+    songId: Kamelot-Zachrante_kone
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create a dramatic scene depicting a burning stable at midnight, with
+      silhouettes of horses in distress. Include a figure desperately calling
+      for help amidst the flames, with a backdrop of a dark sky and scattered
+      crows. Capture the emotion of loss and urgency, emphasizing the bond
+      between the person and the horses.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

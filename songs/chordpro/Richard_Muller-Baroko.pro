@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Baroko}
 {artist: Richard Müller}
-{songbooks: []}
 {key: Dm}
-{date_added: 05-2025}
-{language: czech}
-{tempo: }
 {capo: 0}
+{tempo: }
 {range: c1-f2}
-{start_melody: a b a}
-{pdf_filenames: []}
+{language: czech}
+{startMelody: a b a}
+{createdAt: 1747173600000}
+{illustrationId: Richard_Muller-Baroko_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Richard_Muller-Baroko_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Dmi]Schoulené holky [C]spí nahé

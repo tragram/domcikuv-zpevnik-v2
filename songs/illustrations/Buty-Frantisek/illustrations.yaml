@@ -1,0 +1,20 @@
+songId: Buty-Frantisek
+prompts:
+  - promptId: Buty-Frantisek_gpt-4o-mini_v1
+    songId: Buty-Frantisek
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene pond reflecting the sun, surrounded by
+      a dense circle of tall poplar trees. In the foreground, depict a kind man,
+      František Dobrota, planting saplings with children nearby, while an
+      elderly woman’s spirit watches over them. The scene should convey
+      tranquility and the warmth of family and nature.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

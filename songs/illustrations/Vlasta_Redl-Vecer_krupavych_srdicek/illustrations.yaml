@@ -1,0 +1,19 @@
+songId: Vlasta_Redl-Vecer_krupavych_srdicek
+prompts:
+  - promptId: Vlasta_Redl-Vecer_krupavych_srdicek_gpt-4o-mini_v1
+    songId: Vlasta_Redl-Vecer_krupavych_srdicek
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cozy, intimate evening scene: a table set with
+      a plate of heart-shaped snacks, a lit candle casting a warm glow, and a
+      glass of wine. Outside, gentle rain falls, while two figures share a
+      moment, one reaching out to touch the other's forehead. Include elements
+      of creativity, like scattered matches and a playful arrangement of small
+      hearts forming a larger heart, symbolizing connection and the beauty of
+      simple rituals.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

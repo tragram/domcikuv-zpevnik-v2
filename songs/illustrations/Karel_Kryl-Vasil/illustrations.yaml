@@ -1,0 +1,18 @@
+songId: Karel_Kryl-Vasil
+prompts:
+  - promptId: Karel_Kryl-Vasil_gpt-4o-mini_v1
+    songId: Karel_Kryl-Vasil
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical, romantic scene featuring a woman in
+      vintage fairy tale-style shoes, playfully picking raisins from pastries in
+      a cozy kitchen. Include elements like a wedding shirt being sewn, a table
+      set for a meal with quails, and a steaming cup of herbal tea with
+      mysterious herbs. The atmosphere should convey a blend of enchantment and
+      warmth, with hints of love and passion in the air.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

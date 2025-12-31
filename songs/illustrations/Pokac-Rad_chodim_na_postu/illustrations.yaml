@@ -1,0 +1,19 @@
+songId: Pokac-Rad_chodim_na_postu
+prompts:
+  - promptId: Pokac-Rad_chodim_na_postu_gpt-4o-mini_v1
+    songId: Pokac-Rad_chodim_na_postu
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical post office scene filled with
+      diverse people standing in a long queue. In the foreground, depict an
+      elderly woman at the counter with a vintage rubber stamp and an
+      old-fashioned printer. Include elements of humor, like a scratch-off
+      lottery ticket being offered to a frustrated customer. The atmosphere
+      should feel lively yet slightly chaotic, capturing the charm and quirks of
+      a busy postal experience.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

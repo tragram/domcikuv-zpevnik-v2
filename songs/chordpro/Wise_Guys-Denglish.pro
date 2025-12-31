@@ -1,14 +1,14 @@
 {title: Denglish}
 {artist: Wise Guys}
-{date_added: 12-2018}
-{songbooks: ["Domčík"]}
-{language: german}
-{pdf_filenames: ["wise_guys_denglish-sken.pdf", "wise_guys_denglish-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: a1-f#2}
-{start_melody: c c a g}
+{language: german}
+{startMelody: c c a g}
+{createdAt: 1544742000000}
+{illustrationId: Wise_Guys-Denglish_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Wise_Guys-Denglish_gpt-4o-mini_v1}
 
 {start_of_chorus}
 Oh [C]Herr, bitte gib mir

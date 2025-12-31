@@ -1,14 +1,15 @@
 {title: Popelka}
 {artist: Xindl X}
-{date_added: 10-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["xindl_x_popelka-sken.pdf", "xindl_x_popelka-comp.pdf", "xindl_x_popelka-gen.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: a1-e2}
-{start_melody: d e d}
+{language: czech}
+{startMelody: d e d}
+{createdAt: 1476396000000}
+{illustrationId: Xindl_X-Popelka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Xindl_X-Popelka_gpt-4o-mini_v1}
+
 {start_of_verse}
 Už zase [C]skončil flám,
 do vodky [Ami]džus ti dám

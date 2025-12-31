@@ -1,14 +1,15 @@
 {title: Pohoda}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_pohoda-sken.pdf", "kabat_pohoda-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
-{range: g1-b2}
-{start_melody: c}
+{range: g1-a#2}
+{language: czech}
+{startMelody: c}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Pohoda_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Pohoda_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Vezmu tě má milá [Emi]rovnou k nám
 [Ami]Kolem louky, lesy, [Emi]hejna vran

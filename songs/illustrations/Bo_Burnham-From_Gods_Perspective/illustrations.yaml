@@ -1,0 +1,23 @@
+songId: Bo_Burnham-From_Gods_Perspective
+prompts:
+  - promptId: Bo_Burnham-From_Gods_Perspective_gpt-4o-mini_v1
+    songId: Bo_Burnham-From_Gods_Perspective
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures a satirical and bold interpretation
+      of a modern, irreverent deity. The scene should depict a cosmic figure
+      lounging in a chaotic universe, surrounded by a mix of alien beings and
+      earthly symbols of various religions. The figure should have a relaxed
+      demeanor, showcasing a blend of humor and critique, while emphasizing
+      themes of individuality, morality, and the absurdity of dogma. Use vibrant
+      colors and surreal elements to highlight the contrast between divine power
+      and human folly.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

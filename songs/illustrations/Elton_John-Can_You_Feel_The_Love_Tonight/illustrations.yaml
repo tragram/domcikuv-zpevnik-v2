@@ -1,0 +1,17 @@
+songId: Elton_John-Can_You_Feel_The_Love_Tonight
+prompts:
+  - promptId: Elton_John-Can_You_Feel_The_Love_Tonight_gpt-4o-mini_v1
+    songId: Elton_John-Can_You_Feel_The_Love_Tonight
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene night scene featuring a starry sky over
+      a tranquil landscape. Include a couple, a restless warrior and a wide-eyed
+      wanderer, sharing a peaceful moment together, surrounded by nature's
+      beauty. Emphasize a sense of calmness and love, with subtle hints of
+      royalty and adventure in the background.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,14 @@
 {title: Dragostea Din Tei}
 {artist: O-Zone}
-{date_added: 08-2015}
-{songbooks: ["Domčík"]}
-{language: romanian}
-{pdf_filenames: ["ozone_dragostea_din_tei-sken.pdf", "ozone_dragostea_din_tei-comp.pdf", "ozone_dragostea_din_tei-gen.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
-{range: g1-e2/c3}
-{start_melody: c a}
+{range: g1-e2}
+{language: romanian}
+{startMelody: c a}
+{createdAt: 1439503200000}
+{illustrationId: O-Zone-Dragostea_Din_Tei_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: O-Zone-Dragostea_Din_Tei_gpt-4o-mini_v1}
 
 {start_of_bridge: Intro}
 𝄆 Ma-ia-[F]hii Ma-ia-[C]huu

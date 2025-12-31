@@ -1,14 +1,15 @@
 {title: Čekám na signál}
 {artist: Nightwork}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["nightwork_cekam_na_signal-sken.pdf", "nightwork_cekam_na_signal-comp.pdf"]}
-{capo: 4}
 {key: C}
+{capo: 4}
 {tempo: }
 {range: a1-g2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Nightwork-Cekam_na_signal_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nightwork-Cekam_na_signal_gpt-4o-mini_v1}
+
 {start_of_chorus}
 [C]Čekám [Emi]na sig[Ami]nál,
 ten z nebe [Dmi]nepřichází a

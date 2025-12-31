@@ -1,15 +1,14 @@
 {title: Měl jméno Jan}
 {artist: Alphaville}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["alphaville_mel_jmeno_jan-sken.pdf", "alphaville_mel_jmeno_jan-comp.pdf"]}
-{capo: 4}
 {key: C}
+{capo: 4}
 {tempo: }
 {range: a1-a2}
-{start_melody: g}
-
+{language: czech}
+{startMelody: g}
+{createdAt: 1436824800000}
+{illustrationId: Alphaville-Mel_jmeno_Jan_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Alphaville-Mel_jmeno_Jan_gpt-4o-mini_v2}
 
 {start_of_verse}
 [C]Chtěl by [G]žít a přitom nemůže dýcha[Ami]t

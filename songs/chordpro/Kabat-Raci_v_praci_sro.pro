@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Raci v práci s.r.o.}
 {artist: Kabát}
-{songbooks: []}
 {key: A}
-{date_added: 05-2025}
-{language: czech}
-{tempo: }
 {capo: 3}
+{tempo: }
 {range: a1-e2}
-{start_melody: c# c# c#}
-{pdf_filenames: []}
+{language: czech}
+{startMelody: c# c# c#}
+{createdAt: 1747173600000}
+{illustrationId: Kabat-Raci_v_praci_sro_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Kabat-Raci_v_praci_sro_gpt-4o-mini_v2}
 
 {start_of_verse}
 [A]Na našem [Amaj7]rybníku,

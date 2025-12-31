@@ -1,0 +1,18 @@
+songId: Ewa_Farna-Mels_me_vubec_rad
+prompts:
+  - promptId: Ewa_Farna-Mels_me_vubec_rad_gpt-4o-mini_v1
+    songId: Ewa_Farna-Mels_me_vubec_rad
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the emotional turmoil of longing and
+      uncertainty in a relationship. Depict a solitary figure standing on a
+      dimly lit street, looking up at a starry sky, with a mix of hope and
+      despair in their expression. Include elements like fading memories
+      represented by ghostly silhouettes in the background and a distant phone
+      glowing, symbolizing the desire for connection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,14 @@
 {title: Tage Wie Diese}
 {artist: Die Toten Hosen}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: german}
-{pdf_filenames: ["die_toten_hosen_tage_wie_diese-sken.pdf", "die_toten_hosen_tage_wie_diese-comp.pdf", "die_toten_hosen_tage_wie_diese-gen.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: c h}
+{language: german}
+{startMelody: c h}
+{createdAt: 1436824800000}
+{illustrationId: Die_Toten_Hosen-Tage_Wie_Diese_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Die_Toten_Hosen-Tage_Wie_Diese_gpt-4o-mini_v1}
 
 {start_of_verse}
 Ich wart seit [G]Wochen auf diesen Tag

@@ -1,0 +1,18 @@
+songId: Marsyas-S_Luisem
+prompts:
+  - promptId: Marsyas-S_Luisem_gpt-4o-mini_v1
+    songId: Marsyas-S_Luisem
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an ethereal scene depicting a person lying barefoot in lush green
+      grass, gazing up at a starry sky filled with the Milky Way. The atmosphere
+      should blend elements of fantasy, with swirling lights and shadows, and a
+      sense of connection to a mysterious figure named Luisi. Include dark
+      sunglasses reflecting the cosmos and a cocktail of colors representing
+      imagination and dreams.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

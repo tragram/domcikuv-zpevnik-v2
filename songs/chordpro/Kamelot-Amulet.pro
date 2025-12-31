@@ -1,14 +1,15 @@
 {title: Amulet}
 {artist: Kamelot}
-{date_added: 01-2011}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kamelot_amulet-sken.pdf", "kamelot_amulet-comp.pdf"]}
-{capo: 2}
 {key: G}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1294959600000}
+{illustrationId: Kamelot-Amulet_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kamelot-Amulet_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Zhasl už [Gmaj7]oheň a [G]jiskra [Gmaj7]líná
 [C]pomalu [Cmaj7]vzlétla [C]tmou, [Cmaj7]

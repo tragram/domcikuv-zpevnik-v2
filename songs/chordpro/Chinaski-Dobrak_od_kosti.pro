@@ -1,14 +1,14 @@
 {title: Dobrák od kosti}
 {artist: Chinaski}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_dobrak_od_kosti-sken.pdf", "chinaski_dobrak_od_kosti-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1436824800000}
+{illustrationId: Chinaski-Dobrak_od_kosti_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Dobrak_od_kosti_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]Má milá [A]jak ti je, tak [G]jak ti je?

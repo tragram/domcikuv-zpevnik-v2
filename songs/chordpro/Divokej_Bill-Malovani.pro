@@ -1,14 +1,14 @@
 {title: Malování}
 {artist: Divokej Bill}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: e1-e2}
-{start_melody: e e e g e}
-
+{language: czech}
+{startMelody: e e e g e}
+{createdAt: 1744581600000}
+{illustrationId: Divokej_Bill-Malovani_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Divokej_Bill-Malovani_gpt-4o-mini_v2}
 
 {start_of_verse: Intro}
 [Emi]Nesnaž se, znáš se,

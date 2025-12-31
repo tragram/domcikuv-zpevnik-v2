@@ -1,14 +1,14 @@
 {title: Královské reggae}
 {artist: Filmová hudba}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["filmova_hudba_kralovske_reggae-sken.pdf", "filmova_hudba_kralovske_reggae-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: f#1-e2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Filmova_hudba-Kralovske_reggae_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Filmova_hudba-Kralovske_reggae_gpt-4o-mini_v1}
 
 {start_of_bridge: Umbaba}
 [D]Umbabau, umbabaumbaumba

@@ -1,14 +1,15 @@
 {title: Nad ránem}
 {artist: Epy De Mye}
-{date_added: 08-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["epy_de_mye__nad_ranem-sken.pdf", "epy_de_mye__nad_ranem-comp.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: e1-c1}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1534197600000}
+{illustrationId: Epy_De_Mye-Nad_ranem_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Epy_De_Mye-Nad_ranem_gpt-4o-mini_v1}
+
 {start_of_verse}
 Zaplatil jsem [Emi]papír abych mohl [G]makat
 vydělávat [A]prachy splácet dluhy nad [Emi]ránem.

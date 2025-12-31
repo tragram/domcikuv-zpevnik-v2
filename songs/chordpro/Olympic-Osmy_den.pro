@@ -1,14 +1,14 @@
 {title: Osmý den}
 {artist: Olympic}
-{date_added: 12-2014}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 3}
 {key: D}
+{capo: 3}
 {tempo: }
 {range: a1-h2}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1418511600000}
+{illustrationId: Olympic-Osmy_den_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Olympic-Osmy_den_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]Z kraje týdne málo jsem [G]ti [D]vhod, [G][D]

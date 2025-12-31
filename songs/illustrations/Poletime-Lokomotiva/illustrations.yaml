@@ -1,0 +1,18 @@
+songId: Poletime-Lokomotiva
+prompts:
+  - promptId: Poletime-Lokomotiva_gpt-4o-mini_v1
+    songId: Poletime-Lokomotiva
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical, romantic landscape featuring a
+      vintage train rushing through a dark, starry night. Include playful
+      elements like a couple riding alongside cartoonish donkeys, a flower made
+      of chewing gum on a stick, and two yogurt cups connected by a string. In
+      the background, depict a golden pond with ducks and a festive popcorn
+      scene, symbolizing a timeless love story that defies endings.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

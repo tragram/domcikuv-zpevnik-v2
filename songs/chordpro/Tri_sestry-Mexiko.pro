@@ -1,14 +1,14 @@
 {title: Mexiko}
 {artist: Tři sestry}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: h1-g1}
-{start_melody: e}
-
+{language: czech}
+{startMelody: e}
+{createdAt: 1744581600000}
+{illustrationId: Tri_sestry-Mexiko_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Tri_sestry-Mexiko_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Ami]Kolem kaktusy

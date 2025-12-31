@@ -1,12 +1,14 @@
 {title: Pažitka}
 {artist: Xavier Baumaxa}
-{language: czech}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
-{capo: 0}
-{range: c#1-c#2}
 {key: A}
-{start_melody: e e e c# e}
+{capo: 0}
+{tempo: }
+{range: c#1-c#2}
+{language: czech}
+{startMelody: e e e c# e}
+{createdAt: 1726264800000}
+{illustrationId: Xavier_Baumaxa-Pazitka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Xavier_Baumaxa-Pazitka_gpt-4o-mini_v1}
 
 {start_of_verse}
 Krajina [A]svádí k podzimním [C#mi]výletům,

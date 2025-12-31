@@ -1,15 +1,14 @@
 {title: Tohle je ráj}
 {artist: Argema}
-{date_added: 08-2013}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["argema_tohle_je_raj-sken.pdf", "argema_tohle_je_raj-comp.pdf"]}
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: a1-e1}
-{start_melody: c}
-
+{language: czech}
+{startMelody: c}
+{createdAt: 1376431200000}
+{illustrationId: Argema-Tohle_je_raj_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Argema-Tohle_je_raj_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Před kým dveře zavíráš,

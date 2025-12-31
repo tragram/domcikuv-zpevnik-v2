@@ -1,0 +1,19 @@
+songId: Neznamy-Kriznik_Obrdzes_Reuben_James
+prompts:
+  - promptId: Neznamy-Kriznik_Obrdzes_Reuben_James_gpt-4o-mini_v2
+    songId: Neznamy-Kriznik_Obrdzes_Reuben_James
+    createdAt: 1754387148000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a heroic naval scene during World War II in the
+      Pacific. Show the USS Reuben James, a large American cruiser, bravely
+      positioned in the ocean, with its flag waving proudly against a starry
+      sky. In the foreground, depict a group of determined sailors on deck,
+      ready to face an incoming Japanese torpedo. The atmosphere should be tense
+      yet honorable, capturing the essence of bravery and sacrifice, as well as
+      the poignant reminder of the lives affected back home.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

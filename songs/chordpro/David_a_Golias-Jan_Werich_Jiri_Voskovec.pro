@@ -1,14 +1,15 @@
 {title: Jan Werich, Jiří Voskovec}
 {artist: David a Goliáš}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-e2}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1734130800000}
+{illustrationId: David_a_Golias-Jan_Werich_Jiri_Voskovec_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: David_a_Golias-Jan_Werich_Jiri_Voskovec_gpt-4o-mini_v1}
+
 {start_of_verse: Intro}
 [C]Lidi na [Ami]lidi jsou jako [F]saně, [G7]
 [C]člověk na [Ami]člověka jako [F]kat. [G7]

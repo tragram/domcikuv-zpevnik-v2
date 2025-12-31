@@ -1,14 +1,15 @@
 {title: Morituri te salutant}
 {artist: Karel Kryl}
-{date_added: 12-2010}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_morituri_te_salutant-sken.pdf", "karel_kryl_morituri_te_salutant-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1292281200000}
+{illustrationId: Karel_Kryl-Morituri_te_salutant_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Morituri_te_salutant_gpt-4o-mini_v1}
+
 {start_of_verse}
 Cesta je [Ami]prach a [G]štěrk
 a [Dmi]udusaná [Ami]hlína

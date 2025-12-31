@@ -1,14 +1,14 @@
 {title: Despacito}
 {artist: Luis Fonsi}
-{date_added: 07-2017}
-{songbooks: ["Domčík"]}
-{language: spanish}
-{pdf_filenames: ["luis_fonsi_despacito-sken.pdf", "luis_fonsi_despacito-comp.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: h1-d2}
-{start_melody: e}
+{language: spanish}
+{startMelody: e}
+{createdAt: 1499983200000}
+{illustrationId: Luis_Fonsi-Despacito_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Luis_Fonsi-Despacito_gpt-4o-mini_v1}
 
 {start_of_verse: Intro}
 [Em]Si, sabes que ya llevo rato mir[C]ándote

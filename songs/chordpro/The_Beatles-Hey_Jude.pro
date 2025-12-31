@@ -1,14 +1,15 @@
 {title: Hey Jude}
 {artist: The Beatles}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["the_beatles_hey_jude-sken.pdf", "the_beatles_hey_jude-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-c3}
-{start_melody: g e}
+{language: english}
+{startMelody: g e}
+{createdAt: 1436824800000}
+{illustrationId: The_Beatles-Hey_Jude_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: The_Beatles-Hey_Jude_gpt-4o-mini_v1}
+
 {start_of_verse}
 Hey [C]Jude don't make it [G]bad
 take a [G7]sad [G7sus4]song

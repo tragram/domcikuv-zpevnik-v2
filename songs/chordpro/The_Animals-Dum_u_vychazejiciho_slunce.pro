@@ -1,14 +1,15 @@
 {title: Dům u vycházejícího slunce}
 {artist: The Animals}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["the_animals_dum_u_vychazejiciho_slunce-sken.pdf", "the_animals_dum_u_vychazejiciho_slunce-comp.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: e1-a2}
-{start_melody: e a}
+{language: czech}
+{startMelody: e a}
+{createdAt: 1436824800000}
+{illustrationId: The_Animals-Dum_u_vychazejiciho_slunce_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: The_Animals-Dum_u_vychazejiciho_slunce_gpt-4o-mini_v1}
+
 {start_of_verse}
 Snad [Ami]znáš ten [C]dům za [D]New Orl[F]eans,
 ve [Ami]štítu [C]znak slunce [E]má,

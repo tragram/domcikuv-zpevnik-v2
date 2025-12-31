@@ -1,14 +1,15 @@
 {title: Still Loving You}
 {artist: Scorpions}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["scorpions_still_loving_you-sken.pdf", "scorpions_still_loving_you-comp.pdf"]}
-{capo: 2}
 {key: Gm}
+{capo: 2}
 {tempo: }
-{range: a1-b2}
-{start_melody: d}
+{range: a1-a#2}
+{language: english}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Scorpions-Still_Loving_You_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Scorpions-Still_Loving_You_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Gmi]Time, it needs time
 To win back your love again.

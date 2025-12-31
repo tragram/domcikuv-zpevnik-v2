@@ -1,0 +1,17 @@
+songId: Nezmari-Boure
+prompts:
+  - promptId: Nezmari-Boure_gpt-4o-mini_v1
+    songId: Nezmari-Boure
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a stormy sea with crashing waves and a distant
+      lighthouse shining a bright light. In the foreground, depict a solitary
+      figure in a small boat, braving the tumultuous waters, symbolizing
+      resilience and hope. The sky should be dark and ominous, yet a faint light
+      breaks through, representing love and support amidst the chaos.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

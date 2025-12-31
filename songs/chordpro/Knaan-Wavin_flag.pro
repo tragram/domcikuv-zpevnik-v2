@@ -1,14 +1,14 @@
 {title: Wavin' flag}
 {artist: K'naan}
-{date_added: 07-2018}
-{songbooks: ["Domčík"]}
-{language: spanish}
-{pdf_filenames: []}
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: g1-a2}
-{start_melody: e}
+{language: spanish}
+{startMelody: e}
+{createdAt: 1531519200000}
+{illustrationId: Knaan-Wavin_flag_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Knaan-Wavin_flag_gpt-4o-mini_v1}
 
 {start_of_chorus: Ooo}
 𝄆 [C]oooo,[F]ooo,[Am]ooooo[G] 𝄇

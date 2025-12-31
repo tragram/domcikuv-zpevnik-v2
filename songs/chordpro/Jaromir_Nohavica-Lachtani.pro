@@ -1,14 +1,14 @@
 {title: Lachtani}
 {artist: Jaromír Nohavica}
-{date_added: 08-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_lachtani-sken.pdf", "jaromir_nohavica_lachtani-comp.pdf", "jaromir_nohavica_lachtani-gen.pdf"]}
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: g1-g2}
-{start_melody: g e}
+{language: czech}
+{startMelody: g e}
+{createdAt: 1439503200000}
+{illustrationId: Jaromir_Nohavica-Lachtani_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Lachtani_gpt-4o-mini_v1}
 
 {start_of_chorus}
 𝄆 [C]Lach, lach, [F]jé, [C]jé [Ami]lach, lach[G], [C]jé,jé 𝄇

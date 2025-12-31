@@ -1,13 +1,15 @@
-{language: czech}
-{date_added: 11-2024}
-{songbooks: ["Domčík"]}
-{capo: 3}
-{key: C}
-{tempo: }
 {title: Rosa na kolejích}
 {artist: Wabi Daněk}
+{key: C}
+{capo: 3}
+{tempo: }
 {range: a1-a2}
-{start_melody: g g a c a}
+{language: czech}
+{startMelody: g g a c a}
+{createdAt: 1731538800000}
+{illustrationId: Wabi_Danek-Rosa_na_kolejich_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Wabi_Danek-Rosa_na_kolejich_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Tak, jako jazyk [F6]stále na[F#6]rá[G6]ží
 na vylomený [C]zub,

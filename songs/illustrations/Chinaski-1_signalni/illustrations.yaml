@@ -1,0 +1,21 @@
+songId: Chinaski-1_signalni
+prompts:
+  - promptId: Chinaski-1_signalni_gpt-4o-mini_v1
+    songId: Chinaski-1_signalni
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a contemplative figure standing at dawn,
+      reflecting on their past choices. The background features a vibrant
+      sunrise symbolizing new beginnings, with hints of a world map to represent
+      travel and experiences. Include elements of nostalgia, like musical notes
+      and a microphone, to capture the essence of singing and self-expression.
+      The atmosphere should blend hope and introspection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

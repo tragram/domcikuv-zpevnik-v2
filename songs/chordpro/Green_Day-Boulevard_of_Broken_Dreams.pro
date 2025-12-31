@@ -1,14 +1,14 @@
 {title: Boulevard of Broken Dreams}
 {artist: Green Day}
-{date_added: 08-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["green_day_boulevard_of_broken_dreams-sken.pdf", "green_day_boulevard_of_broken_dreams-comp.pdf", "green_day_boulevard_of_broken_dreams-gen.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: d}
+{language: english}
+{startMelody: d}
+{createdAt: 1439503200000}
+{illustrationId: Green_Day-Boulevard_of_Broken_Dreams_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Green_Day-Boulevard_of_Broken_Dreams_gpt-4o-mini_v1}
 
 {start_of_verse}
 I [Dm]walk a [F]lonely road

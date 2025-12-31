@@ -1,14 +1,14 @@
-{language: english}
-{date_added: 02-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
-{key: D}
 {title: 2 Atoms in a Molecule}
 {artist: Noah and the Whale}
-{range: c#1-a1}
 {key: D}
+{capo: 0}
 {tempo: }
-{start_melody: d a}
+{range: c#1-a1}
+{language: english}
+{startMelody: d a}
+{createdAt: 1581634800000}
+{illustrationId: Noah_and_the_Whale-2_Atoms_in_a_Molecule_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Noah_and_the_Whale-2_Atoms_in_a_Molecule_gpt-4o-mini_v1}
 
 {start_of_tab}
 e|--------------------------------------|

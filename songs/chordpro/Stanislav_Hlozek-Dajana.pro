@@ -1,14 +1,15 @@
 {title: Dajána}
 {artist: Stanislav Hložek}
-{date_added: 09-2010}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["stanislav_hlozek_dajana-sken.pdf", "stanislav_hlozek_dajana-comp.pdf"]}
-{capo: 3}
 {key: G}
+{capo: 3}
 {tempo: }
 {range: f#1-f#2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1284415200000}
+{illustrationId: Stanislav_Hlozek-Dajana_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Stanislav_Hlozek-Dajana_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Lidé o ní [Ami]říkají,
 že je v [F]lásce [G]nestálá,

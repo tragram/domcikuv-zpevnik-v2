@@ -1,0 +1,17 @@
+songId: Samson-Medove-Kolibana
+prompts:
+  - promptId: Samson-Medove-Kolibana_gpt-4o-mini_v1
+    songId: Samson-Medove-Kolibana
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of three playful bears with fluffy fur, peeking out
+      from behind bushes in a whimsical forest. The scene should convey a cozy,
+      nighttime atmosphere with stars twinkling above, while the bears appear
+      friendly and curious. Include elements like honey pots and a soft, warm
+      glow to emphasize the theme of warmth and love.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,13 +1,14 @@
-{language: english}
-{date_added: 02-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
-{key: Am}
 {title: Gotta Catch 'em all!}
 {artist: Pokémon}
+{key: Am}
+{capo: 0}
 {tempo: 145}
 {range: g1-c2}
-{start_melody: e}
+{language: english}
+{startMelody: e}
+{createdAt: 1581634800000}
+{illustrationId: Pokemon-Gotta_Catch_em_all_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pokemon-Gotta_Catch_em_all_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]I wanna be the [G]very best

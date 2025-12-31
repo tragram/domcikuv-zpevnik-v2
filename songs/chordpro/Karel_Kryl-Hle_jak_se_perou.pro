@@ -1,15 +1,14 @@
 {title: Hle, jak se perou}
 {artist: Karel Kryl}
-{date_added: 07-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_hle_jak_se_perou-sken.pdf", "karel_kryl_hle_jak_se_perou-comp.pdf", "karel_kryl_hle_jak_se_perou-gen.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: d1-e2}
-{start_melody: h e}
-
+{language: czech}
+{startMelody: h e}
+{createdAt: 1468447200000}
+{illustrationId: Karel_Kryl-Hle_jak_se_perou_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Hle_jak_se_perou_gpt-4o-mini_v1}
 
 {start_of_verse}
 Tak [Emi]hle, jak se [D]perou, jen [Emi]pohleďte [D]na ně,

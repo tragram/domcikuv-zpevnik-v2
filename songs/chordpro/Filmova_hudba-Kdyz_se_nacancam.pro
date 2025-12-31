@@ -1,14 +1,15 @@
 {title: Když se načančám}
 {artist: Filmová hudba}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["filmova_hudba_kdyz_se_nacancam-sken.pdf", "filmova_hudba_kdyz_se_nacancam-comp.pdf"]}
-{capo: 4}
 {key: A}
+{capo: 4}
 {tempo: }
 {range: a1-h2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Filmova_hudba-Kdyz_se_nacancam_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Filmova_hudba-Kdyz_se_nacancam_gpt-4o-mini_v1}
+
 {start_of_verse}
 [A]Rumělku ve tvá[D]řích,
 ležím v polšt[E7]ářích,

@@ -1,0 +1,18 @@
+songId: Lidova_pisen-To_ta_Helpa
+prompts:
+  - promptId: Lidova_pisen-To_ta_Helpa_gpt-4o-mini_v1
+    songId: Lidova_pisen-To_ta_Helpa
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a picturesque town named Helpa, featuring a
+      vibrant landscape with a flowing river (the Danube) and charming young
+      men. Capture a sense of longing and nostalgia, with a girl gazing towards
+      the river, symbolizing her heartache over a distant love. Include elements
+      of nature, like lush fields and gentle hills, to enhance the romantic
+      atmosphere.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,13 +1,14 @@
 {title: Bohužel}
 {artist: Divokej Bill}
-{date_added: 04-2025}
-{songbooks: ["Kvítek"]}
-{language: czech}
-{capo: 0}
 {key: A}
-
-{range: }
+{capo: 0}
 {tempo: }
+{range: }
+{language: czech}
+{startMelody: }
+{createdAt: 1744581600000}
+{illustrationId: Divokej_Bill-Bohuzel_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Divokej_Bill-Bohuzel_gpt-4o-mini_v2}
 
 {start_of_verse}
 [A]Jsou prokle[E]tý u[D]psali duši [A]ďáblu

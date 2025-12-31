@@ -1,14 +1,14 @@
 {title: V domě straší duch}
 {artist: Ježek + Voskovec + Werich}
-{date_added: 01-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jezek__voskovec__werich_v_dome_strasi_duch-sken.pdf", "jezek__voskovec__werich_v_dome_strasi_duch-comp.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: a f d}
+{language: czech}
+{startMelody: a f d}
+{createdAt: 1484348400000}
+{illustrationId: Jezek_Voskovec_Werich-V_dome_strasi_duch_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jezek_Voskovec_Werich-V_dome_strasi_duch_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Dm]Já bych vám[Dm(maj7)]nebyl sám

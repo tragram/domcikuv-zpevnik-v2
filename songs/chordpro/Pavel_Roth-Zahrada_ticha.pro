@@ -1,14 +1,15 @@
 {title: Zahrada ticha}
 {artist: Pavel Roth}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_roth_zahrada_ticha-sken.pdf", "pavel_roth_zahrada_ticha-comp.pdf"]}
-{capo: 4}
 {key: D}
+{capo: 4}
 {tempo: }
-{range: d1/c1-a1/a1}
-{start_melody: f#}
+{range: d1-a1}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1436824800000}
+{illustrationId: Pavel_Roth-Zahrada_ticha_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pavel_Roth-Zahrada_ticha_gpt-4o-mini_v1}
+
 {start_of_verse}
 Je tam brána zdoben[D]á, cestu oteví[Emi]rá,
 zahradu zele[C]nou, [G]všechno připomín[D]á.

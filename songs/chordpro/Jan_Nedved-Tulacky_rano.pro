@@ -1,14 +1,14 @@
 {title: Tulácký ráno}
 {artist: Jan Nedvěd}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jan_nedved_tulacky_rano-sken.pdf", "jan_nedved_tulacky_rano-comp.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: d1-c1}
-{start_melody: f}
+{language: czech}
+{startMelody: f}
+{createdAt: 1436824800000}
+{illustrationId: Jan_Nedved-Tulacky_rano_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jan_Nedved-Tulacky_rano_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Dmi]Posvátný je mi každý ráno,

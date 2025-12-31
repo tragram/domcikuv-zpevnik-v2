@@ -1,16 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Timshel}
 {artist: Mumford & Sons}
-{songbooks: []}
 {key: G}
-{date_added: 07-2025}
-{language: english}
-{tempo: }
 {capo: 0}
+{tempo: }
 {range: }
-{start_melody: }
+{language: english}
+{startMelody: }
+{createdAt: 1752444000000}
+{illustrationId: Mumford_Sons-Timshel_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Mumford_Sons-Timshel_gpt-4o-mini_v2}
 
 {start_of_verse}
 [G]Cold is the water
@@ -24,7 +22,8 @@ But it will not [G]steal your substance
 {start_of_chorus}
 [D]But you are not [C]alone in [G]this
 And [C]you are not [Em]alone in [G]this
-As [C]brothers we will [Dadd9]stand and we'll [G]hold [G/F#]your [Emi]hand
+As [C]brothers we will [Dadd9]stand and 
+we'll [G]hold [G/F#]your [Emi]hand
 Hold your [G]hand
 {end_of_chorus}
 

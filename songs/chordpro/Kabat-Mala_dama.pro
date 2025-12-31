@@ -1,14 +1,15 @@
 {title: Malá dáma}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_mala_dama-sken.pdf", "kabat_mala_dama-comp.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: g#1-d2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Mala_dama_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Mala_dama_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Utrhla trávu a začla [Dmi]hrát
 ta malá dáma z předměs[F]tí,

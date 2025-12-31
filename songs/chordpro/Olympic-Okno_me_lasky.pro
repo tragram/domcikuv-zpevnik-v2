@@ -1,14 +1,15 @@
 {title: Okno mé lásky}
 {artist: Olympic}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["olympic_okno_me_lasky-sken.pdf", "olympic_okno_me_lasky-comp.pdf"]}
-{capo: 2}
 {key: G}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1436824800000}
+{illustrationId: Olympic-Okno_me_lasky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Olympic-Okno_me_lasky_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Kdo tě líbá, když ne [C]já,
 [G]kdo tě hlídá, když ne [C]já,

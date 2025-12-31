@@ -1,12 +1,14 @@
 {title: Ei Suomalaiset Tanssi}
 {artist: Haloo Helsinki!}
-{language: finnish}
-{date_added: 09-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
 {key: Hm}
+{capo: 0}
+{tempo: }
 {range: h1-h2}
-{start_melody: f#}
+{language: finnish}
+{startMelody: f#}
+{createdAt: 1600034400000}
+{illustrationId: Haloo_Helsinki-Ei_Suomalaiset_Tanssi_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Haloo_Helsinki-Ei_Suomalaiset_Tanssi_gpt-4o-mini_v1}
 
 {start_of_verse}
 Kesä[Hm]lauantai [G]nyt

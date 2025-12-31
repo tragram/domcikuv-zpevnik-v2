@@ -1,14 +1,15 @@
 {title: Nedokonalý pár}
 {artist: Honza Jícha}
-{date_added: 08-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["honza_jicha_nedokonaly_par-sken.pdf", "honza_jicha_nedokonaly_par-comp.pdf", "honza_jicha_nedokonaly_par-gen.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: a1-d2}
-{start_melody: d h h h a}
+{language: czech}
+{startMelody: d h h h a}
+{createdAt: 1471125600000}
+{illustrationId: Honza_Jicha-Nedokonaly_par_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Nedokonaly_par_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]U holiče v časopise přečetla si,
 jak má správně [Ami]vypadat,

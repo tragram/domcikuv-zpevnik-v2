@@ -1,0 +1,40 @@
+songId: AG_Flek-Carpe_diem
+prompts:
+  - promptId: AG_Flek-Carpe_diem_gpt-4o-mini_v1
+    songId: AG_Flek-Carpe_diem
+    createdAt: 1754387142000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a solitary figure walking confidently along
+      train tracks under a dramatic sky, symbolizing the end of an era. The
+      scene should capture a sense of defiance and acceptance, with hints of
+      chaos in the background representing a world gone mad. Include elements
+      like a closed house in the foreground and a bowl of candy, symbolizing the
+      bittersweet nature of final moments. The atmosphere should evoke a mix of
+      nostalgia and determination, reflecting themes of carpe diem and the
+      fleeting nature of life.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp
+  - promptId: AG_Flek-Carpe_diem_gpt-4o-mini_v2
+    songId: AG_Flek-Carpe_diem
+    createdAt: 1754387142000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a solitary figure walking confidently along
+      train tracks under a dramatic sky, symbolizing the last day of a chaotic
+      world. The scene captures a sense of defiance, with the figure ignoring a
+      red signal and a distant view of a bustling city. Surround the figure with
+      hints of nostalgia, like a bowl of candy and a vinyl record of Jethro
+      Tull, representing fleeting moments and the essence of living in the
+      present.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

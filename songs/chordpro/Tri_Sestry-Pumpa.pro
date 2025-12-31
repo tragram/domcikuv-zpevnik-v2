@@ -1,14 +1,15 @@
 {title: Pumpa}
 {artist: Tři Sestry}
-{date_added: 10-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["tri_sestry_pumpa-sken.pdf", "tri_sestry_pumpa-comp.pdf"]}
-{capo: 3}
 {key: Hm}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: f# d h}
+{language: czech}
+{startMelody: f# d h}
+{createdAt: 1539468000000}
+{illustrationId: Tri_Sestry-Pumpa_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Tri_Sestry-Pumpa_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Hmi]Na dálnici [G]prázdný mžourám z oken
 [Hmi]odbila půlnoc [G]a dochází mi palivo

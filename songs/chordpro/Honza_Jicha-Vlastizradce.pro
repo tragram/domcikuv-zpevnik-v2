@@ -1,14 +1,15 @@
 {title: Vlastizrádce}
 {artist: Honza Jícha}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["honza_jicha_vlastizradce-sken.pdf", "honza_jicha_vlastizradce-comp.pdf"]}
-{capo: 4}
 {key: Am}
+{capo: 4}
 {tempo: }
 {range: g#1-e1}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Honza_Jicha-Vlastizradce_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Vlastizradce_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Přikládám [Dmi]do ohně
 [Ami]celou čes[E]kou ústa[Ami]vu

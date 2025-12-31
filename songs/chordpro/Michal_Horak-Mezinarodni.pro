@@ -1,14 +1,14 @@
 {title: Mezinárodní}
 {artist: Michal Horák}
-{date_added: 10-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["michal_horak_mezinarodni-sken.pdf", "michal_horak_mezinarodni-comp.pdf"]}
-{capo: 0}
 {key: Hm}
+{capo: 0}
 {tempo: }
 {range: h1-d#2}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1539468000000}
+{illustrationId: Michal_Horak-Mezinarodni_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Michal_Horak-Mezinarodni_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Hmi]Každou sobotu [D]dole v hospodě

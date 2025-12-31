@@ -1,14 +1,14 @@
 {title: Mr. Tambourine Man}
 {artist: Bob Dylan}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["bob_dylan_mr_tambourine_man-sken.pdf", "bob_dylan_mr_tambourine_man-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: d}
+{language: english}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Bob_Dylan-Mr_Tambourine_Man_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Bob_Dylan-Mr_Tambourine_Man_gpt-4o-mini_v1}
 
 {start_of_chorus}
 [G]Hey! Mr. [A]Tambourine Man,

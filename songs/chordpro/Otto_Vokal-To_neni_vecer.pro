@@ -1,14 +1,14 @@
 {title: To není večer}
 {artist: Otto Vokál}
-{date_added: 08-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["otto_vokal_to_neni_vecer-sken.pdf", "otto_vokal_to_neni_vecer-comp.pdf", "otto_vokal_to_neni_vecer-gen.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: a1-a2}
-{start_melody: a d}
+{language: czech}
+{startMelody: a d}
+{createdAt: 1439503200000}
+{illustrationId: Otto_Vokal-To_neni_vecer_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Otto_Vokal-To_neni_vecer_gpt-4o-mini_v1}
 
 {start_of_verse}
 Na [Dmi]černý vlajce lebka, [C]pod ní hnát a [Dmi]hnát.

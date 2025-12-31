@@ -1,0 +1,17 @@
+songId: Kabat-Corrida
+prompts:
+  - promptId: Kabat-Corrida_gpt-4o-mini_v1
+    songId: Kabat-Corrida
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration capturing the vibrant essence of a Spanish fiesta,
+      featuring a lively scene with castanets, flamenco dancers, and the sun
+      setting over Madrid. Include elements like wine glasses, roses, and a
+      bullfighter in traditional attire, all set against a backdrop of a
+      bustling street filled with music and celebration.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

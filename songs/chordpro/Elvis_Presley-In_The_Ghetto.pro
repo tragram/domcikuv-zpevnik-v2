@@ -1,14 +1,15 @@
 {title: In The Ghetto}
 {artist: Elvis Presley}
-{date_added: 03-2018}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["elvis_presley_in_the_ghetto-sken.pdf", "elvis_presley_in_the_ghetto-comp.pdf"]}
-{capo: 2}
 {key: A}
+{capo: 2}
 {tempo: }
 {range: a1-c#2}
-{start_melody: a}
+{language: english}
+{startMelody: a}
+{createdAt: 1520982000000}
+{illustrationId: Elvis_Presley-In_The_Ghetto_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Elvis_Presley-In_The_Ghetto_gpt-4o-mini_v1}
+
 {start_of_verse}
 [A]As the snow flies
 On a [C#mi7]cold and grey Chicago morning

@@ -1,15 +1,14 @@
 {title: Die Biene Maja}
 {artist: Karel Gott}
-{date_added: 07-2018}
-{songbooks: ["Domčík"]}
-{language: german}
-{pdf_filenames: ["karel_gott_die_biene_maja-sken.pdf", "karel_gott_die_biene_maja-comp.pdf"]}
-{image_model: FLUX.1-schnell}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: a1-f#2}
-{start_melody: a d f# h}
+{language: german}
+{startMelody: a d f# h}
+{createdAt: 1531519200000}
+{illustrationId: Karel_Gott-Die_Biene_Maja_gpt-4o-mini_v1_FLUX.1-schnell}
+{promptId: Karel_Gott-Die_Biene_Maja_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]In einem unbekannten [A]Land, [A][G#][A]

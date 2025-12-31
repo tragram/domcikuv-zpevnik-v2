@@ -1,0 +1,19 @@
+songId: Greenhorns-To_tenkrat_v_ctyricatom_patom
+prompts:
+  - promptId: Greenhorns-To_tenkrat_v_ctyricatom_patom_gpt-4o-mini_v2
+    songId: Greenhorns-To_tenkrat_v_ctyricatom_patom
+    createdAt: 1762970701000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lively scene in Plzeň, capturing a group of
+      friends gathered in a cozy living room filled with nostalgia. One friend
+      is playfully pointing to a vintage couch, while a record player spins a
+      jazz tune in the background. Outside the window, hints of a historical
+      celebration are visible, with American soldiers in WWII uniforms and local
+      women singing joyfully. The atmosphere is warm and inviting, filled with
+      memories of friendship, history, and music.
+    illustrations:
+      - createdAt: 1762970708000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,18 @@
+songId: Vlasta_Redl-Huslicky
+prompts:
+  - promptId: Vlasta_Redl-Huslicky_gpt-4o-mini_v1
+    songId: Vlasta_Redl-Huslicky
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene outdoor scene featuring a grassy area
+      at the base of a large walnut tree. Scatter blue violets among the grass,
+      and include a pair of abandoned violins resting on the ground. In the
+      background, depict a dreamy, ethereal figure of a young musician
+      peacefully asleep, hinting at a whimsical dream. The atmosphere should
+      evoke a sense of nostalgia and longing, with soft, warm colors.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

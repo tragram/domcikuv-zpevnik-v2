@@ -1,14 +1,14 @@
 {title: The Gambler}
 {artist: Kenny Rogers}
-{date_added: 02-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["kenny_rogers_the_gambler-sken.pdf", "kenny_rogers_the_gambler-comp.pdf", "kenny_rogers_the_gambler-gen.pdf"]}
-{capo: 0}
 {key: }
+{capo: 0}
 {tempo: }
 {range: h1-c#2}
-{start_melody: e e e h e}
+{language: english}
+{startMelody: e e e h e}
+{createdAt: 1423868400000}
+{illustrationId: Kenny_Rogers-The_Gambler_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kenny_Rogers-The_Gambler_gpt-4o-mini_v1}
 
 {start_of_verse}
 On a [E]warm summer's evenin'

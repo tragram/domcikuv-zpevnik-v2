@@ -1,14 +1,15 @@
 {title: Kdo vchází do tvých snů}
 {artist: Václav Neckář}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["vaclav_neckar_kdo_vchazi_do_tvych_snu-sken.pdf", "vaclav_neckar_kdo_vchazi_do_tvych_snu-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: f1-d1}
-{start_melody: g c}
+{language: czech}
+{startMelody: g c}
+{createdAt: 1436824800000}
+{illustrationId: Vaclav_Neckar-Kdo_vchazi_do_tvych_snu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Vaclav_Neckar-Kdo_vchazi_do_tvych_snu_gpt-4o-mini_v1}
+
 {start_of_verse}
 Tvůj [C]krok je lehký jako [Emi]dech,
 kudy [F]jdeš, tam začíná [G]bál,

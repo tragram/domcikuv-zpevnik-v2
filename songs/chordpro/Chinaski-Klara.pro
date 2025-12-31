@@ -1,14 +1,15 @@
 {title: Klára}
 {artist: Chinaski}
-{date_added: 10-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_klara-sken.pdf", "chinaski_klara-comp.pdf"]}
-{capo: 0}
 {key: H}
+{capo: 0}
 {tempo: }
 {range: h1-d#2}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1539468000000}
+{illustrationId: Chinaski-Klara_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Klara_gpt-4o-mini_v1}
+
 {start_of_chorus}
 𝄆 [H]Ná nanana[G#mi]nananaá aáá[E]aáa[Emi]ná 𝄇
 {end_of_chorus}

@@ -1,14 +1,14 @@
 {title: Venku je na nule}
 {artist: Chinaski}
-{date_added: 11-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_venku_je_na_nule-sken.pdf", "chinaski_venku_je_na_nule-comp.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: e1-d1}
-{start_melody: g e}
+{language: czech}
+{startMelody: g e}
+{createdAt: 1731538800000}
+{illustrationId: Chinaski-Venku_je_na_nule_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Venku_je_na_nule_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Em]Odbila [C]celá, bylo [D]čtvrt a bude [Aadd9]půl,

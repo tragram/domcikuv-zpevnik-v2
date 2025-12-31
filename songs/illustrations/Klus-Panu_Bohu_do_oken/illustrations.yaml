@@ -1,0 +1,34 @@
+songId: Klus-Panu_Bohu_do_oken
+prompts:
+  - promptId: Klus-Panu_Bohu_do_oken_gpt-4o-mini_v1
+    songId: Klus-Panu_Bohu_do_oken
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a surreal landscape inspired by the
+      lyrics, featuring a whimsical, idyllic countryside with velvet-clad
+      figures engaging in absurd activities like fishing for food scraps and
+      listening to music. Include elements of political satire, such as
+      billboards with exaggerated faces and a backdrop of contrasting poverty
+      and opulence. Capture a sense of disillusionment and irony, with dark
+      clouds looming over the vibrant scene.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - promptId: Klus-Panu_Bohu_do_oken_gpt-4o_v1
+    songId: Klus-Panu_Bohu_do_oken
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o
+    text: >-
+      A satirical depiction of a distant land beyond mountains and rivers, where
+      thieves eat stew from plastic plates with golden cards. The scene shows
+      corrupt politicians with billboards along the highway, portraying a world
+      of wealth inequality, hypocrisy, and cynicism. The imagery captures a
+      biting critique of the political system with an atmosphere of despondency.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: dalle3
+        filename: dalle3.webp

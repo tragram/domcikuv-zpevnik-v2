@@ -1,14 +1,14 @@
 {title: Hurt}
 {artist: Johnny Cash/NIN}
-{date_added: 03-2018}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["johnny_cashnin_hurt-sken.pdf", "johnny_cashnin_hurt-comp.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: g1-g2}
-{start_melody: e g}
+{language: english}
+{startMelody: e g}
+{createdAt: 1520982000000}
+{illustrationId: Johnny_CashNIN-Hurt_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Johnny_CashNIN-Hurt_gpt-4o-mini_v1}
 
 {start_of_verse}
 I [C]hurt [D]myself [Ami]today

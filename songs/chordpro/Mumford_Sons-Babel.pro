@@ -1,16 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Babel}
 {artist: Mumford & Sons}
 {key: Am}
-{date_added: 07-2025}
-{language: other}
-{tempo: }
 {capo: 2}
+{tempo: }
 {range: }
-{start_melody: }
-
+{language: other}
+{startMelody: }
+{createdAt: 1752444000000}
+{illustrationId: Mumford_Sons-Babel_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Mumford_Sons-Babel_gpt-4o-mini_v2}
 
 {comment: C6/9: prostředíček se v akordu C přesouvá na strunu G:druhý pražec v mezihře se dá místo F hrát Csus, capo 2 je originální tónina, doporučuji bez capa}
 

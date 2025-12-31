@@ -1,0 +1,18 @@
+songId: Jelen-Magdalena
+prompts:
+  - promptId: Jelen-Magdalena_gpt-4o-mini_v1
+    songId: Jelen-Magdalena
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene morning scene on a balcony, with two
+      figures sitting together. One has sparkling eyes, symbolizing hope and
+      warmth, while the other looks contemplative. Include elements like a
+      distant clock showing 9:30, a hint of winter chill, and a crossroads in
+      the background with distant church bells ringing. Capture the emotions of
+      longing, connection, and the desire for warmth in a cold world.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

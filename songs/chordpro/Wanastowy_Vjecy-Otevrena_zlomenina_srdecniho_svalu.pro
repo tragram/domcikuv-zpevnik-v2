@@ -1,14 +1,15 @@
 {title: Otevřená zlomenina srdečního svalu}
 {artist: Wanastowy Vjecy}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["wanastowy_vjecy_otevrena_zlomenina_srdecniho_svalu-sken.pdf", "wanastowy_vjecy_otevrena_zlomenina_srdecniho_svalu-comp.pdf"]}
-{capo: 5}
 {key: A}
+{capo: 5}
 {tempo: }
 {range: e1-g#2}
-{start_melody: e e e c#}
+{language: czech}
+{startMelody: e e e c#}
+{createdAt: 1436824800000}
+{illustrationId: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1}
+
 {start_of_verse}
 Jsem jako [A]vítr kterej zfoukne pírko ze tvejch dlaní,
 [E]špínu jedný noci, jako hygiena ranní

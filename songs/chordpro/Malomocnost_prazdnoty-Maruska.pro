@@ -1,14 +1,15 @@
 {title: Maruška}
 {artist: Malomocnost prázdnoty}
-{date_added: 08-2013}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["malomocnost_pazdnoty_maruska-sken.pdf", "malomocnost_pazdnoty_maruska-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: h1-g1}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1376431200000}
+{illustrationId: Malomocnost_prazdnoty-Maruska_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Malomocnost_prazdnoty-Maruska_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Na malém plácku [G]děti si hrají
 [Ami]hrají si na válku [E]všechno už mají

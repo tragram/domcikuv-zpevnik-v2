@@ -1,12 +1,14 @@
 {title: Hej sokoły}
 {artist: Folk}
-{language: polish}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
-{capo: 0}
-{range: e1-a2}
-{start_melody: a c a c e}
 {key: Am}
+{capo: 0}
+{tempo: }
+{range: e1-a2}
+{language: polish}
+{startMelody: a c a c e}
+{createdAt: 1726264800000}
+{illustrationId: Folk-Hej_sokoy_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Folk-Hej_sokoy_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]Hej, tamgdzieś znad czarnej wody

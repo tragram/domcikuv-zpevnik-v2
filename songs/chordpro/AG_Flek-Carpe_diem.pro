@@ -1,15 +1,14 @@
 {title: Carpe diem}
 {artist: AG Flek}
-{date_added: 02-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["ag_flek_carpe_diem-sken.pdf", "ag_flek_carpe_diem-comp.pdf", "ag_flek_carpe_diem-gen.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
-
 {range: g1-g2}
-{start_melody: c d e}
+{language: czech}
+{startMelody: c d e}
+{createdAt: 1423868400000}
+{illustrationId: AG_Flek-Carpe_diem_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: AG_Flek-Carpe_diem_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Ami]Nadešel asi [Dmi7]poslední den,

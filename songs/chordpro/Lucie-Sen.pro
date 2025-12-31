@@ -1,14 +1,15 @@
 {title: Sen}
 {artist: Lucie}
-{date_added: 09-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["lucie_sen-sken.pdf", "lucie_sen-comp.pdf"]}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: c#1-c#2}
-{start_melody: c# e g#}
+{language: czech}
+{startMelody: c# e g#}
+{createdAt: 1442181600000}
+{illustrationId: Lucie-Sen_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Lucie-Sen_gpt-4o-mini_v1}
+
 {start_of_verse}
 Stíny [E]dnů a snů se k obratníkům [A2]stáčí
 Ruce [E]snů černejch se snaží zakrýt [A2]oči

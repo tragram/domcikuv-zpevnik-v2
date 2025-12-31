@@ -1,14 +1,15 @@
 {title: Barbora píše z tábora}
 {artist: Svěrák & Uhlíř}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["uhlir_barbora_pise_z_tabora-sken.pdf", "uhlir_barbora_pise_z_tabora-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: c1-a1}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Sverak_Uhlir-Barbora_pise_z_tabora_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Sverak_Uhlir-Barbora_pise_z_tabora_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Maminko, tatínku, posílám Vám [A]vzpomínku
 z letního tábora, jistě víte,

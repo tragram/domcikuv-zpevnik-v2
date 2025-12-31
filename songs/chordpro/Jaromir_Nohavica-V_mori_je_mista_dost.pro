@@ -1,14 +1,15 @@
 {title: V moři je místa dost}
 {artist: Jaromír Nohavica}
-{date_added: 01-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_v_mori_je_mista_dost-sken.pdf", "jaromir_nohavica_v_mori_je_mista_dost-comp.pdf"]}
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1484348400000}
+{illustrationId: Jaromir_Nohavica-V_mori_je_mista_dost_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-V_mori_je_mista_dost_gpt-4o-mini_v1}
+
 {start_of_chorus}
 V [C]moři je místa dost,
 v [Dmi]moři je místa [G7]dost,

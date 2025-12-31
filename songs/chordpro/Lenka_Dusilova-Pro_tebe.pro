@@ -1,14 +1,15 @@
 {title: Pro tebe}
 {artist: Lenka Dusilová}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["lenka_dusilova_pro_tebe-sken.pdf", "lenka_dusilova_pro_tebe-comp.pdf"]}
-{capo: 3}
 {key: Dm}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: a f}
+{language: czech}
+{startMelody: a f}
+{createdAt: 1436824800000}
+{illustrationId: Lenka_Dusilova-Pro_tebe_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Lenka_Dusilova-Pro_tebe_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Dmi]Jsi světlo mojí duše
 Jsi světlo mojí lásky - proč se [G]trápit

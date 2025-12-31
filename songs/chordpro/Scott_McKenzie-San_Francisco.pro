@@ -1,14 +1,15 @@
 {title: San Francisco}
 {artist: Scott McKenzie}
-{date_added: 08-2013}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["scott_mckenzie_san_francisco-sken.pdf", "scott_mckenzie_san_francisco-comp.pdf"]}
-{capo: 2}
 {key: Em}
+{capo: 2}
 {tempo: }
 {range: g1-d2}
-{start_melody: d}
+{language: english}
+{startMelody: d}
+{createdAt: 1376431200000}
+{illustrationId: Scott_McKenzie-San_Francisco_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Scott_McKenzie-San_Francisco_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Em]If you're [C]going to [G]San Franc[D]isco
 [Em]Be sure to [C]wear some [G]flowers in your [D]hair

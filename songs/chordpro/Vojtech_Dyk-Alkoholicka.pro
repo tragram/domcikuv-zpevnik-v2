@@ -1,14 +1,14 @@
 {title: Alkoholická}
 {artist: Vojtěch Dyk}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: e1-f2}
-{start_melody: e c d h}
-
+{language: czech}
+{startMelody: e c d h}
+{createdAt: 1744581600000}
+{illustrationId: Vojtech_Dyk-Alkoholicka_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Vojtech_Dyk-Alkoholicka_gpt-4o-mini_v2}
 
 {start_of_chorus}
 [Am]Calvados, víno, [E7]porto

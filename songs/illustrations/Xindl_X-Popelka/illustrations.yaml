@@ -1,0 +1,19 @@
+songId: Xindl_X-Popelka
+prompts:
+  - promptId: Xindl_X-Popelka_gpt-4o-mini_v1
+    songId: Xindl_X-Popelka
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a modern Cinderella, dressed in a whimsical
+      nightgown, sitting alone in a dimly lit room filled with remnants of a
+      party. She has a painted smile on her face, surrounded by scattered shoes
+      and a clock striking midnight. Outside the window, silhouettes of flying
+      doves can be seen, symbolizing freedom and lost love. The atmosphere is a
+      blend of melancholy and hope, capturing the essence of fleeting moments
+      and new beginnings.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

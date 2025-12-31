@@ -1,12 +1,14 @@
-{language: estonian}
-{date_added: 05-2019}
-{songbooks: ["Domčík"]}
-{capo: 3}
-{key: C}
-{artist: Curly Strings}
 {title: Kauges Külas}
-{capo: 2}
+{artist: Curly Strings}
+{key: C}
+{capo: 3}
+{tempo: }
 {range: g1-a2}
+{language: estonian}
+{startMelody: }
+{createdAt: 1557784800000}
+{illustrationId: Curly_Strings-Kauges_Kulas_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Curly_Strings-Kauges_Kulas_gpt-4o-mini_v1}
 
 {start_of_verse}
 Kauges [C]külas, vanaema [G]juures,

@@ -1,0 +1,18 @@
+songId: Divokej_Bill-Malovani
+prompts:
+  - promptId: Divokej_Bill-Malovani_gpt-4o-mini_v2
+    songId: Divokej_Bill-Malovani
+    createdAt: 1754387144000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dimly lit room with a person sitting alone,
+      surrounded by shadowy outlines of air castles painted on the walls. The
+      atmosphere should evoke a sense of longing and introspection, with a small
+      window showing a starry night sky. In the background, faint silhouettes of
+      two figures (representing parents) can be seen, symbolizing support and
+      love amidst the solitude.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

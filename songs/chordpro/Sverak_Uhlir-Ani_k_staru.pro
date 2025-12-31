@@ -1,14 +1,15 @@
 {title: Ani k stáru}
 {artist: Svěrák & Uhlíř}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["filmova_hudba_ani_k_staru-sken.pdf", "filmova_hudba_ani_k_staru-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-a1}
-{start_melody: e f g}
+{language: czech}
+{startMelody: e f g}
+{createdAt: 1436824800000}
+{illustrationId: Sverak_Uhlir-Ani_k_staru_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Sverak_Uhlir-Ani_k_staru_gpt-4o-mini_v1}
+
 {start_of_verse}
 Mám ploché [C]nohy po tetě a fanta[F]zii po svém strýci,
 už dlouho [Ami]šlapu po světě a [G]nevím, co mám o něm říci.

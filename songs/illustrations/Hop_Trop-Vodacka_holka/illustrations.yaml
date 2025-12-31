@@ -1,0 +1,20 @@
+songId: Hop_Trop-Vodacka_holka
+prompts:
+  - promptId: Hop_Trop-Vodacka_holka_gpt-4o-mini_v2
+    songId: Hop_Trop-Vodacka_holka
+    createdAt: 1754387145000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dramatic scene on a turbulent river at night,
+      with a small, creaking boat struggling against powerful waves. In the
+      foreground, a man holds a paddle, looking anxiously at the water, while a
+      woman with long hair, reminiscent of a cat's grace, sits beside him,
+      offering a sense of calm amidst the chaos. In the background, a haunting
+      moon casts shadows, and the silhouette of an owl can be seen perched on a
+      rock. The atmosphere should convey both danger and intimacy, capturing the
+      essence of love and adventure in the face of uncertainty.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

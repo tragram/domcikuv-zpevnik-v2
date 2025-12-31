@@ -1,0 +1,18 @@
+songId: Wabi_Danek-Hejkal
+prompts:
+  - promptId: Wabi_Danek-Hejkal_gpt-4o-mini_v1
+    songId: Wabi_Danek-Hejkal
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create a dark, eerie forest scene illuminated by a pale moonlight. In the
+      foreground, depict a shadowy figure with glowing red eyes and sharp claws,
+      embodying the mythical "hejkal." Surround it with twisted trees and a
+      misty atmosphere, while faint echoes of ghostly howls and rattling bones
+      can be suggested in the background. Capture a sense of fear and suspense,
+      inviting viewers to feel the tension of the night.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

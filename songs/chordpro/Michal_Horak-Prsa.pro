@@ -1,14 +1,16 @@
 {title: Prsa}
 {artist: Michal Horák}
-{date_added: 03-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames:}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: c1-d2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1741906800000}
+{illustrationId: Michal_Horak-Prsa_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Michal_Horak-Prsa_gpt-4o-mini_v1}
+
+{pdf_filenames:}
 
 {start_of_verse}
 [Dmi]Po večerech [Dmi7+]s děvčaty [Dmi7]často vedu [Dmi6]debaty

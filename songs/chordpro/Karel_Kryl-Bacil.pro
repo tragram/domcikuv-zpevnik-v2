@@ -1,14 +1,14 @@
 {title: Bacil}
 {artist: Karel Kryl}
-{date_added: 08-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_bacil-sken.pdf", "karel_kryl_bacil-comp.pdf", "karel_kryl_bacil-gen.pdf"]}
-{capo: 2}
 {key: Am}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1439503200000}
+{illustrationId: Karel_Kryl-Bacil_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Bacil_gpt-4o-mini_v1}
 
 {start_of_chorus}
 [Ami][G][C][E]

@@ -1,0 +1,17 @@
+songId: Jaromir_Nohavica-Gronska_pisnicka
+prompts:
+  - promptId: Jaromir_Nohavica-Gronska_pisnicka_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-Gronska_pisnicka
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cheerful Eskimo couple living in a snowy
+      Greenland landscape, surrounded by playful polar bears. The scene should
+      depict their cozy igloo with a bubbling pot of tea, while the sun shines
+      brightly in a polar day setting. Include whimsical elements like the bears
+      performing tricks and the couple enjoying ice cream.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

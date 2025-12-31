@@ -1,0 +1,19 @@
+songId: Wabi_Danek-Hudsonsky_sify
+prompts:
+  - promptId: Wabi_Danek-Hudsonsky_sify_gpt-4o-mini_v1
+    songId: Wabi_Danek-Hudsonsky_sify
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a rugged, adventurous sailor standing on the
+      deck of an old Hudson River steamboat, surrounded by misty waters and
+      dark, towering cliffs. The scene should capture a sense of camaraderie and
+      the harsh beauty of river life, with elements like broken shoes, a
+      weathered face, and hints of a fiery glow from the depths of the river.
+      The atmosphere should evoke a mix of danger and excitement, embodying the
+      spirit of those who embrace the unknown.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

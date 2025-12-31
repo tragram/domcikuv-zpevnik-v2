@@ -1,0 +1,18 @@
+songId: Olympic-Taky_jsem_se_narodil_bos
+prompts:
+  - promptId: Olympic-Taky_jsem_se_narodil_bos_gpt-4o-mini_v1
+    songId: Olympic-Taky_jsem_se_narodil_bos
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a nostalgic childhood scene depicting a young
+      boy running barefoot through a sunny meadow, surrounded by wildflowers and
+      buzzing bees. Include elements that represent freedom and innocence, such
+      as a clear blue sky, playful clouds, and a distant view of mountains. The
+      atmosphere should evoke a sense of carefree joy, contrasting with a hint
+      of winter's approach, symbolized by a pair of forgotten shoes nearby.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

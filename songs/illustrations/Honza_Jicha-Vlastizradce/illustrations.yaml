@@ -1,0 +1,19 @@
+songId: Honza_Jicha-Vlastizradce
+prompts:
+  - promptId: Honza_Jicha-Vlastizradce_gpt-4o-mini_v1
+    songId: Honza_Jicha-Vlastizradce
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical bonfire scene where various
+      historical documents, like the Czech constitution and decrees, are being
+      playfully tossed into the flames. Surround the fire with a group of
+      people, laughing and reminiscing, while the cold winter landscape is
+      visible in the background, emphasizing the contrast between warmth and
+      chill. Add elements of nostalgia, like crumpled paper balls and hints of
+      traditional Czech culture.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

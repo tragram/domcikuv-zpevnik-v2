@@ -1,15 +1,14 @@
 {title: Něgdy}
 {artist: Mňága a Žďorp}
-{date_added: 01-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
+{key: A#}
 {capo: 0}
-{key: B}
 {tempo: }
 {range: c1-d2}
-{start_melody: a g a f}
-
+{language: czech}
+{startMelody: a g a f}
+{createdAt: 1736809200000}
+{illustrationId: Mnaga_a_Zdorp-Negdy_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Mnaga_a_Zdorp-Negdy_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Dmi]Něgdy nejdu [B]spát

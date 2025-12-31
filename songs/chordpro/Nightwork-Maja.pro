@@ -1,14 +1,14 @@
 {title: Maja}
 {artist: Nightwork}
-{date_added: 09-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["nightwork_maja-sken.pdf", "nightwork_maja-comp.pdf"]}
-{capo: 4}
 {key: Am}
+{capo: 4}
 {tempo: }
 {range: a1-h2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1442181600000}
+{illustrationId: Nightwork-Maja_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nightwork-Maja_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Ami]Učení páni [G]zkušení,

@@ -1,14 +1,15 @@
 {title: Vlaštovko leť}
 {artist: Jaromír Nohavica}
-{date_added: 10-2011}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_vlastovko_let-sken.pdf", "jaromir_nohavica_vlastovko_let-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: g1-e2}
-{start_melody: c g1 c g2}
+{language: czech}
+{startMelody: c g1 c g2}
+{createdAt: 1318543200000}
+{illustrationId: Jaromir_Nohavica-Vlastovko_let_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Vlastovko_let_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Vlaštovko, leť [Ami]přes Čínskou zeď,
 [F]přes písek [C]pouště [G]Gobi,

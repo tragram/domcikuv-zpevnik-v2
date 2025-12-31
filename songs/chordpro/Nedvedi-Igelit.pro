@@ -1,14 +1,15 @@
 {title: Igelit}
 {artist: Nedvědi}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["nedvedi_igelit-sken.pdf", "nedvedi_igelit-comp.pdf"]}
-{capo: 4}
 {key: C}
+{capo: 4}
 {tempo: }
 {range: a1-a2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Nedvedi-Igelit_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nedvedi-Igelit_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Ukrytý v stínu lesa, [G]igelit,
 to kdyby přišel k [F]ránu [C]déšť,

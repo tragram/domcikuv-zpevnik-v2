@@ -1,14 +1,15 @@
 {title: Kdyby se v komnatách}
 {artist: Filmová hudba}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["filmova_hudba_kdyby_se_v_komnatach-sken.pdf", "filmova_hudba_kdyby_se_v_komnatach-comp.pdf"]}
-{capo: 4}
 {key: G}
+{capo: 4}
 {tempo: }
 {range: g1-g2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Filmova_hudba-Kdyby_se_v_komnatach_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Filmova_hudba-Kdyby_se_v_komnatach_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]K životu na zámku, [Dmi]mám jednu poznámku,
 [C]Je tu neveselo, je tu [G]truchlivo.

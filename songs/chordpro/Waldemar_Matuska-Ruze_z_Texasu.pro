@@ -1,13 +1,14 @@
 {title: Růže z Texasu}
 {artist: Waldemar Matuška}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: a1-a2}
-{start_melody: c g}
+{language: czech}
+{startMelody: c g}
+{createdAt: 1744581600000}
+{illustrationId: Waldemar_Matuska-Ruze_z_Texasu_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Waldemar_Matuska-Ruze_z_Texasu_gpt-4o-mini_v2}
 
 {start_of_verse}
 [C]Jedu Vám takh[C7]le stezkou

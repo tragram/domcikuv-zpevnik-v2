@@ -1,14 +1,15 @@
 {title: Písek}
 {artist: Nezmaři}
-{date_added: 02-2012}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["nezmari_pisek-sken.pdf", "nezmari_pisek-comp.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: a1-g1}
-{start_melody: a a c}
+{language: czech}
+{startMelody: a a c}
+{createdAt: 1329174000000}
+{illustrationId: Nezmari-Pisek_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nezmari-Pisek_gpt-4o-mini_v1}
+
 {start_of_verse}
 Jako [Ami]pí[D]sek
 [G]přesíváš mě [E7]mezi prsty,

@@ -1,14 +1,14 @@
 {title: Papaoutai}
 {artist: Stromae}
-{date_added: 12-2018}
-{songbooks: ["Domčík"]}
-{language: french}
-{pdf_filenames: ["stromae_papaoutai_-sken.pdf", "stromae_papaoutai_-comp.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: h1-d2}
-{start_melody: e d e d}
+{language: french}
+{startMelody: e d e d}
+{createdAt: 1544742000000}
+{illustrationId: Stromae-Papaoutai_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Stromae-Papaoutai_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]Dites-moi d'où il [G]ient,

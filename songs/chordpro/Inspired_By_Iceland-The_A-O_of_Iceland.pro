@@ -1,14 +1,14 @@
 {title: The A-Ö of Iceland}
 {artist: Inspired By Iceland}
-{date_added: 07-2018}
-{songbooks: ["Domčík"]}
-{language: icelandic}
-{pdf_filenames: ["inspired_by_island_the_ao_of_island-sken.pdf", "inspired_by_island_the_ao_of_island-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: g1-e1}
-{start_melody: g g g}
+{language: icelandic}
+{startMelody: g g g}
+{createdAt: 1531519200000}
+{illustrationId: Inspired_By_Iceland-The_A-O_of_Iceland_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Inspired_By_Iceland-The_A-O_of_Iceland_gpt-4o-mini_v1}
 
 {start_of_chorus}
 This is the [G]A-Ö of [C]Iceland,[G]

@@ -1,14 +1,15 @@
 {title: Mám doma kočku}
 {artist: Pokáč}
-{date_added: 11-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pokac_mam_doma_kocku-sken.pdf", "pokac_mam_doma_kocku-comp.pdf"]}
-{capo: 3}
 {key: G}
+{capo: 3}
 {tempo: }
 {range: e1-c2}
-{start_melody: g a}
+{language: czech}
+{startMelody: g a}
+{createdAt: 1542150000000}
+{illustrationId: Pokac-Mam_doma_kocku_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pokac-Mam_doma_kocku_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Jednou mi drahá říká:
 [Emi]Miláčku, já chci kočku

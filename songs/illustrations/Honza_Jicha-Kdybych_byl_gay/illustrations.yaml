@@ -1,0 +1,32 @@
+songId: Honza_Jicha-Kdybych_byl_gay
+prompts:
+  - promptId: Honza_Jicha-Kdybych_byl_gay_gpt-4o-mini_v1
+    songId: Honza_Jicha-Kdybych_byl_gay
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of two friends sitting together in a cozy, dimly
+      lit bar, surrounded by whiskey glasses and laughter. One friend looks
+      playfully uncomfortable as the other leans in, suggesting a deeper
+      connection. The atmosphere is light-hearted yet slightly tense, capturing
+      the essence of friendship and boundaries, with a whimsical touch of humor.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - promptId: Honza_Jicha-Kdybych_byl_gay_gpt-4o_v1
+    songId: Honza_Jicha-Kdybych_byl_gay
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o
+    text: >-
+      Create an illustration of two friends sitting together in a cozy, dimly
+      lit bar, surrounded by whiskey glasses and laughter. One friend looks
+      playfully uncomfortable as the other leans in, suggesting a deeper
+      connection. The atmosphere is light-hearted yet slightly tense, capturing
+      the essence of friendship and boundaries, with a whimsical touch of humor.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: dalle3
+        filename: dalle3.webp

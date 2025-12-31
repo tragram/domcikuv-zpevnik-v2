@@ -1,14 +1,15 @@
 {title: Zítra ráno v pět}
 {artist: Jaromír Nohavica}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_zitra_rano_v_pet-sken.pdf", "jaromir_nohavica_zitra_rano_v_pet-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Jaromir_Nohavica-Zitra_rano_v_pet_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Zitra_rano_v_pet_gpt-4o-mini_v1}
+
 {start_of_verse}
 Až [Ami]mě zítra ráno v pět
 [C]ke zdi postaví,

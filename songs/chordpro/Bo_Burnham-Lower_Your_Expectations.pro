@@ -1,14 +1,14 @@
 {title: Lower Your Expectations}
 {artist: Bo Burnham}
-{date_added: 07-2018}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["bo_burnham_lower_your_expectations-sken.pdf", "bo_burnham_lower_your_expectations-comp.pdf"]}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: h1-c#2}
-{start_melody: e}
+{language: english}
+{startMelody: e}
+{createdAt: 1531519200000}
+{illustrationId: Bo_Burnham-Lower_Your_Expectations_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Bo_Burnham-Lower_Your_Expectations_gpt-4o-mini_v1}
 
 {start_of_verse}
 [E]You want a guy that's sweet, a guy that's tough

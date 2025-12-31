@@ -1,14 +1,15 @@
 {title: Vdovy z Cordoby}
 {artist: Akáty}
-{date_added: 08-2013}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["akaty_vdovy_z_cordoby-sken.pdf", "akaty_vdovy_z_cordoby-comp.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: h1-e2}
-{start_melody: a c}
+{language: czech}
+{startMelody: a c}
+{createdAt: 1376431200000}
+{illustrationId: Akaty-Vdovy_z_Cordoby_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Akaty-Vdovy_z_Cordoby_gpt-4o-mini_v2}
+
 {start_of_verse}
 Když jsem se vracel z Cor[Ami]doby
 potkal jsem dvě mladé [Dmi]vdovy

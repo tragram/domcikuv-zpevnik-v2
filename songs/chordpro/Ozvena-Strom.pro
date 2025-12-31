@@ -1,14 +1,15 @@
 {title: Strom}
 {artist: Ozvěna}
-{date_added: 08-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["ozvena_strom-sken.pdf", "ozvena_strom-comp.pdf", "ozvena_strom-gen.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: a1-f#1}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1471125600000}
+{illustrationId: Ozvena-Strom_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Ozvena-Strom_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Polní cestou kráčeli
 [G]šumaři do vísky hrát,

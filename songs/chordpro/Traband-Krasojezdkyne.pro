@@ -1,13 +1,14 @@
 {title: Krasojezdkyně}
 {artist: Traband}
+{key: }
 {capo: 0}
-{language: czech}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
 {tempo: 110}
 {range: h1-d2}
-{key: f#}
-{start_melody: c# f# g# a g# f#}
+{language: czech}
+{startMelody: c# f# g# a g# f#}
+{createdAt: 1726264800000}
+{illustrationId: Traband-Krasojezdkyne_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Traband-Krasojezdkyne_gpt-4o-mini_v1}
 
 {start_of_verse}
 [F#m]Přijel jsem [D]na chvíli [E]pozdravit [C#7]přátele,

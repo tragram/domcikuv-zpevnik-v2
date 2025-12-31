@@ -1,13 +1,14 @@
 {title: Ještě jedno kafe}
 {artist: Druhá tráva}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: a1-g#1}
-{start_melody: a e d c}
+{language: czech}
+{startMelody: a e d c}
+{createdAt: 1744581600000}
+{illustrationId: Druha_trava-Jeste_jedno_kafe_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Druha_trava-Jeste_jedno_kafe_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Ami]Máš sladkej dech a oči,

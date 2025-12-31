@@ -1,15 +1,17 @@
 {title: Little Lion Man}
 {artist: Mumford & Sons}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames:}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
-
 {range: a1-c2}
-{start_melody: a}
+{language: english}
+{startMelody: a}
+{createdAt: 1744581600000}
+{illustrationId: Mumford_Sons-Little_Lion_Man_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Mumford_Sons-Little_Lion_Man_gpt-4o-mini_v2}
+
+{pdf_filenames:}
+
 
 {start_of_verse: Intro}
 𝄆 [Am][C][Am][C] 𝄇

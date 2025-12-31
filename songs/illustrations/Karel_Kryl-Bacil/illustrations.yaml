@@ -1,0 +1,20 @@
+songId: Karel_Kryl-Bacil
+prompts:
+  - promptId: Karel_Kryl-Bacil_gpt-4o-mini_v1
+    songId: Karel_Kryl-Bacil
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical, nostalgic scene featuring a group
+      of folk musicians gathered outside a quaint funeral home. Include a
+      vibrant, singing bird perched on a birdhouse, surrounded by colorful
+      tablets scattered on a breakfast table. The musicians, representing
+      various styles, should be depicted with expressive faces, showcasing a mix
+      of frustration and camaraderie, as they confront the metaphorical
+      "songwriter's virus." Capture the essence of a lively folk music community
+      with elements of humor and a hint of melancholy.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

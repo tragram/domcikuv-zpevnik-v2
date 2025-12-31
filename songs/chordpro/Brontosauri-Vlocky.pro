@@ -1,14 +1,15 @@
 {title: Vločky}
 {artist: Brontosauři}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["brontosauri_vlocky-sken.pdf", "brontosauri_vlocky-comp.pdf"]}
-{capo: 3}
 {key: D}
+{capo: 3}
 {tempo: }
 {range: h1-g1}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1436824800000}
+{illustrationId: Brontosauri-Vlocky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Brontosauri-Vlocky_gpt-4o-mini_v1}
+
 {start_of_verse}
 Z [D]vlčích máků a ze sedmikrásek
 [Hmi]jaro mává na první vlak,

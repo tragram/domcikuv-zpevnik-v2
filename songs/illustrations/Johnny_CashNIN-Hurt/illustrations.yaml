@@ -1,0 +1,17 @@
+songId: Johnny_CashNIN-Hurt
+prompts:
+  - promptId: Johnny_CashNIN-Hurt_gpt-4o-mini_v1
+    songId: Johnny_CashNIN-Hurt
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create a hauntingly emotional image of a figure sitting on a throne made
+      of twisted thorns, surrounded by shadows and broken memories. The
+      background should evoke a sense of decay and loss, with hints of fading
+      time. The figure should appear contemplative and sorrowful, reflecting
+      themes of pain, regret, and a longing for redemption.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,15 @@
 {title: Loučím se s tmou}
 {artist: Nedvědi}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["nedvedi_loucim_se_s_tmou-sken.pdf", "nedvedi_loucim_se_s_tmou-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: d1-h1}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1436824800000}
+{illustrationId: Nedvedi-Loucim_se_s_tmou_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nedvedi-Loucim_se_s_tmou_gpt-4o-mini_v1}
+
 {start_of_chorus}
 [D]Loučím se s [A]tmou, [D]
 už [G]vím lás[Hmi]ko má, už [A]vím,

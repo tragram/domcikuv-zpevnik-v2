@@ -1,13 +1,14 @@
 {title: Zkratky}
 {artist: Ivan Mládek}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: h h a h}
+{language: czech}
+{startMelody: h h a h}
+{createdAt: 1744581600000}
+{illustrationId: Ivan_Mladek-Zkratky_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Ivan_Mladek-Zkratky_gpt-4o-mini_v2}
 
 {start_of_verse}
 [G]Z PL[Em]R do [Am]ML[D7]R

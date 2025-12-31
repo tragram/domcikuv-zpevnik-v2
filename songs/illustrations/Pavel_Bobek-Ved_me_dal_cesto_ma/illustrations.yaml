@@ -1,0 +1,17 @@
+songId: Pavel_Bobek-Ved_me_dal_cesto_ma
+prompts:
+  - promptId: Pavel_Bobek-Ved_me_dal_cesto_ma_gpt-4o-mini_v1
+    songId: Pavel_Bobek-Ved_me_dal_cesto_ma
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a winding road leading into the horizon,
+      surrounded by serene landscapes. Include a figure walking along the path,
+      looking hopeful, with distant mountains and a sunset in the background.
+      Add subtle musical notes floating in the air to symbolize the song's
+      themes of journey and longing.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

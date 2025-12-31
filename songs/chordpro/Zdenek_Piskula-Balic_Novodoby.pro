@@ -1,14 +1,14 @@
 {title: Balič Novodobý}
 {artist: Zdeněk Piškula}
-{date_added: 08-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["zdenek_piskula_balic_novodoby-sken.pdf", "zdenek_piskula_balic_novodoby-comp.pdf"]}
-{capo: 0}
 {key: F}
+{capo: 0}
 {tempo: }
 {range: c1-c2}
-{start_melody: a g a}
+{language: czech}
+{startMelody: a g a}
+{createdAt: 1502661600000}
+{illustrationId: Zdenek_Piskula-Balic_Novodoby_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zdenek_Piskula-Balic_Novodoby_gpt-4o-mini_v1}
 
 {start_of_chorus: R1}
 [F]Ratatatatatadau

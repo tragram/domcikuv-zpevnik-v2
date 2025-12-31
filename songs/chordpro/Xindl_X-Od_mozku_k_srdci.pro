@@ -1,14 +1,14 @@
 {title: Od mozku k srdci}
 {artist: Xindl X}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 2}
 {key: C}
+{capo: 2}
 {tempo: }
 {range: a1-c2}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1734130800000}
+{illustrationId: Xindl_X-Od_mozku_k_srdci_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Xindl_X-Od_mozku_k_srdci_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Od povrchu [C/H]Marsu k [Am]Venuši [Am/G]

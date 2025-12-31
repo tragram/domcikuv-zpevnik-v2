@@ -1,14 +1,15 @@
 {title: Já s tebou žít nebudu}
 {artist: Nerez}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["nerez_ja_s_tebou_zit_nebudu-sken.pdf", "nerez_ja_s_tebou_zit_nebudu-comp.pdf"]}
-{capo: 0}
 {key: Em}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1436824800000}
+{illustrationId: Nerez-Ja_s_tebou_zit_nebudu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nerez-Ja_s_tebou_zit_nebudu_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Emi]Bylas' jak poslední hlt [F#7]vína,
 [H7]sladká a k ránu bola[Emi]vá, [Gdim][H7]

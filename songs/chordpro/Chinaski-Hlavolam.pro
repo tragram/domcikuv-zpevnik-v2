@@ -1,14 +1,14 @@
 {title: Hlavolam}
 {artist: Chinaski}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_hlavolam-sken.pdf", "chinaski_hlavolam-comp.pdf", "chinaski_hlavolam-gen.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1436824800000}
+{illustrationId: Chinaski-Hlavolam_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Hlavolam_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]Tisíce [Ami]nocí tisíc [C]slov a dní,

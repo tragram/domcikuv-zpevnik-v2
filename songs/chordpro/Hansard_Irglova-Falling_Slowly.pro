@@ -1,14 +1,14 @@
 {title: Falling Slowly}
 {artist: Hansard & Irglová}
-{date_added: 06-2013}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["hansard__irglova_falling_slowly-sken.pdf", "hansard__irglova_falling_slowly-comp.pdf"]}
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: c}
+{language: english}
+{startMelody: c}
+{createdAt: 1371160800000}
+{illustrationId: Hansard_Irglova-Falling_Slowly_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Hansard_Irglova-Falling_Slowly_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]I don't know you [F]But I want you

@@ -1,0 +1,18 @@
+songId: Traband-Kalna_Reka
+prompts:
+  - promptId: Traband-Kalna_Reka_gpt-4o-mini_v2
+    songId: Traband-Kalna_Reka
+    createdAt: 1754387149000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene riverside scene at dusk, featuring two
+      young lovers, a boy and a girl, standing together with their hands tied,
+      symbolizing their secret bond. In the background, a small village can be
+      seen, with hints of a distant military presence. The river flows calmly,
+      reflecting the fading light, while the atmosphere captures both the
+      innocence of young love and the looming challenges of their future.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

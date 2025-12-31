@@ -1,16 +1,14 @@
 {title: Trezor}
 {artist: Karel Gott}
-{date_added: 08-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_gott_trezor-sken.pdf", "karel_gott_trezor-comp.pdf"]}
-{capo: 0}
 {key: A}
+{capo: 0}
 {tempo: }
-{image_model: dalle3}
-{prompt_id: v1}
 {range: e1-c#2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1534197600000}
+{illustrationId: Karel_Gott-Trezor_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Gott-Trezor_gpt-4o-mini_v1}
 
 {start_of_verse}
 [A]Ze zdi na mě tupě zírá

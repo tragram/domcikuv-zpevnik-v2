@@ -1,14 +1,14 @@
 {title: Prodavač}
 {artist: Michal Tučný}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["michal_tucny_prodavac-sken.pdf", "michal_tucny_prodavac-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: c1-h1}
-{start_melody: g h d}
+{language: czech}
+{startMelody: g h d}
+{createdAt: 1436824800000}
+{illustrationId: Michal_Tucny-Prodavac_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Michal_Tucny-Prodavac_gpt-4o-mini_v1}
 
 {start_of_verse: Rec}
 [G]Pojďte všichni dovnitř, pozvěte si všechny známé,

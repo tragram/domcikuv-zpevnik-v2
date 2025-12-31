@@ -1,14 +1,15 @@
 {title: Magdaléna}
 {artist: Jelen}
-{date_added: 01-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jelen_magdalena-sken.pdf", "jelen_magdalena-comp.pdf"]}
-{capo: 5}
 {key: D}
+{capo: 5}
 {tempo: }
 {range: f#1-a2}
-{start_melody: d d c#}
+{language: czech}
+{startMelody: d d c#}
+{createdAt: 1484348400000}
+{illustrationId: Jelen-Magdalena_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jelen-Magdalena_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Zapal ten oheň ve mně. [G2]Čeho se bojíš?
 [D]Zápalkou škrtni jemně.

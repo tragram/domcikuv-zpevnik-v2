@@ -1,0 +1,19 @@
+songId: Klic-Omnia_Vincit_Amor
+prompts:
+  - promptId: Klic-Omnia_Vincit_Amor_gpt-4o-mini_v1
+    songId: Klic-Omnia_Vincit_Amor
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lively tavern scene where a diverse group of
+      people is gathered around a table, raising their mugs in celebration. In
+      the background, a warm glow emanates from the hearth, and a sense of
+      camaraderie fills the air. Include symbolic elements like a golden coin
+      and a faint, glowing message in the air that reads "Omnia vincit Amor."
+      The atmosphere should convey joy, love, and the triumph of the human
+      spirit over adversity.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

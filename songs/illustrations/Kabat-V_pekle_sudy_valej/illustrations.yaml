@@ -1,0 +1,19 @@
+songId: Kabat-V_pekle_sudy_valej
+prompts:
+  - promptId: Kabat-V_pekle_sudy_valej_gpt-4o-mini_v1
+    songId: Kabat-V_pekle_sudy_valej
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a chaotic train journey through a surreal, smoky
+      landscape. The scene should depict a vintage steam train with a clogged
+      chimney, passengers in various states of excitement and confusion, and a
+      whimsical dining car filled with strange foods and drinks. Include
+      elements like mushrooms and a mysterious figure resembling an old
+      conductor, inviting everyone to a feast. The atmosphere should feel both
+      frenetic and fantastical, capturing the essence of a wild ride.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

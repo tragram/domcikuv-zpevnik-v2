@@ -1,0 +1,17 @@
+songId: Mumford_Sons-Little_Lion_Man
+prompts:
+  - promptId: Mumford_Sons-Little_Lion_Man_gpt-4o-mini_v2
+    songId: Mumford_Sons-Little_Lion_Man
+    createdAt: 1754387147000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a somber, introspective man sitting alone on a rocky
+      cliff at sunset, with a distant lion silhouette in the background. The man
+      has a pained expression, symbolizing inner turmoil and regret, as he gazes
+      out over a vast, troubled landscape. The scene captures a sense of
+      vulnerability and the struggle between bravery and fear.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

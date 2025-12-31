@@ -1,0 +1,18 @@
+songId: Jaromir_Nohavica-Dokud_se_zpiva
+prompts:
+  - promptId: Jaromir_Nohavica-Dokud_se_zpiva_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-Dokud_se_zpiva
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a train departing from a quaint station in
+      Těšín, with vibrant scenery reflecting the passage of time. Include a
+      traveler with a joyful expression, holding a bun and snacks, surrounded by
+      musical notes. The background should show a whimsical landscape,
+      symbolizing life's journey, with hints of challenges like vultures in the
+      sky, yet conveying a sense of hope and resilience through music.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

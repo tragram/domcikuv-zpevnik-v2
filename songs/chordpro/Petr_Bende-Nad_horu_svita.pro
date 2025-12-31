@@ -1,14 +1,14 @@
 {title: Nad horů svítá}
 {artist: Petr Bende}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["petr_bende_nad_horu_svita-sken.pdf", "petr_bende_nad_horu_svita-comp.pdf", "petr_bende_nad_horu_svita-gen.pdf"]}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: e h e}
+{language: czech}
+{startMelody: e h e}
+{createdAt: 1436824800000}
+{illustrationId: Petr_Bende-Nad_horu_svita_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Petr_Bende-Nad_horu_svita_gpt-4o-mini_v1}
 
 {start_of_verse}
 Nad horů [E]svítá, začíná [A]nový den

@@ -1,0 +1,17 @@
+songId: Ready_Kirken-11
+prompts:
+  - promptId: Ready_Kirken-11_gpt-4o-mini_v1
+    songId: Ready_Kirken-11
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a solitary figure in a small, cozy apartment
+      filled with sunlight and plants, symbolizing a hidden world of dreams and
+      tranquility. The scene should convey a sense of introspection and hope,
+      with shadows hinting at past struggles, while a vibrant flower blooms in
+      the foreground, representing the beauty that emerges from simplicity.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

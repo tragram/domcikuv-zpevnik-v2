@@ -1,12 +1,14 @@
 {title: Muutkin Mokaa}
 {artist: Pauli Hanhiniemi}
-{language: finnish}
-{date_added: 02-2025}
-{songbooks: ["Domčík"]}
-{capo: 2}
 {key: Am}
+{capo: 2}
+{tempo: }
 {range: a1-c2}
-{start_melody: e e e e f# f#}
+{language: finnish}
+{startMelody: e e e e f# f#}
+{createdAt: 1739487600000}
+{illustrationId: Pauli_Hanhiniemi-Muutkin_Mokaa_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pauli_Hanhiniemi-Muutkin_Mokaa_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]Valopäitten [D]joukkoon tähtä[G]sin

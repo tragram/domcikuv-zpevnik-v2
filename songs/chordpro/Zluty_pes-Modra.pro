@@ -1,14 +1,15 @@
 {title: Modrá}
 {artist: Žlutý pes}
-{date_added: 07-2009}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["zluty_pes_modra-sken.pdf", "zluty_pes_modra-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-g1}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1247522400000}
+{illustrationId: Zluty_pes-Modra_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zluty_pes-Modra_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Modrá je [G]planeta, kde [F]můžete [G]žít
 [C]Modrá je [G]voda, kterou [F]musíme [G]pít

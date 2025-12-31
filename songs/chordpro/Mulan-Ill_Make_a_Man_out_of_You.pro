@@ -1,14 +1,14 @@
 {title: I'll Make a Man out of You}
 {artist: Mulan}
-{date_added: 08-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["mulan_ill_make_a_man_out_of_you-sken.pdf", "mulan_ill_make_a_man_out_of_you-comp.pdf", "mulan_ill_make_a_man_out_of_you-gen.pdf"]}
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: g1-c#2}
-{start_melody: a e}
+{language: english}
+{startMelody: a e}
+{createdAt: 1439503200000}
+{illustrationId: Mulan-Ill_Make_a_Man_out_of_You_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Mulan-Ill_Make_a_Man_out_of_You_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]Let's get [G/H]down to [C]business

@@ -1,14 +1,15 @@
 {title: Když mě brali za vojáka}
 {artist: Jaromír Nohavica}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_kdyz_me_brali_za_vojaka-sken.pdf", "jaromir_nohavica_kdyz_me_brali_za_vojaka-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: g#1-a2}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1436824800000}
+{illustrationId: Jaromir_Nohavica-Kdyz_me_brali_za_vojaka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Kdyz_me_brali_za_vojaka_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Když mě brali za [C]vojáka, [G]stříhali mě doho[C]la,
 [Dmi]vypadal jsem jako [Ami]blbec,

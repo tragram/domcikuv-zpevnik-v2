@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Vlaštovky}
 {artist: Traband}
-{songbooks: []}
 {key: Dm}
-{date_added: 05-2025}
-{language: czech}
-{tempo: }
 {capo: 0}
+{tempo: }
 {range: a1-f2}
-{start_melody: d d c a}
-{pdf_filenames: []}
+{language: czech}
+{startMelody: d d c a}
+{createdAt: 1747173600000}
+{illustrationId: Traband-Vlastovky_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Traband-Vlastovky_gpt-4o-mini_v2}
 
 {start_of_verse: Intro}
 Óóó[Dmi][Ami][B][F][Dmi][Ami][B][F]

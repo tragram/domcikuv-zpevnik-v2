@@ -1,0 +1,19 @@
+songId: Lidova_pisen-Ceresnicky
+prompts:
+  - promptId: Lidova_pisen-Ceresnicky_gpt-4o-mini_v1
+    songId: Lidova_pisen-Ceresnicky
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical, vibrant scene featuring cherry
+      blossoms scattered along a winding path. In the foreground, a playful girl
+      dances joyfully, surrounded by roses, symbolizing love and flirtation. She
+      wears a floral dress, embodying the spirit of youth and romance. In the
+      background, a charming young man admires her, with a hint of mischief in
+      his expression, capturing the playful essence of courtship. The atmosphere
+      is light and enchanting, evoking a sense of springtime romance.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

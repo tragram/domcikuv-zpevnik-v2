@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Amazonka}
 {artist: Jaroslav Samson Lenk}
 {key: G}
-{date_added: 07-2015}
-{language: czech}
-{tempo: }
 {capo: 3}
+{tempo: }
 {range: h1-h2}
-{start_melody: h c d}
-{songbooks: ["Domčík"]}
-{pdf_filenames: ["jaroslav_samson_lenk_amazonka-sken.pdf", "jaroslav_samson_lenk_amazonka-comp.pdf"]}
+{language: czech}
+{startMelody: h c d}
+{createdAt: 1436824800000}
+{illustrationId: Jaroslav_Samson_Lenk-Amazonka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaroslav_Samson_Lenk-Amazonka_gpt-4o-mini_v1}
 
 {start_of_verse}
 Byly krásný naše [G]plány,

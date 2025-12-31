@@ -1,14 +1,15 @@
 {title: Srdce jako kníže Rohan}
 {artist: Richard Müller}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["richard_muller_srdce_jako_knize_rohan-sken.pdf", "richard_muller_srdce_jako_knize_rohan-comp.pdf"]}
-{capo: 7}
 {key: C}
+{capo: 7}
 {tempo: }
 {range: a1-f1}
-{start_melody: f}
+{language: czech}
+{startMelody: f}
+{createdAt: 1436824800000}
+{illustrationId: Richard_Muller-Srdce_jako_knize_Rohan_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Richard_Muller-Srdce_jako_knize_Rohan_gpt-4o-mini_v1}
+
 {start_of_verse}
 [F]Měsíc je jak Zlatá bula [C]Sicilská
 [Ami]stvrzuje, že, kdo chce, ten se [G]dopíská

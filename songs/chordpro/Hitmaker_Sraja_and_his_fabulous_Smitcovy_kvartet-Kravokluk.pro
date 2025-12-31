@@ -1,13 +1,14 @@
 {title: Krávokluk}
 {artist: Hitmaker Šrája and his fabulous Šmitcový kvartet}
-{date_added: 04-2025}
-{songbooks: ["Kvítek"]}
-{language: czech}
-{capo: 0}
 {key: E}
-{range: e1-g2}
+{capo: 0}
 {tempo: }
-{start_melody: }
+{range: e1-g2}
+{language: czech}
+{startMelody: }
+{createdAt: 1744581600000}
+{illustrationId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Kravokluk_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Kravokluk_gpt-4o-mini_v2}
 
 {start_of_verse}
 Já [E]nosim stetson koženej

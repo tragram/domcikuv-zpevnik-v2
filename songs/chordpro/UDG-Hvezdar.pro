@@ -1,14 +1,15 @@
 {title: Hvězdář}
 {artist: UDG}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["udg_hvezdar-sken.pdf", "udg_hvezdar-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: UDG-Hvezdar_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: UDG-Hvezdar_gpt-4o-mini_v1}
+
 {start_of_verse}
 𝄆 Ztrácíš se [D]před očima,
 rosteš jen [A]ve vlastním stínu.

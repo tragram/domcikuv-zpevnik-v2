@@ -1,14 +1,15 @@
 {title: Nekvalifikovaný učitel}
 {artist: Honza Jícha}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["honza_jicha_nekvalifikovany_ucitel-sken.pdf", "honza_jicha_nekvalifikovany_ucitel-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-e2}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1436824800000}
+{illustrationId: Honza_Jicha-Nekvalifikovany_ucitel_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Nekvalifikovany_ucitel_gpt-4o-mini_v1}
+
 {start_of_chorus: R1}
 [C]Jsem kantor, mám na to talent
 těžko byste ke mně našli ekvivalent

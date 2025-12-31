@@ -1,13 +1,14 @@
 {title: Lodníkův lament}
 {artist: Hop Trop}
+{key: G}
 {capo: 0}
 {tempo: 120}
-{language: czech}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
 {range: d1-c1}
-{start_melody: e g h}
-{key: G}
+{language: czech}
+{startMelody: e g h}
+{createdAt: 1726264800000}
+{illustrationId: Hop_Trop-Lodnikuv_lament_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Hop_Trop-Lodnikuv_lament_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Em]Já snad [G]hned, když jsem se [D]narodil,

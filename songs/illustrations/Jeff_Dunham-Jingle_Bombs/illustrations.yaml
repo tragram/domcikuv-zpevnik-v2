@@ -1,0 +1,20 @@
+songId: Jeff_Dunham-Jingle_Bombs
+prompts:
+  - promptId: Jeff_Dunham-Jingle_Bombs_gpt-4o-mini_v1
+    songId: Jeff_Dunham-Jingle_Bombs
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a comically exaggerated, cartoonish character in
+      a desert setting, wearing a towel on their head and a bomb strapped to
+      their back. The character looks bewildered and slightly defeated, with a
+      humorous expression, while surrounded by whimsical holiday decorations
+      like jingle bells and Christmas lights. In the background, a military
+      checkpoint can be seen, with a cartoonish soldier looking surprised. The
+      overall tone should be satirical and lighthearted, reflecting the
+      absurdity of the lyrics.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

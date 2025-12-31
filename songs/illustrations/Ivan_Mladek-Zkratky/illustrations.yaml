@@ -1,0 +1,19 @@
+songId: Ivan_Mladek-Zkratky
+prompts:
+  - promptId: Ivan_Mladek-Zkratky_gpt-4o-mini_v2
+    songId: Ivan_Mladek-Zkratky
+    createdAt: 1754387145000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a bustling Prague street scene, where a vintage
+      car labeled "Dé Ká Wé" is parked, surrounded by quirky characters engaged
+      in lively conversations. Include elements like a delivery driver holding a
+      package, a street vendor selling local delicacies, and a group of friends
+      discussing plans over a warm meal. Capture the vibrant atmosphere of the
+      city, with historic buildings in the background and hints of musical notes
+      floating in the air to reflect the song's playful tone.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

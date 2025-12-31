@@ -1,0 +1,18 @@
+songId: Michal_Horak-Prsa
+prompts:
+  - promptId: Michal_Horak-Prsa_gpt-4o-mini_v1
+    songId: Michal_Horak-Prsa
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a lively evening debate among a diverse
+      group of women in a cozy café setting, discussing animal rights and
+      healthy eating. Include elements like a cow looking longingly at a pasture
+      through a fence, a plate of healthy food on the table, and playful hints
+      of humor related to body positivity, with an emphasis on the joy of
+      camaraderie and thoughtful conversation.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

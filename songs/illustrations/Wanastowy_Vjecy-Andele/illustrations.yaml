@@ -1,0 +1,18 @@
+songId: Wanastowy_Vjecy-Andele
+prompts:
+  - promptId: Wanastowy_Vjecy-Andele_gpt-4o-mini_v1
+    songId: Wanastowy_Vjecy-Andele
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dreamy, surreal landscape at dawn, featuring a
+      sleepy princess in a whimsical setting. Include elements like wounded
+      angels walking through fields, a mysterious figure representing the
+      "swallower of finds and losses," and a mirror symbolizing introspection.
+      The atmosphere should convey a blend of beauty and melancholy, capturing
+      the essence of love and longing in a strange world.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

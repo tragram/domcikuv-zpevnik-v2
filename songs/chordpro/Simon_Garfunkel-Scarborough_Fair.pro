@@ -1,14 +1,15 @@
 {title: Scarborough Fair}
 {artist: Simon & Garfunkel}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["simon__garfunkel_scarborough_fair-sken.pdf", "simon__garfunkel_scarborough_fair-comp.pdf"]}
-{capo: 4}
 {key: Am}
+{capo: 4}
 {tempo: }
 {range: g1-a2}
-{start_melody: a e}
+{language: english}
+{startMelody: a e}
+{createdAt: 1436824800000}
+{illustrationId: Simon_Garfunkel-Scarborough_Fair_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Simon_Garfunkel-Scarborough_Fair_gpt-4o-mini_v1}
+
 {start_of_verse: V1}
 [Ami]Are you going to [G]Scar[Gsus4]bo[G]rough [Ami]Fair
 [C]parsley [Ami]sage rose[C]ma[D]ry and [Ami]thyme

@@ -1,14 +1,14 @@
 {title: Dlouhej kouř}
 {artist: Chinaski}
-{date_added: 04-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_dlouhej_kour-sken.pdf", "chinaski_dlouhej_kour-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: h1-a1}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1492120800000}
+{illustrationId: Chinaski-Dlouhej_kour_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Dlouhej_kour_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]Když budeš hodná naučím tě [C]číst

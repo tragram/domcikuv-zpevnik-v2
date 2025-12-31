@@ -1,14 +1,15 @@
 {title: Hallelujah}
 {artist: Leonard Cohen}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["leonard_cohen_hallelujah-sken.pdf", "leonard_cohen_hallelujah-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: a1-e2}
-{start_melody: }
+{language: english}
+{startMelody: }
+{createdAt: 1436824800000}
+{illustrationId: Leonard_Cohen-Hallelujah_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Leonard_Cohen-Hallelujah_gpt-4o-mini_v1}
+
 {start_of_verse}
 I've [G]heard there was a [Emi]secret chord
 That [G]David played, and it [Emi]pleased the Lord.

@@ -1,0 +1,19 @@
+songId: Jaromir_Nohavica-Zatanci
+prompts:
+  - promptId: Jaromir_Nohavica-Zatanci_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-Zatanci
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a passionate dance scene under a glowing sunset,
+      with a couple intertwined in movement. The woman is wearing a flowing
+      dress that seems to drift to the ground, symbolizing freedom and intimacy.
+      Surround them with hints of oranges and warm colors, evoking a sense of
+      longing and connection, as if they are dancing around a fire. The
+      atmosphere should feel romantic and vibrant, capturing the essence of love
+      and desire.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,15 @@
 {title: Bláznova ukolébavka}
 {artist: Pavel Dydovič}
-{date_added: 09-2010}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_dydovic_blaznova_ukolebavka-sken.pdf", "pavel_dydovic_blaznova_ukolebavka-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: d d d c# d}
+{language: czech}
+{startMelody: d d d c# d}
+{createdAt: 1284415200000}
+{illustrationId: Pavel_Dydovic-Blaznova_ukolebavka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pavel_Dydovic-Blaznova_ukolebavka_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Máš má ovečko [A]dávno spát
 i [G]píseň ptáků [D]končí

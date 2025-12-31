@@ -1,14 +1,15 @@
 {title: Stížnost}
 {artist: Chinaski}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_stiznost-sken.pdf", "chinaski_stiznost-comp.pdf", "chinaski_stiznost-gen.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: a1-d2}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1436824800000}
+{illustrationId: Chinaski-Stiznost_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Stiznost_gpt-4o-mini_v1}
+
 {start_of_chorus: R1}
 [C]Dva večery sepisuju
 [G]dlouhou stížnost [Dmi]na život

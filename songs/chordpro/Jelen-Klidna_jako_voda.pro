@@ -1,14 +1,15 @@
 {title: Klidná jako voda}
 {artist: Jelen}
-{date_added: 10-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jelen_klidna_jako_voda-sken.pdf", "jelen_klidna_jako_voda-comp.pdf", "jelen_klidna_jako_voda-gen.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: h1-c2}
-{start_melody: c e}
+{language: czech}
+{startMelody: c e}
+{createdAt: 1476396000000}
+{illustrationId: Jelen-Klidna_jako_voda_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jelen-Klidna_jako_voda_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Chodím světem už [F]pěknejch pár [C]let,
 [C]parným létem i [F]zrmzlej jak [C]led.

@@ -1,14 +1,15 @@
 {title: Kutil}
 {artist: Chinaski}
-{date_added: 06-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_kutil-sken.pdf", "chinaski_kutil-comp.pdf"]}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: e f#}
+{language: czech}
+{startMelody: e f#}
+{createdAt: 1528927200000}
+{illustrationId: Chinaski-Kutil_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Kutil_gpt-4o-mini_v1}
+
 {start_of_verse}
 Jsem [E]kutil mám malou
 [F#mi]dílnu víc [A]mě nezají[E]má

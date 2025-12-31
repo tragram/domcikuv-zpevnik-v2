@@ -1,14 +1,15 @@
 {title: Píseň neznámého vojína}
 {artist: Karel Kryl}
-{date_added: 01-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_pisen_neznameho_vojina-sken.pdf", "karel_kryl_pisen_neznameho_vojina-comp.pdf"]}
-{capo: 2}
 {key: Em}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1484348400000}
+{illustrationId: Karel_Kryl-Pisen_neznameho_vojina_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Pisen_neznameho_vojina_gpt-4o-mini_v1}
+
 {start_of_verse}
 V [Emi]čele klaka, pak ctnostné rodiny a náruč chryzant[H7]ém,
 černá saka a žena hrdiny pod paží s amant[Emi]em, [H7]

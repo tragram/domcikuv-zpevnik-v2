@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Kalná Řeka}
 {artist: Traband}
 {key: Hm}
-{date_added: 07-2025}
-{language: czech}
-{tempo: }
 {capo: 0}
+{tempo: }
 {range: }
-{start_melody: }
-
-{songbooks: []}
+{language: czech}
+{startMelody: }
+{createdAt: 1752444000000}
+{illustrationId: Traband-Kalna_Reka_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Traband-Kalna_Reka_gpt-4o-mini_v2}
 
 {start_of_verse}
 [Hmi]Miloval jsem holku ze sou[D]sední vsi

@@ -1,14 +1,15 @@
 {title: Taky jsem se narodil bos}
 {artist: Olympic}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["olympic_taky_jsem_se_narodil_bos-sken.pdf", "olympic_taky_jsem_se_narodil_bos-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-e2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1436824800000}
+{illustrationId: Olympic-Taky_jsem_se_narodil_bos_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Olympic-Taky_jsem_se_narodil_bos_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Taky jsem se narodil bos
 [A]jako každý chlap

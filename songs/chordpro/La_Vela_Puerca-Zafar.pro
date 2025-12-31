@@ -1,14 +1,14 @@
 {title: Zafar}
 {artist: La Vela Puerca}
-{date_added: 10-2020}
-{songbooks: ["Domčík"]}
-{language: spanish}
-{pdf_filenames: []}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: g1-e1}
-{start_melody: e d c h c}
+{language: spanish}
+{startMelody: e d c h c}
+{createdAt: 1602626400000}
+{illustrationId: La_Vela_Puerca-Zafar_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: La_Vela_Puerca-Zafar_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Am]Soy de la ciudad con t[Dm]odo lo que [G]ves

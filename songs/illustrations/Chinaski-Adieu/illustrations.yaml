@@ -1,0 +1,18 @@
+songId: Chinaski-Adieu
+prompts:
+  - promptId: Chinaski-Adieu_gpt-4o-mini_v1
+    songId: Chinaski-Adieu
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cozy, dimly lit bar scene where a melancholic
+      man sits at the counter, reminiscing. In front of him are two wine
+      glasses, one filled with deep red Cabernet and the other with bright
+      Sauvignon. The atmosphere is nostalgic, with shadows of laughter and music
+      in the background, reflecting his bittersweet memories of Mademoiselle
+      Cabernet.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

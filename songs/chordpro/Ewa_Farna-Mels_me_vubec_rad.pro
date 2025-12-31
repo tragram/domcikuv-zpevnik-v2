@@ -1,14 +1,14 @@
 {title: Měls mě vůbec rád}
 {artist: Ewa Farna}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["ewa_farna_mels_me_vubec_rad-sken.pdf", "ewa_farna_mels_me_vubec_rad-comp.pdf"]}
-{capo: 4}
 {key: C}
+{capo: 4}
 {tempo: }
 {range: h1-a1}
-{start_melody: c d}
+{language: czech}
+{startMelody: c d}
+{createdAt: 1436824800000}
+{illustrationId: Ewa_Farna-Mels_me_vubec_rad_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Ewa_Farna-Mels_me_vubec_rad_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Zavolá, [G]Nebo [Ami]příjde [F]

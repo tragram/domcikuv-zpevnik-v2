@@ -1,0 +1,18 @@
+songId: The_Beatles-Let_It_Be
+prompts:
+  - promptId: The_Beatles-Let_It_Be_gpt-4o-mini_v1
+    songId: The_Beatles-Let_It_Be
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an ethereal illustration of a serene figure resembling Mother Mary,
+      surrounded by soft, glowing light. She stands amidst a dark, cloudy night,
+      whispering comforting words to broken-hearted people in the background.
+      The scene conveys hope and wisdom, with a gentle radiance illuminating the
+      surroundings. Include elements of nature, like stars or a soft dawn,
+      symbolizing the promise of a brighter tomorrow.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

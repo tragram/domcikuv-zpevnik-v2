@@ -1,0 +1,17 @@
+songId: Summer_All_Stars-Leto_lasky
+prompts:
+  - promptId: Summer_All_Stars-Leto_lasky_gpt-4o-mini_v1
+    songId: Summer_All_Stars-Leto_lasky
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a vibrant sunrise over a frozen landscape, with flocks
+      of birds taking flight towards the horizon. The scene should convey a
+      sense of awakening and hope, with a person in the foreground, arms
+      outstretched, singing joyfully. Incorporate elements of winter melting
+      into spring, symbolizing renewal and the journey from darkness to light.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

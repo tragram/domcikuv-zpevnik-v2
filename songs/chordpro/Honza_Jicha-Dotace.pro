@@ -1,14 +1,14 @@
 {title: Dotace}
 {artist: Honza Jícha}
-{date_added: 01-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["honza_jicha_dotace-sken.pdf", "honza_jicha_dotace-comp.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: a1-e2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1484348400000}
+{illustrationId: Honza_Jicha-Dotace_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Dotace_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Ami]Po cestě [Ami/G]z Alberta jsem [D7/F#]zakop o že[E]bráka,

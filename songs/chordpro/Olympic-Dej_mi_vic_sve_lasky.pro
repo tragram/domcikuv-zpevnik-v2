@@ -1,14 +1,15 @@
 {title: Dej mi víc své lásky}
 {artist: Olympic}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["olympic_dej_mi_vic_sve_lasky-sken.pdf", "olympic_dej_mi_vic_sve_lasky-comp.pdf"]}
-{capo: 1}
 {key: Am}
+{capo: 1}
 {tempo: }
 {range: a1-h2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Olympic-Dej_mi_vic_sve_lasky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Olympic-Dej_mi_vic_sve_lasky_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Vymyslel jsem spoustu napadů, [C]aů,
 co [Ami]podporujou hloupou nála[G7]du, [E7]aů,

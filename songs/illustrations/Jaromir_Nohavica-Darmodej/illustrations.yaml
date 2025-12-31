@@ -1,0 +1,20 @@
+songId: Jaromir_Nohavica-Darmodej
+prompts:
+  - promptId: Jaromir_Nohavica-Darmodej_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-Darmodej
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a mysterious man walking through a dimly lit city
+      street at night, wearing a snake-skin coat and playing a haunting melody
+      on a flute. The scene should evoke a sense of melancholy and
+      introspection, with shadows of rats scurrying in the background and a full
+      moon casting a ghostly light. Include subtle elements of dreams and fate,
+      such as faint images of family portraits in the shadows and a feeling of
+      unease. The man should have deep, haunting eyes, suggesting a troubled
+      past.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

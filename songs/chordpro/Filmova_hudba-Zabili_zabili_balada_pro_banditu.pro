@@ -1,14 +1,14 @@
 {title: Zabili, zabili, balada pro banditu}
 {artist: Filmová hudba}
-{date_added: 01-2011}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["filmova_hudba_zabili_zabili_balada_pro_banditu-sken.pdf", "filmova_hudba_zabili_zabili_balada_pro_banditu-comp.pdf"]}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
-{range: a1-h2/e2}
-{start_melody: f#}
+{range: a1-h2}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1294959600000}
+{illustrationId: Filmova_hudba-Zabili_zabili_balada_pro_banditu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Filmova_hudba-Zabili_zabili_balada_pro_banditu_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]Zabili, [G]zabili [Emi]chlapa z Kolo[G]čavy,

@@ -1,0 +1,19 @@
+songId: Foster_the_People-Pumped_Up_Kicks
+prompts:
+  - promptId: Foster_the_People-Pumped_Up_Kicks_gpt-4o-mini_v1
+    songId: Foster_the_People-Pumped_Up_Kicks
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a young cowboy kid with a cigarette hanging from
+      his mouth, holding a six-shooter gun. He stands in a dimly lit room filled
+      with shadows, looking around with a mischievous grin. The atmosphere is
+      tense, suggesting a sense of urgency, as if he’s about to chase after
+      something or someone. Include elements of a cluttered room, like a box of
+      toys and a distant kitchen with a hint of ice. The mood should blend
+      innocence with a touch of danger.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

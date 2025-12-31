@@ -1,0 +1,17 @@
+songId: Kamil_Strihavka-Zeme_vzdalena
+prompts:
+  - promptId: Kamil_Strihavka-Zeme_vzdalena_gpt-4o-mini_v1
+    songId: Kamil_Strihavka-Zeme_vzdalena
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a melancholic cityscape under a rainy sky,
+      shrouded in smoke. Include shadowy figures and a pair of wandering cats,
+      with hints of mystery and longing in the atmosphere. Incorporate elements
+      like a guitar gently weeping, soft curtains casting shadows, and a distant
+      star shining above, evoking a sense of introspection and connection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

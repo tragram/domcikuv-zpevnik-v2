@@ -1,0 +1,19 @@
+songId: Inspired_By_Iceland-The_A-O_of_Iceland
+prompts:
+  - promptId: Inspired_By_Iceland-The_A-O_of_Iceland_gpt-4o-mini_v1
+    songId: Inspired_By_Iceland-The_A-O_of_Iceland
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the essence of Iceland, featuring a
+      cozy scene with a person enjoying coffee while looking out a window at
+      stunning landscapes, including a torfbær (turf house), sheep, and a
+      vibrant sundlaug (swimming pool). Incorporate elements like mountains,
+      jöklar (glaciers), and the colorful charm of Icelandic culture, with hints
+      of humor such as a playful nod to elves. The atmosphere should be warm and
+      inviting, reflecting the unique beauty of the island.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

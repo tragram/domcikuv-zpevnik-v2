@@ -1,15 +1,14 @@
 {title: Moc toho nevim}
 {artist: Chinaski}
-{date_added: 10-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_moc_toho_nevim-sken.pdf", "chinaski_moc_toho_nevim-comp.pdf"]}
-{capo: 0}
 {key: A}
+{capo: 0}
 {tempo: }
-{image_model: FLUX.1-pro}
 {range: e1-c#1}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1539468000000}
+{illustrationId: Chinaski-Moc_toho_nevim_gpt-4o-mini_v1_FLUX.1-pro}
+{promptId: Chinaski-Moc_toho_nevim_gpt-4o-mini_v1}
 
 {start_of_verse}
 [A]Moc toho nevim

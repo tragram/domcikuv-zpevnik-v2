@@ -1,0 +1,18 @@
+songId: Metallica-Nothing_Else_Matters
+prompts:
+  - promptId: Metallica-Nothing_Else_Matters_gpt-4o-mini_v1
+    songId: Metallica-Nothing_Else_Matters
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of two people standing close together, gazing into each
+      other's eyes with a serene backdrop of nature. The scene should convey
+      deep trust and connection, with soft light illuminating their faces,
+      symbolizing love and authenticity. Include elements that suggest a
+      journey, like winding paths or distant mountains, to represent the idea of
+      closeness despite distance.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

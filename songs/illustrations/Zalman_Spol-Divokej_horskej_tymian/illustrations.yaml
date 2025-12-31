@@ -1,0 +1,35 @@
+songId: Zalman_Spol-Divokej_horskej_tymian
+prompts:
+  - promptId: Zalman_Spol-Divokej_horskej_tymian_gpt-4o-mini_v1
+    songId: Zalman_Spol-Divokej_horskej_tymian
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a sunlit summer landscape with a winding dirt
+      path, where a couple walks hand in hand, surrounded by wild thyme flowers
+      blooming on the hills. Capture the essence of warmth and tranquility, with
+      a vintage wagon in the background and a vase filled with freshly picked
+      thyme in the foreground.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - promptId: Zalman_Spol-Divokej_horskej_tymian_gpt-4o_v1
+    songId: Zalman_Spol-Divokej_horskej_tymian
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o
+    text: >-
+      Create an illustration of a sunlit summer landscape with a winding dirt
+      path, where a couple walks hand in hand, surrounded by wild thyme flowers
+      blooming on the hills. Capture the essence of warmth and tranquility, with
+      a vintage wagon in the background and a vase filled with freshly picked
+      thyme in the foreground.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: dalle3-simple
+        filename: dalle3-simple.webp
+      - createdAt: 1754387142000
+        imageModel: dalle3
+        filename: dalle3.webp

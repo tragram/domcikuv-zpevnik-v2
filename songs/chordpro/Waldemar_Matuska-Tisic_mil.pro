@@ -1,14 +1,14 @@
 {title: Tisíc mil}
 {artist: Waldemar Matuška}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["waldemar_matuska_tisic_mil-sken.pdf", "waldemar_matuska_tisic_mil-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-h1}
-{start_melody: d g h}
+{language: czech}
+{startMelody: d g h}
+{createdAt: 1436824800000}
+{illustrationId: Waldemar_Matuska-Tisic_mil_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Waldemar_Matuska-Tisic_mil_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]V nohách mám už tisíc [Emi]mil,

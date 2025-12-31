@@ -1,14 +1,15 @@
 {title: Bouře}
 {artist: Nezmaři}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["nezmari_boure-sken.pdf", "nezmari_boure-comp.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: c1-a1}
-{start_melody: f}
+{language: czech}
+{startMelody: f}
+{createdAt: 1436824800000}
+{illustrationId: Nezmari-Boure_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Nezmari-Boure_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Dmi]Slyším bití vln a příboje
 moře [Dmi/C]zuří, bouře blízko je

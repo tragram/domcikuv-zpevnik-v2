@@ -1,14 +1,15 @@
 {title: Holubí dům}
 {artist: Jiří Schlinger}
-{date_added: 08-2013}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jiri_schlinger_holubi_dum-sken.pdf", "jiri_schlinger_holubi_dum-comp.pdf"]}
-{capo: 3}
 {key: Hm}
+{capo: 3}
 {tempo: }
 {range: a1-h2}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1376431200000}
+{illustrationId: Jiri_Schlinger-Holubi_dum_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jiri_Schlinger-Holubi_dum_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Hmi]Zpí[A]vám [Gmaj]ptákům
 a [F#mi7]zvlášť holub[Hmi]ům,

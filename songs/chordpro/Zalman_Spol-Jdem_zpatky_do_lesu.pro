@@ -1,14 +1,15 @@
 {title: Jdem zpátky do lesů}
 {artist: Žalman & Spol.}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_lohonka_zalman_jdem_zpatky_do_lesu-sken.pdf", "pavel_lohonka_zalman_jdem_zpatky_do_lesu-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-h1}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1436824800000}
+{illustrationId: Zalman_Spol-Jdem_zpatky_do_lesu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Jdem_zpatky_do_lesu_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Am7]Sedím na kolejích,
 [D7]které nikam neved[G]ou,[C][G]

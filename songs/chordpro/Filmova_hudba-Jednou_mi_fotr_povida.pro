@@ -1,14 +1,15 @@
 {title: Jednou mi fotr povídá}
 {artist: Filmová hudba}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["filmova_hudba_jednou_mi_fotr_povida-sken.pdf", "filmova_hudba_jednou_mi_fotr_povida-comp.pdf"]}
-{capo: 0}
 {key: A}
+{capo: 0}
 {tempo: }
 {range: a1-e2}
-{start_melody: c#}
+{language: czech}
+{startMelody: c#}
+{createdAt: 1436824800000}
+{illustrationId: Filmova_hudba-Jednou_mi_fotr_povida_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Filmova_hudba-Jednou_mi_fotr_povida_gpt-4o-mini_v1}
+
 {start_of_verse}
 [A]Jednou mi fotr [A7]povídá:
 [D]zůstali jsme už [D7]sami dva,

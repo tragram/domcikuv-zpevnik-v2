@@ -1,0 +1,18 @@
+songId: Waldemar_Matuska-Ruze_z_Texasu
+prompts:
+  - promptId: Waldemar_Matuska-Ruze_z_Texasu_gpt-4o-mini_v2
+    songId: Waldemar_Matuska-Ruze_z_Texasu
+    createdAt: 1754387150000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a romantic scene by the Rio Grande at night. A
+      cowboy, leaning against his horse, gazes at a beautiful girl holding a
+      bouquet of yellow roses. The moonlight reflects on the river, and a serene
+      ranch is visible in the background. The atmosphere should convey a sense
+      of longing and connection, capturing the essence of love and the beauty of
+      the moment.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

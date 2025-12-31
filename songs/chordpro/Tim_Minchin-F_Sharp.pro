@@ -1,14 +1,15 @@
 {title: F Sharp}
 {artist: Tim Minchin}
-{date_added: 03-2025}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: }
+{key: A#}
 {capo: 0}
-{key: B}
 {tempo: }
 {range: a1-g2}
-{start_melody: a a h}
+{language: english}
+{startMelody: a a h}
+{createdAt: 1741906800000}
+{illustrationId: Tim_Minchin-F_Sharp_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Tim_Minchin-F_Sharp_gpt-4o-mini_v1}
+
 {start_of_verse: Intro}
 I've been [B]having a little [A7]problem recent[Dm]ly
 Which is [Gm/E]quite disturbing [A7]musicallical[Dm]ly

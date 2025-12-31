@@ -1,14 +1,15 @@
 {title: Kdyby sis oči vyplakala}
 {artist: Karel Gott}
-{date_added: 10-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_gott_kdyby_sis_oci_vyplakala-sken.pdf", "karel_gott_kdyby_sis_oci_vyplakala-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1507932000000}
+{illustrationId: Karel_Gott-Kdyby_sis_oci_vyplakala_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Gott-Kdyby_sis_oci_vyplakala_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Kdyby sis oči [Emi]vyplakala
 [C]a jako moře [D7]byl tvůj žal,

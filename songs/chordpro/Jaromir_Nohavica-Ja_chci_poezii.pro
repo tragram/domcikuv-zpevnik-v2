@@ -1,15 +1,14 @@
 {title: Já chci poezii}
 {artist: Jaromír Nohavica}
-{date_added: 08-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_ja_chci_poezii-sken.pdf", "jaromir_nohavica_ja_chci_poezii-comp.pdf"]}
-{capo: 2}
 {key: Em}
+{capo: 2}
 {tempo: }
 {range: a1-c2}
-{start_melody: e f#}
-
+{language: czech}
+{startMelody: e f#}
+{createdAt: 1534197600000}
+{illustrationId: Jaromir_Nohavica-Ja_chci_poezii_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Ja_chci_poezii_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Emi]Všichni po mně chtějí podpis nebo prachy,

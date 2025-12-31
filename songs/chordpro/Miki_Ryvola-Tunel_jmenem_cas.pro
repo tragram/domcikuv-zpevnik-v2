@@ -1,11 +1,14 @@
 {title: Tunel jménem čas}
 {artist: Miki Ryvola}
+{key: }
 {capo: 0}
-{language: czech}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
+{tempo: }
 {range: h1-g#1}
-{start_melody: h g#}
+{language: czech}
+{startMelody: h g#}
+{createdAt: 1726264800000}
+{illustrationId: Miki_Ryvola-Tunel_jmenem_cas_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Miki_Ryvola-Tunel_jmenem_cas_gpt-4o-mini_v1}
 
 {start_of_verse}
 Těch [E]strašnejch vlaků, [G#m]co se ženou

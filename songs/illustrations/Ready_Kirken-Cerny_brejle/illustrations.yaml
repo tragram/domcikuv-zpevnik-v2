@@ -1,0 +1,18 @@
+songId: Ready_Kirken-Cerny_brejle
+prompts:
+  - promptId: Ready_Kirken-Cerny_brejle_gpt-4o-mini_v1
+    songId: Ready_Kirken-Cerny_brejle
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a person wearing black sunglasses, standing in a dimly
+      lit urban environment, reflecting a sense of introspection and waiting.
+      The background should hint at a sudden change, with blurred city lights
+      and a mysterious pathway leading into the unknown. Include subtle elements
+      that suggest struggle and hope, like a flickering streetlight or a distant
+      sunrise.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

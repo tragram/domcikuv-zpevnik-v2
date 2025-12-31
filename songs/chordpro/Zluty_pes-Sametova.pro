@@ -1,14 +1,15 @@
 {title: Sametová}
 {artist: Žlutý pes}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["zluty_pes_sametova-sken.pdf", "zluty_pes_sametova-comp.pdf"]}
-{capo: 2}
 {key: C}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1436824800000}
+{illustrationId: Zluty_pes-Sametova_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zluty_pes-Sametova_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Vzpomínám, když tehdá [F]před léty
 [C]začaly lítat [F]rakety,

@@ -1,16 +1,14 @@
 {title: Na palubě Titanicu}
 {artist: Xindl X}
-{date_added: 12-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: g1-d2}
-{start_melody: e-g}
-
-{title: Na palubě Titanicu}
+{language: czech}
+{startMelody: e-g}
+{createdAt: 1450047600000}
+{illustrationId: Xindl_X-Na_palube_Titanicu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Xindl_X-Na_palube_Titanicu_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Na palubě Titani[G]cu máme dneska [Ami]švandu [G]

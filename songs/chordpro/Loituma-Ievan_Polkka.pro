@@ -1,14 +1,14 @@
 {title: Ievan Polkka}
 {artist: Loituma}
-{date_added: 03-2018}
-{songbooks: ["Domčík"]}
-{language: finnish}
-{pdf_filenames: ["loituma_ievan_polkka-sken.pdf", "loituma_ievan_polkka-comp.pdf"]}
-{capo: 3}
 {key: Dm}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: a d}
+{language: finnish}
+{startMelody: a d}
+{createdAt: 1520982000000}
+{illustrationId: Loituma-Ievan_Polkka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Loituma-Ievan_Polkka_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Dmi]Nuapurista kuulu se polokan tahti

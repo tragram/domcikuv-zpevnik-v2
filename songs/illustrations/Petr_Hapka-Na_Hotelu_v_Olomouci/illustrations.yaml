@@ -1,0 +1,18 @@
+songId: Petr_Hapka-Na_Hotelu_v_Olomouci
+prompts:
+  - promptId: Petr_Hapka-Na_Hotelu_v_Olomouci_gpt-4o-mini_v1
+    songId: Petr_Hapka-Na_Hotelu_v_Olomouci
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dimly lit hotel room in Olomouc, featuring a
+      mysterious figure resembling a classic film star, with a backdrop of a
+      heartbeat pulse visual. The atmosphere should evoke a sense of melancholy
+      and intrigue, with elements like a broken heart, a starlit sky visible
+      through a window, and the faint outline of a woman reaching out,
+      symbolizing longing and connection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

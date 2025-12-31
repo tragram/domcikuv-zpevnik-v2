@@ -1,14 +1,15 @@
 {title: Folsom Prison Blues}
 {artist: Johnny Cash}
-{date_added: 10-2018}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["johnny_cash_folsom_prison_blues-sken.pdf", "johnny_cash_folsom_prison_blues-comp.pdf"]}
-{capo: 3}
 {key: E}
+{capo: 3}
 {tempo: }
 {range: e1-h2}
-{start_melody: e g#}
+{language: english}
+{startMelody: e g#}
+{createdAt: 1539468000000}
+{illustrationId: Johnny_Cash-Folsom_Prison_Blues_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Johnny_Cash-Folsom_Prison_Blues_gpt-4o-mini_v1}
+
 {start_of_verse}
 I [E]hear the train a comin'
 it's rollin' 'round the bent

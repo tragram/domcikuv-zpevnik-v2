@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Pod dubem, za dubem}
 {artist: Svěrák & Uhlíř}
-{songbooks: []}
 {key: Am}
-{date_added: 05-2025}
-{language: czech}
-{tempo: }
 {capo: 3}
+{tempo: }
 {range: g#1-a2}
-{start_melody: a a a}
-{pdf_filenames: []}
+{language: czech}
+{startMelody: a a a}
+{createdAt: 1747173600000}
+{illustrationId: Sverak_Uhlir-Pod_dubem_za_dubem_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Sverak_Uhlir-Pod_dubem_za_dubem_gpt-4o-mini_v2}
 
 {start_of_chorus}
 [Ami]Pod dubem, za dubem

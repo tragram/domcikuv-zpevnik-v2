@@ -1,0 +1,19 @@
+songId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika
+prompts:
+  - promptId: >-
+      Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika_gpt-4o-mini_v2
+    songId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika
+    createdAt: 1754387144000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a weary dwarf mining deep underground,
+      surrounded by glimmering veins of gold and dark, crumbling rock. The scene
+      captures a tense moment as shadows loom, hinting at lurking dangers, with
+      a flickering lantern casting an eerie glow. The dwarf, with a determined
+      expression and a pickaxe in hand, is focused on extracting the precious
+      gold, oblivious to the growing threats in the shadows.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

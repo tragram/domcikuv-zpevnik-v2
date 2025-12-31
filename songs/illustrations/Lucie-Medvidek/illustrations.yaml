@@ -1,0 +1,33 @@
+songId: Lucie-Medvidek
+prompts:
+  - promptId: Lucie-Medvidek_gpt-4o-mini_v1
+    songId: Lucie-Medvidek
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a plush teddy bear traveling through a snowy
+      landscape, carrying a small gift. The bear is depicted on a cross,
+      dreaming peacefully, while Roman dogs in festive attire play nearby. The
+      scene is set during a magical Christmas night, with a glowing sunrise in
+      the background and a crown made of thorns subtly present.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - promptId: Lucie-Medvidek_gpt-4o_v1
+    songId: Lucie-Medvidek
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o
+    text: >-
+      A haunting and symbolic scene of a plush teddy bear pinned to a cross,
+      lying in the snow under a dark sky. The bear's soft, innocent appearance
+      contrasts with the grim metaphor of snow symbolizing cocaine. Roman
+      soldiers lurk in the background, while the scene radiates the tragedy of
+      corruption and sacrifice, adding a layer of darkness to the holiday
+      atmosphere.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: dalle3
+        filename: dalle3.webp

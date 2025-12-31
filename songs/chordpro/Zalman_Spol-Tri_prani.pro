@@ -1,14 +1,15 @@
 {title: Tři přání}
 {artist: Žalman & Spol.}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_lohonka_zalman_tri_prani-sken.pdf", "pavel_lohonka_zalman_tri_prani-comp.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: a1-c2}
-{start_melody: a d}
+{language: czech}
+{startMelody: a d}
+{createdAt: 1436824800000}
+{illustrationId: Zalman_Spol-Tri_prani_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Tri_prani_gpt-4o-mini_v1}
+
 {start_of_verse}
 Má [Dmi]dívka sbírá rozmarýn
 do vína prý ho [Ami]dá

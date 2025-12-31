@@ -1,0 +1,18 @@
+songId: Premier-Hrobar
+prompts:
+  - promptId: Premier-Hrobar_gpt-4o-mini_v1
+    songId: Premier-Hrobar
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a melancholic graveyard scene at dusk, featuring
+      a black coffin and a white tombstone. In the background, a silhouette of a
+      city shines brightly under a starry sky, symbolizing a journey from the
+      earthly to the celestial. Include elements of nostalgia, such as a distant
+      view of a smiling face in the city lights, blending themes of life, death,
+      and remembrance.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,15 @@
 {title: Zachraňte koně}
 {artist: Kamelot}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kamelot_zachrante_kone-sken.pdf", "kamelot_zachrante_kone-comp.pdf"]}
-{capo: 3}
 {key: Em}
+{capo: 3}
 {tempo: }
 {range: a1-h2}
-{start_melody: h g f# g}
+{language: czech}
+{startMelody: h g f# g}
+{createdAt: 1436824800000}
+{illustrationId: Kamelot-Zachrante_kone_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kamelot-Zachrante_kone_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Emi]Peklo byl ráj, když hořela stáj, [Ami7]příteli,
 [C]věř mi, koně [D]pláčou, povíd[G]ám, [C7][H7]

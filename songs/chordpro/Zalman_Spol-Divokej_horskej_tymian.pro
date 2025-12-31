@@ -1,14 +1,15 @@
 {title: Divokej horskej tymián}
 {artist: Žalman & Spol.}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_lohonka_zalman_divokej_horskej_tymian-sken.pdf", "pavel_lohonka_zalman_divokej_horskej_tymian-comp.pdf"]}
-{capo: 5}
 {key: C}
+{capo: 5}
 {tempo: }
 {range: g1-a2}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1436824800000}
+{illustrationId: Zalman_Spol-Divokej_horskej_tymian_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Divokej_horskej_tymian_gpt-4o-mini_v1}
+
 {start_of_verse}
 Dál za vo[C]zem [F]spolu [C]šlapem,
 někdo [F]rád a někdo [C]zmaten,

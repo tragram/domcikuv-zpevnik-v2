@@ -1,14 +1,15 @@
 {title: Lásko}
 {artist: Karel Kryl}
-{date_added: 07-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_lasko-sken.pdf", "karel_kryl_lasko-comp.pdf", "karel_kryl_lasko-gen.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: a1-d2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1468447200000}
+{illustrationId: Karel_Kryl-Lasko_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Lasko_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Dmi]Pár zbytků pro krysy na misce od guláše,
 [A7]milostný dopisy s parti[Gmi]í [A]mariáše,

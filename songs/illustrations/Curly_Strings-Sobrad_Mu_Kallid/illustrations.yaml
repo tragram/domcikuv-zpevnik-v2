@@ -1,0 +1,18 @@
+songId: Curly_Strings-Sobrad_Mu_Kallid
+prompts:
+  - promptId: Curly_Strings-Sobrad_Mu_Kallid_gpt-4o-mini_v1
+    songId: Curly_Strings-Sobrad_Mu_Kallid
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      The song expresses feelings of loneliness and longing for friends during
+      difficult times. It contrasts the grayness of solitary days with the joy
+      of shared moments and laughter. The imagery includes a cold, dull
+      environment, and a desire for warmth and connection, symbolized by candles
+      and shared drinks. The message emphasizes that happiness is greater when
+      shared, and that together, worries fade away.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

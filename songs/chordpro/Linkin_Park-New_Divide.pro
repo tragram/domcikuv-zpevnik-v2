@@ -1,14 +1,14 @@
 {title: New Divide}
 {artist: Linkin Park}
-{date_added: 11-2024}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["linkin_park_new_divide-sken.pdf", "linkin_park_new_divide-comp.pdf", "linkin_park_new_divide-gen.pdf"]}
-{capo: 5}
 {key: Em}
+{capo: 5}
 {tempo: }
 {range: a1-a2}
-{start_melody:h d e}
+{language: english}
+{startMelody: h d e}
+{createdAt: 1731538800000}
+{illustrationId: Linkin_Park-New_Divide_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Linkin_Park-New_Divide_gpt-4o-mini_v1}
 
 {start_of_verse}
 I [Em]remembered black skies

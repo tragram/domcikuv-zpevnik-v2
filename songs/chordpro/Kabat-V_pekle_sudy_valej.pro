@@ -1,14 +1,15 @@
 {title: V pekle sudy válej}
 {artist: Kabát}
-{date_added: 09-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_v_pekle_sudy_valej-sken.pdf", "kabat_v_pekle_sudy_valej-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: a1-e1}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1442181600000}
+{illustrationId: Kabat-V_pekle_sudy_valej_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-V_pekle_sudy_valej_gpt-4o-mini_v1}
+
 {start_of_chorus}
 [C]V pekle sudy válej
 [G]Z kotle pára [Dmi]stoupá

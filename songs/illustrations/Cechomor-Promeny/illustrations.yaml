@@ -1,0 +1,18 @@
+songId: Cechomor-Promeny
+prompts:
+  - promptId: Cechomor-Promeny_gpt-4o-mini_v2
+    songId: Cechomor-Promeny
+    createdAt: 1765293140000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical scene featuring a playful squirrel
+      leaping from a tall oak tree to a nearby spruce, with a backdrop of a
+      starry night sky. In the foreground, a small fishing rod rests beside a
+      serene river, hinting at the longing for connection and freedom. The
+      overall atmosphere should convey a sense of longing and fantasy, blending
+      nature with elements of love and destiny.
+    illustrations:
+      - createdAt: 1765293146000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

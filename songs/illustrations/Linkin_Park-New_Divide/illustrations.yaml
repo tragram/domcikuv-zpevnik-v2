@@ -1,0 +1,18 @@
+songId: Linkin_Park-New_Divide
+prompts:
+  - promptId: Linkin_Park-New_Divide_gpt-4o-mini_v1
+    songId: Linkin_Park-New_Divide
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create a dark, atmospheric scene depicting a stormy landscape with black
+      skies and flashes of lightning illuminating a desolate area. In the
+      foreground, include a figure standing amidst falling ashes, symbolizing
+      memories and loss. Add a faint silhouette of a person in the distance,
+      representing a connection yet to be made, with a sense of longing and
+      emotional tension in the air.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

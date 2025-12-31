@@ -1,0 +1,19 @@
+songId: Miki_Ryvola-Bedna_od_whiskey
+prompts:
+  - promptId: Miki_Ryvola-Bedna_od_whiskey_gpt-4o-mini_v2
+    songId: Miki_Ryvola-Bedna_od_whiskey
+    createdAt: 1754387147000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a somber figure standing on a wooden crate
+      labeled "whisky," wearing a long tie and a collar reminiscent of a dog,
+      gazing up a long, winding staircase that disappears into a cloudy,
+      ethereal sky. The scene should evoke a sense of longing and melancholy,
+      capturing the essence of a journey to a heavenly bar, with hints of
+      whiskey bottles scattered around and a distant silhouette of a small
+      hidden house in a meadow.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

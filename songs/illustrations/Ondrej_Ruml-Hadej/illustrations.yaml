@@ -1,0 +1,18 @@
+songId: Ondrej_Ruml-Hadej
+prompts:
+  - promptId: Ondrej_Ruml-Hadej_gpt-4o-mini_v1
+    songId: Ondrej_Ruml-Hadej
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a mystical night scene featuring a bright full
+      moon illuminating a vast sky filled with stars. Below, depict a rugged
+      landscape with thorny bushes and a winding path leading into the unknown.
+      Include a solitary figure wrapped in a tattered coat, contemplating the
+      mysteries of life and love, embodying a sense of longing and
+      introspection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

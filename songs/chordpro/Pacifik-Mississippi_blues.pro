@@ -1,14 +1,15 @@
 {title: Mississippi blues}
 {artist: Pacifik}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pacifik_mississippi_blues-sken.pdf", "pacifik_mississippi_blues-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: g1-a2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Pacifik-Mississippi_blues_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Pacifik-Mississippi_blues_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Říkali mu Charlie a [Dmi]jako malej kluk
 [Ami]kalhoty si [G]o plot potrh[Ami]al,

@@ -1,14 +1,14 @@
 {title: Přítel}
 {artist: Jaromír Nohavica}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_pritel-sken.pdf", "jaromir_nohavica_pritel-comp.pdf"]}
-{capo: 2}
 {key: G}
+{capo: 2}
 {tempo: }
 {range: g1-h2}
-{start_melody: a a a g}
+{language: czech}
+{startMelody: a a a g}
+{createdAt: 1436824800000}
+{illustrationId: Jaromir_Nohavica-Pritel_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Pritel_gpt-4o-mini_v1}
 
 {start_of_verse}
 Jestlipak [G]vzpomínáš si ještě na ten [D/F#]čas,

@@ -1,14 +1,15 @@
 {title: Cesta}
 {artist: Kryštof}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["krystof_cesta-sken.pdf", "krystof_cesta-comp.pdf"]}
-{capo: 5}
 {key: C}
+{capo: 5}
 {tempo: }
 {range: g1-f1}
-{start_melody: c g}
+{language: czech}
+{startMelody: c g}
+{createdAt: 1436824800000}
+{illustrationId: Krystof-Cesta_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Krystof-Cesta_gpt-4o-mini_v1}
+
 {start_of_verse}
 Tou [C]cestou, tím směrem
 prý bych se [G]dávno měl dát,

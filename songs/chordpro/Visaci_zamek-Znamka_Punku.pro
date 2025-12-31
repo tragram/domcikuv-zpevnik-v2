@@ -1,14 +1,14 @@
 {title: Známka Punku}
 {artist: Visací zámek}
-{date_added: 11-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: e1-d1}
-{start_melody: e d}
+{language: czech}
+{startMelody: e d}
+{createdAt: 1731538800000}
+{illustrationId: Visaci_zamek-Znamka_Punku_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Visaci_zamek-Znamka_Punku_gpt-4o-mini_v1}
 
 {start_of_verse}
 [E]Holinky [D]nosil [A]vždycky [G]naruby[F#]

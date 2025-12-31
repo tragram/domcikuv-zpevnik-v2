@@ -1,14 +1,14 @@
 {title: Sejdeme se v pánu}
 {artist: Žalman & Spol.}
-{date_added: 04-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-c2}
-{start_melody: d e g}
+{language: czech}
+{startMelody: d e g}
+{createdAt: 1492120800000}
+{illustrationId: Zalman_Spol-Sejdeme_se_v_panu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Sejdeme_se_v_panu_gpt-4o-mini_v1}
 
 {start_of_bridge}
 Jak se [G]vám nahoře ze sametu líbí,

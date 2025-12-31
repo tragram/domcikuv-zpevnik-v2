@@ -1,0 +1,17 @@
+songId: Survivor-Eye_Of_The_Tiger
+prompts:
+  - promptId: Survivor-Eye_Of_The_Tiger_gpt-4o-mini_v1
+    songId: Survivor-Eye_Of_The_Tiger
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a determined man standing strong on a city street at
+      dawn, symbolizing resilience and the will to survive. He should have an
+      intense gaze, reminiscent of a tiger, with a backdrop of urban challenges.
+      Incorporate elements of struggle and triumph, like shadows of rivals and
+      hints of a fierce competition, to convey the "eye of the tiger" theme.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

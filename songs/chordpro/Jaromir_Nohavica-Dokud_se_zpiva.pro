@@ -1,14 +1,15 @@
 {title: Dokud se zpívá}
 {artist: Jaromír Nohavica}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_dokud_se_zpiva-sken.pdf", "jaromir_nohavica_dokud_se_zpiva-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: g1-d2}
-{start_melody: e g}
+{language: czech}
+{startMelody: e g}
+{createdAt: 1436824800000}
+{illustrationId: Jaromir_Nohavica-Dokud_se_zpiva_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Dokud_se_zpiva_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Z Těšína [Emi]vyjíždí [Dm7]vlaky co čtv[F]rthodinu, [C][Emi][Dm7][G]
 [C]včera jsem [Emi]nespal a [Dm7]ani dnes [F]nespočinu, [C][Emi][Dm7][G]

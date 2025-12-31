@@ -1,14 +1,15 @@
 {title: Veličenstvo kat}
 {artist: Karel Kryl}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_velicenstvo_kat-sken.pdf", "karel_kryl_velicenstvo_kat-comp.pdf"]}
-{capo: 4}
 {key: Am}
+{capo: 4}
 {tempo: }
 {range: g1-a2}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1436824800000}
+{illustrationId: Karel_Kryl-Velicenstvo_kat_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Velicenstvo_kat_gpt-4o-mini_v1}
+
 {start_of_verse}
 V [Ami]ponurém osvětlení [G]gotického [Ami]sálu
 [C]kupčíci vyděšení [Dmi]hledí do mis[E]álů

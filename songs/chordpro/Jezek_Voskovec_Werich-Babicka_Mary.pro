@@ -1,14 +1,15 @@
 {title: Babička Mary}
 {artist: Ježek + Voskovec + Werich}
-{date_added: 08-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jezek__voskovec__werich_babicka_mary-sken.pdf", "jezek__voskovec__werich_babicka_mary-comp.pdf", "jezek__voskovec__werich_babicka_mary-gen.pdf"]}
-{capo: 4}
 {key: Am}
+{capo: 4}
 {tempo: }
 {range: g1-g2}
-{start_melody: a a e e}
+{language: czech}
+{startMelody: a a e e}
+{createdAt: 1471125600000}
+{illustrationId: Jezek_Voskovec_Werich-Babicka_Mary_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jezek_Voskovec_Werich-Babicka_Mary_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Štěchovická laguna když dřímá
 v zadumaném stínu Kordylér,

@@ -1,13 +1,14 @@
 {title: Tři kámošky psycholožky}
 {artist: Poletíme?}
-{language: czech}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
-{capo: 2}
-{range: g1-h2}
-{start_melody: g g g h d d h g}
 {key: G}
-
+{capo: 2}
+{tempo: }
+{range: g1-h2}
+{language: czech}
+{startMelody: g g g h d d h g}
+{createdAt: 1726264800000}
+{illustrationId: Poletime-Tri_kamosky_psycholozky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Poletime-Tri_kamosky_psycholozky_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]Tři kámošky, psycholožky, vracely se [Emi]nocí,

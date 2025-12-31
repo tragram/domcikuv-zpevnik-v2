@@ -1,12 +1,15 @@
 {title: Jarní kurýr}
 {artist: Miki Ryvola}
-{capo: 0}
-{language: czech}
-{date_added: 03-2025}
-{songbooks: ["Domčík"]}
 {key: C}
-{range: c1-c2/e2}
-{start_melody: e d c}
+{capo: 0}
+{tempo: }
+{range: c1-c2}
+{language: czech}
+{startMelody: e d c}
+{createdAt: 1741906800000}
+{illustrationId: Miki_Ryvola-Jarni_kuryr_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Miki_Ryvola-Jarni_kuryr_gpt-4o-mini_v1}
+
 {start_of_verse}
 Duně[C]ní kopyt [F]večer slýchá[C]vám,
 údolím jarní [Emi]kurýr jede k [E]nám.

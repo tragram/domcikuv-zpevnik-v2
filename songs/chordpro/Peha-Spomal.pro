@@ -1,14 +1,15 @@
 {title: Spomaľ}
 {artist: Peha}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: slovak}
-{pdf_filenames: ["peha_spomal-sken.pdf", "peha_spomal-comp.pdf"]}
-{capo: 4}
 {key: D}
+{capo: 4}
 {tempo: }
 {range: g1-a2}
-{start_melody: d}
+{language: slovak}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Peha-Spomal_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Peha-Spomal_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Za niečím [Ami]krásnym
 [D]tak rýchlo [Ami]ako sa [D]dá

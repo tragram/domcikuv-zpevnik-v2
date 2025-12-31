@@ -1,0 +1,18 @@
+songId: Pacifik-Mississippi_blues
+prompts:
+  - promptId: Pacifik-Mississippi_blues_gpt-4o-mini_v1
+    songId: Pacifik-Mississippi_blues
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a young boy named Charlie, standing by the
+      Mississippi River. He wears tattered pants and holds a basketball,
+      surrounded by chalk drawings of dreams on a wooden fence. In the
+      background, a shadowy figure looms, hinting at danger. The scene conveys a
+      bittersweet nostalgia, with a bluesy atmosphere, evoking themes of
+      childhood innocence and loss.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

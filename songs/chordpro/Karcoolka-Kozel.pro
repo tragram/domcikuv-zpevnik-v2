@@ -1,13 +1,14 @@
 {title: Kozel}
 {artist: Karcoolka}
-{date_added: 04-2025}
-{songbooks: ["Kvítek"]}
-{language: czech}
-{capo: 0}
 {key: D}
-{range: a1-d2}
-{start_melody: a d}
+{capo: 0}
 {tempo: }
+{range: a1-d2}
+{language: czech}
+{startMelody: a d}
+{createdAt: 1744581600000}
+{illustrationId: Karcoolka-Kozel_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Karcoolka-Kozel_gpt-4o-mini_v2}
 
 {start_of_verse: V1}
 To [D]strašný prokletí,

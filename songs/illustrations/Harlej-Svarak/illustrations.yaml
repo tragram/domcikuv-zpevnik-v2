@@ -1,0 +1,16 @@
+songId: Harlej-Svarak
+prompts:
+  - promptId: Harlej-Svarak_gpt-4o-mini_v1
+    songId: Harlej-Svarak
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lively indoor party scene, featuring a group
+      of friends enjoying themselves with red mulled wine, festive decorations,
+      and a vintage record player playing music. The atmosphere should be warm
+      and inviting, capturing the essence of celebration and camaraderie.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

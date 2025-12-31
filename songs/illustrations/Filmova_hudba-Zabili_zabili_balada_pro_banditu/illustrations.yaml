@@ -1,0 +1,17 @@
+songId: Filmova_hudba-Zabili_zabili_balada_pro_banditu
+prompts:
+  - promptId: Filmova_hudba-Zabili_zabili_balada_pro_banditu_gpt-4o-mini_v1
+    songId: Filmova_hudba-Zabili_zabili_balada_pro_banditu
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an eerie landscape featuring a graveyard in Koločava, with a somber
+      atmosphere. Include crows perched on a wooden fence, a misty backdrop of
+      distant mountains, and an old, weathered grave with signs of disturbance.
+      The scene should evoke a sense of mystery and loss, with hints of wine
+      barrels and a whisper of the wind carrying tales of the past.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

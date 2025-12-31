@@ -1,14 +1,15 @@
 {title: Méďové-Kolíbaná}
 {artist: Samson}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 3}
 {key: C}
+{capo: 3}
 {tempo: }
 {range: g1-a2}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1734130800000}
+{illustrationId: Samson-Medove-Kolibana_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Samson-Medove-Kolibana_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Co to leze [G]ze křo[C]ví?
 No tak honem, [G]kdo to [C]ví?

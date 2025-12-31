@@ -1,14 +1,15 @@
 {title: Hudsonský šífy}
 {artist: Wabi Daněk}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["wabi_danek_hudsonsky_sify-sken.pdf", "wabi_danek_hudsonsky_sify-comp.pdf"]}
-{capo: 4}
 {key: Am}
+{capo: 4}
 {tempo: }
 {range: g1-a2}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1436824800000}
+{illustrationId: Wabi_Danek-Hudsonsky_sify_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Wabi_Danek-Hudsonsky_sify_gpt-4o-mini_v1}
+
 {start_of_verse}
 Ten, kdo [Ami]nezná hukot
 vody lopat[C]kama vířený

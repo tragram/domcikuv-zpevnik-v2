@@ -1,0 +1,18 @@
+songId: Kabat-Colorado
+prompts:
+  - promptId: Kabat-Colorado_gpt-4o-mini_v1
+    songId: Kabat-Colorado
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a rugged cowboy in Colorado, surrounded by a
+      vibrant landscape featuring cattle and Native American jewelry. In the
+      background, depict a playful sheriff with a smile, while a group of girls
+      and bears adds a surreal twist to the scene. The atmosphere should blend
+      adventure with a hint of mischief, capturing the essence of freedom and
+      rebellion.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

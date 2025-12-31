@@ -1,16 +1,14 @@
 {title: Medvídek}
 {artist: Lucie}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["lucie_medvidek-sken.pdf", "lucie_medvidek-comp.pdf"]}
-{capo: 0}
 {key: A}
-{image_model: dalle3}
-{prompt_id: v1}
+{capo: 0}
 {tempo: }
 {range: a1-c#2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Lucie-Medvidek_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Lucie-Medvidek_gpt-4o-mini_v1}
 
 {start_of_verse}
 [A]Dlouhá noc a mě se stýská moc,

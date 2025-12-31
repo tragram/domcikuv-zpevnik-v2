@@ -1,0 +1,18 @@
+songId: Spiritual_kvintet-Batalion
+prompts:
+  - promptId: Spiritual_kvintet-Batalion_gpt-4o-mini_v1
+    songId: Spiritual_kvintet-Batalion
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a lively, romantic scene set in a rustic
+      tavern at night. Include a soldier sharing a bottle of wine with a
+      beautiful woman, surrounded by the warm glow of candlelight. In the
+      background, suggest a sense of impending adventure with hints of military
+      uniforms and a map of Burgundy. Capture the atmosphere of camaraderie and
+      bittersweet farewell, with a hint of melancholy in the air.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,18 @@
+songId: Cechomor-Hruska
+prompts:
+  - promptId: Cechomor-Hruska_gpt-4o-mini_v1
+    songId: Cechomor-Hruska
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration featuring a green-topped pear tree standing alone
+      in a vast field, with a dark horse grazing beneath it. In the background,
+      depict a serene landscape with deep waters and a hint of a journey,
+      conveying a sense of longing and adventure. Include subtle elements that
+      suggest the presence of a beloved companion, evoking a bittersweet
+      feeling.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

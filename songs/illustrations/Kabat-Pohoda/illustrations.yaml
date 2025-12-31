@@ -1,0 +1,19 @@
+songId: Kabat-Pohoda
+prompts:
+  - promptId: Kabat-Pohoda_gpt-4o-mini_v1
+    songId: Kabat-Pohoda
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a rural village scene with lush meadows and
+      forests, featuring a couple walking together. Include elements like cows,
+      crows, and a cozy village with a cinema and pub. Show men with tools,
+      women dancing with hoes in the morning dew, and tractors in the fields.
+      Add a dramatic backdrop of a fire in the woods and a nearby farmhouse,
+      with firefighters in action. The atmosphere should convey a sense of
+      community, resilience, and a slower pace of life.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

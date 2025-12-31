@@ -1,0 +1,17 @@
+songId: Poletime-Tri_kamosky_psycholozky
+prompts:
+  - promptId: Poletime-Tri_kamosky_psycholozky_gpt-4o-mini_v1
+    songId: Poletime-Tri_kamosky_psycholozky
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of three joyful female psychologists walking home
+      at dawn, laughing and singing. They should be depicted playfully, with one
+      of them stumbling near a river, surrounded by a forest. The scene captures
+      their carefree spirit, with elements of nature around them, like trees and
+      wildflowers, and hints of humor in their expressions.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

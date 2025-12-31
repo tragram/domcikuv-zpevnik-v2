@@ -1,14 +1,14 @@
 {title: Drunken Sailor}
 {artist: Irish Rovers}
-{date_added: 08-2013}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["irish_rovers_drunken_sailor-sken.pdf", "irish_rovers_drunken_sailor-comp.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: g1-a2}
-{start_melody: e}
+{language: english}
+{startMelody: e}
+{createdAt: 1376431200000}
+{illustrationId: Irish_Rovers-Drunken_Sailor_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Irish_Rovers-Drunken_Sailor_gpt-4o-mini_v1}
 
 {start_of_chorus}
 [Dm]Way hay and up she rises

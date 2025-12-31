@@ -1,14 +1,15 @@
 {title: Na Hotelu v Olomouci}
 {artist: Petr Hapka}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: g1-g3}
-{start_melody: f}
+{language: czech}
+{startMelody: f}
+{createdAt: 1734130800000}
+{illustrationId: Petr_Hapka-Na_Hotelu_v_Olomouci_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Petr_Hapka-Na_Hotelu_v_Olomouci_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Dmi]V půlce ledna, ve tmě [Ami]tmoucí,
 [C]na hotelu v Olo[G]mouci.

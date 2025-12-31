@@ -1,0 +1,20 @@
+songId: Stromae-Papaoutai
+prompts:
+  - promptId: Stromae-Papaoutai_gpt-4o-mini_v1
+    songId: Stromae-Papaoutai
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the essence of a child searching for
+      their father, blending themes of curiosity, longing, and the wisdom of a
+      mother. The scene should depict a young child looking up at a distant
+      horizon, symbolizing the search for guidance, with a warm, nurturing
+      figure of a mother in the background. Incorporate elements that evoke
+      feelings of nostalgia and the complexities of parenthood, such as playful
+      toys or fading memories. The atmosphere should be both hopeful and
+      contemplative, reflecting the journey of understanding familial bonds.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,15 @@
 {title: Černý brejle}
 {artist: Ready Kirken}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["ready_kirken_cerny_brejle-sken.pdf", "ready_kirken_cerny_brejle-comp.pdf"]}
-{capo: 2}
 {key: A}
+{capo: 2}
 {tempo: }
 {range: g#1-c2}
-{start_melody: c# h c# a}
+{language: czech}
+{startMelody: c# h c# a}
+{createdAt: 1436824800000}
+{illustrationId: Ready_Kirken-Cerny_brejle_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Ready_Kirken-Cerny_brejle_gpt-4o-mini_v1}
+
 {start_of_verse}
 Nosím černý [A]brejle,
 protože mi [C#mi]nejde

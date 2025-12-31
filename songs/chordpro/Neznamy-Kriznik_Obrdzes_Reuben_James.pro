@@ -1,13 +1,14 @@
 {title: Křižník Obrdžes (Reuben James)}
 {artist: Neznámý}
-{date_added: 05-2025}
-{songbooks: ["Kvítek"]}
-{language: czech}
-{capo: 0}
 {key: D}
-{range: }
-{start_melody: }
+{capo: 0}
 {tempo: }
+{range: }
+{language: czech}
+{startMelody: }
+{createdAt: 1747173600000}
+{illustrationId: Neznamy-Kriznik_Obrdzes_Reuben_James_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Neznamy-Kriznik_Obrdzes_Reuben_James_gpt-4o-mini_v2}
 
 {start_of_verse: Rec.}
 Kdysi během druhé světové války

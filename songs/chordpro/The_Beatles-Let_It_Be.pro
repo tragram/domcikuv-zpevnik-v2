@@ -1,14 +1,14 @@
 {title: Let It Be}
 {artist: The Beatles}
-{date_added: 02-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["the_beatles_let_it_be-sken.pdf", "the_beatles_let_it_be-comp.pdf", "the_beatles_let_it_be-gen.pdf"]}
-{capo: 6}
 {key: C}
+{capo: 6}
 {tempo: }
 {range: e1-a2}
-{start_melody: g}
+{language: english}
+{startMelody: g}
+{createdAt: 1423868400000}
+{illustrationId: The_Beatles-Let_It_Be_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: The_Beatles-Let_It_Be_gpt-4o-mini_v1}
 
 TBD: jiné akordy
 

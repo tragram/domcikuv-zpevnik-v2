@@ -1,0 +1,18 @@
+songId: Wabi_Danek-Papirove_retezy
+prompts:
+  - promptId: Wabi_Danek-Papirove_retezy_gpt-4o-mini_v1
+    songId: Wabi_Danek-Papirove_retezy
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a melancholic Christmas scene: a dimly lit room
+      decorated with paper chains, where a woman prepares a festive dinner, her
+      face reflecting a sense of longing and sadness. Outside the window,
+      children play, and a postman stands at the door holding a telegram. The
+      atmosphere is a mix of holiday cheer and emotional solitude, capturing the
+      essence of a bittersweet Christmas night.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

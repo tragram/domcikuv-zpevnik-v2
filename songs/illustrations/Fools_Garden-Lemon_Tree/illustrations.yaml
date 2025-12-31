@@ -1,0 +1,17 @@
+songId: Fools_Garden-Lemon_Tree
+prompts:
+  - promptId: Fools_Garden-Lemon_Tree_gpt-4o-mini_v1
+    songId: Fools_Garden-Lemon_Tree
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lonely figure sitting on a lemon tree in a
+      dull, rainy room. The background should depict a heavy cloud, symbolizing
+      isolation, while the foreground features a bright yellow lemon tree
+      contrasting with the gray atmosphere. Include hints of a car driving in
+      the distance and a sense of longing in the character's expression.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

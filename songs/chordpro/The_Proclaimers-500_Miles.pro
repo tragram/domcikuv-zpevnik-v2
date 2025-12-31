@@ -1,13 +1,14 @@
 {title: 500 Miles}
 {artist: The Proclaimers}
-{tempo: 132}
-{capo: 0}
-{date_added: 03-2018}
-{songbooks: ["Domčík"]}
-{language: english}
 {key: D}
+{capo: 0}
+{tempo: 132}
 {range: d1-g2}
-{start_melody: f# g a h}
+{language: english}
+{startMelody: f# g a h}
+{createdAt: 1520982000000}
+{illustrationId: The_Proclaimers-500_Miles_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: The_Proclaimers-500_Miles_gpt-4o-mini_v1}
 
 {start_of_verse}
 When I [D]wake up,

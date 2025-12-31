@@ -1,0 +1,18 @@
+songId: Chinaski-Hlavolam
+prompts:
+  - promptId: Chinaski-Hlavolam_gpt-4o-mini_v1
+    songId: Chinaski-Hlavolam
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the essence of longing and intimacy
+      from the song. Depict a serene dawn scene with a couple embracing,
+      surrounded by a dreamy atmosphere filled with soft colors. The focus
+      should be on their faces, expressing deep affection and connection, while
+      hints of a puzzle or labyrinth subtly represent the complexities of love
+      and the quest for understanding.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

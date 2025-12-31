@@ -1,0 +1,17 @@
+songId: Pavel_Dydovic-Blaznova_ukolebavka
+prompts:
+  - promptId: Pavel_Dydovic-Blaznova_ukolebavka_gpt-4o-mini_v1
+    songId: Pavel_Dydovic-Blaznova_ukolebavka
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene, moonlit bedroom scene with a sheep
+      peacefully sleeping on a bed. Outside the window, a curious moth gazes in,
+      while the room is softly illuminated by a gentle glow. A white cloak hangs
+      nearby, hinting at a hidden mystery, and the atmosphere conveys a sense of
+      longing and companionship.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

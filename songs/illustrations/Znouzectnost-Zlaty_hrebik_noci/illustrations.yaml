@@ -1,0 +1,20 @@
+songId: Znouzectnost-Zlaty_hrebik_noci
+prompts:
+  - promptId: Znouzectnost-Zlaty_hrebik_noci_gpt-4o-mini_v2
+    songId: Znouzectnost-Zlaty_hrebik_noci
+    createdAt: 1754387150000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a grand castle courtyard filled with elegant
+      carriages and noble guests in lavish attire, as evening falls. The scene
+      should feature a majestic chandelier of candles illuminating the
+      festivities, with a musician in livery playing a spinet. In the
+      background, a lively dance is underway, while servers carry roasted meats,
+      and a sense of joyous celebration fills the air. Capture the contrast
+      between the opulence of the castle and the rustic charm of nearby
+      cottages, hinting at the excitement brewing there.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

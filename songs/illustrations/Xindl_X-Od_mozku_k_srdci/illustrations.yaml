@@ -1,0 +1,18 @@
+songId: Xindl_X-Od_mozku_k_srdci
+prompts:
+  - promptId: Xindl_X-Od_mozku_k_srdci_gpt-4o-mini_v1
+    songId: Xindl_X-Od_mozku_k_srdci
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a surreal journey from the heart to the brain,
+      featuring vibrant cosmic landscapes that blend elements of Mars and Venus.
+      Include a figure running energetically through a vast, dreamlike terrain,
+      symbolizing determination and adventure. Incorporate abstract
+      representations of obstacles and paths, with a backdrop of stars and
+      celestial bodies, conveying the essence of an epic escapade.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

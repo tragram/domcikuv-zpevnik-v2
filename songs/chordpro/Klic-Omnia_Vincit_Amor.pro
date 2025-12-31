@@ -1,14 +1,15 @@
 {title: Omnia Vincit Amor}
 {artist: Klíč}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["klic_omnia_vincit_amor-sken.pdf", "klic_omnia_vincit_amor-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: e1-d1}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1436824800000}
+{illustrationId: Klic-Omnia_Vincit_Amor_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Klic-Omnia_Vincit_Amor_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Emi]Šel pocestný kol [D]hospodských [Emi]zdí,
 [G]přisedl k nám a [D]lokálem [G]zní

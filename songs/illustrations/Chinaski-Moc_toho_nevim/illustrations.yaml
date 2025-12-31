@@ -1,0 +1,20 @@
+songId: Chinaski-Moc_toho_nevim
+prompts:
+  - promptId: Chinaski-Moc_toho_nevim_gpt-4o-mini_v1
+    songId: Chinaski-Moc_toho_nevim
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a chaotic, late-night party scene.
+      Include a disheveled man searching for his clothes in a dimly lit room,
+      surrounded by empty bottles and a hint of a mysterious figure in the
+      background. The atmosphere should be a mix of confusion and wild energy,
+      capturing the essence of a reckless night out.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-pro
+        filename: FLUX.1-pro.webp

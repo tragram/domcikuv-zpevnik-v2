@@ -1,14 +1,15 @@
 {title: O bláznech}
 {artist: Penk & Pergner}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["penk__pergner_o_blaznech-sken.pdf", "penk__pergner_o_blaznech-comp.pdf"]}
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: f#1-a#2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Penk_Pergner-O_blaznech_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Penk_Pergner-O_blaznech_gpt-4o-mini_v1}
+
 {start_of_verse}
 [E]Nevěř lidem, když jsou jak [H]psi,
 v boudá[A]ch, tlous[E]tnou

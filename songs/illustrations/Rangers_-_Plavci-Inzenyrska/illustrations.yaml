@@ -1,0 +1,18 @@
+songId: Rangers_-_Plavci-Inzenyrska
+prompts:
+  - promptId: Rangers_-_Plavci-Inzenyrska_gpt-4o-mini_v2
+    songId: Rangers_-_Plavci-Inzenyrska
+    createdAt: 1754387149000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a group of cheerful engineers celebrating their
+      graduation in a lively classroom setting. They are surrounded by
+      engineering tools like compasses and blueprints, while some are joyfully
+      playing musical instruments like a banjo and a double bass. The atmosphere
+      is filled with a sense of achievement and camaraderie, with a banner in
+      the background reading "Promovaní inženýři" (Graduated Engineers).
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,21 @@
+songId: Jaromir_Nohavica-U_nas_na_severu
+prompts:
+  - promptId: Jaromir_Nohavica-U_nas_na_severu_gpt-4o-mini_v2
+    songId: Jaromir_Nohavica-U_nas_na_severu
+    createdAt: 1762715729000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical scene in a forest where mammoths
+      roam, surrounded by lush greenery and a playful atmosphere. In the
+      background, depict a small village with families and children playing,
+      while an old statue stands nearby. Include elements like a flowing spring
+      and playful dogs, capturing the essence of rural life in a quirky,
+      light-hearted style.
+    illustrations:
+      - createdAt: 1762715735000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1762718948000
+        imageModel: gpt-image-1-mini
+        filename: gpt-image-1-mini.webp

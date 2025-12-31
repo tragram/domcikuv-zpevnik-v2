@@ -1,14 +1,15 @@
 {title: Mám jizvu na rtu}
 {artist: Jaromír Nohavica}
-{date_added: 02-2017}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_mam_jizvu_na_rtu-sken.pdf", "jaromir_nohavica_mam_jizvu_na_rtu-comp.pdf", "jaromir_nohavica_mam_jizvu_na_rtu-gen.pdf"]}
-{capo: 2}
 {key: C}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1487026800000}
+{illustrationId: Jaromir_Nohavica-Mam_jizvu_na_rtu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Mam_jizvu_na_rtu_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Cadd9]Jsem příliš starý na to abych věřil v revoluci
 [Gsus4]a svoji velkou hlavu [G]těžko skryju pod kapucí

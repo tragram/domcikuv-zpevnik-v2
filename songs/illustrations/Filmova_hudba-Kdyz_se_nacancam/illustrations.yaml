@@ -1,0 +1,18 @@
+songId: Filmova_hudba-Kdyz_se_nacancam
+prompts:
+  - promptId: Filmova_hudba-Kdyz_se_nacancam_gpt-4o-mini_v1
+    songId: Filmova_hudba-Kdyz_se_nacancam
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a glamorous princess lounging on plush pillows,
+      adorned in sparkling jewelry, surrounded by luxurious decor. She exudes
+      confidence and charm, with a backdrop of rich carpets and elegant
+      furnishings, as she prepares to greet guests in a lavish palace setting.
+      The atmosphere is vibrant and joyful, capturing the essence of a carefree
+      and enchanting lifestyle.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

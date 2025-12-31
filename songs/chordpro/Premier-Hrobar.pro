@@ -1,14 +1,15 @@
 {title: Hrobař}
 {artist: Premiér}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["premier_hrobar-sken.pdf", "premier_hrobar-comp.pdf"]}
-{capo: 5}
 {key: C}
+{capo: 5}
 {tempo: }
 {range: f1-e1}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1436824800000}
+{illustrationId: Premier-Hrobar_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Premier-Hrobar_gpt-4o-mini_v1}
+
 {start_of_verse: V1}
 [C]V mládí jsem se učil hrobařem,
 [Ami]jezdit s hlínou, jezdit s trakařem,

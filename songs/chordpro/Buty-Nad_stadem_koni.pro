@@ -1,14 +1,14 @@
 {title: Nad stádem koní}
 {artist: Buty}
-{date_added: 10-2011}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["buty_nad_stadem_koni-sken.pdf", "buty_nad_stadem_koni-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1318543200000}
+{illustrationId: Buty-Nad_stadem_koni_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Buty-Nad_stadem_koni_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]Nad stádem [A]koní,

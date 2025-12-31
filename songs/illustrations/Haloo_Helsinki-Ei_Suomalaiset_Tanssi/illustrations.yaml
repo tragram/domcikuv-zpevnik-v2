@@ -1,0 +1,18 @@
+songId: Haloo_Helsinki-Ei_Suomalaiset_Tanssi
+prompts:
+  - promptId: Haloo_Helsinki-Ei_Suomalaiset_Tanssi_gpt-4o-mini_v1
+    songId: Haloo_Helsinki-Ei_Suomalaiset_Tanssi
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lively Finnish summer dance scene at a
+      lakeside cabin. Depict a relaxed atmosphere with a serene lake, a group of
+      friends dancing in traditional Finnish styles, and an American neighbor
+      wearing a Stetson hat and crocodile leather boots, encouraging everyone to
+      join in. Capture the blend of cultures and the joyous spirit of summer
+      festivities.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

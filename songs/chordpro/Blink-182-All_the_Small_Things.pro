@@ -1,21 +1,14 @@
 {title: All the Small Things}
 {artist: Blink-182}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["blink_182_all_the_small_things-sken.pdf", "blink_182_all_the_small_things-comp.pdf"]}
-{capo: 5}
 {key: C}
+{capo: 5}
 {tempo: }
 {range: g1-g2}
-{start_melody: e}
-
-{title: All the Small Things}
-{artist: Blink-182}
-{key: C}
-{capo: 0}
-{tempo: }
-{language: English}
+{language: english}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Blink-182-All_the_Small_Things_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Blink-182-All_the_Small_Things_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]All the [G]small things

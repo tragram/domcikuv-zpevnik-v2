@@ -1,14 +1,15 @@
 {title: Nevidomá dívka}
 {artist: Karel Kryl}
-{date_added: 07-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_nevidoma_divka-sken.pdf", "karel_kryl_nevidoma_divka-comp.pdf", "karel_kryl_nevidoma_divka-gen.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-e2}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1468447200000}
+{illustrationId: Karel_Kryl-Nevidoma_divka_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Nevidoma_divka_gpt-4o-mini_v1}
+
 {start_of_verse}
 V [C]zahradě [Dmi]za cihlovou [C]zídkou, [Dmi]
 [C]popsanou v [Dmi]slavných výroč[C]ích, [Dmi]

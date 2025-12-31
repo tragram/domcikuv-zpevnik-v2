@@ -1,0 +1,19 @@
+songId: Jaromir_Nohavica-iDnescz
+prompts:
+  - promptId: Jaromir_Nohavica-iDnescz_gpt-4o-mini_v1
+    songId: Jaromir_Nohavica-iDnescz
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create a dark, surreal illustration that captures the themes of pain,
+      loss, and societal issues reflected in the song lyrics. Include elements
+      like a shadowy figure representing heartbreak, a train crashing into a
+      tree, and a snake symbolizing transformation and shedding one's skin.
+      Incorporate a chaotic urban background with police lights, a deserted
+      road, and hints of newspaper clippings, all under a gloomy sky to convey a
+      sense of despair and reflection.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

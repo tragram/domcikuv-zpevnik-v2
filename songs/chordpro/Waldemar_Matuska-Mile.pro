@@ -1,14 +1,15 @@
 {title: Míle}
 {artist: Waldemar Matuška}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["waldemar_matuska_mile-sken.pdf", "waldemar_matuska_mile-comp.pdf"]}
-{capo: 7}
 {key: G}
+{capo: 7}
 {tempo: }
 {range: f#1-e1}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Waldemar_Matuska-Mile_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Waldemar_Matuska-Mile_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Míle a [C]míle jsou [G]cest, které [Emi]znám,
 jdou [G]trávou i [C]úbočím [D]skal,

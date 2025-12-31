@@ -1,14 +1,15 @@
 {title: Šaman}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_saman-sken.pdf", "kabat_saman-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-a1}
-{start_melody: e d c}
+{language: czech}
+{startMelody: e d c}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Saman_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Saman_gpt-4o-mini_v1}
+
 {start_of_verse}
 Poslou[C]chám jak v dáli [F]temný bonga [Ami]zní
 něco tu kol[G]em zavo[F]ní

@@ -1,14 +1,14 @@
 {title: iDnes.cz}
 {artist: Jaromír Nohavica}
-{date_added: 08-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_idnescz-sken.pdf", "jaromir_nohavica_idnescz-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: d1-g1}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1534197600000}
+{illustrationId: Jaromir_Nohavica-iDnescz_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-iDnescz_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G]Žalobce zastavil stíhání sektáře [Hmi]Parsifala

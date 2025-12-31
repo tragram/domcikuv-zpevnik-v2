@@ -1,0 +1,17 @@
+songId: Folk-Sakkijarven_Polkka
+prompts:
+  - promptId: Folk-Sakkijarven_Polkka_gpt-4o-mini_v1
+    songId: Folk-Sakkijarven_Polkka
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lively dance scene set in the picturesque
+      landscapes of Karelia, featuring young and old people joyfully dancing the
+      Säkijärvi polka. Include elements like traditional Finnish instruments,
+      serene lakes, and lush forests, capturing the essence of nostalgia and
+      celebration.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

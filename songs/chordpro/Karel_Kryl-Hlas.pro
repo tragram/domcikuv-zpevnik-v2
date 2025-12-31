@@ -1,14 +1,15 @@
 {title: Hlas}
 {artist: Karel Kryl}
-{date_added: 07-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_hlas-sken.pdf", "karel_kryl_hlas-comp.pdf", "karel_kryl_hlas-gen.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: g1-e2}
-{start_melody: c h a}
+{language: czech}
+{startMelody: c h a}
+{createdAt: 1468447200000}
+{illustrationId: Karel_Kryl-Hlas_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Hlas_gpt-4o-mini_v1}
+
 {start_of_verse}
 V [Ami]měsíci [G]září, kdy [Ami]jablka [F]zrají,
 kdy [Ami]mantilu [G]noci svit [Ami]měsíce [G]protkal,

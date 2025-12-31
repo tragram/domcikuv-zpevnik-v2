@@ -1,0 +1,18 @@
+songId: Vrata_Hosek-Letecky_most
+prompts:
+  - promptId: Vrata_Hosek-Letecky_most_gpt-4o-mini_v2
+    songId: Vrata_Hosek-Letecky_most
+    createdAt: 1754387150000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a tense winter battlefield scene at
+      Stalingrad, with German soldiers in heavy winter gear, surrounded by snow
+      and ruins. In the background, ominous Soviet tanks advance, while a somber
+      Hermann Göring oversees the situation from a distance, looking concerned.
+      The atmosphere is bleak, conveying the desperation and chaos of a besieged
+      army facing overwhelming odds.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

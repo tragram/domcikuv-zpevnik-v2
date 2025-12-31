@@ -1,0 +1,37 @@
+songId: Akaty-Vdovy_z_Cordoby
+prompts:
+  - promptId: Akaty-Vdovy_z_Cordoby_gpt-4o-mini_v1
+    songId: Akaty-Vdovy_z_Cordoby
+    createdAt: 1754387142000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration inspired by the song lyrics featuring two beautiful
+      young widows from Cordoba, adorned with red lips and castanets, dancing a
+      passionate fandango under a warm Spanish sunset. The scene should evoke
+      themes of love, longing, and the bittersweet nature of choice, with a hint
+      of wine and romance in the air.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp
+  - promptId: Akaty-Vdovy_z_Cordoby_gpt-4o-mini_v2
+    songId: Akaty-Vdovy_z_Cordoby
+    createdAt: 1754387142000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a romantic scene set in Cordoba, Spain,
+      featuring two beautiful young widows dancing a passionate fandango. They
+      have vibrant red lips, holding castanets, with a backdrop of traditional
+      Spanish architecture. The atmosphere is lively and filled with warmth, as
+      a man watches them, captivated by their charm. Include elements that
+      suggest the theme of love and choice, such as a glass of wine nearby, and
+      a hint of melancholy as he contemplates his feelings.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

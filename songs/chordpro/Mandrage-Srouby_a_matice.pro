@@ -1,14 +1,15 @@
 {title: Šrouby a matice}
 {artist: Mandrage}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["mandrage_srouby_a_matice-sken.pdf", "mandrage_srouby_a_matice-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: e1-d1}
-{start_melody: h}
+{language: czech}
+{startMelody: h}
+{createdAt: 1436824800000}
+{illustrationId: Mandrage-Srouby_a_matice_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Mandrage-Srouby_a_matice_gpt-4o-mini_v1}
+
 {start_of_verse}
 Mezi zemí a neb[G]em
 A širým [D]světem

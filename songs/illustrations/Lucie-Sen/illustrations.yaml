@@ -1,0 +1,17 @@
+songId: Lucie-Sen
+prompts:
+  - promptId: Lucie-Sen_gpt-4o-mini_v1
+    songId: Lucie-Sen
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an ethereal scene depicting a twilight landscape where shadows of
+      dreams intertwine with glowing stars. Include a flowing river of
+      butterflies carrying cosmic dust, while a new moon casts a gentle light,
+      dispelling the dark shadows. Capture the essence of transformation and the
+      rhythm of nature in a dreamlike atmosphere.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

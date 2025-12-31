@@ -1,14 +1,15 @@
 {title: Moderní děvče}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_moderni_devce-sken.pdf", "kabat_moderni_devce-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-d2}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Moderni_devce_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Moderni_devce_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Moderní devče, když [F]chlapce spatří
 [G]vypadá jak klaun do [F]cirkusu patří

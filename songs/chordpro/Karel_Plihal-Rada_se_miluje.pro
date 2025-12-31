@@ -1,14 +1,15 @@
 {title: Ráda se miluje}
 {artist: Karel Plíhal}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 0}
 {key: H}
+{capo: 0}
 {tempo: }
 {range: a1-c#2}
-{start_melody: h f# f# f# e d}
+{language: czech}
+{startMelody: h f# f# f# e d}
+{createdAt: 1734130800000}
+{illustrationId: Karel_Plihal-Rada_se_miluje_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Plihal-Rada_se_miluje_gpt-4o-mini_v1}
+
 {start_of_chorus}
 [Hmi]Ráda se miluje, [A]ráda [D]jí,
 [G]ráda si [F#mi]jenom tak [Hmi]zpívá,

@@ -1,0 +1,19 @@
+songId: Znouzectnost-Krysar
+prompts:
+  - promptId: Znouzectnost-Krysar_gpt-4o-mini_v2
+    songId: Znouzectnost-Krysar
+    createdAt: 1754387150000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a mysterious medieval scene set in a dimly lit
+      town square at night. In the foreground, a piper in a long, flowing cloak
+      plays a magical melody, surrounded by shadowy figures of rats dancing to
+      the music. The background features old stone buildings with posters
+      advertising a performance, while townsfolk watch with a mix of intrigue
+      and fear. The atmosphere is enchanting yet eerie, capturing the essence of
+      a magical yet unsettling moment.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

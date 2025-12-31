@@ -1,16 +1,14 @@
 {title: Poverty And Famine}
 {artist: Kingdom Come Deliverance}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: []}
-{image_model: dalle3}
-
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: c1-h1}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1744581600000}
+{illustrationId: Kingdom_Come_Deliverance-Poverty_And_Famine_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Kingdom_Come_Deliverance-Poverty_And_Famine_gpt-4o-mini_v2}
 
 {start_of_verse: Intro}
 [G5]Přišla bída, mor a hlad

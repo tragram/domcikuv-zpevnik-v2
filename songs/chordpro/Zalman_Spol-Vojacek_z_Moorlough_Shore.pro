@@ -1,14 +1,14 @@
 {title: Vojáček z Moorlough Shore}
 {artist: Žalman & Spol.}
-{date_added: 08-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_lohonka_zalman_vojacek_z_moorlough_shore-sken.pdf", "pavel_lohonka_zalman_vojacek_z_moorlough_shore-comp.pdf", "pavel_lohonka_zalman_vojacek_z_moorlough_shore-gen.pdf"]}
-{capo: 0}
 {key: Hm}
+{capo: 0}
 {tempo: }
 {range: a1-c#2}
-{start_melody: f# a h}
+{language: czech}
+{startMelody: f# a h}
+{createdAt: 1471125600000}
+{illustrationId: Zalman_Spol-Vojacek_z_Moorlough_Shore_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Vojacek_z_Moorlough_Shore_gpt-4o-mini_v1}
 
 {start_of_verse}
 Tvůj [Hmi]dům měl sto bran, krásný [A]bílý štít

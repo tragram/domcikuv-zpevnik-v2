@@ -1,0 +1,18 @@
+songId: Chinaski-Venku_je_na_nule
+prompts:
+  - promptId: Chinaski-Venku_je_na_nule_gpt-4o-mini_v1
+    songId: Chinaski-Venku_je_na_nule
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene winter night scene featuring a plump
+      moon sailing through a starry sky. Below, depict a quiet valley blanketed
+      in gray, cold fog, evoking a sense of nostalgia and tranquility. Include
+      subtle hints of past memories and a feeling of heaviness in the
+      atmosphere, capturing the essence of a chilly evening where time seems to
+      stand still.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

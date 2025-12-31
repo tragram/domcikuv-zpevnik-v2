@@ -1,0 +1,19 @@
+songId: Michal_Tucny-Abych_Tu_Zil
+prompts:
+  - promptId: Michal_Tucny-Abych_Tu_Zil_gpt-4o-mini_v1
+    songId: Michal_Tucny-Abych_Tu_Zil
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a solitary figure sitting under a vast blue sky,
+      surrounded by meadows and forests. The person wears worn-out clothes with
+      pockets, showing signs of summer dust. In the background, a river flows
+      gently, reflecting sunlight, while distant mountains rise majestically.
+      The scene conveys a sense of contemplation, freedom, and connection to
+      nature, embodying the essence of living simply and appreciating life's
+      small joys.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

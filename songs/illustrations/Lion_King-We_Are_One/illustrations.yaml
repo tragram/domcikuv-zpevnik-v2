@@ -1,0 +1,18 @@
+songId: Lion_King-We_Are_One
+prompts:
+  - promptId: Lion_King-We_Are_One_gpt-4o-mini_v1
+    songId: Lion_King-We_Are_One
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a diverse group of people standing together in
+      unity under a bright sunlit sky, symbolizing hope and connection. Include
+      elements of nature, like the earth and sky, blending harmoniously, with a
+      subtle hint of past memories represented by soft, ethereal figures in the
+      background. The overall mood should be uplifting and inspiring, capturing
+      the essence of togetherness and pride.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

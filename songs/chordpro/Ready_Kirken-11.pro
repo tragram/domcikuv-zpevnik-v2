@@ -1,14 +1,15 @@
 {title: 1+1}
 {artist: Ready Kirken}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["ready_kirken_11-sken.pdf", "ready_kirken_11-comp.pdf"]}
-{capo: 7}
 {key: Am}
+{capo: 7}
 {tempo: }
 {range: d1-g2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Ready_Kirken-11_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Ready_Kirken-11_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Už ani nedivím se, [Emi]jak věci otáčí se
 [Ami]Z radosti splín si klidně [Emi]vrhá stín

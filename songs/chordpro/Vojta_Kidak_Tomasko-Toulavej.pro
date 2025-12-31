@@ -1,11 +1,14 @@
 {title: Toulavej}
 {artist: Vojta Kiďák Tomáško}
+{key: }
 {capo: 2}
-{language: czech}
-{date_added: 09-2024}
-{songbooks: ["Domčík"]}
+{tempo: }
 {range: g1-d2}
-{start_melody: a c e}
+{language: czech}
+{startMelody: a c e}
+{createdAt: 1726264800000}
+{illustrationId: Vojta_Kidak_Tomasko-Toulavej_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Vojta_Kidak_Tomasko-Toulavej_gpt-4o-mini_v1}
 
 {start_of_verse}
 Někdo z [Am]vás, kdo chutnal [G]dálku,

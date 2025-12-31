@@ -1,0 +1,18 @@
+songId: Vitor_Kley-O_Sol
+prompts:
+  - promptId: Vitor_Kley-O_Sol_gpt-4o-mini_v1
+    songId: Vitor_Kley-O_Sol
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant sun shining brightly in a serene
+      landscape, with warm golden rays illuminating a peaceful figure who is
+      smiling and relaxed. The scene should evoke feelings of warmth,
+      tranquility, and joy, symbolizing the sun as a source of comfort and
+      happiness. Include elements that represent calmness, such as gentle waves
+      or soft clouds.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

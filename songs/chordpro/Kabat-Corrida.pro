@@ -1,14 +1,15 @@
 {title: Corrida}
 {artist: Kabát}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["kabat_corrida-sken.pdf", "kabat_corrida-comp.pdf"]}
-{capo: 0}
 {key: Hm}
+{capo: 0}
 {tempo: }
 {range: h1-a1}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1436824800000}
+{illustrationId: Kabat-Corrida_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Kabat-Corrida_gpt-4o-mini_v1}
+
 {start_of_verse}
 Veš[Hmi]kerý slasti pozemský
 skryl [G]ďábel v zemi [E]španělský,

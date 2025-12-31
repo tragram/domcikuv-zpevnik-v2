@@ -1,0 +1,17 @@
+songId: Devitka-Holka_od_koni
+prompts:
+  - promptId: Devitka-Holka_od_koni_gpt-4o-mini_v1
+    songId: Devitka-Holka_od_koni
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical, dreamlike landscape featuring wild
+      horses galloping towards a setting sun, with a girl wearing a halo of
+      flowers, lost in thought. The scene should evoke a sense of freedom,
+      nostalgia, and longing, with soft, flowing colors and hints of a train
+      track fading into the distance.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

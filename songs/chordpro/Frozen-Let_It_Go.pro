@@ -1,14 +1,16 @@
 {title: Let It Go}
 {artist: Frozen}
-{date_added: 03-2025}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames:}
-{capo: 3}
 {key: Em}
+{capo: 3}
 {tempo: }
 {range: e1-d2}
-{start_melody: e h}
+{language: english}
+{startMelody: e h}
+{createdAt: 1741906800000}
+{illustrationId: Frozen-Let_It_Go_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Frozen-Let_It_Go_gpt-4o-mini_v1}
+
+{pdf_filenames:}
 
 {start_of_verse}
 The [Em]snow glows white on the [C]mountain tonight

@@ -1,14 +1,15 @@
 {title: Obyčejné fotky}
 {artist: Epy de Mye}
-{date_added: 08-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["epy_de_mye_obycejne_fotky-sken.pdf", "epy_de_mye_obycejne_fotky-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: d d h}
+{language: czech}
+{startMelody: d d h}
+{createdAt: 1534197600000}
+{illustrationId: Epy_de_Mye-Obycejne_fotky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Epy_de_Mye-Obycejne_fotky_gpt-4o-mini_v1}
+
 {start_of_chorus: R1}
 [G]Obyčejné fotky [Hm]na stole leží,
 [Em]samí mladí lidé [C]jako jsem [D]já,

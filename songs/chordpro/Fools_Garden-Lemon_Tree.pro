@@ -1,14 +1,14 @@
 {title: Lemon Tree}
 {artist: Fools Garden}
-{date_added: 07-2016}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["fools_garden_lemon_tree-sken.pdf", "fools_garden_lemon_tree-comp.pdf", "fools_garden_lemon_tree-gen.pdf"]}
-{capo: 2}
 {key: Am}
+{capo: 2}
 {tempo: }
 {range: a1-c2}
-{start_melody: d e}
+{language: english}
+{startMelody: d e}
+{createdAt: 1468447200000}
+{illustrationId: Fools_Garden-Lemon_Tree_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Fools_Garden-Lemon_Tree_gpt-4o-mini_v1}
 
 {start_of_verse}
 I'm [Ami]sitting here in a [Emi]boring room,

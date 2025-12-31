@@ -1,14 +1,14 @@
 {title: Hlídač krav}
 {artist: Jaromír Nohavica}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_hlidac_krav-sken.pdf", "jaromir_nohavica_hlidac_krav-comp.pdf"]}
-{capo: 4}
 {key: D}
+{capo: 4}
 {tempo: }
 {range: a1-a2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Jaromir_Nohavica-Hlidac_krav_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Hlidac_krav_gpt-4o-mini_v1}
 
 {start_of_verse}
 Kdy[D]ž jsem byl malý, říkali mi naši:

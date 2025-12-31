@@ -1,16 +1,15 @@
 {title: Nonstop}
 {artist: Michal David}
-{date_added: 12-2016}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["michal_david_nonstop-sken.pdf", "michal_david_nonstop-comp.pdf", "michal_david_nonstop-gen.pdf"]}
-{image_model: dalle3}
-{prompt_id: v1}
-{capo: 0}
 {key: D}
+{capo: 0}
 {tempo: }
 {range: d1-a1}
-{start_melody: e f#}
+{language: czech}
+{startMelody: e f#}
+{createdAt: 1481670000000}
+{illustrationId: Michal_David-Nonstop_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Michal_David-Nonstop_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Tátovi nesmím zkřížit krok,
 pro něj jsem pouhej disko[A]cvok,

@@ -1,14 +1,15 @@
 {title: Všech vandráků můza}
 {artist: Žalman & Spol.}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["pavel_lohonka_zalman_vsech_vandraku_muza-sken.pdf", "pavel_lohonka_zalman_vsech_vandraku_muza-comp.pdf"]}
-{capo: 3}
 {key: G}
+{capo: 3}
 {tempo: }
 {range: g1-g2}
-{start_melody: h c d}
+{language: czech}
+{startMelody: h c d}
+{createdAt: 1436824800000}
+{illustrationId: Zalman_Spol-Vsech_vandraku_muza_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Zalman_Spol-Vsech_vandraku_muza_gpt-4o-mini_v1}
+
 {start_of_verse}
 Přišla [G]k nám znenadání, [Fmaj7]hubená až [G]hrůza,
 a [Fmaj7]řekla, že je [G]múza [Fmaj7]všech vandráků z [G]Čech,

@@ -1,14 +1,15 @@
 {title: Jasná zpráva}
 {artist: Olympic}
-{date_added: 10-2011}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["olympic_jasna_zprava-sken.pdf", "olympic_jasna_zprava-comp.pdf"]}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: g1-e1}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1318543200000}
+{illustrationId: Olympic-Jasna_zprava_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Olympic-Jasna_zprava_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Skončili jsme, jasná zpráva,
 [Emi]proč o tebe [C]zakopávám [D]dál,

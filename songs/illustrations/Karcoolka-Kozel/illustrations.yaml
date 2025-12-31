@@ -1,0 +1,18 @@
+songId: Karcoolka-Kozel
+prompts:
+  - promptId: Karcoolka-Kozel_gpt-4o-mini_v2
+    songId: Karcoolka-Kozel
+    createdAt: 1754387146000
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a rugged mountain landscape where a goat stands atop a
+      rocky outcrop, its horns resembling quirky tools like bottle openers. The
+      goat looks wise and unfazed, surrounded by a dramatic scene of an
+      avalanche in the distance, emphasizing a sense of solitude and resilience.
+      The sky is a mix of ominous clouds and rays of sunlight breaking through,
+      symbolizing the contrast between fear and hope.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

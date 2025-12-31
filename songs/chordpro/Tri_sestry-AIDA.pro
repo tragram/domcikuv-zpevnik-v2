@@ -1,14 +1,15 @@
 {title: AIDA}
 {artist: Tři sestry}
-{date_added: 10-2011}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["tri_sestry_aida-sken.pdf", "tri_sestry_aida-comp.pdf"]}
-{capo: 3}
 {key: A}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: e d c}
+{language: czech}
+{startMelody: e d c}
+{createdAt: 1318543200000}
+{illustrationId: Tri_sestry-AIDA_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Tri_sestry-AIDA_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]V noci někdy nespím a [Dmi]civím do zahrady
 [G]Se zástupem lidí kolem [Emi]nevim si už rady

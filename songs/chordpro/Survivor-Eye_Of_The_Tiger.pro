@@ -1,14 +1,15 @@
 {title: Eye Of The Tiger}
 {artist: Survivor}
-{date_added: 08-2017}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["survivor_eye_of_the_tiger-sken.pdf", "survivor_eye_of_the_tiger-comp.pdf"]}
-{capo: 0}
 {key: Hm}
+{capo: 0}
 {tempo: }
 {range: h1-h2}
-{start_melody: f# a}
+{language: english}
+{startMelody: f# a}
+{createdAt: 1502661600000}
+{illustrationId: Survivor-Eye_Of_The_Tiger_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Survivor-Eye_Of_The_Tiger_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Hmi]Rising up, [G]back on the street
 [A]Did my time, [Hmi]took my chances

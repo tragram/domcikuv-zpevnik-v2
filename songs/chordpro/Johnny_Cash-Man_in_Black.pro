@@ -1,14 +1,15 @@
 {title: Man in Black}
 {artist: Johnny Cash}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["johnny_cash_man_in_black-sken.pdf", "johnny_cash_man_in_black-comp.pdf"]}
-{capo: 3}
 {key: G}
+{capo: 3}
 {tempo: }
 {range: f#1-h2}
-{start_melody: a h}
+{language: english}
+{startMelody: a h}
+{createdAt: 1436824800000}
+{illustrationId: Johnny_Cash-Man_in_Black_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Johnny_Cash-Man_in_Black_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Well, you wonder why I always dress in black
 Why you never see bright colors on my [A]back?

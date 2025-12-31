@@ -1,0 +1,23 @@
+songId: Bob_Dylan-Knocking_On_Heavens_Door
+prompts:
+  - promptId: Bob_Dylan-Knocking_On_Heavens_Door_gpt-4o-mini_v1
+    songId: Bob_Dylan-Knocking_On_Heavens_Door
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      The song depicts a somber and introspective scene where the narrator is
+      expressing a sense of surrender and approaching the end of life. They ask
+      their mother to remove their badge, symbolizing a loss of purpose or
+      identity, and mention the darkness closing in. The repeated phrase about
+      knocking on heaven's door conveys a feeling of longing for peace or the
+      afterlife. The imagery could include elements like a darkening sky, a
+      badge being removed, and a figure standing at a door that represents the
+      threshold between life and the afterlife.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

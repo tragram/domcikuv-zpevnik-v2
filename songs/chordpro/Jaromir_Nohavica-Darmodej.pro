@@ -1,14 +1,14 @@
 {title: Darmoděj}
 {artist: Jaromír Nohavica}
-{date_added: 06-2011}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_darmodej-sken.pdf", "jaromir_nohavica_darmodej-comp.pdf"]}
-{capo: 5}
 {key: Am}
+{capo: 5}
 {tempo: }
 {range: g1-g2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1308002400000}
+{illustrationId: Jaromir_Nohavica-Darmodej_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Darmodej_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Ami]Šel včera městem [Emi]muž

@@ -1,0 +1,20 @@
+songId: Bob_Dylan-Mr_Tambourine_Man
+prompts:
+  - promptId: Bob_Dylan-Mr_Tambourine_Man_gpt-4o-mini_v1
+    songId: Bob_Dylan-Mr_Tambourine_Man
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical, dreamlike scene featuring a
+      tambourine man playing music under a diamond sky. Include elements like
+      swirling smoke rings, a foggy beach, and a silhouette dancing by the sea,
+      surrounded by circus sands and haunted trees. The atmosphere should feel
+      magical and free, capturing a sense of adventure and nostalgia.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

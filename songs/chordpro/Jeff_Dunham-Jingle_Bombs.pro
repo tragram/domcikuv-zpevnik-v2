@@ -1,14 +1,14 @@
 {title: Jingle Bombs}
 {artist: Jeff Dunham}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["jeff_dunham_jingle_bombs-sken.pdf", "jeff_dunham_jingle_bombs-comp.pdf"]}
-{capo: 2}
 {key: C}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: g e}
+{language: english}
+{startMelody: g e}
+{createdAt: 1436824800000}
+{illustrationId: Jeff_Dunham-Jingle_Bombs_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jeff_Dunham-Jingle_Bombs_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Rushing through the sand,

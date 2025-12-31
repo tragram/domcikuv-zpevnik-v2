@@ -1,0 +1,18 @@
+songId: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu
+prompts:
+  - promptId: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1
+    songId: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu
+    createdAt: 1754387150000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a surreal landscape at twilight, featuring a broken
+      heart symbol entwined with vines and flowers, surrounded by a misty sea.
+      In the foreground, a vintage car sits abandoned, with a starry sky above
+      and a gentle breeze blowing, represented by flowing ribbons. Incorporate
+      elements of sorrow and beauty, such as a single tear-shaped droplet
+      reflecting starlight and wisps of hair caught in the air.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

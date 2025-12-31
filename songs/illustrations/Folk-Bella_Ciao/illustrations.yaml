@@ -1,0 +1,17 @@
+songId: Folk-Bella_Ciao
+prompts:
+  - promptId: Folk-Bella_Ciao_gpt-4o-mini_v1
+    songId: Folk-Bella_Ciao
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a serene mountain landscape at dawn, with
+      a single vibrant flower in the foreground symbolizing freedom and
+      sacrifice. Include a silhouette of a partisan figure in the background,
+      evoking a sense of hope and resilience, with soft, warm colors that convey
+      a feeling of nostalgia and remembrance.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,15 @@
 {title: 1. signální}
 {artist: Chinaski}
-{date_added: 07-2009}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_1_signalni-sken.pdf", "chinaski_1_signalni-comp.pdf"]}
-{capo: 3}
 {key: D}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1247522400000}
+{illustrationId: Chinaski-1_signalni_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-1_signalni_gpt-4o-mini_v1}
+
 {start_of_verse}
 Až si [D]zejtra ráno [G]řeknu zase
 [Hm]jednou provždy dost,

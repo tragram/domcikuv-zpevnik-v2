@@ -1,14 +1,14 @@
 {title: Šéfe}
 {artist: Fešáci}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["fesaci_sefe-sken.pdf", "fesaci_sefe-comp.pdf"]}
-{capo: 4}
 {key: D}
+{capo: 4}
 {tempo: }
 {range: a1-a2}
-{start_melody: a}
+{language: czech}
+{startMelody: a}
+{createdAt: 1436824800000}
+{illustrationId: Fesaci-Sefe_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Fesaci-Sefe_gpt-4o-mini_v1}
 
 {start_of_verse}
 [D]Kdo se dívá na startovní [G]list.

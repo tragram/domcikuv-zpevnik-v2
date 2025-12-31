@@ -1,14 +1,15 @@
 {title: Husličky}
 {artist: Vlasta Redl}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["vlasta_redl_huslicky-sken.pdf", "vlasta_redl_huslicky-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: g1-h2}
-{start_melody: d a}
+{language: czech}
+{startMelody: d a}
+{createdAt: 1436824800000}
+{illustrationId: Vlasta_Redl-Huslicky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Vlasta_Redl-Huslicky_gpt-4o-mini_v1}
+
 {start_of_verse}
 𝄆 [D]Čí že ste, husličky, [G]či[D]e,
 [Emi]kdo vás tu [Hmi]zanechal [A] 𝄇

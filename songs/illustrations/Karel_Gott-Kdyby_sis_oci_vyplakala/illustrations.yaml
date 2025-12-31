@@ -1,0 +1,18 @@
+songId: Karel_Gott-Kdyby_sis_oci_vyplakala
+prompts:
+  - promptId: Karel_Gott-Kdyby_sis_oci_vyplakala_gpt-4o-mini_v1
+    songId: Karel_Gott-Kdyby_sis_oci_vyplakala
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a serene landscape at sunrise, symbolizing hope and
+      resilience. In the foreground, depict a person with tear-filled eyes
+      gazing out at the ocean, representing deep sorrow. The waves gently
+      crashing on the shore symbolize the passage of time and the inevitability
+      of moving forward. Include soft, warm colors to evoke a sense of healing
+      and renewal.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

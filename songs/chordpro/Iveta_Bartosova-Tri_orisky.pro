@@ -1,14 +1,15 @@
 {title: Tři oříšky}
 {artist: Iveta Bartošová}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 3}
 {key: G}
+{capo: 3}
 {tempo: }
 {range: a1-a2}
-{start_melody: d d}
+{language: czech}
+{startMelody: d d}
+{createdAt: 1734130800000}
+{illustrationId: Iveta_Bartosova-Tri_orisky_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Iveta_Bartosova-Tri_orisky_gpt-4o-mini_v1}
+
 {start_of_verse}
 [G]Marně se vlastního [C/G]osudu ptáš,
 co [G]dnes a zítra [D]schystá

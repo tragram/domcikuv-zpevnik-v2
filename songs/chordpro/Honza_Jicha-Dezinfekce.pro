@@ -1,14 +1,14 @@
 {title: Dezinfekce}
 {artist: Honza Jícha}
-{date_added: 03-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["honza_jicha_dezinfekce-sken.pdf", "honza_jicha_dezinfekce-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: c1-e2}
-{start_melody: c}
+{language: czech}
+{startMelody: c}
+{createdAt: 1520982000000}
+{illustrationId: Honza_Jicha-Dezinfekce_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Honza_Jicha-Dezinfekce_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]Říkali mi neblbni a [F]nevystrkuj [C]růžky,

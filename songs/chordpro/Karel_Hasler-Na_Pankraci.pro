@@ -1,15 +1,14 @@
 {title: Na Pankráci}
 {artist: Karel Hašler}
-{date_added: 04-2025}
-{songbooks: ["Domčík"]}
-{language: czech}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: e1-d1}
-{start_melody: g g f e}
-
-
+{language: czech}
+{startMelody: g g f e}
+{createdAt: 1744581600000}
+{illustrationId: Karel_Hasler-Na_Pankraci_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Karel_Hasler-Na_Pankraci_gpt-4o-mini_v2}
 
 {start_of_verse}
 𝄆 [C]Na Pankráci na malém [F]vršíčku

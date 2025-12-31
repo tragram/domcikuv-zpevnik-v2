@@ -1,0 +1,18 @@
+songId: Epy_de_Mye-Obycejne_fotky
+prompts:
+  - promptId: Epy_de_Mye-Obycejne_fotky_gpt-4o-mini_v1
+    songId: Epy_de_Mye-Obycejne_fotky
+    createdAt: 1754387144000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a table scattered with ordinary photographs of
+      young people from the 1930s, capturing a sense of nostalgia and loss. The
+      images should reflect a haunting atmosphere, with subtle hints of
+      historical turmoil, like faded memories of joy and sorrow. Include
+      elements like an old camera and shadows that evoke a feeling of longing
+      and connection to the past.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

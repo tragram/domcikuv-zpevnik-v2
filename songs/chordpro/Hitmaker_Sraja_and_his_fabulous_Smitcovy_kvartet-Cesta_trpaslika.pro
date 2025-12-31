@@ -1,13 +1,14 @@
 {title: Cesta trpaslíka}
 {artist: Hitmaker Šrája and his fabulous Šmitcový kvartet}
-{date_added: 04-2025}
-{songbooks: ["Kvítek"]}
-{language: czech}
-{capo: 0}
 {key: E}
-
-{range: }
+{capo: 0}
 {tempo: }
+{range: }
+{language: czech}
+{startMelody: }
+{createdAt: 1744581600000}
+{illustrationId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika_gpt-4o-mini_v2}
 
 {start_of_chorus}
 Cesta [E]trpaslíka někdy [G]dlouhá,

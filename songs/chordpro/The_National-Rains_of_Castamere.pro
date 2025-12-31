@@ -1,14 +1,14 @@
 {title: Rains of Castamere}
 {artist: The National}
-{date_added: 08-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["the_national_rains_of_castamere-sken.pdf", "the_national_rains_of_castamere-comp.pdf", "the_national_rains_of_castamere-gen.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: e1-f2}
-{start_melody: e a}
+{language: english}
+{startMelody: e a}
+{createdAt: 1439503200000}
+{illustrationId: The_National-Rains_of_Castamere_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: The_National-Rains_of_Castamere_gpt-4o-mini_v1}
 
 {start_of_verse}
 And [Am]who are [E7]you, the [Am]proud lord [E]said

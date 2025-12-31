@@ -1,0 +1,18 @@
+songId: Petr_Novak-Ja_budu_chodit_po_spickach
+prompts:
+  - promptId: Petr_Novak-Ja_budu_chodit_po_spickach_gpt-4o-mini_v1
+    songId: Petr_Novak-Ja_budu_chodit_po_spickach
+    createdAt: 1754387148000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene bedroom scene at dawn, with a person
+      gently tiptoeing across a soft carpet towards a sleeping figure. The room
+      is softly illuminated by the first light of day, casting a warm glow. The
+      sleeping figure has a peaceful expression, with tousled hair on a pillow.
+      Include subtle elements like a window showing the sunrise and a dreamy
+      atmosphere, evoking a sense of love and tranquility.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

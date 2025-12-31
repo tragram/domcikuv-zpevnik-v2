@@ -1,14 +1,14 @@
 {title: Sé a Dónde Quiere Ir}
 {artist: La Vela Puerca}
-{date_added: 10-2016}
-{songbooks: ["Domčík"]}
-{language: spanish}
-{pdf_filenames: ["la_vela_puerca_se_a_donde_quiere_ir-sken.pdf", "la_vela_puerca_se_a_donde_quiere_ir-comp.pdf", "la_vela_puerca_se_a_donde_quiere_ir-gen.pdf"]}
-{capo: 2}
 {key: G}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: g d}
+{language: spanish}
+{startMelody: g d}
+{createdAt: 1476396000000}
+{illustrationId: La_Vela_Puerca-Se_a_Donde_Quiere_Ir_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: La_Vela_Puerca-Se_a_Donde_Quiere_Ir_gpt-4o-mini_v1}
 
 {start_of_verse}
 [G6]Salio de casa y tras de sí dejo sus miedos y,

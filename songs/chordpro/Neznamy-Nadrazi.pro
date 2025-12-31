@@ -1,14 +1,14 @@
 {title: Nádraží}
 {artist: Neznámý}
-{date_added: 08-2013}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["neznamy_nadrazi-sken.pdf", "neznamy_nadrazi-comp.pdf"]}
-{capo: 2}
 {key: D}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: f#}
+{language: czech}
+{startMelody: f#}
+{createdAt: 1376431200000}
+{illustrationId: Neznamy-Nadrazi_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Neznamy-Nadrazi_gpt-4o-mini_v1}
 
 {start_of_verse}
 Za za[D]táčkou houká [A]vlak, snad to [Hmi]není nákla[G]ďák

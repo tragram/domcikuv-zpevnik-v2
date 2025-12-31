@@ -1,14 +1,14 @@
 {title: Drobná paralela}
 {artist: Chinaski}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_drobna_paralela-sken.pdf", "chinaski_drobna_paralela-comp.pdf", "chinaski_drobna_paralela-gen.pdf"]}
-{capo: 2}
 {key: G}
+{capo: 2}
 {tempo: }
 {range: a1-d2}
-{start_melody: h d}
+{language: czech}
+{startMelody: h d}
+{createdAt: 1436824800000}
+{illustrationId: Chinaski-Drobna_paralela_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Drobna_paralela_gpt-4o-mini_v1}
 
 {start_of_verse}
 Ta [G]stará [D]dobrá hra je [A]okoukaná.

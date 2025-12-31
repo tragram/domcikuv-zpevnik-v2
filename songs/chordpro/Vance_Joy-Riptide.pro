@@ -1,14 +1,15 @@
 {title: Riptide}
 {artist: Vance Joy}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: english}
-{pdf_filenames: ["vance_joy_riptide-sken.pdf", "vance_joy_riptide-comp.pdf"]}
-{capo: 4}
 {key: Am}
+{capo: 4}
 {tempo: }
 {range: a1-a2}
-{start_melody: a h c d}
+{language: english}
+{startMelody: a h c d}
+{createdAt: 1436824800000}
+{illustrationId: Vance_Joy-Riptide_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Vance_Joy-Riptide_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Am]I was scared of [G]dentists and the [C]dark
 [Am]I was scared of [G]pretty girls

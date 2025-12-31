@@ -1,0 +1,19 @@
+songId: Lidova_pisen-Buraky
+prompts:
+  - promptId: Lidova_pisen-Buraky_gpt-4o-mini_v1
+    songId: Lidova_pisen-Buraky
+    createdAt: 1754387147000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a peaceful countryside scene disrupted by
+      the remnants of war. In the foreground, soldiers lazily lounging in a
+      field, cracking peanuts, while in the background, a colonel looks out
+      towards a distant army. The landscape should contrast the chaos of battle
+      with the calmness of nature, featuring cotton plants replaced by thistles.
+      Use warm colors to convey a sense of nostalgia and irony about the
+      absurdity of war.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,14 +1,15 @@
 {title: To ta Heľpa}
 {artist: Lidová píseň}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: slovak}
-{pdf_filenames: ["lidova_piesen_to_ta_helpa-sken.pdf", "lidova_piesen_to_ta_helpa-comp.pdf"]}
-{capo: 0}
 {key: Dm}
+{capo: 0}
 {tempo: }
 {range: d1-d2}
-{start_melody: d}
+{language: slovak}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Lidova_pisen-To_ta_Helpa_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Lidova_pisen-To_ta_Helpa_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Dmi]To ta [G]Heľpa, [Dmi]to ta [G]Heľpa,
 [Dmi]to je [A7]pekné [Dmi]mesto,

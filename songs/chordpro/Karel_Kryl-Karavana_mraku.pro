@@ -1,14 +1,15 @@
 {title: Karavana mraků}
 {artist: Karel Kryl}
-{date_added: 12-2010}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["karel_kryl_karavana_mraku-sken.pdf", "karel_kryl_karavana_mraku-comp.pdf"]}
-{capo: 2}
 {key: C}
+{capo: 2}
 {tempo: }
 {range: g1-c2}
-{start_melody: g}
+{language: czech}
+{startMelody: g}
+{createdAt: 1292281200000}
+{illustrationId: Karel_Kryl-Karavana_mraku_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Karel_Kryl-Karavana_mraku_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Slunce je zlatou skobou [Ami]na vobloze přibitý,
 [F]pod sluncem [G]sedlo kože[C]ný, [G7]

@@ -1,0 +1,18 @@
+songId: Kenny_Rogers-The_Gambler
+prompts:
+  - promptId: Kenny_Rogers-The_Gambler_gpt-4o-mini_v1
+    songId: Kenny_Rogers-The_Gambler
+    createdAt: 1754387146000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a warm summer evening on a train bound for
+      nowhere. Show two weary travelers: one, an old gambler with a thoughtful
+      expression, and the other, a young man, both gazing out a window into the
+      dark night. Include details like a whiskey bottle and a cigarette,
+      capturing the ambiance of quiet contemplation and life lessons amidst the
+      rolling countryside.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

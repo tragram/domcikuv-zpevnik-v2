@@ -1,0 +1,19 @@
+songId: Cechomor-Vcelin
+prompts:
+  - promptId: Cechomor-Vcelin_gpt-4o-mini_v1
+    songId: Cechomor-Vcelin
+    createdAt: 1754387143000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant, sunny scene at a beehive, featuring a
+      young woman with rosy cheeks playfully waving. Surround her with blooming
+      flowers and bees buzzing around, capturing a whimsical and cheerful
+      atmosphere. Include a distant castle silhouette to hint at a royal theme.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1754387142000
+        imageModel: stable-diffusion-3.5-large
+        filename: stable-diffusion-3.5-large.webp

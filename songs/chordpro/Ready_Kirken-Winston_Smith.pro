@@ -1,14 +1,15 @@
 {title: Winston Smith}
 {artist: Ready Kirken}
-{date_added: 06-2018}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["ready_kirken_winston_smith-sken.pdf", "ready_kirken_winston_smith-comp.pdf"]}
-{capo: 0}
 {key: C}
+{capo: 0}
 {tempo: }
 {range: g1-f2}
-{start_melody: g e}
+{language: czech}
+{startMelody: g e}
+{createdAt: 1528927200000}
+{illustrationId: Ready_Kirken-Winston_Smith_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Ready_Kirken-Winston_Smith_gpt-4o-mini_v1}
+
 {start_of_verse}
 [C]Vnímám už [F]nemůže být víc
 [C]jsi to poslední co [F]čekal bych že potkám

@@ -1,14 +1,14 @@
 {title: Adieu}
 {artist: Chinaski}
-{date_added: 10-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["chinaski_adieu-sken.pdf", "chinaski_adieu-comp.pdf"]}
-{capo: 0}
 {key: Am}
+{capo: 0}
 {tempo: }
 {range: g1-e2}
-{start_melody: a e}
+{language: czech}
+{startMelody: a e}
+{createdAt: 1728856800000}
+{illustrationId: Chinaski-Adieu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Chinaski-Adieu_gpt-4o-mini_v1}
 
 {start_of_verse: Intro}
 Už [Ami]dlouho mě [G]znají v tomhle podniku

@@ -1,14 +1,15 @@
 {title: Pánu Bohu do oken}
 {artist: Klus}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["klus_panu_bohu_do_oken-sken.pdf", "klus_panu_bohu_do_oken-comp.pdf"]}
-{capo: 4}
 {key: G}
+{capo: 4}
 {tempo: }
 {range: f#1-f1}
-{start_melody: g g a h}
+{language: czech}
+{startMelody: g g a h}
+{createdAt: 1436824800000}
+{illustrationId: Klus-Panu_Bohu_do_oken_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Klus-Panu_Bohu_do_oken_gpt-4o-mini_v1}
+
 {start_of_verse}
 Za [G]devatero horami a devatero řekami,
 leží kraj líbezný jak z reklamy,

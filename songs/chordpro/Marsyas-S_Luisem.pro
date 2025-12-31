@@ -1,14 +1,15 @@
 {title: S Luisem}
 {artist: Marsyas}
-{date_added: 08-2013}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["marsyas_s_luisem-sken.pdf", "marsyas_s_luisem-comp.pdf"]}
-{capo: 2}
 {key: G}
+{capo: 2}
 {tempo: }
 {range: a1-h2}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1376431200000}
+{illustrationId: Marsyas-S_Luisem_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Marsyas-S_Luisem_gpt-4o-mini_v1}
+
 {start_of_verse}
 K nebi [C]zírám, [F]ležím v trávě
 prsty [C]prosévám [F]teplou hlínu

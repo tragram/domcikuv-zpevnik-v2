@@ -1,12 +1,14 @@
-{language: english}
-{date_added: 02-2020}
-{songbooks: ["Domčík"]}
-{capo: 0}
-{key: G}
 {title: Can You Feel The Love Tonight}
 {artist: Elton John}
+{key: G}
+{capo: 0}
+{tempo: }
 {range: d1-d2}
-{start_melody: e f# g}
+{language: english}
+{startMelody: e f# g}
+{createdAt: 1581634800000}
+{illustrationId: Elton_John-Can_You_Feel_The_Love_Tonight_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Elton_John-Can_You_Feel_The_Love_Tonight_gpt-4o-mini_v1}
 
 {start_of_verse}
 [C]There's a calm sur[G]render

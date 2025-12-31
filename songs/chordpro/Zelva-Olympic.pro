@@ -1,17 +1,14 @@
-{prompt_id: v2}
-{prompt_model: gpt-4o-mini}
-{image_model: FLUX.1-dev}
 {title: Olympic}
 {artist: Želva}
-{songbooks: []}
 {key: G}
-{date_added: 05-2025}
-{language: czech}
-{tempo: }
 {capo: 0}
+{tempo: }
 {range: h1-e2}
-{start_melody: h d}
-{pdf_filenames: []}
+{language: czech}
+{startMelody: h d}
+{createdAt: 1747173600000}
+{illustrationId: Zelva-Olympic_gpt-4o-mini_v2_FLUX.1-dev}
+{promptId: Zelva-Olympic_gpt-4o-mini_v2}
 
 {start_of_verse}
 [G]Ne moc [C]snadno se [G]želva [C]po dně [G]honí, [C][G][C]

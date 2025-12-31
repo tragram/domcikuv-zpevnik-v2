@@ -1,14 +1,15 @@
 {title: Zatanči}
 {artist: Jaromír Nohavica}
-{date_added: 12-2024}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: }
-{capo: 0}
 {key: E}
+{capo: 0}
 {tempo: }
 {range: e1-h2}
-{start_melody: e h h}
+{language: czech}
+{startMelody: e h h}
+{createdAt: 1734130800000}
+{illustrationId: Jaromir_Nohavica-Zatanci_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Zatanci_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Emi]Zatanči, [G]má milá, [D]zatanči [Emi]pro mé oči,
 [Emi]zatanči [G]a vetkni [D]nůž do mých [Emi]zad,

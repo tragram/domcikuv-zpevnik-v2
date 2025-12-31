@@ -1,0 +1,19 @@
+songId: Tri_sestry-AIDA
+prompts:
+  - promptId: Tri_sestry-AIDA_gpt-4o-mini_v1
+    songId: Tri_sestry-AIDA
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures a surreal night scene in a garden
+      filled with whimsical characters like a historical figure resembling
+      Goebbels, a playful Aida, and mythical figures like Caligula and
+      Čingischán. The atmosphere should be dreamlike, with a bathtub in the
+      foreground, white mice, and a mix of chaos and tranquility, reflecting
+      themes of delirium and introspection. Add elements like a tram in the
+      distance and a girl collecting bottle caps to enhance the narrative.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,17 @@
+songId: Irish_Rovers-Drunken_Sailor
+prompts:
+  - promptId: Irish_Rovers-Drunken_Sailor_gpt-4o-mini_v1
+    songId: Irish_Rovers-Drunken_Sailor
+    createdAt: 1754387145000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lively maritime scene at dawn, featuring a
+      group of sailors playfully dealing with a drunken crew member. Include
+      elements like a rustic longboat, a playful atmosphere, and a whimsical
+      touch with the captain's daughter nearby. The sky should be brightening
+      with morning light, capturing the spirit of the song.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

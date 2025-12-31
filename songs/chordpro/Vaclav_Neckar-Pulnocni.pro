@@ -1,14 +1,15 @@
 {title: Půlnoční}
 {artist: Václav Neckář}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["vaclav_neckar_pulnocni-sken.pdf", "vaclav_neckar_pulnocni-comp.pdf"]}
-{capo: 3}
 {key: D}
+{capo: 3}
 {tempo: }
 {range: h1-a1}
-{start_melody: d}
+{language: czech}
+{startMelody: d}
+{createdAt: 1436824800000}
+{illustrationId: Vaclav_Neckar-Pulnocni_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Vaclav_Neckar-Pulnocni_gpt-4o-mini_v1}
+
 {start_of_verse}
 [D]Jedu domů po trati, jedu přes [G]kopce, [A]
 [D]za okny padá, padá sníh, budou [G]Vánoce, [A]

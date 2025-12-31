@@ -1,16 +1,15 @@
 {title: Svaz českých bohémů}
 {artist: Wohnout}
-{date_added: 02-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["wohnout_svaz_ceskych_bohemu-sken.pdf", "wohnout_svaz_ceskych_bohemu-comp.pdf", "wohnout_svaz_ceskych_bohemu-gen.pdf"]}
-{image_model: dalle3}
-{prompt_id: v1}
-{capo: 0}
 {key: G}
+{capo: 0}
 {tempo: }
 {range: c1-c2}
-{start_melody: }
+{language: czech}
+{startMelody: }
+{createdAt: 1423868400000}
+{illustrationId: Wohnout-Svaz_ceskych_bohemu_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Wohnout-Svaz_ceskych_bohemu_gpt-4o-mini_v1}
+
 {start_of_chorus}
 [G]Vracím se domů nad [Dmi]ránem,
 kvalitním vínem omá[Ami]men,

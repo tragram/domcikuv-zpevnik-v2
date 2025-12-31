@@ -1,0 +1,17 @@
+songId: Trainspotting-Perfect_Day
+prompts:
+  - promptId: Trainspotting-Perfect_Day_gpt-4o-mini_v1
+    songId: Trainspotting-Perfect_Day
+    createdAt: 1754387149000
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene park scene at dusk, featuring a couple
+      enjoying Sangria, surrounded by lush greenery. Include a nearby zoo with
+      playful animals, and a cozy outdoor movie setup. The atmosphere should
+      convey a sense of joy, relaxation, and the beauty of a perfect day spent
+      together.
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

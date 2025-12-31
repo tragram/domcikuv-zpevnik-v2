@@ -1,14 +1,15 @@
 {title: Kometa}
 {artist: Jaromír Nohavica}
-{date_added: 07-2015}
-{songbooks: ["Domčík"]}
-{language: czech}
-{pdf_filenames: ["jaromir_nohavica_kometa-sken.pdf", "jaromir_nohavica_kometa-comp.pdf"]}
-{capo: 3}
 {key: Am}
+{capo: 3}
 {tempo: }
 {range: g1-f1}
-{start_melody: e}
+{language: czech}
+{startMelody: e}
+{createdAt: 1436824800000}
+{illustrationId: Jaromir_Nohavica-Kometa_gpt-4o-mini_v1_FLUX.1-dev}
+{promptId: Jaromir_Nohavica-Kometa_gpt-4o-mini_v1}
+
 {start_of_verse}
 [Ami]Spatřil jsem kometu, oblohou letěla,
 chtěl jsem jí zazpívat, ona mi zmizela,
