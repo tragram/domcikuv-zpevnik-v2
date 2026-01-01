@@ -241,7 +241,7 @@ const profileApp = buildApp()
 
       // Generate unique filename
       const fileExtension = file.name.split(".").pop() || "jpg";
-      const fileName = `avatars/${userData.id}-${Date.now()}.${fileExtension}`;
+      const fileName = `avatars/${userData.id}-${userData.name}-${Date.now()}.${fileExtension}`;
 
       // Convert file to ArrayBuffer for R2
       const arrayBuffer = await file.arrayBuffer();
@@ -253,12 +253,14 @@ const profileApp = buildApp()
         },
       });
 
-      // Generate the public URL
-      const imageUrl = `${c.env.CLOUDFLARE_R2_URL}/${fileName}`;
-
       // Update user's image URL in database
       const db = drizzle(c.env.DB);
-      await updateAvatar(db, userData.id, imageUrl);
+      const imageUrl = await updateAvatar(
+        db,
+        userData.id,
+        c.env.R2_BUCKET,
+        fileName
+      );
 
       return successJSend(c, { imageUrl });
     } catch (error) {

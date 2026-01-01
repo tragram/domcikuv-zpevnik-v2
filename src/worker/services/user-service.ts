@@ -3,6 +3,7 @@ import { user, UserDB } from "src/lib/db/schema";
 import { eq, desc, like, or, count } from "drizzle-orm";
 import { PaginatedResponse } from "../api/utils";
 import { z } from "zod";
+import { moveSongToTrash, moveToTrashR2 } from "./illustration-service";
 
 // User validation schemas
 export const createUserSchema = z.object({
@@ -274,8 +275,11 @@ export const updateUserProfile = async (
 export const updateAvatar = async (
   db: DrizzleD1Database,
   userId: string,
-  imageUrl: string
+  CLOUDFLARE_R2_URL: R2Bucket,
+  fileName: string
 ) => {
+  deleteAvatar(db, userId, CLOUDFLARE_R2_URL);
+  const imageUrl = `${CLOUDFLARE_R2_URL}/${fileName}`;
   await db
     .update(user)
     .set({
@@ -285,7 +289,20 @@ export const updateAvatar = async (
     .where(eq(user.id, userId));
 };
 
-export const deleteAvatar = async (db: DrizzleD1Database, userId: string) => {
+export const deleteAvatar = async (
+  db: DrizzleD1Database,
+  userId: string,
+  CLOUDFLARE_R2_URL: R2Bucket
+) => {
+  const oldImage = await db
+    .select({ url: user.image })
+    .from(user)
+    .where(eq(user.id, userId))
+    .limit(1);
+  // Generate the public URL
+  if (oldImage.length > 0 && oldImage[0].url) {
+    moveToTrashR2(CLOUDFLARE_R2_URL, oldImage[0].url);
+  }
   await db
     .update(user)
     .set({

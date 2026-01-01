@@ -76,7 +76,18 @@ const imageFolder = (
   }/${imageModel}`;
 };
 
-export const moveToTrashR2 = async (
+export const moveToTrashR2 = async (R2_BUCKET: R2Bucket, fileName: string) => {
+  const trashFilename = "trash/" + fileName;
+  const file = await R2_BUCKET.get(fileName);
+  if (!file) {
+    throw Error("Failed to retrieve R2 file when deleting!");
+  }
+  await R2_BUCKET.put(trashFilename, file.body);
+  await R2_BUCKET.delete(fileName);
+  return trashFilename;
+};
+
+export const moveSongToTrash = async (
   R2_BUCKET: R2Bucket,
   songId: string,
   promptId: string,
@@ -86,18 +97,12 @@ export const moveToTrashR2 = async (
   const results = { imageURL: "", thumbnailURL: "" };
   for (const thumb of thumbnails) {
     const imageKey = imageFolder(songId, promptId, imageModel, thumb);
-    const file = await R2_BUCKET.get(imageKey);
-    await R2_BUCKET.delete(imageKey);
-    if (!file) {
-      throw Error("Failed to retrieve R2 file when deleting!");
-    }
-    const trashFolder = "trash/" + imageKey;
+    const trashFilename = await moveToTrashR2(R2_BUCKET, imageKey);
     if (thumb) {
-      results.thumbnailURL = trashFolder;
+      results.thumbnailURL = trashFilename;
     } else {
-      results.imageURL = trashFolder;
+      results.imageURL = trashFilename;
     }
-    await R2_BUCKET.put(trashFolder, file.body);
   }
   return results;
 };

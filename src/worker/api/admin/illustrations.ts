@@ -16,7 +16,7 @@ import {
   clearCurrentIllustration,
   uploadImageBuffer,
   sameParametersExist,
-  moveToTrashR2,
+  moveSongToTrash,
 } from "../../services/illustration-service";
 import { findSong, SongWithCurrentVersion } from "../../services/song-service";
 import {
@@ -492,7 +492,7 @@ export const illustrationRoutes = buildApp()
 
       // Delete associated files from R2 storage (if stored there)
       try {
-        await moveToTrashR2(
+        await moveSongToTrash(
           c.env.R2_BUCKET,
           songId,
           existingIllustration[0].promptId,
