@@ -13,6 +13,8 @@ import {
   getSongVersionsByUser,
 } from "../services/song-service";
 import { errorJSend, failJSend, successJSend } from "./responses";
+import OpenAI from "openai";
+import { trustedUserMiddleware } from "./utils";
 
 export const editorSubmitSchema = z.object({
   title: z.string(),
@@ -41,10 +43,88 @@ export const editorSubmitSchema = z.object({
     .transform((x) => (x ? String(x) : null)),
 });
 
+export const autofillChordproSchema = z.object({
+  chordpro: z.string(),
+});
+
 export type EditorSubmitSchema = z.infer<typeof editorSubmitSchema>;
 export type EditorSubmitSchemaInput = z.input<typeof editorSubmitSchema>;
 
 const editorApp = buildApp()
+  .post("/autofill", 
+    zValidator("json", autofillChordproSchema), async (c) => {
+    const { chordpro } = c.req.valid("json");
+
+    const apiKey = c.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      return errorJSend(
+        c,
+        "Server configuration error",
+        500,
+        "MISSING_API_KEY"
+      );
+    }
+
+    try {
+      const client = new OpenAI({ apiKey });
+
+      const response = await client.responses.create({
+        model: "gpt-5.2",
+        text: {
+          format: {
+            type: "text",
+          },
+          verbosity: "low",
+        },
+        reasoning: {
+          effort: "none",
+          summary: null,
+        },
+        instructions: `
+        Given a song in ChordPro format with repeated sections missing chords, complete the chords as follows:
+          - Add chords only where lyrics already exist and chord annotations are missing.
+          - For repeated sections (verse, chorus, bridge, etc.), copy the chord progression from the first occurrence of that section.
+          - If a section contains partial chords (e.g. when there are four lines in a verse with only the first two containing chords), fill in the missing ones when reasonably certain.
+          - Preserve all existing ChordPro directives and structure exactly.
+          - If the song modulates, transpose chords to preserve the relative progression. Only do this when very certain that a modulation has happened.
+
+          Output rules:
+          - Do not add, remove, or modify any lyrics.
+          - Insert chords inline with the lyrics; do not add separate chord-only sections.
+          - Align chords correctly with syllables - there will typically be the same number of syllables between the chords in the same section type.
+          - Always insert chords at syllable bounds. Weakly prefer putting them at the start of the words, unless the syllable counts make it likely they should be within a word. Keep in mind that a chord being at the start of a word in one verse does not necessarily imply it will be the same in the next one - the number of syllables is key, not always word bounds.
+          - Do not expand or rewrite section directives.
+          - Maintain original formatting.
+          - Output the complete ChordPro file only—no commentary or abbreviations.
+          - If uncertain about a chord, flag it for review.
+          - If a section has no clear reference progression, leave it unchanged and flag it for review.
+        `,
+        input: chordpro,
+      });
+
+      const filledChordpro = response.output_text;
+
+      if (!filledChordpro) {
+        return errorJSend(
+          c,
+          "AI returned empty response",
+          500,
+          "AI_EMPTY_RESPONSE"
+        );
+      }
+
+      return successJSend(c, { chordpro: filledChordpro });
+    } catch (error) {
+      console.error(error);
+      return errorJSend(
+        c,
+        "Internal server error during autofill",
+        500,
+        "AUTOFILL_ERROR"
+      );
+    }
+  })
+  // --- Existing Endpoints ---
   .post("/", zValidator("json", editorSubmitSchema), async (c) => {
     const submission = c.req.valid("json");
     const userId = c.get("USER")?.id;

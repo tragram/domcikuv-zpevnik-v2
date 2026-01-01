@@ -27,7 +27,6 @@ import { UserProfileData } from "src/worker/api/userProfile";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 
@@ -111,7 +110,6 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       setIsSubmitting(false);
     }
   };
-
   return (
     <div
       className={cn(
@@ -183,16 +181,26 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         <DownloadButton editorState={editorState} />
 
         {user.loggedIn ? (
-          <Button
-            className="bg-transparent"
-            onClick={handleSubmit}
-            disabled={!canBeSubmitted || isSubmitting}
-          >
-            {isSubmitting
-              ? "Submitting..."
-              : `Submit ${songData ? "edit" : "new song"}`}
-            <CloudUpload />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span tabIndex={0}>
+                <Button
+                  className="bg-transparent"
+                  onClick={handleSubmit}
+                  disabled={!canBeSubmitted || isSubmitting}
+                >
+                  {isSubmitting
+                    ? "Submitting..."
+                    : `Submit ${songData ? "edit" : "new song"}`}
+                  <CloudUpload />
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              You can only submit a song once all the required metadata has been
+              entered.
+            </TooltipContent>
+          </Tooltip>
         ) : (
           <Tooltip>
             <TooltipTrigger asChild>
