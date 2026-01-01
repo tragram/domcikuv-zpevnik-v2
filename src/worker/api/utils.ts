@@ -48,7 +48,7 @@ export const trustedUserMiddleware = async (c: Context, next: Next) => {
       .from(user)
       .where(eq(user.id, userId))
       .limit(1);
-
+    console.log(isTrustedCheckResult);
     if (isTrustedCheckResult.length === 0) {
       return c.json(
         {

@@ -51,79 +51,147 @@ export type EditorSubmitSchema = z.infer<typeof editorSubmitSchema>;
 export type EditorSubmitSchemaInput = z.input<typeof editorSubmitSchema>;
 
 const editorApp = buildApp()
-  .post("/autofill", 
-    zValidator("json", autofillChordproSchema), async (c) => {
-    const { chordpro } = c.req.valid("json");
+  .post(
+    "/autofill",
+    trustedUserMiddleware,
+    zValidator("json", autofillChordproSchema),
+    async (c) => {
+      const { chordpro } = c.req.valid("json");
 
-    const apiKey = c.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      return errorJSend(
-        c,
-        "Server configuration error",
-        500,
-        "MISSING_API_KEY"
-      );
-    }
-
-    try {
-      const client = new OpenAI({ apiKey });
-
-      const response = await client.responses.create({
-        model: "gpt-5.2",
-        text: {
-          format: {
-            type: "text",
-          },
-          verbosity: "low",
-        },
-        reasoning: {
-          effort: "none",
-          summary: null,
-        },
-        instructions: `
-        Given a song in ChordPro format with repeated sections missing chords, complete the chords as follows:
-          - Add chords only where lyrics already exist and chord annotations are missing.
-          - For repeated sections (verse, chorus, bridge, etc.), copy the chord progression from the first occurrence of that section.
-          - If a section contains partial chords (e.g. when there are four lines in a verse with only the first two containing chords), fill in the missing ones when reasonably certain.
-          - Preserve all existing ChordPro directives and structure exactly.
-          - If the song modulates, transpose chords to preserve the relative progression. Only do this when very certain that a modulation has happened.
-
-          Output rules:
-          - Do not add, remove, or modify any lyrics.
-          - Insert chords inline with the lyrics; do not add separate chord-only sections.
-          - Align chords correctly with syllables - there will typically be the same number of syllables between the chords in the same section type.
-          - Always insert chords at syllable bounds. Weakly prefer putting them at the start of the words, unless the syllable counts make it likely they should be within a word. Keep in mind that a chord being at the start of a word in one verse does not necessarily imply it will be the same in the next one - the number of syllables is key, not always word bounds.
-          - Do not expand or rewrite section directives.
-          - Maintain original formatting.
-          - Output the complete ChordPro file only—no commentary or abbreviations.
-          - If uncertain about a chord, flag it for review.
-          - If a section has no clear reference progression, leave it unchanged and flag it for review.
-        `,
-        input: chordpro,
-      });
-
-      const filledChordpro = response.output_text;
-
-      if (!filledChordpro) {
+      const apiKey = c.env.OPENAI_API_KEY;
+      if (!apiKey) {
         return errorJSend(
           c,
-          "AI returned empty response",
+          "Server configuration error",
           500,
-          "AI_EMPTY_RESPONSE"
+          "MISSING_API_KEY"
         );
       }
 
-      return successJSend(c, { chordpro: filledChordpro });
-    } catch (error) {
-      console.error(error);
-      return errorJSend(
-        c,
-        "Internal server error during autofill",
-        500,
-        "AUTOFILL_ERROR"
-      );
+      try {
+        const client = new OpenAI({ apiKey });
+
+        const response = await client.responses.create({
+          model: "gpt-5.2",
+          text: {
+            format: {
+              type: "text",
+            },
+            verbosity: "low",
+          },
+          reasoning: {
+            effort: "none",
+            summary: null,
+          },
+          instructions: `You are given a song in ChordPro format.
+
+Your task is to complete missing chord annotations while preserving exact structure and formatting.
+
+CHORD COMPLETION RULES
+- Add chords only where lyrics already exist and chord annotations are missing.
+- Treat any section that contains chords as defining a complete chord progression.
+- For repeated sections (verse, chorus, bridge, etc.), reuse the chord progression
+  and chord positions from the first occurrence of that section type.
+- If multiple sections of the same type exist, they must have identical chord
+  progressions and relative chord placements unless you are certain this is incorrect.
+- If the song modulates, transpose the progression only when you are very certain.
+
+CHORD PLACEMENT RULES (STRICT)
+- Chords are aligned to syllable positions, not word boundaries.
+- For a given section type, chord placements are defined by the first fully or partially
+  chorded occurrence of that section.
+- Reproduce the same relative syllable positions for all corresponding chords
+  in every line of that section.
+- If a line has the same number of syllables as its reference line, the chord placement
+  MUST be identical.
+- If syllable counts differ slightly, shift chords minimally to preserve rhythmic alignment.
+- Never move a chord earlier or later without a syllable-based reason.
+
+OUTPUT CONSTRAINTS
+- Do not add, remove, or modify any lyrics.
+- Insert chords inline only; never create chord-only lines or sections.
+- Do not expand or rewrite ChordPro directives.
+- Maintain original spacing, line breaks, and formatting.
+- Output the complete ChordPro file only, with no commentary or abbreviations.
+- If a chord or placement cannot be determined confidently, flag it for review.
+
+EXAMPLE
+\`\`\`
+{start_of_verse}
+[Ami]Mám [E7]v kapse jeden [Ami]frank,
+jsem [G7]nejbohatší z [C]bank nad Sei[E7]nou,
+mám víc než krupiér
+a stíny Sacre-Coeur nade mnou.
+{end_of_verse}
+
+{start_of_chorus}
+[F]Láska je [G]úděl [C]tvůj,
+[Dmi]pánbůh tě [E7]opa[Ami]truj,
+bonso[F]ir, mademoi[G]selle [Ami]Paris,
+bonsoir, mademoiselle Paris.
+{end_of_chorus}
+
+{start_of_verse}
+Znám bulvár Saint Michelle,
+tam jsem včera šel s Marie-Claire,
+vím, jak zní z úst krásnejch žen
+slůvka "car je t'aime, oh, mon cher".
+{end_of_verse}
+
+{chorus}
+\`\`\`
+should be turned into
+\`\`\`
+{start_of_verse}
+[Ami]Mám [E7]v kapse jeden [Ami]frank,
+jsem [G7]nejbohatší z [C]bank nad Sei[E7]nou,
+[Ami]mám [E7]víc než krupi[Ami]ér
+a [G7]stíny Sacre-[C]Coeur nade [E7]mnou.
+{end_of_verse}
+
+{start_of_chorus}
+[F]Láska je [G]úděl [C]tvůj,
+[Dmi]pánbůh tě [E7]opa[Ami]truj,
+bonso[F]ir, mademoi[G]selle [Ami]Paris,
+bonso[F]ir, mademoi[G]selle [Ami]Paris.
+{end_of_chorus}
+
+{start_of_verse}
+[Ami]Znám [E7]bulvár Saint Mi[Ami]chelle,
+[G]tam jsem včera [C]šel s Marie-[E7]Claire,
+[Ami]vím, [E7]jak zní z úst krásnejch [Ami]žen
+[G]slůvka "car je [C]t'aime, oh, mon [E7]cher".
+{end_of_verse}
+
+{chorus}
+\`\`\`
+        `,
+          input: chordpro,
+        });
+
+        const filledChordpro = response.output_text;
+
+        if (!filledChordpro) {
+          return errorJSend(
+            c,
+            "AI returned empty response",
+            500,
+            "AI_EMPTY_RESPONSE"
+          );
+        }
+
+        return successJSend(c, { chordpro: filledChordpro });
+      } catch (error) {
+        console.error(error);
+        return errorJSend(
+          c,
+          "Internal server error during autofill",
+          500,
+          "AUTOFILL_ERROR"
+        );
+      }
     }
-  })
+  )
   // --- Existing Endpoints ---
   .post("/", zValidator("json", editorSubmitSchema), async (c) => {
     const submission = c.req.valid("json");

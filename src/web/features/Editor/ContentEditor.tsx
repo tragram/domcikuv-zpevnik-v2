@@ -1,15 +1,20 @@
-import { Textarea } from "~/components/ui/textarea";
+import { useRouteContext } from "@tanstack/react-router";
+import { FileInput, Hourglass, Sparkles, X } from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useHistoryState } from "@uidotdev/usehooks";
+import { UserProfileData } from "src/worker/api/userProfile";
 import { Button } from "~/components/ui/button";
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import { Textarea } from "~/components/ui/textarea";
+import { cn, tailwindBreakpoint } from "~/lib/utils";
+import { autofillChordpro } from "~/services/editorHelpers";
 import "./Editor.css";
+import { convertToChordPro, isConvertibleFormat } from "./chords2chordpro";
 import {
-  SnippetButtonSection,
   SnippetButton,
+  SnippetButtonSection,
   snippets,
 } from "./components/Snippets";
-import { cn, tailwindBreakpoint } from "~/lib/utils";
-import { convertToChordPro, isConvertibleFormat } from "./chords2chordpro";
-import { X, Sparkles, FileInput } from "lucide-react"; // Assuming Lucide icons are available
+import { SmartFeature, SmartFeatureBar } from "./components/SmartFeatureBar";
 
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {
@@ -22,45 +27,27 @@ const textareaAutoSizeStyles = `
 interface ContentEditorProps {
   editorContent: string;
   setEditorContent: (content: string) => void;
+  user: UserProfileData;
 }
 
-// --- Smart Feature Definitions ---
-
-interface SmartFeature {
-  id: string;
-  label: string;
-  loadingLabel: string;
-  icon: React.ElementType;
-  description: React.ReactNode;
-  check: (content: string) => boolean;
-}
-
-/**
- * Checks for sections that have lyrics but NO chords, while ensuring
- * at least one OTHER section in the song DOES have chords (context).
- */
-const isAutofillable = (text: string): boolean => {
-  // 1. Basic check: Does the song have *any* chords?
-  // If no chords exist at all, we might want "Compose" logic, but for "Autofill" we need a seed.
+const isAutofillable = (text: string, user: UserProfileData): boolean => {
+  if (!user.loggedIn || !user.profile.isTrusted) {
+    return false;
+  }
   const hasAnyChords = /\[[A-G][^\]]*\]/.test(text);
   if (!hasAnyChords) return false;
 
-  // 2. Split into sections based on ChordPro directives
-  // Matches {sov}, {start_of_verse}, {c}, etc.
   const sectionSplitRegex =
     /(\{(?:sov|start_of_verse|soc|start_of_chorus|sob|start_of_bridge|v|c|b|verse|chorus|bridge)(?::.*)?\})/i;
   const parts = text.split(sectionSplitRegex);
 
-  // 3. Scan sections. We look for a part that follows a directive, has content, but NO chords.
   for (let i = 1; i < parts.length; i += 2) {
-    // parts[i] is the directive, parts[i+1] is the content
     const content = parts[i + 1];
     if (!content) continue;
 
     const hasLyrics = content.trim().length > 0;
     const hasChordsInSection = /\[[A-G][^\]]*\]/.test(content);
 
-    // If we find a section with lyrics but no chords, this is a candidate for autofill
     if (hasLyrics && !hasChordsInSection) {
       return true;
     }
@@ -75,12 +62,12 @@ const SMART_FEATURES: SmartFeature[] = [
     label: "Convert to ChordPro",
     loadingLabel: "Converting...",
     icon: FileInput,
-    check: isConvertibleFormat,
+    check: (content: string, user: UserProfileData) =>
+      isConvertibleFormat(content),
     description: (
       <>
         Detected chords in separate lines above the lyrics. This will format
-        them into the ChordPro inline format used by this website. The song is
-        now shown in a monospace font to help with proper alignment.
+        them into the ChordPro inline format used by this website.
         <br />
         <br />
         <strong>For best results:</strong>
@@ -100,12 +87,8 @@ const SMART_FEATURES: SmartFeature[] = [
     check: isAutofillable,
     description: (
       <>
-        Some sections have chords, but others are empty. The AI can fill in the
-        missing chords based on the song's context.
-        <ul className="list-disc pl-4 mt-2">
-          <li>Analyzes your existing Verses/Choruses.</li>
-          <li>Propagates patterns to empty sections.</li>
-        </ul>
+        Detected some sections having chords but not all of them. Use AI to
+        generate missing chords.
       </>
     ),
   },
@@ -114,30 +97,63 @@ const SMART_FEATURES: SmartFeature[] = [
 const ContentEditor: React.FC<ContentEditorProps> = ({
   editorContent,
   setEditorContent,
+  user,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // Feature State
   const [dismissedFeatures, setDismissedFeatures] = useState<Set<string>>(
     new Set()
   );
   const [isProcessing, setIsProcessing] = useState(false);
+  const api = useRouteContext({ strict: false }).api;
 
-  // Determine active feature
+  // Manual History Management - Fixed destructuring
+  const {
+    state,
+    set: setHistoryContent,
+    undo,
+    redo,
+  } = useHistoryState(editorContent);
+
+  // Wrap setContent to update both history and parent
+  const setContent = (value: string) => {
+    setHistoryContent(value);
+    setEditorContent(value);
+  };
+
+  // Sync parent when undo/redo changes the state
+  const prevStateRef = useRef(state);
+  useEffect(() => {
+    if (state !== prevStateRef.current && state !== editorContent) {
+      setEditorContent(state);
+      prevStateRef.current = state;
+    }
+  }, [state, editorContent, setEditorContent]);
+
   const activeFeature = useMemo(() => {
     return SMART_FEATURES.find(
-      (feature) =>
-        feature.check(editorContent) && !dismissedFeatures.has(feature.id)
+      (f) => f.check(state, user) && !dismissedFeatures.has(f.id)
     );
-  }, [editorContent, dismissedFeatures]);
+  }, [state, user, dismissedFeatures]);
 
+  // Handle Keyboard Shortcuts for Custom Undo/Redo
   useEffect(() => {
-    if (textareaRef.current && window.innerWidth < tailwindBreakpoint("md")) {
-      const textarea = textareaRef.current;
-      textarea.style.height = "auto";
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-  }, [editorContent]);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
+        e.preventDefault();
+        if (e.shiftKey) {
+          redo();
+        } else {
+          undo();
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
+        e.preventDefault();
+        redo();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [undo, redo]);
 
   useEffect(() => {
     const style = document.createElement("style");
@@ -165,26 +181,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
   }, []);
 
   const onEditorChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditorContent(e.target.value);
-  };
-
-  const replaceEditorContent = (newText: string) => {
-    if (!textareaRef.current) {
-      setEditorContent(newText);
-      return;
-    }
-    const textarea = textareaRef.current;
-    textarea.focus();
-    try {
-      textarea.select();
-      const success = document.execCommand("insertText", false, newText);
-      if (!success) throw new Error("execCommand failed");
-      setEditorContent(newText);
-      textarea.setSelectionRange(0, 0);
-    } catch (e) {
-      console.error("Error using execCommand:", e);
-      setEditorContent(newText);
-    }
+    setContent(e.target.value);
   };
 
   const insertSnippet = (snippetKey: string) => {
@@ -193,68 +190,37 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     const textarea = textareaRef.current;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    const selectedText = editorContent.substring(start, end);
+    const selectedText = state.substring(start, end);
 
-    textarea.focus();
     const textToInsert = snippet.template(selectedText ?? "");
-    const finalCursorPos = selectedText
-      ? start + textToInsert.length
-      : start + snippet.cursorOffset;
+    const newFullText =
+      state.substring(0, start) + textToInsert + state.substring(end);
 
-    try {
-      if (typeof InputEvent === "function") {
-        if (start !== end) document.execCommand("delete", false);
-        document.execCommand("insertText", false, textToInsert);
-        textarea.setSelectionRange(finalCursorPos, finalCursorPos);
-      } else {
-        throw new Error("Legacy fallback");
-      }
-    } catch (e) {
-      const newContent =
-        editorContent.substring(0, start) +
-        textToInsert +
-        editorContent.substring(end);
-      setEditorContent(newContent);
-      setTimeout(
-        () => textarea.setSelectionRange(finalCursorPos, finalCursorPos),
-        0
-      );
-    }
-  };
+    setContent(newFullText);
 
-  // --- Feature Handlers ---
-
-  const handleDismiss = () => {
-    if (activeFeature) {
-      setDismissedFeatures((prev) => new Set(prev).add(activeFeature.id));
-    }
+    // Set cursor position after React update
+    setTimeout(() => {
+      const finalCursorPos = selectedText
+        ? start + textToInsert.length
+        : start + snippet.cursorOffset;
+      textarea.setSelectionRange(finalCursorPos, finalCursorPos);
+      textarea.focus();
+    }, 0);
   };
 
   const executeFeature = async () => {
     if (!activeFeature) return;
 
     if (activeFeature.id === "convert_to_chordpro") {
-      const converted = convertToChordPro(editorContent);
-      replaceEditorContent(converted);
-      // Automatically dismiss convert after usage
+      const converted = convertToChordPro(state);
+      setContent(converted); // This pushes to custom history stack
       setDismissedFeatures((prev) => new Set(prev).add("convert_to_chordpro"));
     } else if (activeFeature.id === "autofill_chords") {
       setIsProcessing(true);
       try {
-        const response = await fetch("/api/editor/autofill", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ chordpro: editorContent }),
-        });
-
-        if (!response.ok) throw new Error(`Error: ${response.statusText}`);
-
-        const data = await response.json();
-        if (data.status === "success" && data.data?.chordpro) {
-          replaceEditorContent(data.data.chordpro);
-          // Dismiss autofill after usage
-          setDismissedFeatures((prev) => new Set(prev).add("autofill_chords"));
-        }
+        const newChordpro = await autofillChordpro(state, api);
+        setContent(newChordpro); // This pushes to custom history stack
+        setDismissedFeatures((prev) => new Set(prev).add("autofill_chords"));
       } catch (error) {
         console.error("Autofill failed", error);
       } finally {
@@ -305,48 +271,20 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
             ? "font-mono !rounded-b-none"
             : "font-normal"
         )}
-        onInput={onEditorChange}
-        value={editorContent}
+        onChange={onEditorChange}
+        value={state}
         disabled={isProcessing}
       />
 
-      {/* Dynamic Smart Feature Bar */}
       {activeFeature && (
-        <div className="relative group animate-in slide-in-from-bottom-2 duration-300">
-          <div className="w-full overflow-hidden bg-muted border-t-2 border-primary px-4 text-xs hidden group-hover:visible group-hover:flex flex-col py-2 pr-8">
-            <div className="font-bold mb-1 flex items-center gap-2">
-              <activeFeature.icon className="w-3 h-3" />
-              {activeFeature.label} detected
-            </div>
-            <div className="opacity-90">{activeFeature.description}</div>
-
-            <button
-              onClick={handleDismiss}
-              className="absolute top-2 right-2 p-1 hover:bg-black/10 rounded transition-colors"
-              title="Dismiss suggestion"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-
-          <Button
-            onClick={executeFeature}
-            disabled={isProcessing}
-            className="w-full rounded-none h-10 transition-transform font-semibold !bg-muted border-t-2 border-primary group-hover:border-t-0 flex items-center gap-2"
-          >
-            {isProcessing ? (
-              <>
-                <span className="animate-spin">⏳</span>{" "}
-                {activeFeature.loadingLabel}
-              </>
-            ) : (
-              <>
-                <activeFeature.icon className="w-2 h-2" />
-                {activeFeature.label}
-              </>
-            )}
-          </Button>
-        </div>
+        <SmartFeatureBar
+          feature={activeFeature}
+          isProcessing={isProcessing}
+          onExecute={executeFeature}
+          onDismiss={() =>
+            setDismissedFeatures((prev) => new Set(prev).add(activeFeature.id))
+          }
+        />
       )}
     </div>
   );

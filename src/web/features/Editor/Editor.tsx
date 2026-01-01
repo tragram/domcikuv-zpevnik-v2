@@ -179,6 +179,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
             <ContentEditor
               editorContent={editorState.chordpro}
               setEditorContent={updateContent}
+              user={user}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>

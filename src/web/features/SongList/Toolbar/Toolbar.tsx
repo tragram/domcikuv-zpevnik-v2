@@ -1,5 +1,4 @@
 import {
-  getRouterContext,
   Link,
   useRouteContext,
 } from "@tanstack/react-router";
