@@ -24,6 +24,12 @@ import SettingsDropdown from "./components/SettingsDropdown";
 import DownloadButton from "./components/DownloadButton";
 import { EditorState } from "./Editor";
 import { UserProfileData } from "src/worker/api/userProfile";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -175,16 +181,33 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       {/* "final" actions */}
       <div className="flex justify-center md:justify-end max-lg:flex-wrap max-xl:w-full editor-toolbar-submit">
         <DownloadButton editorState={editorState} />
-        <Button
-          className="bg-transparent"
-          onClick={handleSubmit}
-          disabled={!canBeSubmitted || isSubmitting}
-        >
-          {isSubmitting
-            ? "Submitting..."
-            : `Submit ${songData ? "edit" : "new song"}`}
-          <CloudUpload />
-        </Button>
+
+        {user.loggedIn ? (
+          <Button
+            className="bg-transparent"
+            onClick={handleSubmit}
+            disabled={!canBeSubmitted || isSubmitting}
+          >
+            {isSubmitting
+              ? "Submitting..."
+              : `Submit ${songData ? "edit" : "new song"}`}
+            <CloudUpload />
+          </Button>
+        ) : (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span tabIndex={0}>
+                <Button className="bg-transparent" disabled>
+                  Log in to submit
+                  <CloudUpload />
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              Don't worry, the song data has been saved!
+            </TooltipContent>
+          </Tooltip>
+        )}
       </div>
     </div>
   );
