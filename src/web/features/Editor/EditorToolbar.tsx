@@ -141,7 +141,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         )}
       </div>
       {/* editor actions */}
-      <div className="flex editor-toolbar-actions">
+      <div className="flex editor-toolbar-actions flex-wrap justify-center">
         <Button
           className="hover:text-white bg-transparent"
           onClick={onUploadClick}
@@ -173,7 +173,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         <SettingsDropdown />
       </div>
       {/* "final" actions */}
-      <div className="flex justify-center max-lg:flex-wrap max-lg:w-full editor-toolbar-submit">
+      <div className="flex justify-center md:justify-end max-lg:flex-wrap max-xl:w-full editor-toolbar-submit">
         <DownloadButton editorState={editorState} />
         <Button
           className="bg-transparent"
