@@ -1,5 +1,9 @@
-import { Link } from "@tanstack/react-router";
-import { ImagesIcon, MoreHorizontal, Pencil, User } from "lucide-react";
+import {
+  getRouterContext,
+  Link,
+  useRouteContext,
+} from "@tanstack/react-router";
+import { ImagesIcon, MoreHorizontal, Pencil, Shield, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import { DropdownThemeToggle, ThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
@@ -27,9 +31,10 @@ interface ToolbarProps {
 
 interface CombinedMenuProps {
   isOnline: boolean;
+  isAdmin: boolean;
 }
 
-const CombinedMenu = ({ isOnline }: CombinedMenuProps) => {
+const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -37,9 +42,7 @@ const CombinedMenu = ({ isOnline }: CombinedMenuProps) => {
           <MoreHorizontal />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="m-2 w-[calc(100dvw-1rem)] max-w-56"
-      >
+      <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56">
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownThemeToggle />
@@ -70,6 +73,17 @@ const CombinedMenu = ({ isOnline }: CombinedMenuProps) => {
             <span>Profile</span>
           </Link>
         </DropdownMenuItem>
+        {isAdmin && (
+          <DropdownMenuItem asChild disabled={!isOnline}>
+            <Link
+              to="/admin"
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <Shield className="h-4 w-4" />
+              <span>Admin</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -83,6 +97,8 @@ function Toolbar({
 }: ToolbarProps) {
   const isOnline = window.navigator.onLine;
 
+  const routeContext = useRouteContext({ strict: false });
+  const isAdmin = routeContext?.user?.profile?.isAdmin ?? false;
   return (
     <ToolbarBase
       showToolbar={showToolbar}
@@ -97,28 +113,35 @@ function Toolbar({
       <SessionView isOnline={isOnline} />
 
       {/* Desktop View - Individual Buttons */}
-      <div className="hidden min-[1100px]:flex h-full w-fit">
+      <div className="hidden min-[1150px]:flex h-full w-fit">
         <ThemeToggle />
       </div>
-      <Link className="hidden min-[1100px]:flex" to="/edit">
+      <Link className="hidden min-[1150px]:flex" to="/edit">
         <Button size="icon" variant="circular">
           <Pencil />
         </Button>
       </Link>
-      <Link className="hidden min-[1100px]:flex" to="/profile">
+      <Link className="hidden min-[1150px]:flex" to="/profile">
         <Button size="icon" variant="circular" disabled={!isOnline}>
           <User />
         </Button>
       </Link>
-      <Link className="hidden min-[1100px]:flex" to="/gallery">
+      <Link className="hidden min-[1150px]:flex" to="/gallery">
         <Button size="icon" variant="circular">
           <ImagesIcon />
         </Button>
       </Link>
+      {isAdmin && (
+        <Link className="hidden min-[1150px]:flex" to="/admin">
+          <Button size="icon" variant="circular">
+            <Shield />
+          </Button>
+        </Link>
+      )}
 
       {/* Mobile/Tablet View - Combined Menu */}
-      <div className="flex min-[1100px]:hidden">
-        <CombinedMenu isOnline={isOnline} />
+      <div className="flex min-[1150px]:hidden">
+        <CombinedMenu isOnline={isOnline} isAdmin={isAdmin} />
       </div>
 
       <RandomSong songs={songDB.songs} />
