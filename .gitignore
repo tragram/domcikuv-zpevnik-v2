@@ -30,6 +30,8 @@ dist-ssr
 dev-dist
 secrets.yaml
 
+.tanstack/*
+
 # DB gets rebuilt on both dev and build
 public/songDB.json
 public/songDB.hash
