@@ -14,12 +14,15 @@ You can run the page fully locally by
 * building the database: `pnpm db:create` (if you haven't run it yet)
 * generating the migrations: `pnpm db:generate`
 * migrating the DB: `pnpm db:migrate:local`
-* TODO: load the remote DB, for now I personally can use `scripts/copyRemoteDB.sh` but that won't work unless you have access to CF Workers
-* starting the server: `pnpm dev`
-* to make authentication and AI services work, you will need to supply your own credentials - see `secrets.yaml.sample`
+* optionally use `pnpm tsx scripts/downloadRemoteData.ts` to update the static files from the remote (but the git version should be +- up to date)
+* load the static files into the dev DB: `pnpm tsx scripts/staticData2DB.ts`
+* start the local dev server: `pnpm dev`
+* to make authentication and AI services work, you will need to supply your own credentials - see `secrets.yaml.sample` and `.dev.vars.sample`
 
 ## Editing songs
-Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/` directory. Pushes to the main branch trigger automatic updates (live in a few minutes). If you don't have edit rights, submit a pull request or let me know. 😉
+The best way to edit is to just use the web interface (`/edit`).
+
+Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/chordpro` directory. However, the changes are no longer automatically reflected on the remote website - you can still however use the below for local development (`pnpm tsx scripts/staticData2DB.ts`) will load the chordpro files correctly.
 
 ### File format
 The songs shall be named `artist_name-song_name.pro` (any special characters converted to ASCII). Use `scripts/format_songs.py` to rename files (and fix common whitespace issues) automatically. It also converts repetition symbols (`|:` and `:|` to `𝄆` and `𝄇`) which are then highlighted in the HTML.
@@ -36,13 +39,6 @@ A song shall have the following preamble (tempo may be left empty - it's current
 {tempo: 110}
 ```
 **Note that the chords need to use the Czech/German note names (H:=B, B:=Bb).**
-
-To exclude a file from the database, simply insert `{disabled: true}` in the preamble.
-
-#### Songbooks
-Users can filter by songbook. Each song has a list of songbooks in which it is included. Care must be taken to type the name properly, there's no autocorrect. ;-) Also, make sure to use double quotes.
-
-All songbook names will be collected and used for filters. To define an avatar of the songbook (that will be shown in the filter and in the list on wide screens), define the URL in `src\components\songbookAvatars.tsx`. I know, not a very elegant solution, but it works for now since probably not that many people will be adding songs. Alternatively, the system will try to locate the file `/public/avatars/[songbook].png`. The fallback will be the first letter of the songbook, so not all is lost if you don't have your avatar.
 
 #### Song range
 The behavior of the range parameter can feel a bit strange. The numbers don't mean the traditional octaves as you might expect but are rather relative to the lower note (which is typically a '1'). For example, transposing "c1-d2" (14 semitones) down by one semitone yields "h1-c#2". I know this is confusing but it's been like this in my songbook for many years and did not feel like changing this part too. Maybe in the future. :-)
@@ -163,12 +159,16 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 * [auto-text-size](https://www.npmjs.com/package/auto-text-size): automatic sizing of chords & lyrics
 * [country-flag-icons](https://www.npmjs.com/package/country-flag-icons)
 * [Zustand](https://github.com/pmndrs/zustand): easier state management
+* [better-auth](https://www.better-auth.com/): authentication including third party logins
 * [@khmyznikov/pwa-install](https://github.com/khmyznikov/pwa-install): managing PWA popups and installation
+* [use-gesture](https://github.com/pmndrs/use-gesture): proper zooming with fingers
+* [TanStack Router](https://tanstack.com/router/latest): for, well, routing
+* [TanStack Query](https://tanstack.com/query/latest): efficient querying (since the website is hosted on the free CF tier)
+* [zod](https://zod.dev/): backend validation
+* [hono](https://hono.dev/): backend framework that works well with cloudflare
 * the API is modeled after [jsend](https://github.com/omniti-labs/jsend)
 
-### Notes
-* minimum target width is 320px (essentially no devices have a narrow screen than that)
+The backend now heavily relies on Cloudflare and uses D1, R2 and Durable objects.
 
-## TODO:
-* the smart ScrollButtons sometimes misbehave (TBD both why and how to fix)
-* make the light theme look better (or at least look less bad, lol)
+### Notes
+* minimum target width is 320px (essentially no devices have a narrow screen than that).
