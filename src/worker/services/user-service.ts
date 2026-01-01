@@ -79,7 +79,7 @@ export const getUsers = async (
       offset,
       hasMore: offset + limit < totalCount,
       currentPage: Math.floor(offset / limit) + 1,
-  totalPages: Math.ceil(totalCount / limit),
+      totalPages: Math.ceil(totalCount / limit),
     },
   };
 };
@@ -229,6 +229,7 @@ export const getUserProfile = async (db: DrizzleD1Database, userId: string) => {
       image: user.image,
       isFavoritesPublic: user.isFavoritesPublic,
       isAdmin: user.isAdmin,
+      isTrusted: user.isTrusted,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     })
