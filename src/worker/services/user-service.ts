@@ -332,7 +332,7 @@ export const deleteAvatar = async (
 
   if (oldFileName.startsWith(prefix)) {
     oldFileName = oldFileName.slice(prefix.length);
-    moveToTrashR2(R2_BUCKET, oldFileName);
+    await moveToTrashR2(R2_BUCKET, oldFileName);
   }
 
   // Generate the public URL
