@@ -20,7 +20,8 @@ const sessionSyncApp = buildApp()
   .get("/", async (c) => {
     try {
       const db = drizzle(c.env.DB);
-      const latestLive = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      // only show last three hours
+      const latestLive = new Date(Date.now() - 3 * 60 * 60 * 1000);
       const liveSessions = await db
         .select({
           masterId: syncSessionTable.masterId,

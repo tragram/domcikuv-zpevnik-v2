@@ -47,7 +47,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
     const hours = Math.floor(minutes / 60);
 
     if (hours > 0) {
-      return `${hours}h ${minutes % 60}m`;
+      return `${hours}h`;
     } else if (minutes > 0) {
       return `${minutes}m`;
     } else {
