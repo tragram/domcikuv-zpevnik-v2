@@ -172,7 +172,6 @@ const generateIllustrationHandler = async (c) => {
     }
 
     if (illustrationData.setAsActive) {
-      console.log(imageId, newIllustration[0].id);
       await setCurrentIllustration(
         db,
         illustrationData.songId,
