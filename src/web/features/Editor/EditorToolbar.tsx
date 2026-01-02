@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { EditorSettings } from "./EditorSettings";
+import { replaceRepetitions } from "src/lib/chordpro";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -108,15 +109,18 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-
+    const parsedState = {
+      ...editorState,
+      chordpro: replaceRepetitions(editorState.chordpro),
+    };
     try {
       const response = await makeApiRequest(() =>
         songData
           ? editorApi[":id"].$put({
               param: { id: songData.id },
-              json: editorState,
+              json: parsedState,
             })
-          : editorApi.$post({ json: editorState })
+          : editorApi.$post({ json: parsedState })
       );
       const version = response.version;
       const isUpdate =

@@ -138,8 +138,6 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
     editorState.title &&
     editorState.chordpro;
 
-  const isTrustedUser = user.loggedIn && user.profile.isTrusted;
-
   return (
     <div className="flex flex-col relative h-fit md:h-dvh gap-4 xl:gap-8 min-w-[250px]">
       {toolbarTop && (
