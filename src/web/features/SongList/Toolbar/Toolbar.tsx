@@ -1,13 +1,11 @@
-import {
-  Link,
-  useRouteContext,
-} from "@tanstack/react-router";
+import { Link, useRouteContext } from "@tanstack/react-router";
 import { ImagesIcon, MoreHorizontal, Pencil, Shield, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import { DropdownThemeToggle, ThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
 import { Button } from "~/components/ui/button";
 import {
+  DropdownIconStart,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -46,10 +44,10 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         <DropdownMenuSeparator />
         <DropdownThemeToggle />
 
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem>
           <Link to="/edit" className="flex items-center gap-2 cursor-pointer">
-            <Pencil className="h-4 w-4" />
-            <span>Add song</span>
+            <DropdownIconStart icon={<Pencil />} />
+            Add song
           </Link>
         </DropdownMenuItem>
 
@@ -58,18 +56,18 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
             to="/gallery"
             className="flex items-center gap-2 cursor-pointer"
           >
-            <ImagesIcon className="h-4 w-4" />
-            <span>Gallery</span>
+            <DropdownIconStart icon={<ImagesIcon />} />
+            Gallery
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild disabled={!isOnline}>
+        <DropdownMenuItem disabled={!isOnline}>
           <Link
             to="/profile"
             className="flex items-center gap-2 cursor-pointer"
           >
-            <User className="h-4 w-4" />
-            <span>Profile</span>
+            <DropdownIconStart icon={<User />} />
+            Profile
           </Link>
         </DropdownMenuItem>
         {isAdmin && (
@@ -78,8 +76,8 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
               to="/admin"
               className="flex items-center gap-2 cursor-pointer"
             >
-              <Shield className="h-4 w-4" />
-              <span>Admin</span>
+              <DropdownIconStart icon={<Shield />} />
+              Admin
             </Link>
           </DropdownMenuItem>
         )}

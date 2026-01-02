@@ -17,6 +17,7 @@ import type { SongDB } from "~/types/types";
 import { Button } from "./ui/button";
 import {
   DropdownIconStart,
+  DropdownItemWithDescription,
   DropdownMenuCheckboxItem,
   DropdownMenuItem,
 } from "./ui/dropdown-menu";
@@ -48,22 +49,20 @@ export function ResetBanListDropdownItems({ songDB }: { songDB: SongDB }) {
         onCheckedChange={() => setIgnoreSeenSongs(!ignoreSeenSongs)}
       >
         <DropdownIconStart icon={<Dices />} />
-        <div>
-          Ban seen songs from random
-          <p className="text-[0.7em] leading-tight">Bans reset at 3AM</p>
-        </div>
+        <DropdownItemWithDescription
+          title={"Ban seen songs from random"}
+          description={"Bans reset at 3AM"}
+        />
       </DropdownMenuCheckboxItem>
       <DropdownMenuItem
         onClick={() => setBannedSongs([])}
         onSelect={(e) => e.preventDefault()}
       >
         <DropdownIconStart icon={<ListRestart />} />
-        <div>
-          Reset ban list
-          <p className="text-[0.7em] leading-tight">
-            {bannedSongs.length}/{songDB.songs.length} songs marked seen
-          </p>
-        </div>
+        <DropdownItemWithDescription
+          title={"Reset ban list"}
+          description={`${bannedSongs.length}/${songDB.songs.length} songs marked seen`}
+        />
       </DropdownMenuItem>
     </>
   );

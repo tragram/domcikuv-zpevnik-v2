@@ -1,7 +1,13 @@
-import { Guitar, Piano, ChevronsLeftRightEllipsis } from 'lucide-react';
-import { Button } from '~/components/ui/button';
-import { DropdownIconStart, DropdownMenuCheckboxItem, DropdownMenuLabel, DropdownMenuSeparator } from '~/components/ui/dropdown-menu';
-import { useViewSettingsStore } from '../hooks/viewSettingsStore';
+import { Guitar, Piano, ChevronsLeftRightEllipsis } from "lucide-react";
+import { Button } from "~/components/ui/button";
+import {
+  DropdownIconStart,
+  DropdownItemWithDescription,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "~/components/ui/dropdown-menu";
+import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 
 export interface ChordSettings {
   showChords: boolean;
@@ -13,14 +19,24 @@ const chordSettingsNames = ["showChords", "czechChordNames", "inlineChords"];
 
 const chordSettingsValues = {
   showChords: { icon: <Guitar />, label: "Show chords", description: "" },
-  czechChordNames: { icon: <Piano />, label: '"Czech" notes', description: "uses notes A-B-H-C" },
-  inlineChords: { icon: <ChevronsLeftRightEllipsis />, label: "Chords inline", description: "" }
+  czechChordNames: {
+    icon: <Piano />,
+    label: '"Czech" notes',
+    description: "uses notes A-B-H-C",
+  },
+  inlineChords: {
+    icon: <ChevronsLeftRightEllipsis />,
+    label: "Chords inline",
+    description: "",
+  },
 };
 
 export const chordSettingsClassNames = (chords: ChordSettings) => {
-  return [chords.inlineChords ? 'chords-inline' : '',
-  chords.showChords ? '' : 'chords-hidden']
-}
+  return [
+    chords.inlineChords ? "chords-inline" : "",
+    chords.showChords ? "" : "chords-hidden",
+  ];
+};
 
 export const ChordSettingsDropdownMenu: React.FC = () => {
   const { chords: chordSettings, actions } = useViewSettingsStore();
@@ -33,16 +49,28 @@ export const ChordSettingsDropdownMenu: React.FC = () => {
     <>
       <DropdownMenuLabel>Chord settings</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      {chordSettingsNames.map(k => (
+      {chordSettingsNames.map((k) => (
         <DropdownMenuCheckboxItem
           key={k}
           checked={chordSettings[k as keyof ChordSettings]}
           disabled={k !== "showChords" && !chordSettings.showChords}
           onCheckedChange={() => toggleSetting(k as keyof ChordSettings)}
-          onSelect={e => e.preventDefault()}
+          onSelect={(e) => e.preventDefault()}
         >
-          <DropdownIconStart icon={chordSettingsValues[k as keyof typeof chordSettingsValues].icon} />
-          <div>{chordSettingsValues[k as keyof typeof chordSettingsValues].label}<p className='text-[0.7em] leading-tight'>{chordSettingsValues[k as keyof typeof chordSettingsValues].description}</p></div>
+          <DropdownIconStart
+            icon={
+              chordSettingsValues[k as keyof typeof chordSettingsValues].icon
+            }
+          />
+          <DropdownItemWithDescription
+            title={
+              chordSettingsValues[k as keyof typeof chordSettingsValues].label
+            }
+            description={
+              chordSettingsValues[k as keyof typeof chordSettingsValues]
+                .description
+            }
+          />
         </DropdownMenuCheckboxItem>
       ))}
     </>

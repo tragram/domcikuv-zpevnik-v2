@@ -142,21 +142,24 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             )}
             <ShareSongButton feedStatus={feedStatus} user={user} />
             <DropdownMenuItem>
-              <DropdownIconStart icon={<Pencil />} />
-              <Link className="w-full h-full" to={"/edit/" + songData.id}>
+              <Link
+                className="flex items-center gap-2 cursor-pointer"
+                to={"/edit/" + songData.id}
+              >
+                <DropdownIconStart icon={<Pencil />} />
                 View in Editor
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <DropdownIconStart icon={<Github />} />
               <Link
-                className="w-full h-full"
+                className="flex items-center gap-2 cursor-pointer"
                 to={
                   "https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" +
                   songData.id +
                   ".pro"
                 }
               >
+                <DropdownIconStart icon={<Github />} />
                 Edit on GitHub
               </Link>
             </DropdownMenuItem>

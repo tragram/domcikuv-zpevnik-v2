@@ -4,6 +4,7 @@ import { UserProfileData } from "src/worker/api/userProfile";
 import {
   DropdownIconStart,
   DropdownMenuCheckboxItem,
+  DropdownItemWithDescription,
 } from "~/components/ui/dropdown-menu";
 import { CloudSync } from "lucide-react";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
@@ -29,7 +30,52 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
     }
   }, [setShareSession, user.loggedIn]);
 
-  const baseButton = (
+  const getDescription = () => {
+    if (onLine && showProfileLink) {
+      return {
+        text: "Click to log in and pick a nickname to enable feature.",
+        className: "text-[0.6em] ml-9 -mt-1",
+      };
+    }
+    if (!shareSession) {
+      return {
+        text: "Share your page with others - live.",
+        className: "",
+      };
+    }
+    if (shareSession && feedStatus && feedStatus.connectedClients > 0) {
+      return {
+        text: `Connected clients: ${feedStatus.connectedClients}`,
+        className: "mb-1",
+      };
+    }
+    if (shareSession && user.loggedIn && user.profile.nickname) {
+      return {
+        text: `Your session can be viewed at ${window.location.host}/feed/${user.profile.nickname}`,
+        className: "",
+      };
+    }
+    return null;
+  };
+
+  const description = getDescription();
+
+  const content = (
+    <DropdownItemWithDescription
+      title="Share current song"
+      description={description?.text}
+      descriptionClassName={description?.className}
+    />
+  );
+
+  const wrappedContent =
+    onLine && showProfileLink ? (
+      <Link to={`/profile?redirect=${location.pathname}`}>{content}</Link>
+    ) : (
+      content
+    );
+
+  return (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
       disabled={showProfileLink}
@@ -37,39 +83,8 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
       onCheckedChange={() => setShareSession(!shareSession)}
     >
       <DropdownIconStart icon={<CloudSync />} />
-
-      <div>
-        Share current song
-        {!shareSession && (
-          <p className="text-[0.7em] leading-tight">
-            Share your page with others - live.
-          </p>
-        )}
-        {shareSession && feedStatus && feedStatus.connectedClients > 0 && (
-          <p className="text-[0.7em] leading-tight mb-1">
-            Connected clients: {feedStatus.connectedClients}
-          </p>
-        )}
-        {shareSession && user.loggedIn && user.profile.nickname && (
-          <p className="text-[0.7em] leading-tight">
-            Your session can be viewed at {window.location.host}/feed/
-            {user.profile.nickname}
-          </p>
-        )}
-      </div>
+      {wrappedContent}
     </DropdownMenuCheckboxItem>
-  );
-
-  return onLine && showProfileLink ? (
-    <Link to={`/profile?redirect=${location.pathname}`}
-    >
-      {baseButton}
-      <p className="text-[0.6em] leading-tight ml-9 -mt-1">
-        Click to log in and pick a nickname to enable feature.
-      </p>
-    </Link>
-  ) : (
-    baseButton
   );
 };
 
