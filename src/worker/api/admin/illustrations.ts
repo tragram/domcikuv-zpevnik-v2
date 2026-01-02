@@ -167,9 +167,17 @@ const generateIllustrationHandler = async (c) => {
       .values(insertData)
       .returning();
 
-    // If this illustration should be set as active, update the song's currentIllustrationId
+    if (!newIllustration[0]) {
+      throw new Error("Failed to insert illustration");
+    }
+
     if (illustrationData.setAsActive) {
-      await setCurrentIllustration(db, illustrationData.songId, imageId);
+      console.log(imageId, newIllustration[0].id);
+      await setCurrentIllustration(
+        db,
+        illustrationData.songId,
+        newIllustration[0].id
+      );
     }
 
     return successJSend(
@@ -381,9 +389,9 @@ export const illustrationRoutes = buildApp()
         .returning();
 
       // Handle setting as active illustration
-      if (setAsActive === true) {
+      if (setAsActive) {
         await setCurrentIllustration(db, songId, illustrationId);
-      } else if (setAsActive === false) {
+      } else {
         // Check if this illustration is currently active and clear it if so
         const currentSong = await db
           .select({ currentIllustrationId: song.currentIllustrationId })
