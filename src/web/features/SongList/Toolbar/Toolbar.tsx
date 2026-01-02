@@ -49,7 +49,7 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         <DropdownMenuItem asChild>
           <Link to="/edit" className="flex items-center gap-2 cursor-pointer">
             <Pencil className="h-4 w-4" />
-            <span>Edit</span>
+            <span>Add song</span>
           </Link>
         </DropdownMenuItem>
 
