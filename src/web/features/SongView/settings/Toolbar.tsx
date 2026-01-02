@@ -113,7 +113,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               <Settings2 size={32} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-80 max-h-[85dvh] max-w-[80dvw] overflow-y-auto">
+          <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-80 max-h-[85dvh] overflow-y-auto">
             {React.Children.toArray(<LayoutSettingsDropdownSection />)}
             {React.Children.toArray(<ChordSettingsDropdownMenu />)}
             <DropdownMenuLabel>Misc</DropdownMenuLabel>
