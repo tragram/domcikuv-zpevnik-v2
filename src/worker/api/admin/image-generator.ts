@@ -1,8 +1,12 @@
 import { InferenceClient } from "@huggingface/inference";
 
-export const SUMMARY_PROMPT_VERSIONS = ["v1", "v2"] as const;
-export const SUMMARY_MODELS_API = ["gpt-4o", "gpt-4o-mini"] as const;
-export const IMAGE_MODELS_API = ["FLUX.1-dev", "gpt-image-1", "gpt-image-1-mini"] as const;
+export const SUMMARY_PROMPT_VERSIONS = ["v2", "v1"] as const;
+export const SUMMARY_MODELS_API = ["gpt-4o-mini", "gpt-4o"] as const;
+export const IMAGE_MODELS_API = [
+  "FLUX.1-dev",
+  "gpt-image-1",
+  "gpt-image-1-mini",
+] as const;
 
 export type SummaryPromptVersion = (typeof SUMMARY_PROMPT_VERSIONS)[number];
 export type AvailableSummaryModel = (typeof SUMMARY_MODELS_API)[number];
@@ -116,28 +120,37 @@ export class ImageGenerator {
         parameters: { width: 512, height: 512 },
       });
 
-    // TS thinks it's a string even though the docs say it's a Blob, so double cast it to get rid of an error
-    return await (imageBlob as unknown as Blob).arrayBuffer();
+      // TS thinks it's a string even though the docs say it's a Blob, so double cast it to get rid of an error
+      return await (imageBlob as unknown as Blob).arrayBuffer();
     }
 
-    const response = await fetch("https://api.openai.com/v1/images/generations", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.config.openaiApiKey}`,
-        "Content-Type": "application/json",
-        ...(this.config.openaiOrgId && { "OpenAI-Organization": this.config.openaiOrgId }),
-        ...(this.config.openaiProjectId && { "OpenAI-Project": this.config.openaiProjectId }),
-      },
-      body: JSON.stringify({
-        model: this.config.imageModel,
-        prompt,
-        size: "1024x1024",
-      }),
-    });
+    const response = await fetch(
+      "https://api.openai.com/v1/images/generations",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.config.openaiApiKey}`,
+          "Content-Type": "application/json",
+          ...(this.config.openaiOrgId && {
+            "OpenAI-Organization": this.config.openaiOrgId,
+          }),
+          ...(this.config.openaiProjectId && {
+            "OpenAI-Project": this.config.openaiProjectId,
+          }),
+        },
+        body: JSON.stringify({
+          model: this.config.imageModel,
+          prompt,
+          size: "1024x1024",
+        }),
+      }
+    );
 
     if (!response.ok) {
       const error = await response.text();
-      throw new Error(`OpenAI image generation error: ${response.status} - ${error}`);
+      throw new Error(
+        `OpenAI image generation error: ${response.status} - ${error}`
+      );
     }
 
     const data = (await response.json()) as { data: { b64_json: string }[] };
@@ -159,12 +172,16 @@ export class ImageGenerator {
     return { prompt, imageBuffer, thumbnailBuffer };
   }
 
-  async generateFromChordPro(chordproContent: string): Promise<GenerationResult> {
+  async generateFromChordPro(
+    chordproContent: string
+  ): Promise<GenerationResult> {
     const lyrics = ImageGenerator.extractLyricsFromChordPro(chordproContent);
     return this.generateFromLyrics(lyrics);
   }
 
-  async generateFromChordProUrl(chordproUrl: string): Promise<GenerationResult> {
+  async generateFromChordProUrl(
+    chordproUrl: string
+  ): Promise<GenerationResult> {
     const response = await fetch(chordproUrl);
     if (!response.ok) {
       throw new Error(`Failed to fetch ChordPro: ${response.status}`);
