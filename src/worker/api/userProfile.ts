@@ -1,5 +1,6 @@
 import { drizzle } from "drizzle-orm/d1";
-import { z } from "zod/v4";
+import { eq, and, ne, sql } from "drizzle-orm"; // Import necessary Drizzle operators
+import { z } from "zod"; // Note: standard zod import usually, check your version
 import {
   deleteAvatar,
   getUserProfile,
@@ -7,14 +8,18 @@ import {
 } from "../services/user-service";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
+import { user } from "src/lib/db/schema";
 
-// Zod schemas for validation
 const updateUserProfileSchema = z.object({
   name: z
     .string()
     .min(1, "Display name is required")
     .max(100, "Display name too long"),
-  nickname: z.string().optional(),
+  nickname: z
+    .string()
+    .regex(/^[^\/]*$/, "Nickname cannot contain the '/' character")
+    .max(30, "Nickname is too long")
+    .optional(),
   isFavoritesPublic: z.boolean(),
 });
 
@@ -48,19 +53,11 @@ const profileApp = buildApp()
     try {
       const userData = c.get("USER");
       if (!userData) {
-        return successJSend(c, {
-          loggedIn: false,
-          profile: undefined,
-        } as UserProfileData);
+        return successJSend(c, { loggedIn: false } as UserProfileData);
       }
-
       const db = drizzle(c.env.DB);
       const profile = await getUserProfile(db, userData.id);
-
-      return successJSend(c, {
-        loggedIn: true,
-        profile,
-      } as UserProfileData);
+      return successJSend(c, { loggedIn: true, profile } as UserProfileData);
     } catch (error) {
       console.error(error);
       return errorJSend(c, "Failed to user profile", 500, "FETCH_ERROR");
@@ -74,22 +71,40 @@ const profileApp = buildApp()
       }
 
       const formData = await c.req.formData();
-
       const name = formData.get("name") as string;
-      const nickname = formData.get("nickname") as string;
-
+      const nicknameRaw = formData.get("nickname") as string;
       const isFavoritesPublic = formData.get("isFavoritesPublic") === "true";
 
-      // TODO: gracefully manage nickname uniqueness (also in the frontend)
-      // TODO: ensure nickname does not use "/"
       // Validate input with Zod
       const validated = updateUserProfileSchema.parse({
         name: name.trim(),
-        nickname: nickname?.trim() || undefined,
+        nickname: nicknameRaw?.trim() || undefined,
         isFavoritesPublic,
       });
 
       const db = drizzle(c.env.DB);
+
+      // Handle Nickname Uniqueness
+      if (validated.nickname) {
+        // Check if ANY user exists with this nickname AND it is NOT the current user
+        const existingUser = await db
+          .select({ id: user.id })
+          .from(user)
+          .where(
+            and(eq(user.nickname, validated.nickname), ne(user.id, userData.id))
+          )
+          .limit(1);
+
+        // FIX: Check .length > 0 because existingUser is an array (even if empty)
+        if (existingUser.length > 0) {
+          return failJSend(
+            c,
+            "This nickname is already taken. Please choose another.",
+            409, // Conflict status code
+            "NICKNAME_TAKEN"
+          );
+        }
+      }
 
       let newImageUrl: string | null = null;
       let imageChanged = false;
@@ -167,13 +182,28 @@ const profileApp = buildApp()
         imageChanged = true;
       }
 
+      const updateData: any = {
+        name: validated.name,
+        nickname: validated.nickname || null,
+        isFavoritesPublic: validated.isFavoritesPublic,
+        updatedAt: new Date(),
+      };
+
+      if (imageChanged) {
+        updateData.image = newImageUrl;
+      }
+
+      await db
+        .update(user)
+        .set(updateData)
+        .where(eq(user.id, userData.id))
+        .execute();
+
       return successJSend(c, {
         imageUrl: imageChanged ? newImageUrl : undefined,
       } as ProfileUpdateData);
     } catch (error) {
       console.error("Profile update error:", error);
-
-      // Handle Zod validation errors
       if (error instanceof z.ZodError) {
         return failJSend(
           c,
@@ -181,7 +211,6 @@ const profileApp = buildApp()
           400
         );
       }
-
       return errorJSend(
         c,
         error instanceof Error ? error.message : "Internal server error",

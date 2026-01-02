@@ -3,10 +3,7 @@ import { Camera, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "src/lib/auth/client";
-import {
-  ProfileUpdateData,
-  UserProfileData,
-} from "src/worker/api/userProfile";
+import { ProfileUpdateData, UserProfileData } from "src/worker/api/userProfile";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
@@ -20,7 +17,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
-import { ApiException, handleApiResponse } from "~/services/apiHelpers";
+import { handleApiResponse } from "~/services/apiHelpers";
 
 type ProfileUpdateResponse = {
   status: string;
@@ -69,6 +66,7 @@ function RouteComponent() {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [pendingAvatarFile, setPendingAvatarFile] = useState<File | null>(null);
   const [avatarToDelete, setAvatarToDelete] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<{ nickname?: string }>({});
 
   const handleLogout = async () => {
     try {
@@ -86,8 +84,32 @@ function RouteComponent() {
       console.error("Logout error:", err);
     }
   };
+
+  const validateForm = () => {
+    const errors: { nickname?: string } = {};
+
+    if (currentData.nickname && currentData.nickname.includes("/")) {
+      errors.nickname = "Nickname cannot contain the '/' character";
+    }
+    // Optional: Add client-side max length check
+    if (currentData.nickname && currentData.nickname.length > 30) {
+      errors.nickname = "Nickname is too long (max 30 characters)";
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSaveProfile = async () => {
+    // Check client-side validation first
+    if (!validateForm()) {
+      toast.error("Please fix the errors before saving.");
+      return;
+    }
+
     setSaving(true);
+    setFieldErrors({}); // Clear previous API errors
+
     try {
       const formData = new FormData();
       formData.append("name", currentData.name);
@@ -96,14 +118,9 @@ function RouteComponent() {
         "isFavoritesPublic",
         String(currentData.isFavoritesPublic)
       );
-
-      if (pendingAvatarFile) {
-        formData.append("avatarFile", pendingAvatarFile);
-      }
-
-      if (avatarToDelete && !pendingAvatarFile) {
+      if (pendingAvatarFile) formData.append("avatarFile", pendingAvatarFile);
+      if (avatarToDelete && !pendingAvatarFile)
         formData.append("deleteAvatar", "true");
-      }
 
       const response = await fetch("/api/profile", {
         method: "PUT",
@@ -126,8 +143,13 @@ function RouteComponent() {
       router.invalidate();
       toast.success("Profile updated successfully");
     } catch (err) {
-      if (err instanceof ApiException) {
-        toast.error(err.message || "Failed to update profile");
+      if (err) {
+        if (err.code === "NICKNAME_TAKEN") {
+          setFieldErrors((prev) => ({ ...prev, nickname: err.message }));
+          toast.error("Nickname is already taken");
+        } else {
+          toast.error(err.message || "Failed to update profile");
+        }
       } else {
         console.error("Save error:", err);
         toast.error("An unexpected error occurred while updating profile.");
@@ -228,7 +250,23 @@ function RouteComponent() {
             name={currentData.name}
             nickname={currentData.nickname}
             email={currentData.email}
-            onNicknameChange={(value) => updateField("nickname", value)}
+            error={fieldErrors.nickname} // Pass the error
+            onNicknameChange={(value) => {
+              updateField("nickname", value);
+
+              // LIVE VALIDATION FIX
+              if (value.includes("/")) {
+                setFieldErrors((prev) => ({
+                  ...prev,
+                  nickname: "Nickname cannot contain the '/' character",
+                }));
+              } else {
+                // Clear error if it was previously set
+                if (fieldErrors.nickname) {
+                  setFieldErrors((prev) => ({ ...prev, nickname: undefined }));
+                }
+              }
+            }}
             onNameChange={(value) => updateField("name", value)}
           />
 
@@ -313,7 +351,8 @@ function ProfilePictureSection({
         </CardTitle>
         <CardDescription>
           Upload a new avatar. It will be used as the icon of your songbook (if
-          you choose to have public favorites below) and in your feed (if you turn on sharing your feed).
+          you choose to have public favorites below) and in your feed (if you
+          turn on sharing your feed).
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -425,6 +464,7 @@ interface BasicInformationSectionProps {
   name: string;
   nickname: string;
   email: string;
+  error?: string; // Add this prop
   onNicknameChange: (value: string) => void;
   onNameChange: (value: string) => void;
 }
@@ -433,6 +473,7 @@ function BasicInformationSection({
   name,
   nickname,
   email,
+  error,
   onNicknameChange,
   onNameChange,
 }: BasicInformationSectionProps) {
@@ -456,16 +497,25 @@ function BasicInformationSection({
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="nickname">Nickname</Label>
+          <Label htmlFor="nickname" className={error ? "text-destructive" : ""}>
+            Nickname
+          </Label>
           <Input
             id="nickname"
             value={nickname}
             onChange={(e) => onNicknameChange(e.target.value)}
             placeholder="Enter your nickname"
+            className={
+              error ? "border-destructive focus-visible:ring-destructive" : ""
+            }
           />
-          <p className="text-sm text-muted-foreground">
-            Will be used instead of your name on your songbook if available.
-          </p>
+          {error ? (
+            <p className="text-sm text-destructive font-medium">{error}</p>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Will be used instead of your name on your songbook if available.
+            </p>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email Address</Label>

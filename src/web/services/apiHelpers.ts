@@ -5,12 +5,7 @@ export class ApiException extends Error {
   code?: number;
   data?: unknown;
 
-  constructor(
-    message: string,
-    status: number,
-    code?: number,
-    data?: unknown
-  ) {
+  constructor(message: string, status: number, code?: number, data?: unknown) {
     super(message);
     this.name = "ApiException";
     this.status = status;
@@ -49,7 +44,7 @@ export async function handleApiResponse<T>(
     throw new ApiException(
       json.failData?.message ?? "Request failed",
       response.status,
-      undefined,
+      json.failData?.code,
       json.failData
     );
   }
