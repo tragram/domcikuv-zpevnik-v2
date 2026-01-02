@@ -109,7 +109,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex items-center gap-3 min-w-0 flex-1 justify-between">
-                    <div className="truncate text-sm w-[4rem] flex-shrink-0">
+                    <div className="truncate text-sm w-[6rem] flex-shrink-0">
                       {session.masterId}
                     </div>
                     <div className="text-xs hidden xs:flex flex-col flex-1 min-w-0 text-center">
