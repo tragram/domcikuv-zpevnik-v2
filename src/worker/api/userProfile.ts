@@ -153,7 +153,7 @@ const profileApp = buildApp()
       // Handle avatar deletion (only if no new file is being uploaded)
       else if (shouldDeleteAvatar && currentImage) {
         try {
-          deleteAvatar(
+          await deleteAvatar(
             db,
             currentUserProfile.id,
             c.env.R2_BUCKET,
@@ -219,29 +219,18 @@ const profileApp = buildApp()
       }
 
       const db = drizzle(c.env.DB);
-
-      // Get current image URL to delete from R2
-      const currentUserProfile = await getUserProfile(db, userData.id);
-
-      const currentImage = currentUserProfile?.image;
-
       // Delete from R2 if exists
-      if (currentImage) {
-        try {
-          // Extract filename from URL
-          const fileName = currentImage.split("/").pop();
-          if (fileName && fileName.startsWith("avatars/")) {
-            await c.env.R2_BUCKET.delete(fileName);
-          }
-        } catch (r2Error) {
-          console.error("R2 deletion error:", r2Error);
-          // Continue even if R2 deletion fails
-        }
+      try {
+        await deleteAvatar(
+          db,
+          userData.id,
+          c.env.R2_BUCKET,
+          c.env.CLOUDFLARE_R2_URL
+        );
+      } catch (r2Error) {
+        console.error("R2 deletion error:", r2Error);
+        // Continue even if R2 deletion fails
       }
-
-      // Update database to remove image URL
-      await deleteAvatar(db, userData.id);
-
       return successJSend(c, null);
     } catch (error) {
       console.error("Avatar deletion error:", error);
