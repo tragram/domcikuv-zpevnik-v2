@@ -29,6 +29,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { EditorSettings } from "./EditorSettings";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -40,6 +41,7 @@ interface EditorToolbarProps {
   onSubmitSuccess?: () => void;
   onUploadClick: () => void;
   user: UserProfileData;
+  editorSettings: EditorSettings;
 }
 
 const EditorToolbar: React.FC<EditorToolbarProps> = ({
@@ -52,6 +54,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   onSubmitSuccess,
   onUploadClick,
   user,
+  editorSettings,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,6 +70,40 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         redirect: location.pathname,
       },
     });
+  };
+
+  const generateIllustrationInBackground = (
+    songId: string,
+    settings: EditorSettings
+  ) => {
+    const generationParams = {
+      songId,
+      setAsActive: true,
+      imageModel: settings.defaultImageModel,
+      promptVersion: settings.defaultPromptVersion,
+      summaryModel: settings.defaultSummaryModel,
+    };
+
+    // Use keepalive to ensure request completes even if page navigates away
+    fetch("/api/illustrations/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(generationParams),
+      keepalive: true,
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log(`Illustration generation started for song ${songId}`);
+          toast.info("Illustration generation started in background");
+        } else {
+          console.error("Failed to start illustration generation");
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to generate illustration:", error);
+      });
   };
 
   const handleSubmit = async () => {
@@ -85,12 +122,25 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       const isUpdate =
         new Date(version.createdAt).getTime() !==
         new Date(version.updatedAt).getTime();
+
       toast.success(
         `Successfully ${
           isUpdate ? "updated" : "submitted"
         } your version of the song!`
       );
+
       onSubmitSuccess?.();
+
+      // Auto-generate illustration if enabled, new song being submitted and user is trusted
+      if (
+        !isUpdate &&
+        user.loggedIn &&
+        user.profile.isTrusted &&
+        editorSettings.autoGenerateIllustration
+      ) {
+        generateIllustrationInBackground(response.song.id, editorSettings);
+      }
+
       queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
@@ -110,6 +160,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       setIsSubmitting(false);
     }
   };
+
   return (
     <div
       className={cn(
