@@ -15,6 +15,7 @@ import {
   snippets,
 } from "./components/Snippets";
 import { SmartFeature, SmartFeatureBar } from "./components/SmartFeatureBar";
+import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {
@@ -212,7 +213,9 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     if (!activeFeature) return;
 
     if (activeFeature.id === "convert_to_chordpro") {
-      const converted = convertToChordPro(state);
+      const converted = normalizeWhitespace(
+        replaceRepetitions(convertToChordPro(state))
+      );
       setContent(converted); // This pushes to custom history stack
       setDismissedFeatures((prev) => new Set(prev).add("convert_to_chordpro"));
     } else if (activeFeature.id === "autofill_chords") {

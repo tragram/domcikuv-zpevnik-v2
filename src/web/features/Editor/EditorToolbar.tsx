@@ -30,7 +30,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { EditorSettings } from "./EditorSettings";
-import { replaceRepetitions } from "src/lib/chordpro";
+import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -111,7 +111,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     setIsSubmitting(true);
     const parsedState = {
       ...editorState,
-      chordpro: replaceRepetitions(editorState.chordpro),
+      chordpro: normalizeWhitespace(replaceRepetitions(editorState.chordpro)),
     };
     try {
       const response = await makeApiRequest(() =>
