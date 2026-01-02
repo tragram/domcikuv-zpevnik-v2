@@ -1,9 +1,11 @@
-import { DrizzleD1Database } from "drizzle-orm/d1";
+import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import { user, UserDB } from "src/lib/db/schema";
 import { eq, desc, like, or, count } from "drizzle-orm";
 import { PaginatedResponse } from "../api/utils";
 import { z } from "zod";
 import { moveSongToTrash, moveToTrashR2 } from "./illustration-service";
+import { failJSend, successJSend } from "../api/responses";
+import { Context } from "hono";
 
 // User validation schemas
 export const createUserSchema = z.object({
@@ -274,35 +276,67 @@ export const updateUserProfile = async (
 
 export const updateAvatar = async (
   db: DrizzleD1Database,
-  userId: string,
-  CLOUDFLARE_R2_URL: R2Bucket,
-  fileName: string
+  R2_BUCKET: R2Bucket,
+  R2_URL: string,
+  userData: Awaited<ReturnType<typeof getUserProfile>>,
+  avatarFile: File
 ) => {
-  deleteAvatar(db, userId, CLOUDFLARE_R2_URL);
-  const imageUrl = `${CLOUDFLARE_R2_URL}/${fileName}`;
+  // generate new file name
+  const fileExtension = avatarFile.name.split(".").pop() || "jpg";
+  const fileName = `avatars/${userData.id}-${
+    userData.nickname
+  }-${Date.now()}.${fileExtension}`;
+  // convert file to ArrayBuffer for R2
+  const arrayBuffer = await avatarFile.arrayBuffer();
+
+  // Upload to R2
+  await R2_BUCKET.put(fileName, arrayBuffer, {
+    httpMetadata: {
+      contentType: avatarFile.type,
+    },
+  });
+  const imageUrl = `${R2_URL}/${fileName}`;
   await db
     .update(user)
     .set({
       image: imageUrl,
       updatedAt: new Date(),
     })
-    .where(eq(user.id, userId));
+    .where(eq(user.id, userData.id));
+  return imageUrl;
 };
 
 export const deleteAvatar = async (
   db: DrizzleD1Database,
   userId: string,
-  CLOUDFLARE_R2_URL: R2Bucket
+  R2_BUCKET: R2Bucket,
+  CLOUDFLARE_R2_URL: string,
+  fileName?: string
 ) => {
-  const oldImage = await db
-    .select({ url: user.image })
-    .from(user)
-    .where(eq(user.id, userId))
-    .limit(1);
-  // Generate the public URL
-  if (oldImage.length > 0 && oldImage[0].url) {
-    moveToTrashR2(CLOUDFLARE_R2_URL, oldImage[0].url);
+  let oldFileName = fileName;
+  if (!oldFileName) {
+    const oldImage = await db
+      .select({ url: user.image })
+      .from(user)
+      .where(eq(user.id, userId))
+      .limit(1);
+    if (oldImage.length > 0 && oldImage[0].url) {
+      oldFileName = oldImage[0].url;
+    } else {
+      return null;
+    }
   }
+
+  // make sure the URL does not contain the bucket URL
+  const prefix = `${CLOUDFLARE_R2_URL}/`;
+
+  if (oldFileName.startsWith(prefix)) {
+    oldFileName = oldFileName.slice(prefix.length);
+  }
+
+  moveToTrashR2(R2_BUCKET, oldFileName);
+
+  // Generate the public URL
   await db
     .update(user)
     .set({
