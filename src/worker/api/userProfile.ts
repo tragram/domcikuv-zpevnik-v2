@@ -227,11 +227,11 @@ const profileApp = buildApp()
           c.env.R2_BUCKET,
           c.env.CLOUDFLARE_R2_URL
         );
+        return successJSend(c, null);
       } catch (r2Error) {
+        // Continue even if R2 deletion fails - could be in case of external
         console.error("R2 deletion error:", r2Error);
-        // Continue even if R2 deletion fails
       }
-      return successJSend(c, null);
     } catch (error) {
       console.error("Avatar deletion error:", error);
       return errorJSend(

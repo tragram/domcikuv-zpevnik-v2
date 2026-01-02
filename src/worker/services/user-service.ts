@@ -327,14 +327,13 @@ export const deleteAvatar = async (
     }
   }
 
-  // make sure the URL does not contain the bucket URL
+  // make sure the URL contains the correct bucket URL
   const prefix = `${CLOUDFLARE_R2_URL}/`;
 
   if (oldFileName.startsWith(prefix)) {
     oldFileName = oldFileName.slice(prefix.length);
+    moveToTrashR2(R2_BUCKET, oldFileName);
   }
-
-  moveToTrashR2(R2_BUCKET, oldFileName);
 
   // Generate the public URL
   await db
