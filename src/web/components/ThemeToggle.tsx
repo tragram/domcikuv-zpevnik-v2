@@ -1,7 +1,11 @@
 import { MoonIcon, SunIcon } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { useTheme } from "./ThemeProvider";
-import { DropdownIconStart, DropdownMenuItem } from "./ui/dropdown-menu";
+import {
+  DropdownIconStart,
+  DropdownItemWithDescription,
+  DropdownMenuItem,
+} from "./ui/dropdown-menu";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -47,8 +51,17 @@ export function DropdownThemeToggle() {
       <div className="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0">
         <DropdownIconStart icon={<MoonIcon />} />
       </div>
-      <div className="inline dark:hidden">Light theme</div>
-      <div className="hidden dark:inline">Dark theme</div>
+      <DropdownItemWithDescription
+        title={
+          <>
+            <div className="inline dark:hidden">Light theme</div>
+            <div className="hidden dark:inline">Dark theme</div>
+          </>
+        }
+        description={
+          theme === "dark" ? "Good choice!" : "Dark theme looks better ;-)"
+        }
+      />
     </DropdownMenuItem>
   );
 }
