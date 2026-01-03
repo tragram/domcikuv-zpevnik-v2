@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useState } from "react";
@@ -19,6 +19,7 @@ export const FavoriteButton = ({
 }: FavoriteButtonProps) => {
   const [isFavorite, setIsFavorite] = useState(song.isFavorite);
   const context = useRouteContext({ strict: false });
+  const queryClient = useQueryClient();
 
   // Mutation for adding favorite
   const addFavoriteMutation = useMutation({
@@ -33,6 +34,20 @@ export const FavoriteButton = ({
       setIsFavorite(true);
 
       return { previousState };
+    },
+    onSuccess: () => {
+      // Update the cache directly instead of invalidating
+      queryClient.setQueryData(["userProfile"], (oldData: any) => {
+        if (!oldData || !oldData.loggedIn) return oldData;
+
+        return {
+          ...oldData,
+          profile: {
+            ...oldData.profile,
+            favoriteSongIds: [...oldData.profile.favoriteSongIds, song.id],
+          },
+        };
+      });
     },
     onError: (_error, _variables, context) => {
       // Rollback on error
@@ -55,6 +70,22 @@ export const FavoriteButton = ({
       setIsFavorite(false);
 
       return { previousState };
+    },
+    onSuccess: () => {
+      // Update the cache directly instead of invalidating
+      queryClient.setQueryData(["userProfile"], (oldData: any) => {
+        if (!oldData || !oldData.loggedIn) return oldData;
+
+        return {
+          ...oldData,
+          profile: {
+            ...oldData.profile,
+            favoriteSongIds: oldData.profile.favoriteSongIds.filter(
+              (id: string) => id !== song.id
+            ),
+          },
+        };
+      });
     },
     onError: (_error, _variables, context) => {
       if (context?.previousState !== undefined) {
