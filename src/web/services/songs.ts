@@ -45,16 +45,12 @@ export const parseDBDates = <T extends Timestamped>(o: T) => {
 };
 
 // Public API
-export const fetchSongs = async (
-  api: API
-): Promise<SongDataApi[]> => {
+export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
   const response = await makeApiRequest(api.songs.$get);
   return response.songs;
 };
 
-export const fetchPublicSongbooks = async (
-  api: API
-): Promise<Songbook[]> => {
+export const fetchPublicSongbooks = async (api: API): Promise<Songbook[]> => {
   const response = await makeApiRequest(api.songs.songbooks.$get);
   return response.map((s) => {
     const newS = { ...s, songIds: new Set(s.songIds) } as Songbook;
@@ -160,9 +156,23 @@ export const resetVersionDB = async (adminApi: AdminApi) => {
 // Utility functions
 export const buildSongDB = (
   songs: SongDataApi[],
-  songbooks: Songbook[]
+  songbooks: Songbook[],
+  userFavoriteSongIds?: Set<string> | string[] // New Argument
 ): SongDB => {
-  const songDatas = songs.map((d) => new SongData(d));
+  const favoritesSet =
+    userFavoriteSongIds instanceof Set
+      ? userFavoriteSongIds
+      : new Set(userFavoriteSongIds || []);
+
+  const songDatas = songs.map((d) => {
+    // Inject favorite status
+    const enrichedData = {
+      ...d,
+      isFavoriteByCurrentUser: favoritesSet.has(d.id),
+    };
+    return new SongData(enrichedData);
+  });
+
   const languages: LanguageCount = songDatas
     .map((s) => s.language)
     .reduce((acc: LanguageCount, lang: string) => {

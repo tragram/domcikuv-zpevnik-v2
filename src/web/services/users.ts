@@ -7,6 +7,7 @@ import {
   UsersResponse,
 } from "src/worker/services/user-service";
 import { SessionsResponseData } from "src/worker/api/sessions";
+import { UserProfileData } from "src/worker/api/userProfile";
 
 export type UsersApi = typeof client.api.admin.users;
 
@@ -35,7 +36,7 @@ export async function fetchProfile(api: API) {
     return response;
   } catch (e) {
     console.error("Failed to fetch profile - returning empty...", e);
-    return { loggedIn: false };
+    return { loggedIn: false} as UserProfileData;
   }
 }
 

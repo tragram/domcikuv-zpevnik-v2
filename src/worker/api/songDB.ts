@@ -47,10 +47,9 @@ export type BasicSongIllustrationResponseData = BasicSongIllustrationDB[];
 export const songDBRoutes = buildApp()
   .get("/", async (c) => {
     const db = drizzle(c.env.DB);
-    const userId = c.get("USER")?.id;
 
     try {
-      const songs = await retrieveSongs(db, userId);
+      const songs = await retrieveSongs(db);
       const songDBVersion = (await c.env.KV.get("songDB-version")) ?? "v0";
       return successJSend(c, {
         songs,
@@ -69,7 +68,6 @@ export const songDBRoutes = buildApp()
     async (c) => {
       const { lastUpdateAt, songDBVersion } = c.req.valid("query");
       const db = drizzle(c.env.DB);
-      const userId = c.get("USER")?.id;
 
       try {
         const currentDBVersion = (await c.env.KV.get("songDB-version")) ?? "0";
@@ -77,7 +75,6 @@ export const songDBRoutes = buildApp()
 
         const songs = await retrieveSongs(
           db,
-          userId,
           isIncremental ? lastUpdateAt : undefined,
           isIncremental,
           isIncremental

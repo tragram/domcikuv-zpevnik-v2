@@ -1,6 +1,7 @@
+import { and, eq, ne } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { eq, and, ne, sql } from "drizzle-orm"; // Import necessary Drizzle operators
-import { z } from "zod"; // Note: standard zod import usually, check your version
+import { user, userFavoriteSongs } from "src/lib/db/schema";
+import { z } from "zod";
 import {
   deleteAvatar,
   getUserProfile,
@@ -8,7 +9,6 @@ import {
 } from "../services/user-service";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
-import { user } from "src/lib/db/schema";
 
 const updateUserProfileSchema = z.object({
   name: z
@@ -41,6 +41,7 @@ export type UserProfileData =
         isTrusted: boolean;
         createdAt: Date;
         updatedAt: Date;
+        favoriteSongIds: string[];
       };
     };
 
@@ -56,11 +57,24 @@ const profileApp = buildApp()
         return successJSend(c, { loggedIn: false } as UserProfileData);
       }
       const db = drizzle(c.env.DB);
+
       const profile = await getUserProfile(db, userData.id);
-      return successJSend(c, { loggedIn: true, profile } as UserProfileData);
+
+      // get Favorites
+      const favorites = await db
+        .select({ songId: userFavoriteSongs.songId })
+        .from(userFavoriteSongs)
+        .where(eq(userFavoriteSongs.userId, userData.id));
+
+      const favoriteSongIds = favorites.map((f) => f.songId);
+
+      return successJSend(c, {
+        loggedIn: true,
+        profile: { ...profile, favoriteSongIds },
+      } as UserProfileData);
     } catch (error) {
       console.error(error);
-      return errorJSend(c, "Failed to user profile", 500, "FETCH_ERROR");
+      return errorJSend(c, "Failed to fetch user profile", 500, "FETCH_ERROR");
     }
   })
   .put("/", async (c) => {
