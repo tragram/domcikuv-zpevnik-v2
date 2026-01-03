@@ -74,6 +74,7 @@ function RouteComponent() {
         fetchOptions: {
           onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+            router.invalidate();
             toast.success("Logged out successfully");
             navigate({ to: redirectURL });
           },
