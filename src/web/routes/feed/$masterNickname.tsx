@@ -15,7 +15,6 @@ export const Route = createFileRoute("/feed/$masterNickname")({
       param: { masterNickname: params.masterNickname },
     });
     if (response.ok) liveState = (await response.json()) as SessionSyncState;
-    console.log(liveState);
     return {
       user: context.user,
       songDB: context.songDB,
