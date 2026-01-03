@@ -1,7 +1,7 @@
 import { Link, useRouteContext } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -58,10 +58,6 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
     }
   };
 
-  const getInitials = (masterId: string) => {
-    return masterId.slice(0, 2).toUpperCase();
-  };
-
   const active = activeSessions && activeSessions.length > 0;
 
   return (
@@ -105,12 +101,12 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                 className="block"
               >
                 <div className="flex items-center gap-3 w-full min-w-0 rounded-md px-2 py-2 hover:bg-accent transition-colors">
-                  <Avatar className="h-7 w-7 flex-shrink-0">
-                    <AvatarImage src={session.avatar} />
-                    <AvatarFallback className="text-xs">
-                      {getInitials(session.nickname)}
-                    </AvatarFallback>
-                  </Avatar>
+                  <AvatarWithFallback
+                    avatarSrc={session.avatar}
+                    fallbackStr={session.nickname}
+                    avatarClassName="h-7 w-7 flex-shrink-0"
+                    fallbackClassName="text-xs"
+                  />
                   <div className="flex items-center gap-3 min-w-0 flex-1 justify-between">
                     <div className="truncate text-sm w-[6rem] flex-shrink-0">
                       {session.nickname}

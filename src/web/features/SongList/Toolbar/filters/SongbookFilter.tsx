@@ -1,4 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { BookUser } from "lucide-react";
+import type { JSX } from "react";
+import {
+  AvatarWithFallback
+} from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -8,8 +12,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { BookUser } from "lucide-react";
-import type { JSX } from "react";
 import { SongData } from "~/types/songData";
 import { filterSongbook } from "../../useFilteredSongs";
 
@@ -70,12 +72,12 @@ const createSongbookChoices = (
           className="py-2"
         >
           <div className="flex items-center gap-3 w-full min-w-0">
-            <Avatar className="h-7 w-7 flex-shrink-0">
-              <AvatarImage src={image} />
-              <AvatarFallback className="text-xs">
-                {label.charAt(0).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
+            <AvatarWithFallback
+              avatarSrc={image}
+              fallbackStr={label}
+              avatarClassName="h-7 w-7 flex-shrink-0"
+              fallbackClassName="text-xs"
+            />
             <div className="truncate flex-1 text-sm">{label}</div>
             <div className="text-xs text-primary/80 flex-shrink-0">
               {count} songs

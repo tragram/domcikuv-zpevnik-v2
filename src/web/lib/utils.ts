@@ -32,3 +32,18 @@ export function useLoggedIn() {
   const routeContext = useRouteContext({ from: "__root__" });
   return routeContext.user.loggedIn;
 }
+
+export const getInitials = (name: string) => {
+  if (!name) {
+    return "?";
+  }
+  const splitName = name.split(" ");
+  if (splitName.length > 1) {
+    return splitName
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  }
+  return name.slice(0, 2).toUpperCase();
+};

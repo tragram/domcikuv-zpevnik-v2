@@ -4,7 +4,9 @@ import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "src/lib/auth/client";
 import { ProfileUpdateData, UserProfileData } from "src/worker/api/userProfile";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import {
+  AvatarWithFallback
+} from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -333,15 +335,6 @@ function ProfilePictureSection({
     return null;
   }
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -363,15 +356,12 @@ function ProfilePictureSection({
             onClick={onAvatarClick}
             title="Click to change avatar"
           >
-            <Avatar className="h-24 w-24 border-4 border-background shadow-lg transition-all group-hover:border-primary/50">
-              <AvatarImage
-                src={displayAvatar || undefined}
-                alt={userProfile.name || ""}
-              />
-              <AvatarFallback className="text-xl font-semibold">
-                {getInitials(userProfile.name || "")}
-              </AvatarFallback>
-            </Avatar>
+            <AvatarWithFallback
+              avatarSrc={displayAvatar || undefined}
+              fallbackStr={userProfile.name || ""}
+              avatarClassName="h-24 w-24 border-4 border-background shadow-lg transition-all group-hover:border-primary/50"
+              fallbackClassName="text-xl font-semibold"
+            />
 
             {/* Hover overlay */}
             <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
