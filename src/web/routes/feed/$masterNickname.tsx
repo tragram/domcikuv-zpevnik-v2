@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import React, { useCallback, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { UserProfileData } from "src/worker/api/userProfile";
+import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import useLocalStorageState from "use-local-storage-state";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
@@ -9,64 +10,80 @@ import { SongDB } from "~/types/types";
 export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
+    let liveState: SessionSyncState | undefined;
+    const response = await context.api.session[":masterNickname"].$get({
+      param: { masterNickname: params.masterNickname },
+    });
+    if (response.ok) liveState = (await response.json()) as SessionSyncState;
+    console.log(liveState);
     return {
       user: context.user,
       songDB: context.songDB,
       masterNickname: params.masterNickname,
+      liveState,
     };
   },
 });
 
 function RouteComponent() {
-  const { songDB, masterNickname, user } = Route.useLoaderData();
+  const { songDB, liveState, masterNickname, user } = Route.useLoaderData();
 
-  return <FeedView songDB={songDB} masterNickname={masterNickname} user={user} />;
+  return (
+    <FeedView
+      songDB={songDB}
+      masterNickname={masterNickname}
+      liveState={liveState}
+      user={user}
+    />
+  );
 }
 
 type FeedViewProps = {
   songDB: SongDB;
+  liveState?: SessionSyncState;
   masterNickname: string;
   user: UserProfileData;
 };
 
-function FeedView({ songDB, masterNickname, user }: FeedViewProps) {
+function FeedView({ songDB, liveState, masterNickname, user }: FeedViewProps) {
   // Feed route manages session sync as follower (read-only)
-  const { currentSongId, isConnected, currentTransposeSteps } = useSessionSync(
+  const { isConnected, sessionState } = useSessionSync(
     masterNickname,
-    false, // isMaster = false (follower mode)
-    true // enabled
+    false,
+    true,
+    liveState // hydrate with the live version
   );
 
   // useMemo to prevent re-finding the song on every render
-  const songData = React.useMemo(() => {
-    return currentSongId
-      ? songDB.songs.find((s) => s.id === currentSongId)
+  const songData = useMemo(() => {
+    return sessionState?.songId
+      ? songDB.songs.find((s) => s.id === sessionState.songId)
       : null;
-  }, [currentSongId, songDB.songs]);
+  }, [sessionState?.songId, songDB.songs]);
 
   // force transposeSteps (a bit hacky but passing it down feels even uglier - TODO: use Zustand)
   const [, setTransposeSteps] = useLocalStorageState(
-    `transposeSteps/${currentSongId}`,
+    `transposeSteps/${sessionState?.songId}`,
     { defaultValue: 0 }
   );
 
   useEffect(() => {
-    if (currentTransposeSteps !== undefined)
-      setTransposeSteps(currentTransposeSteps);
-  }, [currentTransposeSteps, setTransposeSteps]);
+    if (sessionState && sessionState.transposeSteps)
+      setTransposeSteps(sessionState.transposeSteps);
+  }, [sessionState, setTransposeSteps]);
 
-  if (!isConnected && !currentSongId) {
+  if (!songData || !sessionState || !sessionState.songId) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Connecting to feed...</p>
+        <p>Waiting for {masterNickname} to select a song...</p>
       </div>
     );
   }
 
-  if (!songData) {
+  if (!isConnected) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Waiting for {masterNickname} to select a song...</p>
+        <p>Connecting to feed...</p>
       </div>
     );
   }
@@ -78,6 +95,7 @@ function FeedView({ songDB, masterNickname, user }: FeedViewProps) {
       user={user}
       feedStatus={{
         enabled: true,
+        sessionState: sessionState,
         isConnected,
         isMaster: false,
         connectedClients: 0,

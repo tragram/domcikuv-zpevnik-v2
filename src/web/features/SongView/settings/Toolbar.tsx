@@ -20,7 +20,6 @@ import {
   Settings2,
   Undo2,
   CloudOff,
-  CloudCheck,
 } from "lucide-react";
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -45,6 +44,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { FeedStatus } from "../SongView";
 import ShareSongButton from "../components/ShareSongButton";
+import { AvatarWithFallback } from "~/components/ui/avatar";
 
 interface ToolbarProps {
   songDB: SongDB;
@@ -174,9 +174,17 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             size="icon"
             variant="circular"
             disabled
-            className="!opacity-70"
+            className="!opacity-100"
           >
-            {feedStatus?.isConnected ? <CloudCheck /> : <CloudOff />}
+            {feedStatus?.isConnected ? (
+              <AvatarWithFallback
+                avatarSrc={feedStatus.sessionState?.masterAvatar ?? undefined}
+                fallbackStr={feedStatus.sessionState?.masterNickname ?? "?"}
+                avatarClassName="h-full w-full"
+              />
+            ) : (
+              <CloudOff />
+            )}
           </Button>
         )}
       </ToolbarBase>

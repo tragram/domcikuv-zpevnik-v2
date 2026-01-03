@@ -1,14 +1,14 @@
-import { eq, gte, and } from "drizzle-orm";
+import { eq, gte } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { syncSessionTable, user, user as userTable } from "src/lib/db/schema";
-import { buildApp } from "./utils";
 import { errorJSend, successJSend } from "./responses";
+import { buildApp } from "./utils";
 
 export { SessionSync } from "../durable-objects/SessionSync";
 
 export type SyncSessionData = {
   masterId: string;
-  createdAt: Date;
+  timestamp: Date;
   songId: string;
   avatar: string | undefined;
   nickname: string;
@@ -25,21 +25,19 @@ const sessionSyncApp = buildApp()
       const liveSessions = await db
         .select({
           masterId: syncSessionTable.masterId,
-          createdAt: syncSessionTable.createdAt,
+          timestamp: syncSessionTable.timestamp,
           songId: syncSessionTable.songId,
           avatar: user.image,
           nickname: user.nickname,
         })
         .from(syncSessionTable)
-        .where(gte(syncSessionTable.createdAt, latestLive))
-        // TODO: now this should not require as the join...?
+        .where(gte(syncSessionTable.timestamp, latestLive))
         .leftJoin(user, eq(user.id, syncSessionTable.masterId))
         .all();
-      console.log(liveSessions);
       // Filter to only the latest entry per masterId
       const latestByMasterId = liveSessions.reduce((acc, session) => {
         const existing = acc.get(session.masterId);
-        if (!existing || session.createdAt > existing.createdAt) {
+        if (!existing || session.timestamp > existing.timestamp) {
           acc.set(session.masterId, session);
         }
         return acc;
@@ -61,7 +59,7 @@ const sessionSyncApp = buildApp()
     // Verify the master user exists
     const db = drizzle(c.env.DB);
     const masterProfile = await db
-      .select({ id: userTable.id })
+      .select({ id: userTable.id, avatar: userTable.image })
       .from(userTable)
       .where(eq(userTable.nickname, masterNickname))
       .limit(1)
@@ -100,7 +98,9 @@ const sessionSyncApp = buildApp()
       url.searchParams.set("masterNickname", masterNickname);
     }
     url.searchParams.set("masterId", masterProfile.id);
-
+    if (masterProfile.avatar) {
+      url.searchParams.set("masterAvatar", masterProfile.avatar);
+    }
     return stub.fetch(url.toString(), c.req.raw);
   });
 export default sessionSyncApp;

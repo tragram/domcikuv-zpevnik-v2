@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { UserProfileData } from "src/worker/api/userProfile";
 import useLocalStorageState from "use-local-storage-state";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
@@ -10,13 +11,14 @@ import { SongViewLayout } from "./components/SongViewLayout";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
 import "./SongView.css";
-import { UserProfileData } from "src/worker/api/userProfile";
+import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 
 export type FeedStatus = {
   isMaster: boolean;
   enabled: boolean;
   isConnected: boolean;
   connectedClients: number;
+  sessionState?: SessionSyncState
 };
 
 type DataForSongView = {

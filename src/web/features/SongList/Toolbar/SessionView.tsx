@@ -26,16 +26,17 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   );
 
   // Update time every second when dropdown is open
+  // TODO: this could be reworked using the liveData get request in DO
   useEffect(() => {
     if (isOpen) {
       // Update time immediately when dropdown opens
       setCurrentTime(Date.now());
-      refetchIfStale(0.5);
+      refetchIfStale(0.1);
 
       const interval = setInterval(() => {
         if (isOpen) {
           setCurrentTime(Date.now());
-          refetchIfStale(1);
+          refetchIfStale(0.5);
         }
       }, 1000);
       return () => clearInterval(interval);
@@ -124,7 +125,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                       )}
                     </div>
                     <div className="text-xs text-primary/80 w-[2rem] flex-shrink-0 text-center">
-                      {getTimeSince(session.createdAt)}
+                      {getTimeSince(session.timestamp)}
                       <br />
                       ago
                     </div>

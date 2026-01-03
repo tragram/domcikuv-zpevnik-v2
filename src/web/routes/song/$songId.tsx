@@ -58,7 +58,7 @@ function RouteComponent() {
         enabled: shouldShare,
         isConnected,
         isMaster: true,
-        connectedClients,
+        connectedClients: connectedClients ?? 0,
       }}
     />
   );

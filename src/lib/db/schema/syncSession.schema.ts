@@ -7,10 +7,9 @@ export const syncSessionTable = sqliteTable("syncSession", {
   masterId: text("master_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  createdAt: integer("created_at", { mode: "timestamp" })
+  timestamp: integer("timestamp", { mode: "timestamp" })
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
-  masterNickname: text("master_nickname").notNull(), // nickname ~ feed URL
   songId: text("song_id")
     .notNull()
     .references(() => song.id, { onDelete: "no action" }),

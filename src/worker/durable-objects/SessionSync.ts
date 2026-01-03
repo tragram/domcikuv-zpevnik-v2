@@ -9,11 +9,15 @@ interface Env {
 // Data we stick to the WebSocket handle
 interface SocketMetadata {
   isMaster: boolean;
+  masterId: string;
 }
 
-interface SessionSyncState {
+export interface SessionSyncState {
   songId: string | null;
   transposeSteps: number | null;
+  masterAvatar: string | null;
+  masterNickname: string | null;
+  masterId: string | null;
 }
 
 export interface SyncMessage extends SessionSyncState {
@@ -40,15 +44,15 @@ export type SesssionSyncWSMessage =
   | MasterReplacedMessage;
 export class SessionSync extends DurableObject<Env> {
   private masterWebSocket: WebSocket | null = null;
+  private masterId: string | null = null;
 
+  masterNickname: string | null = null;
+  masterAvatar: string | null = null;
   currentTransposeSteps: number | null = null;
   currentSongId: string | null = null;
 
-  private masterId: string | null = null;
-  private masterNickname: string | null = null;
   private pendingDbWrite: {
     masterId: string;
-    masterNickname: string;
     songId: string;
   } | null = null;
 
@@ -59,18 +63,16 @@ export class SessionSync extends DurableObject<Env> {
     super(ctx, env);
     this.ctx.blockConcurrencyWhile(async () => {
       const stored = await this.ctx.storage.get<SessionSyncState>("state");
+      this.currentSongId = stored?.songId || null;
+      this.currentTransposeSteps = stored?.transposeSteps || null;
+      this.masterAvatar = stored?.masterAvatar || null;
+      this.masterNickname = stored?.masterNickname || null;
+      this.masterId = stored?.masterId || null;
       this.masterWebSocket =
         this.ctx
           .getWebSockets()
           .find((webSocket) => webSocket.deserializeAttachment().isMaster) ||
         null;
-      if (this.masterWebSocket) {
-        const meta = this.masterWebSocket.deserializeAttachment();
-        this.masterNickname = meta.masterNickname;
-        this.masterId = meta.masterId;
-      }
-      this.currentSongId = stored?.songId || null;
-      this.currentTransposeSteps = stored?.transposeSteps || null;
 
       // Restore pending write if exists
       this.pendingDbWrite =
@@ -83,8 +85,19 @@ export class SessionSync extends DurableObject<Env> {
   }
 
   async fetch(request: Request) {
-    if (request.headers.get("Upgrade") !== "websocket") {
-      return new Response("Upgrade Required", { status: 426 });
+    // Handle HTTP GET (The Snapshot)
+    const isWS = request.headers.get("Upgrade") === "websocket";
+    if (!isWS) {
+      return new Response(
+        JSON.stringify({
+          songId: this.currentSongId,
+          transposeSteps: this.currentTransposeSteps,
+          masterNickname: this.masterNickname,
+          masterAvatar: this.masterAvatar,
+          masterId: this.masterId,
+        } as SessionSyncState),
+        { headers: { "Content-Type": "application/json" } }
+      );
     }
 
     const url = new URL(request.url);
@@ -100,7 +113,10 @@ export class SessionSync extends DurableObject<Env> {
       this.masterNickname = masterNicknameParam;
       this.masterId = masterIdParam;
     }
-
+    const masterAvatarParam = url.searchParams.get("masterAvatar");
+    if (masterAvatarParam) {
+      this.masterAvatar = masterAvatarParam;
+    }
     // If this is a master connection and we already have one, disconnect the old one
     if (isMaster && this.masterWebSocket) {
       const oldMaster = this.masterWebSocket;
@@ -127,8 +143,6 @@ export class SessionSync extends DurableObject<Env> {
 
     server.serializeAttachment({
       isMaster,
-      masterId: this.masterId,
-      masterNickname: this.masterNickname,
     });
 
     // Enable hibernation - accept the new socket
@@ -144,6 +158,9 @@ export class SessionSync extends DurableObject<Env> {
         type: "sync",
         songId: this.currentSongId,
         transposeSteps: this.currentTransposeSteps,
+        masterAvatar: this.masterAvatar,
+        masterNickname: this.masterNickname,
+        masterId: this.masterId,
         isMaster,
       } as SyncMessage)
     );
@@ -177,7 +194,6 @@ export class SessionSync extends DurableObject<Env> {
           data.songId !== this.currentSongId
         ) {
           await this.scheduleDbWrite({
-            masterNickname: this.masterNickname,
             masterId: this.masterId,
             songId: data.songId,
           });
@@ -188,6 +204,9 @@ export class SessionSync extends DurableObject<Env> {
         await this.ctx.storage.put("state", {
           songId: data.songId,
           transposeSteps: data.transposeSteps,
+          masterAvatar: this.masterAvatar,
+          masterNickname: this.masterNickname,
+          masterId: this.masterId,
         } as SessionSyncState);
 
         // Broadcast to everyone
@@ -210,7 +229,6 @@ export class SessionSync extends DurableObject<Env> {
   }
 
   private async scheduleDbWrite(data: {
-    masterNickname: string;
     masterId: string;
     songId: string | null;
   }) {
@@ -222,7 +240,6 @@ export class SessionSync extends DurableObject<Env> {
     // Store pending write
     this.pendingDbWrite = {
       masterId: data.masterId,
-      masterNickname: data.masterNickname,
       songId: data.songId, // written like this to keep TS happy about songId
     };
     await this.ctx.storage.put("pendingDbWrite", this.pendingDbWrite);
@@ -245,7 +262,6 @@ export class SessionSync extends DurableObject<Env> {
       const db = drizzle(this.env.DB);
       await db.insert(syncSessionTable).values({
         masterId: this.pendingDbWrite.masterId,
-        masterNickname: this.pendingDbWrite.masterNickname,
         songId: this.pendingDbWrite.songId,
       });
     } catch (e) {

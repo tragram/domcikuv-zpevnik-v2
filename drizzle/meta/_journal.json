@@ -204,6 +204,13 @@
       "when": 1767373002683,
       "tag": "0028_fuzzy_mandrill",
       "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "6",
+      "when": 1767436126411,
+      "tag": "0029_lame_purifiers",
+      "breakpoints": true
     }
   ]
 }

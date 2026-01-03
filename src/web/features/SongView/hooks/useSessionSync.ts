@@ -1,17 +1,31 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { toast } from "sonner";
-import { SesssionSyncWSMessage } from "src/worker/durable-objects/SessionSync";
+import {
+  SessionSyncState,
+  SesssionSyncWSMessage,
+} from "src/worker/durable-objects/SessionSync";
 
 export function useSessionSync(
   masterNickname: string | undefined,
   isMaster: boolean,
-  enabled: boolean = true
+  enabled: boolean = true,
+  initialState?: SessionSyncState
 ) {
-  const [currentSongId, setCurrentSongId] = useState<string | undefined>();
-  const [connectedClients, setConnectedClients] = useState<number>(0);
-  const [currentTransposeSteps, setCurrentTransposeSteps] = useState<
-    number | undefined
-  >();
+  if (initialState && initialState.masterNickname !== masterNickname) {
+    console.error(
+      "Session sync received initialState.nickname",
+      initialState.masterNickname,
+      "but masterNickname",
+      masterNickname
+    );
+  }
+  const [currentState, setCurrentState] = useState<SessionSyncState | null>(
+    initialState ?? null
+  );
+
+  const [connectedClients, setConnectedClients] = useState<number | undefined>(
+    undefined
+  );
   const [isConnected, setIsConnected] = useState(false);
 
   // Changing this value forces the useEffect to restart the connection
@@ -35,14 +49,15 @@ export function useSessionSync(
   // Helper function to reset heartbeat timeout
   const resetHeartbeat = useCallback((ws: WebSocket) => {
     missedPongsRef.current = 0;
-    
+
     if (pingIntervalRef.current) {
       clearInterval(pingIntervalRef.current);
     }
 
     pingIntervalRef.current = window.setInterval(() => {
       if (ws.readyState !== WebSocket.OPEN) return;
-      if (missedPongsRef.current >= 1) { // no message since last ping (not even pong)
+      if (missedPongsRef.current >= 1) {
+        // no message since last ping (not even pong)
         console.warn("[WS] Connection dead (no pong), forcing reconnect");
         ws.close();
         return;
@@ -128,8 +143,12 @@ export function useSessionSync(
         if (data.type === "sync") {
           // ignore sync message if isMaster
           if (isMaster) return;
-          setCurrentSongId(data.songId ?? undefined);
-          setCurrentTransposeSteps(data.transposeSteps ?? undefined);
+          setCurrentState({
+            songId: data.songId,
+            transposeSteps: data.transposeSteps,
+            masterAvatar: data.masterAvatar,
+            masterNickname: data.masterNickname,
+          });
         }
 
         if (data.type === "master-replaced") {
@@ -165,10 +184,10 @@ export function useSessionSync(
 
     // CLEANUP
     return () => {
-      // 1. Clear the timer. If unmounted quickly, `new WebSocket` is never called.
+      // clear the timer. If unmounted quickly, `new WebSocket` is never called.
       clearTimeout(connectTimer);
 
-      // 2. Close existing socket if it exists
+      // close existing socket if it exists
       if (socketRef.current) {
         socketRef.current.onclose = null; // Prevent retry triggering on cleanup
         socketRef.current.close();
@@ -180,7 +199,13 @@ export function useSessionSync(
         pingIntervalRef.current = null;
       }
     };
-  }, [enabled, masterNickname, isMaster, retryTrigger, resetHeartbeat]);
+  }, [
+    enabled,
+    masterNickname,
+    isMaster,
+    retryTrigger,
+    resetHeartbeat,
+  ]);
 
   // Online/Offline Detection
   useEffect(() => {
@@ -210,8 +235,7 @@ export function useSessionSync(
   }, [enabled, masterNickname, isMaster]);
 
   return {
-    currentSongId,
-    currentTransposeSteps,
+    sessionState: currentState,
     connectedClients,
     updateSong,
     isConnected,
