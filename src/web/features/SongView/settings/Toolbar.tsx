@@ -107,6 +107,26 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           setTransposeSteps={setTransposeSteps}
         />
 
+        {feedStatus?.isMaster ? (
+          <RandomSong songs={songDB.songs} currentSong={songData} />
+        ) : (
+          <Button
+            size="icon"
+            variant="circular"
+            disabled
+            className="!opacity-100"
+          >
+            {feedStatus?.isConnected ? (
+              <AvatarWithFallback
+                avatarSrc={feedStatus.sessionState?.masterAvatar ?? undefined}
+                fallbackStr={feedStatus.sessionState?.masterNickname ?? "?"}
+                avatarClassName="h-full w-full"
+              />
+            ) : (
+              <CloudOff />
+            )}
+          </Button>
+        )}
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="circular">
@@ -166,27 +186,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             {installItem}
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {feedStatus?.isMaster ? (
-          <RandomSong songs={songDB.songs} currentSong={songData} />
-        ) : (
-          <Button
-            size="icon"
-            variant="circular"
-            disabled
-            className="!opacity-100"
-          >
-            {feedStatus?.isConnected ? (
-              <AvatarWithFallback
-                avatarSrc={feedStatus.sessionState?.masterAvatar ?? undefined}
-                fallbackStr={feedStatus.sessionState?.masterNickname ?? "?"}
-                avatarClassName="h-full w-full"
-              />
-            ) : (
-              <CloudOff />
-            )}
-          </Button>
-        )}
       </ToolbarBase>
       {PWAInstallComponent}
     </div>

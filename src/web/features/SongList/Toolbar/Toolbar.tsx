@@ -1,5 +1,5 @@
 import { Link, useRouteContext } from "@tanstack/react-router";
-import { ImagesIcon, MoreHorizontal, Pencil, Shield, User } from "lucide-react";
+import { ImagesIcon, Menu, Pencil, Shield, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import { DropdownThemeToggle, ThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
@@ -36,7 +36,7 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="circular">
-          <MoreHorizontal />
+          <Menu />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56">
@@ -109,6 +109,7 @@ function Toolbar({
 
       <SessionView isOnline={isOnline} />
 
+      <RandomSong songs={songDB.songs} />
       {/* Desktop View - Individual Buttons */}
       <div className="hidden min-[1150px]:flex h-full w-fit">
         <ThemeToggle />
@@ -141,7 +142,6 @@ function Toolbar({
         <CombinedMenu isOnline={isOnline} isAdmin={isAdmin} />
       </div>
 
-      <RandomSong songs={songDB.songs} />
     </ToolbarBase>
   );
 }
