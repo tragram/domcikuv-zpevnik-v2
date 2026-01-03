@@ -52,7 +52,8 @@ export const layoutSettingsValues = {
   repeatParts: {
     icon: <Repeat />,
     label: "Repeat sections",
-    description: "Shows repeated sections (e.g. a second identical chorus) instead of referencing them",
+    description:
+      "Shows repeated sections (e.g. a second identical chorus) instead of referencing them",
   },
   repeatPartsChords: {
     icon: <LoopNoteIcon />,
@@ -128,7 +129,10 @@ export const LayoutSettingsToolbar: React.FC<{
           options={presetOptions}
           setSelectedOption={(preset: LayoutPreset) => {
             actions.applyPreset(preset);
-            if (preset === "compact" && layout.compactInFullScreen) {
+            if (
+              (preset === "compact" && layout.compactInFullScreen) ||
+              (preset === "compact" && layout.fitScreenMode === "fitXY")
+            ) {
               fullScreenHandle.enter();
             }
           }}
