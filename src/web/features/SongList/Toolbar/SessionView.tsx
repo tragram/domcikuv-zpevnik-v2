@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouteContext } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -19,8 +19,11 @@ interface SessionViewProps {
 const SessionView = ({ isOnline }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(Date.now());
-
-  const { activeSessions, refetchIfStale } = useActiveSessions();
+  const context = useRouteContext({ from: "/" });
+  const { activeSessions, refetchIfStale } = useActiveSessions(
+    context.songDB,
+    context.api
+  );
 
   // Update time every second when dropdown is open
   useEffect(() => {
@@ -96,8 +99,8 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
             {activeSessions.map((session) => (
               <Link
                 key={session.masterId}
-                to="/feed/$masterId"
-                params={{ masterId: session.masterId }}
+                to="/feed/$masterNickname"
+                params={{ masterNickname: session.nickname }}
                 onClick={() => setIsOpen(false)}
                 className="block"
               >
@@ -105,12 +108,12 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                   <Avatar className="h-7 w-7 flex-shrink-0">
                     <AvatarImage src={session.avatar} />
                     <AvatarFallback className="text-xs">
-                      {getInitials(session.masterId)}
+                      {getInitials(session.nickname)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex items-center gap-3 min-w-0 flex-1 justify-between">
                     <div className="truncate text-sm w-[6rem] flex-shrink-0">
-                      {session.masterId}
+                      {session.nickname}
                     </div>
                     <div className="text-xs hidden xs:flex flex-col flex-1 min-w-0 text-center">
                       {session.song && (

@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { SesssionSyncWSMessage } from "src/worker/durable-objects/SessionSync";
 
 export function useSessionSync(
-  masterId: string | undefined,
+  masterNickname: string | undefined,
   isMaster: boolean,
   enabled: boolean = true
 ) {
@@ -74,7 +74,7 @@ export function useSessionSync(
 
   // ---- WebSocket Lifecycle ----
   useEffect(() => {
-    if (!enabled || !masterId) return;
+    if (!enabled || !masterNickname) return;
 
     // DEBOUNCE: Wait 100ms before connecting.
     // This prevents "interrupted" errors during React Strict Mode double-mounts
@@ -82,7 +82,7 @@ export function useSessionSync(
     const connectTimer = setTimeout(() => {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const url = new URL(
-        `${protocol}//${window.location.host}/api/session/${masterId}`
+        `${protocol}//${window.location.host}/api/session/${masterNickname}`
       );
       url.searchParams.set("role", isMaster ? "master" : "follower");
 
@@ -180,11 +180,11 @@ export function useSessionSync(
         pingIntervalRef.current = null;
       }
     };
-  }, [enabled, masterId, isMaster, retryTrigger, resetHeartbeat]);
+  }, [enabled, masterNickname, isMaster, retryTrigger, resetHeartbeat]);
 
   // Online/Offline Detection
   useEffect(() => {
-    if (!enabled || !masterId) return;
+    if (!enabled || !masterNickname) return;
 
     const handleOnline = () => {
       console.debug("[WS] Online detected, reconnecting immediately");
@@ -207,7 +207,7 @@ export function useSessionSync(
       window.removeEventListener("offline", handleOffline);
       window.removeEventListener("online", handleOnline);
     };
-  }, [enabled, masterId, isMaster]);
+  }, [enabled, masterNickname, isMaster]);
 
   return {
     currentSongId,

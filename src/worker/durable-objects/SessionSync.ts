@@ -44,11 +44,11 @@ export class SessionSync extends DurableObject<Env> {
   currentTransposeSteps: number | null = null;
   currentSongId: string | null = null;
 
-  private masterUserId: string | null = null;
   private masterId: string | null = null;
+  private masterNickname: string | null = null;
   private pendingDbWrite: {
-    userId: string;
     masterId: string;
+    masterNickname: string;
     songId: string;
   } | null = null;
 
@@ -66,7 +66,7 @@ export class SessionSync extends DurableObject<Env> {
         null;
       if (this.masterWebSocket) {
         const meta = this.masterWebSocket.deserializeAttachment();
-        this.masterUserId = meta.masterUserId;
+        this.masterNickname = meta.masterNickname;
         this.masterId = meta.masterId;
       }
       this.currentSongId = stored?.songId || null;
@@ -75,8 +75,8 @@ export class SessionSync extends DurableObject<Env> {
       // Restore pending write if exists
       this.pendingDbWrite =
         (await this.ctx.storage.get<{
-          userId: string;
           masterId: string;
+          masterNickname: string;
           songId: string;
         }>("pendingDbWrite")) || null;
     });
@@ -89,15 +89,15 @@ export class SessionSync extends DurableObject<Env> {
 
     const url = new URL(request.url);
     const roleParam = url.searchParams.get("role");
-    const userIdParam = url.searchParams.get("userId");
+    const masterNicknameParam = url.searchParams.get("masterNickname");
     const masterIdParam = url.searchParams.get("masterId");
 
     // Backend has already verified authorization, so we trust the role parameter
     const isMaster = roleParam === "master";
 
     // Store userId and masterId when master connects
-    if (isMaster && userIdParam && masterIdParam) {
-      this.masterUserId = userIdParam;
+    if (isMaster && masterNicknameParam && masterIdParam) {
+      this.masterNickname = masterNicknameParam;
       this.masterId = masterIdParam;
     }
 
@@ -128,7 +128,7 @@ export class SessionSync extends DurableObject<Env> {
     server.serializeAttachment({
       isMaster,
       masterId: this.masterId,
-      masterUserId: this.masterUserId,
+      masterNickname: this.masterNickname,
     });
 
     // Enable hibernation - accept the new socket
@@ -171,13 +171,13 @@ export class SessionSync extends DurableObject<Env> {
       if (data.type === "update-song") {
         // Schedule debounced DB write using stored userId and masterId on new song
         if (
-          this.masterUserId &&
+          this.masterNickname &&
           this.masterId &&
           data.songId &&
           data.songId !== this.currentSongId
         ) {
           await this.scheduleDbWrite({
-            userId: this.masterUserId,
+            masterNickname: this.masterNickname,
             masterId: this.masterId,
             songId: data.songId,
           });
@@ -210,7 +210,7 @@ export class SessionSync extends DurableObject<Env> {
   }
 
   private async scheduleDbWrite(data: {
-    userId: string;
+    masterNickname: string;
     masterId: string;
     songId: string | null;
   }) {
@@ -221,8 +221,8 @@ export class SessionSync extends DurableObject<Env> {
 
     // Store pending write
     this.pendingDbWrite = {
-      userId: data.userId,
       masterId: data.masterId,
+      masterNickname: data.masterNickname,
       songId: data.songId, // written like this to keep TS happy about songId
     };
     await this.ctx.storage.put("pendingDbWrite", this.pendingDbWrite);
@@ -244,8 +244,8 @@ export class SessionSync extends DurableObject<Env> {
     try {
       const db = drizzle(this.env.DB);
       await db.insert(syncSessionTable).values({
-        userId: this.pendingDbWrite.userId,
         masterId: this.pendingDbWrite.masterId,
+        masterNickname: this.pendingDbWrite.masterNickname,
         songId: this.pendingDbWrite.songId,
       });
     } catch (e) {
@@ -266,7 +266,7 @@ export class SessionSync extends DurableObject<Env> {
     // If the master disconnects, clear our reference
     if (meta.isMaster && this.masterWebSocket === ws) {
       this.masterWebSocket = null;
-      this.masterUserId = null;
+      this.masterNickname = null;
       this.masterId = null;
     }
   }

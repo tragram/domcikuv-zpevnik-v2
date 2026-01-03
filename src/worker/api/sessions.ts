@@ -1,20 +1,20 @@
 import { eq, gte, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { syncSessionTable, user, user as userTable } from "src/lib/db/schema";
-import { getUserProfile } from "../services/user-service";
 import { buildApp } from "./utils";
 import { errorJSend, successJSend } from "./responses";
 
 export { SessionSync } from "../durable-objects/SessionSync";
 
-export type SyncSession = {
+export type SyncSessionData = {
   masterId: string;
   createdAt: Date;
   songId: string;
   avatar: string | undefined;
+  nickname: string;
 };
 
-export type SessionsResponseData = SyncSession[];
+export type SessionsResponseData = SyncSessionData[];
 
 const sessionSyncApp = buildApp()
   .get("/", async (c) => {
@@ -28,12 +28,14 @@ const sessionSyncApp = buildApp()
           createdAt: syncSessionTable.createdAt,
           songId: syncSessionTable.songId,
           avatar: user.image,
+          nickname: user.nickname,
         })
         .from(syncSessionTable)
         .where(gte(syncSessionTable.createdAt, latestLive))
-        .leftJoin(user, eq(user.id, syncSessionTable.userId))
+        // TODO: now this should not require as the join...?
+        .leftJoin(user, eq(user.id, syncSessionTable.masterId))
         .all();
-
+      console.log(liveSessions);
       // Filter to only the latest entry per masterId
       const latestByMasterId = liveSessions.reduce((acc, session) => {
         const existing = acc.get(session.masterId);
@@ -51,19 +53,17 @@ const sessionSyncApp = buildApp()
       return errorJSend(c, "Failed to fetch current sessions", 500);
     }
   })
-  .get("/:masterId", async (c) => {
-    const masterId = c.req.param("masterId");
+  .get("/:masterNickname", async (c) => {
+    const masterNickname = c.req.param("masterNickname");
     const requestedRole = new URL(c.req.url).searchParams.get("role");
-    let userId: string | null = null;
 
     const user = c.get("USER");
-
     // Verify the master user exists
     const db = drizzle(c.env.DB);
     const masterProfile = await db
       .select({ id: userTable.id })
       .from(userTable)
-      .where(eq(userTable.nickname, masterId))
+      .where(eq(userTable.nickname, masterNickname))
       .limit(1)
       .then((res) => res[0]);
 
@@ -78,8 +78,7 @@ const sessionSyncApp = buildApp()
         return errorJSend(c, "Authentication required to be master", 401);
       }
 
-      const userProfile = await getUserProfile(db, user.id);
-      const isAuthorized = userProfile.nickname === masterId;
+      const isAuthorized = masterProfile.id === user.id;
 
       if (!isAuthorized) {
         return errorJSend(
@@ -88,20 +87,19 @@ const sessionSyncApp = buildApp()
           403
         );
       }
-      userId = masterProfile.id;
       verifiedRole = "master";
     }
 
     // Forward to Durable Object with verified role
-    const id = c.env.SESSION_SYNC.idFromName(masterId);
+    const id = c.env.SESSION_SYNC.idFromName(masterProfile.id);
     const stub = c.env.SESSION_SYNC.get(id);
 
     const url = new URL(c.req.url);
     url.searchParams.set("role", verifiedRole);
-    if (userId) {
-      url.searchParams.set("userId", userId);
+    if (masterNickname) {
+      url.searchParams.set("masterNickname", masterNickname);
     }
-    url.searchParams.set("masterId", masterId);
+    url.searchParams.set("masterId", masterProfile.id);
 
     return stub.fetch(url.toString(), c.req.raw);
   });

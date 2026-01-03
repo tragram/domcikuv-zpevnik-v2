@@ -6,33 +6,33 @@ import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
 import { SongDB } from "~/types/types";
 
-export const Route = createFileRoute("/feed/$masterId")({
+export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
     return {
       user: context.user,
       songDB: context.songDB,
-      masterId: params.masterId,
+      masterNickname: params.masterNickname,
     };
   },
 });
 
 function RouteComponent() {
-  const { songDB, masterId, user } = Route.useLoaderData();
+  const { songDB, masterNickname, user } = Route.useLoaderData();
 
-  return <FeedView songDB={songDB} masterId={masterId} user={user} />;
+  return <FeedView songDB={songDB} masterNickname={masterNickname} user={user} />;
 }
 
 type FeedViewProps = {
   songDB: SongDB;
-  masterId: string;
+  masterNickname: string;
   user: UserProfileData;
 };
 
-function FeedView({ songDB, masterId, user }: FeedViewProps) {
+function FeedView({ songDB, masterNickname, user }: FeedViewProps) {
   // Feed route manages session sync as follower (read-only)
   const { currentSongId, isConnected, currentTransposeSteps } = useSessionSync(
-    masterId,
+    masterNickname,
     false, // isMaster = false (follower mode)
     true // enabled
   );
@@ -66,7 +66,7 @@ function FeedView({ songDB, masterId, user }: FeedViewProps) {
   if (!songData) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Waiting for {masterId} to select a song...</p>
+        <p>Waiting for {masterNickname} to select a song...</p>
       </div>
     );
   }
