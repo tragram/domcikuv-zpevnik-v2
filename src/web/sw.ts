@@ -180,8 +180,12 @@ async function cacheDynamicThumbnails(songs: SongDataApi[]): Promise<void> {
       const thumbUrl = song.currentIllustration?.thumbnailURL;
 
       if (thumbUrl && typeof thumbUrl === "string") {
-        // Only cache if it looks like a relative/remote path we want to handle
-        if (thumbUrl.startsWith("http")) {
+        // Only cache if it's a thumbnail delivered via CDN
+        if (
+          thumbUrl.startsWith(
+            "https://zpevnik.hodan.page/cdn-cgi/image/width=128/"
+          )
+        ) {
           console.log(thumbUrl);
           urlsToCache.add(thumbUrl);
         }
