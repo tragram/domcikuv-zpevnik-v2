@@ -82,6 +82,7 @@ export const SongView = ({
           songData={songData}
           transposeSteps={transposeSteps}
           gestureContainerRef={gestureContainerRef}
+          user={user}
         />
       </FullScreen>
       <FeedStatusBar feedStatus={feedStatus} />

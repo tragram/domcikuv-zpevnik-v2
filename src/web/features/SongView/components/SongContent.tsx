@@ -1,5 +1,6 @@
 import { forwardRef, useMemo } from "react";
 import { SongData } from "~/types/songData";
+import { UserProfileData } from "src/worker/api/userProfile";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { renderSong } from "../utils/songRendering";
 import BackgroundImage from "./BackgroundImage";
@@ -10,19 +11,15 @@ interface SongContentProps {
   songData: SongData;
   transposeSteps: number;
   gestureContainerRef: React.RefObject<HTMLDivElement>;
+  user?: UserProfileData;
 }
 
 export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-  ({ songData, transposeSteps, gestureContainerRef }, ref) => {
+  ({ songData, transposeSteps, gestureContainerRef, user }, ref) => {
     const { layout, chords: chordSettings } = useViewSettingsStore();
 
     const parsedContent = useMemo(
-      () =>
-        renderSong(
-          songData,
-          transposeSteps,
-          chordSettings.czechChordNames
-        ),
+      () => renderSong(songData, transposeSteps, chordSettings.czechChordNames),
       [songData, transposeSteps, chordSettings.czechChordNames]
     );
 
@@ -42,6 +39,7 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
             songData={songData}
             layoutSettings={layout}
             transposeSteps={transposeSteps}
+            user={user}
           />
 
           <div
