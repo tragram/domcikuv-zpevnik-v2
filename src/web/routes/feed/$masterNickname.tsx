@@ -44,9 +44,8 @@ type FeedViewProps = {
 };
 
 function FeedView({ songDB, liveState, masterNickname, user }: FeedViewProps) {
-
   // Feed route manages session sync as follower (read-only)
-  const { isConnected, sessionState } = useSessionSync(
+  const { isConnected, sessionState, retryAttempt } = useSessionSync(
     masterNickname,
     false,
     true,
@@ -71,18 +70,35 @@ function FeedView({ songDB, liveState, masterNickname, user }: FeedViewProps) {
       setTransposeSteps(sessionState.transposeSteps);
   }, [sessionState, setTransposeSteps]);
 
-  if (!songData || !sessionState || !sessionState.songId) {
+  if (!sessionState) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Waiting for {masterNickname} to select a song...</p>
+        <div className="text-center space-y-2">
+          <p className="text-lg">Connecting to feed...</p>
+          {!isConnected && retryAttempt > 2 && (
+            <p className="text-xs text-gray-400">
+              Having trouble connecting but I'll keep trying in the background.
+              ;-)
+            </p>
+          )}
+        </div>
       </div>
     );
   }
 
-  if (!isConnected) {
+  if (!songData || !sessionState.songId) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Connecting to feed...</p>
+        <div className="text-center space-y-2">
+          <p className="text-lg">
+            Waiting for {masterNickname} to select a song...
+          </p>
+          {!isConnected && (
+            <p className="text-sm text-yellow-600">
+              Connection lost - attempting to reconnect...
+            </p>
+          )}
+        </div>
       </div>
     );
   }

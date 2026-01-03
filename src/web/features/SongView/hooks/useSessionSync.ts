@@ -12,7 +12,7 @@ export function useSessionSync(
   initialState?: SessionSyncState
 ) {
   if (initialState && initialState.masterNickname !== masterNickname) {
-    console.error(
+    console.warn(
       "Session sync received initialState.nickname",
       initialState.masterNickname,
       "but masterNickname",
@@ -41,10 +41,26 @@ export function useSessionSync(
   const missedPongsRef = useRef(0);
   const pingIntervalRef = useRef<number | null>(null);
 
+  // Exponential backoff state
+  const retryCountRef = useRef(0);
+  const retryTimeoutRef = useRef<number | null>(null);
+
   // Keep role ref fresh
   useEffect(() => {
     isMasterRef.current = isMaster;
   }, [isMaster]);
+
+  // Helper function to calculate exponential backoff delay
+  const getBackoffDelay = useCallback((retryCount: number): number => {
+    // Base delay of 1 second, doubles each time, max 30 seconds
+    const baseDelay = 1000;
+    const maxDelay = 30000;
+    const delay = Math.min(baseDelay * Math.pow(2, retryCount), maxDelay);
+    
+    // Add jitter (±25%) to prevent thundering herd
+    const jitter = delay * 0.25 * (Math.random() * 2 - 1);
+    return delay + jitter;
+  }, []);
 
   // Helper function to reset heartbeat timeout
   const resetHeartbeat = useCallback((ws: WebSocket) => {
@@ -64,7 +80,7 @@ export function useSessionSync(
       }
       ws.send(JSON.stringify({ type: "ping" }));
       missedPongsRef.current += 1;
-    }, 90_000); // 90s - CF timeout is supposedly 100s (https://community.cloudflare.com/t/cloudflare-websocket-timeout/5865)
+    }, 90_000); // 90s - CF timeout is supposedly 100s
   }, []);
 
   // ---- Public API ----
@@ -83,6 +99,8 @@ export function useSessionSync(
         "[WS] Disconnected/Kicked. Queuing update and reconnecting..."
       );
       pendingSongUpdateRef.current = songId;
+      // Reset retry count on user-initiated action
+      retryCountRef.current = 0;
       setRetryTrigger((prev) => prev + 1);
     }
   }, []);
@@ -101,7 +119,7 @@ export function useSessionSync(
       );
       url.searchParams.set("role", isMaster ? "master" : "follower");
 
-      console.debug(`[WS] Connecting (Attempt ${retryTrigger})...`);
+      console.debug(`[WS] Connecting (Attempt ${retryCountRef.current + 1})...`);
       const ws = new WebSocket(url.toString());
       socketRef.current = ws;
 
@@ -109,6 +127,9 @@ export function useSessionSync(
       ws.onopen = () => {
         console.debug("[WS] Connected");
         setIsConnected(true);
+        
+        // Reset retry count on successful connection
+        retryCountRef.current = 0;
 
         // If we reconnected because the user tried to change the song, flush that update now
         if (isMaster && pendingSongUpdateRef.current) {
@@ -171,8 +192,16 @@ export function useSessionSync(
 
         // Only trigger retry if this socket is still the "current" one
         if (socketRef.current === ws) {
-          console.debug("[WS] Closed. Retrying in 3s...");
-          setTimeout(() => setRetryTrigger((prev) => prev + 1), 3000);
+          const backoffDelay = getBackoffDelay(retryCountRef.current);
+          console.debug(
+            `[WS] Closed. Retrying in ${Math.round(backoffDelay / 1000)}s (attempt ${retryCountRef.current + 1})...`
+          );
+          
+          retryCountRef.current += 1;
+          
+          retryTimeoutRef.current = window.setTimeout(() => {
+            setRetryTrigger((prev) => prev + 1);
+          }, backoffDelay);
         }
       };
 
@@ -187,6 +216,12 @@ export function useSessionSync(
     return () => {
       // clear the timer. If unmounted quickly, `new WebSocket` is never called.
       clearTimeout(connectTimer);
+      
+      // Clear retry timeout
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
+        retryTimeoutRef.current = null;
+      }
 
       // close existing socket if it exists
       if (socketRef.current) {
@@ -200,7 +235,7 @@ export function useSessionSync(
         pingIntervalRef.current = null;
       }
     };
-  }, [enabled, masterNickname, isMaster, retryTrigger, resetHeartbeat]);
+  }, [enabled, masterNickname, isMaster, retryTrigger, resetHeartbeat, getBackoffDelay]);
 
   // Online/Offline Detection
   useEffect(() => {
@@ -211,6 +246,8 @@ export function useSessionSync(
       toast.info(
         `Reconnected: Attempting to ${isMaster ? "broadcast" : "reload feed!"}`
       );
+      // Reset retry count when network comes back online
+      retryCountRef.current = 0;
       setRetryTrigger((prev) => prev + 1);
     };
 
@@ -234,5 +271,6 @@ export function useSessionSync(
     connectedClients,
     updateSong,
     isConnected,
+    retryAttempt: retryCountRef.current,
   };
 }
