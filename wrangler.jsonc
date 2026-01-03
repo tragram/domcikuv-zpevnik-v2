@@ -7,19 +7,16 @@
   "name": "domcikuv-zpevnik-v2",
   "main": "./src/worker/index.ts",
   "compatibility_date": "2025-06-17",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
   "observability": {
     "enabled": true
   },
   "upload_source_maps": true,
   "assets": {
     // behave as a SPA but on /API, Hono should be called
+    "directory": "./dist/client",
     "not_found_handling": "single-page-application",
-    "run_worker_first": [
-      "/api/*"
-    ]
+    "run_worker_first": ["/api/*"]
   },
   /**
    * Smart Placement
@@ -56,16 +53,14 @@
     "bindings": [
       {
         "name": "SESSION_SYNC",
-        "class_name": "SessionSync",
+        "class_name": "SessionSync"
       }
     ]
   },
   "migrations": [
     {
       "tag": "<v1>",
-      "new_sqlite_classes": [
-        "SessionSync"
-      ]
+      "new_sqlite_classes": ["SessionSync"]
     }
   ],
   /**
