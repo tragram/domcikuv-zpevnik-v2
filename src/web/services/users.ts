@@ -30,8 +30,13 @@ interface UserSearchParams {
 }
 
 export async function fetchProfile(api: API) {
-  const response = await makeApiRequest(api.profile.$get);
-  return response;
+  try {
+    const response = await makeApiRequest(api.profile.$get);
+    return response;
+  } catch (e) {
+    console.error("Failed to fetch profile - returning empty...", e);
+    return { loggedIn: false };
+  }
 }
 
 export async function fetchActiveSessions(
@@ -39,7 +44,7 @@ export async function fetchActiveSessions(
 ): Promise<SessionsResponseData> {
   const response = await makeApiRequest(api.session.$get);
   return response.map((item) => {
-    return { ...item, createdAt: new Date(item.createdAt) };
+    return { ...item, timestamp: new Date(item.timestamp) };
   });
 }
 
