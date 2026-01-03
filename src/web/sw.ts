@@ -43,11 +43,33 @@ registerRoute(
     denylist: [/^\/api\//],
   })
 );
+
 // TODO: caching of R2
-// Runtime caching for illustrations
+// Runtime caching for illustration thumbnails (precached + on-demand)
 registerRoute(
   ({ url }) => {
-    return url.pathname.startsWith("/songs/illustrations/");
+    return (
+      url.pathname.startsWith("/songs/illustrations/") &&
+      url.pathname.includes("/thumbnail/")
+    );
+  },
+  new CacheFirst({
+    cacheName: "thumbnail-cache",
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  })
+);
+
+// Runtime caching for full-sized illustrations (on-demand only, not precached)
+registerRoute(
+  ({ url }) => {
+    return (
+      url.pathname.startsWith("/songs/illustrations/") &&
+      !url.pathname.includes("/thumbnail/")
+    );
   },
   new CacheFirst({
     cacheName: "full-illustration-cache",
@@ -72,8 +94,7 @@ registerRoute(
 registerRoute(
   ({ url }) => {
     return (
-      url.pathname.startsWith("/api/") &&
-      !url.pathname.startsWith("/api/auth")
+      url.pathname.startsWith("/api/") && !url.pathname.startsWith("/api/auth")
     );
   },
   new NetworkFirst({
