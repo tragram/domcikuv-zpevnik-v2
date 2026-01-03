@@ -72,7 +72,7 @@ const imageFolder = (
   thumbnail: boolean
 ) => {
   return `songs/illustrations/${songId}/${promptFolder(songId, promptId)}/${
-    thumbnail ? "illustration_thumbnails" : "illustrations"
+    thumbnail ? "thumbnail" : "full"
   }/${imageModel}`;
 };
 
