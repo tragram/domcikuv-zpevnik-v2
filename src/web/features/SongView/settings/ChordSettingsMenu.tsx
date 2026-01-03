@@ -21,8 +21,8 @@ const chordSettingsValues = {
   showChords: { icon: <Guitar />, label: "Show chords", description: "" },
   czechChordNames: {
     icon: <Piano />,
-    label: '"Czech" notes',
-    description: "uses notes A-B-H-C",
+    label: 'Czech notation',
+    description: "Uses A-B-H-C instead of A-Bb-B-C",
   },
   inlineChords: {
     icon: <ChevronsLeftRightEllipsis />,

@@ -99,7 +99,7 @@ function DropdownItemWithDescription({
     <div className="min-w-0 flex-1">
       {title}
       {description && (
-        <p className={cn("text-[0.7em] leading-tight", descriptionClassName)}>
+        <p className={cn("text-[0.7em] leading-tight ml-[0.05em]", descriptionClassName)}>
           {description}
         </p>
       )}
