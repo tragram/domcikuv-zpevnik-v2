@@ -33,8 +33,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   const getDescription = () => {
     if (onLine && showProfileLink) {
       return {
-        text: "Click to log in and pick a nickname to enable feature.",
-        className: "text-[0.6em] ml-9 -mt-1",
+        text: "Click to log in & pick a nickname to enable",
       };
     }
     if (feedStatus?.enabled && !feedStatus.isMaster) {
@@ -77,14 +76,17 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
       content
     );
 
+  const checkboxDisabled =
+    showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster);
   return (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
-      disabled={
-        showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster)
-      }
       checked={shareSession}
-      onCheckedChange={() => setShareSession(!shareSession)}
+      onCheckedChange={() => {
+        if (checkboxDisabled) return;
+        setShareSession(!shareSession);
+      }}
+      className={checkboxDisabled ? "opacity-50" : ""}
     >
       <DropdownIconStart icon={<CloudSync />} />
       {wrappedContent}
