@@ -39,7 +39,7 @@ export default defineConfig({
         globPatterns: [
           "**/*.{js,css,html,ico,png,svg,yaml,json}",
           // "songs/chordpro/*.pro",
-          "songs/illustrations_thumbnails/**/*.webp",
+          "songs/illustrations/**/*.webp",
           // "songs/image_prompts/**/*.yaml",
           "site.webmanifest",
         ],
