@@ -214,6 +214,9 @@ export class SessionSync extends DurableObject<Env> {
           type: "sync",
           songId: this.currentSongId,
           transposeSteps: this.currentTransposeSteps,
+          masterAvatar: this.masterAvatar,
+          masterNickname: this.masterNickname,
+          masterId: this.masterId,
         } as SyncMessage);
 
         this.masterWebSocket.send(

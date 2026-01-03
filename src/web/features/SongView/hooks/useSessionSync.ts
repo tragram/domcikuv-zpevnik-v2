@@ -148,6 +148,7 @@ export function useSessionSync(
             transposeSteps: data.transposeSteps,
             masterAvatar: data.masterAvatar,
             masterNickname: data.masterNickname,
+            masterId: data.masterId,
           });
         }
 
@@ -199,13 +200,7 @@ export function useSessionSync(
         pingIntervalRef.current = null;
       }
     };
-  }, [
-    enabled,
-    masterNickname,
-    isMaster,
-    retryTrigger,
-    resetHeartbeat,
-  ]);
+  }, [enabled, masterNickname, isMaster, retryTrigger, resetHeartbeat]);
 
   // Online/Offline Detection
   useEffect(() => {

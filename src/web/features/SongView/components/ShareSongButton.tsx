@@ -37,16 +37,18 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
         className: "text-[0.6em] ml-9 -mt-1",
       };
     }
+    if (feedStatus?.enabled && !feedStatus.isMaster) {
+      return {
+        text: `Currently connected to ${
+          feedStatus.sessionState?.masterNickname || "someone else"
+        }'s session.`,
+        className: "",
+      };
+    }
     if (!shareSession) {
       return {
         text: "Share your page with others - live.",
         className: "",
-      };
-    }
-    if (shareSession && feedStatus && feedStatus.connectedClients > 0) {
-      return {
-        text: `Connected clients: ${feedStatus.connectedClients}`,
-        className: "mb-1",
       };
     }
     if (shareSession && user.loggedIn && user.profile.nickname) {
@@ -78,7 +80,9 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   return (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
-      disabled={showProfileLink}
+      disabled={
+        showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster)
+      }
       checked={shareSession}
       onCheckedChange={() => setShareSession(!shareSession)}
     >

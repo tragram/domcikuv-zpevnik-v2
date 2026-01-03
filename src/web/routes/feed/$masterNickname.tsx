@@ -26,7 +26,6 @@ export const Route = createFileRoute("/feed/$masterNickname")({
 
 function RouteComponent() {
   const { songDB, liveState, masterNickname, user } = Route.useLoaderData();
-
   return (
     <FeedView
       songDB={songDB}
@@ -45,6 +44,7 @@ type FeedViewProps = {
 };
 
 function FeedView({ songDB, liveState, masterNickname, user }: FeedViewProps) {
+
   // Feed route manages session sync as follower (read-only)
   const { isConnected, sessionState } = useSessionSync(
     masterNickname,
