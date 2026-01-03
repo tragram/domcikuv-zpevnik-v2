@@ -10,6 +10,7 @@ import { SongContent } from "./components/SongContent";
 import { SongViewLayout } from "./components/SongViewLayout";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
+import { FeedStatusBar } from "./components/FeedStatusBar";
 import "./SongView.css";
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 
@@ -72,7 +73,8 @@ export const SongView = ({
           "fullscreen-wrapper w-full overflow-x-clip",
           layoutSettings.fitScreenMode == "fitXY"
             ? " h-full "
-            : "h-fit overflow-y-auto"
+            : "h-fit overflow-y-auto",
+          feedStatus?.enabled ? "pb-8" : ""
         )}
       >
         <ScrollButtons fitScreenMode={layoutSettings.fitScreenMode} />
@@ -82,13 +84,7 @@ export const SongView = ({
           gestureContainerRef={gestureContainerRef}
         />
       </FullScreen>
-      {feedStatus?.enabled && (
-        <div className="fixed bottom-0 h-8 w-full flex justify-center items-center text-primary bg-glass/30 dark:bg-glass/90 dark:text-white/70 text-xs backdrop-blur-md border-primary dark:border-primary/30 border-t-2">
-          {feedStatus?.isMaster ? `Sharing session · ${feedStatus.connectedClients} connected`:`Following ${
-            feedStatus && feedStatus.sessionState?.masterNickname
-          }'s feed`}
-        </div>
-      )}
+      <FeedStatusBar feedStatus={feedStatus} />
     </SongViewLayout>
   );
 };
