@@ -4,9 +4,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { signOut } from "src/lib/auth/client";
 import { ProfileUpdateData, UserProfileData } from "src/worker/api/userProfile";
-import {
-  AvatarWithFallback
-} from "~/components/ui/avatar";
+import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -576,9 +574,8 @@ function ActionButtons({
   onLogout,
 }: ActionButtonsProps) {
   return (
-    <div className="flex flex-col flex-wrap sm:flex-row gap-3 justify-between">
+    <div className="flex flex-row flex-wrap-reverse gap-3 justify-between">
       <Button
-        variant="outline"
         onClick={onLogout}
         className="sm:w-auto"
         disabled={!window.navigator.onLine}
@@ -587,6 +584,7 @@ function ActionButtons({
         Logout
       </Button>
       <Button
+        variant="outline"
         onClick={onSave}
         disabled={saving || !hasChanges || !window.navigator.onLine}
         className="sm:w-auto"
