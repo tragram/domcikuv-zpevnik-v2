@@ -43,7 +43,7 @@ registerRoute(
     denylist: [/^\/api\//],
   })
 );
-
+// TODO: caching of R2
 // Runtime caching for illustrations
 registerRoute(
   ({ url }) => {
