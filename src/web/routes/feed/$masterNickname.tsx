@@ -66,7 +66,7 @@ function FeedView({ songDB, liveState, masterNickname, user }: FeedViewProps) {
   );
 
   useEffect(() => {
-    if (sessionState && sessionState.transposeSteps)
+    if (sessionState && sessionState.transposeSteps != null)
       setTransposeSteps(sessionState.transposeSteps);
   }, [sessionState, setTransposeSteps]);
 
