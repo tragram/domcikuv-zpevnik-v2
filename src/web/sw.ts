@@ -41,7 +41,7 @@ if (import.meta.env.DEV) allowlist = [/^\/$/];
 registerRoute(
   new NavigationRoute(createHandlerBoundToURL("index.html"), {
     allowlist,
-    denylist: [/^\/api\//],
+    denylist: [/^\/api\//, /^\/songs\//],
   })
 );
 
@@ -180,11 +180,7 @@ async function cacheDynamicThumbnails(songs: SongDataApi[]): Promise<void> {
       const thumbUrl = song.currentIllustration?.thumbnailURL;
       if (thumbUrl && typeof thumbUrl === "string") {
         // Only cache if it's a thumbnail delivered via CDN
-        if (
-          thumbUrl.startsWith(
-            "/cdn-cgi/image/width=128/"
-          )
-        ) {
+        if (thumbUrl.startsWith("/cdn-cgi/image/width=128/")) {
           urlsToCache.add(thumbUrl);
         }
       }
