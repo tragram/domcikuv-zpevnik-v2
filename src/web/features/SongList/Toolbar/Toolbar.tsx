@@ -45,7 +45,7 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         <DropdownThemeToggle />
 
         <DropdownMenuItem>
-          <Link to="/edit" className="flex items-center gap-2 cursor-pointer">
+          <Link to="/edit" className="flex items-center gap-2 cursor-pointer w-full">
             <DropdownIconStart icon={<Pencil />} />
             Add song
           </Link>
@@ -54,7 +54,7 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         <DropdownMenuItem asChild>
           <Link
             to="/gallery"
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer w-full"
           >
             <DropdownIconStart icon={<ImagesIcon />} />
             Gallery
@@ -64,7 +64,7 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         <DropdownMenuItem disabled={!isOnline}>
           <Link
             to="/profile"
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer w-full"
           >
             <DropdownIconStart icon={<User />} />
             Profile
@@ -74,7 +74,7 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
           <DropdownMenuItem asChild disabled={!isOnline}>
             <Link
               to="/admin"
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer w-full"
             >
               <DropdownIconStart icon={<Shield />} />
               Admin

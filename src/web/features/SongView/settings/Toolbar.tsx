@@ -163,7 +163,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             <ShareSongButton feedStatus={feedStatus} user={user} />
             <DropdownMenuItem>
               <Link
-                className="flex items-center gap-2 cursor-pointer"
+                className="flex items-center gap-2 cursor-pointer w-full"
                 to={"/edit/" + songData.id}
               >
                 <DropdownIconStart icon={<Pencil />} />
@@ -172,7 +172,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link
-                className="flex items-center gap-2 cursor-pointer"
+                className="flex items-center gap-2 cursor-pointer w-full"
                 to={
                   "https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" +
                   songData.id +
