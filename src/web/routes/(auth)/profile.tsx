@@ -73,9 +73,11 @@ function RouteComponent() {
       await signOut({
         fetchOptions: {
           onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
-            router.invalidate();
-            toast.success("Logged out successfully");
+            // Remove the cached user data entirely (don't just invalidate)
+            queryClient.removeQueries({ queryKey: ["userProfile"] });
+            // toast.success("Logged out successfully");
+            // // Hard redirect to home
+            // window.location.href = "/";
             navigate({ to: redirectURL });
           },
         },
