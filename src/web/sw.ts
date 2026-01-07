@@ -45,25 +45,6 @@ registerRoute(
   })
 );
 
-// TODO: caching of R2
-// Runtime caching for illustration thumbnails (precached + on-demand)
-registerRoute(
-  ({ url }) => {
-    return (
-      url.pathname.startsWith("/songs/illustrations/") &&
-      url.pathname.includes("/thumbnail/")
-    );
-  },
-  new CacheFirst({
-    cacheName: THUMBNAIL_CACHE,
-    plugins: [
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-    ],
-  })
-);
-
 // Runtime caching for full-sized illustrations (on-demand only, not precached)
 registerRoute(
   ({ url }) => {
@@ -91,6 +72,7 @@ registerRoute(
     return handleSongsRequest(request);
   }
 );
+
 // Handle other API routes with NetworkFirst strategy
 registerRoute(
   ({ url }) => {
