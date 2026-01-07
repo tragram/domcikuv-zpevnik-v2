@@ -45,7 +45,10 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         <DropdownThemeToggle />
 
         <DropdownMenuItem>
-          <Link to="/edit" className="flex items-center gap-2 cursor-pointer w-full">
+          <Link
+            to="/edit"
+            className="flex items-center gap-2 cursor-pointer w-full"
+          >
             <DropdownIconStart icon={<Pencil />} />
             Add song
           </Link>
@@ -114,34 +117,54 @@ function Toolbar({
       <div className="hidden min-[1150px]:flex h-full w-fit">
         <ThemeToggle />
       </div>
-      <Link className="hidden min-[1150px]:flex" to="/edit">
-        <Button size="icon" variant="circular">
+      <Button
+        asChild
+        className="hidden min-[1150px]:flex"
+        size="icon"
+        variant="circular"
+      >
+        <Link to="/edit">
           <Pencil />
-        </Button>
-      </Link>
-      <Link className="hidden min-[1150px]:flex" to="/profile">
-        <Button size="icon" variant="circular" disabled={!isOnline}>
-          <User />
-        </Button>
-      </Link>
-      <Link className="hidden min-[1150px]:flex" to="/gallery">
-        <Button size="icon" variant="circular">
-          <ImagesIcon />
-        </Button>
-      </Link>
-      {isAdmin && (
-        <Link className="hidden min-[1150px]:flex" to="/admin">
-          <Button size="icon" variant="circular">
-            <Shield />
-          </Button>
         </Link>
+      </Button>
+      <Button
+        asChild
+        className="hidden min-[1150px]:flex"
+        size="icon"
+        variant="circular"
+        disabled={!isOnline}
+      >
+        <Link to="/profile">
+          <User />
+        </Link>
+      </Button>
+      <Button
+        asChild
+        className="hidden min-[1150px]:flex"
+        size="icon"
+        variant="circular"
+      >
+        <Link to="/gallery">
+          <ImagesIcon />
+        </Link>
+      </Button>
+      {isAdmin && (
+        <Button
+          asChild
+          className="hidden min-[1150px]:flex"
+          size="icon"
+          variant="circular"
+        >
+          <Link to="/admin">
+            <Shield />
+          </Link>
+        </Button>
       )}
 
       {/* Mobile/Tablet View - Combined Menu */}
       <div className="flex min-[1150px]:hidden">
         <CombinedMenu isOnline={isOnline} isAdmin={isAdmin} />
       </div>
-
     </ToolbarBase>
   );
 }

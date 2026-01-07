@@ -177,6 +177,7 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
       <Button
         size="icon"
         variant="circular"
+        asChild
         onClick={chosenSong ? banSong : () => setIsNoSongsDialogOpen(true)}
       >
         <Link to={chosenSong?.url()}>
