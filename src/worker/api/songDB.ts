@@ -80,7 +80,7 @@ export const songDBRoutes = buildApp()
           userId,
           isIncremental ? lastUpdateAt : undefined,
           isIncremental,
-          isIncremental
+          isIncremental,
         );
 
         return successJSend(c, {
@@ -93,8 +93,14 @@ export const songDBRoutes = buildApp()
         console.error("Database error:", error);
         return errorJSend(c, "Failed to fetch incremental update", 500);
       }
-    }
+    },
   )
+  .get("/info/pa_token", async (c) => {
+    const userId = c.get("USER")?.id;
+    if (userId) {
+      return successJSend(c, { PAToken: c.env.PA_BEARER_TOKEN });
+    } else return errorJSend(c, "User not authenticated", 401);
+  })
   .get("/songbooks", async (c) => {
     const db = drizzle(c.env.DB);
     try {
@@ -124,14 +130,14 @@ export const songDBRoutes = buildApp()
         c,
         allIlustrations.map((ai) => {
           return { ...ai, createdAt: ai.createdAt.getTime() };
-        }) as BasicSongIllustrationResponseData
+        }) as BasicSongIllustrationResponseData,
       );
     } catch {
       return errorJSend(
         c,
         "Internal error listing illustrations",
         500,
-        "ERROR_FINDING_PROMPT"
+        "ERROR_FINDING_PROMPT",
       );
     }
   })
@@ -154,14 +160,14 @@ export const songDBRoutes = buildApp()
         c,
         allPrompts.map((ap) => {
           return { ...ap, createdAt: ap.createdAt.getTime() };
-        }) as AllIllustrationPromptsResponseData
+        }) as AllIllustrationPromptsResponseData,
       );
     } catch {
       return errorJSend(
         c,
         "Internal error listing prompts",
         500,
-        "ERROR_FINDING_PROMPT"
+        "ERROR_FINDING_PROMPT",
       );
     }
   })
@@ -184,7 +190,7 @@ export const songDBRoutes = buildApp()
         c,
         "Internal error finding prompt",
         500,
-        "ERROR_FINDING_PROMPT"
+        "ERROR_FINDING_PROMPT",
       );
     }
   });

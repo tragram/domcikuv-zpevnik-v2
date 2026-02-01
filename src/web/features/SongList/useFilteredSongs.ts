@@ -8,34 +8,33 @@ import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { Songbook } from "~/services/songs";
-
+import {
+  searchAllExternalServices,
+  usePAToken,
+} from "./Toolbar/ExternalSearch";
+import { useQuery } from "@tanstack/react-query";
+import { useDebounceValue } from "usehooks-ts";
 const filterLanguage = (
   songs: SongData[],
   selectedLanguage: string,
-  languageCounts: LanguageCount
+  languageCounts: LanguageCount,
 ): SongData[] => {
   if (selectedLanguage === "all") {
     return songs;
   }
-
   if (selectedLanguage === "other") {
-    // Count all languages across the song database
-
-    // Return songs with languages that have fewer than x songs
     return songs.filter((song) => {
       const lang = song.language || "other";
       return languageCounts[lang] < RARE_LANGUAGE_THRESHOLD;
     });
   }
-
-  // Standard language filtering
   return songs.filter((song) => song.language === selectedLanguage);
 };
 
 const filterFavorites = (
   songs: SongData[],
   loggedIn: boolean,
-  onlyFavorites: boolean
+  onlyFavorites: boolean,
 ) => {
   if (loggedIn && onlyFavorites) {
     return songs.filter((song) => song.isFavorite);
@@ -53,7 +52,7 @@ const filterCapo = (songs: SongData[], allowCapo: boolean): SongData[] => {
 
 const filterVocalRange = (
   songs: SongData[],
-  vocalRange: "all" | [number, number]
+  vocalRange: "all" | [number, number],
 ): SongData[] => {
   if (vocalRange === "all") {
     return songs;
@@ -62,14 +61,14 @@ const filterVocalRange = (
     (song) =>
       song.range?.semitones !== undefined &&
       song.range.semitones >= vocalRange[0] &&
-      song.range.semitones <= vocalRange[1]
+      song.range.semitones <= vocalRange[1],
   );
 };
 
 export const filterSongbook = (
   songs: SongData[],
   availableSongbooks: Songbook[],
-  selectedSongbooks: Songbook[]
+  selectedSongbooks: Songbook[],
 ) => {
   if (availableSongbooks.length === 0 || selectedSongbooks.length === 0) {
     return songs;
@@ -78,7 +77,7 @@ export const filterSongbook = (
   let contentsOfSelectedSongbooks = new Set<string>();
   selectedSongbooks.forEach((s) => {
     contentsOfSelectedSongbooks = contentsOfSelectedSongbooks.union(
-      new Set(s.songIds)
+      new Set(s.songIds),
     );
   });
   return songs.filter((s) => contentsOfSelectedSongbooks.has(s.id));
@@ -86,7 +85,7 @@ export const filterSongbook = (
 
 const getSortCompareFunction = (
   sortByField: SortField,
-  sortOrder: SortOrder
+  sortOrder: SortOrder,
 ) => {
   return (a: SongData, b: SongData): number => {
     let comparison: number;
@@ -113,13 +112,13 @@ export function useFilteredSongs(
   songs: SongData[],
   languageCounts: LanguageCount,
   user: UserProfileData,
-  availableSongbooks: Songbook[]
+  availableSongbooks: Songbook[],
 ) {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
   const { language, selectedSongbooks, vocalRange, capo, onlyFavorites } =
     useFilterSettingsStore();
-  // Reset search when sort settings change
+
   useEffect(() => {
     setQuery("");
   }, [sortByField, sortOrder, setQuery]);
@@ -134,20 +133,79 @@ export function useFilteredSongs(
     return new Fuse(songs, options);
   }, [songs]);
 
-  const searchResults = useMemo(
-    () => (query === "" ? songs : fuse.search(query).map((r) => r.item)),
-    [fuse, songs, query]
+  const fuseSearch = useMemo(
+    () =>
+      query === ""
+        ? songs.map((s) => {
+            return { item: s, score: 0 };
+          })
+        : fuse.search(query),
+    [fuse, songs, query],
   );
 
-  // Apply filters
-  let results = filterCapo(searchResults, capo);
-  results = filterVocalRange(results, vocalRange);
-  results = filterLanguage(results, language, languageCounts);
-  results = filterFavorites(results, user.loggedIn, onlyFavorites);
-  results = filterSongbook(results, availableSongbooks, selectedSongbooks);
-  // Only sort if there's no search query
+  // fuzzyScore \in [0,1], where 0 ~ perfect match and 1 ~ completely fuzzy match (i.e. no match)
+  const minFuzzyScore = Math.min(...fuseSearch.map((fs) => fs.score as number));
+  const internalSearchResults = fuseSearch.map((r) => r.item);
+
+  let filteredInternalResults = filterCapo(internalSearchResults, capo);
+  filteredInternalResults = filterVocalRange(
+    filteredInternalResults,
+    vocalRange,
+  );
+  filteredInternalResults = filterLanguage(
+    filteredInternalResults,
+    language,
+    languageCounts,
+  );
+  filteredInternalResults = filterFavorites(
+    filteredInternalResults,
+    user.loggedIn,
+    onlyFavorites,
+  );
+  filteredInternalResults = filterSongbook(
+    filteredInternalResults,
+    availableSongbooks,
+    selectedSongbooks,
+  );
+
   if (!query) {
-    results = [...results].sort(getSortCompareFunction(sortByField, sortOrder));
+    filteredInternalResults = [...filteredInternalResults].sort(
+      getSortCompareFunction(sortByField, sortOrder),
+    );
   }
-  return { songs: results };
+
+  // --- External Search Logic ---
+  // Debounce the query to prevent spamming APIs while typing
+  const [debouncedQuery] = useDebounceValue(query, 500);
+
+  const shouldSearchExternal =
+    user.loggedIn &&
+    debouncedQuery.trim().length >= 5 &&
+    (minFuzzyScore > 0.1 || internalSearchResults.length === 0);
+
+  // Fetch PA token lazily - only when external search is needed
+  const { data: paToken } = usePAToken(shouldSearchExternal);
+
+  const { data: externalSongs = [], isFetching: isLoadingExternal } = useQuery({
+    queryKey: ["externalSearch", debouncedQuery],
+    queryFn: async () => {
+      // Only search if we have a token
+      if (!paToken) return [];
+      const results = await searchAllExternalServices(
+        debouncedQuery,
+        paToken.PAToken,
+      );
+      return results.map(SongData.fromExternal);
+    },
+    // Only enable external search if we should search AND we have a token
+    enabled: shouldSearchExternal && !!paToken,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    songs: filteredInternalResults,
+    externalSongs,
+    isLoadingExternal,
+    shouldSearchExternal,
+  };
 }

@@ -49,7 +49,7 @@ const DateDisplay = memo(
     <div
       className={cn(
         "min-w-20 flex-col content-center justify-center text-center",
-        className
+        className,
       )}
     >
       {month && year && (
@@ -59,7 +59,7 @@ const DateDisplay = memo(
         </>
       )}
     </div>
-  )
+  ),
 );
 
 interface VocalRangeIndicatorProps {
@@ -77,7 +77,7 @@ const CapoDisplay = memo(({ capo, className = "" }: CapoDisplayProps) => (
   <div
     className={cn(
       "min-w-12 flex-col content-center justify-center text-center",
-      className
+      className,
     )}
   >
     <h2 className="text-xs opacity-70">Capo</h2>
@@ -105,7 +105,7 @@ const VocalRangeIndicator = memo(
         <div className="flex items-center">{innerHTML}</div>
       </div>
     );
-  }
+  },
 );
 
 interface SongbookAvatarsProps {
@@ -231,7 +231,7 @@ const FavoriteButton = ({ song, className = "" }: FavoriteButtonProps) => {
       className={cn(
         "favorite-button flex items-center justify-center p-2 transition-transform hover:scale-110",
         "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100",
-        className
+        className,
       )}
       title={isFavorite ? "Remove from favorites" : "Add to favorites"}
     >
@@ -241,7 +241,7 @@ const FavoriteButton = ({ song, className = "" }: FavoriteButtonProps) => {
           isLoading && "animate-pulse",
           isFavorite
             ? "fill-primary text-primary"
-            : "hover:text-primary text-white/70"
+            : "hover:text-primary text-white/70",
         )}
       />
     </button>
@@ -288,7 +288,7 @@ const SongRow = memo(({ song, maxRange, user }: SongRowProps) => {
             />
 
             {/* <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" /> */}
-            {user.loggedIn && (
+            {user.loggedIn && !song.externalSource && (
               <FavoriteButton
                 song={song}
                 className="hidden shrink-0 basis-1/12 xs:flex"

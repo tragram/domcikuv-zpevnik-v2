@@ -2,6 +2,7 @@ import { EditorState } from "~/features/Editor/Editor";
 import { Key, SongRange } from "./musicTypes";
 import type { ChordPro, int, SongLanguage } from "./types";
 import { SongDataApi } from "src/worker/services/song-service";
+import { ExternalSongResult } from "~/features/SongList/Toolbar/ExternalSearch";
 
 interface CurrentIllustration {
   illustrationId: string;
@@ -26,7 +27,7 @@ const sanitizeId = (id: string) => {
 export const defaultPromptId = (
   songId: string,
   summaryModel: string,
-  promptVersion: string
+  promptVersion: string,
 ) => sanitizeId(`${songId}_${summaryModel}_${promptVersion}`);
 
 export const promptFolder = (songId: string, promptId: string) =>
@@ -48,6 +49,8 @@ export class SongData {
   capo: int;
   range?: SongRange;
   chordpro: ChordPro;
+  externalSource?: string;
+  externalUrl?: string;
 
   // UI-specific fields
   currentIllustration: CurrentIllustration | undefined;
@@ -86,6 +89,44 @@ export class SongData {
       capo: data.capo,
       range: data.range,
     });
+  }
+
+  static fromExternal(external: ExternalSongResult): SongData {
+    const song = new SongData({
+      id: external.id,
+      title: external.title,
+      artist: external.artist,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      key: undefined,
+      startMelody: "",
+      language: "other",
+      capo: 0,
+      tempo: undefined,
+      range: undefined,
+      chordpro: "", // External songs won't have chordpro immediately
+      currentIllustration: undefined,
+      isFavoriteByCurrentUser: false,
+    });
+
+    // Manually set properties that don't fit the constructor perfectly or need overrides
+    song.externalSource = external.source;
+    song.externalUrl = external.url;
+
+    // Mock the illustration object so thumbnailURL() works
+    if (external.thumbnailUrl) {
+      song.currentIllustration = {
+        thumbnailURL: external.thumbnailUrl,
+        imageURL: external.thumbnailUrl,
+        // Mock required fields that won't be used
+        illustrationId: "ext",
+        promptId: "ext",
+        imageModel: "ext",
+        promptURL: "",
+      };
+    }
+
+    return song;
   }
 
   private parseKey(key?: string): Key | undefined {
@@ -134,6 +175,7 @@ export class SongData {
   }
 
   url(): string | undefined {
+    if (this.externalUrl) return this.externalUrl;
     return this.id ? `/song/${this.id}` : undefined;
   }
 
@@ -198,12 +240,12 @@ export class SongData {
     const preamble = directives.map((d) =>
       this[d] instanceof Date
         ? `{${d}: ${this[d].getTime()}}`
-        : `{${d}: ${this[d] ?? ""}}`
+        : `{${d}: ${this[d] ?? ""}}`,
     );
 
     preamble.push(`{createdAt: ${this.createdAt.getTime()}}`);
     preamble.push(
-      `{illustrationId: ${this.currentIllustration?.illustrationId}}`
+      `{illustrationId: ${this.currentIllustration?.illustrationId}}`,
     );
     preamble.push(`{promptId: ${this.currentIllustration?.promptId}}`);
     return preamble.join("\n") + "\n\n" + this.chordpro;
