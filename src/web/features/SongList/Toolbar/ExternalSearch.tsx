@@ -76,7 +76,7 @@ export class PisnickyAkordyProvider implements ExternalSearchProvider {
           title: hit.name,
           artist: hit.interpreter?.name,
           source: this.name,
-          url: `https://pisnicky-akordy.cz/${hit.interpreter.slug}/${hit.slug}`,
+          url: `/pa/${hit.interpreter.slug}/${hit.slug}`,
           thumbnailUrl: hit.image || "pa_logo.png",
         }));
     } catch (error) {
