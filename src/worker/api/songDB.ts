@@ -95,6 +95,36 @@ export const songDBRoutes = buildApp()
       }
     },
   )
+  .get("/proxy/pa/:slug", async (c) => {
+    const slug = c.req.param("slug");
+    const url = `https://pisnicky-akordy.cz/${slug}`;
+
+    const response = await fetch(url);
+    if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
+
+    let lyricsHtml = "";
+
+    // HTMLRewriter is built-in and extremely memory efficient
+    const rewriter = new HTMLRewriter().on("div#com_lyrics", {
+      element(element) {
+        // You could also modify the element here (e.g., remove unwanted classes)
+      },
+      text(text) {
+        // Concatenate all text/HTML chunks within this div
+        lyricsHtml += text.text;
+      },
+    });
+
+    // We "transform" the response to trigger the rewriter,
+    // but we only care about the captured 'lyricsHtml'
+    await rewriter.transform(response).text();
+
+    if (!lyricsHtml) {
+      return failJSend(c, "Lyrics container not found", 404);
+    }
+
+    return successJSend(c, { html: lyricsHtml.trim() });
+  })
   .get("/info/pa_token", async (c) => {
     const userId = c.get("USER")?.id;
     if (userId) {
