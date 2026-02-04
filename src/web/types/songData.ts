@@ -49,8 +49,7 @@ export class SongData {
   capo: int;
   range?: SongRange;
   chordpro: ChordPro;
-  externalSource?: string;
-  externalUrl?: string;
+  sourceId: string;
 
   // UI-specific fields
   currentIllustration: CurrentIllustration | undefined;
@@ -69,6 +68,7 @@ export class SongData {
     this.capo = songFromDB.capo || 0;
     this.range = this.parseRange(songFromDB.range);
     this.chordpro = songFromDB.chordpro;
+    this.sourceId = songFromDB.sourceId;
 
     this.currentIllustration = songFromDB.currentIllustration;
     this.isFavorite = songFromDB.isFavoriteByCurrentUser;
@@ -83,6 +83,7 @@ export class SongData {
       currentIllustration: undefined,
       tempo: Number(data.tempo) || undefined,
       isFavoriteByCurrentUser: false,
+      sourceId: "editor",
       // these need to be here because of a minor type mismatch
       key: data.key,
       startMelody: data.startMelody,
@@ -107,11 +108,8 @@ export class SongData {
       chordpro: "", // External songs won't have chordpro immediately
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
+      sourceId: "external_search",
     });
-
-    // Manually set properties that don't fit the constructor perfectly or need overrides
-    song.externalSource = external.source;
-    song.externalUrl = external.url;
 
     // Mock the illustration object so thumbnailURL() works
     if (external.thumbnailUrl) {
@@ -169,22 +167,26 @@ export class SongData {
       tempo: undefined,
       range: "",
       chordpro: "",
+      sourceId: "",
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
     });
   }
 
   url(): string | undefined {
-    if (this.externalUrl) return this.externalUrl;
     return this.id ? `/song/${this.id}` : undefined;
   }
 
   // Image URL methods
   thumbnailURL(): string | undefined {
+    if (!this.currentIllustration && this.sourceId === "pisnicky-akordy")
+      return "/pa_logo.png";
     return this.currentIllustration?.thumbnailURL;
   }
 
   illustrationURL(): string | undefined {
+    if (!this.currentIllustration && this.sourceId === "pisnicky-akordy")
+      return "/pa_logo.png";
     return this.currentIllustration?.imageURL;
   }
 
@@ -205,6 +207,7 @@ export class SongData {
       chordpro: this.chordpro,
       currentIllustration: this.currentIllustration,
       isFavorite: this.isFavorite,
+      sourceId: this.sourceId,
       url: this.url(),
       thumbnailURL: this.thumbnailURL(),
       illustrationURL: this.illustrationURL(),

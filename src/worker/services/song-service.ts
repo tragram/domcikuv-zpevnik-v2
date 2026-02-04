@@ -32,6 +32,7 @@ export type SongWithCurrentVersion = SongDataDB & {
   capo: number | null;
   range: string | null;
   chordpro: string;
+  sourceId: string;
 };
 
 export type SongWithDataDB = SongDataDB & {
@@ -61,6 +62,7 @@ export type SongDataApi = {
   capo: number | undefined;
   range: string | undefined;
   chordpro: string;
+  sourceId: string;
   currentIllustration:
     | {
         illustrationId: string;
@@ -94,6 +96,7 @@ export const baseSelectFields = {
   capo: songVersion.capo,
   range: songVersion.range,
   chordpro: songVersion.chordpro,
+  sourceId: songVersion.sourceId,
 
   // Current illustration fields
   currentIllustration: {
@@ -175,6 +178,7 @@ export async function retrieveSongs(
       tempo: songItem.tempo ? parseInt(songItem.tempo) : undefined,
       capo: songItem.capo ?? undefined,
       range: songItem.range ?? undefined,
+      sourceId: songItem.sourceId ?? "",
       chordpro: songItem.chordpro ?? "Not uploaded",
       // Convert userId presence to boolean
       isFavoriteByCurrentUser: !!(

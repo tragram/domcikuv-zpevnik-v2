@@ -51,7 +51,7 @@ export const songVersion = sqliteTable("song_version", {
   approved: integer("approved", { mode: "boolean" }).notNull().default(false),
   approvedBy: text("approved_by").references(() => user.id),
   approvedAt: integer("approved_at", { mode: "timestamp" }),
-  sourceId: text("source_id").notNull().default("manual"),
+  sourceId: text("source_id").notNull().default("editor"),
 
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())

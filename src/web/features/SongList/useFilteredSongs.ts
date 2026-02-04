@@ -83,6 +83,18 @@ export const filterSongbook = (
   return songs.filter((s) => contentsOfSelectedSongbooks.has(s.id));
 };
 
+const filterExternal = (
+  songs: SongData[],
+  loggedIn: boolean,
+  showExternal: boolean,
+) => {
+  if (!loggedIn || !showExternal) {
+    return songs.filter((song) => song.sourceId === "editor");
+  } else {
+    return songs;
+  }
+};
+
 const getSortCompareFunction = (
   sortByField: SortField,
   sortOrder: SortOrder,
@@ -161,6 +173,11 @@ export function useFilteredSongs(
     filteredInternalResults,
     user.loggedIn,
     onlyFavorites,
+  );
+  filteredInternalResults = filterExternal(
+    filteredInternalResults,
+    user.loggedIn,
+    true, //TODO: change when the setting is available
   );
   filteredInternalResults = filterSongbook(
     filteredInternalResults,
