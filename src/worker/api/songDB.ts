@@ -1,16 +1,28 @@
 import { zValidator } from "@hono/zod-validator";
-import { eq, not } from "drizzle-orm";
+import { and, eq, not } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { illustrationPrompt, songIllustration } from "src/lib/db/schema";
+import {
+  illustrationPrompt,
+  song,
+  songIllustration,
+  songVersion,
+} from "src/lib/db/schema";
 import { z } from "zod/v4";
 import {
+  baseSelectFields,
+  createSong,
+  findSong,
   getSongbooks,
   retrieveSongs,
   SongDataApi,
 } from "../services/song-service";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
-
+import { SongData } from "~/types/songData";
+import { convertToChordPro } from "~/lib/chords2chordpro";
+import { guessLanguage } from "~/lib/utils";
+import { ChordProParser } from "chordproject-parser";
+import { EditorSubmitSchema } from "./editor";
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
   lastUpdateAt: z.string().transform((str) => new Date(str)),
@@ -95,36 +107,103 @@ export const songDBRoutes = buildApp()
       }
     },
   )
-  .get("/proxy/pa/:slug", async (c) => {
-    const slug = c.req.param("slug");
-    const url = `https://pisnicky-akordy.cz/${slug}`;
+  .get("/fetch/:id", async (c) => {
+    const songId = c.req.param("id");
+    const db = drizzle(c.env.DB);
 
-    const response = await fetch(url);
-    if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
-
-    let lyricsHtml = "";
-
-    // HTMLRewriter is built-in and extremely memory efficient
-    const rewriter = new HTMLRewriter().on("div#com_lyrics", {
-      element(element) {
-        // You could also modify the element here (e.g., remove unwanted classes)
-      },
-      text(text) {
-        // Concatenate all text/HTML chunks within this div
-        lyricsHtml += text.text;
-      },
-    });
-
-    // We "transform" the response to trigger the rewriter,
-    // but we only care about the captured 'lyricsHtml'
-    await rewriter.transform(response).text();
-
-    if (!lyricsHtml) {
-      return failJSend(c, "Lyrics container not found", 404);
+    try {
+      const foundSong = await findSong(db, songId, true);
+      if (!songId || typeof songId !== "string") {
+        return failJSend(c, "Invalid song ID", 400);
+      }
+      if (!foundSong) {
+        return failJSend(c, "Song not found", 404);
+      }
+      return successJSend(c, foundSong);
+    } catch (e) {
+      return errorJSend(c, "Error fetching song", 500);
     }
-
-    return successJSend(c, { html: lyricsHtml.trim() });
   })
+  .get("/import/pa/:slug", async (c) => {
+    const slug = c.req.param("slug");
+    const db = drizzle(c.env.DB);
+    const user = c.get("USER");
+
+    if (!user)
+      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
+
+    try {
+      // scrape the song
+      const url = `https://pisnicky-akordy.cz/${slug}`;
+      const response = await fetch(url);
+      if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
+
+      let lyricsHtml = "";
+      let title = "";
+      let artist = "";
+
+      const rewriter = new HTMLRewriter()
+        .on("div#songtext pre", {
+          text(text) {
+            lyricsHtml += text.text;
+          },
+        })
+        .on("h1", {
+          text(text) {
+            if (text.text.trim()) title = text.text.trim();
+          },
+        })
+        .on("h2", {
+          text(text) {
+            if (text.text.trim()) artist = text.text.trim();
+          },
+        });
+
+      await rewriter.transform(response).text();
+      const chordPro = convertToChordPro(lyricsHtml);
+      if (!lyricsHtml || !artist || !title)
+        return failJSend(c, "Error scraping song", 500, "IMPORT_ERROR");
+
+      // check if the song (by artist/title ID) already exists
+      const newSongId = SongData.baseId(title, artist);
+      const existingSong = await db
+        .select({ id: song.id })
+        .from(song)
+        .where(and(eq(song.id, newSongId), song.currentVersionId))
+        .limit(1);
+      const songExists = existingSong.length > 0;
+      if (songExists)
+        return errorJSend(c, "Song already exists in DB", 422, newSongId);
+
+      // database write
+      const submission: EditorSubmitSchema = {
+        title: title,
+        artist: artist,
+        language: guessLanguage(chordPro),
+        chordpro: chordPro,
+        key:
+          new ChordProParser().parse(chordPro).getPossibleKey()?.toString() ??
+          null,
+        capo: null,
+        range: null,
+        startMelody: null,
+        tempo: null,
+      };
+      const { newSong } = await createSong(
+        db,
+        submission,
+        user.id,
+        true,
+        "pisnicky-akordy",
+      );
+
+      return successJSend(c, { songId: newSong.id });
+    } catch (error) {
+      console.error("Import error:", error);
+      return errorJSend(c, "Import failed", 500);
+    }
+  })
+
   .get("/info/pa_token", async (c) => {
     const userId = c.get("USER")?.id;
     if (userId) {

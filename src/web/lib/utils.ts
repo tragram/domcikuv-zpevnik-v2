@@ -22,7 +22,7 @@ export const fileURL = (url: string) => {
 };
 
 export const tailwindBreakpoint = (
-  breakpoint: "xs" | "xsm" | "sm" | "md" | "lg" | "xl"
+  breakpoint: "xs" | "xsm" | "sm" | "md" | "lg" | "xl",
 ) => {
   const styles = getComputedStyle(document.documentElement);
   const value = styles.getPropertyValue(`--breakpoint-${breakpoint}`);
@@ -31,4 +31,26 @@ export const tailwindBreakpoint = (
 export function useLoggedIn() {
   const routeContext = useRouteContext({ from: "__root__" });
   return routeContext.user.loggedIn;
+}
+
+export function guessLanguage(lyrics: string) {
+  if (
+    lyrics.search("ř") ||
+    lyrics.search("ž") ||
+    lyrics.search("ů") ||
+    lyrics.search("ť") ||
+    lyrics.search("ď") ||
+    lyrics.search("ě")
+  ) {
+    return "czech";
+  }
+
+  if ((lyrics.match(/ the /g) || []).length > 3) {
+    return "english";
+  }
+
+  if (lyrics.search("ñ")) {
+    return "spanish";
+  }
+  return "other";
 }

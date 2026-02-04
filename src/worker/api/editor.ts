@@ -101,7 +101,7 @@ const editorApp = buildApp()
         submission,
         songId,
         userId,
-        isTrusted
+        isTrusted,
       );
 
       return successJSend(c, { song: existingSong, version: versionResult });
@@ -128,7 +128,7 @@ const editorApp = buildApp()
         c,
         "Failed to retrieve your submissions",
         500,
-        "GET_EDITS_ERROR"
+        "GET_EDITS_ERROR",
       );
     }
   })
@@ -152,7 +152,7 @@ const editorApp = buildApp()
         c,
         "Failed to delete version",
         500,
-        "DELETE_VERSION_ERROR"
+        "DELETE_VERSION_ERROR",
       );
     }
   });

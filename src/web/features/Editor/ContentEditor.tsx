@@ -8,7 +8,7 @@ import {
   snippets,
 } from "./components/Snippets";
 import { cn, tailwindBreakpoint } from "~/lib/utils";
-import { convertToChordPro, isConvertibleFormat } from "./chords2chordpro";
+import { convertToChordPro, isConvertibleFormat } from "../../lib/chords2chordpro";
 
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {

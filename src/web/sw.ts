@@ -7,7 +7,7 @@ import {
   createHandlerBoundToURL,
 } from "workbox-precaching";
 import { registerRoute, NavigationRoute } from "workbox-routing";
-import { NetworkFirst, CacheFirst } from "workbox-strategies";
+import { NetworkFirst, CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { clientsClaim } from "workbox-core";
 import { SongDBResponseData } from "../worker/api/songDB";
@@ -59,6 +59,21 @@ registerRoute(
   })
 );
 
+registerRoute(
+  ({ url }) => {
+    // Matches /api/songs/:uuid (UUID is approx 36 chars, simple regex check)
+    return url.pathname.match(/\/api\/songs\/[a-f0-9-]{36}$/);
+  },
+  new StaleWhileRevalidate({
+    cacheName: "external-songs-cache",
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  })
+);
+
 // Register custom route for /api/songs
 registerRoute(
   ({ url }) => {
@@ -73,7 +88,8 @@ registerRoute(
   ({ url }) => {
     return (
       url.pathname.startsWith("/api/") &&
-      !url.pathname.startsWith("/api/auth")
+      !url.pathname.startsWith("/api/auth") &&
+      !url.pathname.startsWith("/api/songs/") // Exclude the single song route handled above
     );
   },
   new NetworkFirst({
@@ -105,7 +121,6 @@ async function getCachedMetadata(): Promise<SongsCacheData | null> {
     if (!dataResponse) return null;
 
     const data = (await dataResponse.json()) as SongsCacheData;
-    // Convert songs array back to Map for efficient operations
     const songsMap = new Map(data.songs || []);
 
     return {
@@ -158,7 +173,6 @@ async function applyIncrementalUpdates(
       updatedSongs.set(song.id, song);
     }
   }
-
   return updatedSongs;
 }
 
