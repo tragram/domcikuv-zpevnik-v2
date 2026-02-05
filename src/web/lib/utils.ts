@@ -33,6 +33,22 @@ export function useLoggedIn() {
   return routeContext.user.loggedIn;
 }
 
+export const getInitials = (name: string) => {
+  if (!name) {
+    return "?";
+  }
+  const splitName = name.split(" ");
+  if (splitName.length > 1) {
+    return splitName
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  }
+  return name.slice(0, 2).toUpperCase();
+};
+
+
 export function guessLanguage(lyrics: string) {
   // extremely basic heuristic to guess which language a song is
   // apart from special characters and words it also takes into account the prior of importing that actual language...

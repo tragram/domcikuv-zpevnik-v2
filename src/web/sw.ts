@@ -18,6 +18,7 @@ import { SongDataApi } from "src/worker/services/song-service";
 // Cache names
 const SONGS_CACHE = "songs-db-cache";
 const SONGS_METADATA_KEY = "songs-metadata";
+const THUMBNAIL_CACHE = "thumbnail-cache";
 
 type SongsCacheData = {
   songDBVersion: string;
@@ -40,14 +41,17 @@ if (import.meta.env.DEV) allowlist = [/^\/$/];
 registerRoute(
   new NavigationRoute(createHandlerBoundToURL("index.html"), {
     allowlist,
-    denylist: [/^\/api\//],
+    denylist: [/^\/api\//, /^\/songs\//],
   })
 );
 
-// Runtime caching for illustrations
+// Runtime caching for full-sized illustrations (on-demand only, not precached)
 registerRoute(
   ({ url }) => {
-    return url.pathname.startsWith("/songs/illustrations/");
+    return (
+      url.pathname.startsWith("/songs/illustrations/") &&
+      !url.pathname.includes("/thumbnail/")
+    );
   },
   new CacheFirst({
     cacheName: "full-illustration-cache",
@@ -80,9 +84,10 @@ registerRoute(
     return url.pathname === "/api/songs";
   },
   async ({ request }) => {
-    return handleSongsRequest(request);
+  return handleSongsRequest(request);
   }
 );
+
 // Handle other API routes with NetworkFirst strategy
 registerRoute(
   ({ url }) => {
@@ -160,6 +165,36 @@ async function setCachedData(
   }
 }
 
+/**
+ * Iterates through songs and caches their dynamic thumbnail URLs.
+ * This ensures R2-hosted thumbnails are available offline even if not visited yet.
+ */
+async function cacheDynamicThumbnails(songs: SongDataApi[]): Promise<void> {
+  try {
+    const cache = await caches.open(THUMBNAIL_CACHE);
+    const urlsToCache = new Set<string>();
+
+    for (const song of songs) {
+      const thumbUrl = song.currentIllustration?.thumbnailURL;
+      if (thumbUrl && typeof thumbUrl === "string") {
+        // Only cache if it's a thumbnail delivered via CDN
+        if (thumbUrl.startsWith("/cdn-cgi/image/width=128/")) {
+          urlsToCache.add(thumbUrl);
+        }
+      }
+    }
+
+    if (urlsToCache.size > 0) {
+      console.debug(
+        `PWA: Precaching ${urlsToCache.size} dynamic thumbnails...`
+      );
+      await cache.addAll(Array.from(urlsToCache));
+    }
+  } catch (error) {
+    console.warn("PWA: Error precaching dynamic thumbnails:", error);
+  }
+}
+
 async function applyIncrementalUpdates(
   currentSongs: Map<string, SongDataApi>,
   updates: SongDataApi[]
@@ -221,6 +256,9 @@ async function handleSongsRequest(request: Request): Promise<Response> {
         );
         const songsMap = new Map(data.songs.map((song) => [song.id, song]));
         await setCachedData(data.songDBVersion, data.lastUpdateAt, songsMap);
+        // Trigger background caching of thumbnails
+        cacheDynamicThumbnails(Array.from(songsMap.values()));
+
         return successJSendResponse(data);
       }
 
@@ -233,6 +271,11 @@ async function handleSongsRequest(request: Request): Promise<Response> {
 
       // Update cache
       await setCachedData(data.songDBVersion, data.lastUpdateAt, updatedSongs);
+
+      // Trigger background caching of thumbnails (using the full updated list to be safe,
+      // or just data.songs if we only want to cache new ones.
+      // Using full list ensures consistency if cache was cleared manually)
+      cacheDynamicThumbnails(Array.from(updatedSongs.values()));
 
       // Return the complete dataset from cache
       const responseData = {
@@ -276,6 +319,9 @@ async function fetchFullDataset(): Promise<Response> {
     // Cache the full dataset
     const songsMap = new Map(data.songs.map((song) => [song.id, song]));
     await setCachedData(data.songDBVersion, data.lastUpdateAt, songsMap);
+
+    // Trigger background caching of thumbnails
+    cacheDynamicThumbnails(data.songs);
 
     return response;
   } catch (error) {

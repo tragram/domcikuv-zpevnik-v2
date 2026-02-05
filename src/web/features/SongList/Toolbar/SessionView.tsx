@@ -1,7 +1,7 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouteContext } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -19,20 +19,24 @@ interface SessionViewProps {
 const SessionView = ({ isOnline }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(Date.now());
-
-  const { activeSessions, refetchIfStale } = useActiveSessions();
+  const context = useRouteContext({ from: "/" });
+  const { activeSessions, refetchIfStale } = useActiveSessions(
+    context.songDB,
+    context.api
+  );
 
   // Update time every second when dropdown is open
+  // TODO: this could be reworked using the liveData get request in DO
   useEffect(() => {
     if (isOpen) {
       // Update time immediately when dropdown opens
       setCurrentTime(Date.now());
-      refetchIfStale(0.5);
+      refetchIfStale(0.1);
 
       const interval = setInterval(() => {
         if (isOpen) {
           setCurrentTime(Date.now());
-          refetchIfStale(1);
+          refetchIfStale(0.5);
         }
       }, 1000);
       return () => clearInterval(interval);
@@ -47,16 +51,12 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
     const hours = Math.floor(minutes / 60);
 
     if (hours > 0) {
-      return `${hours}h ${minutes % 60}m`;
+      return `${hours}h`;
     } else if (minutes > 0) {
       return `${minutes}m`;
     } else {
       return `${seconds}s`;
     }
-  };
-
-  const getInitials = (masterId: string) => {
-    return masterId.slice(0, 2).toUpperCase();
   };
 
   const active = activeSessions && activeSessions.length > 0;
@@ -96,21 +96,21 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
             {activeSessions.map((session) => (
               <Link
                 key={session.masterId}
-                to="/feed/$masterId"
-                params={{ masterId: session.masterId }}
+                to="/feed/$masterNickname"
+                params={{ masterNickname: session.nickname }}
                 onClick={() => setIsOpen(false)}
                 className="block"
               >
                 <div className="flex items-center gap-3 w-full min-w-0 rounded-md px-2 py-2 hover:bg-accent transition-colors">
-                  <Avatar className="h-7 w-7 flex-shrink-0">
-                    <AvatarImage src={session.avatar} />
-                    <AvatarFallback className="text-xs">
-                      {getInitials(session.masterId)}
-                    </AvatarFallback>
-                  </Avatar>
+                  <AvatarWithFallback
+                    avatarSrc={session.avatar}
+                    fallbackStr={session.nickname}
+                    avatarClassName="h-7 w-7 flex-shrink-0"
+                    fallbackClassName="text-xs"
+                  />
                   <div className="flex items-center gap-3 min-w-0 flex-1 justify-between">
-                    <div className="truncate text-sm w-[4rem] flex-shrink-0">
-                      {session.masterId}
+                    <div className="truncate text-sm w-[6rem] flex-shrink-0">
+                      {session.nickname}
                     </div>
                     <div className="text-xs hidden xs:flex flex-col flex-1 min-w-0 text-center">
                       {session.song && (
@@ -125,7 +125,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                       )}
                     </div>
                     <div className="text-xs text-primary/80 w-[2rem] flex-shrink-0 text-center">
-                      {getTimeSince(session.createdAt)}
+                      {getTimeSince(session.timestamp)}
                       <br />
                       ago
                     </div>

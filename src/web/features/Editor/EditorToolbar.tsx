@@ -24,6 +24,13 @@ import SettingsDropdown from "./components/SettingsDropdown";
 import DownloadButton from "./components/DownloadButton";
 import { EditorState } from "./Editor";
 import { UserProfileData } from "src/worker/api/userProfile";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
+import { EditorSettings } from "./EditorSettings";
+import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -35,6 +42,7 @@ interface EditorToolbarProps {
   onSubmitSuccess?: () => void;
   onUploadClick: () => void;
   user: UserProfileData;
+  editorSettings: EditorSettings;
 }
 
 const EditorToolbar: React.FC<EditorToolbarProps> = ({
@@ -47,6 +55,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   onSubmitSuccess,
   onUploadClick,
   user,
+  editorSettings,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -64,28 +73,78 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     });
   };
 
+  const generateIllustrationInBackground = (
+    songId: string,
+    settings: EditorSettings
+  ) => {
+    const generationParams = {
+      songId,
+      setAsActive: true,
+      imageModel: settings.defaultImageModel,
+      promptVersion: settings.defaultPromptVersion,
+      summaryModel: settings.defaultSummaryModel,
+    };
+
+    // Use keepalive to ensure request completes even if page navigates away
+    fetch("/api/illustrations/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(generationParams),
+      keepalive: true,
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log(`Illustration generation started for song ${songId}`);
+          toast.info("Illustration generation started in background");
+        } else {
+          console.error("Failed to start illustration generation");
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to generate illustration:", error);
+      });
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
-
+    const parsedState = {
+      ...editorState,
+      chordpro: normalizeWhitespace(replaceRepetitions(editorState.chordpro)),
+    };
     try {
       const response = await makeApiRequest(() =>
         songData
           ? editorApi[":id"].$put({
               param: { id: songData.id },
-              json: editorState,
+              json: parsedState,
             })
-          : editorApi.$post({ json: editorState })
+          : editorApi.$post({ json: parsedState })
       );
       const version = response.version;
       const isUpdate =
         new Date(version.createdAt).getTime() !==
         new Date(version.updatedAt).getTime();
+
       toast.success(
         `Successfully ${
           isUpdate ? "updated" : "submitted"
         } your version of the song!`
       );
+
       onSubmitSuccess?.();
+
+      // Auto-generate illustration if enabled, new song being submitted and user is trusted
+      if (
+        !isUpdate &&
+        user.loggedIn &&
+        user.profile.isTrusted &&
+        editorSettings.autoGenerateIllustration
+      ) {
+        generateIllustrationInBackground(response.song.id, editorSettings);
+      }
+
       queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
@@ -141,7 +200,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         )}
       </div>
       {/* editor actions */}
-      <div className="flex editor-toolbar-actions">
+      <div className="flex editor-toolbar-actions flex-wrap justify-center">
         <Button
           className="hover:text-white bg-transparent"
           onClick={onUploadClick}
@@ -173,18 +232,45 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         <SettingsDropdown />
       </div>
       {/* "final" actions */}
-      <div className="flex justify-center max-lg:flex-wrap max-lg:w-full editor-toolbar-submit">
+      <div className="flex justify-center md:justify-end max-lg:flex-wrap max-xl:w-full editor-toolbar-submit">
         <DownloadButton editorState={editorState} />
-        <Button
-          className="bg-transparent"
-          onClick={handleSubmit}
-          disabled={!canBeSubmitted || isSubmitting}
-        >
-          {isSubmitting
-            ? "Submitting..."
-            : `Submit ${songData ? "edit" : "new song"}`}
-          <CloudUpload />
-        </Button>
+
+        {user.loggedIn ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span tabIndex={0}>
+                <Button
+                  className="bg-transparent"
+                  onClick={handleSubmit}
+                  disabled={!canBeSubmitted || isSubmitting}
+                >
+                  {isSubmitting
+                    ? "Submitting..."
+                    : `Submit ${songData ? "edit" : "new song"}`}
+                  <CloudUpload />
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              You can only submit a song once all the required metadata has been
+              entered.
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span tabIndex={0}>
+                <Button className="bg-transparent" disabled>
+                  Log in to submit
+                  <CloudUpload />
+                </Button>
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>
+              Don't worry, the song data has been saved!
+            </TooltipContent>
+          </Tooltip>
+        )}
       </div>
     </div>
   );

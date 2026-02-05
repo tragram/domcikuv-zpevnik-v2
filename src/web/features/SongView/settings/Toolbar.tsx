@@ -20,7 +20,6 @@ import {
   Settings2,
   Undo2,
   CloudOff,
-  CloudCheck,
 } from "lucide-react";
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -45,6 +44,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { FeedStatus } from "../SongView";
 import ShareSongButton from "../components/ShareSongButton";
+import { AvatarWithFallback } from "~/components/ui/avatar";
 
 interface ToolbarProps {
   songDB: SongDB;
@@ -107,13 +107,33 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           setTransposeSteps={setTransposeSteps}
         />
 
+        {feedStatus?.isMaster ? (
+          <RandomSong songs={songDB.songs} currentSong={songData} />
+        ) : (
+          <Button
+            size="icon"
+            variant="circular"
+            disabled
+            className="!opacity-100"
+          >
+            {feedStatus?.isConnected ? (
+              <AvatarWithFallback
+                avatarSrc={feedStatus.sessionState?.masterAvatar ?? undefined}
+                fallbackStr={feedStatus.sessionState?.masterNickname ?? "?"}
+                avatarClassName="h-full w-full"
+              />
+            ) : (
+              <CloudOff />
+            )}
+          </Button>
+        )}
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="circular">
               <Settings2 size={32} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-80 max-h-[85dvh] max-w-[80dvw] overflow-y-auto">
+          <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-80 max-h-[85dvh] overflow-y-auto">
             {React.Children.toArray(<LayoutSettingsDropdownSection />)}
             {React.Children.toArray(<ChordSettingsDropdownMenu />)}
             <DropdownMenuLabel>Misc</DropdownMenuLabel>
@@ -142,40 +162,30 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             )}
             <ShareSongButton feedStatus={feedStatus} user={user} />
             <DropdownMenuItem>
-              <DropdownIconStart icon={<Pencil />} />
-              <Link className="w-full h-full" to={"/edit/" + songData.id}>
+              <Link
+                className="flex items-center gap-2 cursor-pointer w-full"
+                to={"/edit/" + songData.id}
+              >
+                <DropdownIconStart icon={<Pencil />} />
                 View in Editor
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <DropdownIconStart icon={<Github />} />
               <Link
-                className="w-full h-full"
+                className="flex items-center gap-2 cursor-pointer w-full"
                 to={
                   "https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" +
                   songData.id +
                   ".pro"
                 }
               >
+                <DropdownIconStart icon={<Github />} />
                 Edit on GitHub
               </Link>
             </DropdownMenuItem>
             {installItem}
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {feedStatus?.isMaster ? (
-          <RandomSong songs={songDB.songs} currentSong={songData} />
-        ) : (
-          <Button
-            size="icon"
-            variant="circular"
-            disabled
-            className="!opacity-70"
-          >
-            {feedStatus?.isConnected ? <CloudCheck /> : <CloudOff />}
-          </Button>
-        )}
       </ToolbarBase>
       {PWAInstallComponent}
     </div>

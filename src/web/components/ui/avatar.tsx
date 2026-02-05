@@ -1,9 +1,9 @@
-"use client"
+import * as AvatarPrimitive from "@radix-ui/react-avatar";
+import * as React from "react";
 
-import * as React from "react"
-import * as AvatarPrimitive from "@radix-ui/react-avatar"
+import { cn } from "~/lib/utils";
 
-import { cn } from "~/lib/utils"
+import { getInitials } from "~/lib/utils";
 
 function Avatar({
   className,
@@ -18,7 +18,7 @@ function Avatar({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function AvatarImage({
@@ -31,7 +31,7 @@ function AvatarImage({
       className={cn("aspect-square size-full", className)}
       {...props}
     />
-  )
+  );
 }
 
 function AvatarFallback({
@@ -47,7 +47,30 @@ function AvatarFallback({
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { Avatar, AvatarImage, AvatarFallback }
+type AvatarWithFallbackProps = {
+  avatarSrc: string | undefined;
+  fallbackStr: string;
+  avatarClassName?: string;
+  fallbackClassName?: string;
+};
+
+const AvatarWithFallback = ({
+  avatarSrc,
+  fallbackStr,
+  avatarClassName = "",
+  fallbackClassName = "",
+}: AvatarWithFallbackProps) => {
+  return (
+    <Avatar className={cn("h-12 w-12", avatarClassName)}>
+      <AvatarImage src={avatarSrc} alt={fallbackStr} />
+      <AvatarFallback className={cn("text-sm", fallbackClassName)}>
+        {getInitials(fallbackStr)}
+      </AvatarFallback>
+    </Avatar>
+  );
+};
+
+export { Avatar, AvatarFallback, AvatarImage, AvatarWithFallback };

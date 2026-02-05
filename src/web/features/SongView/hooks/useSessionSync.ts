@@ -1,17 +1,31 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { toast } from "sonner";
-import { SesssionSyncWSMessage } from "src/worker/durable-objects/SessionSync";
+import {
+  SessionSyncState,
+  SesssionSyncWSMessage,
+} from "src/worker/durable-objects/SessionSync";
 
 export function useSessionSync(
-  masterId: string | undefined,
+  masterNickname: string | undefined,
   isMaster: boolean,
-  enabled: boolean = true
+  enabled: boolean = true,
+  initialState?: SessionSyncState
 ) {
-  const [currentSongId, setCurrentSongId] = useState<string | undefined>();
-  const [connectedClients, setConnectedClients] = useState<number>(0);
-  const [currentTransposeSteps, setCurrentTransposeSteps] = useState<
-    number | undefined
-  >();
+  if (initialState && initialState.masterNickname !== masterNickname) {
+    console.warn(
+      "Session sync received initialState.nickname",
+      initialState.masterNickname,
+      "but masterNickname",
+      masterNickname
+    );
+  }
+  const [currentState, setCurrentState] = useState<SessionSyncState | null>(
+    initialState ?? null
+  );
+
+  const [connectedClients, setConnectedClients] = useState<number | undefined>(
+    undefined
+  );
   const [isConnected, setIsConnected] = useState(false);
 
   // Changing this value forces the useEffect to restart the connection
@@ -27,29 +41,46 @@ export function useSessionSync(
   const missedPongsRef = useRef(0);
   const pingIntervalRef = useRef<number | null>(null);
 
+  // Exponential backoff state
+  const retryCountRef = useRef(0);
+  const retryTimeoutRef = useRef<number | null>(null);
+
   // Keep role ref fresh
   useEffect(() => {
     isMasterRef.current = isMaster;
   }, [isMaster]);
 
+  // Helper function to calculate exponential backoff delay
+  const getBackoffDelay = useCallback((retryCount: number): number => {
+    // Base delay of 1 second, doubles each time, max 30 seconds
+    const baseDelay = 1000;
+    const maxDelay = 30000;
+    const delay = Math.min(baseDelay * Math.pow(2, retryCount), maxDelay);
+    
+    // Add jitter (±25%) to prevent thundering herd
+    const jitter = delay * 0.25 * (Math.random() * 2 - 1);
+    return delay + jitter;
+  }, []);
+
   // Helper function to reset heartbeat timeout
   const resetHeartbeat = useCallback((ws: WebSocket) => {
     missedPongsRef.current = 0;
-    
+
     if (pingIntervalRef.current) {
       clearInterval(pingIntervalRef.current);
     }
 
     pingIntervalRef.current = window.setInterval(() => {
       if (ws.readyState !== WebSocket.OPEN) return;
-      if (missedPongsRef.current >= 1) { // no message since last ping (not even pong)
+      if (missedPongsRef.current >= 1) {
+        // no message since last ping (not even pong)
         console.warn("[WS] Connection dead (no pong), forcing reconnect");
         ws.close();
         return;
       }
       ws.send(JSON.stringify({ type: "ping" }));
       missedPongsRef.current += 1;
-    }, 90_000); // 90s - CF timeout is supposedly 100s (https://community.cloudflare.com/t/cloudflare-websocket-timeout/5865)
+    }, 90_000); // 90s - CF timeout is supposedly 100s
   }, []);
 
   // ---- Public API ----
@@ -68,13 +99,15 @@ export function useSessionSync(
         "[WS] Disconnected/Kicked. Queuing update and reconnecting..."
       );
       pendingSongUpdateRef.current = songId;
+      // Reset retry count on user-initiated action
+      retryCountRef.current = 0;
       setRetryTrigger((prev) => prev + 1);
     }
   }, []);
 
   // ---- WebSocket Lifecycle ----
   useEffect(() => {
-    if (!enabled || !masterId) return;
+    if (!enabled || !masterNickname) return;
 
     // DEBOUNCE: Wait 100ms before connecting.
     // This prevents "interrupted" errors during React Strict Mode double-mounts
@@ -82,11 +115,11 @@ export function useSessionSync(
     const connectTimer = setTimeout(() => {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const url = new URL(
-        `${protocol}//${window.location.host}/api/session/${masterId}`
+        `${protocol}//${window.location.host}/api/session/${masterNickname}`
       );
       url.searchParams.set("role", isMaster ? "master" : "follower");
 
-      console.debug(`[WS] Connecting (Attempt ${retryTrigger})...`);
+      console.debug(`[WS] Connecting (Attempt ${retryCountRef.current + 1})...`);
       const ws = new WebSocket(url.toString());
       socketRef.current = ws;
 
@@ -94,6 +127,9 @@ export function useSessionSync(
       ws.onopen = () => {
         console.debug("[WS] Connected");
         setIsConnected(true);
+        
+        // Reset retry count on successful connection
+        retryCountRef.current = 0;
 
         // If we reconnected because the user tried to change the song, flush that update now
         if (isMaster && pendingSongUpdateRef.current) {
@@ -128,8 +164,13 @@ export function useSessionSync(
         if (data.type === "sync") {
           // ignore sync message if isMaster
           if (isMaster) return;
-          setCurrentSongId(data.songId ?? undefined);
-          setCurrentTransposeSteps(data.transposeSteps ?? undefined);
+          setCurrentState({
+            songId: data.songId,
+            transposeSteps: data.transposeSteps,
+            masterAvatar: data.masterAvatar,
+            masterNickname: data.masterNickname,
+            masterId: data.masterId,
+          });
         }
 
         if (data.type === "master-replaced") {
@@ -151,8 +192,16 @@ export function useSessionSync(
 
         // Only trigger retry if this socket is still the "current" one
         if (socketRef.current === ws) {
-          console.debug("[WS] Closed. Retrying in 3s...");
-          setTimeout(() => setRetryTrigger((prev) => prev + 1), 3000);
+          const backoffDelay = getBackoffDelay(retryCountRef.current);
+          console.debug(
+            `[WS] Closed. Retrying in ${Math.round(backoffDelay / 1000)}s (attempt ${retryCountRef.current + 1})...`
+          );
+          
+          retryCountRef.current += 1;
+          
+          retryTimeoutRef.current = window.setTimeout(() => {
+            setRetryTrigger((prev) => prev + 1);
+          }, backoffDelay);
         }
       };
 
@@ -165,10 +214,16 @@ export function useSessionSync(
 
     // CLEANUP
     return () => {
-      // 1. Clear the timer. If unmounted quickly, `new WebSocket` is never called.
+      // clear the timer. If unmounted quickly, `new WebSocket` is never called.
       clearTimeout(connectTimer);
+      
+      // Clear retry timeout
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
+        retryTimeoutRef.current = null;
+      }
 
-      // 2. Close existing socket if it exists
+      // close existing socket if it exists
       if (socketRef.current) {
         socketRef.current.onclose = null; // Prevent retry triggering on cleanup
         socketRef.current.close();
@@ -180,17 +235,19 @@ export function useSessionSync(
         pingIntervalRef.current = null;
       }
     };
-  }, [enabled, masterId, isMaster, retryTrigger, resetHeartbeat]);
+  }, [enabled, masterNickname, isMaster, retryTrigger, resetHeartbeat, getBackoffDelay]);
 
   // Online/Offline Detection
   useEffect(() => {
-    if (!enabled || !masterId) return;
+    if (!enabled || !masterNickname) return;
 
     const handleOnline = () => {
       console.debug("[WS] Online detected, reconnecting immediately");
       toast.info(
         `Reconnected: Attempting to ${isMaster ? "broadcast" : "reload feed!"}`
       );
+      // Reset retry count when network comes back online
+      retryCountRef.current = 0;
       setRetryTrigger((prev) => prev + 1);
     };
 
@@ -207,13 +264,13 @@ export function useSessionSync(
       window.removeEventListener("offline", handleOffline);
       window.removeEventListener("online", handleOnline);
     };
-  }, [enabled, masterId, isMaster]);
+  }, [enabled, masterNickname, isMaster]);
 
   return {
-    currentSongId,
-    currentTransposeSteps,
+    sessionState: currentState,
     connectedClients,
     updateSong,
     isConnected,
+    retryAttempt: retryCountRef.current,
   };
 }

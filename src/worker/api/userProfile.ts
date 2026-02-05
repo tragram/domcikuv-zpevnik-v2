@@ -1,21 +1,25 @@
+import { and, eq, ne } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { z } from "zod/v4";
+import { user, userFavoriteSongs } from "src/lib/db/schema";
+import { z } from "zod";
 import {
   deleteAvatar,
   getUserProfile,
   updateAvatar,
-  updateUserProfile,
 } from "../services/user-service";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 
-// Zod schemas for validation
 const updateUserProfileSchema = z.object({
   name: z
     .string()
     .min(1, "Display name is required")
     .max(100, "Display name too long"),
-  nickname: z.string().optional(),
+  nickname: z
+    .string()
+    .regex(/^[^\/]*$/, "Nickname cannot contain the '/' character")
+    .max(30, "Nickname is too long")
+    .optional(),
   isFavoritesPublic: z.boolean(),
 });
 
@@ -37,6 +41,7 @@ export type UserProfileData =
         isTrusted: boolean;
         createdAt: Date;
         updatedAt: Date;
+        favoriteSongIds: string[];
       };
     };
 
@@ -49,22 +54,27 @@ const profileApp = buildApp()
     try {
       const userData = c.get("USER");
       if (!userData) {
-        return successJSend(c, {
-          loggedIn: false,
-          profile: undefined,
-        } as UserProfileData);
+        return successJSend(c, { loggedIn: false } as UserProfileData);
       }
-
       const db = drizzle(c.env.DB);
+
       const profile = await getUserProfile(db, userData.id);
+
+      // get Favorites
+      const favorites = await db
+        .select({ songId: userFavoriteSongs.songId })
+        .from(userFavoriteSongs)
+        .where(eq(userFavoriteSongs.userId, userData.id));
+
+      const favoriteSongIds = favorites.map((f) => f.songId);
 
       return successJSend(c, {
         loggedIn: true,
-        profile,
+        profile: { ...profile, favoriteSongIds },
       } as UserProfileData);
     } catch (error) {
       console.error(error);
-      return errorJSend(c, "Failed to user profile", 500, "FETCH_ERROR");
+      return errorJSend(c, "Failed to fetch user profile", 500, "FETCH_ERROR");
     }
   })
   .put("/", async (c) => {
@@ -75,22 +85,40 @@ const profileApp = buildApp()
       }
 
       const formData = await c.req.formData();
-
       const name = formData.get("name") as string;
-      const nickname = formData.get("nickname") as string;
-
+      const nicknameRaw = formData.get("nickname") as string;
       const isFavoritesPublic = formData.get("isFavoritesPublic") === "true";
 
-      // TODO: gracefully manage nickname uniqueness (also in the frontend)
-      // TODO: ensure nickname does not use "/"
       // Validate input with Zod
       const validated = updateUserProfileSchema.parse({
         name: name.trim(),
-        nickname: nickname?.trim() || undefined,
+        nickname: nicknameRaw?.trim() || undefined,
         isFavoritesPublic,
       });
 
       const db = drizzle(c.env.DB);
+
+      // Handle Nickname Uniqueness
+      if (validated.nickname) {
+        // Check if ANY user exists with this nickname AND it is NOT the current user
+        const existingUser = await db
+          .select({ id: user.id })
+          .from(user)
+          .where(
+            and(eq(user.nickname, validated.nickname), ne(user.id, userData.id))
+          )
+          .limit(1);
+
+        // FIX: Check .length > 0 because existingUser is an array (even if empty)
+        if (existingUser.length > 0) {
+          return failJSend(
+            c,
+            "This nickname is already taken. Please choose another.",
+            409, // Conflict status code
+            "NICKNAME_TAKEN"
+          );
+        }
+      }
 
       let newImageUrl: string | null = null;
       let imageChanged = false;
@@ -98,6 +126,8 @@ const profileApp = buildApp()
       // Handle avatar operations
       const avatarFile = formData.get("avatarFile") as File | null;
       const shouldDeleteAvatar = formData.get("deleteAvatar") === "true";
+      const currentUserProfile = await getUserProfile(db, userData.id);
+      const currentImage = currentUserProfile?.image;
 
       // Handle avatar upload
       if (avatarFile && avatarFile.size > 0) {
@@ -111,44 +141,33 @@ const profileApp = buildApp()
             c,
             "File size must be less than 5MB",
             400,
-            "Image too large!"
+            "IMAGE_TOO_LARGE"
           );
         }
 
         // Get current user data to check for existing avatar
-        const currentUserProfile = await getUserProfile(db, userData.id);
-
-        const currentImage = currentUserProfile?.image;
-
-        // Generate unique filename
-        const fileExtension =
-          avatarFile.name.split(".").pop()?.toLowerCase() || "jpg";
-        const fileName = `avatars/${
-          userData.id
-        }-${Date.now()}.${fileExtension}`;
 
         try {
-          // Convert file to ArrayBuffer for R2
-          const arrayBuffer = await avatarFile.arrayBuffer();
-
-          // Upload new avatar to R2
-          await c.env.R2_BUCKET.put(fileName, arrayBuffer, {
-            httpMetadata: {
-              contentType: avatarFile.type,
-            },
-          });
-
           // Generate the public URL
-          newImageUrl = `${c.env.CLOUDFLARE_R2_URL}/${fileName}`;
+          newImageUrl = await updateAvatar(
+            db,
+            c.env.R2_BUCKET,
+            c.env.CLOUDFLARE_R2_URL,
+            currentUserProfile,
+            avatarFile
+          );
           imageChanged = true;
 
           // Delete old avatar if it exists (after successful upload)
           if (currentImage) {
             try {
-              const oldFileName = currentImage.split("/").pop();
-              if (oldFileName?.startsWith("avatars/")) {
-                await c.env.R2_BUCKET.delete(oldFileName);
-              }
+              deleteAvatar(
+                db,
+                currentUserProfile.id,
+                c.env.R2_BUCKET,
+                c.env.CLOUDFLARE_R2_URL,
+                currentImage
+              );
             } catch (error) {
               console.error("Failed to delete old avatar:", error);
               // Continue even if old avatar deletion fails
@@ -160,42 +179,45 @@ const profileApp = buildApp()
         }
       }
       // Handle avatar deletion (only if no new file is being uploaded)
-      else if (shouldDeleteAvatar) {
-        const currentUserProfile = await getUserProfile(db, userData.id);
-
-        const currentImage = currentUserProfile?.image;
-
-        if (currentImage) {
-          try {
-            const fileName = currentImage.split("/").pop();
-            if (fileName?.startsWith("avatars/")) {
-              await c.env.R2_BUCKET.delete(fileName);
-            }
-          } catch (r2Error) {
-            console.error("R2 deletion error:", r2Error);
-          }
+      else if (shouldDeleteAvatar && currentImage) {
+        try {
+          await deleteAvatar(
+            db,
+            currentUserProfile.id,
+            c.env.R2_BUCKET,
+            c.env.CLOUDFLARE_R2_URL,
+            currentImage
+          );
+        } catch (r2Error) {
+          console.error("R2 deletion error:", r2Error);
         }
 
         newImageUrl = null;
         imageChanged = true;
       }
 
-      // Update user profile in database
-      await updateUserProfile(
-        db,
-        userData.id,
-        validated,
-        imageChanged,
-        newImageUrl
-      );
+      const updateData: any = {
+        name: validated.name,
+        nickname: validated.nickname || null,
+        isFavoritesPublic: validated.isFavoritesPublic,
+        updatedAt: new Date(),
+      };
+
+      if (imageChanged) {
+        updateData.image = newImageUrl;
+      }
+
+      await db
+        .update(user)
+        .set(updateData)
+        .where(eq(user.id, userData.id))
+        .execute();
 
       return successJSend(c, {
         imageUrl: imageChanged ? newImageUrl : undefined,
-      } as ProfileUpdateResponse);
+      } as ProfileUpdateData);
     } catch (error) {
       console.error("Profile update error:", error);
-
-      // Handle Zod validation errors
       if (error instanceof z.ZodError) {
         return failJSend(
           c,
@@ -203,7 +225,6 @@ const profileApp = buildApp()
           400
         );
       }
-
       return errorJSend(
         c,
         error instanceof Error ? error.message : "Internal server error",
@@ -211,65 +232,27 @@ const profileApp = buildApp()
       );
     }
   })
-  .post("/avatar", async (c) => {
-    try {
-      const userData = c.get("USER");
-      if (!userData) {
-        return errorJSend(c, "User not authenticated", 401);
-      }
+  // .post("/avatar", async (c) => {
+  //   try {
+  //     const userData = c.get("USER");
+  //     if (!userData) {
+  //       return errorJSend(c, "User not authenticated", 401);
+  //     }
 
-      const formData = await c.req.formData();
-      const file = formData.get("file") as File;
+  //     const formData = await c.req.formData();
+  //     const file = formData.get("file") as File;
 
-      if (!file) {
-        return failJSend(c, "No file provided", 400, "MISSING_FILE");
-      }
-
-      // Validate file
-      if (!file.type.startsWith("image/")) {
-        return failJSend(c, "File must be an image", 400, "FILE_NOT_IMAGE");
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        return failJSend(
-          c,
-          "File size must be less than 5MB",
-          400,
-          "IMAEG_TOO_LARGE"
-        );
-      }
-
-      // Generate unique filename
-      const fileExtension = file.name.split(".").pop() || "jpg";
-      const fileName = `avatars/${userData.id}-${Date.now()}.${fileExtension}`;
-
-      // Convert file to ArrayBuffer for R2
-      const arrayBuffer = await file.arrayBuffer();
-
-      // Upload to R2
-      await c.env.R2_BUCKET.put(fileName, arrayBuffer, {
-        httpMetadata: {
-          contentType: file.type,
-        },
-      });
-
-      // Generate the public URL
-      const imageUrl = `${c.env.CLOUDFLARE_R2_URL}/${fileName}`;
-
-      // Update user's image URL in database
-      const db = drizzle(c.env.DB);
-      await updateAvatar(db, userData.id, imageUrl);
-
-      return successJSend(c, { imageUrl });
-    } catch (error) {
-      console.error("Avatar upload error:", error);
-      return errorJSend(
-        c,
-        error instanceof Error ? error.message : "Internal server error",
-        500
-      );
-    }
-  })
+  //     // Update user's image URL in database
+  //     return await updateAvatar(c, userData, file);
+  //   } catch (error) {
+  //     console.error("Avatar upload error:", error);
+  //     return errorJSend(
+  //       c,
+  //       error instanceof Error ? error.message : "Internal server error",
+  //       500
+  //     );
+  //   }
+  // })
   .delete("/avatar", async (c) => {
     try {
       const userData = c.get("USER");
@@ -278,30 +261,19 @@ const profileApp = buildApp()
       }
 
       const db = drizzle(c.env.DB);
-
-      // Get current image URL to delete from R2
-      const currentUserProfile = await getUserProfile(db, userData.id);
-
-      const currentImage = currentUserProfile?.image;
-
       // Delete from R2 if exists
-      if (currentImage) {
-        try {
-          // Extract filename from URL
-          const fileName = currentImage.split("/").pop();
-          if (fileName && fileName.startsWith("avatars/")) {
-            await c.env.R2_BUCKET.delete(fileName);
-          }
-        } catch (r2Error) {
-          console.error("R2 deletion error:", r2Error);
-          // Continue even if R2 deletion fails
-        }
+      try {
+        await deleteAvatar(
+          db,
+          userData.id,
+          c.env.R2_BUCKET,
+          c.env.CLOUDFLARE_R2_URL
+        );
+        return successJSend(c, null);
+      } catch (r2Error) {
+        // Continue even if R2 deletion fails - could be in case of external
+        console.error("R2 deletion error:", r2Error);
       }
-
-      // Update database to remove image URL
-      await deleteAvatar(db, userData.id);
-
-      return successJSend(c, null);
     } catch (error) {
       console.error("Avatar deletion error:", error);
       return errorJSend(

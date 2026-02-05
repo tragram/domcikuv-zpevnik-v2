@@ -6,7 +6,6 @@ import {
   isNotNull,
   getTableColumns,
   desc,
-  sql,
 } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import {
@@ -73,7 +72,6 @@ export type SongDataApi = {
         promptURL: string;
       }
     | undefined;
-  isFavoriteByCurrentUser: boolean;
   // incremental update status
   updateStatus?: "added" | "modified" | "deleted";
 };
@@ -118,9 +116,6 @@ export async function retrieveSongs(
   let query = db
     .select({
       ...baseSelectFields,
-      isFavoriteByCurrentUser: userId
-        ? userFavoriteSongs.userId
-        : sql<string | null>`NULL`,
     })
     .from(song)
     .leftJoin(songVersion, eq(songVersion.id, song.currentVersionId))
@@ -180,10 +175,6 @@ export async function retrieveSongs(
       range: songItem.range ?? undefined,
       sourceId: songItem.sourceId ?? "",
       chordpro: songItem.chordpro ?? "Not uploaded",
-      // Convert userId presence to boolean
-      isFavoriteByCurrentUser: !!(
-        songItem as { isFavoriteByCurrentUser?: string | null }
-      ).isFavoriteByCurrentUser,
       currentIllustration:
         songItem.currentIllustration?.illustrationId &&
         songItem.currentIllustration?.promptId &&
@@ -196,7 +187,6 @@ export async function retrieveSongs(
               imageModel: songItem.currentIllustration.imageModel,
               imageURL: songItem.currentIllustration.imageURL,
               thumbnailURL: songItem.currentIllustration.thumbnailURL,
-              // TODO: this is not true anymore...
               promptURL: `/songs/image_prompts/${songItem.id}.yaml`,
             }
           : undefined,
@@ -335,6 +325,11 @@ export const createSongVersion = async (
 
   // only allowing one song version per user - TODO: this is ugly and random
   const userVersionResult = await db
+    .select()
+    .from(songVersion)
+    .where(and(eq(songVersion.songId, songId), eq(songVersion.userId, userId)))
+    .limit(1);
+
     .select()
     .from(songVersion)
     .where(and(eq(songVersion.songId, songId), eq(songVersion.userId, userId)))

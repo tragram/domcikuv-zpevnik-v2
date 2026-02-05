@@ -13,6 +13,7 @@ import "./Editor.css";
 import EditorToolbar from "./EditorToolbar";
 import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
+import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
 
 export type EditorState = EditorSubmitSchemaInput;
 
@@ -49,6 +50,12 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
     editorStateKey,
     { defaultValue: () => defaultEditorState }
   );
+
+  // Editor settings stored per-user
+  const [editorSettings, setEditorSettings] =
+    useLocalStorageState<EditorSettings>("editor/settings", {
+      defaultValue: () => DEFAULT_EDITOR_SETTINGS,
+    });
 
   const initializeEditor = useCallback(() => {
     setEditorState(defaultEditorState);
@@ -144,6 +151,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
           onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
           user={user}
           onUploadClick={onUploadClick}
+          editorSettings={editorSettings}
         />
       )}
       <input
@@ -173,12 +181,16 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
               defaultMetadata={defaultEditorState}
               metadata={editorState}
               updateMetadata={updateMetadata}
+              editorSettings={editorSettings}
+              onSettingsChange={setEditorSettings}
+              user={user}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Editor"} className={"basis-[40%] "}>
             <ContentEditor
               editorContent={editorState.chordpro}
               setEditorContent={updateContent}
+              user={user}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
@@ -197,6 +209,7 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
           onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
           user={user}
           onUploadClick={onUploadClick}
+          editorSettings={editorSettings}
         />
       )}
     </div>

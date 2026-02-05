@@ -29,8 +29,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [showDeleted, setShowDeleted] = useState(false);
   const [imageModelFilter, setImageModelFilter] = useState<string>("all");
   const [summaryModelFilter, setSummaryModelFilter] = useState<string>("all");
-  const [promptVersionFilter, setPromptVersionFilter] =
-    useState<string>("all");
+  const [promptVersionFilter, setPromptVersionFilter] = useState<string>("all");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
   const { data: songs, isLoading: songsLoading } = useSongDBAdmin(adminApi);
@@ -152,14 +151,17 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     }
     setExpandedGroups(newExpanded);
   };
-
   return (
     <div className="space-y-4 p-4 w-full">
       <div className="flex flex-col sm:flex-row items-center justify-between">
         <div className="text-center sm:text-left">
           <h3 className="text-lg font-medium">Song Illustrations</h3>
           <p className="text-sm text-muted-foreground">
-            {filteredAndSortedGroups.length} songs • {illustrations.length}{" "}
+            {filteredAndSortedGroups.length} songs •{" "}
+            {filteredAndSortedGroups
+              .map((g) => g[1].illustrations.length)
+              .reduce((acc, el) => acc + el)}
+              {" "}
             illustrations
           </p>
         </div>

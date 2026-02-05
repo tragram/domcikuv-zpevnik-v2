@@ -16,7 +16,7 @@ import {
   clearCurrentIllustration,
   uploadImageBuffer,
   sameParametersExist,
-  moveToTrashR2,
+  moveSongToTrash,
 } from "../../services/illustration-service";
 import { findSong, SongWithCurrentVersion } from "../../services/song-service";
 import {
@@ -64,6 +64,134 @@ const illustrationModifySchema = z.object({
 
 const CFImagesThumbnailURL = (imageURL: string) => {
   return "/cdn-cgi/image/width=128/" + imageURL;
+};
+
+const generateIllustrationHandler = async (c) => {
+  try {
+    const illustrationData = c.req.valid("json");
+    const db = drizzle(c.env.DB);
+    // Verify the song exists
+    let illustrationSong;
+    try {
+      illustrationSong = (await findSong(
+        db,
+        illustrationData.songId
+      )) as SongWithCurrentVersion;
+    } catch {
+      return songNotFoundFail(c);
+    }
+
+    // Validate API keys
+    if (!c.env.OPENAI_API_KEY || !c.env.HUGGING_FACE_TOKEN) {
+      console.error("Missing required API keys for image generation!");
+      return errorJSend(
+        c,
+        "Missing required API keys for image generation!",
+        500,
+        "MISSING_API_KEYS"
+      );
+    }
+
+    // Create image generator
+    const generationConfig: GenerationConfig = {
+      promptVersion: illustrationData.promptVersion,
+      summaryModel: illustrationData.summaryModel,
+      imageModel: illustrationData.imageModel,
+      openaiApiKey: c.env.OPENAI_API_KEY,
+      huggingFaceToken: c.env.HUGGING_FACE_TOKEN,
+      openaiOrgId: c.env.OPENAI_ORGANIZATION_ID,
+      openaiProjectId: c.env.OPENAI_PROJECT_ID,
+    };
+
+    const generator = new ImageGenerator(generationConfig);
+
+    // Find or create prompt
+    const prompt = await findOrCreatePrompt(
+      db,
+      c,
+      illustrationData.songId,
+      illustrationData.promptVersion,
+      illustrationData.summaryModel,
+      generator,
+      illustrationSong
+    );
+
+    if (
+      await sameParametersExist(
+        db,
+        illustrationData.songId,
+        prompt.id,
+        illustrationData.imageModel
+      )
+    ) {
+      return failJSend(
+        c,
+        "Illustration with the same parameters already exists.",
+        400,
+        "DUPLICATE_ILLUSTRATION"
+      );
+    }
+
+    const imageBuffer = await generator.generateImage(prompt.text);
+    const promptId = defaultPromptId(
+      illustrationData.songId,
+      illustrationData.summaryModel,
+      illustrationData.promptVersion
+    );
+    const imageId = defaultIllustrationId(
+      promptId,
+      illustrationData.imageModel
+    );
+    const imageURL = await uploadImageBuffer(
+      imageBuffer,
+      illustrationSong.id,
+      promptId,
+      illustrationData.imageModel,
+      c.env
+    );
+
+    const insertData = {
+      id: imageId,
+      songId: illustrationData.songId,
+      imageModel: illustrationData.imageModel,
+      imageURL: imageURL,
+      thumbnailURL: CFImagesThumbnailURL(imageURL),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deleted: false,
+      promptId: prompt.id,
+    };
+
+    const newIllustration = await db
+      .insert(songIllustration)
+      .values(insertData)
+      .returning();
+
+    if (!newIllustration[0]) {
+      throw new Error("Failed to insert illustration");
+    }
+
+    if (illustrationData.setAsActive) {
+      await setCurrentIllustration(
+        db,
+        illustrationData.songId,
+        newIllustration[0].id
+      );
+    }
+
+    return successJSend(
+      c,
+      {
+        song: illustrationSong,
+        illustration: newIllustration[0] as SongIllustrationDB,
+        prompt,
+      },
+      201
+    );
+  } catch (error) {
+    console.error("Error generating illustration:", error);
+    return errorJSend(c, "Failed to create illustration", 500, "CREATE_ERROR");
+  }
 };
 
 export const illustrationRoutes = buildApp()
@@ -217,132 +345,7 @@ export const illustrationRoutes = buildApp()
   .post(
     "/generate",
     zValidator("json", illustrationGenerateSchema),
-    async (c) => {
-      try {
-        const illustrationData = c.req.valid("json");
-        const db = drizzle(c.env.DB);
-
-        // Verify the song exists
-        let illustrationSong;
-        try {
-          illustrationSong = (await findSong(
-            db,
-            illustrationData.songId
-          )) as SongWithCurrentVersion;
-        } catch {
-          return songNotFoundFail(c);
-        }
-
-        // Validate API keys
-        if (!c.env.OPENAI_API_KEY || !c.env.HUGGING_FACE_TOKEN) {
-          console.error("Missing required API keys for image generation!");
-          return errorJSend(
-            c,
-            "Missing required API keys for image generation!",
-            500,
-            "MISSING_API_KEYS"
-          );
-        }
-
-        // Create image generator
-        const generationConfig: GenerationConfig = {
-          promptVersion: illustrationData.promptVersion,
-          summaryModel: illustrationData.summaryModel,
-          imageModel: illustrationData.imageModel,
-          openaiApiKey: c.env.OPENAI_API_KEY,
-          huggingFaceToken: c.env.HUGGING_FACE_TOKEN,
-          openaiOrgId: c.env.OPENAI_ORGANIZATION_ID,
-          openaiProjectId: c.env.OPENAI_PROJECT_ID,
-        };
-
-        const generator = new ImageGenerator(generationConfig);
-
-        // Find or create prompt
-        const prompt = await findOrCreatePrompt(
-          db,
-          c,
-          illustrationData.songId,
-          illustrationData.promptVersion,
-          illustrationData.summaryModel,
-          generator,
-          illustrationSong
-        );
-
-        if (
-          await sameParametersExist(
-            db,
-            illustrationData.songId,
-            prompt.id,
-            illustrationData.imageModel
-          )
-        ) {
-          return failJSend(
-            c,
-            "Illustration with the same parameters already exists.",
-            400,
-            "DUPLICATE_ILLUSTRATION"
-          );
-        }
-
-        const imageBuffer = await generator.generateImage(prompt.text);
-        const promptId = defaultPromptId(
-          illustrationData.songId,
-          illustrationData.summaryModel,
-          illustrationData.promptVersion
-        );
-        const imageId = defaultIllustrationId(
-          promptId,
-          illustrationData.imageModel
-        );
-        const imageURL = await uploadImageBuffer(
-          imageBuffer,
-          illustrationSong.id,
-          promptId,
-          illustrationData.imageModel,
-          c.env
-        );
-
-        const insertData = {
-          id: imageId,
-          songId: illustrationData.songId,
-          imageModel: illustrationData.imageModel,
-          imageURL: imageURL,
-          thumbnailURL: CFImagesThumbnailURL(imageURL),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          deleted: false,
-          promptId: prompt.id,
-        };
-
-        const newIllustration = await db
-          .insert(songIllustration)
-          .values(insertData)
-          .returning();
-
-        // If this illustration should be set as active, update the song's currentIllustrationId
-        if (illustrationData.setAsActive) {
-          await setCurrentIllustration(db, illustrationData.songId, imageId);
-        }
-
-        return successJSend(
-          c,
-          {
-            song: illustrationSong,
-            illustration: newIllustration[0] as SongIllustrationDB,
-            prompt,
-          },
-          201
-        );
-      } catch (error) {
-        console.error("Error generating illustration:", error);
-        return errorJSend(
-          c,
-          "Failed to create illustration",
-          500,
-          "CREATE_ERROR"
-        );
-      }
-    }
+    generateIllustrationHandler
   )
 
   .put("/:id", zValidator("json", illustrationModifySchema), async (c) => {
@@ -385,9 +388,9 @@ export const illustrationRoutes = buildApp()
         .returning();
 
       // Handle setting as active illustration
-      if (setAsActive === true) {
+      if (setAsActive) {
         await setCurrentIllustration(db, songId, illustrationId);
-      } else if (setAsActive === false) {
+      } else {
         // Check if this illustration is currently active and clear it if so
         const currentSong = await db
           .select({ currentIllustrationId: song.currentIllustrationId })
@@ -492,7 +495,7 @@ export const illustrationRoutes = buildApp()
 
       // Delete associated files from R2 storage (if stored there)
       try {
-        await moveToTrashR2(
+        await moveSongToTrash(
           c.env.R2_BUCKET,
           songId,
           existingIllustration[0].promptId,
@@ -545,3 +548,10 @@ export const illustrationRoutes = buildApp()
       );
     }
   });
+
+// Only the generate endpoint for trusted users
+export const trustedGenerateRoute = buildApp().post(
+  "/generate",
+  zValidator("json", illustrationGenerateSchema),
+  generateIllustrationHandler
+);

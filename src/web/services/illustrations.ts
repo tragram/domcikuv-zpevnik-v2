@@ -3,7 +3,7 @@ import {
   SongDataDB,
   SongIllustrationDB,
 } from "src/lib/db/schema";
-import client from "src/worker/api-client";
+import client, { API } from "src/worker/api-client";
 import {
   adminIllustrationResponse,
   IllustrationCreateSchema,
@@ -101,7 +101,7 @@ export const createIllustration = async (
 };
 
 export const generateIllustration = async (
-  adminApi: AdminApi,
+  adminApi: AdminApi | API,
   illustrationData: IllustrationGenerateSchema
 ): Promise<adminIllustrationResponse> => {
   const response = await makeApiRequest(() =>

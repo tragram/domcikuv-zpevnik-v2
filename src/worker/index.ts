@@ -1,17 +1,18 @@
 /// <reference types="../../worker-configuration.d.ts" />
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { auth } from "../lib/auth/server";
-import { buildApp } from "./api/utils";
 import { user } from "src/lib/db/schema/auth.schema";
-import adminApp from "./api/admin/admin";
+import { auth } from "../lib/auth/server";
+import adminApp, { adminOrTrustedMiddleware } from "./api/admin/admin";
+import { trustedGenerateRoute } from "./api/admin/illustrations";
 import authApp from "./api/auth";
 import editorApp from "./api/editor";
 import favoritesApp from "./api/favorites";
-import profileApp from "./api/userProfile";
-import songDBRoutes from "./api/songDB";
-import { eq } from "drizzle-orm";
 import sessionSyncApp from "./api/sessions";
-export { SessionSync } from './durable-objects/SessionSync';
+import songDBRoutes from "./api/songDB";
+import profileApp from "./api/userProfile";
+import { buildApp } from "./api/utils";
+export { SessionSync } from "./durable-objects/SessionSync";
 
 const app = buildApp();
 
@@ -37,6 +38,10 @@ export const route = app
   .route("/editor", editorApp)
   .route("/profile", profileApp)
   .route("/admin", adminApp)
+  .route(
+    "/illustrations",
+    buildApp().use(adminOrTrustedMiddleware).route("/", trustedGenerateRoute)
+  )
   .route("/session", sessionSyncApp);
 
 export default route;

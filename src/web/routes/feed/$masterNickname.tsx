@@ -2,46 +2,71 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query"; //
 import React, { useEffect } from "react";
 import { UserProfileData } from "src/worker/api/userProfile";
+import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import useLocalStorageState from "use-local-storage-state";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
 import { SongDB } from "~/types/types";
 import { handleApiResponse } from "~/services/apiHelpers";
 import { SongData } from "~/types/songData";
+import { API } from "src/worker/api-client";
 
-export const Route = createFileRoute("/feed/$masterId")({
+export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
+    let liveState: SessionSyncState | undefined;
+    const response = await context.api.session[":masterNickname"].$get({
+      param: { masterNickname: params.masterNickname },
+    });
+    if (response.ok) liveState = (await response.json()) as SessionSyncState;
     return {
       user: context.user,
       songDB: context.songDB,
-      masterId: params.masterId,
-      api: context.api 
+      masterNickname: params.masterNickname,
+      liveState,
+      api: context.api,
     };
   },
 });
 
 function RouteComponent() {
-  const { songDB, masterId, user, api } = Route.useLoaderData();
+  const { songDB, liveState, masterNickname, user, api } =
+    Route.useLoaderData();
 
-  return <FeedView songDB={songDB} masterId={masterId} user={user} api={api} />;
+  return (
+    <FeedView
+      songDB={songDB}
+      masterNickname={masterNickname}
+      liveState={liveState}
+      user={user}
+      api={api}
+    />
+  );
 }
 
 type FeedViewProps = {
   songDB: SongDB;
-  masterId: string;
+  liveState?: SessionSyncState;
+  masterNickname: string;
   user: UserProfileData;
-  api: any; // Type this properly based on your client definition
+  api: API;
 };
 
-function FeedView({ songDB, masterId, user, api }: FeedViewProps) {
+function FeedView({
+  songDB,
+  liveState,
+  masterNickname,
+  user,
+  api,
+}: FeedViewProps) {
   // Feed route manages session sync as follower (read-only)
-  const { currentSongId, isConnected, currentTransposeSteps } = useSessionSync(
-    masterId,
-    false, // isMaster = false (follower mode)
-    true // enabled
+  const { isConnected, sessionState, retryAttempt } = useSessionSync(
+    masterNickname,
+    false,
+    true,
+    liveState, // hydrate with the live version
   );
-
+  const currentSongId = sessionState?.songId;
   // try local DB
   const localSong = React.useMemo(() => {
     return currentSongId
@@ -54,9 +79,9 @@ function FeedView({ songDB, masterId, user, api }: FeedViewProps) {
     queryKey: ["song", currentSongId],
     queryFn: async () => {
       if (!currentSongId || localSong) return null;
-      
+
       const response = await api.songs.fetch[":id"].$get({
-        param: { id: currentSongId }
+        param: { id: currentSongId },
       });
       const data = await handleApiResponse(response);
       return new SongData(data);
@@ -71,35 +96,43 @@ function FeedView({ songDB, masterId, user, api }: FeedViewProps) {
   // force transposeSteps (a bit hacky but passing it down feels even uglier - TODO: use Zustand)
   const [, setTransposeSteps] = useLocalStorageState(
     `transposeSteps/${currentSongId}`,
-    { defaultValue: 0 }
+    { defaultValue: 0 },
   );
 
   useEffect(() => {
-    if (currentTransposeSteps !== undefined)
-      setTransposeSteps(currentTransposeSteps);
-  }, [currentTransposeSteps, setTransposeSteps]);
+    if (sessionState && sessionState.transposeSteps !== null)
+      setTransposeSteps(sessionState.transposeSteps);
+  }, [sessionState, setTransposeSteps]);
 
-  if (!isConnected && !currentSongId) {
+  if (!sessionState) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Connecting to feed...</p>
+        <div className="text-center space-y-2">
+          <p className="text-lg">Connecting to feed...</p>
+          {!isConnected && retryAttempt > 2 && (
+            <p className="text-xs text-gray-400">
+              Having trouble connecting but I'll keep trying in the background.
+              ;-)
+            </p>
+          )}
+        </div>
       </div>
     );
   }
 
-  // Handle loading state for fetch-on-miss
-  if (currentSongId && !songData) {
-     return (
-      <div className="flex items-center justify-center h-screen">
-        <p>Loading song...</p>
-      </div>
-    );
-  }
-
-  if (!songData) {
+  if (!songData || !sessionState.songId) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <p>Waiting for {masterId} to select a song...</p>
+        <div className="text-center space-y-2">
+          <p className="text-lg">
+            Waiting for {masterNickname} to select a song...
+          </p>
+          {!isConnected && (
+            <p className="text-sm text-yellow-600">
+              Connection lost - attempting to reconnect...
+            </p>
+          )}
+        </div>
       </div>
     );
   }
@@ -111,6 +144,7 @@ function FeedView({ songDB, masterId, user, api }: FeedViewProps) {
       user={user}
       feedStatus={{
         enabled: true,
+        sessionState: sessionState,
         isConnected,
         isMaster: false,
         connectedClients: 0,

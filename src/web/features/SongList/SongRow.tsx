@@ -1,10 +1,8 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getRouteApi, Link } from "@tanstack/react-router";
-import { Heart } from "lucide-react";
-import { memo, useState } from "react";
-import { toast } from "sonner";
+import { Link } from "@tanstack/react-router";
+import { memo } from "react";
 import { UserProfileData } from "src/worker/api/userProfile";
 import CircularProgress from "~/components/circular-progress";
+import { FavoriteButton } from "~/components/FavoriteButton";
 import { IllustrationPopup } from "~/components/IllustrationPopup";
 import LanguageFlag from "~/components/LanguageFlag";
 import { cn } from "~/lib/utils";

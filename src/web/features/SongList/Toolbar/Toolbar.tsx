@@ -1,14 +1,11 @@
-import {
-  getRouterContext,
-  Link,
-  useRouteContext,
-} from "@tanstack/react-router";
-import { ImagesIcon, MoreHorizontal, Pencil, Shield, User } from "lucide-react";
+import { Link, useRouteContext } from "@tanstack/react-router";
+import { ImagesIcon, Menu, Pencil, Shield, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import { DropdownThemeToggle, ThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
 import { Button } from "~/components/ui/button";
 import {
+  DropdownIconStart,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -39,7 +36,7 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button size="icon" variant="circular">
-          <MoreHorizontal />
+          <Menu />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56">
@@ -47,40 +44,43 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         <DropdownMenuSeparator />
         <DropdownThemeToggle />
 
-        <DropdownMenuItem asChild>
-          <Link to="/edit" className="flex items-center gap-2 cursor-pointer">
-            <Pencil className="h-4 w-4" />
-            <span>Edit</span>
+        <DropdownMenuItem>
+          <Link
+            to="/edit"
+            className="flex items-center gap-2 cursor-pointer w-full"
+          >
+            <DropdownIconStart icon={<Pencil />} />
+            Add song
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
           <Link
             to="/gallery"
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer w-full"
           >
-            <ImagesIcon className="h-4 w-4" />
-            <span>Gallery</span>
+            <DropdownIconStart icon={<ImagesIcon />} />
+            Gallery
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild disabled={!isOnline}>
+        <DropdownMenuItem disabled={!isOnline}>
           <Link
             to="/profile"
-            className="flex items-center gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer w-full"
           >
-            <User className="h-4 w-4" />
-            <span>Profile</span>
+            <DropdownIconStart icon={<User />} />
+            Profile
           </Link>
         </DropdownMenuItem>
         {isAdmin && (
           <DropdownMenuItem asChild disabled={!isOnline}>
             <Link
               to="/admin"
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer w-full"
             >
-              <Shield className="h-4 w-4" />
-              <span>Admin</span>
+              <DropdownIconStart icon={<Shield />} />
+              Admin
             </Link>
           </DropdownMenuItem>
         )}
@@ -112,39 +112,59 @@ function Toolbar({
 
       <SessionView isOnline={isOnline} />
 
+      <RandomSong songs={songDB.songs} />
       {/* Desktop View - Individual Buttons */}
       <div className="hidden min-[1150px]:flex h-full w-fit">
         <ThemeToggle />
       </div>
-      <Link className="hidden min-[1150px]:flex" to="/edit">
-        <Button size="icon" variant="circular">
+      <Button
+        asChild
+        className="hidden min-[1150px]:flex"
+        size="icon"
+        variant="circular"
+      >
+        <Link to="/edit">
           <Pencil />
-        </Button>
-      </Link>
-      <Link className="hidden min-[1150px]:flex" to="/profile">
-        <Button size="icon" variant="circular" disabled={!isOnline}>
-          <User />
-        </Button>
-      </Link>
-      <Link className="hidden min-[1150px]:flex" to="/gallery">
-        <Button size="icon" variant="circular">
-          <ImagesIcon />
-        </Button>
-      </Link>
-      {isAdmin && (
-        <Link className="hidden min-[1150px]:flex" to="/admin">
-          <Button size="icon" variant="circular">
-            <Shield />
-          </Button>
         </Link>
+      </Button>
+      <Button
+        asChild
+        className="hidden min-[1150px]:flex"
+        size="icon"
+        variant="circular"
+        disabled={!isOnline}
+      >
+        <Link to="/profile">
+          <User />
+        </Link>
+      </Button>
+      <Button
+        asChild
+        className="hidden min-[1150px]:flex"
+        size="icon"
+        variant="circular"
+      >
+        <Link to="/gallery">
+          <ImagesIcon />
+        </Link>
+      </Button>
+      {isAdmin && (
+        <Button
+          asChild
+          className="hidden min-[1150px]:flex"
+          size="icon"
+          variant="circular"
+        >
+          <Link to="/admin">
+            <Shield />
+          </Link>
+        </Button>
       )}
 
       {/* Mobile/Tablet View - Combined Menu */}
       <div className="flex min-[1150px]:hidden">
         <CombinedMenu isOnline={isOnline} isAdmin={isAdmin} />
       </div>
-
-      <RandomSong songs={songDB.songs} />
     </ToolbarBase>
   );
 }

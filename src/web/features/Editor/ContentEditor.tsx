@@ -1,14 +1,23 @@
+import { useRouteContext } from "@tanstack/react-router";
+import { useHistoryState } from "@uidotdev/usehooks";
+import { FileInput, Sparkles } from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
+import { UserProfileData } from "src/worker/api/userProfile";
 import { Textarea } from "~/components/ui/textarea";
-import { Button } from "~/components/ui/button";
-import React, { useEffect, useRef, useState } from "react";
-import "./Editor.css";
+import { cn, tailwindBreakpoint } from "~/lib/utils";
+import { autofillChordpro } from "~/services/editorHelpers";
 import {
-  SnippetButtonSection,
+  convertToChordPro,
+  isConvertibleFormat,
+} from "../../lib/chords2chordpro";
+import "./Editor.css";
+import { SmartFeature, SmartFeatureBar } from "./components/SmartFeatureBar";
+import {
   SnippetButton,
+  SnippetButtonSection,
   snippets,
 } from "./components/Snippets";
-import { cn, tailwindBreakpoint } from "~/lib/utils";
-import { convertToChordPro, isConvertibleFormat } from "../../lib/chords2chordpro";
 
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {
@@ -21,52 +30,151 @@ const textareaAutoSizeStyles = `
 interface ContentEditorProps {
   editorContent: string;
   setEditorContent: (content: string) => void;
+  user: UserProfileData;
 }
+
+const isAutofillable = (text: string, user: UserProfileData): boolean => {
+  if (!user.loggedIn || !user.profile.isTrusted) {
+    return false;
+  }
+  const hasAnyChords = /\[[A-G][^\]]*\]/.test(text);
+  if (!hasAnyChords) return false;
+
+  const sectionSplitRegex =
+    /(\{(?:sov|start_of_verse|soc|start_of_chorus|sob|start_of_bridge|v|c|b|verse|chorus|bridge)(?::.*)?\})/i;
+  const parts = text.split(sectionSplitRegex);
+
+  for (let i = 1; i < parts.length; i += 2) {
+    const content = parts[i + 1];
+    if (!content) continue;
+
+    const hasLyrics = content.trim().length > 0;
+    const hasChordsInSection = /\[[A-G][^\]]*\]/.test(content);
+
+    if (hasLyrics && !hasChordsInSection) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const SMART_FEATURES: SmartFeature[] = [
+  {
+    id: "convert_to_chordpro",
+    label: "Convert to ChordPro",
+    loadingLabel: "Converting...",
+    icon: FileInput,
+    check: (content: string, user: UserProfileData) =>
+      isConvertibleFormat(content),
+    description: (
+      <>
+        Detected chords in separate lines above the lyrics. This will format
+        them into the ChordPro inline format used by this website.
+        <br />
+        <br />
+        <strong>For best results:</strong>
+        <ul className="list-disc pl-4">
+          <li>Place chords precisely above the syllable where they belong.</li>
+          <li>Indicate separate sections by blank lines.</li>
+          <li>Use Ctrl+Z to go back and adjust if necessary.</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    id: "autofill_chords",
+    label: "Autofill Missing Chords",
+    loadingLabel: "Analyzing & Filling...",
+    icon: Sparkles,
+    check: isAutofillable,
+    description: (
+      <>
+        Detected some sections having chords but not all of them. Use AI to
+        generate missing chords.
+      </>
+    ),
+  },
+];
 
 const ContentEditor: React.FC<ContentEditorProps> = ({
   editorContent,
   setEditorContent,
+  user,
 }) => {
-  // Reference to the textarea element
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [showConvertButton, setShowConvertButton] = useState(
-    isConvertibleFormat(editorContent)
+  const [dismissedFeatures, setDismissedFeatures] = useState<Set<string>>(
+    new Set(),
   );
+  const [isProcessing, setIsProcessing] = useState(false);
+  const api = useRouteContext({ strict: false }).api;
 
+  // Manual History Management - Fixed destructuring
+  const {
+    state,
+    set: setHistoryContent,
+    undo,
+    redo,
+  } = useHistoryState(editorContent);
+
+  // Wrap setContent to update both history and parent
+  const setContent = (value: string) => {
+    setHistoryContent(value);
+    setEditorContent(value);
+  };
+
+  // Sync parent when undo/redo changes the state
+  const prevStateRef = useRef(state);
   useEffect(() => {
-    // Adjust textarea height when content changes (for mobile)
-    if (textareaRef.current && window.innerWidth < tailwindBreakpoint("md")) {
-      const textarea = textareaRef.current;
-      textarea.style.height = "auto";
-      textarea.style.height = `${textarea.scrollHeight}px`;
+    if (state !== prevStateRef.current && state !== editorContent) {
+      setEditorContent(state);
+      prevStateRef.current = state;
     }
-  }, [editorContent]);
+  }, [state, editorContent, setEditorContent]);
 
-  // Add the stylesheet to the document head and set up resize listener
+  const activeFeature = useMemo(() => {
+    return SMART_FEATURES.find(
+      (f) => f.check(state, user) && !dismissedFeatures.has(f.id),
+    );
+  }, [state, user, dismissedFeatures]);
+
+  // Handle Keyboard Shortcuts for Custom Undo/Redo
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
+        e.preventDefault();
+        if (e.shiftKey) {
+          redo();
+        } else {
+          undo();
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
+        e.preventDefault();
+        redo();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [undo, redo]);
+
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = textareaAutoSizeStyles;
     document.head.appendChild(style);
 
-    // Function to adjust textarea height based on screen size
     const adjustTextareaHeight = () => {
       if (!textareaRef.current) return;
-
       const textarea = textareaRef.current;
       if (window.innerWidth < tailwindBreakpoint("md")) {
-        // Mobile: Auto-height based on content
         textarea.style.height = "auto";
         textarea.style.height = `${textarea.scrollHeight}px`;
       } else {
-        // Desktop: Reset to use container height
         textarea.style.height = "";
       }
     };
 
-    // Adjust height on window resize
     window.addEventListener("resize", adjustTextareaHeight);
-
-    // Initial adjustment
     adjustTextareaHeight();
 
     return () => {
@@ -75,104 +183,54 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     };
   }, []);
 
-  const onEditorChange = (e) => {
-    const newContent = e.target.value;
-    setShowConvertButton(isConvertibleFormat(newContent));
-    setEditorContent(newContent);
+  const onEditorChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
   };
 
-  // Insert template at current cursor position with undo/redo support
   const insertSnippet = (snippetKey: string) => {
     if (!textareaRef.current || !snippets[snippetKey]) return;
-
     const snippet = snippets[snippetKey];
     const textarea = textareaRef.current;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
+    const selectedText = state.substring(start, end);
 
-    // Get selected text
-    const selectedText = editorContent.substring(start, end);
-
-    // Focus the textarea to make it the active element
-    textarea.focus();
-
-    // Determine what text to insert and where the cursor should end up
     const textToInsert = snippet.template(selectedText ?? "");
-    const finalCursorPos = selectedText
-      ? start + textToInsert.length
-      : start + snippet.cursorOffset;
+    const newFullText =
+      state.substring(0, start) + textToInsert + state.substring(end);
 
-    // Use the Document execCommand API for undo support
-    // This modifies the document in a way that registers with the browser's undo stack
-    try {
-      // For modern browsers, try using InputEvent
-      if (typeof InputEvent === "function") {
-        // First delete any selected text (this will be undoable)
-        if (start !== end) {
-          document.execCommand("delete", false);
-        }
+    setContent(newFullText);
 
-        // Then insert our text (this will be undoable)
-        document.execCommand("insertText", false, textToInsert);
-
-        // Position cursor where needed
-        textarea.setSelectionRange(finalCursorPos, finalCursorPos);
-      } else {
-        // Fallback for older browsers - this won't be undoable as a single action
-        // but we ensure content is updated in state
-        const newContent =
-          editorContent.substring(0, start) +
-          textToInsert +
-          editorContent.substring(end);
-
-        setEditorContent(newContent);
-
-        // Position cursor
-        setTimeout(() => {
-          textarea.setSelectionRange(finalCursorPos, finalCursorPos);
-        }, 0);
-      }
-    } catch (e) {
-      console.error("Error using execCommand for undo-friendly insertion:", e);
-
-      // Fallback method if execCommand fails
-      const newContent =
-        editorContent.substring(0, start) +
-        textToInsert +
-        editorContent.substring(end);
-
-      setEditorContent(newContent);
-
-      // Position cursor
-      setTimeout(() => {
-        textarea.setSelectionRange(finalCursorPos, finalCursorPos);
-      }, 0);
-    }
+    // Set cursor position after React update
+    setTimeout(() => {
+      const finalCursorPos = selectedText
+        ? start + textToInsert.length
+        : start + snippet.cursorOffset;
+      textarea.setSelectionRange(finalCursorPos, finalCursorPos);
+      textarea.focus();
+    }, 0);
   };
 
-  const handleConvertToChordPro = () => {
-    if (!textareaRef.current) return;
+  const executeFeature = async () => {
+    if (!activeFeature) return;
 
-    const textarea = textareaRef.current;
-    const convertedContent = convertToChordPro(editorContent);
-
-    // Focus the textarea to make it the active element
-    textarea.focus();
-
-    try {
-      // Select all content
-      textarea.select();
-
-      // Use execCommand to replace all text (this will be undoable)
-      document.execCommand("insertText", false, convertedContent);
-
-      // Update state
-      setEditorContent(convertedContent);
-    } catch (e) {
-      console.error("Error using execCommand for conversion:", e);
-
-      // Fallback method
-      setEditorContent(convertedContent);
+    if (activeFeature.id === "convert_to_chordpro") {
+      const converted = normalizeWhitespace(
+        replaceRepetitions(convertToChordPro(state)),
+      );
+      setContent(converted); // This pushes to custom history stack
+      setDismissedFeatures((prev) => new Set(prev).add("convert_to_chordpro"));
+    } else if (activeFeature.id === "autofill_chords") {
+      setIsProcessing(true);
+      try {
+        const newChordpro = await autofillChordpro(state, api);
+        setContent(newChordpro); // This pushes to custom history stack
+        setDismissedFeatures((prev) => new Set(prev).add("autofill_chords"));
+      } catch (error) {
+        console.error("Autofill failed", error);
+      } finally {
+        setIsProcessing(false);
+      }
     }
   };
 
@@ -209,41 +267,29 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
           <SnippetButton snippetKey="chords" onInsert={insertSnippet} />
         </SnippetButtonSection>
       </div>
+
       <Textarea
         ref={textareaRef}
         className={cn(
           "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto border-none",
-          showConvertButton ? "font-mono" : "font-normal",
-          showConvertButton ? "!rounded-b-none" : ""
+          activeFeature?.id === "convert_to_chordpro"
+            ? "font-mono !rounded-b-none"
+            : "font-normal",
         )}
-        onInput={(e) => {
-          onEditorChange(e);
-        }}
-        value={editorContent}
+        onChange={onEditorChange}
+        value={state}
+        disabled={isProcessing}
       />
-      {showConvertButton && (
-        <div className="relative group">
-          <div className="w-full overflow-hidden bg-muted border-t-2 border-primary px-4 text-xs hidden group-hover:visible group-hover:flex flex-col py-2">
-            Detected chords in separate lines above the lyrics. This will
-            attempt to insert them acording to the ChordPro format. The song is now shown in a monospace font to help with proper alignment.
-            <br />
-            <br />
-            <strong>Tips for best results:</strong>
-            <ul className="list-disc pl-4">
-              <li>
-                Place chords precisely above the syllable where they belong.
-              </li>
-              <li>Indicate separate sections by blank lines.</li>
-              <li>Use Ctrl+Z to go back and adjust if necessary.</li>
-            </ul>
-          </div>
-          <Button
-            onClick={handleConvertToChordPro}
-            className="w-full rounded-none h-10 animate-in fade-in duration-300 transition-transform font-semibold !bg-muted border-t-2 border-primary group-hover:border-t-0"
-          >
-            Automatically convert to ChordPro
-          </Button>
-        </div>
+
+      {activeFeature && (
+        <SmartFeatureBar
+          feature={activeFeature}
+          isProcessing={isProcessing}
+          onExecute={executeFeature}
+          onDismiss={() =>
+            setDismissedFeatures((prev) => new Set(prev).add(activeFeature.id))
+          }
+        />
       )}
     </div>
   );

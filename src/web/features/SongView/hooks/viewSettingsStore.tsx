@@ -49,7 +49,7 @@ const defaultIndependentSettings: IndependentLayoutSettings = isSmallScreen()
     fontSize: 12,
     multiColumns: false,
     smartColumns: false,
-    compactInFullScreen: true,
+    compactInFullScreen: false,
   }
   : {
     fontSize: 12,

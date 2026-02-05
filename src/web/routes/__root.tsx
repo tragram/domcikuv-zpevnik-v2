@@ -42,8 +42,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     );
 
     const memoizedBuildSongDB = memoizeOne(buildSongDB);
-    const songDB = memoizedBuildSongDB(songs, publicSongbooks);
-    
+
+    const favoriteSongIds = user.loggedIn ? user.profile.favoriteSongIds : [];
+
+    const songDB = memoizedBuildSongDB(songs, publicSongbooks, favoriteSongIds);
+
     return {
       user: user as UserProfileData,
       songDB,

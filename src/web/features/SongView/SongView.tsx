@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { UserProfileData } from "src/worker/api/userProfile";
 import useLocalStorageState from "use-local-storage-state";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
@@ -9,14 +10,16 @@ import { SongContent } from "./components/SongContent";
 import { SongViewLayout } from "./components/SongViewLayout";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
+import { FeedStatusBar } from "./components/FeedStatusBar";
 import "./SongView.css";
-import { UserProfileData } from "src/worker/api/userProfile";
+import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 
 export type FeedStatus = {
   isMaster: boolean;
   enabled: boolean;
   isConnected: boolean;
   connectedClients: number;
+  sessionState?: SessionSyncState;
 };
 
 type DataForSongView = {
@@ -70,7 +73,8 @@ export const SongView = ({
           "fullscreen-wrapper w-full overflow-x-clip",
           layoutSettings.fitScreenMode == "fitXY"
             ? " h-full "
-            : "h-fit overflow-y-auto"
+            : "h-fit overflow-y-auto",
+          feedStatus?.enabled ? "pb-8" : ""
         )}
       >
         <ScrollButtons fitScreenMode={layoutSettings.fitScreenMode} />
@@ -78,8 +82,10 @@ export const SongView = ({
           songData={songData}
           transposeSteps={transposeSteps}
           gestureContainerRef={gestureContainerRef}
+          user={user}
         />
       </FullScreen>
+      <FeedStatusBar feedStatus={feedStatus} />
     </SongViewLayout>
   );
 };

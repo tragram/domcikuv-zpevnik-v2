@@ -4,6 +4,7 @@ import { UserProfileData } from "src/worker/api/userProfile";
 import {
   DropdownIconStart,
   DropdownMenuCheckboxItem,
+  DropdownItemWithDescription,
 } from "~/components/ui/dropdown-menu";
 import { CloudSync } from "lucide-react";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
@@ -29,47 +30,67 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
     }
   }, [setShareSession, user.loggedIn]);
 
-  const baseButton = (
-    <DropdownMenuCheckboxItem
-      onSelect={(e) => e.preventDefault()}
-      disabled={showProfileLink}
-      checked={shareSession}
-      onCheckedChange={() => setShareSession(!shareSession)}
-    >
-      <DropdownIconStart icon={<CloudSync />} />
+  const getDescription = () => {
+    if (onLine && showProfileLink) {
+      return {
+        text: "Click to log in & pick a nickname to enable",
+      };
+    }
+    if (feedStatus?.enabled && !feedStatus.isMaster) {
+      return {
+        text: `Currently connected to ${
+          feedStatus.sessionState?.masterNickname || "someone else"
+        }'s session.`,
+        className: "",
+      };
+    }
+    if (!shareSession) {
+      return {
+        text: "Share your page with others - live.",
+        className: "",
+      };
+    }
+    if (shareSession && user.loggedIn && user.profile.nickname) {
+      return {
+        text: `Your session can be viewed at ${window.location.host}/feed/${user.profile.nickname}`,
+        className: "",
+      };
+    }
+    return null;
+  };
 
-      <div>
-        Share current song
-        {!shareSession && (
-          <p className="text-[0.7em] leading-tight">
-            Share your page with others - live.
-          </p>
-        )}
-        {shareSession && feedStatus && feedStatus.connectedClients > 0 && (
-          <p className="text-[0.7em] leading-tight mb-1">
-            Connected clients: {feedStatus.connectedClients}
-          </p>
-        )}
-        {shareSession && user.loggedIn && user.profile.nickname && (
-          <p className="text-[0.7em] leading-tight">
-            Your session can be viewed at {window.location.host}/feed/
-            {user.profile.nickname}
-          </p>
-        )}
-      </div>
-    </DropdownMenuCheckboxItem>
+  const description = getDescription();
+
+  const content = (
+    <DropdownItemWithDescription
+      title="Share current song"
+      description={description?.text}
+      descriptionClassName={description?.className}
+    />
   );
 
-  return onLine && showProfileLink ? (
-    <Link to={`/profile?redirect=${location.pathname}`}
+  const wrappedContent =
+    onLine && showProfileLink ? (
+      <Link to={`/profile?redirect=${location.pathname}`}>{content}</Link>
+    ) : (
+      content
+    );
+
+  const checkboxDisabled =
+    showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster);
+  return (
+    <DropdownMenuCheckboxItem
+      onSelect={(e) => e.preventDefault()}
+      checked={shareSession}
+      onCheckedChange={() => {
+        if (checkboxDisabled) return;
+        setShareSession(!shareSession);
+      }}
+      className={checkboxDisabled ? "opacity-50" : ""}
     >
-      {baseButton}
-      <p className="text-[0.6em] leading-tight ml-9 -mt-1">
-        Click to log in and pick a nickname to enable feature.
-      </p>
-    </Link>
-  ) : (
-    baseButton
+      <DropdownIconStart icon={<CloudSync />} />
+      {wrappedContent}
+    </DropdownMenuCheckboxItem>
   );
 };
 
