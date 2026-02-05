@@ -101,6 +101,7 @@ export class SongData {
       updatedAt: new Date(),
       key: undefined,
       startMelody: "",
+      // TODO: songrow should be able to accept undefined...
       language: "other",
       capo: 0,
       tempo: undefined,
@@ -108,21 +109,10 @@ export class SongData {
       chordpro: "", // External songs won't have chordpro immediately
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
-      sourceId: "external_search",
+      sourceId: external.sourceId,
     });
 
-    // Mock the illustration object so thumbnailURL() works
-    if (external.thumbnailUrl) {
-      song.currentIllustration = {
-        thumbnailURL: external.thumbnailUrl,
-        imageURL: external.thumbnailUrl,
-        // Mock required fields that won't be used
-        illustrationId: "ext",
-        promptId: "ext",
-        imageModel: "ext",
-        promptURL: "",
-      };
-    }
+    song.url = () => external.url;
 
     return song;
   }

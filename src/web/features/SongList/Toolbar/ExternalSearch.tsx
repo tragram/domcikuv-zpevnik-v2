@@ -8,7 +8,8 @@ export interface ExternalSongResult {
   artist: string;
   source: string;
   url: string;
-  thumbnailUrl?: string;
+  thumbnailUrl: string;
+  sourceId: string;
 }
 
 // Interface for any external search provider
@@ -78,6 +79,7 @@ export class PisnickyAkordyProvider implements ExternalSearchProvider {
           source: this.name,
           url: `/pa/${hit.interpreter.slug}/${hit.slug}`,
           thumbnailUrl: hit.image || "pa_logo.png",
+          sourceId: "pisnicky-akordy"
         }));
     } catch (error) {
       console.error("Error searching pisnicky-akordy:", error);
