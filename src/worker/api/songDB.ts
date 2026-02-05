@@ -5,11 +5,9 @@ import {
   illustrationPrompt,
   song,
   songIllustration,
-  songVersion,
 } from "src/lib/db/schema";
 import { z } from "zod/v4";
 import {
-  baseSelectFields,
   createSong,
   findSong,
   getSongbooks,
@@ -174,7 +172,6 @@ export const songDBRoutes = buildApp()
       const songExists = existingSong.length > 0;
       if (songExists)
         return errorJSend(c, "Song already exists in DB", 422, newSongId);
-
       // database write
       const submission: EditorSubmitSchema = {
         title: title,
