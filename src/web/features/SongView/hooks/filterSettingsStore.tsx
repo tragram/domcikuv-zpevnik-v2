@@ -19,6 +19,7 @@ interface FilterSettingsState extends FilterSettings {
   setCapo: (capo: boolean) => void;
   toggleCapo: () => void;
   toggleFavorites: () => void;
+  toggleShowExternal: () => void;
   resetFilters: () => void;
 }
 
@@ -28,6 +29,7 @@ interface FilterDefaults {
   selectedSongbooks: Songbook[];
   capo: boolean;
   onlyFavorites: boolean;
+  showExternal: boolean;
 }
 
 interface FilterStoreProps {
@@ -57,13 +59,13 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
           set((state) => ({
             selectedSongbooks: safeAddSongbook(
               state.selectedSongbooks,
-              songbook
+              songbook,
             ),
           })),
         removeSongbook: (deletedSongbook: Songbook) =>
           set((state) => ({
             selectedSongbooks: state.selectedSongbooks.filter(
-              (s) => s.name != deletedSongbook.name
+              (s) => s.name != deletedSongbook.name,
             ),
           })),
         clearSongbooks: () => set({ selectedSongbooks: [] }),
@@ -72,6 +74,9 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
         toggleCapo: () => set((state) => ({ capo: !state.capo })),
         toggleFavorites: () =>
           set((state) => ({ onlyFavorites: !state.onlyFavorites })),
+
+        toggleShowExternal: () =>
+          set((state) => ({ showExternal: !state.showExternal })),
         resetFilters: () => set(initProps.defaults),
       }),
       {
@@ -85,11 +90,11 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
             // ensure we do not have selected songbooks that are not available anymore
             if (parsed.state?.selectedSongbooks) {
               const availableSongbookNames = new Set(
-                initProps.availableSongbooks.map((s) => s.name)
+                initProps.availableSongbooks.map((s) => s.name),
               );
               parsed.state.selectedSongbooks =
                 parsed.state.selectedSongbooks.filter((s: Songbook) =>
-                  availableSongbookNames.has(s.name)
+                  availableSongbookNames.has(s.name),
                 );
             }
             return parsed;
@@ -101,7 +106,7 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
               state: {
                 ...value.state,
                 selectedSongbooks: Array.from(
-                  value.state.selectedSongbooks || []
+                  value.state.selectedSongbooks || [],
                 ),
               },
             };
@@ -109,8 +114,8 @@ const createFilterSettingsStore = (initProps: FilterStoreProps) =>
           },
           removeItem: (name) => localStorage.removeItem(name),
         },
-      }
-    )
+      },
+    ),
   );
 
 const FilterStoreContext = React.createContext<ReturnType<
@@ -121,7 +126,7 @@ export const useFilterSettingsStore = () => {
   const store = React.useContext(FilterStoreContext);
   if (!store) {
     throw new Error(
-      "useFilterSettingsStore must be used within FilterStoreProvider"
+      "useFilterSettingsStore must be used within FilterStoreProvider",
     );
   }
   return store();
@@ -140,13 +145,14 @@ export const FilterStoreProvider = ({
     selectedSongbooks: [],
     capo: true,
     onlyFavorites: false,
+    showExternal: true,
   };
 
   const [store] = React.useState(() =>
     createFilterSettingsStore({
       defaults: filterDefaults,
       availableSongbooks,
-    })
+    }),
   );
 
   return (
