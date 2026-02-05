@@ -330,10 +330,6 @@ export const createSongVersion = async (
     .where(and(eq(songVersion.songId, songId), eq(songVersion.userId, userId)))
     .limit(1);
 
-    .select()
-    .from(songVersion)
-    .where(and(eq(songVersion.songId, songId), eq(songVersion.userId, userId)))
-    .limit(1);
 
   if (userVersionResult.length > 0) {
     const existingVersion = userVersionResult[0];

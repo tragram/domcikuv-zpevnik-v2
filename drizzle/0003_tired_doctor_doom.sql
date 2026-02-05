@@ -1,1 +1,0 @@
-ALTER TABLE `song` ADD `verified` integer DEFAULT true NOT NULL;
