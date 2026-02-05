@@ -10,17 +10,20 @@ import { UserProfileData } from "src/worker/api/userProfile";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
+import { Globe, Search } from "lucide-react";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
 function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
-  const { songs, externalSongs, isLoadingExternal, shouldSearchExternal } =
-    useFilteredSongs(
-      songDB.songs,
-      songDB.languages,
-      user,
-      songDB.songbooks,
-    );
+  const {
+    songs,
+    externalSongs,
+    isLoadingExternal,
+    triggerExternalSearch,
+    hasTriggeredExternalSearch,
+    canSearchExternal,
+  } = useFilteredSongs(songDB.songs, songDB.languages, user, songDB.songbooks);
+
   const { resetFilters } = useFilterSettingsStore();
   const [showToolbar, setShowToolbar] = useState(true);
   const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
@@ -54,10 +57,6 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
 
   const hasInternalResults = songs.length > 0;
   const hasExternalResults = externalSongs.length > 0;
-  
-  // Logic: Show external section if we have results OR if we are currently loading them.
-  // We do NOT show it if we are just "ready to search" but finished with 0 results (that falls to Empty State).
-  const showExternalSection = hasExternalResults || isLoadingExternal;
 
   return (
     <div className="no-scrollbar w-full">
@@ -103,60 +102,78 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
           </div>
         )}
 
-        {/* Separator: Only if we have BOTH internal AND (external results OR loading) */}
-        {hasInternalResults && showExternalSection && (
-          <div className="container mx-auto max-w-3xl my-6 flex items-center gap-4">
-            <div className="h-px bg-border flex-1" />
-            <span className="text-xs font-medium text-muted-foreground uppercase">
-              External Results
-            </span>
-            <div className="h-px bg-border flex-1" />
-          </div>
-        )}
-
-        {/* SECTION 2: External Results Container */}
-        {showExternalSection && (
-          <div className="container mx-auto max-w-3xl flex flex-col gap-2">
-            {/* Context Message */}
-            {!hasInternalResults && !isLoadingExternal && hasExternalResults && (
-              <div className="text-sm text-muted-foreground p-4 text-center">
-                No exact local matches found. Showing results from the web:
+        {/* SECTION 2: External Search Trigger & Results */}
+        <div className="container mx-auto max-w-3xl flex flex-col gap-2 pb-8">
+          
+          {/* Separator if we have mixed content */}
+          {hasInternalResults && canSearchExternal && hasTriggeredExternalSearch && hasExternalResults && (
+            <div className="my-6 flex items-center gap-4">
+              <div className="h-px bg-border flex-1" />
+              <div className="flex items-center gap-2 px-4 text-xs font-medium text-primary uppercase tracking-wider whitespace-nowrap">
+                <Globe className="w-3 h-3" />
+                External Results
               </div>
-            )}
+              <div className="h-px bg-border flex-1" />
+            </div>
+          )}
 
-            {/* List */}
-            {hasExternalResults &&
-              externalSongs.map((song) => (
-                <SongRow
-                  key={song.id}
-                  song={song}
-                  maxRange={undefined}
-                  user={user}
-                />
-              ))}
-
-            {/* Loading Spinner */}
-            {isLoadingExternal && (
-              <div
-                className={cn(
-                  "flex justify-center w-full py-8",
-                  // Reduce padding if we already have content above
-                  hasExternalResults || hasInternalResults ? "py-4" : "pt-32",
-                )}
+          {/* Trigger Button: Show if we CAN search but HAVEN'T triggered it yet */}
+          {canSearchExternal && !hasTriggeredExternalSearch && (
+            <div className="flex flex-col items-center justify-center py-6 gap-3">
+              {!hasInternalResults && (
+                <p className="text-muted-foreground text-sm">
+                  No local songs found.
+                </p>
+              )}
+              <Button
+                variant="secondary"
+                onClick={triggerExternalSearch}
+                className="gap-2"
               >
-                <div className="flex flex-col items-center gap-2 animate-pulse text-muted-foreground">
-                  <span>Searching external libraries...</span>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+                <Globe className="w-4 h-4" />
+                Search Online Services
+              </Button>
+            </div>
+          )}
 
-        {/* SECTION 3: Empty State */}
-        {/* Render if: No Internal AND No External AND Not Loading */}
-        {!hasInternalResults && !hasExternalResults && !isLoadingExternal && (
-            <div className="pt-[20vh] text-primary flex flex-col h-full w-full items-center justify-center text-center text-xl font-bold sm:text-2xl gap-4">
+          {/* Loading State */}
+          {isLoadingExternal && (
+            <div className="flex justify-center w-full py-8">
+              <div className="flex flex-col items-center gap-2 animate-pulse text-muted-foreground">
+                <Search className="w-6 h-6 animate-bounce" />
+                <span className="text-sm">Searching external libraries...</span>
+              </div>
+            </div>
+          )}
+
+          {/* Results List */}
+          {hasTriggeredExternalSearch &&
+            hasExternalResults &&
+            externalSongs.map((song) => (
+              <SongRow
+                key={song.id}
+                song={song}
+                maxRange={undefined}
+                user={user}
+                externalSearch={true}
+              />
+            ))}
+        </div>
+
+        {/* SECTION 3: Unified Empty State */}
+        {/* Show when: No internal results AND (cannot search external OR already searched with no results) */}
+        {!hasInternalResults &&
+          (!canSearchExternal ||
+            (hasTriggeredExternalSearch &&
+              !isLoadingExternal &&
+              !hasExternalResults)) && (
+            <div className="text-primary flex flex-col h-full w-auto items-center justify-center text-center text-xl font-bold sm:text-2xl gap-4 border bg-muted/20 border-dashed p-8 rounded-lg m-6">
               <p>No songs fulfill all the filters set!</p>
+              {hasTriggeredExternalSearch && !hasExternalResults && (
+                <p className="text-sm font-normal text-muted-foreground">
+                  No results found in external libraries either.
+                </p>
+              )}
               <Button variant={"outline"} onClick={resetFilters}>
                 Reset all filters
               </Button>

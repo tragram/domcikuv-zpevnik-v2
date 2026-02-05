@@ -252,74 +252,78 @@ interface SongRowProps {
   song: SongData;
   maxRange?: number | undefined;
   user: UserProfileData;
+  externalSearch?: boolean;
 }
 
-const SongRow = memo(({ song, maxRange, user }: SongRowProps) => {
-  if (!song) {
-    console.error("Invalid song provided to SongRow");
+const SongRow = memo(
+  ({ song, maxRange, user, externalSearch = false }: SongRowProps) => {
+    if (!song) {
+      console.error("Invalid song provided to SongRow");
+      return (
+        <div className="text-foreground container mx-auto flex h-[70px] max-w-3xl items-center bg-white px-2 sm:px-4">
+          Invalid song
+        </div>
+      );
+    }
+
     return (
-      <div className="text-foreground container mx-auto flex h-[70px] max-w-3xl items-center bg-white px-2 sm:px-4">
-        Invalid song
-      </div>
-    );
-  }
-
-  return (
-    <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4">
-      <div
-        className="song-row-bg-image flex h-14 w-full min-w-72 rounded-full"
-        style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
-      >
-        <div className="song-row-bg-image row-text-shadow relative flex h-full w-full items-center rounded-full p-1 shadow-black backdrop-blur-md">
-          <IllustrationPopup
-            avatarClassName="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
-            song={song}
-          />
-          <Link
-            to={song.url()}
-            className="song-row bg-glass/60 hover:bg-glass/90 relative flex h-12 w-full rounded-full backdrop-blur-lg"
-          >
-            <div className="relative flex min-w-[72px] content-center justify-center rounded-l-full" />
-
-            <SongInfo
-              title={song.title}
-              artist={song.artist}
-              className="flex-auto"
+      <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4">
+        <div
+          className="song-row-bg-image flex h-14 w-full min-w-72 rounded-full"
+          style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
+        >
+          <div className="song-row-bg-image row-text-shadow relative flex h-full w-full items-center rounded-full p-1 shadow-black backdrop-blur-md">
+            <IllustrationPopup
+              avatarClassName="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
+              song={song}
             />
+            <Link
+              to={song.url()}
+              preload={externalSearch ? false : "intent"}
+              className="song-row bg-glass/60 hover:bg-glass/90 relative flex h-12 w-full rounded-full backdrop-blur-lg"
+            >
+              <div className="relative flex min-w-[72px] content-center justify-center rounded-l-full" />
 
-            {/* <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" /> */}
-            {user.loggedIn && !song.externalSource && (
-              <FavoriteButton
-                song={song}
-                className="hidden shrink-0 basis-1/12 xs:flex"
+              <SongInfo
+                title={song.title}
+                artist={song.artist}
+                className="flex-auto"
               />
-            )}
 
-            <DateDisplay
-              month={song.createdAt.getMonth() + 1}
-              year={song.createdAt.getFullYear()}
-              className="xsm:flex hidden shrink-0 basis-[2/12] md:basis-1/12"
-            />
+              {/* <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" /> */}
+              {user.loggedIn && !externalSearch && (
+                <FavoriteButton
+                  song={song}
+                  className="hidden shrink-0 basis-1/12 xs:flex"
+                />
+              )}
 
-            <CapoDisplay
-              capo={song.capo}
-              className="hidden shrink-0 basis-1/12 lg:flex"
-            />
+              <DateDisplay
+                month={song.createdAt.getMonth() + 1}
+                year={song.createdAt.getFullYear()}
+                className="xsm:flex hidden shrink-0 basis-[2/12] md:basis-1/12"
+              />
 
-            <VocalRangeIndicator
-              songRangeSemitones={song.range?.semitones}
-              maxRange={maxRange}
-              className="hidden shrink-0 basis-1/12 md:flex"
-            />
+              <CapoDisplay
+                capo={song.capo}
+                className="hidden shrink-0 basis-1/12 lg:flex"
+              />
 
-            <div className="flex min-w-10 shrink-0 basis-[5%] items-center justify-end p-2">
-              <LanguageFlag language={song.language} />
-            </div>
-          </Link>
+              <VocalRangeIndicator
+                songRangeSemitones={song.range?.semitones}
+                maxRange={maxRange}
+                className="hidden shrink-0 basis-1/12 md:flex"
+              />
+
+              <div className="flex min-w-10 shrink-0 basis-[5%] items-center justify-end p-2">
+                {!externalSearch && <LanguageFlag language={song.language} />}
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 export default SongRow;

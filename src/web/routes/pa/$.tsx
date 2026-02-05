@@ -1,7 +1,10 @@
 import { createFileRoute, redirect, Link } from "@tanstack/react-router";
 import { Button } from "~/components/ui/button";
 import { ApiException, makeApiRequest } from "~/services/apiHelpers";
+
 export const Route = createFileRoute("/pa/$")({
+  pendingMs: 0, // Show pending immediately
+  pendingMinMs: 2000, // keep visible for at least 500ms
   loader: async ({ params, context, preload }) => {
     // Don't run import on preload (e.g., from hover)
     if (preload) {
@@ -62,6 +65,19 @@ export const Route = createFileRoute("/pa/$")({
       throw error;
     }
   },
+  pendingComponent: () => (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="max-w-md w-full outline-primary outline-2 rounded-lg shadow-lg p-6 text-center">
+        <div className="mb-4">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
+        </div>
+        <h1 className="text-2xl font-bold text-primary mb-2">Importing Song</h1>
+        <p className="text-700">
+          Please wait while the song is being scraped...
+        </p>
+      </div>
+    </div>
+  ),
   errorComponent: ({ error }) => {
     const songId = (error as any)?.songId;
 

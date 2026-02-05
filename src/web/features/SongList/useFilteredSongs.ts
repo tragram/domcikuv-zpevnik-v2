@@ -1,7 +1,7 @@
 import type { LanguageCount, SortField, SortOrder } from "~/types/types";
 import { SongData } from "~/types/songData";
 import Fuse from "fuse.js";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQueryStore } from "./Toolbar/SearchBar";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
@@ -14,6 +14,7 @@ import {
 } from "./Toolbar/ExternalSearch";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounceValue } from "usehooks-ts";
+
 const filterLanguage = (
   songs: SongData[],
   selectedLanguage: string,
@@ -139,6 +140,14 @@ export function useFilteredSongs(
     showExternal,
   } = useFilterSettingsStore();
 
+  const [externalSearchTriggered, setExternalSearchTriggered] = useState(false);
+
+  // Reset external search trigger when the query changes
+  useEffect(() => {
+    setExternalSearchTriggered(false);
+  }, [query]);
+
+  // Reset query on sort change (optional, legacy behavior preserved)
   useEffect(() => {
     setQuery("");
   }, [sortByField, sortOrder, setQuery]);
@@ -163,8 +172,6 @@ export function useFilteredSongs(
     [fuse, songs, query],
   );
 
-  // fuzzyScore \in [0,1], where 0 ~ perfect match and 1 ~ completely fuzzy match (i.e. no match)
-  const minFuzzyScore = Math.min(...fuseSearch.map((fs) => fs.score as number));
   const internalSearchResults = fuseSearch.map((r) => r.item);
 
   let filteredInternalResults = filterCapo(internalSearchResults, capo);
@@ -200,16 +207,16 @@ export function useFilteredSongs(
   }
 
   // --- External Search Logic ---
-  // Debounce the query to prevent spamming APIs while typing
   const [debouncedQuery] = useDebounceValue(query, 500);
+  const isQueryValidForExternal = debouncedQuery.trim().length >= 3;
 
   const shouldSearchExternal =
     user.loggedIn &&
     showExternal &&
-    debouncedQuery.trim().length >= 5 &&
-    (minFuzzyScore > 0.1 || internalSearchResults.length === 0);
+    isQueryValidForExternal &&
+    externalSearchTriggered;
 
-  // Fetch PA token lazily - only when external search is needed
+  // Fetch PA token lazily - only when external search is actually triggered
   const { data: paToken } = usePAToken(shouldSearchExternal);
 
   const { data: externalSongs = [], isFetching: isLoadingExternal } = useQuery({
@@ -223,7 +230,7 @@ export function useFilteredSongs(
       );
       return results.map(SongData.fromExternal);
     },
-    // Only enable external search if we should search AND we have a token
+    // Only enable external search if trigger is active and we have a token
     enabled: shouldSearchExternal && !!paToken,
     staleTime: 1000 * 60 * 5,
   });
@@ -232,6 +239,8 @@ export function useFilteredSongs(
     songs: filteredInternalResults,
     externalSongs,
     isLoadingExternal,
-    shouldSearchExternal,
+    triggerExternalSearch: () => setExternalSearchTriggered(true),
+    hasTriggeredExternalSearch: externalSearchTriggered,
+    canSearchExternal: user.loggedIn && showExternal && isQueryValidForExternal,
   };
 }
