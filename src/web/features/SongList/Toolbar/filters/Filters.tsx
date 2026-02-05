@@ -1,5 +1,5 @@
 import { getRouteApi } from "@tanstack/react-router";
-import { Filter, Handshake, Heart } from "lucide-react";
+import { Filter, Globe, Handshake, Heart } from "lucide-react";
 import { JSX } from "react";
 import { Button } from "~/components/ui/button";
 import {
@@ -30,6 +30,7 @@ export interface FilterSettings {
   vocalRange: VocalRangeType;
   capo: boolean;
   onlyFavorites: boolean;
+  showExternal: boolean;
 }
 
 // Common filter buttons used by both desktop and mobile views
@@ -50,6 +51,7 @@ const FilterControls = ({
     selectedSongbooks,
     vocalRange,
     capo,
+    showExternal,
     onlyFavorites,
     setLanguage,
     addSongbook,
@@ -58,6 +60,7 @@ const FilterControls = ({
     clearSongbooks,
     setVocalRange,
     toggleCapo,
+    toggleShowExternal,
     toggleFavorites,
   } = filterStore;
 
@@ -106,6 +109,17 @@ const FilterControls = ({
             {!iconOnly && "Favorites only"}
           </Button>
         )}
+        {user.loggedIn && (
+          <Button
+            variant="circular"
+            isActive={showExternal}
+            className="rounded-none font-bold shadow-none outline-0"
+            onClick={toggleShowExternal}
+          >
+            <Globe />
+            {!iconOnly && "Show external"}
+          </Button>
+        )}
         {maxRange && (
           <VocalRangeFilter
             maxRange={maxRange}
@@ -134,6 +148,13 @@ const FilterControls = ({
         >
           Allow capo
         </DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          onClick={toggleShowExternal}
+          onSelect={(e) => e.preventDefault()}
+          checked={showExternal}
+        >
+          Show external songs
+        </DropdownMenuCheckboxItem>
         {maxRange &&
           VocalRangeDropdownSection(maxRange, vocalRange, setVocalRange)}
         {LanguageFilterDropdownSection(languages, language, setLanguage)}
@@ -149,7 +170,7 @@ const FilterControls = ({
               clearSongbooks={clearSongbooks}
               iconOnly={false}
               sectionOnly={true}
-            />
+            />,
           )}
       </>
     ),

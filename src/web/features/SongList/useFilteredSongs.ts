@@ -89,7 +89,9 @@ const filterExternal = (
   showExternal: boolean,
 ) => {
   if (!loggedIn || !showExternal) {
-    return songs.filter((song) => song.sourceId === "editor");
+    return songs.filter(
+      (song) => song.sourceId === "editor" || song.sourceId === "manual",
+    );
   } else {
     return songs;
   }
@@ -128,8 +130,14 @@ export function useFilteredSongs(
 ) {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
-  const { language, selectedSongbooks, vocalRange, capo, onlyFavorites } =
-    useFilterSettingsStore();
+  const {
+    language,
+    selectedSongbooks,
+    vocalRange,
+    capo,
+    onlyFavorites,
+    showExternal,
+  } = useFilterSettingsStore();
 
   useEffect(() => {
     setQuery("");
@@ -177,7 +185,7 @@ export function useFilteredSongs(
   filteredInternalResults = filterExternal(
     filteredInternalResults,
     user.loggedIn,
-    true, //TODO: change when the setting is available
+    showExternal,
   );
   filteredInternalResults = filterSongbook(
     filteredInternalResults,
