@@ -31,6 +31,7 @@ export type SongWithCurrentVersion = SongDataDB & {
   capo: number | null;
   range: string | null;
   chordpro: string;
+  sourceId: string;
 };
 
 export type SongWithDataDB = SongDataDB & {
@@ -60,6 +61,7 @@ export type SongDataApi = {
   capo: number | undefined;
   range: string | undefined;
   chordpro: string;
+  sourceId: string;
   currentIllustration:
     | {
         illustrationId: string;
@@ -74,42 +76,44 @@ export type SongDataApi = {
   updateStatus?: "added" | "modified" | "deleted";
 };
 
+export const baseSelectFields = {
+  // Song table fields
+  id: song.id,
+  createdAt: song.createdAt,
+  updatedAt: song.updatedAt,
+  hidden: song.hidden,
+  deleted: song.deleted,
+
+  // Current version fields (song metadata)
+  title: songVersion.title,
+  artist: songVersion.artist,
+  key: songVersion.key,
+  startMelody: songVersion.startMelody,
+  language: songVersion.language,
+  tempo: songVersion.tempo,
+  capo: songVersion.capo,
+  range: songVersion.range,
+  chordpro: songVersion.chordpro,
+  sourceId: songVersion.sourceId,
+
+  // Current illustration fields
+  currentIllustration: {
+    illustrationId: songIllustration.id,
+    promptId: songIllustration.promptId,
+    imageModel: songIllustration.imageModel,
+    imageURL: songIllustration.imageURL,
+    thumbnailURL: songIllustration.thumbnailURL,
+  },
+};
+
 export async function retrieveSongs(
   db: DrizzleD1Database,
+  userId?: string,
   updatedSince?: Date,
   includeHidden = false,
-  includeDeleted = false
+  includeDeleted = false,
 ) {
-  const baseSelectFields = {
-    // Song table fields
-    id: song.id,
-    createdAt: song.createdAt,
-    updatedAt: song.updatedAt,
-    hidden: song.hidden,
-    deleted: song.deleted,
-
-    // Current version fields (song metadata)
-    title: songVersion.title,
-    artist: songVersion.artist,
-    key: songVersion.key,
-    startMelody: songVersion.startMelody,
-    language: songVersion.language,
-    tempo: songVersion.tempo,
-    capo: songVersion.capo,
-    range: songVersion.range,
-    chordpro: songVersion.chordpro,
-
-    // Current illustration fields
-    currentIllustration: {
-      illustrationId: songIllustration.id,
-      promptId: songIllustration.promptId,
-      imageModel: songIllustration.imageModel,
-      imageURL: songIllustration.imageURL,
-      thumbnailURL: songIllustration.thumbnailURL,
-    },
-  };
-
-  const query = db
+  let query = db
     .select({
       ...baseSelectFields,
     })
@@ -117,8 +121,19 @@ export async function retrieveSongs(
     .leftJoin(songVersion, eq(songVersion.id, song.currentVersionId))
     .leftJoin(
       songIllustration,
-      eq(songIllustration.id, song.currentIllustrationId)
+      eq(songIllustration.id, song.currentIllustrationId),
     );
+
+  // Add the userFavoriteSongs join conditionally
+  if (userId) {
+    query = query.leftJoin(
+      userFavoriteSongs,
+      and(
+        eq(userFavoriteSongs.songId, song.id),
+        eq(userFavoriteSongs.userId, userId),
+      ),
+    );
+  }
 
   // Build conditions
   const conditions = [];
@@ -158,6 +173,7 @@ export async function retrieveSongs(
       tempo: songItem.tempo ? parseInt(songItem.tempo) : undefined,
       capo: songItem.capo ?? undefined,
       range: songItem.range ?? undefined,
+      sourceId: songItem.sourceId ?? "",
       chordpro: songItem.chordpro ?? "Not uploaded",
       currentIllustration:
         songItem.currentIllustration?.illustrationId &&
@@ -178,10 +194,10 @@ export async function retrieveSongs(
         ? songItem.deleted
           ? "deleted"
           : new Date(songItem.createdAt) >= updatedSince
-          ? "added"
-          : "modified"
+            ? "added"
+            : "modified"
         : undefined,
-    })
+    }),
   );
 }
 
@@ -230,7 +246,7 @@ export async function getSongbooks(db: DrizzleD1Database) {
 export const findSong = async (
   db: DrizzleD1Database,
   songId: string,
-  withVersion = true
+  withVersion = true,
 ): Promise<SongWithCurrentVersion | SongDataDB> => {
   let songResults: SongWithCurrentVersion[] | SongDataDB[];
   if (withVersion) {
@@ -261,7 +277,8 @@ export const createSong = async (
   db: DrizzleD1Database,
   submission: EditorSubmitSchema,
   userId: string,
-  isTrusted: boolean
+  isTrusted: boolean,
+  sourceId: string = "editor",
 ) => {
   const now = new Date();
   // assume 1-to-1 relation between songs and IDs
@@ -287,7 +304,8 @@ export const createSong = async (
     submission,
     songId,
     userId,
-    isTrusted
+    isTrusted,
+    sourceId,
   );
 
   const newSong = await db.select().from(song).where(eq(song.id, songId));
@@ -300,7 +318,8 @@ export const createSongVersion = async (
   submission: EditorSubmitSchema,
   songId: string,
   userId: string,
-  isTrusted: boolean
+  isTrusted: boolean,
+  sourceId: string = "editor",
 ) => {
   const now = new Date();
 
@@ -310,6 +329,7 @@ export const createSongVersion = async (
     .from(songVersion)
     .where(and(eq(songVersion.songId, songId), eq(songVersion.userId, userId)))
     .limit(1);
+
 
   if (userVersionResult.length > 0) {
     const existingVersion = userVersionResult[0];
@@ -321,6 +341,7 @@ export const createSongVersion = async (
         approved: isTrusted,
         approvedBy: isTrusted ? userId : null,
         approvedAt: isTrusted ? now : null,
+        sourceId: sourceId,
       })
       .where(eq(songVersion.id, existingVersion.id))
       .returning();
@@ -344,6 +365,7 @@ export const createSongVersion = async (
         updatedAt: now,
         userId: userId,
         approved: isTrusted,
+        sourceId: sourceId,
         approvedBy: isTrusted ? userId : null,
         approvedAt: isTrusted ? now : null,
       })
@@ -360,7 +382,7 @@ export const createSongVersion = async (
 
 export const findSongWithVersions = async (
   db: DrizzleD1Database,
-  songId: string
+  songId: string,
 ): Promise<SongWithDataDB> => {
   const songData = (await findSong(db, songId)) as SongDataDB;
 
@@ -411,7 +433,7 @@ export const findSongWithVersions = async (
 
 export const getSongVersionsByUser = async (
   db: DrizzleD1Database,
-  userId: string
+  userId: string,
 ) => {
   const versions = await db
     .select()
@@ -425,7 +447,7 @@ export const getSongVersionsByUser = async (
 export const deleteSongVersion = async (
   db: DrizzleD1Database,
   versionId: string,
-  userId: string
+  userId: string,
 ) => {
   const version = await db
     .select()

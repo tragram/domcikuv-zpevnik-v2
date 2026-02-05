@@ -20,11 +20,23 @@ export function IllustrationPopup({
   song,
 }: IllustrationPopupProps) {
   const [isOpen, setIsOpen] = useState(false);
+  // Track high-res loading state
+  const [highResLoaded, setHighResLoaded] = useState(false);
+  const [highResError, setHighResError] = useState(false);
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     setIsOpen(true);
   }, []);
+
+  // Reset states when dialog closes/opens to prevent flickering from previous songs
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      setHighResLoaded(false);
+      setHighResError(false);
+    }
+  };
 
   return (
     <>
@@ -37,45 +49,47 @@ export function IllustrationPopup({
           alt={"song illustration thumbnail"}
         />
       </Avatar>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      
+      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
         <DialogTitle className="hidden">Illustration image view</DialogTitle>
         {/* DialogDescription is here just so that accessibility does not complain */}
         <DialogDescription className="hidden">Illustration</DialogDescription>
+        
         <DialogContent
           animate={false}
-          className="max-w-[512px] max-h-[calc(100vh)] h-fit rounded-lg backdrop-blur-sm p-0 avatar-modal-dialog overflow-clip content-radix bg-glass/15 dark:bg-glass/50 gap-0 flex flex-col 
-          
-          duration-300 
-
-          data-[state=open]:animate-in 
-          data-[state=closed]:animate-out 
-
-          data-[state=closed]:fade-out-0 
-          data-[state=open]:fade-in-0 
-
-          data-[state=closed]:zoom-out-5 
-          data-[state=open]:zoom-in-5 
-          
-          data-[state=closed]:slide-out-to-right-[-50%] 
-          data-[state=open]:slide-in-from-right-[-50%]"
-          close={() => setIsOpen(false)}
+          className="max-w-[512px] max-h-[100vh] h-fit rounded-lg backdrop-blur-sm p-0 avatar-modal-dialog overflow-clip content-radix bg-glass/15 dark:bg-glass/50 gap-0 flex flex-col duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-5 data-[state=open]:zoom-in-5 data-[state=closed]:slide-out-to-right-[-50%] data-[state=open]:slide-in-from-right-[-50%]"
+          close={() => handleOpenChange(false)}
         >
           <div className="h-full w-full relative">
-            <div className="relative flex justify-center max-h-[512px] h-[70%] shadow-lg ">
-              <img
-                style={{
-                  backgroundImage: `url(${song.thumbnailURL()})`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                }}
-                src={song.illustrationURL()}
-                loading="lazy"
-                width={512}
-                height={512}
-                className="object-scale-down z-50"
-                alt="Song illustration"
-              />
+            {/* 1 & 2: Container handles unexpected sizes and overlapping */}
+            <div className="relative grid place-items-center w-full max-h-[512px] aspect-square shadow-lg overflow-hidden bg-black/20">
+              
+              {/* Pre-cached Thumbnail: Shown as a fallback/background */}
+              {(!highResLoaded || highResError) && (
+                <img
+                  src={song.thumbnailURL()}
+                  className="absolute inset-0 w-full h-full object-contain blur-sm scale-110"
+                  alt="placeholder"
+                />
+              )}
+
+              {/* High-res Image: Stacked on top */}
+              {!highResError && (
+                <img
+                  src={song.illustrationURL()}
+                  onLoad={() => setHighResLoaded(true)}
+                  onError={() => setHighResError(true)}
+                  // 1: Ensure we don't see both if we don't want to (via opacity)
+                  // 2: object-contain handles unexpected aspect ratios
+                  className={cn(
+                    "relative z-10 w-full h-full object-contain transition-opacity duration-300",
+                    highResLoaded ? "opacity-100" : "opacity-0"
+                  )}
+                  alt="Song illustration"
+                />
+              )}
             </div>
+
             <IllustrationPrompt
               song={song}
               show={isOpen && Boolean(song.currentIllustration)}

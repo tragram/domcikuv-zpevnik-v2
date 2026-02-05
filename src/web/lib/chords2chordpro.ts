@@ -302,3 +302,4 @@ function convertToChordPro(songText: string): string {
 }
 
 export { processSong, isConvertibleFormat, convertToChordPro };
+

@@ -249,7 +249,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
         submission,
         songId,
         userId,
-        isTrusted
+        isTrusted,
       );
 
       return successJSend(c, { song: existingSong, version: versionResult });
@@ -276,7 +276,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
         c,
         "Failed to retrieve your submissions",
         500,
-        "GET_EDITS_ERROR"
+        "GET_EDITS_ERROR",
       );
     }
   })
@@ -300,7 +300,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
         c,
         "Failed to delete version",
         500,
-        "DELETE_VERSION_ERROR"
+        "DELETE_VERSION_ERROR",
       );
     }
   });

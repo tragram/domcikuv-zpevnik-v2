@@ -1,1 +1,0 @@
-ALTER TABLE `song` ADD `deleted` integer DEFAULT false NOT NULL;

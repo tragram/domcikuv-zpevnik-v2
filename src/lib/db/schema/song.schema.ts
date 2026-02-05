@@ -3,6 +3,7 @@ import {
   integer,
   sqliteTable,
   text,
+  uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 import { user } from "./auth.schema";
@@ -11,11 +12,11 @@ export const song = sqliteTable("song", {
   id: text("id").primaryKey(),
   currentVersionId: text("current_version_id").references(
     () => songVersion.id,
-    { onDelete: "set null" }
+    { onDelete: "set null" },
   ),
   currentIllustrationId: text("current_illustration_id").references(
     () => songIllustration.id,
-    { onDelete: "set null" }
+    { onDelete: "set null" },
   ),
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
@@ -50,6 +51,7 @@ export const songVersion = sqliteTable("song_version", {
   approved: integer("approved", { mode: "boolean" }).notNull().default(false),
   approvedBy: text("approved_by").references(() => user.id),
   approvedAt: integer("approved_at", { mode: "timestamp" }),
+  sourceId: text("source_id").notNull().default("editor"),
 
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
@@ -130,7 +132,7 @@ export const songIllustrationRelations = relations(
       fields: [songIllustration.songId],
       references: [song.id],
     }),
-  })
+  }),
 );
 
 export const songVersionRelations = relations(songVersion, ({ one }) => ({
@@ -155,5 +157,5 @@ export const illustrationPromptRelations = relations(
       fields: [illustrationPrompt.songId],
       references: [song.id],
     }),
-  })
+  }),
 );

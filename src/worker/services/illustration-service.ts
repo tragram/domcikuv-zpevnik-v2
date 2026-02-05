@@ -9,7 +9,7 @@ import {
 } from "src/lib/db/schema";
 import { findSong, SongWithCurrentVersion } from "./song-service";
 import { Context } from "hono";
-import { promptFolder, SongData } from "~/types/songData";
+import { promptFolder } from "~/types/songData";
 import { z } from "zod";
 import {
   IMAGE_MODELS_API,

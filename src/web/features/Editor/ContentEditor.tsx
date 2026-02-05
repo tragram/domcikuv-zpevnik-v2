@@ -1,21 +1,23 @@
 import { useRouteContext } from "@tanstack/react-router";
-import { FileInput, Hourglass, Sparkles, X } from "lucide-react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useHistoryState } from "@uidotdev/usehooks";
+import { FileInput, Sparkles } from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 import { UserProfileData } from "src/worker/api/userProfile";
-import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
 import { cn, tailwindBreakpoint } from "~/lib/utils";
 import { autofillChordpro } from "~/services/editorHelpers";
+import {
+  convertToChordPro,
+  isConvertibleFormat,
+} from "../../lib/chords2chordpro";
 import "./Editor.css";
-import { convertToChordPro, isConvertibleFormat } from "./chords2chordpro";
+import { SmartFeature, SmartFeatureBar } from "./components/SmartFeatureBar";
 import {
   SnippetButton,
   SnippetButtonSection,
   snippets,
 } from "./components/Snippets";
-import { SmartFeature, SmartFeatureBar } from "./components/SmartFeatureBar";
-import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {
@@ -102,7 +104,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [dismissedFeatures, setDismissedFeatures] = useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const [isProcessing, setIsProcessing] = useState(false);
   const api = useRouteContext({ strict: false }).api;
@@ -132,7 +134,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
 
   const activeFeature = useMemo(() => {
     return SMART_FEATURES.find(
-      (f) => f.check(state, user) && !dismissedFeatures.has(f.id)
+      (f) => f.check(state, user) && !dismissedFeatures.has(f.id),
     );
   }, [state, user, dismissedFeatures]);
 
@@ -214,7 +216,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
 
     if (activeFeature.id === "convert_to_chordpro") {
       const converted = normalizeWhitespace(
-        replaceRepetitions(convertToChordPro(state))
+        replaceRepetitions(convertToChordPro(state)),
       );
       setContent(converted); // This pushes to custom history stack
       setDismissedFeatures((prev) => new Set(prev).add("convert_to_chordpro"));
@@ -272,7 +274,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
           "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto border-none",
           activeFeature?.id === "convert_to_chordpro"
             ? "font-mono !rounded-b-none"
-            : "font-normal"
+            : "font-normal",
         )}
         onChange={onEditorChange}
         value={state}

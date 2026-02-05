@@ -1,41 +1,41 @@
 import type { LanguageCount, SortField, SortOrder } from "~/types/types";
 import { SongData } from "~/types/songData";
 import Fuse from "fuse.js";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQueryStore } from "./Toolbar/SearchBar";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { Songbook } from "~/services/songs";
+import {
+  searchAllExternalServices,
+  usePAToken,
+} from "./Toolbar/ExternalSearch";
+import { useQuery } from "@tanstack/react-query";
+import { useDebounceValue } from "usehooks-ts";
 
 const filterLanguage = (
   songs: SongData[],
   selectedLanguage: string,
-  languageCounts: LanguageCount
+  languageCounts: LanguageCount,
 ): SongData[] => {
   if (selectedLanguage === "all") {
     return songs;
   }
-
   if (selectedLanguage === "other") {
-    // Count all languages across the song database
-
-    // Return songs with languages that have fewer than x songs
     return songs.filter((song) => {
       const lang = song.language || "other";
       return languageCounts[lang] < RARE_LANGUAGE_THRESHOLD;
     });
   }
-
-  // Standard language filtering
   return songs.filter((song) => song.language === selectedLanguage);
 };
 
 const filterFavorites = (
   songs: SongData[],
   loggedIn: boolean,
-  onlyFavorites: boolean
+  onlyFavorites: boolean,
 ) => {
   if (loggedIn && onlyFavorites) {
     return songs.filter((song) => song.isFavorite);
@@ -53,7 +53,7 @@ const filterCapo = (songs: SongData[], allowCapo: boolean): SongData[] => {
 
 const filterVocalRange = (
   songs: SongData[],
-  vocalRange: "all" | [number, number]
+  vocalRange: "all" | [number, number],
 ): SongData[] => {
   if (vocalRange === "all") {
     return songs;
@@ -62,14 +62,14 @@ const filterVocalRange = (
     (song) =>
       song.range?.semitones !== undefined &&
       song.range.semitones >= vocalRange[0] &&
-      song.range.semitones <= vocalRange[1]
+      song.range.semitones <= vocalRange[1],
   );
 };
 
 export const filterSongbook = (
   songs: SongData[],
   availableSongbooks: Songbook[],
-  selectedSongbooks: Songbook[]
+  selectedSongbooks: Songbook[],
 ) => {
   if (availableSongbooks.length === 0 || selectedSongbooks.length === 0) {
     return songs;
@@ -78,15 +78,29 @@ export const filterSongbook = (
   let contentsOfSelectedSongbooks = new Set<string>();
   selectedSongbooks.forEach((s) => {
     contentsOfSelectedSongbooks = contentsOfSelectedSongbooks.union(
-      new Set(s.songIds)
+      new Set(s.songIds),
     );
   });
   return songs.filter((s) => contentsOfSelectedSongbooks.has(s.id));
 };
 
+const filterExternal = (
+  songs: SongData[],
+  loggedIn: boolean,
+  showExternal: boolean,
+) => {
+  if (!loggedIn || !showExternal) {
+    return songs.filter(
+      (song) => song.sourceId === "editor" || song.sourceId === "manual",
+    );
+  } else {
+    return songs;
+  }
+};
+
 const getSortCompareFunction = (
   sortByField: SortField,
-  sortOrder: SortOrder
+  sortOrder: SortOrder,
 ) => {
   return (a: SongData, b: SongData): number => {
     let comparison: number;
@@ -113,13 +127,27 @@ export function useFilteredSongs(
   songs: SongData[],
   languageCounts: LanguageCount,
   user: UserProfileData,
-  availableSongbooks: Songbook[]
+  availableSongbooks: Songbook[],
 ) {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
-  const { language, selectedSongbooks, vocalRange, capo, onlyFavorites } =
-    useFilterSettingsStore();
-  // Reset search when sort settings change
+  const {
+    language,
+    selectedSongbooks,
+    vocalRange,
+    capo,
+    onlyFavorites,
+    showExternal,
+  } = useFilterSettingsStore();
+
+  const [externalSearchTriggered, setExternalSearchTriggered] = useState(false);
+
+  // Reset external search trigger when the query changes
+  useEffect(() => {
+    setExternalSearchTriggered(false);
+  }, [query]);
+
+  // Reset query on sort change (optional, legacy behavior preserved)
   useEffect(() => {
     setQuery("");
   }, [sortByField, sortOrder, setQuery]);
@@ -134,20 +162,85 @@ export function useFilteredSongs(
     return new Fuse(songs, options);
   }, [songs]);
 
-  const searchResults = useMemo(
-    () => (query === "" ? songs : fuse.search(query).map((r) => r.item)),
-    [fuse, songs, query]
+  const fuseSearch = useMemo(
+    () =>
+      query === ""
+        ? songs.map((s) => {
+            return { item: s, score: 0 };
+          })
+        : fuse.search(query),
+    [fuse, songs, query],
   );
 
-  // Apply filters
-  let results = filterCapo(searchResults, capo);
-  results = filterVocalRange(results, vocalRange);
-  results = filterLanguage(results, language, languageCounts);
-  results = filterFavorites(results, user.loggedIn, onlyFavorites);
-  results = filterSongbook(results, availableSongbooks, selectedSongbooks);
-  // Only sort if there's no search query
+  const internalSearchResults = fuseSearch.map((r) => r.item);
+
+  let filteredInternalResults = filterCapo(internalSearchResults, capo);
+  filteredInternalResults = filterVocalRange(
+    filteredInternalResults,
+    vocalRange,
+  );
+  filteredInternalResults = filterLanguage(
+    filteredInternalResults,
+    language,
+    languageCounts,
+  );
+  filteredInternalResults = filterFavorites(
+    filteredInternalResults,
+    user.loggedIn,
+    onlyFavorites,
+  );
+  filteredInternalResults = filterExternal(
+    filteredInternalResults,
+    user.loggedIn,
+    showExternal,
+  );
+  filteredInternalResults = filterSongbook(
+    filteredInternalResults,
+    availableSongbooks,
+    selectedSongbooks,
+  );
+
   if (!query) {
-    results = [...results].sort(getSortCompareFunction(sortByField, sortOrder));
+    filteredInternalResults = [...filteredInternalResults].sort(
+      getSortCompareFunction(sortByField, sortOrder),
+    );
   }
-  return { songs: results };
+
+  // --- External Search Logic ---
+  const [debouncedQuery] = useDebounceValue(query, 500);
+  const isQueryValidForExternal = debouncedQuery.trim().length >= 3;
+
+  const shouldSearchExternal =
+    user.loggedIn &&
+    showExternal &&
+    isQueryValidForExternal &&
+    externalSearchTriggered;
+
+  // Fetch PA token lazily - only when external search is actually triggered
+  const { data: paToken } = usePAToken(shouldSearchExternal);
+
+  const { data: externalSongs = [], isFetching: isLoadingExternal } = useQuery({
+    queryKey: ["externalSearch", debouncedQuery],
+    queryFn: async () => {
+      // Only search if we have a token
+      if (!paToken) return [];
+      const results = await searchAllExternalServices(
+        debouncedQuery,
+        paToken.PAToken,
+      );
+      return results.map(SongData.fromExternal);
+    },
+    // Only enable external search if trigger is active and we have a token
+    enabled: shouldSearchExternal && !!paToken,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    songs: filteredInternalResults,
+    externalSongs,
+    isLoadingExternal,
+    triggerExternalSearch: () => setExternalSearchTriggered(true),
+    hasTriggeredExternalSearch: externalSearchTriggered,
+    canSearchExternal: user.loggedIn && showExternal && isQueryValidForExternal,
+  };
 }

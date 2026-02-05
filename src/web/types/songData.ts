@@ -2,6 +2,7 @@ import { EditorState } from "~/features/Editor/Editor";
 import { Key, SongRange } from "./musicTypes";
 import type { ChordPro, int, SongLanguage } from "./types";
 import { SongDataApi } from "src/worker/services/song-service";
+import { ExternalSongResult } from "~/features/SongList/Toolbar/ExternalSearch";
 
 interface CurrentIllustration {
   illustrationId: string;
@@ -26,7 +27,7 @@ const sanitizeId = (id: string) => {
 export const defaultPromptId = (
   songId: string,
   summaryModel: string,
-  promptVersion: string
+  promptVersion: string,
 ) => sanitizeId(`${songId}_${summaryModel}_${promptVersion}`);
 
 export const promptFolder = (songId: string, promptId: string) =>
@@ -48,6 +49,7 @@ export class SongData {
   capo: int;
   range?: SongRange;
   chordpro: ChordPro;
+  sourceId: string;
 
   // UI-specific fields
   currentIllustration: CurrentIllustration | undefined;
@@ -66,6 +68,7 @@ export class SongData {
     this.capo = songFromDB.capo || 0;
     this.range = this.parseRange(songFromDB.range);
     this.chordpro = songFromDB.chordpro;
+    this.sourceId = songFromDB.sourceId;
 
     this.currentIllustration = songFromDB.currentIllustration;
     this.isFavorite = songFromDB.isFavoriteByCurrentUser;
@@ -80,12 +83,38 @@ export class SongData {
       currentIllustration: undefined,
       tempo: Number(data.tempo) || undefined,
       isFavoriteByCurrentUser: false,
+      sourceId: "editor",
       // these need to be here because of a minor type mismatch
       key: data.key,
       startMelody: data.startMelody,
       capo: data.capo,
       range: data.range,
     });
+  }
+
+  static fromExternal(external: ExternalSongResult): SongData {
+    const song = new SongData({
+      id: external.id,
+      title: external.title,
+      artist: external.artist,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      key: undefined,
+      startMelody: "",
+      // TODO: songrow should be able to accept undefined...
+      language: "other",
+      capo: 0,
+      tempo: undefined,
+      range: undefined,
+      chordpro: "", // External songs won't have chordpro immediately
+      currentIllustration: undefined,
+      isFavoriteByCurrentUser: false,
+      sourceId: external.sourceId,
+    });
+
+    song.url = () => external.url;
+
+    return song;
   }
 
   private parseKey(key?: string): Key | undefined {
@@ -128,6 +157,7 @@ export class SongData {
       tempo: undefined,
       range: "",
       chordpro: "",
+      sourceId: "",
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
     });
@@ -139,10 +169,14 @@ export class SongData {
 
   // Image URL methods
   thumbnailURL(): string | undefined {
+    if (!this.currentIllustration && this.sourceId === "pisnicky-akordy")
+      return "/pa_logo.png";
     return this.currentIllustration?.thumbnailURL;
   }
 
   illustrationURL(): string | undefined {
+    if (!this.currentIllustration && this.sourceId === "pisnicky-akordy")
+      return "/pa_logo.png";
     return this.currentIllustration?.imageURL;
   }
 
@@ -163,6 +197,7 @@ export class SongData {
       chordpro: this.chordpro,
       currentIllustration: this.currentIllustration,
       isFavorite: this.isFavorite,
+      sourceId: this.sourceId,
       url: this.url(),
       thumbnailURL: this.thumbnailURL(),
       illustrationURL: this.illustrationURL(),
@@ -198,12 +233,12 @@ export class SongData {
     const preamble = directives.map((d) =>
       this[d] instanceof Date
         ? `{${d}: ${this[d].getTime()}}`
-        : `{${d}: ${this[d] ?? ""}}`
+        : `{${d}: ${this[d] ?? ""}}`,
     );
 
     preamble.push(`{createdAt: ${this.createdAt.getTime()}}`);
     preamble.push(
-      `{illustrationId: ${this.currentIllustration?.illustrationId}}`
+      `{illustrationId: ${this.currentIllustration?.illustrationId}}`,
     );
     preamble.push(`{promptId: ${this.currentIllustration?.promptId}}`);
     return preamble.join("\n") + "\n\n" + this.chordpro;
