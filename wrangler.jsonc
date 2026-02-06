@@ -33,7 +33,7 @@
     {
       "binding": "DB",
       "database_name": "zpevnik",
-      "database_id": "9a26c188-9584-4259-afdb-bb33d56d267c",
+      "database_id": "3b8b9e28-f862-40bf-a694-58cf3d597f03",
       "migrations_dir": "drizzle/"
     }
   ],
