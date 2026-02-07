@@ -9,11 +9,11 @@ import {
   ListRestart,
   RotateCcw,
   Star,
-  Trash2,
 } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
+import useLocalStorageState from "use-local-storage-state";
 import SongVersionStatusBadge from "~/components/SongVersionStatusBadge";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -35,6 +35,7 @@ import {
   useApproveVersion,
   useDeleteSong,
   useDeleteVersion,
+  useGenerateIllustration,
   useRejectVersion,
   useResetVersionDB,
   useRestoreSong,
@@ -45,12 +46,23 @@ import {
 } from "../adminHooks";
 import { ActionButtons } from "./shared/action-buttons";
 import { TableToolbar } from "./shared/table-toolbar";
+import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
+import { backendDropdownOptions } from "./illustrations-table/illustration-group";
+
+// LocalStorage key for auto-illustration setting
+const AUTO_ILLUSTRATION_STORAGE_KEY = "admin-auto-generate-illustration";
 
 export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleted, setShowDeleted] = useState(false);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
   const navigate = useNavigate({ from: "/admin" });
+
+  // Load auto-illustration setting from localStorage (default: true)
+  const [autoGenerateIllustration, setAutoGenerateIllustration] =
+    useLocalStorageState(AUTO_ILLUSTRATION_STORAGE_KEY, {
+      defaultValue: false,
+    });
 
   const { data: songs, isLoading: songsLoading } = useSongsAdmin(adminApi);
   const { data: versions, isLoading: versionsLoading } =
@@ -64,6 +76,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const rejectVersionMutation = useRejectVersion(adminApi);
   const deleteVersionMutation = useDeleteVersion(adminApi);
   const restoreVersionMutation = useRestoreVersion(adminApi);
+  const generateIllustrationMutation = useGenerateIllustration(adminApi);
 
   if (songsLoading || versionsLoading) return <div>Loading...</div>;
   if (!songs || !versions) return <div>Error loading data.</div>;
@@ -105,6 +118,46 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     setExpandedSongs(next);
   };
 
+  // Helper to check if this is the first approval for a song
+  const isFirstApproval = (songId: string) => {
+    const songVersions = versionsBySong[songId] || [];
+    // Check if there are no approved or current versions yet
+    return songVersions.every(
+      (v) => v.status === "pending" || v.status === "rejected",
+    );
+  };
+
+  // Enhanced approve handler with auto-illustration generation
+  const handleApproveVersion = (songId: string, versionId: string) => {
+    const isFirst = isFirstApproval(songId);
+
+    approveVersionMutation.mutate(
+      { songId, versionId },
+      {
+        onSuccess: () => {
+          toast.success("Version approved and published");
+
+          // Auto-generate illustration if enabled and this is the first approval
+          if (autoGenerateIllustration && isFirst) {
+            toast.info("Auto-generating illustration...");
+
+            // Use the same defaults as in illustration-group.tsx
+            const illustrationData: IllustrationGenerateSchema = {
+              songId,
+              promptVersion: backendDropdownOptions.promptVersions.default,
+              summaryModel: backendDropdownOptions.summaryModels.default,
+              imageModel: backendDropdownOptions.imageModels.default,
+              setAsActive: true,
+            };
+
+            generateIllustrationMutation.mutate(illustrationData);
+          }
+        },
+        onError: () => toast.error("Failed to approve version"),
+      },
+    );
+  };
+
   return (
     <div className="space-y-4">
       <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm}>
@@ -120,6 +173,21 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Show deleted
+            </Label>
+          </div>
+          <div className="flex flex-row gap-2">
+            <Checkbox
+              id="auto-illustration"
+              checked={autoGenerateIllustration}
+              onCheckedChange={() =>
+                setAutoGenerateIllustration(!autoGenerateIllustration)
+              }
+            />
+            <Label
+              htmlFor="auto-illustration"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Auto-generate illustration on first approval
             </Label>
           </div>
           <ConfirmationDialog
@@ -185,11 +253,10 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                 currentVersion ??
                 songVersions.find((v) => ["published"].includes(v.status)) ??
                 songVersions.find((v) => ["archived"].includes(v.status)) ??
-                songVersions.find((v) => ["pending"].includes(v.status));
-
+                songVersions.find((v) => ["pending"].includes(v.status)) ??
+                songVersions.find((v) => ["rejected"].includes(v.status));
               return (
                 <React.Fragment key={song.id}>
-                  {/* Master Row */}
                   <TableRow
                     className={`cursor-pointer hover:bg-muted/50`}
                     onClick={() => toggleSongExpansion(song.id)}
@@ -271,22 +338,10 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                             Restore
                           </Button>
                         ) : (
-                          <ConfirmationDialog
-                            trigger={
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            }
-                            title="Delete Song"
+                          <DeletePrompt
+                            title={`Delete "${currentVersion?.title || "this song"}"?`}
                             description="Are you sure you want to delete this song?"
-                            confirmText="Delete"
-                            cancelText="Cancel"
-                            variant="destructive"
-                            onConfirm={() =>
+                            onDelete={() =>
                               deleteSongMutation.mutate(song.id, {
                                 onSuccess: () => toast.success("Song deleted"),
                                 onError: () =>
@@ -299,13 +354,17 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                     </TableCell>
                   </TableRow>
 
-                  {/* Expanded Detail Row */}
                   {isExpanded && (
-                    <TableRow className="bg-muted/5 hover:bg-muted/5">
-                      <TableCell colSpan={6} className="p-0">
-                        <div className="p-4 border-b border-t shadow-inner ">
-                          <h4 className="font-semibold text-sm mb-3 text-primary">
-                            History & Suggestions
+                    <TableRow>
+                      <TableCell colSpan={6} className="bg-muted/30 p-0">
+                        <div className="p-4">
+                          <h4 className="font-medium mb-3 flex items-center gap-2">
+                            <Clock className="h-4 w-4" />
+                            Version History
+                            <Badge variant="outline" className="ml-2">
+                              {songVersions.length} version
+                              {songVersions.length !== 1 ? "s" : ""}
+                            </Badge>
                           </h4>
                           <div className="space-y-2">
                             {songVersions
@@ -333,27 +392,19 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                               .map((version) => (
                                 <div
                                   key={version.id}
-                                  className={`flex items-center justify-between p-3 rounded-md border ${
-                                    version.status === "published"
-                                      ? "border-green-200 ring-1 ring-green-100"
-                                      : version.status === "rejected" ||
-                                          version.status === "deleted"
-                                        ? "opacity-75 border-dashed"
-                                        : ""
+                                  className={`flex items-center justify-between p-3 rounded-lg border bg-background transition-colors ${
+                                    version.id === song.currentVersionId
+                                      ? "border-primary/50 shadow-sm"
+                                      : "border-muted"
                                   }`}
                                 >
-                                  <div className="flex items-center gap-3">
-                                    {/* Icon indicating state */}
-                                    {version.status === "published" && (
-                                      <Star className="h-4 w-4 text-green-500 fill-green-100" />
-                                    )}
-                                    {version.status === "pending" && (
-                                      <Clock className="h-4 w-4 text-amber-500" />
-                                    )}
-
-                                    <div className="flex flex-col">
+                                  <div className="flex items-center gap-3 flex-1">
+                                    <Star
+                                      className={`h-4 w-4 text-primary fill-primary ${version.id === song.currentVersionId ? "" : "opacity-0"}`}
+                                    />
+                                    <div className="flex flex-col gap-1">
                                       <div className="flex items-center gap-2">
-                                        <span className="font-medium text-sm">
+                                        <span className="font-medium text">
                                           {version.title}
                                         </span>
                                         <SongVersionStatusBadge
@@ -361,12 +412,12 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                                         />
                                       </div>
                                       <span className="text-xs text-muted-foreground">
-                                        by {version.userId} •{" "}
                                         {new Date(
                                           version.createdAt,
                                         ).toLocaleDateString()}
-                                        {version.key &&
-                                          ` • Key: ${version.key}`}
+                                        {` • Key: ${version.key}`}
+                                        {version.tempo &&
+                                          ` • Tempo: ${version.tempo}`}
                                       </span>
                                     </div>
                                   </div>
@@ -380,21 +431,9 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                                           variant="outline"
                                           className="text-green-700 hover:text-green-800 hover:bg-green-50 border-green-200"
                                           onClick={() =>
-                                            approveVersionMutation.mutate(
-                                              {
-                                                songId: song.id,
-                                                versionId: version.id,
-                                              },
-                                              {
-                                                onSuccess: () =>
-                                                  toast.success(
-                                                    "Version approved and published",
-                                                  ),
-                                                onError: () =>
-                                                  toast.error(
-                                                    "Failed to approve version",
-                                                  ),
-                                              },
+                                            handleApproveVersion(
+                                              song.id,
+                                              version.id,
                                             )
                                           }
                                         >

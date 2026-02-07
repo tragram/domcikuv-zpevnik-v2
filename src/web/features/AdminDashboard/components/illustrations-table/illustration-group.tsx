@@ -10,11 +10,6 @@ import {
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "src/worker/api/admin/image-generator";
-import {
-  IllustrationCreateSchema,
-  IllustrationGenerateSchema,
-} from "src/worker/helpers/illustration-service";
-import { SongWithCurrentVersion } from "src/worker/helpers/song-service";
 import FormDialog from "~/components/dialogs/form-dialog";
 import PreviewDialog from "~/components/dialogs/preview-dialog";
 import { Badge } from "~/components/ui/badge";
@@ -31,6 +26,8 @@ import {
   IllustrationForm,
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
+import { IllustrationCreateSchema, IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
+import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
 
 interface SongIllustrationsGroupProps {
   song: SongWithCurrentVersion;
@@ -41,7 +38,7 @@ interface SongIllustrationsGroupProps {
   showDeleted: boolean;
 }
 
-const backendDropdownOptions = {
+export const backendDropdownOptions = {
   promptVersions: {
     data: SUMMARY_PROMPT_VERSIONS.map((spi) => {
       return { value: spi, label: spi };
