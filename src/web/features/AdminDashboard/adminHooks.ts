@@ -18,13 +18,13 @@ import {
   setActiveIllustration,
   songsWithCurrentVersionAdmin,
   updateIllustration,
-} from "~/services/songs";
+} from "~/services/song-service";
 import {
   createUserAdmin,
   deleteUserAdmin,
   fetchUsersAdmin,
   updateUserAdmin,
-} from "~/services/users";
+} from "~/services/user-service";
 import {
   IllustrationPromptDB,
   SongIllustrationDB,
@@ -36,12 +36,12 @@ import {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
   IllustrationModifySchema,
-} from "src/worker/services/illustration-service";
-import { SongWithCurrentVersion } from "src/worker/services/song-service";
+} from "src/worker/helpers/illustration-service";
+import { SongWithCurrentVersion } from "src/worker/helpers/song-service";
 import {
   CreateUserSchema,
   UpdateUserSchema,
-} from "src/worker/services/user-service";
+} from "src/worker/helpers/user-service";
 
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({

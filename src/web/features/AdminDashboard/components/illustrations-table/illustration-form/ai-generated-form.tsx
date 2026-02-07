@@ -17,7 +17,7 @@ import {
 import type { IllustrationSubmitData } from "./illustration-form";
 import {
   IllustrationGenerateSchema,
-} from "src/worker/services/illustration-service";
+} from "src/worker/helpers/illustration-service";
 import { SummaryPromptVersion, AvailableSummaryModel, AvailableImageModel } from "src/worker/api/admin/image-generator";
 
 interface AIGeneratedFormProps {

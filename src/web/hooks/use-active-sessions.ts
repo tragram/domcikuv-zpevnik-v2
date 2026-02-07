@@ -1,6 +1,6 @@
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { API } from "src/worker/api-client";
-import { fetchActiveSessions } from "~/services/users";
+import { fetchActiveSessions } from "~/services/user-service";
 import { SongDB } from "~/types/types";
 
 // Centralized query configuration

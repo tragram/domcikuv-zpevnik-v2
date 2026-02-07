@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { makeApiRequest } from "../../services/apiHelpers";
+import { makeApiRequest } from "../../services/api-service";
 import SongVersionStatusBadge from "~/components/SongVersionStatusBadge";
 import { SongVersionDB } from "src/lib/db/schema";
 

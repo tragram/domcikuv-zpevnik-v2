@@ -10,7 +10,7 @@ import {
   userSearchSchema,
   createUser,
   createUserSchema,
-} from "../../services/user-service";
+} from "../../helpers/user-helpers";
 import {
   errorFail,
   errorJSend,

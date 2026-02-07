@@ -26,8 +26,8 @@ import {
 } from "~/components/ui/dialog";
 import { cn } from "~/lib/utils";
 import { IllustrationForm } from "./illustration-form/illustration-form";
-import { IllustrationModifySchema } from "src/worker/services/illustration-service";
-import { SongWithCurrentVersion } from "src/worker/services/song-service";
+import { IllustrationModifySchema } from "src/worker/helpers/illustration-service";
+import { SongWithCurrentVersion } from "src/worker/helpers/song-service";
 import {
   useDeleteIllustration,
   useRestoreIllustration,

@@ -5,8 +5,8 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { SongIllustrationsGroup } from "./illustration-group";
-import { songsWithIllustrationsAndPrompts } from "~/services/illustrations";
-import { AdminApi } from "~/services/songs";
+import { songsWithIllustrationsAndPrompts } from "~/services/illustration-service";
+import { AdminApi } from "~/services/song-service";
 import {
   Select,
   SelectContent,

@@ -6,7 +6,7 @@ import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { Textarea } from "~/components/ui/textarea";
 import { cn, tailwindBreakpoint } from "~/lib/utils";
-import { autofillChordpro } from "~/services/editorHelpers";
+import { autofillChordpro } from "~/services/editor-service";
 import {
   convertToChordPro,
   isConvertibleFormat,

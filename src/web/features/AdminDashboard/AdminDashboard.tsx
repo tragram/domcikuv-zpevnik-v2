@@ -16,7 +16,7 @@ import { AdminSidebar } from "./components/admin-sidebar";
 import { IllustrationsTable } from "./components/illustrations-table/illustrations-table";
 import SongsTable from "./components/songs-table";
 import { UsersTable } from "./components/users-table";
-import { AdminApi } from "~/services/songs";
+import { AdminApi } from "~/services/song-service";
 
 interface AdminDashboardProps {
   adminApi: AdminApi;

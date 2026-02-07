@@ -6,7 +6,7 @@ import {
   deleteAvatar,
   getUserProfile,
   updateAvatar,
-} from "../services/user-service";
+} from "../helpers/user-helpers";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 

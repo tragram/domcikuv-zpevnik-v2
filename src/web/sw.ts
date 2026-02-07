@@ -12,8 +12,8 @@ import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { clientsClaim } from "workbox-core";
 import { SongDBResponseData } from "../worker/api/songDB";
 import client from "../worker/api-client";
-import { handleApiResponse, makeApiRequest } from "./services/apiHelpers";
-import { SongDataApi } from "src/worker/services/song-service";
+import { handleApiResponse, makeApiRequest } from "./services/api-service";
+import { SongDataApi } from "src/worker/helpers/song-service";
 
 // Cache names
 const SONGS_CACHE = "songs-db-cache";

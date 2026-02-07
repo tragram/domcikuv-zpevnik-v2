@@ -17,7 +17,7 @@ import {
   useRouteContext,
 } from "@tanstack/react-router";
 import { SongData } from "~/types/songData";
-import { makeApiRequest } from "~/services/apiHelpers";
+import { makeApiRequest } from "~/services/api-service";
 import { useQueryClient } from "@tanstack/react-query";
 import { cn, useLoggedIn } from "~/lib/utils";
 import SettingsDropdown from "./components/SettingsDropdown";

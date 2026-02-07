@@ -1,7 +1,7 @@
 import { EditorState } from "~/features/Editor/Editor";
 import { Key, SongRange } from "./musicTypes";
 import type { ChordPro, int, SongLanguage } from "./types";
-import { SongDataApi } from "src/worker/services/song-service";
+import { SongDataApi } from "src/worker/helpers/song-helpers";
 import { ExternalSongResult } from "~/features/SongList/Toolbar/ExternalSearch";
 
 interface CurrentIllustration {

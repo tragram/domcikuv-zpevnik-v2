@@ -3,7 +3,7 @@ import { DrizzleD1Database } from "drizzle-orm/d1";
 import { user, UserDB } from "src/lib/db/schema";
 import { z } from "zod";
 import { PaginatedResponse } from "../api/utils";
-import { moveToTrashR2 } from "./illustration-service";
+import { moveToTrashR2 } from "./illustration-helpers";
 
 // User validation schemas
 export const createUserSchema = z.object({

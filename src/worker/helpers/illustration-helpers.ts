@@ -7,7 +7,7 @@ import {
   songIllustration,
   SongIllustrationDB,
 } from "src/lib/db/schema";
-import { findSong, SongWithCurrentVersion } from "./song-service";
+import { findSong, SongWithCurrentVersion } from "./song-helpers";
 import { Context } from "hono";
 import { promptFolder } from "~/types/songData";
 import { z } from "zod";

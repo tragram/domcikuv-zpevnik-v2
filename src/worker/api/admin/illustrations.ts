@@ -17,8 +17,8 @@ import {
   uploadImageBuffer,
   sameParametersExist,
   moveSongToTrash,
-} from "../../services/illustration-service";
-import { findSong, SongWithCurrentVersion } from "../../services/song-service";
+} from "../../helpers/illustration-helpers";
+import { findSong, SongWithCurrentVersion } from "../../helpers/song-helpers";
 import {
   errorFail,
   errorJSend,

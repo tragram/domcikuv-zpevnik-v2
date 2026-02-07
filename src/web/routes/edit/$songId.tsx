@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import Editor from "~/features/Editor/Editor";
-import { makeApiRequest } from "~/services/apiHelpers";
+import { makeApiRequest } from "~/services/api-service";
 import { SongData } from "~/types/songData";
 import { z } from "zod";
 

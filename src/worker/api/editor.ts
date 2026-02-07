@@ -10,7 +10,7 @@ import {
   createSongVersion,
   findSong,
   getSongVersionsByUser,
-} from "../services/song-service";
+} from "../helpers/song-helpers";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import OpenAI from "openai";
 import { trustedUserMiddleware } from "./utils";

@@ -8,7 +8,7 @@ import {
 import {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
-} from "src/worker/services/illustration-service";
+} from "src/worker/helpers/illustration-service";
 import { AIGeneratedForm } from "./ai-generated-form";
 import { ManualForm } from "./manual-form";
 

@@ -1,6 +1,6 @@
 import { createFileRoute, redirect, Link } from "@tanstack/react-router";
 import { Button } from "~/components/ui/button";
-import { ApiException, makeApiRequest } from "~/services/apiHelpers";
+import { ApiException, makeApiRequest } from "~/services/api-service";
 
 export const Route = createFileRoute("/pa/$")({
   pendingMs: 0, // Show pending immediately

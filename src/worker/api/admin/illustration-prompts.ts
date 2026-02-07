@@ -4,7 +4,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { createInsertSchema } from "drizzle-zod";
 import { illustrationPrompt, songIllustration } from "../../../lib/db/schema";
 import { buildApp } from "../utils";
-import { findSong } from "../../services/song-service";
+import { findSong } from "../../helpers/song-helpers";
 import {
   errorJSend,
   failJSend,

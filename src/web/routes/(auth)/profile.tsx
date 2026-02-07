@@ -17,7 +17,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
-import { handleApiResponse } from "~/services/apiHelpers";
+import { handleApiResponse } from "~/services/api-service";
 
 type ProfileUpdateResponse = {
   status: string;

@@ -6,7 +6,7 @@ import {
   getFavorites,
   addFavorite,
   removeFavorite,
-} from "../services/favorite-service";
+} from "../helpers/favorite-helpers";
 import { errorJSend, notLoggedInFail, successJSend } from "./responses";
 
 const SongSchema = z.object({

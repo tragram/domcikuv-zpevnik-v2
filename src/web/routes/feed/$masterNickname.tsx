@@ -7,7 +7,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
 import { SongDB } from "~/types/types";
-import { handleApiResponse } from "~/services/apiHelpers";
+import { handleApiResponse } from "~/services/api-service";
 import { SongData } from "~/types/songData";
 import { API } from "src/worker/api-client";
 

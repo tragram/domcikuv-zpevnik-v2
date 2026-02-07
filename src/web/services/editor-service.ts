@@ -1,6 +1,6 @@
 import { API } from "~/../worker/api-client";
-import { makeApiRequest } from "./apiHelpers";
-export * from "./illustrations";
+import { makeApiRequest } from "./api-service";
+export * from "./illustration-service";
 
 export const autofillChordpro = async (
   currentChordPro: string,

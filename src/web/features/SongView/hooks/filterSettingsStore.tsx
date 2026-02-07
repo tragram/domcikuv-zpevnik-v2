@@ -5,7 +5,7 @@ import {
   FilterSettings,
   VocalRangeType,
 } from "~/features/SongList/Toolbar/filters/Filters";
-import { Songbook } from "~/services/songs";
+import { Songbook } from "~/services/song-service";
 import { SongLanguage } from "~/types/types";
 
 interface FilterSettingsState extends FilterSettings {

@@ -1,6 +1,6 @@
 import { AutoTextSize } from "auto-text-size";
 import { cn } from "~/lib/utils";
-import { fetchIllustrationPrompt } from "~/services/songs";
+import { fetchIllustrationPrompt } from "~/services/song-service";
 import { useQuery } from "@tanstack/react-query";
 import { SongData } from "~/types/songData";
 import { useRouteContext } from "@tanstack/react-router";

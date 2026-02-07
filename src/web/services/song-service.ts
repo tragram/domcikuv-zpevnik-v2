@@ -1,5 +1,5 @@
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
-import { SongDataApi, SongWithCurrentVersion } from "src/worker/services/song-service";
+import { SongDataApi, SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
 import client, { API } from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {
@@ -8,10 +8,10 @@ import {
   SongDB,
   SongLanguage,
 } from "~/types/types";
-import { makeApiRequest } from "./apiHelpers";
+import { makeApiRequest } from "./api-service";
 import { ModifySongVersionSchema, SongModificationSchema } from "src/worker/api/admin/songs";
 
-export * from "./illustrations";
+export * from "./illustration-service";
 
 export type AdminApi = typeof client.api.admin;
 

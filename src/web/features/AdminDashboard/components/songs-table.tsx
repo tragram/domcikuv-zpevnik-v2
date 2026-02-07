@@ -28,7 +28,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { AdminApi } from "~/services/songs";
+import { AdminApi } from "~/services/song-service";
 import ConfirmationDialog from "../../../components/dialogs/confirmation-dialog";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import {

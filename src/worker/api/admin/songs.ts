@@ -14,7 +14,7 @@ import {
   findSongWithVersions,
   promoteVersionToCurrent,
   SongWithCurrentVersion,
-} from "../../services/song-service";
+} from "../../helpers/song-helpers";
 import {
   errorJSend,
   failJSend,

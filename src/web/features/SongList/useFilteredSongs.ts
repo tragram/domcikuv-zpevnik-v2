@@ -7,7 +7,7 @@ import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import { UserProfileData } from "src/worker/api/userProfile";
-import { Songbook } from "~/services/songs";
+import { Songbook } from "~/services/song-service";
 import {
   searchAllExternalServices,
   usePAToken,

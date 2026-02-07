@@ -1,11 +1,11 @@
 import { UserDB } from "src/lib/db/schema/auth.schema";
 import client, { API } from "../../worker/api-client";
-import { makeApiRequest } from "./apiHelpers";
+import { makeApiRequest } from "./api-service";
 import {
   CreateUserSchema,
   UpdateUserSchema,
   UsersResponse,
-} from "src/worker/services/user-service";
+} from "src/worker/helpers/user-service";
 import { SessionsResponseData } from "src/worker/api/sessions";
 import { UserProfileData } from "src/worker/api/userProfile";
 

@@ -13,8 +13,8 @@ import {
 import {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
-} from "src/worker/services/illustration-service";
-import { SongWithCurrentVersion } from "src/worker/services/song-service";
+} from "src/worker/helpers/illustration-service";
+import { SongWithCurrentVersion } from "src/worker/helpers/song-service";
 import FormDialog from "~/components/dialogs/form-dialog";
 import PreviewDialog from "~/components/dialogs/preview-dialog";
 import { Badge } from "~/components/ui/badge";
@@ -25,7 +25,7 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 import { cn } from "~/lib/utils";
-import { createIllustration, generateIllustration } from "~/services/songs";
+import { createIllustration, generateIllustration } from "~/services/song-service";
 import { IllustrationCard } from "./illustration-card";
 import {
   IllustrationForm,

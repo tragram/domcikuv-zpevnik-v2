@@ -6,9 +6,9 @@ import {
   buildSongDB,
   fetchPublicSongbooks,
   fetchSongs,
-} from "~/services/songs";
+} from "~/services/song-service";
 import { RouterContext } from "~/main";
-import { fetchProfile } from "~/services/users";
+import { fetchProfile } from "~/services/user-service";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { NotFound } from "~/components/NotFound";
 import { prefetchActiveSessions } from "~/hooks/use-active-sessions";

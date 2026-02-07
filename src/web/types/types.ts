@@ -1,7 +1,7 @@
 import { User } from "better-auth";
 import { Note } from "./musicTypes";
 import { SongData } from "./songData";
-import { Songbook } from "~/services/songs";
+import { Songbook } from "~/services/song-service";
 // Import keywords from the source of truth
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range";

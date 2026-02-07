@@ -10,11 +10,11 @@ import {
   IllustrationGenerateSchema,
   IllustrationModifySchema,
   IllustrationPromptCreateSchema,
-} from "src/worker/services/illustration-service";
-import { SongWithCurrentVersion } from "src/worker/services/song-service";
+} from "src/worker/helpers/illustration-helpers";
+import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
 import { SongData } from "~/types/songData";
-import { makeApiRequest } from "./apiHelpers";
-import { AdminApi, parseDBDates } from "./songs";
+import { makeApiRequest } from "./api-service";
+import { AdminApi, parseDBDates } from "./song-service";
 
 export type SongDBApi = typeof client.api.songs;
 

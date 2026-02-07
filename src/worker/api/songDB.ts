@@ -9,7 +9,7 @@ import {
   retrieveSingleSong,
   retrieveSongs,
   SongDataApi,
-} from "../services/song-service";
+} from "../helpers/song-helpers";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 import { SongData } from "~/types/songData";
