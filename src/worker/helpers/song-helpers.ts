@@ -177,18 +177,19 @@ export async function retrieveSongs(
   includeHidden = false,
   includeDeleted = false,
 ) {
+  // this does not retrieve songs without currentVersionId => for users only
   let query = db
     .select({
       ...baseSelectFields,
     })
     .from(song)
+    .where(isNotNull(song.currentVersionId))
     .leftJoin(songVersion, eq(songVersion.id, song.currentVersionId))
     .leftJoin(
       songIllustration,
       eq(songIllustration.id, song.currentIllustrationId),
     );
-
-  // Add the userFavoriteSongs join conditionally
+  // potentially add favorites
   if (userId) {
     query = query.leftJoin(
       userFavoriteSongs,
@@ -346,7 +347,8 @@ export const createSong = async (
       id: songId,
       createdAt: now,
       updatedAt: now,
-      hidden: !isTrusted,
+      // newly added songs by untrusted users don't have to be hidden via this - they won't have currentVersionId and thus won't be shown automatically
+      // hidden: !isTrusted,
       currentVersionId: null,
     });
   }
@@ -382,7 +384,10 @@ export const createSongVersion = async (
       .from(songVersion)
       .where(eq(songVersion.id, submission.parentId))
       .limit(1);
-    if (parentVersionResult.length === 0 || parentVersionResult[0].songId !== songId) {
+    if (
+      parentVersionResult.length === 0 ||
+      parentVersionResult[0].songId !== songId
+    ) {
       throw Error("Invalid parentId!");
     }
     parentVersion = parentVersionResult[0];
