@@ -35,7 +35,7 @@ import {
 } from "./LayoutSettings";
 import TransposeSettings from "./TransposeSettings";
 import ToolbarBase from "~/components/ToolbarBase";
-import { Link } from "@tanstack/react-router";
+import { Link, useSearch } from "@tanstack/react-router";
 import { DropdownThemeToggle } from "~/components/ThemeToggle";
 import { SongDB } from "~/types/types";
 import { SongData } from "~/types/songData";
@@ -80,7 +80,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   });
   const [wakeLockEnabled, setWakeLockEnabled] = useLocalStorageState<boolean>(
     "wakeLockEnabled",
-    { defaultValue: true }
+    { defaultValue: true },
   );
   useEffect(() => {
     if (wakeLockSupported && wakeLockEnabled) {
@@ -89,7 +89,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       wakeLockRelease();
     }
   }, [wakeLockSupported, wakeLockEnabled, wakeLockRequest, wakeLockRelease]);
-
+  const { version: versionId } = useSearch({ from: "/song/$songId" });
   return (
     <div className="absolute top-0 w-full">
       <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
@@ -148,7 +148,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               Enter fullscreen
             </DropdownMenuItem>
             {React.Children.toArray(
-              <ResetBanListDropdownItems songDB={songDB} />
+              <ResetBanListDropdownItems songDB={songDB} />,
             )}
             {wakeLockSupported && (
               <DropdownMenuCheckboxItem
@@ -164,7 +164,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             <DropdownMenuItem>
               <Link
                 className="flex items-center gap-2 cursor-pointer w-full"
-                to={"/edit/" + songData.id}
+                to="/edit/$songId"
+                params={{ songId: songData.id }}
+                search={{ version: versionId }}
               >
                 <DropdownIconStart icon={<Pencil />} />
                 View in Editor
