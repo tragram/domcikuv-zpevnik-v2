@@ -104,18 +104,20 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
 
         {/* SECTION 2: External Search Trigger & Results */}
         <div className="container mx-auto max-w-3xl flex flex-col gap-2 pb-8">
-          
           {/* Separator if we have mixed content */}
-          {hasInternalResults && canSearchExternal && hasTriggeredExternalSearch && hasExternalResults && (
-            <div className="my-6 flex items-center gap-4">
-              <div className="h-px bg-border flex-1" />
-              <div className="flex items-center gap-2 px-4 text-xs font-medium text-primary uppercase tracking-wider whitespace-nowrap">
-                <Globe className="w-3 h-3" />
-                External Results
+          {hasInternalResults &&
+            canSearchExternal &&
+            hasTriggeredExternalSearch &&
+            hasExternalResults && (
+              <div className="my-6 flex items-center gap-4">
+                <div className="h-px bg-border flex-1" />
+                <div className="flex items-center gap-2 px-4 text-xs font-medium text-primary uppercase tracking-wider whitespace-nowrap">
+                  <Globe className="w-3 h-3" />
+                  External Results
+                </div>
+                <div className="h-px bg-border flex-1" />
               </div>
-              <div className="h-px bg-border flex-1" />
-            </div>
-          )}
+            )}
 
           {/* Trigger Button: Show if we CAN search but HAVEN'T triggered it yet */}
           {canSearchExternal && !hasTriggeredExternalSearch && (
@@ -167,16 +169,18 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
             (hasTriggeredExternalSearch &&
               !isLoadingExternal &&
               !hasExternalResults)) && (
-            <div className="text-primary flex flex-col h-full w-auto items-center justify-center text-center text-xl font-bold sm:text-2xl gap-4 border bg-muted/20 border-dashed p-8 rounded-lg m-6">
-              <p>No songs fulfill all the filters set!</p>
-              {hasTriggeredExternalSearch && !hasExternalResults && (
-                <p className="text-sm font-normal text-muted-foreground">
-                  No results found in external libraries either.
-                </p>
-              )}
-              <Button variant={"outline"} onClick={resetFilters}>
-                Reset all filters
-              </Button>
+            <div className="flex flex-col h-full w-full items-center justify-center">
+              <div className="text-primary text-center text-xl font-bold sm:text-2xl border bg-muted/20 border-dashed p-8 rounded-lg m-6 w-[80%] max-w-[800px] items-center justify-center leading-[1.7] lg:p-16">
+                <p>No songs fulfill all the filters set!</p>
+                {hasTriggeredExternalSearch && !hasExternalResults && (
+                  <p className="text-sm font-normal text-white/80">
+                    No results found in external libraries either.
+                  </p>
+                )}
+                <Button variant={"outline"} className="mt-6" onClick={resetFilters}>
+                  Reset all filters
+                </Button>
+              </div>
             </div>
           )}
       </div>
