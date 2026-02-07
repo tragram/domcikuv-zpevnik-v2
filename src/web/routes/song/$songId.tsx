@@ -5,21 +5,50 @@ import useLocalStorageState from "use-local-storage-state";
 import SongView from "~/features/SongView/SongView";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore";
-import { handleApiResponse } from "~/services/apiHelpers";
+import { makeApiRequest } from "~/services/apiHelpers";
 import { SongData } from "~/types/songData";
+import { z } from "zod";
+
+const songSearchSchema = z.object({
+  version: z.string().optional(),
+});
 
 export const Route = createFileRoute("/song/$songId")({
+  validateSearch: songSearchSchema,
   component: RouteComponent,
-  loader: async ({ context, params }) => {
+  loaderDeps: ({ search }) => ({ version: search.version }),
+  loader: async ({ context, params, deps }) => {
     const songDB = context.songDB;
     const songId = params.songId;
+    const versionId = deps.version;
+
+    // If versionId is present, fetch that specific version from API
+    if (versionId) {
+      const songData = await makeApiRequest(() =>
+        context.api.songs.fetch[":songId"][":versionId"].$get({
+          param: { songId, versionId },
+        }),
+      );
+
+      return {
+        user: context.user,
+        songDB,
+        songData: new SongData(songData),
+        songId,
+        versionId,
+        api: context.api,
+      };
+    }
+
+    // Otherwise, try to find in local songDB (for regular song view)
     const songData = songDB.songs.find((s) => s.id === songId);
 
     return {
       user: context.user,
       songDB,
       songData,
-      songId: params.songId,
+      songId,
+      versionId: null,
       api: context.api,
     };
   },
@@ -31,11 +60,14 @@ function RouteComponent() {
     songData: localSongData,
     user,
     songId,
+    versionId,
     api,
   } = Route.useLoaderData();
   const { shareSession } = useViewSettingsStore();
 
-  // Try fetching from API if not found locally
+  // Only fetch from API if:
+  // - No versionId (versioned songs are already fetched in loader)
+  // - Not found locally
   const {
     data: fetchedSong,
     isLoading,
@@ -43,43 +75,45 @@ function RouteComponent() {
   } = useQuery({
     queryKey: ["song", songId],
     queryFn: async () => {
-      if (!songId || localSongData) return null;
+      if (!songId || localSongData || versionId) return null;
 
       try {
-        const response = await api.songs.fetch[":id"].$get({
-          param: { id: songId },
-        });
-        const data = await handleApiResponse(response);
+        const data = await makeApiRequest(() =>
+          api.songs.fetch[":id"].$get({
+            param: { id: songId },
+          }),
+        );
         return new SongData(data);
       } catch (error) {
         console.error("Failed to fetch song:", error);
         return null;
       }
     },
-    enabled: !!songId && !localSongData,
-    staleTime: Infinity, // Once fetched, keep it
-    retry: 1, // Only retry once
+    enabled: !!songId && !localSongData && !versionId,
+    staleTime: Infinity,
+    retry: 1,
   });
 
   // Combine local and fetched results
   const songData = localSongData || fetchedSong;
 
-  const shouldShare = user.loggedIn && shareSession;
+  // Only enable session sync for non-versioned songs
+  const shouldShare = user.loggedIn && shareSession && !versionId;
   const masterId = user.loggedIn
     ? (user.profile.nickname ?? undefined)
     : undefined;
 
   const { updateSong, isConnected, connectedClients } = useSessionSync(
     masterId,
-    shouldShare, // isMaster
-    shouldShare, // enabled
+    shouldShare,
+    shouldShare,
   );
 
   const [transposeSteps] = useLocalStorageState(`transposeSteps/${songId}`, {
     defaultValue: 0,
   });
 
-  // push new songs to the server (if enabled)
+  // Push new songs to the server (only for non-versioned songs)
   useEffect(() => {
     if (shouldShare && updateSong && songData?.id) {
       console.debug("Master updating song to:", songData.id);
@@ -88,7 +122,7 @@ function RouteComponent() {
   }, [songData?.id, shouldShare, updateSong, transposeSteps]);
 
   // Show loading state while fetching
-  if (isLoading && !localSongData) {
+  if (isLoading && !localSongData && !versionId) {
     return (
       <div className="flex items-center justify-center h-screen">
         <p>Loading song...</p>
@@ -110,7 +144,7 @@ function RouteComponent() {
     );
   }
 
-  // Shouldn't happen, but safety check
+  // Safety check
   if (!songData) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -124,12 +158,16 @@ function RouteComponent() {
       songDB={songDB}
       songData={songData}
       user={user}
-      feedStatus={{
-        enabled: shouldShare,
-        isConnected,
-        isMaster: true,
-        connectedClients: connectedClients ?? 0,
-      }}
+      feedStatus={
+        versionId
+          ? undefined // No session sync for versioned songs
+          : {
+              enabled: shouldShare,
+              isConnected,
+              isMaster: true,
+              connectedClients: connectedClients ?? 0,
+            }
+      }
     />
   );
 }

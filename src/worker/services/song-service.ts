@@ -106,6 +106,67 @@ export const baseSelectFields = {
   },
 };
 
+const transformSongToApi = (songItem: {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  hidden: boolean;
+  deleted: boolean;
+  title: string | null;
+  artist: string | null;
+  key: string | null;
+  startMelody: string | null;
+  language: string | null;
+  tempo: string | null;
+  capo: number | null;
+  range: string | null;
+  chordpro: string | null;
+  sourceId: string | null;
+  currentIllustration: {
+    illustrationId: string | null;
+    promptId: string | null;
+    imageModel: string | null;
+    imageURL: string | null;
+    thumbnailURL: string | null;
+  } | null;
+}, updatedSince?: Date): SongDataApi => ({
+  id: songItem.id,
+  title: songItem.title ?? "Unknown title",
+  artist: songItem.artist ?? "Unknown artist",
+  key: songItem.key ?? "",
+  createdAt: songItem.createdAt,
+  updatedAt: songItem.updatedAt,
+  startMelody: songItem.startMelody ?? undefined,
+  language: songItem.language ?? "unknown",
+  tempo: songItem.tempo ? parseInt(songItem.tempo) : undefined,
+  capo: songItem.capo ?? undefined,
+  range: songItem.range ?? undefined,
+  sourceId: songItem.sourceId ?? "",
+  chordpro: songItem.chordpro ?? "Not uploaded",
+  currentIllustration:
+    songItem.currentIllustration?.illustrationId &&
+    songItem.currentIllustration?.promptId &&
+    songItem.currentIllustration?.imageModel &&
+    songItem.currentIllustration?.imageURL &&
+    songItem.currentIllustration?.thumbnailURL
+      ? {
+          illustrationId: songItem.currentIllustration.illustrationId,
+          promptId: songItem.currentIllustration.promptId,
+          imageModel: songItem.currentIllustration.imageModel,
+          imageURL: songItem.currentIllustration.imageURL,
+          thumbnailURL: songItem.currentIllustration.thumbnailURL,
+          promptURL: `/songs/image_prompts/${songItem.id}.yaml`,
+        }
+      : undefined,
+  updateStatus: updatedSince
+    ? songItem.deleted
+      ? "deleted"
+      : new Date(songItem.createdAt) >= updatedSince
+        ? "added"
+        : "modified"
+    : undefined,
+});
+
 export async function retrieveSongs(
   db: DrizzleD1Database,
   userId?: string,
@@ -160,47 +221,8 @@ export async function retrieveSongs(
 
   const songsRaw = await finalQuery;
 
-  return songsRaw.map(
-    (songItem): SongDataApi => ({
-      id: songItem.id,
-      title: songItem.title ?? "Unknown title",
-      artist: songItem.artist ?? "Unknown artist",
-      key: songItem.key ?? "",
-      createdAt: songItem.createdAt,
-      updatedAt: songItem.updatedAt,
-      startMelody: songItem.startMelody ?? undefined,
-      language: songItem.language ?? "unknown",
-      tempo: songItem.tempo ? parseInt(songItem.tempo) : undefined,
-      capo: songItem.capo ?? undefined,
-      range: songItem.range ?? undefined,
-      sourceId: songItem.sourceId ?? "",
-      chordpro: songItem.chordpro ?? "Not uploaded",
-      currentIllustration:
-        songItem.currentIllustration?.illustrationId &&
-        songItem.currentIllustration?.promptId &&
-        songItem.currentIllustration?.imageModel &&
-        songItem.currentIllustration?.imageURL &&
-        songItem.currentIllustration?.thumbnailURL
-          ? {
-              illustrationId: songItem.currentIllustration.illustrationId,
-              promptId: songItem.currentIllustration.promptId,
-              imageModel: songItem.currentIllustration.imageModel,
-              imageURL: songItem.currentIllustration.imageURL,
-              thumbnailURL: songItem.currentIllustration.thumbnailURL,
-              promptURL: `/songs/image_prompts/${songItem.id}.yaml`,
-            }
-          : undefined,
-      updateStatus: updatedSince
-        ? songItem.deleted
-          ? "deleted"
-          : new Date(songItem.createdAt) >= updatedSince
-            ? "added"
-            : "modified"
-        : undefined,
-    }),
-  );
+  return songsRaw.map((songItem) => transformSongToApi(songItem, updatedSince));
 }
-
 export async function getSongbooks(db: DrizzleD1Database) {
   const result = await db
     .select({
@@ -243,6 +265,36 @@ export async function getSongbooks(db: DrizzleD1Database) {
   return Array.from(userSongbooks.values()) as SongbookDataApi[];
 }
 
+export const retrieveSingleSong = async (
+  db: DrizzleD1Database,
+  songId: string,
+  versionId?: string,
+): Promise<SongDataApi | null> => {
+  const songsRaw = await db
+    .select({
+      ...baseSelectFields,
+    })
+    .from(song)
+    .leftJoin(
+      songVersion,
+      eq(
+        songVersion.id,
+        versionId ? versionId : song.currentVersionId,
+      ),
+    )
+    .leftJoin(
+      songIllustration,
+      eq(songIllustration.id, song.currentIllustrationId),
+    )
+    .where(eq(song.id, songId))
+    .limit(1);
+
+  if (songsRaw.length === 0) {
+    return null;
+  }
+
+  return transformSongToApi(songsRaw[0]);
+};
 export const findSong = async (
   db: DrizzleD1Database,
   songId: string,
@@ -323,63 +375,114 @@ export const createSongVersion = async (
 ) => {
   const now = new Date();
 
-  // only allowing one song version per user - TODO: this is ugly and random
-  const userVersionResult = await db
-    .select()
-    .from(songVersion)
-    .where(and(eq(songVersion.songId, songId), eq(songVersion.userId, userId)))
+  // 1. Get the current state of the song (to know what we are basing this on)
+  const currentSong = await db
+    .select({ currentVersionId: song.currentVersionId })
+    .from(song)
+    .where(eq(song.id, songId))
     .limit(1);
 
+  if (currentSong.length === 0) throw new Error("Song not found");
+  const parentId = currentSong[0].currentVersionId;
 
-  if (userVersionResult.length > 0) {
-    const existingVersion = userVersionResult[0];
+  // 2. Check if the user already has a PENDING version for this song
+  // We allow users to edit their own pending suggestions ("drafts")
+  const existingPendingVersion = await db
+    .select()
+    .from(songVersion)
+    .where(
+      and(
+        eq(songVersion.songId, songId),
+        eq(songVersion.userId, userId),
+        eq(songVersion.status, "pending"),
+      ),
+    )
+    .limit(1);
+
+  // LOGIC BRANCH A: Update existing pending draft
+  if (existingPendingVersion.length > 0) {
+    const existingVersion = existingPendingVersion[0];
+
+    // If the user is trusted, their update acts as an "Approval" of their own draft immediately
+    const shouldPublish = isTrusted;
+
     const updatedVersion = await db
       .update(songVersion)
       .set({
         ...submission,
         updatedAt: now,
-        approved: isTrusted,
-        approvedBy: isTrusted ? userId : null,
-        approvedAt: isTrusted ? now : null,
+        // If trusted, we auto-publish, otherwise it stays pending
+        status: shouldPublish ? "published" : "pending",
+        approvedBy: shouldPublish ? userId : null,
+        approvedAt: shouldPublish ? now : null,
         sourceId: sourceId,
       })
       .where(eq(songVersion.id, existingVersion.id))
       .returning();
 
-    if (isTrusted) {
-      await db
-        .update(song)
-        .set({ currentVersionId: existingVersion.id, updatedAt: now })
-        .where(eq(song.id, songId));
+    // If we just published this, update the main Song pointer and archive the old parent
+    if (shouldPublish) {
+      await promoteVersionToCurrent(db, songId, existingVersion.id, parentId);
     }
+
     return updatedVersion[0];
-  } else {
+  }
+
+  // LOGIC BRANCH B: Create new version (Fork from current)
+  else {
     const versionId = songId + "_" + now.getTime();
+    const shouldPublish = isTrusted;
+
     const newVersion = await db
       .insert(songVersion)
       .values({
         ...submission,
         id: versionId,
         songId: songId,
+        parentId: parentId, // Link to the version this was based on
+        status: shouldPublish ? "published" : "pending",
+        userId: userId,
+        approvedBy: shouldPublish ? userId : null,
+        approvedAt: shouldPublish ? now : null,
+        sourceId: sourceId,
         createdAt: now,
         updatedAt: now,
-        userId: userId,
-        approved: isTrusted,
-        sourceId: sourceId,
-        approvedBy: isTrusted ? userId : null,
-        approvedAt: isTrusted ? now : null,
       })
       .returning();
-    if (isTrusted) {
-      await db
-        .update(song)
-        .set({ currentVersionId: versionId, updatedAt: now })
-        .where(eq(song.id, songId));
+
+    if (shouldPublish) {
+      await promoteVersionToCurrent(db, songId, versionId, parentId);
     }
+
     return newVersion[0];
   }
 };
 
+// Helper to handle the atomic swap of "Current Version"
+async function promoteVersionToCurrent(
+  db: DrizzleD1Database,
+  songId: string,
+  newVersionId: string,
+  oldVersionId: string | null,
+) {
+  // 1. Update the Song pointer
+  await db
+    .update(song)
+    .set({ currentVersionId: newVersionId, updatedAt: new Date() })
+    .where(eq(song.id, songId));
+
+  // 2. Archive the old version (if it exists) so it's no longer "published"
+  // Note: Depending on your preference, you might keep multiple 'published' in history
+  // or strictly ensure only one is published.
+  // Standard Wiki style: Old versions are valid history, but not "Current".
+  // We mark them 'archived' to easily distinguish the active head.
+  if (oldVersionId) {
+    await db
+      .update(songVersion)
+      .set({ status: "archived" })
+      .where(eq(songVersion.id, oldVersionId));
+  }
+}
 export const findSongWithVersions = async (
   db: DrizzleD1Database,
   songId: string,
@@ -442,30 +545,4 @@ export const getSongVersionsByUser = async (
     .orderBy(desc(songVersion.createdAt));
 
   return versions;
-};
-
-export const deleteSongVersion = async (
-  db: DrizzleD1Database,
-  versionId: string,
-  userId: string,
-) => {
-  const version = await db
-    .select()
-    .from(songVersion)
-    .where(eq(songVersion.id, versionId))
-    .limit(1);
-
-  if (version.length === 0) {
-    throw new Error("Version not found");
-  }
-
-  if (version[0].userId !== userId) {
-    throw new Error("You are not authorized to delete this version");
-  }
-
-  if (version[0].approved) {
-    throw new Error("You cannot delete an approved version");
-  }
-
-  await db.delete(songVersion).where(eq(songVersion.id, versionId));
 };

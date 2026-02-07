@@ -9,8 +9,8 @@ import {
 import { z } from "zod/v4";
 import {
   createSong,
-  findSong,
   getSongbooks,
+  retrieveSingleSong,
   retrieveSongs,
   SongDataApi,
 } from "../services/song-service";
@@ -104,16 +104,45 @@ export const songDBRoutes = buildApp()
   )
   .get("/fetch/:id", async (c) => {
     const songId = c.req.param("id");
+    
+    if (!songId || typeof songId !== "string") {
+      return failJSend(c, "Invalid song ID", 400);
+    }
+
     const db = drizzle(c.env.DB);
 
     try {
-      const foundSong = await findSong(db, songId, true);
-      if (!songId || typeof songId !== "string") {
-        return failJSend(c, "Invalid song ID", 400);
-      }
+      const foundSong = await retrieveSingleSong(db, songId);
+      
       if (!foundSong) {
         return failJSend(c, "Song not found", 404);
       }
+      
+      return successJSend(c, foundSong);
+    } catch (e) {
+      return errorJSend(c, "Error fetching song", 500);
+    }
+  })
+  .get("/fetch/:songId/:versionId", async (c) => {
+    const songId = c.req.param("songId");
+    const versionId = c.req.param("versionId");
+    
+    if (!songId || typeof songId !== "string") {
+      return failJSend(c, "Invalid song ID", 400);
+    }
+    if (!versionId || typeof versionId !== "string") {
+      return failJSend(c, "Invalid version ID", 400);
+    }
+
+    const db = drizzle(c.env.DB);
+
+    try {
+      const foundSong = await retrieveSingleSong(db, songId, versionId);
+      
+      if (!foundSong) {
+        return failJSend(c, "Song not found", 404);
+      }
+      
       return successJSend(c, foundSong);
     } catch (e) {
       return errorJSend(c, "Error fetching song", 500);
