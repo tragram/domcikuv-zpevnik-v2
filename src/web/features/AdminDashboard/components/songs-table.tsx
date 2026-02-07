@@ -97,7 +97,11 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
 
   const toggleSongExpansion = (id: string) => {
     const next = new Set(expandedSongs);
-    next.has(id) ? next.delete(id) : next.add(id);
+    if (next.has(id)) {
+      next.delete(id);
+    } else {
+      next.add(id);
+    }
     setExpandedSongs(next);
   };
 
@@ -177,6 +181,12 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                 (v) => v.status === "pending",
               ).length;
 
+              const workingVersion =
+                currentVersion ??
+                songVersions.find((v) => ["published"].includes(v.status)) ??
+                songVersions.find((v) => ["archived"].includes(v.status)) ??
+                songVersions.find((v) => ["pending"].includes(v.status));
+
               return (
                 <React.Fragment key={song.id}>
                   {/* Master Row */}
@@ -196,29 +206,30 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                     <TableCell
                       className={`font-medium  ${song.deleted ? "opacity-60" : ""}`}
                     >
-                      {currentVersion?.title}
+                      {workingVersion?.title}
                     </TableCell>
                     <TableCell
                       className={`font-medium  ${song.deleted ? "opacity-60" : ""}`}
                     >
-                      {currentVersion?.artist || "-"}
+                      {workingVersion?.artist}
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
                         {song.deleted ? (
                           <SongVersionStatusBadge status={"deleted"} />
-                        ) : currentVersion ? (
+                        ) : workingVersion ? (
                           <SongVersionStatusBadge
-                            status={currentVersion.status}
+                            status={workingVersion.status}
                           />
                         ) : (
                           <Badge variant="outline">Empty</Badge>
                         )}
-                        {pendingCount > 0 && !isExpanded && !song.deleted && (
-                          <SongVersionStatusBadge status="pending" />
-                        )}
+                        {pendingCount > 0 &&
+                          !song.deleted &&
+                          workingVersion?.status !== "pending" && (
+                            <SongVersionStatusBadge status="pending" />
+                          )}
                       </div>
-                      {/* Show status of the CURRENT version */}
                     </TableCell>
                     <TableCell>
                       <Switch
