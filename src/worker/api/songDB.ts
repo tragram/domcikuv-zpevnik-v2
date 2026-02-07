@@ -1,11 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { and, eq, not } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import {
-  illustrationPrompt,
-  song,
-  songIllustration,
-} from "src/lib/db/schema";
+import { illustrationPrompt, song, songIllustration } from "src/lib/db/schema";
 import { z } from "zod/v4";
 import {
   createSong,
@@ -104,7 +100,7 @@ export const songDBRoutes = buildApp()
   )
   .get("/fetch/:id", async (c) => {
     const songId = c.req.param("id");
-    
+
     if (!songId || typeof songId !== "string") {
       return failJSend(c, "Invalid song ID", 400);
     }
@@ -113,11 +109,11 @@ export const songDBRoutes = buildApp()
 
     try {
       const foundSong = await retrieveSingleSong(db, songId);
-      
+
       if (!foundSong) {
         return failJSend(c, "Song not found", 404);
       }
-      
+
       return successJSend(c, foundSong);
     } catch (e) {
       return errorJSend(c, "Error fetching song", 500);
@@ -126,7 +122,7 @@ export const songDBRoutes = buildApp()
   .get("/fetch/:songId/:versionId", async (c) => {
     const songId = c.req.param("songId");
     const versionId = c.req.param("versionId");
-    
+
     if (!songId || typeof songId !== "string") {
       return failJSend(c, "Invalid song ID", 400);
     }
@@ -138,11 +134,11 @@ export const songDBRoutes = buildApp()
 
     try {
       const foundSong = await retrieveSingleSong(db, songId, versionId);
-      
+
       if (!foundSong) {
         return failJSend(c, "Song not found", 404);
       }
-      
+
       return successJSend(c, foundSong);
     } catch (e) {
       return errorJSend(c, "Error fetching song", 500);

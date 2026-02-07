@@ -1,11 +1,9 @@
-import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
+import { count, desc, eq, like, or } from "drizzle-orm";
+import { DrizzleD1Database } from "drizzle-orm/d1";
 import { user, UserDB } from "src/lib/db/schema";
-import { eq, desc, like, or, count } from "drizzle-orm";
-import { PaginatedResponse } from "../api/utils";
 import { z } from "zod";
-import { moveSongToTrash, moveToTrashR2 } from "./illustration-service";
-import { failJSend, successJSend } from "../api/responses";
-import { Context } from "hono";
+import { PaginatedResponse } from "../api/utils";
+import { moveToTrashR2 } from "./illustration-service";
 
 // User validation schemas
 export const createUserSchema = z.object({
@@ -36,7 +34,7 @@ export const getUsers = async (
   db: DrizzleD1Database,
   search?: string,
   limit = 50,
-  offset = 0
+  offset = 0,
 ): Promise<UsersResponse> => {
   // Build where clause for search
   let whereClause = undefined;
@@ -45,7 +43,7 @@ export const getUsers = async (
     whereClause = or(
       like(user.name, searchTerm),
       like(user.email, searchTerm),
-      like(user.nickname, searchTerm)
+      like(user.nickname, searchTerm),
     );
   }
 
@@ -89,7 +87,7 @@ export const getUsers = async (
 
 export const createUser = async (
   db: DrizzleD1Database,
-  userData: CreateUserSchema
+  userData: CreateUserSchema,
 ): Promise<UserDB> => {
   // If email is being updated, check for duplicates
   if (userData.email) {
@@ -119,7 +117,7 @@ export const createUser = async (
 
 export const getUser = async (
   db: DrizzleD1Database,
-  userId: string
+  userId: string,
 ): Promise<UserDB | undefined> => {
   // Basic UUID validation
   if (!userId || userId.length < 10) {
@@ -139,7 +137,7 @@ export const updateUser = async (
   db: DrizzleD1Database,
   userId: string,
   userData: UpdateUserSchema,
-  currentUserId: string
+  currentUserId: string,
 ): Promise<UserDB> => {
   // Basic UUID validation
   if (!userId || userId.length < 10) {
@@ -189,8 +187,8 @@ export const updateUser = async (
 export const deleteUser = async (
   db: DrizzleD1Database,
   userId: string,
-  currentUserId: string
-): Promise<{ id: string; name: string }> => {
+  currentUserId: string,
+): Promise<UserDB> => {
   // Basic UUID validation
   if (!userId || userId.length < 10) {
     throw new Error("Invalid user ID format");
@@ -211,15 +209,12 @@ export const deleteUser = async (
   // disallow deletion of admins
   if (existingUser.isAdmin) {
     throw new Error(
-      "Cannot delete an administrator. Please remove admin priviledges first"
+      "Cannot delete an administrator. Please remove admin priviledges first",
     );
   }
   await db.delete(user).where(eq(user.id, userId));
 
-  return {
-    id: userId,
-    name: existingUser.name,
-  };
+  return existingUser;
 };
 
 export const getUserProfile = async (db: DrizzleD1Database, userId: string) => {
@@ -252,7 +247,7 @@ export const updateUserProfile = async (
     isFavoritesPublic: boolean;
   },
   imageChanged: boolean,
-  newImageUrl?: string | null
+  newImageUrl?: string | null,
 ) => {
   const updateData: {
     name: string;
@@ -279,7 +274,7 @@ export const updateAvatar = async (
   R2_BUCKET: R2Bucket,
   R2_URL: string,
   userData: Awaited<ReturnType<typeof getUserProfile>>,
-  avatarFile: File
+  avatarFile: File,
 ) => {
   // generate new file name
   const fileExtension = avatarFile.name.split(".").pop() || "jpg";
@@ -311,7 +306,7 @@ export const deleteAvatar = async (
   userId: string,
   R2_BUCKET: R2Bucket,
   CLOUDFLARE_R2_URL: string,
-  fileName?: string
+  fileName?: string,
 ) => {
   let oldFileName = fileName;
   if (!oldFileName) {

@@ -1,19 +1,18 @@
+import { zValidator } from "@hono/zod-validator";
+import { and, desc, eq, getTableColumns, isNotNull } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
+import { createInsertSchema } from "drizzle-zod";
+import z from "zod/v4";
 import {
   song,
-  songVersion,
-  songIllustration,
   SongDataDB,
+  songVersion,
   SongVersionDB,
 } from "../../../lib/db/schema";
-import { eq, desc, isNotNull, and, getTableColumns } from "drizzle-orm";
-import { buildApp } from "../utils";
-import { createInsertSchema } from "drizzle-zod";
-import { zValidator } from "@hono/zod-validator";
-import z from "zod/v4";
 import {
   findSong,
   findSongWithVersions,
+  promoteVersionToCurrent,
   SongWithCurrentVersion,
 } from "../../services/song-service";
 import {
@@ -22,22 +21,25 @@ import {
   songNotFoundFail,
   successJSend,
 } from "../responses";
+import { buildApp } from "../utils";
 
 // Song validation schemas
 const songModificationSchema = createInsertSchema(song)
   .partial()
-  .omit({ id: true, updatedAt: true, createdAt: true }); // Prevent modifying creation date
+  .omit({ id: true, updatedAt: true, createdAt: true });
 
-const newSongVersionSchema = createInsertSchema(songVersion).omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-const modifySongVersionSchema = newSongVersionSchema.partial();
+// Schema for updating a version (if Admin wants to tweak it before approving)
+const modifySongVersionSchema = createInsertSchema(songVersion)
+  .omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+    songId: true, // Should not move versions between songs
+    userId: true, // Should not change author
+  })
+  .partial();
 
 export type SongModificationSchema = z.infer<typeof songModificationSchema>;
-export type NewSongVersionSchema = z.infer<typeof newSongVersionSchema>;
 export type ModifySongVersionSchema = z.infer<typeof modifySongVersionSchema>;
 
 export const songRoutes = buildApp()
@@ -47,18 +49,13 @@ export const songRoutes = buildApp()
       const songs: SongDataDB[] = await db
         .select()
         .from(song)
-        .orderBy(desc(song.updatedAt));
-
-      return successJSend(c, {
-        songs,
-        count: songs.length,
-      });
+        .orderBy(desc(song.createdAt));
+      return successJSend(c, songs);
     } catch (error) {
-      console.error("Error fetching songs:", error);
-      return errorJSend(c, "Failed to fetch songs", 500, "FETCH_ERROR");
+      console.error(error);
+      return errorJSend(c, "Failed to fetch songs", 500, "INTERNAL_ERROR");
     }
   })
-
   .get("/withCurrentVersion", async (c) => {
     try {
       const db = drizzle(c.env.DB);
@@ -69,13 +66,7 @@ export const songRoutes = buildApp()
           id: song.id,
         })
         .from(song)
-        .where(
-          and(
-            isNotNull(song.currentVersionId),
-            eq(song.hidden, false),
-            eq(song.deleted, false)
-          )
-        )
+        .where(and(isNotNull(song.currentVersionId), eq(song.hidden, false)))
         .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
         .orderBy(desc(song.updatedAt));
 
@@ -97,150 +88,202 @@ export const songRoutes = buildApp()
         .from(songVersion)
         .orderBy(desc(songVersion.updatedAt));
 
-      return successJSend(c, {
-        versions,
-        count: versions.length,
-      });
+      return successJSend(c, versions);
     } catch (error) {
       console.error("Error fetching songs:", error);
       return errorJSend(c, "Failed to fetch songs", 500, "FETCH_ERROR");
     }
   })
-
-  .get("/:id", async (c) => {
+  .get("/:songId", async (c) => {
+    const songId = c.req.param("songId");
+    const db = drizzle(c.env.DB);
     try {
-      const songId = c.req.param("id");
-      const db = drizzle(c.env.DB);
-
-      const songWithVersions = await findSongWithVersions(db, songId);
-
-      return successJSend(c, songWithVersions);
+      const songData = await findSongWithVersions(db, songId);
+      return successJSend(c, songData);
     } catch (error) {
-      console.error("Error fetching song:", error);
-      return errorJSend(c, "Failed to fetch song", 404, "FETCH_ERROR");
+      if (error instanceof Error && error.message === "Song not found") {
+        return songNotFoundFail(c);
+      }
+      return errorJSend(c, "Failed to fetch song", 500, "INTERNAL_ERROR");
     }
   })
 
-  .put("/:id", zValidator("json", songModificationSchema), async (c) => {
+  // --- Existing Patch Song Metadata ---
+  .patch("/:songId", zValidator("json", songModificationSchema), async (c) => {
+    const songId = c.req.param("songId");
+    const data = c.req.valid("json");
+    const db = drizzle(c.env.DB);
+
     try {
-      const modifiedSong = c.req.valid("json");
-      const songId = c.req.param("id");
-      const db = drizzle(c.env.DB);
-
-      // Check if song exists
-      await findSong(db, songId);
-
-      // Update the song record
-      await db
+      const updated = await db
         .update(song)
-        .set({ ...modifiedSong, updatedAt: new Date() })
-        .where(eq(song.id, songId));
-
-      // Return the updated song with all versions and illustrations
-      const songWithVersions = await findSongWithVersions(db, songId);
-
-      return successJSend(c, songWithVersions);
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(song.id, songId))
+        .returning();
+      return successJSend(c, updated[0]);
     } catch (error) {
       console.error(error);
-      return errorJSend(c, "Failed to modify song", 500, "UPDATE_ERROR");
+      return songNotFoundFail(c);
     }
   })
 
-  .post(
-    "/:songId/versions",
-    zValidator("json", newSongVersionSchema),
-    async (c) => {
-      try {
-        const versionData = c.req.valid("json");
-        const songId = c.req.param("songId");
-        const db = drizzle(c.env.DB);
-
-        // Verify song exists
-        await findSong(db, songId);
-
-        // Generate ID for the new version
-        const versionId = `${songId}_${Date.now()}`;
-
-        // Create new version
-        const newVersion = await db
-          .insert(songVersion)
-          .values({
-            id: versionId,
-            ...versionData,
-            songId: songId,
-          })
-          .returning();
-
-        return successJSend(c, newVersion[0]);
-      } catch (error) {
-        console.error("Error creating song version:", error);
-        return errorJSend(
-          c,
-          "Failed to create song version",
-          500,
-          "VERSION_CREATE_ERROR"
-        );
-      }
+  .delete("/:id", async (c) => {
+    const db = drizzle(c.env.DB);
+    const songId = c.req.param("id");
+    try {
+      await findSong(db, songId);
+      const deletedSong = await db
+        .update(song)
+        .set({ deleted: true, updatedAt: new Date() })
+        .where(eq(song.id, songId))
+        .returning();
+      return successJSend(c, deletedSong[0]);
+    } catch (error) {
+      console.error(error);
+      return songNotFoundFail(c);
     }
-  )
+  })
 
-  .put(
-    ":songId/versions/:versionId",
+  .post("/:id/restore", async (c) => {
+    const db = drizzle(c.env.DB);
+    const songId = c.req.param("id");
+    try {
+      await findSong(db, songId, false);
+      const restoredSong = await db
+        .update(song)
+        .set({ deleted: false, updatedAt: new Date() })
+        .where(eq(song.id, songId))
+        .returning();
+      return successJSend(c, restoredSong[0]);
+    } catch (error) {
+      console.error(error);
+      return songNotFoundFail(c);
+    }
+  })
+
+  .post("/:songId/versions/:versionId/approve", async (c) => {
+    const { songId, versionId } = c.req.param();
+    // TODO: silence this error - given the admin guards, a USER not having been set is a security risk (but it should be under current structure)
+    const adminId = c.get("USER").id;
+    const db = drizzle(c.env.DB);
+
+    try {
+      // Validate existence first
+      const versionToCheck = await db
+        .select()
+        .from(songVersion)
+        .where(
+          and(eq(songVersion.id, versionId), eq(songVersion.songId, songId)),
+        )
+        .get();
+
+      if (!versionToCheck) {
+        return failJSend(c, "Version not found", 404, "VERSION_NOT_FOUND");
+      }
+
+      await promoteVersionToCurrent(db, songId, versionId, adminId);
+
+      return successJSend(c, { message: "Version approved and published." });
+    } catch (error) {
+      console.error(error);
+      return errorJSend(c, "Failed to approve version", 500, "APPROVE_ERROR");
+    }
+  })
+
+  .post("/:songId/versions/:versionId/reject", async (c) => {
+    const { songId, versionId } = c.req.param();
+    const db = drizzle(c.env.DB);
+
+    try {
+      // We don't delete it, we just mark status as rejected so the user sees it
+      const updated = await db
+        .update(songVersion)
+        .set({ status: "rejected", updatedAt: new Date() })
+        .where(
+          and(eq(songVersion.id, versionId), eq(songVersion.songId, songId)),
+        )
+        .returning();
+
+      if (!updated.length) {
+        return failJSend(c, "Version not found", 404, "VERSION_NOT_FOUND");
+      }
+
+      return successJSend(c, { message: "Version rejected." });
+    } catch (error) {
+      console.error(error);
+      return errorJSend(c, "Failed to reject version", 500, "REJECT_ERROR");
+    }
+  })
+
+  .post("/:songId/versions/:versionId/restore", async (c) => {
+    const { songId, versionId } = c.req.param();
+    const db = drizzle(c.env.DB);
+
+    try {
+      const version = await db
+        .select()
+        .from(songVersion)
+        .where(
+          and(eq(songVersion.id, versionId), eq(songVersion.songId, songId)),
+        )
+        .get();
+
+      if (!version) {
+        return failJSend(c, "Version not found", 404, "VERSION_NOT_FOUND");
+      }
+
+      // Logic: If it was rejected, put it back to pending (retry).
+      // If it was deleted, put it to archived (safe state) or pending if you want it reviewed.
+      // Defaulting to 'pending' if rejected, 'archived' if deleted.
+      const newStatus = version.status === "rejected" ? "pending" : "archived";
+
+      const updated = await db
+        .update(songVersion)
+        .set({ status: newStatus, updatedAt: new Date() })
+        .where(eq(songVersion.id, versionId))
+        .returning();
+
+      return successJSend(c, updated[0]);
+    } catch (error) {
+      console.error(error);
+      return errorJSend(c, "Failed to restore version", 500, "RESTORE_ERROR");
+    }
+  })
+
+  .patch(
+    "/:songId/versions/:versionId",
     zValidator("json", modifySongVersionSchema),
     async (c) => {
+      const { songId, versionId } = c.req.param();
+      const data = c.req.valid("json");
+      const db = drizzle(c.env.DB);
+
       try {
-        const songId = c.req.param("songId");
-        const versionId = c.req.param("versionId");
-        const versionData = c.req.valid("json");
-        const db = drizzle(c.env.DB);
-
-        // Verify version exists and belongs to this song
-        const version = await db
-          .select()
-          .from(songVersion)
-          .where(eq(songVersion.id, versionId))
-          .limit(1);
-
-        if (version.length === 0 || version[0].songId !== songId) {
-          failJSend(
-            c,
-            "Version not found or doesn't belong to this song",
-            404,
-            "VERSION_NOT_FOUND"
-          );
-        }
-
-        // Update the song's current version
-        const updatedVersion = await db
+        const updated = await db
           .update(songVersion)
-          .set({
-            ...versionData,
-            updatedAt: new Date(),
-          })
-          .where(eq(songVersion.id, versionId))
+          .set({ ...data, updatedAt: new Date() })
+          .where(
+            and(eq(songVersion.id, versionId), eq(songVersion.songId, songId)),
+          )
           .returning();
 
-        return successJSend(c, updatedVersion[0]);
+        if (!updated.length) {
+          return failJSend(c, "Version not found", 404);
+        }
+        return successJSend(c, updated[0]);
       } catch (error) {
-        console.error("Error setting current version:", error);
-        return errorJSend(
-          c,
-          "Failed to modify song version",
-          500,
-          "MODIFY_SONG_VERSION_ERROR"
-        );
+        console.error(error);
+        return errorJSend(c, "Failed to update version", 500);
       }
-    }
+    },
   )
 
-  .put("/:songId/current-version/:versionId", async (c) => {
+  // Kept for "Spam" or "Mistake" removal
+  .delete("/:songId/versions/:versionId", async (c) => {
     try {
       const songId = c.req.param("songId");
       const versionId = c.req.param("versionId");
       const db = drizzle(c.env.DB);
-
-      // Verify song exists
-      await findSong(db, songId);
 
       // Verify version exists and belongs to this song
       const version = await db
@@ -258,135 +301,33 @@ export const songRoutes = buildApp()
         );
       }
 
-      // Update the song's current version
-      const updatedSong = await db
-        .update(song)
-        .set({
-          currentVersionId: versionId,
-          updatedAt: new Date(),
-        })
-        .where(eq(song.id, songId))
-        .returning();
-
-      return successJSend(c, updatedSong[0]);
-    } catch (error) {
-      console.error("Error setting current version:", error);
-      return errorJSend(
-        c,
-        "Failed to set current version",
-        500,
-        "SET_CURRENT_VERSION_ERROR"
-      );
-    }
-  })
-
-  .put("/:songId/current-illustration/:illustrationId", async (c) => {
-    try {
-      const songId = c.req.param("songId");
-      const illustrationId = c.req.param("illustrationId");
-      const db = drizzle(c.env.DB);
-
-      // Verify illustration exists and belongs to this song
-      const illustration = await db
-        .select()
-        .from(songIllustration)
-        .where(eq(songIllustration.id, illustrationId))
-        .limit(1);
-
-      if (illustration.length === 0 || illustration[0].songId !== songId) {
+      // don't allow deletion of current version
+      const songData = await findSong(db, songId);
+      if (songData.currentVersionId === versionId) {
         return failJSend(
           c,
-          "Illustration not found or doesn't belong to this song",
-          404,
-          "ILLUSTRATION_NOT_FOUND"
+          "Cannot delete active version.",
+          500,
+          "DELETE_ERROR",
         );
       }
 
-      // Update the song's current illustration
-      const updatedSong = await db
-        .update(song)
-        .set({
-          currentIllustrationId: illustrationId,
-          updatedAt: new Date(),
-        })
-        .where(eq(song.id, songId))
-        .returning();
-
-      return successJSend(c, updatedSong[0]);
-    } catch (error) {
-      console.error("Error setting current illustration:", error);
-      return errorJSend(
-        c,
-        "Failed to set current illustration",
-        500,
-        "SET_CURRENT_ILLUSTRATION_ERROR"
-      );
-    }
-  })
-
-  .delete("/:id", async (c) => {
-    const db = drizzle(c.env.DB);
-    const songId = c.req.param("id");
-    try {
-      await findSong(db, songId);
-      const deletedSong = await db
-        .update(song)
-        .set({ deleted: true, updatedAt: new Date() })
-        .where(eq(song.id, songId))
-        .returning();
-      return successJSend(c, deletedSong[0]);
-    } catch {
-      return songNotFoundFail(c);
-    }
-  })
-
-  .delete(":songId/versions/:versionId", async (c) => {
-    try {
-      const songId = c.req.param("songId");
-      const versionId = c.req.param("versionId");
-      const db = drizzle(c.env.DB);
-
-      // Verify version exists and belongs to this song
-      const version = await db
-        .select()
-        .from(songVersion)
-        .where(eq(songVersion.id, versionId))
-        .limit(1);
-
-      if (version.length === 0 || version[0].songId !== songId) {
-        return failJSend(
-          c,
-          "Version not found or doesn't belong to this song",
-          404,
-          "VERSION_NOT_FOUND"
-        );
-      }
-
-      // Update the song's deleted state
+      // Soft delete
       const updatedVersion = await db
         .update(songVersion)
         .set({
           updatedAt: new Date(),
-          deleted: true,
+          status: "deleted",
         })
         .where(eq(songVersion.id, versionId))
         .returning();
 
-      // remove from currentVersion if it is selected
-      const songData = await findSong(db, songId);
-      if (songData.currentVersionId === versionId) {
-        await db
-          .update(song)
-          .set({ currentVersionId: null, updatedAt: new Date() })
-          .where(eq(song.id, songId));
-      }
-
       return successJSend(c, updatedVersion[0]);
-    } catch {
-      return songNotFoundFail(c);
+    } catch (error) {
+      console.error(error);
+      return failJSend(c, "Failed to delete version", 500, "DELETE_ERROR");
     }
   })
-
   .post("/reset-songDB-version", async (c) => {
     const newVersion = Date.now().toString();
     await c.env.KV.put("songDB-version", newVersion);

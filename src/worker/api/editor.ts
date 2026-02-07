@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { drizzle } from "drizzle-orm/d1";
-import { user } from "../../lib/db/schema";
+import { songVersion, user } from "../../lib/db/schema";
 
 import { eq } from "drizzle-orm";
 import { buildApp } from "./utils";
@@ -8,7 +8,6 @@ import { zValidator } from "@hono/zod-validator";
 import {
   createSong,
   createSongVersion,
-  deleteSongVersion,
   findSong,
   getSongVersionsByUser,
 } from "../services/song-service";
@@ -21,6 +20,7 @@ export const editorSubmitSchema = z.object({
   artist: z.string(),
   language: z.string(),
   chordpro: z.string(),
+  parentId: z.string().optional(),
   key: z
     .string()
     .optional()
@@ -64,7 +64,7 @@ const editorApp = buildApp()
           c,
           "Server configuration error",
           500,
-          "MISSING_API_KEY"
+          "MISSING_API_KEY",
         );
       }
 
@@ -176,7 +176,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
             c,
             "AI returned empty response",
             500,
-            "AI_EMPTY_RESPONSE"
+            "AI_EMPTY_RESPONSE",
           );
         }
 
@@ -187,12 +187,11 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
           c,
           "Internal server error during autofill",
           500,
-          "AUTOFILL_ERROR"
+          "AUTOFILL_ERROR",
         );
       }
-    }
+    },
   )
-  // --- Existing Endpoints ---
   .post("/", zValidator("json", editorSubmitSchema), async (c) => {
     const submission = c.req.valid("json");
     const userId = c.get("USER")?.id;
@@ -241,7 +240,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       const isTrusted =
         userProfile && userProfile.length > 0 && userProfile[0].isTrusted;
 
-      // ensure a song with the same id exists...
+      // Ensure song exists
       const existingSong = await findSong(db, songId, false);
 
       const versionResult = await createSongVersion(
@@ -252,7 +251,12 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
         isTrusted,
       );
 
-      return successJSend(c, { song: existingSong, version: versionResult });
+      // Response includes status so UI can show "Changes saved (Pending Approval)"
+      return successJSend(c, {
+        song: existingSong,
+        version: versionResult,
+        status: versionResult.status,
+      });
     } catch (error) {
       console.error(error);
       if (error instanceof Error) {
@@ -280,7 +284,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       );
     }
   })
-  .delete("/:id", async (c) => {
+  .delete("/versions/:id", async (c) => {
     const userId = c.get("USER")?.id;
     const versionId = c.req.param("id");
 
@@ -289,13 +293,34 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     }
     try {
       const db = drizzle(c.env.DB);
-      await deleteSongVersion(db, versionId, userId);
+      const version = await db
+        .select()
+        .from(songVersion)
+        .where(eq(songVersion.id, versionId))
+        .limit(1);
+
+      if (version.length === 0) {
+        return failJSend(c, "Version not found", 404, "VERSION_NOT_FOUND");
+      }
+      if (version[0].userId !== userId || version[0].status !== "pending") {
+        return failJSend(
+          c,
+          "Users can only delete their own pending song versions",
+          403,
+          "INSUFFICIENT_PRIVILEGES",
+        );
+      }
+      const updatedVersion = await db
+        .update(songVersion)
+        .set({
+          updatedAt: new Date(),
+          status: "deleted",
+        })
+        .where(eq(songVersion.id, versionId))
+        .returning();
       return successJSend(c, { message: "Version deleted successfully" });
     } catch (error) {
       console.error(error);
-      if (error instanceof Error) {
-        return errorJSend(c, error.message, 400, "DELETE_VERSION_FAILED");
-      }
       return errorJSend(
         c,
         "Failed to delete version",

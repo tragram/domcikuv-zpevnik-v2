@@ -1,9 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { Button } from "~/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
+import {
+  CheckCircle2,
+  ChevronDown,
+  ChevronRight,
+  Clock,
+  Edit,
+  ExternalLink,
+  ListRestart,
+  RotateCcw,
+  Star,
+  Trash2,
+} from "lucide-react";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
+import SongVersionStatusBadge from "~/components/SongVersionStatusBadge";
 import { Badge } from "~/components/ui/badge";
+import { Button } from "~/components/ui/button";
+import { Checkbox } from "~/components/ui/checkbox";
+import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
 import {
   Table,
@@ -13,53 +28,25 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { DeletePrompt } from "./shared/delete-prompt";
-import { ActionButtons } from "./shared/action-buttons";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
-import { Label } from "~/components/ui/label";
-import { Checkbox } from "~/components/ui/checkbox";
-import {
-  Edit,
-  ExternalLink,
-  ListRestart,
-  AlertTriangle,
-  RotateCcw,
-  ChevronDown,
-  ChevronRight,
-  Check,
-  X,
-  Star,
-  Clock,
-} from "lucide-react";
-import { toast } from "sonner";
-import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
 import { AdminApi } from "~/services/songs";
+import ConfirmationDialog from "../../../components/dialogs/confirmation-dialog";
+import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import {
+  useApproveVersion,
+  useDeleteSong,
   useDeleteVersion,
+  useRejectVersion,
   useResetVersionDB,
-  useSetCurrentVersion,
+  useRestoreSong,
+  useRestoreVersion,
   useSongsAdmin,
   useUpdateSong,
-  useUpdateVersion,
   useVersionsAdmin,
 } from "../adminHooks";
+import { ActionButtons } from "./shared/action-buttons";
 import { TableToolbar } from "./shared/table-toolbar";
 
-interface SongsTableProps {
-  adminApi: AdminApi;
-}
-
-export default function SongsTable({ adminApi }: SongsTableProps) {
+export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleted, setShowDeleted] = useState(false);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
@@ -70,175 +57,48 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
     useVersionsAdmin(adminApi);
 
   const updateSongMutation = useUpdateSong(adminApi);
-  const updateVersionMutation = useUpdateVersion(adminApi);
-  const deleteVersionMutation = useDeleteVersion(adminApi);
-  const setCurrentVersionMutation = useSetCurrentVersion(adminApi);
+  const deleteSongMutation = useDeleteSong(adminApi);
+  const restoreSongMutation = useRestoreSong(adminApi);
   const resetDBMutation = useResetVersionDB(adminApi);
+  const approveVersionMutation = useApproveVersion(adminApi);
+  const rejectVersionMutation = useRejectVersion(adminApi);
+  const deleteVersionMutation = useDeleteVersion(adminApi);
+  const restoreVersionMutation = useRestoreVersion(adminApi);
 
-  const handleMutationSuccess = (message: string) => {
-    toast.success(message);
-  };
+  if (songsLoading || versionsLoading) return <div>Loading...</div>;
+  if (!songs || !versions) return <div>Error loading data.</div>;
 
-  const handleMutationError = (error: Error, message: string) => {
-    console.error(message, error);
-    toast.error(message);
-  };
-
-  // TanStack Query mutations
-  const updateSong = useMutation({
-    mutationFn: ({
-      songId,
-      data,
-    }: {
-      songId: string;
-      data: Partial<SongDataDB>;
-    }) => updateSongMutation.mutateAsync({ songId, song: data }),
-    onSuccess: () => handleMutationSuccess("Song updated successfully"),
-    onError: (error) => handleMutationError(error, "Error updating song"),
-  });
-
-  const updateVersion = useMutation({
-    mutationFn: ({
-      songId,
-      versionId,
-      data,
-    }: {
-      songId: string;
-      versionId: string;
-      data: Partial<SongVersionDB>;
-    }) =>
-      updateVersionMutation.mutateAsync({
-        songId,
-        versionId,
-        version: data as SongVersionDB,
-      }),
-    onSuccess: () => handleMutationSuccess("Version updated successfully"),
-    onError: (error) => handleMutationError(error, "Error updating version"),
-  });
-
-  const deleteVersion = useMutation({
-    mutationFn: ({
-      songId,
-      versionId,
-    }: {
-      songId: string;
-      versionId: string;
-    }) => deleteVersionMutation.mutateAsync({ songId, versionId }),
-    onSuccess: () => handleMutationSuccess("Version deleted successfully"),
-    onError: (error) => handleMutationError(error, "Error deleting version"),
-  });
-
-  const setCurrentVersion = useMutation({
-    mutationFn: ({
-      songId,
-      versionId,
-    }: {
-      songId: string;
-      versionId: string;
-    }) => setCurrentVersionMutation.mutateAsync({ songId, versionId }),
-    onSuccess: () =>
-      handleMutationSuccess("Current version updated successfully"),
-    onError: (error) =>
-      handleMutationError(error, "Error setting current version"),
-  });
-
-  const resetDB = useMutation({
-    mutationFn: () => resetDBMutation.mutateAsync(),
-    onSuccess: () =>
-      handleMutationSuccess("Database version reset successfully"),
-    onError: (error) =>
-      handleMutationError(error, "Error resetting database version"),
-  });
-
-  if (songsLoading || versionsLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!songs || !versions) {
-    return <div>Error loading data.</div>;
-  }
-
-  // Create a map of versions by song ID for easy lookup
+  // Organizing data
   const versionsBySong = versions.reduce(
-    (acc: Record<string, SongVersionDB[]>, version: SongVersionDB) => {
-      if (!acc[version.songId]) {
-        acc[version.songId] = [];
-      }
+    (acc, version) => {
+      if (!acc[version.songId]) acc[version.songId] = [];
       acc[version.songId].push(version);
       return acc;
     },
-    {}
+    {} as Record<string, SongVersionDB[]>,
   );
 
-  // Get current version for a song
-  const getCurrentVersion = (song: SongDataDB): SongVersionDB | undefined => {
-    if (!song.currentVersionId) return undefined;
-    return versions.find((v) => v.id === song.currentVersionId);
-  };
+  const getCurrentVersion = (song: SongDataDB) =>
+    versions.find((v) => v.id === song.currentVersionId);
 
-  const filteredSongs = (songs || []).filter((song) => {
-    const currentVersion = getCurrentVersion(song);
-    const songVersions = versionsBySong[song.id] || [];
+  // Filter Logic
+  const filteredSongs = songs.filter((song) => {
+    const current = getCurrentVersion(song);
+    const vList = versionsBySong[song.id] || [];
 
-    const matchesSearch = currentVersion
-      ? currentVersion.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        currentVersion.artist
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
-        currentVersion.key?.toLowerCase().includes(searchTerm.toLowerCase())
-      : songVersions.some(
-          (version) =>
-            version.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            version.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            version.key?.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-
+    // Search in current or any version
+    const matchesSearch = [current, ...vList].some(
+      (v) =>
+        v?.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        v?.artist.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
     return matchesSearch && (showDeleted || !song.deleted);
   });
 
-  const handleSongUpdate = (songId: string, data: Partial<SongDataDB>) => {
-    updateSong.mutate({ songId, data });
-  };
-
-  const handleVersionUpdate = (
-    songId: string,
-    versionId: string,
-    data: Partial<SongVersionDB>
-  ) => {
-    updateVersion.mutate({ songId, versionId, data });
-  };
-
-  const handleVersionDelete = (songId: string, versionId: string) => {
-    deleteVersion.mutate({ songId, versionId });
-  };
-
-  const handleSetCurrentVersion = (songId: string, versionId: string) => {
-    setCurrentVersion.mutate({ songId, versionId });
-  };
-
-  const handleVisibilityToggle = (songId: string, hidden: boolean) => {
-    handleSongUpdate(songId, { hidden });
-  };
-
-  const handleDelete = (songId: string) =>
-    handleSongUpdate(songId, { deleted: true });
-
-  const handleRestore = (songId: string) => {
-    handleSongUpdate(songId, { deleted: false });
-  };
-
-  const handleResetDB = () => {
-    resetDB.mutate();
-  };
-
-  const toggleSongExpansion = (songId: string) => {
-    const newExpanded = new Set(expandedSongs);
-    if (newExpanded.has(songId)) {
-      newExpanded.delete(songId);
-    } else {
-      newExpanded.add(songId);
-    }
-    setExpandedSongs(newExpanded);
+  const toggleSongExpansion = (id: string) => {
+    const next = new Set(expandedSongs);
+    next.has(id) ? next.delete(id) : next.add(id);
+    setExpandedSongs(next);
   };
 
   return (
@@ -258,60 +118,51 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
               Show deleted
             </Label>
           </div>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline" disabled={resetDB.isPending}>
+          <ConfirmationDialog
+            trigger={
+              <Button variant="outline" disabled={resetDBMutation.isPending}>
                 <ListRestart className="mr-2 h-4 w-4" />
-                {resetDB.isPending ? "Resetting..." : "Reset DB Version"}
+                {resetDBMutation.isPending
+                  ? "Resetting..."
+                  : "Reset DB Version"}
               </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle className="flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-amber-500" />
-                  Reset Database Version
-                </AlertDialogTitle>
-                <AlertDialogDescription className="space-y-2">
+            }
+            title="Reset Database Version"
+            description={
+              <div className="space-y-2">
+                <p>
                   <strong>Warning:</strong> This will force all clients to
-                  redownload the entire song database.
-                  <br />
-                  <br />
-                  This should only be done when the database schema changes or
-                  when there are significant structural updates that require a
-                  full sync.
-                  <br />
-                  <br />
-                  Are you sure you want to proceed? This action cannot be
-                  undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleResetDB}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                >
-                  Reset Database Version
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+                  reload their song database.
+                </p>
+                <p>Use this when:</p>
+                <ul className="list-disc list-inside space-y-1">
+                  <li>Multiple songs have been updated</li>
+                  <li>Critical changes need immediate propagation</li>
+                </ul>
+                <p className="text-sm text-muted-foreground">
+                  Note: Individual song updates automatically notify clients.
+                  This is only needed for bulk changes.
+                </p>
+              </div>
+            }
+            confirmText="Yes, Reset DB Version"
+            cancelText="Cancel"
+            variant="default"
+            onConfirm={() => resetDBMutation.mutate()}
+            isLoading={resetDBMutation.isPending}
+          />
         </div>
       </TableToolbar>
 
-      <div className="rounded-md border">
+      <div className="rounded-md border shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead className="w-8"></TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Artist</TableHead>
-              <TableHead>Key</TableHead>
-              <TableHead>Language</TableHead>
-              <TableHead>Tempo</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Visible</TableHead>
-              <TableHead>Modified</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -321,274 +172,353 @@ export default function SongsTable({ adminApi }: SongsTableProps) {
               const songVersions = versionsBySong[song.id] || [];
               const isExpanded = expandedSongs.has(song.id);
 
+              // Count pending suggestions to show a notification dot?
+              const pendingCount = songVersions.filter(
+                (v) => v.status === "pending",
+              ).length;
+
               return (
                 <React.Fragment key={song.id}>
-                  {/* Main song row */}
+                  {/* Master Row */}
                   <TableRow
-                    className={`cursor-pointer hover:bg-muted/50 ${
-                      song.deleted ? "opacity-50" : ""
-                    }`}
+                    className={`cursor-pointer hover:bg-muted/50`}
                     onClick={() => toggleSongExpansion(song.id)}
                   >
                     <TableCell>
-                      {songVersions.length > 0 &&
-                        (isExpanded ? (
+                      <div className="flex items-center">
+                        {isExpanded ? (
                           <ChevronDown className="h-4 w-4" />
                         ) : (
                           <ChevronRight className="h-4 w-4" />
-                        ))}
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      {currentVersion?.title || "No current version"}
-                    </TableCell>
-                    <TableCell>{currentVersion?.artist || "-"}</TableCell>
-                    <TableCell>
-                      {currentVersion?.key && (
-                        <Badge variant="outline">{currentVersion.key}</Badge>
-                      )}
-                    </TableCell>
-                    <TableCell>{currentVersion?.language || "-"}</TableCell>
-                    <TableCell>{currentVersion?.tempo || "-"}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
-                        {currentVersion?.approved ? (
-                          <Badge
-                            variant="default"
-                            className="bg-green-100 text-green-800"
-                          >
-                            <Check className="h-3 w-3 mr-1" />
-                            Approved
-                          </Badge>
-                        ) : currentVersion ? (
-                          <Badge variant="secondary">
-                            <Clock className="h-3 w-3 mr-1" />
-                            Pending
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline">No Version</Badge>
                         )}
                       </div>
+                    </TableCell>
+                    <TableCell
+                      className={`font-medium  ${song.deleted ? "opacity-60" : ""}`}
+                    >
+                      {currentVersion?.title}
+                    </TableCell>
+                    <TableCell
+                      className={`font-medium  ${song.deleted ? "opacity-60" : ""}`}
+                    >
+                      {currentVersion?.artist || "-"}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        {song.deleted ? (
+                          <SongVersionStatusBadge status={"deleted"} />
+                        ) : currentVersion ? (
+                          <SongVersionStatusBadge
+                            status={currentVersion.status}
+                          />
+                        ) : (
+                          <Badge variant="outline">Empty</Badge>
+                        )}
+                        {pendingCount > 0 && !isExpanded && !song.deleted && (
+                          <SongVersionStatusBadge status="pending" />
+                        )}
+                      </div>
+                      {/* Show status of the CURRENT version */}
                     </TableCell>
                     <TableCell>
                       <Switch
                         checked={!song.hidden}
+                        disabled={song.deleted}
                         onCheckedChange={(checked) =>
-                          handleVisibilityToggle(song.id, !checked)
+                          updateSongMutation.mutate({
+                            songId: song.id,
+                            song: { hidden: !checked },
+                          })
                         }
-                        disabled={song.deleted || updateSong.isPending}
                         onClick={(e) => e.stopPropagation()}
                       />
-                    </TableCell>
-                    <TableCell>
-                      {song.updatedAt
-                        ? song.updatedAt.toLocaleDateString()
-                        : "-"}
                     </TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
                       <ActionButtons>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => {
-                            navigate({ to: `/edit/${song.id}` });
-                          }}
+                          onClick={() => navigate({ to: `/edit/${song.id}` })}
                           disabled={song.deleted}
                         >
                           <Edit className="h-4 w-4" />
                         </Button>
-                        {currentVersion && (
+                        {song.deleted ? (
                           <Button
                             variant="ghost"
                             size="sm"
+                            className="text-green-600 hover:text-green-700 hover:bg-green-50"
                             onClick={() =>
-                              window.open(
-                                `/chordpro/${currentVersion.id}`,
-                                "_blank"
-                              )
+                              restoreSongMutation.mutate(song.id, {
+                                onSuccess: () => toast.success("Song restored"),
+                                onError: () =>
+                                  toast.error("Failed to restore song"),
+                              })
                             }
                           >
-                            <ExternalLink className="h-4 w-4" />
+                            <RotateCcw className="h-4 w-4 mr-1" />
+                            Restore
                           </Button>
-                        )}
-                        {song.deleted ? (
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
+                        ) : (
+                          <ConfirmationDialog
+                            trigger={
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                                className="text-destructive hover:text-destructive hover:bg-destructive/10"
                               >
-                                <RotateCcw className="h-4 w-4" />
+                                <Trash2 className="h-4 w-4" />
                               </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle className="flex items-center gap-2">
-                                  <RotateCcw className="h-5 w-5 text-green-600" />
-                                  Restore Song
-                                </AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Are you sure you want to restore this song?
-                                  This will make the song visible to users
-                                  again.
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction
-                                  onClick={() => handleRestore(song.id)}
-                                  className="bg-green-600 text-white hover:bg-green-700"
-                                >
-                                  Restore Song
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                        ) : (
-                          <DeletePrompt
-                            onDelete={() => handleDelete(song.id)}
-                            title="Are you sure you want to delete this song?"
-                            description="This action will mark the song as deleted and it will no longer be visible to users. This action can be undone by using the restore function."
-                            variant="ghost"
-                            size="sm"
+                            }
+                            title="Delete Song"
+                            description="Are you sure you want to delete this song?"
+                            confirmText="Delete"
+                            cancelText="Cancel"
+                            variant="destructive"
+                            onConfirm={() =>
+                              deleteSongMutation.mutate(song.id, {
+                                onSuccess: () => toast.success("Song deleted"),
+                                onError: () =>
+                                  toast.error("Failed to delete song"),
+                              })
+                            }
                           />
                         )}
                       </ActionButtons>
                     </TableCell>
                   </TableRow>
 
-                  {/* Expanded versions row */}
+                  {/* Expanded Detail Row */}
                   {isExpanded && (
-                    <TableRow>
-                      <TableCell colSpan={10} className="p-0">
-                        <div className="bg-muted/20 p-4 border-t">
-                          <h4 className="font-medium mb-3 flex items-center gap-2">
-                            <span>All Versions ({songVersions.length})</span>
+                    <TableRow className="bg-muted/5 hover:bg-muted/5">
+                      <TableCell colSpan={6} className="p-0">
+                        <div className="p-4 border-b border-t shadow-inner ">
+                          <h4 className="font-semibold text-sm mb-3 text-primary">
+                            History & Suggestions
                           </h4>
                           <div className="space-y-2">
-                            {songVersions.map((version) => (
-                              <div
-                                key={version.id}
-                                className={`flex items-center justify-between p-3 rounded-lg border bg-background ${
-                                  version.id === song.currentVersionId
-                                    ? "ring-2 ring-primary"
-                                    : ""
-                                }`}
-                              >
-                                <div className="flex items-center gap-4">
-                                  {version.id === song.currentVersionId && (
-                                    <Star className="h-4 w-4 text-primary" />
-                                  )}
-                                  <div>
-                                    <div className="font-medium">
-                                      {version.title} - {version.artist}
-                                    </div>
-                                    <div className="text-sm text-muted-foreground">
-                                      {version.key && `Key: ${version.key} • `}
-                                      {version.language} • Created{" "}
-                                      {version.createdAt
-                                        ? new Date(
-                                            version.createdAt
-                                          ).toLocaleDateString()
-                                        : ""}
-                                      {version.approved &&
-                                        version.approvedAt && (
-                                          <span className="text-green-600">
-                                            {" • Approved "}
-                                            {new Date(
-                                              version.approvedAt
-                                            ).toLocaleDateString()}
-                                          </span>
-                                        )}
+                            {songVersions
+                              // Sort: Pending first, then by Date desc
+                              .sort((a, b) => {
+                                if (
+                                  a.status === "pending" &&
+                                  b.status !== "pending"
+                                )
+                                  return -1;
+                                if (
+                                  b.status === "pending" &&
+                                  a.status !== "pending"
+                                )
+                                  return 1;
+                                return (
+                                  new Date(b.createdAt).getTime() -
+                                  new Date(a.createdAt).getTime()
+                                );
+                              })
+                              .filter(
+                                (version) =>
+                                  version.status !== "deleted" || showDeleted,
+                              )
+                              .map((version) => (
+                                <div
+                                  key={version.id}
+                                  className={`flex items-center justify-between p-3 rounded-md border ${
+                                    version.status === "published"
+                                      ? "border-green-200 ring-1 ring-green-100"
+                                      : version.status === "rejected" ||
+                                          version.status === "deleted"
+                                        ? "opacity-75 border-dashed"
+                                        : ""
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-3">
+                                    {/* Icon indicating state */}
+                                    {version.status === "published" && (
+                                      <Star className="h-4 w-4 text-green-500 fill-green-100" />
+                                    )}
+                                    {version.status === "pending" && (
+                                      <Clock className="h-4 w-4 text-amber-500" />
+                                    )}
+
+                                    <div className="flex flex-col">
+                                      <div className="flex items-center gap-2">
+                                        <span className="font-medium text-sm">
+                                          {version.title}
+                                        </span>
+                                        <SongVersionStatusBadge
+                                          status={version.status}
+                                        />
+                                      </div>
+                                      <span className="text-xs text-muted-foreground">
+                                        by {version.userId} •{" "}
+                                        {new Date(
+                                          version.createdAt,
+                                        ).toLocaleDateString()}
+                                        {version.key &&
+                                          ` • Key: ${version.key}`}
+                                      </span>
                                     </div>
                                   </div>
+
+                                  <ActionButtons>
+                                    {/* Approve / Reject Actions for Pending Items */}
+                                    {version.status === "pending" && (
+                                      <>
+                                        <Button
+                                          size="sm"
+                                          variant="outline"
+                                          className="text-green-700 hover:text-green-800 hover:bg-green-50 border-green-200"
+                                          onClick={() =>
+                                            approveVersionMutation.mutate(
+                                              {
+                                                songId: song.id,
+                                                versionId: version.id,
+                                              },
+                                              {
+                                                onSuccess: () =>
+                                                  toast.success(
+                                                    "Version approved and published",
+                                                  ),
+                                                onError: () =>
+                                                  toast.error(
+                                                    "Failed to approve version",
+                                                  ),
+                                              },
+                                            )
+                                          }
+                                        >
+                                          <CheckCircle2 className="w-4 h-4 mr-1" />{" "}
+                                          Approve
+                                        </Button>
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          className="text-red-700 hover:text-red-800 hover:bg-red-50"
+                                          onClick={() =>
+                                            rejectVersionMutation.mutate(
+                                              {
+                                                songId: song.id,
+                                                versionId: version.id,
+                                              },
+                                              {
+                                                onSuccess: () =>
+                                                  toast.success(
+                                                    "Version marked as rejected",
+                                                  ),
+                                                onError: () =>
+                                                  toast.error(
+                                                    "Failed to reject version",
+                                                  ),
+                                              },
+                                            )
+                                          }
+                                        >
+                                          Reject
+                                        </Button>
+                                      </>
+                                    )}
+
+                                    {/* Re-promote old versions */}
+                                    {version.status === "archived" && (
+                                      <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() =>
+                                          approveVersionMutation.mutate(
+                                            {
+                                              songId: song.id,
+                                              versionId: version.id,
+                                            },
+                                            {
+                                              onSuccess: () =>
+                                                toast.success(
+                                                  "Version restored as current",
+                                                ),
+                                              onError: () =>
+                                                toast.error(
+                                                  "Failed to restore version",
+                                                ),
+                                            },
+                                          )
+                                        }
+                                      >
+                                        Restore as Current
+                                      </Button>
+                                    )}
+
+                                    {/* Restore Rejected/Deleted Versions */}
+                                    {(version.status === "rejected" ||
+                                      version.status === "deleted") && (
+                                      <Button
+                                        size="sm"
+                                        variant="ghost"
+                                        onClick={() =>
+                                          restoreVersionMutation.mutate(
+                                            {
+                                              songId: song.id,
+                                              versionId: version.id,
+                                            },
+                                            {
+                                              onSuccess: () =>
+                                                toast.success(
+                                                  "Version restored",
+                                                ),
+                                              onError: () =>
+                                                toast.error(
+                                                  "Failed to restore version",
+                                                ),
+                                            },
+                                          )
+                                        }
+                                      >
+                                        <RotateCcw className="h-4 w-4 mr-1" />
+                                        Restore
+                                      </Button>
+                                    )}
+
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() =>
+                                        window.open(
+                                          `/song/${song.id}?version=${version.id}`,
+                                          "_blank",
+                                        )
+                                      }
+                                    >
+                                      <ExternalLink className="h-4 w-4" />
+                                    </Button>
+
+                                    {/* Only allow hard delete if rejected or admin explicit choice */}
+                                    <DeletePrompt
+                                      title="Permanently Delete?"
+                                      description="This will remove the data entirely."
+                                      disabled={
+                                        version.id === song.currentVersionId ||
+                                        version.status === "deleted"
+                                      }
+                                      onDelete={() =>
+                                        deleteVersionMutation.mutate(
+                                          {
+                                            songId: song.id,
+                                            versionId: version.id,
+                                          },
+                                          {
+                                            onSuccess: () =>
+                                              toast.success(
+                                                "Version permanently deleted",
+                                              ),
+                                            onError: () =>
+                                              toast.error(
+                                                "Failed to delete version",
+                                              ),
+                                          },
+                                        )
+                                      }
+                                    />
+                                  </ActionButtons>
                                 </div>
-
-                                <ActionButtons>
-                                  {version.id !== song.currentVersionId && (
-                                    <Button
-                                      variant="outline"
-                                      size="sm"
-                                      onClick={() =>
-                                        handleSetCurrentVersion(
-                                          song.id,
-                                          version.id
-                                        )
-                                      }
-                                      className="mr-2"
-                                      disabled={setCurrentVersion.isPending}
-                                    >
-                                      <Star className="h-4 w-4 mr-1" />
-                                      Set Current
-                                    </Button>
-                                  )}
-                                  {version.approved ? (
-                                    <Button
-                                      variant="outline"
-                                      size="sm"
-                                      onClick={() =>
-                                        handleVersionUpdate(
-                                          song.id,
-                                          version.id,
-                                          { approved: false }
-                                        )
-                                      }
-                                      className="text-amber-600 hover:text-amber-700"
-                                      disabled={updateVersion.isPending}
-                                    >
-                                      <X className="h-4 w-4 mr-1" />
-                                      Unapprove
-                                    </Button>
-                                  ) : (
-                                    <Button
-                                      variant="outline"
-                                      size="sm"
-                                      onClick={() =>
-                                        handleVersionUpdate(
-                                          song.id,
-                                          version.id,
-                                          { approved: true }
-                                        )
-                                      }
-                                      className="text-green-600 hover:text-green-700"
-                                      disabled={updateVersion.isPending}
-                                    >
-                                      <Check className="h-4 w-4 mr-1" />
-                                      Approve
-                                    </Button>
-                                  )}
-
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() =>
-                                      window.open(
-                                        `/chordpro/${version.id}`,
-                                        "_blank"
-                                      )
-                                    }
-                                  >
-                                    <ExternalLink className="h-4 w-4" />
-                                  </Button>
-
-                                  <DeletePrompt
-                                    onDelete={() =>
-                                      handleVersionDelete(song.id, version.id)
-                                    }
-                                    title={`Are you sure you want to delete this version of "${version.title}"?`}
-                                    description="This action cannot be undone."
-                                    variant="ghost"
-                                    size="sm"
-                                  />
-                                </ActionButtons>
-                              </div>
-                            ))}
-
-                            {songVersions.length === 0 && (
-                              <div className="text-center py-4 text-muted-foreground">
-                                No versions available for this song
-                              </div>
-                            )}
+                              ))}
                           </div>
                         </div>
                       </TableCell>

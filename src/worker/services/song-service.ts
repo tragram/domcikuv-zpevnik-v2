@@ -106,30 +106,33 @@ export const baseSelectFields = {
   },
 };
 
-const transformSongToApi = (songItem: {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  hidden: boolean;
-  deleted: boolean;
-  title: string | null;
-  artist: string | null;
-  key: string | null;
-  startMelody: string | null;
-  language: string | null;
-  tempo: string | null;
-  capo: number | null;
-  range: string | null;
-  chordpro: string | null;
-  sourceId: string | null;
-  currentIllustration: {
-    illustrationId: string | null;
-    promptId: string | null;
-    imageModel: string | null;
-    imageURL: string | null;
-    thumbnailURL: string | null;
-  } | null;
-}, updatedSince?: Date): SongDataApi => ({
+const transformSongToApi = (
+  songItem: {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    hidden: boolean;
+    deleted: boolean;
+    title: string | null;
+    artist: string | null;
+    key: string | null;
+    startMelody: string | null;
+    language: string | null;
+    tempo: string | null;
+    capo: number | null;
+    range: string | null;
+    chordpro: string | null;
+    sourceId: string | null;
+    currentIllustration: {
+      illustrationId: string | null;
+      promptId: string | null;
+      imageModel: string | null;
+      imageURL: string | null;
+      thumbnailURL: string | null;
+    } | null;
+  },
+  updatedSince?: Date,
+): SongDataApi => ({
   id: songItem.id,
   title: songItem.title ?? "Unknown title",
   artist: songItem.artist ?? "Unknown artist",
@@ -277,10 +280,7 @@ export const retrieveSingleSong = async (
     .from(song)
     .leftJoin(
       songVersion,
-      eq(
-        songVersion.id,
-        versionId ? versionId : song.currentVersionId,
-      ),
+      eq(songVersion.id, versionId ? versionId : song.currentVersionId),
     )
     .leftJoin(
       songIllustration,
@@ -330,7 +330,7 @@ export const createSong = async (
   submission: EditorSubmitSchema,
   userId: string,
   isTrusted: boolean,
-  sourceId: string = "editor",
+  sourceId: SongVersionDB["sourceId"] = "editor",
 ) => {
   const now = new Date();
   // assume 1-to-1 relation between songs and IDs
@@ -371,38 +371,25 @@ export const createSongVersion = async (
   songId: string,
   userId: string,
   isTrusted: boolean,
-  sourceId: string = "editor",
+  sourceId: SongVersionDB["sourceId"] = "editor",
 ) => {
   const now = new Date();
-
-  // 1. Get the current state of the song (to know what we are basing this on)
-  const currentSong = await db
-    .select({ currentVersionId: song.currentVersionId })
-    .from(song)
-    .where(eq(song.id, songId))
-    .limit(1);
-
-  if (currentSong.length === 0) throw new Error("Song not found");
-  const parentId = currentSong[0].currentVersionId;
-
-  // 2. Check if the user already has a PENDING version for this song
-  // We allow users to edit their own pending suggestions ("drafts")
-  const existingPendingVersion = await db
-    .select()
-    .from(songVersion)
-    .where(
-      and(
-        eq(songVersion.songId, songId),
-        eq(songVersion.userId, userId),
-        eq(songVersion.status, "pending"),
-      ),
-    )
-    .limit(1);
-
+  let parentVersion: SongVersionDB | undefined = undefined;
+  // ensure parentId is valid
+  if (submission.parentId) {
+    const parentVersionResult = await db
+      .select()
+      .from(songVersion)
+      .where(eq(songVersion.id, submission.parentId))
+      .limit(1);
+    if (parentVersionResult.length === 0 || parentVersionResult[0].songId !== songId) {
+      throw Error("Invalid parentId!");
+    }
+    parentVersion = parentVersionResult[0];
+  }
+  // check if the parent id is pending - in that case we edit that one
   // LOGIC BRANCH A: Update existing pending draft
-  if (existingPendingVersion.length > 0) {
-    const existingVersion = existingPendingVersion[0];
-
+  if (parentVersion && parentVersion.status === "pending") {
     // If the user is trusted, their update acts as an "Approval" of their own draft immediately
     const shouldPublish = isTrusted;
 
@@ -411,18 +398,16 @@ export const createSongVersion = async (
       .set({
         ...submission,
         updatedAt: now,
-        // If trusted, we auto-publish, otherwise it stays pending
-        status: shouldPublish ? "published" : "pending",
         approvedBy: shouldPublish ? userId : null,
         approvedAt: shouldPublish ? now : null,
         sourceId: sourceId,
       })
-      .where(eq(songVersion.id, existingVersion.id))
+      .where(eq(songVersion.id, parentVersion.id))
       .returning();
 
     // If we just published this, update the main Song pointer and archive the old parent
     if (shouldPublish) {
-      await promoteVersionToCurrent(db, songId, existingVersion.id, parentId);
+      await promoteVersionToCurrent(db, songId, parentVersion.id, userId);
     }
 
     return updatedVersion[0];
@@ -439,8 +424,7 @@ export const createSongVersion = async (
         ...submission,
         id: versionId,
         songId: songId,
-        parentId: parentId, // Link to the version this was based on
-        status: shouldPublish ? "published" : "pending",
+        parentId: submission.parentId,
         userId: userId,
         approvedBy: shouldPublish ? userId : null,
         approvedAt: shouldPublish ? now : null,
@@ -451,38 +435,60 @@ export const createSongVersion = async (
       .returning();
 
     if (shouldPublish) {
-      await promoteVersionToCurrent(db, songId, versionId, parentId);
+      await promoteVersionToCurrent(db, songId, versionId, userId);
     }
 
     return newVersion[0];
   }
 };
 
-// Helper to handle the atomic swap of "Current Version"
-async function promoteVersionToCurrent(
+export const promoteVersionToCurrent = async (
   db: DrizzleD1Database,
   songId: string,
-  newVersionId: string,
-  oldVersionId: string | null,
-) {
-  // 1. Update the Song pointer
-  await db
-    .update(song)
-    .set({ currentVersionId: newVersionId, updatedAt: new Date() })
-    .where(eq(song.id, songId));
+  versionId: string,
+  approverId: string,
+) => {
+  const now = new Date();
 
-  // 2. Archive the old version (if it exists) so it's no longer "published"
-  // Note: Depending on your preference, you might keep multiple 'published' in history
-  // or strictly ensure only one is published.
-  // Standard Wiki style: Old versions are valid history, but not "Current".
-  // We mark them 'archived' to easily distinguish the active head.
-  if (oldVersionId) {
+  // 1. Get the current active version to archive it
+  const currentSong = await db
+    .select({ currentVersionId: song.currentVersionId })
+    .from(song)
+    .where(eq(song.id, songId))
+    .get();
+
+  // 2. Archive the OLD current version (if it exists and is different)
+  if (
+    currentSong?.currentVersionId &&
+    currentSong.currentVersionId !== versionId
+  ) {
     await db
       .update(songVersion)
       .set({ status: "archived" })
-      .where(eq(songVersion.id, oldVersionId));
+      .where(eq(songVersion.id, currentSong.currentVersionId));
   }
-}
+
+  // 3. Publish the NEW version
+  await db
+    .update(songVersion)
+    .set({
+      status: "published",
+      approvedBy: approverId,
+      approvedAt: now,
+      updatedAt: now,
+    })
+    .where(eq(songVersion.id, versionId));
+
+  // 4. Update the Song pointer
+  await db
+    .update(song)
+    .set({
+      currentVersionId: versionId,
+      updatedAt: now,
+    })
+    .where(eq(song.id, songId));
+};
+
 export const findSongWithVersions = async (
   db: DrizzleD1Database,
   songId: string,

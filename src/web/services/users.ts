@@ -1,5 +1,5 @@
 import { UserDB } from "src/lib/db/schema/auth.schema";
-import { API } from "../../worker/api-client";
+import client, { API } from "../../worker/api-client";
 import { makeApiRequest } from "./apiHelpers";
 import {
   CreateUserSchema,
@@ -36,7 +36,7 @@ export async function fetchProfile(api: API) {
     return response;
   } catch (e) {
     console.error("Failed to fetch profile - returning empty...", e);
-    return { loggedIn: false} as UserProfileData;
+    return { loggedIn: false } as UserProfileData;
   }
 }
 
@@ -101,64 +101,58 @@ export async function fetchUserAdmin(
  * Creates a new user
  * @param api - The users API client
  * @param userData - The user data to create
- * @returns Promise containing the creation result and user data
+ * @returns Promise containing the created user data
  * @throws {ApiException} When user creation fails (e.g., email already exists)
  */
 export async function createUserAdmin(
   api: UsersApi,
   userData: CreateUserSchema
-): Promise<{ success: boolean; user: UserDB }> {
+): Promise<UserDB> {
   const createdUser = await makeApiRequest(() =>
     api.$post({
       json: userData,
     })
   );
-  return {
-    success: true,
-    user: parseUserDates(createdUser),
-  };
+  return parseUserDates(createdUser);
 }
 
 /**
- * Updates an existing user
+ * Updates an existing user (PATCH)
  * @param api - The users API client
  * @param userId - The ID of the user to update
- * @param userData - The user data to update
- * @returns Promise containing the update result and user data
+ * @param userData - The user data to update (partial)
+ * @returns Promise containing the updated user data
  * @throws {ApiException} When user update fails or user not found
  */
 export async function updateUserAdmin(
   api: UsersApi,
   userId: string,
   userData: UpdateUserSchema
-): Promise<{ success: boolean; user: UserDB }> {
+): Promise<UserDB> {
   const updatedUser = await makeApiRequest(() =>
-    api[":id"].$put({
+    api[":id"].$patch({
       param: { id: userId },
       json: userData,
     })
   );
-  return {
-    success: true,
-    user: parseUserDates(updatedUser),
-  };
+  return parseUserDates(updatedUser);
 }
 
 /**
  * Deletes a user
  * @param api - The users API client
  * @param userId - The ID of the user to delete
- * @returns Promise containing the deletion result
+ * @returns Promise containing the deleted user data
  * @throws {ApiException} When user deletion fails or user not found
  */
 export async function deleteUserAdmin(
   api: UsersApi,
   userId: string
-): Promise<{ success: boolean }> {
-  await makeApiRequest(() =>
+): Promise<UserDB> {
+  const deletedUser = await makeApiRequest(() =>
     api[":id"].$delete({
       param: { id: userId },
     })
   );
-  return { success: true };
+  return parseUserDates(deletedUser);
 }

@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import { DeletePrompt } from "../shared/delete-prompt";
 import { ActionButtons } from "../shared/action-buttons";
 import {
   AlertDialog,
@@ -39,6 +38,7 @@ import {
   AvailableSummaryModel,
   SummaryPromptVersion,
 } from "src/worker/api/admin/image-generator";
+import DeletePrompt from "~/components/dialogs/delete-prompt";
 
 interface IllustrationCardProps {
   song: SongWithCurrentVersion;

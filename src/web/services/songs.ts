@@ -1,8 +1,5 @@
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
-import {
-  SongDataApi,
-  SongWithCurrentVersion,
-} from "src/worker/services/song-service";
+import { SongDataApi, SongWithCurrentVersion } from "src/worker/services/song-service";
 import client, { API } from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {
@@ -12,10 +9,8 @@ import {
   SongLanguage,
 } from "~/types/types";
 import { makeApiRequest } from "./apiHelpers";
-import {
-  ModifySongVersionSchema,
-  SongModificationSchema,
-} from "src/worker/api/admin/songs";
+import { ModifySongVersionSchema, SongModificationSchema } from "src/worker/api/admin/songs";
+
 export * from "./illustrations";
 
 export type AdminApi = typeof client.api.admin;
@@ -44,7 +39,7 @@ export const parseDBDates = <T extends Timestamped>(o: T) => {
   };
 };
 
-// Public API
+// --- Public API ---
 export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
   const response = await makeApiRequest(api.songs.$get);
   return response.songs;
@@ -52,80 +47,92 @@ export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
 
 export const fetchPublicSongbooks = async (api: API): Promise<Songbook[]> => {
   const response = await makeApiRequest(api.songs.songbooks.$get);
-  return response.map((s) => {
-    const newS = { ...s, songIds: new Set(s.songIds) } as Songbook;
-    return newS;
-  });
+  return response.map(
+    (s) => ({ ...s, songIds: new Set(s.songIds) }) as Songbook,
+  );
 };
 
-// Admin API
+// --- Admin API ---
 export const getSongsAdmin = async (
-  adminApi: AdminApi
+  adminApi: AdminApi,
 ): Promise<SongDataDB[]> => {
   const response = await makeApiRequest(adminApi.songs.$get);
-  return response.songs.map(parseDBDates);
+  return response.map(parseDBDates);
 };
 
 export const getVersionsAdmin = async (
-  adminApi: AdminApi
+  adminApi: AdminApi,
 ): Promise<SongVersionDB[]> => {
   const response = await makeApiRequest(adminApi.songs.versions.$get);
-  return response.versions.map(parseDBDates);
-};
-export const putSongAdmin = async (
-  adminApi: AdminApi,
-  songId: string,
-  songData: SongModificationSchema
-): Promise<SongDataDB> => {
-  const modifiedSong = await makeApiRequest(() =>
-    adminApi.songs[":id"].$put({
-      param: { id: songId },
-      json: songData,
-    })
-  );
-  return parseDBDates(modifiedSong);
+  return response.map(parseDBDates);
 };
 
-export const setCurrentVersionAdmin = async (
+export const approveSongVersion = async (
   adminApi: AdminApi,
   songId: string,
-  versionId: string
+  versionId: string,
+) => {
+  return await makeApiRequest(() =>
+    adminApi.songs[":songId"].versions[":versionId"].approve.$post({
+      param: { songId, versionId },
+    }),
+  );
+};
+
+export const rejectSongVersion = async (
+  adminApi: AdminApi,
+  songId: string,
+  versionId: string,
+) => {
+  return await makeApiRequest(() =>
+    adminApi.songs[":songId"].versions[":versionId"].reject.$post({
+      param: { songId, versionId },
+    }),
+  );
+};
+
+export const patchSongAdmin = async (
+  adminApi: AdminApi,
+  songId: string,
+  songData: SongModificationSchema,
 ): Promise<SongDataDB> => {
   const modifiedSong = await makeApiRequest(() =>
-    adminApi.songs[":songId"]["current-version"][":versionId"].$put({
-      param: { songId, versionId },
-    })
+    adminApi.songs[":songId"].$patch({
+      // Using patch as per your songs.ts admin file
+      param: { songId },
+      json: songData,
+    }),
   );
   return parseDBDates(modifiedSong);
 };
 
 export const deleteSongAdmin = async (
   adminApi: AdminApi,
-  songId: string
+  songId: string,
 ): Promise<SongDataDB> => {
   const deletedSong = await makeApiRequest(() =>
     adminApi.songs[":id"].$delete({
       param: { id: songId },
-    })
+    }),
   );
   return parseDBDates(deletedSong);
 };
 
 export const songsWithCurrentVersionAdmin = async (
-  adminApi: AdminApi
+  adminApi: AdminApi,
 ): Promise<SongWithCurrentVersion[]> => {
   const songs = await makeApiRequest(adminApi.songs.withCurrentVersion.$get);
   return songs.songs.map(parseDBDates);
 };
 
-export const putVersionAdmin = async (
+export const patchVersionAdmin = async (
   adminApi: AdminApi,
   songId: string,
   versionId: string,
   versionData: ModifySongVersionSchema
 ): Promise<SongVersionDB> => {
   const updatedVersion = await makeApiRequest(() =>
-    adminApi.songs[":songId"].versions[":versionId"].$put({
+    adminApi.songs[":songId"].versions[":versionId"].$patch({
       param: { songId, versionId },
       json: { ...versionData },
     })
@@ -136,56 +143,49 @@ export const putVersionAdmin = async (
 export const deleteVersionAdmin = async (
   adminApi: AdminApi,
   songId: string,
-  versionId: string
+  versionId: string,
 ): Promise<SongVersionDB> => {
   const deletedVersion = await makeApiRequest(() =>
     adminApi.songs[":songId"].versions[":versionId"].$delete({
       param: { songId, versionId },
-    })
+    }),
   );
   return parseDBDates(deletedVersion);
 };
 
 export const resetVersionDB = async (adminApi: AdminApi) => {
-  const newVersion = await makeApiRequest(
-    adminApi.songs["reset-songDB-version"].$post
-  );
-  return newVersion;
+  return await makeApiRequest(adminApi.songs["reset-songDB-version"].$post);
 };
 
-// Utility functions
+// --- Utility functions ---
 export const buildSongDB = (
   songs: SongDataApi[],
   songbooks: Songbook[],
-  userFavoriteSongIds?: Set<string> | string[] // New Argument
+  userFavoriteSongIds?: Set<string> | string[],
 ): SongDB => {
   const favoritesSet =
     userFavoriteSongIds instanceof Set
       ? userFavoriteSongIds
       : new Set(userFavoriteSongIds || []);
 
-  const songDatas = songs.map((d) => {
-    // Inject favorite status
-    const enrichedData = {
+  const songDatas = songs
+    .map((d) => ({
       ...d,
       isFavoriteByCurrentUser: favoritesSet.has(d.id),
-    };
-    return new SongData(enrichedData);
-  });
+    }))
+    .map((enriched) => new SongData(enriched));
 
-  const languages: LanguageCount = songDatas
-    .map((s) => s.language)
-    .reduce((acc: LanguageCount, lang: string) => {
-      const validLang: SongLanguage = isValidSongLanguage(lang)
-        ? lang
-        : "other";
-      acc[validLang] = (acc[validLang] || 0) + 1;
-      return acc;
-    }, {} as LanguageCount);
+  const languages: LanguageCount = songDatas.reduce((acc: LanguageCount, s) => {
+    const validLang: SongLanguage = isValidSongLanguage(s.language)
+      ? s.language
+      : "other";
+    acc[validLang] = (acc[validLang] || 0) + 1;
+    return acc;
+  }, {} as LanguageCount);
 
   const songRanges = songDatas
     .map((s) => s.range?.semitones)
-    .filter(Boolean) as Array<number>;
+    .filter(Boolean) as number[];
 
   return {
     maxRange: songRanges.length > 0 ? Math.max(...songRanges) : undefined,

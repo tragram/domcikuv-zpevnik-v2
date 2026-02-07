@@ -24,7 +24,7 @@ interface AdminDashboardProps {
 
 export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
   const { tab } = useSearch({ from: "/admin" });
-  const [activeTab, setActiveTab] = useState(tab || "illustrations");
+  const [activeTab, setActiveTab] = useState(tab || "songs");
   const getTabTitle = (tab: string) => {
     switch (tab) {
       case "songs":

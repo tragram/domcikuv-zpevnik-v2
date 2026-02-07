@@ -36,19 +36,34 @@ interface EditorProps {
   songDB: SongDB;
   songData?: SongData;
   user: UserProfileData;
+  versionId?: string;
 }
 
-const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
+const Editor: React.FC<EditorProps> = ({
+  songDB,
+  songData,
+  user,
+  versionId,
+}) => {
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
     : "editor/state";
+
   const defaultEditorState: EditorState = (
     songData ? songData : SongData.empty()
-  ).toJSON();
+  ).toJSON() as EditorState;
+
+  // If we are editing a specific version (e.g. a pending draft or an old version),
+  // we set that as the parentId.
+  // - If it's a pending draft, the backend will update it in place.
+  // - If it's a published version, the backend will fork it.
+  if (versionId) {
+    defaultEditorState.parentId = versionId;
+  }
 
   const [editorState, setEditorState] = useLocalStorageState<EditorState>(
     editorStateKey,
-    { defaultValue: () => defaultEditorState }
+    { defaultValue: () => defaultEditorState },
   );
 
   // Editor settings stored per-user
@@ -66,11 +81,11 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
       if (!editorStatesEqual(editorState, defaultEditorState as EditorState)) {
         localStorage.setItem(
           editorStateKey + "-backup",
-          JSON.stringify(editorState)
+          JSON.stringify(editorState),
         );
       }
     },
-    [defaultEditorState, editorStateKey]
+    [defaultEditorState, editorStateKey],
   );
 
   const loadBackupState = useCallback(() => {
@@ -163,13 +178,13 @@ const Editor: React.FC<EditorProps> = ({ songDB, songData, user }) => {
       />
       <div
         className={cn(
-          "flex flex-col md:flex-row w-full h-fit md:h-full overflow-hidden"
+          "flex flex-col md:flex-row w-full h-fit md:h-full overflow-hidden",
         )}
       >
         <div
           className={cn(
             "flex flex-col md:flex-row h-full w-full gap-4 p-4 xl:gap-8 xl:p-8 overflow-auto",
-            toolbarTop ? "!pt-0" : "!pb-0"
+            toolbarTop ? "!pt-0" : "!pb-0",
           )}
         >
           <CollapsibleMainArea

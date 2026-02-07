@@ -1,66 +1,77 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import Editor from "~/features/Editor/Editor";
-import { handleApiResponse } from "~/services/apiHelpers";
+import { makeApiRequest } from "~/services/apiHelpers";
 import { SongData } from "~/types/songData";
+import { z } from "zod";
 
 export const Route = createFileRoute("/edit/$songId")({
   component: RouteComponent,
-  loader: async ({ context, params }) => {
+  validateSearch: z.object({
+    version: z.string().optional(),
+  }),
+  loaderDeps: ({ search }) => ({ version: search.version }),
+  loader: async ({ context, params, deps }) => {
     const songDB = context.songDB;
     const songId = params.songId;
-    const songData = songDB.songs.find((s) => s.id === songId);
+    const versionId = deps.version;
 
     return {
       user: context.user,
       songDB,
-      songData,
       songId: params.songId,
+      versionId,
       api: context.api,
+      // Only set local data if we are NOT looking for a specific version
+      // and the song exists in the global cache
+      localSongData: !versionId
+        ? songDB.songs.find((s) => s.id === songId)
+        : undefined,
     };
   },
 });
 
 function RouteComponent() {
-  const {
-    user,
-    songDB,
-    songData: localSongData,
-    songId,
-    api,
-  } = Route.useLoaderData();
+  const { user, songDB, localSongData, songId, versionId, api } =
+    Route.useLoaderData();
 
-  // Try fetching from API if not found locally
   const {
     data: fetchedSong,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["song", songId],
+    queryKey: ["song", songId, versionId],
     queryFn: async () => {
-      if (!songId || localSongData) return null;
-
-      try {
-        const response = await api.songs.fetch[":id"].$get({
-          param: { id: songId },
-        });
-        const data = await handleApiResponse(response);
-        return new SongData(data);
-      } catch (error) {
-        console.error("Failed to fetch song:", error);
-        return null;
+      // Branch 1: Specific version requested
+      if (versionId) {
+        const response = await makeApiRequest(() =>
+          api.songs.fetch[":songId"][":versionId"].$get({
+            param: { songId, versionId },
+          }),
+        );
+        return new SongData(response);
       }
+
+      // Branch 2: No version requested, but not found in local context
+      const response = await makeApiRequest(() =>
+        api.songs.fetch[":id"].$get({
+          param: { id: songId },
+        }),
+      );
+      return new SongData(response);
     },
-    enabled: !!songId && !localSongData,
-    staleTime: Infinity, // Once fetched, keep it
-    retry: 1, // Only retry once
+    // Enable fetching if:
+    // 1. We requested a specific version (we generally don't cache all versions in context)
+    // 2. OR we didn't find the main song in the local context
+    enabled: !!versionId || !localSongData,
+    staleTime: Infinity,
+    retry: 1,
   });
 
-  // Combine local and fetched results
-  const songData = localSongData || fetchedSong;
+  // Use local data if available and no specific version was requested, otherwise use fetched data
+  const songData = !versionId && localSongData ? localSongData : fetchedSong;
 
-  // Show loading state while fetching
-  if (isLoading && !localSongData) {
+  if (isLoading && !songData) {
     return (
       <div className="flex items-center justify-center h-screen">
         <p>Loading song...</p>
@@ -68,7 +79,6 @@ function RouteComponent() {
     );
   }
 
-  // Show error state if song not found
   if (!songData && (isError || (!localSongData && !isLoading))) {
     return (
       <div className="flex flex-col items-center justify-center h-screen p-4">
@@ -82,7 +92,6 @@ function RouteComponent() {
     );
   }
 
-  // Shouldn't happen, but safety check
   if (!songData) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -91,5 +100,12 @@ function RouteComponent() {
     );
   }
 
-  return <Editor songDB={songDB} songData={songData} user={user} />;
+  return (
+    <Editor
+      songDB={songDB}
+      songData={songData}
+      user={user}
+      versionId={versionId}
+    />
+  );
 }

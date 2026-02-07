@@ -2,7 +2,7 @@ import type React from "react";
 
 import { useState, useEffect } from "react";
 import { Button } from "~/components/ui/button";
-import { Input } from '~/components/ui/input';
+import { Input } from "~/components/ui/input";
 import { Badge } from "~/components/ui/badge";
 import {
   Table,
@@ -12,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { DeletePrompt } from "./shared/delete-prompt";
 import { ActionButtons } from "./shared/action-buttons";
 import {
   Dialog,
@@ -23,103 +22,75 @@ import {
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
 import { Edit } from "lucide-react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TableToolbar } from "./shared/table-toolbar";
 import { Pagination } from "./shared/pagination";
-import {
-  deleteUserAdmin,
-  updateUserAdmin,
-} from "~/services/users";
 import { toast } from "sonner";
-import { useUsersAdmin } from "../adminHooks";
+import { useUsersAdmin, useUpdateUser, useDeleteUser } from "../adminHooks";
 import { AdminApi } from "~/services/songs";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  image?: string;
-  nickname?: string;
-  isTrusted: boolean;
-  isAdmin: boolean;
-  isFavoritesPublic: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  lastLogin: Date;
-}
+import DeletePrompt from "../../../components/dialogs/delete-prompt";
+import { UserDB } from "src/lib/db/schema";
 
 interface UsersTableProps {
   adminApi: AdminApi;
 }
 
-export function UsersTable({ adminApi }: UsersTableProps) {
-  const queryClient = useQueryClient();
+const PAGE_SIZE = 20;
 
+export function UsersTable({ adminApi }: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editingUser, setEditingUser] = useState<UserDB | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const pageSize = 20;
 
   const {
     data: usersData,
     isLoading,
     error,
   } = useUsersAdmin(adminApi, {
-    limit: pageSize,
-    offset: currentPage * pageSize,
+    limit: PAGE_SIZE,
+    offset: currentPage * PAGE_SIZE,
+    search: searchTerm || undefined,
   });
 
-  // Update user mutation
-  const updateUserMutation = useMutation({
-    mutationFn: ({
-      userId,
-      userData,
-    }: {
-      userId: string;
-      userData: Parameters<typeof updateUserAdmin>[2];
-    }) => updateUserAdmin(adminApi.users, userId, userData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-      toast.success("User updated successfully");
-      setIsDialogOpen(false);
-      setEditingUser(null);
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to update user");
-    },
-  });
-
-  // Delete user mutation
-  const deleteUserMutation = useMutation({
-    mutationFn: (userId: string) => deleteUserAdmin(adminApi.users, userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-      toast.success("User deleted successfully");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message || "Failed to delete user");
-    },
-  });
+  const updateUserMutation = useUpdateUser(adminApi);
+  const deleteUserMutation = useDeleteUser(adminApi);
 
   // Reset page when search changes
   useEffect(() => {
     setCurrentPage(0);
   }, [searchTerm]);
 
-  const handleSaveUser = (userData: Partial<User>) => {
+  const handleSaveUser = (userData: Partial<UserDB>) => {
     if (editingUser) {
-      updateUserMutation.mutate({
-        userId: editingUser.id,
-        userData,
-      });
+      updateUserMutation.mutate(
+        { userId: editingUser.id, userData },
+        {
+          onSuccess: () => {
+            toast.success("User updated successfully");
+            setIsDialogOpen(false);
+            setEditingUser(null);
+          },
+          onError: (error: Error) => {
+            toast.error(error.message || "Failed to update user");
+          },
+        },
+      );
     }
   };
 
+  const handleDeleteUser = (userId: string, userName: string) => {
+    deleteUserMutation.mutate(userId, {
+      onSuccess: () => {
+        toast.success(`User "${userName}" deleted successfully`);
+      },
+      onError: (error: Error) => {
+        toast.error(error.message || "Failed to delete user");
+      },
+    });
+  };
+
   const users = usersData?.users || [];
-  const totalPages = Math.ceil((usersData?.pagination.total || 0) / pageSize);
+  const totalPages = Math.ceil((usersData?.pagination.total || 0) / PAGE_SIZE);
   const hasNextPage = usersData?.pagination.hasMore || false;
   const hasPrevPage = currentPage > 0;
 
@@ -158,18 +129,18 @@ export function UsersTable({ adminApi }: UsersTableProps) {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center py-8">
+                <TableCell colSpan={8} className="text-center py-8">
                   Loading users...
                 </TableCell>
               </TableRow>
             ) : users.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center py-8">
+                <TableCell colSpan={8} className="text-center py-8">
                   No users found
                 </TableCell>
               </TableRow>
             ) : (
-              users.map((user: User) => (
+              users.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
@@ -210,7 +181,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
                         <Edit className="h-4 w-4" />
                       </Button>
                       <DeletePrompt
-                        onDelete={() => deleteUserMutation.mutate(user.id)}
+                        onDelete={() => handleDeleteUser(user.id, user.name)}
                         title={`Are you sure you want to delete user "${user.name}"?`}
                         description="This action cannot be undone. All user data will be permanently deleted."
                         variant="ghost"
@@ -233,7 +204,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
           hasPrevPage={hasPrevPage}
           onPageChange={setCurrentPage}
           totalItems={usersData?.pagination.total || 0}
-          pageSize={pageSize}
+          pageSize={PAGE_SIZE}
         />
       )}
 
@@ -259,8 +230,8 @@ function UserForm({
   onSave,
   isLoading,
 }: {
-  user: User | null;
-  onSave: (data: Partial<User>) => void;
+  user: UserDB | null;
+  onSave: (data: Partial<UserDB>) => void;
   isLoading?: boolean;
 }) {
   const [formData, setFormData] = useState({

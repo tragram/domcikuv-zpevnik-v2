@@ -61,7 +61,7 @@ export const userRoutes = buildApp()
       return errorJSend(c, "Failed to fetch user", 500, "FETCH_ERROR");
     }
   })
-  .put("/:id", zValidator("json", updateUserSchema), async (c) => {
+  .patch("/:id", zValidator("json", updateUserSchema), async (c) => {
     try {
       const userId = c.req.param("id");
       const userData = c.req.valid("json");

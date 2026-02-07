@@ -9,7 +9,10 @@ import { songRoutes } from "./songs";
 import { userRoutes } from "./users";
 
 // Shared auth check logic
-const checkUserPermissions = async (c: Context, requireAdmin: boolean = true) => {
+const checkUserPermissions = async (
+  c: Context,
+  requireAdmin: boolean = true,
+) => {
   const db = drizzle(c.env.DB);
   const userId = c.get("USER")?.id;
 
@@ -21,15 +24,14 @@ const checkUserPermissions = async (c: Context, requireAdmin: boolean = true) =>
           message: "Authentication required",
           code: "AUTH_REQUIRED",
         },
-        401
+        401,
       ),
     };
   }
-
   const userCheckResult = await db
-    .select({ 
+    .select({
       isAdmin: user.isAdmin,
-      isTrusted: user.isTrusted 
+      isTrusted: user.isTrusted,
     })
     .from(user)
     .where(eq(user.id, userId))
@@ -43,7 +45,7 @@ const checkUserPermissions = async (c: Context, requireAdmin: boolean = true) =>
           message: "User not found",
           code: "USER_NOT_FOUND",
         },
-        404
+        404,
       ),
     };
   }
@@ -57,13 +59,13 @@ const checkUserPermissions = async (c: Context, requireAdmin: boolean = true) =>
           message: "Database integrity error",
           code: "DB_INTEGRITY_ERROR",
         },
-        500
+        500,
       ),
     };
   }
 
   const { isAdmin, isTrusted } = userCheckResult[0];
-  
+
   // In dev mode, allow everything
   if (import.meta.env.DEV) {
     return { authorized: true };
@@ -78,7 +80,7 @@ const checkUserPermissions = async (c: Context, requireAdmin: boolean = true) =>
           message: "Admin privileges required",
           code: "INSUFFICIENT_PRIVILEGES",
         },
-        403
+        403,
       ),
     };
   }
@@ -91,7 +93,7 @@ const checkUserPermissions = async (c: Context, requireAdmin: boolean = true) =>
           message: "Admin or trusted user privileges required",
           code: "INSUFFICIENT_PRIVILEGES",
         },
-        403
+        403,
       ),
     };
   }
@@ -112,7 +114,7 @@ const adminMiddleware = async (c: Context, next: Next) => {
         message: "Internal server error",
         code: "INTERNAL_ERROR",
       },
-      500
+      500,
     );
   }
 };
@@ -130,7 +132,7 @@ export const adminOrTrustedMiddleware = async (c: Context, next: Next) => {
         message: "Internal server error",
         code: "INTERNAL_ERROR",
       },
-      500
+      500,
     );
   }
 };

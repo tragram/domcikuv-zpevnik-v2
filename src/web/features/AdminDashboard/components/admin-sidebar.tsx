@@ -1,17 +1,25 @@
 "use client";
 
 import { Link } from "@tanstack/react-router";
-import { Users, Music, ImageIcon, History, Database, Home, Pencil, User } from "lucide-react";
+import {
+  Database,
+  Home,
+  ImageIcon,
+  Music,
+  Pencil,
+  User,
+  Users,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarHeader,
   SidebarRail,
   SidebarSeparator,
 } from "~/components/ui/sidebar";

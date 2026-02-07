@@ -3,7 +3,6 @@ import {
   integer,
   sqliteTable,
   text,
-  uniqueIndex,
 } from "drizzle-orm/sqlite-core";
 import { relations } from "drizzle-orm";
 import { user } from "./auth.schema";
@@ -36,6 +35,18 @@ export const songVersion = sqliteTable("song_version", {
     .notNull()
     .references((): AnySQLiteColumn => song.id),
 
+  // The lineage - which version was this edited from?
+  parentId: text("parent_id").references((): AnySQLiteColumn => songVersion.id),
+
+  // Status flow:
+  // 'pending' (User suggestion) -> 'published' (Active) -> 'archived' (History) -> 'deleted'
+  // 'rejected' (Closed without merging)
+  status: text("status", {
+    enum: ["pending", "published", "archived", "rejected", "draft", "deleted"],
+  })
+    .notNull()
+    .default("pending"),
+
   title: text("title").notNull(),
   artist: text("artist").notNull(),
   key: text("key"),
@@ -48,10 +59,15 @@ export const songVersion = sqliteTable("song_version", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id),
-  approved: integer("approved", { mode: "boolean" }).notNull().default(false),
+
   approvedBy: text("approved_by").references(() => user.id),
   approvedAt: integer("approved_at", { mode: "timestamp" }),
-  sourceId: text("source_id").notNull().default("editor"),
+
+  sourceId: text("source_id", {
+    enum: ["editor", "pisnicky-akordy"],
+  })
+    .notNull()
+    .default("editor"),
 
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
@@ -61,11 +77,9 @@ export const songVersion = sqliteTable("song_version", {
     .notNull(),
 
   chordpro: text("chordpro").notNull(),
-
-  deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
 });
 
-export type SongVersionDB = typeof songVersion.$inferInsert;
+export type SongVersionDB = typeof songVersion.$inferSelect;
 
 export const illustrationPrompt = sqliteTable("illustration_prompt", {
   id: text("id").primaryKey(),
@@ -148,8 +162,11 @@ export const songVersionRelations = relations(songVersion, ({ one }) => ({
     fields: [songVersion.approvedBy],
     references: [user.id],
   }),
+  parent: one(songVersion, {
+    fields: [songVersion.parentId],
+    references: [songVersion.id],
+  }),
 }));
-
 export const illustrationPromptRelations = relations(
   illustrationPrompt,
   ({ one }) => ({

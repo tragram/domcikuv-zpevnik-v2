@@ -6,9 +6,17 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 import {
+  IMAGE_MODELS_API,
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_VERSIONS,
+} from "src/worker/api/admin/image-generator";
+import {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
 } from "src/worker/services/illustration-service";
+import { SongWithCurrentVersion } from "src/worker/services/song-service";
+import FormDialog from "~/components/dialogs/form-dialog";
+import PreviewDialog from "~/components/dialogs/preview-dialog";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -16,13 +24,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "~/components/ui/dialog";
 import { cn } from "~/lib/utils";
 import { createIllustration, generateIllustration } from "~/services/songs";
 import { IllustrationCard } from "./illustration-card";
@@ -30,8 +31,6 @@ import {
   IllustrationForm,
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
-import { SongWithCurrentVersion } from "src/worker/services/song-service";
-import { SUMMARY_PROMPT_VERSIONS, SUMMARY_MODELS_API, IMAGE_MODELS_API } from "src/worker/api/admin/image-generator";
 
 interface SongIllustrationsGroupProps {
   song: SongWithCurrentVersion;
@@ -98,7 +97,7 @@ export function SongIllustrationsGroup({
       }
     },
     onError: (error) => {
-      console.error('Create illustration error:', error);
+      console.error("Create illustration error:", error);
       toast.error("Failed to create illustration");
     },
   });
@@ -120,7 +119,7 @@ export function SongIllustrationsGroup({
       }
     },
     onError: (error) => {
-      console.error('Generate illustration error:', error);
+      console.error("Generate illustration error:", error);
       toast.error("Failed to generate illustration");
     },
   });
@@ -132,16 +131,16 @@ export function SongIllustrationsGroup({
     try {
       if (mode === "manual") {
         await createMutation.mutateAsync(
-          illustrationData as IllustrationCreateSchema
+          illustrationData as IllustrationCreateSchema,
         );
       } else {
         await generateMutation.mutateAsync(
-          illustrationData as IllustrationGenerateSchema
+          illustrationData as IllustrationGenerateSchema,
         );
       }
     } catch (error) {
       // Error handling is done in onError callbacks
-      console.error('Illustration creation/generation error:', error);
+      console.error("Illustration creation/generation error:", error);
     }
   };
 
@@ -153,7 +152,7 @@ export function SongIllustrationsGroup({
         <div
           className={cn(
             "flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors gap-2",
-            someActive ? "" : "border-red-900 border-2"
+            someActive ? "" : "border-red-900 border-2",
           )}
         >
           <CollapsibleTrigger className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 text-left">
@@ -188,7 +187,7 @@ export function SongIllustrationsGroup({
                       "w-10 h-10 sm:w-12 sm:h-12 rounded object-cover border-2 shadow-sm hover:shadow-md transition-shadow cursor-pointer",
                       illustration.id === song.currentIllustrationId
                         ? "border-primary"
-                        : ""
+                        : "",
                     )}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -219,7 +218,7 @@ export function SongIllustrationsGroup({
               variant="secondary"
               className={cn(
                 "text-xs px-1 sm:px-2",
-                filteredIllustrations.length === 0 ? "bg-red-900" : ""
+                filteredIllustrations.length === 0 ? "bg-red-900" : "",
               )}
             >
               <span className="hidden sm:inline">
@@ -227,34 +226,30 @@ export function SongIllustrationsGroup({
               </span>
               <span className="sm:hidden">{filteredIllustrations.length}</span>
             </Badge>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
+            <FormDialog
+              trigger={
                 <Button
                   size="sm"
                   className="h-8 w-8 p-0 bg-primary hover:bg-primary/90 text-white shadow-sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
+                  onClick={(e) => e.stopPropagation()}
                   disabled={isLoading}
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl">
-                <DialogHeader>
-                  <DialogTitle>
-                    Add New Illustration for "{song.title}"
-                  </DialogTitle>
-                </DialogHeader>
-                <IllustrationForm
-                  illustration={{ songId: song.id }}
-                  onSave={handleCreateIllustration}
-                  isLoading={isLoading}
-                  dropdownOptions={backendDropdownOptions}
-                  onSuccess={() => setIsDialogOpen(false)}
-                />
-              </DialogContent>
-            </Dialog>
+              }
+              title={`Add New Illustration for "${song.title}"`}
+              maxWidth="2xl"
+              open={isDialogOpen}
+              onOpenChange={setIsDialogOpen}
+            >
+              <IllustrationForm
+                illustration={{ songId: song.id }}
+                onSave={handleCreateIllustration}
+                isLoading={isLoading}
+                dropdownOptions={backendDropdownOptions}
+                onSuccess={() => setIsDialogOpen(false)}
+              />
+            </FormDialog>
           </div>
         </div>
 
@@ -263,7 +258,9 @@ export function SongIllustrationsGroup({
             {filteredIllustrations.length === 0 ? (
               <div className="mt-3 p-8 text-center text-muted-foreground border-2 border-dashed rounded-lg">
                 <p className="text-sm">No illustrations yet</p>
-                <p className="text-xs mt-1">Click the + button above to create one</p>
+                <p className="text-xs mt-1">
+                  Click the + button above to create one
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
@@ -283,26 +280,20 @@ export function SongIllustrationsGroup({
           </div>
         </CollapsibleContent>
       </Collapsible>
-
-      {previewImage && (
-        <Dialog
-          open={!!previewImage}
-          onOpenChange={() => setPreviewImage(null)}
-        >
-          <DialogContent className="max-w-4xl">
-            <DialogHeader>
-              <DialogTitle>Image Preview - {song.title}</DialogTitle>
-            </DialogHeader>
-            <div className="flex justify-center">
-              <img
-                src={previewImage}
-                alt="Full size preview"
-                className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-lg"
-              />
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
+      <PreviewDialog
+        open={!!previewImage}
+        onOpenChange={(open) => !open && setPreviewImage(null)}
+        title={`Image Preview - ${song.title}`}
+        maxWidth="4xl"
+      >
+        <div className="flex justify-center">
+          <img
+            src={previewImage!}
+            alt="Full size preview"
+            className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-lg"
+          />
+        </div>
+      </PreviewDialog>
     </>
   );
 }
