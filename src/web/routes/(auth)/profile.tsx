@@ -26,6 +26,11 @@ type ProfileUpdateResponse = {
 
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      redirect: (search.redirect as string) || undefined,
+    };
+  },
   loader: async ({ context }) => {
     const userProfileData = context.queryClient.getQueryData([
       "userProfile",
@@ -43,6 +48,7 @@ function RouteComponent() {
   const { userProfileData } = Route.useLoaderData();
   const profile = userProfileData.profile;
   const { queryClient, redirectURL } = Route.useRouteContext();
+  const { redirect } = Route.useSearch();
 
   const navigate = Route.useNavigate();
   const router = useRouter();
@@ -144,7 +150,20 @@ function RouteComponent() {
       setSavedData(updatedData);
 
       router.invalidate();
+      
+      // Invalidate userProfile query to ensure all components get fresh data
+      await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+      
+      // Invalidate songs and songbooks since favorites or profile data may affect them
+      await queryClient.invalidateQueries({ queryKey: ["songs"] });
+      await queryClient.invalidateQueries({ queryKey: ["publicSongbooks"] });
+      
       toast.success("Profile updated successfully");
+      
+      // Redirect if redirect parameter is present
+      if (redirect) {
+        navigate({ to: redirect });
+      }
     } catch (err) {
       if (err) {
         if (err.code === "NICKNAME_TAKEN") {
