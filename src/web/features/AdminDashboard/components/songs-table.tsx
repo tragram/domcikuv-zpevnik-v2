@@ -255,6 +255,11 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                 songVersions.find((v) => ["archived"].includes(v.status)) ??
                 songVersions.find((v) => ["pending"].includes(v.status)) ??
                 songVersions.find((v) => ["rejected"].includes(v.status));
+              const versionCount = (
+                showDeleted
+                  ? songVersions
+                  : songVersions.filter((v) => v.status !== "deleted")
+              ).length;
               return (
                 <React.Fragment key={song.id}>
                   <TableRow
@@ -362,8 +367,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                             <Clock className="h-4 w-4" />
                             Version History
                             <Badge variant="outline" className="ml-2">
-                              {songVersions.length} version
-                              {songVersions.length !== 1 ? "s" : ""}
+                              {versionCount} version
+                              {versionCount !== 1 ? "s" : ""}
                             </Badge>
                           </h4>
                           <div className="space-y-2">
