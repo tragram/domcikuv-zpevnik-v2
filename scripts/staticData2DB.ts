@@ -54,13 +54,13 @@ async function ensureSystemUser(db: DrizzleD1Database): Promise<string> {
     .select()
     .from(user)
     .where(eq(user.email, SYSTEM_EMAIL))
-    .get();
-  if (existingUser) {
+    .limit(1);
+  if (existingUser.length > 0) {
     await db
       .update(user)
       .set({ isTrusted: true, isAdmin: true })
-      .where(eq(user.id, existingUser.id));
-    return existingUser.id;
+      .where(eq(user.id, existingUser[0].id));
+    return existingUser[0].id;
   }
 
   const userId = "system-migration-user";
@@ -127,7 +127,7 @@ async function uploadSong(
     artist: metadata.artist,
     key: metadata.key || null,
     language: metadata.language || "other",
-    capo: metadata.capo || 0,
+    capo: parseInt(metadata.capo) || 0,
     tempo: metadata.tempo || null,
     range: metadata.range || null,
     startMelody: metadata.startMelody || null,
@@ -146,6 +146,12 @@ async function uploadSong(
     .update(song)
     .set({ currentVersionId: versionId })
     .where(eq(song.id, songId));
+
+  // 4. add to favorites
+  await db.insert(userFavoriteSongs).values({
+    userId: systemUserId,
+    songId,
+  });
 
   if (VERBOSE) console.log(`  Uploaded: ${songId}`);
   return metadata.illustrationId;
@@ -243,15 +249,17 @@ async function processAndMigrateSongs(
 async function main() {
   const songsPath = path.resolve(__dirname, "../songs");
   try {
-    // await D1Helper.get("DB").useLocalD1((db) =>
-    //   processAndMigrateSongs(db, songsPath),
-    // );
-    await D1Helper.get("DB")
-      .withCfCredentials(
-        process.env.CLOUDFLARE_ACCOUNT_ID,
-        process.env.CLOUDFLARE_D1_TOKEN,
-      )
-      .useProxyD1(async (db) => processAndMigrateSongs(db, songsPath));
+    /*** local ***/
+    await D1Helper.get("DB").useLocalD1((db) =>
+      processAndMigrateSongs(db, songsPath),
+    );
+    /*** remote ***/
+    // await D1Helper.get("DB")
+    //   .withCfCredentials(
+    //     process.env.CLOUDFLARE_ACCOUNT_ID,
+    //     process.env.CLOUDFLARE_D1_TOKEN,
+    //   )
+    //   .useProxyD1(async (db) => processAndMigrateSongs(db, songsPath));
   } catch (error) {
     console.error("Migration failed:", error);
     process.exit(1);
