@@ -177,19 +177,43 @@ export async function retrieveSongs(
   includeHidden = false,
   includeDeleted = false,
 ) {
-  // this does not retrieve songs without currentVersionId => for users only
+  // Build conditions first
+  const conditions = [isNotNull(song.currentVersionId)];
+
+  if (!includeHidden) {
+    if (includeDeleted) {
+      // the or condition can return undefined sometimes, so this is for TS
+      const orCondition = or(eq(song.hidden, false), eq(song.deleted, true));
+      if (orCondition) {
+        conditions.push(orCondition);
+      }
+    } else {
+      conditions.push(eq(song.hidden, false));
+    }
+  }
+
+  if (!includeDeleted) {
+    conditions.push(eq(song.deleted, false));
+  }
+
+  if (updatedSince) {
+    conditions.push(gte(song.updatedAt, updatedSince));
+  }
+
+  // Build query with all conditions at once
   let query = db
     .select({
       ...baseSelectFields,
     })
     .from(song)
-    .where(isNotNull(song.currentVersionId))
+    .where(and(...conditions))
     .leftJoin(songVersion, eq(songVersion.id, song.currentVersionId))
     .leftJoin(
       songIllustration,
       eq(songIllustration.id, song.currentIllustrationId),
     );
-  // potentially add favorites
+
+  // Add favorites join if userId is provided
   if (userId) {
     query = query.leftJoin(
       userFavoriteSongs,
@@ -200,33 +224,11 @@ export async function retrieveSongs(
     );
   }
 
-  // Build conditions
-  const conditions = [];
-  if (!includeHidden) {
-    if (includeDeleted) {
-      conditions.push(or(eq(song.hidden, false), eq(song.deleted, true)));
-    } else {
-      conditions.push(eq(song.hidden, false));
-    }
-  }
-
-  if (!includeDeleted) {
-    conditions.push(eq(song.deleted, false));
-    conditions.push(isNotNull(song.currentVersionId));
-  }
-
-  if (updatedSince) {
-    conditions.push(gte(song.updatedAt, updatedSince));
-  }
-
-  // Apply where conditions if any exist
-  const finalQuery =
-    conditions.length > 0 ? query.where(and(...conditions)) : query;
-
-  const songsRaw = await finalQuery;
+  const songsRaw = await query;
 
   return songsRaw.map((songItem) => transformSongToApi(songItem, updatedSince));
 }
+
 export async function getSongbooks(db: DrizzleD1Database) {
   const result = await db
     .select({
