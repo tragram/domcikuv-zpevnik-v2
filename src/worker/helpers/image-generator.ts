@@ -2,10 +2,11 @@ import { InferenceClient } from "@huggingface/inference";
 
 // the first element of each array is used as default by the frontend
 export const SUMMARY_PROMPT_VERSIONS = ["v2", "v1"] as const;
-export const SUMMARY_MODELS_API = ["gpt-4o-mini", "gpt-4o"] as const;
+export const SUMMARY_MODELS_API = ["gpt-5-mini", "gpt-5.2"] as const;
 export const IMAGE_MODELS_API = [
   "FLUX.1-dev",
   "FLUX.1-schnell",
+  "gpt-image-1.5",
   "gpt-image-1",
   "gpt-image-1-mini",
 ] as const;
