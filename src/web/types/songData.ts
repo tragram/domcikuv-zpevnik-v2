@@ -171,13 +171,15 @@ export class SongData {
   thumbnailURL(): string | undefined {
     if (!this.currentIllustration && this.sourceId === "pisnicky-akordy")
       return "/pa_logo.png";
-    return this.currentIllustration?.thumbnailURL;
+    return (
+      this.currentIllustration?.thumbnailURL ?? "/unknown_illustration.png"
+    );
   }
 
   illustrationURL(): string | undefined {
     if (!this.currentIllustration && this.sourceId === "pisnicky-akordy")
       return "/pa_logo.png";
-    return this.currentIllustration?.imageURL;
+    return this.currentIllustration?.imageURL ?? "/unknown_illustration.png";
   }
 
   // JSON serialization for API responses
