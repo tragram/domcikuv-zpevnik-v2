@@ -85,7 +85,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       groups = groups.filter(
         ([, group]) =>
           Array.isArray(group.illustrations) &&
-          group.illustrations.some((i) => i.imageModel === imageModelFilter)
+          group.illustrations.some((i) => i.imageModel === imageModelFilter),
       );
     }
 
@@ -160,8 +160,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             {filteredAndSortedGroups.length} songs •{" "}
             {filteredAndSortedGroups
               .map((g) => g[1].illustrations.length)
-              .reduce((acc, el) => acc + el)}
-              {" "}
+              .reduce((acc, el) => acc + el, 0)}{" "}
             illustrations
           </p>
         </div>
@@ -243,7 +242,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             size="sm"
             onClick={() =>
               setExpandedGroups(
-                new Set(filteredAndSortedGroups.map(([songId]) => songId))
+                new Set(filteredAndSortedGroups.map(([songId]) => songId)),
               )
             }
           >
