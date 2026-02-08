@@ -20,7 +20,7 @@ import {
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
-  summaryPromptId: z.string().optional(),
+  summaryPromptVersion: z.string().optional(),
   imageModel: z.string(),
   setAsActive: z.string().transform((val) => val === "true"), // FormData sends as string
   imageFile: z.any().optional(),
@@ -69,7 +69,7 @@ const imageFolder = (
   songId: string,
   promptId: string,
   imageModel: string,
-  thumbnail: boolean
+  thumbnail: boolean,
 ) => {
   return `songs/illustrations/${songId}/${promptFolder(songId, promptId)}/${
     thumbnail ? "thumbnail" : "full"
@@ -91,7 +91,7 @@ export const moveSongToTrash = async (
   R2_BUCKET: R2Bucket,
   songId: string,
   promptId: string,
-  imageModel: string
+  imageModel: string,
 ) => {
   const thumbnails = [false, true];
   const results = { imageURL: "", thumbnailURL: "" };
@@ -116,7 +116,7 @@ export async function uploadImageBuffer(
   promptId: string,
   imageModel: string,
   env: Env,
-  thumbnail: boolean = false
+  thumbnail: boolean = false,
 ) {
   const imageKey = imageFolder(songId, promptId, imageModel, thumbnail);
   await env.R2_BUCKET.put(imageKey, imageBuffer);
@@ -128,7 +128,7 @@ export async function sameParametersExist(
   db: DrizzleD1Database,
   songId: string,
   summaryPromptId: string,
-  imageModel: string
+  imageModel: string,
 ) {
   const result = db
     .select()
@@ -138,8 +138,8 @@ export async function sameParametersExist(
         eq(songIllustration.songId, songId),
         eq(songIllustration.promptId, summaryPromptId),
         eq(songIllustration.imageModel, imageModel),
-        eq(songIllustration.deleted, false)
-      )
+        eq(songIllustration.deleted, false),
+      ),
     )
     .limit(1);
   return (await result).length > 0;
@@ -151,7 +151,7 @@ export async function sameParametersExist(
 export async function setCurrentIllustration(
   db: DrizzleD1Database,
   songId: string,
-  illustrationId: string
+  illustrationId: string,
 ) {
   await db
     .update(song)
@@ -167,7 +167,7 @@ export async function setCurrentIllustration(
  */
 export async function clearCurrentIllustration(
   db: DrizzleD1Database,
-  songId: string
+  songId: string,
 ) {
   await db
     .update(song)
@@ -188,7 +188,7 @@ export async function findOrCreatePrompt(
   promptVersion: string,
   promptModel: string,
   generator: ImageGenerator,
-  songData?: SongWithCurrentVersion
+  songData?: SongWithCurrentVersion,
 ): Promise<IllustrationPromptDB> {
   // Check if prompt already exists
   const existingPrompt = await db
@@ -198,8 +198,8 @@ export async function findOrCreatePrompt(
       and(
         eq(illustrationPrompt.songId, songId),
         eq(illustrationPrompt.summaryPromptVersion, promptVersion),
-        eq(illustrationPrompt.summaryModel, promptModel)
-      )
+        eq(illustrationPrompt.summaryModel, promptModel),
+      ),
     )
     .limit(1);
 
@@ -216,7 +216,7 @@ export async function findOrCreatePrompt(
   }
 
   const promptText = await generator.generatePrompt(
-    ImageGenerator.extractLyricsFromChordPro(song.chordpro)
+    ImageGenerator.extractLyricsFromChordPro(song.chordpro),
   );
   console.log("Prompt Text:", promptText);
   // Create new prompt record
@@ -240,14 +240,19 @@ export async function findOrCreatePrompt(
 export async function createOrFindManualPrompt(
   db: DrizzleD1Database,
   songId: string,
-  providedPromptId?: string
+  providedPromptVersion?: string,
 ): Promise<IllustrationPromptDB> {
   // If a specific prompt ID is provided, try to find it
-  if (providedPromptId && providedPromptId.trim()) {
+  if (providedPromptVersion && providedPromptVersion.trim()) {
     const existingPrompt = await db
       .select()
       .from(illustrationPrompt)
-      .where(eq(illustrationPrompt.id, providedPromptId.trim()))
+      .where(
+        and(
+          eq(illustrationPrompt.songId, songId),
+          eq(illustrationPrompt.summaryPromptVersion, providedPromptVersion.trim()),
+        ),
+      )
       .limit(1);
 
     if (existingPrompt.length > 0) {
@@ -255,7 +260,7 @@ export async function createOrFindManualPrompt(
     }
 
     // If the provided prompt ID doesn't exist, throw an error
-    throw new Error(`Prompt with ID "${providedPromptId}" not found`);
+    throw new Error(`Prompt version "${providedPromptVersion}" not found`);
   }
 
   // Create a new manual prompt

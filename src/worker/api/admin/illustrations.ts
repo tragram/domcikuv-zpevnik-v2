@@ -38,7 +38,7 @@ import { defaultIllustrationId, defaultPromptId } from "~/types/songData";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),
-  summaryPromptId: z.string().optional(),
+  summaryPromptVersion: z.string().optional(),
   imageModel: z.string(),
   setAsActive: z.string().transform((val) => val === "true"), // FormData sends as string
   imageFile: z.any().optional(),
@@ -75,7 +75,7 @@ const generateIllustrationHandler = async (c) => {
     try {
       illustrationSong = (await findSong(
         db,
-        illustrationData.songId
+        illustrationData.songId,
       )) as SongWithCurrentVersion;
     } catch {
       return songNotFoundFail(c);
@@ -88,7 +88,7 @@ const generateIllustrationHandler = async (c) => {
         c,
         "Missing required API keys for image generation!",
         500,
-        "MISSING_API_KEYS"
+        "MISSING_API_KEYS",
       );
     }
 
@@ -113,7 +113,7 @@ const generateIllustrationHandler = async (c) => {
       illustrationData.promptVersion,
       illustrationData.summaryModel,
       generator,
-      illustrationSong
+      illustrationSong,
     );
 
     if (
@@ -121,14 +121,14 @@ const generateIllustrationHandler = async (c) => {
         db,
         illustrationData.songId,
         prompt.id,
-        illustrationData.imageModel
+        illustrationData.imageModel,
       )
     ) {
       return failJSend(
         c,
         "Illustration with the same parameters already exists.",
         400,
-        "DUPLICATE_ILLUSTRATION"
+        "DUPLICATE_ILLUSTRATION",
       );
     }
 
@@ -136,18 +136,18 @@ const generateIllustrationHandler = async (c) => {
     const promptId = defaultPromptId(
       illustrationData.songId,
       illustrationData.summaryModel,
-      illustrationData.promptVersion
+      illustrationData.promptVersion,
     );
     const imageId = defaultIllustrationId(
       promptId,
-      illustrationData.imageModel
+      illustrationData.imageModel,
     );
     const imageURL = await uploadImageBuffer(
       imageBuffer,
       illustrationSong.id,
       promptId,
       illustrationData.imageModel,
-      c.env
+      c.env,
     );
 
     const insertData = {
@@ -175,7 +175,7 @@ const generateIllustrationHandler = async (c) => {
       await setCurrentIllustration(
         db,
         illustrationData.songId,
-        newIllustration[0].id
+        newIllustration[0].id,
       );
     }
 
@@ -186,7 +186,7 @@ const generateIllustrationHandler = async (c) => {
         illustration: newIllustration[0] as SongIllustrationDB,
         prompt,
       },
-      201
+      201,
     );
   } catch (error) {
     console.error("Error generating illustration:", error);
@@ -221,7 +221,7 @@ export const illustrationRoutes = buildApp()
       try {
         illustrationSong = (await findSong(
           db,
-          validatedData.songId
+          validatedData.songId,
         )) as SongWithCurrentVersion;
       } catch {
         return failJSend(c, "Referenced song not found", 400, "SONG_NOT_FOUND");
@@ -238,7 +238,7 @@ export const illustrationRoutes = buildApp()
         prompt = await createOrFindManualPrompt(
           db,
           validatedData.songId,
-          validatedData.summaryPromptId
+          validatedData.summaryPromptVersion,
         );
       } catch (error) {
         return error instanceof Error
@@ -254,7 +254,7 @@ export const illustrationRoutes = buildApp()
           illustrationSong.id,
           prompt.id,
           validatedData.imageModel,
-          c.env
+          c.env,
         );
       }
 
@@ -266,7 +266,7 @@ export const illustrationRoutes = buildApp()
           prompt.id,
           validatedData.imageModel,
           c.env,
-          true
+          true,
         );
       } else if (imageURL && !thumbnailURL) {
         // Use Cloudflare Images to generate thumbnail from main image
@@ -279,7 +279,7 @@ export const illustrationRoutes = buildApp()
           c,
           "Either provide URLs or upload files for both image and thumbnail",
           400,
-          "MISSING_IMAGE_DATA"
+          "MISSING_IMAGE_DATA",
         );
       }
 
@@ -288,14 +288,14 @@ export const illustrationRoutes = buildApp()
           db,
           validatedData.songId,
           prompt.id,
-          validatedData.imageModel
+          validatedData.imageModel,
         )
       ) {
         return failJSend(
           c,
           "Illustration with the same parameters already exists.",
           400,
-          "ILLUSTRATION_DUPLICATE"
+          "ILLUSTRATION_DUPLICATE",
         );
       }
 
@@ -329,7 +329,7 @@ export const illustrationRoutes = buildApp()
           illustration: newIllustration[0] as SongIllustrationDB,
           prompt: prompt,
         },
-        201
+        201,
       );
     } catch (error) {
       console.error("Error creating manual illustration:", error);
@@ -337,7 +337,7 @@ export const illustrationRoutes = buildApp()
         c,
         "Failed to create manual illustration",
         500,
-        "CREATE_ERROR"
+        "CREATE_ERROR",
       );
     }
   })
@@ -345,7 +345,7 @@ export const illustrationRoutes = buildApp()
   .post(
     "/generate",
     zValidator("json", illustrationGenerateSchema),
-    generateIllustrationHandler
+    generateIllustrationHandler,
   )
 
   .put("/:id", zValidator("json", illustrationModifySchema), async (c) => {
@@ -365,8 +365,8 @@ export const illustrationRoutes = buildApp()
         .where(
           and(
             eq(songIllustration.id, illustrationId),
-            eq(songIllustration.deleted, false)
-          )
+            eq(songIllustration.deleted, false),
+          ),
         )
         .limit(1);
 
@@ -407,7 +407,7 @@ export const illustrationRoutes = buildApp()
       try {
         illustrationSong = (await findSong(
           db,
-          songId
+          songId,
         )) as SongWithCurrentVersion;
       } catch {
         return songNotFoundFail(c);
@@ -432,7 +432,7 @@ export const illustrationRoutes = buildApp()
         c,
         "Failed to modify illustration",
         500,
-        "UPDATE_ERROR"
+        "UPDATE_ERROR",
       );
     }
   })
@@ -448,7 +448,7 @@ export const illustrationRoutes = buildApp()
           c,
           "Invalid illustration ID format",
           400,
-          "INVALID_ID"
+          "INVALID_ID",
         );
       }
 
@@ -466,8 +466,8 @@ export const illustrationRoutes = buildApp()
         .where(
           and(
             eq(songIllustration.id, illustrationId),
-            eq(songIllustration.deleted, false)
-          )
+            eq(songIllustration.deleted, false),
+          ),
         )
         .limit(1);
 
@@ -476,7 +476,7 @@ export const illustrationRoutes = buildApp()
           c,
           "Illustration not found",
           404,
-          "ILLUSTRATION_NOT_FOUND"
+          "ILLUSTRATION_NOT_FOUND",
         );
       }
 
@@ -499,7 +499,7 @@ export const illustrationRoutes = buildApp()
           c.env.R2_BUCKET,
           songId,
           existingIllustration[0].promptId,
-          existingIllustration[0].imageModel
+          existingIllustration[0].imageModel,
         );
       } catch (e) {}
 
@@ -519,7 +519,7 @@ export const illustrationRoutes = buildApp()
         c,
         "Failed to delete illustration",
         500,
-        "DELETE_ERROR"
+        "DELETE_ERROR",
       );
     }
   })
@@ -544,7 +544,7 @@ export const illustrationRoutes = buildApp()
         c,
         "Failed to restore illustration",
         500,
-        "RESTORE_ERROR"
+        "RESTORE_ERROR",
       );
     }
   });
@@ -553,5 +553,5 @@ export const illustrationRoutes = buildApp()
 export const trustedGenerateRoute = buildApp().post(
   "/generate",
   zValidator("json", illustrationGenerateSchema),
-  generateIllustrationHandler
+  generateIllustrationHandler,
 );

@@ -64,7 +64,7 @@ export function ManualForm({
   const [thumbnailGenerating, setThumbnailGenerating] = useState(false);
   const [formData, setFormData] = useState<IllustrationCreateSchema>({
     songId: illustration?.songId || "",
-    summaryPromptId: illustration?.summaryPromptId || "",
+    summaryPromptVersion: illustration?.summaryPromptVersion || "",
     imageModel: illustration?.imageModel || "",
     imageURL: illustration?.imageURL || "",
     thumbnailURL: illustration?.thumbnailURL || "",
@@ -199,15 +199,15 @@ export function ManualForm({
       />
 
       <div className="space-y-2">
-        <Label htmlFor="manual-promptId">Prompt ID (Optional)</Label>
+        <Label htmlFor="manual-promptVersion">Prompt version (Optional)</Label>
         <Input
-          id="manual-promptId"
-          value={formData.summaryPromptId}
-          onChange={(e) => updateFormData({ summaryPromptId: e.target.value })}
+          id="manual-promptVersion"
+          value={formData.summaryPromptVersion}
+          onChange={(e) => updateFormData({ summaryPromptVersion: e.target.value })}
           placeholder="Leave empty to auto-generate a manual prompt"
         />
         <p className="text-sm text-muted-foreground">
-          If left empty, a manual prompt will be created automatically. Otherwise, provide an existing prompt ID.
+          If left empty, a manual prompt will be created automatically. Otherwise, provide an existing prompt version.
         </p>
       </div>
 
