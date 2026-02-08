@@ -1,5 +1,5 @@
-import { Input } from '~/components/ui/input';
-import { Search } from 'lucide-react';
+import { Input } from "~/components/ui/input";
+import { Search } from "lucide-react";
 
 type Props = {
   searchTerm: string;
@@ -7,10 +7,14 @@ type Props = {
   children?: React.ReactNode;
 };
 
-export const TableToolbar = ({ searchTerm, onSearchChange, children }: Props) => {
+export const TableToolbar = ({
+  searchTerm,
+  onSearchChange,
+  children,
+}: Props) => {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center space-x-2">
+    <div className="flex flex-wrap gap-2 items-center justify-between w-full">
+      <div className="flex items-center space-x-2 grow">
         <Search className="h-4 w-4 text-muted-foreground" />
         <Input
           placeholder="Search..."

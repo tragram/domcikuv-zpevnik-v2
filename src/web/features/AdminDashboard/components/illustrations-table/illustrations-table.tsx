@@ -19,6 +19,7 @@ import {
   usePromptsAdmin,
   useSongDBAdmin,
 } from "../../adminHooks";
+import { TableToolbar } from "../shared/table-toolbar";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;
@@ -166,16 +167,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center space-x-2 flex-1 w-full">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search songs or illustrations..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="text-xs sm:text-sm md:text-base"
-          />
-        </div>
+      <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm}>
         <div className="flex items-center space-x-4">
           <Select value={imageModelFilter} onValueChange={setImageModelFilter}>
             <SelectTrigger className="w-[180px]">
@@ -256,7 +248,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             Collapse All
           </Button>
         </div>
-      </div>
+      </TableToolbar>
 
       <div className="space-y-2">
         {filteredAndSortedGroups.map(([songId, song]) => (

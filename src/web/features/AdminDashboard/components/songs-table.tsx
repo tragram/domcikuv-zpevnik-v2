@@ -159,18 +159,19 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-full">
       <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm}>
-        <div className="flex items-center space-x-8">
+        <div className="flex flex-col gap-1">
           <div className="flex flex-row gap-2">
             <Checkbox
               id="show-deleted"
+              className="size-3"
               checked={showDeleted}
               onCheckedChange={() => setShowDeleted(!showDeleted)}
             />
             <Label
               htmlFor="show-deleted"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Show deleted
             </Label>
@@ -178,6 +179,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
           <div className="flex flex-row gap-2">
             <Checkbox
               id="auto-illustration"
+              className="size-3"
               checked={autoGenerateIllustration}
               onCheckedChange={() =>
                 setAutoGenerateIllustration(!autoGenerateIllustration)
@@ -185,45 +187,43 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
             />
             <Label
               htmlFor="auto-illustration"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Auto-generate illustration on first approval
+              Generate image on first approval
             </Label>
           </div>
-          <ConfirmationDialog
-            trigger={
-              <Button variant="outline" disabled={resetDBMutation.isPending}>
-                <ListRestart className="mr-2 h-4 w-4" />
-                {resetDBMutation.isPending
-                  ? "Resetting..."
-                  : "Reset DB Version"}
-              </Button>
-            }
-            title="Reset Database Version"
-            description={
-              <div className="space-y-2">
-                <p>
-                  <strong>Warning:</strong> This will force all clients to
-                  reload their song database.
-                </p>
-                <p>Use this when:</p>
-                <ul className="list-disc list-inside space-y-1">
-                  <li>Multiple songs have been updated</li>
-                  <li>Critical changes need immediate propagation</li>
-                </ul>
-                <p className="text-sm text-muted-foreground">
-                  Note: Individual song updates automatically notify clients.
-                  This is only needed for bulk changes.
-                </p>
-              </div>
-            }
-            confirmText="Yes, Reset DB Version"
-            cancelText="Cancel"
-            variant="default"
-            onConfirm={() => resetDBMutation.mutate()}
-            isLoading={resetDBMutation.isPending}
-          />
         </div>
+        <ConfirmationDialog
+          trigger={
+            <Button variant="outline" disabled={resetDBMutation.isPending}>
+              <ListRestart className="mr-2 h-4 w-4" />
+              {resetDBMutation.isPending ? "Resetting..." : "Reset DB Version"}
+            </Button>
+          }
+          title="Reset Database Version"
+          description={
+            <div className="space-y-2">
+              <p>
+                <strong>Warning:</strong> This will force all clients to reload
+                their song database.
+              </p>
+              <p>Use this when:</p>
+              <ul className="list-disc list-inside space-y-1">
+                <li>Multiple songs have been updated</li>
+                <li>Critical changes need immediate propagation</li>
+              </ul>
+              <p className="text-sm text-muted-foreground">
+                Note: Individual song updates automatically notify clients. This
+                is only needed for bulk changes.
+              </p>
+            </div>
+          }
+          confirmText="Yes, Reset DB Version"
+          cancelText="Cancel"
+          variant="default"
+          onConfirm={() => resetDBMutation.mutate()}
+          isLoading={resetDBMutation.isPending}
+        />
       </TableToolbar>
 
       <div className="rounded-md border shadow-sm">
@@ -320,7 +320,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                       <ActionButtons>
                         <Button
                           variant="ghost"
-                          size="sm"
+                          size="icon"
                           onClick={() => navigate({ to: `/edit/${song.id}` })}
                           disabled={song.deleted}
                         >
@@ -329,7 +329,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                         {song.deleted ? (
                           <Button
                             variant="ghost"
-                            size="sm"
+                            size="icon"
                             className="text-green-600 hover:text-green-700 hover:bg-green-50"
                             onClick={() =>
                               restoreSongMutation.mutate(song.id, {

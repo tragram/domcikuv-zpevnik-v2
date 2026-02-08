@@ -7,7 +7,7 @@ import {
 } from "~/components/ui/breadcrumb";
 import { Separator } from "~/components/ui/separator";
 import {
-  SidebarInset,
+  SidebarContent,
   SidebarProvider,
   SidebarTrigger,
 } from "~/components/ui/sidebar";
@@ -47,12 +47,12 @@ export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
   };
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="h-screen">
       <AdminSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mr-2 h-4" />
+      <SidebarContent className="flex flex-col h-full">
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b">
+          <SidebarTrigger className="ml-2" />
+          <Separator orientation="vertical" className="mr-2" />
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
@@ -63,14 +63,14 @@ export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
             </BreadcrumbList>
           </Breadcrumb>
         </header>
-        <div className="p-2 md:p-4 w-full">
+        <div className="flex-1 p-2 md:p-4 overflow-auto">
           {activeTab === "songs" && <SongsTable adminApi={adminApi} />}
           {activeTab === "illustrations" && (
             <IllustrationsTable adminApi={adminApi} />
           )}
           {activeTab === "users" && <UsersTable adminApi={adminApi} />}
         </div>
-      </SidebarInset>
+      </SidebarContent>
     </SidebarProvider>
   );
 }
