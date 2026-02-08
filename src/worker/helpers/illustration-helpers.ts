@@ -16,7 +16,7 @@ import {
   ImageGenerator,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
-} from "../api/admin/image-generator";
+} from "./image-generator";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),

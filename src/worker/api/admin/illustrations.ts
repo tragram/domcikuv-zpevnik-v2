@@ -33,7 +33,7 @@ import {
   ImageGenerator,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
-} from "./image-generator";
+} from "../../helpers/image-generator";
 import { defaultIllustrationId, defaultPromptId } from "~/types/songData";
 
 const illustrationCreateSchema = z.object({

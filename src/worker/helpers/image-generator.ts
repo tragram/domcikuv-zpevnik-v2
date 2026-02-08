@@ -1,9 +1,11 @@
 import { InferenceClient } from "@huggingface/inference";
 
+// the first element of each array is used as default by the frontend
 export const SUMMARY_PROMPT_VERSIONS = ["v2", "v1"] as const;
 export const SUMMARY_MODELS_API = ["gpt-4o-mini", "gpt-4o"] as const;
 export const IMAGE_MODELS_API = [
   "FLUX.1-dev",
+  "FLUX.1-schnell",
   "gpt-image-1",
   "gpt-image-1-mini",
 ] as const;
@@ -19,6 +21,7 @@ const PROMPTS: Record<SummaryPromptVersion, string> = {
 
 const models2HF: Partial<Record<AvailableImageModel, string>> = {
   "FLUX.1-dev": "black-forest-labs/FLUX.1-dev",
+  "FLUX.1-schnell": "black-forest-labs/FLUX.1-schnell",
 };
 
 export interface GenerationConfig {
@@ -54,11 +57,11 @@ export class ImageGenerator {
         (line) =>
           !line.trim().startsWith("{") && // Remove directives like {title: ...}
           !line.trim().startsWith("#") && // Remove comments
-          line.trim().length > 0 // Remove empty lines
+          line.trim().length > 0, // Remove empty lines
       )
       .map((line) =>
         // Remove chord annotations like [Am] or [C7]
-        line.replace(/\[([^\]]+)\]/g, "").trim()
+        line.replace(/\[([^\]]+)\]/g, "").trim(),
       )
       .filter((line) => line.length > 0)
       .join("\n");
@@ -143,13 +146,13 @@ export class ImageGenerator {
           prompt,
           size: "1024x1024",
         }),
-      }
+      },
     );
 
     if (!response.ok) {
       const error = await response.text();
       throw new Error(
-        `OpenAI image generation error: ${response.status} - ${error}`
+        `OpenAI image generation error: ${response.status} - ${error}`,
       );
     }
 
@@ -173,14 +176,14 @@ export class ImageGenerator {
   }
 
   async generateFromChordPro(
-    chordproContent: string
+    chordproContent: string,
   ): Promise<GenerationResult> {
     const lyrics = ImageGenerator.extractLyricsFromChordPro(chordproContent);
     return this.generateFromLyrics(lyrics);
   }
 
   async generateFromChordProUrl(
-    chordproUrl: string
+    chordproUrl: string,
   ): Promise<GenerationResult> {
     const response = await fetch(chordproUrl);
     if (!response.ok) {

@@ -1,16 +1,9 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import {
-  SummaryPromptVersion,
-  AvailableSummaryModel,
-  AvailableImageModel,
-} from "~/../worker/api/admin/image-generator";
-import {
-  IllustrationCreateSchema,
-  IllustrationGenerateSchema,
-} from "src/worker/helpers/illustration-service";
 import { AIGeneratedForm } from "./ai-generated-form";
 import { ManualForm } from "./manual-form";
+import { IllustrationCreateSchema, IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
+import { SummaryPromptVersion, AvailableSummaryModel, AvailableImageModel } from "src/worker/helpers/image-generator";
 
 interface IllustrationFormData {
   songId?: string;

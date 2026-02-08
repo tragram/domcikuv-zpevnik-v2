@@ -15,10 +15,8 @@ import {
   ImageModelSelect,
 } from "./shared-form-fields";
 import type { IllustrationSubmitData } from "./illustration-form";
-import {
-  IllustrationGenerateSchema,
-} from "src/worker/helpers/illustration-service";
-import { SummaryPromptVersion, AvailableSummaryModel, AvailableImageModel } from "src/worker/api/admin/image-generator";
+import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
+import { SummaryPromptVersion, AvailableSummaryModel, AvailableImageModel } from "src/worker/helpers/image-generator";
 
 interface AIGeneratedFormProps {
   illustration: {

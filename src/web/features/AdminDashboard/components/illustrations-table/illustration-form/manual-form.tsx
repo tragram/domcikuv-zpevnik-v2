@@ -7,7 +7,7 @@ import { Label } from "~/components/ui/label";
 import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
 import { SongIdField, ActiveSwitch } from "./shared-form-fields";
 import type { IllustrationSubmitData } from "./illustration-form";
-import { IllustrationCreateSchema } from "src/worker/helpers/illustration-service";
+import { IllustrationCreateSchema } from "src/worker/helpers/illustration-helpers";
 
 interface ManualFormProps {
   illustration: any;

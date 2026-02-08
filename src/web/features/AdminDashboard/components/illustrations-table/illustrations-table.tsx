@@ -1,12 +1,7 @@
-import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
-import { Input } from "~/components/ui/input";
-import { SongIllustrationsGroup } from "./illustration-group";
-import { songsWithIllustrationsAndPrompts } from "~/services/illustration-service";
-import { AdminApi } from "~/services/song-service";
 import {
   Select,
   SelectContent,
@@ -14,12 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { songsWithIllustrationsAndPrompts } from "~/services/illustration-service";
+import { AdminApi } from "~/services/song-service";
 import {
   useIllustrationsAdmin,
   usePromptsAdmin,
   useSongDBAdmin,
 } from "../../adminHooks";
 import { TableToolbar } from "../shared/table-toolbar";
+import { SongIllustrationsGroup } from "./illustration-group";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;

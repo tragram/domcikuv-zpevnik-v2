@@ -5,11 +5,6 @@ import { ChevronDown, ChevronRight, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
-import {
-  IMAGE_MODELS_API,
-  SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS,
-} from "src/worker/api/admin/image-generator";
 import FormDialog from "~/components/dialogs/form-dialog";
 import PreviewDialog from "~/components/dialogs/preview-dialog";
 import { Badge } from "~/components/ui/badge";
@@ -20,14 +15,25 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 import { cn } from "~/lib/utils";
-import { createIllustration, generateIllustration } from "~/services/song-service";
+import {
+  createIllustration,
+  generateIllustration,
+} from "~/services/song-service";
 import { IllustrationCard } from "./illustration-card";
 import {
   IllustrationForm,
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
-import { IllustrationCreateSchema, IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
+import {
+  IllustrationCreateSchema,
+  IllustrationGenerateSchema,
+} from "src/worker/helpers/illustration-helpers";
 import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
+import {
+  SUMMARY_PROMPT_VERSIONS,
+  SUMMARY_MODELS_API,
+  IMAGE_MODELS_API,
+} from "src/worker/helpers/image-generator";
 
 interface SongIllustrationsGroupProps {
   song: SongWithCurrentVersion;
@@ -43,19 +49,19 @@ export const backendDropdownOptions = {
     data: SUMMARY_PROMPT_VERSIONS.map((spi) => {
       return { value: spi, label: spi };
     }),
-    default: "v2" as const,
+    default: SUMMARY_PROMPT_VERSIONS[0],
   },
   summaryModels: {
     data: SUMMARY_MODELS_API.map((smi) => {
       return { value: smi, label: smi };
     }),
-    default: "gpt-4o-mini" as const,
+    default: SUMMARY_MODELS_API[0],
   },
   imageModels: {
     data: IMAGE_MODELS_API.map((im) => {
       return { value: im, label: im };
     }),
-    default: "FLUX.1-dev" as const,
+    default: IMAGE_MODELS_API[0],
   },
 };
 
