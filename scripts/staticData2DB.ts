@@ -11,10 +11,12 @@ import {
   songIllustration,
   songVersion,
 } from "../src/lib/db/schema/song.schema";
-import { syncSessionTable, userFavoriteSongs } from "../src/lib/db/schema";
+import { syncSession, userFavoriteSongs } from "../src/lib/db/schema";
 import { fileURLToPath } from "url";
-
+import { config } from "dotenv";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+config({ path: path.resolve(__dirname, "../.dev.vars") });
+
 const VERBOSE = false;
 const SYSTEM_EMAIL = "domho108@gmail.com";
 
@@ -38,9 +40,9 @@ function parseChordproFile(content: string) {
     }
   }
 
-  return { 
-    metadata, 
-    chordpro: lines.slice(contentStartIndex).join("\n").trim() 
+  return {
+    metadata,
+    chordpro: lines.slice(contentStartIndex).join("\n").trim(),
   };
 }
 
@@ -48,8 +50,18 @@ function parseChordproFile(content: string) {
  * Creates or gets the system user for migrations
  */
 async function ensureSystemUser(db: DrizzleD1Database): Promise<string> {
-  const existingUser = await db.select().from(user).where(eq(user.email, SYSTEM_EMAIL)).get();
-  if (existingUser) return existingUser.id;
+  const existingUser = await db
+    .select()
+    .from(user)
+    .where(eq(user.email, SYSTEM_EMAIL))
+    .get();
+  if (existingUser) {
+    await db
+      .update(user)
+      .set({ isTrusted: true, isAdmin: true })
+      .where(eq(user.id, existingUser.id));
+    return existingUser.id;
+  }
 
   const userId = "system-migration-user";
   await db.insert(user).values({
@@ -70,7 +82,14 @@ async function ensureSystemUser(db: DrizzleD1Database): Promise<string> {
 async function clearTables(db: DrizzleD1Database) {
   console.log("Clearing tables...");
   await db.run(sql`PRAGMA defer_foreign_keys = OFF`);
-  const tables = [songIllustration, illustrationPrompt, songVersion, userFavoriteSongs, syncSessionTable, song];
+  const tables = [
+    songIllustration,
+    illustrationPrompt,
+    songVersion,
+    userFavoriteSongs,
+    syncSession,
+    song,
+  ];
   for (const table of tables) await db.delete(table);
   await db.run(sql`PRAGMA defer_foreign_keys = ON`);
 }
@@ -82,11 +101,15 @@ async function uploadSong(
   db: DrizzleD1Database,
   songId: string,
   chordproPath: string,
-  systemUserId: string
+  systemUserId: string,
 ): Promise<string> {
-  const { metadata, chordpro } = parseChordproFile(fs.readFileSync(chordproPath, "utf-8"));
+  const { metadata, chordpro } = parseChordproFile(
+    fs.readFileSync(chordproPath, "utf-8"),
+  );
   const now = new Date();
-  const createdAt = metadata.createdAt ? new Date(parseInt(metadata.createdAt)) : now;
+  const createdAt = metadata.createdAt
+    ? new Date(parseInt(metadata.createdAt))
+    : now;
 
   // 1. Create the Song Shell
   await db.insert(song).values({
@@ -100,21 +123,29 @@ async function uploadSong(
   await db.insert(songVersion).values({
     id: versionId,
     songId,
-    title: metadata.title || "Untitled",
-    artist: metadata.artist || "Unknown Artist",
+    title: metadata.title,
+    artist: metadata.artist,
     key: metadata.key || null,
     language: metadata.language || "other",
+    capo: metadata.capo || 0,
+    tempo: metadata.tempo || null,
+    range: metadata.range || null,
+    startMelody: metadata.startMelody || null,
     chordpro,
     userId: systemUserId,
-    status: "published", // Updated from approved: true
+    status: "published",
+    sourceId: "editor",
     approvedBy: systemUserId,
-    approvedAt: now,
-    createdAt: now,
+    approvedAt: createdAt,
+    createdAt: createdAt,
     updatedAt: now,
   });
 
   // 3. Link Song to this Version
-  await db.update(song).set({ currentVersionId: versionId }).where(eq(song.id, songId));
+  await db
+    .update(song)
+    .set({ currentVersionId: versionId })
+    .where(eq(song.id, songId));
 
   if (VERBOSE) console.log(`  Uploaded: ${songId}`);
   return metadata.illustrationId;
@@ -127,9 +158,11 @@ async function uploadIllustrations(
   db: DrizzleD1Database,
   songId: string,
   illustrationsYamlPath: string,
-  baseFolder: string
+  baseFolder: string,
 ) {
-  const data = yaml.load(fs.readFileSync(illustrationsYamlPath, "utf-8")) as any;
+  const data = yaml.load(
+    fs.readFileSync(illustrationsYamlPath, "utf-8"),
+  ) as any;
 
   for (const prompt of data.prompts) {
     await db.insert(illustrationPrompt).values({
@@ -144,7 +177,7 @@ async function uploadIllustrations(
     for (const ill of prompt.illustrations) {
       const illustrationId = `${prompt.promptId}_${ill.imageModel}`;
       const shortPromptId = prompt.promptId.replace(`${songId}_`, "");
-      
+
       await db.insert(songIllustration).values({
         id: illustrationId,
         songId,
@@ -165,7 +198,7 @@ async function processAndMigrateSongs(
   db: DrizzleD1Database,
   songsPath: string,
   clearExisting: boolean = true,
-  baseFolder: string = "/songs"
+  baseFolder: string = "/songs",
 ) {
   const systemUserId = await ensureSystemUser(db);
   if (clearExisting) await clearTables(db);
@@ -173,19 +206,31 @@ async function processAndMigrateSongs(
   const chordproDir = path.join(songsPath, "chordpro");
   const illustrationsDir = path.join(songsPath, "illustrations");
 
-  const files = fs.readdirSync(chordproDir).filter(f => f.endsWith(".pro"));
+  const files = fs.readdirSync(chordproDir).filter((f) => f.endsWith(".pro"));
   console.log(`Processing ${files.length} songs...`);
 
   for (const filename of files) {
     const songId = path.basename(filename, ".pro");
     try {
-      const illustrationId = await uploadSong(db, songId, path.join(chordproDir, filename), systemUserId);
+      const illustrationId = await uploadSong(
+        db,
+        songId,
+        path.join(chordproDir, filename),
+        systemUserId,
+      );
 
-      const yamlPath = path.join(illustrationsDir, songId, "illustrations.yaml");
+      const yamlPath = path.join(
+        illustrationsDir,
+        songId,
+        "illustrations.yaml",
+      );
       if (fs.existsSync(yamlPath)) {
         await uploadIllustrations(db, songId, yamlPath, baseFolder);
         if (illustrationId) {
-          await db.update(song).set({ currentIllustrationId: illustrationId }).where(eq(song.id, songId));
+          await db
+            .update(song)
+            .set({ currentIllustrationId: illustrationId })
+            .where(eq(song.id, songId));
         }
       }
     } catch (error) {
@@ -198,7 +243,15 @@ async function processAndMigrateSongs(
 async function main() {
   const songsPath = path.resolve(__dirname, "../songs");
   try {
-    await D1Helper.get("DB").useLocalD1(db => processAndMigrateSongs(db, songsPath));
+    // await D1Helper.get("DB").useLocalD1((db) =>
+    //   processAndMigrateSongs(db, songsPath),
+    // );
+    await D1Helper.get("DB")
+      .withCfCredentials(
+        process.env.CLOUDFLARE_ACCOUNT_ID,
+        process.env.CLOUDFLARE_D1_TOKEN,
+      )
+      .useProxyD1(async (db) => processAndMigrateSongs(db, songsPath));
   } catch (error) {
     console.error("Migration failed:", error);
     process.exit(1);

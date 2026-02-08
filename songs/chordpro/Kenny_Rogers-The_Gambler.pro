@@ -1,6 +1,6 @@
 {title: The Gambler}
 {artist: Kenny Rogers}
-{key: }
+{key: E}
 {capo: 0}
 {tempo: }
 {range: h1-c#2}

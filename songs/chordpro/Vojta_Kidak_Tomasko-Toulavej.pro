@@ -1,6 +1,6 @@
 {title: Toulavej}
 {artist: Vojta Kiďák Tomáško}
-{key: }
+{key: Am}
 {capo: 2}
 {tempo: }
 {range: g1-d2}

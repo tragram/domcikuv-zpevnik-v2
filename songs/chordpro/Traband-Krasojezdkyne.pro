@@ -1,6 +1,6 @@
 {title: Krasojezdkyně}
 {artist: Traband}
-{key: }
+{key: F#m}
 {capo: 0}
 {tempo: 110}
 {range: h1-d2}

@@ -1,6 +1,6 @@
 {title: Já budu chodit po špičkách}
 {artist: Petr Novák}
-{key: }
+{key: G}
 {capo: 0}
 {tempo: }
 {range: d1-h1}

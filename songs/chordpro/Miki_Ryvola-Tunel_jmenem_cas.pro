@@ -1,6 +1,6 @@
 {title: Tunel jménem čas}
 {artist: Miki Ryvola}
-{key: }
+{key: E}
 {capo: 0}
 {tempo: }
 {range: h1-g#1}

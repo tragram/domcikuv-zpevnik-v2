@@ -1,6 +1,6 @@
 {title: Srdce a Kříž}
 {artist: Karel Kryl}
-{key: }
+{key: Am}
 {capo: 0}
 {tempo: }
 {range: }
