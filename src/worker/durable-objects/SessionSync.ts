@@ -1,6 +1,6 @@
 import { DurableObject } from "cloudflare:workers";
 import { drizzle } from "drizzle-orm/d1";
-import { syncSessionTable } from "src/lib/db/schema";
+import { syncSession } from "src/lib/db/schema";
 
 interface Env {
   DB: D1Database;
@@ -263,7 +263,7 @@ export class SessionSync extends DurableObject<Env> {
 
     try {
       const db = drizzle(this.env.DB);
-      await db.insert(syncSessionTable).values({
+      await db.insert(syncSession).values({
         masterId: this.pendingDbWrite.masterId,
         songId: this.pendingDbWrite.songId,
       });

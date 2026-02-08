@@ -2,7 +2,7 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { user } from "./auth.schema";
 import { song } from "./song.schema";
 
-export const syncSessionTable = sqliteTable("syncSession", {
+export const syncSession = sqliteTable("sync_session", {
   id: integer("id").primaryKey(),
   masterId: text("master_id")
     .notNull()

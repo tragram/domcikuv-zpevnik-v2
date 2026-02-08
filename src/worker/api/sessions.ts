@@ -1,6 +1,6 @@
 import { eq, gte } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { syncSessionTable, user, user as userTable } from "src/lib/db/schema";
+import { syncSession, user, user as userTable } from "src/lib/db/schema";
 import { errorJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 
@@ -24,15 +24,15 @@ const sessionSyncApp = buildApp()
       const latestLive = new Date(Date.now() - 3 * 60 * 60 * 1000);
       const liveSessions = await db
         .select({
-          masterId: syncSessionTable.masterId,
-          timestamp: syncSessionTable.timestamp,
-          songId: syncSessionTable.songId,
+          masterId: syncSession.masterId,
+          timestamp: syncSession.timestamp,
+          songId: syncSession.songId,
           avatar: user.image,
           nickname: user.nickname,
         })
-        .from(syncSessionTable)
-        .where(gte(syncSessionTable.timestamp, latestLive))
-        .leftJoin(user, eq(user.id, syncSessionTable.masterId))
+        .from(syncSession)
+        .where(gte(syncSession.timestamp, latestLive))
+        .leftJoin(user, eq(user.id, syncSession.masterId))
         .all();
       // Filter to only the latest entry per masterId
       const latestByMasterId = liveSessions.reduce((acc, session) => {
