@@ -3,13 +3,6 @@ import { and, eq, not } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { illustrationPrompt, song, songIllustration } from "src/lib/db/schema";
 import { z } from "zod/v4";
-import {
-  createSong,
-  getSongbooks,
-  retrieveSingleSong,
-  retrieveSongs,
-  SongDataApi,
-} from "../helpers/song-helpers";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 import { SongData } from "~/types/songData";
@@ -17,6 +10,13 @@ import { convertToChordPro } from "~/lib/chords2chordpro";
 import { guessLanguage } from "~/lib/utils";
 import { ChordProParser } from "chordproject-parser";
 import { EditorSubmitSchema } from "./editor";
+import {
+  SongDataApi,
+  retrieveSongs,
+  retrieveSingleSong,
+  createSong,
+  getSongbooks,
+} from "../helpers/song-helpers";
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
   lastUpdateAt: z.string().transform((str) => new Date(str)),
@@ -81,6 +81,7 @@ export const songDBRoutes = buildApp()
 
         const songs = await retrieveSongs(
           db,
+          c.get("USER")?.id,
           isIncremental ? lastUpdateAt : undefined,
           isIncremental,
           isIncremental,
