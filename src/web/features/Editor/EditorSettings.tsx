@@ -8,6 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { UserProfileData } from "src/worker/api/userProfile";
 import {
   AvailableImageModel,
   SummaryPromptVersion,
@@ -15,8 +16,7 @@ import {
   IMAGE_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
   SUMMARY_MODELS_API,
-} from "src/worker/api/admin/image-generator";
-import { UserProfileData } from "src/worker/api/userProfile";
+} from "src/worker/helpers/image-generator";
 
 export interface EditorSettings {
   autoGenerateIllustration: boolean;
