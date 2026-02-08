@@ -9,14 +9,14 @@
   "compatibility_date": "2025-06-17",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
   "upload_source_maps": true,
   "assets": {
     // behave as a SPA but on /API, Hono should be called
     "directory": "./dist/client",
     "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": ["/api/*"],
   },
   /**
    * Smart Placement
@@ -33,35 +33,35 @@
     {
       "binding": "DB",
       "database_name": "zpevnik",
-      "database_id": "3b8b9e28-f862-40bf-a694-58cf3d597f03",
+      "database_id": "f6fcba04-be2e-4763-9ef2-d505f59d120d",
       "migrations_dir": "drizzle/"
-    }
+    },
   ],
   "r2_buckets": [
     {
       "binding": "R2_BUCKET",
-      "bucket_name": "zpevnik"
-    }
+      "bucket_name": "zpevnik",
+    },
   ],
   "kv_namespaces": [
     {
       "binding": "KV",
-      "id": "072c47d0d304449caaf16f44a3886499"
-    }
+      "id": "072c47d0d304449caaf16f44a3886499",
+    },
   ],
   "durable_objects": {
     "bindings": [
       {
         "name": "SESSION_SYNC",
-        "class_name": "SessionSync"
-      }
-    ]
+        "class_name": "SessionSync",
+      },
+    ],
   },
   "migrations": [
     {
       "tag": "<v1>",
-      "new_sqlite_classes": ["SessionSync"]
-    }
+      "new_sqlite_classes": ["SessionSync"],
+    },
   ],
   /**
    * Environment Variables
@@ -71,8 +71,8 @@
     "VITE_BASE_URL": "http://localhost:5173",
     "PROD_BASE_URL": "https://zpevnik.hodan.page",
     "CLOUDFLARE_R2_URL": "https://kyblik.zpevnik.hodan.page",
-    "GITHUB_REPO": "tragram/domcikuv-zpevnik-v2"
-  }
+    "GITHUB_REPO": "tragram/domcikuv-zpevnik-v2",
+  },
   /**
    * Note: Use secrets to store sensitive data.
    * https://developers.cloudflare.com/workers/configuration/secrets/
