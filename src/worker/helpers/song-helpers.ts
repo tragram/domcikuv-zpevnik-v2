@@ -276,20 +276,23 @@ export const retrieveSingleSong = async (
   songId: string,
   versionId?: string,
 ): Promise<SongDataApi | null> => {
+  console.log(versionId);
   const songsRaw = await db
     .select({
       ...baseSelectFields,
     })
     .from(song)
-    .leftJoin(
-      songVersion,
-      eq(songVersion.id, versionId ? versionId : song.currentVersionId),
-    )
+    .leftJoin(songVersion, eq(songVersion.songId, songId))
     .leftJoin(
       songIllustration,
       eq(songIllustration.id, song.currentIllustrationId),
     )
-    .where(eq(song.id, songId))
+    .where(
+      and(
+        eq(song.id, songId),
+        versionId ? eq(songVersion.id, versionId) : undefined,
+      ),
+    )
     .limit(1);
 
   if (songsRaw.length === 0) {
@@ -298,6 +301,7 @@ export const retrieveSingleSong = async (
 
   return transformSongToApi(songsRaw[0]);
 };
+
 export const findSong = async (
   db: DrizzleD1Database,
   songId: string,

@@ -1,24 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query"; //
-import React, { useEffect } from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { API } from "src/worker/api-client";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import useLocalStorageState from "use-local-storage-state";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
-import { SongDB } from "~/types/types";
 import { handleApiResponse } from "~/services/api-service";
+import { fetchFeed } from "~/services/song-service";
 import { SongData } from "~/types/songData";
-import { API } from "src/worker/api-client";
+import { SongDB } from "~/types/types";
 
 export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
-    let liveState: SessionSyncState | undefined;
-    const response = await context.api.session[":masterNickname"].$get({
-      param: { masterNickname: params.masterNickname },
-    });
-    if (response.ok) liveState = (await response.json()) as SessionSyncState;
+    const liveState = await fetchFeed(context.api, params.masterNickname);
     return {
       user: context.user,
       songDB: context.songDB,
@@ -66,19 +63,12 @@ function FeedView({
     true,
     liveState, // hydrate with the live version
   );
-  const currentSongId = sessionState?.songId;
-  // try local DB
-  const localSong = React.useMemo(() => {
-    return currentSongId
-      ? songDB.songs.find((s) => s.id === currentSongId)
-      : null;
-  }, [currentSongId, songDB.songs]);
 
-  // 2. If local miss, try fetching from API
-  const { data: fetchedSong } = useQuery({
+  const currentSongId = sessionState?.songId;
+  const { data: songData } = useQuery({
     queryKey: ["song", currentSongId],
     queryFn: async () => {
-      if (!currentSongId || localSong) return null;
+      if (!currentSongId) return null;
 
       const response = await api.songs.fetch[":id"].$get({
         param: { id: currentSongId },
@@ -86,13 +76,9 @@ function FeedView({
       const data = await handleApiResponse(response);
       return new SongData(data);
     },
-    enabled: !!currentSongId && !localSong,
-    staleTime: Infinity, // Once fetched, keep it
+    staleTime: Infinity,
   });
-
-  // combine results
-  const songData = localSong || fetchedSong;
-
+  console.log(songData);
   // force transposeSteps (a bit hacky but passing it down feels even uglier - TODO: use Zustand)
   const [, setTransposeSteps] = useLocalStorageState(
     `transposeSteps/${currentSongId}`,

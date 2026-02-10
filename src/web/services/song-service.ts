@@ -1,5 +1,8 @@
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
-import { SongDataApi, SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
+import {
+  SongDataApi,
+  SongWithCurrentVersion,
+} from "src/worker/helpers/song-helpers";
 import client, { API } from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {
@@ -9,7 +12,11 @@ import {
   SongLanguage,
 } from "~/types/types";
 import { makeApiRequest } from "./api-service";
-import { ModifySongVersionSchema, SongModificationSchema } from "src/worker/api/admin/songs";
+import {
+  ModifySongVersionSchema,
+  SongModificationSchema,
+} from "src/worker/api/admin/songs";
+import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 
 export * from "./illustration-service";
 
@@ -45,11 +52,75 @@ export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
   return response.songs;
 };
 
+export const fetchSongVersion = async (
+  api: API,
+  songId: string,
+  versionId?: string,
+): Promise<SongData> => {
+  let songData: SongDataApi;
+  if (versionId) {
+    songData = await makeApiRequest(() =>
+      api.songs.fetch[":songId"][":versionId"].$get({
+        param: { songId, versionId },
+      }),
+    );
+  } else {
+    songData = await makeApiRequest(() =>
+      api.songs.fetch[":id"].$get({
+        param: { id: songId },
+      }),
+    );
+  }
+  return new SongData(songData);
+};
+
+export const findOrFetchSong = async (
+  api: API,
+  songDB: SongDB,
+  songId: string,
+  versionId?: string,
+): Promise<SongData | null> => {
+  let songData: SongData | undefined;
+  if (versionId) {
+    songData = new SongData(
+      await makeApiRequest(() =>
+        api.songs.fetch[":songId"][":versionId"].$get({
+          param: { songId, versionId },
+        }),
+      ),
+    );
+  } else {
+    songData = songDB.songs.find((s) => s.id === songId);
+    if (!songData) {
+      songData = new SongData(
+        await makeApiRequest(() =>
+          api.songs.fetch[":id"].$get({
+            param: { id: songId },
+          }),
+        ),
+      );
+    }
+  }
+  return songData ?? null;
+};
+
 export const fetchPublicSongbooks = async (api: API): Promise<Songbook[]> => {
   const response = await makeApiRequest(api.songs.songbooks.$get);
   return response.map(
     (s) => ({ ...s, songIds: new Set(s.songIds) }) as Songbook,
   );
+};
+
+export const fetchFeed = async (
+  api: API,
+  masterNickname: string,
+): Promise<SessionSyncState | undefined> => {
+  const response = await api.session[":masterNickname"].$get({
+    param: { masterNickname },
+  });
+  let liveState: SessionSyncState | undefined;
+  if (response.ok) liveState = (await response.json()) as SessionSyncState;
+  return liveState;
 };
 
 // --- Admin API ---
@@ -129,13 +200,13 @@ export const patchVersionAdmin = async (
   adminApi: AdminApi,
   songId: string,
   versionId: string,
-  versionData: ModifySongVersionSchema
+  versionData: ModifySongVersionSchema,
 ): Promise<SongVersionDB> => {
   const updatedVersion = await makeApiRequest(() =>
     adminApi.songs[":songId"].versions[":versionId"].$patch({
       param: { songId, versionId },
       json: { ...versionData },
-    })
+    }),
   );
   return parseDBDates(updatedVersion);
 };
