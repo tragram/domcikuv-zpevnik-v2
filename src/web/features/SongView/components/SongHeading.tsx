@@ -102,7 +102,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
         {user?.loggedIn && (
           <FavoriteButton
             song={songData}
-            iconClassName="size-[2em] stroke-[1.5]"
+            iconClassName="size-[2em] stroke-[1.5] max-w-14"
             className="p-0"
           />
         )}
