@@ -89,7 +89,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       wakeLockRelease();
     }
   }, [wakeLockSupported, wakeLockEnabled, wakeLockRequest, wakeLockRelease]);
-  const { version: versionId } = useSearch({ from: "/song/$songId" });
+  const { version: versionId } = useSearch({ strict: false });
   return (
     <div className="absolute top-0 w-full">
       <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
