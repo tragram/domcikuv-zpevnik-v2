@@ -276,7 +276,6 @@ export const retrieveSingleSong = async (
   songId: string,
   versionId?: string,
 ): Promise<SongDataApi | null> => {
-  console.log(versionId);
   const songsRaw = await db
     .select({
       ...baseSelectFields,
