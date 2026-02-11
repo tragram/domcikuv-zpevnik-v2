@@ -30,8 +30,9 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   useEffect(() => {
     if (isOpen) {
       // Update time immediately when dropdown opens
+      // note that this still is subject to SessionSync's DB_WRITE_DEBOUNCE
       setCurrentTime(Date.now());
-      refetchIfStale(0.1);
+      refetchIfStale(0);
 
       const interval = setInterval(() => {
         if (isOpen) {
