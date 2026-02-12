@@ -76,6 +76,8 @@ export const VocalRangeFilter = ({
         className="w-80"
         sideOffset={16}
       >
+        <DropdownMenuLabel>Select song range</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuItem key="slider" onSelect={(e) => e.preventDefault()}>
           <VocalRangeSlider
             maxRange={maxRange}
@@ -97,7 +99,7 @@ export const VocalRangeFilter = ({
 export const VocalRangeDropdownSection = (
   maxRange: number,
   vocalRangeFilter: VocalRangeValue,
-  setVocalRangeFilter: (range: VocalRangeValue) => void
+  setVocalRangeFilter: (range: VocalRangeValue) => void,
 ): JSX.Element => {
   return (
     <>

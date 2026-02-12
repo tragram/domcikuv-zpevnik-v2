@@ -40,7 +40,7 @@ const capitalizeFirstLetter = (str: string): string => {
 const createLanguageChoices = (
   languages: LanguageCount,
   selectedLanguage: SongLanguage,
-  setSelectedLanguage: (language: SongLanguage) => void
+  setSelectedLanguage: (language: SongLanguage) => void,
 ): JSX.Element[] => {
   // Filter languages with count >= RARE_LANGUAGE_THRESHOLD
   const commonLanguages = Object.entries(languages)
@@ -109,10 +109,12 @@ export const LanguageFilter = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent aria-label="Language Choices" sideOffset={16}>
+        <DropdownMenuLabel>Select languages</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         {createLanguageChoices(
           languages,
           selectedLanguage,
-          setSelectedLanguage
+          setSelectedLanguage,
         )}
       </DropdownMenuContent>
     </DropdownMenu>
@@ -122,7 +124,7 @@ export const LanguageFilter = ({
 export const LanguageFilterDropdownSection = (
   languages: LanguageCount,
   selectedLanguage: SongLanguage,
-  setSelectedLanguage: (language: SongLanguage) => void
+  setSelectedLanguage: (language: SongLanguage) => void,
 ): JSX.Element => {
   return (
     <>
