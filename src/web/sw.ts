@@ -94,7 +94,7 @@ registerRoute(
 // Profile and Songbooks.
 registerRoute(
   ({ url }) => {
-    return url.pathname === "/api/profile" || url.pathname === "/api/songbooks";
+    return url.pathname === "/api/profile" || url.pathname === "/api/songs/songbooks";
   },
   new StaleWhileRevalidate({
     cacheName: CACHE_NAMES.CRITICAL_API,
