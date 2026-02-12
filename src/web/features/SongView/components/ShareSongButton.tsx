@@ -31,6 +31,11 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   }, [setShareSession, user.loggedIn]);
 
   const getDescription = () => {
+    if (!onLine) {
+      return {
+        text: "You need to be online to use this feature",
+      };
+    }
     if (onLine && showProfileLink) {
       return {
         text: "Click to log in & pick a nickname to enable",
@@ -40,13 +45,13 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
       return {
         text: `Currently connected to ${
           feedStatus.sessionState?.masterNickname || "someone else"
-        }'s session.`,
+        }'s session`,
         className: "",
       };
     }
     if (!shareSession) {
       return {
-        text: "Share your page with others - live.",
+        text: "Share your page with others - live",
         className: "",
       };
     }
@@ -77,7 +82,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
     );
 
   const checkboxDisabled =
-    showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster);
+    !onLine || showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster);
   return (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
