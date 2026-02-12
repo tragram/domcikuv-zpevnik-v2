@@ -1,8 +1,8 @@
+import { useLayoutEffect, useRef, useState } from "react";
+import { UserProfileData } from "src/worker/api/userProfile";
+import { FavoriteButton } from "~/components/FavoriteButton";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { FavoriteButton } from "~/components/FavoriteButton";
-import { UserProfileData } from "src/worker/api/userProfile";
 import type { LayoutSettings } from "../hooks/viewSettingsStore";
 
 interface SongHeadingProps {
@@ -69,7 +69,6 @@ const SongHeading: React.FC<SongHeadingProps> = ({
         "flex w-full justify-between flex-wrap gap-4 text-primary dark:text-white rounded-2xl dark:rounded-none mb-4",
         isWrapped && "justify-center gap-6",
       )}
-      ref={containerRef}
     >
       <div
         className={cn(
