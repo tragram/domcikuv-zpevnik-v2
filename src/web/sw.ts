@@ -13,7 +13,7 @@ import { clientsClaim } from "workbox-core";
 import { SongDBResponseData } from "../worker/api/songDB";
 import client from "../worker/api-client";
 import { handleApiResponse, makeApiRequest } from "./services/api-service";
-import { SongDataApi } from "src/worker/helpers/song-service";
+import { SongDataApi } from "src/worker/helpers/song-helpers";
 
 // Cache names
 const SONGS_CACHE = "songs-db-cache";
