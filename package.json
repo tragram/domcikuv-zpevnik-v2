@@ -66,6 +66,7 @@
     "use-local-storage-state": "^19.5.0",
     "usehooks-ts": "^3.1.1",
     "workbox-build": "^7.4.0",
+    "workbox-expiration": "^7.4.0",
     "zod": "^3.25.64",
     "zustand": "^5.0.5"
   },
