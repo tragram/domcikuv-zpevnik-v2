@@ -207,8 +207,7 @@ export function useFilteredSongs(
   }
 
   // --- External Search Logic ---
-  const [debouncedQuery] = useDebounceValue(query, 500);
-  const isQueryValidForExternal = debouncedQuery.trim().length >= 3;
+  const isQueryValidForExternal = query.trim().length >= 3;
 
   const shouldSearchExternal =
     user.loggedIn &&
@@ -220,14 +219,11 @@ export function useFilteredSongs(
   const { data: paToken } = usePAToken(shouldSearchExternal);
 
   const { data: externalSongs = [], isFetching: isLoadingExternal } = useQuery({
-    queryKey: ["externalSearch", debouncedQuery],
+    queryKey: ["externalSearch", query],
     queryFn: async () => {
       // Only search if we have a token
       if (!paToken) return [];
-      const results = await searchAllExternalServices(
-        debouncedQuery,
-        paToken.PAToken,
-      );
+      const results = await searchAllExternalServices(query, paToken.PAToken);
       return results.map(SongData.fromExternal);
     },
     // Only enable external search if trigger is active and we have a token

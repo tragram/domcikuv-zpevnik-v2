@@ -9,7 +9,6 @@ import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
 import { Globe, Search } from "lucide-react";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
