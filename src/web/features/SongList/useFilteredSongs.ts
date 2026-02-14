@@ -220,9 +220,25 @@ export function useFilteredSongs(
     staleTime: 1000 * 60 * 5,
   });
 
+  // Apply fuse search to external results for relevance sorting
+  const sortedExternalSongs = useMemo(() => {
+    if (externalSongs.length === 0 || !query) {
+      return externalSongs;
+    }
+
+    const externalFuse = new Fuse(externalSongs, {
+      includeScore: true,
+      keys: ["artist", "title", "ascii_title", "ascii_artist"],
+      ignoreLocation: true,
+      threshold: 0.4,
+    });
+
+    return externalFuse.search(query).map((r) => r.item);
+  }, [externalSongs, query]);
+
   return {
     songs: filteredInternalResults,
-    externalSongs,
+    externalSongs: sortedExternalSongs,
     isLoadingExternal,
     triggerExternalSearch: () => setExternalSearchTriggered(true),
     hasTriggeredExternalSearch: externalSearchTriggered,
