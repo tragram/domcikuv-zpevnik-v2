@@ -201,7 +201,10 @@ export function useFilteredSongs(
   }
 
   // --- External Search Logic ---
-  const isQueryValidForExternal = query.trim().length >= 3;
+  // fuzzyScore \in [0,1], where 0 ~ perfect match and 1 ~ completely fuzzy match (i.e. no match)
+  const minFuzzyScore = Math.min(...fuseSearch.map((fs) => fs.score as number));
+  const isQueryValidForExternal =
+    query.trim().length >= 3 && minFuzzyScore > 0.1;
 
   const shouldSearchExternal =
     user.loggedIn &&
@@ -213,7 +216,9 @@ export function useFilteredSongs(
     queryKey: ["externalSearch", query],
     queryFn: async () => {
       const results = await fetchExternalSearch(api, query);
-      return results.map(SongData.fromExternal);
+      return results
+        .map(SongData.fromExternal)
+        .filter((s) => !songs.map((os) => os.id).includes(s.id));
     },
     // Only fetch when the trigger is active
     enabled: shouldSearchExternal,
