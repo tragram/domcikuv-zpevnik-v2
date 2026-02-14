@@ -1,7 +1,12 @@
 import { zValidator } from "@hono/zod-validator";
 import { and, eq, not } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { illustrationPrompt, song, songIllustration } from "src/lib/db/schema";
+import {
+  illustrationPrompt,
+  song,
+  songIllustration,
+  songImport,
+} from "src/lib/db/schema";
 import { z } from "zod/v4";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
@@ -16,7 +21,12 @@ import {
   retrieveSingleSong,
   createSong,
   getSongbooks,
+  createImportSong,
 } from "../helpers/song-helpers";
+import {
+  externalSongSchema,
+  searchAllExternalServices,
+} from "../helpers/external-search";
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
   lastUpdateAt: z.string().transform((str) => new Date(str)),
@@ -145,8 +155,8 @@ export const songDBRoutes = buildApp()
       return errorJSend(c, "Error fetching song", 500);
     }
   })
-  .get("/import/pa/:slug", async (c) => {
-    const slug = c.req.param("slug");
+  .post("/import", zValidator("json", externalSongSchema), async (c) => {
+    const { id, title, artist, url, externalSource } = c.req.valid("json");
     const db = drizzle(c.env.DB);
     const user = c.get("USER");
 
@@ -154,48 +164,64 @@ export const songDBRoutes = buildApp()
       return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
 
     try {
-      // scrape the song
-      const url = `https://pisnicky-akordy.cz/${slug}`;
-      const response = await fetch(url);
-      if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
-
-      let lyricsHtml = "";
-      let title = "";
-      let artist = "";
-
-      const rewriter = new HTMLRewriter()
-        .on("div#songtext pre", {
-          text(text) {
-            lyricsHtml += text.text;
-          },
-        })
-        .on("h1", {
-          text(text) {
-            if (text.text.trim()) title = text.text.trim();
-          },
-        })
-        .on("h2", {
-          text(text) {
-            if (text.text.trim()) artist = text.text.trim();
-          },
-        });
-
-      await rewriter.transform(response).text();
-      const chordPro = convertToChordPro(lyricsHtml);
-      if (!lyricsHtml || !artist || !title)
-        return failJSend(c, "Error scraping song", 500, "IMPORT_ERROR");
-
-      // check if the song (by artist/title ID) already exists
+      // Check if the song (by artist/title ID) already exists
       const newSongId = SongData.baseId(title, artist);
       const existingSong = await db
         .select({ id: song.id })
         .from(song)
         .where(and(eq(song.id, newSongId), song.currentVersionId))
         .limit(1);
-      const songExists = existingSong.length > 0;
-      if (songExists)
+
+      if (existingSong.length > 0)
         return errorJSend(c, "Song already exists in DB", 422, newSongId);
-      // database write
+
+      // Fetch the source page
+      const response = await fetch(url);
+      if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
+
+      let lyricsHtml = "";
+
+      // Source-specific scraping (only for lyrics!)
+      const rewriter = new HTMLRewriter();
+
+      if (externalSource === "pisnicky-akordy") {
+        rewriter.on("div#songtext pre", {
+          text(text) {
+            lyricsHtml += text.text;
+          },
+        });
+      } else if (externalSource === "cifraclub") {
+        // Example selector for CifraClub, adjust to match their DOM
+        rewriter.on("pre", {
+          text(text) {
+            lyricsHtml += text.text;
+          },
+        });
+      } else {
+        return failJSend(c, "Unsupported external source", 400);
+      }
+
+      await rewriter.transform(response).text();
+
+      if (!lyricsHtml)
+        return failJSend(c, "Error scraping song lyrics", 500, "IMPORT_ERROR");
+
+      let chordPro = convertToChordPro(lyricsHtml);
+      if(["cifraclub"].includes(externalSource)){
+        chordPro = convert 
+      }
+
+      const importId = await createImportSong(
+        db,
+        title,
+        artist,
+        lyricsHtml,
+        url,
+        user.id,
+        externalSource,
+      );
+
+      // Database write
       const submission: EditorSubmitSchema = {
         title: title,
         artist: artist,
@@ -209,12 +235,13 @@ export const songDBRoutes = buildApp()
         startMelody: null,
         tempo: null,
       };
+
       const { newSong } = await createSong(
         db,
         submission,
         user.id,
         true,
-        "pisnicky-akordy",
+        importId,
       );
 
       return successJSend(c, { songId: newSong.id });
@@ -224,12 +251,30 @@ export const songDBRoutes = buildApp()
     }
   })
 
-  .get("/info/pa_token", async (c) => {
-    const userId = c.get("USER")?.id;
-    if (userId) {
-      return successJSend(c, { PAToken: c.env.PA_BEARER_TOKEN });
-    } else return errorJSend(c, "User not authenticated", 401);
+  .get("/external-search", async (c) => {
+    const query = c.req.query("q");
+    const user = c.get("USER");
+
+    if (!user) {
+      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
+    }
+
+    if (!query || query.trim().length < 3) {
+      return successJSend(c, []);
+    }
+
+    try {
+      const results = await searchAllExternalServices(
+        query,
+        c.env.PA_BEARER_TOKEN,
+      );
+      return successJSend(c, results);
+    } catch (error) {
+      console.error("External search failed:", error);
+      return errorJSend(c, "Failed to fetch external songs", 500);
+    }
   })
+
   .get("/songbooks", async (c) => {
     const db = drizzle(c.env.DB);
     try {

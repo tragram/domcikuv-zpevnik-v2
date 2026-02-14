@@ -134,7 +134,6 @@ async function uploadSong(
     chordpro,
     userId: systemUserId,
     status: "published",
-    sourceId: "editor",
     approvedBy: systemUserId,
     approvedAt: createdAt,
     createdAt: createdAt,

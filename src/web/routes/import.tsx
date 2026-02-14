@@ -1,75 +1,68 @@
 import { createFileRoute, redirect, Link } from "@tanstack/react-router";
+import { externalSongSchema } from "src/worker/helpers/external-search";
 import PendingComponent from "~/components/PendingComponent";
 import { Button } from "~/components/ui/button";
 import { ApiException, makeApiRequest } from "~/services/api-service";
 
-export const Route = createFileRoute("/pa/$")({
-  pendingMs: 0, // Show pending immediately
-  pendingMinMs: 2000, // keep visible for at least 2000ms
-  loader: async ({ params, context, preload }) => {
-    // Don't run import on preload (e.g., from hover)
+export const Route = createFileRoute("/import")({
+  validateSearch: (search) => externalSongSchema.parse(search),
+  pendingMs: 0,
+  pendingMinMs: 2000,
+  loaderDeps: ({ search }) => ({ search }),
+  loader: async ({ context, preload, deps: { search } }) => {
     if (preload) {
       return;
     }
-
-    // encodeURIComponent handles slashes within the splat
-    const encodedSlug = encodeURIComponent(params._splat || "");
+    console.log(search);
 
     try {
-      // Using makeApiRequest with Hono client from context
+      // Hit the new POST endpoint with the search parameters as the JSON body
       const data = await makeApiRequest(
         () =>
-          context.api.songs.import.pa[":slug"].$get({
-            param: { slug: encodedSlug },
+          context.api.songs.import.$post({
+            json: search,
           }),
         "Failed to import song",
       );
 
-      // On success, redirect to the song page
       throw redirect({
         to: "/song/$songId",
         params: { songId: data.songId },
       });
     } catch (error) {
-      // Re-throw redirect as-is
       if (error instanceof Response) {
         throw error;
       }
 
-      // Handle ApiException with user-friendly messages
       if (error instanceof ApiException) {
         let userMessage = error.message;
         let songId: string | undefined;
 
-        // Provide specific error messages based on status codes
         if (error.status === 401) {
           userMessage = "You must be logged in to import songs";
         } else if (error.status === 422) {
           userMessage = "This song already exists in the database";
-          // The backend can pass the songId in the code field
           if (error.code && typeof error.code === "string") {
             songId = error.code;
           }
         } else if (error.status === 502) {
           userMessage = "Failed to fetch song from source website";
         } else if (error.status === 500) {
-          userMessage = "Could not extract song data from the source";
+          userMessage = "Could not extract lyrics from the source";
         }
 
         const customError = new Error(userMessage);
-        // Attach songId to the error for the error component to use
         (customError as any).songId = songId;
         throw customError;
       }
 
-      // Re-throw other errors
       throw error;
     }
   },
   pendingComponent: () => (
     <PendingComponent
       title="Importing Song"
-      text="Please wait while the song is being scraped..."
+      text="Please wait while the lyrics are being fetched..."
     />
   ),
   errorComponent: ({ error }) => {

@@ -2,7 +2,8 @@ import { EditorState } from "~/features/Editor/Editor";
 import { Key, SongRange } from "./musicTypes";
 import type { ChordPro, int, SongLanguage } from "./types";
 import { SongDataApi } from "src/worker/helpers/song-helpers";
-import { ExternalSongResult } from "~/features/SongList/Toolbar/ExternalSearch";
+import { ExternalSong } from "src/worker/helpers/external-search";
+import { SongImportDB } from "src/lib/db/schema";
 
 interface CurrentIllustration {
   illustrationId: string;
@@ -49,7 +50,7 @@ export class SongData {
   capo: int;
   range?: SongRange;
   chordpro: ChordPro;
-  sourceId: string;
+  externalSource: SongImportDB["source"];
 
   // UI-specific fields
   currentIllustration: CurrentIllustration | undefined;
@@ -68,7 +69,7 @@ export class SongData {
     this.capo = songFromDB.capo || 0;
     this.range = this.parseRange(songFromDB.range);
     this.chordpro = songFromDB.chordpro;
-    this.sourceId = songFromDB.sourceId;
+    this.externalSource = songFromDB.externalSource;
 
     this.currentIllustration = songFromDB.currentIllustration;
     this.isFavorite = songFromDB.isFavoriteByCurrentUser;
@@ -83,7 +84,6 @@ export class SongData {
       currentIllustration: undefined,
       tempo: Number(data.tempo) || undefined,
       isFavoriteByCurrentUser: false,
-      sourceId: "editor",
       // these need to be here because of a minor type mismatch
       key: data.key,
       startMelody: data.startMelody,
@@ -92,7 +92,7 @@ export class SongData {
     });
   }
 
-  static fromExternal(external: ExternalSongResult): SongData {
+  static fromExternal(external: ExternalSong): SongData {
     const song = new SongData({
       id: external.id,
       title: external.title,
@@ -109,10 +109,12 @@ export class SongData {
       chordpro: "", // External songs won't have chordpro immediately
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
-      sourceId: external.sourceId,
+      externalSource: external.externalSource,
     });
 
     song.url = () => external.url;
+    song.thumbnailURL = () => external.thumbnailURL;
+    song.illustrationURL = () => external.thumbnailURL;
 
     return song;
   }
@@ -157,7 +159,6 @@ export class SongData {
       tempo: undefined,
       range: "",
       chordpro: "",
-      sourceId: "",
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
     });
@@ -169,16 +170,20 @@ export class SongData {
 
   // Image URL methods
   thumbnailURL(): string | undefined {
-    if (!this.currentIllustration && this.sourceId === "pisnicky-akordy")
-      return "/pa_logo.png";
+    if (!this.currentIllustration) {
+      if (this.externalSource === "pisnicky-akordy") return "/pa_logo.png";
+      if (this.externalSource === "cifraclub") return "/cc_logo.png";
+    }
     return (
       this.currentIllustration?.thumbnailURL ?? "/unknown_illustration.png"
     );
   }
 
   illustrationURL(): string | undefined {
-    if (!this.currentIllustration && this.sourceId === "pisnicky-akordy")
-      return "/pa_logo.png";
+    if (!this.currentIllustration) {
+      if (this.externalSource === "pisnicky-akordy") return "/pa_logo.png";
+      if (this.externalSource === "cifraclub") return "/cc_logo.png";
+    }
     return this.currentIllustration?.imageURL ?? "/unknown_illustration.png";
   }
 
@@ -199,7 +204,7 @@ export class SongData {
       chordpro: this.chordpro,
       currentIllustration: this.currentIllustration,
       isFavorite: this.isFavorite,
-      sourceId: this.sourceId,
+      externalSource: this.externalSource,
       url: this.url(),
       thumbnailURL: this.thumbnailURL(),
       illustrationURL: this.illustrationURL(),

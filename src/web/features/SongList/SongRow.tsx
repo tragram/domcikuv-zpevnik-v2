@@ -170,7 +170,9 @@ const SongRow = memo(
         </div>
       );
     }
-
+    if (song.title=="Stars") {
+      console.log(song);
+    }
     return (
       <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4">
         <div
@@ -183,7 +185,19 @@ const SongRow = memo(
               song={song}
             />
             <Link
-              to={song.url()}
+              to={externalSearch ? "/import" : song.url()}
+              search={
+                externalSearch
+                  ? {
+                      id: song.id,
+                      title: song.title,
+                      artist: song.artist,
+                      url: song.url(),
+                      externalSource: song.externalSource || "unknown",
+                      thumbnailUrl: song.thumbnailURL(),
+                    }
+                  : {}
+              }
               preload={externalSearch ? false : "intent"}
               className="song-row bg-glass/60 hover:bg-glass/90 relative flex h-12 w-full rounded-full backdrop-blur-lg"
             >

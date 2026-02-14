@@ -13,6 +13,8 @@ import {
   SongDataDB,
   songIllustration,
   SongIllustrationDB,
+  songImport,
+  SongImportDB,
   songVersion,
   SongVersionDB,
   user,
@@ -31,7 +33,7 @@ export type SongWithCurrentVersion = SongDataDB & {
   capo: number | null;
   range: string | null;
   chordpro: string;
-  sourceId: string;
+  externalSource: string;
 };
 
 export type SongWithDataDB = SongDataDB & {
@@ -61,7 +63,7 @@ export type SongDataApi = {
   capo: number | undefined;
   range: string | undefined;
   chordpro: string;
-  sourceId: string;
+  externalSource: SongImportDB["source"];
   currentIllustration:
     | {
         illustrationId: string;
@@ -94,7 +96,7 @@ export const baseSelectFields = {
   capo: songVersion.capo,
   range: songVersion.range,
   chordpro: songVersion.chordpro,
-  sourceId: songVersion.sourceId,
+  songImport: songImport,
 
   // Current illustration fields
   currentIllustration: {
@@ -122,7 +124,7 @@ const transformSongToApi = (
     capo: number | null;
     range: string | null;
     chordpro: string | null;
-    sourceId: string | null;
+    songImport: SongImportDB | null;
     currentIllustration: {
       illustrationId: string | null;
       promptId: string | null;
@@ -144,7 +146,7 @@ const transformSongToApi = (
   tempo: songItem.tempo ? parseInt(songItem.tempo) : undefined,
   capo: songItem.capo ?? undefined,
   range: songItem.range ?? undefined,
-  sourceId: songItem.sourceId ?? "",
+  externalSource: songItem.songImport?.source ?? null,
   chordpro: songItem.chordpro ?? "Not uploaded",
   currentIllustration:
     songItem.currentIllustration?.illustrationId &&
@@ -208,6 +210,7 @@ export async function retrieveSongs(
     .from(song)
     .where(and(...conditions))
     .leftJoin(songVersion, eq(songVersion.id, song.currentVersionId))
+    .leftJoin(songImport, eq(songImport.id, songVersion.importId))
     .leftJoin(
       songIllustration,
       eq(songIllustration.id, song.currentIllustrationId),
@@ -225,7 +228,6 @@ export async function retrieveSongs(
   }
 
   const songsRaw = await query;
-
   return songsRaw.map((songItem) => transformSongToApi(songItem, updatedSince));
 }
 
@@ -286,6 +288,7 @@ export const retrieveSingleSong = async (
       songIllustration,
       eq(songIllustration.id, song.currentIllustrationId),
     )
+    .leftJoin(songImport, eq(songImport.id, songVersion.importId))
     .where(
       and(
         eq(song.id, songId),
@@ -312,10 +315,12 @@ export const findSong = async (
       .select({
         ...getTableColumns(song),
         ...getTableColumns(songVersion),
+        externalSource: songImport.source,
         id: song.id,
       })
       .from(song)
       .innerJoin(songVersion, eq(songVersion.id, song.currentVersionId))
+      .leftJoin(songImport, eq(songImport.id, songVersion.importId))
       .where(eq(song.id, songId))
       .limit(1)) as SongWithCurrentVersion[];
   } else {
@@ -325,6 +330,7 @@ export const findSong = async (
       .where(eq(song.id, songId))
       .limit(1)) as SongDataDB[];
   }
+  console.log(songResults);
   if (songResults.length === 0) {
     throw new Error("Referenced song not found!");
   }
@@ -336,7 +342,7 @@ export const createSong = async (
   submission: EditorSubmitSchema,
   userId: string,
   isTrusted: boolean,
-  sourceId: SongVersionDB["sourceId"] = "editor",
+  importId?: string,
 ) => {
   const now = new Date();
   // assume 1-to-1 relation between songs and IDs
@@ -364,7 +370,7 @@ export const createSong = async (
     songId,
     userId,
     isTrusted,
-    sourceId,
+    importId,
   );
 
   const newSong = await db.select().from(song).where(eq(song.id, songId));
@@ -378,7 +384,7 @@ export const createSongVersion = async (
   songId: string,
   userId: string,
   isTrusted: boolean,
-  sourceId: SongVersionDB["sourceId"] = "editor",
+  importId?: string,
 ) => {
   const now = new Date();
   let parentVersion: SongVersionDB | undefined = undefined;
@@ -410,11 +416,10 @@ export const createSongVersion = async (
         updatedAt: now,
         approvedBy: shouldPublish ? userId : null,
         approvedAt: shouldPublish ? now : null,
-        sourceId: sourceId,
+        importId: importId ?? null,
       })
       .where(eq(songVersion.id, parentVersion.id))
       .returning();
-
     // If we just published this, update the main Song pointer and archive the old parent
     if (shouldPublish) {
       await promoteVersionToCurrent(db, songId, parentVersion.id, userId);
@@ -438,9 +443,9 @@ export const createSongVersion = async (
         userId: userId,
         approvedBy: shouldPublish ? userId : null,
         approvedAt: shouldPublish ? now : null,
-        sourceId: sourceId,
         createdAt: now,
         updatedAt: now,
+        importId: importId ?? null,
       })
       .returning();
 
@@ -497,6 +502,30 @@ export const promoteVersionToCurrent = async (
       updatedAt: now,
     })
     .where(eq(song.id, songId));
+};
+
+export const createImportSong = async (
+  db: DrizzleD1Database,
+  title: string,
+  artist: string,
+  originalContent: string,
+  url: string,
+  userId: string,
+  source: SongImportDB["source"],
+) => {
+  const importId = SongData.baseId(title, artist);
+  console.log(importId);
+  const importedSong = await db.insert(songImport).values({
+    id: importId,
+    title: title,
+    artist: artist,
+    source: source,
+    originalContent: originalContent,
+    url: url,
+    userId: userId,
+  });
+  console.log(importedSong);
+  return importId;
 };
 
 export const findSongWithVersions = async (

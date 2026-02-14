@@ -7,13 +7,9 @@ import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import { UserProfileData } from "src/worker/api/userProfile";
-import { Songbook } from "~/services/song-service";
-import {
-  searchAllExternalServices,
-  usePAToken,
-} from "./Toolbar/ExternalSearch";
+import { fetchExternalSearch, Songbook } from "~/services/song-service";
 import { useQuery } from "@tanstack/react-query";
-import { useDebounceValue } from "usehooks-ts";
+import { useRouteContext } from "@tanstack/react-router";
 
 const filterLanguage = (
   songs: SongData[],
@@ -90,9 +86,7 @@ const filterExternal = (
   showExternal: boolean,
 ) => {
   if (!loggedIn || !showExternal) {
-    return songs.filter(
-      (song) => song.sourceId === "editor" || song.sourceId === "manual",
-    );
+    return songs.filter((song) => !song.externalSource);
   } else {
     return songs;
   }
@@ -141,7 +135,7 @@ export function useFilteredSongs(
   } = useFilterSettingsStore();
 
   const [externalSearchTriggered, setExternalSearchTriggered] = useState(false);
-
+  const { api } = useRouteContext({ from: "__root__" });
   // Reset external search trigger when the query changes
   useEffect(() => {
     setExternalSearchTriggered(false);
@@ -215,19 +209,14 @@ export function useFilteredSongs(
     isQueryValidForExternal &&
     externalSearchTriggered;
 
-  // Fetch PA token lazily - only when external search is actually triggered
-  const { data: paToken } = usePAToken(shouldSearchExternal);
-
   const { data: externalSongs = [], isFetching: isLoadingExternal } = useQuery({
     queryKey: ["externalSearch", query],
     queryFn: async () => {
-      // Only search if we have a token
-      if (!paToken) return [];
-      const results = await searchAllExternalServices(query, paToken.PAToken);
+      const results = await fetchExternalSearch(api, query);
       return results.map(SongData.fromExternal);
     },
-    // Only enable external search if trigger is active and we have a token
-    enabled: shouldSearchExternal && !!paToken,
+    // Only fetch when the trigger is active
+    enabled: shouldSearchExternal,
     staleTime: 1000 * 60 * 5,
   });
 

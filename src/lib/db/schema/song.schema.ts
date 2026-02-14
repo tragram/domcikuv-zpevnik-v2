@@ -35,8 +35,10 @@ export const songVersion = sqliteTable("song_version", {
     .notNull()
     .references((): AnySQLiteColumn => song.id),
 
-  // The lineage - which version was this edited from?
+  // The internal lineage - which version was this edited from?
   parentId: text("parent_id").references((): AnySQLiteColumn => songVersion.id),
+  // the external lineage
+  importId: text("import_id").references((): AnySQLiteColumn => songImport.id),
 
   // Status flow:
   // 'pending' (User suggestion) -> 'published' (Active) -> 'archived' (History) -> 'deleted'
@@ -63,12 +65,6 @@ export const songVersion = sqliteTable("song_version", {
   approvedBy: text("approved_by").references(() => user.id),
   approvedAt: integer("approved_at", { mode: "timestamp" }),
 
-  sourceId: text("source_id", {
-    enum: ["editor", "pisnicky-akordy"],
-  })
-    .notNull()
-    .default("editor"),
-
   createdAt: integer("created_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
     .notNull(),
@@ -80,6 +76,27 @@ export const songVersion = sqliteTable("song_version", {
 });
 
 export type SongVersionDB = typeof songVersion.$inferSelect;
+
+export const SONG_SOURCES = ["pisnicky-akordy", "cifraclub"] as const;
+
+export const songImport = sqliteTable("song_import", {
+  id: text("id").primaryKey(),
+  title: text().notNull(),
+  artist: text().notNull(),
+  source: text("source", {
+    enum: SONG_SOURCES,
+  }),
+  originalContent: text().notNull(),
+  url: text().notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" })
+    .$defaultFn(() => new Date())
+    .notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id),
+});
+
+export type SongImportDB = typeof songImport.$inferSelect;
 
 export const illustrationPrompt = sqliteTable("illustration_prompt", {
   id: text("id").primaryKey(),
