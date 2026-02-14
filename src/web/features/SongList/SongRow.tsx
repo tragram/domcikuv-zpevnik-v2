@@ -190,8 +190,8 @@ const SongRow = memo(
                       title: song.title,
                       artist: song.artist,
                       url: song.url(),
-                      externalSource: song.externalSource || "unknown",
-                      thumbnailUrl: song.thumbnailURL(),
+                      externalSource: song.externalSource,
+                      thumbnailURL: song.thumbnailURL(),
                     }
                   : {}
               }

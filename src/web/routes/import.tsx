@@ -15,10 +15,9 @@ export const Route = createFileRoute("/import")({
     }
 
     try {
-      // Hit the new POST endpoint with the search parameters as the JSON body
       const data = await makeApiRequest(
         () =>
-          context.api.songs.import.$post({
+          context.api.songs.external.import.$post({
             json: search,
           }),
         "Failed to import song",

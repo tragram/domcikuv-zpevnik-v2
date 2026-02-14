@@ -315,6 +315,7 @@ export async function addIllustrationFromURL(
     env,
     false,
   );
+  console.log(r2ImageUrl)
 
   const imageId = defaultIllustrationId("manual", fakeModelId);
   const insertData = {
@@ -332,5 +333,6 @@ export async function addIllustrationFromURL(
     .insert(songIllustration)
     .values(insertData)
     .returning();
+  console.log(newIllustration);
   await setCurrentIllustration(db, songId, newIllustration[0].id);
 }

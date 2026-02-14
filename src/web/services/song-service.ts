@@ -17,7 +17,7 @@ import {
   SongModificationSchema,
 } from "src/worker/api/admin/songs";
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
-import { ExternalSongResult } from "src/worker/helpers/external-search";
+import { ExternalSong } from "src/worker/helpers/external-search";
 
 export * from "./illustration-service";
 
@@ -127,10 +127,10 @@ export const fetchFeed = async (
 export const fetchExternalSearch = async (
   api: API,
   query: string,
-): Promise<ExternalSongResult[]> => {
+): Promise<ExternalSong[]> => {
   // Call the new Hono backend route
   const response = await makeApiRequest(() =>
-    api.songs["external-search"].$get({ query: { q: query } }),
+    api.songs.external.search.$get({ query: { q: query } }),
   );
   return response;
 };
