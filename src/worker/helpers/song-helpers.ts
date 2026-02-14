@@ -330,7 +330,6 @@ export const findSong = async (
       .where(eq(song.id, songId))
       .limit(1)) as SongDataDB[];
   }
-  console.log(songResults);
   if (songResults.length === 0) {
     throw new Error("Referenced song not found!");
   }

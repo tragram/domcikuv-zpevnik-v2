@@ -13,7 +13,6 @@ export const Route = createFileRoute("/import")({
     if (preload) {
       return;
     }
-    console.log(search);
 
     try {
       // Hit the new POST endpoint with the search parameters as the JSON body
