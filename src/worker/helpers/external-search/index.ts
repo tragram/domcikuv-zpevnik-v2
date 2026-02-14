@@ -18,8 +18,7 @@ export async function searchAllExternalServices(
   query: string,
   paToken: string,
 ): Promise<ExternalSong[]> {
-  const paResults = [] as ExternalSong[];
-  // const paResults = await searchPisnickyAkordy(query, paToken);
+  const paResults = await searchPisnickyAkordy(query, paToken);
   const ccResults = await searchCifraClub(query);
 
   return [...paResults, ...ccResults];

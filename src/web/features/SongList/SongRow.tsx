@@ -170,9 +170,6 @@ const SongRow = memo(
         </div>
       );
     }
-    if (song.title=="Stars") {
-      console.log(song);
-    }
     return (
       <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4">
         <div

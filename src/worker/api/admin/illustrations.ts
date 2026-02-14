@@ -62,7 +62,7 @@ const illustrationModifySchema = z.object({
   setAsActive: z.boolean().optional(),
 });
 
-const CFImagesThumbnailURL = (imageURL: string) => {
+export const CFImagesThumbnailURL = (imageURL: string) => {
   return "/cdn-cgi/image/width=128/" + imageURL;
 };
 

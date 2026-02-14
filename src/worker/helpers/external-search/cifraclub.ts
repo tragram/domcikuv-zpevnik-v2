@@ -30,7 +30,6 @@ export async function searchCifraClub(
     const text = await response.text();
     const jsonText = text.trim().slice(1, -1);
     const data = JSON.parse(jsonText)["response"] as CifraResponse;
-
     return (data.docs || [])
       .filter((hit) => hit.t === "2")
       .map((hit) => ({
@@ -39,7 +38,7 @@ export async function searchCifraClub(
         artist: hit.a,
         url: `https://www.cifraclub.com/${hit.d}/${hit.u}`,
         thumbnailURL: hit.i
-          ? `akamai.sscdn.co/letras/25x25/fotos/${hit.i}`
+          ? `https://akamai.sscdn.co/letras/115x115/fotos/${hit.i}`
           : "cc_logo.png",
         externalSource: "cifraclub",
       }));

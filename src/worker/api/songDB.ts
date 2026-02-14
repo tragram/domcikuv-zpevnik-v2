@@ -1,32 +1,32 @@
 import { zValidator } from "@hono/zod-validator";
+import { ChordProParser } from "chordproject-parser";
 import { and, eq, not } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import {
   illustrationPrompt,
   song,
-  songIllustration,
-  songImport,
+  songIllustration
 } from "src/lib/db/schema";
 import { z } from "zod/v4";
-import { errorJSend, failJSend, successJSend } from "./responses";
-import { buildApp } from "./utils";
-import { SongData } from "~/types/songData";
 import { convertToChordPro } from "~/lib/chords2chordpro";
 import { guessLanguage } from "~/lib/utils";
-import { ChordProParser } from "chordproject-parser";
-import { EditorSubmitSchema } from "./editor";
-import {
-  SongDataApi,
-  retrieveSongs,
-  retrieveSingleSong,
-  createSong,
-  getSongbooks,
-  createImportSong,
-} from "../helpers/song-helpers";
+import { SongData } from "~/types/songData";
 import {
   externalSongSchema,
   searchAllExternalServices,
 } from "../helpers/external-search";
+import { addIllustrationFromURL } from "../helpers/illustration-helpers";
+import {
+  SongDataApi,
+  createImportSong,
+  createSong,
+  getSongbooks,
+  retrieveSingleSong,
+  retrieveSongs,
+} from "../helpers/song-helpers";
+import { EditorSubmitSchema } from "./editor";
+import { errorJSend, failJSend, successJSend } from "./responses";
+import { buildApp } from "./utils";
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
   lastUpdateAt: z.string().transform((str) => new Date(str)),
@@ -156,7 +156,8 @@ export const songDBRoutes = buildApp()
     }
   })
   .post("/import", zValidator("json", externalSongSchema), async (c) => {
-    const { id, title, artist, url, externalSource } = c.req.valid("json");
+    const { id, title, artist, url, externalSource, thumbnailURL } =
+      c.req.valid("json");
     const db = drizzle(c.env.DB);
     const user = c.get("USER");
 
@@ -244,6 +245,10 @@ export const songDBRoutes = buildApp()
         true,
         importId,
       );
+
+      if (thumbnailURL) {
+        await addIllustrationFromURL(db, newSong.id, thumbnailURL, c.env);
+      }
 
       return successJSend(c, { songId: newSong.id });
     } catch (error) {

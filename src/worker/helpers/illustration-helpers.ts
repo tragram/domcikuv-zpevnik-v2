@@ -9,7 +9,7 @@ import {
 } from "src/lib/db/schema";
 import { findSong, SongWithCurrentVersion } from "./song-helpers";
 import { Context } from "hono";
-import { promptFolder } from "~/types/songData";
+import { defaultIllustrationId, promptFolder } from "~/types/songData";
 import { z } from "zod";
 import {
   IMAGE_MODELS_API,
@@ -17,6 +17,7 @@ import {
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "./image-generator";
+import { CFImagesThumbnailURL } from "../api/admin/illustrations";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -234,6 +235,27 @@ export async function findOrCreatePrompt(
   return newPrompt[0];
 }
 
+export async function createManualPrompt(
+  db: DrizzleD1Database,
+  songId: string,
+) {
+  const promptId = `${songId}_manual-${Date.now()}`;
+  const promptData = {
+    id: promptId,
+    songId: songId,
+    summaryPromptVersion: "manual",
+    summaryModel: "manual",
+    text: "Manual upload - no generated prompt",
+  };
+
+  const newPrompt = await db
+    .insert(illustrationPrompt)
+    .values(promptData)
+    .returning();
+
+  return newPrompt[0];
+}
+
 /**
  * Helper function to create or find a manual prompt
  */
@@ -250,7 +272,10 @@ export async function createOrFindManualPrompt(
       .where(
         and(
           eq(illustrationPrompt.songId, songId),
-          eq(illustrationPrompt.summaryPromptVersion, providedPromptVersion.trim()),
+          eq(
+            illustrationPrompt.summaryPromptVersion,
+            providedPromptVersion.trim(),
+          ),
         ),
       )
       .limit(1);
@@ -264,19 +289,48 @@ export async function createOrFindManualPrompt(
   }
 
   // Create a new manual prompt
-  const promptId = `${songId}_manual-${Date.now()}`;
-  const promptData = {
-    id: promptId,
+  return createManualPrompt(db, songId);
+}
+
+export async function addIllustrationFromURL(
+  db: DrizzleD1Database,
+  songId: string,
+  imageUrl: string,
+  env: Env,
+) {
+  const prompt = await createManualPrompt(db, songId);
+  const response = await fetch(imageUrl);
+
+  // Check if fetch was successful
+  if (!response.ok) {
+    throw Error("Failed to fetch image");
+  }
+  const imageBuffer = await response.arrayBuffer();
+  const fakeModelId = `import-${imageUrl}`;
+  const r2ImageUrl = await uploadImageBuffer(
+    imageBuffer,
+    songId,
+    prompt.id,
+    fakeModelId,
+    env,
+    false,
+  );
+
+  const imageId = defaultIllustrationId("manual", fakeModelId);
+  const insertData = {
+    id: imageId,
     songId: songId,
-    summaryPromptVersion: "manual",
-    summaryModel: "manual",
-    text: "Manual upload - no generated prompt",
+    imageModel: fakeModelId,
+    imageURL: r2ImageUrl,
+    thumbnailURL: CFImagesThumbnailURL(r2ImageUrl),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deleted: false,
+    promptId: prompt.id,
   };
-
-  const newPrompt = await db
-    .insert(illustrationPrompt)
-    .values(promptData)
+  const newIllustration = await db
+    .insert(songIllustration)
+    .values(insertData)
     .returning();
-
-  return newPrompt[0];
+  await setCurrentIllustration(db, songId, newIllustration[0].id);
 }
