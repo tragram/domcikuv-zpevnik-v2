@@ -206,10 +206,11 @@ export const songDBRoutes = buildApp()
       if (!lyricsHtml)
         return failJSend(c, "Error scraping song lyrics", 500, "IMPORT_ERROR");
 
-      let chordPro = convertToChordPro(lyricsHtml);
-      if(["cifraclub"].includes(externalSource)){
-        chordPro = convert 
-      }
+      const chordPro = convertToChordPro(
+        lyricsHtml,
+        // non-czech sources need to have chords converted
+        ["cifraclub"].includes(externalSource),
+      );
 
       const importId = await createImportSong(
         db,

@@ -1,5 +1,7 @@
 // Converts song text with chord lines (Ultimate Guitar, pisnicky-akordy.cz...) into ChordPro format
 
+import { convertChordNotation } from "~/features/SongView/utils/chordNotation";
+
 interface Token {
   text: string;
   position: number;
@@ -17,9 +19,11 @@ function isChordLine(line: string): boolean {
     return false;
   }
 
-  const chordPattern = /[A-H][#bs]?m?[mi]?[5-7]?/g;
+  const chordPattern =
+    /[A-H][#bs]?(?:m|mi|maj|min|sus|dim|aug)?[0-9]*(?:\/[A-H][#b]?)?/g;
 
   const chords = line.match(chordPattern) || [];
+  // there should not be any words
   const words = line.split(/\s+/).filter((w) => w.length > 0);
 
   return chords.length > 0 && chords.length >= words.length / 2;
@@ -75,36 +79,47 @@ function placeChords(lyricToken: Token, chordTokens: Token[]): string {
   for (const chordToken of chordTokens.toReversed()) {
     const insertPos = chordToken.position - wordStartPos;
     word = `${word.slice(0, insertPos)}[${chordToken.text}]${word.slice(
-      insertPos
+      insertPos,
     )}`;
   }
   return word;
 }
 
-export function normalizeChordTokens(tokens: Token[]): Token[] {
-  return tokens.map(token => {
+export function normalizeChordTokens(
+  tokens: Token[],
+  convertToCzechNotation: boolean = false,
+): Token[] {
+  return tokens.map((token) => {
     let text = token.text.trim();
 
-    // Remove trailing comma or period (multiple if needed)
     while (text.endsWith(",") || text.endsWith(".")) {
       text = text.slice(0, -1).trimEnd();
     }
 
-    return {
-      ...token,
-      text,
-    };
+    // Apply the conversion here
+    if (convertToCzechNotation) {
+      text = convertChordNotation(text);
+    }
+
+    return { ...token, text };
   });
 }
 
-function insertChordsInLyrics(chordLine: string, lyricLine: string): string {
+function insertChordsInLyrics(
+  chordLine: string,
+  lyricLine: string,
+  convertToCzechNotation: boolean,
+): string {
   /**
    * Inserts chords into the lyrics at the correct positions based on word boundaries.
    */
   const result: string[] = [];
 
   const lyricTokens = tokenizeWithPositions(lyricLine);
-  const chordTokens = normalizeChordTokens(tokenizeWithPositions(chordLine));
+  const chordTokens = normalizeChordTokens(
+    tokenizeWithPositions(chordLine),
+    convertToCzechNotation,
+  );
   let chordTokenIndex = 0;
   for (const lyricToken of lyricTokens) {
     const chordsToInsert = [];
@@ -153,76 +168,50 @@ function groupLinesIntoParagraphs(songLines: string[]): string[][] {
 }
 
 function addChordproDirectives(paragraph: string[]): string[] {
-  /**
-   * Adds ChordPro directives based on verse and chorus markers.
-   */
-  const outputLines: string[] = [];
-
-  if (paragraph.length === 0) {
-    return [];
-  }
+  if (paragraph.length === 0) return [];
 
   const firstLine = paragraph[0].trim();
-
   const verseMatch = firstLine.match(/^\d+\.\s/);
   const chorusMatch = firstLine.match(/^(R\d*|Ref\.?|Chorus|Refrain):\s*/i);
-  const bridgeMatch = firstLine.match(/^(B\d*|Bridge):\s*/);
+  const bridgeMatch = firstLine.match(/^(B\d*|Bridge):\s*/i);
 
-  // Detect choruses (e.g., "R: ")
-  if (chorusMatch) {
-    if (firstLine === chorusMatch[0].trim()) {
-      outputLines.push("{chorus}");
-    } else {
-      outputLines.push("{start_of_chorus}");
-      for (let i = 0; i < paragraph.length; i++) {
-        const line = paragraph[i];
-        if (i === 0) {
-          outputLines.push(line.slice(chorusMatch[0].length).trim());
-        } else {
-          outputLines.push(line);
-        }
-      }
-      outputLines.push("{end_of_chorus}");
-    }
-  }
-  // Detect bridges
-  else if (bridgeMatch) {
-    if (firstLine === bridgeMatch[0].trim()) {
-      outputLines.push("{bridge}");
-    } else {
-      outputLines.push("{start_of_bridge}");
-      for (let i = 0; i < paragraph.length; i++) {
-        const line = paragraph[i];
-        if (i === 0) {
-          outputLines.push(line.slice(bridgeMatch[0].length).trim());
-        } else {
-          outputLines.push(line);
-        }
-      }
-      outputLines.push("{end_of_bridge}");
-    }
-  } else {
-    outputLines.push("{start_of_verse}");
-    if (verseMatch) {
-      // remove the verse number of pisnicky-akordy
-      for (let i = 0; i < paragraph.length; i++) {
-        const line = paragraph[i];
-        if (i === 0) {
-          outputLines.push(line.slice(verseMatch[0].length).trim());
-        } else {
-          outputLines.push(line);
-        }
-      }
-    } else {
-      outputLines.push(...paragraph);
-    }
-    outputLines.push("{end_of_verse}");
-  }
+  // Helper function to handle wrapping logic
+  const wrapSection = (
+    type: string,
+    match: RegExpMatchArray | null,
+    isChorusOrBridge: boolean,
+  ) => {
+    const outputLines: string[] = [];
 
-  return outputLines;
+    if (match && firstLine === match[0].trim() && isChorusOrBridge) {
+      // Handle single-line references like "R:"
+      return [`{${type}}`];
+    }
+
+    outputLines.push(`{start_of_${type}}`);
+    for (let i = 0; i < paragraph.length; i++) {
+      if (i === 0 && match) {
+        // Strip the marker from the first line
+        outputLines.push(paragraph[i].slice(match[0].length).trim());
+      } else {
+        outputLines.push(paragraph[i]);
+      }
+    }
+    outputLines.push(`{end_of_${type}}`);
+
+    // Filter out any empty lines resulting from stripping markers
+    return outputLines.filter((line) => line.trim() !== "");
+  };
+
+  if (chorusMatch) return wrapSection("chorus", chorusMatch, true);
+  if (bridgeMatch) return wrapSection("bridge", bridgeMatch, true);
+  return wrapSection("verse", verseMatch, false);
 }
 
-function processParagraph(songLines: string[]): string {
+function processParagraph(
+  songLines: string[],
+  convertToCzechNotation: boolean,
+): string {
   /**
    * Processes an entire paragraph by detecting chord and lyric lines, inserting chords into the lyrics,
    * and adding ChordPro directives for verses and choruses.
@@ -234,12 +223,18 @@ function processParagraph(songLines: string[]): string {
     if (isChordLine(line)) {
       if (chordLineToInsert) {
         // make sure chords are not deleted even if no lyrics are detected
-        structuredSong.push(insertChordsInLyrics(chordLineToInsert, ""));
+        structuredSong.push(
+          insertChordsInLyrics(chordLineToInsert, "", convertToCzechNotation),
+        );
       }
       chordLineToInsert = line;
     } else {
       if (chordLineToInsert) {
-        const chordproLine = insertChordsInLyrics(chordLineToInsert, line);
+        const chordproLine = insertChordsInLyrics(
+          chordLineToInsert,
+          line,
+          convertToCzechNotation,
+        );
         structuredSong.push(chordproLine);
         chordLineToInsert = null;
       } else {
@@ -250,26 +245,31 @@ function processParagraph(songLines: string[]): string {
 
   if (chordLineToInsert) {
     // make sure chords are not deleted even if no lyrics are detected
-    structuredSong.push(insertChordsInLyrics(chordLineToInsert, ""));
+    structuredSong.push(
+      insertChordsInLyrics(chordLineToInsert, "", convertToCzechNotation),
+    );
   }
 
   const chordproResult = addChordproDirectives(structuredSong);
   return chordproResult.join("\n");
 }
 
-function processSong(songLines: string[]): string {
+function processSong(
+  songLines: string[],
+  convertToCzechNotation: boolean,
+): string {
   const paragraphs = groupLinesIntoParagraphs(songLines);
   const result: string[] = [];
 
   for (const paragraph of paragraphs) {
-    const processed = processParagraph(paragraph);
+    const processed = processParagraph(paragraph, convertToCzechNotation);
     result.push(processed);
   }
 
   return result.join("\n\n");
 }
 
-function isConvertibleFormat(text: string): boolean {
+export function isConvertibleFormat(text: string): boolean {
   /**
    * Detects whether the text is in a format suitable for conversion to ChordPro.
    * Returns true if the text contains chord lines that can be converted.
@@ -292,14 +292,14 @@ function isConvertibleFormat(text: string): boolean {
   return chordLineCount >= 2 && chordLineCount / nonEmptyLineCount >= 0.1;
 }
 
-function convertToChordPro(songText: string): string {
+export function convertToChordPro(
+  songText: string,
+  convertToCzechNotation: boolean = false,
+): string {
   /**
    * Main conversion function that takes song text as input
    * and returns ChordPro formatted text.
    */
   const songLines = songText.split("\n");
-  return processSong(songLines);
+  return processSong(songLines, convertToCzechNotation);
 }
-
-export { processSong, isConvertibleFormat, convertToChordPro };
-

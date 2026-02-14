@@ -514,7 +514,6 @@ export const createImportSong = async (
   source: SongImportDB["source"],
 ) => {
   const importId = SongData.baseId(title, artist);
-  console.log(importId);
   const importedSong = await db.insert(songImport).values({
     id: importId,
     title: title,
@@ -524,7 +523,6 @@ export const createImportSong = async (
     url: url,
     userId: userId,
   });
-  console.log(importedSong);
   return importId;
 };
 
