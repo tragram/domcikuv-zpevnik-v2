@@ -4,6 +4,8 @@ import { FavoriteButton } from "~/components/FavoriteButton";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import type { LayoutSettings } from "../hooks/viewSettingsStore";
+import { SONG_SOURCES_PRETTY } from "src/lib/db/schema/song.schema";
+import { Link } from "@tanstack/react-router";
 
 interface SongHeadingProps {
   songData: SongData;
@@ -85,7 +87,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
       </div>
       <div
         className={cn(
-          "flex gap-4 md:gap-6 items-start",
+          "flex gap-4 md:gap-6 items-center",
           isWrapped ? "w-full justify-around" : "",
         )}
       >
@@ -98,11 +100,22 @@ const SongHeading: React.FC<SongHeadingProps> = ({
           <h2 className="text-[0.75em] text-nowrap">
             Capo: {(songData.capo - transposeSteps + 12) % 12}
           </h2>
-          <h2 className="text-[0.75em] sub-sup-container">
-            {songData.range
-              ? formatChords(songData.range.toString(transposeSteps, true))
-              : ""}
-          </h2>
+          {songData.externalSource ? ( // external songs won't have range --> safe to replace by import source
+            <Link
+              className="text-[0.55em] dark:text-white/70"
+              to={songData.externalSource.url}
+              target="_blank"
+            >
+              {songData.externalSource &&
+                `Imported from ${SONG_SOURCES_PRETTY[songData.externalSource.id]}`}
+            </Link>
+          ) : (
+            <h3 className="text-[0.75em] sub-sup-container">
+              {songData.range
+                ? formatChords(songData.range.toString(transposeSteps, true))
+                : ""}
+            </h3>
+          )}
         </div>
         {user?.loggedIn && (
           <FavoriteButton

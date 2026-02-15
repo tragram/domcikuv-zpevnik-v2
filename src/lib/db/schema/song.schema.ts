@@ -79,6 +79,14 @@ export type SongVersionDB = typeof songVersion.$inferSelect;
 
 export const SONG_SOURCES = ["pisnicky-akordy", "cifraclub"] as const;
 
+export const SONG_SOURCES_PRETTY: Record<
+  (typeof SONG_SOURCES)[number],
+  string
+> = {
+  "pisnicky-akordy": "Písničky-Akordy",
+  cifraclub: "CifraClub",
+};
+
 export const songImport = sqliteTable("song_import", {
   id: text("id").primaryKey(),
   title: text().notNull(),
