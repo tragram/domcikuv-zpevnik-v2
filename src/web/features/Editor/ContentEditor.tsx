@@ -1,6 +1,6 @@
 import { useRouteContext } from "@tanstack/react-router";
 import { useHistoryState } from "@uidotdev/usehooks";
-import { FileInput, Sparkles } from "lucide-react";
+import { FileInput, Sparkles, ExternalLink } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 import { UserProfileData } from "src/worker/api/userProfile";
@@ -18,6 +18,7 @@ import {
   SnippetButtonSection,
   snippets,
 } from "./components/Snippets";
+import { SongData } from "~/types/songData";
 
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {
@@ -31,6 +32,7 @@ interface ContentEditorProps {
   editorContent: string;
   setEditorContent: (content: string) => void;
   user: UserProfileData;
+  songData?: SongData;
 }
 
 const isAutofillable = (text: string, user: UserProfileData): boolean => {
@@ -59,7 +61,34 @@ const isAutofillable = (text: string, user: UserProfileData): boolean => {
   return false;
 };
 
+const hasExternalOriginalContent = (
+  songData?: SongData,
+  currentContent?: string,
+): boolean => {
+  if (!songData?.externalSource?.originalContent) return false;
+  // Only show if current content is empty or different from original
+  return (
+    !currentContent ||
+    currentContent.trim() === "" ||
+    currentContent !== songData.externalSource.originalContent
+  );
+};
+
 const SMART_FEATURES: SmartFeature[] = [
+  {
+    id: "show_external_original",
+    label: "Show Original Content",
+    loadingLabel: "Loading...",
+    icon: ExternalLink,
+    check: (content: string, user: UserProfileData, songData?: SongData) =>
+      hasExternalOriginalContent(songData, content),
+    description: (
+      <>
+        This song was imported from an external source. Click to view the
+        original content from the source website.
+      </>
+    ),
+  },
   {
     id: "convert_to_chordpro",
     label: "Convert to ChordPro",
@@ -96,11 +125,11 @@ const SMART_FEATURES: SmartFeature[] = [
     ),
   },
 ];
-
 const ContentEditor: React.FC<ContentEditorProps> = ({
   editorContent,
   setEditorContent,
   user,
+  songData,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [dismissedFeatures, setDismissedFeatures] = useState<Set<string>>(
@@ -109,7 +138,8 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const api = useRouteContext({ strict: false }).api;
 
-  // Manual History Management - Fixed destructuring
+  const contentToFeatureMap = useRef<Map<string, string>>(new Map());
+
   const {
     state,
     set: setHistoryContent,
@@ -117,37 +147,41 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     redo,
   } = useHistoryState(editorContent);
 
-  // Wrap setContent to update both history and parent
   const setContent = (value: string) => {
     setHistoryContent(value);
     setEditorContent(value);
   };
 
-  // Sync parent when undo/redo changes the state
   const prevStateRef = useRef(state);
   useEffect(() => {
     if (state !== prevStateRef.current && state !== editorContent) {
       setEditorContent(state);
       prevStateRef.current = state;
+
+      const associatedFeature = contentToFeatureMap.current.get(state);
+      if (associatedFeature) {
+        setDismissedFeatures((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(associatedFeature);
+          return newSet;
+        });
+      }
     }
   }, [state, editorContent, setEditorContent]);
 
-  const activeFeature = useMemo(() => {
-    return SMART_FEATURES.find(
-      (f) => f.check(state, user) && !dismissedFeatures.has(f.id),
+  const activeFeatures = useMemo(() => {
+    return SMART_FEATURES.filter(
+      (f) => f.check(state, user, songData) && !dismissedFeatures.has(f.id),
     );
-  }, [state, user, dismissedFeatures]);
+  }, [state, user, songData, dismissedFeatures]);
 
   // Handle Keyboard Shortcuts for Custom Undo/Redo
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
         e.preventDefault();
-        if (e.shiftKey) {
-          redo();
-        } else {
-          undo();
-        }
+        e.shiftKey ? redo() : undo();
       } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
         e.preventDefault();
         redo();
@@ -184,10 +218,11 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
   }, []);
 
   const onEditorChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    // Manual edits don't have an associated feature
     setContent(e.target.value);
   };
 
-  const insertSnippet = (snippetKey: string) => {
+  const insertSnippet = (snippetKey: keyof typeof snippets) => {
     if (!textareaRef.current || !snippets[snippetKey]) return;
     const snippet = snippets[snippetKey];
     const textarea = textareaRef.current;
@@ -211,29 +246,36 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     }, 0);
   };
 
-  const executeFeature = async () => {
-    if (!activeFeature) return;
+  const executeFeature = async (feature: SmartFeature) => {
+    const featureId = feature.id;
+    const previousContent = state;
+    let newContent = state;
 
-    if (activeFeature.id === "convert_to_chordpro") {
-      const converted = normalizeWhitespace(
-        replaceRepetitions(convertToChordPro(state)),
-      );
-      setContent(converted); // This pushes to custom history stack
-      setDismissedFeatures((prev) => new Set(prev).add("convert_to_chordpro"));
-    } else if (activeFeature.id === "autofill_chords") {
-      setIsProcessing(true);
-      try {
-        const newChordpro = await autofillChordpro(state, api);
-        setContent(newChordpro); // This pushes to custom history stack
-        setDismissedFeatures((prev) => new Set(prev).add("autofill_chords"));
-      } catch (error) {
-        console.error("Autofill failed", error);
-      } finally {
-        setIsProcessing(false);
+    try {
+      if (featureId === "show_external_original") {
+        newContent = songData!.externalSource!.originalContent!;
+      } else if (featureId === "convert_to_chordpro") {
+        newContent = normalizeWhitespace(
+          replaceRepetitions(convertToChordPro(state)),
+        );
+      } else if (featureId === "autofill_chords") {
+        setIsProcessing(true);
+        newContent = await autofillChordpro(state, api);
       }
+
+      if (newContent !== state) {
+        contentToFeatureMap.current.set(previousContent, featureId);
+        setContent(newContent);
+      }
+    } catch (error) {
+      console.error(`Feature ${featureId} failed:`, error);
+    } finally {
+      setIsProcessing(false);
     }
   };
-
+  const dismissFeature = (id: string) => {
+    setDismissedFeatures((prev) => new Set(prev).add(id));
+  };
   return (
     <div className="flex flex-col h-full">
       <div className="w-full flex flex-wrap gap-1 border-b-4 md:border-b-8 border-primary mt-1 md:mt-0">
@@ -241,7 +283,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
           <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
           <SnippetButton snippetKey="bridge_env" onInsert={insertSnippet} />
           <SnippetButton snippetKey="chorus_env" onInsert={insertSnippet} />
-          <SnippetButton snippetKey="chorus_env" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="tab_env" onInsert={insertSnippet} />
         </SnippetButtonSection>
         <SnippetButtonSection label="Recalls">
           <SnippetButton snippetKey="verse_recall" onInsert={insertSnippet} />
@@ -273,7 +315,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
         ref={textareaRef}
         className={cn(
           "resize-none main-container !rounded-t-none outline-none focus-visible:bg-primary/10 h-auto md:h-full flex-grow auto-resize-textarea hyphens-auto border-none",
-          activeFeature?.id === "convert_to_chordpro"
+          activeFeatures.some((f) => f.id === "convert_to_chordpro")
             ? "font-mono !rounded-b-none"
             : "font-normal",
         )}
@@ -282,16 +324,15 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
         disabled={isProcessing}
       />
 
-      {activeFeature && (
+      {activeFeatures.map((feature) => (
         <SmartFeatureBar
-          feature={activeFeature}
+          key={feature.id}
+          feature={feature}
           isProcessing={isProcessing}
-          onExecute={executeFeature}
-          onDismiss={() =>
-            setDismissedFeatures((prev) => new Set(prev).add(activeFeature.id))
-          }
+          onExecute={() => executeFeature(feature)}
+          onDismiss={() => dismissFeature(feature.id)}
         />
-      )}
+      ))}
     </div>
   );
 };

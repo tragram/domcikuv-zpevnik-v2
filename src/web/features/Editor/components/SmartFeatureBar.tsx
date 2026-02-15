@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "~/components/ui/button";
 import { Hourglass, X } from "lucide-react";
 import { UserProfileData } from "src/worker/api/userProfile";
+import { SongData } from "~/types/songData";
 
 export interface SmartFeature {
   id: string;
@@ -9,7 +10,7 @@ export interface SmartFeature {
   loadingLabel: string;
   icon: React.ElementType;
   description: React.ReactNode;
-  check: (content: string, user: UserProfileData) => boolean;
+  check: (content: string, user: UserProfileData, songData?: SongData) => boolean;
 }
 
 interface SmartFeatureBarProps {
