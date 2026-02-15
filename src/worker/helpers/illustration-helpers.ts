@@ -298,6 +298,11 @@ export async function addIllustrationFromURL(
   imageUrl: string,
   env: Env,
 ) {
+  if (import.meta.env.DEV) {
+    console.log("R2 storage does not work in DEV - not saving illustration!");
+    throw Error("R2 broken in dev");
+  }
+
   const prompt = await createManualPrompt(db, songId);
   const response = await fetch(imageUrl);
 

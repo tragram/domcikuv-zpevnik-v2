@@ -152,7 +152,14 @@ export const externalRoutes = buildApp()
         );
       }
       if (thumbnailURL) {
-        await addIllustrationFromURL(db, existingSong.id, thumbnailURL, c.env);
+        try {
+          await addIllustrationFromURL(
+            db,
+            existingSong.id,
+            thumbnailURL,
+            c.env,
+          );
+        } catch {}
       }
 
       return successJSend(c, { songId: existingSong.id });
