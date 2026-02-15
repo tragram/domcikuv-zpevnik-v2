@@ -23,6 +23,12 @@ import {
 import { EditorSubmitSchema } from "../api/editor";
 import { SongData } from "src/web/types/songData";
 
+export type ExternalSource = {
+  id: SongImportDB["sourceId"];
+  originalContent: string;
+  url: string;
+};
+
 export type SongWithCurrentVersion = SongDataDB & {
   title: string;
   artist: string;
@@ -33,7 +39,7 @@ export type SongWithCurrentVersion = SongDataDB & {
   capo: number | null;
   range: string | null;
   chordpro: string;
-  externalSource: string;
+  externalSource: ExternalSource | null;
 };
 
 export type SongWithDataDB = SongDataDB & {
@@ -63,7 +69,7 @@ export type SongDataApi = {
   capo: number | undefined;
   range: string | undefined;
   chordpro: string;
-  externalSource: SongImportDB["source"];
+  externalSource: ExternalSource | null;
   currentIllustration:
     | {
         illustrationId: string;
@@ -146,7 +152,13 @@ const transformSongToApi = (
   tempo: songItem.tempo ? parseInt(songItem.tempo) : undefined,
   capo: songItem.capo ?? undefined,
   range: songItem.range ?? undefined,
-  externalSource: songItem.songImport?.source ?? null,
+  externalSource: songItem.songImport
+    ? {
+        id: songItem.songImport.sourceId,
+        originalContent: songItem.songImport.originalContent,
+        url: songItem.songImport.url,
+      }
+    : null,
   chordpro: songItem.chordpro ?? "Not uploaded",
   currentIllustration:
     songItem.currentIllustration?.illustrationId &&
@@ -350,20 +362,35 @@ export const findSong = async (
   songId: string,
   withVersion = true,
 ): Promise<SongWithCurrentVersion | SongDataDB> => {
-  let songResults: SongWithCurrentVersion[] | SongDataDB[];
+  let songResults: any[];
   if (withVersion) {
-    songResults = (await db
+    const rawResults = await db
       .select({
         ...getTableColumns(song),
         ...getTableColumns(songVersion),
-        externalSource: songImport.source,
+        songImport: songImport,
         id: song.id,
       })
       .from(song)
       .innerJoin(songVersion, eq(songVersion.id, song.currentVersionId))
       .leftJoin(songImport, eq(songImport.id, songVersion.importId))
       .where(eq(song.id, songId))
-      .limit(1)) as SongWithCurrentVersion[];
+      .limit(1);
+
+    // Transform the result to include externalSource
+    songResults = rawResults.map(
+      (result) =>
+        ({
+          ...result,
+          externalSource: result.songImport
+            ? {
+                id: result.songImport.sourceId,
+                originalContent: result.songImport.originalContent,
+                url: result.songImport.url,
+              }
+            : null,
+        }) as SongWithCurrentVersion,
+    );
   } else {
     songResults = (await db
       .select()
@@ -504,10 +531,10 @@ export const promoteVersionToCurrent = async (
 };
 
 export const songImportId = (
-  source: SongImportDB["source"],
+  sourceId: SongImportDB["sourceId"],
   title: string,
   artist: string,
-) => `${source}/${SongData.baseId(title, artist)}_${Date.now()}`;
+) => `${sourceId}/${SongData.baseId(title, artist)}_${Date.now()}`;
 
 export const createImportSong = async (
   db: DrizzleD1Database,
@@ -516,15 +543,15 @@ export const createImportSong = async (
   originalContent: string,
   url: string,
   userId: string,
-  source: SongImportDB["source"],
+  sourceId: SongImportDB["sourceId"],
 ): Promise<SongImportDB> => {
   const importedSong = await db
     .insert(songImport)
     .values({
-      id: songImportId(source, title, artist),
+      id: songImportId(sourceId, title, artist),
       title: title,
       artist: artist,
-      source: source,
+      sourceId: sourceId,
       originalContent: originalContent,
       url: url,
       userId: userId,

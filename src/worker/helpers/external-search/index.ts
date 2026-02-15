@@ -3,21 +3,21 @@ import { z } from "zod";
 import { searchCifraClub } from "./cifraclub";
 import { searchPisnickyAkordy } from "./pisnicky-akordy";
 
-export const externalSongSchema = z.object({
+export const externalSearchResultSchema = z.object({
   id: z.string(),
   title: z.string(),
   artist: z.string(),
   url: z.string(),
-  externalSource: z.enum(SONG_SOURCES),
+  sourceId: z.enum(SONG_SOURCES),
   thumbnailURL: z.string().optional(),
 });
 
-export type ExternalSong = z.infer<typeof externalSongSchema>;
+export type ExternalSearchResult = z.infer<typeof externalSearchResultSchema>;
 
 export async function searchAllExternalServices(
   query: string,
   paToken: string,
-): Promise<ExternalSong[]> {
+): Promise<ExternalSearchResult[]> {
   const paResults = await searchPisnickyAkordy(query, paToken);
   const ccResults = await searchCifraClub(query);
 

@@ -1,11 +1,11 @@
 import { createFileRoute, redirect, Link } from "@tanstack/react-router";
-import { externalSongSchema } from "src/worker/helpers/external-search";
+import { externalSearchResultSchema } from "src/worker/helpers/external-search";
 import PendingComponent from "~/components/PendingComponent";
 import { Button } from "~/components/ui/button";
 import { ApiException, makeApiRequest } from "~/services/api-service";
 
 export const Route = createFileRoute("/import")({
-  validateSearch: (search) => externalSongSchema.parse(search),
+  validateSearch: (search) => externalSearchResultSchema.parse(search),
   pendingMs: 0,
   pendingMinMs: 2000,
   loaderDeps: ({ search }) => ({ search }),

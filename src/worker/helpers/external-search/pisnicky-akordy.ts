@@ -48,7 +48,7 @@ export async function searchPisnickyAkordy(
         source: "Písničky Akordy",
         url: `https://pisnicky-akordy.cz/${hit.interpreter?.slug}/${hit.slug}`,
         thumbnailURL: hit.image || "pa_logo.png",
-        externalSource: "pisnicky-akordy",
+        sourceId: "pisnicky-akordy",
       }));
   } catch (error) {
     console.error("Error searching Písničky Akordy:", error);

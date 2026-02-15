@@ -205,7 +205,6 @@ export function useFilteredSongs(
   const minFuzzyScore = Math.min(...fuseSearch.map((fs) => fs.score as number));
   const isQueryValidForExternal =
     query.trim().length >= 3 && minFuzzyScore > 0.1;
-
   const shouldSearchExternal =
     user.loggedIn &&
     showExternal &&
@@ -216,9 +215,9 @@ export function useFilteredSongs(
     queryKey: ["externalSearch", query],
     queryFn: async () => {
       const results = await fetchExternalSearch(api, query);
-      return results
-        .map(SongData.fromExternal)
-        .filter((s) => !songs.map((os) => os.id).includes(s.id));
+      // only show songs not already in the internal DB
+      const localSongIds = songs.map((os) => os.id);
+      return results.filter((s) => !localSongIds.includes(s.id));
     },
     // Only fetch when the trigger is active
     enabled: shouldSearchExternal,

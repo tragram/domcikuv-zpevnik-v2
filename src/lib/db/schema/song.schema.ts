@@ -83,9 +83,9 @@ export const songImport = sqliteTable("song_import", {
   id: text("id").primaryKey(),
   title: text().notNull(),
   artist: text().notNull(),
-  source: text("source", {
+  sourceId: text("source_id", {
     enum: SONG_SOURCES,
-  }),
+  }).notNull(),
   originalContent: text().notNull(),
   url: text().notNull(),
   createdAt: integer("created_at", { mode: "timestamp" })

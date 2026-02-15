@@ -1,9 +1,8 @@
 import { EditorState } from "~/features/Editor/Editor";
 import { Key, SongRange } from "./musicTypes";
 import type { ChordPro, int, SongLanguage } from "./types";
-import { SongDataApi } from "src/worker/helpers/song-helpers";
-import { ExternalSong } from "src/worker/helpers/external-search";
-import { SongImportDB } from "src/lib/db/schema";
+import { ExternalSource, SongDataApi } from "src/worker/helpers/song-helpers";
+import { ExternalSearchResult } from "src/worker/helpers/external-search";
 
 interface CurrentIllustration {
   illustrationId: string;
@@ -50,7 +49,7 @@ export class SongData {
   capo: int;
   range?: SongRange;
   chordpro: ChordPro;
-  externalSource: SongImportDB["source"];
+  externalSource: ExternalSource | null;
 
   // UI-specific fields
   currentIllustration: CurrentIllustration | undefined;
@@ -92,7 +91,7 @@ export class SongData {
     });
   }
 
-  static fromExternal(external: ExternalSong): SongData {
+  static fromExternalSearch(external: ExternalSearchResult): SongData {
     const song = new SongData({
       id: external.id,
       title: external.title,
@@ -109,7 +108,11 @@ export class SongData {
       chordpro: "", // External songs won't have chordpro immediately
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
-      externalSource: external.externalSource,
+      externalSource: {
+        id: external.sourceId,
+        originalContent: "",
+        url: external.url,
+      },
     });
 
     song.url = () => external.url;
@@ -171,8 +174,8 @@ export class SongData {
   // Image URL methods
   thumbnailURL(): string | undefined {
     if (!this.currentIllustration) {
-      if (this.externalSource === "pisnicky-akordy") return "/pa_logo.png";
-      if (this.externalSource === "cifraclub") return "/cc_logo.png";
+      if (this.externalSource?.id === "pisnicky-akordy") return "/pa_logo.png";
+      if (this.externalSource?.id === "cifraclub") return "/cc_logo.png";
     }
     return (
       this.currentIllustration?.thumbnailURL ?? "/unknown_illustration.png"
@@ -181,8 +184,8 @@ export class SongData {
 
   illustrationURL(): string | undefined {
     if (!this.currentIllustration) {
-      if (this.externalSource === "pisnicky-akordy") return "/pa_logo.png";
-      if (this.externalSource === "cifraclub") return "/cc_logo.png";
+      if (this.externalSource?.id === "pisnicky-akordy") return "/pa_logo.png";
+      if (this.externalSource?.id === "cifraclub") return "/cc_logo.png";
     }
     return this.currentIllustration?.imageURL ?? "/unknown_illustration.png";
   }

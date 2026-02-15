@@ -40,7 +40,7 @@ export async function searchCifraClub(
         thumbnailURL: hit.i
           ? `https://akamai.sscdn.co/letras/115x115/fotos/${hit.i}`
           : "cc_logo.png",
-        externalSource: "cifraclub",
+        sourceId: "cifraclub",
       }));
   } catch (error) {
     console.error("Error searching Cifra Club:", error);

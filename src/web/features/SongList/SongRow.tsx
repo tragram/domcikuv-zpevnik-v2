@@ -163,12 +163,17 @@ interface SongRowProps {
 const SongRow = memo(
   ({ song, maxRange, user, externalSearch = false }: SongRowProps) => {
     if (!song) {
-      console.error("Invalid song provided to SongRow");
+      console.error("Invalid song provided to SongRow", song);
       return (
         <div className="text-foreground container mx-auto flex h-[70px] max-w-3xl items-center bg-white px-2 sm:px-4">
           Invalid song
         </div>
       );
+    }
+    const externalSourceId = song.externalSource?.id;
+    if (externalSearch && (!externalSourceId || !song.url())) {
+      console.error("Invalid external song provided to SongRow", song);
+      return;
     }
     return (
       <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4">
@@ -189,8 +194,9 @@ const SongRow = memo(
                       id: song.id,
                       title: song.title,
                       artist: song.artist,
-                      url: song.url(),
-                      externalSource: song.externalSource,
+                      url: song.url()!,
+                      // TS complains but it should be OK...?
+                      sourceId: externalSourceId!,
                       thumbnailURL: song.thumbnailURL(),
                     }
                   : {}
