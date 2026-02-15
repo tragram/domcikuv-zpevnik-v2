@@ -315,7 +315,6 @@ export async function addIllustrationFromURL(
     env,
     false,
   );
-  console.log(r2ImageUrl)
 
   const imageId = defaultIllustrationId("manual", fakeModelId);
   const insertData = {

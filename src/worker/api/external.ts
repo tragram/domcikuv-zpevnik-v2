@@ -2,7 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { ChordProParser } from "chordproject-parser";
 import { and, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { song } from "src/lib/db/schema";
+import { song, songVersion } from "src/lib/db/schema";
 import { convertToChordPro } from "~/lib/chords2chordpro";
 import { guessLanguage } from "~/lib/utils";
 import { SongData } from "~/types/songData";
@@ -11,7 +11,14 @@ import {
   searchAllExternalServices,
 } from "../helpers/external-search";
 import { addIllustrationFromURL } from "../helpers/illustration-helpers";
-import { createImportSong, createSong } from "../helpers/song-helpers";
+import {
+  createImportSong,
+  createSong,
+  createSongVersion,
+  findSong,
+  findSongWithVersions,
+  SongWithCurrentVersion,
+} from "../helpers/song-helpers";
 import { EditorSubmitSchema } from "./editor";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
@@ -41,7 +48,7 @@ export const externalRoutes = buildApp()
     }
   })
   .post("/import", zValidator("json", externalSongSchema), async (c) => {
-    const { id, title, artist, url, externalSource, thumbnailURL } =
+    const { title, artist, url, externalSource, thumbnailURL } =
       c.req.valid("json");
     const db = drizzle(c.env.DB);
     const user = c.get("USER");
@@ -50,16 +57,20 @@ export const externalRoutes = buildApp()
       return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
 
     try {
-      // Check if the song (by artist/title ID) already exists
+      // Check if the song (by artist/title ID) already exists in the internal DB (allow multiple external versions)
       const newSongId = SongData.baseId(title, artist);
-      const existingSong = await db
-        .select({ id: song.id })
-        .from(song)
-        .where(and(eq(song.id, newSongId), song.currentVersionId))
-        .limit(1);
-
-      if (existingSong.length > 0)
-        return errorJSend(c, "Song already exists in DB", 422, newSongId);
+      let existingSong = null;
+      try {
+        existingSong = (await findSong(
+          db,
+          newSongId,
+          true,
+        )) as SongWithCurrentVersion;
+        if (!existingSong.externalSource) {
+          // song not only exists but is already an internal song - do not add, just redirect to the actual song
+          return successJSend(c, { songId: existingSong.id });
+        }
+      } catch {}
 
       // Fetch the source page
       const response = await fetch(url);
@@ -98,8 +109,7 @@ export const externalRoutes = buildApp()
         ["cifraclub"].includes(externalSource),
       );
 
-      // TODO: if song is "fake-deleted", it won't show up in the search and this will crash
-      const importId = await createImportSong(
+      const importedSong = await createImportSong(
         db,
         title,
         artist,
@@ -123,19 +133,29 @@ export const externalRoutes = buildApp()
         startMelody: null,
         tempo: null,
       };
-
-      const { newSong } = await createSong(
-        db,
-        submission,
-        user.id,
-        true,
-        importId,
-      );
+      if (!existingSong) {
+        ({ newSong: existingSong } = await createSong(
+          db,
+          submission,
+          user.id,
+          true,
+          importedSong.id,
+        ));
+      } else {
+        const newVersion = await createSongVersion(
+          db,
+          submission,
+          existingSong.id,
+          user.id,
+          true,
+          importedSong.id,
+        );
+      }
       if (thumbnailURL) {
-        await addIllustrationFromURL(db, newSong.id, thumbnailURL, c.env);
+        await addIllustrationFromURL(db, existingSong.id, thumbnailURL, c.env);
       }
 
-      return successJSend(c, { songId: newSong.id });
+      return successJSend(c, { songId: existingSong.id });
     } catch (error) {
       console.error("Import error:", error);
       return errorJSend(c, "Import failed", 500);

@@ -11,7 +11,7 @@ import {
 } from "../../../lib/db/schema";
 import {
   findSong,
-  findSongWithVersions,
+  findSongWithAllData,
   promoteVersionToCurrent,
   SongWithCurrentVersion,
 } from "../../helpers/song-helpers";
@@ -98,7 +98,7 @@ export const songRoutes = buildApp()
     const songId = c.req.param("songId");
     const db = drizzle(c.env.DB);
     try {
-      const songData = await findSongWithVersions(db, songId);
+      const songData = await findSongWithAllData(db, songId);
       return successJSend(c, songData);
     } catch (error) {
       if (error instanceof Error && error.message === "Song not found") {

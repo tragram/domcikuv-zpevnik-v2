@@ -304,38 +304,6 @@ export const retrieveSingleSong = async (
   return transformSongToApi(songsRaw[0]);
 };
 
-export const findSong = async (
-  db: DrizzleD1Database,
-  songId: string,
-  withVersion = true,
-): Promise<SongWithCurrentVersion | SongDataDB> => {
-  let songResults: SongWithCurrentVersion[] | SongDataDB[];
-  if (withVersion) {
-    songResults = (await db
-      .select({
-        ...getTableColumns(song),
-        ...getTableColumns(songVersion),
-        externalSource: songImport.source,
-        id: song.id,
-      })
-      .from(song)
-      .innerJoin(songVersion, eq(songVersion.id, song.currentVersionId))
-      .leftJoin(songImport, eq(songImport.id, songVersion.importId))
-      .where(eq(song.id, songId))
-      .limit(1)) as SongWithCurrentVersion[];
-  } else {
-    songResults = (await db
-      .select()
-      .from(song)
-      .where(eq(song.id, songId))
-      .limit(1)) as SongDataDB[];
-  }
-  if (songResults.length === 0) {
-    throw new Error("Referenced song not found!");
-  }
-  return songResults[0];
-};
-
 export const createSong = async (
   db: DrizzleD1Database,
   submission: EditorSubmitSchema,
@@ -375,6 +343,38 @@ export const createSong = async (
   const newSong = await db.select().from(song).where(eq(song.id, songId));
 
   return { newSong: newSong[0], newVersion: newVersion };
+};
+
+export const findSong = async (
+  db: DrizzleD1Database,
+  songId: string,
+  withVersion = true,
+): Promise<SongWithCurrentVersion | SongDataDB> => {
+  let songResults: SongWithCurrentVersion[] | SongDataDB[];
+  if (withVersion) {
+    songResults = (await db
+      .select({
+        ...getTableColumns(song),
+        ...getTableColumns(songVersion),
+        externalSource: songImport.source,
+        id: song.id,
+      })
+      .from(song)
+      .innerJoin(songVersion, eq(songVersion.id, song.currentVersionId))
+      .leftJoin(songImport, eq(songImport.id, songVersion.importId))
+      .where(eq(song.id, songId))
+      .limit(1)) as SongWithCurrentVersion[];
+  } else {
+    songResults = (await db
+      .select()
+      .from(song)
+      .where(eq(song.id, songId))
+      .limit(1)) as SongDataDB[];
+  }
+  if (songResults.length === 0) {
+    throw new Error("Referenced song not found!");
+  }
+  return songResults[0];
 };
 
 export const createSongVersion = async (
@@ -503,6 +503,12 @@ export const promoteVersionToCurrent = async (
     .where(eq(song.id, songId));
 };
 
+export const songImportId = (
+  source: SongImportDB["source"],
+  title: string,
+  artist: string,
+) => `${source}/${SongData.baseId(title, artist)}_${Date.now()}`;
+
 export const createImportSong = async (
   db: DrizzleD1Database,
   title: string,
@@ -511,24 +517,26 @@ export const createImportSong = async (
   url: string,
   userId: string,
   source: SongImportDB["source"],
-) => {
-  const importId = SongData.baseId(title, artist);
-  const importedSong = await db.insert(songImport).values({
-    id: importId,
-    title: title,
-    artist: artist,
-    source: source,
-    originalContent: originalContent,
-    url: url,
-    userId: userId,
-  });
-  return importId;
+): Promise<SongImportDB> => {
+  const importedSong = await db
+    .insert(songImport)
+    .values({
+      id: songImportId(source, title, artist),
+      title: title,
+      artist: artist,
+      source: source,
+      originalContent: originalContent,
+      url: url,
+      userId: userId,
+    })
+    .returning();
+  return importedSong[0];
 };
 
 export const findSongWithVersions = async (
   db: DrizzleD1Database,
   songId: string,
-): Promise<SongWithDataDB> => {
+) => {
   const songData = (await findSong(db, songId)) as SongDataDB;
 
   // Get all versions for this song
@@ -537,6 +545,14 @@ export const findSongWithVersions = async (
     .from(songVersion)
     .where(eq(songVersion.songId, songId))
     .orderBy(desc(songVersion.createdAt));
+  return { songData, versions };
+};
+
+export const findSongWithAllData = async (
+  db: DrizzleD1Database,
+  songId: string,
+): Promise<SongWithDataDB> => {
+  const { songData, versions } = await findSongWithVersions(db, songId);
 
   // Get all illustrations for this song
   const illustrations = await db
