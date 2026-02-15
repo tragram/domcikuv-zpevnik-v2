@@ -7,33 +7,128 @@ interface Token {
   position: number;
 }
 
-function isChordLine(line: string): boolean {
-  /**
-   * Detects if a line is likely to be a chord line.
-   * Chord lines generally contain chord names like 'A', 'G#m', etc.
-   * Excludes lines with ChordPro format chords ([C], [G#m], etc.)
-   */
+function isTabLine(line: string): boolean {
+  const trimmed = line.trim();
+  if (trimmed.length < 5) return false;
 
-  // First check if line contains ChordPro format chords
-  if (/\[[A-H][#bs]?m?[mi]?[5-7]?\]/.test(line)) {
-    return false;
+  if (/^[a-gA-G]\s*\|/.test(trimmed)) return true;
+
+  if (
+    trimmed.includes("|-") ||
+    trimmed.includes("-|") ||
+    trimmed.includes("--|") ||
+    trimmed.includes("|--")
+  ) {
+    const dashCount = (trimmed.match(/-/g) || []).length;
+    if (dashCount >= 4) return true;
+  }
+  return false;
+}
+
+function isDirectiveLine(line: string): RegExpMatchArray | null {
+  return line.match(/^\s*(?:\[(.*)\]|\((.*)\))\s*$/);
+}
+
+function getEnvironmentDirective(
+  line: string,
+): { env: string | null; comment: string | null; stripLength: number } | null {
+  // Matches numbered verses like "1. ", "12. " ensuring trailing space or end of line
+  const verseMatch = line.match(/^\s*(\d+\.)(?:[\s]+|$)/);
+  if (verseMatch)
+    return { env: "verse", comment: null, stripLength: verseMatch[0].length };
+
+  // Matches "R", "R1:", "Ref:", "Chorus", ensuring it isn't part of a word like "Ricky"
+  const chorusMatch = line.match(
+    /^\s*(R\d*|Ref\.?|Chorus|Refrain)(?:[\s:]+|$)/i,
+  );
+  if (chorusMatch)
+    return { env: "chorus", comment: null, stripLength: chorusMatch[0].length };
+
+  // Matches "B:", "Bridge 2: "
+  const bridgeMatch = line.match(/^\s*(B\d*|Bridge)(?:[\s:]+|$)/i);
+  if (bridgeMatch)
+    return { env: "bridge", comment: null, stripLength: bridgeMatch[0].length };
+
+  // Bracketed or parenthesized directives [Intro], (Cambio de ritmo)
+  const dirMatch = isDirectiveLine(line);
+  if (dirMatch) {
+    const content = (
+      dirMatch[1] !== undefined ? dirMatch[1] : dirMatch[2]
+    ).trim();
+    const lowerContent = content.toLowerCase();
+
+    // Checks if the bracketed text is a widely recognized environment block
+    if (/^(verse|chorus|refrain|bridge)(?:\s*\d*)?$/.test(lowerContent)) {
+      const envName = lowerContent.replace(/\s*\d*$/, "");
+
+      return {
+        env: envName === "refrain" ? "chorus" : envName,
+        comment: null,
+        stripLength: line.length,
+      };
+    } else {
+      // Unrecognized directives gracefully become comments
+      return {
+        env: "verse",
+        comment: content,
+        stripLength: line.length,
+      };
+    }
   }
 
-  const chordPattern =
-    /[A-H][#bs]?(?:m|mi|maj|min|sus|dim|aug)?[0-9]*(?:\/[A-H][#b]?)?/g;
+  return null;
+}
 
-  const chords = line.match(chordPattern) || [];
-  // there should not be any words
-  const words = line.split(/\s+/).filter((w) => w.length > 0);
+function getChordTokens(chordLine: string): Token[] {
+  const tokens: Token[] = [];
+  const regex = /\S+/g;
+  let match;
 
-  return chords.length > 0 && chords.length >= words.length / 2;
+  const strictChord =
+    /^[({\[]?([A-H][#b]?(?:m|mi|maj|min|sus|dim|aug|add)?[0-9]*(?:\/[A-H][#b]?)?)[)}\]]?$/;
+
+  while ((match = regex.exec(chordLine)) !== null) {
+    const text = match[0];
+    const cleanText = text.replace(/[,.]$/, "");
+    const chordMatch = strictChord.exec(cleanText);
+
+    if (chordMatch) {
+      tokens.push({
+        text: chordMatch[1],
+        position: match.index + text.indexOf(chordMatch[1]),
+      });
+    }
+  }
+  return tokens;
+}
+
+function isChordLine(line: string): boolean {
+  if (/\[[A-H][#bs]?m?[mi]?[5-7]?\]/.test(line)) return false;
+  if (isTabLine(line)) return false;
+
+  const tokens = line.split(/\s+/).filter((w) => w.length > 0);
+  if (tokens.length === 0) return false;
+
+  let chordCount = 0;
+  let nonChordCount = 0;
+
+  const strictChord =
+    /^[({\[]?([A-H][#b]?(?:m|mi|maj|min|sus|dim|aug|add)?[0-9]*(?:\/[A-H][#b]?)?)[)}\]]?$/;
+  const allowedExtras = /^(?:[()|%xX~/\\]+|\d+x|N\.?C\.?)$/i;
+
+  for (const token of tokens) {
+    const cleanToken = token.replace(/[,.]$/, "");
+    if (strictChord.test(cleanToken)) {
+      chordCount++;
+    } else if (!allowedExtras.test(cleanToken)) {
+      nonChordCount++;
+    }
+  }
+
+  return chordCount > 0 && nonChordCount === 0;
 }
 
 function tokenizeWithPositions(text: string): Token[] {
-  /**
-   * Tokenizes a string into words and spaces, while keeping track of their start positions.
-   * Returns a list of tokens with their start positions.
-   */
   const tokens: Token[] = [];
   const regex = /\S+/g;
   let match: RegExpExecArray | null;
@@ -49,18 +144,10 @@ function tokenizeWithPositions(text: string): Token[] {
 }
 
 function placeChords(lyricToken: Token, chordTokens: Token[]): string {
-  /**
-   * Returns the string and if it placed the chord
-   * If the chord position is within 2 characters of the word's start, the chord is placed before the word.
-   */
-
   let word = lyricToken.text;
   const wordStartPos = lyricToken.position;
   const adjustChordPosition = (chordToken: Token) => {
-    // heuristics to avoid minor misalignments at the start and end
     const chordPos = chordToken.position;
-
-    // move to word start if after first letter or it's a short word
     if (
       chordPos - wordStartPos < 2 ||
       (chordPos - wordStartPos === 2 && word.length === 2) ||
@@ -71,16 +158,12 @@ function placeChords(lyricToken: Token, chordTokens: Token[]): string {
     return chordToken;
   };
 
-  // do not use heuristics when more than one chord is being inserted in a single word
   if (chordTokens.length < 2)
     chordTokens = chordTokens.map(adjustChordPosition);
 
-  // insert chords from back to front so that we do not mess up the alignment
   for (const chordToken of chordTokens.toReversed()) {
     const insertPos = chordToken.position - wordStartPos;
-    word = `${word.slice(0, insertPos)}[${chordToken.text}]${word.slice(
-      insertPos,
-    )}`;
+    word = `${word.slice(0, insertPos)}[${chordToken.text}]${word.slice(insertPos)}`;
   }
   return word;
 }
@@ -91,16 +174,12 @@ export function normalizeChordTokens(
 ): Token[] {
   return tokens.map((token) => {
     let text = token.text.trim();
-
     while (text.endsWith(",") || text.endsWith(".")) {
       text = text.slice(0, -1).trimEnd();
     }
-
-    // Apply the conversion here
     if (convertToCzechNotation) {
       text = convertChordNotation(text);
     }
-
     return { ...token, text };
   });
 }
@@ -110,16 +189,13 @@ function insertChordsInLyrics(
   lyricLine: string,
   convertToCzechNotation: boolean,
 ): string {
-  /**
-   * Inserts chords into the lyrics at the correct positions based on word boundaries.
-   */
   const result: string[] = [];
-
   const lyricTokens = tokenizeWithPositions(lyricLine);
   const chordTokens = normalizeChordTokens(
-    tokenizeWithPositions(chordLine),
+    getChordTokens(chordLine),
     convertToCzechNotation,
   );
+
   let chordTokenIndex = 0;
   for (const lyricToken of lyricTokens) {
     const chordsToInsert = [];
@@ -134,7 +210,6 @@ function insertChordsInLyrics(
     result.push(placeChords(lyricToken, chordsToInsert));
   }
 
-  // when we run out of lyrics, just print all the remaining chords
   while (chordTokenIndex < chordTokens.length) {
     result.push(`[${chordTokens[chordTokenIndex].text}]`);
     chordTokenIndex++;
@@ -143,10 +218,28 @@ function insertChordsInLyrics(
   return result.join(" ");
 }
 
+function formatStandaloneChordLine(
+  line: string,
+  convertToCzechNotation: boolean,
+): string {
+  const tokens = getChordTokens(line);
+  let result = line;
+
+  for (const token of tokens.toReversed()) {
+    let chordText = token.text;
+    if (convertToCzechNotation) {
+      chordText = convertChordNotation(chordText);
+    }
+    result =
+      result.slice(0, token.position) +
+      `[${chordText}]` +
+      result.slice(token.position + token.text.length);
+  }
+
+  return result.trimEnd();
+}
+
 function groupLinesIntoParagraphs(songLines: string[]): string[][] {
-  /**
-   * Groups song lines into paragraphs
-   */
   const paragraphs: string[][] = [];
   let paragraph: string[] = [];
 
@@ -161,73 +254,65 @@ function groupLinesIntoParagraphs(songLines: string[]): string[][] {
     }
   }
 
-  if (paragraph.length > 0) {
-    paragraphs.push(paragraph);
-  }
+  if (paragraph.length > 0) paragraphs.push(paragraph);
   return paragraphs;
 }
 
-function addChordproDirectives(paragraph: string[]): string[] {
-  if (paragraph.length === 0) return [];
-
-  const firstLine = paragraph[0].trim();
-  const verseMatch = firstLine.match(/^\d+\.\s/);
-  const chorusMatch = firstLine.match(/^(R\d*|Ref\.?|Chorus|Refrain):\s*/i);
-  const bridgeMatch = firstLine.match(/^(B\d*|Bridge):\s*/i);
-
-  // Helper function to handle wrapping logic
-  const wrapSection = (
-    type: string,
-    match: RegExpMatchArray | null,
-    isChorusOrBridge: boolean,
-  ) => {
-    const outputLines: string[] = [];
-
-    if (match && firstLine === match[0].trim() && isChorusOrBridge) {
-      // Handle single-line references like "R:"
-      return [`{${type}}`];
-    }
-
-    outputLines.push(`{start_of_${type}}`);
-    for (let i = 0; i < paragraph.length; i++) {
-      if (i === 0 && match) {
-        // Strip the marker from the first line
-        outputLines.push(paragraph[i].slice(match[0].length).trim());
-      } else {
-        outputLines.push(paragraph[i]);
-      }
-    }
-    outputLines.push(`{end_of_${type}}`);
-
-    // Filter out any empty lines resulting from stripping markers
-    return outputLines.filter((line) => line.trim() !== "");
-  };
-
-  if (chorusMatch) return wrapSection("chorus", chorusMatch, true);
-  if (bridgeMatch) return wrapSection("bridge", bridgeMatch, true);
-  return wrapSection("verse", verseMatch, false);
-}
-
-function processParagraph(
+function processParagraphLines(
   songLines: string[],
   convertToCzechNotation: boolean,
 ): string {
-  /**
-   * Processes an entire paragraph by detecting chord and lyric lines, inserting chords into the lyrics,
-   * and adding ChordPro directives for verses and choruses.
-   */
+  const hasTabLine = songLines.some(isTabLine);
+  if (hasTabLine) {
+    const result: string[] = [];
+    let tabStartIndex = 0;
+
+    // Isolate any inline comments before the tab starts
+    while (tabStartIndex < songLines.length) {
+      const line = songLines[tabStartIndex];
+      const dirMatch = isDirectiveLine(line);
+
+      if (dirMatch && !isChordLine(line)) {
+        const content = dirMatch[1] !== undefined ? dirMatch[1] : dirMatch[2];
+        result.push(`{comment: ${content}}`);
+        tabStartIndex++;
+      } else {
+        break;
+      }
+    }
+
+    if (tabStartIndex < songLines.length) {
+      result.push("{start_of_tab}");
+      for (let i = tabStartIndex; i < songLines.length; i++) {
+        result.push(songLines[i]);
+      }
+      result.push("{end_of_tab}");
+    }
+    return result.join("\n");
+  }
+
   let chordLineToInsert: string | null = null;
   const structuredSong: string[] = [];
 
   for (const line of songLines) {
+    const dirMatch = isDirectiveLine(line);
+
     if (isChordLine(line)) {
       if (chordLineToInsert) {
-        // make sure chords are not deleted even if no lyrics are detected
         structuredSong.push(
-          insertChordsInLyrics(chordLineToInsert, "", convertToCzechNotation),
+          formatStandaloneChordLine(chordLineToInsert, convertToCzechNotation),
         );
       }
       chordLineToInsert = line;
+    } else if (dirMatch && !isChordLine(line)) {
+      if (chordLineToInsert) {
+        structuredSong.push(
+          formatStandaloneChordLine(chordLineToInsert, convertToCzechNotation),
+        );
+        chordLineToInsert = null;
+      }
+      const content = dirMatch[1] !== undefined ? dirMatch[1] : dirMatch[2];
+      structuredSong.push(`{comment: ${content}}`);
     } else {
       if (chordLineToInsert) {
         const chordproLine = insertChordsInLyrics(
@@ -244,14 +329,12 @@ function processParagraph(
   }
 
   if (chordLineToInsert) {
-    // make sure chords are not deleted even if no lyrics are detected
     structuredSong.push(
-      insertChordsInLyrics(chordLineToInsert, "", convertToCzechNotation),
+      formatStandaloneChordLine(chordLineToInsert, convertToCzechNotation),
     );
   }
 
-  const chordproResult = addChordproDirectives(structuredSong);
-  return chordproResult.join("\n");
+  return structuredSong.join("\n");
 }
 
 function processSong(
@@ -260,20 +343,79 @@ function processSong(
 ): string {
   const paragraphs = groupLinesIntoParagraphs(songLines);
   const result: string[] = [];
+  let pendingEnv: string | null = null;
 
   for (const paragraph of paragraphs) {
-    const processed = processParagraph(paragraph, convertToCzechNotation);
-    result.push(processed);
+    if (paragraph.length === 0) continue;
+
+    let envToApply = pendingEnv;
+    pendingEnv = null;
+    const linesToProcess = [...paragraph];
+    const prependComments: string[] = [];
+
+    // Analyze paragraph headers to assign environments across boundaries
+    while (linesToProcess.length > 0) {
+      const firstLine = linesToProcess[0];
+
+      // Protect against single-chord lines (like `B`) triggering as bridge directives
+      if (isChordLine(firstLine)) break;
+
+      const dir = getEnvironmentDirective(firstLine);
+      if (dir) {
+        if (linesToProcess.length === 1) {
+          if (dir.env) pendingEnv = dir.env;
+          else if (dir.comment)
+            prependComments.push(`{comment: ${dir.comment}}`);
+          linesToProcess.shift();
+          break;
+        } else {
+          if (dir.env) envToApply = dir.env;
+          else if (dir.comment)
+            prependComments.push(`{comment: ${dir.comment}}`);
+
+          const strippedLine = firstLine.slice(dir.stripLength).trim();
+          if (strippedLine.length === 0) {
+            linesToProcess.shift();
+          } else {
+            linesToProcess[0] = strippedLine; // Removes '1. ' but leaves lyric content intact
+            break;
+          }
+        }
+      } else {
+        break;
+      }
+    }
+
+    const blockResult: string[] = [];
+
+    if (prependComments.length > 0) {
+      blockResult.push(prependComments.join("\n"));
+    }
+
+    if (linesToProcess.length > 0) {
+      const processedStr = processParagraphLines(
+        linesToProcess,
+        convertToCzechNotation,
+      );
+      if (envToApply) {
+        // Correctly wraps processed content—even if it contains tabs—within the pending environment
+        blockResult.push(
+          `{start_of_${envToApply}}\n${processedStr}\n{end_of_${envToApply}}`,
+        );
+      } else {
+        blockResult.push(`{start_of_verse}\n${processedStr}\n{end_of_verse}`);
+      }
+    }
+
+    if (blockResult.length > 0) {
+      result.push(blockResult.join("\n"));
+    }
   }
 
   return result.join("\n\n");
 }
 
 export function isConvertibleFormat(text: string): boolean {
-  /**
-   * Detects whether the text is in a format suitable for conversion to ChordPro.
-   * Returns true if the text contains chord lines that can be converted.
-   */
   const lines = text.split("\n");
   let chordLineCount = 0;
   let nonEmptyLineCount = 0;
@@ -287,8 +429,6 @@ export function isConvertibleFormat(text: string): boolean {
       }
     }
   }
-  // Consider it convertible if at least 10% of non-empty lines are chord lines
-  // and there are at least 2 chord lines
   return chordLineCount >= 2 && chordLineCount / nonEmptyLineCount >= 0.1;
 }
 
@@ -296,10 +436,6 @@ export function convertToChordPro(
   songText: string,
   convertToCzechNotation: boolean = false,
 ): string {
-  /**
-   * Main conversion function that takes song text as input
-   * and returns ChordPro formatted text.
-   */
   const songLines = songText.split("\n");
   return processSong(songLines, convertToCzechNotation);
 }
