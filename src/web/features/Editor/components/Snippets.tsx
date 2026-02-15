@@ -20,6 +20,12 @@ export const snippets = {
         template: (selection?: string) => `{start_of_bridge}\n${selection}\n{end_of_bridge}\n\n`,
         cursorOffset: "{start_of_bridge}".length
     },
+    tab_env: {
+        name: "Tabs",
+        letter: "T",
+        template: (selection?: string) => `{start_of_tab}\n${selection}\n{end_of_tab}\n\n`,
+        cursorOffset: "{start_of_tab}".length
+    },
     chorus_recall: {
         name: "Chorus",
         letter: "C",

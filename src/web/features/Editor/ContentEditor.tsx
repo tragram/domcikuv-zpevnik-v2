@@ -241,6 +241,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
           <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
           <SnippetButton snippetKey="bridge_env" onInsert={insertSnippet} />
           <SnippetButton snippetKey="chorus_env" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="chorus_env" onInsert={insertSnippet} />
         </SnippetButtonSection>
         <SnippetButtonSection label="Recalls">
           <SnippetButton snippetKey="verse_recall" onInsert={insertSnippet} />
