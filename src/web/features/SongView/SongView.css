@@ -126,6 +126,9 @@
     opacity: 80%;
 }
 
+.song-content>.comment-line:first-child {
+    margin-top: 0;
+}
 
 .section {
     display: flex;
@@ -272,6 +275,6 @@
 }
 
 /* make space between comments smaller */
-.comment-line~.comment-line {
+.comment-line+.comment-line {
     margin-top: 0 !important;
 }
