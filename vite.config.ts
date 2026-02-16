@@ -7,51 +7,56 @@ import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from "vite-plugin-pwa";
 
-export default defineConfig({
-  plugins: [
-    tsConfigPaths({
-      projects: ["./tsconfig.json"],
-    }),
-    TanStackRouterVite({
-      target: "react",
-      autoCodeSplitting: true,
-      routesDirectory: "src/web/routes",
-      generatedRouteTree: "src/web/routeTree.gen.ts",
-    }),
-    react(),
-    cloudflare(),
-    tailwindcss(),
-    copy({
-      targets: [
-        { src: "songs/*", dest: "dist/client/songs" },
-        { src: "src/assets/*", dest: "dist/client/assets" },
-      ],
-      hook: "writeBundle",
-    }),
-    VitePWA({
-      registerType: "autoUpdate",
-      strategies: "injectManifest",
-      srcDir: "src/web",
-      filename: "sw.ts",
-      manifest: false,
-      injectManifest: {
-        globDirectory: "dist/client/",
-        globPatterns: [
-          "**/*.{js,css,html,ico,png,svg,yaml,json}",
-          // "songs/chordpro/*.pro",
-          "songs/illustrations/*/*/thumbnail/*.webp",
-          // "songs/image_prompts/**/*.yaml",
-          "site.webmanifest",
-        ],
-      },
-      devOptions: {
-        enabled: false,
-        type: "module",
-        navigateFallback: "/",
-      },
-    }),
-  ],
-  preview: {
-    port: 5173,
-  },
+export default defineConfig(({ mode }) => {
+  const isTest = process.env.VITEST !== undefined || mode === "test";
+  return {
+    plugins: [
+      tsConfigPaths({
+        projects: ["./tsconfig.json"],
+      }),
+      TanStackRouterVite({
+        target: "react",
+        autoCodeSplitting: true,
+        routesDirectory: "src/web/routes",
+        generatedRouteTree: "src/web/routeTree.gen.ts",
+      }),
+      react(),
+      !isTest && cloudflare(),
+      tailwindcss(),
+      !isTest &&
+        copy({
+          targets: [
+            { src: "songs/*", dest: "dist/client/songs" },
+            { src: "src/assets/*", dest: "dist/client/assets" },
+          ],
+          hook: "writeBundle",
+        }),
+      !isTest &&
+        VitePWA({
+          registerType: "autoUpdate",
+          strategies: "injectManifest",
+          srcDir: "src/web",
+          filename: "sw.ts",
+          manifest: false,
+          injectManifest: {
+            globDirectory: "dist/client/",
+            globPatterns: [
+              "**/*.{js,css,html,ico,png,svg,yaml,json}",
+              // "songs/chordpro/*.pro",
+              "songs/illustrations/*/*/thumbnail/*.webp",
+              // "songs/image_prompts/**/*.yaml",
+              "site.webmanifest",
+            ],
+          },
+          devOptions: {
+            enabled: false,
+            type: "module",
+            navigateFallback: "/",
+          },
+        }),
+    ].filter(Boolean),
+    preview: {
+      port: 5173,
+    },
+  };
 });
