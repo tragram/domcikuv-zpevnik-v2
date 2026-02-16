@@ -110,6 +110,8 @@
     "build": "vite build",
     "check": "tsc && vite build && wrangler deploy --dry-run",
     "deploy": "pnpm run build && wrangler deploy",
+    "deploy:backup": "wrangler deploy --config wrangler.db-backup.jsonc",
+    "deploy:all": "npm run deploy && npm run deploy:backup",
     "dev": "vite",
     "lint": "eslint .",
     "preview": "pnpm run build && vite preview",
