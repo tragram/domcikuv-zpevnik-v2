@@ -1,8 +1,7 @@
 songId: Lucie-Amerika
 prompts:
-  - promptId: Lucie-Amerika_gpt-4o-mini_v1
+  - id: Lucie-Amerika_gpt-4o-mini_v1
     songId: Lucie-Amerika
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       flowing hair, symbolizing lost love and longing, surrounded by musical
       notes. The overall mood should blend sadness with a sense of beauty and
       nostalgia.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

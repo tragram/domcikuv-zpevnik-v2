@@ -1,8 +1,7 @@
 songId: Zluty_pes-Modra
 prompts:
-  - promptId: Zluty_pes-Modra_gpt-4o-mini_v1
+  - id: Zluty_pes-Modra_gpt-4o-mini_v1
     songId: Zluty_pes-Modra
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       cow, a blue grass field, a blue Arctic fox, and a blue military book.
       Incorporate a sense of hope and love through various shades of blue,
       evoking a joyful and nostalgic atmosphere.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-17T07:16:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

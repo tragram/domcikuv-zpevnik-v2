@@ -1,8 +1,7 @@
 songId: Sverak_Uhlir-Pod_dubem_za_dubem
 prompts:
-  - promptId: Sverak_Uhlir-Pod_dubem_za_dubem_gpt-4o-mini_v2
+  - id: Sverak_Uhlir-Pod_dubem_za_dubem_gpt-4o-mini_v2
     songId: Sverak_Uhlir-Pod_dubem_za_dubem
-    createdAt: 1754387149000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       tense and suspenseful, with a hint of mischief in the air, as they prepare
       to ambush unsuspecting travelers. The setting is dimly lit, emphasizing
       the sense of danger and excitement in their illicit profession.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

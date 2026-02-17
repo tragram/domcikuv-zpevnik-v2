@@ -1,8 +1,7 @@
 songId: Ozzy_Osbourne-Mama
 prompts:
-  - promptId: Ozzy_Osbourne-Mama_gpt-4o-mini_v1
+  - id: Ozzy_Osbourne-Mama_gpt-4o-mini_v1
     songId: Ozzy_Osbourne-Mama
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       should be a blend of sunset hues, evoking a sense of longing and hope,
       while subtle hints of firelight can be seen from the home, representing
       warmth and memories.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-17T07:16:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

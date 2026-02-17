@@ -1,8 +1,7 @@
 songId: Jaromir_Nohavica-Kdyz_me_brali_za_vojaka
 prompts:
-  - promptId: Jaromir_Nohavica-Kdyz_me_brali_za_vojaka_gpt-4o-mini_v1
+  - id: Jaromir_Nohavica-Kdyz_me_brali_za_vojaka_gpt-4o-mini_v1
     songId: Jaromir_Nohavica-Kdyz_me_brali_za_vojaka
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       symbolizing love and loss, while hints of military life, like uniforms and
       a star insignia, are subtly integrated into the scene. The mood should
       convey a mix of duty, heartache, and the passage of time.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-17T07:16:36.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

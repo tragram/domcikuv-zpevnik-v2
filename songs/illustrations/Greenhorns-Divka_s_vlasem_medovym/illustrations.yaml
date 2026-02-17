@@ -1,8 +1,7 @@
 songId: Greenhorns-Divka_s_vlasem_medovym
 prompts:
-  - promptId: Greenhorns-Divka_s_vlasem_medovym_gpt-4o-mini_v1
+  - id: Greenhorns-Divka_s_vlasem_medovym_gpt-4o-mini_v1
     songId: Greenhorns-Divka_s_vlasem_medovym
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       headlights on waits, and a shadowy figure of a concerned father stands
       nearby, looking distressed. The setting should evoke a sense of mystery
       and melancholy, with dark trees and a starry sky.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:35.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

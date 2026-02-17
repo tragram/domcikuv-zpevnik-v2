@@ -1,8 +1,7 @@
 songId: Karel_Kryl-Pisen_neznameho_vojina
 prompts:
-  - promptId: Karel_Kryl-Pisen_neznameho_vojina_gpt-4o-mini_v1
+  - id: Karel_Kryl-Pisen_neznameho_vojina_gpt-4o-mini_v1
     songId: Karel_Kryl-Pisen_neznameho_vojina
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       embodying a sense of defiance and indifference. The atmosphere should
       convey a mix of melancholy and rebellion, with dark, moody colors and a
       hint of irony in the expressions of the figures.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

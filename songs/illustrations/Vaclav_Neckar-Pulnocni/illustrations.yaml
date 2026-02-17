@@ -1,8 +1,7 @@
 songId: Vaclav_Neckar-Pulnocni
 prompts:
-  - promptId: Vaclav_Neckar-Pulnocni_gpt-4o-mini_v1
+  - id: Vaclav_Neckar-Pulnocni_gpt-4o-mini_v1
     songId: Vaclav_Neckar-Pulnocni
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -10,6 +9,9 @@ prompts:
       hills, with a glowing church in the distance where people are singing.
       Include a silhouette of a cross with a faint shadow, and a starry night
       sky above, capturing a sense of hope and reflection."
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-17T07:16:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

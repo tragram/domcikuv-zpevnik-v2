@@ -1,8 +1,7 @@
 songId: Mumford_Sons-Timshel
 prompts:
-  - promptId: Mumford_Sons-Timshel_gpt-4o-mini_v2
+  - id: Mumford_Sons-Timshel_gpt-4o-mini_v2
     songId: Mumford_Sons-Timshel
-    createdAt: 1754387148000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       conveys a sense of both vulnerability and strength, with a faint whisper
       of stars beginning to twinkle in the sky above. The scene captures the
       themes of support, life, and resilience amidst the coldness of the world.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-17T07:16:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

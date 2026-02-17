@@ -1,8 +1,7 @@
 songId: Filmova_hudba-Kdyby_se_v_komnatach
 prompts:
-  - promptId: Filmova_hudba-Kdyby_se_v_komnatach_gpt-4o-mini_v1
+  - id: Filmova_hudba-Kdyby_se_v_komnatach_gpt-4o-mini_v1
     songId: Filmova_hudba-Kdyby_se_v_komnatach
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       between a lively celebration and a somber atmosphere. Include instruments,
       dancers, and a festive ambiance, capturing the essence of music bringing
       happiness to life.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

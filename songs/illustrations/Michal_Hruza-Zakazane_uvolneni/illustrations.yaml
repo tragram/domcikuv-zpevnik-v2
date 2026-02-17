@@ -1,8 +1,7 @@
 songId: Michal_Hruza-Zakazane_uvolneni
 prompts:
-  - promptId: Michal_Hruza-Zakazane_uvolneni_gpt-4o-mini_v1
+  - id: Michal_Hruza-Zakazane_uvolneni_gpt-4o-mini_v1
     songId: Michal_Hruza-Zakazane_uvolneni
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       representing the universe, and ethereal elements like stars and dreams are
       gently floating around. The scene conveys a sense of freedom, positivity,
       and the power of belief.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

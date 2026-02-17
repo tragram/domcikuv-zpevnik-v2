@@ -1,8 +1,7 @@
 songId: Curly_Strings-Sobrad_Mu_Kallid
 prompts:
-  - promptId: Curly_Strings-Sobrad_Mu_Kallid_gpt-4o-mini_v1
+  - id: Curly_Strings-Sobrad_Mu_Kallid_gpt-4o-mini_v1
     songId: Curly_Strings-Sobrad_Mu_Kallid
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       environment, and a desire for warmth and connection, symbolized by candles
       and shared drinks. The message emphasizes that happiness is greater when
       shared, and that together, worries fade away.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:33.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

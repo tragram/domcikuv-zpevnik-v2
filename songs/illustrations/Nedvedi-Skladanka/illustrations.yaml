@@ -1,8 +1,7 @@
 songId: Nedvedi-Skladanka
 prompts:
-  - promptId: Nedvedi-Skladanka_gpt-4o-mini_v1
+  - id: Nedvedi-Skladanka_gpt-4o-mini_v1
     songId: Nedvedi-Skladanka
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       elements like a clock striking midnight, hints of cozy furniture, and a
       feeling of warmth and longing. Capture the essence of love, vulnerability,
       and magical moments shared together.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-17T07:16:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
