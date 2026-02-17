@@ -28,14 +28,39 @@ function parseChordproFile(content: string) {
   const metadata: Record<string, string> = {};
   let contentStartIndex = 0;
 
+  const allowedMetadataKeys = new Set([
+    "title",
+    "artist",
+    "key",
+    "capo",
+    "tempo",
+    "range",
+    "language",
+    "startMelody",
+    "createdAt",
+    "updatedAt",
+    "illustrationId",
+    "promptId",
+  ]);
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     const match = line.match(/^\{([^:]+):\s*(.+)\}$/);
+
     if (match) {
-      metadata[match[1].trim()] = match[2].trim();
-      contentStartIndex = i + 1;
+      const key = match[1].trim();
+
+      if (allowedMetadataKeys.has(key)) {
+        metadata[key] = match[2].trim();
+        contentStartIndex = i + 1; // Move start index past this valid metadata
+      } else {
+        // We found a directive, but it's a formatting directive (like {comment: ...})
+        // The old script would have swallowed this. We record it, and then STOP
+        // reading metadata so it safely becomes part of the chordpro body.
+        break;
+      }
     } else if (line !== "") {
-      contentStartIndex = i;
+      // We hit actual lyrics or chords, stop parsing metadata
       break;
     }
   }
@@ -169,6 +194,7 @@ async function uploadIllustrations(
     fs.readFileSync(illustrationsYamlPath, "utf-8"),
   ) as any;
 
+  // TODO: rename prompt.promptId -> prompt.id
   for (const prompt of data.prompts) {
     await db.insert(illustrationPrompt).values({
       id: prompt.promptId,
