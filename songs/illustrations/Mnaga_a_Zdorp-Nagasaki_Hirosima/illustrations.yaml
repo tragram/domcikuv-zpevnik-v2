@@ -1,8 +1,7 @@
 songId: Mnaga_a_Zdorp-Nagasaki_Hirosima
 prompts:
-  - promptId: Mnaga_a_Zdorp-Nagasaki_Hirosima_gpt-4o-mini_v1
+  - id: Mnaga_a_Zdorp-Nagasaki_Hirosima_gpt-4o-mini_v1
     songId: Mnaga_a_Zdorp-Nagasaki_Hirosima
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       hearts). Incorporate elements like dark circles under their eyes and a
       somber color palette to evoke the themes of lost love and emotional scars,
       reminiscent of Nagasaki and Hiroshima.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

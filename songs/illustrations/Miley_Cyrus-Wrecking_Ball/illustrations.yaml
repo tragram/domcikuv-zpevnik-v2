@@ -1,8 +1,7 @@
 songId: Miley_Cyrus-Wrecking_Ball
 prompts:
-  - promptId: Miley_Cyrus-Wrecking_Ball_gpt-4o-mini_v1
+  - id: Miley_Cyrus-Wrecking_Ball_gpt-4o-mini_v1
     songId: Miley_Cyrus-Wrecking_Ball
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       regretful and the other looking determined. The sky is a mix of dark storm
       clouds and hints of light breaking through, symbolizing the tumultuous
       nature of love and loss.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

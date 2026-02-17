@@ -1,8 +1,7 @@
 songId: Divokej_Bill-Malovani
 prompts:
-  - promptId: Divokej_Bill-Malovani_gpt-4o-mini_v2
+  - id: Divokej_Bill-Malovani_gpt-4o-mini_v2
     songId: Divokej_Bill-Malovani
-    createdAt: 1754387144000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       window showing a starry night sky. In the background, faint silhouettes of
       two figures (representing parents) can be seen, symbolizing support and
       love amidst the solitude.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

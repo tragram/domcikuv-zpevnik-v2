@@ -1,8 +1,7 @@
 songId: Chinaski-Klara
 prompts:
-  - promptId: Chinaski-Klara_gpt-4o-mini_v1
+  - id: Chinaski-Klara_gpt-4o-mini_v1
     songId: Chinaski-Klara
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       romance. Include playful musical notes floating around to represent the
       song's catchy refrain. The atmosphere should be enchanting and slightly
       surreal, capturing the essence of love and longing.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:33.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Chinaski-Vinari
 prompts:
-  - promptId: Chinaski-Vinari_gpt-4o-mini_v1
+  - id: Chinaski-Vinari_gpt-4o-mini_v1
     songId: Chinaski-Vinari
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       wine, music, and the love for life. Add elements like a warm sunset and
       hints of traditional Czech culture to evoke a sense of freedom and
       celebration.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:33.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

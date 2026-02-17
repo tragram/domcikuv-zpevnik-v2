@@ -42,4 +42,3 @@ z [Hmi7]téhlete [E]říše
 [G]Na tváře smívky [A]právě příst pan
 [H]Kačer, uú.
 {end_of_chorus}
-

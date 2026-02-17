@@ -1,8 +1,7 @@
 songId: Jaromir_Nohavica-Peterburg
 prompts:
-  - promptId: Jaromir_Nohavica-Peterburg_gpt-4o-mini_v2
+  - id: Jaromir_Nohavica-Peterburg_gpt-4o-mini_v2
     songId: Jaromir_Nohavica-Peterburg
-    createdAt: 1765293866000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       ominously above, while a stray dog searches for food below. The sky is
       painted with the soft hues of dawn, hinting at the arrival of blind birds
       flying in the distance, capturing a sense of sorrow and longing.
+    createdAt: 2025-12-09T15:24:26.000Z
+    updatedAt: 2026-02-17T07:16:36.000Z
+    deleted: false
     illustrations:
       - createdAt: 1765293872000
         imageModel: FLUX.1-dev

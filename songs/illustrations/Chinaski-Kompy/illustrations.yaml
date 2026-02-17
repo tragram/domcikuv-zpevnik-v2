@@ -1,8 +1,7 @@
 songId: Chinaski-Kompy
 prompts:
-  - promptId: Chinaski-Kompy_gpt-4o-mini_v1
+  - id: Chinaski-Kompy_gpt-4o-mini_v1
     songId: Chinaski-Kompy
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       elements like binary code (0s and 1s) and representations of different
       data sizes (kilo, mega, giga, tera) to evoke a sense of nostalgia and the
       passage of time in technology.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:33.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

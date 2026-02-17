@@ -1,8 +1,7 @@
 songId: Michal_Tucny-Abych_Tu_Zil
 prompts:
-  - promptId: Michal_Tucny-Abych_Tu_Zil_gpt-4o-mini_v1
+  - id: Michal_Tucny-Abych_Tu_Zil_gpt-4o-mini_v1
     songId: Michal_Tucny-Abych_Tu_Zil
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       The scene conveys a sense of contemplation, freedom, and connection to
       nature, embodying the essence of living simply and appreciating life's
       small joys.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

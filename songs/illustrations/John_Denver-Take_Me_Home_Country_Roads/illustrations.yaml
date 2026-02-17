@@ -1,8 +1,7 @@
 songId: John_Denver-Take_Me_Home_Country_Roads
 prompts:
-  - promptId: John_Denver-Take_Me_Home_Country_Roads_gpt-4o-mini_v1
+  - id: John_Denver-Take_Me_Home_Country_Roads_gpt-4o-mini_v1
     songId: John_Denver-Take_Me_Home_Country_Roads
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       leading into the mountains, with a nostalgic feel, capturing the essence
       of home. Add elements like a misty sky, a hint of moonshine, and a rustic,
       welcoming atmosphere to evoke the song's themes of longing and belonging.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Otto_Vokal-To_neni_vecer
 prompts:
-  - promptId: Otto_Vokal-To_neni_vecer_gpt-4o-mini_v1
+  - id: Otto_Vokal-To_neni_vecer_gpt-4o-mini_v1
     songId: Otto_Vokal-To_neni_vecer
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       final charge against a larger enemy vessel. The atmosphere is tense yet
       hopeful, with waves crashing and the sky darkening, symbolizing the
       struggle against despair.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-17T07:16:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

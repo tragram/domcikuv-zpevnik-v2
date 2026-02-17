@@ -1,8 +1,7 @@
 songId: Foster_the_People-Pumped_Up_Kicks
 prompts:
-  - promptId: Foster_the_People-Pumped_Up_Kicks_gpt-4o-mini_v1
+  - id: Foster_the_People-Pumped_Up_Kicks_gpt-4o-mini_v1
     songId: Foster_the_People-Pumped_Up_Kicks
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       something or someone. Include elements of a cluttered room, like a box of
       toys and a distant kitchen with a hint of ice. The mood should blend
       innocence with a touch of danger.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:35.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
