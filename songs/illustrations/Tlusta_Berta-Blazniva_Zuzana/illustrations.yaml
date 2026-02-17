@@ -1,8 +1,7 @@
 songId: Tlusta_Berta-Blazniva_Zuzana
 prompts:
-  - promptId: Tlusta_Berta-Blazniva_Zuzana_gpt-4o-mini_v1
+  - id: Tlusta_Berta-Blazniva_Zuzana_gpt-4o-mini_v1
     songId: Tlusta_Berta-Blazniva_Zuzana
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       ships and flying stars, with a sense of longing and connection to the
       earth. The overall mood should be both fantastical and melancholic,
       capturing the essence of searching for freedom and love.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

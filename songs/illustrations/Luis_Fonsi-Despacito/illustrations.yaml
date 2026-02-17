@@ -1,8 +1,7 @@
 songId: Luis_Fonsi-Despacito
 prompts:
-  - promptId: Luis_Fonsi-Despacito_gpt-4o-mini_v1
+  - id: Luis_Fonsi-Despacito_gpt-4o-mini_v1
     songId: Luis_Fonsi-Despacito
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       atmosphere should evoke passion and intimacy, with warm colors and a sense
       of rhythm in their movements. Include elements like flowing hair and
       playful interactions to capture the essence of the song "Despacito."
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

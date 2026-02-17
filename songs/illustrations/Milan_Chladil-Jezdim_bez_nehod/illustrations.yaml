@@ -1,8 +1,7 @@
 songId: Milan_Chladil-Jezdim_bez_nehod
 prompts:
-  - promptId: Milan_Chladil-Jezdim_bez_nehod_gpt-4o-mini_v1
+  - id: Milan_Chladil-Jezdim_bez_nehod_gpt-4o-mini_v1
     songId: Milan_Chladil-Jezdim_bez_nehod
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       emphasizing speed and safety. Include details like the rider smiling,
       navigating potholes, and a clear blue sky to evoke a sense of freedom and
       joy.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

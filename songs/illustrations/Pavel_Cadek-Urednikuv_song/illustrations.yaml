@@ -1,8 +1,7 @@
 songId: Pavel_Cadek-Urednikuv_song
 prompts:
-  - promptId: Pavel_Cadek-Urednikuv_song_gpt-4o-mini_v1
+  - id: Pavel_Cadek-Urednikuv_song_gpt-4o-mini_v1
     songId: Pavel_Cadek-Urednikuv_song
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       rushing in and out. Include a humorous touch with a ping pong game
       happening in the background, symbolizing the chaos of daily life and the
       pressure of time.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-17T07:16:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

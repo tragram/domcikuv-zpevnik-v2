@@ -1,8 +1,7 @@
 songId: Elvis_Presley-In_The_Ghetto
 prompts:
-  - promptId: Elvis_Presley-In_The_Ghetto_gpt-4o-mini_v1
+  - id: Elvis_Presley-In_The_Ghetto_gpt-4o-mini_v1
     songId: Elvis_Presley-In_The_Ghetto
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       young boy with a runny nose plays in the street. In the background, depict
       a crowd gathered around a young man face down, with a gun in his hand,
       symbolizing the cycle of hardship and despair in the ghetto.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Chinaski-Venku_je_na_nule
 prompts:
-  - promptId: Chinaski-Venku_je_na_nule_gpt-4o-mini_v1
+  - id: Chinaski-Venku_je_na_nule_gpt-4o-mini_v1
     songId: Chinaski-Venku_je_na_nule
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       subtle hints of past memories and a feeling of heaviness in the
       atmosphere, capturing the essence of a chilly evening where time seems to
       stand still.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:33.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

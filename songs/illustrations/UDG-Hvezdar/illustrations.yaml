@@ -1,8 +1,7 @@
 songId: UDG-Hvezdar
 prompts:
-  - promptId: UDG-Hvezdar_gpt-4o-mini_v1
+  - id: UDG-Hvezdar_gpt-4o-mini_v1
     songId: UDG-Hvezdar
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       should feature a dimly lit corridor with flickering lights and a distant
       celestial sky, blending day and night. Include elements of wine and stars
       to evoke a sense of longing and reflection.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
