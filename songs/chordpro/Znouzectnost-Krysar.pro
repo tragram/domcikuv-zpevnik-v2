@@ -10,8 +10,6 @@
 {illustrationId: Znouzectnost-Krysar_gpt-4o-mini_v2_FLUX.1-dev}
 {promptId: Znouzectnost-Krysar_gpt-4o-mini_v2}
 
-{comment: Začít pomalu zlehka a postupně zrychlovat a gradovat.}
-
 {start_of_verse}
 [Ami]Bylo nebylo, kde se to tu vzalo,
 [G]černé na bílém to [F]na plakátech [Ami]stálo.

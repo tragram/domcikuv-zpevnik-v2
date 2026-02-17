@@ -1,8 +1,7 @@
 songId: Filmova_hudba-Jednou_mi_fotr_povida
 prompts:
-  - promptId: Filmova_hudba-Jednou_mi_fotr_povida_gpt-4o-mini_v1
+  - id: Filmova_hudba-Jednou_mi_fotr_povida_gpt-4o-mini_v1
     songId: Filmova_hudba-Jednou_mi_fotr_povida
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       from above. The atmosphere should convey a blend of freedom, nostalgia,
       and a hint of chaos, with colorful birds flying around and a sense of
       adventure in the air.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-15T13:41:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

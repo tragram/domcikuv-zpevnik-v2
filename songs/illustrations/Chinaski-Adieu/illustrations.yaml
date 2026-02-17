@@ -1,8 +1,7 @@
 songId: Chinaski-Adieu
 prompts:
-  - promptId: Chinaski-Adieu_gpt-4o-mini_v1
+  - id: Chinaski-Adieu_gpt-4o-mini_v1
     songId: Chinaski-Adieu
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       Sauvignon. The atmosphere is nostalgic, with shadows of laughter and music
       in the background, reflecting his bittersweet memories of Mademoiselle
       Cabernet.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-15T13:41:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

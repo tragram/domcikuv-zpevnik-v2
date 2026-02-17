@@ -1,8 +1,7 @@
 songId: Jiri_Schlinger-Holubi_dum
 prompts:
-  - promptId: Jiri_Schlinger-Holubi_dum_gpt-4o-mini_v1
+  - id: Jiri_Schlinger-Holubi_dum_gpt-4o-mini_v1
     songId: Jiri_Schlinger-Holubi_dum
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -10,6 +9,9 @@ prompts:
       surrounded by flying doves. A gentle girl is tossing peas to the birds,
       creating a magical atmosphere filled with dust and fluttering wings. The
       scene captures nostalgia and longing, with hints of rain and a dreamy sky.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-15T13:41:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

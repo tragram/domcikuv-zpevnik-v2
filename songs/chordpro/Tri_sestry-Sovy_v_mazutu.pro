@@ -10,7 +10,6 @@
 {illustrationId: Tri_sestry-Sovy_v_mazutu_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Tri_sestry-Sovy_v_mazutu_gpt-4o-mini_v1}
 
-{start_of_verse: Rec}
 [G]Tak jsme byli [D]včera na Portě,[C][D]
 [G]a když jsme se vraceli [D]cestou domů[C]
 [D]tak jsme viděli [G]dřevorubce

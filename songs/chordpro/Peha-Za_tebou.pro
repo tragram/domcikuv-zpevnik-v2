@@ -10,7 +10,6 @@
 {illustrationId: Peha-Za_tebou_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Peha-Za_tebou_gpt-4o-mini_v1}
 
-{start_of_verse: V1}
 Nado mnou [Emi]nebo,
 ktoré v [C]duchu preklí [G]nam [D]
 V odraze [Emi]hviezd vidím,

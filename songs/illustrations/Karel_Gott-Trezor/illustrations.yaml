@@ -1,8 +1,7 @@
 songId: Karel_Gott-Trezor
 prompts:
-  - promptId: Karel_Gott-Trezor_gpt-4o-mini_v1
+  - id: Karel_Gott-Trezor_gpt-4o-mini_v1
     songId: Karel_Gott-Trezor
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,13 +11,15 @@ prompts:
       expression a mix of fear and anticipation. Shadows loom in the background,
       hinting at the presence of a thief. The atmosphere is tense and
       suspenseful, capturing the essence of loss and uncertainty.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Karel_Gott-Trezor_gpt-4o_v1
+  - id: Karel_Gott-Trezor_gpt-4o_v1
     songId: Karel_Gott-Trezor
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -27,6 +28,9 @@ prompts:
       expression is one of bemusement and frustration as he imagines the absurd
       situation of a thief possibly returning the stolen item. The room is
       simple, with a comedic air of disbelief, and the mood is playful.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

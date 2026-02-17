@@ -1,8 +1,7 @@
 songId: Jan_Nedved-Tulacky_rano
 prompts:
-  - promptId: Jan_Nedved-Tulacky_rano_gpt-4o-mini_v1
+  - id: Jan_Nedved-Tulacky_rano_gpt-4o-mini_v1
     songId: Jan_Nedved-Tulacky_rano
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       softly. In the foreground, a figure stands with a guitar, embodying a
       spirit of wanderlust and connection to nature. The atmosphere is peaceful,
       capturing the sacredness of morning and evening moments in the wild.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-15T13:41:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

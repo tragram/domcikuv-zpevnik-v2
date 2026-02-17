@@ -10,7 +10,6 @@
 {illustrationId: Karcoolka-Kozel_gpt-4o-mini_v2_FLUX.1-dev}
 {promptId: Karcoolka-Kozel_gpt-4o-mini_v2}
 
-{start_of_verse: V1}
 To [D]strašný prokletí,
 už [G]trvá stovky [D]dní,
 já [D]když chci něco [Hmi]říct,

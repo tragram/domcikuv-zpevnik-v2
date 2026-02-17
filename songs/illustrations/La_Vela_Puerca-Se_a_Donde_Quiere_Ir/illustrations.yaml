@@ -1,8 +1,7 @@
 songId: La_Vela_Puerca-Se_a_Donde_Quiere_Ir
 prompts:
-  - promptId: La_Vela_Puerca-Se_a_Donde_Quiere_Ir_gpt-4o-mini_v1
+  - id: La_Vela_Puerca-Se_a_Donde_Quiere_Ir_gpt-4o-mini_v1
     songId: La_Vela_Puerca-Se_a_Donde_Quiere_Ir
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       symbolized by intertwining shadows and light. Include elements that
       represent dreams and sincerity, like faint glowing stars and a gentle
       breeze.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

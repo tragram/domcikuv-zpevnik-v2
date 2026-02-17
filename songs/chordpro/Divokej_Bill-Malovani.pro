@@ -10,7 +10,6 @@
 {illustrationId: Divokej_Bill-Malovani_gpt-4o-mini_v2_FLUX.1-dev}
 {promptId: Divokej_Bill-Malovani_gpt-4o-mini_v2}
 
-{start_of_verse: Intro}
 [Emi]Nesnaž se, znáš se,
 [C]řekni mi [D]co je jiný,
 jak v kleci máš [C]se [D]pro nevinný

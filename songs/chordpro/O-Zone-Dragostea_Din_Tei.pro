@@ -10,7 +10,6 @@
 {illustrationId: O-Zone-Dragostea_Din_Tei_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: O-Zone-Dragostea_Din_Tei_gpt-4o-mini_v1}
 
-{start_of_bridge: Intro}
 𝄆 Ma-ia-[F]hii Ma-ia-[C]huu
 Ma-ia-[G]hoo Ma-ia-[Am]haha 𝄇 (3x)
 {end_of_bridge}

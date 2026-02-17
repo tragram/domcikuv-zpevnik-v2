@@ -1,8 +1,7 @@
 songId: Treasure_Planet-Im_Still_Here
 prompts:
-  - promptId: Treasure_Planet-Im_Still_Here_gpt-4o-mini_v1
+  - id: Treasure_Planet-Im_Still_Here_gpt-4o-mini_v1
     songId: Treasure_Planet-Im_Still_Here
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       represent his desire for connection and authenticity. The scene should
       evoke a sense of hope and determination, capturing the essence of being
       true to oneself despite external pressures.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-15T13:41:48.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

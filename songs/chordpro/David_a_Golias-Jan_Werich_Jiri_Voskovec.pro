@@ -10,7 +10,6 @@
 {illustrationId: David_a_Golias-Jan_Werich_Jiri_Voskovec_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: David_a_Golias-Jan_Werich_Jiri_Voskovec_gpt-4o-mini_v1}
 
-{start_of_verse: Intro}
 [C]Lidi na [Ami]lidi jsou jako [F]saně, [G7]
 [C]člověk na [Ami]člověka jako [F]kat. [G7]
 [C]Podívejte [A7]se na ně,

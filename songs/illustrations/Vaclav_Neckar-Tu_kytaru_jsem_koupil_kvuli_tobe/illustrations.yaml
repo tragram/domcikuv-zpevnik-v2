@@ -1,8 +1,7 @@
 songId: Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe
 prompts:
-  - promptId: Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe_gpt-4o-mini_v1
+  - id: Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe_gpt-4o-mini_v1
     songId: Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       connection between the musician, the guitar, and the emotions tied to love
       and longing. Include soft, warm colors to evoke a sense of nostalgia and
       yearning.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-15T13:41:48.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

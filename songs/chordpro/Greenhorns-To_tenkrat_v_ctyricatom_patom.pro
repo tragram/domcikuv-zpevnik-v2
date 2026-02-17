@@ -63,5 +63,3 @@ Já [A]trvám na tom, že Plzeň osvobodil [E]Patton
    a místní [E]krásky zpívaly sborem: [A]"Roll out the [D]Barrels..."[A][E][A]
 {end_of_variant}
 {chorus}
-
-

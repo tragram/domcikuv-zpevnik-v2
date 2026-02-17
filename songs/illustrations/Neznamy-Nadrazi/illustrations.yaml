@@ -1,8 +1,7 @@
 songId: Neznamy-Nadrazi
 prompts:
-  - promptId: Neznamy-Nadrazi_gpt-4o-mini_v1
+  - id: Neznamy-Nadrazi_gpt-4o-mini_v1
     songId: Neznamy-Nadrazi
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       looking out the train window, lost in thought. Capture the essence of
       adventure and nostalgia, evoking a sense of freedom and connection with
       nature.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-15T13:41:45.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Greenhorns-To_tenkrat_v_ctyricatom_patom
 prompts:
-  - promptId: Greenhorns-To_tenkrat_v_ctyricatom_patom_gpt-4o-mini_v2
+  - id: Greenhorns-To_tenkrat_v_ctyricatom_patom_gpt-4o-mini_v2
     songId: Greenhorns-To_tenkrat_v_ctyricatom_patom
-    createdAt: 1762970701000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       celebration are visible, with American soldiers in WWII uniforms and local
       women singing joyfully. The atmosphere is warm and inviting, filled with
       memories of friendship, history, and music.
+    createdAt: 2025-11-12T18:05:01.000Z
+    updatedAt: 2026-02-15T13:41:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1762970708000
         imageModel: FLUX.1-dev

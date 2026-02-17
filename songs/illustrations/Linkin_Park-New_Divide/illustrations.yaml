@@ -1,8 +1,7 @@
 songId: Linkin_Park-New_Divide
 prompts:
-  - promptId: Linkin_Park-New_Divide_gpt-4o-mini_v1
+  - id: Linkin_Park-New_Divide_gpt-4o-mini_v1
     songId: Linkin_Park-New_Divide
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       memories and loss. Add a faint silhouette of a person in the distance,
       representing a connection yet to be made, with a sense of longing and
       emotional tension in the air.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

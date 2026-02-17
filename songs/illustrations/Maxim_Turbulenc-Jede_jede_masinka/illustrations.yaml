@@ -1,8 +1,7 @@
 songId: Maxim_Turbulenc-Jede_jede_masinka
 prompts:
-  - promptId: Maxim_Turbulenc-Jede_jede_masinka_gpt-4o-mini_v1
+  - id: Maxim_Turbulenc-Jede_jede_masinka_gpt-4o-mini_v1
     songId: Maxim_Turbulenc-Jede_jede_masinka
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       atmosphere with musical notes floating in the air, and a vintage-style
       conductor checking tickets. In the background, a moonlit landscape and a
       grassy area where a couple is enjoying a carefree moment together.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

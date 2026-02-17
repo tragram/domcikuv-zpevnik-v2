@@ -10,7 +10,6 @@
 {illustrationId: Chinaski-Stiznost_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Chinaski-Stiznost_gpt-4o-mini_v1}
 
-{start_of_chorus: R1}
 [C]Dva večery sepisuju
 [G]dlouhou stížnost [Dmi]na život
 chci [F]zrušit svoji existenci

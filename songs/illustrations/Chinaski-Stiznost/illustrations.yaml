@@ -1,8 +1,7 @@
 songId: Chinaski-Stiznost
 prompts:
-  - promptId: Chinaski-Stiznost_gpt-4o-mini_v1
+  - id: Chinaski-Stiznost_gpt-4o-mini_v1
     songId: Chinaski-Stiznost
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       burdens, while hints of official documents like a birth certificate and ID
       cards are scattered around, representing the desire to escape one's
       identity.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-15T13:41:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

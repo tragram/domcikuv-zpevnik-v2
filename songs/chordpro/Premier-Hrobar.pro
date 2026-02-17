@@ -10,7 +10,6 @@
 {illustrationId: Premier-Hrobar_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Premier-Hrobar_gpt-4o-mini_v1}
 
-{start_of_verse: V1}
 [C]V mládí jsem se učil hrobařem,
 [Ami]jezdit s hlínou, jezdit s trakařem,
 [F]kopat hroby byl můj ide[G]ál. [G7]
