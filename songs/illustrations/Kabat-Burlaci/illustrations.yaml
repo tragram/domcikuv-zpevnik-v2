@@ -1,8 +1,7 @@
 songId: Kabat-Burlaci
 prompts:
-  - promptId: Kabat-Burlaci_gpt-4o-mini_v1
+  - id: Kabat-Burlaci_gpt-4o-mini_v1
     songId: Kabat-Burlaci
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       from an accordion playing on the riverbank. The atmosphere should blend
       tension and beauty, reflecting the themes of longing and the passage of
       time.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev-v2
@@ -23,9 +25,8 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-schnell
         filename: FLUX.1-schnell.webp
-  - promptId: Kabat-Burlaci_gpt-4o_v1
+  - id: Kabat-Burlaci_gpt-4o_v1
     songId: Kabat-Burlaci
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -38,6 +39,9 @@ prompts:
       sky, and faint silhouettes of wolves can be seen. The muted colors and
       harsh lighting emphasize the themes of struggle, survival, and resilience
       in the face of adversity.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

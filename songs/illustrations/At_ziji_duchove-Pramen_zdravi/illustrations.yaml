@@ -1,8 +1,7 @@
 songId: At_ziji_duchove-Pramen_zdravi
 prompts:
-  - promptId: At_ziji_duchove-Pramen_zdravi_gpt-4o-mini_v1
+  - id: At_ziji_duchove-Pramen_zdravi_gpt-4o-mini_v1
     songId: At_ziji_duchove-Pramen_zdravi
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       drinking from the spring, with a backdrop of dairy products like cheese
       and milk, symbolizing health and vitality. The scene should evoke a sense
       of wellness and nature's bounty.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:32.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
@@ -18,9 +20,8 @@ prompts:
       - createdAt: 1754387142000
         imageModel: stable-diffusion-3.5-large
         filename: stable-diffusion-3.5-large.webp
-  - promptId: At_ziji_duchove-Pramen_zdravi_gpt-4o-mini_v2
+  - id: At_ziji_duchove-Pramen_zdravi_gpt-4o-mini_v2
     songId: At_ziji_duchove-Pramen_zdravi
-    createdAt: 1754387143000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -29,4 +30,7 @@ prompts:
       child is joyfully drinking from the spring, while a basket of dairy
       products sits nearby, symbolizing health and vitality. The scene should
       evoke a sense of natural wellness and happiness.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:32.000Z
+    deleted: false
     illustrations: []

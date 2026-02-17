@@ -1,8 +1,7 @@
 songId: Jaromir_Nohavica-V_mori_je_mista_dost
 prompts:
-  - promptId: Jaromir_Nohavica-V_mori_je_mista_dost_gpt-4o-mini_v1
+  - id: Jaromir_Nohavica-V_mori_je_mista_dost_gpt-4o-mini_v1
     songId: Jaromir_Nohavica-V_mori_je_mista_dost
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       and transparent jellyfish floating near the surface. Include flat manta
       rays illuminated by glowing lights, all set against a vibrant ocean
       backdrop that hints at Africa in the distance.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-17T07:16:36.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

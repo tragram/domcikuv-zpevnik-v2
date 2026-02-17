@@ -1,8 +1,7 @@
 songId: Johnny_Cash-Folsom_Prison_Blues
 prompts:
-  - promptId: Johnny_Cash-Folsom_Prison_Blues_gpt-4o-mini_v1
+  - id: Johnny_Cash-Folsom_Prison_Blues_gpt-4o-mini_v1
     songId: Johnny_Cash-Folsom_Prison_Blues
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       silhouette of a dining car with wealthy passengers enjoying their lives.
       The atmosphere should evoke feelings of longing, regret, and a desire for
       freedom.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

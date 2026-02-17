@@ -1,8 +1,7 @@
 songId: Miki_Ryvola-Bedna_od_whiskey
 prompts:
-  - promptId: Miki_Ryvola-Bedna_od_whiskey_gpt-4o-mini_v2
+  - id: Miki_Ryvola-Bedna_od_whiskey_gpt-4o-mini_v2
     songId: Miki_Ryvola-Bedna_od_whiskey
-    createdAt: 1754387147000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       capturing the essence of a journey to a heavenly bar, with hints of
       whiskey bottles scattered around and a distant silhouette of a small
       hidden house in a meadow.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

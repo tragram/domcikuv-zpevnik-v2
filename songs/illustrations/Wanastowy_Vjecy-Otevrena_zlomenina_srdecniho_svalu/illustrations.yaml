@@ -1,8 +1,7 @@
 songId: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu
 prompts:
-  - promptId: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1
+  - id: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1
     songId: Wanastowy_Vjecy-Otevrena_zlomenina_srdecniho_svalu
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       and a gentle breeze blowing, represented by flowing ribbons. Incorporate
       elements of sorrow and beauty, such as a single tear-shaped droplet
       reflecting starlight and wisps of hair caught in the air.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-17T07:16:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Cechomor-Promeny
 prompts:
-  - promptId: Cechomor-Promeny_gpt-4o-mini_v2
+  - id: Cechomor-Promeny_gpt-4o-mini_v2
     songId: Cechomor-Promeny
-    createdAt: 1765293140000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       serene river, hinting at the longing for connection and freedom. The
       overall atmosphere should convey a sense of longing and fantasy, blending
       nature with elements of love and destiny.
+    createdAt: 2025-12-09T15:12:20.000Z
+    updatedAt: 2026-02-17T07:16:33.000Z
+    deleted: false
     illustrations:
       - createdAt: 1765293146000
         imageModel: FLUX.1-dev

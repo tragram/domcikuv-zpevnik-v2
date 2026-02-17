@@ -1,8 +1,7 @@
 songId: Michal_David-Nonstop
 prompts:
-  - promptId: Michal_David-Nonstop_gpt-4o-mini_v1
+  - id: Michal_David-Nonstop_gpt-4o-mini_v1
     songId: Michal_David-Nonstop
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,13 +11,15 @@ prompts:
       their desire to live life fully and authentically. Include hints of family
       dynamics in the background, like shadowy figures of a father and brother,
       contrasting with the character's bold individuality.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Michal_David-Nonstop_gpt-4o_v1
+  - id: Michal_David-Nonstop_gpt-4o_v1
     songId: Michal_David-Nonstop
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -27,6 +28,9 @@ prompts:
       youthful and independent spirit, set against a backdrop of the open sky
       and city lights. The scene reflects the desire to live life “nonstop”
       despite family pressures and expectations.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

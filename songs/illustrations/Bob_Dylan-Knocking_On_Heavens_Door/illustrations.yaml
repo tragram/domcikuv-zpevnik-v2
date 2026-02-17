@@ -1,8 +1,7 @@
 songId: Bob_Dylan-Knocking_On_Heavens_Door
 prompts:
-  - promptId: Bob_Dylan-Knocking_On_Heavens_Door_gpt-4o-mini_v1
+  - id: Bob_Dylan-Knocking_On_Heavens_Door_gpt-4o-mini_v1
     songId: Bob_Dylan-Knocking_On_Heavens_Door
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       afterlife. The imagery could include elements like a darkening sky, a
       badge being removed, and a figure standing at a door that represents the
       threshold between life and the afterlife.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:32.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Karel_Kryl-Velicenstvo_kat
 prompts:
-  - promptId: Karel_Kryl-Velicenstvo_kat_gpt-4o-mini_v1
+  - id: Karel_Kryl-Velicenstvo_kat_gpt-4o-mini_v1
     songId: Karel_Kryl-Velicenstvo_kat
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       flag with a guillotine emblem. The atmosphere is heavy with a sense of
       dread, sulfurous fumes, and a flock of crows overhead, symbolizing death
       and despair.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

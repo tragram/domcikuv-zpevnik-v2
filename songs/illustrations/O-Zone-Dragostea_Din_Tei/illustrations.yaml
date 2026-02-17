@@ -1,8 +1,7 @@
 songId: O-Zone-Dragostea_Din_Tei
 prompts:
-  - promptId: O-Zone-Dragostea_Din_Tei_gpt-4o-mini_v1
+  - id: O-Zone-Dragostea_Din_Tei_gpt-4o-mini_v1
     songId: O-Zone-Dragostea_Din_Tei
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       playful spirit of the repetitive "Ma-ia-hii" refrain. The character should
       have an artistic flair, reminiscent of Picasso, with bright colors and a
       lively atmosphere that embodies happiness and carefree love.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-17T07:16:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

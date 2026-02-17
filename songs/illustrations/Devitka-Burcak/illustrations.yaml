@@ -1,8 +1,7 @@
 songId: Devitka-Burcak
 prompts:
-  - promptId: Devitka-Burcak_gpt-4o-mini_v1
+  - id: Devitka-Burcak_gpt-4o-mini_v1
     songId: Devitka-Burcak
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,13 +12,15 @@ prompts:
       with horses. The scene is infused with a sense of nostalgia and longing,
       with fallen chestnuts scattered on the ground and the scent of rain in the
       air.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Devitka-Burcak_gpt-4o_v1
+  - id: Devitka-Burcak_gpt-4o_v1
     songId: Devitka-Burcak
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -28,6 +29,9 @@ prompts:
       energy, representing the poetic and romantic vision of Shakespeare, Byron,
       and Mácha. The environment feels mystical and intimate, reflecting the
       beauty and melancholy of the song.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

@@ -1,8 +1,7 @@
 songId: Fleret-Zafukane
 prompts:
-  - promptId: Fleret-Zafukane_gpt-4o-mini_v1
+  - id: Fleret-Zafukane_gpt-4o-mini_v1
     songId: Fleret-Zafukane
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       snow-covered paths obscured by drifts, and a warm glow emanating from a
       distant cottage window. The atmosphere should evoke feelings of nostalgia
       and the quiet beauty of winter.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

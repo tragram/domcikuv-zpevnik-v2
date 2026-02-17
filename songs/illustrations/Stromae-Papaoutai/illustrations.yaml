@@ -1,8 +1,7 @@
 songId: Stromae-Papaoutai
 prompts:
-  - promptId: Stromae-Papaoutai_gpt-4o-mini_v1
+  - id: Stromae-Papaoutai_gpt-4o-mini_v1
     songId: Stromae-Papaoutai
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       feelings of nostalgia and the complexities of parenthood, such as playful
       toys or fading memories. The atmosphere should be both hopeful and
       contemplative, reflecting the journey of understanding familial bonds.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
