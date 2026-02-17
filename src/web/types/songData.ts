@@ -239,6 +239,8 @@ export class SongData {
       "range",
       "language",
       "startMelody",
+      "createdAt",
+      "updatedAt",
     ] as (keyof SongData)[];
     const preamble = directives.map((d) =>
       this[d] instanceof Date
@@ -246,7 +248,6 @@ export class SongData {
         : `{${d}: ${this[d] ?? ""}}`,
     );
 
-    preamble.push(`{createdAt: ${this.createdAt.getTime()}}`);
     preamble.push(
       `{illustrationId: ${this.currentIllustration?.illustrationId}}`,
     );

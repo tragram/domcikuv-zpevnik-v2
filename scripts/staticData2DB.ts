@@ -194,10 +194,9 @@ async function uploadIllustrations(
     fs.readFileSync(illustrationsYamlPath, "utf-8"),
   ) as any;
 
-  // TODO: rename prompt.promptId -> prompt.id
   for (const prompt of data.prompts) {
     await db.insert(illustrationPrompt).values({
-      id: prompt.promptId,
+      id: prompt.id,
       songId,
       text: prompt.text,
       summaryModel: prompt.summaryModel,
@@ -206,13 +205,13 @@ async function uploadIllustrations(
     });
 
     for (const ill of prompt.illustrations) {
-      const illustrationId = `${prompt.promptId}_${ill.imageModel}`;
-      const shortPromptId = prompt.promptId.replace(`${songId}_`, "");
+      const illustrationId = `${prompt.id}_${ill.imageModel}`;
+      const shortPromptId = prompt.id.replace(`${songId}_`, "");
 
       await db.insert(songIllustration).values({
         id: illustrationId,
         songId,
-        promptId: prompt.promptId,
+        promptId: prompt.id,
         imageModel: ill.imageModel,
         imageURL: `${baseFolder}/illustrations/${songId}/${shortPromptId}/full/${ill.filename}`,
         thumbnailURL: `${baseFolder}/illustrations/${songId}/${shortPromptId}/thumbnail/${ill.filename}`,
