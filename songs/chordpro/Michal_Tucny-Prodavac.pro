@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: g h d}
 {createdAt: 1436824800000}
+{updatedAt: 1771162905000}
 {illustrationId: Michal_Tucny-Prodavac_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Michal_Tucny-Prodavac_gpt-4o-mini_v1}
 
-{start_of_verse: Rec}
 [G]Pojďte všichni dovnitř, pozvěte si všechny známé,
 my vám dobrou radu dáme, neboť právě otvíráme,
 prodáváme, vyděláme, co kdo chcete, tak to máme,

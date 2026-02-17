@@ -1,8 +1,7 @@
 songId: Karel_Gott-Kdyby_sis_oci_vyplakala
 prompts:
-  - promptId: Karel_Gott-Kdyby_sis_oci_vyplakala_gpt-4o-mini_v1
+  - id: Karel_Gott-Kdyby_sis_oci_vyplakala_gpt-4o-mini_v1
     songId: Karel_Gott-Kdyby_sis_oci_vyplakala
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       crashing on the shore symbolize the passage of time and the inevitability
       of moving forward. Include soft, warm colors to evoke a sense of healing
       and renewal.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

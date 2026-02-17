@@ -1,8 +1,7 @@
 songId: Mnaga_a_Zdorp-Negdy
 prompts:
-  - promptId: Mnaga_a_Zdorp-Negdy_gpt-4o-mini_v1
+  - id: Mnaga_a_Zdorp-Negdy_gpt-4o-mini_v1
     songId: Mnaga_a_Zdorp-Negdy
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       rising above a panelák (prefabricated apartment building), casting a warm
       glow. The scene captures a mix of melancholy and hope, symbolizing
       introspection and the desire for change amidst a quiet Sunday morning.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:45.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

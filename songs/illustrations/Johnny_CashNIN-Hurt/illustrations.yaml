@@ -1,8 +1,7 @@
 songId: Johnny_CashNIN-Hurt
 prompts:
-  - promptId: Johnny_CashNIN-Hurt_gpt-4o-mini_v1
+  - id: Johnny_CashNIN-Hurt_gpt-4o-mini_v1
     songId: Johnny_CashNIN-Hurt
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       background should evoke a sense of decay and loss, with hints of fading
       time. The figure should appear contemplative and sorrowful, reflecting
       themes of pain, regret, and a longing for redemption.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

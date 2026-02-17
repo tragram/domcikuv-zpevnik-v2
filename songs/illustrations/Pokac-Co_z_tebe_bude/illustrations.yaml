@@ -1,8 +1,7 @@
 songId: Pokac-Co_z_tebe_bude
 prompts:
-  - promptId: Pokac-Co_z_tebe_bude_gpt-4o-mini_v1
+  - id: Pokac-Co_z_tebe_bude_gpt-4o-mini_v1
     songId: Pokac-Co_z_tebe_bude
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       of adults asking questions about the future, contrasting with the boy's
       carefree spirit. Use vibrant colors to evoke a sense of adventure and
       longing for freedom.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-15T13:41:46.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

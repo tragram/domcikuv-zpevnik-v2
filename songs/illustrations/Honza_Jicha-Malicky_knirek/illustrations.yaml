@@ -1,8 +1,7 @@
 songId: Honza_Jicha-Malicky_knirek
 prompts:
-  - promptId: Honza_Jicha-Malicky_knirek_gpt-4o-mini_v1
+  - id: Honza_Jicha-Malicky_knirek_gpt-4o-mini_v1
     songId: Honza_Jicha-Malicky_knirek
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       motifs and references to historical figures, juxtaposed with romantic
       elements like flowers and hearts, to reflect the song's ironic take on a
       relationship with troubling undertones.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-15T13:41:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

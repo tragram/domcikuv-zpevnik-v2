@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: a}
 {createdAt: 1436824800000}
+{updatedAt: 1771162907000}
 {illustrationId: Spiritual_kvintet-Batalion_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Spiritual_kvintet-Batalion_gpt-4o-mini_v1}
 
-{start_of_chorus: Intro}
 [Ami]Víno [C]máš a [G]marky[Ami]tánku,
 [Ami]dlouhá [C]noc se [G]pro[Emi]hýří, [Ami]
 [Ami]víno [C]máš a [G]chvilku [Ami]spánku,

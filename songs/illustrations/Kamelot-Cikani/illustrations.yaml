@@ -1,8 +1,7 @@
 songId: Kamelot-Cikani
 prompts:
-  - promptId: Kamelot-Cikani_gpt-4o-mini_v1
+  - id: Kamelot-Cikani_gpt-4o-mini_v1
     songId: Kamelot-Cikani
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       hints of gypsy musicians play in the background. Capture the contrast
       between warmth and pain, with a heart symbolically beating against daggers
       and the flowing manes of white horses.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

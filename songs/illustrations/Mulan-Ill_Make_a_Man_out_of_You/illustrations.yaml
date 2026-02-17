@@ -1,8 +1,7 @@
 songId: Mulan-Ill_Make_a_Man_out_of_You
 prompts:
-  - promptId: Mulan-Ill_Make_a_Man_out_of_You_gpt-4o-mini_v1
+  - id: Mulan-Ill_Make_a_Man_out_of_You_gpt-4o-mini_v1
     songId: Mulan-Ill_Make_a_Man_out_of_You
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       the background. Include elements symbolizing strength and transformation,
       like a raging fire and a coursing river, to capture the essence of
       becoming a true warrior.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:45.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

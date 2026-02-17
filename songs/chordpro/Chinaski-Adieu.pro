@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: a e}
 {createdAt: 1728856800000}
+{updatedAt: 1771162898000}
 {illustrationId: Chinaski-Adieu_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Chinaski-Adieu_gpt-4o-mini_v1}
 
-{start_of_verse: Intro}
 Už [Ami]dlouho mě [G]znají v tomhle podniku
 [C]už všichni přesně ví, [F]kdy vezmu za kliku.
 [Ami]Sem často večer chodím [G]svlažit ret

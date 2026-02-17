@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: g}
 {createdAt: 1442181600000}
+{updatedAt: 1771162908000}
 {illustrationId: Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Vaclav_Neckar-Tu_kytaru_jsem_koupil_kvuli_tobe_gpt-4o-mini_v1}
 
-{start_of_bridge: Intro}
 Jak může[C]š bejt tak krut[A7]á,
 [Dmi]copak nemáš kouska citu v [G6]těle? [C][C6][C]
 {end_of_bridge}

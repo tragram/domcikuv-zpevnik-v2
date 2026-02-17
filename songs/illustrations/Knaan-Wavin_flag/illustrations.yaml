@@ -1,8 +1,7 @@
 songId: Knaan-Wavin_flag
 prompts:
-  - promptId: Knaan-Wavin_flag_gpt-4o-mini_v1
+  - id: Knaan-Wavin_flag_gpt-4o-mini_v1
     songId: Knaan-Wavin_flag
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -10,6 +9,9 @@ prompts:
       high, waving flags from different nations, celebrating unity and freedom.
       The scene should be filled with energy and joy, capturing the spirit of a
       global celebration, with bright colors and a sunlit atmosphere.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

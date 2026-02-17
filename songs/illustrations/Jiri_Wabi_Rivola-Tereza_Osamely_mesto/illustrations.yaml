@@ -1,8 +1,7 @@
 songId: Jiri_Wabi_Rivola-Tereza_Osamely_mesto
 prompts:
-  - promptId: Jiri_Wabi_Rivola-Tereza_Osamely_mesto_gpt-4o-mini_v1
+  - id: Jiri_Wabi_Rivola-Tereza_Osamely_mesto_gpt-4o-mini_v1
     songId: Jiri_Wabi_Rivola-Tereza_Osamely_mesto
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       the gentle sound of a flute, and scattered papers on the ground, with a
       few broken piano keys. The atmosphere should reflect a sense of loss and
       longing for a past connection.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

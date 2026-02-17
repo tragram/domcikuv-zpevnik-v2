@@ -1,8 +1,7 @@
 songId: Fesaci-Jaro
 prompts:
-  - promptId: Fesaci-Jaro_gpt-4o-mini_v1
+  - id: Fesaci-Jaro_gpt-4o-mini_v1
     songId: Fesaci-Jaro
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       a journey taken. In the background, illustrate a treacherous cliff with a
       hint of danger, capturing the essence of a chilling tale of loss and
       caution amidst a fierce snowstorm.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-15T13:41:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

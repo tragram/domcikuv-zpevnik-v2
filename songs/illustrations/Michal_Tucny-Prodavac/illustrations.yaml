@@ -1,8 +1,7 @@
 songId: Michal_Tucny-Prodavac
 prompts:
-  - promptId: Michal_Tucny-Prodavac_gpt-4o-mini_v1
+  - id: Michal_Tucny-Prodavac_gpt-4o-mini_v1
     songId: Michal_Tucny-Prodavac
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       the air, symbolizing the transition from a shopkeeper to a performer.
       Include details like a vintage gramophone and a sign that reads "Michal
       Tučný, odpovědný vedoucí."
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:45.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

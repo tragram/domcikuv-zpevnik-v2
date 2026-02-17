@@ -7,10 +7,10 @@
 {language: other}
 {startMelody: }
 {createdAt: 1752444000000}
+{updatedAt: 1771162905000}
 {illustrationId: Nahore-Credo_gpt-4o-mini_v2_FLUX.1-dev}
 {promptId: Nahore-Credo_gpt-4o-mini_v2}
 
-{start_of_verse: Intro}
 [Ami][H][E][Ami]
 [F][Ami][Ddim][C#]
 [Ami][H][E][Ami]

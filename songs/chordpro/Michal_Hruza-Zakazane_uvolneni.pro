@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: d d d c#}
 {createdAt: 1731538800000}
+{updatedAt: 1771162904000}
 {illustrationId: Michal_Hruza-Zakazane_uvolneni_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Michal_Hruza-Zakazane_uvolneni_gpt-4o-mini_v1}
 
-{start_of_verse: V1}
 [D]Někdy je to [F#]tak a nezmůžeš s tím [Hmi]nic,
 můžeš se jen [G]smát ze svých [A]plných [D]plic.
 [D]Chceš to přivo[F#]lat a chceš to čím [Hmi]dál víc,

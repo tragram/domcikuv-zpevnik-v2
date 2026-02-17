@@ -1,8 +1,7 @@
 songId: Johnny_Cash-I_Walk_the_Line
 prompts:
-  - promptId: Johnny_Cash-I_Walk_the_Line_gpt-4o-mini_v1
+  - id: Johnny_Cash-I_Walk_the_Line_gpt-4o-mini_v1
     songId: Johnny_Cash-I_Walk_the_Line
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       subtle imagery of a heart and a tie to represent the connection and
       commitment, with a serene landscape that evokes a sense of happiness and
       loyalty.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
