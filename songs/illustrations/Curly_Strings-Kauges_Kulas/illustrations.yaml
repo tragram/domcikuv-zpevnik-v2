@@ -1,8 +1,7 @@
 songId: Curly_Strings-Kauges_Kulas
 prompts:
-  - promptId: Curly_Strings-Kauges_Kulas_gpt-4o-mini_v1
+  - id: Curly_Strings-Kauges_Kulas_gpt-4o-mini_v1
     songId: Curly_Strings-Kauges_Kulas
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -15,6 +14,9 @@ prompts:
       dirt road leading to it, but looks forward to a village party where they
       hope to meet other young people. The imagery evokes a sense of longing for
       connection and the bittersweet nature of rural solitude.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-15T13:41:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

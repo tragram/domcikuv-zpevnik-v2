@@ -1,8 +1,7 @@
 songId: Klic-Omnia_Vincit_Amor
 prompts:
-  - promptId: Klic-Omnia_Vincit_Amor_gpt-4o-mini_v1
+  - id: Klic-Omnia_Vincit_Amor_gpt-4o-mini_v1
     songId: Klic-Omnia_Vincit_Amor
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       and a faint, glowing message in the air that reads "Omnia vincit Amor."
       The atmosphere should convey joy, love, and the triumph of the human
       spirit over adversity.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

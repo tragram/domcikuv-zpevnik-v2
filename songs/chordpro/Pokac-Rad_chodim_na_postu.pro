@@ -10,7 +10,6 @@
 {illustrationId: Pokac-Rad_chodim_na_postu_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Pokac-Rad_chodim_na_postu_gpt-4o-mini_v1}
 
-{start_of_chorus: R1}
 [D]Rád chodím [A]na poštu,
 [G]nejsem tam jen [D]do počtu
 [G]jsem tam důležitý [D]člen

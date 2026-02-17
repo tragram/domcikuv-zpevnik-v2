@@ -10,7 +10,6 @@
 {illustrationId: Epy_de_Mye-Obycejne_fotky_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Epy_de_Mye-Obycejne_fotky_gpt-4o-mini_v1}
 
-{start_of_chorus: R1}
 [G]Obyčejné fotky [Hm]na stole leží,
 [Em]samí mladí lidé [C]jako jsem [D]já,
 možná [G]jsou mi podobní a já [Hm]dýchám jen stěží,

@@ -1,8 +1,7 @@
 songId: Hansard_Irglova-Falling_Slowly
 prompts:
-  - promptId: Hansard_Irglova-Falling_Slowly_gpt-4o-mini_v1
+  - id: Hansard_Irglova-Falling_Slowly_gpt-4o-mini_v1
     songId: Hansard_Irglova-Falling_Slowly
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       ethereal music notes that symbolize the connection between souls. The
       color palette should blend soft blues and deep blacks, evoking a sense of
       emotional depth and resilience.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-15T13:41:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

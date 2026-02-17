@@ -1,8 +1,7 @@
 songId: Marsyas-S_Luisem
 prompts:
-  - promptId: Marsyas-S_Luisem_gpt-4o-mini_v1
+  - id: Marsyas-S_Luisem_gpt-4o-mini_v1
     songId: Marsyas-S_Luisem
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       sense of connection to a mysterious figure named Luisi. Include dark
       sunglasses reflecting the cosmos and a cocktail of colors representing
       imagination and dreams.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,15 @@
 {title: Život je jen náhoda}
 {artist: Ježek + Voskovec + Werich}
 {key: G}
-{createdAt: 1767887277000}
+{capo: 0}
+{tempo: }
+{range: }
 {language: czech}
+{startMelody: }
+{createdAt: 1767887277000}
+{illustrationId: undefined}
+{promptId: undefined}
+
 {start_of_verse}
 [G]Proč že [As]se [A]mi [B]každou noc 
 [B]o [A]tom [As]jen [G]zdá, o [F#]tom [F]jen [E]zdá,
@@ -45,4 +52,3 @@ zažene [D]pří[C]ští [D7]den. [D7+]
 [C]láska že je [Cmi]náhoda 
 [Es7]a [G]bez ní [D+]štěstí ne[G]ní. [D+] [G]
 {end_of_chorus}
-

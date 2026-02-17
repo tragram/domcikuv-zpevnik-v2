@@ -1,8 +1,7 @@
 songId: Zalman_Spol-Vojacek_z_Moorlough_Shore
 prompts:
-  - promptId: Zalman_Spol-Vojacek_z_Moorlough_Shore_gpt-4o-mini_v1
+  - id: Zalman_Spol-Vojacek_z_Moorlough_Shore_gpt-4o-mini_v1
     songId: Zalman_Spol-Vojacek_z_Moorlough_Shore
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       symbolizing loss and hope. The scene should evoke a sense of love,
       nostalgia, and the beauty of Moorlough Shore, with gentle waves of the
       Maine sea in the background.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-15T13:41:49.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Noah_and_the_Whale-2_Atoms_in_a_Molecule
 prompts:
-  - promptId: Noah_and_the_Whale-2_Atoms_in_a_Molecule_gpt-4o-mini_v1
+  - id: Noah_and_the_Whale-2_Atoms_in_a_Molecule_gpt-4o-mini_v1
     songId: Noah_and_the_Whale-2_Atoms_in_a_Molecule
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       depict a shadowy figure waking up in a dimly lit room, symbolizing
       loneliness and heartbreak. The overall mood should convey a mix of beauty
       and sadness, reflecting the complexities of love.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-15T13:41:45.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

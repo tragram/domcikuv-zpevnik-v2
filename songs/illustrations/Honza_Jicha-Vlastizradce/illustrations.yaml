@@ -1,8 +1,7 @@
 songId: Honza_Jicha-Vlastizradce
 prompts:
-  - promptId: Honza_Jicha-Vlastizradce_gpt-4o-mini_v1
+  - id: Honza_Jicha-Vlastizradce_gpt-4o-mini_v1
     songId: Honza_Jicha-Vlastizradce
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       visible in the background, emphasizing the contrast between warmth and
       chill. Add elements of nostalgia, like crumpled paper balls and hints of
       traditional Czech culture.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-15T13:41:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

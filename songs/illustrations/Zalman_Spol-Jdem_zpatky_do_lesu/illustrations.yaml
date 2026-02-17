@@ -1,8 +1,7 @@
 songId: Zalman_Spol-Jdem_zpatky_do_lesu
 prompts:
-  - promptId: Zalman_Spol-Jdem_zpatky_do_lesu_gpt-4o-mini_v1
+  - id: Zalman_Spol-Jdem_zpatky_do_lesu_gpt-4o-mini_v1
     songId: Zalman_Spol-Jdem_zpatky_do_lesu
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       obscure the sun, hinting at a sense of longing and nostalgia. In the
       distance, a silhouette of a girl is seen walking away, symbolizing loss
       and yearning for connection.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-15T13:41:49.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

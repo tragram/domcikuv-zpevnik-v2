@@ -1,8 +1,7 @@
 songId: Karel_Kryl-Lasko
 prompts:
-  - promptId: Karel_Kryl-Lasko_gpt-4o-mini_v1
+  - id: Karel_Kryl-Lasko_gpt-4o-mini_v1
     songId: Karel_Kryl-Lasko
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       and cigarette smoke, capturing a sense of longing and the harshness of
       life. The atmosphere should be melancholic yet infused with a sense of
       camaraderie.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

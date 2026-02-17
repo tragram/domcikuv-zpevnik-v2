@@ -1,8 +1,7 @@
 songId: Michal_Tucny-Poveste_ho_vejs
 prompts:
-  - promptId: Michal_Tucny-Poveste_ho_vejs_gpt-4o-mini_v1
+  - id: Michal_Tucny-Poveste_ho_vejs_gpt-4o-mini_v1
     songId: Michal_Tucny-Poveste_ho_vejs
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       home, and hints of a carefree lifestyle, such as flowers and a guitar, to
       capture the essence of adventure, nostalgia, and the bittersweet nature of
       life's choices.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

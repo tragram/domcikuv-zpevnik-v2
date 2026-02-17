@@ -10,7 +10,6 @@
 {illustrationId: Kingdom_Come_Deliverance-Poverty_And_Famine_gpt-4o-mini_v2_FLUX.1-dev}
 {promptId: Kingdom_Come_Deliverance-Poverty_And_Famine_gpt-4o-mini_v2}
 
-{start_of_verse: Intro}
 [G5]Přišla bída, mor a hlad
 To neustojí žádnej chlap
 

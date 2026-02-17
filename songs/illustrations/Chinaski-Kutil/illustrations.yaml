@@ -1,8 +1,7 @@
 songId: Chinaski-Kutil
 prompts:
-  - promptId: Chinaski-Kutil_gpt-4o-mini_v1
+  - id: Chinaski-Kutil_gpt-4o-mini_v1
     songId: Chinaski-Kutil
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       woman nearby, absorbed in her own thoughts, with a hint of distance
       between them. The atmosphere should convey a blend of happiness in his
       work and a longing for connection.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-15T13:41:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
