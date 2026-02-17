@@ -7,10 +7,10 @@
 {language: english}
 {startMelody: a e}
 {createdAt: 1436824800000}
+{updatedAt: 1771162907000}
 {illustrationId: Simon_Garfunkel-Scarborough_Fair_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Simon_Garfunkel-Scarborough_Fair_gpt-4o-mini_v1}
 
-{start_of_verse: V1}
 [Ami]Are you going to [G]Scar[Gsus4]bo[G]rough [Ami]Fair
 [C]parsley [Ami]sage rose[C]ma[D]ry and [Ami]thyme
 [Ami]remember [C]me to one who lives [G]there[Gsus4][G]

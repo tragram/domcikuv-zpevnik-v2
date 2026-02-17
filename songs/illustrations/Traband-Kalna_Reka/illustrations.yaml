@@ -1,8 +1,7 @@
 songId: Traband-Kalna_Reka
 prompts:
-  - promptId: Traband-Kalna_Reka_gpt-4o-mini_v2
+  - id: Traband-Kalna_Reka_gpt-4o-mini_v2
     songId: Traband-Kalna_Reka
-    createdAt: 1754387149000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       seen, with hints of a distant military presence. The river flows calmly,
       reflecting the fading light, while the atmosphere captures both the
       innocence of young love and the looming challenges of their future.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-15T13:41:48.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

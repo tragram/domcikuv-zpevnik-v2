@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: e e e c e}
 {createdAt: 1423868400000}
+{updatedAt: 1771162904000}
 {illustrationId: Michal_Tucny-Poveste_ho_vejs_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Michal_Tucny-Poveste_ho_vejs_gpt-4o-mini_v1}
 
-{start_of_chorus: R1}
 Pověste [Ami]ho vejš, ať se houpá,
 pověste [C]ho vejš, ať [G]má dost,
 pověste ho [Dmi]vejš, ať se [Ami]houpá,

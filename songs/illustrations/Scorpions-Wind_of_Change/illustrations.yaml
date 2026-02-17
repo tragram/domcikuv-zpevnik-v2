@@ -1,8 +1,7 @@
 songId: Scorpions-Wind_of_Change
 prompts:
-  - promptId: Scorpions-Wind_of_Change_gpt-4o-mini_v1
+  - id: Scorpions-Wind_of_Change_gpt-4o-mini_v1
     songId: Scorpions-Wind_of_Change
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       and hope, featuring children dreaming under a starry sky, symbolizing the
       "wind of change." Include elements of nature like gently blowing trees and
       a soft breeze to evoke a magical atmosphere.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-15T13:41:47.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

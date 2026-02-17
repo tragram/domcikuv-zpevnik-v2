@@ -1,8 +1,7 @@
 songId: Richard_Muller-Baroko
 prompts:
-  - promptId: Richard_Muller-Baroko_gpt-4o-mini_v2
+  - id: Richard_Muller-Baroko_gpt-4o-mini_v2
     songId: Richard_Muller-Baroko
-    createdAt: 1754387149000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       horses take flight into the starry sky. The atmosphere should convey a
       sense of both tranquility and the haunting beauty of baroque art,
       capturing the juxtaposition of life, death, and the ethereal.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-15T13:41:47.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

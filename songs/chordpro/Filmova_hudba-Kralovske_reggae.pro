@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: d}
 {createdAt: 1436824800000}
+{updatedAt: 1771162899000}
 {illustrationId: Filmova_hudba-Kralovske_reggae_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Filmova_hudba-Kralovske_reggae_gpt-4o-mini_v1}
 
-{start_of_bridge: Umbaba}
 [D]Umbabau, umbabaumbaumba
 [Hmi]umbabau, umbabaumbaumba
 {end_of_bridge}

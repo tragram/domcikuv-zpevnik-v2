@@ -7,11 +7,9 @@
 {language: english}
 {startMelody: h}
 {createdAt: 1436824800000}
+{updatedAt: 1771162897000}
 {illustrationId: Bob_Dylan-Knocking_On_Heavens_Door_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Bob_Dylan-Knocking_On_Heavens_Door_gpt-4o-mini_v1}
-
-{subtitle: }
-{pdf_filename: bob_dylan_knocking_on_heavens_door.pdf}
 
 {start_of_verse}
 [G]Mama take this [D]badge off of [Am7]me

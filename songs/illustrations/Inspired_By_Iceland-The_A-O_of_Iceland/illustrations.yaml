@@ -1,8 +1,7 @@
 songId: Inspired_By_Iceland-The_A-O_of_Iceland
 prompts:
-  - promptId: Inspired_By_Iceland-The_A-O_of_Iceland_gpt-4o-mini_v1
+  - id: Inspired_By_Iceland-The_A-O_of_Iceland_gpt-4o-mini_v1
     songId: Inspired_By_Iceland-The_A-O_of_Iceland
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       jöklar (glaciers), and the colorful charm of Icelandic culture, with hints
       of humor such as a playful nod to elves. The atmosphere should be warm and
       inviting, reflecting the unique beauty of the island.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-15T13:41:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

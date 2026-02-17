@@ -1,8 +1,7 @@
 songId: Lucie-Sen
 prompts:
-  - promptId: Lucie-Sen_gpt-4o-mini_v1
+  - id: Lucie-Sen_gpt-4o-mini_v1
     songId: Lucie-Sen
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       butterflies carrying cosmic dust, while a new moon casts a gentle light,
       dispelling the dark shadows. Capture the essence of transformation and the
       rhythm of nature in a dreamlike atmosphere.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

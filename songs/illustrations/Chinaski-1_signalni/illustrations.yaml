@@ -1,8 +1,7 @@
 songId: Chinaski-1_signalni
 prompts:
-  - promptId: Chinaski-1_signalni_gpt-4o-mini_v1
+  - id: Chinaski-1_signalni_gpt-4o-mini_v1
     songId: Chinaski-1_signalni
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,7 +10,10 @@ prompts:
       sunrise symbolizing new beginnings, with hints of a world map to represent
       travel and experiences. Include elements of nostalgia, like musical notes
       and a microphone, to capture the essence of singing and self-expression.
-      The atmosphere should blend hope and introspection.
+      The atmosphere should blend hope and introspectionnnn.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-16T19:42:25.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
@@ -19,3 +21,18 @@ prompts:
       - createdAt: 1754387142000
         imageModel: stable-diffusion-3.5-large
         filename: stable-diffusion-3.5-large.webp
+      - createdAt: 1771270972000
+        imageModel: zdgr
+        filename: zdgr.webp
+  - id: Chinaski-1_signalni_manual_v1-manual_1771271570028
+    songId: Chinaski-1_signalni
+    summaryPromptVersion: v1-manual
+    summaryModel: manual
+    text: test tets test
+    createdAt: 2026-02-16T19:52:50.000Z
+    updatedAt: 2026-02-16T19:52:50.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1771271570000
+        imageModel: wdadwa
+        filename: wdadwa.webp

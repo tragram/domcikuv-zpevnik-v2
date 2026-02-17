@@ -1,8 +1,7 @@
 songId: Klus-Panu_Bohu_do_oken
 prompts:
-  - promptId: Klus-Panu_Bohu_do_oken_gpt-4o-mini_v1
+  - id: Klus-Panu_Bohu_do_oken_gpt-4o-mini_v1
     songId: Klus-Panu_Bohu_do_oken
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,13 +12,15 @@ prompts:
       billboards with exaggerated faces and a backdrop of contrasting poverty
       and opulence. Capture a sense of disillusionment and irony, with dark
       clouds looming over the vibrant scene.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Klus-Panu_Bohu_do_oken_gpt-4o_v1
+  - id: Klus-Panu_Bohu_do_oken_gpt-4o_v1
     songId: Klus-Panu_Bohu_do_oken
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -28,6 +29,9 @@ prompts:
       corrupt politicians with billboards along the highway, portraying a world
       of wealth inequality, hypocrisy, and cynicism. The imagery captures a
       biting critique of the political system with an atmosphere of despondency.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

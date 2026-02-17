@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: e}
 {createdAt: 1436824800000}
+{updatedAt: 1771162904000}
 {illustrationId: Michal_Tucny-Abych_Tu_Zil_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Michal_Tucny-Abych_Tu_Zil_gpt-4o-mini_v1}
 
-{start_of_verse: V1}
 Kapsy [C]mám, [F]abych v nich měl [C]díru
 boty mám a na nich letní pra[G]ch.
 Pod šir[E]ou obloh[E7]ou,

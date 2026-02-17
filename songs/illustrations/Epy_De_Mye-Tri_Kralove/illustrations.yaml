@@ -1,8 +1,7 @@
 songId: Epy_De_Mye-Tri_Kralove
 prompts:
-  - promptId: Epy_De_Mye-Tri_Kralove_gpt-4o-mini_v1
+  - id: Epy_De_Mye-Tri_Kralove_gpt-4o-mini_v1
     songId: Epy_De_Mye-Tri_Kralove
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,13 +12,15 @@ prompts:
       shadows of oppressive forces and hints of hope, like a faint light
       breaking through the darkness. The overall mood should convey resilience
       and the fight for freedom.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-15T13:41:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Epy_De_Mye-Tri_Kralove_gpt-4o_v1
+  - id: Epy_De_Mye-Tri_Kralove_gpt-4o_v1
     songId: Epy_De_Mye-Tri_Kralove
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -28,6 +29,9 @@ prompts:
       landscape of wartime resistance, with dark clouds overhead, eagle imagery,
       and clandestine figures. The tension is palpable, capturing the bravery
       and defiance of the Three Kings and their symbolic struggle.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-15T13:41:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

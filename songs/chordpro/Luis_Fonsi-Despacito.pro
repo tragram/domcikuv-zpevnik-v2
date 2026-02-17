@@ -7,10 +7,10 @@
 {language: spanish}
 {startMelody: e}
 {createdAt: 1499983200000}
+{updatedAt: 1771162904000}
 {illustrationId: Luis_Fonsi-Despacito_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Luis_Fonsi-Despacito_gpt-4o-mini_v1}
 
-{start_of_verse: Intro}
 [Em]Si, sabes que ya llevo rato mir[C]ándote
 [G]Tengo que bailar contigo [D]hoy(DY)
 [Em]Vi, que tu mirada ya estaba llam[C]ándome

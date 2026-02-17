@@ -1,8 +1,7 @@
 songId: Jezek_Voskovec_Werich-V_dome_strasi_duch
 prompts:
-  - promptId: Jezek_Voskovec_Werich-V_dome_strasi_duch_gpt-4o-mini_v1
+  - id: Jezek_Voskovec_Werich-V_dome_strasi_duch_gpt-4o-mini_v1
     songId: Jezek_Voskovec_Werich-V_dome_strasi_duch
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       elements like a face in a window and a hand reaching from the stones. The
       atmosphere should evoke a haunting mystery, emphasizing the chilling
       presence of a ghostly spirit.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-15T13:41:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

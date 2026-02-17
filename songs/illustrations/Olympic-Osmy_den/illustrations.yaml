@@ -1,8 +1,7 @@
 songId: Olympic-Osmy_den
 prompts:
-  - promptId: Olympic-Osmy_den_gpt-4o-mini_v1
+  - id: Olympic-Osmy_den_gpt-4o-mini_v1
     songId: Olympic-Osmy_den
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       imagery that symbolizes longing and silence, such as a pencil lying unused
       and a clock with its hands stuck on the eighth day. The atmosphere should
       convey a sense of yearning and missed connections.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-15T13:41:45.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

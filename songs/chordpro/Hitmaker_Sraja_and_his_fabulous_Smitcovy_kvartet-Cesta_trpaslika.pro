@@ -7,6 +7,7 @@
 {language: czech}
 {startMelody: }
 {createdAt: 1744581600000}
+{updatedAt: 1771162900000}
 {illustrationId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika_gpt-4o-mini_v2_FLUX.1-dev}
 {promptId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika_gpt-4o-mini_v2}
 

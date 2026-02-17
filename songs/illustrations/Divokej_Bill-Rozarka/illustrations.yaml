@@ -1,8 +1,7 @@
 songId: Divokej_Bill-Rozarka
 prompts:
-  - promptId: Divokej_Bill-Rozarka_gpt-4o-mini_v2
+  - id: Divokej_Bill-Rozarka_gpt-4o-mini_v2
     songId: Divokej_Bill-Rozarka
-    createdAt: 1754387144000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       suggesting a sense of foreboding. The figure, named Rozárko, should be
       surrounded by ghostly silhouettes that evoke a feeling of melancholy and
       reflection, as if they are toasting to both the living and the lost.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-15T13:41:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

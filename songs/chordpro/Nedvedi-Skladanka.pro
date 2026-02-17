@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: d}
 {createdAt: 1436824800000}
+{updatedAt: 1771162905000}
 {illustrationId: Nedvedi-Skladanka_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Nedvedi-Skladanka_gpt-4o-mini_v1}
 
-{start_of_verse: V1}
 Tak od dneška [G]vím, jak zavíráš
 [Ami]oči, když pusu ti [G]dávám,
 jak otáčíš hlavu, všechno už

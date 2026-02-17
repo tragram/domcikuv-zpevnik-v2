@@ -7,7 +7,8 @@
 {language: czech}
 {startMelody: a c# e}
 {createdAt: 1759669836000}
-{illustrationId: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2_FLUX.1-dev}
+{updatedAt: 1771269877000}
+{illustrationId: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2_nano-banana}
 {promptId: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2}
 
 {start_of_verse}
@@ -42,4 +43,3 @@ z [Hmi7]téhlete [E]říše
 [G]Na tváře smívky [A]právě příst pan
 [H]Kačer, uú.
 {end_of_chorus}
-

@@ -1,8 +1,7 @@
 songId: Visaci_zamek-Znamka_Punku
 prompts:
-  - promptId: Visaci_zamek-Znamka_Punku_gpt-4o-mini_v1
+  - id: Visaci_zamek-Znamka_Punku_gpt-4o-mini_v1
     songId: Visaci_zamek-Znamka_Punku
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       and a female punk rocker with lipstick on her teeth, laughing amidst the
       chaos. Capture the essence of rebellion and individuality, with a playful,
       colorful style.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-15T13:41:48.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

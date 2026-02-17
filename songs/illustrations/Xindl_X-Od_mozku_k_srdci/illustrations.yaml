@@ -1,8 +1,7 @@
 songId: Xindl_X-Od_mozku_k_srdci
 prompts:
-  - promptId: Xindl_X-Od_mozku_k_srdci_gpt-4o-mini_v1
+  - id: Xindl_X-Od_mozku_k_srdci_gpt-4o-mini_v1
     songId: Xindl_X-Od_mozku_k_srdci
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       symbolizing determination and adventure. Incorporate abstract
       representations of obstacles and paths, with a backdrop of stars and
       celestial bodies, conveying the essence of an epic escapade.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-15T13:41:49.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

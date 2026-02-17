@@ -1,8 +1,7 @@
 songId: Pavel_Bobek-Ved_me_dal_cesto_ma
 prompts:
-  - promptId: Pavel_Bobek-Ved_me_dal_cesto_ma_gpt-4o-mini_v1
+  - id: Pavel_Bobek-Ved_me_dal_cesto_ma_gpt-4o-mini_v1
     songId: Pavel_Bobek-Ved_me_dal_cesto_ma
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       looking hopeful, with distant mountains and a sunset in the background.
       Add subtle musical notes floating in the air to symbolize the song's
       themes of journey and longing.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-15T13:41:46.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

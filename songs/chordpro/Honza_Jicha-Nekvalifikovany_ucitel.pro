@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: c}
 {createdAt: 1436824800000}
+{updatedAt: 1771162900000}
 {illustrationId: Honza_Jicha-Nekvalifikovany_ucitel_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Honza_Jicha-Nekvalifikovany_ucitel_gpt-4o-mini_v1}
 
-{start_of_chorus: R1}
 [C]Jsem kantor, mám na to talent
 těžko byste ke mně našli ekvivalent
 [F]ale začal jsem vadit, chtějí mě vystrnadit

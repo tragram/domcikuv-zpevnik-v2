@@ -1,8 +1,7 @@
 songId: Spiritual_kvintet-Batalion
 prompts:
-  - promptId: Spiritual_kvintet-Batalion_gpt-4o-mini_v1
+  - id: Spiritual_kvintet-Batalion_gpt-4o-mini_v1
     songId: Spiritual_kvintet-Batalion
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       background, suggest a sense of impending adventure with hints of military
       uniforms and a map of Burgundy. Capture the atmosphere of camaraderie and
       bittersweet farewell, with a hint of melancholy in the air.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-15T13:41:47.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

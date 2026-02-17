@@ -1,8 +1,7 @@
 songId: Petr_Hapka-Na_Hotelu_v_Olomouci
 prompts:
-  - promptId: Petr_Hapka-Na_Hotelu_v_Olomouci_gpt-4o-mini_v1
+  - id: Petr_Hapka-Na_Hotelu_v_Olomouci_gpt-4o-mini_v1
     songId: Petr_Hapka-Na_Hotelu_v_Olomouci
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       and intrigue, with elements like a broken heart, a starlit sky visible
       through a window, and the faint outline of a woman reaching out,
       symbolizing longing and connection.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-15T13:41:46.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

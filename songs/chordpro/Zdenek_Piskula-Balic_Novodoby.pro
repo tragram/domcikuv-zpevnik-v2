@@ -7,10 +7,10 @@
 {language: czech}
 {startMelody: a g a}
 {createdAt: 1502661600000}
+{updatedAt: 1771162909000}
 {illustrationId: Zdenek_Piskula-Balic_Novodoby_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Zdenek_Piskula-Balic_Novodoby_gpt-4o-mini_v1}
 
-{start_of_chorus: R1}
 [F]Ratatatatatadau
 [Ami]Ratatatatýdydau
 [Dmi]Ratatatatádadapau

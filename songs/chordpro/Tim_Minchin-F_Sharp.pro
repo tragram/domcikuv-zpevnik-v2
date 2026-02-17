@@ -7,10 +7,10 @@
 {language: english}
 {startMelody: a a h}
 {createdAt: 1741906800000}
+{updatedAt: 1771162907000}
 {illustrationId: Tim_Minchin-F_Sharp_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Tim_Minchin-F_Sharp_gpt-4o-mini_v1}
 
-{start_of_verse: Intro}
 I've been [B]having a little [A7]problem recent[Dm]ly
 Which is [Gm/E]quite disturbing [A7]musicallical[Dm]ly
 In[Gm]volving a [A7]semitonal discrepan[Dm]cy

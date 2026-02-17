@@ -1,8 +1,7 @@
 songId: Karel_Kryl-Hle_jak_se_perou
 prompts:
-  - promptId: Karel_Kryl-Hle_jak_se_perou_gpt-4o-mini_v1
+  - id: Karel_Kryl-Hle_jak_se_perou_gpt-4o-mini_v1
     songId: Karel_Kryl-Hle_jak_se_perou
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       charged with tension. The background should hint at a dark, oppressive
       ambiance, capturing the essence of recklessness and the consequences of
       their actions.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-15T13:41:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

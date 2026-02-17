@@ -1,8 +1,7 @@
 songId: Krystof-Ty_a_ja
 prompts:
-  - promptId: Krystof-Ty_a_ja_gpt-4o-mini_v1
+  - id: Krystof-Ty_a_ja_gpt-4o-mini_v1
     songId: Krystof-Ty_a_ja
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       glimmers with more stars than one can count. In the foreground, two
       ethereal figures represent unity, with wings poised above a deep chasm,
       symbolizing connection and hope.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-15T13:41:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

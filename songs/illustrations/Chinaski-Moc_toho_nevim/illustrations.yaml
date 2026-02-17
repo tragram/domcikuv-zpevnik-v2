@@ -1,8 +1,7 @@
 songId: Chinaski-Moc_toho_nevim
 prompts:
-  - promptId: Chinaski-Moc_toho_nevim_gpt-4o-mini_v1
+  - id: Chinaski-Moc_toho_nevim_gpt-4o-mini_v1
     songId: Chinaski-Moc_toho_nevim
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       surrounded by empty bottles and a hint of a mysterious figure in the
       background. The atmosphere should be a mix of confusion and wild energy,
       capturing the essence of a reckless night out.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-15T13:41:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

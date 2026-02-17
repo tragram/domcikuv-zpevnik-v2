@@ -1,9 +1,8 @@
 songId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika
 prompts:
-  - promptId: >-
+  - id: >-
       Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika_gpt-4o-mini_v2
     songId: Hitmaker_Sraja_and_his_fabulous_Smitcovy_kvartet-Cesta_trpaslika
-    createdAt: 1754387144000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       a flickering lantern casting an eerie glow. The dwarf, with a determined
       expression and a pickaxe in hand, is focused on extracting the precious
       gold, oblivious to the growing threats in the shadows.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-15T13:41:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
