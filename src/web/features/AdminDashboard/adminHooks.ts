@@ -1,11 +1,9 @@
-// hooks.ts
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AdminApi,
   createIllustration,
   deleteIllustration,
   restoreIllustration,
-  deleteSongAdmin,
   deleteVersionAdmin,
   fetchIllustrationsAdmin,
   fetchPromptsAdmin,
@@ -49,6 +47,7 @@ import {
   CreateUserSchema,
   UpdateUserSchema,
 } from "src/worker/helpers/user-helpers";
+import { makeApiRequest } from "~/services/api-service";
 
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({
@@ -116,9 +115,9 @@ export const useDeleteSong = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (songId: string) => {
-      // Assuming deleteSongAdmin calls the api.delete method
-      // We implement the restore logic via a separate hook, but deletion is here.
-      return adminApi.songs[":id"].$delete({ param: { id: songId } });
+      return makeApiRequest(() =>
+        adminApi.songs[":id"].$delete({ param: { id: songId } }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
@@ -131,7 +130,9 @@ export const useRestoreSong = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (songId: string) => {
-      return adminApi.songs[":id"].restore.$post({ param: { id: songId } });
+      return makeApiRequest(() =>
+        adminApi.songs[":id"].restore.$post({ param: { id: songId } }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
@@ -186,9 +187,11 @@ export const useRestoreVersion = (adminApi: AdminApi) => {
       songId: string;
       versionId: string;
     }) => {
-      return adminApi.songs[":songId"].versions[":versionId"].restore.$post({
-        param: { songId, versionId },
-      });
+      return makeApiRequest(() =>
+        adminApi.songs[":songId"].versions[":versionId"].restore.$post({
+          param: { songId, versionId },
+        }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
@@ -478,9 +481,11 @@ export const useApproveVersion = (adminApi: AdminApi) => {
       songId: string;
       versionId: string;
     }) => {
-      return adminApi.songs[":songId"].versions[":versionId"].approve.$post({
-        param: { songId, versionId },
-      });
+      return makeApiRequest(() =>
+        adminApi.songs[":songId"].versions[":versionId"].approve.$post({
+          param: { songId, versionId },
+        }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
@@ -500,9 +505,11 @@ export const useRejectVersion = (adminApi: AdminApi) => {
       songId: string;
       versionId: string;
     }) => {
-      return adminApi.songs[":songId"].versions[":versionId"].reject.$post({
-        param: { songId, versionId },
-      });
+      return makeApiRequest(() =>
+        adminApi.songs[":songId"].versions[":versionId"].reject.$post({
+          param: { songId, versionId },
+        }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
@@ -617,18 +624,15 @@ export const useDeleteUser = (adminApi: AdminApi) => {
 export const useCreatePrompt = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: {
+    mutationFn: (data: {
       songId: string;
       summaryModel: string;
       summaryPromptVersion: string;
       text: string;
     }) => {
-      const response = await adminApi.prompts.create.$post({ json: data });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to create prompt");
-      }
-      return response.json();
+      return makeApiRequest(() =>
+        adminApi.prompts.create.$post({ json: data }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
@@ -639,13 +643,13 @@ export const useCreatePrompt = (adminApi: AdminApi) => {
 export const useUpdatePrompt = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, text }: { id: string; text: string }) => {
-      const response = await adminApi.prompts[":id"].$put({
-        param: { id },
-        json: { text },
-      });
-      if (!response.ok) throw new Error("Failed to update prompt");
-      return response.json();
+    mutationFn: ({ id, text }: { id: string; text: string }) => {
+      return makeApiRequest(() =>
+        adminApi.prompts[":id"].$put({
+          param: { id },
+          json: { text },
+        }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
@@ -656,15 +660,12 @@ export const useUpdatePrompt = (adminApi: AdminApi) => {
 export const useDeletePrompt = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (id: string) => {
-      const response = await adminApi.prompts[":id"].$delete({
-        param: { id },
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to delete");
-      }
-      return response.json();
+    mutationFn: (id: string) => {
+      return makeApiRequest(() =>
+        adminApi.prompts[":id"].$delete({
+          param: { id },
+        }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
@@ -764,18 +765,15 @@ export const useIllustrationsTableData = (adminApi: AdminApi) => {
 export const useGeneratePrompt = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (data: {
+    mutationFn: (data: {
       songId: string;
       summaryModel: string;
       summaryPromptVersion: string;
     }) => {
       // Ensure your Honos API types expose this endpoint
-      const response = await adminApi.prompts.generate.$post({ json: data });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to generate prompt");
-      }
-      return response.json();
+      return makeApiRequest(() =>
+        adminApi.prompts.generate.$post({ json: data }),
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });

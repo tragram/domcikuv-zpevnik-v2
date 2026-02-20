@@ -21,7 +21,12 @@ import {
   AvailableSummaryModel,
   AvailableImageModel,
 } from "src/worker/helpers/image-generator";
-import { useIllustrationOptions } from "~/features/AdminDashboard/adminHooks";
+import {
+  useIllustrationOptions,
+  useSongPrompts,
+} from "~/features/AdminDashboard/adminHooks";
+import { useRouteContext } from "@tanstack/react-router";
+import { defaultPromptId } from "~/types/songData";
 interface AIGeneratedFormProps {
   illustration: {
     songId?: string;
@@ -42,6 +47,8 @@ function AIGeneratedForm({
   onSuccess,
 }: AIGeneratedFormProps) {
   const options = useIllustrationOptions();
+  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
+  const { songPrompts } = useSongPrompts(adminApi, illustration?.songId);
 
   const [formData, setFormData] = useState({
     songId: illustration?.songId || "",
@@ -136,7 +143,21 @@ function AIGeneratedForm({
         onActiveChange={(checked) => updateFormData({ setAsActive: checked })}
         mode="ai"
       />
-
+      {illustration?.songId && (
+        <p>
+          {songPrompts
+            .map((p) => p.id)
+            .includes(
+              defaultPromptId(
+                illustration?.songId,
+                formData.summaryModel,
+                formData.promptVersion,
+              ),
+            )
+            ? "Prompt exists"
+            : "Prompt will be generated"}
+        </p>
+      )}
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? "Generating..." : "Generate with AI"}
       </Button>
