@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import {
@@ -24,9 +24,12 @@ import {
 import {
   useIllustrationOptions,
   useSongPrompts,
+  useIllustrationsAdmin,
 } from "~/features/AdminDashboard/adminHooks";
 import { useRouteContext } from "@tanstack/react-router";
 import { defaultPromptId } from "~/types/songData";
+import { Sparkles, CheckCircle2, History } from "lucide-react";
+
 interface AIGeneratedFormProps {
   illustration: {
     songId?: string;
@@ -49,6 +52,7 @@ function AIGeneratedForm({
   const options = useIllustrationOptions();
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
   const { songPrompts } = useSongPrompts(adminApi, illustration?.songId);
+  const { data: allIllustrations } = useIllustrationsAdmin(adminApi);
 
   const [formData, setFormData] = useState({
     songId: illustration?.songId || "",
@@ -58,6 +62,49 @@ function AIGeneratedForm({
     imageModel: illustration?.imageModel || options.imageModels.default,
     setAsActive: illustration?.isActive || false,
   });
+
+  // Dynamically include legacy models/versions if they exist in the song's prompts
+  const summaryModelOptions = useMemo(() => {
+    const existing = new Set(options.summaryModels.data.map((opt) => opt.value));
+    const historical = Array.from(new Set(songPrompts.map((p) => p.summaryModel))).filter(
+      (m) => m && !existing.has(m)
+    );
+    return [
+      ...options.summaryModels.data,
+      ...historical.map((m) => ({ value: m, label: `${m} (Legacy)` })),
+    ];
+  }, [options.summaryModels.data, songPrompts]);
+
+  const promptVersionOptions = useMemo(() => {
+    const existing = new Set(options.promptVersions.data.map((opt) => opt.value));
+    const historical = Array.from(
+      new Set(songPrompts.map((p) => p.summaryPromptVersion))
+    ).filter((v) => v && !existing.has(v));
+    return [
+      ...options.promptVersions.data,
+      ...historical.map((v) => ({ value: v, label: `${v} (Legacy)` })),
+    ];
+  }, [options.promptVersions.data, songPrompts]);
+
+  const promptExists = useMemo(() => {
+    if (!formData.songId) return false;
+    const targetId = defaultPromptId(
+      formData.songId,
+      formData.summaryModel,
+      formData.promptVersion
+    );
+    return songPrompts.some((p) => p.id === targetId);
+  }, [songPrompts, formData.songId, formData.summaryModel, formData.promptVersion]);
+
+  const illustrationExists = useMemo(() => {
+    return allIllustrations?.some(
+      (ill) =>
+        ill.songId === formData.songId &&
+        ill.imageModel === formData.imageModel &&
+        ill.summaryModel === formData.summaryModel &&
+        ill.summaryPromptVersion === formData.promptVersion
+    );
+  }, [allIllustrations, formData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,94 +120,112 @@ function AIGeneratedForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <SongIdField
         songId={formData.songId || ""}
         onSongIdChange={(value) => updateFormData({ songId: value })}
         mode="ai"
       />
 
-      <div className="space-y-2">
-        <Label>Prompt Version</Label>
-        <Select
-          value={formData.promptVersion}
-          onValueChange={(value) =>
-            updateFormData({ promptVersion: value as SummaryPromptVersion })
-          }
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select a prompt version" />
-          </SelectTrigger>
-          <SelectContent>
-            {options.promptVersions.data.map(
-              (option: { value: string; label: string }) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ),
-            )}
-          </SelectContent>
-        </Select>
+      {/* Prompt Configuration Group */}
+      <div className="space-y-4 pt-2">
+        <div className="flex items-center justify-between">
+          <Label className="text-xs font-bold uppercase tracking-tight text-muted-foreground">
+            LLM Prompt Settings
+          </Label>
+          {formData.songId && (
+            <div className={`flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full border ${
+              promptExists 
+                ? "bg-emerald-50 text-emerald-600 border-emerald-100" 
+                : "bg-amber-50 text-amber-600 border-amber-100"
+            }`}>
+              {promptExists ? (
+                <>
+                  <CheckCircle2 className="w-3 h-3" />
+                  Prompt Cached
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-3 h-3" />
+                  New Prompt Needed
+                </>
+              )}
+            </div>
+          )}
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label className="text-xs">Model</Label>
+            <Select
+              value={formData.summaryModel}
+              onValueChange={(v) => updateFormData({ summaryModel: v as AvailableSummaryModel })}
+            >
+              <SelectTrigger className="h-9">
+                <SelectValue placeholder="Model" />
+              </SelectTrigger>
+              <SelectContent>
+                {summaryModelOptions.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-xs">Version</Label>
+            <Select
+              value={formData.promptVersion}
+              onValueChange={(v) => updateFormData({ promptVersion: v as SummaryPromptVersion })}
+            >
+              <SelectTrigger className="h-9">
+                <SelectValue placeholder="Version" />
+              </SelectTrigger>
+              <SelectContent>
+                {promptVersionOptions.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label>Summary Model</Label>
-          <Select
-            value={formData.summaryModel}
-            onValueChange={(value) =>
-              updateFormData({
-                summaryModel: value as AvailableSummaryModel,
-              })
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select summary model" />
-            </SelectTrigger>
-            <SelectContent>
-              {options.summaryModels.data.map(
-                (option: { value: string; label: string }) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ),
-              )}
-            </SelectContent>
-          </Select>
-        </div>
-
+      {/* Image Configuration Group */}
+      <div className="space-y-4 border-t pt-4">
+        <Label className="text-xs font-bold uppercase tracking-tight text-muted-foreground block">
+          Generation Settings
+        </Label>
+        
         <ImageModelSelect
           value={formData.imageModel || ""}
-          onChange={(value) =>
-            updateFormData({ imageModel: value as AvailableImageModel })
-          }
+          onChange={(v) => updateFormData({ imageModel: v as AvailableImageModel })}
           options={options.imageModels.data}
+        />
+        
+        <ActiveSwitch
+          isActive={formData.setAsActive || false}
+          onActiveChange={(checked) => updateFormData({ setAsActive: checked })}
+          mode="ai"
         />
       </div>
 
-      <ActiveSwitch
-        isActive={formData.setAsActive || false}
-        onActiveChange={(checked) => updateFormData({ setAsActive: checked })}
-        mode="ai"
-      />
-      {illustration?.songId && (
-        <p>
-          {songPrompts
-            .map((p) => p.id)
-            .includes(
-              defaultPromptId(
-                illustration?.songId,
-                formData.summaryModel,
-                formData.promptVersion,
-              ),
-            )
-            ? "Prompt exists"
-            : "Prompt will be generated"}
-        </p>
-      )}
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Generating..." : "Generate with AI"}
-      </Button>
+      <div className="space-y-3">
+        {illustrationExists && (
+          <div className="flex items-center justify-center gap-2 text-muted-foreground text-[11px] bg-muted/50 py-2 rounded-md border border-dashed">
+            <History className="w-3.5 h-3.5" />
+            This specific combination already exists in the gallery.
+          </div>
+        )}
+
+        <Button 
+          type="submit" 
+          className="w-full" 
+          disabled={isLoading || illustrationExists || !formData.songId}
+        >
+          {isLoading ? "Generating..." : illustrationExists ? "Configuration Exists" : "Generate Illustration"}
+        </Button>
+      </div>
     </form>
   );
 }
