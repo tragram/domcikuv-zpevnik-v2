@@ -52,7 +52,7 @@ export default {
         status: 200,
       });
     } catch (error: any) {
-      console.error("🚨 Fetch handler caught an error:", error);
+      console.error("Fetch handler caught an error:", error);
       return new Response(`Task failed: ${error.message}\n${error.stack}`, {
         status: 500,
       });
@@ -60,29 +60,36 @@ export default {
   },
 };
 
-// --- DEBUG HELPER ---
-function debugAndValidatePath(path: string, context: string): void {
-  const issues = [];
-  if (path.includes("//")) issues.push("Contains double slashes (//)");
-  if (path.startsWith("/")) issues.push("Starts with a slash");
-  if (path.endsWith("/")) issues.push("Ends with a slash");
-  if (/[\r\n]/.test(path)) issues.push("Contains hidden newline characters");
-  if (path.includes("..")) issues.push("Contains '..'");
-  if (path.includes(" "))
-    issues.push(
-      "Contains spaces (GitHub allows this, but it might indicate messy data)",
-    );
+// --- GUARDS & HELPERS ---
 
-  if (issues.length > 0) {
-    console.error(`\n🚨 MALFORMED PATH DETECTED!`);
-    console.error(`   Context: ${context}`);
-    console.error(`   Raw Path string: "${path}"`);
-    console.error(`   Issues found: ${issues.join(", ")}`);
-    console.error(
-      `   Hex dump of path (to spot hidden chars):`,
-      Buffer.from(path).toString("hex"),
-    );
-    console.error(`----------------------------------------\n`);
+/**
+ * Ensures a string is safe to use as a folder or file name in Git.
+ * Strips URLs, slashes, and special characters.
+ */
+function sanitizePathSegment(segment: string): string {
+  if (!segment) return "unknown";
+  return segment
+    .replace(/[^a-zA-Z0-9.\-_]/g, "-") // Replace bad chars with dashes
+    .replace(/-+/g, "-") // Collapse multiple dashes
+    .replace(/^-|-$/g, ""); // Trim dashes from start/end
+}
+
+/**
+ * Extracts the correct R2 key, even if wrapped in a Cloudflare image resizing URL.
+ */
+function getR2Key(url: string): string {
+  let key = url;
+
+  // Strip Cloudflare CDN Image Resizing prefix if it exists
+  const cgiMatch = key.match(/^\/?cdn-cgi\/image\/[^/]+\/(.+)$/);
+  if (cgiMatch) {
+    key = cgiMatch[1];
+  }
+
+  try {
+    return new URL(key).pathname.replace(/^\//, "");
+  } catch {
+    return key.replace(/^\//, "");
   }
 }
 
@@ -207,16 +214,10 @@ async function syncToGithub(env: Env): Promise<void> {
 
   for (const songApi of allSongsApi) {
     const song = new SongData(songApi);
-    if (song.externalSource) {
-      continue;
-    }
 
     // A. ChordPro
-    const chordproPath = `songs/chordpro/${song.id}.pro`;
-    debugAndValidatePath(chordproPath, `ChordPro for Song ID: ${song.id}`);
-
     treeEntries.push({
-      path: chordproPath,
+      path: `songs/chordpro/${song.id}.pro`,
       mode: "100644",
       type: "blob",
       content: song.toCustomChordpro(),
@@ -232,20 +233,13 @@ async function syncToGithub(env: Env): Promise<void> {
       const illustrationsByPrompt = new Map<string, any[]>();
 
       for (const ill of songIllustrations) {
-        // --- DEBUGGING POTENTIAL VARIABLES ---
-        if (!ill.promptId)
-          console.warn(
-            `⚠️ Warning: Missing promptId for illustration ID ${ill.id} on song ${song.id}`,
-          );
-        if (!ill.imageModel)
-          console.warn(
-            `⚠️ Warning: Missing imageModel for illustration ID ${ill.id} on song ${song.id}`,
-          );
-
-        const promptPathPart = ill.promptId
+        // Sanitize the paths to guard against full URLs in the database
+        const rawPromptPart = ill.promptId
           ? ill.promptId.replace(song.id + "_", "")
-          : "UNKNOWN_PROMPT";
-        const filename = `${ill.imageModel}.webp`;
+          : "unknown";
+        const promptPathPart = sanitizePathSegment(rawPromptPart);
+        const safeModelName = sanitizePathSegment(ill.imageModel || "unknown");
+        const filename = `${safeModelName}.webp`;
 
         if (!illustrationsByPrompt.has(ill.promptId))
           illustrationsByPrompt.set(ill.promptId, []);
@@ -256,17 +250,8 @@ async function syncToGithub(env: Env): Promise<void> {
           filename,
         });
 
-        // Upload Images as Blobs
-        for (const type of ["full", "thumbnail"]) {
-          const url = type === "full" ? ill.imageURL : ill.thumbnailURL;
-
-          if (!url) {
-            console.warn(
-              `⚠️ Warning: Missing ${type} URL for illustration ID ${ill.id}`,
-            );
-            continue;
-          }
-
+        const url = ill.imageURL;
+        if (url) {
           const r2Key = getR2Key(url);
           const r2Object = await env.R2_BUCKET.get(r2Key);
 
@@ -280,25 +265,17 @@ async function syncToGithub(env: Env): Promise<void> {
               encoding: "base64",
             });
 
-            const imagePath = `songs/illustrations/${song.id}/${promptPathPart}/${type}/${filename}`;
-            debugAndValidatePath(imagePath, `Image path for ill.id: ${ill.id}`);
-
             treeEntries.push({
-              path: imagePath,
+              path: `songs/illustrations/${song.id}/${promptPathPart}/full/${filename}`,
               mode: "100644",
               type: "blob",
               sha: blobData.sha,
             });
-          } else {
-            console.warn(`⚠️ Warning: R2 object not found for key: ${r2Key}`);
           }
         }
       }
 
       // YAML Metadata
-      const yamlPath = `songs/illustrations/${song.id}/illustrations.yaml`;
-      debugAndValidatePath(yamlPath, `YAML for Song ID: ${song.id}`);
-
       const metadata = {
         songId: song.id,
         prompts: songPrompts.map((p) => ({
@@ -308,7 +285,7 @@ async function syncToGithub(env: Env): Promise<void> {
       };
 
       treeEntries.push({
-        path: yamlPath,
+        path: `songs/illustrations/${song.id}/illustrations.yaml`,
         mode: "100644",
         type: "blob",
         content: yaml.dump(metadata),
@@ -316,87 +293,54 @@ async function syncToGithub(env: Env): Promise<void> {
     }
   }
 
-  if (treeEntries.length === 0) {
-    console.log("No files to sync. Exiting.");
-    return;
-  }
+  if (treeEntries.length === 0) return;
 
   // 3. Git Operations (Commit & PR)
-  try {
-    console.log(
-      `Preparing to send ${treeEntries.length} entries to GitHub createTree API.`,
-    );
+  const { data: repoData } = await octokit.rest.repos.get({ owner, repo });
+  const defaultBranch = repoData.default_branch;
+  const { data: refData } = await octokit.rest.git.getRef({
+    owner,
+    repo,
+    ref: `heads/${defaultBranch}`,
+  });
+  const latestCommitSha = refData.object.sha;
 
-    const { data: repoData } = await octokit.rest.repos.get({ owner, repo });
-    const defaultBranch = repoData.default_branch;
-    const { data: refData } = await octokit.rest.git.getRef({
-      owner,
-      repo,
-      ref: `heads/${defaultBranch}`,
-    });
-    const latestCommitSha = refData.object.sha;
+  // Create Tree
+  const { data: treeData } = await octokit.rest.git.createTree({
+    owner,
+    repo,
+    base_tree: latestCommitSha,
+    tree: treeEntries,
+  });
 
-    // Create Tree
-    const { data: treeData } = await octokit.rest.git.createTree({
-      owner,
-      repo,
-      base_tree: latestCommitSha,
-      tree: treeEntries,
-    });
+  // Create Commit
+  const { data: commitData } = await octokit.rest.git.createCommit({
+    owner,
+    repo,
+    message: "chore: Automated sync of ChordPro data and illustrations",
+    tree: treeData.sha,
+    parents: [latestCommitSha],
+  });
 
-    console.log("✓ Tree created successfully:", treeData.sha);
+  // Create Branch
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const branchName = `data-sync-${timestamp}`;
+  await octokit.rest.git.createRef({
+    owner,
+    repo,
+    ref: `refs/heads/${branchName}`,
+    sha: commitData.sha,
+  });
 
-    // Create Commit
-    const { data: commitData } = await octokit.rest.git.createCommit({
-      owner,
-      repo,
-      message: "chore: Automated sync of ChordPro data and illustrations",
-      tree: treeData.sha,
-      parents: [latestCommitSha],
-    });
+  // Create Pull Request
+  const { data: prData } = await octokit.rest.pulls.create({
+    owner,
+    repo,
+    title: `Automated Data Sync: ${timestamp}`,
+    head: branchName,
+    base: defaultBranch,
+    body: `Automated pull request pushing the newest ChordPro configurations, generated prompts, and illustrations.\n\nFiles synced: \`${treeEntries.length}\``,
+  });
 
-    // Create Branch
-    const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-    const branchName = `data-sync-${timestamp}`;
-    await octokit.rest.git.createRef({
-      owner,
-      repo,
-      ref: `refs/heads/${branchName}`,
-      sha: commitData.sha,
-    });
-
-    // Create Pull Request
-    const { data: prData } = await octokit.rest.pulls.create({
-      owner,
-      repo,
-      title: `Automated Data Sync: ${timestamp}`,
-      head: branchName,
-      base: defaultBranch,
-      body: `Automated pull request pushing the newest ChordPro configurations, generated prompts, and illustrations.\n\nFiles synced: \`${treeEntries.length}\``,
-    });
-
-    console.log(`✓ Pull Request created: ${prData.html_url}`);
-  } catch (gitError: any) {
-    console.error("\n❌ GITHUB API ERROR DURING SYNC:");
-    console.error(gitError.message);
-
-    // If it's the tree error, log all paths so we can comb through them
-    if (
-      gitError.message &&
-      gitError.message.includes("malformed path component")
-    ) {
-      console.error("\nDumping all paths attempted in this tree payload:");
-      treeEntries.forEach((t, index) => console.error(`[${index}] ${t.path}`));
-    }
-
-    throw gitError;
-  }
-}
-
-function getR2Key(url: string): string {
-  try {
-    return new URL(url).pathname.replace(/^\//, "");
-  } catch {
-    return url.replace(/^\//, "");
-  }
+  console.log(`✓ Pull Request created: ${prData.html_url}`);
 }

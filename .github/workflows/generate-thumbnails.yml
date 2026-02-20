@@ -1,0 +1,38 @@
+name: Generate Thumbnails
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'songs/illustrations/**/full/*.webp'
+
+permissions:
+  contents: write # Needed to commit the thumbnails back to the repo
+
+jobs:
+  generate-thumbnails:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Important for the auto-commit action
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        # Install sharp right before running the script
+        run: npm install sharp
+
+      - name: Run thumbnail generator
+        run: node scripts/generate-thumbnails.mjs
+
+      - name: Commit newly generated thumbnails
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-generate static PWA thumbnails"
+          file_pattern: "songs/illustrations/**/thumbnail/*.webp"
