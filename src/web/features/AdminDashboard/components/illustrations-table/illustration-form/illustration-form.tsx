@@ -10,8 +10,8 @@ import {
   AvailableSummaryModel,
   AvailableImageModel,
 } from "src/worker/helpers/image-generator";
-import { IllustrationPromptDB } from "src/lib/db/schema";
 import AIGeneratedForm from "./ai-generated-form";
+import useLocalStorageState from "use-local-storage-state";
 
 interface IllustrationFormData {
   songId?: string;
@@ -50,8 +50,9 @@ export function IllustrationForm({
   manualOnly = false,
   onSuccess = () => {},
 }: IllustrationFormProps) {
-  const [activeTab, setActiveTab] = useState<"ai" | "manual">(
-    manualOnly ? "manual" : "ai",
+  const [activeTab, setActiveTab] = useLocalStorageState<"ai" | "manual">(
+    "admin-illustration-form-activeTab",
+    { defaultValue: manualOnly ? "manual" : "ai" },
   );
 
   if (manualOnly) {
