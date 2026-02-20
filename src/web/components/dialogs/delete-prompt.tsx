@@ -10,6 +10,7 @@ type Props = {
   buttonText?: string;
   variant?: VariantProps<typeof buttonVariants>["variant"];
   size?: VariantProps<typeof buttonVariants>["size"];
+  mini?: boolean;
   disabled?: boolean;
   isLoading?: boolean;
 };
@@ -35,6 +36,7 @@ const DeletePrompt = ({
   buttonText,
   variant = "destructive",
   size = "icon",
+  mini = false,
   disabled,
   isLoading,
 }: Props) => {
@@ -45,7 +47,7 @@ const DeletePrompt = ({
           variant={variant}
           size={size}
           disabled={disabled || isLoading}
-          className="h-7 w-7 p-0"
+          className={mini ? "h-7 w-7 p-0" : ""}
         >
           {buttonText ? buttonText : <Trash2 />}
         </Button>

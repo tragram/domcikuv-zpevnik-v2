@@ -236,6 +236,7 @@ export function IllustrationCard({
               description="This action cannot be undone."
               variant="ghost"
               size="sm"
+              mini={true}
               disabled={deleteMutation.isPending}
             />
           )}

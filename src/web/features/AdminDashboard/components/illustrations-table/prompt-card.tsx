@@ -91,6 +91,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
               description="This cannot be undone. You cannot delete prompts currently used by illustrations."
               variant="ghost"
               size="sm"
+              mini={true}
               disabled={deleteMutation.isPending}
             />
           </ActionButtons>
