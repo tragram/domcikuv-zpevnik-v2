@@ -1,8 +1,7 @@
 songId: Poupata-Toulavy_boty
 prompts:
-  - promptId: Poupata-Toulavy_boty_gpt-4o-mini_v1
+  - id: Poupata-Toulavy_boty_gpt-4o-mini_v1
     songId: Poupata-Toulavy_boty
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       summer landscape, evoking memories of a joyful past and a lost father.
       Include elements like a distant mountain range and a soft, melancholic
       light to reflect the themes of journey and remembrance.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

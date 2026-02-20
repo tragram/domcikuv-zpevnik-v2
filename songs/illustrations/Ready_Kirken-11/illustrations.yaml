@@ -1,8 +1,7 @@
 songId: Ready_Kirken-11
 prompts:
-  - promptId: Ready_Kirken-11_gpt-4o-mini_v1
+  - id: Ready_Kirken-11_gpt-4o-mini_v1
     songId: Ready_Kirken-11
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       tranquility. The scene should convey a sense of introspection and hope,
       with shadows hinting at past struggles, while a vibrant flower blooms in
       the foreground, representing the beauty that emerges from simplicity.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Nezmari-Boure
 prompts:
-  - promptId: Nezmari-Boure_gpt-4o-mini_v1
+  - id: Nezmari-Boure_gpt-4o-mini_v1
     songId: Nezmari-Boure
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       figure in a small boat, braving the tumultuous waters, symbolizing
       resilience and hope. The sky should be dark and ominous, yet a faint light
       breaks through, representing love and support amidst the chaos.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-17T07:16:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Pokac-Kebaby
 prompts:
-  - promptId: Pokac-Kebaby_gpt-4o-mini_v1
+  - id: Pokac-Kebaby_gpt-4o-mini_v1
     songId: Pokac-Kebaby
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       the background, a sign reads "Halal Food" and there's a playful depiction
       of various foods like kebabs, vegetables, and drinks, emphasizing the
       cultural clash and the traveler's longing for familiar comfort food.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-17T07:16:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

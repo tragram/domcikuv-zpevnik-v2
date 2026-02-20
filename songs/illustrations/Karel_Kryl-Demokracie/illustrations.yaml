@@ -1,8 +1,7 @@
 songId: Karel_Kryl-Demokracie
 prompts:
-  - promptId: Karel_Kryl-Demokracie_gpt-4o-mini_v1
+  - id: Karel_Kryl-Demokracie_gpt-4o-mini_v1
     songId: Karel_Kryl-Demokracie
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       and a symbolic representation of a heart replaced by a stomach, all set
       against a backdrop of contrasting symbols of prosperity and corruption.
       Use a mix of humor and critique to capture the essence of the lyrics.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
