@@ -1,8 +1,7 @@
 songId: Mandrage-Srouby_a_matice
 prompts:
-  - promptId: Mandrage-Srouby_a_matice_gpt-4o-mini_v1
+  - id: Mandrage-Srouby_a_matice_gpt-4o-mini_v1
     songId: Mandrage-Srouby_a_matice
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       time, symbolized by gears and nuts and bolts. The atmosphere should blend
       light and night, evoking a sense of love and connection amidst the
       dreamlike surroundings.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-17T07:16:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

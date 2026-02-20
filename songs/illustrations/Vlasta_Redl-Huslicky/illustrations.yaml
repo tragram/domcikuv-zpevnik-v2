@@ -1,8 +1,7 @@
 songId: Vlasta_Redl-Huslicky
 prompts:
-  - promptId: Vlasta_Redl-Huslicky_gpt-4o-mini_v1
+  - id: Vlasta_Redl-Huslicky_gpt-4o-mini_v1
     songId: Vlasta_Redl-Huslicky
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       background, depict a dreamy, ethereal figure of a young musician
       peacefully asleep, hinting at a whimsical dream. The atmosphere should
       evoke a sense of nostalgia and longing, with soft, warm colors.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-17T07:16:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Irish_Rovers-Drunken_Sailor
 prompts:
-  - promptId: Irish_Rovers-Drunken_Sailor_gpt-4o-mini_v1
+  - id: Irish_Rovers-Drunken_Sailor_gpt-4o-mini_v1
     songId: Irish_Rovers-Drunken_Sailor
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       elements like a rustic longboat, a playful atmosphere, and a whimsical
       touch with the captain's daughter nearby. The sky should be brightening
       with morning light, capturing the spirit of the song.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-17T07:16:35.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

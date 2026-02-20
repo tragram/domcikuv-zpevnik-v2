@@ -1,8 +1,7 @@
 songId: Divokej_Bill-Bohuzel
 prompts:
-  - promptId: Divokej_Bill-Bohuzel_gpt-4o-mini_v2
+  - id: Divokej_Bill-Bohuzel_gpt-4o-mini_v2
     songId: Divokej_Bill-Bohuzel
-    createdAt: 1754387144000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       faces expressing despair. The atmosphere is heavy and foreboding,
       capturing the essence of a journey to the afterlife, with hints of
       blood-red clouds in the sky, symbolizing the pact with the devil.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

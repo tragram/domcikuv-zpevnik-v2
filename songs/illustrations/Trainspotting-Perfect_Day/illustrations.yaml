@@ -1,8 +1,7 @@
 songId: Trainspotting-Perfect_Day
 prompts:
-  - promptId: Trainspotting-Perfect_Day_gpt-4o-mini_v1
+  - id: Trainspotting-Perfect_Day_gpt-4o-mini_v1
     songId: Trainspotting-Perfect_Day
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       playful animals, and a cozy outdoor movie setup. The atmosphere should
       convey a sense of joy, relaxation, and the beauty of a perfect day spent
       together.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Stanislav_Hlozek-Dajana
 prompts:
-  - promptId: Stanislav_Hlozek-Dajana_gpt-4o-mini_v1
+  - id: Stanislav_Hlozek-Dajana_gpt-4o-mini_v1
     songId: Stanislav_Hlozek-Dajana
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       cinnamon-scented dreams, represented as ethereal wisps in the air. Capture
       the contrast between her outward smile and inner sorrow, with hints of a
       past love lingering in the shadows.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

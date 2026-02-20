@@ -1,8 +1,7 @@
 songId: Kamil_Strihavka-Zeme_vzdalena
 prompts:
-  - promptId: Kamil_Strihavka-Zeme_vzdalena_gpt-4o-mini_v1
+  - id: Kamil_Strihavka-Zeme_vzdalena_gpt-4o-mini_v1
     songId: Kamil_Strihavka-Zeme_vzdalena
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       with hints of mystery and longing in the atmosphere. Incorporate elements
       like a guitar gently weeping, soft curtains casting shadows, and a distant
       star shining above, evoking a sense of introspection and connection.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

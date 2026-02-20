@@ -1,8 +1,7 @@
 songId: Kamelot-Zachrante_kone
 prompts:
-  - promptId: Kamelot-Zachrante_kone_gpt-4o-mini_v1
+  - id: Kamelot-Zachrante_kone_gpt-4o-mini_v1
     songId: Kamelot-Zachrante_kone
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       for help amidst the flames, with a backdrop of a dark sky and scattered
       crows. Capture the emotion of loss and urgency, emphasizing the bond
       between the person and the horses.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

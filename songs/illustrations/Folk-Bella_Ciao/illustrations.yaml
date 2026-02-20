@@ -1,8 +1,7 @@
 songId: Folk-Bella_Ciao
 prompts:
-  - promptId: Folk-Bella_Ciao_gpt-4o-mini_v1
+  - id: Folk-Bella_Ciao_gpt-4o-mini_v1
     songId: Folk-Bella_Ciao
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       sacrifice. Include a silhouette of a partisan figure in the background,
       evoking a sense of hope and resilience, with soft, warm colors that convey
       a feeling of nostalgia and remembrance.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:35.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

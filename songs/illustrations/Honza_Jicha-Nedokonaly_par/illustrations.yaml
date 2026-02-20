@@ -1,8 +1,7 @@
 songId: Honza_Jicha-Nedokonaly_par
 prompts:
-  - promptId: Honza_Jicha-Nedokonaly_par_gpt-4o-mini_v1
+  - id: Honza_Jicha-Nedokonaly_par_gpt-4o-mini_v1
     songId: Honza_Jicha-Nedokonaly_par
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       expectations. Include elements like a city skyline, coffee cups, and a
       swimming pool in the background to capture the essence of their everyday
       life.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-17T07:16:35.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Kabat-Saman
 prompts:
-  - promptId: Kabat-Saman_gpt-4o-mini_v1
+  - id: Kabat-Saman_gpt-4o-mini_v1
     songId: Kabat-Saman
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       background, shadows of children can be seen emerging from the darkness,
       symbolizing new beginnings amidst a sense of melancholy. The atmosphere is
       rich with a sense of ancient wisdom and introspection.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

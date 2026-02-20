@@ -1,8 +1,7 @@
 songId: Rod_Stewart-Sailing
 prompts:
-  - promptId: Rod_Stewart-Sailing_gpt-4o-mini_v1
+  - id: Rod_Stewart-Sailing_gpt-4o-mini_v1
     songId: Rod_Stewart-Sailing
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       clouds and hints of sunset colors. In the distance, a silhouette of a
       person stands on the boat, arms outstretched as if embracing freedom,
       symbolizing a journey home to a loved one.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-17T07:16:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Karcoolka-Kozel
 prompts:
-  - promptId: Karcoolka-Kozel_gpt-4o-mini_v2
+  - id: Karcoolka-Kozel_gpt-4o-mini_v2
     songId: Karcoolka-Kozel
-    createdAt: 1754387146000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       avalanche in the distance, emphasizing a sense of solitude and resilience.
       The sky is a mix of ominous clouds and rays of sunlight breaking through,
       symbolizing the contrast between fear and hope.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-17T07:16:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

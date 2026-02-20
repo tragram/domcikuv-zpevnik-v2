@@ -1,8 +1,7 @@
 songId: Vlasta_Redl-Vecer_krupavych_srdicek
 prompts:
-  - promptId: Vlasta_Redl-Vecer_krupavych_srdicek_gpt-4o-mini_v1
+  - id: Vlasta_Redl-Vecer_krupavych_srdicek_gpt-4o-mini_v1
     songId: Vlasta_Redl-Vecer_krupavych_srdicek
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       of creativity, like scattered matches and a playful arrangement of small
       hearts forming a larger heart, symbolizing connection and the beauty of
       simple rituals.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-17T07:16:43.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

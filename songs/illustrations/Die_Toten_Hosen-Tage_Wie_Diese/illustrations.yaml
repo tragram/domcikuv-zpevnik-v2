@@ -1,8 +1,7 @@
 songId: Die_Toten_Hosen-Tage_Wie_Diese
 prompts:
-  - promptId: Die_Toten_Hosen-Tage_Wie_Diese_gpt-4o-mini_v1
+  - id: Die_Toten_Hosen-Tage_Wie_Diese_gpt-4o-mini_v1
     songId: Die_Toten_Hosen-Tage_Wie_Diese
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       backdrop should feature illuminated streets, bridges, and music notes
       floating in the air, symbolizing a sense of euphoria and endless
       possibilities.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-17T07:16:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Chinaski-1_signalni
 prompts:
-  - promptId: Chinaski-1_signalni_gpt-4o-mini_v1
+  - id: Chinaski-1_signalni_gpt-4o-mini_v1
     songId: Chinaski-1_signalni
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       travel and experiences. Include elements of nostalgia, like musical notes
       and a microphone, to capture the essence of singing and self-expression.
       The atmosphere should blend hope and introspection.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-17T07:16:33.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
@@ -19,3 +21,30 @@ prompts:
       - createdAt: 1754387142000
         imageModel: stable-diffusion-3.5-large
         filename: stable-diffusion-3.5-large.webp
+  - id: Chinaski-1_signalni_manual_v1-manual_1771615258656
+    songId: Chinaski-1_signalni
+    summaryPromptVersion: v1-manual
+    summaryModel: manual
+    text: Test pestík
+    createdAt: 2026-02-20T19:20:58.000Z
+    updatedAt: 2026-02-20T19:21:10.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1771615258000
+        imageModel: dad
+        filename: dad.webp
+  - id: Chinaski-1_signalni_gpt-5-mini_v2
+    songId: Chinaski-1_signalni
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Bittersweet, retro scene: a slightly shabby crooner reminiscent of a 1960s
+      Czech star (Karel Gott) on a small smoky bar stage under a warm spotlight,
+      dramatic hand raised, singing into a vintage microphone
+      ("vampam-tydapam"), an amused lover at a nearby table with scattered
+      postcards and a small globe hinting at world travel, a few coins on the
+      table—cinematic, melancholic, ironic.
+    createdAt: 2026-02-20T21:09:39.000Z
+    updatedAt: 2026-02-20T21:09:39.000Z
+    deleted: false
+    illustrations: []
