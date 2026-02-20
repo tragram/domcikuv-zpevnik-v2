@@ -13,11 +13,16 @@ import {
   successJSend,
 } from "../responses";
 import { defaultPromptId } from "~/types/songData";
+import z from "zod/v4";
 
 const illustrationPromptCreateSchema = createInsertSchema(
-  illustrationPrompt
+  illustrationPrompt,
 ).omit({
   id: true,
+});
+
+const promptModifySchema = z.object({
+  text: z.string().min(1, "Prompt text cannot be empty"),
 });
 
 export const illustrationPromptRoutes = buildApp()
@@ -26,7 +31,42 @@ export const illustrationPromptRoutes = buildApp()
     const illustrationPrompts = await db.select().from(illustrationPrompt);
     return successJSend(c, illustrationPrompts);
   })
+  .put("/:id", zValidator("json", promptModifySchema), async (c) => {
+    try {
+      const promptId = c.req.param("id");
+      const updateData = c.req.valid("json");
+      const db = drizzle(c.env.DB);
 
+      const existingPrompt = await db
+        .select({ id: illustrationPrompt.id })
+        .from(illustrationPrompt)
+        .where(eq(illustrationPrompt.id, promptId))
+        .limit(1);
+
+      if (existingPrompt.length === 0) {
+        return itemNotFoundFail(c, "prompt");
+      }
+
+      const updatedPrompt = await db
+        .update(illustrationPrompt)
+        .set({
+          text: updateData.text,
+          updatedAt: new Date(),
+        })
+        .where(eq(illustrationPrompt.id, promptId))
+        .returning();
+
+      return successJSend(c, updatedPrompt[0]);
+    } catch (error) {
+      console.error("Error updating illustration prompt:", error);
+      return errorJSend(
+        c,
+        "Failed to update illustration prompt",
+        500,
+        "UPDATE_ERROR",
+      );
+    }
+  })
   .post(
     "/create",
     zValidator("json", illustrationPromptCreateSchema),
@@ -46,7 +86,7 @@ export const illustrationPromptRoutes = buildApp()
         const newId = defaultPromptId(
           promptData.songId,
           promptData.summaryModel,
-          promptData.summaryPromptVersion
+          promptData.summaryPromptVersion,
         );
 
         // assume that a combination song-model-prompt fully defines the image prompt
@@ -59,7 +99,7 @@ export const illustrationPromptRoutes = buildApp()
           return errorJSend(
             c,
             "Prompt with the given combination songId-summaryModel-summaryPromptVersion already exists",
-            409
+            409,
           );
         }
 
@@ -78,10 +118,10 @@ export const illustrationPromptRoutes = buildApp()
           c,
           "Failed to create illustration prompt",
           500,
-          "CREATE_ERROR"
+          "CREATE_ERROR",
         );
       }
-    }
+    },
   )
 
   .delete("/:id", async (c) => {
@@ -106,7 +146,7 @@ export const illustrationPromptRoutes = buildApp()
           c,
           "Cannot delete prompt that is referenced by illustrations",
           400,
-          "PROMPT_IN_USE"
+          "PROMPT_IN_USE",
         );
       }
 
@@ -132,7 +172,7 @@ export const illustrationPromptRoutes = buildApp()
         c,
         "Failed to delete illustration prompt",
         500,
-        "DELETE_ERROR"
+        "DELETE_ERROR",
       );
     }
   });

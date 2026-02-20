@@ -18,6 +18,7 @@ import {
   setActiveIllustration,
   songsWithCurrentVersionAdmin,
   updateIllustration,
+  songsWithIllustrationsAndPrompts,
 } from "~/services/song-service";
 import {
   createUserAdmin,
@@ -32,16 +33,22 @@ import {
   UserDB,
 } from "src/lib/db/schema";
 import { SongModificationSchema } from "src/worker/api/admin/songs";
+import { useMemo } from "react";
 import {
+  IMAGE_MODELS_API,
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_VERSIONS,
+} from "src/worker/helpers/image-generator";
+import {
+  IllustrationModifySchema,
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
-  IllustrationModifySchema,
-} from "src/worker/helpers/illustration-service";
-import { SongWithCurrentVersion } from "src/worker/helpers/song-service";
+} from "src/worker/helpers/illustration-helpers";
+import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
 import {
   CreateUserSchema,
   UpdateUserSchema,
-} from "src/worker/helpers/user-service";
+} from "src/worker/helpers/user-helpers";
 
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({
@@ -605,4 +612,151 @@ export const useDeleteUser = (adminApi: AdminApi) => {
       queryClient.invalidateQueries({ queryKey: ["usersAdmin"] });
     },
   });
+};
+
+export const useCreatePrompt = (adminApi: AdminApi) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: {
+      songId: string;
+      summaryModel: string;
+      summaryPromptVersion: string;
+      text: string;
+    }) => {
+      const response = await adminApi.prompts.create.$post({ json: data });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to create prompt");
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
+    },
+  });
+};
+
+export const useUpdatePrompt = (adminApi: AdminApi) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, text }: { id: string; text: string }) => {
+      const response = await adminApi.prompts[":id"].$put({
+        param: { id },
+        json: { text },
+      });
+      if (!response.ok) throw new Error("Failed to update prompt");
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
+    },
+  });
+};
+
+export const useDeletePrompt = (adminApi: AdminApi) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await adminApi.prompts[":id"].$delete({
+        param: { id },
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete");
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
+    },
+  });
+};
+
+export const useSongPrompts = (adminApi: AdminApi, songId?: string) => {
+  const { data: prompts, isLoading } = usePromptsAdmin(adminApi);
+
+  const songPrompts = useMemo(() => {
+    if (!prompts || !songId) return [];
+    return prompts.filter((p) => p.songId === songId);
+  }, [prompts, songId]);
+
+  return { songPrompts, isLoading };
+};
+
+export const useIllustrationOptions = () => {
+  return useMemo(
+    () => ({
+      promptVersions: {
+        data: SUMMARY_PROMPT_VERSIONS.map((spi) => ({
+          value: spi,
+          label: spi,
+        })),
+        default: SUMMARY_PROMPT_VERSIONS[0],
+      },
+      summaryModels: {
+        data: SUMMARY_MODELS_API.map((smi) => ({ value: smi, label: smi })),
+        default: SUMMARY_MODELS_API[0],
+      },
+      imageModels: {
+        data: IMAGE_MODELS_API.map((im) => ({ value: im, label: im })),
+        default: IMAGE_MODELS_API[0],
+      },
+    }),
+    [],
+  );
+};
+
+export const useIllustrationsTableData = (adminApi: AdminApi) => {
+  const songsQuery = useSongDBAdmin(adminApi);
+  const illustrationsQuery = useIllustrationsAdmin(adminApi);
+  const promptsQuery = usePromptsAdmin(adminApi);
+
+  const isLoading =
+    songsQuery.isLoading ||
+    illustrationsQuery.isLoading ||
+    promptsQuery.isLoading;
+
+  const isError =
+    songsQuery.isError || illustrationsQuery.isError || promptsQuery.isError;
+
+  const groupedData = useMemo(() => {
+    if (!songsQuery.data || !illustrationsQuery.data || !promptsQuery.data) {
+      return {};
+    }
+    return songsWithIllustrationsAndPrompts(
+      songsQuery.data,
+      illustrationsQuery.data,
+      promptsQuery.data,
+    );
+  }, [songsQuery.data, illustrationsQuery.data, promptsQuery.data]);
+
+  const promptsById = useMemo(() => {
+    if (!promptsQuery.data) return new Map();
+    return new Map(promptsQuery.data.map((p) => [p.id, p]));
+  }, [promptsQuery.data]);
+
+  const filterOptions = useMemo(() => {
+    const imageModels = [
+      ...new Set(illustrationsQuery.data?.map((i) => i.imageModel) || []),
+    ];
+    const summaryModels = [
+      ...new Set(promptsQuery.data?.map((p) => p.summaryModel) || []),
+    ];
+    const promptVersions = [
+      ...new Set(promptsQuery.data?.map((p) => p.summaryPromptVersion) || []),
+    ];
+
+    return { imageModels, summaryModels, promptVersions };
+  }, [illustrationsQuery.data, promptsQuery.data]);
+
+  return {
+    songs: songsQuery.data,
+    illustrations: illustrationsQuery.data,
+    prompts: promptsQuery.data,
+    groupedData,
+    promptsById,
+    filterOptions,
+    isLoading,
+    isError,
+  };
 };

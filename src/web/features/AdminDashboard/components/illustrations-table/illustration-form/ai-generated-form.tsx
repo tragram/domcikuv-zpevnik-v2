@@ -16,8 +16,12 @@ import {
 } from "./shared-form-fields";
 import type { IllustrationSubmitData } from "./illustration-form";
 import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
-import { SummaryPromptVersion, AvailableSummaryModel, AvailableImageModel } from "src/worker/helpers/image-generator";
-
+import {
+  SummaryPromptVersion,
+  AvailableSummaryModel,
+  AvailableImageModel,
+} from "src/worker/helpers/image-generator";
+import { useIllustrationOptions } from "~/features/AdminDashboard/adminHooks";
 interface AIGeneratedFormProps {
   illustration: {
     songId?: string;
@@ -28,42 +32,25 @@ interface AIGeneratedFormProps {
   } | null;
   onSave: (data: IllustrationSubmitData) => void;
   isLoading?: boolean;
-  dropdownOptions: {
-    promptVersions: {
-      default: string;
-      data: { value: string; label: string }[];
-    };
-    summaryModels: {
-      default: string;
-      data: { value: string; label: string }[];
-    };
-    imageModels: {
-      default: string;
-      data: { value: string; label: string }[];
-    };
-  };
   onSuccess?: () => void;
 }
 
-export function AIGeneratedForm({
+function AIGeneratedForm({
   illustration,
   onSave,
   isLoading,
-  dropdownOptions,
   onSuccess,
 }: AIGeneratedFormProps) {
-  const [formData, setFormData] = useState<Partial<IllustrationGenerateSchema>>(
-    {
-      songId: illustration?.songId || "",
-      promptVersion: (illustration?.summaryPromptVersion ||
-        dropdownOptions.promptVersions.default) as SummaryPromptVersion,
-      summaryModel: (illustration?.summaryModel ||
-        dropdownOptions.summaryModels.default) as AvailableSummaryModel,
-      imageModel: (illustration?.imageModel ||
-        dropdownOptions.imageModels.default) as AvailableImageModel,
-      setAsActive: illustration?.isActive || false,
-    }
-  );
+  const options = useIllustrationOptions();
+
+  const [formData, setFormData] = useState({
+    songId: illustration?.songId || "",
+    promptVersion:
+      illustration?.summaryPromptVersion || options.promptVersions.default,
+    summaryModel: illustration?.summaryModel || options.summaryModels.default,
+    imageModel: illustration?.imageModel || options.imageModels.default,
+    setAsActive: illustration?.isActive || false,
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -98,12 +85,12 @@ export function AIGeneratedForm({
             <SelectValue placeholder="Select a prompt version" />
           </SelectTrigger>
           <SelectContent>
-            {dropdownOptions.promptVersions.data.map(
+            {options.promptVersions.data.map(
               (option: { value: string; label: string }) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
-              )
+              ),
             )}
           </SelectContent>
         </Select>
@@ -124,12 +111,12 @@ export function AIGeneratedForm({
               <SelectValue placeholder="Select summary model" />
             </SelectTrigger>
             <SelectContent>
-              {dropdownOptions.summaryModels.data.map(
+              {options.summaryModels.data.map(
                 (option: { value: string; label: string }) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
                   </SelectItem>
-                )
+                ),
               )}
             </SelectContent>
           </Select>
@@ -140,7 +127,7 @@ export function AIGeneratedForm({
           onChange={(value) =>
             updateFormData({ imageModel: value as AvailableImageModel })
           }
-          options={dropdownOptions.imageModels.data}
+          options={options.imageModels.data}
         />
       </div>
 
@@ -156,3 +143,5 @@ export function AIGeneratedForm({
     </form>
   );
 }
+
+export default AIGeneratedForm;

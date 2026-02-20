@@ -41,7 +41,12 @@ const DeletePrompt = ({
   return (
     <ConfirmationDialog
       trigger={
-        <Button variant={variant} size={size} disabled={disabled || isLoading}>
+        <Button
+          variant={variant}
+          size={size}
+          disabled={disabled || isLoading}
+          className="h-7 w-7 p-0"
+        >
           {buttonText ? buttonText : <Trash2 />}
         </Button>
       }

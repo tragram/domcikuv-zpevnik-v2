@@ -26,19 +26,19 @@ import {
 } from "~/components/ui/dialog";
 import { cn } from "~/lib/utils";
 import { IllustrationForm } from "./illustration-form/illustration-form";
-import { IllustrationModifySchema } from "src/worker/helpers/illustration-service";
-import { SongWithCurrentVersion } from "src/worker/helpers/song-service";
 import {
   useDeleteIllustration,
   useRestoreIllustration,
   useUpdateIllustration,
 } from "../../adminHooks";
-import {
-  AvailableImageModel,
-  AvailableSummaryModel,
-  SummaryPromptVersion,
-} from "src/worker/api/admin/image-generator";
 import DeletePrompt from "~/components/dialogs/delete-prompt";
+import { IllustrationModifySchema } from "src/worker/helpers/illustration-helpers";
+import {
+  SummaryPromptVersion,
+  AvailableSummaryModel,
+  AvailableImageModel,
+} from "src/worker/helpers/image-generator";
+import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
 
 interface IllustrationCardProps {
   song: SongWithCurrentVersion;
@@ -64,7 +64,7 @@ export function IllustrationCard({
 
   const handleUpdateIllustration = async (
     id: string,
-    illustrationData: IllustrationModifySchema
+    illustrationData: IllustrationModifySchema,
   ) => {
     try {
       await updateMutation.mutateAsync({ id, data: illustrationData });
@@ -103,7 +103,7 @@ export function IllustrationCard({
         data: { setAsActive: !isActive },
       });
       toast.success(
-        isActive ? "Illustration deactivated" : "Illustration activated"
+        isActive ? "Illustration deactivated" : "Illustration activated",
       );
     } catch (error) {
       toast.error("Failed to update illustration status");
@@ -130,7 +130,7 @@ export function IllustrationCard({
           "border-2 rounded-lg p-1 md:p-3 space-y-2 transition-all duration-200",
           isActive ? "border-primary shadow-md" : "border-gray-200",
           illustration.deleted ? "opacity-50" : "",
-          updateMutation.isPending ? "opacity-70" : ""
+          updateMutation.isPending ? "opacity-70" : "",
         )}
       >
         <div className="flex items-start justify-between">
@@ -172,25 +172,25 @@ export function IllustrationCard({
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 w-7 p-0"
             onClick={() => setIsEditDialogOpen(true)}
             disabled={updateMutation.isPending}
+            className="h-7 w-7 p-0"
           >
             <Edit className="h-3 w-3" />
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 w-7 p-0"
             onClick={() => onPreview(illustration.imageURL)}
+            className="h-7 w-7 p-0"
           >
             <Eye className="h-3 w-3" />
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 w-7 p-0"
             onClick={() => window.open(illustration.imageURL, "_blank")}
+            className="h-7 w-7 p-0"
           >
             <ExternalLink className="h-3 w-3" />
           </Button>
@@ -247,22 +247,22 @@ export function IllustrationCard({
                 "text-xs cursor-pointer h-7 transition-colors",
                 updateMutation.isPending
                   ? "pointer-events-none opacity-50"
-                  : "hover:opacity-80"
+                  : "hover:opacity-80",
               )}
               onClick={handleToggleActive}
             >
               {updateMutation.isPending
                 ? "..."
                 : isActive
-                ? "Active"
-                : "Inactive"}
+                  ? "Active"
+                  : "Inactive"}
             </Badge>
           )}
         </ActionButtons>
       </div>
 
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit Illustration</DialogTitle>
           </DialogHeader>
@@ -272,11 +272,6 @@ export function IllustrationCard({
               handleUpdateIllustration(illustration.id, illustrationData)
             }
             isLoading={updateMutation.isPending}
-            dropdownOptions={{
-              promptVersions: { data: [], default: "v1" },
-              summaryModels: { data: [], default: "gpt-4o-mini" },
-              imageModels: { data: [], default: "FLUX.1-dev" },
-            }}
             manualOnly
             onSuccess={() => setIsEditDialogOpen(false)}
           />

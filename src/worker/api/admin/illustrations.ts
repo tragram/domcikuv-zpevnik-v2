@@ -17,6 +17,7 @@ import {
   uploadImageBuffer,
   sameParametersExist,
   moveSongToTrash,
+  createManualPrompt, // Need this imported for fallback
 } from "../../helpers/illustration-helpers";
 import { findSong, SongWithCurrentVersion } from "../../helpers/song-helpers";
 import {
@@ -38,13 +39,18 @@ import { defaultIllustrationId, defaultPromptId } from "~/types/songData";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),
-  summaryPromptVersion: z.string().optional(),
   imageModel: z.string(),
   setAsActive: z.string().transform((val) => val === "true"), // FormData sends as string
   imageFile: z.any().optional(),
   thumbnailFile: z.any().optional(),
   imageURL: z.string().optional(),
   thumbnailURL: z.string().optional(),
+
+  // Prompt Fields
+  promptId: z.string().optional(),
+  promptText: z.string().optional(),
+  summaryModel: z.string().optional(),
+  summaryPromptVersion: z.string().optional(),
 });
 
 const illustrationGenerateSchema = z.object({
@@ -231,19 +237,57 @@ export const illustrationRoutes = buildApp()
       let imageURL = validatedData.imageURL || "";
       let thumbnailURL = validatedData.thumbnailURL || "";
 
-      // TODO: allow user to enter a custom prompt they used
-      // Create or find the prompt
+      // Logic to resolve or create the prompt
       let prompt;
       try {
-        prompt = await createOrFindManualPrompt(
-          db,
-          validatedData.songId,
-          validatedData.summaryPromptVersion,
-        );
+        if (validatedData.promptId) {
+          // Look up existing prompt by ID
+          const existingPrompt = await db
+            .select()
+            .from(illustrationPrompt)
+            .where(eq(illustrationPrompt.id, validatedData.promptId))
+            .limit(1);
+
+          if (existingPrompt.length === 0) {
+            return failJSend(
+              c,
+              "Selected prompt not found",
+              400,
+              "INVALID_PROMPT_ID",
+            );
+          }
+          prompt = existingPrompt[0];
+        } else if (validatedData.promptText) {
+          // Create new custom prompt
+          const model = validatedData.summaryModel || "manual";
+          const version = validatedData.summaryPromptVersion || "v1-manual";
+          const newId = `${validatedData.songId}_${model}_${version}_${Date.now()}`;
+
+          const newPrompt = await db
+            .insert(illustrationPrompt)
+            .values({
+              id: newId,
+              songId: validatedData.songId,
+              summaryModel: model,
+              summaryPromptVersion: version,
+              text: validatedData.promptText,
+            })
+            .returning();
+
+          prompt = newPrompt[0];
+        } else {
+          // Fallback just in case neither is provided
+          prompt = await createManualPrompt(db, validatedData.songId);
+        }
       } catch (error) {
         return error instanceof Error
           ? errorFail(c, error)
-          : failJSend(c, "Invalid prompt ID", 400, "INVALID_PROMPT_ID");
+          : failJSend(
+              c,
+              "Failed to resolve prompt",
+              400,
+              "PROMPT_RESOLUTION_ERROR",
+            );
       }
 
       // Handle file uploads with proper validation

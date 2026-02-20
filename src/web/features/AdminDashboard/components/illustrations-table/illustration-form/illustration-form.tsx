@@ -1,9 +1,17 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import { AIGeneratedForm } from "./ai-generated-form";
 import { ManualForm } from "./manual-form";
-import { IllustrationCreateSchema, IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
-import { SummaryPromptVersion, AvailableSummaryModel, AvailableImageModel } from "src/worker/helpers/image-generator";
+import {
+  IllustrationCreateSchema,
+  IllustrationGenerateSchema,
+} from "src/worker/helpers/illustration-helpers";
+import {
+  SummaryPromptVersion,
+  AvailableSummaryModel,
+  AvailableImageModel,
+} from "src/worker/helpers/image-generator";
+import { IllustrationPromptDB } from "src/lib/db/schema";
+import AIGeneratedForm from "./ai-generated-form";
 
 interface IllustrationFormData {
   songId?: string;
@@ -13,30 +21,6 @@ interface IllustrationFormData {
   imageURL?: string;
   thumbnailURL?: string;
   isActive?: boolean;
-}
-
-interface DropdownOptions {
-  promptVersions: {
-    data: Array<{
-      value: SummaryPromptVersion;
-      label: string;
-    }>;
-    default: SummaryPromptVersion;
-  };
-  summaryModels: {
-    data: Array<{
-      value: AvailableSummaryModel;
-      label: string;
-    }>;
-    default: AvailableSummaryModel;
-  };
-  imageModels: {
-    data: Array<{
-      value: AvailableImageModel;
-      label: string;
-    }>;
-    default: AvailableImageModel;
-  };
 }
 
 export type IllustrationSubmitData =
@@ -51,40 +35,41 @@ export type IllustrationSubmitData =
 
 interface IllustrationFormProps {
   illustration: Partial<IllustrationFormData>;
+  activePromptId?: string;
   onSave: (data: IllustrationSubmitData) => void;
   isLoading?: boolean;
-  dropdownOptions: DropdownOptions;
   manualOnly?: boolean;
   onSuccess?: () => void;
 }
 
 export function IllustrationForm({
   illustration,
+  activePromptId,
   onSave,
   isLoading,
-  dropdownOptions,
   manualOnly = false,
   onSuccess = () => {},
 }: IllustrationFormProps) {
   const [activeTab, setActiveTab] = useState<"ai" | "manual">(
-    manualOnly ? "manual" : "ai"
+    manualOnly ? "manual" : "ai",
   );
 
   if (manualOnly) {
     return (
-      <div className="max-w-2xl mx-auto p-6">
+      <div className="max-w-full flex flex-col p-6 overflow-auto">
         <ManualForm
           illustration={illustration}
+          activePromptId={activePromptId}
           onSave={onSave}
           isLoading={isLoading}
-          dropdownOptions={dropdownOptions}
+          onSuccess={onSuccess}
         />
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="max-w-full flex flex-col p-6 overflow-auto">
       <Tabs
         value={activeTab}
         onValueChange={(value) => setActiveTab(value as "ai" | "manual")}
@@ -99,16 +84,15 @@ export function IllustrationForm({
             illustration={illustration}
             onSave={onSave}
             isLoading={isLoading}
-            dropdownOptions={dropdownOptions}
             onSuccess={onSuccess}
           />
         </TabsContent>
         <TabsContent value="manual" className="space-y-4 mt-6">
           <ManualForm
             illustration={illustration}
+            activePromptId={activePromptId}
             onSave={onSave}
             isLoading={isLoading}
-            dropdownOptions={dropdownOptions}
             onSuccess={onSuccess}
           />
         </TabsContent>

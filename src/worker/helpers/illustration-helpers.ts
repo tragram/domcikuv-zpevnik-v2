@@ -21,13 +21,18 @@ import { CFImagesThumbnailURL } from "../api/admin/illustrations";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
-  summaryPromptVersion: z.string().optional(),
   imageModel: z.string(),
   setAsActive: z.string().transform((val) => val === "true"), // FormData sends as string
   imageFile: z.any().optional(),
   thumbnailFile: z.any().optional(),
   imageURL: z.string().optional(),
   thumbnailURL: z.string().optional(),
+
+  // Prompt Fields
+  promptId: z.string().optional(),
+  promptText: z.string().optional(),
+  summaryModel: z.string().optional(),
+  summaryPromptVersion: z.string().optional(),
 });
 
 export const illustrationGenerateSchema = z.object({

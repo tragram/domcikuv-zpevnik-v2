@@ -1,19 +1,29 @@
-// manual-form.tsx
 import type React from "react";
 import { useState, useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Upload, X, CheckCircle, AlertCircle } from "lucide-react";
+import { Textarea } from "~/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { Upload, X, CheckCircle } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { SongIdField, ActiveSwitch } from "./shared-form-fields";
 import type { IllustrationSubmitData } from "./illustration-form";
 import { IllustrationCreateSchema } from "src/worker/helpers/illustration-helpers";
-
+import { cn } from "~/lib/utils";
+import { useSongPrompts } from "~/features/AdminDashboard/adminHooks";
+import { useRouteContext } from "@tanstack/react-router";
 interface ManualFormProps {
   illustration: any;
+  activePromptId?: string;
   onSave: (data: IllustrationSubmitData) => void;
   isLoading?: boolean;
-  dropdownOptions: any;
   onSuccess?: () => void;
 }
 
@@ -37,15 +47,15 @@ const resizeImageToThumbnail = (file: File): Promise<File> => {
             });
             resolve(thumbnailFile);
           } else {
-            reject(new Error('Failed to generate thumbnail'));
+            reject(new Error("Failed to generate thumbnail"));
           }
         },
         file.type,
-        0.8
+        0.8,
       );
     };
 
-    img.onerror = () => reject(new Error('Failed to load image'));
+    img.onerror = () => reject(new Error("Failed to load image"));
     img.crossOrigin = "anonymous";
     img.src = URL.createObjectURL(file);
   });
@@ -53,6 +63,7 @@ const resizeImageToThumbnail = (file: File): Promise<File> => {
 
 export function ManualForm({
   illustration,
+  activePromptId,
   onSave,
   isLoading,
   onSuccess,
@@ -62,9 +73,18 @@ export function ManualForm({
   const [imagePreview, setImagePreview] = useState<string>("");
   const [thumbnailPreview, setThumbnailPreview] = useState<string>("");
   const [thumbnailGenerating, setThumbnailGenerating] = useState(false);
-  const [formData, setFormData] = useState<IllustrationCreateSchema>({
+
+  // Prompt handling state
+  const [promptMode, setPromptMode] = useState<"existing" | "new">("existing");
+  const [selectedPromptId, setSelectedPromptId] = useState<string>("");
+  const [newPromptText, setNewPromptText] = useState("");
+  const [manualModel, setManualModel] = useState("manual");
+  const [manualVersion, setManualVersion] = useState("v1-manual");
+  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
+  const { songPrompts } = useSongPrompts(adminApi, illustration.songId);
+
+  const [formData, setFormData] = useState<Partial<IllustrationCreateSchema>>({
     songId: illustration?.songId || "",
-    summaryPromptVersion: illustration?.summaryPromptVersion || "",
     imageModel: illustration?.imageModel || "",
     imageURL: illustration?.imageURL || "",
     thumbnailURL: illustration?.thumbnailURL || "",
@@ -79,136 +99,232 @@ export function ManualForm({
     if (illustration?.thumbnailURL && !thumbnailFile) {
       setThumbnailPreview(illustration.thumbnailURL);
     }
-  }, [illustration?.imageURL, illustration?.thumbnailURL, imageFile, thumbnailFile]);
+  }, [
+    illustration?.imageURL,
+    illustration?.thumbnailURL,
+    imageFile,
+    thumbnailFile,
+  ]);
+
+  // Set initial prompt selection
+  useEffect(() => {
+    const targetPromptId = illustration?.promptId || activePromptId;
+    if (targetPromptId && songPrompts.some((p) => p.id === targetPromptId)) {
+      setPromptMode("existing");
+      setSelectedPromptId(targetPromptId);
+    } else if (songPrompts.length > 0 && !selectedPromptId) {
+      setSelectedPromptId(songPrompts[0].id);
+    } else if (songPrompts.length === 0) {
+      setPromptMode("new");
+    }
+  }, [illustration?.promptId, activePromptId, songPrompts, selectedPromptId]);
 
   const updateFormData = (updates: Partial<IllustrationCreateSchema>) => {
-    setFormData(prev => ({ ...prev, ...updates }));
+    setFormData((prev) => ({ ...prev, ...updates }));
   };
 
-  const handleImageFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       setImageFile(file);
-      
-      // Create preview URL
+
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
-      
-      // Generate thumbnail
+
       setThumbnailGenerating(true);
       try {
-        const thumbnailFile = await resizeImageToThumbnail(file);
-        setThumbnailFile(thumbnailFile);
-        
-        const thumbnailPreviewUrl = URL.createObjectURL(thumbnailFile);
+        const generatedThumbnail = await resizeImageToThumbnail(file);
+        setThumbnailFile(generatedThumbnail);
+
+        const thumbnailPreviewUrl = URL.createObjectURL(generatedThumbnail);
         setThumbnailPreview(thumbnailPreviewUrl);
-        
+
         updateFormData({ imageURL: "", thumbnailURL: "" });
       } catch (error) {
         console.error("Error generating thumbnail:", error);
-        // Could add toast here for thumbnail generation failure
       } finally {
         setThumbnailGenerating(false);
       }
     }
   };
 
-  const handleThumbnailFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleThumbnailFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       setThumbnailFile(file);
-      
+
       const previewUrl = URL.createObjectURL(file);
       setThumbnailPreview(previewUrl);
-      
+
       updateFormData({ thumbnailURL: "" });
     }
   };
 
   const clearImageFile = () => {
-    if (imagePreview && imagePreview.startsWith('blob:')) {
+    if (imagePreview && imagePreview.startsWith("blob:")) {
       URL.revokeObjectURL(imagePreview);
     }
-    if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+    if (thumbnailPreview && thumbnailPreview.startsWith("blob:")) {
       URL.revokeObjectURL(thumbnailPreview);
     }
-    
+
     setImageFile(null);
     setThumbnailFile(null);
     setImagePreview(illustration?.imageURL || "");
     setThumbnailPreview(illustration?.thumbnailURL || "");
-    
-    const imageInput = document.getElementById("image-upload") as HTMLInputElement;
+
+    const imageInput = document.getElementById(
+      "image-upload",
+    ) as HTMLInputElement;
     if (imageInput) imageInput.value = "";
   };
 
   const clearThumbnailFile = () => {
-    if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+    if (thumbnailPreview && thumbnailPreview.startsWith("blob:")) {
       URL.revokeObjectURL(thumbnailPreview);
     }
-    
+
     setThumbnailFile(null);
     setThumbnailPreview(illustration?.thumbnailURL || "");
-    
-    const thumbnailInput = document.getElementById("thumbnail-upload") as HTMLInputElement;
+
+    const thumbnailInput = document.getElementById(
+      "thumbnail-upload",
+    ) as HTMLInputElement;
     if (thumbnailInput) thumbnailInput.value = "";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = { ...formData };
+    const data: any = { ...formData };
     if (imageFile) data.imageFile = imageFile;
     if (thumbnailFile) data.thumbnailFile = thumbnailFile;
-    
+
+    // Attach prompt data
+    if (promptMode === "existing" && selectedPromptId) {
+      data.promptId = selectedPromptId;
+    } else {
+      data.promptText = newPromptText;
+      data.summaryModel = "manual";
+      data.summaryPromptVersion = "manual";
+    }
+
     try {
       await onSave({ mode: "manual", illustrationData: data });
-      
-      // Clean up blob URLs after successful submission
-      if (imagePreview && imagePreview.startsWith('blob:')) {
+
+      if (imagePreview && imagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(imagePreview);
       }
-      if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+      if (thumbnailPreview && thumbnailPreview.startsWith("blob:")) {
         URL.revokeObjectURL(thumbnailPreview);
       }
-      
+
       onSuccess?.();
     } catch (error) {
-      // Error handling is done in parent component
-      console.error('Form submission error:', error);
+      console.error("Form submission error:", error);
     }
   };
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (imagePreview && imagePreview.startsWith('blob:')) {
+      if (imagePreview && imagePreview.startsWith("blob:")) {
         URL.revokeObjectURL(imagePreview);
       }
-      if (thumbnailPreview && thumbnailPreview.startsWith('blob:')) {
+      if (thumbnailPreview && thumbnailPreview.startsWith("blob:")) {
         URL.revokeObjectURL(thumbnailPreview);
       }
     };
   }, []);
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6 w-full">
       <SongIdField
-        songId={formData.songId}
+        songId={formData.songId || ""}
         onSongIdChange={(value) => updateFormData({ songId: value })}
         mode="manual"
       />
 
-      <div className="space-y-2">
-        <Label htmlFor="manual-promptVersion">Prompt version (Optional)</Label>
-        <Input
-          id="manual-promptVersion"
-          value={formData.summaryPromptVersion}
-          onChange={(e) => updateFormData({ summaryPromptVersion: e.target.value })}
-          placeholder="Leave empty to auto-generate a manual prompt"
-        />
-        <p className="text-sm text-muted-foreground">
-          If left empty, a manual prompt will be created automatically. Otherwise, provide an existing prompt version.
-        </p>
+      {/* PROMPT SELECTION UI */}
+      <div className="space-y-4 border rounded-lg p-4 bg-muted/20">
+        <Label className="text-base font-semibold">Illustration Prompt</Label>
+
+        <RadioGroup
+          value={promptMode}
+          onValueChange={(v: "existing" | "new") => setPromptMode(v)}
+          className="flex flex-col gap-4 mt-2"
+        >
+          {/* Existing Prompt Option */}
+          <div className="flex flex-col space-y-2">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem
+                value="existing"
+                id="mode-existing"
+                disabled={songPrompts.length === 0}
+              />
+              <Label
+                htmlFor="mode-existing"
+                className={cn(
+                  songPrompts.length === 0 && "text-muted-foreground",
+                )}
+              >
+                Existing prompt ({songPrompts.length} in total)
+              </Label>
+            </div>
+
+            {promptMode === "existing" && (
+              <div className="pl-6 space-y-2">
+                <Select
+                  value={selectedPromptId}
+                  onValueChange={setSelectedPromptId}
+                >
+                  <SelectTrigger className="w-full  bg-background">
+                    <SelectValue placeholder="Select a prompt..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {songPrompts.map((p) => (
+                      <SelectItem key={p.id} value={p.id}>
+                        <span className="font-mono text-xs text-muted-foreground mr-2">
+                          [{p.summaryModel}]
+                        </span>
+                        {p.text.length > 50
+                          ? p.text.substring(0, 50) + "..."
+                          : p.text}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {selectedPromptId && (
+                  <p className="text-xs text-muted-foreground p-2 bg-background rounded border">
+                    {songPrompts.find((p) => p.id === selectedPromptId)?.text}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* New Prompt Option */}
+          <div className="flex flex-col space-y-2">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="new" id="mode-new" />
+              <Label htmlFor="mode-new">Custom prompt</Label>
+            </div>
+
+            {promptMode === "new" && (
+              <div className="pl-6 space-y-3">
+                <Textarea
+                  placeholder="Enter the exact prompt text used to generate the image..."
+                  value={newPromptText}
+                  onChange={(e) => setNewPromptText(e.target.value)}
+                  className="min-h-[100px] bg-background text-white/50"
+                  required={promptMode === "new"}
+                />
+              </div>
+            )}
+          </div>
+        </RadioGroup>
       </div>
 
       <div className="space-y-2">
@@ -259,7 +375,7 @@ export function ManualForm({
               </Button>
             )}
           </div>
-          
+
           {/* Image Preview */}
           {imagePreview && (
             <div className="mt-2">
@@ -283,7 +399,7 @@ export function ManualForm({
             onChange={(e) => updateFormData({ thumbnailURL: e.target.value })}
             disabled={!!thumbnailFile || !!imageFile}
           />
-          
+
           {imageFile && thumbnailFile ? (
             <div className="flex items-center gap-2 p-4 border-2 border-dashed border-green-200 rounded-md bg-green-50">
               {thumbnailGenerating ? (
@@ -304,7 +420,9 @@ export function ManualForm({
             </div>
           ) : !imageFile ? (
             <>
-              <div className="text-sm text-muted-foreground text-center">or</div>
+              <div className="text-sm text-muted-foreground text-center">
+                or
+              </div>
               <div className="relative">
                 <Input
                   type="file"
@@ -334,7 +452,7 @@ export function ManualForm({
               </div>
             </>
           ) : null}
-          
+
           {/* Thumbnail Preview */}
           {thumbnailPreview && (
             <div className="mt-2">
@@ -349,17 +467,21 @@ export function ManualForm({
       </div>
 
       <ActiveSwitch
-        isActive={formData.setAsActive}
+        isActive={formData.setAsActive || false}
         onActiveChange={(checked) => updateFormData({ setAsActive: checked })}
         mode="manual"
       />
 
-      <Button 
-        type="submit" 
-        className="w-full" 
+      <Button
+        type="submit"
+        className="w-full"
         disabled={isLoading || thumbnailGenerating}
       >
-        {isLoading ? "Saving..." : illustration ? "Update Illustration" : "Create Illustration"}
+        {isLoading
+          ? "Saving..."
+          : illustration
+            ? "Update Illustration"
+            : "Create Illustration"}
       </Button>
     </form>
   );

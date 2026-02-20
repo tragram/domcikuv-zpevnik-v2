@@ -29,11 +29,8 @@ import {
   IllustrationGenerateSchema,
 } from "src/worker/helpers/illustration-helpers";
 import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
-import {
-  SUMMARY_PROMPT_VERSIONS,
-  SUMMARY_MODELS_API,
-  IMAGE_MODELS_API,
-} from "src/worker/helpers/image-generator";
+import { PromptCard } from "./prompt-card";
+import { PromptCreateDialog } from "./prompt-create-dialog";
 
 interface SongIllustrationsGroupProps {
   song: SongWithCurrentVersion;
@@ -43,27 +40,6 @@ interface SongIllustrationsGroupProps {
   onToggleExpanded: () => void;
   showDeleted: boolean;
 }
-
-export const backendDropdownOptions = {
-  promptVersions: {
-    data: SUMMARY_PROMPT_VERSIONS.map((spi) => {
-      return { value: spi, label: spi };
-    }),
-    default: SUMMARY_PROMPT_VERSIONS[0],
-  },
-  summaryModels: {
-    data: SUMMARY_MODELS_API.map((smi) => {
-      return { value: smi, label: smi };
-    }),
-    default: SUMMARY_MODELS_API[0],
-  },
-  imageModels: {
-    data: IMAGE_MODELS_API.map((im) => {
-      return { value: im, label: im };
-    }),
-    default: IMAGE_MODELS_API[0],
-  },
-};
 
 export function SongIllustrationsGroup({
   song,
@@ -76,12 +52,21 @@ export function SongIllustrationsGroup({
   const queryClient = useQueryClient();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSectionIllustrationDialogOpen, setIsSectionIllustrationDialogOpen] =
+    useState(false);
   const someActive = Boolean(song.currentIllustrationId);
 
   const filteredIllustrations = showDeleted
     ? illustrations
     : illustrations.filter((i) => !i.deleted);
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
+  const songPrompts = Object.values(prompts).filter(
+    (p) => p.songId === song.id,
+  );
+  const activeIllustration = illustrations.find(
+    (i) => i.id === song.currentIllustrationId,
+  );
+  const activePromptId = activeIllustration?.promptId;
 
   const createMutation = useMutation({
     mutationFn: async (data: IllustrationCreateSchema) => {
@@ -247,9 +232,10 @@ export function SongIllustrationsGroup({
             >
               <IllustrationForm
                 illustration={{ songId: song.id }}
+                songPrompts={songPrompts}
+                activePromptId={activePromptId}
                 onSave={handleCreateIllustration}
                 isLoading={isLoading}
-                dropdownOptions={backendDropdownOptions}
                 onSuccess={() => setIsDialogOpen(false)}
               />
             </FormDialog>
@@ -257,29 +243,81 @@ export function SongIllustrationsGroup({
         </div>
 
         <CollapsibleContent>
-          <div className="px-1 md:px-3 pb-3">
-            {filteredIllustrations.length === 0 ? (
-              <div className="mt-3 p-8 text-center text-muted-foreground border-2 border-dashed rounded-lg">
-                <p className="text-sm">No illustrations yet</p>
-                <p className="text-xs mt-1">
-                  Click the + button above to create one
-                </p>
+          <div className="px-1 md:px-3 pb-4 space-y-6">
+            {/* Prompts Section */}
+            <div className="mt-4">
+              <div className="flex items-center justify-between mb-3 border-b pb-1">
+                <h5 className="text-sm font-semibold text-muted-foreground">
+                  Prompts ({songPrompts.length})
+                </h5>
+                <PromptCreateDialog songId={song.id} />
               </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
-                {filteredIllustrations
-                  .filter((illustration) => prompts[illustration.promptId])
-                  .map((illustration) => (
-                    <IllustrationCard
-                      key={illustration.id}
-                      song={song}
-                      illustration={illustration}
-                      onPreview={setPreviewImage}
-                      prompt={prompts[illustration.promptId]}
-                    />
+
+              {songPrompts.length === 0 ? (
+                <div className="p-6 text-center text-muted-foreground border-2 border-dashed rounded-lg bg-muted/20">
+                  <p className="text-sm">No prompts generated yet.</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {songPrompts.map((prompt) => (
+                    <PromptCard key={prompt.id} prompt={prompt} />
                   ))}
+                </div>
+              )}
+            </div>
+
+            {/* Illustrations Section */}
+            <div>
+              <div className="flex items-center justify-between mb-3 border-b pb-1">
+                <h5 className="text-sm font-semibold text-muted-foreground">
+                  Illustrations ({filteredIllustrations.length})
+                </h5>
+
+                <FormDialog
+                  trigger={
+                    <Button size="sm" variant="outline" className="h-7 text-xs">
+                      <Plus className="h-3 w-3 mr-1" /> Add Illustration
+                    </Button>
+                  }
+                  title={`Add New Illustration for "${song.title}"`}
+                  maxWidth="2xl"
+                  open={isSectionIllustrationDialogOpen}
+                  onOpenChange={setIsSectionIllustrationDialogOpen}
+                >
+                  <IllustrationForm
+                    illustration={{ songId: song.id }}
+                    songPrompts={songPrompts}
+                    activePromptId={activePromptId}
+                    onSave={handleCreateIllustration}
+                    isLoading={isLoading}
+                    onSuccess={() => setIsSectionIllustrationDialogOpen(false)}
+                  />
+                </FormDialog>
               </div>
-            )}
+
+              {filteredIllustrations.length === 0 ? (
+                <div className="p-8 text-center text-muted-foreground border-2 border-dashed rounded-lg bg-muted/20">
+                  <p className="text-sm">No illustrations yet</p>
+                  <p className="text-xs mt-1">
+                    Click the + button above to create one
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                  {filteredIllustrations
+                    .filter((illustration) => prompts[illustration.promptId])
+                    .map((illustration) => (
+                      <IllustrationCard
+                        key={illustration.id}
+                        song={song}
+                        illustration={illustration}
+                        onPreview={setPreviewImage}
+                        prompt={prompts[illustration.promptId]}
+                      />
+                    ))}
+                </div>
+              )}
+            </div>
           </div>
         </CollapsibleContent>
       </Collapsible>

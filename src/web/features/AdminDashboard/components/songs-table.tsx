@@ -36,6 +36,7 @@ import {
   useDeleteSong,
   useDeleteVersion,
   useGenerateIllustration,
+  useIllustrationOptions,
   useRejectVersion,
   useResetVersionDB,
   useRestoreSong,
@@ -47,7 +48,6 @@ import {
 import { ActionButtons } from "./shared/action-buttons";
 import { TableToolbar } from "./shared/table-toolbar";
 import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
-import { backendDropdownOptions } from "./illustrations-table/illustration-group";
 
 // LocalStorage key for auto-illustration setting
 const AUTO_ILLUSTRATION_STORAGE_KEY = "admin-auto-generate-illustration";
@@ -57,6 +57,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [showDeleted, setShowDeleted] = useState(false);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
   const navigate = useNavigate({ from: "/admin" });
+  const backendDropdownOptions = useIllustrationOptions();
 
   // Load auto-illustration setting from localStorage (default: true)
   const [autoGenerateIllustration, setAutoGenerateIllustration] =
