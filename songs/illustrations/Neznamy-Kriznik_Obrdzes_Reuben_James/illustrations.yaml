@@ -1,8 +1,7 @@
 songId: Neznamy-Kriznik_Obrdzes_Reuben_James
 prompts:
-  - promptId: Neznamy-Kriznik_Obrdzes_Reuben_James_gpt-4o-mini_v2
+  - id: Neznamy-Kriznik_Obrdzes_Reuben_James_gpt-4o-mini_v2
     songId: Neznamy-Kriznik_Obrdzes_Reuben_James
-    createdAt: 1754387148000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       ready to face an incoming Japanese torpedo. The atmosphere should be tense
       yet honorable, capturing the essence of bravery and sacrifice, as well as
       the poignant reminder of the lives affected back home.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:32.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

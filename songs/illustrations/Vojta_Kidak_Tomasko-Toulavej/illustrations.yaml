@@ -1,8 +1,7 @@
 songId: Vojta_Kidak_Tomasko-Toulavej
 prompts:
-  - promptId: Vojta_Kidak_Tomasko-Toulavej_gpt-4o-mini_v1
+  - id: Vojta_Kidak_Tomasko-Toulavej_gpt-4o-mini_v1
     songId: Vojta_Kidak_Tomasko-Toulavej
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       melancholy. Include elements like an acoustic guitar, a weathered canvas
       tent, and a starry night sky transitioning into dawn, symbolizing the
       journey and memories of a wandering artist.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:37:51.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

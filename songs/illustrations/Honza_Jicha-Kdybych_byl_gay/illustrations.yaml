@@ -1,8 +1,7 @@
 songId: Honza_Jicha-Kdybych_byl_gay
 prompts:
-  - promptId: Honza_Jicha-Kdybych_byl_gay_gpt-4o-mini_v1
+  - id: Honza_Jicha-Kdybych_byl_gay_gpt-4o-mini_v1
     songId: Honza_Jicha-Kdybych_byl_gay
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,13 +10,15 @@ prompts:
       playfully uncomfortable as the other leans in, suggesting a deeper
       connection. The atmosphere is light-hearted yet slightly tense, capturing
       the essence of friendship and boundaries, with a whimsical touch of humor.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:59.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Honza_Jicha-Kdybych_byl_gay_gpt-4o_v1
+  - id: Honza_Jicha-Kdybych_byl_gay_gpt-4o_v1
     songId: Honza_Jicha-Kdybych_byl_gay
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -26,6 +27,9 @@ prompts:
       playfully uncomfortable as the other leans in, suggesting a deeper
       connection. The atmosphere is light-hearted yet slightly tense, capturing
       the essence of friendship and boundaries, with a whimsical touch of humor.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:59.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

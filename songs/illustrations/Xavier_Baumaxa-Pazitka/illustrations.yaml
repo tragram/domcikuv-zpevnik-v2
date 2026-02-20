@@ -1,8 +1,7 @@
 songId: Xavier_Baumaxa-Pazitka
 prompts:
-  - promptId: Xavier_Baumaxa-Pazitka_gpt-4o-mini_v1
+  - id: Xavier_Baumaxa-Pazitka_gpt-4o-mini_v1
     songId: Xavier_Baumaxa-Pazitka
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       whimsical character enjoying a carefree adventure, surrounded by small
       bags filled with herbs, symbolizing good vibes. Capture the essence of
       nostalgia and youthful spontaneity in a warm, inviting color palette.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

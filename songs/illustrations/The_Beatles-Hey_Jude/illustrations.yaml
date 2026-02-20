@@ -1,8 +1,7 @@
 songId: The_Beatles-Hey_Jude
 prompts:
-  - promptId: The_Beatles-Hey_Jude_gpt-4o-mini_v1
+  - id: The_Beatles-Hey_Jude_gpt-4o-mini_v1
     songId: The_Beatles-Hey_Jude
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       the background, symbolizing love and connection. The overall mood should
       convey encouragement and warmth, reflecting themes of heart and
       resilience.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:31.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

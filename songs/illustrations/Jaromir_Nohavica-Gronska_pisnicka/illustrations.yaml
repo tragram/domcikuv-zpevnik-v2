@@ -1,8 +1,7 @@
 songId: Jaromir_Nohavica-Gronska_pisnicka
 prompts:
-  - promptId: Jaromir_Nohavica-Gronska_pisnicka_gpt-4o-mini_v1
+  - id: Jaromir_Nohavica-Gronska_pisnicka_gpt-4o-mini_v1
     songId: Jaromir_Nohavica-Gronska_pisnicka
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       depict their cozy igloo with a bubbling pot of tea, while the sun shines
       brightly in a polar day setting. Include whimsical elements like the bears
       performing tricks and the couple enjoying ice cream.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:18.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

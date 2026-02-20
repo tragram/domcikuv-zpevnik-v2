@@ -1,8 +1,7 @@
 songId: La_Vela_Puerca-De_Atar
 prompts:
-  - promptId: La_Vela_Puerca-De_Atar_gpt-4o-mini_v1
+  - id: La_Vela_Puerca-De_Atar_gpt-4o-mini_v1
     songId: La_Vela_Puerca-De_Atar
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       dreams represented as vibrant colors and abstract shapes. Include elements
       symbolizing struggle and escape, like a broken chain or a soaring bird,
       while maintaining a sense of urgency and tension in the scene.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:47.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

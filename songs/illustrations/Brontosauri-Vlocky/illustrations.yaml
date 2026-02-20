@@ -1,8 +1,7 @@
 songId: Brontosauri-Vlocky
 prompts:
-  - promptId: Brontosauri-Vlocky_gpt-4o-mini_v1
+  - id: Brontosauri-Vlocky_gpt-4o-mini_v1
     songId: Brontosauri-Vlocky
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       broken ice, green grass emerging between the railway ties, and a group of
       friends joyfully singing and throwing stones into the water under a
       starlit sky.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-08T17:32:54.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

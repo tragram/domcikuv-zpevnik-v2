@@ -1,8 +1,7 @@
 songId: Traband-Krasojezdkyne
 prompts:
-  - promptId: Traband-Krasojezdkyne_gpt-4o-mini_v1
+  - id: Traband-Krasojezdkyne_gpt-4o-mini_v1
     songId: Traband-Krasojezdkyne
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       depict a glamorous acrobat in a red costume, symbolizing longing and
       adventure. Include elements of Paris and Babylon in the scenery, blending
       cultural motifs to evoke a sense of journey and desire for return.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

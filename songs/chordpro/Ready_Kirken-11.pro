@@ -7,8 +7,9 @@
 {language: czech}
 {startMelody: a}
 {createdAt: 1436824800000}
-{illustrationId: Ready_Kirken-11_gpt-4o-mini_v1_FLUX.1-dev}
-{promptId: Ready_Kirken-11_gpt-4o-mini_v1}
+{updatedAt: 1771619808000}
+{illustrationId: undefined}
+{promptId: undefined}
 
 {start_of_verse}
 [Ami]Už ani nedivím se, [Emi]jak věci otáčí se

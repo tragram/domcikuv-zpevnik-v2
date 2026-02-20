@@ -1,8 +1,7 @@
 songId: Divokej_Bill-Plakala
 prompts:
-  - promptId: Divokej_Bill-Plakala_gpt-4o-mini_v2
+  - id: Divokej_Bill-Plakala_gpt-4o-mini_v2
     songId: Divokej_Bill-Plakala
-    createdAt: 1754387144000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       is walking away, representing the separation and longing expressed in the
       lyrics. The scene should evoke a sense of bittersweet nostalgia and the
       complexity of love and loss.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:27.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

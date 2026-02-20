@@ -1,8 +1,7 @@
 songId: Jelen-Magdalena
 prompts:
-  - promptId: Jelen-Magdalena_gpt-4o-mini_v1
+  - id: Jelen-Magdalena_gpt-4o-mini_v1
     songId: Jelen-Magdalena
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       distant clock showing 9:30, a hint of winter chill, and a crossroads in
       the background with distant church bells ringing. Capture the emotions of
       longing, connection, and the desire for warmth in a cold world.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:56.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

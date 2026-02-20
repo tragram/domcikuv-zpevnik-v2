@@ -1,8 +1,7 @@
 songId: Cerni_andele-Lucie
 prompts:
-  - promptId: Cerni_andele-Lucie_gpt-4o-mini_v1
+  - id: Cerni_andele-Lucie_gpt-4o-mini_v1
     songId: Cerni_andele-Lucie
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       sensuality, with drops of something resembling blood falling from their
       wings. Include hints of a gothic atmosphere, with shadows and a mysterious
       aura, while featuring a central figure representing a captivating woman.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-08T17:33:01.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

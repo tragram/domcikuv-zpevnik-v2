@@ -1,8 +1,7 @@
 songId: Nerez-Ja_s_tebou_zit_nebudu
 prompts:
-  - promptId: Nerez-Ja_s_tebou_zit_nebudu_gpt-4o-mini_v1
+  - id: Nerez-Ja_s_tebou_zit_nebudu_gpt-4o-mini_v1
     songId: Nerez-Ja_s_tebou_zit_nebudu
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       atmosphere should be a mix of warmth and melancholy, with hints of wine
       glasses and shadows representing past regrets. Include a tram passing by
       outside, symbolizing the fleeting nature of their connection.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:30.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

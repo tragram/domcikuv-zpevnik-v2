@@ -1,8 +1,7 @@
 songId: Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You
 prompts:
-  - promptId: Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You_gpt-4o-mini_v1
+  - id: Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You_gpt-4o-mini_v1
     songId: Elvis_Presley-I_Cant_Help_Falling_In_Love_With_You
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -10,6 +9,9 @@ prompts:
       serene river flowing towards the sea at sunset, symbolizing love and
       destiny. The atmosphere should be dreamy and enchanting, capturing the
       essence of deep affection and inevitability.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:31.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

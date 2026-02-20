@@ -1,8 +1,7 @@
 songId: Tomas_Klus-Napojen
 prompts:
-  - promptId: Tomas_Klus-Napojen_gpt-4o-mini_v1
+  - id: Tomas_Klus-Napojen_gpt-4o-mini_v1
     songId: Tomas_Klus-Napojen
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       distant moon, symbolizing hope and introspection. Emphasize a feeling of
       unity and peace, capturing the essence of life's beauty and the importance
       of being present.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:36.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

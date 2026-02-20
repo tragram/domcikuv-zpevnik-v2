@@ -1,8 +1,7 @@
 songId: Honza_Jicha-Nekvalifikovany_ucitel
 prompts:
-  - promptId: Honza_Jicha-Nekvalifikovany_ucitel_gpt-4o-mini_v1
+  - id: Honza_Jicha-Nekvalifikovany_ucitel_gpt-4o-mini_v1
     songId: Honza_Jicha-Nekvalifikovany_ucitel
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       reflecting a love for learning. In the background, subtle hints of
       frustration with the education system can be seen, like a crumpled paper
       with a "demagogue" label, symbolizing the challenges faced.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:04.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Petr_Bende-Nad_horu_svita
 prompts:
-  - promptId: Petr_Bende-Nad_horu_svita_gpt-4o-mini_v1
+  - id: Petr_Bende-Nad_horu_svita_gpt-4o-mini_v1
     songId: Petr_Bende-Nad_horu_svita
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       contrasting scene of impending war looms, with a hint of red in the sky
       symbolizing bloodshed. The atmosphere should evoke a sense of hope mixed
       with the foreboding of conflict, capturing the duality of peace and war.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:57.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

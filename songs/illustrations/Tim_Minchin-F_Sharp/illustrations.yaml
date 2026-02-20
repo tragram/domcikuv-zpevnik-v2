@@ -1,8 +1,7 @@
 songId: Tim_Minchin-F_Sharp
 prompts:
-  - promptId: Tim_Minchin-F_Sharp_gpt-4o-mini_v1
+  - id: Tim_Minchin-F_Sharp_gpt-4o-mini_v1
     songId: Tim_Minchin-F_Sharp
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       musical notes in F major, and the other side showing a frustrated singer
       grappling with F-sharp notes. Include visual elements like musical keys
       and symbols to emphasize the contrasting tones.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

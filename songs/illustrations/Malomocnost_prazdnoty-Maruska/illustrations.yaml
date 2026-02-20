@@ -1,8 +1,7 @@
 songId: Malomocnost_prazdnoty-Maruska
 prompts:
-  - promptId: Malomocnost_prazdnoty-Maruska_gpt-4o-mini_v1
+  - id: Malomocnost_prazdnoty-Maruska_gpt-4o-mini_v1
     songId: Malomocnost_prazdnoty-Maruska
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       foreground, crying and holding her arm, symbolizing the impact of
       conflict. The atmosphere should convey a mix of innocence and the harsh
       realities of war.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:36:00.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

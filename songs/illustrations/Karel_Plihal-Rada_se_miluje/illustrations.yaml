@@ -1,8 +1,7 @@
 songId: Karel_Plihal-Rada_se_miluje
 prompts:
-  - promptId: Karel_Plihal-Rada_se_miluje_gpt-4o-mini_v1
+  - id: Karel_Plihal-Rada_se_miluje_gpt-4o-mini_v1
     songId: Karel_Plihal-Rada_se_miluje
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       idea of souls surviving in different forms, and at the edge of a clearing,
       show a snail contentedly enjoying a snack, hinting at its future
       transformation.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

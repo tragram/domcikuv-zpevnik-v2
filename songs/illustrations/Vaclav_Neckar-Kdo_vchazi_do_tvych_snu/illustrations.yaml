@@ -1,8 +1,7 @@
 songId: Vaclav_Neckar-Kdo_vchazi_do_tvych_snu
 prompts:
-  - promptId: Vaclav_Neckar-Kdo_vchazi_do_tvych_snu_gpt-4o-mini_v1
+  - id: Vaclav_Neckar-Kdo_vchazi_do_tvych_snu_gpt-4o-mini_v1
     songId: Vaclav_Neckar-Kdo_vchazi_do_tvych_snu
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       Surround her with hints of surrealism inspired by Salvador Dalí, like
       melting clocks or whimsical shapes, to capture the essence of dreams and
       hidden emotions.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:37:45.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

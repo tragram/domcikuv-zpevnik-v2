@@ -1,8 +1,7 @@
 songId: Znouzectnost-Krysar
 prompts:
-  - promptId: Znouzectnost-Krysar_gpt-4o-mini_v2
+  - id: Znouzectnost-Krysar_gpt-4o-mini_v2
     songId: Znouzectnost-Krysar
-    createdAt: 1754387150000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       advertising a performance, while townsfolk watch with a mix of intrigue
       and fear. The atmosphere is enchanting yet eerie, capturing the essence of
       a magical yet unsettling moment.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:55.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

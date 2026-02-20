@@ -1,8 +1,7 @@
 songId: Lucie-Medvidek
 prompts:
-  - promptId: Lucie-Medvidek_gpt-4o-mini_v1
+  - id: Lucie-Medvidek_gpt-4o-mini_v1
     songId: Lucie-Medvidek
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,13 +10,15 @@ prompts:
       dreaming peacefully, while Roman dogs in festive attire play nearby. The
       scene is set during a magical Christmas night, with a glowing sunrise in
       the background and a crown made of thorns subtly present.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:58.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Lucie-Medvidek_gpt-4o_v1
+  - id: Lucie-Medvidek_gpt-4o_v1
     songId: Lucie-Medvidek
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -27,6 +28,9 @@ prompts:
       soldiers lurk in the background, while the scene radiates the tragedy of
       corruption and sacrifice, adding a layer of darkness to the holiday
       atmosphere.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:58.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3
