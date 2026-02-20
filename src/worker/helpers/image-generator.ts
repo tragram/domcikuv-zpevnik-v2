@@ -4,14 +4,14 @@ import { InferenceClient } from "@huggingface/inference";
 export const SUMMARY_PROMPT_VERSIONS = ["v2", "v1"] as const;
 export const SUMMARY_MODELS_API = ["gpt-5-mini", "gpt-5.2"] as const;
 
-// Added FLUX.2 to the list of available models
 export const IMAGE_MODELS_API = [
   "FLUX.1-dev",
   "FLUX.1-schnell",
-  // "FLUX.2-dev", 
+  "FLUX.2-dev", 
   "gpt-image-1.5",
   "gpt-image-1",
   "gpt-image-1-mini",
+  "nano-banana-pro",
 ] as const;
 
 export type SummaryPromptVersion = (typeof SUMMARY_PROMPT_VERSIONS)[number];
@@ -23,24 +23,25 @@ const PROMPTS: Record<SummaryPromptVersion, string> = {
   v2: "Based on the following song lyrics, create a prompt for an AI image generator that will be used as an illustration of the song. Try to be short but also to capture a concrete scene/idea from the song.",
 } as const;
 
-// Define available provider types
-export type ImageProviderType = "openai" | "huggingface";
+export type ImageProviderType = "openai" | "huggingface" | "google";
 
 // Easily map models to their respective providers
 export const MODEL_PROVIDERS: Record<AvailableImageModel, ImageProviderType> = {
   "FLUX.1-dev": "huggingface",
   "FLUX.1-schnell": "huggingface",
-  // "FLUX.2-dev": "replicate",
+  "FLUX.2-dev": "huggingface",
   "gpt-image-1.5": "openai",
   "gpt-image-1": "openai",
   "gpt-image-1-mini": "openai",
+  "nano-banana-pro": "google",
 };
 
 // Map generic model names to provider-specific endpoints/tags
 const PROVIDER_MODEL_NAMES: Partial<Record<AvailableImageModel, string>> = {
   "FLUX.1-dev": "black-forest-labs/FLUX.1-dev",
   "FLUX.1-schnell": "black-forest-labs/FLUX.1-schnell",
-  // "FLUX.2-dev": "black-forest-labs/flux-2",
+  "FLUX.2-dev": "black-forest-labs/flux-2",
+  "nano-banana-pro": "gemini-3-pro-image-preview",
 };
 
 export interface GenerationConfig {
@@ -49,7 +50,7 @@ export interface GenerationConfig {
   imageModel: AvailableImageModel;
   openaiApiKey: string;
   huggingFaceToken?: string;
-  replicateApiToken?: string; // Added token for Replicate
+  googleApiKey?: string;
   openaiOrgId?: string;
   openaiProjectId?: string;
 }
@@ -116,6 +117,49 @@ class HuggingFaceImageProvider implements ImageProvider {
   }
 }
 
+// Added Google Image Provider for Nano Banana Pro
+class GoogleImageProvider implements ImageProvider {
+  async generate(prompt: string, model: string, config: GenerationConfig): Promise<ArrayBuffer> {
+    if (!config.googleApiKey) throw new Error("Google API key is required");
+
+    const googleModel = PROVIDER_MODEL_NAMES[model as AvailableImageModel] || model;
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${googleModel}:generateContent?key=${config.googleApiKey}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: prompt }],
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Google image generation error: ${response.status} - ${error}`);
+    }
+
+    // Google returns the generated image inside inlineData.data as a base64 string
+    const data = (await response.json()) as any;
+    const parts = data.candidates?.[0]?.content?.parts;
+    const imagePart = parts?.find((p: any) => p.inlineData?.data);
+
+    if (!imagePart?.inlineData?.data) {
+      throw new Error("No image data returned from Google API");
+    }
+
+    const base64 = imagePart.inlineData.data;
+    const binary = atob(base64);
+    const buffer = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) buffer[i] = binary.charCodeAt(i);
+    return buffer.buffer;
+  }
+}
+
 export class ImageGenerator {
   private config: GenerationConfig;
   private providers: Record<ImageProviderType, ImageProvider>;
@@ -126,6 +170,7 @@ export class ImageGenerator {
     this.providers = {
       openai: new OpenAIImageProvider(),
       huggingface: new HuggingFaceImageProvider(),
+      google: new GoogleImageProvider(), // Registered the new provider
     };
   }
 

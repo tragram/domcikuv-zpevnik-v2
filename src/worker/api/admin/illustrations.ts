@@ -104,6 +104,7 @@ const generateIllustrationHandler = async (c) => {
       summaryModel: illustrationData.summaryModel,
       imageModel: illustrationData.imageModel,
       openaiApiKey: c.env.OPENAI_API_KEY,
+      googleApiKey: c.env.GOOGLE_API_KEY,
       huggingFaceToken: c.env.HUGGING_FACE_TOKEN,
       openaiOrgId: c.env.OPENAI_ORGANIZATION_ID,
       openaiProjectId: c.env.OPENAI_PROJECT_ID,
