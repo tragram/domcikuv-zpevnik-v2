@@ -1,5 +1,6 @@
 import { and, eq } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
+import { Context } from "hono";
 import {
   illustrationPrompt,
   IllustrationPromptDB,
@@ -7,17 +8,20 @@ import {
   songIllustration,
   SongIllustrationDB,
 } from "src/lib/db/schema";
-import { findSong, SongWithCurrentVersion } from "./song-helpers";
-import { Context } from "hono";
-import { defaultIllustrationId, promptFolder } from "~/types/songData";
 import { z } from "zod";
+import {
+  defaultIllustrationId,
+  defaultPromptId,
+  promptFolder,
+} from "~/types/songData";
+import { CFImagesThumbnailURL } from "../api/admin/illustrations";
 import {
   IMAGE_MODELS_API,
   ImageGenerator,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "./image-generator";
-import { CFImagesThumbnailURL } from "../api/admin/illustrations";
+import { findSong, SongWithCurrentVersion } from "./song-helpers";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -184,6 +188,43 @@ export async function clearCurrentIllustration(
     .where(eq(song.id, songId));
 }
 
+export async function generateAndSavePrompt(
+  db: DrizzleD1Database,
+  songId: string,
+  promptVersion: string,
+  promptModel: string,
+  generator: ImageGenerator,
+  songData?: SongWithCurrentVersion,
+): Promise<IllustrationPromptDB> {
+  let song: SongWithCurrentVersion;
+  if (!songData) {
+    song = (await findSong(db, songId)) as SongWithCurrentVersion;
+  } else {
+    song = songData;
+  }
+
+  const promptText = await generator.generatePrompt(
+    ImageGenerator.extractLyricsFromChordPro(song.chordpro),
+  );
+  console.log("Generated Prompt Text:", promptText);
+
+  // Unify the ID generation using your defaultPromptId utility
+  const newId = defaultPromptId(songId, promptModel, promptVersion);
+
+  const newPrompt = await db
+    .insert(illustrationPrompt)
+    .values({
+      id: newId,
+      songId,
+      summaryPromptVersion: promptVersion,
+      summaryModel: promptModel,
+      text: promptText,
+    })
+    .returning();
+
+  return newPrompt[0];
+}
+
 /**
  * Helper function to find or create a prompt
  */
@@ -196,7 +237,6 @@ export async function findOrCreatePrompt(
   generator: ImageGenerator,
   songData?: SongWithCurrentVersion,
 ): Promise<IllustrationPromptDB> {
-  // Check if prompt already exists
   const existingPrompt = await db
     .select()
     .from(illustrationPrompt)
@@ -213,31 +253,15 @@ export async function findOrCreatePrompt(
     return existingPrompt[0];
   }
 
-  // Need to generate new prompt
-  let song: SongWithCurrentVersion;
-  if (!songData) {
-    song = (await findSong(db, songId)) as SongWithCurrentVersion;
-  } else {
-    song = songData;
-  }
-
-  const promptText = await generator.generatePrompt(
-    ImageGenerator.extractLyricsFromChordPro(song.chordpro),
+  // Use the new DRY helper
+  return await generateAndSavePrompt(
+    db,
+    songId,
+    promptVersion,
+    promptModel,
+    generator,
+    songData,
   );
-  console.log("Prompt Text:", promptText);
-  // Create new prompt record
-  const newPrompt = await db
-    .insert(illustrationPrompt)
-    .values({
-      id: `${songId}_${promptVersion}_${promptModel}_${Date.now()}`,
-      songId,
-      summaryPromptVersion: promptVersion,
-      summaryModel: promptModel,
-      text: promptText,
-    })
-    .returning();
-
-  return newPrompt[0];
 }
 
 export async function createManualPrompt(

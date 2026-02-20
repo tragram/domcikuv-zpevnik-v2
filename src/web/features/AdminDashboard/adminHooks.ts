@@ -760,3 +760,25 @@ export const useIllustrationsTableData = (adminApi: AdminApi) => {
     isError,
   };
 };
+
+export const useGeneratePrompt = (adminApi: AdminApi) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: {
+      songId: string;
+      summaryModel: string;
+      summaryPromptVersion: string;
+    }) => {
+      // Ensure your Honos API types expose this endpoint
+      const response = await adminApi.prompts.generate.$post({ json: data });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to generate prompt");
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
+    },
+  });
+};

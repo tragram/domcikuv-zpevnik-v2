@@ -1,4 +1,3 @@
-// illustration-group.tsx
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { ChevronDown, ChevronRight, Plus } from "lucide-react";

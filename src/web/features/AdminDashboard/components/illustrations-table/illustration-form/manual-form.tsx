@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useRouteContext } from "@tanstack/react-router";
+import { CheckCircle, Loader2, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { IllustrationCreateSchema } from "src/worker/helpers/illustration-helpers";
+import { ImageDropzone } from "~/components/ImageDropzone";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Textarea } from "~/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import { X, CheckCircle, Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -12,13 +14,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { SongIdField, ActiveSwitch } from "./shared-form-fields";
-import type { IllustrationSubmitData } from "./illustration-form";
-import { IllustrationCreateSchema } from "src/worker/helpers/illustration-helpers";
-import { cn } from "~/lib/utils";
+import { Textarea } from "~/components/ui/textarea";
 import { useSongPrompts } from "~/features/AdminDashboard/adminHooks";
-import { useRouteContext } from "@tanstack/react-router";
-import { ImageDropzone } from "~/components/ImageDropzone";
+import { cn } from "~/lib/utils";
+import type { IllustrationSubmitData } from "./illustration-form";
+import { ActiveSwitch, SongIdField } from "./shared-form-fields";
 
 interface ManualFormProps {
   illustration: any;
@@ -72,7 +72,7 @@ export function ManualForm({
 }: ManualFormProps) {
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
   const { songPrompts } = useSongPrompts(adminApi, illustration.songId);
-  
+
   // --- State ---
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
@@ -88,7 +88,6 @@ export function ManualForm({
     songPrompts.length > 0 ? "existing" : "new",
   );
   const [newPromptText, setNewPromptText] = useState("");
-
 
   const [formData, setFormData] = useState<Partial<IllustrationCreateSchema>>({
     songId: illustration?.songId || "",

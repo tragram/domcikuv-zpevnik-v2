@@ -94,8 +94,6 @@ export class ImageGenerator {
           { role: "system", content: PROMPTS[this.config.promptVersion] },
           { role: "user", content: lyrics },
         ],
-        temperature: 0.7,
-        top_p: 0.8,
       }),
     });
 
