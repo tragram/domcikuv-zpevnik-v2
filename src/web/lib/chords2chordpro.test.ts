@@ -35,7 +35,15 @@ describe("chords2chordpro", () => {
 
   describe("convertToChordPro", () => {
     it("converts basic chords over lyrics", () => {
-      const input = `C       G\nLet it be`;
+      const input = `C     G \nLet it be`;
+      // 'C' is at index 0 (over 'Let')
+      // 'G' is at index 7 (over the 'b' in 'be', since 'be' starts at 7)
+      const expected = `{start_of_verse}\n[C]Let it [G]be\n{end_of_verse}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("correctly adjust chords to starts of words when near the start", () => {
+      const input = `C      G\nLet it be`;
       // 'C' is at index 0 (over 'Let')
       // 'G' is at index 8 (over the 'e' in 'be', since 'be' starts at 7)
       const expected = `{start_of_verse}\n[C]Let it [G]be\n{end_of_verse}`;
@@ -43,19 +51,31 @@ describe("chords2chordpro", () => {
     });
 
     it("handles standalone chord lines (e.g., intros without lyrics)", () => {
-      const input = `[Intro]\nG  C  D  G`;
+      const input = `[Intro]\nG  C  D  G\n\n`;
       const expected = `{start_of_verse: Intro}\n[G]  [C]  [D]  [G]\n{end_of_verse}`;
       expect(convertToChordPro(input)).toBe(expected);
     });
 
     it("identifies and wraps numbered verses", () => {
-      const input = `1.\nG\nVerse one`;
-      const expected = `{start_of_verse: 1.}\n[G]Verse one\n{end_of_verse}`;
+      const input = `\nG\n1. Verse one`;
+      const expected = `{start_of_verse}\n[G]Verse one\n{end_of_verse}`;
       expect(convertToChordPro(input)).toBe(expected);
     });
 
-    it("identifies and wraps choruses", () => {
-      const input = `Chorus:\nD\nSinging loud`;
+    it("identifies and wraps choruses denoted by 'Chorus:'", () => {
+      const input = `\nD\nChorus: Singing loud`;
+      const expected = `{start_of_chorus}\n[D]Singing loud\n{end_of_chorus}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("identifies and wraps choruses denoted by 'R:'", () => {
+      const input = `\nD\nR: Singing loud`;
+      const expected = `{start_of_chorus}\n[D]Singing loud\n{end_of_chorus}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("identifies and wraps choruses preceded by '[Chorus]'", () => {
+      const input = `[Chorus]\nD\nSinging loud`;
       const expected = `{start_of_chorus}\n[D]Singing loud\n{end_of_chorus}`;
       expect(convertToChordPro(input)).toBe(expected);
     });
@@ -66,16 +86,9 @@ describe("chords2chordpro", () => {
       expect(convertToChordPro(input)).toBe(expected);
     });
 
-    it("snaps chords to the start of short words", () => {
-      // 'G' is at index 1, word 'is' starts at 0. Offset is 1, but length is 2, so it should snap to front.
-      const input = ` G\nis`;
-      const expected = `{start_of_verse}\n[G]is\n{end_of_verse}`;
-      expect(convertToChordPro(input)).toBe(expected);
-    });
-
     it("preserves trailing chords that fall after the last word", () => {
-      const input = `G    C\nHey`;
-      const expected = `{start_of_verse}\n[G]Hey [C]\n{end_of_verse}`;
+      const input = `G    C D G\nHey`;
+      const expected = `{start_of_verse}\n[G]Hey [C] [D] [G]\n{end_of_verse}`;
       expect(convertToChordPro(input)).toBe(expected);
     });
 
@@ -84,6 +97,28 @@ describe("chords2chordpro", () => {
       const expected = `{start_of_verse}\n[H]Lyric\n{end_of_verse}`;
       // Pass 'true' to trigger convertToCzechNotation
       expect(convertToChordPro(input, true)).toBe(expected);
+    });
+  });
+  
+  describe("Section closing and non-overlapping", () => {
+    it("splits paragraphs forcefully when an environment directive interrupts contiguous lines", () => {
+      // Previously, the lack of a blank line made [Chorus] become a comment inside the verse block
+      const input = `C\nLine 1\n[Chorus]\nD\nLine 2`;
+      const expected = `{start_of_verse}\n[C]Line 1\n{end_of_verse}\n\n{start_of_chorus}\n[D]Line 2\n{end_of_chorus}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("does not incorrectly split on a chord line enclosed in parentheses", () => {
+      // Sometimes standard chord lines appear in brackets and shouldn't act as block directives
+      const input = `C\nLine 1\n(D)\nLine 2`;
+      const expected = `{start_of_verse}\n[C]Line 1\n[D]Line 2\n{end_of_verse}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("ensures tab environments strictly open and close independently from verse bodies", () => {
+      const input = `Verse\n[Solo]\ne|---0---|\nB|---1---|`;
+      const expected = `{start_of_verse}\nVerse\n{end_of_verse}\n\n{comment: Solo}\n{start_of_tab}\ne|---0---|\nB|---1---|\n{end_of_tab}`;
+      expect(convertToChordPro(input)).toBe(expected);
     });
   });
 

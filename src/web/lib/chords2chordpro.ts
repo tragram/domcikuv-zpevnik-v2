@@ -14,14 +14,11 @@ interface EnvDirective {
 }
 
 // Global Matchers
-// Matches chords like G, C#m, Dsus4*, G/B, N.C., Cadd9**
 const CHORD_REGEX =
   /^[({\[]?([A-H][#b]?(?:m|mi|maj|min|sus|dim|aug|add|M)?[0-9]*(?:[#b][0-9]+)?(?:\/[A-H][#b]?)?\**|N\.?C\.?)[)}\]]?$/i;
 
-// Allowed non-chord characters on a chord line (bar lines, repeat markers)
 const ALLOWED_EXTRAS_REGEX = /^(?:[()|%xX~/\\]+|\d+x)$/;
 
-// Matches tab line indicators
 const TAB_LINE_REGEX = /(?:^[a-gA-G]\s*\|)|(?:\|-)|(?:-\|)|(?:--\|)|(?:\|--)/;
 
 function isTabLine(line: string): boolean {
@@ -43,7 +40,7 @@ function getEnvironmentDirective(line: string): EnvDirective | null {
   if (verseMatch) {
     return {
       env: "verse",
-      name: verseMatch[1],
+      name: undefined, // Standard numbers shouldn't act as specific names
       stripLength: verseMatch[0].length,
     };
   }
@@ -54,7 +51,7 @@ function getEnvironmentDirective(line: string): EnvDirective | null {
   );
   if (chorusMatch) {
     let name: string | undefined = chorusMatch[1].trim();
-    if (/^(chorus|refrain)$/i.test(name)) name = undefined;
+    if (/^(chorus|refrain|r|ref\.?)$/i.test(name)) name = undefined; // Drop generic tags
     return { env: "chorus", name, stripLength: chorusMatch[0].length };
   }
 
@@ -62,7 +59,7 @@ function getEnvironmentDirective(line: string): EnvDirective | null {
   const bridgeMatch = line.match(/^\s*(B\d*|Bridge\s*\d*)(?:[\s:]+|$)/i);
   if (bridgeMatch) {
     let name: string | undefined = bridgeMatch[1].trim();
-    if (/^bridge$/i.test(name)) name = undefined;
+    if (/^(bridge|b)$/i.test(name)) name = undefined; // Drop generic tags
     return { env: "bridge", name, stripLength: bridgeMatch[0].length };
   }
 
@@ -87,7 +84,7 @@ function getEnvironmentDirective(line: string): EnvDirective | null {
       };
     }
 
-    // Everything else (Intro, Solo, Outro) safely defaults to a named verse block
+    // Everything else (Intro, Solo, Outro) defaults to a named verse block
     return { env: "verse", name: content, stripLength: line.length };
   }
 
@@ -101,12 +98,12 @@ function getChordTokens(chordLine: string): Token[] {
 
   while ((match = regex.exec(chordLine)) !== null) {
     const text = match[0];
-    const cleanText = text.replace(/[,.]$/, "");
+    const cleanText = text.replace(/[,.]+$/, "");
     const chordMatch = CHORD_REGEX.exec(cleanText);
 
     if (chordMatch) {
       tokens.push({
-        text: chordMatch[1], // Capture group 1 has the pure chord string
+        text: chordMatch[1],
         position: match.index + text.indexOf(chordMatch[1]),
       });
     }
@@ -115,7 +112,7 @@ function getChordTokens(chordLine: string): Token[] {
 }
 
 function isChordLine(line: string): boolean {
-  if (/\[[A-H][#bs]?m?[mi]?[5-7]?\]/.test(line)) return false; // Already ChordPro tags
+  if (/\[[A-H][#bs]?m?[mi]?[5-7]?\]/.test(line)) return false; 
   if (isTabLine(line)) return false;
 
   const tokens = line.split(/\s+/).filter(Boolean);
@@ -124,51 +121,15 @@ function isChordLine(line: string): boolean {
   let chordCount = 0;
 
   for (const token of tokens) {
-    const cleanToken = token.replace(/[,.]$/, "");
+    const cleanToken = token.replace(/[,.]+$/, "");
     if (CHORD_REGEX.test(cleanToken)) {
       chordCount++;
     } else if (!ALLOWED_EXTRAS_REGEX.test(cleanToken)) {
-      return false; // Immediately fail if a word is neither a chord nor allowed extra
+      return false;
     }
   }
 
   return chordCount > 0;
-}
-
-function tokenizeWithPositions(text: string): Token[] {
-  const tokens: Token[] = [];
-  const regex = /\S+/g;
-  let match: RegExpExecArray | null;
-
-  while ((match = regex.exec(text)) !== null) {
-    tokens.push({ text: match[0], position: match.index });
-  }
-  return tokens;
-}
-
-function placeChords(lyricToken: Token, chordTokens: Token[]): string {
-  let word = lyricToken.text;
-  const wordStartPos = lyricToken.position;
-
-  const adjustedChords = chordTokens.map((chord) => {
-    const offset = chord.position - wordStartPos;
-    // Snap chords close to the start of a short word
-    if (
-      offset < 2 ||
-      (offset === 2 && word.length === 2) ||
-      (offset === 3 && word.length === 3)
-    ) {
-      return { ...chord, position: wordStartPos };
-    }
-    return chord;
-  });
-
-  // Reversing so index injections don't affect each other
-  for (const chord of adjustedChords.reverse()) {
-    const insertPos = Math.max(0, chord.position - wordStartPos);
-    word = `${word.slice(0, insertPos)}[${chord.text}]${word.slice(insertPos)}`;
-  }
-  return word;
 }
 
 export function normalizeChordTokens(
@@ -176,7 +137,7 @@ export function normalizeChordTokens(
   convertToCzechNotation: boolean = false,
 ): Token[] {
   return tokens.map((token) => {
-    let text = token.text.replace(/[,.]+$/, ""); // strip trailing punct
+    let text = token.text.replace(/[,.]+$/, "");
     if (convertToCzechNotation) {
       text = convertChordNotation(text);
     }
@@ -189,31 +150,54 @@ function insertChordsInLyrics(
   lyricLine: string,
   convert: boolean,
 ): string {
-  const result: string[] = [];
-  const lyricTokens = tokenizeWithPositions(lyricLine);
   const chordTokens = normalizeChordTokens(getChordTokens(chordLine), convert);
+  let result = lyricLine;
+  const appendChords: string[] = [];
 
-  let chordIndex = 0;
-  for (const lyricToken of lyricTokens) {
-    const lyricTokenEnd = lyricToken.position + lyricToken.text.length;
-    const chordsToInsert: Token[] = [];
+  for (const chord of [...chordTokens].reverse()) {
+    let pos = chord.position;
 
-    while (
-      chordIndex < chordTokens.length &&
-      chordTokens[chordIndex].position < lyricTokenEnd
-    ) {
-      chordsToInsert.push(chordTokens[chordIndex]);
-      chordIndex++;
+    if (pos >= lyricLine.length) {
+      appendChords.unshift(`[${chord.text}]`);
+      continue;
     }
-    result.push(placeChords(lyricToken, chordsToInsert));
+
+    while (pos < result.length && result[pos] === " ") {
+      pos++;
+    }
+
+    if (pos >= result.length) {
+      appendChords.unshift(`[${chord.text}]`);
+      continue;
+    }
+
+    let wordStart = pos;
+    while (wordStart > 0 && result[wordStart - 1] !== " " && result[wordStart - 1] !== "]") {
+      wordStart--;
+    }
+
+    let wordEnd = pos;
+    while (wordEnd < result.length && result[wordEnd] !== " " && result[wordEnd] !== "[") {
+      wordEnd++;
+    }
+    const wordLen = wordEnd - wordStart;
+    const offset = pos - wordStart;
+
+    if (
+      offset > 0 &&
+      (offset < 2 || (offset === 2 && wordLen <= 2) || (offset === 3 && wordLen <= 3))
+    ) {
+      pos = wordStart;
+    }
+
+    result = result.slice(0, pos) + `[${chord.text}]` + result.slice(pos);
   }
 
-  while (chordIndex < chordTokens.length) {
-    result.push(`[${chordTokens[chordIndex].text}]`);
-    chordIndex++;
+  if (appendChords.length > 0) {
+    result += (result.length > 0 && !result.endsWith(" ") ? " " : "") + appendChords.join(" ");
   }
 
-  return result.join(" ");
+  return result.replace(/\s+/g, " ").trim();
 }
 
 function formatStandaloneChordLine(line: string, convert: boolean): string {
@@ -231,6 +215,25 @@ function formatStandaloneChordLine(line: string, convert: boolean): string {
   return result.trimEnd();
 }
 
+// Safely shifts a chord line left when lyric prefixes (e.g., '1. ') are stripped
+function shiftChordLineLeft(chordLine: string, shift: number): string {
+  const tokens = getChordTokens(chordLine);
+  if (tokens.length === 0) return chordLine;
+
+  let res = "";
+  let curPos = 0;
+  for (const t of tokens) {
+    const newPos = Math.max(0, t.position - shift);
+    if (newPos > curPos) {
+      res += " ".repeat(newPos - curPos);
+      curPos = newPos;
+    }
+    res += t.text;
+    curPos += t.text.length;
+  }
+  return res;
+}
+
 function groupLinesIntoParagraphs(songLines: string[]): string[][] {
   const paragraphs: string[][] = [];
   let paragraph: string[] = [];
@@ -242,6 +245,14 @@ function groupLinesIntoParagraphs(songLines: string[]): string[][] {
         paragraph = [];
       }
     } else {
+      const dir = getEnvironmentDirective(line);
+      const isPrevLineChord = paragraph.length > 0 && isChordLine(paragraph[paragraph.length - 1]);
+      
+      // Force block splits for structural markers, but ignore inline prefixes attached to chords
+      if (dir && !isChordLine(line) && paragraph.length > 0 && !isPrevLineChord) {
+        paragraphs.push(paragraph);
+        paragraph = [];
+      }
       paragraph.push(line);
     }
   }
@@ -284,7 +295,6 @@ function processParagraphLines(
   const structuredSong: string[] = [];
   let pendingChordLine: string | null = null;
 
-  // Extracted helper handles writing unmatched chord-only lines easily
   const flushPendingChord = () => {
     if (pendingChordLine) {
       structuredSong.push(formatStandaloneChordLine(pendingChordLine, convert));
@@ -333,10 +343,37 @@ function processSong(songLines: string[], convert: boolean): string {
 
     while (linesToProcess.length > 0) {
       const firstLine = linesToProcess[0];
-      if (isChordLine(firstLine)) break;
+
+      if (isChordLine(firstLine)) {
+        // Peek ahead to see if the lyrics beneath the chords contain an inline directive
+        let lyricIndex = 0;
+        while (lyricIndex < linesToProcess.length && isChordLine(linesToProcess[lyricIndex])) {
+          lyricIndex++;
+        }
+        
+        if (lyricIndex < linesToProcess.length) {
+          const lyricLine = linesToProcess[lyricIndex];
+          const dir = getEnvironmentDirective(lyricLine);
+          
+          if (dir && !isDirectiveLine(lyricLine)) {
+            explicitEnv = dir;
+            const strippedLine = lyricLine.slice(dir.stripLength).trim();
+            if (strippedLine.length === 0) {
+              linesToProcess.splice(lyricIndex, 1);
+            } else {
+              linesToProcess[lyricIndex] = strippedLine;
+              // Shift chord lines left to maintain alignment
+              for (let i = 0; i < lyricIndex; i++) {
+                linesToProcess[i] = shiftChordLineLeft(linesToProcess[i], dir.stripLength);
+              }
+            }
+          }
+        }
+        break; 
+      }
 
       const dir = getEnvironmentDirective(firstLine);
-      if (!dir) break;
+      if (!dir) break; 
 
       const commentFallback =
         explicitEnv?.name ||
@@ -344,11 +381,10 @@ function processSong(songLines: string[], convert: boolean): string {
           ? explicitEnv.env.charAt(0).toUpperCase() + explicitEnv.env.slice(1)
           : "");
 
-      if (linesToProcess.length === 1) {
+      if (isDirectiveLine(firstLine)) {
         if (explicitEnv) prependComments.push(`{comment: ${commentFallback}}`);
-        pendingEnv = dir;
+        explicitEnv = dir;
         linesToProcess.shift();
-        break;
       } else {
         if (explicitEnv) prependComments.push(`{comment: ${commentFallback}}`);
         explicitEnv = dir;
@@ -363,30 +399,34 @@ function processSong(songLines: string[], convert: boolean): string {
       }
     }
 
+    if (linesToProcess.length === 0) {
+      pendingEnv = explicitEnv;
+      if (prependComments.length > 0) result.push(prependComments.join("\n"));
+      continue;
+    }
+
     const blockResult: string[] = [];
     if (prependComments.length > 0) {
       blockResult.push(prependComments.join("\n"));
     }
 
-    if (linesToProcess.length > 0) {
-      const processed = processParagraphLines(linesToProcess, convert);
+    const processed = processParagraphLines(linesToProcess, convert);
 
-      if (processed.isTab) {
-        if (explicitEnv) {
-          const c =
-            explicitEnv.name ||
-            explicitEnv.env.charAt(0).toUpperCase() + explicitEnv.env.slice(1);
-          blockResult.push(`{comment: ${c}}`);
-        }
-        blockResult.push(processed.content);
-      } else {
-        const finalEnv = explicitEnv || { env: "verse", stripLength: 0 };
-        const nameStr = finalEnv.name ? `: ${finalEnv.name}` : "";
-
-        blockResult.push(`{start_of_${finalEnv.env}${nameStr}}`);
-        blockResult.push(processed.content);
-        blockResult.push(`{end_of_${finalEnv.env}}`);
+    if (processed.isTab) {
+      if (explicitEnv) {
+        const c =
+          explicitEnv.name ||
+          explicitEnv.env.charAt(0).toUpperCase() + explicitEnv.env.slice(1);
+        blockResult.push(`{comment: ${c}}`);
       }
+      blockResult.push(processed.content);
+    } else {
+      const finalEnv = explicitEnv || { env: "verse", stripLength: 0 };
+      const nameStr = finalEnv.name ? `: ${finalEnv.name}` : "";
+
+      blockResult.push(`{start_of_${finalEnv.env}${nameStr}}`);
+      blockResult.push(processed.content);
+      blockResult.push(`{end_of_${finalEnv.env}}`);
     }
 
     if (blockResult.length > 0) {
