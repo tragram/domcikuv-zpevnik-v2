@@ -1,11 +1,10 @@
-import type React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Textarea } from "~/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import { Upload, X, CheckCircle } from "lucide-react";
+import { X, CheckCircle, Loader2 } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -19,6 +18,8 @@ import { IllustrationCreateSchema } from "src/worker/helpers/illustration-helper
 import { cn } from "~/lib/utils";
 import { useSongPrompts } from "~/features/AdminDashboard/adminHooks";
 import { useRouteContext } from "@tanstack/react-router";
+import { ImageDropzone } from "~/components/ImageDropzone";
+
 interface ManualFormProps {
   illustration: any;
   activePromptId?: string;
@@ -27,6 +28,7 @@ interface ManualFormProps {
   onSuccess?: () => void;
 }
 
+// Helper to resize image
 const resizeImageToThumbnail = (file: File): Promise<File> => {
   return new Promise((resolve, reject) => {
     const canvas = document.createElement("canvas");
@@ -68,18 +70,18 @@ export function ManualForm({
   isLoading,
   onSuccess,
 }: ManualFormProps) {
+  // --- State ---
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [thumbnailPreview, setThumbnailPreview] = useState<string>("");
   const [thumbnailGenerating, setThumbnailGenerating] = useState(false);
 
-  // Prompt handling state
+  // Prompt handling
   const [promptMode, setPromptMode] = useState<"existing" | "new">("existing");
   const [selectedPromptId, setSelectedPromptId] = useState<string>("");
   const [newPromptText, setNewPromptText] = useState("");
-  const [manualModel, setManualModel] = useState("manual");
-  const [manualVersion, setManualVersion] = useState("v1-manual");
+
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
   const { songPrompts } = useSongPrompts(adminApi, illustration.songId);
 
@@ -91,7 +93,9 @@ export function ManualForm({
     setAsActive: illustration?.setAsActive || false,
   });
 
-  // Set initial previews from existing data
+  // --- Effects ---
+
+  // 1. Initialize Previews
   useEffect(() => {
     if (illustration?.imageURL && !imageFile) {
       setImagePreview(illustration.imageURL);
@@ -99,14 +103,9 @@ export function ManualForm({
     if (illustration?.thumbnailURL && !thumbnailFile) {
       setThumbnailPreview(illustration.thumbnailURL);
     }
-  }, [
-    illustration?.imageURL,
-    illustration?.thumbnailURL,
-    imageFile,
-    thumbnailFile,
-  ]);
+  }, [illustration, imageFile, thumbnailFile]);
 
-  // Set initial prompt selection
+  // 2. Initialize Prompt Selection
   useEffect(() => {
     const targetPromptId = illustration?.promptId || activePromptId;
     if (targetPromptId && songPrompts.some((p) => p.id === targetPromptId)) {
@@ -117,84 +116,85 @@ export function ManualForm({
     } else if (songPrompts.length === 0) {
       setPromptMode("new");
     }
-  }, [illustration?.promptId, activePromptId, songPrompts, selectedPromptId]);
+  }, [illustration?.promptId, activePromptId, songPrompts]); // Removed selectedPromptId from deps to prevent loops
+
+  // 3. Paste Listener
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      if (e.clipboardData && e.clipboardData.files.length > 0) {
+        const file = e.clipboardData.files[0];
+        if (file.type.startsWith("image/")) {
+          e.preventDefault();
+          handleImageSelection(file);
+        }
+      }
+    };
+
+    window.addEventListener("paste", handlePaste);
+    return () => window.removeEventListener("paste", handlePaste);
+  }, []); // Empty deps effectively, but handleImageSelection is stable enough or we can use ref if needed.
+
+  // --- Handlers ---
 
   const updateFormData = (updates: Partial<IllustrationCreateSchema>) => {
     setFormData((prev) => ({ ...prev, ...updates }));
   };
 
-  const handleImageFileChange = async (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
+  const handleImageSelection = async (file: File) => {
+    // 1. Set Main Image
+    setImageFile(file);
+    const previewUrl = URL.createObjectURL(file);
+    setImagePreview(previewUrl);
+    updateFormData({ imageURL: "" }); // Clear URL if file is present
 
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
-
-      setThumbnailGenerating(true);
-      try {
-        const generatedThumbnail = await resizeImageToThumbnail(file);
-        setThumbnailFile(generatedThumbnail);
-
-        const thumbnailPreviewUrl = URL.createObjectURL(generatedThumbnail);
-        setThumbnailPreview(thumbnailPreviewUrl);
-
-        updateFormData({ imageURL: "", thumbnailURL: "" });
-      } catch (error) {
-        console.error("Error generating thumbnail:", error);
-      } finally {
-        setThumbnailGenerating(false);
-      }
+    // 2. Auto-generate Thumbnail
+    setThumbnailGenerating(true);
+    try {
+      const generatedThumbnail = await resizeImageToThumbnail(file);
+      setThumbnailFile(generatedThumbnail);
+      setThumbnailPreview(URL.createObjectURL(generatedThumbnail));
+      updateFormData({ thumbnailURL: "" });
+    } catch (error) {
+      console.error("Error generating thumbnail:", error);
+    } finally {
+      setThumbnailGenerating(false);
     }
   };
 
-  const handleThumbnailFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setThumbnailFile(file);
-
-      const previewUrl = URL.createObjectURL(file);
-      setThumbnailPreview(previewUrl);
-
-      updateFormData({ thumbnailURL: "" });
-    }
+  const handleThumbnailSelection = (file: File) => {
+    setThumbnailFile(file);
+    setThumbnailPreview(URL.createObjectURL(file));
+    updateFormData({ thumbnailURL: "" });
   };
 
   const clearImageFile = () => {
     if (imagePreview && imagePreview.startsWith("blob:")) {
       URL.revokeObjectURL(imagePreview);
     }
+    // Also clear thumbnail if it was auto-generated from this image
     if (thumbnailPreview && thumbnailPreview.startsWith("blob:")) {
       URL.revokeObjectURL(thumbnailPreview);
+      setThumbnailFile(null);
+      setThumbnailPreview(illustration?.thumbnailURL || "");
     }
 
     setImageFile(null);
-    setThumbnailFile(null);
     setImagePreview(illustration?.imageURL || "");
-    setThumbnailPreview(illustration?.thumbnailURL || "");
 
-    const imageInput = document.getElementById(
-      "image-upload",
-    ) as HTMLInputElement;
-    if (imageInput) imageInput.value = "";
+    // Reset file input value if it exists
+    const input = document.getElementById("image-upload") as HTMLInputElement;
+    if (input) input.value = "";
   };
 
   const clearThumbnailFile = () => {
     if (thumbnailPreview && thumbnailPreview.startsWith("blob:")) {
       URL.revokeObjectURL(thumbnailPreview);
     }
-
     setThumbnailFile(null);
     setThumbnailPreview(illustration?.thumbnailURL || "");
-
-    const thumbnailInput = document.getElementById(
-      "thumbnail-upload",
-    ) as HTMLInputElement;
-    if (thumbnailInput) thumbnailInput.value = "";
+    
+    const input = document.getElementById("thumbnail-upload") as HTMLInputElement;
+    if (input) input.value = "";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -214,30 +214,11 @@ export function ManualForm({
 
     try {
       await onSave({ mode: "manual", illustrationData: data });
-
-      if (imagePreview && imagePreview.startsWith("blob:")) {
-        URL.revokeObjectURL(imagePreview);
-      }
-      if (thumbnailPreview && thumbnailPreview.startsWith("blob:")) {
-        URL.revokeObjectURL(thumbnailPreview);
-      }
-
       onSuccess?.();
     } catch (error) {
       console.error("Form submission error:", error);
     }
   };
-
-  useEffect(() => {
-    return () => {
-      if (imagePreview && imagePreview.startsWith("blob:")) {
-        URL.revokeObjectURL(imagePreview);
-      }
-      if (thumbnailPreview && thumbnailPreview.startsWith("blob:")) {
-        URL.revokeObjectURL(thumbnailPreview);
-      }
-    };
-  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 w-full">
@@ -247,7 +228,7 @@ export function ManualForm({
         mode="manual"
       />
 
-      {/* PROMPT SELECTION UI */}
+      {/* --- PROMPT SECTION --- */}
       <div className="space-y-4 border rounded-lg p-4 bg-muted/20">
         <Label className="text-base font-semibold">Illustration Prompt</Label>
 
@@ -256,7 +237,7 @@ export function ManualForm({
           onValueChange={(v: "existing" | "new") => setPromptMode(v)}
           className="flex flex-col gap-4 mt-2"
         >
-          {/* Existing Prompt Option */}
+          {/* Existing Prompt */}
           <div className="flex flex-col space-y-2">
             <div className="flex items-center space-x-2">
               <RadioGroupItem
@@ -266,21 +247,16 @@ export function ManualForm({
               />
               <Label
                 htmlFor="mode-existing"
-                className={cn(
-                  songPrompts.length === 0 && "text-muted-foreground",
-                )}
+                className={cn(songPrompts.length === 0 && "text-muted-foreground")}
               >
-                Existing prompt ({songPrompts.length} in total)
+                Existing prompt ({songPrompts.length})
               </Label>
             </div>
 
             {promptMode === "existing" && (
               <div className="pl-6 space-y-2">
-                <Select
-                  value={selectedPromptId}
-                  onValueChange={setSelectedPromptId}
-                >
-                  <SelectTrigger className="w-full  bg-background">
+                <Select value={selectedPromptId} onValueChange={setSelectedPromptId}>
+                  <SelectTrigger className="w-full bg-background">
                     <SelectValue placeholder="Select a prompt..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -289,36 +265,28 @@ export function ManualForm({
                         <span className="font-mono text-xs text-muted-foreground mr-2">
                           [{p.summaryModel}]
                         </span>
-                        {p.text.length > 50
-                          ? p.text.substring(0, 50) + "..."
-                          : p.text}
+                        {p.text.length > 50 ? p.text.substring(0, 50) + "..." : p.text}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                {selectedPromptId && (
-                  <p className="text-xs text-muted-foreground p-2 bg-background rounded border">
-                    {songPrompts.find((p) => p.id === selectedPromptId)?.text}
-                  </p>
-                )}
               </div>
             )}
           </div>
 
-          {/* New Prompt Option */}
+          {/* New Prompt */}
           <div className="flex flex-col space-y-2">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="new" id="mode-new" />
               <Label htmlFor="mode-new">Custom prompt</Label>
             </div>
-
             {promptMode === "new" && (
               <div className="pl-6 space-y-3">
                 <Textarea
-                  placeholder="Enter the exact prompt text used to generate the image..."
+                  placeholder="Enter prompt text..."
                   value={newPromptText}
                   onChange={(e) => setNewPromptText(e.target.value)}
-                  className="min-h-[100px] bg-background text-white/50"
+                  className="min-h-[100px] bg-background"
                   required={promptMode === "new"}
                 />
               </div>
@@ -337,131 +305,119 @@ export function ManualForm({
         />
       </div>
 
-      {/* Image Upload Section */}
-      <div className="space-y-2">
-        <Label>Image</Label>
-        <div className="space-y-2">
-          <Input
-            placeholder="Image URL"
-            value={formData.imageURL}
-            onChange={(e) => updateFormData({ imageURL: e.target.value })}
-            disabled={!!imageFile}
-          />
-          <div className="text-sm text-muted-foreground text-center">or</div>
+      {/* --- IMAGE UPLOAD SECTION --- */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Main Image Column */}
+        <div className="space-y-3">
+          <Label>Main Image</Label>
+          
           <div className="relative">
-            <Input
-              type="file"
-              accept="image/*"
-              onChange={handleImageFileChange}
-              className="hidden"
+            <ImageDropzone
               id="image-upload"
+              label={imageFile ? imageFile.name : "Upload Main Image"}
+              onFileSelect={handleImageSelection}
+              previewUrl={imagePreview}
+              className={cn(imageFile && "border-green-500/50 bg-green-50/10")}
             />
-            <Label
-              htmlFor="image-upload"
-              className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-muted-foreground/25 rounded-md cursor-pointer hover:border-muted-foreground/50 transition-colors"
-            >
-              <Upload className="h-4 w-4" />
-              {imageFile ? imageFile.name : "Upload Image"}
-            </Label>
             {imageFile && (
               <Button
                 type="button"
-                variant="outline"
-                size="sm"
-                className="absolute top-2 right-2 h-8 w-8 p-0 bg-transparent"
+                variant="destructive"
+                size="icon"
+                className="absolute -top-2 -right-2 h-6 w-6 rounded-full"
                 onClick={clearImageFile}
               >
-                <X className="h-4 w-4" />
+                <X className="h-3 w-3" />
               </Button>
             )}
           </div>
 
-          {/* Image Preview */}
-          {imagePreview && (
-            <div className="mt-2">
-              <img
-                src={imagePreview}
-                alt="Image preview"
-                className="w-full max-w-xs h-auto rounded border object-cover"
-              />
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
             </div>
-          )}
-        </div>
-      </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-background px-2 text-muted-foreground">Or using URL</span>
+            </div>
+          </div>
 
-      {/* Thumbnail Upload Section */}
-      <div className="space-y-2">
-        <Label>Thumbnail</Label>
-        <div className="space-y-2">
           <Input
-            placeholder="Thumbnail URL"
-            value={formData.thumbnailURL}
-            onChange={(e) => updateFormData({ thumbnailURL: e.target.value })}
-            disabled={!!thumbnailFile || !!imageFile}
+            placeholder="https://..."
+            value={formData.imageURL}
+            onChange={(e) => updateFormData({ imageURL: e.target.value })}
+            disabled={!!imageFile}
+            className="text-xs font-mono"
           />
+        </div>
 
-          {imageFile && thumbnailFile ? (
-            <div className="flex items-center gap-2 p-4 border-2 border-dashed border-green-200 rounded-md bg-green-50">
+        {/* Thumbnail Column */}
+        <div className="space-y-3">
+          <Label>Thumbnail (128x128)</Label>
+
+          {/* Scenario A: Main Image is uploaded -> Auto Generate State */}
+          {imageFile ? (
+            <div className="h-[200px] border-2 border-dashed border-green-200 bg-green-50/50 rounded-lg flex flex-col items-center justify-center p-4 text-center space-y-3">
               {thumbnailGenerating ? (
                 <>
-                  <div className="animate-spin h-4 w-4 border-2 border-green-500 border-t-transparent rounded-full"></div>
-                  <span className="text-sm text-green-700">
-                    Generating thumbnail...
-                  </span>
+                  <Loader2 className="h-8 w-8 text-green-600 animate-spin" />
+                  <p className="text-sm font-medium text-green-700">Generating thumbnail...</p>
                 </>
               ) : (
                 <>
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <span className="text-sm text-green-700">
-                    Thumbnail auto-generated from uploaded image (128x128)
-                  </span>
+                  <div className="relative">
+                    <img 
+                      src={thumbnailPreview} 
+                      className="w-24 h-24 rounded border shadow-sm object-cover"
+                      alt="Thumbnail Preview"
+                    />
+                    <div className="absolute -bottom-2 -right-2 bg-green-100 text-green-700 rounded-full p-1">
+                      <CheckCircle className="h-4 w-4" />
+                    </div>
+                  </div>
+                  <p className="text-xs text-green-700 font-medium">Auto-generated from main image</p>
                 </>
               )}
             </div>
-          ) : !imageFile ? (
+          ) : (
+            /* Scenario B: No Main Image -> Manual Upload State */
             <>
-              <div className="text-sm text-muted-foreground text-center">
-                or
-              </div>
               <div className="relative">
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleThumbnailFileChange}
-                  className="hidden"
+                <ImageDropzone
                   id="thumbnail-upload"
+                  label={thumbnailFile ? thumbnailFile.name : "Upload Thumbnail"}
+                  onFileSelect={handleThumbnailSelection}
+                  previewUrl={thumbnailPreview}
                 />
-                <Label
-                  htmlFor="thumbnail-upload"
-                  className="flex items-center justify-center gap-2 p-4 border-2 border-dashed border-muted-foreground/25 rounded-md cursor-pointer hover:border-muted-foreground/50 transition-colors"
-                >
-                  <Upload className="h-4 w-4" />
-                  {thumbnailFile ? thumbnailFile.name : "Upload Thumbnail"}
-                </Label>
                 {thumbnailFile && (
                   <Button
                     type="button"
-                    variant="outline"
-                    size="sm"
-                    className="absolute top-2 right-2 h-8 w-8 p-0 bg-transparent"
+                    variant="destructive"
+                    size="icon"
+                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full"
                     onClick={clearThumbnailFile}
                   >
-                    <X className="h-4 w-4" />
+                    <X className="h-3 w-3" />
                   </Button>
                 )}
               </div>
-            </>
-          ) : null}
 
-          {/* Thumbnail Preview */}
-          {thumbnailPreview && (
-            <div className="mt-2">
-              <img
-                src={thumbnailPreview}
-                alt="Thumbnail preview"
-                className="w-32 h-32 rounded border object-cover"
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">Or using URL</span>
+                </div>
+              </div>
+
+              <Input
+                placeholder="https://..."
+                value={formData.thumbnailURL}
+                onChange={(e) => updateFormData({ thumbnailURL: e.target.value })}
+                disabled={!!thumbnailFile}
+                className="text-xs font-mono"
               />
-            </div>
+            </>
           )}
         </div>
       </div>
@@ -480,8 +436,8 @@ export function ManualForm({
         {isLoading
           ? "Saving..."
           : illustration
-            ? "Update Illustration"
-            : "Create Illustration"}
+          ? "Update Illustration"
+          : "Create Illustration"}
       </Button>
     </form>
   );

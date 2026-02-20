@@ -246,7 +246,7 @@ export function SongIllustrationsGroup({
           <div className="px-1 md:px-3 pb-4 space-y-6">
             {/* Prompts Section */}
             <div className="mt-4">
-              <div className="flex items-center justify-between mb-3 border-b pb-1">
+              <div className="flex items-end justify-between mb-2 border-b pb-1.5">
                 <h5 className="text-sm font-semibold text-muted-foreground">
                   Prompts ({songPrompts.length})
                 </h5>
@@ -268,7 +268,7 @@ export function SongIllustrationsGroup({
 
             {/* Illustrations Section */}
             <div>
-              <div className="flex items-center justify-between mb-3 border-b pb-1">
+              <div className="flex items-end justify-between mb-2 border-b pb-1.5">
                 <h5 className="text-sm font-semibold text-muted-foreground">
                   Illustrations ({filteredIllustrations.length})
                 </h5>
