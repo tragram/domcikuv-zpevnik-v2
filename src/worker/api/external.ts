@@ -161,6 +161,7 @@ export const externalRoutes = buildApp()
             await addIllustrationFromURL(
               db,
               existingSong.id,
+              sourceId,
               thumbnailURL,
               c.env,
             );

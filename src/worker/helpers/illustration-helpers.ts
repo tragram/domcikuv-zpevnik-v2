@@ -324,6 +324,7 @@ export async function createOrFindManualPrompt(
 export async function addIllustrationFromURL(
   db: DrizzleD1Database,
   songId: string,
+  sourceId: string,
   imageUrl: string,
   env: Env,
 ) {
@@ -340,7 +341,7 @@ export async function addIllustrationFromURL(
     throw Error("Failed to fetch image");
   }
   const imageBuffer = await response.arrayBuffer();
-  const fakeModelId = `import-${imageUrl}`;
+  const fakeModelId = `import-${songId}-${sourceId}-${Date.now()}`;
   const r2ImageUrl = await uploadImageBuffer(
     imageBuffer,
     songId,
