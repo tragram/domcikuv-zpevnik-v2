@@ -1,8 +1,7 @@
 songId: Karel_Kryl-Vasil
 prompts:
-  - promptId: Karel_Kryl-Vasil_gpt-4o-mini_v1
+  - id: Karel_Kryl-Vasil_gpt-4o-mini_v1
     songId: Karel_Kryl-Vasil
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       set for a meal with quails, and a steaming cup of herbal tea with
       mysterious herbs. The atmosphere should convey a blend of enchantment and
       warmth, with hints of love and passion in the air.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:33.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

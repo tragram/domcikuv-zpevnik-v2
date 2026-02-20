@@ -1,8 +1,7 @@
 songId: Wohnout-Svaz_ceskych_bohemu
 prompts:
-  - promptId: Wohnout-Svaz_ceskych_bohemu_gpt-4o-mini_v1
+  - id: Wohnout-Svaz_ceskych_bohemu_gpt-4o-mini_v1
     songId: Wohnout-Svaz_ceskych_bohemu
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,13 +12,15 @@ prompts:
       the background, show a princess figure playfully leaning over, hinting at
       the revelry. Capture the essence of friendship and the carefree spirit of
       youth, with a touch of whimsy and a hint of introspection.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Wohnout-Svaz_ceskych_bohemu_gpt-4o_v1
+  - id: Wohnout-Svaz_ceskych_bohemu_gpt-4o_v1
     songId: Wohnout-Svaz_ceskych_bohemu
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o
     text: >-
@@ -28,6 +29,9 @@ prompts:
       a wild party are strewn across a room, while friends laugh, drink, and
       discuss life. The atmosphere is full of energy, with vivid colors and a
       sense of camaraderie as they reflect on their unconventional lives.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

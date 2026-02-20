@@ -1,8 +1,7 @@
 songId: Frozen-Let_It_Go
 prompts:
-  - promptId: Frozen-Let_It_Go_gpt-4o-mini_v1
+  - id: Frozen-Let_It_Go_gpt-4o-mini_v1
     songId: Frozen-Let_It_Go
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       strength and freedom, with a determined expression, as the cold winds whip
       around her. The backdrop features a vast, icy landscape under a starry
       night sky, symbolizing her liberation from the past.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:51.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

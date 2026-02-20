@@ -1,8 +1,7 @@
 songId: Devitka-Holka_od_koni
 prompts:
-  - promptId: Devitka-Holka_od_koni_gpt-4o-mini_v1
+  - id: Devitka-Holka_od_koni_gpt-4o-mini_v1
     songId: Devitka-Holka_od_koni
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       flowers, lost in thought. The scene should evoke a sense of freedom,
       nostalgia, and longing, with soft, flowing colors and hints of a train
       track fading into the distance.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:24.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

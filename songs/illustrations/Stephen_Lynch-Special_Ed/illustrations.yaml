@@ -1,8 +1,7 @@
 songId: Stephen_Lynch-Special_Ed
 prompts:
-  - promptId: Stephen_Lynch-Special_Ed_gpt-4o-mini_v1
+  - id: Stephen_Lynch-Special_Ed_gpt-4o-mini_v1
     songId: Stephen_Lynch-Special_Ed
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       The other boy is laughing, showcasing their bond. Include elements like a
       shed in the background and a playful, slightly chaotic atmosphere that
       captures their unique friendship and innocence.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:25.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Traband-Vlastovky
 prompts:
-  - promptId: Traband-Vlastovky_gpt-4o-mini_v2
+  - id: Traband-Vlastovky_gpt-4o-mini_v2
     songId: Traband-Vlastovky
-    createdAt: 1754387149000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       stars and a hint of distant mountains. Include elements that represent
       journeys and homes, such as a winding river and lush trees, symbolizing
       the connection between distant lands and the comfort of returning home.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

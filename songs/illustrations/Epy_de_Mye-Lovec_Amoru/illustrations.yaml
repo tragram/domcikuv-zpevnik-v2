@@ -1,8 +1,7 @@
 songId: Epy_de_Mye-Lovec_Amoru
 prompts:
-  - promptId: Epy_de_Mye-Lovec_Amoru_gpt-4o-mini_v1
+  - id: Epy_de_Mye-Lovec_Amoru_gpt-4o-mini_v1
     songId: Epy_de_Mye-Lovec_Amoru
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       symbolizing the challenges of love. Include elements like a giant orange
       basin and a starry sky with a Bethlehem-like setting, capturing the
       lighthearted yet poignant essence of the lyrics.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:32.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

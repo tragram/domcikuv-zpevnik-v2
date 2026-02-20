@@ -1,8 +1,7 @@
 songId: Pokac-Hrdinsky_cin
 prompts:
-  - promptId: Pokac-Hrdinsky_cin_gpt-4o-mini_v1
+  - id: Pokac-Hrdinsky_cin_gpt-4o-mini_v1
     songId: Pokac-Hrdinsky_cin
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       local with a surprised expression reacts. Include iconic elements like the
       statue of a horse, vibrant city life, and a hint of tension with the
       foreign man's knife, capturing both humor and adventure.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:37:01.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

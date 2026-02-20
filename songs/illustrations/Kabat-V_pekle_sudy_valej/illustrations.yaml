@@ -1,8 +1,7 @@
 songId: Kabat-V_pekle_sudy_valej
 prompts:
-  - promptId: Kabat-V_pekle_sudy_valej_gpt-4o-mini_v1
+  - id: Kabat-V_pekle_sudy_valej_gpt-4o-mini_v1
     songId: Kabat-V_pekle_sudy_valej
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       elements like mushrooms and a mysterious figure resembling an old
       conductor, inviting everyone to a feast. The atmosphere should feel both
       frenetic and fantastical, capturing the essence of a wild ride.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:16.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

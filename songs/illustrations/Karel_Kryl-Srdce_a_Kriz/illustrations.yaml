@@ -1,8 +1,7 @@
 songId: Karel_Kryl-Srdce_a_Kriz
 prompts:
-  - promptId: Karel_Kryl-Srdce_a_Kriz_gpt-4o-mini_v2
+  - id: Karel_Kryl-Srdce_a_Kriz_gpt-4o-mini_v2
     songId: Karel_Kryl-Srdce_a_Kriz
-    createdAt: 1754387146000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       resilience. The atmosphere should convey a sense of hope and tranquility
       amidst the chaos, with soft colors and gentle light illuminating the
       figure's face, reflecting a moment of introspection and acceptance.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:31.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

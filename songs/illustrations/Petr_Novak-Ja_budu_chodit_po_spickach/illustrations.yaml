@@ -1,8 +1,7 @@
 songId: Petr_Novak-Ja_budu_chodit_po_spickach
 prompts:
-  - promptId: Petr_Novak-Ja_budu_chodit_po_spickach_gpt-4o-mini_v1
+  - id: Petr_Novak-Ja_budu_chodit_po_spickach_gpt-4o-mini_v1
     songId: Petr_Novak-Ja_budu_chodit_po_spickach
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       sleeping figure has a peaceful expression, with tousled hair on a pillow.
       Include subtle elements like a window showing the sunrise and a dreamy
       atmosphere, evoking a sense of love and tranquility.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:59.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

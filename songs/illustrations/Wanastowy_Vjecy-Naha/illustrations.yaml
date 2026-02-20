@@ -1,8 +1,7 @@
 songId: Wanastowy_Vjecy-Naha
 prompts:
-  - promptId: Wanastowy_Vjecy-Naha_gpt-4o-mini_v1
+  - id: Wanastowy_Vjecy-Naha_gpt-4o-mini_v1
     songId: Wanastowy_Vjecy-Naha
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       the dark, and playful creatures like a dog and a cat in a bucket of
       bubbles. The scene should evoke a sense of freedom and enchantment,
       capturing the essence of love and nature in a fantastical setting.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

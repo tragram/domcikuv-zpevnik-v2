@@ -1,8 +1,7 @@
 songId: Olympic-Taky_jsem_se_narodil_bos
 prompts:
-  - promptId: Olympic-Taky_jsem_se_narodil_bos_gpt-4o-mini_v1
+  - id: Olympic-Taky_jsem_se_narodil_bos_gpt-4o-mini_v1
     songId: Olympic-Taky_jsem_se_narodil_bos
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       as a clear blue sky, playful clouds, and a distant view of mountains. The
       atmosphere should evoke a sense of carefree joy, contrasting with a hint
       of winter's approach, symbolized by a pair of forgotten shoes nearby.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

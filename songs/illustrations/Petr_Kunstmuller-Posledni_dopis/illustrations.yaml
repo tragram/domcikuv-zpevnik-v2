@@ -1,8 +1,7 @@
 songId: Petr_Kunstmuller-Posledni_dopis
 prompts:
-  - promptId: Petr_Kunstmuller-Posledni_dopis_gpt-4o-mini_v1
+  - id: Petr_Kunstmuller-Posledni_dopis_gpt-4o-mini_v1
     songId: Petr_Kunstmuller-Posledni_dopis
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       cityscape with a distant, speeding car, symbolizing lost connections and
       unresolved emotions. The atmosphere should evoke a haunting blend of
       sorrow and reflection, capturing the essence of a final goodbye.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:59.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

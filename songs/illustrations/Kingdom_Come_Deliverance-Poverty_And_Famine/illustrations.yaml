@@ -1,8 +1,7 @@
 songId: Kingdom_Come_Deliverance-Poverty_And_Famine
 prompts:
-  - promptId: Kingdom_Come_Deliverance-Poverty_And_Famine_gpt-4o-mini_v2
+  - id: Kingdom_Come_Deliverance-Poverty_And_Famine_gpt-4o-mini_v2
     songId: Kingdom_Come_Deliverance-Poverty_And_Famine
-    createdAt: 1754387146000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,13 +11,15 @@ prompts:
       town loom, hinting at a recent calamity. The atmosphere should capture a
       juxtaposition of celebration amidst chaos, with hints of fear and
       uncertainty in the expressions of some characters.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Kingdom_Come_Deliverance-Poverty_And_Famine_gpt-4o_v2
+  - id: Kingdom_Come_Deliverance-Poverty_And_Famine_gpt-4o_v2
     songId: Kingdom_Come_Deliverance-Poverty_And_Famine
-    createdAt: 1754387146000
     summaryPromptVersion: v2
     summaryModel: gpt-4o
     text: >-
@@ -28,6 +29,9 @@ prompts:
       town loom, hinting at a recent calamity. The atmosphere should capture a
       juxtaposition of celebration amidst chaos, with hints of fear and
       uncertainty in the expressions of some characters.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:40.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: dalle3

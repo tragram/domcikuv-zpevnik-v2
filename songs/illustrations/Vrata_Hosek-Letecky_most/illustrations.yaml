@@ -1,8 +1,7 @@
 songId: Vrata_Hosek-Letecky_most
 prompts:
-  - promptId: Vrata_Hosek-Letecky_most_gpt-4o-mini_v2
+  - id: Vrata_Hosek-Letecky_most_gpt-4o-mini_v2
     songId: Vrata_Hosek-Letecky_most
-    createdAt: 1754387150000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       Hermann Göring oversees the situation from a distance, looking concerned.
       The atmosphere is bleak, conveying the desperation and chaos of a besieged
       army facing overwhelming odds.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:37:53.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Samson-Medove-Kolibana
 prompts:
-  - promptId: Samson-Medove-Kolibana_gpt-4o-mini_v1
+  - id: Samson-Medove-Kolibana_gpt-4o-mini_v1
     songId: Samson-Medove-Kolibana
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       nighttime atmosphere with stars twinkling above, while the bears appear
       friendly and curious. Include elements like honey pots and a soft, warm
       glow to emphasize the theme of warmth and love.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:18.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

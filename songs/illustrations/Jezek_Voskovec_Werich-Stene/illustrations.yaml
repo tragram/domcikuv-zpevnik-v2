@@ -1,8 +1,7 @@
 songId: Jezek_Voskovec_Werich-Stene
 prompts:
-  - promptId: Jezek_Voskovec_Werich-Stene_gpt-4o-mini_v1
+  - id: Jezek_Voskovec_Werich-Stene_gpt-4o-mini_v1
     songId: Jezek_Voskovec_Werich-Stene
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       stifled by a chain. Capture the contrast between the puppy's joyful nature
       and the owner's discontent, symbolizing the theme of freedom versus
       restriction.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:59.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

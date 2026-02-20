@@ -1,8 +1,7 @@
 songId: Epy_de_Mye-Zeny_muzu
 prompts:
-  - promptId: Epy_de_Mye-Zeny_muzu_gpt-4o-mini_v1
+  - id: Epy_de_Mye-Zeny_muzu_gpt-4o-mini_v1
     songId: Epy_de_Mye-Zeny_muzu
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       venture out, symbolized by distant mountains and stormy skies. Include
       elements that represent both the beauty and challenges of their journeys,
       such as a collection of flowers and a pair of wings in the background.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:35.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
