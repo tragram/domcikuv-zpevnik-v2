@@ -70,6 +70,9 @@ export function ManualForm({
   isLoading,
   onSuccess,
 }: ManualFormProps) {
+  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
+  const { songPrompts } = useSongPrompts(adminApi, illustration.songId);
+  
   // --- State ---
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
@@ -78,12 +81,14 @@ export function ManualForm({
   const [thumbnailGenerating, setThumbnailGenerating] = useState(false);
 
   // Prompt handling
-  const [promptMode, setPromptMode] = useState<"existing" | "new">("existing");
-  const [selectedPromptId, setSelectedPromptId] = useState<string>("");
+  const [selectedPromptId, setSelectedPromptId] = useState<string>(
+    illustration?.promptId || activePromptId,
+  );
+  const [promptMode, setPromptMode] = useState<"existing" | "new">(
+    songPrompts.length > 0 ? "existing" : "new",
+  );
   const [newPromptText, setNewPromptText] = useState("");
 
-  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
-  const { songPrompts } = useSongPrompts(adminApi, illustration.songId);
 
   const [formData, setFormData] = useState<Partial<IllustrationCreateSchema>>({
     songId: illustration?.songId || "",
@@ -95,7 +100,7 @@ export function ManualForm({
 
   // --- Effects ---
 
-  // 1. Initialize Previews
+  // Initialize Previews
   useEffect(() => {
     if (illustration?.imageURL && !imageFile) {
       setImagePreview(illustration.imageURL);
@@ -105,20 +110,7 @@ export function ManualForm({
     }
   }, [illustration, imageFile, thumbnailFile]);
 
-  // 2. Initialize Prompt Selection
-  useEffect(() => {
-    const targetPromptId = illustration?.promptId || activePromptId;
-    if (targetPromptId && songPrompts.some((p) => p.id === targetPromptId)) {
-      setPromptMode("existing");
-      setSelectedPromptId(targetPromptId);
-    } else if (songPrompts.length > 0 && !selectedPromptId) {
-      setSelectedPromptId(songPrompts[0].id);
-    } else if (songPrompts.length === 0) {
-      setPromptMode("new");
-    }
-  }, [illustration?.promptId, activePromptId, songPrompts]); // Removed selectedPromptId from deps to prevent loops
-
-  // 3. Paste Listener
+  // Paste Listener
   useEffect(() => {
     const handlePaste = (e: ClipboardEvent) => {
       if (e.clipboardData && e.clipboardData.files.length > 0) {
@@ -192,8 +184,10 @@ export function ManualForm({
     }
     setThumbnailFile(null);
     setThumbnailPreview(illustration?.thumbnailURL || "");
-    
-    const input = document.getElementById("thumbnail-upload") as HTMLInputElement;
+
+    const input = document.getElementById(
+      "thumbnail-upload",
+    ) as HTMLInputElement;
     if (input) input.value = "";
   };
 
@@ -247,7 +241,9 @@ export function ManualForm({
               />
               <Label
                 htmlFor="mode-existing"
-                className={cn(songPrompts.length === 0 && "text-muted-foreground")}
+                className={cn(
+                  songPrompts.length === 0 && "text-muted-foreground",
+                )}
               >
                 Existing prompt ({songPrompts.length})
               </Label>
@@ -255,7 +251,10 @@ export function ManualForm({
 
             {promptMode === "existing" && (
               <div className="pl-6 space-y-2">
-                <Select value={selectedPromptId} onValueChange={setSelectedPromptId}>
+                <Select
+                  value={selectedPromptId}
+                  onValueChange={setSelectedPromptId}
+                >
                   <SelectTrigger className="w-full bg-background">
                     <SelectValue placeholder="Select a prompt..." />
                   </SelectTrigger>
@@ -265,7 +264,9 @@ export function ManualForm({
                         <span className="font-mono text-xs text-muted-foreground mr-2">
                           [{p.summaryModel}]
                         </span>
-                        {p.text.length > 50 ? p.text.substring(0, 50) + "..." : p.text}
+                        {p.text.length > 50
+                          ? p.text.substring(0, 50) + "..."
+                          : p.text}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -310,7 +311,7 @@ export function ManualForm({
         {/* Main Image Column */}
         <div className="space-y-3">
           <Label>Main Image</Label>
-          
+
           <div className="relative">
             <ImageDropzone
               id="image-upload"
@@ -337,7 +338,9 @@ export function ManualForm({
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Or using URL</span>
+              <span className="bg-background px-2 text-muted-foreground">
+                Or using URL
+              </span>
             </div>
           </div>
 
@@ -360,13 +363,15 @@ export function ManualForm({
               {thumbnailGenerating ? (
                 <>
                   <Loader2 className="h-8 w-8 text-green-600 animate-spin" />
-                  <p className="text-sm font-medium text-green-700">Generating thumbnail...</p>
+                  <p className="text-sm font-medium text-green-700">
+                    Generating thumbnail...
+                  </p>
                 </>
               ) : (
                 <>
                   <div className="relative">
-                    <img 
-                      src={thumbnailPreview} 
+                    <img
+                      src={thumbnailPreview}
                       className="w-24 h-24 rounded border shadow-sm object-cover"
                       alt="Thumbnail Preview"
                     />
@@ -374,7 +379,9 @@ export function ManualForm({
                       <CheckCircle className="h-4 w-4" />
                     </div>
                   </div>
-                  <p className="text-xs text-green-700 font-medium">Auto-generated from main image</p>
+                  <p className="text-xs text-green-700 font-medium">
+                    Auto-generated from main image
+                  </p>
                 </>
               )}
             </div>
@@ -384,7 +391,9 @@ export function ManualForm({
               <div className="relative">
                 <ImageDropzone
                   id="thumbnail-upload"
-                  label={thumbnailFile ? thumbnailFile.name : "Upload Thumbnail"}
+                  label={
+                    thumbnailFile ? thumbnailFile.name : "Upload Thumbnail"
+                  }
                   onFileSelect={handleThumbnailSelection}
                   previewUrl={thumbnailPreview}
                 />
@@ -406,14 +415,18 @@ export function ManualForm({
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Or using URL</span>
+                  <span className="bg-background px-2 text-muted-foreground">
+                    Or using URL
+                  </span>
                 </div>
               </div>
 
               <Input
                 placeholder="https://..."
                 value={formData.thumbnailURL}
-                onChange={(e) => updateFormData({ thumbnailURL: e.target.value })}
+                onChange={(e) =>
+                  updateFormData({ thumbnailURL: e.target.value })
+                }
                 disabled={!!thumbnailFile}
                 className="text-xs font-mono"
               />
@@ -436,8 +449,8 @@ export function ManualForm({
         {isLoading
           ? "Saving..."
           : illustration
-          ? "Update Illustration"
-          : "Create Illustration"}
+            ? "Update Illustration"
+            : "Create Illustration"}
       </Button>
     </form>
   );
