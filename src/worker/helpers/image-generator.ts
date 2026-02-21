@@ -62,7 +62,11 @@ export interface GenerationResult {
   imageBuffer: ArrayBuffer;
   thumbnailBuffer: ArrayBuffer;
 }
-
+declare global {
+  interface Uint8ArrayConstructor {
+    fromBase64(string: string): Uint8Array;
+  }
+}
 // --- Image Provider Interfaces & Implementations ---
 
 interface ImageProvider {
@@ -97,10 +101,9 @@ class OpenAIImageProvider implements ImageProvider {
       throw new Error("No image data returned from OpenAI");
     }
 
-    const binary = atob(base64);
-    const buffer = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) buffer[i] = binary.charCodeAt(i);
-    return buffer.buffer;
+    // Native fast decode using V8
+    const uint8Array = Uint8Array.fromBase64(base64);
+    return uint8Array.buffer;
   }
 }
 
@@ -127,7 +130,6 @@ class HuggingFaceImageProvider implements ImageProvider {
   }
 }
 
-// Updated Google Image Provider using the new @google/genai SDK
 class GoogleImageProvider implements ImageProvider {
   async generate(
     prompt: string,
@@ -157,11 +159,10 @@ class GoogleImageProvider implements ImageProvider {
       throw new Error("No image data returned from Google API");
     }
 
+    // Native fast decode using V8
     const base64 = imagePart.inlineData.data;
-    const binary = atob(base64);
-    const buffer = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) buffer[i] = binary.charCodeAt(i);
-    return buffer.buffer;
+    const uint8Array = Uint8Array.fromBase64(base64);
+    return uint8Array.buffer;
   }
 }
 
