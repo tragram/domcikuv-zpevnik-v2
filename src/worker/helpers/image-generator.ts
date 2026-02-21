@@ -1,4 +1,6 @@
 import { InferenceClient } from "@huggingface/inference";
+import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 
 // the first element of each array is used as default by the frontend
 export const SUMMARY_PROMPT_VERSIONS = ["v2", "v1"] as const;
@@ -7,7 +9,7 @@ export const SUMMARY_MODELS_API = ["gpt-5-mini", "gpt-5.2"] as const;
 export const IMAGE_MODELS_API = [
   "FLUX.1-dev",
   "FLUX.1-schnell",
-  "FLUX.2-dev", 
+  "FLUX.2-dev",
   "gpt-image-1.5",
   "gpt-image-1",
   "gpt-image-1-mini",
@@ -64,34 +66,37 @@ export interface GenerationResult {
 // --- Image Provider Interfaces & Implementations ---
 
 interface ImageProvider {
-  generate(prompt: string, model: string, config: GenerationConfig): Promise<ArrayBuffer>;
+  generate(
+    prompt: string,
+    model: string,
+    config: GenerationConfig,
+  ): Promise<ArrayBuffer>;
 }
 
 class OpenAIImageProvider implements ImageProvider {
-  async generate(prompt: string, model: string, config: GenerationConfig): Promise<ArrayBuffer> {
-    const response = await fetch("https://api.openai.com/v1/images/generations", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${config.openaiApiKey}`,
-        "Content-Type": "application/json",
-        ...(config.openaiOrgId && { "OpenAI-Organization": config.openaiOrgId }),
-        ...(config.openaiProjectId && { "OpenAI-Project": config.openaiProjectId }),
-      },
-      body: JSON.stringify({
-        model: model,
-        prompt,
-        size: "1024x1024",
-        response_format: "b64_json",
-      }),
+  async generate(
+    prompt: string,
+    model: string,
+    config: GenerationConfig,
+  ): Promise<ArrayBuffer> {
+    const openai = new OpenAI({
+      apiKey: config.openaiApiKey,
+      organization: config.openaiOrgId,
+      project: config.openaiProjectId,
     });
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`OpenAI image generation error: ${response.status} - ${error}`);
+    const response = await openai.images.generate({
+      model: model,
+      prompt,
+      size: "1024x1024",
+      response_format: "b64_json",
+    });
+
+    const base64 = response.data[0].b64_json;
+    if (!base64) {
+      throw new Error("No image data returned from OpenAI");
     }
 
-    const data = (await response.json()) as { data: { b64_json: string }[] };
-    const base64 = data.data[0].b64_json;
     const binary = atob(base64);
     const buffer = new Uint8Array(binary.length);
     for (let i = 0; i < binary.length; i++) buffer[i] = binary.charCodeAt(i);
@@ -100,12 +105,17 @@ class OpenAIImageProvider implements ImageProvider {
 }
 
 class HuggingFaceImageProvider implements ImageProvider {
-  async generate(prompt: string, model: string, config: GenerationConfig): Promise<ArrayBuffer> {
-    if (!config.huggingFaceToken) throw new Error("Hugging Face token is required");
-    
+  async generate(
+    prompt: string,
+    model: string,
+    config: GenerationConfig,
+  ): Promise<ArrayBuffer> {
+    if (!config.huggingFaceToken)
+      throw new Error("Hugging Face token is required");
+
     const client = new InferenceClient(config.huggingFaceToken);
     const hfModel = PROVIDER_MODEL_NAMES[model as AvailableImageModel] || model;
-    
+
     const imageBlob = await client.textToImage({
       model: hfModel,
       inputs: prompt,
@@ -117,35 +127,30 @@ class HuggingFaceImageProvider implements ImageProvider {
   }
 }
 
-// Added Google Image Provider for Nano Banana Pro
+// Updated Google Image Provider using the new @google/genai SDK
 class GoogleImageProvider implements ImageProvider {
-  async generate(prompt: string, model: string, config: GenerationConfig): Promise<ArrayBuffer> {
+  async generate(
+    prompt: string,
+    model: string,
+    config: GenerationConfig,
+  ): Promise<ArrayBuffer> {
     if (!config.googleApiKey) throw new Error("Google API key is required");
 
-    const googleModel = PROVIDER_MODEL_NAMES[model as AvailableImageModel] || model;
+    const ai = new GoogleGenAI({ apiKey: config.googleApiKey });
+    const googleModel =
+      PROVIDER_MODEL_NAMES[model as AvailableImageModel] || model;
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${googleModel}:generateContent?key=${config.googleApiKey}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await ai.models.generateContent({
+      model: googleModel,
+      contents: prompt,
+      config: {
+        imageConfig: {
+          aspectRatio: "1:1",
+        },
       },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [{ text: prompt }],
-          },
-        ],
-      }),
     });
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Google image generation error: ${response.status} - ${error}`);
-    }
-
-    // Google returns the generated image inside inlineData.data as a base64 string
-    const data = (await response.json()) as any;
-    const parts = data.candidates?.[0]?.content?.parts;
+    const parts = response.candidates?.[0]?.content?.parts;
     const imagePart = parts?.find((p: any) => p.inlineData?.data);
 
     if (!imagePart?.inlineData?.data) {
@@ -166,11 +171,10 @@ export class ImageGenerator {
 
   constructor(config: GenerationConfig) {
     this.config = config;
-    // Register your providers here
     this.providers = {
       openai: new OpenAIImageProvider(),
       huggingface: new HuggingFaceImageProvider(),
-      google: new GoogleImageProvider(), // Registered the new provider
+      google: new GoogleImageProvider(),
     };
   }
 
@@ -202,37 +206,21 @@ export class ImageGenerator {
       throw new Error("Lyrics too short for meaningful prompt generation");
     }
 
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${this.config.openaiApiKey}`,
-        "Content-Type": "application/json",
-        ...(this.config.openaiOrgId && {
-          "OpenAI-Organization": this.config.openaiOrgId,
-        }),
-        ...(this.config.openaiProjectId && {
-          "OpenAI-Project": this.config.openaiProjectId,
-        }),
-      },
-      body: JSON.stringify({
-        model: this.config.summaryModel,
-        messages: [
-          { role: "system", content: PROMPTS[this.config.promptVersion] },
-          { role: "user", content: lyrics },
-        ],
-      }),
+    const openai = new OpenAI({
+      apiKey: this.config.openaiApiKey,
+      organization: this.config.openaiOrgId,
+      project: this.config.openaiProjectId,
     });
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`OpenAI API error: ${response.status} - ${error}`);
-    }
+    const response = await openai.chat.completions.create({
+      model: this.config.summaryModel,
+      messages: [
+        { role: "system", content: PROMPTS[this.config.promptVersion] },
+        { role: "user", content: lyrics },
+      ],
+    });
 
-    const data = (await response.json()) as {
-      choices: { message: { content: string } }[];
-    };
-
-    const prompt = data.choices?.[0]?.message?.content;
+    const prompt = response.choices?.[0]?.message?.content;
     if (!prompt) throw new Error("Failed to generate prompt from OpenAI");
 
     return prompt;
@@ -243,7 +231,7 @@ export class ImageGenerator {
     const provider = this.providers[providerType];
 
     if (!provider) {
-        throw new Error(`No provider registered for type: ${providerType}`);
+      throw new Error(`No provider registered for type: ${providerType}`);
     }
 
     return provider.generate(prompt, this.config.imageModel, this.config);

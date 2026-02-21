@@ -5,6 +5,7 @@
   "version": "2.3.0",
   "type": "module",
   "dependencies": {
+    "@google/genai": "^1.42.0",
     "@huggingface/inference": "^4.6.1",
     "@khmyznikov/pwa-install": "^0.5.6",
     "@libsql/client": "^0.15.9",
