@@ -134,12 +134,9 @@ export function useFilteredSongs(
     showExternal,
   } = useFilterSettingsStore();
 
-  const [externalSearchTriggered, setExternalSearchTriggered] = useState(false);
   const { api } = useRouteContext({ from: "__root__" });
-  // Reset external search trigger when the query changes
-  useEffect(() => {
-    setExternalSearchTriggered(false);
-  }, [query]);
+  const [triggeredQuery, setTriggeredQuery] = useState<string | null>(null);
+  const hasTriggeredExternalSearch = query === triggeredQuery;
 
   // Reset query on sort change (optional, legacy behavior preserved)
   useEffect(() => {
@@ -209,7 +206,7 @@ export function useFilteredSongs(
     user.loggedIn &&
     showExternal &&
     isQueryValidForExternal &&
-    externalSearchTriggered;
+    hasTriggeredExternalSearch;
 
   const { data: externalSongs = [], isFetching: isLoadingExternal } = useQuery({
     queryKey: ["externalSearch", query],
@@ -244,8 +241,8 @@ export function useFilteredSongs(
     songs: filteredInternalResults,
     externalSongs: sortedExternalSongs,
     isLoadingExternal,
-    triggerExternalSearch: () => setExternalSearchTriggered(true),
-    hasTriggeredExternalSearch: externalSearchTriggered,
+    triggerExternalSearch: () => setTriggeredQuery(query),
+    hasTriggeredExternalSearch: hasTriggeredExternalSearch,
     canSearchExternal: user.loggedIn && showExternal && isQueryValidForExternal,
   };
 }
