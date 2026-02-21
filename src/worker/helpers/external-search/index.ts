@@ -19,9 +19,11 @@ export async function searchAllExternalServices(
   query: string,
   env: Env,
 ): Promise<ExternalSearchResult[]> {
-  const paResults = await searchPisnickyAkordy(query, env.PA_BEARER_TOKEN);
-  const zsResults = await searchZpevnikSkorepova(query, env.KV);
-  const ccResults = await searchCifraClub(query);
+  const results = await Promise.all([
+    searchPisnickyAkordy(query, env.PA_BEARER_TOKEN),
+    searchZpevnikSkorepova(query, env.KV),
+    searchCifraClub(query),
+  ]);
 
-  return [...paResults, ...zsResults, ...ccResults];
+  return results.flat();
 }
