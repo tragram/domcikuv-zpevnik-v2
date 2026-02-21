@@ -341,7 +341,7 @@ export async function addIllustrationFromURL(
     throw Error("Failed to fetch image");
   }
   const imageBuffer = await response.arrayBuffer();
-  const fakeModelId = `import-${songId}-${sourceId}-${Date.now()}`;
+  const fakeModelId = `import-${sourceId}`;
   const r2ImageUrl = await uploadImageBuffer(
     imageBuffer,
     songId,

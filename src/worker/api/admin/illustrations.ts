@@ -261,7 +261,7 @@ export const illustrationRoutes = buildApp()
         } else if (validatedData.promptText) {
           // Create new custom prompt
           const model = validatedData.summaryModel || "manual";
-          const version = validatedData.summaryPromptVersion || "v1-manual";
+          const version = validatedData.summaryPromptVersion || "manual";
           const newId = `${validatedData.songId}_${model}_${version}_${Date.now()}`;
 
           const newPrompt = await db
