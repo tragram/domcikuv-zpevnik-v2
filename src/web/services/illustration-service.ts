@@ -183,22 +183,6 @@ export const deleteIllustrationPrompt = async (
   );
 };
 
-export const setActiveIllustration = async (
-  adminApi: AdminApi,
-  songId: string,
-  illustrationId: string,
-): Promise<SongDataDB> => {
-  const response = await makeApiRequest(() =>
-    adminApi.songs[":songId"]["current-illustration"][":illustrationId"].$put({
-      param: {
-        songId: songId,
-        illustrationId: illustrationId,
-      },
-    }),
-  );
-  return parseDBDates(response);
-};
-
 export type SongWithIllustrationsAndPrompts = {
   song: SongWithCurrentVersion;
   illustrations: SongIllustrationDB[];

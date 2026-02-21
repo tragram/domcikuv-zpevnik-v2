@@ -13,7 +13,6 @@ import {
   patchSongAdmin,
   patchVersionAdmin,
   resetVersionDB,
-  setActiveIllustration,
   songsWithCurrentVersionAdmin,
   updateIllustration,
   songsWithIllustrationsAndPrompts,
@@ -421,47 +420,6 @@ export const useGenerateIllustration = (adminApi: AdminApi) => {
         ["promptsAdmin"],
         (old) => (old ? [...old, response.prompt] : [response.prompt]),
       );
-    },
-  });
-};
-
-export const useSetActiveIllustration = (adminApi: AdminApi) => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: ({
-      songId,
-      illustrationId,
-    }: {
-      songId: string;
-      illustrationId: string;
-    }) => setActiveIllustration(adminApi, songId, illustrationId),
-    onMutate: async ({ songId, illustrationId }) => {
-      await queryClient.cancelQueries({ queryKey: ["songDBAdmin"] });
-
-      const previousSongs = queryClient.getQueryData<SongWithCurrentVersion[]>([
-        "songDBAdmin",
-      ]);
-
-      // Optimistically update the current illustration
-      queryClient.setQueryData<SongWithCurrentVersion[]>(
-        ["songDBAdmin"],
-        (old) =>
-          old?.map((song) =>
-            song.id === songId
-              ? { ...song, currentIllustrationId: illustrationId }
-              : song,
-          ) || [],
-      );
-
-      return { previousSongs };
-    },
-    onError: (err, variables, context) => {
-      if (context?.previousSongs) {
-        queryClient.setQueryData(["songDBAdmin"], context.previousSongs);
-      }
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
   });
 };
