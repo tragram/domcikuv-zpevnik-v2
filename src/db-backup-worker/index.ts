@@ -231,9 +231,11 @@ async function syncToGithub(env: Env, isFullSync: boolean): Promise<void> {
     content?: string;
   }[] = [];
 
-  const blobUploadPromises: Promise<{ path: string; sha: string } | null>[] =
-    [];
-  const r2ShadowDeletePromises: Promise<string>[] = [];
+  const blobUploadPromises: Promise<{
+    path: string;
+    sha: string;
+    r2Key: string;
+  } | null>[] = [];
 
   for (const songRow of allSongs) {
     if (songRow.sourceId) {
@@ -336,12 +338,10 @@ async function syncToGithub(env: Env, isFullSync: boolean): Promise<void> {
                 encoding: "base64",
               });
 
-              // Apply shadow deletion using the provided helper function
-              r2ShadowDeletePromises.push(moveToTrashR2(env.R2_BUCKET, r2Key));
-
               return {
                 path: `songs/illustrations/${song.id}/${promptPathPart}/full/${filename}`,
                 sha: blobData.sha,
+                r2Key,
               };
             })(),
           );
@@ -367,16 +367,8 @@ async function syncToGithub(env: Env, isFullSync: boolean): Promise<void> {
     }
   }
 
-  const [, uploadedBlobs] = await Promise.all([
-    Promise.all(r2ShadowDeletePromises),
-    Promise.all(blobUploadPromises),
-  ]);
-
-  if (r2ShadowDeletePromises.length > 0) {
-    console.log(
-      `✓ Shadow deleted ${r2ShadowDeletePromises.length} synced files to /trash in R2.`,
-    );
-  }
+  const uploadedBlobs = await Promise.all(blobUploadPromises);
+  const keysToTrash: string[] = [];
 
   for (const blob of uploadedBlobs) {
     if (blob) {
@@ -386,6 +378,7 @@ async function syncToGithub(env: Env, isFullSync: boolean): Promise<void> {
         type: "blob",
         sha: blob.sha,
       });
+      keysToTrash.push(blob.r2Key);
     }
   }
 
@@ -437,4 +430,18 @@ async function syncToGithub(env: Env, isFullSync: boolean): Promise<void> {
   });
 
   console.log(`✓ Pull Request created: ${prData.html_url}`);
+
+  // TODO: Enable shadow deletions once the sync pipeline is fully tested
+  /*
+  if (keysToTrash.length > 0) {
+    const shadowDeletePromises = keysToTrash.map(key => moveToTrashR2(env.R2_BUCKET, key));
+    await Promise.all(shadowDeletePromises);
+    console.log(`✓ Shadow deleted ${keysToTrash.length} synced files to /trash in R2.`);
+  }
+  */
+  if (keysToTrash.length > 0) {
+    console.log(
+      `ℹ Skipped shadow deletion of ${keysToTrash.length} synced files in R2 (Pending implementation).`,
+    );
+  }
 }
