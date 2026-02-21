@@ -2,11 +2,16 @@
   "extends": "./tsconfig.node.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.worker.tsbuildinfo",
+    "lib": ["ES2024", "ESNext"],
     "types": ["vite/client", "./worker-configuration.d.ts", "node"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/web/*"]
-    },
+    }
   },
-  "include": ["src/worker", "src/web/components/ImageGeneratorTest.tsx", "src/db-backup-worker/index.ts"]
+  "include": [
+    "src/worker",
+    "src/web/components/ImageGeneratorTest.tsx",
+    "src/db-backup-worker/index.ts"
+  ]
 }
