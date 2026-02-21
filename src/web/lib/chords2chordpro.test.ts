@@ -92,6 +92,18 @@ describe("chords2chordpro", () => {
       expect(convertToChordPro(input)).toBe(expected);
     });
 
+    it("correctly parses chords when there's a verse number", () => {
+      const input = `   Dmi               G          C\n1. Atmosféra vánoční už mi leze krkem.`;
+      const expected = `{start_of_verse}\n[Dmi]Atmosféra vánoční [G]už mi leze [C]krkem.\n{end_of_verse}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("correctly parses chords even if they are offset due to verse number", () => {
+      const input = `Dmi   G      Dmi   G      Dmi   A7    Dmi\n1. To ta Helpa, to ta Helpa, to je pekné mesto\n`;
+      const expected = `{start_of_verse}\n[Dmi]To ta [G]Helpa, [Dmi]to ta [G]Helpa, [Dmi]to je [A7]pekné [Dmi]mesto\n{end_of_verse}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
     it("applies Czech chord notation conversion when requested", () => {
       const input = `B\nLyric`;
       const expected = `{start_of_verse}\n[H]Lyric\n{end_of_verse}`;
@@ -99,7 +111,7 @@ describe("chords2chordpro", () => {
       expect(convertToChordPro(input, true)).toBe(expected);
     });
   });
-  
+
   describe("Section closing and non-overlapping", () => {
     it("splits paragraphs forcefully when an environment directive interrupts contiguous lines", () => {
       // Previously, the lack of a blank line made [Chorus] become a comment inside the verse block

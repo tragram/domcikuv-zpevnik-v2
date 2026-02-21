@@ -220,10 +220,15 @@ function shiftChordLineLeft(chordLine: string, shift: number): string {
   const tokens = getChordTokens(chordLine);
   if (tokens.length === 0) return chordLine;
 
+  // Only shift as much as the first chord's position allows.
+  // This preserves all relative spacing and prevents squishing.
+  const actualShift = Math.min(shift, tokens[0].position);
+  if (actualShift === 0) return chordLine;
+
   let res = "";
   let curPos = 0;
   for (const t of tokens) {
-    const newPos = Math.max(0, t.position - shift);
+    const newPos = t.position - actualShift;
     if (newPos > curPos) {
       res += " ".repeat(newPos - curPos);
       curPos = newPos;
