@@ -20,7 +20,7 @@ export type SongDBApi = typeof client.api.songs;
 
 export const fetchIllustrationPrompt = async (
   songDBApi: SongDBApi,
-  song: SongData
+  song: SongData,
 ): Promise<string> => {
   const promptId = song.currentIllustration?.promptId;
   if (!promptId) {
@@ -29,23 +29,23 @@ export const fetchIllustrationPrompt = async (
   const response = await makeApiRequest(() =>
     songDBApi.prompts[":id"].$get({
       param: { id: promptId },
-    })
+    }),
   );
   return response.text;
 };
 
 // Admin API
 export const fetchIllustrationsAdmin = async (
-  adminApi: AdminApi
+  adminApi: AdminApi,
 ): Promise<SongIllustrationDB[]> => {
   const songWithIllustrationsAndPrompts = await makeApiRequest(
-    adminApi.illustrations.$get
+    adminApi.illustrations.$get,
   );
   return songWithIllustrationsAndPrompts.map(parseDBDates);
 };
 
 export const fetchPromptsAdmin = async (
-  adminApi: AdminApi
+  adminApi: AdminApi,
 ): Promise<IllustrationPromptDB[]> => {
   const prompts = await makeApiRequest(adminApi.prompts.$get);
   return prompts.map(parseDBDates);
@@ -53,45 +53,20 @@ export const fetchPromptsAdmin = async (
 
 export const createIllustrationPrompt = async (
   adminApi: AdminApi,
-  promptData: IllustrationPromptCreateSchema
+  promptData: IllustrationPromptCreateSchema,
 ): Promise<IllustrationPromptDB> => {
   const response = await makeApiRequest(() =>
-    adminApi.prompts.create.$post({ json: promptData })
+    adminApi.prompts.create.$post({ json: promptData }),
   );
   return parseDBDates(response);
 };
 
-export const createIllustration = async (
-  adminApi: AdminApi,
-  data: IllustrationCreateSchema
+export const generateIllustration = async (
+  adminApi: AdminApi | API,
+  illustrationData: IllustrationGenerateSchema,
 ): Promise<adminIllustrationResponse> => {
-  const formData = new FormData();
-  formData.append("songId", data.songId);
-  if (data.summaryPromptId && data.summaryPromptId.trim()) {
-    formData.append("summaryPromptId", data.summaryPromptId.trim());
-  }
-  formData.append("imageModel", data.imageModel);
-  formData.append("setAsActive", data.setAsActive.toString());
-  // Add URLs if provided
-  if (data.imageURL) {
-    formData.append("imageURL", data.imageURL);
-  }
-  if (data.thumbnailURL) {
-    formData.append("thumbnailURL", data.thumbnailURL);
-  }
-
-  // Add files if provided
-  if (data.imageFile) {
-    formData.append("imageFile", data.imageFile);
-  }
-  if (data.thumbnailFile) {
-    formData.append("thumbnailFile", data.thumbnailFile);
-  }
-  // formData cannot be sent via Hono's RPC
   const response = await makeApiRequest(() =>
-    adminApi.illustrations.create.$post({
-      form: data as unknown as Record<string, string | Blob>,
-    })
+    adminApi.illustrations.generate.$post({ json: illustrationData }),
   );
   return {
     illustration: parseDBDates(response.illustration),
@@ -99,14 +74,48 @@ export const createIllustration = async (
     prompt: parseDBDates(response.prompt),
   };
 };
+function buildIllustrationFormData(data: any): FormData {
+  const formData = new FormData();
 
-export const generateIllustration = async (
-  adminApi: AdminApi | API,
-  illustrationData: IllustrationGenerateSchema
+  // Standard fields
+  if (data.songId) formData.append("songId", data.songId);
+  if (data.imageModel) formData.append("imageModel", data.imageModel);
+  if (data.setAsActive !== undefined)
+    formData.append("setAsActive", String(data.setAsActive));
+  if (data.imageURL) formData.append("imageURL", data.imageURL);
+  if (data.thumbnailURL) formData.append("thumbnailURL", data.thumbnailURL);
+
+  // Prompt fields (Make sure these match your ManualForm schema!)
+  if (data.promptId) formData.append("promptId", data.promptId);
+  if (data.promptText) formData.append("promptText", data.promptText);
+  if (data.summaryModel) formData.append("summaryModel", data.summaryModel);
+  if (data.summaryPromptVersion)
+    formData.append("summaryPromptVersion", data.summaryPromptVersion);
+
+  // File objects
+  if (data.imageFile instanceof File) {
+    formData.append("imageFile", data.imageFile);
+  }
+  if (data.thumbnailFile instanceof File) {
+    formData.append("thumbnailFile", data.thumbnailFile);
+  }
+
+  return formData;
+}
+
+export const createIllustration = async (
+  adminApi: AdminApi,
+  data: IllustrationCreateSchema,
 ): Promise<adminIllustrationResponse> => {
+  const formData = buildIllustrationFormData(data);
+
   const response = await makeApiRequest(() =>
-    adminApi.illustrations.generate.$post({ json: illustrationData })
+    adminApi.illustrations.create.$post({
+      // Bypass strict RPC typing to safely pass the FormData entries
+      form: Object.fromEntries(formData.entries()),
+    } as any),
   );
+
   return {
     illustration: parseDBDates(response.illustration),
     song: parseDBDates(response.song),
@@ -117,14 +126,32 @@ export const generateIllustration = async (
 export const updateIllustration = async (
   adminApi: AdminApi,
   illustrationId: string,
-  illustrationData: IllustrationModifySchema
+  illustrationData: IllustrationModifySchema,
 ): Promise<adminIllustrationResponse> => {
+  // 1. If we have files, we MUST send as FormData
+  if (illustrationData.imageFile || illustrationData.thumbnailFile) {
+    const formData = buildIllustrationFormData(illustrationData);
+    const response = await makeApiRequest(() =>
+      adminApi.illustrations[":id"].$put({
+        param: { id: illustrationId },
+        form: Object.fromEntries(formData.entries()),
+      } as any),
+    );
+    return {
+      illustration: parseDBDates(response.illustration),
+      song: parseDBDates(response.song),
+      prompt: parseDBDates(response.prompt),
+    };
+  }
+
+  // 2. Fallback to standard JSON if it's just a text/toggle update
   const response = await makeApiRequest(() =>
     adminApi.illustrations[":id"].$put({
       param: { id: illustrationId },
-      json: illustrationData,
-    })
+      json: illustrationData as any, // casting may be needed depending on your exact Hono types
+    }),
   );
+
   return {
     illustration: parseDBDates(response.illustration),
     song: parseDBDates(response.song),
@@ -134,41 +161,41 @@ export const updateIllustration = async (
 
 export const deleteIllustration = async (
   adminApi: AdminApi,
-  id: string
+  id: string,
 ): Promise<void> => {
   await makeApiRequest(() =>
     adminApi.illustrations[":id"].$delete({
       param: { id },
-    })
+    }),
   );
 };
 
 export const restoreIllustration = async (
   adminApi: AdminApi,
-  id: string
+  id: string,
 ): Promise<void> => {
   await makeApiRequest(() =>
     adminApi.illustrations[":id"].restore.$post({
       param: { id },
-    })
+    }),
   );
 };
 
 export const deleteIllustrationPrompt = async (
   adminApi: AdminApi,
-  id: string
+  id: string,
 ): Promise<void> => {
   await makeApiRequest(() =>
     adminApi.prompts[":id"].$delete({
       param: { id },
-    })
+    }),
   );
 };
 
 export const setActiveIllustration = async (
   adminApi: AdminApi,
   songId: string,
-  illustrationId: string
+  illustrationId: string,
 ): Promise<SongDataDB> => {
   const response = await makeApiRequest(() =>
     adminApi.songs[":songId"]["current-illustration"][":illustrationId"].$put({
@@ -176,7 +203,7 @@ export const setActiveIllustration = async (
         songId: songId,
         illustrationId: illustrationId,
       },
-    })
+    }),
   );
   return parseDBDates(response);
 };
@@ -191,17 +218,20 @@ export type SongWithIllustrationsAndPrompts = {
 export const songsWithIllustrationsAndPrompts = (
   songs: SongWithCurrentVersion[],
   illustrations: SongIllustrationDB[],
-  prompts: IllustrationPromptDB[]
+  prompts: IllustrationPromptDB[],
 ) => {
-  const songIllustrationsPrompts = songs.reduce((acc, s) => {
-    acc[s.id] = {
-      song: s,
-      illustrations: [],
-      prompts: {},
-    } as SongWithIllustrationsAndPrompts;
+  const songIllustrationsPrompts = songs.reduce(
+    (acc, s) => {
+      acc[s.id] = {
+        song: s,
+        illustrations: [],
+        prompts: {},
+      } as SongWithIllustrationsAndPrompts;
 
-    return acc;
-  }, {} as Record<string, SongWithIllustrationsAndPrompts>);
+      return acc;
+    },
+    {} as Record<string, SongWithIllustrationsAndPrompts>,
+  );
   illustrations.forEach((il) => {
     if (Object.hasOwn(songIllustrationsPrompts, il.songId))
       songIllustrationsPrompts[il.songId].illustrations.push(il);

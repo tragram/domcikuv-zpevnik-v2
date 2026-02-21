@@ -51,7 +51,12 @@ export const illustrationModifySchema = z.object({
   imageModel: z.string().optional(),
   imageURL: z.string().optional(),
   thumbnailURL: z.string().optional(),
-  setAsActive: z.boolean().optional(),
+  setAsActive: z
+    .union([z.boolean(), z.string()])
+    .transform((val) => val === true || val === "true")
+    .optional(),
+  imageFile: z.any().optional(),
+  thumbnailFile: z.any().optional(),
 });
 
 export const illustrationPromptCreateSchema = z.object({
@@ -369,4 +374,49 @@ export async function addIllustrationFromURL(
     .returning();
   console.log(newIllustration);
   await setCurrentIllustration(db, songId, newIllustration[0].id);
+}
+
+export async function processAndUploadImages(
+  imageFile: File | null | undefined | string, // string occurs if it's empty form data
+  thumbnailFile: File | null | undefined | string,
+  currentImageURL: string,
+  currentThumbnailURL: string,
+  songId: string,
+  promptId: string,
+  imageModel: string,
+  env: Env,
+) {
+  let imageURL = currentImageURL;
+  let thumbnailURL = currentThumbnailURL;
+
+  // Process main image
+  if (imageFile && imageFile instanceof File) {
+    const imageBuffer = await imageFile.arrayBuffer();
+    imageURL = await uploadImageBuffer(
+      imageBuffer,
+      songId,
+      promptId,
+      imageModel,
+      env,
+    );
+  }
+
+  // Process thumbnail
+  if (thumbnailFile && thumbnailFile instanceof File) {
+    const thumbnailBuffer = await thumbnailFile.arrayBuffer();
+    thumbnailURL = await uploadImageBuffer(
+      thumbnailBuffer,
+      songId,
+      promptId,
+      imageModel,
+      env,
+      true,
+    );
+  }
+  // Auto-generate CF thumbnail if main image changed but no thumbnail file was provided
+  else if (imageFile instanceof File && !thumbnailFile) {
+    thumbnailURL = CFImagesThumbnailURL(imageURL);
+  }
+
+  return { imageURL, thumbnailURL };
 }

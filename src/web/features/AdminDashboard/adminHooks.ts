@@ -221,14 +221,12 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
       data,
     }: {
       id: string;
-      data: IllustrationModifySchema;
+      data: IllustrationModifySchema; // This now includes imageFile and thumbnailFile
     }) => updateIllustration(adminApi, id, data),
     onMutate: async ({ id, data }) => {
-      // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: ["songDBAdmin"] });
       await queryClient.cancelQueries({ queryKey: ["illustrationsAdmin"] });
 
-      // Snapshot previous values
       const previousSongs = queryClient.getQueryData<SongWithCurrentVersion[]>([
         "songDBAdmin",
       ]);
@@ -236,7 +234,6 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
         SongIllustrationDB[]
       >(["illustrationsAdmin"]);
 
-      // Optimistically update illustrations
       if (previousIllustrations) {
         queryClient.setQueryData<SongIllustrationDB[]>(
           ["illustrationsAdmin"],
@@ -246,8 +243,15 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
                 ? {
                     ...ill,
                     imageModel: data.imageModel || ill.imageModel,
-                    imageURL: data.imageURL || ill.imageURL,
-                    thumbnailURL: data.thumbnailURL || ill.thumbnailURL,
+                    // Only optimistically update URLs if they are actual strings, not File objects
+                    imageURL:
+                      typeof data.imageURL === "string"
+                        ? data.imageURL
+                        : ill.imageURL,
+                    thumbnailURL:
+                      typeof data.thumbnailURL === "string"
+                        ? data.thumbnailURL
+                        : ill.thumbnailURL,
                   }
                 : ill,
             ) || [],

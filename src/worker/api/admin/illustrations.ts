@@ -17,7 +17,8 @@ import {
   uploadImageBuffer,
   sameParametersExist,
   moveSongToTrash,
-  createManualPrompt, // Need this imported for fallback
+  createManualPrompt,
+  processAndUploadImages,
 } from "../../helpers/illustration-helpers";
 import { findSong, SongWithCurrentVersion } from "../../helpers/song-helpers";
 import {
@@ -213,17 +214,13 @@ export const illustrationRoutes = buildApp()
   .post("/create", async (c) => {
     try {
       const formData = await c.req.formData();
-
-      // Convert FormData to object for Zod validation
       const formDataObj = Object.fromEntries(formData.entries());
       const validatedData = illustrationCreateSchema.parse(formDataObj);
 
-      // Extract files separately since they don't convert well with Object.fromEntries
       const imageFile = formData.get("imageFile") as File | null;
       const thumbnailFile = formData.get("thumbnailFile") as File | null;
       const db = drizzle(c.env.DB);
 
-      // Verify the song exists
       let illustrationSong;
       try {
         illustrationSong = (await findSong(
@@ -234,36 +231,27 @@ export const illustrationRoutes = buildApp()
         return failJSend(c, "Referenced song not found", 400, "SONG_NOT_FOUND");
       }
 
-      // TODO: copy these to R2
-      let imageURL = validatedData.imageURL || "";
-      let thumbnailURL = validatedData.thumbnailURL || "";
-
-      // Logic to resolve or create the prompt
+      // 1. Resolve or create the prompt
       let prompt;
       try {
         if (validatedData.promptId) {
-          // Look up existing prompt by ID
           const existingPrompt = await db
             .select()
             .from(illustrationPrompt)
             .where(eq(illustrationPrompt.id, validatedData.promptId))
             .limit(1);
-
-          if (existingPrompt.length === 0) {
+          if (existingPrompt.length === 0)
             return failJSend(
               c,
               "Selected prompt not found",
               400,
               "INVALID_PROMPT_ID",
             );
-          }
           prompt = existingPrompt[0];
         } else if (validatedData.promptText) {
-          // Create new custom prompt
           const model = validatedData.summaryModel || "manual";
           const version = validatedData.summaryPromptVersion || "manual";
           const newId = `${validatedData.songId}_${model}_${version}_${Date.now()}`;
-
           const newPrompt = await db
             .insert(illustrationPrompt)
             .values({
@@ -274,10 +262,8 @@ export const illustrationRoutes = buildApp()
               text: validatedData.promptText,
             })
             .returning();
-
           prompt = newPrompt[0];
         } else {
-          // Fallback just in case neither is provided
           prompt = await createManualPrompt(db, validatedData.songId);
         }
       } catch (error) {
@@ -289,43 +275,6 @@ export const illustrationRoutes = buildApp()
               400,
               "PROMPT_RESOLUTION_ERROR",
             );
-      }
-
-      // Handle file uploads with proper validation
-      if (imageFile && imageFile instanceof File) {
-        const imageBuffer = await imageFile.arrayBuffer();
-        imageURL = await uploadImageBuffer(
-          imageBuffer,
-          illustrationSong.id,
-          prompt.id,
-          validatedData.imageModel,
-          c.env,
-        );
-      }
-
-      if (thumbnailFile && thumbnailFile instanceof File) {
-        const thumbnailBuffer = await thumbnailFile.arrayBuffer();
-        thumbnailURL = await uploadImageBuffer(
-          thumbnailBuffer,
-          illustrationSong.id,
-          prompt.id,
-          validatedData.imageModel,
-          c.env,
-          true,
-        );
-      } else if (imageURL && !thumbnailURL) {
-        // Use Cloudflare Images to generate thumbnail from main image
-        thumbnailURL = CFImagesThumbnailURL(imageURL);
-      }
-
-      // Validate that we have both URLs
-      if (!imageURL || !thumbnailURL) {
-        return failJSend(
-          c,
-          "Either provide URLs or upload files for both image and thumbnail",
-          400,
-          "MISSING_IMAGE_DATA",
-        );
       }
 
       if (
@@ -344,28 +293,46 @@ export const illustrationRoutes = buildApp()
         );
       }
 
-      const newId = defaultIllustrationId(prompt.id, validatedData.imageModel);
-      const insertData = {
-        id: newId,
-        songId: validatedData.songId,
-        imageModel: validatedData.imageModel,
-        imageURL: imageURL,
-        thumbnailURL: thumbnailURL,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        deleted: false,
-        promptId: prompt.id,
-      };
+      // 2. Process Uploads via Helper
+      const { imageURL, thumbnailURL } = await processAndUploadImages(
+        imageFile,
+        thumbnailFile,
+        validatedData.imageURL || "",
+        validatedData.thumbnailURL || "",
+        illustrationSong.id,
+        prompt.id,
+        validatedData.imageModel,
+        c.env,
+      );
 
+      if (!imageURL || !thumbnailURL) {
+        return failJSend(
+          c,
+          "Either provide URLs or upload files for both image and thumbnail",
+          400,
+          "MISSING_IMAGE_DATA",
+        );
+      }
+
+      // 3. Insert into Database
+      const newId = defaultIllustrationId(prompt.id, validatedData.imageModel);
       const newIllustration = await db
         .insert(songIllustration)
-        .values(insertData)
+        .values({
+          id: newId,
+          songId: validatedData.songId,
+          imageModel: validatedData.imageModel,
+          imageURL,
+          thumbnailURL,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          deleted: false,
+          promptId: prompt.id,
+        })
         .returning();
 
-      // If this illustration should be set as active, update the song's currentIllustrationId
-      if (validatedData.setAsActive) {
+      if (validatedData.setAsActive)
         await setCurrentIllustration(db, validatedData.songId, newId);
-      }
 
       return successJSend(
         c,
@@ -387,25 +354,15 @@ export const illustrationRoutes = buildApp()
     }
   })
 
-  .post(
-    "/generate",
-    zValidator("json", illustrationGenerateSchema),
-    generateIllustrationHandler,
-  )
-
-  .put("/:id", zValidator("json", illustrationModifySchema), async (c) => {
+  .put("/:id", async (c) => {
     try {
-      const modifiedIllustration = c.req.valid("json");
-      const db = drizzle(c.env.DB);
       const illustrationId = c.req.param("id");
+      const db = drizzle(c.env.DB);
+      const contentType = c.req.header("content-type") || "";
 
-      // Check if illustration exists and get its song ID
-      const existingIllustration = await db
-        .select({
-          id: songIllustration.id,
-          songId: songIllustration.songId,
-          promptId: songIllustration.promptId,
-        })
+      // 1. Fetch existing
+      const existing = await db
+        .select()
         .from(songIllustration)
         .where(
           and(
@@ -414,62 +371,74 @@ export const illustrationRoutes = buildApp()
           ),
         )
         .limit(1);
+      if (existing.length === 0) return itemNotFoundFail(c, "illustration");
+      const current = existing[0];
 
-      if (existingIllustration.length === 0) {
-        return itemNotFoundFail(c, "illustration");
+      // 2. Parse payload based on Content-Type
+      let parsedData: any = {};
+      if (contentType.includes("multipart/form-data")) {
+        const formData = await c.req.formData();
+        const obj = Object.fromEntries(formData.entries());
+        parsedData = illustrationModifySchema.parse(obj);
+        parsedData.imageFile = formData.get("imageFile");
+        parsedData.thumbnailFile = formData.get("thumbnailFile");
+      } else {
+        parsedData = illustrationModifySchema.parse(await c.req.json());
       }
-      const songId = existingIllustration[0].songId;
 
-      // Prepare update data (excluding setAsActive which we handle separately)
-      const { setAsActive, ...updateData } = modifiedIllustration;
+      // 3. Process Uploads via Helper
+      const targetModel = parsedData.imageModel || current.imageModel;
+      const { imageURL, thumbnailURL } = await processAndUploadImages(
+        parsedData.imageFile,
+        parsedData.thumbnailFile,
+        parsedData.imageURL || current.imageURL,
+        parsedData.thumbnailURL || current.thumbnailURL,
+        current.songId,
+        current.promptId,
+        targetModel,
+        c.env,
+      );
 
+      // 4. Update Database
       const updatedIllustration = await db
         .update(songIllustration)
         .set({
-          ...updateData,
+          imageModel: targetModel,
+          imageURL,
+          thumbnailURL,
           updatedAt: new Date(),
         })
         .where(eq(songIllustration.id, illustrationId))
         .returning();
 
-      // Handle setting as active illustration
-      if (setAsActive) {
-        await setCurrentIllustration(db, songId, illustrationId);
-      } else {
-        // Check if this illustration is currently active and clear it if so
+      // 5. Handle Active State
+      if (parsedData.setAsActive) {
+        await setCurrentIllustration(db, current.songId, illustrationId);
+      } else if (parsedData.setAsActive === false) {
         const currentSong = await db
           .select({ currentIllustrationId: song.currentIllustrationId })
           .from(song)
-          .where(eq(song.id, songId))
+          .where(eq(song.id, current.songId))
           .limit(1);
-
         if (currentSong[0]?.currentIllustrationId === illustrationId) {
-          await clearCurrentIllustration(db, songId);
+          await clearCurrentIllustration(db, current.songId);
         }
       }
 
-      let illustrationSong;
-      try {
-        illustrationSong = (await findSong(
-          db,
-          songId,
-        )) as SongWithCurrentVersion;
-      } catch {
-        return songNotFoundFail(c);
-      }
-
-      // Fetch the prompt
-      const promptResult = await db
-        .select()
-        .from(illustrationPrompt)
-        .where(eq(illustrationPrompt.id, existingIllustration[0].promptId))
-        .limit(1);
-      const prompt = promptResult[0];
+      // Fetch related info for response
+      const [illustrationSong, prompt] = await Promise.all([
+        findSong(db, current.songId),
+        db
+          .select()
+          .from(illustrationPrompt)
+          .where(eq(illustrationPrompt.id, current.promptId))
+          .limit(1),
+      ]);
 
       return successJSend(c, {
-        song: illustrationSong,
+        song: illustrationSong as SongWithCurrentVersion,
         illustration: updatedIllustration[0] as SongIllustrationDB,
-        prompt,
+        prompt: prompt[0],
       });
     } catch (error) {
       console.error("Error modifying illustration:", error);
@@ -481,6 +450,12 @@ export const illustrationRoutes = buildApp()
       );
     }
   })
+
+  .post(
+    "/generate",
+    zValidator("json", illustrationGenerateSchema),
+    generateIllustrationHandler,
+  )
 
   .delete("/:id", async (c) => {
     try {
