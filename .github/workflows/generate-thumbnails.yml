@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'songs/illustrations/**/full/*.webp'
+      - 'songs/illustrations/**/**/full/*.webp'
 
 permissions:
   contents: write # Needed to commit the thumbnails back to the repo
