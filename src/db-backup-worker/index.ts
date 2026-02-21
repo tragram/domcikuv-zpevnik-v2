@@ -149,13 +149,14 @@ async function cleanupOldBackups(
         match[1].replace(/-/g, ":").replace("T", "T").slice(0, -3),
       );
       if (backupDate < cutoffDate) {
-        await bucket.delete(object.key);
+        // Apply shadow deletion to old backups
+        await moveToTrashR2(bucket, object.key);
         deletedCount++;
       }
     }
   }
   if (deletedCount > 0)
-    console.log(`✓ Cleaned up ${deletedCount} old backup(s)`);
+    console.log(`✓ Shadow deleted ${deletedCount} old backup(s) to /trash`);
 }
 
 // ---------------------------------------------------------------------------
@@ -298,6 +299,10 @@ async function syncToGithub(env: Env, isFullSync: boolean): Promise<void> {
       const illustrationsByPrompt = new Map<string, any[]>();
 
       for (const ill of songIllustrations) {
+        if (ill.deleted) {
+          continue;
+        }
+
         const rawPromptPart = ill.promptId
           ? ill.promptId.replace(song.id + "_", "")
           : "unknown";
