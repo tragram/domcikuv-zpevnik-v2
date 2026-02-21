@@ -58,12 +58,10 @@ const illustrationGenerateSchema = z.object({
   promptVersion: z.enum(SUMMARY_PROMPT_VERSIONS),
   summaryModel: z.enum(SUMMARY_MODELS_API),
 });
-
 const illustrationModifySchema = z.object({
   imageModel: z.string().optional(),
-  setAsActive: z.boolean().optional(),
+  setAsActive: z.string().transform((val) => val === "true"),
 });
-
 export const CFImagesThumbnailURL = (imageURL: string) => {
   return "/cdn-cgi/image/width=128/" + imageURL;
 };

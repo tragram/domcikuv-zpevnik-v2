@@ -92,7 +92,6 @@ function buildIllustrationFormData(data: any): FormData {
   if (data.imageFile instanceof File) {
     formData.append("imageFile", data.imageFile);
   }
-
   return formData;
 }
 
@@ -139,7 +138,7 @@ export const updateIllustration = async (
   const response = await makeApiRequest(() =>
     adminApi.illustrations[":id"].$put({
       param: { id: illustrationId },
-      json: illustrationData as any, 
+      json: illustrationData as any,
     }),
   );
 
