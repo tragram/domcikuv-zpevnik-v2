@@ -34,10 +34,7 @@ export const externalRoutes = buildApp()
     }
 
     try {
-      const results = await searchAllExternalServices(
-        query,
-        c.env.PA_BEARER_TOKEN,
-      );
+      const results = await searchAllExternalServices(query, c.env);
       return successJSend(c, results);
     } catch (error) {
       console.error("External search failed:", error);
@@ -76,22 +73,46 @@ export const externalRoutes = buildApp()
         const response = await fetch(url);
         if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
 
-        let lyricsHtml = "";
+        let unparsedLyrics = "";
 
         // Source-specific scraping (only for lyrics!)
         const rewriter = new HTMLRewriter();
+        if (sourceId === "zpevnik-skorepova") {
+          // Extract the original ID that we stored during the search mapping
+          const originalId = c.req
+            .valid("json")
+            .id.replace("zpevnik-skorepova/", "");
 
-        if (sourceId === "pisnicky-akordy") {
+          // Pull the cached array from KV
+          const cachedSongs = (await c.env.KV.get(
+            "zpevnik_skorepova_all_songs",
+            "json",
+          )) as any[];
+          console.log(originalId)
+          const song = cachedSongs?.find((s: any) => s.id === originalId);
+
+          if (!song || !song.data.text) {
+            return failJSend(
+              c,
+              "Song data not found in cache",
+              404,
+              "IMPORT_ERROR",
+            );
+          }
+
+          // Zpevnik Skorepova already provides the raw text/chordpro format directly
+          unparsedLyrics = song.data.text;
+        } else if (sourceId === "pisnicky-akordy") {
           rewriter.on("div#songtext pre", {
             text(text) {
-              lyricsHtml += text.text;
+              unparsedLyrics += text.text;
             },
           });
         } else if (sourceId === "cifraclub") {
           // Example selector for CifraClub, adjust to match their DOM
           rewriter.on("pre", {
             text(text) {
-              lyricsHtml += text.text;
+              unparsedLyrics += text.text;
             },
           });
         } else {
@@ -100,7 +121,7 @@ export const externalRoutes = buildApp()
 
         await rewriter.transform(response).text();
 
-        if (!lyricsHtml)
+        if (!unparsedLyrics)
           return failJSend(
             c,
             "Error scraping song lyrics",
@@ -109,7 +130,7 @@ export const externalRoutes = buildApp()
           );
 
         const chordPro = convertToChordPro(
-          lyricsHtml,
+          unparsedLyrics,
           // non-czech sources need to have chords converted
           ["cifraclub"].includes(sourceId),
         );
@@ -118,7 +139,7 @@ export const externalRoutes = buildApp()
           db,
           title,
           artist,
-          lyricsHtml,
+          unparsedLyrics,
           url,
           user.id,
           sourceId,

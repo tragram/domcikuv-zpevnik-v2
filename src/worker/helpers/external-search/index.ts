@@ -2,6 +2,7 @@ import { SONG_SOURCES } from "src/lib/db/schema";
 import { z } from "zod";
 import { searchCifraClub } from "./cifraclub";
 import { searchPisnickyAkordy } from "./pisnicky-akordy";
+import { searchZpevnikSkorepova } from "./zpevnik-skorepova";
 
 export const externalSearchResultSchema = z.object({
   id: z.string(),
@@ -16,10 +17,11 @@ export type ExternalSearchResult = z.infer<typeof externalSearchResultSchema>;
 
 export async function searchAllExternalServices(
   query: string,
-  paToken: string,
+  env: Env,
 ): Promise<ExternalSearchResult[]> {
-  const paResults = await searchPisnickyAkordy(query, paToken);
+  const paResults = await searchPisnickyAkordy(query, env.PA_BEARER_TOKEN);
+  const zsResults = await searchZpevnikSkorepova(query, env.KV);
   const ccResults = await searchCifraClub(query);
 
-  return [...paResults, ...ccResults];
+  return [...paResults, ...zsResults, ...ccResults];
 }

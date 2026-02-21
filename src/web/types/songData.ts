@@ -176,6 +176,8 @@ export class SongData {
     if (!this.currentIllustration) {
       if (this.externalSource?.id === "pisnicky-akordy") return "/pa_logo.png";
       if (this.externalSource?.id === "cifraclub") return "/cc_logo.png";
+      if (this.externalSource?.id === "zpevnik-skorepova")
+        return "/zs_logo.png";
     }
     return (
       this.currentIllustration?.thumbnailURL ?? "/unknown_illustration.png"
@@ -186,6 +188,8 @@ export class SongData {
     if (!this.currentIllustration) {
       if (this.externalSource?.id === "pisnicky-akordy") return "/pa_logo.png";
       if (this.externalSource?.id === "cifraclub") return "/cc_logo.png";
+      if (this.externalSource?.id === "zpevnik-skorepova")
+        return "/zs_logo.png";
     }
     return this.currentIllustration?.imageURL ?? "/unknown_illustration.png";
   }
@@ -247,7 +251,7 @@ export class SongData {
         (d) => this[d] !== undefined && this[d] !== null && this[d] !== "",
       )
       .map((d) => `{${d}: ${this[d]}}`);
-      
+
     preamble.push(`{createdAt: ${this.createdAt.getTime()}}`);
     preamble.push(`{updatedAt: ${this.updatedAt.getTime()}}`);
 
