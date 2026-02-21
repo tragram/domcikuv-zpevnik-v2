@@ -118,8 +118,6 @@ export function IllustrationCard({
     summaryPromptVersion: prompt.summaryPromptVersion as SummaryPromptVersion,
     summaryModel: prompt.summaryModel as AvailableSummaryModel,
     imageModel: illustration.imageModel as AvailableImageModel,
-    imageURL: illustration.imageURL,
-    thumbnailURL: illustration.thumbnailURL,
     setAsActive: isActive,
   };
 

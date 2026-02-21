@@ -74,30 +74,23 @@ export const generateIllustration = async (
     prompt: parseDBDates(response.prompt),
   };
 };
+
 function buildIllustrationFormData(data: any): FormData {
   const formData = new FormData();
 
-  // Standard fields
   if (data.songId) formData.append("songId", data.songId);
   if (data.imageModel) formData.append("imageModel", data.imageModel);
   if (data.setAsActive !== undefined)
     formData.append("setAsActive", String(data.setAsActive));
-  if (data.imageURL) formData.append("imageURL", data.imageURL);
-  if (data.thumbnailURL) formData.append("thumbnailURL", data.thumbnailURL);
 
-  // Prompt fields (Make sure these match your ManualForm schema!)
   if (data.promptId) formData.append("promptId", data.promptId);
   if (data.promptText) formData.append("promptText", data.promptText);
   if (data.summaryModel) formData.append("summaryModel", data.summaryModel);
   if (data.summaryPromptVersion)
     formData.append("summaryPromptVersion", data.summaryPromptVersion);
 
-  // File objects
   if (data.imageFile instanceof File) {
     formData.append("imageFile", data.imageFile);
-  }
-  if (data.thumbnailFile instanceof File) {
-    formData.append("thumbnailFile", data.thumbnailFile);
   }
 
   return formData;
@@ -111,7 +104,6 @@ export const createIllustration = async (
 
   const response = await makeApiRequest(() =>
     adminApi.illustrations.create.$post({
-      // Bypass strict RPC typing to safely pass the FormData entries
       form: Object.fromEntries(formData.entries()),
     } as any),
   );
@@ -128,8 +120,8 @@ export const updateIllustration = async (
   illustrationId: string,
   illustrationData: IllustrationModifySchema,
 ): Promise<adminIllustrationResponse> => {
-  // 1. If we have files, we MUST send as FormData
-  if (illustrationData.imageFile || illustrationData.thumbnailFile) {
+  // 1. If we have a file, we MUST send as FormData
+  if (illustrationData.imageFile) {
     const formData = buildIllustrationFormData(illustrationData);
     const response = await makeApiRequest(() =>
       adminApi.illustrations[":id"].$put({
@@ -144,11 +136,10 @@ export const updateIllustration = async (
     };
   }
 
-  // 2. Fallback to standard JSON if it's just a text/toggle update
   const response = await makeApiRequest(() =>
     adminApi.illustrations[":id"].$put({
       param: { id: illustrationId },
-      json: illustrationData as any, // casting may be needed depending on your exact Hono types
+      json: illustrationData as any, 
     }),
   );
 
@@ -208,7 +199,6 @@ export const setActiveIllustration = async (
   return parseDBDates(response);
 };
 
-// Utility functions
 export type SongWithIllustrationsAndPrompts = {
   song: SongWithCurrentVersion;
   illustrations: SongIllustrationDB[];

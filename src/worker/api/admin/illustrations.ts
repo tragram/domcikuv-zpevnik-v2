@@ -41,11 +41,8 @@ import { defaultIllustrationId, defaultPromptId } from "~/types/songData";
 const illustrationCreateSchema = z.object({
   songId: z.string(),
   imageModel: z.string(),
-  setAsActive: z.string().transform((val) => val === "true"), // FormData sends as string
+  setAsActive: z.string().transform((val) => val === "true"),
   imageFile: z.any().optional(),
-  thumbnailFile: z.any().optional(),
-  imageURL: z.string().optional(),
-  thumbnailURL: z.string().optional(),
 
   // Prompt Fields
   promptId: z.string().optional(),
@@ -64,8 +61,6 @@ const illustrationGenerateSchema = z.object({
 
 const illustrationModifySchema = z.object({
   imageModel: z.string().optional(),
-  imageURL: z.string().optional(),
-  thumbnailURL: z.string().optional(),
   setAsActive: z.boolean().optional(),
 });
 
@@ -77,7 +72,6 @@ const generateIllustrationHandler = async (c) => {
   try {
     const illustrationData = c.req.valid("json");
     const db = drizzle(c.env.DB);
-    // Verify the song exists
     let illustrationSong;
     try {
       illustrationSong = (await findSong(
@@ -88,7 +82,6 @@ const generateIllustrationHandler = async (c) => {
       return songNotFoundFail(c);
     }
 
-    // Validate API keys
     if (!c.env.OPENAI_API_KEY || !c.env.HUGGING_FACE_TOKEN) {
       console.error("Missing required API keys for image generation!");
       return errorJSend(
@@ -99,7 +92,6 @@ const generateIllustrationHandler = async (c) => {
       );
     }
 
-    // Create image generator
     const generationConfig: GenerationConfig = {
       promptVersion: illustrationData.promptVersion,
       summaryModel: illustrationData.summaryModel,
@@ -113,7 +105,6 @@ const generateIllustrationHandler = async (c) => {
 
     const generator = new ImageGenerator(generationConfig);
 
-    // Find or create prompt
     const prompt = await findOrCreatePrompt(
       db,
       c,
@@ -218,7 +209,6 @@ export const illustrationRoutes = buildApp()
       const validatedData = illustrationCreateSchema.parse(formDataObj);
 
       const imageFile = formData.get("imageFile") as File | null;
-      const thumbnailFile = formData.get("thumbnailFile") as File | null;
       const db = drizzle(c.env.DB);
 
       let illustrationSong;
@@ -231,7 +221,6 @@ export const illustrationRoutes = buildApp()
         return failJSend(c, "Referenced song not found", 400, "SONG_NOT_FOUND");
       }
 
-      // 1. Resolve or create the prompt
       let prompt;
       try {
         if (validatedData.promptId) {
@@ -293,12 +282,8 @@ export const illustrationRoutes = buildApp()
         );
       }
 
-      // 2. Process Uploads via Helper
       const { imageURL, thumbnailURL } = await processAndUploadImages(
         imageFile,
-        thumbnailFile,
-        validatedData.imageURL || "",
-        validatedData.thumbnailURL || "",
         illustrationSong.id,
         prompt.id,
         validatedData.imageModel,
@@ -308,13 +293,12 @@ export const illustrationRoutes = buildApp()
       if (!imageURL || !thumbnailURL) {
         return failJSend(
           c,
-          "Either provide URLs or upload files for both image and thumbnail",
+          "An image file must be provided.",
           400,
           "MISSING_IMAGE_DATA",
         );
       }
 
-      // 3. Insert into Database
       const newId = defaultIllustrationId(prompt.id, validatedData.imageModel);
       const newIllustration = await db
         .insert(songIllustration)
@@ -360,7 +344,6 @@ export const illustrationRoutes = buildApp()
       const db = drizzle(c.env.DB);
       const contentType = c.req.header("content-type") || "";
 
-      // 1. Fetch existing
       const existing = await db
         .select()
         .from(songIllustration)
@@ -374,44 +357,41 @@ export const illustrationRoutes = buildApp()
       if (existing.length === 0) return itemNotFoundFail(c, "illustration");
       const current = existing[0];
 
-      // 2. Parse payload based on Content-Type
       let parsedData: any = {};
       if (contentType.includes("multipart/form-data")) {
         const formData = await c.req.formData();
         const obj = Object.fromEntries(formData.entries());
         parsedData = illustrationModifySchema.parse(obj);
         parsedData.imageFile = formData.get("imageFile");
-        parsedData.thumbnailFile = formData.get("thumbnailFile");
       } else {
         parsedData = illustrationModifySchema.parse(await c.req.json());
       }
 
-      // 3. Process Uploads via Helper
       const targetModel = parsedData.imageModel || current.imageModel;
       const { imageURL, thumbnailURL } = await processAndUploadImages(
         parsedData.imageFile,
-        parsedData.thumbnailFile,
-        parsedData.imageURL || current.imageURL,
-        parsedData.thumbnailURL || current.thumbnailURL,
         current.songId,
         current.promptId,
         targetModel,
         c.env,
       );
 
-      // 4. Update Database
+      const updateData: any = {
+        imageModel: targetModel,
+        updatedAt: new Date(),
+      };
+
+      if (imageURL) {
+        updateData.imageURL = imageURL;
+        updateData.thumbnailURL = thumbnailURL;
+      }
+
       const updatedIllustration = await db
         .update(songIllustration)
-        .set({
-          imageModel: targetModel,
-          imageURL,
-          thumbnailURL,
-          updatedAt: new Date(),
-        })
+        .set(updateData)
         .where(eq(songIllustration.id, illustrationId))
         .returning();
 
-      // 5. Handle Active State
       if (parsedData.setAsActive) {
         await setCurrentIllustration(db, current.songId, illustrationId);
       } else if (parsedData.setAsActive === false) {
@@ -425,7 +405,6 @@ export const illustrationRoutes = buildApp()
         }
       }
 
-      // Fetch related info for response
       const [illustrationSong, prompt] = await Promise.all([
         findSong(db, current.songId),
         db
@@ -462,7 +441,6 @@ export const illustrationRoutes = buildApp()
       const illustrationId = c.req.param("id");
       const db = drizzle(c.env.DB);
 
-      // Basic ID validation
       if (!illustrationId || illustrationId.length < 10) {
         return failJSend(
           c,
@@ -472,7 +450,6 @@ export const illustrationRoutes = buildApp()
         );
       }
 
-      // Check if illustration exists
       const existingIllustration = await db
         .select({
           id: songIllustration.id,
@@ -502,7 +479,6 @@ export const illustrationRoutes = buildApp()
 
       const songId = existingIllustration[0].songId;
 
-      // Check if this illustration is currently active and clear it if so
       const currentSong = await db
         .select({ currentIllustrationId: song.currentIllustrationId })
         .from(song)
@@ -513,7 +489,6 @@ export const illustrationRoutes = buildApp()
         await clearCurrentIllustration(db, songId);
       }
 
-      // Delete associated files from R2 storage (if stored there)
       try {
         await moveSongToTrash(
           c.env.R2_BUCKET,
@@ -523,7 +498,6 @@ export const illustrationRoutes = buildApp()
         );
       } catch (e) {}
 
-      // Soft delete the illustration instead of hard delete
       await db
         .update(songIllustration)
         .set({
@@ -569,7 +543,6 @@ export const illustrationRoutes = buildApp()
     }
   });
 
-// Only the generate endpoint for trusted users
 export const trustedGenerateRoute = buildApp().post(
   "/generate",
   zValidator("json", illustrationGenerateSchema),

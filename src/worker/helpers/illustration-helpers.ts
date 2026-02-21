@@ -28,9 +28,6 @@ export const illustrationCreateSchema = z.object({
   imageModel: z.string(),
   setAsActive: z.string().transform((val) => val === "true"), // FormData sends as string
   imageFile: z.any().optional(),
-  thumbnailFile: z.any().optional(),
-  imageURL: z.string().optional(),
-  thumbnailURL: z.string().optional(),
 
   // Prompt Fields
   promptId: z.string().optional(),
@@ -49,14 +46,11 @@ export const illustrationGenerateSchema = z.object({
 
 export const illustrationModifySchema = z.object({
   imageModel: z.string().optional(),
-  imageURL: z.string().optional(),
-  thumbnailURL: z.string().optional(),
   setAsActive: z
     .union([z.boolean(), z.string()])
     .transform((val) => val === true || val === "true")
     .optional(),
   imageFile: z.any().optional(),
-  thumbnailFile: z.any().optional(),
 });
 
 export const illustrationPromptCreateSchema = z.object({
@@ -122,9 +116,6 @@ export const moveSongToTrash = async (
   return results;
 };
 
-/**
- * Helper function to upload image buffers to storage and return URLs
- */
 export async function uploadImageBuffer(
   imageBuffer: ArrayBuffer,
   songId: string,
@@ -160,9 +151,6 @@ export async function sameParametersExist(
   return (await result).length > 0;
 }
 
-/**
- * Helper function to set an illustration as the current active one for a song
- */
 export async function setCurrentIllustration(
   db: DrizzleD1Database,
   songId: string,
@@ -177,9 +165,6 @@ export async function setCurrentIllustration(
     .where(eq(song.id, songId));
 }
 
-/**
- * Helper function to clear current illustration for a song
- */
 export async function clearCurrentIllustration(
   db: DrizzleD1Database,
   songId: string,
@@ -213,7 +198,6 @@ export async function generateAndSavePrompt(
   );
   console.log("Generated Prompt Text:", promptText);
 
-  // Unify the ID generation using your defaultPromptId utility
   const newId = defaultPromptId(songId, promptModel, promptVersion);
 
   const newPrompt = await db
@@ -230,9 +214,6 @@ export async function generateAndSavePrompt(
   return newPrompt[0];
 }
 
-/**
- * Helper function to find or create a prompt
- */
 export async function findOrCreatePrompt(
   db: DrizzleD1Database,
   c: Context,
@@ -258,7 +239,6 @@ export async function findOrCreatePrompt(
     return existingPrompt[0];
   }
 
-  // Use the new DRY helper
   return await generateAndSavePrompt(
     db,
     songId,
@@ -290,9 +270,6 @@ export async function createManualPrompt(
   return newPrompt[0];
 }
 
-/**
- * Helper function to create or find a manual prompt
- */
 export async function createOrFindManualPrompt(
   db: DrizzleD1Database,
   songId: string,
@@ -322,7 +299,6 @@ export async function createOrFindManualPrompt(
     throw new Error(`Prompt version "${providedPromptVersion}" not found`);
   }
 
-  // Create a new manual prompt
   return createManualPrompt(db, songId);
 }
 
@@ -377,19 +353,15 @@ export async function addIllustrationFromURL(
 }
 
 export async function processAndUploadImages(
-  imageFile: File | null | undefined | string, // string occurs if it's empty form data
-  thumbnailFile: File | null | undefined | string,
-  currentImageURL: string,
-  currentThumbnailURL: string,
+  imageFile: File | null | undefined | string,
   songId: string,
   promptId: string,
   imageModel: string,
   env: Env,
 ) {
-  let imageURL = currentImageURL;
-  let thumbnailURL = currentThumbnailURL;
+  let imageURL: string | undefined;
+  let thumbnailURL: string | undefined;
 
-  // Process main image
   if (imageFile && imageFile instanceof File) {
     const imageBuffer = await imageFile.arrayBuffer();
     imageURL = await uploadImageBuffer(
@@ -399,22 +371,6 @@ export async function processAndUploadImages(
       imageModel,
       env,
     );
-  }
-
-  // Process thumbnail
-  if (thumbnailFile && thumbnailFile instanceof File) {
-    const thumbnailBuffer = await thumbnailFile.arrayBuffer();
-    thumbnailURL = await uploadImageBuffer(
-      thumbnailBuffer,
-      songId,
-      promptId,
-      imageModel,
-      env,
-      true,
-    );
-  }
-  // Auto-generate CF thumbnail if main image changed but no thumbnail file was provided
-  else if (imageFile instanceof File && !thumbnailFile) {
     thumbnailURL = CFImagesThumbnailURL(imageURL);
   }
 

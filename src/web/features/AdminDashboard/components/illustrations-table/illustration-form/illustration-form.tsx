@@ -17,8 +17,6 @@ interface IllustrationFormData {
   summaryPromptVersion?: SummaryPromptVersion;
   summaryModel?: AvailableSummaryModel;
   imageModel?: AvailableImageModel;
-  imageURL?: string;
-  thumbnailURL?: string;
   isActive?: boolean;
 }
 

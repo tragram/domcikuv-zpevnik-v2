@@ -243,15 +243,6 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
                 ? {
                     ...ill,
                     imageModel: data.imageModel || ill.imageModel,
-                    // Only optimistically update URLs if they are actual strings, not File objects
-                    imageURL:
-                      typeof data.imageURL === "string"
-                        ? data.imageURL
-                        : ill.imageURL,
-                    thumbnailURL:
-                      typeof data.thumbnailURL === "string"
-                        ? data.thumbnailURL
-                        : ill.thumbnailURL,
                   }
                 : ill,
             ) || [],
