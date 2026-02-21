@@ -239,19 +239,25 @@ export class SongData {
       "range",
       "language",
       "startMelody",
-      "createdAt",
-      "updatedAt",
     ] as (keyof SongData)[];
-    const preamble = directives.map((d) =>
-      this[d] instanceof Date
-        ? `{${d}: ${this[d].getTime()}}`
-        : `{${d}: ${this[d] ?? ""}}`,
-    );
 
-    preamble.push(
-      `{illustrationId: ${this.currentIllustration?.illustrationId}}`,
-    );
-    preamble.push(`{promptId: ${this.currentIllustration?.promptId}}`);
+    // Map only the directives that actually have values
+    const preamble = directives
+      .filter(
+        (d) => this[d] !== undefined && this[d] !== null && this[d] !== "",
+      )
+      .map((d) => `{${d}: ${this[d]}}`);
+      
+    preamble.push(`{createdAt: ${this.createdAt.getTime()}}`);
+    preamble.push(`{updatedAt: ${this.updatedAt.getTime()}}`);
+
+    if (this.currentIllustration?.illustrationId) {
+      preamble.push(
+        `{illustrationId: ${this.currentIllustration.illustrationId}}`,
+      );
+      preamble.push(`{promptId: ${this.currentIllustration.promptId}}`);
+    }
+
     return preamble.join("\n") + "\n\n" + this.chordpro;
   }
 }
