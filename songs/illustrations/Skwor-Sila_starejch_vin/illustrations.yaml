@@ -1,8 +1,7 @@
 songId: Skwor-Sila_starejch_vin
 prompts:
-  - promptId: Skwor-Sila_starejch_vin_gpt-4o-mini_v2
+  - id: Skwor-Sila_starejch_vin_gpt-4o-mini_v2
     songId: Skwor-Sila_starejch_vin
-    createdAt: 1763931494000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       old roots. The atmosphere should convey a sense of introspection and
       nostalgia, with hints of darkness suggesting uncertainty and fear of the
       future.
+    createdAt: 2025-11-23T20:58:14.000Z
+    updatedAt: 2026-02-08T17:37:23.000Z
+    deleted: false
     illustrations:
       - createdAt: 1763931499000
         imageModel: FLUX.1-dev

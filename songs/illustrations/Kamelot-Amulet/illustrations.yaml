@@ -1,8 +1,7 @@
 songId: Kamelot-Amulet
 prompts:
-  - promptId: Kamelot-Amulet_gpt-4o-mini_v1
+  - id: Kamelot-Amulet_gpt-4o-mini_v1
     songId: Kamelot-Amulet
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       embroidery of spiders is visible on the hat. The atmosphere should evoke a
       sense of longing and reflection, with hints of vibrant red flames
       symbolizing lost summer moments.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:16.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

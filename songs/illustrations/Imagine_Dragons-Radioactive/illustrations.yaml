@@ -1,8 +1,7 @@
 songId: Imagine_Dragons-Radioactive
 prompts:
-  - promptId: Imagine_Dragons-Radioactive_gpt-4o-mini_v1
+  - id: Imagine_Dragons-Radioactive_gpt-4o-mini_v1
     songId: Imagine_Dragons-Radioactive
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,7 +12,27 @@ prompts:
       freedom and change, under a dramatic sky that hints at a new age. The
       atmosphere should feel intense and energetic, capturing the essence of
       transformation and resilience.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:08.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - id: Imagine_Dragons-Radioactive_gpt-5-mini_v2
+    songId: Imagine_Dragons-Radioactive
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Post‑apocalyptic city at sunrise, ash and dust in the air; a lone figure
+      stands on a rusted prison bus, wiping sweat and rust from their brow while
+      hoisting a tattered red flag — their veins/bones glow a radioactive
+      orange, chemical mist and ruined skyscrapers behind, cinematic gritty
+      photorealism.
+    createdAt: 2026-02-20T23:26:07.000Z
+    updatedAt: 2026-02-20T23:26:07.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1771630731000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp

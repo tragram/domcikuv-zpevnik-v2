@@ -1,8 +1,7 @@
 songId: Karel_Plihal-Muj_gral
 prompts:
-  - promptId: Karel_Plihal-Muj_gral_gpt-4o-mini_v1
+  - id: Karel_Plihal-Muj_gral_gpt-4o-mini_v1
     songId: Karel_Plihal-Muj_gral
-    createdAt: 1754387146000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       dawn. Include elements like a distant castle on a hill, a bow and shield,
       and a serene yet protective atmosphere, evoking themes of love and
       sacrifice.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

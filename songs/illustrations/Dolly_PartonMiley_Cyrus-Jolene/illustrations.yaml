@@ -1,8 +1,7 @@
 songId: Dolly_PartonMiley_Cyrus-Jolene
 prompts:
-  - promptId: Dolly_PartonMiley_Cyrus-Jolene_gpt-4o-mini_v1
+  - id: Dolly_PartonMiley_Cyrus-Jolene_gpt-4o-mini_v1
     songId: Dolly_PartonMiley_Cyrus-Jolene
-    createdAt: 1754387144000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       scene should convey a sense of longing and desperation, with soft, dreamy
       lighting that evokes a feeling of summer rain. Include elements that
       symbolize love and rivalry, such as a wilting flower in the foreground.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:28.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,8 +1,7 @@
 songId: Nirvana-Where_Did_You_Sleep_Last_Night
 prompts:
-  - promptId: Nirvana-Where_Did_You_Sleep_Last_Night_gpt-4o-mini_v1
+  - id: Nirvana-Where_Did_You_Sleep_Last_Night_gpt-4o-mini_v1
     songId: Nirvana-Where_Did_You_Sleep_Last_Night
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       by mist and cold winds. The atmosphere should evoke a sense of mystery and
       melancholy, with moonlight filtering through the trees, casting eerie
       shadows.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:35.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

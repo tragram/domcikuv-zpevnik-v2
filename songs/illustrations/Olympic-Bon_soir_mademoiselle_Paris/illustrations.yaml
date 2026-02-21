@@ -1,8 +1,7 @@
 songId: Olympic-Bon_soir_mademoiselle_Paris
 prompts:
-  - promptId: Olympic-Bon_soir_mademoiselle_Paris_gpt-4o-mini_v1
+  - id: Olympic-Bon_soir_mademoiselle_Paris_gpt-4o-mini_v1
     songId: Olympic-Bon_soir_mademoiselle_Paris
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       under the moonlight. Include elements of love, such as a couple sharing a
       tender moment, and the vibrant atmosphere of the Saint Michel boulevard.
       Capture the essence of Parisian charm and romance.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:37.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

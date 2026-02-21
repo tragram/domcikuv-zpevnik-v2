@@ -1,8 +1,7 @@
 songId: Xindl_X-Popelka
 prompts:
-  - promptId: Xindl_X-Popelka_gpt-4o-mini_v1
+  - id: Xindl_X-Popelka_gpt-4o-mini_v1
     songId: Xindl_X-Popelka
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       doves can be seen, symbolizing freedom and lost love. The atmosphere is a
       blend of melancholy and hope, capturing the essence of fleeting moments
       and new beginnings.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

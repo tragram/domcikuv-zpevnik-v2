@@ -1,8 +1,7 @@
 songId: Olympic-Jasna_zprava
 prompts:
-  - promptId: Olympic-Jasna_zprava_gpt-4o-mini_v1
+  - id: Olympic-Jasna_zprava_gpt-4o-mini_v1
     songId: Olympic-Jasna_zprava
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       a beautifully illustrated but meaningless book. The atmosphere should
       convey a sense of loneliness and reflection, with subtle hints of the
       couple's memories lingering in the air.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:39.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

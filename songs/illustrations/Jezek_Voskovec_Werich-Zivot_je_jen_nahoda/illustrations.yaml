@@ -1,0 +1,32 @@
+songId: Jezek_Voskovec_Werich-Zivot_je_jen_nahoda
+prompts:
+  - id: Jezek_Voskovec_Werich-Zivot_je_jen_nahoda_v2_gpt-4o-mini_1770578062820
+    songId: Jezek_Voskovec_Werich-Zivot_je_jen_nahoda
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a serene night sky filled with twinkling stars,
+      focusing on a particularly bright and beautiful star that symbolizes hope
+      and happiness. Below, depict a tranquil river flowing gently, reflecting
+      the starry sky, with hints of golden fish swimming just above the surface,
+      representing dreams and love. The scene should evoke a sense of wonder and
+      the fleeting nature of life and happiness.
+    createdAt: 2026-02-08T19:14:22.000Z
+    updatedAt: 2026-02-08T19:14:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1770578064000
+        imageModel: FLUX.1-schnell
+        filename: FLUX.1-schnell.webp
+  - id: Jezek_Voskovec_Werich-Zivot_je_jen_nahoda_manual-1770579022700
+    songId: Jezek_Voskovec_Werich-Zivot_je_jen_nahoda
+    summaryPromptVersion: manual
+    summaryModel: manual
+    text: Manual upload - no generated prompt
+    createdAt: 2026-02-08T19:30:22.000Z
+    updatedAt: 2026-02-08T19:30:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1770579023000
+        imageModel: nano-banana-pro
+        filename: nano-banana-pro.webp

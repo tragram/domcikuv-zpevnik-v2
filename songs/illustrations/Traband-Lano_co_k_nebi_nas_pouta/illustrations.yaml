@@ -1,0 +1,20 @@
+songId: Traband-Lano_co_k_nebi_nas_pouta
+prompts:
+  - id: Traband-Lano_co_k_nebi_nas_pouta_gpt-5-mini_v2
+    songId: Traband-Lano_co_k_nebi_nas_pouta
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Harbor tavern at dusk — a weary man with a lit pipe and glass sits among
+      laughing girls; a mysterious old captain leans in, whispering "Matouš" and
+      pointing out to a majestic wooden ship named "Eternité" visible through
+      the window. Outside, tall masts and a thick rope gleam as if tethering the
+      ship to the starry sky; smoky, cinematic warm light, realistic painterly
+      style.
+    createdAt: 2026-02-20T23:06:37.000Z
+    updatedAt: 2026-02-20T23:06:37.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1771630881000
+        imageModel: nano-banana-pro
+        filename: nano-banana-pro.webp

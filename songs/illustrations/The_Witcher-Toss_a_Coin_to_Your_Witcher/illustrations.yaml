@@ -1,8 +1,7 @@
 songId: The_Witcher-Toss_a_Coin_to_Your_Witcher
 prompts:
-  - promptId: The_Witcher-Toss_a_Coin_to_Your_Witcher_gpt-4o-mini_v1
+  - id: The_Witcher-Toss_a_Coin_to_Your_Witcher_gpt-4o-mini_v1
     songId: The_Witcher-Toss_a_Coin_to_Your_Witcher
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       of a dark forest. Include a group of elves in the distance, and a bard
       with a lute, singing passionately. The atmosphere should be mystical and
       adventurous, capturing the essence of a fantasy epic.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:34.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -7,8 +7,9 @@
 {language: english}
 {startMelody: d a}
 {createdAt: 1439503200000}
-{illustrationId: Imagine_Dragons-Radioactive_gpt-4o-mini_v1_FLUX.1-dev}
-{promptId: Imagine_Dragons-Radioactive_gpt-4o-mini_v1}
+{updatedAt: 1771630736000}
+{illustrationId: Imagine_Dragons-Radioactive_gpt-5-mini_v2_FLUX1-dev}
+{promptId: Imagine_Dragons-Radioactive_gpt-5-mini_v2}
 
 {start_of_verse}
 [Dmi]I'm waking [F]up to ash and [C]dust

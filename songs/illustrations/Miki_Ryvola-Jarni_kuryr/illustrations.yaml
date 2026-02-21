@@ -1,8 +1,7 @@
 songId: Miki_Ryvola-Jarni_kuryr
 prompts:
-  - promptId: Miki_Ryvola-Jarni_kuryr_gpt-4o-mini_v1
+  - id: Miki_Ryvola-Jarni_kuryr_gpt-4o-mini_v1
     songId: Miki_Ryvola-Jarni_kuryr
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       wandering shoes in the foreground, suggesting a journey, with fluffy white
       clouds drifting overhead. The scene should evoke a sense of adventure and
       the promise of return.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:36:17.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
