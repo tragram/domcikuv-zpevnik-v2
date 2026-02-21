@@ -9,8 +9,11 @@ import {
   ListRestart,
   RotateCcw,
   Star,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
 import useLocalStorageState from "use-local-storage-state";
@@ -52,12 +55,29 @@ import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-help
 // LocalStorage key for auto-illustration setting
 const AUTO_ILLUSTRATION_STORAGE_KEY = "admin-auto-generate-illustration";
 
+type SortableSong = SongDataDB & {
+  title: string;
+  artist: string;
+  lastModified: Date;
+  status: string;
+  hasPendingVersions: boolean;
+};
+
+type SortConfig = {
+  key: keyof Omit<SortableSong, "hasPendingVersions">;
+  direction: "ascending" | "descending";
+};
+
 export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleted, setShowDeleted] = useState(false);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
   const navigate = useNavigate({ from: "/admin" });
   const backendDropdownOptions = useIllustrationOptions();
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>({
+    key: "lastModified",
+    direction: "descending",
+  });
 
   // Load auto-illustration setting from localStorage (default: true)
   const [autoGenerateIllustration, setAutoGenerateIllustration] =
@@ -79,35 +99,82 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const restoreVersionMutation = useRestoreVersion(adminApi);
   const generateIllustrationMutation = useGenerateIllustration(adminApi);
 
+  const versionsBySong = useMemo(() => {
+    if (!versions) return {};
+    return versions.reduce(
+      (acc, version) => {
+        if (!acc[version.songId]) acc[version.songId] = [];
+        acc[version.songId].push(version);
+        return acc;
+      },
+      {} as Record<string, SongVersionDB[]>,
+    );
+  }, [versions]);
+
+  const sortedSongs = useMemo(() => {
+    if (!songs) return [];
+
+    const getWorkingVersion = (
+      song: SongDataDB,
+      songVersions: SongVersionDB[],
+    ) =>
+      versions?.find((v) => v.id === song.currentVersionId) ??
+      songVersions.find((v) => ["published"].includes(v.status)) ??
+      songVersions.find((v) => ["archived"].includes(v.status)) ??
+      songVersions.find((v) => ["pending"].includes(v.status)) ??
+      songVersions.find((v) => ["rejected"].includes(v.status));
+
+    const enrichedSongs: SortableSong[] = songs
+      .map((song) => {
+        const songVersions = versionsBySong[song.id] || [];
+        const workingVersion = getWorkingVersion(song, songVersions);
+        const lastModified = songVersions.reduce(
+          (latest, v) =>
+            new Date(v.createdAt) > latest ? new Date(v.createdAt) : latest,
+          new Date(0),
+        );
+        const hasPendingVersions = songVersions.some(
+          (v) => v.status === "pending",
+        );
+
+        return {
+          ...song,
+          title: workingVersion?.title || "N/A",
+          artist: workingVersion?.artist || "N/A",
+          lastModified,
+          status: song.deleted ? "deleted" : workingVersion?.status || "empty",
+          hasPendingVersions,
+        };
+      })
+      .filter((song) => {
+        const matchesSearch =
+          song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          song.artist.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesSearch && (showDeleted || !song.deleted);
+      });
+
+    enrichedSongs.sort((a, b) => {
+      if (a.hasPendingVersions && !b.hasPendingVersions) return -1;
+      if (!a.hasPendingVersions && b.hasPendingVersions) return 1;
+
+      if (sortConfig !== null) {
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
+        if (aValue < bValue) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+      }
+      return 0;
+    });
+
+    return enrichedSongs;
+  }, [songs, versions, versionsBySong, searchTerm, showDeleted, sortConfig]);
+
   if (songsLoading || versionsLoading) return <div>Loading...</div>;
   if (!songs || !versions) return <div>Error loading data.</div>;
-
-  // Organizing data
-  const versionsBySong = versions.reduce(
-    (acc, version) => {
-      if (!acc[version.songId]) acc[version.songId] = [];
-      acc[version.songId].push(version);
-      return acc;
-    },
-    {} as Record<string, SongVersionDB[]>,
-  );
-
-  const getCurrentVersion = (song: SongDataDB) =>
-    versions.find((v) => v.id === song.currentVersionId);
-
-  // Filter Logic
-  const filteredSongs = songs.filter((song) => {
-    const current = getCurrentVersion(song);
-    const vList = versionsBySong[song.id] || [];
-
-    // Search in current or any version
-    const matchesSearch = [current, ...vList].some(
-      (v) =>
-        v?.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        v?.artist.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-    return matchesSearch && (showDeleted || !song.deleted);
-  });
 
   const toggleSongExpansion = (id: string) => {
     const next = new Set(expandedSongs);
@@ -119,16 +186,13 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     setExpandedSongs(next);
   };
 
-  // Helper to check if this is the first approval for a song
   const isFirstApproval = (songId: string) => {
     const songVersions = versionsBySong[songId] || [];
-    // Check if there are no approved or current versions yet
     return songVersions.every(
       (v) => v.status === "pending" || v.status === "rejected",
     );
   };
 
-  // Enhanced approve handler with auto-illustration generation
   const handleApproveVersion = (songId: string, versionId: string) => {
     const isFirst = isFirstApproval(songId);
 
@@ -137,12 +201,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       {
         onSuccess: () => {
           toast.success("Version approved and published");
-
-          // Auto-generate illustration if enabled and this is the first approval
           if (autoGenerateIllustration && isFirst) {
             toast.info("Auto-generating illustration...");
-
-            // Use the same defaults as in illustration-group.tsx
             const illustrationData: IllustrationGenerateSchema = {
               songId,
               promptVersion: backendDropdownOptions.promptVersions.default,
@@ -150,7 +210,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
               imageModel: backendDropdownOptions.imageModels.default,
               setAsActive: true,
             };
-
             generateIllustrationMutation.mutate(illustrationData);
           }
         },
@@ -158,6 +217,43 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       },
     );
   };
+
+  const requestSort = (key: keyof Omit<SortableSong, "hasPendingVersions">) => {
+    let direction: "ascending" | "descending" = "ascending";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortIndicator = (
+    key: keyof Omit<SortableSong, "hasPendingVersions">,
+  ) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return <ArrowUpDown className="ml-2 h-4 w-4 opacity-30" />;
+    }
+    return sortConfig.direction === "ascending" ? (
+      <ArrowUp className="ml-2 h-4 w-4" />
+    ) : (
+      <ArrowDown className="ml-2 h-4 w-4" />
+    );
+  };
+
+  const renderHeader = (
+    label: string,
+    key: keyof Omit<SortableSong, "hasPendingVersions">,
+  ) => (
+    <TableHead onClick={() => requestSort(key)} className="cursor-pointer">
+      <div className="flex items-center">
+        {label}
+        {getSortIndicator(key)}
+      </div>
+    </TableHead>
+  );
 
   return (
     <div className="space-y-4 max-w-full">
@@ -232,35 +328,27 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
           <TableHeader>
             <TableRow>
               <TableHead className="w-8"></TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead>Artist</TableHead>
+              {renderHeader("Title", "title")}
+              {renderHeader("Artist", "artist")}
               <TableHead>Status</TableHead>
+              {renderHeader("Last Modified", "lastModified")}
               <TableHead>Visible</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredSongs.map((song) => {
-              const currentVersion = getCurrentVersion(song);
+            {sortedSongs.map((song) => {
               const songVersions = versionsBySong[song.id] || [];
               const isExpanded = expandedSongs.has(song.id);
-
-              // Count pending suggestions to show a notification dot?
               const pendingCount = songVersions.filter(
                 (v) => v.status === "pending",
               ).length;
-
-              const workingVersion =
-                currentVersion ??
-                songVersions.find((v) => ["published"].includes(v.status)) ??
-                songVersions.find((v) => ["archived"].includes(v.status)) ??
-                songVersions.find((v) => ["pending"].includes(v.status)) ??
-                songVersions.find((v) => ["rejected"].includes(v.status));
               const versionCount = (
                 showDeleted
                   ? songVersions
                   : songVersions.filter((v) => v.status !== "deleted")
               ).length;
+
               return (
                 <React.Fragment key={song.id}>
                   <TableRow
@@ -279,30 +367,25 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                     <TableCell
                       className={`font-medium  ${song.deleted ? "opacity-60" : ""}`}
                     >
-                      {workingVersion?.title}
+                      {song.title}
                     </TableCell>
                     <TableCell
                       className={`font-medium  ${song.deleted ? "opacity-60" : ""}`}
                     >
-                      {workingVersion?.artist}
+                      {song.artist}
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
-                        {song.deleted ? (
-                          <SongVersionStatusBadge status={"deleted"} />
-                        ) : workingVersion ? (
-                          <SongVersionStatusBadge
-                            status={workingVersion.status}
-                          />
-                        ) : (
-                          <Badge variant="outline">Empty</Badge>
-                        )}
+                        <SongVersionStatusBadge status={song.status} />
                         {pendingCount > 0 &&
                           !song.deleted &&
-                          workingVersion?.status !== "pending" && (
+                          song.status !== "pending" && (
                             <SongVersionStatusBadge status="pending" />
                           )}
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      {song.lastModified.toLocaleDateString()}
                     </TableCell>
                     <TableCell>
                       <Switch
@@ -345,7 +428,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                           </Button>
                         ) : (
                           <DeletePrompt
-                            title={`Delete "${currentVersion?.title || "this song"}"?`}
+                            title={`Delete "${song.title || "this song"}"?`}
                             description="Are you sure you want to delete this song?"
                             onDelete={() =>
                               deleteSongMutation.mutate(song.id, {
@@ -362,7 +445,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
 
                   {isExpanded && (
                     <TableRow>
-                      <TableCell colSpan={6} className="bg-muted/30 p-0">
+                      <TableCell colSpan={7} className="bg-muted/30 p-0">
                         <div className="p-4">
                           <h4 className="font-medium mb-3 flex items-center gap-2">
                             <Clock className="h-4 w-4" />
@@ -374,23 +457,11 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                           </h4>
                           <div className="space-y-2">
                             {songVersions
-                              // Sort: Pending first, then by Date desc
-                              .sort((a, b) => {
-                                if (
-                                  a.status === "pending" &&
-                                  b.status !== "pending"
-                                )
-                                  return -1;
-                                if (
-                                  b.status === "pending" &&
-                                  a.status !== "pending"
-                                )
-                                  return 1;
-                                return (
+                              .sort(
+                                (a, b) =>
                                   new Date(b.createdAt).getTime() -
-                                  new Date(a.createdAt).getTime()
-                                );
-                              })
+                                  new Date(a.createdAt).getTime(),
+                              )
                               .filter(
                                 (version) =>
                                   version.status !== "deleted" || showDeleted,

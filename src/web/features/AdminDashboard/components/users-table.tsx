@@ -1,6 +1,6 @@
 import type React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Badge } from "~/components/ui/badge";
@@ -21,7 +21,7 @@ import {
 } from "~/components/ui/dialog";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
-import { Edit } from "lucide-react";
+import { Edit, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { TableToolbar } from "./shared/table-toolbar";
 import { Pagination } from "./shared/pagination";
 import { toast } from "sonner";
@@ -36,11 +36,17 @@ interface UsersTableProps {
 
 const PAGE_SIZE = 20;
 
+type SortConfig = {
+  key: keyof UserDB;
+  direction: "ascending" | "descending";
+};
+
 export function UsersTable({ adminApi }: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [editingUser, setEditingUser] = useState<UserDB | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
 
   const {
     data: usersData,
@@ -59,6 +65,53 @@ export function UsersTable({ adminApi }: UsersTableProps) {
   useEffect(() => {
     setCurrentPage(0);
   }, [searchTerm]);
+
+  const users = usersData?.users || [];
+
+  const sortedUsers = useMemo(() => {
+    const sortableUsers = [...users];
+    if (sortConfig !== null) {
+      sortableUsers.sort((a, b) => {
+        const aValue = a[sortConfig.key];
+        const bValue = b[sortConfig.key];
+
+        if (aValue === null || aValue === undefined) return 1;
+        if (bValue === null || bValue === undefined) return -1;
+
+        if (aValue < bValue) {
+          return sortConfig.direction === "ascending" ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortConfig.direction === "ascending" ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableUsers;
+  }, [users, sortConfig]);
+
+  const requestSort = (key: keyof UserDB) => {
+    let direction: "ascending" | "descending" = "ascending";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const getSortIndicator = (key: keyof UserDB) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return <ArrowUpDown className="ml-2 h-4 w-4 opacity-30" />;
+    }
+    return sortConfig.direction === "ascending" ? (
+      <ArrowUp className="ml-2 h-4 w-4" />
+    ) : (
+      <ArrowDown className="ml-2 h-4 w-4" />
+    );
+  };
 
   const handleSaveUser = (userData: Partial<UserDB>) => {
     if (editingUser) {
@@ -89,7 +142,6 @@ export function UsersTable({ adminApi }: UsersTableProps) {
     });
   };
 
-  const users = usersData?.users || [];
   const totalPages = Math.ceil((usersData?.pagination.total || 0) / PAGE_SIZE);
   const hasNextPage = usersData?.pagination.hasMore || false;
   const hasPrevPage = currentPage > 0;
@@ -108,6 +160,15 @@ export function UsersTable({ adminApi }: UsersTableProps) {
     );
   }
 
+  const renderHeader = (label: string, key: keyof UserDB) => (
+    <TableHead onClick={() => requestSort(key)} className="cursor-pointer">
+      <div className="flex items-center">
+        {label}
+        {getSortIndicator(key)}
+      </div>
+    </TableHead>
+  );
+
   return (
     <div className="space-y-4">
       <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
@@ -116,13 +177,13 @@ export function UsersTable({ adminApi }: UsersTableProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Nickname</TableHead>
+              {renderHeader("Name", "name")}
+              {renderHeader("Email", "email")}
+              {renderHeader("Nickname", "nickname")}
               <TableHead>Status</TableHead>
               <TableHead>Roles</TableHead>
-              <TableHead>Created</TableHead>
-              <TableHead>Last login</TableHead>
+              {renderHeader("Created", "createdAt")}
+              {renderHeader("Last login", "lastLogin")}
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -133,14 +194,14 @@ export function UsersTable({ adminApi }: UsersTableProps) {
                   Loading users...
                 </TableCell>
               </TableRow>
-            ) : users.length === 0 ? (
+            ) : sortedUsers.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={8} className="text-center py-8">
                   No users found
                 </TableCell>
               </TableRow>
             ) : (
-              users.map((user) => (
+              sortedUsers.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell className="font-medium">{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>

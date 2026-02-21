@@ -13,10 +13,14 @@ import { AdminApi } from "~/services/song-service";
 import { useIllustrationsTableData } from "../../adminHooks";
 import { TableToolbar } from "../shared/table-toolbar";
 import { SongIllustrationsGroup } from "./illustration-group";
+import { SongIllustrationDB } from "src/lib/db/schema";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;
 }
+
+type SortKey = "title" | "lastModified" | "illustrationCount";
+type SortDirection = "asc" | "desc";
 
 export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,13 +29,15 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [summaryModelFilter, setSummaryModelFilter] = useState<string>("all");
   const [promptVersionFilter, setPromptVersionFilter] = useState<string>("all");
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
+  const [sortKey, setSortKey] = useState<SortKey>("lastModified");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
-  const { 
-    groupedData, 
-    promptsById, 
-    filterOptions, 
-    isLoading, 
-    isError 
+  const {
+    groupedData,
+    promptsById,
+    filterOptions,
+    isLoading,
+    isError,
   } = useIllustrationsTableData(adminApi);
 
   const filteredAndSortedGroups = useMemo(() => {
@@ -52,7 +58,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       groups = groups.filter(
         ([, group]) =>
           Array.isArray(group.illustrations) &&
-          group.illustrations.some((i) => i.imageModel === imageModelFilter)
+          group.illustrations.some((i) => i.imageModel === imageModelFilter),
       );
     }
 
@@ -76,14 +82,34 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       });
     }
 
-    return groups.sort(([, songA], [, songB]) => {
-      const activeA = Boolean(songA.song.currentIllustrationId);
-      const activeB = Boolean(songB.song.currentIllustrationId);
-      if (!activeA || !activeB) {
-        if (!activeA) return -1;
-        if (!activeB) return 1;
+    const getGroupSortValue = (
+      group: any,
+      key: SortKey,
+    ): string | number | Date => {
+      switch (key) {
+        case "title":
+          return group.song.title;
+        case "lastModified":
+          return group.illustrations.reduce(
+            (max: Date, i: SongIllustrationDB) =>
+              new Date(i.createdAt) > max ? new Date(i.createdAt) : max,
+            new Date(0),
+          );
+        case "illustrationCount":
+          return group.illustrations.length;
+        default:
+          return 0;
       }
-      return songA.song.title.localeCompare(songB.song.title);
+    };
+
+    return groups.sort(([, a], [, b]) => {
+      const valA = getGroupSortValue(a, sortKey);
+      const valB = getGroupSortValue(b, sortKey);
+      const direction = sortDirection === "asc" ? 1 : -1;
+
+      if (valA < valB) return -1 * direction;
+      if (valA > valB) return 1 * direction;
+      return 0;
     });
   }, [
     groupedData,
@@ -92,6 +118,8 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     summaryModelFilter,
     promptVersionFilter,
     promptsById,
+    sortKey,
+    sortDirection,
   ]);
 
   if (isLoading) return <div>Loading...</div>;
@@ -105,6 +133,12 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       newExpanded.add(songId);
     }
     setExpandedGroups(newExpanded);
+  };
+
+  const handleSortChange = (value: string) => {
+    const [key, dir] = value.split("-") as [SortKey, SortDirection];
+    setSortKey(key);
+    setSortDirection(dir);
   };
 
   return (
@@ -131,58 +165,103 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             <SelectContent>
               <SelectItem value="all">All Image Models</SelectItem>
               {filterOptions.imageModels.map((model) => (
-                <SelectItem key={model} value={model}>{model}</SelectItem>
+                <SelectItem key={model} value={model}>
+                  {model}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          
-          <Select value={summaryModelFilter} onValueChange={setSummaryModelFilter}>
+
+          <Select
+            value={summaryModelFilter}
+            onValueChange={setSummaryModelFilter}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by summary model" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Summary Models</SelectItem>
               {filterOptions.summaryModels.map((model) => (
-                <SelectItem key={model} value={model}>{model}</SelectItem>
+                <SelectItem key={model} value={model}>
+                  {model}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          
-          <Select value={promptVersionFilter} onValueChange={setPromptVersionFilter}>
+
+          <Select
+            value={promptVersionFilter}
+            onValueChange={setPromptVersionFilter}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by prompt version" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Prompt Versions</SelectItem>
               {filterOptions.promptVersions.map((version) => (
-                <SelectItem key={version} value={version}>{version}</SelectItem>
+                <SelectItem key={version} value={version}>
+                  {version}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
-          
+          <Select
+            value={`${sortKey}-${sortDirection}`}
+            onValueChange={handleSortChange}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="lastModified-desc">
+                Last Modified (Newest)
+              </SelectItem>
+              <SelectItem value="lastModified-asc">
+                Last Modified (Oldest)
+              </SelectItem>
+              <SelectItem value="title-asc">Title (A-Z)</SelectItem>
+              <SelectItem value="title-desc">Title (Z-A)</SelectItem>
+              <SelectItem value="illustrationCount-desc">
+                Illustrations (Most)
+              </SelectItem>
+              <SelectItem value="illustrationCount-asc">
+                Illustrations (Fewest)
+              </SelectItem>
+            </SelectContent>
+          </Select>
+
           <div className="flex items-center space-x-2">
             <Checkbox
               id="show-deleted"
               checked={showDeleted}
               onCheckedChange={() => setShowDeleted(!showDeleted)}
             />
-            <Label htmlFor="show-deleted" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <Label
+              htmlFor="show-deleted"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               Show deleted
             </Label>
           </div>
         </div>
-        
+
         <div className="flex gap-2">
           <Button
             variant="outline"
             size="sm"
             onClick={() =>
-              setExpandedGroups(new Set(filteredAndSortedGroups.map(([songId]) => songId)))
+              setExpandedGroups(
+                new Set(filteredAndSortedGroups.map(([songId]) => songId)),
+              )
             }
           >
             Expand All
           </Button>
-          <Button variant="outline" size="sm" onClick={() => setExpandedGroups(new Set())}>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setExpandedGroups(new Set())}
+          >
             Collapse All
           </Button>
         </div>
