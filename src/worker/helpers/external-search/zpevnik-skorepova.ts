@@ -1,6 +1,5 @@
 import { ExternalSearchResult } from "./index";
 
-// Defining the expected structure based on the frontend's GraphQL fragment
 interface ZpevnikSong {
   id: string;
   data: {
@@ -10,20 +9,42 @@ interface ZpevnikSong {
   };
 }
 
+// Define the structure for our new cache payload
+interface CachedPayload {
+  timestamp: number;
+  songs: ZpevnikSong[];
+}
+
 export async function searchZpevnikSkorepova(
   query: string,
-  // Pass the Cloudflare environment bindings to access KV
   ZPEVNIK_CACHE: KVNamespace,
 ): Promise<ExternalSearchResult[]> {
   const CACHE_KEY = "zpevnik_skorepova_all_songs";
-  let songs: ZpevnikSong[] = [];
+  const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
-  // 1. Attempt to fetch the entire songbook from the KV edge cache
+  let songs: ZpevnikSong[] = [];
+  let needsUpdate = true;
+
+  // 1. Fetch from cache and check freshness
   const cachedData = await ZPEVNIK_CACHE.get(CACHE_KEY, "json");
+
   if (cachedData) {
-    songs = cachedData as ZpevnikSong[];
-  } else {
-    // 2. Cache miss: Fetch from the original GraphQL API
+    // Handle transition from the old array format to the new timestamped format
+    if (Array.isArray(cachedData)) {
+      songs = cachedData;
+      needsUpdate = true;
+    } else {
+      const parsedData = cachedData as CachedPayload;
+      songs = parsedData.songs;
+
+      // Check if the data is older than one week
+      const isStale = Date.now() - parsedData.timestamp > ONE_DAY_MS;
+      needsUpdate = isStale;
+    }
+  }
+
+  // 2. Fetch fresh data if needed (cache miss OR stale data)
+  if (needsUpdate) {
     try {
       const response = await fetch(
         "https://zpevnik.skorepova.info/api/graphql",
@@ -48,24 +69,38 @@ export async function searchZpevnikSkorepova(
           }),
         },
       );
-      if (!response.ok) return [];
 
-      const json: any = await response.json();
-      songs = json?.data?.songs || [];
+      if (response.ok) {
+        const json: any = await response.json();
+        const fetchedSongs = json?.data?.songs || [];
 
-      // 3. Store the result in KV with a 24-hour TTL (86400 seconds)
-      if (songs.length > 0) {
-        await ZPEVNIK_CACHE.put(CACHE_KEY, JSON.stringify(songs), {
-          expirationTtl: 86400,
-        });
+        if (fetchedSongs.length > 0) {
+          songs = fetchedSongs; // Update our working variable with fresh data
+
+          // 3. Store the result permanently with a timestamp (NO expirationTtl)
+          const payloadToCache: CachedPayload = {
+            timestamp: Date.now(),
+            songs: fetchedSongs,
+          };
+          await ZPEVNIK_CACHE.put(CACHE_KEY, JSON.stringify(payloadToCache));
+        }
+      } else {
+        console.warn(
+          "Zpevnik API returned a non-OK status. Falling back to cached data.",
+        );
       }
     } catch (error) {
-      console.error("Error fetching Zpevnik Skorepova:", error);
-      return [];
+      // If the fetch fails (e.g., website down, DNS error), we just log it.
+      // Because we didn't overwrite the 'songs' variable, the application
+      // will gracefully continue using the stale data we loaded in step 1.
+      console.error(
+        "Failed to fetch fresh Zpevnik data. Using stale cache.",
+        error,
+      );
     }
   }
 
-  // 4. Perform a local, case-insensitive search on the cached data
+  // 4. Perform a local, case-insensitive search on the data
   const normalizedQuery = query.toLowerCase();
   return songs
     .filter(
