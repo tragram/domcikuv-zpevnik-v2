@@ -1,8 +1,7 @@
 songId: Xindl_X-Na_palube_Titanicu
 prompts:
-  - promptId: Xindl_X-Na_palube_Titanicu_gpt-4o-mini_v1
+  - id: Xindl_X-Na_palube_Titanicu_gpt-4o-mini_v1
     songId: Xindl_X-Na_palube_Titanicu
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       surrounding them. Include elements that symbolize impending disaster, like
       cracks in the ship and lifeboats being fought over, while maintaining a
       satirical tone.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:42.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

@@ -1,0 +1,21 @@
+songId: Jaromir_Nohavica-Pochod_marodu
+prompts:
+  - id: Jaromir_Nohavica-Pochod_marodu_gpt-5-mini_v2
+    songId: Jaromir_Nohavica-Pochod_marodu
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Darkly comic retro‑punk poster: three battered ambulance drivers laughing
+      in a smoky bar with a pack of cigarettes, a coffee cup with rum and empty
+      vodka + Fernet bottles on the table; one coughing, one clutching his
+      chest, ambulance parked outside and hospital silhouettes visible through
+      the window, jubilant surgeons prepping a gurney like it's a party; bold
+      colors, gritty texture, high contrast, hand‑lettered Czech chorus
+      (“Cirhóza, trombóza…”)
+    createdAt: 2026-02-20T23:06:46.000Z
+    updatedAt: 2026-02-20T23:06:46.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1771629046000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

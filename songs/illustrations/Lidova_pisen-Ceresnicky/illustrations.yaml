@@ -1,8 +1,7 @@
 songId: Lidova_pisen-Ceresnicky
 prompts:
-  - promptId: Lidova_pisen-Ceresnicky_gpt-4o-mini_v1
+  - id: Lidova_pisen-Ceresnicky_gpt-4o-mini_v1
     songId: Lidova_pisen-Ceresnicky
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       background, a charming young man admires her, with a hint of mischief in
       his expression, capturing the playful essence of courtship. The atmosphere
       is light and enchanting, evoking a sense of springtime romance.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:52.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

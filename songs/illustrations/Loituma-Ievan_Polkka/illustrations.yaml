@@ -1,8 +1,7 @@
 songId: Loituma-Ievan_Polkka
 prompts:
-  - promptId: Loituma-Ievan_Polkka_gpt-4o-mini_v1
+  - id: Loituma-Ievan_Polkka_gpt-4o-mini_v1
     songId: Loituma-Ievan_Polkka
-    createdAt: 1754387147000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       in the background, and the ground is slightly wet, hinting at a lively,
       carefree celebration. Include elements of nature and a cozy, village
       backdrop to capture the essence of the song.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:55.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

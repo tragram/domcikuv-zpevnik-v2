@@ -1,8 +1,7 @@
 songId: The_Animals-Dum_u_vychazejiciho_slunce
 prompts:
-  - promptId: The_Animals-Dum_u_vychazejiciho_slunce_gpt-4o-mini_v1
+  - id: The_Animals-Dum_u_vychazejiciho_slunce_gpt-4o-mini_v1
     songId: The_Animals-Dum_u_vychazejiciho_slunce
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       their struggles. Include elements of the city's atmosphere, such as
       worn-down streets and hints of vibrant culture, contrasted with a feeling
       of coldness and confinement.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:30.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

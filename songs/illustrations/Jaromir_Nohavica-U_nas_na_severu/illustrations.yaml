@@ -1,8 +1,7 @@
 songId: Jaromir_Nohavica-U_nas_na_severu
 prompts:
-  - promptId: Jaromir_Nohavica-U_nas_na_severu_gpt-4o-mini_v2
+  - id: Jaromir_Nohavica-U_nas_na_severu_gpt-4o-mini_v2
     songId: Jaromir_Nohavica-U_nas_na_severu
-    createdAt: 1762715729000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       while an old statue stands nearby. Include elements like a flowing spring
       and playful dogs, capturing the essence of rural life in a quirky,
       light-hearted style.
+    createdAt: 2025-11-09T19:15:29.000Z
+    updatedAt: 2026-02-08T17:34:49.000Z
+    deleted: false
     illustrations:
       - createdAt: 1762715735000
         imageModel: FLUX.1-dev

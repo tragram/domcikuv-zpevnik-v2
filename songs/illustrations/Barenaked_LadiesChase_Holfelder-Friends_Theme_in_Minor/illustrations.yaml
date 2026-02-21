@@ -1,8 +1,7 @@
 songId: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor
 prompts:
-  - promptId: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor_gpt-4o-mini_v1
+  - id: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor_gpt-4o-mini_v1
     songId: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor
-    createdAt: 1754387143000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,13 +11,15 @@ prompts:
       and rain pouring outside the window. Include a supportive friend standing
       nearby with an umbrella, ready to cheer them up, capturing the theme of
       friendship and support during tough times.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-08T17:32:49.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
-  - promptId: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor_gpt-4o-mini_v2
+  - id: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor_gpt-4o-mini_v2
     songId: Barenaked_LadiesChase_Holfelder-Friends_Theme_in_Minor
-    createdAt: 1754387143000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -30,4 +31,7 @@ prompts:
       smiling and ready to support. The atmosphere should convey a mix of
       struggle and friendship, capturing the essence of being there for someone
       during tough times.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-08T17:32:49.000Z
+    deleted: false
     illustrations: []

@@ -1,8 +1,7 @@
 songId: Zalman_Spol-Vsech_vandraku_muza
 prompts:
-  - promptId: Zalman_Spol-Vsech_vandraku_muza_gpt-4o-mini_v1
+  - id: Zalman_Spol-Vsech_vandraku_muza_gpt-4o-mini_v1
     songId: Zalman_Spol-Vsech_vandraku_muza
-    createdAt: 1754387150000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       nearby, and a backdrop of a wintry landscape hinting at falling snow. The
       scene should capture a sense of both joy and melancholy, reflecting the
       muse's rise and fall in a vibrant yet gritty urban environment.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:52.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

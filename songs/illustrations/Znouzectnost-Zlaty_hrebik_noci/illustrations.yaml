@@ -1,8 +1,7 @@
 songId: Znouzectnost-Zlaty_hrebik_noci
 prompts:
-  - promptId: Znouzectnost-Zlaty_hrebik_noci_gpt-4o-mini_v2
+  - id: Znouzectnost-Zlaty_hrebik_noci_gpt-4o-mini_v2
     songId: Znouzectnost-Zlaty_hrebik_noci
-    createdAt: 1754387150000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -14,6 +13,9 @@ prompts:
       and a sense of joyous celebration fills the air. Capture the contrast
       between the opulence of the castle and the rustic charm of nearby
       cottages, hinting at the excitement brewing there.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:56.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

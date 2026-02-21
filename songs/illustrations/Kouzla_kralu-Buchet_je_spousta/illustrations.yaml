@@ -1,8 +1,7 @@
 songId: Kouzla_kralu-Buchet_je_spousta
 prompts:
-  - promptId: Kouzla_kralu-Buchet_je_spousta_gpt-4o-mini_v2
+  - id: Kouzla_kralu-Buchet_je_spousta_gpt-4o-mini_v2
     songId: Kouzla_kralu-Buchet_je_spousta
-    createdAt: 1754387147000
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
     text: >-
@@ -11,6 +10,9 @@ prompts:
       gazing into each other's eyes with joy. The scene should convey a sense of
       celebration and love, with hints of magical elements like floating clouds
       and twinkling lights, capturing the essence of a fairytale romance.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

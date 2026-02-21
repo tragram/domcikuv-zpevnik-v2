@@ -1,8 +1,7 @@
 songId: Pokac-26
 prompts:
-  - promptId: Pokac-26_gpt-4o-mini_v1
+  - id: Pokac-26_gpt-4o-mini_v1
     songId: Pokac-26
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,7 +12,24 @@ prompts:
       he awkwardly flirts with a bartender. The atmosphere should blend youthful
       energy with a sense of growing up, capturing the tension between fun and
       responsibility.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:37:00.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: Pokac-26_gpt-5-mini_v2
+    songId: Pokac-26
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Cinematic twilight in a small Czech town: a melancholic 26‑year‑old man
+      with thinning hair stands on the sidewalk as a train pulls away, clutching
+      a paperback, a baby stroller nearby and a smoke‑free pub with an awkward
+      barmaid in the background; realistic, moody lighting, shallow depth of
+      field.
+    createdAt: 2026-02-20T23:24:40.000Z
+    updatedAt: 2026-02-20T23:24:40.000Z
+    deleted: false
+    illustrations: []

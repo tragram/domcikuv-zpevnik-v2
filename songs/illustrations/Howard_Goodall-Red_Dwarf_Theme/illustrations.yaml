@@ -1,8 +1,7 @@
 songId: Howard_Goodall-Red_Dwarf_Theme
 prompts:
-  - promptId: Howard_Goodall-Red_Dwarf_Theme_gpt-4o-mini_v1
+  - id: Howard_Goodall-Red_Dwarf_Theme_gpt-4o-mini_v1
     songId: Howard_Goodall-Red_Dwarf_Theme
-    createdAt: 1754387145000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       hand, surrounded by colorful fish swimming near their toes. The atmosphere
       should evoke a sense of fun and relaxation, contrasting with a cold,
       lonely environment.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:07.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

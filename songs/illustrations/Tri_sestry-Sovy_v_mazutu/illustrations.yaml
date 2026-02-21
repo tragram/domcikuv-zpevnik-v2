@@ -1,8 +1,7 @@
 songId: Tri_sestry-Sovy_v_mazutu
 prompts:
-  - promptId: Tri_sestry-Sovy_v_mazutu_gpt-4o-mini_v1
+  - id: Tri_sestry-Sovy_v_mazutu_gpt-4o-mini_v1
     songId: Tri_sestry-Sovy_v_mazutu
-    createdAt: 1754387149000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       soot looking confused, and a forest ranger sadly collecting dead snakes.
       The atmosphere should be surreal and slightly dark, capturing the song's
       quirky yet somber tone.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:44.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

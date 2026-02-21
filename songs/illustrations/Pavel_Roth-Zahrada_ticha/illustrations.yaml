@@ -1,8 +1,7 @@
 songId: Pavel_Roth-Zahrada_ticha
 prompts:
-  - promptId: Pavel_Roth-Zahrada_ticha_gpt-4o-mini_v1
+  - id: Pavel_Roth-Zahrada_ticha_gpt-4o-mini_v1
     songId: Pavel_Roth-Zahrada_ticha
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       leading into the serene space. Include subtle elements like birds in the
       distance and a quiet atmosphere, reflecting the themes of solitude and the
       passage of time.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:54.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

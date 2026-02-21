@@ -1,0 +1,20 @@
+songId: filmove_melodie-Hajny_je_lesa_pan
+prompts:
+  - id: filmove_melodie-Hajny_je_lesa_pan_gpt-5-mini_v2
+    songId: filmove_melodie-Hajny_je_lesa_pan
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Whimsical storybook scene: a proud forest ranger in a green uniform and
+      cap stands center in a sunlit clearing, smiling and surrounded by adoring
+      wildlife (deer, fox, hare, birds, a marten) and cheerful children in
+      slippers offering small saplings; an old axe leans on a stump and a wooden
+      crate labeled "100 seedlings" sits nearby, warm golden afternoon light,
+      lively folk‑art color palette, cozy Central European rural atmosphere.
+    createdAt: 2026-02-20T22:47:17.000Z
+    updatedAt: 2026-02-20T22:47:17.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1771627679000
+        imageModel: gpt-image-1.5
+        filename: gpt-image-1.5.webp

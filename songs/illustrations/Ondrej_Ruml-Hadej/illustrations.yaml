@@ -1,8 +1,7 @@
 songId: Ondrej_Ruml-Hadej
 prompts:
-  - promptId: Ondrej_Ruml-Hadej_gpt-4o-mini_v1
+  - id: Ondrej_Ruml-Hadej_gpt-4o-mini_v1
     songId: Ondrej_Ruml-Hadej
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -12,6 +11,9 @@ prompts:
       Include a solitary figure wrapped in a tattered coat, contemplating the
       mysteries of life and love, embodying a sense of longing and
       introspection.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:41.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

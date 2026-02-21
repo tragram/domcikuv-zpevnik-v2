@@ -1,8 +1,7 @@
 songId: Olympic-Dej_mi_vic_sve_lasky
 prompts:
-  - promptId: Olympic-Dej_mi_vic_sve_lasky_gpt-4o-mini_v1
+  - id: Olympic-Dej_mi_vic_sve_lasky_gpt-4o-mini_v1
     songId: Olympic-Dej_mi_vic_sve_lasky
-    createdAt: 1754387148000
     summaryPromptVersion: v1
     summaryModel: gpt-4o-mini
     text: >-
@@ -13,6 +12,9 @@ prompts:
       and a mysterious castle. Include elements of humor, like keys playfully
       tossed into a canal and a rocky slope, to reflect the song's quirky ideas
       and emotions.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:38.000Z
+    deleted: false
     illustrations:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev

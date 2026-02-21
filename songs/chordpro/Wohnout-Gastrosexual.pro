@@ -1,8 +1,16 @@
 {title: Gastrosexuál}
 {artist: Wohnout}
 {key: F#m}
-{createdAt: 1768578477000}
+{capo: 0}
+{tempo: }
+{range: }
 {language: czech}
+{startMelody: }
+{createdAt: 1768578477000}
+{updatedAt: 1770578334000}
+{illustrationId: Wohnout-Gastrosexual_gpt-4o-mini_v2_gpt-image-1-mini}
+{promptId: Wohnout-Gastrosexual_v2_gpt-4o-mini_1770573024737}
+
 {start_of_verse}
 [F#m]Můj doktor sebou [E]sek
 A [H]málem to neus[F#m]tál
