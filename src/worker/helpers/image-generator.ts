@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
 
 // the first element of each array is used as default by the frontend
-export const SUMMARY_PROMPT_VERSIONS = ["v2", "v1"] as const;
+export const SUMMARY_PROMPT_VERSIONS = ["v3", "v2", "v1"] as const;
 export const SUMMARY_MODELS_API = ["gpt-5-mini", "gpt-5.2"] as const;
 
 export const IMAGE_MODELS_API = [
@@ -23,6 +23,7 @@ export type AvailableImageModel = (typeof IMAGE_MODELS_API)[number];
 const PROMPTS: Record<SummaryPromptVersion, string> = {
   v1: "Based on the following song lyrics, create a prompt for an AI image generator that will be used as an illustration of the song. Try to be short",
   v2: "Based on the following song lyrics, create a prompt for an AI image generator that will be used as an illustration of the song. Try to be short but also to capture a concrete scene/idea from the song.",
+  v3: "Based on the following song lyrics, create a prompt for an AI image generator. Try to be short but also to capture a concrete scene/idea from the song. The image will be used as an illustration of the song in a database, so do not aim for photo realistic unless it fits the lyrics perfectly.",
 } as const;
 
 export type ImageProviderType = "openai" | "huggingface" | "google";
