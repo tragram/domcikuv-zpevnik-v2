@@ -18,6 +18,6 @@ jobs:
     steps:
       - name: Hit Worker Endpoint
         run: |
-          curl -X GET "https://<YOUR_WORKER_URL>/?full=${{ inputs.full_sync }}" \
+          curl -X GET "https://domcikuv-zpevnik-v2-backup.domho108.workers.dev/?full=${{ inputs.full_sync }}" \
             -H "Authorization: Bearer ${{ secrets.WORKER_SYNC_SECRET }}" \
             --fail
