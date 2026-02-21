@@ -20,7 +20,7 @@ export async function searchZpevnikSkorepova(
 
   // 1. Attempt to fetch the entire songbook from the KV edge cache
   const cachedData = await ZPEVNIK_CACHE.get(CACHE_KEY, "json");
-  if (cachedData && false) {
+  if (cachedData) {
     songs = cachedData as ZpevnikSong[];
   } else {
     // 2. Cache miss: Fetch from the original GraphQL API
