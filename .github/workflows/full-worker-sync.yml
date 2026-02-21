@@ -19,5 +19,5 @@ jobs:
       - name: Hit Worker Endpoint
         run: |
           curl -X GET "https://domcikuv-zpevnik-v2-backup.domho108.workers.dev/?full=${{ inputs.full_sync }}" \
-            -H "Authorization: Bearer ${{ secrets.WORKER_SYNC_SECRET }}" \
+            -H "Authorization: Bearer ${{ secrets.SYNC_SECRET }}" \
             --fail
