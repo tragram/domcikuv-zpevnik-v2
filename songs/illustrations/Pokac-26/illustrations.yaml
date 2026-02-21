@@ -32,4 +32,7 @@ prompts:
     createdAt: 2026-02-20T23:24:40.000Z
     updatedAt: 2026-02-20T23:24:40.000Z
     deleted: false
-    illustrations: []
+    illustrations:
+      - createdAt: 1771688459000
+        imageModel: nano-banana-pro
+        filename: nano-banana-pro.webp

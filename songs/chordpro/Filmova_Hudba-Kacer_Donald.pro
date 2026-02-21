@@ -7,8 +7,8 @@
 {language: czech}
 {startMelody: a c# e}
 {createdAt: 1759669836000}
-{updatedAt: 1770572018000}
-{illustrationId: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2_FLUX.1-dev}
+{updatedAt: 1771688093000}
+{illustrationId: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2_nano-banana-pro}
 {promptId: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2}
 
 {start_of_verse}
