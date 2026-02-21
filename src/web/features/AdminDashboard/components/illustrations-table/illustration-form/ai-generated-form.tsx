@@ -58,8 +58,18 @@ function AIGeneratedForm({
     songId: illustration?.songId || "",
     promptVersion:
       illustration?.summaryPromptVersion || options.promptVersions.default,
-    summaryModel: illustration?.summaryModel || options.summaryModels.default,
-    imageModel: illustration?.imageModel || options.imageModels.default,
+    summaryModel:
+      illustration?.summaryModel ||
+      (typeof window !== "undefined"
+        ? (sessionStorage.getItem("admin-ai-summaryModel") as AvailableSummaryModel)
+        : null) ||
+      options.summaryModels.default,
+    imageModel:
+      illustration?.imageModel ||
+      (typeof window !== "undefined"
+        ? (sessionStorage.getItem("admin-ai-imageModel") as AvailableImageModel)
+        : null) ||
+      options.imageModels.default,
     setAsActive: illustration?.isActive || false,
   });
 
@@ -116,6 +126,12 @@ function AIGeneratedForm({
   };
 
   const updateFormData = (updates: Partial<IllustrationGenerateSchema>) => {
+    if (updates.summaryModel) {
+      sessionStorage.setItem("admin-ai-summaryModel", updates.summaryModel);
+    }
+    if (updates.imageModel) {
+      sessionStorage.setItem("admin-ai-imageModel", updates.imageModel);
+    }
     setFormData((prev) => ({ ...prev, ...updates }));
   };
 

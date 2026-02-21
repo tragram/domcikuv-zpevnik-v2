@@ -91,7 +91,12 @@ export function ManualForm({
 
   const [formData, setFormData] = useState<Partial<IllustrationCreateSchema>>({
     songId: illustration?.songId || "",
-    imageModel: illustration?.imageModel || "",
+    imageModel:
+      illustration?.imageModel ||
+      (typeof window !== "undefined"
+        ? sessionStorage.getItem("admin-manual-imageModel")
+        : "") ||
+      "",
     imageURL: illustration?.imageURL || "",
     thumbnailURL: illustration?.thumbnailURL || "",
     setAsActive: illustration?.setAsActive || false,
@@ -128,6 +133,9 @@ export function ManualForm({
   // --- Handlers ---
 
   const updateFormData = (updates: Partial<IllustrationCreateSchema>) => {
+    if (updates.imageModel !== undefined) {
+      sessionStorage.setItem("admin-manual-imageModel", updates.imageModel || "");
+    }
     setFormData((prev) => ({ ...prev, ...updates }));
   };
 
