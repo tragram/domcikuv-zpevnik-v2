@@ -1,8 +1,3 @@
-import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
-import {
-  SongDataApi,
-  SongWithCurrentVersion,
-} from "src/worker/helpers/song-helpers";
 import client, { API } from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {
@@ -12,12 +7,17 @@ import {
   SongLanguage,
 } from "~/types/types";
 import { makeApiRequest } from "./api-service";
+import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import {
   ModifySongVersionSchema,
   SongModificationSchema,
 } from "src/worker/api/admin/songs";
-import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
-import { ExternalSearchResult } from "src/worker/helpers/external-search";
+import {
+  SongDataAdminApi,
+  SongDataApi,
+  SongVersionApi,
+} from "src/worker/api/api-types";
+import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
 
 export * from "./illustration-service";
 
@@ -84,21 +84,21 @@ export const findOrFetchSong = async (
   let songData: SongData | undefined;
   if (versionId) {
     songData = new SongData(
-      await makeApiRequest(() =>
+      (await makeApiRequest(() =>
         api.songs.fetch[":songId"][":versionId"].$get({
           param: { songId, versionId },
         }),
-      ),
+      )) as SongDataApi,
     );
   } else {
     songData = songDB.songs.find((s) => s.id === songId);
     if (!songData) {
       songData = new SongData(
-        await makeApiRequest(() =>
+        (await makeApiRequest(() =>
           api.songs.fetch[":id"].$get({
             param: { id: songId },
           }),
-        ),
+        )) as SongDataApi,
       );
     }
   }
@@ -128,12 +128,12 @@ export const fetchExternalSearch = async (
   api: API,
   query: string,
 ): Promise<SongData[]> => {
-  // Call the new Hono backend route
   const response = await makeApiRequest(() =>
     api.songs.external.search.$get({ query: { q: query } }),
   );
   return response.map(SongData.fromExternalSearch);
 };
+
 // --- Admin API ---
 export const getSongsAdmin = async (
   adminApi: AdminApi,
@@ -180,7 +180,6 @@ export const patchSongAdmin = async (
 ): Promise<SongDataDB> => {
   const modifiedSong = await makeApiRequest(() =>
     adminApi.songs[":songId"].$patch({
-      // Using patch as per your songs.ts admin file
       param: { songId },
       json: songData,
     }),
@@ -202,9 +201,9 @@ export const deleteSongAdmin = async (
 
 export const songsWithCurrentVersionAdmin = async (
   adminApi: AdminApi,
-): Promise<SongWithCurrentVersion[]> => {
+): Promise<SongDataAdminApi[]> => {
   const songs = await makeApiRequest(adminApi.songs.withCurrentVersion.$get);
-  return songs.songs.map(parseDBDates);
+  return songs.map(parseDBDates) as SongDataAdminApi[];
 };
 
 export const patchVersionAdmin = async (
@@ -212,7 +211,7 @@ export const patchVersionAdmin = async (
   songId: string,
   versionId: string,
   versionData: ModifySongVersionSchema,
-): Promise<SongVersionDB> => {
+): Promise<SongVersionApi> => {
   const updatedVersion = await makeApiRequest(() =>
     adminApi.songs[":songId"].versions[":versionId"].$patch({
       param: { songId, versionId },
@@ -226,7 +225,7 @@ export const deleteVersionAdmin = async (
   adminApi: AdminApi,
   songId: string,
   versionId: string,
-): Promise<SongVersionDB> => {
+): Promise<SongVersionApi> => {
   const deletedVersion = await makeApiRequest(() =>
     adminApi.songs[":songId"].versions[":versionId"].$delete({
       param: { songId, versionId },

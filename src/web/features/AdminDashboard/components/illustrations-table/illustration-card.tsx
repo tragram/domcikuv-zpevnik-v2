@@ -1,4 +1,3 @@
-// illustration-card.tsx
 import { useRouteContext } from "@tanstack/react-router";
 import { Edit, ExternalLink, Eye, RotateCcw } from "lucide-react";
 import { useState } from "react";
@@ -38,10 +37,10 @@ import {
   AvailableSummaryModel,
   AvailableImageModel,
 } from "src/worker/helpers/image-generator";
-import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
+import { SongDataAdminApi } from "src/worker/api/api-types";
 
 interface IllustrationCardProps {
-  song: SongWithCurrentVersion;
+  song: SongDataAdminApi;
   illustration: SongIllustrationDB;
   prompt: IllustrationPromptDB;
   onPreview: (imageUrl: string) => void;

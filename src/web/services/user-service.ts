@@ -3,7 +3,11 @@ import client, { API } from "../../worker/api-client";
 import { makeApiRequest } from "./api-service";
 import { SessionsResponseData } from "src/worker/api/sessions";
 import { UserProfileData } from "src/worker/api/userProfile";
-import { UsersResponse } from "src/worker/helpers/user-helpers";
+import {
+  CreateUserSchema,
+  UpdateUserSchema,
+  UsersResponse,
+} from "src/worker/helpers/user-helpers";
 
 export type UsersApi = typeof client.api.admin.users;
 

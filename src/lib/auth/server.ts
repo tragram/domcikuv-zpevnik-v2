@@ -1,11 +1,11 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { drizzle, DrizzleD1Database } from "drizzle-orm/d1";
 import { account, session, user, verification } from "../db/schema";
+import { AppDatabase } from "src/worker/api/utils";
 
 export const auth = (
   env: Env,
-  db: DrizzleD1Database
+  db: AppDatabase,
 ): ReturnType<typeof betterAuth> => {
   const baseURL = import.meta.env.DEV ? env.VITE_BASE_URL : env.PROD_BASE_URL;
   return betterAuth({

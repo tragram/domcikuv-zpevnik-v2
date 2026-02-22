@@ -1,25 +1,24 @@
-import {
-  IllustrationPromptDB,
-  SongDataDB,
-  SongIllustrationDB,
-} from "src/lib/db/schema";
 import client, { API } from "src/worker/api-client";
-import {
-  adminIllustrationResponse,
-  IllustrationCreateSchema,
-  IllustrationGenerateSchema,
-  IllustrationModifySchema,
-  IllustrationPromptCreateSchema,
-} from "src/worker/helpers/illustration-helpers";
-import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
 import { SongData } from "~/types/songData";
 import { makeApiRequest } from "./api-service";
 import { AdminApi, parseDBDates } from "./song-service";
-
-export type SongDBApi = typeof client.api.songs;
+import {
+  IllustrationPromptApi,
+  SongDataAdminApi,
+  SongIllustrationApi,
+} from "src/worker/api/api-types";
+import {
+  IllustrationPromptCreateSchema,
+  IllustrationGenerateSchema,
+  IllustrationCreateSchema,
+  IllustrationModifySchema,
+  AdminIllustrationResponse,
+} from "src/worker/helpers/illustration-helpers";
+import { PopulatedSongDB } from "src/worker/helpers/song-helpers";
+import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 
 export const fetchIllustrationPrompt = async (
-  songDBApi: SongDBApi,
+  songDBApi: typeof client.api.songs,
   song: SongData,
 ): Promise<string> => {
   const promptId = song.currentIllustration?.promptId;
@@ -37,16 +36,18 @@ export const fetchIllustrationPrompt = async (
 // Admin API
 export const fetchIllustrationsAdmin = async (
   adminApi: AdminApi,
-): Promise<SongIllustrationDB[]> => {
+): Promise<SongIllustrationApi[]> => {
   const songWithIllustrationsAndPrompts = await makeApiRequest(
     adminApi.illustrations.$get,
   );
-  return songWithIllustrationsAndPrompts.map(parseDBDates);
+  return songWithIllustrationsAndPrompts.map(
+    parseDBDates,
+  );
 };
 
 export const fetchPromptsAdmin = async (
   adminApi: AdminApi,
-): Promise<IllustrationPromptDB[]> => {
+): Promise<IllustrationPromptApi[]> => {
   const prompts = await makeApiRequest(adminApi.prompts.$get);
   return prompts.map(parseDBDates);
 };
@@ -54,7 +55,7 @@ export const fetchPromptsAdmin = async (
 export const createIllustrationPrompt = async (
   adminApi: AdminApi,
   promptData: IllustrationPromptCreateSchema,
-): Promise<IllustrationPromptDB> => {
+): Promise<IllustrationPromptApi> => {
   const response = await makeApiRequest(() =>
     adminApi.prompts.create.$post({ json: promptData }),
   );
@@ -64,17 +65,16 @@ export const createIllustrationPrompt = async (
 export const generateIllustration = async (
   adminApi: AdminApi | API,
   illustrationData: IllustrationGenerateSchema,
-): Promise<adminIllustrationResponse> => {
+): Promise<AdminIllustrationResponse> => {
   const response = await makeApiRequest(() =>
     adminApi.illustrations.generate.$post({ json: illustrationData }),
   );
   return {
-    illustration: parseDBDates(response.illustration),
-    song: parseDBDates(response.song),
-    prompt: parseDBDates(response.prompt),
+    illustration: parseDBDates(response.illustration) as SongIllustrationDB,
+    song: parseDBDates(response.song) as PopulatedSongDB,
+    prompt: parseDBDates(response.prompt) as IllustrationPromptDB,
   };
 };
-
 function buildIllustrationFormData(data: any): FormData {
   const formData = new FormData();
 
@@ -98,19 +98,19 @@ function buildIllustrationFormData(data: any): FormData {
 export const createIllustration = async (
   adminApi: AdminApi,
   data: IllustrationCreateSchema,
-): Promise<adminIllustrationResponse> => {
+): Promise<AdminIllustrationResponse> => {
   const formData = buildIllustrationFormData(data);
 
   const response = await makeApiRequest(() =>
     adminApi.illustrations.create.$post({
       form: Object.fromEntries(formData.entries()),
-    } as any),
+    }),
   );
 
   return {
-    illustration: parseDBDates(response.illustration),
-    song: parseDBDates(response.song),
-    prompt: parseDBDates(response.prompt),
+    illustration: parseDBDates(response.illustration) as SongIllustrationDB,
+    song: parseDBDates(response.song) as PopulatedSongDB,
+    prompt: parseDBDates(response.prompt) as IllustrationPromptDB,
   };
 };
 
@@ -118,35 +118,26 @@ export const updateIllustration = async (
   adminApi: AdminApi,
   illustrationId: string,
   illustrationData: IllustrationModifySchema,
-): Promise<adminIllustrationResponse> => {
-  // 1. If we have a file, we MUST send as FormData
+): Promise<SongIllustrationDB> => {
   if (illustrationData.imageFile) {
     const formData = buildIllustrationFormData(illustrationData);
-    const response = await makeApiRequest(() =>
+    const illustration = await makeApiRequest(() =>
       adminApi.illustrations[":id"].$put({
         param: { id: illustrationId },
         form: Object.fromEntries(formData.entries()),
-      } as any),
+      }),
     );
-    return {
-      illustration: parseDBDates(response.illustration),
-      song: parseDBDates(response.song),
-      prompt: parseDBDates(response.prompt),
-    };
+    return parseDBDates(illustration);
   }
 
-  const response = await makeApiRequest(() =>
+  const illustration = await makeApiRequest(() =>
     adminApi.illustrations[":id"].$put({
       param: { id: illustrationId },
-      json: illustrationData as any,
+      json: illustrationData,
     }),
   );
 
-  return {
-    illustration: parseDBDates(response.illustration),
-    song: parseDBDates(response.song),
-    prompt: parseDBDates(response.prompt),
-  };
+  return parseDBDates(illustration);
 };
 
 export const deleteIllustration = async (
@@ -183,13 +174,13 @@ export const deleteIllustrationPrompt = async (
 };
 
 export type SongWithIllustrationsAndPrompts = {
-  song: SongWithCurrentVersion;
+  song: SongDataAdminApi;
   illustrations: SongIllustrationDB[];
   prompts: Record<string, IllustrationPromptDB>;
 };
 
 export const songsWithIllustrationsAndPrompts = (
-  songs: SongWithCurrentVersion[],
+  songs: SongDataAdminApi[],
   illustrations: SongIllustrationDB[],
   prompts: IllustrationPromptDB[],
 ) => {
@@ -205,6 +196,7 @@ export const songsWithIllustrationsAndPrompts = (
     },
     {} as Record<string, SongWithIllustrationsAndPrompts>,
   );
+
   illustrations.forEach((il) => {
     if (Object.hasOwn(songIllustrationsPrompts, il.songId))
       songIllustrationsPrompts[il.songId].illustrations.push(il);
@@ -214,5 +206,6 @@ export const songsWithIllustrationsAndPrompts = (
     if (Object.hasOwn(songIllustrationsPrompts, prompt.songId))
       songIllustrationsPrompts[prompt.songId].prompts[prompt.id] = prompt;
   });
+
   return songIllustrationsPrompts;
 };

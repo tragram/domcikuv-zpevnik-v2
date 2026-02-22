@@ -3,14 +3,14 @@ import { eq, not } from "drizzle-orm";
 import { illustrationPrompt, songIllustration } from "src/lib/db/schema";
 import { z } from "zod";
 import {
-  SongDataApi,
   getSongbooks,
   retrieveSingleSong,
   retrieveSongs,
 } from "../helpers/song-helpers";
-import { errorJSend, failJSend, successJSend } from "./responses";
+import { failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 import { externalRoutes } from "./external";
+import { IllustrationPromptApi, SongDataApi } from "./api-types";
 
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
@@ -118,7 +118,7 @@ export const songDBRoutes = buildApp()
       allIlustrations.map((ai) => ({
         ...ai,
         createdAt: ai.createdAt.getTime(),
-      })),
+      })) as BasicSongIllustrationResponseData,
     );
   })
   .get("/prompts", async (c) => {
@@ -136,7 +136,10 @@ export const songDBRoutes = buildApp()
 
     return successJSend(
       c,
-      allPrompts.map((ap) => ({ ...ap, createdAt: ap.createdAt.getTime() })),
+      allPrompts.map((ap) => ({
+        ...ap,
+        createdAt: ap.createdAt.getTime(),
+      })) as AllIllustrationPromptsResponseData,
     );
   })
   .get("/prompts/:id", async (c) => {
@@ -154,7 +157,7 @@ export const songDBRoutes = buildApp()
         "PROMPT_NOT_FOUND",
       );
     }
-    return successJSend(c, existingPrompt);
+    return successJSend(c, existingPrompt as IllustrationPromptApi);
   });
 
 export default songDBRoutes;

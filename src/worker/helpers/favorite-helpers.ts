@@ -1,8 +1,8 @@
 import { and, eq } from "drizzle-orm";
-import { DrizzleD1Database } from "drizzle-orm/d1";
+import { AppDatabase } from "../api/utils";
 import { userFavoriteSongs } from "src/lib/db/schema";
 
-export const getFavorites = async (db: DrizzleD1Database, userId: string) => {
+export const getFavorites = async (db: AppDatabase, userId: string) => {
   const result = await db
     .select({ songId: userFavoriteSongs.songId })
     .from(userFavoriteSongs)
@@ -12,7 +12,7 @@ export const getFavorites = async (db: DrizzleD1Database, userId: string) => {
 };
 
 export const addFavorite = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   userId: string,
   songId: string
 ) => {
@@ -42,7 +42,7 @@ export const addFavorite = async (
 };
 
 export const removeFavorite = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   userId: string,
   songId: string
 ) => {

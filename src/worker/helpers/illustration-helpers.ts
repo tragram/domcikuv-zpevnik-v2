@@ -1,5 +1,5 @@
 import { and, eq } from "drizzle-orm";
-import { DrizzleD1Database } from "drizzle-orm/d1";
+import { AppDatabase } from "../api/utils";
 import { Context } from "hono";
 import {
   illustrationPrompt,
@@ -21,7 +21,7 @@ import {
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "./image-generator";
-import { findSong, SongWithCurrentVersion } from "./song-helpers";
+import { getSongPopulated, PopulatedSongDB } from "./song-helpers";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -65,14 +65,15 @@ export type IllustrationGenerateSchema = z.infer<
   typeof illustrationGenerateSchema
 >;
 export type IllustrationModifySchema = z.infer<typeof illustrationModifySchema>;
-export type adminIllustrationResponse = {
-  song: SongWithCurrentVersion;
-  illustration: SongIllustrationDB;
-  prompt: IllustrationPromptDB;
-};
 export type IllustrationPromptCreateSchema = z.infer<
   typeof illustrationPromptCreateSchema
 >;
+
+export type AdminIllustrationResponse = {
+  song: PopulatedSongDB;
+  illustration: SongIllustrationDB;
+  prompt: IllustrationPromptDB;
+};
 
 const imageFolder = (
   songId: string,
@@ -131,7 +132,7 @@ export async function uploadImageBuffer(
 }
 
 export async function sameParametersExist(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songId: string,
   summaryPromptId: string,
   imageModel: string,
@@ -152,7 +153,7 @@ export async function sameParametersExist(
 }
 
 export async function setCurrentIllustration(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songId: string,
   illustrationId: string,
 ) {
@@ -166,7 +167,7 @@ export async function setCurrentIllustration(
 }
 
 export async function clearCurrentIllustration(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songId: string,
 ) {
   await db
@@ -179,22 +180,20 @@ export async function clearCurrentIllustration(
 }
 
 export async function generateAndSavePrompt(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songId: string,
   promptVersion: string,
   promptModel: string,
   generator: ImageGenerator,
-  songData?: SongWithCurrentVersion,
+  songData?: PopulatedSongDB,
 ): Promise<IllustrationPromptDB> {
-  let song: SongWithCurrentVersion;
-  if (!songData) {
-    song = (await findSong(db, songId)) as SongWithCurrentVersion;
-  } else {
-    song = songData;
-  }
+  const song = songData ?? (await getSongPopulated(db, songId));
+
+  // Ensure chordpro exists before trying to extract lyrics
+  const chordpro = song.currentVersion?.chordpro ?? "";
 
   const promptText = await generator.generatePrompt(
-    ImageGenerator.extractLyricsFromChordPro(song.chordpro),
+    ImageGenerator.extractLyricsFromChordPro(chordpro),
   );
   console.log("Generated Prompt Text:", promptText);
 
@@ -215,13 +214,13 @@ export async function generateAndSavePrompt(
 }
 
 export async function findOrCreatePrompt(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   c: Context,
   songId: string,
   promptVersion: string,
   promptModel: string,
   generator: ImageGenerator,
-  songData?: SongWithCurrentVersion,
+  songData?: PopulatedSongDB, // Removed 'any' here
 ): Promise<IllustrationPromptDB> {
   const existingPrompt = await db
     .select()
@@ -249,10 +248,7 @@ export async function findOrCreatePrompt(
   );
 }
 
-export async function createManualPrompt(
-  db: DrizzleD1Database,
-  songId: string,
-) {
+export async function createManualPrompt(db: AppDatabase, songId: string) {
   const promptId = `${songId}_manual-${Date.now()}`;
   const promptData = {
     id: promptId,
@@ -271,7 +267,7 @@ export async function createManualPrompt(
 }
 
 export async function createOrFindManualPrompt(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songId: string,
   providedPromptVersion?: string,
 ): Promise<IllustrationPromptDB> {
@@ -303,7 +299,7 @@ export async function createOrFindManualPrompt(
 }
 
 export async function addIllustrationFromURL(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songId: string,
   sourceId: string,
   imageUrl: string,
@@ -317,10 +313,10 @@ export async function addIllustrationFromURL(
   const prompt = await createManualPrompt(db, songId);
   const response = await fetch(imageUrl);
 
-  // Check if fetch was successful
   if (!response.ok) {
     throw Error("Failed to fetch image");
   }
+
   const imageBuffer = await response.arrayBuffer();
   const fakeModelId = `import-${sourceId}`;
   const r2ImageUrl = await uploadImageBuffer(
@@ -344,11 +340,12 @@ export async function addIllustrationFromURL(
     deleted: false,
     promptId: prompt.id,
   };
+
   const newIllustration = await db
     .insert(songIllustration)
     .values(insertData)
     .returning();
-  console.log(newIllustration);
+
   await setCurrentIllustration(db, songId, newIllustration[0].id);
 }
 

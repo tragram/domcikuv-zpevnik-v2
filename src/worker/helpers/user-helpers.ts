@@ -1,5 +1,5 @@
 import { count, desc, eq, like, or } from "drizzle-orm";
-import { DrizzleD1Database } from "drizzle-orm/d1";
+import { AppDatabase } from "../api/utils";
 import { user, UserDB } from "src/lib/db/schema";
 import { z } from "zod";
 import { PaginatedResponse } from "../api/utils";
@@ -31,7 +31,7 @@ export const userSearchSchema = z.object({
 export type UsersResponse = PaginatedResponse<UserDB[], "users">;
 
 export const getUsers = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   search?: string,
   limit = 50,
   offset = 0,
@@ -86,7 +86,7 @@ export const getUsers = async (
 };
 
 export const createUser = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   userData: CreateUserSchema,
 ): Promise<UserDB> => {
   // If email is being updated, check for duplicates
@@ -116,7 +116,7 @@ export const createUser = async (
 };
 
 export const getUser = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   userId: string,
 ): Promise<UserDB | undefined> => {
   // Basic UUID validation
@@ -134,7 +134,7 @@ export const getUser = async (
 };
 
 export const updateUser = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   userId: string,
   userData: UpdateUserSchema,
   currentUserId: string,
@@ -185,7 +185,7 @@ export const updateUser = async (
 };
 
 export const deleteUser = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   userId: string,
   currentUserId: string,
 ): Promise<UserDB> => {
@@ -217,7 +217,7 @@ export const deleteUser = async (
   return existingUser;
 };
 
-export const getUserProfile = async (db: DrizzleD1Database, userId: string) => {
+export const getUserProfile = async (db: AppDatabase, userId: string) => {
   const result = await db
     .select({
       id: user.id,
@@ -239,7 +239,7 @@ export const getUserProfile = async (db: DrizzleD1Database, userId: string) => {
 };
 
 export const updateUserProfile = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   userId: string,
   data: {
     name: string;
@@ -270,7 +270,7 @@ export const updateUserProfile = async (
 };
 
 export const updateAvatar = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   R2_BUCKET: R2Bucket,
   R2_URL: string,
   userData: Awaited<ReturnType<typeof getUserProfile>>,
@@ -302,7 +302,7 @@ export const updateAvatar = async (
 };
 
 export const deleteAvatar = async (
-  db: DrizzleD1Database,
+  db: AppDatabase,
   userId: string,
   R2_BUCKET: R2Bucket,
   CLOUDFLARE_R2_URL: string,

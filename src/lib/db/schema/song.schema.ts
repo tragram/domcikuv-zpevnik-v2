@@ -178,14 +178,8 @@ export const songIllustrationRelations = relations(
 );
 
 export const songVersionRelations = relations(songVersion, ({ one }) => ({
-  song: one(song, {
-    fields: [songVersion.songId],
-    references: [song.id],
-  }),
-  user: one(user, {
-    fields: [songVersion.userId],
-    references: [user.id],
-  }),
+  song: one(song, { fields: [songVersion.songId], references: [song.id] }),
+  user: one(user, { fields: [songVersion.userId], references: [user.id] }),
   approver: one(user, {
     fields: [songVersion.approvedBy],
     references: [user.id],
@@ -194,7 +188,13 @@ export const songVersionRelations = relations(songVersion, ({ one }) => ({
     fields: [songVersion.parentId],
     references: [songVersion.id],
   }),
+
+  songImport: one(songImport, {
+    fields: [songVersion.importId],
+    references: [songImport.id],
+  }),
 }));
+
 export const illustrationPromptRelations = relations(
   illustrationPrompt,
   ({ one }) => ({

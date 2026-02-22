@@ -1,17 +1,12 @@
 import { EditorState } from "~/features/Editor/Editor";
 import { Key, SongRange } from "./musicTypes";
 import type { ChordPro, int, SongLanguage } from "./types";
-import { ExternalSource, SongDataApi } from "src/worker/helpers/song-helpers";
+import {
+  CurrentIllustrationApi,
+  ExternalSourceApi,
+  SongDataApi,
+} from "src/worker/api/api-types";
 import { ExternalSearchResult } from "src/worker/helpers/external-search";
-
-interface CurrentIllustration {
-  illustrationId: string;
-  promptId: string;
-  imageModel: string;
-  imageURL: string;
-  thumbnailURL: string;
-  promptURL: string;
-}
 
 const to_ascii = (text: string): string => {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -49,10 +44,10 @@ export class SongData {
   capo: int;
   range?: SongRange;
   chordpro: ChordPro;
-  externalSource: ExternalSource | null;
+  externalSource: ExternalSourceApi | null;
 
   // UI-specific fields
-  currentIllustration: CurrentIllustration | undefined;
+  currentIllustration: CurrentIllustrationApi | undefined;
   isFavorite: boolean;
 
   constructor(songFromDB: SongDataApi) {
@@ -88,6 +83,7 @@ export class SongData {
       startMelody: data.startMelody,
       capo: data.capo,
       range: data.range,
+      externalSource: null,
     });
   }
 
@@ -109,7 +105,7 @@ export class SongData {
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
       externalSource: {
-        id: external.sourceId,
+        sourceId: external.sourceId,
         originalContent: "",
         url: external.url,
       },
@@ -153,17 +149,18 @@ export class SongData {
       id: "",
       title: "",
       artist: "",
-      createdAt: Date(),
+      createdAt: new Date(),
       updatedAt: new Date(),
       key: undefined,
       startMelody: "",
-      language: "",
+      language: "other",
       capo: 0,
       tempo: undefined,
-      range: "",
+      range: undefined,
       chordpro: "",
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
+      externalSource: null,
     });
   }
 
@@ -174,9 +171,10 @@ export class SongData {
   // Image URL methods
   thumbnailURL(): string | undefined {
     if (!this.currentIllustration) {
-      if (this.externalSource?.id === "pisnicky-akordy") return "/pa_logo.png";
-      if (this.externalSource?.id === "cifraclub") return "/cc_logo.png";
-      if (this.externalSource?.id === "zpevnik-skorepova")
+      if (this.externalSource?.sourceId === "pisnicky-akordy")
+        return "/pa_logo.png";
+      if (this.externalSource?.sourceId === "cifraclub") return "/cc_logo.png";
+      if (this.externalSource?.sourceId === "zpevnik-skorepova")
         return "/zs_logo.png";
     }
     return (
@@ -186,9 +184,10 @@ export class SongData {
 
   illustrationURL(): string | undefined {
     if (!this.currentIllustration) {
-      if (this.externalSource?.id === "pisnicky-akordy") return "/pa_logo.png";
-      if (this.externalSource?.id === "cifraclub") return "/cc_logo.png";
-      if (this.externalSource?.id === "zpevnik-skorepova")
+      if (this.externalSource?.sourceId === "pisnicky-akordy")
+        return "/pa_logo.png";
+      if (this.externalSource?.sourceId === "cifraclub") return "/cc_logo.png";
+      if (this.externalSource?.sourceId === "zpevnik-skorepova")
         return "/zs_logo.png";
     }
     return this.currentIllustration?.imageURL ?? "/unknown_illustration.png";

@@ -27,12 +27,12 @@ import {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
 } from "src/worker/helpers/illustration-helpers";
-import { SongWithCurrentVersion } from "src/worker/helpers/song-helpers";
-import { PromptCard } from "./prompt-card";
 import { PromptCreateDialog } from "./prompt-create-dialog";
+import { SongDataAdminApi } from "src/worker/api/api-types";
+import { PromptCard } from "./prompt-card";
 
 interface SongIllustrationsGroupProps {
-  song: SongWithCurrentVersion;
+  song: SongDataAdminApi;
   illustrations: SongIllustrationDB[];
   prompts: Record<string, IllustrationPromptDB>;
   isExpanded: boolean;
@@ -231,7 +231,6 @@ export function SongIllustrationsGroup({
             >
               <IllustrationForm
                 illustration={{ songId: song.id }}
-                songPrompts={songPrompts}
                 activePromptId={activePromptId}
                 onSave={handleCreateIllustration}
                 isLoading={isLoading}
@@ -285,7 +284,6 @@ export function SongIllustrationsGroup({
                 >
                   <IllustrationForm
                     illustration={{ songId: song.id }}
-                    songPrompts={songPrompts}
                     activePromptId={activePromptId}
                     onSave={handleCreateIllustration}
                     isLoading={isLoading}

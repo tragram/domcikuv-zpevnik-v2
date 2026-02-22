@@ -10,8 +10,11 @@ import {
 } from "src/worker/helpers/image-generator";
 import z from "zod/v4";
 import { defaultPromptId } from "~/types/songData";
-import { illustrationPrompt, songIllustration } from "../../../lib/db/schema";
-import { findSong } from "../../helpers/song-helpers";
+import {
+  illustrationPrompt,
+  IllustrationPromptDB,
+  songIllustration,
+} from "../../../lib/db/schema";
 import {
   errorJSend,
   failJSend,
@@ -20,6 +23,11 @@ import {
   successJSend,
 } from "../responses";
 import { buildApp } from "../utils";
+import {
+  getSongBase,
+  getSongPopulated,
+  PopulatedSongDB,
+} from "src/worker/helpers/song-helpers";
 
 const illustrationPromptCreateSchema = createInsertSchema(
   illustrationPrompt,
@@ -32,10 +40,17 @@ const promptGenerateSchema = z.object({
   summaryModel: z.enum(SUMMARY_MODELS_API),
   summaryPromptVersion: z.enum(SUMMARY_PROMPT_VERSIONS),
 });
+export type PromptModifySchema = z.infer<typeof promptModifySchema>;
+export type PromptGenerateSchema = z.infer<typeof promptGenerateSchema>;
 
 export const illustrationPromptRoutes = buildApp()
   .get("/", async (c) => {
-    return successJSend(c, await c.var.db.select().from(illustrationPrompt));
+    return successJSend(
+      c,
+      (await c.var.db
+        .select()
+        .from(illustrationPrompt)) as IllustrationPromptDB[],
+    );
   })
   .put("/:id", zValidator("json", promptModifySchema), async (c) => {
     const promptId = c.req.param("id");
@@ -56,7 +71,7 @@ export const illustrationPromptRoutes = buildApp()
       .where(eq(illustrationPrompt.id, promptId))
       .returning();
 
-    return successJSend(c, updatedPrompt[0]);
+    return successJSend(c, updatedPrompt[0] as IllustrationPromptDB);
   })
   .post(
     "/create",
@@ -66,7 +81,7 @@ export const illustrationPromptRoutes = buildApp()
       const db = c.var.db;
 
       try {
-        await findSong(db, promptData.songId);
+        await getSongBase(db, promptData.songId);
       } catch {
         return songNotFoundFail(c);
       }
@@ -89,16 +104,16 @@ export const illustrationPromptRoutes = buildApp()
         .insert(illustrationPrompt)
         .values({ id: newId, ...promptData })
         .returning();
-      return successJSend(c, newPrompt[0], 201);
+      return successJSend(c, newPrompt[0] as IllustrationPromptDB, 201);
     },
   )
   .post("/generate", zValidator("json", promptGenerateSchema), async (c) => {
     const { songId, summaryModel, summaryPromptVersion } = c.req.valid("json");
     const db = c.var.db;
 
-    let song;
+    let song: PopulatedSongDB;
     try {
-      song = await findSong(db, songId);
+      song = await getSongPopulated(db, songId);
     } catch {
       return songNotFoundFail(c);
     }
@@ -136,7 +151,7 @@ export const illustrationPromptRoutes = buildApp()
       new ImageGenerator(generationConfig),
       song,
     );
-    return successJSend(c, newPrompt, 201);
+    return successJSend(c, newPrompt as IllustrationPromptDB, 201);
   })
   .delete("/:id", async (c) => {
     const promptId = c.req.param("id");

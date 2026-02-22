@@ -16,6 +16,7 @@ import { HTTPException } from "hono/http-exception";
 import { z } from "zod";
 import { errorJSend, failJSend } from "./api/responses";
 export { SessionSync } from "./durable-objects/SessionSync";
+import * as schema from "src/lib/db/schema";
 
 const app = buildApp();
 
@@ -46,7 +47,7 @@ export const route = app
   .basePath("/api")
   .use(async (c, next) => {
     // 2. Global DB Initialization and Injection
-    const db = drizzle(c.env.DB);
+    const db = drizzle(c.env.DB, { schema });
     c.set("db", db); // Make 'db' available to all downstream routes via c.get("db")
 
     const authInstance = auth(c.env, db);

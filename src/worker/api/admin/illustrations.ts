@@ -9,6 +9,7 @@ import {
   SongIllustrationDB,
 } from "../../../lib/db/schema";
 import {
+  AdminIllustrationResponse,
   clearCurrentIllustration,
   createManualPrompt,
   findOrCreatePrompt,
@@ -16,28 +17,33 @@ import {
   processAndUploadImages,
   sameParametersExist,
   setCurrentIllustration,
-  uploadImageBuffer
+  uploadImageBuffer,
 } from "../../helpers/illustration-helpers";
 import {
   IMAGE_MODELS_API,
   ImageGenerator,
   SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS
+  SUMMARY_PROMPT_VERSIONS,
 } from "../../helpers/image-generator";
-import { findSong, SongWithCurrentVersion } from "../../helpers/song-helpers";
 import {
   errorJSend,
   failJSend,
   itemNotFoundFail,
   songNotFoundFail,
-  successJSend
+  successJSend,
 } from "../responses";
 import { buildApp } from "../utils";
+import {
+  getSongPopulated,
+  PopulatedSongDB,
+} from "src/worker/helpers/song-helpers";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),
   imageModel: z.string(),
-  setAsActive: z.string().transform((val) => val === "true"),
+  setAsActive: z
+    .union([z.string(), z.boolean()])
+    .transform((val) => val === "true" || val === true),
   imageFile: z.any().optional(),
   promptId: z.string().optional(),
   promptText: z.string().optional(),
@@ -47,7 +53,9 @@ const illustrationCreateSchema = z.object({
 
 const illustrationGenerateSchema = z.object({
   songId: z.string(),
-  setAsActive: z.boolean().default(false),
+  setAsActive: z
+    .union([z.string(), z.boolean()])
+    .transform((val) => val === "true" || val === true),
   imageModel: z.enum(IMAGE_MODELS_API),
   promptVersion: z.enum(SUMMARY_PROMPT_VERSIONS),
   summaryModel: z.enum(SUMMARY_MODELS_API),
@@ -55,7 +63,9 @@ const illustrationGenerateSchema = z.object({
 
 const illustrationModifySchema = z.object({
   imageModel: z.string().optional(),
-  setAsActive: z.string().transform((val) => val === "true"),
+  setAsActive: z
+    .union([z.string(), z.boolean()])
+    .transform((val) => val === "true" || val === true),
 });
 
 export const CFImagesThumbnailURL = (imageURL: string) =>
@@ -65,12 +75,9 @@ const generateIllustrationHandler = async (c: any) => {
   const illustrationData = c.req.valid("json");
   const db = c.var.db;
 
-  let illustrationSong;
+  let illustrationSong: PopulatedSongDB;
   try {
-    illustrationSong = (await findSong(
-      db,
-      illustrationData.songId,
-    )) as SongWithCurrentVersion;
+    illustrationSong = await getSongPopulated(db, illustrationData.songId);
   } catch {
     return songNotFoundFail(c);
   }
@@ -151,14 +158,17 @@ const generateIllustrationHandler = async (c: any) => {
       song: illustrationSong,
       illustration: newIllustration[0] as SongIllustrationDB,
       prompt,
-    },
+    } as AdminIllustrationResponse,
     201,
   );
 };
 
 export const illustrationRoutes = buildApp()
   .get("/", async (c) =>
-    successJSend(c, await c.var.db.select().from(songIllustration)),
+    successJSend(
+      c,
+      (await c.var.db.select().from(songIllustration)) as SongIllustrationDB[],
+    ),
   )
   .post("/create", async (c) => {
     const formData = await c.req.formData();
@@ -168,12 +178,9 @@ export const illustrationRoutes = buildApp()
     const imageFile = formData.get("imageFile") as File | null;
     const db = c.var.db;
 
-    let illustrationSong;
+    let illustrationSong: PopulatedSongDB;
     try {
-      illustrationSong = (await findSong(
-        db,
-        validatedData.songId,
-      )) as SongWithCurrentVersion;
+      illustrationSong = await getSongPopulated(db, validatedData.songId);
     } catch {
       return failJSend(c, "Referenced song not found", 400, "SONG_NOT_FOUND");
     }
@@ -249,7 +256,11 @@ export const illustrationRoutes = buildApp()
       await setCurrentIllustration(db, validatedData.songId, newId);
     return successJSend(
       c,
-      { song: illustrationSong, illustration: newIllustration[0], prompt },
+      {
+        song: illustrationSong,
+        illustration: newIllustration[0],
+        prompt,
+      } as AdminIllustrationResponse,
       201,
     );
   })
@@ -313,7 +324,7 @@ export const illustrationRoutes = buildApp()
         await clearCurrentIllustration(db, current.songId);
     }
 
-    return successJSend(c, { illustration: updatedIllustration[0] });
+    return successJSend(c, updatedIllustration[0] as SongIllustrationDB);
   })
   .post(
     "/generate",
@@ -351,7 +362,9 @@ export const illustrationRoutes = buildApp()
         existing.promptId,
         existing.imageModel,
       );
-    } catch {}
+    } catch (e) {
+      console.error("Error moving song to trash", e);
+    }
 
     await db
       .update(songIllustration)
@@ -365,7 +378,9 @@ export const illustrationRoutes = buildApp()
       .set({ deleted: false, updatedAt: new Date() })
       .where(eq(songIllustration.id, c.req.param("id")))
       .returning();
-    return successJSend(c, { restoredIllustration: restored[0] });
+    return successJSend(c, {
+      restoredIllustration: restored[0] as SongIllustrationDB,
+    });
   });
 
 export const trustedGenerateRoute = buildApp().post(

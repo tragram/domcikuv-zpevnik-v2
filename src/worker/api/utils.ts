@@ -4,13 +4,15 @@ import { eq } from "drizzle-orm";
 import { DrizzleD1Database } from "drizzle-orm/d1";
 import { Context, Next } from "hono";
 import { user } from "src/lib/db/schema";
+import * as schema from "src/lib/db/schema";
 
+export type AppDatabase = DrizzleD1Database<typeof schema>;
 export type AppEnv = {
   Bindings: Env;
   Variables: {
     SESSION: Session | null;
     USER: User | null;
-    db: DrizzleD1Database;
+    db: AppDatabase;
   };
 };
 
@@ -45,10 +47,10 @@ export const trustedUserMiddleware = async (c: Context<AppEnv>, next: Next) => {
   }
 
   const userRecord = await db
-  .select({ isTrusted: user.isTrusted })
-  .from(user)
-  .where(eq(user.id, userId))
-  .get();
+    .select({ isTrusted: user.isTrusted })
+    .from(user)
+    .where(eq(user.id, userId))
+    .get();
 
   if (!userRecord) {
     return c.json(

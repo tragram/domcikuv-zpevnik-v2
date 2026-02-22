@@ -1,14 +1,23 @@
 import { zValidator } from "@hono/zod-validator";
 import { and, desc, eq, getTableColumns, isNotNull } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
-import { song, songVersion } from "../../../lib/db/schema";
 import {
-  findSong,
-  findSongWithAllData,
-  promoteVersionToCurrent,
-} from "../../helpers/song-helpers";
+  song,
+  SongDataDB,
+  songImport,
+  songVersion,
+  SongVersionDB,
+} from "../../../lib/db/schema";
 import { failJSend, songNotFoundFail, successJSend } from "../responses";
 import { buildApp } from "../utils";
+import {
+  findSongWithAllData,
+  getSongBase,
+  getSongPopulated,
+  promoteVersionToCurrent,
+} from "src/worker/helpers/song-helpers";
+import z from "zod/v4";
+import { SongDataAdminApi, SongVersionApi } from "../api-types";
 
 const songModificationSchema = createInsertSchema(song)
   .partial()
@@ -25,11 +34,17 @@ const modifySongVersionSchema = createInsertSchema(songVersion)
   })
   .partial();
 
+export type SongModificationSchema = z.infer<typeof songModificationSchema>;
+export type ModifySongVersionSchema = z.infer<typeof modifySongVersionSchema>;
+
 export const songRoutes = buildApp()
   .get("/", async (c) =>
     successJSend(
       c,
-      await c.var.db.select().from(song).orderBy(desc(song.createdAt)),
+      (await c.var.db
+        .select()
+        .from(song)
+        .orderBy(desc(song.createdAt))) as SongDataDB[],
     ),
   )
   .get("/withCurrentVersion", async (c) => {
@@ -38,20 +53,28 @@ export const songRoutes = buildApp()
         ...getTableColumns(song),
         ...getTableColumns(songVersion),
         id: song.id,
+        externalSource: songImport
+          ? {
+              sourceId: songImport.sourceId,
+              originalContent: songImport.originalContent,
+              url: songImport.url,
+            }
+          : null,
       })
       .from(song)
       .where(and(isNotNull(song.currentVersionId), eq(song.hidden, false)))
       .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
+      .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(song.updatedAt));
-    return successJSend(c, { songs, count: songs.length });
+    return successJSend(c, songs as SongDataAdminApi[]);
   })
   .get("/versions", async (c) =>
     successJSend(
       c,
-      await c.var.db
+      (await c.var.db
         .select()
         .from(songVersion)
-        .orderBy(desc(songVersion.updatedAt)),
+        .orderBy(desc(songVersion.updatedAt))) as SongVersionDB[],
     ),
   )
   .get("/:songId", async (c) => {
@@ -72,27 +95,27 @@ export const songRoutes = buildApp()
       .where(eq(song.id, c.req.param("songId")))
       .returning();
     if (!updated.length) return songNotFoundFail(c);
-    return successJSend(c, updated[0]);
+    return successJSend(c, updated[0] as SongDataDB);
   })
   .delete("/:id", async (c) => {
     const songId = c.req.param("id");
-    await findSong(c.var.db, songId); // throws if missing
+    await getSongBase(c.var.db, songId); // throws if missing
     const deleted = await c.var.db
       .update(song)
       .set({ deleted: true, updatedAt: new Date() })
       .where(eq(song.id, songId))
       .returning();
-    return successJSend(c, deleted[0]);
+    return successJSend(c, deleted[0] as SongDataDB);
   })
   .post("/:id/restore", async (c) => {
     const songId = c.req.param("id");
-    await findSong(c.var.db, songId, false);
+    await getSongBase(c.var.db, songId); // throws if missing
     const restored = await c.var.db
       .update(song)
       .set({ deleted: false, updatedAt: new Date() })
       .where(eq(song.id, songId))
       .returning();
-    return successJSend(c, restored[0]);
+    return successJSend(c, restored[0] as SongDataDB);
   })
   .post("/:songId/versions/:versionId/approve", async (c) => {
     const { songId, versionId } = c.req.param();
@@ -138,7 +161,7 @@ export const songRoutes = buildApp()
       .set({ status: newStatus, updatedAt: new Date() })
       .where(eq(songVersion.id, versionId))
       .returning();
-    return successJSend(c, updated[0]);
+    return successJSend(c, updated[0] as SongVersionDB);
   })
   .patch(
     "/:songId/versions/:versionId",
@@ -153,7 +176,7 @@ export const songRoutes = buildApp()
         )
         .returning();
       if (!updated.length) return failJSend(c, "Version not found", 404);
-      return successJSend(c, updated[0]);
+      return successJSend(c, updated[0] as SongVersionApi);
     },
   )
   .delete("/:songId/versions/:versionId", async (c) => {
@@ -169,7 +192,7 @@ export const songRoutes = buildApp()
       return failJSend(c, "Version not found", 404);
 
     // don't allow deletion of current version
-    const songData = await findSong(db, songId);
+    const songData = await getSongPopulated(db, songId);
     if (songData.currentVersionId === versionId)
       return failJSend(c, "Cannot delete active version.", 400);
 
@@ -179,7 +202,7 @@ export const songRoutes = buildApp()
       .set({ updatedAt: new Date(), status: "deleted" })
       .where(eq(songVersion.id, versionId))
       .returning();
-    return successJSend(c, updated[0]);
+    return successJSend(c, updated[0] as SongVersionDB);
   })
   .post("/reset-songDB-version", async (c) => {
     const newVersion = Date.now().toString();

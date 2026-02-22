@@ -1,17 +1,19 @@
 import { z } from "zod";
-import { songVersion, user } from "../../lib/db/schema";
+import { songVersion, SongVersionDB, user } from "../../lib/db/schema";
 import { eq } from "drizzle-orm";
 import { buildApp } from "./utils";
 import { zValidator } from "@hono/zod-validator";
 import {
   createSong,
   createSongVersion,
-  findSong,
+  getSongBase,
+  getSongPopulated,
   getSongVersionsByUser,
 } from "../helpers/song-helpers";
 import { failJSend, successJSend } from "./responses";
 import OpenAI from "openai";
 import { trustedUserMiddleware } from "./utils";
+import { EditorSubmissionResponse } from "./api-types";
 
 export const editorSubmitSchema = z.object({
   title: z.string(),
@@ -194,7 +196,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     return successJSend(c, {
       song: result.newSong,
       version: result.newVersion,
-    });
+    } as EditorSubmissionResponse);
   })
   .put("/:id", zValidator("json", editorSubmitSchema), async (c) => {
     const submission = c.req.valid("json");
@@ -214,9 +216,9 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
 
     const isTrusted = !!userProfile?.isTrusted;
 
-    // findSong will throw an error if the song is not found.
+    // getSongPopulated will throw an error if the song is not found.
     // The global handler catches it and returns a clean 500 or mapped 404 depending on your helper logic.
-    const existingSong = await findSong(db, songId, false);
+    const existingSong = await getSongBase(db, songId);
 
     const versionResult = await createSongVersion(
       db,
@@ -231,7 +233,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       song: existingSong,
       version: versionResult,
       status: versionResult.status,
-    });
+    } as EditorSubmissionResponse);
   })
   .get("/submissions", async (c) => {
     const userId = c.var.USER?.id;
@@ -240,7 +242,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     }
 
     const versions = await getSongVersionsByUser(c.var.db, userId);
-    return successJSend(c, versions);
+    return successJSend(c, versions as SongVersionDB[]);
   })
   .delete("/versions/:id", async (c) => {
     const userId = c.var.USER?.id;
