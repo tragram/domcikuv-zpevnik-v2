@@ -50,6 +50,7 @@ import {
   UserApi,
 } from "src/worker/api/api-types";
 import { PromptGenerateSchema } from "src/worker/api/admin/illustration-prompts";
+import { SongDataDB } from "src/lib/db/schema";
 
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({
@@ -230,7 +231,7 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
       await queryClient.cancelQueries({ queryKey: ["illustrationsAdmin"] });
 
       // Ensure we query using the new flat DTO types
-      const previousSongs = queryClient.getQueryData<SongDataApi[]>([
+      const previousSongs = queryClient.getQueryData<SongDataDB[]>([
         "songDBAdmin",
       ]);
       const previousIllustrations = queryClient.getQueryData<
@@ -253,7 +254,7 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
       }
 
       if (data.setAsActive !== undefined && previousSongs) {
-        queryClient.setQueryData<SongDataApi[]>(
+        queryClient.setQueryData<SongDataDB[]>(
           ["songDBAdmin"],
           (old) =>
             old?.map((song) => {
@@ -263,19 +264,11 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
               if (illustration && illustration.songId === song.id) {
                 return {
                   ...song,
-                  // Handling flat state mapping for current illustration
-                  currentIllustration: data.setAsActive
-                    ? {
-                        illustrationId: id,
-                        imageModel: illustration.imageModel,
-                        imageURL: illustration.imageURL,
-                        thumbnailURL: illustration.thumbnailURL,
-                        promptId: illustration.promptId,
-                        promptURL: "",
-                      }
-                    : song.currentIllustration?.illustrationId === id
-                      ? undefined
-                      : song.currentIllustration,
+                  currentIllustrationId: data.setAsActive
+                    ? id
+                    : song.currentIllustrationId === id
+                      ? null
+                      : song.currentIllustrationId,
                 };
               }
               return song;
