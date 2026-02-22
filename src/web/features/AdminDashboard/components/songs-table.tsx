@@ -47,7 +47,7 @@ import {
   useSongsAdmin,
   useUpdateSong,
   useVersionsAdmin,
-} from "../adminHooks";
+} from "../../../services/adminHooks";
 import { ActionButtons } from "./shared/action-buttons";
 import { TableToolbar } from "./shared/table-toolbar";
 import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";

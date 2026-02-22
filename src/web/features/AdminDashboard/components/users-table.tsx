@@ -25,7 +25,7 @@ import { Edit, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { TableToolbar } from "./shared/table-toolbar";
 import { Pagination } from "./shared/pagination";
 import { toast } from "sonner";
-import { useUsersAdmin, useUpdateUser, useDeleteUser } from "../adminHooks";
+import { useUsersAdmin, useUpdateUser, useDeleteUser } from "../../../services/adminHooks";
 import { AdminApi } from "~/services/song-service";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import { UserDB } from "src/lib/db/schema";

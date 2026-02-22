@@ -29,7 +29,7 @@ import {
   useDeleteIllustration,
   useRestoreIllustration,
   useUpdateIllustration,
-} from "../../adminHooks";
+} from "../../../../services/adminHooks";
 import DeletePrompt from "~/components/dialogs/delete-prompt";
 import { IllustrationModifySchema } from "src/worker/helpers/illustration-helpers";
 import {

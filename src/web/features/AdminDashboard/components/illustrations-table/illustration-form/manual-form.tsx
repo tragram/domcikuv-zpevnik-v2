@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { Textarea } from "~/components/ui/textarea";
-import { useSongPrompts } from "~/features/AdminDashboard/adminHooks";
+import { useSongPrompts } from "~/services/adminHooks";
 import { cn } from "~/lib/utils";
 import type { IllustrationSubmitData } from "./illustration-form";
 import { ActiveSwitch, SongIdField } from "./shared-form-fields";

@@ -25,7 +25,7 @@ import {
   useIllustrationOptions,
   useSongPrompts,
   useIllustrationsAdmin,
-} from "~/features/AdminDashboard/adminHooks";
+} from "~/services/adminHooks";
 import { useRouteContext } from "@tanstack/react-router";
 import { defaultPromptId } from "~/types/songData";
 import { Sparkles, CheckCircle2, History } from "lucide-react";
