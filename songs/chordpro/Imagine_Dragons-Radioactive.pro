@@ -2,12 +2,11 @@
 {artist: Imagine Dragons}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: c1-d2}
 {language: english}
 {startMelody: d a}
 {createdAt: 1439503200000}
-{updatedAt: 1771630736000}
+{updatedAt: 1771715043000}
 {illustrationId: Imagine_Dragons-Radioactive_gpt-5-mini_v2_FLUX1-dev}
 {promptId: Imagine_Dragons-Radioactive_gpt-5-mini_v2}
 

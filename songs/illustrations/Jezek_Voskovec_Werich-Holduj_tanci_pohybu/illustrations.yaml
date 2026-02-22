@@ -1,23 +1,2 @@
 songId: Jezek_Voskovec_Werich-Holduj_tanci_pohybu
-prompts:
-  - id: Jezek_Voskovec_Werich-Holduj_tanci_pohybu_gpt-4o-mini_v1
-    songId: Jezek_Voskovec_Werich-Holduj_tanci_pohybu
-    summaryPromptVersion: v1
-    summaryModel: gpt-4o-mini
-    text: >-
-      Create an illustration depicting a vibrant spring scene where people are
-      joyfully engaging in various outdoor activities like rowing, dancing, and
-      skiing. Capture the energy and rhythm of movement, with a focus on
-      individuals breathing deeply and exercising, surrounded by blooming
-      flowers and a bright blue sky. Include elements of music and joy, such as
-      musical notes in the air and smiling faces.
-    createdAt: 2025-08-05T09:45:45.000Z
-    updatedAt: 2026-02-08T17:34:58.000Z
-    deleted: false
-    illustrations:
-      - createdAt: 1754387142000
-        imageModel: FLUX.1-dev
-        filename: FLUX.1-dev.webp
-      - createdAt: 1754387142000
-        imageModel: imagen4
-        filename: imagen4.webp
+prompts: []
