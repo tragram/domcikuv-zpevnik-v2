@@ -2,13 +2,12 @@
 {artist: Ježek + Voskovec + Werich}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: g1-d2}
 {language: czech}
 {startMelody: d e f#}
 {createdAt: 1481670000000}
-{updatedAt: 1770572098000}
-{illustrationId: Jezek_Voskovec_Werich-Holduj_tanci_pohybu_gpt-4o-mini_v1_FLUX.1-dev}
+{updatedAt: 1771699237000}
+{illustrationId: Jezek_Voskovec_Werich-Holduj_tanci_pohybu_gpt-4o-mini_v1_imagen4}
 {promptId: Jezek_Voskovec_Werich-Holduj_tanci_pohybu_gpt-4o-mini_v1}
 
 {start_of_verse}
