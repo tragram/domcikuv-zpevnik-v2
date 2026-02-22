@@ -1,19 +1,21 @@
 songId: Kouzla_kralu-Buchet_je_spousta
 prompts:
-  - id: Kouzla_kralu-Buchet_je_spousta_gpt-4o-mini_v2
+  - id: Kouzla_kralu-Buchet_je_spousta_gpt-5-mini_v3
     songId: Kouzla_kralu-Buchet_je_spousta
-    summaryPromptVersion: v2
-    summaryModel: gpt-4o-mini
+    summaryPromptVersion: v3
+    summaryModel: gpt-5-mini
     text: >-
-      Create an illustration of a whimsical bakery castle filled with delicious
-      pastries and cakes, set against a dreamy sky where a couple holds hands,
-      gazing into each other's eyes with joy. The scene should convey a sense of
-      celebration and love, with hints of magical elements like floating clouds
-      and twinkling lights, capturing the essence of a fairytale romance.
-    createdAt: 2025-08-05T09:45:47.000Z
-    updatedAt: 2026-02-08T17:35:44.000Z
+      Whimsical storybook illustration: a humble baker boy in an apron and a
+      simple, smiling princess in a farm dress hold hands in the foreground as
+      if about to float, behind them a bakery transformed into a small
+      wooden-beam castle with oven chimneys and a grand gate, tables piled with
+      buns and pastries, a glowing ruby-heart pendant on the princess, soft
+      clouds and warm golden light — folk-art / watercolor gouache style, not
+      photorealistic.
+    createdAt: 2026-02-21T20:02:30.000Z
+    updatedAt: 2026-02-21T20:02:30.000Z
     deleted: false
     illustrations:
-      - createdAt: 1754387142000
-        imageModel: FLUX.1-dev
-        filename: FLUX.1-dev.webp
+      - createdAt: 1771704165000
+        imageModel: nano-banana-pro
+        filename: nano-banana-pro.webp
