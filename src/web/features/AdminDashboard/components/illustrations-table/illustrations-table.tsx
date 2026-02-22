@@ -9,11 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { AdminApi } from "~/services/song-service";
+import {
+  AdminApi,
+  SongWithIllustrationsAndPrompts,
+} from "~/services/song-service";
 import { useIllustrationsTableData } from "../../adminHooks";
 import { TableToolbar } from "../shared/table-toolbar";
 import { SongIllustrationsGroup } from "./illustration-group";
 import { SongIllustrationDB } from "src/lib/db/schema";
+import useLocalStorageState from "use-local-storage-state";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;
@@ -25,6 +29,13 @@ type SortDirection = "asc" | "desc";
 export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleted, setShowDeleted] = useState(false);
+
+  // New local storage toggle for unillustrated prioritization
+  const [prioritizeUnillustrated, setPrioritizeUnillustrated] =
+    useLocalStorageState<boolean>("prioritize-unillustrated", {
+      defaultValue: true,
+    });
+
   const [imageModelFilter, setImageModelFilter] = useState<string>("all");
   const [summaryModelFilter, setSummaryModelFilter] = useState<string>("all");
   const [promptVersionFilter, setPromptVersionFilter] = useState<string>("all");
@@ -32,16 +43,14 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>("lastModified");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
-  const {
-    groupedData,
-    promptsById,
-    filterOptions,
-    isLoading,
-    isError,
-  } = useIllustrationsTableData(adminApi);
+  const { groupedData, promptsById, filterOptions, isLoading, isError } =
+    useIllustrationsTableData(adminApi);
 
   const filteredAndSortedGroups = useMemo(() => {
-    let groups = Object.entries(groupedData);
+    let groups = Object.entries(groupedData) as [
+      string,
+      SongWithIllustrationsAndPrompts,
+    ][];
 
     if (searchTerm) {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
@@ -83,7 +92,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     }
 
     const getGroupSortValue = (
-      group: any,
+      group: SongWithIllustrationsAndPrompts, // Replaced 'any' with explicit type
       key: SortKey,
     ): string | number | Date => {
       switch (key) {
@@ -103,6 +112,23 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     };
 
     return groups.sort(([, a], [, b]) => {
+      // 1. Prioritize unillustrated logic (if toggle is active)
+      if (prioritizeUnillustrated) {
+        // Adjust this logic if your schema indicates "active" differently (e.g., an isActive boolean)
+        const isIllustrationActive = (i: SongIllustrationDB) =>
+          !("deletedAt" in i && i.deletedAt !== null) &&
+          !("isDeleted" in i && i.isDeleted === true);
+
+        const aHasActive = a.illustrations.some(isIllustrationActive);
+        const bHasActive = b.illustrations.some(isIllustrationActive);
+
+        // If a has no active illustrations but b does, a comes first
+        if (!aHasActive && bHasActive) return -1;
+        // If a has active illustrations but b doesn't, b comes first
+        if (aHasActive && !bHasActive) return 1;
+      }
+
+      // 2. Standard sorting logic (applied among the prioritized and unprioritized groups)
       const valA = getGroupSortValue(a, sortKey);
       const valB = getGroupSortValue(b, sortKey);
       const direction = sortDirection === "asc" ? 1 : -1;
@@ -120,6 +146,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     promptsById,
     sortKey,
     sortDirection,
+    prioritizeUnillustrated,
   ]);
 
   if (isLoading) return <div>Loading...</div>;
@@ -157,7 +184,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       </div>
 
       <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm}>
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-wrap items-center gap-4">
           <Select value={imageModelFilter} onValueChange={setImageModelFilter}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by image model" />
@@ -230,18 +257,37 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             </SelectContent>
           </Select>
 
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="show-deleted"
-              checked={showDeleted}
-              onCheckedChange={() => setShowDeleted(!showDeleted)}
-            />
-            <Label
-              htmlFor="show-deleted"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Show deleted
-            </Label>
+          <div className="flex items-center space-x-4 ml-auto">
+            {/* New Priority Checkbox */}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="prioritize-unillustrated"
+                checked={prioritizeUnillustrated}
+                onCheckedChange={(checked) =>
+                  setPrioritizeUnillustrated(checked as boolean)
+                }
+              />
+              <Label
+                htmlFor="prioritize-unillustrated"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 whitespace-nowrap"
+              >
+                Prioritize unillustrated
+              </Label>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="show-deleted"
+                checked={showDeleted}
+                onCheckedChange={() => setShowDeleted(!showDeleted)}
+              />
+              <Label
+                htmlFor="show-deleted"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 whitespace-nowrap"
+              >
+                Show deleted
+              </Label>
+            </div>
           </div>
         </div>
 
