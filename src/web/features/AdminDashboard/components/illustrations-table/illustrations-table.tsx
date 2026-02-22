@@ -18,6 +18,7 @@ import { TableToolbar } from "../shared/table-toolbar";
 import { SongIllustrationsGroup } from "./illustration-group";
 import { SongIllustrationDB } from "src/lib/db/schema";
 import useLocalStorageState from "use-local-storage-state";
+import { Filter, Eye, Layers } from "lucide-react";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;
@@ -30,22 +31,16 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleted, setShowDeleted] = useLocalStorageState<boolean>(
     "admin/illustration-table/show-deleted-illustrations",
-    {
-      defaultValue: false,
-    },
+    { defaultValue: false },
   );
   const [prioritizeUnillustrated, setPrioritizeUnillustrated] =
     useLocalStorageState<boolean>(
       "admin/illustration-table/prioritize-unillustrated",
-      {
-        defaultValue: true,
-      },
+      { defaultValue: true },
     );
   const [showDeletedSongs, setShowDeletedSongs] = useLocalStorageState<boolean>(
     "admin/illustration-table/show-deleted-songs",
-    {
-      defaultValue: false,
-    },
+    { defaultValue: false },
   );
 
   const [imageModelFilter, setImageModelFilter] = useState<string>("all");
@@ -59,6 +54,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     useIllustrationsTableData(adminApi);
 
   const filteredAndSortedGroups = useMemo(() => {
+    // ... [Keep existing sorting/filtering logic intact] ...
     let groups = Object.entries(groupedData) as [
       string,
       SongWithIllustrationsAndPrompts,
@@ -76,9 +72,9 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     }
 
     if (!showDeletedSongs) {
-      groups = groups.filter(([, group]) => {
-        return !group.song.deleted && !group.song.hidden;
-      });
+      groups = groups.filter(
+        ([, group]) => !group.song.deleted && !group.song.hidden,
+      );
     }
 
     if (imageModelFilter !== "all") {
@@ -110,7 +106,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     }
 
     const getGroupSortValue = (
-      group: SongWithIllustrationsAndPrompts, // Replaced 'any' with explicit type
+      group: SongWithIllustrationsAndPrompts,
       key: SortKey,
     ): string | number | Date => {
       switch (key) {
@@ -130,9 +126,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     };
 
     return groups.sort(([, a], [, b]) => {
-      // 1. Prioritize unillustrated logic (if toggle is active)
       if (prioritizeUnillustrated) {
-        // Adjust this logic if your schema indicates "active" differently (e.g., an isActive boolean)
         const isIllustrationActive = (i: SongIllustrationDB) =>
           !("deletedAt" in i && i.deletedAt !== null) &&
           !("isDeleted" in i && i.isDeleted === true);
@@ -140,13 +134,10 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
         const aHasActive = a.illustrations.some(isIllustrationActive);
         const bHasActive = b.illustrations.some(isIllustrationActive);
 
-        // If a has no active illustrations but b does, a comes first
         if (!aHasActive && bHasActive) return -1;
-        // If a has active illustrations but b doesn't, b comes first
         if (aHasActive && !bHasActive) return 1;
       }
 
-      // 2. Standard sorting logic (applied among the prioritized and unprioritized groups)
       const valA = getGroupSortValue(a, sortKey);
       const valB = getGroupSortValue(b, sortKey);
       const direction = sortDirection === "asc" ? 1 : -1;
@@ -173,11 +164,8 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
 
   const toggleGroup = (songId: string) => {
     const newExpanded = new Set(expandedGroups);
-    if (newExpanded.has(songId)) {
-      newExpanded.delete(songId);
-    } else {
-      newExpanded.add(songId);
-    }
+    if (newExpanded.has(songId)) newExpanded.delete(songId);
+    else newExpanded.add(songId);
     setExpandedGroups(newExpanded);
   };
 
@@ -188,141 +176,19 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   };
 
   return (
-    <div className="space-y-4 p-4 w-full">
-      <div className="flex flex-col sm:flex-row items-center justify-between">
-        <div className="text-center sm:text-left">
-          <h3 className="text-lg font-medium">Song Illustrations</h3>
-          <p className="text-sm text-muted-foreground">
-            {filteredAndSortedGroups.length} songs •{" "}
+    <div className="space-y-6 w-full pb-8">
+      <div className="flex flex-col sm:flex-row items-end justify-between border-b pb-4 ">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight">Illustrations</h2>
+          <p className="text-muted-foreground mt-1">
+            Managing {filteredAndSortedGroups.length} songs and{" "}
             {filteredAndSortedGroups
               .map((g) => g[1].illustrations.length)
               .reduce((acc, el) => acc + el, 0)}{" "}
-            illustrations
+            generated assets.
           </p>
         </div>
-      </div>
-
-      <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm}>
-        <div className="flex flex-wrap items-center gap-4">
-          <Select value={imageModelFilter} onValueChange={setImageModelFilter}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by image model" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Image Models</SelectItem>
-              {filterOptions.imageModels.map((model) => (
-                <SelectItem key={model} value={model}>
-                  {model}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select
-            value={summaryModelFilter}
-            onValueChange={setSummaryModelFilter}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by summary model" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Summary Models</SelectItem>
-              {filterOptions.summaryModels.map((model) => (
-                <SelectItem key={model} value={model}>
-                  {model}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select
-            value={promptVersionFilter}
-            onValueChange={setPromptVersionFilter}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by prompt version" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Prompt Versions</SelectItem>
-              {filterOptions.promptVersions.map((version) => (
-                <SelectItem key={version} value={version}>
-                  {version}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Select
-            value={`${sortKey}-${sortDirection}`}
-            onValueChange={handleSortChange}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="lastModified-desc">
-                Last Modified (Newest)
-              </SelectItem>
-              <SelectItem value="lastModified-asc">
-                Last Modified (Oldest)
-              </SelectItem>
-              <SelectItem value="title-asc">Title (A-Z)</SelectItem>
-              <SelectItem value="title-desc">Title (Z-A)</SelectItem>
-              <SelectItem value="illustrationCount-desc">
-                Illustrations (Most)
-              </SelectItem>
-              <SelectItem value="illustrationCount-asc">
-                Illustrations (Fewest)
-              </SelectItem>
-            </SelectContent>
-          </Select>
-
-          <div className="flex items-center space-x-4 ml-auto">
-            {/* New Priority Checkbox */}
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="prioritize-unillustrated"
-                checked={prioritizeUnillustrated}
-                onCheckedChange={(checked) =>
-                  setPrioritizeUnillustrated(checked as boolean)
-                }
-              />
-              <Label
-                htmlFor="prioritize-unillustrated"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 whitespace-nowrap"
-              >
-                Prioritize unillustrated
-              </Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="show-deleted-songs"
-                checked={showDeletedSongs}
-                onCheckedChange={(checked) => setShowDeletedSongs(!!checked)}
-              />
-              <Label
-                htmlFor="show-deleted-songs"
-                className="text-sm font-medium leading-none whitespace-nowrap"
-              >
-                Show deleted songs
-              </Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="show-deleted-illustrations"
-                checked={showDeleted}
-                onCheckedChange={() => setShowDeleted(!showDeleted)}
-              />
-              <Label
-                htmlFor="show-deleted-illustrations"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 whitespace-nowrap"
-              >
-                Show deleted
-              </Label>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-4 sm:mt-0">
           <Button
             variant="outline"
             size="sm"
@@ -332,34 +198,168 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
               )
             }
           >
-            Expand All
+            <Layers className="w-4 h-4 mr-2" /> Expand All
           </Button>
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             onClick={() => setExpandedGroups(new Set())}
           >
             Collapse All
           </Button>
         </div>
-      </TableToolbar>
+      </div>
 
-      <div className="space-y-2">
-        {filteredAndSortedGroups.map(([songId, song]) => (
-          <SongIllustrationsGroup
-            key={songId}
-            song={song.song}
-            illustrations={song.illustrations}
-            prompts={song.prompts}
-            isExpanded={expandedGroups.has(songId)}
-            onToggleExpanded={() => toggleGroup(songId)}
-            showDeleted={showDeleted}
+      {/* Structured Control Panel */}
+      <div className="bg-card rounded-xl shadow-sm overflow-hidden border-3 border-primary">
+        <div className="p-4 border-b bg-muted/20">
+          <TableToolbar
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
           />
-        ))}
+        </div>
 
+        <div className="p-4 grid grid-cols-1 xl:grid-cols-12 gap-6">
+          {/* Toggles Panel */}
+          <div className="xl:col-span-5 space-y-3">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center">
+              <Eye className="w-3 h-3 mr-2" /> View Options
+            </h4>
+            {/* Added flex-wrap and whitespace-nowrap, min-h to match dropdowns */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-3 bg-muted/40 px-4 py-2.5 rounded-lg border border-border/50 min-h-[40px]">
+              <Label className="flex items-center space-x-2 cursor-pointer group">
+                <Checkbox
+                  checked={prioritizeUnillustrated}
+                  onCheckedChange={(c) =>
+                    setPrioritizeUnillustrated(c as boolean)
+                  }
+                />
+                <span className="text-sm font-medium whitespace-nowrap group-hover:text-primary transition-colors">
+                  Unillustrated first
+                </span>
+              </Label>
+              <Label className="flex items-center space-x-2 cursor-pointer group">
+                <Checkbox
+                  checked={showDeletedSongs}
+                  onCheckedChange={(c) => setShowDeletedSongs(!!c)}
+                />
+                <span className="text-sm font-medium whitespace-nowrap group-hover:text-primary transition-colors">
+                  Deleted songs
+                </span>
+              </Label>
+              <Label className="flex items-center space-x-2 cursor-pointer group">
+                <Checkbox
+                  checked={showDeleted}
+                  onCheckedChange={() => setShowDeleted(!showDeleted)}
+                />
+                <span className="text-sm font-medium whitespace-nowrap group-hover:text-primary transition-colors">
+                  Deleted images
+                </span>
+              </Label>
+            </div>
+          </div>
+
+          {/* Filters Panel */}
+          <div className="xl:col-span-7 space-y-3">
+            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center">
+              <Filter className="w-3 h-3 mr-2" /> Filter & Sort
+            </h4>
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
+              <Select
+                value={imageModelFilter}
+                onValueChange={setImageModelFilter}
+              >
+                <SelectTrigger className="bg-background h-10">
+                  <SelectValue placeholder="Image Model" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Images</SelectItem>
+                  {filterOptions.imageModels.map((m) => (
+                    <SelectItem key={m} value={m}>
+                      {m}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={summaryModelFilter}
+                onValueChange={setSummaryModelFilter}
+              >
+                <SelectTrigger className="bg-background h-10">
+                  <SelectValue placeholder="Summary Model" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Summaries</SelectItem>
+                  {filterOptions.summaryModels.map((m) => (
+                    <SelectItem key={m} value={m}>
+                      {m}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={promptVersionFilter}
+                onValueChange={setPromptVersionFilter}
+              >
+                <SelectTrigger className="bg-background h-10">
+                  <SelectValue placeholder="Prompt Ver." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Prompts</SelectItem>
+                  {filterOptions.promptVersions.map((v) => (
+                    <SelectItem key={v} value={v}>
+                      {v}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={`${sortKey}-${sortDirection}`}
+                onValueChange={handleSortChange}
+              >
+                <SelectTrigger className="bg-background h-10 font-medium border-primary/20">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="lastModified-desc">
+                    Newest First
+                  </SelectItem>
+                  <SelectItem value="lastModified-asc">Oldest First</SelectItem>
+                  <SelectItem value="title-asc">Title (A-Z)</SelectItem>
+                  <SelectItem value="title-desc">Title (Z-A)</SelectItem>
+                  <SelectItem value="illustrationCount-desc">
+                    Most Images
+                  </SelectItem>
+                  <SelectItem value="illustrationCount-asc">
+                    Fewest Images
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {filteredAndSortedGroups.map(([songId, song]) => (
+          <div key={songId} className="transition-all duration-200">
+            <SongIllustrationsGroup
+              song={song.song}
+              illustrations={song.illustrations}
+              prompts={song.prompts}
+              isExpanded={expandedGroups.has(songId)}
+              onToggleExpanded={() => toggleGroup(songId)}
+              showDeleted={showDeleted}
+            />
+          </div>
+        ))}
         {filteredAndSortedGroups.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground">
-            No illustrations found matching your search.
+          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground border-2 border-dashed rounded-xl bg-muted/10">
+            <Filter className="w-8 h-8 mb-4 opacity-50" />
+            <p className="text-lg font-medium">No illustrations found</p>
+            <p className="text-sm">
+              Try adjusting your filters or search term.
+            </p>
           </div>
         )}
       </div>

@@ -1,5 +1,4 @@
 import type React from "react";
-
 import { useState, useEffect, useMemo } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -18,14 +17,25 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "~/components/ui/dialog";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
-import { Edit, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import {
+  Edit,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  Users as UsersIcon,
+} from "lucide-react";
 import { TableToolbar } from "./shared/table-toolbar";
 import { Pagination } from "./shared/pagination";
 import { toast } from "sonner";
-import { useUsersAdmin, useUpdateUser, useDeleteUser } from "../../../services/adminHooks";
+import {
+  useUsersAdmin,
+  useUpdateUser,
+  useDeleteUser,
+} from "../../../services/adminHooks";
 import { AdminApi } from "~/services/song-service";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import { UserDB } from "src/lib/db/schema";
@@ -33,13 +43,8 @@ import { UserDB } from "src/lib/db/schema";
 interface UsersTableProps {
   adminApi: AdminApi;
 }
-
 const PAGE_SIZE = 20;
-
-type SortConfig = {
-  key: keyof UserDB;
-  direction: "ascending" | "descending";
-};
+type SortConfig = { key: keyof UserDB; direction: "ascending" | "descending" };
 
 export function UsersTable({ adminApi }: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -61,29 +66,21 @@ export function UsersTable({ adminApi }: UsersTableProps) {
   const updateUserMutation = useUpdateUser(adminApi);
   const deleteUserMutation = useDeleteUser(adminApi);
 
-  // Reset page when search changes
   useEffect(() => {
     setCurrentPage(0);
   }, [searchTerm]);
 
   const users = usersData?.users || [];
-
   const sortedUsers = useMemo(() => {
     const sortableUsers = [...users];
     if (sortConfig !== null) {
       sortableUsers.sort((a, b) => {
-        const aValue = a[sortConfig.key];
-        const bValue = b[sortConfig.key];
-
-        if (aValue === null || aValue === undefined) return 1;
-        if (bValue === null || bValue === undefined) return -1;
-
-        if (aValue < bValue) {
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return sortConfig.direction === "ascending" ? 1 : -1;
-        }
+        const aVal = a[sortConfig.key];
+        const bVal = b[sortConfig.key];
+        if (aVal === null || aVal === undefined) return 1;
+        if (bVal === null || bVal === undefined) return -1;
+        if (aVal < bVal) return sortConfig.direction === "ascending" ? -1 : 1;
+        if (aVal > bVal) return sortConfig.direction === "ascending" ? 1 : -1;
         return 0;
       });
     }
@@ -91,195 +88,234 @@ export function UsersTable({ adminApi }: UsersTableProps) {
   }, [users, sortConfig]);
 
   const requestSort = (key: keyof UserDB) => {
-    let direction: "ascending" | "descending" = "ascending";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "ascending"
-    ) {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-  };
-
-  const getSortIndicator = (key: keyof UserDB) => {
-    if (!sortConfig || sortConfig.key !== key) {
-      return <ArrowUpDown className="ml-2 h-4 w-4 opacity-30" />;
-    }
-    return sortConfig.direction === "ascending" ? (
-      <ArrowUp className="ml-2 h-4 w-4" />
-    ) : (
-      <ArrowDown className="ml-2 h-4 w-4" />
-    );
-  };
-
-  const handleSaveUser = (userData: Partial<UserDB>) => {
-    if (editingUser) {
-      updateUserMutation.mutate(
-        { userId: editingUser.id, userData },
-        {
-          onSuccess: () => {
-            toast.success("User updated successfully");
-            setIsDialogOpen(false);
-            setEditingUser(null);
-          },
-          onError: (error: Error) => {
-            toast.error(error.message || "Failed to update user");
-          },
-        },
-      );
-    }
-  };
-
-  const handleDeleteUser = (userId: string, userName: string) => {
-    deleteUserMutation.mutate(userId, {
-      onSuccess: () => {
-        toast.success(`User "${userName}" deleted successfully`);
-      },
-      onError: (error: Error) => {
-        toast.error(error.message || "Failed to delete user");
-      },
+    setSortConfig({
+      key,
+      direction:
+        sortConfig?.key === key && sortConfig.direction === "ascending"
+          ? "descending"
+          : "ascending",
     });
   };
 
-  const totalPages = Math.ceil((usersData?.pagination.total || 0) / PAGE_SIZE);
-  const hasNextPage = usersData?.pagination.hasMore || false;
-  const hasPrevPage = currentPage > 0;
-
-  if (error) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-medium">Users</h3>
-        </div>
-        <div className="text-center text-red-500 py-8">
-          Failed to load users:{" "}
-          {error instanceof Error ? error.message : "Unknown error"}
-        </div>
-      </div>
-    );
-  }
-
   const renderHeader = (label: string, key: keyof UserDB) => (
-    <TableHead onClick={() => requestSort(key)} className="cursor-pointer">
+    <TableHead
+      onClick={() => requestSort(key)}
+      className="cursor-pointer whitespace-nowrap hover:bg-muted/50 transition-colors"
+    >
       <div className="flex items-center">
         {label}
-        {getSortIndicator(key)}
+        {!sortConfig || sortConfig.key !== key ? (
+          <ArrowUpDown className="ml-2 h-4 w-4 opacity-30" />
+        ) : sortConfig.direction === "ascending" ? (
+          <ArrowUp className="ml-2 h-4 w-4" />
+        ) : (
+          <ArrowDown className="ml-2 h-4 w-4" />
+        )}
       </div>
     </TableHead>
   );
 
-  return (
-    <div className="space-y-4">
-      <TableToolbar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+  const totalPages = Math.ceil((usersData?.pagination.total || 0) / PAGE_SIZE);
 
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {renderHeader("Name", "name")}
-              {renderHeader("Email", "email")}
-              {renderHeader("Nickname", "nickname")}
-              <TableHead>Status</TableHead>
-              <TableHead>Roles</TableHead>
-              {renderHeader("Created", "createdAt")}
-              {renderHeader("Last login", "lastLogin")}
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isLoading ? (
+  if (error) {
+    return (
+      <div className="space-y-4 p-8 text-center border-2 border-dashed border-red-200 bg-red-50 rounded-xl">
+        <h3 className="text-lg font-bold text-red-600">Failed to load users</h3>
+        <p className="text-red-500">
+          {error instanceof Error ? error.message : "Unknown error"}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 w-full pb-8">
+      <div className="flex flex-col sm:flex-row items-end justify-between border-b pb-4">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight flex items-center">
+            <UsersIcon className="w-8 h-8 mr-3 text-primary" /> User Directory
+          </h2>
+          <p className="text-muted-foreground mt-1">
+            Manage {usersData?.pagination.total || 0} registered accounts and
+            permissions.
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-card border rounded-xl shadow-sm overflow-hidden">
+        <div className="p-4 bg-muted/20">
+          <TableToolbar
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+          />
+        </div>
+
+        <div className="overflow-x-auto border-t">
+          <Table className="min-w-[900px]">
+            <TableHeader className="bg-muted/30">
               <TableRow>
-                <TableCell colSpan={8} className="text-center py-8">
-                  Loading users...
-                </TableCell>
+                {renderHeader("Name", "name")}
+                {renderHeader("Email", "email")}
+                <TableHead className="whitespace-nowrap">
+                  Access / Roles
+                </TableHead>
+                {renderHeader("Created", "createdAt")}
+                {renderHeader("Last login", "lastLogin")}
+                <TableHead className="whitespace-nowrap text-right pr-6">
+                  Actions
+                </TableHead>
               </TableRow>
-            ) : sortedUsers.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={8} className="text-center py-8">
-                  No users found
-                </TableCell>
-              </TableRow>
-            ) : (
-              sortedUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.nickname || "-"}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={user.emailVerified ? "default" : "secondary"}
-                    >
-                      {user.emailVerified ? "Verified" : "Unverified"}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-1">
-                      {user.isAdmin && (
-                        <Badge variant="destructive">Admin</Badge>
-                      )}
-                      {user.isTrusted && (
-                        <Badge variant="default">Trusted</Badge>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(user.lastLogin).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    <ActionButtons>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          setEditingUser(user);
-                          setIsDialogOpen(true);
-                        }}
-                      >
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <DeletePrompt
-                        onDelete={() => handleDeleteUser(user.id, user.name)}
-                        title={`Are you sure you want to delete user "${user.name}"?`}
-                        description="This action cannot be undone. All user data will be permanently deleted."
-                        variant="ghost"
-                        size="sm"
-                      />
-                    </ActionButtons>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-12 text-muted-foreground"
+                  >
+                    Loading user directory...
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+              ) : sortedUsers.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center py-12 text-muted-foreground"
+                  >
+                    No users match your criteria.
+                  </TableCell>
+                </TableRow>
+              ) : (
+                sortedUsers.map((user) => (
+                  <TableRow
+                    key={user.id}
+                    className="hover:bg-accent/30 transition-colors group"
+                  >
+                    <TableCell className="font-semibold whitespace-nowrap">
+                      <div className="flex flex-col">
+                        <span>{user.name}</span>
+                        {user.nickname && (
+                          <span className="text-xs text-muted-foreground font-normal">
+                            @{user.nickname}
+                          </span>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {user.email}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap gap-1.5">
+                        <Badge
+                          variant={user.emailVerified ? "outline" : "secondary"}
+                          className={
+                            user.emailVerified
+                              ? "border-green-200 text-green-700 bg-green-50"
+                              : ""
+                          }
+                        >
+                          {user.emailVerified ? "Verified" : "Unverified"}
+                        </Badge>
+                        {user.isAdmin && (
+                          <Badge
+                            variant="default"
+                            className="bg-primary shadow-sm"
+                          >
+                            Admin
+                          </Badge>
+                        )}
+                        {user.isTrusted && (
+                          <Badge
+                            variant="secondary"
+                            className="bg-blue-50 text-blue-700 border-blue-200 border"
+                          >
+                            Trusted
+                          </Badge>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-muted-foreground whitespace-nowrap">
+                      {new Date(user.createdAt).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground whitespace-nowrap">
+                      {new Date(user.lastLogin).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell className="pr-4">
+                      <div className="flex justify-end opacity-60 group-hover:opacity-100 transition-opacity">
+                        <ActionButtons>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => {
+                              setEditingUser(user);
+                              setIsDialogOpen(true);
+                            }}
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <DeletePrompt
+                            onDelete={() =>
+                              deleteUserMutation.mutate(user.id, {
+                                onSuccess: () => toast.success(`User deleted`),
+                              })
+                            }
+                            title={`Delete ${user.name}?`}
+                            description="This is permanent."
+                            variant="ghost"
+                            size="icon"
+                          />
+                        </ActionButtons>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
       {totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          hasNextPage={hasNextPage}
-          hasPrevPage={hasPrevPage}
+          hasNextPage={usersData?.pagination.hasMore || false}
+          hasPrevPage={currentPage > 0}
           onPageChange={setCurrentPage}
           totalItems={usersData?.pagination.total || 0}
           pageSize={PAGE_SIZE}
         />
       )}
 
-      {/* Edit user dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit User</DialogTitle>
-          </DialogHeader>
-          <UserForm
-            user={editingUser}
-            onSave={handleSaveUser}
-            isLoading={updateUserMutation.isPending}
-          />
+        <DialogContent className="sm:max-w-[550px] p-0 overflow-hidden">
+          <div className="p-6 bg-muted/30 border-b">
+            <DialogTitle className="text-2xl font-bold">
+              Edit Account
+            </DialogTitle>
+            <DialogDescription>
+              Modify permissions and basic details for {editingUser?.name}.
+            </DialogDescription>
+          </div>
+          <div className="p-6">
+            <UserForm
+              user={editingUser}
+              isLoading={updateUserMutation.isPending}
+              onSave={(data) => {
+                if (editingUser)
+                  updateUserMutation.mutate(
+                    { userId: editingUser.id, userData: data },
+                    {
+                      onSuccess: () => {
+                        toast.success("Updated");
+                        setIsDialogOpen(false);
+                        setEditingUser(null);
+                      },
+                    },
+                  );
+              }}
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </div>
@@ -305,9 +341,8 @@ function UserForm({
     isFavoritesPublic: user?.isFavoritesPublic || false,
   });
 
-  // Update form data when user prop changes
   useEffect(() => {
-    if (user) {
+    if (user)
       setFormData({
         name: user.name,
         email: user.email,
@@ -317,29 +352,40 @@ function UserForm({
         isAdmin: user.isAdmin,
         isFavoritesPublic: user.isFavoritesPublic,
       });
-    }
   }, [user]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSave(formData);
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="name">Name</Label>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSave(formData);
+      }}
+      className="space-y-6"
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="space-y-2.5">
+          <Label
+            htmlFor="name"
+            className="text-muted-foreground text-xs uppercase tracking-wider font-semibold"
+          >
+            Full Name
+          </Label>
           <Input
             id="name"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
             disabled={isLoading}
+            className="bg-muted/20"
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
+        <div className="space-y-2.5">
+          <Label
+            htmlFor="email"
+            className="text-muted-foreground text-xs uppercase tracking-wider font-semibold"
+          >
+            Email Address
+          </Label>
           <Input
             id="email"
             type="email"
@@ -349,75 +395,84 @@ function UserForm({
             }
             required
             disabled={isLoading}
+            className="bg-muted/20"
+          />
+        </div>
+        <div className="space-y-2.5 sm:col-span-2">
+          <Label
+            htmlFor="nickname"
+            className="text-muted-foreground text-xs uppercase tracking-wider font-semibold"
+          >
+            Nickname (Optional)
+          </Label>
+          <Input
+            id="nickname"
+            value={formData.nickname}
+            onChange={(e) =>
+              setFormData({ ...formData, nickname: e.target.value })
+            }
+            disabled={isLoading}
+            className="bg-muted/20"
           />
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="nickname">Nickname</Label>
-        <Input
-          id="nickname"
-          value={formData.nickname}
-          onChange={(e) =>
-            setFormData({ ...formData, nickname: e.target.value })
-          }
+      <div className="pt-4 border-t">
+        <Label className="text-muted-foreground text-xs uppercase tracking-wider font-semibold mb-4 block">
+          Permissions & Settings
+        </Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-muted/10 p-4 rounded-xl border">
+          <Label className="flex items-center justify-between space-x-2 cursor-pointer p-2 hover:bg-muted/30 rounded-lg transition-colors">
+            <span className="font-medium">Email Verified</span>
+            <Switch
+              checked={formData.emailVerified}
+              onCheckedChange={(c) =>
+                setFormData({ ...formData, emailVerified: c })
+              }
+              disabled={isLoading}
+            />
+          </Label>
+          <Label className="flex items-center justify-between space-x-2 cursor-pointer p-2 hover:bg-muted/30 rounded-lg transition-colors">
+            <span className="font-medium text-blue-600">Trusted User</span>
+            <Switch
+              checked={formData.isTrusted}
+              onCheckedChange={(c) =>
+                setFormData({ ...formData, isTrusted: c })
+              }
+              disabled={isLoading}
+            />
+          </Label>
+          <Label className="flex items-center justify-between space-x-2 cursor-pointer p-2 hover:bg-muted/30 rounded-lg transition-colors">
+            <span className="font-medium text-primary">System Admin</span>
+            <Switch
+              checked={formData.isAdmin}
+              onCheckedChange={(c) => setFormData({ ...formData, isAdmin: c })}
+              disabled={isLoading}
+            />
+          </Label>
+          <Label className="flex items-center justify-between space-x-2 cursor-pointer p-2 hover:bg-muted/30 rounded-lg transition-colors">
+            <span className="font-medium">Public Favorites</span>
+            <Switch
+              checked={formData.isFavoritesPublic}
+              onCheckedChange={(c) =>
+                setFormData({ ...formData, isFavoritesPublic: c })
+              }
+              disabled={isLoading}
+            />
+          </Label>
+        </div>
+      </div>
+
+      <div className="pt-2 flex justify-end">
+        <Button
+          type="submit"
           disabled={isLoading}
-        />
+          size="lg"
+          className="w-full sm:w-auto shadow-sm"
+        >
+          {isLoading ? "Saving Changes..." : "Save Account Settings"}
+        </Button>
       </div>
-
-      <div className="space-y-4">
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="emailVerified"
-            checked={formData.emailVerified}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, emailVerified: checked })
-            }
-            disabled={isLoading}
-          />
-          <Label htmlFor="emailVerified">Email Verified</Label>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="isTrusted"
-            checked={formData.isTrusted}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, isTrusted: checked })
-            }
-            disabled={isLoading}
-          />
-          <Label htmlFor="isTrusted">Trusted User</Label>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="isAdmin"
-            checked={formData.isAdmin}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, isAdmin: checked })
-            }
-            disabled={isLoading}
-          />
-          <Label htmlFor="isAdmin">Admin</Label>
-        </div>
-
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="isFavoritesPublic"
-            checked={formData.isFavoritesPublic}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, isFavoritesPublic: checked })
-            }
-            disabled={isLoading}
-          />
-          <Label htmlFor="isFavoritesPublic">Public Favorites</Label>
-        </div>
-      </div>
-
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Updating..." : "Update User"}
-      </Button>
     </form>
   );
 }
