@@ -1,24 +1,5 @@
 songId: Imagine_Dragons-Radioactive
 prompts:
-  - id: Imagine_Dragons-Radioactive_gpt-4o-mini_v1
-    songId: Imagine_Dragons-Radioactive
-    summaryPromptVersion: v1
-    summaryModel: gpt-4o-mini
-    text: >-
-      Create an illustration depicting a post-apocalyptic landscape with a
-      person standing amidst ash and dust. They are sweating and surrounded by a
-      mix of vibrant colors representing revolution, with flags raised and
-      clothes dyed red. In the background, a prison bus looms, symbolizing
-      freedom and change, under a dramatic sky that hints at a new age. The
-      atmosphere should feel intense and energetic, capturing the essence of
-      transformation and resilience.
-    createdAt: 2025-08-05T09:45:45.000Z
-    updatedAt: 2026-02-08T17:34:08.000Z
-    deleted: false
-    illustrations:
-      - createdAt: 1754387142000
-        imageModel: FLUX.1-dev
-        filename: FLUX.1-dev.webp
   - id: Imagine_Dragons-Radioactive_gpt-5-mini_v2
     songId: Imagine_Dragons-Radioactive
     summaryPromptVersion: v2

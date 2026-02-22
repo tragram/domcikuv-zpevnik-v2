@@ -2,14 +2,13 @@
 {artist: Kouzla králů}
 {key: C}
 {capo: 3}
-{tempo: }
 {range: g1-g2}
 {language: czech}
 {startMelody: c c}
 {createdAt: 1744581600000}
-{updatedAt: 1770572143000}
-{illustrationId: Kouzla_kralu-Buchet_je_spousta_gpt-4o-mini_v2_FLUX.1-dev}
-{promptId: Kouzla_kralu-Buchet_je_spousta_gpt-4o-mini_v2}
+{updatedAt: 1771714962000}
+{illustrationId: Kouzla_kralu-Buchet_je_spousta_gpt-5-mini_v3_nano-banana-pro}
+{promptId: Kouzla_kralu-Buchet_je_spousta_gpt-5-mini_v3}
 
 {start_of_verse}
 [C]Z pekárny světa kraj za [F]láskou [G]svou,

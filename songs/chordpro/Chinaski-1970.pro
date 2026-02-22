@@ -2,14 +2,13 @@
 {artist: Chinaski}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: d1-d2}
 {language: czech}
 {startMelody: f#}
 {createdAt: 1434232800000}
-{updatedAt: 1770571982000}
-{illustrationId: Chinaski-1970_gpt-4o-mini_v1_FLUX.1-dev}
-{promptId: Chinaski-1970_gpt-4o-mini_v1}
+{updatedAt: 1771714974000}
+{illustrationId: Chinaski-1970_gpt-5-mini_v2_nano-banana-pro}
+{promptId: Chinaski-1970_gpt-5-mini_v2}
 
 {start_of_verse}
 [D]Nevím jestli je to [Emi]znát,

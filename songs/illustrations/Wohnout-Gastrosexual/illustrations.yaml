@@ -1,22 +1,2 @@
 songId: Wohnout-Gastrosexual
-prompts:
-  - id: Wohnout-Gastrosexual_v2_gpt-4o-mini_1770573024737
-    songId: Wohnout-Gastrosexual
-    summaryPromptVersion: v2
-    summaryModel: gpt-4o-mini
-    text: >-
-      Create an illustration of a whimsical doctor's office where a quirky
-      patient is animatedly sharing his eccentric culinary ideas with a
-      surprised doctor. The scene should feature a colorful, chaotic mix of
-      food-themed elements, like a coat made of green sauce and a table set with
-      unusual dishes like marzipan trousers and a goulash-inspired outfit. The
-      doctor, with a bemused expression, sits across from the patient, who is
-      gesturing excitedly, surrounded by playful food items that reflect the
-      absurdity of the conversation.
-    createdAt: 2026-02-08T17:50:24.000Z
-    updatedAt: 2026-02-08T17:50:24.000Z
-    deleted: false
-    illustrations:
-      - createdAt: 1770578150000
-        imageModel: gpt-image-1-mini
-        filename: gpt-image-1-mini.webp
+prompts: []

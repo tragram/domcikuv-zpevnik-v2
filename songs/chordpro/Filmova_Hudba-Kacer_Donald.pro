@@ -2,12 +2,11 @@
 {artist: Filmová Hudba}
 {key: A}
 {capo: 0}
-{tempo: }
 {range: a1-f#2}
 {language: czech}
 {startMelody: a c# e}
 {createdAt: 1759669836000}
-{updatedAt: 1771688093000}
+{updatedAt: 1771715272000}
 {illustrationId: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2_nano-banana-pro}
 {promptId: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2}
 

@@ -2,12 +2,9 @@
 {artist: Ježek + Voskovec + Werich}
 {key: G}
 {capo: 0}
-{tempo: }
-{range: }
 {language: czech}
-{startMelody: }
 {createdAt: 1767887277000}
-{updatedAt: 1770579023000}
+{updatedAt: 1771715252000}
 {illustrationId: Jezek_Voskovec_Werich-Zivot_je_jen_nahoda_manual-1770579022700_nano-banana-pro}
 {promptId: Jezek_Voskovec_Werich-Zivot_je_jen_nahoda_manual-1770579022700}
 
