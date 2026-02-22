@@ -1,7 +1,5 @@
-import { z } from "zod/v4";
-import { drizzle } from "drizzle-orm/d1";
+import { z } from "zod";
 import { songVersion, user } from "../../lib/db/schema";
-
 import { eq } from "drizzle-orm";
 import { buildApp } from "./utils";
 import { zValidator } from "@hono/zod-validator";
@@ -11,7 +9,7 @@ import {
   findSong,
   getSongVersionsByUser,
 } from "../helpers/song-helpers";
-import { errorJSend, failJSend, successJSend } from "./responses";
+import { failJSend, successJSend } from "./responses";
 import OpenAI from "openai";
 import { trustedUserMiddleware } from "./utils";
 
@@ -57,10 +55,10 @@ const editorApp = buildApp()
     zValidator("json", autofillChordproSchema),
     async (c) => {
       const { chordpro } = c.req.valid("json");
-
       const apiKey = c.env.OPENAI_API_KEY;
+
       if (!apiKey) {
-        return errorJSend(
+        return failJSend(
           c,
           "Server configuration error",
           500,
@@ -68,22 +66,14 @@ const editorApp = buildApp()
         );
       }
 
-      try {
-        const client = new OpenAI({ apiKey });
+      const client = new OpenAI({ apiKey });
 
-        const response = await client.responses.create({
-          model: "gpt-5.2",
-          text: {
-            format: {
-              type: "text",
-            },
-            verbosity: "low",
-          },
-          reasoning: {
-            effort: "none",
-            summary: null,
-          },
-          instructions: `You are given a song in ChordPro format.
+      const response = await client.responses.create({
+        model: "gpt-5.2",
+        text: { format: { type: "text" }, verbosity: "low" },
+        reasoning: { effort: "none", summary: null },
+        // ... Original long instructions omitted for brevity, keep the exact same string you had ...
+        instructions: `You are given a song in ChordPro format.
 
 Your task is to complete missing chord annotations while preserving exact structure and formatting.
 
@@ -166,168 +156,130 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
 {chorus}
 \`\`\`
         `,
-          input: chordpro,
-        });
+        input: chordpro,
+      });
 
-        const filledChordpro = response.output_text;
+      const filledChordpro = response.output_text;
 
-        if (!filledChordpro) {
-          return errorJSend(
-            c,
-            "AI returned empty response",
-            500,
-            "AI_EMPTY_RESPONSE",
-          );
-        }
-
-        return successJSend(c, { chordpro: filledChordpro });
-      } catch (error) {
-        console.error(error);
-        return errorJSend(
+      if (!filledChordpro) {
+        return failJSend(
           c,
-          "Internal server error during autofill",
+          "AI returned empty response",
           500,
-          "AUTOFILL_ERROR",
+          "AI_EMPTY_RESPONSE",
         );
       }
+
+      return successJSend(c, { chordpro: filledChordpro });
     },
   )
   .post("/", zValidator("json", editorSubmitSchema), async (c) => {
     const submission = c.req.valid("json");
-    const userId = c.get("USER")?.id;
-    if (!userId) {
-      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
-    }
-    try {
-      const db = drizzle(c.env.DB);
-      const userProfile = await db
-        .select()
-        .from(user)
-        .where(eq(user.id, userId))
-        .limit(1);
+    const userId = c.var.USER?.id;
 
-      const isTrusted =
-        userProfile && userProfile.length > 0 && userProfile[0].isTrusted;
-      const result = await createSong(db, submission, userId, isTrusted);
-      return successJSend(c, {
-        song: result.newSong,
-        version: result.newVersion,
-      });
-    } catch (error) {
-      console.error(error);
-      if (error instanceof Error) {
-        return errorJSend(c, error.message, 400, "SONG_CREATION_FAILED");
-      }
-      return errorJSend(c, "Failed to add song", 500, "ADD_SONG_ERROR");
+    if (!userId) {
+      return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
     }
+
+    const db = c.var.db;
+    const userProfile = await db
+      .select({ isTrusted: user.isTrusted })
+      .from(user)
+      .where(eq(user.id, userId))
+      .get();
+
+    const isTrusted = !!userProfile?.isTrusted;
+    const result = await createSong(db, submission, userId, isTrusted);
+
+    return successJSend(c, {
+      song: result.newSong,
+      version: result.newVersion,
+    });
   })
   .put("/:id", zValidator("json", editorSubmitSchema), async (c) => {
     const submission = c.req.valid("json");
-    const userId = c.get("USER")?.id;
+    const userId = c.var.USER?.id;
     const songId = c.req.param("id");
 
     if (!userId) {
-      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
+      return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
     }
-    try {
-      const db = drizzle(c.env.DB);
-      const userProfile = await db
-        .select()
-        .from(user)
-        .where(eq(user.id, userId))
-        .limit(1);
 
-      const isTrusted =
-        userProfile && userProfile.length > 0 && userProfile[0].isTrusted;
+    const db = c.var.db;
+    const userProfile = await db
+      .select({ isTrusted: user.isTrusted })
+      .from(user)
+      .where(eq(user.id, userId))
+      .get();
 
-      // Ensure song exists
-      const existingSong = await findSong(db, songId, false);
+    const isTrusted = !!userProfile?.isTrusted;
 
-      const versionResult = await createSongVersion(
-        db,
-        submission,
-        songId,
-        userId,
-        isTrusted,
-      );
+    // findSong will throw an error if the song is not found.
+    // The global handler catches it and returns a clean 500 or mapped 404 depending on your helper logic.
+    const existingSong = await findSong(db, songId, false);
 
-      // Response includes status so UI can show "Changes saved (Pending Approval)"
-      return successJSend(c, {
-        song: existingSong,
-        version: versionResult,
-        status: versionResult.status,
-      });
-    } catch (error) {
-      console.error(error);
-      if (error instanceof Error) {
-        return failJSend(c, error.message, 400, "VERSION_EXISTS");
-      }
-      return errorJSend(c, "Failed to add song version", 500, "UPDATE_ERROR");
-    }
+    const versionResult = await createSongVersion(
+      db,
+      submission,
+      songId,
+      userId,
+      isTrusted,
+    );
+
+    // Response includes status so UI can show "Changes saved (Pending Approval)"
+    return successJSend(c, {
+      song: existingSong,
+      version: versionResult,
+      status: versionResult.status,
+    });
   })
   .get("/submissions", async (c) => {
-    const userId = c.get("USER")?.id;
+    const userId = c.var.USER?.id;
     if (!userId) {
-      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
+      return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
     }
-    try {
-      const db = drizzle(c.env.DB);
-      const versions = await getSongVersionsByUser(db, userId);
-      return successJSend(c, versions);
-    } catch (error) {
-      console.error(error);
-      return errorJSend(
-        c,
-        "Failed to retrieve your submissions",
-        500,
-        "GET_EDITS_ERROR",
-      );
-    }
+
+    const versions = await getSongVersionsByUser(c.var.db, userId);
+    return successJSend(c, versions);
   })
   .delete("/versions/:id", async (c) => {
-    const userId = c.get("USER")?.id;
+    const userId = c.var.USER?.id;
     const versionId = c.req.param("id");
 
     if (!userId) {
-      return errorJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
+      return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
     }
-    try {
-      const db = drizzle(c.env.DB);
-      const version = await db
-        .select()
-        .from(songVersion)
-        .where(eq(songVersion.id, versionId))
-        .limit(1);
 
-      if (version.length === 0) {
-        return failJSend(c, "Version not found", 404, "VERSION_NOT_FOUND");
-      }
-      if (version[0].userId !== userId || version[0].status !== "pending") {
-        return failJSend(
-          c,
-          "Users can only delete their own pending song versions",
-          403,
-          "INSUFFICIENT_PRIVILEGES",
-        );
-      }
-      const updatedVersion = await db
-        .update(songVersion)
-        .set({
-          updatedAt: new Date(),
-          status: "deleted",
-        })
-        .where(eq(songVersion.id, versionId))
-        .returning();
-      return successJSend(c, { message: "Version deleted successfully" });
-    } catch (error) {
-      console.error(error);
-      return errorJSend(
+    const db = c.var.db;
+    const version = await db
+      .select()
+      .from(songVersion)
+      .where(eq(songVersion.id, versionId))
+      .get();
+
+    if (!version) {
+      return failJSend(c, "Version not found", 404, "VERSION_NOT_FOUND");
+    }
+
+    if (version.userId !== userId || version.status !== "pending") {
+      return failJSend(
         c,
-        "Failed to delete version",
-        500,
-        "DELETE_VERSION_ERROR",
+        "Users can only delete their own pending song versions",
+        403,
+        "INSUFFICIENT_PRIVILEGES",
       );
     }
+
+    await db
+      .update(songVersion)
+      .set({
+        updatedAt: new Date(),
+        status: "deleted",
+      })
+      .where(eq(songVersion.id, versionId))
+      .returning();
+
+    return successJSend(c, { message: "Version deleted successfully" });
   });
 
 export default editorApp;

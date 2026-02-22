@@ -1,6 +1,5 @@
 import { zValidator } from "@hono/zod-validator";
-import { drizzle } from "drizzle-orm/d1";
-import { z } from "zod/v4";
+import { z } from "zod";
 import { buildApp } from "./utils";
 import {
   getFavorites,
@@ -15,58 +14,40 @@ const SongSchema = z.object({
 
 const favoritesApp = buildApp()
   .get("/", async (c) => {
-    try {
-      const userData = c.get("USER");
-      if (!userData) {
-        return successJSend(c, []);
-      }
+    const userData = c.var.USER;
+    if (!userData) return successJSend(c, []);
 
-      const db = drizzle(c.env.DB);
-      const songIds = await getFavorites(db, userData.id);
-      return successJSend(c, songIds);
-    } catch (error) {
-      console.error(error);
-      return errorJSend(c, "Failed to fetch favorite songs", 500);
-    }
+    const songIds = await getFavorites(c.var.db, userData.id);
+    return successJSend(c, songIds);
   })
   .post("/", zValidator("json", SongSchema), async (c) => {
-    try {
-      const userData = c.get("USER");
-      if (!userData) {
-        return notLoggedInFail(c);
-      }
+    const userData = c.var.USER;
+    if (!userData) return notLoggedInFail(c);
 
-      const { songId } = c.req.valid("json");
-      const db = drizzle(c.env.DB);
-      await addFavorite(db, userData.id, songId);
+    const { songId } = c.req.valid("json");
+
+    try {
+      await addFavorite(c.var.db, userData.id, songId);
       return successJSend(c, null);
     } catch (error) {
-      console.log(error);
-      if (error instanceof Error) {
+      // Keep this specific try/catch to handle the 409 constraint error
+      if (
+        error instanceof Error &&
+        error.message.includes("already in favorites")
+      ) {
         return errorJSend(c, error.message, 409);
       }
-      return errorJSend(c, "Failed to add favorite song", 500);
+      throw error; // Let the global handler deal with 500s
     }
   })
   .delete("/", zValidator("json", SongSchema), async (c) => {
-    try {
-      const userData = c.get("USER");
-      if (!userData) {
-        return notLoggedInFail(c);
-      }
+    const userData = c.var.USER;
+    if (!userData) return notLoggedInFail(c);
 
-      const { songId } = c.req.valid("json");
-      const db = drizzle(c.env.DB);
+    const { songId } = c.req.valid("json");
+    await removeFavorite(c.var.db, userData.id, songId);
 
-      await removeFavorite(db, userData.id, songId);
-
-      return successJSend(c, null);
-    } catch (error) {
-      if (error instanceof Error) {
-        return errorJSend(c, error.message, 500);
-      }
-      return errorJSend(c, "Failed to remove favorite song", 500);
-    }
+    return successJSend(c, null);
   });
 
 export default favoritesApp;

@@ -1,8 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { eq, not } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/d1";
 import { illustrationPrompt, songIllustration } from "src/lib/db/schema";
-import { z } from "zod/v4";
+import { z } from "zod";
 import {
   SongDataApi,
   getSongbooks,
@@ -12,6 +11,7 @@ import {
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 import { externalRoutes } from "./external";
+
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
   lastUpdateAt: z.string().transform((str) => new Date(str)),
@@ -48,192 +48,113 @@ export type BasicSongIllustrationResponseData = BasicSongIllustrationDB[];
 export const songDBRoutes = buildApp()
   .route("/external", externalRoutes)
   .get("/", async (c) => {
-    const db = drizzle(c.env.DB);
+    const songs = await retrieveSongs(c.var.db);
+    const songDBVersion = (await c.env.KV.get("songDB-version")) ?? "v0";
 
-    try {
-      const songs = await retrieveSongs(db);
-      const songDBVersion = (await c.env.KV.get("songDB-version")) ?? "v0";
-      return successJSend(c, {
-        songs,
-        songDBVersion,
-        lastUpdateAt: new Date().toISOString(),
-        isIncremental: false,
-      } as SongDBResponseData);
-    } catch (error) {
-      console.error("Database error:", error);
-      return errorJSend(c, "Failed to fetch songs", 500);
-    }
+    return successJSend(c, {
+      songs,
+      songDBVersion,
+      lastUpdateAt: new Date().toISOString(),
+      isIncremental: false,
+    } as SongDBResponseData);
   })
   .get(
     "/incremental",
     zValidator("query", incrementalUpdateSchema),
     async (c) => {
       const { lastUpdateAt, songDBVersion } = c.req.valid("query");
-      const db = drizzle(c.env.DB);
+      const currentDBVersion = (await c.env.KV.get("songDB-version")) ?? "0";
+      const isIncremental = songDBVersion === currentDBVersion;
 
-      try {
-        const currentDBVersion = (await c.env.KV.get("songDB-version")) ?? "0";
-        const isIncremental = songDBVersion === currentDBVersion;
+      const songs = await retrieveSongs(
+        c.var.db,
+        c.var.USER?.id,
+        isIncremental ? lastUpdateAt : undefined,
+        isIncremental,
+        isIncremental,
+      );
 
-        const songs = await retrieveSongs(
-          db,
-          c.get("USER")?.id,
-          isIncremental ? lastUpdateAt : undefined,
-          isIncremental,
-          isIncremental,
-        );
-
-        return successJSend(c, {
-          songs,
-          songDBVersion: currentDBVersion,
-          lastUpdateAt: new Date().toISOString(),
-          isIncremental,
-        } as SongDBResponseData);
-      } catch (error) {
-        console.error("Database error:", error);
-        return errorJSend(c, "Failed to fetch incremental update", 500);
-      }
+      return successJSend(c, {
+        songs,
+        songDBVersion: currentDBVersion,
+        lastUpdateAt: new Date().toISOString(),
+        isIncremental,
+      } as SongDBResponseData);
     },
   )
   .get("/fetch/:id", async (c) => {
     const songId = c.req.param("id");
+    const foundSong = await retrieveSingleSong(c.var.db, songId);
 
-    if (!songId || typeof songId !== "string") {
-      return failJSend(c, "Invalid song ID", 400);
-    }
-
-    const db = drizzle(c.env.DB);
-
-    try {
-      const foundSong = await retrieveSingleSong(db, songId);
-
-      if (!foundSong) {
-        return failJSend(c, "Song not found", 404);
-      }
-
-      return successJSend(c, foundSong);
-    } catch (e) {
-      return errorJSend(c, "Error fetching song", 500);
-    }
+    if (!foundSong) return failJSend(c, "Song not found", 404);
+    return successJSend(c, foundSong);
   })
   .get("/fetch/:songId/:versionId", async (c) => {
-    const songId = c.req.param("songId");
-    const versionId = c.req.param("versionId");
+    const { songId, versionId } = c.req.param();
+    const foundSong = await retrieveSingleSong(c.var.db, songId, versionId);
 
-    if (!songId || typeof songId !== "string") {
-      return failJSend(c, "Invalid song ID", 400);
-    }
-    if (!versionId || typeof versionId !== "string") {
-      return failJSend(c, "Invalid version ID", 400);
-    }
-
-    const db = drizzle(c.env.DB);
-
-    try {
-      const foundSong = await retrieveSingleSong(db, songId, versionId);
-
-      if (!foundSong) {
-        return failJSend(c, "Song not found", 404);
-      }
-
-      return successJSend(c, foundSong);
-    } catch (e) {
-      return errorJSend(c, "Error fetching song", 500);
-    }
+    if (!foundSong) return failJSend(c, "Song not found", 404);
+    return successJSend(c, foundSong);
   })
-
   .get("/songbooks", async (c) => {
-    const db = drizzle(c.env.DB);
-    try {
-      const songbooks = await getSongbooks(db);
-      return successJSend(c, songbooks);
-    } catch (error) {
-      console.error("Database error:", error);
-      return errorJSend(c, "Failed to fetch songbooks", 500);
-    }
+    const songbooks = await getSongbooks(c.var.db);
+    return successJSend(c, songbooks);
   })
-
   .get("/illustrations", async (c) => {
-    try {
-      const db = drizzle(c.env.DB);
-      const allIlustrations = await db
-        .select({
-          songId: songIllustration.songId,
-          promptId: songIllustration.promptId,
-          createdAt: songIllustration.createdAt,
-          imageModel: songIllustration.imageModel,
-          imageURL: songIllustration.imageURL,
-          thumbnailURL: songIllustration.thumbnailURL,
-        })
-        .from(songIllustration)
-        .where(not(songIllustration.deleted));
-      return successJSend(
-        c,
-        allIlustrations.map((ai) => {
-          return { ...ai, createdAt: ai.createdAt.getTime() };
-        }) as BasicSongIllustrationResponseData,
-      );
-    } catch {
-      return errorJSend(
-        c,
-        "Internal error listing illustrations",
-        500,
-        "ERROR_FINDING_PROMPT",
-      );
-    }
-  })
+    const allIlustrations = await c.var.db
+      .select({
+        songId: songIllustration.songId,
+        promptId: songIllustration.promptId,
+        createdAt: songIllustration.createdAt,
+        imageModel: songIllustration.imageModel,
+        imageURL: songIllustration.imageURL,
+        thumbnailURL: songIllustration.thumbnailURL,
+      })
+      .from(songIllustration)
+      .where(not(songIllustration.deleted));
 
+    return successJSend(
+      c,
+      allIlustrations.map((ai) => ({
+        ...ai,
+        createdAt: ai.createdAt.getTime(),
+      })),
+    );
+  })
   .get("/prompts", async (c) => {
-    try {
-      const db = drizzle(c.env.DB);
-      const allPrompts = await db
-        .select({
-          promptId: illustrationPrompt.id,
-          songId: illustrationPrompt.songId,
-          createdAt: illustrationPrompt.createdAt,
-          summaryPromptVersion: illustrationPrompt.summaryPromptVersion,
-          summaryModel: illustrationPrompt.summaryModel,
-          text: illustrationPrompt.text,
-        })
-        .from(illustrationPrompt)
-        .where(not(illustrationPrompt.deleted));
-      return successJSend(
-        c,
-        allPrompts.map((ap) => {
-          return { ...ap, createdAt: ap.createdAt.getTime() };
-        }) as AllIllustrationPromptsResponseData,
-      );
-    } catch {
-      return errorJSend(
-        c,
-        "Internal error listing prompts",
-        500,
-        "ERROR_FINDING_PROMPT",
-      );
-    }
+    const allPrompts = await c.var.db
+      .select({
+        promptId: illustrationPrompt.id,
+        songId: illustrationPrompt.songId,
+        createdAt: illustrationPrompt.createdAt,
+        summaryPromptVersion: illustrationPrompt.summaryPromptVersion,
+        summaryModel: illustrationPrompt.summaryModel,
+        text: illustrationPrompt.text,
+      })
+      .from(illustrationPrompt)
+      .where(not(illustrationPrompt.deleted));
+
+    return successJSend(
+      c,
+      allPrompts.map((ap) => ({ ...ap, createdAt: ap.createdAt.getTime() })),
+    );
   })
-
   .get("/prompts/:id", async (c) => {
-    try {
-      const db = drizzle(c.env.DB);
-      const existingPrompt = await db
-        .select()
-        .from(illustrationPrompt)
-        .where(eq(illustrationPrompt.id, c.req.param("id")))
-        .limit(1);
+    const existingPrompt = await c.var.db
+      .select()
+      .from(illustrationPrompt)
+      .where(eq(illustrationPrompt.id, c.req.param("id")))
+      .get();
 
-      if (existingPrompt.length === 0) {
-        return failJSend(c, "Referenced song not found", 400, "VERSION_EXISTS");
-      }
-      return successJSend(c, existingPrompt[0]);
-    } catch {
-      return errorJSend(
+    if (!existingPrompt) {
+      return failJSend(
         c,
-        "Internal error finding prompt",
-        500,
-        "ERROR_FINDING_PROMPT",
+        "Referenced prompt not found",
+        404,
+        "PROMPT_NOT_FOUND",
       );
     }
+    return successJSend(c, existingPrompt);
   });
 
 export default songDBRoutes;
