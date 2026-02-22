@@ -28,13 +28,25 @@ type SortDirection = "asc" | "desc";
 
 export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [showDeleted, setShowDeleted] = useState(false);
-
-  // New local storage toggle for unillustrated prioritization
+  const [showDeleted, setShowDeleted] = useLocalStorageState<boolean>(
+    "admin/illustration-table/show-deleted-illustrations",
+    {
+      defaultValue: false,
+    },
+  );
   const [prioritizeUnillustrated, setPrioritizeUnillustrated] =
-    useLocalStorageState<boolean>("prioritize-unillustrated", {
-      defaultValue: true,
-    });
+    useLocalStorageState<boolean>(
+      "admin/illustration-table/prioritize-unillustrated",
+      {
+        defaultValue: true,
+      },
+    );
+  const [showDeletedSongs, setShowDeletedSongs] = useLocalStorageState<boolean>(
+    "admin/illustration-table/show-deleted-songs",
+    {
+      defaultValue: false,
+    },
+  );
 
   const [imageModelFilter, setImageModelFilter] = useState<string>("all");
   const [summaryModelFilter, setSummaryModelFilter] = useState<string>("all");
@@ -60,6 +72,12 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
           song.title.toLowerCase().includes(lowerCaseSearchTerm) ||
           song.artist.toLowerCase().includes(lowerCaseSearchTerm)
         );
+      });
+    }
+
+    if (!showDeletedSongs) {
+      groups = groups.filter(([, group]) => {
+        return !group.song.deleted && !group.song.hidden;
       });
     }
 
@@ -140,13 +158,14 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   }, [
     groupedData,
     searchTerm,
+    showDeletedSongs,
     imageModelFilter,
     summaryModelFilter,
     promptVersionFilter,
     promptsById,
+    prioritizeUnillustrated,
     sortKey,
     sortDirection,
-    prioritizeUnillustrated,
   ]);
 
   if (isLoading) return <div>Loading...</div>;
@@ -274,15 +293,27 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
                 Prioritize unillustrated
               </Label>
             </div>
-
             <div className="flex items-center space-x-2">
               <Checkbox
-                id="show-deleted"
+                id="show-deleted-songs"
+                checked={showDeletedSongs}
+                onCheckedChange={(checked) => setShowDeletedSongs(!!checked)}
+              />
+              <Label
+                htmlFor="show-deleted-songs"
+                className="text-sm font-medium leading-none whitespace-nowrap"
+              >
+                Show deleted songs
+              </Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="show-deleted-illustrations"
                 checked={showDeleted}
                 onCheckedChange={() => setShowDeleted(!showDeleted)}
               />
               <Label
-                htmlFor="show-deleted"
+                htmlFor="show-deleted-illustrations"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 whitespace-nowrap"
               >
                 Show deleted
