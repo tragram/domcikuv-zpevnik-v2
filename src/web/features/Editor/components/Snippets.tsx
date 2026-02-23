@@ -87,6 +87,12 @@ export const snippets = {
     template: (selection?: string) => `{comment: ${selection}}\n`,
     cursorOffset: "{comment: ".length,
   },
+  repetition: {
+    name: "Repetition",
+    letter: "R",
+    template: (selection?: string) => `𝄆 ${selection} 𝄇`,
+    cursorOffset: 1,
+  },
   chords: {
     name: "Chord",
     letter: "CH",

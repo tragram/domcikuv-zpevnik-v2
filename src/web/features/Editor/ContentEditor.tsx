@@ -307,6 +307,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
         </SnippetButtonSection>
         <SnippetButtonSection label="Misc">
           <SnippetButton snippetKey="comment" onInsert={insertSnippet} />
+          <SnippetButton snippetKey="repetition" onInsert={insertSnippet} />
           <SnippetButton snippetKey="chords" onInsert={insertSnippet} />
         </SnippetButtonSection>
       </div>
