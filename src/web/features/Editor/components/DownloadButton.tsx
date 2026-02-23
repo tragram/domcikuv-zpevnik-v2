@@ -1,6 +1,5 @@
 import { Button } from "~/components/ui/button";
 import { Download } from "lucide-react";
-import { editorToChordPro } from "./utils";
 import { useEffect, useCallback } from "react";
 import { EditorState } from "../Editor";
 import { SongData } from "~/types/songData";

@@ -13,7 +13,7 @@ interface MetadataEditorProps {
   songDB: SongDB;
   defaultMetadata: EditorState;
   metadata: EditorState;
-  updateMetadata: (field: keyof EditorState, value: string | number) => void;
+  updateMetadata: (field: keyof EditorState, value: string) => void;
   editorSettings: EditorSettings;
   onSettingsChange: (settings: EditorSettings) => void;
   user: UserProfileData;
@@ -81,7 +81,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
                 "border-2 border-primary/50 dark:border-muted",
                 defaultMetadata.language !== metadata.language
                   ? "text-foreground !bg-primary/30"
-                  : "text-foreground/70 !bg-input/30"
+                  : "text-foreground/70 !bg-input/30",
               )}
             />
           }
@@ -129,7 +129,6 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
             settings={editorSettings}
             onSettingsChange={onSettingsChange}
             user={user}
-            isEdit
           />
         </div>
       </div>

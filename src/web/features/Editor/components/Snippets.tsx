@@ -121,7 +121,7 @@ export const SnippetButtonSection: React.FC<{
 
 interface SnippetButtonProps {
   snippetKey: keyof typeof snippets;
-  onInsert: (key: string) => void;
+  onInsert: (key: keyof typeof snippets) => void;
   className?: string;
 }
 
