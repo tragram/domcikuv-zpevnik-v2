@@ -92,7 +92,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const { version: versionId } = useSearch({ strict: false });
   return (
     <div className="absolute top-0 w-full">
-      <ToolbarBase showToolbar={isToolbarVisible} scrollOffset={window.scrollY}>
+      <ToolbarBase isVisible={isToolbarVisible}>
         <Button size="icon" variant="circular" asChild>
           <Link to="/">
             <Undo2 />

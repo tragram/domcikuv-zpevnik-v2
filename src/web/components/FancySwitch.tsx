@@ -36,7 +36,7 @@ export default function FancySwitch<T extends string | number>({
     }, []);
     const showHighlight = hiddenHighlightOnOther ? options.map(o => o.value).includes(selectedOption) : true;
     return (
-        <div className={"h-full bg-white dark:bg-background/90 font-bold rounded-full transition-all shadow-xs flex outline-primary dark:outline-primary/30 outline-2 select-none " + (full ? "w-full justify-center" : "w-fit")}>
+        <div className={"h-[40px] bg-white dark:bg-background/90 font-bold rounded-full transition-all shadow-xs flex outline-primary dark:outline-primary/30 outline-2 select-none " + (full ? "w-full justify-center" : "w-fit")}>
             <FancySwitchBase
                 options={options}
                 value={selectedOption}

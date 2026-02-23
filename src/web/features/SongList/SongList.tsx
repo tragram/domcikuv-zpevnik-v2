@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { SongDB } from "~/types/types";
 import useLocalStorageState from "use-local-storage-state";
 import "~/features/SongList/SongList.css";
@@ -10,6 +10,7 @@ import { UserProfileData } from "src/worker/api/userProfile";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import { Button } from "~/components/ui/button";
 import { Globe, Search } from "lucide-react";
+import { useScrollDirection } from "~/hooks/use-scroll-direction";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
@@ -24,7 +25,10 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
   } = useFilteredSongs(songDB.songs, songDB.languages, user, songDB.songbooks);
 
   const { resetFilters } = useFilterSettingsStore();
-  const [showToolbar, setShowToolbar] = useState(true);
+
+  // Use our new hook!
+  const isToolbarVisible = useScrollDirection();
+
   const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
     SCROLL_OFFSET_KEY,
     { defaultValue: 0, storageSync: false },
@@ -37,17 +41,10 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
     overscan: 10,
     initialOffset: scrollOffset,
     onChange: (instance) => {
-      const isAtTop = (instance.scrollOffset ?? 0) === 0;
-      if (instance.scrollDirection === "backward" || isAtTop) {
-        setShowToolbar(true);
-      } else if (instance.scrollDirection === "forward") {
-        setShowToolbar(false);
-      }
-
+      // We only use this now to save scroll position for when they return to the page
       if (debounceRef.current) {
         clearTimeout(debounceRef.current);
       }
-
       debounceRef.current = setTimeout(() => {
         setScrollOffset(instance.scrollOffset ?? 0);
       }, 200);
@@ -59,12 +56,7 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
 
   return (
     <div className="no-scrollbar w-full">
-      <Toolbar
-        songDB={songDB}
-        showToolbar={showToolbar}
-        scrollOffset={scrollOffset}
-        fakeScroll={true}
-      />
+      <Toolbar songDB={songDB} isVisible={isToolbarVisible} />
 
       <div className="pt-[72px] sm:pt-20 pb-2">
         {/* SECTION 1: Internal Songs */}
@@ -176,7 +168,11 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
                     No results found in external libraries either.
                   </p>
                 )}
-                <Button variant={"outline"} className="mt-6" onClick={resetFilters}>
+                <Button
+                  variant={"outline"}
+                  className="mt-6"
+                  onClick={resetFilters}
+                >
                   Reset all filters
                 </Button>
               </div>

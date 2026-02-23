@@ -19,13 +19,6 @@ import SearchBar from "./SearchBar";
 import SessionView from "./SessionView";
 import SortMenu from "./SortMenu";
 
-interface ToolbarProps {
-  showToolbar: boolean;
-  scrollOffset: number;
-  fakeScroll?: boolean;
-  songDB: SongDB;
-}
-
 interface CombinedMenuProps {
   isOnline: boolean;
   isAdmin: boolean;
@@ -89,21 +82,19 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
   );
 };
 
-function Toolbar({
-  songDB,
-  showToolbar,
-  scrollOffset,
-  fakeScroll = false,
-}: ToolbarProps) {
+interface ToolbarProps {
+  songDB: SongDB;
+  isVisible: boolean;
+}
+
+function Toolbar({ songDB, isVisible }: ToolbarProps) {
   const isOnline = window.navigator.onLine;
 
   const routeContext = useRouteContext({ strict: false });
   const isAdmin = routeContext?.user?.profile?.isAdmin ?? false;
   return (
     <ToolbarBase
-      showToolbar={showToolbar}
-      scrollOffset={scrollOffset}
-      fakeScroll={fakeScroll}
+      isVisible={isVisible}
       childContainerClassName="max-sm:justify-between"
     >
       <SortMenu />
