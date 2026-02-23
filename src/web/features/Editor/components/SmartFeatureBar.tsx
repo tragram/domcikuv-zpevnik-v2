@@ -10,7 +10,11 @@ export interface SmartFeature {
   loadingLabel: string;
   icon: React.ElementType;
   description: React.ReactNode;
-  check: (content: string, user: UserProfileData, songData?: SongData) => boolean;
+  check: (
+    content: string,
+    user: UserProfileData,
+    songData?: SongData,
+  ) => boolean;
 }
 
 interface SmartFeatureBarProps {
@@ -19,7 +23,6 @@ interface SmartFeatureBarProps {
   onExecute: () => void;
   onDismiss: () => void;
 }
-
 export const SmartFeatureBar: React.FC<SmartFeatureBarProps> = ({
   feature,
   isProcessing,
@@ -29,7 +32,7 @@ export const SmartFeatureBar: React.FC<SmartFeatureBarProps> = ({
   return (
     <div className="relative group animate-in slide-in-from-bottom-2 duration-300">
       {/* Description Tooltip/Drawer */}
-      <div className="w-full overflow-hidden bg-muted border-t-2 border-primary px-4 text-xs hidden group-hover:visible group-hover:flex flex-col py-2 pr-8">
+      <div className="absolute bottom-full left-0 z-10 w-full overflow-hidden bg-muted border-t-2 border-primary px-4 text-xs hidden group-hover:visible group-hover:flex flex-col py-2 pr-8 shadow-md">
         <div className="font-bold mb-1 flex items-center gap-2">
           <feature.icon className="w-3 h-3" />
           {feature.label}
