@@ -153,21 +153,21 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
   };
 
   const prevStateRef = useRef(state);
+
   useEffect(() => {
+    // If state changed internally (like via undo) but parent doesn't know yet
     if (state !== prevStateRef.current && state !== editorContent) {
       setEditorContent(state);
-      prevStateRef.current = state;
-
-      const associatedFeature = contentToFeatureMap.current.get(state);
-      if (associatedFeature) {
-        setDismissedFeatures((prev) => {
-          const newSet = new Set(prev);
-          newSet.delete(associatedFeature);
-          return newSet;
-        });
-      }
     }
+    // Always keep track of the latest internal state
+    prevStateRef.current = state;
   }, [state, editorContent, setEditorContent]);
+
+  useEffect(() => {
+    if (editorContent !== state && editorContent !== prevStateRef.current) {
+      setHistoryContent(editorContent);
+    }
+  }, [editorContent, setHistoryContent, state]); // Only trigger when the parent pushes new content
 
   const activeFeatures = useMemo(() => {
     return SMART_FEATURES.filter(
