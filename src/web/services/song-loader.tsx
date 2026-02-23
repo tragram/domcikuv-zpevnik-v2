@@ -22,8 +22,7 @@ export const SongLoaderErrorComponent = ({
         <p className="text-lg text-primary">Song not found</p>
         <p className="text-sm">
           The song with ID "{params.songId}"{" "}
-          {deps.version ? `(version ${deps.version})` : ""} could not be
-          found.
+          {deps.version ? `(version ${deps.version})` : ""} could not be found.
         </p>
       </div>
     </div>

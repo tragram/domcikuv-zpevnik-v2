@@ -56,10 +56,6 @@ function RouteComponent() {
     }
   }, [songData?.id, shouldShare, updateSong, transposeSteps]);
 
-  // Show error state if song not found
-  if (!songData) {
-  }
-
   return (
     <SongView
       songDB={songDB}
