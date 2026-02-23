@@ -1,7 +1,6 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { user } from "./auth.schema";
-import { song, songIllustration, songVersion } from "./song.schema";
-import { relations } from "drizzle-orm";
+import { song } from "./song.schema";
 
 export const userFavoriteSongs = sqliteTable("favorites", {
   id: integer("id").primaryKey(),
