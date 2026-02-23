@@ -15,19 +15,3 @@ export const userFavoriteSongs = sqliteTable("favorites", {
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
-
-export const songRelations = relations(song, ({ one, many }) => ({
-  currentIllustration: one(songIllustration, {
-    fields: [song.currentIllustrationId],
-    references: [songIllustration.id],
-  }),
-  currentVersion: one(songVersion, {
-    fields: [song.currentVersionId],
-    references: [songVersion.id],
-  }),
-  illustration: many(songIllustration),
-  version: many(songVersion),
-
-  // ADD THIS: Relation to favorites
-  favorites: many(userFavoriteSongs),
-}));
