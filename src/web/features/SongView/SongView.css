@@ -168,6 +168,11 @@
     align-items: flex-end;
     margin-right: 0.33em;
     /*border: 1px solid red;*/
+
+    /* attempt to fight against safari slicing words in half mid-letter */
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid-column;
 }
 
 /* hiding and showing parts */
