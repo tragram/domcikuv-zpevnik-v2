@@ -155,12 +155,12 @@ export type SongIllustrationDB = typeof songIllustration.$inferSelect;
 export const songRelations = relations(song, ({ one, many }) => ({
   // Get the current active illustration & version (only one per song)
   currentIllustration: one(songIllustration, {
-    fields: [song.id],
-    references: [songIllustration.songId],
+    fields: [song.currentIllustrationId],
+    references: [songIllustration.id],
   }),
   currentVersion: one(songVersion, {
-    fields: [song.id],
-    references: [songVersion.songId],
+    fields: [song.currentVersionId],
+    references: [songVersion.id],
   }),
   // Get all illustrations & versions for this song
   illustration: many(songIllustration),
