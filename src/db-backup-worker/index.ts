@@ -284,6 +284,7 @@ async function syncToGithub(env: Env, isFullSync: boolean): Promise<void> {
             promptURL: "",
           }
         : undefined,
+      isFavoriteByCurrentUser: false,
     });
     treeEntries.push({
       path: `songs/chordpro/${song.id}.pro`,
@@ -386,50 +387,93 @@ async function syncToGithub(env: Env, isFullSync: boolean): Promise<void> {
     console.log("No new changes to sync.");
     return;
   }
-
   const { data: repoData } = await octokit.rest.repos.get({ owner, repo });
   const defaultBranch = repoData.default_branch;
-  const { data: refData } = await octokit.rest.git.getRef({
+  const syncBranchName = "production-data-sync";
+
+  let baseCommitSha: string;
+  let branchExists = false;
+
+  // 1. Check if our dedicated sync branch exists
+  try {
+    const { data: refData } = await octokit.rest.git.getRef({
+      owner,
+      repo,
+      ref: `heads/${syncBranchName}`,
+    });
+    baseCommitSha = refData.object.sha;
+    branchExists = true;
+  } catch (error: any) {
+    // If the branch doesn't exist (404), fallback to the default branch to start from
+    if (error.status === 404) {
+      const { data: defaultRefData } = await octokit.rest.git.getRef({
+        owner,
+        repo,
+        ref: `heads/${defaultBranch}`,
+      });
+      baseCommitSha = defaultRefData.object.sha;
+    } else {
+      throw error; // Rethrow if it's an actual authentication/network error
+    }
+  }
+
+  // 2. Get the base commit's tree SHA to compare for empty commits
+  const { data: baseCommit } = await octokit.rest.git.getCommit({
     owner,
     repo,
-    ref: `heads/${defaultBranch}`,
+    commit_sha: baseCommitSha,
   });
-  const latestCommitSha = refData.object.sha;
+  const baseTreeSha = baseCommit.tree.sha;
 
+  // 3. Create the new tree
   const { data: treeData } = await octokit.rest.git.createTree({
     owner,
     repo,
-    base_tree: latestCommitSha,
+    base_tree: baseTreeSha,
     tree: treeEntries,
   });
 
+  // 4. Prevent empty commits
+  if (treeData.sha === baseTreeSha) {
+    console.log(
+      `No actual file changes detected compared to branch '${branchExists ? syncBranchName : defaultBranch}'. Skipping commit.`,
+    );
+    return;
+  }
+
+  // 5. Create the commit
   const { data: commitData } = await octokit.rest.git.createCommit({
     owner,
     repo,
     message: `chore: Automated sync of database changes (${isFullSync ? "Full" : "Incremental"})`,
     tree: treeData.sha,
-    parents: [latestCommitSha],
+    parents: [baseCommitSha],
   });
 
-  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const branchName = `data-sync-${timestamp}`;
-  await octokit.rest.git.createRef({
-    owner,
-    repo,
-    ref: `refs/heads/${branchName}`,
-    sha: commitData.sha,
-  });
-
-  const { data: prData } = await octokit.rest.pulls.create({
-    owner,
-    repo,
-    title: `Automated Data Sync: ${timestamp}`,
-    head: branchName,
-    base: defaultBranch,
-    body: `Automated pull request pushing the newest database changes.\n\nFiles synced: \`${treeEntries.length}\``,
-  });
-
-  console.log(`✓ Pull Request created: ${prData.html_url}`);
+  // 6. Update the existing branch, or create it if it didn't exist
+  if (branchExists) {
+    await octokit.rest.git.updateRef({
+      owner,
+      repo,
+      ref: `heads/${syncBranchName}`,
+      sha: commitData.sha,
+      // Using force: true ensures the script doesn't get stuck if you manually rebase or alter the staging branch
+      force: true,
+    });
+    console.log(
+      `✓ Updated existing branch '${syncBranchName}' (Commit: ${commitData.sha})`,
+    );
+  } else {
+    await octokit.rest.git.createRef({
+      owner,
+      repo,
+      ref: `refs/heads/${syncBranchName}`,
+      sha: commitData.sha,
+    });
+    console.log(
+      `✓ Created new branch '${syncBranchName}' (Commit: ${commitData.sha})`,
+    );
+  }
 
   // TODO: Enable shadow deletions once the sync pipeline is fully tested
   /*
