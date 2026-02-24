@@ -43,7 +43,7 @@ export const MODEL_PROVIDERS: Record<AvailableImageModel, ImageProviderType> = {
 const PROVIDER_MODEL_NAMES: Partial<Record<AvailableImageModel, string>> = {
   "FLUX.1-dev": "black-forest-labs/FLUX.1-dev",
   "FLUX.1-schnell": "black-forest-labs/FLUX.1-schnell",
-  "FLUX.2-dev": "black-forest-labs/flux-2",
+  "FLUX.2-dev": "black-forest-labs/FLUX.2-dev",
   "nano-banana-pro": "gemini-3-pro-image-preview",
 };
 
