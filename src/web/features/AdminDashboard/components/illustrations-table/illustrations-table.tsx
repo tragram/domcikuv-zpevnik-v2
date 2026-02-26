@@ -18,7 +18,7 @@ import { TableToolbar } from "../shared/table-toolbar";
 import { SongIllustrationsGroup } from "./illustration-group";
 import { SongIllustrationDB } from "src/lib/db/schema";
 import useLocalStorageState from "use-local-storage-state";
-import { Filter, Eye, Layers } from "lucide-react";
+import { Filter, Eye, Layers, AlertCircle } from "lucide-react";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;
@@ -50,7 +50,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>("lastModified");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
-  const { groupedData, promptsById, filterOptions, isLoading, isError } =
+  const { groupedData, promptsById, filterOptions, isLoading, isError, error } =
     useIllustrationsTableData(adminApi);
 
   const filteredAndSortedGroups = useMemo(() => {
@@ -159,9 +159,53 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     sortDirection,
   ]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading data.</div>;
+  if (isLoading) {
+    return (
+      <div className="space-y-6 w-full pb-8 animate-pulse">
+        <div className="flex flex-col sm:flex-row items-end justify-between border-b pb-4">
+          <div>
+            <div className="h-9 w-64 bg-muted rounded mb-2"></div>
+            <div className="h-4 w-48 bg-muted rounded"></div>
+          </div>
+          <div className="flex gap-2 mt-4 sm:mt-0">
+            <div className="h-9 w-28 bg-muted rounded"></div>
+            <div className="h-9 w-28 bg-muted rounded"></div>
+          </div>
+        </div>
 
+        {/* Skeleton Control Panel */}
+        <div className="h-[140px] bg-muted/20 rounded-xl shadow-sm border-2 border-muted w-full mb-6"></div>
+
+        {/* Skeleton Illustration Groups */}
+        <div className="space-y-4">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div
+              key={i}
+              className="h-16 w-full bg-muted/40 rounded-lg border"
+            ></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="rounded-lg border border-destructive/50 text-destructive p-4 flex gap-3 items-start bg-destructive/10 my-8">
+        <AlertCircle className="h-5 w-5 mt-0.5" />
+        <div>
+          <h3 className="font-semibold leading-none tracking-tight mb-2">
+            Error Loading Data
+          </h3>
+          <p className="text-sm opacity-90">
+            {error instanceof Error
+              ? error.message
+              : "An unexpected error occurred while fetching data."}
+          </p>
+        </div>
+      </div>
+    );
+  }
   const toggleGroup = (songId: string) => {
     const newExpanded = new Set(expandedGroups);
     if (newExpanded.has(songId)) newExpanded.delete(songId);

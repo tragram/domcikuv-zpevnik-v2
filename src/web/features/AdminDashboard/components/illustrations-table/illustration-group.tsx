@@ -18,7 +18,7 @@ import {
   createIllustration,
   generateIllustration,
 } from "~/services/song-service";
-import { IllustrationCard } from "./illustration-card";
+import { IllustrationCard, PendingIllustrationCard } from "./illustration-card";
 import {
   IllustrationForm,
   IllustrationSubmitData,
@@ -78,14 +78,12 @@ export function SongIllustrationsGroup({
       queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
 
-      // Auto-expand the group to show the new illustration
-      if (!isExpanded) {
-        onToggleExpanded();
-      }
+      if (!isExpanded) onToggleExpanded();
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error("Create illustration error:", error);
-      toast.error("Failed to create illustration");
+      // Ensure the specific server error message is shown
+      toast.error(error?.message || "Failed to create illustration");
     },
   });
 
@@ -100,14 +98,12 @@ export function SongIllustrationsGroup({
       queryClient.invalidateQueries({ queryKey: ["promptsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
 
-      // Auto-expand the group to show the new illustration
-      if (!isExpanded) {
-        onToggleExpanded();
-      }
+      if (!isExpanded) onToggleExpanded();
     },
-    onError: (error) => {
+    onError: (error: any) => {
       console.error("Generate illustration error:", error);
-      toast.error("Failed to generate illustration");
+      // Ensure the specific server error message is shown
+      toast.error(error?.message || "Failed to generate illustration");
     },
   });
 
@@ -292,7 +288,7 @@ export function SongIllustrationsGroup({
                 </FormDialog>
               </div>
 
-              {filteredIllustrations.length === 0 ? (
+              {filteredIllustrations.length === 0 && !isLoading ? (
                 <div className="p-8 text-center text-muted-foreground border-2 border-dashed rounded-lg bg-muted/20">
                   <p className="text-sm">No illustrations yet</p>
                   <p className="text-xs mt-1">
@@ -312,6 +308,41 @@ export function SongIllustrationsGroup({
                         prompt={prompts[illustration.promptId]}
                       />
                     ))}
+
+                  {/* AI Generation Pending Card */}
+                  {generateMutation.isPending && generateMutation.variables && (
+                    <PendingIllustrationCard
+                      imageModel={generateMutation.variables.imageModel}
+                      summaryModel={generateMutation.variables.summaryModel}
+                      summaryPromptVersion={
+                        generateMutation.variables.promptVersion
+                      }
+                      isGenerating={true}
+                    />
+                  )}
+
+                  {/* Manual Creation Pending Card */}
+                  {createMutation.isPending &&
+                    createMutation.variables &&
+                    (() => {
+                      const vars = createMutation.variables;
+                      const usedPrompt = vars.promptId
+                        ? prompts[vars.promptId]
+                        : null;
+                      return (
+                        <PendingIllustrationCard
+                          imageModel={vars.imageModel}
+                          summaryModel={
+                            usedPrompt?.summaryModel || vars.summaryModel
+                          }
+                          summaryPromptVersion={
+                            usedPrompt?.summaryPromptVersion ||
+                            vars.summaryPromptVersion
+                          }
+                          isGenerating={false}
+                        />
+                      );
+                    })()}
                 </div>
               )}
             </div>

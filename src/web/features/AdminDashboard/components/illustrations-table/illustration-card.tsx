@@ -69,8 +69,8 @@ export function IllustrationCard({
       await updateMutation.mutateAsync({ id, data: illustrationData });
       toast.success("Illustration updated successfully");
       setIsEditDialogOpen(false);
-    } catch (error) {
-      toast.error("Failed to update illustration");
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to update illustration");
       console.error("Update error:", error);
     }
   };
@@ -79,8 +79,8 @@ export function IllustrationCard({
     try {
       await deleteMutation.mutateAsync(illustration.id);
       toast.success("Illustration deleted successfully");
-    } catch (error) {
-      toast.error("Failed to delete illustration");
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to delete illustration");
       console.error("Delete error:", error);
     }
   };
@@ -89,8 +89,8 @@ export function IllustrationCard({
     try {
       await restoreMutation.mutateAsync(illustration.id);
       toast.success("Illustration restored successfully");
-    } catch (error) {
-      toast.error("Failed to restore illustration");
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to restore illustration");
       console.error("Restore error:", error);
     }
   };
@@ -104,8 +104,8 @@ export function IllustrationCard({
       toast.success(
         isActive ? "Illustration deactivated" : "Illustration activated",
       );
-    } catch (error) {
-      toast.error("Failed to update illustration status");
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to update illustration status");
       console.error("Toggle active error:", error);
     }
   };
@@ -276,5 +276,42 @@ export function IllustrationCard({
         </DialogContent>
       </Dialog>
     </>
+  );
+}
+
+export function PendingIllustrationCard({
+  imageModel,
+  summaryModel,
+  summaryPromptVersion,
+  isGenerating = true,
+}: {
+  imageModel?: string;
+  summaryModel?: string;
+  summaryPromptVersion?: string;
+  isGenerating?: boolean;
+}) {
+  return (
+    <div className="border-2 rounded-lg p-1 md:p-3 space-y-2 border-primary/40 bg-primary/5 animate-pulse shadow-sm">
+      <div className="relative w-full aspect-square bg-muted/40 rounded flex flex-col items-center justify-center gap-3">
+        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full"></div>
+        <p className="text-sm font-medium text-primary/80">
+          {isGenerating ? "Generating Image..." : "Uploading Image..."}
+        </p>
+      </div>
+
+      <div className="space-y-1">
+        <p className="text-xs text-muted-foreground">
+          <span className="font-medium">Summary prompt version:</span>{" "}
+          {summaryPromptVersion || "N/A"}
+        </p>
+        <p className="text-xs text-muted-foreground">
+          <span className="font-medium">Lyrics summary by:</span>{" "}
+          {summaryModel || "N/A"}
+        </p>
+        <p className="text-xs text-muted-foreground">
+          <span className="font-medium">Image by:</span> {imageModel || "N/A"}
+        </p>
+      </div>
+    </div>
   );
 }

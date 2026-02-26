@@ -16,6 +16,7 @@ import {
   songsWithCurrentVersionAdmin,
   updateIllustration,
   songsWithIllustrationsAndPrompts,
+  parseDBDates,
 } from "~/services/song-service";
 import {
   createUserAdmin,
@@ -656,16 +657,8 @@ export const useIllustrationsTableData = (adminApi: AdminApi) => {
   const isError =
     songsQuery.isError || illustrationsQuery.isError || promptsQuery.isError;
 
-  const groupedData = useMemo(() => {
-    if (!songsQuery.data || !illustrationsQuery.data || !promptsQuery.data) {
-      return {};
-    }
-    return songsWithIllustrationsAndPrompts(
-      songsQuery.data,
-      illustrationsQuery.data,
-      promptsQuery.data,
-    );
-  }, [songsQuery.data, illustrationsQuery.data, promptsQuery.data]);
+  const error =
+    songsQuery.error || illustrationsQuery.error || promptsQuery.error;
 
   const promptsById = useMemo(() => {
     if (!promptsQuery.data) return new Map();
@@ -686,6 +679,17 @@ export const useIllustrationsTableData = (adminApi: AdminApi) => {
     return { imageModels, summaryModels, promptVersions };
   }, [illustrationsQuery.data, promptsQuery.data]);
 
+  const groupedData = useMemo(() => {
+    if (!songsQuery.data || !illustrationsQuery.data || !promptsQuery.data) {
+      return {};
+    }
+    return songsWithIllustrationsAndPrompts(
+      songsQuery.data,
+      illustrationsQuery.data.map(parseDBDates),
+      promptsQuery.data.map(parseDBDates),
+    );
+  }, [songsQuery.data, illustrationsQuery.data, promptsQuery.data]);
+
   return {
     songs: songsQuery.data,
     illustrations: illustrationsQuery.data,
@@ -695,6 +699,7 @@ export const useIllustrationsTableData = (adminApi: AdminApi) => {
     filterOptions,
     isLoading,
     isError,
+    error,
   };
 };
 
