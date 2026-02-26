@@ -14,6 +14,7 @@ export const IMAGE_MODELS_API = [
   "gpt-image-1",
   "gpt-image-1-mini",
   "nano-banana-pro",
+  "nano-banana-2",
 ] as const;
 
 export type SummaryPromptVersion = (typeof SUMMARY_PROMPT_VERSIONS)[number];
@@ -37,6 +38,7 @@ export const MODEL_PROVIDERS: Record<AvailableImageModel, ImageProviderType> = {
   "gpt-image-1": "openai",
   "gpt-image-1-mini": "openai",
   "nano-banana-pro": "google",
+  "nano-banana-2": "google",
 };
 
 // Map generic model names to provider-specific endpoints/tags
@@ -45,6 +47,7 @@ const PROVIDER_MODEL_NAMES: Partial<Record<AvailableImageModel, string>> = {
   "FLUX.1-schnell": "black-forest-labs/FLUX.1-schnell",
   "FLUX.2-dev": "black-forest-labs/FLUX.2-dev",
   "nano-banana-pro": "gemini-3-pro-image-preview",
+  "nano-banana-2": "gemini-3.1-flash-image-preview",
 };
 
 export interface GenerationConfig {
@@ -148,6 +151,7 @@ class GoogleImageProvider implements ImageProvider {
       config: {
         imageConfig: {
           aspectRatio: "1:1",
+          // imageSize: "512x512", //TODO: banana pro 2 should support lower than 1K resolution but the library does not yet...
         },
       },
     });
