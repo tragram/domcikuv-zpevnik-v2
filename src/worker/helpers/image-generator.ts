@@ -94,7 +94,6 @@ class OpenAIImageProvider implements ImageProvider {
       model: model,
       prompt,
       size: "1024x1024",
-      response_format: "b64_json",
     });
 
     const base64 = response.data[0].b64_json;
