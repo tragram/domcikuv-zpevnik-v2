@@ -31,7 +31,6 @@ export function IllustrationPopup({
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (!open) {
-      // Reset state so the next song starts fresh
       setHighResLoaded(false);
       setHighResError(false);
     }
@@ -55,13 +54,15 @@ export function IllustrationPopup({
 
         <DialogContent
           animate={false}
-          className="w-full max-w-[512px] max-h-[100vh] h-fit rounded-lg backdrop-blur-sm p-0 avatar-modal-dialog overflow-hidden content-radix bg-glass/15 dark:bg-glass/50 gap-0 flex flex-col duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-5 data-[state=open]:zoom-in-5 data-[state=closed]:slide-out-to-right-[-50%] data-[state=open]:slide-in-from-right-[-50%]"
+          // w-full guarantees edge-to-edge on mobile, max-w-[512px] restrains it on desktop
+          className="w-full max-w-[512px] rounded-lg backdrop-blur-sm p-0 avatar-modal-dialog overflow-hidden content-radix bg-glass/15 dark:bg-glass/50 gap-0 flex flex-col duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-5 data-[state=open]:zoom-in-5 data-[state=closed]:slide-out-to-right-[-50%] data-[state=open]:slide-in-from-right-[-50%]"
           close={() => handleOpenChange(false)}
         >
-          <div className="h-full w-full relative">
-            {/* Strict relative container for Safari compatibility */}
-            <div className="relative w-full max-h-[512px] aspect-square shadow-lg overflow-hidden bg-black/20">
-              {/* Permanent LQ Backdrop */}
+          {/* The Safari-safe wrapper: No `h-full` or `h-fit` to prevent cyclic height dependency collapse */}
+          <div className="w-full flex flex-col relative">
+            {/* Aspect square with flex-shrink-0 protects the image proportions */}
+            <div className="relative w-full aspect-square bg-black/20 overflow-hidden flex-shrink-0">
+              {/* Permanent LQ Backdrop (no scale-110 so it matches perfectly) */}
               <img
                 src={song.thumbnailURL()}
                 className="absolute inset-0 w-full h-full object-contain blur-sm transform-gpu"
@@ -86,7 +87,7 @@ export function IllustrationPopup({
             <IllustrationPrompt
               song={song}
               show={isOpen && Boolean(song.currentIllustration)}
-              className="text-center text-white font-bold !items-center h-[256px] [@media(max-height:1000px)]:h-[150px] [@media(max-height:800px)]:h-[100px] [@media(max-height:700px)]:!hidden"
+              className="text-center text-white font-bold flex items-center justify-center h-[256px] [@media(max-height:1000px)]:h-[150px] [@media(max-height:800px)]:h-[100px] [@media(max-height:700px)]:hidden"
             />
           </div>
         </DialogContent>
