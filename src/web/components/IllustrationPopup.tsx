@@ -23,8 +23,28 @@ export function IllustrationPopup({
   const [highResLoaded, setHighResLoaded] = useState(false);
   const [highResError, setHighResError] = useState(false);
 
+  // Track the calculated transform origin for the animation
+  const [originOffset, setOriginOffset] = useState({ x: 0, y: 0 });
+
   const handleClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
+
+    // 1. Get the exact position of the clicked thumbnail
+    const rect = e.currentTarget.getBoundingClientRect();
+    const thumbCenterX = rect.left + rect.width / 2;
+    const thumbCenterY = rect.top + rect.height / 2;
+
+    // 2. Get the center point of the window
+    const windowCenterX = window.innerWidth / 2;
+    const windowCenterY = window.innerHeight / 2;
+
+    // 3. Calculate the difference. Assuming the modal will be centered,
+    // this tells the modal exactly where the thumbnail is relative to itself.
+    setOriginOffset({
+      x: thumbCenterX - windowCenterX,
+      y: thumbCenterY - windowCenterY,
+    });
+
     setIsOpen(true);
   }, []);
 
@@ -54,8 +74,11 @@ export function IllustrationPopup({
 
         <DialogContent
           animate={false}
-          // w-full guarantees edge-to-edge on mobile, max-w-[512px] restrains it on desktop
-          className="w-full max-w-[512px] rounded-lg backdrop-blur-sm p-0 avatar-modal-dialog overflow-hidden content-radix bg-glass/15 dark:bg-glass/50 gap-0 flex flex-col duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-5 data-[state=open]:zoom-in-5 data-[state=closed]:slide-out-to-right-[-50%] data-[state=open]:slide-in-from-right-[-50%]"
+          className="w-full max-w-[512px] rounded-lg backdrop-blur-sm p-0 avatar-modal-dialog overflow-hidden content-radix bg-glass/15 dark:bg-glass/50 gap-0 flex flex-col duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-5 data-[state=open]:zoom-in-5"
+          style={{
+            // Apply the dynamic calculation
+            transformOrigin: `calc(50% + ${originOffset.x}px) calc(50% + ${originOffset.y}px)`,
+          }}
           close={() => handleOpenChange(false)}
         >
           {/* The Safari-safe wrapper: No `h-full` or `h-fit` to prevent cyclic height dependency collapse */}
