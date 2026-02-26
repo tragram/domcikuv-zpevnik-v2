@@ -15,7 +15,7 @@ import {
 import { Textarea } from "~/components/ui/textarea";
 import DeletePrompt from "~/components/dialogs/delete-prompt";
 import { cn } from "~/lib/utils";
-import { useDeletePrompt, useUpdatePrompt } from "../../../../services/adminHooks";
+import { useDeletePrompt, useUpdatePrompt } from "../../../../services/admin-hooks";
 
 interface PromptCardProps {
   prompt: IllustrationPromptDB;

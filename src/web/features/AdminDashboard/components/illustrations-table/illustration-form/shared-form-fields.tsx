@@ -10,7 +10,7 @@ import {
 } from "~/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Textarea } from "~/components/ui/textarea";
-import { useSongPrompts } from "~/services/adminHooks";
+import { useSongPrompts } from "~/services/admin-hooks";
 import { useRouteContext } from "@tanstack/react-router";
 import { cn } from "~/lib/utils";
 

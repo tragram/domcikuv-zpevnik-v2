@@ -35,7 +35,7 @@ import {
   useUsersAdmin,
   useUpdateUser,
   useDeleteUser,
-} from "../../../services/adminHooks";
+} from "../../../services/admin-hooks";
 import { AdminApi } from "~/services/song-service";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import { UserDB } from "src/lib/db/schema";

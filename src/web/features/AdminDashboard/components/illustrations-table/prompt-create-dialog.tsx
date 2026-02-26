@@ -26,7 +26,7 @@ import {
   useCreatePrompt,
   useGeneratePrompt,
   useIllustrationOptions,
-} from "../../../../services/adminHooks";
+} from "../../../../services/admin-hooks";
 import useLocalStorageState from "use-local-storage-state";
 
 export function PromptCreateDialog({ songId }: { songId: string }) {

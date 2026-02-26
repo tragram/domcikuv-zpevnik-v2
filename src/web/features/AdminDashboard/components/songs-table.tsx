@@ -49,7 +49,7 @@ import {
   useSongsAdmin,
   useUpdateSong,
   useVersionsAdmin,
-} from "../../../services/adminHooks";
+} from "../../../services/admin-hooks";
 import { ActionButtons } from "./shared/action-buttons";
 import { TableToolbar } from "./shared/table-toolbar";
 import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";

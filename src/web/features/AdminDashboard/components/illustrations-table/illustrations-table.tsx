@@ -13,7 +13,7 @@ import {
   AdminApi,
   SongWithIllustrationsAndPrompts,
 } from "~/services/song-service";
-import { useIllustrationsTableData } from "../../../../services/adminHooks";
+import { useIllustrationsTableData } from "../../../../services/admin-hooks";
 import { TableToolbar } from "../shared/table-toolbar";
 import { SongIllustrationsGroup } from "./illustration-group";
 import { SongIllustrationDB } from "src/lib/db/schema";
