@@ -170,7 +170,7 @@ const SongRow = memo(
         </div>
       );
     }
-    const externalSourceId = song.externalSource?.id;
+    const externalSourceId = song.externalSource?.sourceId;
     if (externalSearch && (!externalSourceId || !song.url())) {
       console.error("Invalid external song provided to SongRow", song);
       return;
