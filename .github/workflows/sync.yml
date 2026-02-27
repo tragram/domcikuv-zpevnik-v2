@@ -3,7 +3,7 @@ name: Database & Assets Sync
 on:
   schedule:
     # Runs automatically at 00:00 UTC every day
-    - cron: '0 4 * * *'
+    - cron: '0 0 * * *'
   workflow_dispatch:
     # The manual trigger ;)
     inputs:
@@ -24,14 +24,19 @@ jobs:
           # Important: Fetch all history so Git can accurately detect diffs and deletions
           fetch-depth: 0 
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Run Sync Script
         env:
@@ -48,8 +53,8 @@ jobs:
           # Sync Configuration
           IS_FULL_SYNC: ${{ github.event.inputs.full_sync || 'false' }}
         
-        # Executes your new Worker-less script
-        run: npx tsx scripts/sync.ts
+        # Using pnpm exec instead of npx
+        run: pnpm exec tsx scripts/sync.ts
 
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
