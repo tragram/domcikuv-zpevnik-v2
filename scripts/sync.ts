@@ -107,14 +107,41 @@ async function main() {
     }),
   );
   console.log("✓ DB Backup completed.");
-
   // ---------------------------------------------------------------------------
   // TASK 2: Sync to GitHub (Local File Generation)
   // ---------------------------------------------------------------------------
   console.log("Fetching data for GitHub sync via Drizzle...");
 
-  // Use your exact Drizzle logic from the original Worker
-  const songsQuery = db.select().from(schema.song);
+  // 1. Restore the explicit joins so title, artist, and chordpro are actually fetched
+  const songsQuery = db
+    .select({
+      id: schema.song.id,
+      deleted: schema.song.deleted,
+      hidden: schema.song.hidden,
+      createdAt: schema.song.createdAt,
+      updatedAt: schema.song.updatedAt,
+      title: schema.songVersion.title,
+      artist: schema.songVersion.artist,
+      chordpro: schema.songVersion.chordpro,
+      key: schema.songVersion.key,
+      language: schema.songVersion.language,
+      capo: schema.songVersion.capo,
+      tempo: schema.songVersion.tempo,
+      range: schema.songVersion.range,
+      startMelody: schema.songVersion.startMelody,
+      currentIllustrationId: schema.song.currentIllustrationId,
+      sourceId: schema.songImport.sourceId,
+    })
+    .from(schema.song)
+    .leftJoin(
+      schema.songVersion,
+      eq(schema.song.currentVersionId, schema.songVersion.id),
+    )
+    .leftJoin(
+      schema.songImport,
+      eq(schema.songImport.id, schema.songVersion.importId),
+    );
+
   const promptsQuery = db.select().from(schema.illustrationPrompt);
   const illustrationsQuery = db.select().from(schema.songIllustration);
 
@@ -129,6 +156,7 @@ async function main() {
     );
   }
 
+  // Execute all queries concurrently
   const [songs, prompts, illustrations] = await Promise.all([
     songsQuery,
     promptsQuery,
@@ -137,8 +165,10 @@ async function main() {
 
   console.log(`Fetched: ${songs.length} songs, ${prompts.length} prompts.`);
 
-  // Write files to disk exactly as we mapped out previously
   for (const songRow of songs) {
+    // Skip imported songs exactly like your original script
+    if (songRow.sourceId) continue;
+
     if (songRow.deleted) {
       const proPath = path.join(
         process.cwd(),
@@ -153,7 +183,39 @@ async function main() {
       continue;
     }
 
-    const song = new SongData({ ...songRow });
+    // 2. Safely map current illustration
+    const currentIll = illustrations.find(
+      (i: any) => i.id === songRow.currentIllustrationId,
+    );
+
+    // 3. Rehydrate the SongData class properly
+    const song = new SongData({
+      id: songRow.id,
+      title: songRow.title || "Unknown",
+      artist: songRow.artist || "Unknown",
+      key: songRow.key || undefined,
+      createdAt: songRow.createdAt,
+      updatedAt: songRow.updatedAt,
+      startMelody: songRow.startMelody || undefined,
+      language: songRow.language || "other",
+      tempo: songRow.tempo ? Number(songRow.tempo) : undefined,
+      capo: songRow.capo || 0,
+      range: songRow.range || undefined,
+      chordpro: songRow.chordpro || "",
+      externalSource: null,
+      currentIllustration: currentIll
+        ? {
+            illustrationId: currentIll.id,
+            promptId: currentIll.promptId,
+            imageModel: currentIll.imageModel,
+            imageURL: currentIll.imageURL,
+            thumbnailURL: currentIll.thumbnailURL,
+            promptURL: "",
+          }
+        : undefined,
+      isFavoriteByCurrentUser: false,
+    } as any);
+
     const proDir = path.join(process.cwd(), "songs/chordpro");
     fs.mkdirSync(proDir, { recursive: true });
     fs.writeFileSync(
@@ -169,7 +231,6 @@ async function main() {
     if (songPrompts.length > 0 || songIllustrations.length > 0) {
       const illustrationsByPrompt = new Map<string, any[]>();
 
-      // Recreate your original illustration mapping logic
       for (const ill of songIllustrations) {
         if (ill.deleted) continue;
 
@@ -184,8 +245,11 @@ async function main() {
           illustrationsByPrompt.set(ill.promptId, []);
         }
 
-        // Safely extract the timestamp, falling back to Date.now() if it's an Invalid Date
-        const createdAtDate = new Date(ill.createdAt);
+        // Safely extract the timestamp from Drizzle's Date object
+        const createdAtDate =
+          ill.createdAt instanceof Date
+            ? ill.createdAt
+            : new Date(ill.createdAt);
         const safeCreatedAt = isNaN(createdAtDate.getTime())
           ? Date.now()
           : createdAtDate.getTime();
@@ -197,12 +261,10 @@ async function main() {
         });
       }
 
-      // Sanitize the prompts to ensure js-yaml doesn't choke on Invalid Dates
       const safePrompts = songPrompts
         .filter((p: any) => !p.deleted)
         .map((p: any) => {
           const cleanP = { ...p };
-          // Convert any valid Dates to ISO strings, and Invalid Dates to null
           for (const key of Object.keys(cleanP)) {
             if (cleanP[key] instanceof Date) {
               cleanP[key] = isNaN(cleanP[key].getTime())
@@ -231,7 +293,6 @@ async function main() {
         yaml.dump(metadata),
       );
 
-      // Download Images
       for (const ill of songIllustrations) {
         if (ill.deleted || !ill.imageURL) continue;
 
