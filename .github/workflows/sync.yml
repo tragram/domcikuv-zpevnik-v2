@@ -1,0 +1,60 @@
+name: Database & Assets Sync
+
+on:
+  schedule:
+    # Runs automatically at 00:00 UTC every day
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+    # The manual trigger ;)
+    inputs:
+      full_sync:
+        description: 'Perform a Full Sync? (Re-downloads all images)'
+        required: true
+        type: boolean
+        default: false
+
+jobs:
+  sync-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Important: Fetch all history so Git can accurately detect diffs and deletions
+          fetch-depth: 0 
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Sync Script
+        env:
+          # Cloudflare D1 Credentials
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_DATABASE_ID: ${{ secrets.CF_DATABASE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          
+          # Cloudflare R2 Credentials (S3 API)
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+          
+          # Sync Configuration
+          IS_FULL_SYNC: ${{ github.event.inputs.full_sync || 'false' }}
+        
+        # Executes your new Worker-less script
+        run: npx tsx scripts/sync.ts
+
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: Automated database and assets sync"
+          branch: production-data-sync
+          create_branch: true
+          push_options: '--force'
