@@ -63,3 +63,17 @@ export const illustrationPromptRelations = relations(
     }),
   }),
 );
+
+export const userFavoriteSongsRelations = relations(
+  userFavoriteSongs,
+  ({ one }) => ({
+    song: one(song, {
+      fields: [userFavoriteSongs.songId],
+      references: [song.id],
+    }),
+    user: one(user, {
+      fields: [userFavoriteSongs.userId],
+      references: [user.id],
+    }),
+  }),
+);
