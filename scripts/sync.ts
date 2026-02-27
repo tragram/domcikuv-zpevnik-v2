@@ -5,7 +5,7 @@ import {
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3";
-import { gte } from "drizzle-orm";
+import { gte, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/sqlite-proxy";
 import yaml from "js-yaml";
 import fs from "node:fs";
