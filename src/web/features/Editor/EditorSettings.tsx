@@ -17,6 +17,7 @@ import {
   SUMMARY_PROMPT_VERSIONS,
   SUMMARY_MODELS_API,
 } from "src/worker/helpers/image-generator";
+import { useRouterState } from "@tanstack/react-router";
 
 export interface EditorSettings {
   autoGenerateIllustration: boolean;
@@ -50,7 +51,7 @@ const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
       [key]: !settings[key],
     });
   };
-
+  const location = useRouterState({ select: (s) => s.location });
   // since there's only one setting, hide the whole component if not trusted (to be changed later on)
   return user.loggedIn && user.profile.isTrusted ? (
     <div className="space-y-2">
@@ -79,6 +80,7 @@ const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
           </div>
           <Switch
             id="auto-illustration"
+            disabled={location.pathname !== "/edit"}
             checked={settings.autoGenerateIllustration}
             onCheckedChange={() => handleToggle("autoGenerateIllustration")}
           />
