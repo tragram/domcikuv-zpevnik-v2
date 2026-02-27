@@ -6,7 +6,7 @@
   "type": "module",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1000.0",
-    "@google/genai": "^1.42.0",
+    "@google/genai": "^1.43.0",
     "@huggingface/inference": "^4.6.1",
     "@khmyznikov/pwa-install": "^0.5.6",
     "@libsql/client": "^0.15.9",
