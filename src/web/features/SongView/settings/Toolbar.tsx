@@ -211,7 +211,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={handleForceUpdate}
-              disabled={"serviceWorker" in navigator}
+              disabled={!("serviceWorker" in navigator)}
             >
               <DropdownIconStart icon={<RefreshCw />} />
               <DropdownItemWithDescription
