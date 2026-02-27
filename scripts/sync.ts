@@ -43,7 +43,6 @@ const db = drizzle(
         Authorization: `Bearer ${process.env.CF_API_TOKEN}`,
         "Content-Type": "application/json",
       },
-      // The D1 HTTP API expects an array of queries if executing multiple, or just SQL string
       body: JSON.stringify({ sql, params }),
     });
 
@@ -56,9 +55,6 @@ const db = drizzle(
     const data = await response.json();
     const rows = data.result[0].results;
 
-    // Map the response format back to what Drizzle expects
-    if (method === "all") return rows;
-    if (method === "get") return rows[0];
     return { rows };
   },
   { schema },
