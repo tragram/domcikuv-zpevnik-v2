@@ -42,7 +42,6 @@ const db = drizzle(
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        // Added .trim() to the API token
         Authorization: `Bearer ${process.env.CF_API_TOKEN!.trim()}`,
         "Content-Type": "application/json",
       },
@@ -56,7 +55,9 @@ const db = drizzle(
     }
 
     const data = await response.json();
-    const rows = data.result[0].results;
+    const results = data.result[0].results;
+
+    const rows = results.map((row: any) => Object.values(row));
 
     return { rows };
   },
