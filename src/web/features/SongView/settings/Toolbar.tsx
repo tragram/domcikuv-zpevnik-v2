@@ -2,6 +2,7 @@ import RandomSong, { ResetBanListDropdownItems } from "~/components/RandomSong";
 import { Button } from "~/components/ui/button";
 import {
   DropdownIconStart,
+  DropdownItemWithDescription,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -20,6 +21,7 @@ import {
   Settings2,
   Undo2,
   CloudOff,
+  RefreshCw, // <-- Added for the update button
 } from "lucide-react";
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -45,6 +47,7 @@ import { UserProfileData } from "src/worker/api/userProfile";
 import { FeedStatus } from "../SongView";
 import ShareSongButton from "../components/ShareSongButton";
 import { AvatarWithFallback } from "~/components/ui/avatar";
+import { version as appVersion } from "../../../../../package.json";
 
 interface ToolbarProps {
   songDB: SongDB;
@@ -89,7 +92,25 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       wakeLockRelease();
     }
   }, [wakeLockSupported, wakeLockEnabled, wakeLockRequest, wakeLockRelease]);
+
   const { version: versionId } = useSearch({ strict: false });
+
+  // Handler to force SW update and reload
+  const handleForceUpdate = () => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+          registration.update();
+        }
+        // Reload to apply the new service worker rules immediately
+        window.location.reload();
+      });
+    } else {
+      // Fallback reload if SW isn't supported
+      window.location.reload();
+    }
+  };
+
   return (
     <div className="absolute top-0 w-full">
       <ToolbarBase isVisible={isToolbarVisible}>
@@ -186,6 +207,18 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               </Link>
             </DropdownMenuItem>
             {installItem}
+
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={handleForceUpdate}
+              disabled={"serviceWorker" in navigator}
+            >
+              <DropdownIconStart icon={<RefreshCw />} />
+              <DropdownItemWithDescription
+                title={`Currently on v${appVersion}`}
+                description={"Click to force update"}
+              />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </ToolbarBase>
