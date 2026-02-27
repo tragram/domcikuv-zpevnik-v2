@@ -165,8 +165,61 @@ async function main() {
       (i: any) => i.songId === song.id,
     );
 
-    if (songPrompts.length > 0) {
-      const metadata = { songId: song.id, prompts: songPrompts };
+    if (songPrompts.length > 0 || songIllustrations.length > 0) {
+      const illustrationsByPrompt = new Map<string, any[]>();
+
+      // Recreate your original illustration mapping logic
+      for (const ill of songIllustrations) {
+        if (ill.deleted) continue;
+
+        const rawPromptPart = ill.promptId
+          ? ill.promptId.replace(song.id + "_", "")
+          : "unknown";
+        const promptPathPart = sanitizePathSegment(rawPromptPart);
+        const safeModelName = sanitizePathSegment(ill.imageModel || "unknown");
+        const filename = `${safeModelName}.webp`;
+
+        if (!illustrationsByPrompt.has(ill.promptId)) {
+          illustrationsByPrompt.set(ill.promptId, []);
+        }
+
+        // Safely extract the timestamp, falling back to Date.now() if it's an Invalid Date
+        const createdAtDate = new Date(ill.createdAt);
+        const safeCreatedAt = isNaN(createdAtDate.getTime())
+          ? Date.now()
+          : createdAtDate.getTime();
+
+        illustrationsByPrompt.get(ill.promptId)!.push({
+          createdAt: safeCreatedAt,
+          imageModel: ill.imageModel,
+          filename,
+        });
+      }
+
+      // Sanitize the prompts to ensure js-yaml doesn't choke on Invalid Dates
+      const safePrompts = songPrompts
+        .filter((p: any) => !p.deleted)
+        .map((p: any) => {
+          const cleanP = { ...p };
+          // Convert any valid Dates to ISO strings, and Invalid Dates to null
+          for (const key of Object.keys(cleanP)) {
+            if (cleanP[key] instanceof Date) {
+              cleanP[key] = isNaN(cleanP[key].getTime())
+                ? null
+                : cleanP[key].toISOString();
+            }
+          }
+          return {
+            ...cleanP,
+            illustrations: illustrationsByPrompt.get(p.id) || [],
+          };
+        });
+
+      const metadata = {
+        songId: song.id,
+        prompts: safePrompts,
+      };
+
       const yamlDir = path.join(
         process.cwd(),
         `songs/illustrations/${song.id}`,
@@ -177,6 +230,7 @@ async function main() {
         yaml.dump(metadata),
       );
 
+      // Download Images
       for (const ill of songIllustrations) {
         if (ill.deleted || !ill.imageURL) continue;
 
