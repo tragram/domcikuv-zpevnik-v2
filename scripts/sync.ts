@@ -25,10 +25,12 @@ const isFullSync = process.env.IS_FULL_SYNC === "true";
 // 1. Setup R2 (S3 Client) - Requires S3 Access Keys, not the Cloudflare API Token
 const s3 = new S3Client({
   region: "auto",
-  endpoint: `https://${process.env.CF_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  // Added .trim() to Account ID
+  endpoint: `https://${process.env.CF_ACCOUNT_ID!.trim()}.r2.cloudflarestorage.com`,
   credentials: {
-    accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+    // Added .trim() to both keys
+    accessKeyId: process.env.R2_ACCESS_KEY_ID!.trim(),
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!.trim(),
   },
 });
 
@@ -40,7 +42,8 @@ const db = drizzle(
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.CF_API_TOKEN}`,
+        // Added .trim() to the API token
+        Authorization: `Bearer ${process.env.CF_API_TOKEN!.trim()}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ sql, params }),
