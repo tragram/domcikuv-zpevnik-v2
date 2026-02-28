@@ -1,15 +1,9 @@
-// used by github actions
-
-import {
-  GetObjectCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
-import { gte, eq } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/sqlite-proxy";
-import yaml from "js-yaml";
 import fs from "node:fs";
 import path from "node:path";
+import yaml from "js-yaml";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { drizzle } from "drizzle-orm/sqlite-proxy";
+import { eq, gte } from "drizzle-orm";
 import { SongData } from "../src/web/types/songData";
 import * as schema from "../src/lib/db/schema";
 export function sanitizePathSegment(segment: string): string {
@@ -22,13 +16,11 @@ export function sanitizePathSegment(segment: string): string {
 
 const isFullSync = process.env.IS_FULL_SYNC === "true";
 
-// 1. Setup R2 (S3 Client) - Requires S3 Access Keys, not the Cloudflare API Token
+// 1. Setup R2 (S3 Client) - Used ONLY for the database backup JSON
 const s3 = new S3Client({
   region: "auto",
-  // Added .trim() to Account ID
   endpoint: `https://${process.env.CF_ACCOUNT_ID!.trim()}.r2.cloudflarestorage.com`,
   credentials: {
-    // Added .trim() to both keys
     accessKeyId: process.env.R2_ACCESS_KEY_ID!.trim(),
     secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!.trim(),
   },
@@ -37,7 +29,7 @@ const s3 = new S3Client({
 // 2. Setup Drizzle over HTTP via SQLite Proxy
 const db = drizzle(
   async (sql, params, method) => {
-    const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID}/d1/database/${process.env.CF_DATABASE_ID}/query`;
+    const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID!.trim()}/d1/database/${process.env.CF_DATABASE_ID!.trim()}/query`;
 
     const response = await fetch(url, {
       method: "POST",
@@ -57,8 +49,8 @@ const db = drizzle(
     const data = await response.json();
     const results = data.result[0].results;
 
+    // FIX: Convert D1's array of objects into an array of arrays for Drizzle's proxy
     const rows = results.map((row: any) => Object.values(row));
-
     return { rows };
   },
   { schema },
@@ -90,7 +82,6 @@ async function main() {
     );
   });
 
-  // Use Drizzle to fetch all rows for backups
   for (const [tableName, table] of tables) {
     const rows = await db.select().from(table as any);
     backupData.tables[tableName] = rows;
@@ -107,12 +98,13 @@ async function main() {
     }),
   );
   console.log("✓ DB Backup completed.");
+
   // ---------------------------------------------------------------------------
   // TASK 2: Sync to GitHub (Local File Generation)
   // ---------------------------------------------------------------------------
   console.log("Fetching data for GitHub sync via Drizzle...");
 
-  // 1. Restore the explicit joins so title, artist, and chordpro are actually fetched
+  // Explicitly map all columns to ensure Drizzle constructs the object correctly
   const songsQuery = db
     .select({
       id: schema.song.id,
@@ -156,7 +148,6 @@ async function main() {
     );
   }
 
-  // Execute all queries concurrently
   const [songs, prompts, illustrations] = await Promise.all([
     songsQuery,
     promptsQuery,
@@ -166,7 +157,6 @@ async function main() {
   console.log(`Fetched: ${songs.length} songs, ${prompts.length} prompts.`);
 
   for (const songRow of songs) {
-    // Skip imported songs exactly like your original script
     if (songRow.sourceId) continue;
 
     if (songRow.deleted) {
@@ -183,12 +173,10 @@ async function main() {
       continue;
     }
 
-    // 2. Safely map current illustration
     const currentIll = illustrations.find(
       (i: any) => i.id === songRow.currentIllustrationId,
     );
 
-    // 3. Rehydrate the SongData class properly
     const song = new SongData({
       id: songRow.id,
       title: songRow.title || "Unknown",
@@ -245,7 +233,6 @@ async function main() {
           illustrationsByPrompt.set(ill.promptId, []);
         }
 
-        // Safely extract the timestamp from Drizzle's Date object
         const createdAtDate =
           ill.createdAt instanceof Date
             ? ill.createdAt
@@ -306,17 +293,24 @@ async function main() {
         const imgPath = path.join(imgDir, `${safeModelName}.webp`);
 
         if (!fs.existsSync(imgPath) || isFullSync) {
-          const r2Key = new URL(ill.imageURL).pathname.slice(1);
-          const { Body } = await s3.send(
-            new GetObjectCommand({
-              Bucket: process.env.R2_BUCKET_NAME,
-              Key: r2Key,
-            }),
-          );
-          if (Body) {
-            const buffer = Buffer.from(await Body.transformToByteArray());
-            fs.writeFileSync(imgPath, buffer);
+          // If it's a publicly accessible R2 image URL, fetch it natively
+          if (ill.imageURL.startsWith("http")) {
+            try {
+              const response = await fetch(ill.imageURL);
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+
+              const arrayBuffer = await response.arrayBuffer();
+              fs.writeFileSync(imgPath, Buffer.from(arrayBuffer));
+            } catch (error: any) {
+              console.error(
+                `Failed to fetch image ${ill.imageURL}:`,
+                error.message,
+              );
+            }
           }
+          // If it's a relative path (e.g. /songs/illustrations/...), it's already a local static asset. Do nothing.
         }
       }
     }

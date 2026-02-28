@@ -1,0 +1,47 @@
+name: Post-Sync Cleanup
+
+on:
+  workflow_run:
+    workflows: ["Database & Assets Sync"]
+    types:
+      - completed
+
+jobs:
+  cleanup:
+    # Only run if the sync actually succeeded (don't clean up if the commit failed!)
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. 5-Minute Delay for build
+      - name: Wait for Deployment
+        run: sleep 300
+
+      # 2. Setup the environment
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 3. Run the Cleanup Script
+      - name: Execute Cleanup and Update DB
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_DATABASE_ID: ${{ secrets.CF_DATABASE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
+        run: pnpm exec tsx scripts/post-sync-cleanup.ts
