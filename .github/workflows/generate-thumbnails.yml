@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'songs/illustrations/**/**/full/*.webp'
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
 permissions:
   contents: write # Needed to commit the thumbnails back to the repo
@@ -35,4 +36,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: auto-generate static PWA thumbnails"
-          file_pattern: "songs/illustrations/**/thumbnail/*.webp"
+          file_pattern: "songs/illustrations/**/**/thumbnail/*.webp"
