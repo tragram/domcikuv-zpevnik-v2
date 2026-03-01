@@ -72,12 +72,14 @@ async function main() {
     },
     tables: {},
   };
+  const EXCLUDED_TABLES = ["account", "session", "user"];
 
   const tables = Object.entries(schema).filter(([key, value]) => {
     return (
       value &&
       typeof value === "object" &&
-      Symbol.for("drizzle:IsDrizzleTable") in value
+      Symbol.for("drizzle:IsDrizzleTable") in value &&
+      !EXCLUDED_TABLES.includes(key) // Skip the excluded tables
     );
   });
 
