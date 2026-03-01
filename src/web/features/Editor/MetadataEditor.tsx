@@ -8,6 +8,8 @@ import { cn } from "~/lib/utils";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
 import { Separator } from "~/components/ui/separator";
 import { UserProfileData } from "src/worker/api/userProfile";
+import { Button } from "~/components/ui/button";
+import { guessKey } from "../SongView/utils/songRendering";
 
 interface MetadataEditorProps {
   songDB: SongDB;
@@ -94,6 +96,22 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           modified={defaultMetadata.key !== metadata.key}
           description="Use note name (with #/b into denote sharp/flat) for major key and append 'm' or 'mi' to indicate minor key."
           validator={metadataValidators.key}
+          action={
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                // Pass the current chordpro content from state to the guessKey function
+                const guessedKey = guessKey(metadata.chordpro);
+                if (guessedKey) {
+                  updateMetadata("key", guessedKey.toString());
+                }
+              }}
+            >
+              Guess
+            </Button>
+          }
         />
         <MetadataField
           label="Range"
