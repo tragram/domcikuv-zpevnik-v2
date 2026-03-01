@@ -2,10 +2,7 @@
 {artist: Znouzectnost}
 {key: Em}
 {capo: 0}
-{tempo: }
-{range: }
 {language: czech}
-{startMelody: }
 {createdAt: 1747173600000}
 {updatedAt: 1770572336000}
 {illustrationId: Znouzectnost-Zlaty_hrebik_noci_gpt-4o-mini_v2_FLUX.1-dev}

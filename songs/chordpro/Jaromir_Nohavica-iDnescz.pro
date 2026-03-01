@@ -2,7 +2,6 @@
 {artist: Jaromír Nohavica}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: d1-g1}
 {language: czech}
 {startMelody: g}

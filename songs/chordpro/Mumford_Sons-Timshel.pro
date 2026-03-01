@@ -2,10 +2,7 @@
 {artist: Mumford & Sons}
 {key: G}
 {capo: 0}
-{tempo: }
-{range: }
 {language: english}
-{startMelody: }
 {createdAt: 1752444000000}
 {updatedAt: 1770572186000}
 {illustrationId: Mumford_Sons-Timshel_gpt-4o-mini_v2_FLUX.1-dev}

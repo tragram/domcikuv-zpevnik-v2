@@ -2,10 +2,7 @@
 {artist: Neznámý}
 {key: D}
 {capo: 0}
-{tempo: }
-{range: }
 {language: czech}
-{startMelody: }
 {createdAt: 1747173600000}
 {updatedAt: 1770572191000}
 {illustrationId: Neznamy-Kriznik_Obrdzes_Reuben_James_gpt-4o-mini_v2_FLUX.1-dev}

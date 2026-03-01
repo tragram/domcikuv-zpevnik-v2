@@ -2,7 +2,6 @@
 {artist: Karel Plíhal}
 {key: H}
 {capo: 0}
-{tempo: }
 {range: a1-c#2}
 {language: czech}
 {startMelody: h f# f# f# e d}

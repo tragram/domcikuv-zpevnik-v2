@@ -2,7 +2,6 @@
 {artist: Mňága a Žďorp}
 {key: A#}
 {capo: 0}
-{tempo: }
 {range: c1-d2}
 {language: czech}
 {startMelody: a g a f}

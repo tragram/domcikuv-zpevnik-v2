@@ -2,7 +2,6 @@
 {artist: Miki Ryvola}
 {key: E}
 {capo: 0}
-{tempo: }
 {range: h1-g#1}
 {language: czech}
 {startMelody: h g#}

@@ -2,7 +2,6 @@
 {artist: Karel Kryl}
 {key: C}
 {capo: 2}
-{tempo: }
 {range: g1-c2}
 {language: czech}
 {startMelody: g}

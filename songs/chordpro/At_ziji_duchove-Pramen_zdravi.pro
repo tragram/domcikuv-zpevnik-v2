@@ -2,7 +2,6 @@
 {artist: Ať žijí duchové}
 {key: G}
 {capo: 5}
-{tempo: }
 {range: g1-g2}
 {language: czech}
 {startMelody: d e g}

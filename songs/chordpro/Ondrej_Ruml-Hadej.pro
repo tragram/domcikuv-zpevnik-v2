@@ -2,7 +2,6 @@
 {artist: Ondřej Ruml}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: h1-e2}
 {language: czech}
 {startMelody: h}

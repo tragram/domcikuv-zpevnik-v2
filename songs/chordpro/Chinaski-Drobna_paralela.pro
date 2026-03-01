@@ -2,7 +2,6 @@
 {artist: Chinaski}
 {key: G}
 {capo: 2}
-{tempo: }
 {range: a1-d2}
 {language: czech}
 {startMelody: h d}

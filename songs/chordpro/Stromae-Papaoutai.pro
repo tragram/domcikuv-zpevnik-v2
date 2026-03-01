@@ -2,7 +2,6 @@
 {artist: Stromae}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: h1-d2}
 {language: french}
 {startMelody: e d e d}

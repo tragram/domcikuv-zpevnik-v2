@@ -1,2 +1,23 @@
 songId: Filmova_Hudba-Kacer_Donald
-prompts: []
+prompts:
+  - id: Filmova_Hudba-Kacer_Donald_gpt-4o-mini_v2
+    songId: Filmova_Hudba-Kacer_Donald
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical scene where cheerful cartoon ducks,
+      resembling superheroes, are soaring through a vibrant cityscape filled
+      with colorful cars and futuristic airplanes. The sky is bright, and the
+      ducks are spreading joy, with children looking up in awe, their faces lit
+      with smiles as they welcome the magical arrival of the ducks from a
+      distant land.
+    createdAt: 2025-10-05T13:10:55.000Z
+    updatedAt: 2026-02-08T17:33:39.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1759669862000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1771688093000
+        imageModel: nano-banana-pro
+        filename: nano-banana-pro.webp

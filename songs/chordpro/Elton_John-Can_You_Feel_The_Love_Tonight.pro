@@ -2,7 +2,6 @@
 {artist: Elton John}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: d1-d2}
 {language: english}
 {startMelody: e f# g}

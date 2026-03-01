@@ -2,7 +2,6 @@
 {artist: The Barenaked Ladies & Chris Hadfield}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: d1-e2}
 {language: english}
 {startMelody: e}

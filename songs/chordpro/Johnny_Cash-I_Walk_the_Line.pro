@@ -2,7 +2,6 @@
 {artist: Johnny Cash}
 {key: E}
 {capo: 3}
-{tempo: }
 {range: g#1-e2}
 {language: english}
 {startMelody: e e e f#}

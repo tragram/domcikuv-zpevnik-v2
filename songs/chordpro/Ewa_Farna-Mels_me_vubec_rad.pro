@@ -2,7 +2,6 @@
 {artist: Ewa Farna}
 {key: C}
 {capo: 4}
-{tempo: }
 {range: h1-a1}
 {language: czech}
 {startMelody: c d}

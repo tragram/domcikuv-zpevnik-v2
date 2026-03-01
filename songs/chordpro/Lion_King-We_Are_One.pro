@@ -2,7 +2,6 @@
 {artist: Lion King}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: d1-d2}
 {language: english}
 {startMelody: g}

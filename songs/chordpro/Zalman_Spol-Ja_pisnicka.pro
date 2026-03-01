@@ -2,7 +2,6 @@
 {artist: Žalman & Spol.}
 {key: Am}
 {capo: 4}
-{tempo: }
 {range: g1-a2}
 {language: czech}
 {startMelody: a a e f e}

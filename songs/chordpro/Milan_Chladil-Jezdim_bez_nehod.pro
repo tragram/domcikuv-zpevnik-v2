@@ -2,7 +2,6 @@
 {artist: Milan Chladil}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: c1-d2}
 {language: czech}
 {startMelody: c}

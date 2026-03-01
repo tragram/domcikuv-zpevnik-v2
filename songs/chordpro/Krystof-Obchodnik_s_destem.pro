@@ -2,7 +2,6 @@
 {artist: Kryštof}
 {key: G}
 {capo: 2}
-{tempo: }
 {range: h1-c2}
 {language: czech}
 {startMelody: d}

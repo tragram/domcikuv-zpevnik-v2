@@ -2,7 +2,6 @@
 {artist: Wise Guys}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: a1-f#2}
 {language: german}
 {startMelody: c c a g}

@@ -2,7 +2,6 @@
 {artist: Tomáš Klus}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: d1-c1}
 {language: czech}
 {startMelody: g f#}

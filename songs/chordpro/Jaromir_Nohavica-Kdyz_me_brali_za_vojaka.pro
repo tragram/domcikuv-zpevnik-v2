@@ -2,10 +2,8 @@
 {artist: Jaromír Nohavica}
 {key: Am}
 {capo: 3}
-{tempo: }
 {range: g#1-a2}
 {language: czech}
-{startMelody: }
 {createdAt: 1436824800000}
 {updatedAt: 1770572061000}
 {illustrationId: Jaromir_Nohavica-Kdyz_me_brali_za_vojaka_gpt-4o-mini_v1_FLUX.1-dev}

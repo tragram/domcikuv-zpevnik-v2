@@ -2,7 +2,6 @@
 {artist: Rod Stewart}
 {key: C}
 {capo: 4}
-{tempo: }
 {range: g1-a2}
 {language: english}
 {startMelody: g}

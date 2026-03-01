@@ -2,7 +2,6 @@
 {artist: Otto Vokál}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: a1-a2}
 {language: czech}
 {startMelody: a d}

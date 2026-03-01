@@ -2,10 +2,8 @@
 {artist: Leonard Cohen}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: a1-e2}
 {language: english}
-{startMelody: }
 {createdAt: 1436824800000}
 {updatedAt: 1770572150000}
 {illustrationId: Leonard_Cohen-Hallelujah_gpt-4o-mini_v1_FLUX.1-dev}

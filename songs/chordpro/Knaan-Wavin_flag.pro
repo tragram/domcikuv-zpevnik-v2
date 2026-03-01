@@ -2,7 +2,6 @@
 {artist: K'naan}
 {key: C}
 {capo: 3}
-{tempo: }
 {range: g1-a2}
 {language: spanish}
 {startMelody: e}

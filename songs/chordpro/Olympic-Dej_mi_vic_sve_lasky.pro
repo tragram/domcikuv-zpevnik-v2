@@ -2,7 +2,6 @@
 {artist: Olympic}
 {key: Am}
 {capo: 1}
-{tempo: }
 {range: a1-h2}
 {language: czech}
 {startMelody: a}

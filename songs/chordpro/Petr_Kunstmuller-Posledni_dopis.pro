@@ -5,7 +5,6 @@
 {tempo: 5}
 {range: g1-e1}
 {language: czech}
-{startMelody: }
 {createdAt: 1531519200000}
 {updatedAt: 1770572218000}
 {illustrationId: Petr_Kunstmuller-Posledni_dopis_gpt-4o-mini_v1_FLUX.1-dev}

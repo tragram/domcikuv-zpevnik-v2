@@ -2,7 +2,6 @@
 {artist: Svěrák & Uhlíř}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: c1-a1}
 {language: czech}
 {startMelody: a}

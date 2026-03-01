@@ -2,7 +2,6 @@
 {artist: Lidová píseň}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: d1-d2}
 {language: slovak}
 {startMelody: d}

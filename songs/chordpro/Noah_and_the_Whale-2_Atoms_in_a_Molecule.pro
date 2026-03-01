@@ -2,7 +2,6 @@
 {artist: Noah and the Whale}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: c#1-a1}
 {language: english}
 {startMelody: d a}

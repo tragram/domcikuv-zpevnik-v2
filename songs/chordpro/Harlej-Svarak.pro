@@ -2,7 +2,6 @@
 {artist: Harlej}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: e1-e2}
 {language: czech}
 {startMelody: h h §h c d}

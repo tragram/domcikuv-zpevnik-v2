@@ -2,7 +2,6 @@
 {artist: Traband}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: a1-f2}
 {language: czech}
 {startMelody: d d c a}

@@ -2,7 +2,6 @@
 {artist: Trainspotting}
 {key: Am}
 {capo: 2}
-{tempo: }
 {range: g1-h2}
 {language: english}
 {startMelody: a e}

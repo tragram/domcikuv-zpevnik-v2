@@ -2,7 +2,6 @@
 {artist: Druhá tráva}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: a1-g#1}
 {language: czech}
 {startMelody: a e d c}

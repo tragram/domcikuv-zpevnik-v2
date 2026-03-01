@@ -2,7 +2,6 @@
 {artist: Mandrage}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: e1-d1}
 {language: czech}
 {startMelody: h}

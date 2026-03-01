@@ -2,7 +2,6 @@
 {artist: Folk}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: a1-c2}
 {language: finnish}
 {startMelody: e a}

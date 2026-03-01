@@ -2,7 +2,6 @@
 {artist: Jiří Schlinger}
 {key: Hm}
 {capo: 3}
-{tempo: }
 {range: a1-h2}
 {language: czech}
 {startMelody: h}

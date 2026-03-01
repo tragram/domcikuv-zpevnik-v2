@@ -2,7 +2,6 @@
 {artist: Nedvědi}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: d1-h1}
 {language: czech}
 {startMelody: f#}

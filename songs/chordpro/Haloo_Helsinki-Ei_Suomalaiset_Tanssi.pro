@@ -2,7 +2,6 @@
 {artist: Haloo Helsinki!}
 {key: Hm}
 {capo: 0}
-{tempo: }
 {range: h1-h2}
 {language: finnish}
 {startMelody: f#}

@@ -2,7 +2,6 @@
 {artist: Petr Hapka}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: g1-g3}
 {language: czech}
 {startMelody: f}

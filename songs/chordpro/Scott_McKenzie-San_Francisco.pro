@@ -2,7 +2,6 @@
 {artist: Scott McKenzie}
 {key: Em}
 {capo: 2}
-{tempo: }
 {range: g1-d2}
 {language: english}
 {startMelody: d}

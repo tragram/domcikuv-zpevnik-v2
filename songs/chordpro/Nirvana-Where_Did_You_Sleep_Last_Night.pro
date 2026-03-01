@@ -2,7 +2,6 @@
 {artist: Nirvana}
 {key: E}
 {capo: 0}
-{tempo: }
 {range: e1-h1}
 {language: english}
 {startMelody: g# f# e}

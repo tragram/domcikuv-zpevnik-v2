@@ -2,10 +2,8 @@
 {artist: Karel Kryl}
 {key: Am}
 {capo: 4}
-{tempo: }
 {range: g1-a2}
 {language: czech}
-{startMelody: }
 {createdAt: 1436824800000}
 {updatedAt: 1770572133000}
 {illustrationId: Karel_Kryl-Velicenstvo_kat_gpt-4o-mini_v1_FLUX.1-dev}

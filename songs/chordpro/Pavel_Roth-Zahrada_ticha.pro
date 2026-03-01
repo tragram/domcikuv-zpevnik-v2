@@ -2,7 +2,6 @@
 {artist: Pavel Roth}
 {key: D}
 {capo: 4}
-{tempo: }
 {range: d1-a1}
 {language: czech}
 {startMelody: f#}

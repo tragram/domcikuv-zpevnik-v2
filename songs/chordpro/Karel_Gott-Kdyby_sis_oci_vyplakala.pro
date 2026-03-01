@@ -2,7 +2,6 @@
 {artist: Karel Gott}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: h1-h2}
 {language: czech}
 {startMelody: d}

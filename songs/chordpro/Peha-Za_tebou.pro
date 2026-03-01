@@ -2,7 +2,6 @@
 {artist: Peha}
 {key: Em}
 {capo: 3}
-{tempo: }
 {range: g1-h2}
 {language: slovak}
 {startMelody: e f#}

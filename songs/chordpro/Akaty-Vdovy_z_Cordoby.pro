@@ -2,7 +2,6 @@
 {artist: Akáty}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: h1-e2}
 {language: czech}
 {startMelody: a c}

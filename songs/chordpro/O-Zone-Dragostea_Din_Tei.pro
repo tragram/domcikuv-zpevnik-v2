@@ -2,7 +2,6 @@
 {artist: O-Zone}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: g1-e2}
 {language: romanian}
 {startMelody: c a}

@@ -2,7 +2,6 @@
 {artist: Ozvěna}
 {key: Am}
 {capo: 5}
-{tempo: }
 {range: a1-f#1}
 {language: czech}
 {startMelody: e}

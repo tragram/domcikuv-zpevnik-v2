@@ -2,7 +2,6 @@
 {artist: Jan Nedvěd}
 {key: Em}
 {capo: 3}
-{tempo: }
 {range: g1-h2}
 {language: czech}
 {startMelody: h g}

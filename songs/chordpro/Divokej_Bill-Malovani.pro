@@ -2,7 +2,6 @@
 {artist: Divokej Bill}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: e1-e2}
 {language: czech}
 {startMelody: e e e g e}

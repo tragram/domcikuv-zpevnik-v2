@@ -2,10 +2,8 @@
 {artist: Pokáč}
 {key: C}
 {capo: 3}
-{tempo: }
 {range: g1-a2}
 {language: czech}
-{startMelody: }
 {createdAt: 1544742000000}
 {updatedAt: 1770572222000}
 {illustrationId: Pokac-Kebaby_gpt-4o-mini_v1_FLUX.1-dev}

@@ -2,7 +2,6 @@
 {artist: Čechomor}
 {key: Am}
 {capo: 4}
-{tempo: }
 {range: a1-g1}
 {language: czech}
 {startMelody: e}

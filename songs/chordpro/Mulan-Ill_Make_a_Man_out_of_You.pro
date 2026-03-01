@@ -2,7 +2,6 @@
 {artist: Mulan}
 {key: C}
 {capo: 3}
-{tempo: }
 {range: g1-c#2}
 {language: english}
 {startMelody: a e}

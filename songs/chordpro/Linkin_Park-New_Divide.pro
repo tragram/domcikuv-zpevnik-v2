@@ -2,7 +2,6 @@
 {artist: Linkin Park}
 {key: Em}
 {capo: 5}
-{tempo: }
 {range: a1-a2}
 {language: english}
 {startMelody: h d e}

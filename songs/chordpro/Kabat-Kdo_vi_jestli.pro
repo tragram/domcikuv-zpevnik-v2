@@ -2,7 +2,6 @@
 {artist: Kabát}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: c1-a1}
 {language: czech}
 {startMelody: e g a g}

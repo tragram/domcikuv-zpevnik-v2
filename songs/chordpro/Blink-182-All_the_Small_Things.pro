@@ -2,7 +2,6 @@
 {artist: Blink-182}
 {key: C}
 {capo: 5}
-{tempo: }
 {range: g1-g2}
 {language: english}
 {startMelody: e}

@@ -2,7 +2,6 @@
 {artist: Pavel Čadek}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: d1-a1}
 {language: czech}
 {startMelody: f}

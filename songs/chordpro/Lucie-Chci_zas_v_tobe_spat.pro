@@ -2,7 +2,6 @@
 {artist: Lucie}
 {key: G}
 {capo: 6}
-{tempo: }
 {range: d1-g2}
 {language: czech}
 {startMelody: a a g a}

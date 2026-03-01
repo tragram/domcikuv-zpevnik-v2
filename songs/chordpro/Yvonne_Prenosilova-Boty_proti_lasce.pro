@@ -2,7 +2,6 @@
 {artist: Yvonne Přenosilová}
 {key: E}
 {capo: 0}
-{tempo: }
 {range: e1-e2}
 {language: czech}
 {startMelody: e d#}

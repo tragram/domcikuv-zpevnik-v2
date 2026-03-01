@@ -2,7 +2,6 @@
 {artist: Michal Hrůza}
 {key: D}
 {capo: 5}
-{tempo: }
 {range: f#1-f#2}
 {language: czech}
 {startMelody: d d d c#}

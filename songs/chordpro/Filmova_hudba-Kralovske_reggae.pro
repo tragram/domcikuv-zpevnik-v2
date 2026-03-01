@@ -2,7 +2,6 @@
 {artist: Filmová hudba}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: f#1-e2}
 {language: czech}
 {startMelody: d}

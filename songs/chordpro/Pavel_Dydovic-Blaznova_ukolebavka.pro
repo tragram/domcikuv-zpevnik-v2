@@ -2,7 +2,6 @@
 {artist: Pavel Dydovič}
 {key: D}
 {capo: 2}
-{tempo: }
 {range: a1-h2}
 {language: czech}
 {startMelody: d d d c# d}

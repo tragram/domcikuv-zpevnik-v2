@@ -2,7 +2,6 @@
 {artist: Svěrák & Uhlíř}
 {key: Am}
 {capo: 3}
-{tempo: }
 {range: g#1-a2}
 {language: czech}
 {startMelody: a a a}

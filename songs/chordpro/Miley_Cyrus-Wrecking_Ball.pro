@@ -2,7 +2,6 @@
 {artist: Miley Cyrus}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: g1-c2}
 {language: english}
 {startMelody: h e}

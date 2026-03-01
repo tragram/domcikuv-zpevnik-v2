@@ -2,7 +2,6 @@
 {artist: Vojtěch Dyk}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: e1-f2}
 {language: czech}
 {startMelody: e c d h}

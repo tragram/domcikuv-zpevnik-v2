@@ -2,7 +2,6 @@
 {artist: Marta Kubišová}
 {key: C}
 {capo: 5}
-{tempo: }
 {range: g1-g2}
 {language: czech}
 {startMelody: c}

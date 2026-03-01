@@ -2,7 +2,6 @@
 {artist: Irish Rovers}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: g1-a2}
 {language: english}
 {startMelody: e}

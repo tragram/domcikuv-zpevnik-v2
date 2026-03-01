@@ -2,7 +2,6 @@
 {artist: Rangers - Plavci}
 {key: E}
 {capo: 0}
-{tempo: }
 {range: h1-f2}
 {language: czech}
 {startMelody: e h g# h}

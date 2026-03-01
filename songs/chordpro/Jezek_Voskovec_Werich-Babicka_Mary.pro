@@ -2,7 +2,6 @@
 {artist: Ježek + Voskovec + Werich}
 {key: Am}
 {capo: 4}
-{tempo: }
 {range: g1-g2}
 {language: czech}
 {startMelody: a a e e}

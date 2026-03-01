@@ -2,7 +2,6 @@
 {artist: Simple Plan}
 {key: C}
 {capo: 5}
-{tempo: }
 {range: a1-g1}
 {language: english}
 {startMelody: c d e}

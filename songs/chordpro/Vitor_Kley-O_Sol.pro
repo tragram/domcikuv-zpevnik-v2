@@ -2,7 +2,6 @@
 {artist: Vitor Kley}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: d1-e2}
 {language: portuguese}
 {startMelody: e h}

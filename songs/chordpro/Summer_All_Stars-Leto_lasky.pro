@@ -2,7 +2,6 @@
 {artist: Summer All Stars}
 {key: F}
 {capo: 0}
-{tempo: }
 {range: a1-d2}
 {language: czech}
 {startMelody: a}

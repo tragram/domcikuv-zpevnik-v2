@@ -2,7 +2,6 @@
 {artist: Kabát}
 {key: A}
 {capo: 3}
-{tempo: }
 {range: a1-e2}
 {language: czech}
 {startMelody: c# c# c#}

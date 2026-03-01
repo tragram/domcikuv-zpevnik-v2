@@ -2,10 +2,8 @@
 {artist: Karel Kryl}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: c1-e2}
 {language: czech}
-{startMelody: }
 {createdAt: 1468447200000}
 {updatedAt: 1770572129000}
 {illustrationId: Karel_Kryl-Nevidoma_divka_gpt-4o-mini_v1_FLUX.1-dev}

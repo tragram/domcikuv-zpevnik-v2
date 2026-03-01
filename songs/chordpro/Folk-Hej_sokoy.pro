@@ -2,7 +2,6 @@
 {artist: Folk}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: e1-a2}
 {language: polish}
 {startMelody: a c a c e}

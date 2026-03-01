@@ -2,7 +2,6 @@
 {artist: Maxim Turbulenc}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: c1-g1}
 {language: czech}
 {startMelody: c e f g}
