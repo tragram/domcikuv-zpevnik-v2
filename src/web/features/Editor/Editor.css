@@ -16,3 +16,82 @@
 .lyrics-line:not(.section > .lyrics-line):not(.editor-content-empty .lyrics-line) {
     color: rgb(220, 38, 38);
 }
+
+/* Base wrapper */
+.markdown {
+    color: hsl(var(--foreground));
+    line-height: 1.4;
+
+    display: block !important;
+    gap: 0 !important;
+}
+
+/* Reset all margins on children just to be safe */
+.markdown>* {
+    margin: 0;
+}
+
+/* ----------------------------------------- */
+/* EXACT SPACING (Now that the gap is dead)  */
+/* ----------------------------------------- */
+
+.markdown h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.markdown h1:first-child {
+    margin-top: 0;
+}
+
+.markdown h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-top: 1.25rem;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+}
+
+.markdown p {
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+}
+
+/* Tiny gap between consecutive paragraphs */
+.markdown p+p {
+    margin-top: 0.25rem;
+}
+
+/* Squeeze H2 if it sits right below H1 */
+.markdown h1+h2 {
+    margin-top: 0.25rem;
+}
+
+/* ----------------------------------------- */
+/* CODE BLOCKS                               */
+/* ----------------------------------------- */
+
+.markdown pre {
+    background-color: hsl(var(--muted));
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    overflow-x: auto;
+    border: 1px solid hsl(var(--border) / 0.5);
+}
+
+.markdown pre code {
+    background-color: transparent;
+    padding: 0;
+    font-size: 0.85em;
+    color: hsl(var(--foreground));
+}
+
+.markdown code {
+    background-color: hsl(var(--muted));
+    padding: 0.15em 0.3em;
+    border-radius: 0.25rem;
+    font-size: 0.85em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}

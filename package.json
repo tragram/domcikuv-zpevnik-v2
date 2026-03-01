@@ -58,6 +58,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-full-screen": "^1.1.1",
+    "react-markdown": "^10.1.0",
     "react-screen-wake-lock": "^3.1.1",
     "react-scroll": "^1.9.3",
     "shadcn": "^3.6.2",

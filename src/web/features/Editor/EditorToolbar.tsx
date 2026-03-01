@@ -31,6 +31,7 @@ import {
 } from "~/components/ui/tooltip";
 import { EditorSettings } from "./EditorSettings";
 import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
+import EditorHelp from "./components/EditorHelp";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -75,7 +76,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
   const generateIllustrationInBackground = (
     songId: string,
-    settings: EditorSettings
+    settings: EditorSettings,
   ) => {
     const generationParams = {
       songId,
@@ -120,7 +121,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
               param: { id: songData.id },
               json: parsedState,
             })
-          : editorApi.$post({ json: parsedState })
+          : editorApi.$post({ json: parsedState }),
       );
       const version = response.version;
       const isUpdate =
@@ -130,7 +131,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       toast.success(
         `Successfully ${
           isUpdate ? "updated" : "submitted"
-        } your version of the song!`
+        } your version of the song!`,
       );
 
       onSubmitSuccess?.();
@@ -169,7 +170,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     <div
       className={cn(
         "flex flex-wrap w-auto mx-4 xl:mx-8 border-4 border-primary rounded-md max-md:justify-around md:justify-between [&>*]:bg-transparent [&>*]:rounded-none",
-        toolbarTop ? "mt-4 xl:mt-8" : "mb-4 xl:mb-8 "
+        toolbarTop ? "mt-4 xl:mt-8" : "mb-4 xl:mb-8 ",
       )}
     >
       {/* links */}
@@ -201,6 +202,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       </div>
       {/* editor actions */}
       <div className="flex editor-toolbar-actions flex-wrap justify-center">
+        <EditorHelp />
         <Button
           className="hover:text-white bg-transparent"
           onClick={onUploadClick}
