@@ -6,6 +6,8 @@ import fs from "node:fs";
 import path from "node:path";
 import * as schema from "../src/lib/db/schema";
 import { SongData } from "../src/web/types/songData";
+import { formatChordpro } from "../src/web/lib/formatChordpro";
+
 export function sanitizePathSegment(segment: string): string {
   if (!segment) return "unknown";
   return segment
@@ -47,7 +49,6 @@ const db = drizzle(
     const data = await response.json();
     const results = data.result[0].results;
 
-    // FIX: Convert D1's array of objects into an array of arrays for Drizzle's proxy
     const rows = results.map((row: any) => Object.values(row));
     return { rows };
   },
@@ -98,11 +99,10 @@ async function main() {
   console.log("✓ DB Backup completed.");
 
   // ---------------------------------------------------------------------------
-  // TASK 2: Sync to GitHub (Local File Generation)
+  // TASK 2: Sync to GitHub (Local File Generation & Two-Way Sync Cleanup)
   // ---------------------------------------------------------------------------
   console.log("Fetching data for GitHub sync via Drizzle...");
 
-  // Explicitly map all columns to ensure Drizzle constructs the object correctly
   const songsQuery = db
     .select({
       id: schema.song.id,
@@ -143,22 +143,49 @@ async function main() {
 
   console.log(`Fetched: ${songs.length} songs, ${prompts.length} prompts.`);
 
+  // --- IDENTIFY ACTIVE RECORDS ---
+  const activeSongIds = new Set<string>();
   for (const songRow of songs) {
-    if (songRow.sourceId) continue;
-
-    if (songRow.deleted) {
-      const proPath = path.join(
-        process.cwd(),
-        `songs/chordpro/${songRow.id}.pro`,
-      );
-      const yamlPath = path.join(
-        process.cwd(),
-        `songs/illustrations/${songRow.id}/illustrations.yaml`,
-      );
-      if (fs.existsSync(proPath)) fs.unlinkSync(proPath);
-      if (fs.existsSync(yamlPath)) fs.unlinkSync(yamlPath);
-      continue;
+    // A song is active if it hasn't been deleted and isn't imported from an external source
+    if (!songRow.sourceId && !songRow.deleted) {
+      activeSongIds.add(songRow.id);
     }
+  }
+
+  // --- CLEANUP ORPHANED LOCAL FILES ---
+  console.log("Sweeping local directories for deleted records...");
+  const proDir = path.join(process.cwd(), "songs/chordpro");
+  const illustrationsBaseDir = path.join(process.cwd(), "songs/illustrations");
+
+  if (fs.existsSync(proDir)) {
+    for (const file of fs.readdirSync(proDir)) {
+      if (file.endsWith(".pro")) {
+        const songId = file.replace(".pro", "");
+        if (!activeSongIds.has(songId)) {
+          fs.unlinkSync(path.join(proDir, file));
+          console.log(`Deleted orphaned chordpro: ${file}`);
+        }
+      }
+    }
+  }
+
+  if (fs.existsSync(illustrationsBaseDir)) {
+    for (const folder of fs.readdirSync(illustrationsBaseDir)) {
+      if (folder.startsWith(".")) continue; // Ignore hidden files like .DS_Store
+      if (!activeSongIds.has(folder)) {
+        fs.rmSync(path.join(illustrationsBaseDir, folder), {
+          recursive: true,
+          force: true,
+        });
+        console.log(`Deleted orphaned illustration folder for song: ${folder}`);
+      }
+    }
+  }
+
+  // --- PHASE C - GENERATE AND UPDATE ACTIVE RECORDS ---
+  for (const songRow of songs) {
+    // Skip entirely if it's not in our active set
+    if (!activeSongIds.has(songRow.id)) continue;
 
     const currentIll = illustrations.find(
       (i: any) => i.id === songRow.currentIllustrationId,
@@ -191,11 +218,10 @@ async function main() {
       isFavoriteByCurrentUser: false,
     } as any);
 
-    const proDir = path.join(process.cwd(), "songs/chordpro");
     fs.mkdirSync(proDir, { recursive: true });
     fs.writeFileSync(
       path.join(proDir, `${song.id}.pro`),
-      song.toCustomChordpro(),
+      formatChordpro(song.toCustomChordpro()),
     );
 
     const songPrompts = prompts.filter((p: any) => p.songId === song.id);
@@ -203,8 +229,12 @@ async function main() {
       (i: any) => i.songId === song.id,
     );
 
+    const yamlDir = path.join(illustrationsBaseDir, song.id);
+    fs.mkdirSync(yamlDir, { recursive: true });
+
     if (songPrompts.length > 0 || songIllustrations.length > 0) {
       const illustrationsByPrompt = new Map<string, any[]>();
+      const expectedPromptFolders = new Set<string>(); // Used to clean up orphaned prompts later
 
       for (const ill of songIllustrations) {
         if (ill.deleted) continue;
@@ -215,6 +245,9 @@ async function main() {
         const promptPathPart = sanitizePathSegment(rawPromptPart);
         const safeModelName = sanitizePathSegment(ill.imageModel || "unknown");
         const filename = `${safeModelName}.webp`;
+
+        // Track that this folder should exist on disk
+        expectedPromptFolders.add(promptPathPart);
 
         if (!illustrationsByPrompt.has(ill.promptId)) {
           illustrationsByPrompt.set(ill.promptId, []);
@@ -252,21 +285,18 @@ async function main() {
             illustrations: illustrationsByPrompt.get(p.id) || [],
           };
         });
+
       const metadata = {
         songId: song.id,
         prompts: safePrompts,
       };
 
-      const yamlDir = path.join(
-        process.cwd(),
-        `songs/illustrations/${song.id}`,
-      );
-      fs.mkdirSync(yamlDir, { recursive: true });
       fs.writeFileSync(
         path.join(yamlDir, "illustrations.yaml"),
         yaml.dump(metadata),
       );
 
+      // Download missing images
       for (const ill of songIllustrations) {
         if (ill.deleted || !ill.imageURL) continue;
 
@@ -280,14 +310,12 @@ async function main() {
         const imgPath = path.join(imgDir, `${safeModelName}.webp`);
 
         if (!fs.existsSync(imgPath)) {
-          // If it's a publicly accessible R2 image URL, fetch it natively
           if (ill.imageURL.startsWith("http")) {
             try {
               const response = await fetch(ill.imageURL);
               if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
               }
-
               const arrayBuffer = await response.arrayBuffer();
               fs.writeFileSync(imgPath, Buffer.from(arrayBuffer));
             } catch (error: any) {
@@ -297,9 +325,25 @@ async function main() {
               );
             }
           }
-          // If it's a relative path (e.g. /songs/illustrations/...), it's already a local static asset. Do nothing.
         }
       }
+
+      // ---  CLEANUP ORPHANED PROMPTS WITHIN THE SONG ---
+      // If an illustration was deleted, its specific prompt folder might still exist. Let's sweep it.
+      for (const item of fs.readdirSync(yamlDir)) {
+        const itemPath = path.join(yamlDir, item);
+        if (fs.statSync(itemPath).isDirectory()) {
+          if (!expectedPromptFolders.has(item)) {
+            fs.rmSync(itemPath, { recursive: true, force: true });
+          }
+        }
+      }
+    } else {
+      // If there are no prompts or illustrations at all, just write an empty yaml
+      fs.writeFileSync(
+        path.join(yamlDir, "illustrations.yaml"),
+        yaml.dump({ songId: song.id, prompts: [] }),
+      );
     }
   }
   console.log("✓ GitHub Sync file generation completed.");
