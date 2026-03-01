@@ -21,9 +21,9 @@
 {end_of_verse}
 
 {start_of_chorus}
-[D]Na zámku se dneska [G]tančí 
+[D]Na zámku se dneska [G]tančí
 [C]a pod kopcem v hospodě
-[D]bodaj nože do stolu, 
+[D]bodaj nože do stolu,
 [D]na zámku se dneska [G]tančí
 [C]a pod lesem v chalupách se [D]asi něco chystá.
 Co asi, co asi, [G]co asi, [D]co asi, co asi, [G]co asi,
@@ -52,7 +52,7 @@ Co asi, co asi, [G]co asi, [D]co asi, co asi, [G]co asi,
 [Emi]Zámek se roz[C]svítí [G]jako [D]lampion,
 [Emi]velký zlatý [C]hřebík [G]nocí bude [D]zářit,
 [Emi]nebem si za[C]tančí [G]jisker [D]milion
-[Emi]a nezvaní [C]zvané [G]lesem budou [D]honit. 
+[Emi]a nezvaní [C]zvané [G]lesem budou [D]honit.
 [G]Honit, [C]lesem budou [D]honit.
 {end_of_verse}
 

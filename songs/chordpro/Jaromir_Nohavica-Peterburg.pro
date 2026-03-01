@@ -17,7 +17,7 @@ zatoulaný pes nevzal si ani kůrku [A#]chleba, kterou [A]jsem mu [Dmi]dal
 
 {start_of_chorus}
 [: [F]Lásku moji [Gmi]kníže I[A]gor si bere,
-[A#]nad sklenkou [Asdim]vodky [H7]hraju si s [A] evolverem,
+[A#]nad sklenkou [Asdim]vodky [H7]hraju si s [A]evolverem,
 [Dmi]havran usedá na střechy Petěrburgu, [A#]čert a[A]by to [Dmi]spral. :]
 {end_of_chorus}
 
@@ -28,6 +28,6 @@ moje duše, široširá stepi, [A#]máš na [A]kahán[Dmi]ku.
 
 {start_of_chorus}
 [: [F]Mému žalu na [Gmi]světě [A]není rovno,
-[A#] vy jste tím [Asdim]vinna, [H7]Naděždo [A]Ivanovno,
+[A#]vy jste tím [Asdim]vinna, [H7]Naděždo [A]Ivanovno,
 [Dmi]vy jste tím vinna, až mě zítra najdou [A#]s dírou [A]ve spán[Dmi]ku :]
 {end_of_chorus}

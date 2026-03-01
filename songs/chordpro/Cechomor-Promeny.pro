@@ -47,7 +47,7 @@ A ty přece [C]bu[G]deš [C]má [Dmi]lebo mi tě [E]Pán Bůh [Ami]dá.
 {end_of_verse}
 
 {start_of_verse}
-[mezihra:] [Ami] [F] [C] [F] [C] [G] [Ami] [F] [C] [F] [C] [G]
+[mezihra:][Ami][F][C][F][C][G][Ami][F][C][F][C][G]
 {end_of_verse}
 
 {start_of_verse}

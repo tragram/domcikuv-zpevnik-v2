@@ -20,7 +20,7 @@ But it will not [G]steal your substance
 {start_of_chorus}
 [D]But you are not [C]alone in [G]this
 And [C]you are not [Em]alone in [G]this
-As [C]brothers we will [Dadd9]stand and 
+As [C]brothers we will [Dadd9]stand and
 we'll [G]hold [G/F#]your [Emi]hand
 Hold your [G]hand
 {end_of_chorus}

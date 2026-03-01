@@ -15,14 +15,14 @@
 K [Asus4]nám [A]už [Asus4]mí[A]ří
 [A]Auta laser aeroplán
 [Dsus4]Měs[D]tem [Dsus4]ví[D]ří
-[Hmi7]Příběhy [E]píše 
+[Hmi7]Příběhy [E]píše
 z [Hmi7]téhlete [E]říše
 {end_of_verse}
 
 {start_of_chorus}
-[A]Kačer, úú, 
+[A]Kačer, úú,
 [F]teď k vám děti [G]z dálky letí
-[A]Kačer, úú, 
+[A]Kačer, úú,
 [F]přináší sem [G]kouzelnou zem
 [A]Kačer
 {end_of_chorus}
@@ -34,11 +34,11 @@ z [Hmi7]téhlete [E]říše
 {end_of_bridge}
 
 {start_of_chorus}
-[H]Kačer, úú, 
+[H]Kačer, úú,
 [G]teď k vám děti [A]z dálky letí
-[H]Kačer, úú, 
+[H]Kačer, úú,
 [G]přináší sem [A]kouzelnou zem
-[H]Kačer, úú, 
+[H]Kačer, úú,
 [G]Na tváře smívky [A]právě příst pan
 [H]Kačer, uú.
 {end_of_chorus}
