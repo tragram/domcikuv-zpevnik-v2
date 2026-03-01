@@ -103,6 +103,7 @@ async function main() {
         .set({
           imageURL: finalImageURL,
           thumbnailURL: finalThumbURL,
+          updatedAt: new Date(),
         })
         .where(eq(schema.songIllustration.id, ill.id));
 
