@@ -5,6 +5,7 @@ import {
   eq,
   ExtractTablesWithRelations,
   gte,
+  inArray,
   isNotNull,
   or,
 } from "drizzle-orm";
@@ -108,7 +109,22 @@ export async function retrieveSongs(
     else conditions.push(eq(song.hidden, false));
   }
   if (!includeDeleted) conditions.push(eq(song.deleted, false));
-  if (updatedSince) conditions.push(gte(song.updatedAt, updatedSince));
+
+  
+  if (updatedSince) {
+    conditions.push(
+      or(
+        gte(song.updatedAt, updatedSince),
+        inArray(
+          song.currentIllustrationId,
+          db
+            .select({ id: songIllustration.id })
+            .from(songIllustration)
+            .where(gte(songIllustration.updatedAt, updatedSince)),
+        ),
+      )!,
+    );
+  }
 
   const songsRaw = await db.query.song.findMany({
     where: and(...conditions),
@@ -117,7 +133,6 @@ export async function retrieveSongs(
         with: { songImport: true },
       },
       currentIllustration: true,
-      // Only pull favorites if a user is logged in to check against
       ...(userId && {
         favorites: { where: eq(userFavoriteSongs.userId, userId), limit: 1 },
       }),
