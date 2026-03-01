@@ -2,16 +2,9 @@ name: Database & Assets Sync
 
 on:
   schedule:
-    # Runs automatically at 00:00 UTC every day
-    - cron: '0 0 * * *'
+    # Runs automatically at 04:00 UTC every day
+    - cron: '0 4 * * *'
   workflow_dispatch:
-    # The manual trigger ;)
-    inputs:
-      full_sync:
-        description: 'Perform a Full Sync? (Re-downloads all images)'
-        required: true
-        type: boolean
-        default: false
 
 jobs:
   sync-data:

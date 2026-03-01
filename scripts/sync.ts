@@ -1,11 +1,11 @@
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/sqlite-proxy";
+import yaml from "js-yaml";
 import fs from "node:fs";
 import path from "node:path";
-import yaml from "js-yaml";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { drizzle } from "drizzle-orm/sqlite-proxy";
-import { eq, gte } from "drizzle-orm";
-import { SongData } from "../src/web/types/songData";
 import * as schema from "../src/lib/db/schema";
+import { SongData } from "../src/web/types/songData";
 export function sanitizePathSegment(segment: string): string {
   if (!segment) return "unknown";
   return segment
@@ -13,8 +13,6 @@ export function sanitizePathSegment(segment: string): string {
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
 }
-
-const isFullSync = process.env.IS_FULL_SYNC === "true";
 
 // 1. Setup R2 (S3 Client) - Used ONLY for the database backup JSON
 const s3 = new S3Client({
@@ -57,7 +55,7 @@ const db = drizzle(
 );
 
 async function main() {
-  console.log(`Starting Worker-less Sync... Full Sync: ${isFullSync}`);
+  console.log(`Starting Sync...`);
 
   // ---------------------------------------------------------------------------
   // TASK 1: Backup D1 Database to R2 JSON
@@ -136,17 +134,6 @@ async function main() {
 
   const promptsQuery = db.select().from(schema.illustrationPrompt);
   const illustrationsQuery = db.select().from(schema.songIllustration);
-
-  if (!isFullSync) {
-    const syncWindow = new Date();
-    syncWindow.setDate(syncWindow.getDate() - 7);
-
-    songsQuery.where(gte(schema.song.updatedAt, syncWindow));
-    promptsQuery.where(gte(schema.illustrationPrompt.updatedAt, syncWindow));
-    illustrationsQuery.where(
-      gte(schema.songIllustration.updatedAt, syncWindow),
-    );
-  }
 
   const [songs, prompts, illustrations] = await Promise.all([
     songsQuery,
@@ -253,10 +240,11 @@ async function main() {
         .map((p: any) => {
           const cleanP = { ...p };
           for (const key of Object.keys(cleanP)) {
-            if (cleanP[key] instanceof Date) {
-              cleanP[key] = isNaN(cleanP[key].getTime())
-                ? null
-                : cleanP[key].toISOString();
+            if (key === "createdAt" || key === "updatedAt") {
+              const d = new Date(cleanP[key]);
+              cleanP[key] = isNaN(d.getTime()) ? null : d;
+            } else if (cleanP[key] instanceof Date) {
+              cleanP[key] = isNaN(cleanP[key].getTime()) ? null : cleanP[key];
             }
           }
           return {
@@ -264,7 +252,6 @@ async function main() {
             illustrations: illustrationsByPrompt.get(p.id) || [],
           };
         });
-
       const metadata = {
         songId: song.id,
         prompts: safePrompts,
@@ -292,7 +279,7 @@ async function main() {
 
         const imgPath = path.join(imgDir, `${safeModelName}.webp`);
 
-        if (!fs.existsSync(imgPath) || isFullSync) {
+        if (!fs.existsSync(imgPath)) {
           // If it's a publicly accessible R2 image URL, fetch it natively
           if (ill.imageURL.startsWith("http")) {
             try {
