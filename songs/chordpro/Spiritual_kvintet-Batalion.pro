@@ -2,7 +2,6 @@
 {artist: Spirituál kvintet}
 {key: Am}
 {capo: 5}
-{tempo: }
 {range: g1-c2}
 {language: czech}
 {startMelody: a}

@@ -2,10 +2,8 @@
 {artist: Wohnout}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: c1-c2}
 {language: czech}
-{startMelody: }
 {createdAt: 1423868400000}
 {updatedAt: 1770572320000}
 {illustrationId: Wohnout-Svaz_ceskych_bohemu_gpt-4o-mini_v1_FLUX.1-dev}

@@ -2,7 +2,6 @@
 {artist: Scorpions}
 {key: Gm}
 {capo: 2}
-{tempo: }
 {range: a1-a#2}
 {language: english}
 {startMelody: d}

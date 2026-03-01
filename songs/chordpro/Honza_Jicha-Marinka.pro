@@ -2,10 +2,8 @@
 {artist: Honza Jícha}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: a1-c2}
 {language: czech}
-{startMelody: }
 {createdAt: 1531519200000}
 {updatedAt: 1770572041000}
 {illustrationId: Honza_Jicha-Marinka_gpt-4o-mini_v1_FLUX.1-dev}

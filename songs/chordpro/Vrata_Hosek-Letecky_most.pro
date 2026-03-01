@@ -2,7 +2,6 @@
 {artist: Vráťa Hošek}
 {key: Am}
 {capo: 5}
-{tempo: }
 {range: a1-a2}
 {language: czech}
 {startMelody: e a}

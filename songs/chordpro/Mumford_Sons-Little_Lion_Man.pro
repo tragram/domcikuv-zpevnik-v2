@@ -2,7 +2,6 @@
 {artist: Mumford & Sons}
 {key: Am}
 {capo: 5}
-{tempo: }
 {range: a1-c2}
 {language: english}
 {startMelody: a}

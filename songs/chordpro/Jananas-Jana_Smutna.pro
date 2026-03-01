@@ -2,7 +2,6 @@
 {artist: Jananas}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: c1-c2}
 {language: czech}
 {startMelody: d a}

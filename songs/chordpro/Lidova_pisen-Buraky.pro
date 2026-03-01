@@ -2,7 +2,6 @@
 {artist: Lidová píseň}
 {key: D}
 {capo: 7}
-{tempo: }
 {range: a1-f#1}
 {language: czech}
 {startMelody: h a}

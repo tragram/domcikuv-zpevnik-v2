@@ -2,7 +2,6 @@
 {artist: Stephen Lynch}
 {key: D}
 {capo: 2}
-{tempo: }
 {range: a1-h2}
 {language: english}
 {startMelody: a d}

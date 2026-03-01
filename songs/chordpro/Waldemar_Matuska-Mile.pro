@@ -2,7 +2,6 @@
 {artist: Waldemar Matuška}
 {key: G}
 {capo: 7}
-{tempo: }
 {range: f#1-e1}
 {language: czech}
 {startMelody: d}

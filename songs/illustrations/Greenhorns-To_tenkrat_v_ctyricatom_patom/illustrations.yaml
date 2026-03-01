@@ -19,3 +19,25 @@ prompts:
       - createdAt: 1762970708000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: Greenhorns-To_tenkrat_v_ctyricatom_patom_gpt-5-mini_v3
+    songId: Greenhorns-To_tenkrat_v_ctyricatom_patom
+    summaryPromptVersion: v3
+    summaryModel: gpt-5-mini
+    text: >-
+      Warm, nostalgic painterly illustration of a 1945 Plzeň living room: a
+      father pulls a bottle of schnapps from a cupboard as a small jazz combo
+      (trumpet, sax, upright bass) plays; American GIs in parkas have placed
+      their helmets on a worn sofa with a small handmade sign "tady nesedej";
+      through the open window a jeep with a white star rolls by and factory
+      girls in simple 1940s dresses dance and sing in the doorway — evening,
+      soft sepia tones, cozy historic details, slightly stylized.
+    createdAt: 2026-02-26T20:04:26.000Z
+    updatedAt: 2026-02-26T20:04:26.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1772137861000
+        imageModel: gpt-image-1-mini
+        filename: gpt-image-1-mini.webp
+      - createdAt: 1772137923000
+        imageModel: gpt-image-1.5
+        filename: gpt-image-1.5.webp

@@ -2,7 +2,6 @@
 {artist: El Cuarteto de Nos}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: d1-e2}
 {language: spanish}
 {startMelody: f#-a}

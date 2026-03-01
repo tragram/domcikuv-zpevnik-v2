@@ -2,7 +2,6 @@
 {artist: Wanastowy Vjecy}
 {key: H}
 {capo: 3}
-{tempo: }
 {range: h1-a1}
 {language: czech}
 {startMelody: f#}

@@ -2,7 +2,6 @@
 {artist: Howard Goodall}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: c1-d2}
 {language: english}
 {startMelody: e c}

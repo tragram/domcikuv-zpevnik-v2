@@ -2,7 +2,6 @@
 {artist: Kenny Rogers}
 {key: E}
 {capo: 0}
-{tempo: }
 {range: h1-c#2}
 {language: english}
 {startMelody: e e e h e}

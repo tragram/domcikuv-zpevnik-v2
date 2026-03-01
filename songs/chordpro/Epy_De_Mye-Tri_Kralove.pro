@@ -2,7 +2,6 @@
 {artist: Epy De Mye}
 {key: Hm}
 {capo: 2}
-{tempo: }
 {range: h1-h2}
 {language: czech}
 {startMelody: h a}

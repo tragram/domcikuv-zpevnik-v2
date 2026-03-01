@@ -2,7 +2,6 @@
 {artist: Honza Jícha}
 {key: F}
 {capo: 0}
-{tempo: }
 {range: c1-d2}
 {language: czech}
 {startMelody: f}

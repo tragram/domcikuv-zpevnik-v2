@@ -2,7 +2,6 @@
 {artist: Karel Kryl}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: d1-e2}
 {language: czech}
 {startMelody: h e}

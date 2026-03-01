@@ -2,10 +2,8 @@
 {artist: Traband}
 {key: Em}
 {capo: 4}
-{tempo: }
 {range: d1-a1}
 {language: czech}
-{startMelody: }
 {createdAt: 1442181600000}
 {updatedAt: 1770572259000}
 {illustrationId: Traband-Sara_gpt-4o-mini_v1_FLUX.1-dev}

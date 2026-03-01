@@ -2,7 +2,6 @@
 {artist: Johnny Cash/NIN}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: g1-g2}
 {language: english}
 {startMelody: e g}

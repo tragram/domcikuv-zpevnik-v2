@@ -2,7 +2,6 @@
 {artist: Olympic}
 {key: G}
 {capo: 2}
-{tempo: }
 {range: g1-c2}
 {language: czech}
 {startMelody: h}

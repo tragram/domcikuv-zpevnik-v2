@@ -2,7 +2,6 @@
 {artist: Poletíme?}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: h1-e2}
 {language: czech}
 {startMelody: h c d}

@@ -2,7 +2,6 @@
 {artist: Malomocnost prázdnoty}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: h1-g1}
 {language: czech}
 {startMelody: e}

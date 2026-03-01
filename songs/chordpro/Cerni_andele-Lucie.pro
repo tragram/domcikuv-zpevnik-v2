@@ -1,17 +1,17 @@
-{title: Lucie}
-{artist: Černí andělé}
+{title: Černí andělé}
+{artist: Lucie}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: f#1-d1}
 {language: czech}
 {startMelody: c a}
 {createdAt: 1734130800000}
-{updatedAt: 1770571981000}
+{updatedAt: 1772225910000}
 {illustrationId: Cerni_andele-Lucie_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Cerni_andele-Lucie_gpt-4o-mini_v1}
 
 {comment: https://www.youtube.com/watch?v=VBfUbEK2Kpghttps://www.youtube.com/watch?v=VBfUbEK2Kpghttps://www.youtube.com/watch?v=VBfUbEK2Kpg}
+
 {start_of_verse}
 [Asus2]Sex je náš dělá [G]dobře mně i [D]tobě
 [Asus2]Otčenáš bejby [G]odříkej až v [D]hrobě

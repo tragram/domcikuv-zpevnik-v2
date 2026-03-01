@@ -2,7 +2,6 @@
 {artist: Janek Ledecký}
 {key: Em}
 {capo: 3}
-{tempo: }
 {range: f#1-c2}
 {language: czech}
 {startMelody: h c d}

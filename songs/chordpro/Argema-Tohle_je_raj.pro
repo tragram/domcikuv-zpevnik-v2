@@ -2,7 +2,6 @@
 {artist: Argema}
 {key: C}
 {capo: 3}
-{tempo: }
 {range: a1-e1}
 {language: czech}
 {startMelody: c}

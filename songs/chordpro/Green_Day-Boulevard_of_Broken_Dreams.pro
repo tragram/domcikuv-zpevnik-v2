@@ -2,7 +2,6 @@
 {artist: Green Day}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: d1-d2}
 {language: english}
 {startMelody: d}

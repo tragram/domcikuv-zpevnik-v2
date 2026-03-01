@@ -2,7 +2,6 @@
 {artist: Bob Dylan}
 {key: G}
 {capo: 3}
-{tempo: }
 {range: e1-c2}
 {language: english}
 {startMelody: h}

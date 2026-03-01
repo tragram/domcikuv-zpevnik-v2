@@ -2,7 +2,6 @@
 {artist: Jelen}
 {key: D}
 {capo: 5}
-{tempo: }
 {range: f#1-a2}
 {language: czech}
 {startMelody: d d c#}

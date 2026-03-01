@@ -2,10 +2,7 @@
 {artist: Divokej Bill}
 {key: A}
 {capo: 0}
-{tempo: }
-{range: }
 {language: czech}
-{startMelody: }
 {createdAt: 1744581600000}
 {updatedAt: 1770572005000}
 {illustrationId: Divokej_Bill-Bohuzel_gpt-4o-mini_v2_FLUX.1-dev}

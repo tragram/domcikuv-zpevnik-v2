@@ -2,7 +2,6 @@
 {artist: Frozen}
 {key: Em}
 {capo: 3}
-{tempo: }
 {range: e1-d2}
 {language: english}
 {startMelody: e h}

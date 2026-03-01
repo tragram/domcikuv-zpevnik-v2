@@ -2,7 +2,6 @@
 {artist: Václav Neckář}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: f1-d1}
 {language: czech}
 {startMelody: g c}

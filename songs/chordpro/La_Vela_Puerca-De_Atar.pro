@@ -2,7 +2,6 @@
 {artist: La Vela Puerca}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: a1-d2}
 {language: spanish}
 {startMelody: a f#}

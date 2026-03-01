@@ -2,7 +2,6 @@
 {artist: Xindl X}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: g1-d2}
 {language: czech}
 {startMelody: e-g}

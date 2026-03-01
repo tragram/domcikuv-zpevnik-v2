@@ -2,7 +2,6 @@
 {artist: The Witcher}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: d1-e2}
 {language: english}
 {startMelody: g}

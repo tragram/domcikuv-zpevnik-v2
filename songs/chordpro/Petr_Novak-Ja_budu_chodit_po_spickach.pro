@@ -2,7 +2,6 @@
 {artist: Petr Novák}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: d1-h1}
 {language: czech}
 {startMelody: a g f#}

@@ -2,7 +2,6 @@
 {artist: Fešáci}
 {key: D}
 {capo: 4}
-{tempo: }
 {range: a1-a2}
 {language: czech}
 {startMelody: a}

@@ -2,7 +2,6 @@
 {artist: AG Flek}
 {key: Am}
 {capo: 3}
-{tempo: }
 {range: g1-g2}
 {language: czech}
 {startMelody: c d e}

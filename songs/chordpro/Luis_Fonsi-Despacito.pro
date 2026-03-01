@@ -2,7 +2,6 @@
 {artist: Luis Fonsi}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: h1-d2}
 {language: spanish}
 {startMelody: e}

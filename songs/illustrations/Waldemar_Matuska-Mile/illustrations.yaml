@@ -17,3 +17,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: Waldemar_Matuska-Mile_gpt-5-mini_v3
+    songId: Waldemar_Matuska-Mile
+    summaryPromptVersion: v3
+    summaryModel: gpt-5-mini
+    text: >-
+      A melancholic folk-illustration: a lone traveler in a mud‑stained coat
+      stands at a fork of muddy paths on grassy, rocky slopes under gusting wind
+      and light rain, clutching a single blade of grass and a wooden flute;
+      winding trails vanish into the distance where pale white crosses and tiny
+      lamp‑like stars glow hesitantly on the dark horizon, wilted roses
+      half‑buried in rotten soil at the traveler's feet — muted earth tones,
+      painterly watercolor texture, gentle motion in the grass, soft backlight,
+      contemplative mood.
+    createdAt: 2026-02-24T08:18:24.000Z
+    updatedAt: 2026-02-24T08:18:24.000Z
+    deleted: false
+    illustrations: []

@@ -2,7 +2,6 @@
 {artist: Zdeněk Piškula}
 {key: F}
 {capo: 0}
-{tempo: }
 {range: c1-c2}
 {language: czech}
 {startMelody: a g a}

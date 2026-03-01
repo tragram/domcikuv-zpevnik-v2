@@ -2,7 +2,6 @@
 {artist: Fleret}
 {key: Am}
 {capo: 2}
-{tempo: }
 {range: g1-f1}
 {language: czech}
 {startMelody: c}

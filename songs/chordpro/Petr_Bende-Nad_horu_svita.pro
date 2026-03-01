@@ -2,7 +2,6 @@
 {artist: Petr Bende}
 {key: E}
 {capo: 0}
-{tempo: }
 {range: h1-h2}
 {language: czech}
 {startMelody: e h e}

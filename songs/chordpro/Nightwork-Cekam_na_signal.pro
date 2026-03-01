@@ -2,7 +2,6 @@
 {artist: Nightwork}
 {key: C}
 {capo: 4}
-{tempo: }
 {range: a1-g2}
 {language: czech}
 {startMelody: e}

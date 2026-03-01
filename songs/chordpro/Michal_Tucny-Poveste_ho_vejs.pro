@@ -2,7 +2,6 @@
 {artist: Michal Tučný}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: g1-g#2}
 {language: czech}
 {startMelody: e e e c e}

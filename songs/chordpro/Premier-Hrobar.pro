@@ -2,7 +2,6 @@
 {artist: Premiér}
 {key: C}
 {capo: 5}
-{tempo: }
 {range: f1-e1}
 {language: czech}
 {startMelody: c}

@@ -2,7 +2,6 @@
 {artist: Ozzy Osbourne}
 {key: E}
 {capo: 5}
-{tempo: }
 {range: e1-g#2}
 {language: english}
 {startMelody: h g#}

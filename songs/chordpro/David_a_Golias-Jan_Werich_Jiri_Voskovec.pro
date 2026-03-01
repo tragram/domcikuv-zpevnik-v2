@@ -2,7 +2,6 @@
 {artist: David a Goliáš}
 {key: C}
 {capo: 0}
-{tempo: }
 {range: c1-e2}
 {language: czech}
 {startMelody: c}

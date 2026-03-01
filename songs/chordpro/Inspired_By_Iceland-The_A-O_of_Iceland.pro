@@ -2,7 +2,6 @@
 {artist: Inspired By Iceland}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: g1-e1}
 {language: icelandic}
 {startMelody: g g g}

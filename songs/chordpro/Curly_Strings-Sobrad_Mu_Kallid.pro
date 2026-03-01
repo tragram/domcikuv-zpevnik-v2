@@ -2,7 +2,6 @@
 {artist: Curly Strings}
 {key: G}
 {capo: 3}
-{tempo: }
 {range: e1-c#2}
 {language: estonian}
 {startMelody: h}

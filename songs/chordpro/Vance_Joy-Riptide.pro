@@ -2,7 +2,6 @@
 {artist: Vance Joy}
 {key: Am}
 {capo: 4}
-{tempo: }
 {range: a1-a2}
 {language: english}
 {startMelody: a h c d}

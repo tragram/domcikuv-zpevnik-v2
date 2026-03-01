@@ -2,7 +2,6 @@
 {artist: Foster the People}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: f#1-f#2}
 {language: english}
 {startMelody: h}

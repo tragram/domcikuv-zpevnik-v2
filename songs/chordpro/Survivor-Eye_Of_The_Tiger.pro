@@ -2,7 +2,6 @@
 {artist: Survivor}
 {key: Hm}
 {capo: 0}
-{tempo: }
 {range: h1-h2}
 {language: english}
 {startMelody: f# a}

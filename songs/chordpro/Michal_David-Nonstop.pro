@@ -2,7 +2,6 @@
 {artist: Michal David}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: d1-a1}
 {language: czech}
 {startMelody: e f#}

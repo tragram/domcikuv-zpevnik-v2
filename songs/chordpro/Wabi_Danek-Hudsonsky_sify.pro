@@ -2,10 +2,8 @@
 {artist: Wabi Daněk}
 {key: Am}
 {capo: 4}
-{tempo: }
 {range: g1-a2}
 {language: czech}
-{startMelody: }
 {createdAt: 1436824800000}
 {updatedAt: 1770572308000}
 {illustrationId: Wabi_Danek-Hudsonsky_sify_gpt-4o-mini_v1_FLUX.1-dev}

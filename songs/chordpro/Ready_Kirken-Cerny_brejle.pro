@@ -2,7 +2,6 @@
 {artist: Ready Kirken}
 {key: A}
 {capo: 2}
-{tempo: }
 {range: g#1-c2}
 {language: czech}
 {startMelody: c# h c# a}

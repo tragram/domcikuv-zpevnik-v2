@@ -2,7 +2,6 @@
 {artist: Milan Prouza}
 {key: G}
 {capo: 5}
-{tempo: }
 {range: d1-a2}
 {language: czech}
 {startMelody: f#}

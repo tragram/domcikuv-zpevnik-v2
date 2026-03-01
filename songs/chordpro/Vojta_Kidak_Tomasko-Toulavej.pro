@@ -2,7 +2,6 @@
 {artist: Vojta Kiďák Tomáško}
 {key: Am}
 {capo: 2}
-{tempo: }
 {range: g1-d2}
 {language: czech}
 {startMelody: a c e}

@@ -2,7 +2,6 @@
 {artist: Klus}
 {key: G}
 {capo: 4}
-{tempo: }
 {range: f#1-f1}
 {language: czech}
 {startMelody: g g a h}

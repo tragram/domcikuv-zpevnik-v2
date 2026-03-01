@@ -2,7 +2,6 @@
 {artist: Simple Plan}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: h1-d2}
 {language: english}
 {startMelody: f#}

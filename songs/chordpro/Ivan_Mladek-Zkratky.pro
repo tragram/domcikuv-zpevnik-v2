@@ -2,7 +2,6 @@
 {artist: Ivan Mládek}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: d1-d2}
 {language: czech}
 {startMelody: h h a h}

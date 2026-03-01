@@ -2,7 +2,6 @@
 {artist: John Denver}
 {key: D}
 {capo: 3}
-{tempo: }
 {range: a1-h2}
 {language: english}
 {startMelody: a}

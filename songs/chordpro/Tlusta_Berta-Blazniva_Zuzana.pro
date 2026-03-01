@@ -2,7 +2,6 @@
 {artist: Tlustá Berta}
 {key: C}
 {capo: 6}
-{tempo: }
 {range: g1-f1}
 {language: czech}
 {startMelody: g g e}

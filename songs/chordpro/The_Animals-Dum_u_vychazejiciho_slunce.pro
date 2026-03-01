@@ -2,7 +2,6 @@
 {artist: The Animals}
 {key: Am}
 {capo: 5}
-{tempo: }
 {range: e1-a2}
 {language: czech}
 {startMelody: e a}

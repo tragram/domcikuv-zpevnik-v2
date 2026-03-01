@@ -2,7 +2,6 @@
 {artist: Jiří Wabi Rivola}
 {key: C}
 {capo: 2}
-{tempo: }
 {range: g1-h2}
 {language: czech}
 {startMelody: h c}

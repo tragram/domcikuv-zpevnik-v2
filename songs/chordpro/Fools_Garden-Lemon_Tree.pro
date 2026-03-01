@@ -2,7 +2,6 @@
 {artist: Fools Garden}
 {key: Am}
 {capo: 2}
-{tempo: }
 {range: a1-c2}
 {language: english}
 {startMelody: d e}

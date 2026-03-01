@@ -2,7 +2,6 @@
 {artist: The National}
 {key: Am}
 {capo: 0}
-{tempo: }
 {range: e1-f2}
 {language: english}
 {startMelody: e a}

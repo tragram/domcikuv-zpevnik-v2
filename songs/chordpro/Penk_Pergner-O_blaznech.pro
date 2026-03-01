@@ -2,7 +2,6 @@
 {artist: Penk & Pergner}
 {key: E}
 {capo: 0}
-{tempo: }
 {range: f#1-a#2}
 {language: czech}
 {startMelody: e}

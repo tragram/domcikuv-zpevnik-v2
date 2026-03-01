@@ -2,7 +2,6 @@
 {artist: The Beatles}
 {key: C}
 {capo: 6}
-{tempo: }
 {range: e1-a2}
 {language: english}
 {startMelody: g}

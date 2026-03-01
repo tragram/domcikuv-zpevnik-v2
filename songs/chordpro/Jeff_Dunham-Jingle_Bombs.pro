@@ -2,7 +2,6 @@
 {artist: Jeff Dunham}
 {key: C}
 {capo: 2}
-{tempo: }
 {range: g1-c2}
 {language: english}
 {startMelody: g e}

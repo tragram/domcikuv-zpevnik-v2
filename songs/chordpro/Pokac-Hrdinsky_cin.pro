@@ -2,7 +2,6 @@
 {artist: Pokáč}
 {key: Am}
 {capo: 3}
-{tempo: }
 {range: e1-c2}
 {language: czech}
 {startMelody: e g a}

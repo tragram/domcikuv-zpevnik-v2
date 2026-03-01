@@ -2,7 +2,6 @@
 {artist: Kamelot}
 {key: Em}
 {capo: 3}
-{tempo: }
 {range: a1-h2}
 {language: czech}
 {startMelody: h g f# g}

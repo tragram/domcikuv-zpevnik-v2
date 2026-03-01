@@ -2,7 +2,6 @@
 {artist: Aleš Brichta}
 {key: Am}
 {capo: 5}
-{tempo: }
 {range: a1-e1}
 {language: czech}
 {startMelody: e e c d}

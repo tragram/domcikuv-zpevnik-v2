@@ -2,7 +2,6 @@
 {artist: Xavier Baumaxa}
 {key: A}
 {capo: 0}
-{tempo: }
 {range: c#1-c#2}
 {language: czech}
 {startMelody: e e e c# e}

@@ -2,10 +2,7 @@
 {artist: Mumford & Sons}
 {key: Am}
 {capo: 2}
-{tempo: }
-{range: }
 {language: other}
-{startMelody: }
 {createdAt: 1752444000000}
 {updatedAt: 1770572183000}
 {illustrationId: Mumford_Sons-Babel_gpt-4o-mini_v2_FLUX.1-dev}

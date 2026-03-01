@@ -2,7 +2,6 @@
 {artist: Michal Horák}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: c1-d2}
 {language: czech}
 {startMelody: d}

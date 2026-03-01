@@ -2,14 +2,13 @@
 {artist: Poupata}
 {key: A}
 {capo: 0}
-{tempo: }
 {range: h1-h2}
 {language: czech}
 {startMelody: e d c#}
 {createdAt: 1318543200000}
-{updatedAt: 1770572227000}
-{illustrationId: Poupata-Toulavy_boty_gpt-4o-mini_v1_FLUX.1-dev}
-{promptId: Poupata-Toulavy_boty_gpt-4o-mini_v1}
+{updatedAt: 1772228526000}
+{illustrationId: Poupata-Toulavy_boty_gpt-5-mini_v3_nano-banana-2}
+{promptId: Poupata-Toulavy_boty_gpt-5-mini_v3}
 
 {start_of_verse}
 Každý [A]den dál a [E]dál,

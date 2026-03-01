@@ -2,7 +2,6 @@
 {artist: Tim Minchin}
 {key: A#}
 {capo: 0}
-{tempo: }
 {range: a1-g2}
 {language: english}
 {startMelody: a a h}

@@ -2,7 +2,6 @@
 {artist: Alvaro Soler}
 {key: F#m}
 {capo: 0}
-{tempo: }
 {range: a1-e2}
 {language: spanish}
 {startMelody: c# e}

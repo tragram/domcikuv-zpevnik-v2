@@ -2,7 +2,6 @@
 {artist: Jaroslav Samson Lenk}
 {key: G}
 {capo: 3}
-{tempo: }
 {range: h1-h2}
 {language: czech}
 {startMelody: h c d}

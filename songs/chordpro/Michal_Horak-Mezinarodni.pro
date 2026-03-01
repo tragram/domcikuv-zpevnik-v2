@@ -2,10 +2,8 @@
 {artist: Michal Horák}
 {key: Hm}
 {capo: 0}
-{tempo: }
 {range: h1-d#2}
 {language: czech}
-{startMelody: }
 {createdAt: 1539468000000}
 {updatedAt: 1770572167000}
 {illustrationId: Michal_Horak-Mezinarodni_gpt-4o-mini_v1_FLUX.1-dev}

@@ -2,7 +2,6 @@
 {artist: Hop Trop}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: a1-h2}
 {language: czech}
 {startMelody: a d e f#}

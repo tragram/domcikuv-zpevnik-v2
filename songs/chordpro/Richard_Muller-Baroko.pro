@@ -2,7 +2,6 @@
 {artist: Richard Müller}
 {key: Dm}
 {capo: 0}
-{tempo: }
 {range: c1-f2}
 {language: czech}
 {startMelody: a b a}

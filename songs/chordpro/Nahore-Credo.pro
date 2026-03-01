@@ -2,10 +2,7 @@
 {artist: Nahoře}
 {key: E}
 {capo: 2}
-{tempo: }
-{range: }
 {language: other}
-{startMelody: }
 {createdAt: 1752444000000}
 {updatedAt: 1770572186000}
 {illustrationId: Nahore-Credo_gpt-4o-mini_v2_FLUX.1-dev}

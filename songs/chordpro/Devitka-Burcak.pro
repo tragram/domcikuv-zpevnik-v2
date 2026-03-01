@@ -2,7 +2,6 @@
 {artist: Devítka}
 {key: D}
 {capo: 0}
-{tempo: }
 {range: h1-h2}
 {language: czech}
 {startMelody: a a g f#}

@@ -2,7 +2,6 @@
 {artist: Nerez}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: h1-h2}
 {language: czech}
 {startMelody: h}

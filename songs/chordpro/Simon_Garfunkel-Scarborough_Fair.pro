@@ -2,7 +2,6 @@
 {artist: Simon & Garfunkel}
 {key: Am}
 {capo: 4}
-{tempo: }
 {range: g1-a2}
 {language: english}
 {startMelody: a e}

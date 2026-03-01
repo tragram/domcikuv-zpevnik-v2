@@ -2,7 +2,6 @@
 {artist: Tři sestry}
 {key: Am}
 {capo: 5}
-{tempo: }
 {range: h1-g1}
 {language: czech}
 {startMelody: e}

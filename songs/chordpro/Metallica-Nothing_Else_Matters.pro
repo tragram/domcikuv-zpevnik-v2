@@ -2,7 +2,6 @@
 {artist: Metallica}
 {key: Em}
 {capo: 0}
-{tempo: }
 {range: h1-h2}
 {language: english}
 {startMelody: e}

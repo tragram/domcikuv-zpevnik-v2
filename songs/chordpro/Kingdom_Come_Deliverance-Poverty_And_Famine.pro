@@ -2,7 +2,6 @@
 {artist: Kingdom Come Deliverance}
 {key: G}
 {capo: 0}
-{tempo: }
 {range: c1-h1}
 {language: czech}
 {startMelody: g}

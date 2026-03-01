@@ -2,7 +2,6 @@
 {artist: Škwor}
 {key: C#m}
 {capo: 0}
-{tempo: }
 {range: d#1-e2}
 {language: czech}
 {startMelody: g# g#}

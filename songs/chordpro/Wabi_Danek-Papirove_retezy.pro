@@ -2,7 +2,6 @@
 {artist: Wabi Daněk}
 {key: A}
 {capo: 3}
-{tempo: }
 {range: f#1-h2}
 {language: czech}
 {startMelody: c# c# h c#}

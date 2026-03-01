@@ -2,7 +2,6 @@
 {artist: Elvis Presley}
 {key: A}
 {capo: 2}
-{tempo: }
 {range: a1-c#2}
 {language: english}
 {startMelody: a}
