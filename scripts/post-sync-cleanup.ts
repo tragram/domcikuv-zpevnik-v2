@@ -39,38 +39,43 @@ const db = drizzle(
 
 async function main() {
   console.log("Starting post-sync cleanup (DRY RUN MODE)...");
-
-  // 1. Find all illustrations that still have absolute HTTP URLs
+  // 1. Find all illustrations that are absolute URLs AND actually belong to our illustrations folder
   const illustrations = await db.select().from(schema.songIllustration);
-  const pendingCleanup = illustrations.filter((ill: any) =>
-    ill.imageURL.startsWith("http"),
+  const pendingCleanup = illustrations.filter(
+    (ill: any) =>
+      ill.imageURL.startsWith("http") &&
+      ill.imageURL.includes("/songs/illustrations/"),
   );
 
   console.log(`Found ${pendingCleanup.length} synced images pending cleanup.`);
 
   for (const ill of pendingCleanup) {
     try {
-      // 2. Parse out the relative paths
+      // 2. Safely parse out the R2 key from the exact URL in the database
       const parsedImageURL = new URL(ill.imageURL);
-      const relativeImageURL = parsedImageURL.pathname;
-      const parsedThumbURL = new URL(ill.thumbnailURL);
-      const relativeThumbURL = parsedThumbURL.pathname;
-
-      const oldKey = relativeImageURL.slice(1); // Strip leading slash
+      const oldKey = parsedImageURL.pathname.slice(1); // Exact key to move in R2
       const trashKey = `trash/${oldKey}`;
 
-      // 3. Log the intended actions
+      // 3. Format the final static paths for the database
+      // sync.ts adds '.webp' to the local files, so we make sure the DB matches
+      let finalImageURL = parsedImageURL.pathname;
+      if (!finalImageURL.endsWith(".webp")) finalImageURL += ".webp";
+
+      // Format the expected thumbnail path for the other GitHub Action
+      const finalThumbURL = finalImageURL.replace("/full/", "/thumbnail/");
+
+      // 4. Log the intended actions
       console.log(`\n[DRY RUN] Processing Illustration ID: ${ill.id}`);
       console.log(`  - Would COPY in R2: ${oldKey} -> ${trashKey}`);
       console.log(`  - Would DELETE in R2: ${oldKey}`);
-      console.log(`  - Would UPDATE DB: imageURL -> ${relativeImageURL}`);
-      console.log(`  - Would UPDATE DB: thumbnailURL -> ${relativeThumbURL}`);
+      console.log(`  - Would UPDATE DB: imageURL -> ${finalImageURL}`);
+      console.log(`  - Would UPDATE DB: thumbnailURL -> ${finalThumbURL}`);
 
       /* ====================================================================
          DANGER ZONE: Uncomment this block to enable actual cleanup
          ==================================================================== 
       
-      // Move the file to /trash in R2 using the S3 SDK
+      // Move ONLY the full image to /trash in R2 using the S3 SDK
       await s3.send(new CopyObjectCommand({
         Bucket: process.env.R2_BUCKET_NAME,
         CopySource: `${process.env.R2_BUCKET_NAME}/${oldKey}`,
@@ -82,11 +87,11 @@ async function main() {
         Key: oldKey
       }));
 
-      // Update the D1 database to use the relative static paths
+      // Update the D1 database to use the newly formatted static paths
       await db.update(schema.songIllustration)
         .set({ 
-          imageURL: relativeImageURL, 
-          thumbnailURL: relativeThumbURL 
+          imageURL: finalImageURL, 
+          thumbnailURL: finalThumbURL 
         })
         .where(eq(schema.songIllustration.id, ill.id));
 
