@@ -8,18 +8,15 @@ on:
 
 jobs:
   cleanup:
-    # Only run if the sync actually succeeded (don't clean up if the commit failed!)
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     
     steps:
-      # 1. 5-Minute Delay for build
-      - name: Wait for Deployment
-        run: sleep 300
-
-      # 2. Setup the environment
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Wait for Deployment
+        run: sleep 300
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -35,7 +32,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      # 3. Run the Cleanup Script
       - name: Execute Cleanup and Update DB
         env:
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}

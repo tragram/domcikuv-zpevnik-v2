@@ -6,6 +6,8 @@ import {
 import { drizzle } from "drizzle-orm/sqlite-proxy";
 import { eq } from "drizzle-orm";
 import * as schema from "../src/lib/db/schema";
+import fs from "fs";
+import path from "path";
 
 // 1. Setup R2 (S3 Client)
 const s3 = new S3Client({
@@ -38,7 +40,8 @@ const db = drizzle(
 );
 
 async function main() {
-  console.log("Starting post-sync cleanup (DRY RUN MODE)...");
+  console.log("Starting post-sync cleanup...");
+
   // 1. Find all illustrations that are absolute URLs AND actually belong to our illustrations folder
   const illustrations = await db.select().from(schema.songIllustration);
   const pendingCleanup = illustrations.filter(
@@ -47,7 +50,9 @@ async function main() {
       ill.imageURL.includes("/songs/illustrations/"),
   );
 
-  console.log(`Found ${pendingCleanup.length} synced images pending cleanup.`);
+  console.log(
+    `Found ${pendingCleanup.length} synced images pending cleanup in the database.`,
+  );
 
   for (const ill of pendingCleanup) {
     try {
@@ -56,54 +61,58 @@ async function main() {
       const oldKey = parsedImageURL.pathname.slice(1); // Exact key to move in R2
       const trashKey = `trash/${oldKey}`;
 
-      // 3. Format the final static paths for the database
-      // sync.ts adds '.webp' to the local files, so we make sure the DB matches
+      // 3. Format the final static paths
       let finalImageURL = parsedImageURL.pathname;
       if (!finalImageURL.endsWith(".webp")) finalImageURL += ".webp";
 
-      // Format the expected thumbnail path for the other GitHub Action
       const finalThumbURL = finalImageURL.replace("/full/", "/thumbnail/");
 
-      // 4. Log the intended actions
-      console.log(`\n[DRY RUN] Processing Illustration ID: ${ill.id}`);
-      console.log(`  - Would COPY in R2: ${oldKey} -> ${trashKey}`);
-      console.log(`  - Would DELETE in R2: ${oldKey}`);
-      console.log(`  - Would UPDATE DB: imageURL -> ${finalImageURL}`);
-      console.log(`  - Would UPDATE DB: thumbnailURL -> ${finalThumbURL}`);
+      // 4. VERIFY FILE EXISTS LOCALLY
+      // Strip leading slash from URL to ensure cross-platform path joining works reliably
+      const relativeFilePath = finalImageURL.replace(/^\/+/, "");
+      const localFilePath = path.join(process.cwd(), relativeFilePath);
 
-      /* ====================================================================
-         DANGER ZONE: Uncomment this block to enable actual cleanup
-         ==================================================================== 
-      
-      // Move ONLY the full image to /trash in R2 using the S3 SDK
-      await s3.send(new CopyObjectCommand({
-        Bucket: process.env.R2_BUCKET_NAME,
-        CopySource: `${process.env.R2_BUCKET_NAME}/${oldKey}`,
-        Key: trashKey
-      }));
-      
-      await s3.send(new DeleteObjectCommand({
-        Bucket: process.env.R2_BUCKET_NAME,
-        Key: oldKey
-      }));
+      if (!fs.existsSync(localFilePath)) {
+        console.log(`\n[SKIP] ID: ${ill.id}`);
+        console.log(`  -> Expected static file missing at: ${localFilePath}`);
+        console.log(`  -> Keeping R2 fallback intact.`);
+        continue;
+      }
 
-      // Update the D1 database to use the newly formatted static paths
-      await db.update(schema.songIllustration)
-        .set({ 
-          imageURL: finalImageURL, 
-          thumbnailURL: finalThumbURL 
+      console.log(`\n[PROCESSING] ID: ${ill.id}`);
+
+      // 5. Move ONLY the full image to /trash in R2 using the S3 SDK
+      await s3.send(
+        new CopyObjectCommand({
+          Bucket: process.env.R2_BUCKET_NAME,
+          CopySource: `${process.env.R2_BUCKET_NAME}/${oldKey}`,
+          Key: trashKey,
+        }),
+      );
+
+      await s3.send(
+        new DeleteObjectCommand({
+          Bucket: process.env.R2_BUCKET_NAME,
+          Key: oldKey,
+        }),
+      );
+
+      // 6. Update the D1 database to use the newly formatted static paths
+      await db
+        .update(schema.songIllustration)
+        .set({
+          imageURL: finalImageURL,
+          thumbnailURL: finalThumbURL,
         })
         .where(eq(schema.songIllustration.id, ill.id));
 
-      console.log(`✓ Cleaned up ${ill.id}: Moved to trash and updated DB.`);
-      
-      ==================================================================== */
+      console.log(`  ✓ Cleaned up! Moved to trash in R2 and updated D1 paths.`);
     } catch (error: any) {
-      console.error(`✗ Failed to process ${ill.id}:`, error.message);
+      console.error(`  ✗ Failed to process ${ill.id}:`, error.message);
     }
   }
 
-  console.log("\nCleanup (Dry Run) complete!");
+  console.log("\nCleanup complete!");
 }
 
 main().catch(console.error);

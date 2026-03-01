@@ -14,7 +14,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          # Important: Fetch all history so Git can accurately detect diffs and deletions
+          # check out the target branch so we build on its history
+          ref: production-data-sync 
           fetch-depth: 0 
 
       - name: Install pnpm
@@ -33,26 +34,16 @@ jobs:
 
       - name: Run Sync Script
         env:
-          # Cloudflare D1 Credentials
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CF_DATABASE_ID: ${{ secrets.CF_DATABASE_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          
-          # Cloudflare R2 Credentials (S3 API)
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_BUCKET_NAME: ${{ secrets.R2_BUCKET_NAME }}
-          
-          # Sync Configuration
           IS_FULL_SYNC: ${{ github.event.inputs.full_sync || 'false' }}
-        
-        # Using pnpm exec instead of npx
         run: pnpm exec tsx scripts/sync.ts
 
       - name: Commit and Push Changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: Automated database and assets sync"
-          branch: production-data-sync
-          create_branch: true
-          push_options: '--force'
