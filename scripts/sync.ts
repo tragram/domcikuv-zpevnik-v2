@@ -72,7 +72,7 @@ async function main() {
     },
     tables: {},
   };
-  const EXCLUDED_TABLES = ["account", "session", "user"];
+  const EXCLUDED_TABLES = ["session"];
 
   const tables = Object.entries(schema).filter(([key, value]) => {
     return (
