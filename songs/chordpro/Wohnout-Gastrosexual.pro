@@ -6,7 +6,7 @@
 {createdAt: 1768578477000}
 {updatedAt: 1771715180000}
 {illustrationId: Wohnout-Gastrosexual_gpt-4o-mini_v2_gpt-image-1-mini}
-{promptId: Wohnout-Gastrosexual_v2_gpt-4o-mini_1770573024737}
+{promptId: Wohnout-Gastrosexual_v2_gpt-4o-mini}
 
 {start_of_verse}
 [F#m]Můj doktor sebou [E]sek
