@@ -14,11 +14,14 @@ import {
   ArrowDown,
   Settings2,
   Sparkles,
+  GitCompare,
 } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { toast } from "sonner";
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
 import useLocalStorageState from "use-local-storage-state";
+import ReactDiffViewer from "react-diff-viewer-continued";
+import { useTheme } from "next-themes";
 import SongVersionStatusBadge from "~/components/SongVersionStatusBadge";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
@@ -33,6 +36,12 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
 import { AdminApi } from "~/services/song-service";
 import ConfirmationDialog from "../../../components/dialogs/confirmation-dialog";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
@@ -52,7 +61,6 @@ import {
 } from "../../../services/admin-hooks";
 import { ActionButtons } from "./shared/action-buttons";
 import { TableToolbar } from "./shared/table-toolbar";
-import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
 
 const AUTO_ILLUSTRATION_STORAGE_KEY = "admin-auto-generate-illustration";
 
@@ -63,15 +71,40 @@ type SortableSong = SongDataDB & {
   status: string;
   hasPendingVersions: boolean;
 };
+
 type SortConfig = {
   key: keyof Omit<SortableSong, "hasPendingVersions">;
   direction: "ascending" | "descending";
+};
+
+type DiffViewState = {
+  isOpen: boolean;
+  songTitle: string;
+  version: SongVersionDB;
+  target: SongVersionDB;
+  targetLabel: string;
 };
 
 export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleted, setShowDeleted] = useState(false);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
+
+  // Singleton state for the diff viewer to improve performance and sizing
+  const [diffView, setDiffView] = useState<DiffViewState | null>(null);
+
+  // Theme detection for the Diff Viewer
+  const { theme, systemTheme } = useTheme();
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const isDarkMode =
+      theme === "dark" ||
+      (theme === "system" && systemTheme === "dark") ||
+      document.documentElement.classList.contains("dark");
+    setIsDark(isDarkMode);
+  }, [theme, systemTheme]);
+
   const navigate = useNavigate({ from: "/admin" });
   const backendDropdownOptions = useIllustrationOptions();
   const [sortConfig, setSortConfig] = useState<SortConfig | null>({
@@ -83,6 +116,14 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     useLocalStorageState(AUTO_ILLUSTRATION_STORAGE_KEY, {
       defaultValue: false,
     });
+
+  // Add this new state for the diff viewer
+  const [isSplitView, setIsSplitView] = useLocalStorageState(
+    "admin-diff-split-view",
+    {
+      defaultValue: true,
+    },
+  );
 
   const { data: songs, isLoading: songsLoading } = useSongsAdmin(adminApi);
   const { data: versions, isLoading: versionsLoading } =
@@ -463,114 +504,235 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                                   (version) =>
                                     version.status !== "deleted" || showDeleted,
                                 )
-                                .map((version) => (
-                                  <div
-                                    key={version.id}
-                                    className={`flex items-center justify-between p-4 rounded-xl border transition-all ${version.id === song.currentVersionId ? "border-primary shadow-md bg-primary/5" : "border-border hover:border-border/80 bg-card hover:bg-accent/40"}`}
-                                  >
-                                    <div className="flex items-center gap-4 flex-1">
-                                      <div
-                                        className={`flex items-center justify-center w-8 h-8 rounded-full ${version.id === song.currentVersionId ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground/30"}`}
-                                      >
-                                        <Star
-                                          className={`h-4 w-4 ${version.id === song.currentVersionId ? "fill-primary" : ""}`}
-                                        />
-                                      </div>
-                                      <div className="flex flex-col gap-1.5">
-                                        <div className="flex items-center gap-3">
-                                          <span className="font-semibold text-foreground/90">
-                                            {version.title}
-                                          </span>
-                                          <SongVersionStatusBadge
-                                            status={version.status}
-                                          />
-                                        </div>
-                                        <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
-                                          <span>
-                                            {new Date(
-                                              version.createdAt,
-                                            ).toLocaleDateString()}
-                                          </span>
-                                          <span className="w-1 h-1 rounded-full bg-border"></span>
-                                          <span className="bg-muted px-1.5 py-0.5 rounded">
-                                            Key: {version.key}
-                                          </span>
-                                          {version.tempo && (
-                                            <span className="bg-muted px-1.5 py-0.5 rounded">
-                                              BPM: {version.tempo}
-                                            </span>
-                                          )}
-                                        </div>
-                                      </div>
-                                    </div>
+                                .map((version) => {
+                                  const parentVersion = version.parentId
+                                    ? songVersions.find(
+                                        (v) => v.id === version.parentId,
+                                      )
+                                    : null;
 
-                                    <div className="flex items-center gap-2 bg-background p-1.5 rounded-lg border shadow-sm">
-                                      {version.status === "pending" && (
-                                        <>
-                                          <Button
-                                            size="sm"
-                                            variant="outline"
-                                            className="text-green-700 hover:text-green-800 hover:bg-green-50 border-green-200"
-                                            onClick={() =>
-                                              handleApproveVersion(
-                                                song.id,
-                                                version.id,
-                                              )
-                                            }
-                                          >
-                                            <CheckCircle2 className="w-4 h-4 mr-1.5" />{" "}
-                                            Approve
-                                          </Button>
-                                          <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            className="text-red-700 hover:text-red-800 hover:bg-red-50"
-                                            onClick={() =>
-                                              rejectVersionMutation.mutate(
+                                  const currentVersion = song.currentVersionId
+                                    ? songVersions.find(
+                                        (v) => v.id === song.currentVersionId,
+                                      )
+                                    : null;
+
+                                  const isCurrentActive =
+                                    version.id === song.currentVersionId;
+
+                                  return (
+                                    <div
+                                      key={version.id}
+                                      className={`flex items-center justify-between p-4 rounded-xl border transition-all ${isCurrentActive ? "border-primary shadow-md bg-primary/5" : "border-border hover:border-border/80 bg-card hover:bg-accent/40"}`}
+                                    >
+                                      <div className="flex items-center gap-4 flex-1">
+                                        <button
+                                          onClick={() => {
+                                            if (!isCurrentActive) {
+                                              approveVersionMutation.mutate(
                                                 {
                                                   songId: song.id,
                                                   versionId: version.id,
                                                 },
                                                 {
                                                   onSuccess: () =>
-                                                    toast.success("Rejected"),
+                                                    toast.success(
+                                                      "Set as current version",
+                                                    ),
+                                                },
+                                              );
+                                            }
+                                          }}
+                                          disabled={
+                                            isCurrentActive ||
+                                            approveVersionMutation.isPending
+                                          }
+                                          title={
+                                            isCurrentActive
+                                              ? "Current Active Version"
+                                              : "Set as Current Version"
+                                          }
+                                          className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors ${
+                                            isCurrentActive
+                                              ? "bg-primary/20 text-primary cursor-default"
+                                              : "bg-muted text-muted-foreground/30 hover:bg-primary/10 hover:text-primary cursor-pointer"
+                                          }`}
+                                        >
+                                          <Star
+                                            className={`h-4 w-4 ${isCurrentActive ? "fill-primary" : ""}`}
+                                          />
+                                        </button>
+                                        <div className="flex flex-col gap-1.5">
+                                          <div className="flex items-center gap-3">
+                                            <span className="font-semibold text-foreground/90">
+                                              {version.title}
+                                            </span>
+                                            <SongVersionStatusBadge
+                                              status={version.status}
+                                            />
+                                          </div>
+                                          <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
+                                            <span>
+                                              {new Date(
+                                                version.createdAt,
+                                              ).toLocaleDateString()}
+                                            </span>
+                                            <span className="w-1 h-1 rounded-full bg-border"></span>
+                                            <span className="bg-muted px-1.5 py-0.5 rounded">
+                                              Key: {version.key}
+                                            </span>
+                                            {version.tempo && (
+                                              <span className="bg-muted px-1.5 py-0.5 rounded">
+                                                BPM: {version.tempo}
+                                              </span>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                      <div className="flex items-center gap-2 bg-background p-1 px-2 rounded-lg border shadow-sm">
+                                        {/* Version Actions */}
+
+                                        {parentVersion && (
+                                          <Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() =>
+                                              setDiffView({
+                                                isOpen: true,
+                                                songTitle: song.title,
+                                                version: version,
+                                                target: parentVersion,
+                                                targetLabel: "Parent Version",
+                                              })
+                                            }
+                                          >
+                                            <GitCompare className="w-4 h-4 mr-1" />
+                                            Diff Parent
+                                          </Button>
+                                        )}
+
+                                        {currentVersion &&
+                                          currentVersion.id !== version.id && (
+                                            <Button
+                                              size="sm"
+                                              variant="outline"
+                                              onClick={() =>
+                                                setDiffView({
+                                                  isOpen: true,
+                                                  songTitle: song.title,
+                                                  version: version,
+                                                  target: currentVersion,
+                                                  targetLabel:
+                                                    "Current Active Version",
+                                                })
+                                              }
+                                            >
+                                              <GitCompare className="w-4 h-4 mr-1" />
+                                              Diff Current
+                                            </Button>
+                                          )}
+
+                                        <div className="w-px h-6 bg-border mx-2"></div>
+
+                                        {version.status === "pending" && (
+                                          <>
+                                            <Button
+                                              size="sm"
+                                              variant="outline"
+                                              className="text-green-700 hover:text-green-800 hover:bg-green-50 border-green-200"
+                                              onClick={() =>
+                                                handleApproveVersion(
+                                                  song.id,
+                                                  version.id,
+                                                )
+                                              }
+                                            >
+                                              <CheckCircle2 className="w-4 h-4 mr-1.5" />{" "}
+                                              Approve
+                                            </Button>
+                                            <Button
+                                              size="sm"
+                                              variant="ghost"
+                                              className="text-red-700 hover:text-red-800 hover:bg-red-50"
+                                              onClick={() =>
+                                                rejectVersionMutation.mutate(
+                                                  {
+                                                    songId: song.id,
+                                                    versionId: version.id,
+                                                  },
+                                                  {
+                                                    onSuccess: () =>
+                                                      toast.success("Rejected"),
+                                                  },
+                                                )
+                                              }
+                                            >
+                                              Reject
+                                            </Button>
+                                          </>
+                                        )}
+                                        {(version.status === "rejected" ||
+                                          version.status === "deleted") && (
+                                          <Button
+                                            size="sm"
+                                            variant="ghost"
+                                            onClick={() =>
+                                              restoreVersionMutation.mutate(
+                                                {
+                                                  songId: song.id,
+                                                  versionId: version.id,
+                                                },
+                                                {
+                                                  onSuccess: () =>
+                                                    toast.success(
+                                                      "Version restored",
+                                                    ),
                                                 },
                                               )
                                             }
                                           >
-                                            Reject
+                                            <RotateCcw className="h-4 w-4 mr-1.5" />{" "}
+                                            Restore
                                           </Button>
-                                        </>
-                                      )}
-                                      {version.status === "archived" && (
+                                        )}
                                         <Button
-                                          size="sm"
-                                          variant="secondary"
-                                          onClick={() =>
-                                            approveVersionMutation.mutate(
-                                              {
-                                                songId: song.id,
-                                                versionId: version.id,
-                                              },
-                                              {
-                                                onSuccess: () =>
-                                                  toast.success(
-                                                    "Restored as current",
-                                                  ),
-                                              },
-                                            )
-                                          }
-                                        >
-                                          Restore as Current
-                                        </Button>
-                                      )}
-                                      {(version.status === "rejected" ||
-                                        version.status === "deleted") && (
-                                        <Button
-                                          size="sm"
                                           variant="ghost"
+                                          size="icon"
+                                          className="text-muted-foreground hover:text-primary"
                                           onClick={() =>
-                                            restoreVersionMutation.mutate(
+                                            window.open(
+                                              `/song/${song.id}?version=${version.id}`,
+                                              "_blank",
+                                            )
+                                          }
+                                        >
+                                          <ExternalLink className="h-4 w-4" />
+                                        </Button>
+
+                                        <Button
+                                          variant="ghost"
+                                          size="icon"
+                                          onClick={() =>
+                                            navigate({
+                                              to: "/edit/$songId",
+                                              params: { songId: song.id },
+                                              search: { version: version.id },
+                                            })
+                                          }
+                                        >
+                                          <Edit className="h-4 w-4" />
+                                        </Button>
+                                        <DeletePrompt
+                                          title="Permanently Delete?"
+                                          description="This will remove the data entirely."
+                                          disabled={
+                                            version.id ===
+                                              song.currentVersionId ||
+                                            version.status === "deleted"
+                                          }
+                                          onDelete={() =>
+                                            deleteVersionMutation.mutate(
                                               {
                                                 songId: song.id,
                                                 versionId: version.id,
@@ -578,55 +740,16 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                                               {
                                                 onSuccess: () =>
                                                   toast.success(
-                                                    "Version restored",
+                                                    "Permanently deleted",
                                                   ),
                                               },
                                             )
                                           }
-                                        >
-                                          <RotateCcw className="h-4 w-4 mr-1.5" />{" "}
-                                          Restore
-                                        </Button>
-                                      )}
-                                      <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="text-muted-foreground hover:text-primary"
-                                        onClick={() =>
-                                          window.open(
-                                            `/song/${song.id}?version=${version.id}`,
-                                            "_blank",
-                                          )
-                                        }
-                                      >
-                                        <ExternalLink className="h-4 w-4" />
-                                      </Button>
-                                      <DeletePrompt
-                                        title="Permanently Delete?"
-                                        description="This will remove the data entirely."
-                                        disabled={
-                                          version.id ===
-                                            song.currentVersionId ||
-                                          version.status === "deleted"
-                                        }
-                                        onDelete={() =>
-                                          deleteVersionMutation.mutate(
-                                            {
-                                              songId: song.id,
-                                              versionId: version.id,
-                                            },
-                                            {
-                                              onSuccess: () =>
-                                                toast.success(
-                                                  "Permanently deleted",
-                                                ),
-                                            },
-                                          )
-                                        }
-                                      />
+                                        />
+                                      </div>
                                     </div>
-                                  </div>
-                                ))}
+                                  );
+                                })}
                             </div>
                           </div>
                         </TableCell>
@@ -639,6 +762,72 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
           </Table>
         </div>
       </div>
+
+      <Dialog
+        open={diffView?.isOpen ?? false}
+        onOpenChange={(open) => !open && setDiffView(null)}
+      >
+        <DialogContent className="!max-w-[95vw] sm:!max-w-[95vw] !w-[95vw] h-[95vh] max-h-[95vh] flex flex-col overflow-hidden p-0 sm:p-0 bg-card border-border shadow-lg">
+          {/* 1. Updated DialogHeader to align items in a row */}
+          <DialogHeader className="px-6 py-4 border-b border-border/50 shrink-0 flex flex-row items-center justify-between space-y-0">
+            <DialogTitle className="text-xl flex items-center gap-2">
+              <GitCompare className="w-5 h-5 text-muted-foreground" />
+              Comparing "{diffView?.songTitle}"
+            </DialogTitle>
+
+            {/* 2. Added Split View Toggle */}
+            <div className="flex items-center space-x-2 mr-6">
+              <Label
+                htmlFor="split-view"
+                className="text-sm font-medium cursor-pointer"
+              >
+                Split View
+              </Label>
+              <Switch
+                id="split-view"
+                checked={isSplitView}
+                onCheckedChange={setIsSplitView}
+              />
+            </div>
+          </DialogHeader>
+
+          <div className="flex-1 overflow-auto bg-background/50 p-4">
+            <div className="border border-border rounded-md overflow-hidden bg-card h-full w-full">
+              {diffView && (
+                <ReactDiffViewer
+                  oldValue={diffView.target.chordpro}
+                  newValue={diffView.version.chordpro}
+                  splitView={isSplitView} // 3. Bound this to the state
+                  leftTitle={`${diffView.targetLabel} (Key: ${diffView.target.key || "N/A"})`}
+                  rightTitle={`This Version (Key: ${diffView.version.key || "N/A"})`}
+                  hideLineNumbers={false}
+                  useDarkTheme={isDark}
+                  styles={{
+                    variables: {
+                      dark: {
+                        diffViewerBackground: "transparent",
+                        addedBackground: "rgba(20, 70, 32, 0.4)",
+                        removedBackground: "rgba(80, 20, 20, 0.4)",
+                        wordAddedBackground: "rgba(30, 110, 45, 0.6)",
+                        wordRemovedBackground: "rgba(120, 30, 30, 0.6)",
+                      },
+                      light: {
+                        diffViewerBackground: "transparent",
+                      },
+                    },
+                    diffContainer: {
+                      width: "100%",
+                    },
+                    content: {
+                      width: "100%",
+                    },
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
