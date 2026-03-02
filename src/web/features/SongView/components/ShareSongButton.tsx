@@ -9,6 +9,7 @@ import {
 import { CloudSync } from "lucide-react";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { Link } from "@tanstack/react-router";
+import { useIsOnline } from "~/hooks/use-is-online";
 
 interface ShareSongButtonProps {
   feedStatus: FeedStatus | undefined;
@@ -19,7 +20,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   feedStatus,
   user,
 }) => {
-  const onLine = window.navigator.onLine;
+  const onLine = useIsOnline();
   const showProfileLink = !user.loggedIn || !user.profile.nickname;
   const { shareSession, actions } = useViewSettingsStore();
   const setShareSession = actions.setShareSession;

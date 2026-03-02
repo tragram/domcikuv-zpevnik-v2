@@ -18,6 +18,7 @@ import Filtering from "./filters/Filters";
 import SearchBar from "./SearchBar";
 import SessionView from "./SessionView";
 import SortMenu from "./SortMenu";
+import { useIsOnline } from "~/hooks/use-is-online";
 
 interface CombinedMenuProps {
   isOnline: boolean;
@@ -88,7 +89,7 @@ interface ToolbarProps {
 }
 
 function Toolbar({ songDB, isVisible }: ToolbarProps) {
-  const isOnline = window.navigator.onLine;
+  const isOnline = useIsOnline();
 
   const routeContext = useRouteContext({ strict: false });
   const isAdmin = routeContext?.user?.profile?.isAdmin ?? false;

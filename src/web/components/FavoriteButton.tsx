@@ -3,6 +3,7 @@ import { useRouteContext } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useIsOnline } from "~/hooks/use-is-online";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 
@@ -81,7 +82,7 @@ export const FavoriteButton = ({
           profile: {
             ...oldData.profile,
             favoriteSongIds: oldData.profile.favoriteSongIds.filter(
-              (id: string) => id !== song.id
+              (id: string) => id !== song.id,
             ),
           },
         };
@@ -109,16 +110,16 @@ export const FavoriteButton = ({
 
   const isLoading =
     addFavoriteMutation.isPending || removeFavoriteMutation.isPending;
-
+  const isOnline = useIsOnline();
   return (
     <button
       type="button"
       onClick={handleClick}
-      disabled={isLoading || !window.navigator.onLine}
+      disabled={isLoading || !isOnline}
       className={cn(
         "favorite-button flex items-center justify-center p-2 transition-transform hover:scale-110",
         "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100",
-        className
+        className,
       )}
       title={isFavorite ? "Remove from favorites" : "Add to favorites"}
     >
@@ -129,7 +130,7 @@ export const FavoriteButton = ({
           isLoading && "animate-pulse",
           isFavorite
             ? "fill-primary text-primary"
-            : "hover:text-primary text-white/70"
+            : "hover:text-primary text-white/70",
         )}
       />
     </button>

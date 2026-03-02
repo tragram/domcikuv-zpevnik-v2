@@ -17,6 +17,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
+import { useIsOnline } from "~/hooks/use-is-online";
 import { handleApiResponse } from "~/services/api-service";
 
 type ProfileUpdateResponse = {
@@ -125,7 +126,7 @@ function RouteComponent() {
       formData.append("nickname", currentData.nickname || "");
       formData.append(
         "isFavoritesPublic",
-        String(currentData.isFavoritesPublic)
+        String(currentData.isFavoritesPublic),
       );
       if (pendingAvatarFile) formData.append("avatarFile", pendingAvatarFile);
       if (avatarToDelete && !pendingAvatarFile)
@@ -150,16 +151,16 @@ function RouteComponent() {
       setSavedData(updatedData);
 
       router.invalidate();
-      
+
       // Invalidate userProfile query to ensure all components get fresh data
       await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
-      
+
       // Invalidate songs and songbooks since favorites or profile data may affect them
       await queryClient.invalidateQueries({ queryKey: ["songs"] });
       await queryClient.invalidateQueries({ queryKey: ["publicSongbooks"] });
-      
+
       toast.success("Profile updated successfully");
-      
+
       // Redirect if redirect parameter is present
       if (redirect) {
         navigate({ to: redirect });
@@ -244,7 +245,7 @@ function RouteComponent() {
   // Helper functions to update specific fields in currentData
   const updateField = <K extends keyof typeof currentData>(
     field: K,
-    value: (typeof currentData)[K]
+    value: (typeof currentData)[K],
   ) => {
     setCurrentData((prev) => ({ ...prev, [field]: value }));
   };
@@ -595,20 +596,17 @@ function ActionButtons({
   onSave,
   onLogout,
 }: ActionButtonsProps) {
+  const isOnline = useIsOnline();
   return (
     <div className="flex flex-row flex-wrap-reverse gap-3 justify-between">
-      <Button
-        onClick={onLogout}
-        className="sm:w-auto"
-        disabled={!window.navigator.onLine}
-      >
+      <Button onClick={onLogout} className="sm:w-auto" disabled={!isOnline}>
         <LogOut />
         Logout
       </Button>
       <Button
         variant="outline"
         onClick={onSave}
-        disabled={saving || !hasChanges || !window.navigator.onLine}
+        disabled={saving || !hasChanges || !isOnline}
         className="sm:w-auto"
       >
         {saving ? (
