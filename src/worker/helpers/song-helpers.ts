@@ -110,7 +110,6 @@ export async function retrieveSongs(
   }
   if (!includeDeleted) conditions.push(eq(song.deleted, false));
 
-  
   if (updatedSince) {
     conditions.push(
       or(
@@ -306,9 +305,15 @@ export const createSongVersion = async (
   const now = new Date();
   let parentVersion: schema.SongVersionDB | undefined = undefined;
 
-  if (submission.parentId) {
+  const parentId =
+    submission.parentId === songId
+      ? (await db.query.song.findFirst({ where: eq(song.id, songId) }))
+          ?.currentVersionId
+      : submission.parentId;
+  if (parentId) {
+    // hacky way to tell the backend that we're basing the edit on current version (which is unavailable) is setting parentId to songId which won't happen otherwise due to the structure of versionId
     parentVersion = await db.query.songVersion.findFirst({
-      where: eq(songVersion.id, submission.parentId),
+      where: eq(songVersion.id, parentId),
     });
     if (!parentVersion || parentVersion.songId !== songId) {
       throw Error("Invalid parentId!");
@@ -347,7 +352,7 @@ export const createSongVersion = async (
         ...submission,
         id: versionId,
         songId: songId,
-        parentId: submission.parentId,
+        parentId: parentId,
         userId: userId,
         approvedBy: shouldPublish ? userId : null,
         approvedAt: shouldPublish ? now : null,

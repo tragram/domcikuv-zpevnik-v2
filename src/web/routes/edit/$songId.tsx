@@ -24,13 +24,12 @@ export const Route = createFileRoute("/edit/$songId")({
 
 function RouteComponent() {
   const { user, songDB, versionId, songData } = Route.useLoaderData();
-
   return (
     <Editor
       songDB={songDB}
       songData={songData}
       user={user}
-      versionId={versionId}
+      versionId={versionId ?? songData.id}
     />
   );
 }
