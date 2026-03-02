@@ -21,7 +21,8 @@ import {
   Settings2,
   Undo2,
   CloudOff,
-  RefreshCw, // <-- Added for the update button
+  RefreshCw,
+  Contrast, // <-- Added Contrast icon
 } from "lucide-react";
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -70,7 +71,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   transposeSteps,
   setTransposeSteps,
 }) => {
-  const { layout } = useViewSettingsStore();
+  // Grab 'actions' along with 'layout' to update the store
+  const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
   const { PWAInstallComponent, installItem } = usePWAInstall();
@@ -160,6 +162,21 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             <DropdownMenuLabel>Misc</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownThemeToggle />
+
+            {/* Added High Contrast Checkbox Item */}
+            <DropdownMenuCheckboxItem
+              onSelect={(e) => e.preventDefault()}
+              checked={layout.highContrast}
+              onCheckedChange={() =>
+                actions.setLayoutSettings({
+                  highContrast: !layout.highContrast,
+                })
+              }
+            >
+              <DropdownIconStart icon={<Contrast />} />
+              High contrast
+            </DropdownMenuCheckboxItem>
+
             <DropdownMenuItem
               onClick={() => {
                 fullScreenHandle.enter();

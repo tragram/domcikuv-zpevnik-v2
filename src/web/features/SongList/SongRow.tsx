@@ -18,7 +18,7 @@ interface SongInfoProps {
 const SongInfo = memo(({ title, artist, className = "" }: SongInfoProps) => (
   <div className={cn("min-w-36 flex-col content-center text-left", className)}>
     <h2 className="song-title truncate text-sm font-bold">{title}</h2>
-    <h3 className="song-artist truncate text-sm opacity-50">{artist}</h3>
+    <h3 className="song-artist truncate text-sm opacity-50 hc:opacity-80">{artist}</h3>
   </div>
 ));
 
@@ -53,8 +53,8 @@ const DateDisplay = memo(
     >
       {month && year && (
         <>
-          <h3 className="text-xs opacity-70">{MONTH_NAMES[month - 1]}</h3>
-          <h2 className="text-sm opacity-70">{year}</h2>
+          <h3 className="text-xs opacity-70 hc:opacity-80">{MONTH_NAMES[month - 1]}</h3>
+          <h2 className="text-sm opacity-70 hc:opacity-80">{year}</h2>
         </>
       )}
     </div>
@@ -79,8 +79,8 @@ const CapoDisplay = memo(({ capo, className = "" }: CapoDisplayProps) => (
       className,
     )}
   >
-    <h2 className="text-xs opacity-70">Capo</h2>
-    <h3 className="text-sm opacity-70">{capo}</h3>
+    <h2 className="text-xs opacity-70 hc:opacity-80">Capo</h2>
+    <h3 className="text-sm opacity-70 hc:opacity-80">{capo}</h3>
   </div>
 ));
 
@@ -176,14 +176,14 @@ const SongRow = memo(
       return;
     }
     return (
-      <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4">
+      <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4 !pl-4 !sm:pl-6">
         <div
-          className="song-row-bg-image flex h-14 w-full min-w-72 rounded-full"
+          className="song-row-bg-image flex h-14 w-full min-w-72 rounded-full hc:border-foreground hc:border-4 hc:!bg-none"
           style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
         >
-          <div className="song-row-bg-image row-text-shadow relative flex h-full w-full items-center rounded-full p-1 shadow-black backdrop-blur-md">
+          <div className="song-row-bg-image row-text-shadow relative flex h-full w-full items-center rounded-full shadow-black backdrop-blur-md">
             <IllustrationPopup
-              avatarClassName="absolute -left-0 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
+              avatarClassName="absolute -left-2 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
               song={song}
             />
             <Link

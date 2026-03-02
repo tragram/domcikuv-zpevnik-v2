@@ -1,62 +1,66 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 // Shared types across settings
-export type FitScreenMode = 'none' | 'fitX' | 'fitXY'
-export type LayoutPreset = 'compact' | 'maximizeFontSize' | 'custom'
+export type FitScreenMode = "none" | "fitX" | "fitXY";
+export type LayoutPreset = "compact" | "maximizeFontSize" | "custom";
 export const isSmallScreen = () => {
-  if (typeof window === 'undefined') return false;
-  return window.matchMedia('(max-width: 768px)').matches;
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(max-width: 768px)").matches;
 };
 // Separate interfaces for preset fields vs independent settings
 export interface PresetSettings {
-  fitScreenMode: FitScreenMode
-  repeatParts: boolean
-  repeatPartsChords: boolean
+  fitScreenMode: FitScreenMode;
+  repeatParts: boolean;
+  repeatPartsChords: boolean;
 }
 
 export interface IndependentLayoutSettings {
-  fontSize: number
-  multiColumns: boolean
-  smartColumns: boolean
-  compactInFullScreen: boolean
+  fontSize: number;
+  multiColumns: boolean;
+  smartColumns: boolean;
+  compactInFullScreen: boolean;
+  highContrast: boolean;
 }
 
-export interface LayoutSettings extends PresetSettings, IndependentLayoutSettings { }
+export interface LayoutSettings
+  extends PresetSettings, IndependentLayoutSettings {}
 
 export interface ChordSettings {
-  showChords: boolean
-  czechChordNames: boolean
-  inlineChords: boolean
+  showChords: boolean;
+  czechChordNames: boolean;
+  inlineChords: boolean;
 }
 
 // Constants and preset configurations
 export const LAYOUT_PRESETS = {
   compact: {
-    fitScreenMode: 'fitXY' as FitScreenMode,
+    fitScreenMode: "fitXY" as FitScreenMode,
     repeatParts: false,
     repeatPartsChords: false,
   },
   maximizeFontSize: {
-    fitScreenMode: 'fitX' as FitScreenMode,
+    fitScreenMode: "fitX" as FitScreenMode,
     repeatParts: true,
     repeatPartsChords: true,
   },
-} as const
+} as const;
 
 const defaultIndependentSettings: IndependentLayoutSettings = isSmallScreen()
   ? {
-    fontSize: 12,
-    multiColumns: false,
-    smartColumns: false,
-    compactInFullScreen: false,
-  }
+      fontSize: 12,
+      multiColumns: false,
+      smartColumns: false,
+      compactInFullScreen: false,
+      highContrast: false,
+    }
   : {
-    fontSize: 12,
-    multiColumns: true,
-    smartColumns: true,
-    compactInFullScreen: false,
-  };
+      fontSize: 12,
+      multiColumns: true,
+      smartColumns: true,
+      compactInFullScreen: false,
+      highContrast: false,
+    };
 
 const defaultPresetSettings: PresetSettings = isSmallScreen()
   ? LAYOUT_PRESETS.maximizeFontSize
@@ -75,26 +79,30 @@ const getCurrentPreset = (settings: PresetSettings): LayoutPreset => {
 
 // Store interface
 interface SettingsState {
-  layout: LayoutSettings
-  customLayoutPreset: PresetSettings
-  chords: ChordSettings
-  shareSession: boolean
+  layout: LayoutSettings;
+  customLayoutPreset: PresetSettings;
+  chords: ChordSettings;
+  shareSession: boolean;
   actions: {
-    setLayoutSettings: (settings: Partial<LayoutSettings>) => void
-    setCustomLayoutPreset: (settings: Partial<PresetSettings>) => void
-    setChordSettings: (settings: Partial<ChordSettings>) => void
-    applyPreset: (preset: LayoutPreset) => void
-    getCurrentPreset: () => LayoutPreset
-    setShareSession: (value: boolean) => void
-  }
+    setLayoutSettings: (settings: Partial<LayoutSettings>) => void;
+    setCustomLayoutPreset: (settings: Partial<PresetSettings>) => void;
+    setChordSettings: (settings: Partial<ChordSettings>) => void;
+    applyPreset: (preset: LayoutPreset) => void;
+    getCurrentPreset: () => LayoutPreset;
+    setShareSession: (value: boolean) => void;
+  };
 }
 
 // Utility functions
-const MIN_FONT_SIZE = 4
-const MAX_FONT_SIZE = 80
-export const getFontSizeInRange = (size: number, min: number = MIN_FONT_SIZE, max: number = MAX_FONT_SIZE) => {
-  return Math.min(Math.max(min, size), max)
-}
+const MIN_FONT_SIZE = 4;
+const MAX_FONT_SIZE = 80;
+export const getFontSizeInRange = (
+  size: number,
+  min: number = MIN_FONT_SIZE,
+  max: number = MAX_FONT_SIZE,
+) => {
+  return Math.min(Math.max(min, size), max);
+};
 
 export const useViewSettingsStore = create<SettingsState>()(
   persist(
@@ -116,12 +124,12 @@ export const useViewSettingsStore = create<SettingsState>()(
         setLayoutSettings: (settings) =>
           set((state) => {
             // If we're just updating fontSize, do it directly without any other logic
-            if (Object.keys(settings).length === 1 && 'fontSize' in settings) {
+            if (Object.keys(settings).length === 1 && "fontSize" in settings) {
               return {
                 layout: {
                   ...state.layout,
-                  fontSize: getFontSizeInRange(settings.fontSize!)
-                }
+                  fontSize: getFontSizeInRange(settings.fontSize!),
+                },
               };
             }
             const newLayout = {
@@ -148,10 +156,9 @@ export const useViewSettingsStore = create<SettingsState>()(
             },
           })),
         applyPreset: (preset) => {
-          const { actions, customLayoutPreset } = get()
-          let presetSettings = preset === 'custom'
-            ? customLayoutPreset
-            : LAYOUT_PRESETS[preset];
+          const { actions, customLayoutPreset } = get();
+          let presetSettings =
+            preset === "custom" ? customLayoutPreset : LAYOUT_PRESETS[preset];
           if (preset === "custom") {
             presetSettings = { ...presetSettings, fitScreenMode: "none" };
           }
@@ -166,13 +173,13 @@ export const useViewSettingsStore = create<SettingsState>()(
       },
     }),
     {
-      name: 'songview-settings-store',
+      name: "songview-settings-store",
       partialize: (state) => ({
         layout: state.layout,
         customLayoutPreset: state.customLayoutPreset,
         chords: state.chords,
         shareSession: state.shareSession,
       }),
-    }
-  )
-)
+    },
+  ),
+);
