@@ -25,20 +25,45 @@ const capitalizeLyrics = (text: string): string => {
     return placeholder;
   });
 
-  // 2. Capitalize Lyrics
-  // Group 1: Directives/Newlines, Group 2: Chords, Group 3: Lyrics
-  const pattern =
-    /((?:^|\n)\s*(?:\{[^}]*\}\s*|\n)\s*)(\[[A-Ha-h0-9#mi\s]*\])?([^\n]*)/g;
-  processed = processed.replace(pattern, (_, prefix, chord, lyrics) => {
-    const p = prefix || "";
-    const c = chord || "";
-    const l = lyrics || "";
-    // Capitalize first non-whitespace char
-    const capLyrics = l.replace(/(?<!\S)(\S)/, (char: string) =>
-      char.toUpperCase(),
-    );
-    return p + c + capLyrics;
-  });
+  // 2. Capitalize Paragraphs
+  let isStartOfParagraph = true;
+
+  processed = processed
+    .split("\n")
+    .map((line) => {
+      // An empty line resets the paragraph capitalization tracker
+      if (line.trim() === "") {
+        isStartOfParagraph = true;
+        return line;
+      }
+
+      // Matches leading whitespace, directives {...}, chords [...], or musical repetition markers 𝄆 / 𝄇
+      const pattern = /^((?:\s*|\{[^}]*\}|\[[^\]]*\]|𝄆|𝄇)*)(.*)$/;
+      const match = line.match(pattern);
+
+      if (match) {
+        const prefix = match[1];
+        const lyrics = match[2];
+
+        // If there are actual lyrics on this line (not just chords/directives)
+        if (lyrics.trim() !== "") {
+          if (isStartOfParagraph) {
+            // Capitalize the first non-whitespace character
+            const capLyrics = lyrics.replace(/(?<!\S)(\S)/, (char: string) =>
+              char.toUpperCase(),
+            );
+            isStartOfParagraph = false; // Turn off until next empty line
+            return prefix + capLyrics;
+          } else {
+            // Leave subsequent lines in the paragraph exactly as they are
+            return prefix + lyrics;
+          }
+        }
+      }
+
+      return line;
+    })
+    .join("\n");
 
   // 3. Restore Tabs
   for (const [key, val] of Object.entries(tabs)) {
