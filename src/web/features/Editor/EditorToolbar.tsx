@@ -32,6 +32,10 @@ import {
 import { EditorSettings } from "./EditorSettings";
 import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 import EditorHelp from "./components/EditorHelp";
+import {
+  generateSongIllustration,
+  submitSongVersion,
+} from "~/services/editor-service";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -78,23 +82,12 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     songId: string,
     settings: EditorSettings,
   ) => {
-    const generationParams = {
+    generateSongIllustration(
       songId,
-      setAsActive: true,
-      imageModel: settings.defaultImageModel,
-      promptVersion: settings.defaultPromptVersion,
-      summaryModel: settings.defaultSummaryModel,
-    };
-
-    // Use keepalive to ensure request completes even if page navigates away
-    fetch("/api/illustrations/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(generationParams),
-      keepalive: true,
-    })
+      settings.defaultImageModel,
+      settings.defaultPromptVersion,
+      settings.defaultSummaryModel,
+    )
       .then((response) => {
         if (response.ok) {
           console.log(`Illustration generation started for song ${songId}`);
@@ -110,19 +103,22 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
+
+    // Inject the current version ID as the parentId so the DB tracks lineage
     const parsedState = {
       ...editorState,
       chordpro: normalizeWhitespace(replaceRepetitions(editorState.chordpro)),
+      parentId: editorState?.parentId,
     };
+
     try {
-      const response = await makeApiRequest(() =>
-        songData
-          ? editorApi[":id"].$put({
-              param: { id: songData.id },
-              json: parsedState,
-            })
-          : editorApi.$post({ json: parsedState }),
+      // Use the new service function
+      const response = await submitSongVersion(
+        editorApi,
+        parsedState,
+        songData?.id,
       );
+
       const version = response.version;
       const isUpdate =
         new Date(version.createdAt).getTime() !==
