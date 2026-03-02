@@ -13,6 +13,7 @@ import {
   preparseDirectives,
   transposeChordPro,
 } from "./preparseChordpro";
+import { formatChordpro } from "~/lib/formatChordpro";
 /**
  * Default section classes used in rendering
  */
@@ -77,7 +78,11 @@ export function renderSong(
   centralEuropeanNotation: boolean,
 ): string {
   // Parse and process the chord pro content
-  const song = parseChordPro(songData.chordpro, songData.key, transposeSteps);
+  const song = parseChordPro(
+    formatChordpro(songData.chordpro),
+    songData.key,
+    transposeSteps,
+  );
   // Configure formatter settings
   const settings = new FormatterSettings();
   settings.showMetadata = false;
