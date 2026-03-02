@@ -14,191 +14,24 @@ import {
 } from "chord-symbol/lib/chord-symbol.js";
 import { hasExactly } from "chord-symbol/src/helpers/hasElement";
 import type { Key } from "~/types/musicTypes";
+import {
+  applyVariant,
+  variantHandlers,
+  EXPANDED_SECTION_DIRECTIVE,
+  SHORTHAND_SECTION_DIRECTIVE,
+} from "./variantHandlers";
 
-// these are used to pass information about collapsed/shorthand sections to post-processing
-// this is an ugly solution but the alternative appears to be writing my own parser
-export const EXPANDED_SECTION_DIRECTIVE = "{comment: %expanded_section%}";
-export const SHORTHAND_SECTION_DIRECTIVE = "{comment: %shorthand_section%}";
 export const SECTION_TITLE_COMMENT = (
   repeatKey: string | null,
-  consecutiveModifier: string | null
-) =>
-  repeatKey || consecutiveModifier
-    ? `{comment: %section_title: ${consecutiveModifier}${repeatKey}%}`
-    : null;
-
-// ==================== TYPES ====================
+  consecutiveModifier: string | null,
+) => `{comment: %section_title: ${consecutiveModifier}${repeatKey}%}`;
 
 /**
- * Valid variation types for part variants
+ * Default section directives
  */
-const validVariationValues = [
-  "replace_last_line",
-  "replace_last_lines",
-  "append_content",
-  "replace_first_line",
-  "prepend_content",
-] as const;
-
-type validVariation = (typeof validVariationValues)[number];
-
-// ==================== PART VARIATIONS ====================
-
-/**
- * Applies variations to a section of chord content
- *
- * @param originalLines - The original content lines
- * @param variantType - The type of variation to apply
- * @param variantContent - The content to use in the variation
- * @param repeat - Whether to include the full content or a placeholder
- * @param sectionTitle - Key identifier for the section
- * @returns Modified array of content lines
- */
-function partVariation(
-  originalLines: string[],
-  variantType: validVariation,
-  variantContent: string[],
-  repeat: boolean,
-  sectionTitle: string
-): string[] {
-  // Validate inputs
-  if (!originalLines) {
-    console.log("Error: No original lines found!");
-    return [""];
-  }
-
-  // Handle multi-line variant content
-  if (variantContent.length > 1) {
-    variantContent = [variantContent.join("\n").trim()];
-  }
-
-  // Skip if content is too short
-  if (originalLines.length < 3) {
-    console.log(
-      "Error: Ignoring part variant",
-      variantType,
-      "on",
-      originalLines,
-      "- originalLines content too short!"
-    );
-    return originalLines;
-  }
-
-  // Apply the appropriate variation type
-  switch (variantType) {
-    case "replace_last_line":
-      if (repeat) {
-        return [
-          ...originalLines.slice(0, -2),
-          ...variantContent,
-          ...originalLines.slice(-1),
-        ];
-      } else {
-        return [
-          originalLines[0],
-          sectionTitle,
-          " ..." + variantContent,
-          ...originalLines.slice(-1),
-        ];
-      }
-
-    case "replace_last_lines":
-      throw new Error("Error: Replace last lines not yet supported!");
-
-    case "append_content":
-      if (repeat) {
-        // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
-        return [
-          ...originalLines.slice(0, -1),
-          ...variantContent,
-          ...originalLines.slice(-1),
-        ];
-      } else {
-        return [
-          originalLines[0],
-          sectionTitle,
-          " + " + variantContent,
-          ...originalLines.slice(-1),
-        ];
-      }
-
-    case "replace_first_line":
-      if (repeat) {
-        // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
-        return [
-          originalLines[0],
-          sectionTitle,
-          " " + variantContent[0],
-          ...originalLines.slice(3, -1),
-        ];
-      } else {
-        return [
-          originalLines[0],
-          sectionTitle,
-          " " + variantContent[0].trim() + "...",
-          ...originalLines.slice(-1),
-        ];
-      }
-
-    case "prepend_content": {
-      const replaceRegex = new RegExp("^" + sectionTitle, "g");
-      if (repeat) {
-        // Assuming first and last line are {start_of_xyz} and {end_of_xyz}
-        const replacedLines = [
-          ...originalLines.slice(0, 1),
-          sectionTitle,
-          " " + variantContent[0],
-          ...originalLines.slice(1, -1).map((l) => l.replace(replaceRegex, "")),
-        ];
-        return replacedLines;
-      } else {
-        const replacedLines = [
-          originalLines[0],
-          sectionTitle,
-          " " + variantContent[0] + "...",
-          originalLines[1].replace(replaceRegex, ""),
-          ...originalLines.slice(-1),
-        ];
-        return replacedLines;
-      }
-    }
-
-    default:
-      return originalLines;
-  }
-}
-
-/**
- * Applies variations to a section of chord content.
- * Wrapper to partVariation that adds a meta information tag about whether it's expanded or not.
- *
- * @param originalLines - The original content lines
- * @param variantType - The type of variation to apply
- * @param variantContent - The content to use in the variation
- * @param repeat - Whether to include the full content or a placeholder
- * @param sectionTitle - Key identifier for the section
- * @returns Modified array of content lines
- */
-function partVariationWithMetaInfo(
-  originalLines: string[],
-  variantType: validVariation,
-  variantContent: string[],
-  repeat: boolean,
-  sectionTitle: string
-): string[] {
-  const variation = partVariation(
-    originalLines,
-    variantType,
-    variantContent,
-    repeat,
-    sectionTitle
-  );
-  return variation.toSpliced(
-    1,
-    0,
-    repeat ? EXPANDED_SECTION_DIRECTIVE : SHORTHAND_SECTION_DIRECTIVE
-  );
-}
+const DEFAULT_SECTION_DIRECTIVES = ["chorus", "bridge", "verse"];
+const DEFAULT_SECTION_LABELS = ["R", "B", ""];
+const DEFAULT_SECTION_SHORTHANDS = ["R", "B", "V"];
 
 // ==================== DIRECTIVE PROCESSING ====================
 
@@ -215,12 +48,13 @@ function detectConsecutiveRecalls(
   content: string[],
   position: number,
   callRegex: RegExp,
-  currentVariationContent: string[]
+  currentVariationContent: string[] | null,
 ): { count: number; key: string; lastIndex: number } {
-  if (currentVariationContent) {
+  if (currentVariationContent && currentVariationContent.length > 0) {
     // ignore repeats when there's a variant
     return { count: 1, lastIndex: position, key: "" };
   }
+
   let consecutiveRecalls = 0;
   let currentKey = "";
   let lastIndex = position;
@@ -265,17 +99,24 @@ function detectConsecutiveRecalls(
  *
  * @param song - The ChordPro song content
  * @param directives - Array of directive names to process
- * @param shortHands - Array of shorthand identifiers corresponding to directives
+ * @param labels - Array of labels corresponding to directives shown when expanded
+ * @param shortHands - Array of shorthand identifiers corresponding to directives shown when collapsed
  * @returns Processed song with expanded directives and compressed recalls
  */
 export function preparseDirectives(
   song: string,
-  directives: string[] = ["chorus"],
-  shortHands: string[] = ["R"]
+  directives: string[] = DEFAULT_SECTION_DIRECTIVES,
+  labels: string[] = DEFAULT_SECTION_LABELS,
+  shortHands: string[] = DEFAULT_SECTION_SHORTHANDS,
 ): string {
   // Validate inputs
-  if (directives.length !== shortHands.length) {
-    throw new Error("Directives and shortHands must be the same length.");
+  if (
+    directives.length !== labels.length ||
+    directives.length !== shortHands.length
+  ) {
+    throw new Error(
+      "Directives, labels and shortHands must be the same length.",
+    );
   }
 
   // Maps to store directive content by key
@@ -286,15 +127,16 @@ export function preparseDirectives(
   // Create regex patterns for each directive
   const directiveRegexes = directives.map((directive, i) => ({
     directive,
+    label: labels[i],
     shortHand: shortHands[i],
     startRegex: new RegExp(
       `^\\{start_of_${directive}(?::\\s*([\\w\\-_+. \\p{L}]+))?\\}`,
-      "u"
+      "u",
     ),
     endRegex: new RegExp(`^\\{end_of_${directive}\\}`, "u"),
     callRegex: new RegExp(
       `^\\{${directive}(?::\\s*([\\w\\-_+. \\p{L}]+))?\\}`,
-      "u"
+      "u",
     ),
   }));
 
@@ -306,19 +148,20 @@ export function preparseDirectives(
   let currentDirective: string | null = null;
   let currentContent: string[] | null = null;
   let currentKey: string | null = null;
-  let currentVariationType: validVariation | null = null;
+  let currentVariationType: string | null = null;
+  let currentVariationArgs: string[] = [];
   let currentVariationContent: string[] | null = null;
   let variantActive = false;
 
   // Regex for variants
-  const variantStartRegex = new RegExp(
-    "^\\{start_of_variant: ([\\w\\-_+]+)\\}"
-  );
-  const variantEndRegex = new RegExp("^\\{end_of_variant\\}");
+  const variantStartRegex =
+    /^\{start_of_variant:\s*([\w\-_+]+)(?::\s*(\d+))?\}/;
+  const variantEndRegex = /^\{end_of_variant\}/;
 
   // Process each line of the song
   const processedLines: string[] = [];
   const songLines = song.split("\n");
+
   let i = 0;
   while (i < songLines.length) {
     const line = songLines[i];
@@ -326,20 +169,20 @@ export function preparseDirectives(
     // Check for variant start
     const variantStartMatch = line.match(variantStartRegex);
     if (variantStartMatch) {
-      if (
-        !validVariationValues.includes(variantStartMatch[1] as validVariation)
-      ) {
-        console.log(
-          "Invalid variant type:",
-          variantStartMatch[1],
-          "--> Skipping..."
-        );
-        i++;
-        continue;
+      const type = variantStartMatch[1];
+      const arg = variantStartMatch[2];
+
+      if (!variantHandlers[type]) {
+        // GRACEFUL FALLBACK: Render invalid variant as a comment, keep the text
+        processedLines.push(`{comment: Invalid variant type: ${type}}`);
+        currentVariationType = null;
+        variantActive = true;
+      } else {
+        currentVariationType = type;
+        currentVariationArgs = arg ? [arg] : [];
+        variantActive = true;
       }
-      currentVariationType = variantStartMatch[1] as validVariation;
       currentVariationContent = [];
-      variantActive = true;
       i++;
       continue;
     }
@@ -354,54 +197,51 @@ export function preparseDirectives(
 
     // Collect variant content
     if (variantActive) {
-      if (!currentVariationContent) {
-        currentVariationContent = [];
-        console.log(
-          "Warning: variantActive but currentVariationContent is null!"
-        );
+      if (currentVariationContent !== null) {
+        currentVariationContent.push(line);
       }
-      currentVariationContent.push(line);
       i++;
       continue;
     }
 
-    // Process directive start/end
     let directiveMatched = false;
     for (const {
       directive,
+      label,
       shortHand,
       startRegex,
       endRegex,
       callRegex,
     } of directiveRegexes) {
-      // Check for directive start
+      // Directive start
       const startMatch = line.match(startRegex);
       if (startMatch) {
         currentDirective = directive;
-        currentKey = startMatch[1] || shortHand || defaultKey;
+        currentKey = startMatch[1] || label || defaultKey;
         currentContent = [line];
         directiveMaps[directive] = directiveMaps[directive] || {};
         directivesAdded[directive] = directivesAdded[directive] || [];
         directiveMatched = true;
         break;
       }
-      // Check for directive end
+
+      // Directive end
       const endMatch = line.match(endRegex);
       if (endMatch && currentContent && currentDirective === directive) {
         currentContent.push(line);
-        if (!currentKey) {
-          console.log("Error: Directive key not found!");
-          currentKey = defaultKey;
-        }
+        if (!currentKey) currentKey = defaultKey;
+
         directiveMaps[directive][currentKey] = currentContent;
         directivesAdded[directive].push(currentKey);
+
         if (currentKey !== defaultKey) {
           currentContent.splice(
             1,
             0,
-            SECTION_TITLE_COMMENT(currentKey, "") ?? ""
+            SECTION_TITLE_COMMENT(currentKey, "") ?? "",
           );
         }
+
         processedLines.push(currentContent.join("\n"));
         currentDirective = null;
         currentContent = null;
@@ -412,113 +252,150 @@ export function preparseDirectives(
 
       // Check for (consecutive) directive recalls
       const callMatch = line.match(callRegex);
-      let consecutiveModifier = "";
       if (callMatch) {
+        if (currentContent !== null) {
+          currentContent.push(
+            `{comment: Error: Cannot recall from within a section.}`,
+          );
+          directiveMatched = true;
+          break;
+        }
+
+        let consecutiveModifier = "";
         const consecutiveInfo = detectConsecutiveRecalls(
           songLines,
           i,
           callRegex,
-          currentVariationContent
+          currentVariationContent,
         );
+
         if (consecutiveInfo.count > 1) {
           // We found consecutive recalls of the same directive
           consecutiveModifier = `(${consecutiveInfo.count}x) `;
           i = consecutiveInfo.lastIndex;
         }
 
-        let directiveKey = callMatch[1] || shortHand || defaultKey;
-        let contentToInsert;
+        let directiveKey = callMatch[1] || label || defaultKey;
+        let contentToInsert: string[] = [];
+
         if (directivesAdded[directive]?.includes(directiveKey)) {
-          contentToInsert = directiveMaps[directive][directiveKey];
+          contentToInsert = [...directiveMaps[directive][directiveKey]];
         } else {
-          if (directivesAdded[directive]) {
-            const newDirectiveKey = directivesAdded[directive].slice(-1)[0];
-            console.log(
-              `Warning: Recalled part "${directiveKey}" not found! Recalling the last section of the same type (${directive}) - ${newDirectiveKey}!`
+          // GRACEFUL FALLBACK: Attempt to find fallback, otherwise render comment
+          const fallbackKey = directivesAdded[directive]?.slice(-1)[0];
+          if (fallbackKey) {
+            processedLines.push(
+              `{comment: Warning: Recalled part "${directiveKey}" not found. Using "${fallbackKey}" instead.}`,
             );
-            directiveKey = newDirectiveKey;
-            contentToInsert = directiveMaps[directive][directiveKey];
+            directiveKey = fallbackKey;
+            contentToInsert = [...directiveMaps[directive][directiveKey]];
           } else {
-            console.log(
-              `Warning: Recalled part "${directive}" not found! No section of the same type has been recorded --> ignoring...`
+            processedLines.push(
+              `{comment: Error: Recalled part "${directive}" not found. No previous section recorded.}`,
             );
+            processedLines.push(line); // Preserve original line so data isn't lost
+            directiveMatched = true;
             break;
           }
         }
-        const sectionTitle = SECTION_TITLE_COMMENT(
-          directiveKey === defaultKey ? "" : directiveKey,
-          consecutiveModifier
+
+        const sectionTitleExpanded = SECTION_TITLE_COMMENT(
+          directiveKey === defaultKey ? label : directiveKey,
+          consecutiveModifier,
+        );
+        const sectionTitleShortHand = SECTION_TITLE_COMMENT(
+          directiveKey === defaultKey ? shortHand : directiveKey,
+          consecutiveModifier,
         );
 
-        if (currentVariationContent) {
-          // insert variation if applicable
+        // Apply Variant
+        if (currentVariationContent && currentVariationContent.length > 0) {
           if (!currentVariationType) {
-            console.log(
-              "Error: currentVariationType null unexpectedly - skipping part variation!"
+            // Unrecognized variant, but we collected lines
+            processedLines.push(
+              `{comment: Warning: Lost variant contents applied here.}`,
             );
+            processedLines.push(...currentVariationContent);
+
+            // Check if title comment is already present
+            const hasTitle = contentToInsert[1]?.startsWith(
+              "{comment: %section_title",
+            );
+
+            contentToInsert = [
+              contentToInsert[0],
+              EXPANDED_SECTION_DIRECTIVE,
+              hasTitle ? contentToInsert[1] : sectionTitleExpanded,
+              ...contentToInsert.slice(hasTitle ? 2 : 1, -1),
+              `{end_of_${directive}}`,
+              `{start_of_${directive}}`,
+              SHORTHAND_SECTION_DIRECTIVE,
+              sectionTitleShortHand,
+              `{end_of_${directive}}`,
+            ];
           } else {
-            // insert the expanded version...
-            const expandedContent = partVariationWithMetaInfo(
+            const expandedContent = applyVariant(
               contentToInsert,
               currentVariationType,
               currentVariationContent,
               true,
-              sectionTitle ?? ""
+              sectionTitleExpanded,
+              currentVariationArgs,
             );
-            // ...as well as the short-hand version
-            const shorthandContent = partVariationWithMetaInfo(
+            const shorthandContent = applyVariant(
               contentToInsert,
               currentVariationType,
               currentVariationContent,
               false,
-              sectionTitle ?? ""
+              sectionTitleShortHand,
+              currentVariationArgs,
             );
             contentToInsert = expandedContent.concat(shorthandContent);
-            currentVariationType = null;
-            currentVariationContent = null;
           }
+          currentVariationType = null;
+          currentVariationArgs = [];
+          currentVariationContent = null;
         } else {
-          // or just recall the contents - both expanded and shorthand
-          try {
-            contentToInsert = [
-              contentToInsert[0],
-              EXPANDED_SECTION_DIRECTIVE,
-              contentToInsert[1],
-              ...contentToInsert.slice(2),
+          // Standard Recall
+          const singleLineLyric =
+            contentToInsert.length === 3 ? contentToInsert[1] : null;
 
-              `{start_of_${directive}}`,
-              SHORTHAND_SECTION_DIRECTIVE,
-              sectionTitle ?? "",
-              // include the recalled part even in shorthand if it's only a single line
-              contentToInsert.length === 3 ? contentToInsert[1] : "",
-              `{end_of_${directive}}`,
-            ];
-          } catch (error) {
-            console.log(error);
-          }
+          contentToInsert = [
+            contentToInsert[0],
+            EXPANDED_SECTION_DIRECTIVE,
+            ...contentToInsert.slice(1),
+            `{start_of_${directive}}`,
+            SHORTHAND_SECTION_DIRECTIVE,
+            sectionTitleShortHand,
+            ...(singleLineLyric !== null ? [singleLineLyric] : []), // Inject single lyric line if exactly 3 lines long
+            `{end_of_${directive}}`,
+          ];
         }
 
-        if (contentToInsert) {
-          processedLines.push(contentToInsert.filter((c) => c).join("\n"));
-          directiveMatched = true;
-        }
+        // Use a strict null/undefined check to prevent dropping empty lines ("")
+        processedLines.push(
+          contentToInsert
+            .filter((c) => c !== null && c !== undefined)
+            .join("\n"),
+        );
+        directiveMatched = true;
       }
     }
-    // If no directive matched, add as regular line
+
+    // Add regular lines
     if (!directiveMatched) {
-      // If inside a directive, add to current content
       if (currentContent !== null) {
         currentContent.push(line);
-      } else if (line) {
+      } else if (line !== null && line !== undefined) {
         processedLines.push(line);
       }
     }
     i++;
   }
-  // Join the processed lines
+
   return processedLines
     .map((l) => (l ? l.trim() : null))
-    .filter((p) => p)
+    .filter((p) => p !== null)
     .join("\n")
     .trim();
 }
@@ -561,14 +438,13 @@ export function czechToEnglish(song: string): string {
 export function transposeChordPro(
   song: string,
   songKey?: Key,
-  transposeSteps?: number
+  transposeSteps?: number,
 ): string {
   // Skip if can't transpose
   if (!songKey || !transposeSteps) {
     return song;
   }
 
-  // Calculate new key and prepare parser
   const newKey = songKey.transposed(transposeSteps);
   const normalizedKey = songKey.note
     .toString()
@@ -580,14 +456,11 @@ export function transposeChordPro(
   /**
    * Preserves specific chord notations that would otherwise be altered
    */
-  const keepSus2Maj7 = (chord) => {
-    // Helper to overwrite descriptor
-    function overwriteDescriptor(chord, descriptor) {
+  const keepSus2Maj7 = (chord: any) => {
+    function overwriteDescriptor(chord: any, descriptor: string) {
       const { rootNote, bassNote } = chord.formatted;
       let symbol = rootNote + descriptor;
-      if (bassNote) {
-        symbol += "/" + bassNote;
-      }
+      if (bassNote) symbol += "/" + bassNote;
       chord.formatted.symbol = symbol;
       return chord;
     }
@@ -604,7 +477,6 @@ export function transposeChordPro(
     else if (chord.formatted.descriptor == "sus") {
       chord = overwriteDescriptor(chord, "sus4");
     }
-
     return chord;
   };
 
@@ -622,7 +494,6 @@ export function transposeChordPro(
     chord.formatted.symbol = chord.formatted.symbol
       .replace("(", "")
       .replace(")", "");
-
     return chord;
   };
 
@@ -640,6 +511,6 @@ export function transposeChordPro(
 
   return song.replace(
     /\[([A-Ha-h][A-Za-z\d#b,\s/]{0,10})\]/g,
-    convertChordBracket
+    convertChordBracket,
   );
 }

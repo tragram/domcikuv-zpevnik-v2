@@ -14,12 +14,6 @@ import {
   transposeChordPro,
 } from "./preparseChordpro";
 /**
- * Default section directives
- */
-const DEFAULT_SECTION_DIRECTIVES = ["chorus", "bridge", "verse"];
-const DEFAULT_SECTION_LABELS = ["R", "B", ""];
-
-/**
  * Default section classes used in rendering
  */
 const DEFAULT_RENDERED_SECTIONS = [
@@ -38,23 +32,19 @@ const DEFAULT_RENDERED_SECTIONS = [
 function parseChordPro(
   chordProContent: string,
   songKey?: Key,
-  transposeSteps?: number
+  transposeSteps?: number,
 ) {
   // Use memoized function to avoid repeated processing
   const memoizedCzechToEnglish = memoize(czechToEnglish);
   const withEnglishChords = memoizedCzechToEnglish(chordProContent);
 
   // Process the directive sections
-  const preparsedContent = preparseDirectives(
-    withEnglishChords,
-    DEFAULT_SECTION_DIRECTIVES,
-    DEFAULT_SECTION_LABELS
-  );
+  const preparsedContent = preparseDirectives(withEnglishChords);
   // Transpose the song if needed
   const transposedContent = transposeChordPro(
     preparsedContent,
     songKey,
-    transposeSteps ?? 0
+    transposeSteps ?? 0,
   );
 
   // Parse the processed content
@@ -84,7 +74,7 @@ export function guessKey(chordProContent: string): Key | undefined {
 export function renderSong(
   songData: SongData,
   transposeSteps: number,
-  centralEuropeanNotation: boolean
+  centralEuropeanNotation: boolean,
 ): string {
   // Parse and process the chord pro content
   const song = parseChordPro(songData.chordpro, songData.key, transposeSteps);
