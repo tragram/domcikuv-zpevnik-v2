@@ -18,3 +18,21 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: Poletime-Lokomotiva_gpt-5-mini_v3
+    songId: Poletime-Lokomotiva
+    summaryPromptVersion: v3
+    summaryModel: gpt-5-mini
+    text: >-
+      Whimsical night terrace scene: a smiling couple using a string telephone
+      made from two yogurt cups, the woman wearing a chewed-gum “crown” on a
+      stick; golden ducks pecking popcorn at their feet, two donkeys nearby
+      pulling a rusty wire, and a small steam locomotive streaking across the
+      dark sky — hand-drawn ink and watercolor style, warm dreamy colors, cozy
+      romantic mood.
+    createdAt: 2026-03-02T08:03:24.000Z
+    updatedAt: 2026-03-02T08:03:24.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1772438616000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

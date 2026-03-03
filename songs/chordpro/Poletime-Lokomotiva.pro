@@ -6,9 +6,9 @@
 {language: czech}
 {startMelody: h c d}
 {createdAt: 1726264800000}
-{updatedAt: 1770572225000}
-{illustrationId: Poletime-Lokomotiva_gpt-4o-mini_v1_FLUX.1-dev}
-{promptId: Poletime-Lokomotiva_gpt-4o-mini_v1}
+{updatedAt: 1772438640000}
+{illustrationId: Poletime-Lokomotiva_gpt-5-mini_v3_nano-banana-2}
+{promptId: Poletime-Lokomotiva_gpt-5-mini_v3}
 
 {start_of_verse}
 [G]Pokaždé když tě vidím, [D]vím, že by to šlo
