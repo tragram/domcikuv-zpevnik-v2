@@ -1,11 +1,14 @@
-import type { InferResponseType } from "hono/client";
-
 export class ApiException extends Error {
   status: number;
-  code?: number;
+  code?: number | string;
   data?: unknown;
 
-  constructor(message: string, status: number, code?: number, data?: unknown) {
+  constructor(
+    message: string,
+    status: number,
+    code?: number | string,
+    data?: unknown,
+  ) {
     super(message);
     this.name = "ApiException";
     this.status = status;
@@ -15,24 +18,51 @@ export class ApiException extends Error {
 }
 
 // Extract the data type from a JSend success response
-// Handle the case where status is inferred as string rather than literal "success"
 type ExtractJSendData<T> = T extends { status: string; data: infer U }
   ? U
   : T extends { data: infer U }
-  ? U
-  : never;
+    ? U
+    : never;
+
+// Define the expected JSend structure for type guarding
+interface JSendParsed {
+  status: string;
+  data?: unknown;
+  failData?: {
+    message?: string;
+    code?: string | number;
+  };
+  message?: string;
+  code?: string | number;
+  errorData?: unknown;
+}
+
+// create a structural interface that matches BOTH standard Response and Hono ClientResponse
+export interface BaseResponse {
+  status: number;
+  json(): Promise<unknown>;
+}
 
 export async function handleApiResponse<T>(
-  response: Response
+  response: BaseResponse,
 ): Promise<ExtractJSendData<T>> {
-  let json: any;
+  let json: unknown;
   try {
     json = await response.json();
   } catch {
     throw new ApiException("Invalid JSON from server", response.status);
   }
 
-  if (!json || typeof json.status !== "string") {
+  const isJSend = (obj: unknown): obj is JSendParsed => {
+    return (
+      typeof obj === "object" &&
+      obj !== null &&
+      "status" in obj &&
+      typeof (obj as Record<string, unknown>).status === "string"
+    );
+  };
+
+  if (!isJSend(json)) {
     throw new ApiException("Invalid JSend response structure", response.status);
   }
 
@@ -45,7 +75,7 @@ export async function handleApiResponse<T>(
       json.failData?.message ?? "Request failed",
       response.status,
       json.failData?.code,
-      json.failData
+      json.failData,
     );
   }
 
@@ -58,16 +88,16 @@ export async function handleApiResponse<T>(
   throw new ApiException("Unknown JSend status", response.status);
 }
 
-// Define what a Hono client API function looks like
-type HonoApiFunction = (...args: any[]) => Promise<Response>;
-
-export const makeApiRequest = async <T extends HonoApiFunction>(
+export const makeApiRequest = async <
+  T extends () => Promise<BaseResponse>,
+  U = T extends () => Promise<{ json(): Promise<infer R> }> ? R : never,
+>(
   apiCall: T,
-  errorMessage?: string
-): Promise<ExtractJSendData<InferResponseType<T>>> => {
+  errorMessage?: string,
+): Promise<ExtractJSendData<U>> => {
   try {
     const response = await apiCall();
-    return await handleApiResponse<InferResponseType<T>>(response);
+    return await handleApiResponse<U>(response);
   } catch (error) {
     if (errorMessage) console.error(`${errorMessage}:`, error);
     throw error;

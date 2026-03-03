@@ -1,6 +1,4 @@
 import { and, eq } from "drizzle-orm";
-import { AppDatabase } from "../api/utils";
-import { Context } from "hono";
 import {
   illustrationPrompt,
   IllustrationPromptDB,
@@ -15,6 +13,7 @@ import {
   promptFolder,
 } from "~/types/songData";
 import { CFImagesThumbnailURL } from "../api/admin/illustrations";
+import { AppDatabase } from "../api/utils";
 import {
   IMAGE_MODELS_API,
   ImageGenerator,
@@ -215,7 +214,6 @@ export async function generateAndSavePrompt(
 
 export async function findOrCreatePrompt(
   db: AppDatabase,
-  c: Context,
   songId: string,
   promptVersion: string,
   promptModel: string,

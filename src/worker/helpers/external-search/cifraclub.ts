@@ -1,4 +1,4 @@
-import { ExternalSong } from ".";
+import { ExternalSearchResult } from ".";
 
 interface CifraSong {
   t: string; // type? artist=="1"; chords=="2"?
@@ -20,7 +20,7 @@ interface CifraResponse {
 
 export async function searchCifraClub(
   query: string,
-): Promise<ExternalSong[]> {
+): Promise<ExternalSearchResult[]> {
   try {
     const response = await fetch(`https://solr.sscdn.co/cc/h2/?q=${query}`);
 

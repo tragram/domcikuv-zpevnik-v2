@@ -1,6 +1,6 @@
 // Converts song text with chord lines (Ultimate Guitar, pisnicky-akordy.cz...) into ChordPro format
 
-import { convertChordNotation } from "~/features/SongView/utils/chordNotation";
+import { convertChordNotation } from "./utils";
 
 interface Token {
   text: string;
@@ -112,7 +112,7 @@ function getChordTokens(chordLine: string): Token[] {
 }
 
 function isChordLine(line: string): boolean {
-  if (/\[[A-H][#bs]?m?[mi]?[5-7]?\]/.test(line)) return false; 
+  if (/\[[A-H][#bs]?m?[mi]?[5-7]?\]/.test(line)) return false;
   if (isTabLine(line)) return false;
 
   const tokens = line.split(/\s+/).filter(Boolean);
@@ -172,12 +172,20 @@ function insertChordsInLyrics(
     }
 
     let wordStart = pos;
-    while (wordStart > 0 && result[wordStart - 1] !== " " && result[wordStart - 1] !== "]") {
+    while (
+      wordStart > 0 &&
+      result[wordStart - 1] !== " " &&
+      result[wordStart - 1] !== "]"
+    ) {
       wordStart--;
     }
 
     let wordEnd = pos;
-    while (wordEnd < result.length && result[wordEnd] !== " " && result[wordEnd] !== "[") {
+    while (
+      wordEnd < result.length &&
+      result[wordEnd] !== " " &&
+      result[wordEnd] !== "["
+    ) {
       wordEnd++;
     }
     const wordLen = wordEnd - wordStart;
@@ -185,7 +193,9 @@ function insertChordsInLyrics(
 
     if (
       offset > 0 &&
-      (offset < 2 || (offset === 2 && wordLen <= 2) || (offset === 3 && wordLen <= 3))
+      (offset < 2 ||
+        (offset === 2 && wordLen <= 2) ||
+        (offset === 3 && wordLen <= 3))
     ) {
       pos = wordStart;
     }
@@ -194,7 +204,9 @@ function insertChordsInLyrics(
   }
 
   if (appendChords.length > 0) {
-    result += (result.length > 0 && !result.endsWith(" ") ? " " : "") + appendChords.join(" ");
+    result +=
+      (result.length > 0 && !result.endsWith(" ") ? " " : "") +
+      appendChords.join(" ");
   }
 
   return result.replace(/\s+/g, " ").trim();
@@ -251,10 +263,16 @@ function groupLinesIntoParagraphs(songLines: string[]): string[][] {
       }
     } else {
       const dir = getEnvironmentDirective(line);
-      const isPrevLineChord = paragraph.length > 0 && isChordLine(paragraph[paragraph.length - 1]);
-      
+      const isPrevLineChord =
+        paragraph.length > 0 && isChordLine(paragraph[paragraph.length - 1]);
+
       // Force block splits for structural markers, but ignore inline prefixes attached to chords
-      if (dir && !isChordLine(line) && paragraph.length > 0 && !isPrevLineChord) {
+      if (
+        dir &&
+        !isChordLine(line) &&
+        paragraph.length > 0 &&
+        !isPrevLineChord
+      ) {
         paragraphs.push(paragraph);
         paragraph = [];
       }
@@ -341,7 +359,9 @@ function processSong(songLines: string[], convert: boolean): string {
   for (const paragraph of paragraphs) {
     if (paragraph.length === 0) continue;
 
-    let explicitEnv = pendingEnv ? { ...pendingEnv } : null;
+    let explicitEnv: EnvDirective | null = pendingEnv
+      ? { ...(pendingEnv as EnvDirective) }
+      : null;
     pendingEnv = null;
     const linesToProcess = [...paragraph];
     const prependComments: string[] = [];
@@ -352,14 +372,17 @@ function processSong(songLines: string[], convert: boolean): string {
       if (isChordLine(firstLine)) {
         // Peek ahead to see if the lyrics beneath the chords contain an inline directive
         let lyricIndex = 0;
-        while (lyricIndex < linesToProcess.length && isChordLine(linesToProcess[lyricIndex])) {
+        while (
+          lyricIndex < linesToProcess.length &&
+          isChordLine(linesToProcess[lyricIndex])
+        ) {
           lyricIndex++;
         }
-        
+
         if (lyricIndex < linesToProcess.length) {
           const lyricLine = linesToProcess[lyricIndex];
           const dir = getEnvironmentDirective(lyricLine);
-          
+
           if (dir && !isDirectiveLine(lyricLine)) {
             explicitEnv = dir;
             const strippedLine = lyricLine.slice(dir.stripLength).trim();
@@ -369,16 +392,19 @@ function processSong(songLines: string[], convert: boolean): string {
               linesToProcess[lyricIndex] = strippedLine;
               // Shift chord lines left to maintain alignment
               for (let i = 0; i < lyricIndex; i++) {
-                linesToProcess[i] = shiftChordLineLeft(linesToProcess[i], dir.stripLength);
+                linesToProcess[i] = shiftChordLineLeft(
+                  linesToProcess[i],
+                  dir.stripLength,
+                );
               }
             }
           }
         }
-        break; 
+        break;
       }
 
       const dir = getEnvironmentDirective(firstLine);
-      if (!dir) break; 
+      if (!dir) break;
 
       const commentFallback =
         explicitEnv?.name ||

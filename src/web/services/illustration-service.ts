@@ -40,9 +40,7 @@ export const fetchIllustrationsAdmin = async (
   const songWithIllustrationsAndPrompts = await makeApiRequest(
     adminApi.illustrations.$get,
   );
-  return songWithIllustrationsAndPrompts.map(
-    parseDBDates,
-  );
+  return songWithIllustrationsAndPrompts.map(parseDBDates);
 };
 
 export const fetchPromptsAdmin = async (
@@ -75,35 +73,19 @@ export const generateIllustration = async (
     prompt: parseDBDates(response.prompt) as IllustrationPromptDB,
   };
 };
-function buildIllustrationFormData(data: any): FormData {
-  const formData = new FormData();
-
-  if (data.songId) formData.append("songId", data.songId);
-  if (data.imageModel) formData.append("imageModel", data.imageModel);
-  if (data.setAsActive !== undefined)
-    formData.append("setAsActive", String(data.setAsActive));
-
-  if (data.promptId) formData.append("promptId", data.promptId);
-  if (data.promptText) formData.append("promptText", data.promptText);
-  if (data.summaryModel) formData.append("summaryModel", data.summaryModel);
-  if (data.summaryPromptVersion)
-    formData.append("summaryPromptVersion", data.summaryPromptVersion);
-
-  if (data.imageFile instanceof File) {
-    formData.append("imageFile", data.imageFile);
-  }
-  return formData;
-}
 
 export const createIllustration = async (
   adminApi: AdminApi,
   data: IllustrationCreateSchema,
 ): Promise<AdminIllustrationResponse> => {
-  const formData = buildIllustrationFormData(data);
+  const formPayload = {
+    ...data,
+    setAsActive: String(data.setAsActive),
+  };
 
   const response = await makeApiRequest(() =>
     adminApi.illustrations.create.$post({
-      form: Object.fromEntries(formData.entries()),
+      form: formPayload,
     }),
   );
 
@@ -119,21 +101,18 @@ export const updateIllustration = async (
   illustrationId: string,
   illustrationData: IllustrationModifySchema,
 ): Promise<SongIllustrationDB> => {
-  if (illustrationData.imageFile) {
-    const formData = buildIllustrationFormData(illustrationData);
-    const illustration = await makeApiRequest(() =>
-      adminApi.illustrations[":id"].$put({
-        param: { id: illustrationId },
-        form: Object.fromEntries(formData.entries()),
-      }),
-    );
-    return parseDBDates(illustration);
-  }
+  const formPayload = {
+    ...illustrationData,
+    setAsActive:
+      illustrationData.setAsActive === undefined
+        ? undefined
+        : String(illustrationData.setAsActive),
+  };
 
   const illustration = await makeApiRequest(() =>
     adminApi.illustrations[":id"].$put({
       param: { id: illustrationId },
-      json: illustrationData,
+      form: formPayload,
     }),
   );
 

@@ -99,14 +99,18 @@ class OpenAIImageProvider implements ImageProvider {
       size: "1024x1024",
     });
 
+    if (!response.data || response.data.length === 0) {
+      throw new Error("No image data returned from OpenAI");
+    }
+
     const base64 = response.data[0].b64_json;
     if (!base64) {
-      throw new Error("No image data returned from OpenAI");
+      throw new Error("No base64 string returned from OpenAI");
     }
 
     // Native fast decode using V8
     const uint8Array = Uint8Array.fromBase64(base64);
-    return uint8Array.buffer;
+    return uint8Array.buffer as ArrayBuffer;
   }
 }
 
@@ -157,7 +161,7 @@ class GoogleImageProvider implements ImageProvider {
     });
 
     const parts = response.candidates?.[0]?.content?.parts;
-    const imagePart = parts?.find((p: any) => p.inlineData?.data);
+    const imagePart = parts?.find((p) => p.inlineData?.data);
 
     if (!imagePart?.inlineData?.data) {
       throw new Error("No image data returned from Google API");
@@ -166,7 +170,7 @@ class GoogleImageProvider implements ImageProvider {
     // Native fast decode using V8
     const base64 = imagePart.inlineData.data;
     const uint8Array = Uint8Array.fromBase64(base64);
-    return uint8Array.buffer;
+    return uint8Array.buffer as ArrayBuffer;
   }
 }
 

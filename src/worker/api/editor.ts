@@ -7,7 +7,6 @@ import {
   createSong,
   createSongVersion,
   getSongBase,
-  getSongPopulated,
   getSongVersionsByUser,
 } from "../helpers/song-helpers";
 import { failJSend, successJSend } from "./responses";

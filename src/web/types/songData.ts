@@ -1,6 +1,5 @@
-import { EditorState } from "~/features/Editor/Editor";
 import { Key, SongRange } from "./musicTypes";
-import type { ChordPro, int, SongLanguage } from "./types";
+import type { ChordPro, EditorState, int, SongLanguage } from "./types";
 import {
   CurrentIllustrationApi,
   ExternalSourceApi,
@@ -30,7 +29,6 @@ export const promptFolder = (songId: string, promptId: string) =>
 
 export const defaultIllustrationId = (promptId: string, imageModel: string) =>
   sanitizeId(`${promptId}_${imageModel}`);
-
 export class SongData {
   id: string;
   title: string;

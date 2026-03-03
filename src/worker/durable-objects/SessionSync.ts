@@ -96,7 +96,7 @@ export class SessionSync extends DurableObject<Env> {
           masterAvatar: this.masterAvatar,
           masterId: this.masterId,
         } as SessionSyncState),
-        { headers: { "Content-Type": "application/json" } }
+        { headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -128,7 +128,7 @@ export class SessionSync extends DurableObject<Env> {
           JSON.stringify({
             type: "master-replaced",
             message: "Another master has connected",
-          })
+          }),
         );
 
         // Close the old master connection
@@ -162,7 +162,7 @@ export class SessionSync extends DurableObject<Env> {
         masterNickname: this.masterNickname,
         masterId: this.masterId,
         isMaster,
-      } as SyncMessage)
+      } as SyncMessage),
     );
 
     return new Response(null, { status: 101, webSocket: client });
@@ -223,7 +223,7 @@ export class SessionSync extends DurableObject<Env> {
           JSON.stringify({
             type: "update-ok",
             connectedClients: this.ctx.getWebSockets().length - 1,
-          })
+          }),
         );
       }
     } catch (e) {
@@ -279,7 +279,7 @@ export class SessionSync extends DurableObject<Env> {
     ws: WebSocket,
     code: number,
     reason: string,
-    wasClean: boolean
+    wasClean: boolean,
   ) {
     const meta = ws.deserializeAttachment() as SocketMetadata;
     // If the master disconnects, clear our reference

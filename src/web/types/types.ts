@@ -2,6 +2,7 @@ import { User } from "better-auth";
 import { Note } from "./musicTypes";
 import { SongData } from "./songData";
 import { Songbook } from "~/services/song-service";
+import { EditorSubmitSchemaInput } from "src/worker/api/editor";
 // Import keywords from the source of truth
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range";
@@ -63,3 +64,5 @@ export interface UserData extends User {
 }
 
 export type ChordPro = string;
+
+export type EditorState = EditorSubmitSchemaInput;

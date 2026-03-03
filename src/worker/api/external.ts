@@ -12,10 +12,16 @@ import {
   createImportSong,
   createSong,
   createSongVersion,
+  retrieveSingleSong,
 } from "../helpers/song-helpers";
 import { EditorSubmitSchema } from "./editor";
 import { errorJSend, failJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
+import { SongDataApi } from "./api-types";
+import {
+  SkorepovaCache,
+  ZPEVNIK_SKOREPOVA_CACHE_KEY,
+} from "../helpers/external-search/zpevnik-skorepova";
 
 export const externalRoutes = buildApp()
   .get("/search", async (c) => {
@@ -43,16 +49,12 @@ export const externalRoutes = buildApp()
 
       // Check if the song (by artist/title ID) already exists in the internal DB (allow multiple external versions)
       const newSongId = SongData.baseId(title, artist);
-      // TODO: it's actually not SongWithCurrentVersion...
-      let existingSong: SongWithCurrentVersion | null = null;
+
+      let existingSong: SongDataApi | null = null;
 
       try {
-        existingSong = (await findSong(
-          db,
-          newSongId,
-          true,
-        )) as SongWithCurrentVersion;
-        if (!existingSong.externalSource) {
+        existingSong = await retrieveSingleSong(db, newSongId);
+        if (existingSong && !existingSong.externalSource) {
           // song not only exists but is already an internal song - do not add, just redirect to the actual song
           return successJSend(c, { songId: existingSong.id });
         }
@@ -71,10 +73,10 @@ export const externalRoutes = buildApp()
           .valid("json")
           .id.replace("zpevnik-skorepova/", "");
         const cachedSongs = (await c.env.KV.get(
-          "zpevnik_skorepova_all_songs",
+          ZPEVNIK_SKOREPOVA_CACHE_KEY,
           "json",
-        )) as any[];
-        const song = cachedSongs?.find((s: any) => s.id === originalId);
+        )) as SkorepovaCache;
+        const song = cachedSongs?.songs.find((s) => s.id === originalId);
 
         if (!song || !song.data.text) {
           return failJSend(
@@ -137,13 +139,8 @@ export const externalRoutes = buildApp()
       };
 
       if (!existingSong) {
-        ({ newSong: existingSong } = await createSong(
-          db,
-          submission,
-          user.id,
-          true,
-          importedSong.id,
-        ));
+        await createSong(db, submission, user.id, true, importedSong.id);
+        existingSong = await retrieveSingleSong(db, newSongId);
       } else {
         await createSongVersion(
           db,
@@ -154,6 +151,8 @@ export const externalRoutes = buildApp()
           importedSong.id,
         );
       }
+
+      if (!existingSong) throw Error("Failed to create song!");
 
       if (thumbnailURL) {
         try {

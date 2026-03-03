@@ -43,35 +43,6 @@ const CHORD_NOTATION_MAP = {
 const CHORD_MODIFIER_REGEX = /(♯|♭|2|4|6|7|9|maj|sus|dim|\+|\([^()]*\))/g;
 
 /**
- * Converts English chord names to Central European notation (H/B system)
- * This is the system used in Czech, German, Polish, Nordic countries, etc.
- */
-export function convertChordNotation(chord: string): string {
-    if (!chord) return chord;
-
-    const trimmedChord = chord.trim();
-
-    // Handle B flat (Bb) becoming B in Central European notation
-    if (trimmedChord.startsWith("Bb")) {
-        return "B" + trimmedChord.slice(2);
-    }
-    // Handle B becoming H in Central European notation
-    else if (trimmedChord.startsWith("B")) {
-        return "H" + trimmedChord.slice(1);
-    }
-    // Handle chords ending with Bb
-    else if (trimmedChord.endsWith("Bb")) {
-        return trimmedChord.slice(0, -2) + "B";
-    }
-    // Handle chords ending with B
-    else if (trimmedChord.endsWith("B")) {
-        return trimmedChord.slice(0, -1) + "H";
-    }
-
-    return chord;
-}
-
-/**
  * Formats a chord with proper notation and superscripts
  * @param chordText - The chord text to format
  * @param centralEuropeanNotation - Whether to use Central European notation (H/B system)

@@ -6,35 +6,46 @@ interface ZpevnikSong {
     slug: string;
     author: string;
     title: string;
+    text: string;
   };
 }
 
-// Define the structure for our new cache payload
-interface CachedPayload {
+interface SkorepovaResponse {
+  data: {
+    songs: ZpevnikSong[];
+  };
+}
+
+export interface SkorepovaCache {
   timestamp: number;
   songs: ZpevnikSong[];
 }
+
+export const ZPEVNIK_SKOREPOVA_CACHE_KEY = "zpevnik_skorepova_all_songs";
 
 export async function searchZpevnikSkorepova(
   query: string,
   ZPEVNIK_CACHE: KVNamespace,
 ): Promise<ExternalSearchResult[]> {
-  const CACHE_KEY = "zpevnik_skorepova_all_songs";
   const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
   let songs: ZpevnikSong[] = [];
   let needsUpdate = true;
 
   // 1. Fetch from cache and check freshness
-  const cachedData = await ZPEVNIK_CACHE.get(CACHE_KEY, "json");
+  const cachedData = await ZPEVNIK_CACHE.get(
+    ZPEVNIK_SKOREPOVA_CACHE_KEY,
+    "json",
+  );
 
   if (cachedData) {
     // Handle transition from the old array format to the new timestamped format
+    // TODO: remove this when it's done
     if (Array.isArray(cachedData)) {
       songs = cachedData;
       needsUpdate = true;
     } else {
-      const parsedData = cachedData as CachedPayload;
+      const parsedData = cachedData as SkorepovaCache;
       songs = parsedData.songs;
 
       // Check if the data is older than one week
@@ -71,18 +82,21 @@ export async function searchZpevnikSkorepova(
       );
 
       if (response.ok) {
-        const json: any = await response.json();
+        const json: SkorepovaResponse = await response.json();
         const fetchedSongs = json?.data?.songs || [];
 
         if (fetchedSongs.length > 0) {
           songs = fetchedSongs; // Update our working variable with fresh data
 
           // 3. Store the result permanently with a timestamp (NO expirationTtl)
-          const payloadToCache: CachedPayload = {
+          const payloadToCache: SkorepovaCache = {
             timestamp: Date.now(),
             songs: fetchedSongs,
           };
-          await ZPEVNIK_CACHE.put(CACHE_KEY, JSON.stringify(payloadToCache));
+          await ZPEVNIK_CACHE.put(
+            ZPEVNIK_SKOREPOVA_CACHE_KEY,
+            JSON.stringify(payloadToCache),
+          );
         }
       } else {
         console.warn(

@@ -107,7 +107,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
               target="_blank"
             >
               {songData.externalSource &&
-                `Imported from ${SONG_SOURCES_PRETTY[songData.externalSource.id]}`}
+                `Imported from ${SONG_SOURCES_PRETTY[songData.externalSource.sourceId]}`}
             </Link>
           ) : (
             <h3 className="text-[0.75em] sub-sup-container">

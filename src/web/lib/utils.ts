@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { useRouteContext } from "@tanstack/react-router";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -21,16 +20,33 @@ export const fileURL = (url: string) => {
   return url;
 };
 
-export const tailwindBreakpoint = (
-  breakpoint: "xs" | "xsm" | "sm" | "md" | "lg" | "xl",
-) => {
-  const styles = getComputedStyle(document.documentElement);
-  const value = styles.getPropertyValue(`--breakpoint-${breakpoint}`);
-  return parseInt(value, 10);
-};
-export function useLoggedIn() {
-  const routeContext = useRouteContext({ from: "__root__" });
-  return routeContext.user.loggedIn;
+/**
+ * Converts English chord names to Central European notation (H/B system)
+ * This is the system used in Czech, German, Polish, Nordic countries, etc.
+ */
+export function convertChordNotation(chord: string): string {
+    if (!chord) return chord;
+
+    const trimmedChord = chord.trim();
+
+    // Handle B flat (Bb) becoming B in Central European notation
+    if (trimmedChord.startsWith("Bb")) {
+        return "B" + trimmedChord.slice(2);
+    }
+    // Handle B becoming H in Central European notation
+    else if (trimmedChord.startsWith("B")) {
+        return "H" + trimmedChord.slice(1);
+    }
+    // Handle chords ending with Bb
+    else if (trimmedChord.endsWith("Bb")) {
+        return trimmedChord.slice(0, -2) + "B";
+    }
+    // Handle chords ending with B
+    else if (trimmedChord.endsWith("B")) {
+        return trimmedChord.slice(0, -1) + "H";
+    }
+
+    return chord;
 }
 
 export const getInitials = (name: string) => {
@@ -47,7 +63,6 @@ export const getInitials = (name: string) => {
   }
   return name.slice(0, 2).toUpperCase();
 };
-
 
 export function guessLanguage(lyrics: string) {
   // extremely basic heuristic to guess which language a song is

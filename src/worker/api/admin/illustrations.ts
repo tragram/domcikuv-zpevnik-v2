@@ -37,6 +37,7 @@ import {
   getSongPopulated,
   PopulatedSongDB,
 } from "src/worker/helpers/song-helpers";
+import { Context } from "hono";
 
 const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -44,11 +45,11 @@ const illustrationCreateSchema = z.object({
   setAsActive: z
     .union([z.string(), z.boolean()])
     .transform((val) => val === "true" || val === true),
-  imageFile: z.any().optional(),
   promptId: z.string().optional(),
   promptText: z.string().optional(),
   summaryModel: z.string().optional(),
   summaryPromptVersion: z.string().optional(),
+  imageFile: z.any().optional(),
 });
 
 const illustrationGenerateSchema = z.object({
@@ -65,13 +66,16 @@ const illustrationModifySchema = z.object({
   imageModel: z.string().optional(),
   setAsActive: z
     .union([z.string(), z.boolean()])
-    .transform((val) => val === "true" || val === true),
+    .transform((val) => val === "true" || val === true)
+    .optional(),
+  imageFile: z.any().optional(),
 });
 
 export const CFImagesThumbnailURL = (imageURL: string) =>
   `/cdn-cgi/image/width=128/${imageURL}`;
 
-const generateIllustrationHandler = async (c: any) => {
+// @ts-expect-error Hono context
+const generateIllustrationHandler = async (c) => {
   const illustrationData = c.req.valid("json");
   const db = c.var.db;
 
@@ -97,7 +101,6 @@ const generateIllustrationHandler = async (c: any) => {
 
   const prompt = await findOrCreatePrompt(
     db,
-    c,
     illustrationData.songId,
     illustrationData.promptVersion,
     illustrationData.summaryModel,
@@ -170,12 +173,9 @@ export const illustrationRoutes = buildApp()
       (await c.var.db.select().from(songIllustration)) as SongIllustrationDB[],
     ),
   )
-  .post("/create", async (c) => {
-    const formData = await c.req.formData();
-    const validatedData = illustrationCreateSchema.parse(
-      Object.fromEntries(formData.entries()),
-    );
-    const imageFile = formData.get("imageFile") as File | null;
+  .post("/create", zValidator("form", illustrationCreateSchema), async (c) => {
+    const validatedData = c.req.valid("form");
+    const imageFile = validatedData.imageFile as File | null;
     const db = c.var.db;
 
     let illustrationSong: PopulatedSongDB;
@@ -264,9 +264,10 @@ export const illustrationRoutes = buildApp()
       201,
     );
   })
-  .put("/:id", async (c) => {
+  .put("/:id", zValidator("form", illustrationModifySchema), async (c) => {
     const illustrationId = c.req.param("id");
     const db = c.var.db;
+    const parsedData = c.req.valid("form");
 
     const current = await db
       .select()
@@ -280,17 +281,6 @@ export const illustrationRoutes = buildApp()
       .get();
     if (!current) return itemNotFoundFail(c, "illustration");
 
-    let parsedData: any = {};
-    if (c.req.header("content-type")?.includes("multipart/form-data")) {
-      const formData = await c.req.formData();
-      parsedData = illustrationModifySchema.parse(
-        Object.fromEntries(formData.entries()),
-      );
-      parsedData.imageFile = formData.get("imageFile");
-    } else {
-      parsedData = illustrationModifySchema.parse(await c.req.json());
-    }
-
     const targetModel = parsedData.imageModel || current.imageModel;
     const { imageURL, thumbnailURL } = await processAndUploadImages(
       parsedData.imageFile,
@@ -300,7 +290,15 @@ export const illustrationRoutes = buildApp()
       c.env,
     );
 
-    const updateData: any = { imageModel: targetModel, updatedAt: new Date() };
+    const updateData: {
+      imageModel: string;
+      updatedAt: Date;
+      imageURL?: string;
+      thumbnailURL?: string;
+    } = {
+      imageModel: targetModel,
+      updatedAt: new Date(),
+    };
     if (imageURL) {
       updateData.imageURL = imageURL;
       updateData.thumbnailURL = thumbnailURL;
@@ -383,6 +381,7 @@ export const illustrationRoutes = buildApp()
     });
   });
 
+// this function is available for trusted users too --> used in different endpoint than the one for admins
 export const trustedGenerateRoute = buildApp().post(
   "/generate",
   zValidator("json", illustrationGenerateSchema),

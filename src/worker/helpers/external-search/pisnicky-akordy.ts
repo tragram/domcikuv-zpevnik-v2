@@ -1,4 +1,4 @@
-import { ExternalSong } from ".";
+import { ExternalSearchResult } from ".";
 
 interface PASong {
   id: number;
@@ -22,7 +22,7 @@ interface PAData {
 export async function searchPisnickyAkordy(
   query: string,
   token: string,
-): Promise<ExternalSong[]> {
+): Promise<ExternalSearchResult[]> {
   try {
     const response = await fetch(
       "https://pisnicky-akordy.cz/meilisearch/indexes/pa_hlavni_index/search",

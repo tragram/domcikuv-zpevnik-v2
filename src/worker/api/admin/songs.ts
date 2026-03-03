@@ -48,25 +48,40 @@ export const songRoutes = buildApp()
     ),
   )
   .get("/withCurrentVersion", async (c) => {
-    const songs = await c.var.db
+    const records = await c.var.db
       .select({
         ...getTableColumns(song),
         ...getTableColumns(songVersion),
         id: song.id,
-        externalSource: songImport
-          ? {
-              sourceId: songImport.sourceId,
-              originalContent: songImport.originalContent,
-              url: songImport.url,
-            }
-          : null,
+        importSourceId: songImport.sourceId,
+        importOriginalContent: songImport.originalContent,
+        importUrl: songImport.url,
       })
       .from(song)
       .where(and(isNotNull(song.currentVersionId), eq(song.hidden, false)))
       .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(song.updatedAt));
-    return successJSend(c, songs as SongDataAdminApi[]);
+
+    const songs = records.map((record) => {
+      // Destructure the import fields out of the record
+      const { importSourceId, importOriginalContent, importUrl, ...rest } =
+        record;
+
+      // Construct and return the typed object
+      return {
+        ...rest,
+        externalSource: importSourceId
+          ? {
+              sourceId: importSourceId,
+              originalContent: importOriginalContent!,
+              url: importUrl!,
+            }
+          : null,
+      } as SongDataAdminApi;
+    });
+
+    return successJSend(c, songs);
   })
   .get("/versions", async (c) =>
     successJSend(
@@ -83,9 +98,8 @@ export const songRoutes = buildApp()
         c,
         await findSongWithAllData(c.var.db, c.req.param("songId")),
       );
-    } catch (e: any) {
-      if (e.message === "Song not found") return songNotFoundFail(c);
-      throw e;
+    } catch {
+      return songNotFoundFail(c);
     }
   })
   .patch("/:songId", zValidator("json", songModificationSchema), async (c) => {
