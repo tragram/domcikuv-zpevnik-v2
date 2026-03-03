@@ -6,6 +6,7 @@ import copy from "rollup-plugin-copy";
 import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from "vite-plugin-pwa";
+import checker from "vite-plugin-checker";
 
 export default defineConfig(({ mode }) => {
   const isTest = process.env.VITEST !== undefined || mode === "test";
@@ -21,6 +22,12 @@ export default defineConfig(({ mode }) => {
         generatedRouteTree: "src/web/routeTree.gen.ts",
       }),
       react(),
+      checker({
+        typescript: {
+          tsconfigPath: "./tsconfig.json",
+          buildMode: true,
+        },
+      }),
       !isTest && cloudflare(),
       tailwindcss(),
       !isTest &&
