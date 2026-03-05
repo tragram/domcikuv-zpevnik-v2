@@ -22,6 +22,8 @@ import {
   SkorepovaCache,
   ZPEVNIK_SKOREPOVA_CACHE_KEY,
 } from "../helpers/external-search/zpevnik-skorepova";
+import { eq } from "drizzle-orm";
+import { song } from "src/lib/db/schema";
 
 export const externalRoutes = buildApp()
   .get("/search", async (c) => {
@@ -54,11 +56,7 @@ export const externalRoutes = buildApp()
 
       try {
         existingSong = await retrieveSingleSong(db, newSongId);
-        if (
-          existingSong &&
-          !existingSong.deleted &&
-          !existingSong.externalSource
-        ) {
+        if (existingSong && !existingSong.externalSource) {
           // TODO: restore if deleted
           // song not only exists but is already an internal song - do not add, just redirect to the actual song
           return successJSend(c, { songId: existingSong.id });
@@ -157,6 +155,11 @@ export const externalRoutes = buildApp()
       }
 
       if (!existingSong) throw Error("Failed to create song!");
+
+      await db
+        .update(song)
+        .set({ deleted: true })
+        .where(eq(song.id, newSongId));
 
       if (thumbnailURL) {
         try {

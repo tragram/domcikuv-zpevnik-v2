@@ -150,9 +150,6 @@ export const retrieveSingleSong = async (
   const songRaw = await db.query.song.findFirst({
     where: eq(song.id, songId),
     with: {
-      // If versionId is provided, we still fetch the specific requested version.
-      // If you strictly want *only* that version, you might need a separate query,
-      // but assuming currentVersion maps well here:
       currentVersion: {
         with: { songImport: true },
       },
@@ -165,7 +162,6 @@ export const retrieveSingleSong = async (
 
   if (!songRaw) return null;
 
-  // If a specific version is requested, override currentVersion data (Optional optimization)
   if (versionId && songRaw.currentVersion?.id !== versionId) {
     const specificVersion = await db.query.songVersion.findFirst({
       where: eq(songVersion.id, versionId),
