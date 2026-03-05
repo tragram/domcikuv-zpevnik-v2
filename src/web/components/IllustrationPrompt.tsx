@@ -1,10 +1,9 @@
-import { AutoTextSize } from "auto-text-size";
-import { cn } from "~/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import { SongData } from "~/types/songData";
-import { useRouteContext } from "@tanstack/react-router";
-import { fetchIllustrationPrompt } from "~/services/illustration-service";
+import { AutoTextSize } from "auto-text-size";
 import { SongsAPI } from "src/worker/api-client";
+import { cn } from "~/lib/utils";
+import { fetchIllustrationPrompt } from "~/services/illustration-service";
+import { SongData } from "~/types/songData";
 
 interface IllustrationPromptProps {
   song: SongData;
@@ -37,7 +36,7 @@ export function IllustrationPrompt({
 
   return (
     <div className={cn("px-4 flex flex-grow my-4 w-full", className)}>
-      <AutoTextSize mode="boxoneline">
+      <AutoTextSize mode="boxoneline" maxFontSizePx={60}>
         {isLoading ? (
           <p className="text-wrap w-full text-shadow opacity-50"></p>
         ) : error ? (
