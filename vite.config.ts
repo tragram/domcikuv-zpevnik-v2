@@ -27,6 +27,7 @@ export default defineConfig(({ mode }) => {
           tsconfigPath: "./tsconfig.json",
           buildMode: true,
         },
+        enableBuild: process.env.CI ? false : true,
       }),
       !isTest && cloudflare(),
       tailwindcss(),
