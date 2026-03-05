@@ -2,16 +2,15 @@ import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
-import {
-  signIn,
-  signUp
-} from "~/../lib/auth/client";
+import { signIn, signUp } from "~/../lib/auth/client";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { redirectSearchSchema } from "~/main";
 import { AuthHeader } from "./route";
 
 export const Route = createFileRoute("/(auth)/signup")({
+  validateSearch: (search) => redirectSearchSchema.parse(search),
   component: SignupForm,
 });
 
@@ -66,7 +65,7 @@ function SignupForm() {
     <>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
-          <AuthHeader text="Sign up for Domčíkův Zpěvník!"/>
+          <AuthHeader text="Sign up for Domčíkův Zpěvník!" />
           <div className="flex flex-col gap-5">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
@@ -112,13 +111,20 @@ function SignupForm() {
                 required
               />
             </div>
-            <Button type="submit" className="mt-2 w-full" size="lg" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="mt-2 w-full"
+              size="lg"
+              disabled={isLoading}
+            >
               {isLoading && <LoaderCircle className="animate-spin" />}
               {isLoading ? "Signing up..." : "Sign up"}
             </Button>
           </div>
           {errorMessage && (
-            <span className="text-destructive text-center text-sm">{errorMessage}</span>
+            <span className="text-destructive text-center text-sm">
+              {errorMessage}
+            </span>
           )}
           <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
             <span className="bg-background text-muted-foreground relative z-10 px-2">
@@ -195,11 +201,15 @@ function SignupForm() {
       </form>
 
       <div className="text-center text-sm">
-        Already have an account?{" "}
-        <Link to="/login" className="underline underline-offset-4">
+        Already have an account?
+        <Link
+          to="/login"
+          search={{ redirect: redirectURL }}
+          className="underline underline-offset-4"
+        >
           Login
         </Link>
       </div>
-      </>
+    </>
   );
 }

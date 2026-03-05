@@ -128,6 +128,7 @@ function FeedView({
       songDB={songDB}
       songData={songData}
       user={user}
+      favoritesApi={api.favorites}
       feedStatus={{
         enabled: true,
         sessionState: sessionState,

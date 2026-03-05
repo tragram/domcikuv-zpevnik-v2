@@ -6,11 +6,13 @@ import { SongData } from "~/types/songData";
 import type { LayoutSettings } from "../hooks/viewSettingsStore";
 import { SONG_SOURCES_PRETTY } from "src/lib/db/schema/song.schema";
 import { Link } from "@tanstack/react-router";
+import { FavoritesAPI } from "src/worker/api-client";
 
 interface SongHeadingProps {
   songData: SongData;
   layoutSettings: LayoutSettings;
   transposeSteps: number;
+  favoritesApi?: FavoritesAPI;
   user?: UserProfileData;
 }
 
@@ -26,6 +28,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
   songData,
   layoutSettings,
   transposeSteps,
+  favoritesApi,
   user,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -117,9 +120,10 @@ const SongHeading: React.FC<SongHeadingProps> = ({
             </h3>
           )}
         </div>
-        {user?.loggedIn && (
+        {user?.loggedIn && favoritesApi && (
           <FavoriteButton
             song={songData}
+            favoritesApi={favoritesApi}
             iconClassName={cn(
               "size-[2em] stroke-[1.5]",
               isWrapped ? "" : "max-w-14",

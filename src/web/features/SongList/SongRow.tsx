@@ -1,5 +1,4 @@
-import { Link } from "@tanstack/react-router";
-import { Heart } from "lucide-react";
+import { Link, useRouteContext } from "@tanstack/react-router";
 import { memo } from "react";
 import { UserProfileData } from "src/worker/api/userProfile";
 import CircularProgress from "~/components/circular-progress";
@@ -18,7 +17,9 @@ interface SongInfoProps {
 const SongInfo = memo(({ title, artist, className = "" }: SongInfoProps) => (
   <div className={cn("min-w-36 flex-col content-center text-left", className)}>
     <h2 className="song-title truncate text-sm font-bold">{title}</h2>
-    <h3 className="song-artist truncate text-sm opacity-50 hc:opacity-80">{artist}</h3>
+    <h3 className="song-artist truncate text-sm opacity-50 hc:opacity-80">
+      {artist}
+    </h3>
   </div>
 ));
 
@@ -53,7 +54,9 @@ const DateDisplay = memo(
     >
       {month && year && (
         <>
-          <h3 className="text-xs opacity-70 hc:opacity-80">{MONTH_NAMES[month - 1]}</h3>
+          <h3 className="text-xs opacity-70 hc:opacity-80">
+            {MONTH_NAMES[month - 1]}
+          </h3>
           <h2 className="text-sm opacity-70 hc:opacity-80">{year}</h2>
         </>
       )}
@@ -107,61 +110,16 @@ const VocalRangeIndicator = memo(
   },
 );
 
-interface SongbookAvatarsProps {
-  songbooks: string[];
-  maxAvatars?: number;
-  className?: string;
-}
-
-// const SongBookAvatars = memo(
-//   ({ songbooks, maxAvatars = 3, className = "" }: SongbookAvatarsProps) => {
-//     const songbooksWithAvatars = songBooksWAvatars(songbooks).filter(
-//       (s) => s.value !== "All"
-//     );
-//     const displaySongbooks = songbooksWithAvatars.slice(0, maxAvatars);
-//     const remainingCount = songbooksWithAvatars.length - maxAvatars;
-
-//     return (
-//       <div className={cn("flex items-center justify-end", className)}>
-//         <div className="flex w-fit items-center justify-end -space-x-5">
-//           {displaySongbooks.map((songbook, index) => (
-//             <div
-//               key={index}
-//               className={cn(
-//                 "border-background h-10 w-10 rounded-full border-2 hover:z-10"
-//               )}
-//             >
-//               <Avatar className={"h-full w-full"}>
-//                 <AvatarImage
-//                   src={songbook.avatar}
-//                   alt={songbook.value + " avatar"}
-//                 />
-//                 <AvatarFallback>{songbook.avatar_fallback}</AvatarFallback>
-//               </Avatar>
-//             </div>
-//           ))}
-//           {remainingCount > 0 && (
-//             <div className="border-background bg-muted relative flex items-center justify-center rounded-full border-2 hover:z-10">
-//               <Avatar className={""}>
-//                 <AvatarFallback>+{remainingCount}</AvatarFallback>
-//               </Avatar>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     );
-//   }
-// );
-
 interface SongRowProps {
   song: SongData;
   maxRange?: number | undefined;
   user: UserProfileData;
   externalSearch?: boolean;
 }
-
 const SongRow = memo(
   ({ song, maxRange, user, externalSearch = false }: SongRowProps) => {
+    const favoritesApi = useRouteContext({ from: "/" }).api.favorites;
+
     if (!song) {
       console.error("Invalid song provided to SongRow", song);
       return (
@@ -170,11 +128,59 @@ const SongRow = memo(
         </div>
       );
     }
+
     const externalSourceId = song.externalSource?.sourceId;
     if (externalSearch && (!externalSourceId || !song.url())) {
       console.error("Invalid external song provided to SongRow", song);
       return;
     }
+
+    // 1. Extract the shared Link classes
+    const linkClassName =
+      "song-row bg-glass/60 hover:bg-glass/90 relative flex h-12 w-full rounded-full backdrop-blur-lg";
+
+    // 2. Extract the inner contents to keep the render DRY
+    const linkInnerContent = (
+      <>
+        <div className="relative flex min-w-[72px] content-center justify-center rounded-l-full" />
+
+        <SongInfo
+          title={song.title}
+          artist={song.artist}
+          className="flex-auto"
+        />
+
+        {user.loggedIn && !externalSearch && (
+          <FavoriteButton
+            favoritesApi={favoritesApi}
+            song={song}
+            className="hidden shrink-0 basis-1/12 xs:flex"
+          />
+        )}
+
+        <DateDisplay
+          month={song.createdAt.getMonth() + 1}
+          year={song.createdAt.getFullYear()}
+          className="xsm:flex hidden shrink-0 basis-[2/12] md:basis-1/12"
+        />
+
+        <CapoDisplay
+          capo={song.capo}
+          className="hidden shrink-0 basis-1/12 lg:flex"
+        />
+
+        <VocalRangeIndicator
+          songRangeSemitones={song.range?.semitones}
+          maxRange={maxRange}
+          className="hidden shrink-0 basis-1/12 md:flex"
+        />
+
+        <div className="flex min-w-10 shrink-0 basis-[5%] items-center justify-end p-2">
+          {!externalSearch && <LanguageFlag language={song.language} />}
+        </div>
+      </>
+    );
+
     return (
       <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4 !pl-4 !sm:pl-6">
         <div
@@ -186,61 +192,28 @@ const SongRow = memo(
               avatarClassName="absolute -left-2 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
               song={song}
             />
-            <Link
-              to={externalSearch ? "/import" : song.url()}
-              search={
-                externalSearch
-                  ? {
-                      id: song.id,
-                      title: song.title,
-                      artist: song.artist,
-                      url: song.url()!,
-                      // TS complains but it should be OK...?
-                      sourceId: externalSourceId!,
-                      thumbnailURL: song.thumbnailURL(),
-                    }
-                  : {}
-              }
-              preload={externalSearch ? false : "intent"}
-              className="song-row bg-glass/60 hover:bg-glass/90 relative flex h-12 w-full rounded-full backdrop-blur-lg"
-            >
-              <div className="relative flex min-w-[72px] content-center justify-center rounded-l-full" />
 
-              <SongInfo
-                title={song.title}
-                artist={song.artist}
-                className="flex-auto"
-              />
-
-              {/* <SongBookAvatars songbooks={song.songbooks} className="hidden sm:flex ml-2" /> */}
-              {user.loggedIn && !externalSearch && (
-                <FavoriteButton
-                  song={song}
-                  className="hidden shrink-0 basis-1/12 xs:flex"
-                />
-              )}
-
-              <DateDisplay
-                month={song.createdAt.getMonth() + 1}
-                year={song.createdAt.getFullYear()}
-                className="xsm:flex hidden shrink-0 basis-[2/12] md:basis-1/12"
-              />
-
-              <CapoDisplay
-                capo={song.capo}
-                className="hidden shrink-0 basis-1/12 lg:flex"
-              />
-
-              <VocalRangeIndicator
-                songRangeSemitones={song.range?.semitones}
-                maxRange={maxRange}
-                className="hidden shrink-0 basis-1/12 md:flex"
-              />
-
-              <div className="flex min-w-10 shrink-0 basis-[5%] items-center justify-end p-2">
-                {!externalSearch && <LanguageFlag language={song.language} />}
-              </div>
-            </Link>
+            {externalSearch ? (
+              <Link
+                to="/import"
+                search={{
+                  id: song.id,
+                  title: song.title,
+                  artist: song.artist,
+                  url: song.url()!,
+                  sourceId: externalSourceId!,
+                  thumbnailURL: song.thumbnailURL(),
+                }}
+                preload={false}
+                className={linkClassName}
+              >
+                {linkInnerContent}
+              </Link>
+            ) : (
+              <Link to={song.url()} preload="intent" className={linkClassName}>
+                {linkInnerContent}
+              </Link>
+            )}
           </div>
         </div>
       </div>

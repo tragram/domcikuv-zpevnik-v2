@@ -1,12 +1,12 @@
-import { cn } from "~/lib/utils";
-import { SongData, type SongMetadata } from "~/types/songData";
 import React from "react";
+import { cn } from "~/lib/utils";
+import { SongData } from "~/types/songData";
+import { EditorState } from "~/types/types";
 import SongHeading from "../SongView/components/SongHeading";
 import { useViewSettingsStore } from "../SongView/hooks/viewSettingsStore";
 import { chordSettingsClassNames } from "../SongView/settings/ChordSettingsMenu";
 import { layoutSettingsClassNames } from "../SongView/settings/LayoutSettings";
 import { renderSong } from "../SongView/utils/songRendering";
-import { EditorState } from "./Editor";
 
 interface PreviewProps {
   editorState: EditorState;
@@ -19,7 +19,7 @@ const Preview: React.FC<PreviewProps> = ({ editorState }) => {
     renderedContent = renderSong(
       songData,
       0, // transposeSteps
-      true
+      true,
     );
   } catch (error) {
     console.error("Error rendering song:", error);
@@ -37,7 +37,7 @@ const Preview: React.FC<PreviewProps> = ({ editorState }) => {
           "main-container editor-preview-container",
           chordSettingsClassNames(chords),
           layoutSettingsClassNames(layout),
-          editorState.chordpro.length === 0 ? "editor-content-empty" : ""
+          editorState.chordpro.length === 0 ? "editor-content-empty" : "",
         )}
       >
         <SongHeading

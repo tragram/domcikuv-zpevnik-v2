@@ -19,7 +19,7 @@ import { layoutSettingsClassNames } from "../settings/LayoutSettings";
 
 interface ResizableAutoTextSizeProps {
   children: React.ReactNode;
-  gestureContainerRef: React.RefObject<HTMLDivElement>;
+  gestureContainerRef: React.RefObject<HTMLDivElement | null>;
   className?: string;
   autoColumns?: boolean;
 }
@@ -46,6 +46,8 @@ export function ResizableAutoTextSize({
     if (layout.fitScreenMode !== "none") {
       setFontSize(contentRef.current, wrapperRef.current, layout.fitScreenMode);
     }
+    // chords actually indirectly change the layout --> need to be there
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layout, chords]);
 
   // Initialize ResizeObserver
@@ -77,7 +79,7 @@ export function ResizableAutoTextSize({
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
-      // If Ctrl is NOT pressed, we return early. 
+      // If Ctrl is NOT pressed, we return early.
       // This allows the event to bubble up and perform standard scrolling.
       if (!e.ctrlKey) return;
 
@@ -87,15 +89,20 @@ export function ResizableAutoTextSize({
       if (!contentRef.current) return;
 
       const currentFontSize = getElementFontSize(contentRef.current);
-      
+
       // Negative deltaY is scrolling UP/Away (Zoom In)
-      const step = 0.2; 
+      const step = 0.2;
       const direction = e.deltaY > 0 ? -1 : 1;
-      
-      const newFontSize = getFontSizeInRange(currentFontSize * (1 + (direction * step)));
+
+      const newFontSize = getFontSizeInRange(
+        currentFontSize * (1 + direction * step),
+      );
 
       setElementFontSize(contentRef.current, newFontSize);
-      actions.setLayoutSettings({ fontSize: newFontSize, fitScreenMode: "none" });
+      actions.setLayoutSettings({
+        fontSize: newFontSize,
+        fitScreenMode: "none",
+      });
     };
 
     // { passive: false } allows us to call e.preventDefault()
@@ -105,7 +112,6 @@ export function ResizableAutoTextSize({
       container.removeEventListener("wheel", handleWheel);
     };
   }, [gestureContainerRef, actions]);
-
 
   // --------------------------------------------------------------------------
   // 2. Gesture Handler (Handles Touch Pinch)
@@ -125,7 +131,7 @@ export function ResizableAutoTextSize({
         setPinching(false);
       },
       onPinch: ({ movement: [dScale], memo, event }) => {
-        // Double safety: If a wheel event somehow gets here, ignore it 
+        // Double safety: If a wheel event somehow gets here, ignore it
         // (your manual handler above takes care of it)
         if (event instanceof WheelEvent) return memo;
 
@@ -140,12 +146,12 @@ export function ResizableAutoTextSize({
       },
     },
     {
-      target: gestureContainerRef,
+      target: gestureContainerRef ?? undefined,
       eventOptions: { passive: true },
       pinch: {
         rubberband: true,
       },
-    }
+    },
   );
 
   return (
@@ -154,7 +160,7 @@ export function ResizableAutoTextSize({
       className={cn(
         "w-full z-10 lg:px-16 p-4 sm:p-8",
         layout.fitScreenMode == "fitXY" ? "h-full" : "h-fit ",
-        layout.fitScreenMode !== "fitXY" ? "mb-10" : ""
+        layout.fitScreenMode !== "fitXY" ? "mb-10" : "",
       )}
     >
       <div className="flex h-full w-full justify-center" ref={wrapperRef}>
@@ -165,7 +171,7 @@ export function ResizableAutoTextSize({
             className,
             chordSettingsClassNames(chords),
             layoutSettingsClassNames(layout),
-            "dark:text-white/95 h-fit max-w-full"
+            "dark:text-white/95 h-fit max-w-full",
           )}
           style={{
             fontSize: `${layout.fontSize}px`,

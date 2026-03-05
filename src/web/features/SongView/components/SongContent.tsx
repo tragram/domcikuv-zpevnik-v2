@@ -6,21 +6,26 @@ import { renderSong } from "../utils/songRendering";
 import BackgroundImage from "./BackgroundImage";
 import ResizableAutoTextSize from "./ResizableAutoTextSize";
 import SongHeading from "./SongHeading";
+import { FavoritesAPI } from "src/worker/api-client";
 
 interface SongContentProps {
   songData: SongData;
   transposeSteps: number;
-  gestureContainerRef: React.RefObject<HTMLDivElement>;
+  gestureContainerRef: React.RefObject<HTMLDivElement | null>;
+  favoritesApi?: FavoritesAPI;
   user?: UserProfileData;
 }
 
 export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-  ({ songData, transposeSteps, gestureContainerRef, user }, ref) => {
+  (
+    { songData, transposeSteps, gestureContainerRef, favoritesApi, user },
+    ref,
+  ) => {
     const { layout, chords: chordSettings } = useViewSettingsStore();
 
     const parsedContent = useMemo(
       () => renderSong(songData, transposeSteps, chordSettings.czechChordNames),
-      [songData, transposeSteps, chordSettings.czechChordNames]
+      [songData, transposeSteps, chordSettings.czechChordNames],
     );
 
     return (
@@ -39,6 +44,7 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
             songData={songData}
             layoutSettings={layout}
             transposeSteps={transposeSteps}
+            favoritesApi={favoritesApi}
             user={user}
           />
 
@@ -50,5 +56,5 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
         </ResizableAutoTextSize>
       </>
     );
-  }
+  },
 );

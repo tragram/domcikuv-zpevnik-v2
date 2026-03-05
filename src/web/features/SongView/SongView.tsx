@@ -13,6 +13,7 @@ import { Toolbar } from "./settings/Toolbar";
 import { FeedStatusBar } from "./components/FeedStatusBar";
 import "./SongView.css";
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
+import { FavoritesAPI } from "src/worker/api-client";
 
 export type FeedStatus = {
   isMaster: boolean;
@@ -26,6 +27,7 @@ type DataForSongView = {
   songDB: SongDB;
   songData: SongData;
   user: UserProfileData;
+  favoritesApi?: FavoritesAPI;
   feedStatus?: FeedStatus;
 };
 
@@ -33,6 +35,7 @@ export const SongView = ({
   songDB,
   songData,
   user,
+  favoritesApi,
   feedStatus,
 }: DataForSongView) => {
   const fullScreenHandle = useFullScreenHandle();
@@ -40,7 +43,7 @@ export const SongView = ({
   const { layout: layoutSettings } = useViewSettingsStore();
   const [transposeSteps, setTransposeSteps] = useLocalStorageState(
     `transposeSteps/${songData.id}`,
-    { defaultValue: 0 }
+    { defaultValue: 0 },
   );
 
   // Prevent default gesture behavior
@@ -74,7 +77,7 @@ export const SongView = ({
           layoutSettings.fitScreenMode == "fitXY"
             ? " h-full "
             : "h-fit overflow-y-auto",
-          feedStatus?.enabled ? "pb-8" : ""
+          feedStatus?.enabled ? "pb-8" : "",
         )}
       >
         <ScrollButtons fitScreenMode={layoutSettings.fitScreenMode} />
@@ -82,6 +85,7 @@ export const SongView = ({
           songData={songData}
           transposeSteps={transposeSteps}
           gestureContainerRef={gestureContainerRef}
+          favoritesApi={favoritesApi}
           user={user}
         />
       </FullScreen>

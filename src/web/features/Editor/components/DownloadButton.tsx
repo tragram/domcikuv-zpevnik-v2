@@ -1,8 +1,8 @@
 import { Button } from "~/components/ui/button";
 import { Download } from "lucide-react";
 import { useEffect, useCallback } from "react";
-import { EditorState } from "../Editor";
 import { SongData } from "~/types/songData";
+import { EditorState } from "~/types/types";
 
 type DownloadButtonProps = {
   editorState: EditorState;

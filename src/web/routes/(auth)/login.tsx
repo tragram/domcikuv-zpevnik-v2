@@ -10,9 +10,11 @@ import { signIn } from "~/../lib/auth/client";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { redirectSearchSchema } from "~/main";
 import { AuthHeader } from "./route";
 
 export const Route = createFileRoute("/(auth)/login")({
+  validateSearch: (search) => redirectSearchSchema.parse(search),
   component: LoginForm,
 });
 
@@ -51,7 +53,7 @@ function LoginForm() {
           router.invalidate();
           navigate({ to: redirectURL });
         },
-      }
+      },
     );
   };
 
@@ -125,7 +127,7 @@ function LoginForm() {
                       setIsLoading(false);
                       setErrorMessage(ctx.error.message);
                     },
-                  }
+                  },
                 )
               }
             >
@@ -157,7 +159,7 @@ function LoginForm() {
                       setIsLoading(false);
                       setErrorMessage(ctx.error.message);
                     },
-                  }
+                  },
                 )
               }
             >
@@ -174,8 +176,12 @@ function LoginForm() {
       </form>
 
       <div className="text-center text-sm">
-        Don&apos;t have an account?{" "}
-        <Link to="/signup" className="underline underline-offset-4">
+        Don't have an account?{" "}
+        <Link
+          to="/signup"
+          search={{ redirect: redirectURL }}
+          className="underline underline-offset-4"
+        >
           Sign up
         </Link>
       </div>

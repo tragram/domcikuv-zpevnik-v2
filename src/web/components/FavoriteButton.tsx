@@ -1,31 +1,31 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouteContext } from "@tanstack/react-router";
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { FavoritesAPI } from "src/worker/api-client";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 
 interface FavoriteButtonProps {
   song: SongData;
+  favoritesApi: FavoritesAPI;
   className?: string;
   iconClassName?: string;
 }
 
 export const FavoriteButton = ({
   song,
+  favoritesApi,
   className = "",
   iconClassName = "h-6 w-6",
 }: FavoriteButtonProps) => {
   const [isFavorite, setIsFavorite] = useState(song.isFavorite);
-  const context = useRouteContext({ strict: false });
   const queryClient = useQueryClient();
 
   // Mutation for adding favorite
   const addFavoriteMutation = useMutation({
-    mutationFn: () =>
-      context.api.favorites.$post({ json: { songId: song.id } }),
+    mutationFn: () => favoritesApi.$post({ json: { songId: song.id } }),
     onMutate: () => {
       // Store previous state for rollback
       const previousState = song.isFavorite;
@@ -62,8 +62,7 @@ export const FavoriteButton = ({
 
   // Mutation for removing favorite
   const removeFavoriteMutation = useMutation({
-    mutationFn: () =>
-      context.api.favorites.$delete({ json: { songId: song.id } }),
+    mutationFn: () => favoritesApi.$delete({ json: { songId: song.id } }),
     onMutate: () => {
       const previousState = song.isFavorite;
 

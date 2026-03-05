@@ -8,11 +8,8 @@
  * - Transposes chords between musical keys
  */
 
-import {
-  chordParserFactory,
-  chordRendererFactory,
-} from "chord-symbol/lib/chord-symbol.js";
-import { hasExactly } from "chord-symbol/src/helpers/hasElement";
+import { chordParserFactory, chordRendererFactory } from "chord-symbol";
+import type { Chord, MaybeChord, ChordParseFailure } from "chord-symbol";
 import type { Key } from "~/types/musicTypes";
 import {
   applyVariant,
@@ -20,12 +17,22 @@ import {
   EXPANDED_SECTION_DIRECTIVE,
   SHORTHAND_SECTION_DIRECTIVE,
 } from "./variantHandlers";
-
 export const SECTION_TITLE_COMMENT = (
   repeatKey: string | null,
   consecutiveModifier: string | null,
 ) => `{comment: %section_title: ${consecutiveModifier}${repeatKey}%}`;
 
+function hasExactly(
+  allIntervals: string[],
+  search: string | string[],
+): boolean {
+  // 1. Wrap in array if it's a single string, just like lodash.isArray check
+  const arraySearch = Array.isArray(search) ? search : [search];
+
+  // 2. Exact equality check, just like lodash.isEqual for flat arrays
+  if (allIntervals.length !== arraySearch.length) return false;
+  return allIntervals.every((val, index) => val === arraySearch[index]);
+}
 /**
  * Default section directives
  */
@@ -456,8 +463,8 @@ export function transposeChordPro(
   /**
    * Preserves specific chord notations that would otherwise be altered
    */
-  const keepSus2Maj7 = (chord: any) => {
-    function overwriteDescriptor(chord: any, descriptor: string) {
+  const keepSus2Maj7 = (chord: Chord) => {
+    function overwriteDescriptor(chord: Chord, descriptor: string) {
       const { rootNote, bassNote } = chord.formatted;
       let symbol = rootNote + descriptor;
       if (bassNote) symbol += "/" + bassNote;
@@ -483,7 +490,7 @@ export function transposeChordPro(
   /**
    * Removes unnecessary parentheses from chord modifiers
    */
-  const hideParentheses = (chord) => {
+  const hideParentheses = (chord: Chord) => {
     // I don't like parentheses around my chord modifiers...
     // Keep parentheses for multiple modifiers
     if (chord.formatted.symbol.includes(",")) {
@@ -499,6 +506,7 @@ export function transposeChordPro(
 
   // Configure chord renderer
   const renderChord = chordRendererFactory({
+    // TODO: could this be converted to "german" notation so we could get rid of the transforms?
     notationSystem: "english",
     transposeValue: transposeSteps,
     accidental: newKey.isFlat() ? "flat" : "sharp",
@@ -506,8 +514,13 @@ export function transposeChordPro(
   });
 
   // Process all chord brackets
-  const convertChordBracket = (match: string, chord: string) =>
-    `[${renderChord(parseChord(chord))}]`;
+  const convertChordBracket = (match: string, chord: string) => {
+    const parsedChord: MaybeChord = parseChord(chord);
+    if ("error" in parsedChord) {
+      return match;
+    }
+    return `[${renderChord(parsedChord)}]`;
+  };
 
   return song.replace(
     /\[([A-Ha-h][A-Za-z\d#b,\s/]{0,10})\]/g,

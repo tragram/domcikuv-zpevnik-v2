@@ -1,30 +1,50 @@
-// import { ButtonGroup, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { Button } from "~/components/ui/button";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "~/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Note } from "~/types/musicTypes";
 import { Key } from "~/types/musicTypes";
-import TransposeIcon from "./transpose_icon"
+import TransposeIcon from "./transpose_icon";
 import ToolbarBase from "~/components/ToolbarBase";
 import FancySwitch from "~/components/FancySwitch";
 
-const RENDER_KEYS = ['C', 'C#', 'D', 'Es', 'E', 'F', 'F#', 'G', 'As', 'A', 'B', 'H'];
-
+const RENDER_KEYS = [
+  "C",
+  "C#",
+  "D",
+  "Es",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "As",
+  "A",
+  "B",
+  "H",
+];
 
 interface TransposeSettingsProps {
   originalKey: Key | undefined;
-  transposeSteps: number
-  setTransposeSteps: (value: number) => void
+  transposeSteps: number;
+  setTransposeSteps: (value: number) => void;
 }
 
-const TransposeSettings: React.FC<TransposeSettingsProps> = ({ originalKey, transposeSteps, setTransposeSteps }) => {
+const TransposeSettings: React.FC<TransposeSettingsProps> = ({
+  originalKey,
+  transposeSteps,
+  setTransposeSteps,
+}) => {
   const originalKeyIndex = originalKey?.note
-    ? new Note('C').semitonesBetween(originalKey?.note)
+    ? new Note("C").semitonesBetween(originalKey?.note)
     : 0;
 
   const transposeValues = useMemo(
     () => [...Array(12).keys()].map((v) => v - originalKeyIndex),
-    [originalKeyIndex]
+    [originalKeyIndex],
   );
 
   return (
@@ -49,7 +69,8 @@ const TransposeSettings: React.FC<TransposeSettingsProps> = ({ originalKey, tran
 };
 
 function useComponentVisible(initialIsVisible: boolean) {
-  const [isComponentVisible, setIsComponentVisible] = useState(initialIsVisible);
+  const [isComponentVisible, setIsComponentVisible] =
+    useState(initialIsVisible);
   const ref = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -59,9 +80,9 @@ function useComponentVisible(initialIsVisible: boolean) {
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener("click", handleClickOutside, true);
     return () => {
-      document.removeEventListener('click', handleClickOutside, true);
+      document.removeEventListener("click", handleClickOutside, true);
     };
   }, []);
 
@@ -75,10 +96,18 @@ interface TransposeButtonsProps {
   vertical?: boolean;
 }
 
-const TransposeButtons: React.FC<TransposeButtonsProps> = ({ values, selected, onChange, vertical = false }) => {
+const TransposeButtons: React.FC<TransposeButtonsProps> = ({
+  values,
+  selected,
+  onChange,
+  vertical = false,
+}) => {
   return (
     <FancySwitch
-      options={RENDER_KEYS.map((k, index) => ({ label: k, value: values[index] }))}
+      options={RENDER_KEYS.map((k, index) => ({
+        label: k,
+        value: values[index],
+      }))}
       selectedOption={selected}
       setSelectedOption={onChange}
       vertical={vertical}
@@ -94,9 +123,14 @@ interface TransposeDropdownProps {
   onChange: (steps: number) => void;
 }
 
-const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected, onChange }) => {
-  const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
-  
+const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
+  values,
+  selected,
+  onChange,
+}) => {
+  const { ref, isComponentVisible, setIsComponentVisible } =
+    useComponentVisible(false);
+
   const handleToolbarOptionChange = (steps: number) => {
     onChange(steps);
     // setIsComponentVisible(false); // Close toolbar after selection
@@ -104,23 +138,36 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected,
 
   return (
     <>
-      <div className='hidden xl:flex h-full'>
-        <TransposeButtons values={values} selected={selected} onChange={onChange} />
+      <div className="hidden xl:flex h-full">
+        <TransposeButtons
+          values={values}
+          selected={selected}
+          onChange={onChange}
+        />
       </div>
-      <div className='xl:hidden flex max-[600px]:hidden'>
-        <Button size="icon" variant="circular" onClick={() => setIsComponentVisible(!isComponentVisible)}>
+      <div className="xl:hidden flex max-[600px]:hidden">
+        <Button
+          size="icon"
+          variant="circular"
+          onClick={() => setIsComponentVisible(!isComponentVisible)}
+        >
           <TransposeIcon />
         </Button>
         <div className={"absolute top-13 w-fit right-[554px]"} ref={ref}>
-          {isComponentVisible &&
-            <ToolbarBase showToolbar={isComponentVisible} className="!px-0 w-fit">
+          {isComponentVisible && (
+            <ToolbarBase isVisible={isComponentVisible} className="!px-0 w-fit">
               <div className="w-fit flex justify-center p-0 h-full min-h-10">
-                <TransposeButtons values={values} selected={selected} onChange={handleToolbarOptionChange} />
+                <TransposeButtons
+                  values={values}
+                  selected={selected}
+                  onChange={handleToolbarOptionChange}
+                />
               </div>
-            </ToolbarBase>}
+            </ToolbarBase>
+          )}
         </div>
       </div>
-      <div className='flex min-[600px]:hidden'>
+      <div className="flex min-[600px]:hidden">
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="circular">
@@ -132,7 +179,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({ values, selected,
               <DropdownMenuCheckboxItem
                 checked={selected === values[index]}
                 key={k}
-                onSelect={e => e.preventDefault()}
+                onSelect={(e) => e.preventDefault()}
                 onCheckedChange={() => onChange(values[index])}
               >
                 {k}

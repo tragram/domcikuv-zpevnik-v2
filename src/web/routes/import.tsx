@@ -4,6 +4,15 @@ import PendingComponent from "~/components/PendingComponent";
 import { Button } from "~/components/ui/button";
 import { ApiException, makeApiRequest } from "~/services/api-service";
 
+class ImportError extends Error {
+  songId?: string;
+
+  constructor(message: string, songId?: string) {
+    super(message);
+    this.songId = songId;
+  }
+}
+
 export const Route = createFileRoute("/import")({
   validateSearch: (search) => externalSearchResultSchema.parse(search),
   pendingMs: 0,
@@ -49,9 +58,7 @@ export const Route = createFileRoute("/import")({
           userMessage = "Could not extract lyrics from the source";
         }
 
-        const customError = new Error(userMessage);
-        (customError as any).songId = songId;
-        throw customError;
+        throw new ImportError(userMessage, songId);
       }
 
       throw error;
@@ -64,7 +71,7 @@ export const Route = createFileRoute("/import")({
     />
   ),
   errorComponent: ({ error }) => {
-    const songId = (error as any)?.songId;
+    const songId = error instanceof ImportError ? error.songId : undefined;
 
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">

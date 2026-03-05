@@ -17,12 +17,10 @@ import {
   useRouteContext,
 } from "@tanstack/react-router";
 import { SongData } from "~/types/songData";
-import { makeApiRequest } from "~/services/api-service";
 import { useQueryClient } from "@tanstack/react-query";
-import { cn, useLoggedIn } from "~/lib/utils";
+import { cn } from "~/lib/utils";
 import SettingsDropdown from "./components/SettingsDropdown";
 import DownloadButton from "./components/DownloadButton";
-import { EditorState } from "./Editor";
 import { UserProfileData } from "src/worker/api/userProfile";
 import {
   Tooltip,
@@ -36,6 +34,8 @@ import {
   generateSongIllustration,
   submitSongVersion,
 } from "~/services/editor-service";
+import { EditorState } from "~/types/types";
+import { useLoggedIn } from "~/lib/utils.frontend";
 
 interface EditorToolbarProps {
   editorState: EditorState;

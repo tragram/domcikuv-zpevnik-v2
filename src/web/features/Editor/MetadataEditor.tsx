@@ -1,15 +1,14 @@
 import React from "react";
+import { UserProfileData } from "src/worker/api/userProfile";
+import SelectOrEditList from "~/components/SelectOrEditList";
+import { Button } from "~/components/ui/button";
+import { Separator } from "~/components/ui/separator";
+import { cn } from "~/lib/utils";
+import { EditorState, SongDB } from "~/types/types";
+import { guessKey } from "../SongView/utils/songRendering";
 import MetadataField from "./components/MetadataField";
 import { metadataValidators } from "./components/validationUtils";
-import type { EditorState } from "./Editor";
-import SelectOrEditList from "~/components/SelectOrEditList";
-import { SongDB } from "~/types/types";
-import { cn } from "~/lib/utils";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
-import { Separator } from "~/components/ui/separator";
-import { UserProfileData } from "src/worker/api/userProfile";
-import { Button } from "~/components/ui/button";
-import { guessKey } from "../SongView/utils/songRendering";
 
 interface MetadataEditorProps {
   songDB: SongDB;
@@ -54,9 +53,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
         />
         <MetadataField
           label="Capo"
-          onChange={(value) =>
-            updateMetadata("capo", parseInt(value, 10) || value)
-          }
+          onChange={(value) => updateMetadata("capo", value)}
           placeholder="0"
           value={metadata.capo?.toString()}
           modified={defaultMetadata.capo !== metadata.capo}

@@ -35,11 +35,11 @@ export const resetBanList = () => {
 export function ResetBanListDropdownItems({ songDB }: { songDB: SongDB }) {
   const [bannedSongs, setBannedSongs] = useLocalStorageState<string[]>(
     "songsBannedFromRandom",
-    { defaultValue: [] }
+    { defaultValue: [] },
   );
   const [ignoreSeenSongs, setIgnoreSeenSongs] = useLocalStorageState<boolean>(
     "ignoreSeenSongs",
-    { defaultValue: true }
+    { defaultValue: true },
   );
   return (
     <>
@@ -82,7 +82,7 @@ function shouldResetBanList(lastResetDate: string | null): boolean {
     3,
     0,
     0,
-    0
+    0,
   );
 
   // If now is after today's 3 AM and last reset was before today's 3 AM
@@ -92,7 +92,7 @@ function shouldResetBanList(lastResetDate: string | null): boolean {
 const banSongFactory = (
   ignoreSeenSongs: boolean,
   bannedSongs: string[],
-  songToBan: string
+  songToBan: string,
 ) => {
   if (ignoreSeenSongs || !bannedSongs.includes(songToBan)) {
     // Add chosen song to banned list if not in the list (or when using banned songs, in which case it is guaranteed that it is not in the list)
@@ -103,7 +103,7 @@ const banSongFactory = (
 const chooseRandomSong = (
   songs: SongData[],
   currentSong: SongData | null,
-  ignoreSeenSongs: boolean
+  ignoreSeenSongs: boolean,
 ) => {
   // TODO: acknowledge current filters
   const bannedSongs = ignoreSeenSongs ? new Set(retrieveBanList()) : new Set();
@@ -126,7 +126,7 @@ const chooseRandomSong = (
       banSongFactory(
         ignoreSeenSongs,
         Array.from(bannedSongs) as string[],
-        chosenSong.id
+        chosenSong.id,
       ),
   };
 };

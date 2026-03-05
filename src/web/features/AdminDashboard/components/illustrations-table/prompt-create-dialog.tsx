@@ -28,6 +28,11 @@ import {
   useIllustrationOptions,
 } from "../../../../services/admin-hooks";
 import useLocalStorageState from "use-local-storage-state";
+import { ApiException } from "~/services/api-service";
+import {
+  AvailableSummaryModel,
+  SummaryPromptVersion,
+} from "src/worker/helpers/image-generator";
 
 export function PromptCreateDialog({ songId }: { songId: string }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,15 +46,14 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
   // Manual State
   const [text, setText] = useState("");
   const [manualSummaryModel, setManualSummaryModel] = useState("manual");
-  const [manualPromptVersion, setManualPromptVersion] = useState(
-    options.promptVersions.default,
-  );
+  const [manualPromptVersion, setManualPromptVersion] =
+    useState<SummaryPromptVersion>(options.promptVersions.default);
 
   // AI State
-  const [aiSummaryModel, setAiSummaryModel] = useState(
+  const [aiSummaryModel, setAiSummaryModel] = useState<AvailableSummaryModel>(
     options.summaryModels.default,
   );
-  const [aiPromptVersion, setAiPromptVersion] = useState(
+  const [aiPromptVersion, setAiPromptVersion] = useState<SummaryPromptVersion>(
     options.promptVersions.default,
   );
 
@@ -67,8 +71,10 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
       });
       toast.success("Prompt created successfully");
       resetAndClose();
-    } catch (err: any) {
-      toast.error(err.message || "Failed to create prompt");
+    } catch (err) {
+      if (err instanceof ApiException)
+        toast.error(err.message || "Failed to create prompt");
+      else toast.error("Failed to create prompt");
     }
   };
 
@@ -81,8 +87,10 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
       });
       toast.success("Prompt generated successfully");
       resetAndClose();
-    } catch (err: any) {
-      toast.error(err.message || "Failed to generate prompt");
+    } catch (err) {
+      if (err instanceof ApiException)
+        toast.error(err.message || "Failed to create prompt");
+      else toast.error("Failed to create prompt");
     }
   };
 
@@ -120,7 +128,9 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
                 <Label>Summary Model</Label>
                 <Select
                   value={aiSummaryModel}
-                  onValueChange={setAiSummaryModel}
+                  onValueChange={(model: AvailableSummaryModel) =>
+                    setAiSummaryModel(model)
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -138,7 +148,9 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
                 <Label>Prompt Version</Label>
                 <Select
                   value={aiPromptVersion}
-                  onValueChange={setAiPromptVersion}
+                  onValueChange={(promptVersion: SummaryPromptVersion) =>
+                    setAiPromptVersion(promptVersion)
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -183,7 +195,9 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
                 <Label>Prompt Version</Label>
                 <Select
                   value={manualPromptVersion}
-                  onValueChange={setManualPromptVersion}
+                  onValueChange={(version: SummaryPromptVersion) =>
+                    setManualPromptVersion(version)
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue />

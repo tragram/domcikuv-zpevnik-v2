@@ -9,6 +9,7 @@ import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import { useState, useCallback } from "react";
 import { IllustrationPrompt } from "./IllustrationPrompt";
+import { useRouteContext } from "@tanstack/react-router";
 
 interface IllustrationPopupProps {
   avatarClassName: string;
@@ -19,6 +20,7 @@ export function IllustrationPopup({
   avatarClassName,
   song,
 }: IllustrationPopupProps) {
+  const songsAPI = useRouteContext({ from: "/" }).api.songs;
   const [isOpen, setIsOpen] = useState(false);
   const [highResLoaded, setHighResLoaded] = useState(false);
   const [highResError, setHighResError] = useState(false);
@@ -110,6 +112,7 @@ export function IllustrationPopup({
             <IllustrationPrompt
               song={song}
               show={isOpen && Boolean(song.currentIllustration)}
+              songsAPI={songsAPI}
               className="text-center text-white font-bold flex items-center justify-center h-[256px] [@media(max-height:1000px)]:h-[150px] [@media(max-height:800px)]:h-[100px] [@media(max-height:700px)]:hidden"
             />
           </div>

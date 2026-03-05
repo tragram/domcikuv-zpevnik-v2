@@ -1,6 +1,6 @@
-import { useRouteContext } from "@tanstack/react-router";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { IllustrationPromptApi } from "src/worker/api/api-types";
 import { IllustrationCreateSchema } from "src/worker/helpers/illustration-helpers";
 import { ImageDropzone } from "~/components/ImageDropzone";
 import { Button } from "~/components/ui/button";
@@ -15,17 +15,12 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { Textarea } from "~/components/ui/textarea";
-import { useSongPrompts } from "~/services/admin-hooks";
 import { cn } from "~/lib/utils";
-import type { IllustrationSubmitData } from "./illustration-form";
+import type { IllustrationFormProps } from "./illustration-form";
 import { ActiveSwitch, SongIdField } from "./shared-form-fields";
 
-interface ManualFormProps {
-  illustration: any;
-  activePromptId?: string;
-  onSave: (data: IllustrationSubmitData) => void;
-  isLoading?: boolean;
-  onSuccess?: () => void;
+interface ManualFormProps extends IllustrationFormProps {
+  songPrompts: IllustrationPromptApi[];
 }
 
 export function ManualForm({
@@ -34,24 +29,23 @@ export function ManualForm({
   onSave,
   isLoading,
   onSuccess,
+  songPrompts,
 }: ManualFormProps) {
-  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
-  const { songPrompts } = useSongPrompts(adminApi, illustration.songId);
+  console.log(illustration);
 
-  // --- State ---
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
 
   // Prompt handling
-  const [selectedPromptId, setSelectedPromptId] = useState<string>(
-    illustration?.promptId || activePromptId,
+  const [selectedPromptId, setSelectedPromptId] = useState<string | undefined>(
+    activePromptId ?? (songPrompts.length > 0 ? songPrompts[0].id : undefined),
   );
   const [promptMode, setPromptMode] = useState<"existing" | "new">(
     songPrompts.length > 0 ? "existing" : "new",
   );
   const [newPromptText, setNewPromptText] = useState("");
 
-  const [formData, setFormData] = useState<Partial<IllustrationCreateSchema>>({
+  const [formData, setFormData] = useState<IllustrationCreateSchema>({
     songId: illustration?.songId || "",
     imageModel:
       illustration?.imageModel ||
@@ -59,17 +53,10 @@ export function ManualForm({
         ? sessionStorage.getItem("admin-manual-imageModel")
         : "") ||
       "",
-    setAsActive: illustration?.setAsActive || false,
+    setAsActive: true,
   });
 
   // --- Effects ---
-  useEffect(() => {
-    // If updating an existing illustration, we only have a remote URL to show
-    if (illustration?.imageURL && !imageFile) {
-      setImagePreview(illustration.imageURL);
-    }
-  }, [illustration, imageFile]);
-
   useEffect(() => {
     const handlePaste = (e: ClipboardEvent) => {
       if (e.clipboardData && e.clipboardData.files.length > 0) {
@@ -107,7 +94,6 @@ export function ManualForm({
     }
 
     setImageFile(null);
-    setImagePreview(illustration?.imageURL || "");
 
     const input = document.getElementById("image-upload") as HTMLInputElement;
     if (input) input.value = "";
@@ -115,7 +101,7 @@ export function ManualForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data: any = { ...formData };
+    const data = { ...formData };
     if (imageFile) data.imageFile = imageFile;
 
     // Attach prompt data
@@ -128,7 +114,10 @@ export function ManualForm({
     }
 
     try {
-      await onSave({ mode: "manual", illustrationData: data });
+      onSave({
+        mode: "manual",
+        illustrationData: data,
+      });
       onSuccess?.();
     } catch (error) {
       console.error("Form submission error:", error);
@@ -171,6 +160,7 @@ export function ManualForm({
             {promptMode === "existing" && (
               <div className="pl-6 space-y-2">
                 <Select
+                  disabled={!selectedPromptId}
                   value={selectedPromptId}
                   onValueChange={setSelectedPromptId}
                 >
@@ -228,7 +218,6 @@ export function ManualForm({
         <Label>Main Image</Label>
         <div className="relative">
           <ImageDropzone
-            id="image-upload"
             label={imageFile ? imageFile.name : "Upload or paste Image"}
             onFileSelect={handleImageSelection}
             previewUrl={imagePreview}

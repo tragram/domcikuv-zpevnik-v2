@@ -1,24 +1,24 @@
-import client, { API } from "src/worker/api-client";
-import { SongData } from "~/types/songData";
-import { makeApiRequest } from "./api-service";
-import { AdminApi, parseDBDates } from "./song-service";
+import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
+import { API, SongsAPI } from "src/worker/api-client";
 import {
   IllustrationPromptApi,
   SongDataAdminApi,
   SongIllustrationApi,
 } from "src/worker/api/api-types";
 import {
-  IllustrationPromptCreateSchema,
-  IllustrationGenerateSchema,
-  IllustrationCreateSchema,
-  IllustrationModifySchema,
   AdminIllustrationResponse,
+  IllustrationCreateSchema,
+  IllustrationGenerateSchema,
+  IllustrationModifySchema,
+  IllustrationPromptCreateSchema,
 } from "src/worker/helpers/illustration-helpers";
 import { PopulatedSongDB } from "src/worker/helpers/song-helpers";
-import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
+import { SongData } from "~/types/songData";
+import { makeApiRequest } from "./api-service";
+import { AdminApi, parseDBDates } from "./song-service";
 
 export const fetchIllustrationPrompt = async (
-  songDBApi: typeof client.api.songs,
+  songDBApi: SongsAPI,
   song: SongData,
 ): Promise<string> => {
   const promptId = song.currentIllustration?.promptId;

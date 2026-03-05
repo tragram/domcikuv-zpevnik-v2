@@ -7,4 +7,8 @@ type AppType = typeof route;
 const client = hc<AppType>("/");
 
 export type API = typeof client.api;
+export type FavoritesAPI = API["favorites"];
+export type SongsAPI = API["songs"];
+export type EditorAPI = API["editor"];
+
 export default client;

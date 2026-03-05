@@ -80,7 +80,7 @@ export function SongIllustrationsGroup({
 
       if (!isExpanded) onToggleExpanded();
     },
-    onError: (error: any) => {
+    onError: (error) => {
       console.error("Create illustration error:", error);
       // Ensure the specific server error message is shown
       toast.error(error?.message || "Failed to create illustration");
@@ -100,7 +100,7 @@ export function SongIllustrationsGroup({
 
       if (!isExpanded) onToggleExpanded();
     },
-    onError: (error: any) => {
+    onError: (error) => {
       console.error("Generate illustration error:", error);
       // Ensure the specific server error message is shown
       toast.error(error?.message || "Failed to generate illustration");

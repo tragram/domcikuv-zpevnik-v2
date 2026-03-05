@@ -1,5 +1,14 @@
+import { useRouteContext } from "@tanstack/react-router";
+import { CheckCircle2, History, Sparkles } from "lucide-react";
 import type React from "react";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+import { IllustrationPromptApi } from "src/worker/api/api-types";
+import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
+import {
+  AvailableImageModel,
+  AvailableSummaryModel,
+  SummaryPromptVersion,
+} from "src/worker/helpers/image-generator";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import {
@@ -10,60 +19,79 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import {
-  SongIdField,
-  ActiveSwitch,
-  ImageModelSelect,
-} from "./shared-form-fields";
-import type { IllustrationSubmitData } from "./illustration-form";
-import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
-import {
-  SummaryPromptVersion,
-  AvailableSummaryModel,
-  AvailableImageModel,
-} from "src/worker/helpers/image-generator";
-import {
   useIllustrationOptions,
-  useSongPrompts,
   useIllustrationsAdmin,
 } from "~/services/admin-hooks";
-import { useRouteContext } from "@tanstack/react-router";
 import { defaultPromptId } from "~/types/songData";
-import { Sparkles, CheckCircle2, History } from "lucide-react";
+import type { IllustrationFormProps } from "./illustration-form";
+import {
+  ActiveSwitch,
+  ImageModelSelect,
+  SongIdField,
+} from "./shared-form-fields";
 
-interface AIGeneratedFormProps {
-  illustration: {
-    songId?: string;
-    summaryPromptVersion?: SummaryPromptVersion;
-    summaryModel?: AvailableSummaryModel;
-    imageModel?: AvailableImageModel;
-    isActive?: boolean;
-  } | null;
-  onSave: (data: IllustrationSubmitData) => void;
-  isLoading?: boolean;
-  onSuccess?: () => void;
+interface AIGeneratedFormProps extends IllustrationFormProps {
+  songPrompts: IllustrationPromptApi[];
 }
 
 function AIGeneratedForm({
   illustration,
+  activePromptId,
   onSave,
   isLoading,
   onSuccess,
+  songPrompts,
 }: AIGeneratedFormProps) {
-  const options = useIllustrationOptions();
+  // TODO: use activePromptId to potentially preselect it
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
-  const { songPrompts } = useSongPrompts(adminApi, illustration?.songId);
+  const options = useIllustrationOptions();
   const { data: allIllustrations } = useIllustrationsAdmin(adminApi);
+
+  // Dynamically include legacy models/versions if they exist in the song's prompts
+  const summaryModelOptions = useMemo(() => {
+    const existing: Set<string> = new Set(
+      options.summaryModels.data.map((opt) => opt.value),
+    );
+    const historical = Array.from(
+      new Set(songPrompts.map((p) => p.summaryModel)),
+    ).filter((m) => m && !existing.has(m));
+    return [
+      ...options.summaryModels.data,
+      ...historical.map((m) => ({ value: m, label: `${m} (Legacy)` })),
+    ];
+  }, [options.summaryModels.data, songPrompts]);
+
+  const promptVersionOptions = useMemo(() => {
+    const existing: Set<string> = new Set(
+      options.promptVersions.data.map((opt) => opt.value),
+    );
+    const historical = Array.from(
+      new Set(songPrompts.map((p) => p.summaryPromptVersion)),
+    ).filter((v) => v && !existing.has(v));
+    return [
+      ...options.promptVersions.data,
+      ...historical.map((v) => ({ value: v, label: `${v} (Legacy)` })),
+    ];
+  }, [options.promptVersions.data, songPrompts]);
+
+  // TODO: when image models and versions are deleted, this will need to be done on all three
+  const summaryModelCandidate =
+    illustration?.summaryModel ||
+    (typeof window !== "undefined"
+      ? (sessionStorage.getItem(
+          "admin-ai-summaryModel",
+        ) as AvailableSummaryModel)
+      : options.summaryModels.default);
 
   const [formData, setFormData] = useState({
     songId: illustration?.songId || "",
     promptVersion:
       illustration?.summaryPromptVersion || options.promptVersions.default,
-    summaryModel:
-      illustration?.summaryModel ||
-      (typeof window !== "undefined"
-        ? (sessionStorage.getItem("admin-ai-summaryModel") as AvailableSummaryModel)
-        : null) ||
-      options.summaryModels.default,
+    summaryModel: summaryModelOptions
+      .map((smo) => smo.label)
+      .includes(summaryModelCandidate)
+      ? summaryModelCandidate
+      : options.summaryModels.default,
     imageModel:
       illustration?.imageModel ||
       (typeof window !== "undefined"
@@ -73,48 +101,42 @@ function AIGeneratedForm({
     setAsActive: illustration?.isActive || false,
   });
 
-  // Dynamically include legacy models/versions if they exist in the song's prompts
-  const summaryModelOptions = useMemo(() => {
-    const existing = new Set(options.summaryModels.data.map((opt) => opt.value));
-    const historical = Array.from(new Set(songPrompts.map((p) => p.summaryModel))).filter(
-      (m) => m && !existing.has(m)
-    );
-    return [
-      ...options.summaryModels.data,
-      ...historical.map((m) => ({ value: m, label: `${m} (Legacy)` })),
-    ];
-  }, [options.summaryModels.data, songPrompts]);
-
-  const promptVersionOptions = useMemo(() => {
-    const existing = new Set(options.promptVersions.data.map((opt) => opt.value));
-    const historical = Array.from(
-      new Set(songPrompts.map((p) => p.summaryPromptVersion))
-    ).filter((v) => v && !existing.has(v));
-    return [
-      ...options.promptVersions.data,
-      ...historical.map((v) => ({ value: v, label: `${v} (Legacy)` })),
-    ];
-  }, [options.promptVersions.data, songPrompts]);
-
   const promptExists = useMemo(() => {
     if (!formData.songId) return false;
     const targetId = defaultPromptId(
       formData.songId,
       formData.summaryModel,
-      formData.promptVersion
+      formData.promptVersion,
     );
     return songPrompts.some((p) => p.id === targetId);
-  }, [songPrompts, formData.songId, formData.summaryModel, formData.promptVersion]);
+  }, [
+    songPrompts,
+    formData.songId,
+    formData.summaryModel,
+    formData.promptVersion,
+  ]);
 
   const illustrationExists = useMemo(() => {
-    return allIllustrations?.some(
-      (ill) =>
+    return allIllustrations?.some((ill) => {
+      const illPrompt = songPrompts.find(
+        (prompt) => prompt.id === ill.promptId,
+      );
+      if (!illPrompt) return false;
+      return (
         ill.songId === formData.songId &&
         ill.imageModel === formData.imageModel &&
-        ill.summaryModel === formData.summaryModel &&
-        ill.summaryPromptVersion === formData.promptVersion
-    );
-  }, [allIllustrations, formData]);
+        illPrompt.summaryModel === formData.summaryModel &&
+        illPrompt.summaryPromptVersion === formData.promptVersion
+      );
+    });
+  }, [
+    allIllustrations,
+    formData.imageModel,
+    formData.promptVersion,
+    formData.songId,
+    formData.summaryModel,
+    songPrompts,
+  ]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -150,11 +172,13 @@ function AIGeneratedForm({
             LLM Prompt Settings
           </Label>
           {formData.songId && (
-            <div className={`flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full border ${
-              promptExists 
-                ? "bg-emerald-50 text-emerald-600 border-emerald-100" 
-                : "bg-amber-50 text-amber-600 border-amber-100"
-            }`}>
+            <div
+              className={`flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full border ${
+                promptExists
+                  ? "bg-emerald-50 text-emerald-600 border-emerald-100"
+                  : "bg-amber-50 text-amber-600 border-amber-100"
+              }`}
+            >
               {promptExists ? (
                 <>
                   <CheckCircle2 className="w-3 h-3" />
@@ -169,20 +193,24 @@ function AIGeneratedForm({
             </div>
           )}
         </div>
-        
+
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="text-xs">Model</Label>
             <Select
               value={formData.summaryModel}
-              onValueChange={(v) => updateFormData({ summaryModel: v as AvailableSummaryModel })}
+              onValueChange={(v) =>
+                updateFormData({ summaryModel: v as AvailableSummaryModel })
+              }
             >
               <SelectTrigger className="h-9">
                 <SelectValue placeholder="Model" />
               </SelectTrigger>
               <SelectContent>
                 {summaryModelOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                  <SelectItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -192,14 +220,18 @@ function AIGeneratedForm({
             <Label className="text-xs">Version</Label>
             <Select
               value={formData.promptVersion}
-              onValueChange={(v) => updateFormData({ promptVersion: v as SummaryPromptVersion })}
+              onValueChange={(v) =>
+                updateFormData({ promptVersion: v as SummaryPromptVersion })
+              }
             >
               <SelectTrigger className="h-9">
                 <SelectValue placeholder="Version" />
               </SelectTrigger>
               <SelectContent>
                 {promptVersionOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                  <SelectItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -212,13 +244,15 @@ function AIGeneratedForm({
         <Label className="text-xs font-bold uppercase tracking-tight text-muted-foreground block">
           Generation Settings
         </Label>
-        
+
         <ImageModelSelect
           value={formData.imageModel || ""}
-          onChange={(v) => updateFormData({ imageModel: v as AvailableImageModel })}
+          onChange={(v) =>
+            updateFormData({ imageModel: v as AvailableImageModel })
+          }
           options={options.imageModels.data}
         />
-        
+
         <ActiveSwitch
           isActive={formData.setAsActive || false}
           onActiveChange={(checked) => updateFormData({ setAsActive: checked })}
@@ -234,12 +268,16 @@ function AIGeneratedForm({
           </div>
         )}
 
-        <Button 
-          type="submit" 
-          className="w-full" 
+        <Button
+          type="submit"
+          className="w-full"
           disabled={isLoading || illustrationExists || !formData.songId}
         >
-          {isLoading ? "Generating..." : illustrationExists ? "Configuration Exists" : "Generate Illustration"}
+          {isLoading
+            ? "Generating..."
+            : illustrationExists
+              ? "Configuration Exists"
+              : "Generate Illustration"}
         </Button>
       </div>
     </form>

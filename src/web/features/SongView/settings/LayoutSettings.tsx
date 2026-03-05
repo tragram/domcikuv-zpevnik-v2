@@ -30,7 +30,7 @@ import { LoopNoteIcon } from "~/components/ui/loop-note-icon";
 import SmartColumnIcon from "./smart_columns_icon";
 import FancySwitch from "~/components/FancySwitch";
 
-const layouSettingsBoolsKeys = [
+const layoutSettingsBoolsKeys = [
   "multiColumns",
   "smartColumns",
   "repeatParts",
@@ -227,7 +227,7 @@ export const LayoutSettingsDropdownSection: React.FC = () => {
 
       <DropdownMenuLabel>Contents</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      {layouSettingsBoolsKeys.map((k) => (
+      {layoutSettingsBoolsKeys.map((k) => (
         <DropdownMenuCheckboxItem
           key={k}
           checked={layoutSettings[k]}

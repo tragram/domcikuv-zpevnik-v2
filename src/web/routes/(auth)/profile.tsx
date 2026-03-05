@@ -18,7 +18,8 @@ import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
 import { useIsOnline } from "~/hooks/use-is-online";
-import { handleApiResponse } from "~/services/api-service";
+import { redirectSearchSchema } from "~/main";
+import { ApiException, handleApiResponse } from "~/services/api-service";
 
 type ProfileUpdateResponse = {
   status: string;
@@ -27,17 +28,16 @@ type ProfileUpdateResponse = {
 
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,
-  validateSearch: (search: Record<string, unknown>) => {
-    return {
-      redirect: (search.redirect as string) || undefined,
-    };
-  },
+  validateSearch: (search) => redirectSearchSchema.parse(search),
   loader: async ({ context }) => {
     const userProfileData = context.queryClient.getQueryData([
       "userProfile",
     ]) as UserProfileData;
     if (!userProfileData.loggedIn) {
-      throw redirect({ to: "/login" });
+      throw redirect({
+        to: "/login",
+        search: { redirect: context.redirectURL },
+      });
     }
     return {
       userProfileData,
@@ -166,13 +166,16 @@ function RouteComponent() {
         navigate({ to: redirect });
       }
     } catch (err) {
-      if (err) {
+      // Safely type-check the error
+      if (err instanceof ApiException) {
         if (err.code === "NICKNAME_TAKEN") {
           setFieldErrors((prev) => ({ ...prev, nickname: err.message }));
           toast.error("Nickname is already taken");
         } else {
           toast.error(err.message || "Failed to update profile");
         }
+      } else if (err instanceof Error) {
+        toast.error(err.message || "Failed to update profile");
       } else {
         console.error("Save error:", err);
         toast.error("An unexpected error occurred while updating profile.");

@@ -14,11 +14,13 @@ import { useIsOnline } from "~/hooks/use-is-online";
 interface ShareSongButtonProps {
   feedStatus: FeedStatus | undefined;
   user: UserProfileData;
+  songId: string;
 }
 
 const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   feedStatus,
   user,
+  songId,
 }) => {
   const onLine = useIsOnline();
   const showProfileLink = !user.loggedIn || !user.profile.nickname;
@@ -77,7 +79,9 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
 
   const wrappedContent =
     onLine && showProfileLink ? (
-      <Link to={`/profile?redirect=${location.pathname}`}>{content}</Link>
+      <Link to="/profile" search={{ redirect: `/song/${songId}` }}>
+        {content}
+      </Link>
     ) : (
       content
     );

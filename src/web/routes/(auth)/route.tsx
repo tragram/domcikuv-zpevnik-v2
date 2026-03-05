@@ -1,12 +1,13 @@
 import {
-  Outlet,
-  redirect,
   createFileRoute,
   Link,
+  Outlet,
+  redirect,
 } from "@tanstack/react-router";
 import { CloudUpload, Home, Shield } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
+import { redirectSearchSchema } from "~/main";
 
 const PROFILE_URL = "/profile";
 const LOGIN_URL = "/login";
@@ -15,10 +16,11 @@ const SUBMISSIONS_URL = "/submissions";
 
 export const Route = createFileRoute("/(auth)")({
   // TODO: disable when offline
+  validateSearch: (search) => redirectSearchSchema.parse(search),
   component: RouteComponent,
   beforeLoad: async ({ context, location, search }) => {
-    // Get the redirect URL from search params or default to "/"
-    const redirectURL = (search as { redirect?: string })?.redirect || "/";
+    // Get the redirect URL from validated search params or default to "/"
+    const redirectURL = search.redirect || "/";
 
     // If user is not logged in and not on login/signup page, redirect to login
     if (!context.user.loggedIn && location.pathname === PROFILE_URL) {
@@ -32,14 +34,14 @@ export const Route = createFileRoute("/(auth)")({
     if (context.user.loggedIn) {
       if (location.pathname === LOGIN_URL) {
         throw redirect({
-          to: redirectURL,
+          href: redirectURL,
         });
       }
 
       // If user is logged in and on signup page, redirect to the intended destination
       if (location.pathname === SIGNUP_URL) {
         throw redirect({
-          to: redirectURL,
+          href: redirectURL,
         });
       }
     }
@@ -66,20 +68,20 @@ export const AuthHeader: React.FC<{ text: string }> = ({ text }) => {
 };
 
 function RouteComponent() {
-  const { location, user } = Route.useLoaderData();
+  const { user } = Route.useLoaderData();
   return (
     <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10 w-full">
       <div className="w-fit flex flex-col gap-4 xl:gap-8">
         <div
           className={cn(
-            "flex flex-wrap w-auto border-4 border-primary rounded-md max-md:justify-around md:justify-between [&>*]:bg-transparent [&>*]:rounded-none"
+            "flex flex-wrap w-auto border-4 border-primary rounded-md max-md:justify-around md:justify-between [&>*]:bg-transparent [&>*]:rounded-none",
           )}
         >
           {/* links */}
           <div
             className={cn(
               "flex w-full profile-toolbar-links",
-              user.loggedIn ? "justify-between" : ""
+              user.loggedIn ? "justify-between" : "",
             )}
           >
             <Button asChild>

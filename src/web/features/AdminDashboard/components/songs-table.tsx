@@ -73,7 +73,10 @@ type SortableSong = SongDataDB & {
 };
 
 type SortConfig = {
-  key: keyof Omit<SortableSong, "hasPendingVersions">;
+  key: keyof Omit<
+    SortableSong,
+    "hasPendingVersions" | "currentVersionId" | "currentIllustrationId"
+  >;
   direction: "ascending" | "descending";
 };
 
@@ -107,7 +110,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
 
   const navigate = useNavigate({ from: "/admin" });
   const backendDropdownOptions = useIllustrationOptions();
-  const [sortConfig, setSortConfig] = useState<SortConfig | null>({
+  const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: "lastModified",
     direction: "descending",
   });
@@ -191,12 +194,11 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     enrichedSongs.sort((a, b) => {
       if (a.hasPendingVersions && !b.hasPendingVersions) return -1;
       if (!a.hasPendingVersions && b.hasPendingVersions) return 1;
-      if (sortConfig !== null) {
-        if (a[sortConfig.key] < b[sortConfig.key])
-          return sortConfig.direction === "ascending" ? -1 : 1;
-        if (a[sortConfig.key] > b[sortConfig.key])
-          return sortConfig.direction === "ascending" ? 1 : -1;
-      }
+      if (a[sortConfig.key] < b[sortConfig.key])
+        return sortConfig.direction === "ascending" ? -1 : 1;
+      if (a[sortConfig.key] > b[sortConfig.key])
+        return sortConfig.direction === "ascending" ? 1 : -1;
+
       return 0;
     });
     return enrichedSongs;
@@ -240,7 +242,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     );
   };
 
-  const requestSort = (key: keyof Omit<SortableSong, "hasPendingVersions">) => {
+  const requestSort = (key: SortConfig["key"]) => {
     let direction: "ascending" | "descending" = "ascending";
     if (
       sortConfig &&
@@ -251,10 +253,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     setSortConfig({ key, direction });
   };
 
-  const renderHeader = (
-    label: string,
-    key: keyof Omit<SortableSong, "hasPendingVersions">,
-  ) => (
+  const renderHeader = (label: string, key: SortConfig["key"]) => (
     <TableHead
       onClick={() => requestSort(key)}
       className="cursor-pointer whitespace-nowrap hover:bg-muted/50 transition-colors"

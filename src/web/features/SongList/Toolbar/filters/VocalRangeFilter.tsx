@@ -28,7 +28,7 @@ const VocalRangeSlider = ({
   vocalRangeFilter,
   setVocalRangeFilter,
 }: VocalRangeSliderProps): JSX.Element => {
-  const currentValue =
+  const currentValue: [number, number] =
     vocalRangeFilter === "all" ? [0, maxRange] : vocalRangeFilter;
 
   const setValue = (value: number[]) => {

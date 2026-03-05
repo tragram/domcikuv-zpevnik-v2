@@ -11,13 +11,16 @@ import useLocalStorageState from "use-local-storage-state";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import AIGeneratedForm from "./ai-generated-form";
 import { ManualForm } from "./manual-form";
+import { useRouteContext } from "@tanstack/react-router";
+import { useSongPrompts } from "~/services/admin-hooks";
 
-interface IllustrationFormData {
-  songId?: string;
+export interface IllustrationFormData {
+  songId: string;
   summaryPromptVersion?: SummaryPromptVersion;
   summaryModel?: AvailableSummaryModel;
   imageModel?: AvailableImageModel;
   isActive?: boolean;
+  promptId?: string;
 }
 
 export type IllustrationSubmitData =
@@ -30,12 +33,11 @@ export type IllustrationSubmitData =
       illustrationData: IllustrationGenerateSchema;
     };
 
-interface IllustrationFormProps {
-  illustration: Partial<IllustrationFormData>;
+export interface IllustrationFormProps {
+  illustration: IllustrationFormData;
   activePromptId?: string;
   onSave: (data: IllustrationSubmitData) => void;
   isLoading?: boolean;
-  manualOnly?: boolean;
   onSuccess?: () => void;
 }
 
@@ -44,28 +46,15 @@ export function IllustrationForm({
   activePromptId,
   onSave,
   isLoading,
-  manualOnly = false,
   onSuccess = () => {},
 }: IllustrationFormProps) {
   const [activeTab, setActiveTab] = useLocalStorageState<"ai" | "manual">(
     "admin-illustration-form-activeTab",
-    { defaultValue: manualOnly ? "manual" : "ai" },
+    { defaultValue: "ai" },
   );
-
-  if (manualOnly) {
-    return (
-      <div className="max-w-full flex flex-col p-6 overflow-auto">
-        <ManualForm
-          illustration={illustration}
-          activePromptId={activePromptId}
-          onSave={onSave}
-          isLoading={isLoading}
-          onSuccess={onSuccess}
-        />
-      </div>
-    );
-  }
-
+  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
+  const { songPrompts } = useSongPrompts(adminApi, illustration.songId);
+  // TODO: what gets shown on edit - make sure it's the right thing
   return (
     <div className="max-w-full flex flex-col p-6 overflow-auto">
       <Tabs
@@ -80,6 +69,8 @@ export function IllustrationForm({
         <TabsContent value="ai" className="space-y-4 mt-6">
           <AIGeneratedForm
             illustration={illustration}
+            activePromptId={activePromptId}
+            songPrompts={songPrompts}
             onSave={onSave}
             isLoading={isLoading}
             onSuccess={onSuccess}
@@ -89,6 +80,7 @@ export function IllustrationForm({
           <ManualForm
             illustration={illustration}
             activePromptId={activePromptId}
+            songPrompts={songPrompts}
             onSave={onSave}
             isLoading={isLoading}
             onSuccess={onSuccess}

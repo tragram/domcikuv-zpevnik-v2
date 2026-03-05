@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { Textarea } from "~/components/ui/textarea";
-import { cn, tailwindBreakpoint } from "~/lib/utils";
+import { cn } from "~/lib/utils";
 import { autofillChordpro } from "~/services/editor-service";
 import {
   convertToChordPro,
@@ -19,6 +19,8 @@ import {
   snippets,
 } from "./components/Snippets";
 import { SongData } from "~/types/songData";
+import { tailwindBreakpoint } from "~/lib/utils.frontend";
+import { EditorAPI } from "src/worker/api-client";
 
 const textareaAutoSizeStyles = `
 @media (max-width: 810px) {
@@ -33,6 +35,7 @@ interface ContentEditorProps {
   setEditorContent: (content: string) => void;
   user: UserProfileData;
   songData?: SongData;
+  editorAPI: EditorAPI;
 }
 
 const isAutofillable = (text: string, user: UserProfileData): boolean => {
@@ -130,13 +133,13 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
   setEditorContent,
   user,
   songData,
+  editorAPI,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [dismissedFeatures, setDismissedFeatures] = useState<Set<string>>(
     new Set(),
   );
   const [isProcessing, setIsProcessing] = useState(false);
-  const api = useRouteContext({ strict: false }).api;
 
   const contentToFeatureMap = useRef<Map<string, string>>(new Map());
 
@@ -261,7 +264,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
         );
       } else if (featureId === "autofill_chords") {
         setIsProcessing(true);
-        newContent = await autofillChordpro(state, api);
+        newContent = await autofillChordpro(state, editorAPI);
       }
 
       if (newContent !== state) {

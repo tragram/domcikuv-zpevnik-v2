@@ -38,6 +38,7 @@ import {
   AvailableImageModel,
 } from "src/worker/helpers/image-generator";
 import { SongDataAdminApi } from "src/worker/api/api-types";
+import { ApiException } from "~/services/api-service";
 
 interface IllustrationCardProps {
   song: SongDataAdminApi;
@@ -69,8 +70,9 @@ export function IllustrationCard({
       await updateMutation.mutateAsync({ id, data: illustrationData });
       toast.success("Illustration updated successfully");
       setIsEditDialogOpen(false);
-    } catch (error: any) {
-      toast.error(error?.message || "Failed to update illustration");
+    } catch (error) {
+      if (error instanceof ApiException)
+        toast.error(error?.message || "Failed to update illustration");
       console.error("Update error:", error);
     }
   };
@@ -79,8 +81,9 @@ export function IllustrationCard({
     try {
       await deleteMutation.mutateAsync(illustration.id);
       toast.success("Illustration deleted successfully");
-    } catch (error: any) {
-      toast.error(error?.message || "Failed to delete illustration");
+    } catch (error) {
+      if (error instanceof ApiException)
+        toast.error(error?.message || "Failed to update illustration");
       console.error("Delete error:", error);
     }
   };
@@ -89,8 +92,9 @@ export function IllustrationCard({
     try {
       await restoreMutation.mutateAsync(illustration.id);
       toast.success("Illustration restored successfully");
-    } catch (error: any) {
-      toast.error(error?.message || "Failed to restore illustration");
+    } catch (error) {
+      if (error instanceof ApiException)
+        toast.error(error?.message || "Failed to update illustration");
       console.error("Restore error:", error);
     }
   };
@@ -104,8 +108,9 @@ export function IllustrationCard({
       toast.success(
         isActive ? "Illustration deactivated" : "Illustration activated",
       );
-    } catch (error: any) {
-      toast.error(error?.message || "Failed to update illustration status");
+    } catch (error) {
+      if (error instanceof ApiException)
+        toast.error(error?.message || "Failed to update illustration");
       console.error("Toggle active error:", error);
     }
   };
@@ -270,7 +275,6 @@ export function IllustrationCard({
               handleUpdateIllustration(illustration.id, illustrationData)
             }
             isLoading={updateMutation.isPending}
-            manualOnly
             onSuccess={() => setIsEditDialogOpen(false)}
           />
         </DialogContent>

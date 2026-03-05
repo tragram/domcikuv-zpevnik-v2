@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouteContext } from "@tanstack/react-router";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { CircleX } from "lucide-react";
 import { memo, useMemo, useState } from "react";
@@ -19,11 +19,12 @@ const getShuffledArr = (arr: SongData[]) => {
 
 const imageHeight = (normalHeight: number, variability: number) => {
   return Math.round(
-    normalHeight * (1 - variability + variability * Math.random())
+    normalHeight * (1 - variability + variability * Math.random()),
   );
 };
 
 function CardThatHides({ song }: { song: SongData }) {
+  const songsAPI = useRouteContext({ from: "/gallery" }).api.songs;
   const [hidden, setHidden] = useState(false);
   const [showingContent, setShowingContent] = useState(false);
   const onError = () => {
@@ -61,6 +62,7 @@ function CardThatHides({ song }: { song: SongData }) {
             <IllustrationPrompt
               song={song}
               show={showingContent}
+              songsAPI={songsAPI}
               className={"text-white h-32"}
             />
             <Button
@@ -104,14 +106,14 @@ const SongGallery = memo(({ songDB }: SongGalleryProps) => {
   const { columnNr, columnWidth } = columnData();
   const shuffledSongs = useMemo(
     () => getShuffledArr(songDB.songs),
-    [songDB.songs]
+    [songDB.songs],
   );
   const songHeights = useMemo(
     () =>
       shuffledSongs.map(() =>
-        imageHeight(Math.min(512, 1.5 * columnWidth), 0.3)
+        imageHeight(Math.min(512, 1.5 * columnWidth), 0.3),
       ),
-    [columnWidth, shuffledSongs]
+    [columnWidth, shuffledSongs],
   );
 
   const rowVirtualizer = useWindowVirtualizer({

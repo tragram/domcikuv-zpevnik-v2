@@ -1,14 +1,14 @@
-import { API } from "~/../worker/api-client";
-import { makeApiRequest } from "./api-service";
 import { EditorSubmitSchemaInput } from "src/worker/api/editor";
+import { EditorAPI } from "~/../worker/api-client";
+import { makeApiRequest } from "./api-service";
 export * from "./illustration-service";
 
 export const autofillChordpro = async (
   currentChordPro: string,
-  api: API,
+  api: EditorAPI,
 ): Promise<string> => {
   const response = await makeApiRequest(() =>
-    api.editor.autofill.$post({
+    api.autofill.$post({
       json: { chordpro: currentChordPro },
     }),
   );
@@ -16,7 +16,7 @@ export const autofillChordpro = async (
 };
 
 export const submitSongVersion = async (
-  editorApi: API["editor"],
+  editorApi: EditorAPI,
   payload: EditorSubmitSchemaInput,
   songId?: string,
 ) => {

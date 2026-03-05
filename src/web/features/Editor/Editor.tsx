@@ -4,8 +4,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { parseChordPro } from "../../../lib/chordpro";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
-import { SongDB } from "~/types/types";
-import { type EditorSubmitSchemaInput } from "../../../worker/api/editor";
+import { EditorState, SongDB } from "~/types/types";
 import "../SongView/SongView.css";
 import CollapsibleMainArea from "./components/CollapsibleMainArea";
 import ContentEditor from "./ContentEditor";
@@ -14,8 +13,7 @@ import EditorToolbar from "./EditorToolbar";
 import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
 import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
-
-export type EditorState = EditorSubmitSchemaInput;
+import { EditorAPI } from "src/worker/api-client";
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -37,6 +35,7 @@ interface EditorProps {
   songData?: SongData;
   user: UserProfileData;
   versionId?: string;
+  editorAPI: EditorAPI;
 }
 
 const Editor: React.FC<EditorProps> = ({
@@ -44,6 +43,7 @@ const Editor: React.FC<EditorProps> = ({
   songData,
   user,
   versionId,
+  editorAPI,
 }) => {
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
@@ -207,6 +207,7 @@ const Editor: React.FC<EditorProps> = ({
               setEditorContent={updateContent}
               user={user}
               songData={songData}
+              editorAPI={editorAPI}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>

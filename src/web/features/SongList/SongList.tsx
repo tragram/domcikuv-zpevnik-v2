@@ -56,7 +56,11 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
 
   return (
     <div className="no-scrollbar w-full">
-      <Toolbar songDB={songDB} isVisible={isToolbarVisible} />
+      <Toolbar
+        isAdmin={user.loggedIn && user.profile.isAdmin}
+        songDB={songDB}
+        isVisible={isToolbarVisible}
+      />
 
       <div className="pt-[72px] sm:pt-20 pb-2">
         {/* SECTION 1: Internal Songs */}

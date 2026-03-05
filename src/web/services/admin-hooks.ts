@@ -614,8 +614,9 @@ export const useSongPrompts = (adminApi: AdminApi, songId?: string) => {
   const { data: prompts, isLoading } = usePromptsAdmin(adminApi);
 
   const songPrompts = useMemo(() => {
-    if (!prompts || !songId) return [];
-    return prompts.filter((p) => p.songId === songId);
+    if (!prompts) return [];
+    if (!songId) return prompts;
+    else return prompts.filter((p) => p.songId === songId);
   }, [prompts, songId]);
 
   return { songPrompts, isLoading };

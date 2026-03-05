@@ -198,7 +198,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 Keep screen on
               </DropdownMenuCheckboxItem>
             )}
-            <ShareSongButton feedStatus={feedStatus} user={user} />
+            <ShareSongButton
+              feedStatus={feedStatus}
+              user={user}
+              songId={songData.id}
+            />
             <DropdownMenuItem>
               <Link
                 className="flex items-center gap-2 cursor-pointer w-full"

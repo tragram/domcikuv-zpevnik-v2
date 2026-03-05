@@ -29,7 +29,8 @@ export const Route = createFileRoute("/song/$songId")({
 });
 
 function RouteComponent() {
-  const { songDB, songData, user, songId, versionId } = Route.useLoaderData();
+  const { songDB, songData, user, songId, versionId, api } =
+    Route.useLoaderData();
   const { shareSession } = useViewSettingsStore();
 
   // Only enable session sync for non-versioned songs
@@ -61,6 +62,7 @@ function RouteComponent() {
       songDB={songDB}
       songData={songData}
       user={user}
+      favoritesApi={api.favorites}
       feedStatus={
         versionId
           ? undefined // No session sync for versioned songs
