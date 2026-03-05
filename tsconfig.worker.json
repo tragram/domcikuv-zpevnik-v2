@@ -9,9 +9,5 @@
       "~/*": ["./src/web/*"]
     }
   },
-  "include": [
-    "src/worker",
-    "src/web/components/ImageGeneratorTest.tsx",
-    "src/db-backup-worker/index.ts"
-  ]
+  "include": ["src/worker"]
 }
