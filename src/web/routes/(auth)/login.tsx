@@ -123,6 +123,13 @@ function LoginForm() {
                       setIsLoading(true);
                       setErrorMessage("");
                     },
+                    onSuccess: async () => {
+                      await queryClient.invalidateQueries({
+                        queryKey: ["userProfile"],
+                      });
+                      router.invalidate();
+                      navigate({ to: redirectURL });
+                    },
                     onError: (ctx) => {
                       setIsLoading(false);
                       setErrorMessage(ctx.error.message);
@@ -154,6 +161,13 @@ function LoginForm() {
                     onRequest: () => {
                       setIsLoading(true);
                       setErrorMessage("");
+                    },
+                    onSuccess: async () => {
+                      await queryClient.invalidateQueries({
+                        queryKey: ["userProfile"],
+                      });
+                      router.invalidate();
+                      navigate({ to: redirectURL });
                     },
                     onError: (ctx) => {
                       setIsLoading(false);
