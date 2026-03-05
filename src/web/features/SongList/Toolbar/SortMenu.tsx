@@ -1,14 +1,3 @@
-import { Button } from "~/components/ui/button";
-import {
-  DropdownIconStart,
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import FancySwitch from "~/components/FancySwitch";
 import {
   ArrowDown01,
   ArrowDown10,
@@ -25,6 +14,16 @@ import {
 import type { JSX, ReactElement } from "react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import FancySwitch from "~/components/FancySwitch";
+import { RichItem } from "~/components/RichDropdown";
+import { Button } from "~/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { SortField, SortOrder, SortSettings } from "~/types/types";
 
 interface SortSettingsState extends SortSettings {
@@ -35,7 +34,6 @@ interface SortSettingsState extends SortSettings {
 export const useSortSettingsStore = create<SortSettingsState>()(
   persist(
     (set) => ({
-      // Changed default order to descending for dates
       order: "descending" as SortOrder,
       field: "dateAdded" as SortField,
       setSortOrder: (sortOrder: SortOrder) =>
@@ -49,8 +47,8 @@ export const useSortSettingsStore = create<SortSettingsState>()(
     }),
     {
       name: "sort-settings-store",
-    }
-  )
+    },
+  ),
 );
 
 interface SortingIcons {
@@ -175,7 +173,6 @@ const SortMenu = (): JSX.Element => {
 
   const activeCategory = getActiveCategory(sortByField);
 
-  // Handle field change with smart default order
   const handleFieldChange = (newField: SortField) => {
     if (newField !== sortByField) {
       setSortField(newField);
@@ -185,7 +182,6 @@ const SortMenu = (): JSX.Element => {
 
   return (
     <>
-      {/* Mobile View */}
       <div className="flex md:hidden">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -194,39 +190,49 @@ const SortMenu = (): JSX.Element => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56">
-            <DropdownMenuLabel>Sorting method</DropdownMenuLabel>
+            <RichItem.Header>Sorting method</RichItem.Header>
             <DropdownMenuSeparator />
+
             {categories.map((category) => (
               <DropdownMenuCheckboxItem
                 key={category.field}
                 onSelect={(e) => e.preventDefault()}
                 checked={isActive(sortByField, category.field)}
                 onCheckedChange={() => handleFieldChange(category.field)}
+                className="py-2"
               >
-                <DropdownIconStart icon={category.icon} />
-                {category.title}
+                <RichItem.Shell>
+                  <RichItem.Icon>{category.icon}</RichItem.Icon>
+                  <RichItem.Body title={category.title} />
+                </RichItem.Shell>
               </DropdownMenuCheckboxItem>
             ))}
-            <DropdownMenuLabel>Direction</DropdownMenuLabel>
+
+            <RichItem.Header>Direction</RichItem.Header>
             <DropdownMenuSeparator />
+
             {(["ascending", "descending"] as const).map((direction) => (
               <DropdownMenuCheckboxItem
                 key={`${direction}_sort`}
                 checked={sortOrder === direction}
                 onSelect={(e) => e.preventDefault()}
                 onCheckedChange={() => setSortOrder(direction)}
+                className="py-2"
               >
-                <DropdownIconStart
-                  icon={activeCategory.sorting_icons[direction]}
-                />
-                {activeCategory.sorting_labels[direction]}
+                <RichItem.Shell>
+                  <RichItem.Icon>
+                    {activeCategory.sorting_icons[direction]}
+                  </RichItem.Icon>
+                  <RichItem.Body
+                    title={activeCategory.sorting_labels[direction]}
+                  />
+                </RichItem.Shell>
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
 
-      {/* Desktop View */}
       <div className="hidden md:flex h-full w-fit">
         <FancySwitch
           options={switchOptions}

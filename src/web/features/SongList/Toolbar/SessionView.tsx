@@ -2,11 +2,11 @@ import { Link, useRouteContext } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AvatarWithFallback } from "~/components/ui/avatar";
+import { RichItem } from "~/components/RichDropdown";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
@@ -22,7 +22,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const context = useRouteContext({ from: "/" });
   const { activeSessions, refetchIfStale } = useActiveSessions(
     context.songDB,
-    context.api
+    context.api,
   );
 
   // Update time every second when dropdown is open
@@ -78,9 +78,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
         className="m-2 w-[calc(100dvw-1rem)] sm:w-96"
         align="start"
       >
-        <DropdownMenuLabel className="text-sm font-semibold">
-          Active Sessions
-        </DropdownMenuLabel>
+        <RichItem.Header>Active Sessions</RichItem.Header>
         <DropdownMenuSeparator />
         {!activeSessions && (
           <div className="px-2 py-2 text-sm text-destructive">
@@ -93,7 +91,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
           </div>
         )}
         {activeSessions && activeSessions.length > 0 && (
-          <div className="max-h-64 overflow-y-auto">
+          <div className="max-h-64 overflow-y-auto pr-1">
             {activeSessions.map((session) => (
               <Link
                 key={session.masterId}
@@ -116,10 +114,10 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                     <div className="text-xs hidden xs:flex flex-col flex-1 min-w-0 text-center">
                       {session.song && (
                         <>
-                          <div className="truncate text-white/80">
+                          <div className="truncate text-foreground/80">
                             {session.song.artist}
                           </div>
-                          <div className="truncate text-white/80">
+                          <div className="truncate text-foreground/80">
                             {session.song.title}
                           </div>
                         </>
@@ -139,7 +137,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
 
         <DropdownMenuSeparator />
         <p className="px-2 py-2 text-xs">
-          To share your own sesion, just log in, pick a nickname and enable the
+          To share your own session, just log in, pick a nickname and enable the
           feature in song settings!
         </p>
       </DropdownMenuContent>

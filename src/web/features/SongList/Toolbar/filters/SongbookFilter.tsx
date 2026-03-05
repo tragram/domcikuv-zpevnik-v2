@@ -1,8 +1,6 @@
 import { BookUser } from "lucide-react";
 import type { JSX } from "react";
-import {
-  AvatarWithFallback
-} from "~/components/ui/avatar";
+import { RichItem } from "~/components/RichDropdown";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -38,7 +36,7 @@ const createSongbookChoices = (
   availableSongbooks: Songbook[],
   selectedSongbooks: Songbook[],
   addSongbook: (songbook: Songbook) => void,
-  removeSongbook: (songbook: Songbook) => void
+  removeSongbook: (songbook: Songbook) => void,
 ): JSX.Element[] => {
   const toggleSongbook = (songbook: Songbook) => {
     const isSelected = selectedSongbooks.some((s) => s.user === songbook.user);
@@ -61,7 +59,7 @@ const createSongbookChoices = (
     .sort((a, b) => b.count - a.count)
     .map(({ songbook, label, image, count, onClick }) => {
       const isSelected = selectedSongbooks.some(
-        (s) => s.user === songbook.user
+        (s) => s.user === songbook.user,
       );
       return (
         <DropdownMenuCheckboxItem
@@ -71,18 +69,11 @@ const createSongbookChoices = (
           onClick={onClick}
           className="py-2"
         >
-          <div className="flex items-center gap-3 w-full min-w-0">
-            <AvatarWithFallback
-              avatarSrc={image}
-              fallbackStr={label}
-              avatarClassName="h-7 w-7 flex-shrink-0"
-              fallbackClassName="text-xs"
-            />
-            <div className="truncate flex-1 text-sm">{label}</div>
-            <div className="text-xs text-primary/80 flex-shrink-0">
-              {count} songs
-            </div>
-          </div>
+          <RichItem.Shell>
+            <RichItem.Avatar src={image} fallback={label} />
+            <RichItem.Body title={label} />
+            <RichItem.Trailing>{count} songs</RichItem.Trailing>
+          </RichItem.Shell>
         </DropdownMenuCheckboxItem>
       );
     });
@@ -101,11 +92,11 @@ export const SongBookFilter = ({
 }: SongBookFilterProps): JSX.Element => {
   const totalSongsInSongbooks = availableSongbooks.reduce(
     (sum, songbook) => sum + songbook.songIds.size,
-    0
+    0,
   );
 
   const allSelected = availableSongbooks.every((songbook) =>
-    selectedSongbooks.some((selected) => selected.user === songbook.user)
+    selectedSongbooks.some((selected) => selected.user === songbook.user),
   );
 
   const handleSelectAll = () => {
@@ -120,7 +111,7 @@ export const SongBookFilter = ({
     availableSongbooks,
     selectedSongbooks,
     addSongbook,
-    removeSongbook
+    removeSongbook,
   );
 
   const SelectAllButton = () => (
@@ -130,31 +121,27 @@ export const SongBookFilter = ({
       onClick={handleSelectAll}
       className="py-2"
     >
-      <div className="flex items-center gap-3 w-full min-w-0">
-        <div className="flex items-center justify-center h-7 w-7 bg-primary/10 rounded-full flex-shrink-0">
-          <BookUser className="h-4 w-4 text-primary" />
-        </div>
-        <div className="truncate flex-1 text-sm">
-          {allSelected ? "All songs" : "Select all"}
-        </div>
-        <div className="text-xs flex-shrink-0 text-primary/80 ">
-          {allSelected
-            ? `${availableSongs.length} songs`
-            : `${totalSongsInSongbooks} songs`}
-        </div>
-      </div>
+      <RichItem.Shell>
+        <RichItem.Icon>
+          <BookUser className="h-4 w-4" />
+        </RichItem.Icon>
+        <RichItem.Body title={allSelected ? "All songs" : "Select all"} />
+        <RichItem.Trailing>
+          {allSelected ? availableSongs.length : totalSongsInSongbooks} songs
+        </RichItem.Trailing>
+      </RichItem.Shell>
     </DropdownMenuCheckboxItem>
   );
 
   const selectedInfo = (
     availableSongbooks: Songbook[],
     selectedSongbooks: Songbook[],
-    availableSongs: SongData[]
+    availableSongs: SongData[],
   ) => {
     const selectedSongs = filterSongbook(
       availableSongs,
       selectedSongbooks,
-      availableSongbooks
+      availableSongbooks,
     );
     return selectedSongbooks.length > 0 ? (
       <>

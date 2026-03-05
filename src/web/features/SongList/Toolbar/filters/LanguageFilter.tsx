@@ -1,7 +1,9 @@
+import { Languages } from "lucide-react";
+import type { JSX } from "react";
 import LanguageFlag from "~/components/LanguageFlag";
+import { RichItem } from "~/components/RichDropdown";
 import { Button } from "~/components/ui/button";
 import {
-  DropdownIconStart,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -9,8 +11,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { Languages } from "lucide-react";
-import type { JSX } from "react";
 import { LanguageCount, SongLanguage } from "~/types/types";
 
 export const RARE_LANGUAGE_THRESHOLD = 3;
@@ -42,7 +42,6 @@ const createLanguageChoices = (
   selectedLanguage: SongLanguage,
   setSelectedLanguage: (language: SongLanguage) => void,
 ): JSX.Element[] => {
-  // Filter languages with count >= RARE_LANGUAGE_THRESHOLD
   const commonLanguages = Object.entries(languages)
     .filter(([_, count]) => count >= RARE_LANGUAGE_THRESHOLD)
     .map(([language]) => ({
@@ -50,24 +49,20 @@ const createLanguageChoices = (
       value: language as SongLanguage,
     }));
 
-  // Create an "Other" option that includes all languages with count < RARE_LANGUAGE_THRESHOLD
   const rareLanguages = Object.entries(languages)
     .filter(([_, count]) => count < RARE_LANGUAGE_THRESHOLD)
     .map(([language]) => language);
-  // Create final language choices array
+
   const languageChoices: LanguageChoice[] = commonLanguages;
 
-  // Sort alphabetically
   languageChoices.sort((a, b) => {
     if (a.value === "other") return 1;
     if (b.value === "other") return -1;
     return a.text.localeCompare(b.text);
   });
 
-  // Add "All" at the beginning
   languageChoices.unshift({ text: "All", value: "all" });
 
-  // Move "Other" option if there are any rare languages and it's not already there
   if (
     rareLanguages.length > 0 &&
     !languageChoices.map((lc) => lc.value).includes("other")
@@ -81,9 +76,14 @@ const createLanguageChoices = (
       onSelect={(e) => e.preventDefault()}
       checked={selectedLanguage === choice.value}
       onClick={() => setSelectedLanguage(choice.value)}
+      className="py-1"
     >
-      <DropdownIconStart icon={<LanguageFlag language={choice.value} />} />
-      {choice.text}
+      <RichItem.Shell className="gap-2">
+        <div className="flex-shrink-0 flex items-center justify-center w-5">
+          <LanguageFlag language={choice.value} />
+        </div>
+        <RichItem.Body title={choice.text} titleClass="font-normal" />
+      </RichItem.Shell>
     </DropdownMenuCheckboxItem>
   ));
 };

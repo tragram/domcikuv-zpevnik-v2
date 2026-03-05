@@ -1,24 +1,23 @@
-import { Link, useRouteContext } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { ImagesIcon, Menu, Pencil, Shield, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
+import { RichItem } from "~/components/RichDropdown";
 import { DropdownThemeToggle, ThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
 import { Button } from "~/components/ui/button";
 import {
-  DropdownIconStart,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { useIsOnline } from "~/hooks/use-is-online";
 import type { SongDB } from "~/types/types";
 import Filtering from "./filters/Filters";
 import SearchBar from "./SearchBar";
 import SessionView from "./SessionView";
 import SortMenu from "./SortMenu";
-import { useIsOnline } from "~/hooks/use-is-online";
 
 interface CombinedMenuProps {
   isOnline: boolean;
@@ -34,47 +33,53 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56">
-        <DropdownMenuLabel>Menu</DropdownMenuLabel>
+        <RichItem.Header>Menu</RichItem.Header>
         <DropdownMenuSeparator />
+
         <DropdownThemeToggle />
 
-        <DropdownMenuItem>
-          <Link
-            to="/edit"
-            className="flex items-center gap-2 cursor-pointer w-full"
-          >
-            <DropdownIconStart icon={<Pencil />} />
-            Add song
+        <DropdownMenuItem asChild>
+          <Link to="/edit" className="w-full cursor-pointer py-2">
+            <RichItem.Shell>
+              <RichItem.Icon>
+                <Pencil className="w-4 h-4" />
+              </RichItem.Icon>
+              <RichItem.Body title="Add song" />
+            </RichItem.Shell>
           </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link
-            to="/gallery"
-            className="flex items-center gap-2 cursor-pointer w-full"
-          >
-            <DropdownIconStart icon={<ImagesIcon />} />
-            Gallery
+          <Link to="/gallery" className="w-full cursor-pointer py-2">
+            <RichItem.Shell>
+              <RichItem.Icon>
+                <ImagesIcon className="w-4 h-4" />
+              </RichItem.Icon>
+              <RichItem.Body title="Gallery" />
+            </RichItem.Shell>
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem disabled={!isOnline}>
-          <Link
-            to="/profile"
-            className="flex items-center gap-2 cursor-pointer w-full"
-          >
-            <DropdownIconStart icon={<User />} />
-            Profile
+        <DropdownMenuItem asChild disabled={!isOnline}>
+          <Link to="/profile" className="w-full cursor-pointer py-2">
+            <RichItem.Shell>
+              <RichItem.Icon>
+                <User className="w-4 h-4" />
+              </RichItem.Icon>
+              <RichItem.Body title="Profile" />
+            </RichItem.Shell>
           </Link>
         </DropdownMenuItem>
+
         {isAdmin && (
           <DropdownMenuItem asChild disabled={!isOnline}>
-            <Link
-              to="/admin"
-              className="flex items-center gap-2 cursor-pointer w-full"
-            >
-              <DropdownIconStart icon={<Shield />} />
-              Admin
+            <Link to="/admin" className="w-full cursor-pointer py-2">
+              <RichItem.Shell>
+                <RichItem.Icon>
+                  <Shield className="w-4 h-4" />
+                </RichItem.Icon>
+                <RichItem.Body title="Admin" />
+              </RichItem.Shell>
             </Link>
           </DropdownMenuItem>
         )}
@@ -86,13 +91,12 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
 interface ToolbarProps {
   songDB: SongDB;
   isVisible: boolean;
+  isAdmin: boolean;
 }
 
-function Toolbar({ songDB, isVisible }: ToolbarProps) {
+function Toolbar({ songDB, isVisible, isAdmin }: ToolbarProps) {
   const isOnline = useIsOnline();
 
-  const routeContext = useRouteContext({ strict: false });
-  const isAdmin = routeContext?.user?.profile?.isAdmin ?? false;
   return (
     <ToolbarBase
       isVisible={isVisible}
@@ -105,7 +109,7 @@ function Toolbar({ songDB, isVisible }: ToolbarProps) {
       <SessionView isOnline={isOnline} />
 
       <RandomSong songs={songDB.songs} />
-      {/* Desktop View - Individual Buttons */}
+
       <div className="hidden min-[1150px]:flex h-full w-fit">
         <ThemeToggle />
       </div>
@@ -153,7 +157,6 @@ function Toolbar({ songDB, isVisible }: ToolbarProps) {
         </Button>
       )}
 
-      {/* Mobile/Tablet View - Combined Menu */}
       <div className="flex min-[1150px]:hidden">
         <CombinedMenu isOnline={isOnline} isAdmin={isAdmin} />
       </div>
