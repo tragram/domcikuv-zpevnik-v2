@@ -54,7 +54,12 @@ export const externalRoutes = buildApp()
 
       try {
         existingSong = await retrieveSingleSong(db, newSongId);
-        if (existingSong && !existingSong.externalSource) {
+        if (
+          existingSong &&
+          !existingSong.deleted &&
+          !existingSong.externalSource
+        ) {
+          // TODO: restore if deleted
           // song not only exists but is already an internal song - do not add, just redirect to the actual song
           return successJSend(c, { songId: existingSong.id });
         }
