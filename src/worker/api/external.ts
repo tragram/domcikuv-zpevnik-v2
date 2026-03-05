@@ -77,7 +77,6 @@ export const externalRoutes = buildApp()
           "json",
         )) as SkorepovaCache;
         const song = cachedSongs?.songs.find((s) => s.id === originalId);
-
         if (!song || !song.data.text) {
           return failJSend(
             c,

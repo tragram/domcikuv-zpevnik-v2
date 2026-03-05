@@ -39,19 +39,12 @@ export async function searchZpevnikSkorepova(
   );
 
   if (cachedData) {
-    // Handle transition from the old array format to the new timestamped format
-    // TODO: remove this when it's done
-    if (Array.isArray(cachedData)) {
-      songs = cachedData;
-      needsUpdate = true;
-    } else {
-      const parsedData = cachedData as SkorepovaCache;
-      songs = parsedData.songs;
+    const parsedData = cachedData as SkorepovaCache;
+    songs = parsedData.songs;
 
-      // Check if the data is older than one week
-      const isStale = Date.now() - parsedData.timestamp > ONE_DAY_MS;
-      needsUpdate = isStale;
-    }
+    // Check if the data is older than one week
+    const isStale = Date.now() - parsedData.timestamp > ONE_DAY_MS;
+    needsUpdate = isStale;
   }
 
   // 2. Fetch fresh data if needed (cache miss OR stale data)
