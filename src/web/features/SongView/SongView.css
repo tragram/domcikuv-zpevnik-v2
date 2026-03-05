@@ -186,7 +186,6 @@
 
 /* misc */
 .song-content .literal, .song-content .tab-section {
-    color: var("--text-foreground");
     font-family: monospace;
     font-size: 0.9em;
     scrollbar-width: none;
