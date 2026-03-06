@@ -99,8 +99,9 @@
 .song-content {
     line-height: 1.1;
     white-space: nowrap;
-    display: flex;
+    display: block;
     flex-direction: column;
+    height: fit-content
 }
 
 .song-content>.section+.section {
@@ -131,13 +132,17 @@
 }
 
 .section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1em;
+    display: block;
+    /* flex-direction: column; */
+    /* gap: 0.1em; */
     break-inside: avoid-column;
     width: fit-content;
     /* width: fit-content;*/
     max-width: 100%;
+}
+
+.section>*+* {
+    margin-top: 0.1em;
 }
 
 .lyrics-line {
@@ -168,11 +173,6 @@
     align-items: flex-end;
     margin-right: 0.33em;
     /*border: 1px solid red;*/
-
-    /* attempt to fight against safari slicing words in half mid-letter */
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid-column;
 }
 
 /* hiding and showing parts */
