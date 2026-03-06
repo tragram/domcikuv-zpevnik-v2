@@ -5,11 +5,14 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Note } from "~/types/musicTypes";
-import { Key } from "~/types/musicTypes";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import { useMemo } from "react";
+import { Note, Key } from "~/types/musicTypes";
 import TransposeIcon from "./transpose_icon";
-import ToolbarBase from "~/components/ToolbarBase";
 import FancySwitch from "~/components/FancySwitch";
 
 const RENDER_KEYS = [
@@ -68,27 +71,6 @@ const TransposeSettings: React.FC<TransposeSettingsProps> = ({
   );
 };
 
-function useComponentVisible(initialIsVisible: boolean) {
-  const [isComponentVisible, setIsComponentVisible] =
-    useState(initialIsVisible);
-  const ref = useRef<HTMLDivElement>(null);
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (ref.current && !ref.current.contains(event.target as Node)) {
-      setIsComponentVisible(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside, true);
-    return () => {
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  }, []);
-
-  return { ref, isComponentVisible, setIsComponentVisible };
-}
-
 interface TransposeButtonsProps {
   values: number[];
   selected: number;
@@ -128,16 +110,9 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
   selected,
   onChange,
 }) => {
-  const { ref, isComponentVisible, setIsComponentVisible } =
-    useComponentVisible(false);
-
-  const handleToolbarOptionChange = (steps: number) => {
-    onChange(steps);
-    // setIsComponentVisible(false); // Close toolbar after selection
-  };
-
   return (
     <>
+      {/* Desktop View */}
       <div className="hidden xl:flex h-full">
         <TransposeButtons
           values={values}
@@ -145,28 +120,31 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
           onChange={onChange}
         />
       </div>
+
+      {/* Tablet View using Popover */}
       <div className="xl:hidden flex max-[600px]:hidden">
-        <Button
-          size="icon"
-          variant="circular"
-          onClick={() => setIsComponentVisible(!isComponentVisible)}
-        >
-          <TransposeIcon />
-        </Button>
-        <div className={"absolute top-13 w-fit right-[554px]"} ref={ref}>
-          {isComponentVisible && (
-            <ToolbarBase isVisible={isComponentVisible} className="!px-0 w-fit">
-              <div className="w-fit flex justify-center p-0 h-full min-h-10">
-                <TransposeButtons
-                  values={values}
-                  selected={selected}
-                  onChange={handleToolbarOptionChange}
-                />
-              </div>
-            </ToolbarBase>
-          )}
-        </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button size="icon" variant="circular">
+              <TransposeIcon />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            side="bottom"
+            align="end"
+            sideOffset={16}
+            className="w-fit p-1.5 rounded-full bg-glass/80 dark:bg-glass/30 backdrop-blur-md outline-primary dark:outline-primary/30 outline-2 border-none shadow-lg"
+          >
+            <TransposeButtons
+              values={values}
+              selected={selected}
+              onChange={onChange}
+            />
+          </PopoverContent>
+        </Popover>
       </div>
+
+      {/* Mobile View using DropdownMenu */}
       <div className="flex min-[600px]:hidden">
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
