@@ -6,8 +6,8 @@
 {language: czech}
 {startMelody: e d#}
 {createdAt: 1731538800000}
-{updatedAt: 1772439629000}
-{illustrationId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-5-mini_v3_FLUX1-dev}
+{updatedAt: 1772711522000}
+{illustrationId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-5-mini_v3_nano-banana-2}
 {promptId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-5-mini_v3}
 
 {start_of_verse}
