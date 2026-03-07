@@ -45,6 +45,6 @@ pel z tvojí [Emi]kůže nechci si [C]vzít,
 {end_of_verse}
 
 {start_of_variant: append_content}
-milova[G]ná
+Milova[G]ná
 {end_of_variant}
 {verse: V1}

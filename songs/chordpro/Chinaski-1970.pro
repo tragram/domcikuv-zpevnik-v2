@@ -52,7 +52,7 @@ a možná, že jsem rád.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-a nikdy nebojuj [A]sám!
+A nikdy nebojuj [A]sám!
 {end_of_variant}
 {bridge}
 

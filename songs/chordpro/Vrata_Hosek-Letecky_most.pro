@@ -25,7 +25,7 @@ má [E]v rukou Hermann [Ami]Göring
 {end_of_chorus}
 
 {start_of_verse}
-[Ami]tak tu válčíme s Rusem
+[Ami]Tak tu válčíme s Rusem
 [Dmi]a vedení jsme [Ami]Paulusem
 on zamyšleně mne si bradu
 [E]uvízli jsme u [Ami]Stalingradu
@@ -77,7 +77,7 @@ je [E]konec šesté [Ami]armády
 {end_of_verse}
 
 {start_of_chorus: Závěr}
-[F]žádný le[C]tecký most
+[F]Žádný le[C]tecký most
 a [Dmi]neměli jsme [Ami]zásob dost
 [F]naší [C]budoucnost
 ne[E]spasil Hermann [Ami]Göring

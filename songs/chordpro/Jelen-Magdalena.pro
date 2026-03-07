@@ -20,7 +20,7 @@ prosit se [D]dá-ál - [G2]nenech se!
 {end_of_verse}
 
 {start_of_bridge}
-[D]ó-ó-ó-óó [G2]ó-ó-ó-óó [D][G2]
+[D]Ó-ó-ó-óó [G2]ó-ó-ó-óó [D][G2]
 {end_of_bridge}
 
 {start_of_verse}

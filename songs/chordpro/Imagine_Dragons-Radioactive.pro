@@ -7,7 +7,7 @@
 {startMelody: d a}
 {createdAt: 1439503200000}
 {updatedAt: 1771715043000}
-{illustrationId: Imagine_Dragons-Radioactive_gpt-5-mini_v2_FLUX1-dev}
+{illustrationId: Imagine_Dragons-Radioactive_gpt-5-mini_v2_FLUX.1-dev}
 {promptId: Imagine_Dragons-Radioactive_gpt-5-mini_v2}
 
 {start_of_verse}

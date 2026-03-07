@@ -55,6 +55,6 @@ co [Cdim]nevej[E]de se [Ami]do vzorce
 {end_of_verse}
 
 {start_of_variant: append_content}
-ale nemám [Ami]s kým!
+Ale nemám [Ami]s kým!
 {end_of_variant}
 {chorus}

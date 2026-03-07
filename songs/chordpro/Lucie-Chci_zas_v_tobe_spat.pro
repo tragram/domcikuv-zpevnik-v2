@@ -29,7 +29,7 @@
 {end_of_chorus}
 
 {start_of_chorus: R2}
-[C]jsem na tom [D]stejně mám tě [Emi]rád,
+[C]Jsem na tom [D]stejně mám tě [Emi]rád,
 [C]jablkem, [D]jablkem nejsi,
 [Ami]kousnu hloubš a pak [Am7]zlíbám tě celou
 [C]merci, ó merci, tak opustit zoufalců [D]ráj,

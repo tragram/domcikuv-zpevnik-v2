@@ -40,6 +40,6 @@ osmý den [D]scházel nám
 
 
 {start_of_variant: append_content}
-vždyť [D]víš.
+Vždyť [D]víš.
 {end_of_variant}
 {chorus}

@@ -39,7 +39,7 @@ po těchhle dobrotá[C]ch teď musím na proplac[G]h
 {end_of_verse}
 
 {start_of_verse}
-[C]mám zeleniny dost jsem alkoholu pro[G]st
+[C]Mám zeleniny dost jsem alkoholu pro[G]st
 s takovou svači[Dm]nou ať vycpat se j[Am]dou
 [C]špatnou češtinou stravenku odmítn[G]ou
 věděl jsem to h[Dm]ned nikdy nevrátím se z[Am]pět

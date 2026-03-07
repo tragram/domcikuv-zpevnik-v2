@@ -18,7 +18,7 @@ když je [E7]vhodíš na polštář,
 {end_of_verse}
 
 {start_of_verse}
-ale [Ami]já se o tvou lásku
+Ale [Ami]já se o tvou lásku
 ani [G]vděčnost neprosím,
 ty [F]děkuješ jen hvězdám
 a jseš [E7]věrná jenom jim
@@ -38,7 +38,7 @@ dorovnáva[E7]t dech,
 {end_of_verse}
 
 {start_of_verse}
-a [Ami]taky házet nožem
+A [Ami]taky házet nožem
 a držet [G]pospolu
 a [F]brada se mu třese,
 když se [E7]nosí ke stolu
@@ -54,7 +54,7 @@ co je mimo [E7]tenhle svět,
 {end_of_verse}
 
 {start_of_verse}
-a tvá [Ami]rozkoš nezná hranic,
+A tvá [Ami]rozkoš nezná hranic,
 [G]děvče s hlasem skřivana,
 jen [F]tvý srdce je jak moře
 sam[E7]ý tajemství a tma.

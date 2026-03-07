@@ -56,7 +56,7 @@
 {end_of_bridge}
 
 {start_of_variant: replace_last_line}
-[Dmi]a nikdy [E]nepřestat se
+[Dmi]A nikdy [E]nepřestat se
 {end_of_variant}
 {chorus}
 

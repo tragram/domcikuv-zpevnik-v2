@@ -36,6 +36,6 @@ já [C]viděl, jak to [D]hříbě [G]umírá, [C7][H7]
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-spálil na [H7]troud [D7][Emi]
+Spálil na [H7]troud [D7][Emi]
 {end_of_variant}
 {chorus}

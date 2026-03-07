@@ -32,7 +32,7 @@ a [Hmi]zapomenout, že se ještě někdy rozedn[H7]í,
 {end_of_chorus}
 
 {start_of_chorus: R2}
-kolem hlavy [Emi]mám svatozář [C]holky od koní,
+Kolem hlavy [Emi]mám svatozář [C]holky od koní,
 když zavír[Ami]ám oči a [H7]doufám,
 že předhoním aspoň o kousek [Emi]čas.
 {end_of_chorus}
@@ -52,7 +52,7 @@ a krabice na [G]sny pro hloupý
 {chorus: R2}
 
 {start_of_chorus: R3}
-[Emi]dráhy čar [C]osudu odkloním,
+[Emi]Dráhy čar [C]osudu odkloním,
 a příště, až se pro[Ami]budím,
 možná to [H7]budu zase já,
 [Emi]tak jako dřív [E]

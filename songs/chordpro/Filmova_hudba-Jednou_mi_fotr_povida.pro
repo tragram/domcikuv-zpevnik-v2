@@ -17,7 +17,7 @@
 {end_of_verse}
 
 {start_of_verse}
-[A]nech si to projít [A7]palicí
+[A]Nech si to projít [A7]palicí
 a [D]nevracej se s [D7]vopicí,
 [E]snaž se mě hochu [E7]trochu pocho[A]pit.
 {end_of_verse}
@@ -36,7 +36,7 @@ a [E]nad kolíbkou [E7]Elvis Presley [A]stál,
 {end_of_verse}
 
 {start_of_verse}
-[A]obrovskej bourák [A7]v ulici,
+[A]Obrovskej bourák [A7]v ulici,
 po [D]boku krásnou [D7]slepici
 a [E]lidi šeptaj: [E7]přijel ňákej [A]král.
 {end_of_verse}
@@ -50,7 +50,7 @@ a [E]nemůžu si [E7]najít klidnej [A]kout,
 {end_of_verse}
 
 {start_of_verse}
-[A]bláznivý ptáci [A7]začnou řvát
+[A]Bláznivý ptáci [A7]začnou řvát
 a [D]nový ráno [D7]šacovat
 a [E]do mě vždycky [E7]pustí silnej [A]proud.
 {end_of_verse}

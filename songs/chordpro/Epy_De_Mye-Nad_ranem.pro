@@ -41,6 +41,6 @@ vidět svoje vrahy klesat dolů nad [Esus2]ránem.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-takový [C]temno nad [Esus2]ránem.
+Takový [C]temno nad [Esus2]ránem.
 {end_of_variant}
 {chorus}

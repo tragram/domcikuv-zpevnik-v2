@@ -18,14 +18,14 @@
 {end_of_chorus}
 
 {start_of_chorus: R2}
-vždy když se cítím sám,
+Vždy když se cítím sám,
 rád na poštu zavítám
 tam je tolik lidí, že
 [Emi]pohnout se [A]mám potíž[D]e
 {end_of_chorus}
 
 {start_of_verse}
-[G]za přepážkou [D]paní v letech
+[G]Za přepážkou [D]paní v letech
 [G]má razítko [D]gumové
 [G]a občas tiskne [Hmi]tiskárnou
 z dob [Emi]první války [A]světové
@@ -40,7 +40,7 @@ ať uklidní se hazardem
 {chorus: R2}
 
 {start_of_verse}
-proč je vždy jen jedna
+Proč je vždy jen jedna
 z pěti přepážek otevřená
 je záhada co navždy zůstat
 má tajemstvím zastřená
@@ -54,7 +54,7 @@ budu moct jít na poštu
 {end_of_verse}
 
 {start_of_chorus: R3}
-vždy když tam stepuju
+Vždy když tam stepuju
 tenhle song si notuju
 mám pak hnedka trochu míň
 chuť do [Emi]mozku si [A]vrazit [D]klín

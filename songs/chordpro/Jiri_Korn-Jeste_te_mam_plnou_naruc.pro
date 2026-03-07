@@ -16,12 +16,12 @@
 {end_of_verse}
 
 {start_of_verse}
-[Emi]vlasy tvé [G]ač se jich nedo[Hmi]týkám,
+[Emi]Vlasy tvé [G]ač se jich nedo[Hmi]týkám,
 [D]hladím [A]líbám pota[C]jí
 {end_of_verse}
 
 {start_of_bridge}
-[C#dim7]zůstalas [C#msus4]ve mně,
+[C#dim7]Zůstalas [C#msus4]ve mně,
 jak jsem si [A#dim7]přál,
 [Ami]i když [G]vzdále[C]ná jsi tu [H]dál
 {end_of_bridge}
@@ -39,12 +39,12 @@ slito[Emi]vání, přijď [Hmaj7]zítra [Emi]dřív
 {end_of_verse}
 
 {start_of_verse}
-[Emi]řekla bys [G]ať tolik nepře[Hmi]háním,
+[Emi]Řekla bys [G]ať tolik nepře[Hmi]háním,
 [D]z velkých [A]slov máš oba[C]vy
 {end_of_verse}
 
 {start_of_bridge}
-[C#dim7]a možná [C#msus4]jednou
+[C#dim7]A možná [C#msus4]jednou
 budeš si [A#dim7]přát,
 [Ami]abych [G]říkal [C]dál tisíc [H]krát
 {end_of_bridge}
@@ -58,6 +58,6 @@ jak jsem si [A#dim7]přál,
 {end_of_bridge}
 
 {start_of_variant: append_content}
-[F]slitování, [Emi]přijď [Hmaj7]zítra [Emi]dřív
+[F]Slitování, [Emi]přijď [Hmaj7]zítra [Emi]dřív
 {end_of_variant}
 {chorus}

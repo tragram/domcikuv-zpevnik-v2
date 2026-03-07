@@ -11,7 +11,7 @@
 {promptId: Knaan-Wavin_flag_gpt-4o-mini_v1}
 
 {start_of_chorus: Ooo}
-𝄆 [C]oooo,[F]ooo,[Am]ooooo[G] 𝄇
+𝄆 [C]Oooo,[F]ooo,[Am]ooooo[G] 𝄇
 {end_of_chorus}
 
 {start_of_verse}

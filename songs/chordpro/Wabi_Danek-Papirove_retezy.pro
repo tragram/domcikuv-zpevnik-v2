@@ -61,13 +61,13 @@ je jí to dávno všechno jasné,
 {end_of_verse}
 
 {start_of_verse}
-[A]nůžkama proužek po [Hmi]proužku
+[A]Nůžkama proužek po [Hmi]proužku
 odstřihuje z něj mechanicky
 [C#mi]a na řetězech jako vždycky
 [E7]přibývá kroužek ke kroužku.
 {end_of_verse}
 
 {start_of_variant: append_content}
-[Dmi]vánoční [A]noc.
+[Dmi]Vánoční [A]noc.
 {end_of_variant}
 {chorus}
