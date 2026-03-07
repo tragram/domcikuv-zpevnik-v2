@@ -50,6 +50,32 @@ interface EditorToolbarProps {
   editorSettings: EditorSettings;
 }
 
+// Helper to strip exactly the metadata directives we auto-parsed
+const stripMetadataDirectives = (content: string): string => {
+  const keysToStrip = [
+    "title",
+    "t",
+    "artist",
+    "capo",
+    "key",
+    "tempo",
+    "language",
+    "range",
+    "startmelody",
+  ];
+
+  return content
+    .split("\n")
+    .filter((line) => {
+      const match = line.match(/^\s*\{(?<key>[a-zA-Z]+):\s*(?<value>.*)\}\s*$/);
+      if (match && match.groups) {
+        return !keysToStrip.includes(match.groups.key.toLowerCase());
+      }
+      return true;
+    })
+    .join("\n");
+};
+
 const EditorToolbar: React.FC<EditorToolbarProps> = ({
   editorState,
   songData,
@@ -104,10 +130,13 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
-    // Inject the current version ID as the parentId so the DB tracks lineage
+    // 1. Strip the directives cleanly (this also strips their newlines)
+    const strippedChordpro = stripMetadataDirectives(editorState.chordpro);
+
+    // 2. Inject the cleaned string into the parsed state
     const parsedState = {
       ...editorState,
-      chordpro: normalizeWhitespace(replaceRepetitions(editorState.chordpro)),
+      chordpro: normalizeWhitespace(replaceRepetitions(strippedChordpro)),
       parentId: editorState?.parentId,
     };
 
