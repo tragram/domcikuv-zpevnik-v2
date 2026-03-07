@@ -428,3 +428,11 @@ export const createImportSong = async (
     .returning();
   return importedSong[0];
 };
+
+export const getSongVersions = async (db: AppDatabase, songId: string) => {
+  const songVersions = await db
+    .select()
+    .from(songVersion)
+    .where(eq(songVersion.id, songId));
+  return songVersions;
+};

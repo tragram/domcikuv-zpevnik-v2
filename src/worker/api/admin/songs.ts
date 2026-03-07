@@ -2,22 +2,24 @@ import { zValidator } from "@hono/zod-validator";
 import { and, desc, eq, getTableColumns, isNotNull } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import {
-  song,
-  SongDataDB,
-  songImport,
-  songVersion,
-  SongVersionDB,
-} from "../../../lib/db/schema";
-import { failJSend, songNotFoundFail, successJSend } from "../responses";
-import { buildApp } from "../utils";
-import {
   findSongWithAllData,
   getSongBase,
   getSongPopulated,
-  promoteVersionToCurrent,
+  promoteVersionToCurrent
 } from "src/worker/helpers/song-helpers";
 import z from "zod/v4";
+import {
+  illustrationPrompt,
+  song,
+  SongDataDB,
+  songIllustration,
+  songImport,
+  songVersion,
+  SongVersionDB
+} from "../../../lib/db/schema";
 import { SongDataAdminApi, SongVersionApi } from "../api-types";
+import { failJSend, songNotFoundFail, successJSend } from "../responses";
+import { buildApp } from "../utils";
 
 const songModificationSchema = createInsertSchema(song)
   .partial()
@@ -113,8 +115,20 @@ export const songRoutes = buildApp()
   })
   .delete("/:id", async (c) => {
     const songId = c.req.param("id");
-    await getSongBase(c.var.db, songId); // throws if missing
-    const deleted = await c.var.db
+    const db = c.var.db;
+    await getSongBase(db, songId); // throws if missing
+
+    // shadow delete all related illustrations & prompts
+    await db
+      .update(songIllustration)
+      .set({ deleted: true, updatedAt: new Date() })
+      .where(eq(songIllustration.songId, songId));
+    await db
+      .update(illustrationPrompt)
+      .set({ deleted: true, updatedAt: new Date() })
+      .where(eq(illustrationPrompt.songId, songId));
+
+    const deleted = await db
       .update(song)
       .set({ deleted: true, updatedAt: new Date() })
       .where(eq(song.id, songId))
