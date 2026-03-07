@@ -14,6 +14,7 @@ interface MetadataEditorProps {
   songDB: SongDB;
   defaultMetadata: EditorState;
   metadata: EditorState;
+  extractedMetadata: Partial<EditorState>; // Added extracted metadata prop
   updateMetadata: (field: keyof EditorState, value: string) => void;
   editorSettings: EditorSettings;
   onSettingsChange: (settings: EditorSettings) => void;
@@ -24,6 +25,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   songDB,
   defaultMetadata,
   metadata,
+  extractedMetadata,
   updateMetadata,
   editorSettings,
   onSettingsChange,
@@ -41,6 +43,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           modified={defaultMetadata.title !== metadata.title}
           validator={metadataValidators.title}
           required={true}
+          disabled={extractedMetadata.title !== undefined}
         />
         <MetadataField
           label="Artist"
@@ -50,6 +53,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           modified={defaultMetadata.artist !== metadata.artist}
           validator={metadataValidators.artist}
           required={true}
+          disabled={extractedMetadata.artist !== undefined}
         />
         <MetadataField
           label="Capo"
@@ -58,6 +62,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           value={metadata.capo?.toString()}
           modified={defaultMetadata.capo !== metadata.capo}
           validator={metadataValidators.capo}
+          disabled={extractedMetadata.capo !== undefined}
         />
         <MetadataField
           label="Language"
@@ -67,6 +72,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           modified={defaultMetadata.language !== metadata.language}
           description="If language not already present in some other song, flag might not be shown."
           validator={metadataValidators.language}
+          disabled={extractedMetadata.language !== undefined}
           customInput={
             <SelectOrEditList
               options={Object.keys(songDB.languages)}
@@ -93,13 +99,14 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           modified={defaultMetadata.key !== metadata.key}
           description="Use note name (with #/b into denote sharp/flat) for major key and append 'm' or 'mi' to indicate minor key."
           validator={metadataValidators.key}
+          disabled={extractedMetadata.key !== undefined}
           action={
             <Button
               type="button"
               variant="outline"
               size="sm"
+              disabled={extractedMetadata.key !== undefined}
               onClick={() => {
-                // Pass the current chordpro content from state to the guessKey function
                 const guessedKey = guessKey(metadata.chordpro);
                 if (guessedKey) {
                   updateMetadata("key", guessedKey.toString());
@@ -118,6 +125,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           modified={defaultMetadata.range !== metadata.range}
           description="Also used for vocal range. See README. ;-)"
           validator={metadataValidators.range}
+          disabled={extractedMetadata.range !== undefined}
         />
         <MetadataField
           label="Start Melody"
@@ -127,6 +135,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           modified={defaultMetadata.startMelody !== metadata.startMelody}
           description="Currently not used so not very standardized across the songs."
           validator={metadataValidators.startMelody}
+          disabled={extractedMetadata.startMelody !== undefined}
         />
         <MetadataField
           label="Tempo"
@@ -136,6 +145,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           modified={defaultMetadata.tempo !== metadata.tempo}
           description="In BPM. Currently not used and very few songs define it."
           validator={metadataValidators.tempo}
+          disabled={extractedMetadata.tempo !== undefined}
         />
         <Separator />
         {/* Editor Settings Section */}

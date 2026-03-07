@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { UserProfileData } from "src/worker/api/userProfile";
 import useLocalStorageState from "use-local-storage-state";
 import { parseChordPro } from "../../../lib/chordpro";
@@ -30,6 +30,30 @@ const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   });
 };
 
+// Helper to extract metadata directives from the ChordPro text
+const parseMetadataFromChordPro = (content: string): Partial<EditorState> => {
+  const extracted: Partial<EditorState> = {};
+  const lines = content.split("\n");
+
+  for (const line of lines) {
+    const match = line.match(/^\s*\{(?<key>[a-zA-Z]+):\s*(?<value>.*)\}\s*$/);
+    if (match && match.groups) {
+      const key = match.groups.key.toLowerCase();
+      const value = match.groups.value.trim();
+
+      if (key === "title" || key === "t") extracted.title = value;
+      else if (key === "artist") extracted.artist = value;
+      else if (key === "capo") extracted.capo = value;
+      else if (key === "key") extracted.key = value;
+      else if (key === "tempo") extracted.tempo = value;
+      else if (key === "language") extracted.language = value;
+      else if (key === "range") extracted.range = value;
+      else if (key === "startmelody") extracted.startMelody = value;
+    }
+  }
+  return extracted;
+};
+
 interface EditorProps {
   songDB: SongDB;
   songData?: SongData;
@@ -53,10 +77,6 @@ const Editor: React.FC<EditorProps> = ({
     songData ? songData : SongData.empty()
   ).toJSON() as EditorState;
 
-  // If we are editing a specific version (e.g. a pending draft or an old version),
-  // we set that as the parentId.
-  // - If it's a pending draft, the backend will update it in place.
-  // - If it's a published version, the backend will fork it.
   if (versionId) {
     defaultEditorState.parentId = versionId;
   }
@@ -66,7 +86,6 @@ const Editor: React.FC<EditorProps> = ({
     { defaultValue: () => defaultEditorState },
   );
 
-  // Editor settings stored per-user
   const [editorSettings, setEditorSettings] =
     useLocalStorageState<EditorSettings>("editor/settings", {
       defaultValue: () => DEFAULT_EDITOR_SETTINGS,
@@ -138,9 +157,17 @@ const Editor: React.FC<EditorProps> = ({
     });
   };
 
+  // Dynamically compute which metadata is currently controlled by text directives
+  const extractedMetadata = useMemo(
+    () => parseMetadataFromChordPro(editorState.chordpro),
+    [editorState.chordpro],
+  );
+
   const updateContent = (content: string) => {
+    const extracted = parseMetadataFromChordPro(content);
     setEditorState({
       ...editorState,
+      ...extracted, // Instantly sync extracted tags into state
       chordpro: content,
     });
   };
@@ -195,6 +222,7 @@ const Editor: React.FC<EditorProps> = ({
               songDB={songDB}
               defaultMetadata={defaultEditorState}
               metadata={editorState}
+              extractedMetadata={extractedMetadata}
               updateMetadata={updateMetadata}
               editorSettings={editorSettings}
               onSettingsChange={setEditorSettings}
