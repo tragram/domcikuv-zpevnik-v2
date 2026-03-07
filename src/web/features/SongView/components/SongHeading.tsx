@@ -100,7 +100,12 @@ const SongHeading: React.FC<SongHeadingProps> = ({
             isWrapped ? "w-fit mb-4" : "text-right flex-grow",
           )}
         >
-          <h2 className="text-[0.75em] text-nowrap">
+          <h2
+            className={cn(
+              "text-[0.75em] text-nowrap",
+              songData.capo === undefined ? "opacity-0" : "opacity-100",
+            )}
+          >
             Capo:{" "}
             {songData.capo !== undefined
               ? (songData.capo - transposeSteps + 12) % 12
