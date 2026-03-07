@@ -44,7 +44,7 @@ const filterCapo = (songs: SongData[], allowCapo: boolean): SongData[] => {
   if (allowCapo) {
     return songs;
   }
-  return songs.filter((song) => song.capo === 0);
+  return songs.filter((song) => song.capo === 0 || song.capo === undefined);
 };
 
 const filterVocalRange = (
