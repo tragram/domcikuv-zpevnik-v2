@@ -32,7 +32,7 @@
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-a tak si [D]zpívají, když ždímají si prádlo krajkový.
+A tak si [D]zpívají, když ždímají si prádlo krajkový.
 {end_of_variant}
 {chorus}
 
@@ -44,7 +44,7 @@ a tak si [D]zpívají, když ždímají si prádlo krajkový.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-a tak si [D]zpívají a jsou šťastný i když jsou napuchlý.
+A tak si [D]zpívají a jsou šťastný i když jsou napuchlý.
 {end_of_variant}
 {chorus}
 
@@ -56,6 +56,6 @@ a tak si [D]zpívají a jsou šťastný i když jsou napuchlý.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-a teď už [D]spinkají a jsou nahý, tak přejem hezký sny.
+A teď už [D]spinkají a jsou nahý, tak přejem hezký sny.
 {end_of_variant}
 {chorus}

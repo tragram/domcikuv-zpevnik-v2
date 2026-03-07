@@ -41,6 +41,6 @@ a [Dmi]bude jásat, [Ami]že se dožil [E]rána ve zdr[Ami]aví.
 {end_of_verse}
 
 {start_of_variant: append_content}
-ne[F]boť za boudou [C]v lese zase [G]hejkal začal [C]výt, hej!
+Ne[F]boť za boudou [C]v lese zase [G]hejkal začal [C]výt, hej!
 {end_of_variant}
 {chorus}

@@ -48,7 +48,7 @@ zakáza[G]né uvolně[D]ní.
 {bridge}
 
 {start_of_variant: replace_last_line}
-já se chci [G]vznášet nad ze[D]mí.
+Já se chci [G]vznášet nad ze[D]mí.
 {end_of_variant}
 {chorus: R1}
 

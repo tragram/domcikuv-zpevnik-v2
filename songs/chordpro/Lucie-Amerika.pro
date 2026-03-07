@@ -25,7 +25,7 @@ Do vlasů mi zabrouk[C]e, pa pa pa [G]pá
 {end_of_verse}
 
 {start_of_chorus}
-[G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
+[G]Pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
 [G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá
 {end_of_chorus}
 

@@ -37,6 +37,6 @@ už to nedo[C]honím.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-třeba [F]s vámi, milé [Emi]dámy, chcete - [C]li.
+Třeba [F]s vámi, milé [Emi]dámy, chcete - [C]li.
 {end_of_variant}
 {chorus}

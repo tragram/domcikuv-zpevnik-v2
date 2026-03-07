@@ -19,7 +19,7 @@ kus [F]něhy ti za nehty [G]slíbí a dají.
 {end_of_verse}
 
 {start_of_verse}
-víc [C]síly, se prát,
+Víc [C]síly, se prát,
 na dně víc [G]dávat než brát,
 a i [Ami]když se vleče
 a je schůdná jen v kleče
@@ -44,7 +44,7 @@ a přes [F]zkroucená záda být [G]součástí stáda,
 {end_of_verse}
 
 {start_of_verse}
-ale [C]zpívat, a hrát,
+Ale [C]zpívat, a hrát,
 kotníky líbat, [G]a stát,
 na [Ami]křídlech všech slavíků
 a vlastně už ze zvyku

@@ -55,7 +55,7 @@ a [A]ke kafi si ráno dát tři [D]cukry a hrst léků
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-tak [A]proč se mě tak blbě
+Tak [A]proč se mě tak blbě
 ale vážně hodně blbě [D]ptáš?
 {end_of_variant}
 {chorus}

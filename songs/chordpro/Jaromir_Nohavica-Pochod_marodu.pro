@@ -7,7 +7,7 @@
 {startMelody: a e e a ee}
 {createdAt: 1770654254000}
 {updatedAt: 1771715137000}
-{illustrationId: Jaromir_Nohavica-Pochod_marodu_gpt-5-mini_v2_FLUX1-dev}
+{illustrationId: Jaromir_Nohavica-Pochod_marodu_gpt-5-mini_v2_FLUX.1-dev}
 {promptId: Jaromir_Nohavica-Pochod_marodu_gpt-5-mini_v2}
 
 {start_of_verse}

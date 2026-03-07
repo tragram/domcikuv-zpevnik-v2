@@ -50,6 +50,6 @@ stále [Emi]dokážeš mě chytit lasem [C]a přitáhnout na terasu.
 {end_of_verse}
 
 {start_of_variant: append_content}
-já a [G]ty.
+Já a [G]ty.
 {end_of_variant}
 {chorus}

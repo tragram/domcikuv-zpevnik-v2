@@ -45,7 +45,7 @@ na [Hm]léto si pak uva[E]řím
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-šaty kopro[F#m]vý...
+Šaty kopro[F#m]vý...
 {end_of_variant}
 
 {chorus}
