@@ -61,6 +61,7 @@ import {
 } from "../../../services/admin-hooks";
 import { ActionButtons } from "./shared/action-buttons";
 import { TableToolbar } from "./shared/table-toolbar";
+import { formatChordpro } from "~/lib/formatChordpro";
 
 const AUTO_ILLUSTRATION_STORAGE_KEY = "admin-auto-generate-illustration";
 
@@ -794,8 +795,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
             <div className="border border-border rounded-md overflow-hidden bg-card h-full w-full">
               {diffView && (
                 <ReactDiffViewer
-                  oldValue={diffView.target.chordpro}
-                  newValue={diffView.version.chordpro}
+                  oldValue={formatChordpro(diffView.target.chordpro)}
+                  newValue={formatChordpro(diffView.version.chordpro)}
                   splitView={isSplitView} // 3. Bound this to the state
                   leftTitle={`${diffView.targetLabel} (Key: ${diffView.target.key || "N/A"})`}
                   rightTitle={`This Version (Key: ${diffView.version.key || "N/A"})`}
