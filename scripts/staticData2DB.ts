@@ -10,10 +10,13 @@ import {
   song,
   songIllustration,
   songVersion,
+  songImport,
 } from "../src/lib/db/schema/song.schema";
+import { AppDatabase } from "../src/worker/api/utils";
 import { syncSession, userFavoriteSongs } from "../src/lib/db/schema";
 import { fileURLToPath } from "url";
 import { config } from "dotenv";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 config({ path: path.resolve(__dirname, "../.dev.vars") });
 
@@ -55,8 +58,6 @@ function parseChordproFile(content: string) {
         contentStartIndex = i + 1; // Move start index past this valid metadata
       } else {
         // We found a directive, but it's a formatting directive (like {comment: ...})
-        // The old script would have swallowed this. We record it, and then STOP
-        // reading metadata so it safely becomes part of the chordpro body.
         break;
       }
     } else if (line !== "") {
@@ -107,15 +108,21 @@ async function ensureSystemUser(db: DrizzleD1Database): Promise<string> {
 async function clearTables(db: DrizzleD1Database) {
   console.log("Clearing tables...");
   await db.run(sql`PRAGMA defer_foreign_keys = OFF`);
+
   const tables = [
     songIllustration,
     illustrationPrompt,
     songVersion,
+    songImport, // Included safely
     userFavoriteSongs,
     syncSession,
     song,
   ];
-  for (const table of tables) await db.delete(table);
+
+  for (const table of tables) {
+    await db.delete(table);
+  }
+
   await db.run(sql`PRAGMA defer_foreign_keys = ON`);
 }
 
@@ -127,16 +134,26 @@ async function uploadSong(
   songId: string,
   chordproPath: string,
   systemUserId: string,
+  logger: (msg: string) => void,
 ): Promise<string> {
+  logger(`\n▶️ Starting upload for: ${songId}`);
   const { metadata, chordpro } = parseChordproFile(
     fs.readFileSync(chordproPath, "utf-8"),
   );
+
+  logger(
+    `  [DEBUG] Parsed metadata for ${songId}: ${JSON.stringify(metadata)}`,
+  );
+
   const now = new Date();
   const createdAt = metadata.createdAt
     ? new Date(parseInt(metadata.createdAt))
     : now;
 
+  logger(`  [DEBUG] Computed createdAt for ${songId}: ${createdAt}`);
+
   // 1. Create the Song Shell
+  logger(`  [DEBUG] 1. Inserting into 'song' table...`);
   await db.insert(song).values({
     id: songId,
     createdAt,
@@ -145,6 +162,9 @@ async function uploadSong(
 
   // 2. Create the Version (Status: Published)
   const versionId = `${songId}_${createdAt.getTime()}`;
+  logger(
+    `  [DEBUG] 2. Inserting into 'songVersion' table with ID: ${versionId}...`,
+  );
   await db.insert(songVersion).values({
     id: versionId,
     songId,
@@ -166,18 +186,20 @@ async function uploadSong(
   });
 
   // 3. Link Song to this Version
+  logger(`  [DEBUG] 3. Updating 'song' with currentVersionId...`);
   await db
     .update(song)
     .set({ currentVersionId: versionId })
     .where(eq(song.id, songId));
 
   // 4. add to favorites
+  logger(`  [DEBUG] 4. Inserting into 'userFavoriteSongs'...`);
   await db.insert(userFavoriteSongs).values({
     userId: systemUserId,
     songId,
   });
 
-  if (VERBOSE) console.log(`  Uploaded: ${songId}`);
+  if (VERBOSE) logger(`  Uploaded: ${songId}`);
   return metadata.illustrationId;
 }
 
@@ -189,12 +211,15 @@ async function uploadIllustrations(
   songId: string,
   illustrationsYamlPath: string,
   baseFolder: string,
+  logger: (msg: string) => void,
 ) {
+  logger(`  [DEBUG] Reading illustrations YAML for ${songId}...`);
   const data = yaml.load(
     fs.readFileSync(illustrationsYamlPath, "utf-8"),
   ) as any;
 
   for (const prompt of data.prompts) {
+    logger(`  [DEBUG] Inserting 'illustrationPrompt' ID: ${prompt.id}`);
     await db.insert(illustrationPrompt).values({
       id: prompt.id,
       songId,
@@ -208,6 +233,7 @@ async function uploadIllustrations(
       const illustrationId = `${prompt.id}_${ill.imageModel}`;
       const shortPromptId = prompt.id.replace(`${songId}_`, "");
 
+      logger(`  [DEBUG] Inserting 'songIllustration' ID: ${illustrationId}`);
       await db.insert(songIllustration).values({
         id: illustrationId,
         songId,
@@ -225,13 +251,13 @@ async function uploadIllustrations(
  * Main Migration Logic
  */
 async function processAndMigrateSongs(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songsPath: string,
   clearExisting: boolean = true,
   baseFolder: string = "/songs",
 ) {
-  const systemUserId = await ensureSystemUser(db);
-  if (clearExisting) await clearTables(db);
+  const systemUserId = await ensureSystemUser(db as any);
+  if (clearExisting) await clearTables(db as any);
 
   const chordproDir = path.join(songsPath, "chordpro");
   const illustrationsDir = path.join(songsPath, "illustrations");
@@ -241,12 +267,16 @@ async function processAndMigrateSongs(
 
   for (const filename of files) {
     const songId = path.basename(filename, ".pro");
+    const logs: string[] = [];
+    const logger = (msg: string) => logs.push(msg);
+
     try {
       const illustrationId = await uploadSong(
-        db,
+        db as any,
         songId,
         path.join(chordproDir, filename),
         systemUserId,
+        logger,
       );
 
       const yamlPath = path.join(
@@ -254,17 +284,34 @@ async function processAndMigrateSongs(
         songId,
         "illustrations.yaml",
       );
+
       if (fs.existsSync(yamlPath)) {
-        await uploadIllustrations(db, songId, yamlPath, baseFolder);
+        await uploadIllustrations(
+          db as any,
+          songId,
+          yamlPath,
+          baseFolder,
+          logger,
+        );
+
         if (illustrationId) {
-          await db
+          logger(
+            `  [DEBUG] 5. Updating 'song' with currentIllustrationId: ${illustrationId}...`,
+          );
+          await (db as any)
             .update(song)
             .set({ currentIllustrationId: illustrationId })
             .where(eq(song.id, songId));
         }
       }
+
+      if (VERBOSE) {
+        console.log(`✅ Success: ${songId}`);
+      }
     } catch (error) {
-      console.error(`❌ Failed: ${songId}`, error);
+      console.error(`\n❌ Failed: ${songId}`);
+      logs.forEach((log) => console.error(log));
+      console.error(error);
     }
   }
   console.log("✅ Migration complete!");
@@ -275,7 +322,7 @@ async function main() {
   try {
     /*** local ***/
     await D1Helper.get("DB").useLocalD1((db) =>
-      processAndMigrateSongs(db, songsPath),
+      processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
     );
     /*** remote ***/
     // await D1Helper.get("DB")
