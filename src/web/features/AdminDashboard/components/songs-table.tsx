@@ -576,10 +576,17 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                                               ).toLocaleDateString()}
                                             </span>
                                             <span className="w-1 h-1 rounded-full bg-border"></span>
-                                            <span className="bg-muted px-1.5 py-0.5 rounded">
-                                              Key: {version.key}
-                                            </span>
-                                            {version.tempo && (
+                                            {version.key && (
+                                              <span className="bg-muted px-1.5 py-0.5 rounded">
+                                                Key: {version.key}
+                                              </span>
+                                            )}
+                                            {version.capo !== null && (
+                                              <span className="bg-muted px-1.5 py-0.5 rounded">
+                                                Capo: {version.capo}
+                                              </span>
+                                            )}
+                                            {version.tempo !== null && (
                                               <span className="bg-muted px-1.5 py-0.5 rounded">
                                                 BPM: {version.tempo}
                                               </span>
@@ -795,7 +802,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                 <ReactDiffViewer
                   oldValue={formatChordpro(diffView.target.chordpro)}
                   newValue={formatChordpro(diffView.version.chordpro)}
-                  splitView={isSplitView} // 3. Bound this to the state
+                  splitView={isSplitView}
                   leftTitle={`${diffView.targetLabel} (Key: ${diffView.target.key || "N/A"})`}
                   rightTitle={`This Version (Key: ${diffView.version.key || "N/A"})`}
                   hideLineNumbers={false}
