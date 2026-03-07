@@ -6,9 +6,9 @@
 {language: czech}
 {startMelody: e d#}
 {createdAt: 1731538800000}
-{updatedAt: 1770572324000}
-{illustrationId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-4o-mini_v1_FLUX.1-dev}
-{promptId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-4o-mini_v1}
+{updatedAt: 1772711522000}
+{illustrationId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-5-mini_v3_nano-banana-2}
+{promptId: Yvonne_Prenosilova-Boty_proti_lasce_gpt-5-mini_v3}
 
 {start_of_verse}
 [E]Zas mi říkal, že má něco pro mne,

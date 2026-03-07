@@ -1,6 +1,6 @@
 songId: Wohnout-Gastrosexual
 prompts:
-  - id: Wohnout-Gastrosexual_v2_gpt-4o-mini_1770573024737
+  - id: Wohnout-Gastrosexual_v2_gpt-4o-mini
     songId: Wohnout-Gastrosexual
     summaryPromptVersion: v2
     summaryModel: gpt-4o-mini
