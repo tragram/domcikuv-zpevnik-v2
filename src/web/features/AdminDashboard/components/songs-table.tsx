@@ -99,15 +99,13 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
 
   // Theme detection for the Diff Viewer
   const { theme, systemTheme } = useTheme();
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const isDarkMode =
+  const isDark = useMemo(
+    () =>
       theme === "dark" ||
       (theme === "system" && systemTheme === "dark") ||
-      document.documentElement.classList.contains("dark");
-    setIsDark(isDarkMode);
-  }, [theme, systemTheme]);
+      document.documentElement.classList.contains("dark"),
+    [theme, systemTheme],
+  );
 
   const navigate = useNavigate({ from: "/admin" });
   const backendDropdownOptions = useIllustrationOptions();
