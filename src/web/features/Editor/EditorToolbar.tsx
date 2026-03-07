@@ -42,6 +42,7 @@ interface EditorToolbarProps {
   songData?: SongData;
   toolbarTop: boolean;
   canBeSubmitted: boolean;
+  validationErrors: string[]; // <-- Added validation errors prop
   onBackupAndInitialize: () => void;
   onLoadBackup: () => void;
   onSubmitSuccess?: () => void;
@@ -81,6 +82,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   songData,
   toolbarTop,
   canBeSubmitted,
+  validationErrors, // <-- Destructured here
   onBackupAndInitialize,
   onLoadBackup,
   onSubmitSuccess,
@@ -126,22 +128,40 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         console.error("Failed to generate illustration:", error);
       });
   };
-
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
-    // 1. Strip the directives cleanly (this also strips their newlines)
     const strippedChordpro = stripMetadataDirectives(editorState.chordpro);
 
-    // 2. Inject the cleaned string into the parsed state
+    // Cast directly to EditorState here. This reassures TypeScript that
+    // the required fields are definitively populated.
     const parsedState = {
-      ...editorState,
+      title: editorState.title,
+      artist: editorState.artist,
+      language: editorState.language,
       chordpro: normalizeWhitespace(replaceRepetitions(strippedChordpro)),
-      parentId: editorState?.parentId,
-    };
+    } as EditorState;
+
+    if (editorState.parentId) parsedState.parentId = editorState.parentId;
+
+    // Only attach optional fields if they have truthy, non-empty values
+    if (editorState.key?.trim()) parsedState.key = editorState.key;
+    if (editorState.range?.trim()) parsedState.range = editorState.range;
+    if (editorState.startMelody?.trim())
+      parsedState.startMelody = editorState.startMelody;
+    if (editorState.tempo?.toString().trim())
+      parsedState.tempo = String(editorState.tempo);
+
+    if (
+      editorState.capo !== undefined &&
+      editorState.capo !== null &&
+      String(editorState.capo).trim() !== ""
+    ) {
+      parsedState.capo = Number(editorState.capo);
+    }
 
     try {
-      // Use the new service function
+      // TypeScript is now happy because parsedState is recognized as EditorState
       const response = await submitSongVersion(
         editorApi,
         parsedState,
@@ -279,8 +299,22 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
               </span>
             </TooltipTrigger>
             <TooltipContent>
-              You can only submit a song once all the required metadata has been
-              entered.
+              {/* Dynamically display the exact validation errors */}
+              {validationErrors && validationErrors.length > 0 ? (
+                <ul className="list-disc pl-4 space-y-1">
+                  {validationErrors.map((error, index) => (
+                    <li key={index} className="text-white font-medium">
+                      {error}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>
+                  {canBeSubmitted
+                    ? "Ready to submit!"
+                    : "Make some changes before submitting."}
+                </p>
+              )}
             </TooltipContent>
           </Tooltip>
         ) : (

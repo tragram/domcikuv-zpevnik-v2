@@ -14,6 +14,7 @@ import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
 import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
 import { EditorAPI } from "src/worker/api-client";
+import { metadataValidators } from "./components/validationUtils";
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -171,6 +172,41 @@ const Editor: React.FC<EditorProps> = ({
       chordpro: content,
     });
   };
+  const validationErrors = useMemo(() => {
+    const errors: string[] = [];
+    const fieldsToValidate: (keyof EditorState)[] = [
+      "title",
+      "artist",
+      "capo",
+      "language",
+      "key",
+      "range",
+      "startMelody",
+      "tempo",
+    ];
+
+    for (const field of fieldsToValidate) {
+      const validator = metadataValidators[field];
+      if (validator) {
+        const rawValue = editorState[field];
+        // Safely extract string to prevent .trim() crashes
+        const safeStringValue =
+          rawValue !== undefined && rawValue !== null ? String(rawValue) : "";
+
+        const result = validator(safeStringValue);
+        if (!result.isValid && result.errorMessage) {
+          errors.push(result.errorMessage);
+        }
+      }
+    }
+
+    // Explicitly check Chordpro since it's not in metadataValidators
+    if (!editorState.chordpro?.trim()) {
+      errors.push("ChordPro content is required");
+    }
+
+    return errors;
+  }, [editorState]);
 
   const toolbarTop = true;
 
@@ -178,7 +214,8 @@ const Editor: React.FC<EditorProps> = ({
     !editorStatesEqual(editorState, defaultEditorState) &&
     editorState.artist &&
     editorState.title &&
-    editorState.chordpro;
+    editorState.chordpro &&
+    validationErrors.length === 0;
 
   return (
     <div className="flex flex-col relative h-fit md:h-dvh gap-4 xl:gap-8 min-w-[250px]">
@@ -189,6 +226,7 @@ const Editor: React.FC<EditorProps> = ({
           toolbarTop={toolbarTop}
           canBeSubmitted={!!canBeSubmitted}
           onBackupAndInitialize={handleBackupAndInitialize}
+          validationErrors={validationErrors}
           onLoadBackup={loadBackupState}
           onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
           user={user}
@@ -249,6 +287,7 @@ const Editor: React.FC<EditorProps> = ({
           songData={songData}
           toolbarTop={toolbarTop}
           canBeSubmitted={!!canBeSubmitted}
+          validationErrors={validationErrors}
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
           onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
