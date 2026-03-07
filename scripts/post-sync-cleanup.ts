@@ -2,6 +2,8 @@ import {
   S3Client,
   CopyObjectCommand,
   DeleteObjectCommand,
+  ListObjectsV2Command,
+  DeleteObjectsCommand,
 } from "@aws-sdk/client-s3";
 import { drizzle } from "drizzle-orm/sqlite-proxy";
 import { eq } from "drizzle-orm";
@@ -45,13 +47,14 @@ async function main() {
   // 1. Find all illustrations that are absolute URLs AND actually belong to our illustrations folder
   const illustrations = await db.select().from(schema.songIllustration);
   const pendingCleanup = illustrations.filter(
-    (ill: any) =>
+    (ill) =>
       ill.imageURL.startsWith("http") &&
       ill.imageURL.includes("/songs/illustrations/"),
   );
 
   console.log(
     `Found ${pendingCleanup.length} synced images pending cleanup in the database.`,
+    pendingCleanup.map((pc) => pc.imageURL + "\n"),
   );
 
   for (const ill of pendingCleanup) {
@@ -108,9 +111,64 @@ async function main() {
         .where(eq(schema.songIllustration.id, ill.id));
 
       console.log(`  ✓ Cleaned up! Moved to trash in R2 and updated D1 paths.`);
-    } catch (error: any) {
+    } catch (error) {
       console.error(`  ✗ Failed to process ${ill.id}:`, error.message);
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // TASK: Cleanup Old R2 Backups (Keep 30 days daily, 1 per month after)
+  // ---------------------------------------------------------------------------
+  console.log("\nStarting old R2 backup cleanup...");
+
+  try {
+    const listResult = await s3.send(
+      new ListObjectsV2Command({
+        Bucket: process.env.R2_BUCKET_NAME,
+        Prefix: "backups/db-backup-",
+      }),
+    );
+
+    const files = listResult.Contents || [];
+
+    // Calculate the cutoff date (30 days ago)
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const toDelete: { Key: string }[] = [];
+    const retainedMonths = new Set<string>();
+
+    for (const file of files) {
+      if (!file.Key || !file.LastModified) continue;
+
+      // If the file is older than 30 days, apply the monthly retention logic
+      if (file.LastModified < thirtyDaysAgo) {
+        // Format as YYYY-MM
+        const yearMonth = file.LastModified.toISOString().slice(0, 7);
+
+        if (!retainedMonths.has(yearMonth)) {
+          // Keep the first one we encounter for this month
+          retainedMonths.add(yearMonth);
+        } else {
+          // We already have a backup for this month, mark this one for deletion
+          toDelete.push({ Key: file.Key });
+        }
+      }
+    }
+
+    if (toDelete.length > 0) {
+      await s3.send(
+        new DeleteObjectsCommand({
+          Bucket: process.env.R2_BUCKET_NAME,
+          Delete: { Objects: toDelete },
+        }),
+      );
+      console.log(`✓ Deleted ${toDelete.length} old backup(s).`);
+    } else {
+      console.log("✓ No old backups needed cleanup.");
+    }
+  } catch (error) {
+    console.error("✗ Failed to cleanup old backups:", error.message);
   }
 
   console.log("\nCleanup complete!");
