@@ -1,4 +1,3 @@
-
 import { ChordProParser } from "chordproject-parser";
 import { convertToChordPro } from "~/lib/chords2chordpro";
 import { guessLanguage } from "~/lib/utils";
@@ -160,11 +159,6 @@ export const externalRoutes = buildApp()
       }
 
       if (!existingSong) throw Error("Failed to create song!");
-
-      await db
-        .update(song)
-        .set({ deleted: true })
-        .where(eq(song.id, newSongId));
 
       if (thumbnailURL) {
         try {
