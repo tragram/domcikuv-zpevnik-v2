@@ -17,7 +17,6 @@ import {
   SUMMARY_PROMPT_VERSIONS,
   SUMMARY_MODELS_API,
 } from "src/worker/helpers/image-generator";
-import { useRouterState } from "@tanstack/react-router";
 
 export interface EditorSettings {
   autoGenerateIllustration: boolean;
@@ -30,20 +29,22 @@ export interface EditorSettings {
 export const DEFAULT_EDITOR_SETTINGS: EditorSettings = {
   autoGenerateIllustration: false,
   defaultImageModel: IMAGE_MODELS_API[0], // "FLUX.1-dev"
-  defaultPromptVersion: SUMMARY_PROMPT_VERSIONS[0], // "v2"
-  defaultSummaryModel: SUMMARY_MODELS_API[0], // "gpt-4o-mini"
+  defaultPromptVersion: SUMMARY_PROMPT_VERSIONS[0], // "v3"
+  defaultSummaryModel: SUMMARY_MODELS_API[0], // "gpt-5o-mini"
 };
 
 interface EditorSettingsProps {
   settings: EditorSettings;
   onSettingsChange: (settings: EditorSettings) => void;
   user: UserProfileData;
+  hasIllustration?: boolean;
 }
 
 const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
   settings,
   onSettingsChange,
   user,
+  hasIllustration = false,
 }) => {
   const handleToggle = (key: keyof EditorSettings) => {
     onSettingsChange({
@@ -51,7 +52,7 @@ const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
       [key]: !settings[key],
     });
   };
-  const location = useRouterState({ select: (s) => s.location });
+
   // since there's only one setting, hide the whole component if not trusted (to be changed later on)
   return user.loggedIn && user.profile.isTrusted ? (
     <div className="space-y-2">
@@ -80,7 +81,7 @@ const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
           </div>
           <Switch
             id="auto-illustration"
-            disabled={location.pathname !== "/edit"}
+            disabled={hasIllustration}
             checked={settings.autoGenerateIllustration}
             onCheckedChange={() => handleToggle("autoGenerateIllustration")}
           />

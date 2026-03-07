@@ -176,6 +176,8 @@ const Editor: React.FC<EditorProps> = ({
   const { isValid, validationErrors, fieldErrors } =
     useEditorValidation(editorState);
 
+  const hasIllustration = !!songData?.currentIllustration;
+
   const toolbarTop = true;
 
   const canBeSubmitted =
@@ -230,6 +232,7 @@ const Editor: React.FC<EditorProps> = ({
               onSettingsChange={setEditorSettings}
               user={user}
               fieldErrors={fieldErrors}
+              hasIllustration={hasIllustration}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Editor"} className={"basis-[40%] "}>

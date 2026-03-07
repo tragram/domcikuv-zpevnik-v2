@@ -19,6 +19,7 @@ interface MetadataEditorProps {
   editorSettings: EditorSettings;
   onSettingsChange: (settings: EditorSettings) => void;
   user: UserProfileData;
+  hasIllustration?: boolean;
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({
@@ -31,6 +32,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   editorSettings,
   onSettingsChange,
   user,
+  hasIllustration = false,
 }) => {
   return (
     <div className="main-container space-y-4">
@@ -155,6 +157,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
             settings={editorSettings}
             onSettingsChange={onSettingsChange}
             user={user}
+            hasIllustration={hasIllustration}
           />
         </div>
       </div>
