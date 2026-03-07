@@ -33,9 +33,9 @@ prompts:
     updatedAt: 2026-02-26T20:03:00.000Z
     deleted: false
     illustrations:
-      - createdAt: 1772136183000
-        imageModel: FLUX.1-dev
-        filename: FLUX.1-dev.webp
       - createdAt: 1772228485000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+      - createdAt: 1772136183000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

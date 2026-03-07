@@ -19,7 +19,7 @@ When I [C]find myself in [G]times of trouble
 {end_of_verse}
 
 {start_of_verse}
-and [C]in my hour of [G]darkness
+And [C]in my hour of [G]darkness
 she is [Am]standing right in [F]front of me
 [C]speaking words of [G]wisdom let it [F]be. [C]
 {end_of_verse}
@@ -42,7 +42,7 @@ there is [Ami]still a chance that [F]they will see
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-there will be an [G]answer let it [F]be. [C]
+There will be an [G]answer let it [F]be. [C]
 {end_of_variant}
 {chorus}
 

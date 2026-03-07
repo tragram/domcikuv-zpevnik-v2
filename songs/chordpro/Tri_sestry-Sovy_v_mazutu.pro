@@ -41,6 +41,6 @@ jestli jsou to zmije nebo schizofrénie.
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-hů a hů a hů, úplně blbě čuměj!
+Hů a hů a hů, úplně blbě čuměj!
 {end_of_variant}
 {chorus}

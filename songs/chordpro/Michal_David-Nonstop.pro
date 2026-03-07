@@ -18,7 +18,7 @@ pro mámu pořád jen dítě [D]jsem.
 
 
 {start_of_verse}
-[D]brácha ten, hlídá jen svůj job,
+[D]Brácha ten, hlídá jen svůj job,
 stal se z něj velkej pán a [A]snob,
 kdo jsem já, to nemaj poně[D]tí.
 {end_of_verse}
@@ -44,7 +44,7 @@ vymyslet, jak by se zmáknout [D]dal,
 {end_of_verse}
 
 {start_of_verse}
-[D]nejsem už dítě mejdanů,
+[D]Nejsem už dítě mejdanů,
 teď jsem svůj, tím už zůstan[A]u,
 jenomže, to právě jen ty [D]víš.
 {end_of_verse}

@@ -26,7 +26,7 @@
 {end_of_chorus}
 
 {start_of_bridge}
-𝄆 [Emi]a me tu ha nadži vava
+𝄆 [Emi]A me tu ha nadži vava
 [Ami7]jaj dari [Gdim]dari [H7]daj. 𝄇
 {end_of_bridge}
 

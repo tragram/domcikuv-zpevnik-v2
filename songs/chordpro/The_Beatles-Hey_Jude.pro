@@ -66,7 +66,7 @@ then you'll be[G7]gin to make it [C]better
 {end_of_verse}
 
 {start_of_bridge}
-[C]better better better better better oh.
+[C]Better better better better better oh.
 [C]Na na na [B]na na na na
 [F]na na na na hey [C]Jude ...
 {end_of_bridge}

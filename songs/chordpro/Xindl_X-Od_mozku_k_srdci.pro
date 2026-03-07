@@ -74,7 +74,7 @@ na poplach [Em]metrů [Am]
 {chorus: R2}
 
 {start_of_verse: Outro}
-[F]pá pá [G]p pa pá pá[Em]pa pá p[Am]á
+[F]Pá pá [G]p pa pá pá[Em]pa pá p[Am]á
 [F]vpřed do dalších es[Gsus4]kapád [G]
 [F]pá pá [G]pá pa pá pá[Em]pa pá p[Am]á
 [F]s předsevzetím [G]nezkapat

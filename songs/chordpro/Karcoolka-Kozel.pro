@@ -18,7 +18,7 @@ tak [E]zpívám z plných [A]plic,
 {end_of_verse}
 
 {start_of_verse: V2}
-[G]a když pořád [D]zpíváš,
+[G]A když pořád [D]zpíváš,
 tak [G]to mu[A]síš žít [Hmi]sám,
 [Hmi]na samotě [D]v horách žiju,
 [A]co s tím nadělám?
@@ -80,7 +80,7 @@ já [G]slyším její [D]řev,
 {end_of_verse}
 
 {start_of_verse: V2}
-[G]já jsem kozel [D]prokletej,
+[G]Já jsem kozel [D]prokletej,
 ne[G]můžu [A]strachy [Hmi]řvát,
 [Hmi]proto místo [D]toho musím [A]jódlovat…
 {end_of_verse}

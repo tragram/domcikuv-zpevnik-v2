@@ -18,7 +18,7 @@ už [D]slyším lidi na půlnoční zpívat v kostele, [A]
 {end_of_verse}
 
 {start_of_bridge}
-ale[D]luja, ale[Hmi]lu - [G]ja. [A]
+Ale[D]luja, ale[Hmi]lu - [G]ja. [A]
 {end_of_bridge}
 
 {start_of_verse}

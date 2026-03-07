@@ -17,7 +17,7 @@ Kdy[D]ž jsem byl malý, říkali mi naši:
 {end_of_verse}
 
 {start_of_verse}
-takový doktor sedí pěkně v suchu,
+Takový doktor sedí pěkně v suchu,
 bere velký peníze a škrábe se v uchu,"
 [G]já jim ale na to řek':"Chc[A]i být hlídačem [D]krav."
 {end_of_verse}

@@ -5,7 +5,7 @@
 {language: czech}
 {createdAt: 1770930524000}
 {updatedAt: 1771715148000}
-{illustrationId: filmove_melodie-Hajny_je_lesa_pan_gpt-5-mini_v2_gpt-image-15}
+{illustrationId: filmove_melodie-Hajny_je_lesa_pan_gpt-5-mini_v2_gpt-image-1.5}
 {promptId: filmove_melodie-Hajny_je_lesa_pan_gpt-5-mini_v2}
 
 {start_of_verse}

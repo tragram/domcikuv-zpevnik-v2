@@ -39,6 +39,6 @@ mi [Ami]dokonale zvednul nála[G]du, [E7]aů,
 {end_of_verse}
 
 {start_of_variant: append_content}
-[G7]aůůůůůůů, aůůůůůůů, aůůůůůůů, [A]aůůůůůůů
+[G7]Aůůůůůůů, aůůůůůůů, aůůůůůůů, [A]aůůůůůůů
 {end_of_variant}
 {chorus}

@@ -7,7 +7,7 @@
 {startMelody: c#}
 {createdAt: 1762970315000}
 {updatedAt: 1772145765000}
-{illustrationId: Greenhorns-To_tenkrat_v_ctyricatom_patom_gpt-5-mini_v3_gpt-image-15}
+{illustrationId: Greenhorns-To_tenkrat_v_ctyricatom_patom_gpt-5-mini_v3_gpt-image-1.5}
 {promptId: Greenhorns-To_tenkrat_v_ctyricatom_patom_gpt-5-mini_v3}
 
 {start_of_verse}

@@ -78,6 +78,6 @@ najmout [Ami]dá, [G]jo-[G#]ho-[Ami]ho.
 {end_of_verse}
 
 {start_of_variant: append_content}
-[G]jo[G#]ho[A]ho.
+[G]Jo[G#]ho[A]ho.
 {end_of_variant}
 {chorus}
