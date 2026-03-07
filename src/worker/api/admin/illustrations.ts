@@ -1,6 +1,5 @@
-import { zValidator } from "@hono/zod-validator";
 import { and, eq } from "drizzle-orm";
-import z from "zod/v4";
+import z from "zod";
 import { defaultIllustrationId, defaultPromptId } from "~/types/songData";
 import {
   illustrationPrompt,
@@ -31,6 +30,7 @@ import {
   itemNotFoundFail,
   songNotFoundFail,
   successJSend,
+  zValidatorJSend,
 } from "../responses";
 import { buildApp } from "../utils";
 import {
@@ -173,98 +173,102 @@ export const illustrationRoutes = buildApp()
       (await c.var.db.select().from(songIllustration)) as SongIllustrationDB[],
     ),
   )
-  .post("/create", zValidator("form", illustrationCreateSchema), async (c) => {
-    const validatedData = c.req.valid("form");
-    const imageFile = validatedData.imageFile as File | null;
-    const db = c.var.db;
+  .post(
+    "/create",
+    zValidatorJSend("form", illustrationCreateSchema),
+    async (c) => {
+      const validatedData = c.req.valid("form");
+      const imageFile = validatedData.imageFile as File | null;
+      const db = c.var.db;
 
-    let illustrationSong: PopulatedSongDB;
-    try {
-      illustrationSong = await getSongPopulated(db, validatedData.songId);
-    } catch {
-      return failJSend(c, "Referenced song not found", 400, "SONG_NOT_FOUND");
-    }
+      let illustrationSong: PopulatedSongDB;
+      try {
+        illustrationSong = await getSongPopulated(db, validatedData.songId);
+      } catch {
+        return failJSend(c, "Referenced song not found", 400, "SONG_NOT_FOUND");
+      }
 
-    let prompt;
-    if (validatedData.promptId) {
-      prompt = await db
-        .select()
-        .from(illustrationPrompt)
-        .where(eq(illustrationPrompt.id, validatedData.promptId))
-        .get();
-      if (!prompt) return failJSend(c, "Prompt not found", 400);
-    } else if (validatedData.promptText) {
-      const summaryModel = "manual";
-      const summaryPromptVersion = "manual";
-      const newId = defaultPromptId(
-        validatedData.songId,
-        summaryModel,
-        summaryPromptVersion,
+      let prompt;
+      if (validatedData.promptId) {
+        prompt = await db
+          .select()
+          .from(illustrationPrompt)
+          .where(eq(illustrationPrompt.id, validatedData.promptId))
+          .get();
+        if (!prompt) return failJSend(c, "Prompt not found", 400);
+      } else if (validatedData.promptText) {
+        const summaryModel = "manual";
+        const summaryPromptVersion = "manual";
+        const newId = defaultPromptId(
+          validatedData.songId,
+          summaryModel,
+          summaryPromptVersion,
+        );
+        const res = await db
+          .insert(illustrationPrompt)
+          .values({
+            id: newId,
+            songId: validatedData.songId,
+            summaryModel,
+            summaryPromptVersion,
+            text: validatedData.promptText,
+          })
+          .returning();
+        prompt = res[0];
+      } else {
+        prompt = await createManualPrompt(db, validatedData.songId);
+      }
+
+      if (
+        await sameParametersExist(
+          db,
+          validatedData.songId,
+          prompt.id,
+          validatedData.imageModel,
+        )
+      ) {
+        return failJSend(c, "Illustration exists", 400);
+      }
+
+      const { imageURL, thumbnailURL } = await processAndUploadImages(
+        imageFile,
+        illustrationSong.id,
+        prompt.id,
+        validatedData.imageModel,
+        c.env,
       );
-      const res = await db
-        .insert(illustrationPrompt)
+      if (!imageURL || !thumbnailURL) return failJSend(c, "Missing image", 400);
+
+      const newId = defaultIllustrationId(prompt.id, validatedData.imageModel);
+      const newIllustration = await db
+        .insert(songIllustration)
         .values({
           id: newId,
           songId: validatedData.songId,
-          summaryModel,
-          summaryPromptVersion,
-          text: validatedData.promptText,
+          imageModel: validatedData.imageModel,
+          imageURL,
+          thumbnailURL,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          deleted: false,
+          promptId: prompt.id,
         })
         .returning();
-      prompt = res[0];
-    } else {
-      prompt = await createManualPrompt(db, validatedData.songId);
-    }
 
-    if (
-      await sameParametersExist(
-        db,
-        validatedData.songId,
-        prompt.id,
-        validatedData.imageModel,
-      )
-    ) {
-      return failJSend(c, "Illustration exists", 400);
-    }
-
-    const { imageURL, thumbnailURL } = await processAndUploadImages(
-      imageFile,
-      illustrationSong.id,
-      prompt.id,
-      validatedData.imageModel,
-      c.env,
-    );
-    if (!imageURL || !thumbnailURL) return failJSend(c, "Missing image", 400);
-
-    const newId = defaultIllustrationId(prompt.id, validatedData.imageModel);
-    const newIllustration = await db
-      .insert(songIllustration)
-      .values({
-        id: newId,
-        songId: validatedData.songId,
-        imageModel: validatedData.imageModel,
-        imageURL,
-        thumbnailURL,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        deleted: false,
-        promptId: prompt.id,
-      })
-      .returning();
-
-    if (validatedData.setAsActive)
-      await setCurrentIllustration(db, validatedData.songId, newId);
-    return successJSend(
-      c,
-      {
-        song: illustrationSong,
-        illustration: newIllustration[0],
-        prompt,
-      } as AdminIllustrationResponse,
-      201,
-    );
-  })
-  .put("/:id", zValidator("form", illustrationModifySchema), async (c) => {
+      if (validatedData.setAsActive)
+        await setCurrentIllustration(db, validatedData.songId, newId);
+      return successJSend(
+        c,
+        {
+          song: illustrationSong,
+          illustration: newIllustration[0],
+          prompt,
+        } as AdminIllustrationResponse,
+        201,
+      );
+    },
+  )
+  .put("/:id", zValidatorJSend("form", illustrationModifySchema), async (c) => {
     const illustrationId = c.req.param("id");
     const db = c.var.db;
     const parsedData = c.req.valid("form");
@@ -326,7 +330,7 @@ export const illustrationRoutes = buildApp()
   })
   .post(
     "/generate",
-    zValidator("json", illustrationGenerateSchema),
+    zValidatorJSend("json", illustrationGenerateSchema),
     generateIllustrationHandler,
   )
   .delete("/:id", async (c) => {
@@ -384,6 +388,6 @@ export const illustrationRoutes = buildApp()
 // this function is available for trusted users too --> used in different endpoint than the one for admins
 export const trustedGenerateRoute = buildApp().post(
   "/generate",
-  zValidator("json", illustrationGenerateSchema),
+  zValidatorJSend("json", illustrationGenerateSchema),
   generateIllustrationHandler,
 );

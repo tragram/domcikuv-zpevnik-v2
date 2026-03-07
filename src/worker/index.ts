@@ -46,9 +46,9 @@ app.onError((err, c) => {
 export const route = app
   .basePath("/api")
   .use(async (c, next) => {
-    // 2. Global DB Initialization and Injection
+    // Global DB Initialization and Injection
     const db = drizzle(c.env.DB, { schema });
-    c.set("db", db); // Make 'db' available to all downstream routes via c.get("db")
+    c.set("db", db);
 
     const authInstance = auth(c.env, db);
     const session = await authInstance.api.getSession(c.req.raw);
@@ -57,13 +57,13 @@ export const route = app
       c.set("SESSION", session.session);
       c.set("USER", session.user);
 
-      // 3. Optimization: Fire and forget the login update
-      // This prevents the DB write from blocking the response back to the client
+      // Fire and forget the login update
       c.executionCtx.waitUntil(
         db
           .update(user)
           .set({ lastLogin: new Date() })
-          .where(eq(user.id, session.user.id)),
+          .where(eq(user.id, session.user.id))
+          .execute(),
       );
     }
     return next();

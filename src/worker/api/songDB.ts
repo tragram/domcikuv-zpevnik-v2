@@ -1,4 +1,3 @@
-import { zValidator } from "@hono/zod-validator";
 import { eq, not } from "drizzle-orm";
 import { illustrationPrompt, songIllustration } from "src/lib/db/schema";
 import { z } from "zod";
@@ -7,14 +6,14 @@ import {
   retrieveSingleSong,
   retrieveSongs,
 } from "../helpers/song-helpers";
-import { failJSend, successJSend } from "./responses";
+import { failJSend, successJSend, zValidatorJSend } from "./responses";
 import { buildApp } from "./utils";
 import { externalRoutes } from "./external";
 import { IllustrationPromptApi, SongDataApi } from "./api-types";
 
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
-  lastUpdateAt: z.string().transform((str) => new Date(str)),
+  lastUpdateAt: z.coerce.date(),
 });
 
 export type SongDBResponseData = {
@@ -50,7 +49,6 @@ export const songDBRoutes = buildApp()
   .get("/", async (c) => {
     const songs = await retrieveSongs(c.var.db);
     const songDBVersion = (await c.env.KV.get("songDB-version")) ?? "v0";
-
     return successJSend(c, {
       songs,
       songDBVersion,
@@ -60,7 +58,7 @@ export const songDBRoutes = buildApp()
   })
   .get(
     "/incremental",
-    zValidator("query", incrementalUpdateSchema),
+    zValidatorJSend("query", incrementalUpdateSchema),
     async (c) => {
       const { lastUpdateAt, songDBVersion } = c.req.valid("query");
       const currentDBVersion = (await c.env.KV.get("songDB-version")) ?? "0";

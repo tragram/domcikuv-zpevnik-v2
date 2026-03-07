@@ -137,7 +137,6 @@ export async function retrieveSongs(
       }),
     },
   });
-
   return songsRaw.map((s) => transformSongToApi(s, userId, updatedSince));
 }
 

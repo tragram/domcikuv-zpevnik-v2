@@ -1,4 +1,4 @@
-import { zValidator } from "@hono/zod-validator";
+
 import { z } from "zod";
 import { buildApp } from "./utils";
 import {
@@ -6,7 +6,7 @@ import {
   addFavorite,
   removeFavorite,
 } from "../helpers/favorite-helpers";
-import { errorJSend, notLoggedInFail, successJSend } from "./responses";
+import { errorJSend, notLoggedInFail, successJSend, zValidatorJSend } from "./responses";
 
 const SongSchema = z.object({
   songId: z.string(),
@@ -20,7 +20,7 @@ const favoritesApp = buildApp()
     const songIds = await getFavorites(c.var.db, userData.id);
     return successJSend(c, songIds);
   })
-  .post("/", zValidator("json", SongSchema), async (c) => {
+  .post("/", zValidatorJSend("json", SongSchema), async (c) => {
     const userData = c.var.USER;
     if (!userData) return notLoggedInFail(c);
 
@@ -40,7 +40,7 @@ const favoritesApp = buildApp()
       throw error; // Let the global handler deal with 500s
     }
   })
-  .delete("/", zValidator("json", SongSchema), async (c) => {
+  .delete("/", zValidatorJSend("json", SongSchema), async (c) => {
     const userData = c.var.USER;
     if (!userData) return notLoggedInFail(c);
 

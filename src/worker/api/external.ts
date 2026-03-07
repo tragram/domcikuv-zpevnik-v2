@@ -1,4 +1,4 @@
-import { zValidator } from "@hono/zod-validator";
+
 import { ChordProParser } from "chordproject-parser";
 import { convertToChordPro } from "~/lib/chords2chordpro";
 import { guessLanguage } from "~/lib/utils";
@@ -15,7 +15,12 @@ import {
   retrieveSingleSong,
 } from "../helpers/song-helpers";
 import { EditorSubmitSchema } from "./editor";
-import { errorJSend, failJSend, successJSend } from "./responses";
+import {
+  errorJSend,
+  failJSend,
+  successJSend,
+  zValidatorJSend,
+} from "./responses";
 import { buildApp } from "./utils";
 import { SongDataApi } from "./api-types";
 import {
@@ -39,7 +44,7 @@ export const externalRoutes = buildApp()
   })
   .post(
     "/import",
-    zValidator("json", externalSearchResultSchema),
+    zValidatorJSend("json", externalSearchResultSchema),
     async (c) => {
       const { title, artist, url, sourceId, thumbnailURL } =
         c.req.valid("json");

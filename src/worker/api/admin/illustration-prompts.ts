@@ -1,4 +1,3 @@
-import { zValidator } from "@hono/zod-validator";
 import { eq } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { generateAndSavePrompt } from "src/worker/helpers/illustration-helpers";
@@ -8,7 +7,6 @@ import {
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "src/worker/helpers/image-generator";
-import z from "zod/v4";
 import { defaultPromptId } from "~/types/songData";
 import {
   illustrationPrompt,
@@ -21,6 +19,7 @@ import {
   itemNotFoundFail,
   songNotFoundFail,
   successJSend,
+  zValidatorJSend,
 } from "../responses";
 import { buildApp } from "../utils";
 import {
@@ -28,6 +27,7 @@ import {
   getSongPopulated,
   PopulatedSongDB,
 } from "src/worker/helpers/song-helpers";
+import z from "zod";
 
 const illustrationPromptCreateSchema = createInsertSchema(
   illustrationPrompt,
@@ -52,7 +52,7 @@ export const illustrationPromptRoutes = buildApp()
         .from(illustrationPrompt)) as IllustrationPromptDB[],
     );
   })
-  .put("/:id", zValidator("json", promptModifySchema), async (c) => {
+  .put("/:id", zValidatorJSend("json", promptModifySchema), async (c) => {
     const promptId = c.req.param("id");
     const updateData = c.req.valid("json");
     const db = c.var.db;
@@ -75,7 +75,7 @@ export const illustrationPromptRoutes = buildApp()
   })
   .post(
     "/create",
-    zValidator("json", illustrationPromptCreateSchema),
+    zValidatorJSend("json", illustrationPromptCreateSchema),
     async (c) => {
       const promptData = c.req.valid("json");
       const db = c.var.db;
@@ -107,52 +107,57 @@ export const illustrationPromptRoutes = buildApp()
       return successJSend(c, newPrompt[0] as IllustrationPromptDB, 201);
     },
   )
-  .post("/generate", zValidator("json", promptGenerateSchema), async (c) => {
-    const { songId, summaryModel, summaryPromptVersion } = c.req.valid("json");
-    const db = c.var.db;
+  .post(
+    "/generate",
+    zValidatorJSend("json", promptGenerateSchema),
+    async (c) => {
+      const { songId, summaryModel, summaryPromptVersion } =
+        c.req.valid("json");
+      const db = c.var.db;
 
-    let song: PopulatedSongDB;
-    try {
-      song = await getSongPopulated(db, songId);
-    } catch {
-      return songNotFoundFail(c);
-    }
+      let song: PopulatedSongDB;
+      try {
+        song = await getSongPopulated(db, songId);
+      } catch {
+        return songNotFoundFail(c);
+      }
 
-    // Check if prompt already exists to prevent duplicate generation costs
-    const expectedId = defaultPromptId(
-      songId,
-      summaryModel,
-      summaryPromptVersion,
-    );
-    const existingPrompt = await db
-      .select()
-      .from(illustrationPrompt)
-      .where(eq(illustrationPrompt.id, expectedId))
-      .get();
+      // Check if prompt already exists to prevent duplicate generation costs
+      const expectedId = defaultPromptId(
+        songId,
+        summaryModel,
+        summaryPromptVersion,
+      );
+      const existingPrompt = await db
+        .select()
+        .from(illustrationPrompt)
+        .where(eq(illustrationPrompt.id, expectedId))
+        .get();
 
-    if (existingPrompt) return errorJSend(c, "Prompt already exists", 409);
-    if (!c.env.OPENAI_API_KEY)
-      return errorJSend(c, "Missing API key!", 500, "MISSING_API_KEYS");
+      if (existingPrompt) return errorJSend(c, "Prompt already exists", 409);
+      if (!c.env.OPENAI_API_KEY)
+        return errorJSend(c, "Missing API key!", 500, "MISSING_API_KEYS");
 
-    const generationConfig: GenerationConfig = {
-      promptVersion: summaryPromptVersion,
-      summaryModel,
-      imageModel: "gpt-image-1", // Dummy value, we are only generating text here
-      openaiApiKey: c.env.OPENAI_API_KEY,
-      openaiOrgId: c.env.OPENAI_ORGANIZATION_ID,
-      openaiProjectId: c.env.OPENAI_PROJECT_ID,
-    };
+      const generationConfig: GenerationConfig = {
+        promptVersion: summaryPromptVersion,
+        summaryModel,
+        imageModel: "gpt-image-1", // Dummy value, we are only generating text here
+        openaiApiKey: c.env.OPENAI_API_KEY,
+        openaiOrgId: c.env.OPENAI_ORGANIZATION_ID,
+        openaiProjectId: c.env.OPENAI_PROJECT_ID,
+      };
 
-    const newPrompt = await generateAndSavePrompt(
-      db,
-      songId,
-      summaryPromptVersion,
-      summaryModel,
-      new ImageGenerator(generationConfig),
-      song,
-    );
-    return successJSend(c, newPrompt as IllustrationPromptDB, 201);
-  })
+      const newPrompt = await generateAndSavePrompt(
+        db,
+        songId,
+        summaryPromptVersion,
+        summaryModel,
+        new ImageGenerator(generationConfig),
+        song,
+      );
+      return successJSend(c, newPrompt as IllustrationPromptDB, 201);
+    },
+  )
   .delete("/:id", async (c) => {
     const promptId = c.req.param("id");
     const db = c.var.db;

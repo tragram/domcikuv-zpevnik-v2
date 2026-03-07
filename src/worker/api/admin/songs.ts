@@ -1,13 +1,12 @@
-import { zValidator } from "@hono/zod-validator";
 import { and, desc, eq, getTableColumns, isNotNull } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import {
   findSongWithAllData,
   getSongBase,
   getSongPopulated,
-  promoteVersionToCurrent
+  promoteVersionToCurrent,
 } from "src/worker/helpers/song-helpers";
-import z from "zod/v4";
+import z from "zod";
 import {
   illustrationPrompt,
   song,
@@ -15,10 +14,15 @@ import {
   songIllustration,
   songImport,
   songVersion,
-  SongVersionDB
+  SongVersionDB,
 } from "../../../lib/db/schema";
 import { SongDataAdminApi, SongVersionApi } from "../api-types";
-import { failJSend, songNotFoundFail, successJSend } from "../responses";
+import {
+  failJSend,
+  songNotFoundFail,
+  successJSend,
+  zValidatorJSend,
+} from "../responses";
 import { buildApp } from "../utils";
 
 const songModificationSchema = createInsertSchema(song)
@@ -104,15 +108,19 @@ export const songRoutes = buildApp()
       return songNotFoundFail(c);
     }
   })
-  .patch("/:songId", zValidator("json", songModificationSchema), async (c) => {
-    const updated = await c.var.db
-      .update(song)
-      .set({ ...c.req.valid("json"), updatedAt: new Date() })
-      .where(eq(song.id, c.req.param("songId")))
-      .returning();
-    if (!updated.length) return songNotFoundFail(c);
-    return successJSend(c, updated[0] as SongDataDB);
-  })
+  .patch(
+    "/:songId",
+    zValidatorJSend("json", songModificationSchema),
+    async (c) => {
+      const updated = await c.var.db
+        .update(song)
+        .set({ ...c.req.valid("json"), updatedAt: new Date() })
+        .where(eq(song.id, c.req.param("songId")))
+        .returning();
+      if (!updated.length) return songNotFoundFail(c);
+      return successJSend(c, updated[0] as SongDataDB);
+    },
+  )
   .delete("/:id", async (c) => {
     const songId = c.req.param("id");
     const db = c.var.db;
@@ -193,7 +201,7 @@ export const songRoutes = buildApp()
   })
   .patch(
     "/:songId/versions/:versionId",
-    zValidator("json", modifySongVersionSchema),
+    zValidatorJSend("json", modifySongVersionSchema),
     async (c) => {
       const { songId, versionId } = c.req.param();
       const updated = await c.var.db

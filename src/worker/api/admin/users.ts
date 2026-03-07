@@ -1,5 +1,5 @@
 import { buildApp } from "../utils";
-import { zValidator } from "@hono/zod-validator";
+
 import {
   getUsers,
   getUser,
@@ -10,14 +10,19 @@ import {
   createUser,
   createUserSchema,
 } from "../../helpers/user-helpers";
-import { failJSend, itemNotFoundFail, successJSend } from "../responses";
+import {
+  failJSend,
+  itemNotFoundFail,
+  successJSend,
+  zValidatorJSend,
+} from "../responses";
 
 export const userRoutes = buildApp()
-  .get("/", zValidator("query", userSearchSchema), async (c) => {
+  .get("/", zValidatorJSend("query", userSearchSchema), async (c) => {
     const { search, limit, offset } = c.req.valid("query");
     return successJSend(c, await getUsers(c.var.db, search, limit, offset));
   })
-  .post("/", zValidator("json", createUserSchema), async (c) => {
+  .post("/", zValidatorJSend("json", createUserSchema), async (c) => {
     const userData = c.req.valid("json");
     const newUser = await createUser(c.var.db, userData);
     return successJSend(c, newUser, 201);
@@ -27,7 +32,7 @@ export const userRoutes = buildApp()
     if (!user) return itemNotFoundFail(c, "user");
     return successJSend(c, user);
   })
-  .patch("/:id", zValidator("json", updateUserSchema), async (c) => {
+  .patch("/:id", zValidatorJSend("json", updateUserSchema), async (c) => {
     const currentUserId = c.var.USER?.id;
     if (!currentUserId)
       return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");

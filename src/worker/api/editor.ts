@@ -2,14 +2,14 @@ import { z } from "zod";
 import { songVersion, SongVersionDB, user } from "../../lib/db/schema";
 import { eq } from "drizzle-orm";
 import { buildApp } from "./utils";
-import { zValidator } from "@hono/zod-validator";
+
 import {
   createSong,
   createSongVersion,
   getSongBase,
   getSongVersionsByUser,
 } from "../helpers/song-helpers";
-import { failJSend, successJSend } from "./responses";
+import { failJSend, successJSend, zValidatorJSend } from "./responses";
 import OpenAI from "openai";
 import { trustedUserMiddleware } from "./utils";
 import { EditorSubmissionResponse } from "./api-types";
@@ -53,7 +53,7 @@ const editorApp = buildApp()
   .post(
     "/autofill",
     trustedUserMiddleware,
-    zValidator("json", autofillChordproSchema),
+    zValidatorJSend("json", autofillChordproSchema),
     async (c) => {
       const { chordpro } = c.req.valid("json");
       const apiKey = c.env.OPENAI_API_KEY;
@@ -174,7 +174,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       return successJSend(c, { chordpro: filledChordpro });
     },
   )
-  .post("/", zValidator("json", editorSubmitSchema), async (c) => {
+  .post("/", zValidatorJSend("json", editorSubmitSchema), async (c) => {
     // TODO: is this even used?
     const submission = c.req.valid("json");
     const userId = c.var.USER?.id;
@@ -198,7 +198,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       version: result.newVersion,
     } as EditorSubmissionResponse);
   })
-  .put("/:id", zValidator("json", editorSubmitSchema), async (c) => {
+  .put("/:id", zValidatorJSend("json", editorSubmitSchema), async (c) => {
     const submission = c.req.valid("json");
     const userId = c.var.USER?.id;
     const songId = c.req.param("id");
