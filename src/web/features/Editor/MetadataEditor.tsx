@@ -7,14 +7,14 @@ import { cn } from "~/lib/utils";
 import { EditorState, SongDB } from "~/types/types";
 import { guessKey } from "../SongView/utils/songRendering";
 import MetadataField from "./components/MetadataField";
-import { metadataValidators } from "./components/validationUtils";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
 
 interface MetadataEditorProps {
   songDB: SongDB;
   defaultMetadata: EditorState;
   metadata: EditorState;
-  extractedMetadata: Partial<EditorState>; // Added extracted metadata prop
+  extractedMetadata: Partial<EditorState>;
+  fieldErrors: Partial<Record<keyof EditorState, string>>;
   updateMetadata: (field: keyof EditorState, value: string) => void;
   editorSettings: EditorSettings;
   onSettingsChange: (settings: EditorSettings) => void;
@@ -26,6 +26,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   defaultMetadata,
   metadata,
   extractedMetadata,
+  fieldErrors,
   updateMetadata,
   editorSettings,
   onSettingsChange,
@@ -41,7 +42,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           placeholder="Apassionata v F"
           value={metadata.title}
           modified={defaultMetadata.title !== metadata.title}
-          validator={metadataValidators.title}
+          error={fieldErrors.title}
           required={true}
           disabled={extractedMetadata.title !== undefined}
         />
@@ -51,7 +52,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           placeholder="František Omáčka"
           value={metadata.artist}
           modified={defaultMetadata.artist !== metadata.artist}
-          validator={metadataValidators.artist}
+          error={fieldErrors.artist}
           required={true}
           disabled={extractedMetadata.artist !== undefined}
         />
@@ -61,7 +62,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           placeholder="0"
           value={metadata.capo?.toString()}
           modified={defaultMetadata.capo !== metadata.capo}
-          validator={metadataValidators.capo}
+          error={fieldErrors.capo}
           disabled={extractedMetadata.capo !== undefined}
         />
         <MetadataField
@@ -71,7 +72,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           value={metadata.language}
           modified={defaultMetadata.language !== metadata.language}
           description="If language not already present in some other song, flag might not be shown."
-          validator={metadataValidators.language}
+          error={fieldErrors.language}
           disabled={extractedMetadata.language !== undefined}
           customInput={
             <SelectOrEditList
@@ -98,7 +99,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           value={metadata.key}
           modified={defaultMetadata.key !== metadata.key}
           description="Use note name (with #/b into denote sharp/flat) for major key and append 'm' or 'mi' to indicate minor key."
-          validator={metadataValidators.key}
+          error={fieldErrors.key}
           disabled={extractedMetadata.key !== undefined}
           action={
             <Button
@@ -124,7 +125,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           value={metadata.range}
           modified={defaultMetadata.range !== metadata.range}
           description="Also used for vocal range. See README. ;-)"
-          validator={metadataValidators.range}
+          error={fieldErrors.range}
           disabled={extractedMetadata.range !== undefined}
         />
         <MetadataField
@@ -134,7 +135,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           value={metadata.startMelody}
           modified={defaultMetadata.startMelody !== metadata.startMelody}
           description="Currently not used so not very standardized across the songs."
-          validator={metadataValidators.startMelody}
+          error={fieldErrors.startMelody}
           disabled={extractedMetadata.startMelody !== undefined}
         />
         <MetadataField
@@ -144,7 +145,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           value={metadata.tempo?.toString()}
           modified={defaultMetadata.tempo !== metadata.tempo}
           description="In BPM. Currently not used and very few songs define it."
-          validator={metadataValidators.tempo}
+          error={fieldErrors.tempo}
           disabled={extractedMetadata.tempo !== undefined}
         />
         <Separator />

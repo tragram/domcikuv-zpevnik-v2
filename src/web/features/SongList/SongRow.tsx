@@ -165,7 +165,7 @@ const SongRow = memo(
         />
 
         <CapoDisplay
-          capo={song.capo}
+          capo={song.capo !== undefined ? song.capo : 0}
           className="hidden shrink-0 basis-1/12 lg:flex"
         />
 

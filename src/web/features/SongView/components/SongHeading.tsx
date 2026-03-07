@@ -101,7 +101,10 @@ const SongHeading: React.FC<SongHeadingProps> = ({
           )}
         >
           <h2 className="text-[0.75em] text-nowrap">
-            Capo: {(songData.capo - transposeSteps + 12) % 12}
+            Capo:{" "}
+            {songData.capo !== undefined
+              ? (songData.capo - transposeSteps + 12) % 12
+              : "undefined"}
           </h2>
           {songData.externalSource ? ( // external songs won't have range --> safe to replace by import source
             <Link

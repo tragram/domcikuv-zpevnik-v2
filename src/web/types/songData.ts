@@ -29,6 +29,7 @@ export const promptFolder = (songId: string, promptId: string) =>
 
 export const defaultIllustrationId = (promptId: string, imageModel: string) =>
   sanitizeId(`${promptId}_${imageModel}`);
+
 export class SongData {
   id: string;
   title: string;
@@ -39,7 +40,7 @@ export class SongData {
   startMelody?: string;
   language: SongLanguage;
   tempo?: int;
-  capo: int;
+  capo?: int;
   range?: SongRange;
   chordpro: ChordPro;
   externalSource: ExternalSourceApi | null;
@@ -58,7 +59,10 @@ export class SongData {
     this.startMelody = songFromDB.startMelody || undefined;
     this.language = (songFromDB.language as SongLanguage) || "other";
     this.tempo = songFromDB.tempo || undefined;
-    this.capo = songFromDB.capo || 0;
+
+    // Safely assign 0 if it exists, otherwise undefined (not forcing 0 for empty states)
+    this.capo = songFromDB.capo !== null ? songFromDB.capo : undefined;
+
     this.range = this.parseRange(songFromDB.range);
     this.chordpro = songFromDB.chordpro;
     this.externalSource = songFromDB.externalSource;
@@ -76,13 +80,13 @@ export class SongData {
       currentIllustration: undefined,
       tempo: Number(data.tempo) || undefined,
       isFavoriteByCurrentUser: false,
-      // these need to be here because of a minor type mismatch
       key: data.key,
       startMelody: data.startMelody,
-      capo: data.capo,
+      // Safely parse strings to numbers, falling back to null for the DB Api
+      capo: data.capo === "" || data.capo == null ? null : Number(data.capo),
       range: data.range,
       externalSource: null,
-    });
+    } as unknown as SongDataApi); // Assert type to bypass strict interface checks on EditorState overlap
   }
 
   static fromExternalSearch(external: ExternalSearchResult): SongData {
@@ -94,12 +98,11 @@ export class SongData {
       updatedAt: new Date(),
       key: undefined,
       startMelody: "",
-      // TODO: songrow should be able to accept undefined...
       language: "other",
-      capo: 0,
-      tempo: undefined,
+      capo: null, // Replaced 0 with null to match DB
+      tempo: null,
       range: undefined,
-      chordpro: "", // External songs won't have chordpro immediately
+      chordpro: "",
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
       externalSource: {
@@ -107,7 +110,7 @@ export class SongData {
         originalContent: "",
         url: external.url,
       },
-    });
+    } as unknown as SongDataApi);
 
     song.url = () => external.url;
     song.thumbnailURL = () => external.thumbnailURL;
@@ -152,14 +155,14 @@ export class SongData {
       key: undefined,
       startMelody: "",
       language: "other",
-      capo: 0,
-      tempo: undefined,
+      capo: null, // Replaced 0 with null to match DB
+      tempo: null,
       range: undefined,
       chordpro: "",
       currentIllustration: undefined,
       isFavoriteByCurrentUser: false,
       externalSource: null,
-    });
+    } as unknown as SongDataApi);
   }
 
   url(): string | undefined {
@@ -224,7 +227,7 @@ export class SongData {
       "tempo",
     ] as (keyof SongData)[];
     const preamble = directives
-      .filter((d) => this[d])
+      .filter((d) => this[d] !== undefined && this[d] !== null)
       .map((d) => `{${d}: ${this[d]}}`)
       .join("\n");
     return preamble + "\n" + this.chordpro;

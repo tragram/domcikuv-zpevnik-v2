@@ -15,30 +15,49 @@ import { trustedUserMiddleware } from "./utils";
 import { EditorSubmissionResponse } from "./api-types";
 
 export const editorSubmitSchema = z.object({
-  title: z.string(),
-  artist: z.string(),
-  language: z.string(),
-  chordpro: z.string(),
+  title: z.string().min(1, "Title is required"),
+  artist: z.string().min(1, "Artist is required"),
+  language: z.string().min(1, "Language is required"),
+  chordpro: z.string().min(1, "ChordPro content is required"),
   parentId: z.string().optional(),
+
   key: z
     .string()
+    .regex(/^[A-H][#b]?(m|mi)?$/, "Invalid key format (e.g., C, C#, Dm, Ami)")
     .optional()
-    .transform((x) => x ?? null),
+    .or(z.literal("")) // Catch empty strings when user clears the input
+    .transform((x) => x || null),
+
   capo: z
-    .number()
+    .union([z.string(), z.number()])
     .optional()
-    .transform((x) => x ?? null),
+    .or(z.literal(""))
+    .refine((val) => {
+      // 1. Let empty states pass through to the transform block
+      if (val === "" || val == null) return true;
+
+      // 2. Ensure the value only contains numbers (and optionally a leading minus sign)
+      return /^-?\d+$/.test(String(val).trim());
+    }, "Capo must be a valid whole number")
+    .transform((x) => (x === "" || x == null ? null : Number(x))),
+    
   range: z
     .string()
+    .regex(/^[a-h][#b]?\d+-[a-h][#b]?\d+$/, "Range must be in format: c1-g2")
     .optional()
-    .transform((x) => x ?? null),
+    .or(z.literal(""))
+    .transform((x) => x || null),
+
   startMelody: z
     .string()
     .optional()
-    .transform((x) => x ?? null),
+    .or(z.literal(""))
+    .transform((x) => x || null),
+
   tempo: z
     .union([z.string(), z.number()])
     .optional()
+    .or(z.literal(""))
     .transform((x) => (x ? String(x) : null)),
 });
 

@@ -6,8 +6,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import type { ValidationResult } from "./validationUtils";
-import { useMemo } from "react"; // Swapped out useState and useEffect
 import { cn } from "~/lib/utils";
 
 interface MetadataFieldProps {
@@ -16,7 +14,7 @@ interface MetadataFieldProps {
   placeholder?: string;
   description?: string;
   onChange: (value: string) => void;
-  validator?: (value: string) => ValidationResult;
+  error?: string;
   required?: boolean;
   customInput?: React.ReactElement;
   modified: boolean;
@@ -30,23 +28,14 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   placeholder,
   description,
   onChange,
-  validator,
+  error,
   required = false,
   customInput = null,
   modified,
   action,
   disabled = false,
 }) => {
-  // Compute the validation directly. useMemo ensures it only recalculates
-  // when 'value' or 'validator' actually changes.
-  const validationResult = useMemo(() => {
-    if (validator && value) {
-      return validator(value);
-    }
-    return { isValid: true };
-  }, [value, validator]);
-
-  const displayError = !validationResult.isValid;
+  const displayError = !!error;
 
   const innerInput = customInput ? (
     <div
@@ -108,9 +97,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
           {description}
         </p>
       )}
-      {displayError && (
-        <p className="text-xs text-red-600">{validationResult.errorMessage}</p>
-      )}
+      {displayError && <p className="text-xs text-red-600">{error}</p>}
     </div>
   );
 };
