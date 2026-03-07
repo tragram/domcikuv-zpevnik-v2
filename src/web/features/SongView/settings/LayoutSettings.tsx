@@ -19,16 +19,14 @@ import {
 } from "../hooks/viewSettingsStore";
 import type { FullScreenHandle } from "react-full-screen";
 import {
-  DropdownIconStart,
-  DropdownItemWithDescription,
   DropdownMenuCheckboxItem,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "~/components/ui/dropdown-menu";
 import { LoopNoteIcon } from "~/components/ui/loop-note-icon";
 import SmartColumnIcon from "./smart_columns_icon";
 import FancySwitch from "~/components/FancySwitch";
+import { CompactItem } from "~/components/RichDropdown";
 
 const layoutSettingsBoolsKeys = [
   "multiColumns",
@@ -37,6 +35,7 @@ const layoutSettingsBoolsKeys = [
   "repeatPartsChords",
   "compactInFullScreen",
 ] as const satisfies ReadonlyArray<keyof LayoutSettings>;
+
 export const layoutSettingsValues = {
   multiColumns: {
     icon: <Columns2 />,
@@ -168,10 +167,12 @@ export const LayoutSettingsDropdownSection: React.FC = () => {
     actions.setCustomLayoutPreset({ ...modifiedSettings });
   }
   const FONT_SIZE_STEP = 1.2;
+
   return (
     <>
-      <DropdownMenuLabel>Font size</DropdownMenuLabel>
+      <CompactItem.Header>Font size</CompactItem.Header>
       <DropdownMenuSeparator />
+
       <DropdownMenuCheckboxItem
         key="fitXY"
         checked={layoutSettings.fitScreenMode === "fitXY"}
@@ -180,12 +181,17 @@ export const LayoutSettingsDropdownSection: React.FC = () => {
           actions.setLayoutSettings({ fitScreenMode: "fitXY" })
         }
       >
-        <DropdownIconStart icon={<MoveDiagonal />} />
-        <DropdownItemWithDescription
-          title={"Compact"}
-          description={"Fits song to screen (no scrolling needed)"}
-        />
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <MoveDiagonal />
+          </CompactItem.Icon>
+          <CompactItem.Body
+            title="Compact"
+            subtitle="Fits song to screen (no scrolling needed)"
+          />
+        </CompactItem.Shell>
       </DropdownMenuCheckboxItem>
+
       <DropdownMenuCheckboxItem
         key="fitX"
         checked={layoutSettings.fitScreenMode === "fitX"}
@@ -194,12 +200,17 @@ export const LayoutSettingsDropdownSection: React.FC = () => {
           actions.setLayoutSettings({ fitScreenMode: "fitX" })
         }
       >
-        <DropdownIconStart icon={<MoveHorizontal />} />
-        <DropdownItemWithDescription
-          title={"Scroll"}
-          description={"Fits song to screen width"}
-        />
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <MoveHorizontal />
+          </CompactItem.Icon>
+          <CompactItem.Body
+            title="Scroll"
+            subtitle="Fits song to screen width"
+          />
+        </CompactItem.Shell>
       </DropdownMenuCheckboxItem>
+
       <DropdownMenuItem
         onClick={() =>
           setBothSettings({
@@ -209,9 +220,14 @@ export const LayoutSettingsDropdownSection: React.FC = () => {
         }
         onSelect={(e) => e.preventDefault()}
       >
-        <DropdownIconStart icon={<AArrowUp />} />
-        Increase font size
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <AArrowUp />
+          </CompactItem.Icon>
+          <CompactItem.Body title="Increase font size" />
+        </CompactItem.Shell>
       </DropdownMenuItem>
+
       <DropdownMenuItem
         onClick={() =>
           setBothSettings({
@@ -221,30 +237,40 @@ export const LayoutSettingsDropdownSection: React.FC = () => {
         }
         onSelect={(e) => e.preventDefault()}
       >
-        <DropdownIconStart icon={<AArrowDown />} />
-        Decrease font size
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <AArrowDown />
+          </CompactItem.Icon>
+          <CompactItem.Body title="Decrease font size" />
+        </CompactItem.Shell>
       </DropdownMenuItem>
 
-      <DropdownMenuLabel>Contents</DropdownMenuLabel>
+      <CompactItem.Header>Contents</CompactItem.Header>
       <DropdownMenuSeparator />
-      {layoutSettingsBoolsKeys.map((k) => (
-        <DropdownMenuCheckboxItem
-          key={k}
-          checked={layoutSettings[k]}
-          onCheckedChange={() =>
-            ["repeatParts", "repeatPartsChords"].includes(k)
-              ? setBothSettings({ [k]: !layoutSettings[k] })
-              : actions.setLayoutSettings({ [k]: !layoutSettings[k] })
-          }
-          onSelect={(e) => e.preventDefault()}
-        >
-          <DropdownIconStart icon={layoutSettingsValues[k].icon} />
-          <DropdownItemWithDescription
-            title={layoutSettingsValues[k].label}
-            description={layoutSettingsValues[k]?.description}
-          />
-        </DropdownMenuCheckboxItem>
-      ))}
+
+      {layoutSettingsBoolsKeys.map((k) => {
+        const setting = layoutSettingsValues[k];
+        return (
+          <DropdownMenuCheckboxItem
+            key={k}
+            checked={layoutSettings[k]}
+            onCheckedChange={() =>
+              ["repeatParts", "repeatPartsChords"].includes(k)
+                ? setBothSettings({ [k]: !layoutSettings[k] })
+                : actions.setLayoutSettings({ [k]: !layoutSettings[k] })
+            }
+            onSelect={(e) => e.preventDefault()}
+          >
+            <CompactItem.Shell>
+              <CompactItem.Icon>{setting.icon}</CompactItem.Icon>
+              <CompactItem.Body
+                title={setting.label}
+                subtitle={setting.description || undefined}
+              />
+            </CompactItem.Shell>
+          </DropdownMenuCheckboxItem>
+        );
+      })}
     </>
   );
 };

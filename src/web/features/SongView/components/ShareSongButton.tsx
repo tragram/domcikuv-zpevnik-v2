@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 import { FeedStatus } from "../SongView";
 import { UserProfileData } from "src/worker/api/userProfile";
-import {
-  DropdownIconStart,
-  DropdownMenuCheckboxItem,
-  DropdownItemWithDescription,
-} from "~/components/ui/dropdown-menu";
+import { DropdownMenuCheckboxItem } from "~/components/ui/dropdown-menu";
 import { CloudSync } from "lucide-react";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { Link } from "@tanstack/react-router";
 import { useIsOnline } from "~/hooks/use-is-online";
+import { CompactItem } from "~/components/RichDropdown";
 
 interface ShareSongButtonProps {
   feedStatus: FeedStatus | undefined;
@@ -49,19 +46,16 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
         text: `Currently connected to ${
           feedStatus.sessionState?.masterNickname || "someone else"
         }'s session`,
-        className: "",
       };
     }
     if (!shareSession) {
       return {
         text: "Share your page with others - live",
-        className: "",
       };
     }
     if (shareSession && user.loggedIn && user.profile.nickname) {
       return {
         text: `Your session can be viewed at ${window.location.host}/feed/${user.profile.nickname}`,
-        className: "",
       };
     }
     return null;
@@ -70,16 +64,15 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   const description = getDescription();
 
   const content = (
-    <DropdownItemWithDescription
+    <CompactItem.Body
       title="Share current song"
-      description={description?.text}
-      descriptionClassName={description?.className}
+      subtitle={description?.text}
     />
   );
 
   const wrappedContent =
     onLine && showProfileLink ? (
-      <Link to="/profile" search={{ redirect: `/song/${songId}` }}>
+      <Link to="/profile" search={{ redirect: `/song/${songId}` }} className="w-full">
         {content}
       </Link>
     ) : (
@@ -88,6 +81,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
 
   const checkboxDisabled =
     !onLine || showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster);
+
   return (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
@@ -98,8 +92,12 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
       }}
       className={checkboxDisabled ? "opacity-50" : ""}
     >
-      <DropdownIconStart icon={<CloudSync />} />
-      {wrappedContent}
+      <CompactItem.Shell className="w-full">
+        <CompactItem.Icon>
+          <CloudSync />
+        </CompactItem.Icon>
+        {wrappedContent}
+      </CompactItem.Shell>
     </DropdownMenuCheckboxItem>
   );
 };

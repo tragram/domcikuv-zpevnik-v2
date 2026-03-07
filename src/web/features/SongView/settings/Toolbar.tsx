@@ -1,13 +1,10 @@
 import RandomSong, { ResetBanListDropdownItems } from "~/components/RandomSong";
 import { Button } from "~/components/ui/button";
 import {
-  DropdownIconStart,
-  DropdownItemWithDescription,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
@@ -22,7 +19,7 @@ import {
   Undo2,
   CloudOff,
   RefreshCw,
-  Contrast, // <-- Added Contrast icon
+  Contrast,
 } from "lucide-react";
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -49,6 +46,7 @@ import { FeedStatus } from "../SongView";
 import ShareSongButton from "../components/ShareSongButton";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { version as appVersion } from "../../../../../package.json";
+import { CompactItem } from "~/components/RichDropdown";
 
 interface ToolbarProps {
   songDB: SongDB;
@@ -71,7 +69,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   transposeSteps,
   setTransposeSteps,
 }) => {
-  // Grab 'actions' along with 'layout' to update the store
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
 
@@ -97,18 +94,15 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
   const { version: versionId } = useSearch({ strict: false });
 
-  // Handler to force SW update and reload
   const handleForceUpdate = () => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         for (const registration of registrations) {
           registration.update();
         }
-        // Reload to apply the new service worker rules immediately
         window.location.reload();
       });
     } else {
-      // Fallback reload if SW isn't supported
       window.location.reload();
     }
   };
@@ -159,11 +153,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-80 max-h-[85dvh] overflow-y-auto">
             {React.Children.toArray(<LayoutSettingsDropdownSection />)}
             {React.Children.toArray(<ChordSettingsDropdownMenu />)}
-            <DropdownMenuLabel>Misc</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownThemeToggle />
 
-            {/* Added High Contrast Checkbox Item */}
+            <CompactItem.Header>Misc</CompactItem.Header>
+            <DropdownMenuSeparator />
+            <DropdownThemeToggle size={6} />
+
             <DropdownMenuCheckboxItem
               onSelect={(e) => e.preventDefault()}
               checked={layout.highContrast}
@@ -173,8 +167,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 })
               }
             >
-              <DropdownIconStart icon={<Contrast />} />
-              High contrast
+              <CompactItem.Shell>
+                <CompactItem.Icon>
+                  <Contrast />
+                </CompactItem.Icon>
+                <CompactItem.Body title="High contrast" />
+              </CompactItem.Shell>
             </DropdownMenuCheckboxItem>
 
             <DropdownMenuItem
@@ -182,51 +180,72 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 fullScreenHandle.enter();
               }}
             >
-              <DropdownIconStart icon={<Fullscreen />} />
-              Enter fullscreen
+              <CompactItem.Shell>
+                <CompactItem.Icon>
+                  <Fullscreen />
+                </CompactItem.Icon>
+                <CompactItem.Body title="Enter fullscreen" />
+              </CompactItem.Shell>
             </DropdownMenuItem>
+
             {React.Children.toArray(
               <ResetBanListDropdownItems songDB={songDB} />,
             )}
+
             {wakeLockSupported && (
               <DropdownMenuCheckboxItem
                 onSelect={(e) => e.preventDefault()}
                 checked={wakeLockEnabled}
                 onCheckedChange={() => setWakeLockEnabled(!wakeLockEnabled)}
               >
-                <DropdownIconStart icon={<Coffee />} />
-                Keep screen on
+                <CompactItem.Shell>
+                  <CompactItem.Icon>
+                    <Coffee />
+                  </CompactItem.Icon>
+                  <CompactItem.Body title="Keep screen on" />
+                </CompactItem.Shell>
               </DropdownMenuCheckboxItem>
             )}
+
             <ShareSongButton
               feedStatus={feedStatus}
               user={user}
               songId={songData.id}
             />
+
             <DropdownMenuItem>
               <Link
-                className="flex items-center gap-2 cursor-pointer w-full"
+                className="w-full"
                 to="/edit/$songId"
                 params={{ songId: songData.id }}
                 search={{ version: versionId }}
               >
-                <DropdownIconStart icon={<Pencil />} />
-                View in Editor
+                <CompactItem.Shell className="cursor-pointer w-full">
+                  <CompactItem.Icon>
+                    <Pencil />
+                  </CompactItem.Icon>
+                  <CompactItem.Body title="View in Editor" />
+                </CompactItem.Shell>
               </Link>
             </DropdownMenuItem>
 
             {installItem}
 
             <DropdownMenuSeparator />
+
             <DropdownMenuItem
               onClick={handleForceUpdate}
               disabled={!("serviceWorker" in navigator)}
             >
-              <DropdownIconStart icon={<RefreshCw />} />
-              <DropdownItemWithDescription
-                title={`Currently on v${appVersion}`}
-                description={"Click to force update"}
-              />
+              <CompactItem.Shell>
+                <CompactItem.Icon>
+                  <RefreshCw />
+                </CompactItem.Icon>
+                <CompactItem.Body
+                  title={`Currently on v${appVersion}`}
+                  subtitle="Click to force update"
+                />
+              </CompactItem.Shell>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

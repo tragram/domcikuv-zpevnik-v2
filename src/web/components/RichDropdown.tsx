@@ -34,23 +34,32 @@ const Shell = ({
   </div>
 );
 
-// 3. Circular Leading Elements (Now using standard `children`)
+// 3. Circular Leading Elements
 const Icon = ({
   children,
+  size = 8,
   className,
 }: {
   children: ReactNode;
+  size?: number;
   className?: string;
-}) => (
-  <div
-    className={cn(
-      "flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-primary/10 text-primary",
-      className,
-    )}
-  >
-    {children}
-  </div>
-);
+}) => {
+  // Automatically scale the inner SVG so it fits neatly inside smaller wrappers
+  const innerSizeClass = size <= 6 ? "[&_svg]:!size-3.5" : "[&_svg]:!size-4";
+
+  return (
+    <div
+      className={cn(
+        "flex shrink-0 items-center justify-center rounded-full bg-primary dark:bg-primary/30 *:stroke-current! *:text-white! dark:*:text-primary!",
+        `size-${size}`,
+        innerSizeClass,
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+};
 
 const Avatar = ({
   src,
@@ -69,7 +78,7 @@ const Avatar = ({
   />
 );
 
-// 4. Stacked Text Body (Kept as props to strictly enforce truncation/typography)
+// 4. Stacked Text Body
 const Body = ({
   title,
   subtitle,
@@ -79,12 +88,12 @@ const Body = ({
   subtitle?: ReactNode;
   titleClass?: string;
 }) => (
-  <div className="flex flex-col flex-1 min-w-0 justify-center gap-0.5">
-    <span className={cn("truncate text-sm font-medium", titleClass)}>
-      {title}
-    </span>
+  <div className="flex flex-col flex-1 justify-center min-w-0">
+    <span className={cn("truncate font-medium", titleClass)}>{title}</span>
     {subtitle && (
-      <span className="truncate text-xs text-muted-foreground">{subtitle}</span>
+      <span className="text-tiny font-normal text-muted-foreground leading-tight line-clamp-2">
+        {subtitle}
+      </span>
     )}
   </div>
 );
@@ -97,22 +106,75 @@ const Trailing = ({
   children: ReactNode;
   className?: string;
 }) => (
-  <div
-    className={cn(
-      "flex-shrink-0 text-xs text-primary/80 text-right",
-      className,
-    )}
-  >
+  <div className={cn("text-xs text-primary/80 text-right", className)}>
     {children}
   </div>
 );
 
-// 6. Export as a compound component
+// 6. Standard Export
 export const RichItem = {
   Header,
   Shell,
   Icon,
   Avatar,
   Body,
+  Trailing,
+};
+
+// 7. Compact Export (Overrides defaults for tighter menus)
+export const CompactItem = {
+  Header,
+  Shell: ({
+    children,
+    className,
+  }: {
+    children: ReactNode;
+    className?: string;
+  }) => (
+    <Shell className={cn("gap-2 text-[0.8rem]", className)}>{children}</Shell>
+  ),
+  Icon: ({
+    children,
+    size = 6,
+    className,
+  }: {
+    children: ReactNode;
+    size?: number;
+    className?: string;
+  }) => (
+    <Icon size={size} className={className}>
+      {children}
+    </Icon>
+  ),
+  Avatar: ({
+    src,
+    fallback,
+    className,
+  }: {
+    src?: string;
+    fallback: string;
+    className?: string;
+  }) => (
+    <Avatar
+      src={src}
+      fallback={fallback}
+      className={cn("h-6 w-6", className)}
+    />
+  ),
+  Body: ({
+    title,
+    subtitle,
+    titleClass,
+  }: {
+    title: string;
+    subtitle?: string;
+    titleClass?: string;
+  }) => (
+    <Body
+      title={title}
+      subtitle={subtitle}
+      titleClass={cn("font-normal", titleClass)}
+    />
+  ),
   Trailing,
 };

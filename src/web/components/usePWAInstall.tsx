@@ -1,106 +1,111 @@
-import { PWAInstallElement } from '@khmyznikov/pwa-install';
-import PWAInstall from '@khmyznikov/pwa-install/react-legacy';
-import { Save } from 'lucide-react';
-import { useRef, useState } from 'react';
-import { DropdownIconStart, DropdownMenuItem } from './ui/dropdown-menu';
+import { PWAInstallElement } from "@khmyznikov/pwa-install";
+import PWAInstall from "@khmyznikov/pwa-install/react-legacy";
+import { Save } from "lucide-react";
+import { useRef, useState } from "react";
+import { DropdownMenuItem } from "./ui/dropdown-menu";
+import { CompactItem } from "./RichDropdown";
 
 export const usePWAInstall = () => {
-    const pwaInstallRef = useRef<PWAInstallElement>(null);
-    const [installAvailable, setInstallAvailable] = useState(false);
-    
-    // Disable PWA install functionality during development
-    const isDevelopment = import.meta.env.DEV;
+  const pwaInstallRef = useRef<PWAInstallElement>(null);
+  const [installAvailable, setInstallAvailable] = useState(false);
 
-    // Function to show the install prompt
-    // TODO: only show install prompt once or twice - now it shows up 5 times
-    const showInstallPrompt = () => {
-        if (isDevelopment) {
-            console.log('PWA install disabled in development mode');
-            return;
-        }
-        
-        if (pwaInstallRef.current) {
-            pwaInstallRef.current.showDialog();
-        }
-    };
+  const isDevelopment = import.meta.env.DEV;
 
-    const installNative = () => {
-        if (isDevelopment) {
-            console.log('PWA install disabled in development mode');
-            return;
-        }
-
-        if (pwaInstallRef.current) {
-            pwaInstallRef.current.install();
-        }
-    }
-
-    // Only render PWA component in production
-    const PWAInstallComponent = isDevelopment ? null : (
-        <>
-            <PWAInstall
-                disableChrome={false}
-                disableClose={false}
-                ref={pwaInstallRef}
-                icon={"/icons/favicon.svg"}
-                name={"Domčíkův Zpěvník"}
-                description='Druhá verze mého báječného zpěvníku - nyní offline!'
-                onPwaInstallAvailableEvent={() => { setInstallAvailable(true) }}
-            />
-        </>
-    );
-
-    let installItem;
-    
-    // In development, show a disabled state or hide completely
+  const showInstallPrompt = () => {
     if (isDevelopment) {
-        installItem = (
-            <DropdownMenuItem disabled>
-                <DropdownIconStart icon={<Save />} />
-                <span className="text-muted-foreground text-[10px]">Install disabled in dev mode</span>
-            </DropdownMenuItem>
-        );
-    } else if (pwaInstallRef.current) {
-        const PWAInstall = pwaInstallRef.current;
-        if (PWAInstall.isAppleDesktopPlatform || PWAInstall.isAppleMobilePlatform) {
-            // Safari on iOS/MacOS
-            installItem = (
-                <DropdownMenuItem
-                    onClick={showInstallPrompt}
-                >
-                    <DropdownIconStart icon={<Save />} />
-                    How to install
-                </DropdownMenuItem>
-            )
-        } else if (PWAInstall.isInstallAvailable) {
-            // Chrome on Android/Windows(/maybe Linux)
-            installItem = (
-                <DropdownMenuItem
-                    onClick={installNative}
-                >
-                    <DropdownIconStart icon={<Save />} />
-                    Install app
-                </DropdownMenuItem>
-            )
-        } else {
-            installItem = (
-                <DropdownMenuItem
-                >
-                    <DropdownIconStart icon={<Save />} />
-                    <p className='text-[0.7em] leading-tight'>Use Safari (iOS) or Chrome (otherwise) to install the app.</p>
-                </DropdownMenuItem>
-            )
-        }
+      console.log("PWA install disabled in development mode");
+      return;
     }
+    if (pwaInstallRef.current) {
+      pwaInstallRef.current.showDialog();
+    }
+  };
 
-    return {
-        showInstallPrompt,
-        installNative,
-        installAvailable: isDevelopment ? false : installAvailable,
-        PWAInstallComponent,
-        pwaInstallRef,
-        installItem
-    };
+  const installNative = () => {
+    if (isDevelopment) {
+      console.log("PWA install disabled in development mode");
+      return;
+    }
+    if (pwaInstallRef.current) {
+      pwaInstallRef.current.install();
+    }
+  };
+
+  const PWAInstallComponent = isDevelopment ? null : (
+    <>
+      <PWAInstall
+        disableChrome={false}
+        disableClose={false}
+        ref={pwaInstallRef}
+        icon={"/icons/favicon.svg"}
+        name={"Domčíkův Zpěvník"}
+        description="Druhá verze mého báječného zpěvníku - nyní offline!"
+        onPwaInstallAvailableEvent={() => {
+          setInstallAvailable(true);
+        }}
+      />
+    </>
+  );
+
+  let installItem;
+
+  if (isDevelopment) {
+    installItem = (
+      <DropdownMenuItem disabled>
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <Save />
+          </CompactItem.Icon>
+          <CompactItem.Body title="Install disabled in dev mode" />
+        </CompactItem.Shell>
+      </DropdownMenuItem>
+    );
+  } else if (pwaInstallRef.current) {
+    const PWAInstall = pwaInstallRef.current;
+    if (PWAInstall.isAppleDesktopPlatform || PWAInstall.isAppleMobilePlatform) {
+      installItem = (
+        <DropdownMenuItem onClick={showInstallPrompt}>
+          <CompactItem.Shell>
+            <CompactItem.Icon>
+              <Save />
+            </CompactItem.Icon>
+            <CompactItem.Body title="How to install" />
+          </CompactItem.Shell>
+        </DropdownMenuItem>
+      );
+    } else if (PWAInstall.isInstallAvailable) {
+      installItem = (
+        <DropdownMenuItem onClick={installNative}>
+          <CompactItem.Shell>
+            <CompactItem.Icon>
+              <Save />
+            </CompactItem.Icon>
+            <CompactItem.Body title="Install app" />
+          </CompactItem.Shell>
+        </DropdownMenuItem>
+      );
+    } else {
+      installItem = (
+        <DropdownMenuItem disabled>
+          <CompactItem.Shell>
+            <CompactItem.Icon>
+              <Save />
+            </CompactItem.Icon>
+            <CompactItem.Body title="Use Safari (iOS) or Chrome (otherwise) to install the app." />
+          </CompactItem.Shell>
+        </DropdownMenuItem>
+      );
+    }
+  }
+
+  return {
+    showInstallPrompt,
+    installNative,
+    installAvailable: isDevelopment ? false : installAvailable,
+    PWAInstallComponent,
+    pwaInstallRef,
+    installItem,
+  };
 };
 
 export default usePWAInstall;

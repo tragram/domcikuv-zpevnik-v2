@@ -32,17 +32,17 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
           <Menu />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56">
+      <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56 flex flex-col gap-1">
         <RichItem.Header>Menu</RichItem.Header>
         <DropdownMenuSeparator />
 
         <DropdownThemeToggle />
 
         <DropdownMenuItem asChild>
-          <Link to="/edit" className="w-full cursor-pointer py-2">
+          <Link to="/edit" className="w-full cursor-pointer">
             <RichItem.Shell>
               <RichItem.Icon>
-                <Pencil className="w-4 h-4" />
+                <Pencil />
               </RichItem.Icon>
               <RichItem.Body title="Add song" />
             </RichItem.Shell>
@@ -50,10 +50,10 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link to="/gallery" className="w-full cursor-pointer py-2">
+          <Link to="/gallery" className="w-full cursor-pointer">
             <RichItem.Shell>
               <RichItem.Icon>
-                <ImagesIcon className="w-4 h-4" />
+                <ImagesIcon />
               </RichItem.Icon>
               <RichItem.Body title="Gallery" />
             </RichItem.Shell>
@@ -61,10 +61,10 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild disabled={!isOnline}>
-          <Link to="/profile" className="w-full cursor-pointer py-2">
+          <Link to="/profile" className="w-full cursor-pointer">
             <RichItem.Shell>
               <RichItem.Icon>
-                <User className="w-4 h-4" />
+                <User />
               </RichItem.Icon>
               <RichItem.Body title="Profile" />
             </RichItem.Shell>
@@ -73,10 +73,10 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
 
         {isAdmin && (
           <DropdownMenuItem asChild disabled={!isOnline}>
-            <Link to="/admin" className="w-full cursor-pointer py-2">
+            <Link to="/admin" className="w-full cursor-pointer">
               <RichItem.Shell>
                 <RichItem.Icon>
-                  <Shield className="w-4 h-4" />
+                  <Shield />
                 </RichItem.Icon>
                 <RichItem.Body title="Admin" />
               </RichItem.Shell>

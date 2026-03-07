@@ -7,6 +7,8 @@
   --font-display: "Poppins", sans-serif;
   --font-mono: "Inconsolata", monospace;
   --default-font-family: "Poppins", var(--font-sans);
+  --text-tiny: 0.625rem;
+  --text-tiny--line-height: 1rem;
   --breakpoint-xs: 350px;
   --breakpoint-xsm: 400px;
   --breakpoint-sm: 500px;

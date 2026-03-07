@@ -1,13 +1,12 @@
+import React from "react";
 import { Guitar, Piano, ChevronsLeftRightEllipsis } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
-  DropdownIconStart,
-  DropdownItemWithDescription,
   DropdownMenuCheckboxItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "~/components/ui/dropdown-menu";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
+import { CompactItem } from "~/components/RichDropdown";
 
 export interface ChordSettings {
   showChords: boolean;
@@ -21,7 +20,7 @@ const chordSettingsValues = {
   showChords: { icon: <Guitar />, label: "Show chords", description: "" },
   czechChordNames: {
     icon: <Piano />,
-    label: 'Czech notation',
+    label: "Czech notation",
     description: "Uses A-B-H-C instead of A-Bb-B-C",
   },
   inlineChords: {
@@ -47,32 +46,29 @@ export const ChordSettingsDropdownMenu: React.FC = () => {
 
   return (
     <>
-      <DropdownMenuLabel>Chord settings</DropdownMenuLabel>
+      <CompactItem.Header>Chord settings</CompactItem.Header>
       <DropdownMenuSeparator />
-      {chordSettingsNames.map((k) => (
-        <DropdownMenuCheckboxItem
-          key={k}
-          checked={chordSettings[k as keyof ChordSettings]}
-          disabled={k !== "showChords" && !chordSettings.showChords}
-          onCheckedChange={() => toggleSetting(k as keyof ChordSettings)}
-          onSelect={(e) => e.preventDefault()}
-        >
-          <DropdownIconStart
-            icon={
-              chordSettingsValues[k as keyof typeof chordSettingsValues].icon
-            }
-          />
-          <DropdownItemWithDescription
-            title={
-              chordSettingsValues[k as keyof typeof chordSettingsValues].label
-            }
-            description={
-              chordSettingsValues[k as keyof typeof chordSettingsValues]
-                .description
-            }
-          />
-        </DropdownMenuCheckboxItem>
-      ))}
+      {chordSettingsNames.map((k) => {
+        const setting =
+          chordSettingsValues[k as keyof typeof chordSettingsValues];
+        return (
+          <DropdownMenuCheckboxItem
+            key={k}
+            checked={chordSettings[k as keyof ChordSettings]}
+            disabled={k !== "showChords" && !chordSettings.showChords}
+            onCheckedChange={() => toggleSetting(k as keyof ChordSettings)}
+            onSelect={(e) => e.preventDefault()}
+          >
+            <CompactItem.Shell>
+              <CompactItem.Icon>{setting.icon}</CompactItem.Icon>
+              <CompactItem.Body
+                title={setting.label}
+                subtitle={setting.description || undefined}
+              />
+            </CompactItem.Shell>
+          </DropdownMenuCheckboxItem>
+        );
+      })}
     </>
   );
 };
@@ -91,7 +87,7 @@ export const ChordSettingsButtons: React.FC = () => {
         variant="circular"
         isActive={chordSettings.showChords}
         className="hidden sm:flex"
-        onClick={() => toggleSetting("showChords")}
+      onClick={() => toggleSetting("showChords")}
       >
         {chordSettingsValues.showChords.icon}
       </Button>

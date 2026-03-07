@@ -14,6 +14,7 @@ import { useMemo } from "react";
 import { Note, Key } from "~/types/musicTypes";
 import TransposeIcon from "./transpose_icon";
 import FancySwitch from "~/components/FancySwitch";
+import { CompactItem } from "~/components/RichDropdown";
 
 const RENDER_KEYS = [
   "C",
@@ -152,7 +153,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
               <TransposeIcon />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-12">
+          <DropdownMenuContent className="w-fit min-w-16">
             {RENDER_KEYS.map((k, index) => (
               <DropdownMenuCheckboxItem
                 checked={selected === values[index]}
@@ -160,7 +161,9 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
                 onSelect={(e) => e.preventDefault()}
                 onCheckedChange={() => onChange(values[index])}
               >
-                {k}
+                <CompactItem.Shell>
+                  <CompactItem.Body title={k} />
+                </CompactItem.Shell>
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>

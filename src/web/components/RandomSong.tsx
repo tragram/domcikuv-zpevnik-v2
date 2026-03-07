@@ -12,16 +12,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "~/components/ui/alert-dialog";
+import { getLocalStorageItem, setLocalStorageItem } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import type { SongDB } from "~/types/types";
+import { CompactItem } from "./RichDropdown";
 import { Button } from "./ui/button";
-import {
-  DropdownIconStart,
-  DropdownItemWithDescription,
-  DropdownMenuCheckboxItem,
-  DropdownMenuItem,
-} from "./ui/dropdown-menu";
-import { getLocalStorageItem, setLocalStorageItem } from "~/lib/utils";
+import { DropdownMenuCheckboxItem, DropdownMenuItem } from "./ui/dropdown-menu";
 
 const BAN_LIST_KEY = "songsBannedFromRandom";
 
@@ -48,21 +44,30 @@ export function ResetBanListDropdownItems({ songDB }: { songDB: SongDB }) {
         checked={ignoreSeenSongs}
         onCheckedChange={() => setIgnoreSeenSongs(!ignoreSeenSongs)}
       >
-        <DropdownIconStart icon={<Dices />} />
-        <DropdownItemWithDescription
-          title={"Ban seen songs from random"}
-          description={"Bans reset at 3AM"}
-        />
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <Dices />
+          </CompactItem.Icon>
+          <CompactItem.Body
+            title="Ban seen songs from random"
+            subtitle="Bans reset at 3AM"
+          />
+        </CompactItem.Shell>
       </DropdownMenuCheckboxItem>
+
       <DropdownMenuItem
         onClick={() => setBannedSongs([])}
         onSelect={(e) => e.preventDefault()}
       >
-        <DropdownIconStart icon={<ListRestart />} />
-        <DropdownItemWithDescription
-          title={"Reset ban list"}
-          description={`${bannedSongs.length}/${songDB.songs.length} songs marked seen`}
-        />
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <ListRestart />
+          </CompactItem.Icon>
+          <CompactItem.Body
+            title="Reset ban list"
+            subtitle={`${bannedSongs.length}/${songDB.songs.length} songs marked seen`}
+          />
+        </CompactItem.Shell>
       </DropdownMenuItem>
     </>
   );
@@ -170,7 +175,7 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
 
   const { chosenSong, banSong } = useMemo(() => {
     return chooseRandomSong(songs, currentSong, ignoreSeenSongs);
-  }, [reloads, currentSong]);
+  }, [songs, currentSong, ignoreSeenSongs]);
 
   return (
     <>
