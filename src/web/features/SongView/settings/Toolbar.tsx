@@ -214,19 +214,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 View in Editor
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link
-                className="flex items-center gap-2 cursor-pointer w-full"
-                to={
-                  "https://github.com/tragram/domcikuv-zpevnik-v2/tree/main/songs/chordpro/" +
-                  songData.id +
-                  ".pro"
-                }
-              >
-                <DropdownIconStart icon={<Github />} />
-                Edit on GitHub
-              </Link>
-            </DropdownMenuItem>
+
             {installItem}
 
             <DropdownMenuSeparator />
