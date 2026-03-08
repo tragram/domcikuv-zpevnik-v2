@@ -185,7 +185,7 @@ const SongRow = memo(
       <div className="song-row-wrapper container mx-auto flex h-[70px] max-w-3xl items-center px-2 sm:px-4 !pl-4 !sm:pl-6">
         <div
           className="song-row-bg-image flex h-14 w-full min-w-72 rounded-full hc:border-foreground hc:border-4 hc:!bg-none"
-          style={{ backgroundImage: `url(${song.thumbnailURL()})` }}
+          style={{ backgroundImage: `url("${song.thumbnailURL()}")` }}
         >
           <div className="song-row-bg-image row-text-shadow relative flex h-full w-full items-center rounded-full shadow-black backdrop-blur-md pr-1 hc:pr-0">
             <IllustrationPopup

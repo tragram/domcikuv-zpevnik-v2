@@ -18,6 +18,21 @@ const sanitizeId = (id: string) => {
     .replace(/_+/g, "_");
 };
 
+const generateFallbackLogo = (bgColor: string, fgColor: string): string => {
+  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect fill="${bgColor}" width="1204" height="1263" x="-66" y="-89" />
+    <g transform="translate(0,12)">
+      <g transform="matrix(3.9881201,0,0,3.9881201,-891.73511,-1091.1055)" fill="${fgColor}">
+        <path d="m 285.92551,358.08122 c 0,0 -15.50153,29.85651 16.52314,83.23096 32.04467,53.40778 52.28712,60.221 56.5781,60.26501 4.29099,0.044 24.53952,-6.85593 56.5246,-60.16438 32.02467,-53.37445 16.52314,-83.22891 16.52313,-83.22891 0,0 -9.15513,-35.61997 -73.06258,-35.76089 -63.90744,-0.14093 -73.08634,35.65835 -73.08634,35.65835 z" />
+        <path d="m 289.40525,359.64878 c 0,0 -14.76336,28.43477 15.73633,79.26758 30.51873,50.86455 49.79725,57.35333 53.8839,57.39525 4.08666,0.0419 23.37097,-6.52946 53.83295,-57.29941 30.49969,-50.83281 15.73633,-79.26563 15.73632,-79.26563 0,0 -8.71917,-33.92378 -69.58341,-34.05799 -60.86423,-0.13422 -69.60604,33.96033 -69.60604,33.96033 z" />
+      </g>
+    </g>
+  </svg>`;
+
+  // encodeURIComponent is crucial here so that the '#' in hex codes doesn't break the URL
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`;
+};
+
 export const defaultPromptId = (
   songId: string,
   summaryModel: string,
@@ -173,25 +188,31 @@ export class SongData {
   thumbnailURL(): string | undefined {
     if (!this.currentIllustration) {
       if (this.externalSource?.sourceId === "pisnicky-akordy")
-        return "/pa_logo.png";
-      if (this.externalSource?.sourceId === "cifraclub") return "/cc_logo.png";
+        return generateFallbackLogo("#7BAADF", "#578DC5");
+      if (this.externalSource?.sourceId === "cifraclub")
+        return generateFallbackLogo("#ffb940", "#ff7800");
       if (this.externalSource?.sourceId === "zpevnik-skorepova")
-        return "/zs_logo.png";
+        return generateFallbackLogo("#9917DA", "#3B0A54");
     }
     return (
-      this.currentIllustration?.thumbnailURL ?? "/unknown_illustration.png"
+      this.currentIllustration?.thumbnailURL ??
+      generateFallbackLogo("#ffc48c", "#f28c28")
     );
   }
 
   illustrationURL(): string | undefined {
     if (!this.currentIllustration) {
       if (this.externalSource?.sourceId === "pisnicky-akordy")
-        return "/pa_logo.png";
-      if (this.externalSource?.sourceId === "cifraclub") return "/cc_logo.png";
+        return generateFallbackLogo("#7BAADF", "#578DC5");
+      if (this.externalSource?.sourceId === "cifraclub")
+        return generateFallbackLogo("#ffb940", "#ff7800");
       if (this.externalSource?.sourceId === "zpevnik-skorepova")
-        return "/zs_logo.png";
+        return generateFallbackLogo("#9917DA", "#3B0A54");
     }
-    return this.currentIllustration?.imageURL ?? "/unknown_illustration.png";
+    return (
+      this.currentIllustration?.imageURL ??
+      generateFallbackLogo("#ffc48c", "#f28c28")
+    );
   }
 
   // JSON serialization for API responses
