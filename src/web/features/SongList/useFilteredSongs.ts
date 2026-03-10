@@ -184,22 +184,21 @@ export function useFilteredSongs(
     const localSongIds = new Set(songs.map((s) => s.id));
     return rawExternalSongs.filter((s) => !localSongIds.has(s.id));
   }, [rawExternalSongs, songs]);
-
   const sortedExternalSongs = useMemo(() => {
     if (unaddedExternalSongs.length === 0 || !query) {
       return unaddedExternalSongs;
     }
-
     const externalFuse = new Fuse(unaddedExternalSongs, {
       includeScore: true,
       keys: ["title_for_search", "artist_for_search"],
       ignoreLocation: true,
-      threshold: 0.4,
+      // A threshold of 1.0 forces Fuse to act as a sorter only,
+      // never filtering items out of the array.
+      threshold: 1.0,
     });
 
     return externalFuse.search(query).map((r) => r.item);
   }, [unaddedExternalSongs, query]);
-
   const displayedSongs = useMemo(() => {
     // 1. If searching, return raw internal search results + fetched external results
     if (query && searchResults) {
