@@ -123,8 +123,7 @@
   "scripts": {
     "build": "vite build",
     "check": "tsc && vite build && wrangler deploy --dry-run",
-    "bump": "calver --format yyyy.mm.dd package.json",
-    "deploy": "pnpm run bump && pnpm run build && wrangler deploy",
+    "deploy": "pnpm run build && wrangler deploy",
     "deploy:backup": "wrangler deploy --config wrangler.db-backup.jsonc",
     "deploy:all": "npm run deploy && npm run deploy:backup",
     "dev": "vite",
