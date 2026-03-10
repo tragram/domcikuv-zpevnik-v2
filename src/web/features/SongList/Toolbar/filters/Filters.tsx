@@ -109,17 +109,15 @@ const FilterControls = ({
             {!iconOnly && "Favorites only"}
           </Button>
         )}
-        {user.loggedIn && (
-          <Button
-            variant="circular"
-            isActive={showExternal}
-            className="rounded-none font-bold shadow-none outline-0"
-            onClick={toggleShowExternal}
-          >
-            <Globe />
-            {!iconOnly && "Show external"}
-          </Button>
-        )}
+        <Button
+          variant="circular"
+          isActive={showExternal}
+          className="rounded-none font-bold shadow-none outline-0"
+          onClick={toggleShowExternal}
+        >
+          <Globe />
+          {!iconOnly && "Show external"}
+        </Button>
         {maxRange && (
           <VocalRangeFilter
             maxRange={maxRange}

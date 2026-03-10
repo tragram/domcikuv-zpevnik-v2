@@ -80,12 +80,8 @@ export const filterSongbook = (
   return songs.filter((s) => contentsOfSelectedSongbooks.has(s.id));
 };
 
-const filterExternal = (
-  songs: SongData[],
-  loggedIn: boolean,
-  showExternal: boolean,
-) => {
-  if (!loggedIn || !showExternal) {
+const filterExternal = (songs: SongData[], showExternal: boolean) => {
+  if (!showExternal) {
     return songs.filter((song) => !song.externalSource);
   } else {
     return songs;
@@ -144,90 +140,57 @@ export function useFilteredSongs(
   }, [sortByField, sortOrder, setQuery]);
 
   const fuse = useMemo(() => {
-    const options = {
+    return new Fuse(songs, {
       includeScore: true,
       keys: ["title_for_search", "artist_for_search"],
       ignoreLocation: true,
       threshold: 0.4,
-    };
-    return new Fuse(songs, options);
+    });
   }, [songs]);
 
-  const fuseSearch = useMemo(
-    () =>
-      query === ""
-        ? songs.map((s) => {
-            return { item: s, score: 0 };
-          })
-        : fuse.search(to_ascii(query).toLowerCase()),
-    [fuse, songs, query],
-  );
-
-  const internalSearchResults = fuseSearch.map((r) => r.item);
-
-  let filteredInternalResults = filterCapo(internalSearchResults, capo);
-  filteredInternalResults = filterVocalRange(
-    filteredInternalResults,
-    vocalRange,
-  );
-  filteredInternalResults = filterLanguage(
-    filteredInternalResults,
-    language,
-    languageCounts,
-  );
-  filteredInternalResults = filterFavorites(
-    filteredInternalResults,
-    user.loggedIn,
-    onlyFavorites,
-  );
-  filteredInternalResults = filterExternal(
-    filteredInternalResults,
-    user.loggedIn,
-    showExternal,
-  );
-  filteredInternalResults = filterSongbook(
-    filteredInternalResults,
-    availableSongbooks,
-    selectedSongbooks,
-  );
-
-  if (!query) {
-    filteredInternalResults = [...filteredInternalResults].sort(
-      getSortCompareFunction(sortByField, sortOrder),
-    );
-  }
+  const searchResults = useMemo(() => {
+    if (!query) return null;
+    return fuse.search(to_ascii(query).toLowerCase());
+  }, [query, fuse]);
 
   // --- External Search Logic ---
-  // fuzzyScore \in [0,1], where 0 ~ perfect match and 1 ~ completely fuzzy match (i.e. no match)
-  const minFuzzyScore = Math.min(...fuseSearch.map((fs) => fs.score as number));
+  const minFuzzyScore = searchResults?.length
+    ? Math.min(...searchResults.map((fs) => fs.score as number))
+    : Infinity;
+
   const isQueryValidForExternal =
-    minFuzzyScore > 0.05 || query.trim().length >= 7;
+    !!query && (minFuzzyScore > 0.05 || query.trim().length >= 7);
+
   const shouldSearchExternal =
     user.loggedIn &&
     showExternal &&
     isQueryValidForExternal &&
     hasTriggeredExternalSearch;
 
-  const { data: externalSongs = [], isFetching: isLoadingExternal } = useQuery({
-    queryKey: ["externalSearch", query],
-    queryFn: async () => {
-      const results = await fetchExternalSearch(api, query);
-      // only show songs not already in the internal DB
-      const localSongIds = songs.map((os) => os.id);
-      return results.filter((s) => !localSongIds.includes(s.id));
-    },
-    // Only fetch when the trigger is active
-    enabled: shouldSearchExternal,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: rawExternalSongs = [], isFetching: isLoadingExternal } =
+    useQuery({
+      queryKey: ["externalSearch", query],
+      queryFn: async () => {
+        return await fetchExternalSearch(api, query);
+      },
+      enabled: shouldSearchExternal,
+      staleTime: 1000 * 60 * 5,
+      structuralSharing: false,
+    });
 
-  // Apply fuse search to external results for relevance sorting
+  // Dynamically filter out songs already in the internal DB.
+  // This ensures that right after a user "clicks" and adds a song, it instantly disappears from external results.
+  const unaddedExternalSongs = useMemo(() => {
+    const localSongIds = new Set(songs.map((s) => s.id));
+    return rawExternalSongs.filter((s) => !localSongIds.has(s.id));
+  }, [rawExternalSongs, songs]);
+
   const sortedExternalSongs = useMemo(() => {
-    if (externalSongs.length === 0 || !query) {
-      return externalSongs;
+    if (unaddedExternalSongs.length === 0 || !query) {
+      return unaddedExternalSongs;
     }
 
-    const externalFuse = new Fuse(externalSongs, {
+    const externalFuse = new Fuse(unaddedExternalSongs, {
       includeScore: true,
       keys: ["title_for_search", "artist_for_search"],
       ignoreLocation: true,
@@ -235,14 +198,52 @@ export function useFilteredSongs(
     });
 
     return externalFuse.search(query).map((r) => r.item);
-  }, [externalSongs, query]);
+  }, [unaddedExternalSongs, query]);
+
+  const displayedSongs = useMemo(() => {
+    // 1. If searching, return raw internal search results + fetched external results
+    if (query && searchResults) {
+      let localResults = searchResults.map((r) => r.item);
+
+      // Respect the 'showExternal' filter during search so internal external songs hide properly
+      localResults = filterExternal(localResults, showExternal);
+
+      return [...localResults, ...sortedExternalSongs];
+    }
+
+    // 2. If NOT searching, apply filters and sort
+    let results = filterCapo(songs, capo);
+    results = filterVocalRange(results, vocalRange);
+    results = filterLanguage(results, language, languageCounts);
+    results = filterFavorites(results, user.loggedIn, onlyFavorites);
+    results = filterExternal(results, showExternal);
+    results = filterSongbook(results, availableSongbooks, selectedSongbooks);
+
+    return results.sort(getSortCompareFunction(sortByField, sortOrder));
+  }, [
+    query,
+    searchResults,
+    sortedExternalSongs,
+    songs,
+    capo,
+    vocalRange,
+    language,
+    languageCounts,
+    user.loggedIn,
+    onlyFavorites,
+    showExternal,
+    availableSongbooks,
+    selectedSongbooks,
+    sortByField,
+    sortOrder,
+  ]);
 
   return {
-    songs: filteredInternalResults,
-    externalSongs: sortedExternalSongs,
+    songs: displayedSongs,
+    externalSongs: [] as SongData[],
     isLoadingExternal,
     triggerExternalSearch: () => setTriggeredQuery(query),
-    hasTriggeredExternalSearch: hasTriggeredExternalSearch,
+    hasTriggeredExternalSearch,
     canSearchExternal: user.loggedIn && showExternal && isQueryValidForExternal,
   };
 }
