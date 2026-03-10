@@ -7,7 +7,7 @@ import {
 } from "src/worker/api/api-types";
 import { ExternalSearchResult } from "src/worker/helpers/external-search";
 
-const to_ascii = (text: string): string => {
+export const to_ascii = (text: string): string => {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };
 
@@ -155,6 +155,14 @@ export class SongData {
 
   get ascii_artist(): string {
     return to_ascii(this.artist);
+  }
+
+  get title_for_search(): string {
+    return this.ascii_title.toLowerCase();
+  }
+
+  get artist_for_search(): string {
+    return this.ascii_artist.toLowerCase();
   }
 
   static baseId(title: string, artist: string) {

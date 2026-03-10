@@ -1,5 +1,5 @@
 import type { LanguageCount, SortField, SortOrder } from "~/types/types";
-import { SongData } from "~/types/songData";
+import { SongData, to_ascii } from "~/types/songData";
 import Fuse from "fuse.js";
 import { useEffect, useMemo, useState } from "react";
 import { useQueryStore } from "./Toolbar/SearchBar";
@@ -138,7 +138,7 @@ export function useFilteredSongs(
   const [triggeredQuery, setTriggeredQuery] = useState<string | null>(null);
   const hasTriggeredExternalSearch = query === triggeredQuery;
 
-  // Reset query on sort change (optional, legacy behavior preserved)
+  // Reset query on sort change
   useEffect(() => {
     setQuery("");
   }, [sortByField, sortOrder, setQuery]);
@@ -146,7 +146,7 @@ export function useFilteredSongs(
   const fuse = useMemo(() => {
     const options = {
       includeScore: true,
-      keys: ["artist", "title", "ascii_title", "ascii_artist"],
+      keys: ["title_for_search", "artist_for_search"],
       ignoreLocation: true,
       threshold: 0.4,
     };
@@ -159,7 +159,7 @@ export function useFilteredSongs(
         ? songs.map((s) => {
             return { item: s, score: 0 };
           })
-        : fuse.search(query),
+        : fuse.search(to_ascii(query).toLowerCase()),
     [fuse, songs, query],
   );
 
@@ -229,7 +229,7 @@ export function useFilteredSongs(
 
     const externalFuse = new Fuse(externalSongs, {
       includeScore: true,
-      keys: ["artist", "title", "ascii_title", "ascii_artist"],
+      keys: ["title_for_search", "artist_for_search"],
       ignoreLocation: true,
       threshold: 0.4,
     });
