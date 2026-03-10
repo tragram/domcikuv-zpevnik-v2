@@ -7,13 +7,26 @@ import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from "vite-plugin-pwa";
 import checker from "vite-plugin-checker";
+import { execSync } from "child_process";
+
+// Generate YYYY.MM.DD
+const d = new Date();
+const calver = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+
+let uniqueId = "dev";
+try {
+  uniqueId =
+    process.env.CF_PAGES_COMMIT_SHA?.slice(0, 7) ||
+    execSync("git rev-parse --short HEAD").toString().trim();
+} catch (e) {
+  // Fallback for environments without git
+}
+const finalVersion = `${calver}-${uniqueId}`;
 
 export default defineConfig(({ mode }) => {
   const isTest = process.env.VITEST !== undefined || mode === "test";
   return {
-    define: {
-      __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
-    },
+    define: { __APP_VERSION__: JSON.stringify(finalVersion) },
     plugins: [
       tsConfigPaths({
         projects: ["./tsconfig.json"],
