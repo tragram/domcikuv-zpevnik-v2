@@ -11,6 +11,9 @@ import checker from "vite-plugin-checker";
 export default defineConfig(({ mode }) => {
   const isTest = process.env.VITEST !== undefined || mode === "test";
   return {
+    define: {
+      __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
+    },
     plugins: [
       tsConfigPaths({
         projects: ["./tsconfig.json"],

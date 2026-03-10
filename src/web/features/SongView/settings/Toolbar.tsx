@@ -45,7 +45,6 @@ import { UserProfileData } from "src/worker/api/userProfile";
 import { FeedStatus } from "../SongView";
 import ShareSongButton from "../components/ShareSongButton";
 import { AvatarWithFallback } from "~/components/ui/avatar";
-import { version as appVersion } from "../../../../../package.json";
 import { CompactItem } from "~/components/RichDropdown";
 
 interface ToolbarProps {
@@ -242,7 +241,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                   <RefreshCw />
                 </CompactItem.Icon>
                 <CompactItem.Body
-                  title={`Currently on v${appVersion}`}
+                  title={`Currently on v${__APP_VERSION__}`}
                   subtitle="Click to force update"
                 />
               </CompactItem.Shell>
