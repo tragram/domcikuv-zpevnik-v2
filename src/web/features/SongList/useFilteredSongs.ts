@@ -201,7 +201,7 @@ export function useFilteredSongs(
   // fuzzyScore \in [0,1], where 0 ~ perfect match and 1 ~ completely fuzzy match (i.e. no match)
   const minFuzzyScore = Math.min(...fuseSearch.map((fs) => fs.score as number));
   const isQueryValidForExternal =
-    query.trim().length >= 3 && minFuzzyScore > 0.1;
+    minFuzzyScore > 0.05 || query.trim().length >= 7;
   const shouldSearchExternal =
     user.loggedIn &&
     showExternal &&
