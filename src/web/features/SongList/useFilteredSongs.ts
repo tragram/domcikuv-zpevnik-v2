@@ -207,7 +207,7 @@ export function useFilteredSongs(
       // Respect the 'showExternal' filter during search so internal external songs hide properly
       localResults = filterExternal(localResults, showExternal);
 
-      return [...localResults, ...sortedExternalSongs];
+      return localResults;
     }
 
     // 2. If NOT searching, apply filters and sort
@@ -239,7 +239,7 @@ export function useFilteredSongs(
 
   return {
     songs: displayedSongs,
-    externalSongs: [] as SongData[],
+    externalSongs: Array.from(unaddedExternalSongs), 
     isLoadingExternal,
     triggerExternalSearch: () => setTriggeredQuery(query),
     hasTriggeredExternalSearch,
