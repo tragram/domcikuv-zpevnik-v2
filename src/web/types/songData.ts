@@ -114,7 +114,7 @@ export class SongData {
       key: undefined,
       startMelody: "",
       language: "other",
-      capo: null, // Replaced 0 with null to match DB
+      capo: null,
       tempo: null,
       range: undefined,
       chordpro: "",
@@ -128,9 +128,10 @@ export class SongData {
     } as unknown as SongDataApi);
 
     song.url = () => external.url;
-    song.thumbnailURL = () => external.thumbnailURL;
-    song.illustrationURL = () => external.thumbnailURL;
-
+    if (external.thumbnailURL) {
+      song.thumbnailURL = () => external.thumbnailURL;
+      song.illustrationURL = () => external.thumbnailURL;
+    }
     return song;
   }
 

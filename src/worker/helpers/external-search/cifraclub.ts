@@ -39,7 +39,7 @@ export async function searchCifraClub(
         url: `https://www.cifraclub.com/${hit.d}/${hit.u}`,
         thumbnailURL: hit.i
           ? `https://akamai.sscdn.co/letras/115x115/fotos/${hit.i}`
-          : "cc_logo.png",
+          : undefined,
         sourceId: "cifraclub",
       }));
   } catch (error) {

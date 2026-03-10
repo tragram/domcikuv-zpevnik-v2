@@ -47,7 +47,7 @@ export async function searchPisnickyAkordy(
         artist: hit.interpreter?.name || "Unknown Artist",
         source: "Písničky Akordy",
         url: `https://pisnicky-akordy.cz/${hit.interpreter?.slug}/${hit.slug}`,
-        thumbnailURL: hit.image || "pa_logo.png",
+        thumbnailURL: hit.image || undefined,
         sourceId: "pisnicky-akordy",
       }));
   } catch (error) {

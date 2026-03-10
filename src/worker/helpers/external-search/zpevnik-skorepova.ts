@@ -122,6 +122,6 @@ export async function searchZpevnikSkorepova(
       artist: song.data.author || "Unknown Artist",
       url: `https://zpevnik.skorepova.info/song/${song.data.slug}`,
       sourceId: "zpevnik-skorepova",
-      thumbnailURL: "zs_logo.png",
+      thumbnailURL: undefined,
     }));
 }
