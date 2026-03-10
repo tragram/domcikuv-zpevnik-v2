@@ -12,6 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { useIsOnline } from "~/hooks/use-is-online";
 import type { SongDB } from "~/types/types";
 import Filtering from "./filters/Filters";
@@ -102,64 +108,98 @@ function Toolbar({ songDB, isVisible, isAdmin }: ToolbarProps) {
       isVisible={isVisible}
       childContainerClassName="max-sm:justify-between"
     >
-      <SortMenu />
-      <SearchBar />
-      <Filtering songDB={songDB} />
+      <TooltipProvider delayDuration={300}>
+        <SortMenu />
+        <SearchBar />
+        <Filtering songDB={songDB} />
 
-      <SessionView isOnline={isOnline} />
+        <SessionView isOnline={isOnline} />
 
-      <RandomSong songs={songDB.songs} />
+        <RandomSong songs={songDB.songs} />
 
-      <div className="hidden min-[1150px]:flex h-full w-fit">
-        <ThemeToggle />
-      </div>
-      <Button
-        asChild
-        className="hidden min-[1150px]:flex"
-        size="icon"
-        variant="circular"
-      >
-        <Link to="/edit">
-          <Pencil />
-        </Link>
-      </Button>
-      <Button
-        asChild
-        className="hidden min-[1150px]:flex"
-        size="icon"
-        variant="circular"
-        disabled={!isOnline}
-      >
-        <Link to="/profile">
-          <User />
-        </Link>
-      </Button>
-      <Button
-        asChild
-        className="hidden min-[1150px]:flex"
-        size="icon"
-        variant="circular"
-      >
-        <Link to="/gallery">
-          <ImagesIcon />
-        </Link>
-      </Button>
-      {isAdmin && (
-        <Button
-          asChild
-          className="hidden min-[1150px]:flex"
-          size="icon"
-          variant="circular"
-        >
-          <Link to="/admin">
-            <Shield />
-          </Link>
-        </Button>
-      )}
+        <div className="hidden min-[1150px]:flex h-full w-fit">
+          <ThemeToggle />
+        </div>
 
-      <div className="flex min-[1150px]:hidden">
-        <CombinedMenu isOnline={isOnline} isAdmin={isAdmin} />
-      </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              asChild
+              className="hidden min-[1150px]:flex"
+              size="icon"
+              variant="circular"
+            >
+              <Link to="/edit">
+                <Pencil />
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Add song</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              asChild
+              className="hidden min-[1150px]:flex"
+              size="icon"
+              variant="circular"
+              disabled={!isOnline}
+            >
+              <Link to="/profile">
+                <User />
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Profile</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              asChild
+              className="hidden min-[1150px]:flex"
+              size="icon"
+              variant="circular"
+            >
+              <Link to="/gallery">
+                <ImagesIcon />
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Gallery</p>
+          </TooltipContent>
+        </Tooltip>
+
+        {isAdmin && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                asChild
+                className="hidden min-[1150px]:flex"
+                size="icon"
+                variant="circular"
+              >
+                <Link to="/admin">
+                  <Shield />
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Admin</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+
+        <div className="flex min-[1150px]:hidden">
+          <CombinedMenu isOnline={isOnline} isAdmin={isAdmin} />
+        </div>
+      </TooltipProvider>
     </ToolbarBase>
   );
 }

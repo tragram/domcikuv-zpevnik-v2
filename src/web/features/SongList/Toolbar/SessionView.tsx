@@ -10,6 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { useActiveSessions } from "~/hooks/use-active-sessions";
 
 interface SessionViewProps {
@@ -64,16 +69,25 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger asChild>
-        <Button
-          size="icon"
-          variant="circular"
-          disabled={!isOnline}
-          isActive={active}
-        >
-          <CloudSync />
-        </Button>
-      </DropdownMenuTrigger>
+      {/* Tooltip wraps the Dropdown trigger */}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button
+              size="icon"
+              variant="circular"
+              disabled={!isOnline}
+              isActive={active}
+            >
+              <CloudSync />
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Active Sessions</p>
+        </TooltipContent>
+      </Tooltip>
+
       <DropdownMenuContent
         className="m-2 w-[calc(100dvw-1rem)] sm:w-96"
         align="start"

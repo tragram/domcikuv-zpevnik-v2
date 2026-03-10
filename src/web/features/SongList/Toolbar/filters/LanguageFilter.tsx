@@ -11,6 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { LanguageCount, SongLanguage } from "~/types/types";
 
 export const RARE_LANGUAGE_THRESHOLD = 3;
@@ -98,16 +103,23 @@ export const LanguageFilter = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="circular"
-          isActive={active}
-          className="outline-0 rounded-r-none font-bold"
-        >
-          <Languages />
-          {!iconOnly && "Languages"}
-        </Button>
-      </DropdownMenuTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="circular"
+              isActive={active}
+              className="outline-0 rounded-r-none font-bold"
+            >
+              <Languages />
+              {!iconOnly && "Languages"}
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Languages</p>
+        </TooltipContent>
+      </Tooltip>
       <DropdownMenuContent aria-label="Language Choices" sideOffset={16}>
         <DropdownMenuLabel>Select languages</DropdownMenuLabel>
         <DropdownMenuSeparator />

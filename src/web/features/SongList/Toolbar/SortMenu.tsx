@@ -24,6 +24,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { SortField, SortOrder, SortSettings } from "~/types/types";
 
 interface SortSettingsState extends SortSettings {
@@ -184,11 +189,18 @@ const SortMenu = (): JSX.Element => {
     <>
       <div className="flex md:hidden">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="circular">
-              <ArrowDownUp size={32} />
-            </Button>
-          </DropdownMenuTrigger>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="circular">
+                  <ArrowDownUp size={32} />
+                </Button>
+              </DropdownMenuTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Sort options</p>
+            </TooltipContent>
+          </Tooltip>
           <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56">
             <RichItem.Header>Sorting method</RichItem.Header>
             <DropdownMenuSeparator />
@@ -240,12 +252,19 @@ const SortMenu = (): JSX.Element => {
           selectedOption={sortByField}
           roundedClass="rounded-l-full"
         >
-          <Button
-            className="rounded-r-full hover:bg-transparent hover:text-primary hover:dark:bg-transparent"
-            onClick={() => setSortOrder(toggleSortOrder(sortOrder))}
-          >
-            {activeCategory.sorting_icons[sortOrder]}
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                className="rounded-r-full hover:bg-transparent hover:text-primary hover:dark:bg-transparent"
+                onClick={() => setSortOrder(toggleSortOrder(sortOrder))}
+              >
+                {activeCategory.sorting_icons[sortOrder]}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Toggle direction</p>
+            </TooltipContent>
+          </Tooltip>
         </FancySwitch>
       </div>
     </>

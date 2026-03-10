@@ -7,6 +7,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { RangeSlider } from "~/components/ui/slider";
 import { Music } from "lucide-react";
 import { JSX } from "react";
@@ -61,16 +66,23 @@ export const VocalRangeFilter = ({
 }: VocalRangeFilterProps): JSX.Element => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="circular"
-          isActive={vocalRangeFilter !== "all"}
-          className="shadow-none outline-0 font-bold rounded-l-none"
-        >
-          <Music />
-          {!iconOnly && "Range"}
-        </Button>
-      </DropdownMenuTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="circular"
+              isActive={vocalRangeFilter !== "all"}
+              className="shadow-none outline-0 font-bold rounded-l-none"
+            >
+              <Music />
+              {!iconOnly && "Range"}
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Vocal range</p>
+        </TooltipContent>
+      </Tooltip>
       <DropdownMenuContent
         aria-label="Vocal range filter slider"
         className="w-80"

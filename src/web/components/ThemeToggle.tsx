@@ -3,6 +3,7 @@ import { Button } from "~/components/ui/button";
 import { useTheme } from "./ThemeProvider";
 import { DropdownMenuItem } from "./ui/dropdown-menu";
 import { RichItem, CompactItem } from "./RichDropdown";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -12,10 +13,22 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button variant="circular" size="icon" type="button" onClick={toggleTheme}>
-      <SunIcon className="scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-      <MoonIcon className="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="circular"
+          size="icon"
+          type="button"
+          onClick={toggleTheme}
+        >
+          <SunIcon className="scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+          <MoonIcon className="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>Toggle theme</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }
 

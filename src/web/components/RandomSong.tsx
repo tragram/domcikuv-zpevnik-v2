@@ -18,6 +18,11 @@ import type { SongDB } from "~/types/types";
 import { CompactItem } from "./RichDropdown";
 import { Button } from "./ui/button";
 import { DropdownMenuCheckboxItem, DropdownMenuItem } from "./ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 const BAN_LIST_KEY = "songsBannedFromRandom";
 
@@ -179,16 +184,23 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
 
   return (
     <>
-      <Button
-        size="icon"
-        variant="circular"
-        asChild
-        onClick={chosenSong ? banSong : () => setIsNoSongsDialogOpen(true)}
-      >
-        <Link to={chosenSong?.url()}>
-          <Dices />
-        </Link>
-      </Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            size="icon"
+            variant="circular"
+            asChild
+            onClick={chosenSong ? banSong : () => setIsNoSongsDialogOpen(true)}
+          >
+            <Link to={chosenSong?.url()}>
+              <Dices />
+            </Link>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Pick random song</p>
+        </TooltipContent>
+      </Tooltip>
 
       <AlertDialog
         open={isNoSongsDialogOpen}

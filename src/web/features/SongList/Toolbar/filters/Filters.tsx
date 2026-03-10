@@ -8,6 +8,11 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { useMediaQuery } from "usehooks-ts";
 import type { LanguageCount, SongDB, SongLanguage } from "~/types/types";
 import {
@@ -89,35 +94,59 @@ const FilterControls = ({
             sectionOnly={false}
           />
         )}
-        <Button
-          variant="circular"
-          isActive={capo}
-          className="rounded-none font-bold shadow-none outline-0"
-          onClick={toggleCapo}
-        >
-          <Handshake />
-          {!iconOnly && "Capo"}
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="circular"
+              isActive={capo}
+              className="rounded-none font-bold shadow-none outline-0"
+              onClick={toggleCapo}
+            >
+              <Handshake />
+              {!iconOnly && "Capo"}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Allow capo</p>
+          </TooltipContent>
+        </Tooltip>
+
         {user.loggedIn && (
-          <Button
-            variant="circular"
-            isActive={onlyFavorites}
-            className="rounded-none font-bold shadow-none outline-0"
-            onClick={toggleFavorites}
-          >
-            <Heart />
-            {!iconOnly && "Favorites only"}
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="circular"
+                isActive={onlyFavorites}
+                className="rounded-none font-bold shadow-none outline-0"
+                onClick={toggleFavorites}
+              >
+                <Heart />
+                {!iconOnly && "Favorites only"}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Favorites only</p>
+            </TooltipContent>
+          </Tooltip>
         )}
-        <Button
-          variant="circular"
-          isActive={showExternal}
-          className="rounded-none font-bold shadow-none outline-0"
-          onClick={toggleShowExternal}
-        >
-          <Globe />
-          {!iconOnly && "Show external"}
-        </Button>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="circular"
+              isActive={showExternal}
+              className="rounded-none font-bold shadow-none outline-0"
+              onClick={toggleShowExternal}
+            >
+              <Globe />
+              {!iconOnly && "Show external"}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Show external songs</p>
+          </TooltipContent>
+        </Tooltip>
+
         {maxRange && (
           <VocalRangeFilter
             maxRange={maxRange}
@@ -203,11 +232,22 @@ const Filtering = ({ songDB }: { songDB: SongDB }): JSX.Element => {
       {/* Mobile View */}
       <div className="lg:hidden">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="circular" isActive={!isFilterInactive}>
-              <Filter />
-            </Button>
-          </DropdownMenuTrigger>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="circular"
+                  isActive={!isFilterInactive}
+                >
+                  <Filter />
+                </Button>
+              </DropdownMenuTrigger>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Filter songs</p>
+            </TooltipContent>
+          </Tooltip>
           <DropdownMenuContent
             aria-label="Filtering"
             className="dropdown-scroll no-scrollbar max-h-[80dvh] overflow-y-scroll m-2 w-[calc(100dvw-1rem)] max-w-72"

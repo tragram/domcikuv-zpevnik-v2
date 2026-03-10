@@ -10,6 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 import { SongData } from "~/types/songData";
 import { filterSongbook } from "../../useFilteredSongs";
 
@@ -175,26 +180,33 @@ export const SongBookFilter = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="circular"
-          isActive={active}
-          className="outline-0 rounded-none font-bold"
-        >
-          <BookUser className="h-4 w-4" />
-          {!iconOnly && (
-            <span>
-              Songbooks
-              {selectedSongbooks.length > 0 &&
-                selectedSongbooks.length < availableSongbooks.length && (
-                  <span className="ml-1 text-xs opacity-75">
-                    ({selectedSongbooks.length})
-                  </span>
-                )}
-            </span>
-          )}
-        </Button>
-      </DropdownMenuTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="circular"
+              isActive={active}
+              className="outline-0 rounded-none font-bold"
+            >
+              <BookUser className="h-4 w-4" />
+              {!iconOnly && (
+                <span>
+                  Songbooks
+                  {selectedSongbooks.length > 0 &&
+                    selectedSongbooks.length < availableSongbooks.length && (
+                      <span className="ml-1 text-xs opacity-75">
+                        ({selectedSongbooks.length})
+                      </span>
+                    )}
+                </span>
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Songbooks</p>
+        </TooltipContent>
+      </Tooltip>
       <DropdownMenuContent className="w-80" align="start" sideOffset={16}>
         <DropdownMenuLabel className="text-sm font-semibold">
           Filter by Songbooks
