@@ -38,11 +38,10 @@ interface FilterStoreProps {
 }
 
 const safeAddSongbook = (songbooks: Songbook[], songbook: Songbook) => {
-  if (songbooks.map((s) => s.name).includes(songbook.name)) {
+  if (songbooks.some((s) => s.name === songbook.name)) {
     return songbooks;
   }
-  songbooks.push(songbook);
-  return songbooks;
+  return [...songbooks, songbook];
 };
 
 const createFilterSettingsStore = (initProps: FilterStoreProps) =>
