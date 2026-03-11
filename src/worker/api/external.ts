@@ -29,7 +29,6 @@ import { buildApp } from "./utils";
 
 export const externalRoutes = buildApp()
   .get("/search", async (c) => {
-    console.log("searching");
     const query = c.req.query("q");
     const user = c.var.USER;
 
