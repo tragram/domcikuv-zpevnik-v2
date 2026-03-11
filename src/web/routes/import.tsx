@@ -31,7 +31,9 @@ export const Route = createFileRoute("/import")({
           }),
         "Failed to import song",
       );
-
+      // Invalidate the songs cache so the local DB rebuilds with the new song
+      await context.queryClient.invalidateQueries({ queryKey: ["songs"] });
+      
       throw redirect({
         to: "/song/$songId",
         params: { songId: data.songId },
