@@ -6,6 +6,10 @@ import {
   externalSearchResultSchema,
   searchAllExternalServices,
 } from "../helpers/external-search";
+import {
+  SkorepovaCache,
+  ZPEVNIK_SKOREPOVA_CACHE_KEY,
+} from "../helpers/external-search/zpevnik-skorepova";
 import { addIllustrationFromURL } from "../helpers/illustration-helpers";
 import {
   createImportSong,
@@ -13,6 +17,7 @@ import {
   createSongVersion,
   retrieveSingleSong,
 } from "../helpers/song-helpers";
+import { SongDataApi } from "./api-types";
 import { EditorSubmitSchema } from "./editor";
 import {
   errorJSend,
@@ -21,16 +26,10 @@ import {
   zValidatorJSend,
 } from "./responses";
 import { buildApp } from "./utils";
-import { SongDataApi } from "./api-types";
-import {
-  SkorepovaCache,
-  ZPEVNIK_SKOREPOVA_CACHE_KEY,
-} from "../helpers/external-search/zpevnik-skorepova";
-import { eq } from "drizzle-orm";
-import { song } from "src/lib/db/schema";
 
 export const externalRoutes = buildApp()
   .get("/search", async (c) => {
+    console.log("searching");
     const query = c.req.query("q");
     const user = c.var.USER;
 

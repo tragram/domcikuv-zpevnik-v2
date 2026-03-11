@@ -178,17 +178,11 @@ export function useFilteredSongs(
       structuralSharing: false,
     });
 
-  // Dynamically filter out songs already in the internal DB.
-  // This ensures that right after a user "clicks" and adds a song, it instantly disappears from external results.
-  const unaddedExternalSongs = useMemo(() => {
-    const localSongIds = new Set(songs.map((s) => s.id));
-    return rawExternalSongs.filter((s) => !localSongIds.has(s.id));
-  }, [rawExternalSongs, songs]);
   const sortedExternalSongs = useMemo(() => {
-    if (unaddedExternalSongs.length === 0 || !query) {
-      return unaddedExternalSongs;
+    if (rawExternalSongs.length === 0 || !query) {
+      return rawExternalSongs;
     }
-    const externalFuse = new Fuse(unaddedExternalSongs, {
+    const externalFuse = new Fuse(rawExternalSongs, {
       includeScore: true,
       keys: ["title_for_search", "artist_for_search"],
       ignoreLocation: true,
@@ -198,7 +192,7 @@ export function useFilteredSongs(
     });
 
     return externalFuse.search(query).map((r) => r.item);
-  }, [unaddedExternalSongs, query]);
+  }, [rawExternalSongs, query]);
   const displayedSongs = useMemo(() => {
     // 1. If searching, return raw internal search results + fetched external results
     if (query && searchResults) {
@@ -230,7 +224,6 @@ export function useFilteredSongs(
     sortByField,
     sortOrder,
   ]);
-
   return {
     songs: displayedSongs,
     externalSongs: Array.from(sortedExternalSongs),
