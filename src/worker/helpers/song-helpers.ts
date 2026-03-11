@@ -297,6 +297,15 @@ export const createSongVersion = async (
   isTrusted: boolean,
   importId?: string,
 ) => {
+  const existingSong = await getSongBase(db, songId);
+  if (existingSong.hidden || existingSong.deleted) {
+    console.log(existingSong);
+    // ensure the song won't be hidden after this new version, at least after the suggested version is accepted
+    await db
+      .update(song)
+      .set({ hidden: false, deleted: false, currentVersionId: null })
+      .where(eq(song.id, songId));
+  }
   const now = new Date();
   let parentVersion: schema.SongVersionDB | undefined = undefined;
 
