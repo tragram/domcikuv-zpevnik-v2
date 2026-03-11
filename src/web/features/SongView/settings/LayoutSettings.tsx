@@ -1,32 +1,29 @@
-import React from "react";
-import { Button } from "~/components/ui/button";
 import {
-  MoveDiagonal,
-  MoveHorizontal,
+  Brain,
   Columns2,
   Fullscreen,
-  AArrowDown,
-  AArrowUp,
-  PencilRuler,
-  Repeat,
   Maximize,
-  Brain,
+  MoveDiagonal,
+  MoveHorizontal,
+  PencilRuler,
+  Repeat
 } from "lucide-react";
+import React from "react";
+import type { FullScreenHandle } from "react-full-screen";
+import FancySwitch from "~/components/FancySwitch";
+import { CompactItem } from "~/components/RichDropdown";
+import { Button } from "~/components/ui/button";
+import {
+  DropdownMenuCheckboxItem,
+  DropdownMenuSeparator
+} from "~/components/ui/dropdown-menu";
+import { LoopNoteIcon } from "~/components/ui/loop-note-icon";
 import {
   type LayoutPreset,
   type LayoutSettings,
   useViewSettingsStore,
 } from "../hooks/viewSettingsStore";
-import type { FullScreenHandle } from "react-full-screen";
-import {
-  DropdownMenuCheckboxItem,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "~/components/ui/dropdown-menu";
-import { LoopNoteIcon } from "~/components/ui/loop-note-icon";
 import SmartColumnIcon from "./smart_columns_icon";
-import FancySwitch from "~/components/FancySwitch";
-import { CompactItem } from "~/components/RichDropdown";
 
 const layoutSettingsBoolsKeys = [
   "multiColumns",
@@ -166,7 +163,6 @@ export const LayoutSettingsDropdownSection: React.FC = () => {
     actions.setLayoutSettings({ ...modifiedSettings });
     actions.setCustomLayoutPreset({ ...modifiedSettings });
   }
-  const FONT_SIZE_STEP = 1.2;
 
   return (
     <>
@@ -210,40 +206,6 @@ export const LayoutSettingsDropdownSection: React.FC = () => {
           />
         </CompactItem.Shell>
       </DropdownMenuCheckboxItem>
-
-      <DropdownMenuItem
-        onClick={() =>
-          setBothSettings({
-            fitScreenMode: "none",
-            fontSize: layoutSettings.fontSize * FONT_SIZE_STEP,
-          })
-        }
-        onSelect={(e) => e.preventDefault()}
-      >
-        <CompactItem.Shell>
-          <CompactItem.Icon>
-            <AArrowUp />
-          </CompactItem.Icon>
-          <CompactItem.Body title="Increase font size" />
-        </CompactItem.Shell>
-      </DropdownMenuItem>
-
-      <DropdownMenuItem
-        onClick={() =>
-          setBothSettings({
-            fitScreenMode: "none",
-            fontSize: layoutSettings.fontSize / FONT_SIZE_STEP,
-          })
-        }
-        onSelect={(e) => e.preventDefault()}
-      >
-        <CompactItem.Shell>
-          <CompactItem.Icon>
-            <AArrowDown />
-          </CompactItem.Icon>
-          <CompactItem.Body title="Decrease font size" />
-        </CompactItem.Shell>
-      </DropdownMenuItem>
 
       <CompactItem.Header>Contents</CompactItem.Header>
       <DropdownMenuSeparator />
