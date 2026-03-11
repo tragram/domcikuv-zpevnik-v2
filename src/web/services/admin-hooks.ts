@@ -109,6 +109,7 @@ export const useUpdateSong = (adminApi: AdminApi) => {
       song: SongModificationSchema;
     }) => patchSongAdmin(adminApi, songId, song),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
@@ -124,6 +125,7 @@ export const useDeleteSong = (adminApi: AdminApi) => {
       );
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
@@ -139,6 +141,7 @@ export const useRestoreSong = (adminApi: AdminApi) => {
       );
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
@@ -158,6 +161,7 @@ export const useUpdateVersion = (adminApi: AdminApi) => {
       version: ModifySongVersionSchema;
     }) => patchVersionAdmin(adminApi, songId, versionId, version),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
@@ -210,6 +214,7 @@ export const useResetVersionDB = (adminApi: AdminApi) => {
   return useMutation({
     mutationFn: () => resetVersionDB(adminApi),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
@@ -228,6 +233,7 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
       data: IllustrationModifySchema;
     }) => updateIllustration(adminApi, id, data),
     onMutate: async ({ id, data }) => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       await queryClient.cancelQueries({ queryKey: ["songDBAdmin"] });
       await queryClient.cancelQueries({ queryKey: ["illustrationsAdmin"] });
 
@@ -330,6 +336,7 @@ export const useDeleteIllustration = (adminApi: AdminApi) => {
       }
     },
     onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
     },
@@ -381,6 +388,7 @@ export const useCreateIllustration = (adminApi: AdminApi) => {
     mutationFn: (data: IllustrationCreateSchema) =>
       createIllustration(adminApi, data),
     onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
 
       queryClient.setQueryData<SongIllustrationApi[]>(
@@ -403,6 +411,7 @@ export const useGenerateIllustration = (adminApi: AdminApi) => {
     mutationFn: (data: IllustrationGenerateSchema) =>
       generateIllustration(adminApi, data),
     onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
 
       queryClient.setQueryData<SongIllustrationApi[]>(
@@ -436,6 +445,7 @@ export const useApproveVersion = (adminApi: AdminApi) => {
       );
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
