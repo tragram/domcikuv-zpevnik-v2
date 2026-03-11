@@ -128,7 +128,6 @@ const SongRow = memo(
         </div>
       );
     }
-
     const externalSourceId = song.externalSource?.sourceId;
     if (externalSearch && (!externalSourceId || !song.url())) {
       console.error("Invalid external song provided to SongRow", song);
@@ -176,7 +175,9 @@ const SongRow = memo(
         />
 
         <div className="flex min-w-10 shrink-0 basis-[5%] items-center justify-end p-2">
-          {!externalSearch && <LanguageFlag language={song.language} />}
+          {!externalSearch && song.language && (
+            <LanguageFlag language={song.language} />
+          )}
         </div>
       </>
     );

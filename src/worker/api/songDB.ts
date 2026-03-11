@@ -90,7 +90,7 @@ export const songDBRoutes = buildApp()
   .get("/fetch/:songId/:versionId", async (c) => {
     const { songId, versionId } = c.req.param();
     const foundSong = await retrieveSingleSong(c.var.db, songId, versionId);
-
+    console.log(foundSong);
     if (!foundSong) return failJSend(c, "Song not found", 404);
     return successJSend(c, foundSong);
   })

@@ -17,7 +17,11 @@ import { EditorSubmissionResponse } from "./api-types";
 export const editorSubmitSchema = z.object({
   title: z.string().min(1, "Title is required"),
   artist: z.string().min(1, "Artist is required"),
-  language: z.string().min(1, "Language is required"),
+  language: z
+    .string()
+    .min(1, "Language is required")
+    .optional()
+    .transform((x) => x || null),
   chordpro: z.string().min(1, "ChordPro content is required"),
   parentId: z.string().optional(),
 
@@ -40,7 +44,7 @@ export const editorSubmitSchema = z.object({
       return /^-?\d+$/.test(String(val).trim());
     }, "Capo must be a valid whole number")
     .transform((x) => (x === "" || x == null ? null : Number(x))),
-    
+
   range: z
     .string()
     .regex(/^[a-h][#b]?\d+-[a-h][#b]?\d+$/, "Range must be in format: c1-g2")

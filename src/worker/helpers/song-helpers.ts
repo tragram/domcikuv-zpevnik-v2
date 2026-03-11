@@ -53,7 +53,7 @@ const transformSongToApi = (
     createdAt: songItem.createdAt,
     updatedAt: songItem.updatedAt,
     startMelody: version?.startMelody ?? undefined,
-    language: version?.language ?? "unknown",
+    language: version?.language ?? undefined,
     tempo: version?.tempo ? parseInt(version.tempo) : undefined,
     capo: version?.capo ?? undefined,
     range: version?.range ?? undefined,

@@ -51,7 +51,7 @@ export const songVersion = sqliteTable("song_version", {
   title: text("title").notNull(),
   artist: text("artist").notNull(),
   key: text("key"),
-  language: text("language").notNull(),
+  language: text("language"),
   capo: integer("capo"),
   range: text("range"),
   startMelody: text("start_melody"),

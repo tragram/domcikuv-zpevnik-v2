@@ -26,7 +26,6 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
 
   const { resetFilters } = useFilterSettingsStore();
 
-  // Use our new hook!
   const isToolbarVisible = useScrollDirection();
 
   const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
@@ -50,7 +49,6 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
       }, 200);
     },
   });
-
   const hasInternalResults = songs.length > 0;
   const hasExternalResults = externalSongs.length > 0;
 

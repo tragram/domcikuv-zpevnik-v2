@@ -25,28 +25,28 @@ export const fileURL = (url: string) => {
  * This is the system used in Czech, German, Polish, Nordic countries, etc.
  */
 export function convertChordNotation(chord: string): string {
-    if (!chord) return chord;
+  if (!chord) return chord;
 
-    const trimmedChord = chord.trim();
+  const trimmedChord = chord.trim();
 
-    // Handle B flat (Bb) becoming B in Central European notation
-    if (trimmedChord.startsWith("Bb")) {
-        return "B" + trimmedChord.slice(2);
-    }
-    // Handle B becoming H in Central European notation
-    else if (trimmedChord.startsWith("B")) {
-        return "H" + trimmedChord.slice(1);
-    }
-    // Handle chords ending with Bb
-    else if (trimmedChord.endsWith("Bb")) {
-        return trimmedChord.slice(0, -2) + "B";
-    }
-    // Handle chords ending with B
-    else if (trimmedChord.endsWith("B")) {
-        return trimmedChord.slice(0, -1) + "H";
-    }
+  // Handle B flat (Bb) becoming B in Central European notation
+  if (trimmedChord.startsWith("Bb")) {
+    return "B" + trimmedChord.slice(2);
+  }
+  // Handle B becoming H in Central European notation
+  else if (trimmedChord.startsWith("B")) {
+    return "H" + trimmedChord.slice(1);
+  }
+  // Handle chords ending with Bb
+  else if (trimmedChord.endsWith("Bb")) {
+    return trimmedChord.slice(0, -2) + "B";
+  }
+  // Handle chords ending with B
+  else if (trimmedChord.endsWith("B")) {
+    return trimmedChord.slice(0, -1) + "H";
+  }
 
-    return chord;
+  return chord;
 }
 
 export const getInitials = (name: string) => {
@@ -104,5 +104,5 @@ export function guessLanguage(lyrics: string) {
   ) {
     return "slovak";
   }
-  return "other";
+  return undefined;
 }

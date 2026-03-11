@@ -132,7 +132,7 @@ export const externalRoutes = buildApp()
       const submission: EditorSubmitSchema = {
         title,
         artist,
-        language: guessLanguage(chordPro),
+        language: guessLanguage(chordPro) ?? null,
         chordpro: chordPro,
         key:
           new ChordProParser().parse(chordPro).getPossibleKey()?.toString() ??

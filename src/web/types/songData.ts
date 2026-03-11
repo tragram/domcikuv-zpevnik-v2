@@ -53,7 +53,7 @@ export class SongData {
   createdAt: Date;
   updatedAt: Date;
   startMelody?: string;
-  language: SongLanguage;
+  language?: SongLanguage;
   tempo?: int;
   capo?: int;
   range?: SongRange;
@@ -72,7 +72,7 @@ export class SongData {
     this.createdAt = new Date(songFromDB.createdAt);
     this.updatedAt = new Date(songFromDB.updatedAt);
     this.startMelody = songFromDB.startMelody || undefined;
-    this.language = (songFromDB.language as SongLanguage) || "other";
+    this.language = songFromDB.language as SongLanguage | undefined;
     this.tempo = songFromDB.tempo || undefined;
 
     // Safely assign 0 if it exists, otherwise undefined (not forcing 0 for empty states)

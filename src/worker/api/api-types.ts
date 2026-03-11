@@ -30,7 +30,7 @@ export type SongDataApi = {
   createdAt: Date | string;
   updatedAt: Date | string;
   startMelody?: string;
-  language: string;
+  language?: string;
   tempo?: number;
   capo?: number;
   range?: string;
@@ -53,7 +53,7 @@ export type SongVersionApi = {
   title: string;
   artist: string;
   key?: string | null;
-  language: string;
+  language?: string | null;
   capo?: number | null;
   range?: string | null;
   startMelody?: string | null;
