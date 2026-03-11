@@ -1,0 +1,38 @@
+songId: Chinaski-Vrchlabi
+prompts:
+  - id: Chinaski-Vrchlabi_gpt-5-mini_v2
+    songId: Chinaski-Vrchlabi
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Night winter road trip: three women — friends laughing and singing after a
+      concert — in a big car on a winding snow-covered road, heavy snowfall and
+      headlights cutting through swirling flakes, warm golden interior light on
+      their smiling faces as they take turns at the wheel, concert tickets on
+      the dash and distant town lights of Vrchlabí; cinematic, cozy, slightly
+      vintage film look.
+    createdAt: 2026-03-11T11:51:41.000Z
+    updatedAt: 2026-03-11T11:51:41.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773251785000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+  - id: Chinaski-Vrchlabi_gpt-5-mini_v3
+    songId: Chinaski-Vrchlabi
+    summaryPromptVersion: v3
+    summaryModel: gpt-5-mini
+    text: >-
+      Three women in a big van driving through heavy snowfall on a winding night
+      road — warm interior glow, laughter and two hands on the wheel as they
+      trade driving, headlights cutting through drifting snow, a roadside sign
+      reading "Vrchlabí" visible, hint of a guitar case in the back. Stylized
+      cozy poster illustration, bold colors, dynamic motion/snow streaks,
+      slightly retro cinematic vibe (not photorealistic).
+    createdAt: 2026-03-11T11:53:11.000Z
+    updatedAt: 2026-03-11T11:53:11.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773230063000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
