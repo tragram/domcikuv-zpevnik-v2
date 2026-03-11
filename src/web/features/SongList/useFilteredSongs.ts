@@ -202,12 +202,7 @@ export function useFilteredSongs(
   const displayedSongs = useMemo(() => {
     // 1. If searching, return raw internal search results + fetched external results
     if (query && searchResults) {
-      let localResults = searchResults.map((r) => r.item);
-
-      // Respect the 'showExternal' filter during search so internal external songs hide properly
-      localResults = filterExternal(localResults, showExternal);
-
-      return localResults;
+      return searchResults.map((r) => r.item);
     }
 
     // 2. If NOT searching, apply filters and sort
@@ -222,7 +217,6 @@ export function useFilteredSongs(
   }, [
     query,
     searchResults,
-    sortedExternalSongs,
     songs,
     capo,
     vocalRange,
@@ -239,7 +233,7 @@ export function useFilteredSongs(
 
   return {
     songs: displayedSongs,
-    externalSongs: Array.from(unaddedExternalSongs), 
+    externalSongs: Array.from(sortedExternalSongs),
     isLoadingExternal,
     triggerExternalSearch: () => setTriggeredQuery(query),
     hasTriggeredExternalSearch,
