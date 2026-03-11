@@ -186,6 +186,8 @@ export class SessionSync extends DurableObject<Env> {
 
     try {
       if (data.type === "update-song") {
+        const isFirstSong = this.currentSongId === null;
+
         // Schedule debounced DB write using stored userId and masterId on new song
         if (
           this.masterNickname &&
@@ -193,11 +195,15 @@ export class SessionSync extends DurableObject<Env> {
           data.songId &&
           data.songId !== this.currentSongId
         ) {
-          await this.scheduleDbWrite({
-            masterId: this.masterId,
-            songId: data.songId,
-          });
+          await this.scheduleDbWrite(
+            {
+              masterId: this.masterId,
+              songId: data.songId,
+            },
+            isFirstSong,
+          );
         }
+
         this.currentSongId = data.songId;
         this.currentTransposeSteps = data.transposeSteps;
 
@@ -231,11 +237,11 @@ export class SessionSync extends DurableObject<Env> {
     }
   }
 
-  private async scheduleDbWrite(data: {
-    masterId: string;
-    songId: string | null;
-  }) {
-    // debounced DB write to minimze rows written during randomize
+  private async scheduleDbWrite(
+    data: { masterId: string; songId: string | null },
+    isFirstSong: boolean = false,
+  ) {
+    // debounced DB write to minimize rows written during randomize
     if (!data.songId) {
       return;
     }
@@ -247,9 +253,14 @@ export class SessionSync extends DurableObject<Env> {
     };
     await this.ctx.storage.put("pendingDbWrite", this.pendingDbWrite);
 
-    // Schedule alarm (this persists across hibernation)
-    const alarmTime = Date.now() + this.DB_WRITE_DEBOUNCE;
-    await this.ctx.storage.setAlarm(alarmTime);
+    if (isFirstSong) {
+      // Execute the database write immediately
+      await this.flushDbWrite();
+    } else {
+      // Schedule alarm for subsequent songs (this persists across hibernation)
+      const alarmTime = Date.now() + this.DB_WRITE_DEBOUNCE;
+      await this.ctx.storage.setAlarm(alarmTime);
+    }
   }
 
   async alarm() {
