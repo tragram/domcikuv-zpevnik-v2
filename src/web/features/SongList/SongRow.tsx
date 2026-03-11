@@ -202,7 +202,9 @@ const SongRow = memo(
                   artist: song.artist,
                   url: song.url()!,
                   sourceId: externalSourceId!,
-                  thumbnailURL: song.thumbnailURL(),
+                  thumbnailURL: song.currentIllustration
+                    ? song.thumbnailURL()
+                    : undefined,
                 }}
                 preload={false}
                 className={linkClassName}
