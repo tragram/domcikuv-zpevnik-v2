@@ -130,6 +130,7 @@ export const externalRoutes = buildApp()
         sourceId,
       );
 
+      const capoMatch = unparsedLyrics.match(/(?:capo|kapo)\s*:?\s*(\d+)/i);
       const submission: EditorSubmitSchema = {
         title,
         artist,
@@ -138,7 +139,7 @@ export const externalRoutes = buildApp()
         key:
           new ChordProParser().parse(chordPro).getPossibleKey()?.toString() ??
           null,
-        capo: null,
+        capo: capoMatch ? parseInt(capoMatch[1]) : null,
         range: null,
         startMelody: null,
         tempo: null,
