@@ -3,10 +3,11 @@ import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
 
 // the first element of each array is used as default by the frontend
-export const SUMMARY_PROMPT_VERSIONS = ["v3", "v2", "v1"] as const;
+export const SUMMARY_PROMPT_VERSIONS = ["v4", "v3", "v2", "v1"] as const;
 export const SUMMARY_MODELS_API = ["gpt-5-mini", "gpt-5.2"] as const;
 
 export const IMAGE_MODELS_API = [
+  "nano-banana-2",
   "FLUX.1-dev",
   "FLUX.1-schnell",
   "FLUX.2-dev",
@@ -14,7 +15,6 @@ export const IMAGE_MODELS_API = [
   "gpt-image-1",
   "gpt-image-1-mini",
   "nano-banana-pro",
-  "nano-banana-2",
 ] as const;
 
 export type SummaryPromptVersion = (typeof SUMMARY_PROMPT_VERSIONS)[number];
@@ -25,6 +25,7 @@ const PROMPTS: Record<SummaryPromptVersion, string> = {
   v1: "Based on the following song lyrics, create a prompt for an AI image generator that will be used as an illustration of the song. Try to be short",
   v2: "Based on the following song lyrics, create a prompt for an AI image generator that will be used as an illustration of the song. Try to be short but also to capture a concrete scene/idea from the song.",
   v3: "Based on the following song lyrics, create a prompt for an AI image generator. Try to be short but also to capture a concrete scene/idea from the song. The image will be used as an illustration of the song in a database, so do not aim for photo realistic unless it fits the lyrics perfectly.",
+  v4: "Based on the following song lyrics, create a prompt for an AI image generator. Try to be short but also to capture a concrete scene/idea from the song. The image will be used as an illustration of the song in a database, it should 1) Be good looking even in smaller sizes and 2) The style should follow the contents too - e.g. only photorealistic or cartoonish when the song theme calls for it.",
 } as const;
 
 export type ImageProviderType = "openai" | "huggingface" | "google";
