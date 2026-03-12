@@ -1,16 +1,16 @@
-import { useQuery } from "@tanstack/react-query"; //
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { API } from "src/worker/api-client";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
-import useLocalStorageState from "use-local-storage-state";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
 import { handleApiResponse } from "~/services/api-service";
 import { fetchFeed } from "~/services/song-service";
 import { SongData } from "~/types/songData";
 import { SongDB } from "~/types/types";
+import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore"; // <-- Imported Store
 
 export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
@@ -78,17 +78,6 @@ function FeedView({
     },
     staleTime: Infinity,
   });
-  console.log(songData);
-  // force transposeSteps (a bit hacky but passing it down feels even uglier - TODO: use Zustand)
-  const [, setTransposeSteps] = useLocalStorageState(
-    `transposeSteps/${currentSongId}`,
-    { defaultValue: 0 },
-  );
-
-  useEffect(() => {
-    if (sessionState && sessionState.transposeSteps !== null)
-      setTransposeSteps(sessionState.transposeSteps);
-  }, [sessionState, setTransposeSteps]);
 
   if (!sessionState) {
     return (

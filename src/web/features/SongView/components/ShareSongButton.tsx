@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FeedStatus } from "../SongView";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { DropdownMenuCheckboxItem } from "~/components/ui/dropdown-menu";
@@ -21,26 +21,16 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
 }) => {
   const onLine = useIsOnline();
   const showProfileLink = !user.loggedIn || !user.profile.nickname;
-  const { shareSession, actions } = useViewSettingsStore();
-  const setShareSession = actions.setShareSession;
 
-  useEffect(() => {
-    if (!user.loggedIn) {
-      setShareSession(false);
-    }
-  }, [setShareSession, user.loggedIn]);
+  const shareSession = useViewSettingsStore((state) => state.shareSession);
+  const setShareSession = useViewSettingsStore(
+    (state) => state.actions.setShareSession,
+  );
 
   const getDescription = () => {
-    if (!onLine) {
-      return {
-        text: "You need to be online to use this feature",
-      };
-    }
-    if (onLine && showProfileLink) {
-      return {
-        text: "Click to log in & pick a nickname to enable",
-      };
-    }
+    if (!onLine) return { text: "You need to be online to use this feature" };
+    if (onLine && showProfileLink)
+      return { text: "Click to log in & pick a nickname to enable" };
     if (feedStatus?.enabled && !feedStatus.isMaster) {
       return {
         text: `Currently connected to ${
@@ -48,11 +38,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
         }'s session`,
       };
     }
-    if (!shareSession) {
-      return {
-        text: "Share your page with others - live",
-      };
-    }
+    if (!shareSession) return { text: "Share your page with others - live" };
     if (shareSession && user.loggedIn && user.profile.nickname) {
       return {
         text: `Your session can be viewed at ${window.location.host}/feed/${user.profile.nickname}`,
@@ -64,15 +50,16 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   const description = getDescription();
 
   const content = (
-    <CompactItem.Body
-      title="Share current song"
-      subtitle={description?.text}
-    />
+    <CompactItem.Body title="Share current song" subtitle={description?.text} />
   );
 
   const wrappedContent =
     onLine && showProfileLink ? (
-      <Link to="/profile" search={{ redirect: `/song/${songId}` }} className="w-full">
+      <Link
+        to="/profile"
+        search={{ redirect: `/song/${songId}` }}
+        className="w-full"
+      >
         {content}
       </Link>
     ) : (
@@ -88,6 +75,8 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
       checked={shareSession}
       onCheckedChange={() => {
         if (checkboxDisabled) return;
+        // avoid two tabs open (master + follower) e.g. during testing and then follower disabling the sharing all the time
+        if (feedStatus && !feedStatus.isMaster) return;
         setShareSession(!shareSession);
       }}
       className={checkboxDisabled ? "opacity-50" : ""}

@@ -83,6 +83,7 @@ interface SettingsState {
   customLayoutPreset: PresetSettings;
   chords: ChordSettings;
   shareSession: boolean;
+  transpositions: Record<string, number>;
   actions: {
     setLayoutSettings: (settings: Partial<LayoutSettings>) => void;
     setCustomLayoutPreset: (settings: Partial<PresetSettings>) => void;
@@ -90,6 +91,7 @@ interface SettingsState {
     applyPreset: (preset: LayoutPreset) => void;
     getCurrentPreset: () => LayoutPreset;
     setShareSession: (value: boolean) => void;
+    setTranspose: (songId: string, steps: number) => void;
   };
 }
 
@@ -120,6 +122,7 @@ export const useViewSettingsStore = create<SettingsState>()(
         inlineChords: true,
       },
       shareSession: false,
+      transpositions: {},
       actions: {
         setLayoutSettings: (settings) =>
           set((state) => {
@@ -168,8 +171,16 @@ export const useViewSettingsStore = create<SettingsState>()(
           const state = get();
           return getCurrentPreset(state.layout);
         },
-        setShareSession: (value: boolean) =>
-          set(() => ({ shareSession: value })),
+        setShareSession: (value: boolean) => {
+          set(() => ({ shareSession: value }));
+        },
+        setTranspose: (songId: string, steps: number) =>
+          set((state) => ({
+            transpositions: {
+              ...state.transpositions,
+              [songId]: steps,
+            },
+          })),
       },
     }),
     {
@@ -179,6 +190,7 @@ export const useViewSettingsStore = create<SettingsState>()(
         customLayoutPreset: state.customLayoutPreset,
         chords: state.chords,
         shareSession: state.shareSession,
+        transpositions: state.transpositions,
       }),
     },
   ),

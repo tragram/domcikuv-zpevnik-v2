@@ -74,7 +74,7 @@
     "workbox-build": "^7.4.0",
     "workbox-expiration": "^7.4.0",
     "zod": "^4.3.6",
-    "zustand": "^5.0.5"
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.17.1",

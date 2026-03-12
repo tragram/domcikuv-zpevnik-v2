@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
-import useLocalStorageState from "use-local-storage-state";
 import { z } from "zod";
 import PendingComponent from "~/components/PendingComponent";
 import SongView from "~/features/SongView/SongView";
@@ -31,7 +30,11 @@ export const Route = createFileRoute("/song/$songId")({
 function RouteComponent() {
   const { songDB, songData, user, songId, versionId, api } =
     Route.useLoaderData();
-  const { shareSession } = useViewSettingsStore();
+
+  const shareSession = useViewSettingsStore((state) => state.shareSession);
+  const transposeSteps = useViewSettingsStore(
+    (state) => state.transpositions[songId] || 0,
+  );
 
   // Only enable session sync for non-versioned songs
   const shouldShare = user.loggedIn && shareSession && !versionId;
@@ -45,14 +48,15 @@ function RouteComponent() {
     shouldShare,
   );
 
-  const [transposeSteps] = useLocalStorageState(`transposeSteps/${songId}`, {
-    defaultValue: 0,
-  });
-
-  // Push new songs to the server (only for non-versioned songs)
+  // Push new songs & transpositions to the server (only for non-versioned songs)
   useEffect(() => {
     if (shouldShare && updateSong && songData?.id) {
-      console.debug("Master updating song to:", songData.id);
+      console.debug(
+        "Master updating song to:",
+        songData.id,
+        "with transpose:",
+        transposeSteps,
+      );
       updateSong(songData.id, transposeSteps);
     }
   }, [songData?.id, shouldShare, updateSong, transposeSteps]);
