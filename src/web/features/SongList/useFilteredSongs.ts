@@ -207,7 +207,7 @@ export function useFilteredSongs(
     results = filterExternal(results, showExternal);
     results = filterSongbook(results, availableSongbooks, selectedSongbooks);
 
-    return results.sort(getSortCompareFunction(sortByField, sortOrder));
+    return results.toSorted(getSortCompareFunction(sortByField, sortOrder));
   }, [
     query,
     searchResults,
