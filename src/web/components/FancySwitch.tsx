@@ -1,6 +1,5 @@
 import { cn } from "~/lib/utils";
-import { FancySwitch as FancySwitchBase } from "@omit/react-fancy-switch";
-import { ComponentProps, useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export interface Option<T extends string | number = string> {
   value: T;
@@ -29,72 +28,106 @@ export default function FancySwitch<T extends string | number>({
   full = false,
   hiddenHighlightOnOther = false,
 }: FancySwitchProps<T>) {
-  const [animated, setAnimated] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setAnimated(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [highlight, setHighlight] = useState({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+    opacity: 0, // Starts invisible so the initial state isn't an ugly box
+  });
 
   const showHighlight = hiddenHighlightOnOther
     ? options.some((o) => o.value === selectedOption)
     : true;
 
+  useEffect(() => {
+    const updateHighlight = () => {
+      if (!containerRef.current) return;
+
+      const activeEl = containerRef.current.querySelector(
+        '[data-active="true"]',
+      ) as HTMLElement;
+
+      if (activeEl) {
+        setHighlight({
+          left: activeEl.offsetLeft,
+          top: activeEl.offsetTop,
+          width: activeEl.offsetWidth,
+          height: activeEl.offsetHeight,
+          opacity: showHighlight ? 1 : 0,
+        });
+      }
+    };
+
+    updateHighlight();
+
+    window.addEventListener("resize", updateHighlight);
+    document.fonts.ready.then(updateHighlight);
+
+    return () => window.removeEventListener("resize", updateHighlight);
+  }, [selectedOption, showHighlight, options, vertical]);
+
   return (
     <div
       className={cn(
-        "flex h-[40px] select-none rounded-full bg-white font-bold shadow-xs outline-2 outline-primary transition-all dark:bg-background/90 dark:outline-primary/30",
-        full ? "w-full justify-center" : "w-fit",
+        "flex select-none rounded-full bg-white font-bold shadow-xs outline-2 outline-primary transition-all dark:bg-background/90 dark:outline-primary/30",
+        "overflow-hidden",
+        vertical ? "min-h-[40px] flex-col w-fit" : "h-[40px] flex-row",
+        full && !vertical ? "w-full justify-center" : "w-fit",
       )}
     >
-      <FancySwitchBase
-        options={
-          options as unknown as ComponentProps<
-            typeof FancySwitchBase
-          >["options"]
-        }
-        value={selectedOption}
-        onChange={(val) => {
-          if (val !== undefined) {
-            setSelectedOption(val as T);
-          }
-        }}
+      <div
+        ref={containerRef}
         className={cn(
-          "flex h-full w-fit text-sm text-primary",
+          "relative flex h-full w-full text-sm text-primary",
+          vertical ? "flex-col" : "flex-row",
           children && "pr-1",
-          vertical && "flex-col py-2",
         )}
-        highlighterClassName={cn(
-          "h-full transition-none",
-          roundedClass,
-          showHighlight ? "bg-primary" : "bg-transparent",
-        )}
-        radioClassName="relative mx-2 flex h-full cursor-pointer items-center justify-center rounded-full px-3.5 text-sm text-primary-foreground transition-colors focus:outline-hidden data-[checked]:text-primary-foreground"
-        highlighterIncludeMargin={true}
-        highlighterStyle={{ transitionProperty: animated ? "all" : "none" }}
-        renderOption={({ option, isSelected, getOptionProps }) => {
-          // Tell TS this isn't just the base library's option, it's ours!
-          const customOption = option as unknown as Option<T>;
+      >
+        <div
+          className={cn(
+            "absolute z-0 bg-primary h-full",
+            // Clean, permanent transition. No hacky timeouts.
+            "transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
+            roundedClass,
+          )}
+          style={{
+            transform: `translate(${highlight.left}px, ${highlight.top}px)`,
+            width: `${highlight.width}px`,
+            opacity: highlight.opacity,
+          }}
+        />
+
+        {options.map((option) => {
+          const isSelected = option.value === selectedOption;
 
           return (
-            <div
-              {...getOptionProps()}
+            <button
+              key={option.value}
+              type="button"
+              data-active={isSelected}
+              onClick={() => setSelectedOption(option.value)}
               className={cn(
-                "z-50 flex items-center justify-center gap-2 hover:dark:text-white",
+                "relative z-10 flex h-full shrink-0 items-center justify-center whitespace-nowrap outline-hidden transition-colors duration-200",
                 vertical ? "px-3" : "px-4",
-                isSelected && showHighlight && "text-white dark:text-white",
-                customOption.value === options[options.length - 1]?.value &&
-                  "rounded-full",
+                isSelected && showHighlight
+                  ? "text-white dark:text-white"
+                  : "hover:dark:text-white",
               )}
             >
-              {customOption.icon && (
-                <span className="fancy-switch-icon">{customOption.icon}</span>
-              )}
-              <span className="fancy-switch-label">{customOption.label}</span>
-            </div>
+              <div className="flex items-center justify-center gap-2">
+                {option.icon && (
+                  <span className="fancy-switch-icon flex items-center justify-center">
+                    {option.icon}
+                  </span>
+                )}
+                <span className="fancy-switch-label">{option.label}</span>
+              </div>
+            </button>
           );
-        }}
-      />
+        })}
+      </div>
       {children}
     </div>
   );

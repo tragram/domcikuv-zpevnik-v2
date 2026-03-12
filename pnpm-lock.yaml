@@ -29,9 +29,6 @@ importers:
       '@nerdfolio/drizzle-d1-helpers':
         specifier: ^0.1.4
         version: 0.1.4(@libsql/client@0.15.9)(cloudflare@4.4.1)(kysely@0.28.2)
-      '@omit/react-fancy-switch':
-        specifier: ^1.0.4
-        version: 1.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@radix-ui/react-accordion':
         specifier: ^1.2.11
         version: 1.2.12(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -2320,12 +2317,6 @@ packages:
   '@octokit/webhooks@14.2.0':
     resolution: {integrity: sha512-da6KbdNCV5sr1/txD896V+6W0iamFWrvVl8cHkBSPT+YlvmT3DwXa4jxZnQc+gnuTEqSWbBeoSZYTayXH9wXcw==}
     engines: {node: '>= 20'}
-
-  '@omit/react-fancy-switch@1.0.4':
-    resolution: {integrity: sha512-8z6s11Zu08kch6MoZcWSolZ5/aleLN/LmkMpie8fWfTHgIBBYwP5FGoGA8vcDMYYrKGcwa3c9zbUC175Q73z7A==}
-    peerDependencies:
-      react: ^18 || ^19 || ^19.0.0-rc
-      react-dom: ^18 || ^19 || ^19.0.0-rc
 
   '@open-draft/deferred-promise@2.2.0':
     resolution: {integrity: sha512-CecwLWx3rhxVQF6V4bAgPS5t+So2sTbPgAzafKkVizyi7tlwpcFpdFqq+wqF2OwNBmqFuu6tOyouTuxgpMfzmA==}
@@ -9859,11 +9850,6 @@ snapshots:
       '@octokit/openapi-webhooks-types': 12.1.0
       '@octokit/request-error': 7.1.0
       '@octokit/webhooks-methods': 6.0.0
-
-  '@omit/react-fancy-switch@1.0.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
-    dependencies:
-      react: 19.1.0
-      react-dom: 19.1.0(react@19.1.0)
 
   '@open-draft/deferred-promise@2.2.0': {}
 
