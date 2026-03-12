@@ -14,6 +14,8 @@ import { NotFound } from "~/components/NotFound";
 import { prefetchActiveSessions } from "~/hooks/use-active-sessions";
 import memoizeOne from "memoize-one";
 
+const memoizedBuildSongDB = memoizeOne(buildSongDB);
+
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFound,
   errorComponent: CustomError,
@@ -38,10 +40,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
     const activeSessions = await prefetchActiveSessions(
       context.queryClient,
-      context.api
+      context.api,
     );
-
-    const memoizedBuildSongDB = memoizeOne(buildSongDB);
 
     const favoriteSongIds = user.loggedIn ? user.profile.favoriteSongIds : [];
 
