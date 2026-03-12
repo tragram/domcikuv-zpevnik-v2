@@ -36,7 +36,7 @@ type SongLanguage = (typeof SONG_LANGUAGES)[number];
 const validLanguages = new Set(SONG_LANGUAGES);
 
 export const isValidSongLanguage = (lang?: string): lang is SongLanguage => {
-  return !!lang && validLanguages.has(lang as SongLanguage);
+  return lang === undefined || validLanguages.has(lang as SongLanguage);
 };
 
 type LanguageCount = Record<SongLanguage, number>;

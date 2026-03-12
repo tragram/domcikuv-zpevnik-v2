@@ -257,9 +257,10 @@ export const buildSongDB = (
     .map((enriched) => new SongData(enriched));
 
   const languages: LanguageCount = songDatas.reduce((acc: LanguageCount, s) => {
+    // map languages without paired flags to "other"
     const validLang: SongLanguage | undefined = isValidSongLanguage(s.language)
       ? s.language
-      : undefined;
+      : "other";
     if (validLang) acc[validLang] = (acc[validLang] || 0) + 1;
     return acc;
   }, {} as LanguageCount);
