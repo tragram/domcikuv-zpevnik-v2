@@ -23,32 +23,40 @@ interface SessionViewProps {
 
 const SessionView = ({ isOnline }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState(Date.now());
+  const [currentTime, setCurrentTime] = useState(() => Date.now());
   const context = useRouteContext({ from: "/" });
   const { activeSessions, refetchIfStale } = useActiveSessions(
     context.songDB,
     context.api,
   );
 
-  // Update time every second when dropdown is open
-  // TODO: this could be reworked using the liveData get request in DO
   useEffect(() => {
-    if (isOpen) {
-      // Update time immediately when dropdown opens
-      // note that this still is subject to SessionSync's DB_WRITE_DEBOUNCE
-      setCurrentTime(Date.now());
-      refetchIfStale(0);
+    if (!isOpen) return;
 
-      const interval = setInterval(() => {
-        if (isOpen) {
-          setCurrentTime(Date.now());
-          refetchIfStale(0.5);
-        }
-      }, 1000);
-      return () => clearInterval(interval);
+    // Visual timer tick: updates the "ago" text every second
+    const clockInterval = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
+
+    // Network tick: polls the backend for new sessions every 10 seconds
+    const networkInterval = setInterval(() => {
+      refetchIfStale(10 / 60);
+    }, 5000);
+
+    return () => {
+      clearInterval(clockInterval);
+      clearInterval(networkInterval);
+    };
+  }, [isOpen, refetchIfStale]);
+
+  // Handle the initial state updates when the user clicks the dropdown
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (open) {
+      setCurrentTime(Date.now());
+      refetchIfStale(0); // Fetch immediately on open
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  };
 
   const getTimeSince = (date: Date) => {
     const diff = currentTime - new Date(date).getTime();
@@ -68,7 +76,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const active = activeSessions && activeSessions.length > 0;
 
   return (
-    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+    <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
       {/* Tooltip wraps the Dropdown trigger */}
       <Tooltip>
         <TooltipTrigger asChild>

@@ -1,4 +1,5 @@
 import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { API } from "src/worker/api-client";
 import { fetchActiveSessions } from "~/services/user-service";
 import { SongDB } from "~/types/types";
@@ -15,17 +16,17 @@ export const prefetchActiveSessions = (queryClient: QueryClient, api: API) => {
   return queryClient.fetchQuery(activeSessionsQuery(api));
 };
 
-export const useActiveSessions = (
-  songDB: SongDB,
-  api: API,
-) => {
+export const useActiveSessions = (songDB: SongDB, api: API) => {
   const queryClient = useQueryClient();
   const songs = songDB.songs;
 
-  // Fetch active sessions using centralized config
-  const { data: activeSessionsData, ...queryResult } = useQuery({
+  // Destructure refetch from useQuery directly
+  const {
+    data: activeSessionsData,
+    refetch,
+    ...queryResult
+  } = useQuery({
     ...activeSessionsQuery(api),
-    // initialData: context.activeSessions,
   });
 
   // Map sessions with song data
@@ -35,26 +36,27 @@ export const useActiveSessions = (
   }));
 
   // Manual refetch function that checks if data is stale (> staleAgeInMinutes old)
-  const refetchIfStale = (staleAgeInMinutes: number) => {
-    const queryState = queryClient.getQueryState(
-      activeSessionsQuery(api).queryKey
-    );
+  const refetchIfStale = useCallback(
+    (staleAgeInMinutes: number) => {
+      const queryState = queryClient.getQueryState(
+        activeSessionsQuery(api).queryKey,
+      );
 
-    if (queryState?.dataUpdatedAt) {
-      const ageInMinutes =
-        (Date.now() - queryState.dataUpdatedAt) / (1000 * 60);
-      if (ageInMinutes > staleAgeInMinutes) {
-        queryClient.invalidateQueries({
-          queryKey: activeSessionsQuery(api).queryKey,
-        });
+      if (queryState?.dataUpdatedAt) {
+        const ageInMinutes =
+          (Date.now() - queryState.dataUpdatedAt) / (1000 * 60);
+
+        // If it's older than the allowed stale age, force an immediate refetch
+        if (ageInMinutes >= staleAgeInMinutes) {
+          refetch();
+        }
+      } else {
+        // If no data exists yet, fetch immediately
+        refetch();
       }
-    } else {
-      // If no data exists yet, invalidate to trigger fetch
-      queryClient.invalidateQueries({
-        queryKey: activeSessionsQuery(api).queryKey,
-      });
-    }
-  };
+    },
+    [api, queryClient, refetch],
+  );
 
   return {
     activeSessions,

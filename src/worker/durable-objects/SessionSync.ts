@@ -42,9 +42,11 @@ export type SesssionSyncWSMessage =
   | PongMessage
   | UpdateOKMessage
   | MasterReplacedMessage;
+
 export class SessionSync extends DurableObject<Env> {
   private masterWebSocket: WebSocket | null = null;
   private masterId: string | null = null;
+  private isNewSession: boolean = true; // Flag to track fresh connections
 
   masterNickname: string | null = null;
   masterAvatar: string | null = null;
@@ -112,6 +114,7 @@ export class SessionSync extends DurableObject<Env> {
     if (isMaster && masterNicknameParam && masterIdParam) {
       this.masterNickname = masterNicknameParam;
       this.masterId = masterIdParam;
+      this.isNewSession = true; // Reset flag so the first broadcast forces a D1 write
     }
     const masterAvatarParam = url.searchParams.get("masterAvatar");
     if (masterAvatarParam) {
@@ -186,22 +189,23 @@ export class SessionSync extends DurableObject<Env> {
 
     try {
       if (data.type === "update-song") {
-        const isFirstSong = this.currentSongId === null;
+        const immediateWrite = this.isNewSession;
 
-        // Schedule debounced DB write using stored userId and masterId on new song
+        // Schedule debounced DB write using stored userId and masterId on new song OR new session
         if (
           this.masterNickname &&
           this.masterId &&
           data.songId &&
-          data.songId !== this.currentSongId
+          (immediateWrite || data.songId !== this.currentSongId)
         ) {
           await this.scheduleDbWrite(
             {
               masterId: this.masterId,
               songId: data.songId,
             },
-            isFirstSong,
+            immediateWrite,
           );
+          this.isNewSession = false; // Consume the flag
         }
 
         this.currentSongId = data.songId;
