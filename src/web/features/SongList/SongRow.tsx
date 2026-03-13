@@ -1,5 +1,6 @@
-import { Link, useRouteContext } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { memo } from "react";
+import { FavoritesAPI } from "src/worker/api-client";
 import { UserProfileData } from "src/worker/api/userProfile";
 import CircularProgress from "~/components/circular-progress";
 import { FavoriteButton } from "~/components/FavoriteButton";
@@ -115,11 +116,16 @@ interface SongRowProps {
   maxRange?: number | undefined;
   user: UserProfileData;
   externalSearch?: boolean;
+  favoritesApi: FavoritesAPI;
 }
 const SongRow = memo(
-  ({ song, maxRange, user, externalSearch = false }: SongRowProps) => {
-    const favoritesApi = useRouteContext({ from: "/" }).api.favorites;
-
+  ({
+    song,
+    maxRange,
+    user,
+    favoritesApi,
+    externalSearch = false,
+  }: SongRowProps) => {
     if (!song) {
       console.error("Invalid song provided to SongRow", song);
       return (
@@ -134,11 +140,9 @@ const SongRow = memo(
       return;
     }
 
-    // 1. Extract the shared Link classes
     const linkClassName =
       "song-row bg-glass/60 hover:bg-glass/90 relative flex h-12 w-full rounded-full backdrop-blur-lg";
 
-    // 2. Extract the inner contents to keep the render DRY
     const linkInnerContent = (
       <>
         <div className="relative flex min-w-[72px] content-center justify-center rounded-l-full" />

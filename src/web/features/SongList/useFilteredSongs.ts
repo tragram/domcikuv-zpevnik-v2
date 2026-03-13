@@ -226,7 +226,7 @@ export function useFilteredSongs(
   ]);
   return {
     songs: displayedSongs,
-    externalSongs: Array.from(sortedExternalSongs),
+    externalSongs: sortedExternalSongs,
     isLoadingExternal,
     triggerExternalSearch: () => setTriggeredQuery(query),
     hasTriggeredExternalSearch,
