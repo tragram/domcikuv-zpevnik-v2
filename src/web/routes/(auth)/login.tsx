@@ -7,11 +7,11 @@ import {
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { signIn } from "~/../lib/auth/client";
+import { AuthHeader } from "~/components/AuthHeader";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { redirectSearchSchema } from "~/main";
-import { AuthHeader } from "./route";
 
 export const Route = createFileRoute("/(auth)/login")({
   validateSearch: (search) => redirectSearchSchema.parse(search),

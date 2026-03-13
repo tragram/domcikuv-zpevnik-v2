@@ -1,13 +1,18 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+  useRouter,
+} from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { signIn, signUp } from "~/../lib/auth/client";
+import { AuthHeader } from "~/components/AuthHeader";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { redirectSearchSchema } from "~/main";
-import { AuthHeader } from "./route";
 
 export const Route = createFileRoute("/(auth)/signup")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
@@ -18,6 +23,7 @@ function SignupForm() {
   const { redirectURL } = Route.useRouteContext();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,6 +61,7 @@ function SignupForm() {
         },
         onSuccess: async () => {
           await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+          router.invalidate();
           navigate({ to: redirectURL });
         },
       },
@@ -148,6 +155,13 @@ function SignupForm() {
                       setIsLoading(true);
                       setErrorMessage("");
                     },
+                    onSuccess: async () => {
+                      await queryClient.invalidateQueries({
+                        queryKey: ["userProfile"],
+                      });
+                      router.invalidate();
+                      navigate({ to: redirectURL });
+                    },
                     onError: (ctx) => {
                       setIsLoading(false);
                       setErrorMessage(ctx.error.message);
@@ -179,6 +193,13 @@ function SignupForm() {
                     onRequest: () => {
                       setIsLoading(true);
                       setErrorMessage("");
+                    },
+                    onSuccess: async () => {
+                      await queryClient.invalidateQueries({
+                        queryKey: ["userProfile"],
+                      });
+                      router.invalidate();
+                      navigate({ to: redirectURL });
                     },
                     onError: (ctx) => {
                       setIsLoading(false);
