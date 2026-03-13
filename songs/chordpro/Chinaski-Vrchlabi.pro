@@ -6,9 +6,9 @@
 {language: czech}
 {startMelody: g g g e e}
 {createdAt: 1772895054000}
-{updatedAt: 1773230063000}
-{illustrationId: Chinaski-Vrchlabi_gpt-5-mini_v3_nano-banana-2}
-{promptId: Chinaski-Vrchlabi_gpt-5-mini_v3}
+{updatedAt: 1773309837000}
+{illustrationId: Chinaski-Vrchlabi_gpt-5-mini_v4_nano-banana-2}
+{promptId: Chinaski-Vrchlabi_gpt-5-mini_v4}
 
 {start_of_verse}
 Jela jsem s [C]Marcelou a Martou[C7]

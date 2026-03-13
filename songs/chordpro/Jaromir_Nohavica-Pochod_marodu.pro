@@ -6,9 +6,9 @@
 {language: czech}
 {startMelody: a e e a ee}
 {createdAt: 1770654254000}
-{updatedAt: 1771715137000}
-{illustrationId: Jaromir_Nohavica-Pochod_marodu_gpt-5-mini_v2_FLUX.1-dev}
-{promptId: Jaromir_Nohavica-Pochod_marodu_gpt-5-mini_v2}
+{updatedAt: 1773310064000}
+{illustrationId: Jaromir_Nohavica-Pochod_marodu_gpt-5-mini_v4_nano-banana-2}
+{promptId: Jaromir_Nohavica-Pochod_marodu_gpt-5-mini_v4}
 
 {start_of_verse}
 [Ami]Krabička cigaret a [C]do kafe [G]rum, [F]rum, [Ami]rum.

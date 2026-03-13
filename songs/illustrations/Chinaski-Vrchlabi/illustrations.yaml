@@ -36,3 +36,23 @@ prompts:
       - createdAt: 1773230063000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+  - id: Chinaski-Vrchlabi_gpt-5-mini_v4
+    songId: Chinaski-Vrchlabi
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Night digital painting: a small car with three laughing women inside
+      drives along a snow‑covered winding road at night. Heavy snowflakes, warm
+      headlight cones cutting through cold blue darkness, soft interior glow
+      illuminating their faces — one at the wheel, two chatting and smiling.
+      Above them a clear starry sky with the Big Dipper visible; a distant sign
+      hints "Vrchlabí". Cinematic, semi‑realistic style, high contrast, crisp
+      silhouettes and faces, slight motion blur on snow/road for sense of
+      movement; composition legible and attractive as a thumbnail. 16:9.
+    createdAt: 2026-03-12T10:03:27.000Z
+    updatedAt: 2026-03-12T10:03:27.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773309825000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

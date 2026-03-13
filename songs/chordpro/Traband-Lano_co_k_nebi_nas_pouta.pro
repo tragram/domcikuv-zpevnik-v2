@@ -6,9 +6,9 @@
 {language: czech}
 {startMelody: c g g g g f e }
 {createdAt: 1770930564000}
-{updatedAt: 1771715220000}
-{illustrationId: Traband-Lano_co_k_nebi_nas_pouta_gpt-5-mini_v2_nano-banana-pro}
-{promptId: Traband-Lano_co_k_nebi_nas_pouta_gpt-5-mini_v2}
+{updatedAt: 1773309973000}
+{illustrationId: Traband-Lano_co_k_nebi_nas_pouta_gpt-5-mini_v4_nano-banana-2}
+{promptId: Traband-Lano_co_k_nebi_nas_pouta_gpt-5-mini_v4}
 
 {start_of_verse}
 [C]Já sedával v přístavu, [Dmi]popíjel kořalu, [C]s holkama laško[G7]val
