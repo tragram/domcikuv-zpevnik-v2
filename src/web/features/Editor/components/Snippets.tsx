@@ -11,87 +11,104 @@ export const snippets = {
     name: "Chorus",
     letter: "C",
     template: (selection?: string) =>
-      `{start_of_chorus}\n${selection}\n{end_of_chorus}\n\n`,
+      selection
+        ? `{start_of_chorus}\n${selection}\n{end_of_chorus}`
+        : `{start_of_chorus}\n\n{end_of_chorus}\n`,
     cursorOffset: "{start_of_chorus}\n".length,
   },
   verse_env: {
     name: "Verse",
     letter: "V",
     template: (selection?: string) =>
-      `{start_of_verse}\n${selection}\n{end_of_verse}\n\n`,
+      selection
+        ? `{start_of_verse}\n${selection}\n{end_of_verse}`
+        : `{start_of_verse}\n\n{end_of_verse}\n`,
     cursorOffset: "{start_of_verse}\n".length,
   },
   bridge_env: {
     name: "Bridge",
     letter: "B",
     template: (selection?: string) =>
-      `{start_of_bridge}\n${selection}\n{end_of_bridge}\n\n`,
-    cursorOffset: "{start_of_bridge}".length,
+      selection
+        ? `{start_of_bridge}\n${selection}\n{end_of_bridge}`
+        : `{start_of_bridge}\n\n{end_of_bridge}\n`,
+    cursorOffset: "{start_of_bridge}\n".length,
   },
   tab_env: {
     name: "Tabs",
     letter: "T",
     template: (selection?: string) =>
-      `{start_of_tab}\n${selection}\n{end_of_tab}\n\n`,
-    cursorOffset: "{start_of_tab}".length,
+      selection
+        ? `{start_of_tab}\n${selection}\n{end_of_tab}`
+        : `{start_of_tab}\n\n{end_of_tab}\n`,
+    cursorOffset: "{start_of_tab}\n".length,
   },
   chorus_recall: {
     name: "Chorus",
     letter: "C",
-    template: (selection?: string) => `{chorus}\n`,
+    template: (selection?: string) => (selection ? `{chorus}` : `{chorus}\n`),
     cursorOffset: "{chorus}\n".length,
   },
   verse_recall: {
     name: "Verse",
     letter: "V",
-    template: (selection?: string) => `{verse}\n`,
+    template: (selection?: string) => (selection ? `{verse}` : `{verse}\n`),
     cursorOffset: "{verse}\n".length,
   },
   bridge_recall: {
     name: "Bridge",
     letter: "B",
-    template: (selection?: string) => `{bridge}\n`,
+    template: (selection?: string) => (selection ? `{bridge}` : `{bridge}\n`),
     cursorOffset: "{bridge}\n".length,
   },
   prepend_content: {
     name: "Variant: Prepend content",
     letter: "P",
     template: (selection?: string) =>
-      `{start_of_variant: prepend_content}\n${selection}\n{end_of_variant}`,
+      selection
+        ? `{start_of_variant: prepend_content}\n${selection}\n{end_of_variant}`
+        : `{start_of_variant: prepend_content}\n\n{end_of_variant}\n`,
     cursorOffset: "{start_of_variant: prepend_content}\n".length,
   },
   replace_first_line: {
     name: "Variant: Replace first line",
     letter: "F",
     template: (selection?: string) =>
-      `{start_of_variant: replace_first_line}\n${selection}\n{end_of_variant}`,
+      selection
+        ? `{start_of_variant: replace_first_line}\n${selection}\n{end_of_variant}`
+        : `{start_of_variant: replace_first_line}\n\n{end_of_variant}\n`,
     cursorOffset: "{start_of_variant: replace_first_line}\n".length,
   },
   replace_last_line: {
     name: "Variant: Replace last line",
     letter: "L",
     template: (selection?: string) =>
-      `{start_of_variant: replace_last_line}\n${selection}{end_of_variant}`,
+      selection
+        ? `{start_of_variant: replace_last_line}\n${selection}\n{end_of_variant}`
+        : `{start_of_variant: replace_last_line}\n\n{end_of_variant}\n`,
     cursorOffset: "{start_of_variant: replace_last_line}\n".length,
   },
   append_content: {
     name: "Variant: Append content",
     letter: "A",
     template: (selection?: string) =>
-      `{start_of_variant: append_content}\n${selection}{end_of_variant}`,
+      selection
+        ? `{start_of_variant: append_content}\n${selection}\n{end_of_variant}`
+        : `{start_of_variant: append_content}\n\n{end_of_variant}\n`,
     cursorOffset: "{start_of_variant: append_content}\n".length,
   },
   comment: {
     name: "Comment",
     letter: "CO",
-    template: (selection?: string) => `{comment: ${selection}}\n`,
+    template: (selection?: string) =>
+      selection ? `{comment: ${selection}}` : `{comment: }\n`,
     cursorOffset: "{comment: ".length,
   },
   repetition: {
     name: "Repetition",
     letter: "R",
-    template: (selection?: string) => `𝄆 ${selection} 𝄇`,
-    cursorOffset: 1,
+    template: (selection?: string) => (selection ? `𝄆 ${selection} 𝄇` : `𝄆  𝄇`),
+    cursorOffset: "𝄆 ".length,
   },
   chords: {
     name: "Chord",
