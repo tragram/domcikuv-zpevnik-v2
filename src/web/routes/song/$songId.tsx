@@ -42,7 +42,7 @@ function RouteComponent() {
     ? (user.profile.nickname ?? undefined)
     : undefined;
 
-  const { updateSong, isConnected, connectedClients } = useSessionSync(
+  const { updateSong, feedStatus } = useSessionSync(
     masterId,
     shouldShare,
     shouldShare,
@@ -67,16 +67,7 @@ function RouteComponent() {
       songData={songData}
       user={user}
       favoritesApi={api.favorites}
-      feedStatus={
-        versionId
-          ? undefined // No session sync for versioned songs
-          : {
-              enabled: shouldShare,
-              isConnected,
-              isMaster: true,
-              connectedClients: connectedClients ?? 0,
-            }
-      }
+      feedStatus={versionId ? undefined : feedStatus}
     />
   );
 }

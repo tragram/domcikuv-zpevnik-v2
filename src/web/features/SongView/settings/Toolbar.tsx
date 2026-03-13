@@ -42,10 +42,10 @@ import { SongData } from "~/types/songData";
 import { useWakeLock } from "react-screen-wake-lock";
 import useLocalStorageState from "use-local-storage-state";
 import { UserProfileData } from "src/worker/api/userProfile";
-import { FeedStatus } from "../SongView";
 import ShareSongButton from "../components/ShareSongButton";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { CompactItem } from "~/components/RichDropdown";
+import { FeedStatus } from "../hooks/useSessionSync";
 
 interface ToolbarProps {
   songDB: SongDB;

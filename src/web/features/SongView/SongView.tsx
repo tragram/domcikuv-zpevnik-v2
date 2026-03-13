@@ -11,16 +11,8 @@ import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
 import { FeedStatusBar } from "./components/FeedStatusBar";
 import "./SongView.css";
-import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import { FavoritesAPI } from "src/worker/api-client";
-
-export type FeedStatus = {
-  isMaster: boolean;
-  enabled: boolean;
-  isConnected: boolean;
-  connectedClients: number;
-  sessionState?: SessionSyncState;
-};
+import { FeedStatus } from "./hooks/useSessionSync";
 
 type DataForSongView = {
   songDB: SongDB;

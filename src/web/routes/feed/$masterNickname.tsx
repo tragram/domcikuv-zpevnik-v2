@@ -10,7 +10,6 @@ import { handleApiResponse } from "~/services/api-service";
 import { fetchFeed } from "~/services/song-service";
 import { SongData } from "~/types/songData";
 import { SongDB } from "~/types/types";
-import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore"; // <-- Imported Store
 
 export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
@@ -57,14 +56,14 @@ function FeedView({
   api,
 }: FeedViewProps) {
   // Feed route manages session sync as follower (read-only)
-  const { isConnected, sessionState, retryAttempt } = useSessionSync(
+  const { feedStatus } = useSessionSync(
     masterNickname,
     false,
     true,
     liveState, // hydrate with the live version
   );
 
-  const currentSongId = sessionState?.songId;
+  const currentSongId = feedStatus.sessionState?.songId;
   const { data: songData } = useQuery({
     queryKey: ["song", currentSongId],
     queryFn: async () => {
@@ -79,12 +78,12 @@ function FeedView({
     staleTime: Infinity,
   });
 
-  if (!sessionState) {
+  if (!feedStatus.sessionState) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center space-y-2">
           <p className="text-lg">Connecting to feed...</p>
-          {!isConnected && retryAttempt > 2 && (
+          {!feedStatus.isConnected && feedStatus.retryAttempt > 2 && (
             <p className="text-xs text-gray-400">
               Having trouble connecting but I'll keep trying in the background.
               ;-)
@@ -95,14 +94,14 @@ function FeedView({
     );
   }
 
-  if (!songData || !sessionState.songId) {
+  if (!songData || !feedStatus.sessionState.songId) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center space-y-2">
           <p className="text-lg">
             Waiting for {masterNickname} to select a song...
           </p>
-          {!isConnected && (
+          {!feedStatus.isConnected && (
             <p className="text-sm text-yellow-600">
               Connection lost - attempting to reconnect...
             </p>
@@ -118,13 +117,7 @@ function FeedView({
       songData={songData}
       user={user}
       favoritesApi={api.favorites}
-      feedStatus={{
-        enabled: true,
-        sessionState: sessionState,
-        isConnected,
-        isMaster: false,
-        connectedClients: 0,
-      }}
+      feedStatus={feedStatus}
     />
   );
 }

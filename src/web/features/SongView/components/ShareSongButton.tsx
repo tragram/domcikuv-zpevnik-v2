@@ -1,5 +1,4 @@
 import React from "react";
-import { FeedStatus } from "../SongView";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { DropdownMenuCheckboxItem } from "~/components/ui/dropdown-menu";
 import { CloudSync } from "lucide-react";
@@ -7,6 +6,7 @@ import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { Link } from "@tanstack/react-router";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { CompactItem } from "~/components/RichDropdown";
+import { FeedStatus } from "../hooks/useSessionSync";
 
 interface ShareSongButtonProps {
   feedStatus: FeedStatus | undefined;
