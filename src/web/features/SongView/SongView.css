@@ -206,7 +206,7 @@
 }
 
 /* autosizing of tabs and comments */
-.measuring-container .comment-line, .measuring-container .tab-section {
+.measuring-container .tab-section {
     width: 0;
 }
 
@@ -219,11 +219,23 @@
     max-width: none !important;
 }
 
-.comment-line, .tab-section {
+.tab-section {
     overflow-x: auto;
     overflow-y: clip;
     max-width: 100%;
 }
+
+/* Allow comments to wrap to multiple lines */
+.comment-line {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+
+    /* This combo locks the comment width strictly to the lyrics width */
+    width: 0;
+    min-width: max(100%, 15em);
+}
+
+/* Prevent multiline comments from exploding in height during measurement */
 
 /* make subscript appear under superscript */
 .sub-sup-container {
