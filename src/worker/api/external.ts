@@ -26,6 +26,7 @@ import {
   zValidatorJSend,
 } from "./responses";
 import { buildApp } from "./utils";
+import { addFavorite } from "../helpers/favorite-helpers";
 
 export const externalRoutes = buildApp()
   .get("/search", async (c) => {
@@ -158,6 +159,11 @@ export const externalRoutes = buildApp()
       }
 
       if (!existingSong) throw Error("Failed to create song!");
+      try {
+        addFavorite(db, user.id, existingSong.id);
+      } catch {
+        /* non fatal */
+      }
 
       if (thumbnailURL) {
         try {

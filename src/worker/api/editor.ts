@@ -13,6 +13,7 @@ import { failJSend, successJSend, zValidatorJSend } from "./responses";
 import OpenAI from "openai";
 import { trustedUserMiddleware } from "./utils";
 import { EditorSubmissionResponse } from "./api-types";
+import { addFavorite } from "../helpers/favorite-helpers";
 
 export const editorSubmitSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -215,7 +216,11 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
 
     const isTrusted = !!userProfile?.isTrusted;
     const result = await createSong(db, submission, userId, isTrusted);
-
+    try {
+      addFavorite(db, userId, result.newSong.id);
+    } catch {
+      /* non fatal */
+    }
     return successJSend(c, {
       song: result.newSong,
       version: result.newVersion,
@@ -240,8 +245,12 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     const isTrusted = !!userProfile?.isTrusted;
 
     // getSongPopulated will throw an error if the song is not found.
-    // The global handler catches it and returns a clean 500 or mapped 404 depending on your helper logic.
     const existingSong = await getSongBase(db, songId);
+    try {
+      addFavorite(db, userId, existingSong.id);
+    } catch {
+      /* non fatal */
+    }
 
     const versionResult = await createSongVersion(
       db,
