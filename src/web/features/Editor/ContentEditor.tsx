@@ -1,4 +1,3 @@
-import { useHistoryState } from "@uidotdev/usehooks";
 import { FileInput, Sparkles, ExternalLink } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
@@ -148,54 +147,40 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
 
   const contentToFeatureMap = useRef<Map<string, string>>(new Map());
 
-  const {
-    state,
-    set: setHistoryContent,
-    undo,
-    redo,
-  } = useHistoryState(editorContent);
-
-  const setContent = (value: string) => {
-    setHistoryContent(value);
-    setEditorContent(value);
-  };
-
-  const prevStateRef = useRef(state);
-
-  useEffect(() => {
-    if (state !== prevStateRef.current && state !== editorContent) {
-      setEditorContent(state);
-    }
-    prevStateRef.current = state;
-  }, [state, editorContent, setEditorContent]);
-
-  useEffect(() => {
-    if (editorContent !== state && editorContent !== prevStateRef.current) {
-      setHistoryContent(editorContent);
-    }
-  }, [editorContent, setHistoryContent, state]);
-
   const activeFeatures = useMemo(() => {
     return SMART_FEATURES.filter(
-      (f) => f.check(state, user, songData) && !dismissedFeatures.has(f.id),
+      (f) =>
+        f.check(editorContent, user, songData) && !dismissedFeatures.has(f.id),
     );
-  }, [state, user, songData, dismissedFeatures]);
+  }, [editorContent, user, songData, dismissedFeatures]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
-        e.preventDefault();
-        if (e.shiftKey) redo();
-        else undo();
-      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y") {
-        e.preventDefault();
-        redo();
-      }
-    };
+  const replaceEntireContentWithUndo = (newContent: string) => {
+    const textarea = textareaRef.current;
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [undo, redo]);
+    if (!textarea) {
+      setEditorContent(newContent);
+      return;
+    }
+
+    // 1. Lock the height to prevent the layout from collapsing during replacement
+    const currentHeight = textarea.getBoundingClientRect().height;
+    const originalHeight = textarea.style.height;
+    textarea.style.height = `${currentHeight}px`;
+
+    // 2. Focus and replace
+    textarea.focus({ preventScroll: true });
+    textarea.select();
+    document.execCommand("insertText", false, newContent);
+    setEditorContent(newContent);
+
+    // 3. Reset cursor to the top of the file
+    textarea.setSelectionRange(0, 0);
+
+    // 4. Unlock the height right before the browser's next visual paint
+    requestAnimationFrame(() => {
+      textarea.style.height = originalHeight;
+    });
+  };
 
   useEffect(() => {
     const style = document.createElement("style");
@@ -223,7 +208,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
   }, []);
 
   const onEditorChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
+    setEditorContent(e.target.value);
   };
 
   const insertSnippet = (snippetKey: keyof typeof snippets) => {
@@ -232,48 +217,57 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
     const textarea = textareaRef.current;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
-    const selectedText = state.substring(start, end);
+    const selectedText = editorContent.substring(start, end);
 
     const textToInsert = snippet.template(selectedText ?? "");
     const newFullText =
-      state.substring(0, start) + textToInsert + state.substring(end);
+      editorContent.substring(0, start) +
+      textToInsert +
+      editorContent.substring(end);
 
-    setContent(newFullText);
+    // Focus and highlight selection to prepare for insertion
+    textarea.focus();
+    textarea.setSelectionRange(start, end);
+
+    // document.execCommand hooks into the browser's native undo stack
+    const success = document.execCommand("insertText", false, textToInsert);
+
+    // Keep React state perfectly synced regardless of execCommand support
+    setEditorContent(newFullText);
 
     setTimeout(() => {
       const finalCursorPos = selectedText
         ? start + textToInsert.length
         : start + snippet.cursorOffset;
       textarea.setSelectionRange(finalCursorPos, finalCursorPos);
-      textarea.focus();
     }, 0);
   };
 
   const executeFeature = async (feature: SmartFeature) => {
     const featureId = feature.id;
-    const previousContent = state;
-    let newContent = state;
+    const previousContent = editorContent;
+    let newContent = editorContent;
 
     try {
       if (featureId === "show_external_original") {
         newContent = songData!.externalSource!.originalContent!;
-        if (newContent !== state) {
+        if (newContent !== editorContent) {
           contentToFeatureMap.current.set(previousContent, featureId);
-          setContent(newContent);
+          replaceEntireContentWithUndo(newContent);
         }
       } else if (featureId === "convert_to_chordpro") {
         newContent = normalizeWhitespace(
-          replaceRepetitions(convertToChordPro(state)),
+          replaceRepetitions(convertToChordPro(editorContent)),
         );
-        if (newContent !== state) {
+        if (newContent !== editorContent) {
           contentToFeatureMap.current.set(previousContent, featureId);
-          setContent(newContent);
+          replaceEntireContentWithUndo(newContent);
         }
       } else if (featureId === "autofill_chords") {
         setIsProcessing(true);
-        newContent = await autofillChordpro(state, editorAPI);
+        newContent = await autofillChordpro(editorContent, editorAPI);
 
-        if (newContent !== state) {
+        if (newContent !== editorContent) {
           setPendingAutofill({
             originalContent: previousContent,
             newContent,
@@ -293,7 +287,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
       pendingAutofill.originalContent,
       "autofill_chords",
     );
-    setContent(editedContent);
+    replaceEntireContentWithUndo(editedContent);
     setPendingAutofill(null);
   };
 
@@ -370,7 +364,7 @@ const ContentEditor: React.FC<ContentEditorProps> = ({
               : "font-normal",
           )}
           onChange={onEditorChange}
-          value={state}
+          value={editorContent}
           disabled={isProcessing}
         />
 
