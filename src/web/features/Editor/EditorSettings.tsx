@@ -9,28 +9,12 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { UserProfileData } from "src/worker/api/userProfile";
-import {
-  AvailableImageModel,
-  SummaryPromptVersion,
-  AvailableSummaryModel,
-  IMAGE_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS,
-  SUMMARY_MODELS_API,
-} from "src/worker/helpers/image-generator";
-
 export interface EditorSettings {
   autoGenerateIllustration: boolean;
-  // Default generation parameters
-  defaultImageModel: AvailableImageModel;
-  defaultPromptVersion: SummaryPromptVersion;
-  defaultSummaryModel: AvailableSummaryModel;
 }
 
 export const DEFAULT_EDITOR_SETTINGS: EditorSettings = {
   autoGenerateIllustration: false,
-  defaultImageModel: IMAGE_MODELS_API[0], // "FLUX.1-dev"
-  defaultPromptVersion: SUMMARY_PROMPT_VERSIONS[0], // "v3"
-  defaultSummaryModel: SUMMARY_MODELS_API[0], // "gpt-5o-mini"
 };
 
 interface EditorSettingsProps {

@@ -1,6 +1,10 @@
-import { Button } from "~/components/ui/button";
-import React, { useState } from "react";
-import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useRouteContext,
+} from "@tanstack/react-router";
 import {
   CloudUpload,
   Home,
@@ -10,32 +14,34 @@ import {
   Upload,
   User,
 } from "lucide-react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useRouteContext,
-} from "@tanstack/react-router";
-import { SongData } from "~/types/songData";
-import { useQueryClient } from "@tanstack/react-query";
-import { cn } from "~/lib/utils";
-import SettingsDropdown from "./components/SettingsDropdown";
-import DownloadButton from "./components/DownloadButton";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 import { UserProfileData } from "src/worker/api/userProfile";
+import { Button } from "~/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { EditorSettings } from "./EditorSettings";
-import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
-import EditorHelp from "./components/EditorHelp";
+import { cn } from "~/lib/utils";
+import { useLoggedIn } from "~/lib/utils.frontend";
 import {
   generateSongIllustration,
   submitSongVersion,
 } from "~/services/editor-service";
+import { SongData } from "~/types/songData";
 import { EditorState } from "~/types/types";
-import { useLoggedIn } from "~/lib/utils.frontend";
+import DownloadButton from "./components/DownloadButton";
+import EditorHelp from "./components/EditorHelp";
+import SettingsDropdown from "./components/SettingsDropdown";
+import { EditorSettings } from "./EditorSettings";
+
+import {
+  IMAGE_MODELS_API,
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_VERSIONS
+} from "src/worker/helpers/image-generator";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -106,15 +112,12 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     });
   };
 
-  const generateIllustrationInBackground = (
-    songId: string,
-    settings: EditorSettings,
-  ) => {
+  const generateIllustrationInBackground = (songId: string) => {
     generateSongIllustration(
       songId,
-      settings.defaultImageModel,
-      settings.defaultPromptVersion,
-      settings.defaultSummaryModel,
+      IMAGE_MODELS_API[0], // "FLUX.1-dev"
+      SUMMARY_PROMPT_VERSIONS[0], // "v4"
+      SUMMARY_MODELS_API[0], // "gpt-5o-mini"
     )
       .then((response) => {
         if (response.ok) {
@@ -188,7 +191,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         user.profile.isTrusted &&
         editorSettings.autoGenerateIllustration
       ) {
-        generateIllustrationInBackground(response.song.id, editorSettings);
+        generateIllustrationInBackground(response.song.id);
       }
 
       queryClient.invalidateQueries({ queryKey: ["songs"] });
