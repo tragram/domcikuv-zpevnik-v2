@@ -31,13 +31,12 @@ import {
   useUpdateIllustration,
 } from "../../../../services/admin-hooks";
 import DeletePrompt from "~/components/dialogs/delete-prompt";
-import { IllustrationModifySchema } from "src/worker/helpers/illustration-helpers";
 import {
   SummaryPromptVersion,
   AvailableSummaryModel,
   AvailableImageModel,
 } from "src/worker/helpers/image-generator";
-import { SongDataAdminApi } from "src/worker/api/api-types";
+import { IllustrationModifySchema, SongDataAdminApi } from "src/worker/api/api-types";
 import { ApiException } from "~/services/api-service";
 
 interface IllustrationCardProps {

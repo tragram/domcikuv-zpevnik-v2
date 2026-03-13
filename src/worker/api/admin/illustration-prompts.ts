@@ -29,19 +29,17 @@ import {
 } from "src/worker/helpers/song-helpers";
 import z from "zod";
 
-const illustrationPromptCreateSchema = createInsertSchema(
+export const illustrationPromptCreateSchema = createInsertSchema(
   illustrationPrompt,
 ).omit({ id: true });
-const promptModifySchema = z.object({
+export const promptModifySchema = z.object({
   text: z.string().min(1, "Prompt text cannot be empty"),
 });
-const promptGenerateSchema = z.object({
+export const promptGenerateSchema = z.object({
   songId: z.string(),
   summaryModel: z.enum(SUMMARY_MODELS_API),
   summaryPromptVersion: z.enum(SUMMARY_PROMPT_VERSIONS),
 });
-export type PromptModifySchema = z.infer<typeof promptModifySchema>;
-export type PromptGenerateSchema = z.infer<typeof promptGenerateSchema>;
 
 export const illustrationPromptRoutes = buildApp()
   .get("/", async (c) => {

@@ -8,7 +8,6 @@ import {
   SongIllustrationDB,
 } from "../../../lib/db/schema";
 import {
-  AdminIllustrationResponse,
   clearCurrentIllustration,
   createManualPrompt,
   findOrCreatePrompt,
@@ -37,9 +36,9 @@ import {
   getSongPopulated,
   PopulatedSongDB,
 } from "src/worker/helpers/song-helpers";
-import { Context } from "hono";
+import { AdminIllustrationResponse } from "../api-types";
 
-const illustrationCreateSchema = z.object({
+export const illustrationCreateSchema = z.object({
   songId: z.string(),
   imageModel: z.string(),
   setAsActive: z
@@ -52,7 +51,7 @@ const illustrationCreateSchema = z.object({
   imageFile: z.any().optional(),
 });
 
-const illustrationGenerateSchema = z.object({
+export const illustrationGenerateSchema = z.object({
   songId: z.string(),
   setAsActive: z
     .union([z.string(), z.boolean()])
@@ -62,7 +61,7 @@ const illustrationGenerateSchema = z.object({
   summaryModel: z.enum(SUMMARY_MODELS_API),
 });
 
-const illustrationModifySchema = z.object({
+export const illustrationModifySchema = z.object({
   imageModel: z.string().optional(),
   setAsActive: z
     .union([z.string(), z.boolean()])

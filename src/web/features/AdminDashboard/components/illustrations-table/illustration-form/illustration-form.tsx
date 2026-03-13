@@ -1,7 +1,7 @@
 import {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
-} from "src/worker/helpers/illustration-helpers";
+} from "src/worker/api/api-types";
 import {
   AvailableImageModel,
   AvailableSummaryModel,

@@ -3,8 +3,7 @@ import {
   illustrationPrompt,
   IllustrationPromptDB,
   song,
-  songIllustration,
-  SongIllustrationDB,
+  songIllustration
 } from "src/lib/db/schema";
 import { z } from "zod";
 import {
@@ -12,67 +11,14 @@ import {
   defaultPromptId,
   promptFolder,
 } from "~/types/songData";
-import { CFImagesThumbnailURL } from "../api/admin/illustrations";
+import {
+  CFImagesThumbnailURL
+} from "../api/admin/illustrations";
 import { AppDatabase } from "../api/utils";
 import {
-  IMAGE_MODELS_API,
-  ImageGenerator,
-  SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS,
+  ImageGenerator
 } from "./image-generator";
 import { getSongPopulated, PopulatedSongDB } from "./song-helpers";
-
-export const illustrationCreateSchema = z.object({
-  songId: z.string(),
-  imageModel: z.string(),
-  setAsActive: z.string().transform((val) => val === "true"), // FormData sends as string
-  imageFile: z.any().optional(),
-
-  // Prompt Fields
-  promptId: z.string().optional(),
-  promptText: z.string().optional(),
-  summaryModel: z.string().optional(),
-  summaryPromptVersion: z.string().optional(),
-});
-
-export const illustrationGenerateSchema = z.object({
-  songId: z.string(),
-  setAsActive: z.boolean().default(false),
-  imageModel: z.enum(IMAGE_MODELS_API),
-  promptVersion: z.enum(SUMMARY_PROMPT_VERSIONS),
-  summaryModel: z.enum(SUMMARY_MODELS_API),
-});
-
-export const illustrationModifySchema = z.object({
-  imageModel: z.string().optional(),
-  setAsActive: z
-    .union([z.boolean(), z.string()])
-    .transform((val) => val === true || val === "true")
-    .optional(),
-  imageFile: z.any().optional(),
-});
-
-export const illustrationPromptCreateSchema = z.object({
-  songId: z.string(),
-  summaryPromptVersion: z.string(),
-  summaryModel: z.string(),
-  text: z.string(),
-});
-
-export type IllustrationCreateSchema = z.infer<typeof illustrationCreateSchema>;
-export type IllustrationGenerateSchema = z.infer<
-  typeof illustrationGenerateSchema
->;
-export type IllustrationModifySchema = z.infer<typeof illustrationModifySchema>;
-export type IllustrationPromptCreateSchema = z.infer<
-  typeof illustrationPromptCreateSchema
->;
-
-export type AdminIllustrationResponse = {
-  song: PopulatedSongDB;
-  illustration: SongIllustrationDB;
-  prompt: IllustrationPromptDB;
-};
 
 const imageFolder = (
   songId: string,

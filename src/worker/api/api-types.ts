@@ -1,4 +1,22 @@
-import { SongDataDB, SongImportDB, SongVersionDB } from "src/lib/db/schema";
+import {
+  IllustrationPromptDB,
+  SongDataDB,
+  SongIllustrationDB,
+  SongImportDB,
+  SongVersionDB,
+} from "src/lib/db/schema";
+import { z } from "zod";
+import { PopulatedSongDB } from "../helpers/song-helpers";
+import {
+  illustrationCreateSchema,
+  illustrationGenerateSchema,
+  illustrationModifySchema,
+} from "./admin/illustrations";
+import {
+  illustrationPromptCreateSchema,
+  promptModifySchema,
+  promptGenerateSchema,
+} from "./admin/illustration-prompts";
 
 export type ExternalSourceApi = {
   sourceId: SongImportDB["sourceId"];
@@ -105,3 +123,21 @@ export type EditorSubmissionResponse = {
 
 export type SongWithCurrentVersionDB = SongDataDB &
   SongVersionDB & { id: string };
+
+export type IllustrationCreateSchema = z.infer<typeof illustrationCreateSchema>;
+export type IllustrationGenerateSchema = z.infer<
+  typeof illustrationGenerateSchema
+>;
+export type IllustrationModifySchema = z.infer<typeof illustrationModifySchema>;
+export type IllustrationPromptCreateSchema = z.infer<
+  typeof illustrationPromptCreateSchema
+>;
+
+export type PromptModifySchema = z.infer<typeof promptModifySchema>;
+export type PromptGenerateSchema = z.infer<typeof promptGenerateSchema>;
+
+export type AdminIllustrationResponse = {
+  song: PopulatedSongDB;
+  illustration: SongIllustrationDB;
+  prompt: IllustrationPromptDB;
+};

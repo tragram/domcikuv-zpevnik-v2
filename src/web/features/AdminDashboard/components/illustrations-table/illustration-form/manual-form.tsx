@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { IllustrationPromptApi } from "src/worker/api/api-types";
-import { IllustrationCreateSchema } from "src/worker/helpers/illustration-helpers";
+import { IllustrationCreateSchema } from "src/worker/api/api-types";
 import { ImageDropzone } from "~/components/ImageDropzone";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";

@@ -23,12 +23,8 @@ import {
   IllustrationForm,
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
-import {
-  IllustrationCreateSchema,
-  IllustrationGenerateSchema,
-} from "src/worker/helpers/illustration-helpers";
 import { PromptCreateDialog } from "./prompt-create-dialog";
-import { SongDataAdminApi } from "src/worker/api/api-types";
+import { IllustrationCreateSchema, IllustrationGenerateSchema, SongDataAdminApi } from "src/worker/api/api-types";
 import { PromptCard } from "./prompt-card";
 
 interface SongIllustrationsGroupProps {

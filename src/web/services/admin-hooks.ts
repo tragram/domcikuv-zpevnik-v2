@@ -1,22 +1,47 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { SongDataDB } from "src/lib/db/schema";
+import {
+  ModifySongVersionSchema,
+  SongModificationSchema,
+} from "src/worker/api/admin/songs";
+import {
+  IllustrationCreateSchema,
+  IllustrationGenerateSchema,
+  IllustrationModifySchema,
+  IllustrationPromptApi,
+  PromptGenerateSchema,
+  SongIllustrationApi,
+  UserApi,
+} from "src/worker/api/api-types";
+import {
+  IMAGE_MODELS_API,
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_VERSIONS,
+} from "src/worker/helpers/image-generator";
+import {
+  CreateUserSchema,
+  UpdateUserSchema,
+} from "src/worker/helpers/user-helpers";
+import { makeApiRequest } from "~/services/api-service";
 import {
   AdminApi,
   createIllustration,
   deleteIllustration,
-  restoreIllustration,
   deleteVersionAdmin,
   fetchIllustrationsAdmin,
   fetchPromptsAdmin,
   generateIllustration,
   getSongsAdmin,
   getVersionsAdmin,
+  parseDBDates,
   patchSongAdmin,
   patchVersionAdmin,
   resetVersionDB,
+  restoreIllustration,
   songsWithCurrentVersionAdmin,
-  updateIllustration,
   songsWithIllustrationsAndPrompts,
-  parseDBDates,
+  updateIllustration,
 } from "~/services/song-service";
 import {
   createUserAdmin,
@@ -24,34 +49,6 @@ import {
   fetchUsersAdmin,
   updateUserAdmin,
 } from "~/services/user-service";
-import {
-  ModifySongVersionSchema,
-  SongModificationSchema,
-} from "src/worker/api/admin/songs";
-import { useMemo } from "react";
-import {
-  IMAGE_MODELS_API,
-  SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS,
-} from "src/worker/helpers/image-generator";
-import {
-  IllustrationModifySchema,
-  IllustrationCreateSchema,
-  IllustrationGenerateSchema,
-} from "src/worker/helpers/illustration-helpers";
-import {
-  CreateUserSchema,
-  UpdateUserSchema,
-} from "src/worker/helpers/user-helpers";
-import { makeApiRequest } from "~/services/api-service";
-import {
-  IllustrationPromptApi,
-  SongDataApi,
-  SongIllustrationApi,
-  UserApi,
-} from "src/worker/api/api-types";
-import { PromptGenerateSchema } from "src/worker/api/admin/illustration-prompts";
-import { SongDataDB } from "src/lib/db/schema";
 
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({

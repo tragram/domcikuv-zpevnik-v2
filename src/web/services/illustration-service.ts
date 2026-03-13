@@ -1,17 +1,15 @@
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
 import { API, SongsAPI } from "src/worker/api-client";
 import {
-  IllustrationPromptApi,
-  SongDataAdminApi,
-  SongIllustrationApi,
-} from "src/worker/api/api-types";
-import {
   AdminIllustrationResponse,
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
   IllustrationModifySchema,
+  IllustrationPromptApi,
   IllustrationPromptCreateSchema,
-} from "src/worker/helpers/illustration-helpers";
+  SongDataAdminApi,
+  SongIllustrationApi,
+} from "src/worker/api/api-types";
 import { PopulatedSongDB } from "src/worker/helpers/song-helpers";
 import { SongData } from "~/types/songData";
 import { makeApiRequest } from "./api-service";

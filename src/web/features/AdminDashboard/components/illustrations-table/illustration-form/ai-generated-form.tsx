@@ -3,7 +3,7 @@ import { CheckCircle2, History, Sparkles } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
 import { IllustrationPromptApi } from "src/worker/api/api-types";
-import { IllustrationGenerateSchema } from "src/worker/helpers/illustration-helpers";
+import { IllustrationGenerateSchema } from "src/worker/api/api-types";
 import {
   AvailableImageModel,
   AvailableSummaryModel,
