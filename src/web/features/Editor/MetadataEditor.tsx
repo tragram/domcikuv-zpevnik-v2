@@ -24,7 +24,7 @@ interface MetadataEditorProps {
   hasIllustration?: boolean;
   features: EvaluatedFeature[];
   isProcessing: boolean;
-  onExecuteFeature: (feature: SmartFeature) => void;
+  onExecuteFeature: (feature: SmartFeature, payload?: any) => void;
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({

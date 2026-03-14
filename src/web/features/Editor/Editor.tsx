@@ -19,9 +19,15 @@ import Preview from "./Preview";
 import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
 import { EditorAPI } from "src/worker/api-client";
 import { useEditorValidation } from "./components/use-editor-validation";
-import { ExternalLink, FileInput, Sparkles } from "lucide-react";
+import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
 import { autofillChordpro } from "~/services/editor-service";
 import { convertToChordPro } from "~/lib/chords2chordpro";
+import { guessKey } from "../SongView/utils/songRendering";
+import {
+  czechToEnglish,
+  transposeChordPro,
+} from "../SongView/utils/preparseChordpro";
+import { convertChordNotation } from "~/lib/utils";
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -118,6 +124,7 @@ export interface SmartFeature {
   icon: React.ElementType;
   description: React.ReactNode;
   disabledReason: React.ReactNode;
+  actionType?: "default" | "stepper"; // <-- Added actionType
   check: (
     content: string,
     user: UserProfileData,
@@ -138,12 +145,9 @@ const SMART_FEATURES: SmartFeature[] = [
     check: (content: string, user: UserProfileData, songData?: SongData) =>
       hasExternalOriginalContent(songData, content),
     description: (
-      <>
-        Click to view the original content from the source website.
-      </>
+      <>Click to view the original content from the source website.</>
     ),
-    disabledReason:
-      "This song was not imported from a different source.",
+    disabledReason: "This song was not imported from a different source.",
   },
   {
     id: "convert_to_chordpro",
@@ -179,6 +183,21 @@ const SMART_FEATURES: SmartFeature[] = [
     description: <>Use AI to generate chords in sections where they missing.</>,
     disabledReason:
       "No missing chords detected in lyrics sections, or you are not logged in as a trusted user.",
+  },
+  {
+    id: "transpose",
+    label: "Transpose Chords",
+    loadingLabel: "Transposing...",
+    icon: ArrowUpDown,
+    actionType: "stepper",
+    check: (content: string) => /\[[A-H][A-Za-z\d#b,\s/]*\]/.test(content),
+    description: (
+      <>
+        Use the <strong>-</strong> and <strong>+</strong> buttons to transpose
+        all chords in the editor up or down by semitones.
+      </>
+    ),
+    disabledReason: "No chords detected to transpose.",
   },
 ];
 
@@ -314,7 +333,8 @@ const Editor: React.FC<EditorProps> = ({
     });
   };
 
-  const executeFeature = async (feature: SmartFeature) => {
+  // Note the added payload parameter
+  const executeFeature = async (feature: SmartFeature, payload?: any) => {
     const featureId = feature.id;
     const previousContent = editorState.chordpro;
     let newContent = editorState.chordpro;
@@ -341,6 +361,51 @@ const Editor: React.FC<EditorProps> = ({
             originalContent: previousContent,
             newContent,
           });
+        }
+      } else if (featureId === "transpose") {
+        const steps = payload as number;
+
+        // 1. Convert Czech to English so chord-symbol can read it
+        const englishContent = czechToEnglish(editorState.chordpro);
+
+        // 2. Try to guess the key. Fallback to 'C' so it still processes valid chords.
+        let songKey = guessKey(englishContent);
+        if (!songKey) {
+          songKey = guessKey("[C]");
+        }
+
+        if (songKey) {
+          let transposedContent = transposeChordPro(
+            englishContent,
+            songKey,
+            steps,
+          );
+          const newKey = songKey.transposed(steps);
+
+          // 3. Update {key: ...} directive directly in text, converting it back to Czech
+          const czechKey = convertChordNotation(newKey.toString());
+          transposedContent = transposedContent.replace(
+            /\{key:\s*([^}]+)\}/i,
+            `{key: ${czechKey}}`,
+          );
+
+          // 4. Revert English notation back to Czech for all inline chords
+          transposedContent = transposedContent.replace(
+            /\[([^\]]+)\]/g,
+            (match, chord) => {
+              // Split by "/" so convertChordNotation safely processes both root and bass notes
+              const czechChord = chord
+                .split("/")
+                .map((part: string) => convertChordNotation(part))
+                .join("/");
+
+              return `[${czechChord}]`;
+            },
+          );
+
+          if (transposedContent !== editorState.chordpro) {
+            contentEditorRef.current?.replaceContentWithUndo(transposedContent);
+          }
         }
       }
     } catch (error) {
