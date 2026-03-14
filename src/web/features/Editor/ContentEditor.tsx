@@ -78,6 +78,7 @@ export const transparentTheme = EditorView.theme({
   ".cm-content": {
     padding: "0.5rem 0",
     fontFamily: "inherit",
+    caretColor: "currentColor", 
   },
   "&.cm-focused": {
     outline: "none",
@@ -85,7 +86,11 @@ export const transparentTheme = EditorView.theme({
   ".cm-scroller": {
     overflow: "auto",
   },
-  // Bulletproof selection highlight (works in dark and light mode)
+  // Makes the CodeMirror custom cursor visible by inheriting text color
+  ".cm-cursor, .cm-dropCursor": {
+    borderLeftColor: "currentColor",
+  },
+  // Bulletproof selection highlight
   "&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection":
     {
       backgroundColor: "rgba(130, 170, 255, 0.3) !important",
