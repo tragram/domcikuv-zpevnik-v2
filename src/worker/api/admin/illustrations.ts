@@ -1,4 +1,8 @@
 import { and, eq } from "drizzle-orm";
+import {
+  getSongPopulated,
+  PopulatedSongDB,
+} from "src/worker/helpers/song-helpers";
 import z from "zod";
 import { defaultIllustrationId, defaultPromptId } from "~/types/songData";
 import {
@@ -24,19 +28,16 @@ import {
   SUMMARY_PROMPT_VERSIONS,
 } from "../../helpers/image-generator";
 import {
-  errorJSend,
+  AdminIllustrationResponse,
+  IllustrationGenerateSchema,
+} from "../api-types";
+import {
   failJSend,
   itemNotFoundFail,
-  songNotFoundFail,
   successJSend,
-  zValidatorJSend,
+  zValidatorJSend
 } from "../responses";
 import { buildApp } from "../utils";
-import {
-  getSongPopulated,
-  PopulatedSongDB,
-} from "src/worker/helpers/song-helpers";
-import { AdminIllustrationResponse } from "../api-types";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -73,20 +74,26 @@ export const illustrationModifySchema = z.object({
 export const CFImagesThumbnailURL = (imageURL: string) =>
   `/cdn-cgi/image/width=128/${imageURL}`;
 
-// @ts-expect-error Hono context
-const generateIllustrationHandler = async (c) => {
-  const illustrationData = c.req.valid("json");
+const coreGenerateIllustration = async (
+  // @ts-expect-error Hono context
+  c,
+  illustrationData: IllustrationGenerateSchema,
+) => {
   const db = c.var.db;
-
   let illustrationSong: PopulatedSongDB;
   try {
     illustrationSong = await getSongPopulated(db, illustrationData.songId);
   } catch {
-    return songNotFoundFail(c);
+    throw new Error("SONG_NOT_FOUND");
   }
 
-  if (!c.env.OPENAI_API_KEY || !c.env.HUGGING_FACE_TOKEN) {
-    return errorJSend(c, "Missing API keys", 500, "MISSING_API_KEYS");
+  // Included Google API Key check here to fix the potential crash!
+  if (
+    !c.env.OPENAI_API_KEY ||
+    !c.env.HUGGING_FACE_TOKEN ||
+    !c.env.GOOGLE_API_KEY
+  ) {
+    throw new Error("MISSING_API_KEYS");
   }
 
   const generator = new ImageGenerator({
@@ -115,20 +122,16 @@ const generateIllustrationHandler = async (c) => {
       illustrationData.imageModel,
     )
   ) {
-    return failJSend(c, "Illustration exists.", 400, "DUPLICATE_ILLUSTRATION");
+    throw new Error("DUPLICATE_ILLUSTRATION");
   }
 
   const imageBuffer = await generator.generateImage(prompt.text);
-  const promptId = defaultPromptId(
-    illustrationData.songId,
-    illustrationData.summaryModel,
-    illustrationData.promptVersion,
-  );
-  const imageId = defaultIllustrationId(promptId, illustrationData.imageModel);
+
+  const imageId = defaultIllustrationId(prompt.id, illustrationData.imageModel);
   const imageURL = await uploadImageBuffer(
     imageBuffer,
     illustrationSong.id,
-    promptId,
+    prompt.id,
     illustrationData.imageModel,
     c.env,
   );
@@ -148,21 +151,19 @@ const generateIllustrationHandler = async (c) => {
     })
     .returning();
 
-  if (illustrationData.setAsActive)
+  if (illustrationData.setAsActive) {
     await setCurrentIllustration(
       db,
       illustrationData.songId,
       newIllustration[0].id,
     );
-  return successJSend(
-    c,
-    {
-      song: illustrationSong,
-      illustration: newIllustration[0] as SongIllustrationDB,
-      prompt,
-    } as AdminIllustrationResponse,
-    201,
-  );
+  }
+
+  return {
+    song: illustrationSong,
+    illustration: newIllustration[0] as SongIllustrationDB,
+    prompt,
+  } as AdminIllustrationResponse;
 };
 
 export const illustrationRoutes = buildApp()
@@ -330,7 +331,12 @@ export const illustrationRoutes = buildApp()
   .post(
     "/generate",
     zValidatorJSend("json", illustrationGenerateSchema),
-    generateIllustrationHandler,
+    async (c) => {
+      const data = c.req.valid("json");
+      // Synchronous execution for the Admin UI
+      const result = await coreGenerateIllustration(c, data);
+      return successJSend(c, result, 201);
+    },
   )
   .delete("/:id", async (c) => {
     const illustrationId = c.req.param("id");
@@ -388,5 +394,13 @@ export const illustrationRoutes = buildApp()
 export const trustedGenerateRoute = buildApp().post(
   "/generate",
   zValidatorJSend("json", illustrationGenerateSchema),
-  generateIllustrationHandler,
+  async (c) => {
+    const data = c.req.valid("json");
+
+    // Background execution for the Editor UI
+    c.executionCtx.waitUntil(coreGenerateIllustration(c, data));
+
+    // Return immediately so the frontend doesn't hang
+    return successJSend(c, { status: "processing" }, 202);
+  },
 );

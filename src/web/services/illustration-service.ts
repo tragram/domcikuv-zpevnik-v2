@@ -59,7 +59,7 @@ export const createIllustrationPrompt = async (
 };
 
 export const generateIllustration = async (
-  adminApi: AdminApi | API,
+  adminApi: AdminApi,
   illustrationData: IllustrationGenerateSchema,
 ): Promise<AdminIllustrationResponse> => {
   const response = await makeApiRequest(() =>
