@@ -13,9 +13,9 @@ interface EnvDirective {
   stripLength: number;
 }
 
-// Global Matchers
+// Global Matchers - Updated to support Czech/European notation (s, es, is, H)
 const CHORD_REGEX =
-  /^[({\[]?([A-H][#b]?(?:m|mi|maj|min|sus|dim|aug|add|M)?[0-9]*(?:[#b][0-9]+)?(?:\/[A-H][#b]?)?\**|N\.?C\.?)[)}\]]?$/i;
+  /^[({\[]?([A-H](?:is|es|s|[#b])?(?:m|mi|maj|min|sus|dim|aug|add|M)?[0-9]*(?:(?:is|es|s|[#b])[0-9]+)?(?:\/[A-H](?:is|es|s|[#b])?)?\**|N\.?C\.?)[)}\]]?$/i;
 
 const ALLOWED_EXTRAS_REGEX = /^(?:[()|%xX~/\\]+|\d+x)$/;
 
@@ -112,7 +112,13 @@ function getChordTokens(chordLine: string): Token[] {
 }
 
 function isChordLine(line: string): boolean {
-  if (/\[[A-H][#bs]?m?[mi]?[5-7]?\]/.test(line)) return false;
+  // If the line already has inline chordpro chords, it's not a standard top-line chord line
+  if (
+    /\[[A-H](?:is|es|s|[#b])?(?:m|mi|maj|min|sus|dim|aug|add|M)?[0-9]*\]/i.test(
+      line,
+    )
+  )
+    return false;
   if (isTabLine(line)) return false;
 
   const tokens = line.split(/\s+/).filter(Boolean);

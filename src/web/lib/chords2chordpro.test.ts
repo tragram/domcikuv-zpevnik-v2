@@ -33,6 +33,25 @@ describe("chords2chordpro", () => {
     });
   });
 
+  describe("Czech and European notation support", () => {
+    it("returns true in isConvertibleFormat for Czech chord notations", () => {
+      const text = `Es      Asmaj7\nHello world\nB      Fm\nTesting this`;
+      expect(isConvertibleFormat(text)).toBe(true);
+    });
+
+    it("converts Czech chord notations natively", () => {
+      const input = `Es     Asmaj7 \nNejlíp jim bylo,\nEs     Asmaj7 \nkdyž nevěděli co dělají.`;
+      const expected = `{start_of_verse}\n[Es]Nejlíp [Asmaj7]jim bylo,\n[Es]když ne[Asmaj7]věděli co dělají.\n{end_of_verse}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("converts lines with chords with an empty line below them", () => {
+      const input = `Es   Asmaj7 \n\nB   Fm\n`;
+      const expected = `{start_of_verse}\n[Es]   [Asmaj7]\n{end_of_verse}\n\n{start_of_verse}\n[B]   [Fm]\n{end_of_verse}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+  });
+
   describe("convertToChordPro", () => {
     it("converts basic chords over lyrics", () => {
       const input = `C     G \nLet it be`;

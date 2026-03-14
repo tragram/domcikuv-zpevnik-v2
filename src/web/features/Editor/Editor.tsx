@@ -109,8 +109,7 @@ const isConvertibleFormat = (text: string): boolean => {
   const lines = text.split("\n");
   let chordLineCount = 0;
   for (const line of lines) {
-    if (line.trim() === "") continue;
-    if (/^([A-G][#b]?(m|min|maj|dim|aug|sus)?\d*[\s/]*)+$/.test(line.trim())) {
+    if (line.trim() === "") continue;if (/^([A-H](is|es|s|[#b])?(m|min|maj|dim|aug|sus)?\d*[\s/]*)+$/i.test(line.trim())) {
       chordLineCount++;
     }
   }
