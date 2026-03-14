@@ -1,0 +1,16 @@
+songId: Michal_Horak-Hej_teto
+prompts:
+  - id: Michal_Horak-Hej_teto_gpt-5-mini_v2
+    songId: Michal_Horak-Hej_teto
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Cartoonish dark‑humor illustration: a guilty young man sprawled on a couch
+      with a TV remote stuck under him, faint smoke and wavy smell lines rising
+      to a radiator where a tiny hamster is comically stuck to the metal by a
+      small magnet; an astonished aunt stands in the doorway, warm cozy
+      apartment, exaggerated expressions, vivid colors, non‑graphic.
+    createdAt: 2026-03-13T15:46:20.000Z
+    updatedAt: 2026-03-13T15:46:20.000Z
+    deleted: false
+    illustrations: []
