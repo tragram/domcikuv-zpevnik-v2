@@ -1,35 +1,18 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import { Check, X, Sparkles, AlertTriangle } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils";
-import ReactDiffViewer, { DiffMethod } from "react-diff-viewer-continued";
 
-const DIFF_VIEWER_STYLES = {
-  variables: {
-    light: {
-      diffViewerBackground: "transparent",
-      addedBackground: "#d1fae5",
-      addedColor: "#065f46",
-      removedBackground: "#fee2e2",
-      removedColor: "#991b1b",
-      wordAddedBackground: "#6ee7b7",
-      wordRemovedBackground: "#fca5a5",
-      addedGutterBackground: "#a7f3d0",
-      removedGutterBackground: "#fecaca",
-      gutterBackground: "hsl(var(--muted))",
-      gutterBackgroundDark: "hsl(var(--muted))",
-      highlightBackground: "hsl(var(--accent))",
-      highlightGutterBackground: "hsl(var(--accent))",
-      codeFoldBackground: "hsl(var(--muted))",
-      emptyLineBackground: "rgba(0,0,0,0.03)",
-      codeFoldContentColor: "hsl(var(--muted-foreground))",
-      // Hide the built-in title bar — we render our own column headers
-      diffViewerTitleBackground: "transparent",
-      diffViewerTitleColor: "transparent",
-      diffViewerTitleBorderColor: "transparent",
-    },
-  },
-};
+// Import both the standard editor and the merge wrapper
+import CodeMirror from "@uiw/react-codemirror";
+import CodeMirrorMerge from "react-codemirror-merge";
+
+// Import the unified view extension directly from the core package
+import { unifiedMergeView } from "@codemirror/merge";
+import { EditorView } from "@codemirror/view";
+import { EditorState } from "@codemirror/state";
+import { chordProExtensions, transparentTheme } from "../ContentEditor";
+
+const { Original, Modified } = CodeMirrorMerge;
 
 export interface AutofillReviewPanelProps {
   originalContent: string;
@@ -45,23 +28,6 @@ export const AutofillReviewPanel: React.FC<AutofillReviewPanelProps> = ({
   onReject,
 }) => {
   const [editedContent, setEditedContent] = useState(newContent);
-  const diffScrollRef = useRef<HTMLDivElement>(null);
-  const savedScrollTop = useRef(0);
-
-  // Save scroll position before React re-renders the diff
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (diffScrollRef.current) {
-      savedScrollTop.current = diffScrollRef.current.scrollTop;
-    }
-    setEditedContent(e.target.value);
-  };
-
-  // Restore scroll position after the diff re-renders, before paint
-  useLayoutEffect(() => {
-    if (diffScrollRef.current) {
-      diffScrollRef.current.scrollTop = savedScrollTop.current;
-    }
-  }, [editedContent]);
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
@@ -89,13 +55,18 @@ export const AutofillReviewPanel: React.FC<AutofillReviewPanelProps> = ({
           </div>
         </div>
 
-        {/* ── Main body: editor left, live diff right ──────────────────── */}
-        <div className="flex flex-1 min-h-0 divide-x divide-border">
-          {/* Left: editable new content */}
-          <div className="flex flex-col w-1/2 min-h-0">
-            <div className="flex items-center justify-between px-3 py-1.5 bg-muted/30 border-b border-border shrink-0">
+        {/* ── DESKTOP: Side-by-Side Merge View ─────────────────────────── */}
+        <div className="hidden md:flex flex-col flex-1 min-h-0 bg-background">
+          <div className="flex items-center divide-x divide-border border-b border-border bg-muted/30 shrink-0">
+            {/* Headers swapped: Original is now on the left */}
+            <div className="w-1/2 px-3 py-1.5">
               <span className="text-xs font-medium text-muted-foreground">
-                Autofilled result
+                Original content
+              </span>
+            </div>
+            <div className="flex items-center justify-between w-1/2 px-3 py-1.5">
+              <span className="text-xs font-medium text-muted-foreground">
+                Autofilled result{" "}
                 <span className="ml-1.5 opacity-60 font-normal">
                   (editable)
                 </span>
@@ -103,42 +74,60 @@ export const AutofillReviewPanel: React.FC<AutofillReviewPanelProps> = ({
               <button
                 onClick={() => setEditedContent(newContent)}
                 className="text-[10px] text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
-                title="Reset to AI output"
               >
                 Reset
               </button>
             </div>
-            <textarea
-              value={editedContent}
-              onChange={handleChange}
-              className="flex-1 w-full resize-none p-3 font-mono text-xs focus:outline-none focus:bg-primary/5 transition-colors overflow-y-auto"
-              spellCheck={false}
-              autoFocus
-            />
           </div>
 
-          {/* Right: live inline diff */}
-          <div className="flex flex-col w-1/2 min-h-0 overflow-hidden">
-            <div className="text-xs font-medium text-muted-foreground bg-muted/30 border-b border-border shrink-0 px-3 py-1.5">
-              Live diff
-            </div>
-            <div
-              ref={diffScrollRef}
-              className="flex-1 overflow-y-auto overflow-x-hidden text-xs
-              [&_table]:w-full [&_table]:table-fixed
-              [&_td]:break-words [&_td]:whitespace-pre-wrap
-              [&_pre]:whitespace-pre-wrap [&_pre]:break-words [&_pre]:overflow-hidden"
-            >
-              <ReactDiffViewer
-                oldValue={originalContent}
-                newValue={editedContent}
-                splitView={false}
-                compareMethod={DiffMethod.WORDS}
-                hideLineNumbers={false}
-                useDarkTheme={false}
-                styles={DIFF_VIEWER_STYLES}
+          <div className="flex-1 min-h-0 overflow-hidden font-mono text-xs [&_.cm-mergeView]:h-full [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto">
+            {/* Removed orientation prop to default to Original -> Modified */}
+            <CodeMirrorMerge theme={transparentTheme} className="h-full">
+              <Original
+                value={originalContent}
+                extensions={[
+                  ...chordProExtensions,
+                  EditorView.editable.of(false),
+                  EditorState.readOnly.of(true),
+                ]}
               />
-            </div>
+              <Modified
+                value={editedContent}
+                onChange={setEditedContent}
+                extensions={chordProExtensions}
+              />
+            </CodeMirrorMerge>
+          </div>
+        </div>
+
+        {/* ── MOBILE: Unified / Inline Diff View ───────────────────────── */}
+        <div className="flex md:hidden flex-col flex-1 min-h-0 bg-background">
+          <div className="flex items-center justify-between border-b border-border bg-muted/30 shrink-0 px-3 py-1.5">
+            <span className="text-xs font-medium text-muted-foreground">
+              Inline Diff{" "}
+              <span className="ml-1.5 opacity-60 font-normal">(editable)</span>
+            </span>
+            <button
+              onClick={() => setEditedContent(newContent)}
+              className="text-[10px] text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
+            >
+              Reset
+            </button>
+          </div>
+          <div className="flex-1 min-h-0 overflow-hidden font-mono text-xs">
+            {/* Standard CodeMirror but with the unifiedMergeView extension */}
+            <CodeMirror
+              value={editedContent}
+              onChange={setEditedContent}
+              theme={transparentTheme}
+              extensions={[
+                ...chordProExtensions,
+                unifiedMergeView({
+                  original: originalContent,
+                }),
+              ]}
+              className="h-full w-full outline-none [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto"
+            />
           </div>
         </div>
 

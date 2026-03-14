@@ -8,6 +8,8 @@ import { EditorState, SongDB } from "~/types/types";
 import { guessKey } from "../SongView/utils/songRendering";
 import MetadataField from "./components/MetadataField";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
+import SmartFeatures from "./components/SmartFeatures"; // <-- Import the new component
+import type { EvaluatedFeature, SmartFeature } from "./Editor";
 
 interface MetadataEditorProps {
   songDB: SongDB;
@@ -20,6 +22,9 @@ interface MetadataEditorProps {
   onSettingsChange: (settings: EditorSettings) => void;
   user: UserProfileData;
   hasIllustration?: boolean;
+  features: EvaluatedFeature[];
+  isProcessing: boolean;
+  onExecuteFeature: (feature: SmartFeature) => void;
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({
@@ -33,6 +38,9 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   onSettingsChange,
   user,
   hasIllustration = false,
+  features,
+  isProcessing,
+  onExecuteFeature,
 }) => {
   return (
     <div className="main-container space-y-4">
@@ -150,7 +158,9 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           error={fieldErrors.tempo}
           disabled={extractedMetadata.tempo !== undefined}
         />
-        <Separator />
+
+        <Separator className="my-4" />
+
         {/* Editor Settings Section */}
         <div className="mt-4">
           <EditorSettingsComponent
@@ -160,6 +170,18 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
             hasIllustration={hasIllustration}
           />
         </div>
+
+        {/* Smart Features Section */}
+        {features.length > 0 && (
+          <>
+            <Separator className="my-4" />
+            <SmartFeatures
+              features={features}
+              isProcessing={isProcessing}
+              onExecuteFeature={onExecuteFeature}
+            />
+          </>
+        )}
       </div>
     </div>
   );

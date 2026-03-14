@@ -1,13 +1,17 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { UserProfileData } from "src/worker/api/userProfile";
 import useLocalStorageState from "use-local-storage-state";
-import { parseChordPro } from "../../../lib/chordpro";
+import {
+  parseChordPro,
+  normalizeWhitespace,
+  replaceRepetitions,
+} from "src/lib/chordpro";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import { EditorState, SongDB } from "~/types/types";
 import "../SongView/SongView.css";
 import CollapsibleMainArea from "./components/CollapsibleMainArea";
-import ContentEditor from "./ContentEditor";
+import ContentEditor, { ContentEditorRef } from "./ContentEditor";
 import "./Editor.css";
 import EditorToolbar from "./EditorToolbar";
 import MetadataEditor from "./MetadataEditor";
@@ -15,6 +19,9 @@ import Preview from "./Preview";
 import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
 import { EditorAPI } from "src/worker/api-client";
 import { useEditorValidation } from "./components/use-editor-validation";
+import { ExternalLink, FileInput, Sparkles } from "lucide-react";
+import { autofillChordpro } from "~/services/editor-service";
+import { convertToChordPro } from "~/lib/chords2chordpro";
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -31,7 +38,6 @@ const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   });
 };
 
-// Helper to extract metadata directives from the ChordPro text
 const parseMetadataFromChordPro = (content: string): Partial<EditorState> => {
   const extracted: Partial<EditorState> = {};
   const lines = content.split("\n");
@@ -55,6 +61,127 @@ const parseMetadataFromChordPro = (content: string): Partial<EditorState> => {
   return extracted;
 };
 
+const isAutofillable = (text: string, user: UserProfileData): boolean => {
+  if (!user.loggedIn || !user.profile.isTrusted) {
+    return false;
+  }
+  const hasAnyChords = /\[[A-G][^\]]*\]/.test(text);
+  if (!hasAnyChords) return false;
+
+  const sectionSplitRegex =
+    /(\{(?:sov|start_of_verse|soc|start_of_chorus|sob|start_of_bridge|v|c|b|verse|chorus|bridge)(?::.*)?\})/i;
+  const parts = text.split(sectionSplitRegex);
+
+  for (let i = 1; i < parts.length; i += 2) {
+    const content = parts[i + 1];
+    if (!content) continue;
+
+    const hasLyrics = content.trim().length > 0;
+    const hasChordsInSection = /\[[A-G][^\]]*\]/.test(content);
+
+    if (hasLyrics && !hasChordsInSection) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const hasExternalOriginalContent = (
+  songData?: SongData,
+  currentContent?: string,
+): boolean => {
+  if (!songData?.externalSource?.originalContent) return false;
+  return (
+    !currentContent ||
+    currentContent.trim() === "" ||
+    currentContent !== songData.externalSource.originalContent
+  );
+};
+
+const isConvertibleFormat = (text: string): boolean => {
+  const lines = text.split("\n");
+  let chordLineCount = 0;
+  for (const line of lines) {
+    if (line.trim() === "") continue;
+    if (/^([A-G][#b]?(m|min|maj|dim|aug|sus)?\d*[\s/]*)+$/.test(line.trim())) {
+      chordLineCount++;
+    }
+  }
+  return chordLineCount > 1;
+};
+
+export interface SmartFeature {
+  id: string;
+  label: string;
+  loadingLabel: string;
+  icon: React.ElementType;
+  description: React.ReactNode;
+  disabledReason: React.ReactNode;
+  check: (
+    content: string,
+    user: UserProfileData,
+    songData?: SongData,
+  ) => boolean;
+}
+
+export interface EvaluatedFeature extends SmartFeature {
+  isEnabled: boolean;
+}
+
+const SMART_FEATURES: SmartFeature[] = [
+  {
+    id: "show_external_original",
+    label: "Show Original Content",
+    loadingLabel: "Loading...",
+    icon: ExternalLink,
+    check: (content: string, user: UserProfileData, songData?: SongData) =>
+      hasExternalOriginalContent(songData, content),
+    description: (
+      <>
+        Click to view the original content from the source website.
+      </>
+    ),
+    disabledReason:
+      "This song was not imported from a different source.",
+  },
+  {
+    id: "convert_to_chordpro",
+    label: "Convert to ChordPro",
+    loadingLabel: "Converting...",
+    icon: FileInput,
+    check: (content: string, user: UserProfileData) =>
+      isConvertibleFormat(content),
+    description: (
+      <>
+        When importing songs from other sources, chords are often in separate
+        lines above the lyrics. This will format them into the inline ChordPro
+        format used by this website.
+        <br />
+        <br />
+        <strong>For best results:</strong>
+        <ul className="list-disc pl-4">
+          <li>Place chords precisely above the syllable where they belong.</li>
+          <li>Indicate separate sections by blank lines.</li>
+          <li>Use Ctrl+Z to go back and adjust if necessary.</li>
+        </ul>
+      </>
+    ),
+    disabledReason:
+      "The content is already in ChordPro format or no convertible chords were detected.",
+  },
+  {
+    id: "autofill_chords",
+    label: "Autofill Missing Chords",
+    loadingLabel: "Filling...",
+    icon: Sparkles,
+    check: isAutofillable,
+    description: <>Use AI to generate chords in sections where they missing.</>,
+    disabledReason:
+      "No missing chords detected in lyrics sections, or you are not logged in as a trusted user.",
+  },
+];
+
 interface EditorProps {
   songDB: SongDB;
   songData?: SongData;
@@ -70,6 +197,8 @@ const Editor: React.FC<EditorProps> = ({
   versionId,
   editorAPI,
 }) => {
+  const contentEditorRef = useRef<ContentEditorRef>(null);
+
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
     : "editor/state";
@@ -91,6 +220,19 @@ const Editor: React.FC<EditorProps> = ({
     useLocalStorageState<EditorSettings>("editor/settings", {
       defaultValue: () => DEFAULT_EDITOR_SETTINGS,
     });
+
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [pendingAutofill, setPendingAutofill] = useState<{
+    originalContent: string;
+    newContent: string;
+  } | null>(null);
+
+  const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
+    return SMART_FEATURES.map((f) => ({
+      ...f,
+      isEnabled: f.check(editorState.chordpro, user, songData),
+    }));
+  }, [editorState.chordpro, user, songData]);
 
   const initializeEditor = useCallback(() => {
     setEditorState(defaultEditorState);
@@ -158,7 +300,6 @@ const Editor: React.FC<EditorProps> = ({
     });
   };
 
-  // Dynamically compute which metadata is currently controlled by text directives
   const extractedMetadata = useMemo(
     () => parseMetadataFromChordPro(editorState.chordpro),
     [editorState.chordpro],
@@ -168,9 +309,45 @@ const Editor: React.FC<EditorProps> = ({
     const extracted = parseMetadataFromChordPro(content);
     setEditorState({
       ...editorState,
-      ...extracted, // Instantly sync extracted tags into state
+      ...extracted,
       chordpro: content,
     });
+  };
+
+  const executeFeature = async (feature: SmartFeature) => {
+    const featureId = feature.id;
+    const previousContent = editorState.chordpro;
+    let newContent = editorState.chordpro;
+
+    try {
+      if (featureId === "show_external_original") {
+        newContent = songData!.externalSource!.originalContent!;
+        if (newContent !== editorState.chordpro) {
+          contentEditorRef.current?.replaceContentWithUndo(newContent);
+        }
+      } else if (featureId === "convert_to_chordpro") {
+        newContent = normalizeWhitespace(
+          replaceRepetitions(convertToChordPro(editorState.chordpro)),
+        );
+        if (newContent !== editorState.chordpro) {
+          contentEditorRef.current?.replaceContentWithUndo(newContent);
+        }
+      } else if (featureId === "autofill_chords") {
+        setIsProcessing(true);
+        newContent = await autofillChordpro(editorState.chordpro, editorAPI);
+
+        if (newContent !== editorState.chordpro) {
+          setPendingAutofill({
+            originalContent: previousContent,
+            newContent,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(`Feature ${featureId} failed:`, error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const { isValid, validationErrors, fieldErrors } =
@@ -233,15 +410,26 @@ const Editor: React.FC<EditorProps> = ({
               user={user}
               fieldErrors={fieldErrors}
               hasIllustration={hasIllustration}
+              features={evaluatedFeatures}
+              isProcessing={isProcessing}
+              onExecuteFeature={executeFeature}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Editor"} className={"basis-[40%] "}>
             <ContentEditor
+              ref={contentEditorRef}
               editorContent={editorState.chordpro}
               setEditorContent={updateContent}
               user={user}
               songData={songData}
               editorAPI={editorAPI}
+              pendingAutofill={pendingAutofill}
+              isProcessing={isProcessing}
+              onAcceptAutofill={(editedContent) => {
+                contentEditorRef.current?.replaceContentWithUndo(editedContent);
+                setPendingAutofill(null);
+              }}
+              onRejectAutofill={() => setPendingAutofill(null)}
             />
           </CollapsibleMainArea>
           <CollapsibleMainArea title={"Preview"} className={"basis-[40%]"}>
