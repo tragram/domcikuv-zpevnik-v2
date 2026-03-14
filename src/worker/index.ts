@@ -4,7 +4,10 @@ import { drizzle } from "drizzle-orm/d1";
 import { user } from "src/lib/db/schema/auth.schema";
 import { auth } from "../lib/auth/server";
 import adminApp, { adminOrTrustedMiddleware } from "./api/admin/admin";
-import { trustedGenerateRoute } from "./api/admin/illustrations";
+import {
+  coreGenerateIllustration,
+  trustedGenerateRoute,
+} from "./api/admin/illustrations";
 import authApp from "./api/auth";
 import editorApp from "./api/editor";
 import favoritesApp from "./api/favorites";
@@ -17,6 +20,7 @@ import { z } from "zod";
 import { errorJSend, failJSend } from "./api/responses";
 export { SessionSync } from "./durable-objects/SessionSync";
 import * as schema from "src/lib/db/schema";
+import { IllustrationGenerateSchema } from "./api/api-types"; // Or wherever your schema type lives
 
 const app = buildApp();
 
@@ -80,4 +84,41 @@ export const route = app
   )
   .route("/session", sessionSyncApp);
 
-export default route;
+// Export the handlers for both HTTP and Queues
+export default {
+  // 1. Handle normal HTTP requests via Hono
+  fetch: route.fetch,
+
+  // 2. Handle background Queue messages
+  async queue(
+    batch: MessageBatch<IllustrationGenerateSchema>,
+    env: Env,
+    ctx: ExecutionContext,
+  ) {
+    // Initialize the DB for the background worker (since it bypasses Hono middleware)
+    const db = drizzle(env.DB, { schema });
+
+    for (const message of batch.messages) {
+      try {
+        console.log(
+          `Processing illustration generation for song: ${message.body.songId}`,
+        );
+
+        // Pass the env, db, and payload to your isolated logic
+        await coreGenerateIllustration(env, db, message.body);
+
+        // Acknowledge the message so it isn't retried
+        message.ack();
+      } catch (error) {
+        console.error(
+          `Queue generation failed for song ${message.body.songId}:`,
+          error,
+        );
+
+        // If it fails, message.retry() puts it back in the queue to try again later
+        // Cloudflare will automatically handle the backoff based on your wrangler.toml max_retries
+        message.retry();
+      }
+    }
+  },
+};

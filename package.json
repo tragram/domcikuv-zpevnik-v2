@@ -117,7 +117,7 @@
     "workbox-precaching": "^7.3.0",
     "workbox-routing": "^7.3.0",
     "workbox-strategies": "^7.3.0",
-    "wrangler": "4.63.0"
+    "wrangler": "4.73.0"
   },
   "scripts": {
     "build": "vite build",

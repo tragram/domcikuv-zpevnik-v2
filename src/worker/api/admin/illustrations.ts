@@ -35,9 +35,9 @@ import {
   failJSend,
   itemNotFoundFail,
   successJSend,
-  zValidatorJSend
+  zValidatorJSend,
 } from "../responses";
-import { buildApp } from "../utils";
+import { AppDatabase, buildApp } from "../utils";
 
 export const illustrationCreateSchema = z.object({
   songId: z.string(),
@@ -74,12 +74,11 @@ export const illustrationModifySchema = z.object({
 export const CFImagesThumbnailURL = (imageURL: string) =>
   `/cdn-cgi/image/width=128/${imageURL}`;
 
-const coreGenerateIllustration = async (
-  // @ts-expect-error Hono context
-  c,
+export const coreGenerateIllustration = async (
+  env: Env,
+  db: AppDatabase,
   illustrationData: IllustrationGenerateSchema,
 ) => {
-  const db = c.var.db;
   let illustrationSong: PopulatedSongDB;
   try {
     illustrationSong = await getSongPopulated(db, illustrationData.songId);
@@ -88,11 +87,7 @@ const coreGenerateIllustration = async (
   }
 
   // Included Google API Key check here to fix the potential crash!
-  if (
-    !c.env.OPENAI_API_KEY ||
-    !c.env.HUGGING_FACE_TOKEN ||
-    !c.env.GOOGLE_API_KEY
-  ) {
+  if (!env.OPENAI_API_KEY || !env.HUGGING_FACE_TOKEN || !env.GOOGLE_API_KEY) {
     throw new Error("MISSING_API_KEYS");
   }
 
@@ -100,9 +95,9 @@ const coreGenerateIllustration = async (
     promptVersion: illustrationData.promptVersion,
     summaryModel: illustrationData.summaryModel,
     imageModel: illustrationData.imageModel,
-    openaiApiKey: c.env.OPENAI_API_KEY,
-    googleApiKey: c.env.GOOGLE_API_KEY,
-    huggingFaceToken: c.env.HUGGING_FACE_TOKEN,
+    openaiApiKey: env.OPENAI_API_KEY,
+    googleApiKey: env.GOOGLE_API_KEY,
+    huggingFaceToken: env.HUGGING_FACE_TOKEN,
   });
 
   const prompt = await findOrCreatePrompt(
@@ -133,7 +128,7 @@ const coreGenerateIllustration = async (
     illustrationSong.id,
     prompt.id,
     illustrationData.imageModel,
-    c.env,
+    env,
   );
 
   const newIllustration = await db
@@ -334,7 +329,7 @@ export const illustrationRoutes = buildApp()
     async (c) => {
       const data = c.req.valid("json");
       // Synchronous execution for the Admin UI
-      const result = await coreGenerateIllustration(c, data);
+      const result = await coreGenerateIllustration(c.env, c.var.db, data);
       return successJSend(c, result, 201);
     },
   )
@@ -396,11 +391,11 @@ export const trustedGenerateRoute = buildApp().post(
   zValidatorJSend("json", illustrationGenerateSchema),
   async (c) => {
     const data = c.req.valid("json");
-
-    // Background execution for the Editor UI
-    c.executionCtx.waitUntil(coreGenerateIllustration(c, data));
-
-    // Return immediately so the frontend doesn't hang
-    return successJSend(c, { status: "processing" }, 202);
+    await c.env.ILLUSTRATION_QUEUE.send(data);
+    return successJSend(
+      c,
+      { status: "processing", message: "Queued for background generation." },
+      202,
+    );
   },
 );

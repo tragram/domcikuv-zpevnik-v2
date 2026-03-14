@@ -34,7 +34,7 @@
       "binding": "DB",
       "database_name": "zpevnik",
       "database_id": "f6fcba04-be2e-4763-9ef2-d505f59d120d",
-      "migrations_dir": "drizzle/"
+      "migrations_dir": "drizzle/",
     },
   ],
   "r2_buckets": [
@@ -63,6 +63,23 @@
       "new_sqlite_classes": ["SessionSync"],
     },
   ],
+
+  "queues": {
+    "producers": [
+      {
+        "queue": "illustration-queue",
+        "binding": "ILLUSTRATION_QUEUE",
+      },
+    ],
+    "consumers": [
+      {
+        "queue": "illustration-queue",
+        "max_batch_size": 1,
+        "max_retries": 3,
+      },
+    ],
+  },
+
   /**
    * Environment Variables
    * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
