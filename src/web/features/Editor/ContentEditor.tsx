@@ -43,8 +43,32 @@ export const chordPlugin = ViewPlugin.fromClass(
 );
 
 // 2. Highlight Directives: e.g. {start_of_chorus}
+const metadataMatcher = new MatchDecorator({
+  regexp:
+    /\{(?:title|t|artist|capo|key|tempo|language|range|startmelody)\s*:.*?\}/gi,
+  decoration: Decoration.mark({
+    // Using opacity and muted text to visually "grey out" the metadata
+    class: "opacity-50 text-muted-foreground",
+  }),
+});
+
+export const metadataPlugin = ViewPlugin.fromClass(
+  class {
+    decorations;
+    constructor(view: EditorView) {
+      this.decorations = metadataMatcher.createDeco(view);
+    }
+    update(update: ViewUpdate) {
+      this.decorations = metadataMatcher.updateDeco(update, this.decorations);
+    }
+  },
+  { decorations: (v) => v.decorations },
+);
+
 const directiveMatcher = new MatchDecorator({
-  regexp: /\{(.*?)\}/g,
+  // Uses negative lookahead to match any {...} that is NOT a metadata key
+  regexp:
+    /\{(?!(?:title|t|artist|capo|key|tempo|language|range|startmelody)\s*:)(.*?)\}/gi,
   decoration: Decoration.mark({
     class: "text-primary/70 bg-primary/5 font-semibold",
   }),
@@ -62,9 +86,9 @@ export const directivePlugin = ViewPlugin.fromClass(
   },
   { decorations: (v) => v.decorations },
 );
-
 export const chordProExtensions = [
   chordPlugin,
+  metadataPlugin,
   directivePlugin,
   EditorView.lineWrapping,
 ];
@@ -78,7 +102,7 @@ export const transparentTheme = EditorView.theme({
   ".cm-content": {
     padding: "0.5rem 0",
     fontFamily: "inherit",
-    caretColor: "currentColor", 
+    caretColor: "currentColor",
   },
   "&.cm-focused": {
     outline: "none",
