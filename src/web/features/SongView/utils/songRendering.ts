@@ -122,7 +122,6 @@ export function renderSong(
 ): string {
   // Parse and process the chord pro content
   let song = parseChordPro(formatChordpro(songData.chordpro));
-  console.log(song);
   // Inject known key to help the transposer pick sharp/flat accidentals properly
   if (songData.key) {
     const isFlat = songData.key.isFlat();
