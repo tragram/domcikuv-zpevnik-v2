@@ -32,13 +32,79 @@ function parseChordPro(chordProContent: string) {
 }
 
 /**
+ * Extracts the root and quality (major/minor) from a raw chord string.
+ * Uses the character class logic from preparseChordpro.ts
+ * e.g., "Cmaj7" -> "C", "F#m7" -> "F#m", "G/B" -> "G"
+ */
+function extractBaseKey(rawChord: string): string | null {
+  // Matches A-G, optional # or b, optional m or min (for minor)
+  const match = rawChord.match(/^([A-G][#b]?)(m(?:in)?(?![a-z]))?/i);
+  if (match) {
+    const root = match[1].toUpperCase();
+    const isMinor = match[2] ? "m" : "";
+    return `${root}${isMinor}`;
+  }
+  return null;
+}
+
+/**
  * Attempts to determine the key of a song from its ChordPro content
+ * using a weighted scoring system based on chord frequency and structure.
  */
 export function guessKey(chordProContent: string): Key | undefined {
-  const song = parseChordPro(chordProContent);
-  //TODO: actual guess
-  const possibleKey = song.metadata?.key || "";
-  return Key.parse(possibleKey, false);
+  // 1. Check explicit metadata first (fastest and most accurate)
+  const keyMetaMatch = chordProContent.match(/\{key:\s*([^}]+)\}/i);
+  if (keyMetaMatch) {
+    const parsedKey = Key.parse(keyMetaMatch[1].trim(), false);
+    if (parsedKey) return parsedKey;
+  }
+
+  // 2. Pre-process to ensure English notation (H -> B, etc.)
+  const englishContent = czechToEnglish(chordProContent);
+
+  // 3. Extract all chords using the bracket matching logic from preparseChordpro
+  // Matches anything starting with A-G inside brackets, allowing extensions
+  const chordRegex = /\[([A-G][A-Za-z\d#b,\s/]{0,15})\]/gi;
+  const chords: string[] = [];
+  let match;
+
+  while ((match = chordRegex.exec(englishContent)) !== null) {
+    const baseChord = extractBaseKey(match[1]);
+    if (baseChord) {
+      chords.push(baseChord);
+    }
+  }
+
+  if (chords.length === 0) return undefined;
+
+  // 4. Elaborate Guessing Logic (Scoring System)
+  const chordScores: Record<string, number> = {};
+
+  // Score A: Frequency (1 point per occurrence)
+  chords.forEach((chord) => {
+    chordScores[chord] = (chordScores[chord] || 0) + 1;
+  });
+
+  // Score B: Structural Start (First chord gets +3 points)
+  const firstChord = chords[0];
+  chordScores[firstChord] = (chordScores[firstChord] || 0) + 3;
+
+  // Score C: Structural Resolution (Last chord gets +5 points)
+  const lastChord = chords[chords.length - 1];
+  chordScores[lastChord] = (chordScores[lastChord] || 0) + 5;
+
+  // 5. Determine the highest scoring chord
+  let bestGuess = "";
+  let highestScore = -1;
+
+  for (const [chord, score] of Object.entries(chordScores)) {
+    if (score > highestScore) {
+      highestScore = score;
+      bestGuess = chord;
+    }
+  }
+
+  return bestGuess ? Key.parse(bestGuess, false) : undefined;
 }
 
 /**
