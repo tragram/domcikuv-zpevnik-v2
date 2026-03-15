@@ -1,60 +1,61 @@
 {title: Hej teto!}
 {artist: Michal Horák}
-{key: C}
-{capo: 2}
-{range: c1-e1}
+{key: Am}
+{capo: 0}
+{range: g1-h1}
 {language: czech}
-{startMelody: d e d c}
+{startMelody: a h a g}
 {createdAt: 1773416356000}
-{updatedAt: 1773416772000}
+{updatedAt: 1773498967000}
+{illustrationId: Michal_Horak-Hej_teto_gpt-5-mini_v4_nano-banana-2}
+{promptId: Michal_Horak-Hej_teto_gpt-5-mini_v4}
 
 {start_of_verse}
-Měl jsem [Am]hlídat tetě [C]křečka,
-[G]dala mi ho se slovy, ať [D]u mě chvíli přečká.
-Ale [Am]křečka, uhlí[C]dati
-[G]nelze jen tak lehce,
-obzvlášť [D]když se vám moc nechce.
+Měl jsem [Em]hlídat tetě [G]křečka,
+[D]dala mi ho se slovy, ať [A]u mě chvíli přečká.
+Ale [Em]křečka, uhlí[G]dati
+[D]nelze jen tak lehce, obzvlášť [A]když se vám moc nechce.
 {end_of_verse}
 
 {start_of_verse}
-[Am]Po pokoji ať si [C]běhá,
-[G]na gauč jsem si lehnul, vzápětí se ani [D]nehnul.
-[Am]Tlačilo mě do zad [C]kromě
-[G]polštářů i cosi, už se vidim tetu [D]prosit:
+Po po[Em]koji ať si [G]běhá,
+[D]na gauč jsem si lehnul, vzápě[A]tí se ani nehnul.
+Tlači[Em]lo mě do zad [G]kromě
+[D]polštářů i cosi, už se [A]vidim tetu prosit:
 {end_of_verse}
 
 {start_of_chorus}
-Hej [F]teto! Já [C]ho zabil.
-[E7]Už se to nestane, jo, [Am]ten už asi nevstane.
-Hej teto! Nekřič na mě.
-Já ho prostě neviděl, už dost jsem se nastyděl.
-Hej [F]teto!
-[C E7 Am F C E7]
+Hej [C]teto! Já [G]ho zabil.
+[H7]Už se to nestane, jo, [Em]ten už asi nevstane.
+Hej [C]teto! Nekřič [G]na mě.
+[H7]Já ho prostě neviděl, už [Em]dost jsem se nastyděl.
+Hej [C]teto!
+[G][H7][Em][C][G][H7]
 {end_of_chorus}
 
 {start_of_verse}
-[Am]Tak jsem kouknul, co mě [C]tlačí,
-[G]seděl jsem jenom na televizním ovla[D]dači.
-[Am]Ale křeččí švito[C]ření
-[G]slyšet není, jenom zvláštní smrad se line od to[D]pení.
+Tak jsem [Em]kouknul, co mě [G]tlačí,
+[D]seděl jsem jenom na tele[A]vizním ovladači.
+Ale [Em]křeččí švito[G]ření
+slyšet [D]není, jenom zvláštní smrad se [A]line od topení.
 {end_of_verse}
 
 {start_of_verse}
-[Am]Zase se mi dech za[C]tajil,
-[G]spečeného křečka bych před tetou neob[D]hájil.
-[Am]A dřív než tam sebou [C]seknu,
-[G]měl bych asi vymyslet, jak tetě potom [D]řeknu.
+Zase [Em]se mi dech za[G]tajil,
+[D]spečeného křečka bych před [A]tetou neobhájil.
+A [Em]dřív než tam sebou [G]seknu,
+[D]měl bych asi vymyslet, jak [A]tetě potom řeknu.
 {end_of_verse}
 
 {chorus}
 
 {start_of_chorus: R2}
-Hej [F]teto! Já [C]ho fakt zabil.
-[E7]Ten bídák sežral magnet
-a k topení se [Am]přitavil.
-Hej teto, co na to říci?
-Můžeš si ho maximálně
-připnout na lednici.
+Hej [C]teto! Já [G]ho fakt zabil.
+[H7]Ten bídák sežral magnet
+a k to[Em]pení se přitavil.
+Hej [C]teto, co [G]na to říci?
+[H7]Můžeš si ho maximálně
+při[Em]pnout na lednici.
 {end_of_chorus}
 
 {chorus}
