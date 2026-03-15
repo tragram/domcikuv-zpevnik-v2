@@ -52,8 +52,15 @@ const CHORD_MODIFIER_REGEX = /(♯|♭|2|4|6|7|9|maj|sus|dim|\+|\([^()]*\))/g;
 export function formatChord(chordText: string): string {
   if (!chordText) return "";
 
-  // Replace flat and sharp signs
   let formatted = chordText;
+
+  // --- Opinionated naming fixes ---
+  // Restore sus4 (only if it's just 'sus' and not 'sus2')
+  formatted = formatted.replace(/sus(?![24])/g, "sus4");
+  // Restore maj7
+  formatted = formatted.replace(/ma7/g, "maj7");
+
+  // Replace flat and sharp signs
   for (const [symbol, replacement] of Object.entries(CHORD_NOTATION_MAP)) {
     formatted = formatted.replace(new RegExp(symbol, "g"), replacement);
   }
@@ -61,7 +68,6 @@ export function formatChord(chordText: string): string {
   // Add superscript to modifiers
   return formatted.replace(CHORD_MODIFIER_REGEX, "<sup>$1</sup>");
 }
-
 /**
  * Converts chord notation in HTML to Central European notation and adds formatting
  * @param songText - HTML song text to process

@@ -1,4 +1,4 @@
-import { ChordProParser } from "chordproject-parser";
+import ChordSheetJS from "chordsheetjs";
 import { convertToChordPro } from "~/lib/chords2chordpro";
 import { guessLanguage } from "~/lib/utils";
 import { SongData } from "~/types/songData";
@@ -10,6 +10,7 @@ import {
   SkorepovaCache,
   ZPEVNIK_SKOREPOVA_CACHE_KEY,
 } from "../helpers/external-search/zpevnik-skorepova";
+import { addFavorite } from "../helpers/favorite-helpers";
 import { addIllustrationFromURL } from "../helpers/illustration-helpers";
 import {
   createImportSong,
@@ -26,7 +27,6 @@ import {
   zValidatorJSend,
 } from "./responses";
 import { buildApp } from "./utils";
-import { addFavorite } from "../helpers/favorite-helpers";
 
 export const externalRoutes = buildApp()
   .get("/search", async (c) => {
@@ -136,7 +136,7 @@ export const externalRoutes = buildApp()
         language: guessLanguage(chordPro) ?? null,
         chordpro: chordPro,
         key:
-          new ChordProParser().parse(chordPro).getPossibleKey()?.toString() ??
+          new ChordSheetJS.ChordProParser().parse(chordPro).metadata?.key ??
           null,
         capo: capoMatch ? parseInt(capoMatch[1]) : null,
         range: null,

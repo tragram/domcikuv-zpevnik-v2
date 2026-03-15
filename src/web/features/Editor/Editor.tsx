@@ -23,11 +23,9 @@ import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
 import { autofillChordpro } from "~/services/editor-service";
 import { convertToChordPro } from "~/lib/chords2chordpro";
 import { guessKey } from "../SongView/utils/songRendering";
-import {
-  czechToEnglish,
-  transposeChordPro,
-} from "../SongView/utils/preparseChordpro";
+import { czechToEnglish } from "../SongView/utils/preparseChordpro";
 import { convertChordNotation } from "~/lib/utils";
+import ChordSheetJS from "chordsheetjs";
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -109,7 +107,12 @@ const isConvertibleFormat = (text: string): boolean => {
   const lines = text.split("\n");
   let chordLineCount = 0;
   for (const line of lines) {
-    if (line.trim() === "") continue;if (/^([A-H](is|es|s|[#b])?(m|min|maj|dim|aug|sus)?\d*[\s/]*)+$/i.test(line.trim())) {
+    if (line.trim() === "") continue;
+    if (
+      /^([A-H](is|es|s|[#b])?(m|min|maj|dim|aug|sus)?\d*[\s/]*)+$/i.test(
+        line.trim(),
+      )
+    ) {
       chordLineCount++;
     }
   }
@@ -364,41 +367,49 @@ const Editor: React.FC<EditorProps> = ({
       } else if (featureId === "transpose") {
         const steps = payload as number;
 
-        // 1. Convert Czech to English so chord-symbol can read it
-        const englishContent = czechToEnglish(editorState.chordpro);
-
-        // 2. Try to guess the key. Fallback to 'C' so it still processes valid chords.
-        let songKey = guessKey(englishContent);
+        // 1. Try to guess the key from the current content. Fallback to 'C'.
+        let songKey = guessKey(editorState.chordpro);
         if (!songKey) {
           songKey = guessKey("[C]");
         }
 
         if (songKey) {
-          let transposedContent = transposeChordPro(
-            englishContent,
-            songKey,
-            steps,
-          );
+          let transposedContent = editorState.chordpro;
           const newKey = songKey.transposed(steps);
 
-          // 3. Update {key: ...} directive directly in text, converting it back to Czech
+          // 2. Update {key: ...} directive directly in text
           const czechKey = convertChordNotation(newKey.toString());
           transposedContent = transposedContent.replace(
             /\{key:\s*([^}]+)\}/i,
             `{key: ${czechKey}}`,
           );
 
-          // 4. Revert English notation back to Czech for all inline chords
+          // 3. Transpose all inline chords safely
           transposedContent = transposedContent.replace(
             /\[([^\]]+)\]/g,
             (match, chord) => {
-              // Split by "/" so convertChordNotation safely processes both root and bass notes
-              const czechChord = chord
-                .split("/")
-                .map((part: string) => convertChordNotation(part))
-                .join("/");
+              // Convert Czech to English purely for the parser
+              const engChord = chord.replace(/B/g, "Bb").replace(/H/g, "B");
 
-              return `[${czechChord}]`;
+              // Parse the single chord using chordsheetjs
+              const parsedChord = ChordSheetJS.Chord.parse(engChord);
+
+              if (parsedChord) {
+                // Transpose it
+                const transposed = parsedChord.transpose(steps);
+
+                // Format back to Czech notation, respecting bass notes
+                const czechOutput = transposed
+                  .toString()
+                  .split("/")
+                  .map((part: string) => convertChordNotation(part))
+                  .join("/");
+
+                return `[${czechOutput}]`;
+              }
+
+              // Fallback if the parser doesn't understand the string
+              return match;
             },
           );
 

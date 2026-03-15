@@ -1,38 +1,23 @@
 /**
- * ChordPro Parser and Transposer
+ * Custom ChordPro Parser
  *
  * This module provides functionality for processing ChordPro files:
  * - Handles custom variant directives
  * - Replaces repeated section directives (like chorus)
  * - Converts Czech music notation to English
- * - Transposes chords between musical keys
  */
 
-import { chordParserFactory, chordRendererFactory } from "chord-symbol";
-import type { Chord, MaybeChord, ChordParseFailure } from "chord-symbol";
-import type { Key } from "~/types/musicTypes";
 import {
   applyVariant,
-  variantHandlers,
   EXPANDED_SECTION_DIRECTIVE,
   SHORTHAND_SECTION_DIRECTIVE,
+  variantHandlers,
 } from "./variantHandlers";
 export const SECTION_TITLE_COMMENT = (
   repeatKey: string | null,
   consecutiveModifier: string | null,
 ) => `{comment: %section_title: ${consecutiveModifier}${repeatKey}%}`;
-
-function hasExactly(
-  allIntervals: string[],
-  search: string | string[],
-): boolean {
-  // 1. Wrap in array if it's a single string, just like lodash.isArray check
-  const arraySearch = Array.isArray(search) ? search : [search];
-
-  // 2. Exact equality check, just like lodash.isEqual for flat arrays
-  if (allIntervals.length !== arraySearch.length) return false;
-  return allIntervals.every((val, index) => val === arraySearch[index]);
-}
+export const EMPTY_LINE = "{comment: %empty_line%}";
 /**
  * Default section directives
  */
@@ -400,11 +385,15 @@ export function preparseDirectives(
     i++;
   }
 
-  return processedLines
-    .map((l) => (l ? l.trim() : null))
-    .filter((p) => p !== null)
-    .join("\n")
-    .trim();
+  return (
+    processedLines
+      .map((l) => (l ? l.trim() : null))
+      .filter((p) => p !== null)
+      // replace empty lines because chordsheet JS aggressively splits sections into paragraphs
+      .map((l) => l.replace("\n\n", `\n${EMPTY_LINE}\n`))
+      .join("\n")
+      .trim()
+  );
 }
 
 // ==================== NOTATION CONVERSION ====================
@@ -430,100 +419,4 @@ export function czechToEnglish(song: string): string {
   song = song.replace(/\[H([A-Za-z\d#b,\s/]{0,10})\]/g, "[B$1]");
 
   return song;
-}
-
-// ==================== CHORD TRANSPOSITION ====================
-
-/**
- * Transposes all chords in a ChordPro format song
- *
- * @param song - The song content in ChordPro format
- * @param songKey - The current key of the song
- * @param transposeSteps - Number of semitones to transpose
- * @returns Processed song with transposed chords
- */
-export function transposeChordPro(
-  song: string,
-  songKey?: Key,
-  transposeSteps?: number,
-): string {
-  // Skip if can't transpose
-  if (!songKey || !transposeSteps) {
-    return song;
-  }
-
-  const newKey = songKey.transposed(transposeSteps);
-  const normalizedKey = songKey.note
-    .toString()
-    .replace("B", "Bb")
-    .replace("H", "B");
-
-  const parseChord = chordParserFactory({ key: normalizedKey });
-
-  /**
-   * Preserves specific chord notations that would otherwise be altered
-   */
-  const keepSus2Maj7 = (chord: Chord) => {
-    function overwriteDescriptor(chord: Chord, descriptor: string) {
-      const { rootNote, bassNote } = chord.formatted;
-      let symbol = rootNote + descriptor;
-      if (bassNote) symbol += "/" + bassNote;
-      chord.formatted.symbol = symbol;
-      return chord;
-    }
-
-    // Fix sus2 notation (library renames sus2 to (omit3,add9) by default)
-    if (hasExactly(chord.normalized.intervals, ["1", "5", "9"])) {
-      chord = overwriteDescriptor(chord, "sus2");
-    }
-    // Fix maj7 notation (library uses ma7)
-    else if (chord.formatted.descriptor == "ma7") {
-      chord = overwriteDescriptor(chord, "maj7");
-    }
-    // Fix sus4 notation (library uses just sus)
-    else if (chord.formatted.descriptor == "sus") {
-      chord = overwriteDescriptor(chord, "sus4");
-    }
-    return chord;
-  };
-
-  /**
-   * Removes unnecessary parentheses from chord modifiers
-   */
-  const hideParentheses = (chord: Chord) => {
-    // I don't like parentheses around my chord modifiers...
-    // Keep parentheses for multiple modifiers
-    if (chord.formatted.symbol.includes(",")) {
-      return chord;
-    }
-
-    // Remove parentheses for single modifiers
-    chord.formatted.symbol = chord.formatted.symbol
-      .replace("(", "")
-      .replace(")", "");
-    return chord;
-  };
-
-  // Configure chord renderer
-  const renderChord = chordRendererFactory({
-    // TODO: could this be converted to "german" notation so we could get rid of the transforms?
-    notationSystem: "english",
-    transposeValue: transposeSteps,
-    accidental: newKey.isFlat() ? "flat" : "sharp",
-    customFilters: [keepSus2Maj7, hideParentheses],
-  });
-
-  // Process all chord brackets
-  const convertChordBracket = (match: string, chord: string) => {
-    const parsedChord: MaybeChord = parseChord(chord);
-    if ("error" in parsedChord) {
-      return match;
-    }
-    return `[${renderChord(parsedChord)}]`;
-  };
-
-  return song.replace(
-    /\[([A-Ha-h][A-Za-z\d#b,\s/]{0,10})\]/g,
-    convertChordBracket,
-  );
 }

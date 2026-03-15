@@ -1,27 +1,16 @@
-import {
-  ChordProParser,
-  FormatterSettings,
-  HtmlFormatter,
-} from "chordproject-parser";
+import ChordSheetJS from "chordsheetjs";
 import memoize from "memoize-one";
-import { Key } from "~/types/musicTypes";
 import { SongData } from "~/types/songData";
 import { convertHTMLChordNotation } from "./chordNotation";
 import { postProcessChordPro } from "./postProcessing";
-import {
-  czechToEnglish,
-  preparseDirectives,
-  transposeChordPro,
-} from "./preparseChordpro";
+import { czechToEnglish, preparseDirectives } from "./preparseChordpro";
 import { formatChordpro } from "~/lib/formatChordpro";
+import { Key, KeyMode } from "~/types/musicTypes";
+
 /**
- * Default section classes used in rendering
+ * Default section classes used by chordsheetjs
  */
-const DEFAULT_RENDERED_SECTIONS = [
-  "verse-section",
-  "chorus-section",
-  "bridge-section",
-];
+const DEFAULT_RENDERED_SECTIONS = ["verse", "chorus", "bridge"];
 
 /**
  * Parses ChordPro format content with various transformations
@@ -30,37 +19,25 @@ const DEFAULT_RENDERED_SECTIONS = [
  * @param transposeSteps - Number of semitones to transpose
  * @returns Parsed song object
  */
-function parseChordPro(
-  chordProContent: string,
-  songKey?: Key,
-  transposeSteps?: number,
-) {
-  // Use memoized function to avoid repeated processing
+function parseChordPro(chordProContent: string) {
   const memoizedCzechToEnglish = memoize(czechToEnglish);
   const withEnglishChords = memoizedCzechToEnglish(chordProContent);
 
   // Process the directive sections
   const preparsedContent = preparseDirectives(withEnglishChords);
-  // Transpose the song if needed
-  const transposedContent = transposeChordPro(
-    preparsedContent,
-    songKey,
-    transposeSteps ?? 0,
-  );
 
-  // Parse the processed content
-  const parser = new ChordProParser();
-  return parser.parse(transposedContent);
+  // Parse using ChordSheetJS
+  const parser = new ChordSheetJS.ChordProParser();
+  return parser.parse(preparsedContent);
 }
 
 /**
  * Attempts to determine the key of a song from its ChordPro content
- * @param chordProContent - ChordPro content to analyze
- * @returns Detected key or undefined
  */
 export function guessKey(chordProContent: string): Key | undefined {
-  const song = parseChordPro(chordProContent, undefined, 0);
-  const possibleKey = song.getPossibleKey()?.toString() || "";
+  const song = parseChordPro(chordProContent);
+  //TODO: actual guess
+  const possibleKey = song.metadata?.key || "";
   return Key.parse(possibleKey, false);
 }
 
@@ -78,18 +55,31 @@ export function renderSong(
   centralEuropeanNotation: boolean,
 ): string {
   // Parse and process the chord pro content
-  const song = parseChordPro(
-    formatChordpro(songData.chordpro),
-    songData.key,
-    transposeSteps,
-  );
-  // Configure formatter settings
-  const settings = new FormatterSettings();
-  settings.showMetadata = false;
+  let song = parseChordPro(formatChordpro(songData.chordpro));
+  console.log(song);
+  // Inject known key to help the transposer pick sharp/flat accidentals properly
+  if (songData.key) {
+    const isFlat = songData.key.isFlat();
+    // Format the note (specifying flat/sharp and disabling Czech notation for the parser)
+    const noteStr = songData.key.note.toString(
+      isFlat ? "flat" : "sharp",
+      false,
+    );
+    // Append 'm' for minor keys
+    const modeStr = songData.key.mode === KeyMode.Minor ? "m" : "";
 
-  // Format the song to HTML
-  const formatter = new HtmlFormatter(settings);
-  let songText = formatter.format(song).join("\n");
+    // chordsheetjs Song objects are immutable, so we reassign using setKey
+    song = song.setKey(noteStr + modeStr);
+  }
+
+  // Use ChordSheetJS native transposition
+  if (transposeSteps !== 0) {
+    song = song.transpose(transposeSteps);
+  }
+
+  // Format the song to HTML using Div Formatter
+  const formatter = new ChordSheetJS.HtmlDivFormatter();
+  let songText = formatter.format(song);
 
   // Apply Central European notation if requested
   songText = convertHTMLChordNotation(songText, centralEuropeanNotation);

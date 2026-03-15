@@ -1,3 +1,4 @@
+import { EMPTY_LINE } from "./preparseChordpro";
 import {
   EXPANDED_SECTION_DIRECTIVE,
   SHORTHAND_SECTION_DIRECTIVE,
@@ -31,9 +32,9 @@ function detectRepeatedChordPatterns(
   useLabels = false,
 ): Document {
   const DEFAULT_KEYS: Record<string, string> = {
-    "verse-section": "V:",
-    "bridge-section": "B:",
-    "chorus-section": "R:",
+    verse: "V:",
+    bridge: "B:",
+    chorus: "R:",
   };
 
   const getDefaultKey = (key: string): string =>
@@ -185,43 +186,76 @@ function compareChordLists(chords1: string[], chords2: string[]): ChordMatch {
  * @returns Processed HTML with appropriate classes added and comments removed
  */
 function processExpandedSections(doc: Document): Document {
-  const commentElements = Array.from(doc.querySelectorAll(".comment-line"));
+  const commentElements = Array.from(doc.querySelectorAll(".comment"));
   const mutations: Array<() => void> = [];
 
   commentElements.forEach((element) => {
     if (!element.textContent) return;
     const commentText = element.textContent.trim();
-
+    const isEmptyLine = `{comment: ${commentText}}` === EMPTY_LINE;
     // Check if it's one of our directive comments
     const isExpandedDirective =
       `{comment: ${commentText}}` === EXPANDED_SECTION_DIRECTIVE;
     const isShorthandDirective =
       `{comment: ${commentText}}` === SHORTHAND_SECTION_DIRECTIVE;
 
-    if (isExpandedDirective || isShorthandDirective) {
-      // Find the parent section element
-      let section = element.parentElement;
-      while (section && !section.classList.contains("section")) {
-        section = section.parentElement;
-      }
+    if (isEmptyLine) {
+      mutations.push(() => {
+        const emptyLineDiv = doc.createElement("div");
+        emptyLineDiv.className = "empty-line";
 
-      if (section) {
+        // Target the parent row if it exists to cleanly remove the wrapper,
+        // otherwise just target the comment element itself.
+        const targetElement = element.closest(".row") || element;
+
+        if (targetElement.parentNode) {
+          targetElement.parentNode.replaceChild(emptyLineDiv, targetElement);
+        }
+      });
+    } else if (isExpandedDirective || isShorthandDirective) {
+      const paragraph = element.closest(".paragraph");
+      const directiveRow = element.closest(".row");
+
+      if (paragraph && directiveRow) {
         mutations.push(() => {
-          if (isExpandedDirective) section!.classList.add("expanded-section");
-          else section!.classList.add("shorthand-section");
-          // Remove the directive comment element
+          // 1. Identify external rows ChordSheetJS greedily merged
+          const siblingsToEject: Node[] = [];
+          let current = paragraph.firstChild;
+
+          // Because our directive is injected immediately after the start tag,
+          // anything preceding it in the DOM must be an external element.
+          while (current && current !== directiveRow) {
+            siblingsToEject.push(current);
+            current = current.nextSibling;
+          }
+
+          // 2. Eject them into a preceding standalone paragraph
+          if (siblingsToEject.length > 0) {
+            const externalPara = doc.createElement("div");
+            // Wrap in 'paragraph' so it flows correctly, plus a custom class for styling
+            externalPara.className = "paragraph standalone-comments";
+            paragraph.parentNode?.insertBefore(externalPara, paragraph);
+            siblingsToEject.forEach((node) => externalPara.appendChild(node));
+          }
+
+          // 3. Apply standard visibility classes
+          if (isExpandedDirective) {
+            paragraph.classList.add("expanded-section");
+          } else {
+            paragraph.classList.add("shorthand-section");
+          }
+
+          // 4. Clean up the internal directive tag
           element.remove();
         });
       }
     }
   });
-
   mutations.forEach((mutate) => mutate());
   return doc;
 }
-
 function processSectionTitles(doc: Document): Document {
-  const commentElements = Array.from(doc.querySelectorAll(".comment-line"));
+  const commentElements = Array.from(doc.querySelectorAll(".comment"));
 
   // We execute these directly since creation and insertion is complex and doesn't heavily read the DOM
   commentElements.forEach((element) => {
@@ -231,11 +265,13 @@ function processSectionTitles(doc: Document): Document {
     const match = commentText.match(sectionTitlePattern);
 
     if (match) {
-      let lyricsLineElement = element.nextElementSibling;
+      const commentRow = element.closest(".row");
+
+      let lyricsLineElement = commentRow?.nextElementSibling;
       while (lyricsLineElement) {
         if (
           lyricsLineElement instanceof HTMLDivElement &&
-          lyricsLineElement.classList.contains("lyrics-line")
+          lyricsLineElement.classList.contains("row")
         )
           break;
         lyricsLineElement = lyricsLineElement.nextElementSibling;
@@ -248,7 +284,7 @@ function processSectionTitles(doc: Document): Document {
 
       // Create the word div that will contain the section title
       const wordDiv = doc.createElement("div");
-      wordDiv.className = "word";
+      wordDiv.className = "column";
       wordDiv.appendChild(sectionTitleDiv);
 
       if (lyricsLineElement && lyricsLineElement instanceof HTMLDivElement) {
@@ -257,15 +293,18 @@ function processSectionTitles(doc: Document): Document {
       } else {
         // If no lyrics-line div exists, create one
         const newLyricsDiv = doc.createElement("div");
-        newLyricsDiv.className = "lyrics-line";
+        newLyricsDiv.className = "row";
         // Add the word div containing the section title as its first child
         newLyricsDiv.appendChild(wordDiv);
-
         // Insert the new lyrics-line div after the comment
-        const parent = element.parentNode;
-        if (parent) parent.insertBefore(newLyricsDiv, element.nextSibling);
+
+        const parent = commentRow?.parentNode;
+        if (parent && commentRow)
+          parent.insertBefore(newLyricsDiv, commentRow.nextSibling);
       }
-      element.remove();
+      commentRow?.remove();
+    } else {
+      console.log(commentText);
     }
   });
 
