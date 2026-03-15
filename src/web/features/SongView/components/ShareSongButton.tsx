@@ -68,7 +68,6 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
 
   const checkboxDisabled =
     !onLine || showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster);
-
   return (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
@@ -76,7 +75,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
       onCheckedChange={() => {
         if (checkboxDisabled) return;
         // avoid two tabs open (master + follower) e.g. during testing and then follower disabling the sharing all the time
-        if (feedStatus && !feedStatus.isMaster) return;
+        if (feedStatus && feedStatus.enabled && !feedStatus.isMaster) return;
         setShareSession(!shareSession);
       }}
       className={checkboxDisabled ? "opacity-50" : ""}
