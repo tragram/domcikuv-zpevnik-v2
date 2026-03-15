@@ -26,23 +26,24 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       staleTime: Infinity,
     });
 
-    const songs = await context.queryClient.fetchQuery({
-      queryKey: ["songs"],
-      queryFn: () => fetchSongs(context.api),
-      staleTime: 1000 * 60 * 60 * 24, // one day
-    });
-
-    const publicSongbooks = await context.queryClient.fetchQuery({
-      queryKey: ["publicSongbooks"],
-      queryFn: () => fetchPublicSongbooks(context.api),
-      staleTime: 1000 * 60 * 60, // one hour
-    });
+    // 2. Fetch dependencies
+    const [songs, publicSongbooks] = await Promise.all([
+      context.queryClient.fetchQuery({
+        queryKey: ["songs"],
+        queryFn: () => fetchSongs(context.api),
+        staleTime: 1000 * 60 * 60 * 24,
+      }),
+      context.queryClient.fetchQuery({
+        queryKey: ["publicSongbooks"],
+        queryFn: () => fetchPublicSongbooks(context.api),
+        staleTime: 1000 * 60 * 60,
+      }),
+    ]);
 
     const activeSessions = await prefetchActiveSessions(
       context.queryClient,
       context.api,
     );
-
     const favoriteSongIds = user.loggedIn ? user.profile.favoriteSongIds : [];
 
     const songDB = memoizedBuildSongDB(songs, publicSongbooks, favoriteSongIds);

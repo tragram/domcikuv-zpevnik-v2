@@ -1,8 +1,7 @@
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Camera, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
-import { signOut } from "src/lib/auth/client";
 import { ProfileUpdateData, UserProfileData } from "src/worker/api/userProfile";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
@@ -17,6 +16,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
+import { useAuthActions } from "~/hooks/use-auth-actions";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { redirectSearchSchema } from "~/main";
 import { ApiException, handleApiResponse } from "~/services/api-service";
@@ -24,6 +24,7 @@ import { ApiException, handleApiResponse } from "~/services/api-service";
 type ProfileUpdateResponse = {
   status: string;
   data: ProfileUpdateData;
+  imageUrl?: string;
 };
 
 export const Route = createFileRoute("/(auth)/profile")({
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/(auth)/profile")({
     const userProfileData = context.queryClient.getQueryData([
       "userProfile",
     ]) as UserProfileData;
-    if (!userProfileData.loggedIn) {
+    if (!userProfileData?.loggedIn) {
       throw redirect({
         to: "/login",
         search: { redirect: context.redirectURL },
@@ -48,13 +49,13 @@ export const Route = createFileRoute("/(auth)/profile")({
 function RouteComponent() {
   const { userProfileData } = Route.useLoaderData();
   const profile = userProfileData.profile;
-  const { queryClient, redirectURL } = Route.useRouteContext();
-  const { redirect } = Route.useSearch();
+  const { redirectURL } = Route.useRouteContext();
+  const { redirect: searchRedirect } = Route.useSearch();
+  const { logout, refreshAuth } = useAuthActions();
 
   const navigate = Route.useNavigate();
-  const router = useRouter();
-
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   // Create initial state object matching userProfile structure
   const initialState = {
     name: profile.name,
@@ -63,6 +64,7 @@ function RouteComponent() {
     image: profile?.image || null,
     isFavoritesPublic: profile.isFavoritesPublic,
   };
+
   // Current state (what user is editing)
   const [currentData, setCurrentData] = useState(initialState);
   // Saved state (baseline for comparison)
@@ -75,32 +77,12 @@ function RouteComponent() {
   const [avatarToDelete, setAvatarToDelete] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<{ nickname?: string }>({});
 
-  const handleLogout = async () => {
-    try {
-      await signOut({
-        fetchOptions: {
-          onSuccess: async () => {
-            // Remove the cached user data entirely (don't just invalidate)
-            queryClient.removeQueries({ queryKey: ["userProfile"] });
-            await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
-            router.invalidate();
-            navigate({ to: redirectURL });
-          },
-        },
-      });
-    } catch (err) {
-      toast.error("Error during logout");
-      console.error("Logout error:", err);
-    }
-  };
-
   const validateForm = () => {
     const errors: { nickname?: string } = {};
 
     if (currentData.nickname && currentData.nickname.includes("/")) {
       errors.nickname = "Nickname cannot contain the '/' character";
     }
-    // Optional: Add client-side max length check
     if (currentData.nickname && currentData.nickname.length > 30) {
       errors.nickname = "Nickname is too long (max 30 characters)";
     }
@@ -110,14 +92,13 @@ function RouteComponent() {
   };
 
   const handleSaveProfile = async () => {
-    // Check client-side validation first
     if (!validateForm()) {
       toast.error("Please fix the errors before saving.");
       return;
     }
 
     setSaving(true);
-    setFieldErrors({}); // Clear previous API errors
+    setFieldErrors({});
 
     try {
       const formData = new FormData();
@@ -149,23 +130,15 @@ function RouteComponent() {
       setAvatarToDelete(false);
       setSavedData(updatedData);
 
-      router.invalidate();
-
-      // Invalidate userProfile query to ensure all components get fresh data
-      await queryClient.invalidateQueries({ queryKey: ["userProfile"] });
-
-      // Invalidate songs and songbooks since favorites or profile data may affect them
-      await queryClient.invalidateQueries({ queryKey: ["songs"] });
-      await queryClient.invalidateQueries({ queryKey: ["publicSongbooks"] });
-
+      // Centralized global cache and router flush
+      await refreshAuth();
       toast.success("Profile updated successfully");
 
-      // Redirect if redirect parameter is present
-      if (redirect) {
-        navigate({ to: redirect });
+      // Redirect if redirect parameter is present and is a valid string
+      if (searchRedirect && typeof searchRedirect === "string") {
+        navigate({ to: searchRedirect });
       }
     } catch (err) {
-      // Safely type-check the error
       if (err instanceof ApiException) {
         if (err.code === "NICKNAME_TAKEN") {
           setFieldErrors((prev) => ({ ...prev, nickname: err.message }));
@@ -176,7 +149,6 @@ function RouteComponent() {
       } else if (err instanceof Error) {
         toast.error(err.message || "Failed to update profile");
       } else {
-        console.error("Save error:", err);
         toast.error("An unexpected error occurred while updating profile.");
       }
     } finally {
@@ -188,28 +160,24 @@ function RouteComponent() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Validate file size (5MB max)
     if (file.size > 5 * 1024 * 1024) {
       toast.error("File size must be less than 5MB");
       return;
     }
 
-    // Validate file type
     if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
     }
 
-    // Create preview
     const reader = new FileReader();
     reader.onload = (e) => {
       setAvatarPreview(e.target?.result as string);
     };
     reader.readAsDataURL(file);
 
-    // Store the file for upload on save
     setPendingAvatarFile(file);
-    setAvatarToDelete(false); // Clear any pending deletion
+    setAvatarToDelete(false);
   };
 
   const handleRemoveAvatar = () => {
@@ -232,7 +200,6 @@ function RouteComponent() {
     }
   };
 
-  // Simplified hasChanges function using object comparison
   const hasChanges = () => {
     const dataChanged =
       currentData.name !== savedData.name ||
@@ -244,7 +211,6 @@ function RouteComponent() {
     return dataChanged || avatarChanged;
   };
 
-  // Helper functions to update specific fields in currentData
   const updateField = <K extends keyof typeof currentData>(
     field: K,
     value: (typeof currentData)[K],
@@ -275,18 +241,15 @@ function RouteComponent() {
             name={currentData.name}
             nickname={currentData.nickname}
             email={currentData.email}
-            error={fieldErrors.nickname} // Pass the error
+            error={fieldErrors.nickname}
             onNicknameChange={(value) => {
               updateField("nickname", value);
-
-              // LIVE VALIDATION FIX
               if (value.includes("/")) {
                 setFieldErrors((prev) => ({
                   ...prev,
                   nickname: "Nickname cannot contain the '/' character",
                 }));
               } else {
-                // Clear error if it was previously set
                 if (fieldErrors.nickname) {
                   setFieldErrors((prev) => ({ ...prev, nickname: undefined }));
                 }
@@ -309,7 +272,9 @@ function RouteComponent() {
           saving={saving}
           hasChanges={hasChanges()}
           onSave={handleSaveProfile}
-          onLogout={handleLogout}
+          onLogout={() =>
+            logout(typeof redirectURL === "string" ? redirectURL : "/")
+          }
         />
       </div>
     </div>
@@ -354,9 +319,7 @@ function ProfilePictureSection({
 }: ProfilePictureSectionProps) {
   const displayAvatar = avatarToDelete ? null : avatarPreview || currentAvatar;
 
-  if (!userProfile) {
-    return null;
-  }
+  if (!userProfile) return null;
 
   return (
     <Card>
@@ -366,14 +329,11 @@ function ProfilePictureSection({
           Avatar
         </CardTitle>
         <CardDescription>
-          Upload a new avatar. It will be used as the icon of your songbook (if
-          you choose to have public favorites below) and in your feed (if you
-          turn on sharing your feed).
+          Upload a new avatar for your songbook and feed.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col items-center space-y-4">
-          {/* Avatar Display */}
           <div
             className="relative group cursor-pointer"
             onClick={onAvatarClick}
@@ -385,29 +345,19 @@ function ProfilePictureSection({
               avatarClassName="h-24 w-24 border-4 border-background shadow-lg transition-all group-hover:border-primary/50"
               fallbackClassName="text-xl font-semibold"
             />
-
-            {/* Hover overlay */}
             <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <Camera className="h-6 w-6 text-white" />
             </div>
           </div>
 
-          {/* Status Messages */}
-          {pendingAvatarFile && (
+          {(pendingAvatarFile || avatarToDelete) && (
             <div className="text-center space-y-1">
-              <p className="text-sm text-blue-600 font-medium">
-                New avatar selected: {pendingAvatarFile.name}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                Click "Save Changes" to upload
-              </p>
-            </div>
-          )}
-
-          {avatarToDelete && !pendingAvatarFile && (
-            <div className="text-center space-y-1">
-              <p className="text-sm text-red-600 font-medium">
-                Avatar will be removed
+              <p
+                className={`text-sm font-medium ${avatarToDelete ? "text-red-600" : "text-blue-600"}`}
+              >
+                {avatarToDelete
+                  ? "Avatar will be removed"
+                  : `Selected: ${pendingAvatarFile?.name}`}
               </p>
               <p className="text-xs text-muted-foreground">
                 Click "Save Changes" to confirm
@@ -415,7 +365,6 @@ function ProfilePictureSection({
             </div>
           )}
 
-          {/* Upload Controls */}
           <div className="flex flex-col items-center space-y-2">
             <input
               ref={fileInputRef}
@@ -424,26 +373,21 @@ function ProfilePictureSection({
               onChange={onAvatarChange}
               className="hidden"
             />
-
             <div className="flex gap-2">
               <Button variant="outline" size="sm" onClick={onAvatarClick}>
                 <Camera className="h-4 w-4 mr-2" />
                 Choose Picture
               </Button>
-
-              {/* Remove Picture Option */}
               {(currentAvatar || avatarPreview) && !avatarToDelete && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-destructive hover:text-destructive"
+                  className="text-destructive"
                   onClick={onRemoveAvatar}
                 >
                   Remove
                 </Button>
               )}
-
-              {/* Cancel Changes Option */}
               {(pendingAvatarFile || avatarToDelete) && (
                 <Button
                   variant="ghost"
@@ -454,18 +398,9 @@ function ProfilePictureSection({
                 </Button>
               )}
             </div>
-
-            {/* Additional Info */}
             <p className="text-xs text-muted-foreground text-center max-w-xs">
-              JPG, PNG, or GIF up to 5MB. Click the avatar or button above to
-              select a new picture.
+              JPG, PNG, or GIF up to 5MB.
             </p>
-            {import.meta.env.DEV && (
-              <p className="text-red-700 font-medium text-xs">
-                Note that R2 storage does not yet work in DEV, so avatar will
-                not be saved!
-              </p>
-            )}
           </div>
         </div>
       </CardContent>
@@ -477,7 +412,7 @@ interface BasicInformationSectionProps {
   name: string;
   nickname: string;
   email: string;
-  error?: string; // Add this prop
+  error?: string;
   onNicknameChange: (value: string) => void;
   onNameChange: (value: string) => void;
 }
@@ -501,12 +436,11 @@ function BasicInformationSection({
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="nickname">Display Name</Label>
+          <Label htmlFor="name">Display Name</Label>
           <Input
             id="name"
             value={name}
             onChange={(e) => onNameChange(e.target.value)}
-            placeholder="Enter your display name"
           />
         </div>
         <div className="space-y-2">
@@ -517,7 +451,6 @@ function BasicInformationSection({
             id="nickname"
             value={nickname}
             onChange={(e) => onNicknameChange(e.target.value)}
-            placeholder="Enter your nickname"
             className={
               error ? "border-destructive focus-visible:ring-destructive" : ""
             }
@@ -526,16 +459,13 @@ function BasicInformationSection({
             <p className="text-sm text-destructive font-medium">{error}</p>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Will be used instead of your name on your songbook if available.
+              Used instead of your name on your songbook.
             </p>
           )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email Address</Label>
           <Input id="email" value={email} disabled className="bg-muted" />
-          <p className="text-sm text-muted-foreground">
-            Email cannot be changed from this page
-          </p>
         </div>
       </CardContent>
     </Card>
@@ -558,20 +488,16 @@ function PrivacySection({
           <Shield className="h-5 w-5" />
           Privacy Settings
         </CardTitle>
-        <CardDescription>
-          Control your privacy and visibility preferences
-        </CardDescription>
+        <CardDescription>Control visibility preferences</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <Label htmlFor="public-favorites" className="font-medium">
-                Public Favorites
-              </Label>
-            </div>
+            <Label htmlFor="public-favorites" className="font-medium">
+              Public Favorites
+            </Label>
             <p className="text-sm text-muted-foreground">
-              Others will be able to filter by your favorite songs
+              Others can filter by your favorites
             </p>
           </div>
           <Switch
@@ -601,12 +527,15 @@ function ActionButtons({
   const isOnline = useIsOnline();
   return (
     <div className="flex flex-row flex-wrap-reverse gap-3 justify-between">
-      <Button onClick={onLogout} className="sm:w-auto" disabled={!isOnline}>
-        <LogOut />
-        Logout
+      <Button
+        variant="destructive"
+        onClick={onLogout}
+        className="sm:w-auto"
+        disabled={!isOnline}
+      >
+        <LogOut className="mr-2 h-4 w-4" /> Logout
       </Button>
       <Button
-        variant="outline"
         onClick={onSave}
         disabled={saving || !hasChanges || !isOnline}
         className="sm:w-auto"
@@ -618,8 +547,7 @@ function ActionButtons({
           </>
         ) : (
           <>
-            <Save />
-            Save Changes
+            <Save className="mr-2 h-4 w-4" /> Save Changes
           </>
         )}
       </Button>
