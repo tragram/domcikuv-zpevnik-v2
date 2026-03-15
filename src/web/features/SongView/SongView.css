@@ -55,7 +55,7 @@
     max-width: none !important;
 }
 
-#content-wrapper.measuring-container .tab-section {
+#content-wrapper.measuring-container .tab {
     width: 0;
 }
 
@@ -138,13 +138,13 @@
     min-width: max(100%, 15em);
 }
 
-.tab-section {
+.tab {
     overflow-x: auto;
     overflow-y: clip;
     max-width: 100%;
 }
 
-.chord-sheet .tab-section {
+.chord-sheet .tab {
     font-family: monospace;
     font-size: 0.9em;
     scrollbar-width: none;
@@ -202,7 +202,7 @@
 
 /* --- HIDE CHORDS MODE --- */
 .chords-hidden .chord,
-.chords-hidden .tab-section,
+.chords-hidden .tab,
 .chords-hidden .force-shown {
     display: none !important;
 }
