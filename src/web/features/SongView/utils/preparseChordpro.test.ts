@@ -980,7 +980,7 @@ kdo čeká na [C]nás, na ná[Ami]vrat.
 hlubokých [B]mořích, divokých [F]řekách,
 o vysokých [Dmi]horách,
 které je [C]nutné přelét[Ami]nout.
-
+{comment: %empty_line%}
 [Dmi]O nebeských [Ami]stezkách,
 zářících [B]hvězdách, o cestách [F]domů,
 o korunách [Dmi]stromů,
@@ -1012,7 +1012,7 @@ kde je [C]možné odpoči[Ami]nout.
 z papíru [B]draci, létáme v [F]mracích
 a pak se [Dmi]vracíme zpátky
 tam, kde při[C]poutaní [Ami]jsme.
-
+{comment: %empty_line%}
 [Dmi]Jsme lidské by[Ami]tosti
 z masa a [B]kostí, jsme jenom [F]hosti
 na tomhle [Dmi]světě,
@@ -1024,7 +1024,7 @@ přicházíme, [C]odchází[Ami]me.
 že někde [B]místo, že někde je [F]hnízdo,
 odkud jsme [Dmi]přišli
 a kam zas [C]potom půjdeme [Ami]spát,
-
+{comment: %empty_line%}
 [Dmi]Že někde je [Ami]domov,
 že někde je [B]hnízdo, útulno [F]čisto,
 že někde je [Dmi]někdo,
@@ -1037,7 +1037,7 @@ kdo čeká na [C]nás, na ná[Ami]vrat.
 hlubokých [B]mořích, divokých [F]řekách,
 o vysokých [Dmi]horách,
 které je [C]nutné přelét[Ami]nout.
-
+{comment: %empty_line%}
 [Dmi]O nebeských [Ami]stezkách,
 zářících [B]hvězdách, o cestách [F]domů,
 o korunách [Dmi]stromů,
@@ -1055,7 +1055,7 @@ kde je [C]možné odpoči[Ami]nout.
 hlubokých [B]mořích, divokých [F]řekách,
 o vysokých [Dmi]horách,
 které je [C]nutné přelét[Ami]nout.
-
+{comment: %empty_line%}
 [Dmi]O nebeských [Ami]stezkách,
 zářících [B]hvězdách, o cestách [F]domů,
 o korunách [Dmi]stromů,
