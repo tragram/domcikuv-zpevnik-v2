@@ -43,12 +43,12 @@ describe("preparseChordpro Directives", () => {
     `.trim();
 
       const expected = `
-{start_of_verse: V1}
+{start_of_verse}
 {comment: %section_title: V1%}
 [C]This is the verse
 [G]It is very nice
 {end_of_verse}
-{start_of_verse: V1}
+{start_of_verse}
 {comment: %expanded_section%}
 {comment: %section_title: V1%}
 [C]This is the verse
@@ -105,12 +105,12 @@ describe("preparseChordpro Directives", () => {
     `.trim();
 
       const expected = `
-{start_of_bridge: B1}
+{start_of_bridge}
 {comment: %section_title: B1%}
 [C]This is the bridge
 [G]It is very nice
 {end_of_bridge}
-{start_of_bridge: B1}
+{start_of_bridge}
 {comment: %expanded_section%}
 {comment: %section_title: B1%}
 [C]This is the bridge
@@ -167,12 +167,12 @@ describe("preparseChordpro Directives", () => {
     `.trim();
 
       const expected = `
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 [C]This is the chorus
 [G]It is very nice
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 [C]This is the chorus
@@ -298,11 +298,11 @@ A great chorus
     `.trim();
 
     const expected = `
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 A great chorus
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 A great chorus
@@ -333,17 +333,17 @@ Pre Line
     `.trim();
 
       const expected = `
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 Line 1
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 Pre Line
 Line 1
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
 Pre Line+
@@ -369,18 +369,18 @@ New Line 1
     `.trim();
 
       const expected = `
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 Line 1
 Line 2
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 New Line 1
 Line 2
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
 New Line 1...
@@ -404,17 +404,17 @@ Extra Line
     `.trim();
 
       const expected = `
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 Line 1
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 Line 1
 Extra Line
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
 + Extra Line
@@ -439,18 +439,18 @@ Variant Line
     `.trim();
 
       const expected = `
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 Line 1
 Line 2
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 Line 1
 Variant Line
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
 ...Variant Line
@@ -478,14 +478,14 @@ Variant Line B
     `.trim();
 
       const expected = `
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 Line 1
 Line 2
 Line 3
 Line 4
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 Line 1
@@ -493,7 +493,7 @@ Line 2
 Variant Line A
 Variant Line B
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
 ...Variant Line A
@@ -592,7 +592,7 @@ a [Bmi]v tramvaji je pouštím sednout,
     `.trim();
 
       const expected = `
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 [F]Ratatatatatadau
 [Ami]Ratatatatýdydau
@@ -624,7 +624,7 @@ to se [B]dneska neno[Bmi]sí,
 a [Bmi]v tramvaji je pouštím sednout,
 [C]jen když poprosí...
 {end_of_bridge}
-{start_of_chorus: R2}
+{start_of_chorus}
 {comment: %section_title: R2%}
 No tak..[F]. ať se na mě klidně zlobí,
 [Ami]gentlemani ze záhrobí,
@@ -637,7 +637,7 @@ No tak..[F]. ať se na mě klidně zlobí,
 [Dmi]jistě na vás zapůsobí,
 [B]tenhle balič novodobý,
 {end_of_verse}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 [F]Ratatatatatadau
@@ -674,7 +674,7 @@ to se [B]dneska neno[Bmi]sí,
 a [Bmi]v tramvaji je pouštím sednout,
 [C]když můžem dál jen, chatovat
 {end_of_bridge}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 [F]Ratatatatatadau
@@ -686,7 +686,7 @@ a [Bmi]v tramvaji je pouštím sednout,
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
 {end_of_chorus}
-{start_of_chorus: R2}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R2%}
 No tak..[F]. ať se na mě klidně zlobí,
@@ -776,7 +776,7 @@ we all say
     `.trim();
 
       const expected = `
-{start_of_chorus: Ooo}
+{start_of_chorus}
 {comment: %section_title: Ooo%}
 𝄆 [C]oooo,[F]ooo,[Am]ooooo[G] 𝄇
 {end_of_chorus}
@@ -792,21 +792,21 @@ we all say
 [C]una fiesta [F]sin descanso,
 [Am]los paìses [G]como hermanos
 {end_of_verse}
-{start_of_bridge: Pre-chorus}
+{start_of_bridge}
 {comment: %section_title: Pre-chorus%}
 [C]Canta y une tu [F]voz,
 grita fu[Am]erte que te escuche el [G]sol,
 el part[C]ido ya va a comenz[F]ar,
 todos j[Am]untos vamos a gan[G]ar
 {end_of_bridge}
-{start_of_chorus: ES}
+{start_of_chorus}
 {comment: %section_title: ES%}
 Unidos [C]seremos grandes, [F]seremos fuertes
 s[Am]omos un pueblo [G]bandera de libert[C]ad,
 que viene y que [F]va que viene y que [Am]va,
 que viene y que [G]va que viene y que [C]va
 {end_of_chorus}
-{start_of_chorus: EN}
+{start_of_chorus}
 {comment: %section_title: EN%}
 [C]When I get older, [F]I will be stronger!
 [Am]they'll call me freedom,
@@ -814,7 +814,7 @@ que viene y que [G]va que viene y que [C]va
 𝄆 Now wave your [F]flag now wave your f[Am]lag
 now wave your [G]flag now wave your [C]flag 𝄇
 {end_of_chorus}
-{start_of_chorus: Ooo}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: Ooo%}
 𝄆 [C]oooo,[F]ooo,[Am]ooooo[G] 𝄇
@@ -835,7 +835,7 @@ now wave your [G]flag now wave your [C]flag 𝄇
 [C]celebration [F]is around us,
 [Am]every nation [G]all around us!
 {end_of_verse}
-{start_of_bridge: Pre-chorus}
+{start_of_bridge}
 {comment: %section_title: Pre-chorus%}
 [C]Singing forever [F]young,
 singing s[Am]ongs underneath the [G]sun!
@@ -843,7 +843,7 @@ let's rej[C]oice the beautiful [F]game
 and tog[Am]ether at the end of the [G]day
 we all say
 {end_of_bridge}
-{start_of_chorus: ES}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: ES%}
 Unidos [C]seremos grandes, [F]seremos fuertes
@@ -855,7 +855,7 @@ que viene y que [G]va que viene y que [C]va
 {comment: %shorthand_section%}
 {comment: %section_title: ES%}
 {end_of_chorus}
-{start_of_chorus: EN}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: EN%}
 [C]When I get older, [F]I will be stronger!
@@ -868,7 +868,7 @@ now wave your [G]flag now wave your [C]flag 𝄇
 {comment: %shorthand_section%}
 {comment: %section_title: EN%}
 {end_of_chorus}
-{start_of_chorus: Ooo}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: Ooo%}
 𝄆 [C]oooo,[F]ooo,[Am]ooooo[G] 𝄇
@@ -959,7 +959,7 @@ kdo čeká na [C]nás, na ná[Ami]vrat.
 
 {verse: Intro}`.trim();
 
-      const expected = `{start_of_verse: Intro}
+      const expected = `{start_of_verse}
 {comment: %section_title: Intro%}
 Óóó[Dmi][Ami][B][F][Dmi][Ami][B][F]
 Óóó[Dmi][Ami][B][F][Dmi][Ami][F][G][A]
@@ -974,7 +974,7 @@ kdo čeká na [C]nás, na ná[Ami]vrat.
 [B]a lidé, kteří [F]uvnitř žili,
 [Dmi]rozuměli [C]jejich švitoře[Ami]ní.
 {end_of_verse}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %section_title: R1%}
 [Dmi]O dalekých [Ami]krajích,
 hlubokých [B]mořích, divokých [F]řekách,
@@ -986,7 +986,7 @@ zářících [B]hvězdách, o cestách [F]domů,
 o korunách [Dmi]stromů,
 kde je [C]možné odpoči[Ami]nout.
 {end_of_chorus}
-{start_of_verse: Intro}
+{start_of_verse}
 {comment: %expanded_section%}
 {comment: %section_title: Intro%}
 Óóó[Dmi][Ami][B][F][Dmi][Ami][B][F]
@@ -1030,7 +1030,7 @@ a kam zas [C]potom půjdeme [Ami]spát,
 že někde je [Dmi]někdo,
 kdo čeká na [C]nás, na ná[Ami]vrat.
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 [Dmi]Tam v dalekých [Ami]krajích,
@@ -1043,12 +1043,12 @@ zářících [B]hvězdách, o cestách [F]domů,
 o korunách [Dmi]stromů,
 kde je [C]možné odpoči[Ami]nout.
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
 [Dmi]Tam v dalekých [Ami]krajích,...
 {end_of_chorus}
-{start_of_chorus: R1}
+{start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
 [Dmi]O dalekých [Ami]krajích,
@@ -1065,7 +1065,7 @@ kde je [C]možné odpoči[Ami]nout.
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
 {end_of_chorus}
-{start_of_verse: Intro}
+{start_of_verse}
 {comment: %expanded_section%}
 {comment: %section_title: Intro%}
 Óóó[Dmi][Ami][B][F][Dmi][Ami][B][F]
