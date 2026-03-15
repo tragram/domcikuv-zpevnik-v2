@@ -105,7 +105,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       window.location.reload();
     }
   };
-
   return (
     <div className="absolute top-0 w-full">
       <ToolbarBase isVisible={isToolbarVisible}>
@@ -123,7 +122,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           setTransposeSteps={setTransposeSteps}
         />
 
-        {feedStatus?.isMaster ? (
+        {!feedStatus || !feedStatus.enabled || feedStatus.isMaster ? (
           <RandomSong songs={songDB.songs} currentSong={songData} />
         ) : (
           <Button
