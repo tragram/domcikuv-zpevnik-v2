@@ -385,12 +385,23 @@ export function preparseDirectives(
     i++;
   }
 
+  function hideTitles(text: string) {
+    const types = ["verse", "chorus", "bridge"];
+    const pattern = new RegExp(
+      `\\{start_of_(${types.join("|")}):[^}]*\\}`,
+      "g",
+    );
+    return text.replace(pattern, "{start_of_$1}");
+  }
+
   return (
     processedLines
       .map((l) => (l ? l.trim() : null))
       .filter((p) => p !== null)
-      // replace empty lines because chordsheet JS aggressively splits sections into paragraphs
+      // replace empty lines because chordsheetJS aggressively splits sections into paragraphs
       .map((l) => l.replace("\n\n", `\n${EMPTY_LINE}\n`))
+      // hide section titles so chordsheetJS doesn't duplicate them
+      .map((l) => hideTitles(l))
       .join("\n")
       .trim()
   );
