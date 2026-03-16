@@ -14,29 +14,34 @@ You can run the page fully locally by
 * building the database: `pnpm db:create` (if you haven't run it yet)
 * generating the migrations: `pnpm db:generate`
 * migrating the DB: `pnpm db:migrate:local`
-* optionally use `pnpm tsx scripts/downloadRemoteData.ts` to update the static files from the remote (but the git version should be +- up to date)
-* load the static files into the dev DB: `pnpm tsx scripts/staticData2DB.ts`
-* start the local dev server: `pnpm dev`
-* to make authentication and AI services work, you will need to supply your own credentials - see `secrets.yaml.sample` and `.dev.vars.sample`
+* loading the static files into the dev DB: `pnpm tsx scripts/staticData2DB.ts`
+  * tip: changing `SYSTEM_EMAIL` in the script let's you be the admin and creator of all songs after local login
+* starting the local dev server: `pnpm dev`
+* to make authentication and AI services work, you will need to supply your own credentials - see `.dev.vars.sample`
 
 ## Editing songs
 The best way to edit is to just use the web interface (`/edit`).
 
-Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/chordpro` directory. However, the changes are no longer automatically reflected on the remote website - you can still however use the below for local development (`pnpm tsx scripts/staticData2DB.ts`) will load the chordpro files correctly.
+Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/chordpro` directory. There's a daily sync setup that pushes the production DB to the `production-data-sync` branch and then manually pushed to main. 
+
+Changing the chordpro files does not affect the production website. However, you can load the changes to your local server by running `pnpm tsx scripts/staticData2DB.ts`.
 
 ### File format
-The songs shall be named `artist_name-song_name.pro` (any special characters converted to ASCII). Use `scripts/format_songs.py` to rename files (and fix common whitespace issues) automatically. It also converts repetition symbols (`|:` and `:|` to `𝄆` and `𝄇`) which are then highlighted in the HTML.
+The songs are named `artist_name-song_name.pro` (any special characters converted to ASCII). This (and much of the following) is enforced by the sync script.
 
 A song shall have the following preamble (tempo may be left empty - it's currently not used):
 ```chordpro
 {artist: František Vomáčka}
 {title: Svíčková}
-{language: english}
-{date_added: 02-2020}
-{capo: 0}
 {key: H}
+{capo: 0}
 {range: c1-f#2}
+{language: english}
 {tempo: 110}
+{createdAt: 1436824800000}
+{updatedAt: 1770572317000}
+{illustrationId: ...}
+{promptId: ...}
 ```
 **Note that the chords need to use the Czech/German note names (H:=B, B:=Bb).**
 
@@ -84,7 +89,7 @@ Lastly, though less common, it might happen that a part has a variation at the s
 
 Applying multiple variants at the same time is not possible - you'll just have to repeat yourself. ;)
 
-### Image generation
+### Image generation (history)
 Since it's 2024, I decided to use AI for tasks other than helping me code this thing. The `scripts/generate_images.py` script loads the lyrics of each of the songs and generates a prompt (in English) for an image generation model.
 
 Because the songs have lyrics in many languages, it is currently (October 2024) necessary to use GPT-4o to generate the prompt based on the lyrics, as it has by far the best multilingual capabilities for tiny languages like Czech, Slovak, Finnish or Estonian. By default, the script uses GPT-4o-mini which still provides very satisfactory results (you can see for yourself in `songs/image_prompts`) at a fraction of the cost (around 0.01USD/50 songs).
@@ -112,7 +117,7 @@ prompt_id: v1
 image_model: FLUX.1-dev
 ```
 
-### Filling in missing chords
+### Filling in missing chords (history)
 Humans are lazy, so why would you repeat yourself unnecessarily? Adding chords to repeated verses (or choruses, provided the lyrics change) is boring. But it's useful on the website when the whole song does not fit on the screen. You do not have to do this yourself though - it's the age of AI after all!
 
 Unfortunately, based on my testing, even the larger GPT-4o sucks at this task and I'm not made of money to use o1 (and they won't let me anyways). Therefore, I turned to Anthropic AI - even their smallest model, Haiku 3.5, does a better good job with this and with the batch API, even the pricing even for the Sonnet is pretty reasonable too. You will have to extend your `secrets.yaml` as follows
@@ -132,7 +137,7 @@ The output should be acceptable as long as the incomplete verses follow the same
 
 To skip a part from having chords filled in, use the "Rec." label (e.g. `{start_of_verse: Rec.}`).
 
-### Web scraping for lyrics & chords
+### Web scraping for lyrics & chords (history)
 When moving from the old PDF-based songbook, there was a need to recreate almost 300 songs in ChordPro. Naturally, some automation had to be done in order not to spend the rest of my life on this step.
 
 If you define a `.pro` file with just the preamble and no body, you can try running `scripts/scrape_songs.py`. It will use [Selenium](https://pypi.org/project/selenium/) perform a Google search on [Písničky Akordy](https://pisnicky-akordy.cz/), transpose it to the key specified in the preamble and download the contents into `songs/scraped/artist_name`. 
@@ -146,7 +151,7 @@ Songs from there *usually* are in their "standard" format but it's worth checkin
   
 If this holds, you can run `scripts/chordpro_from_txt.py` and it will process the contents, inserting chords where appropriate (avoiding inserting the chords at the very start of the word in case of minor misalignments) and converting the verse numbers etc. into ChordPro directives.
 
-### Checking song aspect ratio
+### Checking song aspect ratio (to be updated)
 Because most viewing is done using the `fitXY` feature, it is important to keep in balance the maximum line length and number of lines in the song to ensure proper fit. And wouldn't you know it - there's a Python script even for that! Run `find_font_sizes.py` to automatically evaluate the resulting font-size of each of the songs at a few selected screen sizes (at the time of writing: `Galaxy Tab S7, iPhone XR, Galaxy Z Flip6`).
 
 This is done via Selenium again, so expect it to take a while. Also, do not expect it to work at all in fact, since it's prone to breaking with any future changes! :-)
@@ -154,7 +159,7 @@ This is done via Selenium again, so expect it to take a while. Also, do not expe
 ## Tech
 Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) and (heavily modified) [shadcn](https://ui.shadcn.com/) and uses (mainly) the following libraries:
 * [Lucide](https://lucide.dev/): icons
-* [chordpro-parser](https://github.com/chordproject/chorpro-parser/): parsing Chordpro in JS
+* [ChordSheetJS](https://github.com/martijnversluis/ChordSheetJS): parsing Chordpro in JS
 * [Fuse.js](https://www.fusejs.io/): fuzzy search
 * [auto-text-size](https://www.npmjs.com/package/auto-text-size): automatic sizing of chords & lyrics
 * [country-flag-icons](https://www.npmjs.com/package/country-flag-icons)
@@ -166,6 +171,7 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 * [TanStack Query](https://tanstack.com/query/latest): efficient querying (since the website is hosted on the free CF tier)
 * [zod](https://zod.dev/): backend validation
 * [hono](https://hono.dev/): backend framework that works well with cloudflare
+* [codemirror](https://codemirror.net/): top-tier editor
 * the API is modeled after [jsend](https://github.com/omniti-labs/jsend)
 
 The backend now heavily relies on Cloudflare and uses D1, R2 and Durable objects.

@@ -19,7 +19,7 @@ export function sanitizePathSegment(segment: string): string {
 // 1. Setup R2 (S3 Client) - Used ONLY for the database backup JSON
 const s3 = new S3Client({
   region: "auto",
-  endpoint: `https://${process.env.CF_ACCOUNT_ID!.trim()}.r2.cloudflarestorage.com`,
+  endpoint: `https://${process.env.CLOUDFLARE_ACCOUNT_ID!.trim()}.r2.cloudflarestorage.com`,
   credentials: {
     accessKeyId: process.env.R2_ACCESS_KEY_ID!.trim(),
     secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!.trim(),
@@ -29,7 +29,7 @@ const s3 = new S3Client({
 // 2. Setup Drizzle over HTTP via SQLite Proxy
 const db = drizzle(
   async (sql, params, method) => {
-    const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID!.trim()}/d1/database/${process.env.CF_DATABASE_ID!.trim()}/query`;
+    const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID!.trim()}/d1/database/${process.env.CF_DATABASE_ID!.trim()}/query`;
 
     const response = await fetch(url, {
       method: "POST",
