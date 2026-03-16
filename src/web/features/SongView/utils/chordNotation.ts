@@ -78,8 +78,11 @@ export function convertHTMLChordNotation(
   centralEuropeanNotation: boolean,
 ): string {
   const parser = new DOMParser();
-  let doc = parser.parseFromString(songText, "text/html");
-  doc = highlightRepetition(doc);
+  songText = songText
+    .replace("𝄆", `<span class="repetition">𝄆</span>`)
+    .replace("𝄇", `<span class="repetition">𝄇</span>`);
+  const doc = parser.parseFromString(songText, "text/html");
+  // doc = highlightRepetition(doc);
 
   // Process all chords in one go
   const chords = doc.querySelectorAll(`.chord`);

@@ -273,7 +273,7 @@
 
 .repetition {
     color: var(--primary);
-    /* font-size:larger; */
+    font-size: larger;
     font-weight: 100;
 }
 
