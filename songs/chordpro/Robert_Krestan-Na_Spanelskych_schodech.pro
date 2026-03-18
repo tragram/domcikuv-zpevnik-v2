@@ -2,14 +2,16 @@
 {artist: Robert Křesťan}
 {key: G}
 {capo: 3}
+{range: e1-c1}
 {language: czech}
+{startMelody: e h a g}
 {createdAt: 1772733137000}
-{updatedAt: 1772892105000}
+{updatedAt: 1773688438000}
 {illustrationId: Robert_Krestan-Na_Spanelskych_schodech_gpt-5-mini_v3_FLUX.1-dev}
 {promptId: Robert_Krestan-Na_Spanelskych_schodech_gpt-5-mini_v3}
 
 {start_of_verse}
-[G]Na Španělských [D]schodech se [C]stmívá,
+Na [G]Španělských [D]schodech se [C]stmívá,
 [G]v zátylku [D]světa zní [C]zvon,
 jsi [C]nenápa[G]dná a nepůva[D]bná,
 ale [G]chtivá jak [D]Napole[C]on.

@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: g}
 {createdAt: 1436824800000}
-{updatedAt: 1770572327000}
+{updatedAt: 1773784553000}
 {illustrationId: Zalman_Spol-Jdem_zpatky_do_lesu_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Zalman_Spol-Jdem_zpatky_do_lesu_gpt-4o-mini_v1}
 
@@ -42,6 +42,8 @@ jdem zpátky do [Am7]lesů
 [Am7]i pes, kterej chce přízeň,
 napřed [D7]svýho pána popros[G]í. [D7]
 {end_of_verse}
+
+{chorus}
 
 {start_of_verse}
 [Am7]Už tě vidím z dálky,

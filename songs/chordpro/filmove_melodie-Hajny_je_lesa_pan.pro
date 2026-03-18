@@ -4,7 +4,7 @@
 {capo: 2}
 {language: czech}
 {createdAt: 1770930524000}
-{updatedAt: 1771715148000}
+{updatedAt: 1773739584000}
 {illustrationId: filmove_melodie-Hajny_je_lesa_pan_gpt-5-mini_v2_gpt-image-1.5}
 {promptId: filmove_melodie-Hajny_je_lesa_pan_gpt-5-mini_v2}
 
@@ -56,5 +56,6 @@ je [G]mládeží a [A7]zvěří
 milo[D]vá[F#]á[G]n[Emi]á[E]á[A7]n
 
 [F#]Hajný je lesa [Hm]pán,
-je [G]mládeží a [A7]zvěří milo[D]vá[C]á[D]á[F]á[D]n. [A][D]
+je [G]mládeží a [A7]zvěří
+milo[D]vá[C]á[D]á[F]á[D]n. [A][D]
 {end_of_verse}
