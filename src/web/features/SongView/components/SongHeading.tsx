@@ -66,7 +66,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
     observer.observe(parent);
     return () => observer.disconnect();
   }, [layoutSettings, songData]); // Re-run only if settings/data change
-
+  console.log(songData.capo);
   return (
     <div
       ref={containerRef}
@@ -121,10 +121,15 @@ const SongHeading: React.FC<SongHeadingProps> = ({
                 `Imported from ${SONG_SOURCES_PRETTY[songData.externalSource.sourceId]}`}
             </Link>
           ) : (
-            <h3 className="text-[0.75em] sub-sup-container">
+            <h3
+              className={cn(
+                "text-[0.75em] sub-sup-container",
+                songData.range === undefined ? "opacity-0" : "opacity-100",
+              )}
+            >
               {songData.range
                 ? formatChords(songData.range.toString(transposeSteps, true))
-                : ""}
+                : "undefined"}
             </h3>
           )}
         </div>
