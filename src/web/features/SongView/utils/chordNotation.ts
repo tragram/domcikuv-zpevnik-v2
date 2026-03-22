@@ -79,8 +79,8 @@ export function convertHTMLChordNotation(
 ): string {
   const parser = new DOMParser();
   songText = songText
-    .replace("𝄆", `<span class="repetition">𝄆</span>`)
-    .replace("𝄇", `<span class="repetition">𝄇</span>`);
+    .replaceAll("𝄆", `<span class="repetition">𝄆</span>`)
+    .replaceAll("𝄇", `<span class="repetition">𝄇</span>`);
   const doc = parser.parseFromString(songText, "text/html");
   // doc = highlightRepetition(doc);
 
