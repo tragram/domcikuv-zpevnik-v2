@@ -327,7 +327,7 @@ async function main() {
     /*** remote ***/
     // await D1Helper.get("DB")
     //   .withCfCredentials(
-    //     process.env.CLOUDFLARE_ACCOUNT_ID,
+    //     process.env.CF_ACCOUNT_ID,
     //     process.env.CLOUDFLARE_D1_TOKEN,
     //   )
     //   .useProxyD1(async (db) => processAndMigrateSongs(db, songsPath));

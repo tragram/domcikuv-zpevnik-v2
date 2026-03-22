@@ -7,7 +7,7 @@ const {
   LOCAL_DB_PATH,
   CLOUDFLARE_DATABASE_ID,
   CLOUDFLARE_TOKEN,
-  CLOUDFLARE_ACCOUNT_ID,
+  CF_ACCOUNT_ID,
 } = process.env;
 
 export default LOCAL_DB_PATH
@@ -25,6 +25,6 @@ export default LOCAL_DB_PATH
       dbCredentials: {
         databaseId: CLOUDFLARE_DATABASE_ID!,
         token: CLOUDFLARE_TOKEN!,
-        accountId: CLOUDFLARE_ACCOUNT_ID!,
+        accountId: CF_ACCOUNT_ID!,
       },
     } satisfies Config);

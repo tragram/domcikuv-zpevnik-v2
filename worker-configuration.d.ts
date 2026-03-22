@@ -15,7 +15,7 @@ declare namespace Cloudflare {
 		PROD_BASE_URL: "https://zpevnik.hodan.page";
 		CLOUDFLARE_R2_URL: "https://kyblik.zpevnik.hodan.page";
 		GITHUB_REPO: "tragram/domcikuv-zpevnik-v2";
-		CLOUDFLARE_ACCOUNT_ID: string;
+		CF_ACCOUNT_ID: string;
 		CLOUDFLARE_D1_TOKEN: string;
 		BETTER_AUTH_SECRET: string;
 		GITHUB_CLIENT_ID: string;
@@ -42,7 +42,7 @@ type StringifyValues<EnvType extends Record<string, unknown>> = {
 	[Binding in keyof EnvType]: EnvType[Binding] extends string ? EnvType[Binding] : string;
 };
 declare namespace NodeJS {
-	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "VITE_BASE_URL" | "PROD_BASE_URL" | "CLOUDFLARE_R2_URL" | "GITHUB_REPO" | "CLOUDFLARE_ACCOUNT_ID" | "CLOUDFLARE_D1_TOKEN" | "BETTER_AUTH_SECRET" | "GITHUB_CLIENT_ID" | "GITHUB_CLIENT_SECRET" | "GOOGLE_CLIENT_ID" | "GOOGLE_CLIENT_SECRET" | "HUGGING_FACE_TOKEN" | "OPENAI_API_KEY" | "OPENAI_ORGANIZATION_ID" | "OPENAI_PROJECT_ID" | "ANTHROPIC_API_KEY" | "GOOGLE_API_KEY" | "CF_DATABASE_ID" | "CF_API_TOKEN" | "R2_ACCESS_KEY_ID" | "R2_SECRET_ACCESS_KEY" | "R2_BUCKET_NAME" | "PA_BEARER_TOKEN">> {}
+	interface ProcessEnv extends StringifyValues<Pick<Cloudflare.Env, "VITE_BASE_URL" | "PROD_BASE_URL" | "CLOUDFLARE_R2_URL" | "GITHUB_REPO" | "CF_ACCOUNT_ID" | "CLOUDFLARE_D1_TOKEN" | "BETTER_AUTH_SECRET" | "GITHUB_CLIENT_ID" | "GITHUB_CLIENT_SECRET" | "GOOGLE_CLIENT_ID" | "GOOGLE_CLIENT_SECRET" | "HUGGING_FACE_TOKEN" | "OPENAI_API_KEY" | "OPENAI_ORGANIZATION_ID" | "OPENAI_PROJECT_ID" | "ANTHROPIC_API_KEY" | "GOOGLE_API_KEY" | "CF_DATABASE_ID" | "CF_API_TOKEN" | "R2_ACCESS_KEY_ID" | "R2_SECRET_ACCESS_KEY" | "R2_BUCKET_NAME" | "PA_BEARER_TOKEN">> {}
 }
 
 // Begin runtime types
