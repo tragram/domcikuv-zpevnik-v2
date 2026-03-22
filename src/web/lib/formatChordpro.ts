@@ -8,9 +8,10 @@ const removeWhitespaces = (lines: string[]): string[] => {
 };
 
 const replaceRepetitions = (content: string): string => {
-  return content.replace(/\|:([^{}]+?):\|/g, (_, inner) => {
-    return `𝄆 ${inner.trim()} 𝄇`;
-  });
+  console.log(content)
+  return content
+    .replace(/\|:([^{}]+?):\|/g, (_, inner) => `𝄆 ${inner.trim()} 𝄇`)
+    .replace(/\/:([^{}]+?):\//g, (_, inner) => `𝄆 ${inner.trim()} 𝄇`);
 };
 
 const capitalizeLyrics = (text: string): string => {
