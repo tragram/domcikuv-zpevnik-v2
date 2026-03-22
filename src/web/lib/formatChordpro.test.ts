@@ -29,6 +29,18 @@ describe("formatChordpro", () => {
       expect(formatChordpro(input)).toBe(expected);
     });
 
+    it("should replace /: :/ with musical repetition markers", () => {
+      const input = "/: repeat this section :/";
+      const expected = "𝄆 Repeat this section 𝄇";
+      expect(formatChordpro(input)).toBe(expected);
+    });
+
+    it("shouldn't replace mixed /: :| with musical repetition markers", () => {
+      const input = "/: repeat this section :|";
+      const expected = "/: repeat this section :|";
+      expect(formatChordpro(input)).toBe(expected);
+    });
+
     it("should trim excess spaces inside repetition markers", () => {
       const input = "|:   spaced repetition   :|";
       const expected = "𝄆 Spaced repetition 𝄇";
