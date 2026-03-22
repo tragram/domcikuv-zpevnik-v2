@@ -80,8 +80,12 @@ export const filterSongbook = (
   return songs.filter((s) => contentsOfSelectedSongbooks.has(s.id));
 };
 
-const filterExternal = (songs: SongData[], showExternal: boolean) => {
-  if (!showExternal) {
+const filterExternal = (
+  songs: SongData[],
+  loggedIn: boolean,
+  showExternal: boolean,
+) => {
+  if (!loggedIn || !showExternal) {
     return songs.filter((song) => !song.externalSource);
   } else {
     return songs;
@@ -204,7 +208,7 @@ export function useFilteredSongs(
     results = filterVocalRange(results, vocalRange);
     results = filterLanguage(results, language, languageCounts);
     results = filterFavorites(results, user.loggedIn, onlyFavorites);
-    results = filterExternal(results, showExternal);
+    results = filterExternal(results, user.loggedIn, showExternal);
     results = filterSongbook(results, availableSongbooks, selectedSongbooks);
 
     return results.toSorted(getSortCompareFunction(sortByField, sortOrder));
