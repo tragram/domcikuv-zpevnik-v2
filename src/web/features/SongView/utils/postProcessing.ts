@@ -303,8 +303,6 @@ function processSectionTitles(doc: Document): Document {
           parent.insertBefore(newLyricsDiv, commentRow.nextSibling);
       }
       commentRow?.remove();
-    } else {
-      console.log(commentText);
     }
   });
 

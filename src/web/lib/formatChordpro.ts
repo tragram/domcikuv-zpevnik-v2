@@ -8,7 +8,6 @@ const removeWhitespaces = (lines: string[]): string[] => {
 };
 
 const replaceRepetitions = (content: string): string => {
-  console.log(content)
   return content
     .replace(/\|:([^{}]+?):\|/g, (_, inner) => `𝄆 ${inner.trim()} 𝄇`)
     .replace(/\/:([^{}]+?):\//g, (_, inner) => `𝄆 ${inner.trim()} 𝄇`);

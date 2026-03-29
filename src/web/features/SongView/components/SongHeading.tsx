@@ -66,7 +66,6 @@ const SongHeading: React.FC<SongHeadingProps> = ({
     observer.observe(parent);
     return () => observer.disconnect();
   }, [layoutSettings, songData]); // Re-run only if settings/data change
-  console.log(songData.capo);
   return (
     <div
       ref={containerRef}
