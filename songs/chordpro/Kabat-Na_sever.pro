@@ -1,11 +1,12 @@
 {title: Na sever}
 {artist: Kabát}
+{key: G}
 {capo: 0}
 {range: g1-e1}
 {language: czech}
 {startMelody: h h h h h g}
 {createdAt: 1773786115000}
-{updatedAt: 1774185193000}
+{updatedAt: 1774794376000}
 {illustrationId: Kabat-Na_sever_gpt-5-mini_v4_nano-banana-2}
 {promptId: Kabat-Na_sever_gpt-5-mini_v4}
 
@@ -29,7 +30,7 @@ a teď [G]holka musím [Emi]jít až [D]tam na se[G]ver.
 {comment: Pozor, poprvé refrén není celý!}
 
 {start_of_chorus}
-Cestu [G]znám...
+Cestu [G]znám... [D][G]
 {end_of_chorus}
 
 {start_of_verse}

@@ -1,14 +1,14 @@
 {title: Hříšná Těla Křídla Motýlí}
 {artist: Aneta Langerová}
 {key: E}
-{capo: 0}
+{capo: 7}
 {range: h1-e2}
 {language: czech}
 {startMelody: h h h}
 {createdAt: 1772895473000}
-{updatedAt: 1773688139000}
-{illustrationId: Aneta_Langerova-Hrisna_Tela_Kridla_Motyli_gpt-5-mini_v2_FLUX.1-dev}
-{promptId: Aneta_Langerova-Hrisna_Tela_Kridla_Motyli_gpt-5-mini_v2}
+{updatedAt: 1774796125000}
+{illustrationId: Aneta_Langerova-Hrisna_Tela_Kridla_Motyli_gpt-5-mini_v4_nano-banana-2}
+{promptId: Aneta_Langerova-Hrisna_Tela_Kridla_Motyli_gpt-5-mini_v4}
 
 {start_of_verse}
 [E]Jednou uz tě málem měla
@@ -58,12 +58,12 @@ a půjdeš [E]dál [H][C#m][A]
 {start_of_verse}
 Vzpomeň si [E]na svět kdy pro kousek těla
 [H]zázraky si neviděla,
-[C#m]neměla si křídla mot[A]ýlí
+[C#m]neměla jsi křídla motý[A]lí
 {end_of_verse}
 
 {start_of_verse: Outro}
 [E]V roklině pod skálou zjevení,
-[H]údolí rozšklebené napětim, otevřené spojením,
+[H]údolí rozšklebené napětím, otevřené spojením,
 [C#m]jeleni obtěžkáni vábením,
 [A]vrhají se bezhlavě do hloubi [E]země...
 {end_of_verse}

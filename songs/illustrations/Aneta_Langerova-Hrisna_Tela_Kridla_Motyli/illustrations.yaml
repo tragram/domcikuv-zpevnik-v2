@@ -26,3 +26,21 @@ prompts:
       - createdAt: 1772896107000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: Aneta_Langerova-Hrisna_Tela_Kridla_Motyli_gpt-5-mini_v4
+    songId: Aneta_Langerova-Hrisna_Tela_Kridla_Motyli
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Close-up vertical scene: a single crimson rose pinned to cracked plaster,
+      dark blood trickling from its petals down the wall; draped over the rose
+      is a large tattered monarch butterfly wing with frayed edges and missing
+      pieces. Moody, cinematic lighting, deep shadows and warm rim light, muted
+      desaturated background for contrast. Painterly-surreal realism, high
+      detail on textures, simple composition, thumbnail-friendly.
+    createdAt: 2026-03-29T14:54:22.000Z
+    updatedAt: 2026-03-29T14:54:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1774796124000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
