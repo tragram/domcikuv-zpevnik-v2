@@ -23,6 +23,28 @@ config({ path: path.resolve(__dirname, "../.dev.vars") });
 const VERBOSE = false;
 const SYSTEM_EMAIL = "domho108@gmail.com";
 
+// ---------------------------------------------------------------------------
+// CLI flag parsing
+// ---------------------------------------------------------------------------
+
+type Environment = "dev" | "staging" | "prod";
+
+function parseEnvironment(): Environment {
+  const args = process.argv.slice(2);
+  if (args.includes("--prod")) return "prod";
+  if (args.includes("--staging")) return "staging";
+  if (args.includes("--dev")) return "dev";
+
+  console.error(
+    "❌ No environment flag provided. Use --dev, --staging, or --prod.",
+  );
+  process.exit(1);
+}
+
+// ---------------------------------------------------------------------------
+// Core migration helpers (unchanged)
+// ---------------------------------------------------------------------------
+
 /**
  * Parses a chordpro file and extracts metadata and content
  */
@@ -55,13 +77,11 @@ function parseChordproFile(content: string) {
 
       if (allowedMetadataKeys.has(key)) {
         metadata[key] = match[2].trim();
-        contentStartIndex = i + 1; // Move start index past this valid metadata
+        contentStartIndex = i + 1;
       } else {
-        // We found a directive, but it's a formatting directive (like {comment: ...})
         break;
       }
     } else if (line !== "") {
-      // We hit actual lyrics or chords, stop parsing metadata
       break;
     }
   }
@@ -113,7 +133,7 @@ async function clearTables(db: DrizzleD1Database) {
     songIllustration,
     illustrationPrompt,
     songVersion,
-    songImport, // Included safely
+    songImport,
     userFavoriteSongs,
     syncSession,
     song,
@@ -152,7 +172,6 @@ async function uploadSong(
 
   logger(`  [DEBUG] Computed createdAt for ${songId}: ${createdAt}`);
 
-  // 1. Create the Song Shell
   logger(`  [DEBUG] 1. Inserting into 'song' table...`);
   await db.insert(song).values({
     id: songId,
@@ -160,7 +179,6 @@ async function uploadSong(
     updatedAt: now,
   });
 
-  // 2. Create the Version (Status: Published)
   const versionId = `${songId}_${createdAt.getTime()}`;
   logger(
     `  [DEBUG] 2. Inserting into 'songVersion' table with ID: ${versionId}...`,
@@ -185,14 +203,12 @@ async function uploadSong(
     updatedAt: now,
   });
 
-  // 3. Link Song to this Version
   logger(`  [DEBUG] 3. Updating 'song' with currentVersionId...`);
   await db
     .update(song)
     .set({ currentVersionId: versionId })
     .where(eq(song.id, songId));
 
-  // 4. add to favorites
   logger(`  [DEBUG] 4. Inserting into 'userFavoriteSongs'...`);
   await db.insert(userFavoriteSongs).values({
     userId: systemUserId,
@@ -317,20 +333,149 @@ async function processAndMigrateSongs(
   console.log("✅ Migration complete!");
 }
 
-async function main() {
-  const songsPath = path.resolve(__dirname, "../songs");
-  try {
-    /*** local ***/
-    await D1Helper.get("DB").useLocalD1((db) =>
-      processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
+// ---------------------------------------------------------------------------
+// Environment-specific runners
+// ---------------------------------------------------------------------------
+
+/**
+ * Prompts the user for confirmation via stdin.
+ * @param message  The question to display (should include [Y/n] or [y/N]).
+ * @param defaultYes  If true, an empty/Enter reply is treated as "yes".
+ * @returns true if the user confirmed, false otherwise.
+ */
+async function confirm(message: string, defaultYes: boolean): Promise<boolean> {
+  const { createInterface } = await import("readline");
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+
+  return new Promise((resolve) => {
+    rl.question(message + " ", (answer) => {
+      rl.close();
+      const trimmed = answer.trim().toLowerCase();
+      if (trimmed === "") return resolve(defaultYes);
+      resolve(trimmed === "y" || trimmed === "yes");
+    });
+  });
+}
+
+async function runDev(songsPath: string) {
+  console.log("🛠️  Running migration against LOCAL D1...");
+  await D1Helper.get("DB").useLocalD1((db) =>
+    processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
+  );
+}
+
+/**
+ * Reads wrangler.jsonc and extracts the D1 database_id and database_name
+ * for the given environment ("staging" = env.staging.d1_databases, prod = top-level).
+ */
+function getD1ConfigFromWrangler(env: "staging" | "prod"): {
+  databaseId: string;
+  databaseName: string;
+} {
+  const wranglerPath = path.resolve(__dirname, "../wrangler.jsonc");
+  // Strip single-line comments so JSON.parse can handle .jsonc
+  const raw = fs.readFileSync(wranglerPath, "utf-8").replace(/\/\/[^\n]*/g, "");
+  const wrangler = JSON.parse(raw);
+
+  const d1List =
+    env === "staging"
+      ? wrangler?.env?.staging?.d1_databases
+      : wrangler?.d1_databases;
+
+  const db = (d1List ?? []).find((d: any) => d.binding === "DB");
+
+  if (!db?.database_id) {
+    console.error(
+      `❌ Could not find D1 binding "DB" for env "${env}" in wrangler.jsonc`,
     );
-    /*** remote ***/
-    // await D1Helper.get("DB")
-    //   .withCfCredentials(
-    //     process.env.CF_ACCOUNT_ID,
-    //     process.env.CLOUDFLARE_D1_TOKEN,
-    //   )
-    //   .useProxyD1(async (db) => processAndMigrateSongs(db, songsPath));
+    process.exit(1);
+  }
+
+  return { databaseId: db.database_id, databaseName: db.database_name };
+}
+
+async function runStaging(songsPath: string) {
+  const accountId = process.env.staging?.CF_ACCOUNT_ID;
+  const token = process.env.staging?.CF_D1_TOKEN;
+
+  if (!accountId || !token) {
+    console.error(
+      "❌ Missing staging credentials. Ensure process.env.staging.CF_ACCOUNT_ID " +
+        "and process.env.staging.CF_D1_TOKEN are set in your .dev.vars.",
+    );
+    process.exit(1);
+  }
+
+  const { databaseId, databaseName } = getD1ConfigFromWrangler("staging");
+
+  console.log(`🔶 Target:  STAGING D1  (${databaseName})`);
+  console.log(`   DB ID:   ${databaseId}`);
+
+  // Default YES — press Enter to proceed
+  const ok = await confirm("Proceed? [Y/n]", true);
+  if (!ok) {
+    console.log("Aborted.");
+    process.exit(0);
+  }
+
+  console.log("Running migration...");
+  await D1Helper.get("DB")
+    .withCfCredentials(accountId, token)
+    .useProxyD1(
+      async (db) =>
+        processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
+      { databaseId },
+    );
+}
+
+async function runProd(songsPath: string) {
+  const accountId = process.env.CF_ACCOUNT_ID;
+  const token = process.env.CLOUDFLARE_D1_TOKEN;
+
+  if (!accountId || !token) {
+    console.error(
+      "❌ Missing production credentials. Ensure CF_ACCOUNT_ID and " +
+        "CLOUDFLARE_D1_TOKEN are set in your environment.",
+    );
+    process.exit(1);
+  }
+
+  const { databaseId, databaseName } = getD1ConfigFromWrangler("prod");
+
+  console.log(`🚨 Target:  PRODUCTION D1  (${databaseName})`);
+  console.log(`   DB ID:   ${databaseId}`);
+
+  // Default NO — must explicitly type "y"
+  const ok = await confirm("Proceed? [y/N]", false);
+  if (!ok) {
+    console.log("Aborted.");
+    process.exit(0);
+  }
+
+  console.log("Running migration...");
+  await D1Helper.get("DB")
+    .withCfCredentials(accountId, token)
+    .useProxyD1(
+      async (db) =>
+        processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
+      { databaseId },
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Entrypoint
+// ---------------------------------------------------------------------------
+
+async function main() {
+  const env = parseEnvironment();
+  const songsPath = path.resolve(__dirname, "../songs");
+
+  console.log(`\n📦 staticData2DB — environment: ${env.toUpperCase()}\n`);
+
+  try {
+    if (env === "dev") await runDev(songsPath);
+    else if (env === "staging") await runStaging(songsPath);
+    else await runProd(songsPath);
   } catch (error) {
     console.error("Migration failed:", error);
     process.exit(1);

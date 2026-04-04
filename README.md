@@ -14,7 +14,7 @@ You can run the page fully locally by
 * building the database: `pnpm db:create` (if you haven't run it yet)
 * generating the migrations: `pnpm db:generate`
 * migrating the DB: `pnpm db:migrate:local`
-* loading the static files into the dev DB: `pnpm tsx scripts/staticData2DB.ts`
+* loading the static files into the dev DB: `pnpm tsx scripts/staticData2DB.ts --dev`
   * tip: changing `SYSTEM_EMAIL` in the script let's you be the admin and creator of all songs after local login
 * starting the local dev server: `pnpm dev`
 * to make authentication and AI services work, you will need to supply your own credentials - see `.dev.vars.sample`
