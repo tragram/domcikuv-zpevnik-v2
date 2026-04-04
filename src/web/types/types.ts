@@ -1,8 +1,8 @@
 import { User } from "better-auth";
 import { Note } from "./musicTypes";
 import { SongData } from "./songData";
-import { Songbook } from "~/services/song-service";
 import { EditorSubmitSchemaInput } from "src/worker/api/editor";
+import z from "zod";
 // Import keywords from the source of truth
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range";
@@ -39,6 +39,13 @@ export const isValidSongLanguage = (lang?: string): lang is SongLanguage => {
   return lang === undefined || validLanguages.has(lang as SongLanguage);
 };
 
+export interface Songbook {
+  user: string;
+  image: string;
+  name: string;
+  songIds: Set<string>;
+}
+
 type LanguageCount = Record<SongLanguage, number>;
 interface SongDB {
   songs: SongData[];
@@ -66,3 +73,11 @@ export interface UserData extends User {
 export type ChordPro = string;
 
 export type EditorState = EditorSubmitSchemaInput;
+
+export const redirectSearchSchema = z.object({
+  redirect: z
+    .string()
+    .refine((val) => val.startsWith("/") && !val.startsWith("//")) // Security check
+    .optional()
+    .catch(undefined), // Strip out bad URLs seamlessly
+});

@@ -1,22 +1,27 @@
-import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  QueryClient,
+  queryOptions,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useCallback } from "react";
-import { API } from "src/worker/api-client";
+import client from "src/worker/api-client";
 import { fetchActiveSessions } from "~/services/user-service";
 import { SongDB } from "~/types/types";
 
 // Centralized query configuration
-export const activeSessionsQuery = (api: API) => ({
-  queryKey: ["activeSessions"] as const,
-  queryFn: () => fetchActiveSessions(api),
-  staleTime: 1000 * 60 * 60 * 24, // 24 hours
-});
+export const activeSessionsQueryOptions = () =>
+  queryOptions({
+    queryKey: ["activeSessions"] as const,
+    queryFn: () => fetchActiveSessions(client.api),
+  });
 
 // Helper for prefetching in route loaders
-export const prefetchActiveSessions = (queryClient: QueryClient, api: API) => {
-  return queryClient.fetchQuery(activeSessionsQuery(api));
+export const prefetchActiveSessions = (queryClient: QueryClient) => {
+  return queryClient.fetchQuery(activeSessionsQueryOptions());
 };
 
-export const useActiveSessions = (songDB: SongDB, api: API) => {
+export const useActiveSessions = (songDB: SongDB) => {
   const queryClient = useQueryClient();
   const songs = songDB.songs;
 
@@ -25,9 +30,7 @@ export const useActiveSessions = (songDB: SongDB, api: API) => {
     data: activeSessionsData,
     refetch,
     ...queryResult
-  } = useQuery({
-    ...activeSessionsQuery(api),
-  });
+  } = useQuery(activeSessionsQueryOptions());
 
   // Map sessions with song data
   const activeSessions = activeSessionsData?.map((as) => ({
@@ -39,7 +42,7 @@ export const useActiveSessions = (songDB: SongDB, api: API) => {
   const refetchIfStale = useCallback(
     (staleAgeInMinutes: number) => {
       const queryState = queryClient.getQueryState(
-        activeSessionsQuery(api).queryKey,
+        activeSessionsQueryOptions().queryKey,
       );
 
       if (queryState?.dataUpdatedAt) {
@@ -55,7 +58,7 @@ export const useActiveSessions = (songDB: SongDB, api: API) => {
         refetch();
       }
     },
-    [api, queryClient, refetch],
+    [queryClient, refetch],
   );
 
   return {

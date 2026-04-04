@@ -1,5 +1,5 @@
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
-import { API, SongsAPI } from "src/worker/api-client";
+import { AdminApi, SongsAPI } from "src/worker/api-client";
 import {
   AdminIllustrationResponse,
   IllustrationCreateSchema,
@@ -8,12 +8,13 @@ import {
   IllustrationPromptApi,
   IllustrationPromptCreateSchema,
   SongDataAdminApi,
+  SongDataApi,
   SongIllustrationApi,
 } from "src/worker/api/api-types";
 import { PopulatedSongDB } from "src/worker/helpers/song-helpers";
 import { SongData } from "~/types/songData";
 import { makeApiRequest } from "./api-service";
-import { AdminApi, parseDBDates } from "./song-service";
+import { parseDBDates } from "./song-service";
 
 export const fetchIllustrationPrompt = async (
   songDBApi: SongsAPI,

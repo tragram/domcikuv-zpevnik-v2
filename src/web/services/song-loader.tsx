@@ -1,10 +1,11 @@
-import { SongDB } from "~/types/types";
-import { findOrFetchSong } from "./song-service";
-import { API } from "src/worker/api-client";
-import { UserProfileData } from "src/worker/api/userProfile";
+import { QueryClient } from "@tanstack/react-query";
 import { RouteIds, useLoaderDeps, useParams } from "@tanstack/react-router";
+import {
+  songsQueryOptions
+} from "~/hooks/use-songDB";
 import type { routeTree } from "~/routeTree.gen";
 import { SongData } from "~/types/songData";
+import { findOrFetchSong } from "./song-service";
 
 type SongLoaderErrorComponentProps = {
   from: RouteIds<typeof routeTree>;
@@ -37,21 +38,15 @@ type SongLoaderParams = {
   songId: string;
 };
 
-// Define the loader context type (adjust based on your actual context)
 type SongLoaderContext = {
-  songDB: SongDB;
-  api: API;
-  user: UserProfileData;
+  queryClient: QueryClient;
 };
 
 // Define the loader return type
 export type SongLoaderData = {
-  user: SongLoaderContext["user"];
-  songDB: SongLoaderContext["songDB"];
   songData: SongData;
   songId: string;
   versionId?: string;
-  api: SongLoaderContext["api"];
 };
 
 const songLoader = async ({
@@ -63,28 +58,14 @@ const songLoader = async ({
   params: SongLoaderParams;
   deps: SongLoaderDeps;
 }): Promise<SongLoaderData> => {
-  const songDB = context.songDB;
-  const songId = params.songId;
-  const versionId = deps.version;
-  const songData = await findOrFetchSong(
-    context.api,
-    songDB,
-    songId,
-    versionId,
-  );
+  const queryClient = context.queryClient;
 
-  if (!songData) {
-    throw Error("Song not found!");
-  }
+  const songs = queryClient.getQueryData(songsQueryOptions().queryKey) ?? [];
 
-  return {
-    user: context.user,
-    songDB,
-    songData,
-    songId,
-    versionId,
-    api: context.api,
-  };
+  const songData = await findOrFetchSong(songs, params.songId, deps.version);
+  if (!songData) throw new Error("Song not found!");
+
+  return { songData, songId: params.songId, versionId: deps.version };
 };
 
 export default songLoader;

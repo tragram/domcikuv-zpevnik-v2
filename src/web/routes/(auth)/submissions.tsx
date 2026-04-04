@@ -200,5 +200,3 @@ function UserSubmissions() {
     </div>
   );
 }
-
-export default UserSubmissions;

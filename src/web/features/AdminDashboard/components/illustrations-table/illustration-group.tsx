@@ -14,10 +14,6 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 import { cn } from "~/lib/utils";
-import {
-  createIllustration,
-  generateIllustration,
-} from "~/services/song-service";
 import { IllustrationCard, PendingIllustrationCard } from "./illustration-card";
 import {
   IllustrationForm,
@@ -26,6 +22,7 @@ import {
 import { PromptCreateDialog } from "./prompt-create-dialog";
 import { IllustrationCreateSchema, IllustrationGenerateSchema, SongDataAdminApi } from "src/worker/api/api-types";
 import { PromptCard } from "./prompt-card";
+import { createIllustration, generateIllustration } from "~/services/illustration-service";
 
 interface SongIllustrationsGroupProps {
   song: SongDataAdminApi;

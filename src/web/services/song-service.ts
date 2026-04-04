@@ -1,13 +1,4 @@
-import client, { API } from "~/../worker/api-client";
-import { SongData } from "~/types/songData";
-import {
-  isValidSongLanguage,
-  LanguageCount,
-  SongDB,
-  SongLanguage,
-} from "~/types/types";
-import { makeApiRequest } from "./api-service";
-import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
+import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
 import {
   ModifySongVersionSchema,
   SongModificationSchema,
@@ -17,11 +8,18 @@ import {
   SongDataApi,
   SongVersionApi,
 } from "src/worker/api/api-types";
-import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
-
-export * from "./illustration-service";
-
-export type AdminApi = typeof client.api.admin;
+import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
+import client, { AdminApi, API } from "~/../worker/api-client";
+import { SongData } from "~/types/songData";
+import {
+  isValidSongLanguage,
+  LanguageCount,
+  Songbook,
+  SongDB,
+  SongLanguage,
+} from "~/types/types";
+import { makeApiRequest } from "./api-service";
+import { queryClient } from "src/lib/query-client";
 
 interface Timestamped {
   createdAt?: Date | string;
@@ -29,14 +27,6 @@ interface Timestamped {
   approvedAt?: Date | string | null;
   lastLogin?: Date | string | null;
 }
-
-export interface Songbook {
-  user: string;
-  image: string;
-  name: string;
-  songIds: Set<string>;
-}
-
 export const parseDBDates = <T extends Timestamped>(o: T) => {
   return {
     ...o,
@@ -49,8 +39,73 @@ export const parseDBDates = <T extends Timestamped>(o: T) => {
 
 // --- Public API ---
 export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
-  const response = await makeApiRequest(api.songs.$get);
-  return response.songs;
+  // 1. Get current cached state from TanStack/IndexedDB
+  const cached = queryClient.getQueryData<SongDataApi[]>(["songs"]);
+
+  const meta = queryClient.getQueryData<{
+    version: string;
+    lastUpdate: string;
+  }>(["songs-meta"]);
+
+  // 2. If no cache exists, do a full fetch
+  if (!cached || !meta) {
+    const data = await makeApiRequest(api.songs.$get);
+
+    // Save metadata for next time
+    queryClient.setQueryData(["songs-meta"], {
+      version: data.songDBVersion,
+      lastUpdate: data.lastUpdateAt,
+    });
+
+    return data.songs;
+  }
+
+  // 3. Try Incremental Update
+  try {
+    const data = await makeApiRequest(() =>
+      api.songs.incremental.$get({
+        query: { songDBVersion: meta.version, lastUpdateAt: meta.lastUpdate },
+      }),
+    );
+    console.log(data);
+    // 4. Handle Full Reset (isIncremental: false)
+    if (!data.isIncremental) {
+      queryClient.setQueryData(["songs-meta"], {
+        version: data.songDBVersion,
+        lastUpdate: data.lastUpdateAt,
+      });
+      return data.songs;
+    }
+
+    // 5. Apply Incremental Updates (matches your applyIncrementalUpdates)
+    if (data.songs.length > 0) {
+      const songMap = new Map(cached.map((s) => [s.id, s]));
+
+      for (const song of data.songs) {
+        if (song.updateStatus === "deleted") {
+          songMap.delete(song.id);
+        } else {
+          songMap.set(song.id, song);
+        }
+      }
+
+      const updatedList = Array.from(songMap.values());
+
+      // Update metadata for next fetch
+      queryClient.setQueryData(["songs-meta"], {
+        version: data.songDBVersion,
+        lastUpdate: data.lastUpdateAt,
+      });
+
+      return updatedList;
+    }
+
+    // No updates needed
+    return cached;
+  } catch (error) {
+    console.warn("Incremental fetch failed, returning cache", error);
+    return cached;
+  }
 };
 
 export const fetchSongVersion = async (
@@ -76,31 +131,33 @@ export const fetchSongVersion = async (
 };
 
 export const findOrFetchSong = async (
-  api: API,
-  songDB: SongDB,
+  songs: SongData[] | SongDataApi[],
   songId: string,
   versionId?: string,
 ): Promise<SongData | null> => {
-  let songData: SongData | undefined;
+  let songData: SongData | SongDataApi | undefined;
   if (versionId) {
     songData = new SongData(
       (await makeApiRequest(() =>
-        api.songs.fetch[":songId"][":versionId"].$get({
+        client.api.songs.fetch[":songId"][":versionId"].$get({
           param: { songId, versionId },
         }),
       )) as SongDataApi,
     );
   } else {
-    songData = songDB.songs.find((s) => s.id === songId);
-    if (!songData) {
-      songData = new SongData(
-        (await makeApiRequest(() =>
-          api.songs.fetch[":id"].$get({
-            param: { id: songId },
-          }),
-        )) as SongDataApi,
-      );
-    }
+    songData = songs.find((s) => s.id === songId);
+  }
+  if (!songData) {
+    songData = new SongData(
+      (await makeApiRequest(() =>
+        client.api.songs.fetch[":id"].$get({
+          param: { id: songId },
+        }),
+      )) as SongDataApi,
+    );
+  }
+  if (!(songData instanceof SongData)) {
+    songData = new SongData(songData);
   }
   return songData ?? null;
 };

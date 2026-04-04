@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { SongDataDB } from "src/lib/db/schema";
+import { AdminApi } from "src/worker/api-client";
 import {
   ModifySongVersionSchema,
   SongModificationSchema,
@@ -25,23 +26,14 @@ import {
 } from "src/worker/helpers/user-helpers";
 import { makeApiRequest } from "~/services/api-service";
 import {
-  AdminApi,
-  createIllustration,
-  deleteIllustration,
   deleteVersionAdmin,
-  fetchIllustrationsAdmin,
-  fetchPromptsAdmin,
-  generateIllustration,
   getSongsAdmin,
   getVersionsAdmin,
   parseDBDates,
   patchSongAdmin,
   patchVersionAdmin,
   resetVersionDB,
-  restoreIllustration,
   songsWithCurrentVersionAdmin,
-  songsWithIllustrationsAndPrompts,
-  updateIllustration,
 } from "~/services/song-service";
 import {
   createUserAdmin,
@@ -49,6 +41,16 @@ import {
   fetchUsersAdmin,
   updateUserAdmin,
 } from "~/services/user-service";
+import {
+  fetchIllustrationsAdmin,
+  fetchPromptsAdmin,
+  updateIllustration,
+  deleteIllustration,
+  restoreIllustration,
+  createIllustration,
+  generateIllustration,
+  songsWithIllustrationsAndPrompts,
+} from "./illustration-service";
 
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({

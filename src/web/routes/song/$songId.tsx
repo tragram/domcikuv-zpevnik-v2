@@ -5,6 +5,7 @@ import PendingComponent from "~/components/PendingComponent";
 import SongView from "~/features/SongView/SongView";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore";
+import { useUserProfile } from "~/hooks/use-user-profile";
 import songLoader, { SongLoaderErrorComponent } from "~/services/song-loader";
 
 const songSearchSchema = z.object({
@@ -28,9 +29,8 @@ export const Route = createFileRoute("/song/$songId")({
 });
 
 function RouteComponent() {
-  const { songDB, songData, user, songId, versionId, api } =
-    Route.useLoaderData();
-
+  const { songData, songId, versionId } = Route.useLoaderData();
+  const { userProfile: user } = useUserProfile();
   const shareSession = useViewSettingsStore((state) => state.shareSession);
   const transposeSteps = useViewSettingsStore(
     (state) => state.transpositions[songId] || 0,
@@ -63,10 +63,8 @@ function RouteComponent() {
 
   return (
     <SongView
-      songDB={songDB}
       songData={songData}
       user={user}
-      favoritesApi={api.favorites}
       feedStatus={versionId ? undefined : feedStatus}
     />
   );

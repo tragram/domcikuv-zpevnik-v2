@@ -1,4 +1,24 @@
+import { Link, useSearch } from "@tanstack/react-router";
+import {
+  CloudOff,
+  Coffee,
+  Contrast,
+  Fullscreen,
+  Pencil,
+  RefreshCw,
+  Settings2,
+  Undo2
+} from "lucide-react";
+import React, { useEffect } from "react";
+import type { FullScreenHandle } from "react-full-screen";
+import { useWakeLock } from "react-screen-wake-lock";
+import { UserProfileData } from "src/worker/api/userProfile";
+import useLocalStorageState from "use-local-storage-state";
 import RandomSong, { ResetBanListDropdownItems } from "~/components/RandomSong";
+import { CompactItem } from "~/components/RichDropdown";
+import { DropdownThemeToggle } from "~/components/ThemeToggle";
+import ToolbarBase from "~/components/ToolbarBase";
+import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -9,21 +29,12 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import usePWAInstall from "~/components/usePWAInstall";
+import { useSongDB } from "~/hooks/use-songDB";
 import { Key } from "~/types/musicTypes";
-import {
-  Coffee,
-  Fullscreen,
-  Github,
-  Pencil,
-  Settings2,
-  Undo2,
-  CloudOff,
-  RefreshCw,
-  Contrast,
-} from "lucide-react";
-import React, { useEffect } from "react";
-import type { FullScreenHandle } from "react-full-screen";
+import { SongData } from "~/types/songData";
+import ShareSongButton from "../components/ShareSongButton";
 import { useScrollHandler } from "../hooks/useScrollHandler";
+import { FeedStatus } from "../hooks/useSessionSync";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import {
   ChordSettingsButtons,
@@ -34,21 +45,8 @@ import {
   LayoutSettingsToolbar,
 } from "./LayoutSettings";
 import TransposeSettings from "./TransposeSettings";
-import ToolbarBase from "~/components/ToolbarBase";
-import { Link, useSearch } from "@tanstack/react-router";
-import { DropdownThemeToggle } from "~/components/ThemeToggle";
-import { SongDB } from "~/types/types";
-import { SongData } from "~/types/songData";
-import { useWakeLock } from "react-screen-wake-lock";
-import useLocalStorageState from "use-local-storage-state";
-import { UserProfileData } from "src/worker/api/userProfile";
-import ShareSongButton from "../components/ShareSongButton";
-import { AvatarWithFallback } from "~/components/ui/avatar";
-import { CompactItem } from "~/components/RichDropdown";
-import { FeedStatus } from "../hooks/useSessionSync";
 
 interface ToolbarProps {
-  songDB: SongDB;
   songData: SongData;
   user: UserProfileData;
   feedStatus: FeedStatus | undefined;
@@ -59,7 +57,6 @@ interface ToolbarProps {
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
-  songDB,
   songData,
   user,
   feedStatus,
@@ -70,7 +67,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
-
+  const { songDB } = useSongDB();
   const { PWAInstallComponent, installItem } = usePWAInstall();
   const {
     request: wakeLockRequest,
@@ -187,7 +184,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             </DropdownMenuItem>
 
             {React.Children.toArray(
-              <ResetBanListDropdownItems songDB={songDB} />,
+              <ResetBanListDropdownItems songs={songDB.songs} />,
             )}
 
             {wakeLockSupported && (

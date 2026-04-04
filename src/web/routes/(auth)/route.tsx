@@ -6,8 +6,9 @@ import {
 } from "@tanstack/react-router";
 import { CloudUpload, Home, Shield } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import { loadUserProfile } from "~/hooks/use-user-profile";
 import { cn } from "~/lib/utils";
-import { redirectSearchSchema } from "~/main";
+import { redirectSearchSchema } from "~/types/types";
 
 const PROFILE_URL = "/profile";
 const LOGIN_URL = "/login";
@@ -19,11 +20,12 @@ export const Route = createFileRoute("/(auth)")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
   component: RouteComponent,
   beforeLoad: async ({ context, location, search }) => {
+    const user = await loadUserProfile();
     // Get the redirect URL from validated search params or default to "/"
     const redirectURL = search.redirect || "/";
 
     // If user is not logged in and not on login/signup page, redirect to login
-    if (!context.user.loggedIn && location.pathname === PROFILE_URL) {
+    if (!user.loggedIn && location.pathname === PROFILE_URL) {
       throw redirect({
         to: LOGIN_URL,
         search: { redirect: redirectURL },
@@ -31,7 +33,7 @@ export const Route = createFileRoute("/(auth)")({
     }
 
     // If user is logged in and on login page, redirect to the intended destination
-    if (context.user.loggedIn) {
+    if (user.loggedIn) {
       if (location.pathname === LOGIN_URL) {
         throw redirect({
           href: redirectURL,
@@ -46,7 +48,7 @@ export const Route = createFileRoute("/(auth)")({
       }
     }
 
-    return { redirectURL, location };
+    return { redirectURL, location, user };
   },
   loader: async ({ context }) => {
     return context;
@@ -55,6 +57,7 @@ export const Route = createFileRoute("/(auth)")({
 
 function RouteComponent() {
   const { user } = Route.useLoaderData();
+
   return (
     <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10 w-full">
       <div className="w-fit flex flex-col gap-4 xl:gap-8">
@@ -84,7 +87,7 @@ function RouteComponent() {
                 </Link>
               </Button>
             )}
-            {user.profile?.isAdmin && (
+            {user.loggedIn && user.profile.isAdmin && (
               <Button asChild className="sm:w-auto">
                 <Link to="/admin">
                   <Shield />

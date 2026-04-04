@@ -6,8 +6,7 @@ import { AuthHeader } from "~/components/AuthHeader";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { redirectSearchSchema } from "~/main";
-import { useAuthActions } from "~/hooks/use-auth-actions";
+import { redirectSearchSchema } from "~/types/types";
 
 export const Route = createFileRoute("/(auth)/login")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
@@ -16,7 +15,6 @@ export const Route = createFileRoute("/(auth)/login")({
 
 function LoginForm() {
   const { redirectURL } = Route.useRouteContext();
-  const { refreshAuth } = useAuthActions();
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -45,8 +43,6 @@ function LoginForm() {
           setIsLoading(false);
         },
         onSuccess: async () => {
-          // Centralized cache flush and router synchronization
-          await refreshAuth();
           navigate({ to: redirectURL });
         },
       },
@@ -120,7 +116,6 @@ function LoginForm() {
                       setErrorMessage("");
                     },
                     onSuccess: async () => {
-                      await refreshAuth();
                       navigate({ to: redirectURL });
                     },
                     onError: (ctx) => {
@@ -160,7 +155,6 @@ function LoginForm() {
                       setErrorMessage("");
                     },
                     onSuccess: async () => {
-                      await refreshAuth();
                       navigate({ to: redirectURL });
                     },
                     onError: (ctx) => {

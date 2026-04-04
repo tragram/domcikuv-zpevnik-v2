@@ -1,23 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { API } from "src/worker/api-client";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
+import { useUserProfile } from "~/hooks/use-user-profile";
 import { handleApiResponse } from "~/services/api-service";
 import { fetchFeed } from "~/services/song-service";
 import { SongData } from "~/types/songData";
-import { SongDB } from "~/types/types";
 
 export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
     const liveState = await fetchFeed(context.api, params.masterNickname);
     return {
-      user: context.user,
-      songDB: context.songDB,
       masterNickname: params.masterNickname,
       liveState,
       api: context.api,
@@ -26,12 +23,11 @@ export const Route = createFileRoute("/feed/$masterNickname")({
 });
 
 function RouteComponent() {
-  const { songDB, liveState, masterNickname, user, api } =
-    Route.useLoaderData();
+  const { liveState, masterNickname, api } = Route.useLoaderData();
 
+  const { userProfile: user } = useUserProfile();
   return (
     <FeedView
-      songDB={songDB}
       masterNickname={masterNickname}
       liveState={liveState}
       user={user}
@@ -41,20 +37,13 @@ function RouteComponent() {
 }
 
 type FeedViewProps = {
-  songDB: SongDB;
   liveState?: SessionSyncState;
   masterNickname: string;
   user: UserProfileData;
   api: API;
 };
 
-function FeedView({
-  songDB,
-  liveState,
-  masterNickname,
-  user,
-  api,
-}: FeedViewProps) {
+function FeedView({ liveState, masterNickname, user, api }: FeedViewProps) {
   // Feed route manages session sync as follower (read-only)
   const { feedStatus } = useSessionSync(
     masterNickname,
@@ -111,13 +100,5 @@ function FeedView({
     );
   }
 
-  return (
-    <SongView
-      songDB={songDB}
-      songData={songData}
-      user={user}
-      favoritesApi={api.favorites}
-      feedStatus={feedStatus}
-    />
-  );
+  return <SongView songData={songData} user={user} feedStatus={feedStatus} />;
 }

@@ -14,7 +14,6 @@ import {
 } from "~/components/ui/alert-dialog";
 import { getLocalStorageItem, setLocalStorageItem } from "~/lib/utils";
 import { SongData } from "~/types/songData";
-import type { SongDB } from "~/types/types";
 import { CompactItem } from "./RichDropdown";
 import { Button } from "./ui/button";
 import { DropdownMenuCheckboxItem, DropdownMenuItem } from "./ui/dropdown-menu";
@@ -33,7 +32,7 @@ export const resetBanList = () => {
   setLocalStorageItem("lastBanListResetDate", Date.now());
 };
 
-export function ResetBanListDropdownItems({ songDB }: { songDB: SongDB }) {
+export function ResetBanListDropdownItems({ songs }: { songs: SongData[] }) {
   const [bannedSongs, setBannedSongs] = useLocalStorageState<string[]>(
     "songsBannedFromRandom",
     { defaultValue: [] },
@@ -70,7 +69,7 @@ export function ResetBanListDropdownItems({ songDB }: { songDB: SongDB }) {
           </CompactItem.Icon>
           <CompactItem.Body
             title="Reset ban list"
-            subtitle={`${bannedSongs.length}/${songDB.songs.length} songs marked seen`}
+            subtitle={`${bannedSongs.length}/${songs.length} songs marked seen`}
           />
         </CompactItem.Shell>
       </DropdownMenuItem>

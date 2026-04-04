@@ -42,7 +42,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { AdminApi } from "~/services/song-service";
+import { AdminApi} from "~/../worker/api-client";
 import ConfirmationDialog from "../../../components/dialogs/confirmation-dialog";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import {

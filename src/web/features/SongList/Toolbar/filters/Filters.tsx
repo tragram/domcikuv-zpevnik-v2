@@ -27,6 +27,8 @@ import {
 import React from "react";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { SongData } from "~/types/songData";
+import { useSongDB } from "~/hooks/use-songDB";
+import { useUserProfile } from "~/hooks/use-user-profile";
 
 export type VocalRangeType = "all" | [number, number];
 
@@ -68,9 +70,8 @@ const FilterControls = ({
     toggleShowExternal,
     toggleFavorites,
   } = filterStore;
-
-  const routeApi = getRouteApi("/");
-  const { user, songDB } = routeApi.useLoaderData();
+  const { songDB } = useSongDB();
+  const { userProfile: user } = useUserProfile();
   const availableSongbooks = songDB.songbooks;
   return {
     controls: (

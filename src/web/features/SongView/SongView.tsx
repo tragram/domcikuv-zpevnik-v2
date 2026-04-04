@@ -3,29 +3,23 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
-import { SongDB } from "~/types/types";
+import { FeedStatusBar } from "./components/FeedStatusBar";
 import ScrollButtons from "./components/ScrollButtons";
 import { SongContent } from "./components/SongContent";
 import { SongViewLayout } from "./components/SongViewLayout";
+import { FeedStatus } from "./hooks/useSessionSync";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
-import { FeedStatusBar } from "./components/FeedStatusBar";
 import "./SongView.css";
-import { FavoritesAPI } from "src/worker/api-client";
-import { FeedStatus } from "./hooks/useSessionSync";
 
 type DataForSongView = {
-  songDB: SongDB;
   songData: SongData;
   user: UserProfileData;
-  favoritesApi?: FavoritesAPI;
   feedStatus?: FeedStatus;
 };
 export const SongView = ({
-  songDB,
   songData,
   user,
-  favoritesApi,
   feedStatus,
 }: DataForSongView) => {
   const fullScreenHandle = useFullScreenHandle();
@@ -90,7 +84,6 @@ export const SongView = ({
   return (
     <SongViewLayout ref={gestureContainerRef}>
       <Toolbar
-        songDB={songDB}
         songData={songData}
         user={user}
         fullScreenHandle={fullScreenHandle}
@@ -114,7 +107,6 @@ export const SongView = ({
           songData={songData}
           transposeSteps={transposeSteps}
           gestureContainerRef={gestureContainerRef}
-          favoritesApi={favoritesApi}
           user={user}
         />
       </FullScreen>

@@ -10,5 +10,6 @@ export type API = typeof client.api;
 export type FavoritesAPI = API["favorites"];
 export type SongsAPI = API["songs"];
 export type EditorAPI = API["editor"];
+export type AdminApi = typeof client.api.admin;
 
 export default client;

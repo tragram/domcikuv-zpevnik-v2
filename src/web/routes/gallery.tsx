@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import SongGallery from "~/features/Gallery/SongGallery";
+import { useSongDB } from "~/hooks/use-songDB";
 export const Route = createFileRoute("/gallery")({
   component: Home,
   loader: async ({ context }) => {
@@ -9,7 +10,7 @@ export const Route = createFileRoute("/gallery")({
 });
 
 function Home() {
-  const { songDB } = Route.useLoaderData();
+  const { songDB } = useSongDB();
 
   return <SongGallery songDB={songDB} />;
 }

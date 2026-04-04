@@ -2,6 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Camera, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
+import { refreshProfile, logoutUser } from "src/lib/auth/client";
 import { ProfileUpdateData, UserProfileData } from "src/worker/api/userProfile";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
@@ -16,11 +17,9 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
-import { useAuthActions } from "~/hooks/use-auth-actions";
 import { useIsOnline } from "~/hooks/use-is-online";
-import { redirectSearchSchema } from "~/main";
+import { redirectSearchSchema } from "~/types/types";
 import { ApiException, handleApiResponse } from "~/services/api-service";
-
 type ProfileUpdateResponse = {
   status: string;
   data: ProfileUpdateData;
@@ -51,7 +50,6 @@ function RouteComponent() {
   const profile = userProfileData.profile;
   const { redirectURL } = Route.useRouteContext();
   const { redirect: searchRedirect } = Route.useSearch();
-  const { logout, refreshAuth } = useAuthActions();
 
   const navigate = Route.useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -130,8 +128,7 @@ function RouteComponent() {
       setAvatarToDelete(false);
       setSavedData(updatedData);
 
-      // Centralized global cache and router flush
-      await refreshAuth();
+      await refreshProfile();
       toast.success("Profile updated successfully");
 
       // Redirect if redirect parameter is present and is a valid string
@@ -272,9 +269,12 @@ function RouteComponent() {
           saving={saving}
           hasChanges={hasChanges()}
           onSave={handleSaveProfile}
-          onLogout={() =>
-            logout(typeof redirectURL === "string" ? redirectURL : "/")
-          }
+          onLogout={async () => {
+            await logoutUser();
+            navigate({
+              to: typeof redirectURL === "string" ? redirectURL : "/",
+            });
+          }}
         />
       </div>
     </div>

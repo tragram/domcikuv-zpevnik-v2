@@ -10,8 +10,7 @@ import { AuthHeader } from "~/components/AuthHeader";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { useAuthActions } from "~/hooks/use-auth-actions";
-import { redirectSearchSchema } from "~/main";
+import { redirectSearchSchema } from "~/types/types";
 
 export const Route = createFileRoute("/(auth)/signup")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
@@ -20,7 +19,6 @@ export const Route = createFileRoute("/(auth)/signup")({
 
 function SignupForm() {
   const { redirectURL } = Route.useRouteContext();
-  const { refreshAuth } = useAuthActions();
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -59,9 +57,6 @@ function SignupForm() {
           setIsLoading(false);
         },
         onSuccess: async () => {
-          // 1. Flush the cache and rebuild songDB via refreshAuth
-          await refreshAuth();
-          // 2. Navigate to the intended destination
           navigate({ to: redirectURL });
         },
       },
@@ -158,7 +153,6 @@ function SignupForm() {
                       setErrorMessage("");
                     },
                     onSuccess: async () => {
-                      await refreshAuth(); // Ensure social login also flushes cache
                       navigate({ to: redirectURL });
                     },
                     onError: (ctx) => {
@@ -199,7 +193,6 @@ function SignupForm() {
                       setErrorMessage("");
                     },
                     onSuccess: async () => {
-                      await refreshAuth();
                       navigate({ to: redirectURL });
                     },
                     onError: (ctx) => {

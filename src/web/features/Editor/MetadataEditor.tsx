@@ -3,16 +3,16 @@ import { UserProfileData } from "src/worker/api/userProfile";
 import SelectOrEditList from "~/components/SelectOrEditList";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
+import { useSongDB } from "~/hooks/use-songDB";
 import { cn } from "~/lib/utils";
-import { EditorState, SongDB } from "~/types/types";
+import { EditorState } from "~/types/types";
 import { guessKey } from "../SongView/utils/songRendering";
 import MetadataField from "./components/MetadataField";
-import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
 import SmartFeatures from "./components/SmartFeatures"; // <-- Import the new component
 import type { EvaluatedFeature, SmartFeature } from "./Editor";
+import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
 
 interface MetadataEditorProps {
-  songDB: SongDB;
   defaultMetadata: EditorState;
   metadata: EditorState;
   extractedMetadata: Partial<EditorState>;
@@ -28,7 +28,6 @@ interface MetadataEditorProps {
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({
-  songDB,
   defaultMetadata,
   metadata,
   extractedMetadata,
@@ -42,6 +41,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   isProcessing,
   onExecuteFeature,
 }) => {
+  const { songDB } = useSongDB();
   return (
     <div className="main-container space-y-4">
       {/* Metadata Fields */}

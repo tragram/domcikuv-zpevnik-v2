@@ -26,6 +26,7 @@ import { guessKey } from "../SongView/utils/songRendering";
 import { czechToEnglish } from "../SongView/utils/preparseChordpro";
 import { convertChordNotation } from "~/lib/utils";
 import ChordSheetJS from "chordsheetjs";
+import { useUserProfile } from "~/hooks/use-user-profile";
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -204,22 +205,13 @@ const SMART_FEATURES: SmartFeature[] = [
 ];
 
 interface EditorProps {
-  songDB: SongDB;
   songData?: SongData;
-  user: UserProfileData;
   versionId?: string;
-  editorAPI: EditorAPI;
 }
 
-const Editor: React.FC<EditorProps> = ({
-  songDB,
-  songData,
-  user,
-  versionId,
-  editorAPI,
-}) => {
+const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const contentEditorRef = useRef<ContentEditorRef>(null);
-
+  const { userProfile: user } = useUserProfile();
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
     : "editor/state";
@@ -356,7 +348,7 @@ const Editor: React.FC<EditorProps> = ({
         }
       } else if (featureId === "autofill_chords") {
         setIsProcessing(true);
-        newContent = await autofillChordpro(editorState.chordpro, editorAPI);
+        newContent = await autofillChordpro(editorState.chordpro);
 
         if (newContent !== editorState.chordpro) {
           setPendingAutofill({
@@ -475,7 +467,6 @@ const Editor: React.FC<EditorProps> = ({
             className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}
           >
             <MetadataEditor
-              songDB={songDB}
               defaultMetadata={defaultEditorState}
               metadata={editorState}
               extractedMetadata={extractedMetadata}
@@ -495,9 +486,6 @@ const Editor: React.FC<EditorProps> = ({
               ref={contentEditorRef}
               editorContent={editorState.chordpro}
               setEditorContent={updateContent}
-              user={user}
-              songData={songData}
-              editorAPI={editorAPI}
               pendingAutofill={pendingAutofill}
               isProcessing={isProcessing}
               onAcceptAutofill={(editedContent) => {

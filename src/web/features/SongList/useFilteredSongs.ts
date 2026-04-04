@@ -1,4 +1,4 @@
-import type { LanguageCount, SortField, SortOrder } from "~/types/types";
+import type { LanguageCount, Songbook, SortField, SortOrder } from "~/types/types";
 import { SongData, to_ascii } from "~/types/songData";
 import Fuse from "fuse.js";
 import { useEffect, useMemo, useState } from "react";
@@ -7,7 +7,7 @@ import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import { UserProfileData } from "src/worker/api/userProfile";
-import { fetchExternalSearch, Songbook } from "~/services/song-service";
+import { fetchExternalSearch } from "~/services/song-service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 

@@ -9,16 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import {
-  AdminApi,
-  SongWithIllustrationsAndPrompts,
-} from "~/services/song-service";
 import { useIllustrationsTableData } from "../../../../services/admin-hooks";
 import { TableToolbar } from "../shared/table-toolbar";
 import { SongIllustrationsGroup } from "./illustration-group";
 import { SongIllustrationDB } from "src/lib/db/schema";
 import useLocalStorageState from "use-local-storage-state";
 import { Filter, Eye, Layers, AlertCircle } from "lucide-react";
+import { SongWithIllustrationsAndPrompts } from "~/services/illustration-service";
+import { AdminApi } from "src/worker/api-client";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;

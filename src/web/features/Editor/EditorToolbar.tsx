@@ -25,7 +25,6 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { cn } from "~/lib/utils";
-import { useLoggedIn } from "~/lib/utils.frontend";
 import {
   generateSongIllustration,
   submitSongVersion,
@@ -40,8 +39,9 @@ import { EditorSettings } from "./EditorSettings";
 import {
   IMAGE_MODELS_API,
   SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS
+  SUMMARY_PROMPT_VERSIONS,
 } from "src/worker/helpers/image-generator";
+import { useLoggedIn } from "~/hooks/use-user-profile";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -164,12 +164,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     }
 
     try {
-      // TypeScript is now happy because parsedState is recognized as EditorState
-      const response = await submitSongVersion(
-        editorApi,
-        parsedState,
-        songData?.id,
-      );
+      const response = await submitSongVersion(parsedState, songData?.id);
 
       const version = response.version;
       const isUpdate =

@@ -25,5 +25,5 @@
     },
     "types": ["dom-chromium-installation-events", "web-app-manifest"]
   },
-  "include": ["src/web"]
+  "include": ["src/web", "src/lib/query-client.ts"]
 }

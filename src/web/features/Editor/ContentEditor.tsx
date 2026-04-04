@@ -1,24 +1,21 @@
-import React, { useRef, forwardRef, useImperativeHandle } from "react";
-import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import {
-  EditorView,
   Decoration,
+  EditorView,
   MatchDecorator,
   ViewPlugin,
   ViewUpdate,
 } from "@codemirror/view";
-import { UserProfileData } from "src/worker/api/userProfile";
-import { cn } from "~/lib/utils";
+import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import { isConvertibleFormat } from "~/lib/chords2chordpro";
+import { cn } from "~/lib/utils";
 import "./Editor.css";
+import { AutofillReviewPanel } from "./components/AutofillReviewPanel";
 import {
   SnippetButton,
   SnippetButtonSection,
   snippets,
 } from "./components/Snippets";
-import { SongData } from "~/types/songData";
-import { EditorAPI } from "src/worker/api-client";
-import { AutofillReviewPanel } from "./components/AutofillReviewPanel";
 
 // --- CUSTOM CHORDPRO SYNTAX HIGHLIGHTING ---
 // 1. Highlight Chords: e.g. [Am7]
@@ -131,9 +128,6 @@ export interface ContentEditorRef {
 interface ContentEditorProps {
   editorContent: string;
   setEditorContent: (content: string) => void;
-  user: UserProfileData;
-  songData?: SongData;
-  editorAPI: EditorAPI;
   pendingAutofill: { originalContent: string; newContent: string } | null;
   isProcessing: boolean;
   onAcceptAutofill: (editedContent: string) => void;
@@ -145,9 +139,6 @@ const ContentEditor = forwardRef<ContentEditorRef, ContentEditorProps>(
     {
       editorContent,
       setEditorContent,
-      user,
-      songData,
-      editorAPI,
       pendingAutofill,
       isProcessing,
       onAcceptAutofill,

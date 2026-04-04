@@ -4,34 +4,16 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { Toaster } from "sonner";
 import { z } from "zod";
-import type { FileRouteTypes } from "~/routeTree.gen";
 import client, { API } from "../worker/api-client";
 import { ThemeProvider } from "./components/ThemeProvider";
 import "./main.css";
 import { routeTree } from "./routeTree.gen";
-
-// Create the query client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      staleTime: 1000 * 60 * 60, // 1 hour default
-      networkMode: "offlineFirst",
-    },
-  },
-});
+import { queryClient } from "../lib/query-client";
 
 export interface RouterContext {
   queryClient: QueryClient;
   api: API;
 }
-export const redirectSearchSchema = z.object({
-  redirect: z
-    .string()
-    .refine((val) => val.startsWith("/") && !val.startsWith("//")) // Security check
-    .optional()
-    .catch(undefined), // Strip out bad URLs seamlessly
-});
 
 // Create the router
 const router = createRouter({

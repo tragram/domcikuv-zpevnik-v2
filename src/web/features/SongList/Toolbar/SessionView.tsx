@@ -1,8 +1,8 @@
-import { Link, useRouteContext } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
-import { AvatarWithFallback } from "~/components/ui/avatar";
 import { RichItem } from "~/components/RichDropdown";
+import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -16,6 +16,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { useActiveSessions } from "~/hooks/use-active-sessions";
+import { useSongDB } from "~/hooks/use-songDB";
 
 interface SessionViewProps {
   isOnline: boolean;
@@ -24,11 +25,8 @@ interface SessionViewProps {
 const SessionView = ({ isOnline }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
-  const context = useRouteContext({ from: "/" });
-  const { activeSessions, refetchIfStale } = useActiveSessions(
-    context.songDB,
-    context.api,
-  );
+  const { songDB } = useSongDB();
+  const { activeSessions, refetchIfStale } = useActiveSessions(songDB);
 
   useEffect(() => {
     if (!isOpen) return;

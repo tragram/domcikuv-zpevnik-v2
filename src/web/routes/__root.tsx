@@ -1,58 +1,34 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { cacheRestored } from "src/lib/query-client";
 import { CustomError } from "~/components/CustomError";
-import {
-  buildSongDB,
-  fetchPublicSongbooks,
-  fetchSongs,
-} from "~/services/song-service";
-import { RouterContext } from "~/main";
-import { fetchProfile } from "~/services/user-service";
-import { UserProfileData } from "src/worker/api/userProfile";
 import { NotFound } from "~/components/NotFound";
-import { prefetchActiveSessions } from "~/hooks/use-active-sessions";
-import memoizeOne from "memoize-one";
-
-const memoizedBuildSongDB = memoizeOne(buildSongDB);
+import { activeSessionsQueryOptions } from "~/hooks/use-active-sessions";
+import {
+  publicSongbooksQueryOptions,
+  songsQueryOptions,
+} from "~/hooks/use-songDB";
+import { userProfileQueryOptions } from "~/hooks/use-user-profile";
+import { RouterContext } from "~/main";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFound,
   errorComponent: CustomError,
   beforeLoad: async ({ context }) => {
-    const user = await context.queryClient.fetchQuery({
-      queryKey: ["userProfile"],
-      queryFn: () => fetchProfile(context.api),
-      staleTime: Infinity,
-    });
+    await cacheRestored;
 
-    // 2. Fetch dependencies
-    const [songs, publicSongbooks] = await Promise.all([
-      context.queryClient.fetchQuery({
-        queryKey: ["songs"],
-        queryFn: () => fetchSongs(context.api),
-        staleTime: 1000 * 60 * 60 * 24,
-      }),
-      context.queryClient.fetchQuery({
-        queryKey: ["publicSongbooks"],
-        queryFn: () => fetchPublicSongbooks(context.api),
-        staleTime: 1000 * 60 * 60,
-      }),
-    ]);
+    const songsPromise = context.queryClient.prefetchQuery(songsQueryOptions());
 
-    const activeSessions = await prefetchActiveSessions(
-      context.queryClient,
-      context.api,
-    );
-    const favoriteSongIds = user.loggedIn ? user.profile.favoriteSongIds : [];
+    context.queryClient.prefetchQuery(publicSongbooksQueryOptions());
+    context.queryClient.prefetchQuery(userProfileQueryOptions());
+    context.queryClient.prefetchQuery(activeSessionsQueryOptions());
 
-    const songDB = memoizedBuildSongDB(songs, publicSongbooks, favoriteSongIds);
-
-    return {
-      user: user as UserProfileData,
-      songDB,
-      activeSessions,
-    };
+    // only block the route if the user has no songs cached
+    const cachedSongs = context.queryClient.getQueryData(["songs"]);
+    if (!cachedSongs) {
+      await songsPromise;
+    }
   },
   component: () => (
     <>
