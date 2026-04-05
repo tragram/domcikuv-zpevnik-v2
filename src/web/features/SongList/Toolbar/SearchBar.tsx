@@ -15,6 +15,28 @@ export const useQueryStore = create<QueryState>()((set) => ({
   setQuery: (query: string) => set({ query: query }),
 }));
 
+const ClearButton = ({
+  query,
+  onClear,
+}: {
+  query: string;
+  onClear: () => void;
+}) => (
+  <Button
+    type="button"
+    variant="ghost"
+    size="icon"
+    className={cn(
+      "absolute right-1 top-1/2 transition-all duration-300 ease-in-out -translate-y-1/2 h-7 w-7 !bg-transparent !hover:bg-transparent hover:scale-125 hover:text-primary",
+      query ? "scale-100" : "scale-0",
+    )}
+    onClick={onClear}
+  >
+    <XIcon className="h-4 w-4" />
+    <span className="sr-only">Clear</span>
+  </Button>
+);
+
 function SearchBar() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [expandedWidth, setExpandedWidth] = useState(248);
@@ -45,21 +67,6 @@ function SearchBar() {
     setIsExpanded(false);
   };
 
-  const ClearButton = () => (
-    <Button
-      type="button"
-      variant="ghost"
-      size="icon"
-      className={cn(
-        "absolute right-1 top-1/2 transition-all duration-300 ease-in-out -translate-y-1/2 h-7 w-7 !bg-transparent !hover:bg-transparent hover:scale-125 hover:text-primary",
-        query ? "scale-100" : "scale-0",
-      )}
-      onClick={handleClear}
-    >
-      <XIcon className="h-4 w-4" />
-      <span className="sr-only">Clear</span>
-    </Button>
-  );
   return (
     <>
       {/* Mobile Search */}
@@ -113,6 +120,7 @@ function SearchBar() {
             </Button>
             <Input
               ref={mobileInputRef}
+              id="search-mobile"
               onChange={search}
               value={query}
               placeholder="Search..."
@@ -121,7 +129,7 @@ function SearchBar() {
                 query ? "" : "",
               )}
             />
-            <ClearButton />
+            <ClearButton query={query} onClear={handleClear} />
           </div>
         </div>
       </div>
@@ -136,6 +144,7 @@ function SearchBar() {
           onChange={search}
           value={query}
           placeholder="Search..."
+          id="search-desktop"
           className={cn(
             "pl-10 pr-7 text-sm h-[40px] font-medium placeholder:font-normal border-none rounded-full peer dark:bg-background focus:bg-background text-primary placeholder:text-primary dark:placeholder:text-primary/30",
             query
@@ -143,7 +152,7 @@ function SearchBar() {
               : "bg-white dark:bg-background",
           )}
         />
-        <ClearButton />
+        <ClearButton query={query} onClear={handleClear} />
         <div
           className={cn(
             "absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none peer-focus:scale-110 peer-focus:text-primary duration-300 ease-in-out transform",
