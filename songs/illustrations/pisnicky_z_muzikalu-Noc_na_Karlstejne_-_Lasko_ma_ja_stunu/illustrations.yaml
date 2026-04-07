@@ -1,0 +1,22 @@
+songId: pisnicky_z_muzikalu-Noc_na_Karlstejne_-_Lasko_ma_ja_stunu
+prompts:
+  - id: pisnicky_z_muzikalu-Noc_na_Karlstejne_-_Lasko_ma_ja_stunu_gpt-5-mini_v4
+    songId: pisnicky_z_muzikalu-Noc_na_Karlstejne_-_Lasko_ma_ja_stunu
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Moody, romantic oil-painting style, medium-close scene: a sleepless person
+      sitting on the edge of a simple bed by a moonlit window, haunted
+      expression; a ghostly regal man (the king) stands beside the bed, slightly
+      translucent, offering a small golden crown and gazing with longing and
+      resignation. Minimal background — faint cathedral silhouette through the
+      window. Muted midnight blues with warm gold accents, strong clear
+      silhouettes, soft painterly brushstrokes, cinematic lighting, high
+      contrast for good readability at small sizes. No text.
+    createdAt: 2026-04-06T10:39:20.000Z
+    updatedAt: 2026-04-06T10:39:20.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1775471975000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
