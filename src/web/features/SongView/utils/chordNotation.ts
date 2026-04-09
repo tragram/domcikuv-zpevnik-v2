@@ -1,4 +1,4 @@
-import { convertChordNotation } from "~/lib/utils";
+import { convertChordNotation } from "src/lib/utils";
 
 /**
  * Musical repetition symbols

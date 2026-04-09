@@ -1,8 +1,8 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Camera, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
-import { refreshProfile, logoutUser } from "src/lib/auth/client";
+import { logoutUser } from "src/lib/auth/client";
 import { ProfileUpdateData, UserProfileData } from "src/worker/api/userProfile";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
@@ -26,40 +26,54 @@ type ProfileUpdateResponse = {
   imageUrl?: string;
 };
 
+import { authClient } from "src/lib/auth/client";
+import { getUserData } from "src/web/hooks/use-user-data";
+
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,
   validateSearch: (search) => redirectSearchSchema.parse(search),
   loader: async ({ context }) => {
-    const userProfileData = context.queryClient.getQueryData([
-      "userProfile",
-    ]) as UserProfileData;
-    if (!userProfileData?.loggedIn) {
+    // Rely exclusively on better-auth for truth rather than the react-query cache
+    const sessionResponse = await authClient.getSession();
+
+    if (!sessionResponse.data?.user) {
       throw redirect({
         to: "/login",
         search: { redirect: context.redirectURL },
       });
     }
+
     return {
-      userProfileData,
+      userProfileData: {
+        loggedIn: true,
+        profile: sessionResponse.data
+          .user as unknown as UserProfileData["profile"],
+      },
     };
   },
 });
 
 function RouteComponent() {
   const { userProfileData } = Route.useLoaderData();
+
+  if (!userProfileData.loggedIn || !userProfileData.profile) {
+    throw new Error("Invalid state - should have been caught by loader");
+  }
+
   const profile = userProfileData.profile;
   const { redirectURL } = Route.useRouteContext();
   const { redirect: searchRedirect } = Route.useSearch();
 
   const navigate = Route.useNavigate();
+  const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Create initial state object matching userProfile structure
   const initialState = {
     name: profile.name,
-    nickname: profile?.nickname || "",
+    nickname: profile.nickname || "",
     email: profile.email,
-    image: profile?.image || null,
+    image: profile.image || null,
     isFavoritesPublic: profile.isFavoritesPublic,
   };
 
@@ -128,7 +142,8 @@ function RouteComponent() {
       setAvatarToDelete(false);
       setSavedData(updatedData);
 
-      await refreshProfile();
+      // TODO: will this work?
+      await getUserData();
       toast.success("Profile updated successfully");
 
       // Redirect if redirect parameter is present and is a valid string
@@ -273,7 +288,7 @@ function RouteComponent() {
             await logoutUser();
             navigate({
               to: typeof redirectURL === "string" ? redirectURL : "/",
-            });
+            }).then(() => router.invalidate());
           }}
         />
       </div>

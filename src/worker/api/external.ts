@@ -1,6 +1,5 @@
 import ChordSheetJS from "chordsheetjs";
 import { convertToChordPro } from "~/lib/chords2chordpro";
-import { guessLanguage } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import {
   externalSearchResultSchema,
@@ -27,6 +26,7 @@ import {
   zValidatorJSend,
 } from "./responses";
 import { buildApp } from "./utils";
+import { guessLanguage } from "src/lib/utils";
 
 export const externalRoutes = buildApp()
   .get("/search", async (c) => {

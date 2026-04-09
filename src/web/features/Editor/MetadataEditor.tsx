@@ -11,6 +11,7 @@ import MetadataField from "./components/MetadataField";
 import SmartFeatures from "./components/SmartFeatures"; // <-- Import the new component
 import type { EvaluatedFeature, SmartFeature } from "./Editor";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
+import { useUserData } from "src/web/hooks/use-user-data";
 
 interface MetadataEditorProps {
   defaultMetadata: EditorState;
@@ -35,13 +36,15 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   updateMetadata,
   editorSettings,
   onSettingsChange,
+  // TODO: duplicate user vs useUserData
   user,
   hasIllustration = false,
   features,
   isProcessing,
   onExecuteFeature,
 }) => {
-  const { songDB } = useSongDB();
+  const { favorites, submissions, userProfile } = useUserData();
+  const { songDB } = useSongDB(userProfile, favorites, submissions);
   return (
     <div className="main-container space-y-4">
       {/* Metadata Fields */}

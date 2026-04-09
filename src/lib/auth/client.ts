@@ -1,61 +1,28 @@
 import { createAuthClient } from "better-auth/react";
 import { queryClient } from "../query-client";
+import type { User, Session } from "better-auth";
 
-const authClient = createAuthClient({});
-
-export async function refreshAuth() {
-  // after login
-  await Promise.all([
-    queryClient.invalidateQueries({ queryKey: ["userProfile"] }),
-    queryClient.invalidateQueries({ queryKey: ["songs"] }),
-    queryClient.invalidateQueries({ queryKey: ["songs-meta"] }),
-  ]);
+export interface AppUser extends User {
+  nickname?: string | null;
+  isFavoritesPublic?: boolean | null;
+  isAdmin?: boolean | null;
+  isTrusted?: boolean | null;
 }
 
-export async function refreshProfile() {
-  // after changes to profile
-  await Promise.all([
-    queryClient.invalidateQueries({ queryKey: ["userProfile"] }),
-  ]);
+export interface StandardAuthResponse {
+  user: AppUser;
+  session: Session;
 }
 
 export async function logoutUser() {
   await authClient.signOut();
 
-  await Promise.all([
-    queryClient.resetQueries({ queryKey: ["userProfile"] }),
-    queryClient.resetQueries({ queryKey: ["songs"] }),
-    queryClient.resetQueries({ queryKey: ["songs-meta"] }),
-  ]);
+  queryClient.removeQueries({ queryKey: ["favorites"] });
+  queryClient.removeQueries({ queryKey: ["submissions"] });
+
+  queryClient.setQueryData(["session"], null);
 }
 
-// a wrapper to intercept Better Auth methods
-const withRefreshAuth = <T extends object>(authModule: T): T => {
-  return new Proxy(authModule, {
-    get(target, prop) {
-      const originalMethod = (target as any)[prop];
+export const authClient = createAuthClient();
 
-      if (typeof originalMethod === "function") {
-        return async (...args: any[]) => {
-          // Call the original better-auth method (e.g., signIn.email)
-          const result = await originalMethod(...args);
-
-          // Better Auth returns { data, error } pattern.
-          // If the request was successful, trigger the refresh.
-          if (result && !result.error) {
-            await refreshAuth();
-          }
-
-          return result;
-        };
-      }
-
-      return originalMethod;
-    },
-  });
-};
-
-export const signIn = withRefreshAuth(authClient.signIn);
-export const signUp = withRefreshAuth(authClient.signUp);
-
-export const { useSession, deleteUser } = authClient;
+export const { signIn, signUp, useSession, deleteUser } = authClient;

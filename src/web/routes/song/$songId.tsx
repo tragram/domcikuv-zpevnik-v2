@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
+import { useUserData } from "src/web/hooks/use-user-data";
 import { z } from "zod";
 import PendingComponent from "~/components/PendingComponent";
 import SongView from "~/features/SongView/SongView";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore";
-import { useUserProfile } from "~/hooks/use-user-profile";
 import songLoader, { SongLoaderErrorComponent } from "~/services/song-loader";
 
 const songSearchSchema = z.object({
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/song/$songId")({
 
 function RouteComponent() {
   const { songData, songId, versionId } = Route.useLoaderData();
-  const { userProfile: user } = useUserProfile();
+  const { favorites, submissions, userProfile: user } = useUserData();
   const shareSession = useViewSettingsStore((state) => state.shareSession);
   const transposeSteps = useViewSettingsStore(
     (state) => state.transpositions[songId] || 0,

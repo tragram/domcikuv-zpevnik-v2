@@ -1,21 +1,34 @@
+import { useRouteContext } from "@tanstack/react-router";
+import { useWindowVirtualizer } from "@tanstack/react-virtual";
+import { Globe, RefreshCw, Search } from "lucide-react";
 import { useRef } from "react";
-import { SongDB } from "~/types/types";
+import { UserProfileData } from "src/worker/api/userProfile";
 import useLocalStorageState from "use-local-storage-state";
+import { Button } from "~/components/ui/button";
 import "~/features/SongList/SongList.css";
+import { useScrollDirection } from "~/hooks/use-scroll-direction";
+import { SongDB } from "~/types/types";
+import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import SongRow from "./SongRow";
 import Toolbar from "./Toolbar/Toolbar";
 import { useFilteredSongs } from "./useFilteredSongs";
-import { useWindowVirtualizer } from "@tanstack/react-virtual";
-import { UserProfileData } from "src/worker/api/userProfile";
-import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
-import { Button } from "~/components/ui/button";
-import { Globe, Search } from "lucide-react";
-import { useScrollDirection } from "~/hooks/use-scroll-direction";
-import { useRouteContext } from "@tanstack/react-router";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
-function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
+function SongList({
+  songDB,
+  songDBSyncing,
+  user,
+}: {
+  songDB: SongDB;
+  songDBSyncing: boolean;
+  user: UserProfileData;
+}) {
+  const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
+    SCROLL_OFFSET_KEY,
+    { defaultValue: 0, storageSync: false },
+  );
+
   const {
     songs,
     externalSongs,
@@ -28,10 +41,7 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
   const { resetFilters } = useFilterSettingsStore();
   const isToolbarVisible = useScrollDirection();
   const favoritesApi = useRouteContext({ from: "/" }).api.favorites;
-  const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
-    SCROLL_OFFSET_KEY,
-    { defaultValue: 0, storageSync: false },
-  );
+
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const virtualizer = useWindowVirtualizer({
@@ -47,7 +57,7 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
     },
   });
 
-  // --- Derived State for Cleaner JSX Rendering ---
+  // --- Derived State ---
   const hasInternalResults = songs.length > 0;
   const hasExternalResults = externalSongs.length > 0;
 
@@ -100,12 +110,36 @@ function SongList({ songDB, user }: { songDB: SongDB; user: UserProfileData }) {
   );
 
   return (
-    <div className="no-scrollbar w-full">
+    <div className="no-scrollbar w-full relative">
       <Toolbar
         isAdmin={user.loggedIn && user.profile.isAdmin}
         songDB={songDB}
         isVisible={isToolbarVisible}
+        // isSyncing removed from Toolbar
       />
+
+      {/* Floating "Updates Available" Pill */}
+      {/* {hasPendingUpdates && scrollOffset > 0 && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-top-4 fade-in">
+          <Button
+            onClick={() => {
+              setDisplayedSongs(songDB.songs);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="rounded-full shadow-lg gap-2"
+          >
+            <ArrowUp className="w-4 h-4" />
+            New updates available
+          </Button>
+        </div>
+      )} */}
+
+      {/* Floating Bottom-Right Sync Bubble */}
+      {songDBSyncing && (
+        <div className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-background border shadow-lg animate-in fade-in slide-in-from-bottom-4 primary">
+          <RefreshCw className="h-5 w-5 animate-spin text-primary" />
+        </div>
+      )}
 
       <div className="pt-[72px] sm:pt-20 pb-2">
         {/* SECTION 1: Internal Songs */}

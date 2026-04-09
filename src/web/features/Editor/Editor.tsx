@@ -1,32 +1,30 @@
+import ChordSheetJS from "chordsheetjs";
+import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { UserProfileData } from "src/worker/api/userProfile";
-import useLocalStorageState from "use-local-storage-state";
 import {
-  parseChordPro,
   normalizeWhitespace,
+  parseChordPro,
   replaceRepetitions,
 } from "src/lib/chordpro";
+import { convertChordNotation } from "src/lib/utils";
+import { useUserData } from "src/web/hooks/use-user-data";
+import { UserProfileData } from "src/worker/api/userProfile";
+import useLocalStorageState from "use-local-storage-state";
+import { convertToChordPro } from "~/lib/chords2chordpro";
 import { cn } from "~/lib/utils";
+import { autofillChordpro } from "~/services/editor-service";
 import { SongData } from "~/types/songData";
-import { EditorState, SongDB } from "~/types/types";
+import { EditorState } from "~/types/types";
 import "../SongView/SongView.css";
+import { guessKey } from "../SongView/utils/songRendering";
 import CollapsibleMainArea from "./components/CollapsibleMainArea";
+import { useEditorValidation } from "./components/use-editor-validation";
 import ContentEditor, { ContentEditorRef } from "./ContentEditor";
 import "./Editor.css";
+import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
 import EditorToolbar from "./EditorToolbar";
 import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
-import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
-import { EditorAPI } from "src/worker/api-client";
-import { useEditorValidation } from "./components/use-editor-validation";
-import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
-import { autofillChordpro } from "~/services/editor-service";
-import { convertToChordPro } from "~/lib/chords2chordpro";
-import { guessKey } from "../SongView/utils/songRendering";
-import { czechToEnglish } from "../SongView/utils/preparseChordpro";
-import { convertChordNotation } from "~/lib/utils";
-import ChordSheetJS from "chordsheetjs";
-import { useUserProfile } from "~/hooks/use-user-profile";
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -211,7 +209,7 @@ interface EditorProps {
 
 const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const contentEditorRef = useRef<ContentEditorRef>(null);
-  const { userProfile: user } = useUserProfile();
+  const { userProfile: user } = useUserData();
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
     : "editor/state";

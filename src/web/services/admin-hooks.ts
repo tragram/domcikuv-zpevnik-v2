@@ -52,6 +52,8 @@ import {
   songsWithIllustrationsAndPrompts,
 } from "./illustration-service";
 
+// TODO: this potentially also needs to invalidate the newly added submissions etc...
+
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({
     queryKey: ["songsAdmin"],

@@ -1,7 +1,8 @@
 import {
   createFileRoute,
   Link,
-  useNavigate
+  useNavigate,
+  useRouter,
 } from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
@@ -20,11 +21,14 @@ export const Route = createFileRoute("/(auth)/signup")({
 function SignupForm() {
   const { redirectURL } = Route.useRouteContext();
   const navigate = useNavigate();
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined,
+  );
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLoading) return;
 
@@ -44,23 +48,20 @@ function SignupForm() {
     setIsLoading(true);
     setErrorMessage("");
 
-    signUp.email(
-      {
-        name,
-        email,
-        password,
-        callbackURL: redirectURL,
-      },
-      {
-        onError: (ctx) => {
-          setErrorMessage(ctx.error.message);
-          setIsLoading(false);
-        },
-        onSuccess: async () => {
-          navigate({ to: redirectURL });
-        },
-      },
-    );
+    const { error } = await signUp.email({
+      name,
+      email,
+      password,
+      callbackURL: typeof redirectURL === "string" ? redirectURL : "/",
+    });
+
+    if (error) {
+      setErrorMessage(error.message);
+      setIsLoading(false);
+    } else {
+      await router.invalidate();
+      navigate({ to: typeof redirectURL === "string" ? redirectURL : "/" });
+    }
   };
 
   return (
@@ -119,7 +120,7 @@ function SignupForm() {
               size="lg"
               disabled={isLoading}
             >
-              {isLoading && <LoaderCircle className="animate-spin" />}
+              {isLoading && <LoaderCircle className="animate-spin mr-2" />}
               {isLoading ? "Signing up..." : "Sign up"}
             </Button>
           </div>
@@ -141,27 +142,19 @@ function SignupForm() {
               className="w-full"
               type="button"
               disabled={isLoading}
-              onClick={() =>
-                signIn.social(
-                  {
-                    provider: "github",
-                    callbackURL: redirectURL,
-                  },
-                  {
-                    onRequest: () => {
-                      setIsLoading(true);
-                      setErrorMessage("");
-                    },
-                    onSuccess: async () => {
-                      navigate({ to: redirectURL });
-                    },
-                    onError: (ctx) => {
-                      setIsLoading(false);
-                      setErrorMessage(ctx.error.message);
-                    },
-                  },
-                )
-              }
+              onClick={async () => {
+                setIsLoading(true);
+                setErrorMessage("");
+                const { error } = await signIn.social({
+                  provider: "github",
+                  callbackURL:
+                    typeof redirectURL === "string" ? redirectURL : "/",
+                });
+                if (error) {
+                  setIsLoading(false);
+                  setErrorMessage(error.message);
+                }
+              }}
             >
               {/* GitHub SVG Icon */}
               <svg
@@ -181,27 +174,19 @@ function SignupForm() {
               className="w-full"
               type="button"
               disabled={isLoading}
-              onClick={() =>
-                signIn.social(
-                  {
-                    provider: "google",
-                    callbackURL: redirectURL,
-                  },
-                  {
-                    onRequest: () => {
-                      setIsLoading(true);
-                      setErrorMessage("");
-                    },
-                    onSuccess: async () => {
-                      navigate({ to: redirectURL });
-                    },
-                    onError: (ctx) => {
-                      setIsLoading(false);
-                      setErrorMessage(ctx.error.message);
-                    },
-                  },
-                )
-              }
+              onClick={async () => {
+                setIsLoading(true);
+                setErrorMessage("");
+                const { error } = await signIn.social({
+                  provider: "google",
+                  callbackURL:
+                    typeof redirectURL === "string" ? redirectURL : "/",
+                });
+                if (error) {
+                  setIsLoading(false);
+                  setErrorMessage(error.message);
+                }
+              }}
             >
               {/* Google SVG Icon */}
               <svg

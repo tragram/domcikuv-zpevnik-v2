@@ -1,9 +1,21 @@
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import * as React from "react";
+import { cn } from "../../lib/utils";
 
-import { cn } from "~/lib/utils";
-
-import { getInitials } from "~/lib/utils";
+export const getInitials = (name: string) => {
+  if (!name) {
+    return "?";
+  }
+  const splitName = name.split(" ");
+  if (splitName.length > 1) {
+    return splitName
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  }
+  return name.slice(0, 2).toUpperCase();
+};
 
 function Avatar({
   className,

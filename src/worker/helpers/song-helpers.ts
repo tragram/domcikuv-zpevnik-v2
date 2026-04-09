@@ -17,6 +17,7 @@ import {
   songImport,
   SongImportDB,
   songVersion,
+  SongVersionDB,
   user,
   userFavoriteSongs,
 } from "src/lib/db/schema";
@@ -40,7 +41,6 @@ export type PopulatedSongDB = BuildQueryResult<
 // --- DTO Mapper ---
 const transformSongToApi = (
   songItem: PopulatedSongDB & { favorites?: { userId: string }[] },
-  userId?: string,
   updatedSince?: Date,
 ): SongDataApi => {
   const version = songItem.currentVersion;
@@ -79,9 +79,6 @@ const transformSongToApi = (
         }
       : undefined,
 
-    isFavoriteByCurrentUser:
-      !!userId && !!songItem.favorites?.some((fav) => fav.userId === userId),
-
     updateStatus: updatedSince
       ? songItem.deleted
         ? "deleted"
@@ -96,7 +93,6 @@ const transformSongToApi = (
 
 export async function retrieveSongs(
   db: AppDatabase,
-  userId?: string,
   updatedSince?: Date,
   includeHidden = false,
   includeDeleted = false,
@@ -132,19 +128,15 @@ export async function retrieveSongs(
         with: { songImport: true },
       },
       currentIllustration: true,
-      ...(userId && {
-        favorites: { where: eq(userFavoriteSongs.userId, userId), limit: 1 },
-      }),
     },
   });
-  return songsRaw.map((s) => transformSongToApi(s, userId, updatedSince));
+  return songsRaw.map((s) => transformSongToApi(s, updatedSince));
 }
 
 export const retrieveSingleSong = async (
   db: AppDatabase,
   songId: string,
   versionId?: string,
-  userId?: string,
 ): Promise<SongDataApi | null> => {
   const songRaw = await db.query.song.findFirst({
     where: eq(song.id, songId),
@@ -153,9 +145,6 @@ export const retrieveSingleSong = async (
         with: { songImport: true },
       },
       currentIllustration: true,
-      ...(userId && {
-        favorites: { where: eq(userFavoriteSongs.userId, userId), limit: 1 },
-      }),
     },
   });
 
@@ -171,7 +160,7 @@ export const retrieveSingleSong = async (
     }
   }
 
-  return transformSongToApi(songRaw, userId);
+  return transformSongToApi(songRaw);
 };
 
 export const getSongBase = async (
@@ -244,7 +233,7 @@ export async function getSongbooks(db: AppDatabase) {
 export const getSongVersionsByUser = async (
   db: AppDatabase,
   userId: string,
-) => {
+): Promise<SongVersionDB[]> => {
   return await db.query.songVersion.findMany({
     where: eq(songVersion.userId, userId),
     orderBy: [desc(songVersion.createdAt)],
@@ -252,7 +241,6 @@ export const getSongVersionsByUser = async (
 };
 
 // --- Mutations ---
-
 export const createSong = async (
   db: AppDatabase,
   submission: EditorSubmitSchema,
@@ -299,7 +287,6 @@ export const createSongVersion = async (
 ) => {
   const existingSong = await getSongBase(db, songId);
   if (existingSong.hidden || existingSong.deleted) {
-    console.log(existingSong);
     // ensure the song won't be hidden after this new version, at least after the suggested version is accepted
     await db
       .update(song)

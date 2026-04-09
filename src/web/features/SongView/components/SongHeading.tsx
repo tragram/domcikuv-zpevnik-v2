@@ -135,6 +135,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
         {user?.loggedIn && favoritesApi && (
           <FavoriteButton
             song={songData}
+            userId={user.profile.id}
             favoritesApi={favoritesApi}
             iconClassName={cn(
               "size-[2em] stroke-[1.5]",

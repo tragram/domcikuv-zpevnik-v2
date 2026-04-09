@@ -64,7 +64,7 @@ export class SongData {
   currentIllustration: CurrentIllustrationApi | undefined;
   isFavorite: boolean;
 
-  constructor(songFromDB: SongDataApi) {
+  constructor(songFromDB: SongDataApi & { isFavoriteByCurrentUser?: boolean }) {
     this.id = songFromDB.id;
     this.title = songFromDB.title;
     this.artist = songFromDB.artist;
@@ -83,7 +83,7 @@ export class SongData {
     this.externalSource = songFromDB.externalSource;
 
     this.currentIllustration = songFromDB.currentIllustration;
-    this.isFavorite = songFromDB.isFavoriteByCurrentUser;
+    this.isFavorite = songFromDB.isFavoriteByCurrentUser ?? false;
   }
 
   static fromEditor(data: EditorState): SongData {

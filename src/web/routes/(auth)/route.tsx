@@ -6,9 +6,9 @@ import {
 } from "@tanstack/react-router";
 import { CloudUpload, Home, Shield } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { loadUserProfile } from "~/hooks/use-user-profile";
 import { cn } from "~/lib/utils";
 import { redirectSearchSchema } from "~/types/types";
+import { getUserData } from "src/web/hooks/use-user-data";
 
 const PROFILE_URL = "/profile";
 const LOGIN_URL = "/login";
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/(auth)")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
   component: RouteComponent,
   beforeLoad: async ({ context, location, search }) => {
-    const user = await loadUserProfile();
+    const user = await getUserData();
     // Get the redirect URL from validated search params or default to "/"
     const redirectURL = search.redirect || "/";
 

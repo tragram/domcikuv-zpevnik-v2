@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { useUserData } from "src/web/hooks/use-user-data";
 import { API } from "src/worker/api-client";
 import { UserProfileData } from "src/worker/api/userProfile";
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
-import { useUserProfile } from "~/hooks/use-user-profile";
 import { handleApiResponse } from "~/services/api-service";
 import { fetchFeed } from "~/services/song-service";
 import { SongData } from "~/types/songData";
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/feed/$masterNickname")({
 function RouteComponent() {
   const { liveState, masterNickname, api } = Route.useLoaderData();
 
-  const { userProfile: user } = useUserProfile();
+  const { userProfile: user } = useUserData();
   return (
     <FeedView
       masterNickname={masterNickname}

@@ -1,6 +1,6 @@
 // Converts song text with chord lines (Ultimate Guitar, pisnicky-akordy.cz...) into ChordPro format
 
-import { convertChordNotation } from "./utils";
+import { convertChordNotation } from "../../lib/utils";
 
 interface Token {
   text: string;

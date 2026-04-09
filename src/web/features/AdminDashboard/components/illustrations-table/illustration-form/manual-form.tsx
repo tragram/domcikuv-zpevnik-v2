@@ -31,8 +31,6 @@ export function ManualForm({
   onSuccess,
   songPrompts,
 }: ManualFormProps) {
-  console.log(illustration);
-
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
 

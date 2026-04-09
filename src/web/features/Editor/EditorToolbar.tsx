@@ -41,7 +41,6 @@ import {
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "src/worker/helpers/image-generator";
-import { useLoggedIn } from "~/hooks/use-user-profile";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -88,7 +87,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   songData,
   toolbarTop,
   canBeSubmitted,
-  validationErrors, // <-- Destructured here
+  validationErrors,
   onBackupAndInitialize,
   onLoadBackup,
   onSubmitSuccess,
@@ -98,9 +97,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const loggedIn = useLoggedIn();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const editorApi = useRouteContext({ from: "/edit" }).api.editor;
   const queryClient = useQueryClient();
 
   const handleLoginRedirect = () => {
@@ -224,7 +221,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
             Home
           </Link>
         </Button>
-        {!loggedIn ? (
+        {!user.loggedIn ? (
           <Button
             className="hover:text-white bg-transparent"
             onClick={handleLoginRedirect}

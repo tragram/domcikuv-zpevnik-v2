@@ -1,14 +1,14 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { Toaster } from "sonner";
-import { z } from "zod";
+import { queryClient, queryPersister } from "../lib/query-client";
 import client, { API } from "../worker/api-client";
 import { ThemeProvider } from "./components/ThemeProvider";
 import "./main.css";
 import { routeTree } from "./routeTree.gen";
-import { queryClient } from "../lib/query-client";
 
 export interface RouterContext {
   queryClient: QueryClient;
@@ -22,8 +22,8 @@ const router = createRouter({
     queryClient,
     api: client.api,
   } as RouterContext,
-  defaultPreload: "intent",
-  defaultPreloadStaleTime: 0,
+  // defaultPreload: "intent",
+  // defaultPreloadStaleTime: 0,
   scrollRestoration: false,
 });
 
@@ -40,12 +40,15 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister: queryPersister }}
+      >
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Toaster />
           <RouterProvider router={router} />
         </ThemeProvider>
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </StrictMode>,
   );
 }

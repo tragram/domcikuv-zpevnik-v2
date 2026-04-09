@@ -20,6 +20,7 @@ import {
 } from "~/types/types";
 import { makeApiRequest } from "./api-service";
 import { queryClient } from "src/lib/query-client";
+import { UserProfileData } from "src/worker/api/userProfile";
 
 interface Timestamped {
   createdAt?: Date | string;
@@ -32,8 +33,16 @@ export const parseDBDates = <T extends Timestamped>(o: T) => {
     ...o,
     createdAt: o.createdAt ? new Date(o.createdAt) : undefined,
     updatedAt: o.updatedAt ? new Date(o.updatedAt) : undefined,
-    approvedAt: o.approvedAt ? new Date(o.approvedAt) : null,
-    lastLogin: o.lastLogin ? new Date(o.lastLogin) : null,
+    approvedAt: o.approvedAt
+      ? new Date(o.approvedAt)
+      : o.approvedAt === null
+        ? null
+        : undefined,
+    lastLogin: o.lastLogin
+      ? new Date(o.lastLogin)
+      : o.lastLogin === null
+        ? null
+        : undefined,
   };
 };
 
@@ -41,7 +50,6 @@ export const parseDBDates = <T extends Timestamped>(o: T) => {
 export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
   // 1. Get current cached state from TanStack/IndexedDB
   const cached = queryClient.getQueryData<SongDataApi[]>(["songs"]);
-
   const meta = queryClient.getQueryData<{
     version: string;
     lastUpdate: string;
@@ -67,7 +75,6 @@ export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
         query: { songDBVersion: meta.version, lastUpdateAt: meta.lastUpdate },
       }),
     );
-    console.log(data);
     // 4. Handle Full Reset (isIncremental: false)
     if (!data.isIncremental) {
       queryClient.setQueryData(["songs-meta"], {
@@ -299,7 +306,9 @@ export const resetVersionDB = async (adminApi: AdminApi) => {
 export const buildSongDB = (
   songs: SongDataApi[],
   songbooks: Songbook[],
+  userProfile?: UserProfileData,
   userFavoriteSongIds?: Set<string> | string[],
+  userSubmissions?: SongVersionDB[],
 ): SongDB => {
   const favoritesSet =
     userFavoriteSongIds instanceof Set
@@ -312,6 +321,28 @@ export const buildSongDB = (
       isFavoriteByCurrentUser: favoritesSet.has(d.id),
     }))
     .map((enriched) => new SongData(enriched));
+
+  const pendingSubmissions = userSubmissions;
+  // TODO: overwrite songIds that have
+  // needs to have versionId synced to users so we can track which have been overwritten, because
+  // follow-up TODO: this needs to be reflected in song syncing
+
+  if (
+    userProfile?.loggedIn &&
+    userFavoriteSongIds &&
+    !songbooks.map((s) => s.user).includes(userProfile.profile.id)
+  ) {
+    const user = userProfile.profile;
+    songbooks = [
+      ...songbooks,
+      {
+        user: user.id,
+        image: user.image ?? "",
+        name: user.nickname ?? "Yours",
+        songIds: favoritesSet,
+      },
+    ];
+  }
 
   const languages: LanguageCount = songDatas.reduce((acc: LanguageCount, s) => {
     // map languages without paired flags to "other"

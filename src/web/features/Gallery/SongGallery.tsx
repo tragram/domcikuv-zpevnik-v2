@@ -28,7 +28,7 @@ function CardThatHides({ song }: { song: SongData }) {
   const [hidden, setHidden] = useState(false);
   const [showingContent, setShowingContent] = useState(false);
   const onError = () => {
-    console.log("Error showing image in gallery!");
+    console.error("Error showing image in gallery!");
     setHidden(true);
   };
   const [overlayOpacity, setOverlayOpacity] = useState(0);

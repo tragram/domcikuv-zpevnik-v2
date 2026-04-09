@@ -1,15 +1,14 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import AdminDashboard from "~/features/AdminDashboard/AdminDashboard";
+import { getUserData } from "src/web/hooks/use-user-data";
 import { z } from "zod";
-import { queryClient } from "src/lib/query-client";
-import { userProfileQueryOptions } from "~/hooks/use-user-profile";
+import AdminDashboard from "~/features/AdminDashboard/AdminDashboard";
 export const Route = createFileRoute("/admin")({
   validateSearch: z.object({
     tab: z.string().optional(),
   }),
   component: Home,
   beforeLoad: async ({ context }) => {
-    const user = await queryClient.ensureQueryData(userProfileQueryOptions());
+    const user = await getUserData();
     if (user.loggedIn && user.profile.isAdmin) {
       return context;
     } else {

@@ -19,11 +19,12 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": ".",
+    "types": ["dom-chromium-installation-events", "web-app-manifest"],
     "paths": {
-      "~/*": ["./src/web/*"]
-    },
-    "types": ["dom-chromium-installation-events", "web-app-manifest"]
+      "src/*": ["./src/*"],
+      "~/*": ["./src/web/*"],
+      "~/lib": ["./src/lib/*"]
+    }
   },
-  "include": ["src/web", "src/lib/query-client.ts"]
+  "include": ["./src/web", "./src/lib"]
 }

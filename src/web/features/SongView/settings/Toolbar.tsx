@@ -7,7 +7,7 @@ import {
   Pencil,
   RefreshCw,
   Settings2,
-  Undo2
+  Undo2,
 } from "lucide-react";
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -45,6 +45,7 @@ import {
   LayoutSettingsToolbar,
 } from "./LayoutSettings";
 import TransposeSettings from "./TransposeSettings";
+import { useUserData } from "src/web/hooks/use-user-data";
 
 interface ToolbarProps {
   songData: SongData;
@@ -58,6 +59,7 @@ interface ToolbarProps {
 
 export const Toolbar: React.FC<ToolbarProps> = ({
   songData,
+  // TODO: user vs useUserData
   user,
   feedStatus,
   fullScreenHandle,
@@ -67,7 +69,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
-  const { songDB } = useSongDB();
+  const { favorites, submissions, userProfile } = useUserData();
+  const { songDB } = useSongDB(userProfile, favorites, submissions);
   const { PWAInstallComponent, installItem } = usePWAInstall();
   const {
     request: wakeLockRequest,

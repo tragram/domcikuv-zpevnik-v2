@@ -40,7 +40,7 @@ export type UserProfileData =
         isTrusted: boolean;
         createdAt: Date;
         updatedAt: Date;
-        favoriteSongIds: string[];
+        // favoriteSongIds: string[];
       };
     };
 
@@ -51,25 +51,19 @@ export type ProfileUpdateData = {
 const profileApp = buildApp()
   .get("/", async (c) => {
     const userData = c.var.USER;
+    // TODO: would be more elegant to just return null...
     if (!userData) {
       return successJSend(c, { loggedIn: false } as UserProfileData);
     }
 
     const db = c.var.db;
     const profile = await getUserProfile(db, userData.id);
-
-    const favorites = await db
-      .select({ songId: userFavoriteSongs.songId })
-      .from(userFavoriteSongs)
-      .where(eq(userFavoriteSongs.userId, userData.id));
-
-    const favoriteSongIds = favorites.map((f) => f.songId);
-
     return successJSend(c, {
       loggedIn: true,
-      profile: { ...profile, favoriteSongIds },
+      profile,
     } as UserProfileData);
   })
+
   .put("/", async (c) => {
     const userData = c.var.USER;
     if (!userData) {

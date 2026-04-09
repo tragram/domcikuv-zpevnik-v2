@@ -2,12 +2,14 @@ import { UserDB } from "src/lib/db/schema/auth.schema";
 import client, { API } from "../../worker/api-client";
 import { makeApiRequest } from "./api-service";
 import { SessionsResponseData } from "src/worker/api/sessions";
-import { UserProfileData } from "src/worker/api/userProfile";
 import {
   CreateUserSchema,
   UpdateUserSchema,
   UsersResponse,
 } from "src/worker/helpers/user-helpers";
+import { UserProfileData } from "src/worker/api/userProfile";
+import { parseDBDates } from "./song-service";
+import { SongVersionDB } from "src/lib/db/schema";
 
 export type UsersApi = typeof client.api.admin.users;
 
@@ -30,14 +32,30 @@ interface UserSearchParams {
   offset?: number;
 }
 
-export async function fetchProfile(api: API) {
+export async function fetchProfile(api: API): Promise<UserProfileData> {
+  const status = await makeApiRequest(api.profile.$get);
+  if (status.loggedIn) {
+    return {
+      ...status,
+      profile: parseDBDates(status.profile),
+    };
+  }
+  return status;
+}
+
+export async function fetchFavorites(api: API): Promise<string[]> {
   try {
-    const response = await makeApiRequest(api.profile.$get);
+    const response = await makeApiRequest(api.favorites.$get);
     return response;
   } catch (e) {
-    console.error("Failed to fetch profile - returning empty...", e);
-    return { loggedIn: false } as UserProfileData;
+    console.error("Failed to fetch favorites", e);
+    return [];
   }
+}
+
+export async function fetchSubmissions(): Promise<SongVersionDB[]> {
+  const res = await makeApiRequest(client.api.editor.submissions.$get);
+  return res.map(parseDBDates);
 }
 
 export async function fetchActiveSessions(

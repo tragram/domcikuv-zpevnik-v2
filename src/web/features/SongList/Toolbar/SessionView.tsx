@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useUserData } from "src/web/hooks/use-user-data";
 import { RichItem } from "~/components/RichDropdown";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
@@ -25,7 +26,8 @@ interface SessionViewProps {
 const SessionView = ({ isOnline }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
-  const { songDB } = useSongDB();
+  const { favorites, submissions, userProfile } = useUserData();
+  const { songDB } = useSongDB(userProfile, favorites, submissions);
   const { activeSessions, refetchIfStale } = useActiveSessions(songDB);
 
   useEffect(() => {

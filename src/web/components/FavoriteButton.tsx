@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
-import { useState } from "react";
 import { toast } from "sonner";
 import { FavoritesAPI } from "src/worker/api-client";
 import { useIsOnline } from "~/hooks/use-is-online";
@@ -10,6 +9,7 @@ import { SongData } from "~/types/songData";
 interface FavoriteButtonProps {
   song: SongData;
   favoritesApi: FavoritesAPI;
+  userId: string;
   className?: string;
   iconClassName?: string;
 }
@@ -17,44 +17,34 @@ interface FavoriteButtonProps {
 export const FavoriteButton = ({
   song,
   favoritesApi,
+  userId,
   className = "",
   iconClassName = "h-6 w-6",
 }: FavoriteButtonProps) => {
-  const [isFavorite, setIsFavorite] = useState(song.isFavorite);
   const queryClient = useQueryClient();
+  const isOnline = useIsOnline();
+  const isFavorite = song.isFavorite;
+
+  const queryKey = ["favorites", userId];
 
   // Mutation for adding favorite
   const addFavoriteMutation = useMutation({
     mutationFn: () => favoritesApi.$post({ json: { songId: song.id } }),
-    onMutate: () => {
-      // Store previous state for rollback
-      const previousState = song.isFavorite;
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey });
 
-      // Optimistically update
-      song.isFavorite = true;
-      setIsFavorite(true);
+      const previousFavorites = queryClient.getQueryData<string[]>(queryKey);
 
-      return { previousState };
-    },
-    onSuccess: () => {
-      // Update the cache directly instead of invalidating
-      queryClient.setQueryData(["userProfile"], (oldData: any) => {
-        if (!oldData || !oldData.loggedIn) return oldData;
-
-        return {
-          ...oldData,
-          profile: {
-            ...oldData.profile,
-            favoriteSongIds: [...oldData.profile.favoriteSongIds, song.id],
-          },
-        };
+      queryClient.setQueryData<string[]>(queryKey, (old = []) => {
+        if (old.includes(song.id)) return old;
+        return [...old, song.id];
       });
+
+      return { previousFavorites };
     },
     onError: (_error, _variables, context) => {
-      // Rollback on error
-      if (context?.previousState !== undefined) {
-        song.isFavorite = context.previousState;
-        setIsFavorite(context.previousState);
+      if (context?.previousFavorites) {
+        queryClient.setQueryData(queryKey, context.previousFavorites);
       }
       toast.error("Failed to add favorite");
     },
@@ -63,34 +53,20 @@ export const FavoriteButton = ({
   // Mutation for removing favorite
   const removeFavoriteMutation = useMutation({
     mutationFn: () => favoritesApi.$delete({ json: { songId: song.id } }),
-    onMutate: () => {
-      const previousState = song.isFavorite;
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey });
 
-      song.isFavorite = false;
-      setIsFavorite(false);
+      const previousFavorites = queryClient.getQueryData<string[]>(queryKey);
 
-      return { previousState };
-    },
-    onSuccess: () => {
-      // Update the cache directly instead of invalidating
-      queryClient.setQueryData(["userProfile"], (oldData: any) => {
-        if (!oldData || !oldData.loggedIn) return oldData;
-
-        return {
-          ...oldData,
-          profile: {
-            ...oldData.profile,
-            favoriteSongIds: oldData.profile.favoriteSongIds.filter(
-              (id: string) => id !== song.id,
-            ),
-          },
-        };
+      queryClient.setQueryData<string[]>(queryKey, (old = []) => {
+        return old.filter((id) => id !== song.id);
       });
+
+      return { previousFavorites };
     },
     onError: (_error, _variables, context) => {
-      if (context?.previousState !== undefined) {
-        song.isFavorite = context.previousState;
-        setIsFavorite(context.previousState);
+      if (context?.previousFavorites) {
+        queryClient.setQueryData(queryKey, context.previousFavorites);
       }
       toast.error("Failed to remove favorite");
     },
@@ -109,7 +85,7 @@ export const FavoriteButton = ({
 
   const isLoading =
     addFavoriteMutation.isPending || removeFavoriteMutation.isPending;
-  const isOnline = useIsOnline();
+
   return (
     <button
       type="button"

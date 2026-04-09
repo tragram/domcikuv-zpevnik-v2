@@ -17,9 +17,10 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-    "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/web/*"]
+      "src/*": ["./src/*"],
+      "~/*": ["./src/web/*"],
+      "~/lib": ["./src/lib/*"]
     }
   },
   "include": ["vite.config.ts", "drizzle.config.ts"]

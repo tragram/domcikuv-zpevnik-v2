@@ -55,7 +55,6 @@ export type SongDataApi = {
   chordpro: string;
   externalSource: ExternalSourceApi | null;
   currentIllustration?: CurrentIllustrationApi;
-  isFavoriteByCurrentUser: boolean;
   updateStatus?: "added" | "modified" | "deleted";
 };
 

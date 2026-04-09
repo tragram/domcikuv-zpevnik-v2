@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import SongList from "~/features/SongList/SongList";
 import { FilterStoreProvider } from "~/features/SongView/hooks/filterSettingsStore";
 import { useSongDB } from "~/hooks/use-songDB";
-import { useUserProfile } from "~/hooks/use-user-profile";
+import { useUserData } from "src/web/hooks/use-user-data";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -12,11 +12,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { songDB } = useSongDB();
-  const { userProfile: user } = useUserProfile();
+  const { favorites, submissions, userProfile: user } = useUserData();
+  const { songDB, isSyncing } = useSongDB(user, favorites, submissions);
   return (
     <FilterStoreProvider availableSongbooks={songDB.songbooks}>
-      <SongList songDB={songDB} user={user} />
+      <SongList songDB={songDB} songDBSyncing={isSyncing} user={user} />
     </FilterStoreProvider>
   );
 }
