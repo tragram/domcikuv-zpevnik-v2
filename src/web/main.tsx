@@ -42,7 +42,12 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <PersistQueryClientProvider
         client={queryClient}
-        persistOptions={{ persister: queryPersister }}
+        persistOptions={{
+          persister: queryPersister,
+          dehydrateOptions: {
+            shouldDehydrateQuery: () => true,
+          },
+        }}
       >
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Toaster />
