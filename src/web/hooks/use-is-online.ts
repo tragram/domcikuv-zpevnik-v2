@@ -1,16 +1,16 @@
 import { useSyncExternalStore } from "react";
 
+const subscribe = (callback: () => void) => {
+  window.addEventListener("online", callback);
+  window.addEventListener("offline", callback);
+  return () => {
+    window.removeEventListener("online", callback);
+    window.removeEventListener("offline", callback);
+  };
+};
+
+const getSnapshot = () => navigator.onLine;
+
 export function useIsOnline() {
-  return useSyncExternalStore(
-    (cb) => {
-      window.addEventListener("online", cb);
-      window.addEventListener("offline", cb);
-      return () => {
-        window.removeEventListener("online", cb);
-        window.removeEventListener("offline", cb);
-      };
-    },
-    () => navigator.onLine,
-    () => true,
-  );
+  return useSyncExternalStore(subscribe, getSnapshot);
 }
