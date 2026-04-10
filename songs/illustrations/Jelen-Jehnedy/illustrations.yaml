@@ -1,0 +1,20 @@
+songId: Jelen-Jehnedy
+prompts:
+  - id: Jelen-Jehnedy_gpt-5-mini_v4
+    songId: Jelen-Jehnedy
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Square cinematic digital painting — a lone, rain-soaked figure with a dark
+      cloak lifts their head as large feathered wings unfurl, storm clouds
+      overhead with a warm sun breaking through the horizon; melting snow and
+      wind‑bent reeds in the foreground, high-contrast blue-gray to gold
+      palette, clear bold silhouette for thumbnail readability, gritty but
+      hopeful mood, painterly-realistic, cinematic lighting, no text.
+    createdAt: 2026-04-09T18:49:26.000Z
+    updatedAt: 2026-04-09T18:49:26.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1775760615000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
