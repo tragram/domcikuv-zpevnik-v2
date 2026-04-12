@@ -30,16 +30,16 @@ export const Route = createFileRoute("/song/$songId")({
 
 function RouteComponent() {
   const { songData, songId, versionId } = Route.useLoaderData();
-  const { favorites, submissions, userProfile: user } = useUserData();
+  const { userData } = useUserData();
   const shareSession = useViewSettingsStore((state) => state.shareSession);
   const transposeSteps = useViewSettingsStore(
     (state) => state.transpositions[songId] || 0,
   );
 
   // Only enable session sync for non-versioned songs
-  const shouldShare = user.loggedIn && shareSession && !versionId;
-  const masterId = user.loggedIn
-    ? (user.profile.nickname ?? undefined)
+  const shouldShare = !!userData && shareSession && !versionId;
+  const masterId = userData
+    ? (userData.profile.nickname ?? undefined)
     : undefined;
 
   const { updateSong, feedStatus } = useSessionSync(
@@ -64,7 +64,7 @@ function RouteComponent() {
   return (
     <SongView
       songData={songData}
-      user={user}
+      userData={userData}
       feedStatus={versionId ? undefined : feedStatus}
     />
   );

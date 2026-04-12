@@ -1,19 +1,18 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import { FavoriteButton } from "~/components/FavoriteButton";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import type { LayoutSettings } from "../hooks/viewSettingsStore";
 import { SONG_SOURCES_PRETTY } from "src/lib/db/schema/song.schema";
 import { Link } from "@tanstack/react-router";
-import { FavoritesAPI } from "src/worker/api-client";
+import { UserData } from "src/web/hooks/use-user-data";
 
 interface SongHeadingProps {
   songData: SongData;
   layoutSettings: LayoutSettings;
   transposeSteps: number;
-  favoritesApi?: FavoritesAPI;
-  user?: UserProfileData;
+  userData?: UserData;
 }
 
 // (Helper function formatChords kept the same...)
@@ -28,8 +27,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
   songData,
   layoutSettings,
   transposeSteps,
-  favoritesApi,
-  user,
+  userData,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isWrapped, setIsWrapped] = useState(false);
@@ -132,11 +130,10 @@ const SongHeading: React.FC<SongHeadingProps> = ({
             </h3>
           )}
         </div>
-        {user?.loggedIn && favoritesApi && (
+        {userData && (
           <FavoriteButton
             song={songData}
-            userId={user.profile.id}
-            favoritesApi={favoritesApi}
+            userId={userData.profile.id}
             iconClassName={cn(
               "size-[2em] stroke-[1.5]",
               isWrapped ? "" : "max-w-14",

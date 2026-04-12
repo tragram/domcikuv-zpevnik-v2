@@ -1,4 +1,7 @@
-import { QueryClient } from "@tanstack/react-query";
+import {
+  defaultShouldDehydrateQuery,
+  QueryClient,
+} from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
@@ -45,7 +48,12 @@ if (!rootElement.innerHTML) {
         persistOptions={{
           persister: queryPersister,
           dehydrateOptions: {
-            shouldDehydrateQuery: () => true,
+            shouldDehydrateQuery: (query) => {
+              return (
+                defaultShouldDehydrateQuery(query) &&
+                query.state.status === "success"
+              );
+            },
           },
         }}
       >

@@ -7,9 +7,10 @@ import {
   UpdateUserSchema,
   UsersResponse,
 } from "src/worker/helpers/user-helpers";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import { parseDBDates } from "./song-service";
 import { SongVersionDB } from "src/lib/db/schema";
+import { UserProfileDB } from "src/worker/api/userProfile";
 
 export type UsersApi = typeof client.api.admin.users;
 
@@ -32,15 +33,9 @@ interface UserSearchParams {
   offset?: number;
 }
 
-export async function fetchProfile(api: API): Promise<UserProfileData> {
-  const status = await makeApiRequest(api.profile.$get);
-  if (status.loggedIn) {
-    return {
-      ...status,
-      profile: parseDBDates(status.profile),
-    };
-  }
-  return status;
+export async function fetchProfile(api: API): Promise<UserProfileDB> {
+  const profile = await makeApiRequest(api.profile.$get);
+  return profile ? parseDBDates(profile) : null;
 }
 
 export async function fetchFavorites(api: API): Promise<string[]> {

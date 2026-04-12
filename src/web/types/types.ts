@@ -1,8 +1,7 @@
-import { User } from "better-auth";
-import { Note } from "./musicTypes";
-import { SongData } from "./songData";
 import { EditorSubmitSchemaInput } from "src/worker/api/editor";
 import z from "zod";
+import { Note } from "./musicTypes";
+import { SongData } from "./songData";
 // Import keywords from the source of truth
 type SortOrder = "descending" | "ascending";
 type SortField = "title" | "artist" | "dateAdded" | "range";
@@ -62,13 +61,8 @@ export type {
   SongLanguage,
   SortField,
   SortOrder,
-  SortSettings,
+  SortSettings
 };
-
-export interface UserData extends User {
-  loggedIn: boolean;
-  favorites: Set<string>;
-}
 
 export type ChordPro = string;
 

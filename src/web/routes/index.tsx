@@ -12,11 +12,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { favorites, submissions, userProfile: user } = useUserData();
-  const { songDB, isSyncing } = useSongDB(user, favorites, submissions);
+  const { userData } = useUserData();
+  const { songDB, isSyncing } = useSongDB(userData);
   return (
     <FilterStoreProvider availableSongbooks={songDB.songbooks}>
-      <SongList songDB={songDB} songDBSyncing={isSyncing} user={user} />
+      <SongList songDB={songDB} songDBSyncing={isSyncing} userData={userData} />
     </FilterStoreProvider>
   );
 }

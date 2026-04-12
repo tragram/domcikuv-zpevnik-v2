@@ -8,7 +8,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { UserProfileData } from "src/worker/api/userProfile";
+import { UserData } from "src/web/hooks/use-user-data";
+
 export interface EditorSettings {
   autoGenerateIllustration: boolean;
 }
@@ -20,14 +21,14 @@ export const DEFAULT_EDITOR_SETTINGS: EditorSettings = {
 interface EditorSettingsProps {
   settings: EditorSettings;
   onSettingsChange: (settings: EditorSettings) => void;
-  user: UserProfileData;
+  userData: UserData;
   hasIllustration?: boolean;
 }
 
 const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
   settings,
   onSettingsChange,
-  user,
+  userData,
   hasIllustration = false,
 }) => {
   const handleToggle = (key: keyof EditorSettings) => {
@@ -38,11 +39,11 @@ const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
   };
 
   // since there's only one setting, hide the whole component if not trusted (to be changed later on)
-  return user.loggedIn && user.profile.isTrusted ? (
+  return userData && userData.profile.isTrusted ? (
     <div className="space-y-2">
       <h3 className="text-sm font-medium">Editor Settings</h3>
 
-      {user.loggedIn && user.profile.isTrusted && (
+      {userData && userData.profile.isTrusted && (
         <div className="flex items-center justify-between relative space-x-2 w-full">
           <Switch
             id="auto-illustration"

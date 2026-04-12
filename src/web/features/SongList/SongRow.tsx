@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { memo } from "react";
+import { UserData } from "src/web/hooks/use-user-data";
 import { FavoritesAPI } from "src/worker/api-client";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import CircularProgress from "~/components/circular-progress";
 import { FavoriteButton } from "~/components/FavoriteButton";
 import { IllustrationPopup } from "~/components/IllustrationPopup";
@@ -114,18 +115,12 @@ const VocalRangeIndicator = memo(
 interface SongRowProps {
   song: SongData;
   maxRange?: number | undefined;
-  user: UserProfileData;
+  userData: UserData;
   externalSearch?: boolean;
   favoritesApi: FavoritesAPI;
 }
 const SongRow = memo(
-  ({
-    song,
-    maxRange,
-    user,
-    favoritesApi,
-    externalSearch = false,
-  }: SongRowProps) => {
+  ({ song, maxRange, userData, externalSearch = false }: SongRowProps) => {
     if (!song) {
       console.error("Invalid song provided to SongRow", song);
       return (
@@ -153,11 +148,10 @@ const SongRow = memo(
           className="flex-auto"
         />
 
-        {user.loggedIn && !externalSearch && (
+        {userData && !externalSearch && (
           <FavoriteButton
-            favoritesApi={favoritesApi}
             song={song}
-            userId={user.profile.id}
+            userId={userData.profile.id}
             className="hidden shrink-0 basis-1/12 xs:flex"
           />
         )}

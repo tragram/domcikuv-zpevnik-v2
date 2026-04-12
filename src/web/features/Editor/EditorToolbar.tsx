@@ -17,7 +17,7 @@ import {
 import React, { useState } from "react";
 import { toast } from "sonner";
 import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import { Button } from "~/components/ui/button";
 import {
   Tooltip,
@@ -41,6 +41,7 @@ import {
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "src/worker/helpers/image-generator";
+import { UserData } from "src/web/hooks/use-user-data";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -52,7 +53,7 @@ interface EditorToolbarProps {
   onLoadBackup: () => void;
   onSubmitSuccess?: () => void;
   onUploadClick: () => void;
-  user: UserProfileData;
+  userData: UserData;
   editorSettings: EditorSettings;
 }
 
@@ -92,7 +93,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   onLoadBackup,
   onSubmitSuccess,
   onUploadClick,
-  user,
+  userData,
   editorSettings,
 }) => {
   const navigate = useNavigate();
@@ -179,8 +180,8 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       // Auto-generate illustration if enabled, new song being submitted and user is trusted
       if (
         !isUpdate &&
-        user.loggedIn &&
-        user.profile.isTrusted &&
+        userData &&
+        userData.profile.isTrusted &&
         editorSettings.autoGenerateIllustration
       ) {
         generateIllustrationInBackground(response.song.id);
@@ -192,7 +193,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
 
-      if (user.profile && user.profile.isAdmin) {
+      if (userData && userData.profile.isAdmin) {
         navigate({ to: "/admin", search: { tab: "songs" } });
       } else {
         navigate({ to: "/submissions" });
@@ -221,7 +222,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
             Home
           </Link>
         </Button>
-        {!user.loggedIn ? (
+        {!userData ? (
           <Button
             className="hover:text-white bg-transparent"
             onClick={handleLoginRedirect}
@@ -277,7 +278,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       <div className="flex justify-center md:justify-end max-lg:flex-wrap max-xl:w-full editor-toolbar-submit">
         <DownloadButton editorState={editorState} />
 
-        {user.loggedIn ? (
+        {userData ? (
           <Tooltip>
             <TooltipTrigger asChild>
               <span tabIndex={0}>

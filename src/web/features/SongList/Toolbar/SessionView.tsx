@@ -26,8 +26,8 @@ interface SessionViewProps {
 const SessionView = ({ isOnline }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
-  const { favorites, submissions, userProfile } = useUserData();
-  const { songDB } = useSongDB(userProfile, favorites, submissions);
+  const { userData } = useUserData();
+  const { songDB } = useSongDB(userData);
   const { activeSessions, refetchIfStale } = useActiveSessions(songDB);
 
   useEffect(() => {

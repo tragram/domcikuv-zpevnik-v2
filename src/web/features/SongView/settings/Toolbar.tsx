@@ -12,7 +12,7 @@ import {
 import React, { useEffect } from "react";
 import type { FullScreenHandle } from "react-full-screen";
 import { useWakeLock } from "react-screen-wake-lock";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import useLocalStorageState from "use-local-storage-state";
 import RandomSong, { ResetBanListDropdownItems } from "~/components/RandomSong";
 import { CompactItem } from "~/components/RichDropdown";
@@ -45,11 +45,11 @@ import {
   LayoutSettingsToolbar,
 } from "./LayoutSettings";
 import TransposeSettings from "./TransposeSettings";
-import { useUserData } from "src/web/hooks/use-user-data";
+import { UserData } from "src/web/hooks/use-user-data";
 
 interface ToolbarProps {
   songData: SongData;
-  user: UserProfileData;
+  userData: UserData;
   feedStatus: FeedStatus | undefined;
   fullScreenHandle: FullScreenHandle;
   originalKey: Key | undefined;
@@ -59,8 +59,7 @@ interface ToolbarProps {
 
 export const Toolbar: React.FC<ToolbarProps> = ({
   songData,
-  // TODO: user vs useUserData
-  user,
+  userData,
   feedStatus,
   fullScreenHandle,
   originalKey,
@@ -69,8 +68,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
-  const { favorites, submissions, userProfile } = useUserData();
-  const { songDB } = useSongDB(userProfile, favorites, submissions);
+  const { songDB } = useSongDB(userData);
   const { PWAInstallComponent, installItem } = usePWAInstall();
   const {
     request: wakeLockRequest,
@@ -207,7 +205,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
             <ShareSongButton
               feedStatus={feedStatus}
-              user={user}
+              userData={userData}
               songId={songData.id}
             />
 

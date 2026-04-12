@@ -2,7 +2,7 @@ import { useRouteContext } from "@tanstack/react-router";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { Globe, RefreshCw, Search } from "lucide-react";
 import { useRef } from "react";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import useLocalStorageState from "use-local-storage-state";
 import { Button } from "~/components/ui/button";
 import "~/features/SongList/SongList.css";
@@ -12,17 +12,18 @@ import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import SongRow from "./SongRow";
 import Toolbar from "./Toolbar/Toolbar";
 import { useFilteredSongs } from "./useFilteredSongs";
+import { UserData } from "src/web/hooks/use-user-data";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
 function SongList({
   songDB,
   songDBSyncing,
-  user,
+  userData,
 }: {
   songDB: SongDB;
   songDBSyncing: boolean;
-  user: UserProfileData;
+  userData: UserData;
 }) {
   const [scrollOffset, setScrollOffset] = useLocalStorageState<number>(
     SCROLL_OFFSET_KEY,
@@ -36,7 +37,7 @@ function SongList({
     triggerExternalSearch,
     hasTriggeredExternalSearch,
     canSearchExternal,
-  } = useFilteredSongs(songDB.songs, songDB.languages, user, songDB.songbooks);
+  } = useFilteredSongs(songDB.songs, songDB.languages, userData, songDB.songbooks);
 
   const { resetFilters } = useFilterSettingsStore();
   const isToolbarVisible = useScrollDirection();
@@ -101,7 +102,7 @@ function SongList({
           <SongRow
             song={songs[item.index]}
             maxRange={songDB.maxRange}
-            user={user}
+            userData={userData}
             favoritesApi={favoritesApi}
           />
         </div>
@@ -112,7 +113,7 @@ function SongList({
   return (
     <div className="no-scrollbar w-full relative">
       <Toolbar
-        isAdmin={user.loggedIn && user.profile.isAdmin}
+        isAdmin={!!userData && userData.profile.isAdmin}
         songDB={songDB}
         isVisible={isToolbarVisible}
         // isSyncing removed from Toolbar
@@ -192,7 +193,7 @@ function SongList({
                 key={song.id}
                 song={song}
                 maxRange={undefined}
-                user={user}
+                userData={userData}
                 externalSearch={true}
                 favoritesApi={favoritesApi}
               />

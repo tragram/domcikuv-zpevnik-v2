@@ -3,7 +3,7 @@ import { Camera, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { logoutUser } from "src/lib/auth/client";
-import { ProfileUpdateData, UserProfileData } from "src/worker/api/userProfile";
+import { ProfileUpdateData } from "src/worker/api/userProfile";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
@@ -27,13 +27,12 @@ type ProfileUpdateResponse = {
 };
 
 import { authClient } from "src/lib/auth/client";
-import { getUserData } from "src/web/hooks/use-user-data";
+import { getUserData, UserData } from "src/web/hooks/use-user-data";
 
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,
   validateSearch: (search) => redirectSearchSchema.parse(search),
   loader: async ({ context }) => {
-    // Rely exclusively on better-auth for truth rather than the react-query cache
     const sessionResponse = await authClient.getSession();
 
     if (!sessionResponse.data?.user) {
@@ -44,23 +43,22 @@ export const Route = createFileRoute("/(auth)/profile")({
     }
 
     return {
-      userProfileData: {
+      userData: {
         loggedIn: true,
-        profile: sessionResponse.data
-          .user as unknown as UserProfileData["profile"],
+        profile: sessionResponse.data.user as unknown as NonNullable<UserData>["profile"],
       },
     };
   },
 });
 
 function RouteComponent() {
-  const { userProfileData } = Route.useLoaderData();
+  const { userData } = Route.useLoaderData();
 
-  if (!userProfileData.loggedIn || !userProfileData.profile) {
+  if (!userData.loggedIn || !userData.profile) {
     throw new Error("Invalid state - should have been caught by loader");
   }
 
-  const profile = userProfileData.profile;
+  const profile = userData.profile;
   const { redirectURL } = Route.useRouteContext();
   const { redirect: searchRedirect } = Route.useSearch();
 
@@ -308,7 +306,7 @@ function ProfileHeader() {
 }
 
 interface ProfilePictureSectionProps {
-  userProfile: UserProfileData["profile"];
+  userProfile: NonNullable<UserData>["profile"];
   currentAvatar: string | null;
   avatarPreview: string | null;
   avatarToDelete: boolean;

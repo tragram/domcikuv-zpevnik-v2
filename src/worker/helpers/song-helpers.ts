@@ -367,7 +367,8 @@ export const promoteVersionToCurrent = async (
 ) => {
   const now = new Date();
   const currentSong = await getSongBase(db, songId);
-  //Archive the OLD current version (if it exists and is different)
+  // Archive the OLD current version (if it exists and is different)
+  // TODO: ensure only one song is published at a time
   if (
     currentSong.currentVersionId &&
     currentSong.currentVersionId !== versionId

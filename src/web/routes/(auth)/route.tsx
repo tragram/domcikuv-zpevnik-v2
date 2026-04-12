@@ -20,12 +20,12 @@ export const Route = createFileRoute("/(auth)")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
   component: RouteComponent,
   beforeLoad: async ({ context, location, search }) => {
-    const user = await getUserData();
+    const userData = await getUserData();
     // Get the redirect URL from validated search params or default to "/"
     const redirectURL = search.redirect || "/";
 
     // If user is not logged in and not on login/signup page, redirect to login
-    if (!user.loggedIn && location.pathname === PROFILE_URL) {
+    if (!userData && location.pathname === PROFILE_URL) {
       throw redirect({
         to: LOGIN_URL,
         search: { redirect: redirectURL },
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/(auth)")({
     }
 
     // If user is logged in and on login page, redirect to the intended destination
-    if (user.loggedIn) {
+    if (userData) {
       if (location.pathname === LOGIN_URL) {
         throw redirect({
           href: redirectURL,
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/(auth)")({
       }
     }
 
-    return { redirectURL, location, user };
+    return { redirectURL, location, userData };
   },
   loader: async ({ context }) => {
     return context;
@@ -56,7 +56,7 @@ export const Route = createFileRoute("/(auth)")({
 });
 
 function RouteComponent() {
-  const { user } = Route.useLoaderData();
+  const { userData } = Route.useLoaderData();
 
   return (
     <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10 w-full">
@@ -70,7 +70,7 @@ function RouteComponent() {
           <div
             className={cn(
               "flex w-full profile-toolbar-links",
-              user.loggedIn ? "justify-between" : "",
+              userData ? "justify-between" : "",
             )}
           >
             <Button asChild>
@@ -79,7 +79,7 @@ function RouteComponent() {
                 Home
               </Link>
             </Button>
-            {user.loggedIn && (
+            {userData && (
               <Button asChild className="sm:w-auto">
                 <Link to="/submissions">
                   <CloudUpload />
@@ -87,7 +87,7 @@ function RouteComponent() {
                 </Link>
               </Button>
             )}
-            {user.loggedIn && user.profile.isAdmin && (
+            {userData && userData.profile.isAdmin && (
               <Button asChild className="sm:w-auto">
                 <Link to="/admin">
                   <Shield />

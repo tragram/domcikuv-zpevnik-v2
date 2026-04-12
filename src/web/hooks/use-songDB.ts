@@ -7,7 +7,7 @@ import {
   fetchSongs,
 } from "~/services/song-service";
 import { SongVersionDB } from "src/lib/db/schema";
-import { UserProfileData } from "src/worker/api/userProfile";
+import { UserData } from "./use-user-data";
 
 export const songsQueryOptions = () =>
   queryOptions({
@@ -22,9 +22,7 @@ export const publicSongbooksQueryOptions = () =>
   });
 
 export function useSongDB(
-  userProfile: UserProfileData,
-  favoriteSongIds: string[] = [],
-  submissions: SongVersionDB[] = [],
+  userData: UserData,
 ) {
   const { data: songs = [], isFetching: isSongsSyncing } =
     useQuery(songsQueryOptions());
@@ -32,18 +30,16 @@ export function useSongDB(
   const { data: publicSongbooks = [] } = useQuery(
     publicSongbooksQueryOptions(),
   );
-  
+
   // Rebuild the DB whenever the base songs, songbooks, or user favorites change
   const songDB = useMemo(
     () =>
       buildSongDB(
         songs,
         publicSongbooks,
-        userProfile,
-        favoriteSongIds,
-        submissions,
+        userData,
       ),
-    [songs, publicSongbooks, userProfile, favoriteSongIds, submissions],
+    [songs, publicSongbooks, userData],
   );
 
   return {

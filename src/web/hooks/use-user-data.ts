@@ -1,9 +1,16 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import client from "src/worker/api-client";
-import { UserProfileData } from "src/worker/api/userProfile";
+import { UserProfileDB } from "src/worker/api/userProfile";
 import { fetchFavorites, fetchSubmissions } from "~/services/user-service";
 import { authClient } from "src/lib/auth/client";
 import { parseDBDates } from "../services/song-service";
+import { SongVersionApi } from "src/worker/api/api-types";
+
+export type UserData = {
+  profile: NonNullable<UserProfileDB>;
+  submissions: SongVersionApi[];
+  favoriteIds: Set<string>;
+} | null;
 
 export const sessionQueryOptions = () =>
   queryOptions({
@@ -35,9 +42,7 @@ type SessionData = NonNullable<
 >;
 
 const sessionToProfile = (sessionData: SessionData | null | undefined) =>
-  (sessionData?.user
-    ? { loggedIn: true, profile: parseDBDates(sessionData.user) }
-    : { loggedIn: false }) as UserProfileData;
+  (sessionData?.user ? parseDBDates(sessionData.user) : null) as UserProfileDB;
 
 export function useUserData() {
   const { data: sessionData, isPending: isAuthSyncing } = useQuery(
@@ -57,14 +62,34 @@ export function useUserData() {
   });
 
   return {
-    userProfile: sessionToProfile(sessionData),
-    favorites: favorites ?? [],
-    submissions: submissions ?? [],
+    userData: isLoggedIn
+      ? ({
+          profile: sessionToProfile(sessionData),
+          favoriteIds: favorites ? new Set(favorites) : new Set([]),
+          submissions: submissions ?? [],
+        } as UserData)
+      : (null as UserData),
     isSyncing: isAuthSyncing || isFavoritesSyncing || isSubmissionsSyncing,
   };
 }
 
-export async function getUserData() {
-  const { data } = await authClient.getSession();
-  return sessionToProfile(data);
+export async function getUserData(): Promise<UserData> {
+  const { data, error } = await authClient.getSession();
+
+  // If there's an error or no user is logged in, return null
+  if (error || !data?.user) {
+    return null;
+  }
+
+  // Fetch favorites and submissions concurrently
+  const [favorites, submissions] = await Promise.all([
+    fetchFavorites(client.api),
+    fetchSubmissions(),
+  ]);
+
+  return {
+    profile: sessionToProfile(data),
+    favoriteIds: favorites ? new Set(favorites) : new Set([]),
+    submissions: submissions ?? [],
+  } as UserData;
 }

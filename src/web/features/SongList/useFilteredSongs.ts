@@ -1,4 +1,9 @@
-import type { LanguageCount, Songbook, SortField, SortOrder } from "~/types/types";
+import type {
+  LanguageCount,
+  Songbook,
+  SortField,
+  SortOrder,
+} from "~/types/types";
 import { SongData, to_ascii } from "~/types/songData";
 import Fuse from "fuse.js";
 import { useEffect, useMemo, useState } from "react";
@@ -6,10 +11,11 @@ import { useQueryStore } from "./Toolbar/SearchBar";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { RARE_LANGUAGE_THRESHOLD } from "./Toolbar/filters/LanguageFilter";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import { fetchExternalSearch } from "~/services/song-service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
+import { UserData } from "src/web/hooks/use-user-data";
 
 const filterLanguage = (
   songs: SongData[],
@@ -120,7 +126,7 @@ const getSortCompareFunction = (
 export function useFilteredSongs(
   songs: SongData[],
   languageCounts: LanguageCount,
-  user: UserProfileData,
+  userData: UserData,
   availableSongbooks: Songbook[],
 ) {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
@@ -166,7 +172,7 @@ export function useFilteredSongs(
     !!query && (minFuzzyScore > 0.05 || query.trim().length >= 7);
 
   const shouldSearchExternal =
-    user.loggedIn &&
+    !!userData &&
     showExternal &&
     isQueryValidForExternal &&
     hasTriggeredExternalSearch;
@@ -207,8 +213,8 @@ export function useFilteredSongs(
     let results = filterCapo(songs, capo);
     results = filterVocalRange(results, vocalRange);
     results = filterLanguage(results, language, languageCounts);
-    results = filterFavorites(results, user.loggedIn, onlyFavorites);
-    results = filterExternal(results, user.loggedIn, showExternal);
+    results = filterFavorites(results, !!userData, onlyFavorites);
+    results = filterExternal(results, !!userData, showExternal);
     results = filterSongbook(results, availableSongbooks, selectedSongbooks);
 
     return results.toSorted(getSortCompareFunction(sortByField, sortOrder));
@@ -220,7 +226,7 @@ export function useFilteredSongs(
     vocalRange,
     language,
     languageCounts,
-    user.loggedIn,
+    userData,
     onlyFavorites,
     showExternal,
     availableSongbooks,
@@ -234,6 +240,6 @@ export function useFilteredSongs(
     isLoadingExternal,
     triggerExternalSearch: () => setTriggeredQuery(query),
     hasTriggeredExternalSearch,
-    canSearchExternal: user.loggedIn && showExternal && isQueryValidForExternal,
+    canSearchExternal: userData && showExternal && isQueryValidForExternal,
   };
 }

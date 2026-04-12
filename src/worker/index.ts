@@ -56,6 +56,7 @@ export const route = app
 
     const authInstance = auth(c.env, db);
     const session = await authInstance.api.getSession(c.req.raw);
+    console.log(c.req.url, session?.user.name);
     if (session?.session) {
       c.set("SESSION", session.session);
       c.set("USER", session.user);

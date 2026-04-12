@@ -8,8 +8,8 @@ export const Route = createFileRoute("/admin")({
   }),
   component: Home,
   beforeLoad: async ({ context }) => {
-    const user = await getUserData();
-    if (user.loggedIn && user.profile.isAdmin) {
+    const userData = await getUserData();
+    if (userData && userData.profile.isAdmin) {
       return context;
     } else {
       throw redirect({ to: "/" });

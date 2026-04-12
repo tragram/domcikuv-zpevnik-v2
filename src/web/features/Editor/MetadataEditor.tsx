@@ -1,5 +1,6 @@
 import React from "react";
-import { UserProfileData } from "src/worker/api/userProfile";
+
+import { UserData } from "src/web/hooks/use-user-data";
 import SelectOrEditList from "~/components/SelectOrEditList";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
@@ -11,7 +12,6 @@ import MetadataField from "./components/MetadataField";
 import SmartFeatures from "./components/SmartFeatures"; // <-- Import the new component
 import type { EvaluatedFeature, SmartFeature } from "./Editor";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
-import { useUserData } from "src/web/hooks/use-user-data";
 
 interface MetadataEditorProps {
   defaultMetadata: EditorState;
@@ -21,7 +21,7 @@ interface MetadataEditorProps {
   updateMetadata: (field: keyof EditorState, value: string) => void;
   editorSettings: EditorSettings;
   onSettingsChange: (settings: EditorSettings) => void;
-  user: UserProfileData;
+  userData: UserData;
   hasIllustration?: boolean;
   features: EvaluatedFeature[];
   isProcessing: boolean;
@@ -36,15 +36,13 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   updateMetadata,
   editorSettings,
   onSettingsChange,
-  // TODO: duplicate user vs useUserData
-  user,
+  userData,
   hasIllustration = false,
   features,
   isProcessing,
   onExecuteFeature,
 }) => {
-  const { favorites, submissions, userProfile } = useUserData();
-  const { songDB } = useSongDB(userProfile, favorites, submissions);
+  const { songDB } = useSongDB(userData);
   return (
     <div className="main-container space-y-4">
       {/* Metadata Fields */}
@@ -169,7 +167,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           <EditorSettingsComponent
             settings={editorSettings}
             onSettingsChange={onSettingsChange}
-            user={user}
+            userData={userData}
             hasIllustration={hasIllustration}
           />
         </div>

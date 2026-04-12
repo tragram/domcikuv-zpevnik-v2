@@ -1,26 +1,22 @@
 import { forwardRef, useMemo } from "react";
 import { SongData } from "~/types/songData";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { renderSong } from "../utils/songRendering";
 import BackgroundImage from "./BackgroundImage";
 import ResizableAutoTextSize from "./ResizableAutoTextSize";
 import SongHeading from "./SongHeading";
-import { FavoritesAPI } from "src/worker/api-client";
+import { UserData } from "src/web/hooks/use-user-data";
 
 interface SongContentProps {
   songData: SongData;
   transposeSteps: number;
   gestureContainerRef: React.RefObject<HTMLDivElement | null>;
-  favoritesApi?: FavoritesAPI;
-  user?: UserProfileData;
+  userData?: UserData;
 }
 
 export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-  (
-    { songData, transposeSteps, gestureContainerRef, favoritesApi, user },
-    ref,
-  ) => {
+  ({ songData, transposeSteps, gestureContainerRef, userData }, ref) => {
     const { layout, chords: chordSettings } = useViewSettingsStore();
 
     const parsedContent = useMemo(
@@ -44,8 +40,7 @@ export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
             songData={songData}
             layoutSettings={layout}
             transposeSteps={transposeSteps}
-            favoritesApi={favoritesApi}
-            user={user}
+            userData={userData}
           />
 
           <div

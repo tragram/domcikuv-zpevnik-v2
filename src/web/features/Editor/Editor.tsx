@@ -7,8 +7,8 @@ import {
   replaceRepetitions,
 } from "src/lib/chordpro";
 import { convertChordNotation } from "src/lib/utils";
-import { useUserData } from "src/web/hooks/use-user-data";
-import { UserProfileData } from "src/worker/api/userProfile";
+import { UserData, useUserData } from "src/web/hooks/use-user-data";
+
 import useLocalStorageState from "use-local-storage-state";
 import { convertToChordPro } from "~/lib/chords2chordpro";
 import { cn } from "~/lib/utils";
@@ -64,8 +64,8 @@ const parseMetadataFromChordPro = (content: string): Partial<EditorState> => {
   return extracted;
 };
 
-const isAutofillable = (text: string, user: UserProfileData): boolean => {
-  if (!user.loggedIn || !user.profile.isTrusted) {
+const isAutofillable = (text: string, userData: UserData): boolean => {
+  if (!userData || !userData.profile.isTrusted) {
     return false;
   }
   const hasAnyChords = /\[[A-G][^\]]*\]/.test(text);
@@ -126,11 +126,7 @@ export interface SmartFeature {
   description: React.ReactNode;
   disabledReason: React.ReactNode;
   actionType?: "default" | "stepper"; // <-- Added actionType
-  check: (
-    content: string,
-    user: UserProfileData,
-    songData?: SongData,
-  ) => boolean;
+  check: (content: string, user: UserData, songData?: SongData) => boolean;
 }
 
 export interface EvaluatedFeature extends SmartFeature {
@@ -143,7 +139,7 @@ const SMART_FEATURES: SmartFeature[] = [
     label: "Show Original Content",
     loadingLabel: "Loading...",
     icon: ExternalLink,
-    check: (content: string, user: UserProfileData, songData?: SongData) =>
+    check: (content: string, user: UserData, songData?: SongData) =>
       hasExternalOriginalContent(songData, content),
     description: (
       <>Click to view the original content from the source website.</>
@@ -155,8 +151,7 @@ const SMART_FEATURES: SmartFeature[] = [
     label: "Convert to ChordPro",
     loadingLabel: "Converting...",
     icon: FileInput,
-    check: (content: string, user: UserProfileData) =>
-      isConvertibleFormat(content),
+    check: (content: string, user: UserData) => isConvertibleFormat(content),
     description: (
       <>
         When importing songs from other sources, chords are often in separate
@@ -209,7 +204,7 @@ interface EditorProps {
 
 const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const contentEditorRef = useRef<ContentEditorRef>(null);
-  const { userProfile: user } = useUserData();
+  const { userData } = useUserData();
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
     : "editor/state";
@@ -241,9 +236,9 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
     return SMART_FEATURES.map((f) => ({
       ...f,
-      isEnabled: f.check(editorState.chordpro, user, songData),
+      isEnabled: f.check(editorState.chordpro, userData, songData),
     }));
-  }, [editorState.chordpro, user, songData]);
+  }, [editorState.chordpro, userData, songData]);
 
   const initializeEditor = useCallback(() => {
     setEditorState(defaultEditorState);
@@ -437,7 +432,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           validationErrors={validationErrors}
           onLoadBackup={loadBackupState}
           onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
-          user={user}
+          userData={userData}
           onUploadClick={onUploadClick}
           editorSettings={editorSettings}
         />
@@ -471,7 +466,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
               updateMetadata={updateMetadata}
               editorSettings={editorSettings}
               onSettingsChange={setEditorSettings}
-              user={user}
+              userData={userData}
               fieldErrors={fieldErrors}
               hasIllustration={hasIllustration}
               features={evaluatedFeatures}
@@ -508,7 +503,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
           onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
-          user={user}
+          userData={userData}
           onUploadClick={onUploadClick}
           editorSettings={editorSettings}
         />

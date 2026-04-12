@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { useUserData } from "src/web/hooks/use-user-data";
+import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { API } from "src/worker/api-client";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import SongView from "~/features/SongView/SongView";
@@ -25,12 +25,12 @@ export const Route = createFileRoute("/feed/$masterNickname")({
 function RouteComponent() {
   const { liveState, masterNickname, api } = Route.useLoaderData();
 
-  const { userProfile: user } = useUserData();
+  const { userData } = useUserData();
   return (
     <FeedView
       masterNickname={masterNickname}
       liveState={liveState}
-      user={user}
+      userData={userData}
       api={api}
     />
   );
@@ -39,11 +39,11 @@ function RouteComponent() {
 type FeedViewProps = {
   liveState?: SessionSyncState;
   masterNickname: string;
-  user: UserProfileData;
+  userData: UserData;
   api: API;
 };
 
-function FeedView({ liveState, masterNickname, user, api }: FeedViewProps) {
+function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
   // Feed route manages session sync as follower (read-only)
   const { feedStatus } = useSessionSync(
     masterNickname,
@@ -100,5 +100,7 @@ function FeedView({ liveState, masterNickname, user, api }: FeedViewProps) {
     );
   }
 
-  return <SongView songData={songData} user={user} feedStatus={feedStatus} />;
+  return (
+    <SongView songData={songData} userData={userData} feedStatus={feedStatus} />
+  );
 }

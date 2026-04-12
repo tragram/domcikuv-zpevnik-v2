@@ -1,14 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
-import { FavoritesAPI } from "src/worker/api-client";
+import client from "src/worker/api-client";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 
 interface FavoriteButtonProps {
   song: SongData;
-  favoritesApi: FavoritesAPI;
   userId: string;
   className?: string;
   iconClassName?: string;
@@ -16,7 +15,6 @@ interface FavoriteButtonProps {
 
 export const FavoriteButton = ({
   song,
-  favoritesApi,
   userId,
   className = "",
   iconClassName = "h-6 w-6",
@@ -29,7 +27,7 @@ export const FavoriteButton = ({
 
   // Mutation for adding favorite
   const addFavoriteMutation = useMutation({
-    mutationFn: () => favoritesApi.$post({ json: { songId: song.id } }),
+    mutationFn: () => client.api.favorites.$post({ json: { songId: song.id } }),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 
@@ -52,7 +50,7 @@ export const FavoriteButton = ({
 
   // Mutation for removing favorite
   const removeFavoriteMutation = useMutation({
-    mutationFn: () => favoritesApi.$delete({ json: { songId: song.id } }),
+    mutationFn: () => client.api.favorites.$delete({ json: { songId: song.id } }),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
 

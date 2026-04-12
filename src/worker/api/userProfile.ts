@@ -22,27 +22,18 @@ const updateUserProfileSchema = z.object({
   isFavoritesPublic: z.boolean(),
 });
 
-export type UserProfileData =
-  | {
-      loggedIn: false;
-      profile?: undefined;
-    }
-  | {
-      loggedIn: true;
-      profile: {
-        id: string;
-        name: string;
-        nickname: string | null;
-        email: string;
-        image: string | null;
-        isFavoritesPublic: boolean;
-        isAdmin: boolean;
-        isTrusted: boolean;
-        createdAt: Date;
-        updatedAt: Date;
-        // favoriteSongIds: string[];
-      };
-    };
+export type UserProfileDB = null | {
+  id: string;
+  name: string;
+  nickname: string | null;
+  email: string;
+  image: string | null;
+  isFavoritesPublic: boolean;
+  isAdmin: boolean;
+  isTrusted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 export type ProfileUpdateData = {
   imageUrl?: string | null;
@@ -51,17 +42,13 @@ export type ProfileUpdateData = {
 const profileApp = buildApp()
   .get("/", async (c) => {
     const userData = c.var.USER;
-    // TODO: would be more elegant to just return null...
     if (!userData) {
-      return successJSend(c, { loggedIn: false } as UserProfileData);
+      return successJSend(c, null as UserProfileDB);
     }
 
     const db = c.var.db;
     const profile = await getUserProfile(db, userData.id);
-    return successJSend(c, {
-      loggedIn: true,
-      profile,
-    } as UserProfileData);
+    return successJSend(c, profile as UserProfileDB);
   })
 
   .put("/", async (c) => {

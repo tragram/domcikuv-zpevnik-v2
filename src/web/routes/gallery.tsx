@@ -11,8 +11,8 @@ export const Route = createFileRoute("/gallery")({
 });
 
 function Home() {
-  const { favorites, submissions, userProfile } = useUserData();
-  const { songDB } = useSongDB(userProfile, favorites, submissions);
+  const { userData } = useUserData();
+  const { songDB } = useSongDB(userData);
 
   return <SongGallery songDB={songDB} />;
 }

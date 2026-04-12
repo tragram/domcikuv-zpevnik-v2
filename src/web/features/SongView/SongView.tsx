@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import { FeedStatusBar } from "./components/FeedStatusBar";
@@ -11,15 +11,16 @@ import { FeedStatus } from "./hooks/useSessionSync";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
 import "./SongView.css";
+import { UserData } from "src/web/hooks/use-user-data";
 
 type DataForSongView = {
   songData: SongData;
-  user: UserProfileData;
+  userData: UserData;
   feedStatus?: FeedStatus;
 };
 export const SongView = ({
   songData,
-  user,
+  userData,
   feedStatus,
 }: DataForSongView) => {
   const fullScreenHandle = useFullScreenHandle();
@@ -85,7 +86,7 @@ export const SongView = ({
     <SongViewLayout ref={gestureContainerRef}>
       <Toolbar
         songData={songData}
-        user={user}
+        userData={userData}
         fullScreenHandle={fullScreenHandle}
         originalKey={songData.key}
         feedStatus={feedStatus}
@@ -107,7 +108,7 @@ export const SongView = ({
           songData={songData}
           transposeSteps={transposeSteps}
           gestureContainerRef={gestureContainerRef}
-          user={user}
+          userData={userData}
         />
       </FullScreen>
       <FeedStatusBar feedStatus={feedStatus} />

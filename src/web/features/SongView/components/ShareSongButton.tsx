@@ -1,5 +1,5 @@
 import React from "react";
-import { UserProfileData } from "src/worker/api/userProfile";
+
 import { DropdownMenuCheckboxItem } from "~/components/ui/dropdown-menu";
 import { CloudSync } from "lucide-react";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
@@ -7,20 +7,21 @@ import { Link } from "@tanstack/react-router";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { CompactItem } from "~/components/RichDropdown";
 import { FeedStatus } from "../hooks/useSessionSync";
+import { UserData } from "src/web/hooks/use-user-data";
 
 interface ShareSongButtonProps {
   feedStatus: FeedStatus | undefined;
-  user: UserProfileData;
+  userData: UserData;
   songId: string;
 }
 
 const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   feedStatus,
-  user,
+  userData,
   songId,
 }) => {
   const onLine = useIsOnline();
-  const showProfileLink = !user.loggedIn || !user.profile.nickname;
+  const showProfileLink = !userData || !userData.profile.nickname;
 
   const shareSession = useViewSettingsStore((state) => state.shareSession);
   const setShareSession = useViewSettingsStore(
@@ -39,9 +40,9 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
       };
     }
     if (!shareSession) return { text: "Share your page with others - live" };
-    if (shareSession && user.loggedIn && user.profile.nickname) {
+    if (shareSession && userData && userData.profile.nickname) {
       return {
-        text: `Your session can be viewed at ${window.location.host}/feed/${user.profile.nickname}`,
+        text: `Your session can be viewed at ${window.location.host}/feed/${userData.profile.nickname}`,
       };
     }
     return null;

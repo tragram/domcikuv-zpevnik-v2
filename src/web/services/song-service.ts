@@ -20,7 +20,7 @@ import {
 } from "~/types/types";
 import { makeApiRequest } from "./api-service";
 import { queryClient } from "src/lib/query-client";
-import { UserProfileData } from "src/worker/api/userProfile";
+import { UserData } from "../hooks/use-user-data";
 
 interface Timestamped {
   createdAt?: Date | string;
@@ -170,6 +170,7 @@ export const findOrFetchSong = async (
 };
 
 export const fetchPublicSongbooks = async (api: API): Promise<Songbook[]> => {
+  console.log("public songbooks!");
   const response = await makeApiRequest(api.songs.songbooks.$get);
   return response.map(
     (s) => ({ ...s, songIds: new Set(s.songIds) }) as Songbook,
@@ -306,40 +307,34 @@ export const resetVersionDB = async (adminApi: AdminApi) => {
 export const buildSongDB = (
   songs: SongDataApi[],
   songbooks: Songbook[],
-  userProfile?: UserProfileData,
-  userFavoriteSongIds?: Set<string> | string[],
-  userSubmissions?: SongVersionDB[],
+  userData: UserData,
 ): SongDB => {
-  const favoritesSet =
-    userFavoriteSongIds instanceof Set
-      ? userFavoriteSongIds
-      : new Set(userFavoriteSongIds || []);
-
   const songDatas = songs
     .map((d) => ({
       ...d,
-      isFavoriteByCurrentUser: favoritesSet.has(d.id),
+      isFavoriteByCurrentUser: userData?.favoriteIds.has(d.id),
     }))
     .map((enriched) => new SongData(enriched));
 
-  const pendingSubmissions = userSubmissions;
+  const pendingSubmissions = userData?.submissions;
   // TODO: overwrite songIds that have
   // needs to have versionId synced to users so we can track which have been overwritten, because
   // follow-up TODO: this needs to be reflected in song syncing
 
+  // add personal favorites songbook if not public
   if (
-    userProfile?.loggedIn &&
-    userFavoriteSongIds &&
-    !songbooks.map((s) => s.user).includes(userProfile.profile.id)
+    userData &&
+    userData.favoriteIds &&
+    !songbooks.map((s) => s.user).includes(userData.profile.id)
   ) {
-    const user = userProfile.profile;
+    const user = userData.profile;
     songbooks = [
       ...songbooks,
       {
         user: user.id,
         image: user.image ?? "",
         name: user.nickname ?? "Yours",
-        songIds: favoritesSet,
+        songIds: userData.favoriteIds,
       },
     ];
   }

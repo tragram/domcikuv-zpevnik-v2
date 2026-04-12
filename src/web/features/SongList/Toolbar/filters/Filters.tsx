@@ -70,8 +70,8 @@ const FilterControls = ({
     toggleShowExternal,
     toggleFavorites,
   } = filterStore;
-  const { favorites, submissions, userProfile: user } = useUserData();
-  const { songDB } = useSongDB(user, favorites, submissions);
+  const { userData } = useUserData();
+  const { songDB } = useSongDB(userData);
   const availableSongbooks = songDB.songbooks;
   return {
     controls: (
@@ -112,7 +112,7 @@ const FilterControls = ({
           </TooltipContent>
         </Tooltip>
 
-        {user.loggedIn && (
+        {userData && (
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -160,7 +160,7 @@ const FilterControls = ({
     ),
     dropdownSections: (
       <>
-        {user && (
+        {userData && (
           <DropdownMenuCheckboxItem
             onClick={toggleFavorites}
             onSelect={(e) => e.preventDefault()}
