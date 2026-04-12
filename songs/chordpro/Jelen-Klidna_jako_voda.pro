@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: c e}
 {createdAt: 1476396000000}
-{updatedAt: 1770572095000}
+{updatedAt: 1775949253000}
 {illustrationId: Jelen-Klidna_jako_voda_gpt-4o-mini_v1_FLUX.1-dev}
 {promptId: Jelen-Klidna_jako_voda_gpt-4o-mini_v1}
 
@@ -44,5 +44,5 @@ spolu [F]půjdem tou [C]cestou, kudy [G]ty musíš [C]jít.
 
 {start_of_chorus}
 [F]Svěží jako ranní [C]rosa a [E7]čistá jako [Ami]sníh.
-Když [F]tančíš po kamení [C]bosá, svět [G]máš na dla[C]ních.
+Když [F]tančíš po kamení [C]bosá, svět [Dmi]máš na dla[C]ních.
 {end_of_chorus}
