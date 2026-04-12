@@ -19,7 +19,6 @@ export const publicSongbooksQueryOptions = () =>
   queryOptions({
     queryKey: ["publicSongbooks"],
     queryFn: () => fetchPublicSongbooks(client.api),
-    initialData: [],
   });
 
 export function useSongDB(
@@ -27,14 +26,13 @@ export function useSongDB(
   favoriteSongIds: string[] = [],
   submissions: SongVersionDB[] = [],
 ) {
-  // TODO: update this to a single profile entity
   const { data: songs = [], isFetching: isSongsSyncing } =
     useQuery(songsQueryOptions());
 
   const { data: publicSongbooks = [] } = useQuery(
     publicSongbooksQueryOptions(),
   );
-
+  
   // Rebuild the DB whenever the base songs, songbooks, or user favorites change
   const songDB = useMemo(
     () =>
