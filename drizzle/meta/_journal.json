@@ -29,6 +29,13 @@
       "when": 1773258078987,
       "tag": "0003_concerned_abomination",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1776025080808,
+      "tag": "0004_tiny_dazzler",
+      "breakpoints": true
     }
   ]
 }

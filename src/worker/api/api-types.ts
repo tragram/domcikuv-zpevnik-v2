@@ -42,6 +42,7 @@ export type SongbookDataApi = {
 
 export type SongDataApi = {
   id: string;
+  versionId?: string; 
   title: string;
   artist: string;
   key?: string;

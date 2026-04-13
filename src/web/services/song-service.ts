@@ -170,7 +170,6 @@ export const findOrFetchSong = async (
 };
 
 export const fetchPublicSongbooks = async (api: API): Promise<Songbook[]> => {
-  console.log("public songbooks!");
   const response = await makeApiRequest(api.songs.songbooks.$get);
   return response.map(
     (s) => ({ ...s, songIds: new Set(s.songIds) }) as Songbook,
@@ -309,17 +308,40 @@ export const buildSongDB = (
   songbooks: Songbook[],
   userData: UserData,
 ): SongDB => {
-  const songDatas = songs
+  // create a map of the canonical songs for easy lookup/modification
+  const songMap = new Map<string, SongDataApi>(
+    songs.map((s) => [s.id, { ...s }]),
+  );
+
+  // overwrite canonical data with user's pending submissions 
+  if (userData?.submissions) {
+    for (const sub of userData.submissions) {
+      if (sub.status === "pending" && songMap.has(sub.songId)) {
+        const canonical = songMap.get(sub.songId)!;
+        songMap.set(sub.songId, {
+          ...canonical,
+          versionId: sub.id,
+          title: sub.title,
+          artist: sub.artist,
+          chordpro: sub.chordpro,
+          key: sub.key ?? canonical.key,
+          tempo: sub.tempo ? parseInt(sub.tempo) : canonical.tempo,
+          language: sub.language ?? canonical.language,
+          capo: sub.capo ?? canonical.capo,
+          startMelody: sub.startMelody ?? canonical.startMelody,
+          range: sub.range ?? canonical.range,
+        });
+      }
+    }
+  }
+
+  // enrich with favorites and instantiate
+  const songDatas = Array.from(songMap.values())
     .map((d) => ({
       ...d,
       isFavoriteByCurrentUser: userData?.favoriteIds.has(d.id),
     }))
     .map((enriched) => new SongData(enriched));
-
-  const pendingSubmissions = userData?.submissions;
-  // TODO: overwrite songIds that have
-  // needs to have versionId synced to users so we can track which have been overwritten, because
-  // follow-up TODO: this needs to be reflected in song syncing
 
   // add personal favorites songbook if not public
   if (

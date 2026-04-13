@@ -26,7 +26,6 @@ export const SongView = ({
   const fullScreenHandle = useFullScreenHandle();
   const gestureContainerRef = useRef<HTMLDivElement>(null);
   const { layout: layoutSettings } = useViewSettingsStore();
-
   const storeTransposeSteps = useViewSettingsStore(
     (state) => state.transpositions[songData.id] || 0,
   );

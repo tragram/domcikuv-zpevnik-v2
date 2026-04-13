@@ -47,6 +47,7 @@ const transformSongToApi = (
 
   return {
     id: songItem.id,
+    versionId: version?.id,
     title: version?.title ?? "Unknown title",
     artist: version?.artist ?? "Unknown artist",
     key: version?.key ?? undefined,

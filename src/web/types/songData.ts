@@ -47,6 +47,7 @@ export const defaultIllustrationId = (promptId: string, imageModel: string) =>
 
 export class SongData {
   id: string;
+  versionId?: string;
   title: string;
   artist: string;
   key?: Key;
@@ -66,6 +67,7 @@ export class SongData {
 
   constructor(songFromDB: SongDataApi & { isFavoriteByCurrentUser?: boolean }) {
     this.id = songFromDB.id;
+    this.versionId = songFromDB.versionId;
     this.title = songFromDB.title;
     this.artist = songFromDB.artist;
     this.key = this.parseKey(songFromDB.key);

@@ -44,27 +44,29 @@ type FeedViewProps = {
 };
 
 function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
-  // Feed route manages session sync as follower (read-only)
-  const { feedStatus } = useSessionSync(
-    masterNickname,
-    false,
-    true,
-    liveState, // hydrate with the live version
-  );
-
+  const { feedStatus } = useSessionSync(masterNickname, false, true, liveState);
   const currentSongId = feedStatus.sessionState?.songId;
+  const currentVersionId = feedStatus.sessionState?.versionId;
   const { data: songData } = useQuery({
-    queryKey: ["song", currentSongId],
+    queryKey: ["song", currentSongId, currentVersionId],
+    enabled: !!currentSongId,
+    refetchOnMount: "always",
     queryFn: async () => {
-      if (!currentSongId) return null;
+      const response = currentVersionId
+        ? await api.songs.fetch[":songId"][":versionId"].$get({
+          param: { songId: currentSongId!, versionId: currentVersionId },
+        })
+        : await api.songs.fetch[":id"].$get({
+          param: { id: currentSongId! },
+        });
 
-      const response = await api.songs.fetch[":id"].$get({
-        param: { id: currentSongId },
-      });
       const data = await handleApiResponse(response);
-      return new SongData(data);
+      return data;
     },
-    staleTime: Infinity,
+    select: (data: any) => {
+      return data instanceof SongData ? data : new SongData(data);
+    },
+    staleTime: 1000 * 60 * 10, // 10 minutes - pending versions could potentially change
   });
 
   if (!feedStatus.sessionState) {

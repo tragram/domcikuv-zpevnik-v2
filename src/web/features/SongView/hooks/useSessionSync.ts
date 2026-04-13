@@ -51,6 +51,7 @@ export function useSessionSync(
   const socketRef = useRef<WebSocket | null>(null);
   const pendingUpdateRef = useRef<{
     songId: string;
+    versionId?: string;
     transposeSteps: number;
   } | null>(null);
   const pingIntervalRef = useRef<number | undefined>(undefined);
@@ -68,84 +69,98 @@ export function useSessionSync(
   }, []);
 
   const connect = useCallback(() => {
-    cleanupSockets();
-    if (!enabled || !masterNickname) return;
+    // 1. Wrap the logic in a hoisted inner function
+    function attemptConnection() {
+      cleanupSockets();
+      if (!enabled || !masterNickname) return;
 
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const url = new URL(
-      `${protocol}//${window.location.host}/api/session/${masterNickname}`,
-    );
-    url.searchParams.set("role", isMaster ? "master" : "follower");
+      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const url = new URL(
+        `${protocol}//${window.location.host}/api/session/${masterNickname}`,
+      );
+      url.searchParams.set("role", isMaster ? "master" : "follower");
 
-    const ws = new WebSocket(url.toString());
-    socketRef.current = ws;
+      const ws = new WebSocket(url.toString());
+      socketRef.current = ws;
 
-    ws.onopen = () => {
-      setIsConnected(true);
-      setConnectionStatus("connected");
-      setRetryAttempt(0);
-      missedPongsRef.current = 0;
+      ws.onopen = () => {
+        setIsConnected(true);
+        setConnectionStatus("connected");
+        setRetryAttempt(0);
+        missedPongsRef.current = 0;
 
-      // Flush pending updates if master
-      if (isMaster && pendingUpdateRef.current) {
-        ws.send(
-          JSON.stringify({ type: "update-song", ...pendingUpdateRef.current }),
-        );
-        pendingUpdateRef.current = null;
-      }
+        // Flush pending updates if master
+        if (isMaster && pendingUpdateRef.current) {
+          ws.send(
+            JSON.stringify({
+              type: "update-song",
+              ...pendingUpdateRef.current,
+            }),
+          );
+          pendingUpdateRef.current = null;
+        }
 
-      // Start Heartbeat
-      pingIntervalRef.current = window.setInterval(() => {
-        if (ws.readyState !== WebSocket.OPEN) return;
-        if (missedPongsRef.current >= 1) {
-          ws.close();
+        // Start Heartbeat
+        pingIntervalRef.current = window.setInterval(() => {
+          if (ws.readyState !== WebSocket.OPEN) return;
+          if (missedPongsRef.current >= 1) {
+            ws.close();
+            return;
+          }
+          ws.send(JSON.stringify({ type: "ping" }));
+          missedPongsRef.current++;
+        }, 90_000); // 90s
+      };
+
+      ws.onmessage = (event) => {
+        missedPongsRef.current = 0; // Reset heartbeat on ANY message
+        const data: SesssionSyncWSMessage = JSON.parse(event.data);
+
+        if (data.type === "update-ok") {
+          setConnectedClients(data.connectedClients);
+        } else if (data.type === "sync" && !isMaster) {
+          setSessionState({
+            songId: data.songId,
+            versionId: data.versionId,
+            transposeSteps: data.transposeSteps,
+            masterAvatar: data.masterAvatar,
+            masterNickname: data.masterNickname,
+            masterId: data.masterId,
+          });
+        } else if (data.type === "master-replaced") {
+          setConnectionStatus("kicked");
+          toast.info("Session taken over by another device.");
+        }
+      };
+
+      ws.onclose = (event) => {
+        setIsConnected(false);
+        clearInterval(pingIntervalRef.current);
+
+        if (event.reason === "New master connected") {
+          setConnectionStatus("kicked");
           return;
         }
-        ws.send(JSON.stringify({ type: "ping" }));
-        missedPongsRef.current++;
-      }, 90_000); // 90s
-    };
 
-    ws.onmessage = (event) => {
-      missedPongsRef.current = 0; // Reset heartbeat on ANY message
-      const data: SesssionSyncWSMessage = JSON.parse(event.data);
+        setConnectionStatus("reconnecting");
+        setRetryAttempt((prev) => {
+          const delay = Math.min(1000 * Math.pow(2, prev), 30000);
+          const jitterDelay = delay + delay * 0.25 * (Math.random() * 2 - 1);
 
-      if (data.type === "update-ok") {
-        setConnectedClients(data.connectedClients);
-      } else if (data.type === "sync" && !isMaster) {
-        setSessionState({
-          songId: data.songId,
-          transposeSteps: data.transposeSteps,
-          masterAvatar: data.masterAvatar,
-          masterNickname: data.masterNickname,
-          masterId: data.masterId,
+          // 2. Safely reference the inner hoisted function here instead of `connect`
+          reconnectTimeoutRef.current = window.setTimeout(
+            attemptConnection,
+            jitterDelay,
+          );
+          return prev + 1;
         });
-      } else if (data.type === "master-replaced") {
-        setConnectionStatus("kicked");
-        toast.info("Session taken over by another device.");
-      }
-    };
+      };
 
-    ws.onclose = (event) => {
-      setIsConnected(false);
-      clearInterval(pingIntervalRef.current);
+      ws.onerror = () => ws.close();
+    }
 
-      if (event.reason === "New master connected") {
-        setConnectionStatus("kicked");
-        return;
-      }
-
-      setConnectionStatus("reconnecting");
-      setRetryAttempt((prev) => {
-        const delay = Math.min(1000 * Math.pow(2, prev), 30000);
-        const jitterDelay = delay + delay * 0.25 * (Math.random() * 2 - 1);
-
-        reconnectTimeoutRef.current = window.setTimeout(connect, jitterDelay);
-        return prev + 1;
-      });
-    };
-
-    ws.onerror = () => ws.close();
+    // 3. Kick off the initial connection
+    attemptConnection();
   }, [enabled, masterNickname, isMaster, cleanupSockets]);
 
   // Main Mount / Reconnect Effect
@@ -186,25 +201,29 @@ export function useSessionSync(
 
   // Public API
   const updateSong = useCallback(
-    (songId: string, transposeSteps: number) => {
+    (songId: string, transposeSteps: number, versionId?: string) => {
       if (!isMaster) return;
 
       const ws = socketRef.current;
       if (ws?.readyState === WebSocket.OPEN) {
         ws.send(
-          JSON.stringify({ type: "update-song", songId, transposeSteps }),
+          JSON.stringify({
+            type: "update-song",
+            songId,
+            transposeSteps,
+            versionId,
+          }),
         );
         pendingUpdateRef.current = null;
       } else {
-        pendingUpdateRef.current = { songId, transposeSteps };
+        pendingUpdateRef.current = { songId, transposeSteps, versionId };
         setRetryAttempt(0);
         setConnectionStatus("connecting");
-        connect(); // Force immediate reconnect
+        connect();
       }
     },
     [isMaster, connect],
   );
-
   return {
     feedStatus: {
       isMaster,

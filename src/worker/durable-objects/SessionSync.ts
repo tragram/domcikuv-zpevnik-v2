@@ -14,6 +14,7 @@ interface SocketMetadata {
 
 export interface SessionSyncState {
   songId: string | null;
+  versionId: string | null;
   transposeSteps: number | null;
   masterAvatar: string | null;
   masterNickname: string | null;
@@ -52,10 +53,12 @@ export class SessionSync extends DurableObject<Env> {
   masterAvatar: string | null = null;
   currentTransposeSteps: number | null = null;
   currentSongId: string | null = null;
+  currentVersionId: string | null = null;
 
   private pendingDbWrite: {
     masterId: string;
     songId: string;
+    versionId: string | null;
   } | null = null;
 
   // DB-related
@@ -66,6 +69,7 @@ export class SessionSync extends DurableObject<Env> {
     this.ctx.blockConcurrencyWhile(async () => {
       const stored = await this.ctx.storage.get<SessionSyncState>("state");
       this.currentSongId = stored?.songId || null;
+      this.currentVersionId = stored?.versionId || null;
       this.currentTransposeSteps = stored?.transposeSteps || null;
       this.masterAvatar = stored?.masterAvatar || null;
       this.masterNickname = stored?.masterNickname || null;
@@ -82,6 +86,7 @@ export class SessionSync extends DurableObject<Env> {
           masterId: string;
           masterNickname: string;
           songId: string;
+          versionId: string | null;
         }>("pendingDbWrite")) || null;
     });
   }
@@ -93,6 +98,7 @@ export class SessionSync extends DurableObject<Env> {
       return new Response(
         JSON.stringify({
           songId: this.currentSongId,
+          versionId: this.currentVersionId,
           transposeSteps: this.currentTransposeSteps,
           masterNickname: this.masterNickname,
           masterAvatar: this.masterAvatar,
@@ -160,6 +166,7 @@ export class SessionSync extends DurableObject<Env> {
       JSON.stringify({
         type: "sync",
         songId: this.currentSongId,
+        versionId: this.currentVersionId,
         transposeSteps: this.currentTransposeSteps,
         masterAvatar: this.masterAvatar,
         masterNickname: this.masterNickname,
@@ -191,28 +198,32 @@ export class SessionSync extends DurableObject<Env> {
       if (data.type === "update-song") {
         const immediateWrite = this.isNewSession;
 
-        // Schedule debounced DB write using stored userId and masterId on new song OR new session
         if (
           this.masterNickname &&
           this.masterId &&
           data.songId &&
-          (immediateWrite || data.songId !== this.currentSongId)
+          (immediateWrite ||
+            data.songId !== this.currentSongId ||
+            data.versionId !== this.currentVersionId)
         ) {
           await this.scheduleDbWrite(
             {
               masterId: this.masterId,
               songId: data.songId,
+              versionId: data.versionId ?? null,
             },
             immediateWrite,
           );
-          this.isNewSession = false; // Consume the flag
+          this.isNewSession = false;
         }
 
         this.currentSongId = data.songId;
+        this.currentVersionId = data.versionId ?? null;
         this.currentTransposeSteps = data.transposeSteps;
 
         await this.ctx.storage.put("state", {
           songId: data.songId,
+          versionId: data.versionId ?? null,
           transposeSteps: data.transposeSteps,
           masterAvatar: this.masterAvatar,
           masterNickname: this.masterNickname,
@@ -223,6 +234,7 @@ export class SessionSync extends DurableObject<Env> {
         this.broadcast({
           type: "sync",
           songId: this.currentSongId,
+          versionId: this.currentVersionId,
           transposeSteps: this.currentTransposeSteps,
           masterAvatar: this.masterAvatar,
           masterNickname: this.masterNickname,
@@ -242,7 +254,7 @@ export class SessionSync extends DurableObject<Env> {
   }
 
   private async scheduleDbWrite(
-    data: { masterId: string; songId: string | null },
+    data: { masterId: string; songId: string | null; versionId: string | null },
     isFirstSong: boolean = false,
   ) {
     // debounced DB write to minimize rows written during randomize
@@ -254,6 +266,7 @@ export class SessionSync extends DurableObject<Env> {
     this.pendingDbWrite = {
       masterId: data.masterId,
       songId: data.songId, // written like this to keep TS happy about songId
+      versionId: data.versionId,
     };
     await this.ctx.storage.put("pendingDbWrite", this.pendingDbWrite);
 
@@ -272,15 +285,13 @@ export class SessionSync extends DurableObject<Env> {
   }
 
   private async flushDbWrite() {
-    if (!this.pendingDbWrite) {
-      return;
-    }
-
+    if (!this.pendingDbWrite) return;
     try {
       const db = drizzle(this.env.DB);
       await db.insert(syncSession).values({
         masterId: this.pendingDbWrite.masterId,
         songId: this.pendingDbWrite.songId,
+        versionId: this.pendingDbWrite.versionId,
       });
     } catch (e) {
       console.error("Failed to write to D1:", e);

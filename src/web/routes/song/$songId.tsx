@@ -36,8 +36,7 @@ function RouteComponent() {
     (state) => state.transpositions[songId] || 0,
   );
 
-  // Only enable session sync for non-versioned songs
-  const shouldShare = !!userData && shareSession && !versionId;
+  const shouldShare = !!userData && shareSession;
   const masterId = userData
     ? (userData.profile.nickname ?? undefined)
     : undefined;
@@ -47,19 +46,24 @@ function RouteComponent() {
     shouldShare,
     shouldShare,
   );
-
-  // Push new songs & transpositions to the server (only for non-versioned songs)
+  
   useEffect(() => {
-    if (shouldShare && updateSong && songData?.id) {
+    if (shouldShare && updateSong && songData.id) {
       console.debug(
         "Master updating song to:",
         songData.id,
         "with transpose:",
         transposeSteps,
       );
-      updateSong(songData.id, transposeSteps);
+      updateSong(songData.id, transposeSteps, songData.versionId);
     }
-  }, [songData?.id, shouldShare, updateSong, transposeSteps]);
+  }, [
+    songData.id,
+    shouldShare,
+    updateSong,
+    transposeSteps,
+    songData.versionId,
+  ]);
 
   return (
     <SongView
