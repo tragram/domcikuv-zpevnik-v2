@@ -6,15 +6,20 @@
 {language: czech}
 {startMelody: d d e f# e d}
 {createdAt: 1775759850000}
-{updatedAt: 1775760615000}
+{updatedAt: 1776534028000}
 {illustrationId: Jelen-Jehnedy_gpt-5-mini_v4_nano-banana-2}
 {promptId: Jelen-Jehnedy_gpt-5-mini_v4}
 
+{start_of_verse: Mezihra}
+𝄆[D][G][G/D][A][G][A] 𝄇 (3x)
+[Hmi][Asus4][G]
+{end_of_verse}
+
 {start_of_verse}
 [D]Bejval jsem temnej jak [G]bouřkovej [D]mrak,
-rouhal se, válčil a [A]pil,
+rouhal se, válčil a [Asus4]pil,
 [Hmi]v dešti a vánici [G]klopil jsem zrak,
-abych [D]cestu neztra[A]til.
+abych [D]cestu neztra[Asus4]til.
 {end_of_verse}
 
 {start_of_verse}
@@ -28,8 +33,10 @@ se [D]vracím domů k [A]vám.
 [D]Slunce je vzhůru a [G]tajou [D]ledy,
 vítr sníh prohání [G]nad jehně[A]dy,
 [D]začíná pohyb a [G]končí [D]klid,
-[Hmi]bylo nám dobře [A]a bude nám [D]líp.
+[Hmi]bylo nám dobře [A]a bude nám líp.[D]
 {end_of_chorus}
+
+{verse: Mezihra}
 
 {start_of_verse}
 [D]Někdy bys rozdal svůj [G]poslední dech,
@@ -54,4 +61,12 @@ můžeš [D]s čistým srdcem [A]spát.
 [D]ještě jsi naživu, [A]černá má pech.
 {end_of_bridge}
 
+{start_of_variant: replace_last_line}
+[Hmi]Bylo nám dobře... [A]A [G]bude!
+{end_of_variant}
+
 {chorus}
+
+{chorus}
+
+{verse: Mezihra}
