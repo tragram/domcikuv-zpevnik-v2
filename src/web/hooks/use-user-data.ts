@@ -41,7 +41,7 @@ type SessionData = NonNullable<
   Awaited<ReturnType<typeof authClient.getSession>>["data"]
 >;
 
-const sessionToProfile = (sessionData: SessionData | null | undefined) =>
+export const sessionToProfile = (sessionData: SessionData | null | undefined) =>
   (sessionData?.user ? parseDBDates(sessionData.user) : null) as UserProfileDB;
 
 export function useUserData() {

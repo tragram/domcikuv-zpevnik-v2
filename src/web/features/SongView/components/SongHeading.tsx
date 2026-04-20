@@ -7,6 +7,7 @@ import type { LayoutSettings } from "../hooks/viewSettingsStore";
 import { SONG_SOURCES_PRETTY } from "src/lib/db/schema/song.schema";
 import { Link } from "@tanstack/react-router";
 import { UserData } from "src/web/hooks/use-user-data";
+import { Badge } from "src/web/components/ui/badge";
 
 interface SongHeadingProps {
   songData: SongData;
@@ -84,6 +85,11 @@ const SongHeading: React.FC<SongHeadingProps> = ({
         <h2 className="font-bold text-wrap  dark:text-white select-text">
           {songData.title}
         </h2>
+
+        {/* TODO: should show when viewing a session that it's the user's custom version */}
+        {songData.isCustom && (
+          <p className="text-sm opacity-70 mt-2">Viewing changes that are not yet public</p>
+        )}
       </div>
       <div
         className={cn(

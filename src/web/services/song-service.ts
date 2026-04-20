@@ -1,4 +1,5 @@
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
+import { queryClient } from "src/lib/query-client";
 import {
   ModifySongVersionSchema,
   SongModificationSchema,
@@ -18,9 +19,9 @@ import {
   SongDB,
   SongLanguage,
 } from "~/types/types";
-import { makeApiRequest } from "./api-service";
-import { queryClient } from "src/lib/query-client";
 import { UserData } from "../hooks/use-user-data";
+import { makeApiRequest } from "./api-service";
+import { QueryClient, queryOptions } from "@tanstack/react-query";
 
 interface Timestamped {
   createdAt?: Date | string;
@@ -137,32 +138,57 @@ export const fetchSongVersion = async (
   return new SongData(songData);
 };
 
+
+export const singleSongQueryOptions = (songId: string, versionId?: string) =>
+  queryOptions({
+    queryKey: versionId ? ["song", "fetch", songId, versionId] : ["song", "fetch", songId],
+    queryFn: async () => {
+      if (versionId) {
+        return (await makeApiRequest(() =>
+          client.api.songs.fetch[":songId"][":versionId"].$get({
+            param: { songId, versionId },
+          }),
+        )) as SongDataApi;
+      } else {
+        return (await makeApiRequest(() =>
+          client.api.songs.fetch[":id"].$get({
+            param: { id: songId },
+          }),
+        )) as SongDataApi;
+      }
+    },
+  });
+
 export const findOrFetchSong = async (
   songs: SongData[] | SongDataApi[],
   songId: string,
   versionId?: string,
+  queryClientInstance?: QueryClient,
 ): Promise<SongData | null> => {
   let songData: SongData | SongDataApi | undefined;
+
   if (versionId) {
-    songData = new SongData(
-      (await makeApiRequest(() =>
-        client.api.songs.fetch[":songId"][":versionId"].$get({
-          param: { songId, versionId },
-        }),
-      )) as SongDataApi,
-    );
+    let raw: SongDataApi;
+    if (queryClientInstance) {
+      raw = await queryClientInstance.fetchQuery(singleSongQueryOptions(songId, versionId));
+    } else {
+      raw = await singleSongQueryOptions(songId, versionId).queryFn!({} as any);
+    }
+    songData = new SongData(raw);
   } else {
     songData = songs.find((s) => s.id === songId);
   }
+
   if (!songData) {
-    songData = new SongData(
-      (await makeApiRequest(() =>
-        client.api.songs.fetch[":id"].$get({
-          param: { id: songId },
-        }),
-      )) as SongDataApi,
-    );
+    let raw: SongDataApi;
+    if (queryClientInstance) {
+      raw = await queryClientInstance.fetchQuery(singleSongQueryOptions(songId, undefined));
+    } else {
+      raw = await singleSongQueryOptions(songId, undefined).queryFn!({} as any);
+    }
+    songData = new SongData(raw);
   }
+
   if (!(songData instanceof SongData)) {
     songData = new SongData(songData);
   }
@@ -309,28 +335,34 @@ export const buildSongDB = (
   userData: UserData,
 ): SongDB => {
   // create a map of the canonical songs for easy lookup/modification
-  const songMap = new Map<string, SongDataApi>(
+  const songMap = new Map<string, SongDataApi & { isCustom?: boolean }>(
     songs.map((s) => [s.id, { ...s }]),
   );
-
-  // overwrite canonical data with user's pending submissions 
   if (userData?.submissions) {
     for (const sub of userData.submissions) {
-      if (sub.status === "pending" && songMap.has(sub.songId)) {
-        const canonical = songMap.get(sub.songId)!;
+      if (sub.status === "pending") {
+        console.log("overwriting pending")
+        // overwrite canonical data with user's pending submissions
+        const canonical = songMap.get(sub.songId);
         songMap.set(sub.songId, {
-          ...canonical,
+          ...(canonical || ({} as SongDataApi)),
+          id: canonical?.id ?? sub.songId,
           versionId: sub.id,
           title: sub.title,
           artist: sub.artist,
           chordpro: sub.chordpro,
-          key: sub.key ?? canonical.key,
-          tempo: sub.tempo ? parseInt(sub.tempo) : canonical.tempo,
-          language: sub.language ?? canonical.language,
-          capo: sub.capo ?? canonical.capo,
-          startMelody: sub.startMelody ?? canonical.startMelody,
-          range: sub.range ?? canonical.range,
+          key: sub.key !== undefined ? (sub.key ?? undefined) : canonical?.key,
+          tempo: sub.tempo !== undefined ? (sub.tempo ? parseInt(sub.tempo) : undefined) : canonical?.tempo,
+          language: sub.language !== undefined ? (sub.language ?? undefined) : canonical?.language,
+          capo: sub.capo !== undefined ? (sub.capo ?? undefined) : canonical?.capo,
+          startMelody: sub.startMelody !== undefined ? (sub.startMelody ?? undefined) : canonical?.startMelody,
+          range: sub.range !== undefined ? (sub.range ?? undefined) : canonical?.range,
+          isCustom: true,
+          createdAt: canonical?.createdAt ?? sub.createdAt,
+          updatedAt: sub.updatedAt,
+          externalSource: canonical?.externalSource ?? null,
         });
+        console.log(songMap.get(sub.songId));
       }
     }
   }

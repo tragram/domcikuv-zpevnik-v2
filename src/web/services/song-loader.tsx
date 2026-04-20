@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { RouteIds, useLoaderDeps, useParams } from "@tanstack/react-router";
 import {
-  songsQueryOptions
+  getSongDB,
 } from "~/hooks/use-songDB";
 import type { routeTree } from "~/routeTree.gen";
 import { SongData } from "~/types/songData";
@@ -60,9 +60,9 @@ const songLoader = async ({
 }): Promise<SongLoaderData> => {
   const queryClient = context.queryClient;
 
-  const songs = queryClient.getQueryData(songsQueryOptions().queryKey) ?? [];
-
-  const songData = await findOrFetchSong(songs, params.songId, deps.version);
+  const songDB = await getSongDB(queryClient);
+  
+  let songData = await findOrFetchSong(songDB.songs, params.songId, deps.version, queryClient);
   if (!songData) throw new Error("Song not found!");
 
   return { songData, songId: params.songId, versionId: deps.version };

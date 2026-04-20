@@ -42,7 +42,7 @@ export type SongbookDataApi = {
 
 export type SongDataApi = {
   id: string;
-  versionId?: string; 
+  versionId?: string;
   title: string;
   artist: string;
   key?: string;
@@ -78,7 +78,7 @@ export type SongVersionApi = {
   tempo?: string | null;
   userId: string;
   approvedBy?: string | null;
-  approvedAt?: string | null;
+  approvedAt?: Date | string | null;
   createdAt: Date | string;
   updatedAt: Date | string;
   chordpro: string;
