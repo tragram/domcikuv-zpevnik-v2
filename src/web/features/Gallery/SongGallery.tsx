@@ -1,7 +1,8 @@
-import { Link, useRouteContext } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { CircleX } from "lucide-react";
 import { memo, useMemo, useState } from "react";
+import client from "src/worker/api-client";
 import { IllustrationPrompt } from "~/components/IllustrationPrompt";
 import { Button } from "~/components/ui/button";
 import { SongData } from "~/types/songData";
@@ -24,7 +25,6 @@ const imageHeight = (normalHeight: number, variability: number) => {
 };
 
 function CardThatHides({ song }: { song: SongData }) {
-  const songsAPI = useRouteContext({ from: "/gallery" }).api.songs;
   const [hidden, setHidden] = useState(false);
   const [showingContent, setShowingContent] = useState(false);
   const onError = () => {
@@ -62,7 +62,7 @@ function CardThatHides({ song }: { song: SongData }) {
             <IllustrationPrompt
               song={song}
               show={showingContent}
-              songsAPI={songsAPI}
+              songsAPI={client.api.songs}
               className={"text-white h-32"}
             />
             <Button
@@ -105,7 +105,7 @@ const columnData = () => {
 const SongGallery = memo(({ songDB }: SongGalleryProps) => {
   const { columnNr, columnWidth } = columnData();
   const shuffledSongs = useMemo(
-    () => getShuffledArr(songDB.songs),
+    () => getShuffledArr(songDB.songs).filter((s) => s.currentIllustration),
     [songDB.songs],
   );
   const songHeights = useMemo(
