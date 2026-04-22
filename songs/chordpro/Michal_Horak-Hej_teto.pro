@@ -6,8 +6,8 @@
 {language: czech}
 {startMelody: a h a g}
 {createdAt: 1773416356000}
-{updatedAt: 1773498967000}
-{illustrationId: Michal_Horak-Hej_teto_gpt-5-mini_v4_nano-banana-2}
+{updatedAt: 1776760885000}
+{illustrationId: Michal_Horak-Hej_teto_gpt-5-mini_v4_nano-banana-2-modified}
 {promptId: Michal_Horak-Hej_teto_gpt-5-mini_v4}
 
 {start_of_verse}

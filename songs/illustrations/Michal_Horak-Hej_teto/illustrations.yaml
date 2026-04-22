@@ -34,3 +34,6 @@ prompts:
       - createdAt: 1773498967000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+      - createdAt: 1776760885000
+        imageModel: nano-banana-2-modified
+        filename: nano-banana-2-modified.webp
