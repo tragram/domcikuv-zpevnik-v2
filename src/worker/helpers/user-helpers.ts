@@ -12,10 +12,9 @@ export const createUserSchema = z.object({
   emailVerified: z.boolean().optional(),
   image: z.string().optional().nullable(),
   // Pre-process empty strings into nulls before validation
-  nickname: z.preprocess(
-    (val) => (val === "" ? null : val),
-    z.string().nullable().optional(),
-  ),
+  nickname: z
+    .preprocess((val) => (val === "" ? null : val), z.string().nullable())
+    .optional(),
   isTrusted: z.boolean().optional(),
   isAdmin: z.boolean().optional(),
   isFavoritesPublic: z.boolean().optional(),
