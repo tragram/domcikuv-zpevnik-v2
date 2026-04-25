@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { API } from "src/worker/api-client";
 
@@ -45,6 +46,16 @@ type FeedViewProps = {
 
 function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
   const { feedStatus } = useSessionSync(masterNickname, false, true, liveState);
+  const navigate = useNavigate();
+
+  //change URL if nickname changes
+  const currentMasterNickname = feedStatus.sessionState?.masterNickname;
+  useEffect(() => {
+    if (currentMasterNickname && currentMasterNickname !== masterNickname) {
+      navigate({ to: `/feed/${currentMasterNickname}`, replace: true });
+    }
+  }, [currentMasterNickname, masterNickname, navigate]);
+
   const currentSongId = feedStatus.sessionState?.songId;
   const currentVersionId = feedStatus.sessionState?.versionId;
   const { data: songData } = useQuery({

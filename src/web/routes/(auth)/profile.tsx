@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Camera, LogOut, Save, Shield, User } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
@@ -64,6 +65,7 @@ function RouteComponent() {
 
   const navigate = Route.useNavigate();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Create initial state object matching userProfile structure
@@ -140,8 +142,7 @@ function RouteComponent() {
       setAvatarToDelete(false);
       setSavedData(updatedData);
 
-      // TODO: will this work?
-      await getUserData();
+      await queryClient.invalidateQueries({ queryKey: ["session"] });
       toast.success("Profile updated successfully");
 
       // Redirect if redirect parameter is present and is a valid string

@@ -38,7 +38,7 @@ function RouteComponent() {
 
   const shouldShare = !!userData && shareSession;
   const masterId = userData
-    ? (userData.profile.nickname ?? undefined)
+    ? (userData.profile.nickname || userData.profile.name)
     : undefined;
 
   const { updateSong, feedStatus } = useSessionSync(
