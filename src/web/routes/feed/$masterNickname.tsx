@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { UserData, useUserData } from "src/web/hooks/use-user-data";
@@ -65,11 +65,11 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
     queryFn: async () => {
       const response = currentVersionId
         ? await api.songs.fetch[":songId"][":versionId"].$get({
-          param: { songId: currentSongId!, versionId: currentVersionId },
-        })
+            param: { songId: currentSongId!, versionId: currentVersionId },
+          })
         : await api.songs.fetch[":id"].$get({
-          param: { id: currentSongId! },
-        });
+            param: { id: currentSongId! },
+          });
 
       const data = await handleApiResponse(response);
       return data;
@@ -77,7 +77,8 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
     select: (data: any) => {
       return data instanceof SongData ? data : new SongData(data);
     },
-    staleTime: 1000 * 60 * 10, // 10 minutes - pending versions could potentially change
+    staleTime: 1000 * 60 * 10,
+    placeholderData: keepPreviousData,
   });
 
   if (!feedStatus.sessionState) {
