@@ -341,7 +341,6 @@ export const buildSongDB = (
   if (userData?.submissions) {
     for (const sub of userData.submissions) {
       if (sub.status === "pending") {
-        console.log("overwriting pending")
         // overwrite canonical data with user's pending submissions
         const canonical = songMap.get(sub.songId);
         songMap.set(sub.songId, {
@@ -362,7 +361,6 @@ export const buildSongDB = (
           updatedAt: sub.updatedAt,
           externalSource: canonical?.externalSource ?? null,
         });
-        console.log(songMap.get(sub.songId));
       }
     }
   }
