@@ -286,6 +286,7 @@ export const createSongVersion = async (
   isTrusted: boolean,
   importId?: string,
 ) => {
+  // TODO: what to do when the song is present by an older untrusted submission/import?
   const existingSong = await getSongBase(db, songId);
   if (existingSong.hidden || existingSong.deleted) {
     // ensure the song won't be hidden after this new version, at least after the suggested version is accepted

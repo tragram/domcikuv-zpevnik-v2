@@ -62,7 +62,10 @@ export const externalRoutes = buildApp()
         if (existingSong && !existingSong.externalSource) {
           // TODO: restore if deleted
           // song not only exists but is already an internal song - do not add, just redirect to the actual song
-          return successJSend(c, { songId: existingSong.id });
+          return successJSend(c, {
+            songId: existingSong.id,
+            versionId: existingSong.versionId,
+          });
         }
       } catch {
         // Song doesn't exist yet, proceed
@@ -146,7 +149,6 @@ export const externalRoutes = buildApp()
 
       if (!existingSong) {
         await createSong(db, submission, user.id, true, importedSong.id);
-        existingSong = await retrieveSingleSong(db, newSongId);
       } else {
         await createSongVersion(
           db,
@@ -157,6 +159,8 @@ export const externalRoutes = buildApp()
           importedSong.id,
         );
       }
+      // load the updated song
+      existingSong = await retrieveSingleSong(db, newSongId);
 
       if (!existingSong) throw Error("Failed to create song!");
       try {
@@ -179,6 +183,9 @@ export const externalRoutes = buildApp()
         }
       }
 
-      return successJSend(c, { songId: existingSong.id });
+      return successJSend(c, {
+        songId: existingSong.id,
+        versionId: existingSong.versionId,
+      });
     },
   );
