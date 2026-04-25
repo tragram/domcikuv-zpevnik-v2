@@ -38,7 +38,8 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
     (state) => state.actions.setShareSession,
   );
 
-  const showProfileLink = !userData || !userData.profile.nickname;
+  const showProfileLink = !userData;
+  const showNicknameRecommendation = userData && !userData.profile.nickname;
 
   const { scheduleEnable } = useEnableShareSessionAfterAuth(userData);
 
@@ -109,7 +110,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
       </Tooltip>
 
       <DropdownMenuContent
-        className="m-2 w-[calc(100dvw-1rem)] sm:w-96"
+        className="m-2 w-[calc(100dvw-1rem)] sm:w-96 text-foreground/80"
         align="start"
       >
         <RichItem.Header>Active Sessions</RichItem.Header>
@@ -142,16 +143,16 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                     fallbackClassName="text-xs"
                   />
                   <div className="flex items-center gap-3 min-w-0 flex-1 justify-between">
-                    <div className="truncate text-sm w-[6rem] flex-shrink-0">
+                    <div className="truncate text-sm w-[6rem] flex-shrink-0 dark:text-white">
                       {session.nickname}
                     </div>
                     <div className="text-xs hidden xs:flex flex-col flex-1 min-w-0 text-center">
                       {session.song && (
                         <>
-                          <div className="truncate text-foreground/80">
+                          <div className="truncate">
                             {session.song.artist}
                           </div>
-                          <div className="truncate text-foreground/80">
+                          <div className="truncate">
                             {session.song.title}
                           </div>
                         </>
@@ -177,26 +178,29 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
             className="block"
             onClick={scheduleEnable}
           >
-            <div className="flex items-center gap-3 w-full rounded-md px-2 py-2 hover:bg-accent transition-colors text-sm text-muted-foreground">
-              <div className="w-7 flex justify-center flex-shrink-0">
-                <CloudSync className="h-5 w-5" />
-              </div>
-              <span>To share your session, log in & pick a nickname!</span>
+            <div className="flex items-center gap-3 w-full rounded-md px-2 py-2 hover:bg-accent transition-colors text-sm">
+              <RichItem.Icon size={7}><CloudSync /></RichItem.Icon>
+              <span><span className="underline">Log in</span> to share your session!</span>
             </div>
           </Link>
         ) : (
-          <div className="flex items-center justify-between w-full px-2 py-2">
-            <div className={`flex items-center gap-3 text-sm ${!isOnline ? "opacity-50" : ""}`}>
-              <div className="w-7 flex justify-center flex-shrink-0">
-                <CloudSync className="h-5 w-5" />
+          <div className="flex flex-col w-full px-2 py-2">
+            <div className="flex items-center justify-between w-full">
+              <div className={`flex items-center gap-3 text-sm ${!isOnline ? "opacity-50" : ""}`}>
+                <RichItem.Icon size={7}><CloudSync /></RichItem.Icon>
+                <span>Share your session</span>
               </div>
-              <span>Share your session</span>
+              <Switch
+                checked={shareSession}
+                onCheckedChange={setShareSession}
+                disabled={!isOnline}
+              />
             </div>
-            <Switch
-              checked={shareSession}
-              onCheckedChange={setShareSession}
-              disabled={!isOnline}
-            />
+            {showNicknameRecommendation && (
+              <div className="text-xs text-muted-foreground pl-10">
+                Tip: <Link to="/profile" className="underline">Set a nickname</Link> for a better sharing link.
+              </div>
+            )}
           </div>
         )}
       </DropdownMenuContent>

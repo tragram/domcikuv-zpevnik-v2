@@ -166,8 +166,8 @@ export const CompactItem = {
     subtitle,
     titleClass,
   }: {
-    title: string;
-    subtitle?: string;
+    title: ReactNode;
+    subtitle?: ReactNode;
     titleClass?: string;
   }) => (
     <Body

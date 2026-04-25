@@ -22,7 +22,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   songId,
 }) => {
   const onLine = useIsOnline();
-  const showProfileLink = !userData || !userData.profile.nickname;
+  const showProfileLink = !userData;
 
   const shareSession = useViewSettingsStore((state) => state.shareSession);
   const setShareSession = useViewSettingsStore(
@@ -34,18 +34,18 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   const getDescription = () => {
     if (!onLine) return { text: "You need to be online to use this feature" };
     if (onLine && showProfileLink)
-      return { text: "Click to log in & pick a nickname to enable" };
+      return { text: <><span className="underline">Log in</span> to enable this feature</> };
     if (feedStatus?.enabled && !feedStatus.isMaster) {
       return {
-        text: `Currently connected to ${
-          feedStatus.sessionState?.masterNickname || "someone else"
-        }'s session`,
+        text: `Currently connected to ${feedStatus.sessionState?.masterNickname || "someone else"
+          }'s session`,
       };
     }
     if (!shareSession) return { text: "Share your page with others - live" };
-    if (shareSession && userData && userData.profile.nickname) {
+    if (shareSession && userData) {
+      const displayName = userData.profile.nickname || userData.profile.name;
       return {
-        text: `Your session can be viewed at ${window.location.host}/feed/${userData.profile.nickname}`,
+        text: `Your session can be viewed at ${window.location.host}/feed/${displayName}`,
       };
     }
     return null;

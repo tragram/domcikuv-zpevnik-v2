@@ -9,13 +9,13 @@ export function useEnableShareSessionAfterAuth(userData: UserData | undefined | 
   );
 
   useEffect(() => {
-    if (userData?.profile?.nickname) {
+    if (userData?.profile) {
       if (localStorage.getItem("enableShareSessionAfterAuth") === "true") {
         localStorage.removeItem("enableShareSessionAfterAuth");
         if (!shareSession) setShareSession(true);
       }
     }
-  }, [userData?.profile?.nickname, shareSession, setShareSession]);
+  }, [userData?.profile, shareSession, setShareSession]);
 
   const scheduleEnable = () => {
     localStorage.setItem("enableShareSessionAfterAuth", "true");

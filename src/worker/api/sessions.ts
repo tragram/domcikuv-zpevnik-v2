@@ -1,4 +1,4 @@
-import { eq, gte } from "drizzle-orm";
+import { eq, gte, or } from "drizzle-orm";
 import { syncSession, user, user as userTable } from "src/lib/db/schema";
 import { errorJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
@@ -27,6 +27,7 @@ const sessionSyncApp = buildApp()
         songId: syncSession.songId,
         avatar: user.image,
         nickname: user.nickname,
+        name: user.name,
       })
       .from(syncSession)
       .where(gte(syncSession.timestamp, latestLive))
@@ -42,7 +43,12 @@ const sessionSyncApp = buildApp()
       return acc;
     }, new Map());
 
-    const uniqueSessions = Array.from(latestByMasterId.values());
+    const uniqueSessions = Array.from(latestByMasterId.values()).map(
+      (s: any) => ({
+        ...s,
+        nickname: s.nickname || s.name,
+      })
+    );
 
     return successJSend(c, uniqueSessions as SessionsResponseData);
   })
@@ -53,9 +59,9 @@ const sessionSyncApp = buildApp()
     // Verify the master user exists
     const db = c.var.db;
     const masterProfile = await db
-      .select({ id: userTable.id, avatar: userTable.image })
+      .select({ id: userTable.id, avatar: userTable.image, nickname: userTable.nickname, name: userTable.name })
       .from(userTable)
-      .where(eq(userTable.nickname, masterNickname))
+      .where(or(eq(userTable.nickname, masterNickname), eq(userTable.name, masterNickname)))
       .get();
 
     if (!masterProfile) return errorJSend(c, "Master user not found", 404);
@@ -78,7 +84,8 @@ const sessionSyncApp = buildApp()
 
     const url = new URL(c.req.url);
     url.searchParams.set("role", verifiedRole);
-    if (masterNickname) url.searchParams.set("masterNickname", masterNickname);
+    const displayName = masterProfile.nickname || masterProfile.name;
+    url.searchParams.set("masterNickname", displayName);
     url.searchParams.set("masterId", masterProfile.id);
     if (masterProfile.avatar)
       url.searchParams.set("masterAvatar", masterProfile.avatar);
