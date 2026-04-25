@@ -2,15 +2,15 @@ import { Link } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useUserData } from "src/web/hooks/use-user-data";
-import { RichItem } from "~/components/RichDropdown";
-import { AvatarWithFallback } from "~/components/ui/avatar";
-import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { RichItem } from "~/components/RichDropdown";
+import { useViewSettingsStore } from "src/web/features/SongView/hooks/viewSettingsStore";
+import { Switch } from "~/components/ui/switch";
 import {
   Tooltip,
   TooltipContent,
@@ -18,6 +18,9 @@ import {
 } from "~/components/ui/tooltip";
 import { useActiveSessions } from "~/hooks/use-active-sessions";
 import { useSongDB } from "~/hooks/use-songDB";
+import { Button } from "src/web/components/ui/button";
+import { AvatarWithFallback } from "src/web/components/ui/avatar";
+import { useEnableShareSessionAfterAuth } from "src/web/hooks/use-enable-share-session-after-auth";
 
 interface SessionViewProps {
   isOnline: boolean;
@@ -29,6 +32,15 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const { userData } = useUserData();
   const { songDB } = useSongDB(userData);
   const { activeSessions, refetchIfStale } = useActiveSessions(songDB);
+
+  const shareSession = useViewSettingsStore((state) => state.shareSession);
+  const setShareSession = useViewSettingsStore(
+    (state) => state.actions.setShareSession,
+  );
+
+  const showProfileLink = !userData || !userData.profile.nickname;
+
+  const { scheduleEnable } = useEnableShareSessionAfterAuth(userData);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -158,10 +170,35 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
         )}
 
         <DropdownMenuSeparator />
-        <p className="px-2 py-2 text-xs">
-          To share your own session, just log in, pick a nickname and enable the
-          feature in song settings!
-        </p>
+        {isOnline && showProfileLink ? (
+          <Link
+            to="/profile"
+            search={{ redirect: window.location.pathname }}
+            className="block"
+            onClick={scheduleEnable}
+          >
+            <div className="flex items-center gap-3 w-full rounded-md px-2 py-2 hover:bg-accent transition-colors text-sm text-muted-foreground">
+              <div className="w-7 flex justify-center flex-shrink-0">
+                <CloudSync className="h-5 w-5" />
+              </div>
+              <span>To share your session, log in & pick a nickname!</span>
+            </div>
+          </Link>
+        ) : (
+          <div className="flex items-center justify-between w-full px-2 py-2">
+            <div className={`flex items-center gap-3 text-sm ${!isOnline ? "opacity-50" : ""}`}>
+              <div className="w-7 flex justify-center flex-shrink-0">
+                <CloudSync className="h-5 w-5" />
+              </div>
+              <span>Share your session</span>
+            </div>
+            <Switch
+              checked={shareSession}
+              onCheckedChange={setShareSession}
+              disabled={!isOnline}
+            />
+          </div>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

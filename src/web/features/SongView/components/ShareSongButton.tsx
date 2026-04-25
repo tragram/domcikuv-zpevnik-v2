@@ -8,6 +8,7 @@ import { useIsOnline } from "~/hooks/use-is-online";
 import { CompactItem } from "~/components/RichDropdown";
 import { FeedStatus } from "../hooks/useSessionSync";
 import { UserData } from "src/web/hooks/use-user-data";
+import { useEnableShareSessionAfterAuth } from "src/web/hooks/use-enable-share-session-after-auth";
 
 interface ShareSongButtonProps {
   feedStatus: FeedStatus | undefined;
@@ -27,6 +28,8 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   const setShareSession = useViewSettingsStore(
     (state) => state.actions.setShareSession,
   );
+
+  const { scheduleEnable } = useEnableShareSessionAfterAuth(userData);
 
   const getDescription = () => {
     if (!onLine) return { text: "You need to be online to use this feature" };
@@ -60,6 +63,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
         to="/profile"
         search={{ redirect: `/song/${songId}` }}
         className="w-full"
+        onClick={scheduleEnable}
       >
         {content}
       </Link>
