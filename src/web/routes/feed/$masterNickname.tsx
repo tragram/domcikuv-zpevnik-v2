@@ -48,7 +48,7 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
   const { feedStatus } = useSessionSync(masterNickname, false, true, liveState);
   const navigate = useNavigate();
 
-  //change URL if nickname changes
+  // change URL if nickname changes
   const currentMasterNickname = feedStatus.sessionState?.masterNickname;
   useEffect(() => {
     if (currentMasterNickname && currentMasterNickname !== masterNickname) {
@@ -95,7 +95,7 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
       </div>
     );
   }
-
+  console.log(feedStatus.sessionState?.isMasterConnected)
   if (!songData || !feedStatus.sessionState.songId) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -112,7 +112,6 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
       </div>
     );
   }
-
   return (
     <SongView songData={songData} userData={userData} feedStatus={feedStatus} />
   );

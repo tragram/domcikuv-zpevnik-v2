@@ -126,6 +126,7 @@ export function useSessionSync(
             masterAvatar: data.masterAvatar,
             masterNickname: data.masterNickname,
             masterId: data.masterId,
+            isMasterConnected: data.isMasterConnected,
           });
         } else if (data.type === "master-replaced") {
           setConnectionStatus("kicked");

@@ -10,6 +10,7 @@ interface Env {
 interface SocketMetadata {
   isMaster: boolean;
   masterId: string;
+  connectionId: string;
 }
 
 export interface SessionSyncState {
@@ -19,6 +20,7 @@ export interface SessionSyncState {
   masterAvatar: string | null;
   masterNickname: string | null;
   masterId: string | null;
+  isMasterConnected?: boolean;
 }
 
 export interface SyncMessage extends SessionSyncState {
@@ -36,6 +38,7 @@ export interface UpdateOKMessage {
 
 export interface MasterReplacedMessage {
   type: "master-replaced";
+  message?: string;
 }
 
 export type SesssionSyncWSMessage =
@@ -46,6 +49,7 @@ export type SesssionSyncWSMessage =
 
 export class SessionSync extends DurableObject<Env> {
   private masterWebSocket: WebSocket | null = null;
+  private masterConnectionId: string | null = null;
   private masterId: string | null = null;
   private isNewSession: boolean = true; // Flag to track fresh connections
 
@@ -74,11 +78,16 @@ export class SessionSync extends DurableObject<Env> {
       this.masterAvatar = stored?.masterAvatar || null;
       this.masterNickname = stored?.masterNickname || null;
       this.masterId = stored?.masterId || null;
-      this.masterWebSocket =
-        this.ctx
-          .getWebSockets()
-          .find((webSocket) => webSocket.deserializeAttachment().isMaster) ||
-        null;
+
+      // Restore active connection details in case of DO hibernation
+      const activeMasterWs = this.ctx
+        .getWebSockets()
+        .find((webSocket) => webSocket.deserializeAttachment().isMaster);
+
+      this.masterWebSocket = activeMasterWs || null;
+      this.masterConnectionId = activeMasterWs
+        ? activeMasterWs.deserializeAttachment().connectionId
+        : null;
 
       // Restore pending write if exists
       this.pendingDbWrite =
@@ -103,6 +112,7 @@ export class SessionSync extends DurableObject<Env> {
           masterNickname: this.masterNickname,
           masterAvatar: this.masterAvatar,
           masterId: this.masterId,
+          isMasterConnected: this.masterWebSocket !== null,
         } as SessionSyncState),
         { headers: { "Content-Type": "application/json" } },
       );
@@ -126,6 +136,7 @@ export class SessionSync extends DurableObject<Env> {
     if (masterAvatarParam) {
       this.masterAvatar = masterAvatarParam;
     }
+
     // If this is a master connection and we already have one, disconnect the old one
     if (isMaster && this.masterWebSocket) {
       const oldMaster = this.masterWebSocket;
@@ -149,9 +160,12 @@ export class SessionSync extends DurableObject<Env> {
 
     const pair = new WebSocketPair();
     const [client, server] = Object.values(pair);
+    const connectionId = crypto.randomUUID(); // Generate unique ID for this socket
 
     server.serializeAttachment({
       isMaster,
+      masterId: this.masterId,
+      connectionId,
     });
 
     // Enable hibernation - accept the new socket
@@ -159,9 +173,22 @@ export class SessionSync extends DurableObject<Env> {
 
     if (isMaster) {
       this.masterWebSocket = server;
+      this.masterConnectionId = connectionId; // Lock in the active connection ID
+
+      // BROADCAST to followers that the master is officially connected
+      this.broadcast({
+        type: "sync",
+        songId: this.currentSongId,
+        versionId: this.currentVersionId,
+        transposeSteps: this.currentTransposeSteps,
+        masterAvatar: this.masterAvatar,
+        masterNickname: this.masterNickname,
+        masterId: this.masterId,
+        isMasterConnected: true,
+      } as SyncMessage);
     }
 
-    // initial sync
+    // initial sync sent to the connecting client
     server.send(
       JSON.stringify({
         type: "sync",
@@ -171,6 +198,7 @@ export class SessionSync extends DurableObject<Env> {
         masterAvatar: this.masterAvatar,
         masterNickname: this.masterNickname,
         masterId: this.masterId,
+        isMasterConnected: this.masterWebSocket !== null,
         isMaster,
       } as SyncMessage),
     );
@@ -189,8 +217,8 @@ export class SessionSync extends DurableObject<Env> {
     const meta = ws.deserializeAttachment() as SocketMetadata;
 
     // Only process messages from the current Master
-    // Also verify this socket IS the current master socket
-    if (!meta.isMaster || ws !== this.masterWebSocket) {
+    // Verify using connectionId to ensure proxy bugs don't cross wires
+    if (!meta.isMaster || this.masterConnectionId !== meta.connectionId) {
       return;
     }
 
@@ -239,9 +267,10 @@ export class SessionSync extends DurableObject<Env> {
           masterAvatar: this.masterAvatar,
           masterNickname: this.masterNickname,
           masterId: this.masterId,
+          isMasterConnected: true,
         } as SyncMessage);
 
-        this.masterWebSocket.send(
+        this.masterWebSocket?.send(
           JSON.stringify({
             type: "update-ok",
             connectedClients: this.ctx.getWebSockets().length - 1,
@@ -308,11 +337,22 @@ export class SessionSync extends DurableObject<Env> {
     wasClean: boolean,
   ) {
     const meta = ws.deserializeAttachment() as SocketMetadata;
-    // If the master disconnects, clear our reference
-    if (meta.isMaster && this.masterWebSocket === ws) {
+
+    // Compare unique connection IDs instead of WebSocket proxies
+    if (meta.isMaster && this.masterConnectionId === meta.connectionId) {
       this.masterWebSocket = null;
-      this.masterNickname = null;
-      this.masterId = null;
+      this.masterConnectionId = null;
+
+      this.broadcast({
+        type: "sync",
+        songId: this.currentSongId,
+        versionId: this.currentVersionId,
+        transposeSteps: this.currentTransposeSteps,
+        masterAvatar: this.masterAvatar,
+        masterNickname: this.masterNickname,
+        masterId: this.masterId,
+        isMasterConnected: false,
+      } as SyncMessage);
     }
   }
 

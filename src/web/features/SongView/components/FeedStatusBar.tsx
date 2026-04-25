@@ -53,11 +53,13 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
         statusMessage = "Lost connection to feed, reconnecting...";
         break;
       case "connected":
-        // If connected but we receive a null masterNickname, the host is not actively in the session
-        if (!feedStatus.sessionState?.masterNickname) {
+        // If connected but we receive a false isMasterConnected flag, the host is not actively in the session
+        // (if it's undefined we fallback to checking if masterNickname exists, for backwards compatibility with old worker state)
+        const isActivelyConnected = feedStatus.sessionState?.isMasterConnected ?? !!feedStatus.sessionState?.masterNickname;
+        if (!isActivelyConnected) {
           statusMessage = "Waiting for master to join the session...";
         } else {
-          statusMessage = `Following ${feedStatus.sessionState.masterNickname}'s feed`;
+          statusMessage = `Following ${feedStatus.sessionState?.masterNickname}'s feed`;
         }
         break;
       default:
