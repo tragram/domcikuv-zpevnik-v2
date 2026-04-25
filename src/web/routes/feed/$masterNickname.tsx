@@ -95,7 +95,6 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
       </div>
     );
   }
-  console.log(feedStatus.sessionState?.isMasterConnected)
   if (!songData || !feedStatus.sessionState.songId) {
     return (
       <div className="flex items-center justify-center h-screen">
