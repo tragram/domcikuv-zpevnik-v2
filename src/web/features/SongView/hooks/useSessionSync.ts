@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import {
   SessionSyncState,
@@ -115,7 +115,7 @@ export function useSessionSync(
       ws.onmessage = (event) => {
         missedPongsRef.current = 0; // Reset heartbeat on ANY message
         const data: SesssionSyncWSMessage = JSON.parse(event.data);
-        
+
         if (data.type === "update-ok" || data.type === "client-count") {
           setConnectedClients(data.connectedClients);
         } else if (data.type === "sync" && !isMaster) {
@@ -166,9 +166,8 @@ export function useSessionSync(
 
   // Main Mount / Reconnect Effect
   useEffect(() => {
-    const timer = setTimeout(connect, 100); // Debounce to prevent Strict Mode glitches
+    connect();
     return () => {
-      clearTimeout(timer);
       cleanupSockets();
     };
   }, [connect, cleanupSockets]);
@@ -218,15 +217,32 @@ export function useSessionSync(
         pendingUpdateRef.current = null;
       } else {
         pendingUpdateRef.current = { songId, transposeSteps, versionId };
-        setRetryAttempt(0);
-        setConnectionStatus("connecting");
-        connect();
+
+        if (
+          !ws ||
+          ws.readyState === WebSocket.CLOSED ||
+          ws.readyState === WebSocket.CLOSING
+        ) {
+          setRetryAttempt(0);
+          setConnectionStatus("connecting");
+          connect();
+        }
       }
     },
     [isMaster, connect],
   );
-  return {
-    feedStatus: {
+  const feedStatus = useMemo(
+    () =>
+      ({
+        isMaster,
+        enabled,
+        isConnected,
+        connectedClients,
+        connectionStatus,
+        retryAttempt,
+        sessionState,
+      }) as FeedStatus,
+    [
       isMaster,
       enabled,
       isConnected,
@@ -234,7 +250,11 @@ export function useSessionSync(
       connectionStatus,
       retryAttempt,
       sessionState,
-    } as FeedStatus,
+    ],
+  );
+
+  return {
+    feedStatus,
     updateSong,
   };
 }
