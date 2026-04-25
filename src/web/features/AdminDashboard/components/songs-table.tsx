@@ -42,7 +42,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { AdminApi} from "~/../worker/api-client";
+import { AdminApi } from "~/../worker/api-client";
 import ConfirmationDialog from "../../../components/dialogs/confirmation-dialog";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import {
@@ -57,6 +57,7 @@ import {
   useRestoreVersion,
   useSongsAdmin,
   useUpdateSong,
+  useUsersAdmin,
   useVersionsAdmin,
 } from "../../../services/admin-hooks";
 import { ActionButtons } from "./shared/action-buttons";
@@ -130,6 +131,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const { data: songs, isLoading: songsLoading } = useSongsAdmin(adminApi);
   const { data: versions, isLoading: versionsLoading } =
     useVersionsAdmin(adminApi);
+  const { data: users } = useUsersAdmin(adminApi, { limit: 100, offset: 0 });
+  console.log(users);
 
   const updateSongMutation = useUpdateSong(adminApi);
   const deleteSongMutation = useDeleteSong(adminApi);
@@ -576,6 +579,19 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                                               ).toLocaleDateString()}
                                             </span>
                                             <span className="w-1 h-1 rounded-full bg-border"></span>
+                                            {users && (
+                                              <span className="bg-muted px-1.5 py-0.5 rounded">
+                                                {(() => {
+                                                  const user = users.users.find(
+                                                    (u) =>
+                                                      u.id == version.userId,
+                                                  );
+                                                  return (
+                                                    user?.nickname || user?.name
+                                                  );
+                                                })()}
+                                              </span>
+                                            )}
                                             {version.key && (
                                               <span className="bg-muted px-1.5 py-0.5 rounded">
                                                 Key: {version.key}
