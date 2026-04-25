@@ -115,8 +115,8 @@ export function useSessionSync(
       ws.onmessage = (event) => {
         missedPongsRef.current = 0; // Reset heartbeat on ANY message
         const data: SesssionSyncWSMessage = JSON.parse(event.data);
-
-        if (data.type === "update-ok") {
+        
+        if (data.type === "update-ok" || data.type === "client-count") {
           setConnectedClients(data.connectedClients);
         } else if (data.type === "sync" && !isMaster) {
           setSessionState({

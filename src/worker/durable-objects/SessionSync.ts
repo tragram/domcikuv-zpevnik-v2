@@ -41,11 +41,17 @@ export interface MasterReplacedMessage {
   message?: string;
 }
 
+export interface ClientCountMessage {
+  type: "client-count";
+  connectedClients: number;
+}
+
 export type SesssionSyncWSMessage =
   | SyncMessage
   | PongMessage
   | UpdateOKMessage
-  | MasterReplacedMessage;
+  | MasterReplacedMessage
+  | ClientCountMessage;
 
 export class SessionSync extends DurableObject<Env> {
   private masterWebSocket: WebSocket | null = null;
@@ -203,6 +209,7 @@ export class SessionSync extends DurableObject<Env> {
       } as SyncMessage),
     );
 
+    this.notifyMasterOfClientCount();
     return new Response(null, { status: 101, webSocket: client });
   }
 
@@ -354,6 +361,7 @@ export class SessionSync extends DurableObject<Env> {
         isMasterConnected: false,
       } as SyncMessage);
     }
+    this.notifyMasterOfClientCount();
   }
 
   private broadcast(data: SyncMessage) {
@@ -364,6 +372,32 @@ export class SessionSync extends DurableObject<Env> {
       } catch (e) {
         // Handle closed/stale sockets
       }
+    }
+  }
+
+  private notifyMasterOfClientCount(closingWs?: WebSocket) {
+    if (!this.masterWebSocket) return;
+
+    // Safely count active followers, ignoring the master and any socket currently closing
+    const followerCount = this.ctx.getWebSockets().filter((w) => {
+      if (w === closingWs) return false;
+      try {
+        const meta = w.deserializeAttachment() as SocketMetadata;
+        return !meta.isMaster;
+      } catch {
+        return false;
+      }
+    }).length;
+
+    try {
+      this.masterWebSocket.send(
+        JSON.stringify({
+          type: "client-count",
+          connectedClients: followerCount,
+        }),
+      );
+    } catch (e) {
+      console.error("Failed to send client count to master", e);
     }
   }
 }
