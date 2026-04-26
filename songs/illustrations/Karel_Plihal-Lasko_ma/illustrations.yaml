@@ -1,0 +1,21 @@
+songId: Karel_Plihal-Lasko_ma
+prompts:
+  - id: Karel_Plihal-Lasko_ma_gpt-5-mini_v4
+    songId: Karel_Plihal-Lasko_ma
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Dreamlike nocturnal scene: a sorrowful king in a velvet cloak kneels
+      before a lone dreamer, solemnly removing his crown and offering it;
+      scattered glowing jewels at their feet, an empty throne and cathedral
+      spires ghosting into mist in the background; soft moonlight with warm gold
+      highlights on jewels, cool blue shadows, gentle haze, minimalist
+      composition with clear silhouettes — painterly digital illustration,
+      cinematic, slightly surreal, high-contrast, suitable for small thumbnails.
+    createdAt: 2026-04-25T13:20:11.000Z
+    updatedAt: 2026-04-25T13:20:11.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1777123267000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
