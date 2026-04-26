@@ -13,8 +13,9 @@ export const to_ascii = (text: string): string => {
 
 const sanitizeId = (id: string) => {
   return to_ascii(id)
+    .toLowerCase()
     .replace(/ /g, "_")
-    .replace(/[^A-Za-z0-9-_.]+/g, "")
+    .replace(/[^a-z0-9-_.]+/g, "")
     .replace(/_+/g, "_");
 };
 

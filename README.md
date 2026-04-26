@@ -24,7 +24,7 @@ The best way to edit is to just use the web interface (`/edit`).
 
 Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/chordpro` directory. There's a daily sync setup that pushes the production DB to the `production-data-sync` branch and then manually pushed to main. 
 
-Changing the chordpro files does not affect the production website. However, you can load the changes to your local server by running `pnpm tsx scripts/staticData2DB.ts`.
+Changing the chordpro files does not affect the production website. However, you can load the changes to your local server by running `pnpm tsx scripts/staticData2DB.ts --dev`.
 
 ### File format
 The songs are named `artist_name-song_name.pro` (any special characters converted to ASCII). This (and much of the following) is enforced by the sync script.
