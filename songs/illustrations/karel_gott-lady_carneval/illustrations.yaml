@@ -1,0 +1,23 @@
+songId: karel_gott-lady_carneval
+prompts:
+  - id: karel_gott-lady_carneval_gpt-5-mini_v4
+    songId: karel_gott-lady_carneval
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Vintage cabaret poster-style illustration: "Lady Carneval" — a single
+      striking masked woman dancing in a spotlight, wearing flowing white
+      pantaloons (kamaše), a dramatic carnival coat, and an ornate
+      white-and-gold half-mask; a shadowy entranced man in a tuxedo silhouette
+      reaches toward her from the background. Deep crimson and black backdrop
+      with gold accents, confetti and soft string lights, strong rim lighting
+      and high contrast, simplified bold shapes and clean lines for readability
+      at small sizes, romantic-melancholic atmosphere. No text. Art
+      Nouveau/retro poster aesthetic.
+    createdAt: 2026-04-26T13:08:14.000Z
+    updatedAt: 2026-04-26T13:08:14.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1777208910000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

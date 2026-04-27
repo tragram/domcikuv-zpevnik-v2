@@ -1,0 +1,20 @@
+songId: simple_plan-astronaut
+prompts:
+  - id: simple_plan-astronaut_gpt-4o-mini_v1
+    songId: simple_plan-astronaut
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a solitary astronaut floating in the vastness of
+      space, surrounded by stars and distant planets. The astronaut is inside a
+      small, transparent capsule, looking out with a longing expression. There
+      are faint signals and static visual effects to symbolize communication
+      struggles. The scene conveys a sense of loneliness and yearning for
+      connection, with a backdrop of deep space emphasizing isolation.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

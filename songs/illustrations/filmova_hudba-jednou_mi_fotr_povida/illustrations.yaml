@@ -1,0 +1,21 @@
+songId: filmova_hudba-jednou_mi_fotr_povida
+prompts:
+  - id: filmova_hudba-jednou_mi_fotr_povida_gpt-4o-mini_v1
+    songId: filmova_hudba-jednou_mi_fotr_povida
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical scene featuring a young man dancing
+      joyfully under a starry sky, with a black stork beside him tapping its
+      beak in rhythm. In the background, a vintage car is parked next to a
+      charming house, while an ethereal figure of Elvis Presley watches over
+      from above. The atmosphere should convey a blend of freedom, nostalgia,
+      and a hint of chaos, with colorful birds flying around and a sense of
+      adventure in the air.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:38.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

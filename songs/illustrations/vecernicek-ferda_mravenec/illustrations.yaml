@@ -1,0 +1,22 @@
+songId: vecernicek-ferda_mravenec
+prompts:
+  - id: vecernicek-ferda_mravenec_gpt-5-mini_v4
+    songId: vecernicek-ferda_mravenec
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Children's‑book/cartoon illustration, square 1:1 — A cheerful, round
+      handyman named Ferda opens his tiny colorful shop at dusk. Ferda stands
+      center with a guitar slung over his shoulder, singing, while a small,
+      friendly group of buddies (children and cute small animals) gather around
+      with minimal gear: backpacks, simple tools and a tambourine. Warm glowing
+      shop interior, string lights and bunting, bold flat shapes, high-contrast
+      palette (warm yellows, reds, blues), clean composition and clear
+      silhouettes so it reads well at small sizes. No text.
+    createdAt: 2026-04-01T18:05:49.000Z
+    updatedAt: 2026-04-01T18:05:49.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1775066769000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,0 +1,21 @@
+songId: mumford_sons-babel
+prompts:
+  - id: mumford_sons-babel_gpt-4o-mini_v2
+    songId: mumford_sons-babel
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a crumbling tower symbolizing the fall of pride and
+      greed, surrounded by a cityscape at dusk. In the foreground, a figure
+      stands confidently with arms outstretched, embracing the chaos of falling
+      bricks and dust. Their face shows a mix of determination and
+      vulnerability, embodying the themes of love, choice, and self-discovery.
+      In the background, faint outlines of mountains and clouds represent the
+      challenges ahead, while a warm glow hints at hope and grace.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:36:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

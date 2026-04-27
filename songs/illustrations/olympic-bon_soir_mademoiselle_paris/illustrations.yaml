@@ -1,0 +1,20 @@
+songId: olympic-bon_soir_mademoiselle_paris
+prompts:
+  - id: olympic-bon_soir_mademoiselle_paris_gpt-4o-mini_v1
+    songId: olympic-bon_soir_mademoiselle_paris
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a romantic Parisian scene at night, featuring a
+      man with a single franc in his pocket, strolling along the Seine River.
+      The iconic Sacré-Cœur basilica is visible in the background, illuminated
+      under the moonlight. Include elements of love, such as a couple sharing a
+      tender moment, and the vibrant atmosphere of the Saint Michel boulevard.
+      Capture the essence of Parisian charm and romance.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:37.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

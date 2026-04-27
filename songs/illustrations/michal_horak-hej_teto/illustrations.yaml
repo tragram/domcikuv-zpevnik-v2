@@ -1,0 +1,39 @@
+songId: michal_horak-hej_teto
+prompts:
+  - id: michal_horak-hej_teto_gpt-5-mini_v2
+    songId: michal_horak-hej_teto
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Cartoonish dark‑humor illustration: a guilty young man sprawled on a couch
+      with a TV remote stuck under him, faint smoke and wavy smell lines rising
+      to a radiator where a tiny hamster is comically stuck to the metal by a
+      small magnet; an astonished aunt stands in the doorway, warm cozy
+      apartment, exaggerated expressions, vivid colors, non‑graphic.
+    createdAt: 2026-03-13T15:46:20.000Z
+    updatedAt: 2026-03-13T15:46:20.000Z
+    deleted: false
+    illustrations: []
+  - id: michal_horak-hej_teto_gpt-5-mini_v4
+    songId: michal_horak-hej_teto
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Cartoonish thumbnail-friendly illustration: A young man slumped on a
+      couch, eyes wide and embarrassed, a TV remote visibly crushed under his
+      seat. At the right edge, a small singed hamster is comically stuck to a
+      warm radiator with a tiny fridge magnet clinging to it; a wisp of smoke
+      and a few stink lines rise from the hamster (no gore). Simple living-room
+      background, warm radiator glow, bold shapes, high-contrast colors, clean
+      outlines, minimal clutter. Playful dark-humor tone, square composition,
+      legible at small sizes.
+    createdAt: 2026-03-14T14:35:51.000Z
+    updatedAt: 2026-03-14T14:35:51.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773498967000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+      - createdAt: 1776760885000
+        imageModel: nano-banana-2-modified
+        filename: nano-banana-2-modified.webp

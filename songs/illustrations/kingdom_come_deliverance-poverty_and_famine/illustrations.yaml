@@ -1,0 +1,38 @@
+songId: kingdom_come_deliverance-poverty_and_famine
+prompts:
+  - id: kingdom_come_deliverance-poverty_and_famine_gpt-4o-mini_v2
+    songId: kingdom_come_deliverance-poverty_and_famine
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a lively tavern scene filled with a mix of joy
+      and despair. In the foreground, a group of people are laughing and
+      toasting with mugs of beer, while in the background, shadows of a desolate
+      town loom, hinting at a recent calamity. The atmosphere should capture a
+      juxtaposition of celebration amidst chaos, with hints of fear and
+      uncertainty in the expressions of some characters.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:40.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - id: kingdom_come_deliverance-poverty_and_famine_gpt-4o_v2
+    songId: kingdom_come_deliverance-poverty_and_famine
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o
+    text: >-
+      Create an illustration of a lively tavern scene filled with a mix of joy
+      and despair. In the foreground, a group of people are laughing and
+      toasting with mugs of beer, while in the background, shadows of a desolate
+      town loom, hinting at a recent calamity. The atmosphere should capture a
+      juxtaposition of celebration amidst chaos, with hints of fear and
+      uncertainty in the expressions of some characters.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:40.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: dalle3
+        filename: dalle3.webp

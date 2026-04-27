@@ -1,0 +1,20 @@
+songId: jan_nedved-podvod
+prompts:
+  - id: jan_nedved-podvod_gpt-4o-mini_v1
+    songId: jan_nedved-podvod
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a melancholic nighttime scene featuring a
+      solitary figure gazing at a dark sky, with church bells ringing in the
+      distance. The figure holds a letter under a pillow, surrounded by dimly
+      lit candles, evoking a sense of longing and regret. Include subtle hints
+      of past memories, like musical notes floating in the air, to capture the
+      essence of lost love and nostalgia.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:15.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,20 @@
+songId: zalman_spol-vsech_vandraku_muza
+prompts:
+  - id: zalman_spol-vsech_vandraku_muza_gpt-4o-mini_v1
+    songId: zalman_spol-vsech_vandraku_muza
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a mysterious, slender muse with a
+      whimsical aura, surrounded by wandering musicians in a lively, bohemian
+      setting. Include elements of graffiti on the walls, a guitar resting
+      nearby, and a backdrop of a wintry landscape hinting at falling snow. The
+      scene should capture a sense of both joy and melancholy, reflecting the
+      muse's rise and fall in a vibrant yet gritty urban environment.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:52.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

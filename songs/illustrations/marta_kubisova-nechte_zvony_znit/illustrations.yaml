@@ -1,0 +1,19 @@
+songId: marta_kubisova-nechte_zvony_znit
+prompts:
+  - id: marta_kubisova-nechte_zvony_znit_gpt-4o-mini_v1
+    songId: marta_kubisova-nechte_zvony_znit
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a serene, old church with a tall steeple and ringing
+      bells, surrounded by a dreamlike landscape filled with ethereal, swirling
+      dreams and shadows of solitude. Include elements like delicate stalactites
+      resembling musical notes and a soft, twilight sky to evoke a sense of
+      longing and hope.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:36:03.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

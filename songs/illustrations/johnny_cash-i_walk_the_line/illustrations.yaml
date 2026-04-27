@@ -1,0 +1,19 @@
+songId: johnny_cash-i_walk_the_line
+prompts:
+  - id: johnny_cash-i_walk_the_line_gpt-4o-mini_v1
+    songId: johnny_cash-i_walk_the_line
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a person walking along a winding path, surrounded by
+      vibrant day and night elements, symbolizing love and devotion. Include
+      subtle imagery of a heart and a tie to represent the connection and
+      commitment, with a serene landscape that evokes a sense of happiness and
+      loyalty.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:04.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

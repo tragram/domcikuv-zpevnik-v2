@@ -1,0 +1,23 @@
+songId: michal_horak-paty_kafe
+prompts:
+  - id: michal_horak-paty_kafe_gpt-5-mini_v4
+    songId: michal_horak-paty_kafe
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      A cozy, slightly messy late‑night study scene: mid-shot of a tired young
+      person hunched at a cluttered desk, holding an oversized steaming coffee
+      mug (visible spoon and a splash of milk), laptop glowing, scattered empty
+      chocolate wrappers and an open Merci box with a few eaten chocolates, a
+      small milk jug and sugar spoon nearby. Warm desk-lamp pool of light
+      contrasts with cool blue night through the window; expression is
+      wired/exhausted but determined. Clean, graphic semi‑realistic digital
+      illustration with strong silhouettes and high contrast so it reads well at
+      small sizes.
+    createdAt: 2026-03-14T12:07:50.000Z
+    updatedAt: 2026-03-14T12:07:50.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773496125000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

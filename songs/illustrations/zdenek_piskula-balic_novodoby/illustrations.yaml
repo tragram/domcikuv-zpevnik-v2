@@ -1,0 +1,20 @@
+songId: zdenek_piskula-balic_novodoby
+prompts:
+  - id: zdenek_piskula-balic_novodoby_gpt-4o-mini_v1
+    songId: zdenek_piskula-balic_novodoby
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a modern-day "gentleman" in a cozy bedroom,
+      taking a selfie in a bathrobe, surrounded by social media icons like
+      hearts and likes floating around. Include a smartphone displaying a dating
+      app and a laptop with social media open. The atmosphere should be playful
+      and vibrant, capturing the essence of virtual romance and social media
+      culture.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:52.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

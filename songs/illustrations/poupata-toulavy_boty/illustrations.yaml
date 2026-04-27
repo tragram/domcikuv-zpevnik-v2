@@ -1,0 +1,41 @@
+songId: poupata-toulavy_boty
+prompts:
+  - id: poupata-toulavy_boty_gpt-4o-mini_v1
+    songId: poupata-toulavy_boty
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a solitary wanderer with worn-out shoes, walking
+      along a winding path under a vast sky where the horizon meets the clouds.
+      The scene captures a sense of nostalgia and longing, with a hint of a
+      summer landscape, evoking memories of a joyful past and a lost father.
+      Include elements like a distant mountain range and a soft, melancholic
+      light to reflect the themes of journey and remembrance.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:08.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - id: poupata-toulavy_boty_gpt-5-mini_v3
+    songId: poupata-toulavy_boty
+    summaryPromptVersion: v3
+    summaryModel: gpt-5-mini
+    text: >-
+      Painterly, slightly folk-art illustration: a small wooden porch at golden
+      dusk — in the foreground a child clutching a pair of scuffed, well‑worn
+      boots, nearby a tearful mother holding a black envelope; in the distance a
+      lone wanderer’s silhouette walks like a king along a road toward misty
+      mountains where horizon blends with sky. Warm, nostalgic colors, soft
+      brushstrokes, melancholic yet tender mood.
+    createdAt: 2026-02-26T20:03:00.000Z
+    updatedAt: 2026-02-26T20:03:00.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1772228485000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+      - createdAt: 1772136183000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,20 @@
+songId: karel_kryl-nevidoma_divka
+prompts:
+  - id: karel_kryl-nevidoma_divka_gpt-4o-mini_v1
+    songId: karel_kryl-nevidoma_divka
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an enchanting autumn scene featuring a blind girl sitting on the
+      grass in a garden behind a brick wall. She has a blindfold and is reading
+      a fairy tale from a notebook. Surround her with vibrant flowers and
+      butterflies, capturing a sense of magic and innocence. Include hints of a
+      talking bird, golden apple trees, and whimsical elements like a rainbow
+      and a treasure island in the background, evoking a dreamlike atmosphere.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:30.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

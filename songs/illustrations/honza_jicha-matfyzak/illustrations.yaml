@@ -1,0 +1,22 @@
+songId: honza_jicha-matfyzak
+prompts:
+  - id: honza_jicha-matfyzak_gpt-4o-mini_v1
+    songId: honza_jicha-matfyzak
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a quirky mathematician, standing confidently
+      with a chalkboard filled with equations in the background. He is
+      surrounded by abstract representations of curves and graphs, symbolizing
+      his intelligence. In the foreground, depict a whimsical scene of him
+      attempting to impress a girl under a rainbow, with playful elements like
+      πr² and mathematical symbols floating around. The overall vibe should be
+      humorous and lighthearted, capturing the contrast between his mathematical
+      prowess and social awkwardness.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:02.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

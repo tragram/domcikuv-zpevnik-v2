@@ -1,0 +1,20 @@
+songId: stanislav_hlozek-dajana
+prompts:
+  - id: stanislav_hlozek-dajana_gpt-4o-mini_v1
+    songId: stanislav_hlozek-dajana
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a beautiful, melancholic woman named Dajána
+      walking alone down a dimly lit street at night. She has a wistful
+      expression, embodying both longing and sadness. Surround her with swirling
+      cinnamon-scented dreams, represented as ethereal wisps in the air. Capture
+      the contrast between her outward smile and inner sorrow, with hints of a
+      past love lingering in the shadows.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:24.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

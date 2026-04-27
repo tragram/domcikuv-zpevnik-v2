@@ -1,0 +1,21 @@
+songId: honza_jicha-nekvalifikovany_ucitel
+prompts:
+  - id: honza_jicha-nekvalifikovany_ucitel_gpt-4o-mini_v1
+    songId: honza_jicha-nekvalifikovany_ucitel
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a passionate teacher in a vibrant classroom,
+      surrounded by attentive students of diverse backgrounds. The teacher, with
+      a heartwarming smile, is engaged in a lively discussion, using creative
+      teaching methods. The room is filled with educational posters and books,
+      reflecting a love for learning. In the background, subtle hints of
+      frustration with the education system can be seen, like a crumpled paper
+      with a "demagogue" label, symbolizing the challenges faced.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:04.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

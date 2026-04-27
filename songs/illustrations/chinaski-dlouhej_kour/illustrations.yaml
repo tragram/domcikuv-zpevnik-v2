@@ -1,0 +1,20 @@
+songId: chinaski-dlouhej_kour
+prompts:
+  - id: chinaski-dlouhej_kour_gpt-4o-mini_v1
+    songId: chinaski-dlouhej_kour
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a dreamy, starry night scene with a couple
+      walking hand-in-hand through a velvety black landscape. Include elements
+      like paper wings floating in the air, hints of jazz music notes, and a
+      gentle southern breeze. Capture a sense of adventure and intimacy, with
+      the couple surrounded by a whimsical atmosphere that suggests hidden
+      secrets and the thrill of the unknown.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-08T17:33:05.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

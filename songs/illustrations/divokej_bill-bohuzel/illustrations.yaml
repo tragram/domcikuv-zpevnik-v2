@@ -1,0 +1,20 @@
+songId: divokej_bill-bohuzel
+prompts:
+  - id: divokej_bill-bohuzel_gpt-4o-mini_v2
+    songId: divokej_bill-bohuzel
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a dark, eerie river scene at twilight, where a grim
+      ferryman with a scythe stands by a small, weathered boat. In the
+      background, shadowy figures of lost souls linger on the riverbank, their
+      faces expressing despair. The atmosphere is heavy and foreboding,
+      capturing the essence of a journey to the afterlife, with hints of
+      blood-red clouds in the sky, symbolizing the pact with the devil.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

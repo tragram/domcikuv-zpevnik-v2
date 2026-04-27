@@ -1,0 +1,22 @@
+songId: malomocnost_prazdnoty-maruska
+prompts:
+  - id: malomocnost_prazdnoty-maruska_gpt-4o-mini_v1
+    songId: malomocnost_prazdnoty-maruska
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a whimsical playground scene where
+      children dressed in oversized military outfits play with wooden toy guns
+      and paper hats. In the background, a somber contrast shows adults engaged
+      in a more serious and destructive version of the game, using metal weapons
+      and causing damage to nature. A young girl named Maruška stands in the
+      foreground, crying and holding her arm, symbolizing the impact of
+      conflict. The atmosphere should convey a mix of innocence and the harsh
+      realities of war.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:36:00.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,20 @@
+songId: miley_cyrus-wrecking_ball
+prompts:
+  - id: miley_cyrus-wrecking_ball_gpt-4o-mini_v1
+    songId: miley_cyrus-wrecking_ball
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a dramatic scene depicting a heart-shaped wrecking ball
+      crashing through a wall made of bricks, surrounded by ashes and flames. In
+      the background, a silhouette of a couple stands apart, one looking
+      regretful and the other looking determined. The sky is a mix of dark storm
+      clouds and hints of light breaking through, symbolizing the tumultuous
+      nature of love and loss.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:36:20.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

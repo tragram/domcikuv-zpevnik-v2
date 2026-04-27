@@ -1,0 +1,19 @@
+songId: john_denver-take_me_home_country_roads
+prompts:
+  - id: john_denver-take_me_home_country_roads_gpt-4o-mini_v1
+    songId: john_denver-take_me_home_country_roads
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a serene West Virginia landscape featuring the Blue
+      Ridge Mountains and the Shenandoah River. Include a winding country road
+      leading into the mountains, with a nostalgic feel, capturing the essence
+      of home. Add elements like a misty sky, a hint of moonshine, and a rustic,
+      welcoming atmosphere to evoke the song's themes of longing and belonging.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:06.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

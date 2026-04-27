@@ -1,0 +1,21 @@
+songId: druha_trava-jeste_jedno_kafe
+prompts:
+  - id: druha_trava-jeste_jedno_kafe_gpt-4o-mini_v2
+    songId: druha_trava-jeste_jedno_kafe
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a cozy café scene, featuring a person sitting
+      alone at a small table, sipping coffee. The atmosphere is warm and
+      intimate, with soft lighting casting gentle shadows. In the background, a
+      window reveals a starry night sky, hinting at a sense of longing. Include
+      subtle details like a silk scarf draped over the back of a chair and a
+      hint of a mysterious figure outside, evoking themes of love, longing, and
+      secrets.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:29.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

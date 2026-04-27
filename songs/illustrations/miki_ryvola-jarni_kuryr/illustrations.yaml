@@ -1,0 +1,20 @@
+songId: miki_ryvola-jarni_kuryr
+prompts:
+  - id: miki_ryvola-jarni_kuryr_gpt-4o-mini_v1
+    songId: miki_ryvola-jarni_kuryr
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant spring landscape featuring a winding
+      river with gentle waves, blooming flowers, and a distant figure on
+      horseback, symbolizing the arrival of spring. Include a pair of well-worn,
+      wandering shoes in the foreground, suggesting a journey, with fluffy white
+      clouds drifting overhead. The scene should evoke a sense of adventure and
+      the promise of return.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:36:17.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,19 @@
+songId: jaromir_nohavica-zitra_rano_v_pet
+prompts:
+  - id: jaromir_nohavica-zitra_rano_v_pet_gpt-4o-mini_v1
+    songId: jaromir_nohavica-zitra_rano_v_pet
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a somber scene at dawn, depicting a man standing
+      against a wall with a glass of vodka in hand, gazing up at the sky. In the
+      background, a faint silhouette of a priest and a soldier can be seen,
+      symbolizing a farewell. The atmosphere is bittersweet, blending feelings
+      of love and loss, with hints of a sunrise illuminating the scene.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:52.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

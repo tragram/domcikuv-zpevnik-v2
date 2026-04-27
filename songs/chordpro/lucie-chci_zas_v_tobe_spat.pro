@@ -1,0 +1,61 @@
+{title: Chci zas v tobě spát}
+{artist: Lucie}
+{key: G}
+{capo: 6}
+{range: d1-g2}
+{language: czech}
+{startMelody: a a g a}
+{createdAt: 1436824800000}
+{updatedAt: 1770572156000}
+{illustrationId: lucie-chci_zas_v_tobe_spat_gpt-4o-mini_v1_flux.1-dev}
+{promptId: lucie-chci_zas_v_tobe_spat_gpt-4o-mini_v1}
+
+{start_of_verse}
+[G]Mlčíš a svět je funny[Hmi], záhadou,
+[Emi]stává se pro mě honey, když [C]dračí drápy tnou,
+[G]temnice tmavá vříská, [Hmi]bleskne tmou,
+[Emi]mý vlasy loučí víská a [C]letí nad vodou
+{end_of_verse}
+
+{start_of_chorus: R1}
+[D]A hrubý síly vzývám, [C]snídám bezprá[G]ví,
+[D]tvý voči v hlavě vídám,
+[Ami]je to všechno jedna [Ami7]velká síla,
+[Emi]jestli se vážně hodíš, [C]nevím nejdu spát,
+[D]na kolej kluky vodíš a [C]ráno se chceš brát,
+[Emi]jestli se ke mně hodíš, [C]snad jdu k tobě spát,
+[D]s láskou se vůní brodíme,
+[C]postelový království [D]za koně nechce se mi [C]dát,
+{end_of_chorus}
+
+{start_of_chorus: R2}
+[C]Jsem na tom [D]stejně mám tě [Emi]rád,
+[C]jablkem, [D]jablkem nejsi,
+[Ami]kousnu hloubš a pak [Am7]zlíbám tě celou
+[C]merci, ó merci, tak opustit zoufalců [D]ráj,
+[D]chci zas v tobě [Emi]spát.
+{end_of_chorus}
+
+{start_of_verse}
+[G]Říkáš, že svět je krá[Hmi]snej, svět je zlej,
+[Emi]až naše hvězda zhasne, [C]haudy haudy hej,
+[G]štěstím se lůza brodí [Hmi]neříkám,
+[Emi]hledá, pravdu rodí, [C]neví, nesvlíká se lásko
+{end_of_verse}
+
+{chorus: R1}
+
+{chorus: R2}
+
+{start_of_bridge}
+[Emi]Sami se k břehům kloníme,
+[C]sami jak bezvládnej proud,
+[Emi]sami se proti vlnám stavíme,
+[C]sami se chcem zbavit těch [C7]pout,
+[Emi]sami se k břehům kloníme,
+[C]sami jak bezvládnej [C7]proud,
+[Emi]sami se proti vlnám stavíme. [C][D]
+[C]Jsem na tom [D]stejně mám tě [Emi]rád
+{end_of_bridge}
+
+{chorus: R2}

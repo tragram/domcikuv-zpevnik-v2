@@ -1,0 +1,22 @@
+songId: petr_muk-stin_katedral
+prompts:
+  - id: petr_muk-stin_katedral_gpt-5-mini_v4
+    songId: petr_muk-stin_katedral
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Dreamlike painterly dawn: a bold Gothic cathedral silhouette on the left
+      casts a long shadow across a misty seashore/plain. Inside the shadow float
+      symbolic gifts — a small golden tower/mineshaft, a salt crystal, a tiny
+      beach/shoreline, and translucent glowing spheres like music notes — while
+      a lone figure stands in the shadow with an outstretched hand offering
+      them. Soft pastel dawn palette with warm gold highlights, high-contrast
+      shapes, minimal clutter, clear focal point, cinematic composition,
+      semi-realistic painterly style. No text.
+    createdAt: 2026-04-04T17:35:58.000Z
+    updatedAt: 2026-04-04T17:35:58.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1775324194000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

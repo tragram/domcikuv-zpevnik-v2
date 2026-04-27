@@ -1,0 +1,19 @@
+songId: la_vela_puerca-de_atar
+prompts:
+  - id: la_vela_puerca-de_atar_gpt-4o-mini_v1
+    songId: la_vela_puerca-de_atar
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the emotional turmoil of the lyrics,
+      featuring a person on the ground, surrounded by swirling thoughts and
+      dreams represented as vibrant colors and abstract shapes. Include elements
+      symbolizing struggle and escape, like a broken chain or a soaring bird,
+      while maintaining a sense of urgency and tension in the scene.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:47.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

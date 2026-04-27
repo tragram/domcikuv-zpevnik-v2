@@ -1,0 +1,18 @@
+songId: elvis_presley-i_cant_help_falling_in_love_with_you
+prompts:
+  - id: elvis_presley-i_cant_help_falling_in_love_with_you_gpt-4o-mini_v1
+    songId: elvis_presley-i_cant_help_falling_in_love_with_you
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create a romantic scene depicting a couple standing hand in hand by a
+      serene river flowing towards the sea at sunset, symbolizing love and
+      destiny. The atmosphere should be dreamy and enchanting, capturing the
+      essence of deep affection and inevitability.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:31.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

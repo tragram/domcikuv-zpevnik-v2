@@ -1,0 +1,24 @@
+songId: les_miserables-stars
+prompts:
+  - id: les_miserables-stars_gpt-5-mini_v4
+    songId: les_miserables-stars
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Epic heavy‑metal fantasy illustration: a lone armored hunter on a rocky
+      outcrop at night, cloak billowing, holding a flaming sword and staring
+      toward a distant barred doorway glowing with cold light. Midground: a
+      winged, fallen figure plunging in fire toward that doorway. Overhead: a
+      vast, orderly starry sky—stars like sentinels—dominates the scene.
+      High‑contrast, bold silhouette composition, limited palette of deep
+      blues/black with fiery oranges and cold white highlights, dramatic rim
+      lighting, clear central focal point, readable at small sizes. Style:
+      dramatic heavy‑metal album art / fantasy illustration. No text or
+      watermark.
+    createdAt: 2026-03-22T09:21:31.000Z
+    updatedAt: 2026-03-22T09:21:31.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1774171392000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

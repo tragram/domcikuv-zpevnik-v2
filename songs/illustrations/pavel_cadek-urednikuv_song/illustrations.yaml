@@ -1,0 +1,19 @@
+songId: pavel_cadek-urednikuv_song
+prompts:
+  - id: pavel_cadek-urednikuv_song_gpt-4o-mini_v1
+    songId: pavel_cadek-urednikuv_song
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a bustling office scene with a frustrated
+      worker holding a stamp, surrounded by clocks ticking down, and people
+      rushing in and out. Include a humorous touch with a ping pong game
+      happening in the background, symbolizing the chaos of daily life and the
+      pressure of time.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:52.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
