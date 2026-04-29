@@ -91,18 +91,32 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
   const { version: versionId } = useSearch({ strict: false });
 
-  const handleForceUpdate = () => {
+  const handleForceUpdate = async () => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.getRegistrations().then((registrations) => {
+      try {
+        // 1. Unregister all existing service workers
+        const registrations = await navigator.serviceWorker.getRegistrations();
         for (const registration of registrations) {
-          registration.update();
+          await registration.unregister();
         }
+
+        // 2. Clear out the CacheStorage (where the SW keeps HTML/JS/CSS)
+        if ("caches" in window) {
+          const cacheKeys = await caches.keys();
+          await Promise.all(cacheKeys.map((key) => caches.delete(key)));
+        }
+
+        // 3. Reload the page to fetch fresh assets
         window.location.reload();
-      });
+      } catch (error) {
+        console.error("Force update failed, falling back to standard reload:", error);
+        window.location.reload();
+      }
     } else {
       window.location.reload();
     }
   };
+
   return (
     <div className="absolute top-0 w-full">
       <ToolbarBase isVisible={isToolbarVisible}>
