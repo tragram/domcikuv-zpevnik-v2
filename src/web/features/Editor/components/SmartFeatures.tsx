@@ -26,12 +26,11 @@ const SmartFeatureItem: React.FC<SmartFeatureItemProps> = ({
 
   const triggerContent = isStepper ? (
     <div tabIndex={0} className="flex-1 min-w-0 text-primary">
-      <div 
+      <div
         className={cn(
-          // Forced bg-transparent to remove the lighter background fill
           "flex w-full items-stretch justify-between text-left text-xs font-medium border border-border dark:border-input shadow-xs rounded-md transition-all bg-transparent",
           (!feature.isEnabled || isProcessing) &&
-            "opacity-50 pointer-events-none",
+          "opacity-50 pointer-events-none",
         )}
       >
         <div className="flex flex-1 items-center gap-1.5 py-2 px-2.5 min-w-0">
@@ -75,7 +74,6 @@ const SmartFeatureItem: React.FC<SmartFeatureItemProps> = ({
         disabled={!feature.isEnabled || isProcessing}
         onMouseDown={(e) => e.preventDefault()}
         onClick={() => onExecuteFeature(feature)}
-        // Added bg-transparent here too just in case your Button variant forces a background
         className="w-full h-auto py-2 px-2.5 justify-start text-left whitespace-normal text-xs bg-transparent"
       >
         <feature.icon className="size-4 shrink-0 self-center" />

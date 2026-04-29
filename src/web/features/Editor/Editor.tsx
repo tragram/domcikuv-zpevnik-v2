@@ -15,6 +15,7 @@ import { cn } from "~/lib/utils";
 import { autofillChordpro } from "~/services/editor-service";
 import { SongData } from "~/types/songData";
 import { EditorState } from "~/types/types";
+import { Key, Note, SongRange } from "~/types/musicTypes";
 import "../SongView/SongView.css";
 import { guessKey } from "../SongView/utils/songRendering";
 import CollapsibleMainArea from "./components/CollapsibleMainArea";
@@ -300,10 +301,10 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   };
 
   const updateMetadata = (field: keyof EditorState, value: string) => {
-    setEditorState({
-      ...editorState,
+    setEditorState((prev) => ({
+      ...prev,
       [field]: value,
-    });
+    }));
   };
 
   const extractedMetadata = useMemo(
@@ -313,11 +314,11 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
 
   const updateContent = (content: string) => {
     const extracted = parseMetadataFromChordPro(content);
-    setEditorState({
-      ...editorState,
+    setEditorState((prev) => ({
+      ...prev,
       ...extracted,
       chordpro: content,
-    });
+    }));
   };
 
   // Note the added payload parameter
@@ -360,6 +361,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
 
         if (songKey) {
           let transposedContent = editorState.chordpro;
+          const extractedBefore = parseMetadataFromChordPro(transposedContent);
           const newKey = songKey.transposed(steps);
 
           // 2. Update {key: ...} directive directly in text
@@ -369,7 +371,61 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
             `{key: ${czechKey}}`,
           );
 
-          // 3. Transpose all inline chords safely
+          // 3. Update {capo: ...} directive directly in text
+          transposedContent = transposedContent.replace(
+            /\{capo:\s*([^}]+)\}/i,
+            (match, oldCapoStr) => {
+              const oldCapo = parseInt(oldCapoStr.trim(), 10);
+              if (!isNaN(oldCapo)) {
+                let newCapo = (oldCapo - steps) % 12;
+                if (newCapo < 0) newCapo += 12;
+                return `{capo: ${newCapo}}`;
+              }
+              return match;
+            }
+          );
+
+          // 4. Update {range: ...} directive directly in text
+          transposedContent = transposedContent.replace(
+            /\{range:\s*([^}]+)\}/i,
+            (match, rangeStr) => {
+              try {
+                const parsedRange = new SongRange(rangeStr);
+                if (parsedRange.min && parsedRange.max) {
+                  return `{range: ${parsedRange.toString(steps, false)}}`;
+                }
+              } catch (e) {
+                // ignore invalid range
+              }
+              return match;
+            }
+          );
+
+          // 5. Update {startmelody: ...} directive directly in text
+          transposedContent = transposedContent.replace(
+            /\{startmelody:\s*([^}]+)\}/i,
+            (match, melodyStr) => {
+              const transposedMelody = melodyStr.replace(
+                /(^|[\s,]+)([a-hA-H][#b]?)([0-9]*)(?=[\s,]|$)/g,
+                (noteMatch: string, prefix: string, nStr: string, oct: string) => {
+                  try {
+                    const note = Note.parse(nStr, true);
+                    if (note) {
+                      const isUpper = nStr[0] === nStr[0].toUpperCase();
+                      const t = note.transposed(steps).toString("sharp", true);
+                      return prefix + (isUpper ? t : t.toLowerCase()) + oct;
+                    }
+                  } catch (e) {
+                    // ignore invalid note
+                  }
+                  return noteMatch;
+                }
+              );
+              return `{startmelody: ${transposedMelody}}`;
+            }
+          );
+
+          // 6. Transpose all inline chords safely
           transposedContent = transposedContent.replace(
             /\[([^\]]+)\]/g,
             (match, chord) => {
@@ -385,6 +441,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
 
                 // Format back to Czech notation, respecting bass notes
                 const czechOutput = transposed
+                  .normalize()
                   .toString()
                   .split("/")
                   .map((part: string) => convertChordNotation(part))
@@ -401,6 +458,57 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           if (transposedContent !== editorState.chordpro) {
             contentEditorRef.current?.replaceContentWithUndo(transposedContent);
           }
+
+          setEditorState((prev) => {
+            const newState = { ...prev };
+
+            if (newState.key && extractedBefore.key === undefined) {
+              try {
+                const parsedKey = Key.parse(newState.key, true);
+                if (parsedKey) {
+                  newState.key = convertChordNotation(parsedKey.transposed(steps).toString());
+                }
+              } catch (e) {
+                // ignore invalid key
+              }
+            }
+
+            if (newState.capo !== undefined && newState.capo !== null && newState.capo !== "" && extractedBefore.capo === undefined) {
+              let newCapo = (Number(newState.capo) - steps) % 12;
+              if (newCapo < 0) newCapo += 12;
+              newState.capo = newCapo;
+            }
+
+            if (newState.range && extractedBefore.range === undefined) {
+              try {
+                const parsedRange = new SongRange(newState.range);
+                if (parsedRange.min && parsedRange.max) {
+                  newState.range = parsedRange.toString(steps, false);
+                }
+              } catch (e) { }
+            }
+
+            if (newState.startMelody && extractedBefore.startMelody === undefined) {
+              newState.startMelody = newState.startMelody.replace(
+                /(^|[\s,]+)([a-hA-H][#b]?)([0-9]*)(?=[\s,]|$)/g,
+                (noteMatch: string, prefix: string, nStr: string, oct: string) => {
+                  try {
+                    const note = Note.parse(nStr, true);
+                    if (note) {
+                      const isUpper = nStr[0] === nStr[0].toUpperCase();
+                      const t = note.transposed(steps).toString("sharp", true);
+                      return prefix + (isUpper ? t : t.toLowerCase()) + oct;
+                    }
+                  } catch (e) {
+                    // ignore invalid note
+                  }
+                  return noteMatch;
+                }
+              );
+            }
+
+            return newState;
+          });
         }
       }
     } catch (error) {

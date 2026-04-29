@@ -61,10 +61,23 @@ export class Note implements Clonable<Note> {
     private static getIndexFromLetter(letter: string, accidental: string, czech: boolean): number | null {
         const selectedSharpDict = czech ? Note.sharpDictionaryCZ : Note.sharpDictionary;
         const selectedFlatDict = czech ? Note.flatDictionaryCZ : Note.flatDictionary;
-        const sharpIndex = selectedSharpDict.indexOf(letter + accidental);
-        const flatIndex = selectedFlatDict.indexOf(letter + accidental);
+        const combined = letter + accidental;
+        const sharpIndex = selectedSharpDict.indexOf(combined);
+        const flatIndex = selectedFlatDict.indexOf(combined);
 
-        return sharpIndex !== -1 ? sharpIndex : flatIndex !== -1 ? flatIndex : null;
+        let index = sharpIndex !== -1 ? sharpIndex : flatIndex !== -1 ? flatIndex : null;
+        if (index === null) {
+            // Handle enharmonic equivalents not explicitly in the dictionaries
+            if (combined === "E#") return 5;
+            if (combined === "B#" && !czech) return 0;
+            if (combined === "H#" && czech) return 0;
+            if (combined === "Cb") return 11;
+            if (combined === "Fb") return 4;
+            // In Czech notation, B means Bb. So B# is Bb raised by a semitone = B natural = H (index 11).
+            if (combined === "B#" && czech) return 11;
+        }
+
+        return index;
     }
 
     // Converts internal value to a string representation using the specified dictionary
