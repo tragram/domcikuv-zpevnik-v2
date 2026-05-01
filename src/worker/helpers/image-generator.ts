@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
 
 // the first element of each array is used as default by the frontend
-export const SUMMARY_PROMPT_VERSIONS = ["v4", "v3", "v2", "v1"] as const;
+export const SUMMARY_PROMPT_VERSIONS = ["v5", "v4", "v3", "v2", "v1"] as const;
 export const SUMMARY_MODELS_API = ["gpt-5-mini", "gpt-5.2"] as const;
 
 export const IMAGE_MODELS_API = [
@@ -26,6 +26,14 @@ const PROMPTS: Record<SummaryPromptVersion, string> = {
   v2: "Based on the following song lyrics, create a prompt for an AI image generator that will be used as an illustration of the song. Try to be short but also to capture a concrete scene/idea from the song.",
   v3: "Based on the following song lyrics, create a prompt for an AI image generator. Try to be short but also to capture a concrete scene/idea from the song. The image will be used as an illustration of the song in a database, so do not aim for photo realistic unless it fits the lyrics perfectly.",
   v4: "Based on the following song lyrics, create a prompt for an AI image generator. Try to be short but also to capture a concrete scene/idea from the song. The image will be used as an illustration of the song in a database, it should 1) Be good looking even in smaller sizes and 2) The style should follow the contents too - e.g. only photorealistic or cartoonish when the song theme calls for it.",
+  v5: `
+Act as a professional Art Director. Analyze the provided song lyrics and generate a concise image generation prompt that captures the song's essence through a single, concrete scene.
+
+Styling: Explicitly define a visual medium (e.g. 3D render, minimalist vector, oil painting) and lighting that matches the song's genre/mood.
+
+Composition: NO frames or borders. The image should remain legible within a circular crop at low resolution.
+
+Output: Provide only the final prompt.`
 } as const;
 
 export type ImageProviderType = "openai" | "huggingface" | "google";
