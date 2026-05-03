@@ -58,35 +58,35 @@ export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({
     queryKey: ["songsAdmin"],
     queryFn: () => getSongsAdmin(adminApi),
-    staleTime: 1000 * 60 * 60, // 1 hour
+    refetchOnMount: "always",
   });
 
 export const useSongDBAdmin = (adminApi: AdminApi) =>
   useQuery({
     queryKey: ["songDBAdmin"],
     queryFn: () => songsWithCurrentVersionAdmin(adminApi),
-    staleTime: 1000 * 60 * 60,
+    refetchOnMount: "always",
   });
 
 export const useIllustrationsAdmin = (adminApi: AdminApi) =>
   useQuery({
     queryKey: ["illustrationsAdmin"],
     queryFn: () => fetchIllustrationsAdmin(adminApi),
-    staleTime: 1000 * 60 * 60,
+    refetchOnMount: "always",
   });
 
 export const usePromptsAdmin = (adminApi: AdminApi) =>
   useQuery({
     queryKey: ["promptsAdmin"],
     queryFn: () => fetchPromptsAdmin(adminApi),
-    staleTime: 1000 * 60 * 60,
+    refetchOnMount: "always",
   });
 
 export const useVersionsAdmin = (adminApi: AdminApi) =>
   useQuery({
     queryKey: ["versionsAdmin"],
     queryFn: () => getVersionsAdmin(adminApi),
-    staleTime: 1000 * 60 * 60,
+    refetchOnMount: "always",
   });
 
 export const useUsersAdmin = (
@@ -96,7 +96,6 @@ export const useUsersAdmin = (
   useQuery({
     queryKey: ["usersAdmin", params.limit, params.offset, params.search],
     queryFn: () => fetchUsersAdmin(adminApi.users, params),
-    staleTime: 1000 * 60 * 60,
   });
 
 export const useUpdateSong = (adminApi: AdminApi) => {
@@ -253,9 +252,9 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
             old?.map((ill) =>
               ill.id === id
                 ? {
-                    ...ill,
-                    imageModel: data.imageModel || ill.imageModel,
-                  }
+                  ...ill,
+                  imageModel: data.imageModel || ill.imageModel,
+                }
                 : ill,
             ) || [],
         );
