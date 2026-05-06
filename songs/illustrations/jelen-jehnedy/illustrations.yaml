@@ -18,3 +18,26 @@ prompts:
       - createdAt: 1775760615000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+  - id: jelen-jehnedy_gpt-5-mini_v5
+    songId: jelen-jehnedy
+    summaryPromptVersion: v5
+    summaryModel: gpt-5-mini
+    text: >-
+      Oil painting, dramatic realist style with bold brushwork; warm golden
+      sunrise rim light breaking through receding storm clouds with soft
+      volumetric rays and wet reflections on snow. Single concrete scene: a
+      rugged, dirt-smudged man in a dark wet coat and boots stands on a thawing
+      snowy meadow, he has weathered, partially unfurled wings emerging from his
+      back and is looking upward with quiet resolve as wind lifts snow flurries
+      and his coat; a narrow muddy path leads from him toward a small distant
+      cottage cluster on the horizon, composition high-contrast with a limited
+      palette of stormy blues, muddy browns and amber light, clear strong
+      silhouettes and negative space so the figure and wings read easily inside
+      a circular crop at low resolution. No frames or borders.
+    createdAt: 2026-05-05T14:09:14.000Z
+    updatedAt: 2026-05-05T14:09:14.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1777990173000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

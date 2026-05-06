@@ -6,9 +6,9 @@
 {language: czech}
 {startMelody: d d e f# e d}
 {createdAt: 1775759850000}
-{updatedAt: 1776534028000}
-{illustrationId: jelen-jehnedy_gpt-5-mini_v4_nano-banana-2}
-{promptId: jelen-jehnedy_gpt-5-mini_v4}
+{updatedAt: 1777990173000}
+{illustrationId: jelen-jehnedy_gpt-5-mini_v5_nano-banana-2}
+{promptId: jelen-jehnedy_gpt-5-mini_v5}
 
 {start_of_verse: Mezihra}
 𝄆[D][G][G/D][A][G][A] 𝄇 (3x)
@@ -23,9 +23,9 @@ abych [D]cestu neztra[Asus4]til.
 {end_of_verse}
 
 {start_of_verse}
-[D]Pak jednou jsem svý oči od [G]země zved,
-a [D]zjistil, že křídla [A]mám,
-[Hmi]teď přes všechny úsměvy [G]křivý jak šavle,
+[D]Pak jednou jsem svý oči od [G]země [D]zved,
+a zjistil, že křídla [A]mám,
+teď [Hmi]přes všechny úsměvy [G]křivý jak šavle,
 se [D]vracím domů k [A]vám.
 {end_of_verse}
 
@@ -33,24 +33,28 @@ se [D]vracím domů k [A]vám.
 [D]Slunce je vzhůru a [G]tajou [D]ledy,
 vítr sníh prohání [G]nad jehně[A]dy,
 [D]začíná pohyb a [G]končí [D]klid,
-[Hmi]bylo nám dobře [A]a bude nám líp.[D]
+[Hmi]bylo nám dobře [A]a bude nám [D]líp.
 {end_of_chorus}
 
 {verse: Mezihra}
 
 {start_of_verse}
-[D]Někdy bys rozdal svůj [G]poslední dech,
-a [D]jindy zas radši pár [A]ran,
+[D]Někdy bys rozdal svůj [G]poslední [D]dech,
+a jindy zas radši pár [A]ran,
 [Hmi]někdy jsi expertem na [G]dlouhej běh,
 jindy [D]pajdáš do všech [A]stran.
 {end_of_verse}
 
 {start_of_verse}
-[D]A občas se nemůžeš [G]vystát, já vím,
-a [D]se vším bys skoncoval [A]rád,
+[D]A občas se nemůžeš [G]vystát, já [D]vím,
+a se vším bys skoncoval [A]rád,
 [Hmi]ale hlavně když na konci [G]dalšího dne,
 můžeš [D]s čistým srdcem [A]spát.
 {end_of_verse}
+
+{start_of_variant: replace_last_line}
+[Hmi]Bylo nám dobře [A]a bude nám [G]líp.
+{end_of_variant}
 
 {chorus}
 
