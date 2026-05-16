@@ -67,7 +67,7 @@ export class SessionSync extends DurableObject<Env> {
 
   private pendingDbWrite: {
     masterId: string;
-    songId: string;
+    songId: string | null;
     versionId: string | null;
   } | null = null;
 
@@ -100,7 +100,7 @@ export class SessionSync extends DurableObject<Env> {
         (await this.ctx.storage.get<{
           masterId: string;
           masterNickname: string;
-          songId: string;
+          songId: string | null;
           versionId: string | null;
         }>("pendingDbWrite")) || null;
     });
@@ -110,6 +110,53 @@ export class SessionSync extends DurableObject<Env> {
     // Handle HTTP GET (The Snapshot)
     const isWS = request.headers.get("Upgrade") === "websocket";
     if (!isWS) {
+      if (request.method === "POST") {
+        try {
+          const body = (await request.json()) as { songId: string | null };
+          if (body.songId === null) {
+            this.currentSongId = null;
+            this.currentVersionId = null;
+            this.currentTransposeSteps = null;
+
+            await this.ctx.storage.put("state", {
+              songId: null,
+              versionId: null,
+              transposeSteps: null,
+              masterAvatar: this.masterAvatar,
+              masterNickname: this.masterNickname,
+              masterId: this.masterId,
+            } as SessionSyncState);
+
+            if (this.masterId) {
+              await this.scheduleDbWrite({
+                masterId: this.masterId,
+                songId: null,
+                versionId: null,
+              }, true);
+            }
+
+            this.broadcast({
+              type: "sync",
+              songId: null,
+              versionId: null,
+              transposeSteps: null,
+              masterAvatar: this.masterAvatar,
+              masterNickname: this.masterNickname,
+              masterId: this.masterId,
+              isMasterConnected: this.masterWebSocket !== null,
+            } as SyncMessage);
+
+            return new Response(JSON.stringify({ success: true }), {
+              headers: { "Content-Type": "application/json" },
+            });
+          }
+        } catch (e) {
+          return new Response(JSON.stringify({ error: "Bad Request" }), {
+            status: 400,
+          });
+        }
+      }
+
       return new Response(
         JSON.stringify({
           songId: this.currentSongId,
@@ -294,7 +341,7 @@ export class SessionSync extends DurableObject<Env> {
     isFirstSong: boolean = false,
   ) {
     // debounced DB write to minimize rows written during randomize
-    if (!data.songId) {
+    if (data.songId === undefined) {
       return;
     }
 

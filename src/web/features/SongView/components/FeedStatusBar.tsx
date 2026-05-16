@@ -57,7 +57,11 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
         // (if it's undefined we fallback to checking if masterNickname exists, for backwards compatibility with old worker state)
         const isActivelyConnected = feedStatus.sessionState?.isMasterConnected ?? !!feedStatus.sessionState?.masterNickname;
         if (!isActivelyConnected) {
-          statusMessage = `Waiting for ${feedStatus.sessionState?.masterNickname ?? "master"} to join the session...`;
+          if (feedStatus.sessionState?.songId === null) {
+            statusMessage = `${feedStatus.sessionState.masterNickname ?? "The master"} has stopped sharing.`;
+          } else {
+            statusMessage = `${feedStatus.sessionState?.masterNickname ?? "Master"} is looking for a song to play...`;
+          }
         } else {
           statusMessage = `Following ${feedStatus.sessionState?.masterNickname}'s feed`;
         }

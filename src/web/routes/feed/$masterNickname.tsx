@@ -65,11 +65,11 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
     queryFn: async () => {
       const response = currentVersionId
         ? await api.songs.fetch[":songId"][":versionId"].$get({
-            param: { songId: currentSongId!, versionId: currentVersionId },
-          })
+          param: { songId: currentSongId!, versionId: currentVersionId },
+        })
         : await api.songs.fetch[":id"].$get({
-            param: { id: currentSongId! },
-          });
+          param: { id: currentSongId! },
+        });
 
       const data = await handleApiResponse(response);
       return data;
@@ -96,14 +96,19 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
       </div>
     );
   }
+  console.log(songData, feedStatus.sessionState)
   if (!songData || !feedStatus.sessionState.songId) {
+    const isEnded = !feedStatus.sessionState.isMasterConnected && feedStatus.sessionState.songId === null;
+
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center space-y-2">
           <p className="text-lg">
-            Waiting for {masterNickname} to select a song...
+            {isEnded
+              ? `${masterNickname} stopped sharing their feed.`
+              : `Waiting for ${masterNickname} to select a song...`}
           </p>
-          {!feedStatus.isConnected && (
+          {!feedStatus.isConnected && !isEnded && (
             <p className="text-sm text-yellow-600">
               Connection lost - attempting to reconnect...
             </p>

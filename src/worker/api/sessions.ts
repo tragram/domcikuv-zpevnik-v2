@@ -1,5 +1,7 @@
 import { eq, gte, or } from "drizzle-orm";
 import { syncSession, user, user as userTable } from "src/lib/db/schema";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
 import { errorJSend, successJSend } from "./responses";
 import { buildApp } from "./utils";
 
@@ -43,7 +45,12 @@ const sessionSyncApp = buildApp()
       return acc;
     }, new Map());
 
-    const uniqueSessions = Array.from(latestByMasterId.values()).map(
+    // Filter out ended sessions (songId is null)
+    const activeSessions = Array.from(latestByMasterId.values()).filter(
+      (s: any) => s.songId !== null
+    );
+
+    const uniqueSessions = activeSessions.map(
       (s: any) => ({
         ...s,
         nickname: s.nickname || s.name,
@@ -52,6 +59,46 @@ const sessionSyncApp = buildApp()
 
     return successJSend(c, uniqueSessions as SessionsResponseData);
   })
+  .post(
+    "/:masterNickname",
+    zValidator(
+      "json",
+      z.object({
+        songId: z.string().nullable(),
+      })
+    ),
+    async (c) => {
+      // POST endpoint primarily for nulling a session (not connected via websocket)
+      const masterNickname = c.req.param("masterNickname");
+      const user = c.var.USER;
+      console.log(masterNickname)
+
+      if (!user) return errorJSend(c, "Authentication required", 401);
+
+      const db = c.var.db;
+      const masterProfile = await db
+        .select({ id: userTable.id, nickname: userTable.nickname, name: userTable.name })
+        .from(userTable)
+        .where(or(eq(userTable.nickname, masterNickname), eq(userTable.name, masterNickname)))
+        .get();
+
+      if (!masterProfile || masterProfile.id !== user.id) {
+        return errorJSend(c, "Not authorized to modify this session", 403);
+      }
+
+      const id = c.env.SESSION_SYNC.idFromName(masterProfile.id);
+      const stub = c.env.SESSION_SYNC.get(id);
+
+      const validated = c.req.valid("json");
+      const newReq = new Request(c.req.url, {
+        method: "POST",
+        headers: c.req.raw.headers,
+        body: JSON.stringify(validated),
+      });
+
+      return stub.fetch(newReq);
+    }
+  )
   .get("/:masterNickname", async (c) => {
     const masterNickname = c.req.param("masterNickname");
     const requestedRole = new URL(c.req.url).searchParams.get("role");

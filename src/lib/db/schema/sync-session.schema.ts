@@ -11,7 +11,6 @@ export const syncSession = sqliteTable("sync_session", {
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
   songId: text("song_id")
-    .notNull()
     .references(() => song.id, { onDelete: "no action" }),
   versionId: text("version_id").references(() => songVersion.id, {
     onDelete: "no action",

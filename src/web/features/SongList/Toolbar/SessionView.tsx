@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { RichItem } from "~/components/RichDropdown";
-import { useViewSettingsStore } from "src/web/features/SongView/hooks/viewSettingsStore";
 import { Switch } from "~/components/ui/switch";
 import {
   Tooltip,
@@ -21,6 +20,7 @@ import { useSongDB } from "~/hooks/use-songDB";
 import { Button } from "src/web/components/ui/button";
 import { AvatarWithFallback } from "src/web/components/ui/avatar";
 import { useEnableShareSessionAfterAuth } from "src/web/hooks/use-enable-share-session-after-auth";
+import { useShareSessionToggle } from "src/web/features/SongView/hooks/useShareSessionToggle";
 
 interface SessionViewProps {
   isOnline: boolean;
@@ -33,10 +33,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const { songDB } = useSongDB(userData);
   const { activeSessions, refetchIfStale } = useActiveSessions(songDB);
 
-  const shareSession = useViewSettingsStore((state) => state.shareSession);
-  const setShareSession = useViewSettingsStore(
-    (state) => state.actions.setShareSession,
-  );
+  const { shareSession, toggleShareSession } = useShareSessionToggle();
 
   const showProfileLink = !userData;
   const showNicknameRecommendation = userData && !userData.profile.nickname;
@@ -192,7 +189,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
               </div>
               <Switch
                 checked={shareSession}
-                onCheckedChange={setShareSession}
+                onCheckedChange={toggleShareSession}
                 disabled={!isOnline}
               />
             </div>

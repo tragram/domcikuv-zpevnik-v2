@@ -2,13 +2,13 @@ import React from "react";
 
 import { DropdownMenuCheckboxItem } from "~/components/ui/dropdown-menu";
 import { CloudSync } from "lucide-react";
-import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { Link } from "@tanstack/react-router";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { CompactItem } from "~/components/RichDropdown";
 import { FeedStatus } from "../hooks/useSessionSync";
 import { UserData } from "src/web/hooks/use-user-data";
 import { useEnableShareSessionAfterAuth } from "src/web/hooks/use-enable-share-session-after-auth";
+import { useShareSessionToggle } from "../hooks/useShareSessionToggle";
 
 interface ShareSongButtonProps {
   feedStatus: FeedStatus | undefined;
@@ -24,10 +24,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
   const onLine = useIsOnline();
   const showProfileLink = !userData;
 
-  const shareSession = useViewSettingsStore((state) => state.shareSession);
-  const setShareSession = useViewSettingsStore(
-    (state) => state.actions.setShareSession,
-  );
+  const { shareSession, toggleShareSession } = useShareSessionToggle();
 
   const { scheduleEnable } = useEnableShareSessionAfterAuth(userData);
 
@@ -81,7 +78,7 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
         if (checkboxDisabled) return;
         // avoid two tabs open (master + follower) e.g. during testing and then follower disabling the sharing all the time
         if (feedStatus && feedStatus.enabled && !feedStatus.isMaster) return;
-        setShareSession(!shareSession);
+        toggleShareSession(!shareSession);
       }}
       className={checkboxDisabled ? "opacity-50" : ""}
     >
