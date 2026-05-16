@@ -96,7 +96,6 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
       </div>
     );
   }
-  console.log(songData, feedStatus.sessionState)
   if (!songData || !feedStatus.sessionState.songId) {
     const isEnded = !feedStatus.sessionState.isMasterConnected && feedStatus.sessionState.songId === null;
 
