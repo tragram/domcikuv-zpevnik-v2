@@ -57,7 +57,7 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
         // (if it's undefined we fallback to checking if masterNickname exists, for backwards compatibility with old worker state)
         const isActivelyConnected = feedStatus.sessionState?.isMasterConnected ?? !!feedStatus.sessionState?.masterNickname;
         if (!isActivelyConnected) {
-          statusMessage = "Waiting for master to join the session...";
+          statusMessage = `Waiting for ${feedStatus.sessionState?.masterNickname ?? "master"} to join the session...`;
         } else {
           statusMessage = `Following ${feedStatus.sessionState?.masterNickname}'s feed`;
         }
@@ -70,9 +70,8 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
   return (
     <div className="fixed bottom-0 left-0 right-0 h-fit w-full py-2 px-4 text-center flex justify-center items-center text-primary bg-glass/30 dark:bg-glass/90 dark:text-white/70 text-xs backdrop-blur-md border-primary dark:border-primary/30 border-t-2 z-50 whitespace-nowrap">
       <span
-        className={`transition-opacity duration-300 ease-in-out ${
-          isReadyToDisplay ? "opacity-100" : "opacity-0"
-        }`}
+        className={`transition-opacity duration-300 ease-in-out ${isReadyToDisplay ? "opacity-100" : "opacity-0"
+          }`}
       >
         {statusMessage}
       </span>
