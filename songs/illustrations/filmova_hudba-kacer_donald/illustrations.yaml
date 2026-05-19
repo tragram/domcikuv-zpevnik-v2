@@ -21,3 +21,26 @@ prompts:
       - createdAt: 1771688093000
         imageModel: nano-banana-pro
         filename: nano-banana-pro.webp
+  - id: filmova_hudba-kacer_donald_gpt-5-mini_v5
+    songId: filmova_hudba-kacer_donald
+    summaryPromptVersion: v5
+    summaryModel: gpt-5-mini
+    text: >-
+      Stylized 3D render (cartoonish, retro-futuristic) with warm twilight and
+      neon rim lighting plus soft volumetric magical glow — center composition,
+      no frames or borders, legible in a circular crop at low resolution. Scene:
+      a heroic golden-feathered drake wearing a small captain’s scarf hovers
+      mid-air above a whimsical city, leading a swirling, hurricane-like flock
+      of smaller glowing ducklings and paper-plane children; retro cars and a
+      laser-lit aeroplane streak through the background, trails of sparkling
+      magic dust arc from the drake to form a protective, smiling glow over
+      rooftop children. High-contrast silhouettes, saturated
+      teal/magenta/warm-gold palette, joyful expressions, simple bold shapes,
+      avoid fine detail near edges.
+    createdAt: 2026-05-18T16:29:32.000Z
+    updatedAt: 2026-05-18T16:29:32.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1779121804000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

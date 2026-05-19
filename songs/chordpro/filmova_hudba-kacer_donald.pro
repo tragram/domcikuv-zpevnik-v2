@@ -1,44 +1,44 @@
 {title: Kačer Donald}
 {artist: Filmová Hudba}
-{key: A}
-{capo: 0}
-{range: a1-f#2}
+{key: D}
+{capo: 7}
+{range: d1-h2}
 {language: czech}
-{startMelody: a c# e}
+{startMelody: d f# a}
 {createdAt: 1759669836000}
-{updatedAt: 1771715272000}
-{illustrationId: filmova_hudba-kacer_donald_gpt-4o-mini_v2_nano-banana-pro}
-{promptId: filmova_hudba-kacer_donald_gpt-4o-mini_v2}
+{updatedAt: 1779121804000}
+{illustrationId: filmova_hudba-kacer_donald_gpt-5-mini_v5_nano-banana-2}
+{promptId: filmova_hudba-kacer_donald_gpt-5-mini_v5}
 
 {start_of_verse}
-[A]Kačeři jak hurikán
-K [Asus4]nám [A]už [Asus4]mí[A]ří
-[A]Auta laser aeroplán
-[Dsus4]Měs[D]tem [Dsus4]ví[D]ří
-[Hmi7]Příběhy [E]píše
-z [Hmi7]téhlete [E]říše
+[D]Kačeři jak [D7]hurikán
+K [Dsus4]nám [D]už [Dsus4]mí[D]ří
+[D]Auta laser [D7]aeroplán
+[Gsus4]Měs[G]tem [Gsus4]ví[G]ří
+[Em7]Příběhy [F#m7]píše
+z [G]téhlete [A]říše
 {end_of_verse}
 
 {start_of_chorus}
-[A]Kačer, úú,
-[F]teď k vám děti [G]z dálky letí
-[A]Kačer, úú,
-[F]přináší sem [G]kouzelnou zem
-[A]Kačer
+[D]Kačer, úú,
+[B]teď k vám děti [C]z dálky letí
+[D]Kačer, úú,
+[B]přináší sem [C]kouzelnou zem
+[D]Kačer
 {end_of_chorus}
 
 {start_of_bridge}
-[Hmi7]Kačeři přijdou [E/C#]když si v nouzi
-[D/G]Když tě úzkost [A]ze sna splouží
-[F#sus4]Zavolat jen stačí heslo:
+[Em7]Kačeři přijdou [A/F#]když si v nouzi
+[C]Když tě úzkost [D]ze sna splouží
+[A]Zavolat jen stačí heslo:
 {end_of_bridge}
 
 {start_of_chorus}
-[H]Kačer, úú,
-[G]teď k vám děti [A]z dálky letí
-[H]Kačer, úú,
-[G]přináší sem [A]kouzelnou zem
-[H]Kačer, úú,
-[G]Na tváře smívky [A]právě příst pan
-[H]Kačer, uú.
+[E]Kačer, úú,
+[C]teď k vám děti [D]z dálky letí
+[E]Kačer, úú,
+[C]přináší sem [D]kouzelnou zem
+[E]Kačer, úú,
+[C]Na tváře smívky [D]právě příst pan
+[E]Kačer, uú.
 {end_of_chorus}
