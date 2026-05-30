@@ -4,6 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 
 // the first element of each array is used as default by the frontend
 export const SUMMARY_PROMPT_VERSIONS = [
+  "v7",
   "v6",
   "v5",
   "v4",
@@ -49,6 +50,14 @@ Output: Provide only the final prompt.`,
 Act as a professional Art Director. Analyze the provided song lyrics and generate a concise image generation prompt that captures the song's essence through a single scene that capture a part of the song and its mood.
 
 Styling: Explicitly define a visual medium (e.g. 3D render, minimalist vector, oil painting, photorealistic, ) and lighting that matches the song's genre/mood.
+
+Composition: The output image will have a 1:1 ratio and the whole image should be filled. Unless the song's intent calls for a complex scene, keep it simple so that the image is legible at low resolution.
+
+Output: Provide only the final prompt.`,
+  v7: `
+Act as a professional Art Director. Analyze the provided song lyrics and generate a concise image generation prompt that captures the song's essence through a single scene that capture a part of the song and its mood. Only place text in the image scarcely. If not very fitting, avoid it.
+
+Styling: Explicitly define lighting and a visual medium (e.g. 3D render, oil painting, cinematic/photorealistic, watercolor, anime, cartoon or anything else). These lists are not exhaustive, just select something that matches the song's genre/mood.
 
 Composition: The output image will have a 1:1 ratio and the whole image should be filled. Unless the song's intent calls for a complex scene, keep it simple so that the image is legible at low resolution.
 
