@@ -3,8 +3,19 @@ import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
 
 // the first element of each array is used as default by the frontend
-export const SUMMARY_PROMPT_VERSIONS = ["v6", "v5", "v4", "v3", "v2", "v1"] as const;
-export const SUMMARY_MODELS_API = ["gpt-5.4-mini","gpt-5-mini", "gpt-5.2"] as const;
+export const SUMMARY_PROMPT_VERSIONS = [
+  "v6",
+  "v5",
+  "v4",
+  "v3",
+  "v2",
+  "v1",
+] as const;
+export const SUMMARY_MODELS_API = [
+  "gpt-5.4-mini",
+  "gpt-5-mini",
+  "gpt-5.2",
+] as const;
 
 export const IMAGE_MODELS_API = [
   "nano-banana-2",
@@ -41,7 +52,7 @@ Styling: Explicitly define a visual medium (e.g. 3D render, minimalist vector, o
 
 Composition: The output image will have a 1:1 ratio and the whole image should be filled. Unless the song's intent calls for a complex scene, keep it simple so that the image is legible at low resolution.
 
-Output: Provide only the final prompt.`
+Output: Provide only the final prompt.`,
 } as const;
 
 export type ImageProviderType = "openai" | "huggingface" | "google";
@@ -260,7 +271,12 @@ export class ImageGenerator {
       throw new Error(`No provider registered for type: ${providerType}`);
     }
 
-    return provider.generate(prompt, this.config.imageModel, this.config);
+    return provider.generate(
+      prompt +
+        " Important: Avoid frame, vignetting, etc. - extend the image all the way to the edges.",
+      this.config.imageModel,
+      this.config,
+    );
   }
 
   async createThumbnail(imageBuffer: ArrayBuffer): Promise<ArrayBuffer> {

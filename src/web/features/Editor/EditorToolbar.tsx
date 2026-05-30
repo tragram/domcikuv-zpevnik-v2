@@ -113,9 +113,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   const generateIllustrationInBackground = (songId: string) => {
     generateSongIllustration(
       songId,
-      IMAGE_MODELS_API[0], // "FLUX.1-dev"
-      SUMMARY_PROMPT_VERSIONS[0], // "v4"
-      SUMMARY_MODELS_API[0], // "gpt-5o-mini"
+      IMAGE_MODELS_API[0], 
+      SUMMARY_PROMPT_VERSIONS[0],
+      SUMMARY_MODELS_API[0],
     )
       .then((response) => {
         if (response.ok) {
