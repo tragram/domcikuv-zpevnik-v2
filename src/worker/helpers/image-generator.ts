@@ -4,7 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 
 // the first element of each array is used as default by the frontend
 export const SUMMARY_PROMPT_VERSIONS = ["v6", "v5", "v4", "v3", "v2", "v1"] as const;
-export const SUMMARY_MODELS_API = ["gpt-5-mini", "gpt-5.2"] as const;
+export const SUMMARY_MODELS_API = ["gpt-5.4-mini","gpt-5-mini", "gpt-5.2"] as const;
 
 export const IMAGE_MODELS_API = [
   "nano-banana-2",
