@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
 
 // the first element of each array is used as default by the frontend
-export const SUMMARY_PROMPT_VERSIONS = ["v5", "v4", "v3", "v2", "v1"] as const;
+export const SUMMARY_PROMPT_VERSIONS = ["v6", "v5", "v4", "v3", "v2", "v1"] as const;
 export const SUMMARY_MODELS_API = ["gpt-5-mini", "gpt-5.2"] as const;
 
 export const IMAGE_MODELS_API = [
@@ -32,6 +32,14 @@ Act as a professional Art Director. Analyze the provided song lyrics and generat
 Styling: Explicitly define a visual medium (e.g. 3D render, minimalist vector, oil painting) and lighting that matches the song's genre/mood.
 
 Composition: NO frames or borders. The image should remain legible within a circular crop at low resolution.
+
+Output: Provide only the final prompt.`,
+  v6: `
+Act as a professional Art Director. Analyze the provided song lyrics and generate a concise image generation prompt that captures the song's essence through a single scene that capture a part of the song and its mood.
+
+Styling: Explicitly define a visual medium (e.g. 3D render, minimalist vector, oil painting, photorealistic, ) and lighting that matches the song's genre/mood.
+
+Composition: The output image will have a 1:1 ratio and the whole image should be filled. Unless the song's intent calls for a complex scene, keep it simple so that the image is legible at low resolution.
 
 Output: Provide only the final prompt.`
 } as const;
