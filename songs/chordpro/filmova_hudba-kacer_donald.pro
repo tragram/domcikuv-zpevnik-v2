@@ -6,9 +6,9 @@
 {language: czech}
 {startMelody: d f# a}
 {createdAt: 1759669836000}
-{updatedAt: 1779121804000}
-{illustrationId: filmova_hudba-kacer_donald_gpt-5-mini_v5_nano-banana-2}
-{promptId: filmova_hudba-kacer_donald_gpt-5-mini_v5}
+{updatedAt: 1780163403000}
+{illustrationId: filmova_hudba-kacer_donald_gpt-5.4-mini_v6_nano-banana-2}
+{promptId: filmova_hudba-kacer_donald_gpt-5.4-mini_v6}
 
 {start_of_verse}
 [D]Kačeři jak [D7]hurikán

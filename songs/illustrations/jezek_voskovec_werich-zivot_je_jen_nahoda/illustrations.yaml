@@ -30,3 +30,22 @@ prompts:
       - createdAt: 1770579023000
         imageModel: nano-banana-pro
         filename: nano-banana-pro.webp
+  - id: jezek_voskovec_werich-zivot_je_jen_nahoda_gpt-5.4-mini_v6
+    songId: jezek_voskovec_werich-zivot_je_jen_nahoda
+    summaryPromptVersion: v6
+    summaryModel: gpt-5.4-mini
+    text: >-
+      3D cinematic render of a solitary figure standing on a small shore at
+      night, gazing up at a single radiant star reflected in calm water, with a
+      subtle illusion of the star turning into a golden fish above the waves;
+      symbolic mood of fragile hope, love, and life’s uncertainty; deep blue and
+      silver palette with warm golden highlights; soft moonlight, gentle mist,
+      and luminous reflections; square composition, full-frame, simple and
+      legible, poetic and dreamlike.
+    createdAt: 2026-05-30T17:53:08.000Z
+    updatedAt: 2026-05-30T17:53:08.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780163602000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

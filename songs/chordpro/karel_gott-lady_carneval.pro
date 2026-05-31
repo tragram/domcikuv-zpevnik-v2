@@ -4,9 +4,9 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1777207711000}
-{updatedAt: 1777208910000}
-{illustrationId: karel_gott-lady_carneval_gpt-5-mini_v4_nano-banana-2}
-{promptId: karel_gott-lady_carneval_gpt-5-mini_v4}
+{updatedAt: 1780161587000}
+{illustrationId: karel_gott-lady_carneval_gpt-5-mini_v6_nano-banana-2}
+{promptId: karel_gott-lady_carneval_gpt-5-mini_v6}
 
 {start_of_verse: V1}
 [C]Páni a paní, vím, jak se [G7]ruší [C]žal,

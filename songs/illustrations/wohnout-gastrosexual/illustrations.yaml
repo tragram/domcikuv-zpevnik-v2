@@ -40,3 +40,24 @@ prompts:
       - createdAt: 1773310166000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+  - id: wohnout-gastrosexual_gpt-5.4-mini_v6
+    songId: wohnout-gastrosexual
+    summaryPromptVersion: v6
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A surreal comedic hospital examination scene in a whimsical folk-song
+      style: a cheerful doctor in a white coat leaning back in amused disbelief
+      while a quirky patient proudly explains his absurd “gastrosexual” fashion,
+      surrounded by edible clothing pieces laid out like a wardrobe—kaviar
+      shoes, salami buttons, marzipan lingerie, dill-patterned dress fabric,
+      sausage tie, and breaded cuffs; simple single-room composition, central
+      characters, playful clutter, eccentric details, vivid but slightly muted
+      colors, soft theatrical lighting with a warm daylight glow, stylized 3D
+      illustration, full-frame 1:1 composition, highly legible at low resolution
+    createdAt: 2026-05-30T17:51:44.000Z
+    updatedAt: 2026-05-30T17:51:44.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780163530000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

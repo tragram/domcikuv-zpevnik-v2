@@ -6,8 +6,8 @@
 {language: czech}
 {startMelody: d d e f# e d}
 {createdAt: 1775759850000}
-{updatedAt: 1777990173000}
-{illustrationId: jelen-jehnedy_gpt-5-mini_v5_nano-banana-2}
+{updatedAt: 1780159630000}
+{illustrationId: jelen-jehnedy_gpt-5-mini_v5_dalle3}
 {promptId: jelen-jehnedy_gpt-5-mini_v5}
 
 {start_of_verse: Mezihra}

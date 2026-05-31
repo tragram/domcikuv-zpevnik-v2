@@ -4,9 +4,9 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1768578477000}
-{updatedAt: 1771715180000}
-{illustrationId: wohnout-gastrosexual_gpt-4o-mini_v2_gpt-image-1-mini}
-{promptId: wohnout-gastrosexual_gpt-4o-mini_v2}
+{updatedAt: 1780163546000}
+{illustrationId: wohnout-gastrosexual_gpt-5.4-mini_v6_nano-banana-2}
+{promptId: wohnout-gastrosexual_gpt-5.4-mini_v6}
 
 {start_of_verse}
 [F#m]Můj doktor sebou [E]sek

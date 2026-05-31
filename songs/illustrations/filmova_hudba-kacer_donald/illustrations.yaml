@@ -44,3 +44,23 @@ prompts:
       - createdAt: 1779121804000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+  - id: filmova_hudba-kacer_donald_gpt-5.4-mini_v6
+    songId: filmova_hudba-kacer_donald
+    summaryPromptVersion: v6
+    summaryModel: gpt-5.4-mini
+    text: >-
+      3D animated family-adventure scene, square composition filled
+      edge-to-edge: a small squad of heroic duck adventurers blasting toward the
+      viewer through a glowing city sky, like a playful hurricane, with one
+      sleek duck-shaped airship, laser streaks and a speeding car weaving behind
+      them, magical clouds and a warm sense of rescue and wonder, bright
+      colorful motion trails, dynamic but legible, whimsical Czech cartoon
+      energy, cinematic evening lighting with neon highlights and golden magical
+      glow, high detail, vibrant saturated colors, joyful and protective mood
+    createdAt: 2026-05-30T17:49:49.000Z
+    updatedAt: 2026-05-30T17:49:49.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780163403000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

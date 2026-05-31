@@ -34,3 +34,22 @@ prompts:
     updatedAt: 2026-02-08T17:32:48.000Z
     deleted: false
     illustrations: []
+  - id: at_ziji_duchove-pramen_zdravi_gpt-5.4-mini_v6
+    songId: at_ziji_duchove-pramen_zdravi
+    summaryPromptVersion: v6
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Retro Czech advertising poster, 1930s style, cheerful pastoral dairy scene
+      with a healthy rosy-cheeked child holding a bottle of milk from Posázaví,
+      rolling green river valley in the background, subtle farmhouse and cows,
+      simple bold typography feel, warm nostalgic color palette, illustrated
+      lithograph look, clean composition, full-frame 1:1, bright optimistic
+      daylight, slightly idealized vintage commercial art, crisp legible shapes,
+      charming propaganda-style composition
+    createdAt: 2026-05-30T17:54:17.000Z
+    updatedAt: 2026-05-30T17:54:17.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780163682000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

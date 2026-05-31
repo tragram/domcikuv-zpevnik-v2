@@ -4,9 +4,9 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1767887277000}
-{updatedAt: 1771715252000}
-{illustrationId: jezek_voskovec_werich-zivot_je_jen_nahoda_manual-1770579022700_nano-banana-pro}
-{promptId: jezek_voskovec_werich-zivot_je_jen_nahoda_manual-1770579022700}
+{updatedAt: 1780163608000}
+{illustrationId: jezek_voskovec_werich-zivot_je_jen_nahoda_gpt-5.4-mini_v6_nano-banana-2}
+{promptId: jezek_voskovec_werich-zivot_je_jen_nahoda_gpt-5.4-mini_v6}
 
 {start_of_verse}
 [G]Proč že [As]se [A]mi [B]každou noc

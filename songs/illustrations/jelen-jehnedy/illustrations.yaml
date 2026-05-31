@@ -41,3 +41,6 @@ prompts:
       - createdAt: 1777990173000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+      - createdAt: 1780159630000
+        imageModel: dalle3
+        filename: dalle3.webp
