@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useUserData } from "src/web/hooks/use-user-data";
 import { z } from "zod";
@@ -41,12 +41,15 @@ function RouteComponent() {
     ? (userData.profile.nickname || userData.profile.name)
     : undefined;
 
+  const navigate = useNavigate();
   const { updateSong, feedStatus } = useSessionSync(
     masterId,
     shouldShare,
     shouldShare,
+    undefined,
+    masterId ? () => navigate({ to: `/feed/${masterId}`, replace: true }) : undefined,
   );
-  
+
   useEffect(() => {
     if (shouldShare && updateSong && songData.id) {
       console.debug(

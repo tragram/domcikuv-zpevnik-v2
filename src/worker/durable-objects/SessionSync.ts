@@ -76,7 +76,6 @@ export interface UpdateOKMessage {
 
 export interface MasterReplacedMessage {
   type: "master-replaced";
-  message?: string;
 }
 
 export interface ClientCountMessage {
@@ -251,12 +250,11 @@ export class SessionSync extends DurableObject<Env> {
     // Displace any existing master connection
     if (isMaster && this.masterWebSocket) {
       try {
-        this.masterWebSocket.send(
-          JSON.stringify({
-            type: "master-replaced",
-            message: "Another master has connected",
-          }),
-        );
+        // Send the message before closing — it's a reliable WS message and
+        // guaranteed to arrive before the close frame, giving the client a
+        // chance to set "kicked" before any reconnect logic fires. The close
+        // reason alone is not reliable in CF hibernation mode.
+        this.masterWebSocket.send(JSON.stringify({ type: "master-replaced" }));
         this.masterWebSocket.close(1000, "New master connected");
       } catch {
         /* stale socket */

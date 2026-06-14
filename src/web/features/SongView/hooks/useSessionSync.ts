@@ -40,7 +40,6 @@ export type ConnectionStatus =
   | "connecting"
   | "connected"
   | "reconnecting"
-  | "kicked"
   | "disconnected";
 
 /** State exposed by useMasterRelay when a relay is active. */
@@ -76,6 +75,7 @@ export function useSessionSync(
   isMaster: boolean,
   enabled: boolean = true,
   initialState?: SessionSyncState,
+  onKicked?: () => void,
 ) {
   if (
     initialState?.masterNickname &&
@@ -128,6 +128,12 @@ export function useSessionSync(
   const pingIntervalRef = useRef<number | undefined>(undefined);
   const reconnectTimeoutRef = useRef<number | undefined>(undefined);
   const missedPongsRef = useRef(0);
+  // Set when the server displaces us as master — suppresses reconnect in onclose.
+  const kickedRef = useRef(false);
+  const onKickedRef = useRef(onKicked);
+  useEffect(() => {
+    onKickedRef.current = onKicked;
+  }, [onKicked]);
 
   const cleanupSockets = useCallback(() => {
     if (socketRef.current) {
@@ -265,15 +271,15 @@ export function useSessionSync(
             }
             lastSyncKeyRef.current = syncKey;
           }
+        } else if (data.type === "master-replaced") {
+          kickedRef.current = true;
+          onKickedRef.current?.();
         } else if (data.type === "loop-detected") {
           setLoopInfo({
             detected: true,
             chainPath: data.chainPath,
             loopSize: data.loopSize,
           });
-        } else if (data.type === "master-replaced") {
-          setConnectionStatus("kicked");
-          toast.info("Session taken over by another device.");
         }
       };
 
@@ -281,8 +287,9 @@ export function useSessionSync(
         setIsConnected(false);
         clearInterval(pingIntervalRef.current);
 
-        if (event.reason === "New master connected") {
-          setConnectionStatus("kicked");
+        if (event.reason === "New master connected" || kickedRef.current) {
+          kickedRef.current = true;
+          onKickedRef.current?.();
           return;
         }
 

@@ -50,14 +50,6 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
       case "reconnecting":
         statusMessage = `Reconnecting... (Attempt ${feedStatus.retryAttempt})`;
         break;
-      case "kicked":
-        statusMessage = (
-          <>
-            Your session was taken over by another device. <wbr />
-            Reload to restore control.
-          </>
-        );
-        break;
       case "connected":
         statusMessage = count !== undefined ? (
           <>
