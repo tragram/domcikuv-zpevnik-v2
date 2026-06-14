@@ -5,7 +5,8 @@ import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { API } from "src/worker/api-client";
 
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
-import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
+import { useMasterRelay } from "~/features/SongView/hooks/useMasterRelay";
+import { useShareSessionToggle } from "~/features/SongView/hooks/useShareSessionToggle";
 import SongView from "~/features/SongView/SongView";
 import { handleApiResponse } from "~/services/api-service";
 import { fetchFeed } from "~/services/song-service";
@@ -45,10 +46,29 @@ type FeedViewProps = {
 };
 
 function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
-  const { feedStatus } = useSessionSync(masterNickname, false, true, liveState);
+  // The user's own identity — needed for relay and loop detection
+  const ownNickname =
+    userData?.profile?.nickname ?? userData?.profile?.name ?? undefined;
+  const ownMasterId = userData?.profile?.id ?? undefined;
+
+  // Relay is enabled only when the user has sharing turned on in their song view
+  const { shareSession } = useShareSessionToggle();
+
+  // useMasterRelay subsumes plain useSessionSync:
+  //   • When shareEnabled=false (or isSelf) it behaves as a regular follower.
+  //   • When shareEnabled=true it opens a second (downstream) WS to relay the
+  //     target's content to the user's own followers, with full loop detection.
+  const { feedStatus } = useMasterRelay({
+    targetNickname: masterNickname,
+    ownNickname,
+    ownMasterId,
+    shareEnabled: shareSession,
+    initialState: liveState,
+  });
+
   const navigate = useNavigate();
 
-  // change URL if nickname changes
+  // Follow URL nickname redirects (e.g. if the master's profile changes)
   const currentMasterNickname = feedStatus.sessionState?.masterNickname;
   useEffect(() => {
     if (currentMasterNickname && currentMasterNickname !== masterNickname) {
@@ -65,11 +85,11 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
     queryFn: async () => {
       const response = currentVersionId
         ? await api.songs.fetch[":songId"][":versionId"].$get({
-          param: { songId: currentSongId!, versionId: currentVersionId },
-        })
+            param: { songId: currentSongId!, versionId: currentVersionId },
+          })
         : await api.songs.fetch[":id"].$get({
-          param: { id: currentSongId! },
-        });
+            param: { id: currentSongId! },
+          });
 
       const data = await handleApiResponse(response);
       return data;
@@ -96,8 +116,11 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
       </div>
     );
   }
+
   if (!songData || !feedStatus.sessionState.songId) {
-    const isEnded = !feedStatus.sessionState.isMasterConnected && feedStatus.sessionState.songId === null;
+    const isEnded =
+      !feedStatus.sessionState.isMasterConnected &&
+      feedStatus.sessionState.songId === null;
 
     return (
       <div className="flex items-center justify-center h-screen">
@@ -116,6 +139,7 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
       </div>
     );
   }
+
   return (
     <SongView songData={songData} userData={userData} feedStatus={feedStatus} />
   );

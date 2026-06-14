@@ -8,13 +8,19 @@ interface FeedStatusBarProps {
 
 export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
   const isOnline = useIsOnline();
-  const [isReadyToDisplay, setIsReadyToDisplay] = useState(false);
 
+  // Debounce the connected count so transient dips (a follower reloading, which
+  // briefly drops then re-adds it) don't flicker the number on screen.
+  // When rawCount is undefined (no server message yet), bypass the debounce.
+  const rawCount = feedStatus?.connectedClients;
+  const [debouncedCount, setDebouncedCount] = useState<number | undefined>(
+    rawCount,
+  );
   useEffect(() => {
-    // Wait 150ms before fading the text in. This masks the WS handshake to prevent the "connecting" blip
-    const timer = setTimeout(() => setIsReadyToDisplay(true), 150);
+    const timer = setTimeout(() => setDebouncedCount(rawCount), 500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [rawCount]);
+  const count = rawCount === undefined ? undefined : debouncedCount;
 
   if (!feedStatus?.enabled) return null;
 
@@ -22,7 +28,21 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
 
   if (!isOnline) {
     statusMessage = "Offline. Reconnect to internet to sync.";
+  } else if (feedStatus.relay?.loopDetected) {
+    // ── Relay master: loop detected in the chain (master-facing only) ─────
+    const stuck = feedStatus.relay.loopSize ?? 0;
+    statusMessage = `⚠ Relay loop detected — ${stuck} session${stuck === 1 ? "" : "s"} stuck. Pick a different song to break it. ⚠`;
+  } else if (feedStatus.relay?.active) {
+    // ── Relay master: actively relaying upstream content ──────────────────
+    const originator = feedStatus.relay.originatorNickname ?? "someone";
+    statusMessage = (
+      <>
+        Relaying {originator}'s session
+        {count !== undefined && <span className="hidden sm:inline"> · {count} connected</span>}
+      </>
+    );
   } else if (feedStatus.isMaster) {
+    // ── Standalone master broadcasting their own session ──────────────────
     switch (feedStatus.connectionStatus) {
       case "connecting":
         statusMessage = "Starting session broadcast...";
@@ -39,12 +59,19 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
         );
         break;
       case "connected":
-        statusMessage = `Sharing session · ${feedStatus.connectedClients ?? 0} connected`;
+        statusMessage = count !== undefined ? (
+          <>
+            Sharing session<span className="hidden sm:inline"> · {count} connected</span>
+          </>
+        ) : (
+          ""
+        );
         break;
       default:
         statusMessage = "Disconnected from feed server.";
     }
   } else {
+    // ── Follower ──────────────────────────────────────────────────────────
     switch (feedStatus.connectionStatus) {
       case "connecting":
         statusMessage = "Connecting to feed...";
@@ -52,33 +79,55 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
       case "reconnecting":
         statusMessage = "Lost connection to feed, reconnecting...";
         break;
-      case "connected":
-        // If connected but we receive a false isMasterConnected flag, the host is not actively in the session
-        // (if it's undefined we fallback to checking if masterNickname exists, for backwards compatibility with old worker state)
-        const isActivelyConnected = feedStatus.sessionState?.isMasterConnected ?? !!feedStatus.sessionState?.masterNickname;
+      case "connected": {
+        const state = feedStatus.sessionState;
+        const masterName = state?.masterNickname ?? "The master";
+        const isActivelyConnected =
+          state?.isMasterConnected ?? !!state?.masterNickname;
+
         if (!isActivelyConnected) {
-          if (feedStatus.sessionState?.songId === null) {
-            statusMessage = `${feedStatus.sessionState.masterNickname ?? "The master"} has stopped sharing.`;
-          } else {
-            statusMessage = `${feedStatus.sessionState?.masterNickname ?? "Master"} is looking for a song to play...`;
-          }
+          // We keep showing the last (stale) song, so frame it as "stopped"
+          // rather than "looking" once a song has been seen.
+          statusMessage = state?.songId
+            ? `${masterName} has stopped sharing.`
+            : `${masterName} is looking for a song to play...`;
         } else {
-          statusMessage = `Following ${feedStatus.sessionState?.masterNickname}'s feed`;
+          // Note when the content arrives through a relay chain.
+          const chainLength = state?.chainPath?.length ?? 0;
+          const originator = state?.originatorNickname;
+          statusMessage =
+            chainLength > 1 && originator && originator !== masterName
+              ? (
+                  <>
+                    Following {masterName}'s relay<span className="hidden xs:inline"> · originated by {originator}</span>
+                  </>
+                )
+              : `Following ${masterName}'s feed`;
         }
         break;
+      }
       default:
         statusMessage = "Disconnected from feed server.";
     }
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-fit w-full py-2 px-4 text-center flex justify-center items-center text-primary bg-glass/30 dark:bg-glass/90 dark:text-white/70 text-xs backdrop-blur-md border-primary dark:border-primary/30 border-t-2 z-50 whitespace-nowrap">
-      <span
-        className={`transition-opacity duration-300 ease-in-out ${isReadyToDisplay ? "opacity-100" : "opacity-0"
-          }`}
-      >
-        {statusMessage}
-      </span>
+    <div
+      className={`
+        fixed bottom-0 left-0 right-0 h-fit w-full
+        py-2 px-4
+        flex justify-center items-center
+        text-center text-primary text-xs
+        bg-glass/30 dark:bg-glass/90
+        dark:text-white/70
+        backdrop-blur-md
+        border-t-2 border-primary dark:border-primary/30
+        z-50
+        transition-opacity duration-300 ease-in-out
+        ${count !== undefined ? "opacity-100" : "opacity-0"}
+      `}
+    >
+      <span>{statusMessage}</span>
     </div>
   );
 };

@@ -28,14 +28,35 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
 
   const { scheduleEnable } = useEnableShareSessionAfterAuth(userData);
 
+  const isFollowing = !!feedStatus?.enabled && !feedStatus.isMaster;
+
   const getDescription = () => {
     if (!onLine) return { text: "You need to be online to use this feature" };
     if (onLine && showProfileLink)
-      return { text: <><span className="underline">Log in</span> to enable this feature</> };
-    if (feedStatus?.enabled && !feedStatus.isMaster) {
       return {
-        text: `Currently connected to ${feedStatus.sessionState?.masterNickname || "someone else"
-          }'s session`,
+        text: (
+          <>
+            <span className="underline">Log in</span> to enable this feature
+          </>
+        ),
+      };
+    if (feedStatus?.relay?.loopDetected) {
+      return { text: "Relay paused — a master loop was detected" };
+    }
+    if (feedStatus?.relay?.active) {
+      const originator =
+        feedStatus.relay.originatorNickname ??
+        feedStatus.sessionState?.masterNickname ??
+        "this";
+      return {
+        text: `Relaying ${originator}'s session to your own followers`,
+      };
+    }
+    if (isFollowing && !shareSession) {
+      return {
+        text: `Enable to relay ${
+          feedStatus?.sessionState?.masterNickname ?? "master"
+        }'s session to your own followers`,
       };
     }
     if (!shareSession) return { text: "Share your page with others - live" };
@@ -68,16 +89,15 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
       content
     );
 
-  const checkboxDisabled =
-    !onLine || showProfileLink || (feedStatus?.enabled && !feedStatus.isMaster);
+  // Logged-in users can always toggle sharing — including from a feed page,
+  // where enabling it starts relaying the viewed session to their followers.
+  const checkboxDisabled = !onLine || showProfileLink;
   return (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
       checked={shareSession}
       onCheckedChange={() => {
         if (checkboxDisabled) return;
-        // avoid two tabs open (master + follower) e.g. during testing and then follower disabling the sharing all the time
-        if (feedStatus && feedStatus.enabled && !feedStatus.isMaster) return;
         toggleShareSession(!shareSession);
       }}
       className={checkboxDisabled ? "opacity-50" : ""}
