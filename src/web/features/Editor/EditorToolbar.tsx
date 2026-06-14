@@ -180,6 +180,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       // Auto-generate illustration if enabled, new song being submitted and user is trusted
       if (
         !isUpdate &&
+        !songData &&
         userData &&
         userData.profile.isTrusted &&
         editorSettings.autoGenerateIllustration
