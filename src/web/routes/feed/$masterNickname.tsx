@@ -77,6 +77,9 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
   }, [currentMasterNickname, masterNickname, navigate]);
 
   const currentSongId = feedStatus.sessionState?.songId;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentSongId]);
   const currentVersionId = feedStatus.sessionState?.versionId;
   const { data: songData } = useQuery({
     queryKey: ["song", currentSongId, currentVersionId],
