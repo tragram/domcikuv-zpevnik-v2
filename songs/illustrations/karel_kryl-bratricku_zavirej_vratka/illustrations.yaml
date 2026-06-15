@@ -1,0 +1,22 @@
+songId: karel_kryl-bratricku_zavirej_vratka
+prompts:
+  - id: karel_kryl-bratricku_zavirej_vratka_gpt-5.4-mini_v7
+    songId: karel_kryl-bratricku_zavirej_vratka
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic square composition of two young brothers standing
+      in a rain-soaked rural lane at dusk, one shielding the other beside a
+      half-open wooden gate, distant angular military trucks and shadowy
+      soldiers emerging through the storm in the background, tense and sorrowful
+      mood, wet cobblestones reflecting cold light, dark clouds, subtle tears,
+      minimalist scene, realistic 1960s Eastern European atmosphere, dramatic
+      low-key lighting, muted gray-blue palette, no text, highly detailed, full
+      frame, 1:1
+    createdAt: 2026-06-14T18:06:22.000Z
+    updatedAt: 2026-06-14T18:06:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1781460395000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
