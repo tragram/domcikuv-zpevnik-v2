@@ -1,4 +1,6 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { queryClient } from "src/lib/query-client";
 import client from "src/worker/api-client";
 import { UserProfileDB } from "src/worker/api/userProfile";
 import { fetchFavorites, fetchSubmissions } from "~/services/user-service";
@@ -15,13 +17,20 @@ export type UserData = {
 export const sessionQueryOptions = () =>
   queryOptions({
     queryKey: ["session"],
-    queryFn: async () => {
+    // Always revalidate so a just-completed login is picked up without a manual
+    // reload (the persisted copy is still shown instantly).
+    staleTime: 0,
+    queryFn: async (): Promise<SessionData | null> => {
       const { data, error } = await authClient.getSession();
-      if (error) {
-        if (error.status === 401 || error.status === 403) return null;
-        throw new Error(error.message || "Network error");
-      }
-      return data;
+      if (!error) return data;
+      // Explicit logout from the server.
+      if (error.status === 401 || error.status === 403) return null;
+      // Network error (offline): keep the last known session. This keeps the
+      // PWA logged in offline AND keeps the query in "success" state so it stays
+      // in the persisted cache (an "error" query is dropped on persist).
+      const prev = queryClient.getQueryData<SessionData | null>(["session"]);
+      if (prev !== undefined) return prev;
+      throw new Error(error.message || "Network error");
     },
   });
 
@@ -61,14 +70,23 @@ export function useUserData() {
     enabled: isLoggedIn && !!userId,
   });
 
+  // Memoize so userData keeps a stable reference across renders (a fresh
+  // `new Set(...)` each render would otherwise rebuild the whole SongDB in
+  // useSongDB on every render).
+  const userData = useMemo<UserData>(
+    () =>
+      isLoggedIn
+        ? ({
+            profile: sessionToProfile(sessionData),
+            favoriteIds: favorites ? new Set(favorites) : new Set([]),
+            submissions: submissions ?? [],
+          } as UserData)
+        : (null as UserData),
+    [isLoggedIn, sessionData, favorites, submissions],
+  );
+
   return {
-    userData: isLoggedIn
-      ? ({
-          profile: sessionToProfile(sessionData),
-          favoriteIds: favorites ? new Set(favorites) : new Set([]),
-          submissions: submissions ?? [],
-        } as UserData)
-      : (null as UserData),
+    userData,
     isSyncing: isAuthSyncing || isFavoritesSyncing || isSubmissionsSyncing,
   };
 }
