@@ -1,2 +1,22 @@
 songId: sum_41-pieces
-prompts: []
+prompts:
+  - id: sum_41-pieces_gpt-5.4-mini_v7
+    songId: sum_41-pieces
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A solitary figure sitting on the edge of an empty bed in a dim, cold
+      bedroom, staring at the floor with a tired, distant expression, faint
+      lyric-like fragments implied only as barely visible reflections on a
+      window or scattered paper, conveying loneliness, self-doubt, and emotional
+      emptiness; cinematic photorealistic style, moody low-key lighting with a
+      single weak window beam, muted blue-gray palette, soft shadows, simple
+      uncluttered composition, 1:1 square frame, entire image filled, subtle
+      atmosphere, no prominent text
+    createdAt: 2026-06-15T20:07:25.000Z
+    updatedAt: 2026-06-15T20:07:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1781554055000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
