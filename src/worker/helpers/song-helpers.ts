@@ -81,7 +81,7 @@ const transformSongToApi = (
       : undefined,
 
     updateStatus: updatedSince
-      ? songItem.deleted
+      ? songItem.deleted || songItem.hidden
         ? "deleted"
         : new Date(songItem.createdAt) >= updatedSince
           ? "added"
