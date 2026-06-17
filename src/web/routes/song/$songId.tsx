@@ -36,18 +36,24 @@ function RouteComponent() {
     (state) => state.transpositions[songId] || 0,
   );
 
-  const shouldShare = !!userData && shareSession;
-  const masterId = userData
-    ? (userData.profile.nickname || userData.profile.name)
-    : undefined;
+  // Sessions are addressed by nickname only; without one the user cannot share.
+  const masterNickname = userData?.profile.nickname ?? undefined;
+  const shouldShare = !!masterNickname && shareSession;
 
   const navigate = useNavigate();
   const { updateSong, feedStatus } = useSessionSync(
-    masterId,
+    masterNickname,
     shouldShare,
     shouldShare,
     undefined,
-    masterId ? () => navigate({ to: `/feed/${masterId}`, replace: true }) : undefined,
+    masterNickname
+      ? () =>
+          navigate({
+            to: "/feed/$masterNickname",
+            params: { masterNickname },
+            replace: true,
+          })
+      : undefined,
   );
 
   useEffect(() => {

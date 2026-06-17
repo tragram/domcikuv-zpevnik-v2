@@ -21,6 +21,7 @@ import { Button } from "src/web/components/ui/button";
 import { AvatarWithFallback } from "src/web/components/ui/avatar";
 import { useEnableShareSessionAfterAuth } from "src/web/hooks/use-enable-share-session-after-auth";
 import { useShareSessionToggle } from "src/web/features/SongView/hooks/useShareSessionToggle";
+import { SetNicknameDialog } from "src/web/features/SongView/components/SetNicknameDialog";
 
 interface SessionViewProps {
   isOnline: boolean;
@@ -28,6 +29,7 @@ interface SessionViewProps {
 
 const SessionView = ({ isOnline }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
   const { userData } = useUserData();
   const { songDB } = useSongDB(userData);
@@ -36,7 +38,8 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const { shareSession, toggleShareSession } = useShareSessionToggle();
 
   const showProfileLink = !userData;
-  const showNicknameRecommendation = userData && !userData.profile.nickname;
+  // Sharing is addressed by nickname only, so a nickname is required to share.
+  const nickname = userData?.profile.nickname ?? null;
 
   const { scheduleEnable } = useEnableShareSessionAfterAuth(userData);
 
@@ -86,6 +89,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const active = activeSessions && activeSessions.length > 0;
 
   return (
+    <>
     <DropdownMenu open={isOpen} onOpenChange={handleOpenChange}>
       {/* Tooltip wraps the Dropdown trigger */}
       <Tooltip>
@@ -190,18 +194,41 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
               <Switch
                 checked={shareSession}
                 onCheckedChange={toggleShareSession}
-                disabled={!isOnline}
+                disabled={!isOnline || !nickname}
               />
             </div>
-            {showNicknameRecommendation && (
+            {nickname ? (
               <div className="text-xs text-muted-foreground pl-10">
-                Tip: <Link to="/profile" className="underline">Set a nickname</Link> for a better sharing link.
+                Sharing as <span className="font-medium">{nickname}</span> ·{" "}
+                <button
+                  type="button"
+                  className="underline"
+                  onClick={() => setNicknameDialogOpen(true)}
+                >
+                  change
+                </button>
+              </div>
+            ) : (
+              <div className="text-xs text-muted-foreground pl-10">
+                <button
+                  type="button"
+                  className="underline"
+                  onClick={() => setNicknameDialogOpen(true)}
+                >
+                  Set a nickname
+                </button>{" "}
+                to share your session.
               </div>
             )}
           </div>
         )}
       </DropdownMenuContent>
     </DropdownMenu>
+    <SetNicknameDialog
+      open={nicknameDialogOpen}
+      onOpenChange={setNicknameDialogOpen}
+    />
+    </>
   );
 };
 

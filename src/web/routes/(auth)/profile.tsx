@@ -29,6 +29,7 @@ type ProfileUpdateResponse = {
 
 import { authClient } from "src/lib/auth/client";
 import { getUserData, UserData } from "src/web/hooks/use-user-data";
+import { nicknameError } from "src/lib/nickname";
 
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,
@@ -92,11 +93,12 @@ function RouteComponent() {
   const validateForm = () => {
     const errors: { nickname?: string } = {};
 
-    if (currentData.nickname && currentData.nickname.includes("/")) {
-      errors.nickname = "Nickname cannot contain the '/' character";
-    }
-    if (currentData.nickname && currentData.nickname.length > 30) {
-      errors.nickname = "Nickname is too long (max 30 characters)";
+    // An empty nickname is allowed here (it clears the handle); only validate
+    // the characters/length when one is actually provided.
+    const trimmed = currentData.nickname.trim();
+    if (trimmed) {
+      const err = nicknameError(trimmed);
+      if (err) errors.nickname = err;
     }
 
     setFieldErrors(errors);
@@ -255,16 +257,9 @@ function RouteComponent() {
             error={fieldErrors.nickname}
             onNicknameChange={(value) => {
               updateField("nickname", value);
-              if (value.includes("/")) {
-                setFieldErrors((prev) => ({
-                  ...prev,
-                  nickname: "Nickname cannot contain the '/' character",
-                }));
-              } else {
-                if (fieldErrors.nickname) {
-                  setFieldErrors((prev) => ({ ...prev, nickname: undefined }));
-                }
-              }
+              const trimmed = value.trim();
+              const err = trimmed ? nicknameError(trimmed) : undefined;
+              setFieldErrors((prev) => ({ ...prev, nickname: err ?? undefined }));
             }}
             onNameChange={(value) => updateField("name", value)}
           />

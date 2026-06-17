@@ -59,11 +59,14 @@ const ShareSongButton: React.FC<ShareSongButtonProps> = ({
         }'s session to your own followers`,
       };
     }
+    // Sharing is addressed by nickname only — prompt the user to set one first.
+    if (userData && !userData.profile.nickname) {
+      return { text: "Set a nickname (in your profile) to share your session" };
+    }
     if (!shareSession) return { text: "Share your page with others - live" };
-    if (shareSession && userData) {
-      const displayName = userData.profile.nickname || userData.profile.name;
+    if (shareSession && userData?.profile.nickname) {
       return {
-        text: `Your session can be viewed at ${window.location.host}/feed/${displayName}`,
+        text: `Your session can be viewed at ${window.location.host}/feed/${userData.profile.nickname}`,
       };
     }
     return null;

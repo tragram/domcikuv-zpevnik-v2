@@ -16,7 +16,8 @@ export function useShareSessionToggle() {
     async (checked: boolean) => {
       setShareSession(checked);
       if (!checked && userData) {
-        const masterNickname = userData.profile.nickname || userData.profile.name;
+        // Sessions are addressed by nickname only; nothing to end without one.
+        const masterNickname = userData.profile.nickname;
         if (masterNickname) {
           // Optimistic update
           queryClient.setQueryData(activeSessionsQueryOptions().queryKey, (old) => {

@@ -164,6 +164,10 @@ export class SessionSync extends DurableObject<Env> {
         this.masterId = stored.masterId;
         this.currentChainPath = stored.chainPath ?? [];
         this.currentOriginatorNickname = stored.originatorNickname ?? null;
+        // Reconstructed from storage with an existing song → not a new session,
+        // so a same-song update after a hibernation wake won't write a duplicate
+        // discovery row. A genuinely fresh DO keeps the field's `true` default.
+        this.isNewSession = stored.songId === null;
       }
 
       const activeMasterWs = this.ctx
@@ -240,12 +244,20 @@ export class SessionSync extends DurableObject<Env> {
     // Backend has already verified authorization, so we trust the role parameter
     const isMaster = roleParam === "master";
 
-    if (isMaster && masterNicknameParam && masterIdParam) {
-      this.masterNickname = masterNicknameParam;
-      this.masterId = masterIdParam;
-      this.isNewSession = true;
+    // Only the master connection may mutate the session's identity. Followers
+    // also carry these params (server-derived), but applying them on a follower
+    // socket would let a follower connection write session state — gate it.
+    if (isMaster) {
+      if (masterNicknameParam && masterIdParam) {
+        this.masterNickname = masterNicknameParam;
+        this.masterId = masterIdParam;
+        // Only force the immediate "appear in discovery" D1 write for a session
+        // that has no song yet. A reconnect/hibernation wake that already has
+        // song state is NOT new — treating it as new writes a duplicate row.
+        this.isNewSession = this.currentSongId === null;
+      }
+      if (masterAvatarParam) this.masterAvatar = masterAvatarParam;
     }
-    if (masterAvatarParam) this.masterAvatar = masterAvatarParam;
 
     // Displace any existing master connection
     if (isMaster && this.masterWebSocket) {

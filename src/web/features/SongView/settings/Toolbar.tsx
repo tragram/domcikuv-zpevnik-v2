@@ -1,5 +1,6 @@
 import { Link, useSearch } from "@tanstack/react-router";
 import {
+  AtSign,
   CloudOff,
   Coffee,
   Contrast,
@@ -9,7 +10,7 @@ import {
   Settings2,
   Undo2,
 } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import type { FullScreenHandle } from "react-full-screen";
 import { useWakeLock } from "react-screen-wake-lock";
 
@@ -33,6 +34,7 @@ import { useSongDB } from "~/hooks/use-songDB";
 import { Key } from "~/types/musicTypes";
 import { SongData } from "~/types/songData";
 import ShareSongButton from "../components/ShareSongButton";
+import { SetNicknameDialog } from "../components/SetNicknameDialog";
 import { useScrollHandler } from "../hooks/useScrollHandler";
 import { FeedStatus } from "../hooks/useSessionSync";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
@@ -69,6 +71,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
   const { songDB } = useSongDB(userData);
+  const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
+  const nickname = userData?.profile.nickname ?? null;
   const { PWAInstallComponent, installItem } = usePWAInstall();
   const {
     request: wakeLockRequest,
@@ -223,6 +227,25 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               songId={songData.id}
             />
 
+            {userData && (
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setNicknameDialogOpen(true);
+                }}
+              >
+                <CompactItem.Shell>
+                  <CompactItem.Icon>
+                    <AtSign />
+                  </CompactItem.Icon>
+                  <CompactItem.Body
+                    title={nickname ? "Change sharing nickname" : "Set a nickname to share"}
+                    subtitle={nickname ? `Sharing as ${nickname}` : undefined}
+                  />
+                </CompactItem.Shell>
+              </DropdownMenuItem>
+            )}
+
             <DropdownMenuItem>
               <Link
                 className="w-full"
@@ -261,6 +284,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         </DropdownMenu>
       </ToolbarBase>
       {PWAInstallComponent}
+      <SetNicknameDialog
+        open={nicknameDialogOpen}
+        onOpenChange={setNicknameDialogOpen}
+      />
     </div>
   );
 };

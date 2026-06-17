@@ -163,7 +163,9 @@ export function useSessionSync(
 
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const url = new URL(
-        `${protocol}//${window.location.host}/api/session/${masterNickname}`,
+        `${protocol}//${window.location.host}/api/session/${encodeURIComponent(
+          masterNickname,
+        )}`,
       );
       url.searchParams.set("role", isMaster ? "master" : "follower");
       // Stable per-tab id so the DO can collapse duplicate connections from

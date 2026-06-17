@@ -46,9 +46,10 @@ type FeedViewProps = {
 };
 
 function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
-  // The user's own identity — needed for relay and loop detection
-  const ownNickname =
-    userData?.profile?.nickname ?? userData?.profile?.name ?? undefined;
+  // The user's own identity — needed for relay and loop detection. Sessions are
+  // addressed by nickname only, so a user without one cannot relay (they have no
+  // own feed URL); the relay hook falls back to plain following.
+  const ownNickname = userData?.profile?.nickname ?? undefined;
   const ownMasterId = userData?.profile?.id ?? undefined;
 
   // Relay is enabled only when the user has sharing turned on in their song view
@@ -72,7 +73,11 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
   const currentMasterNickname = feedStatus.sessionState?.masterNickname;
   useEffect(() => {
     if (currentMasterNickname && currentMasterNickname !== masterNickname) {
-      navigate({ to: `/feed/${currentMasterNickname}`, replace: true });
+      navigate({
+        to: "/feed/$masterNickname",
+        params: { masterNickname: currentMasterNickname },
+        replace: true,
+      });
     }
   }, [currentMasterNickname, masterNickname, navigate]);
 

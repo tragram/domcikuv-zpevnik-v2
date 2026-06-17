@@ -2,6 +2,12 @@ import { and, eq, ne } from "drizzle-orm";
 import { user, userFavoriteSongs } from "src/lib/db/schema";
 import { z } from "zod";
 import {
+  NICKNAME_MAX_LENGTH,
+  NICKNAME_REGEX,
+  NICKNAME_RULES_MESSAGE,
+  NICKNAME_TOO_LONG_MESSAGE,
+} from "src/lib/nickname";
+import {
   deleteAvatar,
   getUserProfile,
   updateAvatar,
@@ -16,8 +22,8 @@ const updateUserProfileSchema = z.object({
     .max(100, "Display name too long"),
   nickname: z
     .string()
-    .regex(/^[^\/]*$/, "Nickname cannot contain the '/' character")
-    .max(30, "Nickname is too long")
+    .max(NICKNAME_MAX_LENGTH, NICKNAME_TOO_LONG_MESSAGE)
+    .regex(NICKNAME_REGEX, NICKNAME_RULES_MESSAGE)
     .optional(),
   isFavoritesPublic: z.boolean(),
 });

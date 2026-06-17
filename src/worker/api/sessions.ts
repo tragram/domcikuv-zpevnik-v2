@@ -1,4 +1,4 @@
-import { eq, gte, or } from "drizzle-orm";
+import { eq, gte } from "drizzle-orm";
 import { syncSession, user, user as userTable } from "src/lib/db/schema";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
@@ -30,7 +30,6 @@ const sessionSyncApp = buildApp()
         songId: syncSession.songId,
         avatar: user.image,
         nickname: user.nickname,
-        name: user.name,
       })
       .from(syncSession)
       .where(gte(syncSession.timestamp, latestLive))
@@ -44,19 +43,16 @@ const sessionSyncApp = buildApp()
         acc.set(session.masterId, session);
       }
       return acc;
-    }, new Map());
+    }, new Map<string, (typeof liveSessions)[number]>());
 
-    // Filter out ended sessions (songId is null)
+    // Keep only live sessions (songId set) that are addressable: a session is
+    // followed via /feed/:nickname, so a master without a nickname can't be
+    // linked to and is omitted from discovery.
     const activeSessions = Array.from(latestByMasterId.values()).filter(
-      (s: any) => s.songId !== null,
+      (s) => s.songId !== null && s.nickname,
     );
 
-    const uniqueSessions = activeSessions.map((s: any) => ({
-      ...s,
-      nickname: s.nickname || s.name,
-    }));
-
-    return successJSend(c, uniqueSessions as SessionsResponseData);
+    return successJSend(c, activeSessions as SessionsResponseData);
   })
   .post(
     "/:masterNickname",
@@ -73,15 +69,9 @@ const sessionSyncApp = buildApp()
         .select({
           id: userTable.id,
           nickname: userTable.nickname,
-          name: userTable.name,
         })
         .from(userTable)
-        .where(
-          or(
-            eq(userTable.nickname, masterNickname),
-            eq(userTable.name, masterNickname),
-          ),
-        )
+        .where(eq(userTable.nickname, masterNickname))
         .get();
 
       if (!masterProfile || masterProfile.id !== user.id) {
@@ -121,15 +111,9 @@ const sessionSyncApp = buildApp()
           id: userTable.id,
           avatar: userTable.image,
           nickname: userTable.nickname,
-          name: userTable.name,
         })
         .from(userTable)
-        .where(
-          or(
-            eq(userTable.nickname, masterNickname),
-            eq(userTable.name, masterNickname),
-          ),
-        )
+        .where(eq(userTable.nickname, masterNickname))
         .get();
 
       if (!masterProfile) return errorJSend(c, "Master user not found", 404);
@@ -152,8 +136,8 @@ const sessionSyncApp = buildApp()
 
       const url = new URL(c.req.url);
       url.searchParams.set("role", verifiedRole);
-      const displayName = masterProfile.nickname || masterProfile.name;
-      url.searchParams.set("masterNickname", displayName);
+      // Non-null: the profile was matched by exactly this nickname above.
+      url.searchParams.set("masterNickname", masterProfile.nickname ?? masterNickname);
       url.searchParams.set("masterId", masterProfile.id);
       if (masterProfile.avatar)
         url.searchParams.set("masterAvatar", masterProfile.avatar);
