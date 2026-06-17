@@ -60,9 +60,10 @@ const sessionSyncApp = buildApp()
   })
   .post(
     "/:masterNickname",
+    zValidator("param", z.object({ masterNickname: z.string().min(1) })),
     zValidator("json", z.object({ songId: z.string().nullable() })),
     async (c) => {
-      const masterNickname = c.req.param("masterNickname");
+      const { masterNickname } = c.req.valid("param");
       const user = c.var.USER;
 
       if (!user) return errorJSend(c, "Authentication required", 401);
@@ -105,55 +106,60 @@ const sessionSyncApp = buildApp()
       return successJSend(c, null);
     },
   )
-  .get("/:masterNickname", async (c) => {
-    const masterNickname = c.req.param("masterNickname");
-    const requestedRole = new URL(c.req.url).searchParams.get("role");
-    const user = c.var.USER;
+  .get(
+    "/:masterNickname",
+    zValidator("param", z.object({ masterNickname: z.string().min(1) })),
+    zValidator("query", z.object({ role: z.enum(["master", "follower"]).optional() })),
+    async (c) => {
+      const { masterNickname } = c.req.valid("param");
+      const { role: requestedRole } = c.req.valid("query");
+      const user = c.var.USER;
 
-    const db = c.var.db;
-    const masterProfile = await db
-      .select({
-        id: userTable.id,
-        avatar: userTable.image,
-        nickname: userTable.nickname,
-        name: userTable.name,
-      })
-      .from(userTable)
-      .where(
-        or(
-          eq(userTable.nickname, masterNickname),
-          eq(userTable.name, masterNickname),
-        ),
-      )
-      .get();
+      const db = c.var.db;
+      const masterProfile = await db
+        .select({
+          id: userTable.id,
+          avatar: userTable.image,
+          nickname: userTable.nickname,
+          name: userTable.name,
+        })
+        .from(userTable)
+        .where(
+          or(
+            eq(userTable.nickname, masterNickname),
+            eq(userTable.name, masterNickname),
+          ),
+        )
+        .get();
 
-    if (!masterProfile) return errorJSend(c, "Master user not found", 404);
+      if (!masterProfile) return errorJSend(c, "Master user not found", 404);
 
-    let verifiedRole = "follower";
-    if (requestedRole === "master") {
-      if (!user)
-        return errorJSend(c, "Authentication required to be master", 401);
-      if (masterProfile.id !== user.id)
-        return errorJSend(
-          c,
-          "Not authorized to be master for this session",
-          403,
-        );
-      verifiedRole = "master";
-    }
+      let verifiedRole = "follower";
+      if (requestedRole === "master") {
+        if (!user)
+          return errorJSend(c, "Authentication required to be master", 401);
+        if (masterProfile.id !== user.id)
+          return errorJSend(
+            c,
+            "Not authorized to be master for this session",
+            403,
+          );
+        verifiedRole = "master";
+      }
 
-    const id = c.env.SESSION_SYNC.idFromName(masterProfile.id);
-    const stub = c.env.SESSION_SYNC.get(id);
+      const id = c.env.SESSION_SYNC.idFromName(masterProfile.id);
+      const stub = c.env.SESSION_SYNC.get(id);
 
-    const url = new URL(c.req.url);
-    url.searchParams.set("role", verifiedRole);
-    const displayName = masterProfile.nickname || masterProfile.name;
-    url.searchParams.set("masterNickname", displayName);
-    url.searchParams.set("masterId", masterProfile.id);
-    if (masterProfile.avatar)
-      url.searchParams.set("masterAvatar", masterProfile.avatar);
+      const url = new URL(c.req.url);
+      url.searchParams.set("role", verifiedRole);
+      const displayName = masterProfile.nickname || masterProfile.name;
+      url.searchParams.set("masterNickname", displayName);
+      url.searchParams.set("masterId", masterProfile.id);
+      if (masterProfile.avatar)
+        url.searchParams.set("masterAvatar", masterProfile.avatar);
 
-    return stub.fetch(url.toString(), c.req.raw);
-  });
+      return stub.fetch(url.toString(), c.req.raw);
+    },
+  );
 
 export default sessionSyncApp;

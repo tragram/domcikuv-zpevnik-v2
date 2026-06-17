@@ -208,6 +208,7 @@ export const fetchFeed = async (
 ): Promise<SessionSyncState | undefined> => {
   const response = await api.session[":masterNickname"].$get({
     param: { masterNickname },
+    query: {},
   });
   let liveState: SessionSyncState | undefined;
   if (response.ok) liveState = (await response.json()) as SessionSyncState;
