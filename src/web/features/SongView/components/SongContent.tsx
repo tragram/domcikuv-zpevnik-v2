@@ -1,5 +1,6 @@
 import { forwardRef, useMemo } from "react";
 import { SongData } from "~/types/songData";
+import { Key } from "~/types/musicTypes";
 
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { renderSong } from "../utils/songRendering";
@@ -13,15 +14,16 @@ interface SongContentProps {
   transposeSteps: number;
   gestureContainerRef: React.RefObject<HTMLDivElement | null>;
   userData?: UserData;
+  effectiveKey?: Key;
 }
 
 export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-  ({ songData, transposeSteps, gestureContainerRef, userData }, ref) => {
+  ({ songData, transposeSteps, gestureContainerRef, userData, effectiveKey }, ref) => {
     const { layout, chords: chordSettings } = useViewSettingsStore();
 
     const parsedContent = useMemo(
-      () => renderSong(songData, transposeSteps, chordSettings.czechChordNames),
-      [songData, transposeSteps, chordSettings.czechChordNames],
+      () => renderSong(songData, transposeSteps, chordSettings.czechChordNames, effectiveKey),
+      [songData, transposeSteps, chordSettings.czechChordNames, effectiveKey],
     );
 
     return (

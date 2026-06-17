@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 import { cn } from "~/lib/utils";
@@ -12,6 +12,7 @@ import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
 import "./SongView.css";
 import { UserData } from "src/web/hooks/use-user-data";
+import { guessKey } from "./utils/songRendering";
 
 type DataForSongView = {
   songData: SongData;
@@ -69,6 +70,11 @@ export const SongView = ({
     }
   };
 
+  const effectiveKey = useMemo(
+    () => songData.key ?? guessKey(songData.chordpro),
+    [songData],
+  );
+
   // Prevent default gesture behavior
   useEffect(() => {
     const preventDefault = (e: Event) => e.preventDefault();
@@ -87,7 +93,7 @@ export const SongView = ({
         songData={songData}
         userData={userData}
         fullScreenHandle={fullScreenHandle}
-        originalKey={songData.key}
+        originalKey={effectiveKey}
         feedStatus={feedStatus}
         transposeSteps={transposeSteps}
         setTransposeSteps={handleSetTransposeSteps}
@@ -108,6 +114,7 @@ export const SongView = ({
           transposeSteps={transposeSteps}
           gestureContainerRef={gestureContainerRef}
           userData={userData}
+          effectiveKey={effectiveKey}
         />
       </FullScreen>
       <FeedStatusBar feedStatus={feedStatus} />

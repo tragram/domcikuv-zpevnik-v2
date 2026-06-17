@@ -89,19 +89,21 @@ export function renderSong(
   songData: SongData,
   transposeSteps: number,
   centralEuropeanNotation: boolean,
+  keyOverride?: Key,
 ): string {
   // Parse and process the chord pro content
   let song = parseChordPro(formatChordpro(songData.chordpro));
   // Inject known key to help the transposer pick sharp/flat accidentals properly
-  if (songData.key) {
-    const isFlat = songData.key.isFlat();
+  const effectiveKey = songData.key ?? keyOverride;
+  if (effectiveKey) {
+    const isFlat = effectiveKey.isFlat();
     // Format the note (specifying flat/sharp and disabling Czech notation for the parser)
-    const noteStr = songData.key.note.toString(
+    const noteStr = effectiveKey.note.toString(
       isFlat ? "flat" : "sharp",
       false,
     );
     // Append 'm' for minor keys
-    const modeStr = songData.key.mode === KeyMode.Minor ? "m" : "";
+    const modeStr = effectiveKey.mode === KeyMode.Minor ? "m" : "";
 
     // chordsheetjs Song objects are immutable, so we reassign using setKey
     song = song.setKey(noteStr + modeStr);
