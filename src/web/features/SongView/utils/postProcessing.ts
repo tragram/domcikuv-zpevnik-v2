@@ -84,6 +84,10 @@ function detectRepeatedChordPatterns(
       seen[elementClass][label] = [];
     }
 
+    const hasLyrics = Array.from(element.querySelectorAll("span.lyrics")).some(
+      (el) => el.textContent?.trim(),
+    );
+
     const matchResult = findBestChordPatternMatch(
       onlyChords,
       seen[elementClass][label],
@@ -95,6 +99,10 @@ function detectRepeatedChordPatterns(
     ) {
       seen[elementClass][label].push(onlyChords);
     } else {
+      if (!hasLyrics) {
+        seen[elementClass][label].push(onlyChords);
+        return;
+      }
       if (matchResult.distance > 0) {
         seen[elementClass][label].push(onlyChords);
       }
