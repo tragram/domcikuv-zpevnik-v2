@@ -1,4 +1,4 @@
-import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
+import { SongDataDB } from "src/lib/db/schema";
 import { queryClient } from "src/lib/query-client";
 import {
   ModifySongVersionSchema,
@@ -7,6 +7,7 @@ import {
 import {
   SongDataAdminApi,
   SongDataApi,
+  SongVersionAdminApi,
   SongVersionApi,
 } from "src/worker/api/api-types";
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
@@ -235,9 +236,9 @@ export const getSongsAdmin = async (
 
 export const getVersionsAdmin = async (
   adminApi: AdminApi,
-): Promise<SongVersionDB[]> => {
+): Promise<SongVersionAdminApi[]> => {
   const response = await makeApiRequest(adminApi.songs.versions.$get);
-  return response.map(parseDBDates);
+  return response.map(parseDBDates) as SongVersionAdminApi[];
 };
 
 export const approveSongVersion = async (

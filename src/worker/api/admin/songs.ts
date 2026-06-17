@@ -16,7 +16,7 @@ import {
   songVersion,
   SongVersionDB,
 } from "../../../lib/db/schema";
-import { SongDataAdminApi, SongVersionApi } from "../api-types";
+import { SongDataAdminApi, SongVersionAdminApi, SongVersionApi } from "../api-types";
 import {
   failJSend,
   songNotFoundFail,
@@ -89,15 +89,18 @@ export const songRoutes = buildApp()
 
     return successJSend(c, songs);
   })
-  .get("/versions", async (c) =>
-    successJSend(
-      c,
-      (await c.var.db
-        .select()
-        .from(songVersion)
-        .orderBy(desc(songVersion.updatedAt))) as SongVersionDB[],
-    ),
-  )
+  .get("/versions", async (c) => {
+    const records = await c.var.db
+      .select({
+        ...getTableColumns(songVersion),
+        importSourceId: songImport.sourceId,
+        importUrl: songImport.url,
+      })
+      .from(songVersion)
+      .leftJoin(songImport, eq(songVersion.importId, songImport.id))
+      .orderBy(desc(songVersion.updatedAt));
+    return successJSend(c, records as SongVersionAdminApi[]);
+  })
   .get("/:songId", async (c) => {
     try {
       return successJSend(

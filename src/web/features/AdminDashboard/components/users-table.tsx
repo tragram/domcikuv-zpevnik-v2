@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Badge } from "~/components/ui/badge";
@@ -15,7 +15,6 @@ import { ActionButtons } from "./shared/action-buttons";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogDescription,
 } from "~/components/ui/dialog";
@@ -27,8 +26,12 @@ import {
   ArrowUp,
   ArrowDown,
   Users as UsersIcon,
+  Shield,
+  ShieldCheck,
+  BadgeCheck,
 } from "lucide-react";
-import { TableToolbar } from "./shared/table-toolbar";
+import { ControlPanel } from "./control-panel";
+import { StatsBar } from "./stats-bar";
 import { Pagination } from "./shared/pagination";
 import { toast } from "sonner";
 import {
@@ -66,11 +69,13 @@ export function UsersTable({ adminApi }: UsersTableProps) {
   const updateUserMutation = useUpdateUser(adminApi);
   const deleteUserMutation = useDeleteUser(adminApi);
 
-  useEffect(() => {
+  // Search changes reset to the first page so matches aren't hidden off-page.
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
     setCurrentPage(0);
-  }, [searchTerm]);
+  };
 
-  const users = usersData?.users || [];
+  const users = useMemo(() => usersData?.users ?? [], [usersData]);
   const sortedUsers = useMemo(() => {
     const sortableUsers = [...users];
     if (sortConfig !== null) {
@@ -142,14 +147,39 @@ export function UsersTable({ adminApi }: UsersTableProps) {
         </div>
       </div>
 
-      <div className="bg-card border rounded-xl shadow-sm overflow-hidden">
-        <div className="p-4 bg-muted/20">
-          <TableToolbar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-          />
-        </div>
+      <StatsBar
+        items={[
+          {
+            label: "Users",
+            value: usersData?.pagination.total ?? 0,
+            icon: UsersIcon,
+          },
+          {
+            label: "Admins",
+            value: usersData?.counts?.admins ?? 0,
+            icon: Shield,
+            className: "text-primary",
+          },
+          {
+            label: "Trusted",
+            value: usersData?.counts?.trusted ?? 0,
+            icon: ShieldCheck,
+            className: "text-blue-600",
+          },
+          {
+            label: "Verified",
+            value: usersData?.counts?.verified ?? 0,
+            icon: BadgeCheck,
+            className: "text-emerald-600",
+          },
+        ]}
+      />
 
+      <ControlPanel
+        searchTerm={searchTerm}
+        onSearchChange={handleSearchChange}
+        className="border"
+      >
         <div className="overflow-x-auto border-t">
           <Table className="min-w-[900px]">
             <TableHeader className="bg-muted/30">
@@ -273,7 +303,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
             </TableBody>
           </Table>
         </div>
-      </div>
+      </ControlPanel>
 
       {totalPages > 1 && (
         <Pagination
@@ -299,6 +329,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
           </div>
           <div className="p-6">
             <UserForm
+              key={editingUser?.id}
               user={editingUser}
               isLoading={updateUserMutation.isPending}
               onSave={(data) => {
@@ -340,19 +371,6 @@ function UserForm({
     isAdmin: user?.isAdmin || false,
     isFavoritesPublic: user?.isFavoritesPublic || false,
   });
-
-  useEffect(() => {
-    if (user)
-      setFormData({
-        name: user.name,
-        email: user.email,
-        nickname: user.nickname || "",
-        emailVerified: user.emailVerified,
-        isTrusted: user.isTrusted,
-        isAdmin: user.isAdmin,
-        isFavoritesPublic: user.isFavoritesPublic,
-      });
-  }, [user]);
 
   return (
     <form

@@ -14,6 +14,7 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 import { cn } from "~/lib/utils";
+import { ExternalSourceBadge } from "../external-source-badge";
 import { IllustrationCard, PendingIllustrationCard } from "./illustration-card";
 import {
   IllustrationForm,
@@ -138,12 +139,20 @@ export function SongIllustrationsGroup({
               <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
             )}
             <div className="flex-shrink-0 min-w-0 max-w-[200px] sm:max-w-none">
-              <h4
-                className="font-medium truncate"
-                title={song.title || "Unknown Song"}
-              >
-                {song.title || "Unknown Song"}
-              </h4>
+              <div className="flex items-center gap-2">
+                <h4
+                  className="font-medium truncate"
+                  title={song.title || "Unknown Song"}
+                >
+                  {song.title || "Unknown Song"}
+                </h4>
+                {song.externalSource && (
+                  <ExternalSourceBadge
+                    sourceId={song.externalSource.sourceId}
+                    url={song.externalSource.url}
+                  />
+                )}
+              </div>
               <p
                 className="text-sm text-muted-foreground truncate"
                 title={song.artist}

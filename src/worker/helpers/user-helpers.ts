@@ -1,4 +1,4 @@
-import { count, desc, eq, like, or } from "drizzle-orm";
+import { and, count, desc, eq, like, or } from "drizzle-orm";
 import { AppDatabase } from "../api/utils";
 import { user, UserDB } from "src/lib/db/schema";
 import { z } from "zod";
@@ -31,7 +31,9 @@ export const userSearchSchema = z.object({
   offset: z.coerce.number().min(0).default(0),
 });
 
-export type UsersResponse = PaginatedResponse<UserDB[], "users">;
+export type UsersResponse = PaginatedResponse<UserDB[], "users"> & {
+  counts: { admins: number; trusted: number; verified: number };
+};
 
 export const getUsers = async (
   db: AppDatabase,
@@ -50,8 +52,19 @@ export const getUsers = async (
     );
   }
 
+  // Counts respect the same search filter as the list, so they stay in sync
+  // with pagination.total (and equal global totals when not searching).
+  const withSearch = (condition: ReturnType<typeof eq>) =>
+    whereClause ? and(whereClause, condition) : condition;
+
   // Execute queries with proper where clause handling
-  const [users, totalCountResult] = await Promise.all([
+  const [
+    users,
+    totalCountResult,
+    adminCountResult,
+    trustedCountResult,
+    verifiedCountResult,
+  ] = await Promise.all([
     // Users query with conditional where clause
     whereClause
       ? db
@@ -72,6 +85,19 @@ export const getUsers = async (
     whereClause
       ? db.select({ count: count() }).from(user).where(whereClause)
       : db.select({ count: count() }).from(user),
+
+    db
+      .select({ count: count() })
+      .from(user)
+      .where(withSearch(eq(user.isAdmin, true))),
+    db
+      .select({ count: count() })
+      .from(user)
+      .where(withSearch(eq(user.isTrusted, true))),
+    db
+      .select({ count: count() })
+      .from(user)
+      .where(withSearch(eq(user.emailVerified, true))),
   ]);
 
   const totalCount = totalCountResult[0]?.count ?? 0;
@@ -84,6 +110,11 @@ export const getUsers = async (
       hasMore: offset + limit < totalCount,
       currentPage: Math.floor(offset / limit) + 1,
       totalPages: Math.ceil(totalCount / limit),
+    },
+    counts: {
+      admins: adminCountResult[0]?.count ?? 0,
+      trusted: trustedCountResult[0]?.count ?? 0,
+      verified: verifiedCountResult[0]?.count ?? 0,
     },
   };
 };

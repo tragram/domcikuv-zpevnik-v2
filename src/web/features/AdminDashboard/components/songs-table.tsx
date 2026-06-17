@@ -6,6 +6,10 @@ import {
   Clock,
   Edit,
   ExternalLink,
+  EyeOff,
+  Filter,
+  Globe,
+  Library,
   ListRestart,
   RotateCcw,
   Star,
@@ -14,19 +18,28 @@ import {
   ArrowDown,
   Settings2,
   Sparkles,
+  Trash2,
+  User,
   GitCompare,
 } from "lucide-react";
 import React, { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
+import { SongDataDB, SONG_SOURCES, SongVersionDB } from "src/lib/db/schema";
+import { SongVersionAdminApi } from "src/worker/api/api-types";
 import useLocalStorageState from "use-local-storage-state";
 import ReactDiffViewer from "react-diff-viewer-continued";
 import { useTheme } from "next-themes";
 import SongVersionStatusBadge from "~/components/SongVersionStatusBadge";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import { Checkbox } from "~/components/ui/checkbox";
 import { Label } from "~/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { Switch } from "~/components/ui/switch";
 import {
   Table,
@@ -61,12 +74,28 @@ import {
   useVersionsAdmin,
 } from "../../../services/admin-hooks";
 import { ActionButtons } from "./shared/action-buttons";
-import { TableToolbar } from "./shared/table-toolbar";
+import { ControlPanel } from "./control-panel";
+import { ExternalSourceBadge } from "./external-source-badge";
+import { Pagination } from "./shared/pagination";
+import { StatsBar } from "./stats-bar";
+import { ToggleCheckbox } from "./toggle-checkbox";
 import { formatChordpro } from "~/lib/formatChordpro";
 
 // --- TYPES & CONSTANTS ---
 
 const AUTO_ILLUSTRATION_STORAGE_KEY = "admin-auto-generate-illustration";
+const PAGE_SIZE = 25;
+
+type ExternalSource = {
+  sourceId: (typeof SONG_SOURCES)[number];
+  url: string;
+};
+
+/** Minimal shape of the admin users query needed to resolve version authors. */
+type AdminUsers =
+  | { users: { id: string; name?: string | null; nickname?: string | null }[] }
+  | null
+  | undefined;
 
 type SortableSong = SongDataDB & {
   title: string;
@@ -74,15 +103,38 @@ type SortableSong = SongDataDB & {
   lastModified: Date;
   status: string;
   hasPendingVersions: boolean;
+  externalSource: ExternalSource | null;
+  submittedBy: string | null;
 };
 
 type SortConfig = {
   key: keyof Omit<
     SortableSong,
-    "hasPendingVersions" | "currentVersionId" | "currentIllustrationId"
+    | "hasPendingVersions"
+    | "currentVersionId"
+    | "currentIllustrationId"
+    | "externalSource"
+    | "submittedBy"
   >;
   direction: "ascending" | "descending";
 };
+
+type StatusFilter =
+  | "all"
+  | "pending"
+  | "published"
+  | "archived"
+  | "rejected"
+  | "empty";
+
+const STATUS_FILTER_OPTIONS: { value: StatusFilter; label: string }[] = [
+  { value: "all", label: "All statuses" },
+  { value: "pending", label: "Pending review" },
+  { value: "published", label: "Published" },
+  { value: "archived", label: "Archived" },
+  { value: "rejected", label: "Rejected" },
+  { value: "empty", label: "No version" },
+];
 
 type DiffViewState = {
   isOpen: boolean;
@@ -188,7 +240,7 @@ interface SongVersionItemProps {
   parentVersion: SongVersionDB | undefined | null;
   currentVersion: SongVersionDB | undefined | null;
   isCurrentActive: boolean;
-  users: any;
+  users: AdminUsers;
   onApprove: () => void;
   onReject: () => void;
   onRestore: () => void;
@@ -217,7 +269,7 @@ function SongVersionItem({
 
   const author = useMemo(() => {
     if (!users) return null;
-    const user = users.users.find((u: any) => u.id == version.userId);
+    const user = users.users.find((u) => u.id == version.userId);
     return user?.nickname || user?.name;
   }, [users, version.userId]);
 
@@ -371,7 +423,7 @@ interface VersionHistoryTimelineProps {
   song: SortableSong;
   songVersions: SongVersionDB[];
   showDeleted: boolean;
-  users: any;
+  users: AdminUsers;
   onApproveVersion: (songId: string, versionId: string) => void;
   onRejectVersion: (songId: string, versionId: string) => void;
   onRestoreVersion: (songId: string, versionId: string) => void;
@@ -519,6 +571,12 @@ function SongTableRow({
         <TableCell>
           <div className="flex flex-wrap gap-2 items-center">
             <SongVersionStatusBadge status={song.status} />
+            {song.externalSource && (
+              <ExternalSourceBadge
+                sourceId={song.externalSource.sourceId}
+                url={song.externalSource.url}
+              />
+            )}
             {pendingCount > 0 && !song.deleted && song.status !== "pending" && (
               <Badge
                 variant="outline"
@@ -528,6 +586,16 @@ function SongTableRow({
               </Badge>
             )}
           </div>
+        </TableCell>
+        <TableCell className="text-muted-foreground whitespace-nowrap">
+          {song.submittedBy ? (
+            <span className="inline-flex items-center gap-1.5">
+              <User className="h-3.5 w-3.5 opacity-60" />
+              {song.submittedBy}
+            </span>
+          ) : (
+            <span className="text-muted-foreground/40">—</span>
+          )}
         </TableCell>
         <TableCell className="text-muted-foreground whitespace-nowrap">
           {song.lastModified.toLocaleDateString()}
@@ -574,7 +642,7 @@ function SongTableRow({
 
       {isExpanded && (
         <TableRow className="bg-accent/20">
-          <TableCell colSpan={7} className="p-0">
+          <TableCell colSpan={8} className="p-0">
             <VersionHistoryTimeline
               song={song}
               songVersions={songVersions}
@@ -600,6 +668,10 @@ function SongTableRow({
 interface SongsTableSettingsBarProps {
   searchTerm: string;
   onSearchChange: (term: string) => void;
+  statusFilter: StatusFilter;
+  onStatusFilterChange: (val: StatusFilter) => void;
+  showExternal: boolean;
+  onShowExternalChange: (val: boolean) => void;
   showDeleted: boolean;
   onShowDeletedChange: (val: boolean) => void;
   autoGenerateIllustration: boolean;
@@ -611,6 +683,10 @@ interface SongsTableSettingsBarProps {
 function SongsTableSettingsBar({
   searchTerm,
   onSearchChange,
+  statusFilter,
+  onStatusFilterChange,
+  showExternal,
+  onShowExternalChange,
   showDeleted,
   onShowDeletedChange,
   autoGenerateIllustration,
@@ -618,34 +694,59 @@ function SongsTableSettingsBar({
   isResetPending,
   onResetDB,
 }: SongsTableSettingsBarProps) {
+  const boxed = "bg-background px-3 py-1.5 rounded-md border shadow-sm";
   return (
-    <div className="bg-card rounded-xl shadow-sm overflow-hidden flex flex-col border-3 border-primary">
-      <div className="p-4 border-b bg-muted/10">
-        <TableToolbar searchTerm={searchTerm} onSearchChange={onSearchChange} />
-      </div>
-
+    <ControlPanel
+      searchTerm={searchTerm}
+      onSearchChange={onSearchChange}
+      toolbarChildren={
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-muted-foreground" />
+          <Select
+            value={statusFilter}
+            onValueChange={(v) => onStatusFilterChange(v as StatusFilter)}
+          >
+            <SelectTrigger size="sm" className="w-[170px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {STATUS_FILTER_OPTIONS.map((opt) => (
+                <SelectItem key={opt.value} value={opt.value}>
+                  {opt.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      }
+    >
       <div className="p-4 bg-muted/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div className="flex flex-wrap items-center gap-6">
+        <div className="flex flex-wrap items-center gap-4">
           <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center">
             <Settings2 className="w-3 h-3 mr-2" /> Quick Settings
           </span>
-          <Label className="flex items-center space-x-2 cursor-pointer bg-background px-3 py-1.5 rounded-md border shadow-sm">
-            <Checkbox
-              checked={showDeleted}
-              onCheckedChange={onShowDeletedChange}
-            />
-            <span className="text-sm font-medium">Show deleted</span>
-          </Label>
-          <Label className="flex items-center space-x-2 cursor-pointer bg-background px-3 py-1.5 rounded-md border shadow-sm">
-            <Checkbox
-              checked={autoGenerateIllustration}
-              onCheckedChange={onAutoGenerateIllustrationChange}
-            />
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            <span className="text-sm font-medium">
-              Auto-illustrate on first approval
-            </span>
-          </Label>
+          <ToggleCheckbox
+            checked={showExternal}
+            onCheckedChange={onShowExternalChange}
+            label="Show external"
+            icon={Globe}
+            iconClassName="text-violet-500"
+            className={boxed}
+          />
+          <ToggleCheckbox
+            checked={showDeleted}
+            onCheckedChange={onShowDeletedChange}
+            label="Show deleted"
+            className={boxed}
+          />
+          <ToggleCheckbox
+            checked={autoGenerateIllustration}
+            onCheckedChange={onAutoGenerateIllustrationChange}
+            label="Auto-illustrate on approval (if none exists)"
+            icon={Sparkles}
+            iconClassName="text-amber-500"
+            className={boxed}
+          />
         </div>
 
         <ConfirmationDialog
@@ -680,7 +781,7 @@ function SongsTableSettingsBar({
           isLoading={isResetPending}
         />
       </div>
-    </div>
+    </ControlPanel>
   );
 }
 
@@ -688,7 +789,10 @@ function SongsTableSettingsBar({
 
 export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [showExternal, setShowExternal] = useState(false);
   const [showDeleted, setShowDeleted] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
   const [diffView, setDiffView] = useState<DiffViewState | null>(null);
 
@@ -721,6 +825,15 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const restoreVersionMutation = useRestoreVersion(adminApi);
   const generateIllustrationMutation = useGenerateIllustration(adminApi);
 
+  const usersById = useMemo(() => {
+    const map = new Map<
+      string,
+      { id: string; name?: string | null; nickname?: string | null }
+    >();
+    users?.users?.forEach((u) => map.set(u.id, u));
+    return map;
+  }, [users]);
+
   const versionsBySong = useMemo(() => {
     if (!versions) return {};
     return versions.reduce(
@@ -729,16 +842,16 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         acc[version.songId].push(version);
         return acc;
       },
-      {} as Record<string, SongVersionDB[]>,
+      {} as Record<string, SongVersionAdminApi[]>,
     );
   }, [versions]);
 
-  const sortedSongs = useMemo(() => {
+  const enrichedSongs = useMemo<SortableSong[]>(() => {
     if (!songs) return [];
 
     const getWorkingVersion = (
       song: SongDataDB,
-      songVersions: SongVersionDB[],
+      songVersions: SongVersionAdminApi[],
     ) =>
       versions?.find((v) => v.id === song.currentVersionId) ??
       songVersions.find((v) => ["published"].includes(v.status)) ??
@@ -746,31 +859,65 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       songVersions.find((v) => ["pending"].includes(v.status)) ??
       songVersions.find((v) => ["rejected"].includes(v.status));
 
-    const enrichedSongs: SortableSong[] = songs
-      .map((song) => {
-        const songVersions = versionsBySong[song.id] || [];
-        const workingVersion = getWorkingVersion(song, songVersions);
-        return {
-          ...song,
-          title: workingVersion?.title || "N/A",
-          artist: workingVersion?.artist || "N/A",
-          lastModified: songVersions.reduce(
-            (latest, v) =>
-              new Date(v.createdAt) > latest ? new Date(v.createdAt) : latest,
-            new Date(0),
-          ),
-          status: song.deleted ? "deleted" : workingVersion?.status || "empty",
-          hasPendingVersions: songVersions.some((v) => v.status === "pending"),
-        };
-      })
-      .filter(
-        (song) =>
-          (song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            song.artist.toLowerCase().includes(searchTerm.toLowerCase())) &&
-          (showDeleted || !song.deleted),
-      );
+    return songs.map((song) => {
+      const songVersions = versionsBySong[song.id] || [];
+      const workingVersion = getWorkingVersion(song, songVersions);
+      const submitter = workingVersion
+        ? usersById.get(workingVersion.userId)
+        : undefined;
+      return {
+        ...song,
+        title: workingVersion?.title || "N/A",
+        artist: workingVersion?.artist || "N/A",
+        lastModified: songVersions.reduce(
+          (latest, v) =>
+            new Date(v.createdAt) > latest ? new Date(v.createdAt) : latest,
+          new Date(0),
+        ),
+        status: song.deleted ? "deleted" : workingVersion?.status || "empty",
+        hasPendingVersions: songVersions.some((v) => v.status === "pending"),
+        externalSource: workingVersion?.importSourceId
+          ? {
+              sourceId: workingVersion.importSourceId,
+              url: workingVersion.importUrl ?? "#",
+            }
+          : null,
+        submittedBy: submitter?.nickname || submitter?.name || null,
+      };
+    });
+  }, [songs, versions, versionsBySong, usersById]);
 
-    enrichedSongs.sort((a, b) => {
+  const stats = useMemo(
+    () => ({
+      total: enrichedSongs.filter((s) => !s.deleted).length,
+      pending: enrichedSongs.filter((s) => s.hasPendingVersions && !s.deleted)
+        .length,
+      external: enrichedSongs.filter((s) => s.externalSource && !s.deleted)
+        .length,
+      hidden: enrichedSongs.filter((s) => s.hidden && !s.deleted).length,
+      deleted: enrichedSongs.filter((s) => s.deleted).length,
+    }),
+    [enrichedSongs],
+  );
+
+  const filteredSortedSongs = useMemo(() => {
+    const term = searchTerm.toLowerCase();
+    const filtered = enrichedSongs.filter((song) => {
+      const matchesSearch =
+        song.title.toLowerCase().includes(term) ||
+        song.artist.toLowerCase().includes(term);
+      const matchesDeleted = showDeleted || !song.deleted;
+      const matchesExternal = showExternal || !song.externalSource;
+      const matchesStatus =
+        statusFilter === "all"
+          ? true
+          : statusFilter === "pending"
+            ? song.hasPendingVersions
+            : song.status === statusFilter;
+      return matchesSearch && matchesDeleted && matchesExternal && matchesStatus;
+    });
+
+    filtered.sort((a, b) => {
       if (a.hasPendingVersions && !b.hasPendingVersions) return -1;
       if (!a.hasPendingVersions && b.hasPendingVersions) return 1;
       if (a[sortConfig.key] < b[sortConfig.key])
@@ -779,11 +926,28 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         return sortConfig.direction === "ascending" ? 1 : -1;
       return 0;
     });
-    return enrichedSongs;
-  }, [songs, versions, versionsBySong, searchTerm, showDeleted, sortConfig]);
+    return filtered;
+  }, [
+    enrichedSongs,
+    searchTerm,
+    showDeleted,
+    showExternal,
+    statusFilter,
+    sortConfig,
+  ]);
 
   if (songsLoading || versionsLoading) return <div>Loading...</div>;
   if (!songs || !versions) return <div>Error loading data.</div>;
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredSortedSongs.length / PAGE_SIZE),
+  );
+  const safePage = Math.min(currentPage, totalPages - 1);
+  const paginatedSongs = filteredSortedSongs.slice(
+    safePage * PAGE_SIZE,
+    (safePage + 1) * PAGE_SIZE,
+  );
 
   const toggleSongExpansion = (id: string) => {
     const next = new Set(expandedSongs);
@@ -792,19 +956,15 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     setExpandedSongs(next);
   };
 
-  const isFirstApproval = (songId: string) =>
-    (versionsBySong[songId] || []).every(
-      (v) => v.status === "pending" || v.status === "rejected",
-    );
-
   const handleApproveVersion = (songId: string, versionId: string) => {
-    const isFirst = isFirstApproval(songId);
+    const song = songs.find((s) => s.id === songId);
+    const hasNoIllustration = !song?.currentIllustrationId;
     approveVersionMutation.mutate(
       { songId, versionId },
       {
         onSuccess: () => {
           toast.success("Version approved and published");
-          if (autoGenerateIllustration && isFirst) {
+          if (autoGenerateIllustration && hasNoIllustration) {
             toast.info("Auto-generating illustration...");
             generateIllustrationMutation.mutate({
               songId,
@@ -849,13 +1009,55 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     </TableHead>
   );
 
+  // Filter changes reset to the first page so results aren't hidden off-page.
+  const withPageReset =
+    <T,>(setter: (val: T) => void) =>
+    (val: T) => {
+      setter(val);
+      setCurrentPage(0);
+    };
+
   return (
     <div className="space-y-6 max-w-full pb-8">
+      <StatsBar
+        items={[
+          { label: "Songs", value: stats.total, icon: Library },
+          {
+            label: "Pending",
+            value: stats.pending,
+            icon: Clock,
+            className: "text-orange-600",
+          },
+          {
+            label: "External",
+            value: stats.external,
+            icon: Globe,
+            className: "text-violet-600",
+          },
+          {
+            label: "Hidden",
+            value: stats.hidden,
+            icon: EyeOff,
+            className: "text-muted-foreground",
+          },
+          {
+            label: "Deleted",
+            value: stats.deleted,
+            icon: Trash2,
+            className: "text-red-600",
+          },
+        ]}
+      />
+
       <SongsTableSettingsBar
         searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
+        onSearchChange={withPageReset(setSearchTerm)}
+        statusFilter={statusFilter}
+        onStatusFilterChange={withPageReset(setStatusFilter)}
+        showExternal={showExternal}
+        onShowExternalChange={withPageReset(setShowExternal)}
         showDeleted={showDeleted}
-        onShowDeletedChange={setShowDeleted}
+        onShowDeletedChange={withPageReset(setShowDeleted)}
         autoGenerateIllustration={autoGenerateIllustration}
         onAutoGenerateIllustrationChange={setAutoGenerateIllustration}
         isResetPending={resetDBMutation.isPending}
@@ -864,13 +1066,14 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
 
       <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <Table className="min-w-[800px]">
+          <Table className="min-w-[900px]">
             <TableHeader className="bg-muted/30">
               <TableRow>
                 <TableHead className="w-12 text-center"></TableHead>
                 {renderHeader("Title", "title")}
                 {renderHeader("Artist", "artist")}
                 <TableHead className="whitespace-nowrap">Status</TableHead>
+                <TableHead className="whitespace-nowrap">Submitted by</TableHead>
                 {renderHeader("Last Modified", "lastModified")}
                 <TableHead className="whitespace-nowrap">Visible</TableHead>
                 <TableHead className="whitespace-nowrap text-right pr-6">
@@ -879,72 +1082,95 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sortedSongs.map((song) => (
-                <SongTableRow
-                  key={song.id}
-                  song={song}
-                  songVersions={versionsBySong[song.id] || []}
-                  isExpanded={expandedSongs.has(song.id)}
-                  showDeleted={showDeleted}
-                  users={users}
-                  onToggleExpand={toggleSongExpansion}
-                  onUpdateHidden={(songId, hidden) =>
-                    updateSongMutation.mutate({ songId, song: { hidden } })
-                  }
-                  onRestoreSong={(songId) =>
-                    restoreSongMutation.mutate(songId, {
-                      onSuccess: () => toast.success("Song restored"),
-                    })
-                  }
-                  onDeleteSong={(songId) =>
-                    deleteSongMutation.mutate(songId, {
-                      onSuccess: () => toast.success("Song deleted"),
-                    })
-                  }
-                  onApproveVersion={handleApproveVersion}
-                  onRejectVersion={(songId, versionId) =>
-                    rejectVersionMutation.mutate(
-                      { songId, versionId },
-                      { onSuccess: () => toast.success("Rejected") },
-                    )
-                  }
-                  onRestoreVersion={(songId, versionId) =>
-                    restoreVersionMutation.mutate(
-                      { songId, versionId },
-                      { onSuccess: () => toast.success("Version restored") },
-                    )
-                  }
-                  onDeleteVersion={(songId, versionId) =>
-                    deleteVersionMutation.mutate(
-                      { songId, versionId },
-                      { onSuccess: () => toast.success("Permanently deleted") },
-                    )
-                  }
-                  onSetCurrentVersion={(songId, versionId) =>
-                    approveVersionMutation.mutate(
-                      { songId, versionId },
-                      {
-                        onSuccess: () =>
-                          toast.success("Set as current version"),
-                      },
-                    )
-                  }
-                  onDiff={(version, target, label) =>
-                    setDiffView({
-                      isOpen: true,
-                      songTitle: song.title,
-                      version,
-                      target,
-                      targetLabel: label,
-                    })
-                  }
-                  isApprovePending={approveVersionMutation.isPending}
-                />
-              ))}
+              {paginatedSongs.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={8}
+                    className="text-center py-12 text-muted-foreground"
+                  >
+                    No songs match your filters.
+                  </TableCell>
+                </TableRow>
+              ) : (
+                paginatedSongs.map((song) => (
+                  <SongTableRow
+                    key={song.id}
+                    song={song}
+                    songVersions={versionsBySong[song.id] || []}
+                    isExpanded={expandedSongs.has(song.id)}
+                    showDeleted={showDeleted}
+                    users={users}
+                    onToggleExpand={toggleSongExpansion}
+                    onUpdateHidden={(songId, hidden) =>
+                      updateSongMutation.mutate({ songId, song: { hidden } })
+                    }
+                    onRestoreSong={(songId) =>
+                      restoreSongMutation.mutate(songId, {
+                        onSuccess: () => toast.success("Song restored"),
+                      })
+                    }
+                    onDeleteSong={(songId) =>
+                      deleteSongMutation.mutate(songId, {
+                        onSuccess: () => toast.success("Song deleted"),
+                      })
+                    }
+                    onApproveVersion={handleApproveVersion}
+                    onRejectVersion={(songId, versionId) =>
+                      rejectVersionMutation.mutate(
+                        { songId, versionId },
+                        { onSuccess: () => toast.success("Rejected") },
+                      )
+                    }
+                    onRestoreVersion={(songId, versionId) =>
+                      restoreVersionMutation.mutate(
+                        { songId, versionId },
+                        { onSuccess: () => toast.success("Version restored") },
+                      )
+                    }
+                    onDeleteVersion={(songId, versionId) =>
+                      deleteVersionMutation.mutate(
+                        { songId, versionId },
+                        { onSuccess: () => toast.success("Permanently deleted") },
+                      )
+                    }
+                    onSetCurrentVersion={(songId, versionId) =>
+                      approveVersionMutation.mutate(
+                        { songId, versionId },
+                        {
+                          onSuccess: () =>
+                            toast.success("Set as current version"),
+                        },
+                      )
+                    }
+                    onDiff={(version, target, label) =>
+                      setDiffView({
+                        isOpen: true,
+                        songTitle: song.title,
+                        version,
+                        target,
+                        targetLabel: label,
+                      })
+                    }
+                    isApprovePending={approveVersionMutation.isPending}
+                  />
+                ))
+              )}
             </TableBody>
           </Table>
         </div>
       </div>
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={safePage}
+          totalPages={totalPages}
+          hasNextPage={safePage < totalPages - 1}
+          hasPrevPage={safePage > 0}
+          onPageChange={setCurrentPage}
+          totalItems={filteredSortedSongs.length}
+          pageSize={PAGE_SIZE}
+        />
+      )}
 
       <DiffViewerModal diffView={diffView} onClose={() => setDiffView(null)} />
     </div>

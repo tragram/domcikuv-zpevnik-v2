@@ -1,7 +1,5 @@
 import { useMemo, useState } from "react";
 import { Button } from "~/components/ui/button";
-import { Checkbox } from "~/components/ui/checkbox";
-import { Label } from "~/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -10,11 +8,22 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { useIllustrationsTableData } from "../../../../services/admin-hooks";
-import { TableToolbar } from "../shared/table-toolbar";
+import { ControlPanel } from "../control-panel";
+import { Pagination } from "../shared/pagination";
+import { StatsBar } from "../stats-bar";
+import { ToggleCheckbox } from "../toggle-checkbox";
 import { SongIllustrationsGroup } from "./illustration-group";
 import { SongIllustrationDB } from "src/lib/db/schema";
 import useLocalStorageState from "use-local-storage-state";
-import { Filter, Eye, Layers, AlertCircle } from "lucide-react";
+import {
+  Filter,
+  Eye,
+  Layers,
+  AlertCircle,
+  Globe,
+  Library,
+  Image as ImageIcon,
+} from "lucide-react";
 import { SongWithIllustrationsAndPrompts } from "~/services/illustration-service";
 import { AdminApi } from "src/worker/api-client";
 
@@ -25,8 +34,11 @@ interface IllustrationsTableProps {
 type SortKey = "title" | "lastModified" | "illustrationCount";
 type SortDirection = "asc" | "desc";
 
+const PAGE_SIZE = 20;
+
 export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
   const [showDeleted, setShowDeleted] = useLocalStorageState<boolean>(
     "admin/illustration-table/show-deleted-illustrations",
     { defaultValue: false },
@@ -40,6 +52,10 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     "admin/illustration-table/show-deleted-songs",
     { defaultValue: false },
   );
+  const [showExternal, setShowExternal] = useLocalStorageState<boolean>(
+    "admin/illustration-table/show-external",
+    { defaultValue: false },
+  );
 
   const [imageModelFilter, setImageModelFilter] = useState<string>("all");
   const [summaryModelFilter, setSummaryModelFilter] = useState<string>("all");
@@ -51,8 +67,24 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const { groupedData, promptsById, filterOptions, isLoading, isError, error } =
     useIllustrationsTableData(adminApi);
 
+  const stats = useMemo(() => {
+    const groups = Object.values(
+      groupedData,
+    ) as SongWithIllustrationsAndPrompts[];
+    const visible = groups.filter((g) => !g.song.deleted && !g.song.hidden);
+    return {
+      songs: visible.length,
+      illustrated: visible.filter((g) => g.song.currentIllustrationId).length,
+      unillustrated: visible.filter((g) => !g.song.currentIllustrationId).length,
+      assets: groups.reduce(
+        (acc, g) => acc + g.illustrations.filter((i) => !i.deleted).length,
+        0,
+      ),
+      external: visible.filter((g) => g.song.externalSource).length,
+    };
+  }, [groupedData]);
+
   const filteredAndSortedGroups = useMemo(() => {
-    // ... [Keep existing sorting/filtering logic intact] ...
     let groups = Object.entries(groupedData) as [
       string,
       SongWithIllustrationsAndPrompts,
@@ -73,6 +105,10 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       groups = groups.filter(
         ([, group]) => !group.song.deleted && !group.song.hidden,
       );
+    }
+
+    if (!showExternal) {
+      groups = groups.filter(([, group]) => !group.song.externalSource);
     }
 
     if (imageModelFilter !== "all") {
@@ -148,6 +184,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     groupedData,
     searchTerm,
     showDeletedSongs,
+    showExternal,
     imageModelFilter,
     summaryModelFilter,
     promptVersionFilter,
@@ -204,6 +241,17 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       </div>
     );
   }
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredAndSortedGroups.length / PAGE_SIZE),
+  );
+  const safePage = Math.min(currentPage, totalPages - 1);
+  const paginatedGroups = filteredAndSortedGroups.slice(
+    safePage * PAGE_SIZE,
+    (safePage + 1) * PAGE_SIZE,
+  );
+
   const toggleGroup = (songId: string) => {
     const newExpanded = new Set(expandedGroups);
     if (newExpanded.has(songId)) newExpanded.delete(songId);
@@ -217,17 +265,21 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     setSortDirection(dir);
   };
 
+  // Filter changes reset to the first page so results aren't hidden off-page.
+  const withPageReset =
+    <T,>(setter: (val: T) => void) =>
+    (val: T) => {
+      setter(val);
+      setCurrentPage(0);
+    };
+
   return (
     <div className="space-y-6 w-full pb-8">
       <div className="flex flex-col sm:flex-row items-end justify-between border-b pb-4 ">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Illustrations</h2>
           <p className="text-muted-foreground mt-1">
-            Managing {filteredAndSortedGroups.length} songs and{" "}
-            {filteredAndSortedGroups
-              .map((g) => g[1].illustrations.length)
-              .reduce((acc, el) => acc + el, 0)}{" "}
-            generated assets.
+            Manage AI illustrations and prompts for the song library.
           </p>
         </div>
         <div className="flex gap-2 mt-4 sm:mt-0">
@@ -252,52 +304,70 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
         </div>
       </div>
 
-      {/* Structured Control Panel */}
-      <div className="bg-card rounded-xl shadow-sm overflow-hidden border-3 border-primary">
-        <div className="p-4 border-b bg-muted/20">
-          <TableToolbar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-          />
-        </div>
+      <StatsBar
+        items={[
+          { label: "Songs", value: stats.songs, icon: Library },
+          {
+            label: "Illustrated",
+            value: stats.illustrated,
+            icon: ImageIcon,
+            className: "text-emerald-600",
+          },
+          {
+            label: "Unillustrated",
+            value: stats.unillustrated,
+            icon: AlertCircle,
+            className: "text-red-600",
+          },
+          {
+            label: "Assets",
+            value: stats.assets,
+            icon: Layers,
+            className: "text-blue-600",
+          },
+          {
+            label: "External",
+            value: stats.external,
+            icon: Globe,
+            className: "text-violet-600",
+          },
+        ]}
+      />
 
+      {/* Structured Control Panel */}
+      <ControlPanel
+        searchTerm={searchTerm}
+        onSearchChange={withPageReset(setSearchTerm)}
+      >
         <div className="p-4 grid grid-cols-1 xl:grid-cols-12 gap-6">
           {/* Toggles Panel */}
           <div className="xl:col-span-5 space-y-3">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center">
               <Eye className="w-3 h-3 mr-2" /> View Options
             </h4>
-            {/* Added flex-wrap and whitespace-nowrap, min-h to match dropdowns */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-3 bg-muted/40 px-4 py-2.5 rounded-lg border border-border/50 min-h-[40px]">
-              <Label className="flex items-center space-x-2 cursor-pointer group">
-                <Checkbox
-                  checked={prioritizeUnillustrated}
-                  onCheckedChange={(c) =>
-                    setPrioritizeUnillustrated(c as boolean)
-                  }
-                />
-                <span className="text-sm font-medium whitespace-nowrap group-hover:text-primary transition-colors">
-                  Unillustrated first
-                </span>
-              </Label>
-              <Label className="flex items-center space-x-2 cursor-pointer group">
-                <Checkbox
-                  checked={showDeletedSongs}
-                  onCheckedChange={(c) => setShowDeletedSongs(!!c)}
-                />
-                <span className="text-sm font-medium whitespace-nowrap group-hover:text-primary transition-colors">
-                  Deleted songs
-                </span>
-              </Label>
-              <Label className="flex items-center space-x-2 cursor-pointer group">
-                <Checkbox
-                  checked={showDeleted}
-                  onCheckedChange={() => setShowDeleted(!showDeleted)}
-                />
-                <span className="text-sm font-medium whitespace-nowrap group-hover:text-primary transition-colors">
-                  Deleted images
-                </span>
-              </Label>
+              <ToggleCheckbox
+                checked={prioritizeUnillustrated}
+                onCheckedChange={setPrioritizeUnillustrated}
+                label="Unillustrated first"
+              />
+              <ToggleCheckbox
+                checked={showDeletedSongs}
+                onCheckedChange={withPageReset(setShowDeletedSongs)}
+                label="Deleted songs"
+              />
+              <ToggleCheckbox
+                checked={showDeleted}
+                onCheckedChange={setShowDeleted}
+                label="Deleted images"
+              />
+              <ToggleCheckbox
+                checked={showExternal}
+                onCheckedChange={withPageReset(setShowExternal)}
+                label="External songs"
+                icon={Globe}
+                iconClassName="text-violet-500"
+              />
             </div>
           </div>
 
@@ -309,7 +379,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
               <Select
                 value={imageModelFilter}
-                onValueChange={setImageModelFilter}
+                onValueChange={withPageReset(setImageModelFilter)}
               >
                 <SelectTrigger className="bg-background h-10">
                   <SelectValue placeholder="Image Model" />
@@ -325,7 +395,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
               </Select>
               <Select
                 value={summaryModelFilter}
-                onValueChange={setSummaryModelFilter}
+                onValueChange={withPageReset(setSummaryModelFilter)}
               >
                 <SelectTrigger className="bg-background h-10">
                   <SelectValue placeholder="Summary Model" />
@@ -341,7 +411,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
               </Select>
               <Select
                 value={promptVersionFilter}
-                onValueChange={setPromptVersionFilter}
+                onValueChange={withPageReset(setPromptVersionFilter)}
               >
                 <SelectTrigger className="bg-background h-10">
                   <SelectValue placeholder="Prompt Ver." />
@@ -380,10 +450,10 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             </div>
           </div>
         </div>
-      </div>
+      </ControlPanel>
 
       <div className="space-y-4">
-        {filteredAndSortedGroups.map(([songId, song]) => (
+        {paginatedGroups.map(([songId, song]) => (
           <div key={songId} className="transition-all duration-200">
             <SongIllustrationsGroup
               song={song.song}
@@ -405,6 +475,18 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
           </div>
         )}
       </div>
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={safePage}
+          totalPages={totalPages}
+          hasNextPage={safePage < totalPages - 1}
+          hasPrevPage={safePage > 0}
+          onPageChange={setCurrentPage}
+          totalItems={filteredAndSortedGroups.length}
+          pageSize={PAGE_SIZE}
+        />
+      )}
     </div>
   );
 }
