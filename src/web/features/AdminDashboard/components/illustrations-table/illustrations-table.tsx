@@ -31,7 +31,7 @@ interface IllustrationsTableProps {
   adminApi: AdminApi;
 }
 
-type SortKey = "title" | "lastModified" | "illustrationCount";
+type SortKey = "title" | "lastModified" | "songDate" | "illustrationCount";
 type SortDirection = "asc" | "desc";
 
 const PAGE_SIZE = 20;
@@ -152,6 +152,8 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
               new Date(i.createdAt) > max ? new Date(i.createdAt) : max,
             new Date(0),
           );
+        case "songDate":
+          return group.song.createdAt ? new Date(group.song.createdAt) : new Date(0);
         case "illustrationCount":
           return group.illustrations.length;
         default:
@@ -434,9 +436,13 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="lastModified-desc">
-                    Newest First
+                    Newest Illustration
                   </SelectItem>
-                  <SelectItem value="lastModified-asc">Oldest First</SelectItem>
+                  <SelectItem value="lastModified-asc">
+                    Oldest Illustration
+                  </SelectItem>
+                  <SelectItem value="songDate-desc">Newest Song</SelectItem>
+                  <SelectItem value="songDate-asc">Oldest Song</SelectItem>
                   <SelectItem value="title-asc">Title (A-Z)</SelectItem>
                   <SelectItem value="title-desc">Title (Z-A)</SelectItem>
                   <SelectItem value="illustrationCount-desc">
