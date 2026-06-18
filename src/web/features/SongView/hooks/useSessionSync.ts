@@ -70,13 +70,21 @@ export type FeedStatus = {
   relay?: RelayStatus;
 };
 
-export function useSessionSync(
-  masterNickname: string | undefined,
-  isMaster: boolean,
-  enabled: boolean = true,
-  initialState?: SessionSyncState,
-  onKicked?: () => void,
-) {
+export interface UseSessionSyncOptions {
+  masterNickname: string | undefined;
+  isMaster: boolean;
+  enabled?: boolean;
+  initialState?: SessionSyncState;
+  onKicked?: () => void;
+}
+
+export function useSessionSync({
+  masterNickname,
+  isMaster,
+  enabled = true,
+  initialState,
+  onKicked,
+}: UseSessionSyncOptions) {
   if (
     initialState?.masterNickname &&
     initialState.masterNickname !== masterNickname

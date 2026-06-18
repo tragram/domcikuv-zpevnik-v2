@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from "react";
+import { useMemo } from "react";
 import { SongData } from "~/types/songData";
 import { Key } from "~/types/musicTypes";
 
@@ -17,41 +17,44 @@ interface SongContentProps {
   effectiveKey?: Key;
 }
 
-export const SongContent = forwardRef<HTMLDivElement, SongContentProps>(
-  ({ songData, transposeSteps, gestureContainerRef, userData, effectiveKey }, ref) => {
-    const { layout, chords: chordSettings } = useViewSettingsStore();
+export const SongContent = ({
+  songData,
+  transposeSteps,
+  gestureContainerRef,
+  userData,
+  effectiveKey,
+}: SongContentProps) => {
+  const { layout, chords: chordSettings } = useViewSettingsStore();
 
-    const parsedContent = useMemo(
-      () => renderSong(songData, transposeSteps, chordSettings.czechChordNames, effectiveKey),
-      [songData, transposeSteps, chordSettings.czechChordNames, effectiveKey],
-    );
+  const parsedContent = useMemo(
+    () => renderSong(songData, transposeSteps, chordSettings.czechChordNames, effectiveKey),
+    [songData, transposeSteps, chordSettings.czechChordNames, effectiveKey],
+  );
 
-    return (
-      <>
-        <BackgroundImage
+  return (
+    <>
+      <BackgroundImage
+        songData={songData}
+        className="hidden"
+        id="inner-background-image"
+      />
+      <ResizableAutoTextSize
+        key={songData.id} // force a complete rerender on song change
+        gestureContainerRef={gestureContainerRef}
+        className=" dark:text-white/95"
+      >
+        <SongHeading
           songData={songData}
-          className="hidden"
-          id="inner-background-image"
+          layoutSettings={layout}
+          transposeSteps={transposeSteps}
+          userData={userData}
         />
-        <ResizableAutoTextSize
-          key={songData.id} // force a complete rerender on song change
-          gestureContainerRef={gestureContainerRef}
-          className=" dark:text-white/95"
-        >
-          <SongHeading
-            songData={songData}
-            layoutSettings={layout}
-            transposeSteps={transposeSteps}
-            userData={userData}
-          />
 
-          <div
-            ref={ref}
-            id="song-content-wrapper"
-            dangerouslySetInnerHTML={{ __html: parsedContent }}
-          />
-        </ResizableAutoTextSize>
-      </>
-    );
-  },
-);
+        <div
+          id="song-content-wrapper"
+          dangerouslySetInnerHTML={{ __html: parsedContent }}
+        />
+      </ResizableAutoTextSize>
+    </>
+  );
+};

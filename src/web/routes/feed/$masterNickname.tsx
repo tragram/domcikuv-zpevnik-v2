@@ -5,6 +5,7 @@ import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { API } from "src/worker/api-client";
 
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
+import { SongDataApi } from "src/worker/api/api-types";
 import { useMasterRelay } from "~/features/SongView/hooks/useMasterRelay";
 import { useShareSessionToggle } from "~/features/SongView/hooks/useShareSessionToggle";
 import SongView from "~/features/SongView/SongView";
@@ -99,12 +100,10 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
             param: { id: currentSongId! },
           });
 
-      const data = await handleApiResponse(response);
-      return data;
+      return await handleApiResponse<{ data: SongDataApi }>(response);
     },
-    select: (data: any) => {
-      return data instanceof SongData ? data : new SongData(data);
-    },
+    select: (data: SongData | SongDataApi): SongData =>
+      data instanceof SongData ? data : new SongData(data),
     staleTime: 1000 * 60 * 10,
     placeholderData: keepPreviousData,
   });

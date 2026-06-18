@@ -31,12 +31,12 @@ export const Route = createFileRoute("/song/$songId")({
 });
 
 function RouteComponent() {
-  const { songData, songId, versionId } = Route.useLoaderData();
+  const { songData, versionId } = Route.useLoaderData();
   const { userData } = useUserData();
   const { songDB } = useSongDB(userData);
   const shareSession = useViewSettingsStore((state) => state.shareSession);
   const transposeSteps = useViewSettingsStore(
-    (state) => state.transpositions[songId] || 0,
+    (state) => state.transpositions[songData.id] || 0,
   );
 
   // Sessions are addressed by nickname only; without one the user cannot share.
@@ -44,12 +44,11 @@ function RouteComponent() {
   const shouldShare = !!masterNickname && shareSession;
 
   const navigate = useNavigate();
-  const { updateSong, feedStatus } = useSessionSync(
+  const { updateSong, feedStatus } = useSessionSync({
     masterNickname,
-    shouldShare,
-    shouldShare,
-    undefined,
-    masterNickname
+    isMaster: shouldShare,
+    enabled: shouldShare,
+    onKicked: masterNickname
       ? () =>
           navigate({
             to: "/feed/$masterNickname",
@@ -57,16 +56,10 @@ function RouteComponent() {
             replace: true,
           })
       : undefined,
-  );
+  });
 
   useEffect(() => {
     if (shouldShare && updateSong && songData.id) {
-      console.debug(
-        "Master updating song to:",
-        songData.id,
-        "with transpose:",
-        transposeSteps,
-      );
       updateSong(songData.id, transposeSteps, songData.versionId);
     }
   }, [

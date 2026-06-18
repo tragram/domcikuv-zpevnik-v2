@@ -77,20 +77,20 @@ export function guessKey(chordProContent: string): Key | undefined {
  * Renders a song with specified formatting options
  * @param songData - Song data to render
  * @param transposeSteps - Number of semitones to transpose
- * @param repeatChorus - Whether to repeat chorus sections
  * @param centralEuropeanNotation - Whether to use Central European notation (H/B system)
+ * @param fallbackKey - Key to use when songData has no explicit key (songData.key wins)
  * @returns Rendered HTML
  */
 export function renderSong(
   songData: SongData,
   transposeSteps: number,
   centralEuropeanNotation: boolean,
-  keyOverride?: Key,
+  fallbackKey?: Key,
 ): string {
   // Parse and process the chord pro content
   let song = parseChordPro(formatChordpro(songData.chordpro));
   // Inject known key to help the transposer pick sharp/flat accidentals properly
-  const effectiveKey = songData.key ?? keyOverride;
+  const effectiveKey = songData.key ?? fallbackKey;
   if (effectiveKey) {
     const isFlat = effectiveKey.isFlat();
     // Format the note (specifying flat/sharp and disabling Czech notation for the parser)

@@ -64,12 +64,12 @@ export function useMasterRelay({
   const [hideComplete, setHideComplete] = useState(false);
 
   // ─── Upstream: follow the target master as a regular follower ─────────────
-  const { feedStatus: upstreamStatus, reportRelaySubtree } = useSessionSync(
-    targetNickname,
-    false,
-    true,
+  const { feedStatus: upstreamStatus, reportRelaySubtree } = useSessionSync({
+    masterNickname: targetNickname,
+    isMaster: false,
+    enabled: true,
     initialState,
-  );
+  });
 
   // ─── Downstream: broadcast relay content on own DO ────────────────────────
   const {
@@ -77,7 +77,11 @@ export function useMasterRelay({
     updateSong: downstreamUpdateSong,
     notifyLoopDetected,
     audienceClients: downstreamAudience,
-  } = useSessionSync(ownNickname, true, relayEnabled);
+  } = useSessionSync({
+    masterNickname: ownNickname,
+    isMaster: true,
+    enabled: relayEnabled,
+  });
 
   // ─── Derived relay status (single source of truth) ────────────────────────
   const relayInfo: RelayStatus | undefined = useMemo(() => {
