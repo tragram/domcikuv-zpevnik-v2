@@ -195,7 +195,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       queryClient.invalidateQueries({ queryKey: ["submissions"] });
 
       if (userData && userData.profile.isAdmin) {
-        navigate({ to: "/admin", search: { tab: "songs" } });
+        navigate({ to: "/song/$songId", params: { songId: response.song.id } });
       } else {
         navigate({ to: "/submissions" });
       }
