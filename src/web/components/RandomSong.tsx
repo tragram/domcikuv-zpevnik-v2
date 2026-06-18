@@ -12,8 +12,20 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "~/components/ui/alert-dialog";
+import {
+  filterCapo,
+  filterExternal,
+  filterFavorites,
+  filterLanguage,
+  filterSongbook,
+  filterVocalRange,
+} from "~/features/SongList/useFilteredSongs";
+import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
+import { UserData } from "~/hooks/use-user-data";
+import { toast } from "sonner";
 import { getLocalStorageItem, setLocalStorageItem } from "~/lib/utils";
 import { SongData } from "~/types/songData";
+import { LanguageCount, Songbook } from "~/types/types";
 import { CompactItem } from "./RichDropdown";
 import { Button } from "./ui/button";
 import { DropdownMenuCheckboxItem, DropdownMenuItem } from "./ui/dropdown-menu";
@@ -114,8 +126,6 @@ const chooseRandomSong = (
   currentSong: SongData | null,
   ignoreSeenSongs: boolean,
 ) => {
-  // TODO: acknowledge current filters
-  songs = songs.filter((s) => !s.externalSource);
   const bannedSongs = ignoreSeenSongs ? new Set(retrieveBanList()) : new Set();
   if (currentSong) {
     bannedSongs.add(currentSong.id);
@@ -145,13 +155,24 @@ interface RandomSongProps {
   songs: SongData[];
   // currentSong - when shown in SongView, this allows us to ban songs not entered via the shuffle button
   currentSong?: SongData | null;
+  userData?: UserData;
+  languageCounts?: LanguageCount;
+  availableSongbooks?: Songbook[];
 }
 
-function RandomSong({ songs, currentSong = null }: RandomSongProps) {
+function RandomSong({
+  songs,
+  currentSong = null,
+  userData,
+  languageCounts,
+  availableSongbooks = [],
+}: RandomSongProps) {
   const [isNoSongsDialogOpen, setIsNoSongsDialogOpen] = useState(false);
   const [ignoreSeenSongs] = useLocalStorageState<boolean>("ignoreSeenSongs", {
     defaultValue: true,
   });
+  const { capo, vocalRange, language, onlyFavorites, showExternal, selectedSongbooks } =
+    useFilterSettingsStore();
 
   // used to force reload of the component and find a song after banlist reset
   const [reloads, setReloads] = useState(0);
@@ -178,9 +199,40 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
     setLocalStorageItem(BAN_LIST_KEY, [...bannedSongs, currentSong.id]);
   }, [reloads, currentSong]);
 
-  const { chosenSong, banSong } = useMemo(() => {
-    return chooseRandomSong(songs, currentSong, ignoreSeenSongs);
-  }, [songs, currentSong, ignoreSeenSongs]);
+  const { chosenSong, banSong, poolSize } = useMemo(() => {
+    let pool = filterCapo(songs, capo);
+    pool = filterVocalRange(pool, vocalRange);
+    pool = filterFavorites(pool, !!userData, onlyFavorites);
+    pool = filterExternal(pool, !!userData, showExternal);
+    if (languageCounts) pool = filterLanguage(pool, language, languageCounts);
+    pool = filterSongbook(pool, availableSongbooks, selectedSongbooks);
+    return { ...chooseRandomSong(pool, currentSong, ignoreSeenSongs), poolSize: pool.length };
+  }, [
+    songs,
+    currentSong,
+    ignoreSeenSongs,
+    capo,
+    vocalRange,
+    userData,
+    onlyFavorites,
+    showExternal,
+    language,
+    languageCounts,
+    availableSongbooks,
+    selectedSongbooks,
+  ]);
+
+  const handleClick = () => {
+    if (!chosenSong) {
+      setIsNoSongsDialogOpen(true);
+      return;
+    }
+    banSong();
+    if (poolSize < songs.length && !sessionStorage.getItem("filteredRandomToastShown")) {
+      sessionStorage.setItem("filteredRandomToastShown", "1");
+      toast.info(`Picking from ${poolSize} of ${songs.length} songs due to active filters.`);
+    }
+  };
 
   return (
     <>
@@ -190,7 +242,7 @@ function RandomSong({ songs, currentSong = null }: RandomSongProps) {
             size="icon"
             variant="circular"
             asChild
-            onClick={chosenSong ? banSong : () => setIsNoSongsDialogOpen(true)}
+            onClick={handleClick}
           >
             <Link to={chosenSong?.url()}>
               <Dices />

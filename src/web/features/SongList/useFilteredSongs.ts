@@ -17,7 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { UserData } from "src/web/hooks/use-user-data";
 
-const filterLanguage = (
+export const filterLanguage = (
   songs: SongData[],
   selectedLanguage: string,
   languageCounts: LanguageCount,
@@ -34,7 +34,7 @@ const filterLanguage = (
   return songs.filter((song) => song.language === selectedLanguage);
 };
 
-const filterFavorites = (
+export const filterFavorites = (
   songs: SongData[],
   loggedIn: boolean,
   onlyFavorites: boolean,
@@ -46,14 +46,14 @@ const filterFavorites = (
   }
 };
 
-const filterCapo = (songs: SongData[], allowCapo: boolean): SongData[] => {
+export const filterCapo = (songs: SongData[], allowCapo: boolean): SongData[] => {
   if (allowCapo) {
     return songs;
   }
   return songs.filter((song) => song.capo === 0 || song.capo === undefined);
 };
 
-const filterVocalRange = (
+export const filterVocalRange = (
   songs: SongData[],
   vocalRange: "all" | [number, number],
 ): SongData[] => {
@@ -86,7 +86,7 @@ export const filterSongbook = (
   return songs.filter((s) => contentsOfSelectedSongbooks.has(s.id));
 };
 
-const filterExternal = (
+export const filterExternal = (
   songs: SongData[],
   loggedIn: boolean,
   showExternal: boolean,

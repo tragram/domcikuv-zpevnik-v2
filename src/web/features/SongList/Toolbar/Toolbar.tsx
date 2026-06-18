@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ImagesIcon, Menu, Pencil, Shield, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
+import { UserData } from "~/hooks/use-user-data";
 import { RichItem } from "~/components/RichDropdown";
 import { DropdownThemeToggle, ThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
@@ -98,9 +99,10 @@ interface ToolbarProps {
   songDB: SongDB;
   isVisible: boolean;
   isAdmin: boolean;
+  userData: UserData;
 }
 
-function Toolbar({ songDB, isVisible, isAdmin }: ToolbarProps) {
+function Toolbar({ songDB, isVisible, isAdmin, userData }: ToolbarProps) {
   const isOnline = useIsOnline();
 
   return (
@@ -115,7 +117,12 @@ function Toolbar({ songDB, isVisible, isAdmin }: ToolbarProps) {
 
         <SessionView isOnline={isOnline} />
 
-        <RandomSong songs={songDB.songs} />
+        <RandomSong
+          songs={songDB.songs}
+          userData={userData}
+          languageCounts={songDB.languages}
+          availableSongbooks={songDB.songbooks}
+        />
 
         <div className="hidden min-[1150px]:flex h-full w-fit">
           <ThemeToggle />

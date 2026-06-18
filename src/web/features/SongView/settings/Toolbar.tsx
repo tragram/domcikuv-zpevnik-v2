@@ -139,7 +139,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         />
 
         {!feedStatus || !feedStatus.enabled || feedStatus.isMaster ? (
-          <RandomSong songs={songDB.songs} currentSong={songData} />
+          <RandomSong
+            songs={songDB.songs}
+            currentSong={songData}
+            userData={userData}
+            languageCounts={songDB.languages}
+            availableSongbooks={songDB.songbooks}
+          />
         ) : (
           <Button
             size="icon"

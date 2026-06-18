@@ -114,6 +114,7 @@ function SongList({
     <div className="no-scrollbar w-full relative">
       <Toolbar
         isAdmin={!!userData && userData.profile.isAdmin}
+        userData={userData}
         songDB={songDB}
         isVisible={isToolbarVisible}
         // isSyncing removed from Toolbar

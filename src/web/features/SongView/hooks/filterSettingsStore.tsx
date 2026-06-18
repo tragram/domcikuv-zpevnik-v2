@@ -143,7 +143,7 @@ export const FilterStoreProvider = ({
     selectedSongbooks: [],
     capo: true,
     onlyFavorites: false,
-    showExternal: true,
+    showExternal: false,
   };
 
   const [store] = React.useState(() =>

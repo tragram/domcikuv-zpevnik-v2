@@ -5,7 +5,9 @@ import { z } from "zod";
 import PendingComponent from "~/components/PendingComponent";
 import SongView from "~/features/SongView/SongView";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
+import { FilterStoreProvider } from "~/features/SongView/hooks/filterSettingsStore";
 import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore";
+import { useSongDB } from "~/hooks/use-songDB";
 import songLoader, { SongLoaderErrorComponent } from "~/services/song-loader";
 
 const songSearchSchema = z.object({
@@ -31,6 +33,7 @@ export const Route = createFileRoute("/song/$songId")({
 function RouteComponent() {
   const { songData, songId, versionId } = Route.useLoaderData();
   const { userData } = useUserData();
+  const { songDB } = useSongDB(userData);
   const shareSession = useViewSettingsStore((state) => state.shareSession);
   const transposeSteps = useViewSettingsStore(
     (state) => state.transpositions[songId] || 0,
@@ -75,10 +78,12 @@ function RouteComponent() {
   ]);
 
   return (
-    <SongView
-      songData={songData}
-      userData={userData}
-      feedStatus={versionId ? undefined : feedStatus}
-    />
+    <FilterStoreProvider availableSongbooks={songDB.songbooks}>
+      <SongView
+        songData={songData}
+        userData={userData}
+        feedStatus={versionId ? undefined : feedStatus}
+      />
+    </FilterStoreProvider>
   );
 }
