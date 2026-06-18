@@ -1,11 +1,13 @@
 import { getRouteApi } from "@tanstack/react-router";
-import { Filter, Globe, Handshake, Heart } from "lucide-react";
+import { Filter, Globe, Handshake, Heart, X } from "lucide-react";
 import { JSX } from "react";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import {
@@ -69,10 +71,20 @@ const FilterControls = ({
     toggleCapo,
     toggleShowExternal,
     toggleFavorites,
+    resetFilters,
   } = filterStore;
   const { userData } = useUserData();
   const { songDB } = useSongDB(userData);
   const availableSongbooks = songDB.songbooks;
+  const isFilterInactive =
+    language === "all" &&
+    (vocalRange === "all" ||
+      (Array.isArray(vocalRange) &&
+        vocalRange[0] === 0 &&
+        vocalRange[1] === maxRange)) &&
+    capo &&
+    selectedSongbooks.length === 0 &&
+    !onlyFavorites;
   return {
     controls: (
       <>
@@ -156,6 +168,23 @@ const FilterControls = ({
             iconOnly={iconOnly}
           />
         )}
+        {!isFilterInactive && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="circular"
+                className="rounded-none font-bold shadow-none outline-0"
+                onClick={resetFilters}
+              >
+                <X />
+                {!iconOnly && "Reset"}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Reset all filters</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
       </>
     ),
     dropdownSections: (
@@ -200,17 +229,18 @@ const FilterControls = ({
               sectionOnly={true}
             />,
           )}
+        {!isFilterInactive && (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={resetFilters}>
+              <X />
+              Reset all filters
+            </DropdownMenuItem>
+          </>
+        )}
       </>
     ),
-    isFilterInactive:
-      language === "all" &&
-      (vocalRange === "all" ||
-        (Array.isArray(vocalRange) &&
-          vocalRange[0] === 0 &&
-          vocalRange[1] === maxRange)) &&
-      capo &&
-      selectedSongbooks.length === 0 &&
-      !onlyFavorites,
+    isFilterInactive,
   };
 };
 
