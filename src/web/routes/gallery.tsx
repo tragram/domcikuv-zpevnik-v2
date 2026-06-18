@@ -14,5 +14,7 @@ function Home() {
   const { userData } = useUserData();
   const { songDB } = useSongDB(userData);
 
+  if (!songDB.songs.some((s) => s.currentIllustration)) return null;
+
   return <SongGallery songDB={songDB} />;
 }

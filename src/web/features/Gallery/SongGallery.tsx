@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { CircleX } from "lucide-react";
-import { memo, useMemo, useState } from "react";
+import { memo, useState } from "react";
 import client from "src/worker/api-client";
 import { IllustrationPrompt } from "~/components/IllustrationPrompt";
 import { Button } from "~/components/ui/button";
@@ -103,17 +103,12 @@ const columnData = () => {
 };
 
 const SongGallery = memo(({ songDB }: SongGalleryProps) => {
-  const { columnNr, columnWidth } = columnData();
-  const shuffledSongs = useMemo(
-    () => getShuffledArr(songDB.songs).filter((s) => s.currentIllustration),
-    [songDB.songs],
+  const [{ columnNr, columnWidth }] = useState(() => columnData());
+  const [shuffledSongs] = useState(() =>
+    getShuffledArr(songDB.songs.filter((s) => s.currentIllustration)),
   );
-  const songHeights = useMemo(
-    () =>
-      shuffledSongs.map(() =>
-        imageHeight(Math.min(512, 1.5 * columnWidth), 0.3),
-      ),
-    [columnWidth, shuffledSongs],
+  const [songHeights] = useState(() =>
+    shuffledSongs.map(() => imageHeight(Math.min(512, 1.5 * columnWidth), 0.3)),
   );
 
   const rowVirtualizer = useWindowVirtualizer({
