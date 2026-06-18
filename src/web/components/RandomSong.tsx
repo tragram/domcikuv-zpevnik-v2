@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Dices, ListRestart } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import {
   AlertDialog,
@@ -110,45 +110,21 @@ function shouldResetBanList(lastResetDate: string | null): boolean {
   return now >= resetTime && lastReset < resetTime;
 }
 
-const banSongFactory = (
-  ignoreSeenSongs: boolean,
-  bannedSongs: string[],
-  songToBan: string,
-) => {
-  if (ignoreSeenSongs || !bannedSongs.includes(songToBan)) {
-    // Add chosen song to banned list if not in the list (or when using banned songs, in which case it is guaranteed that it is not in the list)
-    setLocalStorageItem(BAN_LIST_KEY, [...bannedSongs, songToBan]);
-  }
-};
-
 const chooseRandomSong = (
   songs: SongData[],
   currentSong: SongData | null,
   ignoreSeenSongs: boolean,
+  bannedList: string[],
 ) => {
-  const bannedSongs = ignoreSeenSongs ? new Set(retrieveBanList()) : new Set();
+  const bannedSet = ignoreSeenSongs ? new Set(bannedList) : new Set<string>();
   if (currentSong) {
-    bannedSongs.add(currentSong.id);
+    bannedSet.add(currentSong.id);
   }
-  if (songs.length <= bannedSongs.size) {
-    return { chosenSong: null, banSong: () => {} };
+  const available = songs.filter((s) => !bannedSet.has(s.id));
+  if (available.length === 0) {
+    return { chosenSong: null };
   }
-  let chosenSong;
-  while (true) {
-    chosenSong = songs[Math.floor(Math.random() * songs.length)];
-    if (!bannedSongs.has(chosenSong.id)) {
-      break;
-    }
-  }
-  return {
-    chosenSong,
-    banSong: () =>
-      banSongFactory(
-        ignoreSeenSongs,
-        Array.from(bannedSongs) as string[],
-        chosenSong.id,
-      ),
-  };
+  return { chosenSong: available[Math.floor(Math.random() * available.length)] };
 };
 
 interface RandomSongProps {
@@ -167,50 +143,52 @@ function RandomSong({
   languageCounts,
   availableSongbooks = [],
 }: RandomSongProps) {
+  const navigate = useNavigate();
   const [isNoSongsDialogOpen, setIsNoSongsDialogOpen] = useState(false);
+  const pendingNavigation = useRef(false);
   const [ignoreSeenSongs] = useLocalStorageState<boolean>("ignoreSeenSongs", {
     defaultValue: true,
   });
+  const [bannedSongs, setBannedSongs] = useLocalStorageState<string[]>(
+    BAN_LIST_KEY,
+    { defaultValue: [] },
+  );
   const { capo, vocalRange, language, onlyFavorites, showExternal, selectedSongbooks } =
     useFilterSettingsStore();
-
-  // used to force reload of the component and find a song after banlist reset
-  const [reloads, setReloads] = useState(0);
 
   // Check and reset ban list on component mount
   useEffect(() => {
     const lastResetDate = getLocalStorageItem("lastBanListResetDate", null);
     if (shouldResetBanList(lastResetDate)) {
-      resetBanList();
+      setBannedSongs([]);
+      setLocalStorageItem("lastBanListResetDate", Date.now());
     }
+    // setBannedSongs is intentionally omitted — it is not stable across renders in use-local-storage-state
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Handle current song ban
   // the component is included in SongView, so this keeps track of currently viewed songs
-  // TODO: would probably be cleaner to implement this explicitly as a separate hook
   useEffect(() => {
     if (!currentSong) return;
-    const bannedSongs = retrieveBanList();
+    setBannedSongs((prev) =>
+      prev.includes(currentSong.id) ? prev : [...prev, currentSong.id],
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSong]);
 
-    // Skip if song is already in banned list
-    if (bannedSongs.includes(currentSong.id)) return;
-
-    // Add current song to banned songs
-    setLocalStorageItem(BAN_LIST_KEY, [...bannedSongs, currentSong.id]);
-  }, [reloads, currentSong]);
-
-  const { chosenSong, banSong, poolSize } = useMemo(() => {
+  // Expensive filter pipeline — depends only on the filters, not the ban list,
+  // so growing the ban list on every navigation doesn't re-run all of this.
+  const pool = useMemo(() => {
     let pool = filterCapo(songs, capo);
     pool = filterVocalRange(pool, vocalRange);
     pool = filterFavorites(pool, !!userData, onlyFavorites);
     pool = filterExternal(pool, !!userData, showExternal);
     if (languageCounts) pool = filterLanguage(pool, language, languageCounts);
     pool = filterSongbook(pool, availableSongbooks, selectedSongbooks);
-    return { ...chooseRandomSong(pool, currentSong, ignoreSeenSongs), poolSize: pool.length };
+    return pool;
   }, [
     songs,
-    currentSong,
-    ignoreSeenSongs,
     capo,
     vocalRange,
     userData,
@@ -222,12 +200,25 @@ function RandomSong({
     selectedSongbooks,
   ]);
 
+  // Cheap selection — re-runs when the ban list changes (one pass over the pool).
+  const { chosenSong } = useMemo(
+    () => chooseRandomSong(pool, currentSong, ignoreSeenSongs, bannedSongs),
+    [pool, currentSong, ignoreSeenSongs, bannedSongs],
+  );
+  const poolSize = pool.length;
+
+  useEffect(() => {
+    if (pendingNavigation.current && chosenSong) {
+      pendingNavigation.current = false;
+      navigate({ to: chosenSong.url() });
+    }
+  }, [chosenSong, navigate]);
+
   const handleClick = () => {
     if (!chosenSong) {
       setIsNoSongsDialogOpen(true);
       return;
     }
-    banSong();
     if (poolSize < songs.length && !sessionStorage.getItem("filteredRandomToastShown")) {
       sessionStorage.setItem("filteredRandomToastShown", "1");
       toast.info(`Picking from ${poolSize} of ${songs.length} songs due to active filters.`);
@@ -262,8 +253,11 @@ function RandomSong({
           <AlertDialogHeader>
             <AlertDialogTitle>No Songs Available</AlertDialogTitle>
             <AlertDialogDescription>
-              You've cycled through all available songs. Would you like to reset
-              the list and start over?
+              You've cycled through all available songs
+              {poolSize < songs.length
+                ? ` (${poolSize} of ${songs.length} due to active filters)`
+                : ""}
+              . Would you like to reset the list and start over?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -276,9 +270,10 @@ function RandomSong({
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
-                resetBanList();
+                setBannedSongs([]);
+                setLocalStorageItem("lastBanListResetDate", Date.now());
+                pendingNavigation.current = true;
                 setIsNoSongsDialogOpen(false);
-                setReloads(reloads + 1);
               }}
             >
               Reset bans
