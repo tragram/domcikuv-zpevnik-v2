@@ -19,8 +19,11 @@ import {
 
 export const userRoutes = buildApp()
   .get("/", zValidatorJSend("query", userSearchSchema), async (c) => {
-    const { search, limit, offset } = c.req.valid("query");
-    return successJSend(c, await getUsers(c.var.db, search, limit, offset));
+    const { search, limit, offset, role } = c.req.valid("query");
+    return successJSend(
+      c,
+      await getUsers(c.var.db, search, limit, offset, role),
+    );
   })
   .post("/", zValidatorJSend("json", createUserSchema), async (c) => {
     const userData = c.req.valid("json");

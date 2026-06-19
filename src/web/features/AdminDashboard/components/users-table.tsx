@@ -42,6 +42,7 @@ import {
 import { AdminApi} from "~/../worker/api-client";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import { UserDB } from "src/lib/db/schema";
+import { UserRoleFilter } from "src/worker/helpers/user-helpers";
 
 interface UsersTableProps {
   adminApi: AdminApi;
@@ -52,6 +53,7 @@ type SortConfig = { key: keyof UserDB; direction: "ascending" | "descending" };
 export function UsersTable({ adminApi }: UsersTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
+  const [roleFilter, setRoleFilter] = useState<UserRoleFilter | null>(null);
   const [editingUser, setEditingUser] = useState<UserDB | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
@@ -64,7 +66,14 @@ export function UsersTable({ adminApi }: UsersTableProps) {
     limit: PAGE_SIZE,
     offset: currentPage * PAGE_SIZE,
     search: searchTerm || undefined,
+    role: roleFilter ?? undefined,
   });
+
+  // Clicking an active stat card clears the filter; clicking another switches.
+  const toggleRole = (role: UserRoleFilter | null) => {
+    setRoleFilter((cur) => (cur === role ? null : role));
+    setCurrentPage(0);
+  };
 
   const updateUserMutation = useUpdateUser(adminApi);
   const deleteUserMutation = useDeleteUser(adminApi);
@@ -141,7 +150,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
             <UsersIcon className="w-8 h-8 mr-3 text-primary" /> User Directory
           </h2>
           <p className="text-muted-foreground mt-1">
-            Manage {usersData?.pagination.total || 0} registered accounts and
+            Manage {usersData?.counts?.total ?? 0} registered accounts and
             permissions.
           </p>
         </div>
@@ -151,26 +160,34 @@ export function UsersTable({ adminApi }: UsersTableProps) {
         items={[
           {
             label: "Users",
-            value: usersData?.pagination.total ?? 0,
+            value: usersData?.counts?.total ?? 0,
             icon: UsersIcon,
+            onClick: () => toggleRole(null),
+            active: roleFilter === null,
           },
           {
             label: "Admins",
             value: usersData?.counts?.admins ?? 0,
             icon: Shield,
             className: "text-primary",
+            onClick: () => toggleRole("admin"),
+            active: roleFilter === "admin",
           },
           {
             label: "Trusted",
             value: usersData?.counts?.trusted ?? 0,
             icon: ShieldCheck,
             className: "text-blue-600",
+            onClick: () => toggleRole("trusted"),
+            active: roleFilter === "trusted",
           },
           {
             label: "Verified",
             value: usersData?.counts?.verified ?? 0,
             icon: BadgeCheck,
             className: "text-emerald-600",
+            onClick: () => toggleRole("verified"),
+            active: roleFilter === "verified",
           },
         ]}
       />

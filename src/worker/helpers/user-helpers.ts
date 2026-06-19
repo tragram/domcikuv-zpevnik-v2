@@ -24,15 +24,28 @@ export const updateUserSchema = createUserSchema.partial();
 export type CreateUserSchema = z.infer<typeof createUserSchema>;
 export type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 
+// Role filters map onto the boolean columns used for the stat-card counts.
+export const USER_ROLE_FILTERS = ["admin", "trusted", "verified"] as const;
+export type UserRoleFilter = (typeof USER_ROLE_FILTERS)[number];
+
+const ROLE_CONDITIONS: Record<UserRoleFilter, ReturnType<typeof eq>> = {
+  admin: eq(user.isAdmin, true),
+  trusted: eq(user.isTrusted, true),
+  verified: eq(user.emailVerified, true),
+};
+
 // Search schema
 export const userSearchSchema = z.object({
   search: z.string().optional(),
+  role: z.enum(USER_ROLE_FILTERS).optional(),
   limit: z.coerce.number().min(1).max(100).default(50),
   offset: z.coerce.number().min(0).default(0),
 });
 
 export type UsersResponse = PaginatedResponse<UserDB[], "users"> & {
-  counts: { admins: number; trusted: number; verified: number };
+  // `total` is the search-scoped count ignoring the role filter, so the stat
+  // cards keep showing the full totals you can toggle between.
+  counts: { total: number; admins: number; trusted: number; verified: number };
 };
 
 export const getUsers = async (
@@ -40,12 +53,13 @@ export const getUsers = async (
   search?: string,
   limit = 50,
   offset = 0,
+  role?: UserRoleFilter,
 ): Promise<UsersResponse> => {
   // Build where clause for search
-  let whereClause = undefined;
+  let searchClause = undefined;
   if (search && search.trim()) {
     const searchTerm = `%${search.trim()}%`;
-    whereClause = or(
+    searchClause = or(
       like(user.name, searchTerm),
       like(user.email, searchTerm),
       like(user.nickname, searchTerm),
@@ -55,22 +69,31 @@ export const getUsers = async (
   // Counts respect the same search filter as the list, so they stay in sync
   // with pagination.total (and equal global totals when not searching).
   const withSearch = (condition: ReturnType<typeof eq>) =>
-    whereClause ? and(whereClause, condition) : condition;
+    searchClause ? and(searchClause, condition) : condition;
+
+  // The list and its pagination total also honour the active role filter; the
+  // stat-card counts deliberately do not, so they always show the full totals.
+  const roleClause = role ? ROLE_CONDITIONS[role] : undefined;
+  const listClause =
+    roleClause && searchClause
+      ? and(searchClause, roleClause)
+      : (roleClause ?? searchClause);
 
   // Execute queries with proper where clause handling
   const [
     users,
+    listCountResult,
     totalCountResult,
     adminCountResult,
     trustedCountResult,
     verifiedCountResult,
   ] = await Promise.all([
     // Users query with conditional where clause
-    whereClause
+    listClause
       ? db
           .select()
           .from(user)
-          .where(whereClause)
+          .where(listClause)
           .orderBy(desc(user.createdAt))
           .limit(limit)
           .offset(offset)
@@ -81,37 +104,43 @@ export const getUsers = async (
           .limit(limit)
           .offset(offset),
 
-    // Count query with conditional where clause
-    whereClause
-      ? db.select({ count: count() }).from(user).where(whereClause)
+    // Count for pagination (search + role).
+    listClause
+      ? db.select({ count: count() }).from(user).where(listClause)
+      : db.select({ count: count() }).from(user),
+
+    // Search-scoped total (role-independent) for the "Users" stat card.
+    searchClause
+      ? db.select({ count: count() }).from(user).where(searchClause)
       : db.select({ count: count() }).from(user),
 
     db
       .select({ count: count() })
       .from(user)
-      .where(withSearch(eq(user.isAdmin, true))),
+      .where(withSearch(ROLE_CONDITIONS.admin)),
     db
       .select({ count: count() })
       .from(user)
-      .where(withSearch(eq(user.isTrusted, true))),
+      .where(withSearch(ROLE_CONDITIONS.trusted)),
     db
       .select({ count: count() })
       .from(user)
-      .where(withSearch(eq(user.emailVerified, true))),
+      .where(withSearch(ROLE_CONDITIONS.verified)),
   ]);
 
-  const totalCount = totalCountResult[0]?.count ?? 0;
+  const listCount = listCountResult[0]?.count ?? 0;
   return {
     users,
     pagination: {
-      total: totalCount,
+      total: listCount,
       limit,
       offset,
-      hasMore: offset + limit < totalCount,
+      hasMore: offset + limit < listCount,
       currentPage: Math.floor(offset / limit) + 1,
-      totalPages: Math.ceil(totalCount / limit),
+      totalPages: Math.ceil(listCount / limit),
     },
     counts: {
+      total: totalCountResult[0]?.count ?? 0,
       admins: adminCountResult[0]?.count ?? 0,
       trusted: trustedCountResult[0]?.count ?? 0,
       verified: verifiedCountResult[0]?.count ?? 0,

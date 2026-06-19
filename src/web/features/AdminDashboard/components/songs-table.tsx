@@ -1,5 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import {
+  Archive,
+  Ban,
   CheckCircle2,
   ChevronDown,
   ChevronRight,
@@ -7,7 +9,7 @@ import {
   Edit,
   ExternalLink,
   EyeOff,
-  Filter,
+  FileX,
   Globe,
   Library,
   ListRestart,
@@ -33,13 +35,6 @@ import SongVersionStatusBadge from "~/components/SongVersionStatusBadge";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
 import { Switch } from "~/components/ui/switch";
 import {
   Table,
@@ -127,14 +122,99 @@ type StatusFilter =
   | "rejected"
   | "empty";
 
-const STATUS_FILTER_OPTIONS: { value: StatusFilter; label: string }[] = [
-  { value: "all", label: "All statuses" },
-  { value: "pending", label: "Pending review" },
-  { value: "published", label: "Published" },
-  { value: "archived", label: "Archived" },
-  { value: "rejected", label: "Rejected" },
-  { value: "empty", label: "No version" },
+/**
+ * The status filter lives entirely in the StatsBar: each card is a single-select
+ * status, with "all" acting as the reset. `stat` maps the card to its count key.
+ */
+const STATUS_CARDS: {
+  value: StatusFilter;
+  label: string;
+  stat: keyof SongStats;
+  icon: React.ElementType;
+  className?: string;
+}[] = [
+  { value: "all", label: "Songs", stat: "total", icon: Library },
+  {
+    value: "pending",
+    label: "Pending",
+    stat: "pending",
+    icon: Clock,
+    className: "text-orange-600",
+  },
+  {
+    value: "published",
+    label: "Published",
+    stat: "published",
+    icon: CheckCircle2,
+    className: "text-emerald-600",
+  },
+  {
+    value: "archived",
+    label: "Archived",
+    stat: "archived",
+    icon: Archive,
+    className: "text-amber-600",
+  },
+  {
+    value: "rejected",
+    label: "Rejected",
+    stat: "rejected",
+    icon: Ban,
+    className: "text-rose-600",
+  },
+  {
+    value: "empty",
+    label: "No version",
+    stat: "empty",
+    icon: FileX,
+    className: "text-muted-foreground",
+  },
 ];
+
+/** Independent visibility attributes, isolated via their own StatsBar cards. */
+type AttrIsolate = "external" | "hidden" | "deleted";
+
+const ATTR_CARDS: {
+  value: AttrIsolate;
+  label: string;
+  stat: keyof SongStats;
+  icon: React.ElementType;
+  className?: string;
+}[] = [
+  {
+    value: "external",
+    label: "External",
+    stat: "external",
+    icon: Globe,
+    className: "text-violet-600",
+  },
+  {
+    value: "hidden",
+    label: "Hidden",
+    stat: "hidden",
+    icon: EyeOff,
+    className: "text-muted-foreground",
+  },
+  {
+    value: "deleted",
+    label: "Deleted",
+    stat: "deleted",
+    icon: Trash2,
+    className: "text-red-600",
+  },
+];
+
+type SongStats = {
+  total: number;
+  pending: number;
+  published: number;
+  archived: number;
+  rejected: number;
+  empty: number;
+  external: number;
+  hidden: number;
+  deleted: number;
+};
 
 type DiffViewState = {
   isOpen: boolean;
@@ -668,76 +748,71 @@ function SongTableRow({
 interface SongsTableSettingsBarProps {
   searchTerm: string;
   onSearchChange: (term: string) => void;
-  statusFilter: StatusFilter;
-  onStatusFilterChange: (val: StatusFilter) => void;
   showExternal: boolean;
   onShowExternalChange: (val: boolean) => void;
   showDeleted: boolean;
   onShowDeletedChange: (val: boolean) => void;
+  showHidden: boolean;
+  onShowHiddenChange: (val: boolean) => void;
   autoGenerateIllustration: boolean;
   onAutoGenerateIllustrationChange: (val: boolean) => void;
   isResetPending: boolean;
   onResetDB: () => void;
+  /** The isolated attribute card forces (and locks) its matching checkbox. */
+  attrIsolate: AttrIsolate | null;
 }
 
 function SongsTableSettingsBar({
   searchTerm,
   onSearchChange,
-  statusFilter,
-  onStatusFilterChange,
   showExternal,
   onShowExternalChange,
   showDeleted,
   onShowDeletedChange,
+  showHidden,
+  onShowHiddenChange,
   autoGenerateIllustration,
   onAutoGenerateIllustrationChange,
   isResetPending,
   onResetDB,
+  attrIsolate,
 }: SongsTableSettingsBarProps) {
   const boxed = "bg-background px-3 py-1.5 rounded-md border shadow-sm";
+  // Each attribute card forces its own checkbox on and locks only that one.
+  const lockedTitle = "Forced on by the active card above";
   return (
-    <ControlPanel
-      searchTerm={searchTerm}
-      onSearchChange={onSearchChange}
-      toolbarChildren={
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-muted-foreground" />
-          <Select
-            value={statusFilter}
-            onValueChange={(v) => onStatusFilterChange(v as StatusFilter)}
-          >
-            <SelectTrigger size="sm" className="w-[170px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {STATUS_FILTER_OPTIONS.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      }
-    >
+    <ControlPanel searchTerm={searchTerm} onSearchChange={onSearchChange}>
       <div className="p-4 bg-muted/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div className="flex flex-wrap items-center gap-4">
           <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center">
             <Settings2 className="w-3 h-3 mr-2" /> Quick Settings
           </span>
           <ToggleCheckbox
-            checked={showExternal}
+            checked={attrIsolate === "external" ? true : showExternal}
             onCheckedChange={onShowExternalChange}
             label="Show external"
             icon={Globe}
             iconClassName="text-violet-500"
             className={boxed}
+            disabled={attrIsolate === "external"}
+            title={attrIsolate === "external" ? lockedTitle : undefined}
           />
           <ToggleCheckbox
-            checked={showDeleted}
+            checked={attrIsolate === "deleted" ? true : showDeleted}
             onCheckedChange={onShowDeletedChange}
             label="Show deleted"
             className={boxed}
+            disabled={attrIsolate === "deleted"}
+            title={attrIsolate === "deleted" ? lockedTitle : undefined}
+          />
+          <ToggleCheckbox
+            checked={attrIsolate === "hidden" ? true : showHidden}
+            onCheckedChange={onShowHiddenChange}
+            label="Show hidden"
+            icon={EyeOff}
+            className={boxed}
+            disabled={attrIsolate === "hidden"}
+            title={attrIsolate === "hidden" ? lockedTitle : undefined}
           />
           <ToggleCheckbox
             checked={autoGenerateIllustration}
@@ -789,9 +864,14 @@ function SongsTableSettingsBar({
 
 export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [searchTerm, setSearchTerm] = useState("");
+  // Status (single-select) and attribute isolation (single-select) are
+  // independent dimensions, both driven by the StatsBar cards.
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [attrIsolate, setAttrIsolate] = useState<AttrIsolate | null>(null);
+  // Visibility toggles compose with the above; hidden songs show by default.
   const [showExternal, setShowExternal] = useState(false);
   const [showDeleted, setShowDeleted] = useState(false);
+  const [showHidden, setShowHidden] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [expandedSongs, setExpandedSongs] = useState<Set<string>>(new Set());
   const [diffView, setDiffView] = useState<DiffViewState | null>(null);
@@ -887,34 +967,55 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     });
   }, [songs, versions, versionsBySong, usersById]);
 
-  const stats = useMemo(
-    () => ({
-      total: enrichedSongs.filter((s) => !s.deleted).length,
-      pending: enrichedSongs.filter((s) => s.hasPendingVersions && !s.deleted)
-        .length,
-      external: enrichedSongs.filter((s) => s.externalSource && !s.deleted)
-        .length,
-      hidden: enrichedSongs.filter((s) => s.hidden && !s.deleted).length,
+  const stats = useMemo<SongStats>(() => {
+    const live = enrichedSongs.filter((s) => !s.deleted);
+    const byStatus = (status: string) =>
+      live.filter((s) => s.status === status).length;
+    return {
+      total: live.length,
+      pending: live.filter((s) => s.hasPendingVersions).length,
+      published: byStatus("published"),
+      archived: byStatus("archived"),
+      rejected: byStatus("rejected"),
+      empty: byStatus("empty"),
+      external: live.filter((s) => s.externalSource).length,
+      hidden: live.filter((s) => s.hidden).length,
       deleted: enrichedSongs.filter((s) => s.deleted).length,
-    }),
-    [enrichedSongs],
-  );
+    };
+  }, [enrichedSongs]);
 
   const filteredSortedSongs = useMemo(() => {
     const term = searchTerm.toLowerCase();
+    // An isolated attribute forces its own visibility on; the other toggles
+    // still compose, so only the isolated dimension is "locked".
+    const effShowExternal = attrIsolate === "external" ? true : showExternal;
+    const effShowDeleted = attrIsolate === "deleted" ? true : showDeleted;
+    const effShowHidden = attrIsolate === "hidden" ? true : showHidden;
     const filtered = enrichedSongs.filter((song) => {
       const matchesSearch =
         song.title.toLowerCase().includes(term) ||
         song.artist.toLowerCase().includes(term);
-      const matchesDeleted = showDeleted || !song.deleted;
-      const matchesExternal = showExternal || !song.externalSource;
+      if (!matchesSearch) return false;
+
+      // Status (single-select); "all" matches everything.
       const matchesStatus =
         statusFilter === "all"
           ? true
           : statusFilter === "pending"
             ? song.hasPendingVersions
             : song.status === statusFilter;
-      return matchesSearch && matchesDeleted && matchesExternal && matchesStatus;
+      if (!matchesStatus) return false;
+
+      // Attribute isolation narrows to exactly the clicked attribute.
+      if (attrIsolate === "external" && !song.externalSource) return false;
+      if (attrIsolate === "deleted" && !song.deleted) return false;
+      if (attrIsolate === "hidden" && !song.hidden) return false;
+
+      // Visibility toggles (composing).
+      if (!effShowExternal && song.externalSource) return false;
+      if (!effShowDeleted && song.deleted) return false;
+      if (!effShowHidden && song.hidden) return false;
+      return true;
     });
 
     filtered.sort((a, b) => {
@@ -932,7 +1033,9 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     searchTerm,
     showDeleted,
     showExternal,
+    showHidden,
     statusFilter,
+    attrIsolate,
     sortConfig,
   ]);
 
@@ -1017,51 +1120,55 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       setCurrentPage(0);
     };
 
+  // Selecting a status card is single-select; "Songs" (all) is the reset.
+  const selectStatus = (status: StatusFilter) => {
+    setStatusFilter(status);
+    setCurrentPage(0);
+  };
+
+  // Clicking an active attribute card clears it; clicking another switches.
+  const toggleAttr = (attr: AttrIsolate) => {
+    setAttrIsolate((cur) => (cur === attr ? null : attr));
+    setCurrentPage(0);
+  };
+
   return (
     <div className="space-y-6 max-w-full pb-8">
       <StatsBar
         items={[
-          { label: "Songs", value: stats.total, icon: Library },
-          {
-            label: "Pending",
-            value: stats.pending,
-            icon: Clock,
-            className: "text-orange-600",
-          },
-          {
-            label: "External",
-            value: stats.external,
-            icon: Globe,
-            className: "text-violet-600",
-          },
-          {
-            label: "Hidden",
-            value: stats.hidden,
-            icon: EyeOff,
-            className: "text-muted-foreground",
-          },
-          {
-            label: "Deleted",
-            value: stats.deleted,
-            icon: Trash2,
-            className: "text-red-600",
-          },
+          ...STATUS_CARDS.map((c) => ({
+            label: c.label,
+            value: stats[c.stat],
+            icon: c.icon,
+            className: c.className,
+            onClick: () => selectStatus(c.value),
+            active: statusFilter === c.value,
+          })),
+          ...ATTR_CARDS.map((c) => ({
+            label: c.label,
+            value: stats[c.stat],
+            icon: c.icon,
+            className: c.className,
+            onClick: () => toggleAttr(c.value),
+            active: attrIsolate === c.value,
+          })),
         ]}
       />
 
       <SongsTableSettingsBar
         searchTerm={searchTerm}
         onSearchChange={withPageReset(setSearchTerm)}
-        statusFilter={statusFilter}
-        onStatusFilterChange={withPageReset(setStatusFilter)}
         showExternal={showExternal}
         onShowExternalChange={withPageReset(setShowExternal)}
         showDeleted={showDeleted}
         onShowDeletedChange={withPageReset(setShowDeleted)}
+        showHidden={showHidden}
+        onShowHiddenChange={withPageReset(setShowHidden)}
         autoGenerateIllustration={autoGenerateIllustration}
         onAutoGenerateIllustrationChange={setAutoGenerateIllustration}
         isResetPending={resetDBMutation.isPending}
         onResetDB={() => resetDBMutation.mutate()}
+        attrIsolate={attrIsolate}
       />
 
       <div className="rounded-xl border bg-card shadow-sm overflow-hidden">

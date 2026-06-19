@@ -23,6 +23,7 @@ import {
 import {
   CreateUserSchema,
   UpdateUserSchema,
+  UserRoleFilter,
 } from "src/worker/helpers/user-helpers";
 import { makeApiRequest } from "~/services/api-service";
 import {
@@ -91,10 +92,21 @@ export const useVersionsAdmin = (adminApi: AdminApi) =>
 
 export const useUsersAdmin = (
   adminApi: AdminApi,
-  params: { limit: number; offset: number; search?: string },
+  params: {
+    limit: number;
+    offset: number;
+    search?: string;
+    role?: UserRoleFilter;
+  },
 ) =>
   useQuery({
-    queryKey: ["usersAdmin", params.limit, params.offset, params.search],
+    queryKey: [
+      "usersAdmin",
+      params.limit,
+      params.offset,
+      params.search,
+      params.role,
+    ],
     queryFn: () => fetchUsersAdmin(adminApi.users, params),
   });
 

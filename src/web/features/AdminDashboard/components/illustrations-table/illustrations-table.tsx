@@ -34,7 +34,31 @@ interface IllustrationsTableProps {
 type SortKey = "title" | "lastModified" | "songDate" | "illustrationCount";
 type SortDirection = "asc" | "desc";
 
+type IllustrationStat =
+  | "songs"
+  | "illustrated"
+  | "unillustrated"
+  | "assets"
+  | "external";
+
 const PAGE_SIZE = 20;
+
+// Stat counts are computed over "visible" songs (not deleted, not hidden), so
+// the click-to-filter predicates stay within that set to match the numbers.
+const isVisibleSong = (g: SongWithIllustrationsAndPrompts) =>
+  !g.song.deleted && !g.song.hidden;
+
+/** Predicate for each clickable stat card, isolating exactly the counted groups. */
+const ILLUSTRATION_STAT_PREDICATES: Record<
+  IllustrationStat,
+  (g: SongWithIllustrationsAndPrompts) => boolean
+> = {
+  songs: isVisibleSong,
+  illustrated: (g) => isVisibleSong(g) && !!g.song.currentIllustrationId,
+  unillustrated: (g) => isVisibleSong(g) && !g.song.currentIllustrationId,
+  assets: (g) => isVisibleSong(g) && g.illustrations.some((i) => !i.deleted),
+  external: (g) => isVisibleSong(g) && !!g.song.externalSource,
+};
 
 export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,6 +87,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [sortKey, setSortKey] = useState<SortKey>("lastModified");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+  const [activeStat, setActiveStat] = useState<IllustrationStat | null>(null);
 
   const { groupedData, promptsById, filterOptions, isLoading, isError, error } =
     useIllustrationsTableData(adminApi);
@@ -101,14 +126,20 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       });
     }
 
-    if (!showDeletedSongs) {
-      groups = groups.filter(
-        ([, group]) => !group.song.deleted && !group.song.hidden,
-      );
-    }
+    if (activeStat) {
+      // A clicked stat card isolates exactly its groups, overriding the toggles.
+      const predicate = ILLUSTRATION_STAT_PREDICATES[activeStat];
+      groups = groups.filter(([, group]) => predicate(group));
+    } else {
+      if (!showDeletedSongs) {
+        groups = groups.filter(
+          ([, group]) => !group.song.deleted && !group.song.hidden,
+        );
+      }
 
-    if (!showExternal) {
-      groups = groups.filter(([, group]) => !group.song.externalSource);
+      if (!showExternal) {
+        groups = groups.filter(([, group]) => !group.song.externalSource);
+      }
     }
 
     if (imageModelFilter !== "all") {
@@ -194,6 +225,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     prioritizeUnillustrated,
     sortKey,
     sortDirection,
+    activeStat,
   ]);
 
   if (isLoading) {
@@ -275,6 +307,27 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       setCurrentPage(0);
     };
 
+  // The deleted/external toggles are overridden by a clicked stat card, so
+  // clear the active stat when they change to hand control back to the toggles.
+  const withFilterReset =
+    <T,>(setter: (val: T) => void) =>
+    (val: T) => {
+      setter(val);
+      setActiveStat(null);
+      setCurrentPage(0);
+    };
+
+  // Clicking an active stat card clears the filter; clicking another switches.
+  const toggleStat = (stat: IllustrationStat) => {
+    setActiveStat((cur) => (cur === stat ? null : stat));
+    setCurrentPage(0);
+  };
+
+  // A clicked stat card filters to visible songs only and overrides these two
+  // toggles, so lock them and show the effective state the stat implies.
+  const filtersLocked = activeStat !== null;
+  const lockedTitle = "Cleared by the active stat card filter above";
+
   return (
     <div className="space-y-6 w-full pb-8">
       <div className="flex flex-col sm:flex-row items-end justify-between border-b pb-4 ">
@@ -308,30 +361,44 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
 
       <StatsBar
         items={[
-          { label: "Songs", value: stats.songs, icon: Library },
+          {
+            label: "Songs",
+            value: stats.songs,
+            icon: Library,
+            onClick: () => toggleStat("songs"),
+            active: activeStat === "songs",
+          },
           {
             label: "Illustrated",
             value: stats.illustrated,
             icon: ImageIcon,
             className: "text-emerald-600",
+            onClick: () => toggleStat("illustrated"),
+            active: activeStat === "illustrated",
           },
           {
             label: "Unillustrated",
             value: stats.unillustrated,
             icon: AlertCircle,
             className: "text-red-600",
+            onClick: () => toggleStat("unillustrated"),
+            active: activeStat === "unillustrated",
           },
           {
             label: "Assets",
             value: stats.assets,
             icon: Layers,
             className: "text-blue-600",
+            onClick: () => toggleStat("assets"),
+            active: activeStat === "assets",
           },
           {
             label: "External",
             value: stats.external,
             icon: Globe,
             className: "text-violet-600",
+            onClick: () => toggleStat("external"),
+            active: activeStat === "external",
           },
         ]}
       />
@@ -354,9 +421,11 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
                 label="Unillustrated first"
               />
               <ToggleCheckbox
-                checked={showDeletedSongs}
-                onCheckedChange={withPageReset(setShowDeletedSongs)}
+                checked={filtersLocked ? false : showDeletedSongs}
+                onCheckedChange={withFilterReset(setShowDeletedSongs)}
                 label="Deleted songs"
+                disabled={filtersLocked}
+                title={filtersLocked ? lockedTitle : undefined}
               />
               <ToggleCheckbox
                 checked={showDeleted}
@@ -364,11 +433,13 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
                 label="Deleted images"
               />
               <ToggleCheckbox
-                checked={showExternal}
-                onCheckedChange={withPageReset(setShowExternal)}
+                checked={filtersLocked ? true : showExternal}
+                onCheckedChange={withFilterReset(setShowExternal)}
                 label="External songs"
                 icon={Globe}
                 iconClassName="text-violet-500"
+                disabled={filtersLocked}
+                title={filtersLocked ? lockedTitle : undefined}
               />
             </div>
           </div>

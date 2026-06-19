@@ -5,6 +5,7 @@ import { SessionsResponseData } from "src/worker/api/sessions";
 import {
   CreateUserSchema,
   UpdateUserSchema,
+  UserRoleFilter,
   UsersResponse,
 } from "src/worker/helpers/user-helpers";
 
@@ -29,6 +30,7 @@ const parseUserDates = (user: UserFromAPI): UserDB => ({
 
 interface UserSearchParams {
   search?: string;
+  role?: UserRoleFilter;
   limit?: number;
   offset?: number;
 }
@@ -77,6 +79,7 @@ export async function fetchUsersAdmin(
     api.$get({
       query: {
         search: params?.search,
+        role: params?.role,
         limit: params?.limit?.toString(),
         offset: params?.offset?.toString(),
       },
