@@ -153,6 +153,7 @@ function RandomSong({
     onlyFavorites,
     showExternal,
     selectedSongbookIds,
+    resetFilters,
   } = useFilterSettingsStore();
 
   // Check and reset ban list on component mount
@@ -231,6 +232,8 @@ function RandomSong({
     }
   };
 
+  const hasActiveFilters = poolSize < songs.length;
+
   return (
     <>
       <Tooltip>
@@ -260,10 +263,10 @@ function RandomSong({
             <AlertDialogTitle>No Songs Available</AlertDialogTitle>
             <AlertDialogDescription>
               You've cycled through all available songs
-              {poolSize < songs.length
+              {hasActiveFilters
                 ? ` (${poolSize} of ${songs.length} due to active filters)`
                 : ""}
-              . Would you like to reset the list and start over?
+              . Would you like to reset the {hasActiveFilters ? "filters or " : ""}list and start over?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -274,6 +277,17 @@ function RandomSong({
             >
               I'm good
             </AlertDialogCancel>
+            {hasActiveFilters && (
+              <AlertDialogAction
+                onClick={() => {
+                  resetFilters();
+                  pendingNavigation.current = true;
+                  setIsNoSongsDialogOpen(false);
+                }}
+              >
+                Reset filters
+              </AlertDialogAction>
+            )}
             <AlertDialogAction
               onClick={() => {
                 setBannedSongs([]);
