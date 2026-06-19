@@ -54,7 +54,6 @@ export function IllustrationForm({
   );
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
   const { songPrompts } = useSongPrompts(adminApi, illustration.songId);
-  // TODO: what gets shown on edit - make sure it's the right thing
   return (
     <div className="max-w-full flex flex-col p-6 overflow-auto">
       <Tabs

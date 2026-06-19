@@ -24,18 +24,13 @@ import {
   DialogTitle,
 } from "~/components/ui/dialog";
 import { cn } from "~/lib/utils";
-import { IllustrationForm } from "./illustration-form/illustration-form";
+import { IllustrationEditForm } from "./illustration-form/illustration-edit-form";
 import {
   useDeleteIllustration,
   useRestoreIllustration,
   useUpdateIllustration,
 } from "../../../../services/admin-hooks";
 import DeletePrompt from "~/components/dialogs/delete-prompt";
-import {
-  SummaryPromptVersion,
-  AvailableSummaryModel,
-  AvailableImageModel,
-} from "src/worker/helpers/image-generator";
 import { IllustrationModifySchema, SongDataAdminApi } from "src/worker/api/api-types";
 import { ApiException } from "~/services/api-service";
 
@@ -112,16 +107,6 @@ export function IllustrationCard({
         toast.error(error?.message || "Failed to update illustration");
       console.error("Toggle active error:", error);
     }
-  };
-
-  // Transform illustration data to match form expectations
-  const transformedIllustration = {
-    promptId: prompt.id,
-    songId: illustration.songId,
-    summaryPromptVersion: prompt.summaryPromptVersion as SummaryPromptVersion,
-    summaryModel: prompt.summaryModel as AvailableSummaryModel,
-    imageModel: illustration.imageModel as AvailableImageModel,
-    setAsActive: isActive,
   };
 
   return (
@@ -268,13 +253,11 @@ export function IllustrationCard({
           <DialogHeader>
             <DialogTitle>Edit Illustration</DialogTitle>
           </DialogHeader>
-          <IllustrationForm
-            illustration={transformedIllustration}
-            onSave={({ illustrationData }) =>
-              handleUpdateIllustration(illustration.id, illustrationData)
-            }
+          <IllustrationEditForm
+            illustration={illustration}
+            isActive={isActive}
+            onSave={(data) => handleUpdateIllustration(illustration.id, data)}
             isLoading={updateMutation.isPending}
-            onSuccess={() => setIsEditDialogOpen(false)}
           />
         </DialogContent>
       </Dialog>
