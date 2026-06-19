@@ -25,7 +25,7 @@ export function useDisplayedSongs(
 ): DisplayedSongs {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
-  const { language, vocalRange, capo, onlyFavorites, showExternal, selectedSongbookIds } =
+  const { language, vocalRange, hideCapo, onlyFavorites, showExternal, selectedSongbookIds } =
     useFilterSettingsStore();
 
   // Changing the sort clears an active search: search ignores sort entirely, so
@@ -67,7 +67,7 @@ export function useDisplayedSongs(
     return sortSongs(
       applyFilters(
         songDB.songs,
-        { language, vocalRange, capo, onlyFavorites, showExternal, selectedSongbookIds },
+        { language, vocalRange, hideCapo, onlyFavorites, showExternal, selectedSongbookIds },
         {
           userData,
           availableSongbooks: songDB.songbooks,
@@ -84,7 +84,7 @@ export function useDisplayedSongs(
     userData,
     language,
     vocalRange,
-    capo,
+    hideCapo,
     onlyFavorites,
     showExternal,
     selectedSongbookIds,

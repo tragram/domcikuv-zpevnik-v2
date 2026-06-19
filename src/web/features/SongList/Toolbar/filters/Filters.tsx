@@ -1,4 +1,5 @@
-import { Filter, Globe, Handshake, Heart, X } from "lucide-react";
+import { Filter, Globe, Heart, X } from "lucide-react";
+import CapoIcon from "./capo_icon";
 import { JSX } from "react";
 import { Button } from "~/components/ui/button";
 import {
@@ -40,7 +41,7 @@ export type VocalRangeType = "all" | [number, number];
 export interface FilterSettings {
   language: SongLanguage;
   vocalRange: VocalRangeType;
-  capo: boolean;
+  hideCapo: boolean;
   onlyFavorites: boolean;
   showExternal: boolean;
 }
@@ -65,7 +66,7 @@ const FilterControls = ({
     language,
     selectedSongbookIds,
     vocalRange,
-    capo,
+    hideCapo,
     showExternal,
     onlyFavorites,
     setLanguage,
@@ -73,7 +74,7 @@ const FilterControls = ({
     setSelectedSongbookIds,
     clearSongbooks,
     setVocalRange,
-    toggleCapo,
+    toggleHideCapo,
     toggleShowExternal,
     toggleFavorites,
     resetFilters,
@@ -84,7 +85,7 @@ const FilterControls = ({
       (Array.isArray(vocalRange) &&
         vocalRange[0] === 0 &&
         vocalRange[1] === maxRange)) &&
-    capo &&
+    !hideCapo &&
     selectedSongbookIds.length === 0 &&
     !onlyFavorites;
   return {
@@ -112,16 +113,16 @@ const FilterControls = ({
           <TooltipTrigger asChild>
             <Button
               variant="circular"
-              isActive={capo}
+              isActive={hideCapo}
               className="rounded-none font-bold shadow-none outline-0"
-              onClick={toggleCapo}
+              onClick={toggleHideCapo}
             >
-              <Handshake />
-              {!iconOnly && "Capo"}
+              <CapoIcon />
+              {!iconOnly && "No capo"}
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Allow capo</p>
+            <p>Hide songs that need a capo</p>
           </TooltipContent>
         </Tooltip>
 
@@ -201,11 +202,11 @@ const FilterControls = ({
           </DropdownMenuCheckboxItem>
         )}
         <DropdownMenuCheckboxItem
-          onClick={toggleCapo}
+          onClick={toggleHideCapo}
           onSelect={(e) => e.preventDefault()}
-          checked={capo}
+          checked={hideCapo}
         >
-          Allow capo
+          Hide capo songs
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           onClick={toggleShowExternal}
