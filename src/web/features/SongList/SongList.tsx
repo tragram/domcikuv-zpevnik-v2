@@ -1,4 +1,3 @@
-import { useRouteContext } from "@tanstack/react-router";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { Globe, RefreshCw, Search } from "lucide-react";
 import { useRef } from "react";
@@ -7,12 +6,13 @@ import useLocalStorageState from "use-local-storage-state";
 import { Button } from "~/components/ui/button";
 import "~/features/SongList/SongList.css";
 import { useScrollDirection } from "~/hooks/use-scroll-direction";
+import { UserData } from "~/hooks/use-user-data";
 import { SongDB } from "~/types/types";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import SongRow from "./SongRow";
 import Toolbar from "./Toolbar/Toolbar";
-import { useFilteredSongs } from "./useFilteredSongs";
-import { UserData } from "src/web/hooks/use-user-data";
+import { useDisplayedSongs } from "./useDisplayedSongs";
+import { useExternalSearch } from "./useExternalSearch";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
@@ -30,18 +30,17 @@ function SongList({
     { defaultValue: 0, storageSync: false },
   );
 
+  const { songs, bestLocalScore } = useDisplayedSongs(songDB, userData);
   const {
-    songs,
     externalSongs,
     isLoadingExternal,
     triggerExternalSearch,
     hasTriggeredExternalSearch,
     canSearchExternal,
-  } = useFilteredSongs(songDB.songs, songDB.languages, userData, songDB.songbooks);
+  } = useExternalSearch(userData, bestLocalScore);
 
   const { resetFilters } = useFilterSettingsStore();
   const isToolbarVisible = useScrollDirection();
-  const favoritesApi = useRouteContext({ from: "/" }).api.favorites;
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -103,7 +102,6 @@ function SongList({
             song={songs[item.index]}
             maxRange={songDB.maxRange}
             userData={userData}
-            favoritesApi={favoritesApi}
           />
         </div>
       ))}
@@ -117,24 +115,7 @@ function SongList({
         userData={userData}
         songDB={songDB}
         isVisible={isToolbarVisible}
-        // isSyncing removed from Toolbar
       />
-
-      {/* Floating "Updates Available" Pill */}
-      {/* {hasPendingUpdates && scrollOffset > 0 && (
-        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-top-4 fade-in">
-          <Button
-            onClick={() => {
-              setDisplayedSongs(songDB.songs);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            className="rounded-full shadow-lg gap-2"
-          >
-            <ArrowUp className="w-4 h-4" />
-            New updates available
-          </Button>
-        </div>
-      )} */}
 
       {/* Floating Bottom-Right Sync Bubble */}
       {songDBSyncing && (
@@ -196,7 +177,6 @@ function SongList({
                 maxRange={undefined}
                 userData={userData}
                 externalSearch={true}
-                favoritesApi={favoritesApi}
               />
             ))}
         </div>

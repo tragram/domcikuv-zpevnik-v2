@@ -113,7 +113,7 @@ function Toolbar({ songDB, isVisible, isAdmin, userData }: ToolbarProps) {
       <TooltipProvider delayDuration={300}>
         <SortMenu />
         <SearchBar />
-        <Filtering songDB={songDB} />
+        <Filtering songDB={songDB} userData={userData} />
 
         <SessionView isOnline={isOnline} />
 

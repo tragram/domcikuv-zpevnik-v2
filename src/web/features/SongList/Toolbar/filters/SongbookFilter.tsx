@@ -16,22 +16,15 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { SongData } from "~/types/songData";
-import { filterSongbook } from "../../useFilteredSongs";
-
-interface Songbook {
-  user: string;
-  name: string;
-  image: string;
-  songIds: Set<string>;
-}
+import type { Songbook } from "~/types/types";
+import { filterSongbook } from "./songFilters";
 
 interface SongBookFilterProps {
   availableSongbooks: Songbook[];
-  selectedSongbooks: Songbook[];
+  selectedSongbookIds: string[];
   availableSongs: SongData[];
-  addSongbook: (songbook: Songbook) => void;
-  removeSongbook: (songbook: Songbook) => void;
-  setSelectedSongbooks: (songbooks: Songbook[]) => void;
+  toggleSongbook: (songbookId: string) => void;
+  setSelectedSongbookIds: (ids: string[]) => void;
   clearSongbooks: () => void;
   iconOnly: boolean;
   sectionOnly?: boolean;
@@ -39,19 +32,9 @@ interface SongBookFilterProps {
 
 const createSongbookChoices = (
   availableSongbooks: Songbook[],
-  selectedSongbooks: Songbook[],
-  addSongbook: (songbook: Songbook) => void,
-  removeSongbook: (songbook: Songbook) => void,
+  selectedSongbookIds: string[],
+  toggleSongbook: (songbookId: string) => void,
 ): JSX.Element[] => {
-  const toggleSongbook = (songbook: Songbook) => {
-    const isSelected = selectedSongbooks.some((s) => s.user === songbook.user);
-    if (isSelected) {
-      removeSongbook(songbook);
-    } else {
-      addSongbook(songbook);
-    }
-  };
-
   return availableSongbooks
     .filter((as) => as.songIds.size > 0)
     .map((songbook) => ({
@@ -59,19 +42,16 @@ const createSongbookChoices = (
       label: songbook.name,
       image: songbook.image,
       count: songbook.songIds.size,
-      onClick: () => toggleSongbook(songbook),
     }))
     .sort((a, b) => b.count - a.count)
-    .map(({ songbook, label, image, count, onClick }) => {
-      const isSelected = selectedSongbooks.some(
-        (s) => s.user === songbook.user,
-      );
+    .map(({ songbook, label, image, count }) => {
+      const isSelected = selectedSongbookIds.includes(songbook.user);
       return (
         <DropdownMenuCheckboxItem
           key={songbook.user}
           onSelect={(e) => e.preventDefault()}
           checked={isSelected}
-          onClick={onClick}
+          onClick={() => toggleSongbook(songbook.user)}
           className="py-2"
         >
           <RichItem.Shell>
@@ -86,11 +66,10 @@ const createSongbookChoices = (
 
 export const SongBookFilter = ({
   availableSongbooks,
-  selectedSongbooks,
+  selectedSongbookIds,
   availableSongs,
-  addSongbook,
-  removeSongbook,
-  setSelectedSongbooks,
+  toggleSongbook,
+  setSelectedSongbookIds,
   clearSongbooks,
   iconOnly,
   sectionOnly = false,
@@ -100,26 +79,27 @@ export const SongBookFilter = ({
     0,
   );
 
-  const allSelected = availableSongbooks.every((songbook) =>
-    selectedSongbooks.some((selected) => selected.user === songbook.user),
-  );
+  const allSelected =
+    availableSongbooks.length > 0 &&
+    availableSongbooks.every((songbook) =>
+      selectedSongbookIds.includes(songbook.user),
+    );
 
   const handleSelectAll = () => {
     if (allSelected) {
       clearSongbooks();
     } else {
-      setSelectedSongbooks(availableSongbooks);
+      setSelectedSongbookIds(availableSongbooks.map((s) => s.user));
     }
   };
 
   const songbookChoices = createSongbookChoices(
     availableSongbooks,
-    selectedSongbooks,
-    addSongbook,
-    removeSongbook,
+    selectedSongbookIds,
+    toggleSongbook,
   );
 
-  const SelectAllButton = () => (
+  const selectAllButton = (
     <DropdownMenuCheckboxItem
       onSelect={(e) => e.preventDefault()}
       checked={false}
@@ -138,21 +118,17 @@ export const SongBookFilter = ({
     </DropdownMenuCheckboxItem>
   );
 
-  const selectedInfo = (
-    availableSongbooks: Songbook[],
-    selectedSongbooks: Songbook[],
-    availableSongs: SongData[],
-  ) => {
+  const selectedInfo = () => {
     const selectedSongs = filterSongbook(
       availableSongs,
-      selectedSongbooks,
       availableSongbooks,
+      selectedSongbookIds,
     );
-    return selectedSongbooks.length > 0 ? (
+    return selectedSongbookIds.length > 0 ? (
       <>
         <DropdownMenuSeparator />
         <div className="px-2 py-2 text-xs text-primary/80 text-right">
-          {` ${selectedSongbooks.length}/${availableSongbooks.length} songbooks
+          {` ${selectedSongbookIds.length}/${availableSongbooks.length} songbooks
          • ${selectedSongs.length}/${availableSongs.length} songs`}
         </div>
       </>
@@ -168,15 +144,15 @@ export const SongBookFilter = ({
           Filter by Songbooks
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <SelectAllButton />
+        {selectAllButton}
         <DropdownMenuSeparator />
         <div className="max-h-64 overflow-y-auto">{songbookChoices}</div>
-        {selectedInfo(availableSongbooks, selectedSongbooks, availableSongs)}
+        {selectedInfo()}
       </>
     );
   }
 
-  const active = selectedSongbooks.length > 0;
+  const active = selectedSongbookIds.length > 0;
 
   return (
     <DropdownMenu>
@@ -192,10 +168,10 @@ export const SongBookFilter = ({
               {!iconOnly && (
                 <span>
                   Songbooks
-                  {selectedSongbooks.length > 0 &&
-                    selectedSongbooks.length < availableSongbooks.length && (
+                  {selectedSongbookIds.length > 0 &&
+                    selectedSongbookIds.length < availableSongbooks.length && (
                       <span className="ml-1 text-xs opacity-75">
-                        ({selectedSongbooks.length})
+                        ({selectedSongbookIds.length})
                       </span>
                     )}
                 </span>
@@ -211,10 +187,10 @@ export const SongBookFilter = ({
         <DropdownMenuLabel className="text-sm font-semibold">
           Filter by Songbooks
         </DropdownMenuLabel>
-        <SelectAllButton />
+        {selectAllButton}
         <DropdownMenuSeparator />
         <div className="max-h-64 overflow-y-auto">{songbookChoices}</div>
-        {selectedInfo(availableSongbooks, selectedSongbooks, availableSongs)}
+        {selectedInfo()}
       </DropdownMenuContent>
     </DropdownMenu>
   );

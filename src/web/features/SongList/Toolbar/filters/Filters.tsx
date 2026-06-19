@@ -1,4 +1,3 @@
-import { getRouteApi } from "@tanstack/react-router";
 import { Filter, Globe, Handshake, Heart, X } from "lucide-react";
 import { JSX } from "react";
 import { Button } from "~/components/ui/button";
@@ -16,7 +15,12 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { useMediaQuery } from "usehooks-ts";
-import type { LanguageCount, SongDB, SongLanguage } from "~/types/types";
+import type {
+  LanguageCount,
+  Songbook,
+  SongDB,
+  SongLanguage,
+} from "~/types/types";
 import {
   LanguageFilter,
   LanguageFilterDropdownSection,
@@ -29,8 +33,7 @@ import {
 import React from "react";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { SongData } from "~/types/songData";
-import { useSongDB } from "~/hooks/use-songDB";
-import { useUserData } from "src/web/hooks/use-user-data";
+import type { UserData } from "~/hooks/use-user-data";
 
 export type VocalRangeType = "all" | [number, number];
 
@@ -48,34 +51,33 @@ const FilterControls = ({
   maxRange,
   iconOnly,
   songs,
+  availableSongbooks,
+  userData,
 }: {
   languages: LanguageCount;
   maxRange: number | undefined;
   iconOnly: boolean;
   songs: SongData[];
+  availableSongbooks: Songbook[];
+  userData: UserData;
 }) => {
-  const filterStore = useFilterSettingsStore();
   const {
     language,
-    selectedSongbooks,
+    selectedSongbookIds,
     vocalRange,
     capo,
     showExternal,
     onlyFavorites,
     setLanguage,
-    addSongbook,
-    removeSongbook,
-    setSelectedSongbooks,
+    toggleSongbook,
+    setSelectedSongbookIds,
     clearSongbooks,
     setVocalRange,
     toggleCapo,
     toggleShowExternal,
     toggleFavorites,
     resetFilters,
-  } = filterStore;
-  const { userData } = useUserData();
-  const { songDB } = useSongDB(userData);
-  const availableSongbooks = songDB.songbooks;
+  } = useFilterSettingsStore();
   const isFilterInactive =
     language === "all" &&
     (vocalRange === "all" ||
@@ -83,7 +85,7 @@ const FilterControls = ({
         vocalRange[0] === 0 &&
         vocalRange[1] === maxRange)) &&
     capo &&
-    selectedSongbooks.length === 0 &&
+    selectedSongbookIds.length === 0 &&
     !onlyFavorites;
   return {
     controls: (
@@ -97,11 +99,10 @@ const FilterControls = ({
         {availableSongbooks.length > 0 && (
           <SongBookFilter
             availableSongbooks={availableSongbooks}
-            selectedSongbooks={selectedSongbooks}
+            selectedSongbookIds={selectedSongbookIds}
             availableSongs={songs}
-            addSongbook={addSongbook}
-            removeSongbook={removeSongbook}
-            setSelectedSongbooks={setSelectedSongbooks}
+            toggleSongbook={toggleSongbook}
+            setSelectedSongbookIds={setSelectedSongbookIds}
             clearSongbooks={clearSongbooks}
             iconOnly={iconOnly}
             sectionOnly={false}
@@ -219,11 +220,10 @@ const FilterControls = ({
           React.Children.toArray(
             <SongBookFilter
               availableSongbooks={availableSongbooks}
-              selectedSongbooks={selectedSongbooks}
+              selectedSongbookIds={selectedSongbookIds}
               availableSongs={songs}
-              addSongbook={addSongbook}
-              removeSongbook={removeSongbook}
-              setSelectedSongbooks={setSelectedSongbooks}
+              toggleSongbook={toggleSongbook}
+              setSelectedSongbookIds={setSelectedSongbookIds}
               clearSongbooks={clearSongbooks}
               iconOnly={false}
               sectionOnly={true}
@@ -244,12 +244,20 @@ const FilterControls = ({
   };
 };
 
-const Filtering = ({ songDB }: { songDB: SongDB }): JSX.Element => {
+const Filtering = ({
+  songDB,
+  userData,
+}: {
+  songDB: SongDB;
+  userData: UserData;
+}): JSX.Element => {
   const isLargeScreen = useMediaQuery("only screen and (min-width : 1000px)");
   const { controls, dropdownSections, isFilterInactive } = FilterControls({
     languages: songDB.languages,
     maxRange: songDB.maxRange,
     songs: songDB.songs,
+    availableSongbooks: songDB.songbooks,
+    userData,
     iconOnly: isLargeScreen,
   });
 

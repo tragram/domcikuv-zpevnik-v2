@@ -12,14 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "~/components/ui/alert-dialog";
-import {
-  filterCapo,
-  filterExternal,
-  filterFavorites,
-  filterLanguage,
-  filterSongbook,
-  filterVocalRange,
-} from "~/features/SongList/useFilteredSongs";
+import { applyFilters } from "~/features/SongList/Toolbar/filters/songFilters";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { UserData } from "~/hooks/use-user-data";
 import { toast } from "sonner";
@@ -153,8 +146,14 @@ function RandomSong({
     BAN_LIST_KEY,
     { defaultValue: [] },
   );
-  const { capo, vocalRange, language, onlyFavorites, showExternal, selectedSongbooks } =
-    useFilterSettingsStore();
+  const {
+    capo,
+    vocalRange,
+    language,
+    onlyFavorites,
+    showExternal,
+    selectedSongbookIds,
+  } = useFilterSettingsStore();
 
   // Check and reset ban list on component mount
   useEffect(() => {
@@ -179,26 +178,33 @@ function RandomSong({
 
   // Expensive filter pipeline — depends only on the filters, not the ban list,
   // so growing the ban list on every navigation doesn't re-run all of this.
-  const pool = useMemo(() => {
-    let pool = filterCapo(songs, capo);
-    pool = filterVocalRange(pool, vocalRange);
-    pool = filterFavorites(pool, !!userData, onlyFavorites);
-    pool = filterExternal(pool, !!userData, showExternal);
-    if (languageCounts) pool = filterLanguage(pool, language, languageCounts);
-    pool = filterSongbook(pool, availableSongbooks, selectedSongbooks);
-    return pool;
-  }, [
-    songs,
-    capo,
-    vocalRange,
-    userData,
-    onlyFavorites,
-    showExternal,
-    language,
-    languageCounts,
-    availableSongbooks,
-    selectedSongbooks,
-  ]);
+  const pool = useMemo(
+    () =>
+      applyFilters(
+        songs,
+        {
+          capo,
+          vocalRange,
+          language,
+          onlyFavorites,
+          showExternal,
+          selectedSongbookIds,
+        },
+        { userData: userData ?? null, languageCounts, availableSongbooks },
+      ),
+    [
+      songs,
+      capo,
+      vocalRange,
+      language,
+      onlyFavorites,
+      showExternal,
+      selectedSongbookIds,
+      userData,
+      languageCounts,
+      availableSongbooks,
+    ],
+  );
 
   // Cheap selection — re-runs when the ban list changes (one pass over the pool).
   const { chosenSong } = useMemo(

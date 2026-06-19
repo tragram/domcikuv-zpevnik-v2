@@ -9,7 +9,6 @@ import {
 import { UserData } from "./use-user-data";
 
 import { QueryClient } from "@tanstack/react-query";
-import { parseDBDates } from "~/services/song-service";
 import { favoritesQueryOptions, sessionQueryOptions, submissionsQueryOptions, sessionToProfile } from "./use-user-data";
 
 export const songsQueryOptions = () =>
@@ -74,5 +73,5 @@ export const getSongDB = async (queryClient: QueryClient) => {
     console.warn("Failed to gather user context for SongDB buildup", e);
   }
 
-  return buildSongDB(songs, publicSongbooks ?? [], userData as any);
+  return buildSongDB(songs, publicSongbooks ?? [], userData);
 };

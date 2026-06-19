@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { memo } from "react";
 import { UserData } from "src/web/hooks/use-user-data";
-import { FavoritesAPI } from "src/worker/api-client";
 
 import CircularProgress from "~/components/circular-progress";
 import { FavoriteButton } from "~/components/FavoriteButton";
@@ -97,10 +96,7 @@ const VocalRangeIndicator = memo(
   }: VocalRangeIndicatorProps) => {
     const innerHTML =
       songRangeSemitones && maxRange ? (
-        <CircularProgress
-          value={songRangeSemitones || maxRange}
-          maxValue={maxRange}
-        />
+        <CircularProgress value={songRangeSemitones} maxValue={maxRange} />
       ) : (
         <></>
       );
@@ -117,7 +113,6 @@ interface SongRowProps {
   maxRange?: number | undefined;
   userData: UserData;
   externalSearch?: boolean;
-  favoritesApi: FavoritesAPI;
 }
 const SongRow = memo(
   ({ song, maxRange, userData, externalSearch = false }: SongRowProps) => {
@@ -132,7 +127,7 @@ const SongRow = memo(
     const externalSourceId = song.externalSource?.sourceId;
     if (externalSearch && (!externalSourceId || !song.url())) {
       console.error("Invalid external song provided to SongRow", song);
-      return;
+      return null;
     }
 
     const linkClassName =
@@ -159,7 +154,7 @@ const SongRow = memo(
         <DateDisplay
           month={song.createdAt.getMonth() + 1}
           year={song.createdAt.getFullYear()}
-          className="xsm:flex hidden shrink-0 basis-[2/12] md:basis-1/12"
+          className="xsm:flex hidden shrink-0 basis-2/12 md:basis-1/12"
         />
 
         <CapoDisplay
