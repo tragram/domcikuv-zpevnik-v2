@@ -61,6 +61,8 @@ export class SongData {
   range?: SongRange;
   chordpro: ChordPro;
   externalSource: ExternalSourceApi | null;
+  /** Hidden from the browse list, but still searchable and directly accessible. */
+  hidden: boolean;
 
   // UI-specific fields
   currentIllustration: CurrentIllustrationApi | undefined;
@@ -90,6 +92,7 @@ export class SongData {
     this.range = this.parseRange(songFromDB.range);
     this.chordpro = songFromDB.chordpro;
     this.externalSource = songFromDB.externalSource;
+    this.hidden = songFromDB.hidden ?? false;
 
     this.currentIllustration = songFromDB.currentIllustration;
     this.isFavorite = songFromDB.isFavoriteByCurrentUser ?? false;

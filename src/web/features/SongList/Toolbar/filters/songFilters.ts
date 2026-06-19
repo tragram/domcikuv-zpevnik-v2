@@ -95,6 +95,15 @@ export const filterExternal = (
   return songs;
 };
 
+/**
+ * Hidden songs are excluded from the browse list, except the current user's own
+ * favorites (so self-curated hidden songs stay in their songbook). Being an admin
+ * grants no special pass — broad hidden-song management is the dashboard's job.
+ * Search bypasses the whole filter pipeline, so hidden songs remain findable there.
+ */
+export const filterHidden = (songs: SongData[]): SongData[] =>
+  songs.filter((song) => !song.hidden || song.isFavorite);
+
 // --- Composed pipeline ----------------------------------------------------
 
 export type AppliedFilters = FilterSettings & { selectedSongbookIds: string[] };
@@ -116,7 +125,8 @@ export const applyFilters = (
   ctx: FilterContext,
 ): SongData[] => {
   const loggedIn = !!ctx.userData;
-  let result = filterCapo(songs, filters.hideCapo);
+  let result = filterHidden(songs);
+  result = filterCapo(result, filters.hideCapo);
   result = filterVocalRange(result, filters.vocalRange);
   if (ctx.languageCounts) {
     result = filterLanguage(result, filters.language, ctx.languageCounts);

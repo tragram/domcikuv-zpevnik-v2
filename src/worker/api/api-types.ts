@@ -57,6 +57,8 @@ export type SongDataApi = {
   externalSource: ExternalSourceApi | null;
   currentIllustration?: CurrentIllustrationApi;
   updateStatus?: "added" | "modified" | "deleted";
+  // Hidden from the browse list but still reachable via search / direct link.
+  hidden?: boolean;
 };
 
 export type SongDataAdminApi = SongDataDB &

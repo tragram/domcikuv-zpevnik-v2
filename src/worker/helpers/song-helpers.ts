@@ -48,6 +48,7 @@ const transformSongToApi = (
   return {
     id: songItem.id,
     versionId: version?.id,
+    hidden: songItem.hidden,
     title: version?.title ?? "Unknown title",
     artist: version?.artist ?? "Unknown artist",
     key: version?.key ?? undefined,
@@ -80,8 +81,11 @@ const transformSongToApi = (
         }
       : undefined,
 
+    // Only true deletions are removal signals. Hidden songs stay in the client
+    // cache (with `hidden: true`) so they remain reachable via search; the browse
+    // list filters them out client-side.
     updateStatus: updatedSince
-      ? songItem.deleted || songItem.hidden
+      ? songItem.deleted
         ? "deleted"
         : new Date(songItem.createdAt) >= updatedSince
           ? "added"
@@ -133,6 +137,20 @@ export async function retrieveSongs(
   });
   return songsRaw.map((s) => transformSongToApi(s, updatedSince));
 }
+
+/**
+ * Base ids of every locally deleted song. Used to drop matching results from
+ * external search so an admin's deletion isn't trivially undone by re-importing.
+ */
+export const getDeletedSongIds = async (
+  db: AppDatabase,
+): Promise<Set<string>> => {
+  const rows = await db
+    .select({ id: song.id })
+    .from(song)
+    .where(eq(song.deleted, true));
+  return new Set(rows.map((r) => r.id));
+};
 
 export const retrieveSingleSong = async (
   db: AppDatabase,
@@ -288,11 +306,23 @@ export const createSongVersion = async (
 ) => {
   // TODO: what to do when the song is present by an older untrusted submission/import?
   const existingSong = await getSongBase(db, songId);
-  if (existingSong.hidden || existingSong.deleted) {
-    // ensure the song won't be hidden after this new version, at least after the suggested version is accepted
+  if (existingSong.deleted) {
+    // A previously-deleted song is revived as if brand new: drop the `deleted`
+    // flag and the stale current pointer so this submission re-enters the normal
+    // trust flow (untrusted manual -> pending & not shown until approved;
+    // trusted/import -> published). The pre-deletion version is archived so it
+    // doesn't linger as a second "published" version.
+    // NOTE: `hidden` is intentionally NOT reset here — hiding is sticky and must
+    // survive re-imports/edits; only an admin un-hides via the dashboard.
+    if (existingSong.currentVersionId) {
+      await db
+        .update(songVersion)
+        .set({ status: "archived" })
+        .where(eq(songVersion.id, existingSong.currentVersionId));
+    }
     await db
       .update(song)
-      .set({ hidden: false, deleted: false, currentVersionId: null })
+      .set({ deleted: false, currentVersionId: null })
       .where(eq(song.id, songId));
   }
   const now = new Date();

@@ -47,7 +47,10 @@ export type BasicSongIllustrationResponseData = BasicSongIllustrationDB[];
 export const songDBRoutes = buildApp()
   .route("/external", externalRoutes)
   .get("/", async (c) => {
-    const songs = await retrieveSongs(c.var.db);
+    // includeHidden: hidden songs are shipped to clients so they stay reachable
+    // via search; the browse list filters them out client-side. Deleted songs
+    // are still excluded entirely.
+    const songs = await retrieveSongs(c.var.db, undefined, true, false);
     const songDBVersion = (await c.env.KV.get("songDB-version")) ?? "v0";
     return successJSend(c, {
       songs,
@@ -67,7 +70,10 @@ export const songDBRoutes = buildApp()
       const songs = await retrieveSongs(
         c.var.db,
         isIncremental ? lastUpdateAt : undefined,
-        isIncremental,
+        // Always include hidden songs (they live in the client cache, just
+        // filtered from browse). Include deleted only for incremental diffs so
+        // their removal propagates; a full reset omits them entirely.
+        true,
         isIncremental,
       );
 

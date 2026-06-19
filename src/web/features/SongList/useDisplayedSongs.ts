@@ -56,10 +56,10 @@ export function useDisplayedSongs(
 
   const songs = useMemo(() => {
     // SEARCH MODE: an active query deliberately bypasses *every* filter-bar
-    // setting (capo, language, favorites, songbooks, range, show-external).
-    // Search spans the whole local library — and because it skips filterExternal,
-    // it is the only way users who aren't logged in can reach external-origin
-    // songs (which the normal browse list hides from them).
+    // setting (capo, language, favorites, songbooks, show-external) plus the
+    // hidden-song filter. Search spans the whole local library — so it is the
+    // only way to reach songs the browse list hides: external-origin songs (for
+    // logged-out users) and admin-hidden songs (for everyone).
     if (query && searchResults) {
       return searchResults.map((r) => r.item);
     }

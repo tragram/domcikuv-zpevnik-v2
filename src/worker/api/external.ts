@@ -15,6 +15,7 @@ import {
   createImportSong,
   createSong,
   createSongVersion,
+  getDeletedSongIds,
   retrieveSingleSong,
 } from "../helpers/song-helpers";
 import { SongDataApi } from "./api-types";
@@ -38,7 +39,14 @@ export const externalRoutes = buildApp()
     if (!query || query.trim().length < 3) return successJSend(c, []);
 
     const results = await searchAllExternalServices(query, c.env);
-    return successJSend(c, results);
+    // Hide locally-deleted songs from external results so a deletion isn't
+    // trivially undone by re-importing the same song. (Hidden songs are still
+    // shown — only deleted ones are suppressed.)
+    const deletedIds = await getDeletedSongIds(c.var.db);
+    const visible = results.filter(
+      (r) => !deletedIds.has(SongData.baseId(r.title, r.artist)),
+    );
+    return successJSend(c, visible);
   })
   .post(
     "/import",
