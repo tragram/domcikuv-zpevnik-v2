@@ -26,6 +26,7 @@ interface VocalRangeSliderProps {
 
 interface VocalRangeFilterProps extends VocalRangeSliderProps {
   iconOnly: boolean;
+  roundedRight?: boolean;
 }
 
 const VocalRangeSlider = ({
@@ -63,6 +64,7 @@ export const VocalRangeFilter = ({
   vocalRangeFilter,
   setVocalRangeFilter,
   iconOnly,
+  roundedRight = true,
 }: VocalRangeFilterProps): JSX.Element => {
   return (
     <DropdownMenu>
@@ -72,7 +74,7 @@ export const VocalRangeFilter = ({
             <Button
               variant="circular"
               isActive={vocalRangeFilter !== "all"}
-              className="shadow-none outline-0 font-bold rounded-l-none"
+              className={`shadow-none outline-0 font-bold rounded-l-none ${roundedRight ? "" : "rounded-r-none"}`}
             >
               <Music />
               {!iconOnly && "Range"}

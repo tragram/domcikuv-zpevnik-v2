@@ -167,6 +167,7 @@ const FilterControls = ({
             vocalRangeFilter={vocalRange}
             setVocalRangeFilter={setVocalRange}
             iconOnly={iconOnly}
+            roundedRight={isFilterInactive}
           />
         )}
         {!isFilterInactive && (
@@ -174,7 +175,7 @@ const FilterControls = ({
             <TooltipTrigger asChild>
               <Button
                 variant="circular"
-                className="rounded-none font-bold shadow-none outline-0"
+                className="rounded-l-none font-bold shadow-none outline-0"
                 onClick={resetFilters}
               >
                 <X />
