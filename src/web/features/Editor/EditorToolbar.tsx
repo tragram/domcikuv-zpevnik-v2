@@ -188,11 +188,23 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         generateIllustrationInBackground(response.song.id);
       }
 
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
+      // Await + force a refetch (not just "active" queries) so the song list
+      // and pending-submissions caches are fresh before we navigate; both feed
+      // buildSongDB's overlay via ensureQueryData, which otherwise hands back
+      // the stale pre-edit version regardless of invalidation.
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: ["songs"],
+          refetchType: "all",
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["submissions"],
+          refetchType: "all",
+        }),
+      ]);
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
 
       if (userData && userData.profile.isAdmin) {
         navigate({ to: "/song/$songId", params: { songId: response.song.id } });
