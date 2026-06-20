@@ -1,4 +1,5 @@
 import { buildApp } from "../utils";
+import { auth } from "src/lib/auth/server";
 
 import {
   getUsers,
@@ -9,6 +10,8 @@ import {
   userSearchSchema,
   createUser,
   createUserSchema,
+  setUserPassword,
+  setUserPasswordSchema,
 } from "../../helpers/user-helpers";
 import {
   failJSend,
@@ -48,6 +51,24 @@ export const userRoutes = buildApp()
     );
     return successJSend(c, updatedUser);
   })
+  .post(
+    "/:id/password",
+    zValidatorJSend("json", setUserPasswordSchema),
+    async (c) => {
+      const currentUserId = c.var.USER?.id;
+      if (!currentUserId)
+        return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
+
+      const { newPassword } = c.req.valid("json");
+      const updatedUser = await setUserPassword(
+        auth(c.env, c.var.db),
+        c.var.db,
+        c.req.param("id"),
+        newPassword,
+      );
+      return successJSend(c, updatedUser);
+    },
+  )
   .delete("/:id", async (c) => {
     const currentUserId = c.var.USER?.id;
     if (!currentUserId) return failJSend(c, "Authentication required", 401);

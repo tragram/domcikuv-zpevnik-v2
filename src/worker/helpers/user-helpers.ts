@@ -4,6 +4,7 @@ import { user, UserDB } from "src/lib/db/schema";
 import { z } from "zod";
 import { PaginatedResponse } from "../api/utils";
 import { moveToTrashR2 } from "./illustration-helpers";
+import type { auth } from "src/lib/auth/server";
 
 // User validation schemas
 export const createUserSchema = z.object({
@@ -21,8 +22,15 @@ export const createUserSchema = z.object({
 });
 export const updateUserSchema = createUserSchema.partial();
 
+// Mirrors better-auth's default password bounds (minPasswordLength 8 /
+// maxPasswordLength 128) so the admin form fails fast before hashing.
+export const setUserPasswordSchema = z.object({
+  newPassword: z.string().min(8).max(128),
+});
+
 export type CreateUserSchema = z.infer<typeof createUserSchema>;
 export type UpdateUserSchema = z.infer<typeof updateUserSchema>;
+export type SetUserPasswordSchema = z.infer<typeof setUserPasswordSchema>;
 
 // Role filters map onto the boolean columns used for the stat-card counts.
 export const USER_ROLE_FILTERS = ["admin", "trusted", "verified"] as const;
@@ -245,6 +253,56 @@ export const updateUser = async (
   // Return the updated user
   const updatedUser = await getUser(db, userId);
   return updatedUser!;
+};
+
+/**
+ * Sets (or resets) a user's email/password credential as an admin.
+ *
+ * Hashing goes through better-auth's own context so the stored hash matches
+ * what the login flow expects. Users who only ever signed in via a social
+ * provider have no "credential" account row, so we link one instead of a no-op
+ * update (better-auth's updatePassword only touches existing credential rows).
+ *
+ * All of the target user's existing sessions are revoked afterwards so an old
+ * (or compromised) session can't outlive the password it was created under.
+ */
+export const setUserPassword = async (
+  authInstance: ReturnType<typeof auth>,
+  db: AppDatabase,
+  userId: string,
+  newPassword: string,
+): Promise<UserDB> => {
+  if (!userId || userId.length < 10) {
+    throw new Error("Invalid user ID format");
+  }
+
+  const existingUser = await getUser(db, userId);
+  if (!existingUser) {
+    throw new Error("User not found");
+  }
+
+  const ctx = await authInstance.$context;
+  const hashedPassword = await ctx.password.hash(newPassword);
+
+  const accounts = await ctx.internalAdapter.findAccountByUserId(userId);
+  const hasCredential = accounts.some((a) => a.providerId === "credential");
+
+  if (hasCredential) {
+    await ctx.internalAdapter.updatePassword(userId, hashedPassword);
+  } else {
+    await ctx.internalAdapter.linkAccount({
+      accountId: userId,
+      providerId: "credential",
+      userId,
+      password: hashedPassword,
+    });
+  }
+
+  // Sessions are validated against the DB on every request, so dropping the
+  // rows forces the user to re-authenticate with the new password.
+  await ctx.internalAdapter.deleteSessions(userId);
+
+  return existingUser;
 };
 
 export const deleteUser = async (

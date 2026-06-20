@@ -4,6 +4,7 @@ import { makeApiRequest } from "./api-service";
 import { SessionsResponseData } from "src/worker/api/sessions";
 import {
   CreateUserSchema,
+  SetUserPasswordSchema,
   UpdateUserSchema,
   UserRoleFilter,
   UsersResponse,
@@ -149,6 +150,28 @@ export async function updateUserAdmin(
     api[":id"].$patch({
       param: { id: userId },
       json: userData,
+    }),
+  );
+  return parseUserDates(updatedUser);
+}
+
+/**
+ * Sets a new password for a user (admin action)
+ * @param api - The users API client
+ * @param userId - The ID of the user whose password is being set
+ * @param newPassword - The new plaintext password (hashed server-side)
+ * @returns Promise containing the affected user data
+ * @throws {ApiException} When the request fails or user not found
+ */
+export async function setUserPasswordAdmin(
+  api: UsersApi,
+  userId: string,
+  newPassword: string,
+): Promise<UserDB> {
+  const updatedUser = await makeApiRequest(() =>
+    api[":id"].password.$post({
+      param: { id: userId },
+      json: { newPassword } satisfies SetUserPasswordSchema,
     }),
   );
   return parseUserDates(updatedUser);

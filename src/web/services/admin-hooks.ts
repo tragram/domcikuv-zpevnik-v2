@@ -40,6 +40,7 @@ import {
   createUserAdmin,
   deleteUserAdmin,
   fetchUsersAdmin,
+  setUserPasswordAdmin,
   updateUserAdmin,
 } from "~/services/user-service";
 import {
@@ -542,6 +543,19 @@ export const useUpdateUser = (adminApi: AdminApi) => {
   });
 };
 
+export const useSetUserPassword = (adminApi: AdminApi) => {
+  // No cache invalidation: the password isn't part of any cached user view.
+  return useMutation({
+    mutationFn: ({
+      userId,
+      newPassword,
+    }: {
+      userId: string;
+      newPassword: string;
+    }) => setUserPasswordAdmin(adminApi.users, userId, newPassword),
+  });
+};
+
 export const useDeleteUser = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({
@@ -691,13 +705,13 @@ export const useIllustrationsTableData = (adminApi: AdminApi) => {
   const filterOptions = useMemo(() => {
     const imageModels = [
       ...new Set(illustrationsQuery.data?.map((i) => i.imageModel) || []),
-    ];
+    ].sort((a, b) => a.localeCompare(b));
     const summaryModels = [
       ...new Set(promptsQuery.data?.map((p) => p.summaryModel) || []),
-    ];
+    ].sort((a, b) => a.localeCompare(b));
     const promptVersions = [
       ...new Set(promptsQuery.data?.map((p) => p.summaryPromptVersion) || []),
-    ];
+    ].sort((a, b) => a.localeCompare(b));
 
     return { imageModels, summaryModels, promptVersions };
   }, [illustrationsQuery.data, promptsQuery.data]);

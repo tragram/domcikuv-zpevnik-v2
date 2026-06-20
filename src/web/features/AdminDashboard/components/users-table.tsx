@@ -29,6 +29,7 @@ import {
   Shield,
   ShieldCheck,
   BadgeCheck,
+  KeyRound,
 } from "lucide-react";
 import { ControlPanel } from "./control-panel";
 import { StatsBar } from "./stats-bar";
@@ -38,6 +39,7 @@ import {
   useUsersAdmin,
   useUpdateUser,
   useDeleteUser,
+  useSetUserPassword,
 } from "../../../services/admin-hooks";
 import { AdminApi} from "~/../worker/api-client";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
@@ -156,46 +158,47 @@ export function UsersTable({ adminApi }: UsersTableProps) {
         </div>
       </div>
 
-      <StatsBar
-        items={[
-          {
-            label: "Users",
-            value: usersData?.counts?.total ?? 0,
-            icon: UsersIcon,
-            onClick: () => toggleRole(null),
-            active: roleFilter === null,
-          },
-          {
-            label: "Admins",
-            value: usersData?.counts?.admins ?? 0,
-            icon: Shield,
-            className: "text-primary",
-            onClick: () => toggleRole("admin"),
-            active: roleFilter === "admin",
-          },
-          {
-            label: "Trusted",
-            value: usersData?.counts?.trusted ?? 0,
-            icon: ShieldCheck,
-            className: "text-blue-600",
-            onClick: () => toggleRole("trusted"),
-            active: roleFilter === "trusted",
-          },
-          {
-            label: "Verified",
-            value: usersData?.counts?.verified ?? 0,
-            icon: BadgeCheck,
-            className: "text-emerald-600",
-            onClick: () => toggleRole("verified"),
-            active: roleFilter === "verified",
-          },
-        ]}
-      />
-
       <ControlPanel
         searchTerm={searchTerm}
         onSearchChange={handleSearchChange}
         className="border"
+        header={
+          <StatsBar
+            items={[
+              {
+                label: "Users",
+                value: usersData?.counts?.total ?? 0,
+                icon: UsersIcon,
+                onClick: () => toggleRole(null),
+                active: roleFilter === null,
+              },
+              {
+                label: "Admins",
+                value: usersData?.counts?.admins ?? 0,
+                icon: Shield,
+                className: "text-primary",
+                onClick: () => toggleRole("admin"),
+                active: roleFilter === "admin",
+              },
+              {
+                label: "Trusted",
+                value: usersData?.counts?.trusted ?? 0,
+                icon: ShieldCheck,
+                className: "text-blue-600",
+                onClick: () => toggleRole("trusted"),
+                active: roleFilter === "trusted",
+              },
+              {
+                label: "Verified",
+                value: usersData?.counts?.verified ?? 0,
+                icon: BadgeCheck,
+                className: "text-emerald-600",
+                onClick: () => toggleRole("verified"),
+                active: roleFilter === "verified",
+              },
+            ]}
+          />
+        }
       >
         <div className="overflow-x-auto border-t">
           <Table className="min-w-[900px]">
@@ -344,7 +347,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
               Modify permissions and basic details for {editingUser?.name}.
             </DialogDescription>
           </div>
-          <div className="p-6">
+          <div className="p-6 space-y-6">
             <UserForm
               key={editingUser?.id}
               user={editingUser}
@@ -363,6 +366,13 @@ export function UsersTable({ adminApi }: UsersTableProps) {
                   );
               }}
             />
+            {editingUser && (
+              <PasswordSection
+                key={`pw-${editingUser.id}`}
+                user={editingUser}
+                adminApi={adminApi}
+              />
+            )}
           </div>
         </DialogContent>
       </Dialog>
@@ -506,6 +516,109 @@ function UserForm({
           className="w-full sm:w-auto shadow-sm"
         >
           {isLoading ? "Saving Changes..." : "Save Account Settings"}
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+// Minimum enforced server-side by setUserPasswordSchema (better-auth default).
+const MIN_PASSWORD_LENGTH = 8;
+
+function PasswordSection({
+  user,
+  adminApi,
+}: {
+  user: UserDB;
+  adminApi: AdminApi;
+}) {
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const setPasswordMutation = useSetUserPassword(adminApi);
+  const isLoading = setPasswordMutation.isPending;
+
+  const tooShort = password.length > 0 && password.length < MIN_PASSWORD_LENGTH;
+  const mismatch = confirm.length > 0 && password !== confirm;
+  const canSubmit =
+    password.length >= MIN_PASSWORD_LENGTH && password === confirm && !isLoading;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSubmit) return;
+    setPasswordMutation.mutate(
+      { userId: user.id, newPassword: password },
+      {
+        onSuccess: () => {
+          toast.success(`Password updated for ${user.name}`);
+          setPassword("");
+          setConfirm("");
+        },
+        onError: (err) =>
+          toast.error(
+            err instanceof Error ? err.message : "Failed to set password",
+          ),
+      },
+    );
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="pt-6 border-t space-y-4">
+      <div>
+        <Label className="text-muted-foreground text-xs uppercase tracking-wider font-semibold flex items-center gap-2">
+          <KeyRound className="h-3.5 w-3.5" /> Reset Password
+        </Label>
+        <p className="text-xs text-muted-foreground mt-1">
+          Set a new password for this account. The user can sign in with it
+          immediately.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="space-y-2.5">
+          <Label htmlFor="new-password" className="text-sm font-medium">
+            New Password
+          </Label>
+          <Input
+            id="new-password"
+            type="password"
+            autoComplete="new-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={isLoading}
+            className="bg-muted/20"
+            placeholder="At least 8 characters"
+          />
+          {tooShort && (
+            <p className="text-xs text-destructive">
+              Must be at least {MIN_PASSWORD_LENGTH} characters.
+            </p>
+          )}
+        </div>
+        <div className="space-y-2.5">
+          <Label htmlFor="confirm-password" className="text-sm font-medium">
+            Confirm Password
+          </Label>
+          <Input
+            id="confirm-password"
+            type="password"
+            autoComplete="new-password"
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+            disabled={isLoading}
+            className="bg-muted/20"
+          />
+          {mismatch && (
+            <p className="text-xs text-destructive">Passwords do not match.</p>
+          )}
+        </div>
+      </div>
+      <div className="flex justify-end">
+        <Button
+          type="submit"
+          variant="secondary"
+          disabled={!canSubmit}
+          className="w-full sm:w-auto"
+        >
+          {isLoading ? "Setting Password..." : "Set Password"}
         </Button>
       </div>
     </form>
