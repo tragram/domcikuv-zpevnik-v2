@@ -305,7 +305,6 @@ export const createSongVersion = async (
   isTrusted: boolean,
   importId?: string,
 ) => {
-  // TODO: what to do when the song is present by an older untrusted submission/import?
   const existingSong = await getSongBase(db, songId);
   if (existingSong.deleted) {
     // A previously-deleted song is revived as if brand new: drop the `deleted`
@@ -329,67 +328,81 @@ export const createSongVersion = async (
   const now = new Date();
   let parentVersion: schema.SongVersionDB | undefined = undefined;
 
-  const parentId =
+  const resolvedParentId =
     submission.parentId === songId
       ? (await db.query.song.findFirst({ where: eq(song.id, songId) }))
           ?.currentVersionId
       : submission.parentId;
-  if (parentId) {
+  if (resolvedParentId) {
     // hacky way to tell the backend that we're basing the edit on current version (which is unavailable) is setting parentId to songId which won't happen otherwise due to the structure of versionId
     parentVersion = await db.query.songVersion.findFirst({
-      where: eq(songVersion.id, parentId),
+      where: eq(songVersion.id, resolvedParentId),
     });
     if (!parentVersion || parentVersion.songId !== songId) {
       throw Error("Invalid parentId!");
     }
   }
-  // check if the parent id is pending - in that case we edit that one
-  // LOGIC BRANCH A: Update existing pending draft
 
-  if (parentVersion && parentVersion.status === "pending") {
-    // If the user is trusted, their update acts as an "Approval" of their own draft immediately
-    const shouldPublish = isTrusted;
+  const shouldPublish = isTrusted;
+
+  // LOGIC BRANCH A: Update the user's own pending draft in place.
+  // A pending version is only a valid parent when it belongs to the same user —
+  // editing your own unpublished suggestion updates it rather than spawning a
+  // duplicate. (Once pending changes are reachable via another user's songbook,
+  // this ownership check can be widened.)
+  if (
+    parentVersion &&
+    parentVersion.status === "pending" &&
+    parentVersion.userId === userId
+  ) {
     const updatedVersion = await db
       .update(songVersion)
       .set({
         ...submission,
         updatedAt: now,
+        // A trusted user's update acts as an immediate approval of their draft.
         approvedBy: shouldPublish ? userId : null,
         approvedAt: shouldPublish ? now : null,
         importId: importId ?? null,
       })
       .where(eq(songVersion.id, parentVersion.id))
       .returning();
-    // If we just published this, update the main Song pointer and archive the old parent
 
     if (shouldPublish)
       await promoteVersionToCurrent(db, songId, parentVersion.id, userId);
     return updatedVersion[0];
-  } else {
-    // LOGIC BRANCH B: Create new version (Fork from current)
-    const versionId = songId + "_" + now.getTime();
-    const shouldPublish = isTrusted;
-
-    const newVersion = await db
-      .insert(songVersion)
-      .values({
-        ...submission,
-        id: versionId,
-        songId: songId,
-        parentId: parentId,
-        userId: userId,
-        approvedBy: shouldPublish ? userId : null,
-        approvedAt: shouldPublish ? now : null,
-        createdAt: now,
-        updatedAt: now,
-        importId: importId ?? null,
-      })
-      .returning();
-
-    if (shouldPublish)
-      await promoteVersionToCurrent(db, songId, versionId, userId);
-    return newVersion[0];
   }
+
+  // LOGIC BRANCH B: Fork a new version.
+  // Any other unapproved parent (someone else's pending draft, or a
+  // draft/rejected version) is not part of the song's accessible lineage yet, so
+  // it is ignored and the edit forks a fresh version with no parent.
+  const parentIsApproved =
+    parentVersion?.status === "published" ||
+    parentVersion?.status === "archived";
+  const parentId = parentIsApproved ? parentVersion!.id : undefined;
+
+  const versionId = songId + "_" + now.getTime();
+
+  const newVersion = await db
+    .insert(songVersion)
+    .values({
+      ...submission,
+      id: versionId,
+      songId: songId,
+      parentId: parentId,
+      userId: userId,
+      approvedBy: shouldPublish ? userId : null,
+      approvedAt: shouldPublish ? now : null,
+      createdAt: now,
+      updatedAt: now,
+      importId: importId ?? null,
+    })
+    .returning();
+
+  if (shouldPublish)
+    await promoteVersionToCurrent(db, songId, versionId, userId);
+  return newVersion[0];
 };
 
 export const promoteVersionToCurrent = async (
