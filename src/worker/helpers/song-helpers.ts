@@ -7,6 +7,7 @@ import {
   gte,
   inArray,
   isNotNull,
+  ne,
   or,
 } from "drizzle-orm";
 import * as schema from "src/lib/db/schema";
@@ -398,33 +399,36 @@ export const promoteVersionToCurrent = async (
   approverId: string,
 ) => {
   const now = new Date();
-  const currentSong = await getSongBase(db, songId);
-  // Archive the OLD current version (if it exists and is different)
-  // TODO: ensure only one song is published at a time
-  if (
-    currentSong.currentVersionId &&
-    currentSong.currentVersionId !== versionId
-  ) {
-    await db
+  // Enforce the single-published-version invariant: archive EVERY other
+  // published version of this song (not just the tracked currentVersionId, in
+  // case stray published rows exist), publish the target, and repoint the song.
+  // D1 has no interactive transactions, so we run the three writes as one atomic
+  // batch — a partial failure can no longer leave two published versions.
+  await db.batch([
+    db
       .update(songVersion)
       .set({ status: "archived" })
-      .where(eq(songVersion.id, currentSong.currentVersionId));
-  }
-
-  await db
-    .update(songVersion)
-    .set({
-      status: "published",
-      approvedBy: approverId,
-      approvedAt: now,
-      updatedAt: now,
-    })
-    .where(eq(songVersion.id, versionId));
-
-  await db
-    .update(song)
-    .set({ currentVersionId: versionId, updatedAt: now })
-    .where(eq(song.id, songId));
+      .where(
+        and(
+          eq(songVersion.songId, songId),
+          eq(songVersion.status, "published"),
+          ne(songVersion.id, versionId),
+        ),
+      ),
+    db
+      .update(songVersion)
+      .set({
+        status: "published",
+        approvedBy: approverId,
+        approvedAt: now,
+        updatedAt: now,
+      })
+      .where(eq(songVersion.id, versionId)),
+    db
+      .update(song)
+      .set({ currentVersionId: versionId, updatedAt: now })
+      .where(eq(song.id, songId)),
+  ]);
 };
 
 export const songImportId = (
