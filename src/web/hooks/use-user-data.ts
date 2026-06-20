@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { queryClient } from "src/lib/query-client";
 import client from "src/worker/api-client";
 import { UserProfileDB } from "src/worker/api/userProfile";
+import { SongVersionDB } from "src/lib/db/schema";
 import { fetchFavorites, fetchSubmissions } from "~/services/user-service";
 import { authClient } from "src/lib/auth/client";
 import { parseDBDates } from "../services/song-service";
@@ -92,17 +93,29 @@ export function useUserData() {
 }
 
 export async function getUserData(): Promise<UserData> {
-  const { data, error } = await authClient.getSession();
+  // Resolve the session through the query cache so this shares the offline
+  // behavior of sessionQueryOptions: when the network is unavailable we keep the
+  // last known session instead of reporting a logged-in PWA user as logged-out
+  // (which would otherwise bounce them to /login — itself unreachable offline).
+  const data = await queryClient.ensureQueryData(sessionQueryOptions());
 
-  // If there's an error or no user is logged in, return null
-  if (error || !data?.user) {
+  if (!data?.user) {
     return null;
   }
 
-  // Fetch favorites and submissions concurrently
+  const userId = data.user.id;
+
+  // Favorites/submissions may be unreachable offline; fall back to whatever is
+  // already cached rather than failing the route load.
   const [favorites, submissions] = await Promise.all([
-    fetchFavorites(client.api),
-    fetchSubmissions(),
+    queryClient
+      .ensureQueryData(favoritesQueryOptions(userId))
+      .catch(() => queryClient.getQueryData<string[]>(["favorites", userId])),
+    queryClient
+      .ensureQueryData(submissionsQueryOptions(userId))
+      .catch(() =>
+        queryClient.getQueryData<SongVersionDB[]>(["submissions", userId]),
+      ),
   ]);
 
   return {

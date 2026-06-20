@@ -16,7 +16,6 @@ const SIGNUP_URL = "/signup";
 const SUBMISSIONS_URL = "/submissions";
 
 export const Route = createFileRoute("/(auth)")({
-  // TODO: disable when offline
   validateSearch: (search) => redirectSearchSchema.parse(search),
   component: RouteComponent,
   beforeLoad: async ({ context, location, search }) => {
