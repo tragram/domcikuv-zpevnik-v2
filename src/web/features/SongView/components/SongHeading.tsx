@@ -6,14 +6,17 @@ import { SongData } from "~/types/songData";
 import type { LayoutSettings } from "../hooks/viewSettingsStore";
 import { SONG_SOURCES_PRETTY } from "src/lib/db/schema/song.schema";
 import { Link } from "@tanstack/react-router";
+import { Pencil } from "lucide-react";
 import { UserData } from "src/web/hooks/use-user-data";
 import { Badge } from "src/web/components/ui/badge";
+import type { FeedStatus } from "../hooks/useSessionSync";
 
 interface SongHeadingProps {
   songData: SongData;
   layoutSettings: LayoutSettings;
   transposeSteps: number;
   userData?: UserData;
+  feedStatus?: FeedStatus;
 }
 
 // (Helper function formatChords kept the same...)
@@ -29,7 +32,14 @@ const SongHeading: React.FC<SongHeadingProps> = ({
   layoutSettings,
   transposeSteps,
   userData,
+  feedStatus,
 }) => {
+  // When following someone else's session the custom version on screen belongs
+  // to the session host, not the current user, so attribute it to their nickname.
+  const sessionHost =
+    feedStatus?.enabled && !feedStatus.isMaster
+      ? feedStatus.sessionState?.masterNickname
+      : undefined;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isWrapped, setIsWrapped] = useState(false);
 
@@ -85,67 +95,81 @@ const SongHeading: React.FC<SongHeadingProps> = ({
         <h2 className="font-bold text-wrap  dark:text-white select-text">
           {songData.title}
         </h2>
-
-        {/* TODO: should show when viewing a session that it's the user's custom version */}
-        {songData.isCustom && (
-          <p className="text-sm opacity-70 mt-2">Viewing changes that are not yet public</p>
-        )}
       </div>
       <div
         className={cn(
-          "flex gap-4 md:gap-6 items-center",
-          isWrapped ? "w-full justify-around" : "",
+          "flex flex-col gap-2",
+          isWrapped ? "w-full items-center" : "items-end",
         )}
       >
         <div
           className={cn(
-            "flex flex-col  dark:text-white/70 ",
-            isWrapped ? "w-fit mb-4" : "text-right flex-grow",
+            "flex gap-4 md:gap-6 items-center",
+            isWrapped ? "w-full justify-around" : "",
           )}
         >
-          <h2
+          <div
             className={cn(
-              "text-[0.75em] text-nowrap",
-              songData.capo === undefined ? "opacity-0" : "opacity-100",
+              "flex flex-col dark:text-white/70",
+              isWrapped ? "w-fit" : "text-right",
             )}
           >
-            Capo:{" "}
-            {songData.capo !== undefined
-              ? (songData.capo - transposeSteps + 12) % 12
-              : "undefined"}
-          </h2>
-          {songData.externalSource ? ( // external songs won't have range --> safe to replace by import source
-            <Link
-              className="text-[0.55em] dark:text-white/70"
-              to={songData.externalSource.url}
-              target="_blank"
-            >
-              {songData.externalSource &&
-                `Imported from ${SONG_SOURCES_PRETTY[songData.externalSource.sourceId]}`}
-            </Link>
-          ) : (
-            <h3
+            <h2
               className={cn(
-                "text-[0.75em] sub-sup-container",
-                songData.range === undefined ? "opacity-0" : "opacity-100",
+                "text-[0.75em] text-nowrap",
+                songData.capo === undefined ? "opacity-0" : "opacity-100",
               )}
             >
-              {songData.range
-                ? formatChords(songData.range.toString(transposeSteps, true))
+              Capo:{" "}
+              {songData.capo !== undefined
+                ? (songData.capo - transposeSteps + 12) % 12
                 : "undefined"}
-            </h3>
+            </h2>
+            {songData.externalSource ? ( // external songs won't have range --> safe to replace by import source
+              <Link
+                className="text-[0.55em] dark:text-white/70"
+                to={songData.externalSource.url}
+                target="_blank"
+              >
+                {songData.externalSource &&
+                  `Imported from ${SONG_SOURCES_PRETTY[songData.externalSource.sourceId]}`}
+              </Link>
+            ) : (
+              <h3
+                className={cn(
+                  "text-[0.75em] sub-sup-container",
+                  songData.range === undefined ? "opacity-0" : "opacity-100",
+                )}
+              >
+                {songData.range
+                  ? formatChords(songData.range.toString(transposeSteps, true))
+                  : "undefined"}
+              </h3>
+            )}
+          </div>
+          {userData && (
+            <FavoriteButton
+              song={songData}
+              userId={userData.profile.id}
+              iconClassName={cn(
+                "size-[2em] stroke-[1.5]",
+                isWrapped ? "" : "max-w-14",
+              )}
+              className="p-0"
+            />
           )}
         </div>
-        {userData && (
-          <FavoriteButton
-            song={songData}
-            userId={userData.profile.id}
-            iconClassName={cn(
-              "size-[2em] stroke-[1.5]",
-              isWrapped ? "" : "max-w-14",
+        {songData.isCustom && (
+          <Badge
+            variant="outline"
+            className={cn(
+              "gap-1 border-primary/30 bg-primary/5 text-primary",
+              "dark:border-white/25 dark:bg-white/10 dark:text-white/80",
             )}
-            className="p-0"
-          />
+          >
+            <Pencil />
+            {sessionHost ? `${sessionHost}'s draft` : "Your draft"}
+          </Badge>
         )}
       </div>
     </div>

@@ -59,6 +59,9 @@ export type SongDataApi = {
   updateStatus?: "added" | "modified" | "deleted";
   // Hidden from the browse list but still reachable via search / direct link.
   hidden?: boolean;
+  // True when this payload is a not-yet-public (pending) version rather than the
+  // published current one — e.g. a specific version fetched for a shared session.
+  isCustom?: boolean;
 };
 
 export type SongDataAdminApi = SongDataDB &

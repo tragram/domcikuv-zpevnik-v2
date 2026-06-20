@@ -8,6 +8,7 @@ import BackgroundImage from "./BackgroundImage";
 import ResizableAutoTextSize from "./ResizableAutoTextSize";
 import SongHeading from "./SongHeading";
 import { UserData } from "src/web/hooks/use-user-data";
+import { FeedStatus } from "../hooks/useSessionSync";
 
 interface SongContentProps {
   songData: SongData;
@@ -15,6 +16,7 @@ interface SongContentProps {
   gestureContainerRef: React.RefObject<HTMLDivElement | null>;
   userData?: UserData;
   effectiveKey?: Key;
+  feedStatus?: FeedStatus;
 }
 
 export const SongContent = ({
@@ -23,6 +25,7 @@ export const SongContent = ({
   gestureContainerRef,
   userData,
   effectiveKey,
+  feedStatus,
 }: SongContentProps) => {
   const { layout, chords: chordSettings } = useViewSettingsStore();
 
@@ -48,6 +51,7 @@ export const SongContent = ({
           layoutSettings={layout}
           transposeSteps={transposeSteps}
           userData={userData}
+          feedStatus={feedStatus}
         />
 
         <div

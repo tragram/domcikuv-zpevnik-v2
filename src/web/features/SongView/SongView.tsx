@@ -78,6 +78,7 @@ export const SongView = ({
           gestureContainerRef={gestureContainerRef}
           userData={userData}
           effectiveKey={effectiveKey}
+          feedStatus={feedStatus}
         />
       </FullScreen>
       <FeedStatusBar feedStatus={feedStatus} />

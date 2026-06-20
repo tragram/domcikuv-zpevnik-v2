@@ -170,6 +170,7 @@ export const retrieveSingleSong = async (
 
   if (!songRaw) return null;
 
+  let isCustom = false;
   if (versionId && songRaw.currentVersion?.id !== versionId) {
     const specificVersion = await db.query.songVersion.findFirst({
       where: eq(songVersion.id, versionId),
@@ -177,10 +178,16 @@ export const retrieveSingleSong = async (
     });
     if (specificVersion) {
       songRaw.currentVersion = specificVersion;
+      // A pending version served in place of the published current one is a
+      // not-yet-public edit (e.g. the host's draft in a shared session) — flag
+      // it so the UI can badge it as a custom version.
+      isCustom = specificVersion.status === "pending";
     }
   }
 
-  return transformSongToApi(songRaw);
+  const result = transformSongToApi(songRaw);
+  result.isCustom = isCustom;
+  return result;
 };
 
 export const getSongBase = async (
