@@ -1,6 +1,13 @@
 import { useMemo, useRef, useState } from "react";
 import { Button } from "~/components/ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -109,6 +116,97 @@ function SelectCard({
   );
 }
 
+/**
+ * Same StatsBar-card look as `SelectCard`, but backed by a checkbox dropdown
+ * so several options can be selected at once. An empty selection means "all".
+ */
+function MultiSelectCard({
+  label,
+  allLabel,
+  icon: Icon,
+  values,
+  onValuesChange,
+  options,
+  iconClassName,
+}: {
+  label: string;
+  allLabel: string;
+  icon: React.ElementType;
+  values: string[];
+  onValuesChange: (values: string[]) => void;
+  options: SelectOption[];
+  iconClassName?: string;
+}) {
+  const toggle = (value: string) => {
+    onValuesChange(
+      values.includes(value)
+        ? values.filter((v) => v !== value)
+        : [...values, value],
+    );
+  };
+
+  const displayText =
+    values.length === 0
+      ? allLabel
+      : values.length === 1
+        ? (options.find((o) => o.value === values[0])?.label ?? values[0])
+        : `${values.length} selected`;
+
+  const active = values.length > 0;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className={cn(
+            "flex h-auto w-full min-w-35 flex-1 items-center gap-3 rounded-xl border bg-card p-3 text-left shadow-sm transition-all",
+            "hover:border-primary/50 hover:shadow-md",
+            active && "border-primary ring-2 ring-primary/30",
+          )}
+        >
+          <div className="flex min-w-0 flex-1 items-center gap-3">
+            <div
+              className={cn(
+                "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted",
+                iconClassName,
+              )}
+            >
+              <Icon className="h-4 w-4" />
+            </div>
+            <div className="flex min-w-0 flex-col">
+              <span className="truncate text-sm font-bold leading-tight">
+                {displayText}
+              </span>
+              <span className="text-xs text-muted-foreground">{label}</span>
+            </div>
+          </div>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="start">
+        <DropdownMenuCheckboxItem
+          onSelect={(e) => e.preventDefault()}
+          checked={values.length === 0}
+          onClick={() => onValuesChange([])}
+        >
+          {allLabel}
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuSeparator />
+        {options.map((o) => (
+          <DropdownMenuCheckboxItem
+            key={o.value}
+            onSelect={(e) => e.preventDefault()}
+            checked={values.includes(o.value)}
+            onClick={() => toggle(o.value)}
+          >
+            {o.label}
+          </DropdownMenuCheckboxItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 const SORT_OPTIONS: SelectOption[] = [
   { value: "lastModified-desc", label: "Newest Illustration" },
   { value: "lastModified-asc", label: "Oldest Illustration" },
@@ -129,9 +227,11 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       { defaultValue: true },
     );
 
-  const [imageModelFilter, setImageModelFilter] = useState<string>("all");
-  const [summaryModelFilter, setSummaryModelFilter] = useState<string>("all");
-  const [promptVersionFilter, setPromptVersionFilter] = useState<string>("all");
+  const [imageModelFilter, setImageModelFilter] = useState<string[]>([]);
+  const [summaryModelFilter, setSummaryModelFilter] = useState<string[]>([]);
+  const [promptVersionFilter, setPromptVersionFilter] = useState<string[]>(
+    [],
+  );
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [sortKey, setSortKey] = useState<SortKey>("lastModified");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
@@ -227,30 +327,35 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       );
     }
 
-    if (imageModelFilter !== "all") {
+    if (imageModelFilter.length > 0) {
       groups = groups.filter(
         ([, group]) =>
           Array.isArray(group.illustrations) &&
-          group.illustrations.some((i) => i.imageModel === imageModelFilter),
+          group.illustrations.some((i) =>
+            imageModelFilter.includes(i.imageModel),
+          ),
       );
     }
 
-    if (summaryModelFilter !== "all") {
+    if (summaryModelFilter.length > 0) {
       groups = groups.filter(([, group]) => {
         if (!Array.isArray(group.illustrations)) return false;
         return group.illustrations.some((i) => {
           const prompt = promptsById.get(i.promptId);
-          return prompt && prompt.summaryModel === summaryModelFilter;
+          return !!prompt && summaryModelFilter.includes(prompt.summaryModel);
         });
       });
     }
 
-    if (promptVersionFilter !== "all") {
+    if (promptVersionFilter.length > 0) {
       groups = groups.filter(([, group]) => {
         if (!Array.isArray(group.illustrations)) return false;
         return group.illustrations.some((i) => {
           const prompt = promptsById.get(i.promptId);
-          return prompt && prompt.summaryPromptVersion === promptVersionFilter;
+          return (
+            !!prompt &&
+            promptVersionFilter.includes(prompt.summaryPromptVersion)
+          );
         });
       });
     }
@@ -556,44 +661,38 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
               <Filter className="w-3 h-3 mr-2" /> Filter & sort
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
-              <SelectCard
-                label="Image model"
-                icon={ImageIcon}
-                value={imageModelFilter}
-                onValueChange={withPageReset(setImageModelFilter)}
-                options={[
-                  { value: "all", label: "All Images" },
-                  ...filterOptions.imageModels.map((m) => ({
-                    value: m,
-                    label: m,
-                  })),
-                ]}
-              />
-              <SelectCard
-                label="Summary model"
-                icon={FileText}
-                value={summaryModelFilter}
-                onValueChange={withPageReset(setSummaryModelFilter)}
-                options={[
-                  { value: "all", label: "All Summaries" },
-                  ...filterOptions.summaryModels.map((m) => ({
-                    value: m,
-                    label: m,
-                  })),
-                ]}
-              />
-              <SelectCard
+              <MultiSelectCard
                 label="Prompt version"
+                allLabel="All Prompts"
                 icon={Hash}
-                value={promptVersionFilter}
-                onValueChange={withPageReset(setPromptVersionFilter)}
-                options={[
-                  { value: "all", label: "All Prompts" },
-                  ...filterOptions.promptVersions.map((v) => ({
-                    value: v,
-                    label: v,
-                  })),
-                ]}
+                values={promptVersionFilter}
+                onValuesChange={withPageReset(setPromptVersionFilter)}
+                options={filterOptions.promptVersions.map((v) => ({
+                  value: v,
+                  label: v,
+                }))}
+              />
+              <MultiSelectCard
+                label="Summary model"
+                allLabel="All Summaries"
+                icon={FileText}
+                values={summaryModelFilter}
+                onValuesChange={withPageReset(setSummaryModelFilter)}
+                options={filterOptions.summaryModels.map((m) => ({
+                  value: m,
+                  label: m,
+                }))}
+              />
+              <MultiSelectCard
+                label="Image model"
+                allLabel="All Images"
+                icon={ImageIcon}
+                values={imageModelFilter}
+                onValuesChange={withPageReset(setImageModelFilter)}
+                options={filterOptions.imageModels.map((m) => ({
+                  value: m,
+                  label: m,
+                }))}
               />
               <SelectCard
                 label="Sort by"
