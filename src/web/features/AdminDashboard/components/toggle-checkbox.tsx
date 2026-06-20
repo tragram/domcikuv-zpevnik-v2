@@ -33,7 +33,7 @@ export function ToggleCheckbox({
     <Label
       title={title}
       className={cn(
-        "flex items-center space-x-2 group",
+        "flex items-center lg:space-x-2 group",
         disabled
           ? "cursor-not-allowed opacity-50"
           : "cursor-pointer",

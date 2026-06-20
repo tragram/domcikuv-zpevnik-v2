@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button } from "~/components/ui/button";
 import {
   Select,
@@ -17,15 +17,19 @@ import { SongIllustrationDB } from "src/lib/db/schema";
 import useLocalStorageState from "use-local-storage-state";
 import {
   Filter,
-  Eye,
   Layers,
   AlertCircle,
   Globe,
   Library,
   Image as ImageIcon,
+  ArrowDownUp,
+  FileText,
+  Hash,
+  Trash2,
 } from "lucide-react";
 import { SongWithIllustrationsAndPrompts } from "~/services/illustration-service";
 import { AdminApi } from "src/worker/api-client";
+import { cn } from "~/lib/utils";
 
 interface IllustrationsTableProps {
   adminApi: AdminApi;
@@ -34,52 +38,96 @@ interface IllustrationsTableProps {
 type SortKey = "title" | "lastModified" | "songDate" | "illustrationCount";
 type SortDirection = "asc" | "desc";
 
-type IllustrationStat =
-  | "songs"
-  | "illustrated"
-  | "unillustrated"
-  | "assets"
-  | "external";
+/** Illustration-coverage filter (single-select); "all" is the reset. */
+type CoverageFilter = "all" | "illustrated" | "unillustrated" | "assets";
+/** Independent visibility focus, isolated via its own cards. */
+type ShowOnly = "external" | "deleted";
 
 const PAGE_SIZE = 20;
 
-// Stat counts are computed over "visible" songs (not deleted, not hidden), so
-// the click-to-filter predicates stay within that set to match the numbers.
+// "Visible" = not deleted and not hidden. External songs are visible but are
+// hidden from the default working view (they rarely need illustrations); the
+// External card reveals them, so coverage counts ignore them by default too.
 const isVisibleSong = (g: SongWithIllustrationsAndPrompts) =>
   !g.song.deleted && !g.song.hidden;
 
-/** Predicate for each clickable stat card, isolating exactly the counted groups. */
-const ILLUSTRATION_STAT_PREDICATES: Record<
-  IllustrationStat,
-  (g: SongWithIllustrationsAndPrompts) => boolean
-> = {
-  songs: isVisibleSong,
-  illustrated: (g) => isVisibleSong(g) && !!g.song.currentIllustrationId,
-  unillustrated: (g) => isVisibleSong(g) && !g.song.currentIllustrationId,
-  assets: (g) => isVisibleSong(g) && g.illustrations.some((i) => !i.deleted),
-  external: (g) => isVisibleSong(g) && !!g.song.externalSource,
-};
+type SelectOption = { value: string; label: string };
+
+/**
+ * A dropdown styled as a StatsBar card: the trigger looks like the filter cards
+ * (icon badge + current value + label) and opens the option list on click.
+ */
+function SelectCard({
+  label,
+  icon: Icon,
+  value,
+  onValueChange,
+  options,
+  iconClassName,
+}: {
+  label: string;
+  icon: React.ElementType;
+  value: string;
+  onValueChange: (value: string) => void;
+  options: SelectOption[];
+  iconClassName?: string;
+}) {
+  return (
+    <Select value={value} onValueChange={onValueChange}>
+      <SelectTrigger
+        className={cn(
+          "h-auto! w-full min-w-35 flex-1 items-center gap-3 rounded-xl border bg-card p-3 text-left shadow-sm transition-all",
+          "hover:border-primary/50 hover:shadow-md",
+          "data-[state=open]:border-primary data-[state=open]:ring-2 data-[state=open]:ring-primary/30",
+        )}
+      >
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <div
+            className={cn(
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted",
+              iconClassName,
+            )}
+          >
+            <Icon className="h-4 w-4" />
+          </div>
+          <div className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-bold leading-tight">
+              <SelectValue />
+            </span>
+            <span className="text-xs text-muted-foreground">{label}</span>
+          </div>
+        </div>
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((o) => (
+          <SelectItem key={o.value} value={o.value}>
+            {o.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+
+const SORT_OPTIONS: SelectOption[] = [
+  { value: "lastModified-desc", label: "Newest Illustration" },
+  { value: "lastModified-asc", label: "Oldest Illustration" },
+  { value: "songDate-desc", label: "Newest Song" },
+  { value: "songDate-asc", label: "Oldest Song" },
+  { value: "title-asc", label: "Title (A-Z)" },
+  { value: "title-desc", label: "Title (Z-A)" },
+  { value: "illustrationCount-desc", label: "Most Images" },
+  { value: "illustrationCount-asc", label: "Fewest Images" },
+];
 
 export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [showDeleted, setShowDeleted] = useLocalStorageState<boolean>(
-    "admin/illustration-table/show-deleted-illustrations",
-    { defaultValue: false },
-  );
   const [prioritizeUnillustrated, setPrioritizeUnillustrated] =
     useLocalStorageState<boolean>(
       "admin/illustration-table/prioritize-unillustrated",
       { defaultValue: true },
     );
-  const [showDeletedSongs, setShowDeletedSongs] = useLocalStorageState<boolean>(
-    "admin/illustration-table/show-deleted-songs",
-    { defaultValue: false },
-  );
-  const [showExternal, setShowExternal] = useLocalStorageState<boolean>(
-    "admin/illustration-table/show-external",
-    { defaultValue: false },
-  );
 
   const [imageModelFilter, setImageModelFilter] = useState<string>("all");
   const [summaryModelFilter, setSummaryModelFilter] = useState<string>("all");
@@ -87,7 +135,25 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
   const [sortKey, setSortKey] = useState<SortKey>("lastModified");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
-  const [activeStat, setActiveStat] = useState<IllustrationStat | null>(null);
+  const [coverageFilter, setCoverageFilter] = useState<CoverageFilter>("all");
+  // Visibility cards are show/hide toggles (single click) that also support
+  // "show only" via double click (`isolate`). External and deleted are hidden
+  // by default; hidden songs are always excluded (no card reveals them).
+  const [showExternal, setShowExternal] = useLocalStorageState<boolean>(
+    "admin/illustration-table/show-external",
+    { defaultValue: false },
+  );
+  const [showDeleted, setShowDeleted] = useLocalStorageState<boolean>(
+    "admin/illustration-table/show-deleted-songs",
+    { defaultValue: false },
+  );
+  const [isolate, setIsolate] = useState<ShowOnly | null>(null);
+  // Distinguishes a single click (toggle) from a double click (show only).
+  const pendingClickRef = useRef<{
+    attr: ShowOnly;
+    timer: ReturnType<typeof setTimeout>;
+    run: () => void;
+  } | null>(null);
 
   const { groupedData, promptsById, filterOptions, isLoading, isError, error } =
     useIllustrationsTableData(adminApi);
@@ -96,18 +162,25 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     const groups = Object.values(
       groupedData,
     ) as SongWithIllustrationsAndPrompts[];
-    const visible = groups.filter((g) => !g.song.deleted && !g.song.hidden);
+    const visible = groups.filter(isVisibleSong);
+    // Coverage counts follow the external toggle so the cards match the list;
+    // the visibility cards themselves show full category totals.
+    const inScope = visible.filter(
+      (g) => showExternal || !g.song.externalSource,
+    );
     return {
-      songs: visible.length,
-      illustrated: visible.filter((g) => g.song.currentIllustrationId).length,
-      unillustrated: visible.filter((g) => !g.song.currentIllustrationId).length,
+      songs: inScope.length,
+      illustrated: inScope.filter((g) => g.song.currentIllustrationId).length,
+      unillustrated: inScope.filter((g) => !g.song.currentIllustrationId)
+        .length,
       assets: groups.reduce(
         (acc, g) => acc + g.illustrations.filter((i) => !i.deleted).length,
         0,
       ),
       external: visible.filter((g) => g.song.externalSource).length,
+      deleted: groups.filter((g) => g.song.deleted).length,
     };
-  }, [groupedData]);
+  }, [groupedData, showExternal]);
 
   const filteredAndSortedGroups = useMemo(() => {
     let groups = Object.entries(groupedData) as [
@@ -126,20 +199,32 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       });
     }
 
-    if (activeStat) {
-      // A clicked stat card isolates exactly its groups, overriding the toggles.
-      const predicate = ILLUSTRATION_STAT_PREDICATES[activeStat];
-      groups = groups.filter(([, group]) => predicate(group));
+    // Double-click "show only" isolates a category; otherwise the visibility
+    // toggles compose. Hidden songs are always excluded (no card reveals them).
+    if (isolate === "deleted") {
+      groups = groups.filter(([, group]) => group.song.deleted);
+    } else if (isolate === "external") {
+      groups = groups.filter(
+        ([, group]) => isVisibleSong(group) && !!group.song.externalSource,
+      );
     } else {
-      if (!showDeletedSongs) {
-        groups = groups.filter(
-          ([, group]) => !group.song.deleted && !group.song.hidden,
-        );
-      }
+      groups = groups.filter(([, group]) => {
+        if (group.song.hidden) return false;
+        if (!showDeleted && group.song.deleted) return false;
+        if (!showExternal && group.song.externalSource) return false;
+        return true;
+      });
+    }
 
-      if (!showExternal) {
-        groups = groups.filter(([, group]) => !group.song.externalSource);
-      }
+    // Coverage filter (single-select).
+    if (coverageFilter === "illustrated") {
+      groups = groups.filter(([, group]) => group.song.currentIllustrationId);
+    } else if (coverageFilter === "unillustrated") {
+      groups = groups.filter(([, group]) => !group.song.currentIllustrationId);
+    } else if (coverageFilter === "assets") {
+      groups = groups.filter(([, group]) =>
+        group.illustrations.some((i) => !i.deleted),
+      );
     }
 
     if (imageModelFilter !== "all") {
@@ -184,7 +269,9 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             new Date(0),
           );
         case "songDate":
-          return group.song.createdAt ? new Date(group.song.createdAt) : new Date(0);
+          return group.song.createdAt
+            ? new Date(group.song.createdAt)
+            : new Date(0);
         case "illustrationCount":
           return group.illustrations.length;
         default:
@@ -216,8 +303,10 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   }, [
     groupedData,
     searchTerm,
-    showDeletedSongs,
+    isolate,
     showExternal,
+    showDeleted,
+    coverageFilter,
     imageModelFilter,
     summaryModelFilter,
     promptVersionFilter,
@@ -225,7 +314,6 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     prioritizeUnillustrated,
     sortKey,
     sortDirection,
-    activeStat,
   ]);
 
   if (isLoading) {
@@ -307,26 +395,59 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       setCurrentPage(0);
     };
 
-  // The deleted/external toggles are overridden by a clicked stat card, so
-  // clear the active stat when they change to hand control back to the toggles.
-  const withFilterReset =
-    <T,>(setter: (val: T) => void) =>
-    (val: T) => {
-      setter(val);
-      setActiveStat(null);
-      setCurrentPage(0);
-    };
-
-  // Clicking an active stat card clears the filter; clicking another switches.
-  const toggleStat = (stat: IllustrationStat) => {
-    setActiveStat((cur) => (cur === stat ? null : stat));
+  // Coverage is single-select ("Songs" is the reset).
+  const selectCoverage = (coverage: CoverageFilter) => {
+    setCoverageFilter(coverage);
     setCurrentPage(0);
   };
 
-  // A clicked stat card filters to visible songs only and overrides these two
-  // toggles, so lock them and show the effective state the stat implies.
-  const filtersLocked = activeStat !== null;
-  const lockedTitle = "Cleared by the active stat card filter above";
+  const showByAttr: Record<ShowOnly, boolean> = {
+    external: showExternal,
+    deleted: showDeleted,
+  };
+  const setShowByAttr: Record<ShowOnly, (v: boolean) => void> = {
+    external: setShowExternal,
+    deleted: setShowDeleted,
+  };
+
+  // Single click toggles show/hide; double click isolates ("show only"). A
+  // short timer tells the two apart; a second click on the SAME card isolates.
+  const onAttrClick = (attr: ShowOnly) => {
+    const pending = pendingClickRef.current;
+    if (pending && pending.attr === attr) {
+      clearTimeout(pending.timer);
+      pendingClickRef.current = null;
+      setIsolate((cur) => (cur === attr ? null : attr));
+      setCurrentPage(0);
+      return;
+    }
+    if (pending) {
+      clearTimeout(pending.timer);
+      pending.run();
+    }
+    const wasShown = showByAttr[attr];
+    const run = () => {
+      pendingClickRef.current = null;
+      setIsolate(null);
+      setShowByAttr[attr](!wasShown);
+      setCurrentPage(0);
+    };
+    pendingClickRef.current = { attr, run, timer: setTimeout(run, 220) };
+  };
+
+  // Highlight shown/isolated cards; dim hidden ones. In "show only" mode only
+  // the isolated card is active (badged), the rest are dimmed.
+  const attrCardState = (attr: ShowOnly) => {
+    if (isolate) {
+      return attr === isolate
+        ? { active: true, badge: "only" }
+        : { dimmed: true };
+    }
+    return showByAttr[attr] ? { active: true } : { dimmed: true };
+  };
+
+  // Focusing on / showing deleted songs reveals their deleted assets too.
+  const showDeletedAssets = showDeleted || isolate === "deleted";
 
   return (
     <div className="space-y-6 w-full pb-8">
@@ -359,172 +480,141 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
         </div>
       </div>
 
-      <StatsBar
-        items={[
-          {
-            label: "Songs",
-            value: stats.songs,
-            icon: Library,
-            onClick: () => toggleStat("songs"),
-            active: activeStat === "songs",
-          },
-          {
-            label: "Illustrated",
-            value: stats.illustrated,
-            icon: ImageIcon,
-            className: "text-emerald-600",
-            onClick: () => toggleStat("illustrated"),
-            active: activeStat === "illustrated",
-          },
-          {
-            label: "Unillustrated",
-            value: stats.unillustrated,
-            icon: AlertCircle,
-            className: "text-red-600",
-            onClick: () => toggleStat("unillustrated"),
-            active: activeStat === "unillustrated",
-          },
-          {
-            label: "Assets",
-            value: stats.assets,
-            icon: Layers,
-            className: "text-blue-600",
-            onClick: () => toggleStat("assets"),
-            active: activeStat === "assets",
-          },
-          {
-            label: "External",
-            value: stats.external,
-            icon: Globe,
-            className: "text-violet-600",
-            onClick: () => toggleStat("external"),
-            active: activeStat === "external",
-          },
-        ]}
-      />
-
-      {/* Structured Control Panel */}
       <ControlPanel
         searchTerm={searchTerm}
         onSearchChange={withPageReset(setSearchTerm)}
+        searchPosition="bottom"
+        header={
+          <StatsBar
+            groups={[
+              {
+                label: "Coverage",
+                hint: "choose one",
+                items: [
+                  {
+                    label: "Songs",
+                    value: stats.songs,
+                    icon: Library,
+                    onClick: () => selectCoverage("all"),
+                    active: coverageFilter === "all",
+                  },
+                  {
+                    label: "Illustrated",
+                    value: stats.illustrated,
+                    icon: ImageIcon,
+                    className: "text-emerald-600",
+                    onClick: () => selectCoverage("illustrated"),
+                    active: coverageFilter === "illustrated",
+                  },
+                  {
+                    label: "Unillustrated",
+                    value: stats.unillustrated,
+                    icon: AlertCircle,
+                    className: "text-red-600",
+                    onClick: () => selectCoverage("unillustrated"),
+                    active: coverageFilter === "unillustrated",
+                  },
+                  {
+                    label: "Assets",
+                    value: stats.assets,
+                    icon: Layers,
+                    className: "text-blue-600",
+                    onClick: () => selectCoverage("assets"),
+                    active: coverageFilter === "assets",
+                  },
+                ],
+              },
+              {
+                label: "Visibility",
+                hint: "click show/hide · double-click = only",
+                items: [
+                  {
+                    label: "External",
+                    value: stats.external,
+                    icon: Globe,
+                    className: "text-violet-600",
+                    onClick: () => onAttrClick("external"),
+                    ...attrCardState("external"),
+                  },
+                  {
+                    label: "Deleted",
+                    value: stats.deleted,
+                    icon: Trash2,
+                    className: "text-red-600",
+                    onClick: () => onAttrClick("deleted"),
+                    ...attrCardState("deleted"),
+                  },
+                ],
+              },
+            ]}
+          />
+        }
       >
-        <div className="p-4 grid grid-cols-1 xl:grid-cols-12 gap-6">
-          {/* Toggles Panel */}
-          <div className="xl:col-span-5 space-y-3">
+        <div className="p-4 space-y-4">
+          <div className="space-y-2">
             <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center">
-              <Eye className="w-3 h-3 mr-2" /> View Options
+              <Filter className="w-3 h-3 mr-2" /> Filter & sort
             </h4>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-3 bg-muted/40 px-4 py-2.5 rounded-lg border border-border/50 min-h-[40px]">
-              <ToggleCheckbox
-                checked={prioritizeUnillustrated}
-                onCheckedChange={setPrioritizeUnillustrated}
-                label="Unillustrated first"
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+              <SelectCard
+                label="Image model"
+                icon={ImageIcon}
+                value={imageModelFilter}
+                onValueChange={withPageReset(setImageModelFilter)}
+                options={[
+                  { value: "all", label: "All Images" },
+                  ...filterOptions.imageModels.map((m) => ({
+                    value: m,
+                    label: m,
+                  })),
+                ]}
               />
-              <ToggleCheckbox
-                checked={filtersLocked ? false : showDeletedSongs}
-                onCheckedChange={withFilterReset(setShowDeletedSongs)}
-                label="Deleted songs"
-                disabled={filtersLocked}
-                title={filtersLocked ? lockedTitle : undefined}
+              <SelectCard
+                label="Summary model"
+                icon={FileText}
+                value={summaryModelFilter}
+                onValueChange={withPageReset(setSummaryModelFilter)}
+                options={[
+                  { value: "all", label: "All Summaries" },
+                  ...filterOptions.summaryModels.map((m) => ({
+                    value: m,
+                    label: m,
+                  })),
+                ]}
               />
-              <ToggleCheckbox
-                checked={showDeleted}
-                onCheckedChange={setShowDeleted}
-                label="Deleted images"
+              <SelectCard
+                label="Prompt version"
+                icon={Hash}
+                value={promptVersionFilter}
+                onValueChange={withPageReset(setPromptVersionFilter)}
+                options={[
+                  { value: "all", label: "All Prompts" },
+                  ...filterOptions.promptVersions.map((v) => ({
+                    value: v,
+                    label: v,
+                  })),
+                ]}
               />
-              <ToggleCheckbox
-                checked={filtersLocked ? true : showExternal}
-                onCheckedChange={withFilterReset(setShowExternal)}
-                label="External songs"
-                icon={Globe}
-                iconClassName="text-violet-500"
-                disabled={filtersLocked}
-                title={filtersLocked ? lockedTitle : undefined}
+              <SelectCard
+                label="Sort by"
+                icon={ArrowDownUp}
+                iconClassName="text-primary"
+                value={`${sortKey}-${sortDirection}`}
+                onValueChange={handleSortChange}
+                options={SORT_OPTIONS}
               />
             </div>
           </div>
 
-          {/* Filters Panel */}
-          <div className="xl:col-span-7 space-y-3">
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider flex items-center">
-              <Filter className="w-3 h-3 mr-2" /> Filter & Sort
-            </h4>
-            <div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
-              <Select
-                value={imageModelFilter}
-                onValueChange={withPageReset(setImageModelFilter)}
-              >
-                <SelectTrigger className="bg-background h-10">
-                  <SelectValue placeholder="Image Model" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Images</SelectItem>
-                  {filterOptions.imageModels.map((m) => (
-                    <SelectItem key={m} value={m}>
-                      {m}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select
-                value={summaryModelFilter}
-                onValueChange={withPageReset(setSummaryModelFilter)}
-              >
-                <SelectTrigger className="bg-background h-10">
-                  <SelectValue placeholder="Summary Model" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Summaries</SelectItem>
-                  {filterOptions.summaryModels.map((m) => (
-                    <SelectItem key={m} value={m}>
-                      {m}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select
-                value={promptVersionFilter}
-                onValueChange={withPageReset(setPromptVersionFilter)}
-              >
-                <SelectTrigger className="bg-background h-10">
-                  <SelectValue placeholder="Prompt Ver." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Prompts</SelectItem>
-                  {filterOptions.promptVersions.map((v) => (
-                    <SelectItem key={v} value={v}>
-                      {v}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select
-                value={`${sortKey}-${sortDirection}`}
-                onValueChange={handleSortChange}
-              >
-                <SelectTrigger className="bg-background h-10 font-medium border-primary/20">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="lastModified-desc">
-                    Newest Illustration
-                  </SelectItem>
-                  <SelectItem value="lastModified-asc">
-                    Oldest Illustration
-                  </SelectItem>
-                  <SelectItem value="songDate-desc">Newest Song</SelectItem>
-                  <SelectItem value="songDate-asc">Oldest Song</SelectItem>
-                  <SelectItem value="title-asc">Title (A-Z)</SelectItem>
-                  <SelectItem value="title-desc">Title (Z-A)</SelectItem>
-                  <SelectItem value="illustrationCount-desc">
-                    Most Images
-                  </SelectItem>
-                  <SelectItem value="illustrationCount-asc">
-                    Fewest Images
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 bg-muted/40 px-4 py-2.5 rounded-lg border border-border/50">
+            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              Options
+            </span>
+            <ToggleCheckbox
+              checked={prioritizeUnillustrated}
+              onCheckedChange={setPrioritizeUnillustrated}
+              label="Unillustrated first"
+            />
           </div>
         </div>
       </ControlPanel>
@@ -538,7 +628,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
               prompts={song.prompts}
               isExpanded={expandedGroups.has(songId)}
               onToggleExpanded={() => toggleGroup(songId)}
-              showDeleted={showDeleted}
+              showDeleted={showDeletedAssets}
             />
           </div>
         ))}
