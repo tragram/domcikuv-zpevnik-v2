@@ -135,6 +135,7 @@
     "deploy:all": "npm run deploy && npm run deploy:backup",
     "dev": "vite",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "preview": "pnpm run build && vite preview",
     "types": "wrangler types",
     "db:create": "wrangler d1 create zpevnik",
