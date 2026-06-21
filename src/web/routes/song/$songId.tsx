@@ -1,5 +1,4 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { useUserData } from "src/web/hooks/use-user-data";
 import { z } from "zod";
 import PendingComponent from "~/components/PendingComponent";
@@ -10,12 +9,17 @@ import songLoader, { SongLoaderErrorComponent } from "~/services/song-loader";
 
 const songSearchSchema = z.object({
   version: z.string().optional(),
+  // Owner userId when opened from someone else's songbook.
+  songbook: z.string().optional(),
 });
 
 export const Route = createFileRoute("/song/$songId")({
   validateSearch: songSearchSchema,
   component: RouteComponent,
-  loaderDeps: ({ search }) => ({ version: search.version }),
+  loaderDeps: ({ search }) => ({
+    version: search.version,
+    songbook: search.songbook,
+  }),
   loader: songLoader,
   pendingMs: 200,
   pendingMinMs: 1000, // keep visible for at least 1s
@@ -29,12 +33,15 @@ export const Route = createFileRoute("/song/$songId")({
 });
 
 function RouteComponent() {
-  const { songData, versionId } = Route.useLoaderData();
+  const {
+    songData,
+    versionId,
+    personalizationOverride,
+    songbookOwnerName,
+    versionUnavailable,
+  } = Route.useLoaderData();
   const { userData } = useUserData();
   const shareSession = useViewSettingsStore((state) => state.shareSession);
-  const transposeSteps = useViewSettingsStore(
-    (state) => state.transpositions[songData.id] || 0,
-  );
 
   // Sessions are addressed by nickname only; without one the user cannot share.
   const masterNickname = userData?.profile.nickname ?? undefined;
@@ -55,23 +62,21 @@ function RouteComponent() {
       : undefined,
   });
 
-  useEffect(() => {
-    if (shouldShare && updateSong && songData.id) {
-      updateSong(songData.id, transposeSteps, songData.versionId);
-    }
-  }, [
-    songData.id,
-    shouldShare,
-    updateSong,
-    transposeSteps,
-    songData.versionId,
-  ]);
-
   return (
     <SongView
       songData={songData}
       userData={userData}
       feedStatus={versionId ? undefined : feedStatus}
+      songbook={
+        personalizationOverride
+          ? {
+              override: personalizationOverride,
+              ownerName: songbookOwnerName,
+              versionUnavailable,
+            }
+          : undefined
+      }
+      broadcast={{ shouldShare, updateSong }}
     />
   );
 }

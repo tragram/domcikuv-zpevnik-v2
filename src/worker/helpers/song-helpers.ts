@@ -190,6 +190,68 @@ export const retrieveSingleSong = async (
   return result;
 };
 
+/**
+ * Bulk-resolves a set of songbook entries to displayable songs: each entry shows
+ * its pinned version when set (incl. pending songs that have no published
+ * `currentVersion` yet), otherwise the song's current version. Done in a couple
+ * of batched queries (not one `retrieveSingleSong` per entry) so a large
+ * songbook stays within the Worker's subrequest budget. Returns a map keyed by
+ * songId; songs that can't be shown (deleted, or no version at all) are omitted.
+ */
+export const resolveSongbookSongs = async (
+  db: AppDatabase,
+  entries: { songId: string; pinnedVersionId: string | null }[],
+  // When set, skip entries whose pinned version is just the song's current one —
+  // the viewer already has those from the global list, so don't ship them again.
+  opts: { onlyNonCanonical?: boolean } = {},
+): Promise<Map<string, SongDataApi>> => {
+  const result = new Map<string, SongDataApi>();
+  const songIds = [...new Set(entries.map((e) => e.songId))];
+  if (songIds.length === 0) return result;
+
+  const songs = await db.query.song.findMany({
+    where: and(inArray(song.id, songIds), eq(song.deleted, false)),
+    with: {
+      currentVersion: { with: { songImport: true } },
+      currentIllustration: true,
+    },
+  });
+  const songById = new Map(songs.map((s) => [s.id, s]));
+
+  // Pinned versions that differ from (or stand in for a missing) current version.
+  const pinnedIds = [
+    ...new Set(
+      entries
+        .filter((e) => e.pinnedVersionId)
+        .map((e) => e.pinnedVersionId as string),
+    ),
+  ];
+  const versions = pinnedIds.length
+    ? await db.query.songVersion.findMany({
+        where: inArray(songVersion.id, pinnedIds),
+        with: { songImport: true },
+      })
+    : [];
+  const versionById = new Map(versions.map((v) => [v.id, v]));
+
+  for (const entry of entries) {
+    const songRaw = songById.get(entry.songId);
+    if (!songRaw) continue; // deleted / missing
+    const pinned =
+      entry.pinnedVersionId &&
+      entry.pinnedVersionId !== songRaw.currentVersion?.id
+        ? versionById.get(entry.pinnedVersionId)
+        : undefined;
+    if (opts.onlyNonCanonical && !pinned) continue; // canonical → already in list
+    if (pinned) songRaw.currentVersion = pinned;
+    if (!songRaw.currentVersion) continue; // nothing publishable to show
+    const api = transformSongToApi(songRaw);
+    api.isCustom = songRaw.currentVersion.status === "pending";
+    result.set(entry.songId, api);
+  }
+  return result;
+};
+
 export const getSongBase = async (
   db: AppDatabase,
   songId: string,

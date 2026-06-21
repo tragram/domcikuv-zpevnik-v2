@@ -28,8 +28,6 @@ const Preview: React.FC<PreviewProps> = ({ editorState }) => {
 
   const { layout, chords } = useViewSettingsStore();
 
-  const transposeSteps = 0;
-
   return (
     <div className="relative h-full">
       <div
@@ -40,11 +38,7 @@ const Preview: React.FC<PreviewProps> = ({ editorState }) => {
           editorState.chordpro.length === 0 ? "editor-content-empty" : "",
         )}
       >
-        <SongHeading
-          songData={songData}
-          layoutSettings={layout}
-          transposeSteps={transposeSteps}
-        />
+        <SongHeading songData={songData} layoutSettings={layout} />
         <div
           id="song-content-wrapper"
           dangerouslySetInnerHTML={{ __html: renderedContent }}

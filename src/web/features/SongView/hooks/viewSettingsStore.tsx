@@ -84,6 +84,8 @@ interface SettingsState {
   chords: ChordSettings;
   shareSession: boolean;
   transpositions: Record<string, number>;
+  // Per-song absolute capo fret (local, ephemeral until saved to the songbook).
+  capos: Record<string, number>;
   actions: {
     setLayoutSettings: (settings: Partial<LayoutSettings>) => void;
     setCustomLayoutPreset: (settings: Partial<PresetSettings>) => void;
@@ -92,6 +94,7 @@ interface SettingsState {
     getCurrentPreset: () => LayoutPreset;
     setShareSession: (value: boolean) => void;
     setTranspose: (songId: string, steps: number) => void;
+    setCapo: (songId: string, capo: number) => void;
   };
 }
 
@@ -123,6 +126,7 @@ export const useViewSettingsStore = create<SettingsState>()(
       },
       shareSession: false,
       transpositions: {},
+      capos: {},
       actions: {
         setLayoutSettings: (settings) =>
           set((state) => {
@@ -181,6 +185,13 @@ export const useViewSettingsStore = create<SettingsState>()(
               [songId]: steps,
             },
           })),
+        setCapo: (songId: string, capo: number) =>
+          set((state) => ({
+            capos: {
+              ...state.capos,
+              [songId]: capo,
+            },
+          })),
       },
     }),
     {
@@ -191,6 +202,7 @@ export const useViewSettingsStore = create<SettingsState>()(
         chords: state.chords,
         shareSession: state.shareSession,
         transpositions: state.transpositions,
+        capos: state.capos,
       }),
     },
   ),

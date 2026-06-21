@@ -30,7 +30,10 @@ function SongList({
     { defaultValue: 0, storageSync: false },
   );
 
-  const { songs, bestLocalScore } = useDisplayedSongs(songDB, userData);
+  const { songs, bestLocalScore, foreignSongbookOwner } = useDisplayedSongs(
+    songDB,
+    userData,
+  );
   const {
     externalSongs,
     isLoadingExternal,
@@ -102,6 +105,7 @@ function SongList({
             song={songs[item.index]}
             maxRange={songDB.maxRange}
             userData={userData}
+            songbookOwner={foreignSongbookOwner}
           />
         </div>
       ))}

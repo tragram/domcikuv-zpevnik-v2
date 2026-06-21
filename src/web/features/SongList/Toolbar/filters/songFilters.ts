@@ -62,25 +62,19 @@ export const filterVocalRange = (
 };
 
 /**
- * Keeps songs that belong to any of the selected songbooks. Selection is by
- * songbook owner id, resolved against the live `availableSongbooks` here (rather
- * than stored as full objects), so stale selections are simply ignored.
+ * Keeps songs that belong to the selected songbook. Selection is by songbook
+ * owner id, resolved against the live `availableSongbooks` here (rather than
+ * stored as a full object), so a stale selection is simply ignored.
  */
 export const filterSongbook = (
   songs: SongData[],
   availableSongbooks: Songbook[],
-  selectedSongbookIds: string[],
+  selectedSongbookId: string | null,
 ): SongData[] => {
-  if (availableSongbooks.length === 0 || selectedSongbookIds.length === 0) {
-    return songs;
-  }
-  const selected = new Set(selectedSongbookIds);
-  const songIds = new Set<string>();
-  for (const songbook of availableSongbooks) {
-    if (selected.has(songbook.user)) {
-      for (const id of songbook.songIds) songIds.add(id);
-    }
-  }
+  if (!selectedSongbookId) return songs;
+  const songbook = availableSongbooks.find((s) => s.user === selectedSongbookId);
+  if (!songbook) return songs;
+  const songIds = songbook.songIds;
   return songs.filter((song) => songIds.has(song.id));
 };
 
@@ -106,7 +100,9 @@ export const filterHidden = (songs: SongData[]): SongData[] =>
 
 // --- Composed pipeline ----------------------------------------------------
 
-export type AppliedFilters = FilterSettings & { selectedSongbookIds: string[] };
+export type AppliedFilters = FilterSettings & {
+  selectedSongbookId: string | null;
+};
 
 export interface FilterContext {
   userData: UserData;
@@ -133,7 +129,7 @@ export const applyFilters = (
   }
   result = filterFavorites(result, loggedIn, filters.onlyFavorites);
   result = filterExternal(result, loggedIn, filters.showExternal);
-  result = filterSongbook(result, ctx.availableSongbooks, filters.selectedSongbookIds);
+  result = filterSongbook(result, ctx.availableSongbooks, filters.selectedSongbookId);
   return result;
 };
 

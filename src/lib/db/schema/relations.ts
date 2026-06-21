@@ -75,5 +75,9 @@ export const userFavoriteSongsRelations = relations(
       fields: [userFavoriteSongs.userId],
       references: [user.id],
     }),
+    pinnedVersion: one(songVersion, {
+      fields: [userFavoriteSongs.pinnedVersionId],
+      references: [songVersion.id],
+    }),
   }),
 );

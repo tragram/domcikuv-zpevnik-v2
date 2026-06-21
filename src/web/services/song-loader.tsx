@@ -6,6 +6,8 @@ import {
 import type { routeTree } from "~/routeTree.gen";
 import { SongData } from "~/types/songData";
 import { findOrFetchSong } from "./song-service";
+import { songbookEntriesQueryOptions } from "~/hooks/use-user-data";
+import { SongbookOverride } from "~/features/SongView/hooks/songTransposeMath";
 
 type SongLoaderErrorComponentProps = {
   from: RouteIds<typeof routeTree>;
@@ -31,6 +33,8 @@ export const SongLoaderErrorComponent = ({
 };
 type SongLoaderDeps = {
   version?: string;
+  // Owner userId when the song is opened from someone else's songbook.
+  songbook?: string;
 };
 
 // Define the loader params type
@@ -47,6 +51,12 @@ export type SongLoaderData = {
   songData: SongData;
   songId: string;
   versionId?: string;
+  // The songbook owner's saved key/capo, when browsing their songbook.
+  personalizationOverride?: SongbookOverride;
+  // Display name of that owner (for the read-only note).
+  songbookOwnerName?: string;
+  // The owner's pinned version couldn't be fetched; showing the official one.
+  versionUnavailable?: boolean;
 };
 
 const songLoader = async ({
@@ -61,11 +71,58 @@ const songLoader = async ({
   const queryClient = context.queryClient;
 
   const songDB = await getSongDB(queryClient);
-  
-  let songData = await findOrFetchSong(songDB.songs, params.songId, deps.version, queryClient);
+
+  let personalizationOverride: SongLoaderData["personalizationOverride"];
+  let songbookOwnerName: string | undefined;
+  let songData: SongData | null = null;
+  let pinnedVersionId: string | null = null;
+
+  // When opened inside another user's songbook, adopt that owner's saved
+  // key/capo and (for a pinned draft) their already-resolved song. The query
+  // ships only non-canonical drafts inline; canonical entries resolve from the
+  // global list below. An explicit ?version still wins (handled below).
+  if (deps.songbook && !deps.version) {
+    const entries = await queryClient.ensureQueryData(
+      songbookEntriesQueryOptions(deps.songbook),
+    );
+    const entry = entries.find((e) => e.songId === params.songId);
+    if (entry) {
+      personalizationOverride = { keyIndex: entry.keyIndex, capo: entry.capo };
+      songbookOwnerName = songDB.songbooks.find(
+        (s) => s.user === deps.songbook,
+      )?.name;
+      pinnedVersionId = entry.pinnedVersionId;
+      if (entry.song) songData = new SongData(entry.song);
+    }
+  }
+
+  // The viewer's own pinned drafts are already injected into songDB.songs by
+  // buildSongDB, so a normal open just resolves from there (fetching an explicit
+  // ?version, or on a cache miss). This also resolves a foreign songbook's
+  // canonical entries (omitted from the payload).
+  if (!songData) {
+    songData = await findOrFetchSong(
+      songDB.songs,
+      params.songId,
+      deps.version,
+      queryClient,
+    );
+  }
   if (!songData) throw new Error("Song not found!");
 
-  return { songData, songId: params.songId, versionId: deps.version };
+  // If the owner pinned a version we couldn't show (deleted, or just not the
+  // current one and not shipped), we fell back to the official current version.
+  const versionUnavailable =
+    pinnedVersionId != null && songData.versionId !== pinnedVersionId;
+
+  return {
+    songData,
+    songId: params.songId,
+    versionId: deps.version,
+    personalizationOverride,
+    songbookOwnerName,
+    versionUnavailable,
+  };
 };
 
 export default songLoader;

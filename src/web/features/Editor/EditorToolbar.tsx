@@ -188,13 +188,18 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         generateIllustrationInBackground(response.song.id);
       }
 
-      // Await + force a refetch (not just "active" queries) so the song list
-      // and pending-submissions caches are fresh before we navigate; both feed
-      // buildSongDB's overlay via ensureQueryData, which otherwise hands back
-      // the stale pre-edit version regardless of invalidation.
+      // Await + force a refetch (not just "active" queries) so the caches are
+      // fresh before we navigate. The song list + favorites feed buildSongDB
+      // (favorites now carries the resolved pinned-draft song); submissions
+      // feeds the editor's own drafts list. Without this, ensureQueryData hands
+      // back the stale pre-edit version regardless of invalidation.
       await Promise.all([
         queryClient.invalidateQueries({
           queryKey: ["songs"],
+          refetchType: "all",
+        }),
+        queryClient.invalidateQueries({
+          queryKey: ["favorites"],
           refetchType: "all",
         }),
         queryClient.invalidateQueries({

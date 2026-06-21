@@ -7,12 +7,11 @@ import type {
 import type { SongLanguage } from "~/types/types";
 
 interface FilterSettingsState extends FilterSettings {
-  /** Selected songbooks by owner id; resolved against the live DB at read time. */
-  selectedSongbookIds: string[];
+  /** Selected songbook owner id (single-select); resolved against the live DB at read time. */
+  selectedSongbookId: string | null;
   setLanguage: (language: SongLanguage) => void;
+  /** Select a songbook, or clear it if it's already the active one. */
   toggleSongbook: (songbookId: string) => void;
-  setSelectedSongbookIds: (ids: string[]) => void;
-  clearSongbooks: () => void;
   setVocalRange: (range: VocalRangeType) => void;
   setHideCapo: (hideCapo: boolean) => void;
   toggleHideCapo: () => void;
@@ -21,10 +20,10 @@ interface FilterSettingsState extends FilterSettings {
   resetFilters: () => void;
 }
 
-const FILTER_DEFAULTS: FilterSettings & { selectedSongbookIds: string[] } = {
+const FILTER_DEFAULTS: FilterSettings & { selectedSongbookId: string | null } = {
   language: "all",
   vocalRange: "all",
-  selectedSongbookIds: [],
+  selectedSongbookId: null,
   hideCapo: false,
   onlyFavorites: false,
   showExternal: false,
@@ -35,14 +34,13 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
     (set) => ({
       ...FILTER_DEFAULTS,
       setLanguage: (language) => set({ language }),
+      // Single-select: picking a songbook replaces the selection; picking the
+      // active one clears it.
       toggleSongbook: (songbookId) =>
         set((state) => ({
-          selectedSongbookIds: state.selectedSongbookIds.includes(songbookId)
-            ? state.selectedSongbookIds.filter((id) => id !== songbookId)
-            : [...state.selectedSongbookIds, songbookId],
+          selectedSongbookId:
+            state.selectedSongbookId === songbookId ? null : songbookId,
         })),
-      setSelectedSongbookIds: (ids) => set({ selectedSongbookIds: ids }),
-      clearSongbooks: () => set({ selectedSongbookIds: [] }),
       setVocalRange: (range) => set({ vocalRange: range }),
       setHideCapo: (hideCapo) => set({ hideCapo }),
       toggleHideCapo: () => set((state) => ({ hideCapo: !state.hideCapo })),
@@ -54,20 +52,7 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
     }),
     {
       name: "filter-settings-store",
-      version: 1,
-      // v0 stored `capo` meaning "allow capo songs" (default true, i.e. unfiltered).
-      // v1 renamed it to `hideCapo` (default false) so the button highlights only
-      // while actually filtering, matching every other filter control.
-      migrate: (persistedState, version) => {
-        if (version === 0) {
-          const { capo, ...rest } = persistedState as { capo?: boolean } & Record<
-            string,
-            unknown
-          >;
-          return { ...rest, hideCapo: capo === false };
-        }
-        return persistedState as FilterSettingsState;
-      },
+      version: 2,
     },
   ),
 );

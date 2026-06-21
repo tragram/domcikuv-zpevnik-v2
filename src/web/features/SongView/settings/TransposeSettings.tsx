@@ -10,12 +10,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
-import { useMemo } from "react";
-import { Note, Key } from "~/types/musicTypes";
 import TransposeIcon from "./transpose_icon";
 import FancySwitch from "~/components/FancySwitch";
 import { CompactItem } from "~/components/RichDropdown";
 
+// Chromatic keys from C; the array index is the semitone offset from C and is
+// used directly as the (0..11) sounding-key value.
 const RENDER_KEYS = [
   "C",
   "C#",
@@ -32,40 +32,28 @@ const RENDER_KEYS = [
 ];
 
 interface TransposeSettingsProps {
-  originalKey: Key | undefined;
-  transposeSteps: number;
-  setTransposeSteps: (value: number) => void;
+  // Current sounding key as a 0..11 index (what the user hears / sings).
+  soundingKeyIndex: number;
+  setSoundingKeyIndex: (index: number) => void;
 }
 
 const TransposeSettings: React.FC<TransposeSettingsProps> = ({
-  originalKey,
-  transposeSteps,
-  setTransposeSteps,
+  soundingKeyIndex,
+  setSoundingKeyIndex,
 }) => {
-  const originalKeyIndex = originalKey?.note
-    ? new Note("C").semitonesBetween(originalKey?.note)
-    : 0;
-
-  const transposeValues = useMemo(
-    () => [...Array(12).keys()].map((v) => v - originalKeyIndex),
-    [originalKeyIndex],
-  );
-
   return (
     <div className="flex items-center h-full">
       <div className="hidden xl:block h-full">
         <TransposeButtons
-          values={transposeValues}
-          selected={transposeSteps}
-          onChange={setTransposeSteps}
+          selected={soundingKeyIndex}
+          onChange={setSoundingKeyIndex}
         />
       </div>
 
       <div className="xl:hidden h-full">
         <TransposeDropdown
-          values={transposeValues}
-          selected={transposeSteps}
-          onChange={setTransposeSteps}
+          selected={soundingKeyIndex}
+          onChange={setSoundingKeyIndex}
         />
       </div>
     </div>
@@ -73,14 +61,12 @@ const TransposeSettings: React.FC<TransposeSettingsProps> = ({
 };
 
 interface TransposeButtonsProps {
-  values: number[];
   selected: number;
-  onChange: (steps: number) => void;
+  onChange: (index: number) => void;
   vertical?: boolean;
 }
 
 const TransposeButtons: React.FC<TransposeButtonsProps> = ({
-  values,
   selected,
   onChange,
   vertical = false,
@@ -89,7 +75,7 @@ const TransposeButtons: React.FC<TransposeButtonsProps> = ({
     <FancySwitch
       options={RENDER_KEYS.map((k, index) => ({
         label: k,
-        value: values[index],
+        value: index,
       }))}
       selectedOption={selected}
       setSelectedOption={onChange}
@@ -101,13 +87,11 @@ const TransposeButtons: React.FC<TransposeButtonsProps> = ({
 };
 
 interface TransposeDropdownProps {
-  values: number[];
   selected: number;
-  onChange: (steps: number) => void;
+  onChange: (index: number) => void;
 }
 
 const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
-  values,
   selected,
   onChange,
 }) => {
@@ -115,11 +99,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
     <>
       {/* Desktop View */}
       <div className="hidden xl:flex h-full">
-        <TransposeButtons
-          values={values}
-          selected={selected}
-          onChange={onChange}
-        />
+        <TransposeButtons selected={selected} onChange={onChange} />
       </div>
 
       {/* Tablet View using Popover */}
@@ -136,11 +116,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
             sideOffset={16}
             className="w-fit p-1.5 rounded-full bg-glass/80 dark:bg-glass/30 backdrop-blur-md outline-primary dark:outline-primary/30 outline-2 border-none shadow-lg"
           >
-            <TransposeButtons
-              values={values}
-              selected={selected}
-              onChange={onChange}
-            />
+            <TransposeButtons selected={selected} onChange={onChange} />
           </PopoverContent>
         </Popover>
       </div>
@@ -156,10 +132,10 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
           <DropdownMenuContent className="w-fit min-w-16">
             {RENDER_KEYS.map((k, index) => (
               <DropdownMenuCheckboxItem
-                checked={selected === values[index]}
+                checked={selected === index}
                 key={k}
                 onSelect={(e) => e.preventDefault()}
-                onCheckedChange={() => onChange(values[index])}
+                onCheckedChange={() => onChange(index)}
               >
                 <CompactItem.Shell>
                   <CompactItem.Body title={k} />

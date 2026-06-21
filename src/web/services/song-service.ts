@@ -117,29 +117,6 @@ export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
   }
 };
 
-export const fetchSongVersion = async (
-  api: API,
-  songId: string,
-  versionId?: string,
-): Promise<SongData> => {
-  let songData: SongDataApi;
-  if (versionId) {
-    songData = await makeApiRequest(() =>
-      api.songs.fetch[":songId"][":versionId"].$get({
-        param: { songId, versionId },
-      }),
-    );
-  } else {
-    songData = await makeApiRequest(() =>
-      api.songs.fetch[":id"].$get({
-        param: { id: songId },
-      }),
-    );
-  }
-  return new SongData(songData);
-};
-
-
 export const singleSongQueryOptions = (songId: string, versionId?: string) =>
   queryOptions({
     queryKey: versionId ? ["song", "fetch", songId, versionId] : ["song", "fetch", songId],
@@ -163,37 +140,23 @@ export const singleSongQueryOptions = (songId: string, versionId?: string) =>
 export const findOrFetchSong = async (
   songs: SongData[] | SongDataApi[],
   songId: string,
-  versionId?: string,
-  queryClientInstance?: QueryClient,
-): Promise<SongData | null> => {
-  let songData: SongData | SongDataApi | undefined;
-
+  versionId: string | undefined,
+  queryClient: QueryClient,
+): Promise<SongData> => {
+  // A specific version is never the canonical list entry — always fetch it.
   if (versionId) {
-    let raw: SongDataApi;
-    if (queryClientInstance) {
-      raw = await queryClientInstance.fetchQuery(singleSongQueryOptions(songId, versionId));
-    } else {
-      raw = await singleSongQueryOptions(songId, versionId).queryFn!({} as any);
-    }
-    songData = new SongData(raw);
-  } else {
-    songData = songs.find((s) => s.id === songId);
+    const raw = await queryClient.fetchQuery(
+      singleSongQueryOptions(songId, versionId),
+    );
+    return new SongData(raw);
   }
-
-  if (!songData) {
-    let raw: SongDataApi;
-    if (queryClientInstance) {
-      raw = await queryClientInstance.fetchQuery(singleSongQueryOptions(songId, undefined));
-    } else {
-      raw = await singleSongQueryOptions(songId, undefined).queryFn!({} as any);
-    }
-    songData = new SongData(raw);
-  }
-
-  if (!(songData instanceof SongData)) {
-    songData = new SongData(songData);
-  }
-  return songData ?? null;
+  // Otherwise prefer the already-loaded canonical song, fetching only on a miss.
+  const local = songs.find((s) => s.id === songId);
+  if (local) return local instanceof SongData ? local : new SongData(local);
+  const raw = await queryClient.fetchQuery(
+    singleSongQueryOptions(songId, undefined),
+  );
+  return new SongData(raw);
 };
 
 export const fetchPublicSongbooks = async (api: API): Promise<Songbook[]> => {
@@ -336,34 +299,21 @@ export const buildSongDB = (
   songbooks: Songbook[],
   userData: UserData,
 ): SongDB => {
-  // create a map of the canonical songs for easy lookup/modification
-  const songMap = new Map<string, SongDataApi & { isCustom?: boolean }>(
+  // Map of canonical songs for easy lookup/modification. Overlaid below with the
+  // current user's pinned drafts where applicable.
+  type MutableSong = SongDataApi & { isCustom?: boolean };
+  const songMap = new Map<string, MutableSong>(
     songs.map((s) => [s.id, { ...s }]),
   );
-  if (userData?.submissions) {
-    for (const sub of userData.submissions) {
-      if (sub.status === "pending") {
-        // overwrite canonical data with user's pending submissions
-        const canonical = songMap.get(sub.songId);
-        songMap.set(sub.songId, {
-          ...(canonical || ({} as SongDataApi)),
-          id: canonical?.id ?? sub.songId,
-          versionId: sub.id,
-          title: sub.title,
-          artist: sub.artist,
-          chordpro: sub.chordpro,
-          key: sub.key !== undefined ? (sub.key ?? undefined) : canonical?.key,
-          tempo: sub.tempo !== undefined ? (sub.tempo ? parseInt(sub.tempo) : undefined) : canonical?.tempo,
-          language: sub.language !== undefined ? (sub.language ?? undefined) : canonical?.language,
-          capo: sub.capo !== undefined ? (sub.capo ?? undefined) : canonical?.capo,
-          startMelody: sub.startMelody !== undefined ? (sub.startMelody ?? undefined) : canonical?.startMelody,
-          range: sub.range !== undefined ? (sub.range ?? undefined) : canonical?.range,
-          isCustom: true,
-          createdAt: canonical?.createdAt ?? sub.createdAt,
-          updatedAt: sub.updatedAt,
-          externalSource: canonical?.externalSource ?? null,
-        });
-      }
+
+  // Inject each songbook entry's server-resolved pinned draft (the user's own
+  // pending edit, or a foreign draft they pinned — neither is in the global
+  // list). `entry.song` is the one source for pinned drafts; canonical entries
+  // leave the list song as-is. The saved key/capo is read live from the
+  // favorites cache in useSongTranspose, not baked onto the song here.
+  if (userData?.songbookEntries) {
+    for (const entry of userData.songbookEntries.values()) {
+      if (entry.song) songMap.set(entry.songId, { ...entry.song });
     }
   }
 

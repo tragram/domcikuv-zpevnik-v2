@@ -9,7 +9,7 @@ import {
 import { UserData } from "./use-user-data";
 
 import { QueryClient } from "@tanstack/react-query";
-import { favoritesQueryOptions, sessionQueryOptions, submissionsQueryOptions, sessionToProfile } from "./use-user-data";
+import { favoritesQueryOptions, sessionQueryOptions, submissionsQueryOptions, sessionToProfile, indexSongbookEntries } from "./use-user-data";
 
 export const songsQueryOptions = () =>
   queryOptions({
@@ -66,7 +66,7 @@ export const getSongDB = async (queryClient: QueryClient) => {
       userData = {
         profile: sessionToProfile(session)!,
         submissions: submissions ?? [],
-        favoriteIds: new Set(favorites ?? []),
+        ...indexSongbookEntries(favorites),
       };
     }
   } catch (e) {

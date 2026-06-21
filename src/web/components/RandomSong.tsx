@@ -152,7 +152,7 @@ function RandomSong({
     language,
     onlyFavorites,
     showExternal,
-    selectedSongbookIds,
+    selectedSongbookId,
     resetFilters,
   } = useFilterSettingsStore();
 
@@ -189,7 +189,7 @@ function RandomSong({
           language,
           onlyFavorites,
           showExternal,
-          selectedSongbookIds,
+          selectedSongbookId,
         },
         { userData: userData ?? null, languageCounts, availableSongbooks },
       ),
@@ -200,7 +200,7 @@ function RandomSong({
       language,
       onlyFavorites,
       showExternal,
-      selectedSongbookIds,
+      selectedSongbookId,
       userData,
       languageCounts,
       availableSongbooks,

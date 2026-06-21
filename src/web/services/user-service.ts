@@ -13,6 +13,7 @@ import {
 import { parseDBDates } from "./song-service";
 import { SongVersionDB } from "src/lib/db/schema";
 import { UserProfileDB } from "src/worker/api/userProfile";
+import { SongbookEntryApi } from "src/worker/api/api-types";
 
 export type UsersApi = typeof client.api.admin.users;
 
@@ -41,7 +42,7 @@ export async function fetchProfile(api: API): Promise<UserProfileDB> {
   return profile ? parseDBDates(profile) : null;
 }
 
-export async function fetchFavorites(api: API): Promise<string[]> {
+export async function fetchFavorites(api: API): Promise<SongbookEntryApi[]> {
   try {
     const response = await makeApiRequest(api.favorites.$get);
     return response;

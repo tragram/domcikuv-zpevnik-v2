@@ -1,10 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
 import Fuse from "fuse.js";
 import { useEffect, useMemo } from "react";
 
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { SongData, to_ascii } from "~/types/songData";
 import type { SongDB } from "~/types/types";
-import type { UserData } from "~/hooks/use-user-data";
+import { songbookEntriesQueryOptions, type UserData } from "~/hooks/use-user-data";
 import { useQueryStore } from "./Toolbar/SearchBar";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { applyFilters, sortSongs } from "./Toolbar/filters/songFilters";
@@ -17,6 +18,12 @@ export interface DisplayedSongs {
    * Consumed by useExternalSearch to decide whether an online search is worth offering.
    */
   bestLocalScore: number;
+  /**
+   * The other user whose songbook the list is scoped to (single-select of a
+   * foreign songbook), else undefined. Drives both the base list here and the
+   * `?songbook=` link param on each row, so the two can never drift apart.
+   */
+  foreignSongbookOwner?: string;
 }
 
 export function useDisplayedSongs(
@@ -25,7 +32,7 @@ export function useDisplayedSongs(
 ): DisplayedSongs {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
-  const { language, vocalRange, hideCapo, onlyFavorites, showExternal, selectedSongbookIds } =
+  const { language, vocalRange, hideCapo, onlyFavorites, showExternal, selectedSongbookId } =
     useFilterSettingsStore();
 
   // Changing the sort clears an active search: search ignores sort entirely, so
@@ -34,15 +41,41 @@ export function useDisplayedSongs(
     setQuery("");
   }, [sortByField, sortOrder, setQuery]);
 
+  // When the list is narrowed to a single *other* user's songbook, fetch that
+  // songbook's contents on demand and use it as the base list — including the
+  // owner's pending songs that aren't in the global SongDB. Kept fully isolated:
+  // these songs never enter `songDB`, so they can't leak into anyone's browse.
+  const foreignOwner =
+    selectedSongbookId && selectedSongbookId !== userData?.profile.id
+      ? selectedSongbookId
+      : undefined;
+  const { data: ownerEntries } = useQuery({
+    ...songbookEntriesQueryOptions(foreignOwner ?? ""),
+    enabled: !!foreignOwner,
+  });
+  // Resolve each entry to a SongData: pinned drafts ship inline as `e.song`;
+  // canonical entries are looked up in the global SongDB (the payload omits them
+  // to stay small). Entries that resolve to neither (deleted) are dropped.
+  const ownerSongs = useMemo(() => {
+    if (!ownerEntries) return undefined;
+    const byId = new Map(songDB.songs.map((s) => [s.id, s]));
+    return ownerEntries
+      .map((e) => (e.song ? new SongData(e.song) : byId.get(e.songId)))
+      .filter((s): s is SongData => !!s);
+  }, [ownerEntries, songDB.songs]);
+  // Until the owner's songbook loads, fall back to the global list (filtered by
+  // songbook below shows its approved subset), then swap to the full set.
+  const baseSongs = foreignOwner && ownerSongs ? ownerSongs : songDB.songs;
+
   const fuse = useMemo(
     () =>
-      new Fuse(songDB.songs, {
+      new Fuse(baseSongs, {
         includeScore: true,
         keys: ["title_for_search", "artist_for_search"],
         ignoreLocation: true,
         threshold: 0.4,
       }),
-    [songDB.songs],
+    [baseSongs],
   );
 
   const searchResults = useMemo(
@@ -63,11 +96,12 @@ export function useDisplayedSongs(
     if (query && searchResults) {
       return searchResults.map((r) => r.item);
     }
-    // BROWSE MODE: filter, then sort.
+    // BROWSE MODE: filter, then sort. For a foreign songbook the base is already
+    // that songbook's songs (the songbook filter below is then a harmless no-op).
     return sortSongs(
       applyFilters(
-        songDB.songs,
-        { language, vocalRange, hideCapo, onlyFavorites, showExternal, selectedSongbookIds },
+        baseSongs,
+        { language, vocalRange, hideCapo, onlyFavorites, showExternal, selectedSongbookId },
         {
           userData,
           availableSongbooks: songDB.songbooks,
@@ -80,6 +114,7 @@ export function useDisplayedSongs(
   }, [
     query,
     searchResults,
+    baseSongs,
     songDB,
     userData,
     language,
@@ -87,10 +122,10 @@ export function useDisplayedSongs(
     hideCapo,
     onlyFavorites,
     showExternal,
-    selectedSongbookIds,
+    selectedSongbookId,
     sortByField,
     sortOrder,
   ]);
 
-  return { songs, bestLocalScore };
+  return { songs, bestLocalScore, foreignSongbookOwner: foreignOwner };
 }

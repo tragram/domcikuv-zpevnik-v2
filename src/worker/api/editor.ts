@@ -13,7 +13,7 @@ import { failJSend, successJSend, zValidatorJSend } from "./responses";
 import OpenAI from "openai";
 import { trustedUserMiddleware } from "./utils";
 import { EditorSubmissionResponse } from "./api-types";
-import { addFavorite } from "../helpers/favorite-helpers";
+import { setSongbookEntry } from "../helpers/favorite-helpers";
 
 export const editorSubmitSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -217,7 +217,11 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     const isTrusted = !!userProfile?.isTrusted;
     const result = await createSong(db, submission, userId, isTrusted);
     try {
-      addFavorite(db, userId, result.newSong.id);
+      // Pin the author's songbook to their new version so it shows for them
+      // regardless of approval status (also adds it to their favorites).
+      await setSongbookEntry(db, userId, result.newSong.id, {
+        pinnedVersionId: result.newVersion.id,
+      });
     } catch {
       /* non fatal */
     }
@@ -246,11 +250,6 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
 
     // getSongPopulated will throw an error if the song is not found.
     const existingSong = await getSongBase(db, songId);
-    try {
-      addFavorite(db, userId, existingSong.id);
-    } catch {
-      /* non fatal */
-    }
 
     const versionResult = await createSongVersion(
       db,
@@ -259,6 +258,16 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       userId,
       isTrusted,
     );
+
+    try {
+      // Pin the editor's songbook to the version they just created, so their
+      // change sticks in their songbook even if it's never approved.
+      await setSongbookEntry(db, userId, existingSong.id, {
+        pinnedVersionId: versionResult.id,
+      });
+    } catch {
+      /* non fatal */
+    }
 
     // Response includes status so UI can show "Changes saved (Pending Approval)"
     return successJSend(c, {

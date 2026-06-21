@@ -5,6 +5,7 @@ import {
   Coffee,
   Contrast,
   Fullscreen,
+  Heart,
   Pencil,
   RefreshCw,
   Settings2,
@@ -30,8 +31,8 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import usePWAInstall from "~/components/usePWAInstall";
+import { useToggleFavorite } from "~/components/FavoriteButton";
 import { useSongDB } from "~/hooks/use-songDB";
-import { Key } from "~/types/musicTypes";
 import { SongData } from "~/types/songData";
 import ShareSongButton from "../components/ShareSongButton";
 import { SetNicknameDialog } from "../components/SetNicknameDialog";
@@ -48,26 +49,30 @@ import {
 } from "./LayoutSettings";
 import TransposeSettings from "./TransposeSettings";
 import { UserData } from "src/web/hooks/use-user-data";
+import { SongTranspose } from "../hooks/songTransposeMath";
 
 interface ToolbarProps {
   songData: SongData;
   userData: UserData;
+  transpose: SongTranspose;
   feedStatus: FeedStatus | undefined;
   fullScreenHandle: FullScreenHandle;
-  originalKey: Key | undefined;
-  transposeSteps: number;
-  setTransposeSteps: (value: number) => void;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
   songData,
   userData,
+  transpose,
   feedStatus,
   fullScreenHandle,
-  originalKey,
-  transposeSteps,
-  setTransposeSteps,
 }) => {
+  const { soundingKeyIndex, setSoundingKeyIndex, songbookPersonalization } =
+    transpose;
+  const { isFavorite, toggle: toggleFavorite } = useToggleFavorite(
+    songData,
+    userData?.profile.id ?? "",
+    songbookPersonalization,
+  );
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
   const { songDB } = useSongDB(userData);
@@ -133,9 +138,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <ChordSettingsButtons />
         <LayoutSettingsToolbar fullScreenHandle={fullScreenHandle} />
         <TransposeSettings
-          originalKey={originalKey}
-          transposeSteps={transposeSteps}
-          setTransposeSteps={setTransposeSteps}
+          soundingKeyIndex={soundingKeyIndex}
+          setSoundingKeyIndex={setSoundingKeyIndex}
         />
 
         {!feedStatus || !feedStatus.enabled || feedStatus.isMaster ? (
@@ -247,6 +251,31 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                   <CompactItem.Body
                     title={nickname ? "Change sharing nickname" : "Set a nickname to share"}
                     subtitle={nickname ? `Sharing as ${nickname}` : undefined}
+                  />
+                </CompactItem.Shell>
+              </DropdownMenuItem>
+            )}
+
+            {userData && (
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  e.preventDefault();
+                  toggleFavorite();
+                }}
+              >
+                <CompactItem.Shell>
+                  <CompactItem.Icon>
+                    <Heart
+                      className={isFavorite ? "fill-primary text-primary" : ""}
+                    />
+                  </CompactItem.Icon>
+                  <CompactItem.Body
+                    title={isFavorite ? "In your songbook" : "Add to songbook"}
+                    subtitle={
+                      isFavorite
+                        ? "Your key & capo for this song are saved here"
+                        : "Adds song to your songbook and remembers the selected key & capo"
+                    }
                   />
                 </CompactItem.Shell>
               </DropdownMenuItem>

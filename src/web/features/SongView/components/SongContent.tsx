@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import { SongData } from "~/types/songData";
-import { Key } from "~/types/musicTypes";
 
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
 import { renderSong } from "../utils/songRendering";
@@ -9,24 +8,30 @@ import ResizableAutoTextSize from "./ResizableAutoTextSize";
 import SongHeading from "./SongHeading";
 import { UserData } from "src/web/hooks/use-user-data";
 import { FeedStatus } from "../hooks/useSessionSync";
+import { SongTranspose } from "../hooks/songTransposeMath";
 
 interface SongContentProps {
   songData: SongData;
-  transposeSteps: number;
   gestureContainerRef: React.RefObject<HTMLDivElement | null>;
   userData?: UserData;
-  effectiveKey?: Key;
+  transpose: SongTranspose;
   feedStatus?: FeedStatus;
+  // Optional banner shown in the heading (e.g. version-fallback note).
+  note?: string;
+  // Owner name when viewing another user's songbook read-only (draft attribution).
+  songbookOwnerName?: string;
 }
 
 export const SongContent = ({
   songData,
-  transposeSteps,
   gestureContainerRef,
   userData,
-  effectiveKey,
+  transpose,
   feedStatus,
+  note,
+  songbookOwnerName,
 }: SongContentProps) => {
+  const { transposeSteps, effectiveKey } = transpose;
   const { layout, chords: chordSettings } = useViewSettingsStore();
 
   const parsedContent = useMemo(
@@ -49,9 +54,11 @@ export const SongContent = ({
         <SongHeading
           songData={songData}
           layoutSettings={layout}
-          transposeSteps={transposeSteps}
+          transpose={transpose}
           userData={userData}
           feedStatus={feedStatus}
+          note={note}
+          songbookOwnerName={songbookOwnerName}
         />
 
         <div

@@ -40,6 +40,22 @@ export type SongbookDataApi = {
   songIds: string[];
 };
 
+// A user's per-song songbook entry: membership + their personal pin / key / capo.
+// `keyIndex` is the absolute sounding key as a pitch class (0..11), or null.
+export type SongbookEntryApi = {
+  songId: string;
+  pinnedVersionId: string | null;
+  keyIndex: number | null;
+  capo: number | null;
+  // The resolved displayable song, attached by both songbook endpoints ONLY for
+  // a non-canonical pin — a pinned draft that isn't in the global list (a pending
+  // edit, or a foreign draft someone pinned). Canonical entries omit it (resolved
+  // client-side from the global list) so the payload stays small. Lets a viewer
+  // render another user's songbook — including pending songs — without polluting
+  // the shared SongDB.
+  song?: SongDataApi;
+};
+
 export type SongDataApi = {
   id: string;
   versionId?: string;

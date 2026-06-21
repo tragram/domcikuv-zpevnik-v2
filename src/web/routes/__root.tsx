@@ -8,8 +8,12 @@ import {
   publicSongbooksQueryOptions,
   songsQueryOptions,
 } from "~/hooks/use-songDB";
+import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { RouterContext } from "~/main";
-import { sessionQueryOptions } from "../hooks/use-user-data";
+import {
+  sessionQueryOptions,
+  songbookEntriesQueryOptions,
+} from "../hooks/use-user-data";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFound,
@@ -19,6 +23,23 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     context.queryClient.prefetchQuery(sessionQueryOptions());
     context.queryClient.prefetchQuery(publicSongbooksQueryOptions());
     context.queryClient.prefetchQuery(activeSessionsQueryOptions());
+
+    // Warm (and persist for offline) the foreign songbook the user is currently
+    // filtered to, so its contents — including the owner's pending songs that
+    // aren't in the global DB — survive into the next offline launch, the same
+    // way the songs DB above does. Skips the user's own songbook (served from
+    // buildSongDB, not this query).
+    const { selectedSongbookId } = useFilterSettingsStore.getState();
+    if (selectedSongbookId) {
+      const self = context.queryClient.getQueryData<{ user?: { id?: string } }>([
+        "session",
+      ])?.user?.id;
+      if (selectedSongbookId !== self) {
+        context.queryClient.prefetchQuery(
+          songbookEntriesQueryOptions(selectedSongbookId),
+        );
+      }
+    }
 
     // only block the route if the user has no songs cached
     const cachedSongs = context.queryClient.getQueryData(["songs"]);

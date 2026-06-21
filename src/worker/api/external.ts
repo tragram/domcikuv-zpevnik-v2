@@ -9,7 +9,7 @@ import {
   SkorepovaCache,
   ZPEVNIK_SKOREPOVA_CACHE_KEY,
 } from "../helpers/external-search/zpevnik-skorepova";
-import { addFavorite } from "../helpers/favorite-helpers";
+import { setSongbookEntry } from "../helpers/favorite-helpers";
 import { addIllustrationFromURL } from "../helpers/illustration-helpers";
 import {
   createImportSong,
@@ -172,7 +172,7 @@ export const externalRoutes = buildApp()
 
       if (!existingSong) throw Error("Failed to create song!");
       try {
-        addFavorite(db, user.id, existingSong.id);
+        await setSongbookEntry(db, user.id, existingSong.id, {});
       } catch {
         /* non fatal */
       }

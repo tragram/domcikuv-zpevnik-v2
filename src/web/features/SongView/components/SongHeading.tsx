@@ -10,11 +10,21 @@ import { Pencil } from "lucide-react";
 import { UserData } from "src/web/hooks/use-user-data";
 import { Badge } from "src/web/components/ui/badge";
 import type { FeedStatus } from "../hooks/useSessionSync";
+import type { SongTranspose } from "../hooks/songTransposeMath";
+import CapoControl from "../settings/CapoSettings";
 
 interface SongHeadingProps {
   songData: SongData;
   layoutSettings: LayoutSettings;
-  transposeSteps: number;
+  // The viewer's resolved key/capo. Omitted in read-only contexts (the editor
+  // preview): the heading then falls back to the song's own key/capo and the
+  // capo stepper is inert.
+  transpose?: SongTranspose;
+  // Optional banner under the title (e.g. version-fallback note).
+  note?: string;
+  // Set when viewing another user's songbook read-only; used to attribute their
+  // custom version in the draft badge ("<owner>'s draft" instead of "Your draft").
+  songbookOwnerName?: string;
   userData?: UserData;
   feedStatus?: FeedStatus;
 }
@@ -30,16 +40,29 @@ function formatChords(data: string) {
 const SongHeading: React.FC<SongHeadingProps> = ({
   songData,
   layoutSettings,
-  transposeSteps,
+  transpose,
+  note,
+  songbookOwnerName,
   userData,
   feedStatus,
 }) => {
-  // When following someone else's session the custom version on screen belongs
-  // to the session host, not the current user, so attribute it to their nickname.
+  // Read-only contexts (editor preview) pass no transpose: fall back to the
+  // song's own key/capo and leave the capo stepper inert.
+  const transposeSteps = transpose?.transposeSteps ?? 0;
+  const capo = transpose?.capo ?? songData.capo ?? 0;
+  const originalCapo = transpose?.originalCapo ?? songData.capo ?? 0;
+  const setCapo = transpose?.setCapo;
+  const songbookPersonalization = transpose?.songbookPersonalization;
+  const canEditCapo = !!userData && !!setCapo;
+  // The custom version on screen isn't always the current user's: when following
+  // someone's session it's the host's, and when browsing another user's songbook
+  // it's that owner's. Attribute it to whoever it actually belongs to.
   const sessionHost =
     feedStatus?.enabled && !feedStatus.isMaster
       ? feedStatus.sessionState?.masterNickname
       : undefined;
+  const draftAuthor = sessionHost ?? songbookOwnerName;
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [isWrapped, setIsWrapped] = useState(false);
 
@@ -95,6 +118,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
         <h2 className="font-bold text-wrap  dark:text-white select-text">
           {songData.title}
         </h2>
+        {note && <p className="text-sm opacity-70 mt-2">{note}</p>}
       </div>
       <div
         className={cn(
@@ -114,17 +138,15 @@ const SongHeading: React.FC<SongHeadingProps> = ({
               isWrapped ? "w-fit" : "text-right",
             )}
           >
-            <h2
-              className={cn(
-                "text-[0.75em] text-nowrap",
-                songData.capo === undefined ? "opacity-0" : "opacity-100",
-              )}
-            >
-              Capo:{" "}
-              {songData.capo !== undefined
-                ? (songData.capo - transposeSteps + 12) % 12
-                : "undefined"}
-            </h2>
+            {(canEditCapo || capo > 0) && (
+              <CapoControl
+                capo={capo}
+                setCapo={setCapo ?? (() => {})}
+                originalCapo={originalCapo}
+                editable={canEditCapo}
+                className="text-[0.75em] text-nowrap"
+              />
+            )}
             {songData.externalSource ? ( // external songs won't have range --> safe to replace by import source
               <Link
                 className="text-[0.55em] dark:text-white/70"
@@ -151,6 +173,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
             <FavoriteButton
               song={songData}
               userId={userData.profile.id}
+              personalization={songbookPersonalization}
               iconClassName={cn(
                 "size-[2em] stroke-[1.5]",
                 isWrapped ? "" : "max-w-14",
@@ -168,7 +191,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
             )}
           >
             <Pencil />
-            {sessionHost ? `${sessionHost}'s draft` : "Your draft"}
+            {draftAuthor ? `${draftAuthor}'s draft` : "Your draft"}
           </Badge>
         )}
       </div>

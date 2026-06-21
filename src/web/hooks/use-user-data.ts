@@ -1,19 +1,32 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import { QueryClient, queryOptions, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { queryClient } from "src/lib/query-client";
 import client from "src/worker/api-client";
 import { UserProfileDB } from "src/worker/api/userProfile";
 import { SongVersionDB } from "src/lib/db/schema";
 import { fetchFavorites, fetchSubmissions } from "~/services/user-service";
+import { makeApiRequest } from "~/services/api-service";
 import { authClient } from "src/lib/auth/client";
 import { parseDBDates } from "../services/song-service";
-import { SongVersionApi } from "src/worker/api/api-types";
+import { SongbookEntryApi, SongVersionApi } from "src/worker/api/api-types";
 
 export type UserData = {
   profile: NonNullable<UserProfileDB>;
   submissions: SongVersionApi[];
+  // Set of favorited song ids (membership). Derived from songbookEntries.
   favoriteIds: Set<string>;
+  // Per-song personal pin / key / capo, keyed by songId.
+  songbookEntries: Map<string, SongbookEntryApi>;
 } | null;
+
+// Build the membership Set + per-song Map from the favorites payload.
+export const indexSongbookEntries = (entries: SongbookEntryApi[] | undefined) => {
+  const list = entries ?? [];
+  return {
+    favoriteIds: new Set(list.map((e) => e.songId)),
+    songbookEntries: new Map(list.map((e) => [e.songId, e])),
+  };
+};
 
 export const sessionQueryOptions = () =>
   queryOptions({
@@ -40,6 +53,83 @@ export const favoritesQueryOptions = (userId?: string) =>
     queryKey: ["favorites", userId],
     queryFn: () => fetchFavorites(client.api),
   });
+
+// Another user's public songbook entries (their saved key/capo, and pinned
+// drafts inline). Kept off the shared SongDB plumbing so it never pushes
+// Maps/Sets into the persisted filter store.
+export const songbookEntriesQueryOptions = (ownerId: string) =>
+  queryOptions({
+    queryKey: ["songbookEntries", ownerId],
+    queryFn: (): Promise<SongbookEntryApi[]> =>
+      makeApiRequest(() =>
+        client.api.favorites.of[":userId"].$get({ param: { userId: ownerId } }),
+      ),
+  });
+
+/**
+ * Reads one song's songbook entry (and whether it's a favorite) from the *live*
+ * favorites cache, so optimistic add/remove and auto-saved key/capo are picked
+ * up immediately. Falls back to the song's frozen loader snapshot
+ * (`fallbackIsFavorite`) only while the cache is still cold. Shared by the heart
+ * toggle and the song-view transpose hook so "is it a favorite / what's saved"
+ * is read in exactly one way.
+ */
+export function useSongbookEntry(
+  songId: string,
+  userId: string | undefined,
+  fallbackIsFavorite: boolean,
+) {
+  const { data: favorites } = useQuery({
+    ...favoritesQueryOptions(userId),
+    enabled: !!userId,
+  });
+  const entry = favorites?.find((e) => e.songId === songId);
+  return {
+    entry,
+    isFavorite: favorites ? !!entry : fallbackIsFavorite,
+  };
+}
+
+/**
+ * The single place that writes the `["favorites", userId]` cache — membership
+ * (add/remove) and the per-song key/capo patch all flow through here, so the
+ * entry shape and query key live in one spot. Pure cache writes; callers keep
+ * their own cancel/snapshot/rollback.
+ */
+export function addFavoriteEntry(
+  queryClient: QueryClient,
+  userId: string | undefined,
+  entry: SongbookEntryApi,
+) {
+  queryClient.setQueryData<SongbookEntryApi[]>(
+    favoritesQueryOptions(userId).queryKey,
+    (old = []) =>
+      old.some((e) => e.songId === entry.songId) ? old : [...old, entry],
+  );
+}
+
+export function removeFavoriteEntry(
+  queryClient: QueryClient,
+  userId: string | undefined,
+  songId: string,
+) {
+  queryClient.setQueryData<SongbookEntryApi[]>(
+    favoritesQueryOptions(userId).queryKey,
+    (old = []) => old.filter((e) => e.songId !== songId),
+  );
+}
+
+export function patchFavoriteEntry(
+  queryClient: QueryClient,
+  userId: string | undefined,
+  songId: string,
+  patch: Partial<SongbookEntryApi>,
+) {
+  queryClient.setQueryData<SongbookEntryApi[]>(
+    favoritesQueryOptions(userId).queryKey,
+    (old) => old?.map((e) => (e.songId === songId ? { ...e, ...patch } : e)),
+  );
+}
 
 export const submissionsQueryOptions = (userId?: string) =>
   queryOptions({
@@ -79,7 +169,7 @@ export function useUserData() {
       isLoggedIn
         ? ({
             profile: sessionToProfile(sessionData),
-            favoriteIds: favorites ? new Set(favorites) : new Set([]),
+            ...indexSongbookEntries(favorites),
             submissions: submissions ?? [],
           } as UserData)
         : (null as UserData),
@@ -110,7 +200,9 @@ export async function getUserData(): Promise<UserData> {
   const [favorites, submissions] = await Promise.all([
     queryClient
       .ensureQueryData(favoritesQueryOptions(userId))
-      .catch(() => queryClient.getQueryData<string[]>(["favorites", userId])),
+      .catch(() =>
+        queryClient.getQueryData<SongbookEntryApi[]>(["favorites", userId]),
+      ),
     queryClient
       .ensureQueryData(submissionsQueryOptions(userId))
       .catch(() =>
@@ -120,7 +212,7 @@ export async function getUserData(): Promise<UserData> {
 
   return {
     profile: sessionToProfile(data),
-    favoriteIds: favorites ? new Set(favorites) : new Set([]),
+    ...indexSongbookEntries(favorites),
     submissions: submissions ?? [],
   } as UserData;
 }

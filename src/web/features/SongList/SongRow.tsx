@@ -113,9 +113,18 @@ interface SongRowProps {
   maxRange?: number | undefined;
   userData: UserData;
   externalSearch?: boolean;
+  // Owner userId when this list is filtered to a single other user's songbook;
+  // opens the song in that owner's key/capo/version context.
+  songbookOwner?: string;
 }
 const SongRow = memo(
-  ({ song, maxRange, userData, externalSearch = false }: SongRowProps) => {
+  ({
+    song,
+    maxRange,
+    userData,
+    externalSearch = false,
+    songbookOwner,
+  }: SongRowProps) => {
     if (!song) {
       console.error("Invalid song provided to SongRow", song);
       return (
@@ -207,7 +216,13 @@ const SongRow = memo(
                 {linkInnerContent}
               </Link>
             ) : (
-              <Link to={song.url()} preload="intent" className={linkClassName}>
+              <Link
+                to="/song/$songId"
+                params={{ songId: song.id }}
+                search={songbookOwner ? { songbook: songbookOwner } : {}}
+                preload="intent"
+                className={linkClassName}
+              >
                 {linkInnerContent}
               </Link>
             )}

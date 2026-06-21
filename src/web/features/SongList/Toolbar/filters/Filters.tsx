@@ -33,7 +33,6 @@ import {
 } from "./VocalRangeFilter";
 import React from "react";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
-import { SongData } from "~/types/songData";
 import type { UserData } from "~/hooks/use-user-data";
 
 export type VocalRangeType = "all" | [number, number];
@@ -51,28 +50,24 @@ const FilterControls = ({
   languages,
   maxRange,
   iconOnly,
-  songs,
   availableSongbooks,
   userData,
 }: {
   languages: LanguageCount;
   maxRange: number | undefined;
   iconOnly: boolean;
-  songs: SongData[];
   availableSongbooks: Songbook[];
   userData: UserData;
 }) => {
   const {
     language,
-    selectedSongbookIds,
+    selectedSongbookId,
     vocalRange,
     hideCapo,
     showExternal,
     onlyFavorites,
     setLanguage,
     toggleSongbook,
-    setSelectedSongbookIds,
-    clearSongbooks,
     setVocalRange,
     toggleHideCapo,
     toggleShowExternal,
@@ -86,7 +81,7 @@ const FilterControls = ({
         vocalRange[0] === 0 &&
         vocalRange[1] === maxRange)) &&
     !hideCapo &&
-    selectedSongbookIds.length === 0 &&
+    !selectedSongbookId &&
     !onlyFavorites;
   return {
     controls: (
@@ -100,11 +95,8 @@ const FilterControls = ({
         {availableSongbooks.length > 0 && (
           <SongBookFilter
             availableSongbooks={availableSongbooks}
-            selectedSongbookIds={selectedSongbookIds}
-            availableSongs={songs}
+            selectedSongbookId={selectedSongbookId}
             toggleSongbook={toggleSongbook}
-            setSelectedSongbookIds={setSelectedSongbookIds}
-            clearSongbooks={clearSongbooks}
             iconOnly={iconOnly}
             sectionOnly={false}
           />
@@ -222,11 +214,8 @@ const FilterControls = ({
           React.Children.toArray(
             <SongBookFilter
               availableSongbooks={availableSongbooks}
-              selectedSongbookIds={selectedSongbookIds}
-              availableSongs={songs}
+              selectedSongbookId={selectedSongbookId}
               toggleSongbook={toggleSongbook}
-              setSelectedSongbookIds={setSelectedSongbookIds}
-              clearSongbooks={clearSongbooks}
               iconOnly={false}
               sectionOnly={true}
             />,
@@ -257,7 +246,6 @@ const Filtering = ({
   const { controls, dropdownSections, isFilterInactive } = FilterControls({
     languages: songDB.languages,
     maxRange: songDB.maxRange,
-    songs: songDB.songs,
     availableSongbooks: songDB.songbooks,
     userData,
     iconOnly: isLargeScreen,
