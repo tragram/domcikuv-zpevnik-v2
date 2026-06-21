@@ -12,6 +12,8 @@ interface FilterSettingsState extends FilterSettings {
   setLanguage: (language: SongLanguage) => void;
   /** Select a songbook, or clear it if it's already the active one. */
   toggleSongbook: (songbookId: string) => void;
+  /** Idempotently set (or clear) the selected songbook — used to apply a URL param on load. */
+  setSelectedSongbook: (songbookId: string | null) => void;
   setVocalRange: (range: VocalRangeType) => void;
   setHideCapo: (hideCapo: boolean) => void;
   toggleHideCapo: () => void;
@@ -41,6 +43,8 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
           selectedSongbookId:
             state.selectedSongbookId === songbookId ? null : songbookId,
         })),
+      setSelectedSongbook: (songbookId) =>
+        set({ selectedSongbookId: songbookId }),
       setVocalRange: (range) => set({ vocalRange: range }),
       setHideCapo: (hideCapo) => set({ hideCapo }),
       toggleHideCapo: () => set((state) => ({ hideCapo: !state.hideCapo })),

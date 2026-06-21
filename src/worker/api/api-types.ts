@@ -37,6 +37,8 @@ export type SongbookDataApi = {
   user: string;
   image: string;
   name: string;
+  /** Owner's unique nickname, when set. Used as the shareable URL slug. */
+  nickname: string | null;
   songIds: string[];
 };
 

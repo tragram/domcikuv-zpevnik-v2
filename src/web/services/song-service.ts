@@ -338,6 +338,7 @@ export const buildSongDB = (
         user: user.id,
         image: user.image ?? "",
         name: user.nickname ?? "Yours",
+        nickname: user.nickname,
         songIds: userData.favoriteIds,
       },
     ];

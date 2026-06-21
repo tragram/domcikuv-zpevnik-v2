@@ -310,6 +310,7 @@ export async function getSongbooks(db: AppDatabase) {
         user: row.userId,
         image: row.userImage || "",
         name: row.userNickname ?? row.userName,
+        nickname: row.userNickname,
         songIds: [],
       });
     }
