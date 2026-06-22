@@ -228,7 +228,7 @@ export function SongIllustrationsGroup({
               onOpenChange={setIsDialogOpen}
             >
               <IllustrationForm
-                illustration={{ songId: song.id }}
+                illustration={{ songId: song.id, isActive: !someActive }}
                 activePromptId={activePromptId}
                 onSave={handleCreateIllustration}
                 isLoading={isLoading}
@@ -281,7 +281,7 @@ export function SongIllustrationsGroup({
                   onOpenChange={setIsSectionIllustrationDialogOpen}
                 >
                   <IllustrationForm
-                    illustration={{ songId: song.id }}
+                    illustration={{ songId: song.id, isActive: !someActive }}
                     activePromptId={activePromptId}
                     onSave={handleCreateIllustration}
                     isLoading={isLoading}
