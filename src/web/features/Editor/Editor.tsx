@@ -235,6 +235,9 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
     originalContent: string;
     newContent: string;
   } | null>(null);
+  // Field errors stay hidden while the user is still editing; only surface
+  // them (red borders) once they've tried to submit.
+  const [submitAttempted, setSubmitAttempted] = useState(false);
 
   const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
     return SMART_FEATURES.map((f) => {
@@ -279,6 +282,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const handleBackupAndInitialize = useCallback(() => {
     backupEditorState(editorState);
     initializeEditor();
+    setSubmitAttempted(false);
   }, [backupEditorState, editorState, initializeEditor]);
 
   const handleChordproUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -552,6 +556,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           validationErrors={validationErrors}
           onLoadBackup={loadBackupState}
           onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
+          onAttemptSubmit={() => setSubmitAttempted(true)}
           userData={userData}
           onUploadClick={onUploadClick}
           editorSettings={editorSettings}
@@ -587,7 +592,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
               editorSettings={editorSettings}
               onSettingsChange={setEditorSettings}
               userData={userData}
-              fieldErrors={fieldErrors}
+              fieldErrors={submitAttempted ? fieldErrors : {}}
               hasIllustration={hasIllustration}
               features={evaluatedFeatures}
               isProcessing={isProcessing}

@@ -54,6 +54,7 @@ interface EditorToolbarProps {
   onBackupAndInitialize: () => void;
   onLoadBackup: () => void;
   onSubmitSuccess?: () => void;
+  onAttemptSubmit?: () => void;
   onUploadClick: () => void;
   userData: UserData;
   editorSettings: EditorSettings;
@@ -94,6 +95,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   onBackupAndInitialize,
   onLoadBackup,
   onSubmitSuccess,
+  onAttemptSubmit,
   onUploadClick,
   userData,
   editorSettings,
@@ -303,7 +305,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         {userData ? (
           <Tooltip>
             <TooltipTrigger asChild>
-              <span tabIndex={0}>
+              <span tabIndex={0} onClick={() => onAttemptSubmit?.()}>
                 <Button
                   className="bg-transparent"
                   onClick={handleSubmit}
