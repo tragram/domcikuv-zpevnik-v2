@@ -137,22 +137,24 @@ const FilterControls = ({
           </Tooltip>
         )}
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="circular"
-              isActive={showExternal}
-              className="rounded-none font-bold shadow-none outline-0"
-              onClick={toggleShowExternal}
-            >
-              <Globe />
-              {!iconOnly && "Show external"}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Show external songs</p>
-          </TooltipContent>
-        </Tooltip>
+        {userData && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="circular"
+                isActive={showExternal}
+                className="rounded-none font-bold shadow-none outline-0"
+                onClick={toggleShowExternal}
+              >
+                <Globe />
+                {!iconOnly && "Show external"}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Show external songs</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
 
         {maxRange && (
           <VocalRangeFilter
@@ -200,13 +202,15 @@ const FilterControls = ({
         >
           Hide capo songs
         </DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem
-          onClick={toggleShowExternal}
-          onSelect={(e) => e.preventDefault()}
-          checked={showExternal}
-        >
-          Show external songs
-        </DropdownMenuCheckboxItem>
+        {userData && (
+          <DropdownMenuCheckboxItem
+            onClick={toggleShowExternal}
+            onSelect={(e) => e.preventDefault()}
+            checked={showExternal}
+          >
+            Show external songs
+          </DropdownMenuCheckboxItem>
+        )}
         {maxRange &&
           VocalRangeDropdownSection(maxRange, vocalRange, setVocalRange)}
         {LanguageFilterDropdownSection(languages, language, setLanguage)}
