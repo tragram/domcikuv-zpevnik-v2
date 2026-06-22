@@ -190,10 +190,12 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
       onSubmitSuccess?.();
 
-      // Auto-generate illustration if enabled, new song being submitted and user is trusted
+      // Auto-generate illustration if enabled, the song has no illustration yet
+      // (covers brand new songs as well as imported songs without one), and
+      // the user is trusted
       if (
         !isUpdate &&
-        !songData &&
+        !songData?.currentIllustration &&
         userData &&
         userData.profile.isTrusted &&
         editorSettings.autoGenerateIllustration
