@@ -12,7 +12,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "~/components/ui/alert-dialog";
-import { applyFilters } from "~/features/SongList/Toolbar/filters/songFilters";
+import {
+  applyFilters,
+  filterExternal,
+} from "~/features/SongList/Toolbar/filters/songFilters";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { UserData } from "~/hooks/use-user-data";
 import { toast } from "sonner";
@@ -177,6 +180,14 @@ function RandomSong({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSong]);
 
+  // Baseline for "are filters narrowing the pool" — excludes external songs
+  // when they wouldn't be shown anyway, so their default exclusion isn't
+  // mistaken for a user-applied filter.
+  const relevantSongCount = useMemo(
+    () => filterExternal(songs, !!userData, showExternal).length,
+    [songs, userData, showExternal],
+  );
+
   // Expensive filter pipeline — depends only on the filters, not the ban list,
   // so growing the ban list on every navigation doesn't re-run all of this.
   const pool = useMemo(
@@ -226,13 +237,13 @@ function RandomSong({
       setIsNoSongsDialogOpen(true);
       return;
     }
-    if (poolSize < songs.length && !sessionStorage.getItem("filteredRandomToastShown")) {
+    if (poolSize < relevantSongCount && !sessionStorage.getItem("filteredRandomToastShown")) {
       sessionStorage.setItem("filteredRandomToastShown", "1");
-      toast.info(`Picking from ${poolSize} of ${songs.length} songs due to active filters.`);
+      toast.info(`Picking from ${poolSize} of ${relevantSongCount} songs due to active filters.`);
     }
   };
 
-  const hasActiveFilters = poolSize < songs.length;
+  const hasActiveFilters = poolSize < relevantSongCount;
 
   return (
     <>
@@ -264,7 +275,7 @@ function RandomSong({
             <AlertDialogDescription>
               You've cycled through all available songs
               {hasActiveFilters
-                ? ` (${poolSize} of ${songs.length} due to active filters)`
+                ? ` (${poolSize} of ${relevantSongCount} due to active filters)`
                 : ""}
               . Would you like to reset the {hasActiveFilters ? "filters or " : ""}list and start over?
             </AlertDialogDescription>
