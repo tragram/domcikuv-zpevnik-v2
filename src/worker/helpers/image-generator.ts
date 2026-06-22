@@ -43,26 +43,25 @@ Act as a professional Art Director. Analyze the provided song lyrics and generat
 
 Styling: Explicitly define a visual medium (e.g. 3D render, minimalist vector, oil painting) and lighting that matches the song's genre/mood.
 
-Composition: NO frames or borders. The image should remain legible within a circular crop at low resolution.
-
 Output: Provide only the final prompt.`,
   v6: `
 Act as a professional Art Director. Analyze the provided song lyrics and generate a concise image generation prompt that captures the song's essence through a single scene that capture a part of the song and its mood.
 
-Styling: Explicitly define a visual medium (e.g. 3D render, minimalist vector, oil painting, photorealistic, ) and lighting that matches the song's genre/mood.
-
-Composition: The output image will have a 1:1 ratio and the whole image should be filled. Unless the song's intent calls for a complex scene, keep it simple so that the image is legible at low resolution.
+Styling: Explicitly define a visual medium (e.g. 3D render, minimalist vector, oil painting, photorealistic, ) and lighting that matches the song's genre/mood. Keep the scene simple enough to stay legible at small sizes, unless the song's intent calls for a complex scene.
 
 Output: Provide only the final prompt.`,
   v7: `
 Act as a professional Art Director. Analyze the provided song lyrics and generate a concise image generation prompt that captures the song's essence through a single scene that capture a part of the song and its mood. Only place text in the image scarcely. If not very fitting, avoid it.
 
-Styling: Explicitly define lighting and a visual medium (e.g. 3D render, oil painting, cinematic/photorealistic, watercolor, anime, cartoon or anything else). These lists are not exhaustive, just select something that matches the song's genre/mood.
-
-Composition: The output image will have a 1:1 ratio and the whole image should be filled. Unless the song's intent calls for a complex scene, keep it simple so that the image is legible at low resolution.
+Styling: Explicitly define lighting and a visual medium (e.g. 3D render, oil painting, cinematic/photorealistic, watercolor, anime, cartoon or anything else). These lists are not exhaustive, just select something that matches the song's genre/mood. Keep the scene simple enough to stay legible at small sizes, unless the song's intent calls for a complex scene.
 
 Output: Provide only the final prompt.`,
 } as const;
+
+// Technical output constraints for the image-generation model only.
+// The prompt-writing model never sees these — it only needs to describe scene/style/mood.
+const IMAGE_COMPOSITION_INSTRUCTIONS =
+  " Important: 1:1 aspect ratio, fill the entire frame edge-to-edge. Avoid frame, border, vignetting, or any other border-like elements.";
 
 export type ImageProviderType = "openai" | "huggingface" | "google";
 
@@ -281,8 +280,7 @@ export class ImageGenerator {
     }
 
     return provider.generate(
-      prompt +
-        " Important: Avoid frame, vignetting, etc. - extend the image all the way to the edges.",
+      prompt + IMAGE_COMPOSITION_INSTRUCTIONS,
       this.config.imageModel,
       this.config,
     );
