@@ -28,10 +28,15 @@ import SortMenu from "./SortMenu";
 
 interface CombinedMenuProps {
   isOnline: boolean;
+  profileAvailable: boolean;
   isAdmin: boolean;
 }
 
-const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
+const CombinedMenu = ({
+  isOnline,
+  profileAvailable,
+  isAdmin,
+}: CombinedMenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -67,7 +72,7 @@ const CombinedMenu = ({ isOnline, isAdmin }: CombinedMenuProps) => {
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild disabled={!isOnline}>
+        <DropdownMenuItem asChild disabled={!profileAvailable}>
           <Link to="/profile" className="w-full cursor-pointer">
             <RichItem.Shell>
               <RichItem.Icon>
@@ -104,6 +109,10 @@ interface ToolbarProps {
 
 function Toolbar({ songDB, isVisible, isAdmin, userData }: ToolbarProps) {
   const isOnline = useIsOnline();
+  // Logged-in users can open their (read-only) profile offline; logged-out users
+  // only reach the login screen there, which needs the network — so offline +
+  // logged-out leaves nothing to show.
+  const profileAvailable = isOnline || !!userData;
 
   return (
     <ToolbarBase
@@ -148,20 +157,30 @@ function Toolbar({ songDB, isVisible, isAdmin, userData }: ToolbarProps) {
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              asChild
-              className="hidden min-[1150px]:flex"
-              size="icon"
-              variant="circular"
-              disabled={!isOnline}
-            >
-              <Link to="/profile">
+            {profileAvailable ? (
+              <Button
+                asChild
+                className="hidden min-[1150px]:flex"
+                size="icon"
+                variant="circular"
+              >
+                <Link to="/profile">
+                  <User />
+                </Link>
+              </Button>
+            ) : (
+              <Button
+                className="hidden min-[1150px]:flex"
+                size="icon"
+                variant="circular"
+                disabled
+              >
                 <User />
-              </Link>
-            </Button>
+              </Button>
+            )}
           </TooltipTrigger>
           <TooltipContent>
-            <p>Profile</p>
+            <p>{profileAvailable ? "Profile" : "Offline — log in when reconnected"}</p>
           </TooltipContent>
         </Tooltip>
 
@@ -204,7 +223,11 @@ function Toolbar({ songDB, isVisible, isAdmin, userData }: ToolbarProps) {
         )}
 
         <div className="flex min-[1150px]:hidden">
-          <CombinedMenu isOnline={isOnline} isAdmin={isAdmin} />
+          <CombinedMenu
+            isOnline={isOnline}
+            profileAvailable={profileAvailable}
+            isAdmin={isAdmin}
+          />
         </div>
       </TooltipProvider>
     </ToolbarBase>

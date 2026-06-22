@@ -44,7 +44,9 @@ export const sessionQueryOptions = () =>
       // in the persisted cache (an "error" query is dropped on persist).
       const prev = queryClient.getQueryData<SessionData | null>(["session"]);
       if (prev !== undefined) return prev;
-      throw new Error(error.message || "Network error");
+      // Never logged in (no cached session) AND offline: report logged-out rather
+      // than throwing
+      return null;
     },
   });
 

@@ -20,8 +20,11 @@ import { SongVersionDB } from "src/lib/db/schema";
 
 export const Route = createFileRoute("/(auth)/submissions")({
   component: UserSubmissions,
+  // The (auth) guard already resolved `userData` through the query cache, which is
+  // offline-safe (falls back to the last persisted session + submissions). Just
+  // reuse it instead of re-fetching here.
   loader: ({ context }) =>
-    makeApiRequest(() => context.api.editor["submissions"].$get()),
+    (context.userData?.submissions ?? []) as SongVersionDB[],
 });
 
 function UserSubmissions() {

@@ -5,6 +5,7 @@ import client from "src/worker/api-client";
 import { SongbookEntryApi } from "src/worker/api/api-types";
 
 import { SongData } from "~/types/songData";
+import { getIsOnline } from "~/hooks/use-is-online";
 import {
   UserData,
   patchFavoriteEntry,
@@ -96,7 +97,13 @@ function useAutoSaveKeyCapo(
       saveTimer.current = setTimeout(() => {
         client.api.favorites[":songId"]
           .$patch({ param: { songId }, json: { keyIndex, capo } })
-          .catch(() => toast.error("Couldn't save your key & capo"));
+          .catch(() => {
+            // The value was already written to the persisted local cache above,
+            // so offline it isn't actually lost — don't show a scary error.
+            // Only surface a genuine online failure (probe-aware, since
+            // navigator.onLine lies on a network with no real internet).
+            if (getIsOnline()) toast.error("Couldn't save your key & capo");
+          });
       }, 500);
     },
     [songId, userId, canPersist, queryClient],

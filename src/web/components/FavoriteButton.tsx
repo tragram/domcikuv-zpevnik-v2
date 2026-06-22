@@ -122,7 +122,13 @@ export const FavoriteButton = ({
         "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100",
         className,
       )}
-      title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+      title={
+        !isOnline
+          ? "Unavailable offline"
+          : isFavorite
+            ? "Remove from favorites"
+            : "Add to favorites"
+      }
     >
       <Heart
         className={cn(

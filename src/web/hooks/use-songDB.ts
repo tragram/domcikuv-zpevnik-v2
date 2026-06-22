@@ -29,7 +29,7 @@ export function useSongDB(
   const { data: songs = [], isFetching: isSongsSyncing } =
     useQuery(songsQueryOptions());
 
-  const { data: publicSongbooks = [] } = useQuery(
+  const { data: publicSongbooks = [], isFetched: songbooksFetched } = useQuery(
     publicSongbooksQueryOptions(),
   );
 
@@ -47,6 +47,9 @@ export function useSongDB(
   return {
     songDB,
     isSyncing: isSongsSyncing,
+    // Whether the public-songbooks list has settled (resolved or errored) at least
+    // once — distinct from `isSyncing`, which tracks only the songs query.
+    songbooksFetched,
   };
 }
 export const getSongDB = async (queryClient: QueryClient) => {

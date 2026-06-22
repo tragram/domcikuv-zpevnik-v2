@@ -42,6 +42,8 @@ import {
   SUMMARY_PROMPT_VERSIONS,
 } from "src/worker/helpers/image-generator";
 import { UserData } from "src/web/hooks/use-user-data";
+import { useIsOnline } from "src/web/hooks/use-is-online";
+import { OfflineToolbarBadge } from "~/components/OfflineIndicator";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -98,6 +100,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isOnline = useIsOnline();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const queryClient = useQueryClient();
 
@@ -258,6 +261,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
             </Button>
           </>
         )}
+        <OfflineToolbarBadge className="self-center" />
       </div>
       {/* editor actions */}
       <div className="flex editor-toolbar-actions flex-wrap justify-center">
@@ -303,7 +307,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
                 <Button
                   className="bg-transparent"
                   onClick={handleSubmit}
-                  disabled={!canBeSubmitted || isSubmitting}
+                  disabled={!canBeSubmitted || isSubmitting || !isOnline}
                 >
                   {isSubmitting
                     ? "Submitting..."
@@ -313,8 +317,13 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
               </span>
             </TooltipTrigger>
             <TooltipContent>
-              {/* Dynamically display the exact validation errors */}
-              {validationErrors && validationErrors.length > 0 ? (
+              {/* Offline takes priority: the draft is saved locally, just can't sync. */}
+              {!isOnline ? (
+                <p>
+                  You're offline — your draft is saved locally. Reconnect to
+                  submit.
+                </p>
+              ) : validationErrors && validationErrors.length > 0 ? (
                 <ul className="list-disc pl-4 space-y-1">
                   {validationErrors.map((error, index) => (
                     <li key={index} className="text-white font-medium">

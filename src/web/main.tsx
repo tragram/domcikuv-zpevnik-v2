@@ -1,13 +1,9 @@
-import {
-  defaultShouldDehydrateQuery,
-  QueryClient,
-} from "@tanstack/react-query";
-import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { Toaster } from "sonner";
-import { queryClient, queryPersister } from "../lib/query-client";
+import { queryClient } from "../lib/query-client";
 import client, { API } from "../worker/api-client";
 import { ThemeProvider } from "./components/ThemeProvider";
 import "./main.css";
@@ -37,31 +33,20 @@ declare module "@tanstack/react-router" {
   }
 }
 
-// Render the app
+// The persisted (offline) cache is restored at module load in query-client.ts; the
+// root route awaits `cacheRestored` before its loaders run. Rendering itself is NOT
+// gated on the restore, so the app shell always paints immediately.
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <PersistQueryClientProvider
-        client={queryClient}
-        persistOptions={{
-          persister: queryPersister,
-          dehydrateOptions: {
-            shouldDehydrateQuery: (query) => {
-              return (
-                defaultShouldDehydrateQuery(query) &&
-                query.state.status === "success"
-              );
-            },
-          },
-        }}
-      >
+      <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Toaster />
           <RouterProvider router={router} />
         </ThemeProvider>
-      </PersistQueryClientProvider>
+      </QueryClientProvider>
     </StrictMode>,
   );
 }

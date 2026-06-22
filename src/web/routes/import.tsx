@@ -3,6 +3,7 @@ import { externalSearchResultSchema } from "src/worker/helpers/external-search";
 import PendingComponent from "~/components/PendingComponent";
 import { Button } from "~/components/ui/button";
 import { ApiException, makeApiRequest } from "~/services/api-service";
+import { getIsOnline } from "~/hooks/use-is-online";
 
 class ImportError extends Error {
   songId?: string;
@@ -21,6 +22,14 @@ export const Route = createFileRoute("/import")({
   loader: async ({ context, preload, deps: { search } }) => {
     if (preload) {
       return;
+    }
+
+    // Importing pulls a song from an external site through the server — pure
+    // network. Fail fast offline with a clear message instead of a generic error.
+    if (!getIsOnline()) {
+      throw new ImportError(
+        "You're offline — importing a song needs an internet connection.",
+      );
     }
 
     try {

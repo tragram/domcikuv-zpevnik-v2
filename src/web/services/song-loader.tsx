@@ -8,6 +8,21 @@ import { SongData } from "~/types/songData";
 import { findOrFetchSong } from "./song-service";
 import { songbookEntriesQueryOptions } from "~/hooks/use-user-data";
 import { SongbookOverride } from "~/features/SongView/hooks/songTransposeMath";
+import PendingComponent from "~/components/PendingComponent";
+import { useIsOnline } from "~/hooks/use-is-online";
+
+// The song loader resolves cached songs locally but still awaits `getSongDB`'s
+// network-bound refetch attempts, which only fail slowly while offline — long
+// enough to trip the route's pending screen. Offline there is nothing to fetch,
+// so the "Fetching the song from the DB…" screen is both wrong and pointless;
+// suppress it and let the cached song render straight away.
+export const SongPendingComponent = () => {
+  const isOnline = useIsOnline();
+  if (!isOnline) return null;
+  return (
+    <PendingComponent title="Loading Song" text="Fetching the song from the DB..." />
+  );
+};
 
 type SongLoaderErrorComponentProps = {
   from: RouteIds<typeof routeTree>;

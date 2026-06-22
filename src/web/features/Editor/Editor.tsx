@@ -8,6 +8,7 @@ import {
 } from "src/lib/chordpro";
 import { convertChordNotation } from "src/lib/utils";
 import { UserData, useUserData } from "src/web/hooks/use-user-data";
+import { useIsOnline } from "src/web/hooks/use-is-online";
 
 import useLocalStorageState from "use-local-storage-state";
 import { convertToChordPro } from "~/lib/chords2chordpro";
@@ -206,6 +207,7 @@ interface EditorProps {
 const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const contentEditorRef = useRef<ContentEditorRef>(null);
   const { userData } = useUserData();
+  const isOnline = useIsOnline();
   const editorStateKey = songData
     ? `editor/state/${songData.id}`
     : "editor/state";
@@ -235,11 +237,21 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   } | null>(null);
 
   const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
-    return SMART_FEATURES.map((f) => ({
-      ...f,
-      isEnabled: f.check(editorState.chordpro, userData, songData),
-    }));
-  }, [editorState.chordpro, userData, songData]);
+    return SMART_FEATURES.map((f) => {
+      const isEnabled = f.check(editorState.chordpro, userData, songData);
+      // Autofill is an AI/server call — unavailable offline. Local features
+      // (convert, transpose, show-original) keep working.
+      if (f.id === "autofill_chords" && !isOnline) {
+        return {
+          ...f,
+          isEnabled: false,
+          disabledReason:
+            "You're offline — autofill needs an internet connection.",
+        };
+      }
+      return { ...f, isEnabled };
+    });
+  }, [editorState.chordpro, userData, songData, isOnline]);
 
   const initializeEditor = useCallback(() => {
     setEditorState(defaultEditorState);

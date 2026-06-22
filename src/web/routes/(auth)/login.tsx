@@ -9,6 +9,8 @@ import { Label } from "~/components/ui/label";
 import { redirectSearchSchema } from "~/types/types";
 import GithubIcon from "~/components/ui/github_icon";
 import GoogleIcon from "~/components/ui/google_icon";
+import { OfflineInlineNote } from "~/components/OfflineIndicator";
+import { useIsOnline } from "~/hooks/use-is-online";
 
 export const Route = createFileRoute("/(auth)/login")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
@@ -18,6 +20,7 @@ export const Route = createFileRoute("/(auth)/login")({
 function LoginForm() {
   const { redirectURL } = Route.useRouteContext();
   const navigate = useNavigate();
+  const isOnline = useIsOnline();
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -58,6 +61,7 @@ function LoginForm() {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
           <AuthHeader text="Domčíkův Zpěvník login" />
+          <OfflineInlineNote message="You're offline — connect to the internet to log in." />
           <div className="flex flex-col gap-5">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
@@ -86,7 +90,7 @@ function LoginForm() {
               type="submit"
               className="w-full text-lg"
               size="lg"
-              disabled={isLoading}
+              disabled={isLoading || !isOnline}
             >
               {isLoading && <LoaderCircle className="animate-spin" />}
               {isLoading ? "Logging in..." : "Login"}
@@ -107,7 +111,7 @@ function LoginForm() {
               variant="outline"
               className="w-full"
               type="button"
-              disabled={import.meta.env.DEV || isLoading}
+              disabled={import.meta.env.DEV || isLoading || !isOnline}
               onClick={() =>
                 signIn.social(
                   {
@@ -137,7 +141,7 @@ function LoginForm() {
               variant="outline"
               className="w-full"
               type="button"
-              disabled={isLoading}
+              disabled={isLoading || !isOnline}
               onClick={() =>
                 signIn.social(
                   {

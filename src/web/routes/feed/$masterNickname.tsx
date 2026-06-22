@@ -6,6 +6,8 @@ import { API } from "src/worker/api-client";
 
 import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import { SongDataApi } from "src/worker/api/api-types";
+import { OfflineNotice } from "~/components/OfflineIndicator";
+import { useIsOnline } from "~/hooks/use-is-online";
 import { useMasterRelay } from "~/features/SongView/hooks/useMasterRelay";
 import { useShareSessionToggle } from "~/features/SongView/hooks/useShareSessionToggle";
 import SongView from "~/features/SongView/SongView";
@@ -16,7 +18,12 @@ import { SongData } from "~/types/songData";
 export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
   loader: async ({ context, params }) => {
-    const liveState = await fetchFeed(context.api, params.masterNickname);
+    // A live feed is online-only, but don't let an offline/failed initial fetch
+    // error the whole route — render with no live state and let the component
+    // show a graceful offline message (and reconnect when back online).
+    const liveState = await fetchFeed(context.api, params.masterNickname).catch(
+      () => undefined,
+    );
     return {
       masterNickname: params.masterNickname,
       liveState,
@@ -69,6 +76,7 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
   });
 
   const navigate = useNavigate();
+  const isOnline = useIsOnline();
 
   // Follow URL nickname redirects (e.g. if the master's profile changes)
   const currentMasterNickname = feedStatus.sessionState?.masterNickname;
@@ -109,6 +117,15 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
   });
 
   if (!feedStatus.sessionState) {
+    // Offline there's nothing to connect to — say so instead of spinning forever.
+    if (!isOnline) {
+      return (
+        <OfflineNotice
+          title="You're offline"
+          description={`Following ${masterNickname}'s live feed needs an internet connection. It'll reconnect automatically once you're back online.`}
+        />
+      );
+    }
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="text-center space-y-2">

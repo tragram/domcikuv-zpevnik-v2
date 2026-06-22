@@ -3,6 +3,7 @@ import { Globe, RefreshCw, Search } from "lucide-react";
 import { useRef } from "react";
 
 import useLocalStorageState from "use-local-storage-state";
+import { OfflineIndicator } from "~/components/OfflineIndicator";
 import { Button } from "~/components/ui/button";
 import "~/features/SongList/SongList.css";
 import { useScrollDirection } from "~/hooks/use-scroll-direction";
@@ -114,6 +115,7 @@ function SongList({
 
   return (
     <div className="no-scrollbar w-full relative">
+      <OfflineIndicator />
       <Toolbar
         isAdmin={!!userData && userData.profile.isAdmin}
         userData={userData}

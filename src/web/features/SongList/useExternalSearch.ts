@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { fetchExternalSearch } from "~/services/song-service";
 import type { UserData } from "~/hooks/use-user-data";
+import { useIsOnline } from "~/hooks/use-is-online";
 import { useQueryStore } from "./Toolbar/SearchBar";
 
 /**
@@ -20,6 +21,7 @@ export function useExternalSearch(userData: UserData, bestLocalScore: number) {
   const { query } = useQueryStore();
   const { showExternal } = useFilterSettingsStore();
   const { api } = useRouteContext({ from: "__root__" });
+  const isOnline = useIsOnline();
 
   const [triggeredQuery, setTriggeredQuery] = useState<string | null>(null);
   const hasTriggeredExternalSearch = query === triggeredQuery;
@@ -28,7 +30,10 @@ export function useExternalSearch(userData: UserData, bestLocalScore: number) {
   // match) or the query is long enough to be worth a network round-trip.
   const isQueryValidForExternal =
     !!query && (bestLocalScore > 0.05 || query.trim().length >= 7);
-  const canSearchExternal = !!userData && showExternal && isQueryValidForExternal;
+  // Online-only: the endpoint hits third-party libraries and importing a result
+  // needs the network too, so hide the whole flow offline.
+  const canSearchExternal =
+    isOnline && !!userData && showExternal && isQueryValidForExternal;
   const shouldSearchExternal = canSearchExternal && hasTriggeredExternalSearch;
 
   const { data: rawExternalSongs = [], isFetching: isLoadingExternal } = useQuery({

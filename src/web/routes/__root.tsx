@@ -1,6 +1,7 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { cacheRestored } from "src/lib/query-client";
 import { CustomError } from "~/components/CustomError";
 import { NotFound } from "~/components/NotFound";
 import { activeSessionsQueryOptions } from "~/hooks/use-active-sessions";
@@ -19,6 +20,12 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFound,
   errorComponent: CustomError,
   beforeLoad: async ({ context }) => {
+    // Ensure the persisted (offline) cache is hydrated before any loader reads it,
+    // so a hard reload while offline doesn't race an empty cache (and then fail to
+    // fetch). Resolves instantly after the first load; bounded by a timeout so it
+    // can never hang the app.
+    await cacheRestored;
+
     const songsPromise = context.queryClient.prefetchQuery(songsQueryOptions());
     context.queryClient.prefetchQuery(sessionQueryOptions());
     context.queryClient.prefetchQuery(publicSongbooksQueryOptions());

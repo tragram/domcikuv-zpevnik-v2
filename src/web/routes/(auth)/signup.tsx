@@ -14,6 +14,8 @@ import { Label } from "~/components/ui/label";
 import { redirectSearchSchema } from "~/types/types";
 import GithubIcon from "~/components/ui/github_icon";
 import GoogleIcon from "~/components/ui/google_icon";
+import { OfflineInlineNote } from "~/components/OfflineIndicator";
+import { useIsOnline } from "~/hooks/use-is-online";
 
 export const Route = createFileRoute("/(auth)/signup")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
@@ -24,6 +26,7 @@ function SignupForm() {
   const { redirectURL } = Route.useRouteContext();
   const navigate = useNavigate();
   const router = useRouter();
+  const isOnline = useIsOnline();
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -71,6 +74,7 @@ function SignupForm() {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
           <AuthHeader text="Sign up for Domčíkův Zpěvník!" />
+          <OfflineInlineNote message="You're offline — connect to the internet to sign up." />
           <div className="flex flex-col gap-5">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
@@ -120,7 +124,7 @@ function SignupForm() {
               type="submit"
               className="mt-2 w-full"
               size="lg"
-              disabled={isLoading}
+              disabled={isLoading || !isOnline}
             >
               {isLoading && <LoaderCircle className="animate-spin mr-2" />}
               {isLoading ? "Signing up..." : "Sign up"}
@@ -143,7 +147,7 @@ function SignupForm() {
               variant="outline"
               className="w-full"
               type="button"
-              disabled={isLoading}
+              disabled={isLoading || !isOnline}
               onClick={async () => {
                 setIsLoading(true);
                 setErrorMessage("");
@@ -165,7 +169,7 @@ function SignupForm() {
               variant="outline"
               className="w-full"
               type="button"
-              disabled={isLoading}
+              disabled={isLoading || !isOnline}
               onClick={async () => {
                 setIsLoading(true);
                 setErrorMessage("");

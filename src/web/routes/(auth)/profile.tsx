@@ -27,17 +27,18 @@ type ProfileUpdateResponse = {
   imageUrl?: string;
 };
 
-import { authClient } from "src/lib/auth/client";
-import { getUserData, UserData } from "src/web/hooks/use-user-data";
+import { UserData } from "src/web/hooks/use-user-data";
 import { nicknameError } from "src/lib/nickname";
 
 export const Route = createFileRoute("/(auth)/profile")({
   component: RouteComponent,
   validateSearch: (search) => redirectSearchSchema.parse(search),
-  loader: async ({ context }) => {
-    const sessionResponse = await authClient.getSession();
-
-    if (!sessionResponse.data?.user) {
+  loader: ({ context }) => {
+    // The (auth) guard already resolved `userData` through the cache (offline-safe,
+    // keeps the last known session) and redirects to /login when logged out — so
+    // reuse it here instead of a second getUserData() call. The guard ensures this
+    // is non-null on the profile path; the check just narrows the type.
+    if (!context.userData) {
       throw redirect({
         to: "/login",
         search: { redirect: context.redirectURL },
@@ -47,7 +48,7 @@ export const Route = createFileRoute("/(auth)/profile")({
     return {
       userData: {
         loggedIn: true,
-        profile: sessionResponse.data.user as unknown as NonNullable<UserData>["profile"],
+        profile: context.userData.profile,
       },
     };
   },

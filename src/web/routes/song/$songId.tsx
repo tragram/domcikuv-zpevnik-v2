@@ -1,11 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useUserData } from "src/web/hooks/use-user-data";
 import { z } from "zod";
-import PendingComponent from "~/components/PendingComponent";
 import SongView from "~/features/SongView/SongView";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore";
-import songLoader, { SongLoaderErrorComponent } from "~/services/song-loader";
+import songLoader, {
+  SongLoaderErrorComponent,
+  SongPendingComponent,
+} from "~/services/song-loader";
 
 const songSearchSchema = z.object({
   version: z.string().optional(),
@@ -23,12 +25,7 @@ export const Route = createFileRoute("/song/$songId")({
   loader: songLoader,
   pendingMs: 200,
   pendingMinMs: 1000, // keep visible for at least 1s
-  pendingComponent: () => (
-    <PendingComponent
-      title="Loading Song"
-      text="Fetching the song from the DB..."
-    />
-  ),
+  pendingComponent: SongPendingComponent,
   errorComponent: () => <SongLoaderErrorComponent from="/song/$songId" />,
 });
 
