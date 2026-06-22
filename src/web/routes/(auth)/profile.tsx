@@ -1,6 +1,15 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { Camera, LogOut, Save, Shield, User } from "lucide-react";
+import {
+  BookOpen,
+  Camera,
+  Copy,
+  LogOut,
+  QrCode,
+  Save,
+  User,
+} from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { logoutUser } from "src/lib/auth/client";
@@ -16,11 +25,17 @@ import {
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
 import { Separator } from "~/components/ui/separator";
 import { Switch } from "~/components/ui/switch";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { redirectSearchSchema } from "~/types/types";
 import { ApiException, handleApiResponse } from "~/services/api-service";
+import { cn } from "~/lib/utils";
 type ProfileUpdateResponse = {
   status: string;
   data: ProfileUpdateData;
@@ -270,6 +285,11 @@ function RouteComponent() {
             onToggleFavoritesPublic={(value) =>
               updateField("isFavoritesPublic", value)
             }
+            savedNickname={savedData.nickname}
+            hasUnsavedChanges={
+              currentData.isFavoritesPublic !== savedData.isFavoritesPublic ||
+              currentData.nickname !== savedData.nickname
+            }
           />
         </div>
 
@@ -485,22 +505,47 @@ function BasicInformationSection({
 interface PrivacySectionProps {
   isFavoritesPublic: boolean;
   onToggleFavoritesPublic: (value: boolean) => void;
+  // The link only ever works for a nickname that's actually been saved, so
+  // this is savedData.nickname rather than the (possibly unsaved) live value.
+  savedNickname: string;
+  // True when the toggle or nickname has been changed but not saved yet, so
+  // the rendered link doesn't reflect the server's actual state.
+  hasUnsavedChanges: boolean;
 }
 
 function PrivacySection({
   isFavoritesPublic,
   onToggleFavoritesPublic,
+  savedNickname,
+  hasUnsavedChanges,
 }: PrivacySectionProps) {
+  const songbookUrl = savedNickname
+    ? `${window.location.origin}/?songbook=${encodeURIComponent(savedNickname)}`
+    : null;
+
+  const handleCopyLink = async () => {
+    if (!songbookUrl) return;
+    try {
+      await navigator.clipboard.writeText(songbookUrl);
+      toast.success("Link copied to clipboard");
+    } catch {
+      toast.error("Failed to copy link");
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Shield className="h-5 w-5" />
-          Privacy Settings
+          <BookOpen className="h-5 w-5" />
+          Public Songbook
         </CardTitle>
-        <CardDescription>Control visibility preferences</CardDescription>
+        <CardDescription>
+          Let others view your favorites and open your songbook via a direct
+          link
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
             <Label htmlFor="public-favorites" className="font-medium">
@@ -516,6 +561,65 @@ function PrivacySection({
             onCheckedChange={onToggleFavoritesPublic}
           />
         </div>
+
+        {songbookUrl ? (
+          <div className="space-y-2">
+            <div
+              className={cn(
+                "flex gap-2 transition-opacity",
+                !isFavoritesPublic && "opacity-50",
+              )}
+            >
+              <Input
+                value={songbookUrl}
+                readOnly
+                disabled={!isFavoritesPublic}
+                className="font-mono text-sm"
+              />
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleCopyLink}
+                disabled={!isFavoritesPublic}
+                title="Copy link"
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    disabled={!isFavoritesPublic}
+                    title="Show QR code"
+                  >
+                    <QrCode className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto flex flex-col items-center gap-2">
+                  <QRCodeSVG
+                    value={songbookUrl}
+                    size={192}
+                    fgColor="var(--primary)"
+                    bgColor="var(--popover)"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Scan to open the songbook
+                  </p>
+                </PopoverContent>
+              </Popover>
+            </div>
+            {hasUnsavedChanges && (
+              <p className="text-sm text-amber-600">
+                {`Save changes for the link to ${isFavoritesPublic?"work":"stop working"}.`}
+              </p>
+            )}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            Set a nickname above and save to get a shareable link.
+          </p>
+        )}
       </CardContent>
     </Card>
   );
