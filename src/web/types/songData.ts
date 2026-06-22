@@ -68,6 +68,9 @@ export class SongData {
   currentIllustration: CurrentIllustrationApi | undefined;
   isFavorite: boolean;
   isCustom: boolean;
+  /** Set only for not-yet-imported external search results, to point url()/thumbnailURL() at the source instead of an internal song page. */
+  previewUrl?: string;
+  previewThumbnailURL?: string;
 
   constructor(
     songFromDB: SongDataApi & {
@@ -140,11 +143,8 @@ export class SongData {
       },
     } as unknown as SongDataApi);
 
-    song.url = () => external.url;
-    if (external.thumbnailURL) {
-      song.thumbnailURL = () => external.thumbnailURL;
-      song.illustrationURL = () => external.thumbnailURL;
-    }
+    song.previewUrl = external.url;
+    song.previewThumbnailURL = external.thumbnailURL;
     return song;
   }
 
@@ -203,11 +203,13 @@ export class SongData {
   }
 
   url(): string | undefined {
+    if (this.previewUrl) return this.previewUrl;
     return this.id ? `/song/${this.id}` : undefined;
   }
 
   // Image URL methods
   thumbnailURL(): string | undefined {
+    if (this.previewThumbnailURL) return this.previewThumbnailURL;
     if (!this.currentIllustration) {
       if (this.externalSource?.sourceId === "pisnicky-akordy")
         return generateFallbackLogo("#7BAADF", "#578DC5");
@@ -223,6 +225,7 @@ export class SongData {
   }
 
   illustrationURL(): string | undefined {
+    if (this.previewThumbnailURL) return this.previewThumbnailURL;
     if (!this.currentIllustration) {
       if (this.externalSource?.sourceId === "pisnicky-akordy")
         return generateFallbackLogo("#7BAADF", "#578DC5");
