@@ -3,7 +3,6 @@ import { useRouteContext } from "@tanstack/react-router";
 import Fuse from "fuse.js";
 import { useMemo, useState } from "react";
 
-import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { fetchExternalSearch } from "~/services/song-service";
 import type { UserData } from "~/hooks/use-user-data";
 import { useIsOnline } from "~/hooks/use-is-online";
@@ -19,7 +18,6 @@ import { useQueryStore } from "./Toolbar/SearchBar";
  */
 export function useExternalSearch(userData: UserData, bestLocalScore: number) {
   const { query } = useQueryStore();
-  const { showExternal } = useFilterSettingsStore();
   const { api } = useRouteContext({ from: "__root__" });
   const isOnline = useIsOnline();
 
@@ -31,9 +29,12 @@ export function useExternalSearch(userData: UserData, bestLocalScore: number) {
   const isQueryValidForExternal =
     !!query && (bestLocalScore > 0.05 || query.trim().length >= 7);
   // Online-only: the endpoint hits third-party libraries and importing a result
-  // needs the network too, so hide the whole flow offline.
+  // needs the network too, so hide the whole flow offline. The "show external"
+  // browse filter only affects which *local* songs are displayed, not whether
+  // online search is offered — same as every other browse filter being bypassed
+  // while actively searching (see useDisplayedSongs).
   const canSearchExternal =
-    isOnline && !!userData && showExternal && isQueryValidForExternal;
+    isOnline && !!userData && isQueryValidForExternal;
   const shouldSearchExternal = canSearchExternal && hasTriggeredExternalSearch;
 
   const { data: rawExternalSongs = [], isFetching: isLoadingExternal } = useQuery({
