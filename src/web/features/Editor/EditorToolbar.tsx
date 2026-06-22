@@ -122,16 +122,24 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       SUMMARY_PROMPT_VERSIONS[0],
       SUMMARY_MODELS_API[0],
     )
-      .then((response) => {
+      .then(async (response) => {
         if (response.ok) {
           console.log(`Illustration generation started for song ${songId}`);
           toast.info("Illustration generation started in background");
         } else {
-          console.error("Failed to start illustration generation");
+          const body = (await response.json().catch(() => null)) as {
+            failData?: { message?: string };
+            message?: string;
+          } | null;
+          const message =
+            body?.failData?.message ?? body?.message ?? response.statusText;
+          console.error("Failed to start illustration generation:", message);
+          toast.error(`Failed to start illustration generation: ${message}`);
         }
       })
       .catch((error) => {
         console.error("Failed to generate illustration:", error);
+        toast.error("Failed to start illustration generation");
       });
   };
   const handleSubmit = async () => {
