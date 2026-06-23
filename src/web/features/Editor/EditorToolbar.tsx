@@ -188,8 +188,6 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         } your version of the song!`,
       );
 
-      onSubmitSuccess?.();
-
       // Auto-generate illustration if enabled, the song has no illustration yet
       // (covers brand new songs as well as imported songs without one), and
       // the user is trusted
@@ -227,10 +225,16 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
 
       if (userData && userData.profile.isAdmin) {
-        navigate({ to: "/song/$songId", params: { songId: response.song.id } });
+        await navigate({
+          to: "/song/$songId",
+          params: { songId: response.song.id },
+        });
       } else {
-        navigate({ to: "/submissions" });
+        await navigate({ to: "/submissions" });
       }
+
+      // Clear the persisted draft only *after* navigating away
+      onSubmitSuccess?.();
     } catch (e) {
       toast.error("Something went wrong during submission", {
         description: e instanceof Error ? e.message : String(e),

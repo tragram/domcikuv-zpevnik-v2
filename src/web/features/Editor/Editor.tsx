@@ -212,17 +212,34 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
     ? `editor/state/${songData.id}`
     : "editor/state";
 
-  const defaultEditorState: EditorState = (
-    songData ? songData : SongData.empty()
-  ).toJSON() as EditorState;
+  const defaultEditorState: EditorState = useMemo(() => {
+    const base = (songData ? songData : SongData.empty()).toJSON() as EditorState;
+    if (versionId) base.parentId = versionId;
+    return base;
+    // songData identity changes when the route loader revalidates to a fresher
+    // version; recomputing here is what lets that fresh version surface.
+  }, [songData, versionId]);
 
-  if (versionId) {
-    defaultEditorState.parentId = versionId;
-  }
-
-  const [editorState, setEditorState] = useLocalStorageState<EditorState>(
+  // Persist only a genuine in-progress draft (`null` = "no draft"). When there
+  // is no draft the editor mirrors `defaultEditorState`, which tracks the live
+  // `songData`, so a just-submitted (or revalidated) version shows up on its
+  // own. Previously the hook seeded itself from `songData` once and froze that
+  // snapshot — and re-persisted it to storage on clear — so after submitting an
+  // edit, reopening the editor served the stale pre-edit version.
+  const [draft, setDraft] = useLocalStorageState<EditorState | null>(
     editorStateKey,
-    { defaultValue: () => defaultEditorState },
+    { defaultValue: null },
+  );
+  const editorState = draft ?? defaultEditorState;
+  const setEditorState = useCallback(
+    (update: EditorState | ((prev: EditorState) => EditorState)) => {
+      setDraft((prev) =>
+        typeof update === "function"
+          ? update(prev ?? defaultEditorState)
+          : update,
+      );
+    },
+    [setDraft, defaultEditorState],
   );
 
   const [editorSettings, setEditorSettings] =
@@ -555,7 +572,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           onBackupAndInitialize={handleBackupAndInitialize}
           validationErrors={validationErrors}
           onLoadBackup={loadBackupState}
-          onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
+          onSubmitSuccess={() => setDraft(null)}
           onAttemptSubmit={() => setSubmitAttempted(true)}
           userData={userData}
           onUploadClick={onUploadClick}
@@ -627,7 +644,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           validationErrors={validationErrors}
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
-          onSubmitSuccess={() => localStorage.removeItem(editorStateKey)}
+          onSubmitSuccess={() => setDraft(null)}
           userData={userData}
           onUploadClick={onUploadClick}
           editorSettings={editorSettings}
