@@ -66,12 +66,21 @@ export const editorSubmitSchema = z.object({
     .transform((x) => (x ? String(x) : null)),
 });
 
+// The PUT (edit existing song) route additionally accepts an admin-only flag.
+export const editorUpdateSchema = editorSubmitSchema.extend({
+  // When an admin approves another user's pending submission from the editor,
+  // keep the original submitter as the version's author (the admin is still
+  // recorded as the approver). Ignored for non-admins and non-pending edits.
+  editAsSubmitter: z.boolean().optional(),
+});
+
 export const autofillChordproSchema = z.object({
   chordpro: z.string(),
 });
 
 export type EditorSubmitSchema = z.infer<typeof editorSubmitSchema>;
 export type EditorSubmitSchemaInput = z.input<typeof editorSubmitSchema>;
+export type EditorUpdateSchemaInput = z.input<typeof editorUpdateSchema>;
 
 const editorApp = buildApp()
   .post(
@@ -230,8 +239,8 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       version: result.newVersion,
     } as EditorSubmissionResponse);
   })
-  .put("/:id", zValidatorJSend("json", editorSubmitSchema), async (c) => {
-    const submission = c.req.valid("json");
+  .put("/:id", zValidatorJSend("json", editorUpdateSchema), async (c) => {
+    const { editAsSubmitter, ...submission } = c.req.valid("json");
     const userId = c.var.USER?.id;
     const songId = c.req.param("id");
 
@@ -241,12 +250,13 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
 
     const db = c.var.db;
     const userProfile = await db
-      .select({ isTrusted: user.isTrusted })
+      .select({ isTrusted: user.isTrusted, isAdmin: user.isAdmin })
       .from(user)
       .where(eq(user.id, userId))
       .get();
 
     const isTrusted = !!userProfile?.isTrusted;
+    const isAdmin = !!userProfile?.isAdmin;
 
     // getSongPopulated will throw an error if the song is not found.
     const existingSong = await getSongBase(db, songId);
@@ -257,16 +267,22 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       songId,
       userId,
       isTrusted,
+      undefined,
+      { isAdmin, editAsSubmitter },
     );
 
-    try {
-      // Pin the editor's songbook to the version they just created, so their
-      // change sticks in their songbook even if it's never approved.
-      await setSongbookEntry(db, userId, existingSong.id, {
-        pinnedVersionId: versionResult.id,
-      });
-    } catch {
-      /* non fatal */
+    // Pin the new version to the editor's songbook only when it's genuinely
+    // theirs, so an in-progress edit sticks even if it's never approved. An admin
+    // approving someone else's submission publishes it outright — there's nothing
+    // to pin, and we don't want it in the admin's favorites.
+    if (versionResult.userId === userId) {
+      try {
+        await setSongbookEntry(db, userId, existingSong.id, {
+          pinnedVersionId: versionResult.id,
+        });
+      } catch {
+        /* non fatal */
+      }
     }
 
     // Response includes status so UI can show "Changes saved (Pending Approval)"

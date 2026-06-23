@@ -23,6 +23,7 @@ interface MetadataEditorProps {
   onSettingsChange: (settings: EditorSettings) => void;
   userData: UserData;
   hasIllustration?: boolean;
+  canAttributeToSubmitter?: boolean;
   features: EvaluatedFeature[];
   isProcessing: boolean;
   onExecuteFeature: (feature: SmartFeature, payload?: any) => void;
@@ -38,6 +39,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   onSettingsChange,
   userData,
   hasIllustration = false,
+  canAttributeToSubmitter = false,
   features,
   isProcessing,
   onExecuteFeature,
@@ -169,6 +171,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
             onSettingsChange={onSettingsChange}
             userData={userData}
             hasIllustration={hasIllustration}
+            canAttributeToSubmitter={canAttributeToSubmitter}
           />
         </div>
 

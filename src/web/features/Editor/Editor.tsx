@@ -569,10 +569,18 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
 
   const hasIllustration = !!songData?.currentIllustration;
 
+  // True when an admin is editing another user's pending submission: they can
+  // approve it as-is (no edits required) and attribute it to the submitter or
+  // themselves. `isCustom` is set only when the version being edited is pending.
+  const isApprovingSubmission =
+    !!userData?.profile.isAdmin && !!songData?.isCustom;
+
   const toolbarTop = true;
 
   const canBeSubmitted =
-    !editorStatesEqual(editorState, defaultEditorState) && isValid;
+    (isApprovingSubmission ||
+      !editorStatesEqual(editorState, defaultEditorState)) &&
+    isValid;
 
   return (
     <div className="flex flex-col relative h-fit md:h-dvh gap-4 xl:gap-8 min-w-[250px]">
@@ -582,6 +590,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           songData={songData}
           toolbarTop={toolbarTop}
           canBeSubmitted={!!canBeSubmitted}
+          isApprovalMode={isApprovingSubmission}
           onBackupAndInitialize={handleBackupAndInitialize}
           validationErrors={validationErrors}
           onLoadBackup={loadBackupState}
@@ -627,6 +636,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
               userData={userData}
               fieldErrors={submitAttempted ? fieldErrors : {}}
               hasIllustration={hasIllustration}
+              canAttributeToSubmitter={isApprovingSubmission}
               features={evaluatedFeatures}
               isProcessing={isProcessing}
               onExecuteFeature={executeFeature}
@@ -657,6 +667,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           songData={songData}
           toolbarTop={toolbarTop}
           canBeSubmitted={!!canBeSubmitted}
+          isApprovalMode={isApprovingSubmission}
           validationErrors={validationErrors}
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}

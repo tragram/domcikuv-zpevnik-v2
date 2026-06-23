@@ -50,6 +50,8 @@ interface EditorToolbarProps {
   songData?: SongData;
   toolbarTop: boolean;
   canBeSubmitted: boolean;
+  /** An admin approving a pending submission: changes optional, "Approve" wording. */
+  isApprovalMode?: boolean;
   validationErrors: string[]; // <-- Added validation errors prop
   onBackupAndInitialize: () => void;
   onLoadBackup: () => void;
@@ -91,6 +93,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   songData,
   toolbarTop,
   canBeSubmitted,
+  isApprovalMode = false,
   validationErrors,
   onBackupAndInitialize,
   onLoadBackup,
@@ -175,7 +178,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     }
 
     try {
-      const response = await submitSongVersion(parsedState, songData?.id);
+      const response = await submitSongVersion(parsedState, songData?.id, {
+        editAsSubmitter: editorSettings.editAsSubmitter ?? true,
+      });
 
       const version = response.version;
       const isUpdate =
@@ -183,9 +188,11 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         new Date(version.updatedAt).getTime();
 
       toast.success(
-        `Successfully ${
-          isUpdate ? "updated" : "submitted"
-        } your version of the song!`,
+        isApprovalMode
+          ? "Changes approved and published!"
+          : `Successfully ${
+              isUpdate ? "updated" : "submitted"
+            } your version of the song!`,
       );
 
       // Auto-generate illustration if enabled, the song has no illustration yet
@@ -325,9 +332,13 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
                   onClick={handleSubmit}
                   disabled={!canBeSubmitted || isSubmitting || !isOnline}
                 >
-                  {isSubmitting
-                    ? "Submitting..."
-                    : `Submit ${songData ? "edit" : "new song"}`}
+                  {isApprovalMode
+                    ? isSubmitting
+                      ? "Approving..."
+                      : "Approve changes"
+                    : isSubmitting
+                      ? "Submitting..."
+                      : `Submit ${songData ? "edit" : "new song"}`}
                   <CloudUpload />
                 </Button>
               </span>
@@ -349,9 +360,13 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
                 </ul>
               ) : (
                 <p>
-                  {canBeSubmitted
-                    ? "Ready to submit!"
-                    : "Make some changes before submitting."}
+                  {isApprovalMode
+                    ? canBeSubmitted
+                      ? "Ready to approve!"
+                      : "Approve the submission as-is, or make changes first."
+                    : canBeSubmitted
+                      ? "Ready to submit!"
+                      : "Make some changes before submitting."}
                 </p>
               )}
             </TooltipContent>

@@ -61,7 +61,14 @@ const SongHeading: React.FC<SongHeadingProps> = ({
     feedStatus?.enabled && !feedStatus.isMaster
       ? feedStatus.sessionState?.masterNickname
       : undefined;
-  const draftAuthor = sessionHost ?? songbookOwnerName;
+  // A directly-fetched draft (e.g. an admin reviewing a submission) carries its
+  // author: attribute it to them unless it's the viewer's own.
+  const customAuthor = songData.customVersionAuthor;
+  const foreignDraftAuthor =
+    customAuthor && customAuthor.id !== userData?.profile.id
+      ? customAuthor.name
+      : undefined;
+  const draftAuthor = sessionHost ?? songbookOwnerName ?? foreignDraftAuthor;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isWrapped, setIsWrapped] = useState(false);

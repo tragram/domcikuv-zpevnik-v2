@@ -67,15 +67,24 @@ export class SongData {
   // UI-specific fields
   currentIllustration: CurrentIllustrationApi | undefined;
   isFavorite: boolean;
-  isCustom: boolean;
+  /**
+   * When set, the payload is a not-yet-public (pending) version rather than the
+   * published current one, along with who authored it (for badge attribution).
+   * Its presence is what `isCustom` reports.
+   */
+  customVersionAuthor?: { id: string; name: string };
   /** Set only for not-yet-imported external search results, to point url()/thumbnailURL() at the source instead of an internal song page. */
   previewUrl?: string;
   previewThumbnailURL?: string;
 
+  /** A custom (pending draft) version is being shown rather than the canonical one. */
+  get isCustom(): boolean {
+    return !!this.customVersionAuthor;
+  }
+
   constructor(
     songFromDB: SongDataApi & {
       isFavoriteByCurrentUser?: boolean;
-      isCustom?: boolean;
     },
   ) {
     this.id = songFromDB.id;
@@ -99,7 +108,7 @@ export class SongData {
 
     this.currentIllustration = songFromDB.currentIllustration;
     this.isFavorite = songFromDB.isFavoriteByCurrentUser ?? false;
-    this.isCustom = songFromDB.isCustom ?? false;
+    this.customVersionAuthor = songFromDB.customVersionAuthor;
   }
 
   static fromEditor(data: EditorState): SongData {

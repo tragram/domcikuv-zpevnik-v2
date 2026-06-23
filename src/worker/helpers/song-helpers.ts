@@ -39,6 +39,17 @@ export type PopulatedSongDB = BuildQueryResult<
     };
   }
 >;
+// A pending version shown in place of the canonical one is a "custom draft":
+// surface its author so the UI can badge and attribute it. Published/archived
+// (canonical) versions return undefined — no badge.
+const draftAuthorOf = (
+  version: { status: string },
+  author: { id: string; name: string; nickname?: string | null } | null | undefined,
+): SongDataApi["customVersionAuthor"] =>
+  version.status === "pending" && author
+    ? { id: author.id, name: author.nickname ?? author.name }
+    : undefined;
+
 // --- DTO Mapper ---
 const transformSongToApi = (
   songItem: PopulatedSongDB & { favorites?: { userId: string }[] },
@@ -170,23 +181,25 @@ export const retrieveSingleSong = async (
 
   if (!songRaw) return null;
 
-  let isCustom = false;
+  let customVersionAuthor: SongDataApi["customVersionAuthor"];
   if (versionId && songRaw.currentVersion?.id !== versionId) {
     const specificVersion = await db.query.songVersion.findFirst({
       where: eq(songVersion.id, versionId),
-      with: { songImport: true },
+      with: { songImport: true, user: true },
     });
     if (specificVersion) {
-      songRaw.currentVersion = specificVersion;
+      const { user: author, ...version } = specificVersion;
+      songRaw.currentVersion = version;
       // A pending version served in place of the published current one is a
-      // not-yet-public edit (e.g. the host's draft in a shared session) — flag
-      // it so the UI can badge it as a custom version.
-      isCustom = specificVersion.status === "pending";
+      // not-yet-public edit (e.g. the host's draft in a shared session, or a
+      // submission an admin is reviewing): carry its author so the UI can badge
+      // and attribute it.
+      customVersionAuthor = draftAuthorOf(version, author);
     }
   }
 
   const result = transformSongToApi(songRaw);
-  result.isCustom = isCustom;
+  result.customVersionAuthor = customVersionAuthor;
   return result;
 };
 
@@ -212,7 +225,7 @@ export const resolveSongbookSongs = async (
   const songs = await db.query.song.findMany({
     where: and(inArray(song.id, songIds), eq(song.deleted, false)),
     with: {
-      currentVersion: { with: { songImport: true } },
+      currentVersion: { with: { songImport: true, user: true } },
       currentIllustration: true,
     },
   });
@@ -229,7 +242,7 @@ export const resolveSongbookSongs = async (
   const versions = pinnedIds.length
     ? await db.query.songVersion.findMany({
         where: inArray(songVersion.id, pinnedIds),
-        with: { songImport: true },
+        with: { songImport: true, user: true },
       })
     : [];
   const versionById = new Map(versions.map((v) => [v.id, v]));
@@ -244,9 +257,10 @@ export const resolveSongbookSongs = async (
         : undefined;
     if (opts.onlyNonCanonical && !pinned) continue; // canonical → already in list
     if (pinned) songRaw.currentVersion = pinned;
-    if (!songRaw.currentVersion) continue; // nothing publishable to show
+    const shown = songRaw.currentVersion;
+    if (!shown) continue; // nothing publishable to show
     const api = transformSongToApi(songRaw);
-    api.isCustom = songRaw.currentVersion.status === "pending";
+    api.customVersionAuthor = draftAuthorOf(shown, shown.user);
     result.set(entry.songId, api);
   }
   return result;
@@ -374,6 +388,10 @@ export const createSongVersion = async (
   userId: string,
   isTrusted: boolean,
   importId?: string,
+  // Admin approval-from-editor controls. `isAdmin` lets the acting user approve
+  // someone else's pending submission in place; `editAsSubmitter` keeps the
+  // original submitter as the version's author (the admin stays the approver).
+  options?: { isAdmin?: boolean; editAsSubmitter?: boolean },
 ) => {
   const existingSong = await getSongBase(db, songId);
   if (existingSong.deleted) {
@@ -415,30 +433,47 @@ export const createSongVersion = async (
 
   const shouldPublish = isTrusted;
 
-  // LOGIC BRANCH A: Update the user's own pending draft in place.
-  // A pending version is only a valid parent when it belongs to the same user —
-  // editing your own unpublished suggestion updates it rather than spawning a
-  // duplicate. (Once pending changes are reachable via another user's songbook,
-  // this ownership check can be widened.)
-  if (
-    parentVersion &&
-    parentVersion.status === "pending" &&
-    parentVersion.userId === userId
-  ) {
+  // LOGIC BRANCH A: Approve/update a pending version in place (no fork).
+  // This covers two cases:
+  //  - The author editing their own pending draft (updates rather than spawning
+  //    a duplicate).
+  //  - An admin approving someone else's pending submission straight from the
+  //    editor — the submission is consumed in place instead of left dangling.
+  // The admin is always recorded as the approver; `editAsSubmitter` decides
+  // whether the version keeps its original author or is re-attributed to the
+  // admin.
+  const isOwnPending =
+    parentVersion?.status === "pending" && parentVersion.userId === userId;
+  const isAdminApprovingPending =
+    parentVersion?.status === "pending" &&
+    parentVersion.userId !== userId &&
+    !!options?.isAdmin;
+
+  if (parentVersion && (isOwnPending || isAdminApprovingPending)) {
+    // The version keeps its original author (the submitter for an admin approval,
+    // or themselves for an own-draft) unless an admin explicitly opts to claim
+    // authorship of the edit (`editAsSubmitter === false`).
+    const authorId =
+      isAdminApprovingPending && options?.editAsSubmitter === false
+        ? userId
+        : parentVersion.userId;
+    // An admin approving always publishes; a self-edit publishes only if trusted.
+    const publish = shouldPublish || isAdminApprovingPending;
+
     const updatedVersion = await db
       .update(songVersion)
       .set({
         ...submission,
+        userId: authorId,
         updatedAt: now,
-        // A trusted user's update acts as an immediate approval of their draft.
-        approvedBy: shouldPublish ? userId : null,
-        approvedAt: shouldPublish ? now : null,
+        approvedBy: publish ? userId : null,
+        approvedAt: publish ? now : null,
         importId: importId ?? null,
       })
       .where(eq(songVersion.id, parentVersion.id))
       .returning();
 
-    if (shouldPublish)
+    if (publish)
       await promoteVersionToCurrent(db, songId, parentVersion.id, userId);
     return updatedVersion[0];
   }

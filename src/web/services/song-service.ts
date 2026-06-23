@@ -301,8 +301,7 @@ export const buildSongDB = (
 ): SongDB => {
   // Map of canonical songs for easy lookup/modification. Overlaid below with the
   // current user's pinned drafts where applicable.
-  type MutableSong = SongDataApi & { isCustom?: boolean };
-  const songMap = new Map<string, MutableSong>(
+  const songMap = new Map<string, SongDataApi>(
     songs.map((s) => [s.id, { ...s }]),
   );
 

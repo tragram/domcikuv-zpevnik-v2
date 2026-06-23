@@ -16,12 +16,13 @@ export const autofillChordpro = async (
 export const submitSongVersion = async (
   payload: EditorSubmitSchemaInput,
   songId?: string,
+  options?: { editAsSubmitter?: boolean },
 ) => {
   return await makeApiRequest(() =>
     songId
       ? client.api.editor[":id"].$put({
           param: { id: songId },
-          json: payload,
+          json: { ...payload, editAsSubmitter: options?.editAsSubmitter },
         })
       : client.api.editor.$post({ json: payload }),
   );

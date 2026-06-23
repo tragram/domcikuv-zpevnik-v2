@@ -77,9 +77,11 @@ export type SongDataApi = {
   updateStatus?: "added" | "modified" | "deleted";
   // Hidden from the browse list but still reachable via search / direct link.
   hidden?: boolean;
-  // True when this payload is a not-yet-public (pending) version rather than the
-  // published current one — e.g. a specific version fetched for a shared session.
-  isCustom?: boolean;
+  // Set when this payload is a not-yet-public (pending) version rather than the
+  // published current one — e.g. a specific version fetched for a shared session,
+  // or a submission an admin is reviewing. Carries the draft's author so the UI
+  // can flag it as custom and attribute it ("<name>'s draft"). Absent = canonical.
+  customVersionAuthor?: { id: string; name: string };
 };
 
 export type SongDataAdminApi = SongDataDB &
