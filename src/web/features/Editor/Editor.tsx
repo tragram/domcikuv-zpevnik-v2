@@ -1,6 +1,12 @@
 import ChordSheetJS from "chordsheetjs";
 import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   normalizeWhitespace,
   parseChordPro,
@@ -255,6 +261,12 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   // Field errors stay hidden while the user is still editing; only surface
   // them (red borders) once they've tried to submit.
   const [submitAttempted, setSubmitAttempted] = useState(false);
+  // Editor doesn't unmount between songs (e.g. navigating from one song's
+  // edit page straight to another's), so reset explicitly on identity change
+  // rather than relying on stale state from the previous song.
+  useEffect(() => {
+    setSubmitAttempted(false);
+  }, [editorStateKey]);
 
   const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
     return SMART_FEATURES.map((f) => {
@@ -293,6 +305,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
     const backup = localStorage.getItem(editorStateKey + "-backup");
     if (backup) {
       setEditorState(JSON.parse(backup));
+      setSubmitAttempted(false);
     }
   }, [editorStateKey, setEditorState]);
 
@@ -572,7 +585,10 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           onBackupAndInitialize={handleBackupAndInitialize}
           validationErrors={validationErrors}
           onLoadBackup={loadBackupState}
-          onSubmitSuccess={() => setDraft(null)}
+          onSubmitSuccess={() => {
+            setDraft(null);
+            setSubmitAttempted(false);
+          }}
           onAttemptSubmit={() => setSubmitAttempted(true)}
           userData={userData}
           onUploadClick={onUploadClick}
@@ -644,7 +660,10 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           validationErrors={validationErrors}
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
-          onSubmitSuccess={() => setDraft(null)}
+          onSubmitSuccess={() => {
+            setDraft(null);
+            setSubmitAttempted(false);
+          }}
           userData={userData}
           onUploadClick={onUploadClick}
           editorSettings={editorSettings}
