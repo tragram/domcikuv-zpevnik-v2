@@ -4,7 +4,9 @@
 {capo: 0}
 {language: english}
 {createdAt: 1778852844000}
-{updatedAt: 1781882089000}
+{updatedAt: 1782144710000}
+{illustrationId: yungblud-zombie_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: yungblud-zombie_gpt-5.4-mini_v7}
 
 {createdAt: 1778678057025}
 

@@ -1,2 +1,21 @@
 songId: yungblud-zombie
-prompts: []
+prompts:
+  - id: yungblud-zombie_gpt-5.4-mini_v7
+    songId: yungblud-zombie
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely, emotionally exhausted young
+      adult with a pale “zombie-like” expression standing under cold blue
+      moonlight beside a broken rooftop edge, a small paper spaceship model at
+      their feet hinting at escape, city lights turning away in the distance,
+      subtle surreal atmosphere, wind-blown hair, despair mixed with longing,
+      one soft warm light source on the face against a dark night sky, high
+      contrast, moody, square composition, minimal/no text, fully filled frame
+    createdAt: 2026-06-22T16:11:39.000Z
+    updatedAt: 2026-06-22T16:11:39.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1782144710000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
