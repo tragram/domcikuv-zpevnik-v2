@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: a a a h c h a}
 {createdAt: 1781973763000}
-{updatedAt: 1782144587000}
+{updatedAt: 1782205341000}
 {illustrationId: luftaci-burtik_v_srdci_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: luftaci-burtik_v_srdci_gpt-5.4-mini_v7}
 
@@ -34,6 +34,10 @@ kam [F]mizí moje [Am]mládí, kam [H7]odcházejí [E7]kamarádi
 [Am]a uzeniny sojový, kdy [Dm]rozevřou se, kdo to ví
 [F]pryč jsou časy, [E]kdy jsme mohli [Am]v klidu tady [G]žít
 {end_of_verse}
+
+{start_of_variant: prepend_content}
+A to je ten
+{end_of_variant}
 
 {chorus}
 
