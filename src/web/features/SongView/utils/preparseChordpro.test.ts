@@ -346,7 +346,7 @@ Line 1
 {start_of_chorus}
 {comment: %shorthand_section%}
 {comment: %section_title: R1%}
-Pre Line+
+Pre Line...
 Line 1
 {end_of_chorus}
     `.trim();

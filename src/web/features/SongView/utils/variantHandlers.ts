@@ -99,7 +99,7 @@ export const variantHandlers: Record<string, VariantHandler> = {
       return [
         lines[0],
         sectionTitle,
-        content[0] + "+",
+        content[0] + "...",
         ...lines.slice(lyricStartIdx, -1),
         ...lines.slice(-1),
       ];
