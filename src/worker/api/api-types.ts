@@ -77,11 +77,15 @@ export type SongDataApi = {
   updateStatus?: "added" | "modified" | "deleted";
   // Hidden from the browse list but still reachable via search / direct link.
   hidden?: boolean;
-  // Set when this payload is a not-yet-public (pending) version rather than the
-  // published current one — e.g. a specific version fetched for a shared session,
-  // or a submission an admin is reviewing. Carries the draft's author so the UI
-  // can flag it as custom and attribute it ("<name>'s draft"). Absent = canonical.
+  // Set when this payload's shown version isn't the song's published current one
+  // — e.g. a pinned draft, a specific version fetched for a shared session, or a
+  // submission an admin is reviewing. Carries that version's author so the UI can
+  // flag it as custom and attribute it ("<name>'s draft"). Absent = canonical.
   customVersionAuthor?: { id: string; name: string };
+  // Set on a custom payload when the song's published current version is newer
+  // than the one shown (e.g. it was approved/updated after this draft was made),
+  // so the UI can offer "switch to the official version".
+  canonicalIsNewer?: boolean;
 };
 
 export type SongDataAdminApi = SongDataDB &

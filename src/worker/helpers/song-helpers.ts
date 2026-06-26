@@ -39,16 +39,33 @@ export type PopulatedSongDB = BuildQueryResult<
     };
   }
 >;
-// A pending version shown in place of the canonical one is a "custom draft":
-// surface its author so the UI can badge and attribute it. Published/archived
-// (canonical) versions return undefined — no badge.
-const draftAuthorOf = (
-  version: { status: string },
-  author: { id: string; name: string; nickname?: string | null } | null | undefined,
-): SongDataApi["customVersionAuthor"] =>
-  version.status === "pending" && author
-    ? { id: author.id, name: author.nickname ?? author.name }
-    : undefined;
+// Custom-payload metadata, derived purely from how the shown version relates to
+// the song's canonical (published current) one — the single definition of
+// "custom". When the shown version differs from canonical (or there is no
+// canonical yet), it's a draft: attribute it to its author, and flag whether the
+// published version has since moved past it so the UI can offer "switch to
+// official". A canonical version shown as-is yields no custom metadata.
+const customMetaOf = (
+  canonical: { id: string; createdAt: Date | string } | null | undefined,
+  shown:
+    | {
+        id: string;
+        createdAt: Date | string;
+        user?: { id: string; name: string; nickname?: string | null } | null;
+      }
+    | null
+    | undefined,
+): Pick<SongDataApi, "customVersionAuthor" | "canonicalIsNewer"> => {
+  if (!shown || (canonical && shown.id === canonical.id)) return {};
+  return {
+    customVersionAuthor: shown.user
+      ? { id: shown.user.id, name: shown.user.nickname ?? shown.user.name }
+      : undefined,
+    canonicalIsNewer: canonical
+      ? new Date(canonical.createdAt) > new Date(shown.createdAt)
+      : false,
+  };
+};
 
 // --- DTO Mapper ---
 const transformSongToApi = (
@@ -181,8 +198,11 @@ export const retrieveSingleSong = async (
 
   if (!songRaw) return null;
 
-  let customVersionAuthor: SongDataApi["customVersionAuthor"];
+  let customMeta: Pick<SongDataApi, "customVersionAuthor" | "canonicalIsNewer"> =
+    {};
   if (versionId && songRaw.currentVersion?.id !== versionId) {
+    // Capture the canonical current version before swapping in the requested one.
+    const canonical = songRaw.currentVersion;
     const specificVersion = await db.query.songVersion.findFirst({
       where: eq(songVersion.id, versionId),
       with: { songImport: true, user: true },
@@ -190,16 +210,12 @@ export const retrieveSingleSong = async (
     if (specificVersion) {
       const { user: author, ...version } = specificVersion;
       songRaw.currentVersion = version;
-      // A pending version served in place of the published current one is a
-      // not-yet-public edit (e.g. the host's draft in a shared session, or a
-      // submission an admin is reviewing): carry its author so the UI can badge
-      // and attribute it.
-      customVersionAuthor = draftAuthorOf(version, author);
+      customMeta = customMetaOf(canonical, { ...version, user: author });
     }
   }
 
   const result = transformSongToApi(songRaw);
-  result.customVersionAuthor = customVersionAuthor;
+  Object.assign(result, customMeta);
   return result;
 };
 
@@ -250,9 +266,9 @@ export const resolveSongbookSongs = async (
   for (const entry of entries) {
     const songRaw = songById.get(entry.songId);
     if (!songRaw) continue; // deleted / missing
+    const canonical = songRaw.currentVersion;
     const pinned =
-      entry.pinnedVersionId &&
-      entry.pinnedVersionId !== songRaw.currentVersion?.id
+      entry.pinnedVersionId && entry.pinnedVersionId !== canonical?.id
         ? versionById.get(entry.pinnedVersionId)
         : undefined;
     if (opts.onlyNonCanonical && !pinned) continue; // canonical → already in list
@@ -260,7 +276,7 @@ export const resolveSongbookSongs = async (
     const shown = songRaw.currentVersion;
     if (!shown) continue; // nothing publishable to show
     const api = transformSongToApi(songRaw);
-    api.customVersionAuthor = draftAuthorOf(shown, shown.user);
+    Object.assign(api, customMetaOf(canonical, shown));
     result.set(entry.songId, api);
   }
   return result;
@@ -414,20 +430,17 @@ export const createSongVersion = async (
       .where(eq(song.id, songId));
   }
   const now = new Date();
+  // Resolve the edited-from version for lineage. The client sends a real version
+  // id (the current version's id when editing the canonical song). A parentId
+  // that doesn't resolve to a version of this song — e.g. a stale client value —
+  // is ignored so the edit forks fresh rather than failing the whole submission.
   let parentVersion: schema.SongVersionDB | undefined = undefined;
-
-  const resolvedParentId =
-    submission.parentId === songId
-      ? (await db.query.song.findFirst({ where: eq(song.id, songId) }))
-          ?.currentVersionId
-      : submission.parentId;
-  if (resolvedParentId) {
-    // hacky way to tell the backend that we're basing the edit on current version (which is unavailable) is setting parentId to songId which won't happen otherwise due to the structure of versionId
+  if (submission.parentId) {
     parentVersion = await db.query.songVersion.findFirst({
-      where: eq(songVersion.id, resolvedParentId),
+      where: eq(songVersion.id, submission.parentId),
     });
-    if (!parentVersion || parentVersion.songId !== songId) {
-      throw Error("Invalid parentId!");
+    if (parentVersion && parentVersion.songId !== songId) {
+      parentVersion = undefined;
     }
   }
 

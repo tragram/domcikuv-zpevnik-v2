@@ -43,7 +43,7 @@ export const songVersion = sqliteTable("song_version", {
   // 'pending' (User suggestion) -> 'published' (Active) -> 'archived' (History) -> 'deleted'
   // 'rejected' (Closed without merging)
   status: text("status", {
-    enum: ["pending", "published", "archived", "rejected", "draft", "deleted"],
+    enum: ["pending", "published", "archived", "rejected", "deleted"],
   })
     .notNull()
     .default("pending"),

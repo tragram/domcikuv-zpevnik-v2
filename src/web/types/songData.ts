@@ -73,6 +73,9 @@ export class SongData {
    * Its presence is what `isCustom` reports.
    */
   customVersionAuthor?: { id: string; name: string };
+  /** Custom payload whose canonical (published current) version is newer than the
+   * one shown — lets the UI offer switching back to the official version. */
+  canonicalIsNewer?: boolean;
   /** Set only for not-yet-imported external search results, to point url()/thumbnailURL() at the source instead of an internal song page. */
   previewUrl?: string;
   previewThumbnailURL?: string;
@@ -109,6 +112,7 @@ export class SongData {
     this.currentIllustration = songFromDB.currentIllustration;
     this.isFavorite = songFromDB.isFavoriteByCurrentUser ?? false;
     this.customVersionAuthor = songFromDB.customVersionAuthor;
+    this.canonicalIsNewer = songFromDB.canonicalIsNewer;
   }
 
   static fromEditor(data: EditorState): SongData {

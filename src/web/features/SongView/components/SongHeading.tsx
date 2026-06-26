@@ -1,17 +1,92 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 import { FavoriteButton } from "~/components/FavoriteButton";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import type { LayoutSettings } from "../hooks/viewSettingsStore";
 import { SONG_SOURCES_PRETTY } from "src/lib/db/schema/song.schema";
-import { Link } from "@tanstack/react-router";
-import { Pencil } from "lucide-react";
-import { UserData } from "src/web/hooks/use-user-data";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Pencil, RotateCcw, type LucideIcon } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import client from "src/worker/api-client";
+import { makeApiRequest } from "~/services/api-service";
+import { patchFavoriteEntry, UserData } from "src/web/hooks/use-user-data";
 import { Badge } from "src/web/components/ui/badge";
 import type { FeedStatus } from "../hooks/useSessionSync";
 import type { SongTranspose } from "../hooks/songTransposeMath";
 import CapoControl from "../settings/CapoSettings";
+
+/**
+ * Pins `targetVersionId` (or unpins, for `null` = back to canonical) and
+ * navigates to show it. Shared by both switch directions so the optimistic
+ * cache patch / navigation / persistence flow lives in one place.
+ */
+function useSwitchVersion(songId: string, userId?: string) {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  return useCallback(
+    async (targetVersionId: string | null) => {
+      if (!userId) return;
+      patchFavoriteEntry(queryClient, userId, songId, {
+        pinnedVersionId: targetVersionId,
+        song: undefined,
+      });
+      navigate({
+        to: "/song/$songId",
+        params: { songId },
+        search: targetVersionId ? { version: targetVersionId } : {},
+        replace: true,
+      });
+      try {
+        await makeApiRequest(() =>
+          client.api.favorites[":songId"].$patch({
+            param: { songId },
+            json: { pinnedVersionId: targetVersionId },
+          }),
+        );
+      } catch {
+        toast.error("Failed to switch version");
+      }
+    },
+    [queryClient, navigate, songId, userId],
+  );
+}
+
+/** Draft-status badge that becomes a clickable version-switch action when `action` is set. */
+function VersionBadge({
+  icon: Icon,
+  action,
+  children,
+}: {
+  icon: LucideIcon;
+  action?: { label: string; title: string; onClick: () => void };
+  children?: React.ReactNode;
+}) {
+  return (
+    <Badge
+      asChild={!!action}
+      variant="outline"
+      className={cn(
+        "gap-1 border-primary/30 bg-primary/5 text-primary",
+        "dark:border-white/25 dark:bg-white/10 dark:text-white/80",
+        action && "cursor-pointer hover:bg-primary/10 dark:hover:bg-white/20",
+      )}
+    >
+      {action ? (
+        <button type="button" onClick={action.onClick} title={action.title}>
+          <Icon />
+          {action.label}
+        </button>
+      ) : (
+        <>
+          <Icon />
+          {children}
+        </>
+      )}
+    </Badge>
+  );
+}
 
 interface SongHeadingProps {
   songData: SongData;
@@ -69,6 +144,29 @@ const SongHeading: React.FC<SongHeadingProps> = ({
       ? customAuthor.name
       : undefined;
   const draftAuthor = sessionHost ?? songbookOwnerName ?? foreignDraftAuthor;
+
+  const isOwnContext = !!userData && !sessionHost && !songbookOwnerName;
+  const switchVersion = useSwitchVersion(songData.id, userData?.profile.id);
+
+  // "Switch to official version": shown on the viewer's own draft once the
+  // published version has moved past it.
+  const canSwitchToCanonical =
+    isOwnContext && customAuthor?.id === userData?.profile.id &&
+    !!songData.canonicalIsNewer;
+
+  // "Switch back to your version": shown on the canonical version only when
+  // the viewer's *latest* submission for this song isn't the one on screen
+  const latestOwnSubmission =
+    isOwnContext && !songData.isCustom
+      ? userData?.submissions.find((s) => s.songId === songData.id)
+      : undefined;
+  const ownOtherSubmission =
+    latestOwnSubmission &&
+    latestOwnSubmission.id !== songData.versionId &&
+    (latestOwnSubmission.status === "pending" ||
+      latestOwnSubmission.status === "archived")
+      ? latestOwnSubmission
+      : undefined;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isWrapped, setIsWrapped] = useState(false);
@@ -190,16 +288,36 @@ const SongHeading: React.FC<SongHeadingProps> = ({
           )}
         </div>
         {songData.isCustom && (
-          <Badge
-            variant="outline"
-            className={cn(
-              "gap-1 border-primary/30 bg-primary/5 text-primary",
-              "dark:border-white/25 dark:bg-white/10 dark:text-white/80",
-            )}
+          <VersionBadge
+            icon={canSwitchToCanonical ? RotateCcw : Pencil}
+            action={
+              canSwitchToCanonical
+                ? {
+                    label: "Use official version",
+                    title: "A newer official version is available — switch to it",
+                    onClick: () => switchVersion(null),
+                  }
+                : undefined
+            }
           >
-            <Pencil />
-            {draftAuthor ? `${draftAuthor}'s draft` : "Your draft"}
-          </Badge>
+            {draftAuthor ? `${draftAuthor}'s version` : "Your version"}
+          </VersionBadge>
+        )}
+        {ownOtherSubmission && (
+          <VersionBadge
+            icon={Pencil}
+            action={{
+              label:
+                ownOtherSubmission.status === "pending"
+                  ? "View your pending edit"
+                  : "View your version",
+              title:
+                ownOtherSubmission.status === "pending"
+                  ? "You have an edit awaiting approval — switch to it"
+                  : "You have an older version of this song — switch to it",
+              onClick: () => switchVersion(ownOtherSubmission.id),
+            }}
+          />
         )}
       </div>
     </div>

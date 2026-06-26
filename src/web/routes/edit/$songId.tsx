@@ -27,7 +27,7 @@ function RouteComponent() {
   return (
     <Editor
       songData={songData}
-      versionId={versionId ?? songData.id}
+      versionId={versionId ?? songData.versionId}
     />
   );
 }
