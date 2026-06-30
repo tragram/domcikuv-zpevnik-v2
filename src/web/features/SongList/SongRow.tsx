@@ -6,6 +6,7 @@ import CircularProgress from "~/components/circular-progress";
 import { FavoriteButton } from "~/components/FavoriteButton";
 import { IllustrationPopup } from "~/components/IllustrationPopup";
 import LanguageFlag from "~/components/LanguageFlag";
+import { YoutubeButton } from "~/components/YoutubeButton";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 
@@ -151,6 +152,13 @@ const SongRow = memo(
           artist={song.artist}
           className="flex-auto"
         />
+
+        {song.youtubeId && !externalSearch && (
+          <YoutubeButton
+            youtubeId={song.youtubeId}
+            className="hidden shrink-0 xs:flex"
+          />
+        )}
 
         {userData && !externalSearch && (
           <FavoriteButton

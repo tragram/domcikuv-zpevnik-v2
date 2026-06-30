@@ -59,6 +59,8 @@ export class SongData {
   tempo?: int;
   capo?: int;
   range?: SongRange;
+  /** Canonical 11-char YouTube video id, or undefined. See src/lib/youtube.ts. */
+  youtubeId?: string;
   chordpro: ChordPro;
   externalSource: ExternalSourceApi | null;
   /** Hidden from the browse list, but still searchable and directly accessible. */
@@ -105,6 +107,7 @@ export class SongData {
     this.capo = songFromDB.capo !== null ? songFromDB.capo : undefined;
 
     this.range = this.parseRange(songFromDB.range);
+    this.youtubeId = songFromDB.youtubeId || undefined;
     this.chordpro = songFromDB.chordpro;
     this.externalSource = songFromDB.externalSource;
     this.hidden = songFromDB.hidden ?? false;
@@ -267,6 +270,7 @@ export class SongData {
       tempo: this.tempo,
       capo: this.capo,
       range: this.range?.toString(),
+      youtubeId: this.youtubeId,
       chordpro: this.chordpro,
       currentIllustration: this.currentIllustration,
       isFavorite: this.isFavorite,

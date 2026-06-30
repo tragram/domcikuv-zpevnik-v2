@@ -14,6 +14,7 @@ import OpenAI from "openai";
 import { trustedUserMiddleware } from "./utils";
 import { EditorSubmissionResponse } from "./api-types";
 import { setSongbookEntry } from "../helpers/favorite-helpers";
+import { parseYoutubeId } from "src/lib/youtube";
 
 export const editorSubmitSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -64,6 +65,26 @@ export const editorSubmitSchema = z.object({
     .optional()
     .or(z.literal(""))
     .transform((x) => (x ? String(x) : null)),
+
+  // Accepts a pasted YouTube URL or a bare video id; stored as the canonical
+  // 11-char id. Empty clears it; anything non-empty that isn't a YouTube link
+  // is a validation error.
+  youtubeId: z
+    .string()
+    .optional()
+    .or(z.literal(""))
+    .transform((x, ctx) => {
+      if (!x || !x.trim()) return null;
+      const id = parseYoutubeId(x);
+      if (!id) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Invalid YouTube URL or video id",
+        });
+        return z.NEVER;
+      }
+      return id;
+    }),
 });
 
 // The PUT (edit existing song) route additionally accepts an admin-only flag.

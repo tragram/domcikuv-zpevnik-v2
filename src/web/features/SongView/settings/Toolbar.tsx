@@ -10,6 +10,7 @@ import {
   RefreshCw,
   Settings2,
   Undo2,
+  Play,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import type { FullScreenHandle } from "react-full-screen";
@@ -33,6 +34,7 @@ import {
 import usePWAInstall from "~/components/usePWAInstall";
 import { useToggleFavorite } from "~/components/FavoriteButton";
 import { useSongDB } from "~/hooks/use-songDB";
+import { youtubeWatchUrl } from "src/lib/youtube";
 import { SongData } from "~/types/songData";
 import ShareSongButton from "../components/ShareSongButton";
 import { SetNicknameDialog } from "../components/SetNicknameDialog";
@@ -118,7 +120,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         // 3. Reload the page to fetch fresh assets
         window.location.reload();
       } catch (error) {
-        console.error("Force update failed, falling back to standard reload:", error);
+        console.error(
+          "Force update failed, falling back to standard reload:",
+          error,
+        );
         window.location.reload();
       }
     } else {
@@ -142,6 +147,24 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           setSoundingKeyIndex={setSoundingKeyIndex}
         />
 
+        {songData.youtubeId && (
+          <Button
+            size="icon"
+            variant="circular"
+            className="hidden lg:inline-flex"
+            asChild
+          >
+            <a
+              href={youtubeWatchUrl(songData.youtubeId)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Watch on YouTube"
+            >
+              <Play />
+            </a>
+          </Button>
+        )}
+        
         {!feedStatus || !feedStatus.enabled || feedStatus.isMaster ? (
           <RandomSong
             songs={songDB.songs}
@@ -168,6 +191,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             )}
           </Button>
         )}
+
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button size="icon" variant="circular">
@@ -231,6 +255,24 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               </DropdownMenuCheckboxItem>
             )}
 
+            {songData.youtubeId && (
+              <DropdownMenuItem className="lg:hidden">
+                <a
+                  className="w-full"
+                  href={youtubeWatchUrl(songData.youtubeId)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <CompactItem.Shell className="cursor-pointer w-full">
+                    <CompactItem.Icon>
+                      <Play />
+                    </CompactItem.Icon>
+                    <CompactItem.Body title="Watch on YouTube" />
+                  </CompactItem.Shell>
+                </a>
+              </DropdownMenuItem>
+            )}
+
             <ShareSongButton
               feedStatus={feedStatus}
               userData={userData}
@@ -249,7 +291,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                     <AtSign />
                   </CompactItem.Icon>
                   <CompactItem.Body
-                    title={nickname ? "Change sharing nickname" : "Set a nickname to share"}
+                    title={
+                      nickname
+                        ? "Change sharing nickname"
+                        : "Set a nickname to share"
+                    }
                     subtitle={nickname ? `Sharing as ${nickname}` : undefined}
                   />
                 </CompactItem.Shell>

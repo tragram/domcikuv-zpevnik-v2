@@ -1,4 +1,5 @@
 import { EditorSubmitSchemaInput } from "src/worker/api/editor";
+import { YoutubeSearchResult } from "src/worker/api/youtube";
 import client from "~/../worker/api-client";
 import { makeApiRequest } from "./api-service";
 
@@ -11,6 +12,15 @@ export const autofillChordpro = async (
     }),
   );
   return response.chordpro;
+};
+
+/** Top YouTube video for the query, or null if nothing was found. */
+export const searchYoutube = async (
+  query: string,
+): Promise<YoutubeSearchResult | null> => {
+  return await makeApiRequest(() =>
+    client.api.youtube.search.$get({ query: { q: query } }),
+  );
 };
 
 export const submitSongVersion = async (

@@ -153,6 +153,7 @@ export const externalRoutes = buildApp()
         range: null,
         startMelody: null,
         tempo: null,
+        youtubeId: null,
       };
 
       if (!existingSong) {

@@ -71,6 +71,7 @@ export type SongDataApi = {
   tempo?: number;
   capo?: number;
   range?: string;
+  youtubeId?: string;
   chordpro: string;
   externalSource: ExternalSourceApi | null;
   currentIllustration?: CurrentIllustrationApi;
@@ -112,6 +113,7 @@ export type SongVersionApi = {
   range?: string | null;
   startMelody?: string | null;
   tempo?: string | null;
+  youtubeId?: string | null;
   userId: string;
   approvedBy?: string | null;
   approvedAt?: Date | string | null;

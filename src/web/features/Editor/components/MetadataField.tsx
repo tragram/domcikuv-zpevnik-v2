@@ -47,7 +47,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
       {customInput}
     </div>
   ) : (
-    <div className="flex w-full items-center gap-2">
+    <div className="flex w-full flex-wrap items-center gap-2">
       <Input
         disabled={disabled}
         placeholder={value ? undefined : placeholder || label}
@@ -56,7 +56,12 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
           onChange(e.target.value);
         }}
         className={cn(
-          "border-2 p-1 flex-1",
+          // grow-999 lets the input soak up the row so an inline action stays
+          // at its content width; once the row wraps, the action sits alone on
+          // its line and grows to full width. min-w-32 floors the input and is
+          // what forces the wrap on narrow panels (instead of collapsing it).
+          "border-2 p-1 grow-999 basis-0",
+          action && "min-w-32",
           displayError
             ? "border-red-600"
             : "border-primary/50 dark:border-muted focus:border-primary focus:bg-primary/30",

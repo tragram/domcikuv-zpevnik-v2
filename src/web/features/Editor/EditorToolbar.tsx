@@ -168,6 +168,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       parsedState.startMelody = editorState.startMelody;
     if (editorState.tempo?.toString().trim())
       parsedState.tempo = String(editorState.tempo);
+    // Omitted when empty so the server clears it (schema transforms undefined -> null).
+    if (editorState.youtubeId?.trim())
+      parsedState.youtubeId = editorState.youtubeId;
 
     if (
       editorState.capo !== undefined &&

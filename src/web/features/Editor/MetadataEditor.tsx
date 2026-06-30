@@ -9,6 +9,7 @@ import { cn } from "~/lib/utils";
 import { EditorState } from "~/types/types";
 import { guessKey } from "../SongView/utils/songRendering";
 import MetadataField from "./components/MetadataField";
+import YoutubeField from "./components/YoutubeField";
 import SmartFeatures from "./components/SmartFeatures"; // <-- Import the new component
 import type { EvaluatedFeature, SmartFeature } from "./Editor";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
@@ -119,6 +120,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
               type="button"
               variant="outline"
               size="sm"
+              className="h-9 grow"
               disabled={extractedMetadata.key !== undefined}
               onClick={() => {
                 const guessedKey = guessKey(metadata.chordpro);
@@ -160,6 +162,14 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           description="In BPM. Currently not used and very few songs define it."
           error={fieldErrors.tempo}
           disabled={extractedMetadata.tempo !== undefined}
+        />
+        <YoutubeField
+          value={metadata.youtubeId}
+          onChange={(value) => updateMetadata("youtubeId", value)}
+          title={metadata.title}
+          artist={metadata.artist}
+          modified={defaultMetadata.youtubeId !== metadata.youtubeId}
+          error={fieldErrors.youtubeId}
         />
 
         <Separator className="my-4" />

@@ -88,6 +88,7 @@ const transformSongToApi = (
     tempo: version?.tempo ? parseInt(version.tempo) : undefined,
     capo: version?.capo ?? undefined,
     range: version?.range ?? undefined,
+    youtubeId: version?.youtubeId ?? undefined,
     chordpro: version?.chordpro ?? "Not uploaded",
 
     // Use optional chaining safely down the tree

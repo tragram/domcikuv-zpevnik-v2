@@ -13,6 +13,7 @@ import editorApp from "./api/editor";
 import favoritesApp from "./api/favorites";
 import sessionSyncApp from "./api/sessions";
 import songDBRoutes from "./api/songDB";
+import youtubeApp from "./api/youtube";
 import profileApp from "./api/userProfile";
 import { buildApp } from "./api/utils";
 import { HTTPException } from "hono/http-exception";
@@ -75,6 +76,7 @@ export const route = app
   .route("/songs", songDBRoutes)
   .route("/favorites", favoritesApp)
   .route("/editor", editorApp)
+  .route("/youtube", youtubeApp)
   .route("/profile", profileApp)
   .route("/admin", adminApp)
   .route(

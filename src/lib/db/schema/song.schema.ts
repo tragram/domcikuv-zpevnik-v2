@@ -56,6 +56,8 @@ export const songVersion = sqliteTable("song_version", {
   range: text("range"),
   startMelody: text("start_melody"),
   tempo: text("tempo"),
+  // Canonical 11-char YouTube video id (no URL), or null. See src/lib/youtube.ts.
+  youtubeId: text("youtube_id"),
 
   userId: text("user_id")
     .notNull()

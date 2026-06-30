@@ -50,6 +50,13 @@
       "when": 1781780112224,
       "tag": "0006_light_doorman",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1782463888396,
+      "tag": "0007_milky_guardsmen",
+      "breakpoints": true
     }
   ]
 }
