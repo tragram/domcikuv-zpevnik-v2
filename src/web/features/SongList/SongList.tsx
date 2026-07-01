@@ -6,8 +6,10 @@ import useLocalStorageState from "use-local-storage-state";
 import { OfflineIndicator } from "~/components/OfflineIndicator";
 import { Button } from "~/components/ui/button";
 import "~/features/SongList/SongList.css";
+import { useIsOnline } from "~/hooks/use-is-online";
 import { useScrollDirection } from "~/hooks/use-scroll-direction";
 import { UserData } from "~/hooks/use-user-data";
+import { cn } from "~/lib/utils";
 import { SongDB } from "~/types/types";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import SongRow from "./SongRow";
@@ -45,6 +47,7 @@ function SongList({
 
   const { resetFilters } = useFilterSettingsStore();
   const isToolbarVisible = useScrollDirection();
+  const isOnline = useIsOnline();
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -135,7 +138,7 @@ function SongList({
         {hasInternalResults && renderInternalSongs()}
 
         {/* SECTION 2: External Search Trigger & Results */}
-        <div className="container mx-auto max-w-3xl flex flex-col gap-2 pb-8">
+        <div className={cn("container mx-auto max-w-3xl flex flex-col gap-2 pb-2", !isOnline && "pb-11")}>
           {showExternalSeparator && (
             <div className="my-6 flex items-center gap-4">
               <div className="h-px bg-border flex-1" />
