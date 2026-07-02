@@ -57,6 +57,29 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
     {
       name: "filter-settings-store",
       version: 2,
+      // v0 stored `capo` meaning "allow capo songs" (default true, i.e. unfiltered);
+      // v1 renamed it to `hideCapo` (default false) to match other filter controls.
+      // v2 replaced multi-select `selectedSongbookIds` with single-select `selectedSongbookId`.
+      migrate: (persistedState, version) => {
+        let state = persistedState as Record<string, unknown>;
+        if (version === 0) {
+          const { capo, ...rest } = state as { capo?: boolean } & Record<
+            string,
+            unknown
+          >;
+          state = { ...rest, hideCapo: capo === false };
+        }
+        if (version <= 1) {
+          const { selectedSongbookIds, ...rest } = state as {
+            selectedSongbookIds?: string[];
+          } & Record<string, unknown>;
+          state = {
+            ...rest,
+            selectedSongbookId: selectedSongbookIds?.[0] ?? null,
+          };
+        }
+        return state as FilterSettingsState;
+      },
     },
   ),
 );
