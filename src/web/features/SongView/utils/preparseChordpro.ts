@@ -417,9 +417,9 @@ export function preparseDirectives(
  * @returns Processed song with converted notation
  */
 export function czechToEnglish(song: string): string {
-  // Convert key directive
-  song = song.replace(/\{key: B([ieasm#b]){0,5}\}/g, "{key: Bb$1}");
-  song = song.replace(/\{key: H([ieasm#b]){0,5}\}/g, "{key: B$1}");
+  // Convert key directive.
+  song = song.replace(/\{key: B([ieasm#b]{0,5})\}/g, "{key: Bb$1}");
+  song = song.replace(/\{key: H([ieasm#b]{0,5})\}/g, "{key: B$1}");
 
   // Convert chords with bass notes
   song = song.replace(/\[([A-Za-z\d#b,\s/]{0,10})\/B\]/g, "[$1/Bb]");

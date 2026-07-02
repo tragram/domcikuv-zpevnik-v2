@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { preparseDirectives } from "./preparseChordpro";
+import { czechToEnglish, preparseDirectives } from "./preparseChordpro";
 
 describe("preparseChordpro Directives", () => {
   describe("should correctly store and recall", () => {
@@ -1079,5 +1079,28 @@ kde je [C]možné odpoči[Ami]nout.
       const result = preparseDirectives(input);
       expect(result).toBe(expected);
     });
+  });
+});
+
+describe("czechToEnglish key directives", () => {
+  // Regression: the quantifier used to sit outside the capture group, so $1 held
+  // only the last matched character and the rest of the minor suffix was dropped
+  // (e.g. "Hmi" -> "Bi").
+  it("keeps the full minor suffix when converting H/B keys", () => {
+    expect(czechToEnglish("{key: Hmi}")).toBe("{key: Bmi}");
+    expect(czechToEnglish("{key: Bmi}")).toBe("{key: Bbmi}");
+    expect(czechToEnglish("{key: Hm}")).toBe("{key: Bm}");
+  });
+
+  it("still converts bare H/B keys", () => {
+    expect(czechToEnglish("{key: H}")).toBe("{key: B}");
+    expect(czechToEnglish("{key: B}")).toBe("{key: Bb}");
+  });
+
+  it("converts H/B chords and bass notes", () => {
+    expect(czechToEnglish("[H]")).toBe("[B]");
+    expect(czechToEnglish("[B]")).toBe("[Bb]");
+    expect(czechToEnglish("[C/H]")).toBe("[C/B]");
+    expect(czechToEnglish("[C/B]")).toBe("[C/Bb]");
   });
 });

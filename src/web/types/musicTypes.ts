@@ -155,7 +155,9 @@ export class Key implements Clonable<Key> {
         if (!note) {
             return undefined;
         }
-        const mode = matches.groups["mode"] === "m" ? KeyMode.Minor : KeyMode.Major;
+        // Accept both the English "m" and the Czech "mi" minor suffix (the regex
+        // captures either); anything starting with "m" is minor.
+        const mode = matches.groups["mode"].startsWith("m") ? KeyMode.Minor : KeyMode.Major;
         return new Key(note, mode);
     }
 
