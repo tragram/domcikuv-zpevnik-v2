@@ -61,7 +61,12 @@ const parseMetadataFromChordPro = (content: string): Partial<EditorState> => {
 
       if (key === "title" || key === "t") extracted.title = value;
       else if (key === "artist") extracted.artist = value;
-      else if (key === "capo") extracted.capo = parseInt(value);
+      else if (key === "capo") {
+        // Guard against NaN (e.g. while the user is mid-typing "{capo: }") so the
+        // metadata field doesn't flash "NaN".
+        const n = parseInt(value, 10);
+        if (!Number.isNaN(n)) extracted.capo = n;
+      }
       else if (key === "key") extracted.key = value;
       else if (key === "tempo") extracted.tempo = value;
       else if (key === "language") extracted.language = value;
