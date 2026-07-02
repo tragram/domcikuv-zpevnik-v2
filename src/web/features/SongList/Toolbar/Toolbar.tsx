@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ImagesIcon, Menu, Pencil, Shield, User } from "lucide-react";
+import { ImagesIcon, ListVideo, Menu, Pencil, Shield, User } from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import { UserData } from "~/hooks/use-user-data";
+import { cn } from "~/lib/utils";
 import { RichItem } from "~/components/RichDropdown";
 import { DropdownThemeToggle, ThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
@@ -30,12 +31,16 @@ interface CombinedMenuProps {
   isOnline: boolean;
   profileAvailable: boolean;
   isAdmin: boolean;
+  playlistMode: boolean;
+  onTogglePlaylistMode: () => void;
 }
 
 const CombinedMenu = ({
   isOnline,
   profileAvailable,
   isAdmin,
+  playlistMode,
+  onTogglePlaylistMode,
 }: CombinedMenuProps) => {
   return (
     <DropdownMenu>
@@ -72,6 +77,20 @@ const CombinedMenu = ({
           </Link>
         </DropdownMenuItem>
 
+        <DropdownMenuItem
+          onClick={onTogglePlaylistMode}
+          className="w-full cursor-pointer"
+        >
+          <RichItem.Shell>
+            <RichItem.Icon>
+              <ListVideo />
+            </RichItem.Icon>
+            <RichItem.Body
+              title={playlistMode ? "Exit playlist" : "YouTube playlist"}
+            />
+          </RichItem.Shell>
+        </DropdownMenuItem>
+
         <DropdownMenuItem asChild disabled={!profileAvailable}>
           <Link to="/profile" className="w-full cursor-pointer">
             <RichItem.Shell>
@@ -105,9 +124,18 @@ interface ToolbarProps {
   isVisible: boolean;
   isAdmin: boolean;
   userData: UserData;
+  playlistMode: boolean;
+  onTogglePlaylistMode: () => void;
 }
 
-function Toolbar({ songDB, isVisible, isAdmin, userData }: ToolbarProps) {
+function Toolbar({
+  songDB,
+  isVisible,
+  isAdmin,
+  userData,
+  playlistMode,
+  onTogglePlaylistMode,
+}: ToolbarProps) {
   const isOnline = useIsOnline();
   // Logged-in users can open their (read-only) profile offline; logged-out users
   // only reach the login screen there, which needs the network — so offline +
@@ -136,6 +164,26 @@ function Toolbar({ songDB, isVisible, isAdmin, userData }: ToolbarProps) {
         <div className="hidden min-[1150px]:flex h-full w-fit">
           <ThemeToggle />
         </div>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              className={cn(
+                "hidden min-[1150px]:flex",
+                playlistMode && "ring-2 ring-primary text-primary",
+              )}
+              size="icon"
+              variant="circular"
+              onClick={onTogglePlaylistMode}
+              aria-pressed={playlistMode}
+            >
+              <ListVideo />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{playlistMode ? "Exit playlist" : "Make YouTube playlist"}</p>
+          </TooltipContent>
+        </Tooltip>
 
         <Tooltip>
           <TooltipTrigger asChild>
@@ -227,6 +275,8 @@ function Toolbar({ songDB, isVisible, isAdmin, userData }: ToolbarProps) {
             isOnline={isOnline}
             profileAvailable={profileAvailable}
             isAdmin={isAdmin}
+            playlistMode={playlistMode}
+            onTogglePlaylistMode={onTogglePlaylistMode}
           />
         </div>
       </TooltipProvider>

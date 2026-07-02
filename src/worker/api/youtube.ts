@@ -1,4 +1,10 @@
-import { failJSend, successJSend } from "./responses";
+import { z } from "zod";
+import {
+  isValidYoutubeId,
+  YOUTUBE_PLAYLIST_MAX,
+  youtubePlaylistUrl,
+} from "src/lib/youtube";
+import { failJSend, successJSend, zValidatorJSend } from "./responses";
 import { buildApp } from "./utils";
 
 export type YoutubeSearchResult = {
@@ -19,7 +25,57 @@ type YoutubeApiSearchResponse = {
   }[];
 };
 
-const youtubeApp = buildApp().get("/search", async (c) => {
+const playlistBodySchema = z.object({
+  videoIds: z.array(z.string()).min(1),
+});
+
+const youtubeApp = buildApp()
+  .post(
+    "/playlist",
+    zValidatorJSend("json", playlistBodySchema),
+    async (c) => {
+      const ids = c.req
+        .valid("json")
+        .videoIds.filter(isValidYoutubeId)
+        .slice(0, YOUTUBE_PLAYLIST_MAX);
+      if (ids.length === 0)
+        return failJSend(c, "No valid YouTube video ids", 400, "NO_VALID_IDS");
+
+      // `watch_videos` mints a temporary playlist and 303-redirects to
+      // watch?v=<first>&list=TLGG…. We resolve that redirect server-side (the
+      // browser can't read youtube.com's cross-origin Location) and return the
+      // list id, which YouTube Music accepts and lets the user save + name.
+      let listId: string | null = null;
+      try {
+        const res = await fetch(youtubePlaylistUrl(ids), {
+          redirect: "manual",
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+          },
+        });
+        const location = res.headers.get("location");
+        if (location)
+          listId = new URL(
+            location,
+            "https://www.youtube.com",
+          ).searchParams.get("list");
+      } catch {
+        /* fall through to the failure response below */
+      }
+
+      if (!listId)
+        return failJSend(
+          c,
+          "Could not create the YouTube playlist",
+          502,
+          "PLAYLIST_CREATE_FAILED",
+        );
+
+      return successJSend(c, { listId, firstVideoId: ids[0] });
+    },
+  )
+  .get("/search", async (c) => {
   const user = c.var.USER;
   if (!user)
     return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");

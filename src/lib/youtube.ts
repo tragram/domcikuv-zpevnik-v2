@@ -55,6 +55,33 @@ export function youtubeWatchUrl(id: string): string {
   return `https://www.youtube.com/watch?v=${id}`;
 }
 
+/** Max video ids YouTube accepts in a `watch_videos` temporary playlist. */
+export const YOUTUBE_PLAYLIST_MAX = 50;
+
+/**
+ * Build a URL that opens a temporary YouTube playlist from a list of video ids.
+ * YouTube caps `watch_videos` at {@link YOUTUBE_PLAYLIST_MAX} ids, so callers
+ * should slice beforehand if they may have more. This 303-redirects to
+ * `watch?v=<first>&list=TLGG…`; the `TLGG…` list id is the temp playlist.
+ */
+export function youtubePlaylistUrl(ids: string[]): string {
+  return `https://www.youtube.com/watch_videos?video_ids=${ids.join(",")}`;
+}
+
+/**
+ * Open a (previously minted) temporary playlist in YouTube Music. Unlike
+ * youtube.com, Music shows a "Save" button so the user can keep and name the
+ * playlist on their own account — no OAuth or API quota. `listId` is the
+ * `TLGG…` id from {@link youtubePlaylistUrl}'s redirect; `firstVideoId` seeds
+ * the player.
+ */
+export function youtubeMusicPlaylistUrl(
+  firstVideoId: string,
+  listId: string,
+): string {
+  return `https://music.youtube.com/watch?v=${firstVideoId}&list=${listId}`;
+}
+
 /** Default thumbnail. `hqdefault` always exists for any public video. */
 export function youtubeThumbnailUrl(id: string): string {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;

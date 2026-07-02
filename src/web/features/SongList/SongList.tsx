@@ -1,6 +1,15 @@
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
-import { Globe, RefreshCw, Search } from "lucide-react";
-import { useRef } from "react";
+import {
+  CheckCheck,
+  Globe,
+  Loader2,
+  RefreshCw,
+  Search,
+  X,
+  Youtube,
+} from "lucide-react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import useLocalStorageState from "use-local-storage-state";
 import { OfflineIndicator } from "~/components/OfflineIndicator";
@@ -10,12 +19,15 @@ import { useIsOnline } from "~/hooks/use-is-online";
 import { useScrollDirection } from "~/hooks/use-scroll-direction";
 import { UserData } from "~/hooks/use-user-data";
 import { cn } from "~/lib/utils";
+import { SongData } from "~/types/songData";
 import { SongDB } from "~/types/types";
 import { useFilterSettingsStore } from "../SongView/hooks/filterSettingsStore";
 import SongRow from "./SongRow";
 import Toolbar from "./Toolbar/Toolbar";
 import { useDisplayedSongs } from "./useDisplayedSongs";
 import { useExternalSearch } from "./useExternalSearch";
+import { YOUTUBE_PLAYLIST_MAX } from "src/lib/youtube";
+import { createYoutubePlaylist } from "~/services/editor-service";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
@@ -48,6 +60,85 @@ function SongList({
   const { resetFilters } = useFilterSettingsStore();
   const isToolbarVisible = useScrollDirection();
   const isOnline = useIsOnline();
+
+  // --- Playlist mode ---
+  // When active, rows show a checkbox and toggle selection instead of opening.
+  const [playlistMode, setPlaylistMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  const toggleSelect = useCallback((song: SongData) => {
+    // Only songs with a video can be in the playlist; ignore the rest.
+    if (!song.youtubeId) return;
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(song.id)) next.delete(song.id);
+      else next.add(song.id);
+      return next;
+    });
+  }, []);
+
+  const exitPlaylistMode = useCallback(() => {
+    setPlaylistMode(false);
+    setSelectedIds(new Set());
+  }, []);
+
+  const togglePlaylistMode = useCallback(() => {
+    setPlaylistMode((on) => !on);
+    setSelectedIds(new Set());
+  }, []);
+
+  // Only songs with a YouTube video can be selected / exported.
+  const selectableSongs = useMemo(
+    () => songs.filter((s) => s.youtubeId),
+    [songs],
+  );
+
+  const allSelected =
+    selectableSongs.length > 0 &&
+    selectableSongs.every((s) => selectedIds.has(s.id));
+
+  const toggleSelectAll = useCallback(() => {
+    setSelectedIds(
+      allSelected ? new Set() : new Set(selectableSongs.map((s) => s.id)),
+    );
+  }, [allSelected, selectableSongs]);
+
+  const selectedVideoIds = useMemo(
+    () =>
+      selectableSongs
+        .filter((s) => selectedIds.has(s.id))
+        .map((s) => s.youtubeId!),
+    [selectableSongs, selectedIds],
+  );
+
+  const [isExporting, setIsExporting] = useState(false);
+
+  const exportPlaylist = useCallback(async () => {
+    const ids = selectedVideoIds.slice(0, YOUTUBE_PLAYLIST_MAX);
+    if (ids.length === 0 || isExporting) return;
+
+    // Open the tab synchronously inside the click gesture so it isn't blocked as
+    // a popup, then point it at the playlist URL once the worker resolves it.
+    const tab = window.open("about:blank", "_blank");
+    setIsExporting(true);
+    try {
+      const url = await createYoutubePlaylist(ids);
+      if (tab) tab.location.href = url;
+      // Fallback if the pre-opened tab was blocked (this second open usually is
+      // too, since we're past the click gesture — hence the popup hint).
+      else if (!window.open(url, "_blank", "noopener,noreferrer")) {
+        toast.error("Allow popups for this site to open the playlist.");
+        return;
+      }
+      toast.success("Opening in YouTube Music — tap Save to name & keep it.");
+    } catch (e) {
+      console.error("Failed to create YouTube playlist", e);
+      tab?.close();
+      toast.error("Couldn't create the playlist. Please try again.");
+    } finally {
+      setIsExporting(false);
+    }
+  }, [selectedVideoIds, isExporting]);
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -110,6 +201,9 @@ function SongList({
             maxRange={songDB.maxRange}
             userData={userData}
             songbookOwner={foreignSongbookOwner}
+            playlistMode={playlistMode}
+            isSelected={selectedIds.has(songs[item.index].id)}
+            onToggleSelect={toggleSelect}
           />
         </div>
       ))}
@@ -124,6 +218,8 @@ function SongList({
         userData={userData}
         songDB={songDB}
         isVisible={isToolbarVisible}
+        playlistMode={playlistMode}
+        onTogglePlaylistMode={togglePlaylistMode}
       />
 
       {/* Floating Bottom-Right Sync Bubble */}
@@ -133,7 +229,51 @@ function SongList({
         </div>
       )}
 
-      <div className="pt-[72px] sm:pt-20 pb-2">
+      {/* Playlist mode: selection / export action bar */}
+      {playlistMode && (
+        <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background/95 shadow-lg backdrop-blur animate-in slide-in-from-bottom-4">
+          <div className="container mx-auto flex max-w-3xl items-center gap-2 px-3 py-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={exitPlaylistMode}
+              aria-label="Exit playlist mode"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+            <span className="whitespace-nowrap text-sm text-muted-foreground">
+              {selectableSongs.length === 0
+                ? "No songs with a video"
+                : `${selectedIds.size} selected`}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              className="ml-auto gap-2"
+              disabled={selectableSongs.length === 0}
+              onClick={toggleSelectAll}
+            >
+              <CheckCheck className="h-4 w-4" />
+              {allSelected ? "None" : "All"}
+            </Button>
+            <Button
+              size="sm"
+              className="gap-2"
+              disabled={selectedVideoIds.length === 0 || isExporting}
+              onClick={exportPlaylist}
+            >
+              {isExporting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Youtube className="h-4 w-4" />
+              )}
+              Export ({Math.min(selectedVideoIds.length, YOUTUBE_PLAYLIST_MAX)})
+            </Button>
+          </div>
+        </div>
+      )}
+
+      <div className={cn("pt-[72px] sm:pt-20 pb-2", playlistMode && "pb-24")}>
         {/* SECTION 1: Internal Songs */}
         {hasInternalResults && renderInternalSongs()}
 

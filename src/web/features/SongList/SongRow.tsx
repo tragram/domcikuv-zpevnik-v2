@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { Check, VideoOff } from "lucide-react";
 import { memo } from "react";
 import { UserData } from "src/web/hooks/use-user-data";
 
@@ -6,6 +7,7 @@ import CircularProgress from "~/components/circular-progress";
 import { FavoriteButton } from "~/components/FavoriteButton";
 import { IllustrationPopup } from "~/components/IllustrationPopup";
 import LanguageFlag from "~/components/LanguageFlag";
+import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { YoutubeButton } from "~/components/YoutubeButton";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
@@ -117,6 +119,11 @@ interface SongRowProps {
   // Owner userId when this list is filtered to a single other user's songbook;
   // opens the song in that owner's key/capo/version context.
   songbookOwner?: string;
+  // Playlist-building mode: the avatar becomes a checkbox and clicking the row
+  // toggles selection instead of navigating to the song.
+  playlistMode?: boolean;
+  isSelected?: boolean;
+  onToggleSelect?: (song: SongData) => void;
 }
 const SongRow = memo(
   ({
@@ -125,6 +132,9 @@ const SongRow = memo(
     userData,
     externalSearch = false,
     songbookOwner,
+    playlistMode = false,
+    isSelected = false,
+    onToggleSelect,
   }: SongRowProps) => {
     if (!song) {
       console.error("Invalid song provided to SongRow", song);
@@ -139,6 +149,9 @@ const SongRow = memo(
       console.error("Invalid external song provided to SongRow", song);
       return null;
     }
+
+    // In playlist mode only songs with a YouTube video can be selected.
+    const hasVideo = !!song.youtubeId;
 
     const linkClassName =
       "song-row bg-glass/60 hover:bg-glass/90 relative flex h-12 w-full rounded-full backdrop-blur-lg";
@@ -200,12 +213,79 @@ const SongRow = memo(
           style={{ backgroundImage: `url("${song.thumbnailURL()}")` }}
         >
           <div className="song-row-bg-image row-text-shadow relative flex h-full w-full items-center rounded-full shadow-black backdrop-blur-md pr-1 hc:pr-0">
-            <IllustrationPopup
-              avatarClassName="absolute -left-2 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
-              song={song}
-            />
+            {playlistMode ? (
+              <div className="pointer-events-none absolute -left-2 top-0 bottom-0 m-auto z-10 h-16 w-16">
+                <Avatar
+                  className={cn(
+                    "h-full w-full border-2 transition-colors",
+                    !hasVideo
+                      ? "border-muted-foreground/30"
+                      : isSelected
+                        ? "border-primary"
+                        : "border-white/50",
+                  )}
+                >
+                  <AvatarImage
+                    src={song.thumbnailURL()}
+                    alt="song illustration thumbnail"
+                  />
+                </Avatar>
+                {hasVideo ? (
+                  <div
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center rounded-full bg-primary/60 transition-opacity",
+                      isSelected ? "opacity-100" : "opacity-0",
+                    )}
+                  >
+                    <Check className="h-8 w-8 text-primary-foreground" />
+                  </div>
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center rounded-full bg-background/70">
+                    <VideoOff className="h-6 w-6 text-muted-foreground" />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <IllustrationPopup
+                avatarClassName="absolute -left-2 top-0 bottom-0 m-auto song-avatar z-10 w-16 h-16 text-large"
+                song={song}
+              />
+            )}
 
-            {externalSearch ? (
+            {playlistMode ? (
+              hasVideo ? (
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={isSelected}
+                  onClick={() => onToggleSelect?.(song)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      onToggleSelect?.(song);
+                    }
+                  }}
+                  className={cn(
+                    linkClassName,
+                    "cursor-pointer",
+                    isSelected && "ring-primary ring-2",
+                  )}
+                >
+                  {linkInnerContent}
+                </div>
+              ) : (
+                <div
+                  aria-disabled
+                  title="No YouTube video — can't add to the playlist"
+                  className={cn(
+                    linkClassName,
+                    "cursor-not-allowed opacity-40 hover:bg-glass/60",
+                  )}
+                >
+                  {linkInnerContent}
+                </div>
+              )
+            ) : externalSearch ? (
               <Link
                 to="/import"
                 search={{
