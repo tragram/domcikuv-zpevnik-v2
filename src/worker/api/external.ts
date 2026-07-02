@@ -1,4 +1,4 @@
-import ChordSheetJS from "chordsheetjs";
+import { ChordProParser } from "chordsheetjs";
 import { convertToChordPro } from "src/lib/chords2chordpro";
 import { songBaseId } from "src/lib/song-ids";
 import { externalSearchResultSchema } from "src/lib/contracts/external-search-schema";
@@ -145,7 +145,7 @@ export const externalRoutes = buildApp()
         language: guessLanguage(chordPro) ?? null,
         chordpro: chordPro,
         key:
-          new ChordSheetJS.ChordProParser().parse(chordPro).metadata?.key ??
+          new ChordProParser().parse(chordPro).metadata?.key ??
           null,
         capo: capoMatch ? parseInt(capoMatch[1]) : null,
         range: null,

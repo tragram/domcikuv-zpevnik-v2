@@ -1,4 +1,4 @@
-import ChordSheetJS from "chordsheetjs";
+import { Chord } from "chordsheetjs";
 import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
 import React, {
   useCallback,
@@ -484,7 +484,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
               const engChord = chord.replace(/B/g, "Bb").replace(/H/g, "B");
 
               // Parse the single chord using chordsheetjs
-              const parsedChord = ChordSheetJS.Chord.parse(engChord);
+              const parsedChord = Chord.parse(engChord);
 
               if (parsedChord) {
                 // Transpose it

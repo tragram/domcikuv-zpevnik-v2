@@ -113,6 +113,7 @@
     "object-hash": "^3.0.0",
     "postcss": "^8.5.1",
     "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-visualizer": "^7.0.1",
     "tailwindcss": "^4.1.10",
     "tsx": "^4.20.3",
     "typescript": "^5.9.3",

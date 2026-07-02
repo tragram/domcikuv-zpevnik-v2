@@ -1,4 +1,7 @@
-import ChordSheetJS from "chordsheetjs";
+// Named imports (not the default export) so unused chordsheetjs classes can be
+// tree-shaken — the default export retains the whole 3 MB bundle (PdfFormatter
+// fonts, ChordsOverWords parser, jspdf...).
+import { ChordProParser, HtmlDivFormatter } from "chordsheetjs";
 import DOMPurify from "dompurify";
 import memoize from "memoize-one";
 import { SongData } from "~/types/songData";
@@ -28,7 +31,7 @@ function parseChordPro(chordProContent: string) {
   const preparsedContent = preparseDirectives(withEnglishChords);
 
   // Parse using ChordSheetJS
-  const parser = new ChordSheetJS.ChordProParser();
+  const parser = new ChordProParser();
   return parser.parse(preparsedContent);
 }
 
@@ -112,7 +115,7 @@ export function renderSong(
   }
 
   // Format the song to HTML using Div Formatter
-  const formatter = new ChordSheetJS.HtmlDivFormatter();
+  const formatter = new HtmlDivFormatter();
   let songText = formatter.format(song);
 
   // Apply Central European notation if requested

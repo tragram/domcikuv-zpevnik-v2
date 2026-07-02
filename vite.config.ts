@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, type PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
@@ -7,6 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from "vite-plugin-pwa";
 import checker from "vite-plugin-checker";
+import { visualizer } from "rollup-plugin-visualizer";
 import { execSync } from "child_process";
 
 // Generate YYYY.MM.DD
@@ -48,13 +49,26 @@ export default defineConfig(({ mode }) => {
       !isTest && cloudflare(),
       tailwindcss(),
       !isTest &&
-        copy({
+        (copy({
           targets: [
             { src: "songs/*", dest: "dist/client/songs" },
             { src: "src/assets/*", dest: "dist/client/assets" },
           ],
           hook: "writeBundle",
-        }),
+        }) as PluginOption),
+      // Bundle-size treemap: ANALYZE=1 pnpm build, then open bundle-stats.html
+      // (cast: visualizer types against its own rollup copy, not vite's)
+      !!process.env.ANALYZE &&
+        (visualizer({
+          filename: "bundle-stats.html",
+          template: "treemap",
+          gzipSize: true,
+        }) as PluginOption),
+      !!process.env.ANALYZE &&
+        (visualizer({
+          filename: "bundle-stats.json",
+          template: "raw-data",
+        }) as PluginOption),
       !isTest &&
         VitePWA({
           registerType: "autoUpdate",
@@ -79,6 +93,19 @@ export default defineConfig(({ mode }) => {
           },
         }),
     ].filter(Boolean),
+    build: {
+      rollupOptions: {
+        treeshake: {
+          // jspdf is only imported by chordsheetjs's PdfFormatter, which we
+          // never use. It doesn't declare `sideEffects` in its package.json,
+          // so rollup keeps it (plus pako/fflate/fast-png, ~480 KB) for its
+          // potential import side effects. Declare it side-effect-free so the
+          // unused import is dropped. If PdfFormatter is ever used, jspdf is
+          // bundled again automatically.
+          moduleSideEffects: (id) => !id.includes("node_modules/jspdf"),
+        },
+      },
+    },
     preview: {
       port: 5173,
     },

@@ -78,7 +78,8 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
             selectedSongbookId: selectedSongbookIds?.[0] ?? null,
           };
         }
-        return state as FilterSettingsState;
+        // Migrated state is a partial snapshot; zustand merges it over defaults.
+        return state as unknown as FilterSettingsState;
       },
     },
   ),
