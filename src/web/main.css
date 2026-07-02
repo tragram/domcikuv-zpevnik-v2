@@ -193,7 +193,7 @@
 }
 
 body {
-  touch-action: pan-y;
+  touch-action: pan-x pan-y;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

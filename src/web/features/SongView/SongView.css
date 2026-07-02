@@ -1,4 +1,27 @@
 /* ==========================================================================
+   0. iOS SAFARI PINCH-ZOOM SUPPRESSION
+   ==========================================================================
+   touch-action must be set on the element a touch actually starts on AND on
+   any `overflow: auto/scroll` scroll container in between — a scroll container
+   establishes its own touch-action context and otherwise bypasses the value
+   set on <body>. Our FullScreen wrapper (overflow-y-auto) and .tab
+   (overflow-x) are exactly such containers, which is why a pinch over the song
+   content still triggered iOS Safari's native page zoom. Covering every
+   descendant sets touch-action on those containers and the leaf lyric/chord
+   nodes and fixed overlays alike, so pinches are handled by use-gesture (font
+   resize) instead of the browser.
+
+   pan-x pan-y keeps both-axis scrolling (incl. horizontal .tab scroll) while
+   disabling pinch/double-tap zoom. CSS-only on purpose: never reintroduce
+   maximum-scale / user-scalable to fight zoom — modern iOS ignores them for
+   prevention yet they can lock an already-zoomed page into an unescapable
+   state. */
+#song-view-layout,
+#song-view-layout * {
+    touch-action: pan-x pan-y;
+}
+
+/* ==========================================================================
    1. GLOBAL LAYOUT & WRAPPERS
    ========================================================================== */
 

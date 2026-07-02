@@ -20,7 +20,7 @@ export const SongViewLayout = forwardRef<HTMLDivElement, SongViewLayoutProps>(
                 )}
                 ref={ref}
                 style={{
-                    touchAction: 'pan-y',// Prevent default pinch-to-zoom behavior
+                    touchAction: 'pan-x pan-y',// Prevent default pinch-to-zoom behavior (see SongView.css section 0)
                     userSelect: 'none',  // Prevent text selection
                     // transition: 'font-size 0.2s ease',
                 }}
