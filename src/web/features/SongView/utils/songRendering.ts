@@ -1,4 +1,5 @@
 import ChordSheetJS from "chordsheetjs";
+import DOMPurify from "dompurify";
 import memoize from "memoize-one";
 import { SongData } from "~/types/songData";
 import { convertHTMLChordNotation } from "./chordNotation";
@@ -118,5 +119,12 @@ export function renderSong(
   songText = convertHTMLChordNotation(songText, centralEuropeanNotation);
 
   // Process repetitions
-  return postProcessChordPro(songText, DEFAULT_RENDERED_SECTIONS);
+  const html = postProcessChordPro(songText, DEFAULT_RENDERED_SECTIONS);
+
+  // This HTML is injected via dangerouslySetInnerHTML, and chordsheetjs does NOT
+  // escape lyrics/comments/titles — so a crafted chordpro (which can reach other
+  // users via shared songbooks, pinned drafts, and live sessions) could inject
+  // active markup. Sanitize to strip <script>, event handlers, and javascript:
+  // URLs while preserving the div/span/sup/sub + class structure the CSS needs.
+  return DOMPurify.sanitize(html);
 }
