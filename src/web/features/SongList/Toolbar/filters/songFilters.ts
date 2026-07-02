@@ -1,5 +1,6 @@
 import type { SongData } from "~/types/songData";
 import type { UserData } from "~/hooks/use-user-data";
+import { isValidSongLanguage } from "~/types/types";
 import type {
   LanguageCount,
   Songbook,
@@ -21,8 +22,13 @@ export const filterLanguage = (
   }
   if (selectedLanguage === "other") {
     return songs.filter((song) => {
-      const lang = song.language || "other";
-      return languageCounts[lang] < RARE_LANGUAGE_THRESHOLD;
+      // "Other" is the catch-all for songs without their own (common) language
+      // entry. Unknown/invalid languages are bucketed as "other" in buildSongDB,
+      // so they don't appear under their own key in languageCounts — treat them
+      // as "other" here too rather than looking them up (and missing).
+      if (!isValidSongLanguage(song.language)) return true;
+      const lang = song.language ?? "other";
+      return (languageCounts[lang] ?? 0) < RARE_LANGUAGE_THRESHOLD;
     });
   }
   return songs.filter((song) => song.language === selectedLanguage);
