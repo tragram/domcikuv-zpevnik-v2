@@ -2,13 +2,13 @@ import { useRouteContext } from "@tanstack/react-router";
 import { CheckCircle2, History, Sparkles } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
-import { IllustrationPromptApi } from "src/worker/api/api-types";
-import { IllustrationGenerateSchema } from "src/worker/api/api-types";
+import type { IllustrationPromptApi } from "src/worker/api/api-types";
+import type { IllustrationGenerateSchema } from "src/worker/api/api-types";
 import {
   AvailableImageModel,
   AvailableSummaryModel,
   SummaryPromptVersion,
-} from "src/worker/helpers/image-generator";
+} from "src/lib/contracts/image-generation";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import {
@@ -22,7 +22,7 @@ import {
   useIllustrationOptions,
   useIllustrationsAdmin,
 } from "~/services/admin-hooks";
-import { defaultPromptId } from "~/types/songData";
+import { defaultPromptId } from "src/lib/song-ids";
 import type { IllustrationFormProps } from "./illustration-form";
 import {
   ActiveSwitch,

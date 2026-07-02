@@ -4,6 +4,7 @@ import {
   sqliteTable,
   text,
 } from "drizzle-orm/sqlite-core";
+import { SONG_SOURCES } from "src/lib/contracts/song-sources";
 import { user } from "./auth.schema";
 
 export const song = sqliteTable("song", {
@@ -77,21 +78,6 @@ export const songVersion = sqliteTable("song_version", {
 });
 
 export type SongVersionDB = typeof songVersion.$inferSelect;
-
-export const SONG_SOURCES = [
-  "pisnicky-akordy",
-  "zpevnik-skorepova",
-  "cifraclub",
-] as const;
-
-export const SONG_SOURCES_PRETTY: Record<
-  (typeof SONG_SOURCES)[number],
-  string
-> = {
-  "pisnicky-akordy": "Písničky-Akordy",
-  "zpevnik-skorepova": "Zpěvník Skořepová",
-  cifraclub: "CifraClub",
-};
 
 export const songImport = sqliteTable("song_import", {
   id: text("id").primaryKey(),

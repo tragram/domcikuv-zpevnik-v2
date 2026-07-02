@@ -25,8 +25,9 @@ import {
 } from "lucide-react";
 import React, { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { SongDataDB, SONG_SOURCES, SongVersionDB } from "src/lib/db/schema";
-import { SongVersionAdminApi } from "src/worker/api/api-types";
+import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
+import { SONG_SOURCES } from "src/lib/contracts/song-sources";
+import type { SongVersionAdminApi } from "src/worker/api/api-types";
 import useLocalStorageState from "use-local-storage-state";
 import ReactDiffViewer from "react-diff-viewer-continued";
 import { useTheme } from "next-themes";

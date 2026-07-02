@@ -3,7 +3,8 @@ import Fuse from "fuse.js";
 import { useEffect, useMemo } from "react";
 
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
-import { SongData, to_ascii } from "~/types/songData";
+import { to_ascii } from "src/lib/song-ids";
+import { SongData } from "~/types/songData";
 import type { SongDB } from "~/types/types";
 import { songbookEntriesQueryOptions, type UserData } from "~/hooks/use-user-data";
 import { useQueryStore } from "./Toolbar/SearchBar";

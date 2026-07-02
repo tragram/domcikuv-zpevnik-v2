@@ -11,7 +11,7 @@ import { CacheFirst, NetworkOnly } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
 import { clientsClaim } from "workbox-core";
-import { SongDataApi } from "src/worker/api/api-types";
+import type { SongDataApi } from "src/worker/api/api-types";
 import { convert2flag, language2iso } from "./components/LanguageFlag";
 import { SongLanguage } from "./types/types";
 

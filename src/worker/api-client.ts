@@ -1,6 +1,8 @@
 // hono client
 import { hc } from "hono/client";
-import { route } from "./index";
+// type-only: importing the route value would pull the whole worker (and its
+// server-only SDKs) into the client bundle
+import type { route } from "./index";
 
 type AppType = typeof route;
 

@@ -32,7 +32,7 @@ import { ApiException } from "~/services/api-service";
 import {
   AvailableSummaryModel,
   SummaryPromptVersion,
-} from "src/worker/helpers/image-generator";
+} from "src/lib/contracts/image-generation";
 
 export function PromptCreateDialog({ songId }: { songId: string }) {
   const [isOpen, setIsOpen] = useState(false);

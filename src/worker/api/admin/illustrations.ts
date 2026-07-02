@@ -4,7 +4,7 @@ import {
   PopulatedSongDB,
 } from "src/worker/helpers/song-helpers";
 import z from "zod";
-import { defaultIllustrationId, defaultPromptId } from "~/types/songData";
+import { defaultIllustrationId, defaultPromptId } from "src/lib/song-ids";
 import {
   illustrationPrompt,
   song,
@@ -23,10 +23,10 @@ import {
 } from "../../helpers/illustration-helpers";
 import {
   IMAGE_MODELS_API,
-  ImageGenerator,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
-} from "../../helpers/image-generator";
+} from "src/lib/contracts/image-generation";
+import { ImageGenerator } from "../../helpers/image-generator";
 import {
   AdminIllustrationResponse,
   IllustrationGenerateSchema,

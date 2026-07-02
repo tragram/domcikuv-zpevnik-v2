@@ -1,4 +1,4 @@
-import { ExternalSearchResult } from "./index";
+import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
 
 interface ZpevnikSong {
   id: string;

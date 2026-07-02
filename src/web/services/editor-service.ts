@@ -1,5 +1,5 @@
-import { EditorSubmitSchemaInput } from "src/worker/api/editor";
-import { YoutubeSearchResult } from "src/worker/api/youtube";
+import type { EditorSubmitSchemaInput } from "src/lib/contracts/editor-schema";
+import type { YoutubeSearchResult } from "src/worker/api/youtube";
 import { youtubeMusicPlaylistUrl } from "src/lib/youtube";
 import client from "~/../worker/api-client";
 import { makeApiRequest } from "./api-service";

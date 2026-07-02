@@ -4,7 +4,7 @@ import { FavoriteButton } from "~/components/FavoriteButton";
 import { cn } from "~/lib/utils";
 import { SongData } from "~/types/songData";
 import type { LayoutSettings } from "../hooks/viewSettingsStore";
-import { SONG_SOURCES_PRETTY } from "src/lib/db/schema/song.schema";
+import { SONG_SOURCES_PRETTY } from "src/lib/contracts/song-sources";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Pencil, RotateCcw, type LucideIcon } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";

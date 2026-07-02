@@ -1,23 +1,12 @@
 import { Key, SongRange } from "./musicTypes";
 import type { ChordPro, EditorState, int, SongLanguage } from "./types";
-import {
+import type {
   CurrentIllustrationApi,
   ExternalSourceApi,
   SongDataApi,
 } from "src/worker/api/api-types";
-import { ExternalSearchResult } from "src/worker/helpers/external-search";
-
-export const to_ascii = (text: string): string => {
-  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-};
-
-const sanitizeId = (id: string) => {
-  return to_ascii(id)
-    .toLowerCase()
-    .replace(/ /g, "_")
-    .replace(/[^a-z0-9-_.]+/g, "")
-    .replace(/_+/g, "_");
-};
+import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
+import { songBaseId, to_ascii } from "src/lib/song-ids";
 
 const generateFallbackLogo = (bgColor: string, fgColor: string): string => {
   const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
@@ -33,18 +22,6 @@ const generateFallbackLogo = (bgColor: string, fgColor: string): string => {
   // encodeURIComponent is crucial here so that the '#' in hex codes doesn't break the URL
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`;
 };
-
-export const defaultPromptId = (
-  songId: string,
-  summaryModel: string,
-  promptVersion: string,
-) => sanitizeId(`${songId}_${summaryModel}_${promptVersion}`);
-
-export const promptFolder = (songId: string, promptId: string) =>
-  promptId.replace(songId + "_", "");
-
-export const defaultIllustrationId = (promptId: string, imageModel: string) =>
-  sanitizeId(`${promptId}_${imageModel}`);
 
 export class SongData {
   id: string;
@@ -195,7 +172,7 @@ export class SongData {
   }
 
   static baseId(title: string, artist: string) {
-    return sanitizeId(`${to_ascii(artist)}-${to_ascii(title)}`);
+    return songBaseId(title, artist);
   }
 
   static empty() {

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { EditorState } from "~/types/types";
-import { editorSubmitSchema } from "src/worker/api/editor";
+import { editorSubmitSchema } from "src/lib/contracts/editor-schema";
 
 export const useEditorValidation = (editorState: EditorState) => {
   return useMemo(() => {

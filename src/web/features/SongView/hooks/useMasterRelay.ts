@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSessionSync, FeedStatus, RelayStatus } from "./useSessionSync";
-import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
+import type { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 
 export interface UseMasterRelayOptions {
   /** The master whose feed this page is displaying. */

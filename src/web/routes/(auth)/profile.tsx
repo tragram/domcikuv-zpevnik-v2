@@ -13,7 +13,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { ChangeEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { logoutUser } from "src/lib/auth/client";
-import { ProfileUpdateData } from "src/worker/api/userProfile";
+import type { ProfileUpdateData } from "src/worker/api/userProfile";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {

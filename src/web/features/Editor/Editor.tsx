@@ -17,7 +17,7 @@ import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
 
 import useLocalStorageState from "use-local-storage-state";
-import { convertToChordPro } from "~/lib/chords2chordpro";
+import { convertToChordPro } from "src/lib/chords2chordpro";
 import { cn } from "~/lib/utils";
 import { autofillChordpro } from "~/services/editor-service";
 import { SongData } from "~/types/songData";

@@ -1,4 +1,4 @@
-import {
+import type {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
 } from "src/worker/api/api-types";
@@ -6,7 +6,7 @@ import {
   AvailableImageModel,
   AvailableSummaryModel,
   SummaryPromptVersion,
-} from "src/worker/helpers/image-generator";
+} from "src/lib/contracts/image-generation";
 import useLocalStorageState from "use-local-storage-state";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import AIGeneratedForm from "./ai-generated-form";

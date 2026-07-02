@@ -10,7 +10,7 @@ import {
   defaultIllustrationId,
   defaultPromptId,
   promptFolder,
-} from "~/types/songData";
+} from "src/lib/song-ids";
 import {
   CFImagesThumbnailURL
 } from "../api/admin/illustrations";

@@ -1,4 +1,4 @@
-import { ExternalSearchResult } from ".";
+import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
 
 interface CifraSong {
   t: string; // type? artist=="1"; chords=="2"?

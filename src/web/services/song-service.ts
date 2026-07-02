@@ -1,16 +1,16 @@
 import { SongDataDB } from "src/lib/db/schema";
 import { queryClient } from "src/lib/query-client";
-import {
+import type {
   ModifySongVersionSchema,
   SongModificationSchema,
 } from "src/worker/api/admin/songs";
-import {
+import type {
   SongDataAdminApi,
   SongDataApi,
   SongVersionAdminApi,
   SongVersionApi,
 } from "src/worker/api/api-types";
-import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
+import type { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import client, { AdminApi, API } from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {

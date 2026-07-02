@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { useState } from "react";
 import { SongIllustrationDB } from "src/lib/db/schema";
-import { IllustrationModifySchema } from "src/worker/api/api-types";
+import type { IllustrationModifySchema } from "src/worker/api/api-types";
 import { ImageDropzone } from "~/components/ImageDropzone";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import client from "src/worker/api-client";
-import { SongbookEntryApi } from "src/worker/api/api-types";
+import type { SongbookEntryApi } from "src/worker/api/api-types";
 
 import { SongData } from "~/types/songData";
 import { getIsOnline } from "~/hooks/use-is-online";

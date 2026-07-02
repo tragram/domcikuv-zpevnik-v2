@@ -1,10 +1,8 @@
 import ChordSheetJS from "chordsheetjs";
-import { convertToChordPro } from "~/lib/chords2chordpro";
-import { SongData } from "~/types/songData";
-import {
-  externalSearchResultSchema,
-  searchAllExternalServices,
-} from "../helpers/external-search";
+import { convertToChordPro } from "src/lib/chords2chordpro";
+import { songBaseId } from "src/lib/song-ids";
+import { externalSearchResultSchema } from "src/lib/contracts/external-search-schema";
+import { searchAllExternalServices } from "../helpers/external-search";
 import {
   SkorepovaCache,
   ZPEVNIK_SKOREPOVA_CACHE_KEY,
@@ -19,7 +17,7 @@ import {
   retrieveSingleSong,
 } from "../helpers/song-helpers";
 import { SongDataApi } from "./api-types";
-import { EditorSubmitSchema } from "./editor";
+import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import {
   errorJSend,
   failJSend,
@@ -44,7 +42,7 @@ export const externalRoutes = buildApp()
     // shown — only deleted ones are suppressed.)
     const deletedIds = await getDeletedSongIds(c.var.db);
     const visible = results.filter(
-      (r) => !deletedIds.has(SongData.baseId(r.title, r.artist)),
+      (r) => !deletedIds.has(songBaseId(r.title, r.artist)),
     );
     return successJSend(c, visible);
   })
@@ -61,7 +59,7 @@ export const externalRoutes = buildApp()
         return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
 
       // Check if the song (by artist/title ID) already exists in the internal DB (allow multiple external versions)
-      const newSongId = SongData.baseId(title, artist);
+      const newSongId = songBaseId(title, artist);
 
       let existingSong: SongDataApi | null = null;
 

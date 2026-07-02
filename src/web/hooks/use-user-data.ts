@@ -2,13 +2,13 @@ import { QueryClient, queryOptions, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { queryClient } from "src/lib/query-client";
 import client from "src/worker/api-client";
-import { UserProfileDB } from "src/worker/api/userProfile";
+import type { UserProfileDB } from "src/worker/api/userProfile";
 import { SongVersionDB } from "src/lib/db/schema";
 import { fetchFavorites, fetchSubmissions } from "~/services/user-service";
 import { makeApiRequest } from "~/services/api-service";
 import { authClient } from "src/lib/auth/client";
 import { parseDBDates } from "../services/song-service";
-import { SongbookEntryApi, SongVersionApi } from "src/worker/api/api-types";
+import type { SongbookEntryApi, SongVersionApi } from "src/worker/api/api-types";
 
 export type UserData = {
   profile: NonNullable<UserProfileDB>;

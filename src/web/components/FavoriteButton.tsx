@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import client from "src/worker/api-client";
-import { SongbookEntryApi } from "src/worker/api/api-types";
+import type { SongbookEntryApi } from "src/worker/api/api-types";
 import { useIsOnline } from "~/hooks/use-is-online";
 import {
   addFavoriteEntry,

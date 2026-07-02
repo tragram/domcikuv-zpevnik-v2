@@ -2,11 +2,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { SongDataDB } from "src/lib/db/schema";
 import { AdminApi } from "src/worker/api-client";
-import {
+import type {
   ModifySongVersionSchema,
   SongModificationSchema,
 } from "src/worker/api/admin/songs";
-import {
+import type {
   IllustrationCreateSchema,
   IllustrationGenerateSchema,
   IllustrationModifySchema,
@@ -19,8 +19,8 @@ import {
   IMAGE_MODELS_API,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
-} from "src/worker/helpers/image-generator";
-import {
+} from "src/lib/contracts/image-generation";
+import type {
   CreateUserSchema,
   UpdateUserSchema,
   UserRoleFilter,

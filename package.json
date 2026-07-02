@@ -146,6 +146,11 @@
     "db:migrate:remote": "wrangler d1 migrations apply zpevnik --remote",
     "db:studio:local": "LOCAL_DB_PATH=$(find .wrangler/state/v3/d1/miniflare-D1DatabaseObject -type f -name '*.sqlite' -print -quit) pnpm drizzle-kit studio",
     "db:studio:remote": "drizzle-kit studio",
+    "yt:fetch": "tsx scripts/youtube-backfill/fetch.ts",
+    "yt:review": "tsx scripts/youtube-backfill/server.ts",
+    "yt:push": "tsx scripts/youtube-backfill/push.ts",
+    "capo:backup": "tsx scripts/favorites-capo/backup.ts",
+    "capo:apply": "tsx scripts/favorites-capo/apply.ts",
     "test": "vitest"
   }
 }

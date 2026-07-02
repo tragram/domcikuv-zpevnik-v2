@@ -4,8 +4,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { API } from "src/worker/api-client";
 
-import { SessionSyncState } from "src/worker/durable-objects/SessionSync";
-import { SongDataApi } from "src/worker/api/api-types";
+import type { SessionSyncState } from "src/worker/durable-objects/SessionSync";
+import type { SongDataApi } from "src/worker/api/api-types";
 import { OfflineNotice } from "~/components/OfflineIndicator";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { useMasterRelay } from "~/features/SongView/hooks/useMasterRelay";

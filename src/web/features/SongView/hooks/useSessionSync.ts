@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { toast } from "sonner";
-import {
+import type {
   SessionSyncState,
   SesssionSyncWSMessage,
 } from "src/worker/durable-objects/SessionSync";

@@ -1,8 +1,8 @@
 import { UserDB } from "src/lib/db/schema/auth.schema";
 import client, { API } from "../../worker/api-client";
 import { makeApiRequest } from "./api-service";
-import { SessionsResponseData } from "src/worker/api/sessions";
-import {
+import type { SessionsResponseData } from "src/worker/api/sessions";
+import type {
   CreateUserSchema,
   SetUserPasswordSchema,
   UpdateUserSchema,
@@ -12,8 +12,8 @@ import {
 
 import { parseDBDates } from "./song-service";
 import { SongVersionDB } from "src/lib/db/schema";
-import { UserProfileDB } from "src/worker/api/userProfile";
-import { SongbookEntryApi } from "src/worker/api/api-types";
+import type { UserProfileDB } from "src/worker/api/userProfile";
+import type { SongbookEntryApi } from "src/worker/api/api-types";
 
 export type UsersApi = typeof client.api.admin.users;
 

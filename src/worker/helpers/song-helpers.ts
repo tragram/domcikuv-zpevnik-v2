@@ -22,8 +22,8 @@ import {
   user,
   userFavoriteSongs,
 } from "src/lib/db/schema";
-import { SongData } from "src/web/types/songData";
-import { EditorSubmitSchema } from "../api/editor";
+import { songBaseId } from "src/lib/song-ids";
+import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import { AppDatabase } from "../api/utils";
 import { SongbookDataApi, SongDataApi } from "../api/api-types";
 
@@ -370,7 +370,7 @@ export const createSong = async (
   importId?: string,
 ) => {
   const now = new Date();
-  const songId = SongData.baseId(submission.title, submission.artist);
+  const songId = songBaseId(submission.title, submission.artist);
 
   const existingSong = await getSongBase(db, songId).catch(() => null);
 
@@ -567,7 +567,7 @@ export const songImportId = (
   sourceId: SongImportDB["sourceId"],
   title: string,
   artist: string,
-) => `${sourceId}/${SongData.baseId(title, artist)}_${Date.now()}`;
+) => `${sourceId}/${songBaseId(title, artist)}_${Date.now()}`;
 
 export const createImportSong = async (
   db: AppDatabase,

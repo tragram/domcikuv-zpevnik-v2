@@ -1,4 +1,4 @@
-import { EditorSubmitSchemaInput } from "src/worker/api/editor";
+import type { EditorSubmitSchemaInput } from "src/lib/contracts/editor-schema";
 import z from "zod";
 import { Note } from "./musicTypes";
 import { SongData } from "./songData";

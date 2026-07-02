@@ -1,37 +1,11 @@
 import { InferenceClient } from "@huggingface/inference";
 import OpenAI from "openai";
 import { GoogleGenAI } from "@google/genai";
-
-// the first element of each array is used as default by the frontend
-export const SUMMARY_PROMPT_VERSIONS = [
-  "v7",
-  "v6",
-  "v5",
-  "v4",
-  "v3",
-  "v2",
-  "v1",
-] as const;
-export const SUMMARY_MODELS_API = [
-  "gpt-5.4-mini",
-  "gpt-5-mini",
-  "gpt-5.2",
-] as const;
-
-export const IMAGE_MODELS_API = [
-  "nano-banana-2",
-  "FLUX.1-dev",
-  "FLUX.1-schnell",
-  "FLUX.2-dev",
-  "gpt-image-1.5",
-  "gpt-image-1",
-  "gpt-image-1-mini",
-  "nano-banana-pro",
-] as const;
-
-export type SummaryPromptVersion = (typeof SUMMARY_PROMPT_VERSIONS)[number];
-export type AvailableSummaryModel = (typeof SUMMARY_MODELS_API)[number];
-export type AvailableImageModel = (typeof IMAGE_MODELS_API)[number];
+import type {
+  AvailableImageModel,
+  AvailableSummaryModel,
+  SummaryPromptVersion,
+} from "src/lib/contracts/image-generation";
 
 const PROMPTS: Record<SummaryPromptVersion, string> = {
   v1: "Based on the following song lyrics, create a prompt for an AI image generator that will be used as an illustration of the song. Try to be short",

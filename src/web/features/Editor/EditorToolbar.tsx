@@ -40,7 +40,7 @@ import {
   IMAGE_MODELS_API,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
-} from "src/worker/helpers/image-generator";
+} from "src/lib/contracts/image-generation";
 import { UserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
 import { OfflineToolbarBadge } from "~/components/OfflineIndicator";

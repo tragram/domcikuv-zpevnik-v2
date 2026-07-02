@@ -44,7 +44,7 @@ import {
 import { AdminApi} from "~/../worker/api-client";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
 import { UserDB } from "src/lib/db/schema";
-import { UserRoleFilter } from "src/worker/helpers/user-helpers";
+import type { UserRoleFilter } from "src/worker/helpers/user-helpers";
 
 interface UsersTableProps {
   adminApi: AdminApi;

@@ -2,12 +2,14 @@ import { eq } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { generateAndSavePrompt } from "src/worker/helpers/illustration-helpers";
 import {
-  GenerationConfig,
-  ImageGenerator,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
+} from "src/lib/contracts/image-generation";
+import {
+  GenerationConfig,
+  ImageGenerator,
 } from "src/worker/helpers/image-generator";
-import { defaultPromptId } from "~/types/songData";
+import { defaultPromptId } from "src/lib/song-ids";
 import {
   illustrationPrompt,
   IllustrationPromptDB,

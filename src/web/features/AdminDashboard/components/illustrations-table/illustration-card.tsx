@@ -31,7 +31,7 @@ import {
   useUpdateIllustration,
 } from "../../../../services/admin-hooks";
 import DeletePrompt from "~/components/dialogs/delete-prompt";
-import { IllustrationModifySchema, SongDataAdminApi } from "src/worker/api/api-types";
+import type { IllustrationModifySchema, SongDataAdminApi } from "src/worker/api/api-types";
 import { ApiException } from "~/services/api-service";
 
 interface IllustrationCardProps {

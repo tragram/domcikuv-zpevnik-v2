@@ -1,5 +1,5 @@
 import { ExternalLink, Globe } from "lucide-react";
-import { SONG_SOURCES, SONG_SOURCES_PRETTY } from "src/lib/db/schema";
+import { SONG_SOURCES, SONG_SOURCES_PRETTY } from "src/lib/contracts/song-sources";
 import { Badge } from "~/components/ui/badge";
 import { cn } from "~/lib/utils";
 

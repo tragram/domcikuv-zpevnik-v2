@@ -32,6 +32,11 @@ secrets.yaml
 
 .tanstack/*
 
+# YouTube backfill review file (local working data)
+scripts/youtube-backfill/youtube-links.json
+# Favorites capo backup (local working data)
+scripts/favorites-capo/capo-backup.json
+
 # DB gets rebuilt on both dev and build
 public/songDB.json
 public/songDB.hash

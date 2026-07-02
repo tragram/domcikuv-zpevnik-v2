@@ -21,7 +21,7 @@ import {
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
 import { PromptCreateDialog } from "./prompt-create-dialog";
-import { IllustrationCreateSchema, IllustrationGenerateSchema, SongDataAdminApi } from "src/worker/api/api-types";
+import type { IllustrationCreateSchema, IllustrationGenerateSchema, SongDataAdminApi } from "src/worker/api/api-types";
 import { PromptCard } from "./prompt-card";
 import { createIllustration, generateIllustration } from "~/services/illustration-service";
 

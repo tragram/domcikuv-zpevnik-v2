@@ -7,7 +7,7 @@ import {
 } from "@codemirror/view";
 import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import { forwardRef, useImperativeHandle, useRef } from "react";
-import { isConvertibleFormat } from "~/lib/chords2chordpro";
+import { isConvertibleFormat } from "src/lib/chords2chordpro";
 import { cn } from "~/lib/utils";
 import "./Editor.css";
 import { AutofillReviewPanel } from "./components/AutofillReviewPanel";

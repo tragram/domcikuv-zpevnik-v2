@@ -1,5 +1,5 @@
 import { createFileRoute, redirect, Link } from "@tanstack/react-router";
-import { externalSearchResultSchema } from "src/worker/helpers/external-search";
+import { externalSearchResultSchema } from "src/lib/contracts/external-search-schema";
 import PendingComponent from "~/components/PendingComponent";
 import { Button } from "~/components/ui/button";
 import { ApiException, makeApiRequest } from "~/services/api-service";
