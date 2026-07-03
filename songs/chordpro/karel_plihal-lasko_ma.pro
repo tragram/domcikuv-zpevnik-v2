@@ -1,12 +1,12 @@
-{title: Lásko má}
-{artist: Karel Plíhal}
+{title: Lásko má, já stůňu}
+{artist: Karel Svoboda}
 {key: Hm}
 {capo: 1}
 {range: f#1-h2}
 {language: czech}
 {startMelody: h h d c# h a g# f#}
 {createdAt: 1774986742000}
-{updatedAt: 1777123268000}
+{updatedAt: 1782977731000}
 {illustrationId: karel_plihal-lasko_ma_gpt-5-mini_v4_nano-banana-2}
 {promptId: karel_plihal-lasko_ma_gpt-5-mini_v4}
 
