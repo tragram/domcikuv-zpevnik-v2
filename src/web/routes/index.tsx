@@ -6,6 +6,7 @@ import SongList from "~/features/SongList/SongList";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { publicSongbooksQueryOptions, useSongDB } from "~/hooks/use-songDB";
 import {
+  getSessionUserId,
   songbookEntriesQueryOptions,
   useUserData,
 } from "~/hooks/use-user-data";
@@ -28,9 +29,7 @@ export const Route = createFileRoute("/")({
       .ensureQueryData(publicSongbooksQueryOptions())
       .catch(() => undefined);
     const ownerId = songbooks?.find((s) => s.nickname === search.songbook)?.user;
-    const self = context.queryClient.getQueryData<{ user?: { id?: string } }>([
-      "session",
-    ])?.user?.id;
+    const self = getSessionUserId(context.queryClient);
     if (ownerId && ownerId !== self) {
       context.queryClient.prefetchQuery(songbookEntriesQueryOptions(ownerId));
     }

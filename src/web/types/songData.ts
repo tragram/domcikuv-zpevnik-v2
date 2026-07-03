@@ -200,16 +200,26 @@ export class SongData {
     return this.id ? `/song/${this.id}` : undefined;
   }
 
+  /** Fallback logo for external sources without a generated illustration yet. */
+  private externalSourceFallbackLogo(): string | undefined {
+    switch (this.externalSource?.sourceId) {
+      case "pisnicky-akordy":
+        return generateFallbackLogo("#7BAADF", "#578DC5");
+      case "cifraclub":
+        return generateFallbackLogo("#ffb940", "#ff7800");
+      case "zpevnik-skorepova":
+        return generateFallbackLogo("#9917DA", "#3B0A54");
+      default:
+        return undefined;
+    }
+  }
+
   // Image URL methods
   thumbnailURL(): string | undefined {
     if (this.previewThumbnailURL) return this.previewThumbnailURL;
     if (!this.currentIllustration) {
-      if (this.externalSource?.sourceId === "pisnicky-akordy")
-        return generateFallbackLogo("#7BAADF", "#578DC5");
-      if (this.externalSource?.sourceId === "cifraclub")
-        return generateFallbackLogo("#ffb940", "#ff7800");
-      if (this.externalSource?.sourceId === "zpevnik-skorepova")
-        return generateFallbackLogo("#9917DA", "#3B0A54");
+      const fallback = this.externalSourceFallbackLogo();
+      if (fallback) return fallback;
     }
     return (
       this.currentIllustration?.thumbnailURL ??
@@ -220,12 +230,8 @@ export class SongData {
   illustrationURL(): string | undefined {
     if (this.previewThumbnailURL) return this.previewThumbnailURL;
     if (!this.currentIllustration) {
-      if (this.externalSource?.sourceId === "pisnicky-akordy")
-        return generateFallbackLogo("#7BAADF", "#578DC5");
-      if (this.externalSource?.sourceId === "cifraclub")
-        return generateFallbackLogo("#ffb940", "#ff7800");
-      if (this.externalSource?.sourceId === "zpevnik-skorepova")
-        return generateFallbackLogo("#9917DA", "#3B0A54");
+      const fallback = this.externalSourceFallbackLogo();
+      if (fallback) return fallback;
     }
     return (
       this.currentIllustration?.imageURL ??

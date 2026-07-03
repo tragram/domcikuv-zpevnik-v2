@@ -146,6 +146,13 @@ type SessionData = NonNullable<
 export const sessionToProfile = (sessionData: SessionData | null | undefined) =>
   (sessionData?.user ? parseDBDates(sessionData.user) : null) as UserProfileDB;
 
+// Reads the current user's id straight from the session cache, without
+// subscribing to it (for one-off loader checks, e.g. "is this the viewer's
+// own songbook?").
+export const getSessionUserId = (queryClient: QueryClient) =>
+  queryClient.getQueryData<SessionData | null>(sessionQueryOptions().queryKey)
+    ?.user?.id;
+
 export function useUserData() {
   const { data: sessionData, isPending: isAuthSyncing } = useQuery(
     sessionQueryOptions(),

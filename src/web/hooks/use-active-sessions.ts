@@ -1,9 +1,4 @@
-import {
-  QueryClient,
-  queryOptions,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 import client from "src/worker/api-client";
 import { fetchActiveSessions } from "~/services/user-service";
@@ -15,11 +10,6 @@ export const activeSessionsQueryOptions = () =>
     queryKey: ["activeSessions"] as const,
     queryFn: () => fetchActiveSessions(client.api),
   });
-
-// Helper for prefetching in route loaders
-export const prefetchActiveSessions = (queryClient: QueryClient) => {
-  return queryClient.fetchQuery(activeSessionsQueryOptions());
-};
 
 export const useActiveSessions = (songDB: SongDB) => {
   const queryClient = useQueryClient();

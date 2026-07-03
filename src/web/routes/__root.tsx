@@ -12,6 +12,7 @@ import {
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { RouterContext } from "~/main";
 import {
+  getSessionUserId,
   sessionQueryOptions,
   songbookEntriesQueryOptions,
 } from "../hooks/use-user-data";
@@ -38,9 +39,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     // buildSongDB, not this query).
     const { selectedSongbookId } = useFilterSettingsStore.getState();
     if (selectedSongbookId) {
-      const self = context.queryClient.getQueryData<{ user?: { id?: string } }>([
-        "session",
-      ])?.user?.id;
+      const self = getSessionUserId(context.queryClient);
       if (selectedSongbookId !== self) {
         context.queryClient.prefetchQuery(
           songbookEntriesQueryOptions(selectedSongbookId),
