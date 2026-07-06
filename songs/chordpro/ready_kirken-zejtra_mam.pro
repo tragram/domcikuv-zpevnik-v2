@@ -1,0 +1,48 @@
+{title: Zejtra mám}
+{artist: Ready Kirken}
+{key: G}
+{capo: 0}
+{range: g1-g2}
+{language: czech}
+{startMelody: h d}
+{createdAt: 1492120800000}
+{updatedAt: 1770572235000}
+{illustrationId: ready_kirken-zejtra_mam_gpt-4o-mini_v1_flux.1-dev}
+{promptId: ready_kirken-zejtra_mam_gpt-4o-mini_v1}
+
+{start_of_verse}
+Zejtra [G]mám zejtra [Hm]mám svůj [Em]den [D]
+zejtra se mi [C]splní moje tajný [Hm]přání můj [Am]sen [D]
+dlouho tě [G]znám dlouho tě [Hm]znám mám tě [Em]rád [D]
+uvidím tě [C]zas uslyším tvůj [Hm]hlas [Am]možná [D]
+{end_of_verse}
+
+{start_of_verse}
+Zejtra [G]mám zejtra [Hm]mám svůj [Em]den [D]
+asi to tak [C]bude je to cejtit [Hm]všude je to cejtit [Am]všude [D]
+všude [G]tam kam se podí[Hm]vám něco z tebe [Em]mám [D]
+{end_of_verse}
+
+{start_of_bridge}
+Tak se mi [C]zdá tak se mi [Em]zdá,
+že už asi [A]zejtra nebudu [D]sám
+{end_of_bridge}
+
+{start_of_chorus}
+Nebudu [C]sám, nebudu [H]sám
+zejtra tě [Em]máááá[G]ám
+[Em]máááá[A]ám, [Em]máááá[A]ám, [H]jééé
+{end_of_chorus}
+
+{start_of_verse}
+Zejtra [G]mám zejtra [Hm]mám svůj [Em]den [D]
+zejtra se mi [C]splní moje tajný [Hm]přání můj [Am]sen [D]
+všude [G]tam kam se [Hm]podívám něco z tebe [Em]mám [D]
+{end_of_verse}
+
+{start_of_bridge}
+Poslední [C]den jednou vyspím se [Hm]jen
+a pak už [Am]nikdy nebudu [D]sám
+{end_of_bridge}
+
+{chorus}

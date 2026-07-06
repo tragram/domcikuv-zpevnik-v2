@@ -1,0 +1,27 @@
+songId: aneta_langerova-voda_ziva
+prompts:
+  - id: aneta_langerova-voda_ziva_gpt-5-mini_v5
+    songId: aneta_langerova-voda_ziva
+    summaryPromptVersion: v5
+    summaryModel: gpt-5-mini
+    text: >-
+      Oil painting, intimate twilight scene: centered wooden rowboat on calm
+      dark-blue water seen in a three-quarter top-down view for clarity in a
+      circular crop; a lone figure sits in the boat cradling a small luminous
+      "living water" — a translucent blue-green orb with subtle human-wisp shape
+      that emits a soft inner glow reflecting on the water; distant low horizon
+      with warm orange-pink afterglow and faint stars, cool moonlight
+      rim-lighting the boat and figure; soft textured brushstrokes, muted
+      melancholy palette with warm highlights, high contrast between dark
+      surroundings and the glowing water to keep the composition legible at low
+      resolution, contemplative and poetic mood.
+    createdAt: 2026-05-30T15:58:57.000Z
+    updatedAt: 2026-05-30T15:58:57.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780156753000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+      - createdAt: 1780159418000
+        imageModel: dalle3
+        filename: dalle3.webp

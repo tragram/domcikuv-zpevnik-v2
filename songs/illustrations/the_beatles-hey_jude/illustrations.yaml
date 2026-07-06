@@ -1,0 +1,21 @@
+songId: the_beatles-hey_jude
+prompts:
+  - id: the_beatles-hey_jude_gpt-4o-mini_v1
+    songId: the_beatles-hey_jude
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene, introspective man standing on a city
+      street at dusk, holding a guitar. He looks hopeful and contemplative, with
+      soft light illuminating his face. Surround him with gentle, swirling
+      colors representing emotions, and include a faint silhouette of a woman in
+      the background, symbolizing love and connection. The overall mood should
+      convey encouragement and warmth, reflecting themes of heart and
+      resilience.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:31.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

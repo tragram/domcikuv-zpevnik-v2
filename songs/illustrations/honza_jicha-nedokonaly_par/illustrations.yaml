@@ -1,0 +1,21 @@
+songId: honza_jicha-nedokonaly_par
+prompts:
+  - id: honza_jicha-nedokonaly_par_gpt-4o-mini_v1
+    songId: honza_jicha-nedokonaly_par
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical urban scene featuring a couple
+      meeting on a city bus, surrounded by magazine covers depicting unrealistic
+      beauty standards. The couple should appear genuine and carefree, with
+      their hands touching, symbolizing a connection that transcends societal
+      expectations. Include elements like a city skyline, coffee cups, and a
+      swimming pool in the background to capture the essence of their everyday
+      life.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:03.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,18 @@
+songId: vaclav_neckar-pulnocni
+prompts:
+  - id: vaclav_neckar-pulnocni_gpt-4o-mini_v1
+    songId: vaclav_neckar-pulnocni
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      "Create an illustration of a serene winter train journey through snowy
+      hills, with a glowing church in the distance where people are singing.
+      Include a silhouette of a cross with a faint shadow, and a starry night
+      sky above, capturing a sense of hope and reflection."
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:37:46.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

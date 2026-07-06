@@ -1,0 +1,21 @@
+songId: nahore-credo
+prompts:
+  - id: nahore-credo_gpt-4o-mini_v2
+    songId: nahore-credo
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a solitary figure standing at a crossroads
+      during twilight, gazing thoughtfully at the sky filled with clouds. The
+      figure, reflecting a mix of emotions, holds a shield and a banner,
+      symbolizing their internal struggles and resilience. Surrounding them are
+      faint paths leading in different directions, hinting at choices and
+      uncertainty, while a soft glow of fading light casts a melancholic yet
+      hopeful atmosphere.
+    createdAt: 2025-08-05T09:45:48.000Z
+    updatedAt: 2026-02-08T17:36:27.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

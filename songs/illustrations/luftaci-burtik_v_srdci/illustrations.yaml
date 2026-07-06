@@ -1,0 +1,23 @@
+songId: luftaci-burtik_v_srdci
+prompts:
+  - id: luftaci-burtik_v_srdci_gpt-5.4-mini_v7
+    songId: luftaci-burtik_v_srdci
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic square composition of a lonely middle-aged man
+      sitting in a dim Czech pub at night, smoking would-be but forbidden,
+      staring into a half-empty beer and a grilled sausage on a plate, with a
+      nostalgic, melancholic expression; outside the rain-streaked window a
+      blurred tram and old stone bridge silhouette suggest a changing city and
+      lost past, subtle retro details, muted brown and gray palette, soft warm
+      amber interior lighting contrasted with cold blue night light, shallow
+      depth of field, realistic textures, atmosphere of fading memories and
+      quiet defiance, no readable text, only a faint suggestion of old signage.
+    createdAt: 2026-06-20T17:06:26.000Z
+    updatedAt: 2026-06-20T17:06:26.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1781975197000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

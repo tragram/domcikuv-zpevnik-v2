@@ -1,0 +1,19 @@
+songId: scorpions-wind_of_change
+prompts:
+  - id: scorpions-wind_of_change_gpt-4o-mini_v1
+    songId: scorpions-wind_of_change
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene summer night in Gorky Park, Moscow,
+      with soldiers passing by. The scene should capture a sense of nostalgia
+      and hope, featuring children dreaming under a starry sky, symbolizing the
+      "wind of change." Include elements of nature like gently blowing trees and
+      a soft breeze to evoke a magical atmosphere.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:20.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

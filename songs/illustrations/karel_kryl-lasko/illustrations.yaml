@@ -1,0 +1,22 @@
+songId: karel_kryl-lasko
+prompts:
+  - id: karel_kryl-lasko_gpt-4o-mini_v1
+    songId: karel_kryl-lasko
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration inspired by the lyrics of a gritty, nostalgic song.
+      Depict a dimly lit room with a table holding a bowl of leftover food for
+      rats, a deck of cards, and a couple of love letters. In the background,
+      show a weary soldier with a beret, looking at a pair of cherries on a
+      plate, symbolizing lost love. Include elements of war like a vintage gun
+      and cigarette smoke, capturing a sense of longing and the harshness of
+      life. The atmosphere should be melancholic yet infused with a sense of
+      camaraderie.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:28.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

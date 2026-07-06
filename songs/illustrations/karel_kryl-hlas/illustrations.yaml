@@ -1,0 +1,22 @@
+songId: karel_kryl-hlas
+prompts:
+  - id: karel_kryl-hlas_gpt-4o-mini_v1
+    songId: karel_kryl-hlas
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a mysterious and enchanting night scene in
+      September, where a beautiful figure resembling a maiden with an alluring
+      smile embodies temptation. The moonlight casts a soft glow over ripe
+      apples, and the atmosphere is filled with fragrant flowers. In the
+      background, hint at a grand palace with opulent details, but emphasize the
+      absence of people. Include subtle elements of darkness and allure, like
+      shadows or serpentine shapes, to reflect the themes of seduction and the
+      price of one's voice.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

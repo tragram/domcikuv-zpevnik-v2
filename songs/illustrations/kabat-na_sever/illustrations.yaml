@@ -1,0 +1,22 @@
+songId: kabat-na_sever
+prompts:
+  - id: kabat-na_sever_gpt-5-mini_v4
+    songId: kabat-na_sever
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Moody cinematic painterly scene: a lone traveler walking away down a long,
+      straight cracked country road toward a distant river on the horizon with a
+      wooden sign reading "SEVER" (north). Twilight/dusk palette—deep blues,
+      muted earth tones, a warm red accent from a half-empty wine bottle or
+      spilled cup by the roadside; the river glints with faint fish silhouettes
+      and gentle waves. Center composition with strong leading lines, bold
+      silhouette and minimal clutter for clear thumbnail legibility, melancholic
+      and resigned mood.
+    createdAt: 2026-03-22T13:08:17.000Z
+    updatedAt: 2026-03-22T13:08:17.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1774185193000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

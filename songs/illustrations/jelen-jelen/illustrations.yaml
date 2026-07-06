@@ -1,0 +1,48 @@
+songId: jelen-jelen
+prompts:
+  - id: jelen-jelen_gpt-5-mini_v5
+    songId: jelen-jelen
+    summaryPromptVersion: v5
+    summaryModel: gpt-5-mini
+    text: >-
+      Oil painting, muted earth tones and soft painterly brushwork;
+      dusk/twilight with cool diffused light and a faint warm rim accent on
+      highlights. Single scene composed to read clearly inside a circular crop:
+      a diagonal forest river running from lower-left to upper-right, a freshly
+      fallen stag at the near bank (lower-left) bleeding dark red into the
+      water, a solitary man standing at the right bank with bowed head and calm,
+      resigned posture, and a translucent, submerged reflection of a woman
+      visible under the water surface between them. Bare early‑spring trees and
+      scattered autumn leaves drifting on the current, low swirling cloud
+      formation overhead like circling birds; distant hills with a hint of
+      approaching winter snow. Keep figures and key details bold and centered
+      for legibility; painterly texture, soft edges, moody melancholic
+      atmosphere, no borders.
+    createdAt: 2026-05-30T16:33:07.000Z
+    updatedAt: 2026-05-30T16:33:07.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780158799000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+  - id: jelen-jelen_gpt-5-mini_v6
+    songId: jelen-jelen
+    summaryPromptVersion: v6
+    summaryModel: gpt-5-mini
+    text: >-
+      Oil painting, 1:1 square, full-frame: close‑mid scene of a dusky forest
+      riverbank in early spring — a recently killed stag lies at left
+      foreground, a thin ribbon of blood seeps into the flowing water; at the
+      river’s surface near center a faint, submerged reflection of a woman’s
+      face stares up through ripples; background of bare trees with small fresh
+      green shoots and low heavy clouds circling overhead; muted cool palette
+      (blues, grays, brown earth tones) with textured impasto brushwork, soft
+      diffused twilight lighting and a faint warm rim light on the stag;
+      melancholic, contemplative folk‑ballad mood, simple legible composition.
+    createdAt: 2026-05-30T17:01:08.000Z
+    updatedAt: 2026-05-30T17:01:08.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780160506000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

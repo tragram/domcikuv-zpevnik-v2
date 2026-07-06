@@ -1,0 +1,22 @@
+songId: sum_41-with_me
+prompts:
+  - id: sum_41-with_me_gpt-5.4-mini_v7
+    songId: sum_41-with_me
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic close-up of two lovers standing on an empty city
+      street at dusk, one reaching out as if to hold onto a fragile moment, the
+      other softly smiling under a faint rain of glowing memory-like particles
+      falling from the sky; subtle emotional tension, deep longing and devotion,
+      muted blue-gray palette with warm golden highlights, soft volumetric
+      lighting, shallow depth of field, atmospheric bokeh, highly detailed,
+      full-frame 1:1 composition, no visible text except perhaps a tiny faint
+      handwritten lyric fragment if needed
+    createdAt: 2026-06-15T20:06:34.000Z
+    updatedAt: 2026-06-15T20:06:34.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1781554005000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

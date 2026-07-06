@@ -1,0 +1,66 @@
+songId: filmova_hudba-kacer_donald
+prompts:
+  - id: filmova_hudba-kacer_donald_gpt-4o-mini_v2
+    songId: filmova_hudba-kacer_donald
+    summaryPromptVersion: v2
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical scene where cheerful cartoon ducks,
+      resembling superheroes, are soaring through a vibrant cityscape filled
+      with colorful cars and futuristic airplanes. The sky is bright, and the
+      ducks are spreading joy, with children looking up in awe, their faces lit
+      with smiles as they welcome the magical arrival of the ducks from a
+      distant land.
+    createdAt: 2025-10-05T13:10:55.000Z
+    updatedAt: 2026-02-08T17:33:39.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1759669862000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+      - createdAt: 1771688093000
+        imageModel: nano-banana-pro
+        filename: nano-banana-pro.webp
+  - id: filmova_hudba-kacer_donald_gpt-5-mini_v5
+    songId: filmova_hudba-kacer_donald
+    summaryPromptVersion: v5
+    summaryModel: gpt-5-mini
+    text: >-
+      Stylized 3D render (cartoonish, retro-futuristic) with warm twilight and
+      neon rim lighting plus soft volumetric magical glow — center composition,
+      no frames or borders, legible in a circular crop at low resolution. Scene:
+      a heroic golden-feathered drake wearing a small captain’s scarf hovers
+      mid-air above a whimsical city, leading a swirling, hurricane-like flock
+      of smaller glowing ducklings and paper-plane children; retro cars and a
+      laser-lit aeroplane streak through the background, trails of sparkling
+      magic dust arc from the drake to form a protective, smiling glow over
+      rooftop children. High-contrast silhouettes, saturated
+      teal/magenta/warm-gold palette, joyful expressions, simple bold shapes,
+      avoid fine detail near edges.
+    createdAt: 2026-05-18T16:29:32.000Z
+    updatedAt: 2026-05-18T16:29:32.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1779121804000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+  - id: filmova_hudba-kacer_donald_gpt-5.4-mini_v6
+    songId: filmova_hudba-kacer_donald
+    summaryPromptVersion: v6
+    summaryModel: gpt-5.4-mini
+    text: >-
+      3D animated family-adventure scene, square composition filled
+      edge-to-edge: a small squad of heroic duck adventurers blasting toward the
+      viewer through a glowing city sky, like a playful hurricane, with one
+      sleek duck-shaped airship, laser streaks and a speeding car weaving behind
+      them, magical clouds and a warm sense of rescue and wonder, bright
+      colorful motion trails, dynamic but legible, whimsical Czech cartoon
+      energy, cinematic evening lighting with neon highlights and golden magical
+      glow, high detail, vibrant saturated colors, joyful and protective mood
+    createdAt: 2026-05-30T17:49:49.000Z
+    updatedAt: 2026-05-30T17:49:49.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780163403000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

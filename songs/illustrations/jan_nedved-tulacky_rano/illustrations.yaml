@@ -1,0 +1,19 @@
+songId: jan_nedved-tulacky_rano
+prompts:
+  - id: jan_nedved-tulacky_rano_gpt-4o-mini_v1
+    songId: jan_nedved-tulacky_rano
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene campsite at dawn, surrounded by a lush,
+      whispering forest. A gentle stream flows nearby, with a campfire crackling
+      softly. In the foreground, a figure stands with a guitar, embodying a
+      spirit of wanderlust and connection to nature. The atmosphere is peaceful,
+      capturing the sacredness of morning and evening moments in the wild.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:16.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

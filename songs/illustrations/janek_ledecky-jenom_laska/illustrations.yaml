@@ -1,0 +1,20 @@
+songId: janek_ledecky-jenom_laska
+prompts:
+  - id: janek_ledecky-jenom_laska_gpt-4o-mini_v1
+    songId: janek_ledecky-jenom_laska
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vast desert landscape under a starry night
+      sky, with a couple walking hand in hand, their faces reflecting
+      determination and love. In the background, depict a frozen polar landscape
+      with shimmering auroras, symbolizing their journey through hardships. The
+      scene should convey a sense of adventure, resilience, and the power of
+      love amidst challenges.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:14.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

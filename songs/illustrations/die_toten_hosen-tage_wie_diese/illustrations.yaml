@@ -1,0 +1,19 @@
+songId: die_toten_hosen-tage_wie_diese
+prompts:
+  - id: die_toten_hosen-tage_wie_diese_gpt-4o-mini_v1
+    songId: die_toten_hosen-tage_wie_diese
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a vibrant city nightlife scene, capturing a
+      joyful couple dancing on the asphalt, surrounded by a lively crowd. The
+      backdrop should feature illuminated streets, bridges, and music notes
+      floating in the air, symbolizing a sense of euphoria and endless
+      possibilities.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

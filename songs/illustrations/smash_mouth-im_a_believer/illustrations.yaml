@@ -1,0 +1,22 @@
+songId: smash_mouth-im_a_believer
+prompts:
+  - id: smash_mouth-im_a_believer_gpt-5-mini_v5
+    songId: smash_mouth-im_a_believer
+    summaryPromptVersion: v5
+    summaryModel: gpt-5-mini
+    text: >-
+      35mm cinematic film-still, close-up waist-up of a young man euphorically
+      gazing at a young woman's radiant face — she is slightly off-center,
+      backlit by warm golden sunlight breaking through rain clouds so individual
+      raindrops sparkle; vintage 1960s wardrobe (casual collared shirt, A-line
+      dress), saturated retro palette (turquoise, sunflower yellow, coral), soft
+      film grain and gentle lens flare, shallow depth of field, puddled street
+      reflections at the bottom, dreamy optimistic pop‑rock mood; tightly
+      composed so faces remain legible in a circular crop, no borders or text.
+    createdAt: 2026-05-30T16:22:03.000Z
+    updatedAt: 2026-05-30T16:22:03.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1780158139000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
