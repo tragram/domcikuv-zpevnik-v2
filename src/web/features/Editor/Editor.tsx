@@ -164,7 +164,7 @@ const SMART_FEATURES: SmartFeature[] = [
     label: "Convert to ChordPro",
     loadingLabel: "Converting...",
     icon: FileInput,
-    check: (content: string, user: UserData) => isConvertibleFormat(content),
+    check: (content: string, _user: UserData) => isConvertibleFormat(content),
     description: (
       <>
         When importing songs from other sources, chords are often in separate
@@ -445,7 +445,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
                 if (parsedRange.min && parsedRange.max) {
                   return `{range: ${parsedRange.toString(steps, false)}}`;
                 }
-              } catch (e) {
+              } catch {
                 // ignore invalid range
               }
               return match;
@@ -466,7 +466,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
                       const t = note.transposed(steps).toString("sharp", true);
                       return prefix + (isUpper ? t : t.toLowerCase()) + oct;
                     }
-                  } catch (e) {
+                  } catch {
                     // ignore invalid note
                   }
                   return noteMatch;
@@ -519,7 +519,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
                 if (parsedKey) {
                   newState.key = convertChordNotation(parsedKey.transposed(steps).toString());
                 }
-              } catch (e) {
+              } catch {
                 // ignore invalid key
               }
             }
@@ -552,7 +552,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
                       const t = note.transposed(steps).toString("sharp", true);
                       return prefix + (isUpper ? t : t.toLowerCase()) + oct;
                     }
-                  } catch (e) {
+                  } catch {
                     // ignore invalid note
                   }
                   return noteMatch;

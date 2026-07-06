@@ -19,7 +19,7 @@ try {
   uniqueId =
     process.env.CF_PAGES_COMMIT_SHA?.slice(0, 7) ||
     execSync("git rev-parse --short HEAD").toString().trim();
-} catch (e) {
+} catch {
   // Fallback for environments without git
 }
 const finalVersion = `${calver}-${uniqueId}`;

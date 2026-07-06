@@ -94,7 +94,7 @@ export default {
   async queue(
     batch: MessageBatch<IllustrationGenerateSchema>,
     env: Env,
-    ctx: ExecutionContext,
+    _ctx: ExecutionContext,
   ) {
     // Initialize the DB for the background worker (since it bypasses Hono middleware)
     const db = drizzle(env.DB, { schema });

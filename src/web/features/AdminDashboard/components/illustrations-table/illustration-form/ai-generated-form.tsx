@@ -36,7 +36,6 @@ interface AIGeneratedFormProps extends IllustrationFormProps {
 
 function AIGeneratedForm({
   illustration,
-  activePromptId,
   onSave,
   isLoading,
   onSuccess,

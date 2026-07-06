@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import yaml from "js-yaml";
-import { SongData, illustrationBaseId } from "../src/web/types/songData";
+import { SongData } from "../src/web/types/songData";
 import {
   AllIllustrationPromptsResponseData,
   BasicIllustrationPromptDB,

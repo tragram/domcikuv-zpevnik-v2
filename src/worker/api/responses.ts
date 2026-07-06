@@ -3,7 +3,7 @@ import { ContentfulStatusCode } from "hono/utils/http-status";
 
 import { zValidator } from "@hono/zod-validator";
 import { ValidationTargets } from "hono";
-import { ZodSchema, ZodType } from "zod";
+import { ZodSchema } from "zod";
 
 export const successJSend = <T>(
   c: Context,

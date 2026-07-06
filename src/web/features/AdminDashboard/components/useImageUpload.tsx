@@ -96,7 +96,10 @@ export function useImageUpload(
       if (thumbnailPreview.startsWith("blob:"))
         URL.revokeObjectURL(thumbnailPreview);
     };
-  }, []); // Empty dependency array ensures this runs only on unmount
+    // Unmount-only cleanup: including the previews would re-run this on every
+    // change and revoke blob URLs that are still in use.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     imageFile,

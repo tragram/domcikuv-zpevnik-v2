@@ -72,6 +72,9 @@ export const SongView = ({
         songData.versionId,
       );
     }
+    // Deps are intentionally fine-grained on the specific broadcast fields used
+    // rather than the whole `broadcast` object, whose identity changes per render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     broadcast?.shouldShare,
     broadcast?.updateSong,

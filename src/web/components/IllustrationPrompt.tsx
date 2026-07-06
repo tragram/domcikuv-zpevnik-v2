@@ -21,7 +21,6 @@ export function IllustrationPrompt({
 }: IllustrationPromptProps) {
   const {
     data: promptContent,
-    isLoading,
     error,
   } = useQuery({
     queryKey: ["illustrationPrompt", song.currentIllustration?.promptId],

@@ -8,7 +8,6 @@ import type {
   IllustrationPromptApi,
   IllustrationPromptCreateSchema,
   SongDataAdminApi,
-  SongDataApi,
   SongIllustrationApi,
 } from "src/worker/api/api-types";
 import type { PopulatedSongDB } from "src/worker/helpers/song-helpers";

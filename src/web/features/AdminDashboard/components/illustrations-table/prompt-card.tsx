@@ -34,7 +34,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
       await updateMutation.mutateAsync({ id: prompt.id, text: editText });
       toast.success("Prompt updated successfully");
       setIsEditDialogOpen(false);
-    } catch (error) {
+    } catch {
       toast.error("Failed to update prompt");
     }
   };

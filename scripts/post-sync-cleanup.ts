@@ -23,7 +23,7 @@ const s3 = new S3Client({
 
 // 2. Setup Drizzle proxy
 const db = drizzle(
-  async (sql, params, method) => {
+  async (sql, params, _method) => {
     const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID!.trim()}/d1/database/${process.env.CF_DATABASE_ID!.trim()}/query`;
     const response = await fetch(url, {
       method: "POST",

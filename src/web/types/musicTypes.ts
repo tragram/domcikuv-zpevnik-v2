@@ -190,7 +190,7 @@ export class SongRange {
             console.error("Error while parsing song: Invalid song range:", songRangeStr);
             return;
         }
-        const [match, lowerTone, lowerToneOctave, lowerToneVoice2, lowerToneVoice2Octave, higherTone, higherToneOctave, higherToneVoice2, higherToneVoice2Octave] = regexMatch;
+        const [_match, lowerTone, lowerToneOctave, _lowerToneVoice2, _lowerToneVoice2Octave, higherTone, higherToneOctave, _higherToneVoice2, _higherToneVoice2Octave] = regexMatch;
         this.min = Note.parse(lowerTone);
         this.max = Note.parse(higherTone);
         if (this.min && this.max) {

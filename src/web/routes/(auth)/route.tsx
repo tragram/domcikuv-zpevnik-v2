@@ -13,12 +13,11 @@ import { getUserData } from "src/web/hooks/use-user-data";
 const PROFILE_URL = "/profile";
 const LOGIN_URL = "/login";
 const SIGNUP_URL = "/signup";
-const SUBMISSIONS_URL = "/submissions";
 
 export const Route = createFileRoute("/(auth)")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
   component: RouteComponent,
-  beforeLoad: async ({ context, location, search }) => {
+  beforeLoad: async ({ location, search }) => {
     const userData = await getUserData();
     // Get the redirect URL from validated search params or default to "/"
     const redirectURL = search.redirect || "/";

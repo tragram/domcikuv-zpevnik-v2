@@ -39,7 +39,7 @@ const ClearButton = ({
 
 function SearchBar() {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [expandedWidth, setExpandedWidth] = useState(248);
+  const [_expandedWidth, setExpandedWidth] = useState(248);
   const mobileInputRef = useRef<HTMLInputElement>(null);
   const { query, setQuery } = useQueryStore();
 

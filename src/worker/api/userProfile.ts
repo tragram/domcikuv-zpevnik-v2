@@ -1,5 +1,5 @@
 import { and, eq, ne } from "drizzle-orm";
-import { user, userFavoriteSongs } from "src/lib/db/schema";
+import { user } from "src/lib/db/schema";
 import { z } from "zod";
 import {
   NICKNAME_MAX_LENGTH,
