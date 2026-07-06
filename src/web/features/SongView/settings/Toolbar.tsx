@@ -7,6 +7,7 @@ import {
   Fullscreen,
   Heart,
   Pencil,
+  PictureInPicture2,
   RefreshCw,
   Settings2,
   Undo2,
@@ -38,6 +39,7 @@ import { youtubeWatchUrl } from "src/lib/youtube";
 import { SongData } from "~/types/songData";
 import ShareSongButton from "../components/ShareSongButton";
 import { SetNicknameDialog } from "../components/SetNicknameDialog";
+import { YoutubeMiniPlayer } from "../components/YoutubeMiniPlayer";
 import { useScrollHandler } from "../hooks/useScrollHandler";
 import { FeedStatus } from "../hooks/useSessionSync";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
@@ -75,6 +77,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     userData?.profile.id ?? "",
     songbookPersonalization,
   );
+  const [isYoutubeMiniPlayerOpen, setIsYoutubeMiniPlayerOpen] =
+    useState(false);
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
   const { songDB } = useSongDB(userData);
@@ -152,16 +156,15 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             size="icon"
             variant="circular"
             className="hidden lg:inline-flex"
-            asChild
+            isActive={isYoutubeMiniPlayerOpen}
+            onClick={() => setIsYoutubeMiniPlayerOpen((open) => !open)}
+            title={
+              isYoutubeMiniPlayerOpen
+                ? "Close picture-in-picture"
+                : "Watch in picture-in-picture"
+            }
           >
-            <a
-              href={youtubeWatchUrl(songData.youtubeId)}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Watch on YouTube"
-            >
-              <Play />
-            </a>
+            <PictureInPicture2 />
           </Button>
         )}
         
@@ -369,6 +372,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         open={nicknameDialogOpen}
         onOpenChange={setNicknameDialogOpen}
       />
+      {isYoutubeMiniPlayerOpen && songData.youtubeId && (
+        <YoutubeMiniPlayer
+          youtubeId={songData.youtubeId}
+          onClose={() => setIsYoutubeMiniPlayerOpen(false)}
+        />
+      )}
     </div>
   );
 };

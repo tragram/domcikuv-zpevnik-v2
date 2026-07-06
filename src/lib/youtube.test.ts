@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   isValidYoutubeId,
   parseYoutubeId,
+  youtubeEmbedUrl,
   youtubeMusicPlaylistUrl,
   youtubePlaylistUrl,
   youtubeThumbnailUrl,
@@ -85,6 +86,12 @@ describe("URL builders", () => {
 
   it("caps the playlist size at YOUTUBE_PLAYLIST_MAX", () => {
     expect(YOUTUBE_PLAYLIST_MAX).toBe(50);
+  });
+
+  it("builds an autoplaying embed URL", () => {
+    expect(youtubeEmbedUrl(ID)).toBe(
+      `https://www.youtube.com/embed/${ID}?autoplay=1`,
+    );
   });
 
   it("builds a YouTube Music playlist URL", () => {

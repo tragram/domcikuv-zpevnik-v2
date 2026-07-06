@@ -55,6 +55,11 @@ export function youtubeWatchUrl(id: string): string {
   return `https://www.youtube.com/watch?v=${id}`;
 }
 
+/** Autoplaying embed URL, for the Document Picture-in-Picture player. */
+export function youtubeEmbedUrl(id: string): string {
+  return `https://www.youtube.com/embed/${id}?autoplay=1`;
+}
+
 /** Max video ids YouTube accepts in a `watch_videos` temporary playlist. */
 export const YOUTUBE_PLAYLIST_MAX = 50;
 
