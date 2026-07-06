@@ -1,12 +1,10 @@
-name: Generate Thumbnails
+name: Generate Thumbnails (manual fallback)
 
+# Thumbnails are normally generated inside the "Database & Assets Sync"
+# workflow. This is a fallback for full images that land on main some other
+# way (e.g. a manual commit).
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'songs/illustrations/**/**/full/*.webp'
-  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 permissions:
   contents: write # Needed to commit the thumbnails back to the repo

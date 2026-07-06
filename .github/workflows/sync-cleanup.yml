@@ -1,22 +1,25 @@
 name: Post-Sync Cleanup
 
+# Flips illustration URLs in D1 to static paths and trashes the R2 originals,
+# but only for images the production site already serves (verified via HTTP).
+# Safe to run at any time; images not yet merged/deployed are skipped and
+# picked up by a later run. Trigger manually after a deploy to flip fresh
+# images immediately.
 on:
   workflow_run:
     workflows: ["Database & Assets Sync"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   cleanup:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Wait for Deployment
-        run: sleep 300
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4

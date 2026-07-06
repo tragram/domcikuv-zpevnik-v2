@@ -5,23 +5,12 @@
  * Env is read from .dev.vars: CF_ACCOUNT_ID (or CLOUDFLARE_ACCOUNT_ID),
  * CF_DATABASE_ID, CF_API_TOKEN (needs D1 write for any update scripts).
  */
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/sqlite-proxy";
 import * as schema from "../../src/lib/db/schema";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-config({ path: path.resolve(__dirname, "../../.dev.vars") });
+import { requireEnv } from "./env";
 
-export function requireEnv(...names: string[]): string {
-  for (const name of names) {
-    const value = process.env[name];
-    if (value && value.trim()) return value.trim();
-  }
-  throw new Error(`Missing required env var (tried: ${names.join(", ")}) in .dev.vars`);
-}
+export { requireEnv };
 
 const CF_ACCOUNT_ID = requireEnv("CF_ACCOUNT_ID", "CLOUDFLARE_ACCOUNT_ID");
 const CF_DATABASE_ID = requireEnv("CF_DATABASE_ID");

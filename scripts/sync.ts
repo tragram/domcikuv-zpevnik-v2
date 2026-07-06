@@ -1,13 +1,14 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { eq } from "drizzle-orm";
 import type { SQLiteTable } from "drizzle-orm/sqlite-core";
-import { drizzle } from "drizzle-orm/sqlite-proxy";
 import yaml from "js-yaml";
 import fs from "node:fs";
 import path from "node:path";
 import * as schema from "../src/lib/db/schema";
 import { SongData } from "../src/web/types/songData";
 import { formatChordpro } from "../src/web/lib/formatChordpro";
+import { db } from "./shared/remote-db";
+import { R2_BUCKET_NAME, s3 } from "./shared/r2";
 
 export function sanitizePathSegment(segment: string): string {
   if (!segment) return "unknown";
@@ -16,45 +17,6 @@ export function sanitizePathSegment(segment: string): string {
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
 }
-
-// 1. Setup R2 (S3 Client) - Used ONLY for the database backup JSON
-const s3 = new S3Client({
-  region: "auto",
-  endpoint: `https://${process.env.CF_ACCOUNT_ID!.trim()}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: process.env.R2_ACCESS_KEY_ID!.trim(),
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!.trim(),
-  },
-});
-
-// 2. Setup Drizzle over HTTP via SQLite Proxy
-const db = drizzle(
-  async (sql, params, _method) => {
-    const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID!.trim()}/d1/database/${process.env.CF_DATABASE_ID!.trim()}/query`;
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.CF_API_TOKEN!.trim()}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ sql, params }),
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `D1 Query Failed: ${response.status} - ${await response.text()}`,
-      );
-    }
-
-    const data = await response.json();
-    const results = data.result[0].results;
-
-    const rows = results.map((row: Record<string, unknown>) => Object.values(row));
-    return { rows };
-  },
-  { schema },
-);
 
 type DBBackup = {
   metadata: {
@@ -114,7 +76,7 @@ async function main() {
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
   await s3.send(
     new PutObjectCommand({
-      Bucket: process.env.R2_BUCKET_NAME,
+      Bucket: R2_BUCKET_NAME,
       Key: `backups/db-backup-${timestamp}.json`,
       Body: JSON.stringify(backupData, null, 2),
       ContentType: "application/json",

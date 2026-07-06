@@ -12,19 +12,19 @@ You can run the page fully locally by
 * installing the dependencies: `pnpm i`
 * creating a CF Worker account (TODO: allow local build without this step)
 * building the database: `pnpm db:create` (if you haven't run it yet)
-* generating the migrations: `pnpm db:generate`
-* migrating the DB: `pnpm db:migrate:local`
-* loading the static files into the dev DB: `pnpm tsx scripts/staticData2DB.ts --dev`
-  * tip: changing `SYSTEM_EMAIL` in the script let's you be the admin and creator of all songs after local login
+* initializing the dev DB: `pnpm dev:init` (applies migrations and seeds the DB from the static files in `songs/`)
+  * tip: changing `SYSTEM_EMAIL` in `scripts/staticData2DB.ts` let's you be the admin and creator of all songs after local login
+  * to re-seed later, just run `pnpm db:seed`
+  * admin alternative: `pnpm db:restore:local` restores the newest production backup from R2 into the local DB (full data incl. users & favorites; requires the R2 credentials from `.dev.vars.sample`)
 * starting the local dev server: `pnpm dev`
 * to make authentication and AI services work, you will need to supply your own credentials - see `.dev.vars.sample`
 
 ## Editing songs
 The best way to edit is to just use the web interface (`/edit`).
 
-Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/chordpro` directory. There's a daily sync setup that pushes the production DB to the `production-data-sync` branch and then manually pushed to main. 
+Songs are written in an extended [ChordPro](https://www.chordpro.org/chordpro/chordpro-introduction/) format, stored in the `songs/chordpro` directory. A daily GitHub Action exports the production DB into `songs/` (chordpro files, illustration metadata, images + thumbnails) and opens/updates a pull request from the `data-sync` branch. The branch is recreated from `main` on every run, so the PR is always a clean `songs/`-only diff — just merge it whenever. After a merge + deploy, the nightly cleanup job verifies production serves the new static files, then flips the illustration URLs in the DB and moves the R2 originals to trash.
 
-Changing the chordpro files does not affect the production website. However, you can load the changes to your local server by running `pnpm tsx scripts/staticData2DB.ts --dev`.
+Changing the chordpro files does not affect the production website. However, you can load the changes to your local server by running `pnpm db:seed`.
 
 ### File format
 The songs are named `artist_name-song_name.pro` (any special characters converted to ASCII). This (and much of the following) is enforced by the sync script.

@@ -1,48 +1,40 @@
+/**
+ * Post-sync cleanup: for illustrations still pointing at absolute R2 URLs,
+ * verify that production already serves the synced static files (full image
+ * AND thumbnail), then move the R2 original to trash/ and rewrite the D1 row
+ * to the static paths. Images not yet merged/deployed are skipped and picked
+ * up by a later run, so this is safe to run at any time.
+ *
+ * Also prunes old R2 DB backups (30 days of dailies, then one per month).
+ */
 import {
-  S3Client,
   CopyObjectCommand,
   DeleteObjectCommand,
-  ListObjectsV2Command,
   DeleteObjectsCommand,
+  ListObjectsV2Command,
 } from "@aws-sdk/client-s3";
-import { drizzle } from "drizzle-orm/sqlite-proxy";
 import { eq } from "drizzle-orm";
 import * as schema from "../src/lib/db/schema";
-import fs from "fs";
-import path from "path";
+import { db } from "./shared/remote-db";
+import { R2_BUCKET_NAME, s3 } from "./shared/r2";
 
-// 1. Setup R2 (S3 Client)
-const s3 = new S3Client({
-  region: "auto",
-  endpoint: `https://${process.env.CF_ACCOUNT_ID!.trim()}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: process.env.R2_ACCESS_KEY_ID!.trim(),
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!.trim(),
-  },
-});
+const PROD_BASE_URL = (
+  process.env.PROD_BASE_URL || "https://zpevnik.hodan.page"
+).replace(/\/+$/, "");
 
-// 2. Setup Drizzle proxy
-const db = drizzle(
-  async (sql, params, _method) => {
-    const url = `https://api.cloudflare.com/client/v4/accounts/${process.env.CF_ACCOUNT_ID!.trim()}/d1/database/${process.env.CF_DATABASE_ID!.trim()}/query`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.CF_API_TOKEN!.trim()}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ sql, params }),
-    });
-    if (!response.ok) throw new Error(`D1 Query Failed: ${response.status}`);
-    const data = await response.json();
-    const rows = (data.result[0].results as Record<string, unknown>[]).map((row) => Object.values(row));
-    return { rows };
-  },
-  { schema },
-);
+/** Checks that production actually serves the given path. */
+async function servedInProd(pathname: string): Promise<boolean> {
+  try {
+    const response = await fetch(PROD_BASE_URL + pathname, { method: "HEAD" });
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
 
 async function main() {
   console.log("Starting post-sync cleanup...");
+  console.log(`Verifying static files against: ${PROD_BASE_URL}`);
 
   // 1. Find all illustrations that are absolute URLs AND actually belong to our illustrations folder
   const illustrations = await db.select().from(schema.songIllustration);
@@ -70,14 +62,18 @@ async function main() {
 
       const finalThumbURL = finalImageURL.replace("/full/", "/thumbnail/");
 
-      // 4. VERIFY FILE EXISTS LOCALLY
-      // Strip leading slash from URL to ensure cross-platform path joining works reliably
-      const relativeFilePath = finalImageURL.replace(/^\/+/, "");
-      const localFilePath = path.join(process.cwd(), relativeFilePath);
-
-      if (!fs.existsSync(localFilePath)) {
+      // 4. VERIFY PRODUCTION SERVES BOTH STATIC FILES
+      // The static paths only work once the sync PR is merged AND deployed;
+      // checking prod directly makes the URL flip safe regardless of timing.
+      if (!(await servedInProd(finalImageURL))) {
         console.log(`\n[SKIP] ID: ${ill.id}`);
-        console.log(`  -> Expected static file missing at: ${localFilePath}`);
+        console.log(`  -> Full image not served by prod yet: ${finalImageURL}`);
+        console.log(`  -> Keeping R2 fallback intact.`);
+        continue;
+      }
+      if (!(await servedInProd(finalThumbURL))) {
+        console.log(`\n[SKIP] ID: ${ill.id}`);
+        console.log(`  -> Thumbnail not served by prod yet: ${finalThumbURL}`);
         console.log(`  -> Keeping R2 fallback intact.`);
         continue;
       }
@@ -87,15 +83,15 @@ async function main() {
       // 5. Move ONLY the full image to /trash in R2 using the S3 SDK
       await s3.send(
         new CopyObjectCommand({
-          Bucket: process.env.R2_BUCKET_NAME,
-          CopySource: `${process.env.R2_BUCKET_NAME}/${oldKey}`,
+          Bucket: R2_BUCKET_NAME,
+          CopySource: `${R2_BUCKET_NAME}/${oldKey}`,
           Key: trashKey,
         }),
       );
 
       await s3.send(
         new DeleteObjectCommand({
-          Bucket: process.env.R2_BUCKET_NAME,
+          Bucket: R2_BUCKET_NAME,
           Key: oldKey,
         }),
       );
@@ -112,7 +108,10 @@ async function main() {
 
       console.log(`  ✓ Cleaned up! Moved to trash in R2 and updated D1 paths.`);
     } catch (error) {
-      console.error(`  ✗ Failed to process ${ill.id}:`, error.message);
+      console.error(
+        `  ✗ Failed to process ${ill.id}:`,
+        error instanceof Error ? error.message : error,
+      );
     }
   }
 
@@ -124,7 +123,7 @@ async function main() {
   try {
     const listResult = await s3.send(
       new ListObjectsV2Command({
-        Bucket: process.env.R2_BUCKET_NAME,
+        Bucket: R2_BUCKET_NAME,
         Prefix: "backups/db-backup-",
       }),
     );
@@ -159,7 +158,7 @@ async function main() {
     if (toDelete.length > 0) {
       await s3.send(
         new DeleteObjectsCommand({
-          Bucket: process.env.R2_BUCKET_NAME,
+          Bucket: R2_BUCKET_NAME,
           Delete: { Objects: toDelete },
         }),
       );
@@ -168,10 +167,16 @@ async function main() {
       console.log("✓ No old backups needed cleanup.");
     }
   } catch (error) {
-    console.error("✗ Failed to cleanup old backups:", error.message);
+    console.error(
+      "✗ Failed to cleanup old backups:",
+      error instanceof Error ? error.message : error,
+    );
   }
 
   console.log("\nCleanup complete!");
 }
 
-main().catch(console.error);
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

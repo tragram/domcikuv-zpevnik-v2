@@ -6,17 +6,17 @@ on:
     - cron: '0 4 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   sync-data:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          # check out the target branch so we build on its history
-          ref: production-data-sync 
-          fetch-depth: 0 
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -42,7 +42,24 @@ jobs:
           R2_BUCKET_NAME: ${{ vars.R2_BUCKET_NAME }}
         run: pnpm exec tsx scripts/sync.ts
 
-      - name: Commit and Push Changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Generate Thumbnails
+        run: node scripts/generate-thumbnails.mjs
+
+      # Recreates the data-sync branch from current main on every run, so the
+      # PR is always a clean songs/-only diff that never diverges from main.
+      - name: Create or Update Sync PR
+        uses: peter-evans/create-pull-request@v7
         with:
-          commit_message: "chore: Automated database and assets sync"
+          branch: data-sync
+          add-paths: songs/
+          commit-message: "chore: automated database and assets sync"
+          title: "chore: daily production data sync"
+          body: |
+            Automated sync of the production D1 database into `songs/`
+            (chordpro files, illustration metadata, full images and thumbnails).
+
+            Merging this PR only updates the repository snapshot; production is
+            unaffected until the next deploy. After merging and deploying, the
+            nightly cleanup flips illustration URLs in D1 to the static paths
+            and moves the R2 originals to trash.
+          delete-branch: true
