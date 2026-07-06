@@ -1,0 +1,19 @@
+songId: elvis_presley-in_the_ghetto
+prompts:
+  - id: elvis_presley-in_the_ghetto_gpt-4o-mini_v1
+    songId: elvis_presley-in_the_ghetto
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Illustrate a cold, grey Chicago morning with snow falling. Show a
+      distressed mother holding a newborn in a rundown neighborhood, while a
+      young boy with a runny nose plays in the street. In the background, depict
+      a crowd gathered around a young man face down, with a gun in his hand,
+      symbolizing the cycle of hardship and despair in the ghetto.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:30.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

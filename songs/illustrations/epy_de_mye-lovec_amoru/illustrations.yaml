@@ -1,0 +1,20 @@
+songId: epy_de_mye-lovec_amoru
+prompts:
+  - id: epy_de_mye-lovec_amoru_gpt-4o-mini_v1
+    songId: epy_de_mye-lovec_amoru
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a whimsical scene featuring a playful "Amor"
+      character, surrounded by oversized arrows and hearts, amidst a stormy
+      night. The background should depict a boat struggling on turbulent waves,
+      symbolizing the challenges of love. Include elements like a giant orange
+      basin and a starry sky with a Bethlehem-like setting, capturing the
+      lighthearted yet poignant essence of the lyrics.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:32.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

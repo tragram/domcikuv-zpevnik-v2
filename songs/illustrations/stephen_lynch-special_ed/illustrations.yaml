@@ -1,0 +1,20 @@
+songId: stephen_lynch-special_ed
+prompts:
+  - id: stephen_lynch-special_ed_gpt-4o-mini_v1
+    songId: stephen_lynch-special_ed
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of two boys playing together in a whimsical,
+      colorful backyard. One boy, "Special Ed," is depicted with playful, quirky
+      features, engaging with nature—perhaps talking to a tree or counting bugs.
+      The other boy is laughing, showcasing their bond. Include elements like a
+      shed in the background and a playful, slightly chaotic atmosphere that
+      captures their unique friendship and innocence.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

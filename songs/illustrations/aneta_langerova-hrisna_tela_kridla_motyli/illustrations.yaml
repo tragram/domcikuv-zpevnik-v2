@@ -1,0 +1,46 @@
+songId: aneta_langerova-hrisna_tela_kridla_motyli
+prompts:
+  - id: aneta_langerova-hrisna_tela_kridla_motyli_manual-1772895473707
+    songId: aneta_langerova-hrisna_tela_kridla_motyli
+    summaryPromptVersion: manual
+    summaryModel: manual
+    text: Manual upload - no generated prompt
+    createdAt: 2026-03-07T14:57:53.000Z
+    updatedAt: 2026-03-07T14:57:53.000Z
+    deleted: false
+    illustrations: []
+  - id: aneta_langerova-hrisna_tela_kridla_motyli_gpt-5-mini_v2
+    songId: aneta_langerova-hrisna_tela_kridla_motyli
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Surreal, poetic scene: a woman with tattered butterfly wings pressed
+      against a rocky cliff, holding a rose with blood dripping onto the stone;
+      behind her a lone tree is struck by lightning as a storm-lit gorge yawns
+      below where startled stags tumble—moody, cinematic, painterly,
+      high-detail, dusk colors.
+    createdAt: 2026-03-07T15:08:22.000Z
+    updatedAt: 2026-03-07T15:08:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1772896107000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+  - id: aneta_langerova-hrisna_tela_kridla_motyli_gpt-5-mini_v4
+    songId: aneta_langerova-hrisna_tela_kridla_motyli
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Close-up vertical scene: a single crimson rose pinned to cracked plaster,
+      dark blood trickling from its petals down the wall; draped over the rose
+      is a large tattered monarch butterfly wing with frayed edges and missing
+      pieces. Moody, cinematic lighting, deep shadows and warm rim light, muted
+      desaturated background for contrast. Painterly-surreal realism, high
+      detail on textures, simple composition, thumbnail-friendly.
+    createdAt: 2026-03-29T14:54:22.000Z
+    updatedAt: 2026-03-29T14:54:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1774796124000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

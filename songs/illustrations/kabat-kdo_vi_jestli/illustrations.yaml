@@ -1,0 +1,21 @@
+songId: kabat-kdo_vi_jestli
+prompts:
+  - id: kabat-kdo_vi_jestli_gpt-4o-mini_v1
+    songId: kabat-kdo_vi_jestli
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a surreal landscape featuring a vibrant,
+      colorful moon with mysterious footprints leading away from it. In the
+      foreground, depict a girl struggling for breath, surrounded by abstract
+      representations of truth and confusion, like a dalmatian-patterned fog.
+      Include whimsical elements like purple cows grazing on a hillside, and a
+      northern wind depicted as a gentle breeze. The scene should evoke a sense
+      of exploration and the search for truth in a chaotic world.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:10.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

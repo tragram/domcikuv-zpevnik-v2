@@ -1,0 +1,21 @@
+songId: la_vela_puerca-se_a_donde_quiere_ir
+prompts:
+  - id: la_vela_puerca-se_a_donde_quiere_ir_gpt-4o-mini_v1
+    songId: la_vela_puerca-se_a_donde_quiere_ir
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a heartfelt moment between two figures under a
+      starry night sky, with one figure embracing the other who appears to be
+      shedding a tear of joy. The scene should convey a mix of emotions,
+      including compassion, longing, and the complexity of their relationship,
+      symbolized by intertwining shadows and light. Include elements that
+      represent dreams and sincerity, like faint glowing stars and a gentle
+      breeze.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:48.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

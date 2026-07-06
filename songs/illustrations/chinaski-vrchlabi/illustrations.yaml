@@ -1,0 +1,58 @@
+songId: chinaski-vrchlabi
+prompts:
+  - id: chinaski-vrchlabi_gpt-5-mini_v2
+    songId: chinaski-vrchlabi
+    summaryPromptVersion: v2
+    summaryModel: gpt-5-mini
+    text: >-
+      Night winter road trip: three women — friends laughing and singing after a
+      concert — in a big car on a winding snow-covered road, heavy snowfall and
+      headlights cutting through swirling flakes, warm golden interior light on
+      their smiling faces as they take turns at the wheel, concert tickets on
+      the dash and distant town lights of Vrchlabí; cinematic, cozy, slightly
+      vintage film look.
+    createdAt: 2026-03-11T11:51:41.000Z
+    updatedAt: 2026-03-11T11:51:41.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773251785000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+  - id: chinaski-vrchlabi_gpt-5-mini_v3
+    songId: chinaski-vrchlabi
+    summaryPromptVersion: v3
+    summaryModel: gpt-5-mini
+    text: >-
+      Three women in a big van driving through heavy snowfall on a winding night
+      road — warm interior glow, laughter and two hands on the wheel as they
+      trade driving, headlights cutting through drifting snow, a roadside sign
+      reading "Vrchlabí" visible, hint of a guitar case in the back. Stylized
+      cozy poster illustration, bold colors, dynamic motion/snow streaks,
+      slightly retro cinematic vibe (not photorealistic).
+    createdAt: 2026-03-11T11:53:11.000Z
+    updatedAt: 2026-03-11T11:53:11.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773230063000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+  - id: chinaski-vrchlabi_gpt-5-mini_v4
+    songId: chinaski-vrchlabi
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Night digital painting: a small car with three laughing women inside
+      drives along a snow‑covered winding road at night. Heavy snowflakes, warm
+      headlight cones cutting through cold blue darkness, soft interior glow
+      illuminating their faces — one at the wheel, two chatting and smiling.
+      Above them a clear starry sky with the Big Dipper visible; a distant sign
+      hints "Vrchlabí". Cinematic, semi‑realistic style, high contrast, crisp
+      silhouettes and faces, slight motion blur on snow/road for sense of
+      movement; composition legible and attractive as a thumbnail. 16:9.
+    createdAt: 2026-03-12T10:03:27.000Z
+    updatedAt: 2026-03-12T10:03:27.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773309825000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

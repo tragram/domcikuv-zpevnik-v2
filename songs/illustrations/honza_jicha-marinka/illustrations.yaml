@@ -1,0 +1,20 @@
+songId: honza_jicha-marinka
+prompts:
+  - id: honza_jicha-marinka_gpt-4o-mini_v1
+    songId: honza_jicha-marinka
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a charming café scene featuring a mysterious
+      young woman with a fan, sitting at a table. She is smoking a cigarette and
+      gazing thoughtfully, with hints of a vibrant cityscape in the background.
+      Include elements like a vintage music poster referencing Karel Hašler, a
+      playful squirrel nearby, and a whimsical atmosphere that suggests a blend
+      of intrigue and romance.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:01.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

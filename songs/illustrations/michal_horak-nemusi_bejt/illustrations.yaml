@@ -1,0 +1,22 @@
+songId: michal_horak-nemusi_bejt
+prompts:
+  - id: michal_horak-nemusi_bejt_gpt-5-mini_v4
+    songId: michal_horak-nemusi_bejt
+    summaryPromptVersion: v4
+    summaryModel: gpt-5-mini
+    text: >-
+      Close-up, comic‑realistic city morning: a weary young man stands in a
+      narrow apartment stairwell, holding two half‑eaten cheeseburgers and a
+      crumpled meal voucher, a small puddle of dog vomit at his feet; through
+      the open door a tiny bulldozer with a noisy brushcutter strapped to it
+      idles on the street and a crowded bus drives away with faces pressed to
+      the windows. Warm, slightly gritty color palette, bold silhouettes and
+      clear shapes for good legibility at small sizes, wry/humorous mood, high
+      contrast editorial illustration.
+    createdAt: 2026-03-13T16:06:19.000Z
+    updatedAt: 2026-03-13T16:06:19.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1773420306000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,0 +1,20 @@
+songId: jaromir_nohavica-jdou_po_mne_jdou
+prompts:
+  - id: jaromir_nohavica-jdou_po_mne_jdou_gpt-4o-mini_v1
+    songId: jaromir_nohavica-jdou_po_mne_jdou
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a rugged, determined man in a dimly lit alley,
+      clutching a bag of stolen money, with wanted posters featuring his face
+      plastered on the walls. In the background, a glimpse of a bank and a
+      shadowy figure lurking. The atmosphere should evoke a sense of rebellion
+      and tension, reflecting the themes of desperation and freedom from a life
+      of poverty.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:21.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

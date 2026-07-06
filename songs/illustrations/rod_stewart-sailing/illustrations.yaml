@@ -1,0 +1,19 @@
+songId: rod_stewart-sailing
+prompts:
+  - id: rod_stewart-sailing_gpt-4o-mini_v1
+    songId: rod_stewart-sailing
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a serene ocean scene at dusk, featuring a sailboat
+      navigating through stormy waters. The sky is filled with high, fluffy
+      clouds and hints of sunset colors. In the distance, a silhouette of a
+      person stands on the boat, arms outstretched as if embracing freedom,
+      symbolizing a journey home to a loved one.
+    createdAt: 2025-08-05T09:45:49.000Z
+    updatedAt: 2026-02-08T17:37:18.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
