@@ -43,8 +43,9 @@ export function PromptCard({ prompt }: PromptCardProps) {
     try {
       await deleteMutation.mutateAsync(prompt.id);
       toast.success("Prompt deleted successfully");
-    } catch (err: any) {
-      toast.error(err.message || "Failed to delete prompt");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "";
+      toast.error(message || "Failed to delete prompt");
     }
   };
 

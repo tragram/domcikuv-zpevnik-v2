@@ -1,5 +1,6 @@
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { eq } from "drizzle-orm";
+import type { SQLiteTable } from "drizzle-orm/sqlite-core";
 import { drizzle } from "drizzle-orm/sqlite-proxy";
 import yaml from "js-yaml";
 import fs from "node:fs";
@@ -49,11 +50,28 @@ const db = drizzle(
     const data = await response.json();
     const results = data.result[0].results;
 
-    const rows = results.map((row: any) => Object.values(row));
+    const rows = results.map((row: Record<string, unknown>) => Object.values(row));
     return { rows };
   },
   { schema },
 );
+
+type DBBackup = {
+  metadata: {
+    version: string;
+    database: string;
+    createdAt: string;
+    tables: string[];
+  };
+  tables: Record<string, unknown[]>;
+};
+
+// Per-illustration entry written into illustrations.yaml
+type YamlIllustration = {
+  createdAt: number;
+  imageModel: string;
+  filename: string;
+};
 
 async function main() {
   console.log(`Starting Sync...`);
@@ -63,7 +81,7 @@ async function main() {
   // ---------------------------------------------------------------------------
   console.log("Starting D1 to R2 backup...");
 
-  const backupData: any = {
+  const backupData: DBBackup = {
     metadata: {
       version: "v0",
       database: "zpevnik",
@@ -74,17 +92,21 @@ async function main() {
   };
   const EXCLUDED_TABLES = ["session"];
 
-  const tables = Object.entries(schema).filter(([key, value]) => {
-    return (
-      value &&
-      typeof value === "object" &&
-      Symbol.for("drizzle:IsDrizzleTable") in value &&
-      !EXCLUDED_TABLES.includes(key) // Skip the excluded tables
-    );
-  });
+  // The schema module also exports relations; keep only the actual tables.
+  const tables = (Object.entries(schema) as [string, unknown][]).filter(
+    (entry): entry is [string, SQLiteTable] => {
+      const [key, value] = entry;
+      return (
+        !!value &&
+        typeof value === "object" &&
+        Symbol.for("drizzle:IsDrizzleTable") in value &&
+        !EXCLUDED_TABLES.includes(key) // Skip the excluded tables
+      );
+    },
+  );
 
   for (const [tableName, table] of tables) {
-    const rows = await db.select().from(table as any);
+    const rows = await db.select().from(table);
     backupData.tables[tableName] = rows;
     backupData.metadata.tables.push(tableName);
   }
@@ -190,7 +212,7 @@ async function main() {
     if (!activeSongIds.has(songRow.id)) continue;
 
     const currentIll = illustrations.find(
-      (i: any) => i.id === songRow.currentIllustrationId,
+      (i) => i.id === songRow.currentIllustrationId,
     );
 
     const song = new SongData({
@@ -218,7 +240,7 @@ async function main() {
           }
         : undefined,
       isFavoriteByCurrentUser: false,
-    } as any);
+    });
 
     fs.mkdirSync(proDir, { recursive: true });
     fs.writeFileSync(
@@ -226,16 +248,16 @@ async function main() {
       formatChordpro(song.toCustomChordpro()),
     );
 
-    const songPrompts = prompts.filter((p: any) => p.songId === song.id);
+    const songPrompts = prompts.filter((p) => p.songId === song.id);
     const songIllustrations = illustrations.filter(
-      (i: any) => i.songId === song.id,
+      (i) => i.songId === song.id,
     );
 
     const yamlDir = path.join(illustrationsBaseDir, song.id);
     fs.mkdirSync(yamlDir, { recursive: true });
 
     if (songPrompts.length > 0 || songIllustrations.length > 0) {
-      const illustrationsByPrompt = new Map<string, any[]>();
+      const illustrationsByPrompt = new Map<string, YamlIllustration[]>();
       const expectedPromptFolders = new Set<string>(); // Used to clean up orphaned prompts later
 
       for (const ill of songIllustrations) {
@@ -270,23 +292,20 @@ async function main() {
         });
       }
 
+      // Invalid dates would serialize as garbage in the yaml, so null them out.
+      const sanitizeDate = (value: Date | string | null) => {
+        const date = value instanceof Date ? value : new Date(value ?? NaN);
+        return isNaN(date.getTime()) ? null : date;
+      };
+
       const safePrompts = songPrompts
-        .filter((p: any) => !p.deleted)
-        .map((p: any) => {
-          const cleanP = { ...p };
-          for (const key of Object.keys(cleanP)) {
-            if (key === "createdAt" || key === "updatedAt") {
-              const d = new Date(cleanP[key]);
-              cleanP[key] = isNaN(d.getTime()) ? null : d;
-            } else if (cleanP[key] instanceof Date) {
-              cleanP[key] = isNaN(cleanP[key].getTime()) ? null : cleanP[key];
-            }
-          }
-          return {
-            ...cleanP,
-            illustrations: illustrationsByPrompt.get(p.id) || [],
-          };
-        });
+        .filter((p) => !p.deleted)
+        .map((p) => ({
+          ...p,
+          createdAt: sanitizeDate(p.createdAt),
+          updatedAt: sanitizeDate(p.updatedAt),
+          illustrations: illustrationsByPrompt.get(p.id) || [],
+        }));
 
       const metadata = {
         songId: song.id,
@@ -320,10 +339,11 @@ async function main() {
               }
               const arrayBuffer = await response.arrayBuffer();
               fs.writeFileSync(imgPath, Buffer.from(arrayBuffer));
-            } catch (error: any) {
+            } catch (error) {
+              const message = error instanceof Error ? error.message : String(error);
               console.error(
                 `Failed to fetch image ${ill.imageURL}:`,
-                error.message,
+                message,
               );
             }
           }

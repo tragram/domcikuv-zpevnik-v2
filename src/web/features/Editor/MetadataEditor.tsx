@@ -27,7 +27,7 @@ interface MetadataEditorProps {
   canAttributeToSubmitter?: boolean;
   features: EvaluatedFeature[];
   isProcessing: boolean;
-  onExecuteFeature: (feature: SmartFeature, payload?: any) => void;
+  onExecuteFeature: (feature: SmartFeature, payload?: number) => void;
 }
 
 const MetadataEditor: React.FC<MetadataEditorProps> = ({

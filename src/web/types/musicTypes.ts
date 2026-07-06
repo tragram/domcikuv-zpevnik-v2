@@ -65,7 +65,7 @@ export class Note implements Clonable<Note> {
         const sharpIndex = selectedSharpDict.indexOf(combined);
         const flatIndex = selectedFlatDict.indexOf(combined);
 
-        let index = sharpIndex !== -1 ? sharpIndex : flatIndex !== -1 ? flatIndex : null;
+        const index = sharpIndex !== -1 ? sharpIndex : flatIndex !== -1 ? flatIndex : null;
         if (index === null) {
             // Handle enharmonic equivalents not explicitly in the dictionaries
             if (combined === "E#") return 5;
@@ -199,35 +199,34 @@ export class SongRange {
             this.semitones = undefined;
         }
     }
-
-    static fromJSON(json: any): SongRange {
-        const instance = Object.create(SongRange.prototype);
+    
+    private static create(
+        min: Note | undefined,
+        max: Note | undefined,
+        semitones: number | undefined,
+    ): SongRange {
+        const instance: SongRange = Object.create(SongRange.prototype);
         Object.defineProperties(instance, {
-            min: { value: json.min ? Note.fromValue(json.min.value) : undefined, writable: false },
-            max: { value: json.max ? Note.fromValue(json.max.value) : undefined, writable: false },
-            semitones: { value: json.semitones, writable: false }
+            min: { value: min, writable: false },
+            max: { value: max, writable: false },
+            semitones: { value: semitones, writable: false }
         });
         return instance;
     }
 
-
     clone(): SongRange {
-        return SongRange.fromJSON({
-            min: this.min,
-            max: this.max,
-            semitones: this.semitones
-        });
+        return SongRange.create(this.min?.clone(), this.max?.clone(), this.semitones);
     }
 
     transposed(semitones: number): SongRange {
         if (semitones == 0) {
             return this;
         }
-        return SongRange.fromJSON({
-            min: this.min?.transposed(semitones),
-            max: this.max?.transposed(semitones),
-            semitones: this.semitones,
-        });
+        return SongRange.create(
+            this.min?.transposed(semitones),
+            this.max?.transposed(semitones),
+            this.semitones,
+        );
     }
 
     toString(transposeSemitones: number = 0, prettyPrint: boolean = false): string {

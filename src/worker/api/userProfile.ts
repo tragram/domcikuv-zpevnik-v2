@@ -157,7 +157,7 @@ const profileApp = buildApp()
       imageChanged = true;
     }
 
-    const updateData: any = {
+    const updateData: Partial<typeof user.$inferInsert> = {
       name: validated.name,
       nickname: validated.nickname || null,
       isFavoritesPublic: validated.isFavoritesPublic,

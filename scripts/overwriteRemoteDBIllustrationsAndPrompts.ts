@@ -7,7 +7,7 @@ import { eq, isNotNull } from "drizzle-orm";
 const DB_NAME = "zpevnik";
 
 // Helper to run wrangler d1 execute commands
-function runWranglerSQL(sql: string, local: boolean = false): any {
+function runWranglerSQL(sql: string, local: boolean = false): unknown {
   try {
     // Escape the SQL for shell by replacing double quotes
     const escapedSql = sql.replace(/"/g, '\\"');
@@ -20,8 +20,9 @@ function runWranglerSQL(sql: string, local: boolean = false): any {
       }
     );
     return JSON.parse(result);
-  } catch (err: any) {
-    console.error(`❌ Wrangler error: ${err.message}`);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`❌ Wrangler error: ${message}`);
     console.error(`SQL was: ${sql}`);
     return null;
   }

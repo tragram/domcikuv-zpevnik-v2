@@ -1,6 +1,5 @@
 import { D1Helper } from "@nerdfolio/drizzle-d1-helpers";
 import { eq, sql } from "drizzle-orm";
-import { DrizzleD1Database } from "drizzle-orm/d1";
 import * as fs from "fs";
 import yaml from "js-yaml";
 import * as path from "path";
@@ -28,6 +27,22 @@ const SYSTEM_EMAIL = "domho108@gmail.com";
 // ---------------------------------------------------------------------------
 
 type Environment = "dev" | "staging" | "prod";
+
+// Shape of songs/illustrations/<songId>/illustrations.yaml (written by scripts/sync.ts)
+type IllustrationsYaml = {
+  prompts: Array<{
+    id: string;
+    text: string;
+    summaryModel: string;
+    summaryPromptVersion: string;
+    createdAt: string;
+    illustrations: Array<{
+      imageModel: string;
+      filename: string;
+      createdAt: string;
+    }>;
+  }>;
+};
 
 function parseEnvironment(): Environment {
   const args = process.argv.slice(2);
@@ -95,7 +110,7 @@ function parseChordproFile(content: string) {
 /**
  * Creates or gets the system user for migrations
  */
-async function ensureSystemUser(db: DrizzleD1Database): Promise<string> {
+async function ensureSystemUser(db: AppDatabase): Promise<string> {
   const existingUser = await db
     .select()
     .from(user)
@@ -125,7 +140,7 @@ async function ensureSystemUser(db: DrizzleD1Database): Promise<string> {
 /**
  * Clears all data from the tables
  */
-async function clearTables(db: DrizzleD1Database) {
+async function clearTables(db: AppDatabase) {
   console.log("Clearing tables...");
   await db.run(sql`PRAGMA defer_foreign_keys = OFF`);
 
@@ -150,7 +165,7 @@ async function clearTables(db: DrizzleD1Database) {
  * Uploads a single song's chordpro file and sets it as Published
  */
 async function uploadSong(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songId: string,
   chordproPath: string,
   systemUserId: string,
@@ -223,7 +238,7 @@ async function uploadSong(
  * Uploads illustrations for a song
  */
 async function uploadIllustrations(
-  db: DrizzleD1Database,
+  db: AppDatabase,
   songId: string,
   illustrationsYamlPath: string,
   baseFolder: string,
@@ -232,7 +247,7 @@ async function uploadIllustrations(
   logger(`  [DEBUG] Reading illustrations YAML for ${songId}...`);
   const data = yaml.load(
     fs.readFileSync(illustrationsYamlPath, "utf-8"),
-  ) as any;
+  ) as IllustrationsYaml;
 
   for (const prompt of data.prompts) {
     logger(`  [DEBUG] Inserting 'illustrationPrompt' ID: ${prompt.id}`);
@@ -272,8 +287,8 @@ async function processAndMigrateSongs(
   clearExisting: boolean = true,
   baseFolder: string = "/songs",
 ) {
-  const systemUserId = await ensureSystemUser(db as any);
-  if (clearExisting) await clearTables(db as any);
+  const systemUserId = await ensureSystemUser(db);
+  if (clearExisting) await clearTables(db);
 
   const chordproDir = path.join(songsPath, "chordpro");
   const illustrationsDir = path.join(songsPath, "illustrations");
@@ -288,7 +303,7 @@ async function processAndMigrateSongs(
 
     try {
       const illustrationId = await uploadSong(
-        db as any,
+        db,
         songId,
         path.join(chordproDir, filename),
         systemUserId,
@@ -303,7 +318,7 @@ async function processAndMigrateSongs(
 
       if (fs.existsSync(yamlPath)) {
         await uploadIllustrations(
-          db as any,
+          db,
           songId,
           yamlPath,
           baseFolder,
@@ -314,7 +329,7 @@ async function processAndMigrateSongs(
           logger(
             `  [DEBUG] 5. Updating 'song' with currentIllustrationId: ${illustrationId}...`,
           );
-          await (db as any)
+          await db
             .update(song)
             .set({ currentIllustrationId: illustrationId })
             .where(eq(song.id, songId));
@@ -377,14 +392,18 @@ function getD1ConfigFromWrangler(env: "staging" | "prod"): {
   const raw = fs.readFileSync(wranglerPath, "utf-8").replace(/\/\/[^\n]*/g, "");
   const wrangler = JSON.parse(raw);
 
-  const d1List =
+  const d1List: Array<{
+    binding?: string;
+    database_id?: string;
+    database_name?: string;
+  }> =
     env === "staging"
       ? wrangler?.env?.staging?.d1_databases
       : wrangler?.d1_databases;
 
-  const db = (d1List ?? []).find((d: any) => d.binding === "DB");
+  const db = (d1List ?? []).find((d) => d.binding === "DB");
 
-  if (!db?.database_id) {
+  if (!db?.database_id || !db.database_name) {
     console.error(
       `❌ Could not find D1 binding "DB" for env "${env}" in wrangler.jsonc`,
     );

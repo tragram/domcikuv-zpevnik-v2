@@ -14,7 +14,7 @@ import { cn } from "~/lib/utils";
 interface SmartFeatureItemProps {
   feature: EvaluatedFeature;
   isProcessing: boolean;
-  onExecuteFeature: (feature: SmartFeature, payload?: any) => void;
+  onExecuteFeature: (feature: SmartFeature, payload?: number) => void;
 }
 
 const SmartFeatureItem: React.FC<SmartFeatureItemProps> = ({
@@ -114,7 +114,7 @@ const SmartFeatureItem: React.FC<SmartFeatureItemProps> = ({
 interface SmartFeaturesProps {
   features: EvaluatedFeature[];
   isProcessing: boolean;
-  onExecuteFeature: (feature: SmartFeature, payload?: any) => void;
+  onExecuteFeature: (feature: SmartFeature, payload?: number) => void;
 }
 
 const SmartFeatures: React.FC<SmartFeaturesProps> = ({

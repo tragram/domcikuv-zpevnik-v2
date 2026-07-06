@@ -88,14 +88,20 @@ export function ImageModelSelect({
   );
 }
 
+export interface NewPromptData {
+  text: string;
+  model: string;
+  version: string;
+}
+
 interface PromptSelectorProps {
   songId: string;
   selectedPromptId: string;
   onPromptSelect: (id: string) => void;
   promptMode: "existing" | "new";
   onModeChange: (mode: "existing" | "new") => void;
-  newPromptData: { text: string; model: string; version: string };
-  onNewPromptChange: (data: any) => void;
+  newPromptData: NewPromptData;
+  onNewPromptChange: (data: NewPromptData) => void;
 }
 
 export function PromptSelector({

@@ -13,11 +13,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // LocalStorage Helper Functions
-export const getLocalStorageItem = (key: string, defaultValue: any) => {
+export const getLocalStorageItem = <T,>(key: string, defaultValue: T): T => {
   const item = localStorage.getItem(key);
   return item ? JSON.parse(item) : defaultValue;
 };
 
-export const setLocalStorageItem = (key: string, value: any) => {
+export const setLocalStorageItem = <T,>(key: string, value: T): void => {
   localStorage.setItem(key, JSON.stringify(value));
 };

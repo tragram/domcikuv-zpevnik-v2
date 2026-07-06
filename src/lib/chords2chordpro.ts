@@ -15,7 +15,7 @@ interface EnvDirective {
 
 // Global Matchers - Updated to support Czech/European notation (s, es, is, H)
 const CHORD_REGEX =
-  /^[({\[]?([A-H](?:is|es|s|[#b])?(?:m|mi|maj|min|sus|dim|aug|add|M)?[0-9]*(?:(?:is|es|s|[#b])[0-9]+)?(?:\/[A-H](?:is|es|s|[#b])?)?\**|N\.?C\.?)[)}\]]?$/i;
+  /^[({[]?([A-H](?:is|es|s|[#b])?(?:m|mi|maj|min|sus|dim|aug|add|M)?[0-9]*(?:(?:is|es|s|[#b])[0-9]+)?(?:\/[A-H](?:is|es|s|[#b])?)?\**|N\.?C\.?)[)}\]]?$/i;
 
 const ALLOWED_EXTRAS_REGEX = /^(?:[()|%xX~/\\]+|\d+x)$/;
 

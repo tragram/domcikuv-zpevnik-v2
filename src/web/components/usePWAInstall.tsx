@@ -1,13 +1,21 @@
 import { PWAInstallElement } from "@khmyznikov/pwa-install";
 import PWAInstall from "@khmyznikov/pwa-install/react-legacy";
 import { Save } from "lucide-react";
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { DropdownMenuItem } from "./ui/dropdown-menu";
 import { CompactItem } from "./RichDropdown";
 
 export const usePWAInstall = () => {
   const pwaInstallRef = useRef<PWAInstallElement>(null);
   const [installAvailable, setInstallAvailable] = useState(false);
+  // Mirror the web-component instance into state so render stays reactive and
+  // doesn't read the ref during render (populated once the element is ready).
+  const [pwaInstall, setPwaInstall] = useState<PWAInstallElement | null>(null);
+
+  const setPwaInstallRef = useCallback((el: PWAInstallElement | null) => {
+    pwaInstallRef.current = el;
+    setPwaInstall(el);
+  }, []);
 
   const isDevelopment = import.meta.env.DEV;
 
@@ -36,7 +44,7 @@ export const usePWAInstall = () => {
       <PWAInstall
         disableChrome={false}
         disableClose={false}
-        ref={pwaInstallRef}
+        ref={setPwaInstallRef}
         icon={"/icons/favicon.svg"}
         name={"Domčíkův Zpěvník"}
         description="Druhá verze mého báječného zpěvníku - nyní offline!"
@@ -60,8 +68,8 @@ export const usePWAInstall = () => {
         </CompactItem.Shell>
       </DropdownMenuItem>
     );
-  } else if (pwaInstallRef.current) {
-    const PWAInstall = pwaInstallRef.current;
+  } else if (pwaInstall) {
+    const PWAInstall = pwaInstall;
     if (PWAInstall.isAppleDesktopPlatform || PWAInstall.isAppleMobilePlatform) {
       installItem = (
         <DropdownMenuItem onClick={showInstallPrompt}>

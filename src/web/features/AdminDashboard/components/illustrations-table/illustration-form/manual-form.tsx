@@ -54,22 +54,6 @@ export function ManualForm({
     setAsActive: true,
   });
 
-  // --- Effects ---
-  useEffect(() => {
-    const handlePaste = (e: ClipboardEvent) => {
-      if (e.clipboardData && e.clipboardData.files.length > 0) {
-        const file = e.clipboardData.files[0];
-        if (file.type.startsWith("image/")) {
-          e.preventDefault();
-          handleImageSelection(file);
-        }
-      }
-    };
-
-    window.addEventListener("paste", handlePaste);
-    return () => window.removeEventListener("paste", handlePaste);
-  }, []);
-
   // --- Handlers ---
   const updateFormData = (updates: Partial<IllustrationCreateSchema>) => {
     if (updates.imageModel !== undefined) {
@@ -85,6 +69,22 @@ export function ManualForm({
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   };
+
+  // --- Effects ---
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      if (e.clipboardData && e.clipboardData.files.length > 0) {
+        const file = e.clipboardData.files[0];
+        if (file.type.startsWith("image/")) {
+          e.preventDefault();
+          handleImageSelection(file);
+        }
+      }
+    };
+
+    window.addEventListener("paste", handlePaste);
+    return () => window.removeEventListener("paste", handlePaste);
+  }, []);
 
   const clearImageFile = () => {
     if (imagePreview && imagePreview.startsWith("blob:")) {

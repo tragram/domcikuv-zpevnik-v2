@@ -35,7 +35,7 @@ const db = drizzle(
     });
     if (!response.ok) throw new Error(`D1 Query Failed: ${response.status}`);
     const data = await response.json();
-    const rows = data.result[0].results.map((row: any) => Object.values(row));
+    const rows = (data.result[0].results as Record<string, unknown>[]).map((row) => Object.values(row));
     return { rows };
   },
   { schema },

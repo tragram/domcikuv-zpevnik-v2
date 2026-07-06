@@ -372,8 +372,8 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
     }));
   };
 
-  // Note the added payload parameter
-  const executeFeature = async (feature: SmartFeature, payload?: any) => {
+  // The payload carries the step count for stepper features (currently just transpose).
+  const executeFeature = async (feature: SmartFeature, payload?: number) => {
     const featureId = feature.id;
     const previousContent = editorState.chordpro;
     let newContent = editorState.chordpro;
@@ -402,7 +402,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           });
         }
       } else if (featureId === "transpose") {
-        const steps = payload as number;
+        const steps = payload ?? 0;
 
         // 1. Try to guess the key from the current content. Fallback to 'C'.
         let songKey = guessKey(editorState.chordpro);
@@ -536,7 +536,9 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
                 if (parsedRange.min && parsedRange.max) {
                   newState.range = parsedRange.toString(steps, false);
                 }
-              } catch (e) { }
+              } catch {
+                // ignore invalid range
+              }
             }
 
             if (newState.startMelody && extractedBefore.startMelody === undefined) {

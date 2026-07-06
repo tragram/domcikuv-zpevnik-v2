@@ -13,7 +13,6 @@ import type {
   IllustrationPromptApi,
   PromptGenerateSchema,
   SongIllustrationApi,
-  UserApi,
 } from "src/worker/api/api-types";
 import {
   IMAGE_MODELS_API,
@@ -24,6 +23,7 @@ import type {
   CreateUserSchema,
   UpdateUserSchema,
   UserRoleFilter,
+  UsersResponse,
 } from "src/worker/helpers/user-helpers";
 import { makeApiRequest } from "~/services/api-service";
 import {
@@ -518,15 +518,18 @@ export const useUpdateUser = (adminApi: AdminApi) => {
         queryKey: ["usersAdmin"],
       });
 
-      queryClient.setQueriesData({ queryKey: ["usersAdmin"] }, (old: any) => {
-        if (!old?.users) return old;
-        return {
-          ...old,
-          users: old.users.map((user: UserApi) =>
-            user.id === userId ? { ...user, ...userData } : user,
-          ),
-        };
-      });
+      queryClient.setQueriesData(
+        { queryKey: ["usersAdmin"] },
+        (old: UsersResponse | undefined) => {
+          if (!old) return old;
+          return {
+            ...old,
+            users: old.users.map((user) =>
+              user.id === userId ? { ...user, ...userData } : user,
+            ),
+          };
+        },
+      );
 
       return { previousData };
     },
@@ -567,17 +570,20 @@ export const useDeleteUser = (adminApi: AdminApi) => {
         queryKey: ["usersAdmin"],
       });
 
-      queryClient.setQueriesData({ queryKey: ["usersAdmin"] }, (old: any) => {
-        if (!old?.users) return old;
-        return {
-          ...old,
-          users: old.users.filter((user: UserApi) => user.id !== userId),
-          pagination: {
-            ...old.pagination,
-            total: old.pagination.total - 1,
-          },
-        };
-      });
+      queryClient.setQueriesData(
+        { queryKey: ["usersAdmin"] },
+        (old: UsersResponse | undefined) => {
+          if (!old) return old;
+          return {
+            ...old,
+            users: old.users.filter((user) => user.id !== userId),
+            pagination: {
+              ...old.pagination,
+              total: old.pagination.total - 1,
+            },
+          };
+        },
+      );
 
       return { previousData };
     },
