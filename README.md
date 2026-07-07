@@ -15,7 +15,7 @@ You can run the page fully locally by
 * initializing the dev DB: `pnpm dev:init` (applies migrations and seeds the DB from the static files in `songs/`)
   * tip: changing `SYSTEM_EMAIL` in `scripts/staticData2DB.ts` let's you be the admin and creator of all songs after local login
   * to re-seed later, just run `pnpm db:seed`
-  * admin alternative: `pnpm db:restore:local` restores the newest production backup from R2 into the local DB (full data incl. users & favorites; requires the R2 credentials from `.dev.vars.sample`)
+  * admin alternative: `pnpm db:restore:local` restores the newest production backup from R2 into the local DB (full data incl. users & favorites; requires the R2 credentials from `.dev.vars.sample`); add `--live` to snapshot the prod DB directly instead of the up-to-24h-old nightly backup
 * starting the local dev server: `pnpm dev`
 * to make authentication and AI services work, you will need to supply your own credentials - see `.dev.vars.sample`
 
@@ -90,7 +90,7 @@ Lastly, though less common, it might happen that a part has a variation at the s
 Applying multiple variants at the same time is not possible - you'll just have to repeat yourself. ;)
 
 ### Image generation (history)
-Since it's 2024, I decided to use AI for tasks other than helping me code this thing. The `scripts/generate_images.py` script loads the lyrics of each of the songs and generates a prompt (in English) for an image generation model.
+Since it's 2024, I decided to use AI for tasks other than helping me code this thing. Originally, a `scripts/python/generate_images.py` script loaded the lyrics of each of the songs and generated a prompt (in English) for an image generation model. That standalone script has since been retired — illustration generation now lives entirely in the app (admin dashboard → AI generate, backed by a Cloudflare Queue), supporting Hugging Face, OpenAI (`gpt-image-1`/`gpt-image-1-mini`/`gpt-image-1.5`) and Google (`nano-banana-pro`) as image providers. The section below is kept for historical context on the original approach; if you need the old script, it's still in git history.
 
 Because the songs have lyrics in many languages, it is currently (October 2024) necessary to use GPT-4o to generate the prompt based on the lyrics, as it has by far the best multilingual capabilities for tiny languages like Czech, Slovak, Finnish or Estonian. By default, the script uses GPT-4o-mini which still provides very satisfactory results (you can see for yourself in `songs/image_prompts`) at a fraction of the cost (around 0.01USD/50 songs).
 
@@ -131,28 +131,23 @@ openai:
 anthropic:
   api_key: YOUR_KEY
 ```
-and run `scripts/add_missing.chords.py`. Remember to run it again within 24hrs to retrieve the results! 
+and run `scripts/python/add_missing_chords.py`. Remember to run it again within 24hrs to retrieve the results! 
 
 The output should be acceptable as long as the incomplete verses follow the same structure (line breaks etc.) but it's still worth checking. The main thing to look out for is AI making "typos" when chords are inserted within words. It may also occasionally delete a repeated part (such as `{chorus}`).
 
 To skip a part from having chords filled in, use the "Rec." label (e.g. `{start_of_verse: Rec.}`).
 
+Note: this is also available directly in the editor (`/edit`) as an "autofill" action, currently backed by OpenAI — the Python/batch route above is mainly useful for bulk backfilling many songs at once.
+
 ### Web scraping for lyrics & chords (history)
 When moving from the old PDF-based songbook, there was a need to recreate almost 300 songs in ChordPro. Naturally, some automation had to be done in order not to spend the rest of my life on this step.
 
-If you define a `.pro` file with just the preamble and no body, you can try running `scripts/scrape_songs.py`. It will use [Selenium](https://pypi.org/project/selenium/) perform a Google search on [Písničky Akordy](https://pisnicky-akordy.cz/), transpose it to the key specified in the preamble and download the contents into `songs/scraped/artist_name`. 
+Originally this meant running a `scripts/python/scrape_songs.py` Selenium script that Google-searched [Písničky Akordy](https://pisnicky-akordy.cz/) for each song missing lyrics, downloaded the raw text into `songs/scraped/`, and a follow-up `scripts/python/chordpro_from_txt.py` script that turned that raw text into ChordPro (inserting chords at word boundaries, converting verse/chorus/bridge markers into directives).
 
-Songs from there *usually* are in their "standard" format but it's worth checking because it's easier to fix it at this step that:
-* verses/chords are clearly separated by an empty line
-* verses start by e.g. "1. " (the space is necessary!)
-* chorus starts by "R: "
-* bridge starts by "B: "
-* chords are aligned  above the lyrics
-  
-If this holds, you can run `scripts/chordpro_from_txt.py` and it will process the contents, inserting chords where appropriate (avoiding inserting the chords at the very start of the word in case of minor misalignments) and converting the verse numbers etc. into ChordPro directives.
+Both scripts have been retired: the in-app external-source import (`/import`, `src/worker/helpers/external-search/` + `src/worker/api/external.ts`) now does the same job in one step — search Písničky Akordy, CifraClub or Zpěvník Škorepová from the web UI, fetch the source page, and convert it straight to ChordPro (`src/lib/chords2chordpro.ts`) into a new song/version in the DB, instead of leaving an intermediate `.txt` file to reconcile by hand. If you need the old two-step file-based scripts, they're still in git history.
 
 ### Checking song aspect ratio (to be updated)
-Because most viewing is done using the `fitXY` feature, it is important to keep in balance the maximum line length and number of lines in the song to ensure proper fit. And wouldn't you know it - there's a Python script even for that! Run `find_font_sizes.py` to automatically evaluate the resulting font-size of each of the songs at a few selected screen sizes (at the time of writing: `Galaxy Tab S7, iPhone XR, Galaxy Z Flip6`).
+Because most viewing is done using the `fitXY` feature, it is important to keep in balance the maximum line length and number of lines in the song to ensure proper fit. And wouldn't you know it - there's a Python script even for that! Run `scripts/python/find_font_sizes.py` to automatically evaluate the resulting font-size of each of the songs at a few selected screen sizes (at the time of writing: `Galaxy Tab S7, iPhone XR, Galaxy Z Flip6`).
 
 This is done via Selenium again, so expect it to take a while. Also, do not expect it to work at all in fact, since it's prone to breaking with any future changes! :-)
 
@@ -162,19 +157,20 @@ Website built on React+Vite, styled by [TailwindCSS](https://tailwindcss.com) an
 * [ChordSheetJS](https://github.com/martijnversluis/ChordSheetJS): parsing Chordpro in JS
 * [Fuse.js](https://www.fusejs.io/): fuzzy search
 * [auto-text-size](https://www.npmjs.com/package/auto-text-size): automatic sizing of chords & lyrics
-* [country-flag-icons](https://www.npmjs.com/package/country-flag-icons)
 * [Zustand](https://github.com/pmndrs/zustand): easier state management
 * [better-auth](https://www.better-auth.com/): authentication including third party logins
 * [@khmyznikov/pwa-install](https://github.com/khmyznikov/pwa-install): managing PWA popups and installation
 * [use-gesture](https://github.com/pmndrs/use-gesture): proper zooming with fingers
 * [TanStack Router](https://tanstack.com/router/latest): for, well, routing
-* [TanStack Query](https://tanstack.com/query/latest): efficient querying (since the website is hosted on the free CF tier)
+* [TanStack Query](https://tanstack.com/query/latest): efficient querying (since the website is hosted on the free CF tier); persisted to IndexedDB so the song DB and favorites survive full offline use
 * [zod](https://zod.dev/): backend validation
 * [hono](https://hono.dev/): backend framework that works well with cloudflare
 * [codemirror](https://codemirror.net/): top-tier editor
 * the API is modeled after [jsend](https://github.com/omniti-labs/jsend)
 
-The backend now heavily relies on Cloudflare and uses D1, R2 and Durable objects.
+The backend now heavily relies on Cloudflare and uses D1 (songs/users database), R2 (assets & illustrations), KV (song-DB version marker for incremental sync), a Durable Object (`SessionSync`, powering the live "listen along" feature — see `/feed/:masterNickname`) and a Queue (background AI illustration generation).
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for a deeper dive into how these pieces fit together.
 
 ### Notes
 * minimum target width is 320px (essentially no devices have a narrow screen than that).
