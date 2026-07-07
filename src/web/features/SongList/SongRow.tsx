@@ -169,7 +169,7 @@ const SongRow = memo(
         {song.youtubeId && !externalSearch && (
           <YoutubeButton
             youtubeId={song.youtubeId}
-            className="hidden shrink-0 xs:flex"
+            className="hidden shrink-0 xsm:flex"
           />
         )}
 
@@ -184,7 +184,7 @@ const SongRow = memo(
         <DateDisplay
           month={song.createdAt.getMonth() + 1}
           year={song.createdAt.getFullYear()}
-          className="xsm:flex hidden shrink-0 basis-2/12 md:basis-1/12"
+          className="sm:flex hidden shrink-0 basis-2/12 md:basis-1/12"
         />
 
         <CapoDisplay
