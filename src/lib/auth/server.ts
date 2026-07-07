@@ -36,6 +36,8 @@ export const auth = (env: Env, db: AppDatabase) => {
         clientId: env.GOOGLE_CLIENT_ID,
         clientSecret: env.GOOGLE_CLIENT_SECRET,
         redirectURI: baseURL + "/api/auth/callback/google",
+        // required for the YouTube playlist export feature
+        accessType: "offline",
       },
       github: {
         clientId: env.GITHUB_CLIENT_ID,

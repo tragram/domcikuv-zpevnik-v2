@@ -1,6 +1,5 @@
 import type { EditorSubmitSchemaInput } from "src/lib/contracts/editor-schema";
 import type { YoutubeSearchResult } from "src/worker/api/youtube";
-import { youtubeMusicPlaylistUrl } from "src/lib/youtube";
 import client from "~/../worker/api-client";
 import { makeApiRequest } from "./api-service";
 
@@ -25,17 +24,16 @@ export const searchYoutube = async (
 };
 
 /**
- * Turn selected video ids into a YouTube Music playlist URL the user can save
- * (and name) under their own account. The worker mints a temporary playlist via
- * `watch_videos` and returns its list id; we build the Music URL from it.
+ * Create a real, unlisted playlist on the signed-in user's own YouTube account
+ * via the Data API and add the given videos to it.
  */
 export const createYoutubePlaylist = async (
   videoIds: string[],
-): Promise<string> => {
-  const { listId, firstVideoId } = await makeApiRequest(() =>
-    client.api.youtube.playlist.$post({ json: { videoIds } }),
+  title?: string,
+) => {
+  return await makeApiRequest(() =>
+    client.api.youtube.playlist.$post({ json: { videoIds, title } }),
   );
-  return youtubeMusicPlaylistUrl(firstVideoId, listId);
 };
 
 export const submitSongVersion = async (

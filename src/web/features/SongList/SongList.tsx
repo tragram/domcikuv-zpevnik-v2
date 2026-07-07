@@ -9,11 +9,11 @@ import {
   Youtube,
 } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { toast } from "sonner";
 
 import useLocalStorageState from "use-local-storage-state";
 import { OfflineIndicator } from "~/components/OfflineIndicator";
 import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import "~/features/SongList/SongList.css";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { useScrollDirection } from "~/hooks/use-scroll-direction";
@@ -26,8 +26,8 @@ import SongRow from "./SongRow";
 import Toolbar from "./Toolbar/Toolbar";
 import { useDisplayedSongs } from "./useDisplayedSongs";
 import { useExternalSearch } from "./useExternalSearch";
+import { useYoutubeExport } from "./useYoutubeExport";
 import { YOUTUBE_PLAYLIST_MAX } from "src/lib/youtube";
-import { createYoutubePlaylist } from "~/services/editor-service";
 
 const SCROLL_OFFSET_KEY = "scrollOffset";
 
@@ -111,34 +111,13 @@ function SongList({
     [selectableSongs, selectedIds],
   );
 
-  const [isExporting, setIsExporting] = useState(false);
-
-  const exportPlaylist = useCallback(async () => {
-    const ids = selectedVideoIds.slice(0, YOUTUBE_PLAYLIST_MAX);
-    if (ids.length === 0 || isExporting) return;
-
-    // Open the tab synchronously inside the click gesture so it isn't blocked as
-    // a popup, then point it at the playlist URL once the worker resolves it.
-    const tab = window.open("about:blank", "_blank");
-    setIsExporting(true);
-    try {
-      const url = await createYoutubePlaylist(ids);
-      if (tab) tab.location.href = url;
-      // Fallback if the pre-opened tab was blocked (this second open usually is
-      // too, since we're past the click gesture — hence the popup hint).
-      else if (!window.open(url, "_blank", "noopener,noreferrer")) {
-        toast.error("Allow popups for this site to open the playlist.");
-        return;
-      }
-      toast.success("Opening in YouTube Music — tap Save to name & keep it.");
-    } catch (e) {
-      console.error("Failed to create YouTube playlist", e);
-      tab?.close();
-      toast.error("Couldn't create the playlist. Please try again.");
-    } finally {
-      setIsExporting(false);
-    }
-  }, [selectedVideoIds, isExporting]);
+  const { isExporting, exportPlaylist: runExport } = useYoutubeExport();
+  const [playlistName, setPlaylistName] = useState("");
+  const defaultPlaylistName = `Domčíkův Zpěvník – ${new Date().toISOString().slice(0, 10)}`;
+  const exportPlaylist = useCallback(
+    () => runExport(selectedVideoIds, { title: playlistName.trim() || undefined }),
+    [runExport, selectedVideoIds, playlistName],
+  );
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -241,11 +220,20 @@ function SongList({
             >
               <X className="h-5 w-5" />
             </Button>
-            <span className="whitespace-nowrap text-sm text-muted-foreground">
-              {selectableSongs.length === 0
-                ? "No songs with a video"
-                : `${selectedIds.size} selected`}
-            </span>
+            {selectableSongs.length === 0 ? (
+              <span className="whitespace-nowrap text-sm text-muted-foreground">
+                No songs with a video
+              </span>
+            ) : (
+              <Input
+                value={playlistName}
+                onChange={(e) => setPlaylistName(e.target.value)}
+                placeholder={defaultPlaylistName}
+                maxLength={150}
+                aria-label="Playlist name"
+                className="h-9 flex-1"
+              />
+            )}
             <Button
               variant="outline"
               size="sm"
