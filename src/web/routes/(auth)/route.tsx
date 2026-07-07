@@ -57,8 +57,15 @@ function RouteComponent() {
   const { userData } = Route.useLoaderData();
 
   return (
-    <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10 w-full">
-      <div className="w-fit flex flex-col gap-4 xl:gap-8">
+    <div
+      className={cn(
+        "bg-background flex min-h-svh flex-col items-center gap-6 p-3 sm:p-6 md:p-10 w-full",
+        // Center the login/signup card; content pages (profile, submissions)
+        // read better anchored to the top.
+        userData ? "justify-start" : "justify-center",
+      )}
+    >
+      <div className="w-full sm:w-fit flex flex-col gap-4 xl:gap-8">
         <div
           className={cn(
             "flex flex-wrap w-auto border-4 border-primary rounded-md max-md:justify-around md:justify-between [&>*]:bg-transparent [&>*]:rounded-none",
@@ -81,7 +88,7 @@ function RouteComponent() {
               <Button asChild className="sm:w-auto">
                 <Link to="/submissions">
                   <CloudUpload />
-                  My submissions
+                  Submissions
                 </Link>
               </Button>
             )}
@@ -95,7 +102,7 @@ function RouteComponent() {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-2 md:p-4 lg:p-8 w-full max-w-fit">
+        <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-2 md:p-4 lg:p-8 w-full max-w-full sm:max-w-fit">
           <Outlet />
         </div>
       </div>

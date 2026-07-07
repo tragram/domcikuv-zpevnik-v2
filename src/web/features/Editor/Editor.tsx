@@ -590,7 +590,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
     isValid;
 
   return (
-    <div className="flex flex-col relative h-fit md:h-dvh gap-4 xl:gap-8 min-w-[250px]">
+    <div className="editor-root flex flex-col relative h-fit gap-4 xl:gap-8 min-w-62.5">
       {toolbarTop && (
         <EditorToolbar
           editorState={editorState}

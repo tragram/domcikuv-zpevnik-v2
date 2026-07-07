@@ -1,3 +1,13 @@
+/* The fixed-viewport three-column layout needs enough height to be usable —
+   a landscape phone passes the md width breakpoint but at ~390px tall the
+   panels get clipped and the editor collapses to 0px. Below the height
+   threshold the editor stays a normally scrolling page instead. */
+@media (min-width: 768px) and (min-height: 480px) {
+    .editor-root {
+        height: 100dvh;
+    }
+}
+
 .main-container {
     padding: 1rem;
     overflow-y: auto;

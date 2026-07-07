@@ -76,7 +76,7 @@ function UserSubmissions() {
     <div className="max-w-4xl mx-auto w-full">
       <div className="mb-6">
         <h2 className="text-2xl font-bold mb-2">My Contributions</h2>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <p className="text-sm text-muted-foreground">
             {showAllVersions
               ? "Showing all submission versions"
@@ -105,7 +105,7 @@ function UserSubmissions() {
             <TableRow>
               <TableHead>Song</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Submitted On</TableHead>
+              <TableHead className="max-sm:hidden">Submitted On</TableHead>
               <TableHead className="text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -134,7 +134,7 @@ function UserSubmissions() {
                     ${showAllVersions && !isFirstInGroup ? "bg-muted/30" : ""}
                   `}
                 >
-                  <TableCell className="font-medium">
+                  <TableCell className="font-medium whitespace-normal">
                     <div className="flex items-center gap-2">
                       <div
                         className={`flex flex-col ${showAllVersions && !isFirstInGroup ? "ml-4" : ""}`}
@@ -156,7 +156,7 @@ function UserSubmissions() {
                   <TableCell>
                     <SongVersionStatusBadge status={version.status} />
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center max-sm:hidden">
                     {version.createdAt
                       ? new Date(version.createdAt).toLocaleDateString()
                       : "N/A"}
@@ -169,7 +169,7 @@ function UserSubmissions() {
                           params={{ songId: version.songId }}
                           search={{ version: version.id }}
                         >
-                          <FilePenLine className="w-4 h-4 mr-1" />
+                          <FilePenLine className="w-4 h-4" />
                         </Link>
                       </Button>
 
