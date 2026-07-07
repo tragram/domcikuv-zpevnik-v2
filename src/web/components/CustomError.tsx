@@ -1,5 +1,6 @@
 import { ErrorComponent, Link, useRouter } from "@tanstack/react-router";
 import type { ErrorComponentProps } from "@tanstack/react-router";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { RotateCcw, House, RefreshCcw } from "lucide-react";
 
@@ -30,8 +31,19 @@ export const clearCacheAndReload = async () => {
   }
 };
 
+// Remembers, per error message, whether a plain reload was already tried for it -
+// keyed by message so a different, later error isn't stuck disabled because of an
+// older one. A route error re-invalidate remounts the error boundary rather than
+// re-rendering in place, so this can't live in component state; sessionStorage
+// survives that remount.
+const RELOAD_ATTEMPTED_KEY = "customError:reloadAttemptedFor";
+
 export function CustomError({ error }: ErrorComponentProps) {
   const router = useRouter();
+
+  const [reloadDidntHelp] = useState(
+    () => sessionStorage.getItem(RELOAD_ATTEMPTED_KEY) === error.message,
+  );
 
   console.error("CustomError Error:", error);
 
@@ -42,16 +54,19 @@ export function CustomError({ error }: ErrorComponentProps) {
       <div className="flex gap-2 items-center flex-wrap">
         <Button
           variant="outline"
+          disabled={reloadDidntHelp}
+          title={reloadDidntHelp ? "Already tried - try a hard reload instead" : undefined}
           onClick={() => {
+            sessionStorage.setItem(RELOAD_ATTEMPTED_KEY, error.message);
             router.invalidate();
           }}
         >
           <RefreshCcw />
-          Try Again
+          Reload
         </Button>
         <Button variant="outline" onClick={clearCacheAndReload}>
           <RotateCcw />
-          Clear Cache & Reload
+          Hard reload
         </Button>
         <Button variant="outline" asChild>
           <Link to="/">
@@ -60,6 +75,11 @@ export function CustomError({ error }: ErrorComponentProps) {
           </Link>
         </Button>
       </div>
+      {reloadDidntHelp && (
+        <p className="text-sm text-muted-foreground max-w-sm text-center">
+          A plain reload didn't fix it. Try the hard reload. Note that this will delete any settings on your device and will redownload the whole database (a few MB). :-(
+        </p>
+      )}
     </div>
   );
 }
