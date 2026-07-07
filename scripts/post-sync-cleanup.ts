@@ -11,6 +11,7 @@ import {
   CopyObjectCommand,
   DeleteObjectCommand,
   DeleteObjectsCommand,
+  HeadObjectCommand,
   ListObjectsV2Command,
 } from "@aws-sdk/client-s3";
 import { eq } from "drizzle-orm";
@@ -22,11 +23,27 @@ const PROD_BASE_URL = (
   process.env.PROD_BASE_URL || "https://zpevnik.hodan.page"
 ).replace(/\/+$/, "");
 
-/** Checks that production actually serves the given path. */
-async function servedInProd(pathname: string): Promise<boolean> {
+/**
+ * Checks that production actually serves the given path as an image. A plain
+ * 200 is NOT enough: the SPA fallback answers 200 text/html for ANY missing
+ * asset path, which previously fooled this check into trashing R2 originals.
+ * When the expected byte size is known (from the R2 original), it must match
+ * exactly — only then is it safe to consider the R2 copy redundant.
+ */
+async function servedInProd(
+  pathname: string,
+  expectedBytes?: number,
+): Promise<boolean> {
   try {
     const response = await fetch(PROD_BASE_URL + pathname, { method: "HEAD" });
-    return response.ok;
+    if (!response.ok) return false;
+    const contentType = response.headers.get("content-type") ?? "";
+    if (!contentType.startsWith("image/")) return false;
+    if (expectedBytes !== undefined) {
+      const length = Number(response.headers.get("content-length"));
+      return length === expectedBytes;
+    }
+    return true;
   } catch {
     return false;
   }
@@ -65,7 +82,12 @@ async function main() {
       // 4. VERIFY PRODUCTION SERVES BOTH STATIC FILES
       // The static paths only work once the sync PR is merged AND deployed;
       // checking prod directly makes the URL flip safe regardless of timing.
-      if (!(await servedInProd(finalImageURL))) {
+      // The full image must byte-match the R2 original it would replace.
+      const r2Head = await s3.send(
+        new HeadObjectCommand({ Bucket: R2_BUCKET_NAME, Key: oldKey }),
+      );
+
+      if (!(await servedInProd(finalImageURL, r2Head.ContentLength))) {
         console.log(`\n[SKIP] ID: ${ill.id}`);
         console.log(`  -> Full image not served by prod yet: ${finalImageURL}`);
         console.log(`  -> Keeping R2 fallback intact.`);

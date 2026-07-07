@@ -52,7 +52,8 @@ async function main() {
     },
     tables: {},
   };
-  const EXCLUDED_TABLES = ["session"];
+  // Ephemeral state — not worth backing up.
+  const EXCLUDED_TABLES = ["session", "syncSession"];
 
   // The schema module also exports relations; keep only the actual tables.
   const tables = (Object.entries(schema) as [string, unknown][]).filter(
@@ -138,6 +139,23 @@ async function main() {
     }
   }
 
+  // Folders still referenced by illustration URLs in the DB must never be
+  // swept, even when their name doesn't match an active song id (historical
+  // folders can use differently-cased ids; their static files are the only
+  // remaining copy once the R2 original has been trashed by the cleanup job).
+  const referencedIllustrationDirs = new Set<string>();
+  const referencedPromptDirs = new Set<string>(); // "<songDir>/<promptDir>"
+  for (const ill of illustrations) {
+    if (ill.deleted) continue;
+    for (const url of [ill.imageURL, ill.thumbnailURL]) {
+      const match = url?.match(/^\/songs\/illustrations\/([^/]+)\/([^/]+)\//);
+      if (match) {
+        referencedIllustrationDirs.add(match[1]);
+        referencedPromptDirs.add(`${match[1]}/${match[2]}`);
+      }
+    }
+  }
+
   // --- CLEANUP ORPHANED LOCAL FILES ---
   console.log("Sweeping local directories for deleted records...");
   const proDir = path.join(process.cwd(), "songs/chordpro");
@@ -158,7 +176,7 @@ async function main() {
   if (fs.existsSync(illustrationsBaseDir)) {
     for (const folder of fs.readdirSync(illustrationsBaseDir)) {
       if (folder.startsWith(".")) continue; // Ignore hidden files like .DS_Store
-      if (!activeSongIds.has(folder)) {
+      if (!activeSongIds.has(folder) && !referencedIllustrationDirs.has(folder)) {
         fs.rmSync(path.join(illustrationsBaseDir, folder), {
           recursive: true,
           force: true,
@@ -317,7 +335,10 @@ async function main() {
       for (const item of fs.readdirSync(yamlDir)) {
         const itemPath = path.join(yamlDir, item);
         if (fs.statSync(itemPath).isDirectory()) {
-          if (!expectedPromptFolders.has(item)) {
+          if (
+            !expectedPromptFolders.has(item) &&
+            !referencedPromptDirs.has(`${song.id}/${item}`)
+          ) {
             fs.rmSync(itemPath, { recursive: true, force: true });
           }
         }

@@ -4,7 +4,14 @@
  * prod data (users, favorites, songs, illustrations...) minus sessions, with
  * no wrangler version hacks — replaces the old copyRemoteDB.sh flow.
  *
- * Usage: pnpm db:restore:local
+ * Prod data can contain dangling foreign keys (e.g. sync sessions pointing at
+ * hard-deleted versions); those rows are dropped or their nullable pointers
+ * nulled, with a warning, instead of failing the restore.
+ *
+ * Usage: pnpm db:restore:local [--live]
+ *   default: restores the newest nightly R2 backup (up to ~24h stale)
+ *   --live:  snapshots the prod D1 database directly (current data; needs
+ *            CF_DATABASE_ID + CF_API_TOKEN in .dev.vars)
  * Needs R2 credentials in .dev.vars (CF_ACCOUNT_ID, R2_ACCESS_KEY_ID,
  * R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME) and an existing local DB
  * (pnpm db:migrate:local).
@@ -24,7 +31,8 @@ type DBBackup = {
 
 // Insert order respects foreign keys (parents first). The song ⟷ songVersion /
 // songIllustration cycle is broken by inserting song rows with the two
-// "current" pointers nulled and patching them afterwards.
+// "current" pointers nulled and patching them afterwards; ditto for the
+// self-referential songVersion.parentId.
 const INSERT_ORDER = [
   "user",
   "account",
@@ -35,8 +43,13 @@ const INSERT_ORDER = [
   "illustrationPrompt",
   "songIllustration",
   "userFavoriteSongs",
-  "syncSession",
 ] as const;
+
+type TableName = (typeof INSERT_ORDER)[number];
+
+// Ephemeral state that may appear in (older) backups but is not worth
+// restoring into a dev DB.
+const IGNORED_TABLES = new Set(["syncSession"]);
 
 // Delete order: children first. Local sessions are wiped too since their
 // users get replaced.
@@ -54,7 +67,7 @@ const DELETE_ORDER: SQLiteTable[] = [
   schema.user,
 ];
 
-const TABLES: Record<(typeof INSERT_ORDER)[number], SQLiteTable> = {
+const TABLES: Record<TableName, SQLiteTable> = {
   user: schema.user,
   account: schema.account,
   verification: schema.verification,
@@ -64,7 +77,31 @@ const TABLES: Record<(typeof INSERT_ORDER)[number], SQLiteTable> = {
   illustrationPrompt: schema.illustrationPrompt,
   songIllustration: schema.songIllustration,
   userFavoriteSongs: schema.userFavoriteSongs,
-  syncSession: schema.syncSession,
+};
+
+// Foreign keys to validate before inserting: prod data is not guaranteed to be
+// consistent. A dangling required ref drops the row; a nullable one is nulled.
+const FK_SPECS: Partial<
+  Record<TableName, { column: string; ref: TableName; required: boolean }[]>
+> = {
+  account: [{ column: "userId", ref: "user", required: true }],
+  songImport: [{ column: "userId", ref: "user", required: true }],
+  songVersion: [
+    { column: "songId", ref: "song", required: true },
+    { column: "userId", ref: "user", required: true },
+    { column: "approvedBy", ref: "user", required: false },
+    { column: "importId", ref: "songImport", required: false },
+  ],
+  illustrationPrompt: [{ column: "songId", ref: "song", required: true }],
+  songIllustration: [
+    { column: "songId", ref: "song", required: true },
+    { column: "promptId", ref: "illustrationPrompt", required: true },
+  ],
+  userFavoriteSongs: [
+    { column: "userId", ref: "user", required: true },
+    { column: "songId", ref: "song", required: true },
+    { column: "pinnedVersionId", ref: "songVersion", required: false },
+  ],
 };
 
 /** Revives JSON values into what the drizzle column expects (Dates mainly). */
@@ -79,6 +116,24 @@ function reviveRow(table: SQLiteTable, raw: Record<string, unknown>) {
         : value;
   }
   return row;
+}
+
+/** Reads all tables straight from the prod D1 database (current data). */
+async function fetchLiveSnapshot(): Promise<{ key: string; backup: DBBackup }> {
+  const { db: remoteDb } = await import("./shared/remote-db");
+  const tables: Record<string, Record<string, unknown>[]> = {};
+  for (const tableName of INSERT_ORDER) {
+    tables[tableName] = (await remoteDb
+      .select()
+      .from(TABLES[tableName])) as Record<string, unknown>[];
+  }
+  return {
+    key: "live prod D1 snapshot",
+    backup: {
+      metadata: { createdAt: new Date().toISOString(), tables: [...INSERT_ORDER] },
+      tables,
+    },
+  };
 }
 
 async function fetchLatestBackup(): Promise<{ key: string; backup: DBBackup }> {
@@ -103,23 +158,54 @@ async function fetchLatestBackup(): Promise<{ key: string; backup: DBBackup }> {
   return { key: latest.Key!, backup: JSON.parse(body) as DBBackup };
 }
 
+/**
+ * Inserts rows in batches; on a batch failure retries row-by-row so a single
+ * bad row is reported and skipped instead of failing the whole table.
+ */
 async function insertRows<T extends SQLiteTable>(
   db: AppDatabase,
   table: T,
+  tableName: string,
   rows: Record<string, unknown>[],
-) {
+  insertedIds: Set<unknown>,
+): Promise<{ inserted: number; failed: number }> {
   const columnCount = Object.keys(getTableColumns(table)).length;
   // Stay well under SQLite's bound-parameter limit.
   const batchSize = Math.max(1, Math.floor(90 / columnCount));
+  let inserted = 0;
+  let failed = 0;
+
   for (let i = 0; i < rows.length; i += batchSize) {
     const batch = rows.slice(i, i + batchSize);
-    await db.insert(table).values(batch as T["$inferInsert"][]);
+    try {
+      await db.insert(table).values(batch as T["$inferInsert"][]);
+      inserted += batch.length;
+      for (const row of batch) insertedIds.add(row.id);
+    } catch {
+      for (const row of batch) {
+        try {
+          await db.insert(table).values([row] as T["$inferInsert"][]);
+          inserted++;
+          insertedIds.add(row.id);
+        } catch (error) {
+          failed++;
+          console.warn(
+            `  ⚠️ ${tableName}: skipping row ${JSON.stringify(row.id)} — ${
+              error instanceof Error ? error.message : error
+            }`,
+          );
+        }
+      }
+    }
   }
+  return { inserted, failed };
 }
 
 async function restore(db: AppDatabase, backup: DBBackup) {
   const known = new Set<string>(INSERT_ORDER);
-  const skipped = Object.keys(backup.tables).filter((t) => !known.has(t));
+  const skipped = Object.keys(backup.tables).filter(
+    (t) => !known.has(t) && !IGNORED_TABLES.has(t),
+  );
   if (skipped.length > 0) {
     console.warn(
       `⚠️ Backup contains tables unknown to this script (skipping): ${skipped.join(", ")}`,
@@ -130,6 +216,19 @@ async function restore(db: AppDatabase, backup: DBBackup) {
   for (const table of DELETE_ORDER) {
     await db.delete(table);
   }
+
+  // IDs actually inserted per table, used to validate later tables' FKs.
+  const insertedIds: Record<TableName, Set<unknown>> = {
+    user: new Set(),
+    account: new Set(),
+    verification: new Set(),
+    songImport: new Set(),
+    song: new Set(),
+    songVersion: new Set(),
+    illustrationPrompt: new Set(),
+    songIllustration: new Set(),
+    userFavoriteSongs: new Set(),
+  };
 
   // song rows referencing versions/illustrations that don't exist yet — defer.
   const songPointers: {
@@ -177,32 +276,79 @@ async function restore(db: AppDatabase, backup: DBBackup) {
       rows = rows.map((row) => ({ ...row, parentId: null }));
     }
 
-    await insertRows(db, table, rows);
-    console.log(`- ${tableName}: inserted ${rows.length} rows`);
+    // Drop rows with dangling required refs, null out dangling nullable ones.
+    const specs = FK_SPECS[tableName];
+    if (specs) {
+      rows = rows.filter((row) => {
+        for (const spec of specs) {
+          const value = row[spec.column];
+          if (value == null || insertedIds[spec.ref].has(value)) continue;
+          if (spec.required) {
+            console.warn(
+              `  ⚠️ ${tableName}: dropping row ${JSON.stringify(row.id)} — ` +
+                `${spec.column}=${value} missing in ${spec.ref}`,
+            );
+            return false;
+          }
+          console.warn(
+            `  ⚠️ ${tableName}: nulling ${spec.column}=${value} on row ` +
+              `${JSON.stringify(row.id)} — target missing in ${spec.ref}`,
+          );
+          row[spec.column] = null;
+        }
+        return true;
+      });
+    }
+
+    const { inserted, failed } = await insertRows(
+      db,
+      table,
+      tableName,
+      rows,
+      insertedIds[tableName],
+    );
+    console.log(
+      `- ${tableName}: inserted ${inserted} rows` +
+        (failed > 0 ? ` (${failed} skipped, see warnings)` : ""),
+    );
   }
 
-  console.log(`Patching current version/illustration pointers on ${songPointers.length} songs...`);
+  console.log(
+    `Patching current version/illustration pointers on ${songPointers.length} songs...`,
+  );
   for (const pointer of songPointers) {
     await db
       .update(schema.song)
       .set({
-        currentVersionId: pointer.currentVersionId as string | null,
-        currentIllustrationId: pointer.currentIllustrationId as string | null,
+        currentVersionId: insertedIds.songVersion.has(pointer.currentVersionId)
+          ? (pointer.currentVersionId as string)
+          : null,
+        currentIllustrationId: insertedIds.songIllustration.has(
+          pointer.currentIllustrationId,
+        )
+          ? (pointer.currentIllustrationId as string)
+          : null,
       })
       .where(eq(schema.song.id, pointer.id));
   }
 
-  console.log(`Patching parent pointers on ${versionParents.length} song versions...`);
+  console.log(
+    `Patching parent pointers on ${versionParents.length} song versions...`,
+  );
   for (const pointer of versionParents) {
+    if (!insertedIds.songVersion.has(pointer.parentId)) continue;
     await db
       .update(schema.songVersion)
-      .set({ parentId: pointer.parentId as string | null })
+      .set({ parentId: pointer.parentId as string })
       .where(eq(schema.songVersion.id, pointer.id));
   }
 }
 
 async function main() {
-  const { key, backup } = await fetchLatestBackup();
+  const live = process.argv.includes("--live");
+  const { key, backup } = live
+    ? await fetchLiveSnapshot()
+    : await fetchLatestBackup();
   console.log(
     `Backup ${key} created at ${backup.metadata.createdAt}, tables: ${backup.metadata.tables.join(", ")}`,
   );
