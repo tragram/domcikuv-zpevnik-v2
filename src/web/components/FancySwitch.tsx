@@ -41,6 +41,15 @@ export default function FancySwitch<T extends string | number>({
     ? options.some((o) => o.value === selectedOption)
     : true;
 
+  const activeIndex = options.findIndex((o) => o.value === selectedOption);
+  const isLeftRounded = roundedClass.includes("-l-");
+  const isRightRounded = roundedClass.includes("-r-");
+  const appliedRoundedClass =
+    (isLeftRounded && activeIndex !== 0) ||
+    (isRightRounded && activeIndex !== options.length - 1)
+      ? ""
+      : roundedClass;
+
   useEffect(() => {
     const updateHighlight = () => {
       if (!containerRef.current) return;
@@ -90,7 +99,7 @@ export default function FancySwitch<T extends string | number>({
             "absolute z-0 bg-primary h-full",
             // Clean, permanent transition. No hacky timeouts.
             "transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
-            roundedClass,
+            appliedRoundedClass,
           )}
           style={{
             transform: `translate(${highlight.left}px, ${highlight.top}px)`,
