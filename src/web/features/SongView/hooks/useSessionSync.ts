@@ -36,6 +36,10 @@ function resolveTabClientId(): string {
 
 const TAB_CLIENT_ID = resolveTabClientId();
 
+/** How long a visibility-probe ping may go unanswered before the socket is
+ *  declared dead and closed (which triggers an immediate reconnect). */
+const VISIBILITY_PROBE_TIMEOUT_MS = 5_000;
+
 export type ConnectionStatus =
   | "connecting"
   | "connected"
@@ -355,6 +359,52 @@ export function useSessionSync({
       window.removeEventListener("online", handleOnline);
     };
   }, [enabled, masterNickname, isMaster, connect]);
+
+  // Revalidate the connection whenever the tab becomes visible/focused again.
+  // While a tab is hidden the browser throttles or freezes its timers, so a
+  // socket that died in the background never runs its reconnect backoff — the
+  // session (and especially a relay) stays dead until the user returns. On
+  // return: reconnect a closed socket immediately, and probe an "open" one,
+  // which may be half-dead after a background freeze without a close event.
+  useEffect(() => {
+    if (!enabled || !masterNickname) return;
+
+    const revalidate = () => {
+      if (document.visibilityState !== "visible") return;
+      if (kickedRef.current) return; // a displaced master must stay displaced
+      const ws = socketRef.current;
+      if (ws?.readyState === WebSocket.CONNECTING) return; // attempt in flight
+      if (ws?.readyState === WebSocket.OPEN) {
+        try {
+          ws.send(JSON.stringify({ type: "ping" }));
+          missedPongsRef.current++;
+          // Any server message resets missedPongs; silence means a dead socket.
+          window.setTimeout(() => {
+            if (socketRef.current === ws && missedPongsRef.current > 0) {
+              ws.close(); // onclose schedules the reconnect
+            }
+          }, VISIBILITY_PROBE_TIMEOUT_MS);
+        } catch {
+          ws.close();
+        }
+        return;
+      }
+      // Closed (or never created): any scheduled retry was throttled away —
+      // reconnect right now with fresh backoff.
+      setRetryAttempt(0);
+      setConnectionStatus("connecting");
+      connect();
+    };
+
+    document.addEventListener("visibilitychange", revalidate);
+    window.addEventListener("focus", revalidate);
+    window.addEventListener("pageshow", revalidate);
+    return () => {
+      document.removeEventListener("visibilitychange", revalidate);
+      window.removeEventListener("focus", revalidate);
+      window.removeEventListener("pageshow", revalidate);
+    };
+  }, [enabled, masterNickname, connect]);
 
   /**
    * Send an update-song message to the Durable Object.

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useWakeLock } from "react-screen-wake-lock";
 import { useSessionSync, FeedStatus, RelayStatus } from "./useSessionSync";
 import type { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 
@@ -142,6 +143,33 @@ export function useMasterRelay({
     ownMasterId,
   ]);
 
+  // ─── Keep the screen awake while relaying ─────────────────────────────────
+  // The relay is a client-side bridge: content only flows while this tab's JS
+  // runs. A locked/asleep device silently stops the relay for everyone behind
+  // it, so hold a wake lock for the duration (independent of the user's
+  // wake-lock toolbar toggle). Reacquisition on return-to-visible is handled
+  // here rather than via the lib's reacquireOnPageVisible, which would keep
+  // re-grabbing the lock even after the relay ends.
+  const {
+    isSupported: wakeLockSupported,
+    request: requestWakeLock,
+    release: releaseWakeLock,
+  } = useWakeLock();
+  useEffect(() => {
+    if (!wakeLockSupported || !relayEnabled) return;
+    requestWakeLock();
+    // The platform auto-releases the lock when the tab is hidden; take it
+    // back when the user returns while the relay is still on.
+    const reacquire = () => {
+      if (document.visibilityState === "visible") requestWakeLock();
+    };
+    document.addEventListener("visibilitychange", reacquire);
+    return () => {
+      document.removeEventListener("visibilitychange", reacquire);
+      releaseWakeLock();
+    };
+  }, [wakeLockSupported, relayEnabled, requestWakeLock, releaseWakeLock]);
+
   // ─── Hide from the discovery list when relay starts ───────────────────────
   // Send null as a normal stop: the DO nulls its state, writes D1 (removing us
   // from discovery) and broadcasts null — but followers ignore null and keep the
@@ -177,7 +205,15 @@ export function useMasterRelay({
 
   // ─── Side-effect: relay content downstream ────────────────────────────────
   const upstreamState = upstreamStatus.sessionState;
+  const downstreamConnected = downstreamStatus.isConnected;
   useEffect(() => {
+    if (relayEnabled && !downstreamConnected) {
+      // The downstream socket may have died after content was marked as sent
+      // (a send into a dying socket is lost without an error). Forget the
+      // dedupe key so the current content is re-broadcast on reconnect.
+      lastRelayedRef.current = null;
+      return;
+    }
     if (!hideComplete || !relayInfo?.active || !upstreamState?.songId) return;
     const key = JSON.stringify([
       upstreamState.songId,
@@ -198,7 +234,14 @@ export function useMasterRelay({
       relayInfo.originatorNickname ?? undefined,
       /* isRelay */ true,
     );
-  }, [hideComplete, relayInfo, upstreamState, downstreamUpdateSong]);
+  }, [
+    hideComplete,
+    relayInfo,
+    upstreamState,
+    downstreamUpdateSong,
+    relayEnabled,
+    downstreamConnected,
+  ]);
 
   // ─── Side-effect: notify the chain of a loop ──────────────────────────────
   useEffect(() => {

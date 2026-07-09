@@ -33,7 +33,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
   const [currentTime, setCurrentTime] = useState(() => Date.now());
   const { userData } = useUserData();
   const { songDB } = useSongDB(userData);
-  const { activeSessions, refetchIfStale } = useActiveSessions(songDB);
+  const { activeSessions, refetchIfStale, isPending } = useActiveSessions(songDB);
 
   const { shareSession, toggleShareSession } = useShareSessionToggle();
 
@@ -116,7 +116,12 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
       >
         <RichItem.Header>Active Sessions</RichItem.Header>
         <DropdownMenuSeparator />
-        {!activeSessions && (
+        {!activeSessions && isPending && (
+          <div className="px-2 py-2 text-sm text-muted-foreground">
+            Loading sessions…
+          </div>
+        )}
+        {!activeSessions && !isPending && (
           <div className="px-2 py-2 text-sm text-destructive">
             Failed to load sessions
           </div>

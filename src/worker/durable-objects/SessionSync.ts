@@ -1,17 +1,13 @@
 import { DurableObject } from "cloudflare:workers";
 import { drizzle } from "drizzle-orm/d1";
 import { syncSession } from "src/lib/db/schema";
-
-interface Env {
-  DB: D1Database;
-}
-
-/** Order-insensitive equality for two id lists (used to skip no-op updates). */
-function sameMembers(a: string[], b: string[]): boolean {
-  if (a.length !== b.length) return false;
-  const set = new Set(a);
-  return b.every((id) => set.has(id));
-}
+import {
+  computeAudience,
+  isSocketAlive,
+  resolveChainUpdate,
+  sameMembers,
+  type AudienceSocketInfo,
+} from "./session-sync-logic";
 
 interface SocketMetadata {
   isMaster: boolean;
@@ -373,37 +369,23 @@ export class SessionSync extends DurableObject<Env> {
      *  doesn't pollute the sessions list. */
     isRelay?: boolean;
   }) {
-    // If the master provides a chainPath it includes itself as the last element.
-    // Fall back to a standalone chain with just this master's ID.
-    const newChainPath =
-      data.chainPath && data.chainPath.length > 0
-        ? data.chainPath
-        : this.masterId
-          ? [this.masterId]
-          : [];
-
-    // Originator nickname: relayed from upstream, or this master for standalone.
-    const newOriginatorNickname =
-      newChainPath.length > 1
-        ? (data.originatorNickname ?? null)
-        : this.masterNickname;
-
-    // Only write to D1 for first-party (non-relay) updates so the sessions list
-    // reflects the master's own choices, not relayed content.
-    // `wasRelaying` forces a write when the master returns to first-party
-    // broadcasting — even with an unchanged songId — so they reappear in the
-    // sessions list after the null they sent to hide while relaying.
     const isFirstSong = this.isNewSession;
-    const wasRelaying = this.currentChainPath.length > 1;
-    if (
-      !data.isRelay &&
-      this.masterId &&
-      data.songId &&
-      (isFirstSong ||
-        wasRelaying ||
-        data.songId !== this.currentSongId ||
-        data.versionId !== this.currentVersionId)
-    ) {
+    const { chainPath: newChainPath, originatorNickname: newOriginatorNickname, shouldWriteToDb } =
+      resolveChainUpdate({
+        incomingChainPath: data.chainPath,
+        masterId: this.masterId,
+        masterNickname: this.masterNickname,
+        incomingOriginatorNickname: data.originatorNickname,
+        isRelay: data.isRelay,
+        isFirstSong,
+        wasRelaying: this.currentChainPath.length > 1,
+        currentSongId: this.currentSongId,
+        currentVersionId: this.currentVersionId,
+        songId: data.songId,
+        versionId: data.versionId,
+      });
+
+    if (shouldWriteToDb && this.masterId) {
       await this.scheduleDbWrite(
         {
           masterId: this.masterId,
@@ -515,24 +497,17 @@ export class SessionSync extends DurableObject<Env> {
     }
   }
 
-  /** A socket is alive if it was seen within STALE_AFTER_MS — "seen" being its
-   *  last heartbeat ping, or (before the first ping) its connect time, so a
-   *  socket that dies before ever pinging (e.g. a reload before the first
-   *  heartbeat) still ages out instead of counting forever. */
   private isAlive(ws: WebSocket, connectedAt: number): boolean {
     const lastPing = this.ctx.getWebSocketAutoResponseTimestamp(ws);
     const lastSeen = lastPing?.getTime() ?? connectedAt;
-    return Date.now() - lastSeen < this.STALE_AFTER_MS;
+    return isSocketAlive(lastSeen, Date.now(), this.STALE_AFTER_MS);
   }
 
-  /** The distinct client ids following this session. Each alive follower socket
-   *  contributes its own clientId plus every id in the subtree it reported
-   *  (relay-subtree). Because it is a set, a client reachable both directly and
-   *  through a relay — e.g. during a relay reconfiguration — is counted once.
-   *  Duplicate sockets from one tab share a clientId and collapse naturally.
-   *  Master sockets (incl. a lingering just-kicked one) and ghosts are excluded. */
+  /** Duplicate sockets from one tab share a clientId and collapse naturally
+   *  via computeAudience's Set. Master sockets (incl. a lingering just-kicked
+   *  one) and ghosts are excluded there too. */
   private audience(excludeWs?: WebSocket): Set<string> {
-    const clients = new Set<string>();
+    const sockets: AudienceSocketInfo[] = [];
     for (const w of this.ctx.getWebSockets()) {
       if (w === excludeWs) continue;
       let meta: SocketMetadata;
@@ -541,13 +516,15 @@ export class SessionSync extends DurableObject<Env> {
       } catch {
         continue; // stale socket
       }
-      if (meta.isMaster) continue;
-      if (meta.left) continue; // announced departure
-      if (!this.isAlive(w, meta.connectedAt)) continue; // ghost: no clean close
-      clients.add(meta.clientId ?? meta.connectionId);
-      if (meta.subtree) for (const id of meta.subtree) clients.add(id);
+      sockets.push({
+        isMaster: meta.isMaster,
+        left: meta.left,
+        alive: this.isAlive(w, meta.connectedAt),
+        clientId: meta.clientId ?? meta.connectionId,
+        subtree: meta.subtree,
+      });
     }
-    return clients;
+    return computeAudience(sockets);
   }
 
   private countClients(excludeWs?: WebSocket): number {
