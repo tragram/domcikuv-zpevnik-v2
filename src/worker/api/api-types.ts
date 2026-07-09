@@ -99,14 +99,28 @@ export type SongVersionAdminApi = SongVersionDB & {
   importUrl: string | null;
 };
 
-export type SongVersionApi = {
-  id: string;
-  songId: string;
+// API responses serialize Drizzle's `Date` columns as either a `Date`
+// (same-process call) or a JSON `string` (over the wire) — everything else
+// passes through from the DB row as-is, so a new/renamed DB column shows up
+// here automatically instead of needing a manually kept-in-sync field list.
+export type SongVersionApi = Omit<
+  SongVersionDB,
+  | "parentId"
+  | "importId"
+  | "key"
+  | "language"
+  | "capo"
+  | "range"
+  | "startMelody"
+  | "tempo"
+  | "youtubeId"
+  | "approvedBy"
+  | "approvedAt"
+  | "createdAt"
+  | "updatedAt"
+> & {
   parentId?: string | null;
   importId?: string | null;
-  status: SongVersionDB["status"];
-  title: string;
-  artist: string;
   key?: string | null;
   language?: string | null;
   capo?: number | null;
@@ -114,35 +128,26 @@ export type SongVersionApi = {
   startMelody?: string | null;
   tempo?: string | null;
   youtubeId?: string | null;
-  userId: string;
   approvedBy?: string | null;
   approvedAt?: Date | string | null;
   createdAt: Date | string;
   updatedAt: Date | string;
-  chordpro: string;
 };
 
-export type SongIllustrationApi = {
-  id: string;
-  songId: string;
-  promptId: string;
-  imageModel: string;
-  imageURL: string;
-  thumbnailURL: string;
+export type SongIllustrationApi = Omit<
+  SongIllustrationDB,
+  "createdAt" | "updatedAt"
+> & {
   createdAt: Date | string;
   updatedAt: Date | string;
-  deleted: boolean;
 };
 
-export type IllustrationPromptApi = {
-  id: string;
-  songId: string;
-  summaryPromptVersion: string;
-  summaryModel: string;
-  text: string;
+export type IllustrationPromptApi = Omit<
+  IllustrationPromptDB,
+  "createdAt" | "updatedAt"
+> & {
   createdAt: Date | string;
   updatedAt: Date | string;
-  deleted: boolean;
 };
 
 export type UserApi = {

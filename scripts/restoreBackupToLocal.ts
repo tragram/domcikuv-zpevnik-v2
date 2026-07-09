@@ -1,8 +1,9 @@
 /**
  * Restores the newest production DB backup (the JSON that scripts/sync.ts
  * uploads to R2 nightly) into the LOCAL dev D1 database. Full-fidelity copy of
- * prod data (users, favorites, songs, illustrations...) minus sessions, with
- * no wrangler version hacks — replaces the old copyRemoteDB.sh flow.
+ * prod data (users, favorites, songs, illustrations...) minus sessions;
+ * replaces the old copyRemoteDB.sh flow. Also bumps the local KV
+ * songDB-version so clients don't get stuck on a stale incremental sync.
  *
  * Prod data can contain dangling foreign keys (e.g. sync sessions pointing at
  * hard-deleted versions); those rows are dropped or their nullable pointers
@@ -18,6 +19,7 @@
  */
 import { GetObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { D1Helper } from "@nerdfolio/drizzle-d1-helpers";
+import { execSync } from "node:child_process";
 import { eq, getTableColumns } from "drizzle-orm";
 import type { SQLiteTable } from "drizzle-orm/sqlite-core";
 import * as schema from "../src/lib/db/schema";
@@ -344,6 +346,20 @@ async function restore(db: AppDatabase, backup: DBBackup) {
   }
 }
 
+/**
+ * Bumps the local KV songDB-version so clients see the restored data on next
+ * load. Rows keep their original prod updatedAt timestamps, so without this
+ * every client's cached lastUpdate cursor is newer than anything in the
+ * restore and the app's incremental sync (src/worker/api/songDB.ts) returns
+ * an empty diff — the UI silently keeps showing pre-restore data forever.
+ */
+function bumpLocalSongDBVersion() {
+  const newVersion = Date.now().toString();
+  execSync(`wrangler kv key put songDB-version ${newVersion} --binding KV --local`, {
+    stdio: "inherit",
+  });
+}
+
 async function main() {
   const live = process.argv.includes("--live");
   const { key, backup } = live
@@ -357,6 +373,9 @@ async function main() {
   await D1Helper.get("DB").useLocalD1(async (db) => {
     await restore(db as unknown as AppDatabase, backup);
   });
+
+  console.log("Bumping local songDB-version so clients skip stale incremental sync...");
+  bumpLocalSongDBVersion();
 
   console.log("✅ Local DB restored from production backup.");
 }
