@@ -3,8 +3,7 @@ import {
   isValidYoutubeId,
   parseYoutubeId,
   youtubeEmbedUrl,
-  youtubeMusicPlaylistUrl,
-  youtubePlaylistUrl,
+  youtubePlaylistWatchUrl,
   youtubeThumbnailUrl,
   youtubeWatchUrl,
   YOUTUBE_PLAYLIST_MAX,
@@ -77,10 +76,9 @@ describe("URL builders", () => {
     );
   });
 
-  it("builds a temporary playlist URL from ids", () => {
-    const ids = [ID, "abcdefghijk"];
-    expect(youtubePlaylistUrl(ids)).toBe(
-      `https://www.youtube.com/watch_videos?video_ids=${ids.join(",")}`,
+  it("builds a playlist watch URL from a playlist id", () => {
+    expect(youtubePlaylistWatchUrl("PLabc123")).toBe(
+      "https://www.youtube.com/playlist?list=PLabc123",
     );
   });
 
@@ -91,12 +89,6 @@ describe("URL builders", () => {
   it("builds an autoplaying embed URL", () => {
     expect(youtubeEmbedUrl(ID)).toBe(
       `https://www.youtube.com/embed/${ID}?autoplay=1`,
-    );
-  });
-
-  it("builds a YouTube Music playlist URL", () => {
-    expect(youtubeMusicPlaylistUrl(ID, "TLGGabc")).toBe(
-      `https://music.youtube.com/watch?v=${ID}&list=TLGGabc`,
     );
   });
 });
