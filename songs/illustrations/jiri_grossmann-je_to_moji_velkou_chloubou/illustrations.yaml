@@ -1,0 +1,21 @@
+songId: jiri_grossmann-je_to_moji_velkou_chloubou
+prompts:
+  - id: jiri_grossmann-je_to_moji_velkou_chloubou_gpt-5.4-mini_v7
+    songId: jiri_grossmann-je_to_moji_velkou_chloubou
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A quirky Czech folk-pop scene at a riverside under a stone bridge: a
+      humble, slightly awkward young man washing himself with a sea sponge only
+      up to his waist by the old river Jizera, wearing simple rustic clothes,
+      holding a book and a small St. Nicholas gift bow nearby, expressing
+      earnest sincerity and comic charm; overcast late-afternoon light, soft
+      muted colors, cinematic photorealistic style, simple composition, minimal
+      background detail, no text.
+    createdAt: 2026-07-08T17:37:48.000Z
+    updatedAt: 2026-07-08T17:37:48.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783532277000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
