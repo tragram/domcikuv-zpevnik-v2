@@ -6,12 +6,12 @@ import {
   isSocketAlive,
   resolveChainUpdate,
   sameMembers,
+  sanitizeSubtree,
   type AudienceSocketInfo,
 } from "./session-sync-logic";
 
 interface SocketMetadata {
   isMaster: boolean;
-  masterId: string;
   connectionId: string;
   /** Stable per-browser-tab id. Multiple sockets from the same tab to this DO
    *  (e.g. a relay's upstream + a component's own follower connection) share
@@ -50,7 +50,7 @@ export interface SessionSyncState {
   originatorNickname: string | null;
 }
 
-// ─── WebSocket message types ──────────────────────────────────────────────────
+// ─── WebSocket message types (server → client) ────────────────────────────────
 
 export interface SyncMessage extends SessionSyncState {
   type: "sync";
@@ -60,14 +60,6 @@ export interface SyncMessage extends SessionSyncState {
 
 export interface PongMessage {
   type: "pong";
-}
-
-export interface UpdateOKMessage {
-  type: "update-ok";
-  connectedClients: number;
-  /** The audience as distinct client ids; a relaying follower forwards this
-   *  upstream so its subtree is counted by identity, not by a summed count. */
-  clients: string[];
 }
 
 export interface MasterReplacedMessage {
@@ -91,13 +83,58 @@ export interface LoopDetectedMessage {
   loopSize: number;
 }
 
-export type SesssionSyncWSMessage =
+export type SessionSyncWSMessage =
   | SyncMessage
   | PongMessage
-  | UpdateOKMessage
   | MasterReplacedMessage
   | ClientCountMessage
   | LoopDetectedMessage;
+
+// ─── WebSocket message types (client → server) ────────────────────────────────
+
+export interface UpdateSongMessage {
+  type: "update-song";
+  songId: string;
+  versionId?: string;
+  transposeSteps: number;
+  /** Full relay chain including the sender as last element. Omitted by a
+   *  standalone originator — the DO defaults to [masterId]. */
+  chainPath?: string[];
+  /** Nickname of chainPath[0]. Null/omitted when standalone. */
+  originatorNickname?: string | null;
+  /** True for relayed content — skips the D1 write so relay content doesn't
+   *  pollute the sessions list. */
+  isRelay?: boolean;
+}
+
+/** Sent right before the client closes its socket (see handleLeave). */
+export interface LeaveMessage {
+  type: "leave";
+}
+
+/** A relaying follower reporting the distinct client ids watching through it. */
+export interface RelaySubtreeMessage {
+  type: "relay-subtree";
+  clients: string[];
+}
+
+/** A relay master reporting a detected cycle (no loopSize — the DO derives it). */
+export interface LoopDetectedReportMessage {
+  type: "loop-detected";
+  chainPath: string[];
+}
+
+/** Heartbeat — answered by the runtime auto-response, never reaches the DO. */
+export interface PingMessage {
+  type: "ping";
+}
+
+export type SessionSyncClientMessage =
+  | UpdateSongMessage
+  | LeaveMessage
+  | RelaySubtreeMessage
+  | LoopDetectedReportMessage
+  | PingMessage;
 
 // ─── Durable Object ───────────────────────────────────────────────────────────
 
@@ -166,13 +203,14 @@ export class SessionSync extends DurableObject<Env> {
         this.isNewSession = stored.songId === null;
       }
 
-      const activeMasterWs = this.ctx
-        .getWebSockets()
-        .find((ws) => ws.deserializeAttachment().isMaster);
-      this.masterWebSocket = activeMasterWs ?? null;
-      this.masterConnectionId = activeMasterWs
-        ? activeMasterWs.deserializeAttachment().connectionId
-        : null;
+      for (const ws of this.ctx.getWebSockets()) {
+        const meta = this.readMeta(ws);
+        if (meta?.isMaster && !meta.left) {
+          this.masterWebSocket = ws;
+          this.masterConnectionId = meta.connectionId;
+          break;
+        }
+      }
 
       this.pendingDbWrite =
         (await this.ctx.storage.get<typeof this.pendingDbWrite>(
@@ -190,7 +228,9 @@ export class SessionSync extends DurableObject<Env> {
     if (request.method === "POST") {
       return this.handlePost(request);
     }
-    // Snapshot of current sync state
+    // Snapshot of current sync state. Prune a stale master first so a fresh
+    // visitor isn't told the master is connected when its socket is a ghost.
+    this.pruneStaleMaster();
     return new Response(JSON.stringify(this.buildSyncState()), {
       headers: { "Content-Type": "application/json" },
     });
@@ -240,19 +280,29 @@ export class SessionSync extends DurableObject<Env> {
     // Backend has already verified authorization, so we trust the role parameter
     const isMaster = roleParam === "master";
 
-    // Only the master connection may mutate the session's identity. Followers
-    // also carry these params (server-derived), but applying them on a follower
-    // socket would let a follower connection write session state — gate it.
+    // Session identity (nickname / id / avatar) is derived server-side in
+    // sessions.ts from the DB — never from the client — so it's safe to apply
+    // on any connection. This lets a follower reaching a fresh (or renamed)
+    // DO still see whose session it is.
+    let identityChanged = false;
+    if (masterNicknameParam && masterIdParam) {
+      identityChanged =
+        this.masterNickname !== masterNicknameParam ||
+        this.masterId !== masterIdParam;
+      this.masterNickname = masterNicknameParam;
+      this.masterId = masterIdParam;
+    }
+    if (masterAvatarParam && masterAvatarParam !== this.masterAvatar) {
+      this.masterAvatar = masterAvatarParam;
+      identityChanged = true;
+    }
+    if (identityChanged) await this.persistState();
+
     if (isMaster) {
-      if (masterNicknameParam && masterIdParam) {
-        this.masterNickname = masterNicknameParam;
-        this.masterId = masterIdParam;
-        // Only force the immediate "appear in discovery" D1 write for a session
-        // that has no song yet. A reconnect/hibernation wake that already has
-        // song state is NOT new — treating it as new writes a duplicate row.
-        this.isNewSession = this.currentSongId === null;
-      }
-      if (masterAvatarParam) this.masterAvatar = masterAvatarParam;
+      // Only force the immediate "appear in discovery" D1 write for a session
+      // that has no song yet. A reconnect/hibernation wake that already has
+      // song state is NOT new — treating it as new writes a duplicate row.
+      this.isNewSession = this.currentSongId === null;
     }
 
     // Displace any existing master connection
@@ -279,11 +329,10 @@ export class SessionSync extends DurableObject<Env> {
 
     server.serializeAttachment({
       isMaster,
-      masterId: this.masterId,
       connectionId,
       clientId,
       connectedAt: Date.now(),
-    });
+    } satisfies SocketMetadata);
 
     // Enable hibernation - accept the new socket
     this.ctx.acceptWebSocket(server);
@@ -291,12 +340,12 @@ export class SessionSync extends DurableObject<Env> {
     if (isMaster) {
       this.masterWebSocket = server;
       this.masterConnectionId = connectionId;
-      // Inform all existing clients that the master is live
-      this.broadcast({
-        type: "sync",
-        ...this.buildSyncState(),
-        isMasterConnected: true,
-      });
+      // Inform all existing clients that the master is live. The new master
+      // itself is excluded — it gets the isMaster-tagged initial sync below.
+      this.broadcast(
+        { type: "sync", ...this.buildSyncState(), isMasterConnected: true },
+        server,
+      );
     }
 
     // Give the connecting socket its initial state snapshot
@@ -314,9 +363,15 @@ export class SessionSync extends DurableObject<Env> {
   async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
     // Heartbeat pings are handled by the runtime (setWebSocketAutoResponse) and
     // never reach here.
-    const data = JSON.parse(message.toString());
+    let data: SessionSyncClientMessage;
+    try {
+      data = JSON.parse(message.toString());
+    } catch {
+      return; // malformed frame — follower sockets are unauthenticated
+    }
 
-    const meta = ws.deserializeAttachment() as SocketMetadata;
+    const meta = this.readMeta(ws);
+    if (!meta) return; // stale socket
 
     // Explicit departure (sent right before the client closes the socket).
     // Reliable even when the close event is delayed, so the count corrects now.
@@ -329,11 +384,7 @@ export class SessionSync extends DurableObject<Env> {
     // distinct client ids watching through it, so this session's audience
     // includes the whole subtree behind it — counted by identity.
     if (data.type === "relay-subtree" && !meta.isMaster) {
-      const subtree = Array.isArray(data.clients)
-        ? (data.clients as unknown[]).filter(
-            (c): c is string => typeof c === "string",
-          )
-        : [];
+      const subtree = sanitizeSubtree(data.clients);
       if (!sameMembers(meta.subtree ?? [], subtree)) {
         ws.serializeAttachment({ ...meta, subtree });
         this.notifyMasterOfClientCount();
@@ -344,32 +395,16 @@ export class SessionSync extends DurableObject<Env> {
     if (!meta.isMaster || this.masterConnectionId !== meta.connectionId) return;
 
     if (data.type === "update-song") {
-      await this.handleUpdateSong(
-        data as {
-          songId: string;
-          versionId?: string;
-          transposeSteps: number;
-          chainPath?: string[];
-          originatorNickname?: string;
-          isRelay?: boolean;
-        },
-      );
+      await this.handleUpdateSong(data);
     } else if (data.type === "loop-detected") {
-      this.handleLoopDetected(data.chainPath as string[]);
+      this.handleLoopDetected(data.chainPath);
     }
   }
 
-  private async handleUpdateSong(data: {
-    songId: string;
-    versionId?: string;
-    transposeSteps: number;
-    chainPath?: string[];
-    originatorNickname?: string;
-    /** When true this is a relayed update — skip D1 write so relay content
-     *  doesn't pollute the sessions list. */
-    isRelay?: boolean;
-  }) {
+  private async handleUpdateSong(data: UpdateSongMessage) {
     const isFirstSong = this.isNewSession;
+    // Normalized so "no version" compares equal to the stored null.
+    const versionId = data.versionId ?? null;
     const { chainPath: newChainPath, originatorNickname: newOriginatorNickname, shouldWriteToDb } =
       resolveChainUpdate({
         incomingChainPath: data.chainPath,
@@ -382,64 +417,47 @@ export class SessionSync extends DurableObject<Env> {
         currentSongId: this.currentSongId,
         currentVersionId: this.currentVersionId,
         songId: data.songId,
-        versionId: data.versionId,
+        versionId,
       });
 
     if (shouldWriteToDb && this.masterId) {
       await this.scheduleDbWrite(
-        {
-          masterId: this.masterId,
-          songId: data.songId,
-          versionId: data.versionId ?? null,
-        },
+        { masterId: this.masterId, songId: data.songId, versionId },
         isFirstSong,
       );
       this.isNewSession = false;
     }
 
     this.currentSongId = data.songId;
-    this.currentVersionId = data.versionId ?? null;
+    this.currentVersionId = versionId;
     this.currentTransposeSteps = data.transposeSteps;
     this.currentChainPath = newChainPath;
     this.currentOriginatorNickname = newOriginatorNickname;
 
     await this.persistState();
     this.broadcast({ type: "sync", ...this.buildSyncState() });
-
-    const clients = [...this.audience()];
-    this.masterWebSocket?.send(
-      JSON.stringify({
-        type: "update-ok",
-        connectedClients: clients.length,
-        clients,
-      }),
-    );
+    // Ack with a fresh audience count — the master UI shows it live.
+    this.notifyMasterOfClientCount();
   }
 
   /** A relay master detected a loop and is informing us. Broadcast to all clients
    *  so the notification cascades down the relay chain. */
   private handleLoopDetected(chainPath: string[]) {
-    const msg: LoopDetectedMessage = {
+    this.broadcast({
       type: "loop-detected",
       chainPath,
       // The detecting master's ID appears twice in the loop path
       // (once mid-chain, once appended), so count unique masters.
       loopSize: new Set(chainPath).size,
-    };
-    const raw = JSON.stringify(msg);
-    for (const ws of this.ctx.getWebSockets()) {
-      try {
-        ws.send(raw);
-      } catch {
-        /* stale */
-      }
-    }
+    });
   }
 
   // ── WebSocket lifecycle ──────────────────────────────────────────────────────
 
   async webSocketClose(ws: WebSocket, _code: number, _reason: string) {
-    this.handleDeparture(ws, ws.deserializeAttachment() as SocketMetadata);
+    const meta = this.readMeta(ws);
+    if (meta) this.handleDeparture(ws, meta);
+    else this.notifyMasterOfClientCount(ws);
   }
 
   /** Client announced it is leaving (see "leave" message). Mark the socket gone
@@ -486,9 +504,19 @@ export class SessionSync extends DurableObject<Env> {
     await this.ctx.storage.put("state", this.buildSyncState());
   }
 
-  private broadcast(data: SyncMessage) {
+  /** Attachment read that tolerates stale sockets (deserialize can throw). */
+  private readMeta(ws: WebSocket): SocketMetadata | null {
+    try {
+      return ws.deserializeAttachment() as SocketMetadata;
+    } catch {
+      return null;
+    }
+  }
+
+  private broadcast(data: SessionSyncWSMessage, except?: WebSocket) {
     const msg = JSON.stringify(data);
     for (const ws of this.ctx.getWebSockets()) {
+      if (ws === except) continue;
       try {
         ws.send(msg);
       } catch {
@@ -503,6 +531,30 @@ export class SessionSync extends DurableObject<Env> {
     return isSocketAlive(lastSeen, Date.now(), this.STALE_AFTER_MS);
   }
 
+  /** Followers are pruned by liveness in computeAudience, but isMasterConnected
+   *  comes straight from masterWebSocket — a master that died without a close
+   *  frame would look connected forever. When the master socket has gone stale,
+   *  drop it (closing it so a live-but-frozen client reconnects rather than
+   *  keep talking into a socket the DO no longer honors) and tell followers. */
+  private pruneStaleMaster() {
+    const ws = this.masterWebSocket;
+    if (!ws) return;
+    const meta = this.readMeta(ws);
+    if (meta && this.isAlive(ws, meta.connectedAt)) return;
+    try {
+      ws.close(1011, "Master connection stale");
+    } catch {
+      /* already gone */
+    }
+    this.masterWebSocket = null;
+    this.masterConnectionId = null;
+    this.broadcast({
+      type: "sync",
+      ...this.buildSyncState(),
+      isMasterConnected: false,
+    });
+  }
+
   /** Duplicate sockets from one tab share a clientId and collapse naturally
    *  via computeAudience's Set. Master sockets (incl. a lingering just-kicked
    *  one) and ghosts are excluded there too. */
@@ -510,12 +562,8 @@ export class SessionSync extends DurableObject<Env> {
     const sockets: AudienceSocketInfo[] = [];
     for (const w of this.ctx.getWebSockets()) {
       if (w === excludeWs) continue;
-      let meta: SocketMetadata;
-      try {
-        meta = w.deserializeAttachment() as SocketMetadata;
-      } catch {
-        continue; // stale socket
-      }
+      const meta = this.readMeta(w);
+      if (!meta) continue; // stale socket
       sockets.push({
         isMaster: meta.isMaster,
         left: meta.left,
@@ -525,10 +573,6 @@ export class SessionSync extends DurableObject<Env> {
       });
     }
     return computeAudience(sockets);
-  }
-
-  private countClients(excludeWs?: WebSocket): number {
-    return this.audience(excludeWs).size;
   }
 
   private notifyMasterOfClientCount(closingWs?: WebSocket) {
@@ -554,7 +598,6 @@ export class SessionSync extends DurableObject<Env> {
     immediate = false,
   ) {
     // debounced DB write to minimize rows written during randomize
-    if (data.songId === undefined) return;
     this.pendingDbWrite = data;
     await this.ctx.storage.put("pendingDbWrite", this.pendingDbWrite);
 
@@ -568,8 +611,10 @@ export class SessionSync extends DurableObject<Env> {
 
   async alarm() {
     await this.flushDbWrite();
-    // Liveness sweep: re-count (isAlive excludes ghosts), refresh the master, and
-    // keep the alarm going until the count settles to zero.
+    // Liveness sweep: drop a ghost master, re-count followers (isAlive excludes
+    // ghosts), refresh the master, and keep the alarm going until the count
+    // settles to zero.
+    this.pruneStaleMaster();
     this.notifyMasterOfClientCount();
     await this.scheduleNextSweep();
   }
@@ -579,7 +624,7 @@ export class SessionSync extends DurableObject<Env> {
    *  the count has settled to zero. No-op if an alarm is already pending (e.g. a
    *  debounced DB write), whose handler reschedules the sweep when it fires. */
   private async scheduleNextSweep() {
-    if (this.countClients() === 0) return;
+    if (this.audience().size === 0) return;
     if ((await this.ctx.storage.getAlarm()) !== null) return;
     await this.ctx.storage.setAlarm(Date.now() + this.SWEEP_INTERVAL_MS);
   }

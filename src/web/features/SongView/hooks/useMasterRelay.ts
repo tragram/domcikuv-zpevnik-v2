@@ -275,13 +275,17 @@ export function useMasterRelay({
   // The user is a follower of the target, so status is based on the upstream
   // connection, with connectedClients overridden to the user's OWN downstream
   // follower count while relaying, plus the derived relay block.
-  const feedStatus: FeedStatus = {
-    ...upstreamStatus,
-    connectedClients: relayEnabled
-      ? downstreamStatus.connectedClients
-      : upstreamStatus.connectedClients,
-    relay: relayInfo,
-  };
+  const downstreamConnectedClients = downstreamStatus.connectedClients;
+  const feedStatus = useMemo<FeedStatus>(
+    () => ({
+      ...upstreamStatus,
+      connectedClients: relayEnabled
+        ? downstreamConnectedClients
+        : upstreamStatus.connectedClients,
+      relay: relayInfo,
+    }),
+    [upstreamStatus, relayEnabled, downstreamConnectedClients, relayInfo],
+  );
 
   return { feedStatus };
 }

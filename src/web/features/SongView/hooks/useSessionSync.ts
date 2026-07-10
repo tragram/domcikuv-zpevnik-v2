@@ -2,7 +2,8 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import type {
   SessionSyncState,
-  SesssionSyncWSMessage,
+  SessionSyncWSMessage,
+  UpdateSongMessage,
 } from "src/worker/durable-objects/SessionSync";
 
 /**
@@ -35,6 +36,10 @@ function resolveTabClientId(): string {
 }
 
 const TAB_CLIENT_ID = resolveTabClientId();
+
+/** Stable empty audience so consumers' effect deps don't churn while the
+ *  first count is still unknown. */
+const NO_CLIENTS: string[] = [];
 
 /** How long a visibility-probe ping may go unanswered before the socket is
  *  declared dead and closed (which triggers an immediate reconnect). */
@@ -89,24 +94,28 @@ export function useSessionSync({
   initialState,
   onKicked,
 }: UseSessionSyncOptions) {
-  if (
-    initialState?.masterNickname &&
-    initialState.masterNickname !== masterNickname
-  ) {
-    console.warn(
-      `Session sync received initialState.nickname ${initialState.masterNickname} but masterNickname ${masterNickname}`,
-    );
-  }
+  // Sanity check only — logged from an effect so render stays side-effect free.
+  useEffect(() => {
+    if (
+      initialState?.masterNickname &&
+      initialState.masterNickname !== masterNickname
+    ) {
+      console.warn(
+        `Session sync received initialState.nickname ${initialState.masterNickname} but masterNickname ${masterNickname}`,
+      );
+    }
+  }, [initialState, masterNickname]);
 
   const [sessionState, setSessionState] = useState<SessionSyncState | null>(
     initialState ?? null,
   );
-  const [connectedClients, setConnectedClients] = useState<number | undefined>(
-    undefined,
+  // Distinct client ids in this session's audience (master role), as reported
+  // by the DO; null until the first count arrives. The displayed count is just
+  // this array's length. Forwarded upstream by a relay so its subtree is
+  // counted by identity, not summed.
+  const [audienceClients, setAudienceClients] = useState<string[] | null>(
+    null,
   );
-  // Distinct client ids in this session's audience (master role). Forwarded
-  // upstream by a relay so its subtree is counted by identity, not summed.
-  const [audienceClients, setAudienceClients] = useState<string[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const [retryAttempt, setRetryAttempt] = useState(0);
   const [connectionStatus, setConnectionStatus] =
@@ -116,14 +125,7 @@ export function useSessionSync({
   >(undefined);
 
   const socketRef = useRef<WebSocket | null>(null);
-  const pendingUpdateRef = useRef<{
-    songId: string;
-    versionId?: string;
-    transposeSteps: number;
-    chainPath?: string[];
-    originatorNickname?: string | null;
-    isRelay?: boolean;
-  } | null>(null);
+  const pendingUpdateRef = useRef<UpdateSongMessage | null>(null);
   // Loop notifications queued while the socket is still connecting — loop
   // detection often fires right after navigation, before the WS is open.
   const pendingLoopRef = useRef<string[] | null>(null);
@@ -140,12 +142,22 @@ export function useSessionSync({
   const pingIntervalRef = useRef<number | undefined>(undefined);
   const reconnectTimeoutRef = useRef<number | undefined>(undefined);
   const missedPongsRef = useRef(0);
+  // Source of truth for the reconnect backoff. Mirrored into retryAttempt state
+  // for display; kept in a ref so onclose can schedule the retry timer as a
+  // plain statement instead of inside a setState updater (updaters must be
+  // pure — React may invoke them more than once).
+  const retryAttemptRef = useRef(0);
   // Set when the server displaces us as master — suppresses reconnect in onclose.
   const kickedRef = useRef(false);
   const onKickedRef = useRef(onKicked);
   useEffect(() => {
     onKickedRef.current = onKicked;
   }, [onKicked]);
+
+  const resetRetryAttempt = useCallback(() => {
+    retryAttemptRef.current = 0;
+    setRetryAttempt(0);
+  }, []);
 
   const cleanupSockets = useCallback(() => {
     if (socketRef.current) {
@@ -190,17 +202,12 @@ export function useSessionSync({
       ws.onopen = () => {
         setIsConnected(true);
         setConnectionStatus("connected");
-        setRetryAttempt(0);
+        resetRetryAttempt();
         missedPongsRef.current = 0;
 
         // Flush any pending update (master only)
         if (isMaster && pendingUpdateRef.current) {
-          ws.send(
-            JSON.stringify({
-              type: "update-song",
-              ...pendingUpdateRef.current,
-            }),
-          );
+          ws.send(JSON.stringify(pendingUpdateRef.current));
           pendingUpdateRef.current = null;
         }
 
@@ -241,10 +248,9 @@ export function useSessionSync({
 
       ws.onmessage = (event) => {
         missedPongsRef.current = 0; // Reset heartbeat on ANY message
-        const data: SesssionSyncWSMessage = JSON.parse(event.data);
+        const data: SessionSyncWSMessage = JSON.parse(event.data);
 
-        if (data.type === "update-ok" || data.type === "client-count") {
-          setConnectedClients(data.connectedClients);
+        if (data.type === "client-count") {
           setAudienceClients(data.clients ?? []);
         } else if (data.type === "sync" && !isMaster) {
           // Ignore a null song: keep showing the last one (better stale than
@@ -302,28 +308,32 @@ export function useSessionSync({
         clearInterval(pingIntervalRef.current);
 
         if (event.reason === "New master connected" || kickedRef.current) {
-          kickedRef.current = true;
-          onKickedRef.current?.();
+          // The master-replaced message usually arrives (and fires onKicked)
+          // before this close does — only fire for a close-only displacement.
+          if (!kickedRef.current) {
+            kickedRef.current = true;
+            onKickedRef.current?.();
+          }
           return;
         }
 
         setConnectionStatus("reconnecting");
-        setRetryAttempt((prev) => {
-          const delay = Math.min(1000 * Math.pow(2, prev), 30000);
-          const jitterDelay = delay + delay * 0.25 * (Math.random() * 2 - 1);
-          reconnectTimeoutRef.current = window.setTimeout(
-            attemptConnection,
-            jitterDelay,
-          );
-          return prev + 1;
-        });
+        const attempt = retryAttemptRef.current;
+        retryAttemptRef.current = attempt + 1;
+        setRetryAttempt(attempt + 1);
+        const delay = Math.min(1000 * Math.pow(2, attempt), 30000);
+        const jitterDelay = delay + delay * 0.25 * (Math.random() * 2 - 1);
+        reconnectTimeoutRef.current = window.setTimeout(
+          attemptConnection,
+          jitterDelay,
+        );
       };
 
       ws.onerror = () => ws.close();
     }
 
     attemptConnection();
-  }, [enabled, masterNickname, isMaster, cleanupSockets]);
+  }, [enabled, masterNickname, isMaster, cleanupSockets, resetRetryAttempt]);
 
   // Main mount / reconnect effect
   useEffect(() => {
@@ -338,10 +348,11 @@ export function useSessionSync({
     if (!enabled || !masterNickname) return;
 
     const handleOnline = () => {
+      if (kickedRef.current) return; // a displaced master must stay displaced
       toast.info(
         `Reconnected: Attempting to ${isMaster ? "broadcast" : "reload feed!"}`,
       );
-      setRetryAttempt(0);
+      resetRetryAttempt();
       setConnectionStatus("connecting");
       connect();
     };
@@ -358,7 +369,7 @@ export function useSessionSync({
       window.removeEventListener("offline", handleOffline);
       window.removeEventListener("online", handleOnline);
     };
-  }, [enabled, masterNickname, isMaster, connect]);
+  }, [enabled, masterNickname, isMaster, connect, resetRetryAttempt]);
 
   // Revalidate the connection whenever the tab becomes visible/focused again.
   // While a tab is hidden the browser throttles or freezes its timers, so a
@@ -391,7 +402,7 @@ export function useSessionSync({
       }
       // Closed (or never created): any scheduled retry was throttled away —
       // reconnect right now with fresh backoff.
-      setRetryAttempt(0);
+      resetRetryAttempt();
       setConnectionStatus("connecting");
       connect();
     };
@@ -404,7 +415,7 @@ export function useSessionSync({
       window.removeEventListener("focus", revalidate);
       window.removeEventListener("pageshow", revalidate);
     };
-  }, [enabled, masterNickname, connect]);
+  }, [enabled, masterNickname, connect, resetRetryAttempt]);
 
   /**
    * Send an update-song message to the Durable Object.
@@ -427,14 +438,16 @@ export function useSessionSync({
     ) => {
       if (!isMaster) return;
 
-      const payload = {
+      // JSON.stringify drops undefined fields, so the optional params can be
+      // set unconditionally.
+      const payload: UpdateSongMessage = {
         type: "update-song",
         songId,
         transposeSteps,
         versionId,
-        ...(chainPath !== undefined && { chainPath }),
-        ...(originatorNickname !== undefined && { originatorNickname }),
-        ...(isRelay && { isRelay: true }),
+        chainPath,
+        originatorNickname,
+        isRelay,
       };
 
       const ws = socketRef.current;
@@ -442,27 +455,20 @@ export function useSessionSync({
         ws.send(JSON.stringify(payload));
         pendingUpdateRef.current = null;
       } else {
-        pendingUpdateRef.current = {
-          songId,
-          transposeSteps,
-          versionId,
-          chainPath,
-          originatorNickname,
-          isRelay,
-        };
+        pendingUpdateRef.current = payload;
 
         if (
           !ws ||
           ws.readyState === WebSocket.CLOSED ||
           ws.readyState === WebSocket.CLOSING
         ) {
-          setRetryAttempt(0);
+          resetRetryAttempt();
           setConnectionStatus("connecting");
           connect();
         }
       }
     },
-    [isMaster, connect],
+    [isMaster, connect, resetRetryAttempt],
   );
 
   /**
@@ -497,23 +503,22 @@ export function useSessionSync({
     // If not open: onopen re-reports from relaySubtreeRef.
   }, []);
 
-  const feedStatus = useMemo(
-    () =>
-      ({
-        isMaster,
-        enabled,
-        isConnected,
-        connectedClients,
-        connectionStatus,
-        retryAttempt,
-        sessionState,
-        loopInfo,
-      }) as FeedStatus,
+  const feedStatus = useMemo<FeedStatus>(
+    () => ({
+      isMaster,
+      enabled,
+      isConnected,
+      connectedClients: audienceClients?.length,
+      connectionStatus,
+      retryAttempt,
+      sessionState: sessionState ?? undefined,
+      loopInfo,
+    }),
     [
       isMaster,
       enabled,
       isConnected,
-      connectedClients,
+      audienceClients,
       connectionStatus,
       retryAttempt,
       sessionState,
@@ -527,6 +532,6 @@ export function useSessionSync({
     notifyLoopDetected,
     reportRelaySubtree,
     /** Audience client ids (master role) — forwarded upstream by a relay. */
-    audienceClients,
+    audienceClients: audienceClients ?? NO_CLIENTS,
   };
 }

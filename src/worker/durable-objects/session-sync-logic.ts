@@ -22,6 +22,31 @@ export function isSocketAlive(
   return nowMs - lastSeenMs < staleAfterMs;
 }
 
+/** serializeAttachment caps a socket's attachment at 2 KiB, and the subtree is
+ *  client-supplied — bound both the id count and each id's length so a large
+ *  (or hostile) subtree can't fail the attachment write or inflate the
+ *  audience without limit. Audiences beyond the cap are undercounted. */
+export const MAX_SUBTREE_IDS = 40;
+export const MAX_CLIENT_ID_LENGTH = 64;
+
+/** Validate a relay-subtree payload (untrusted client input) into a bounded
+ *  list of client ids. */
+export function sanitizeSubtree(input: unknown): string[] {
+  if (!Array.isArray(input)) return [];
+  const ids: string[] = [];
+  for (const id of input) {
+    if (
+      typeof id !== "string" ||
+      id.length === 0 ||
+      id.length > MAX_CLIENT_ID_LENGTH
+    )
+      continue;
+    ids.push(id);
+    if (ids.length >= MAX_SUBTREE_IDS) break;
+  }
+  return ids;
+}
+
 export interface AudienceSocketInfo {
   isMaster: boolean;
   /** Announced departure (see "leave" message) — excluded regardless of liveness. */
@@ -64,7 +89,10 @@ export interface ChainUpdateInput {
   currentSongId: string | null;
   currentVersionId: string | null;
   songId: string;
-  versionId?: string;
+  /** Normalized to null when the update carries no version, matching how
+   *  currentVersionId is stored — an undefined here would make the
+   *  "version changed?" comparison always true for version-less songs. */
+  versionId: string | null;
 }
 
 export interface ChainUpdateResult {

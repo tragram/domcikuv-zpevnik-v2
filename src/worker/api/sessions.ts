@@ -1,5 +1,5 @@
-import { eq, gte } from "drizzle-orm";
-import { syncSession, user, user as userTable } from "src/lib/db/schema";
+import { desc, eq, gte } from "drizzle-orm";
+import { syncSession, user } from "src/lib/db/schema";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
 import { errorJSend, successJSend } from "./responses";
@@ -34,25 +34,34 @@ const sessionSyncApp = buildApp()
       .from(syncSession)
       .where(gte(syncSession.timestamp, latestLive))
       .leftJoin(user, eq(user.id, syncSession.masterId))
+      .orderBy(desc(syncSession.timestamp))
       .all();
 
-    // Filter to only the latest entry per masterId
-    const latestByMasterId = liveSessions.reduce((acc, session) => {
-      const existing = acc.get(session.masterId);
-      if (!existing || session.timestamp > existing.timestamp) {
-        acc.set(session.masterId, session);
+    // Rows are newest-first, so the first row seen per master is its latest.
+    const latestByMasterId = new Map<string, (typeof liveSessions)[number]>();
+    for (const session of liveSessions) {
+      if (!latestByMasterId.has(session.masterId)) {
+        latestByMasterId.set(session.masterId, session);
       }
-      return acc;
-    }, new Map<string, (typeof liveSessions)[number]>());
+    }
 
     // Keep only live sessions (songId set) that are addressable: a session is
     // followed via /feed/:nickname, so a master without a nickname can't be
     // linked to and is omitted from discovery.
-    const activeSessions = Array.from(latestByMasterId.values()).filter(
-      (s) => s.songId !== null && s.nickname,
-    );
+    const activeSessions: SessionsResponseData = [];
+    for (const { masterId, timestamp, songId, avatar, nickname } of latestByMasterId.values()) {
+      if (songId !== null && nickname) {
+        activeSessions.push({
+          masterId,
+          timestamp,
+          songId,
+          avatar: avatar ?? undefined,
+          nickname,
+        });
+      }
+    }
 
-    return successJSend(c, activeSessions as SessionsResponseData);
+    return successJSend(c, activeSessions);
   })
   .post(
     "/:masterNickname",
@@ -60,21 +69,21 @@ const sessionSyncApp = buildApp()
     zValidator("json", z.object({ songId: z.string().nullable() })),
     async (c) => {
       const { masterNickname } = c.req.valid("param");
-      const user = c.var.USER;
+      const authUser = c.var.USER;
 
-      if (!user) return errorJSend(c, "Authentication required", 401);
+      if (!authUser) return errorJSend(c, "Authentication required", 401);
 
       const db = c.var.db;
       const masterProfile = await db
         .select({
-          id: userTable.id,
-          nickname: userTable.nickname,
+          id: user.id,
+          nickname: user.nickname,
         })
-        .from(userTable)
-        .where(eq(userTable.nickname, masterNickname))
+        .from(user)
+        .where(eq(user.nickname, masterNickname))
         .get();
 
-      if (!masterProfile || masterProfile.id !== user.id) {
+      if (!masterProfile || masterProfile.id !== authUser.id) {
         return errorJSend(c, "Not authorized to modify this session", 403);
       }
 
@@ -103,26 +112,26 @@ const sessionSyncApp = buildApp()
     async (c) => {
       const { masterNickname } = c.req.valid("param");
       const { role: requestedRole } = c.req.valid("query");
-      const user = c.var.USER;
+      const authUser = c.var.USER;
 
       const db = c.var.db;
       const masterProfile = await db
         .select({
-          id: userTable.id,
-          avatar: userTable.image,
-          nickname: userTable.nickname,
+          id: user.id,
+          avatar: user.image,
+          nickname: user.nickname,
         })
-        .from(userTable)
-        .where(eq(userTable.nickname, masterNickname))
+        .from(user)
+        .where(eq(user.nickname, masterNickname))
         .get();
 
       if (!masterProfile) return errorJSend(c, "Master user not found", 404);
 
       let verifiedRole = "follower";
       if (requestedRole === "master") {
-        if (!user)
+        if (!authUser)
           return errorJSend(c, "Authentication required to be master", 401);
-        if (masterProfile.id !== user.id)
+        if (masterProfile.id !== authUser.id)
           return errorJSend(
             c,
             "Not authorized to be master for this session",

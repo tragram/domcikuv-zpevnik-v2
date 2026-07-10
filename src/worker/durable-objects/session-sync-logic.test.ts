@@ -2,8 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   computeAudience,
   isSocketAlive,
+  MAX_CLIENT_ID_LENGTH,
+  MAX_SUBTREE_IDS,
   resolveChainUpdate,
   sameMembers,
+  sanitizeSubtree,
 } from "./session-sync-logic";
 
 describe("sameMembers", () => {
@@ -79,6 +82,25 @@ describe("computeAudience", () => {
   });
 });
 
+describe("sanitizeSubtree", () => {
+  it("returns [] for non-array input", () => {
+    expect(sanitizeSubtree(undefined)).toEqual([]);
+    expect(sanitizeSubtree("nope")).toEqual([]);
+    expect(sanitizeSubtree({ 0: "a" })).toEqual([]);
+  });
+
+  it("drops non-string, empty, and oversized ids", () => {
+    expect(
+      sanitizeSubtree(["ok", 42, "", null, "x".repeat(MAX_CLIENT_ID_LENGTH + 1)]),
+    ).toEqual(["ok"]);
+  });
+
+  it("caps the number of ids so the attachment write can't overflow", () => {
+    const huge = Array.from({ length: MAX_SUBTREE_IDS * 3 }, (_, i) => `c${i}`);
+    expect(sanitizeSubtree(huge)).toHaveLength(MAX_SUBTREE_IDS);
+  });
+});
+
 describe("resolveChainUpdate", () => {
   const baseInput = {
     masterId: "master-1",
@@ -120,6 +142,22 @@ describe("resolveChainUpdate", () => {
   it("writes to D1 when the song changed", () => {
     const result = resolveChainUpdate({ ...baseInput, songId: "song-b" });
     expect(result.shouldWriteToDb).toBe(true);
+  });
+
+  it("writes to D1 when the version changed", () => {
+    const result = resolveChainUpdate({ ...baseInput, versionId: "v2" });
+    expect(result.shouldWriteToDb).toBe(true);
+  });
+
+  // Regression: an update without a version used to compare undefined against
+  // the stored null and schedule a write on every transpose change.
+  it("does not write to D1 for a same-song update without a version id", () => {
+    const result = resolveChainUpdate({
+      ...baseInput,
+      versionId: null,
+      currentVersionId: null,
+    });
+    expect(result.shouldWriteToDb).toBe(false);
   });
 
   it("writes to D1 when returning from relaying, even with an unchanged song", () => {
