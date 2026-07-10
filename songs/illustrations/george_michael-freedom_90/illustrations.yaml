@@ -1,0 +1,21 @@
+songId: george_michael-freedom_90
+prompts:
+  - id: george_michael-freedom_90_gpt-5.4-mini_v7
+    songId: george_michael-freedom_90
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a young pop star stepping out of a
+      glowing backstage corridor into open night, shedding a flashy sequined
+      jacket to reveal a simple white shirt, with a torn concert poster and soft
+      stage lights behind him, expression calm and liberated, subtle motion in
+      the fabric, symbolic of breaking free from image and control; minimalist
+      composition, one focal figure, slight bokeh, dramatic rim lighting, 35mm
+      film look, high contrast, no text.
+    createdAt: 2026-07-07T22:47:08.000Z
+    updatedAt: 2026-07-07T22:47:08.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783464437000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
