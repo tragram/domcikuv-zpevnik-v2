@@ -46,6 +46,9 @@ const persistOptions = {
   buster: CACHE_BUSTER,
 };
 
+let stopPersisting: (() => void) | undefined;
+let persistenceCleared = false;
+
 async function setupPersistence() {
   try {
     await persistQueryClientRestore(persistOptions);
@@ -55,14 +58,32 @@ async function setupPersistence() {
   }
   // Subscribe to save only AFTER restoring, so an early save can't overwrite the
   // good persisted cache with a half-built one.
-  persistQueryClientSubscribe({
+  if (persistenceCleared) return;
+  stopPersisting = persistQueryClientSubscribe({
     ...persistOptions,
     dehydrateOptions: {
       shouldDehydrateQuery: (query) =>
         defaultShouldDehydrateQuery(query) &&
-        query.state.status === "success",
+        query.state.status === "success" &&
+        // Online-only search results, and SongData class instances would come
+        // back from the snapshot as method-less plain objects anyway.
+        query.queryKey[0] !== "externalSearch",
     },
   });
+}
+
+/**
+ * Deletes the persisted offline snapshot and stops persisting for the rest of
+ * this page's lifetime (so an in-flight query settling right before the reload
+ * can't immediately re-save the state we just deleted). Used by the error
+ * page's hard reload: the snapshot in IndexedDB is the one store that survives
+ * localStorage/SW clearing, so leaving it in place would resurrect whatever
+ * broken state sent the user here.
+ */
+export async function clearPersistedCache() {
+  persistenceCleared = true;
+  stopPersisting?.();
+  await queryPersister.removeClient();
 }
 
 /**

@@ -11,6 +11,7 @@ import type {
   SongVersionApi,
 } from "src/worker/api/api-types";
 import type { SessionSyncState } from "src/worker/durable-objects/SessionSync";
+import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
 import client, { AdminApi, API } from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {
@@ -49,25 +50,44 @@ export const parseDBDates = <T extends Timestamped>(o: T) => {
 };
 
 // --- Public API ---
+type SongsMeta = {
+  version: string;
+  lastUpdate: string;
+  // Build that fetched the cache — see the full-fetch condition below.
+  appVersion?: string;
+};
+
+const setSongsMeta = (data: { songDBVersion: string; lastUpdateAt: string }) =>
+  queryClient.setQueryData<SongsMeta>(["songs-meta"], {
+    version: data.songDBVersion,
+    lastUpdate: data.lastUpdateAt,
+    appVersion: __APP_VERSION__,
+  });
+
 export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
   // 1. Get current cached state from TanStack/IndexedDB
   const cached = queryClient.getQueryData<SongDataApi[]>(["songs"]);
-  const meta = queryClient.getQueryData<{
-    version: string;
-    lastUpdate: string;
-  }>(["songs-meta"]);
+  const meta = queryClient.getQueryData<SongsMeta>(["songs-meta"]);
 
-  // 2. If no cache exists, do a full fetch
-  if (!cached || !meta) {
-    const data = await makeApiRequest(api.songs.$get);
-
-    // Save metadata for next time
-    queryClient.setQueryData(["songs-meta"], {
-      version: data.songDBVersion,
-      lastUpdate: data.lastUpdateAt,
-    });
-
-    return data.songs;
+  // 2. Full fetch when there's no cache — or when the cache was written by a
+  // different build. Incremental sync only patches changed songs, so rows kept
+  // from an older build would otherwise retain that build's shape forever;
+  // one full fetch per deploy re-normalizes everything.
+  if (!cached || !meta || meta.appVersion !== __APP_VERSION__) {
+    try {
+      const data = await makeApiRequest(api.songs.$get);
+      setSongsMeta(data);
+      return data.songs;
+    } catch (error) {
+      // Never error the query while a cache exists (an errored query is dropped
+      // on persist, which would wipe the offline songs — see sessionQueryOptions
+      // for the same rule). The full fetch simply retries on a later launch.
+      if (cached) {
+        console.warn("Full song fetch failed, returning cache", error);
+        return cached;
+      }
+      throw error;
+    }
   }
 
   // 3. Try Incremental Update
@@ -79,10 +99,7 @@ export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
     );
     // 4. Handle Full Reset (isIncremental: false)
     if (!data.isIncremental) {
-      queryClient.setQueryData(["songs-meta"], {
-        version: data.songDBVersion,
-        lastUpdate: data.lastUpdateAt,
-      });
+      setSongsMeta(data);
       return data.songs;
     }
 
@@ -98,15 +115,8 @@ export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
         }
       }
 
-      const updatedList = Array.from(songMap.values());
-
-      // Update metadata for next fetch
-      queryClient.setQueryData(["songs-meta"], {
-        version: data.songDBVersion,
-        lastUpdate: data.lastUpdateAt,
-      });
-
-      return updatedList;
+      setSongsMeta(data);
+      return Array.from(songMap.values());
     }
 
     // No updates needed
@@ -179,14 +189,16 @@ export const fetchFeed = async (
   return liveState;
 };
 
+// Returns the raw API rows so callers can cache plain data; building SongData
+// instances is left to a `select` (a persisted class instance would rehydrate
+// as a method-less plain object).
 export const fetchExternalSearch = async (
   api: API,
   query: string,
-): Promise<SongData[]> => {
-  const response = await makeApiRequest(() =>
+): Promise<ExternalSearchResult[]> => {
+  return await makeApiRequest(() =>
     api.songs.external.search.$get({ query: { q: query } }),
   );
-  return response.map(SongData.fromExternalSearch);
 };
 
 // --- Admin API ---

@@ -8,7 +8,7 @@ import { CloudUpload, Home, Shield } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import { redirectSearchSchema } from "~/types/types";
-import { getUserData } from "src/web/hooks/use-user-data";
+import { refreshUserData } from "src/web/hooks/use-user-data";
 
 const PROFILE_URL = "/profile";
 const LOGIN_URL = "/login";
@@ -18,7 +18,11 @@ export const Route = createFileRoute("/(auth)")({
   validateSearch: (search) => redirectSearchSchema.parse(search),
   component: RouteComponent,
   beforeLoad: async ({ location, search }) => {
-    const userData = await getUserData();
+    // Revalidated, not read from the persisted cache: a stale "logged-in"
+    // (expired cookie) must not redirect the user away from /login, and a
+    // stale "logged-out" (just-completed OAuth) must not bounce them off
+    // /profile. Offline it degrades to the cached session.
+    const userData = await refreshUserData();
     // Get the redirect URL from validated search params or default to "/"
     const redirectURL = search.redirect || "/";
 
@@ -46,10 +50,10 @@ export const Route = createFileRoute("/(auth)")({
       }
     }
 
-    return { redirectURL, location, userData };
+    return { redirectURL, userData };
   },
   loader: async ({ context }) => {
-    return context;
+    return { userData: context.userData };
   },
 });
 

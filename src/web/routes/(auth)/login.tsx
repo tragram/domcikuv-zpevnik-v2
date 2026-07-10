@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { signIn } from "~/../lib/auth/client";
+import { refreshUserData } from "~/hooks/use-user-data";
 import { AuthHeader } from "~/components/AuthHeader";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -50,6 +51,10 @@ function LoginForm() {
           setIsLoading(false);
         },
         onSuccess: async () => {
+          // Fetch the user's data (session, favorites, submissions) before
+          // redirecting, so the destination renders complete instead of
+          // hearts/toolbar icons popping in after arrival.
+          await refreshUserData();
           navigate({ to: redirectURL });
         },
       },

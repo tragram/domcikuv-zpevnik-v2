@@ -6,7 +6,15 @@ import { useMemo, useState } from "react";
 import { fetchExternalSearch } from "~/services/song-service";
 import type { UserData } from "~/hooks/use-user-data";
 import { useIsOnline } from "~/hooks/use-is-online";
+import { SongData } from "~/types/songData";
+import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
 import { useQueryStore } from "./Toolbar/SearchBar";
+
+// Stable identity so react-query only re-runs the select when the data changes.
+// The cache keeps the raw API rows; SongData is built on read because a class
+// instance persisted to the offline snapshot would rehydrate without its methods.
+const toSongData = (rows: ExternalSearchResult[]) =>
+  rows.map(SongData.fromExternalSearch);
 
 /**
  * Online ("external") search against third-party song libraries. Kept separate
@@ -37,27 +45,27 @@ export function useExternalSearch(userData: UserData, bestLocalScore: number) {
     isOnline && !!userData && isQueryValidForExternal;
   const shouldSearchExternal = canSearchExternal && hasTriggeredExternalSearch;
 
-  const { data: rawExternalSongs = [], isFetching: isLoadingExternal } = useQuery({
+  const { data: externalSongData = [], isFetching: isLoadingExternal } = useQuery({
     queryKey: ["externalSearch", query],
     queryFn: () => fetchExternalSearch(api, query),
+    select: toSongData,
     enabled: shouldSearchExternal,
     staleTime: 1000 * 60 * 5,
-    structuralSharing: false,
   });
 
   const externalSongs = useMemo(() => {
-    if (rawExternalSongs.length === 0 || !query) {
-      return rawExternalSongs;
+    if (externalSongData.length === 0 || !query) {
+      return externalSongData;
     }
     // A threshold of 1.0 makes Fuse a pure sorter — it ranks but never drops items.
-    const externalFuse = new Fuse(rawExternalSongs, {
+    const externalFuse = new Fuse(externalSongData, {
       includeScore: true,
       keys: ["title_for_search", "artist_for_search"],
       ignoreLocation: true,
       threshold: 1.0,
     });
     return externalFuse.search(query).map((r) => r.item);
-  }, [rawExternalSongs, query]);
+  }, [externalSongData, query]);
 
   return {
     externalSongs,

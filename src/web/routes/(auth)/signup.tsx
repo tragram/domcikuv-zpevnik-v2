@@ -1,12 +1,8 @@
-import {
-  createFileRoute,
-  Link,
-  useNavigate,
-  useRouter,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { signIn, signUp } from "~/../lib/auth/client";
+import { refreshUserData } from "~/hooks/use-user-data";
 import { AuthHeader } from "~/components/AuthHeader";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -25,8 +21,9 @@ export const Route = createFileRoute("/(auth)/signup")({
 function SignupForm() {
   const { redirectURL } = Route.useRouteContext();
   const navigate = useNavigate();
-  const router = useRouter();
   const isOnline = useIsOnline();
+
+  const safeRedirectURL = typeof redirectURL === "string" ? redirectURL : "/";
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -57,15 +54,18 @@ function SignupForm() {
       name,
       email,
       password,
-      callbackURL: typeof redirectURL === "string" ? redirectURL : "/",
+      callbackURL: safeRedirectURL,
     });
 
     if (error) {
       setErrorMessage(error.message);
       setIsLoading(false);
     } else {
-      await router.invalidate();
-      navigate({ to: typeof redirectURL === "string" ? redirectURL : "/" });
+      // Fetch the user's data (session, favorites, submissions) before
+      // redirecting, so the destination renders complete instead of
+      // hearts/toolbar icons popping in after arrival.
+      await refreshUserData();
+      navigate({ to: safeRedirectURL });
     }
   };
 
@@ -153,8 +153,7 @@ function SignupForm() {
                 setErrorMessage("");
                 const { error } = await signIn.social({
                   provider: "github",
-                  callbackURL:
-                    typeof redirectURL === "string" ? redirectURL : "/",
+                  callbackURL: safeRedirectURL,
                 });
                 if (error) {
                   setIsLoading(false);
@@ -175,8 +174,7 @@ function SignupForm() {
                 setErrorMessage("");
                 const { error } = await signIn.social({
                   provider: "google",
-                  callbackURL:
-                    typeof redirectURL === "string" ? redirectURL : "/",
+                  callbackURL: safeRedirectURL,
                 });
                 if (error) {
                   setIsLoading(false);

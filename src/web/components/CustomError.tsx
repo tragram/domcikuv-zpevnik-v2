@@ -1,11 +1,16 @@
-import { ErrorComponent, Link, useRouter } from "@tanstack/react-router";
+import { ErrorComponent, Link } from "@tanstack/react-router";
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import { useState } from "react";
+import { clearPersistedCache } from "src/lib/query-client";
 import { Button } from "./ui/button";
 import { RotateCcw, House, RefreshCcw } from "lucide-react";
 
 export const clearCacheAndReload = async () => {
   try {
+    // The persisted query snapshot (IndexedDB) is the likeliest poison — clear
+    // it first, before anything below can fail.
+    await clearPersistedCache();
+
     // Clear local cache (e.g., localStorage, sessionStorage)
     localStorage.clear();
     sessionStorage.clear();
@@ -23,24 +28,21 @@ export const clearCacheAndReload = async () => {
       const keys = await caches.keys();
       await Promise.all(keys.map((key) => caches.delete(key)));
     }
-
-    // Reload the page
-    window.location.reload();
   } catch (err) {
     console.error("Failed to clear cache:", err);
+  } finally {
+    // Reload even if some clearing step failed — a partial clear plus a fresh
+    // load still beats staying on the error page.
+    window.location.reload();
   }
 };
 
 // Remembers, per error message, whether a plain reload was already tried for it -
 // keyed by message so a different, later error isn't stuck disabled because of an
-// older one. A route error re-invalidate remounts the error boundary rather than
-// re-rendering in place, so this can't live in component state; sessionStorage
-// survives that remount.
+// older one. sessionStorage because it must survive the reload itself.
 const RELOAD_ATTEMPTED_KEY = "customError:reloadAttemptedFor";
 
 export function CustomError({ error }: ErrorComponentProps) {
-  const router = useRouter();
-
   const [reloadDidntHelp] = useState(
     () => sessionStorage.getItem(RELOAD_ATTEMPTED_KEY) === error.message,
   );
@@ -58,7 +60,10 @@ export function CustomError({ error }: ErrorComponentProps) {
           title={reloadDidntHelp ? "Already tried - try a hard reload instead" : undefined}
           onClick={() => {
             sessionStorage.setItem(RELOAD_ATTEMPTED_KEY, error.message);
-            router.invalidate();
+            // A real reload, not router.invalidate(): the most common error here
+            // is a lazy chunk that vanished after a deploy, which only a fresh
+            // document (served by the updated service worker) can fix.
+            window.location.reload();
           }}
         >
           <RefreshCcw />

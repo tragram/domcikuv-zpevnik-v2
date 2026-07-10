@@ -225,3 +225,14 @@ export async function getUserData(): Promise<UserData> {
     submissions: submissions ?? [],
   } as UserData;
 }
+
+/**
+ * Like getUserData, but revalidates the session first instead of trusting the
+ * persisted copy (which can be stale in both directions: still logged-out right
+ * after an OAuth callback, still logged-in after the cookie expired). Never
+ * throws — offline or failed fetches degrade to cached data / logged-out.
+ */
+export async function refreshUserData(): Promise<UserData> {
+  await queryClient.fetchQuery(sessionQueryOptions()).catch(() => undefined);
+  return getUserData().catch(() => null);
+}
