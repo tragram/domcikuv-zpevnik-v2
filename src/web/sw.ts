@@ -12,8 +12,6 @@ import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
 import { clientsClaim } from "workbox-core";
 import type { SongDataApi } from "src/worker/api/api-types";
-import { convert2flag, language2iso } from "./components/LanguageFlag";
-import { SongLanguage } from "./types/types";
 
 const CACHE_NAMES = {
   THUMBNAILS: "thumbnail-cache",
@@ -54,21 +52,18 @@ registerRoute(
   }),
 );
 
-// 3. FlagCDN SVGs
-self.addEventListener("install", (event) => {
-  const FLAG_URLS = Object.keys(language2iso)
-    .map((lang) => convert2flag(lang as SongLanguage))
-    .filter(Boolean);
-  event.waitUntil(
-    caches
-      .open(CACHE_NAMES.FLAGS)
-      .then((cache) =>
-        cache
-          .addAll(FLAG_URLS)
-          .catch((e) => console.warn("SW: Flag precache partial fail", e)),
-      ),
-  );
-});
+// 3. FlagCDN SVGs - CacheFirst (flagcdn.com sends no CORS headers, so these
+// are opaque responses fetched at runtime rather than precached via addAll)
+registerRoute(
+  ({ url }) => url.origin === "https://flagcdn.com",
+  new CacheFirst({
+    cacheName: CACHE_NAMES.FLAGS,
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
+      new ExpirationPlugin(CACHE_LIMITS.IMAGES),
+    ],
+  }),
+);
 
 // 4. API Routes - Network Only (Let TanStack Query handle the offline caching)
 // We intercept /api/songs JUST to extract and cache the thumbnails in the background.
