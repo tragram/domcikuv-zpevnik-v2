@@ -14,6 +14,7 @@ import {
   createSong,
   createSongVersion,
   getDeletedSongIds,
+  getSongBase,
   retrieveSingleSong,
 } from "../helpers/song-helpers";
 import { SongDataApi } from "./api-types";
@@ -66,12 +67,17 @@ export const externalRoutes = buildApp()
       try {
         existingSong = await retrieveSingleSong(db, newSongId);
         if (existingSong && !existingSong.externalSource) {
-          // TODO: restore if deleted
-          // song not only exists but is already an internal song - do not add, just redirect to the actual song
-          return successJSend(c, {
-            songId: existingSong.id,
-            versionId: existingSong.versionId,
-          });
+          // The song already exists as an internal song — don't add a version,
+          // just redirect to it. A *deleted* internal song instead falls
+          // through to the import below: createSongVersion revives it, the
+          // same way re-importing a deleted external-source song behaves.
+          const { deleted } = await getSongBase(db, newSongId);
+          if (!deleted) {
+            return successJSend(c, {
+              songId: existingSong.id,
+              versionId: existingSong.versionId,
+            });
+          }
         }
       } catch {
         // Song doesn't exist yet, proceed
