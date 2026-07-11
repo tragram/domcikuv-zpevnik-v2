@@ -30,6 +30,7 @@ import {
   ShieldCheck,
   BadgeCheck,
   KeyRound,
+  History,
 } from "lucide-react";
 import { ControlPanel } from "./control-panel";
 import { StatsBar } from "./stats-bar";
@@ -43,6 +44,7 @@ import {
 } from "../../../services/admin-hooks";
 import { AdminApi} from "~/../worker/api-client";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
+import { UserEditsDialog } from "./user-edits-dialog";
 import { UserDB } from "src/lib/db/schema";
 import type { UserRoleFilter } from "src/worker/helpers/user-helpers";
 
@@ -57,6 +59,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
   const [currentPage, setCurrentPage] = useState(0);
   const [roleFilter, setRoleFilter] = useState<UserRoleFilter | null>(null);
   const [editingUser, setEditingUser] = useState<UserDB | null>(null);
+  const [historyUser, setHistoryUser] = useState<UserDB | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
 
@@ -296,6 +299,14 @@ export function UsersTable({ adminApi }: UsersTableProps) {
                           <Button
                             variant="ghost"
                             size="icon"
+                            title="View this user's edits"
+                            onClick={() => setHistoryUser(user)}
+                          >
+                            <History className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
                             onClick={() => {
                               setEditingUser(user);
                               setIsDialogOpen(true);
@@ -376,6 +387,14 @@ export function UsersTable({ adminApi }: UsersTableProps) {
           </div>
         </DialogContent>
       </Dialog>
+
+      {historyUser && (
+        <UserEditsDialog
+          adminApi={adminApi}
+          user={historyUser}
+          onClose={() => setHistoryUser(null)}
+        />
+      )}
     </div>
   );
 }
