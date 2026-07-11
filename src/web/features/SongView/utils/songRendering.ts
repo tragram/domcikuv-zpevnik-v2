@@ -16,6 +16,10 @@ import { Key, KeyMode } from "~/types/musicTypes";
  */
 const DEFAULT_RENDERED_SECTIONS = ["verse", "chorus", "bridge"];
 
+// Module-level so the last-args cache survives across renders of the same song
+// (e.g. repeated transposition); a per-call memoize would never hit
+const memoizedCzechToEnglish = memoize(czechToEnglish);
+
 /**
  * Parses ChordPro format content with various transformations
  * @param chordProContent - Raw ChordPro content
@@ -24,7 +28,6 @@ const DEFAULT_RENDERED_SECTIONS = ["verse", "chorus", "bridge"];
  * @returns Parsed song object
  */
 function parseChordPro(chordProContent: string) {
-  const memoizedCzechToEnglish = memoize(czechToEnglish);
   const withEnglishChords = memoizedCzechToEnglish(chordProContent);
 
   // Process the directive sections

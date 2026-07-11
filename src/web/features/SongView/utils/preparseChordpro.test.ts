@@ -10,6 +10,8 @@ describe("preparseChordpro Directives", () => {
 [G]It is very nice
 {end_of_verse}
 
+Interlude
+
 {verse}
     `.trim();
 
@@ -18,6 +20,7 @@ describe("preparseChordpro Directives", () => {
 [C]This is the verse
 [G]It is very nice
 {end_of_verse}
+Interlude
 {start_of_verse}
 {comment: %expanded_section%}
 [C]This is the verse
@@ -39,6 +42,8 @@ describe("preparseChordpro Directives", () => {
 [G]It is very nice
 {end_of_verse}
 
+Interlude
+
 {verse: V1}
     `.trim();
 
@@ -48,6 +53,7 @@ describe("preparseChordpro Directives", () => {
 [C]This is the verse
 [G]It is very nice
 {end_of_verse}
+Interlude
 {start_of_verse}
 {comment: %expanded_section%}
 {comment: %section_title: V1%}
@@ -70,6 +76,8 @@ describe("preparseChordpro Directives", () => {
 [G]It is very nice
 {end_of_bridge}
 
+Interlude
+
 {bridge}
     `.trim();
 
@@ -79,6 +87,7 @@ describe("preparseChordpro Directives", () => {
 [C]This is the bridge
 [G]It is very nice
 {end_of_bridge}
+Interlude
 {start_of_bridge}
 {comment: %expanded_section%}
 {comment: %section_title: B%}
@@ -101,6 +110,8 @@ describe("preparseChordpro Directives", () => {
 [G]It is very nice
 {end_of_bridge}
 
+Interlude
+
 {bridge: B1}
     `.trim();
 
@@ -110,6 +121,7 @@ describe("preparseChordpro Directives", () => {
 [C]This is the bridge
 [G]It is very nice
 {end_of_bridge}
+Interlude
 {start_of_bridge}
 {comment: %expanded_section%}
 {comment: %section_title: B1%}
@@ -132,6 +144,8 @@ describe("preparseChordpro Directives", () => {
 [G]It is very nice
 {end_of_chorus}
 
+Interlude
+
 {chorus}
     `.trim();
 
@@ -141,6 +155,7 @@ describe("preparseChordpro Directives", () => {
 [C]This is the chorus
 [G]It is very nice
 {end_of_chorus}
+Interlude
 {start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R%}
@@ -163,6 +178,8 @@ describe("preparseChordpro Directives", () => {
 [G]It is very nice
 {end_of_chorus}
 
+Interlude
+
 {chorus: R1}
     `.trim();
 
@@ -172,6 +189,7 @@ describe("preparseChordpro Directives", () => {
 [C]This is the chorus
 [G]It is very nice
 {end_of_chorus}
+Interlude
 {start_of_chorus}
 {comment: %expanded_section%}
 {comment: %section_title: R1%}
@@ -251,6 +269,95 @@ describe("preparseChordpro Directives", () => {
       const result = preparseDirectives(input);
       expect(result).toBe(expected);
     });
+    it("preserve an unclosed section at the end of the song", () => {
+      const input = `
+{start_of_verse}
+[C]Verse line
+    `.trim();
+
+      const expected = `
+{start_of_verse}
+[C]Verse line
+{comment: Warning: Unclosed section at the end of the song.}
+{end_of_verse}
+    `.trim();
+
+      expect(preparseDirectives(input)).toBe(expected);
+    });
+
+    it("preserve the label of an unclosed section at the end of the song", () => {
+      const input = `
+{start_of_verse: V1}
+[C]Verse line
+    `.trim();
+
+      const expected = `
+{start_of_verse}
+{comment: %section_title: V1%}
+[C]Verse line
+{comment: Warning: Unclosed section at the end of the song.}
+{end_of_verse}
+    `.trim();
+
+      expect(preparseDirectives(input)).toBe(expected);
+    });
+
+    it("preserve unapplied variant content at the end of the song", () => {
+      const input = `
+{start_of_chorus}
+Line 1
+{end_of_chorus}
+
+{start_of_variant: replace_last_line}
+Important words
+{end_of_variant}
+    `.trim();
+
+      const expected = `
+{start_of_chorus}
+{comment: %section_title: R%}
+Line 1
+{end_of_chorus}
+{comment: Warning: Unapplied variant contents found at the end of the song.}
+Important words
+    `.trim();
+
+      expect(preparseDirectives(input)).toBe(expected);
+    });
+
+    it("fall back to the last defined section when a recalled key is missing", () => {
+      const input = `
+{start_of_chorus: R1}
+Chorus line
+{end_of_chorus}
+
+{chorus: R9}
+    `.trim();
+
+      const expected = `
+{start_of_chorus}
+{comment: %section_title: R1%}
+Chorus line
+{end_of_chorus}
+{comment: Warning: Recalled part "R9" not found. Using "R1" instead.}
+{start_of_chorus}
+{comment: %expanded_section%}
+{comment: %section_title: R1%}
+Chorus line
+{end_of_chorus}
+{start_of_chorus}
+{comment: %shorthand_section%}
+{comment: %section_title: R1%}
+{end_of_chorus}
+    `.trim();
+
+      expect(preparseDirectives(input)).toBe(expected);
+    });
+
+    it("throw when directive config arrays have different lengths", () => {
+      expect(() => preparseDirectives("", ["verse"], [], [])).toThrow();
+    });
+
     it("degrade on an invalid variant type without losing variant text", () => {
       const input = `
 {start_of_chorus}
@@ -342,6 +449,8 @@ Line 1
 A great chorus
 {end_of_chorus}
 
+Interlude
+
 {chorus: R1}
 {chorus: R1}
 {chorus: R1}
@@ -352,9 +461,10 @@ A great chorus
 {comment: %section_title: R1%}
 A great chorus
 {end_of_chorus}
+Interlude
 {start_of_chorus}
 {comment: %expanded_section%}
-{comment: %section_title: R1%}
+{comment: %section_title: (3x) R1%}
 A great chorus
 {end_of_chorus}
 {start_of_chorus}
@@ -365,6 +475,229 @@ A great chorus
 
     const result = preparseDirectives(input);
     expect(result).toBe(expected);
+  });
+
+  it("should condense consecutive identical recalls separated by blank lines", () => {
+    const input = `
+{start_of_chorus: R1}
+A great chorus
+{end_of_chorus}
+
+Interlude
+
+{chorus: R1}
+
+{chorus: R1}
+    `.trim();
+
+    const expected = `
+{start_of_chorus}
+{comment: %section_title: R1%}
+A great chorus
+{end_of_chorus}
+Interlude
+{start_of_chorus}
+{comment: %expanded_section%}
+{comment: %section_title: (2x) R1%}
+A great chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %shorthand_section%}
+{comment: %section_title: (2x) R1%}
+{end_of_chorus}
+    `.trim();
+
+    expect(preparseDirectives(input)).toBe(expected);
+  });
+
+  // Regression: recalls directly below the definition used to emit separate
+  // recall blocks; when shown expanded, the "(Nx)" multiplier got lost there
+  // and all repetitions but one silently disappeared. They now condense into
+  // the definition's own title.
+  it("should condense recalls directly below the definition into its title", () => {
+    const input = `
+{start_of_chorus: R1}
+[Dm]Lajlalalajlalalalaj…
+{end_of_chorus}
+
+{chorus: R1}
+
+{chorus: R1}
+    `.trim();
+
+    const expected = `
+{start_of_chorus}
+{comment: %section_title: (3x) R1%}
+[Dm]Lajlalalajlalalalaj…
+{end_of_chorus}
+    `.trim();
+
+    expect(preparseDirectives(input)).toBe(expected);
+  });
+
+  it("should condense recalls directly below an unlabelled definition", () => {
+    const input = `
+{start_of_verse}
+Only line
+{end_of_verse}
+
+{verse}
+{verse}
+    `.trim();
+
+    const expected = `
+{start_of_verse}
+{comment: %section_title: (3x) %}
+Only line
+{end_of_verse}
+    `.trim();
+
+    expect(preparseDirectives(input)).toBe(expected);
+  });
+
+  it("should not leak the definition's multiplier into later recalls", () => {
+    const input = `
+{start_of_chorus: R1}
+A great chorus
+{end_of_chorus}
+
+{chorus: R1}
+
+Interlude
+
+{chorus: R1}
+    `.trim();
+
+    const expected = `
+{start_of_chorus}
+{comment: %section_title: (2x) R1%}
+A great chorus
+{end_of_chorus}
+Interlude
+{start_of_chorus}
+{comment: %expanded_section%}
+{comment: %section_title: R1%}
+A great chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %shorthand_section%}
+{comment: %section_title: R1%}
+{end_of_chorus}
+    `.trim();
+
+    expect(preparseDirectives(input)).toBe(expected);
+  });
+
+  it("should not condense a recall of a different key into the definition", () => {
+    const input = `
+{start_of_chorus: R1}
+First chorus
+{end_of_chorus}
+
+{start_of_chorus: R2}
+Second chorus
+{end_of_chorus}
+
+{chorus: R1}
+    `.trim();
+
+    const expected = `
+{start_of_chorus}
+{comment: %section_title: R1%}
+First chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %section_title: R2%}
+Second chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %expanded_section%}
+{comment: %section_title: R1%}
+First chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %shorthand_section%}
+{comment: %section_title: R1%}
+{end_of_chorus}
+    `.trim();
+
+    expect(preparseDirectives(input)).toBe(expected);
+  });
+
+  it("should not condense consecutive recalls with different keys", () => {
+    const input = `
+{start_of_chorus: R1}
+First chorus
+{end_of_chorus}
+
+{start_of_chorus: R2}
+Second chorus
+{end_of_chorus}
+
+{chorus: R1}
+{chorus: R2}
+    `.trim();
+
+    const expected = `
+{start_of_chorus}
+{comment: %section_title: R1%}
+First chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %section_title: R2%}
+Second chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %expanded_section%}
+{comment: %section_title: R1%}
+First chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %shorthand_section%}
+{comment: %section_title: R1%}
+{end_of_chorus}
+{start_of_chorus}
+{comment: %expanded_section%}
+{comment: %section_title: R2%}
+Second chorus
+{end_of_chorus}
+{start_of_chorus}
+{comment: %shorthand_section%}
+{comment: %section_title: R2%}
+{end_of_chorus}
+    `.trim();
+
+    expect(preparseDirectives(input)).toBe(expected);
+  });
+
+  it("should include the lyric line in the shorthand of a single-line unlabelled section", () => {
+    const input = `
+{start_of_verse}
+Only line
+{end_of_verse}
+
+Interlude
+
+{verse}
+    `.trim();
+
+    const expected = `
+{start_of_verse}
+Only line
+{end_of_verse}
+Interlude
+{start_of_verse}
+{comment: %expanded_section%}
+Only line
+{end_of_verse}
+{start_of_verse}
+{comment: %shorthand_section%}
+{comment: %section_title: V%}
+Only line
+{end_of_verse}
+    `.trim();
+
+    expect(preparseDirectives(input)).toBe(expected);
   });
 
   // --- COMPREHENSIVE VARIANT TESTS ---
@@ -1152,5 +1485,21 @@ describe("czechToEnglish key directives", () => {
     expect(czechToEnglish("[B]")).toBe("[Bb]");
     expect(czechToEnglish("[C/H]")).toBe("[C/B]");
     expect(czechToEnglish("[C/B]")).toBe("[C/Bb]");
+  });
+
+  it("converts chords with suffixes", () => {
+    expect(czechToEnglish("[H7]")).toBe("[B7]");
+    expect(czechToEnglish("[Hmi]")).toBe("[Bmi]");
+    expect(czechToEnglish("[B7]")).toBe("[Bb7]");
+  });
+
+  it("converts key directives regardless of spacing after the colon", () => {
+    expect(czechToEnglish("{key:H}")).toBe("{key: B}");
+    expect(czechToEnglish("{key:Bmi}")).toBe("{key: Bbmi}");
+  });
+
+  it("converts a chord where both root and bass need conversion", () => {
+    expect(czechToEnglish("[H/H]")).toBe("[B/B]");
+    expect(czechToEnglish("[B/H]")).toBe("[Bb/B]");
   });
 });

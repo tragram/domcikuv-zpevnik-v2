@@ -34,19 +34,13 @@ const DEFAULT_SECTION_SHORTHANDS = ["R", "B", "V"];
  * @param content - Content lines to analyze
  * @param position - Current position in content
  * @param callRegex - Regular expression to match directive calls
- * @returns Object with information about consecutive recalls, or null if none found
+ * @returns Object with information about consecutive recalls
  */
 function detectConsecutiveRecalls(
   content: string[],
   position: number,
   callRegex: RegExp,
-  currentVariationContent: string[] | null,
 ): { count: number; key: string; lastIndex: number } {
-  if (currentVariationContent && currentVariationContent.length > 0) {
-    // ignore repeats when there's a variant
-    return { count: 1, lastIndex: position, key: "" };
-  }
-
   let consecutiveRecalls = 0;
   let currentKey = "";
   let lastIndex = position;
@@ -111,10 +105,11 @@ export function preparseDirectives(
     );
   }
 
-  // Maps to store directive content by key
-  const directiveMaps: { [directive: string]: { [key: string]: string[] } } =
-    {};
-  const directivesAdded: { [directive: string]: string[] } = {};
+  // Section content by directive and key. Maps (not plain objects) so user
+  // labels like "__proto__" can't collide with Object.prototype
+  const directiveMaps: { [directive: string]: Map<string, string[]> } = {};
+  // Most recently closed section key per directive, used as recall fallback
+  const lastSectionKey: { [directive: string]: string } = {};
 
   // Create regex patterns for each directive
   const directiveRegexes = directives.map((directive, i) => ({
@@ -211,8 +206,7 @@ export function preparseDirectives(
         currentDirective = directive;
         currentKey = startMatch[1] || label || defaultKey;
         currentContent = [line];
-        directiveMaps[directive] = directiveMaps[directive] || {};
-        directivesAdded[directive] = directivesAdded[directive] || [];
+        directiveMaps[directive] ??= new Map();
         directiveMatched = true;
         break;
       }
@@ -223,18 +217,46 @@ export function preparseDirectives(
         currentContent.push(line);
         if (!currentKey) currentKey = defaultKey;
 
-        directiveMaps[directive][currentKey] = currentContent;
-        directivesAdded[directive].push(currentKey);
+        directiveMaps[directive].set(currentKey, currentContent);
+        lastSectionKey[directive] = currentKey;
 
+        // Recalls directly below the definition mean "sing this section again
+        // right away", so they condense into the definition's own title as a
+        // "(Nx)" multiplier instead of separate recall blocks. A pending
+        // variant must not be absorbed — it applies to the recall below it.
+        let consecutiveModifier = "";
+        if (!currentVariationContent || currentVariationContent.length === 0) {
+          const consecutiveInfo = detectConsecutiveRecalls(
+            songLines,
+            i + 1,
+            callRegex,
+          );
+          const recallKey = consecutiveInfo.key || label || defaultKey;
+          if (consecutiveInfo.count > 0 && recallKey === currentKey) {
+            consecutiveModifier = `(${consecutiveInfo.count + 1}x) `;
+            i = consecutiveInfo.lastIndex;
+          }
+        }
+
+        // The stored copy must keep the plain title — recalls elsewhere in
+        // the song reuse it and must not inherit this multiplier
+        const emittedContent = [...currentContent];
         if (currentKey !== defaultKey) {
-          currentContent.splice(
+          currentContent.splice(1, 0, SECTION_TITLE_COMMENT(currentKey, ""));
+          emittedContent.splice(
             1,
             0,
-            SECTION_TITLE_COMMENT(currentKey, "") ?? "",
+            SECTION_TITLE_COMMENT(currentKey, consecutiveModifier),
+          );
+        } else if (consecutiveModifier) {
+          emittedContent.splice(
+            1,
+            0,
+            SECTION_TITLE_COMMENT(label, consecutiveModifier),
           );
         }
 
-        processedLines.push(currentContent.join("\n"));
+        processedLines.push(emittedContent.join("\n"));
         currentDirective = null;
         currentContent = null;
         currentKey = null;
@@ -254,12 +276,12 @@ export function preparseDirectives(
         }
 
         let consecutiveModifier = "";
-        const consecutiveInfo = detectConsecutiveRecalls(
-          songLines,
-          i,
-          callRegex,
-          currentVariationContent,
-        );
+        // A pending variant applies only to the recall directly below it,
+        // so it must not be condensed into a "(Nx)" multiplier
+        const consecutiveInfo =
+          currentVariationContent && currentVariationContent.length > 0
+            ? { count: 1, key: "", lastIndex: i }
+            : detectConsecutiveRecalls(songLines, i, callRegex);
 
         if (consecutiveInfo.count > 1) {
           // We found consecutive recalls of the same directive
@@ -270,17 +292,21 @@ export function preparseDirectives(
         let directiveKey = callMatch[1] || label || defaultKey;
         let contentToInsert: string[] = [];
 
-        if (directivesAdded[directive]?.includes(directiveKey)) {
-          contentToInsert = [...directiveMaps[directive][directiveKey]];
+        const storedContent = directiveMaps[directive]?.get(directiveKey);
+        if (storedContent) {
+          contentToInsert = [...storedContent];
         } else {
           // GRACEFUL FALLBACK: Attempt to find fallback, otherwise render comment
-          const fallbackKey = directivesAdded[directive]?.slice(-1)[0];
-          if (fallbackKey) {
+          const fallbackKey = lastSectionKey[directive];
+          const fallbackContent = fallbackKey
+            ? directiveMaps[directive]?.get(fallbackKey)
+            : undefined;
+          if (fallbackKey && fallbackContent) {
             processedLines.push(
               `{comment: Warning: Recalled part "${directiveKey}" not found. Using "${fallbackKey}" instead.}`,
             );
             directiveKey = fallbackKey;
-            contentToInsert = [...directiveMaps[directive][directiveKey]];
+            contentToInsert = [...fallbackContent];
           } else {
             processedLines.push(
               `{comment: Error: Recalled part "${directive}" not found. No previous section recorded.}`,
@@ -352,10 +378,20 @@ export function preparseDirectives(
           const singleLineLyric =
             contentToInsert.length === 3 ? contentToInsert[1] : null;
 
+          // Condensed recalls must carry the "(Nx)" marker in the expanded
+          // block too, otherwise all repetitions but one silently disappear
+          // when sections are shown expanded
+          const hasTitle = contentToInsert[1]?.startsWith(
+            "{comment: %section_title",
+          );
+          const expandedBody = consecutiveModifier
+            ? [sectionTitleExpanded, ...contentToInsert.slice(hasTitle ? 2 : 1)]
+            : contentToInsert.slice(1);
+
           contentToInsert = [
             contentToInsert[0],
             EXPANDED_SECTION_DIRECTIVE,
-            ...contentToInsert.slice(1),
+            ...expandedBody,
             `{start_of_${directive}}`,
             SHORTHAND_SECTION_DIRECTIVE,
             sectionTitleShortHand,
@@ -385,10 +421,30 @@ export function preparseDirectives(
     i++;
   }
 
+  // GRACEFUL FALLBACK: unterminated blocks at the end of the song must not
+  // swallow the lines collected into them
+  if (currentVariationContent && currentVariationContent.length > 0) {
+    processedLines.push(
+      "{comment: Warning: Unapplied variant contents found at the end of the song.}",
+      ...currentVariationContent,
+    );
+  }
+  if (currentContent && currentDirective) {
+    if (currentKey && currentKey !== defaultKey) {
+      currentContent.splice(1, 0, SECTION_TITLE_COMMENT(currentKey, ""));
+    }
+    processedLines.push(
+      [
+        ...currentContent,
+        "{comment: Warning: Unclosed section at the end of the song.}",
+        `{end_of_${currentDirective}}`,
+      ].join("\n"),
+    );
+  }
+
   function hideTitles(text: string) {
-    const types = ["verse", "chorus", "bridge"];
     const pattern = new RegExp(
-      `\\{start_of_(${types.join("|")}):[^}]*\\}`,
+      `\\{start_of_(${directives.join("|")}):[^}]*\\}`,
       "g",
     );
     return text.replace(pattern, "{start_of_$1}");
@@ -425,9 +481,9 @@ export function preparseDirectives(
  * @returns Processed song with converted notation
  */
 export function czechToEnglish(song: string): string {
-  // Convert key directive.
-  song = song.replace(/\{key: B([ieasm#b]{0,5})\}/g, "{key: Bb$1}");
-  song = song.replace(/\{key: H([ieasm#b]{0,5})\}/g, "{key: B$1}");
+  // Convert key directive (whitespace after the colon is optional and gets normalized).
+  song = song.replace(/\{key:\s*B([ieasm#b]{0,5})\}/g, "{key: Bb$1}");
+  song = song.replace(/\{key:\s*H([ieasm#b]{0,5})\}/g, "{key: B$1}");
 
   // Convert chords with bass notes
   song = song.replace(/\[([A-Za-z\d#b,\s/]{0,10})\/B\]/g, "[$1/Bb]");
