@@ -165,7 +165,7 @@ class GoogleImageProvider implements ImageProvider {
       config: {
         imageConfig: {
           aspectRatio: "1:1",
-          // imageSize: "512x512", //TODO: banana pro 2 should support lower than 1K resolution but the library does not yet...
+          // imageSize left unset: the API only accepts "1K"/"2K"/"4K"
         },
       },
     });

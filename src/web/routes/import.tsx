@@ -40,8 +40,9 @@ export const Route = createFileRoute("/import")({
           }),
         "Failed to import song",
       );
-      // TODO: is the invalidation necessary? mutation would be better...
-      // Invalidate the songs cache so the local DB rebuilds with the new song
+      // The songs cache is persisted with an infinite maxAge, so without this
+      // invalidation the imported song wouldn't show up in the list until an
+      // unrelated cache bust.
       await context.queryClient.invalidateQueries({ queryKey: ["songs"] });
 
       throw redirect({

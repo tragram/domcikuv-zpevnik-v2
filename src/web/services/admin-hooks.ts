@@ -54,8 +54,6 @@ import {
   songsWithIllustrationsAndPrompts,
 } from "./illustration-service";
 
-// TODO: this potentially also needs to invalidate the newly added submissions etc...
-
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({
     queryKey: ["songsAdmin"],
@@ -141,6 +139,7 @@ export const useDeleteSong = (adminApi: AdminApi) => {
       queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };
@@ -157,6 +156,7 @@ export const useRestoreSong = (adminApi: AdminApi) => {
       queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };
@@ -177,6 +177,7 @@ export const useUpdateVersion = (adminApi: AdminApi) => {
       queryClient.invalidateQueries({ queryKey: ["songs"] });
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };
@@ -194,6 +195,7 @@ export const useDeleteVersion = (adminApi: AdminApi) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };
@@ -218,6 +220,7 @@ export const useRestoreVersion = (adminApi: AdminApi) => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };
@@ -231,6 +234,7 @@ export const useResetVersionDB = (adminApi: AdminApi) => {
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };
@@ -462,6 +466,7 @@ export const useApproveVersion = (adminApi: AdminApi) => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };
@@ -486,6 +491,7 @@ export const useRejectVersion = (adminApi: AdminApi) => {
       queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
       queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     },
   });
 };

@@ -146,7 +146,6 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     },
   )
   .post("/", zValidatorJSend("json", editorSubmitSchema), async (c) => {
-    // TODO: is this even used?
     const submission = c.req.valid("json");
     const userId = c.var.USER?.id;
 
