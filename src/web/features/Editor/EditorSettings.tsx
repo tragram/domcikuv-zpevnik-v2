@@ -46,7 +46,9 @@ const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
     });
   };
 
-  const isTrusted = !!userData?.profile.isTrusted;
+  // Admins may generate illustrations even without the trusted flag
+  // (the server's adminOrTrustedMiddleware allows either).
+  const isTrusted = !!userData?.profile.isTrusted || !!userData?.profile.isAdmin;
 
   // Hide the whole component when there's nothing the current user can configure.
   return userData && (isTrusted || canAttributeToSubmitter) ? (

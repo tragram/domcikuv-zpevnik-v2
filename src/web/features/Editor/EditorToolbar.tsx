@@ -199,12 +199,15 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
       // Auto-generate illustration if enabled, the song has no illustration yet
       // (covers brand new songs as well as imported songs without one), and
-      // the user is trusted
+      // the user is trusted. Approvals always count: approving a pending edit
+      // updates the version in place (createdAt !== updatedAt), so `!isUpdate`
+      // alone would never fire for them.
       if (
-        !isUpdate &&
+        (!isUpdate || isApprovalMode) &&
         !songData?.currentIllustration &&
         userData &&
-        userData.profile.isTrusted &&
+        // matches the server's adminOrTrustedMiddleware on /illustrations
+        (userData.profile.isTrusted || userData.profile.isAdmin) &&
         editorSettings.autoGenerateIllustration
       ) {
         generateIllustrationInBackground(response.song.id);
