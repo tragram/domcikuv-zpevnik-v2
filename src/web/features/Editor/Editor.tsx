@@ -77,10 +77,7 @@ const parseMetadataFromChordPro = (content: string): Partial<EditorState> => {
   return extracted;
 };
 
-const isAutofillable = (text: string, userData: UserData): boolean => {
-  if (!userData || !userData.profile.isTrusted) {
-    return false;
-  }
+const isAutofillable = (text: string): boolean => {
   const hasAnyChords = /\[[A-G][^\]]*\]/.test(text);
   if (!hasAnyChords) return false;
 
@@ -139,6 +136,9 @@ export interface SmartFeature {
   description: React.ReactNode;
   disabledReason: React.ReactNode;
   actionType?: "default" | "stepper"; // <-- Added actionType
+  // When true, the feature is hidden entirely from non-trusted users rather
+  // than shown disabled (matches the server-side trusted gate on its endpoint).
+  requiresTrust?: boolean;
   check: (content: string, user: UserData, songData?: SongData) => boolean;
 }
 
@@ -188,10 +188,10 @@ const SMART_FEATURES: SmartFeature[] = [
     label: "Autofill Missing Chords",
     loadingLabel: "Filling...",
     icon: Sparkles,
-    check: isAutofillable,
+    requiresTrust: true,
+    check: (content: string) => isAutofillable(content),
     description: <>Use AI to generate chords in sections where they missing.</>,
-    disabledReason:
-      "No missing chords detected in lyrics sections, or you are not logged in as a trusted user.",
+    disabledReason: "No missing chords detected in lyrics sections.",
   },
   {
     id: "transpose",
@@ -274,7 +274,12 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   }, [editorStateKey]);
 
   const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
-    return SMART_FEATURES.map((f) => {
+    const isTrusted = !!userData?.profile.isTrusted;
+    return SMART_FEATURES.filter(
+      // Trust-gated features are hidden from non-trusted users entirely
+      // (rather than shown disabled), matching the server-side gate.
+      (f) => !f.requiresTrust || isTrusted,
+    ).map((f) => {
       const isEnabled = f.check(editorState.chordpro, userData, songData);
       // Autofill is an AI/server call — unavailable offline. Local features
       // (convert, transpose, show-original) keep working.
