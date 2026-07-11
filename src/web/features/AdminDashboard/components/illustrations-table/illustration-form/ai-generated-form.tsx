@@ -34,14 +34,31 @@ interface AIGeneratedFormProps extends IllustrationFormProps {
   songPrompts: IllustrationPromptApi[];
 }
 
+/**
+ * A candidate model/version is only usable if the select offers it — a removed
+ * one would render as an empty select and submit an invalid value. Note the
+ * options may include legacy values outside the "Available" unions.
+ */
+const pickValid = <T extends string>(
+  candidate: string | null | undefined,
+  options: { value: string }[],
+  fallback: T,
+): T =>
+  candidate && options.some((opt) => opt.value === candidate)
+    ? (candidate as T)
+    : fallback;
+
+const stored = (key: string) =>
+  typeof window === "undefined" ? null : sessionStorage.getItem(key);
+
 function AIGeneratedForm({
   illustration,
+  activePromptId,
   onSave,
   isLoading,
   onSuccess,
   songPrompts,
 }: AIGeneratedFormProps) {
-  // TODO: use activePromptId to potentially preselect it
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
   const options = useIllustrationOptions();
   const { data: allIllustrations } = useIllustrationsAdmin(adminApi);
@@ -73,30 +90,29 @@ function AIGeneratedForm({
     ];
   }, [options.promptVersions.data, songPrompts]);
 
-  // TODO: when image models and versions are deleted, this will need to be done on all three
-  const summaryModelCandidate =
-    illustration?.summaryModel ||
-    (typeof window !== "undefined"
-      ? (sessionStorage.getItem(
-          "admin-ai-summaryModel",
-        ) as AvailableSummaryModel)
-      : options.summaryModels.default);
+  // Preselect the settings behind the song's currently active illustration,
+  // falling back to the last ones used in this session.
+  const activePrompt = songPrompts.find((p) => p.id === activePromptId);
 
   const [formData, setFormData] = useState({
     songId: illustration?.songId || "",
-    promptVersion:
-      illustration?.summaryPromptVersion || options.promptVersions.default,
-    summaryModel: summaryModelOptions
-      .map((smo) => smo.label)
-      .includes(summaryModelCandidate)
-      ? summaryModelCandidate
-      : options.summaryModels.default,
-    imageModel:
-      illustration?.imageModel ||
-      (typeof window !== "undefined"
-        ? (sessionStorage.getItem("admin-ai-imageModel") as AvailableImageModel)
-        : null) ||
+    promptVersion: pickValid<SummaryPromptVersion>(
+      illustration?.summaryPromptVersion ?? activePrompt?.summaryPromptVersion,
+      promptVersionOptions,
+      options.promptVersions.default,
+    ),
+    summaryModel: pickValid<AvailableSummaryModel>(
+      illustration?.summaryModel ??
+        activePrompt?.summaryModel ??
+        stored("admin-ai-summaryModel"),
+      summaryModelOptions,
+      options.summaryModels.default,
+    ),
+    imageModel: pickValid<AvailableImageModel>(
+      illustration?.imageModel ?? stored("admin-ai-imageModel"),
+      options.imageModels.data,
       options.imageModels.default,
+    ),
     setAsActive: illustration?.isActive || false,
   });
 
