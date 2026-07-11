@@ -1,5 +1,5 @@
 import { cn } from "~/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
 interface CollapsibleMainAreaProps {
@@ -11,7 +11,16 @@ interface CollapsibleMainAreaProps {
 const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, className, children}) => {
     const [isCollapsed, setIsCollapsed] = useLocalStorageState<boolean>(`editor/${title}-collapsed`, { defaultValue: false });
     const [isHovered, setIsHovered] = useState(false);
-    // TODO: these should be uncollapsed when reloaded on a large screen
+    // Collapsing is meant for small screens; a large screen fits all panels,
+    // so a persisted collapse (e.g. from a phone session) is reset on load.
+    // Mount-only on purpose — collapsing manually on a desktop must stick
+    // for the rest of the session.
+    useEffect(() => {
+        if (window.matchMedia("(min-width: 1024px)").matches) {
+            setIsCollapsed(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (isCollapsed ?
         <div className='flex flex-col  w-full h-fit md:h-full md:w-fit '>
             <div className='flex h-full font-extrabold p-2 border-primary border-4 rounded-md hover:bg-primary/30'>
