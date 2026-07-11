@@ -286,6 +286,56 @@ Line 1
       expect(result).toBe(expected);
     });
   });
+  describe("should replace blank lines inside sections", () => {
+    // ChordSheetJS splits paragraphs on blank lines, so any blank line that
+    // survives preparsing fragments the section into several paragraphs
+    it("even when there is more than one", () => {
+      const input = `
+{start_of_verse}
+[A]part one
+
+[D]part two
+
+[E]part three
+{end_of_verse}
+    `.trim();
+
+      const expected = `
+{start_of_verse}
+[A]part one
+{comment: %empty_line%}
+[D]part two
+{comment: %empty_line%}
+[E]part three
+{end_of_verse}
+    `.trim();
+
+      expect(preparseDirectives(input)).toBe(expected);
+    });
+
+    it("even when they are consecutive", () => {
+      const input = `
+{start_of_verse}
+[A]part one
+
+
+[D]part two
+{end_of_verse}
+    `.trim();
+
+      const expected = `
+{start_of_verse}
+[A]part one
+{comment: %empty_line%}
+{comment: %empty_line%}
+[D]part two
+{end_of_verse}
+    `.trim();
+
+      expect(preparseDirectives(input)).toBe(expected);
+    });
+  });
+
   it("should condense consecutive identical recalls into a multiplier", () => {
     const input = `
 {start_of_chorus: R1}

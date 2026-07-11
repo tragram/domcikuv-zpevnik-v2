@@ -399,7 +399,15 @@ export function preparseDirectives(
       .map((l) => (l ? l.trim() : null))
       .filter((p) => p !== null)
       // replace empty lines because chordsheetJS aggressively splits sections into paragraphs
-      .map((l) => l.replace("\n\n", `\n${EMPTY_LINE}\n`))
+      // (only multi-line blocks, i.e. sections — top-level lines keep their meaning)
+      .map((l) =>
+        l.includes("\n")
+          ? l
+              .split("\n")
+              .map((line) => (line.trim() === "" ? EMPTY_LINE : line))
+              .join("\n")
+          : l,
+      )
       // hide section titles so chordsheetJS doesn't duplicate them
       .map((l) => hideTitles(l))
       .join("\n")

@@ -10,44 +10,44 @@ interface ChordElement {
 }
 
 interface ChordMatch {
+  /** For each chord of the current section: does it align with an identical chord in the pattern? */
   matches: boolean[];
+  /** Edit distance between the pattern and the current chords (substitutions + insertions + deletions) */
   distance: number;
-}
-
-interface PatternCollection {
-  [sectionType: string]: {
-    [label: string]: string[][];
-  };
 }
 
 const MAX_CHORD_MATCH_DISTANCE = 3;
 const DEFAULT_SECTION_TYPES = ["verse", "chorus", "bridge"];
 
 /**
+ * Maximum number of chord edits for a section to still count as a repeat of an
+ * earlier one. Scales with section length so that short sections only match
+ * (nearly) exactly — with a flat cap, a 2-chord verse would "repeat" any other
+ * 2-chord verse no matter its chords.
+ */
+function maxAllowedDistance(chordCount: number): number {
+  return Math.min(MAX_CHORD_MATCH_DISTANCE, Math.floor(chordCount / 3));
+}
+
+/**
+ * Marks sections whose chords repeat an earlier section of the same type with
+ * the `repeated-chords` class; chords that differ from the matched pattern get
+ * `force-shown` so they stay visible when repeated chords are hidden.
+ *
  * 2-Pass Optimization: Reads DOM state first, caches modifications, then applies them all at once.
  */
 function detectRepeatedChordPatterns(
   doc: Document,
   classNames = DEFAULT_SECTION_TYPES,
-  useLabels = false,
 ): Document {
-  const DEFAULT_KEYS: Record<string, string> = {
-    verse: "V:",
-    bridge: "B:",
-    chorus: "R:",
-  };
-
-  const getDefaultKey = (key: string): string =>
-    DEFAULT_KEYS[key] || "a4c0d35c95a63a805915367dcfe6b751";
-  const seen: PatternCollection = {};
-
-  // Initialize tracking object for each className
+  // Seen chord patterns per section type; labels are irrelevant — the feature
+  // is purely about chords repeating, whatever section they came from.
+  const seen: { [sectionType: string]: string[][] } = {};
   classNames.forEach((className) => {
-    seen[className] = {};
+    seen[className] = [];
   });
 
   const selector = classNames.map((className) => `.${className}`).join(",");
-  // Create a document fragment to batch DOM operations
   const sections = Array.from(doc.querySelectorAll(selector));
 
   // Array to batch DOM writes
@@ -60,85 +60,44 @@ function detectRepeatedChordPatterns(
     );
     if (!elementClass) return;
 
-    const labelElement = element.querySelector(".section-title");
-    const defaultKey = getDefaultKey(elementClass);
-    const label =
-      labelElement && useLabels
-        ? labelElement.textContent?.trim() || defaultKey
-        : defaultKey;
-
-    const chordElements = Array.from(element.querySelectorAll(".chord"));
     // keep track of elements as well as chords to be able to highlight changes later
     const chordsWElements: ChordElement[] = [];
-
-    for (let i = 0; i < chordElements.length; i++) {
-      const chord = chordElements[i].textContent?.trim();
+    for (const chordElement of Array.from(element.querySelectorAll(".chord"))) {
+      const chord = chordElement.textContent?.trim();
       if (chord) {
-        chordsWElements.push({ element: chordElements[i], chord: chord });
+        chordsWElements.push({ element: chordElement, chord });
       }
     }
+    if (chordsWElements.length === 0) return;
 
     const onlyChords = chordsWElements.map((c) => c.chord);
-
-    if (!seen[elementClass][label]) {
-      seen[elementClass][label] = [];
-    }
-
-    const hasLyrics = Array.from(element.querySelectorAll("span.lyrics")).some(
-      (el) => el.textContent?.trim(),
-    );
-
     const matchResult = findBestChordPatternMatch(
       onlyChords,
-      seen[elementClass][label],
+      seen[elementClass],
     );
 
-    if (
-      seen[elementClass][label].length === 0 ||
-      matchResult.distance > MAX_CHORD_MATCH_DISTANCE
-    ) {
-      seen[elementClass][label].push(onlyChords);
-    } else {
-      if (!hasLyrics) {
-        seen[elementClass][label].push(onlyChords);
-        return;
-      }
-      if (matchResult.distance > 0) {
-        seen[elementClass][label].push(onlyChords);
-      }
+    // Remember every new variation so later sections can match it
+    if (matchResult.distance > 0) {
+      seen[elementClass].push(onlyChords);
+    }
 
-      // Queue DOM modifications instead of executing them immediately
-      mutations.push(() => element.classList.add("repeated-chords"));
-      // Create a list of elements that need the force-shown class
+    if (matchResult.distance > maxAllowedDistance(onlyChords.length)) return;
 
-      const elementsToHighlight: Element[] = [];
-      // Find chords that differ from the pattern
+    // Sections without lyrics would render empty with their chords hidden
+    const hasLyrics = Array.from(element.querySelectorAll(".lyrics")).some(
+      (el) => el.textContent?.trim(),
+    );
+    if (!hasLyrics) return;
 
-      matchResult.matches.forEach((match, index) => {
-        if (index >= chordsWElements.length) return;
-        if (!match) elementsToHighlight.push(chordsWElements[index].element);
-      });
-
-      // Add any extra chords
-      if (matchResult.matches.length < chordsWElements.length) {
-        for (
-          let i = matchResult.matches.length;
-          i < chordsWElements.length;
-          i++
-        ) {
-          elementsToHighlight.push(chordsWElements[i].element);
+    // Queue DOM modifications instead of executing them immediately
+    mutations.push(() => {
+      element.classList.add("repeated-chords");
+      matchResult.matches.forEach((matched, index) => {
+        if (!matched) {
+          chordsWElements[index].element.classList.add("force-shown");
         }
-      }
-
-      // Add the class to all elements at once
-      mutations.push(() => {
-        elementsToHighlight.forEach((el) => el.classList.add("force-shown"));
       });
-    }
-
-    if (!seen[elementClass][defaultKey]) {
-      seen[elementClass][defaultKey] = [...seen[elementClass][label]];
-    }
+    });
   });
 
   // Phase 2: Mutate / Write
@@ -157,8 +116,6 @@ function findBestChordPatternMatch(
   currentChords: string[],
   knownPatterns: string[][],
 ): ChordMatch {
-  if (knownPatterns.length === 0) return { matches: [], distance: Infinity };
-
   let bestMatch: ChordMatch = { matches: [], distance: Infinity };
   for (let i = 0; i < knownPatterns.length; i++) {
     const match = compareChordLists(knownPatterns[i], currentChords);
@@ -168,23 +125,65 @@ function findBestChordPatternMatch(
 }
 
 /**
- * Compares two chord lists and calculates their difference
- * @param chords1 - First chord list to compare
- * @param chords2 - Second chord list to compare
- * @returns Match information with distance measure
+ * Compares the current chords against a reference pattern using edit-distance
+ * alignment, so one inserted or removed chord doesn't shift-mismatch
+ * everything after it (as a position-by-position comparison would).
+ *
+ * Exported for tests.
+ *
+ * @param pattern - Reference chord list (from a previously seen section)
+ * @param currentChords - Chord list of the section being examined
+ * @returns Per-current-chord match flags and the total edit distance
  */
-function compareChordLists(chords1: string[], chords2: string[]): ChordMatch {
-  const maxLength = Math.max(chords1.length, chords2.length);
-  const matches: boolean[] = new Array(maxLength);
-  let distance = 0;
+export function compareChordLists(
+  pattern: string[],
+  currentChords: string[],
+): ChordMatch {
+  const m = pattern.length;
+  const n = currentChords.length;
 
-  for (let i = 0; i < maxLength; i++) {
-    const match =
-      i < chords1.length && i < chords2.length && chords1[i] === chords2[i];
-    matches[i] = match;
-    if (!match) distance++;
+  // dp[i][j] = edit distance between pattern[0..i) and currentChords[0..j)
+  const dp: number[][] = Array.from({ length: m + 1 }, () =>
+    new Array<number>(n + 1).fill(0),
+  );
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (pattern[i - 1] === currentChords[j - 1]) {
+        dp[i][j] = dp[i - 1][j - 1];
+      } else {
+        dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]);
+      }
+    }
   }
-  return { matches, distance };
+
+  // Backtrace the alignment to flag which current chords sit on exact matches
+  const matches: boolean[] = new Array(n).fill(false);
+  let i = m;
+  let j = n;
+  while (i > 0 && j > 0) {
+    if (
+      pattern[i - 1] === currentChords[j - 1] &&
+      dp[i][j] === dp[i - 1][j - 1]
+    ) {
+      matches[j - 1] = true;
+      i--;
+      j--;
+    } else if (dp[i][j] === dp[i - 1][j - 1] + 1) {
+      // substitution
+      i--;
+      j--;
+    } else if (dp[i][j] === dp[i][j - 1] + 1) {
+      // chord inserted into the current section
+      j--;
+    } else {
+      // chord removed from the pattern
+      i--;
+    }
+  }
+
+  return { matches, distance: dp[m][n] };
 }
 
 /**
@@ -321,20 +320,18 @@ function processSectionTitles(doc: Document): Document {
  * Adds repeat classes to chord sections and processes repetitions etc.
  * @param htmlString - HTML string to process
  * @param classNames - Section class names to process
- * @param useLabels - Whether to use section labels for matching
  * @returns Processed HTML string
  */
 export function postProcessChordPro(
   htmlString: string,
   classNames = DEFAULT_SECTION_TYPES,
-  useLabels = true,
 ): string {
   const parser = new DOMParser();
   let doc = parser.parseFromString(htmlString, "text/html");
 
   doc = processExpandedSections(doc);
   doc = processSectionTitles(doc);
-  const processedDoc = detectRepeatedChordPatterns(doc, classNames, useLabels);
+  const processedDoc = detectRepeatedChordPatterns(doc, classNames);
 
   return processedDoc.body.innerHTML;
 }

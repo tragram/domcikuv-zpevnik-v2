@@ -118,7 +118,7 @@ importers:
         version: 0.2.3(react@19.1.0)
       better-auth:
         specifier: ^1.5.6
-        version: 1.5.6(@opentelemetry/api@1.9.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.1(@libsql/client@0.15.9)(@opentelemetry/api@1.9.1)(kysely@0.28.15))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vitest@4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3))
+        version: 1.5.6(@opentelemetry/api@1.9.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.1(@libsql/client@0.15.9)(@opentelemetry/api@1.9.1)(kysely@0.28.15))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vitest@4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(happy-dom@20.10.6)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3))
       chordsheetjs:
         specifier: ^14.0.0
         version: 14.0.0
@@ -169,7 +169,7 @@ importers:
         version: 5.0.5
       openai:
         specifier: ^6.15.0
-        version: 6.15.0(ws@8.18.2)(zod@4.3.6)
+        version: 6.15.0(ws@8.21.0)(zod@4.3.6)
       qrcode.react:
         specifier: ^4.2.0
         version: 4.2.0(react@19.1.0)
@@ -300,6 +300,9 @@ importers:
       globals:
         specifier: 15.15.0
         version: 15.15.0
+      happy-dom:
+        specifier: ^20.10.6
+        version: 20.10.6
       object-hash:
         specifier: ^3.0.0
         version: 3.0.0
@@ -341,7 +344,7 @@ importers:
         version: 5.1.4(typescript@5.9.3)(vite@7.3.0(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.3))
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3)
+        version: 4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(happy-dom@20.10.6)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3)
       workbox-build:
         specifier: ^7.4.0
         version: 7.4.0(@types/babel__core@7.20.5)
@@ -4153,6 +4156,9 @@ packages:
   '@types/web-app-manifest@1.0.9':
     resolution: {integrity: sha512-aVz1aXTubyL6nvVRyz9W7QR60zHLTiCGAafqYRc/RYUjA1GFc4npUUr7RlfO1+yP6gVvxzFmIVp8ULLYqhBRdA==}
 
+  '@types/whatwg-mimetype@3.0.2':
+    resolution: {integrity: sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA==}
+
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
@@ -4566,6 +4572,10 @@ packages:
 
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
+
+  buffer-image-size@0.6.4:
+    resolution: {integrity: sha512-nEh+kZOPY1w+gcCMobZ6ETUp9WfibndnosbpwB1iJk/8Gt5ZF2bhS6+B6bPYz424KtwsR6Rflc3tCz1/ghX2dQ==}
+    engines: {node: '>=4.0'}
 
   bundle-name@4.1.0:
     resolution: {integrity: sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q==}
@@ -5154,6 +5164,10 @@ packages:
     resolution: {integrity: sha512-LgQMM4WXU3QI+SYgEc2liRgznaD5ojbmY3sb8LxyguVkIg5FxdpTkvk72te2R38/TGKxH634oLxXRGY6d7AP+Q==}
     engines: {node: '>=10.13.0'}
 
+  entities@7.0.1:
+    resolution: {integrity: sha512-TWrgLOFUQTH994YUyl1yT4uyavY5nNB5muff+RtWaqNVCAK408b5ZnnbNAUEWLTCpum9w6arT70i1XdQ4UeOPA==}
+    engines: {node: '>=0.12'}
+
   env-paths@2.2.1:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
     engines: {node: '>=6'}
@@ -5622,6 +5636,10 @@ packages:
   gtoken@8.0.0:
     resolution: {integrity: sha512-+CqsMbHPiSTdtSO14O51eMNlrp9N79gmeqmXeouJOhfucAedHw9noVe/n5uJk3tbKE6a+6ZCQg3RPhVhHByAIw==}
     engines: {node: '>=18'}
+
+  happy-dom@20.10.6:
+    resolution: {integrity: sha512-6QD0ilzDDt93tX44y8tbmZdAcdTRYDhUP+Asgi6pC8Pp5IA3cvaZGyoVN/EGtlq9ziT65iPuBBn3ASLr6hCgVw==}
+    engines: {node: '>=20.0.0'}
 
   has-bigints@1.1.0:
     resolution: {integrity: sha512-R3pbpkcIqv2Pm3dUwgjclDRVmWpTJW2DcMzcIhEXEx1oh/CEMObMm3KLmRJOdvhM7o4uQBnwr8pzRK2sJWIqfg==}
@@ -7806,6 +7824,10 @@ packages:
   webpack-virtual-modules@0.6.2:
     resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
 
+  whatwg-mimetype@3.0.0:
+    resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
+    engines: {node: '>=12'}
+
   whatwg-url@5.0.0:
     resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
 
@@ -7949,6 +7971,18 @@ packages:
 
   ws@8.18.2:
     resolution: {integrity: sha512-DMricUmwGZUVr++AEAe2uiVM7UoO9MAVZMDu05UQOaUII0lp+zOzLLU4Xqh/JvTqklB1T4uELaaPBKyjE1r4fQ==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
+  ws@8.21.0:
+    resolution: {integrity: sha512-Vsp28b7DRcimFQvrqu2Wek3z1iYxDCWqHYB8Qsnk/S4RfaCQzPGPyBNuVjJV3cd6UiKtUtp6sNM77gWvzcCH+g==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -12180,6 +12214,8 @@ snapshots:
 
   '@types/web-app-manifest@1.0.9': {}
 
+  '@types/whatwg-mimetype@3.0.2': {}
+
   '@types/ws@8.18.1':
     dependencies:
       '@types/node': 22.19.15
@@ -12522,7 +12558,7 @@ snapshots:
 
   before-after-hook@4.0.0: {}
 
-  better-auth@1.5.6(@opentelemetry/api@1.9.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.1(@libsql/client@0.15.9)(@opentelemetry/api@1.9.1)(kysely@0.28.15))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vitest@4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3)):
+  better-auth@1.5.6(@opentelemetry/api@1.9.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.1(@libsql/client@0.15.9)(@opentelemetry/api@1.9.1)(kysely@0.28.15))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vitest@4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(happy-dom@20.10.6)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3)):
     dependencies:
       '@better-auth/core': 1.5.6(@better-auth/utils@0.3.1)(@better-fetch/fetch@1.1.21)(@opentelemetry/api@1.9.1)(better-call@1.3.2(zod@4.3.6))(jose@6.1.3)(kysely@0.28.15)(nanostores@1.2.0)
       '@better-auth/drizzle-adapter': 1.5.6(@better-auth/core@1.5.6(@better-auth/utils@0.3.1)(@better-fetch/fetch@1.1.21)(@opentelemetry/api@1.9.1)(better-call@1.3.2(zod@4.3.6))(jose@6.1.3)(kysely@0.28.15)(nanostores@1.2.0))(@better-auth/utils@0.3.1)(drizzle-orm@0.45.1(@libsql/client@0.15.9)(@opentelemetry/api@1.9.1)(kysely@0.28.15))
@@ -12546,7 +12582,7 @@ snapshots:
       drizzle-orm: 0.45.1(@libsql/client@0.15.9)(@opentelemetry/api@1.9.1)(kysely@0.28.15)
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
-      vitest: 4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3)
+      vitest: 4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(happy-dom@20.10.6)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3)
     transitivePeerDependencies:
       - '@cloudflare/workers-types'
       - '@opentelemetry/api'
@@ -12612,6 +12648,10 @@ snapshots:
   buffer-equal-constant-time@1.0.1: {}
 
   buffer-from@1.1.2: {}
+
+  buffer-image-size@0.6.4:
+    dependencies:
+      '@types/node': 22.19.15
 
   bundle-name@4.1.0:
     dependencies:
@@ -13013,6 +13053,8 @@ snapshots:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.2.2
+
+  entities@7.0.1: {}
 
   env-paths@2.2.1: {}
 
@@ -13685,6 +13727,19 @@ snapshots:
       jws: 4.0.1
     transitivePeerDependencies:
       - supports-color
+
+  happy-dom@20.10.6:
+    dependencies:
+      '@types/node': 22.19.15
+      '@types/whatwg-mimetype': 3.0.2
+      '@types/ws': 8.18.1
+      buffer-image-size: 0.6.4
+      entities: 7.0.1
+      whatwg-mimetype: 3.0.0
+      ws: 8.21.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   has-bigints@1.1.0: {}
 
@@ -14705,9 +14760,9 @@ snapshots:
       powershell-utils: 0.1.0
       wsl-utils: 0.3.0
 
-  openai@6.15.0(ws@8.18.2)(zod@4.3.6):
+  openai@6.15.0(ws@8.21.0)(zod@4.3.6):
     optionalDependencies:
-      ws: 8.18.2
+      ws: 8.21.0
       zod: 4.3.6
 
   optionator@0.9.4:
@@ -16075,7 +16130,7 @@ snapshots:
       terser: 5.44.1
       tsx: 4.20.3
 
-  vitest@4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3):
+  vitest@4.0.18(@opentelemetry/api@1.9.1)(@types/node@22.19.15)(happy-dom@20.10.6)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(terser@5.44.1)(tsx@4.20.3):
     dependencies:
       '@vitest/expect': 4.0.18
       '@vitest/mocker': 4.0.18(msw@2.12.7(@types/node@22.19.15)(typescript@5.9.3))(vite@7.3.0(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(tsx@4.20.3))
@@ -16100,6 +16155,7 @@ snapshots:
     optionalDependencies:
       '@opentelemetry/api': 1.9.1
       '@types/node': 22.19.15
+      happy-dom: 20.10.6
     transitivePeerDependencies:
       - jiti
       - less
@@ -16126,6 +16182,8 @@ snapshots:
   webidl-conversions@4.0.2: {}
 
   webpack-virtual-modules@0.6.2: {}
+
+  whatwg-mimetype@3.0.0: {}
 
   whatwg-url@5.0.0:
     dependencies:
@@ -16368,6 +16426,8 @@ snapshots:
   ws@8.18.0: {}
 
   ws@8.18.2: {}
+
+  ws@8.21.0: {}
 
   wsl-utils@0.3.0:
     dependencies:
