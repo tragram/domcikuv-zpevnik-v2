@@ -50,7 +50,7 @@ export function IllustrationCard({
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const routeContext = useRouteContext({ from: "/admin" });
   const adminApi = routeContext.api.admin;
-  const isActive = illustration.id === song.currentIllustrationId;
+  const isActive = illustration.isCurrent;
 
   const updateMutation = useUpdateIllustration(adminApi);
   const deleteMutation = useDeleteIllustration(adminApi);

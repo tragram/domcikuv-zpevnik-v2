@@ -45,7 +45,10 @@ async function main() {
       capo: songVersion.capo,
     })
     .from(song)
-    .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
+    .innerJoin(
+      songVersion,
+      and(eq(songVersion.songId, song.id), eq(songVersion.status, "published")),
+    )
     .where(and(eq(song.deleted, false), isNull(songVersion.importId)));
   console.log(`Found ${songs.length} songs.`);
 

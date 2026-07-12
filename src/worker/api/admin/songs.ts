@@ -1,9 +1,8 @@
-import { and, desc, eq, getTableColumns, isNotNull } from "drizzle-orm";
+import { and, desc, eq, getTableColumns } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import {
   findSongWithAllData,
   getSongBase,
-  getSongPopulated,
   promoteVersionToCurrent,
 } from "src/worker/helpers/song-helpers";
 import z from "zod";
@@ -64,8 +63,14 @@ export const songRoutes = buildApp()
         importUrl: songImport.url,
       })
       .from(song)
-      .where(and(isNotNull(song.currentVersionId), eq(song.hidden, false)))
-      .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
+      .where(eq(song.hidden, false))
+      .innerJoin(
+        songVersion,
+        and(
+          eq(songVersion.songId, song.id),
+          eq(songVersion.status, "published"),
+        ),
+      )
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(song.updatedAt));
 
@@ -230,9 +235,8 @@ export const songRoutes = buildApp()
     if (!version || version.songId !== songId)
       return failJSend(c, "Version not found", 404);
 
-    // don't allow deletion of current version
-    const songData = await getSongPopulated(db, songId);
-    if (songData.currentVersionId === versionId)
+    // don't allow deletion of the current (= published) version
+    if (version.status === "published")
       return failJSend(c, "Cannot delete active version.", 400);
 
     // Soft delete

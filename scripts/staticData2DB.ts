@@ -1,5 +1,5 @@
 import { D1Helper } from "@nerdfolio/drizzle-d1-helpers";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import * as fs from "fs";
 import yaml from "js-yaml";
 import * as path from "path";
@@ -142,23 +142,26 @@ async function ensureSystemUser(db: AppDatabase): Promise<string> {
  */
 async function clearTables(db: AppDatabase) {
   console.log("Clearing tables...");
-  await db.run(sql`PRAGMA defer_foreign_keys = OFF`);
+
+  // Neutralize the self-referential parent_id FK first: a bulk DELETE checks it
+  // row-by-row in unspecified order. With that gone, children-before-parents
+  // ordering satisfies every FK — no PRAGMA needed (D1 wouldn't honor one
+  // across statements anyway).
+  await db.update(songVersion).set({ parentId: null });
 
   const tables = [
+    syncSession,
+    userFavoriteSongs,
     songIllustration,
     illustrationPrompt,
     songVersion,
     songImport,
-    userFavoriteSongs,
-    syncSession,
     song,
   ];
 
   for (const table of tables) {
     await db.delete(table);
   }
-
-  await db.run(sql`PRAGMA defer_foreign_keys = ON`);
 }
 
 /**
@@ -218,13 +221,10 @@ async function uploadSong(
     updatedAt: now,
   });
 
-  logger(`  [DEBUG] 3. Updating 'song' with currentVersionId...`);
-  await db
-    .update(song)
-    .set({ currentVersionId: versionId })
-    .where(eq(song.id, songId));
+  // No pointer update needed: status 'published' IS what makes the version
+  // current.
 
-  logger(`  [DEBUG] 4. Inserting into 'userFavoriteSongs'...`);
+  logger(`  [DEBUG] 3. Inserting into 'userFavoriteSongs'...`);
   await db.insert(userFavoriteSongs).values({
     userId: systemUserId,
     songId,
@@ -327,12 +327,12 @@ async function processAndMigrateSongs(
 
         if (illustrationId) {
           logger(
-            `  [DEBUG] 5. Updating 'song' with currentIllustrationId: ${illustrationId}...`,
+            `  [DEBUG] 4. Flagging illustration as current: ${illustrationId}...`,
           );
           await db
-            .update(song)
-            .set({ currentIllustrationId: illustrationId })
-            .where(eq(song.id, songId));
+            .update(songIllustration)
+            .set({ isCurrent: true })
+            .where(eq(songIllustration.id, illustrationId));
         }
       }
 

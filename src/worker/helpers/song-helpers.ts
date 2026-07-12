@@ -1,25 +1,15 @@
-import {
-  and,
-  BuildQueryResult,
-  desc,
-  eq,
-  ExtractTablesWithRelations,
-  gte,
-  inArray,
-  isNotNull,
-  ne,
-  or,
-} from "drizzle-orm";
-import * as schema from "src/lib/db/schema";
+import { and, desc, eq, gte, inArray, ne, or } from "drizzle-orm";
 import {
   song,
   SongDataDB,
   songIllustration,
+  SongIllustrationDB,
   songImport,
   SongImportDB,
   songVersion,
   SongVersionDB,
   user,
+  UserDB,
   userFavoriteSongs,
 } from "src/lib/db/schema";
 import { songBaseId } from "src/lib/song-ids";
@@ -27,18 +17,44 @@ import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import { AppDatabase } from "../api/utils";
 import { SongbookDataApi, SongDataApi } from "../api/api-types";
 
-type TSchema = ExtractTablesWithRelations<typeof schema>;
+// A song row with its DERIVED current state attached: the current version is
+// the single published one, the current illustration the single flagged one
+// (both enforced by partial unique indexes; nothing is stored on `song`).
+export type PopulatedSongDB = SongDataDB & {
+  currentVersion:
+    | (SongVersionDB & {
+        songImport: SongImportDB | null;
+        user?: UserDB | null;
+      })
+    | null;
+  currentIllustration: SongIllustrationDB | null;
+};
 
-export type PopulatedSongDB = BuildQueryResult<
-  TSchema,
-  TSchema["song"],
-  {
-    with: {
-      currentVersion: { with: { songImport: true } };
-      currentIllustration: true;
-    };
-  }
->;
+// Shared nested-`with` fragments that fetch the derived current state along
+// with a song row. The partial unique indexes guarantee at most one row each.
+const currentVersionWith = {
+  where: eq(songVersion.status, "published"),
+  limit: 1,
+  with: { songImport: true },
+} as const;
+
+const currentIllustrationWith = {
+  where: eq(songIllustration.isCurrent, true),
+  limit: 1,
+} as const;
+
+// Collapses the filtered version/illustration arrays (0 or 1 rows each) of a
+// relational query result into `currentVersion`/`currentIllustration`.
+const toPopulatedSong = <V extends SongVersionDB, I extends SongIllustrationDB>(
+  row: SongDataDB & { version: V[]; illustration: I[] },
+) => {
+  const { version, illustration, ...songRow } = row;
+  return {
+    ...songRow,
+    currentVersion: version[0] ?? null,
+    currentIllustration: illustration[0] ?? null,
+  };
+};
 // Custom-payload metadata, derived purely from how the shown version relates to
 // the song's canonical (published current) one — the single definition of
 // "custom". When the shown version differs from canonical (or there is no
@@ -132,7 +148,7 @@ export async function retrieveSongs(
   includeHidden = false,
   includeDeleted = false,
 ) {
-  const conditions = [isNotNull(song.currentVersionId)];
+  const conditions = [];
 
   if (!includeHidden) {
     if (includeDeleted)
@@ -145,27 +161,37 @@ export async function retrieveSongs(
     conditions.push(
       or(
         gte(song.updatedAt, updatedSince),
+        // ...or the song's current illustration changed since (e.g. its image
+        // was regenerated in place without touching the song row).
         inArray(
-          song.currentIllustrationId,
+          song.id,
           db
-            .select({ id: songIllustration.id })
+            .select({ id: songIllustration.songId })
             .from(songIllustration)
-            .where(gte(songIllustration.updatedAt, updatedSince)),
+            .where(
+              and(
+                eq(songIllustration.isCurrent, true),
+                gte(songIllustration.updatedAt, updatedSince),
+              ),
+            ),
         ),
       )!,
     );
   }
 
   const songsRaw = await db.query.song.findMany({
-    where: and(...conditions),
+    where: conditions.length ? and(...conditions) : undefined,
     with: {
-      currentVersion: {
-        with: { songImport: true },
-      },
-      currentIllustration: true,
+      version: currentVersionWith,
+      illustration: currentIllustrationWith,
     },
   });
-  return songsRaw.map((s) => transformSongToApi(s, updatedSince));
+  // Only songs with a published version are listable — a freshly submitted
+  // pending song has none yet (previously guaranteed by the pointer being set).
+  return songsRaw
+    .map(toPopulatedSong)
+    .filter((s) => s.currentVersion !== null)
+    .map((s) => transformSongToApi(s, updatedSince));
 }
 
 /**
@@ -190,32 +216,31 @@ export const retrieveSingleSong = async (
   const songRaw = await db.query.song.findFirst({
     where: eq(song.id, songId),
     with: {
-      currentVersion: {
-        with: { songImport: true },
-      },
-      currentIllustration: true,
+      version: currentVersionWith,
+      illustration: currentIllustrationWith,
     },
   });
 
   if (!songRaw) return null;
+  const populated: PopulatedSongDB = toPopulatedSong(songRaw);
 
   let customMeta: Pick<SongDataApi, "customVersionAuthor" | "canonicalIsNewer"> =
     {};
-  if (versionId && songRaw.currentVersion?.id !== versionId) {
+  if (versionId && populated.currentVersion?.id !== versionId) {
     // Capture the canonical current version before swapping in the requested one.
-    const canonical = songRaw.currentVersion;
+    const canonical = populated.currentVersion;
     const specificVersion = await db.query.songVersion.findFirst({
       where: eq(songVersion.id, versionId),
       with: { songImport: true, user: true },
     });
     if (specificVersion) {
       const { user: author, ...version } = specificVersion;
-      songRaw.currentVersion = version;
+      populated.currentVersion = version;
       customMeta = customMetaOf(canonical, { ...version, user: author });
     }
   }
 
-  const result = transformSongToApi(songRaw);
+  const result = transformSongToApi(populated);
   Object.assign(result, customMeta);
   return result;
 };
@@ -242,11 +267,13 @@ export const resolveSongbookSongs = async (
   const songs = await db.query.song.findMany({
     where: and(inArray(song.id, songIds), eq(song.deleted, false)),
     with: {
-      currentVersion: { with: { songImport: true, user: true } },
-      currentIllustration: true,
+      version: { ...currentVersionWith, with: { songImport: true, user: true } },
+      illustration: currentIllustrationWith,
     },
   });
-  const songById = new Map(songs.map((s) => [s.id, s]));
+  const songById = new Map<string, PopulatedSongDB>(
+    songs.map((s) => [s.id, toPopulatedSong(s)]),
+  );
 
   // Pinned versions that differ from (or stand in for a missing) current version.
   const pinnedIds = [
@@ -292,31 +319,43 @@ export const getSongBase = async (
   return result;
 };
 
-export const getSongPopulated = async (db: AppDatabase, songId: string) => {
+export const getSongPopulated = async (
+  db: AppDatabase,
+  songId: string,
+): Promise<PopulatedSongDB> => {
   const result = await db.query.song.findFirst({
     where: eq(song.id, songId),
     with: {
-      currentVersion: { with: { songImport: true } },
-      currentIllustration: true,
+      version: currentVersionWith,
+      illustration: currentIllustrationWith,
     },
   });
   if (!result) throw new Error("Song not found");
-  return result;
+  return toPopulatedSong(result);
 };
 
 export const findSongWithAllData = async (db: AppDatabase, songId: string) => {
   const completeSong = await db.query.song.findFirst({
     where: eq(song.id, songId),
     with: {
-      currentVersion: { with: { songImport: true } },
-      currentIllustration: true,
-      version: { orderBy: [desc(songVersion.createdAt)] },
+      version: {
+        orderBy: [desc(songVersion.createdAt)],
+        with: { songImport: true },
+      },
       illustration: { orderBy: [desc(songIllustration.createdAt)] },
     },
   });
 
   if (!completeSong) throw new Error("Referenced song not found!");
-  return completeSong;
+  // The current version/illustration are derived from the full lists instead
+  // of being fetched separately.
+  return {
+    ...completeSong,
+    currentVersion:
+      completeSong.version.find((v) => v.status === "published") ?? null,
+    currentIllustration:
+      completeSong.illustration.find((i) => i.isCurrent) ?? null,
+  };
 };
 
 export async function getSongbooks(db: AppDatabase) {
@@ -375,13 +414,12 @@ export const createSong = async (
   const existingSong = await getSongBase(db, songId).catch(() => null);
 
   if (!existingSong) {
+    // Newly added songs by untrusted users don't have to be hidden explicitly -
+    // they have no published version yet and thus won't be shown automatically.
     await db.insert(song).values({
       id: songId,
       createdAt: now,
       updatedAt: now,
-      // newly added songs by untrusted users don't have to be hidden via this - they won't have currentVersionId and thus won't be shown automatically
-      // hidden: !isTrusted,
-      currentVersionId: null,
     });
   }
 
@@ -413,21 +451,20 @@ export const createSongVersion = async (
   const existingSong = await getSongBase(db, songId);
   if (existingSong.deleted) {
     // A previously-deleted song is revived as if brand new: drop the `deleted`
-    // flag and the stale current pointer so this submission re-enters the normal
-    // trust flow (untrusted manual -> pending & not shown until approved;
-    // trusted/import -> published). The pre-deletion version is archived so it
-    // doesn't linger as a second "published" version.
+    // flag and archive any published version so this submission re-enters the
+    // normal trust flow (untrusted manual -> pending & not shown until
+    // approved; trusted/import -> published).
     // NOTE: `hidden` is intentionally NOT reset here — hiding is sticky and must
     // survive re-imports/edits; only an admin un-hides via the dashboard.
-    if (existingSong.currentVersionId) {
-      await db
-        .update(songVersion)
-        .set({ status: "archived" })
-        .where(eq(songVersion.id, existingSong.currentVersionId));
-    }
+    await db
+      .update(songVersion)
+      .set({ status: "archived" })
+      .where(
+        and(eq(songVersion.songId, songId), eq(songVersion.status, "published")),
+      );
     await db
       .update(song)
-      .set({ deleted: false, currentVersionId: null })
+      .set({ deleted: false })
       .where(eq(song.id, songId));
   }
   const now = new Date();
@@ -435,7 +472,7 @@ export const createSongVersion = async (
   // id (the current version's id when editing the canonical song). A parentId
   // that doesn't resolve to a version of this song — e.g. a stale client value —
   // is ignored so the edit forks fresh rather than failing the whole submission.
-  let parentVersion: schema.SongVersionDB | undefined = undefined;
+  let parentVersion: SongVersionDB | undefined = undefined;
   if (submission.parentId) {
     parentVersion = await db.query.songVersion.findFirst({
       where: eq(songVersion.id, submission.parentId),
@@ -531,11 +568,12 @@ export const promoteVersionToCurrent = async (
   approverId: string,
 ) => {
   const now = new Date();
-  // Enforce the single-published-version invariant: archive EVERY other
-  // published version of this song (not just the tracked currentVersionId, in
-  // case stray published rows exist), publish the target, and repoint the song.
-  // D1 has no interactive transactions, so we run the three writes as one atomic
-  // batch — a partial failure can no longer leave two published versions.
+  // Publishing IS what makes a version current, so this only needs to keep the
+  // single-published-version invariant (also enforced by a partial unique
+  // index): archive every other published version, then publish the target.
+  // The order matters — archiving first frees the unique slot. song.updatedAt
+  // is bumped so incremental sync picks up the change. D1 has no interactive
+  // transactions, so the writes run as one atomic batch.
   await db.batch([
     db
       .update(songVersion)
@@ -556,10 +594,7 @@ export const promoteVersionToCurrent = async (
         updatedAt: now,
       })
       .where(eq(songVersion.id, versionId)),
-    db
-      .update(song)
-      .set({ currentVersionId: versionId, updatedAt: now })
-      .where(eq(song.id, songId)),
+    db.update(song).set({ updatedAt: now }).where(eq(song.id, songId)),
   ]);
 };
 

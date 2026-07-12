@@ -59,6 +59,7 @@ import {
   useDeleteVersion,
   useGenerateIllustration,
   useIllustrationOptions,
+  useIllustrationsAdmin,
   useRejectVersion,
   useResetVersionDB,
   useRestoreSong,
@@ -105,11 +106,7 @@ type SortableSong = SongDataDB & {
 type SortConfig = {
   key: keyof Omit<
     SortableSong,
-    | "hasPendingVersions"
-    | "currentVersionId"
-    | "currentIllustrationId"
-    | "externalSource"
-    | "submittedBy"
+    "hasPendingVersions" | "externalSource" | "submittedBy"
   >;
   direction: "ascending" | "descending";
 };
@@ -488,7 +485,7 @@ function SongVersionItem({
           title="Permanently Delete?"
           description="This will remove the data entirely."
           disabled={
-            version.id === song.currentVersionId || version.status === "deleted"
+            version.status === "published" || version.status === "deleted"
           }
           onDelete={onDelete}
         />
@@ -557,10 +554,11 @@ function VersionHistoryTimeline({
           const parentVersion = version.parentId
             ? songVersions.find((v) => v.id === version.parentId)
             : null;
-          const currentVersion = song.currentVersionId
-            ? songVersions.find((v) => v.id === song.currentVersionId)
-            : null;
-          const isCurrentActive = version.id === song.currentVersionId;
+          // "Current" is derived: it's the song's single published version.
+          const currentVersion = songVersions.find(
+            (v) => v.status === "published",
+          );
+          const isCurrentActive = version.status === "published";
 
           return (
             <SongVersionItem
@@ -873,6 +871,9 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const { data: versions, isLoading: versionsLoading } =
     useVersionsAdmin(adminApi);
   const { data: users } = useUsersAdmin(adminApi, { limit: 100, offset: 0 });
+  // Only needed to know whether a song already has a current illustration when
+  // auto-generation on approve is enabled.
+  const { data: illustrations } = useIllustrationsAdmin(adminApi);
 
   // Mutations
   const updateSongMutation = useUpdateSong(adminApi);
@@ -909,19 +910,17 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const enrichedSongs = useMemo<SortableSong[]>(() => {
     if (!songs) return [];
 
-    const getWorkingVersion = (
-      song: SongDataDB,
-      songVersions: SongVersionAdminApi[],
-    ) =>
-      versions?.find((v) => v.id === song.currentVersionId) ??
-      songVersions.find((v) => ["published"].includes(v.status)) ??
-      songVersions.find((v) => ["archived"].includes(v.status)) ??
-      songVersions.find((v) => ["pending"].includes(v.status)) ??
-      songVersions.find((v) => ["rejected"].includes(v.status));
+    // The published version IS the current one; the rest is a display fallback
+    // for songs that don't have one (pending submissions etc.).
+    const getWorkingVersion = (songVersions: SongVersionAdminApi[]) =>
+      songVersions.find((v) => v.status === "published") ??
+      songVersions.find((v) => v.status === "archived") ??
+      songVersions.find((v) => v.status === "pending") ??
+      songVersions.find((v) => v.status === "rejected");
 
     return songs.map((song) => {
       const songVersions = versionsBySong[song.id] || [];
-      const workingVersion = getWorkingVersion(song, songVersions);
+      const workingVersion = getWorkingVersion(songVersions);
       const submitter = workingVersion
         ? usersById.get(workingVersion.userId)
         : undefined;
@@ -945,7 +944,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         submittedBy: submitter?.nickname || submitter?.name || null,
       };
     });
-  }, [songs, versions, versionsBySong, usersById]);
+  }, [songs, versionsBySong, usersById]);
 
   const stats = useMemo<SongStats>(() => {
     // Status counts follow the external/hidden toggles so the cards match the
@@ -1051,8 +1050,9 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   };
 
   const handleApproveVersion = (songId: string, versionId: string) => {
-    const song = songs.find((s) => s.id === songId);
-    const hasNoIllustration = !song?.currentIllustrationId;
+    const hasNoIllustration = !illustrations?.some(
+      (i) => i.songId === songId && i.isCurrent,
+    );
     approveVersionMutation.mutate(
       { songId, versionId },
       {

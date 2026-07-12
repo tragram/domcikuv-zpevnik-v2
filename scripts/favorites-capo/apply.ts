@@ -11,7 +11,7 @@
  * By default a favorite that already has its own capo override is left alone;
  * pass --overwrite to force every favorite to match its song's current capo.
  */
-import { eq, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { song, songVersion, user, userFavoriteSongs } from "../../src/lib/db/schema";
 import { db } from "../shared/remote-db";
 import fs from "node:fs";
@@ -52,7 +52,10 @@ async function main() {
   const songRows = await db
     .select({ songId: song.id, capo: songVersion.capo })
     .from(song)
-    .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
+    .innerJoin(
+      songVersion,
+      and(eq(songVersion.songId, song.id), eq(songVersion.status, "published")),
+    )
     .where(inArray(song.id, songIds));
   const capoBySong = new Map(songRows.map((r) => [r.songId, r.capo]));
 

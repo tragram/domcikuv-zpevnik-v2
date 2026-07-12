@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import {
   illustrationPrompt,
   IllustrationPromptDB,
@@ -101,26 +101,49 @@ export async function setCurrentIllustration(
   songId: string,
   illustrationId: string,
 ) {
-  await db
-    .update(song)
-    .set({
-      currentIllustrationId: illustrationId,
-      updatedAt: new Date(),
-    })
-    .where(eq(song.id, songId));
+  const now = new Date();
+  // Clear the previous flag before setting the new one — the partial unique
+  // index allows only one current illustration per song. The song row's
+  // updatedAt is bumped so incremental sync picks up the change. Runs as one
+  // atomic batch (D1 has no interactive transactions).
+  await db.batch([
+    db
+      .update(songIllustration)
+      .set({ isCurrent: false })
+      .where(
+        and(
+          eq(songIllustration.songId, songId),
+          eq(songIllustration.isCurrent, true),
+          ne(songIllustration.id, illustrationId),
+        ),
+      ),
+    db
+      .update(songIllustration)
+      .set({ isCurrent: true, updatedAt: now })
+      .where(eq(songIllustration.id, illustrationId)),
+    db.update(song).set({ updatedAt: now }).where(eq(song.id, songId)),
+  ]);
 }
 
 export async function clearCurrentIllustration(
   db: AppDatabase,
   songId: string,
 ) {
-  await db
-    .update(song)
-    .set({
-      currentIllustrationId: null,
-      updatedAt: new Date(),
-    })
-    .where(eq(song.id, songId));
+  await db.batch([
+    db
+      .update(songIllustration)
+      .set({ isCurrent: false })
+      .where(
+        and(
+          eq(songIllustration.songId, songId),
+          eq(songIllustration.isCurrent, true),
+        ),
+      ),
+    db
+      .update(song)
+      .set({ updatedAt: new Date() })
+      .where(eq(song.id, songId)),
+  ]);
 }
 
 export async function generateAndSavePrompt(

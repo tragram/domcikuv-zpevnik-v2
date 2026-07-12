@@ -47,7 +47,8 @@ export function SongIllustrationsGroup({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isSectionIllustrationDialogOpen, setIsSectionIllustrationDialogOpen] =
     useState(false);
-  const someActive = Boolean(song.currentIllustrationId);
+  const activeIllustration = illustrations.find((i) => i.isCurrent);
+  const someActive = Boolean(activeIllustration);
 
   const filteredIllustrations = showDeleted
     ? illustrations
@@ -55,9 +56,6 @@ export function SongIllustrationsGroup({
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
   const songPrompts = Object.values(prompts).filter(
     (p) => p.songId === song.id,
-  );
-  const activeIllustration = illustrations.find(
-    (i) => i.id === song.currentIllustrationId,
   );
   const activePromptId = activeIllustration?.promptId;
 
@@ -170,9 +168,7 @@ export function SongIllustrationsGroup({
                     alt={`${song.title} preview ${index + 1}`}
                     className={cn(
                       "w-10 h-10 sm:w-12 sm:h-12 rounded object-cover border-2 shadow-sm hover:shadow-md transition-shadow cursor-pointer",
-                      illustration.id === song.currentIllustrationId
-                        ? "border-primary"
-                        : "",
+                      illustration.isCurrent ? "border-primary" : "",
                     )}
                     onClick={(e) => {
                       e.stopPropagation();

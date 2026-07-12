@@ -13,7 +13,7 @@
  *   pnpm run yt:push            # preview what would change
  *   pnpm run yt:push -- --apply # write to the remote DB
  */
-import { eq, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { song, songVersion } from "../../src/lib/db/schema";
 import { db, loadData, parseYoutubeId } from "./common";
 import {
@@ -73,7 +73,7 @@ async function main() {
     const batchRows = await db
       .select({
         songId: song.id,
-        versionId: song.currentVersionId,
+        versionId: songVersion.id,
         youtubeId: songVersion.youtubeId,
         key: songVersion.key,
         capo: songVersion.capo,
@@ -82,7 +82,13 @@ async function main() {
         chordpro: songVersion.chordpro,
       })
       .from(song)
-      .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
+      .innerJoin(
+        songVersion,
+        and(
+          eq(songVersion.songId, song.id),
+          eq(songVersion.status, "published"),
+        ),
+      )
       .where(inArray(song.id, batch));
     rows.push(...batchRows);
   }

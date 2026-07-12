@@ -10,7 +10,7 @@
  */
 import fs from "node:fs";
 
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { song, songVersion, user, userFavoriteSongs } from "../../src/lib/db/schema";
 import { db } from "../shared/remote-db";
 import { BACKUP_PATH, targetEmail } from "./config";
@@ -23,7 +23,10 @@ async function main() {
   const songCapos = await db
     .select({ songId: song.id, capo: songVersion.capo, key: songVersion.key })
     .from(song)
-    .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
+    .innerJoin(
+      songVersion,
+      and(eq(songVersion.songId, song.id), eq(songVersion.status, "published")),
+    )
     .where(eq(song.deleted, false));
 
   const users = await db

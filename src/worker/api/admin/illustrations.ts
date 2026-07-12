@@ -7,7 +7,6 @@ import z from "zod";
 import { defaultIllustrationId, defaultPromptId } from "src/lib/song-ids";
 import {
   illustrationPrompt,
-  song,
   songIllustration,
   SongIllustrationDB,
 } from "../../../lib/db/schema";
@@ -311,14 +310,8 @@ export const illustrationRoutes = buildApp()
 
     if (parsedData.setAsActive) {
       await setCurrentIllustration(db, current.songId, illustrationId);
-    } else if (parsedData.setAsActive === false) {
-      const currentSong = await db
-        .select({ currentIllustrationId: song.currentIllustrationId })
-        .from(song)
-        .where(eq(song.id, current.songId))
-        .get();
-      if (currentSong?.currentIllustrationId === illustrationId)
-        await clearCurrentIllustration(db, current.songId);
+    } else if (parsedData.setAsActive === false && current.isCurrent) {
+      await clearCurrentIllustration(db, current.songId);
     }
 
     return successJSend(c, updatedIllustration[0] as SongIllustrationDB);
@@ -349,13 +342,8 @@ export const illustrationRoutes = buildApp()
       .get();
     if (!existing) return failJSend(c, "Illustration not found", 404);
 
-    const currentSong = await db
-      .select({ currentIllustrationId: song.currentIllustrationId })
-      .from(song)
-      .where(eq(song.id, existing.songId))
-      .get();
-    if (currentSong?.currentIllustrationId === illustrationId)
-      await clearCurrentIllustration(db, existing.songId);
+    // A deleted illustration must not stay the song's current one.
+    if (existing.isCurrent) await clearCurrentIllustration(db, existing.songId);
 
     try {
       await moveSongToTrash(

@@ -58,6 +58,11 @@ const PAGE_SIZE = 20;
 const isVisibleSong = (g: SongWithIllustrationsAndPrompts) =>
   !g.song.deleted && !g.song.hidden;
 
+// A song counts as illustrated when one of its illustrations carries the
+// current flag (there is at most one; nothing is stored on the song row).
+const hasCurrentIllustration = (g: SongWithIllustrationsAndPrompts) =>
+  g.illustrations.some((i) => i.isCurrent);
+
 type SelectOption = { value: string; label: string };
 
 /**
@@ -270,9 +275,8 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     );
     return {
       songs: inScope.length,
-      illustrated: inScope.filter((g) => g.song.currentIllustrationId).length,
-      unillustrated: inScope.filter((g) => !g.song.currentIllustrationId)
-        .length,
+      illustrated: inScope.filter(hasCurrentIllustration).length,
+      unillustrated: inScope.filter((g) => !hasCurrentIllustration(g)).length,
       assets: groups.reduce(
         (acc, g) => acc + g.illustrations.filter((i) => !i.deleted).length,
         0,
@@ -318,9 +322,9 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
 
     // Coverage filter (single-select).
     if (coverageFilter === "illustrated") {
-      groups = groups.filter(([, group]) => group.song.currentIllustrationId);
+      groups = groups.filter(([, group]) => hasCurrentIllustration(group));
     } else if (coverageFilter === "unillustrated") {
-      groups = groups.filter(([, group]) => !group.song.currentIllustrationId);
+      groups = groups.filter(([, group]) => !hasCurrentIllustration(group));
     } else if (coverageFilter === "assets") {
       groups = groups.filter(([, group]) =>
         group.illustrations.some((i) => !i.deleted),

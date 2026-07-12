@@ -1,5 +1,5 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import type { SQLiteTable } from "drizzle-orm/sqlite-core";
 import yaml from "js-yaml";
 import fs from "node:fs";
@@ -106,13 +106,15 @@ async function main() {
       tempo: schema.songVersion.tempo,
       range: schema.songVersion.range,
       startMelody: schema.songVersion.startMelody,
-      currentIllustrationId: schema.song.currentIllustrationId,
       sourceId: schema.songImport.sourceId,
     })
     .from(schema.song)
     .leftJoin(
       schema.songVersion,
-      eq(schema.song.currentVersionId, schema.songVersion.id),
+      and(
+        eq(schema.songVersion.songId, schema.song.id),
+        eq(schema.songVersion.status, "published"),
+      ),
     )
     .leftJoin(
       schema.songImport,
@@ -192,7 +194,7 @@ async function main() {
     if (!activeSongIds.has(songRow.id)) continue;
 
     const currentIll = illustrations.find(
-      (i) => i.id === songRow.currentIllustrationId,
+      (i) => i.songId === songRow.id && i.isCurrent,
     );
 
     const song = new SongData({

@@ -9,17 +9,10 @@ import {
 } from "./song.schema";
 import { relations } from "drizzle-orm";
 
-// Relations for efficient querying
-export const songRelations = relations(song, ({ one, many }) => ({
-  // Get the current active illustration & version (only one per song)
-  currentIllustration: one(songIllustration, {
-    fields: [song.currentIllustrationId],
-    references: [songIllustration.id],
-  }),
-  currentVersion: one(songVersion, {
-    fields: [song.currentVersionId],
-    references: [songVersion.id],
-  }),
+// Relations for efficient querying. The current version/illustration are not
+// relations anymore: they're derived (status = 'published' / isCurrent) via
+// filtered `version`/`illustration` fetches in song-helpers.
+export const songRelations = relations(song, ({ many }) => ({
   // Get all illustrations & versions for this song
   illustration: many(songIllustration),
   version: many(songVersion),

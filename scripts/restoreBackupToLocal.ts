@@ -31,10 +31,9 @@ type DBBackup = {
   tables: Record<string, Record<string, unknown>[]>;
 };
 
-// Insert order respects foreign keys (parents first). The song ⟷ songVersion /
-// songIllustration cycle is broken by inserting song rows with the two
-// "current" pointers nulled and patching them afterwards; ditto for the
-// self-referential songVersion.parentId.
+// Insert order respects foreign keys (parents first). The only cycle left is
+// the self-referential songVersion.parentId, broken by inserting versions with
+// parentId nulled and patching it afterwards.
 const INSERT_ORDER = [
   "user",
   "account",
@@ -232,15 +231,17 @@ async function restore(db: AppDatabase, backup: DBBackup) {
     userFavoriteSongs: new Set(),
   };
 
-  // song rows referencing versions/illustrations that don't exist yet — defer.
-  const songPointers: {
-    id: string;
-    currentVersionId: unknown;
-    currentIllustrationId: unknown;
-  }[] = [];
   // songVersion.parentId is self-referential, so a row can point at a version
-  // that appears later in the backup — defer it too.
+  // that appears later in the backup — defer it.
   const versionParents: { id: string; parentId: unknown }[] = [];
+
+  // Backups made before the current-state derivation stored the current
+  // version/illustration as pointer columns on song rows (dropped by
+  // reviveRow, which only keeps known columns). Detect that legacy format and
+  // translate the pointers into songVersion.status / songIllustration.isCurrent.
+  const legacyCurrentVersionOf = new Map<unknown, unknown>(); // songId -> versionId
+  const legacyCurrentIllustrationIds = new Set<unknown>();
+  let isLegacyPointerBackup = false;
 
   for (const tableName of INSERT_ORDER) {
     const rawRows = backup.tables[tableName] ?? [];
@@ -253,20 +254,20 @@ async function restore(db: AppDatabase, backup: DBBackup) {
     let rows = rawRows.map((raw) => reviveRow(table, raw));
 
     if (tableName === "song") {
-      for (const row of rows) {
-        if (row.currentVersionId || row.currentIllustrationId) {
-          songPointers.push({
-            id: row.id as string,
-            currentVersionId: row.currentVersionId,
-            currentIllustrationId: row.currentIllustrationId,
-          });
+      for (const raw of rawRows) {
+        if ("currentVersionId" in raw || "currentIllustrationId" in raw) {
+          isLegacyPointerBackup = true;
+          if (raw.currentVersionId)
+            legacyCurrentVersionOf.set(raw.id, raw.currentVersionId);
+          if (raw.currentIllustrationId)
+            legacyCurrentIllustrationIds.add(raw.currentIllustrationId);
         }
       }
-      rows = rows.map((row) => ({
-        ...row,
-        currentVersionId: null,
-        currentIllustrationId: null,
-      }));
+      if (isLegacyPointerBackup) {
+        console.log(
+          "  (legacy backup with current-pointer columns — translating to statuses/flags)",
+        );
+      }
     }
 
     if (tableName === "songVersion") {
@@ -276,6 +277,27 @@ async function restore(db: AppDatabase, backup: DBBackup) {
         }
       }
       rows = rows.map((row) => ({ ...row, parentId: null }));
+
+      // Legacy translate: the pointer target is THE published version; any
+      // other published row would violate the one-published-per-song index.
+      if (isLegacyPointerBackup) {
+        rows = rows.map((row) => {
+          const isPointerTarget =
+            legacyCurrentVersionOf.get(row.songId) === row.id;
+          if (isPointerTarget && row.status !== "published")
+            return { ...row, status: "published" };
+          if (!isPointerTarget && row.status === "published")
+            return { ...row, status: "archived" };
+          return row;
+        });
+      }
+    }
+
+    if (tableName === "songIllustration" && isLegacyPointerBackup) {
+      rows = rows.map((row) => ({
+        ...row,
+        isCurrent: legacyCurrentIllustrationIds.has(row.id),
+      }));
     }
 
     // Drop rows with dangling required refs, null out dangling nullable ones.
@@ -313,25 +335,6 @@ async function restore(db: AppDatabase, backup: DBBackup) {
       `- ${tableName}: inserted ${inserted} rows` +
         (failed > 0 ? ` (${failed} skipped, see warnings)` : ""),
     );
-  }
-
-  console.log(
-    `Patching current version/illustration pointers on ${songPointers.length} songs...`,
-  );
-  for (const pointer of songPointers) {
-    await db
-      .update(schema.song)
-      .set({
-        currentVersionId: insertedIds.songVersion.has(pointer.currentVersionId)
-          ? (pointer.currentVersionId as string)
-          : null,
-        currentIllustrationId: insertedIds.songIllustration.has(
-          pointer.currentIllustrationId,
-        )
-          ? (pointer.currentIllustrationId as string)
-          : null,
-      })
-      .where(eq(schema.song.id, pointer.id));
   }
 
   console.log(

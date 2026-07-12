@@ -277,27 +277,25 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
         );
       }
 
-      if (data.setAsActive !== undefined && previousSongs) {
-        queryClient.setQueryData<SongDataDB[]>(
-          ["songDBAdmin"],
-          (old) =>
-            old?.map((song) => {
-              const illustration = previousIllustrations?.find(
-                (ill) => ill.id === id,
-              );
-              if (illustration && illustration.songId === song.id) {
-                return {
-                  ...song,
-                  currentIllustrationId: data.setAsActive
-                    ? id
-                    : song.currentIllustrationId === id
-                      ? null
-                      : song.currentIllustrationId,
-                };
-              }
-              return song;
-            }) || [],
-        );
+      if (data.setAsActive !== undefined && previousIllustrations) {
+        const target = previousIllustrations.find((ill) => ill.id === id);
+        if (target) {
+          queryClient.setQueryData<SongIllustrationApi[]>(
+            ["illustrationsAdmin"],
+            (old) =>
+              old?.map((ill) => {
+                if (ill.id === id)
+                  return { ...ill, isCurrent: !!data.setAsActive };
+                if (
+                  data.setAsActive &&
+                  ill.songId === target.songId &&
+                  ill.isCurrent
+                )
+                  return { ...ill, isCurrent: false };
+                return ill;
+              }) || [],
+          );
+        }
       }
 
       return { previousSongs, previousIllustrations };
@@ -334,11 +332,12 @@ export const useDeleteIllustration = (adminApi: AdminApi) => {
         SongIllustrationApi[]
       >(["illustrationsAdmin"]);
 
+      // Deleting also clears the current flag (mirrors the worker behavior).
       queryClient.setQueryData<SongIllustrationApi[]>(
         ["illustrationsAdmin"],
         (old) =>
           old?.map((ill) =>
-            ill.id === id ? { ...ill, deleted: true } : ill,
+            ill.id === id ? { ...ill, deleted: true, isCurrent: false } : ill,
           ) || [],
       );
 
