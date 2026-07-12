@@ -52,6 +52,19 @@ export function useSongDB(
     songbooksFetched,
   };
 }
+// Force a re-sync of the song DB regardless of staleTime. `refetchType: "all"`
+// also refreshes the queries while they're unmounted (e.g. from the admin
+// dashboard), so the next song-list visit renders fresh data immediately.
+// Cheap: fetchSongs goes through the incremental-sync endpoint.
+export const refreshSongDB = (queryClient: QueryClient) =>
+  Promise.all([
+    queryClient.invalidateQueries({ queryKey: ["songs"], refetchType: "all" }),
+    queryClient.invalidateQueries({
+      queryKey: ["publicSongbooks"],
+      refetchType: "all",
+    }),
+  ]);
+
 export const getSongDB = async (queryClient: QueryClient) => {
   const songs = await queryClient.ensureQueryData(songsQueryOptions());
   const publicSongbooks = await queryClient.ensureQueryData(publicSongbooksQueryOptions());

@@ -10,12 +10,15 @@ import {
 } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 
+import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorageState from "use-local-storage-state";
 import { OfflineIndicator } from "~/components/OfflineIndicator";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import "~/features/SongList/SongList.css";
 import { useIsOnline } from "~/hooks/use-is-online";
+import { usePullToRefresh } from "~/hooks/use-pull-to-refresh";
+import { refreshSongDB } from "~/hooks/use-songDB";
 import { useScrollDirection } from "~/hooks/use-scroll-direction";
 import { UserData } from "~/hooks/use-user-data";
 import { cn } from "~/lib/utils";
@@ -60,6 +63,16 @@ function SongList({
   const { resetFilters } = useFilterSettingsStore();
   const isToolbarVisible = useScrollDirection();
   const isOnline = useIsOnline();
+
+  // Manual re-sync of the song DB (pull-to-refresh on touch, toolbar button on
+  // desktop). Feedback while it runs comes from the existing sync bubble, which
+  // reacts to the queries' isFetching.
+  const queryClient = useQueryClient();
+  const refreshSongs = useCallback(
+    () => refreshSongDB(queryClient),
+    [queryClient],
+  );
+  const { pullDistance, isReady } = usePullToRefresh(refreshSongs, isOnline);
 
   // --- Playlist mode ---
   // When active, rows show a checkbox and toggle selection instead of opening.
@@ -199,7 +212,30 @@ function SongList({
         isVisible={isToolbarVisible}
         playlistMode={playlistMode}
         onTogglePlaylistMode={togglePlaylistMode}
+        onRefresh={refreshSongs}
+        isSyncing={songDBSyncing}
       />
+
+      {/* Pull-to-refresh indicator: tracks the drag; once released, the sync
+          bubble below takes over as the "refreshing" feedback. */}
+      {pullDistance > 0 && (
+        <div
+          className="pointer-events-none fixed left-1/2 top-0 z-50"
+          style={{ transform: `translate(-50%, ${pullDistance - 48}px)` }}
+        >
+          <div
+            className={cn(
+              "flex h-12 w-12 items-center justify-center rounded-full bg-background border shadow-lg",
+              isReady ? "text-primary" : "text-muted-foreground",
+            )}
+          >
+            <RefreshCw
+              className="h-5 w-5"
+              style={{ transform: `rotate(${pullDistance * 3}deg)` }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Floating Bottom-Right Sync Bubble */}
       {songDBSyncing && (

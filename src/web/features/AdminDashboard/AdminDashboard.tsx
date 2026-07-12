@@ -1,4 +1,7 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useSearch, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { refreshSongDB } from "~/hooks/use-songDB";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,6 +28,14 @@ export default function AdminDashboard({ adminApi }: AdminDashboardProps) {
   const { tab } = useSearch({ from: "/admin" });
   const navigate = useNavigate();
   const activeTab = tab || "songs";
+
+  // The admin tables refetch on every mount themselves; what goes stale is the
+  // public song list (60min staleTime). Re-sync it here so an admin reviewing
+  // submissions sees the result reflected on the list right after leaving.
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    refreshSongDB(queryClient);
+  }, [queryClient]);
 
   const setActiveTab = (newTab: string) => {
     navigate({

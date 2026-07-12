@@ -1,5 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { ImagesIcon, ListVideo, Menu, Pencil, Shield, User } from "lucide-react";
+import { useState } from "react";
+import {
+  ImagesIcon,
+  ListVideo,
+  Menu,
+  Pencil,
+  RefreshCw,
+  Shield,
+  User,
+} from "lucide-react";
 import RandomSong from "~/components/RandomSong";
 import { UserData } from "~/hooks/use-user-data";
 import { cn } from "~/lib/utils";
@@ -33,6 +42,7 @@ interface CombinedMenuProps {
   isAdmin: boolean;
   playlistMode: boolean;
   onTogglePlaylistMode: () => void;
+  onRefresh: () => void;
 }
 
 const CombinedMenu = ({
@@ -41,6 +51,7 @@ const CombinedMenu = ({
   isAdmin,
   playlistMode,
   onTogglePlaylistMode,
+  onRefresh,
 }: CombinedMenuProps) => {
   return (
     <DropdownMenu>
@@ -91,6 +102,19 @@ const CombinedMenu = ({
           </RichItem.Shell>
         </DropdownMenuItem>
 
+        <DropdownMenuItem
+          onClick={onRefresh}
+          disabled={!isOnline}
+          className="w-full cursor-pointer"
+        >
+          <RichItem.Shell>
+            <RichItem.Icon>
+              <RefreshCw />
+            </RichItem.Icon>
+            <RichItem.Body title="Refresh songs" />
+          </RichItem.Shell>
+        </DropdownMenuItem>
+
         <DropdownMenuItem asChild disabled={!profileAvailable}>
           <Link to="/profile" className="w-full cursor-pointer">
             <RichItem.Shell>
@@ -126,6 +150,8 @@ interface ToolbarProps {
   userData: UserData;
   playlistMode: boolean;
   onTogglePlaylistMode: () => void;
+  onRefresh: () => void;
+  isSyncing: boolean;
 }
 
 function Toolbar({
@@ -135,12 +161,23 @@ function Toolbar({
   userData,
   playlistMode,
   onTogglePlaylistMode,
+  onRefresh,
+  isSyncing,
 }: ToolbarProps) {
   const isOnline = useIsOnline();
   // Logged-in users can open their (read-only) profile offline; logged-out users
   // only reach the login screen there, which needs the network — so offline +
   // logged-out leaves nothing to show.
   const profileAvailable = isOnline || !!userData;
+
+  // The incremental sync often finishes faster than the eye can register, so a
+  // purely isSyncing-driven spin reads as "nothing happened". Spin on click and
+  // stop only at a full-rotation boundary once the sync is over.
+  const [clickSpinning, setClickSpinning] = useState(false);
+  const handleRefresh = () => {
+    setClickSpinning(true);
+    onRefresh();
+  };
 
   return (
     <ToolbarBase
@@ -164,6 +201,29 @@ function Toolbar({
         <div className="hidden min-[1150px]:flex h-full w-fit">
           <ThemeToggle />
         </div>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              className="hidden min-[1150px]:flex"
+              size="icon"
+              variant="circular"
+              onClick={handleRefresh}
+              disabled={!isOnline}
+              aria-label="Refresh songs"
+            >
+              <RefreshCw
+                className={cn((clickSpinning || isSyncing) && "animate-spin")}
+                onAnimationIteration={() => {
+                  if (!isSyncing) setClickSpinning(false);
+                }}
+              />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{isOnline ? "Refresh songs" : "Offline — reconnect to refresh"}</p>
+          </TooltipContent>
+        </Tooltip>
 
         <Tooltip>
           <TooltipTrigger asChild>
@@ -277,6 +337,7 @@ function Toolbar({
             isAdmin={isAdmin}
             playlistMode={playlistMode}
             onTogglePlaylistMode={onTogglePlaylistMode}
+            onRefresh={onRefresh}
           />
         </div>
       </TooltipProvider>
