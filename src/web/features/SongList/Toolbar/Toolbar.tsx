@@ -35,6 +35,7 @@ import Filtering from "./filters/Filters";
 import SearchBar from "./SearchBar";
 import SessionView from "./SessionView";
 import SortMenu from "./SortMenu";
+import { Separator } from "src/web/components/ui/separator";
 
 interface CombinedMenuProps {
   isOnline: boolean;
@@ -64,29 +65,20 @@ const CombinedMenu = ({
         <RichItem.Header>Menu</RichItem.Header>
         <DropdownMenuSeparator />
 
+        <DropdownMenuItem
+          onClick={onRefresh}
+          disabled={!isOnline}
+          className="w-full cursor-pointer"
+        >
+          <RichItem.Shell>
+            <RichItem.Icon>
+              <RefreshCw />
+            </RichItem.Icon>
+            <RichItem.Body title="Refresh songs" />
+          </RichItem.Shell>
+        </DropdownMenuItem>
+
         <DropdownThemeToggle />
-
-        <DropdownMenuItem asChild>
-          <Link to="/edit" className="w-full cursor-pointer">
-            <RichItem.Shell>
-              <RichItem.Icon>
-                <Pencil />
-              </RichItem.Icon>
-              <RichItem.Body title="Add song" />
-            </RichItem.Shell>
-          </Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem asChild>
-          <Link to="/gallery" className="w-full cursor-pointer">
-            <RichItem.Shell>
-              <RichItem.Icon>
-                <ImagesIcon />
-              </RichItem.Icon>
-              <RichItem.Body title="Gallery" />
-            </RichItem.Shell>
-          </Link>
-        </DropdownMenuItem>
 
         <DropdownMenuItem
           onClick={onTogglePlaylistMode}
@@ -102,17 +94,15 @@ const CombinedMenu = ({
           </RichItem.Shell>
         </DropdownMenuItem>
 
-        <DropdownMenuItem
-          onClick={onRefresh}
-          disabled={!isOnline}
-          className="w-full cursor-pointer"
-        >
-          <RichItem.Shell>
-            <RichItem.Icon>
-              <RefreshCw />
-            </RichItem.Icon>
-            <RichItem.Body title="Refresh songs" />
-          </RichItem.Shell>
+        <DropdownMenuItem asChild>
+          <Link to="/edit" className="w-full cursor-pointer">
+            <RichItem.Shell>
+              <RichItem.Icon>
+                <Pencil />
+              </RichItem.Icon>
+              <RichItem.Body title="Add song" />
+            </RichItem.Shell>
+          </Link>
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild disabled={!profileAvailable}>
@@ -138,6 +128,17 @@ const CombinedMenu = ({
             </Link>
           </DropdownMenuItem>
         )}
+
+        <DropdownMenuItem asChild>
+          <Link to="/gallery" className="w-full cursor-pointer">
+            <RichItem.Shell>
+              <RichItem.Icon>
+                <ImagesIcon />
+              </RichItem.Icon>
+              <RichItem.Body title="Gallery" />
+            </RichItem.Shell>
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -186,26 +187,19 @@ function Toolbar({
     >
       <TooltipProvider delayDuration={300}>
         <SortMenu />
+        <Separator orientation="vertical" className="hidden min-[1400px]:flex h-6" />
         <SearchBar />
+        <Separator orientation="vertical" className="hidden min-[1400px]:flex h-6" />
         <Filtering songDB={songDB} userData={userData} />
 
-        <SessionView isOnline={isOnline} />
-
-        <RandomSong
-          songs={songDB.songs}
-          userData={userData}
-          languageCounts={songDB.languages}
-          availableSongbooks={songDB.songbooks}
+        <Separator
+          orientation="vertical"
+          className="hidden min-[1400px]:flex h-6"
         />
-
-        <div className="hidden min-[1150px]:flex h-full w-fit">
-          <ThemeToggle />
-        </div>
-
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
-              className="hidden min-[1150px]:flex"
+              className="hidden min-[1400px]:flex"
               size="icon"
               variant="circular"
               onClick={handleRefresh}
@@ -221,15 +215,21 @@ function Toolbar({
             </Button>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{isOnline ? "Refresh songs" : "Offline — reconnect to refresh"}</p>
+            <p>
+              {isOnline ? "Refresh songs" : "Offline — reconnect to refresh"}
+            </p>
           </TooltipContent>
         </Tooltip>
+
+        <div className="hidden min-[1400px]:flex h-full w-fit">
+          <ThemeToggle />
+        </div>
 
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               className={cn(
-                "hidden min-[1150px]:flex",
+                "hidden min-[1400px]:flex",
                 playlistMode && "ring-2 ring-primary text-primary",
               )}
               size="icon"
@@ -245,30 +245,36 @@ function Toolbar({
           </TooltipContent>
         </Tooltip>
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              asChild
-              className="hidden min-[1150px]:flex"
-              size="icon"
-              variant="circular"
-            >
-              <Link to="/edit">
-                <Pencil />
-              </Link>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Add song</p>
-          </TooltipContent>
-        </Tooltip>
+        <Separator
+          orientation="vertical"
+          className="hidden min-[1400px]:flex h-6"
+        />
+        {profileAvailable && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                asChild
+                className="hidden min-[1400px]:flex"
+                size="icon"
+                variant="circular"
+              >
+                <Link to="/edit">
+                  <Pencil />
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Add song</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
 
         <Tooltip>
           <TooltipTrigger asChild>
             {profileAvailable ? (
               <Button
                 asChild
-                className="hidden min-[1150px]:flex"
+                className="hidden min-[1400px]:flex"
                 size="icon"
                 variant="circular"
               >
@@ -278,7 +284,7 @@ function Toolbar({
               </Button>
             ) : (
               <Button
-                className="hidden min-[1150px]:flex"
+                className="hidden min-[1400px]:flex"
                 size="icon"
                 variant="circular"
                 disabled
@@ -288,25 +294,11 @@ function Toolbar({
             )}
           </TooltipTrigger>
           <TooltipContent>
-            <p>{profileAvailable ? "Profile" : "Offline — log in when reconnected"}</p>
-          </TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              asChild
-              className="hidden min-[1150px]:flex"
-              size="icon"
-              variant="circular"
-            >
-              <Link to="/gallery">
-                <ImagesIcon />
-              </Link>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Gallery</p>
+            <p>
+              {profileAvailable
+                ? "Profile"
+                : "Offline — log in when reconnected"}
+            </p>
           </TooltipContent>
         </Tooltip>
 
@@ -315,7 +307,7 @@ function Toolbar({
             <TooltipTrigger asChild>
               <Button
                 asChild
-                className="hidden min-[1150px]:flex"
+                className="hidden min-[1400px]:flex"
                 size="icon"
                 variant="circular"
               >
@@ -329,8 +321,39 @@ function Toolbar({
             </TooltipContent>
           </Tooltip>
         )}
+        <Separator
+          orientation="vertical"
+          className="hidden min-[1400px]:flex h-6"
+        />
 
-        <div className="flex min-[1150px]:hidden">
+        <SessionView isOnline={isOnline} />
+
+        <RandomSong
+          songs={songDB.songs}
+          userData={userData}
+          languageCounts={songDB.languages}
+          availableSongbooks={songDB.songbooks}
+        />
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              asChild
+              className="hidden min-[1400px]:flex"
+              size="icon"
+              variant="circular"
+            >
+              <Link to="/gallery">
+                <ImagesIcon />
+              </Link>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Gallery</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <div className="flex min-[1400px]:hidden">
           <CombinedMenu
             isOnline={isOnline}
             profileAvailable={profileAvailable}
