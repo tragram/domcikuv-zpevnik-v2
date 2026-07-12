@@ -15,6 +15,7 @@ import {
 import { convertChordNotation } from "src/lib/utils";
 import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
+import { toast } from "sonner";
 
 import useLocalStorageState from "use-local-storage-state";
 import { convertToChordPro } from "src/lib/chords2chordpro";
@@ -82,7 +83,7 @@ const isAutofillable = (text: string): boolean => {
   if (!hasAnyChords) return false;
 
   const sectionSplitRegex =
-    /(\{(?:sov|start_of_verse|soc|start_of_chorus|sob|start_of_bridge|v|c|b|verse|chorus|bridge)(?::.*)?\})/i;
+    /(\{(?:sov|start_of_verse|soc|start_of_chorus|sob|start_of_bridge|soi|start_of_interlude|v|c|b|verse|chorus|bridge|interlude)(?::.*)?\})/i;
   const parts = text.split(sectionSplitRegex);
 
   for (let i = 1; i < parts.length; i += 2) {
@@ -272,6 +273,18 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   useEffect(() => {
     setSubmitAttempted(false);
   }, [editorStateKey]);
+
+  // Notify once per song/version when we're showing a leftover local draft
+  // instead of the live version, so the user isn't silently editing stale
+  // content without realizing a newer version exists.
+  const draftToastKeyRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (draftToastKeyRef.current === editorStateKey) return;
+    draftToastKeyRef.current = editorStateKey;
+    if (draft !== null) {
+      toast.info("Loaded your unsaved draft. Use \"Reload song\" to load the current version.");
+    }
+  }, [editorStateKey, draft]);
 
   const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
     const isTrusted = !!userData?.profile.isTrusted;
