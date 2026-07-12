@@ -125,7 +125,7 @@ function SearchBar() {
               value={query}
               placeholder="Search..."
               className={cn(
-                "pl-3 pr-7 text-sm font-medium placeholder:font-normal border-none rounded-full rounded-l-none peer text-primary placeholder:text-primary dark:placeholder:text-primary/30",
+                "pl-3 pr-7 text-base md:text-sm font-medium placeholder:font-normal border-none rounded-full rounded-l-none peer text-primary placeholder:text-primary dark:placeholder:text-primary/30 h-full",
                 query ? "" : "",
               )}
             />
