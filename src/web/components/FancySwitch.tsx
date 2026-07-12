@@ -66,6 +66,13 @@ export default function FancySwitch<T extends string | number>({
           height: activeEl.offsetHeight,
           opacity: showHighlight ? 1 : 0,
         });
+      } else {
+        // Explicitly hide the highlight when the programmatic state
+        // doesn't match any available options.
+        setHighlight((prev) => ({
+          ...prev,
+          opacity: 0,
+        }));
       }
     };
 
@@ -76,7 +83,7 @@ export default function FancySwitch<T extends string | number>({
 
     return () => window.removeEventListener("resize", updateHighlight);
   }, [selectedOption, showHighlight, options, vertical]);
-
+  
   return (
     <div
       className={cn(
@@ -96,7 +103,7 @@ export default function FancySwitch<T extends string | number>({
       >
         <div
           className={cn(
-            "absolute z-0 bg-primary h-full",
+            "absolute z-0 bg-primary h-full will-change-transform",
             // Clean, permanent transition. No hacky timeouts.
             "transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
             appliedRoundedClass,
@@ -118,7 +125,7 @@ export default function FancySwitch<T extends string | number>({
               data-active={isSelected}
               onClick={() => setSelectedOption(option.value)}
               className={cn(
-                "relative z-10 flex h-full shrink-0 items-center justify-center whitespace-nowrap outline-hidden transition-colors duration-200",
+                "relative z-10 flex h-full shrink-0 transform-gpu items-center justify-center whitespace-nowrap outline-hidden transition-colors duration-200",
                 vertical ? "px-3" : "px-4",
                 isSelected && showHighlight
                   ? "text-white dark:text-white"
