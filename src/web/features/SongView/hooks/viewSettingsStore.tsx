@@ -30,6 +30,7 @@ export interface ChordSettings {
   showChords: boolean;
   czechChordNames: boolean;
   inlineChords: boolean;
+  showInterludes: boolean;
 }
 
 // Constants and preset configurations
@@ -123,6 +124,7 @@ export const useViewSettingsStore = create<SettingsState>()(
         showChords: true,
         czechChordNames: true,
         inlineChords: true,
+        showInterludes: true,
       },
       shareSession: false,
       transpositions: {},
@@ -196,6 +198,24 @@ export const useViewSettingsStore = create<SettingsState>()(
     }),
     {
       name: "songview-settings-store",
+      // The default (shallow) merge would let a persisted `layout` object from
+      // an older app version wipe out newly added settings keys (leaving them
+      // undefined). Merge the nested settings objects over their defaults so
+      // new keys fall back to their default values.
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<SettingsState>;
+        return {
+          ...current,
+          ...p,
+          layout: { ...current.layout, ...p.layout },
+          customLayoutPreset: {
+            ...current.customLayoutPreset,
+            ...p.customLayoutPreset,
+          },
+          chords: { ...current.chords, ...p.chords },
+          actions: current.actions,
+        };
+      },
       partialize: (state) => ({
         layout: state.layout,
         customLayoutPreset: state.customLayoutPreset,

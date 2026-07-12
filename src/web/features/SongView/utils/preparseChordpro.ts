@@ -21,9 +21,9 @@ export const EMPTY_LINE = "{comment: %empty_line%}";
 /**
  * Default section directives
  */
-const DEFAULT_SECTION_DIRECTIVES = ["chorus", "bridge", "verse"];
-const DEFAULT_SECTION_LABELS = ["R", "B", ""];
-const DEFAULT_SECTION_SHORTHANDS = ["R", "B", "V"];
+const DEFAULT_SECTION_DIRECTIVES = ["chorus", "bridge", "verse", "interlude"];
+const DEFAULT_SECTION_LABELS = ["R", "B", "", "I"];
+const DEFAULT_SECTION_SHORTHANDS = ["R", "B", "V", "I"];
 
 // ==================== DIRECTIVE PROCESSING ====================
 

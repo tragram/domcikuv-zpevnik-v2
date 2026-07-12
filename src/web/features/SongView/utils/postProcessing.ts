@@ -17,7 +17,7 @@ interface ChordMatch {
 }
 
 const MAX_CHORD_MATCH_DISTANCE = 3;
-const DEFAULT_SECTION_TYPES = ["verse", "chorus", "bridge"];
+const DEFAULT_SECTION_TYPES = ["verse", "chorus", "bridge", "interlude"];
 
 /**
  * Maximum number of chord edits for a section to still count as a repeat of an

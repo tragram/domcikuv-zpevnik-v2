@@ -1,5 +1,5 @@
 import React from "react";
-import { Guitar, Piano, ChevronsLeftRightEllipsis } from "lucide-react";
+import { Guitar, Piano, ChevronsLeftRightEllipsis, Music4 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenuCheckboxItem,
@@ -12,9 +12,15 @@ export interface ChordSettings {
   showChords: boolean;
   czechChordNames: boolean;
   inlineChords: boolean;
+  showInterludes: boolean;
 }
 
-const chordSettingsNames = ["showChords", "czechChordNames", "inlineChords"];
+const chordSettingsNames = [
+  "showChords",
+  "czechChordNames",
+  "inlineChords",
+  "showInterludes",
+];
 
 const chordSettingsValues = {
   showChords: { icon: <Guitar />, label: "Show chords", description: "" },
@@ -28,12 +34,18 @@ const chordSettingsValues = {
     label: "Chords inline",
     description: "",
   },
+  showInterludes: {
+    icon: <Music4 />,
+    label: "Show interludes",
+    description: "Shows instrumental interlude sections",
+  },
 };
 
 export const chordSettingsClassNames = (chords: ChordSettings) => {
   return [
     chords.inlineChords ? "chords-inline" : "",
     chords.showChords ? "" : "chords-hidden",
+    chords.showInterludes ? "" : "interludes-hidden",
   ];
 };
 

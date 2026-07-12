@@ -244,6 +244,15 @@
     /* Tiny buffer so it doesn't collide with the letter */
 }
 
+/* --- INTERLUDES --- */
+/* Hidden via the explicit toggle, and also whenever chords are hidden —
+   an interlude is instrumental (chords only), so without chords it would
+   render as just an empty title. */
+.interludes-hidden .paragraph.interlude,
+.chords-hidden .paragraph.interlude {
+    display: none !important;
+}
+
 /* --- REPEATED PARTS TOGGLES --- */
 .repeated-parts-shown .shorthand-section {
     display: none;

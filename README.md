@@ -8,16 +8,16 @@ The app is a progressive web application (PWA), which means you can install it o
 The original songbook was my high-school graduation project, consisting of an [Android app](https://github.com/tragram/DomcikuvZpevnik) and a [PHP server](https://github.com/tragram/DomcikuvZpevnik-Server) is [hosted here](https://appelt.cz/domcikuvzpevnik/). Unfortunately, due to lack of updates, the app was taken down from Google Play in 2024 and the website was not mobile-friendly, which is the main use-case of the songbook. Since I no longer code in Java or PHP, I started building this new version to have something to do on the long train journey to the Tatra mountains!
 
 ## Running locally
-You can run the page fully locally by
+No Cloudflare account is needed for local development — all the bindings (D1, KV, R2, Durable Objects) run in Wrangler's local simulator. You can run the page fully locally by
 * installing the dependencies: `pnpm i`
-* creating a CF Worker account (TODO: allow local build without this step)
-* building the database: `pnpm db:create` (if you haven't run it yet)
 * initializing the dev DB: `pnpm dev:init` (applies migrations and seeds the DB from the static files in `songs/`)
   * tip: changing `SYSTEM_EMAIL` in `scripts/staticData2DB.ts` let's you be the admin and creator of all songs after local login
   * to re-seed later, just run `pnpm db:seed`
   * admin alternative: `pnpm db:restore:local` restores the newest production backup from R2 into the local DB (full data incl. users & favorites; requires the R2 credentials from `.dev.vars.sample`); add `--live` to snapshot the prod DB directly instead of the up-to-24h-old nightly backup
 * starting the local dev server: `pnpm dev`
 * to make authentication and AI services work, you will need to supply your own credentials - see `.dev.vars.sample`
+
+Deploying your own instance is where a Cloudflare account comes in: provision your own resources (e.g. `pnpm db:create` for the D1 database), put their ids into `wrangler.jsonc` and run `pnpm run deploy`.
 
 ## Editing songs
 The best way to edit is to just use the web interface (`/edit`).
@@ -70,6 +70,15 @@ and them later recall them by
 {chorus: R1}
 ```
 The labels may contain letters, numbers, spaces and the following special characters: `+_-/.`. In short, they must match `[\w\-_+ .\p{L}]+`.
+
+#### Interludes
+Instrumental parts (chords only, no lyrics) can be marked as interludes:
+```chordpro
+{start_of_interlude}
+[C][G][Ami][F]
+{end_of_interlude}
+```
+Interludes behave like the other sections: they can be labelled (`{start_of_interlude: I2}`) and recalled (`{interlude}`, `{interlude: I2}`), with "I" as the default label. In the song view, they can be hidden via the "Show interludes" toggle in the chord settings and are hidden automatically whenever chords are hidden (an interlude without chords would be empty).
 
 #### Part variants
 It is very common that a chorus is repeated with only a minor modification at the end. To avoid these repetitions, you can define a variant of the chorus as follows:

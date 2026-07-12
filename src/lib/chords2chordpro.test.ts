@@ -99,6 +99,30 @@ describe("chords2chordpro", () => {
       expect(convertToChordPro(input)).toBe(expected);
     });
 
+    it("identifies and wraps interludes denoted by 'Mezihra:'", () => {
+      const input = `Mezihra: C G D`;
+      const expected = `{start_of_interlude}\n[C] [G] [D]\n{end_of_interlude}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("identifies and wraps interludes preceded by '[Interlude]'", () => {
+      const input = `[Interlude]\nC  G  D`;
+      const expected = `{start_of_interlude}\n[C]  [G]  [D]\n{end_of_interlude}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("keeps numbered interlude markers as section names", () => {
+      const input = `Mezihra 2:\nC  G`;
+      const expected = `{start_of_interlude: Mezihra 2}\n[C]  [G]\n{end_of_interlude}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
+    it("does not treat lyrics merely starting with the word as interludes", () => {
+      const input = `D\nMezihra je pryč`;
+      const expected = `{start_of_verse}\n[D]Mezihra je pryč\n{end_of_verse}`;
+      expect(convertToChordPro(input)).toBe(expected);
+    });
+
     it("identifies and formats tab blocks", () => {
       const input = `[Solo]\ne|---0---|\nB|---1---|`;
       const expected = `{comment: Solo}\n{start_of_tab}\ne|---0---|\nB|---1---|\n{end_of_tab}`;

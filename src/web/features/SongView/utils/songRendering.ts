@@ -14,7 +14,7 @@ import { Key, KeyMode } from "~/types/musicTypes";
 /**
  * Default section classes used by chordsheetjs
  */
-const DEFAULT_RENDERED_SECTIONS = ["verse", "chorus", "bridge"];
+const DEFAULT_RENDERED_SECTIONS = ["verse", "chorus", "bridge", "interlude"];
 
 // Module-level so the last-args cache survives across renders of the same song
 // (e.g. repeated transposition); a per-call memoize would never hit

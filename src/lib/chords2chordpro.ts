@@ -8,7 +8,7 @@ interface Token {
 }
 
 interface EnvDirective {
-  env: "verse" | "chorus" | "bridge";
+  env: "verse" | "chorus" | "bridge" | "interlude";
   name?: string;
   stripLength: number;
 }
@@ -63,12 +63,24 @@ function getEnvironmentDirective(line: string): EnvDirective | null {
     return { env: "bridge", name, stripLength: bridgeMatch[0].length };
   }
 
+  // Matches interlude markers: "Mezihra:", "Interlude 2:". Deliberately strict
+  // (full word + colon or end of line) so a lyric line that merely starts with
+  // the word is never swallowed — a false negative just leaves a verse block.
+  const interludeMatch = line.match(
+    /^\s*((?:Mezihra|Interlude)\s*\d*)\s*(?::\s*|$)/i,
+  );
+  if (interludeMatch) {
+    let name: string | undefined = interludeMatch[1].trim();
+    if (/^(mezihra|interlude)$/i.test(name)) name = undefined; // Drop generic tags
+    return { env: "interlude", name, stripLength: interludeMatch[0].length };
+  }
+
   // Bracketed directives like [Intro], (Verse 2)
   const dirMatch = isDirectiveLine(line);
   if (dirMatch) {
     const content = (dirMatch[1] ?? dirMatch[2]).trim();
     const origMatch = content.match(
-      /^(verse|chorus|refrain|bridge)(?:\s+(.*))?$/i,
+      /^(verse|chorus|refrain|bridge|interlude|mezihra)(?:\s+(.*))?$/i,
     );
 
     if (origMatch) {
@@ -76,7 +88,9 @@ function getEnvironmentDirective(line: string): EnvDirective | null {
       const baseEnv =
         lowerBase === "refrain"
           ? "chorus"
-          : (lowerBase as "verse" | "chorus" | "bridge");
+          : lowerBase === "mezihra"
+            ? "interlude"
+            : (lowerBase as "verse" | "chorus" | "bridge" | "interlude");
       return {
         env: baseEnv,
         name: origMatch[2]?.trim(),

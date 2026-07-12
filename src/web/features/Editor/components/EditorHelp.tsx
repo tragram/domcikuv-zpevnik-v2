@@ -42,6 +42,15 @@ and them later recall them by
 \`\`\`
 The labels may contain letters, numbers, spaces and the following special characters: \`+_-/.\`. In short, they must match \`[\\w\\-_+ .\\p{L}]+\`.
 
+## Interludes
+Instrumental parts (chords only, no lyrics) can be wrapped in an interlude section:
+\`\`\`chordpro
+{start_of_interlude}
+[C][G][Ami][F]
+{end_of_interlude}
+\`\`\`
+They can be labelled and recalled just like the other sections (e.g. \`{interlude}\`). Viewers can hide interludes in the chord settings, and they disappear automatically when chords are hidden.
+
 ## Part variants
 It is very common that a chorus is repeated with only a minor modification at the end. To avoid these repetitions, you can define a variant of the chorus as follows:
 \`\`\`

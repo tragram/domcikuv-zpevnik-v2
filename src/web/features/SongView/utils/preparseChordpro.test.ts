@@ -137,6 +137,68 @@ Interlude
       const result = preparseDirectives(input);
       expect(result).toBe(expected);
     });
+    it("a basic interlude with both expanded and shorthand formats", () => {
+      const input = `
+{start_of_interlude}
+[C][G][Ami][F]
+{end_of_interlude}
+
+Some other line
+
+{interlude}
+    `.trim();
+
+      const expected = `
+{start_of_interlude}
+{comment: %section_title: I%}
+[C][G][Ami][F]
+{end_of_interlude}
+Some other line
+{start_of_interlude}
+{comment: %expanded_section%}
+{comment: %section_title: I%}
+[C][G][Ami][F]
+{end_of_interlude}
+{start_of_interlude}
+{comment: %shorthand_section%}
+{comment: %section_title: I%}
+{end_of_interlude}
+    `.trim();
+
+      const result = preparseDirectives(input);
+      expect(result).toBe(expected);
+    });
+    it("a labelled interlude with both expanded and shorthand formats", () => {
+      const input = `
+{start_of_interlude: I2}
+[C][G][Ami][F]
+{end_of_interlude}
+
+Some other line
+
+{interlude: I2}
+    `.trim();
+
+      const expected = `
+{start_of_interlude}
+{comment: %section_title: I2%}
+[C][G][Ami][F]
+{end_of_interlude}
+Some other line
+{start_of_interlude}
+{comment: %expanded_section%}
+{comment: %section_title: I2%}
+[C][G][Ami][F]
+{end_of_interlude}
+{start_of_interlude}
+{comment: %shorthand_section%}
+{comment: %section_title: I2%}
+{end_of_interlude}
+    `.trim();
+
+      const result = preparseDirectives(input);
+      expect(result).toBe(expected);
+    });
     it("a basic chorus with both expanded and shorthand formats", () => {
       const input = `
 {start_of_chorus}

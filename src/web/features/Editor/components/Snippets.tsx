@@ -34,6 +34,15 @@ export const snippets = {
         : `{start_of_bridge}\n\n{end_of_bridge}\n`,
     cursorOffset: "{start_of_bridge}\n".length,
   },
+  interlude_env: {
+    name: "Interlude",
+    letter: "I",
+    template: (selection?: string) =>
+      selection
+        ? `{start_of_interlude}\n${selection}\n{end_of_interlude}`
+        : `{start_of_interlude}\n\n{end_of_interlude}\n`,
+    cursorOffset: "{start_of_interlude}\n".length,
+  },
   tab_env: {
     name: "Tabs",
     letter: "T",
@@ -60,6 +69,13 @@ export const snippets = {
     letter: "B",
     template: (selection?: string) => (selection ? `{bridge}` : `{bridge}\n`),
     cursorOffset: "{bridge}\n".length,
+  },
+  interlude_recall: {
+    name: "Interlude",
+    letter: "I",
+    template: (selection?: string) =>
+      selection ? `{interlude}` : `{interlude}\n`,
+    cursorOffset: "{interlude}\n".length,
   },
   prepend_content: {
     name: "Variant: Prepend content",

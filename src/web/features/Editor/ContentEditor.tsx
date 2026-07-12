@@ -208,6 +208,10 @@ const ContentEditor = forwardRef<ContentEditorRef, ContentEditorProps>(
               <SnippetButton snippetKey="verse_env" onInsert={insertSnippet} />
               <SnippetButton snippetKey="bridge_env" onInsert={insertSnippet} />
               <SnippetButton snippetKey="chorus_env" onInsert={insertSnippet} />
+              <SnippetButton
+                snippetKey="interlude_env"
+                onInsert={insertSnippet}
+              />
               <SnippetButton snippetKey="tab_env" onInsert={insertSnippet} />
             </SnippetButtonSection>
             <SnippetButtonSection label="Recalls">
@@ -221,6 +225,10 @@ const ContentEditor = forwardRef<ContentEditorRef, ContentEditorProps>(
               />
               <SnippetButton
                 snippetKey="chorus_recall"
+                onInsert={insertSnippet}
+              />
+              <SnippetButton
+                snippetKey="interlude_recall"
                 onInsert={insertSnippet}
               />
             </SnippetButtonSection>
