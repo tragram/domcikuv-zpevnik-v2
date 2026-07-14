@@ -6,9 +6,13 @@
 {language: czech}
 {startMelody: a b a}
 {createdAt: 1747173600000}
-{updatedAt: 1770572236000}
+{updatedAt: 1783849620000}
 {illustrationId: richard_muller-baroko_gpt-4o-mini_v2_flux.1-dev}
 {promptId: richard_muller-baroko_gpt-4o-mini_v2}
+
+{start_of_interlude: Intro}
+[Dm][C][Dm][C]
+{end_of_interlude}
 
 {start_of_verse}
 [Dmi]Schoulené holky [C]spí nahé
@@ -38,6 +42,10 @@
 [F]O tom, jak [C/E]mocné je [Dmi]baroko [B]
 {end_of_chorus}
 
+{start_of_interlude: Mezihra}
+[Dm][C][Dm][C][Gm/B][C][Dm][C](sloka)
+{end_of_interlude}
+
 {start_of_verse}
 [Dmi]Sedlejme koně a [C]vzhůru
 [Dmi]Zaplašme zlou denní [C]můru
@@ -64,7 +72,7 @@
 [F]Ztratila [C/E]všechno, i [Dmi]sebe [B]
 [F]Zarůstá [C/E]pastvou jen [Dmi]pro oko [B]
 [F]Proč jsi tak [C/E]vzdálené,
-v perutích [Dmi]oděné, ba[B]roko?
+[Dmi]v perutích odě[B]né, baroko?
 {end_of_chorus}
 
 {start_of_chorus}
@@ -72,4 +80,8 @@ v perutích [Dmi]oděné, ba[B]roko?
 [F]Ztratila [C/E]všechno, i [Dmi]sebe [B]
 [F]Zarůstá [C/E]pastvou jen [Dmi]pro oko [B]
 [F]Proč jsi tak [C/E]vzdálené [Dmi]baroko?[B] 𝄇
+{end_of_chorus}
+
+{start_of_chorus}
+𝄆 Nananana... 𝄇
 {end_of_chorus}

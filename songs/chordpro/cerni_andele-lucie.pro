@@ -2,15 +2,16 @@
 {artist: Lucie}
 {key: Am}
 {capo: 0}
-{range: f#1-d1}
 {language: czech}
 {startMelody: c a}
 {createdAt: 1734130800000}
-{updatedAt: 1772225910000}
+{updatedAt: 1783928189000}
 {illustrationId: cerni_andele-lucie_gpt-4o-mini_v1_flux.1-dev}
 {promptId: cerni_andele-lucie_gpt-4o-mini_v1}
 
-{comment: https://www.youtube.com/watch?v=VBfUbEK2Kpghttps://www.youtube.com/watch?v=VBfUbEK2Kpghttps://www.youtube.com/watch?v=VBfUbEK2Kpg}
+{start_of_interlude}
+𝄆 [A][A][G][D] 𝄇 𝄆 [A][A][D][G] 𝄇
+{end_of_interlude}
 
 {start_of_verse}
 [Asus2]Sex je náš dělá [G]dobře mně i [D]tobě
@@ -20,11 +21,19 @@
 {end_of_verse}
 
 {start_of_verse}
+𝄆 [A][A][G][D] 𝄇
+{end_of_verse}
+
+{start_of_verse}
 [Asus2]Sex je náš padaj [G]kapky z konců [D]křídel
 [Asus2]Nevnímáš zbytky [G]otrávených [D]jídel
 [Asus2]Středověk neskončil, [D]středověk [G]trvá
 [Asus2]Jsme černí andělé a [D]ty jsi byla [G]prvá holka
 {end_of_verse}
+
+{start_of_interlude: Mezihra}
+𝄆 [A][A][G][D] 𝄇 A. I. D.
+{end_of_interlude}
 
 {start_of_verse}
 Sex [Asus2]je náš dělá [G]dobře mně i [D]tobě
@@ -36,6 +45,10 @@ Sex [Asus2]je náš dělá [G]dobře mně i [D]tobě
 [Asus2]Středověk neskončil, [D]středověk [G]trvá
 [Asus2]Jsme černí andělé a [D]ty jsi byla [G]prvá, holka
 {end_of_verse}
+
+{start_of_interlude: Mezihra}
+𝄆 [A][A][G][D] 𝄇 A. I. D. S.
+{end_of_interlude}
 
 {start_of_verse}
 Sex [Asus2]je náš padaj [D]kapky z konců [G]křídel

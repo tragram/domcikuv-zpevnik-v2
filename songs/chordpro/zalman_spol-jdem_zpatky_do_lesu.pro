@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: g}
 {createdAt: 1436824800000}
-{updatedAt: 1773784553000}
+{updatedAt: 1783877738000}
 {illustrationId: zalman_spol-jdem_zpatky_do_lesu_gpt-4o-mini_v1_flux.1-dev}
 {promptId: zalman_spol-jdem_zpatky_do_lesu_gpt-4o-mini_v1}
 
@@ -56,5 +56,7 @@ co si [D7]dávaj' rande za [G]branou,[Emi]
 [Am7]v ráji není místa,
 možná [D7]v pekle se nás [G]zastanou.
 {end_of_verse}
+
+{chorus}
 
 {chorus}

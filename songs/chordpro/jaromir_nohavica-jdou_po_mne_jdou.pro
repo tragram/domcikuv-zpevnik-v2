@@ -1,12 +1,12 @@
 {title: Jdou po mně jdou}
 {artist: Jaromír Nohavica}
 {key: D}
-{capo: 3}
+{capo: 0}
 {range: a1-h2}
 {language: czech}
 {startMelody: a}
 {createdAt: 1436824800000}
-{updatedAt: 1770572061000}
+{updatedAt: 1783877810000}
 {illustrationId: jaromir_nohavica-jdou_po_mne_jdou_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-jdou_po_mne_jdou_gpt-4o-mini_v1}
 

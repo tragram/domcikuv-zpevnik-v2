@@ -1,12 +1,12 @@
 {title: Darmoděj}
 {artist: Jaromír Nohavica}
 {key: Am}
-{capo: 5}
+{capo: 0}
 {range: g1-g2}
 {language: czech}
 {startMelody: a}
 {createdAt: 1308002400000}
-{updatedAt: 1770572056000}
+{updatedAt: 1783863561000}
 {illustrationId: jaromir_nohavica-darmodej_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-darmodej_gpt-4o-mini_v1}
 
@@ -20,7 +20,7 @@ a já ho z okna [Ami]viděl, [Emi]
 znělo to jako [Ami]zvon
 a byl v tom všechen [Emi]žal,
 ten krásný dlouhý [F]tón,
-a já jsem náhle [F#dim]věděl:
+a já jsem náhle [D#dim]věděl:
 ano, to je [E7]on, to je [Ami]on.
 {end_of_verse}
 
@@ -34,7 +34,7 @@ krysy se honi[Ami]ly [Emi]
 lásky i nelás[Ami]ky
 tiše se vrtě[Emi]ly
 rodinné obráz[F]ky,
-a já chtěl [F#dim]odpověď
+a já chtěl [D#dim]odpověď
 na svoje [E7]otázky, otáz[Ami]ky.
 {end_of_verse}
 
@@ -53,7 +53,7 @@ a chytl [Ami]za kabát, [Emi]
 a oči plné [Ami]vran,
 a jizvy u o[Emi]čí,
 celý byl pobo[F]dán,
-a já jsem náhle [F#dim]věděl,
+a já jsem náhle [D#dim]věděl,
 kdo je [E7]onen pán, onen [Ami]pán.
 {end_of_verse}
 
@@ -67,7 +67,7 @@ od Hieronyma [Ami]Bosche, [Emi]
 jak čírka ve vo[Ami]dě,
 jak moje svědo[Emi]mí,
 když zvrací v zácho[F]dě,
-a já jsem náhle [F#dim]věděl:
+a já jsem náhle [D#dim]věděl:
 to je Darmo[E7]děj, můj Darmo[Ami]děj.
 {end_of_verse}
 
@@ -98,6 +98,7 @@ ano, [E7]já jsem on, já jsem [Ami]on.
 {end_of_verse}
 
 {start_of_variant: replace_first_line}
-[Ami]Váš [Emi]Darmoděj,
+[Ami]Váš [Emi]Darmoděj
 {end_of_variant}
+
 {chorus: R2}

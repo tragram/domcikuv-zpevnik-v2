@@ -1,43 +1,43 @@
 {title: Husličky}
 {artist: Vlasta Redl}
-{key: D}
-{capo: 2}
-{range: g1-h2}
+{key: A}
+{capo: 0}
+{range: d1-f#2}
 {language: czech}
-{startMelody: d a}
+{startMelody: a e}
 {createdAt: 1436824800000}
-{updatedAt: 1770572270000}
+{updatedAt: 1783802182000}
 {illustrationId: vlasta_redl-huslicky_gpt-4o-mini_v1_flux.1-dev}
 {promptId: vlasta_redl-huslicky_gpt-4o-mini_v1}
 
 {start_of_verse}
-𝄆 [D]Čí že ste, husličky, [G]či[D]e,
-[Emi]kdo vás tu [Hmi]zanechal [A] 𝄇
-[Emi]na trávě [A]pová[D]lané[G],
-[Emi]na trávě [A]pová[D]lané[G],
-[Emi]u paty [Hmi]oře[A]cha? [Emi][Hmi][A]
+𝄆 [A]Čí že ste, husličky, [D]či[A]e,
+[Hm]kdo vás tu [F#m]zanechal [E] 𝄇
+[Hm]na trávě [E]pová[A]lané[D],
+[Hm]na trávě [E]pová[A]lané[D],
+[Hm]u paty [F#m]oře[E]cha? [Hm][F#m][E]
 {end_of_verse}
 
 {start_of_verse}
-𝄆 [D]A kdože tu trávu tak [G]zvá[D]lal,
-[Emi]aj modré [Hmi]fialy [A] 𝄇
-[Emi]že ste hu[A]sličky [D]samé[G],
-[Emi]že ste hu[A]sličky [D]samé[G],
-[Emi]na světě [Hmi]zosta[A]ly? [Emi][Hmi][A]
+𝄆 [A]A kdože tu trávu tak [D]zvá[A]lal,
+[Hm]aj modré [F#m]fialy [E] 𝄇
+[Hm]že ste hu[E]sličky [A]samé[D],
+[Hm]že ste hu[E]sličky [A]samé[D],
+[Hm]na světě [F#m]zosta[E]ly? [Hm][F#m][E]
 {end_of_verse}
 
 {start_of_verse}
-𝄆 [D]A kerý tu muzikant [G]us[D]nul
-[Emi]a co sa [Hmi]mu přišlo [A]zdát 𝄇
-[Emi]co sa mu [A]v noci [D]zdálo[G],
-[Emi]bože, co [A]sa mu [D]enem zdálo[G],
-[Emi]že už vjec [Hmi]nechtěl [A]hrát? [Emi][Hmi][A]
+𝄆 [A]A kerý tu muzikant [D]us[A]nul
+[Hm]a co sa [F#m]mu přišlo [E]zdát 𝄇
+[Hm]co sa mu [E]v noci [A]zdálo[D],
+[Hm]bože, co [E]sa mu [A]enem zdálo[D],
+[Hm]že už vjec [F#m]nechtěl [E]hrát? [Hm][F#m][E]
 {end_of_verse}
 
 {start_of_verse}
-𝄆 [D]Zahrajte, husličky, [G]sa[D]my,
-[Emi]zahrajte [Hmi]zvesela [A] 𝄇
-[Emi]až sa tá [A]bude [D]trápit[G],
-[Emi]až sa tá [A]bude [D]trápit[G],
-[Emi]která ho [Hmi]nechtě[A]la. [Emi][Hmi][A]
+𝄆 [A]Zahrajte, husličky, [D]sa[A]my,
+[Hm]zahrajte [F#m]zvesela [E] 𝄇
+[Hm]až sa tá [E]bude [A]trápit[D],
+[Hm]až sa tá [E]bude [A]trápit[D],
+[Hm]která ho [F#m]nechtě[E]la. [Hm][F#m][E]
 {end_of_verse}

@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: d d d d a a}
 {createdAt: 1774987976000}
-{updatedAt: 1780160506000}
+{updatedAt: 1783878486000}
 {illustrationId: jelen-jelen_gpt-5-mini_v6_nano-banana-2}
 {promptId: jelen-jelen_gpt-5-mini_v6}
 
@@ -29,32 +29,31 @@ krev teče do vody, [C]v srdci [Dm]klid.
 {end_of_chorus}
 
 {start_of_verse}
-[Dm][C][F][C][Dm]
-[Dm][C][F][C][Dm]
+𝄆 [Dm][C][F][C][Dm] 𝄇
 {end_of_verse}
 
 {start_of_verse}
-Voda teče k moři,
-po kamenech skáče,
-jednou hráze boří.
-Jindy tiše pláče.
-Někdy mám ten pocit,
-I když roky plynou.
-Že vidím tvůj odraz,
-dole pod hladinou.
+[D5]Voda teče k moři,
+[C5]po kamenech skáče[D5],
+[D5]jednou hráze boří.
+[C5]Jindy tiše pláče[D5].
+[D5]Někdy mám ten pocit,
+[C5]I když roky plynou[D5].
+[D5]Že vidím tvůj odraz,
+[C5]dole pod hladinou[G5].
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-Na jaře se vrací,
-listí od podzima.
-Čas se někam ztrácí,
-brzo bude zima.
-Svět přikryje ticho,
-tečka za příběhem.
-Kdo pozná, čí kosti,
-zapadaly sněhem.
+[D5]Na jaře se vrací,
+[C5]listí od podzima[D5].
+[D5]Čas se někam ztrácí,
+[C5]brzo bude zima[D5].
+[D5]Svět přikryje ticho,
+[C5]tečka za příběhem[D5].
+[D5]Kdo pozná, čí kosti,
+[C5]zapadaly sněhem[G5].
 {end_of_verse}
 
 {chorus}
@@ -65,3 +64,7 @@ bez nenávisti, [D]bez jmé[Em]na,
 když přišel dolů k [D]řece [G]pít,
 krev teče do vody, v [D]srdci [Em]klid.
 {end_of_chorus}
+
+{start_of_verse}
+𝄆 [Em][D][G][D][Em] 𝄇
+{end_of_verse}

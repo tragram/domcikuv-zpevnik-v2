@@ -6,53 +6,63 @@
 {language: czech}
 {startMelody: c#}
 {createdAt: 1436824800000}
-{updatedAt: 1770572017000}
+{updatedAt: 1783877914000}
 {illustrationId: filmova_hudba-jednou_mi_fotr_povida_gpt-4o-mini_v1_flux.1-dev}
 {promptId: filmova_hudba-jednou_mi_fotr_povida_gpt-4o-mini_v1}
 
 {start_of_verse}
-[A]Jednou mi fotr [A7]povídá:
-[D]zůstali jsme už [D7]sami dva,
-že [E]si chce začít [E7]taky trochu [A]žít,
+[A7]Jednou mi fotr povídá:
+[D7]zůstali jsme už sami dva,
+že [E7]si chce začít taky trochu [A7]žít,
 {end_of_verse}
 
 {start_of_verse}
-[A]Nech si to projít [A7]palicí
-a [D]nevracej se s [D7]vopicí,
-[E]snaž se mě hochu [E7]trochu pocho[A]pit.
+[A7]Nech si to projít palicí
+a [D7]nevracej se s vopicí,
+[E7]snaž se mě hochu trochu pocho[A7]pit.
 {end_of_verse}
 
 {start_of_chorus}
-Já [E]šel, šel dál, baby, [A]kam mě Pánbůh zval,
-já [E]šel, šel dál, baby, a [D7]furt jen tancoval,
-na [A]každý divný hranici, na [D7]policejní stanici
-[E7]hrál jsem jenom rock'n'roll for [A]you.
+Já [E7]šel, šel dál, baby, [A7]kam mě Pánbůh zval,
+já [E7]šel, šel dál, baby, a [D7]furt jen tancoval,
+na [A7]každý divný hranici, na [D7]policejní stanici
+[E7]hrál jsem jenom rock'n'roll for [A7]you.
 {end_of_chorus}
 
+{start_of_interlude}
+𝄆 [A7][D7][E7][A7] 𝄇
+{end_of_interlude}
+
 {start_of_verse}
-[A]Přiletěl se mnou [A7]černej čáp,
-[D]zobákem dělal [D7]rockin' klap
-a [E]nad kolíbkou [E7]Elvis Presley [A]stál,
+[A7]Přiletěl se mnou černej čáp,
+[D7]zobákem dělal rockin' klap
+a [E7]nad kolíbkou Elvis Presley [A7]stál,
 {end_of_verse}
 
 {start_of_verse}
-[A]Obrovskej bourák [A7]v ulici,
-po [D]boku krásnou [D7]slepici
-a [E]lidi šeptaj: [E7]přijel ňákej [A]král.
+[A7]Obrovskej bourák v ulici,
+po [D7]boku krásnou slepici
+a [E7]lidi šeptaj: přijel ňákej [A7]král.
+{end_of_verse}
+
+{chorus}
+
+{interlude}
+
+{start_of_verse}
+[A7]Pořád tak ňák nemohu,
+[D7]chytit štěstí za nohu
+a [E7]nemůžu si najít klidnej [A7]kout,
+{end_of_verse}
+
+{start_of_verse}
+[A7]Bláznivý ptáci začnou řvát
+a [D7]nový ráno šacovat
+a [E7]do mě vždycky pustí silnej [A7]proud.
 {end_of_verse}
 
 {chorus}
 
-{start_of_verse}
-[A]Pořád tak ňák [A7]nemohu,
-[D]chytit štěstí [D7]za nohu
-a [E]nemůžu si [E7]najít klidnej [A]kout,
-{end_of_verse}
-
-{start_of_verse}
-[A]Bláznivý ptáci [A7]začnou řvát
-a [D]nový ráno [D7]šacovat
-a [E]do mě vždycky [E7]pustí silnej [A]proud.
-{end_of_verse}
-
-{chorus}
+{start_of_chorus:}
++ [E7]hrál jsem jenom rock'n'roll for [A7]you.
+{end_of_chorus}

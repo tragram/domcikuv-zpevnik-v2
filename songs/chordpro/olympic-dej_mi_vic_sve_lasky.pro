@@ -1,12 +1,12 @@
 {title: Dej mi víc své lásky}
 {artist: Olympic}
 {key: Am}
-{capo: 1}
+{capo: 11}
 {range: a1-h2}
 {language: czech}
 {startMelody: a}
 {createdAt: 1436824800000}
-{updatedAt: 1770572197000}
+{updatedAt: 1783859544000}
 {illustrationId: olympic-dej_mi_vic_sve_lasky_gpt-4o-mini_v1_flux.1-dev}
 {promptId: olympic-dej_mi_vic_sve_lasky_gpt-4o-mini_v1}
 
@@ -14,7 +14,7 @@
 [Ami]Vymyslel jsem spoustu napadů, [C]aů,
 co [Ami]podporujou hloupou nála[G7]du, [E7]aů,
 [Ami]hodit klíče do kanálu, [D]sjet po zadku [Dmi]holou skálu,
-v [Ami]noci chodit [E7]strašit do [Ami]hradu
+v [Ami]noci chodit [E7]strašit do [Ami]hradu[E]
 {end_of_verse}
 
 {start_of_verse}
@@ -39,6 +39,7 @@ mi [Ami]dokonale zvednul nála[G]du, [E7]aů,
 {end_of_verse}
 
 {start_of_variant: append_content}
-[G7]Aůůůůůůů, aůůůůůůů, aůůůůůůů, [A]aůůůůůůů
+[Am]Aůůůůůůů, aůůůůůůů, aůůůůůůů, [A]aůůůůůůů
 {end_of_variant}
+
 {chorus}

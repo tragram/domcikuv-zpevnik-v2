@@ -1,0 +1,23 @@
+songId: vypsana_fixa-detaily
+prompts:
+  - id: vypsana_fixa-detaily_gpt-5.4-mini_v7
+    songId: vypsana_fixa-detaily
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene inside a quiet, warmly lit diner at night
+      in humid August air: a lone FBI-agent-like man in a dark suit sits at a
+      small table with a perfectly untouched cherry pie, while the surrounding
+      room feels tense and emotionally fractured, with subtle hints of broken
+      family memories reflected in the window and a fallen napkin on the floor.
+      Outside the glass, the street glows with heavy summer heat and distant
+      storm-like menace, suggesting a journey toward the cold, hidden truth.
+      Moody amber tungsten lighting, deep shadows, slight haze, intimate
+      composition, sparse and subtle text only if any.
+    createdAt: 2026-07-12T12:38:34.000Z
+    updatedAt: 2026-07-12T12:38:34.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783859923000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

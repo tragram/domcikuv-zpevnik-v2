@@ -1,0 +1,21 @@
+songId: xavier_baumaxa-datamtuja
+prompts:
+  - id: xavier_baumaxa-datamtuja_gpt-5.4-mini_v7
+    songId: xavier_baumaxa-datamtuja
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic rural Czech village scene at dusk, a lone
+      frustrated man standing in the foreground beside a narrow country road,
+      facing a small cluster of bland houses and a neighbor’s car, with one tall
+      tuja tree awkwardly blocking the view; cracked plaster walls, muted
+      colors, slightly overcast sky, subtle tension and dry dark humor, bleak
+      post-communist small-town atmosphere, shallow depth of field, natural
+      low-key lighting, no readable text, simple composition, 35mm film look
+    createdAt: 2026-07-12T12:41:09.000Z
+    updatedAt: 2026-07-12T12:41:09.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783860078000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

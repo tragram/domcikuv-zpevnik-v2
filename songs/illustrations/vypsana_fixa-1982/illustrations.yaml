@@ -1,0 +1,22 @@
+songId: vypsana_fixa-1982
+prompts:
+  - id: vypsana_fixa-1982_gpt-5.4-mini_v7
+    songId: vypsana_fixa-1982
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A surreal nostalgic 1982 Czech childhood scene: a small crying boy
+      standing beside a white compact car in a suburban street, a gentle
+      fairy-like woman driver nearby, with a dreamy pop-art retro atmosphere and
+      faint memories of summer, soda, and childhood wonder. Visual style:
+      cinematic photorealistic with subtle pop-art accents, soft grain, warm
+      nostalgic color palette, dusk lighting with glowing highlights and gentle
+      shadows. Keep the composition simple and legible, with only a tiny, barely
+      visible “1982” motif if needed.
+    createdAt: 2026-07-12T13:37:37.000Z
+    updatedAt: 2026-07-12T13:37:37.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783863467000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

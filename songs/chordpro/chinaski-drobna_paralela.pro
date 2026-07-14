@@ -1,70 +1,74 @@
 {title: Drobná paralela}
 {artist: Chinaski}
-{key: G}
-{capo: 2}
-{range: a1-d2}
+{key: C}
+{capo: 0}
+{range: d1-g2}
 {language: czech}
-{startMelody: h d}
+{startMelody: e g}
 {createdAt: 1436824800000}
-{updatedAt: 1770571986000}
+{updatedAt: 1783857555000}
 {illustrationId: chinaski-drobna_paralela_gpt-4o-mini_v1_flux.1-dev}
 {promptId: chinaski-drobna_paralela_gpt-4o-mini_v1}
 
 {start_of_verse}
-Ta [G]stará [D]dobrá hra je [A]okoukaná.
-[G]Nediv se [D]brácho, kdekdo ji [A]zná.
-[G]Přestaň se [D]ptát, bylo nebylo [A]líp.
-[G]Včera je včera, [D]bohužel bohu[A]dík.
+Ta [C]stará [G]dobrá hra je [D]okoukaná.
+[C]Nediv se [G]brácho, kdekdo ji [D]zná.
+[C]Přestaň se [G]ptát, bylo nebylo [D]líp.
+[C]Včera je včera, [G]bohužel bohu[D]dík.
 {end_of_verse}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív,
-[A]nic není jak [Hmi]bejvávalo.
-[G]Nic není jako [D]dřív,
-[A]to se nám to [Hmi]mívávalo.
+[C]Nic není jako [G]dřív,
+[D]nic není jak [Em]bejvávalo.
+[C]Nic není jako [G]dřív,
+[D]to se nám to [Em]mívávalo.
 {end_of_chorus}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív,
-[A]ačkoliv máš všechno [Hmi]co si vždycky chtěla.
-[G]Nic není jako [D]dřív,
-[A]ačkoliv drobná para[Hmi]lela by tu byla.
+[C]Nic není jako [G]dřív,
+[D]ačkoliv máš všechno [Em]co si vždycky chtěla.
+[C]Nic není jako [G]dřív,
+[D]ačkoliv drobná para[Em]lela by tu byla.
 {end_of_chorus}
 
 {start_of_verse}
-[G]Snad nevě[D]říš na tajný zname[A]ní.
-[G]Všechno to harampádí - [D]balábile - [A]mámení.
-[G]Vážení platící, [D]jak všeobecně [A]ví se,
-[G]včera i dneska, [D]stále ta samá [A]píseň.
+[C]Snad nevě[G]říš na tajný zname[D]ní.
+[C]Všechno to harampádí - [G]balábile - [D]mámení.
+[C]Vážení platící, [G]jak všeobecně [D]ví se,
+[C]včera i dneska, [G]stále ta samá [D]píseň.
 {end_of_verse}
 
 {chorus}
 
+{start_of_interlude: Mezihra}
+𝄆 [C][G][D] 𝄇 (4x)
+{end_of_interlude}
+
 {start_of_bridge}
-[G]Promlouvám k vám [D]ústy múzy,
-[A]vzývám tón a [Hmi]lehkou chůzi,
-[G]vzývám zítřek [D]nenadálý,
-[A]odplouvám a [Hmi]mizím.
+[C]Promlouvám k vám [G]ústy múzy,
+[D]vzývám tón a [Em]lehkou chůzi,
+[C]vzývám zítřek [G]nenadálý,
+[D]odplouvám a [Em]mizím.
 {end_of_bridge}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív,
-[A]nic není jak [Hmi]bejvávalo.
-[G]Nic není jako [D]dřív, jó,
-[A]to se nám to dlouze [Hmi]kouřívalo.
+[C]Nic není jako [G]dřív,
+[D]nic není jak [Em]bejvávalo.
+[C]Nic není jako [G]dřív, jó,
+[D]to se nám to dlouze [Em]kouřívalo.
 {end_of_chorus}
 
 {start_of_chorus}
-[G]Bohužel bohu[D]dík je s námi,
-[A]ta nenahmatatelná [Hmi]intimita těla.
-[G]Nic není jako [D]dřív, jen fámy,
-[A]bla-bla-bl[Hmi]a-bla et-cetera.
+[C]Bohužel bohu[G]dík je s námi,
+[D]ta nenahmatatelná [Em]intimita těla.
+[C]Nic není jako [G]dřív, jen fámy,
+[D]bla-bla-bl[Em]a-bla et-cetera.
 {end_of_chorus}
 
 {start_of_chorus}
-[G]Nic není jako [D]dřív
-[A]nic není jak [Hmi]bejvávalo,
-[G]bohužel bohud[D]ík,
-[A]co myslíš ségra,
-je to [Hmi]hodně nebo málo?
+[C]Nic není jako [G]dřív
+[D]nic není jak [Em]bejvávalo,
+[C]bohužel bohud[G]ík,
+[D]co myslíš ségra,
+je to [Em]hodně nebo málo?
 {end_of_chorus}

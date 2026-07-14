@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: d}
 {createdAt: 1436824800000}
-{updatedAt: 1770572058000}
+{updatedAt: 1783797756000}
 {illustrationId: jaromir_nohavica-hlidac_krav_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-hlidac_krav_gpt-4o-mini_v1}
 
@@ -34,8 +34,9 @@ zpívat si: pam pam pam [G]... [A][D]
 co jsem ale vědět chtěl, to nevyčet' jsem z nich:
 [G]nikde jsem se nedozvěděl, [A]jak se hlídají [D]krávy,
 {end_of_verse}
+
 {start_of_verse}
-[D]ptal jsem se starších a ptal jsem se všech,
+[D]Ptal jsem se starších a ptal jsem se všech,
 každý na mě hleděl jako na pytel blech,
 [G]každý se mě opatrně [A]tázal na moje [D]zdraví.
 {end_of_verse}
@@ -47,10 +48,15 @@ každý na mě hleděl jako na pytel blech,
 mnohé věci nemůžu a mnohé smím,
 [G]a když je mi velmi smutno, [A]lehnu si do mokré [D]trávy,
 {end_of_verse}
+
 {start_of_verse}
-[D]s nohama křížem a s rukama za hlavou
+[D]S nohama křížem a s rukama za hlavou
 koukám nahoru na oblohu modravou,
 [G]kde se mezi mraky honí [A]moje strakaté [D]krávy.
 {end_of_verse}
+
+{start_of_variant: append_content}
+[E]Pam pam...[A][H7][E]
+{end_of_variant}
 
 {chorus}

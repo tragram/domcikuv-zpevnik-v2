@@ -6,9 +6,13 @@
 {language: czech}
 {startMelody: d}
 {createdAt: 1318543200000}
-{updatedAt: 1770572198000}
+{updatedAt: 1783875373000}
 {illustrationId: olympic-jasna_zprava_gpt-4o-mini_v1_flux.1-dev}
 {promptId: olympic-jasna_zprava_gpt-4o-mini_v1}
+
+{start_of_interlude}
+𝄆 [G][Em][C][D][Am][C][G] 𝄇
+{end_of_interlude}
 
 {start_of_verse}
 [G]Skončili jsme, jasná zpráva,
@@ -38,6 +42,8 @@ lítá [Ami]vzhůru, ve dvou [D]vzhůru.
 [Ami]kam se kouknu, [C]kousek tebe [G]mám.
 {end_of_verse}
 
+{interlude}
+
 {chorus}
 
 {start_of_verse}
@@ -45,3 +51,5 @@ lítá [Ami]vzhůru, ve dvou [D]vzhůru.
 [Emi]není komu z [C]okna mávat víc
 [Ami]jasná zpráva, [C]rub, co nemá [G]líc.
 {end_of_verse}
+
+{interlude}

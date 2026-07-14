@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: d}
 {createdAt: 1436824800000}
-{updatedAt: 1770572264000}
+{updatedAt: 1783802612000}
 {illustrationId: udg-hvezdar_gpt-4o-mini_v1_flux.1-dev}
 {promptId: udg-hvezdar_gpt-4o-mini_v1}
 
@@ -23,12 +23,12 @@ ve [A]vínu dávno nic
 nehle[Emi]dám. [G] 𝄇
 {end_of_chorus}
 
-{start_of_verse}
+{start_of_bridge}
 𝄆 Jak luna [D]mizíš s nocí
 v bělostných [A]šatech pro nemocné,
 prosit je [Emi]zvláštní pocit,
 jen ať je [G]den noc ne. 𝄇
-{end_of_verse}
+{end_of_bridge}
 
 {start_of_chorus: R2}
 𝄆 Od proseb [D]dávno nic,
@@ -52,14 +52,12 @@ s nebes[Emi]kou interpunkcí,
 
 {chorus: R1}
 
+{bridge}
+
 {start_of_chorus: Outro}
 𝄆 Obzor ne[D]klesne níž,
 je ráno [A]a ty spíš.
 Od vlků [Emi]odraná
-hvězdáře [G]Giordána 𝄇
-
-Obzor neklesne níž,
-je ráno a ty spíš.
-Od vlků odraná
-hvězdáře Giordána odpouštíš.
+hvězdáře [G]Giordána 𝄇 (3x)
+...odpouštíš.
 {end_of_chorus}
