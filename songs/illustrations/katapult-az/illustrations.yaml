@@ -1,0 +1,22 @@
+songId: katapult-az
+prompts:
+  - id: katapult-az_gpt-5.4-mini_v7
+    songId: katapult-az
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely child standing at the edge of a
+      vast futuristic мегacity, looking at a tiny patch of grass and a single
+      playground swing squeezed between towering glass skyscrapers and elevated
+      highways, with drones and satellite silhouettes in the sky hinting at a
+      hyper-advanced world; strong contrast between cold steel-blue city lights
+      and a warm golden sunset on the small play area, emphasizing isolation and
+      lost childhood; simple composition, emotional, realistic, minimal text, no
+      poster typography
+    createdAt: 2026-07-13T07:43:50.000Z
+    updatedAt: 2026-07-13T07:43:50.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783928639000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

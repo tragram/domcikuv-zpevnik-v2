@@ -1,0 +1,20 @@
+songId: miro_zbirka-co_boli_to_preboli
+prompts:
+  - id: miro_zbirka-co_boli_to_preboli_gpt-5.4-mini_v7
+    songId: miro_zbirka-co_boli_to_preboli
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of two weary figures in a small damaged
+      rowboat splitting on a dark moonlit sea, one oar missing, subtle smoke
+      rising from broken wooden planks, a faint glowing secret just beneath the
+      water’s surface, melancholic but resilient mood, distant horizon hinting
+      at a desert-like shore, cold blue and silver lighting with soft mist,
+      minimal composition, no text, high detail, dramatic reflections
+    createdAt: 2026-07-12T13:47:17.000Z
+    updatedAt: 2026-07-12T13:47:17.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783864047000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

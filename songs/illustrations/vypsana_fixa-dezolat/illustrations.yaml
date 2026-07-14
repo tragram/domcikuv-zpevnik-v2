@@ -1,0 +1,22 @@
+songId: vypsana_fixa-dezolat
+prompts:
+  - id: vypsana_fixa-dezolat_gpt-5.4-mini_v7
+    songId: vypsana_fixa-dezolat
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene inside a cozy retro bedroom on a quiet
+      Sunday, a couple lying in bed beside an old gramophone spinning a vinyl
+      record, warm nostalgic interior contrasted with faint cold blue
+      surveillance camera glow visible through the window outside, subtle sense
+      of being watched, music drifting through the room like an invisible haze,
+      intimate and surreal mood, soft volumetric lighting, shallow depth of
+      field, minimal composition, no text, only the gramophone and bed as focal
+      points
+    createdAt: 2026-07-12T12:31:08.000Z
+    updatedAt: 2026-07-12T12:31:08.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783859476000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

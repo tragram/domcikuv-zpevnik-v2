@@ -1,0 +1,21 @@
+songId: vypsana_fixa-ctyri_slunce
+prompts:
+  - id: vypsana_fixa-ctyri_slunce_gpt-5.4-mini_v7
+    songId: vypsana_fixa-ctyri_slunce
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Bright surreal daytime scene: four glowing suns in a clear blue sky over a
+      calm landscape, a simple river crossed by a small wooden bridge, gentle
+      rolling hills, warm cheerful atmosphere, a playful wavy line motif subtly
+      rising like a musical waveform in the foreground, evoking renewal,
+      comfort, and childlike optimism. Cinematic photorealistic style, soft
+      golden lighting, vibrant but clean colors, minimalist composition, only a
+      tiny discreet text-like symbol if needed.
+    createdAt: 2026-07-13T07:33:51.000Z
+    updatedAt: 2026-07-13T07:33:51.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783928040000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

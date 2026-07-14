@@ -1,69 +1,70 @@
 {title: Hříšná Těla Křídla Motýlí}
 {artist: Aneta Langerová}
-{key: E}
-{capo: 7}
-{range: h1-e2}
+{key: A}
+{capo: 2}
+{range: e1-a2}
 {language: czech}
-{startMelody: h h h}
+{startMelody: e e e}
 {createdAt: 1772895473000}
-{updatedAt: 1774796125000}
+{updatedAt: 1783801458000}
 {illustrationId: aneta_langerova-hrisna_tela_kridla_motyli_gpt-5-mini_v4_nano-banana-2}
 {promptId: aneta_langerova-hrisna_tela_kridla_motyli_gpt-5-mini_v4}
 
-{start_of_verse}
-[E]Jednou uz tě málem měla
-[H]a už zase by tě chtěla
-[C#m]Hříšná těla, křídla motý[A]lí
-
-Krev stéká [E]po růži cos na zeď věšel
-[H]průvan sfouk a život nešel
-[C#m]Potrhaná křídla motý[A]lí
+{start_of_verse:Intro}
+[A][A sus2][A][A sus2]
 {end_of_verse}
 
-{start_of_chorus}
-Vyhni se [H]botám který vůní šlapou
-[C#m]Sladké písně psané za pou[C#]hou
-jen skývu taktak zlatou
-
-[F#m]Prodají tě do výkladních [A]skří[E]ní,
-výs[H]tavních [C#m]síní
-A každej [A]zvlášť do kapsy [E]svý
-džípem si [H]pádí
-{end_of_chorus}
-
 {start_of_verse}
-[E]Jednou uz tě málem měla,
-[H]za duši tě podržela
-[C#m]Hříšna těla křídla [A]motýlí
+[A]Jednou uz tě málem měla
+[E]a už zase by tě chtěla
+[F#m]Hříšná těla, křídla motý[D]lí
+Krev stéká [A]po růži cos na zeď věšel
+[E]průvan sfouk a život nešel
+[F#m]Potrhaná křídla motý[D]lí
 
-Navrať se [E]skálou kterou's z cesty sešel
-[H]otoč kamenem kde's vešel
-[C#m]napni slunci křídla [A]motýlí
+Vyhni se [E]botám který vůní šlapou
+[F#m]Drtí řádky psané za pou[F#]hou
+jen skývu málem zlatou
+[Hm]Prodají tě do výkladních [D]skří[A]ní,
+výs[E]tavních [F#m]síní
+A každej [D]zvlášť do kapsy [A]svý
+džípem si [E]pádí
 {end_of_verse}
 
-{chorus}
+{start_of_verse}
+[A]Jednou uz tě málem měla,
+[E]za duši tě podržela
+[F#m]Hříšna těla křídla [D]motýlí
+Navrať se [A]skálou kterou's z cesty sešel
+[E]otoč kamenem kde's vešel
+[F#m]napni slunci křídla motý[D]lí
+
+Vyhni se [E]botám který vůní šlapou
+[F#m]Sladké písně psané Zappou[F#]hou
+jen skývu tak tak zlatou
+[Hm]Prodají tě do výkladních [D]skří[A]ní,
+výs[E]tavních [F#m]síní
+A každej [D]zvlášť do kapsy [A]svý
+džípem si [E]pádí
+{end_of_verse}
 
 {start_of_bridge}
-[F#]Až vyroste strom
-[A]Až udeří do něj blesk a hrom
-[E]Hmm, noc [H]se válí
-[F#]Až vyroste strom
-[A]a udeří do něj blesk a hrom
-
-[H]Narovná, rozdělí, podělí,
+[H]Až vyroste strom [C#m]
+[D]Až udeří do něj blesk a hrom
+[A]Hmm, noc se [E]válí
+[H]Až vyroste strom [C#m]
+[D]a udeří do něj blesk a hrom
+[E]Narovná, rozdělí, podělí,
 poskládáš úterý ke kusům nedělí
-a půjdeš [E]dál [H][C#m][A]
+a půjdeš [A]dál... [E][F#m][D]
+Vzpomeň si [A]na svět kdy pro kousek těla
+[E]zázraky si neviděla,
+[F#m]neměla jsi křídla motý[D]lí
 {end_of_bridge}
 
-{start_of_verse}
-Vzpomeň si [E]na svět kdy pro kousek těla
-[H]zázraky si neviděla,
-[C#m]neměla jsi křídla motý[A]lí
-{end_of_verse}
-
 {start_of_verse: Outro}
-[E]V roklině pod skálou zjevení,
-[H]údolí rozšklebené napětím, otevřené spojením,
-[C#m]jeleni obtěžkáni vábením,
-[A]vrhají se bezhlavě do hloubi [E]země...
+[A]V roklině pod skálou zjevení,
+[E]údolí rozšklebené napětím, otevřené spojením,
+[F#m]jeleni obtěžkáni vábením,
+[D]vrhají se bezhlavě do hloubi [A]země...
 {end_of_verse}

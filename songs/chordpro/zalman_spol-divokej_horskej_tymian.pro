@@ -1,44 +1,67 @@
 {title: Divokej horskej tymián}
 {artist: Žalman & Spol.}
-{key: C}
-{capo: 5}
-{range: g1-a2}
+{key: D}
+{capo: 0}
+{range: a1-h2}
 {language: czech}
-{startMelody: c}
+{startMelody: d}
 {createdAt: 1436824800000}
-{updatedAt: 1770572325000}
+{updatedAt: 1783869779000}
 {illustrationId: zalman_spol-divokej_horskej_tymian_gpt-4o-mini_v1_flux.1-dev}
 {promptId: zalman_spol-divokej_horskej_tymian_gpt-4o-mini_v1}
 
-{start_of_verse}
-Dál za vo[C]zem [F]spolu [C]šlapem,
-někdo [F]rád a někdo [C]zmaten,
-kdo se [F]vrací, není [Emi]sám,
-je to [Dmi]věc, když pro nás [F]voní
-z hor [C]divokej [F]tymián. [C]
+{start_of_tab}
+Sloka + intro..... Refren............
+___D___G__F#m_Em__ ___D___G__F#m_Em__
+e|-x-|-x-|-x-|-x-| e|-2-|-3-|-2-|-0-|
+H|-x-|-x-|-x-|-x-| H|-3-|-0-|-2-|-0-|
+G|-0-|-0-|-0-|-0-| G|-2-|-0-|-2-|-0-|
+D|-4-|-0-|-4-|-2-| D|-0-|-0-|-4-|-2-|
+A|-5-|-5-|-4-|-2-| A|-0-|-5-|-4-|-2-|
+F|-0-|-5-|-4-|-2-| F|-0-|-5-|-4-|-2-|
+{end_of_tab}
+
+{start_of_verse:Intro}
+[D]//[D][G][D]//[G][D]//[G]
+[F#m7]//[Em][G][D][G][D]
 {end_of_verse}
 
 {start_of_verse}
-Léto, [C]zůstaň [F]dlouho s [C]námi,
-dlouho [F]hřej a spal nám [C]rány,
-až po [F]okraj naplň [Emi]džbán,
-je to [Dmi]věc, když pro nás [F]voní
-z hor [C]divokej [F]tymián. [C]
+Dál za vo[D]zem [G]spolu [D]šlapem,
+někdo [G]rád a někdo [D]zmaten,
+kdo se [G]vrací, není [F#m]sám,
+je to [Em]věc, když pro nás [G]voní
+z hor [D]divokej [G]tymián. [D]
+{end_of_verse}
+
+{start_of_verse}
+Léto, [D]zůstaň [G]dlouho s [D]námi,
+dlouho [G]hřej a spal nám [D]rány,
+až po [G]okraj naplň [F#m]džbán,
+je to [Em]věc, když pro nás [G]voní
+z hor [D]divokej [G]tymián. [D][D7]
 {end_of_verse}
 
 {start_of_chorus}
-[C7]Podí[F]vej, jak málo [C]stačí,
-když do [F]vázy natr[Emi]hám
-bílou [Dmi]nocí k milov[F]ání
-z hor di[C]vokej [F]tymián. [C]
+[D7]Podí[G]vej, jak málo [D]stačí,
+když do [G]vázy natr[F#m]hám
+bílou [Em]nocí k milov[G]ání
+z hor di[D]vokej [G]tymián. [D]
 {end_of_chorus}
 
+{start_of_verse:Sólo}
+[D][G][D]//[G][D]//[G]
+[F#m7]//[Em][G][D][G][D]
+{end_of_verse}
+
 {start_of_verse}
-Dál za vo[C]zem [F]trávou, [C]prachem,
-někdy [F]krokem, někdy [C]trapem,
-kdo se [F]vrací dolů k [Emi]nám,
-je to [Dmi]věc, když pro nás [F]voní
-z hor [C]divokej [F]tymián. [C]
+Dál za vo[D]zem [G]trávou, [D]prachem,
+někdy [G]krokem, někdy [D]trapem,
+kdo se [G]vrací dolů k [F#m]nám,
+je to [Em]věc, když pro nás [G]voní
+z hor [D]divokej [G]tymián. [D][D7]
 {end_of_verse}
 
 {chorus}
+
+{verse: Sólo}

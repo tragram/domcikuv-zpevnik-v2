@@ -1,0 +1,21 @@
+songId: brutus-dlazebni_kostka
+prompts:
+  - id: brutus-dlazebni_kostka_gpt-5.4-mini_v7
+    songId: brutus-dlazebni_kostka
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Surreal whimsical forest scene, a curious dog standing on a dirt path in a
+      sun-dappled woodland, facing a single anthropomorphic cobblestone with a
+      faint face and tiny implied movement, playful absurd humor, the dog
+      slightly startled and glancing up as if being teased, subtle antler-like
+      branch shadows above its head as a visual joke, simple composition,
+      storybook illustration, soft natural lighting, muted earthy colors,
+      minimal text if any, highly legible, charming and absurdist mood
+    createdAt: 2026-07-12T09:12:27.000Z
+    updatedAt: 2026-07-12T09:12:27.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783847555000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

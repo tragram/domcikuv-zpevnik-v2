@@ -1,12 +1,12 @@
 {title: Dívka s perlami ve vlasech}
 {artist: Aleš Brichta}
 {key: Am}
-{capo: 5}
+{capo: 6}
 {range: a1-e1}
 {language: czech}
 {startMelody: e e c d}
 {createdAt: 1436824800000}
-{updatedAt: 1770571963000}
+{updatedAt: 1783858977000}
 {illustrationId: ales_brichta-divka_s_perlami_ve_vlasech_gpt-4o-mini_v2_flux.1-dev}
 {promptId: ales_brichta-divka_s_perlami_ve_vlasech_gpt-4o-mini_v2}
 

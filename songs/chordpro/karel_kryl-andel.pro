@@ -1,12 +1,12 @@
 {title: Anděl}
 {artist: Karel Kryl}
 {key: G}
-{capo: 4}
+{capo: 7}
 {range: g1-h2}
 {language: czech}
 {startMelody: h h a g}
 {createdAt: 1287007200000}
-{updatedAt: 1770572123000}
+{updatedAt: 1783928546000}
 {illustrationId: karel_kryl-andel_gpt-4o-mini_v1_flux.1-dev}
 {promptId: karel_kryl-andel_gpt-4o-mini_v1}
 

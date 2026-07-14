@@ -6,9 +6,13 @@
 {language: czech}
 {startMelody: e e}
 {createdAt: 1747173600000}
-{updatedAt: 1770572100000}
+{updatedAt: 1783880750000}
 {illustrationId: jiri_korn-jeste_te_mam_plnou_naruc_gpt-4o-mini_v2_flux.1-dev}
 {promptId: jiri_korn-jeste_te_mam_plnou_naruc_gpt-4o-mini_v2}
+
+{start_of_interlude:Intro}
+𝄆 [Em][Hm][C] 𝄇 (3x)
+{end_of_interlude}
 
 {start_of_verse}
 [Emi]Z prstů [G]tvou vůni [Hmi]svlíkám,
@@ -28,9 +32,9 @@ jak jsem si [A#dim7]přál,
 
 {start_of_chorus}
 [H]Ještě tě [Emi]mám [G]plnou [C]ná[F]ruč
-[G]a jen z tvých [Dmi7]povzdechů [Cmaj7]jsem [H]živ
+[G]a jen z tvých [Dmi7]povzdechů jsem [Cmaj7]živ[H]
 Ukřižo[Emi]ván [G]na svých [C]polštá[F]řích,
-slito[Emi]vání, přijď [Hmaj7]zítra [Emi]dřív
+slito[Emi]vání, přijď [Hmaj7]zítra [Emi]dřív [Hm][C]
 {end_of_chorus}
 
 {start_of_verse}
@@ -51,6 +55,10 @@ budeš si [A#dim7]přát,
 
 {chorus}
 
+{start_of_interlude}
+𝄆 [Emi][G][Hmi][D][A][C] 𝄇
+{end_of_interlude}
+
 {start_of_bridge}
 [C#dim7]Zůstáváš [C#msus4]ve mně,
 jak jsem si [A#dim7]přál,
@@ -60,4 +68,9 @@ jak jsem si [A#dim7]přál,
 {start_of_variant: append_content}
 [F]Slitování, [Emi]přijď [Hmaj7]zítra [Emi]dřív
 {end_of_variant}
+
 {chorus}
+
+{start_of_interlude: Outro}
+𝄆 [Em][Hm][C] 𝄇 (3x)
+{end_of_interlude}

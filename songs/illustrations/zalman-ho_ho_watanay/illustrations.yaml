@@ -1,0 +1,22 @@
+songId: zalman-ho_ho_watanay
+prompts:
+  - id: zalman-ho_ho_watanay_gpt-5.4-mini_v7
+    songId: zalman-ho_ho_watanay
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic nighttime lullaby scene: a tender parent gently
+      tucking a small child to sleep outdoors in a meadow, placing tiny glowing
+      stars into the child’s hair, with a pearlescent moth floating nearby and a
+      dark raven-colored horse resting in the background under a soft moonlit
+      sky; subtle wild grass, dreamy breeze, warm intimate mood, soft blue and
+      silver lighting, gentle bokeh, serene magical atmosphere, minimal
+      composition, no visible text except perhaps a very small, faint decorative
+      chant mark if needed
+    createdAt: 2026-07-13T07:48:14.000Z
+    updatedAt: 2026-07-13T07:48:14.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783928902000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

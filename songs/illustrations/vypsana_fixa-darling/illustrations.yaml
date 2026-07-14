@@ -1,0 +1,23 @@
+songId: vypsana_fixa-darling
+prompts:
+  - id: vypsana_fixa-darling_gpt-5.4-mini_v7
+    songId: vypsana_fixa-darling
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic night scene in a gritty Czech urban
+      no-man’s-land: a tired but defiant man and a woman standing beside a
+      glowing automatic coffee machine, holding small paper cups, surrounded by
+      empty pavement, a distant watchtower, and a faint porn kiosk sign in the
+      background; subtle surreal boomerangs floating in the air, looping back
+      toward them; mood of absurd poetry, streetwise romance, and dark humor,
+      with soft neon reflections, cool blue-gray shadows, and a single warm
+      light from the vending machine; simple composition, small-scale legible,
+      minimal text, no readable signage.
+    createdAt: 2026-07-12T12:50:54.000Z
+    updatedAt: 2026-07-12T12:50:54.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783860665000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

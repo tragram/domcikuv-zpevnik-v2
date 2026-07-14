@@ -1,0 +1,21 @@
+songId: jiri_schelinger-jahody_mrazeny
+prompts:
+  - id: jiri_schelinger-jahody_mrazeny_gpt-5.4-mini_v7
+    songId: jiri_schelinger-jahody_mrazeny
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic winter scene: a forlorn Czech man standing in a snowy field at
+      dusk, holding a nearly empty basket and staring at a distant village
+      cottage, wind blowing through his coat, icy frost and drifting snow
+      emphasizing his hopelessness; subtle humorous touch with a small
+      transparent plastic bag of frozen strawberries peeking from the basket.
+      Cold blue-gray color palette, soft overcast lighting, photorealistic,
+      simple composition, no visible text.
+    createdAt: 2026-07-13T07:31:41.000Z
+    updatedAt: 2026-07-13T07:31:41.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783927909000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,0 +1,22 @@
+songId: pisnicky_z_pohadek-a_pohadky_je_konec
+prompts:
+  - id: pisnicky_z_pohadek-a_pohadky_je_konec_gpt-5.4-mini_v7
+    songId: pisnicky_z_pohadek-a_pohadky_je_konec
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene at dawn over a small fairytale kingdom: a
+      lonely castle silhouette on a hill, soft blue-gray night fading into pale
+      gold sunrise, a distant church bell tower with subtle ringing motion
+      implied, and a single shadowy figure of envy dissolving as warm light
+      reaches a glowing heart-shaped window in the castle. Mood of sorrow
+      turning into fragile hope, magical realism, misty atmosphere, gentle
+      contrast between cold darkness and warm love. Minimal or no text, simple
+      composition, dramatic soft rim lighting, highly legible at small sizes.
+    createdAt: 2026-07-13T07:40:46.000Z
+    updatedAt: 2026-07-13T07:40:46.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783928454000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

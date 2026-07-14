@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: f#}
 {createdAt: 1436824800000}
-{updatedAt: 1770571985000}
+{updatedAt: 1783858584000}
 {illustrationId: chinaski-dobrak_od_kosti_gpt-4o-mini_v1_flux.1-dev}
 {promptId: chinaski-dobrak_od_kosti_gpt-4o-mini_v1}
 
@@ -39,11 +39,15 @@ jak [A]jsi hebká na dotek, [G]krásná a nedospělá
 {end_of_verse}
 
 {start_of_bridge}
-[D]Sejde z očí sejde z mysli
+𝄆 [D]Sejde z očí sejde z mysli
 jenom [A]blázen věří na nesmysly
 [G7]láska je čaroděj a ticho prý léčí,
-ale zákon hovoří jasnou řečí
+ale zákon hovoří jasnou řečí 𝄇
 {end_of_bridge}
+
+{comment: Druhý refren prolíná bridge}
+
+{chorus}
 
 {chorus}
 

@@ -1,0 +1,23 @@
+songId: jelen-a_co_bylo_dal
+prompts:
+  - id: jelen-a_co_bylo_dal_gpt-5.4-mini_v7
+    songId: jelen-a_co_bylo_dal
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely winter bar interior at dusk,
+      warm amber light spilling from windows onto a single couple standing tense
+      and distant near the doorway, while outside through the glass a dark
+      snowstorm swirls with bent trees and heavy clouds; subtle emotional
+      atmosphere, moody contrast between warm refuge and cold world, one figure
+      with snow in their hair, the other frozen mid-turn as if a painful memory
+      has just returned, shallow depth of field, soft film grain, realistic
+      details, minimal or no text, dramatic lighting, melancholic Czech song
+      mood
+    createdAt: 2026-07-11T09:04:58.000Z
+    updatedAt: 2026-07-11T09:04:58.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1783760709000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
