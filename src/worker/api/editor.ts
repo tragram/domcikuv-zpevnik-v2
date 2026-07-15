@@ -19,7 +19,6 @@ import {
   editorUpdateSchema,
 } from "src/lib/contracts/editor-schema";
 
-
 const editorApp = buildApp()
   .post(
     "/autofill",
@@ -41,10 +40,16 @@ const editorApp = buildApp()
       const client = new OpenAI({ apiKey });
 
       const response = await client.responses.create({
-        model: "gpt-5.2",
-        text: { format: { type: "text" }, verbosity: "low" },
-        reasoning: { effort: "none", summary: null },
-        // ... Original long instructions omitted for brevity, keep the exact same string you had ...
+        model: "gpt-5.6-terra",
+        service_tier: "flex",
+        text: {
+          format: { type: "text" },
+          verbosity: "low",
+        },
+        reasoning: {
+          effort: "none",
+          summary: null,
+        },
         instructions: `You are given a song in ChordPro format.
 
 Your task is to complete missing chord annotations while preserving exact structure and formatting.
