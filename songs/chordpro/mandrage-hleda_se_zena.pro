@@ -1,9 +1,12 @@
 {title: Hledá se žena}
 {artist: Mandrage}
+{key: Am}
 {capo: 0}
 {language: czech}
 {createdAt: 1783796053000}
-{updatedAt: 1783797336000}
+{updatedAt: 1784132731000}
+{illustrationId: mandrage-hleda_se_zena_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: mandrage-hleda_se_zena_gpt-5.4-mini_v7}
 
 {start_of_tab}
 ___Ami__________________G_______E____
@@ -35,9 +38,9 @@ raději [F]žádná, nežli [G]vadná.
 Tady je [Ami]každá [C]rada velmi [G]drahá.[E7]
 {end_of_bridge}
 
-{start_of_verse}
+{start_of_interlude}
 Riff [Am][G][E]
-{end_of_verse}
+{end_of_interlude}
 
 {start_of_verse}
 [Ami]Hledá se žena všeho [G]schopná, [E]

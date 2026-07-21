@@ -6,19 +6,21 @@
 {language: czech}
 {startMelody: h h h h h g}
 {createdAt: 1773786115000}
-{updatedAt: 1774794376000}
+{updatedAt: 1784612061000}
 {illustrationId: kabat-na_sever_gpt-5-mini_v4_nano-banana-2}
 {promptId: kabat-na_sever_gpt-5-mini_v4}
+
+{comment: Riff (6x)}
+
+{start_of_interlude: Intro}
 
 {start_of_tab}
 e|-7-10-10-8-7-8-7-7---7-8-8-8-8-7----
 H|-8-8-8-8-8-8-8-8-8---8-8-8-8-8-8-7-8
 G|-7-7-7-7-7-7-7-7-7---7-7-7-7-7-7-7-7
 {end_of_tab}
-
-{start_of_verse}
 [D]
-{end_of_verse}
+{end_of_interlude}
 
 {start_of_verse}
 [G]No tak mi [Emi]zatancuj, ať [D]náladu [G]mám,
@@ -30,7 +32,7 @@ a teď [G]holka musím [Emi]jít až [D]tam na se[G]ver.
 {comment: Pozor, poprvé refrén není celý!}
 
 {start_of_chorus}
-Cestu [G]znám... [D][G]
+(Riff 2x) Cestu [G]znám... [D][G]
 {end_of_chorus}
 
 {start_of_verse}
@@ -44,6 +46,8 @@ já ji [G]jenom polí[Emi]bil a [D]šel na se[G]ver.
 𝄆 [G]Cestu znám a [C]neměním [G]směr,
 [G]dojdu k řece [Em]plný ryb až [D]tam na se[G]ver. 𝄇
 {end_of_chorus}
+
+{comment: Riff (4x)}
 
 {start_of_verse}
 [G]Mám nohy [Emi]bolavý, už [D]nechtěj se [G]hnout,
@@ -63,5 +67,5 @@ já ji [G]jenom polí[Emi]bil a [D]šel na se[G]ver.
 
 {start_of_chorus}
 𝄆 [A]Cestu znám [D]a neměním [A]směr,
-[A]dojdu k řece [F#mi]plný ryb až [E]tam na se[A]ver. 𝄇
+[A]dojdu k řece [F#mi]plný ryb až [E]tam na se[A]ver. 𝄇 (4x)
 {end_of_chorus}

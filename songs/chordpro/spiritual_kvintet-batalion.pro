@@ -6,15 +6,15 @@
 {language: czech}
 {startMelody: a}
 {createdAt: 1436824800000}
-{updatedAt: 1770572243000}
+{updatedAt: 1784058518000}
 {illustrationId: spiritual_kvintet-batalion_gpt-4o-mini_v1_flux.1-dev}
 {promptId: spiritual_kvintet-batalion_gpt-4o-mini_v1}
 
 {start_of_chorus: Intro}
 [Ami]Víno [C]máš a [G]marky[Ami]tánku,
-[Ami]dlouhá [C]noc se [G]pro[Emi]hýří, [Ami]
+[Ami]dlouhá [C]noc [G]se [Am]pro[Emi]hý[Ami]ří,
 [Ami]víno [C]máš a [G]chvilku [Ami]spánku,
-díky, [C]díky, [G]ver[Emi]bíři. [Ami]
+díky, [C]dí[G]ky, [Am]ver[Emi]bí[Ami]ři.
 {end_of_chorus}
 
 {start_of_verse}
@@ -26,7 +26,7 @@ ko[G]ně [Ami]po [Emi]há [Ami]ní.
 [Ami]Tam na straně polední,
 čekají [C]ženy, zlaťá[G]ky a [Ami]slá[Emi]va,
 [Ami]do výstřelů z karabin
-zvon [G]už [Ami]vy [Emi]zvání. [Ami]
+zvon [G]už [Ami]vy [Emi]zvá[Ami]ní.
 {end_of_verse}
 
 {start_of_chorus}
@@ -37,7 +37,7 @@ bata[G]lion [Ami]za[Emi]mí[Ami]ří.
 
 [Ami]Víno na [C]kuráž
 a [G]k ránu dvě hodiny [Ami]spánku,
-[C]díky, díky vám
+díky, díky [C]vám
 králov[G]ští [Ami]ver[Emi]bí[Ami]ři.
 {end_of_chorus}
 

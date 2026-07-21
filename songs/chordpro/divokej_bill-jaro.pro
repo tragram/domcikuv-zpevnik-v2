@@ -4,7 +4,9 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1783876535000}
-{updatedAt: 1783876805000}
+{updatedAt: 1784132870000}
+{illustrationId: divokej_bill-jaro_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: divokej_bill-jaro_gpt-5.4-mini_v7}
 
 {start_of_tab}
 ___E___C___H__

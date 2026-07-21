@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: d}
 {createdAt: 1436824800000}
-{updatedAt: 1783869779000}
+{updatedAt: 1784230092000}
 {illustrationId: zalman_spol-divokej_horskej_tymian_gpt-4o-mini_v1_flux.1-dev}
 {promptId: zalman_spol-divokej_horskej_tymian_gpt-4o-mini_v1}
 
@@ -18,7 +18,7 @@ H|-x-|-x-|-x-|-x-| H|-3-|-0-|-2-|-0-|
 G|-0-|-0-|-0-|-0-| G|-2-|-0-|-2-|-0-|
 D|-4-|-0-|-4-|-2-| D|-0-|-0-|-4-|-2-|
 A|-5-|-5-|-4-|-2-| A|-0-|-5-|-4-|-2-|
-F|-0-|-5-|-4-|-2-| F|-0-|-5-|-4-|-2-|
+D|-0-|-5-|-4-|-2-| D|-0-|-5-|-4-|-2-|
 {end_of_tab}
 
 {start_of_verse:Intro}

@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: d d d c# d}
 {createdAt: 1284415200000}
-{updatedAt: 1770572212000}
+{updatedAt: 1784058506000}
 {illustrationId: pavel_dydovic-blaznova_ukolebavka_gpt-4o-mini_v1_flux.1-dev}
 {promptId: pavel_dydovic-blaznova_ukolebavka_gpt-4o-mini_v1}
 
@@ -23,7 +23,7 @@ zas [A]má bílej plášť a [G]v okně je [A]mříž
 a [G]můžeš hřát ty mně [E]můžeš hřát
 Vždyť [D]přijdou se [G]ptát,
 zítra zas [D]přijdou se [G]ptát
-jestli ty v [D]mých představách [G]už [D]mizíš
+jestli ty v [D]mých předsta[G]vách už [D]mizíš
 {end_of_chorus}
 
 {start_of_verse}

@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: g g g e e}
 {createdAt: 1772895054000}
-{updatedAt: 1773309837000}
+{updatedAt: 1784467717000}
 {illustrationId: chinaski-vrchlabi_gpt-5-mini_v4_nano-banana-2}
 {promptId: chinaski-vrchlabi_gpt-5-mini_v4}
 
@@ -15,8 +15,8 @@ Jela jsem s [C]Marcelou a Martou[C7]
 po koncertě [F]autem domů z Vrchlabí.[D]
 Milí [C]páni, nemáte [C7]nejmenší zdání,
 co [F]všechno tři holky pobaví[D].
-Hustě [F]sněží, [C]cestu [Dm]klikatou dlouhou
-[F]krájíme krok za krokem.
+Hustě [F]sněží, [C]cestu
+[Dm]klikatou dlouhou [F]krájíme krok za krokem.
 {end_of_verse}
 
 {start_of_verse}
@@ -39,14 +39,14 @@ pár přátel [C]na ces[G]tách,
 od jara [Am]do zimy[F].
 Přes [C]všechen [G]čas,
 všech[Am]ny ty dny,[F]
-přes [C]všechno [G]trápení,
+přes všechno [C]trápe[G]ní,
 pořád [Am]jsme to [F]my. [Dm7b5]
 {end_of_chorus}
 
 {start_of_verse}
 Hustě [C]sněží, cestu [C7]klikatou dlouhou
-[F]krájíme krok za kroke[D]m.
-𝄆 Náš [C]tým [C7]neohrožených [Am]že[D]n 𝄇
+[F]krájíme krok za krokem.[D]
+𝄆 Náš [C]tým [C7]neohrožených [Am]žen [D] 𝄇
 Náš [C]tým [C7]neohrožených [F]žen...
 Vstříc novým Vrchlabím
 vždy s [D]úsměvem

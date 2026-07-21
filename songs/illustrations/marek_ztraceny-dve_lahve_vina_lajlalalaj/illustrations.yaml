@@ -1,2 +1,21 @@
 songId: marek_ztraceny-dve_lahve_vina_lajlalalaj
-prompts: []
+prompts:
+  - id: marek_ztraceny-dve_lahve_vina_lajlalalaj_gpt-5.4-mini_v7
+    songId: marek_ztraceny-dve_lahve_vina_lajlalalaj
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic night street scene in a quiet Czech city, a
+      slightly disoriented man in the foreground holding his head after being
+      struck by a bottle, another friend nearby offering support, subtle hints
+      of spilled alcohol on the pavement, dim streetlights casting cold blue and
+      amber glow, moody realism, shallow depth of field, understated melancholy
+      and dark irony, minimal text only if any, no explicit violence, no gore,
+      simple composition, high detail, 16:9
+    createdAt: 2026-07-15T16:24:19.000Z
+    updatedAt: 2026-07-15T16:24:19.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132670000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

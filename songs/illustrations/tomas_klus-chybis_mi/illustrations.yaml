@@ -1,2 +1,23 @@
 songId: tomas_klus-chybis_mi
-prompts: []
+prompts:
+  - id: tomas_klus-chybis_mi_gpt-5.4-mini_v7
+    songId: tomas_klus-chybis_mi
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a cramped dim bedroom at dawn after a
+      sleepless night, a man sitting on the edge of a small bed with a hungover,
+      haunted expression, reaching toward an empty space where a woman has just
+      slipped away through the doorway; rumpled sheets, scattered wine glasses,
+      soft cold morning light spilling across the room, one blurred female
+      silhouette in motion, sense of longing, heartbreak, and emotional
+      distance, intimate but simple composition, muted blue-gray and pale amber
+      palette, shallow depth of field, subtle film grain, no text or only a tiny
+      faint lyric-like detail if needed
+    createdAt: 2026-07-14T19:27:52.000Z
+    updatedAt: 2026-07-14T19:27:52.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784057280000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

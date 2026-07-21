@@ -1,2 +1,21 @@
 songId: jana_kirschner-modra
-prompts: []
+prompts:
+  - id: jana_kirschner-modra_gpt-5.4-mini_v7
+    songId: jana_kirschner-modra
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Dreamlike intimate night scene of a sleeping person in bed under a window,
+      a glowing moon perched on a tree outside, soft rain-like light or falling
+      petals entering the room like a gentle embrace, a childlike barefoot
+      silhouette and a butterfly resting on parted lips, surreal poetic
+      atmosphere, tender longing, calm and melancholic, cinematic
+      photorealistic, soft blue and silver lighting, shallow depth of field,
+      minimal composition, no visible text, only subtle symbolic details
+    createdAt: 2026-07-15T16:22:37.000Z
+    updatedAt: 2026-07-15T16:22:37.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132567000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
