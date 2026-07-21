@@ -1,2 +1,21 @@
 songId: mandrage-hleda_se_zena
-prompts: []
+prompts:
+  - id: mandrage-hleda_se_zena_gpt-5.4-mini_v7
+    songId: mandrage-hleda_se_zena
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic nighttime scene in a quirky noir western setting:
+      a lone man in a rumpled coat stands under a flickering streetlamp holding
+      a “wanted” notice, scanning a rainy empty street for the missing woman;
+      subtle clues like a detective hat, guitar case, and old saloon facade
+      suggest mystery and flirtatious adventure. Moody blue-gray palette, wet
+      reflections, soft fog, dramatic chiaroscuro lighting, simple composition,
+      a few faint handwritten poster letters only, no other text.
+    createdAt: 2026-07-15T16:25:18.000Z
+    updatedAt: 2026-07-15T16:25:18.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132730000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

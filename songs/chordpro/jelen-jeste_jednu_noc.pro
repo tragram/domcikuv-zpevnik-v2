@@ -4,11 +4,13 @@
 {capo: 2}
 {language: czech}
 {createdAt: 1783878698000}
-{updatedAt: 1783879494000}
+{updatedAt: 1784132921000}
+{illustrationId: jelen-jeste_jednu_noc_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: jelen-jeste_jednu_noc_gpt-5.4-mini_v7}
 
-{start_of_verse}
+{start_of_interlude}
 [D][Em7][Hm][A]
-{end_of_verse}
+{end_of_interlude}
 
 {start_of_verse}
 Když mě [D]vůně kávy [Em7]budí

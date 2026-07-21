@@ -1,12 +1,12 @@
 {title: Mám jizvu na rtu}
 {artist: Jaromír Nohavica}
 {key: C}
-{capo: 2}
+{capo: 0}
 {range: g1-c2}
 {language: czech}
 {startMelody: e}
 {createdAt: 1487026800000}
-{updatedAt: 1770572068000}
+{updatedAt: 1784468481000}
 {illustrationId: jaromir_nohavica-mam_jizvu_na_rtu_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-mam_jizvu_na_rtu_gpt-4o-mini_v1}
 
@@ -20,7 +20,7 @@
 {start_of_chorus}
 [Ami]Jak to tak vidím asi těžko projdu [Ami/H]uchem jehly,
 [F]a lesem, běhám tak, [Cadd9]aby mě vlci nedoběhli.
-[Dmi]A kdyby se někdo z vás na [F]anděla ptal,
+[Dmi]A kdyby se někdo z vás na anděla [C]ptal,
 tak [Gsus4]mám jizvu na rtu, [G/H]když při mně [Cadd9]stál. [G/H][F][G]
 {end_of_chorus}
 
@@ -34,7 +34,7 @@ a [Cadd9]tančím jen tak rychle, [G/H]jak hraje muzika.
 {start_of_chorus}
 [Ami]Mé oči mnohé viděly a ruce [Ami/H]mnohé měly,
 [F]a srdce stydělo se, [Cadd9]když salvy slávy zněly
-A [Dmi]kdyby se někdo z vás [F]na anděla ptal,
+A [Dmi]kdyby se někdo z vás na anděla [C]ptal,
 [Gsus4]tak mám jizvu na rtu, [G/H]když při mně [Cadd9]stál. [G/H][F][G]
 {end_of_chorus}
 
@@ -48,7 +48,7 @@ A [Dmi]kdyby se někdo z vás [F]na anděla ptal,
 {start_of_chorus}
 [Ami]A dříve, než mě příjme [Ami/H]svatý Petr u komise,
 [F]básníkům české země [Cadd9]chtěl bych uklonit se,
-[Dmi]A kdyby se někdo z vás na [F]anděla ptal,
+[Dmi]A kdyby se někdo z vás na anděla [C]ptal,
 [Gsus4]tak mám jizvu na rtu, [G/H]když při mně [Cadd9]stál. [G/H][F][G]
 {end_of_chorus}
 
@@ -62,7 +62,7 @@ A [Dmi]kdyby se někdo z vás [F]na anděla ptal,
 {start_of_chorus}
 [Ami]Trumfové eso v mari[Ami/H]áši hážu do talónu
 [F]a chtěl bych vidět [Cadd9]Baník, jak poráží Barcelonu.
-[Dmi]A kdyby se někdo z vás [F]na anděla ptal,
+[Dmi]A kdyby se někdo z vás na anděla [C]ptal,
 [Gsus4]tak mám jizvu na rtu, [G/H]když při mně [Cadd9]stál. [G/H][F][G]
 {end_of_chorus}
 
@@ -76,9 +76,7 @@ A [Dmi]kdyby se někdo z vás [F]na anděla ptal,
 {start_of_chorus}
 [Ami]A i když mě to táhne tam a tebe [Ami/H]občas jinam
 [F]na špatné věci pro ty [Cadd9]dobré zapomínám,
-[Dmi]A kdyby se někdo z vás [F]na anděla ptal,
+[Dmi]A kdyby se někdo z vás na anděla [C]ptal,
 [Gsus4]tak mám jizvu na rtu, [G/H]když při mně [Cadd9]stál. [G/H][F][G]
-{end_of_chorus}
-{start_of_chorus}
 Když při mně [Cadd9]stál. [G/H][F][G]...on při mě [Cadd9]stál.
 {end_of_chorus}

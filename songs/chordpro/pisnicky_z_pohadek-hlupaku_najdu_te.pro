@@ -4,13 +4,18 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1783800660000}
-{updatedAt: 1783800816000}
+{updatedAt: 1784132835000}
+{illustrationId: pisnicky_z_pohadek-hlupaku_najdu_te_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: pisnicky_z_pohadek-hlupaku_najdu_te_gpt-5.4-mini_v7}
 
 {start_of_verse}
 [F]Někdo má hadry [B]na tě[F]le,
 někdo je nosí [C]v hlavě
 [F]Berme ten rozdíl [B]vesel[F]e,
 berme ten [C]rozdíl [F]hravě
+{end_of_verse}
+
+{start_of_verse}
 [F]Nadutec hloupost [B]nese [F]si
 důstojně jako [C]páv
 [F]Platí to v každé [B]profe[F]si,
@@ -29,6 +34,9 @@ Ať jedeš v kočáře a nebo [C]na káře
 sotva byl váš svět [C]stvořen
 [F]Pustila hloupost [B]kořen[F]y,
 pustila hlo[C]upost [F]kořen
+{end_of_verse}
+
+{start_of_verse}
 [F]Rodina zdravých [B]mamlas[F]ů
 valí se jako pr[C]oud
 [F]Jde s námi z časů [B]do čas[F]ů,

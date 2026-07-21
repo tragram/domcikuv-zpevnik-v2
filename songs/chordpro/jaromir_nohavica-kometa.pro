@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: e}
 {createdAt: 1436824800000}
-{updatedAt: 1770572062000}
+{updatedAt: 1784466480000}
 {illustrationId: jaromir_nohavica-kometa_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-kometa_gpt-4o-mini_v1}
 
@@ -26,9 +26,9 @@ my [Dmi]už tu nebudem, [G7]ach, pýcho marnivá,
 
 {start_of_chorus}
 [Ami]O vodě, o trávě, [Dmi]o lese,
-[G7]o smrti, se kterou smířit [C]nejde se,
+[G7]o smrti, se kterou smířit [C]nejde se, [E7]
 [Ami]o lásce, o zradě, [Dmi]o světě
-[E]a o všech lidech, co [E7]kdy žili na téhle [Ami]planetě.
+[E]a o všech lidech, co [E7]kdy žili na téhle [Ami]planetě. [Dmi][E7]
 {end_of_chorus}
 
 {start_of_verse}
@@ -46,8 +46,7 @@ a [C]krev našich nadějí [E7]vesmírem putuje.
 {end_of_verse}
 
 {start_of_chorus}
-[Ami][Dmi][G7][C][E7][Ami][Dmi][E][E7][Ami][Dmi][E7]
-Na na na ...
+Na na na ...[Ami][Dmi][G7][C][E7][Ami][Dmi][E][E7][Ami][Dmi][E7]
 {end_of_chorus}
 
 {start_of_verse}
@@ -66,7 +65,7 @@ my [C]už tu nebudem, ale [E7]jiný jí zazpívá.
 
 {start_of_chorus}
 [Ami]O vodě, o trávě, [Dmi]o lese,
-[G7]o smrti, se kterou smířit [C]nejde se,
-o lásce, o zradě, o světě Ami,Dmi
-bude to písnička o nás a kometě. [E][E7][Ami]
+[G7]o smrti, se kterou smířit [C]nejde se, [E7]
+[Ami]o lásce, o zradě, [Dmi]o světě
+[E]bude to písnička [E7]o nás a [Ami]kometě. [Dmi][E7][Ami]
 {end_of_chorus}

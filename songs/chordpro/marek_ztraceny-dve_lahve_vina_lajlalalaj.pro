@@ -4,7 +4,9 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1783788512000}
-{updatedAt: 1783792011000}
+{updatedAt: 1784132671000}
+{illustrationId: marek_ztraceny-dve_lahve_vina_lajlalalaj_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: marek_ztraceny-dve_lahve_vina_lajlalalaj_gpt-5.4-mini_v7}
 
 {start_of_verse}
 [Dm]Hopa..

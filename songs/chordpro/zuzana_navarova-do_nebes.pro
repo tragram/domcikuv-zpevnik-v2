@@ -4,7 +4,9 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1783788408000}
-{updatedAt: 1783802957000}
+{updatedAt: 1784132647000}
+{illustrationId: zuzana_navarova-do_nebes_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: zuzana_navarova-do_nebes_gpt-5.4-mini_v7}
 
 {start_of_verse}
 [Emi]Neste mě neste ptáci [Ami]do nebes,
@@ -70,4 +72,3 @@ až [H7]štěkne pes.
 {chorus}
 
 {chorus}
-[Em]

@@ -1,2 +1,22 @@
 songId: zuzana_navarova-do_nebes
-prompts: []
+prompts:
+  - id: zuzana_navarova-do_nebes_gpt-5.4-mini_v7
+    songId: zuzana_navarova-do_nebes
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a whimsical man standing at a wooden
+      gate in a rural Czech landscape at dusk, looking up as a flock of birds
+      lifts him toward a star-filled sky; wild ducks and a skylark circle above,
+      magpies steal a small mirror and pocket watch from the foreground, lilac
+      heather and a yellow sea-like field stretching behind him, distant Petřín
+      hill hinted on the horizon, soft moonlight and glowing twilight, dreamy
+      poetic mood, simple composition, no text, highly legible, gentle motion,
+      subtle surreal fantasy lighting
+    createdAt: 2026-07-15T16:23:58.000Z
+    updatedAt: 2026-07-15T16:23:58.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132647000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,12 +1,12 @@
 {title: Amerika}
 {artist: Lucie}
 {key: G}
-{capo: 3}
+{capo: 0}
 {range: g1-a2}
 {language: czech}
 {startMelody: d h}
 {createdAt: 1436824800000}
-{updatedAt: 1770572156000}
+{updatedAt: 1784058633000}
 {illustrationId: lucie-amerika_gpt-4o-mini_v1_flux.1-dev}
 {promptId: lucie-amerika_gpt-4o-mini_v1}
 
@@ -21,22 +21,23 @@ Tak mi teď za to vyna[G]dej
 [G]Zima a [D]promarněný [Ami]touhy
 Do vrásek stromů padá [G]déšť
 [G]Zbejvaj roky [D]asi ne moc [Ami]dlouhý
-Do vlasů mi zabrouk[C]e, pa pa pa [G]pá
+Do vlasů mi zabrou[C]kej, pa pa pa [G]pá
 {end_of_verse}
 
 {start_of_chorus}
-[G]Pa [D]pa pa [Emi]pá, pá pa pa [G]pá jejé
-[G]pa [D]pa pa [Emi]pá, pá pa pa [G]pá
+[G]Pa [F#m]pa pa [Emi7]pá, pá pa pa [G]pá jejé
+[G]pa [F#m]pa pa [Emi7]pá, pá pa pa [G]pá
 {end_of_chorus}
 
 {start_of_verse}
 [G]Tvoje oči [D]jenom žhavý [Ami]tóny
 Dotek slunce zapa[G]dá
 Horkej vítr [D]rozezní mý [Ami]zvony
-Do vlasů ti zabrouká[C]m, pá pa pá [G]pá
+Do vlasů ti zabrouká[C], pá pa pá [G]pá
 {end_of_verse}
 
 {chorus}
+
 {start_of_verse}
 [G]Na obloze [D]křídla tažnej[Ami]ch ptáků
 Tak už na svý bráchy zavol[G]ej
