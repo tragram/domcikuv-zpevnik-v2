@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
   Archive,
   Ban,
@@ -471,18 +471,15 @@ function SongVersionItem({
           <ExternalLink className="h-4 w-4" />
         </Button>
 
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() =>
-            navigate({
-              to: "/edit/$songId",
-              params: { songId: song.id },
-              search: { version: version.id },
-            })
-          }
-        >
-          <Edit className="h-4 w-4" />
+        <Button variant="ghost" size="icon" asChild>
+          <Link
+            to="/edit/$songId"
+            params={{ songId: song.id }}
+            search={{ version: version.id }}
+          >
+            <Edit className="h-4 w-4" />
+            <span className="sr-only">Edit version</span>
+          </Link>
         </Button>
         <DeletePrompt
           title="Permanently Delete?"
