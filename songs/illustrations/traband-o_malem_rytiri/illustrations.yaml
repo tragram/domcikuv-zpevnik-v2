@@ -1,0 +1,22 @@
+songId: traband-o_malem_rytiri
+prompts:
+  - id: traband-o_malem_rytiri_gpt-5.4-mini_v7
+    songId: traband-o_malem_rytiri
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic fantasy scene, a small humble knight riding a
+      tiny spider down a dusty road at dusk, wearing absurd improvised armor
+      made from a wire sword and a tin-can helmet, heart resolute despite
+      mockery; behind him a crooked castle and a faint laughing princess in a
+      window, while the world feels harsh and cynical. Warm golden sunlight
+      mixed with long cool shadows, light dust in the air, simple composition,
+      emotionally poignant, whimsical yet bittersweet, highly legible at small
+      size, minimal background detail, no text.
+    createdAt: 2026-07-14T19:50:20.000Z
+    updatedAt: 2026-07-14T19:50:20.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784058628000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

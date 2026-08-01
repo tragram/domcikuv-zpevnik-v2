@@ -1,2 +1,22 @@
 songId: nedvedi-franky_dlouhan
-prompts: []
+prompts:
+  - id: nedvedi-franky_dlouhan_gpt-5.4-mini_v7
+    songId: nedvedi-franky_dlouhan
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely but cheerful wanderer in worn
+      clothes standing on an empty dusty roadside near a quiet American ranch at
+      dusk, black storm clouds rolling overhead, a soft warm glow from the ranch
+      lights behind him, his face turned upward with a faint smile while holding
+      a guitar or small travel bag, evoking bittersweet melancholy and
+      resilience; simple composition, subdued earthy colors, dramatic clouded
+      sky, soft rim lighting, subtle depth of field, no text, only a minimal
+      hint of distant ranch silhouettes, melancholic folk song mood
+    createdAt: 2026-07-15T16:25:53.000Z
+    updatedAt: 2026-07-15T16:25:53.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132763000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

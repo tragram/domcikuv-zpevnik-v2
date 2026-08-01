@@ -1,0 +1,21 @@
+songId: rybicky_48-my_jeste_nejsme_stary
+prompts:
+  - id: rybicky_48-my_jeste_nejsme_stary_gpt-5.4-mini_v7
+    songId: rybicky_48-my_jeste_nejsme_stary
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene inside a cozy, slightly messy Czech pub at
+      night: three middle-aged friends around a small wooden table over beer
+      glasses, laughing and debating life while one looks at a phone; a loyal
+      small dog lies beside them; subtle signs of aging in their faces, with
+      warm amber tavern lighting, soft shadows, shallow depth of field,
+      nostalgic yet upbeat mood, one framed window showing rain outside, minimal
+      background detail, no text, single clear composition, 16:9.
+    createdAt: 2026-07-30T10:45:47.000Z
+    updatedAt: 2026-07-30T10:45:47.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487483000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,0 +1,22 @@
+songId: traband-na_sirem_mori
+prompts:
+  - id: traband-na_sirem_mori_gpt-5.4-mini_v7
+    songId: traband-na_sirem_mori
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene on a becalmed pirate cargo ship stranded in
+      a vast glassy ocean under a blazing midday sun, one exhausted lone sailor
+      standing on the deck beside stacked crates of gold, jewels, spices, and
+      coffee, dead sails hanging slack, distant empty horizon, subtle signs of
+      despair on the crew remnants, ominous stillness, muted desaturated colors
+      with harsh bright lighting and heat haze, dramatic lonely composition,
+      only a tiny weathered ship’s flag or faint hull marking, no visible text,
+      highly detailed, wide shot
+    createdAt: 2026-07-30T11:18:57.000Z
+    updatedAt: 2026-07-30T11:18:57.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487476000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

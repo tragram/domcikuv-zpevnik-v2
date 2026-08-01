@@ -1,0 +1,24 @@
+songId: vypsana_fixa-antidepresivni_rybicka
+prompts:
+  - id: vypsana_fixa-antidepresivni_rybicka_gpt-5.4-mini_v7
+    songId: vypsana_fixa-antidepresivni_rybicka
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic surreal scene inside a nighttime underground
+      city: a rebellious woman in a tram stop smoking, with a glowing small
+      “anti-depressant fish” tattoo visible on a hidden spot near her ribs/hip,
+      the fish subtly swimming as a symbolic translucent figure through her
+      body, weaving between organs and bruises like a magical neon creature;
+      around her, decayed city traps, fake police lights, bikes, bars, and
+      thieves blurred in the background; gritty punk atmosphere, dark teal and
+      magenta color palette, moody smoke, wet pavement reflections, dramatic
+      low-key lighting, shallow depth of field, simple composition, minimal if
+      any text, album-cover style
+    createdAt: 2026-07-14T19:49:17.000Z
+    updatedAt: 2026-07-14T19:49:17.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784058565000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

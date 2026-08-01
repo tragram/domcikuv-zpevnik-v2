@@ -1,12 +1,12 @@
-{title: Olympic}
-{artist: Želva}
+{title: Želva}
+{artist: Olympic}
 {key: G}
 {capo: 0}
 {range: h1-e2}
 {language: czech}
 {startMelody: h d}
 {createdAt: 1747173600000}
-{updatedAt: 1770572333000}
+{updatedAt: 1785417445000}
 {illustrationId: zelva-olympic_gpt-4o-mini_v2_flux.1-dev}
 {promptId: zelva-olympic_gpt-4o-mini_v2}
 
@@ -30,6 +30,13 @@ jak se [D]vlastně [C]želva hle[G]dá,
 [C]ona ho na něco nachyt[D]á[D7]á,
 i [C]když si to později vyčít[D]á[D7]á
 {end_of_chorus}
+
+{start_of_interlude}
+
+{comment: Sólo harmonika na sloku}
+{end_of_interlude}
+
+{chorus}
 
 {start_of_verse}
 [G]Ne moc [C]lehce se [G]želva [C]po dně [G]honí, [C][G][C]

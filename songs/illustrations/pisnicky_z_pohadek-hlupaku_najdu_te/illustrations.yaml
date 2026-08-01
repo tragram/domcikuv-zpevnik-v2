@@ -1,2 +1,21 @@
 songId: pisnicky_z_pohadek-hlupaku_najdu_te
-prompts: []
+prompts:
+  - id: pisnicky_z_pohadek-hlupaku_najdu_te_gpt-5.4-mini_v7
+    songId: pisnicky_z_pohadek-hlupaku_najdu_te
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic satirical scene of a smug, puffed-up fool strutting like a
+      peacock through a timeless everyday street, his oversized head
+      symbolically heavier than his clothes, while ordinary people pass by with
+      subtle amused expressions; playful social commentary, whimsical but sharp
+      mood, simple composition, muted earthy colors with one vivid peacock-like
+      accent, soft daylight, slight dramatic contrast, photorealistic 3D render,
+      no text, minimal background, legible at small sizes
+    createdAt: 2026-07-15T16:27:04.000Z
+    updatedAt: 2026-07-15T16:27:04.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132834000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

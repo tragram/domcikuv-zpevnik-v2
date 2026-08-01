@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: a a a h c d}
 {createdAt: 1744581600000}
-{updatedAt: 1770572006000}
+{updatedAt: 1784132476000}
 {illustrationId: divokej_bill-plakala_gpt-4o-mini_v2_flux.1-dev}
 {promptId: divokej_bill-plakala_gpt-4o-mini_v2}
 
@@ -32,8 +32,7 @@
 {end_of_verse}
 
 {start_of_chorus}
-𝄆 [Ami]Moje milá [C]plakala-a-a
-[Ami]Moje milá [G]plakala-a-a 𝄇
+𝄆 [Ami]Moje milá [C]plakala-a-a [G] 𝄇 (5x)
 {end_of_chorus}
 
 {start_of_bridge}
@@ -41,7 +40,7 @@
 [G]svět je malej, [Ami]dokona[G]lej
 [Ami]pozdravuj [C]pocestný
 [G]svět je zlej, co když se [Ami]nevrátí [G]
-[G]co když se [Ami]nevrátí [C][G]
+[G]co když se [Ami]nevrátí[C][G]
 {end_of_bridge}
 
 {chorus}

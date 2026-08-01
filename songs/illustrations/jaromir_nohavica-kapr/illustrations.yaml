@@ -1,0 +1,21 @@
+songId: jaromir_nohavica-kapr
+prompts:
+  - id: jaromir_nohavica-kapr_gpt-5.4-mini_v7
+    songId: jaromir_nohavica-kapr
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic watercolor illustration of a calm but slightly uneasy Czech pond
+      in windy weather, large natural waves rippling across the water, a
+      cautious carp barely showing its snout above the surface while a predatory
+      pike lurks nearby, playful folk-song mood with subtle whimsical charm,
+      reeds bending in the wind, muted blue-green palette, soft overcast
+      daylight, simple composition with strong silhouettes, minimal or no text,
+      serene yet mischievous atmosphere
+    createdAt: 2026-07-31T07:35:54.000Z
+    updatedAt: 2026-07-31T07:35:54.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487427000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

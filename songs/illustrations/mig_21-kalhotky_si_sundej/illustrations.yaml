@@ -1,0 +1,22 @@
+songId: mig_21-kalhotky_si_sundej
+prompts:
+  - id: mig_21-kalhotky_si_sundej_gpt-5.4-mini_v7
+    songId: mig_21-kalhotky_si_sundej
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic night scene in a rain-soaked city street, a
+      Zeus-like god in elegant modern attire standing under a crack of
+      lightning, his face briefly illuminated as he speaks to a mortal woman in
+      the rain; tense seductive atmosphere, wet reflections, dramatic
+      thunderclouds, electric blue and warm gold highlights, subtle Greek myth
+      symbolism, intimate composition with two figures only, no explicit nudity,
+      no visible text except perhaps a faint subtle title mark, high detail,
+      moody chiaroscuro lighting
+    createdAt: 2026-07-27T14:27:50.000Z
+    updatedAt: 2026-07-27T14:27:50.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785162480000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

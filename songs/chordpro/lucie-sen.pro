@@ -6,9 +6,13 @@
 {language: czech}
 {startMelody: c# e g#}
 {createdAt: 1442181600000}
-{updatedAt: 1770572158000}
+{updatedAt: 1784130756000}
 {illustrationId: lucie-sen_gpt-4o-mini_v1_flux.1-dev}
 {promptId: lucie-sen_gpt-4o-mini_v1}
+
+{start_of_interlude:Intro}
+[E][A2]
+{end_of_interlude}
 
 {start_of_verse}
 Stíny [E]dnů a snů se k obratníkům [A2]stáčí
@@ -33,6 +37,10 @@ V nebeským [A2]rytmu swingujou
 Že se [C#mi]ráno, že se ráno vytra[H]tí
 {end_of_chorus}
 
+{start_of_interlude:Mezihra}
+[E][A2][E][A2]
+{end_of_interlude}
+
 {start_of_verse}
 [E]Stíny dnů vyrostou a [A2]zmizí
 [E]Nebeský znamení, rosvěcujou [A2]hvězdy
@@ -42,8 +50,16 @@ A [F#mi]měsíc nový stí[A2]ny vypla[H]ší
 
 {chorus}
 
+{start_of_interlude:Mezihra}
+[E][A2][E][A2]
+{end_of_interlude}
+
 {start_of_chorus}
 Proud motý[E]lů unáší strach
 Na listy [A]sedá hvězdnej prach
 A nový [C#mi]stíny, a nový stíny [H]vyplaší
 {end_of_chorus}
+
+{start_of_interlude:Dohra}
+[E]
+{end_of_interlude}

@@ -1,0 +1,22 @@
+songId: elan-neviem_byt_sam
+prompts:
+  - id: elan-neviem_byt_sam_gpt-5.4-mini_v7
+    songId: elan-neviem_byt_sam
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic nocturnal urban scene, a lonely young person standing on a small
+      apartment balcony in a quiet city, holding a glowing phone while warm
+      window lights and reflected storefront glass surround them; a bright star
+      in the dawn sky, pigeons nesting in an old hat, subtle cats and kittens
+      near the bedroom doorway, hint of a rainbow slogan on the T-shirt, dreamy
+      but melancholic atmosphere, soft moonlight and pre-sunrise blue hour
+      lighting, realistic film still, shallow depth of field, simple
+      composition, minimal text if any, intimate and poetic mood
+    createdAt: 2026-07-30T12:40:29.000Z
+    updatedAt: 2026-07-30T12:40:29.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487454000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

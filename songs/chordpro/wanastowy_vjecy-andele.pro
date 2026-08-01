@@ -1,12 +1,12 @@
 {title: Andělé}
 {artist: Wanastowy Vjecy}
 {key: H}
-{capo: 3}
+{capo: 0}
 {range: h1-a1}
 {language: czech}
 {startMelody: f#}
 {createdAt: 1436824800000}
-{updatedAt: 1770572316000}
+{updatedAt: 1784113141000}
 {illustrationId: wanastowy_vjecy-andele_gpt-4o-mini_v1_flux.1-dev}
 {promptId: wanastowy_vjecy-andele_gpt-4o-mini_v1}
 
@@ -33,6 +33,10 @@
 
 {chorus}
 
+{start_of_interlude: Mezihra}
+𝄆 [H][C#m][E][E] 𝄇 (2x) 𝄆 [D][A][G][G] 𝄇 (4x)
+{end_of_interlude}
+
 {start_of_verse}
 [H]Co Tě zas [C#mi]po ránu na[E]padá
 [H]za zrcadlem [C#mi]nezkoušej si [E]lhát,
@@ -43,4 +47,7 @@
 {start_of_variant: append_content}
 𝄆 [D]Svět je mami [A]dokonalej [G]kraj. 𝄇
 {end_of_variant}
+
 {chorus}
+
+{comment: (6x do ztracena)}

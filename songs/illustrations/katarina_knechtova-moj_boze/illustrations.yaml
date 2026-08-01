@@ -1,0 +1,21 @@
+songId: katarina_knechtova-moj_boze
+prompts:
+  - id: katarina_knechtova-moj_boze_gpt-5.4-mini_v7
+    songId: katarina_knechtova-moj_boze
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a solitary medieval figure kneeling in a
+      dark stone chapel at night, hands raised in desperate prayer toward a
+      faint beam of moonlight through a high window, heavy shadows and cold
+      blue-gray tones, feeling of sorrow, despair, and pleading faith, subtle
+      mist in the air, simple composition, minimal background detail, one small
+      candle flickering nearby, no visible text, ultra-detailed lighting, solemn
+      and haunting atmosphere
+    createdAt: 2026-07-30T10:01:59.000Z
+    updatedAt: 2026-07-30T10:01:59.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487488000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

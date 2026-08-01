@@ -1,50 +1,52 @@
 {title: Obchodník s deštěm}
 {artist: Kryštof}
-{key: G}
-{capo: 2}
-{range: h1-c2}
+{key: D}
+{capo: 0}
+{range: f#1-g2}
 {language: czech}
-{startMelody: d}
+{startMelody: a}
 {createdAt: 1442181600000}
-{updatedAt: 1770572145000}
+{updatedAt: 1785417160000}
 {illustrationId: krystof-obchodnik_s_destem_gpt-4o-mini_v1_flux.1-dev}
 {promptId: krystof-obchodnik_s_destem_gpt-4o-mini_v1}
 
 {start_of_verse}
-Jako [G]vášeň která hasne v [Emi]kouři
-namačkaná bez os[G]tychu, v zástup [Emi]živočichů
-jako jas dálkových [C]světel
-jako nad talířem [D]večer, mi mizíš
+Jako [D]vášeň která hasne v [Hm]kouři
+namačkaná bez os[D]tychu, v zástup [Hm]živočichů
+jako jas dálkových [G]světel
+jako nad talířem [A]večer, mi mizíš
 {end_of_verse}
 
 {start_of_verse}
-A [G]mizíš někde v [Emi]dávnu,
-jsi láska, co mě [G]škrtí, já na pokraji [Emi]smrti
-ve svém paralelním [C]světě,
-toužím po [D]odvetě a křičím
+A [D]mizíš někde v [Hm]dávnu,
+jsi láska, co mě [D]škrtí, já na pokraji [Hm]smrti
+ve svém paralelním [G]světě,
+toužím po [A]odvetě a křičím
 {end_of_verse}
 
 {start_of_chorus}
-[C]Slova jsou jen [D]kapky deště
-a ty [Emi]voláš ať prším ještě
-slova jsou jen kapky deště a ty voláš
-slova jsou jen kapky deště
-a ty voláš ať prším ještě
-[C]slova jsou jen [D]kapky deště
+[G]Slova jsou jen [A]kapky deště
+a ty [Hm]voláš ať prším ještě
+[G]slova jsou jen [A]kapky deště a ty [Hm]voláš
+[G]slova jsou jen [A]kapky deště
+a ty [Hm]voláš ať prším ještě
+[G]slova jsou jen [A]kapky deště
 {end_of_chorus}
 
 {start_of_verse}
-Jako [G]touha, sklem, co nepro[Emi]razí,
-nekonečné [G]břehy s kufry [Emi]plných něhy,
-zvu obchodníky s [C]deštěm
-chci koupit to tvé [D]ještě a slyším
+Jako [D]touha, sklem, co nepro[Hm]razí,
+nekonečné [D]břehy s kufry [Hm]plných něhy,
+zvu obchodníky s [G]deštěm
+chci koupit to tvé [A]ještě a slyším
 {end_of_verse}
 
 {start_of_verse}
-V [G]rozestlaném [Emi]tichu,
-zvuky auto[G]plánů, co unáší tě [Emi]ránům,
-jsi tečka v kalen[C]dáři
-co nadosmrti [D]září a křičí.
+V [D]rozestlaném [Hm]tichu,
+zvuky auto[D]plánů, co unáší tě [Hm]ránům,
+jsi tečka v kalen[G]dáři
+co nadosmrti [A]září a křičí.
 {end_of_verse}
+
+{chorus}
 
 {chorus}

@@ -1,0 +1,21 @@
+songId: lidove_pisne-kdyby_tady_byla_takova_panenka
+prompts:
+  - id: lidove_pisne-kdyby_tady_byla_takova_panenka_gpt-5.4-mini_v7
+    songId: lidove_pisne-kdyby_tady_byla_takova_panenka
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic folk-inspired scene of a young Czech peasant couple in a moonlit
+      wooden cottage, standing face to face beside a handmade cradle and a
+      simple ladder reaching toward a glowing night sky, evoking an impossible
+      exchange of tender chores and longing; subtle sense of innocence and
+      bittersweet fatalism, quiet rural atmosphere, sparse symbolic details,
+      soft blue and amber lighting, photorealistic with a slight painterly
+      texture, minimal text, no modern objects
+    createdAt: 2026-07-27T14:38:46.000Z
+    updatedAt: 2026-07-27T14:38:46.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785163138000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

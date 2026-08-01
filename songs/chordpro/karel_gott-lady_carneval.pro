@@ -4,11 +4,11 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1777207711000}
-{updatedAt: 1780161587000}
+{updatedAt: 1785169734000}
 {illustrationId: karel_gott-lady_carneval_gpt-5-mini_v6_nano-banana-2}
 {promptId: karel_gott-lady_carneval_gpt-5-mini_v6}
 
-{start_of_verse: V1}
+{start_of_verse}
 [C]Páni a paní, vím, jak se [G7]ruší [C]žal,
 já tíhnu duší [D7]jen k lady [G7]Carne[C]val.
 Já, kdysi pannám, já ba i [G7]vdovám [C]lhal,
@@ -38,10 +38,11 @@ teď už v srdci chovám [D7]jen Lady [G7]Carne[C]val.
 
 {chorus}
 
-{comment: Capo++}
-
-{start_of_variant: append_content}
-[C]Teď v srdci chovám [D7]jen Lady [G7]Carne[C]val.
-{end_of_variant}
-
-{verse: V1}
+{start_of_verse}
+[C♯]Páni a paní vím jak se [G♯]ruší [C♯]žal
+já tíhnu duší [D♯]jen k lady [G♯]Karne[C♯]val.
+Já kdysi pannám, já ba i [G♯]vdovám [C♯]lhal
+teď v srdci chovám, [D♯]jen lady [G♯]Karne[C♯]val.
+[C♯]Teď v srdci chovám, [D♯]jen la[G♯]dy Karne[C♯]val
+[C♯]Teď v srdci chovám [D♯]jen Lady [G♯]Carne[C♯]val.
+{end_of_verse}

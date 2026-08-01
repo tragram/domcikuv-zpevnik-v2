@@ -1,12 +1,12 @@
 {title: Buchet je spousta}
 {artist: Kouzla králů}
 {key: C}
-{capo: 3}
+{capo: 2}
 {range: g1-g2}
 {language: czech}
 {startMelody: c c}
 {createdAt: 1744581600000}
-{updatedAt: 1771714962000}
+{updatedAt: 1784468050000}
 {illustrationId: kouzla_kralu-buchet_je_spousta_gpt-5-mini_v3_nano-banana-pro}
 {promptId: kouzla_kralu-buchet_je_spousta_gpt-5-mini_v3}
 
@@ -41,7 +41,7 @@ a [F]pevná jako [G]brány [C]trám.
 {start_of_verse}
 [C]Konečně kluk co o mě [F]zájem [G]má,
 [C]přitažli[F]vost je jistě [Ami]vzáje[G]mná.
-[C]A srdce z rubínu [F]má barvu [G]po vínu,
+[Dmi]A srdce [G]z rubínu [Emi]má barvu [Ami]po vínu,
 [F]starý král novému vždy [G]má jej dát.
 {end_of_verse}
 
@@ -49,7 +49,7 @@ a [F]pevná jako [G]brány [C]trám.
 [C]Ta naše dvojice je [F]překvapi[G]vá,
 [Emi]a dle všech [Ami]známek [Dmi]pekárna - [G]zámek.
 [C]Je trasa která někdy [F]krátce tr[G]vá,
-a [F]já ji dobře [G]lásko [C]znám.
+a [F]já ji dobře [G]lásko [C]znám.[G]
 {end_of_bridge}
 
 {chorus}

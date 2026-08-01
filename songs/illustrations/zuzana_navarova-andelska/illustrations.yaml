@@ -1,0 +1,22 @@
+songId: zuzana_navarova-andelska
+prompts:
+  - id: zuzana_navarova-andelska_gpt-5.4-mini_v7
+    songId: zuzana_navarova-andelska
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic nocturnal scene of a solitary person on a quiet
+      city rooftop at dawn, holding a chalice of red wine that glows subtly as
+      if turning into spirit, while a single bright comet arcs across a
+      pre-sunrise sky toward a distant nativity-like horizon; soft melancholy,
+      tender love-and-loss mood, faint breath, one tear on the cheek, a few
+      scattered stars fading into morning light, Prague-inspired skyline hinted
+      in silhouette, simple composition, highly legible, cool blue and amber
+      lighting, subtle film grain, no text, no lyrics overlay
+    createdAt: 2026-07-14T19:53:32.000Z
+    updatedAt: 2026-07-14T19:53:32.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784058847000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

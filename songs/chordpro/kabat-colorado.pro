@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: c}
 {createdAt: 1436824800000}
-{updatedAt: 1770572109000}
+{updatedAt: 1784058477000}
 {illustrationId: kabat-colorado_gpt-4o-mini_v1_flux.1-dev}
 {promptId: kabat-colorado_gpt-4o-mini_v1}
 
@@ -44,5 +44,9 @@ a když jim [G]nezaplatíš, vyrazej' ti [D]dech,
 ale s [G]IQ to tam nebude tak [C]horký,
 místo [G]na koních tam [D]jezděj' v med[G]vědech.
 {end_of_verse}
+
+{start_of_variant: append_content}
+A o tý [G]zlatý žíle [D]řeknu doma [G]všem
+{end_of_variant}
 
 {chorus}

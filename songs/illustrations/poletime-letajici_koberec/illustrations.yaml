@@ -1,0 +1,23 @@
+songId: poletime-letajici_koberec
+prompts:
+  - id: poletime-letajici_koberec_gpt-5.4-mini_v7
+    songId: poletime-letajici_koberec
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic surreal scene of a single flying carpet gliding low over a
+      sunlit countryside toward a distant town, casting a large dramatic shadow
+      on fields below; a faint hint of a domestic vacuumed carpet left behind in
+      a cozy window interior, suggesting the absurd lyric story. Children’s
+      small silhouettes look up nervously from the town edge as the sky begins
+      to fill with a few more floating carpets, darkening the light. Warm golden
+      sunlight fading into a cool eerie blue shadow, whimsical yet slightly
+      unsettling mood, wide composition, clean legible shapes, 3D cinematic
+      illustration, soft volumetric lighting, subtle texture, no readable text.
+    createdAt: 2026-07-27T19:00:12.000Z
+    updatedAt: 2026-07-27T19:00:12.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785178820000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,2 +1,21 @@
 songId: wohnout-fanynka
-prompts: []
+prompts:
+  - id: wohnout-fanynka_gpt-5.4-mini_v7
+    songId: wohnout-fanynka
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic night concert scene, a female fan at the edge of
+      a stage mid-dive into a dense sea of raised human hands, crowd like
+      rolling waves swallowing her, motion and joyful chaos, wet clothes,
+      dramatic spotlight from above, neon stage lights and haze, energetic but
+      slightly surreal atmosphere, simple composition with the fan as focal
+      point, tiny hint of stage in the background, no text, high contrast,
+      realistic detail, 16:9
+    createdAt: 2026-07-15T16:24:37.000Z
+    updatedAt: 2026-07-15T16:24:37.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132688000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

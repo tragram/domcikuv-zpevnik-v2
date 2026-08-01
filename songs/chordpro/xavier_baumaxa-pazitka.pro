@@ -6,15 +6,15 @@
 {language: czech}
 {startMelody: e e e c# e}
 {createdAt: 1726264800000}
-{updatedAt: 1770572321000}
+{updatedAt: 1784130798000}
 {illustrationId: xavier_baumaxa-pazitka_gpt-4o-mini_v1_flux.1-dev}
 {promptId: xavier_baumaxa-pazitka_gpt-4o-mini_v1}
 
 {start_of_verse}
 Krajina [A]svádí k podzimním [C#mi]výletům,
 tripům do [F#mi]mládí a častým [D]úletům.
-Barevný listí je rázem pestřejší,
-hlavu ti čistí, no a ty jsi bystřejší.
+Barevný [A]listí je rázem [C#mi]pestřejší,
+hlavu ti [F#mi]čistí, no a ty jsi [C#mi]bystřejší.
 {end_of_verse}
 
 {start_of_chorus}
@@ -24,6 +24,10 @@ sáčky suchý pažitky, [D]tomu se říká dobrá nálada.
 sáčky suchý pažitky, [D]tomu se říká dobrá nálada.
 {end_of_chorus}
 
+{start_of_interlude}
+𝄆 [A][C#m][F#m][D] 𝄇
+{end_of_interlude}
+
 {start_of_verse}
 Hladina [A]tůní pomalu [C#mi]vychladá,
 je konec [F#mi]vůním a léto [D]uvadá.
@@ -32,6 +36,8 @@ skončil čas [F#mi]trenek, ale já zas něco [D]vymyslím.
 {end_of_verse}
 
 {chorus}
+
+{interlude}
 
 {start_of_verse}
 Kochám se [A]chcaje, překvapen [C#mi]výdrží,

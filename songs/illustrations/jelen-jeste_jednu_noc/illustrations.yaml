@@ -1,2 +1,22 @@
 songId: jelen-jeste_jednu_noc
-prompts: []
+prompts:
+  - id: jelen-jeste_jednu_noc_gpt-5.4-mini_v7
+    songId: jelen-jeste_jednu_noc
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene at dawn inside a quiet, dim kitchen: a
+      lonely couple sits at a small table over untouched coffee and a simple
+      breakfast, their posture heavy and distant, one barefoot foot touching the
+      hot floor near the doorway, cold blue morning light leaking in as darkness
+      still lingers outside the window, subtle rain-streaked glass and a sense
+      of heartbreak and last-night intimacy, bittersweet atmosphere, muted color
+      palette, soft natural lighting with a faint warm lamp glow, minimal
+      composition, no text.
+    createdAt: 2026-07-15T16:28:30.000Z
+    updatedAt: 2026-07-15T16:28:30.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132920000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

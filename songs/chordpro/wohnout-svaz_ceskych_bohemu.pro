@@ -5,7 +5,7 @@
 {range: c1-c2}
 {language: czech}
 {createdAt: 1423868400000}
-{updatedAt: 1770572320000}
+{updatedAt: 1784467390000}
 {illustrationId: wohnout-svaz_ceskych_bohemu_gpt-4o-mini_v1_flux.1-dev}
 {promptId: wohnout-svaz_ceskych_bohemu_gpt-4o-mini_v1}
 
@@ -38,7 +38,8 @@ co [C]na to svědo[G]mí.
 já byl jsem na sra[Ami]zu,
 s kumpány který [F]mám,
 [C]patříme do [G]svazu,
-[G]vlastníme domé[Dmi]nu,
+
+[G]Vlastníme domé[Dmi]nu,
 tak si nás rozklik[Ami]ni,
 svaz českejch bohé[F]mů
 {end_of_verse}
@@ -50,8 +51,8 @@ svaz českejch bohé[F]mů
 společně s [Ami]bohémy,
 za kterými se [F]táhnou
 od [C]školy problé[G]my.
-[G]V partě je Blek[Dmi]ota,
 
+[G]V partě je Blek[Dmi]ota,
 Jekota, Mek[Ami]ota,
 dost často [F]hovoříme
 o [C]smyslu živo[G]ta.
@@ -62,6 +63,7 @@ Jako je třeba [Dmi]teď,
 mám tisíc otáz[Ami]ek,
 na žádnou vzpomí[F]nku,
 si [C]skládám obrá[G]zek.
+
 [G]Z těžkejch ran líž[Dmi]u se,
 včera jsme [Ami]slavili,
 svatýho Vyšu[F]se.
@@ -84,6 +86,7 @@ svatýho Vyšu[F]se.
 [Dmi]co myslíš, osobo?
 [Ami]Na to nelze říci než
 [F]"Co je ti do [C]toho?"
+
 [G]Tak jsme se tu všichni sešli,
 [Dmi]co myslíš, osude?
 [Ami]Na to nelze říci než

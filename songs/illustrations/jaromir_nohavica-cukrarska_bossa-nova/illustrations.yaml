@@ -1,0 +1,21 @@
+songId: jaromir_nohavica-cukrarska_bossa-nova
+prompts:
+  - id: jaromir_nohavica-cukrarska_bossa-nova_gpt-5.4-mini_v7
+    songId: jaromir_nohavica-cukrarska_bossa-nova
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a cheerful, absurdly gluttonous man in a
+      retro Czech café, sitting at a small round table overloaded with kremrole,
+      bonbon wrappers, sugar cubes, coffee, and a bottle of Becherovka; he
+      smiles serenely with crumbs on his face while confectioners in the
+      background glance at him admiringly, warm golden lighting, playful
+      whimsical mood, rich dessert colors, shallow depth of field, simple
+      composition, no readable text, subtle vintage bossa-nova atmosphere
+    createdAt: 2026-07-14T19:57:37.000Z
+    updatedAt: 2026-07-14T19:57:37.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784059065000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

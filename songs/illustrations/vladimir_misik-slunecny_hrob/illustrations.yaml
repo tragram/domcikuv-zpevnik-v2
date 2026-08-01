@@ -1,0 +1,21 @@
+songId: vladimir_misik-slunecny_hrob
+prompts:
+  - id: vladimir_misik-slunecny_hrob_gpt-5.4-mini_v7
+    songId: vladimir_misik-slunecny_hrob
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene at dusk: a grown man kneeling alone beside
+      a small, dry grave patch with bare earth and no flowers, softly holding an
+      old childhood toy in one hand, eyes lowered in quiet grief and longing,
+      evoking memories of being a little boy playing with someone he loved;
+      muted earthy tones, gentle wind, faint warm sunset light breaking through
+      clouds, shallow depth of field, simple composition, emotional and
+      intimate, no visible text, subtle melancholy atmosphere
+    createdAt: 2026-07-15T16:12:27.000Z
+    updatedAt: 2026-07-15T16:12:27.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784131963000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

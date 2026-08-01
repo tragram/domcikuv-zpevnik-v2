@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: f# a h}
 {createdAt: 1471125600000}
-{updatedAt: 1770572331000}
+{updatedAt: 1784057778000}
 {illustrationId: zalman_spol-vojacek_z_moorlough_shore_gpt-4o-mini_v1_flux.1-dev}
 {promptId: zalman_spol-vojacek_z_moorlough_shore_gpt-4o-mini_v1}
 
@@ -47,9 +47,9 @@ co nás [G]donese do [Emi]země Moorlough [Hmi]Shore
 {start_of_verse}
 [Gmi]Z tvých [C#mi]hor bílých štítů, tvých [H]údolí
 mám tu [A]sílu co tě [F#mi]pro mě zachr[C#mi]ání
-{start_of_verse}
-
 {end_of_verse}
+
+{start_of_verse}
 [Gmi]Bůh [C#mi]blat starých mýtů nám [H]dovolí
 zůstat [A]před válkou [F#mi]a smrtí sch[C#mi]ovaní
 {end_of_verse}

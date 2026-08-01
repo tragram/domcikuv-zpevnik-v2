@@ -1,0 +1,22 @@
+songId: ewa_farna-mam_boky_jako_skrin
+prompts:
+  - id: ewa_farna-mam_boky_jako_skrin_gpt-5.4-mini_v7
+    songId: ewa_farna-mam_boky_jako_skrin
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic single scene inside a bright supermarket aisle: a
+      confident plus-size woman pushing a shopping cart full of sweets and
+      groceries, smiling with carefree defiance, oversized hips emphasized
+      naturally, bold body-positive attitude, one visible XXL clothing tag on a
+      shelf in the background, simple composition, playful satirical mood, warm
+      fluorescent store lighting with slightly exaggerated highlights, shallow
+      depth of field, realistic textures, minimal text, no readable signage, no
+      clutter, 16:9
+    createdAt: 2026-07-27T21:22:48.000Z
+    updatedAt: 2026-07-27T21:22:48.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487517000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

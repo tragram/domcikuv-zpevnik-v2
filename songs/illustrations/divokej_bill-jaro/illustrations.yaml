@@ -1,2 +1,21 @@
 songId: divokej_bill-jaro
-prompts: []
+prompts:
+  - id: divokej_bill-jaro_gpt-5.4-mini_v7
+    songId: divokej_bill-jaro
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic autumn street scene in a small Central European
+      town, strong wind blowing golden leaves down an empty cobblestone road,
+      bare trees swaying, a lone person walking with coat collar up and slightly
+      unsteady steps, subtle chimney smoke in the distance, mood of melancholy
+      turning hopeful, late afternoon cold light with soft overcast sky, muted
+      warm gold and gray palette, simple composition, shallow depth of field, no
+      text, no logos, no extra elements, 16:9 wide frame
+    createdAt: 2026-07-15T16:27:40.000Z
+    updatedAt: 2026-07-15T16:27:40.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784132870000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

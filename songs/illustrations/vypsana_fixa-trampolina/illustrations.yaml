@@ -1,0 +1,22 @@
+songId: vypsana_fixa-trampolina
+prompts:
+  - id: vypsana_fixa-trampolina_gpt-5.4-mini_v7
+    songId: vypsana_fixa-trampolina
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Surreal dark bedroom at night, a lone man playing a tambourine in the
+      shadows as a whimsical clown bounces on a small trampoline nearby, a table
+      in the foreground with melted clock faces spilling across it, faint
+      cat-like glowing eyes emerging from the darkness, a sense of longing,
+      motion, and strange wonder, one tiny line of Czech song text barely
+      visible and almost hidden, cinematic photorealistic, moody chiaroscuro
+      lighting, deep blues and muted amber highlights, soft film grain, simple
+      composition, dreamlike absurdism
+    createdAt: 2026-07-15T15:52:06.000Z
+    updatedAt: 2026-07-15T15:52:06.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1784130735000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

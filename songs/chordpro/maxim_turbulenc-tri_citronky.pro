@@ -6,14 +6,14 @@
 {language: czech}
 {startMelody: c e f g}
 {createdAt: 1436824800000}
-{updatedAt: 1770572164000}
+{updatedAt: 1784467828000}
 {illustrationId: maxim_turbulenc-tri_citronky_gpt-4o-mini_v1_flux.1-dev}
 {promptId: maxim_turbulenc-tri_citronky_gpt-4o-mini_v1}
 
 {start_of_verse}
 V [Cmi]jedné [Es]mořské [Fmi]pustině [Gm7]
 [Cmi]ztroskotal [Es]parník v [Fmi]hlubině. [Gm7]
-[Cmi]Jenom tři mal[Es]é [Fmi]citronky, [Gm7]
+[Cmi]Jenom tři [Es]malé [Fmi]citronky, [Gm7]
 zůstaly na hladi[Cmi]ně.
 {end_of_verse}
 
@@ -30,6 +30,10 @@ zůstaly na hladině[Cmi].
 že nám patří moře ce[Cmi]lé.
 {end_of_verse}
 
+{start_of_variant: replace_last_line}
+Že nám patří moře ce[Cmi]lé.
+{end_of_variant}
+
 {chorus}
 
 {start_of_verse}
@@ -39,13 +43,21 @@ zůstaly na hladině[Cmi].
 až na ostrov korá[Cmi]lový
 {end_of_verse}
 
+{start_of_variant: replace_last_line}
+Až na ostrov korá[Cmi]lový
+{end_of_variant}
+
 {chorus}
 
 {start_of_verse}
 [Cmi]Tam je však [Es]stihla ne[Fmi]hoda [Gm7]zlá,
-[Cmi]byla to [Es]mořská [Fmi]kravizna [Gm7]
+[Cmi]byla to [Es]mořská [Fmi]příšera [Gm7]
 [Cmi]Sežrala [Es]citrónky [Fmi]i s kůrou, [Gm7]
 zakončila tak baladu [Cmi]mou.
 {end_of_verse}
+
+{start_of_variant: replace_last_line}
+Zakončila tak baladu [Cmi]mou.
+{end_of_variant}
 
 {chorus}

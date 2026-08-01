@@ -4,11 +4,13 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1783799798000}
-{updatedAt: 1783799799000}
+{updatedAt: 1784132763000}
+{illustrationId: nedvedi-franky_dlouhan_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: nedvedi-franky_dlouhan_gpt-5.4-mini_v7}
 
-{start_of_verse}
+{start_of_interlude}
 [D][G][D]
-{end_of_verse}
+{end_of_interlude}
 
 {start_of_verse}
 Kolik je [D]smutného, když [G]mraky černé [D]jdou,
@@ -44,6 +46,4 @@ farář píseň [A]pěl, [G]umíráček zn[D]ěl.
 
 {chorus}
 
-{start_of_verse}
-[D][G][D]
-{end_of_verse}
+{interlude}

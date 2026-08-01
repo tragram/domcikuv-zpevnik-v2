@@ -1,9 +1,12 @@
 {title: Fanynka}
 {artist: Wohnout}
+{key: Em}
 {capo: 0}
 {language: czech}
 {createdAt: 1783789629000}
-{updatedAt: 1783800957000}
+{updatedAt: 1784132688000}
+{illustrationId: wohnout-fanynka_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: wohnout-fanynka_gpt-5.4-mini_v7}
 
 {start_of_verse}
 [Em]Na kraji pódia stojí fanynka,
