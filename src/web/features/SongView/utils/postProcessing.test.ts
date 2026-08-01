@@ -26,6 +26,41 @@ function renderSections(chordpro: string) {
 }
 
 describe("detectRepeatedChordPatterns (via postProcessChordPro)", () => {
+  it("adds spacing only to comments outside sections", () => {
+    const parse = (chordpro: string) => {
+      const song = new ChordProParser().parse(preparseDirectives(chordpro));
+      const html = postProcessChordPro(new HtmlDivFormatter().format(song));
+      return new DOMParser().parseFromString(html, "text/html");
+    };
+
+    const standalone = parse(`
+{comment: Intro}
+{start_of_verse}
+[C]First line
+{end_of_verse}
+    `.trim());
+    expect(
+      standalone
+        .querySelector(".comment")
+        ?.closest(".row")
+        ?.classList.contains("standalone-comment"),
+    ).toBe(true);
+
+    const withinSection = parse(`
+{start_of_verse}
+[C]First line
+{comment: Sing softly}
+[G]Second line
+{end_of_verse}
+    `.trim());
+    expect(
+      withinSection
+        .querySelector(".comment")
+        ?.closest(".row")
+        ?.classList.contains("standalone-comment"),
+    ).toBe(false);
+  });
+
   it("keeps tabs inside their enclosing section", () => {
     const song = new ChordProParser().parse(
       preparseDirectives(`

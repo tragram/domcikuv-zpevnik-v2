@@ -107,6 +107,13 @@
     margin-top: 0.1em;
 }
 
+/* Top-level comments separate song parts, so give their rows additional
+   breathing room. This remains effective when ChordSheetJS merges a comment
+   with the section that follows it into one paragraph. */
+.standalone-comment {
+    margin-block: 0.5em;
+}
+
 .row {
     display: flex;
     align-items: flex-end;

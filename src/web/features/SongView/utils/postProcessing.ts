@@ -324,6 +324,20 @@ function processSectionTitles(doc: Document): Document {
   return doc;
 }
 
+/** Adds spacing only to comments that are outside a recognised song section. */
+function markStandaloneComments(doc: Document): Document {
+  for (const element of Array.from(doc.querySelectorAll(".comment"))) {
+    const paragraph = element.closest(".paragraph");
+    if (
+      paragraph?.matches(".verse, .chorus, .bridge, .interlude")
+    ) {
+      continue;
+    }
+    element.closest(".row")?.classList.add("standalone-comment");
+  }
+  return doc;
+}
+
 /** Moves natively parsed, extracted tabs back to their marked section position. */
 function restoreNestedTabs(doc: Document): Document {
   const extractedTabs = new Map<string, { tab: Element; marker: Element }>();
@@ -368,6 +382,7 @@ export function postProcessChordPro(
   doc = processExpandedSections(doc);
   doc = processSectionTitles(doc);
   doc = restoreNestedTabs(doc);
+  doc = markStandaloneComments(doc);
   const processedDoc = detectRepeatedChordPatterns(doc, classNames);
 
   return processedDoc.body.innerHTML;
