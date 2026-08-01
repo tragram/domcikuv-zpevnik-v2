@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: e}
 {createdAt: 1436824800000}
-{updatedAt: 1770572112000}
+{updatedAt: 1785403080000}
 {illustrationId: kabat-moderni_devce_gpt-4o-mini_v1_flux.1-dev}
 {promptId: kabat-moderni_devce_gpt-4o-mini_v1}
 
@@ -37,5 +37,11 @@ pupek smrdím a [C]sem špina[G]vej.
 [C]Hodne piju, jím, [G]ženský nebalím
 [Dmi]a když někdy o sobě vím [C]hned to [G]oslavím.
 {end_of_chorus}
+
+{start_of_interlude}
+𝄆 [C][G][Dm][C][G] 𝄇
+{end_of_interlude}
+
+{chorus}
 
 {chorus}

@@ -1,0 +1,23 @@
+songId: lucie-nejlepsi_kterou_znam
+prompts:
+  - id: lucie-nejlepsi_kterou_znam_gpt-5.4-mini_v7
+    songId: lucie-nejlepsi_kterou_znam
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic surreal scene: a solitary lover in a dark,
+      rain-soaked night alley reaching toward a glowing woman-like silhouette
+      made of starlight and liquid gold, her eyes and lips emitting a soft
+      dangerous shimmer, with faint thorn-like lashes and subtle jewel fragments
+      floating in the air; the mood is intoxicating, obsessive, romantic, and
+      fatalistic, with the feeling of beauty turning to poison. Strong
+      chiaroscuro lighting, neon blue and crimson highlights, wet reflective
+      surfaces, shallow depth of field, dramatic contrast, single centered
+      composition, minimal background detail, no text.
+    createdAt: 2026-07-30T12:29:50.000Z
+    updatedAt: 2026-07-30T12:29:50.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487453000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

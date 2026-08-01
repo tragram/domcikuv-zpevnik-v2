@@ -1,0 +1,21 @@
+songId: blue_rocket-modrej_kour
+prompts:
+  - id: blue_rocket-modrej_kour_gpt-5.4-mini_v7
+    songId: blue_rocket-modrej_kour
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic rural twilight scene in a Czech countryside: a
+      lone weathered traveler standing by a muddy path near a simple farmhouse
+      and stable, wet hat, straw in boots, rain just passed, storm clouds
+      clearing, blue smoke drifting like a dragon across the wind over golden
+      rye fields, gray dawn light, quiet welcoming atmosphere, subtle sense of
+      homecoming and rest, soft mist, dramatic but gentle lighting, high detail,
+      no text, minimal composition, 16:9
+    createdAt: 2026-07-30T09:28:31.000Z
+    updatedAt: 2026-07-30T09:28:31.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487496000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

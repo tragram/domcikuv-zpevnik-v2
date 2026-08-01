@@ -1,0 +1,21 @@
+songId: chinaski-kazdy_rano
+prompts:
+  - id: chinaski-kazdy_rano_gpt-5.4-mini_v7
+    songId: chinaski-kazdy_rano
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely middle-aged man at dawn
+      standing on an empty rural road, holding an unlifted small gemstone in his
+      palm that softly glows, with a distant silhouette of a woman fading into
+      the morning mist; mood of regret, longing, and redemption, cold blue-gray
+      morning light with a faint warm sunrise rim light, simple composition,
+      shallow depth of field, subtle atmosphere, no text, highly legible,
+      emotional realism
+    createdAt: 2026-07-27T14:01:30.000Z
+    updatedAt: 2026-07-27T14:01:30.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785160901000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

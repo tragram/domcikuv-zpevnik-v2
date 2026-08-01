@@ -1,0 +1,22 @@
+songId: anna_k.-noc_na_zemi
+prompts:
+  - id: anna_k.-noc_na_zemi_gpt-5.4-mini_v7
+    songId: anna_k.-noc_na_zemi
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely man standing at a heavy iron
+      door in a dim old stone corridor, his hand on the lock as if choosing to
+      shut someone out; cold breath visible in the air, tense expression, faint
+      shadow of a woman deeper in the hall, with small-town rooftops and a few
+      falling star-like embers visible through a narrow window beyond, moody
+      blue-gray palette with subtle amber highlights, dramatic low-key lighting,
+      shallow depth of field, symbolic atmosphere of guilt, betrayal, and
+      finality, no text, simple composition, highly legible, 16:9
+    createdAt: 2026-07-30T13:01:06.000Z
+    updatedAt: 2026-07-30T13:01:06.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487436000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

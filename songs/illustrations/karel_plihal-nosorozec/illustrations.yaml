@@ -1,0 +1,20 @@
+songId: karel_plihal-nosorozec
+prompts:
+  - id: karel_plihal-nosorozec_gpt-5.4-mini_v7
+    songId: karel_plihal-nosorozec
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of two disgruntled men sitting on apartment
+      stairs at night, each beside an absurdly large animal—one a calm
+      rhinoceros, the other a grizzly bear—both looking slightly guilty and out
+      of place; a closed apartment door behind them, faint warm hallway light,
+      humorous domestic chaos, subtle beer bottle details, no text, simple
+      composition, realistic textures, soft shadows, quirky folk-song mood
+    createdAt: 2026-07-30T13:04:02.000Z
+    updatedAt: 2026-07-30T13:04:02.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487433000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

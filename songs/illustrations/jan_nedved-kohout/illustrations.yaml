@@ -1,0 +1,23 @@
+songId: jan_nedved-kohout
+prompts:
+  - id: jan_nedved-kohout_gpt-5.4-mini_v7
+    songId: jan_nedved-kohout
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic twilight scene in a quiet Czech countryside: a
+      lone figure standing beside a small river at dusk, watching warm window
+      reflections shimmer on the water while birds silhouette against a fading
+      blue-orange sky; distant church bells implied by a still, reverent
+      atmosphere; one soft, tender embrace or hand-reaching gesture to suggest
+      fragile love and farewell. Gentle mist, subtle stars beginning to appear,
+      calm melancholy mood, natural colors, soft diffused lighting, shallow
+      depth of field, minimal composition, no text or only a very small faint
+      title if needed.
+    createdAt: 2026-07-27T15:02:33.000Z
+    updatedAt: 2026-07-27T15:02:33.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785164564000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

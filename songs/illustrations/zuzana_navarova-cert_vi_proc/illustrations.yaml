@@ -1,0 +1,21 @@
+songId: zuzana_navarova-cert_vi_proc
+prompts:
+  - id: zuzana_navarova-cert_vi_proc_gpt-5.4-mini_v7
+    songId: zuzana_navarova-cert_vi_proc
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Single surreal folk scene: a devil-like imp crouched in a bush beside a
+      spinning carousel at dusk, drumming on a small infernal drum while holding
+      a violin out of reach in the distance, with a few grotesque greedy figures
+      and coins hinted in the background; dark Czech fairy-tale mood, ironic and
+      mischievous, cinematic lighting, moody low-key contrast, painterly
+      realism, simple composition, no visible text unless a tiny subtle lyric
+      fragment, highly legible at small sizes
+    createdAt: 2026-07-31T07:45:06.000Z
+    updatedAt: 2026-07-31T07:45:06.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487420000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

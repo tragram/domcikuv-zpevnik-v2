@@ -6,9 +6,13 @@
 {language: czech}
 {startMelody: g# h}
 {createdAt: 1484348400000}
-{updatedAt: 1770572256000}
+{updatedAt: 1785411879000}
 {illustrationId: tomas_klus-napojen_gpt-4o-mini_v1_flux.1-dev}
 {promptId: tomas_klus-napojen_gpt-4o-mini_v1}
+
+{start_of_interlude}
+𝄆 [E][A][E][H] 𝄇
+{end_of_interlude}
 
 {start_of_verse}
 [E]Vzpomeň, jak's očima dítě[A]te
@@ -36,11 +40,13 @@ společ[F#]ná je nám planeta [A]Zem.[H]
 [A]láskou, tak přijmi ji.
 [E]cítíš, jak jsi napo[H]jen,
 
-Jak jsi napo[E]jen.
-[E]Přes všechny pochyby [A]život je [E]krásný.
-Jsi napo[H]jen[A]
+Jak jsi napo[E]jen.[A]
+Přes všechny [E]pochyby život je [H]krásný.
+Jsi napo[E]jen[A]
 a svět je [E]Tvá továrna [H]na sny.
 {end_of_chorus}
+
+{interlude}
 
 {start_of_verse}
 [E]Nebe až najde jas ve vodní hladi[A]ně,
@@ -61,3 +67,5 @@ ucítíš [F#]klid, že vše jedno je jedním [A]duchem.[H]
 {end_of_verse}
 
 {chorus}
+
+{interlude}

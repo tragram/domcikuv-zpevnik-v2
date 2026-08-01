@@ -1,64 +1,64 @@
 {title: Otevřená zlomenina srdečního svalu}
 {artist: Wanastowy Vjecy}
-{key: A}
-{capo: 5}
-{range: e1-g#2}
+{key: G}
+{capo: 0}
+{range: d1-f#2}
 {language: czech}
-{startMelody: e e e c#}
+{startMelody: d d d h}
 {createdAt: 1436824800000}
-{updatedAt: 1770572318000}
+{updatedAt: 1785417657000}
 {illustrationId: wanastowy_vjecy-otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1_flux.1-dev}
 {promptId: wanastowy_vjecy-otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1}
 
 {start_of_verse}
-Jsem jako [A]vítr kterej zfoukne pírko ze tvejch dlaní,
-[E]špínu jedný noci, jako hygiena ranní
-[Hmi]velká voda slzí, který spláchnou noční hříchy,
-[Dmi]tamburíny zvoní [F]k operaci míchy
+Jsem jako [G]vítr kterej zfoukne pírko ze tvejch dlaní,
+[D]špínu jedný noci, jako hygiena ranní
+[Am]velká voda slzí, který spláchnou noční hříchy,
+[Cm]tamburíny zvoní [Eb]k operaci míchy
 {end_of_verse}
 
 {start_of_verse}
-Narovnám ti [A]páteř, poškrábu ti záda,
-[E]pofoukám ti srdce, zrada kamaráda
-[Hmi]lásky účel světí prostředky a smetí,
-[Dmi]špínu jedný noci, [F]který neuletíš
+Narovnám ti [G]páteř, poškrábu ti záda,
+[D]pofoukám ti srdce, zrada kamaráda
+[Am]lásky účel světí prostředky a smetí,
+[Cm]špínu jedný noci, [Eb]který neuletíš
 {end_of_verse}
 
 {start_of_verse}
-Otevřená [A]zlomenina srdečního svalu,
-[E]trápení a kocovina, vůně tvýho žalu
-[Hmi]vypustíš svou hříšnou duši do slanýho moře,
-[Dmi]neumírej děvče moje, [F]chci ti říct, že
+Otevřená [G]zlomenina srdečního svalu,
+[D]trápení a kocovina, vůně tvýho žalu
+[Am]vypustíš svou hříšnou duši do slanýho moře,
+[Cm]neumírej děvče moje, [Eb]chci ti říct, že
 {end_of_verse}
 
 {start_of_chorus}
-Ohořelou [A]károu chtěl bych dojet [E]ke hvězdám,
-který svítily z tvejch [Hmi]očí dřív než červo[D]toči
-se do tvýho srdce [G]daj, hm [E]hm
-V ohořelým [A]autě už dva měsíce [E]nedejchám,
-sám se svojí [Hmi]vinou, už nikdy nechci [D]jinou,
-už asi nedou[G]fám. [E]
+Ohořelou [G]károu chtěl bych dojet [D]ke hvězdám,
+který svítily z tvejch [Am]očí dřív než červo[C]toči
+se do tvýho srdce [F]daj, hm [D]hm
+V ohořelým [G]autě už dva měsíce [D]nedejchám,
+sám se svojí [Am]vinou, už nikdy nechci [C]jinou,
+už asi nedou[F]fám. [D]
 {end_of_chorus}
 
 {start_of_verse}
-Pláčem solíš [A]otevřený rány, co se hojí,
-[E]tvoji krev i tělo příjímám pod obojí
-[Hmi]stejný lidi se soumrakem mají stejný stíny,
-[Dmi]zmizelas jak před přízrakem, [F]padám do hlubiny
+Pláčem solíš [G]otevřený rány, co se hojí,
+[D]tvoji krev i tělo příjímám pod obojí
+[Am]stejný lidi se soumrakem mají stejný stíny,
+[Cm]zmizelas jak před přízrakem, [Eb]padám do hlubiny
 {end_of_verse}
 
 {start_of_verse}
-Tvůj pramínek [A]vlasů zaliju včelím voskem,
-[E]koukám na tu krásu a nechápu to mozkem
-[Hmi]to, co jsi mi dala, já [Hmi]nikomu už nedám,
-[Dmi]tak mi řekni, má opičko, [F]proč tě marně hledám
+Tvůj pramínek [G]vlasů zaliju včelím voskem,
+[D]koukám na tu krásu a nechápu to mozkem
+[Am]to, co jsi mi dala, já [Am]nikomu už nedám,
+[Cm]tak mi řekni, má opičko, [Eb]proč tě marně hledám
 {end_of_verse}
 
 {start_of_verse}
-Otevřená [A]zlomenina srdečního svalu,
-[E]trápení a kocovina, vůně tvýho žalu
-[Hmi]vypustíš svou hříšnou duši do slanýno moře,
-[Dmi]neumírej děvče moje, [F]chci ti říct, že
+Otevřená [G]zlomenina srdečního svalu,
+[D]trápení a kocovina, vůně tvýho žalu
+[Am]vypustíš svou hříšnou duši do slanýno moře,
+[Cm]neumírej děvče moje, [Eb]chci ti říct, že
 {end_of_verse}
 
 {chorus}

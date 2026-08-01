@@ -1,0 +1,22 @@
+songId: zuzana_navarova-marie
+prompts:
+  - id: zuzana_navarova-marie_gpt-5.4-mini_v7
+    songId: zuzana_navarova-marie
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene inside a modest, slightly worn Czech train
+      station waiting hall at dusk, one empty wooden chair being hastily set
+      down in the foreground, a small suitcase beside it, and a lone white bird
+      hovering near the open doorway as if someone named Marie is about to
+      return; subtle sense of tension, longing, and movement, with an incoming
+      train glow through the window, muted blue-gray and amber color palette,
+      soft dramatic lighting, shallow depth of field, sparse composition, no
+      visible text except perhaps a tiny, faded station sign if needed.
+    createdAt: 2026-07-27T19:35:31.000Z
+    updatedAt: 2026-07-27T19:35:31.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785180940000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

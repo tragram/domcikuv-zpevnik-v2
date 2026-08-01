@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: h h d c# h a g# f#}
 {createdAt: 1774986742000}
-{updatedAt: 1782977731000}
+{updatedAt: 1785172212000}
 {illustrationId: karel_plihal-lasko_ma_gpt-5-mini_v4_nano-banana-2}
 {promptId: karel_plihal-lasko_ma_gpt-5-mini_v4}
 
@@ -30,6 +30,8 @@ dnes [E]nevím[F#7], kudy [Hmi]kam.
 [Hmi]Trápí mě sen [F#mi]ošidný
 a [E]trápí [F#]mě král [G]sám.
 {end_of_verse}
+
+{chorus}
 
 {chorus}
 

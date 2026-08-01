@@ -1,0 +1,22 @@
+songId: richard_muller-nebude_to_lahke
+prompts:
+  - id: richard_muller-nebude_to_lahke_gpt-5.4-mini_v7
+    songId: richard_muller-nebude_to_lahke
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a tense breakup at night outside a small
+      apartment door: a lone man in a wrinkled shirt stands in the hallway,
+      holding a useless key in his hand while staring at a locked door with a
+      changed number on it, dim warm hallway light mixed with cold blue shadows,
+      a crumpled wedding ring or torn photo on the floor, subtle signs of
+      heartbreak and jealousy, moody and dramatic, shallow depth of field,
+      simple composition, only a tiny barely visible room number on the door, no
+      other text.
+    createdAt: 2026-07-30T12:00:25.000Z
+    updatedAt: 2026-07-30T12:00:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487461000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

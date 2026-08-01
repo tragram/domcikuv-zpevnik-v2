@@ -1,0 +1,20 @@
+songId: jaromir_nohavica-kozel
+prompts:
+  - id: jaromir_nohavica-kozel_gpt-5.4-mini_v7
+    songId: jaromir_nohavica-kozel
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic storybook illustration, slightly whimsical and darkly humorous:
+      a rural railway track at dusk, a startled goat tied to the tracks near a
+      stopped steam train, the goat coughing up a small red shirt while a
+      worried old man stands nearby in surprise; subtle comedic tension, simple
+      composition, muted countryside background, soft dramatic lighting,
+      detailed textures, minimal or no text, high legibility, 16:9.
+    createdAt: 2026-07-27T15:23:04.000Z
+    updatedAt: 2026-07-27T15:23:04.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785165792000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
