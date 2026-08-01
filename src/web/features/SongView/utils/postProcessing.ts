@@ -4,6 +4,9 @@ import {
   SHORTHAND_SECTION_DIRECTIVE,
 } from "./variantHandlers";
 
+const NESTED_TAB_POSITION_PATTERN = /^%nested_tab_position:\s*(\d+)%$/;
+const NESTED_TAB_SOURCE_PATTERN = /^%nested_tab_source:\s*(\d+)%$/;
+
 interface ChordElement {
   element: Element;
   chord: string;
@@ -316,6 +319,34 @@ function processSectionTitles(doc: Document): Document {
   return doc;
 }
 
+/** Moves natively parsed, extracted tabs back to their marked section position. */
+function restoreNestedTabs(doc: Document): Document {
+  const extractedTabs = new Map<string, { tab: Element; marker: Element }>();
+  for (const element of Array.from(doc.querySelectorAll(".comment"))) {
+    const match = element.textContent?.trim().match(NESTED_TAB_SOURCE_PATTERN);
+    if (!match) continue;
+
+    const markerParagraph = element.closest(".paragraph");
+    const tab = markerParagraph?.previousElementSibling;
+    if (tab?.classList.contains("tab") && markerParagraph) {
+      extractedTabs.set(match[1], { tab, marker: markerParagraph });
+    }
+  }
+
+  for (const element of Array.from(doc.querySelectorAll(".comment"))) {
+    const match = element.textContent?.trim().match(NESTED_TAB_POSITION_PATTERN);
+    if (!match) continue;
+
+    const extracted = extractedTabs.get(match[1]);
+    const target = element.closest(".row") || element;
+    if (extracted && target.parentNode) {
+      target.parentNode.replaceChild(extracted.tab, target);
+      extracted.marker.remove();
+    }
+  }
+  return doc;
+}
+
 /**
  * Adds repeat classes to chord sections and processes repetitions etc.
  * @param htmlString - HTML string to process
@@ -331,6 +362,7 @@ export function postProcessChordPro(
 
   doc = processExpandedSections(doc);
   doc = processSectionTitles(doc);
+  doc = restoreNestedTabs(doc);
   const processedDoc = detectRepeatedChordPatterns(doc, classNames);
 
   return processedDoc.body.innerHTML;

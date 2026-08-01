@@ -26,6 +26,29 @@ function renderSections(chordpro: string) {
 }
 
 describe("detectRepeatedChordPatterns (via postProcessChordPro)", () => {
+  it("keeps tabs inside their enclosing section", () => {
+    const song = new ChordProParser().parse(
+      preparseDirectives(`
+{start_of_verse}
+[Am]Before
+{start_of_tab}
+e|--0--    3x--|
+B|--1--|
+{end_of_tab}
+[E]After
+{end_of_verse}
+      `.trim()),
+    );
+    const html = postProcessChordPro(new HtmlDivFormatter().format(song));
+    const doc = new DOMParser().parseFromString(html, "text/html");
+
+    expect(song.warnings).toEqual([]);
+    expect(doc.querySelectorAll(".verse")).toHaveLength(1);
+    const tab = doc.querySelector(".verse > .paragraph.tab .literal");
+    expect(tab?.textContent).toBe("e|--0--    3x--|B|--1--|");
+    expect(tab?.querySelectorAll("br")).toHaveLength(1);
+  });
+
   it("hides chords of a verse identical to a previous one", () => {
     // Regression: lyrics are rendered as <div class="lyrics">; a stray
     // "span.lyrics" selector once made every section look instrumental and

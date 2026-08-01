@@ -2,6 +2,24 @@ import { describe, it, expect } from "vitest";
 import { czechToEnglish, preparseDirectives } from "./preparseChordpro";
 
 describe("preparseChordpro Directives", () => {
+  it("reports tabs nested within another tab instead of attempting to render them", () => {
+    const result = preparseDirectives(`
+{start_of_verse}
+{start_of_tab}
+E|-797
+{start_of_tab}
+B|-777
+{end_of_tab}
+{end_of_tab}
+{end_of_verse}
+    `.trim());
+
+    expect(result).toContain(
+      "{comment: Error: Tabs cannot be nested inside another tab.}",
+    );
+    expect(result).not.toContain("E|-797");
+  });
+
   describe("should correctly store and recall", () => {
     it("a basic verse with both expanded and shorthand formats", () => {
       const input = `

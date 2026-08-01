@@ -18,6 +18,17 @@ export const SECTION_TITLE_COMMENT = (
   consecutiveModifier: string | null,
 ) => `{comment: %section_title: ${consecutiveModifier}${repeatKey}%}`;
 export const EMPTY_LINE = "{comment: %empty_line%}";
+const NESTED_TAB_POSITION_COMMENT = (id: number) =>
+  `{comment: %nested_tab_position: ${id}%}`;
+const NESTED_TAB_SOURCE_COMMENT = (id: number) =>
+  `{comment: %nested_tab_source: ${id}%}`;
+
+/**
+ * ChordSheetJS supports tab sections, but cannot nest sections: opening a tab
+ * inside a verse (or interlude) closes the parent section. Preserve nested tab
+ * content as top-level tab sections and restore their native HTML markup after
+ * formatting.
+ */
 /**
  * Default section directives
  */
@@ -147,6 +158,7 @@ export function preparseDirectives(
 
   // Process each line of the song
   const processedLines: string[] = [];
+  const extractedNestedTabs: string[] = [];
   const songLines = song.split("\n");
 
   let i = 0;
@@ -189,6 +201,52 @@ export function preparseDirectives(
       }
       i++;
       continue;
+    }
+
+    // ChordSheetJS has a single active-section state, so a {start_of_tab}
+    // inside a section would otherwise end the enclosing verse/interlude.
+    // Keep top-level tabs native, but replace a complete nested tab block with
+    // a lossless comment that post-processing restores as a .tab element.
+    if (currentContent !== null && line.trim() === "{start_of_tab}") {
+      let tabEndIndex = -1;
+      let tabDepth = 1;
+      let hasNestedTab = false;
+      for (let tabIndex = i + 1; tabIndex < songLines.length; tabIndex++) {
+        const tabLine = songLines[tabIndex].trim();
+        if (tabLine === "{start_of_tab}") {
+          tabDepth++;
+          hasNestedTab = true;
+        } else if (tabLine === "{end_of_tab}") {
+          tabDepth--;
+        }
+        if (tabDepth === 0) {
+          tabEndIndex = tabIndex;
+          break;
+        }
+        // Do not accidentally consume a later tab's closing directive when
+        // this tab itself is unclosed within the current section.
+        if (tabLine === `{end_of_${currentDirective}}`) break;
+      }
+      if (tabEndIndex !== -1) {
+        if (hasNestedTab) {
+          currentContent.push(
+            "{comment: Error: Tabs cannot be nested inside another tab.}",
+          );
+        } else {
+          const tabId = extractedNestedTabs.length;
+          currentContent.push(NESTED_TAB_POSITION_COMMENT(tabId));
+          extractedNestedTabs.push(
+            [
+              "{start_of_tab}",
+              ...songLines.slice(i + 1, tabEndIndex),
+              "{end_of_tab}",
+              NESTED_TAB_SOURCE_COMMENT(tabId),
+            ].join("\n"),
+          );
+        }
+        i = tabEndIndex + 1;
+        continue;
+      }
     }
 
     let directiveMatched = false;
@@ -441,6 +499,9 @@ export function preparseDirectives(
       ].join("\n"),
     );
   }
+
+  // Keep extracted tabs at top level so ChordSheetJS can parse them natively.
+  processedLines.push(...extractedNestedTabs);
 
   function hideTitles(text: string) {
     const pattern = new RegExp(
