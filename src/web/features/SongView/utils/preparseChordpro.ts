@@ -261,6 +261,33 @@ export function preparseDirectives(
       // Directive start
       const startMatch = line.match(startRegex);
       if (startMatch) {
+        if (currentContent && currentDirective) {
+          const previousDirective = currentDirective;
+          const previousKey: string = currentKey || defaultKey;
+          currentContent.push(
+            `{comment: Warning: Section "${directive}" was started before "${previousDirective}" was closed. Closing "${previousDirective}" automatically.}`,
+            `{end_of_${previousDirective}}`,
+          );
+          directiveMaps[previousDirective] ??= new Map();
+          directiveMaps[previousDirective].set(previousKey, currentContent);
+          lastSectionKey[previousDirective] = previousKey;
+
+          const emittedContent = [...currentContent];
+          if (previousKey !== defaultKey) {
+            currentContent.splice(
+              1,
+              0,
+              SECTION_TITLE_COMMENT(previousKey, ""),
+            );
+            emittedContent.splice(
+              1,
+              0,
+              SECTION_TITLE_COMMENT(previousKey, ""),
+            );
+          }
+          processedLines.push(emittedContent.join("\n"));
+        }
+
         currentDirective = directive;
         currentKey = startMatch[1] || label || defaultKey;
         currentContent = [line];

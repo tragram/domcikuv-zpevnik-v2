@@ -349,6 +349,27 @@ Interlude
       const result = preparseDirectives(input);
       expect(result).toBe(expected);
     });
+    it("warns and recovers when a section starts before the previous one ends", () => {
+      const input = `
+{start_of_verse}
+[G]First verse line
+{start_of_verse}
+[C]Second verse line
+{end_of_verse}
+      `.trim();
+
+      const expected = `
+{start_of_verse}
+[G]First verse line
+{comment: Warning: Section "verse" was started before "verse" was closed. Closing "verse" automatically.}
+{end_of_verse}
+{start_of_verse}
+[C]Second verse line
+{end_of_verse}
+      `.trim();
+
+      expect(preparseDirectives(input)).toBe(expected);
+    });
     it("preserve an unclosed section at the end of the song", () => {
       const input = `
 {start_of_verse}
