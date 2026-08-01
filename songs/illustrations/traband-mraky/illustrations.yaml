@@ -1,0 +1,24 @@
+songId: traband-mraky
+prompts:
+  - id: traband-mraky_gpt-5.4-mini_v7
+    songId: traband-mraky
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of three generations symbolized in one
+      quiet composition: in the foreground a young man sitting alone at a desk
+      in a warm office, staring out a rain-streaked window with a thoughtful,
+      uncertain expression; behind him, subtly layered in the same frame, an
+      older father-like figure in a factory with steel beams and hanging wires,
+      and farther back a grandfather in a windswept field under heavy clouds;
+      the sky above is filled with slow-moving gray clouds, evoking generational
+      labor and existential searching. Soft moody lighting, muted earthy and
+      industrial color palette, shallow depth of field, minimal composition, no
+      text, emotional, contemplative atmosphere.
+    createdAt: 2026-07-30T10:52:55.000Z
+    updatedAt: 2026-07-30T10:52:55.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487479000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

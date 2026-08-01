@@ -1,0 +1,21 @@
+songId: horkyze_slize-l.a.g._song
+prompts:
+  - id: horkyze_slize-l.a.g._song_gpt-5.4-mini_v7
+    songId: horkyze_slize-l.a.g._song
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a small underground comedy-club stage, a
+      playful and charismatic singer holding a microphone under a warm
+      spotlight, with a visible rainbow pride flag draped behind him and a crowd
+      laughing in soft blur, chaotic punk-rock energy with a tongue-in-cheek
+      cabaret vibe, simple composition, shallow depth of field, warm amber and
+      magenta lighting, subtle stage smoke, no readable text, minimal signage,
+      high detail, expressive mood
+    createdAt: 2026-07-27T16:40:36.000Z
+    updatedAt: 2026-07-27T16:40:36.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785170447000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

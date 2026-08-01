@@ -1,12 +1,12 @@
 {title: Lachtani}
 {artist: Jaromír Nohavica}
 {key: C}
-{capo: 3}
+{capo: 0}
 {range: g1-g2}
 {language: czech}
 {startMelody: g e}
 {createdAt: 1439503200000}
-{updatedAt: 1770572063000}
+{updatedAt: 1785170783000}
 {illustrationId: jaromir_nohavica-lachtani_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-lachtani_gpt-4o-mini_v1}
 

@@ -1,0 +1,21 @@
+songId: nedvedi-na_kameni_kamen
+prompts:
+  - id: nedvedi-na_kameni_kamen_gpt-5.4-mini_v7
+    songId: nedvedi-na_kameni_kamen
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a barren field at dawn after a storm, a
+      single broken old tree standing in the foreground with cracked earth and
+      scattered stones, dark rain clouds parting to reveal a faint hopeful
+      sunrise on the horizon, distant silhouettes of arguing men in suits faded
+      into the storm haze, mood of exhaustion, disillusionment, and fragile
+      hope; dramatic low-key lighting, muted earth tones with a small warm glow
+      at the edge of the sky, minimal composition, no text.
+    createdAt: 2026-07-30T13:46:28.000Z
+    updatedAt: 2026-07-30T13:46:28.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487430000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

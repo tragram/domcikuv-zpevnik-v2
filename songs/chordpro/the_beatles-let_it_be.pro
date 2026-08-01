@@ -1,16 +1,16 @@
 {title: Let It Be}
 {artist: The Beatles}
 {key: C}
-{capo: 6}
+{capo: 0}
 {range: e1-a2}
 {language: english}
 {startMelody: g}
 {createdAt: 1423868400000}
-{updatedAt: 1770572251000}
+{updatedAt: 1785173399000}
 {illustrationId: the_beatles-let_it_be_gpt-4o-mini_v1_flux.1-dev}
 {promptId: the_beatles-let_it_be_gpt-4o-mini_v1}
 
-TBD: jiné akordy
+(TBD: jiné akordy?)
 
 {start_of_verse}
 When I [C]find myself in [G]times of trouble
@@ -25,25 +25,28 @@ she is [Am]standing right in [F]front of me
 {end_of_verse}
 
 {start_of_chorus}
-Let it [Ami]be let it [C/G]be Let it [F]be let it be
-whisper words of [G]wisdom let it [F]be. [C]
+Let it [Ami]be let it [C/G]be Let it [F]be let it [C]be
+[C]whisper words of [G]wisdom let it [F]be. [C]
 {end_of_chorus}
 
 {start_of_verse}
 And [C]when the broken [G]hearted people
-livi[Ami]ng in the [F]world agree
-[C]there will be an [G]answer let [F]it [C]be
+[Ami]living in the [F]world agree
+[C]there will be an [G]answer let it [F]be [C]
 {end_of_verse}
 
 {start_of_verse}
 For [C]though they may [G]be parted
 there is [Ami]still a chance that [F]they will see
-[C]there will be an [G]answer let [F]it [C]be.
+[C]there will be an [G]answer let it [F]be. [C]
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
 There will be an [G]answer let it [F]be. [C]
 {end_of_variant}
+
+{chorus}
+
 {chorus}
 
 {start_of_verse}
@@ -57,5 +60,17 @@ I [C]wake up to the [G]sound of music
 [Ami]Mother Mary [F]comes to me
 [C]speaking words of [G]wisdom let it [F]be. [C]
 {end_of_verse}
+
+{start_of_variant: replace_last_line}
+There will be an [G]answer let it [F]be. [C]
+{end_of_variant}
+
+{chorus}
+
+{start_of_variant: replace_last_line}
+There will be an [G]answer let it [F]be. [C]
+{end_of_variant}
+
+{chorus}
 
 {chorus}

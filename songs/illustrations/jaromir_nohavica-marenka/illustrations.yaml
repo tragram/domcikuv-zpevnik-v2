@@ -1,0 +1,22 @@
+songId: jaromir_nohavica-marenka
+prompts:
+  - id: jaromir_nohavica-marenka_gpt-5.4-mini_v7
+    songId: jaromir_nohavica-marenka
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely winter forest at night, a young
+      couple holding hands on a narrow path through thorny thickets, the man in
+      a simple shirt and the woman in a coat, two faint stars and a cold moon
+      glowing through bare branches, a tiny campfire made from leaves and grass
+      flickering near a tree trunk, subtle sense of danger with two shadowy
+      wolves watching from behind the trees, dark blue-gray palette, soft
+      volumetric moonlight, dramatic contrast, sparse composition, emotional and
+      haunting, no text, minimal detail for small-size legibility
+    createdAt: 2026-07-27T21:01:11.000Z
+    updatedAt: 2026-07-27T21:01:11.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487509000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

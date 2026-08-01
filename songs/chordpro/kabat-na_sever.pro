@@ -6,19 +6,19 @@
 {language: czech}
 {startMelody: h h h h h g}
 {createdAt: 1773786115000}
-{updatedAt: 1784612061000}
+{updatedAt: 1785409532000}
 {illustrationId: kabat-na_sever_gpt-5-mini_v4_nano-banana-2}
 {promptId: kabat-na_sever_gpt-5-mini_v4}
-
-{comment: Riff (6x)}
-
-{start_of_interlude: Intro}
 
 {start_of_tab}
 e|-7-10-10-8-7-8-7-7---7-8-8-8-8-7----
 H|-8-8-8-8-8-8-8-8-8---8-8-8-8-8-8-7-8
 G|-7-7-7-7-7-7-7-7-7---7-7-7-7-7-7-7-7
 {end_of_tab}
+
+{start_of_interlude: Intro}
+
+{comment: Riff (6x)}
 [D]
 {end_of_interlude}
 
@@ -32,7 +32,7 @@ a teď [G]holka musím [Emi]jít až [D]tam na se[G]ver.
 {comment: Pozor, poprvé refrén není celý!}
 
 {start_of_chorus}
-(Riff 2x) Cestu [G]znám... [D][G]
+{comment: Riff (2x)} Cestu [G]znám... [D][G]
 {end_of_chorus}
 
 {start_of_verse}
@@ -67,5 +67,7 @@ já ji [G]jenom polí[Emi]bil a [D]šel na se[G]ver.
 
 {start_of_chorus}
 𝄆 [A]Cestu znám [D]a neměním [A]směr,
-[A]dojdu k řece [F#mi]plný ryb až [E]tam na se[A]ver. 𝄇 (4x)
+[A]dojdu k řece [F#mi]plný ryb až [E]tam na se[A]ver. 𝄇
 {end_of_chorus}
+
+{chorus}

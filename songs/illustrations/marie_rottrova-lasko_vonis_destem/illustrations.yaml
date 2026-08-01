@@ -1,0 +1,21 @@
+songId: marie_rottrova-lasko_vonis_destem
+prompts:
+  - id: marie_rottrova-lasko_vonis_destem_gpt-5.4-mini_v7
+    songId: marie_rottrova-lasko_vonis_destem
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A solitary figure walking through a rain-soaked old European city street
+      at dusk, following faint footprints in the wet cobblestones, nostalgic and
+      romantic mood, distant historic clock tower/orloj softly looming in the
+      background, one oversized coat draped in memory, reflections shimmering in
+      puddles, gentle wind and rainfall, cinematic photorealistic style, moody
+      blue-gray palette with warm amber highlights, soft diffused rain lighting,
+      shallow depth of field, minimal text, simple legible composition
+    createdAt: 2026-07-27T18:41:19.000Z
+    updatedAt: 2026-07-27T18:41:19.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785177689000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

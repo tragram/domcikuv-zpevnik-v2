@@ -1,47 +1,55 @@
-{title: Míle}
+{title: Míle (Vítr to ví)}
 {artist: Waldemar Matuška}
 {key: G}
 {capo: 7}
-{range: f#1-e1}
 {language: czech}
-{startMelody: d}
 {createdAt: 1436824800000}
-{updatedAt: 1770572314000}
+{updatedAt: 1785402742000}
 {illustrationId: waldemar_matuska-mile_gpt-4o-mini_v1_flux.1-dev}
 {promptId: waldemar_matuska-mile_gpt-4o-mini_v1}
 
 {start_of_verse}
-[G]Míle a [C]míle jsou [G]cest, které [Emi]znám,
-jdou [G]trávou i [C]úbočím [D]skal,
-[G]jsou cesty [C]zpátky a [G]jsou cesty [Emi]tam,
-a [G]já na [C]všech s vámi [D]stál,
-[G]proč ale [C]blátem nás [G]kázali vést
-a špínou si [C]třísnili [D]šat?
+[G]Míle a [C]míle [C/B]jsou [D/A]cest, které [G]znám,
+jdou trávou i [C]ú[C/B]bočím [G]skal.
+[G]Jsou cesty [C]zpátky[C/B]a [D/A]jsou cesty [G]tam
+a já na [C]všech [C/B]s Vámi [D/A]stál.
+[G]Proč ale [C]blá[C/B]tem nás [D/A]kázali [G]vést
+a špínou si [C]třís[C/B]nili [G]šat?
 {end_of_verse}
 
 {start_of_chorus}
-To [Ami]ví snad jen [D]déšť a [G]vítr kolem [Emi]nás,
-ten [Ami]vítr, co [D]začal právě [G]vát.
+To [C]ví [C/B]snad jen [D/A]déšť[D/F#]
+a [G]vítr kolem [C add9]nás, [G]
+ten [C]vítr[C/B], co [D/A]zača[D/F#]právě [G]vát.
 {end_of_chorus}
 
+{start_of_interlude}
+[C][C/B][D/A][D/F#][G][C add9][G]
+[C][C/B][D/A][D/F#][G]
+{end_of_interlude}
+
 {start_of_verse}
-[G]Míle a [C]míle se [G]táhnou těch cest
-a dál po nich [C]zástupy [D]jdou,
-[G]kříže jsou [C]bílé a [G]lampičky [Emi]hvězd
-jen [G]váhavě [C]svítí [D]tmou,
-[G]Bůh ví, co [C]růží, jež [G]dál mohly kvést,
-spí v hlíně těch [C]práchnivých [D]blat?
+[G]Míle a [C]míle[C/B]se [D/A]táhnou těch [G]cest
+a dál po nich [C]zás[C/B]tupy [G]jdou.
+[G]Kříže jsou [C]bí[C/B]lé a [D/A]lampičky [G]hvězd,
+jen váhavě [C]sví[C/B]tí [D/A]tmou.
+[G]Bůh ví, co [C]rů[C/B]ží, jež [D/A]dál mohly [G]kvést,
+spí v hlíně těch [C]prách[C/B]nivých [G]blat?
 {end_of_verse}
 
 {chorus}
 
+{interlude}
+
 {start_of_verse}
-[G]Dejte mi [C]stéblo a [G]já budu rád,
-i stéblo je [C]záchranný [D]pás,
-[G]dejte mi [C]flétnu a [G]já budu [Emi]hrát
-a [G]zpívat a [C]ptát se [D]vás,
-[G]proč jen se [C]účel tak [G]rád mění v bič
-a proč že se [C]má člověk [D]bát.
+[G]Dejte mi [C]sté[C/B]blo a [D/A]já budu [G]rád,
+i stéblo je [C]zá[C/B]chranný [G]pás.
+[G]Dejte mi [C]flé[C/B]tnu a [D/A]já budu [G]hrát
+a zpívat a [C]ptát[C/B]se [D/A]vás.
+[G]Proč jen se [C]ú[C/B]čel tak [D/A]rád mění v [G]bič
+a proč že se [C]má [C/B]člověk [G]bát.
 {end_of_verse}
 
 {chorus}
+
+{interlude}

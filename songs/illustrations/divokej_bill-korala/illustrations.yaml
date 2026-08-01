@@ -1,0 +1,21 @@
+songId: divokej_bill-korala
+prompts:
+  - id: divokej_bill-korala_gpt-5.4-mini_v7
+    songId: divokej_bill-korala
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Warm intimate scene of a loving couple in a cozy dim room at dawn, the
+      woman leaning on the man as he plays acoustic guitar and sings, bottles
+      and party remnants subtly hinting at a carefree night, open window with
+      first golden sunlight streaming in, feeling of freedom, devotion, and
+      “just live” optimism, cinematic photorealistic style, soft warm lighting
+      with gentle shadows, shallow depth of field, simple composition, minimal
+      or no text, high emotional clarity
+    createdAt: 2026-07-27T15:51:05.000Z
+    updatedAt: 2026-07-27T15:51:05.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785167476000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

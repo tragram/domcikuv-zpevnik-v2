@@ -1,0 +1,21 @@
+songId: aneta_langerova-mala_morska_vila
+prompts:
+  - id: aneta_langerova-mala_morska_vila_gpt-5.4-mini_v7
+    songId: aneta_langerova-mala_morska_vila
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic underwater scene: a lonely small mermaid with a
+      fragile, sorrowful expression floats just beneath a bright white sea
+      surface, her hair and dress blending into flowing green seaweed,
+      surrounded by faint icy flower-like crystals forming around her body as
+      she begins to transform; distant storm light ripples above, soft
+      blue-green palette, ethereal mist, gentle caustic lighting, melancholic
+      and magical mood, simple composition, no text.
+    createdAt: 2026-07-30T07:55:11.000Z
+    updatedAt: 2026-07-30T07:55:11.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487531000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

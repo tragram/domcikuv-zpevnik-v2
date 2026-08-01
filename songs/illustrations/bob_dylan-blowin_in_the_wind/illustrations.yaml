@@ -1,0 +1,21 @@
+songId: bob_dylan-blowin_in_the_wind
+prompts:
+  - id: bob_dylan-blowin_in_the_wind_gpt-5.4-mini_v7
+    songId: bob_dylan-blowin_in_the_wind
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A solitary figure standing on an empty road at dusk, wind visibly sweeping
+      dust and a few loose white feathers across the scene, distant rolling
+      hills fading into a soft sky, subtle sense of longing and protest,
+      symbolic and contemplative mood, cinematic photorealistic style, muted
+      earth tones with pale blue-gray sky, soft diffused lighting, wide
+      composition, minimal details, no text or only a very small faint phrase
+      “blowing in the wind” if needed
+    createdAt: 2026-07-30T08:35:06.000Z
+    updatedAt: 2026-07-30T08:35:06.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487502000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

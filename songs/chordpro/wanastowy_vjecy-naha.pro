@@ -1,87 +1,87 @@
 {title: Nahá}
 {artist: Wanastowy Vjecy}
-{key: H}
-{capo: 3}
-{range: g#1-f#1}
+{key: D}
+{capo: 0}
+{range: h1-a1}
 {language: czech}
-{startMelody: d#}
+{startMelody: f#}
 {createdAt: 1436824800000}
-{updatedAt: 1770572317000}
+{updatedAt: 1785411293000}
 {illustrationId: wanastowy_vjecy-naha_gpt-4o-mini_v1_flux.1-dev}
 {promptId: wanastowy_vjecy-naha_gpt-4o-mini_v1}
 
 {start_of_verse}
-[H]Najednou lítáš [E]nad vodou,
-[A]ne náho[E]dou a [H]včera jsi se chvěla,
-s náladou mizíš [E]oblohou,
-všude [A]barvy [E]jsou, [H]splývaj naše těla.
+[D]Najednou lítáš [G]nad vodou,
+[C]ne náho[G]dou a [D]včera jsi se chvěla,
+s náladou mizíš [G]oblohou,
+všude [C]barvy [G]jsou, [D]splývaj naše těla.
 {end_of_verse}
 
 {start_of_verse}
-[H]Přilítnou broučci s [E]podkovou,
-[A]svítí luce[E]rnou, [H]moucha pracky zvedá,
-P.B.CH. s rybou [E]kouzelnou
-[A]hlídá pod [E]tebou, [H]vědí, co je třeba.
+[D]Přilítnou broučci s [G]podkovou,
+[C]svítí luce[G]rnou, [D]moucha pracky zvedá,
+P.B.CH. s rybou [G]kouzelnou
+[C]hlídá pod [G]tebou, [D]vědí, co je třeba.
 {end_of_verse}
 
 {start_of_chorus: R1}
-[F#]Seš motýl, [H]zkoušíš
-[A]projít [E]tmou, budeš [A]nahá,
-[F#]s tou rybou [H]kouzel
-[A]plout ve [E]dvou, budeš [A]nahá.
+[A]Seš motýl, [D]zkoušíš
+[C]projít [G]tmou, budeš [C]nahá,
+[A]s tou rybou [D]kouzel
+[C]plout ve [G]dvou, budeš [C]nahá.
 {end_of_chorus}
 
 {start_of_verse}
-[H]Andělé svícny [E]pozvednou,
-[A]světlo proudí [E]tmou,
-[H]dní je třistatřiatřicet,
-cesty jdou, [E]ústí v jedinou,
-[A]končí nirváno[E]u, [H]láska břehy zvedá.
+[D]Andělé svícny [G]pozvednou,
+[C]světlo proudí [G]tmou,
+[D]dní je třistatřiatřicet,
+cesty jdou, [G]ústí v jedinou,
+[C]končí nirváno[G]u, [D]láska břehy zvedá.
 {end_of_verse}
 
 {start_of_verse}
-[H]Znamení dogy s [E]kočičkou
-[A]v kýbli s bublino[E]u, [H]díra v sýru touží,
-do peří [E]bílou ponork[A]ou
-letíš spirál[E]ou, [H]prstem v louži kroužíš.
+[D]Znamení dogy s [G]kočičkou
+[C]v kýbli s bublino[G]u, [D]díra v sýru touží,
+do peří [G]bílou ponork[C]ou
+letíš spirál[G]ou, [D]prstem v louži kroužíš.
 {end_of_verse}
 
 {start_of_chorus: R2}
-[F#]Bublinu v [H]kýbli
-[A]nech si [E]zdát a buď [A]nahá,
-[F#]s kobylkou [H]v trávě
-[A]budeš spát [E]taky nahá[A].
+[A]Bublinu v [D]kýbli
+[C]nech si [G]zdát a buď [C]nahá,
+[A]s kobylkou [D]v trávě
+[C]budeš spát [G]taky nahá[C].
 {end_of_chorus}
 
 {start_of_chorus}
-[F#]S hlemýžděm [H]založ
-[A]novej stát [E]a buď nahá[A],
-[F#]tvůj had a [H]skřítek
-[A]tě má rád, [E]když jsi nah[A]á.
+[A]S hlemýžděm [D]založ
+[C]novej stát [G]a buď nahá[C],
+[A]tvůj had a [D]skřítek
+[C]tě má rád, [G]když jsi nah[C]á.
 {end_of_chorus}
 
 {chorus: R2}
 
 {start_of_chorus}
-[F#]Už víš, že [H]sex
-a [A]prachy lžou[E], když jsi [A]nahá,
-[F#]kytky ti [H]vlasy
-[A]provlíknou, [E]když jsi [A]nahá.
+[A]Už víš, že [D]sex
+a [C]prachy lžou[G], když jsi [C]nahá,
+[A]kytky ti [D]vlasy
+[C]provlíknou, [G]když jsi [C]nahá.
 {end_of_chorus}
 
 {start_of_verse}
-[H]Přilítnou broučci [E]s podkovo[A]u,
-svítí lucerno[E]u, [H]moucha pracky zvedá,
-P.B.CH. s [E]rybou kouzelnou,
-[A]hlídá pod [E]tebou, [H]vědí co je třeba.
+[D]Přilítnou broučci [G]s podkovo[C]u,
+svítí lucerno[G]u, [D]moucha pracky zvedá,
+P.B.CH. s [G]rybou kouzelnou,
+[C]hlídá pod [G]tebou, [D]vědí co je třeba.
 {end_of_verse}
 
 {chorus: R1}
 
 {start_of_verse}
-[H]Andělé svícny [E]pozvednou,
-[A]světlo proudí [E]tmou,
-[H]dní je třistatřiatřicet,
-cesty jsou [E]ústí v jedi[A]nou končí
-nirvá[E]nou jó jó [E]jóu, b b b b bua.
+[D]Andělé svícny [G]pozvednou,
+[C]světlo proudí [G]tmou,
+[D]dní je třistatřiatřicet,
+cesty jsou [G]ústí v jedi[C]nou končí
+nirvá[G]nou jó jó [G]jóu, b b b b bua.
 {end_of_verse}

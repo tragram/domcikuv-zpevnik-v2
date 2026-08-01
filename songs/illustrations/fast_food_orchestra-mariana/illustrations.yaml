@@ -1,0 +1,20 @@
+songId: fast_food_orchestra-mariana
+prompts:
+  - id: fast_food_orchestra-mariana_gpt-5.4-mini_v7
+    songId: fast_food_orchestra-mariana
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely man at dawn in a small messy
+      apartment, standing by an open window and looking out at a star-filled sky
+      fading into morning, holding a crumpled handwritten page with a few faint
+      words, suggesting heartbreak and longing; soft blue-gray dawn light mixing
+      with warm streetlamp glow, subtle dust in the air, mood melancholic and
+      intimate, simple composition, shallow depth of field, minimal text, 16:9
+    createdAt: 2026-07-27T19:23:58.000Z
+    updatedAt: 2026-07-27T19:23:58.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785180248000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

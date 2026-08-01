@@ -1,81 +1,83 @@
 {title: Na Hotelu v Olomouci}
 {artist: Petr Hapka}
-{key: Dm}
+{key: Em}
 {capo: 0}
-{range: g1-g3}
+{range: a1-a3}
 {language: czech}
-{startMelody: f}
+{startMelody: g}
 {createdAt: 1734130800000}
-{updatedAt: 1770572217000}
+{updatedAt: 1785408985000}
 {illustrationId: petr_hapka-na_hotelu_v_olomouci_gpt-4o-mini_v1_flux.1-dev}
 {promptId: petr_hapka-na_hotelu_v_olomouci_gpt-4o-mini_v1}
 
 {start_of_verse}
-[Dmi]V půlce ledna, ve tmě [Ami]tmoucí,
-[C]na hotelu v Olo[G]mouci.
-[Dmi]Kdo jste, pane? Šátrám [Ami]dlaní,
-řekla bych, že [C]Mastroiani. [G]
+[Em]V půlce ledna, ve tmě [Hm]tmoucí,
+[D]na hotelu v Olo[A]mouci.
+[Em]Kdo jste, pane? Šátrám [Hm]dlaní,
+řekla bych, že [D]Mastroiani. [A]
 {end_of_verse}
 
 {start_of_verse}
-[Dmi]Ten je ale mrtvej [Ami]přece.
-[C]Leží v zemi, a ne [G]v dece,
-[Dmi]pod níž slyším srdce [F]tlouci
-na hotelu [C]v Olomou[G]ci.
+[Em]Ten je ale mrtvej [Hm]přece.
+[D]Leží v zemi, a ne [A]v dece,
+[Em]pod níž slyším srdce [G]tlouci
+na hotelu [D]v Olomou[A]ci.
 {end_of_verse}
 
 {start_of_chorus}
-3x 𝄆 [Dmi]Na, [Ami]na, na…[C][G] 𝄇
-[Dmi]Na, na, [F]na… [C][G]
+3x 𝄆 [Em]Na, [Hm]na, na…[D][A] 𝄇
+[Em]Na, na, [G]na… [D][A]
 {end_of_chorus}
 
 {start_of_verse}
-[Dmi]Má dlaň je jak pytlák [Ami]v lese,
-[C]tlukot srdce zrychlu[G]je se.
-[Dmi]Nejste starší ročník, [Ami]pane,
-rty však máte [C]rozpukané... [G]
+[Em]Má dlaň je jak pytlák [Hm]v lese,
+[D]tlukot srdce zrychlu[A]je se.
+[Em]Nejste starší ročník, [Hm]pane,
+rty však máte [D]rozpukané... [A]
 {end_of_verse}
 
 {start_of_verse}
-[Dmi]Moře smutku je holt [Ami]slané.
-[C]Chyťte se mne, chyťte, [G]pane!
-[Dmi]Jsem to stéblo pro [F]tonoucí
-na hotelu [C]v Olomou[G]ci.
+[Em]Moře smutku je holt [Hm]slané.
+[D]Chyťte se mne, chyťte, [A]pane!
+[Em]Jsem to stéblo pro [G]tonoucí
+na hotelu [D]v Olomou[A]ci.
 {end_of_verse}
 
 {chorus}
 
 {start_of_verse}
-[Dmi]Chytil jste mě smyčkou [Ami]hada.
-[C]Ale kdo jsem? Zkuste [G]hádat.
-[Dmi]No, to sotva uhod[Ami]nete.
-Budu totiž [C]vším, čím chce[G]te.
+[Em]Chytil jste mě smyčkou [Hm]hada.
+[D]Ale kdo jsem? Zkuste [A]hádat.
+[Em]No, to sotva uhod[Hm]nete.
+Budu totiž [D]vším, čím chce[A]te.
 {end_of_verse}
 
 {start_of_verse}
-[Dmi]Krásnou, blbou, útlou, [Ami]tučnou,
-[C]oněmělou, či tak [G]hlučnou
-[Dmi]až si zacpou uši [F]brouci
-na hotelu [C]v Olomou[G]ci.
+[Em]Krásnou, blbou, útlou, [Hm]tučnou,
+[D]oněmělou, či tak [A]hlučnou
+[Em]až si zacpou uši [G]brouci
+na hotelu [D]v Olomou[A]ci.
 {end_of_verse}
 
-{comment: Capo+=2}
+{comment: transpozice!}
 
-{chorus}
-
+{start_of_chorus}
+3x 𝄆 [F#m]Na, [C#m]na, na…[E][H] 𝄇
+[F#m]Na, na, [A]na… [E][H]
+{end_of_chorus}
 
 {start_of_verse}
-[Dmi]Ztěžka dýchám, byls jak [Ami]zvíře.
-[C]A teď spíš, jsi se vším [G]smířen.
-[Dmi]Do ruky si boty [Ami]beru,
-než ti zmizím [C]v ranním [G]šeru,
+[F#m]Ztěžka dýchám, byls jak [C#m]zvíře.
+[E]A teď spíš, jsi se vším [H]smířen.
+[F#m]Do ruky si boty [C#m]beru,
+než ti zmizím [E]v ranním [H]šeru,
 {end_of_verse}
 
 {start_of_verse}
-[Dmi]Políbím tě. To se [Ami]může.
-[C]Líbám přece svého [G]muže.
-[Dmi]Však víš - změna neu[Ami]blíží.
-Příští pátek [C]v Kroměří[G]ži.
+[F#m]Políbím tě. To se [C#m]může.
+[E]Líbám přece svého [H]muže.
+[F#m]Však víš - změna neu[C#m]blíží.
+Příští pátek [E]v Kroměří[H]ži.
 {end_of_verse}
 
 {chorus}

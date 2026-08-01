@@ -1,75 +1,76 @@
 {title: Lemon Tree}
 {artist: Fools Garden}
-{key: Am}
-{capo: 2}
-{range: a1-c2}
+{key: Em}
+{capo: 1}
+{range: e1-g2}
 {language: english}
-{startMelody: d e}
+{startMelody: a h}
 {createdAt: 1468447200000}
-{updatedAt: 1770572024000}
+{updatedAt: 1785172449000}
 {illustrationId: fools_garden-lemon_tree_gpt-4o-mini_v1_flux.1-dev}
 {promptId: fools_garden-lemon_tree_gpt-4o-mini_v1}
 
 {start_of_verse}
-I'm [Ami]sitting here in a [Emi]boring room,
-it's [Ami]just another rainy sunday [Emi]afternoon
-I'm [Ami]wasting my time I got [Emi]nothing to do,
-I'm [Ami]hanging around I'm [Emi]waiting for you
-But [Dmi]nothing ever [E]happens
-and I [Ami]wonder. [Emi][Ami]
+I'm [Em]sitting here in a [Hm]boring room,
+it's [Em]just another rainy sunday [Hm]afternoon
+I'm [Em]wasting my time I got [Hm]nothing to do,
+I'm [Em]hanging around I'm [Hm]waiting for you
+But [Am]nothing ever [H]happens
+and I [Em]wonder. [Hm][Em]
 {end_of_verse}
 
 {start_of_verse}
-I'm [Ami]driving around in my [Emi]car,
-I'm [Ami]driving too fast I'm driving too [Emi]far
-I'd [Ami]like to change my point of [Emi]view,
-I [Ami]feel so lonely I'm waiting for [Emi]you
-But [Dmi]nothing ever [E]happens
-and I [Ami]wonder. [Emi][Ami]
+I'm [Em]driving around in my [Hm]car,
+I'm [Em]driving too fast I'm driving too [Hm]far
+I'd [Em]like to change my point of [Hm]view,
+I [Em]feel so lonely I'm waiting for [Hm]you
+But [Am]nothing ever [H]happens
+and I [Em]wonder. [Hm][Em]
 {end_of_verse}
 
 {start_of_chorus}
-I [C]wonder how I [G]wonder why
-[Ami]yesterday you told me
-'bout the [Emi]blue blue sky
-and [F]all that I can [G]see
-is just a yellow [C]lemon-tree. [G7]
-I'm [C]turning my head [G]up and down
-I'm [Ami]turning turning turning
-turning [Emi]turning around
-And [F]all that I can [G]see
-is just a yellow lemon[C]-tree. [G7]
+I [G]wonder how I [D]wonder why
+[Em]yesterday you told me
+'bout the [Hm]blue blue sky
+and [C]all that I can [D]see
+is just a yellow [G]lemon-tree. [D7]
+I'm [G]turning my head [D]up and down
+I'm [Em]turning turning turning
+turning [Hm]turning around
+And [C]all that I can [D]see
+is just a yellow lemon[G]-tree. [D7]
 {end_of_chorus}
 
 {start_of_bridge}
-[Ami]Dip, [Emi]da da di da da [Ami]
-di dap di di [Emi]... [Dmi][Emi][Ami][Emi][Ami]
+[Em]Dip, [Hm]da da di da da [Em]
+di dap di di [Hm]... [Am][Hm][Em][Hm][Em]
 {end_of_bridge}
 
 {start_of_verse}
-I'm [Ami]sitting here I miss the [Emi]power,
-I'd [Ami]like to go out taking a [Emi]shower
-But [Ami]there's a heavy cloud inside my [Emi]head,
-I [Ami]feel so tired put myself into [Emi]bed
-Where [Dmi]nothing ever [E]happens
-and I [Ami]wonder [Emi][Ami]
+I'm [Em]sitting here I miss the [Hm]power,
+I'd [Em]like to go out taking a [Hm]shower
+But [Em]there's a heavy cloud inside my [Hm]head,
+I [Em]feel so tired put myself into [Hm]bed
+Where [Am]nothing ever [H]happens
+and I [Em]wonder [Hm][Em]
 {end_of_verse}
 
 {start_of_bridge}
-[E]Isolation - [Ami]is not good for me
-[G]Isolation - [C]I don't want to
-[E]sit on a lemon-tree
+[H]Isolation - [Em]is not good for me
+[D]Isolation - [G]I don't want to
+[H]sit on a lemon-tree
 {end_of_bridge}
 
 {start_of_verse}
-I'm [Ami]steppin' around in a [Emi]desert of joy,
-[Ami]baby anyhow I'll get [Emi]another toy
-and [Dmi]everything will [Emi]happen
-and [Ami]I will wond[Emi]er [Ami]
+I'm [Em]steppin' around in a [Hm]desert of joy,
+[Em]baby anyhow I'll get [Hm]another toy
+and [Am]everything will [Hm]happen
+and [Em]I will wond[Hm]er [Em]
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-𝄆 And [F]all that I can [G]see 𝄇 (3x)
-is just a yellow [C]lemon tree.
+𝄆 And [C]all that I can [D]see 𝄇 (3x)
+is just a yellow [G]lemon tree.
 {end_of_variant}
+
 {chorus}

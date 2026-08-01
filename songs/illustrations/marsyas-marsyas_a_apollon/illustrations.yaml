@@ -1,0 +1,22 @@
+songId: marsyas-marsyas_a_apollon
+prompts:
+  - id: marsyas-marsyas_a_apollon_gpt-5.4-mini_v7
+    songId: marsyas-marsyas_a_apollon
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Mythic Greek tragedy scene at dusk: a solitary satyr musician standing
+      defeated beneath an olive tree, his pan flute fallen in the foreground,
+      while a distant radiant Apollo and a stern king Midas watch from the
+      shadows; subtle hint of Athena as a faceless armored silhouette with an
+      owl and olive branch, symbolizing wisdom over beauty. Cinematic
+      photorealistic style, dramatic chiaroscuro lighting, dust-filled air, cold
+      blue shadows with warm golden divine highlights, emotional and somber,
+      simple composition, minimal text, highly legible small-scale image.
+    createdAt: 2026-07-27T20:29:38.000Z
+    updatedAt: 2026-07-27T20:29:38.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487520000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

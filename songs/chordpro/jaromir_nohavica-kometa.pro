@@ -1,12 +1,12 @@
 {title: Kometa}
 {artist: Jaromír Nohavica}
 {key: Am}
-{capo: 3}
+{capo: 0}
 {range: g1-f1}
 {language: czech}
 {startMelody: e}
 {createdAt: 1436824800000}
-{updatedAt: 1784466480000}
+{updatedAt: 1785163893000}
 {illustrationId: jaromir_nohavica-kometa_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-kometa_gpt-4o-mini_v1}
 
@@ -67,5 +67,5 @@ my [C]už tu nebudem, ale [E7]jiný jí zazpívá.
 [Ami]O vodě, o trávě, [Dmi]o lese,
 [G7]o smrti, se kterou smířit [C]nejde se, [E7]
 [Ami]o lásce, o zradě, [Dmi]o světě
-[E]bude to písnička [E7]o nás a [Ami]kometě. [Dmi][E7][Ami]
+[E]bude to písnička [E7]o nás a [Ami]kometě.
 {end_of_chorus}
