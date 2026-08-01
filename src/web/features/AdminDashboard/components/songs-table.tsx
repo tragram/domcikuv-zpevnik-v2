@@ -254,7 +254,7 @@ function DiffViewerModal({
       open={diffView?.isOpen ?? false}
       onOpenChange={(open) => !open && onClose()}
     >
-      <DialogContent className="!max-w-[95vw] sm:!max-w-[95vw] !w-[95vw] h-[95vh] max-h-[95vh] flex flex-col overflow-hidden p-0 sm:p-0 bg-card border-border shadow-lg">
+      <DialogContent className="!max-w-[95vw] sm:!max-w-[95vw] !w-[95vw] h-[95vh] max-h-[95vh] !flex !flex-col overflow-hidden p-0 sm:p-0 bg-card border-border shadow-lg">
         <DialogHeader className="px-6 py-4 border-b border-border/50 shrink-0 flex flex-row items-center justify-between space-y-0">
           <DialogTitle className="text-xl flex items-center gap-2">
             <GitCompare className="w-5 h-5 text-muted-foreground" />
@@ -276,8 +276,8 @@ function DiffViewerModal({
           </div>
         </DialogHeader>
 
-        <div className="flex-1 overflow-auto bg-background/50 p-4">
-          <div className="border border-border rounded-md overflow-hidden bg-card h-full w-full">
+        <div className="min-h-0 min-w-0 flex-1 overflow-auto bg-background/50 p-4">
+          <div className="border border-border rounded-md bg-card min-h-full min-w-full w-full">
             {diffView && (
               <ReactDiffViewer
                 oldValue={formatChordpro(diffView.target.chordpro)}
