@@ -675,6 +675,10 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
               pendingAutofill={pendingAutofill}
               isProcessing={isProcessing}
               onAcceptAutofill={(editedContent) => {
+                // Do not rely on CodeMirror's programmatic replacement to
+                // trigger onChange: accepting the dialog unmounts it in the
+                // same React update. Persist the reviewed text explicitly.
+                updateContent(editedContent);
                 contentEditorRef.current?.replaceContentWithUndo(editedContent);
                 setPendingAutofill(null);
               }}

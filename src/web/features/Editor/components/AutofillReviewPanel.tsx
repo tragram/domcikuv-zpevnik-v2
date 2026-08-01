@@ -82,7 +82,14 @@ export const AutofillReviewPanel: React.FC<AutofillReviewPanelProps> = ({
 
           <div className="flex-1 min-h-0 overflow-hidden font-mono text-xs [&_.cm-mergeView]:h-full [&_.cm-editor]:h-full [&_.cm-scroller]:overflow-auto">
             {/* Removed orientation prop to default to Original -> Modified */}
-            <CodeMirrorMerge theme={transparentTheme} className="h-full">
+            <CodeMirrorMerge
+              theme={transparentTheme}
+              className="h-full"
+              // The wrapper recreates the merge view by default whenever its
+              // controlled value changes. That recreation omits its change
+              // listener, so only the first review edit reaches React state.
+              destroyRerender={false}
+            >
               <Original
                 value={originalContent}
                 extensions={[
