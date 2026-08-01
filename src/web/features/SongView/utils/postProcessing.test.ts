@@ -153,6 +153,25 @@ B|--1--|
     expect(sections[1].forceShown).toEqual([]);
   });
 
+  it("only hides an interlude when its chord progression is an exact match", () => {
+    const sections = renderSections(`
+{start_of_interlude}
+[A]one [D]two [E]three
+{end_of_interlude}
+
+{start_of_interlude}
+[A]one [D]two [C]three
+{end_of_interlude}
+
+{start_of_interlude}
+[A]one [D]two [E]three
+{end_of_interlude}
+    `);
+
+    expect(sections[1].hidden).toBe(false);
+    expect(sections[2].hidden).toBe(true);
+  });
+
   it("keeps sections with several blank lines as one paragraph and matches them", () => {
     const song = (suffix: string) => `
 {start_of_verse}

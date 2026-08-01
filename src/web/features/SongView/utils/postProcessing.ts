@@ -84,6 +84,11 @@ function detectRepeatedChordPatterns(
       seen[elementClass].push(onlyChords);
     }
 
+    // Interludes are typically short instrumental transitions, where even one
+    // chord change matters. Unlike lyric sections, only an exact progression
+    // repeat should hide their chords.
+    if (elementClass === "interlude" && matchResult.distance !== 0) return;
+
     if (matchResult.distance > maxAllowedDistance(onlyChords.length)) return;
 
     // Sections without lyrics would render empty with their chords hidden
