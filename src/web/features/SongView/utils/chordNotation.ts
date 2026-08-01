@@ -24,8 +24,9 @@ export function formatChord(chordText: string): string {
   // --- Opinionated naming fixes ---
   // Restore sus4 (only if it's just 'sus' and not 'sus2')
   formatted = formatted.replace(/sus(?![24])/g, "sus4");
-  // Restore maj7
-  formatted = formatted.replace(/ma7/g, "maj7");
+  // ChordSheetJS shortens major qualities (e.g. maj9 -> ma9). Restore the
+  // conventional spelling before applying superscript formatting.
+  formatted = formatted.replace(/ma(?=[24679])/g, "maj");
 
   // Replace flat and sharp signs
   for (const [symbol, replacement] of Object.entries(CHORD_NOTATION_MAP)) {

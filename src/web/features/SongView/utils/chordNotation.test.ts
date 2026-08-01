@@ -11,8 +11,9 @@ describe("formatChord", () => {
     expect(formatChord("Asus2")).toBe("A<sup>sus</sup><sup>2</sup>");
   });
 
-  it("restores ma7 to maj7 (each superscripted separately)", () => {
+  it("restores shortened major chord qualities (each superscripted separately)", () => {
     expect(formatChord("Cma7")).toBe("C<sup>maj</sup><sup>7</sup>");
+    expect(formatChord("Dma9")).toBe("D<sup>maj</sup><sup>9</sup>");
   });
 
   it("converts flat/sharp ASCII symbols to typographic ones", () => {
