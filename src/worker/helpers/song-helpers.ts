@@ -205,14 +205,17 @@ export const retrieveSingleSong = async (
     // Capture the canonical current version before swapping in the requested one.
     const canonical = songRaw.currentVersion;
     const specificVersion = await db.query.songVersion.findFirst({
-      where: eq(songVersion.id, versionId),
+      where: and(
+        eq(songVersion.id, versionId),
+        eq(songVersion.songId, songId),
+      ),
       with: { songImport: true, user: true },
     });
-    if (specificVersion) {
-      const { user: author, ...version } = specificVersion;
-      songRaw.currentVersion = version;
-      customMeta = customMetaOf(canonical, { ...version, user: author });
-    }
+    if (!specificVersion) return null;
+
+    const { user: author, ...version } = specificVersion;
+    songRaw.currentVersion = version;
+    customMeta = customMetaOf(canonical, { ...version, user: author });
   }
 
   const result = transformSongToApi(songRaw);

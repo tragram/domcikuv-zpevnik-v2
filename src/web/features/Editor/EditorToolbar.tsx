@@ -47,6 +47,8 @@ import { OfflineToolbarBadge } from "~/components/OfflineIndicator";
 interface EditorToolbarProps {
   editorState: EditorState;
   songData?: SongData;
+  /** Version opened by the route; authoritative for edit lineage. */
+  versionId?: string;
   toolbarTop: boolean;
   canBeSubmitted: boolean;
   /** An admin approving a pending submission: changes optional, "Approve" wording. */
@@ -90,6 +92,7 @@ const stripMetadataDirectives = (content: string): string => {
 const EditorToolbar: React.FC<EditorToolbarProps> = ({
   editorState,
   songData,
+  versionId,
   toolbarTop,
   canBeSubmitted,
   isApprovalMode = false,
@@ -158,7 +161,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       chordpro: normalizeWhitespace(replaceRepetitions(strippedChordpro)),
     } as EditorState;
 
-    if (editorState.parentId) parsedState.parentId = editorState.parentId;
+    // A persisted draft is user content, not authority over which version is
+    // being edited. Always submit against the version selected by the route.
+    if (versionId) parsedState.parentId = versionId;
 
     // Only attach optional fields if they have truthy, non-empty values
     if (editorState.key?.trim()) parsedState.key = editorState.key;

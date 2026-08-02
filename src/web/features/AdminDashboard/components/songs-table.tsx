@@ -79,6 +79,7 @@ import { ToggleCheckbox } from "./toggle-checkbox";
 import { formatChordpro } from "~/lib/formatChordpro";
 import { parseYoutubeId } from "src/lib/youtube";
 import YoutubeField from "~/features/Editor/components/YoutubeField";
+import { getWorkingVersion } from "./version-selection";
 
 // --- TYPES & CONSTANTS ---
 
@@ -637,6 +638,7 @@ function SongTableRow({
   const currentVersion = songVersions.find(
     (version) => version.id === song.currentVersionId,
   );
+  const workingVersion = getWorkingVersion(song, songVersions);
   const [isYoutubeDialogOpen, setIsYoutubeDialogOpen] = useState(false);
   const [youtubeId, setYoutubeId] = useState(currentVersion?.youtubeId ?? "");
 
@@ -720,8 +722,14 @@ function SongTableRow({
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => navigate({ to: `/edit/${song.id}` })}
-                disabled={song.deleted}
+                onClick={() =>
+                  navigate({
+                    to: "/edit/$songId",
+                    params: { songId: song.id },
+                    search: { version: workingVersion?.id },
+                  })
+                }
+                disabled={song.deleted || !workingVersion}
               >
                 <Edit className="h-4 w-4" />
               </Button>
@@ -989,16 +997,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const enrichedSongs = useMemo<SortableSong[]>(() => {
     if (!songs) return [];
 
-    const getWorkingVersion = (
-      song: SongDataDB,
-      songVersions: SongVersionAdminApi[],
-    ) =>
-      versions?.find((v) => v.id === song.currentVersionId) ??
-      songVersions.find((v) => ["published"].includes(v.status)) ??
-      songVersions.find((v) => ["archived"].includes(v.status)) ??
-      songVersions.find((v) => ["pending"].includes(v.status)) ??
-      songVersions.find((v) => ["rejected"].includes(v.status));
-
     return songs.map((song) => {
       const songVersions = versionsBySong[song.id] || [];
       const workingVersion = getWorkingVersion(song, songVersions);
@@ -1026,7 +1024,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         submittedBy: submitter?.nickname || submitter?.name || null,
       };
     });
-  }, [songs, versions, versionsBySong, usersById]);
+  }, [songs, versionsBySong, usersById]);
 
   const stats = useMemo<SongStats>(() => {
     // Status counts follow the external/hidden toggles so the cards match the

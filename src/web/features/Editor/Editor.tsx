@@ -34,6 +34,11 @@ import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
 import EditorToolbar from "./EditorToolbar";
 import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
+import {
+  getEditorBackupKey,
+  getEditorStateKey,
+  readMatchingLegacyDraft,
+} from "./editor-storage";
 
 const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
   const aKeys = Object.keys(a).sort() as (keyof EditorState)[];
@@ -220,9 +225,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const contentEditorRef = useRef<ContentEditorRef>(null);
   const { userData } = useUserData();
   const isOnline = useIsOnline();
-  const editorStateKey = songData
-    ? `editor/state/${songData.id}`
-    : "editor/state";
+  const editorStateKey = getEditorStateKey(songData?.id, versionId);
 
   const defaultEditorState: EditorState = useMemo(() => {
     const base = (songData ? songData : SongData.empty()).toJSON() as EditorState;
@@ -240,7 +243,10 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   // edit, reopening the editor served the stale pre-edit version.
   const [draft, setDraft] = useLocalStorageState<EditorState | null>(
     editorStateKey,
-    { defaultValue: null },
+    {
+      defaultValue: () =>
+        readMatchingLegacyDraft(songData?.id, versionId) ?? null,
+    },
   );
   const editorState = draft ?? defaultEditorState;
   const setEditorState = useCallback(
@@ -316,7 +322,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
     (editorState: EditorState) => {
       if (!editorStatesEqual(editorState, defaultEditorState as EditorState)) {
         localStorage.setItem(
-          editorStateKey + "-backup",
+          getEditorBackupKey(editorStateKey),
           JSON.stringify(editorState),
         );
       }
@@ -325,12 +331,19 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   );
 
   const loadBackupState = useCallback(() => {
-    const backup = localStorage.getItem(editorStateKey + "-backup");
-    if (backup) {
-      setEditorState(JSON.parse(backup));
+    const backup = localStorage.getItem(getEditorBackupKey(editorStateKey));
+    const legacyBackup = readMatchingLegacyDraft(
+      songData?.id,
+      versionId,
+      true,
+    );
+    if (backup || legacyBackup) {
+      setEditorState(
+        backup ? (JSON.parse(backup) as EditorState) : legacyBackup!,
+      );
       setSubmitAttempted(false);
     }
-  }, [editorStateKey, setEditorState]);
+  }, [editorStateKey, setEditorState, songData?.id, versionId]);
 
   const handleBackupAndInitialize = useCallback(() => {
     backupEditorState(editorState);
@@ -613,6 +626,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
         <EditorToolbar
           editorState={editorState}
           songData={songData}
+          versionId={versionId}
           toolbarTop={toolbarTop}
           canBeSubmitted={!!canBeSubmitted}
           isApprovalMode={isApprovingSubmission}
@@ -694,6 +708,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
         <EditorToolbar
           editorState={editorState}
           songData={songData}
+          versionId={versionId}
           toolbarTop={toolbarTop}
           canBeSubmitted={!!canBeSubmitted}
           isApprovalMode={isApprovingSubmission}
