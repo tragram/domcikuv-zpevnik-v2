@@ -44,6 +44,10 @@ export interface SongTranspose {
   setSoundingKeyIndex: (index: number) => void;
   /** Change the cosmetic capo note (affects nothing else). */
   setCapo: (capo: number) => void;
+  /** Restore both the sounding key and capo to the song's original values. */
+  resetKeyAndCapo: () => void;
+  /** Whether either the sounding key or capo differs from the song's original. */
+  canResetKeyAndCapo: boolean;
 }
 
 /**

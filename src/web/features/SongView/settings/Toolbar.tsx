@@ -70,8 +70,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   feedStatus,
   fullScreenHandle,
 }) => {
-  const { soundingKeyIndex, setSoundingKeyIndex, songbookPersonalization } =
-    transpose;
+  const {
+    soundingKeyIndex,
+    setSoundingKeyIndex,
+    songbookPersonalization,
+    resetKeyAndCapo,
+    canResetKeyAndCapo,
+  } = transpose;
   const { isFavorite, toggle: toggleFavorite } = useToggleFavorite(
     songData,
     userData?.profile.id ?? "",
@@ -149,6 +154,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <TransposeSettings
           soundingKeyIndex={soundingKeyIndex}
           setSoundingKeyIndex={setSoundingKeyIndex}
+          canResetKeyAndCapo={canResetKeyAndCapo}
+          resetKeyAndCapo={resetKeyAndCapo}
         />
 
         {songData.youtubeId && (

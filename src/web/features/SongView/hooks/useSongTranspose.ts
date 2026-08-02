@@ -90,7 +90,7 @@ function useAutoSaveKeyCapo(
   useEffect(() => () => clearTimeout(saveTimer.current), []);
 
   return useCallback(
-    (keyIndex: number, capo: number) => {
+    (keyIndex: number | null, capo: number | null) => {
       if (!canPersist) return;
       patchFavoriteEntry(queryClient, userId, songId, { keyIndex, capo });
       clearTimeout(saveTimer.current);
@@ -212,6 +212,20 @@ export function useSongTranspose(
     autoSave(own.soundingKeyIndex, newCapo);
   };
 
+  const resetKeyAndCapo = () => {
+    if (readOnly) {
+      setRoState((s) => ({ ...s, transposeSteps: 0, capo: originalCapo }));
+      return;
+    }
+
+    setStoreTranspose(songData.id, 0);
+    setStoreCapo(songData.id, originalCapo);
+    if (follower.isFollower) follower.setOverride(0);
+    // Store no override instead of duplicating the source values. This keeps a
+    // reset stable if the song's canonical key or capo changes later.
+    autoSave(null, null);
+  };
+
   return {
     effectiveKey,
     transposeSteps,
@@ -221,5 +235,7 @@ export function useSongTranspose(
     songbookPersonalization,
     setSoundingKeyIndex,
     setCapo,
+    resetKeyAndCapo,
+    canResetKeyAndCapo: transposeSteps !== 0 || capo !== originalCapo,
   };
 }
