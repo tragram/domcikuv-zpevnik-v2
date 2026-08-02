@@ -22,8 +22,9 @@ import {
   Trash2,
   User,
   GitCompare,
+  Youtube,
 } from "lucide-react";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
 import { SONG_SOURCES } from "src/lib/contracts/song-sources";
@@ -65,6 +66,7 @@ import {
   useRestoreVersion,
   useSongsAdmin,
   useUpdateSong,
+  useUpdateVersion,
   useUsersAdmin,
   useVersionsAdmin,
 } from "../../../services/admin-hooks";
@@ -75,6 +77,8 @@ import { Pagination } from "./shared/pagination";
 import { StatsBar } from "./stats-bar";
 import { ToggleCheckbox } from "./toggle-checkbox";
 import { formatChordpro } from "~/lib/formatChordpro";
+import { parseYoutubeId } from "src/lib/youtube";
+import YoutubeField from "~/features/Editor/components/YoutubeField";
 
 // --- TYPES & CONSTANTS ---
 
@@ -98,6 +102,7 @@ type SortableSong = SongDataDB & {
   lastModified: Date;
   status: string;
   hasPendingVersions: boolean;
+  hasYoutube: boolean;
   externalSource: ExternalSource | null;
   submittedBy: string | null;
 };
@@ -106,6 +111,7 @@ type SortConfig = {
   key: keyof Omit<
     SortableSong,
     | "hasPendingVersions"
+    | "hasYoutube"
     | "currentVersionId"
     | "currentIllustrationId"
     | "externalSource"
@@ -120,6 +126,7 @@ type StatusFilter =
   | "published"
   | "archived"
   | "rejected"
+  | "noYoutube"
   | "empty";
 
 /**
@@ -161,6 +168,13 @@ const STATUS_CARDS: {
     stat: "rejected",
     icon: Ban,
     className: "text-rose-600",
+  },
+  {
+    value: "noYoutube",
+    label: "No YouTube",
+    stat: "noYoutube",
+    icon: Youtube,
+    className: "text-muted-foreground",
   },
   {
     value: "empty",
@@ -210,6 +224,7 @@ type SongStats = {
   published: number;
   archived: number;
   rejected: number;
+  noYoutube: number;
   empty: number;
   external: number;
   hidden: number;
@@ -593,6 +608,8 @@ interface SongTableRowProps extends VersionHistoryTimelineProps {
   onUpdateHidden: (songId: string, hidden: boolean) => void;
   onRestoreSong: (songId: string) => void;
   onDeleteSong: (songId: string) => void;
+  onUpdateYoutube: (songId: string, versionId: string, youtubeId: string) => void;
+  isYoutubeUpdatePending: boolean;
 }
 
 function SongTableRow({
@@ -610,10 +627,22 @@ function SongTableRow({
   onRestoreVersion,
   onDeleteVersion,
   onSetCurrentVersion,
+  onUpdateYoutube,
   onDiff,
   isApprovePending,
+  isYoutubeUpdatePending,
 }: SongTableRowProps) {
   const navigate = useNavigate({ from: "/admin" });
+  // TODO: Move YouTube metadata to `song` once it no longer needs to vary by version.
+  const currentVersion = songVersions.find(
+    (version) => version.id === song.currentVersionId,
+  );
+  const [isYoutubeDialogOpen, setIsYoutubeDialogOpen] = useState(false);
+  const [youtubeId, setYoutubeId] = useState(currentVersion?.youtubeId ?? "");
+
+  useEffect(() => {
+    setYoutubeId(currentVersion?.youtubeId ?? "");
+  }, [currentVersion?.youtubeId]);
   const pendingCount = songVersions.filter(
     (v) => v.status === "pending",
   ).length;
@@ -696,6 +725,16 @@ function SongTableRow({
               >
                 <Edit className="h-4 w-4" />
               </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsYoutubeDialogOpen(true)}
+                disabled={song.deleted || !currentVersion}
+                title="Edit YouTube link"
+              >
+                <Youtube className="h-5 w-5" />
+                <span className="sr-only">Edit YouTube link</span>
+              </Button>
               {song.deleted ? (
                 <Button
                   variant="ghost"
@@ -713,6 +752,49 @@ function SongTableRow({
                 />
               )}
             </ActionButtons>
+            <Dialog
+              open={isYoutubeDialogOpen}
+              onOpenChange={setIsYoutubeDialogOpen}
+            >
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Edit YouTube link</DialogTitle>
+                </DialogHeader>
+                <YoutubeField
+                  value={youtubeId}
+                  onChange={setYoutubeId}
+                  title={currentVersion?.title ?? song.title}
+                  artist={currentVersion?.artist ?? song.artist}
+                  modified={youtubeId !== (currentVersion?.youtubeId ?? "")}
+                />
+                <Button
+                  onClick={() => {
+                    const normalizedYoutubeId = youtubeId.trim()
+                      ? (parseYoutubeId(youtubeId) ?? "")
+                      : "";
+                    if (youtubeId.trim() && !normalizedYoutubeId) {
+                      toast.error("Enter a valid YouTube link or video ID.");
+                      return;
+                    }
+                    if (currentVersion) {
+                      onUpdateYoutube(
+                        song.id,
+                        currentVersion.id,
+                        normalizedYoutubeId,
+                      );
+                      setIsYoutubeDialogOpen(false);
+                    }
+                  }}
+                  disabled={
+                    !currentVersion ||
+                    isYoutubeUpdatePending ||
+                    youtubeId === (currentVersion?.youtubeId ?? "")
+                  }
+                >
+                  {isYoutubeUpdatePending ? "Saving..." : "Save link"}
+                </Button>
+              </DialogContent>
+            </Dialog>
           </div>
         </TableCell>
       </TableRow>
@@ -873,6 +955,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
 
   // Mutations
   const updateSongMutation = useUpdateSong(adminApi);
+  const updateVersionMutation = useUpdateVersion(adminApi);
   const deleteSongMutation = useDeleteSong(adminApi);
   const restoreSongMutation = useRestoreSong(adminApi);
   const resetDBMutation = useResetVersionDB(adminApi);
@@ -933,6 +1016,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         ),
         status: song.deleted ? "deleted" : workingVersion?.status || "empty",
         hasPendingVersions: songVersions.some((v) => v.status === "pending"),
+        hasYoutube: !!workingVersion?.youtubeId,
         externalSource: workingVersion?.importSourceId
           ? {
               sourceId: workingVersion.importSourceId,
@@ -961,6 +1045,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       published: byStatus("published"),
       archived: byStatus("archived"),
       rejected: byStatus("rejected"),
+      noYoutube: inScope.filter((s) => !s.hasYoutube).length,
       empty: byStatus("empty"),
       external: enrichedSongs.filter((s) => s.externalSource && !s.deleted)
         .length,
@@ -982,8 +1067,10 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         statusFilter === "all"
           ? true
           : statusFilter === "pending"
-            ? song.hasPendingVersions
-            : song.status === statusFilter;
+          ? song.hasPendingVersions
+          : statusFilter === "noYoutube"
+            ? !song.hasYoutube
+          : song.status === statusFilter;
       if (!matchesStatus) return false;
 
       // Double-click "show only" overrides the toggles and isolates a category.
@@ -1286,6 +1373,19 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                         },
                       )
                     }
+                    onUpdateYoutube={(songId, versionId, youtubeId) =>
+                      updateVersionMutation.mutate(
+                        {
+                          songId,
+                          versionId,
+                          version: { youtubeId: youtubeId.trim() || null },
+                        },
+                        {
+                          onSuccess: () => toast.success("YouTube link updated"),
+                          onError: () => toast.error("Failed to update YouTube link"),
+                        },
+                      )
+                    }
                     onDiff={(version, target, label) =>
                       setDiffView({
                         isOpen: true,
@@ -1296,6 +1396,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                       })
                     }
                     isApprovePending={approveVersionMutation.isPending}
+                    isYoutubeUpdatePending={updateVersionMutation.isPending}
                   />
                 ))
               )}
