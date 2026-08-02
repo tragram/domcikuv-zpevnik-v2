@@ -12,7 +12,7 @@ import type {
 } from "src/worker/api/api-types";
 import type { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
-import client, { AdminApi, API } from "~/../worker/api-client";
+import client, { AdminApi } from "~/../worker/api-client";
 import { SongData } from "~/types/songData";
 import {
   isValidSongLanguage,
@@ -64,7 +64,7 @@ const setSongsMeta = (data: { songDBVersion: string; lastUpdateAt: string }) =>
     appVersion: __APP_VERSION__,
   });
 
-export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
+export const fetchSongs = async (): Promise<SongDataApi[]> => {
   // 1. Get current cached state from TanStack/IndexedDB
   const cached = queryClient.getQueryData<SongDataApi[]>(["songs"]);
   const meta = queryClient.getQueryData<SongsMeta>(["songs-meta"]);
@@ -75,7 +75,7 @@ export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
   // one full fetch per deploy re-normalizes everything.
   if (!cached || !meta || meta.appVersion !== __APP_VERSION__) {
     try {
-      const data = await makeApiRequest(api.songs.$get);
+      const data = await makeApiRequest(client.api.songs.$get);
       setSongsMeta(data);
       return data.songs;
     } catch (error) {
@@ -93,7 +93,7 @@ export const fetchSongs = async (api: API): Promise<SongDataApi[]> => {
   // 3. Try Incremental Update
   try {
     const data = await makeApiRequest(() =>
-      api.songs.incremental.$get({
+      client.api.songs.incremental.$get({
         query: { songDBVersion: meta.version, lastUpdateAt: meta.lastUpdate },
       }),
     );
@@ -169,18 +169,17 @@ export const findOrFetchSong = async (
   return new SongData(raw);
 };
 
-export const fetchPublicSongbooks = async (api: API): Promise<Songbook[]> => {
-  const response = await makeApiRequest(api.songs.songbooks.$get);
+export const fetchPublicSongbooks = async (): Promise<Songbook[]> => {
+  const response = await makeApiRequest(client.api.songs.songbooks.$get);
   return response.map(
     (s) => ({ ...s, songIds: new Set(s.songIds) }) as Songbook,
   );
 };
 
 export const fetchFeed = async (
-  api: API,
   masterNickname: string,
 ): Promise<SessionSyncState | undefined> => {
-  const response = await api.session[":masterNickname"].$get({
+  const response = await client.api.session[":masterNickname"].$get({
     param: { masterNickname },
     query: {},
   });
@@ -193,11 +192,10 @@ export const fetchFeed = async (
 // instances is left to a `select` (a persisted class instance would rehydrate
 // as a method-less plain object).
 export const fetchExternalSearch = async (
-  api: API,
   query: string,
 ): Promise<ExternalSearchResult[]> => {
   return await makeApiRequest(() =>
-    api.songs.external.search.$get({ query: { q: query } }),
+    client.api.songs.external.search.$get({ query: { q: query } }),
   );
 };
 

@@ -1,5 +1,5 @@
 import { IllustrationPromptDB, SongIllustrationDB } from "src/lib/db/schema";
-import { AdminApi, SongsAPI } from "src/worker/api-client";
+import client, { AdminApi } from "src/worker/api-client";
 import type {
   AdminIllustrationResponse,
   IllustrationCreateSchema,
@@ -16,7 +16,6 @@ import { makeApiRequest } from "./api-service";
 import { parseDBDates } from "./song-service";
 
 export const fetchIllustrationPrompt = async (
-  songDBApi: SongsAPI,
   song: SongData,
 ): Promise<string> => {
   const promptId = song.currentIllustration?.promptId;
@@ -24,7 +23,7 @@ export const fetchIllustrationPrompt = async (
     return "Could not fetch prompt - currentIllustration?.promptId is empty.";
   }
   const response = await makeApiRequest(() =>
-    songDBApi.prompts[":id"].$get({
+    client.api.songs.prompts[":id"].$get({
       param: { id: promptId },
     }),
   );

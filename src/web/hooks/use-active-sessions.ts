@@ -1,6 +1,5 @@
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
-import client from "src/worker/api-client";
 import { fetchActiveSessions } from "~/services/user-service";
 import { SongDB } from "~/types/types";
 
@@ -8,7 +7,7 @@ import { SongDB } from "~/types/types";
 export const activeSessionsQueryOptions = () =>
   queryOptions({
     queryKey: ["activeSessions"] as const,
-    queryFn: () => fetchActiveSessions(client.api),
+    queryFn: () => fetchActiveSessions(),
   });
 
 export const useActiveSessions = (songDB: SongDB) => {

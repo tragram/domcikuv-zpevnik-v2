@@ -53,7 +53,7 @@ export const sessionQueryOptions = () =>
 export const favoritesQueryOptions = (userId?: string) =>
   queryOptions({
     queryKey: ["favorites", userId],
-    queryFn: () => fetchFavorites(client.api),
+    queryFn: () => fetchFavorites(),
   });
 
 // Another user's public songbook entries (their saved key/capo, and pinned

@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useRouteContext } from "@tanstack/react-router";
 import Fuse from "fuse.js";
 import { useMemo, useState } from "react";
 
@@ -26,7 +25,6 @@ const toSongData = (rows: ExternalSearchResult[]) =>
  */
 export function useExternalSearch(userData: UserData, bestLocalScore: number) {
   const { query } = useQueryStore();
-  const { api } = useRouteContext({ from: "__root__" });
   const isOnline = useIsOnline();
 
   const [triggeredQuery, setTriggeredQuery] = useState<string | null>(null);
@@ -47,7 +45,7 @@ export function useExternalSearch(userData: UserData, bestLocalScore: number) {
 
   const { data: externalSongData = [], isFetching: isLoadingExternal } = useQuery({
     queryKey: ["externalSearch", query],
-    queryFn: () => fetchExternalSearch(api, query),
+    queryFn: () => fetchExternalSearch(query),
     select: toSongData,
     enabled: shouldSearchExternal,
     staleTime: 1000 * 60 * 5,

@@ -21,7 +21,7 @@ export const Route = createFileRoute("/feed/$masterNickname")({
     // A live feed is online-only, but don't let an offline/failed initial fetch
     // error the whole route — render with no live state and let the component
     // show a graceful offline message (and reconnect when back online).
-    const liveState = await fetchFeed(context.api, params.masterNickname).catch(
+    const liveState = await fetchFeed(params.masterNickname).catch(
       () => undefined,
     );
     return {

@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { AutoTextSize } from "auto-text-size";
-import { SongsAPI } from "src/worker/api-client";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { cn } from "~/lib/utils";
 import { fetchIllustrationPrompt } from "~/services/illustration-service";
@@ -9,14 +8,12 @@ import { SongData } from "~/types/songData";
 interface IllustrationPromptProps {
   song: SongData;
   show: boolean;
-  songsAPI: SongsAPI;
   className?: string;
 }
 
 export function IllustrationPrompt({
   song,
   show,
-  songsAPI,
   className,
 }: IllustrationPromptProps) {
   const {
@@ -24,7 +21,7 @@ export function IllustrationPrompt({
     error,
   } = useQuery({
     queryKey: ["illustrationPrompt", song.currentIllustration?.promptId],
-    queryFn: () => fetchIllustrationPrompt(songsAPI, song),
+    queryFn: () => fetchIllustrationPrompt(song),
     enabled: show,
     retry: 1,
     staleTime: 5 * 60 * 1000,

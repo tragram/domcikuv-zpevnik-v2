@@ -1,6 +1,5 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import client from "src/worker/api-client";
 import {
   buildSongDB,
   fetchPublicSongbooks,
@@ -14,13 +13,13 @@ import { favoritesQueryOptions, sessionQueryOptions, submissionsQueryOptions, se
 export const songsQueryOptions = () =>
   queryOptions({
     queryKey: ["songs"],
-    queryFn: () => fetchSongs(client.api),
+    queryFn: () => fetchSongs(),
   });
 
 export const publicSongbooksQueryOptions = () =>
   queryOptions({
     queryKey: ["publicSongbooks"],
-    queryFn: () => fetchPublicSongbooks(client.api),
+    queryFn: () => fetchPublicSongbooks(),
   });
 
 export function useSongDB(

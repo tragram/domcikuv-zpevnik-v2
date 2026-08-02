@@ -1,5 +1,5 @@
 import { UserDB } from "src/lib/db/schema/auth.schema";
-import client, { API } from "../../worker/api-client";
+import client from "../../worker/api-client";
 import { makeApiRequest } from "./api-service";
 import type { SessionsResponseData } from "src/worker/api/sessions";
 import type {
@@ -37,14 +37,14 @@ interface UserSearchParams {
   offset?: number;
 }
 
-export async function fetchProfile(api: API): Promise<UserProfileDB> {
-  const profile = await makeApiRequest(api.profile.$get);
+export async function fetchProfile(): Promise<UserProfileDB> {
+  const profile = await makeApiRequest(client.api.profile.$get);
   return profile ? parseDBDates(profile) : null;
 }
 
-export async function fetchFavorites(api: API): Promise<SongbookEntryApi[]> {
+export async function fetchFavorites(): Promise<SongbookEntryApi[]> {
   try {
-    const response = await makeApiRequest(api.favorites.$get);
+    const response = await makeApiRequest(client.api.favorites.$get);
     return response;
   } catch (e) {
     console.error("Failed to fetch favorites", e);
@@ -57,10 +57,8 @@ export async function fetchSubmissions(): Promise<SongVersionDB[]> {
   return res.map(parseDBDates);
 }
 
-export async function fetchActiveSessions(
-  api: API,
-): Promise<SessionsResponseData> {
-  const response = await makeApiRequest(api.session.$get);
+export async function fetchActiveSessions(): Promise<SessionsResponseData> {
+  const response = await makeApiRequest(client.api.session.$get);
   return response.map((item) => {
     return { ...item, timestamp: new Date(item.timestamp) };
   });

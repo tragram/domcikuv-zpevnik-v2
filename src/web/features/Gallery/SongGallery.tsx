@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { CircleX } from "lucide-react";
 import { memo, useState } from "react";
-import client from "src/worker/api-client";
 import { IllustrationPrompt } from "~/components/IllustrationPrompt";
 import { Button } from "~/components/ui/button";
 import { SongData } from "~/types/songData";
@@ -62,7 +61,6 @@ function CardThatHides({ song }: { song: SongData }) {
             <IllustrationPrompt
               song={song}
               show={showingContent}
-              songsAPI={client.api.songs}
               className={"text-white h-32"}
             />
             <Button
