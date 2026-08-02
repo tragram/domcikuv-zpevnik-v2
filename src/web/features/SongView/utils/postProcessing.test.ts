@@ -9,10 +9,7 @@ import { preparseDirectives } from "./preparseChordpro";
  * summarises each rendered paragraph for assertions.
  */
 function renderSections(chordpro: string) {
-  const song = new ChordProParser().parse(preparseDirectives(chordpro.trim()));
-  const html = new HtmlDivFormatter().format(song);
-  const processed = postProcessChordPro(html);
-  const doc = new DOMParser().parseFromString(processed, "text/html");
+  const doc = renderDocument(chordpro);
   return Array.from(doc.querySelectorAll(".paragraph")).map((p) => ({
     classes: Array.from(p.classList),
     chords: Array.from(p.querySelectorAll(".chord"))
@@ -23,6 +20,13 @@ function renderSections(chordpro: string) {
       (c) => c.textContent?.trim() ?? "",
     ),
   }));
+}
+
+function renderDocument(chordpro: string) {
+  const song = new ChordProParser().parse(preparseDirectives(chordpro.trim()));
+  const html = new HtmlDivFormatter().format(song);
+  const processed = postProcessChordPro(html);
+  return new DOMParser().parseFromString(processed, "text/html");
 }
 
 describe("detectRepeatedChordPatterns (via postProcessChordPro)", () => {
@@ -225,6 +229,144 @@ B|--1--|
     expect(sections[0].chords).toEqual(["A", "D", "E"]);
     expect(sections[0].hidden).toBe(false);
     expect(sections[1].hidden).toBe(true);
+  });
+
+  it("hides a chord pattern repeated within one section", () => {
+    const doc = renderDocument(`
+{start_of_chorus}
+[A]one [D]two [E]three [A]four
+
+[A]five [D]six [E]seven [A]eight
+
+[A]nine [D]ten [E]eleven [A]twelve
+{end_of_chorus}
+    `);
+
+    const chordRows = Array.from(doc.querySelectorAll(".chorus .row")).filter(
+      (row) => row.querySelector(".chord"),
+    );
+    expect(chordRows).toHaveLength(3);
+    expect(
+      chordRows.map((row) => row.classList.contains("repeated-chords")),
+    ).toEqual([false, true, true]);
+  });
+
+  it("force-shows a changed chord in a repeated subsection", () => {
+    const doc = renderDocument(`
+{start_of_chorus}
+[A]one [D]two [E]three [A]four
+
+[A]five [C]six [E]seven [A]eight
+
+[A]nine [D]ten [E]eleven [A]twelve
+{end_of_chorus}
+    `);
+
+    const chordRows = Array.from(doc.querySelectorAll(".chorus .row")).filter(
+      (row) => row.querySelector(".chord"),
+    );
+    expect(
+      chordRows.map((row) => row.classList.contains("repeated-chords")),
+    ).toEqual([false, true, true]);
+    expect(
+      Array.from(chordRows[1].querySelectorAll(".chord.force-shown")).map(
+        (chord) => chord.textContent?.trim(),
+      ),
+    ).toEqual(["C"]);
+  });
+
+  it("treats multiple lyric rows between blank lines as one subsection", () => {
+    const doc = renderDocument(`
+{start_of_chorus}
+[A]first line [D]here
+[E]second line [A]here
+
+[A]third line [D]here
+[E]fourth line [A]here
+{end_of_chorus}
+    `);
+
+    const chordRows = Array.from(doc.querySelectorAll(".chorus .row")).filter(
+      (row) => row.querySelector(".chord"),
+    );
+    expect(chordRows).toHaveLength(4);
+    expect(
+      chordRows.map((row) => row.classList.contains("repeated-chords")),
+    ).toEqual([false, false, true, true]);
+  });
+
+  it("ignores empty subsections created by consecutive blank lines", () => {
+    const doc = renderDocument(`
+{start_of_chorus}
+[A]one [D]two [E]three
+
+
+
+[A]four [D]five [E]six
+{end_of_chorus}
+    `);
+
+    const chordRows = Array.from(doc.querySelectorAll(".chorus .row")).filter(
+      (row) => row.querySelector(".chord"),
+    );
+    expect(chordRows).toHaveLength(2);
+    expect(chordRows[0].classList.contains("repeated-chords")).toBe(false);
+    expect(chordRows[1].classList.contains("repeated-chords")).toBe(true);
+  });
+
+  it("keeps a repeated chord-only subsection visible", () => {
+    const doc = renderDocument(`
+{start_of_chorus}
+[A][D][E]
+
+[A][D][E]
+{end_of_chorus}
+    `);
+
+    const chordRows = Array.from(doc.querySelectorAll(".chorus .row")).filter(
+      (row) => row.querySelector(".chord"),
+    );
+    expect(chordRows).toHaveLength(2);
+    expect(
+      chordRows.every((row) => !row.classList.contains("repeated-chords")),
+    ).toBe(true);
+  });
+
+  it("prioritizes a complete section match over subsection changes", () => {
+    const chorus = (suffix: string) => `
+{start_of_chorus}
+[A]one ${suffix} [D]two [E]three [A]four
+
+[A]five ${suffix} [C]six [E]seven [A]eight
+
+[A]nine ${suffix} [D]ten [E]eleven [A]twelve
+{end_of_chorus}
+    `;
+    const sections = renderSections(chorus("first") + chorus("second"));
+
+    expect(sections).toHaveLength(2);
+    expect(sections[1].hidden).toBe(true);
+    expect(sections[1].forceShown).toEqual([]);
+  });
+
+  it("uses whole-section alignment for a near-repeat before checking subsections", () => {
+    const sections = renderSections(`
+{start_of_chorus}
+[A]one [D]two [E]three [A]four
+
+[A]five [C]six [E]seven [A]eight
+{end_of_chorus}
+
+{start_of_chorus}
+[A]nine [D]ten [E]eleven [A]twelve
+
+[A]thirteen [G]fourteen [E]fifteen [A]sixteen
+{end_of_chorus}
+    `);
+
+    expect(sections).toHaveLength(2);
+    expect(sections[1].hidden).toBe(true);
+    expect(sections[1].forceShown).toEqual(["G"]);
   });
 
   it("matches labeled and unlabeled sections in either order", () => {

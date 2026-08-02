@@ -19,6 +19,12 @@ interface ChordMatch {
   distance: number;
 }
 
+interface ChordGroup {
+  /** Elements that make up this blank-line-delimited group. */
+  elements: Element[];
+  chords: ChordElement[];
+}
+
 const MAX_CHORD_MATCH_DISTANCE = 3;
 const DEFAULT_SECTION_TYPES = ["verse", "chorus", "bridge", "interlude"];
 
@@ -30,6 +36,64 @@ const DEFAULT_SECTION_TYPES = ["verse", "chorus", "bridge", "interlude"];
  */
 function maxAllowedDistance(chordCount: number): number {
   return Math.min(MAX_CHORD_MATCH_DISTANCE, Math.floor(chordCount / 3));
+}
+
+function getChords(elements: Element[]): ChordElement[] {
+  const chords: ChordElement[] = [];
+  for (const element of elements) {
+    for (const chordElement of Array.from(element.querySelectorAll(".chord"))) {
+      const chord = chordElement.textContent?.trim();
+      if (chord) chords.push({ element: chordElement, chord });
+    }
+  }
+  return chords;
+}
+
+/** Splits a rendered section at the empty-line markers preserved by preparsing. */
+function getChordGroups(section: Element): ChordGroup[] {
+  const groups: ChordGroup[] = [];
+  let elements: Element[] = [];
+
+  const finishGroup = () => {
+    const chords = getChords(elements);
+    if (chords.length > 0) groups.push({ elements, chords });
+    elements = [];
+  };
+
+  for (const child of Array.from(section.children)) {
+    if (child.classList.contains("empty-line")) {
+      finishGroup();
+    } else {
+      elements.push(child);
+    }
+  }
+  finishGroup();
+
+  return groups;
+}
+
+function hasLyrics(elements: Element[]): boolean {
+  return elements.some((element) =>
+    Array.from(element.querySelectorAll(".lyrics")).some((lyrics) =>
+      lyrics.textContent?.trim(),
+    ),
+  );
+}
+
+function queueRepeatedChordMutation(
+  mutations: Array<() => void>,
+  containers: Element[],
+  chords: ChordElement[],
+  match: ChordMatch,
+) {
+  mutations.push(() => {
+    containers.forEach((container) =>
+      container.classList.add("repeated-chords"),
+    );
+    match.matches.forEach((matched, index) => {
+      if (!matched) chords[index].element.classList.add("force-shown");
+    });
+  });
 }
 
 /**
@@ -63,14 +127,10 @@ function detectRepeatedChordPatterns(
     );
     if (!elementClass) return;
 
-    // keep track of elements as well as chords to be able to highlight changes later
-    const chordsWElements: ChordElement[] = [];
-    for (const chordElement of Array.from(element.querySelectorAll(".chord"))) {
-      const chord = chordElement.textContent?.trim();
-      if (chord) {
-        chordsWElements.push({ element: chordElement, chord });
-      }
-    }
+    // First compare the complete section. This takes precedence over local
+    // subsection matches, so an exact repeat also hides a one-off variation
+    // that occurred in both copies of the section.
+    const chordsWElements = getChords([element]);
     if (chordsWElements.length === 0) return;
 
     const onlyChords = chordsWElements.map((c) => c.chord);
@@ -84,28 +144,52 @@ function detectRepeatedChordPatterns(
       seen[elementClass].push(onlyChords);
     }
 
-    // Interludes are typically short instrumental transitions, where even one
-    // chord change matters. Unlike lyric sections, only an exact progression
-    // repeat should hide their chords.
-    if (elementClass === "interlude" && matchResult.distance !== 0) return;
+    const interludeMismatch =
+      elementClass === "interlude" && matchResult.distance !== 0;
+    const isWholeSectionRepeat =
+      !interludeMismatch &&
+      matchResult.distance <= maxAllowedDistance(onlyChords.length) &&
+      hasLyrics([element]);
 
-    if (matchResult.distance > maxAllowedDistance(onlyChords.length)) return;
+    if (isWholeSectionRepeat) {
+      queueRepeatedChordMutation(
+        mutations,
+        [element],
+        chordsWElements,
+        matchResult,
+      );
+      return;
+    }
 
-    // Sections without lyrics would render empty with their chords hidden
-    const hasLyrics = Array.from(element.querySelectorAll(".lyrics")).some(
-      (el) => el.textContent?.trim(),
-    );
-    if (!hasLyrics) return;
+    // If the whole section is new, look for its pattern repeating within the
+    // section. Empty lines define the subsection boundaries.
+    const seenSubsections: string[][] = [];
+    for (const group of getChordGroups(element)) {
+      const groupChords = group.chords.map(({ chord }) => chord);
+      const groupMatch = findBestChordPatternMatch(
+        groupChords,
+        seenSubsections,
+      );
 
-    // Queue DOM modifications instead of executing them immediately
-    mutations.push(() => {
-      element.classList.add("repeated-chords");
-      matchResult.matches.forEach((matched, index) => {
-        if (!matched) {
-          chordsWElements[index].element.classList.add("force-shown");
-        }
-      });
-    });
+      if (groupMatch.distance > 0) seenSubsections.push(groupChords);
+
+      const subsectionInterludeMismatch =
+        elementClass === "interlude" && groupMatch.distance !== 0;
+      if (
+        subsectionInterludeMismatch ||
+        groupMatch.distance > maxAllowedDistance(groupChords.length) ||
+        !hasLyrics(group.elements)
+      ) {
+        continue;
+      }
+
+      queueRepeatedChordMutation(
+        mutations,
+        group.elements,
+        group.chords,
+        groupMatch,
+      );
+    }
   });
 
   // Phase 2: Mutate / Write
