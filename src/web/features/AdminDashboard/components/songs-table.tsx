@@ -24,7 +24,7 @@ import {
   GitCompare,
   Youtube,
 } from "lucide-react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
 import { SONG_SOURCES } from "src/lib/contracts/song-sources";
@@ -613,6 +613,56 @@ interface SongTableRowProps extends VersionHistoryTimelineProps {
   isYoutubeUpdatePending: boolean;
 }
 
+interface YoutubeDialogContentProps {
+  song: SortableSong;
+  currentVersion: SongVersionDB;
+  onUpdateYoutube: SongTableRowProps["onUpdateYoutube"];
+  onClose: () => void;
+  isUpdatePending: boolean;
+}
+
+function YoutubeDialogForm({
+  song,
+  currentVersion,
+  onUpdateYoutube,
+  onClose,
+  isUpdatePending,
+}: YoutubeDialogContentProps) {
+  const originalYoutubeId = currentVersion.youtubeId ?? "";
+  const [youtubeId, setYoutubeId] = useState(originalYoutubeId);
+
+  return (
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Edit YouTube link</DialogTitle>
+      </DialogHeader>
+      <YoutubeField
+        value={youtubeId}
+        onChange={setYoutubeId}
+        title={currentVersion.title ?? song.title}
+        artist={currentVersion.artist ?? song.artist}
+        modified={youtubeId !== originalYoutubeId}
+      />
+      <Button
+        onClick={() => {
+          const normalizedYoutubeId = youtubeId.trim()
+            ? (parseYoutubeId(youtubeId) ?? "")
+            : "";
+          if (youtubeId.trim() && !normalizedYoutubeId) {
+            toast.error("Enter a valid YouTube link or video ID.");
+            return;
+          }
+          onUpdateYoutube(song.id, currentVersion.id, normalizedYoutubeId);
+          onClose();
+        }}
+        disabled={isUpdatePending || youtubeId === originalYoutubeId}
+      >
+        {isUpdatePending ? "Saving..." : "Save link"}
+      </Button>
+    </DialogContent>
+  );
+}
+
 function SongTableRow({
   song,
   songVersions,
@@ -640,11 +690,6 @@ function SongTableRow({
   );
   const workingVersion = getWorkingVersion(song, songVersions);
   const [isYoutubeDialogOpen, setIsYoutubeDialogOpen] = useState(false);
-  const [youtubeId, setYoutubeId] = useState(currentVersion?.youtubeId ?? "");
-
-  useEffect(() => {
-    setYoutubeId(currentVersion?.youtubeId ?? "");
-  }, [currentVersion?.youtubeId]);
   const pendingCount = songVersions.filter(
     (v) => v.status === "pending",
   ).length;
@@ -764,44 +809,16 @@ function SongTableRow({
               open={isYoutubeDialogOpen}
               onOpenChange={setIsYoutubeDialogOpen}
             >
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Edit YouTube link</DialogTitle>
-                </DialogHeader>
-                <YoutubeField
-                  value={youtubeId}
-                  onChange={setYoutubeId}
-                  title={currentVersion?.title ?? song.title}
-                  artist={currentVersion?.artist ?? song.artist}
-                  modified={youtubeId !== (currentVersion?.youtubeId ?? "")}
+              {isYoutubeDialogOpen && currentVersion && (
+                <YoutubeDialogForm
+                  key={`${currentVersion.id}:${currentVersion.youtubeId ?? ""}`}
+                  song={song}
+                  currentVersion={currentVersion}
+                  onUpdateYoutube={onUpdateYoutube}
+                  onClose={() => setIsYoutubeDialogOpen(false)}
+                  isUpdatePending={isYoutubeUpdatePending}
                 />
-                <Button
-                  onClick={() => {
-                    const normalizedYoutubeId = youtubeId.trim()
-                      ? (parseYoutubeId(youtubeId) ?? "")
-                      : "";
-                    if (youtubeId.trim() && !normalizedYoutubeId) {
-                      toast.error("Enter a valid YouTube link or video ID.");
-                      return;
-                    }
-                    if (currentVersion) {
-                      onUpdateYoutube(
-                        song.id,
-                        currentVersion.id,
-                        normalizedYoutubeId,
-                      );
-                      setIsYoutubeDialogOpen(false);
-                    }
-                  }}
-                  disabled={
-                    !currentVersion ||
-                    isYoutubeUpdatePending ||
-                    youtubeId === (currentVersion?.youtubeId ?? "")
-                  }
-                >
-                  {isYoutubeUpdatePending ? "Saving..." : "Save link"}
-                </Button>
-              </DialogContent>
+              )}
             </Dialog>
           </div>
         </TableCell>
