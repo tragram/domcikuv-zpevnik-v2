@@ -1,4 +1,5 @@
 import { RotateCcw } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -8,11 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
 import TransposeIcon from "./transpose_icon";
 import FancySwitch from "~/components/FancySwitch";
 import { CompactItem } from "~/components/RichDropdown";
@@ -129,6 +125,48 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
   canResetKeyAndCapo,
   onReset,
 }) => {
+  const [isTabletPickerOpen, setIsTabletPickerOpen] = useState(false);
+  const tabletPickerRef = useRef<HTMLDivElement>(null);
+  const tabletTriggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isTabletPickerOpen) return;
+
+    const closeOnOutsideClick = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+
+      if (
+        !tabletPickerRef.current?.contains(target) &&
+        !tabletTriggerRef.current?.contains(target)
+      ) {
+        setIsTabletPickerOpen(false);
+      }
+    };
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsTabletPickerOpen(false);
+    };
+
+    document.addEventListener("mousedown", closeOnOutsideClick);
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", closeOnOutsideClick);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isTabletPickerOpen]);
+
+  const selectTabletKey = (index: number) => {
+    onChange(index);
+    setIsTabletPickerOpen(false);
+  };
+
+  const resetTabletKeyAndCapo = () => {
+    onReset();
+    setIsTabletPickerOpen(false);
+  };
+
   return (
     <>
       {/* Desktop View */}
@@ -143,26 +181,35 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
 
       {/* Tablet View using Popover */}
       <div className="xl:hidden flex max-[600px]:hidden">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button size="icon" variant="circular">
-              <TransposeIcon />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            side="bottom"
-            align="end"
-            sideOffset={16}
-            className="w-fit p-1.5 rounded-full bg-glass/80 dark:bg-glass/30 backdrop-blur-md outline-primary dark:outline-primary/30 outline-2 border-none shadow-lg"
-          >
-            <TransposeButtons
-              selected={selected}
-              onChange={onChange}
-              canResetKeyAndCapo={canResetKeyAndCapo}
-              onReset={onReset}
-            />
-          </PopoverContent>
-        </Popover>
+        <Button
+          ref={tabletTriggerRef}
+          size="icon"
+          variant="circular"
+          aria-expanded={isTabletPickerOpen}
+          aria-haspopup="dialog"
+          aria-controls="tablet-transpose-picker"
+          onClick={() => setIsTabletPickerOpen((open) => !open)}
+        >
+          <TransposeIcon />
+        </Button>
+        {isTabletPickerOpen && (
+          <div id="tablet-transpose-picker-container" className="fixed left-0 w-full top-16 flex justify-end">
+            <div
+              ref={tabletPickerRef}
+              id="tablet-transpose-picker"
+              role="dialog"
+              aria-label="Transpose key"
+              className="z-50 w-fit rounded-full border-none bg-glass/80 p-1.5 shadow-lg outline-2 outline-primary backdrop-blur-md dark:bg-glass/30 dark:outline-primary/30"
+            >
+              <TransposeButtons
+                selected={selected}
+                onChange={selectTabletKey}
+                canResetKeyAndCapo={canResetKeyAndCapo}
+                onReset={resetTabletKeyAndCapo}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Mobile View using DropdownMenu */}
