@@ -79,6 +79,8 @@ import { ToggleCheckbox } from "./toggle-checkbox";
 import { formatChordpro } from "~/lib/formatChordpro";
 import { parseYoutubeId } from "src/lib/youtube";
 import YoutubeField from "~/features/Editor/components/YoutubeField";
+import { SongMaxWidth } from "./song-max-width";
+import { useSongLayoutPressures } from "./use-song-width-metrics";
 import { getWorkingVersion } from "./version-selection";
 
 // --- TYPES & CONSTANTS ---
@@ -106,6 +108,7 @@ type SortableSong = SongDataDB & {
   hasYoutube: boolean;
   externalSource: ExternalSource | null;
   submittedBy: string | null;
+  maxRowWidth: number | null;
 };
 
 type SortConfig = {
@@ -361,8 +364,6 @@ function SongVersionItem({
   onDiff,
   isApprovePending,
 }: SongVersionItemProps) {
-  const navigate = useNavigate({ from: "/admin" });
-
   const author = useMemo(() => {
     if (!users) return null;
     const user = users.users.find((u) => u.id == version.userId);
@@ -424,6 +425,10 @@ function SongVersionItem({
                 BPM: {version.tempo}
               </span>
             )}
+            <SongMaxWidth
+              versionId={version.id}
+              chordpro={version.chordpro}
+            />
           </div>
         </div>
       </div>
@@ -754,6 +759,16 @@ function SongTableRow({
           {song.lastModified.toLocaleDateString()}
         </TableCell>
         <TableCell>
+          {workingVersion ? (
+            <SongMaxWidth
+              versionId={workingVersion.id}
+              chordpro={workingVersion.chordpro}
+            />
+          ) : (
+            <span className="text-muted-foreground/40">â€”</span>
+          )}
+        </TableCell>
+        <TableCell>
           <Switch
             checked={!song.hidden}
             disabled={song.deleted}
@@ -826,7 +841,7 @@ function SongTableRow({
 
       {isExpanded && (
         <TableRow className="bg-accent/20">
-          <TableCell colSpan={8} className="p-0">
+          <TableCell colSpan={9} className="p-0">
             <VersionHistoryTimeline
               song={song}
               songVersions={songVersions}
@@ -1011,6 +1026,20 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     );
   }, [versions]);
 
+  const workingVersionSources = useMemo(() => {
+    if (!songs) return [];
+    return songs.flatMap((song) => {
+      const workingVersion = getWorkingVersion(
+        song,
+        versionsBySong[song.id] || [],
+      );
+      return workingVersion
+        ? [{ id: workingVersion.id, chordpro: workingVersion.chordpro }]
+        : [];
+    });
+  }, [songs, versionsBySong]);
+  const layoutPressures = useSongLayoutPressures(workingVersionSources);
+
   const enrichedSongs = useMemo<SortableSong[]>(() => {
     if (!songs) return [];
 
@@ -1039,9 +1068,12 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
             }
           : null,
         submittedBy: submitter?.nickname || submitter?.name || null,
+        maxRowWidth: workingVersion
+          ? (layoutPressures.get(workingVersion.id)?.widestRowEm ?? null)
+          : null,
       };
     });
-  }, [songs, versionsBySong, usersById]);
+  }, [songs, versionsBySong, usersById, layoutPressures]);
 
   const stats = useMemo<SongStats>(() => {
     // Status counts follow the external/hidden toggles so the cards match the
@@ -1111,9 +1143,14 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     filtered.sort((a, b) => {
       if (a.hasPendingVersions && !b.hasPendingVersions) return -1;
       if (!a.hasPendingVersions && b.hasPendingVersions) return 1;
-      if (a[sortConfig.key] < b[sortConfig.key])
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+      if (aValue === null && bValue === null) return 0;
+      if (aValue === null) return 1;
+      if (bValue === null) return -1;
+      if (aValue < bValue)
         return sortConfig.direction === "ascending" ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key])
+      if (aValue > bValue)
         return sortConfig.direction === "ascending" ? 1 : -1;
       return 0;
     });
@@ -1321,6 +1358,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                 <TableHead className="whitespace-nowrap">Status</TableHead>
                 <TableHead className="whitespace-nowrap">Submitted by</TableHead>
                 {renderHeader("Last Modified", "lastModified")}
+                {renderHeader("Max width", "maxRowWidth")}
                 <TableHead className="whitespace-nowrap">Visible</TableHead>
                 <TableHead className="whitespace-nowrap text-right pr-6">
                   Actions
@@ -1331,7 +1369,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
               {paginatedSongs.length === 0 ? (
                 <TableRow>
                   <TableCell
-                    colSpan={8}
+                    colSpan={9}
                     className="text-center py-12 text-muted-foreground"
                   >
                     No songs match your filters.
