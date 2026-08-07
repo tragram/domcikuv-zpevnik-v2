@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  favoritesQueryOptions,
   indexSongbookEntries,
   normalizeSongbookEntries,
 } from "./use-user-data";
@@ -33,5 +34,18 @@ describe("songbook entry cache normalization", () => {
     expect(favoriteIds).toEqual(new Set(["song-1", "song-2"]));
     expect(songbookEntries.get("song-1")).toMatchObject({ songId: "song-1" });
     expect(songbookEntries.get("song-2")).toBe(current);
+  });
+
+  it("always revalidates persisted favorites when the app mounts", () => {
+    const options = favoritesQueryOptions("user-1", true);
+
+    expect(options.staleTime).toBe(0);
+    expect(options.refetchOnMount).toBe("always");
+  });
+
+  it("does not make each favorite button refetch on mount", () => {
+    const options = favoritesQueryOptions("user-1");
+
+    expect(options.refetchOnMount).toBeUndefined();
   });
 });

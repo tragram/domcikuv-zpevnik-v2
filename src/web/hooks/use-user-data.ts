@@ -71,9 +71,17 @@ export const sessionQueryOptions = () =>
     },
   });
 
-export const favoritesQueryOptions = (userId?: string) =>
+export const favoritesQueryOptions = (
+  userId?: string,
+  revalidateOnMount = false,
+) =>
   queryOptions({
     queryKey: ["favorites", userId],
+    // Only the top-level user-data subscription opts into this. Heart buttons
+    // share the query without refetching as virtualized rows mount.
+    ...(revalidateOnMount
+      ? { staleTime: 0, refetchOnMount: "always" as const }
+      : {}),
     queryFn: () => fetchFavorites(),
   });
 
@@ -195,7 +203,10 @@ export function useUserData() {
   const isLoggedIn = !!sessionData?.user;
   const userId = sessionData?.user?.id;
   const { data: favorites, isFetching: isFavoritesSyncing } = useQuery({
-    ...favoritesQueryOptions(userId),
+    // An older fetch path could persist a transient failure as a successful
+    // empty list. Revalidate it once whenever the app's user context mounts;
+    // offline failures retain the cached data.
+    ...favoritesQueryOptions(userId, true),
     enabled: isLoggedIn && !!userId,
   });
 

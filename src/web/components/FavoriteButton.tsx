@@ -25,22 +25,14 @@ export function useToggleFavorite(
   // Key/capo to capture when the song is added to the songbook (e.g. from the
   // song view). Omitted in lists, where the song is added with no override.
   personalization?: KeyCapo,
-  // Lists already have resolved membership on SongData. Accepting it here
-  // keeps both the rendered heart and mutation direction on that same source.
-  isFavoriteOverride?: boolean,
 ) {
   const queryClient = useQueryClient();
   const queryKey = favoritesQueryOptions(userId).queryKey;
 
-  // Detail views read membership from the live favorites cache so optimistic
-  // changes appear immediately. Lists can override it with the same resolved
-  // SongData flag their filters use, preventing two snapshots from disagreeing.
-  const { isFavorite: liveIsFavorite } = useSongbookEntry(
-    song.id,
-    userId,
-    song.isFavorite,
-  );
-  const isFavorite = isFavoriteOverride ?? liveIsFavorite;
+  // Membership is read from the live favorites cache (not the song's frozen
+  // loader snapshot), so revalidation and optimistic changes update the heart
+  // immediately.
+  const { isFavorite } = useSongbookEntry(song.id, userId, song.isFavorite);
 
   // Liking a draft (a non-canonical version on screen — e.g. another user's
   // pending edit) pins that exact version, so it keeps showing in the songbook.
@@ -98,11 +90,6 @@ interface FavoriteButtonProps {
   userId: string;
   className?: string;
   iconClassName?: string;
-  /**
-   * Optional controlled membership state. Song lists pass the resolved flag
-   * from SongData so the heart and list filters use the same snapshot.
-   */
-  isFavorite?: boolean;
   // Key/capo to capture when adding to the songbook (song view only).
   personalization?: KeyCapo;
 }
@@ -112,7 +99,6 @@ export const FavoriteButton = ({
   userId,
   className = "",
   iconClassName = "h-6 w-6",
-  isFavorite: controlledIsFavorite,
   personalization,
 }: FavoriteButtonProps) => {
   const isOnline = useIsOnline();
@@ -120,7 +106,6 @@ export const FavoriteButton = ({
     song,
     userId,
     personalization,
-    controlledIsFavorite,
   );
 
   return (
