@@ -19,9 +19,30 @@ export type UserData = {
   songbookEntries: Map<string, SongbookEntryApi>;
 } | null;
 
+// Favorites used to be persisted as string[] before songbook entries gained
+// personalization fields. Normalize that legacy cache shape on read instead of
+// forcing users to discard their entire offline song database.
+type CachedSongbookEntry = SongbookEntryApi | string;
+
+export const normalizeSongbookEntries = (
+  entries: readonly CachedSongbookEntry[] | undefined,
+): SongbookEntryApi[] =>
+  (entries ?? []).map((entry) =>
+    typeof entry === "string"
+      ? {
+          songId: entry,
+          pinnedVersionId: null,
+          keyIndex: null,
+          capo: null,
+        }
+      : entry,
+  );
+
 // Build the membership Set + per-song Map from the favorites payload.
-export const indexSongbookEntries = (entries: SongbookEntryApi[] | undefined) => {
-  const list = entries ?? [];
+export const indexSongbookEntries = (
+  entries: readonly CachedSongbookEntry[] | undefined,
+) => {
+  const list = normalizeSongbookEntries(entries);
   return {
     favoriteIds: new Set(list.map((e) => e.songId)),
     songbookEntries: new Map(list.map((e) => [e.songId, e])),
@@ -85,10 +106,13 @@ export function useSongbookEntry(
     ...favoritesQueryOptions(userId),
     enabled: !!userId,
   });
-  const entry = favorites?.find((e) => e.songId === songId);
+  const normalizedFavorites = favorites
+    ? normalizeSongbookEntries(favorites)
+    : undefined;
+  const entry = normalizedFavorites?.find((e) => e.songId === songId);
   return {
     entry,
-    isFavorite: favorites ? !!entry : fallbackIsFavorite,
+    isFavorite: normalizedFavorites ? !!entry : fallbackIsFavorite,
   };
 }
 
@@ -105,8 +129,12 @@ export function addFavoriteEntry(
 ) {
   queryClient.setQueryData<SongbookEntryApi[]>(
     favoritesQueryOptions(userId).queryKey,
-    (old = []) =>
-      old.some((e) => e.songId === entry.songId) ? old : [...old, entry],
+    (old = []) => {
+      const normalized = normalizeSongbookEntries(old);
+      return normalized.some((e) => e.songId === entry.songId)
+        ? normalized
+        : [...normalized, entry];
+    },
   );
 }
 
@@ -117,7 +145,8 @@ export function removeFavoriteEntry(
 ) {
   queryClient.setQueryData<SongbookEntryApi[]>(
     favoritesQueryOptions(userId).queryKey,
-    (old = []) => old.filter((e) => e.songId !== songId),
+    (old = []) =>
+      normalizeSongbookEntries(old).filter((e) => e.songId !== songId),
   );
 }
 
@@ -129,7 +158,12 @@ export function patchFavoriteEntry(
 ) {
   queryClient.setQueryData<SongbookEntryApi[]>(
     favoritesQueryOptions(userId).queryKey,
-    (old) => old?.map((e) => (e.songId === songId ? { ...e, ...patch } : e)),
+    (old) =>
+      old
+        ? normalizeSongbookEntries(old).map((e) =>
+            e.songId === songId ? { ...e, ...patch } : e,
+          )
+        : old,
   );
 }
 

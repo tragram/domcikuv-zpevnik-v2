@@ -177,6 +177,7 @@ const SongRow = memo(
           <FavoriteButton
             song={song}
             userId={userData.profile.id}
+            isFavorite={song.isFavorite}
             className="hidden shrink-0 basis-1/12 xs:flex"
           />
         )}

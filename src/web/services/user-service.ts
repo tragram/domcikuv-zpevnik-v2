@@ -43,13 +43,7 @@ export async function fetchProfile(): Promise<UserProfileDB> {
 }
 
 export async function fetchFavorites(): Promise<SongbookEntryApi[]> {
-  try {
-    const response = await makeApiRequest(client.api.favorites.$get);
-    return response;
-  } catch (e) {
-    console.error("Failed to fetch favorites", e);
-    return [];
-  }
+  return makeApiRequest(client.api.favorites.$get);
 }
 
 export async function fetchSubmissions(): Promise<SongVersionDB[]> {
