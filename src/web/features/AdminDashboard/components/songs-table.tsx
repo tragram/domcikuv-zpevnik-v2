@@ -6,6 +6,7 @@ import {
   ChevronDown,
   ChevronRight,
   Clock,
+  Columns3,
   Edit,
   ExternalLink,
   EyeOff,
@@ -51,6 +52,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { AdminApi } from "~/../worker/api-client";
 import ConfirmationDialog from "../../../components/dialogs/confirmation-dialog";
 import DeletePrompt from "../../../components/dialogs/delete-prompt";
@@ -86,7 +94,19 @@ import { getWorkingVersion } from "./version-selection";
 // --- TYPES & CONSTANTS ---
 
 const AUTO_ILLUSTRATION_STORAGE_KEY = "admin-auto-generate-illustration";
+const HIDDEN_COLUMNS_STORAGE_KEY = "admin/songs-table/hidden-columns";
 const PAGE_SIZE = 25;
+
+const HIDEABLE_COLUMNS = [
+  { id: "artist", label: "Artist" },
+  { id: "status", label: "Status" },
+  { id: "submittedBy", label: "Submitted by" },
+  { id: "lastModified", label: "Last modified" },
+  { id: "maxRowWidth", label: "Max width" },
+  { id: "visible", label: "Visible" },
+] as const;
+
+type HideableColumn = (typeof HIDEABLE_COLUMNS)[number]["id"];
 
 type ExternalSource = {
   sourceId: (typeof SONG_SOURCES)[number];
@@ -616,6 +636,8 @@ interface SongTableRowProps extends VersionHistoryTimelineProps {
   onDeleteSong: (songId: string) => void;
   onUpdateYoutube: (songId: string, versionId: string, youtubeId: string) => void;
   isYoutubeUpdatePending: boolean;
+  hiddenColumns: readonly HideableColumn[];
+  visibleColumnCount: number;
 }
 
 interface YoutubeDialogContentProps {
@@ -687,6 +709,8 @@ function SongTableRow({
   onDiff,
   isApprovePending,
   isYoutubeUpdatePending,
+  hiddenColumns,
+  visibleColumnCount,
 }: SongTableRowProps) {
   const navigate = useNavigate({ from: "/admin" });
   // TODO: Move YouTube metadata to `song` once it no longer needs to vary by version.
@@ -698,6 +722,8 @@ function SongTableRow({
   const pendingCount = songVersions.filter(
     (v) => v.status === "pending",
   ).length;
+  const isColumnVisible = (column: HideableColumn) =>
+    !hiddenColumns.includes(column);
 
   return (
     <React.Fragment>
@@ -721,12 +747,15 @@ function SongTableRow({
         >
           {song.title}
         </TableCell>
-        <TableCell
-          className={`text-muted-foreground ${song.deleted ? "opacity-50" : ""}`}
-        >
-          {song.artist}
-        </TableCell>
-        <TableCell>
+        {isColumnVisible("artist") && (
+          <TableCell
+            className={`text-muted-foreground ${song.deleted ? "opacity-50" : ""}`}
+          >
+            {song.artist}
+          </TableCell>
+        )}
+        {isColumnVisible("status") && (
+          <TableCell>
           <div className="flex flex-wrap gap-2 items-center">
             <SongVersionStatusBadge status={song.status} />
             {song.externalSource && (
@@ -744,8 +773,10 @@ function SongTableRow({
               </Badge>
             )}
           </div>
-        </TableCell>
-        <TableCell className="text-muted-foreground whitespace-nowrap">
+          </TableCell>
+        )}
+        {isColumnVisible("submittedBy") && (
+          <TableCell className="text-muted-foreground whitespace-nowrap">
           {song.submittedBy ? (
             <span className="inline-flex items-center gap-1.5">
               <User className="h-3.5 w-3.5 opacity-60" />
@@ -754,11 +785,15 @@ function SongTableRow({
           ) : (
             <span className="text-muted-foreground/40">—</span>
           )}
-        </TableCell>
-        <TableCell className="text-muted-foreground whitespace-nowrap">
+          </TableCell>
+        )}
+        {isColumnVisible("lastModified") && (
+          <TableCell className="text-muted-foreground whitespace-nowrap">
           {song.lastModified.toLocaleDateString()}
-        </TableCell>
-        <TableCell>
+          </TableCell>
+        )}
+        {isColumnVisible("maxRowWidth") && (
+          <TableCell>
           {workingVersion ? (
             <SongMaxWidth
               versionId={workingVersion.id}
@@ -767,15 +802,18 @@ function SongTableRow({
           ) : (
             <span className="text-muted-foreground/40">â€”</span>
           )}
-        </TableCell>
-        <TableCell>
+          </TableCell>
+        )}
+        {isColumnVisible("visible") && (
+          <TableCell>
           <Switch
             checked={!song.hidden}
             disabled={song.deleted}
             onCheckedChange={(checked) => onUpdateHidden(song.id, !checked)}
             onClick={(e) => e.stopPropagation()}
           />
-        </TableCell>
+          </TableCell>
+        )}
         <TableCell onClick={(e) => e.stopPropagation()} className="pr-4">
           <div className="flex justify-end">
             <ActionButtons>
@@ -841,7 +879,7 @@ function SongTableRow({
 
       {isExpanded && (
         <TableRow className="bg-accent/20">
-          <TableCell colSpan={9} className="p-0">
+          <TableCell colSpan={visibleColumnCount} className="p-0">
             <VersionHistoryTimeline
               song={song}
               songVersions={songVersions}
@@ -873,6 +911,11 @@ interface SongsTableSettingsBarProps {
   onAutoGenerateIllustrationChange: (val: boolean) => void;
   isResetPending: boolean;
   onResetDB: () => void;
+  hiddenColumns: readonly HideableColumn[];
+  onColumnVisibilityChange: (
+    column: HideableColumn,
+    visible: boolean,
+  ) => void;
 }
 
 function SongsTableSettingsBar({
@@ -883,6 +926,8 @@ function SongsTableSettingsBar({
   onAutoGenerateIllustrationChange,
   isResetPending,
   onResetDB,
+  hiddenColumns,
+  onColumnVisibilityChange,
 }: SongsTableSettingsBarProps) {
   return (
     <ControlPanel
@@ -896,6 +941,35 @@ function SongsTableSettingsBar({
           <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
             Options
           </span>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="shadow-sm">
+                <Columns3 className="mr-2 h-4 w-4" />
+                Columns
+                {hiddenColumns.length > 0 && (
+                  <span className="ml-1 text-xs text-muted-foreground">
+                    {HIDEABLE_COLUMNS.length - hiddenColumns.length}/
+                    {HIDEABLE_COLUMNS.length}
+                  </span>
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-48">
+              <DropdownMenuLabel>Visible columns</DropdownMenuLabel>
+              {HIDEABLE_COLUMNS.map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  checked={!hiddenColumns.includes(column.id)}
+                  onCheckedChange={(visible) =>
+                    onColumnVisibilityChange(column.id, visible)
+                  }
+                  onSelect={(event) => event.preventDefault()}
+                >
+                  {column.label}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
           <ToggleCheckbox
             checked={autoGenerateIllustration}
             onCheckedChange={onAutoGenerateIllustrationChange}
@@ -962,6 +1036,9 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     "admin/songs-table/show-deleted",
     { defaultValue: false },
   );
+  const [hiddenColumns, setHiddenColumns] = useLocalStorageState<
+    HideableColumn[]
+  >(HIDDEN_COLUMNS_STORAGE_KEY, { defaultValue: [] });
   const [isolate, setIsolate] = useState<AttrIsolate | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   // Distinguishes a single click (toggle) from a double click (show only). The
@@ -979,6 +1056,26 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     key: "lastModified",
     direction: "descending",
   });
+
+  const validHiddenColumns = HIDEABLE_COLUMNS.map((column) => column.id).filter(
+    (column) => hiddenColumns.includes(column),
+  );
+  const visibleColumnCount = 9 - validHiddenColumns.length;
+
+  const setColumnVisibility = (
+    column: HideableColumn,
+    visible: boolean,
+  ) => {
+    setHiddenColumns(
+      visible
+        ? hiddenColumns.filter((hidden) => hidden !== column)
+        : [...validHiddenColumns.filter((hidden) => hidden !== column), column],
+    );
+
+    if (!visible && sortConfig.key === column) {
+      setSortConfig({ key: "title", direction: "ascending" });
+    }
+  };
 
   const [autoGenerateIllustration, setAutoGenerateIllustration] =
     useLocalStorageState(AUTO_ILLUSTRATION_STORAGE_KEY, {
@@ -1343,23 +1440,36 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         }
         autoGenerateIllustration={autoGenerateIllustration}
         onAutoGenerateIllustrationChange={setAutoGenerateIllustration}
+        hiddenColumns={validHiddenColumns}
+        onColumnVisibilityChange={setColumnVisibility}
         isResetPending={resetDBMutation.isPending}
         onResetDB={() => resetDBMutation.mutate()}
       />
 
       <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <Table className="min-w-[900px]">
+          <Table className="min-w-[600px]">
             <TableHeader className="bg-muted/30">
               <TableRow>
                 <TableHead className="w-12 text-center"></TableHead>
                 {renderHeader("Title", "title")}
-                {renderHeader("Artist", "artist")}
-                <TableHead className="whitespace-nowrap">Status</TableHead>
-                <TableHead className="whitespace-nowrap">Submitted by</TableHead>
-                {renderHeader("Last Modified", "lastModified")}
-                {renderHeader("Max width", "maxRowWidth")}
-                <TableHead className="whitespace-nowrap">Visible</TableHead>
+                {!validHiddenColumns.includes("artist") &&
+                  renderHeader("Artist", "artist")}
+                {!validHiddenColumns.includes("status") && (
+                  <TableHead className="whitespace-nowrap">Status</TableHead>
+                )}
+                {!validHiddenColumns.includes("submittedBy") && (
+                  <TableHead className="whitespace-nowrap">
+                    Submitted by
+                  </TableHead>
+                )}
+                {!validHiddenColumns.includes("lastModified") &&
+                  renderHeader("Last Modified", "lastModified")}
+                {!validHiddenColumns.includes("maxRowWidth") &&
+                  renderHeader("Max width", "maxRowWidth")}
+                {!validHiddenColumns.includes("visible") && (
+                  <TableHead className="whitespace-nowrap">Visible</TableHead>
+                )}
                 <TableHead className="whitespace-nowrap text-right pr-6">
                   Actions
                 </TableHead>
@@ -1369,7 +1479,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
               {paginatedSongs.length === 0 ? (
                 <TableRow>
                   <TableCell
-                    colSpan={9}
+                    colSpan={visibleColumnCount}
                     className="text-center py-12 text-muted-foreground"
                   >
                     No songs match your filters.
@@ -1450,6 +1560,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                     }
                     isApprovePending={approveVersionMutation.isPending}
                     isYoutubeUpdatePending={updateVersionMutation.isPending}
+                    hiddenColumns={validHiddenColumns}
+                    visibleColumnCount={visibleColumnCount}
                   />
                 ))
               )}
