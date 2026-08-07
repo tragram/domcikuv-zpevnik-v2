@@ -4,7 +4,7 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1785483093000}
-{updatedAt: 1785487427000}
+{updatedAt: 1785578658000}
 {illustrationId: jaromir_nohavica-kapr_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: jaromir_nohavica-kapr_gpt-5.4-mini_v7}
 
