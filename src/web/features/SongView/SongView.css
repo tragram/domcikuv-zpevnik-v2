@@ -78,7 +78,10 @@
     max-width: none !important;
 }
 
-#content-wrapper.measuring-container .tab {
+/* Tabs and comments own their horizontal overflow, so their intrinsic text
+   width must not influence the song's auto-fit measurement. */
+#content-wrapper.measuring-container .tab,
+#content-wrapper.measuring-container .comment {
     width: 0;
 }
 
@@ -162,8 +165,11 @@
     color: var(--primary);
     opacity: 80%;
     line-height: normal;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
+    white-space: pre;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: clip;
 }
 
 .tab {
