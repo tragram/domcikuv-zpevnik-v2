@@ -1,0 +1,21 @@
+songId: koa-pirati
+prompts:
+  - id: koa-pirati_gpt-5.4-mini_v7
+    songId: koa-pirati
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A lonely night tram gliding through rain-soaked Prague toward Vokovice at
+      midnight, a pale young woman under a black canopy reflected in the tram
+      window, with a weary poet silhouette and faint Parnassus-like rooftop glow
+      in the distance, moody surreal poetic atmosphere, violet and cold blue
+      palette, wet reflections, soft fog, cinematic photorealistic lighting,
+      single centered scene, minimal text, highly legible composition, 35mm film
+      look
+    createdAt: 2026-08-09T09:59:57.000Z
+    updatedAt: 2026-08-09T09:59:57.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786269610000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
