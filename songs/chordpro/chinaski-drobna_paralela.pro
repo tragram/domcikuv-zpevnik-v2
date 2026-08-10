@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: e g}
 {createdAt: 1436824800000}
-{updatedAt: 1783857555000}
+{updatedAt: 1786282820000}
 {illustrationId: chinaski-drobna_paralela_gpt-4o-mini_v1_flux.1-dev}
 {promptId: chinaski-drobna_paralela_gpt-4o-mini_v1}
 
@@ -17,14 +17,14 @@ Ta [C]stará [G]dobrá hra je [D]okoukaná.
 [C]Včera je včera, [G]bohužel bohu[D]dík.
 {end_of_verse}
 
-{start_of_chorus}
+{start_of_chorus: R1}
 [C]Nic není jako [G]dřív,
 [D]nic není jak [Em]bejvávalo.
 [C]Nic není jako [G]dřív,
 [D]to se nám to [Em]mívávalo.
 {end_of_chorus}
 
-{start_of_chorus}
+{start_of_chorus: R2}
 [C]Nic není jako [G]dřív,
 [D]ačkoliv máš všechno [Em]co si vždycky chtěla.
 [C]Nic není jako [G]dřív,
@@ -38,7 +38,9 @@ Ta [C]stará [G]dobrá hra je [D]okoukaná.
 [C]včera i dneska, [G]stále ta samá [D]píseň.
 {end_of_verse}
 
-{chorus}
+{chorus: R1}
+
+{chorus: R2}
 
 {start_of_interlude: Mezihra}
 𝄆 [C][G][D] 𝄇 (4x)

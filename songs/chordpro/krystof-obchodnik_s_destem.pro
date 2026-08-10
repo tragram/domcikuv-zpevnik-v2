@@ -6,9 +6,13 @@
 {language: czech}
 {startMelody: a}
 {createdAt: 1442181600000}
-{updatedAt: 1785417160000}
+{updatedAt: 1786271789000}
 {illustrationId: krystof-obchodnik_s_destem_gpt-4o-mini_v1_flux.1-dev}
 {promptId: krystof-obchodnik_s_destem_gpt-4o-mini_v1}
+
+{start_of_interlude}
+𝄆 [D][Hm] 𝄇
+{end_of_interlude}
 
 {start_of_verse}
 Jako [D]vášeň která hasne v [Hm]kouři
@@ -32,6 +36,8 @@ a ty [Hm]voláš ať prším ještě
 a ty [Hm]voláš ať prším ještě
 [G]slova jsou jen [A]kapky deště
 {end_of_chorus}
+
+{interlude}
 
 {start_of_verse}
 Jako [D]touha, sklem, co nepro[Hm]razí,

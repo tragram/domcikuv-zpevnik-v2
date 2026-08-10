@@ -1,0 +1,20 @@
+songId: propadleek-ty_mi_za_to_stojis
+prompts:
+  - id: propadleek-ty_mi_za_to_stojis_gpt-5.4-mini_v7
+    songId: propadleek-ty_mi_za_to_stojis
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a solitary young man standing still at
+      the edge of a quiet forest clearing at dusk, looking toward a distant
+      woman’s silhouette under a sky full of stars, subtle feeling of patience,
+      vulnerability, and hopeful love; soft moonlight and faint warm rim light,
+      melancholic blue tones with a gentle glow; simple composition, emotional
+      and legible at small size, minimal details, no text, no watermark
+    createdAt: 2026-08-09T14:02:02.000Z
+    updatedAt: 2026-08-09T14:02:02.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786284132000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,0 +1,22 @@
+songId: katerina_marie_ticha-plamen
+prompts:
+  - id: katerina_marie_ticha-plamen_gpt-5.4-mini_v7
+    songId: katerina_marie_ticha-plamen
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      cinematic photorealistic night scene, two lovers standing very close in a
+      dark room as a surreal fire bursts from a stone fireplace and curls around
+      them like a dancing flame, one person holding out a glowing spark toward
+      the other, subtle sparks in the air, hint of forbidden passion and
+      restless desire, blue-black background with intense orange-red firelight,
+      dramatic contrast, moody shadows, slight motion blur in the flames,
+      intimate but simple composition, no text, no clutter, high legibility at
+      small sizes
+    createdAt: 2026-08-09T14:24:05.000Z
+    updatedAt: 2026-08-09T14:24:05.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786285457000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
