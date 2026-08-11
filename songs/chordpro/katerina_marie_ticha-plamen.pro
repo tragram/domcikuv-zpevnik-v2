@@ -4,7 +4,7 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1786285440000}
-{updatedAt: 1786285458000}
+{updatedAt: 1786358905000}
 {illustrationId: katerina_marie_ticha-plamen_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: katerina_marie_ticha-plamen_gpt-5.4-mini_v7}
 
@@ -39,9 +39,15 @@ Chci [G]vědět, na co myslíš a chci ti [Hmi]nepřiznat
 
 {chorus}
 
-{start_of_chorus: Outro}
+{start_of_bridge}
 [Hm]Nanananaj nanaj naj na[Hm/A]nanana[G]naj
 naj na naj na naj [G/F#]nananaj
 [E]naj naj nanaj nanaj naj na[E/F#]nanana[G]naj
 naj na naj na [A]naj
-{end_of_chorus}
+{end_of_bridge}
+
+{bridge}
+
+{bridge}
+
+{chorus}

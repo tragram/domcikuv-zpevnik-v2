@@ -1,0 +1,23 @@
+songId: nerez-naruby
+prompts:
+  - id: nerez-naruby_gpt-5.4-mini_v7
+    songId: nerez-naruby
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Surreal poetic single-scene illustration of a woman standing calmly in a
+      sunlit paved courtyard at noon, but around her a midnight garden blooms
+      from cracks in the stone; she is half-metallic, reflective and slightly
+      inverted, with a silver thread on one ankle and a dove nearby caught by a
+      gentle hand gesture, subtle sense of being “above it all” yet tender and
+      resigned. Cinematic lighting with harsh midday top light mixed with faint
+      moonlit glow from the flowers, soft glints on steel and glass. Dreamlike
+      photorealistic style, clean composition, minimal background detail, no
+      visible text.
+    createdAt: 2026-08-10T11:32:46.000Z
+    updatedAt: 2026-08-10T11:32:46.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786361576000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

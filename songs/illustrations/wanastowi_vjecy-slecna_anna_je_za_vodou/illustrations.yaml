@@ -1,0 +1,22 @@
+songId: wanastowi_vjecy-slecna_anna_je_za_vodou
+prompts:
+  - id: wanastowi_vjecy-slecna_anna_je_za_vodou_gpt-5.4-mini_v7
+    songId: wanastowi_vjecy-slecna_anna_je_za_vodou
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely young man standing still on an
+      old, dark bridge at dusk, city river below, wind tugging at his clothes,
+      distant warm memory of a girl suggested only as a faint sunlit reflection
+      or soft blurred figure in the water, moody blue-gray palette with a single
+      nostalgic golden glow, wet pavement, dramatic low-key lighting, quiet
+      heartbreak and longing, simple composition, shallow depth of field, subtle
+      35mm film grain, no readable text, only a very small faint
+      handwritten-style note if needed.
+    createdAt: 2026-08-10T20:50:21.000Z
+    updatedAt: 2026-08-10T20:50:21.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786395029000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

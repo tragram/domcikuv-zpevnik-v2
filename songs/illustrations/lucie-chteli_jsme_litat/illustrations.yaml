@@ -1,0 +1,20 @@
+songId: lucie-chteli_jsme_litat
+prompts:
+  - id: lucie-chteli_jsme_litat_gpt-5.4-mini_v7
+    songId: lucie-chteli_jsme_litat
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic interior scene at night: a dim, cold room with a
+      single bed, a small flower placed on the pillow, and a grieving person
+      sitting beside it holding a glass of wine, with a faint fireplace glow
+      contrasting the blue-gray darkness; subtle hints of smoke, silence, and
+      loss, melancholic blues mood, intimate composition, sparse visual details,
+      no text, soft rim lighting, shallow depth of field, realistic textures
+    createdAt: 2026-08-10T20:28:40.000Z
+    updatedAt: 2026-08-10T20:28:40.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786393728000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
