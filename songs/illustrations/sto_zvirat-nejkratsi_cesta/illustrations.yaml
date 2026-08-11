@@ -1,0 +1,22 @@
+songId: sto_zvirat-nejkratsi_cesta
+prompts:
+  - id: sto_zvirat-nejkratsi_cesta_gpt-5.4-mini_v7
+    songId: sto_zvirat-nejkratsi_cesta
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene in a dim apartment kitchen at night, a
+      tired man standing near a table with a few scattered shared photos,
+      avoiding eye contact with a woman in the background; subtle tension,
+      emotional distance, intimate yet ironic mood, muted colors, soft practical
+      lighting from a single warm lamp mixed with cold moonlight through the
+      window, shallow depth of field, realistic details, minimal composition, no
+      readable text, only a faint suggestion of a photo print or magazine-like
+      reflection, 16:9.
+    createdAt: 2026-08-10T14:20:27.000Z
+    updatedAt: 2026-08-10T14:20:27.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786371639000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

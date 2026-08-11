@@ -4,7 +4,7 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1786268461000}
-{updatedAt: 1786269681000}
+{updatedAt: 1786353650000}
 {illustrationId: koa-pirati_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: koa-pirati_gpt-5.4-mini_v7}
 
@@ -35,10 +35,9 @@
 nahořklých [Ami]nocí
 kde jste mí [Dmi]piráti
 [G]houpu se [C]v bocích
-[Dmi]Kde jste mé přízraky
-[G]pobledlých [C]svic
-[Dmi]Vezte mě tramvaje
-[E]do Voko[Ami]vic
+[Dmi]Kde jste mé přízraky [G]pobledlých [C]svic
+[Dmi]Vezte mě tramvaje [E]do Voko[Ami]vic
+[Dmi][Ami][Dmi][E7][Ami]
 {end_of_chorus}
 
 {start_of_verse}
@@ -57,10 +56,10 @@ kde jste mí [Dmi]piráti
 nahořklých [Ami]nocí
 kde jste mí [Dmi]kumpáni
 [G]houpu se [C]v bocích
-𝄆 [Dmi]Kde jste mé přízraky
-[G]Pobledlých [C]svic
-[Dmi]Vezte mě tramvaje
-[E]do Voko[Ami]vic 𝄇
+[Dmi]Kde jste mé přízraky [G]Pobledlých [C]svic
+[Dmi]Vezte mě tramvaje[E]do Voko[Ami]vic
+[Dmi]Kde jste mé přízraky [Am]Pobledlých svic
+[Dmi]Vezte mě tramvaje[E]do Voko[Ami]vic
 {end_of_chorus}
 
 {start_of_verse}
@@ -79,10 +78,10 @@ kde jste mí [Dmi]kumpáni
 nahořklých [Ami]nocí
 kde jste mí [Dmi]kumpáni
 [G]V tichnoucích [C]krocích
-𝄆 [Dmi]Zdravím vás přízraky
-[G]a pak už [C]nic
-[Dmi]jenom ty tramvaje
-[E]do Voko[Ami]vic 𝄇
+[Dmi]Zdravím vás přízraky [G]a pak už [C]nic
+[Dmi]jenom ty tramvaje [E]do Voko[Ami]vic
+[Dmi]Zdravím vás přízraky [Am]a pak už nic
+[Dmi]jenom ty tramvaje [E]do Voko[Ami]vic
 {end_of_chorus}
 
 {chorus: R2}

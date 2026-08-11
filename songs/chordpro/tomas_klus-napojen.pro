@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: g# h}
 {createdAt: 1484348400000}
-{updatedAt: 1785411879000}
+{updatedAt: 1786352588000}
 {illustrationId: tomas_klus-napojen_gpt-4o-mini_v1_flux.1-dev}
 {promptId: tomas_klus-napojen_gpt-4o-mini_v1}
 
@@ -63,7 +63,7 @@ bez zbraní [F#]a krve porazíš [A]obra.[H]
 [E]A člověka Bůh ví proč znejis[A]til
 [E]v otázce, kdo vlastně [H]jsem.
 Poznej, že [F#]být je jednodu[A]ché,
-ucítíš [F#]klid, že vše jedno je jedním [A]duchem.[H]
+ucítíš [F#]klid, že vše jedno je [A]duchem.[H]
 {end_of_verse}
 
 {chorus}

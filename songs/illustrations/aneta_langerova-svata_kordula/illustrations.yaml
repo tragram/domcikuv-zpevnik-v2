@@ -1,0 +1,21 @@
+songId: aneta_langerova-svata_kordula
+prompts:
+  - id: aneta_langerova-svata_kordula_gpt-5.4-mini_v7
+    songId: aneta_langerova-svata_kordula
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic night seascape, a lone catamaran drifting on dark
+      moonlit waves in deep water, one standing figure on deck silhouetted
+      against a smoky horizon, faint war-like ships’ lights in the distance, the
+      sea glowing with silver reflections and ominous mist, romantic yet
+      dangerous mood, dramatic chiaroscuro lighting, cool blue-black palette
+      with subtle fire-like amber highlights, minimal composition, no text, high
+      detail, legible at small size.
+    createdAt: 2026-08-10T14:41:35.000Z
+    updatedAt: 2026-08-10T14:41:35.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786372905000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

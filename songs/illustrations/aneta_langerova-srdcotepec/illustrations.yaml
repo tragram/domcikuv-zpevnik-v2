@@ -1,0 +1,21 @@
+songId: aneta_langerova-srdcotepec
+prompts:
+  - id: aneta_langerova-srdcotepec_gpt-5.4-mini_v7
+    songId: aneta_langerova-srdcotepec
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Surreal poetic forest scene at twilight: a solitary figure hiding beneath
+      a giant wind-bent tree on a rocky slope, blue sap flowing up through the
+      branches like a luminous river, dragon-like cliffs in the distance, golden
+      sparks and falling star-embers in the sky, delicate spiderwebs catching
+      the air, a subtle sense of longing and danger, dreamlike Czech indie-folk
+      atmosphere, cinematic photorealistic, moody volumetric lighting, rich
+      contrast, soft mist, minimal composition, no text, no logos
+    createdAt: 2026-08-10T15:08:47.000Z
+    updatedAt: 2026-08-10T15:08:47.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786374536000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

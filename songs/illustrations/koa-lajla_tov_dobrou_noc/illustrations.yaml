@@ -1,0 +1,23 @@
+songId: koa-lajla_tov_dobrou_noc
+prompts:
+  - id: koa-lajla_tov_dobrou_noc_gpt-5.4-mini_v7
+    songId: koa-lajla_tov_dobrou_noc
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene inside a dim, slightly messy hotel room at
+      dawn: an unmade bed with a spilled glass of cognac staining the white
+      sheets, a half-open window with a few birds soaring high in the pale sky
+      outside, warm honey-like light pooling on the floor and bed, subtle sense
+      of intoxication and dreamy disorientation, a silent alarm clock on the
+      nightstand showing time frozen, moody atmospheric haze, simple
+      composition, no visible people, no text except perhaps a tiny blurred
+      hotel sign in the distance, shallow depth of field, soft golden-blue
+      lighting
+    createdAt: 2026-08-10T10:22:42.000Z
+    updatedAt: 2026-08-10T10:22:42.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1786357370000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
