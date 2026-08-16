@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: d}
 {createdAt: 1318543200000}
-{updatedAt: 1783875373000}
+{updatedAt: 1786832656000}
 {illustrationId: olympic-jasna_zprava_gpt-4o-mini_v1_flux.1-dev}
 {promptId: olympic-jasna_zprava_gpt-4o-mini_v1}
 
@@ -48,7 +48,7 @@ lítá [Ami]vzhůru, ve dvou [D]vzhůru.
 
 {start_of_verse}
 [G]Skončili jsme jasná zpráva,
-[Emi]není komu z [C]okna mávat víc
+[Emi]není komu z [C]okna mávat [D]víc
 [Ami]jasná zpráva, [C]rub, co nemá [G]líc.
 {end_of_verse}
 
