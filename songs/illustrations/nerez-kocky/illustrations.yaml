@@ -1,0 +1,23 @@
+songId: nerez-kocky
+prompts:
+  - id: nerez-kocky_gpt-5.4-mini_v7
+    songId: nerez-kocky
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic surrealist night scene in a poetic folk-song mood: a small
+      moonlit village path where black cats howl toward a dark sky, a bent
+      crescent moon hangs low, and a shallow pool of water reflects a railing
+      and a few worn sandals beside it; faint autumn leaves swirl while four
+      subtle seasonal hints appear in the background as a warm-to-cool
+      transition, with a burned caramel glow in the shadows and a sense of
+      strange, sweet melancholy. Soft dramatic lighting, painterly photorealism,
+      atmospheric haze, muted earthy colors with silver-blue highlights, simple
+      composition, only minimal subtle text if any.
+    createdAt: 2026-09-04T13:35:41.000Z
+    updatedAt: 2026-09-04T13:35:41.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1788528952000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
