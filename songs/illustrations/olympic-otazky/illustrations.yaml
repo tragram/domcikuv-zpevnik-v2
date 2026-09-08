@@ -1,0 +1,22 @@
+songId: olympic-otazky
+prompts:
+  - id: olympic-otazky_gpt-5.4-mini_v7
+    songId: olympic-otazky
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely folk singer at dusk on a quiet
+      road, standing with a guitar under a vast sky filled with a giant
+      unanswered question mark-shaped cloud; sparse countryside, bare winter
+      tree beside a small patch of summer flowers, subtle river glint in the
+      distance, reflective and wistful mood, soft golden-blue twilight lighting,
+      shallow depth of field, minimal composition, no text, if any only a tiny
+      distant lyric fragment on a poster-like sign, highly legible at small
+      sizes
+    createdAt: 2026-09-08T08:17:55.000Z
+    updatedAt: 2026-09-08T08:17:55.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1788855486000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
