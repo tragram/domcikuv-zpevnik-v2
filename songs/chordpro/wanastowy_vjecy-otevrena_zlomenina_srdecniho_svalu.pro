@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: d d d h}
 {createdAt: 1436824800000}
-{updatedAt: 1785417657000}
+{updatedAt: 1788852646000}
 {illustrationId: wanastowy_vjecy-otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1_flux.1-dev}
 {promptId: wanastowy_vjecy-otevrena_zlomenina_srdecniho_svalu_gpt-4o-mini_v1}
 
@@ -14,21 +14,21 @@
 Jsem jako [G]vítr kterej zfoukne pírko ze tvejch dlaní,
 [D]špínu jedný noci, jako hygiena ranní
 [Am]velká voda slzí, který spláchnou noční hříchy,
-[Cm]tamburíny zvoní [Eb]k operaci míchy
+[C]tamburíny zvoní [Eb]k operaci míchy
 {end_of_verse}
 
 {start_of_verse}
 Narovnám ti [G]páteř, poškrábu ti záda,
 [D]pofoukám ti srdce, zrada kamaráda
 [Am]lásky účel světí prostředky a smetí,
-[Cm]špínu jedný noci, [Eb]který neuletíš
+[C]špínu jedný noci, [Eb]který neuletíš
 {end_of_verse}
 
 {start_of_verse}
 Otevřená [G]zlomenina srdečního svalu,
 [D]trápení a kocovina, vůně tvýho žalu
 [Am]vypustíš svou hříšnou duši do slanýho moře,
-[Cm]neumírej děvče moje, [Eb]chci ti říct, že
+[C]neumírej děvče moje, [Eb]chci ti říct, že
 {end_of_verse}
 
 {start_of_chorus}
@@ -44,21 +44,21 @@ už asi nedou[F]fám. [D]
 Pláčem solíš [G]otevřený rány, co se hojí,
 [D]tvoji krev i tělo příjímám pod obojí
 [Am]stejný lidi se soumrakem mají stejný stíny,
-[Cm]zmizelas jak před přízrakem, [Eb]padám do hlubiny
+[C]zmizelas jak před přízrakem, [Eb]padám do hlubiny
 {end_of_verse}
 
 {start_of_verse}
 Tvůj pramínek [G]vlasů zaliju včelím voskem,
 [D]koukám na tu krásu a nechápu to mozkem
 [Am]to, co jsi mi dala, já [Am]nikomu už nedám,
-[Cm]tak mi řekni, má opičko, [Eb]proč tě marně hledám
+[C]tak mi řekni, má opičko, [Eb]proč tě marně hledám
 {end_of_verse}
 
 {start_of_verse}
 Otevřená [G]zlomenina srdečního svalu,
 [D]trápení a kocovina, vůně tvýho žalu
 [Am]vypustíš svou hříšnou duši do slanýno moře,
-[Cm]neumírej děvče moje, [Eb]chci ti říct, že
+[C]neumírej děvče moje, [Eb]chci ti říct, že
 {end_of_verse}
 
 {chorus}
