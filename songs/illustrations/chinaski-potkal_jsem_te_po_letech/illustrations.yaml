@@ -1,0 +1,22 @@
+songId: chinaski-potkal_jsem_te_po_letech
+prompts:
+  - id: chinaski-potkal_jsem_te_po_letech_gpt-5.4-mini_v7
+    songId: chinaski-potkal_jsem_te_po_letech
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene in a rain-damp city street at dusk: a man
+      and woman meet unexpectedly after many years, standing a few feet apart
+      under a single warm streetlamp, locked in a quiet, emotionally charged
+      gaze; subtle signs of time passed, elegant but restrained 90s/early-2000s
+      wardrobe, nostalgic atmosphere, faint reflections on wet pavement, distant
+      blurred lights, intimate melancholy, longing and bittersweet memory,
+      shallow depth of field, soft film grain, moody warm-cool color contrast,
+      no text, only a very small handwritten note on a bench if needed
+    createdAt: 2026-09-10T10:31:15.000Z
+    updatedAt: 2026-09-10T10:31:15.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1789036287000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

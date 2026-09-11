@@ -1,12 +1,12 @@
 {title: Přítel}
 {artist: Jaromír Nohavica}
 {key: G}
-{capo: 2}
+{capo: 0}
 {range: g1-h2}
 {language: czech}
 {startMelody: a a a g}
 {createdAt: 1436824800000}
-{updatedAt: 1770572088000}
+{updatedAt: 1789047956000}
 {illustrationId: jaromir_nohavica-pritel_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-pritel_gpt-4o-mini_v1}
 
@@ -31,8 +31,8 @@ a [Ami]všechna tajná přání
 [C]kam jsme se to poděli,
 [G]kde je ti [D]konec,
 můj [Emi]jediný příteli,
-[Ami]zmizels' mi, nevím [D]kam,
-[Emi]sám, sám, [C]sám, jsem tady [G]sám.
+[Ami]zmizels' mi, nevím [D7]kam,
+[Cmaj7]sám, [Cadd9]sám, [C]sám, jsem tady [G]sám. [D/F#]
 {end_of_chorus}
 
 {start_of_verse}
@@ -52,9 +52,10 @@ a [Ami]vlasy, vlasy kratší,
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+nejlepší) [Emi]sám, sám, [C]sám,
-peru se teď [G]sám.
+(+nejlepší) [Cmaj7]sám, [Cadd9]sám, [C]sám,
+peru se teď [G]sám. [D]
 {end_of_variant}
+
 {chorus}
 
 {start_of_verse}
@@ -74,10 +75,15 @@ a [Ami]byla velká voda,
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+nejlepší) [Emi]sám, sám,
-[C]sám, zpívám tady [G]sám.
+(+nejlepší) [Cmaj7]sám, [Cadd9]sám,
+[C]sám, zpívám tady [G]sám. [D/F#]
 {end_of_variant}
+
 {chorus}
+
+{start_of_interlude}
+[Emi7][D][Ami][D]
+{end_of_interlude}
 
 {start_of_verse}
 Jestlipak [G]vzpomínáš si na to, jakýs' [D/F#]byl,
@@ -96,7 +102,12 @@ a [Ami]přesto líto je mi,
 {end_of_verse}
 
 {start_of_variant: replace_last_line}
-(+ztracený) [Emi]sám, sám,
-[C]sám, dýchám se teď [G]sám.
+(+ztracený) [Cmaj7]sám, [Cadd9]sám,
+[C]sám, dýchám tady [G]sám.
 {end_of_variant}
+
 {chorus}
+
+{start_of_interlude}
+[Emi7][D][G]
+{end_of_interlude}

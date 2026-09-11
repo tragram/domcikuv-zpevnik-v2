@@ -1,0 +1,22 @@
+songId: propadleek-pod_pantofli
+prompts:
+  - id: propadleek-pod_pantofli_gpt-5.4-mini_v7
+    songId: propadleek-pod_pantofli
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene inside a cozy Czech pub on a Friday
+      evening, a group of friends gathered around a wooden table while one
+      couple subtly flirts under the table, the man awkwardly standing
+      half-rigid like a robot as his friends grin and nudge each other, warm
+      amber tungsten lighting, soft shadows, lively but intimate mood, simple
+      composition with clear character focus, slight comedic tension, shallow
+      depth of field, realistic details, no visible text, only minimal
+      background signage if needed.
+    createdAt: 2026-09-10T09:28:03.000Z
+    updatedAt: 2026-09-10T09:28:03.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1789032495000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
