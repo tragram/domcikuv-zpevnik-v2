@@ -1,0 +1,22 @@
+songId: uraggan_andrew-pozor_dej
+prompts:
+  - id: uraggan_andrew-pozor_dej_gpt-5.4-mini_v7
+    songId: uraggan_andrew-pozor_dej
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a single anti-fascist street protest at
+      dusk: one defiant young person in colorful rastafarian-inspired clothes
+      stands in the foreground raising a hand in a “stop” gesture, facing a
+      menacing bald neo-nazi silhouette in the background with a blurred
+      swastika-like propaganda poster being torn down, subtle smoke and city
+      lights, strong contrast between warm rainbow colors and cold gray tones,
+      dramatic rim lighting, shallow depth of field, powerful rebellious mood,
+      minimal text, clean composition, highly legible at small size
+    createdAt: 2026-09-10T11:23:18.000Z
+    updatedAt: 2026-09-10T11:23:18.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1789039410000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

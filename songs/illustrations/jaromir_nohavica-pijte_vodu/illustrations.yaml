@@ -1,0 +1,22 @@
+songId: jaromir_nohavica-pijte_vodu
+prompts:
+  - id: jaromir_nohavica-pijte_vodu_gpt-5.4-mini_v7
+    songId: jaromir_nohavica-pijte_vodu
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene at a dim 5th railway platform: a lonely
+      tired train worker in a greasy uniform sitting beside a steaming diesel
+      locomotive, holding a bottle of water while a spilled bottle of rum and a
+      small glass lie nearby; the mood is darkly ironic, melancholic, and
+      satirical, with cold industrial blue-gray lighting, wet metal surfaces,
+      subtle steam, and a slightly exaggerated comic realism; simple
+      composition, strong focal point, minimal background detail, no visible
+      text, no gore, no caricature exaggeration
+    createdAt: 2026-09-10T12:09:12.000Z
+    updatedAt: 2026-09-10T12:09:12.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1789042164000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

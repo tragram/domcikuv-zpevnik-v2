@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: a a a h c d}
 {createdAt: 1744581600000}
-{updatedAt: 1784132476000}
+{updatedAt: 1789029255000}
 {illustrationId: divokej_bill-plakala_gpt-4o-mini_v2_flux.1-dev}
 {promptId: divokej_bill-plakala_gpt-4o-mini_v2}
 
@@ -24,6 +24,10 @@
 [Ami]moje milá [C]plakala[G]a
 {end_of_verse}
 
+{start_of_interlude}
+𝄆 [Am][C][G]Hop hop hop hop.... 𝄇 (4x) [Am]
+{end_of_interlude}
+
 {start_of_verse}
 [Ami]Modlila se, hlásila se vo svý práva
 [Ami]motala se na mý trase, byla to tráva
@@ -32,7 +36,7 @@
 {end_of_verse}
 
 {start_of_chorus}
-𝄆 [Ami]Moje milá [C]plakala-a-a [G] 𝄇 (5x)
+𝄆 [Ami]Moje milá [C]plakala-a-a [G] 𝄇 (4x)
 {end_of_chorus}
 
 {start_of_bridge}
@@ -48,3 +52,5 @@
 {bridge}
 
 {chorus}
+
+{interlude}

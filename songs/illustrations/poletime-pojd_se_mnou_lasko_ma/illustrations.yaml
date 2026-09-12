@@ -1,0 +1,22 @@
+songId: poletime-pojd_se_mnou_lasko_ma
+prompts:
+  - id: poletime-pojd_se_mnou_lasko_ma_gpt-5.4-mini_v7
+    songId: poletime-pojd_se_mnou_lasko_ma
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic interior scene of a cramped, damp, windowless
+      apartment at night, peeling walls, single bare bulb casting harsh yellow
+      light, old mattress on the floor, dirty pans and pots, scattered flour
+      with a few cockroaches near the sink and bathroom doorway, a lonely figure
+      in worn clothes offering a gentle embrace with a bleak, darkly ironic
+      mood; subtle absurdist Czech black-humor atmosphere, muted gray-green
+      palette, shallow depth of field, realistic grime and texture, no visible
+      text, minimalist composition, small-screen legibility
+    createdAt: 2026-09-10T10:00:30.000Z
+    updatedAt: 2026-09-10T10:00:30.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1789034441000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,0 +1,21 @@
+songId: tomas_klus-pocity
+prompts:
+  - id: tomas_klus-pocity_gpt-5.4-mini_v7
+    songId: tomas_klus-pocity
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lonely young man sitting on the edge
+      of an empty dawn-lit city square, broken white angel wings lying behind
+      him on the pavement, a woman’s silhouette turning away in the distance,
+      subtle tears and emotional tension, one intimate moment of lost love and
+      freedom, soft cold morning light, pale blue-gray color palette, shallow
+      depth of field, atmospheric haze, minimal composition, no text, no
+      symbols, highly legible, dramatic yet restrained lighting
+    createdAt: 2026-09-10T09:01:03.000Z
+    updatedAt: 2026-09-10T09:01:03.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1789030874000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,0 +1,22 @@
+songId: christina_perri-a_thousand_years
+prompts:
+  - id: christina_perri-a_thousand_years_gpt-5.4-mini_v7
+    songId: christina_perri-a_thousand_years
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of two lovers standing one step apart in a
+      vast, timeless luminous space, the woman facing the man with a mix of
+      longing and courage, soft golden light suspending dust and faint petals in
+      the air, subtle glowing clock faces or blurred time-warp trails receding
+      into the background to suggest “a thousand years,” gentle warm color
+      palette with ethereal blues and amber, emotional stillness, shallow depth
+      of field, romantic and hopeful mood, minimal composition, no text, high
+      detail, soft volumetric lighting
+    createdAt: 2026-09-10T19:48:58.000Z
+    updatedAt: 2026-09-10T19:48:58.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1789069748000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

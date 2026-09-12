@@ -1,19 +1,19 @@
 {title: Podvod}
 {artist: Jan Nedvěd}
 {key: Em}
-{capo: 3}
+{capo: 2}
 {range: g1-h2}
 {language: czech}
 {startMelody: h g}
 {createdAt: 1484348400000}
-{updatedAt: 1770572055000}
+{updatedAt: 1789033397000}
 {illustrationId: jan_nedved-podvod_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jan_nedved-podvod_gpt-4o-mini_v1}
 
 {start_of_verse}
 [Emi]Na dlani jednu z tvých řas,
 do tmy se [Ami]koukám,
-[D]hraju si písničky tvý,
+[D]hraju si písničky [D7]tvý,
 co jsem ti [G]psal[C][G]
 {end_of_verse}
 
@@ -28,7 +28,7 @@ a pozhasínám, co bude [H7]dál?
 {start_of_verse}
 [Emi]Pod polštář dopisů pár,
 co poslalas, [Ami]dávám,
-[D]píšeš, že ráda mě máš
+[D]píšeš, že ráda mě [D7]máš
 a trápí tě [G]stesk,[C][G]
 {end_of_verse}
 
@@ -49,7 +49,7 @@ teď je mi to [Emi]líto.
 {start_of_verse}
 [Emi]Kolikrát člověk může mít rád
 tak opravdu [Ami]z lásky,
-[D]dvakrát či třikrát - to ne,
+[D]dvakrát či třikrát - to [D7]ne,
 i jednou je [G]dost, [C][G]
 {end_of_verse}
 
