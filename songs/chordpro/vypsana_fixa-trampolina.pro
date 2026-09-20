@@ -4,7 +4,7 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1783702804000}
-{updatedAt: 1784130736000}
+{updatedAt: 1789759679000}
 {illustrationId: vypsana_fixa-trampolina_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: vypsana_fixa-trampolina_gpt-5.4-mini_v7}
 
@@ -37,6 +37,8 @@ a [F]málokdo to [Am]chápe
 A [F]klaun pro to [Am*]
 [N.C]pak klaun pro to skáče
 {end_of_verse}
+
+{interlude}
 
 {start_of_verse}
 [Am]V pokoji [C]je [G]tma
