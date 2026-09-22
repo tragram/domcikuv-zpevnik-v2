@@ -17,3 +17,22 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: wabi_danek-rosa_na_kolejich_gpt-5.4-mini_v7
+    songId: wabi_danek-rosa_na_kolejich
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      cinematic photorealistic scene of an early morning railway station at
+      dawn, a solitary traveler standing by wet train tracks with bare feet
+      brushing away dew, carrying a small bundle and blanket, long telegraph
+      wires stretching into the distance under pale mist, shadowy shapes and a
+      strange bird-like cloud circling overhead, melancholic road-movie mood,
+      soft golden-blue lighting, subtle haze, minimal composition, no visible
+      text, highly legible at small size
+    createdAt: 2026-09-21T17:42:16.000Z
+    updatedAt: 2026-09-21T17:42:16.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1790012546000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

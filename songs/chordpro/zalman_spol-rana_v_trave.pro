@@ -1,12 +1,12 @@
 {title: Rána v trávě}
 {artist: Žalman & Spol.}
 {key: Am}
-{capo: 5}
+{capo: 3}
 {range: g1-g2}
 {language: czech}
 {startMelody: e}
 {createdAt: 1436824800000}
-{updatedAt: 1770572328000}
+{updatedAt: 1790007249000}
 {illustrationId: zalman_spol-rana_v_trave_gpt-4o-mini_v1_flux.1-dev}
 {promptId: zalman_spol-rana_v_trave_gpt-4o-mini_v1}
 
@@ -48,4 +48,5 @@
 {start_of_variant: append_content}
 𝄆 [Ami]Před se[Emi]bou sta [Ami]sáhů. 𝄇
 {end_of_variant}
+
 {chorus}

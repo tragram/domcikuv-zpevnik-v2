@@ -1,0 +1,21 @@
+songId: brontosauri-ruze_z_papiru
+prompts:
+  - id: brontosauri-ruze_z_papiru_gpt-5.4-mini_v7
+    songId: brontosauri-ruze_z_papiru
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a young man at a quiet old fairground at
+      dusk, gently offering a handmade paper rose to a girl who has tucked it
+      into her hair, intimate and slightly dreamy, with faded carnival lights
+      and a soft blue sky symbolizing fragile hope in a sad world; subtle
+      surreal melancholy, shallow depth of field, natural skin tones,
+      warm-to-cool contrast, soft rim lighting, single emotional moment, no
+      visible text, only minimal sign remnants in the background if any
+    createdAt: 2026-09-21T18:01:10.000Z
+    updatedAt: 2026-09-21T18:01:10.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1790013681000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

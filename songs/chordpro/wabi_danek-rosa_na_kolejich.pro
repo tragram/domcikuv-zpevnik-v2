@@ -1,50 +1,54 @@
 {title: Rosa na kolejích}
 {artist: Wabi Daněk}
 {key: C}
-{capo: 3}
-{range: a1-a2}
+{capo: 0}
 {language: czech}
-{startMelody: g g a c a}
 {createdAt: 1731538800000}
-{updatedAt: 1770572313000}
-{illustrationId: wabi_danek-rosa_na_kolejich_gpt-4o-mini_v1_flux.1-dev}
-{promptId: wabi_danek-rosa_na_kolejich_gpt-4o-mini_v1}
+{updatedAt: 1790012547000}
+{illustrationId: wabi_danek-rosa_na_kolejich_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: wabi_danek-rosa_na_kolejich_gpt-5.4-mini_v7}
+
+{start_of_interlude}
+[C][Dmi][Emi][Ebm][C]
+{end_of_interlude}
 
 {start_of_verse}
-[C]Tak, jako jazyk [F6]stále na[F#6]rá[G6]ží
+[C]Tak, jako jazyk [Dm]stále nará[Em]ží
 na vylomený [C]zub,
-tak se vracím k [F6]svýmu ná[F#6]dra[G6]ží,
+tak se vracím [Dmi]k svýmu nádra[Em]ží,
 abych šel zas [C]dál,
-přede mnou [F6]stíny se [G6]plouží
-a [Ami]nad krajinou [Cdim]krouží
-podivnej [F6]pták[F#6][G6], pták nebo [C]mrak.
+přede mnou [F]stíny se [G7]plouží
+a [Ami]nad krajinou [Adim]krouží,
+podivnej [Dmi]pták, [Emi]
+pták nebo [C]mrak.
 {end_of_verse}
 
 {start_of_chorus}
-[C]Tak do toho [F6]šlápni,
-ať [G6]vidíš kousek [C]světa,
-vzít do dlaně [F6]dálku
-[G6]zase jednou [C]zkus,
-telegrafní [F6]dráty
-[G6]hrajou ti už [C]léta
-to nekonečně [F6]dlou[F#6]hý
-[G6]mono[F#6]tón[F6]ní [C]blues
-Je [C]ráno, je ráno, nohama [F6]stí[F#6]ráš
-[G6]rosu na [F#6]ko[F6]le[C]jích.
+[C]Tak do toho [Dmi]šlápni,
+ať [Emi]vidíš kousek [C]světa,
+vzít do dlaně [Dmi]dálku,
+[Emi]zase [Dmi]jednou [C]zkus.
+Telegrafní [Dmi]dráty,
+[Emi]hrajou [Dmi]Ti už [C]léta,
+to nekonečně [Dmi]dlou[Ebm]hý
+[Em]mono[Ebm]tón[Dm]ní [C]blues,
+[C]je ráno, je ráno, nohama [Dmi]stí[Ebm]ráš
+[Em]rosu na [Ebm]ko[Dm]le[C]jích.
 {end_of_chorus}
 
 {start_of_verse}
-[C]Pajda dobře [F6]hlídá po[F#6]ces[G6]tný,
-co se nocí [C]toulaj'
-[C]co si radši [F6]počkaj' až [F#6]se [G6]stmí
-a pak šlapou [C]dál
-po kolejí[F6]ch táhnou [G6]bosí
-a na [Ami]špagátě [Cdim]nosí
-celej svůj [F6]dům[F#6], [G6]deku a [C]rum.
+[C]Pajda dobře [Dm]hlídá pocest[Em]ný,
+co se nocí [C]toulaj',
+co si radši [Dm]počkaj' až se [Em]stmí
+a pak šlapou [C]dál,
+po kolejích [F]táhnou [G7]bosí
+a [Am]na špagátu [Adim]nosí,
+celej svůj [Dm]dům,[Em]deku a [C]rum.
 {end_of_verse}
 
 {start_of_variant: append_content}
-Nohama [F6]stí[F#6]ráš
-[G6]rosu na [F#6]ko[F6]le[C]jích.
+Nohama [Dmi]stí[Ebm]ráš
+[Em]rosu na [Ebm]ko[Dm]le[C]jích.
 {end_of_variant}
+
 {chorus}

@@ -1,0 +1,23 @@
+songId: mnaga_a_zdorp-rodne_lany
+prompts:
+  - id: mnaga_a_zdorp-rodne_lany_gpt-5.4-mini_v7
+    songId: mnaga_a_zdorp-rodne_lany
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lone middle-aged man standing frozen
+      on the start line of an empty overgrown running track, looking uncertain
+      into a transformed hometown landscape: a parking lot where a field used to
+      be, a billboard looming over a vanished old house, cracked asphalt cycling
+      path cutting through the background, a half-buried drained pond under gray
+      winter light, subtle melancholy and nostalgia, desaturated cold color
+      palette, soft overcast lighting, shallow depth of field, simple
+      composition, no visible text except possibly a faint distant sign, highly
+      legible at small sizes
+    createdAt: 2026-09-21T17:05:07.000Z
+    updatedAt: 2026-09-21T17:05:07.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1790010317000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
