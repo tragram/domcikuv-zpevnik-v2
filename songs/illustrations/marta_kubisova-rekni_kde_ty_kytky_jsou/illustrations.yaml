@@ -1,0 +1,21 @@
+songId: marta_kubisova-rekni_kde_ty_kytky_jsou
+prompts:
+  - id: marta_kubisova-rekni_kde_ty_kytky_jsou_gpt-5.4-mini_v7
+    songId: marta_kubisova-rekni_kde_ty_kytky_jsou
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A solemn wartime memorial scene in a vast overgrown field, with a few
+      fresh flowers and many small, subtle graves receding into the distance,
+      evoking loss and the cycle of disappearance; a muted, melancholic
+      atmosphere, empty horizon, wind-swept grass, overcast sky, soft gray-blue
+      palette, cinematic photorealistic style, diffused natural lighting, no
+      visible people, no text, only a faint sense of remembrance and poetic
+      sorrow
+    createdAt: 2026-09-21T18:08:20.000Z
+    updatedAt: 2026-09-21T18:08:20.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1790014111000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

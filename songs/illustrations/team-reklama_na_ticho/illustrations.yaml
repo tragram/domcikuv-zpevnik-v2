@@ -1,0 +1,23 @@
+songId: team-reklama_na_ticho
+prompts:
+  - id: team-reklama_na_ticho_gpt-5.4-mini_v7
+    songId: team-reklama_na_ticho
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Surreal satirical scene of a long crowded queue outside a 1980s Eastern
+      European department store, people clutching empty Coca-Cola cans and tin
+      boxes as if waiting to buy “ticho” (silence), TV billboard in the
+      background flashing a glossy “reklama na ticho” ad, ironic contrast of
+      noisy neon, speakers, and bustling bodies against an impossible pocket of
+      serene silence in the center, cinematic photorealistic, sharp composition,
+      muted winter street colors with one calm blue-gray quiet zone, subtle
+      Slovak retro signage, minimal text only on the ad screen, dramatic
+      lighting, slightly absurd and humorous mood
+    createdAt: 2026-09-21T16:44:33.000Z
+    updatedAt: 2026-09-21T16:44:33.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1790009083000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

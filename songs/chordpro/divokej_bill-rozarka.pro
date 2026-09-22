@@ -6,9 +6,14 @@
 {language: czech}
 {startMelody: a a h c c}
 {createdAt: 1747173600000}
-{updatedAt: 1770572007000}
+{updatedAt: 1790013342000}
 {illustrationId: divokej_bill-rozarka_gpt-4o-mini_v2_flux.1-dev}
 {promptId: divokej_bill-rozarka_gpt-4o-mini_v2}
+
+{start_of_interlude}
+𝄆 [Am][Em][Am][Em] 𝄇
+𝄆 [Am][G][Am][G] 𝄇
+{end_of_interlude}
 
 {start_of_verse}
 [Ami]Nikdy [F]neřikej, že víš jak mi [Emi]je, s prázdnym
@@ -24,6 +29,10 @@ Pálim ti [Dmi]cejch a v rukou mám [Emi]kosu, Rozár[Ami]ko.
 Pálim ti [Dmi]cejch a v rukou mám [Emi]kosu, Rozár[Ami]ko.
 {end_of_bridge}
 
+{start_of_interlude}
+𝄆 [Am][G][Am][G] 𝄇
+{end_of_interlude}
+
 {start_of_verse}
 [Ami]Tisíckrát v [F]noci budí ze [Emi]spaní zlej
 [Ami]pocit, že sklání se [Dmi]někdo nad [Emi]tebou.
@@ -38,12 +47,17 @@ To v [F]noci budí ze [Emi]spaní zlej
 [Dmi]dostal je čas maj to [Emi]za sebou, Rozár[Ami]ko.
 {end_of_bridge}
 
+{start_of_interlude}
+𝄆 [Am][Em][Am][Em] 𝄇
+{end_of_interlude}
+
 {start_of_chorus}
 [Ami]Pijem na zdra[F]ví
 [G]i na ty [Ami]bolavý z nás, [Emi]Rozár[Ami]ko.
 {end_of_chorus}
 
 {chorus}
+
 {chorus}
 
 {start_of_chorus}

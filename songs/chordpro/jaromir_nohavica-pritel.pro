@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: a a a g}
 {createdAt: 1436824800000}
-{updatedAt: 1789047956000}
+{updatedAt: 1790006552000}
 {illustrationId: jaromir_nohavica-pritel_gpt-4o-mini_v1_flux.1-dev}
 {promptId: jaromir_nohavica-pritel_gpt-4o-mini_v1}
 
@@ -29,10 +29,11 @@ a [Ami]všechna tajná přání
 {start_of_chorus}
 [Ami]Kam jsme se poděli,
 [C]kam jsme se to poděli,
-[G]kde je ti [D]konec,
+[G]kde je ti [D/F#]konec,
 můj [Emi]jediný příteli,
 [Ami]zmizels' mi, nevím [D7]kam,
-[Cmaj7]sám, [Cadd9]sám, [C]sám, jsem tady [G]sám. [D/F#]
+[Cmaj7]sám, [Cadd9]sám, [C]sám,
+jsem tady [G]sám. [D/F#]
 {end_of_chorus}
 
 {start_of_verse}
