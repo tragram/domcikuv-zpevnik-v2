@@ -1,0 +1,21 @@
+songId: simon_garfunkel-scarborough_fair_ver.2
+prompts:
+  - id: simon_garfunkel-scarborough_fair_ver.2_gpt-5.4-mini_v7
+    songId: simon_garfunkel-scarborough_fair_ver.2
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic folk-fantasy scene at dusk: a solitary traveler walking a misty
+      coastal path toward a distant medieval market town, carrying a bundle of
+      herbs (parsley, sage, rosemary, thyme) tied with twine, with the sea on
+      one side and wild heather on the other; soft golden-blue twilight,
+      melancholic romantic mood, subtle windswept atmosphere, realistic
+      textures, film still look, shallow depth of field, no text, no modern
+      objects.
+    createdAt: 2026-10-01T20:39:33.000Z
+    updatedAt: 2026-10-01T20:39:33.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1790887183000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
