@@ -1,0 +1,22 @@
+songId: chris_isaak-wicked_game
+prompts:
+  - id: chris_isaak-wicked_game_gpt-5.4-mini_v7
+    songId: chris_isaak-wicked_game
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of two lovers standing alone in a vast
+      burning city at night, the world behind them engulfed in distant orange
+      flames and drifting ash, one figure reaching toward the other with
+      hesitant longing, emotional tension and tragic romance, dark silhouettes
+      against firelight, subtle heartbreak in body language, dramatic contrast,
+      volumetric smoke, moody red-orange and deep blue palette, soft rim
+      lighting, shallow depth of field, no text, single intimate moment, high
+      detail, widescreen composition
+    createdAt: 2026-10-01T16:54:32.000Z
+    updatedAt: 2026-10-01T16:54:32.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1790873683000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
