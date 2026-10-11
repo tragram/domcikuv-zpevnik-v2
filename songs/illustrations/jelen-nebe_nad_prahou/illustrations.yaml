@@ -1,0 +1,21 @@
+songId: jelen-nebe_nad_prahou
+prompts:
+  - id: jelen-nebe_nad_prahou_gpt-5.4-mini_v7
+    songId: jelen-nebe_nad_prahou
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a cold, wet autumn Sunday in Prague: a
+      quiet riverside street under heavy gray skies, thick fog over the river,
+      breath visible in the air, empty windows and closed doors, a few dirty
+      swans floating on dark water near the embankment, muted city tones of
+      cinder gray and steel blue, melancholy and abandoned atmosphere, soft
+      diffused overcast lighting, minimal composition, no people, no text,
+      highly detailed, subtle realism, 16:9
+    createdAt: 2026-10-10T15:19:26.000Z
+    updatedAt: 2026-10-10T15:19:26.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1791645577000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
