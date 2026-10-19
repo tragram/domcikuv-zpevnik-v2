@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: g}
 {createdAt: 1436824800000}
-{updatedAt: 1783877738000}
+{updatedAt: 1792267278000}
 {illustrationId: zalman_spol-jdem_zpatky_do_lesu_gpt-4o-mini_v1_flux.1-dev}
 {promptId: zalman_spol-jdem_zpatky_do_lesu_gpt-4o-mini_v1}
 
@@ -49,7 +49,7 @@ napřed [D7]svýho pána popros[G]í. [D7]
 [Am7]Už tě vidím z dálky,
 jak [D7]máváš na mě [G]korunou,[C][G]
 [Am7]a jestli nám to bude stačit,
-[D7]zatleskáme [G]na druhou,
+[D7]zatleskáme [G]na druhou,[D7]
 
 [Am7]Zabalíme všechny,
 co si [D7]dávaj' rande za [G]branou,[Emi]
