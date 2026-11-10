@@ -6,7 +6,7 @@
 {language: czech}
 {startMelody: g}
 {createdAt: 1292281200000}
-{updatedAt: 1770572126000}
+{updatedAt: 1794248218000}
 {illustrationId: karel_kryl-karavana_mraku_gpt-4o-mini_v1_flux.1-dev}
 {promptId: karel_kryl-karavana_mraku_gpt-4o-mini_v1}
 
@@ -21,7 +21,7 @@
 [C7]Dopředu [F]jít s tou [G]karavanou [Ami]mraků,
 schovat svou [F]tvář pod [G]stetson děr[Ami]avý,
 𝄆 jen kousek [Dmi]jít, jen [G7]chvíli, [Ami]do soumr[Dmi]aku,
-až tam, kde [Ami]svítí město, [E]město běl[Ami]avý. [A7] 𝄇
+až tam, kde [Ami]svítí město, [E]město běl[Ami]avý. [A7] 𝄇 [G7]
 {end_of_chorus}
 
 {start_of_verse}
@@ -42,7 +42,7 @@ až tam, kde [Ami]svítí město, [E]město běl[Ami]avý. [A7] 𝄇
 [C7]V městě [F]je řád a [G]pro každého prá[Ami]ce,
 buď ještě [F]rád, když [G]huba voněm[Ami]í,
 𝄆 může tě [Dmi]hřát, že [G7]nejsi [Ami]na voprá[Dmi]tce
-nebo že [Ami]neležíš pár [E]inchů pod [Ami]zemí. [A7] 𝄇
+nebo že [Ami]neležíš pár [E]inchů pod [Ami]zemí. [A7] 𝄇 [G7]
 {end_of_chorus}
 
 {start_of_verse}

@@ -1,0 +1,23 @@
+songId: tomas_klus-az...
+prompts:
+  - id: tomas_klus-az..._gpt-5.4-mini_v7
+    songId: tomas_klus-az...
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic evening scene in a dim apartment, a young man and
+      woman standing by an open window with city light softly spilling in, a
+      nearly finished bottle of wine on a small table, wisps of smoke fading
+      into the air, the woman’s hair loose and gently backlit, a third figure
+      only hinted at as a blurred shadow in the background to suggest emotional
+      tension, melancholy yet romantic atmosphere, subtle reflection of photos
+      on the wall, soft blue-gray and amber palette, shallow depth of field,
+      intimate composition, no visible text, 16:9, high detail, dramatic but
+      restrained lighting
+    createdAt: 2026-10-25T13:10:26.000Z
+    updatedAt: 2026-10-25T13:10:26.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1792933836000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

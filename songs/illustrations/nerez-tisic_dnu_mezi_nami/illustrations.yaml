@@ -1,0 +1,22 @@
+songId: nerez-tisic_dnu_mezi_nami
+prompts:
+  - id: nerez-tisic_dnu_mezi_nami_gpt-5.4-mini_v7
+    songId: nerez-tisic_dnu_mezi_nami
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic close-up of two figures in a dim intimate room,
+      one wearing an ocelově modrá/steel-blue mask, the other lit half in warm
+      light and half in shadow, their hands almost touching as if threading
+      small beads on a string; subtle hints of a phone book and a calendar
+      blurred in the background, messy hair and a sewn button at the collar
+      suggesting time and memory, melancholic, restless, slightly surreal mood,
+      shallow depth of field, soft grain, dramatic chiaroscuro lighting, minimal
+      text, composition simple and legible at small sizes
+    createdAt: 2026-10-25T11:11:05.000Z
+    updatedAt: 2026-10-25T11:11:05.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1792926675000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
