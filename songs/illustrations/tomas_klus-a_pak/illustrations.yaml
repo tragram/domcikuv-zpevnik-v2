@@ -1,0 +1,21 @@
+songId: tomas_klus-a_pak
+prompts:
+  - id: tomas_klus-a_pak_gpt-5.4-mini_v7
+    songId: tomas_klus-a_pak
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene at dawn: a lone rider on a horse
+      transitioning from a slow trot into a gallop across a vast misty plain,
+      wind lifting the rider’s coat, distant horizon glowing with a faint golden
+      light, suggesting a long-awaited change and inner calm; subtle sense of
+      destiny and release, expansive sky, soft atmospheric fog, understated
+      melancholy turning hopeful, minimal composition, no text, high detail,
+      natural lighting with a warm sunrise rim light, shallow depth of field.
+    createdAt: 2026-10-25T12:20:43.000Z
+    updatedAt: 2026-10-25T12:20:43.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1792930853000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
