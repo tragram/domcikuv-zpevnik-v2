@@ -4,7 +4,7 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1786373865000}
-{updatedAt: 1786375340000}
+{updatedAt: 1794653348000}
 {illustrationId: aneta_langerova-srdcotepec_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: aneta_langerova-srdcotepec_gpt-5.4-mini_v7}
 
@@ -87,7 +87,7 @@ jen když [B]je co a kde si [F]brát
 
 {start_of_chorus}
 Svádí si [Gmi]povodí do pohoří,
-[Es]do tebe se ponoří
+[Eb]do tebe se ponoří
 [B]Klínem do srdce že by [F]rád ?
 Vlny tvý mě [Gmi]sráží[Es]
 jen když [B]je co a kde si [F]brát
