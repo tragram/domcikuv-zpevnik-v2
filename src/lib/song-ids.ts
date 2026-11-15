@@ -17,6 +17,16 @@ export const sanitizeId = (id: string) => {
     .replace(/\.+$/, "");
 };
 
+// Existing illustration filenames preserve model case and substitute hyphens.
+// Keep this distinct from sanitizeId: changing the rules would rename assets.
+export function sanitizePathSegment(segment: string): string {
+  if (!segment) return "unknown";
+  return segment
+    .replace(/[^a-zA-Z0-9.\-_]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 export const songBaseId = (title: string, artist: string) =>
   sanitizeId(`${to_ascii(artist)}-${to_ascii(title)}`);
 

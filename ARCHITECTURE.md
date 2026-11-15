@@ -307,10 +307,18 @@ fully-offline use. Two scheduled GitHub Actions keep the two in sync:
 - **`sync.yml`** (nightly, 04:00 UTC) — `scripts/sync.ts` backs up the full
   D1 database to R2 as JSON (skipping ephemeral tables like `session` and
   `syncSession`), regenerates thumbnails
-  (`scripts/generate-thumbnails.mjs`), and opens/updates a standing
-  `data-sync` PR containing only the `songs/` diff. Merging that PR updates
-  the *repository snapshot*; production D1 is unaffected until the next
-  deploy.
+  (`scripts/generate-thumbnails.mjs`), and validates the complete snapshot.
+  `scripts/sync/run.ts publish` runs tests, app/script typechecks and a production build before
+  committing generated `songs/` files directly to `main`. It serializes syncs,
+  skips unchanged exports, rejects changes outside the generated path allowlist,
+  symlinks, invalid references/assets, and oversized files. Deletions above 5%
+  in songs, metadata, or images stop publication unless explicitly overridden
+  through the manual workflow input. Concurrent main changes restart export
+  and all validation (up to three attempts); pushes are never forced.
+  Cloudflare Workers Builds deploys the commit; sync waits for the exact SHA's
+  successful Cloudflare check before succeeding and triggering cleanup.
+  Failures produce an Actions summary without creating a PR. The sync must
+  have permission to push to main; it never bypasses branch protection.
 - **`sync-cleanup.yml`** — after successful sync, daily at 04:30 UTC, and after production deployment
   events: verifies deployed full-image SHA-256 and thumbnail availability,
   saves a recovery record in R2, and conditionally switches D1 to static paths.

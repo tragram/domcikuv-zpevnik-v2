@@ -5,19 +5,12 @@ import yaml from "js-yaml";
 import fs from "node:fs";
 import path from "node:path";
 import * as schema from "../src/lib/db/schema";
+import { promptFolder, sanitizePathSegment } from "../src/lib/song-ids";
 import { SongData } from "../src/web/types/songData";
 import { formatChordpro } from "../src/web/lib/formatChordpro";
 import { db } from "./shared/remote-db";
 import { R2_BUCKET_NAME, s3 } from "./shared/r2";
 import { syncIllustrationFile } from "./shared/illustration-files";
-
-export function sanitizePathSegment(segment: string): string {
-  if (!segment) return "unknown";
-  return segment
-    .replace(/[^a-zA-Z0-9.\-_]/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
 
 type DBBackup = {
   metadata: {
@@ -131,6 +124,19 @@ async function main() {
   ]);
 
   console.log(`Fetched: ${songs.length} songs, ${prompts.length} prompts.`);
+
+  // These database values become directory names before snapshot validation.
+  // Reject traversal and invalid segments before any local deletion or write.
+  const safeSegment = (value: string) => /^[a-zA-Z0-9._-]+$/.test(value) && value !== "." && value !== "..";
+  for (const row of songs) {
+    if (!safeSegment(row.id)) throw new Error(`Unsafe song ID: ${row.id}`);
+  }
+  for (const ill of illustrations) {
+    const folder = sanitizePathSegment(promptFolder(ill.songId, ill.promptId));
+    if (!safeSegment(folder) || !safeSegment(sanitizePathSegment(ill.imageModel))) {
+      throw new Error(`Unsafe illustration path for ${ill.id}`);
+    }
+  }
 
   // --- IDENTIFY ACTIVE RECORDS ---
   const activeSongIds = new Set<string>();
@@ -246,7 +252,7 @@ async function main() {
         if (ill.deleted) continue;
 
         const rawPromptPart = ill.promptId
-          ? ill.promptId.replace(song.id + "_", "")
+          ? promptFolder(song.id, ill.promptId)
           : "unknown";
         const promptPathPart = sanitizePathSegment(rawPromptPart);
         const safeModelName = sanitizePathSegment(ill.imageModel || "unknown");
@@ -304,7 +310,7 @@ async function main() {
         if (ill.deleted || !ill.imageURL) continue;
 
         const promptPathPart = sanitizePathSegment(
-          ill.promptId.replace(song.id + "_", ""),
+          promptFolder(song.id, ill.promptId),
         );
         const safeModelName = sanitizePathSegment(ill.imageModel || "unknown");
         const imgDir = path.join(yamlDir, promptPathPart, "full");
@@ -349,7 +355,7 @@ async function main() {
       );
     }
   }
-  if (imageFailures) throw new Error(`${imageFailures} illustration export(s) failed; refusing to publish an incomplete sync PR.`);
+  if (imageFailures) throw new Error(`${imageFailures} illustration export(s) failed; refusing to publish an incomplete snapshot.`);
   console.log("✓ GitHub Sync file generation completed.");
 }
 

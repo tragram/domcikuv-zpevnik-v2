@@ -4,6 +4,7 @@ import {
   defaultPromptId,
   promptFolder,
   sanitizeId,
+  sanitizePathSegment,
   songBaseId,
   to_ascii,
 } from "./song-ids";
@@ -45,6 +46,21 @@ describe("sanitizeId", () => {
 
   it("collapses repeated underscores", () => {
     expect(sanitizeId("a   b")).toBe("a_b");
+  });
+});
+
+describe("sanitizePathSegment", () => {
+  it("preserves existing model filenames instead of normalizing them as IDs", () => {
+    expect(sanitizePathSegment("FLUX.1-dev")).toBe("FLUX.1-dev");
+    expect(sanitizeId("FLUX.1-dev")).toBe("flux.1-dev");
+    expect(sanitizePathSegment("Hello World")).toBe("Hello-World");
+    expect(sanitizeId("Hello World")).toBe("hello_world");
+  });
+
+  it("substitutes unsupported path characters and keeps the legacy fallback", () => {
+    expect(sanitizePathSegment("vendor/model")).toBe("vendor-model");
+    expect(sanitizePathSegment("--model//variant--")).toBe("model-variant");
+    expect(sanitizePathSegment("")).toBe("unknown");
   });
 });
 
