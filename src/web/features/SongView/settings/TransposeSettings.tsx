@@ -1,17 +1,9 @@
 import { RotateCcw } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { songPanelClassName, toolbarPanelPlacement } from "../components/songPanel";
 import { Button } from "~/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import TransposeIcon from "./transpose_icon";
 import FancySwitch from "~/components/FancySwitch";
-import { CompactItem } from "~/components/RichDropdown";
 
 // Chromatic keys from C; the array index is the semitone offset from C and is
 // used directly as the (0..11) sounding-key value.
@@ -125,126 +117,50 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
   canResetKeyAndCapo,
   onReset,
 }) => {
-  const [isTabletPickerOpen, setIsTabletPickerOpen] = useState(false);
-  const tabletPickerRef = useRef<HTMLDivElement>(null);
-  const tabletTriggerRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (!isTabletPickerOpen) return;
-
-    const closeOnOutsideClick = (event: MouseEvent) => {
-      const target = event.target;
-      if (!(target instanceof Node)) return;
-
-      if (
-        !tabletPickerRef.current?.contains(target) &&
-        !tabletTriggerRef.current?.contains(target)
-      ) {
-        setIsTabletPickerOpen(false);
-      }
-    };
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsTabletPickerOpen(false);
-    };
-
-    document.addEventListener("mousedown", closeOnOutsideClick);
-    document.addEventListener("keydown", closeOnEscape);
-
-    return () => {
-      document.removeEventListener("mousedown", closeOnOutsideClick);
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [isTabletPickerOpen]);
-
-  const selectTabletKey = (index: number) => {
-    onChange(index);
-    setIsTabletPickerOpen(false);
-  };
-
-  const resetTabletKeyAndCapo = () => {
-    onReset();
-    setIsTabletPickerOpen(false);
-  };
-
   return (
-    <>
-      {/* Desktop View */}
-      <div className="hidden xl:flex h-full">
-        <TransposeButtons
-          selected={selected}
-          onChange={onChange}
-          canResetKeyAndCapo={canResetKeyAndCapo}
-          onReset={onReset}
-        />
-      </div>
-
-      {/* Tablet View using Popover */}
-      <div className="xl:hidden flex max-[600px]:hidden">
-        <Button
-          ref={tabletTriggerRef}
-          size="icon"
-          variant="circular"
-          aria-expanded={isTabletPickerOpen}
-          aria-haspopup="dialog"
-          aria-controls="tablet-transpose-picker"
-          onClick={() => setIsTabletPickerOpen((open) => !open)}
-        >
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button size="icon" variant="circular" aria-label="Choose song key">
           <TransposeIcon />
         </Button>
-        {isTabletPickerOpen && (
-          <div id="tablet-transpose-picker-container" className="fixed left-0 w-full top-16 flex justify-end">
-            <div
-              ref={tabletPickerRef}
-              id="tablet-transpose-picker"
-              role="dialog"
-              aria-label="Transpose key"
-              className="z-50 w-fit rounded-full border-none bg-glass/80 p-1.5 shadow-lg outline-2 outline-primary backdrop-blur-md dark:bg-glass/30 dark:outline-primary/30"
-            >
-              <TransposeButtons
-                selected={selected}
-                onChange={selectTabletKey}
-                canResetKeyAndCapo={canResetKeyAndCapo}
-                onReset={resetTabletKeyAndCapo}
-              />
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Mobile View using DropdownMenu */}
-      <div className="flex min-[600px]:hidden">
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="circular">
-              <TransposeIcon />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-fit min-w-16">
-            {RENDER_KEYS.map((k, index) => (
-              <DropdownMenuCheckboxItem
-                checked={selected === index}
-                key={k}
-                onSelect={(e) => e.preventDefault()}
-                onCheckedChange={() => onChange(index)}
-              >
-                <CompactItem.Shell>
-                  <CompactItem.Body title={k} />
-                </CompactItem.Shell>
-              </DropdownMenuCheckboxItem>
+      </PopoverTrigger>
+      <PopoverContent
+        container={typeof document === "undefined" ? undefined : document.fullscreenElement}
+        {...toolbarPanelPlacement}
+        aria-label="Choose song key"
+        className={`${songPanelClassName} w-80 max-w-[calc(100vw-2rem)] max-h-[var(--radix-popover-content-available-height)] overflow-y-auto text-sm font-normal`}
+      >
+        <div className="space-y-4">
+          <div className="grid grid-cols-4 gap-2" role="group" aria-label="Song key">
+            {RENDER_KEYS.map((key, index) => (
+              <button
+                key={key}
+                type="button"
+                aria-pressed={selected === index}
+                onClick={() => onChange(index)}
+                className={
+                  "min-h-11 rounded-full border text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-primary " +
+                  (selected === index
+                    ? "border-primary/70 bg-[var(--song-control-selected-bg)] text-[var(--song-control-selected-text)]"
+                    : "border-primary/25 text-primary hover:bg-primary/10")
+                }
+              >{key}</button>
             ))}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
+          </div>
+          <div className="border-t border-primary/15 pt-3">
+            <button
+              type="button"
               disabled={!canResetKeyAndCapo}
-              onSelect={() => onReset()}
+              onClick={() => onReset()}
+              className="flex min-h-10 w-full items-center justify-center gap-2 rounded-full border border-primary/25 text-xs text-primary hover:bg-primary/10 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-primary"
             >
-              <RotateCcw />
+              <RotateCcw className="size-3.5" />
               Reset key & capo
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </>
+            </button>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 

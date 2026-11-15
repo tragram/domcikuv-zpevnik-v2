@@ -26,6 +26,7 @@ const generateFallbackLogo = (bgColor: string, fgColor: string): string => {
 export class SongData {
   id: string;
   versionId?: string;
+  versionStatus?: SongDataApi["versionStatus"];
   title: string;
   artist: string;
   key?: Key;
@@ -71,6 +72,7 @@ export class SongData {
   ) {
     this.id = songFromDB.id;
     this.versionId = songFromDB.versionId;
+    this.versionStatus = songFromDB.versionStatus;
     this.title = songFromDB.title;
     this.artist = songFromDB.artist;
     this.key = this.parseKey(songFromDB.key);

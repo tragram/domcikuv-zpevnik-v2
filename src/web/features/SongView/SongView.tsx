@@ -13,19 +13,18 @@ import { SongbookOverride } from "./hooks/songTransposeMath";
 import { useSongTranspose } from "./hooks/useSongTranspose";
 import { useViewSettingsStore } from "./hooks/viewSettingsStore";
 import { Toolbar } from "./settings/Toolbar";
+import type { VersionSelection } from "./utils/versionDetails";
 import "./SongView.css";
 
 type DataForSongView = {
   songData: SongData;
   userData: UserData;
   feedStatus?: FeedStatus;
+  versionSelection?: VersionSelection;
   // Present only when browsing another user's songbook (read-only): their saved
-  // key/capo, display name, and whether their pinned version fell back to the
-  // official one. Its presence is what puts the view in read-only mode.
+  // key/capo. Its presence puts the view in read-only mode.
   songbook?: {
     override: SongbookOverride;
-    ownerName?: string;
-    versionUnavailable?: boolean;
   };
   // Master-broadcast wiring (song route only). The resolved transpose is pushed
   // to followers; absent on the feed/follower route, so the effect stays inert.
@@ -48,6 +47,7 @@ export const SongView = ({
   songData,
   userData,
   feedStatus,
+  versionSelection,
   songbook,
   broadcast,
 }: DataForSongView) => {
@@ -94,10 +94,6 @@ export const SongView = ({
     };
   }, []);
 
-  const note = songbook?.versionUnavailable
-    ? `Showing the official version — ${songbook.ownerName ?? "the owner"}'s saved version isn't available.`
-    : undefined;
-
   return (
     <SongViewLayout ref={gestureContainerRef}>
       <Toolbar
@@ -124,8 +120,7 @@ export const SongView = ({
           userData={userData}
           transpose={transpose}
           feedStatus={feedStatus}
-          note={note}
-          songbookOwnerName={songbook?.ownerName}
+          versionSelection={versionSelection}
         />
       </FullScreen>
       <FeedStatusBar feedStatus={feedStatus} />

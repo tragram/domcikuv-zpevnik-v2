@@ -9,6 +9,7 @@ import {
 import { failJSend, successJSend, zValidatorJSend } from "./responses";
 import { buildApp } from "./utils";
 import { externalRoutes } from "./external";
+import { retrieveVersionSummaries } from "../helpers/version-helpers";
 import { IllustrationPromptApi, SongDataApi } from "./api-types";
 
 const incrementalUpdateSchema = z.object({
@@ -101,6 +102,15 @@ export const songDBRoutes = buildApp()
   .get("/songbooks", async (c) => {
     const songbooks = await getSongbooks(c.var.db);
     return successJSend(c, songbooks);
+  })
+  .get("/versions/:songId", async (c) => {
+    const versions = await retrieveVersionSummaries(
+      c.var.db,
+      c.req.param("songId"),
+      c.var.USER?.id,
+    );
+    if (!versions) return failJSend(c, "Song not found", 404);
+    return successJSend(c, versions);
   })
   .get("/illustrations", async (c) => {
     const allIlustrations = await c.var.db

@@ -54,6 +54,7 @@ import {
 import TransposeSettings from "./TransposeSettings";
 import { UserData } from "src/web/hooks/use-user-data";
 import { SongTranspose } from "../hooks/songTransposeMath";
+import { songPanelClassName, toolbarPanelPlacement } from "../components/songPanel";
 
 interface ToolbarProps {
   songData: SongData;
@@ -208,7 +209,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               <Settings2 size={32} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-80 max-h-[85dvh] overflow-y-auto">
+          <DropdownMenuContent
+            {...toolbarPanelPlacement}
+            className={`${songPanelClassName} w-80 max-w-[calc(100vw-2rem)] max-h-[min(85dvh,var(--radix-dropdown-menu-content-available-height))] overflow-y-auto`}
+          >
             {React.Children.toArray(<LayoutSettingsDropdownSection />)}
             {React.Children.toArray(<ChordSettingsDropdownMenu />)}
 

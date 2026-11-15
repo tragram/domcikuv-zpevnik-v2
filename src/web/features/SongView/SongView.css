@@ -44,6 +44,11 @@
     max-width: 100vw;
 }
 
+.song-panel {
+    --song-control-selected-bg: color-mix(in oklab, var(--foreground) 94%, var(--primary));
+    --song-control-selected-text: var(--background);
+}
+
 #auto-text-size-wrapper>div {
     justify-content: safe center;
     /* Allows vertical scrolling but blocks zoom */

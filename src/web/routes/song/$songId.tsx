@@ -34,8 +34,7 @@ function RouteComponent() {
     songData,
     versionId,
     personalizationOverride,
-    songbookOwnerName,
-    versionUnavailable,
+    versionSelection,
   } = Route.useLoaderData();
   const { userData } = useUserData();
   const shareSession = useViewSettingsStore((state) => state.shareSession);
@@ -64,12 +63,11 @@ function RouteComponent() {
       songData={songData}
       userData={userData}
       feedStatus={versionId ? undefined : feedStatus}
+      versionSelection={versionSelection}
       songbook={
         personalizationOverride
           ? {
               override: personalizationOverride,
-              ownerName: songbookOwnerName,
-              versionUnavailable,
             }
           : undefined
       }

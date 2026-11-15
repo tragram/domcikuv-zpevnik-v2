@@ -9,6 +9,7 @@ import SongHeading from "./SongHeading";
 import { UserData } from "src/web/hooks/use-user-data";
 import { FeedStatus } from "../hooks/useSessionSync";
 import { SongTranspose } from "../hooks/songTransposeMath";
+import type { VersionSelection } from "../utils/versionDetails";
 
 interface SongContentProps {
   songData: SongData;
@@ -16,10 +17,7 @@ interface SongContentProps {
   userData?: UserData;
   transpose: SongTranspose;
   feedStatus?: FeedStatus;
-  // Optional banner shown in the heading (e.g. version-fallback note).
-  note?: string;
-  // Owner name when viewing another user's songbook read-only (draft attribution).
-  songbookOwnerName?: string;
+  versionSelection?: VersionSelection;
 }
 
 export const SongContent = ({
@@ -28,8 +26,7 @@ export const SongContent = ({
   userData,
   transpose,
   feedStatus,
-  note,
-  songbookOwnerName,
+  versionSelection,
 }: SongContentProps) => {
   const { transposeSteps, effectiveKey } = transpose;
   const { layout, chords: chordSettings } = useViewSettingsStore();
@@ -57,8 +54,7 @@ export const SongContent = ({
           transpose={transpose}
           userData={userData}
           feedStatus={feedStatus}
-          note={note}
-          songbookOwnerName={songbookOwnerName}
+          versionSelection={versionSelection}
         />
 
         <div

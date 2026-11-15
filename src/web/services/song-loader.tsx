@@ -1,15 +1,19 @@
 import { QueryClient } from "@tanstack/react-query";
 import { RouteIds, useLoaderDeps, useParams } from "@tanstack/react-router";
-import {
-  getSongDB,
-} from "~/hooks/use-songDB";
+import { getSongDB, songsQueryOptions } from "~/hooks/use-songDB";
 import type { routeTree } from "~/routeTree.gen";
 import { SongData } from "~/types/songData";
 import { findOrFetchSong } from "./song-service";
-import { songbookEntriesQueryOptions } from "~/hooks/use-user-data";
+import {
+  favoritesQueryOptions,
+  getSessionUserId,
+  songbookEntriesQueryOptions,
+} from "~/hooks/use-user-data";
 import { SongbookOverride } from "~/features/SongView/hooks/songTransposeMath";
 import PendingComponent from "~/components/PendingComponent";
 import { useIsOnline } from "~/hooks/use-is-online";
+import type { VersionSelection } from "~/features/SongView/utils/versionDetails";
+import type { SongbookEntryApi, SongDataApi } from "src/worker/api/api-types";
 
 // The song loader resolves cached songs locally but still awaits `getSongDB`'s
 // network-bound refetch attempts, which only fail slowly while offline — long
@@ -68,10 +72,7 @@ export type SongLoaderData = {
   versionId?: string;
   // The songbook owner's saved key/capo, when browsing their songbook.
   personalizationOverride?: SongbookOverride;
-  // Display name of that owner (for the read-only note).
-  songbookOwnerName?: string;
-  // The owner's pinned version couldn't be fetched; showing the official one.
-  versionUnavailable?: boolean;
+  versionSelection: VersionSelection;
 };
 
 const songLoader = async ({
@@ -91,6 +92,8 @@ const songLoader = async ({
   let songbookOwnerName: string | undefined;
   let songData: SongData | null = null;
   let pinnedVersionId: string | null = null;
+  const canonicalSongs =
+    queryClient.getQueryData<SongDataApi[]>(songsQueryOptions().queryKey) ?? [];
 
   // When opened inside another user's songbook, adopt that owner's saved
   // key/capo and (for a pinned draft) their already-resolved song. The query
@@ -113,11 +116,11 @@ const songLoader = async ({
 
   // The viewer's own pinned drafts are already injected into songDB.songs by
   // buildSongDB, so a normal open just resolves from there (fetching an explicit
-  // ?version, or on a cache miss). This also resolves a foreign songbook's
-  // canonical entries (omitted from the payload).
+  // ?version, or on a cache miss). Foreign songbooks resolve from the raw
+  // canonical list so the viewer's personal pin cannot replace the owner's song.
   if (!songData) {
     songData = await findOrFetchSong(
-      songDB.songs,
+      deps.songbook ? canonicalSongs : songDB.songs,
       params.songId,
       deps.version,
       queryClient,
@@ -130,13 +133,32 @@ const songLoader = async ({
   const versionUnavailable =
     pinnedVersionId != null && songData.versionId !== pinnedVersionId;
 
+  const ownEntry = queryClient
+    .getQueryData<SongbookEntryApi[]>(
+      favoritesQueryOptions(getSessionUserId(queryClient)).queryKey,
+    )
+    ?.find((entry) => entry.songId === params.songId);
+  const versionSelection: VersionSelection = deps.version
+    ? { source: "link" }
+    : deps.songbook
+      ? {
+          source: "songbook",
+          ownerName: songbookOwnerName,
+          unavailable: versionUnavailable,
+        }
+      : ownEntry?.pinnedVersionId
+        ? {
+            source: "saved",
+            unavailable: songData.versionId !== ownEntry.pinnedVersionId,
+          }
+        : { source: "official" };
+
   return {
     songData,
     songId: params.songId,
     versionId: deps.version,
     personalizationOverride,
-    songbookOwnerName,
-    versionUnavailable,
+    versionSelection,
   };
 };
 

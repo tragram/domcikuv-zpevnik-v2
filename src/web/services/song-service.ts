@@ -9,6 +9,7 @@ import type {
   SongDataApi,
   SongVersionAdminApi,
   SongVersionApi,
+  SongVersionSummaryApi,
 } from "src/worker/api/api-types";
 import type { SessionSyncState } from "src/worker/durable-objects/SessionSync";
 import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
@@ -24,6 +25,7 @@ import {
 import { UserData } from "../hooks/use-user-data";
 import { makeApiRequest } from "./api-service";
 import { QueryClient, queryOptions } from "@tanstack/react-query";
+import { getIsOnline } from "~/hooks/use-is-online";
 
 interface Timestamped {
   createdAt?: Date | string;
@@ -147,14 +149,50 @@ export const singleSongQueryOptions = (songId: string, versionId?: string) =>
     },
   });
 
+export const songVersionsQueryOptions = (songId: string, viewerId?: string) =>
+  queryOptions({
+    queryKey: ["songVersions", songId, viewerId ?? "public"],
+    queryFn: async ({ client: cache, queryKey }) => {
+      try {
+        return await makeApiRequest(() =>
+          client.api.songs.versions[":songId"].$get({ param: { songId } }),
+        );
+      } catch (error) {
+        // Retain successful persisted history when a refresh fails offline.
+        const cached = cache.getQueryData<SongVersionSummaryApi[]>(queryKey);
+        if (!getIsOnline() && cached) return cached;
+        throw error;
+      }
+    },
+    staleTime: 60_000,
+  });
+
+/** Same lookup for offline navigation and the version table's availability. */
+export function getCachedSongVersion(
+  cache: QueryClient,
+  songId: string,
+  versionId: string,
+  songs: readonly (SongData | SongDataApi)[] = [],
+): SongData | SongDataApi | undefined {
+  return cache.getQueryData<SongDataApi>(singleSongQueryOptions(songId, versionId).queryKey)
+    ?? songs.find((song) => song.id === songId && song.versionId === versionId)
+    ?? cache.getQueryData<SongDataApi[]>(["songs"])?.find(
+      (song) => song.id === songId && song.versionId === versionId,
+    );
+}
+
 export const findOrFetchSong = async (
   songs: SongData[] | SongDataApi[],
   songId: string,
   versionId: string | undefined,
   queryClient: QueryClient,
 ): Promise<SongData> => {
-  // A specific version is never the canonical list entry — always fetch it.
+  // Explicit revisions refresh online; offline they must already be downloaded.
   if (versionId) {
+    if (!getIsOnline()) {
+      const cached = getCachedSongVersion(queryClient, songId, versionId, songs);
+      if (cached) return cached instanceof SongData ? cached : new SongData(cached);
+    }
     const raw = await queryClient.fetchQuery(
       singleSongQueryOptions(songId, versionId),
     );

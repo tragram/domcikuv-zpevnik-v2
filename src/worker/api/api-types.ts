@@ -61,6 +61,7 @@ export type SongbookEntryApi = {
 export type SongDataApi = {
   id: string;
   versionId?: string;
+  versionStatus?: SongVersionDB["status"];
   title: string;
   artist: string;
   key?: string;
@@ -97,6 +98,15 @@ export type SongDataAdminApi = SongDataDB &
 export type SongVersionAdminApi = SongVersionDB & {
   importSourceId: SongImportDB["sourceId"] | null;
   importUrl: string | null;
+};
+
+export type SongVersionSummaryApi = Pick<
+  SongVersionDB,
+  "id" | "status" | "key" | "capo"
+> & {
+  createdAt: Date | string;
+  author: { id: string; name: string };
+  isCurrent: boolean;
 };
 
 // API responses serialize Drizzle's `Date` columns as either a `Date`
