@@ -1,4 +1,6 @@
 import { createHash } from "node:crypto";
+import { normalizeWebp } from "../sync/images.mjs";
+import sharp from "sharp";
 
 export const ORIGINAL_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -17,6 +19,8 @@ export type ArchiveRecord = {
   imageURL: string;
   thumbnailURL: string;
   sha256: string;
+  // sha256 always identifies the untouched R2 source; static bytes may differ.
+  staticSha256?: string;
   promotedAt: string;
 };
 
@@ -83,7 +87,7 @@ async function productionImage(baseURL: string, pathname: string, fetcher: typeo
   }
   if (
     response.status !== 200 ||
-    !response.headers.get("content-type")?.toLowerCase().startsWith("image/")
+    response.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !== "image/webp"
   ) {
     await response.body?.cancel();
     return;
@@ -93,15 +97,20 @@ async function productionImage(baseURL: string, pathname: string, fetcher: typeo
 }
 
 export async function verifyProduction(
-  record: Pick<ArchiveRecord, "imageURL" | "thumbnailURL" | "sha256">,
+  record: Pick<ArchiveRecord, "imageURL" | "thumbnailURL" | "sha256" | "staticSha256">,
   baseURL: string,
   fetcher: typeof fetch = fetch,
 ): Promise<"ready" | "awaiting-deployment" | "content-mismatch"> {
   const image = await productionImage(baseURL, record.imageURL, fetcher);
   if (!image) return "awaiting-deployment";
-  if (sha256(image) !== record.sha256) return "content-mismatch";
+  if (sha256(image) !== (record.staticSha256 ?? record.sha256)) return "content-mismatch";
   const thumbnail = await productionImage(baseURL, record.thumbnailURL, fetcher);
-  return thumbnail ? "ready" : "awaiting-deployment";
+  if (!thumbnail) return "awaiting-deployment";
+  try {
+    if ((await sharp(thumbnail).metadata()).format !== "webp") return "content-mismatch";
+    await sharp(thumbnail).resize(1, 1).raw().toBuffer();
+  } catch { return "content-mismatch"; }
+  return "ready";
 }
 
 export async function promoteIllustration(
@@ -124,6 +133,7 @@ export async function promoteIllustration(
     imageURL,
     thumbnailURL: imageURL.replace("/full/", "/thumbnail/"),
     sha256: sha256(source.bytes),
+    staticSha256: sha256(await normalizeWebp(source.bytes)),
     promotedAt: options.now.toISOString(),
   };
   const verification = await verifyProduction(record, options.productionURL, fetcher);
@@ -151,10 +161,18 @@ export async function archiveOriginal(
     !current || current.deleted || current.imageURL !== record.imageURL ||
     current.thumbnailURL !== record.thumbnailURL || await store.referencesSource(record.sourceKey)
   ) return "retained";
-  const verification = await verifyProduction(record, options.productionURL, fetcher);
-  if (verification !== "ready") return verification;
   const source = await store.readImage(record.sourceKey);
   if (source && sha256(source.bytes) !== record.sha256) return "changed";
+  // Old recovery records predate normalization. Derive the expected static hash
+  // from the verified original/trash without changing its retention date.
+  let verificationRecord = record;
+  if (!record.staticSha256) {
+    const original = source ?? await store.readImage(`trash/${record.sourceKey}`);
+    if (!original || sha256(original.bytes) !== record.sha256) return "changed";
+    verificationRecord = { ...record, staticSha256: sha256(await normalizeWebp(original.bytes)) };
+  }
+  const verification = await verifyProduction(verificationRecord, options.productionURL, fetcher);
+  if (verification !== "ready") return verification;
   if (options.dryRun) return "would-archive";
   if (source) await store.copyToTrash(record.sourceKey, source.etag);
   // Verify the archive, including when retrying after an interrupted delete.

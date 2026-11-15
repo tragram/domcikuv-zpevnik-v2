@@ -121,16 +121,24 @@ beforeEach(async () => {
   root = fs.mkdtempSync(path.join(os.tmpdir(), "sync-validation-"));
   write(pro, "{title: Song}\n{artist: Artist}\n{illustrationId: song_prompt_model}\n{promptId: song_prompt}\n\nLyrics");
   write(meta, yaml.dump({ songId: "song", prompts: [{ id: "song_prompt", songId: "song", text: "A scene", illustrations: [{ imageModel: "model", filename: "model.webp" }] }] }));
-  const bytes = await sharp({ create: { width: 2, height: 2, channels: 3, background: "red" } }).png().toBuffer();
-  write(full, bytes); write(thumb, bytes);
+  const bytes = await sharp({ create: { width: 2, height: 2, channels: 3, background: "red" } }).webp().toBuffer();
+  write(full, bytes); write(thumb, await sharp(bytes).resize(128).webp().toBuffer());
 });
 afterEach(() => {
   if (path.dirname(path.resolve(root)) !== path.resolve(os.tmpdir()) || !path.basename(root).startsWith("sync-validation-")) throw new Error("Unexpected temporary path");
   fs.rmSync(root, { recursive: true, maxRetries: 5, retryDelay: 50 });
 });
 describe("exported snapshot integrity", () => {
-  it("accepts the existing naming convention without requiring WebP conversion", async () => {
+  it("accepts genuine WebP pairs", async () => {
     expect(await validateSnapshot(root, inventory(root), [full])).toMatchObject({ songs: 1, illustrations: 1, images: 2 });
+  });
+  it.each(["jpeg", "png"] as const)("rejects %s bytes disguised as WebP", async format => {
+    write(full, await sharp({ create: { width: 2, height: 2, channels: 3, background: "blue" } }).toFormat(format).toBuffer());
+    await expect(validateSnapshot(root, inventory(root), [])).rejects.toThrow("Expected still WebP");
+  });
+  it("rejects incorrectly sized thumbnails", async () => {
+    write(thumb, await sharp({ create: { width: 64, height: 64, channels: 3, background: "red" } }).webp().toBuffer());
+    await expect(validateSnapshot(root, inventory(root), [])).rejects.toThrow("Invalid thumbnail dimensions");
   });
   it("rejects missing thumbnails", async () => {
     fs.unlinkSync(path.join(root, thumb));

@@ -1,3 +1,5 @@
+import sharp from "sharp";
+import { normalizeWebp } from "../sync/images.mjs";
 import { describe, expect, it, vi } from "vitest";
 import {
   archiveOriginal, ORIGINAL_RETENTION_MS, promoteIllustration, referencesBucketSource, sha256, sourceKey,
@@ -7,7 +9,7 @@ import {
 const bucketURL = "https://bucket.example";
 const productionURL = "https://songs.example";
 const key = "songs/illustrations/song/model_v7/full/image-model";
-const bytes = new Uint8Array([1, 2, 3]);
+const bytes = await sharp({ create: { width: 2, height: 2, channels: 3, background: "red" } }).webp().toBuffer();
 const original = { bytes, etag: '"original"' };
 const now = new Date("2026-11-15T12:00:00Z");
 const illustration: Illustration = {
@@ -43,6 +45,17 @@ function fixture() {
 }
 
 describe("illustration promotion", () => {
+  it("verifies normalized output separately from the untouched JPEG source", async () => {
+    const f = fixture();
+    const jpeg = await sharp(bytes).jpeg().toBuffer();
+    const normalized = await normalizeWebp(jpeg);
+    f.images.set(key, { bytes: jpeg, etag: original.etag });
+    f.fetcher.mockImplementation(async () => new Response(normalized, { headers: { "Content-Type": "image/webp" } }));
+    expect(await promoteIllustration(illustration, f.store, options, f.fetcher)).toBe("promoted");
+    expect(f.store.saveRecord).toHaveBeenCalledWith(expect.objectContaining({ sha256: sha256(jpeg), staticSha256: sha256(normalized) }));
+    f.fetcher.mockImplementation(async () => new Response(jpeg, { headers: { "Content-Type": "image/webp" } }));
+    expect(await promoteIllustration(illustration, f.store, options, f.fetcher)).toBe("content-mismatch");
+  });
   it("promotes byte-identical images without Content-Length and keeps originals", async () => {
     const f = fixture();
     expect(await promoteIllustration(illustration, f.store, options, f.fetcher)).toBe("promoted");
@@ -157,6 +170,17 @@ describe("illustration promotion", () => {
 });
 
 describe("delayed original archival", () => {
+  it("reconciles a legacy JPEG record after static normalization", async () => {
+    const f = fixture();
+    const jpeg = await sharp(bytes).jpeg().toBuffer();
+    const normalized = await normalizeWebp(jpeg);
+    const legacy = { ...record, sha256: sha256(jpeg) };
+    f.images.set(key, { bytes: jpeg, etag: original.etag });
+    f.store.copyToTrash.mockImplementation(async () => { f.images.set(`trash/${key}`, { bytes: jpeg, etag: original.etag }); });
+    f.fetcher.mockImplementation(async () => new Response(normalized, { headers: { "Content-Type": "image/webp" } }));
+    expect(await archiveOriginal(legacy, f.store, options, f.fetcher)).toBe("archived");
+    expect(f.images.get(`trash/${key}`)?.bytes).toEqual(jpeg);
+  });
   it("retains originals throughout the 30-day grace period", async () => {
     const f = fixture();
     expect(await archiveOriginal({ ...record, promotedAt: new Date(now.getTime() - ORIGINAL_RETENTION_MS + 1).toISOString() }, f.store, options, f.fetcher)).toBe("retained");

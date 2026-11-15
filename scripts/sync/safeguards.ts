@@ -127,7 +127,15 @@ export async function validateSnapshot(root: string, files: string[], changed: s
     const pair = image.includes("/full/") ? image.replace("/full/", "/thumbnail/") : image.replace("/thumbnail/", "/full/");
     if (!fileSet.has(pair)) throw new Error(`Missing image pair: ${pair}`);
     // Decode pixels: checking an extension or headers alone misses corrupt payloads.
-    await sharp(fs.readFileSync(path.join(root, image))).resize(1, 1).raw().toBuffer();
+    const decoder = sharp(fs.readFileSync(path.join(root, image)));
+    const metadata = await decoder.metadata();
+    if (metadata.format !== "webp" || (metadata.pages ?? 1) > 1) throw new Error(`Expected still WebP: ${image}`);
+    if (image.includes("/thumbnail/")) {
+      const full = await sharp(fs.readFileSync(path.join(root, pair))).metadata();
+      const height = Math.round(full.height! * 128 / full.width!);
+      if (metadata.width !== 128 || metadata.height !== height) throw new Error(`Invalid thumbnail dimensions: ${image}`);
+    }
+    await decoder.resize(1, 1).raw().toBuffer();
   }
   return { songs, prompts: promptIds.size, illustrations: illustrationIds.size, images: images.length, changedBytes };
 }

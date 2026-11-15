@@ -30,6 +30,7 @@ const archiveRecordSchema = z.object({
   imageURL: z.string(),
   thumbnailURL: z.string(),
   sha256: z.string().regex(/^[a-f0-9]{64}$/),
+  staticSha256: z.string().regex(/^[a-f0-9]{64}$/).optional(),
   promotedAt: z.iso.datetime(),
 }).superRefine((record, ctx) => {
   const imageURL = `/${record.sourceKey}${record.sourceKey.endsWith(".webp") ? "" : ".webp"}`;

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { setTimeout } from "node:timers/promises";
+import { normalizeStaticImages } from "./images.mjs";
 import {
   automaticSync, generatedPath, inventory, checkChanges, validateSnapshot,
   deploymentResult, type BuildCheck,
@@ -60,7 +61,7 @@ async function publish() {
       },
       async export() {
         run("exec", "tsx", "scripts/sync.ts");
-        execFileSync(process.execPath, ["scripts/generate-thumbnails.mjs"], { stdio: "inherit" });
+        console.log("Static WebP normalization:", await normalizeStaticImages());
       },
       async validate() {
         await validate();
@@ -128,8 +129,9 @@ async function waitForDeployment() {
 }
 
 switch (process.argv[2]) {
+  case "normalize": console.log(await normalizeStaticImages()); break;
   case "publish": await publish(); break;
   case "wait": await waitForDeployment(); break;
   case "validate": await validate(); break;
-  default: throw new Error("Usage: tsx scripts/sync/run.ts publish|wait|validate");
+  default: throw new Error("Usage: tsx scripts/sync/run.ts publish|wait|validate|normalize");
 }

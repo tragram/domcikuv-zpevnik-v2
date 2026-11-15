@@ -4,6 +4,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import sharp from "sharp";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { normalizeWebp } from "../sync/images.mjs";
 import { syncIllustrationFile } from "./illustration-files";
 
 let directory: string;
@@ -39,16 +40,16 @@ describe("illustration file export", () => {
     existingPair(await sharp(await image("red")).jpeg().toBuffer());
     const replacement = await image("blue");
     expect(await syncIllustrationFile("https://bucket.example/image", fullPath, thumbnailPath, fetchImage(replacement))).toBe("updated");
-    expect(fs.readFileSync(fullPath)).toEqual(replacement);
-    // An edited PNG must replace the old JPEG without implicit format conversion.
-    expect((await sharp(fs.readFileSync(fullPath)).metadata()).format).toBe("png");
+    expect(fs.readFileSync(fullPath)).toEqual(await normalizeWebp(replacement));
+    // Export normalizes incoming PNG bytes to real WebP.
+    expect((await sharp(fs.readFileSync(fullPath)).metadata()).format).toBe("webp");
     expect(fs.existsSync(thumbnailPath)).toBe(false);
     expect(fs.readdirSync(path.dirname(fullPath))).toEqual(["model.webp"]);
   });
 
   it("keeps an unchanged thumbnail intact", async () => {
     const bytes = await image("red");
-    existingPair(bytes);
+    existingPair(await normalizeWebp(bytes));
     expect(await syncIllustrationFile("https://bucket.example/image", fullPath, thumbnailPath, fetchImage(bytes))).toBe("unchanged");
     expect(fs.readFileSync(thumbnailPath, "utf8")).toBe("existing thumbnail");
   });
@@ -56,7 +57,7 @@ describe("illustration file export", () => {
   it("writes a missing full image for thumbnail generation", async () => {
     const bytes = await image("red");
     expect(await syncIllustrationFile("https://bucket.example/image", fullPath, thumbnailPath, fetchImage(bytes))).toBe("updated");
-    expect(fs.readFileSync(fullPath)).toEqual(bytes);
+    expect(fs.readFileSync(fullPath)).toEqual(await normalizeWebp(bytes));
   });
 
   it("preserves both existing files when an upstream fallback returns HTML", async () => {
@@ -93,7 +94,7 @@ describe("thumbnail generation workflow", () => {
     const metadata = await sharp(thumbnail).metadata();
     expect(metadata.format).toBe("webp");
     expect(metadata.width).toBe(128);
-    const expected = await sharp(edited).resize({ width: 128 }).webp({ quality: 80 }).toBuffer();
+    const expected = await sharp(await normalizeWebp(edited)).resize({ width: 128 }).webp({ quality: 80 }).toBuffer();
     expect(thumbnail).toEqual(expected);
   });
 

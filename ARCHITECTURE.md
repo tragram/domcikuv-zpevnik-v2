@@ -306,8 +306,11 @@ fully-offline use. Two scheduled GitHub Actions keep the two in sync:
 
 - **`sync.yml`** (nightly, 04:00 UTC) — `scripts/sync.ts` backs up the full
   D1 database to R2 as JSON (skipping ephemeral tables like `session` and
-  `syncSession`), regenerates thumbnails
-  (`scripts/generate-thumbnails.mjs`), and validates the complete snapshot.
+  `syncSession`). `scripts/sync/images.mjs` normalizes downloaded and historical
+  static illustrations to real WebP (quality 80), retains existing valid WebP
+  bytes, and repairs 128px thumbnails. Upload/R2 originals are unchanged.
+  Validation decodes the complete snapshot and enforces WebP and thumbnail sizes.
+  Cleanup verifies normalized static hashes separately from original R2 hashes.
   `scripts/sync/run.ts publish` runs tests, app/script typechecks and a production build before
   committing generated `songs/` files directly to `main`. It serializes syncs,
   skips unchanged exports, rejects changes outside the generated path allowlist,
