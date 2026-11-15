@@ -5,8 +5,8 @@
 {language: czech}
 {createdAt: 1792317238000}
 {updatedAt: 1792933836000}
-{illustrationId: tomas_klus-az..._gpt-5.4-mini_v7_nano-banana-2}
-{promptId: tomas_klus-az..._gpt-5.4-mini_v7}
+{illustrationId: tomas_klus-az_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: tomas_klus-az_gpt-5.4-mini_v7}
 
 {start_of_interlude}
 𝄆 [Em][A][D][G][G/F#][Em][A][D] 𝄇

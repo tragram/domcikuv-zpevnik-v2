@@ -1,7 +1,7 @@
-songId: tomas_klus-az...
+songId: tomas_klus-az
 prompts:
-  - id: tomas_klus-az..._gpt-5.4-mini_v7
-    songId: tomas_klus-az...
+  - id: tomas_klus-az_gpt-5.4-mini_v7
+    songId: tomas_klus-az
     summaryPromptVersion: v7
     summaryModel: gpt-5.4-mini
     text: >-
