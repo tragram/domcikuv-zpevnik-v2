@@ -13,7 +13,7 @@ const Header = ({
 }) => (
   <DropdownMenuLabel
     className={cn(
-      "text-xs font-semibold uppercase tracking-wider text-primary/70 pb-2",
+      "text-xs font-semibold uppercase tracking-wider text-primary pb-2",
       className,
     )}
   >
@@ -50,7 +50,7 @@ const Icon = ({
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-full bg-primary dark:bg-primary/30 *:stroke-current! *:text-white! dark:*:text-primary!",
+        "flex shrink-0 items-center justify-center rounded-full bg-control-surface text-primary *:stroke-current! *:text-primary!",
         `size-${size}`,
         innerSizeClass,
         className,
@@ -106,7 +106,7 @@ const Trailing = ({
   children: ReactNode;
   className?: string;
 }) => (
-  <div className={cn("text-xs text-primary/80 text-right", className)}>
+  <div className={cn("text-xs text-primary text-right", className)}>
     {children}
   </div>
 );

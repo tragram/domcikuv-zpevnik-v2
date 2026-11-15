@@ -90,7 +90,7 @@ const TransposeButtons: React.FC<TransposeButtonsProps> = ({
         type="button"
         onClick={onReset}
         disabled={!canResetKeyAndCapo}
-        className="relative z-10 flex size-10 shrink-0 items-center justify-center border-l border-primary/15 text-primary transition-colors hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-35 dark:border-primary/25 dark:hover:bg-primary/15"
+        className="relative z-10 flex size-10 shrink-0 items-center justify-center border-l border-control-border text-primary transition-colors hover:bg-control-hover disabled:cursor-not-allowed disabled:opacity-35"
         title={
           canResetKeyAndCapo
             ? "Reset key and capo to the original song settings"
@@ -141,18 +141,18 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
                 className={
                   "min-h-11 rounded-full border text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-primary " +
                   (selected === index
-                    ? "border-primary/70 bg-[var(--song-control-selected-bg)] text-[var(--song-control-selected-text)]"
-                    : "border-primary/25 text-primary hover:bg-primary/10")
+                    ? "border-control-border bg-primary text-primary-foreground hover:bg-control-active-hover"
+                    : "border-control-border bg-control-surface text-primary hover:bg-control-hover")
                 }
               >{key}</button>
             ))}
           </div>
-          <div className="border-t border-primary/15 pt-3">
+          <div className="border-t border-control-border pt-3">
             <button
               type="button"
               disabled={!canResetKeyAndCapo}
               onClick={() => onReset()}
-              className="flex min-h-10 w-full items-center justify-center gap-2 rounded-full border border-primary/25 text-xs text-primary hover:bg-primary/10 disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-primary"
+              className="flex min-h-10 w-full items-center justify-center gap-2 rounded-full border border-control-border bg-control-surface text-xs text-primary hover:bg-control-hover disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-primary"
             >
               <RotateCcw className="size-3.5" />
               Reset key & capo

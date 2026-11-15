@@ -87,7 +87,7 @@ export default function FancySwitch<T extends string | number>({
   return (
     <div
       className={cn(
-        "flex select-none rounded-full bg-white font-bold shadow-xs outline-2 outline-primary transition-all dark:bg-background/90 dark:outline-primary/30",
+        "flex select-none rounded-full bg-control-surface font-bold shadow-xs outline-2 outline-control-border transition-all",
         "overflow-hidden",
         vertical ? "min-h-[40px] flex-col w-fit" : "h-[40px] flex-row",
         full && !vertical ? "w-full justify-center" : "w-fit",
@@ -127,9 +127,10 @@ export default function FancySwitch<T extends string | number>({
               className={cn(
                 "relative z-10 flex h-full shrink-0 transform-gpu items-center justify-center whitespace-nowrap outline-hidden transition-colors duration-200",
                 vertical ? "px-3" : "px-4",
+                roundedClass,
                 isSelected && showHighlight
-                  ? "text-white dark:text-white"
-                  : "hover:dark:text-white",
+                  ? "text-primary-foreground hover:bg-control-active-hover"
+                  : "hover:bg-control-hover",
               )}
             >
               <div className="flex items-center justify-center gap-2">

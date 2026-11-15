@@ -25,7 +25,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
     >
       <div
         className={cn(
-          "w-full xl:w-fit bg-glass/30 dark:bg-glass/10 backdrop-blur-md rounded-full shadow-md flex gap-2 p-2 items-center outline-primary dark:outline-primary/30 outline-2 justify-center h-full",
+          "w-full xl:w-fit bg-glass/70 dark:bg-glass/20 backdrop-blur-md rounded-full shadow-md flex gap-2 p-2 items-center outline-primary/60 outline-2 justify-center h-full",
         )}
         id="toolbar"
       >

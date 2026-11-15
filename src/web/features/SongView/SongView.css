@@ -44,9 +44,10 @@
     max-width: 100vw;
 }
 
-.song-panel {
-    --song-control-selected-bg: color-mix(in oklab, var(--foreground) 94%, var(--primary));
-    --song-control-selected-text: var(--background);
+.song-panel [data-slot="dropdown-menu-item"][data-variant="default"]:focus,
+.song-panel [data-slot="dropdown-menu-checkbox-item"]:focus {
+    @apply bg-control-hover;
+    color: var(--popover-foreground);
 }
 
 #auto-text-size-wrapper>div {

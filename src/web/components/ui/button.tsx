@@ -21,7 +21,7 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         circular:
-          "bg-primary text-primary-foreground hover:bg-primary/90 rounded-full outline-2 shadow-md hover:dark:outline-primary/30 hover:dark:bg-primary/80",
+          "bg-primary text-primary-foreground rounded-full outline-2 shadow-md",
       },
       size: {
         default: "h-10 px-4 py-2 has-[>svg]:px-3",
@@ -30,9 +30,9 @@ const buttonVariants = cva(
         icon: "size-10",
       },
       isActive: {
-        true: "bg-primary outline-white text-white dark:outline-primary/30",
+        true: "bg-primary outline-control-border text-primary-foreground hover:bg-control-active-hover",
         false:
-          "bg-white dark:bg-background/90 text-primary hover:text-white hover:outline-white outline-primary dark:outline-primary/30",
+          "bg-control-surface text-primary hover:bg-control-hover outline-control-border",
       },
     },
     defaultVariants: {

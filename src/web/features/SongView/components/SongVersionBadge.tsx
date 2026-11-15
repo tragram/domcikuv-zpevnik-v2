@@ -5,6 +5,7 @@ import { Check, ChevronDown, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import client from "src/worker/api-client";
 import { Badge } from "~/components/ui/badge";
+import { CompactItem } from "~/components/RichDropdown";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { Separator } from "~/components/ui/separator";
 import { favoritesQueryOptions, useSongbookEntry, type UserData } from "~/hooks/use-user-data";
@@ -88,12 +89,12 @@ export function SongVersionBadge({
         <Badge
           asChild
           variant="outline"
-          className="gap-[0.35em] px-[0.6em] py-[0.2em] text-[0.6em] leading-none [&>svg]:size-[1em] border-primary/30 bg-primary/5 text-primary dark:border-white/25 dark:bg-white/10 dark:text-white/80 cursor-pointer hover:bg-primary/10 dark:hover:bg-white/20"
+          className="gap-[0.4em] rounded-full border-transparent bg-control-surface/50 px-[0.65em] py-[0.3em] text-[0.55em] leading-none text-primary [&>svg]:size-[1em] cursor-pointer hover:bg-control-hover data-[state=open]:bg-control-hover focus-visible:outline-2 focus-visible:outline-primary"
         >
           <button type="button" aria-label={`Version details: ${details.label}`}>
             <Icon aria-hidden="true" />
             {details.label}
-            <ChevronDown aria-hidden="true" className="opacity-60" />
+            <ChevronDown aria-hidden="true" className={`transition-transform ${open ? "rotate-180" : ""}`} />
           </button>
         </Badge>
       </PopoverTrigger>
@@ -103,51 +104,20 @@ export function SongVersionBadge({
         sideOffset={12}
         collisionPadding={16}
         aria-label="Song version details"
-        className={`${songPanelClassName} w-96 max-w-[calc(100vw-2rem)] max-h-[var(--radix-popover-content-available-height)] overflow-y-auto text-sm font-normal`}
+        className={`${songPanelClassName} w-80 max-w-[calc(100vw-2rem)] max-h-[var(--radix-popover-content-available-height)] overflow-y-auto p-1 text-sm font-normal`}
       >
-        <div className="space-y-4">
-          <table className="w-full table-fixed border-collapse text-left text-xs leading-relaxed">
-            <caption className="sr-only">Current song version</caption>
-            <colgroup>
-              <col className="w-20" />
-              <col />
-            </colgroup>
-            <tbody className="[&>tr+tr]:border-t [&>tr]:border-primary/15 [&_th]:w-20 [&_th]:py-2.5 [&_th]:pr-3 [&_th]:align-top [&_th]:font-medium [&_th]:text-primary/80 [&_td]:py-2.5 [&_td]:align-top [&_td]:break-words [&_td]:text-foreground/80 [&>tr:first-child>*]:pt-0 [&>tr:last-child>*]:pb-0">
-              <tr>
-                <th scope="row">Version</th>
-                <td>
-                  <span className="inline-flex items-center gap-1.5 font-semibold text-primary">
-                    <Icon className="size-3.5 shrink-0" aria-hidden="true" />
-                    {details.label}
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Reason</th>
-                <td>{details.reason}</td>
-              </tr>
-              {details.author && (
-                <tr>
-                  <th scope="row">Edited by</th>
-                  <td className="first-letter:uppercase">{details.author}</td>
-                </tr>
-              )}
-              <tr>
-                <th scope="row">Status</th>
-                <td>{details.status ?? (!isOnline ? "Not downloaded" : statusPending ? "Loading…" : "Unavailable")}</td>
-              </tr>
-              {notes.length > 0 && (
-                <tr>
-                  <th scope="row">Notes</th>
-                  <td className="space-y-2">
-                    {notes.map((text) => <p key={text}>{text}</p>)}
-                  </td>
-                </tr>
-              )}
-              {songData.externalSource && (
-                <tr>
-                  <th scope="row">Source</th>
-                  <td>
+        <div className="space-y-1">
+          <h3 className="px-2 pt-1.5 pb-2 text-xs font-semibold uppercase tracking-wider text-primary">Version details</h3>
+          <Separator />
+          <dl className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-2 gap-y-1 px-2 py-1.5 text-xs [&_dt]:text-muted-foreground [&_dd]:break-words">
+            {details.author && <><dt>Edited by</dt><dd className="first-letter:uppercase">{details.author}</dd></>}
+            <dt>Status</dt>
+            <dd>{details.status ?? (!isOnline ? "Not downloaded" : statusPending ? "Loading…" : "Unavailable")}</dd>
+            {notes.length > 0 && <><dt>Notes</dt><dd className="space-y-1">{notes.map((text) => <p key={text}>{text}</p>)}</dd></>}
+            {songData.externalSource && (
+              <>
+                <dt>Source</dt>
+                <dd>
                     <a
                       href={songData.externalSource.url}
                       target="_blank"
@@ -156,12 +126,19 @@ export function SongVersionBadge({
                     >
                       {SONG_SOURCES_PRETTY[songData.externalSource.sourceId]}
                     </a>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-          <Separator className="bg-primary/15" />
+                </dd>
+              </>
+            )}
+          </dl>
+          <div className="px-2 py-1.5">
+            <CompactItem.Shell className="items-start">
+              <CompactItem.Icon><Icon aria-hidden="true" /></CompactItem.Icon>
+              <div className="min-w-0 flex-1">
+                <p>{details.label}</p>
+                <p className="text-tiny leading-tight text-muted-foreground">{details.reason}</p>
+              </div>
+            </CompactItem.Shell>
+          </div>
           <SongVersionHistory
             songId={songData.id}
             shownVersionId={songData.versionId}
