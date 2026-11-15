@@ -31,8 +31,13 @@ export const db = drizzle(
       throw new Error(`D1 query failed: ${response.status} - ${await response.text()}`);
     }
     const data = (await response.json()) as {
-      result: { results: Record<string, unknown>[] }[];
+      success: boolean;
+      errors?: { message: string }[];
+      result: { success: boolean; results: Record<string, unknown>[] }[];
     };
+    if (!data.success || !data.result?.[0]?.success) {
+      throw new Error(`D1 query failed: ${JSON.stringify(data.errors ?? [])}`);
+    }
     const results = data.result[0]?.results ?? [];
     // sqlite-proxy expects rows as positional arrays; D1 returns objects whose
     // key order matches the SELECT column order.

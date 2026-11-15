@@ -1,204 +1,199 @@
-/**
- * Post-sync cleanup: for illustrations still pointing at absolute R2 URLs,
- * verify that production already serves the synced static files (full image
- * AND thumbnail), then move the R2 original to trash/ and rewrite the D1 row
- * to the static paths. Images not yet merged/deployed are skipped and picked
- * up by a later run, so this is safe to run at any time.
- *
- * Also prunes old R2 DB backups (30 days of dailies, then one per month).
- */
+/** Promote verified static illustrations and archive originals after 30 days. */
 import {
-  CopyObjectCommand,
-  DeleteObjectCommand,
-  DeleteObjectsCommand,
-  HeadObjectCommand,
-  ListObjectsV2Command,
+  CopyObjectCommand, DeleteObjectCommand, DeleteObjectsCommand, GetObjectCommand,
+  HeadObjectCommand, ListObjectsV2Command, PutObjectCommand, type _Object,
 } from "@aws-sdk/client-s3";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { z } from "zod";
 import * as schema from "../src/lib/db/schema";
+import {
+  archiveOriginal, promoteIllustration, referencesBucketSource, sha256, sourceKey,
+  type ArchiveRecord, type CleanupResult, type CleanupStore,
+} from "./shared/illustration-cleanup";
 import { db } from "./shared/remote-db";
 import { R2_BUCKET_NAME, s3 } from "./shared/r2";
 
-const PROD_BASE_URL = (
-  process.env.PROD_BASE_URL || "https://zpevnik.hodan.page"
-).replace(/\/+$/, "");
+const PROD_BASE_URL = (process.env.PROD_BASE_URL || "https://zpevnik.hodan.page").replace(/\/+$/, "");
+const BUCKET_URL = (process.env.CLOUDFLARE_R2_URL || "https://kyblik.zpevnik.hodan.page").replace(/\/+$/, "");
+const RECORD_PREFIX = "cleanup/illustration-promotions/";
+const flags = new Set(process.argv.slice(2));
+for (const flag of flags) {
+  if (!["--dry-run", "--prune-backups"].includes(flag)) throw new Error(`Unknown flag: ${flag}`);
+}
+const dryRun = flags.has("--dry-run") || process.env.CLEANUP_DRY_RUN === "true";
+const pruneBackups = flags.has("--prune-backups");
+const recordKey = (record: ArchiveRecord) => `${RECORD_PREFIX}${sha256(Buffer.from(record.illustrationId))}.json`;
+const archiveRecordSchema = z.object({
+  version: z.literal(1),
+  illustrationId: z.string().min(1),
+  sourceKey: z.string().regex(/^songs\/illustrations\/[^/]+\/[^/]+\/full\/[^/]+$/),
+  imageURL: z.string(),
+  thumbnailURL: z.string(),
+  sha256: z.string().regex(/^[a-f0-9]{64}$/),
+  promotedAt: z.iso.datetime(),
+}).superRefine((record, ctx) => {
+  const imageURL = `/${record.sourceKey}${record.sourceKey.endsWith(".webp") ? "" : ".webp"}`;
+  if (record.imageURL !== imageURL || record.thumbnailURL !== imageURL.replace("/full/", "/thumbnail/")) {
+    ctx.addIssue({ code: "custom", message: "Archive paths do not match the source key" });
+  }
+});
 
-/**
- * Checks that production actually serves the given path as an image. A plain
- * 200 is NOT enough: the SPA fallback answers 200 text/html for ANY missing
- * asset path, which previously fooled this check into trashing R2 originals.
- * When the expected byte size is known (from the R2 original), it must match
- * exactly — only then is it safe to consider the R2 copy redundant.
- */
-async function servedInProd(
-  pathname: string,
-  expectedBytes?: number,
-): Promise<boolean> {
+function notFound(error: unknown): boolean {
+  return !!error && typeof error === "object" && (
+    ("name" in error && ["NoSuchKey", "NotFound"].includes(String(error.name))) ||
+    ("$metadata" in error && (error.$metadata as { httpStatusCode?: number }).httpStatusCode === 404)
+  );
+}
+
+async function readObject(key: string) {
   try {
-    const response = await fetch(PROD_BASE_URL + pathname, { method: "HEAD" });
-    if (!response.ok) return false;
-    const contentType = response.headers.get("content-type") ?? "";
-    if (!contentType.startsWith("image/")) return false;
-    if (expectedBytes !== undefined) {
-      const length = Number(response.headers.get("content-length"));
-      return length === expectedBytes;
+    const object = await s3.send(new GetObjectCommand({ Bucket: R2_BUCKET_NAME, Key: key }), {
+      abortSignal: AbortSignal.timeout(30_000),
+    });
+    if (!object.Body || !object.ETag) throw new Error(`R2 object missing body or ETag: ${key}`);
+    return { bytes: await object.Body.transformToByteArray(), etag: object.ETag };
+  } catch (error) {
+    if (notFound(error)) return null;
+    throw error;
+  }
+}
+
+const store: CleanupStore = {
+  readImage: readObject,
+  async saveRecord(record) {
+    await s3.send(new PutObjectCommand({
+      Bucket: R2_BUCKET_NAME, Key: recordKey(record),
+      Body: JSON.stringify(record), ContentType: "application/json",
+    }));
+  },
+  async promote(illustration, record) {
+    const updated = await db.update(schema.songIllustration).set({
+      imageURL: record.imageURL, thumbnailURL: record.thumbnailURL, updatedAt: new Date(),
+    }).where(and(
+      eq(schema.songIllustration.id, illustration.id),
+      eq(schema.songIllustration.imageURL, illustration.imageURL),
+      eq(schema.songIllustration.thumbnailURL, illustration.thumbnailURL),
+      eq(schema.songIllustration.updatedAt, illustration.updatedAt),
+      eq(schema.songIllustration.deleted, false),
+    )).returning({ id: schema.songIllustration.id });
+    return updated.length === 1;
+  },
+  async readIllustration(id) {
+    const rows = await db.select().from(schema.songIllustration).where(eq(schema.songIllustration.id, id));
+    return rows[0];
+  },
+  async referencesSource(key) {
+    // Include deleted rows: a later restore must not resurrect a broken URL.
+    const rows = await db.select({
+      imageURL: schema.songIllustration.imageURL,
+      thumbnailURL: schema.songIllustration.thumbnailURL,
+    }).from(schema.songIllustration);
+    return rows.some(row => [row.imageURL, row.thumbnailURL].some(url => referencesBucketSource(url, key, BUCKET_URL)));
+  },
+  async copyToTrash(key, etag) {
+    await s3.send(new CopyObjectCommand({
+      Bucket: R2_BUCKET_NAME, Key: `trash/${key}`,
+      CopySource: `${R2_BUCKET_NAME}/${key.split("/").map(encodeURIComponent).join("/")}`,
+      CopySourceIfMatch: etag,
+    }));
+  },
+  async sourceEtag(key) {
+    try {
+      return (await s3.send(new HeadObjectCommand({ Bucket: R2_BUCKET_NAME, Key: key }))).ETag;
+    } catch (error) {
+      if (notFound(error)) return;
+      throw error;
     }
-    return true;
-  } catch {
-    return false;
+  },
+  async deleteSource(key) {
+    await s3.send(new DeleteObjectCommand({ Bucket: R2_BUCKET_NAME, Key: key }));
+  },
+  async deleteRecord(record) {
+    await s3.send(new DeleteObjectCommand({ Bucket: R2_BUCKET_NAME, Key: recordKey(record) }));
+  },
+};
+
+async function listObjects(prefix: string): Promise<_Object[]> {
+  const objects: _Object[] = [];
+  let token: string | undefined;
+  do {
+    const page = await s3.send(new ListObjectsV2Command({
+      Bucket: R2_BUCKET_NAME, Prefix: prefix, ContinuationToken: token,
+    }));
+    objects.push(...page.Contents ?? []);
+    token = page.IsTruncated ? page.NextContinuationToken : undefined;
+    if (page.IsTruncated && !token) throw new Error(`Missing pagination token for ${prefix}`);
+  } while (token);
+  return objects;
+}
+
+async function cleanupBackups() {
+  const files = await listObjects("backups/db-backup-");
+  const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const months = new Set<string>();
+  const toDelete: { Key: string }[] = [];
+  // Keep the newest backup of each older month.
+  files.sort((a, b) => (b.LastModified?.getTime() ?? 0) - (a.LastModified?.getTime() ?? 0));
+  for (const file of files) {
+    if (!file.Key || !file.LastModified || file.LastModified >= cutoff) continue;
+    const month = file.LastModified.toISOString().slice(0, 7);
+    if (!months.has(month)) months.add(month);
+    else toDelete.push({ Key: file.Key });
+  }
+  console.log(`${dryRun ? "Would prune" : "Pruning"} ${toDelete.length} old backups.`);
+  if (dryRun) return;
+  for (let offset = 0; offset < toDelete.length; offset += 1000) {
+    const result = await s3.send(new DeleteObjectsCommand({
+      Bucket: R2_BUCKET_NAME, Delete: { Objects: toDelete.slice(offset, offset + 1000) },
+    }));
+    if (result.Errors?.length) throw new Error(`Backup deletion failed: ${JSON.stringify(result.Errors)}`);
   }
 }
 
 async function main() {
-  console.log("Starting post-sync cleanup...");
-  console.log(`Verifying static files against: ${PROD_BASE_URL}`);
-
-  // 1. Find all illustrations that are absolute URLs AND actually belong to our illustrations folder
-  const illustrations = await db.select().from(schema.songIllustration);
-  const pendingCleanup = illustrations.filter(
-    (ill) =>
-      ill.imageURL.startsWith("http") &&
-      ill.imageURL.includes("/songs/illustrations/"),
-  );
-
-  console.log(
-    `Found ${pendingCleanup.length} synced images pending cleanup in the database.`,
-    pendingCleanup.map((pc) => pc.imageURL + "\n"),
-  );
-
-  for (const ill of pendingCleanup) {
+  console.log(`${dryRun ? "DRY RUN: " : ""}Verifying illustrations against ${PROD_BASE_URL}`);
+  const counts: Partial<Record<CleanupResult | "failed", number>> = {};
+  async function run(id: string, action: () => Promise<CleanupResult>) {
     try {
-      // 2. Safely parse out the R2 key from the exact URL in the database
-      const parsedImageURL = new URL(ill.imageURL);
-      const oldKey = parsedImageURL.pathname.slice(1); // Exact key to move in R2
-      const trashKey = `trash/${oldKey}`;
-
-      // 3. Format the final static paths
-      let finalImageURL = parsedImageURL.pathname;
-      if (!finalImageURL.endsWith(".webp")) finalImageURL += ".webp";
-
-      const finalThumbURL = finalImageURL.replace("/full/", "/thumbnail/");
-
-      // 4. VERIFY PRODUCTION SERVES BOTH STATIC FILES
-      // The static paths only work once the sync PR is merged AND deployed;
-      // checking prod directly makes the URL flip safe regardless of timing.
-      // The full image must byte-match the R2 original it would replace.
-      const r2Head = await s3.send(
-        new HeadObjectCommand({ Bucket: R2_BUCKET_NAME, Key: oldKey }),
-      );
-
-      if (!(await servedInProd(finalImageURL, r2Head.ContentLength))) {
-        console.log(`\n[SKIP] ID: ${ill.id}`);
-        console.log(`  -> Full image not served by prod yet: ${finalImageURL}`);
-        console.log(`  -> Keeping R2 fallback intact.`);
-        continue;
-      }
-      if (!(await servedInProd(finalThumbURL))) {
-        console.log(`\n[SKIP] ID: ${ill.id}`);
-        console.log(`  -> Thumbnail not served by prod yet: ${finalThumbURL}`);
-        console.log(`  -> Keeping R2 fallback intact.`);
-        continue;
-      }
-
-      console.log(`\n[PROCESSING] ID: ${ill.id}`);
-
-      // 5. Move ONLY the full image to /trash in R2 using the S3 SDK
-      await s3.send(
-        new CopyObjectCommand({
-          Bucket: R2_BUCKET_NAME,
-          CopySource: `${R2_BUCKET_NAME}/${oldKey}`,
-          Key: trashKey,
-        }),
-      );
-
-      await s3.send(
-        new DeleteObjectCommand({
-          Bucket: R2_BUCKET_NAME,
-          Key: oldKey,
-        }),
-      );
-
-      // 6. Update the D1 database to use the newly formatted static paths
-      await db
-        .update(schema.songIllustration)
-        .set({
-          imageURL: finalImageURL,
-          thumbnailURL: finalThumbURL,
-          updatedAt: new Date(),
-        })
-        .where(eq(schema.songIllustration.id, ill.id));
-
-      console.log(`  ✓ Cleaned up! Moved to trash in R2 and updated D1 paths.`);
+      const result = await action();
+      counts[result] = (counts[result] ?? 0) + 1;
+      console.log(`[${result}] ${id}`);
     } catch (error) {
-      console.error(
-        `  ✗ Failed to process ${ill.id}:`,
-        error instanceof Error ? error.message : error,
-      );
+      counts.failed = (counts.failed ?? 0) + 1;
+      console.error(`[failed] ${id}:`, error instanceof Error ? error.message : error);
     }
   }
-
-  // ---------------------------------------------------------------------------
-  // TASK: Cleanup Old R2 Backups (Keep 30 days daily, 1 per month after)
-  // ---------------------------------------------------------------------------
-  console.log("\nStarting old R2 backup cleanup...");
-
-  try {
-    const listResult = await s3.send(
-      new ListObjectsV2Command({
-        Bucket: R2_BUCKET_NAME,
-        Prefix: "backups/db-backup-",
-      }),
-    );
-
-    const files = listResult.Contents || [];
-
-    // Calculate the cutoff date (30 days ago)
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-
-    const toDelete: { Key: string }[] = [];
-    const retainedMonths = new Set<string>();
-
-    for (const file of files) {
-      if (!file.Key || !file.LastModified) continue;
-
-      // If the file is older than 30 days, apply the monthly retention logic
-      if (file.LastModified < thirtyDaysAgo) {
-        // Format as YYYY-MM
-        const yearMonth = file.LastModified.toISOString().slice(0, 7);
-
-        if (!retainedMonths.has(yearMonth)) {
-          // Keep the first one we encounter for this month
-          retainedMonths.add(yearMonth);
-        } else {
-          // We already have a backup for this month, mark this one for deletion
-          toDelete.push({ Key: file.Key });
-        }
-      }
-    }
-
-    if (toDelete.length > 0) {
-      await s3.send(
-        new DeleteObjectsCommand({
-          Bucket: R2_BUCKET_NAME,
-          Delete: { Objects: toDelete },
-        }),
-      );
-      console.log(`✓ Deleted ${toDelete.length} old backup(s).`);
-    } else {
-      console.log("✓ No old backups needed cleanup.");
-    }
-  } catch (error) {
-    console.error(
-      "✗ Failed to cleanup old backups:",
-      error instanceof Error ? error.message : error,
-    );
+  const illustrations = await db.select().from(schema.songIllustration);
+  for (const illustration of illustrations) {
+    if (illustration.deleted || !sourceKey(illustration.imageURL, BUCKET_URL)) continue;
+    await run(illustration.id, () => promoteIllustration(illustration, store, {
+      productionURL: PROD_BASE_URL, bucketURL: BUCKET_URL, dryRun, now: new Date(),
+    }));
   }
-
-  console.log("\nCleanup complete!");
+  // Every run reconciles archival; the persisted promotion date enforces retention.
+  for (const object of await listObjects(RECORD_PREFIX)) {
+    if (!object.Key) continue;
+    await run(object.Key, async () => {
+      const stored = await readObject(object.Key!);
+      if (!stored) throw new Error("Archive record disappeared");
+      const record = archiveRecordSchema.parse(JSON.parse(Buffer.from(stored.bytes).toString("utf8")));
+      if (recordKey(record) !== object.Key) throw new Error("Archive record key mismatch");
+      return archiveOriginal(record, store, { productionURL: PROD_BASE_URL, dryRun, now: new Date() });
+    });
+  }
+  if (pruneBackups) {
+    try { await cleanupBackups(); }
+    catch (error) {
+      counts.failed = (counts.failed ?? 0) + 1;
+      console.error("[failed] Backup cleanup:", error);
+    }
+  }
+  console.log("Cleanup summary:", JSON.stringify(counts));
+  // Awaiting deployment is expected; mismatched content and operational errors need attention.
+  if (counts.failed || counts["content-mismatch"]) process.exitCode = 1;
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
+main().catch(error => {
+  console.error(error);
+  process.exitCode = 1;
 });

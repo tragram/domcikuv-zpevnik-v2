@@ -9,6 +9,7 @@ import { SongData } from "../src/web/types/songData";
 import { formatChordpro } from "../src/web/lib/formatChordpro";
 import { db } from "./shared/remote-db";
 import { R2_BUCKET_NAME, s3 } from "./shared/r2";
+import { syncIllustrationFile } from "./shared/illustration-files";
 
 export function sanitizePathSegment(segment: string): string {
   if (!segment) return "unknown";
@@ -37,6 +38,7 @@ type YamlIllustration = {
 
 async function main() {
   console.log(`Starting Sync...`);
+  let imageFailures = 0;
 
   // ---------------------------------------------------------------------------
   // TASK 1: Backup D1 Database to R2 JSON
@@ -297,7 +299,7 @@ async function main() {
         yaml.dump(metadata),
       );
 
-      // Download missing images
+      // Bucket keys are mutable: compare bytes even when the file already exists.
       for (const ill of songIllustrations) {
         if (ill.deleted || !ill.imageURL) continue;
 
@@ -310,22 +312,18 @@ async function main() {
 
         const imgPath = path.join(imgDir, `${safeModelName}.webp`);
 
-        if (!fs.existsSync(imgPath)) {
-          if (ill.imageURL.startsWith("http")) {
-            try {
-              const response = await fetch(ill.imageURL);
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              const arrayBuffer = await response.arrayBuffer();
-              fs.writeFileSync(imgPath, Buffer.from(arrayBuffer));
-            } catch (error) {
-              const message = error instanceof Error ? error.message : String(error);
-              console.error(
-                `Failed to fetch image ${ill.imageURL}:`,
-                message,
-              );
-            }
+        if (ill.imageURL.startsWith("http")) {
+          try {
+            const result = await syncIllustrationFile(
+              ill.imageURL,
+              imgPath,
+              path.join(yamlDir, promptPathPart, "thumbnail", `${safeModelName}.webp`),
+            );
+            if (result === "updated") console.log(`Refreshed image: ${imgPath}`);
+          } catch (error) {
+            imageFailures++;
+            const message = error instanceof Error ? error.message : String(error);
+            console.error(`Failed to fetch image ${ill.imageURL}:`, message);
           }
         }
       }
@@ -351,6 +349,7 @@ async function main() {
       );
     }
   }
+  if (imageFailures) throw new Error(`${imageFailures} illustration export(s) failed; refusing to publish an incomplete sync PR.`);
   console.log("✓ GitHub Sync file generation completed.");
 }
 

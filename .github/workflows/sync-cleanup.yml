@@ -1,25 +1,45 @@
 name: Post-Sync Cleanup
 
-# Flips illustration URLs in D1 to static paths and trashes the R2 originals,
-# but only for images the production site already serves (verified via HTTP).
-# Safe to run at any time; images not yet merged/deployed are skipped and
-# picked up by a later run. Trigger manually after a deploy to flip fresh
-# images immediately.
+# Promotion verifies deployed bytes and retains originals for 30 days before
+# automatic archival. Daily reconciliation also covers deploys
+# made outside GitHub or providers that do not emit deployment_status events.
 on:
   workflow_run:
     workflows: ["Database & Assets Sync"]
-    types:
-      - completed
+    types: [completed]
+  schedule:
+    # Daily fallback at 04:30 UTC; sync completion triggers cleanup separately.
+    - cron: '30 4 * * *'
+  deployment_status:
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report changes without writing D1 or R2'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-illustration-cleanup
+  cancel-in-progress: false
 
 jobs:
   cleanup:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: >-
+      (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success') &&
+      (github.event_name != 'deployment_status' ||
+       (github.event.deployment_status.state == 'success' &&
+        github.event.deployment.environment == (vars.PRODUCTION_ENVIRONMENT || 'production')))
     runs-on: ubuntu-latest
+    timeout-minutes: 45
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -43,4 +63,7 @@ jobs:
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           R2_BUCKET_NAME: ${{ vars.R2_BUCKET_NAME }}
-        run: pnpm exec tsx scripts/post-sync-cleanup.ts
+          PROD_BASE_URL: ${{ vars.PROD_BASE_URL || 'https://zpevnik.hodan.page' }}
+          CLOUDFLARE_R2_URL: ${{ vars.CLOUDFLARE_R2_URL || 'https://kyblik.zpevnik.hodan.page' }}
+          CLEANUP_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+        run: pnpm exec tsx scripts/post-sync-cleanup.ts --prune-backups

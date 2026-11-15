@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.node.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.cleanup.tsbuildinfo"
+  },
+  "include": ["post-sync-cleanup.ts", "shared/illustration-cleanup*.ts", "shared/illustration-files*.ts"]
+}

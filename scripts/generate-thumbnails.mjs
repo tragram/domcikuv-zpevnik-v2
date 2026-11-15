@@ -5,6 +5,7 @@ import sharp from 'sharp';
 // We want to look inside the songs/illustrations directory
 const ILLUSTRATIONS_DIR = path.join(process.cwd(), 'songs', 'illustrations');
 const THUMBNAIL_WIDTH = 128; // Your PWA thumbnail size
+let failures = 0;
 
 async function processDirectory(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -51,6 +52,7 @@ async function generateThumbnailsForDir(fullDir) {
         .toFile(outputPath);
       console.log(`✓ Created: ${outputPath}`);
     } catch (error) {
+      failures++;
       console.error(`✗ Failed to process ${image}:`, error);
     }
   }
@@ -58,4 +60,5 @@ async function generateThumbnailsForDir(fullDir) {
 
 console.log('Starting thumbnail generation...');
 await processDirectory(ILLUSTRATIONS_DIR);
+if (failures) throw new Error(`${failures} thumbnail(s) failed; refusing to publish incomplete assets.`);
 console.log('Thumbnail generation complete.');

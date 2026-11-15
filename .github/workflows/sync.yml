@@ -60,6 +60,9 @@ jobs:
 
             Merging this PR only updates the repository snapshot; production is
             unaffected until the next deploy. After merging and deploying, the
-            nightly cleanup flips illustration URLs in D1 to the static paths
-            and moves the R2 originals to trash.
+            cleanup verifies deployed bytes and flips illustration URLs in D1
+            to static paths. It runs after sync, production deployment events,
+            and daily at 04:30 UTC. R2 originals remain available for at least 30 days
+            after promotion, then are automatically moved to trash once
+            deployment, content, and reference checks pass again.
           delete-branch: true

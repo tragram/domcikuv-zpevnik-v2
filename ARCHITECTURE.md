@@ -311,9 +311,14 @@ fully-offline use. Two scheduled GitHub Actions keep the two in sync:
   `data-sync` PR containing only the `songs/` diff. Merging that PR updates
   the *repository snapshot*; production D1 is unaffected until the next
   deploy.
-- **`sync-cleanup.yml`** — `scripts/post-sync-cleanup.ts` runs after a sync
-  PR is merged+deployed: flips illustration URLs in D1 over to the new
-  static paths and moves the now-unreferenced R2 originals to trash.
+- **`sync-cleanup.yml`** — after successful sync, daily at 04:30 UTC, and after production deployment
+  events: verifies deployed full-image SHA-256 and thumbnail availability,
+  saves a recovery record in R2, and conditionally switches D1 to static paths.
+  Originals stay available to cached clients for at least 30 days after promotion.
+  Each run automatically archives eligible originals after fresh production,
+  source-content, ETag, and reference checks. `--dry-run` prevents all writes;
+  `--prune-backups` enables backup retention. Failures and content
+  mismatches fail the job; undeployed assets remain pending.
 - **`generate-thumbnails.yml`** — thumbnail generation on its own schedule
   independent of the full sync.
 - **`ci.yml`** — on every push/PR to `main`: install deps, `pnpm test`
@@ -324,8 +329,6 @@ Other one-off / maintenance scripts: `restoreBackupToLocal.ts` (pull a prod
 R2 backup into the local D1 for dev), `staticData2DB.ts` (seed local D1 from
 `songs/`), `db-query.mjs` (ad hoc D1 queries), `youtube-backfill/*` (fetch →
 manual review server → push pipeline for backfilling YouTube ids),
-`favorites-capo/*` (backup/apply migration helpers for the personal capo
-feature).
 
 ---
 

@@ -51,6 +51,8 @@ src/web/routeTree.gen.ts
 
 .claude/
 
+.pnpm-store
+
 # rollup-plugin-visualizer output (ANALYZE=1 pnpm build)
 bundle-stats.html
 bundle-stats.json
