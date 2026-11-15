@@ -36,10 +36,12 @@ function fetchImage(bytes: Uint8Array) {
 
 describe("illustration file export", () => {
   it("refreshes an existing filename when source bytes change and invalidates its thumbnail", async () => {
-    existingPair(await image("red"));
+    existingPair(await sharp(await image("red")).jpeg().toBuffer());
     const replacement = await image("blue");
     expect(await syncIllustrationFile("https://bucket.example/image", fullPath, thumbnailPath, fetchImage(replacement))).toBe("updated");
     expect(fs.readFileSync(fullPath)).toEqual(replacement);
+    // An edited PNG must replace the old JPEG without implicit format conversion.
+    expect((await sharp(fs.readFileSync(fullPath)).metadata()).format).toBe("png");
     expect(fs.existsSync(thumbnailPath)).toBe(false);
     expect(fs.readdirSync(path.dirname(fullPath))).toEqual(["model.webp"]);
   });
@@ -78,14 +80,21 @@ describe("illustration file export", () => {
 describe("thumbnail generation workflow", () => {
   it("regenerates a valid WebP thumbnail from the refreshed full image", async () => {
     const generatedFull = path.join(directory, "songs", "illustrations", "song", "prompt", "full", "model.webp");
+    const generatedThumbnail = generatedFull.replace(`${path.sep}full${path.sep}`, `${path.sep}thumbnail${path.sep}`);
     fs.mkdirSync(path.dirname(generatedFull), { recursive: true });
-    fs.writeFileSync(generatedFull, await image("blue"));
+    fs.mkdirSync(path.dirname(generatedThumbnail), { recursive: true });
+    fs.writeFileSync(generatedFull, await image("red"));
+    fs.writeFileSync(generatedThumbnail, await image("red"));
+    const edited = await image("blue");
+    await syncIllustrationFile("https://bucket.example/image", generatedFull, generatedThumbnail, fetchImage(edited));
     const result = spawnSync(process.execPath, [path.resolve("scripts/generate-thumbnails.mjs")], { cwd: directory, encoding: "utf8" });
     expect(result.status, result.stderr).toBe(0);
-    const thumbnail = fs.readFileSync(generatedFull.replace(`${path.sep}full${path.sep}`, `${path.sep}thumbnail${path.sep}`));
+    const thumbnail = fs.readFileSync(generatedThumbnail);
     const metadata = await sharp(thumbnail).metadata();
     expect(metadata.format).toBe("webp");
     expect(metadata.width).toBe(128);
+    const expected = await sharp(edited).resize({ width: 128 }).webp({ quality: 80 }).toBuffer();
+    expect(thumbnail).toEqual(expected);
   });
 
   it("exits unsuccessfully when an image cannot produce a thumbnail", () => {

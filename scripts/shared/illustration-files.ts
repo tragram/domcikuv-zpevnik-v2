@@ -10,7 +10,10 @@ export async function syncIllustrationFile(
   thumbnailPath: string,
   fetcher: typeof fetch = fetch,
 ): Promise<"updated" | "unchanged"> {
-  const response = await fetcher(imageURL, { signal: AbortSignal.timeout(30_000) });
+  const response = await fetcher(imageURL, {
+    signal: AbortSignal.timeout(30_000),
+    headers: { "Cache-Control": "no-cache" },
+  });
   if (!response.ok) throw new Error(`Image download returned HTTP ${response.status}`);
   const bytes = Buffer.from(await response.arrayBuffer());
   // Reject HTML fallbacks and invalid payloads before touching an existing pair.
