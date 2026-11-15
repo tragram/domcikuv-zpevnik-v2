@@ -11,7 +11,10 @@ export const sanitizeId = (id: string) => {
     .toLowerCase()
     .replace(/ /g, "_")
     .replace(/[^a-z0-9-_.]+/g, "")
-    .replace(/_+/g, "_");
+    .replace(/_+/g, "_")
+    // Windows cannot check out a directory whose name ends with a period.
+    // Internal periods are meaningful (for example, model version numbers).
+    .replace(/\.+$/, "");
 };
 
 export const songBaseId = (title: string, artist: string) =>

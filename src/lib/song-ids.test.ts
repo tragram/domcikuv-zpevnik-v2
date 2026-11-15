@@ -19,6 +19,18 @@ describe("to_ascii", () => {
 });
 
 describe("sanitizeId", () => {
+  it("removes trailing periods after other normalization", () => {
+    expect(sanitizeId("Tomáš Klus-Až...!")).toBe("tomas_klus-az");
+    expect(sanitizeId("name.")).toBe("name");
+    expect(sanitizeId("...")).toBe("");
+  });
+
+  it("preserves internal periods and is idempotent", () => {
+    expect(sanitizeId("gpt-5.4-mini")).toBe("gpt-5.4-mini");
+    expect(sanitizeId("anna_k.-noc_na_zemi")).toBe("anna_k.-noc_na_zemi");
+    const id = sanitizeId("Tomáš Klus-Až...");
+    expect(sanitizeId(id)).toBe(id);
+  });
   it("lowercases and replaces spaces with underscores", () => {
     expect(sanitizeId("Hello World")).toBe("hello_world");
   });
@@ -37,6 +49,13 @@ describe("sanitizeId", () => {
 });
 
 describe("songBaseId", () => {
+  it("matches repeated imports regardless of trailing title periods", () => {
+    expect(songBaseId("Až...", "Tomáš Klus")).toBe("tomas_klus-az");
+    expect(songBaseId("Až...", "Tomáš Klus")).toBe(songBaseId("Až", "Tomáš Klus"));
+    const songId = songBaseId("Až...", "Tomáš Klus");
+    expect(promptFolder(songId, defaultPromptId(songId, "gpt-5.4-mini", "v7")))
+      .toBe("gpt-5.4-mini_v7");
+  });
   it("joins artist and title with a dash, sanitized", () => {
     expect(songBaseId("Yesterday", "The Beatles")).toBe(
       "the_beatles-yesterday",
