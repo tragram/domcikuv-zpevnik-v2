@@ -128,7 +128,7 @@ const TransposeDropdown: React.FC<TransposeDropdownProps> = ({
         container={typeof document === "undefined" ? undefined : document.fullscreenElement}
         {...toolbarPanelPlacement}
         aria-label="Choose song key"
-        className={`${songPanelClassName} w-80 max-w-[calc(100vw-2rem)] max-h-[var(--radix-popover-content-available-height)] overflow-y-auto text-sm font-normal`}
+        className={`${songPanelClassName} w-80 max-sm:w-[calc(100dvw-2rem)] max-w-[calc(100vw-2rem)] max-h-[var(--radix-popover-content-available-height)] overflow-y-auto text-sm font-normal`}
       >
         <div className="space-y-4">
           <div className="grid grid-cols-4 gap-2" role="group" aria-label="Song key">

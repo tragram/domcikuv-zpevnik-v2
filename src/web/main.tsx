@@ -8,6 +8,7 @@ import client, { API } from "../worker/api-client";
 import { ThemeProvider } from "./components/ThemeProvider";
 import "./main.css";
 import { routeTree } from "./routeTree.gen";
+import { shouldRestoreSongScroll } from "./lib/scroll-restoration";
 
 export interface RouterContext {
   queryClient: QueryClient;
@@ -38,7 +39,7 @@ const router = createRouter({
   } as RouterContext,
   // defaultPreload: "intent",
   // defaultPreloadStaleTime: 0,
-  scrollRestoration: false,
+  scrollRestoration: shouldRestoreSongScroll,
 });
 
 // Register the router instance for type safety
