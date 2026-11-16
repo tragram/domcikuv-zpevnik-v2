@@ -4,6 +4,9 @@
   "description": "Druhá verze mého báječného zpěvníku - nyní offline!",
   "version": "-dev",
   "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1000.0",
     "@codemirror/merge": "^6.12.1",

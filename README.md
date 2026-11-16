@@ -8,6 +8,8 @@ The app is a progressive web application (PWA), which means you can install it o
 The original songbook was my high-school graduation project, consisting of an [Android app](https://github.com/tragram/DomcikuvZpevnik) and a [PHP server](https://github.com/tragram/DomcikuvZpevnik-Server) is [hosted here](https://appelt.cz/domcikuvzpevnik/). Unfortunately, due to lack of updates, the app was taken down from Google Play in 2024 and the website was not mobile-friendly, which is the main use-case of the songbook. Since I no longer code in Java or PHP, I started building this new version to have something to do on the long train journey to the Tatra mountains!
 
 ## Running locally
+Use Node.js 24.x and pnpm 9. All GitHub workflows read the Node version from `package.json`; the test suite uses Node's built-in `node:sqlite` module.
+
 No Cloudflare account is needed for local development — all the bindings (D1, KV, R2, Durable Objects) run in Wrangler's local simulator. You can run the page fully locally by
 * installing the dependencies: `pnpm i`
 * initializing the dev DB: `pnpm dev:init` (applies migrations and seeds the DB from the static files in `songs/`)
