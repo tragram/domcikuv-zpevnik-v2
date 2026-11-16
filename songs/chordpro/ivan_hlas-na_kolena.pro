@@ -3,7 +3,9 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1774984809000}
-{updatedAt: 1785527091000}
+{updatedAt: 1794753289000}
+{illustrationId: ivan_hlas-na_kolena_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: ivan_hlas-na_kolena_gpt-5.4-mini_v7}
 
 {start_of_verse}
 S: Táhněte [C]do háje - všichni [Am]pryč

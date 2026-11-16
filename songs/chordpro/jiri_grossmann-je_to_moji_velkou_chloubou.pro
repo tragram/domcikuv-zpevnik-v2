@@ -4,11 +4,9 @@
 {capo: 0}
 {language: czech}
 {createdAt: 1783502551000}
-{updatedAt: 1784133286000}
+{updatedAt: 1794755450000}
 {illustrationId: jiri_grossmann-je_to_moji_velkou_chloubou_gpt-5.4-mini_v7_nano-banana-2}
 {promptId: jiri_grossmann-je_to_moji_velkou_chloubou_gpt-5.4-mini_v7}
-
-{start_of_verse}
 
 {start_of_verse}
 [F]Je to mojí velkou chloubou

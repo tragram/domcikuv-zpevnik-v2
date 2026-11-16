@@ -1,2 +1,20 @@
 songId: ivan_hlas-na_kolena
-prompts: []
+prompts:
+  - id: ivan_hlas-na_kolena_gpt-5.4-mini_v7
+    songId: ivan_hlas-na_kolena
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a bruised, disheveled man in a smoky dim
+      bar, sitting alone under a harsh overhead light while a crowd in suits
+      blurs in the background, he looks defiant and exhausted, a cigarette in
+      hand, messy clothes, spilled drinks and gritty floor, subtle sense of
+      rejection and rebellion, dark moody color palette, high contrast lighting,
+      shallow depth of field, simple composition, no text, 16:9
+    createdAt: 2026-11-15T14:34:40.000Z
+    updatedAt: 2026-11-15T14:34:40.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1794753289000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

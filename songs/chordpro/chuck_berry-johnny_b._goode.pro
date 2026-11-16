@@ -4,7 +4,9 @@
 {capo: 0}
 {language: english}
 {createdAt: 1789897180000}
-{updatedAt: 1789898145000}
+{updatedAt: 1794753290000}
+{illustrationId: chuck_berry-johnny_b._goode_gpt-5.4-mini_v7_nano-banana-2}
+{promptId: chuck_berry-johnny_b._goode_gpt-5.4-mini_v7}
 
 {start_of_interlude}
 [A#][D#][A#][F][D#][A#]
