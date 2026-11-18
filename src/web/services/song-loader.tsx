@@ -1,25 +1,25 @@
 import { QueryClient } from "@tanstack/react-query";
 import { RouteIds, useLoaderDeps, useParams } from "@tanstack/react-router";
-import { getSongDB, songsQueryOptions } from "~/hooks/use-songDB";
+import { publicSongbooksQueryOptions, songsQueryOptions } from "~/hooks/use-songDB";
 import type { routeTree } from "~/routeTree.gen";
 import { SongData } from "~/types/songData";
-import { findOrFetchSong } from "./song-service";
+import { findOrFetchSong, getCachedSongVersion } from "./song-service";
+import { ApiException } from "./api-service";
 import {
   favoritesQueryOptions,
   getSessionUserId,
+  normalizeSongbookEntries,
+  sessionQueryOptions,
   songbookEntriesQueryOptions,
 } from "~/hooks/use-user-data";
 import { SongbookOverride } from "~/features/SongView/hooks/songTransposeMath";
 import PendingComponent from "~/components/PendingComponent";
-import { useIsOnline } from "~/hooks/use-is-online";
-import type { VersionSelection } from "~/features/SongView/utils/versionDetails";
+import { getIsOnline, useIsOnline } from "~/hooks/use-is-online";
+import { selectSongVersion, type VersionSelection } from "src/lib/song-selection";
 import type { SongbookEntryApi, SongDataApi } from "src/worker/api/api-types";
+import type { Songbook } from "~/types/types";
 
-// The song loader resolves cached songs locally but still awaits `getSongDB`'s
-// network-bound refetch attempts, which only fail slowly while offline — long
-// enough to trip the route's pending screen. Offline there is nothing to fetch,
-// so the "Fetching the song from the DB…" screen is both wrong and pointless;
-// suppress it and let the cached song render straight away.
+// Online navigation revalidates the sheet; offline cached sheets open immediately.
 export const SongPendingComponent = () => {
   const isOnline = useIsOnline();
   if (!isOnline) return null;
@@ -86,78 +86,60 @@ const songLoader = async ({
 }): Promise<SongLoaderData> => {
   const queryClient = context.queryClient;
 
-  const songDB = await getSongDB(queryClient);
-
-  let personalizationOverride: SongLoaderData["personalizationOverride"];
-  let songbookOwnerName: string | undefined;
-  let songData: SongData | null = null;
-  let pinnedVersionId: string | null = null;
-  const canonicalSongs =
-    queryClient.getQueryData<SongDataApi[]>(songsQueryOptions().queryKey) ?? [];
-
-  // When opened inside another user's songbook, adopt that owner's saved
-  // key/capo and (for a pinned draft) their already-resolved song. The query
-  // ships only non-canonical drafts inline; canonical entries resolve from the
-  // global list below. An explicit ?version still wins (handled below).
+  const canonicalSongs = queryClient.getQueryData<SongDataApi[]>(songsQueryOptions().queryKey) ?? [];
+  // Ordinary navigation needs personal context; links and foreign books don't.
+  // ensureQueryData reads restored data immediately, fetching only on a miss.
+  if (!deps.version && !deps.songbook) {
+    await queryClient.ensureQueryData(sessionQueryOptions());
+  }
+  const viewerId = getSessionUserId(queryClient);
+  let favorites = viewerId
+    ? queryClient.getQueryData<SongbookEntryApi[]>(favoritesQueryOptions(viewerId).queryKey)
+    : undefined;
+  if (viewerId && !deps.version && (!deps.songbook || deps.songbook === viewerId)) {
+    favorites = await queryClient.ensureQueryData(favoritesQueryOptions(viewerId)).catch(() => favorites);
+  }
+  const ownEntry = normalizeSongbookEntries(favorites).find((entry) => entry.songId === params.songId);
+  let songbook: Parameters<typeof selectSongVersion>[0]["songbook"];
   if (deps.songbook && !deps.version) {
-    const entries = await queryClient.ensureQueryData(
-      songbookEntriesQueryOptions(deps.songbook),
-    );
-    const entry = entries.find((e) => e.songId === params.songId);
-    if (entry) {
-      personalizationOverride = { keyIndex: entry.keyIndex, capo: entry.capo };
-      songbookOwnerName = songDB.songbooks.find(
-        (s) => s.user === deps.songbook,
-      )?.name;
-      pinnedVersionId = entry.pinnedVersionId;
-      if (entry.song) songData = new SongData(entry.song);
-    }
+    const entries = deps.songbook === viewerId ? favorites
+      : await queryClient.ensureQueryData(songbookEntriesQueryOptions(deps.songbook));
+    songbook = {
+      entry: normalizeSongbookEntries(entries).find((entry) => entry.songId === params.songId),
+      ownerName: queryClient.getQueryData<Songbook[]>(publicSongbooksQueryOptions().queryKey)
+        ?.find((book) => book.user === deps.songbook)?.name,
+    };
   }
-
-  // The viewer's own pinned drafts are already injected into songDB.songs by
-  // buildSongDB, so a normal open just resolves from there (fetching an explicit
-  // ?version, or on a cache miss). Foreign songbooks resolve from the raw
-  // canonical list so the viewer's personal pin cannot replace the owner's song.
-  if (!songData) {
-    songData = await findOrFetchSong(
-      deps.songbook ? canonicalSongs : songDB.songs,
-      params.songId,
-      deps.version,
-      queryClient,
-    );
+  const selected = selectSongVersion({
+    official: canonicalSongs.find((song) => song.id === params.songId),
+    ownEntry, songbook, versionId: deps.version,
+  });
+  const pinnedId = selected.pinnedVersionId ?? undefined;
+  const candidates = selected.sheet ? [selected.sheet] : [];
+  const cachedPin = pinnedId ? getCachedSongVersion(queryClient, params.songId, pinnedId, candidates) : undefined;
+  const requestedId = deps.version ?? ((getIsOnline() || cachedPin) ? pinnedId : undefined);
+  const sheets = !getIsOnline() && pinnedId && !cachedPin ? canonicalSongs : candidates;
+  let songData: SongData;
+  try {
+    songData = await findOrFetchSong(sheets, params.songId, requestedId, queryClient);
+  } catch (error) {
+    // Saved choices may have been withdrawn since the book was cached. Exact
+    // links still fail honestly; personal/book navigation can show official.
+    if (deps.version || !pinnedId || !(error instanceof ApiException) || ![403, 404].includes(error.status)) throw error;
+    songData = await findOrFetchSong(canonicalSongs, params.songId, undefined, queryClient);
   }
-  if (!songData) throw new Error("Song not found!");
-
-  // If the owner pinned a version we couldn't show (deleted, or just not the
-  // current one and not shipped), we fell back to the official current version.
-  const versionUnavailable =
-    pinnedVersionId != null && songData.versionId !== pinnedVersionId;
-
-  const ownEntry = queryClient
-    .getQueryData<SongbookEntryApi[]>(
-      favoritesQueryOptions(getSessionUserId(queryClient)).queryKey,
-    )
-    ?.find((entry) => entry.songId === params.songId);
-  const versionSelection: VersionSelection = deps.version
-    ? { source: "link" }
-    : deps.songbook
-      ? {
-          source: "songbook",
-          ownerName: songbookOwnerName,
-          unavailable: versionUnavailable,
-        }
-      : ownEntry?.pinnedVersionId
-        ? {
-            source: "saved",
-            unavailable: songData.versionId !== ownEntry.pinnedVersionId,
-          }
-        : { source: "official" };
+  songData.isFavorite = !!ownEntry;
+  const versionSelection: VersionSelection = { source: selected.source };
+  if (selected.source === "songbook") versionSelection.ownerName = selected.ownerName;
+  if (selected.source === "saved" || selected.source === "songbook") {
+    versionSelection.unavailable = !!selected.pinnedVersionId && songData.versionId !== selected.pinnedVersionId;
+  }
 
   return {
     songData,
     songId: params.songId,
     versionId: deps.version,
-    personalizationOverride,
+    personalizationOverride: selected.personalizationOverride,
     versionSelection,
   };
 };

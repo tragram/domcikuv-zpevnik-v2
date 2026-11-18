@@ -9,6 +9,7 @@ import { makeApiRequest } from "~/services/api-service";
 import { authClient } from "src/lib/auth/client";
 import { parseDBDates } from "../services/song-service";
 import type { SongbookEntryApi, SongVersionApi } from "src/worker/api/api-types";
+import { songQueryKeys } from "~/services/song-query-keys";
 
 export type UserData = {
   profile: NonNullable<UserProfileDB>;
@@ -76,7 +77,7 @@ export const favoritesQueryOptions = (
   revalidateOnMount = false,
 ) =>
   queryOptions({
-    queryKey: ["favorites", userId],
+    queryKey: songQueryKeys.userFavorites(userId),
     // Only the top-level user-data subscription opts into this. Heart buttons
     // share the query without refetching as virtualized rows mount.
     ...(revalidateOnMount
@@ -90,7 +91,7 @@ export const favoritesQueryOptions = (
 // Maps/Sets into the persisted filter store.
 export const songbookEntriesQueryOptions = (ownerId: string) =>
   queryOptions({
-    queryKey: ["songbookEntries", ownerId],
+    queryKey: songQueryKeys.userSongbook(ownerId),
     queryFn: (): Promise<SongbookEntryApi[]> =>
       makeApiRequest(() =>
         client.api.favorites.of[":userId"].$get({ param: { userId: ownerId } }),
@@ -177,7 +178,7 @@ export function patchFavoriteEntry(
 
 export const submissionsQueryOptions = (userId?: string) =>
   queryOptions({
-    queryKey: ["submissions", userId],
+    queryKey: songQueryKeys.userSubmissions(userId),
     queryFn: () => fetchSubmissions(),
   });
 
@@ -255,12 +256,12 @@ export async function getUserData(): Promise<UserData> {
     queryClient
       .ensureQueryData(favoritesQueryOptions(userId))
       .catch(() =>
-        queryClient.getQueryData<SongbookEntryApi[]>(["favorites", userId]),
+        queryClient.getQueryData<SongbookEntryApi[]>(songQueryKeys.userFavorites(userId)),
       ),
     queryClient
       .ensureQueryData(submissionsQueryOptions(userId))
       .catch(() =>
-        queryClient.getQueryData<SongVersionDB[]>(["submissions", userId]),
+        queryClient.getQueryData<SongVersionDB[]>(songQueryKeys.userSubmissions(userId)),
       ),
   ]);
 

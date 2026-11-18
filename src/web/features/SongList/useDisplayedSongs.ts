@@ -10,6 +10,8 @@ import { songbookEntriesQueryOptions, type UserData } from "~/hooks/use-user-dat
 import { useQueryStore } from "./Toolbar/SearchBar";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { applyFilters, sortSongs } from "./Toolbar/filters/songFilters";
+import { songsQueryOptions } from "~/hooks/use-songDB";
+import { songbookSheet } from "src/lib/song-selection";
 
 export interface DisplayedSongs {
   /** The list to render: fuzzy search results while searching, else filtered + sorted. */
@@ -54,16 +56,24 @@ export function useDisplayedSongs(
     ...songbookEntriesQueryOptions(foreignOwner ?? ""),
     enabled: !!foreignOwner,
   });
+  // Observe the catalog already downloaded by useSongDB; never fetch here.
+  // songDB.songs contains the viewer's pins, which aren't this owner's choices.
+  const { data: officialSongs } = useQuery({ ...songsQueryOptions(), enabled: false });
   // Resolve each entry to a SongData: pinned drafts ship inline as `e.song`;
-  // canonical entries are looked up in the global SongDB (the payload omits them
+  // canonical entries are looked up in the raw catalog (the payload omits them
   // to stay small). Entries that resolve to neither (deleted) are dropped.
   const ownerSongs = useMemo(() => {
-    if (!ownerEntries) return undefined;
-    const byId = new Map(songDB.songs.map((s) => [s.id, s]));
+    if (!foreignOwner) return undefined;
+    const toSong = (sheet: NonNullable<ReturnType<typeof songbookSheet>>) =>
+      new SongData({ ...sheet, isFavoriteByCurrentUser: userData?.favoriteIds.has(sheet.id) });
+    if (!ownerEntries) return (officialSongs ?? []).map(toSong);
+    const byId = new Map(officialSongs?.map((s) => [s.id, s]));
     return ownerEntries
-      .map((e) => (e.song ? new SongData(e.song) : byId.get(e.songId)))
-      .filter((s): s is SongData => !!s);
-  }, [ownerEntries, songDB.songs]);
+      .flatMap((entry) => {
+        const sheet = songbookSheet(byId.get(entry.songId), entry);
+        return sheet ? [toSong(sheet)] : [];
+      });
+  }, [foreignOwner, ownerEntries, officialSongs, userData?.favoriteIds]);
   // Until the owner's songbook loads, fall back to the global list (filtered by
   // songbook below shows its approved subset), then swap to the full set.
   const baseSongs = foreignOwner && ownerSongs ? ownerSongs : songDB.songs;

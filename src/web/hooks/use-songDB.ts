@@ -6,19 +6,20 @@ import {
   fetchSongs,
 } from "~/services/song-service";
 import { UserData } from "./use-user-data";
+import { songQueryKeys } from "~/services/song-query-keys";
 
 import { QueryClient } from "@tanstack/react-query";
 import { favoritesQueryOptions, sessionQueryOptions, submissionsQueryOptions, sessionToProfile, indexSongbookEntries } from "./use-user-data";
 
 export const songsQueryOptions = () =>
   queryOptions({
-    queryKey: ["songs"],
+    queryKey: songQueryKeys.catalog,
     queryFn: () => fetchSongs(),
   });
 
 export const publicSongbooksQueryOptions = () =>
   queryOptions({
-    queryKey: ["publicSongbooks"],
+    queryKey: songQueryKeys.publicSongbooks,
     queryFn: () => fetchPublicSongbooks(),
   });
 
@@ -57,9 +58,9 @@ export function useSongDB(
 // Cheap: fetchSongs goes through the incremental-sync endpoint.
 export const refreshSongDB = (queryClient: QueryClient) =>
   Promise.all([
-    queryClient.invalidateQueries({ queryKey: ["songs"], refetchType: "all" }),
+    queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog, refetchType: "all" }),
     queryClient.invalidateQueries({
-      queryKey: ["publicSongbooks"],
+      queryKey: songQueryKeys.publicSongbooks,
       refetchType: "all",
     }),
   ]);

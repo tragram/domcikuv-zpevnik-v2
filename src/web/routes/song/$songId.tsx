@@ -24,7 +24,7 @@ export const Route = createFileRoute("/song/$songId")({
   }),
   loader: songLoader,
   pendingMs: 200,
-  pendingMinMs: 1000, // keep visible for at least 1s
+  pendingMinMs: 0, // A genuine cache miss should not add an artificial 1s delay.
   pendingComponent: SongPendingComponent,
   errorComponent: () => <SongLoaderErrorComponent from="/song/$songId" />,
 });

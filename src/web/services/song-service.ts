@@ -23,9 +23,11 @@ import {
   SongLanguage,
 } from "~/types/types";
 import { UserData } from "../hooks/use-user-data";
-import { makeApiRequest } from "./api-service";
+import { ApiException, makeApiRequest } from "./api-service";
 import { QueryClient, queryOptions } from "@tanstack/react-query";
 import { getIsOnline } from "~/hooks/use-is-online";
+import { songbookSheet } from "src/lib/song-selection";
+import { songQueryKeys } from "./song-query-keys";
 
 interface Timestamped {
   createdAt?: Date | string;
@@ -60,7 +62,7 @@ type SongsMeta = {
 };
 
 const setSongsMeta = (data: { songDBVersion: string; lastUpdateAt: string }) =>
-  queryClient.setQueryData<SongsMeta>(["songs-meta"], {
+  queryClient.setQueryData<SongsMeta>(songQueryKeys.catalogMeta, {
     version: data.songDBVersion,
     lastUpdate: data.lastUpdateAt,
     appVersion: __APP_VERSION__,
@@ -68,14 +70,15 @@ const setSongsMeta = (data: { songDBVersion: string; lastUpdateAt: string }) =>
 
 export const fetchSongs = async (): Promise<SongDataApi[]> => {
   // 1. Get current cached state from TanStack/IndexedDB
-  const cached = queryClient.getQueryData<SongDataApi[]>(["songs"]);
-  const meta = queryClient.getQueryData<SongsMeta>(["songs-meta"]);
+  const cached = queryClient.getQueryData<SongDataApi[]>(songQueryKeys.catalog);
+  const meta = queryClient.getQueryData<SongsMeta>(songQueryKeys.catalogMeta);
 
   // 2. Full fetch when there's no cache — or when the cache was written by a
   // different build. Incremental sync only patches changed songs, so rows kept
   // from an older build would otherwise retain that build's shape forever;
-  // one full fetch per deploy re-normalizes everything.
-  if (!cached || !meta || meta.appVersion !== __APP_VERSION__) {
+  // one full fetch per deploy (or catalog format upgrade) re-normalizes everything.
+  if (!cached || !meta || meta.appVersion !== __APP_VERSION__ ||
+    cached.some((song) => !Array.isArray(song.publishedVersionIds))) {
     try {
       const data = await makeApiRequest(client.api.songs.$get);
       setSongsMeta(data);
@@ -131,7 +134,7 @@ export const fetchSongs = async (): Promise<SongDataApi[]> => {
 
 export const singleSongQueryOptions = (songId: string, versionId?: string) =>
   queryOptions({
-    queryKey: versionId ? ["song", "fetch", songId, versionId] : ["song", "fetch", songId],
+    queryKey: songQueryKeys.sheet(songId, versionId),
     queryFn: async () => {
       if (versionId) {
         return (await makeApiRequest(() =>
@@ -149,13 +152,13 @@ export const singleSongQueryOptions = (songId: string, versionId?: string) =>
     },
   });
 
-export const songVersionsQueryOptions = (songId: string, viewerId?: string) =>
+export const songVersionsQueryOptions = (songId: string, viewerId?: string, shownVersionId?: string) =>
   queryOptions({
-    queryKey: ["songVersions", songId, viewerId ?? "public"],
+    queryKey: songQueryKeys.versionList(songId, viewerId, shownVersionId),
     queryFn: async ({ client: cache, queryKey }) => {
       try {
         return await makeApiRequest(() =>
-          client.api.songs.versions[":songId"].$get({ param: { songId }, query: {} }),
+          client.api.songs.versions[":songId"].$get({ param: { songId }, query: { shownVersionId } }),
         );
       } catch (error) {
         // Retain successful persisted history when a refresh fails offline.
@@ -174,9 +177,12 @@ export function getCachedSongVersion(
   versionId: string,
   songs: readonly (SongData | SongDataApi)[] = [],
 ): SongData | SongDataApi | undefined {
+  const exactState = cache.getQueryState(singleSongQueryOptions(songId, versionId).queryKey);
+  // A confirmed removal/denial must not be resurrected by cache-first viewing.
+  if (exactState?.error instanceof ApiException && [403, 404].includes(exactState.error.status)) return undefined;
   return cache.getQueryData<SongDataApi>(singleSongQueryOptions(songId, versionId).queryKey)
     ?? songs.find((song) => song.id === songId && song.versionId === versionId)
-    ?? cache.getQueryData<SongDataApi[]>(["songs"])?.find(
+    ?? cache.getQueryData<SongDataApi[]>(songQueryKeys.catalog)?.find(
       (song) => song.id === songId && song.versionId === versionId,
     );
 }
@@ -187,23 +193,29 @@ export const findOrFetchSong = async (
   versionId: string | undefined,
   queryClient: QueryClient,
 ): Promise<SongData> => {
-  // Explicit revisions refresh online; offline they must already be downloaded.
-  if (versionId) {
-    if (!getIsOnline()) {
-      const cached = getCachedSongVersion(queryClient, songId, versionId, songs);
-      if (cached) return cached instanceof SongData ? cached : new SongData(cached);
-    }
-    const raw = await queryClient.fetchQuery(
-      singleSongQueryOptions(songId, versionId),
-    );
-    return new SongData(raw);
+  // Offline sheets open immediately. Online navigation resolves the current
+  // sheet before returning a loader snapshot, including its concurrency token.
+  if (!getIsOnline()) {
+    const cached = versionId
+      ? getCachedSongVersion(queryClient, songId, versionId, songs)
+      : songs.find((song) => song.id === songId);
+    if (cached) return cached instanceof SongData ? cached : new SongData(cached);
   }
-  // Otherwise prefer the already-loaded canonical song, fetching only on a miss.
-  const local = songs.find((s) => s.id === songId);
-  if (local) return local instanceof SongData ? local : new SongData(local);
-  const raw = await queryClient.fetchQuery(
-    singleSongQueryOptions(songId, undefined),
-  );
+  const raw = await queryClient.fetchQuery({
+    ...singleSongQueryOptions(songId, versionId),
+    staleTime: 0,
+    // A cache miss must fail promptly offline instead of pausing navigation.
+    networkMode: "always",
+    retry: false,
+  });
+  if (raw.publishedVersionIds) {
+    // A fresh sheet also carries fresh song-wide choices. Keep the badge's
+    // catalog observation current without postponing the next catalog sync.
+    const catalogUpdatedAt = queryClient.getQueryState(songQueryKeys.catalog)?.dataUpdatedAt;
+    queryClient.setQueryData<SongDataApi[]>(songQueryKeys.catalog, (catalog) =>
+      catalog?.map((song) => song.id === songId ? { ...song, publishedVersionIds: raw.publishedVersionIds } : song),
+    { updatedAt: catalogUpdatedAt });
+  }
   return new SongData(raw);
 };
 
@@ -337,7 +349,8 @@ export const buildSongDB = (
   // favorites cache in useSongTranspose, not baked onto the song here.
   if (userData?.songbookEntries) {
     for (const entry of userData.songbookEntries.values()) {
-      if (entry.song) songMap.set(entry.songId, { ...entry.song });
+      const sheet = songbookSheet(songMap.get(entry.songId), entry);
+      if (sheet) songMap.set(entry.songId, sheet);
     }
   }
 

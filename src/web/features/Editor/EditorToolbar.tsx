@@ -42,6 +42,7 @@ import {
 } from "src/lib/contracts/image-generation";
 import { UserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
+import { refreshSongVersions } from "~/services/version-service";
 import { OfflineToolbarBadge } from "~/components/OfflineIndicator";
 
 interface EditorToolbarProps {
@@ -228,23 +229,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       // (favorites now carries the resolved pinned-draft song); submissions
       // feeds the editor's own drafts list. Without this, ensureQueryData hands
       // back the stale pre-edit version regardless of invalidation.
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: ["songs"],
-          refetchType: "all",
-        }),
-        queryClient.invalidateQueries({
-          queryKey: ["favorites"],
-          refetchType: "all",
-        }),
-        queryClient.invalidateQueries({
-          queryKey: ["submissions"],
-          refetchType: "all",
-        }),
-      ]);
-      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      await refreshSongVersions(queryClient);
 
       if (userData && userData.profile.isAdmin) {
         await navigate({
