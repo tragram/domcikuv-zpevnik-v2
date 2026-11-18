@@ -4,9 +4,11 @@ import { Check, History, Pencil } from "lucide-react";
 import { getCachedSongVersion } from "~/services/song-service";
 import type { SongVersionSummaryApi } from "src/worker/api/api-types";
 import { Button } from "~/components/ui/button";
+import { Badge } from "~/components/ui/badge";
 import { cn } from "~/lib/utils";
 import { CompactItem } from "~/components/RichDropdown";
 import { Separator } from "~/components/ui/separator";
+import { versionLabel } from "src/lib/version-label";
 
 const versionDate = new Intl.DateTimeFormat(undefined, {
   day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit",
@@ -63,15 +65,18 @@ export function SongVersionHistory({
           {versions.map((version) => {
             const shown = version.id === shownVersionId;
             const downloaded = shown || !!getCachedSongVersion(cache, songId, version.id);
-            const title = version.isCurrent ? "Official version" : version.status === "pending" ? "Your pending edit" : "Earlier version";
+            const title = versionLabel(version);
             const VersionIcon = version.isCurrent ? Check : version.status === "pending" ? Pencil : History;
-            const createdAt = versionDate.format(new Date(version.createdAt));
+            const createdAt = versionDate.format(new Date(version.updatedAt ?? version.createdAt));
             return (
-              <li key={version.id} className={cn("rounded-sm px-2 py-1.5", shown && "bg-primary/10")} aria-current={shown ? "true" : undefined}>
+              <li key={version.id} className={cn("rounded-lg px-2 py-1.5", shown && "bg-primary/10")} aria-current={shown ? "true" : undefined}>
                 <CompactItem.Shell>
                   <CompactItem.Icon><VersionIcon aria-hidden="true" /></CompactItem.Icon>
                   <div className="min-w-0 flex-1">
-                    <p className={cn(shown && "text-primary")}>{title}</p>
+                    <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+                      <p className={cn(shown && "text-primary")}>{title}</p>
+                      {version.isCurrent && <Badge variant="outline" className="border-primary/30 bg-primary/10 px-1.5 py-0 text-tiny font-normal text-primary">Official</Badge>}
+                    </div>
                     {!shown && version.id === savedVersionId && <p className="text-tiny text-primary">Saved in your songbook</p>}
                     <p className="text-tiny leading-tight text-muted-foreground break-words">{createdAt} · {version.author.id === viewerId ? "You" : version.author.name}</p>
                     <p className="text-tiny leading-tight text-muted-foreground">
@@ -111,11 +116,13 @@ export function SongVersionHistory({
       {(onUse || (canPreview && versions.length > 1)) && (
         <div>
           <Separator />
-            <p className="px-2 py-1.5 text-tiny leading-tight text-muted-foreground">
+            {(onUse || (canPreview && versions.length > 1)) && <p className="px-2 py-1.5 text-tiny leading-tight text-muted-foreground">
               {onUse
                 ? "View previews a version. Use saves the displayed version to your songbook."
-                : "Sign in to save your version choice. You can preview versions here."}
-            </p>
+                : viewerId
+                  ? "View opens another version without changing this songbook."
+                  : "You can view other versions without signing in. Sign in to save your own choice."}
+            </p>}
         </div>
       )}
     </div>

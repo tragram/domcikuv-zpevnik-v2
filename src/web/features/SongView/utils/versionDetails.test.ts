@@ -18,7 +18,7 @@ describe("song version details", () => {
     expect(getVersionDetails(official, user, undefined, undefined, "published").status)
       .toBe("Published");
     expect(getVersionDetails(custom, user, undefined, undefined, "archived"))
-      .toMatchObject({ status: "Archived", notes: ["Older revision."] });
+      .toMatchObject({ status: "Archived", notes: [] });
   });
   it("distinguishes a saved official revision from following official updates", () => {
     expect(getVersionDetails(official, user, { source: "saved" })).toMatchObject({
@@ -49,14 +49,25 @@ describe("song version details", () => {
       .toMatchObject({ canChoose: false });
   });
 
-  it("keeps an unnamed songbook read-only and explains its fallback", () => {
+  it("allows previews from a read-only songbook and explains its fallback", () => {
     const details = getVersionDetails(official, user, {
       source: "songbook",
       unavailable: true,
     });
     expect(details.canChoose).toBe(false);
+    expect(details.canPreview).toBe(true);
     expect(details.reason).toContain("could not be loaded");
     expect(details.notes).toContain("Saved version unavailable; showing official.");
+  });
+
+  it.each(["songbook", "official", "link"] as const)("allows signed-out version previews from %s without saving a preference", (source) => {
+    expect(getVersionDetails(custom, undefined, { source }))
+      .toMatchObject({ canPreview: true, canChoose: false });
+  });
+
+  it("keeps followers on the host's version even when they are signed out", () => {
+    expect(getVersionDetails(custom, undefined, { source: "songbook" }, { enabled: true, isMaster: false } as FeedStatus))
+      .toMatchObject({ canPreview: false, canChoose: false });
   });
 
   it("does not claim an unavailable personal pin is the displayed revision", () => {
@@ -71,10 +82,12 @@ describe("song version details", () => {
 
   it("describes archived and pending versions accurately for other authors", () => {
     const archived = getVersionDetails({ ...custom, versionStatus: "archived" } as SongData, user);
-    expect(archived.notes).toContain("Older revision.");
+    expect(archived.status).toBe("Archived");
+    expect(archived.notes).toEqual([]);
     expect(archived.notes.join(" ")).not.toContain("awaiting approval");
     const pending = getVersionDetails({ ...custom, versionStatus: "pending" } as SongData, user);
-    expect(pending.notes.join(" ")).toContain("awaiting approval");
+    expect(pending.status).toBe("Awaiting approval");
+    expect(pending.notes).toEqual([]);
   });
 
   it("recognizes the viewer's authorship without attributing a foreign edit to them", () => {

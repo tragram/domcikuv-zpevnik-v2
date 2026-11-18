@@ -110,6 +110,13 @@ const SongHeading: React.FC<SongHeadingProps> = ({
           isWrapped ? "w-full items-center" : "self-stretch",
         )}
       >
+        <SongVersionBadge
+          key={`${songData.id}:${songData.versionId}`}
+          songData={songData}
+          userData={userData}
+          selection={versionSelection}
+          feedStatus={feedStatus}
+        />
         <div className="flex items-center gap-4 md:gap-6">
           <div
             className={cn(
@@ -152,13 +159,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
           )}
 
         </div>
-        <SongVersionBadge
-          key={`${songData.id}:${songData.versionId}`}
-          songData={songData}
-          userData={userData}
-          selection={versionSelection}
-          feedStatus={feedStatus}
-        />
+
       </div>
     </div>
   );

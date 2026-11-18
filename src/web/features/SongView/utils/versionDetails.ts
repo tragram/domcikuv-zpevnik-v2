@@ -2,11 +2,8 @@ import type { SongData } from "~/types/songData";
 import type { UserData } from "~/hooks/use-user-data";
 import type { FeedStatus } from "../hooks/useSessionSync";
 
-export type VersionSelection = {
-  source: "official" | "saved" | "songbook" | "link";
-  ownerName?: string;
-  unavailable?: boolean;
-};
+import type { VersionSelection } from "src/lib/song-selection";
+export type { VersionSelection } from "src/lib/song-selection";
 
 export function getVersionDetails(
   song: SongData,
@@ -48,18 +45,8 @@ export function getVersionDetails(
   if (selection?.unavailable) {
     notes.push("Saved version unavailable; showing official.");
   }
-  if (song.canonicalIsNewer) {
-    notes.push("Newer official version available.");
-  }
-  if (status === "pending") {
-    notes.push("Edit awaiting approval.");
-  } else if (status === "archived") {
-    notes.push("Older revision.");
-  } else if (status === "rejected") {
-    notes.push("Edit not approved.");
-  }
 
-  const canPreview = !following && selection?.source !== "songbook";
+  const canPreview = !following;
   return {
     label,
     reason,
@@ -73,6 +60,8 @@ export function getVersionDetails(
     }[status] : undefined,
     author: author ? (isOwnVersion ? "you" : author.name) : undefined,
     canPreview,
-    canChoose: !!userData && canPreview,
+    // Previewing another sheet is navigation. Keep the public songbook view
+    // read-only; saving a personal choice happens after opening the preview.
+    canChoose: !!userData && canPreview && selection?.source !== "songbook",
   };
 }

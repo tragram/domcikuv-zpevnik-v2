@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import client from "src/worker/api-client";
 import type { SongbookEntryApi } from "src/worker/api/api-types";
 import { useIsOnline } from "~/hooks/use-is-online";
+import { makeApiRequest } from "~/services/api-service";
 import {
   addFavoriteEntry,
   favoritesQueryOptions,
@@ -34,18 +35,15 @@ export function useToggleFavorite(
   // immediately.
   const { isFavorite } = useSongbookEntry(song.id, userId, song.isFavorite);
 
-  // Liking a draft (a non-canonical version on screen — e.g. another user's
-  // pending edit) pins that exact version, so it keeps showing in the songbook.
-  // Imported external versions are never pinned: their curated version is always
-  // the better one to fall back to.
-  const pinnedVersionId =
-    song.isCustom && !song.externalSource ? song.versionId : undefined;
+  // The heart and the version picker's Use action both save the displayed ID.
+  const pinnedVersionId = song.versionId;
 
   const addFavorite = useMutation({
-    mutationFn: () =>
+    mutationFn: () => makeApiRequest(() =>
       client.api.favorites.$post({
         json: { songId: song.id, ...(personalization ?? {}), pinnedVersionId },
       }),
+    ),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
       const previous = queryClient.getQueryData<SongbookEntryApi[]>(queryKey);
@@ -61,6 +59,7 @@ export function useToggleFavorite(
       if (ctx?.previous) queryClient.setQueryData(queryKey, ctx.previous);
       toast.error("Failed to add to songbook");
     },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey, refetchType: "all" }),
   });
 
   const removeFavorite = useMutation({
