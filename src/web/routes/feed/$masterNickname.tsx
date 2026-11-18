@@ -1,19 +1,17 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { API } from "src/worker/api-client";
 
 import type { SessionSyncState } from "src/worker/durable-objects/SessionSync";
-import type { SongDataApi } from "src/worker/api/api-types";
 import { OfflineNotice } from "~/components/OfflineIndicator";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { useMasterRelay } from "~/features/SongView/hooks/useMasterRelay";
 import { useShareSessionToggle } from "~/features/SongView/hooks/useShareSessionToggle";
 import SongView from "~/features/SongView/SongView";
-import { handleApiResponse } from "~/services/api-service";
+import { feedSongQueryOptions } from "~/services/feed-song";
 import { fetchFeed } from "~/services/song-service";
-import { SongData } from "~/types/songData";
 
 export const Route = createFileRoute("/feed/$masterNickname")({
   component: RouteComponent,
@@ -94,27 +92,7 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentSongId]);
-  const currentVersionId = feedStatus.sessionState?.versionId;
-  const { data: songData } = useQuery({
-    queryKey: ["song", currentSongId, currentVersionId],
-    enabled: !!currentSongId,
-    refetchOnMount: "always",
-    queryFn: async () => {
-      const response = currentVersionId
-        ? await api.songs.fetch[":songId"][":versionId"].$get({
-            param: { songId: currentSongId!, versionId: currentVersionId },
-          })
-        : await api.songs.fetch[":id"].$get({
-            param: { id: currentSongId! },
-          });
-
-      return await handleApiResponse<{ data: SongDataApi }>(response);
-    },
-    select: (data: SongData | SongDataApi): SongData =>
-      data instanceof SongData ? data : new SongData(data),
-    staleTime: 1000 * 60 * 10,
-    placeholderData: keepPreviousData,
-  });
+  const { data: songData } = useQuery(feedSongQueryOptions(api, feedStatus.sessionState));
 
   if (!feedStatus.sessionState) {
     // Offline there's nothing to connect to — say so instead of spinning forever.

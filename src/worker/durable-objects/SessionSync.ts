@@ -38,6 +38,7 @@ interface SocketMetadata {
 export interface SessionSyncState {
   songId: string | null;
   versionId: string | null;
+  versionRevision: number | null;
   transposeSteps: number | null;
   masterAvatar: string | null;
   masterNickname: string | null;
@@ -95,7 +96,8 @@ export type SessionSyncWSMessage =
 export interface UpdateSongMessage {
   type: "update-song";
   songId: string;
-  versionId?: string;
+  versionId: string;
+  versionRevision: number;
   transposeSteps: number;
   /** Full relay chain including the sender as last element. Omitted by a
    *  standalone originator — the DO defaults to [masterId]. */
@@ -149,6 +151,7 @@ export class SessionSync extends DurableObject<Env> {
   masterAvatar: string | null = null;
   currentSongId: string | null = null;
   currentVersionId: string | null = null;
+  currentVersionRevision: number | null = null;
   currentTransposeSteps: number | null = null;
   currentChainPath: string[] = [];
   currentOriginatorNickname: string | null = null;
@@ -188,9 +191,10 @@ export class SessionSync extends DurableObject<Env> {
 
     this.ctx.blockConcurrencyWhile(async () => {
       const stored = await this.ctx.storage.get<SessionSyncState>("state");
-      if (stored) {
+      if (stored?.versionRevision !== undefined) {
         this.currentSongId = stored.songId;
         this.currentVersionId = stored.versionId;
+        this.currentVersionRevision = stored.versionRevision;
         this.currentTransposeSteps = stored.transposeSteps;
         this.masterAvatar = stored.masterAvatar;
         this.masterNickname = stored.masterNickname;
@@ -252,6 +256,7 @@ export class SessionSync extends DurableObject<Env> {
       // Full stop: null out state and broadcast to all clients
       this.currentSongId = null;
       this.currentVersionId = null;
+      this.currentVersionRevision = null;
       this.currentTransposeSteps = null;
       this.currentChainPath = [];
       this.currentOriginatorNickname = null;
@@ -402,9 +407,9 @@ export class SessionSync extends DurableObject<Env> {
   }
 
   private async handleUpdateSong(data: UpdateSongMessage) {
+    if (!data.versionId || !Number.isSafeInteger(data.versionRevision) || data.versionRevision <= 0) return;
     const isFirstSong = this.isNewSession;
-    // Normalized so "no version" compares equal to the stored null.
-    const versionId = data.versionId ?? null;
+    const versionId = data.versionId;
     const { chainPath: newChainPath, originatorNickname: newOriginatorNickname, shouldWriteToDb } =
       resolveChainUpdate({
         incomingChainPath: data.chainPath,
@@ -430,6 +435,7 @@ export class SessionSync extends DurableObject<Env> {
 
     this.currentSongId = data.songId;
     this.currentVersionId = versionId;
+    this.currentVersionRevision = data.versionRevision;
     this.currentTransposeSteps = data.transposeSteps;
     this.currentChainPath = newChainPath;
     this.currentOriginatorNickname = newOriginatorNickname;
@@ -490,6 +496,7 @@ export class SessionSync extends DurableObject<Env> {
     return {
       songId: this.currentSongId,
       versionId: this.currentVersionId,
+      versionRevision: this.currentVersionRevision,
       transposeSteps: this.currentTransposeSteps,
       masterAvatar: this.masterAvatar,
       masterNickname: this.masterNickname,

@@ -51,12 +51,10 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
         statusMessage = `Reconnecting... (Attempt ${feedStatus.retryAttempt})`;
         break;
       case "connected":
-        statusMessage = count !== undefined ? (
+        statusMessage = (
           <>
-            Sharing session<span className="hidden sm:inline"> · {count} connected</span>
+            Sharing session{count !== undefined && <span className="hidden sm:inline"> · {count} connected</span>}
           </>
-        ) : (
-          ""
         );
         break;
       default:
@@ -105,6 +103,7 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
 
   return (
     <div
+      role="status"
       className={`
         fixed bottom-0 left-0 right-0 h-fit w-full
         py-2 px-4
@@ -115,8 +114,6 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
         backdrop-blur-md
         border-t-2 border-primary dark:border-primary/30
         z-50
-        transition-opacity duration-300 ease-in-out
-        ${count !== undefined ? "opacity-100" : "opacity-0"}
       `}
     >
       <span>{statusMessage}</span>

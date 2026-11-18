@@ -214,10 +214,12 @@ export function useMasterRelay({
       lastRelayedRef.current = null;
       return;
     }
-    if (!hideComplete || !relayInfo?.active || !upstreamState?.songId) return;
+    if (!hideComplete || !relayInfo?.active || !upstreamState?.songId ||
+      !upstreamState.versionId || upstreamState.versionRevision === null) return;
     const key = JSON.stringify([
       upstreamState.songId,
-      upstreamState.versionId ?? null,
+      upstreamState.versionId,
+      upstreamState.versionRevision,
       upstreamState.transposeSteps ?? 0,
       relayInfo.chainPath,
       relayInfo.originatorNickname,
@@ -229,10 +231,13 @@ export function useMasterRelay({
     downstreamUpdateSong(
       upstreamState.songId,
       upstreamState.transposeSteps ?? 0,
-      upstreamState.versionId ?? undefined,
-      relayInfo.chainPath,
-      relayInfo.originatorNickname ?? undefined,
-      /* isRelay */ true,
+      upstreamState.versionId,
+      {
+        versionRevision: upstreamState.versionRevision,
+        chainPath: relayInfo.chainPath,
+        originatorNickname: relayInfo.originatorNickname ?? undefined,
+        isRelay: true,
+      },
     );
   }, [
     hideComplete,

@@ -253,6 +253,10 @@ export function useSessionSync({
         if (data.type === "client-count") {
           setAudienceClients(data.clients ?? []);
         } else if (data.type === "sync" && !isMaster) {
+          if (data.versionRevision === undefined || (data.songId !== null && (
+            !data.versionId || typeof data.versionRevision !== "number" ||
+            !Number.isSafeInteger(data.versionRevision) || data.versionRevision <= 0
+          ))) return;
           // Ignore a null song: keep showing the last one (better stale than
           // blank). A master sends null to leave the discovery list or when
           // stopping; the song and its chain context are preserved either way.
@@ -260,6 +264,7 @@ export function useSessionSync({
           setSessionState((prev) => ({
             songId: ignoreNull ? (prev?.songId ?? null) : data.songId,
             versionId: ignoreNull ? (prev?.versionId ?? null) : data.versionId,
+            versionRevision: ignoreNull ? (prev?.versionRevision ?? null) : data.versionRevision,
             transposeSteps: ignoreNull
               ? (prev?.transposeSteps ?? null)
               : data.transposeSteps,
@@ -420,34 +425,25 @@ export function useSessionSync({
   /**
    * Send an update-song message to the Durable Object.
    *
-   * @param chainPath    Full relay chain including this master as last element.
-   *                     Omit (or pass undefined) for a standalone originator —
-   *                     the DO will default to [masterId].
-   * @param originatorNickname  Nickname of chainPath[0]. Pass null for standalone.
-   * @param isRelay      When true the DO will skip its D1 write so relay content
-   *                     doesn't show the master as sharing in the sessions list.
+   * Options carry the displayed revision and, for relays, the upstream chain.
+   * isRelay skips the D1 discovery write for relayed content.
    */
   const updateSong = useCallback(
     (
       songId: string,
       transposeSteps: number,
-      versionId?: string,
-      chainPath?: string[],
-      originatorNickname?: string | null,
-      isRelay?: boolean,
+      versionId: string,
+      options: Pick<UpdateSongMessage, "versionRevision" | "chainPath" | "originatorNickname" | "isRelay">,
     ) => {
       if (!isMaster) return;
 
-      // JSON.stringify drops undefined fields, so the optional params can be
-      // set unconditionally.
+      // Revision is required; relay metadata remains optional.
       const payload: UpdateSongMessage = {
         type: "update-song",
         songId,
         transposeSteps,
         versionId,
-        chainPath,
-        originatorNickname,
-        isRelay,
+        ...options,
       };
 
       const ws = socketRef.current;

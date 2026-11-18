@@ -33,7 +33,8 @@ type DataForSongView = {
     updateSong: (
       songId: string,
       transposeSteps: number,
-      versionId?: string,
+      versionId: string,
+      options: { versionRevision: number },
     ) => void;
   };
 };
@@ -65,11 +66,12 @@ export const SongView = ({
   // hook's resolved value (not the raw store), so a saved key broadcasts even
   // with an untouched local store. Inert when not sharing / on the feed route.
   useEffect(() => {
-    if (broadcast?.shouldShare) {
+    if (broadcast?.shouldShare && songData.versionId && songData.versionRevision != null) {
       broadcast.updateSong(
         songData.id,
         transpose.transposeSteps,
         songData.versionId,
+        { versionRevision: songData.versionRevision },
       );
     }
     // Deps are intentionally fine-grained on the specific broadcast fields used
@@ -80,6 +82,7 @@ export const SongView = ({
     broadcast?.updateSong,
     songData.id,
     songData.versionId,
+    songData.versionRevision,
     transpose.transposeSteps,
   ]);
 
@@ -122,8 +125,8 @@ export const SongView = ({
           feedStatus={feedStatus}
           versionSelection={versionSelection}
         />
+        <FeedStatusBar feedStatus={feedStatus} />
       </FullScreen>
-      <FeedStatusBar feedStatus={feedStatus} />
     </SongViewLayout>
   );
 };
