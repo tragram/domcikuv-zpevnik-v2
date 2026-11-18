@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Description } from "./ui/description";
 import { DropdownMenuLabel } from "./ui/dropdown-menu";
 import { cn } from "~/lib/utils";
 import { AvatarWithFallback } from "~/components/ui/avatar";
@@ -91,9 +92,9 @@ const Body = ({
   <div className="flex flex-col flex-1 justify-center min-w-0">
     <span className={cn("truncate font-medium", titleClass)}>{title}</span>
     {subtitle && (
-      <span className="text-tiny font-normal text-muted-foreground leading-tight line-clamp-2">
+      <Description className="line-clamp-2">
         {subtitle}
-      </span>
+      </Description>
     )}
   </div>
 );

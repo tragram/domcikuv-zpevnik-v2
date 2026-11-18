@@ -29,8 +29,8 @@ export default function CircularProgress({
           cx="50"
           cy="50"
           r="40"
-          className="transition-all !duration-500 progress"
           fill="transparent"
+          className="transition-all !duration-500 progress"
           transform="rotate(-90 50 50)"
           stroke={color}
           strokeWidth={strokeWidth * 1.2}
