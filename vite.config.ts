@@ -9,6 +9,7 @@ import { VitePWA } from "vite-plugin-pwa";
 import checker from "vite-plugin-checker";
 import { visualizer } from "rollup-plugin-visualizer";
 import { execSync } from "child_process";
+import { retireServiceWorker } from "./scripts/dev/retire-service-worker";
 
 // Generate YYYY.MM.DD
 const d = new Date();
@@ -29,6 +30,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: { __APP_VERSION__: JSON.stringify(finalVersion) },
     plugins: [
+      retireServiceWorker(),
       tsConfigPaths({
         projects: ["./tsconfig.json"],
       }),
