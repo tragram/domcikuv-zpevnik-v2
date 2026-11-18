@@ -10,11 +10,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { parseYoutubeId, youtubeThumbnailUrl } from "../../src/lib/youtube";
-import { db, sleep } from "../shared/remote-db";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export { db, parseYoutubeId, sleep };
+export { parseYoutubeId };
 
 // --- The review file ----------------------------------------------------------
 

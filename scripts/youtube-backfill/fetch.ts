@@ -1,3 +1,4 @@
+import { db, sleep } from "../shared/remote-db";
 /**
  * Step 1 — fetch all non-external songs (i.e. not imported from an external
  * source like pisnicky-akordy/cifraclub/zpevnik-skorepova) from the REMOTE DB
@@ -16,13 +17,11 @@ import { and, eq, isNull } from "drizzle-orm";
 import { song, songVersion } from "../../src/lib/db/schema";
 import {
   BackfillItem,
-  db,
   loadData,
   mergeItem,
   QUOTA_EXCEEDED,
   saveData,
   searchYoutube,
-  sleep,
 } from "./common";
 
 // Politeness delay between scraped searches (no API quota, but don't hammer

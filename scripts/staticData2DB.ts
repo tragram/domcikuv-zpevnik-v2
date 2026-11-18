@@ -1,4 +1,4 @@
-import { D1Helper } from "@nerdfolio/drizzle-d1-helpers";
+import { D1Helper, useProxyD1 as withProxyD1 } from "@nerdfolio/drizzle-d1-helpers";
 import { eq, sql } from "drizzle-orm";
 import * as fs from "fs";
 import yaml from "js-yaml";
@@ -15,6 +15,7 @@ import { AppDatabase } from "../src/worker/api/utils";
 import { syncSession, userFavoriteSongs } from "../src/lib/db/schema";
 import { fileURLToPath } from "url";
 import { config } from "dotenv";
+import { readD1Config } from "./shared/d1-config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 config({ path: path.resolve(__dirname, "../.dev.vars") });
@@ -388,39 +389,17 @@ function getD1ConfigFromWrangler(env: "staging" | "prod"): {
   databaseName: string;
 } {
   const wranglerPath = path.resolve(__dirname, "../wrangler.jsonc");
-  // Strip single-line comments so JSON.parse can handle .jsonc
-  const raw = fs.readFileSync(wranglerPath, "utf-8").replace(/\/\/[^\n]*/g, "");
-  const wrangler = JSON.parse(raw);
-
-  const d1List: Array<{
-    binding?: string;
-    database_id?: string;
-    database_name?: string;
-  }> =
-    env === "staging"
-      ? wrangler?.env?.staging?.d1_databases
-      : wrangler?.d1_databases;
-
-  const db = (d1List ?? []).find((d) => d.binding === "DB");
-
-  if (!db?.database_id || !db.database_name) {
-    console.error(
-      `❌ Could not find D1 binding "DB" for env "${env}" in wrangler.jsonc`,
-    );
-    process.exit(1);
-  }
-
-  return { databaseId: db.database_id, databaseName: db.database_name };
+  return readD1Config(fs.readFileSync(wranglerPath, "utf8"), env);
 }
 
 async function runStaging(songsPath: string) {
-  const accountId = process.env.staging?.CF_ACCOUNT_ID;
-  const token = process.env.staging?.CF_D1_TOKEN;
+  const accountId = process.env.STAGING_CF_ACCOUNT_ID || process.env["staging.CF_ACCOUNT_ID"];
+  const token = process.env.STAGING_CF_D1_TOKEN || process.env["staging.CF_D1_TOKEN"];
 
   if (!accountId || !token) {
     console.error(
-      "❌ Missing staging credentials. Ensure process.env.staging.CF_ACCOUNT_ID " +
-        "and process.env.staging.CF_D1_TOKEN are set in your .dev.vars.",
+      "❌ Missing staging credentials. Ensure STAGING_CF_ACCOUNT_ID " +
+        "and STAGING_CF_D1_TOKEN are set in your .dev.vars.",
     );
     process.exit(1);
   }
@@ -438,13 +417,9 @@ async function runStaging(songsPath: string) {
   }
 
   console.log("Running migration...");
-  await D1Helper.get("DB")
-    .withCfCredentials(accountId, token)
-    .useProxyD1(
-      async (db) =>
-        processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
-      { databaseId },
-    );
+  await withProxyD1({ accountId, token, databaseId }, async (db) =>
+    processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
+  );
 }
 
 async function runProd(songsPath: string) {
@@ -472,13 +447,9 @@ async function runProd(songsPath: string) {
   }
 
   console.log("Running migration...");
-  await D1Helper.get("DB")
-    .withCfCredentials(accountId, token)
-    .useProxyD1(
-      async (db) =>
-        processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
-      { databaseId },
-    );
+  await withProxyD1({ accountId, token, databaseId }, async (db) =>
+    processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
+  );
 }
 
 // ---------------------------------------------------------------------------

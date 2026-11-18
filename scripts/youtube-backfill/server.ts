@@ -272,7 +272,7 @@ if (!loadData()) {
   process.exit(1);
 }
 
-server.listen(PORT, () => {
+server.listen(PORT, "127.0.0.1", () => {
   console.log(`\n🎬 Song metadata review running at http://localhost:${PORT}`);
   console.log("   Video / Key / Capo each save independently to youtube-links.json.");
   console.log("   When you're done, run `pnpm run yt:push` to write to the remote DB.\n");

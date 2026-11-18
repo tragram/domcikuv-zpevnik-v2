@@ -1,3 +1,4 @@
+import { db } from "../shared/remote-db";
 /**
  * Step 3 — write reviewed metadata back to the REMOTE DB.
  *
@@ -15,7 +16,7 @@
  */
 import { eq, inArray } from "drizzle-orm";
 import { song, songVersion } from "../../src/lib/db/schema";
-import { db, loadData, parseYoutubeId } from "./common";
+import { loadData, parseYoutubeId } from "./common";
 import {
   guessKeyFromChords,
   keyStepsBetween,

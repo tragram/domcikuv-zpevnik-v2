@@ -1,7 +1,7 @@
 import type { Config } from "drizzle-kit";
-import { D1Helper } from "@nerdfolio/drizzle-d1-helpers";
 
-const crawledDbHelper = D1Helper.get("DB");
+
+
 
 const {
   LOCAL_DB_PATH,
@@ -14,7 +14,7 @@ export default LOCAL_DB_PATH
   ? ({
       dialect: "sqlite",
       dbCredentials: {
-        url: crawledDbHelper.sqliteLocalFileCredentials.url,
+        url: LOCAL_DB_PATH,
       },
     } satisfies Config)
   : ({

@@ -27,6 +27,8 @@ async function main() {
     process.exit(1);
   }
 
+  const backup = JSON.parse(fs.readFileSync(BACKUP_PATH, "utf8")) as { userId?: string };
+
   const users = await db
     .select({ id: user.id })
     .from(user)
@@ -36,6 +38,8 @@ async function main() {
     console.error(`No user found with email ${email}.`);
     process.exit(1);
   }
+
+  if (backup.userId !== u.id) throw new Error("The backup belongs to a different user; run capo:backup for this user first.");
 
   const favorites = await db
     .select({ id: userFavoriteSongs.id, songId: userFavoriteSongs.songId, capo: userFavoriteSongs.capo })
@@ -49,11 +53,12 @@ async function main() {
 
   // Current song capos for just the favorited songs.
   const songIds = favorites.map((f) => f.songId);
-  const songRows = await db
-    .select({ songId: song.id, capo: songVersion.capo })
-    .from(song)
-    .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
-    .where(inArray(song.id, songIds));
+  const songRows: { songId: string; capo: number | null }[] = [];
+  for (let offset = 0; offset < songIds.length; offset += 100) {
+    songRows.push(...await db.select({ songId: song.id, capo: songVersion.capo })
+      .from(song).innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
+      .where(inArray(song.id, songIds.slice(offset, offset + 100))));
+  }
   const capoBySong = new Map(songRows.map((r) => [r.songId, r.capo]));
 
   const updates: { id: number; songId: string; from: number | null; to: number }[] = [];

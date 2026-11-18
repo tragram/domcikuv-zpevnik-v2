@@ -92,6 +92,7 @@ async function main() {
       hidden: schema.song.hidden,
       createdAt: schema.song.createdAt,
       updatedAt: schema.song.updatedAt,
+      versionStatus: schema.songVersion.status,
       title: schema.songVersion.title,
       artist: schema.songVersion.artist,
       chordpro: schema.songVersion.chordpro,
@@ -142,7 +143,7 @@ async function main() {
   const activeSongIds = new Set<string>();
   for (const songRow of songs) {
     // A song is active if it hasn't been deleted and isn't imported from an external source
-    if (!songRow.sourceId && !songRow.deleted) {
+    if (!songRow.sourceId && !songRow.deleted && songRow.versionStatus === "published") {
       activeSongIds.add(songRow.id);
     }
   }

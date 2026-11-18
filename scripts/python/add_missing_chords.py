@@ -140,6 +140,9 @@ def find_incomplete_chordpro_files(folder_path, skipping, max_songs=10, batch_ap
                     processed_songs += 1
                     break
 
+    if not incomplete_files or not batch_api:
+        return incomplete_files
+    batches_folder.mkdir(parents=True, exist_ok=True)
     message_batch = generate_chords_batch_api(incomplete_files)
     print(message_batch)
     with open(
@@ -156,7 +159,8 @@ def check_all_past_batches():
                 return song
         raise ValueError("Unknown ID!")
 
-    files = [f for f in Path(batches_folder).iterdir() if f.is_file()]
+    batches_folder.mkdir(parents=True, exist_ok=True)
+    files = [f for f in Path(batches_folder).glob("*.yaml") if f.is_file()]
     skipping = []
     for file_path in files:
         with open(file_path, "r", encoding="utf-8") as file:
@@ -187,10 +191,13 @@ def check_all_past_batches():
                             else:
                                 print(f"Server error {result.custom_id}")
                             should_delete = False
+                        case "canceled":
+                            should_delete = False
                         case "expired":
                             print(f"Request expired {result.custom_id}")
                             should_delete = False
             except Exception as e:
+                should_delete = False
                 print(e)
             if should_delete:
                 Path.unlink(file_path)

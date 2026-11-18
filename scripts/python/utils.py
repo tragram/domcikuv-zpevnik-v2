@@ -12,7 +12,7 @@ def load_secrets():
 
 
 def songs_path():
-    return Path(__file__).parent / "../songs"
+    return Path(__file__).resolve().parents[2] / "songs"
 
 
 def normalize_string(input_str):

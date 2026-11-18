@@ -108,7 +108,7 @@ def format_chordpro_files(
                 print("-" * 40)
                 print("Looking at file", file_path)
                 new_file_path = file_path.rename(directory / new_file_name)
-                for folder, extension in other_folders:
+                for folder, extension in other_folders or []:
                     rename_file_in_directory(
                         song_directory / folder, file_path.stem, new_stem, extension
                     )
@@ -126,4 +126,5 @@ other_folders = [
     ("scraped", ".txt"),
 ]
 # Call the function to rename the ChordPro files
-format_chordpro_files(songs_directory, "chordpro", other_folders)
+if __name__ == "__main__":
+    format_chordpro_files(songs_directory, "chordpro", other_folders)

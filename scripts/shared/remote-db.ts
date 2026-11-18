@@ -17,7 +17,7 @@ const CF_DATABASE_ID = requireEnv("CF_DATABASE_ID");
 const CF_API_TOKEN = requireEnv("CF_API_TOKEN");
 
 export const db = drizzle(
-  async (sql, params) => {
+  async (sql, params, method) => {
     const url = `https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/d1/database/${CF_DATABASE_ID}/query`;
     const response = await fetch(url, {
       method: "POST",
@@ -41,7 +41,8 @@ export const db = drizzle(
     const results = data.result[0]?.results ?? [];
     // sqlite-proxy expects rows as positional arrays; D1 returns objects whose
     // key order matches the SELECT column order.
-    return { rows: results.map((row) => Object.values(row)) };
+    const rows = results.map((row) => Object.values(row));
+    return { rows: method === "get" ? rows[0]! : rows };
   },
   { schema },
 );
