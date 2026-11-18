@@ -158,6 +158,11 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       title: editorState.title,
       artist: editorState.artist,
       language: editorState.language,
+      label: editorState.label,
+      description: editorState.description,
+      baseVersionId: versionId,
+      expectedRevision: editorState.expectedRevision,
+      saveMode: editorState.saveMode,
       chordpro: normalizeWhitespace(replaceRepetitions(strippedChordpro)),
     } as EditorState;
 
@@ -186,7 +191,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
     try {
       const response = await submitSongVersion(parsedState, songData?.id, {
-        editAsSubmitter: editorSettings.editAsSubmitter ?? true,
+        editAsSubmitter: editorSettings.editAsSubmitter ?? true, publish: isApprovalMode,
       });
 
       const version = response.version;

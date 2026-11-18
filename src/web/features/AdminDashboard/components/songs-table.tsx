@@ -401,7 +401,7 @@ function SongVersionItem({
       <div className="flex items-center gap-4 flex-1">
         <button
           onClick={onSetCurrent}
-          disabled={isCurrentActive || isApprovePending}
+          disabled={isCurrentActive || isApprovePending || version.status !== "published"}
           title={
             isCurrentActive
               ? "Current Active Version"
@@ -542,11 +542,11 @@ interface VersionHistoryTimelineProps {
   songVersions: SongVersionDB[];
   showDeleted: boolean;
   users: AdminUsers;
-  onApproveVersion: (songId: string, versionId: string) => void;
-  onRejectVersion: (songId: string, versionId: string) => void;
-  onRestoreVersion: (songId: string, versionId: string) => void;
-  onDeleteVersion: (songId: string, versionId: string) => void;
-  onSetCurrentVersion: (songId: string, versionId: string) => void;
+  onApproveVersion: (songId: string, versionId: string, expectedRevision: number) => void;
+  onRejectVersion: (songId: string, versionId: string, expectedRevision: number) => void;
+  onRestoreVersion: (songId: string, versionId: string, expectedRevision: number) => void;
+  onDeleteVersion: (songId: string, versionId: string, expectedRevision: number) => void;
+  onSetCurrentVersion: (songId: string, versionId: string, expectedRevision: number) => void;
   onDiff: (
     version: SongVersionDB,
     target: SongVersionDB,
@@ -609,12 +609,12 @@ function VersionHistoryTimeline({
               currentVersion={currentVersion}
               isCurrentActive={isCurrentActive}
               users={users}
-              onApprove={() => onApproveVersion(song.id, version.id)}
-              onReject={() => onRejectVersion(song.id, version.id)}
-              onRestore={() => onRestoreVersion(song.id, version.id)}
-              onDelete={() => onDeleteVersion(song.id, version.id)}
+              onApprove={() => onApproveVersion(song.id, version.id, version.revision)}
+              onReject={() => onRejectVersion(song.id, version.id, version.revision)}
+              onRestore={() => onRestoreVersion(song.id, version.id, version.revision)}
+              onDelete={() => onDeleteVersion(song.id, version.id, version.revision)}
               onSetCurrent={() =>
-                !isCurrentActive && onSetCurrentVersion(song.id, version.id)
+                !isCurrentActive && onSetCurrentVersion(song.id, version.id, version.revision)
               }
               onDiff={(target, label) => onDiff(version, target, label)}
               isApprovePending={isApprovePending}
@@ -634,7 +634,7 @@ interface SongTableRowProps extends VersionHistoryTimelineProps {
   onUpdateHidden: (songId: string, hidden: boolean) => void;
   onRestoreSong: (songId: string) => void;
   onDeleteSong: (songId: string) => void;
-  onUpdateYoutube: (songId: string, versionId: string, youtubeId: string) => void;
+  onUpdateYoutube: (songId: string, versionId: string, youtubeId: string, expectedRevision: number) => void;
   isYoutubeUpdatePending: boolean;
   hiddenColumns: readonly HideableColumn[];
   visibleColumnCount: number;
@@ -679,7 +679,7 @@ function YoutubeDialogForm({
             toast.error("Enter a valid YouTube link or video ID.");
             return;
           }
-          onUpdateYoutube(song.id, currentVersion.id, normalizedYoutubeId);
+          onUpdateYoutube(song.id, currentVersion.id, normalizedYoutubeId, currentVersion.revision);
           onClose();
         }}
         disabled={isUpdatePending || youtubeId === originalYoutubeId}
@@ -1283,11 +1283,11 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     setExpandedSongs(next);
   };
 
-  const handleApproveVersion = (songId: string, versionId: string) => {
+  const handleApproveVersion = (songId: string, versionId: string, expectedRevision: number) => {
     const song = songs.find((s) => s.id === songId);
     const hasNoIllustration = !song?.currentIllustrationId;
     approveVersionMutation.mutate(
-      { songId, versionId },
+      { songId, versionId, expectedRevision },
       {
         onSuccess: () => {
           toast.success("Version approved and published");
@@ -1509,39 +1509,39 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                       })
                     }
                     onApproveVersion={handleApproveVersion}
-                    onRejectVersion={(songId, versionId) =>
+                    onRejectVersion={(songId, versionId, expectedRevision) =>
                       rejectVersionMutation.mutate(
-                        { songId, versionId },
+                        { songId, versionId, expectedRevision },
                         { onSuccess: () => toast.success("Rejected") },
                       )
                     }
-                    onRestoreVersion={(songId, versionId) =>
+                    onRestoreVersion={(songId, versionId, expectedRevision) =>
                       restoreVersionMutation.mutate(
-                        { songId, versionId },
+                        { songId, versionId, expectedRevision },
                         { onSuccess: () => toast.success("Version restored") },
                       )
                     }
-                    onDeleteVersion={(songId, versionId) =>
+                    onDeleteVersion={(songId, versionId, expectedRevision) =>
                       deleteVersionMutation.mutate(
-                        { songId, versionId },
+                        { songId, versionId, expectedRevision },
                         { onSuccess: () => toast.success("Permanently deleted") },
                       )
                     }
-                    onSetCurrentVersion={(songId, versionId) =>
+                    onSetCurrentVersion={(songId, versionId, expectedRevision) =>
                       approveVersionMutation.mutate(
-                        { songId, versionId },
+                        { songId, versionId, expectedRevision, official: true },
                         {
                           onSuccess: () =>
                             toast.success("Set as current version"),
                         },
                       )
                     }
-                    onUpdateYoutube={(songId, versionId, youtubeId) =>
+                    onUpdateYoutube={(songId, versionId, youtubeId, expectedRevision) =>
                       updateVersionMutation.mutate(
                         {
                           songId,
                           versionId,
-                          version: { youtubeId: youtubeId.trim() || null },
+                          version: { youtubeId: youtubeId.trim() || null, expectedRevision },
                         },
                         {
                           onSuccess: () => toast.success("YouTube link updated"),

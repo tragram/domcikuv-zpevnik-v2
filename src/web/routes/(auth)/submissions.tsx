@@ -1,4 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
+import { refreshSongVersions } from "~/services/version-service";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { FilePenLine } from "lucide-react";
 import { useState } from "react";
@@ -31,17 +32,19 @@ function UserSubmissions() {
   const versions = Route.useLoaderData() as SongVersionDB[];
   const context = Route.useRouteContext();
   const router = useRouter();
+  const cache = useQueryClient();
   const [showAllVersions, setShowAllVersions] = useState(false);
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) =>
+    mutationFn: ({ id, revision }: Pick<SongVersionDB, "id" | "revision">) =>
       makeApiRequest(() =>
         context.api.editor.versions[":id"].$delete({
-          param: { id },
+          param: { id }, json: { expectedRevision: revision },
         }),
       ),
-    onSuccess: () => {
-      router.invalidate();
+    onSuccess: async () => {
+      await refreshSongVersions(cache);
+      await router.invalidate();
     },
   });
 
@@ -175,7 +178,7 @@ function UserSubmissions() {
 
                       {/* Disable delete for published/archived history to preserve lineage */}
                       <DeletePrompt
-                        onDelete={() => deleteMutation.mutate(version.id)}
+                        onDelete={() => deleteMutation.mutate(version)}
                         title="Withdraw Submission?"
                         description="Are you sure you want to delete this version? This cannot be undone."
                         variant="ghost"

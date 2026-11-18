@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { refreshSongVersions, type VersionMutationInput } from "./version-service";
+import { songQueryKeys } from "./song-query-keys";
 import { SongDataDB } from "src/lib/db/schema";
 import { AdminApi } from "src/worker/api-client";
 import type {
@@ -56,14 +58,14 @@ import {
 
 export const useSongsAdmin = (adminApi: AdminApi) =>
   useQuery({
-    queryKey: ["songsAdmin"],
+    queryKey: songQueryKeys.adminSongs,
     queryFn: () => getSongsAdmin(adminApi),
     refetchOnMount: "always",
   });
 
 export const useSongDBAdmin = (adminApi: AdminApi) =>
   useQuery({
-    queryKey: ["songDBAdmin"],
+    queryKey: songQueryKeys.adminCatalog,
     queryFn: () => songsWithCurrentVersionAdmin(adminApi),
     refetchOnMount: "always",
   });
@@ -84,7 +86,7 @@ export const usePromptsAdmin = (adminApi: AdminApi) =>
 
 export const useVersionsAdmin = (adminApi: AdminApi) =>
   useQuery({
-    queryKey: ["versionsAdmin"],
+    queryKey: songQueryKeys.adminVersions,
     queryFn: () => getVersionsAdmin(adminApi),
     refetchOnMount: "always",
   });
@@ -120,9 +122,9 @@ export const useUpdateSong = (adminApi: AdminApi) => {
       song: SongModificationSchema;
     }) => patchSongAdmin(adminApi, songId, song),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminSongs });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
     },
   });
 };
@@ -136,10 +138,10 @@ export const useDeleteSong = (adminApi: AdminApi) => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminSongs });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.submissions });
     },
   });
 };
@@ -153,10 +155,10 @@ export const useRestoreSong = (adminApi: AdminApi) => {
       );
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminSongs });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.submissions });
     },
   });
 };
@@ -173,12 +175,7 @@ export const useUpdateVersion = (adminApi: AdminApi) => {
       versionId: string;
       version: ModifySongVersionSchema;
     }) => patchVersionAdmin(adminApi, songId, versionId, version),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
-    },
+    onSuccess: () => refreshSongVersions(queryClient),
   });
 };
 
@@ -188,15 +185,9 @@ export const useDeleteVersion = (adminApi: AdminApi) => {
     mutationFn: ({
       songId,
       versionId,
-    }: {
-      songId: string;
-      versionId: string;
-    }) => deleteVersionAdmin(adminApi, songId, versionId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
-    },
+      expectedRevision,
+    }: VersionMutationInput) => deleteVersionAdmin(adminApi, songId, versionId, expectedRevision),
+    onSuccess: () => refreshSongVersions(queryClient),
   });
 };
 
@@ -206,22 +197,14 @@ export const useRestoreVersion = (adminApi: AdminApi) => {
     mutationFn: ({
       songId,
       versionId,
-    }: {
-      songId: string;
-      versionId: string;
-    }) => {
+      expectedRevision,
+    }: VersionMutationInput) => {
       return makeApiRequest(() =>
-        adminApi.songs[":songId"].versions[":versionId"].restore.$post({
-          param: { songId, versionId },
+        adminApi.songs[":songId"].versions[":versionId"][":action"].$post({ param: { songId, versionId, action: "restore" }, json: { expectedRevision },
         }),
       );
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
-    },
+    onSuccess: () => refreshSongVersions(queryClient),
   });
 };
 
@@ -230,11 +213,11 @@ export const useResetVersionDB = (adminApi: AdminApi) => {
   return useMutation({
     mutationFn: () => resetVersionDB(adminApi),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminSongs });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminVersions });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.submissions });
     },
   });
 };
@@ -250,8 +233,8 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
       data: IllustrationModifySchema;
     }) => updateIllustration(adminApi, id, data),
     onMutate: async ({ id, data }) => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      await queryClient.cancelQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
+      await queryClient.cancelQueries({ queryKey: songQueryKeys.adminCatalog });
       await queryClient.cancelQueries({ queryKey: ["illustrationsAdmin"] });
 
       // Ensure we query using the new flat DTO types
@@ -279,7 +262,7 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
 
       if (data.setAsActive !== undefined && previousSongs) {
         queryClient.setQueryData<SongDataDB[]>(
-          ["songDBAdmin"],
+          songQueryKeys.adminCatalog,
           (old) =>
             old?.map((song) => {
               const illustration = previousIllustrations?.find(
@@ -304,7 +287,7 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
     },
     onError: (err, variables, context) => {
       if (context?.previousSongs) {
-        queryClient.setQueryData(["songDBAdmin"], context.previousSongs);
+        queryClient.setQueryData(songQueryKeys.adminCatalog, context.previousSongs);
       }
       if (context?.previousIllustrations) {
         queryClient.setQueryData(
@@ -314,7 +297,7 @@ export const useUpdateIllustration = (adminApi: AdminApi) => {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
       queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
     },
   });
@@ -353,9 +336,9 @@ export const useDeleteIllustration = (adminApi: AdminApi) => {
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
       queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
     },
   });
 };
@@ -394,7 +377,7 @@ export const useRestoreIllustration = (adminApi: AdminApi) => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["illustrationsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
     },
   });
 };
@@ -405,8 +388,8 @@ export const useCreateIllustration = (adminApi: AdminApi) => {
     mutationFn: (data: IllustrationCreateSchema) =>
       createIllustration(adminApi, data),
     onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
 
       queryClient.setQueryData<SongIllustrationApi[]>(
         ["illustrationsAdmin"],
@@ -428,8 +411,8 @@ export const useGenerateIllustration = (adminApi: AdminApi) => {
     mutationFn: (data: IllustrationGenerateSchema) =>
       generateIllustration(adminApi, data),
     onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
+      queryClient.invalidateQueries({ queryKey: songQueryKeys.adminCatalog });
 
       queryClient.setQueryData<SongIllustrationApi[]>(
         ["illustrationsAdmin"],
@@ -446,28 +429,17 @@ export const useGenerateIllustration = (adminApi: AdminApi) => {
 };
 
 export const useApproveVersion = (adminApi: AdminApi) => {
-  const queryClient = useQueryClient();
+  const cache = useQueryClient();
   return useMutation({
-    mutationFn: ({
-      songId,
-      versionId,
-    }: {
-      songId: string;
-      versionId: string;
+    mutationFn: ({ songId, versionId, expectedRevision, official, force, expectedTargetRevision, makeOfficial, archivePrevious }: VersionMutationInput & {
+      official?: boolean; force?: boolean; expectedTargetRevision?: number; makeOfficial?: boolean; archivePrevious?: boolean;
     }) => {
-      return makeApiRequest(() =>
-        adminApi.songs[":songId"].versions[":versionId"].approve.$post({
-          param: { songId, versionId },
-        }),
-      );
+      const route = adminApi.songs[":songId"].versions[":versionId"];
+      return official
+        ? makeApiRequest(() => route.official.$post({ param: { songId, versionId }, json: { expectedRevision } }))
+        : makeApiRequest(() => route.approve.$post({ param: { songId, versionId }, json: { expectedRevision, force, expectedTargetRevision, makeOfficial, archivePrevious } }));
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["songs"] });
-      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
-    },
+    onSuccess: () => refreshSongVersions(cache),
   });
 };
 
@@ -477,22 +449,14 @@ export const useRejectVersion = (adminApi: AdminApi) => {
     mutationFn: ({
       songId,
       versionId,
-    }: {
-      songId: string;
-      versionId: string;
-    }) => {
+      expectedRevision,
+    }: VersionMutationInput) => {
       return makeApiRequest(() =>
-        adminApi.songs[":songId"].versions[":versionId"].reject.$post({
-          param: { songId, versionId },
+        adminApi.songs[":songId"].versions[":versionId"][":action"].$post({ param: { songId, versionId, action: "reject" }, json: { expectedRevision },
         }),
       );
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["versionsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songsAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["songDBAdmin"] });
-      queryClient.invalidateQueries({ queryKey: ["submissions"] });
-    },
+    onSuccess: () => refreshSongVersions(queryClient),
   });
 };
 

@@ -155,7 +155,7 @@ export const songVersionsQueryOptions = (songId: string, viewerId?: string) =>
     queryFn: async ({ client: cache, queryKey }) => {
       try {
         return await makeApiRequest(() =>
-          client.api.songs.versions[":songId"].$get({ param: { songId } }),
+          client.api.songs.versions[":songId"].$get({ param: { songId }, query: {} }),
         );
       } catch (error) {
         // Retain successful persisted history when a refresh fails offline.
@@ -252,30 +252,6 @@ export const getVersionsAdmin = async (
   return response.map(parseDBDates) as SongVersionAdminApi[];
 };
 
-export const approveSongVersion = async (
-  adminApi: AdminApi,
-  songId: string,
-  versionId: string,
-) => {
-  return await makeApiRequest(() =>
-    adminApi.songs[":songId"].versions[":versionId"].approve.$post({
-      param: { songId, versionId },
-    }),
-  );
-};
-
-export const rejectSongVersion = async (
-  adminApi: AdminApi,
-  songId: string,
-  versionId: string,
-) => {
-  return await makeApiRequest(() =>
-    adminApi.songs[":songId"].versions[":versionId"].reject.$post({
-      param: { songId, versionId },
-    }),
-  );
-};
-
 export const patchSongAdmin = async (
   adminApi: AdminApi,
   songId: string,
@@ -328,10 +304,11 @@ export const deleteVersionAdmin = async (
   adminApi: AdminApi,
   songId: string,
   versionId: string,
+  expectedRevision: number,
 ): Promise<SongVersionApi> => {
   const deletedVersion = await makeApiRequest(() =>
     adminApi.songs[":songId"].versions[":versionId"].$delete({
-      param: { songId, versionId },
+      param: { songId, versionId }, json: { expectedRevision },
     }),
   );
   return parseDBDates(deletedVersion);

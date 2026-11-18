@@ -39,13 +39,13 @@ export const createYoutubePlaylist = async (
 export const submitSongVersion = async (
   payload: EditorSubmitSchemaInput,
   songId?: string,
-  options?: { editAsSubmitter?: boolean },
+  options?: { editAsSubmitter?: boolean; publish?: boolean },
 ) => {
   return await makeApiRequest(() =>
     songId
       ? client.api.editor[":id"].$put({
           param: { id: songId },
-          json: { ...payload, editAsSubmitter: options?.editAsSubmitter },
+          json: { ...payload, editAsSubmitter: options?.editAsSubmitter, publish: options?.publish },
         })
       : client.api.editor.$post({ json: payload }),
   );

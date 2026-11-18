@@ -3,7 +3,7 @@ import {
   SongDataDB,
   SongIllustrationDB,
   SongImportDB,
-  SongVersionDB,
+  SongVersionWithSubmission as SongVersionDB,
 } from "src/lib/db/schema";
 import { z } from "zod";
 import { PopulatedSongDB } from "../helpers/song-helpers";
@@ -62,6 +62,22 @@ export type SongDataApi = {
   id: string;
   versionId?: string;
   versionStatus?: SongVersionDB["status"];
+  versionRevision?: number;
+  versionNumber?: number;
+  /** Publicly selectable published versions; excludes history and pending submissions. */
+  publishedVersionIds?: string[];
+  versionLabel?: string | null;
+  versionDescription?: string | null;
+  versionAuthorId?: string;
+  versionParentId?: string | null;
+  versionParentIsImported?: boolean;
+  versionCreatedAt?: Date | string;
+  versionUpdatedAt?: Date | string;
+  isOfficial?: boolean;
+  submissionIntent?: SongVersionDB["submissionIntent"];
+  baseRevision?: number | null;
+  archivePreviousOnPublish?: boolean;
+  makeOfficialOnPublish?: boolean;
   title: string;
   artist: string;
   key?: string;
@@ -96,6 +112,8 @@ export type SongDataAdminApi = SongDataDB &
 // A song version enriched with its import source (if it was imported), used by
 // the admin songs table to detect/badge external songs without an extra query.
 export type SongVersionAdminApi = SongVersionDB & {
+  versionNumber?: number;
+  isOfficial?: boolean;
   importSourceId: SongImportDB["sourceId"] | null;
   importUrl: string | null;
 };
@@ -104,6 +122,12 @@ export type SongVersionSummaryApi = Pick<
   SongVersionDB,
   "id" | "status" | "key" | "capo"
 > & {
+  label?: string | null;
+  description?: string | null;
+  revision?: number;
+  versionNumber?: number;
+  updatedAt?: Date | string;
+  importSourceId?: SongImportDB["sourceId"] | null;
   createdAt: Date | string;
   author: { id: string; name: string };
   isCurrent: boolean;
@@ -129,6 +153,9 @@ export type SongVersionApi = Omit<
   | "createdAt"
   | "updatedAt"
 > & {
+  isOfficial?: boolean;
+  versionNumber?: number;
+  importSourceId?: SongImportDB["sourceId"] | null;
   parentId?: string | null;
   importId?: string | null;
   key?: string | null;

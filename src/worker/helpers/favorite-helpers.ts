@@ -1,6 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { AppDatabase } from "../api/utils";
-import { user, userFavoriteSongs } from "src/lib/db/schema";
+import { song, songVersion, user, userFavoriteSongs } from "src/lib/db/schema";
+import { HTTPException } from "hono/http-exception";
 import { SongbookEntryApi } from "../api/api-types";
 import { resolveSongbookSongs } from "./song-helpers";
 
@@ -91,6 +92,12 @@ export const setSongbookEntry = async (
     capo?: number | null;
   },
 ) => {
+  const parent = await db.query.song.findFirst({ where: and(eq(song.id, songId), eq(song.deleted, false)), columns: { id: true } });
+  if (!parent) throw new HTTPException(404, { message: "Song not found" });
+  if (patch.pinnedVersionId) {
+    const version = await db.query.songVersion.findFirst({ where: and(eq(songVersion.id, patch.pinnedVersionId), eq(songVersion.songId, songId)), columns: { status: true } });
+    if (!version || version.status === "deleted") throw new HTTPException(400, { message: "Choose an available version of this song." });
+  }
   const existing = await db
     .select({ id: userFavoriteSongs.id })
     .from(userFavoriteSongs)

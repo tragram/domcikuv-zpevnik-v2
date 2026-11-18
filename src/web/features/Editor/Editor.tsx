@@ -32,6 +32,7 @@ import ContentEditor, { ContentEditorRef } from "./ContentEditor";
 import "./Editor.css";
 import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
 import EditorToolbar from "./EditorToolbar";
+import { editorStateFromSong } from "./editor-state";
 import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
 import {
@@ -227,13 +228,8 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const isOnline = useIsOnline();
   const editorStateKey = getEditorStateKey(songData?.id, versionId);
 
-  const defaultEditorState: EditorState = useMemo(() => {
-    const base = (songData ? songData : SongData.empty()).toJSON() as EditorState;
-    if (versionId) base.parentId = versionId;
-    return base;
-    // songData identity changes when the route loader revalidates to a fresher
-    // version; recomputing here is what lets that fresh version surface.
-  }, [songData, versionId]);
+  // Revalidation refreshes the base; an existing local draft retains its own token.
+  const defaultEditorState = useMemo(() => editorStateFromSong(songData, versionId), [songData, versionId]);
 
   // Persist only a genuine in-progress draft (`null` = "no draft"). When there
   // is no draft the editor mirrors `defaultEditorState`, which tracks the live
@@ -607,11 +603,10 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
 
   const hasIllustration = !!songData?.currentIllustration;
 
-  // True when an admin is editing another user's pending submission: they can
-  // approve it as-is (no edits required) and attribute it to the submitter or
-  // themselves. `isCustom` is set only when the version being edited is pending.
+  // Admins can approve any pending submission without changing its content.
+  // The attribution setting chooses whether its author remains the submitter.
   const isApprovingSubmission =
-    !!userData?.profile.isAdmin && !!songData?.isCustom;
+    !!userData?.profile.isAdmin && songData?.versionStatus === "pending";
 
   const toolbarTop = true;
 
@@ -715,6 +710,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           validationErrors={validationErrors}
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
+          onAttemptSubmit={() => setSubmitAttempted(true)}
           onSubmitSuccess={() => {
             setDraft(null);
             setSubmitAttempted(false);

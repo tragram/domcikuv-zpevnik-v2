@@ -1,12 +1,28 @@
+import { versionNumbers } from "../../helpers/song-versions/numbering";
 import { and, desc, eq, getTableColumns, isNotNull } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import {
   findSongWithAllData,
   getSongBase,
-  getSongPopulated,
-  promoteVersionToCurrent,
 } from "src/worker/helpers/song-helpers";
 import z from "zod";
+import {
+  approveVersion,
+  saveSongVersion,
+  changeVersionStatus,
+  mergeVersion,
+  reclassifyVersion,
+  setOfficialVersion,
+} from "../../helpers/song-versions/writes";
+import {
+  conflict,
+  contentOf,
+  loadVersion,
+  reviseVersion,
+  sameContent,
+  withVersionConflict,
+} from "../../helpers/song-versions/revisions";
+import { editorContentPatchSchema } from "src/lib/contracts/editor-schema";
 import {
   illustrationPrompt,
   song,
@@ -14,9 +30,13 @@ import {
   songIllustration,
   songImport,
   songVersion,
-  SongVersionDB,
+  songSubmission,
 } from "../../../lib/db/schema";
-import { SongDataAdminApi, SongVersionAdminApi, SongVersionApi } from "../api-types";
+import {
+  SongDataAdminApi,
+  SongVersionAdminApi,
+  SongVersionApi,
+} from "../api-types";
 import {
   failJSend,
   songNotFoundFail,
@@ -27,18 +47,21 @@ import { buildApp } from "../utils";
 
 const songModificationSchema = createInsertSchema(song)
   .partial()
-  .omit({ id: true, updatedAt: true, createdAt: true });
+  .omit({ id: true, updatedAt: true, createdAt: true, currentVersionId: true });
 
 // Schema for updating a version (if Admin wants to tweak it before approving)
-const modifySongVersionSchema = createInsertSchema(songVersion)
-  .omit({
-    id: true,
-    createdAt: true,
-    updatedAt: true,
-    songId: true,
-    userId: true,
-  })
-  .partial();
+const modifySongVersionSchema = editorContentPatchSchema.extend({
+  expectedRevision: z.number().int().positive(),
+});
+const versionStateSchema = z.object({
+  expectedRevision: z.number().int().positive(),
+});
+const approvalSchema = versionStateSchema.extend({
+  makeOfficial: z.boolean().optional(),
+  archivePrevious: z.boolean().optional(),
+  expectedTargetRevision: z.number().int().positive().optional(),
+  force: z.boolean().optional(),
+});
 
 export type SongModificationSchema = z.infer<typeof songModificationSchema>;
 export type ModifySongVersionSchema = z.infer<typeof modifySongVersionSchema>;
@@ -59,6 +82,7 @@ export const songRoutes = buildApp()
         ...getTableColumns(song),
         ...getTableColumns(songVersion),
         id: song.id,
+        officialVersionId: song.currentVersionId,
         importSourceId: songImport.sourceId,
         importOriginalContent: songImport.originalContent,
         importUrl: songImport.url,
@@ -93,13 +117,18 @@ export const songRoutes = buildApp()
     const records = await c.var.db
       .select({
         ...getTableColumns(songVersion),
+        ...getTableColumns(songSubmission),
+        officialVersionId: song.currentVersionId,
         importSourceId: songImport.sourceId,
         importUrl: songImport.url,
       })
       .from(songVersion)
+      .leftJoin(song, eq(song.id, songVersion.songId))
+      .leftJoin(songSubmission, eq(songSubmission.versionId, songVersion.id))
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(songVersion.updatedAt));
-    return successJSend(c, records as SongVersionAdminApi[]);
+    const numbers = await versionNumbers(c.var.db);
+    return successJSend(c, records.map(({ officialVersionId, ...row }) => ({ ...row, isOfficial: row.id === officialVersionId, versionNumber: numbers.get(row.id) })) as SongVersionAdminApi[]);
   })
   .get("/:songId", async (c) => {
     try {
@@ -156,93 +185,142 @@ export const songRoutes = buildApp()
       .returning();
     return successJSend(c, restored[0] as SongDataDB);
   })
-  .post("/:songId/versions/:versionId/approve", async (c) => {
-    const { songId, versionId } = c.req.param();
-    const db = c.var.db;
-
-    const versionToCheck = await db
-      .select()
-      .from(songVersion)
-      .where(and(eq(songVersion.id, versionId), eq(songVersion.songId, songId)))
-      .get();
-    if (!versionToCheck) return failJSend(c, "Version not found", 404);
-
-    await promoteVersionToCurrent(db, songId, versionId, c.var.USER!.id);
-    return successJSend(c, { message: "Version approved and published." });
-  })
-  .post("/:songId/versions/:versionId/reject", async (c) => {
-    const { songId, versionId } = c.req.param();
-    const updated = await c.var.db
-      .update(songVersion)
-      .set({ status: "rejected", updatedAt: new Date() })
-      .where(and(eq(songVersion.id, versionId), eq(songVersion.songId, songId)))
-      .returning();
-    if (!updated.length) return failJSend(c, "Version not found", 404);
-    return successJSend(c, { message: "Version rejected." });
-  })
-  .post("/:songId/versions/:versionId/restore", async (c) => {
-    const { songId, versionId } = c.req.param();
-    const db = c.var.db;
-
-    const version = await db
-      .select()
-      .from(songVersion)
-      .where(and(eq(songVersion.id, versionId), eq(songVersion.songId, songId)))
-      .get();
-    if (!version) return failJSend(c, "Version not found", 404);
-    // Logic: If it was rejected, put it back to pending (retry).
-    // If it was deleted, put it to archived (safe state) or pending if you want it reviewed.
-    // Defaulting to 'pending' if rejected, 'archived' if deleted.
-
-    const newStatus = version.status === "rejected" ? "pending" : "archived";
-    const updated = await db
-      .update(songVersion)
-      .set({ status: newStatus, updatedAt: new Date() })
-      .where(eq(songVersion.id, versionId))
-      .returning();
-    return successJSend(c, updated[0] as SongVersionDB);
-  })
+  .post(
+    "/:songId/versions/:versionId/approve",
+    zValidatorJSend("json", approvalSchema),
+    async (c) => {
+      const { songId, versionId } = c.req.param();
+      return successJSend(
+        c,
+        await approveVersion(
+          c.var.db,
+          songId,
+          versionId,
+          c.var.USER!.id,
+          c.req.valid("json"),
+        ),
+      );
+    },
+  )
+  .post(
+    "/:songId/versions/:versionId/official",
+    zValidatorJSend("json", versionStateSchema),
+    async (c) => {
+      const { songId, versionId } = c.req.param();
+      return successJSend(
+        c,
+        await setOfficialVersion(
+          c.var.db,
+          songId,
+          versionId,
+          c.var.USER!.id,
+          c.req.valid("json").expectedRevision,
+        ),
+      );
+    },
+  )
+  .post(
+    "/:songId/versions/:versionId/merge",
+    zValidatorJSend(
+      "json",
+      versionStateSchema.extend({
+        targetVersionId: z.string(),
+        expectedTargetRevision: z.number().int().positive(),
+      }),
+    ),
+    async (c) => {
+      const { songId, versionId } = c.req.param();
+      const input = c.req.valid("json");
+      return successJSend(
+        c,
+        await mergeVersion(
+          c.var.db,
+          songId,
+          versionId,
+          input.targetVersionId,
+          c.var.USER!.id,
+          input.expectedRevision,
+          input.expectedTargetRevision,
+        ),
+      );
+    },
+  )
+  .post(
+    "/:songId/versions/:versionId/reclassify",
+    zValidatorJSend("json", versionStateSchema.extend({ expectedParentRevision: z.number().int().positive() })),
+    async (c) => {
+      const { songId, versionId } = c.req.param();
+      const { expectedRevision, expectedParentRevision } = c.req.valid("json");
+      return successJSend(c, await reclassifyVersion(c.var.db, songId, versionId,
+        c.var.USER!.id, expectedRevision, expectedParentRevision));
+    },
+  )
+  .post(
+    "/:songId/versions/:versionId/:action",
+    zValidatorJSend("json", versionStateSchema),
+    async (c) => {
+      const { songId, versionId, action } = c.req.param();
+      if (action !== "archive" && action !== "restore" && action !== "reject")
+        return failJSend(c, "Unknown action", 404);
+      return successJSend(
+        c,
+        await changeVersionStatus(
+          c.var.db,
+          songId,
+          versionId,
+          c.var.USER!.id,
+          action,
+          c.req.valid("json").expectedRevision,
+        ),
+      );
+    },
+  )
   .patch(
     "/:songId/versions/:versionId",
     zValidatorJSend("json", modifySongVersionSchema),
     async (c) => {
       const { songId, versionId } = c.req.param();
-      const updated = await c.var.db
-        .update(songVersion)
-        .set({ ...c.req.valid("json"), updatedAt: new Date() })
-        .where(
-          and(eq(songVersion.id, versionId), eq(songVersion.songId, songId)),
-        )
-        .returning();
-      if (!updated.length) return failJSend(c, "Version not found", 404);
-      return successJSend(c, updated[0] as SongVersionApi);
+      const { expectedRevision, ...changes } = c.req.valid("json");
+      const base = await loadVersion(c.var.db, songId, versionId);
+      if (base.revision !== expectedRevision) throw conflict();
+      if (base.mergedIntoVersionId || base.status === "deleted")
+        return failJSend(c, "This version is closed", 400);
+      if (sameContent(base, { ...base, ...changes }))
+        return successJSend(c, base as SongVersionApi);
+      if (base.importId) return successJSend(c, await saveSongVersion(c.var.db, { ...contentOf(base), ...changes, baseVersionId: base.id, expectedRevision }, songId, c.var.USER!.id));
+      await withVersionConflict(() =>
+        c.var.db.batch([
+          reviseVersion(c.var.db, base, changes, c.var.USER!.id),
+          c.var.db
+            .update(song)
+            .set({ updatedAt: new Date() })
+            .where(eq(song.id, songId)),
+        ]),
+      );
+      return successJSend(
+        c,
+        (await loadVersion(c.var.db, songId, versionId)) as SongVersionApi,
+      );
     },
   )
-  .delete("/:songId/versions/:versionId", async (c) => {
-    const { songId, versionId } = c.req.param();
-    const db = c.var.db;
-
-    const version = await db
-      .select()
-      .from(songVersion)
-      .where(eq(songVersion.id, versionId))
-      .get();
-    if (!version || version.songId !== songId)
-      return failJSend(c, "Version not found", 404);
-
-    // don't allow deletion of current version
-    const songData = await getSongPopulated(db, songId);
-    if (songData.currentVersionId === versionId)
-      return failJSend(c, "Cannot delete active version.", 400);
-
-    // Soft delete
-    const updated = await db
-      .update(songVersion)
-      .set({ updatedAt: new Date(), status: "deleted" })
-      .where(eq(songVersion.id, versionId))
-      .returning();
-    return successJSend(c, updated[0] as SongVersionDB);
-  })
+  .delete(
+    "/:songId/versions/:versionId",
+    zValidatorJSend("json", versionStateSchema),
+    async (c) => {
+      const { songId, versionId } = c.req.param();
+      return successJSend(
+        c,
+        await changeVersionStatus(
+          c.var.db,
+          songId,
+          versionId,
+          c.var.USER!.id,
+          "delete",
+          c.req.valid("json").expectedRevision,
+        ),
+      );
+    },
+  )
   .post("/reset-songDB-version", async (c) => {
     const newVersion = Date.now().toString();
     await c.env.KV.put("songDB-version", newVersion);

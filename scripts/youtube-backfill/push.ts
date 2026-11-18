@@ -1,4 +1,6 @@
 import { db } from "../shared/remote-db";
+import { reviseVersion } from "../../src/worker/helpers/song-versions/revisions";
+import type { AppDatabase } from "../../src/worker/api/utils";
 /**
  * Step 3 — write reviewed metadata back to the REMOTE DB.
  *
@@ -62,6 +64,7 @@ async function main() {
   const rows: {
     songId: string;
     versionId: string | null;
+    revision: number;
     youtubeId: string | null;
     key: string | null;
     capo: number | null;
@@ -75,6 +78,7 @@ async function main() {
       .select({
         songId: song.id,
         versionId: song.currentVersionId,
+        revision: songVersion.revision,
         youtubeId: songVersion.youtubeId,
         key: songVersion.key,
         capo: songVersion.capo,
@@ -92,6 +96,7 @@ async function main() {
   const changes: {
     songId: string;
     versionId: string;
+    revision: number;
     title: string;
     artist: string;
     set: FieldSet;
@@ -154,6 +159,7 @@ async function main() {
       changes.push({
         songId: item.songId,
         versionId: cur.versionId,
+        revision: cur.revision,
         title: item.title,
         artist: item.artist,
         set,
@@ -184,7 +190,12 @@ async function main() {
 
   let done = 0;
   for (const ch of changes) {
-    await db.update(songVersion).set(ch.set).where(eq(songVersion.id, ch.versionId));
+    const database = db as unknown as AppDatabase;
+    const current = await db.select().from(songVersion).where(eq(songVersion.id, ch.versionId));
+    const base = current[0];
+    if (!base || base.revision !== ch.revision) throw new Error(`Version changed for ${ch.songId}; rerun the preview.`);
+    await reviseVersion(database, base, ch.set, base.userId, ch.versionId);
+    await db.update(song).set({ updatedAt: new Date() }).where(eq(song.id, ch.songId));
     done++;
     if (done % 25 === 0) console.log(`  ${done}/${changes.length}...`);
   }

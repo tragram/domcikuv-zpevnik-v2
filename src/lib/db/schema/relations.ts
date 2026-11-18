@@ -6,6 +6,7 @@ import {
   songIllustration,
   songImport,
   songVersion,
+  songSubmission,
 } from "./song.schema";
 import { relations } from "drizzle-orm";
 
@@ -37,6 +38,7 @@ export const songIllustrationRelations = relations(
 );
 
 export const songVersionRelations = relations(songVersion, ({ one }) => ({
+  submission: one(songSubmission, { fields: [songVersion.id], references: [songSubmission.versionId] }),
   song: one(song, { fields: [songVersion.songId], references: [song.id] }),
   user: one(user, { fields: [songVersion.userId], references: [user.id] }),
   approver: one(user, {

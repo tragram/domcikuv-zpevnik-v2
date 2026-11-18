@@ -14,7 +14,6 @@ import {
   createSong,
   createSongVersion,
   getDeletedSongIds,
-  getSongBase,
   retrieveSingleSong,
 } from "../helpers/song-helpers";
 import { SongDataApi } from "./api-types";
@@ -66,19 +65,7 @@ export const externalRoutes = buildApp()
 
       try {
         existingSong = await retrieveSingleSong(db, newSongId);
-        if (existingSong && !existingSong.externalSource) {
-          // The song already exists as an internal song — don't add a version,
-          // just redirect to it. A *deleted* internal song instead falls
-          // through to the import below: createSongVersion revives it, the
-          // same way re-importing a deleted external-source song behaves.
-          const { deleted } = await getSongBase(db, newSongId);
-          if (!deleted) {
-            return successJSend(c, {
-              songId: existingSong.id,
-              versionId: existingSong.versionId,
-            });
-          }
-        }
+
       } catch {
         // Song doesn't exist yet, proceed
       }
@@ -160,27 +147,14 @@ export const externalRoutes = buildApp()
         youtubeId: null,
       };
 
-      if (!existingSong) {
-        await createSong(db, submission, user.id, true, importedSong.id);
-      } else {
-        await createSongVersion(
-          db,
-          submission,
-          existingSong.id,
-          user.id,
-          true,
-          importedSong.id,
-        );
-      }
-      // load the updated song
-      existingSong = await retrieveSingleSong(db, newSongId);
-
+      const importedVersion = !existingSong
+        ? (await createSong(db, submission, user.id, importedSong.id)).newVersion
+        : await createSongVersion(db, submission, existingSong.id, user.id, importedSong.id);
+      // Imports follow the same review policy. Resolve and pin the actual
+      // imported sheet even when it is pending or a non-official alternative.
+      existingSong = await retrieveSingleSong(db, newSongId, importedVersion.id);
       if (!existingSong) throw Error("Failed to create song!");
-      try {
-        await setSongbookEntry(db, user.id, existingSong.id, {});
-      } catch {
-        /* non fatal */
-      }
+      await setSongbookEntry(db, user.id, existingSong.id, { pinnedVersionId: importedVersion.id });
 
       if (thumbnailURL) {
         try {

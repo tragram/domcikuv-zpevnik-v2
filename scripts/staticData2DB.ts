@@ -1,5 +1,6 @@
+import { withVersionMaintenance } from "./shared/version-maintenance";
 import { D1Helper, useProxyD1 as withProxyD1 } from "@nerdfolio/drizzle-d1-helpers";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import * as fs from "fs";
 import yaml from "js-yaml";
 import * as path from "path";
@@ -9,6 +10,8 @@ import {
   song,
   songIllustration,
   songVersion,
+  songRevision,
+  songSubmission,
   songImport,
 } from "../src/lib/db/schema/song.schema";
 import { AppDatabase } from "../src/worker/api/utils";
@@ -143,23 +146,14 @@ async function ensureSystemUser(db: AppDatabase): Promise<string> {
  */
 async function clearTables(db: AppDatabase) {
   console.log("Clearing tables...");
-  await db.run(sql`PRAGMA defer_foreign_keys = OFF`);
-
-  const tables = [
-    songIllustration,
-    illustrationPrompt,
-    songVersion,
-    songImport,
-    userFavoriteSongs,
-    syncSession,
-    song,
-  ];
-
-  for (const table of tables) {
-    await db.delete(table);
-  }
-
-  await db.run(sql`PRAGMA defer_foreign_keys = ON`);
+  await withVersionMaintenance(db, async () => {
+    await db.update(song).set({ currentVersionId: null, currentIllustrationId: null });
+    await db.update(songVersion).set({ parentId: null, mergedIntoVersionId: null });
+    for (const table of [syncSession, userFavoriteSongs, songRevision, songSubmission,
+      songIllustration, illustrationPrompt, songVersion, song, songImport]) {
+      await db.delete(table);
+    }
+  });
 }
 
 /**

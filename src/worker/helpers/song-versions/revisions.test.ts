@@ -1,0 +1,889 @@
+import { withVersionMaintenance, backfillRevisionBaselines } from "../../../../scripts/shared/version-maintenance";
+import { DatabaseSync } from "node:sqlite";
+import { readFileSync } from "node:fs";
+import { drizzle } from "drizzle-orm/sqlite-proxy";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { eq } from "drizzle-orm";
+import * as schema from "src/lib/db/schema";
+import { editorSubmitSchema } from "src/lib/contracts/editor-schema";
+import type { AppDatabase } from "../../api/utils";
+import {
+  contentOf,
+  loadVersion,
+  restoreRevision,
+  retrieveRevisions,
+  reviseVersion,
+  withVersionConflict,
+} from "./revisions";
+import {
+  approveVersion,
+  changeVersionStatus,
+  mergeVersion,
+  reclassifyVersion,
+  saveSongVersion,
+  setOfficialVersion,
+} from "./writes";
+import { versionHistoryFixture } from "./history.test-fixture";
+import { setSongbookEntry } from "../favorite-helpers";
+import { publishedVersionIds } from "../song-helpers";
+import { buildApp } from "../../api/utils";
+import { songRoutes } from "../../api/admin/songs";
+import { versionNumbers } from "./numbering";
+
+let sqlite: DatabaseSync;
+let db: AppDatabase;
+
+beforeEach(async () => {
+  sqlite = new DatabaseSync(":memory:");
+  sqlite.exec(versionHistoryFixture);
+  sqlite.exec(readFileSync("drizzle/0008_sturdy_morgan_stark.sql", "utf8"));
+  sqlite.exec(readFileSync("drizzle/0009_living_snowbird.sql", "utf8"));
+  sqlite.exec("PRAGMA foreign_keys = ON");
+  const proxy = drizzle(
+    async (query, params, method) => {
+      const rows = sqlite
+        .prepare(query)
+        .all(...params)
+        .map(Object.values);
+      return { rows: method === "get" ? rows[0]! : rows };
+    },
+    { schema },
+  );
+  // Same SQLite transaction semantics as a D1 atomic batch; no policy decisions
+  // or generated statements are mocked. Also exercised separately with Wrangler.
+  Object.assign(proxy, {
+    batch: async (
+      queries: {
+        toSQL(): { sql: string; params: (string | number | null)[] };
+      }[],
+    ) => {
+      sqlite.exec("BEGIN");
+      try {
+        for (const query of queries) {
+          const statement = query.toSQL();
+          sqlite.prepare(statement.sql).run(...statement.params);
+        }
+        sqlite.exec("COMMIT");
+        return [];
+      } catch (error) {
+        sqlite.exec("ROLLBACK");
+        throw error;
+      }
+    },
+  });
+  db = proxy as unknown as AppDatabase;
+  for (const [id, trusted, admin] of [
+    ["owner", true, false],
+    ["other", true, false],
+    ["untrusted", false, false],
+    ["admin", true, true],
+  ] as const) {
+    await db.insert(schema.user).values({
+      id,
+      name: id,
+      email: `${id}@example.test`,
+      isTrusted: trusted,
+      isAdmin: admin,
+    });
+  }
+  await db.insert(schema.song).values({ id: "song" });
+});
+afterEach(() => sqlite.close());
+
+const input = (chordpro = "[C]Hello world") =>
+  editorSubmitSchema.parse({ title: "Song", artist: "Artist", chordpro });
+const initial = () => saveSongVersion(db, input(), "song", "owner");
+async function edit(
+  id: string,
+  chordpro: string,
+  actor = "owner",
+  mode: "correction" | "new-version" = "correction",
+) {
+  const base = await loadVersion(db, "song", id);
+  return saveSongVersion(
+    db,
+    {
+      ...input(chordpro),
+      baseVersionId: id,
+      expectedRevision: base.revision,
+      saveMode: mode,
+    },
+    "song",
+    actor,
+  );
+}
+
+describe("submitted revision history", () => {
+  it("requires migration classification before approving incomplete submissions", async () => {
+    const target = await initial();
+    const proposal = await edit(target.id, "Reviewed correction", "other");
+    await db.update(schema.songSubmission).set({ submissionIntent: null })
+      .where(eq(schema.songSubmission.versionId, proposal.id));
+    await expect(approveVersion(db, "song", proposal.id, "admin", {
+      expectedRevision: proposal.revision, force: true, expectedTargetRevision: target.revision,
+    })).rejects.toMatchObject({ status: 400 });
+    expect((await loadVersion(db, "song", target.id)).chordpro).toBe(target.chordpro);
+    await db.update(schema.songSubmission).set({ submissionIntent: "update-parent", baseRevision: target.revision })
+      .where(eq(schema.songSubmission.versionId, proposal.id));
+    expect((await approveVersion(db, "song", proposal.id, "admin", {
+      expectedRevision: proposal.revision,
+    })).id).toBe(target.id);
+  });
+
+  async function importCopy(text = "[C]Source sheet", actor = "owner", site: "pisnicky-akordy" | "cifraclub" = "pisnicky-akordy") {
+    const id = crypto.randomUUID();
+    await db.insert(schema.songImport).values({ id, title: "Song", artist: "Artist", originalContent: text, url: `https://${site}.test/song`, sourceId: site, userId: actor });
+    return saveSongVersion(db, input(text), "song", actor, id);
+  }
+
+  it("forks edits of an import and archives its unchanged source even when correction was requested", async () => {
+    const original = await importCopy();
+    const curated = await saveSongVersion(db, { ...input("[D]Curated sheet"), baseVersionId: original.id, expectedRevision: original.revision, saveMode: "correction", archivePreviousOnPublish: false, makeOfficialOnPublish: false }, "song", "owner");
+    expect(curated).toMatchObject({ status: "published", importId: null, parentId: original.id });
+    expect(curated.id).not.toBe(original.id);
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({ status: "archived", importId: original.importId, chordpro: original.chordpro, mergedIntoVersionId: null });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(curated.id);
+  });
+
+  it("keeps untrusted import edits pending and applies mandatory archival on approval", async () => {
+    const original = await importCopy();
+    const draft = await saveSongVersion(db, { ...input("Suggested curation"), baseVersionId: original.id, expectedRevision: original.revision, saveMode: "correction" }, "song", "untrusted");
+    expect(draft).toMatchObject({ status: "pending", importId: null, submissionIntent: "new-version", archivePreviousOnPublish: true, makeOfficialOnPublish: true });
+    expect((await loadVersion(db, "song", original.id)).status).toBe("published");
+    const published = await approveVersion(db, "song", draft.id, "admin", { expectedRevision: draft.revision, archivePrevious: false, makeOfficial: false });
+    expect(published.id).toBe(draft.id);
+    expect((await loadVersion(db, "song", original.id)).status).toBe("archived");
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(draft.id);
+  });
+
+  it("corrects a published curation in place without retiring its imported ancestor again", async () => {
+    const original = await importCopy();
+    const curated = await edit(original.id, "Curated");
+    const corrected = await edit(curated.id, "Corrected curation");
+    expect(corrected).toMatchObject({ id: curated.id, parentId: original.id, revision: 2, importId: null });
+    expect((await loadVersion(db, "song", original.id)).revision).toBe(2);
+  });
+
+  it.each([true, false])("approves an unchanged imported submission in place with submitter attribution %s", async (editAsSubmitter) => {
+    const original = await importCopy("[C]Source sheet", "untrusted");
+    const published = await saveSongVersion(db, {
+      ...input(original.chordpro), baseVersionId: original.id, expectedRevision: original.revision,
+      saveMode: "new-version", archivePreviousOnPublish: true,
+    }, "song", "admin", undefined, { publish: true, editAsSubmitter });
+    expect(published).toMatchObject({ id: original.id, importId: original.importId,
+      status: "published", userId: editAsSubmitter ? "untrusted" : "admin", approvedBy: "admin" });
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
+    expect(await db.query.songSubmission.findMany()).toHaveLength(0);
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
+  });
+
+  it("keeps the original submitter when an admin curates their pending import", async () => {
+    const original = await importCopy("Source", "untrusted");
+    const curated = await saveSongVersion(db, {
+      ...input("Edited source"), baseVersionId: original.id, expectedRevision: original.revision,
+    }, "song", "admin", undefined, { publish: true, editAsSubmitter: true });
+    expect(curated).toMatchObject({ userId: "untrusted", status: "published", importId: null, parentId: original.id });
+    expect((await loadVersion(db, "song", original.id)).status).toBe("archived");
+  });
+
+  it("rejects approval of another user's import by a trusted non-admin", async () => {
+    const original = await importCopy("Source", "untrusted");
+    await expect(saveSongVersion(db, { ...input("Source"), baseVersionId: original.id,
+      expectedRevision: original.revision }, "song", "other", undefined, { publish: true }))
+      .rejects.toMatchObject({ status: 403 });
+    expect((await loadVersion(db, "song", original.id)).status).toBe("pending");
+  });
+
+  it("refreshes only the same site's source copy and leaves its curated replacement alone", async () => {
+    const original = await importCopy();
+    const curated = await edit(original.id, "Curated sheet");
+    const refreshed = await importCopy("Updated source sheet");
+    expect(refreshed).toMatchObject({ id: original.id, status: "archived", chordpro: "Updated source sheet" });
+    expect((await loadVersion(db, "song", curated.id)).chordpro).toBe("Curated sheet");
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(curated.id);
+    expect((await importCopy("Updated source sheet")).revision).toBe(refreshed.revision);
+    expect((await importCopy("Other site's sheet", "owner", "cifraclub")).id).not.toBe(original.id);
+    expect(() => reviseVersion(db, refreshed, { chordpro: "Manual overwrite" }, "admin")).toThrow(/source copies/);
+    await expect(restoreRevision(db, "song", original.id, 1, refreshed.revision, "owner")).rejects.toMatchObject({ status: 400 });
+    await expect(mergeVersion(db, "song", curated.id, original.id, "admin", curated.revision, refreshed.revision)).rejects.toMatchObject({ status: 400 });
+  });
+
+  it("forks Admin metadata patches rather than mutating imported content", async () => {
+    const original = await importCopy();
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      c.set("USER", { id: "admin" } as NonNullable<typeof c.var.USER>);
+      await next();
+    }).route("/", songRoutes);
+    const response = await app.request(`/song/versions/${original.id}`, {
+      method: "PATCH", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ expectedRevision: original.revision, youtubeId: "abcdefghijk" }),
+    });
+    expect(response.status).toBe(200);
+    const { data } = await response.json() as { data: { id: string; importId: string | null; youtubeId: string } };
+    expect(data.id).not.toBe(original.id);
+    expect(data).toMatchObject({ importId: null, youtubeId: "abcdefghijk" });
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({ youtubeId: null, status: "archived" });
+  });
+
+  it("rejects imported merge sources so curation must create a new version instead", async () => {
+    const original = await importCopy();
+    const target = await saveSongVersion(db, input("Curated destination"), "song", "owner");
+    await expect(mergeVersion(db, "song", original.id, target.id, "admin", original.revision, target.revision)).rejects.toMatchObject({ status: 400 });
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({ status: "published", importId: original.importId, mergedIntoVersionId: null, chordpro: original.chordpro });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
+  });
+
+  it("migrates formerly consumed imports back to unchanged archived source copies", async () => {
+    const original = await importCopy();
+    const curated = await edit(original.id, "Curated sheet");
+    const archived = await loadVersion(db, "song", original.id);
+    await reviseVersion(db, archived, { status: "deleted", mergedIntoVersionId: curated.id }, "admin");
+    sqlite.exec(readFileSync("drizzle/0011_preserve_imported_sources.sql", "utf8"));
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({ status: "archived", mergedIntoVersionId: null, chordpro: original.chordpro, importId: original.importId });
+    expect((await loadVersion(db, "song", curated.id)).chordpro).toBe("Curated sheet");
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(curated.id);
+  });
+
+  it("derives list numbers dynamically, counting labeled versions and breaking date ties by ID", async () => {
+    await initial();
+    await db.insert(schema.songVersion).values([
+      { id: "b", songId: "song", userId: "owner", ...input(), createdAt: new Date(2000), status: "published" },
+      { id: "a-tie", songId: "song", userId: "owner", ...input(), createdAt: new Date(1000), status: "published" },
+      { id: "a", songId: "song", userId: "owner", ...input(), createdAt: new Date(1000), status: "published" },
+      { id: "named", songId: "song", userId: "owner", ...input(), label: "Acoustic", createdAt: new Date(500), status: "published" },
+    ]);
+    const numbers = await versionNumbers(db, ["song"]);
+    expect([...numbers.entries()].slice(0, 4)).toEqual([["named", 1], ["a", 2], ["a-tie", 3], ["b", 4]]);
+    await setOfficialVersion(db, "song", "b", "admin", 1);
+    await reviseVersion(db, await loadVersion(db, "song", "named"), { label: null }, "admin");
+    expect(await versionNumbers(db, ["song"])).toEqual(numbers);
+    await db.insert(schema.songVersion).values({ id: "backdated", songId: "song", userId: "owner", ...input(), createdAt: new Date(-1000) });
+    expect([...(await versionNumbers(db, ["song"])).entries()]).toEqual([
+      ["backdated", 1], ...[...numbers].map(([id, number]) => [id, number + 1]),
+    ]);
+    expect(await versionNumbers(db, [])).toEqual(new Map());
+    expect(sqlite.prepare("SELECT name FROM sqlite_master WHERE name = 'song_version_number'").all()).toEqual([]);
+  });
+  it.each(["merge", "approve", "reclassify"] as const)("deletes the consumed source through the Admin %s endpoint", async (action) => {
+    const first = await initial();
+    const proposal = await edit(first.id, "Reviewed sheet", "other");
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      c.set("USER", { id: "admin" } as NonNullable<typeof c.var.USER>);
+      await next();
+    }).route("/", songRoutes);
+    const response = await app.request(`/song/versions/${proposal.id}/${action}`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ expectedRevision: proposal.revision,
+        ...(action === "merge" ? { targetVersionId: first.id, expectedTargetRevision: first.revision } : {}),
+        ...(action === "reclassify" ? { expectedParentRevision: first.revision } : {}),
+      }),
+    });
+    expect(response.status).toBe(200);
+    expect(await loadVersion(db, "song", proposal.id)).toMatchObject({ status: "deleted", mergedIntoVersionId: first.id });
+    expect(await loadVersion(db, "song", first.id)).toMatchObject({ id: first.id, chordpro: "Reviewed sheet", status: "published" });
+  });
+
+  it("migrates legacy merged archives to deleted records while preserving actual alternatives", async () => {
+    const first = await initial();
+    const proposal = await edit(first.id, "Approved correction", "other");
+    await approveVersion(db, "song", proposal.id, "admin", { expectedRevision: proposal.revision });
+    const consumed = await loadVersion(db, "song", proposal.id);
+    await reviseVersion(db, consumed, { status: "archived" }, "admin");
+    const alternative = await edit(first.id, "Archived alternative", "owner", "new-version");
+    await changeVersionStatus(db, "song", alternative.id, "owner", "archive", alternative.revision);
+    const migration = readFileSync("drizzle/0010_delete_consumed_versions.sql", "utf8");
+    sqlite.exec(migration);
+    expect(await loadVersion(db, "song", proposal.id)).toMatchObject({ status: "deleted", mergedIntoVersionId: first.id, revision: consumed.revision + 2 });
+    expect((await loadVersion(db, "song", alternative.id)).status).toBe("archived");
+    const snapshots = await retrieveRevisions(db, "song", proposal.id, "admin");
+    expect(snapshots.revisions[0].status).toBe("deleted");
+    sqlite.exec(migration);
+    expect((await loadVersion(db, "song", proposal.id)).revision).toBe(consumed.revision + 2);
+  });
+  it("ships only live published version IDs for offline catalogs", async () => {
+    const first = await initial();
+    const alternative = await edit(first.id, "Alternative", "owner", "new-version");
+    await edit(first.id, "Pending suggestion", "untrusted", "new-version");
+    expect((await publishedVersionIds(db)).get("song")?.sort()).toEqual([first.id, alternative.id].sort());
+    await changeVersionStatus(db, "song", alternative.id, "owner", "archive", alternative.revision);
+    expect((await publishedVersionIds(db, ["song"])).get("song")).toEqual([first.id]);
+    await mergeVersion(db, "song", alternative.id, first.id, "admin", 2, first.revision);
+    expect((await publishedVersionIds(db)).get("song")).toEqual([first.id]);
+    expect((await publishedVersionIds(db, ["missing"])).size).toBe(0);
+    expect((await publishedVersionIds(db, [])).size).toBe(0);
+  });
+
+  it("keeps catalog choices within D1's 100-parameter limit for 494 songs", async () => {
+    const first = await initial();
+    const parameterCounts: number[] = [];
+    const limited = drizzle(async (query, params) => {
+      parameterCounts.push(params.length);
+      if (params.length > 100) throw new Error("D1 parameter limit exceeded");
+      return { rows: sqlite.prepare(query).all(...params).map(Object.values) };
+    }, { schema }) as unknown as AppDatabase;
+    const ids = Array.from({ length: 494 }, (_, i) => i === 493 ? "song" : `missing-${i}`);
+    expect((await publishedVersionIds(limited, ids)).get("song")).toEqual([first.id]);
+    expect(parameterCounts).toHaveLength(5);
+    expect(Math.max(...parameterCounts)).toBe(100);
+  });
+
+  it("rejects a concurrent draft change between saving and approval", async () => {
+    const proposal = await saveSongVersion(db, input("Draft"), "song", "untrusted");
+    const batch = db.batch.bind(db);
+    let injected = false;
+    db.batch = (async (...args: Parameters<typeof db.batch>) => {
+      const result = await batch(...args);
+      if (!injected) {
+        injected = true;
+        sqlite.prepare("UPDATE song_version SET chordpro = 'Concurrent', revision = revision + 1 WHERE id = ?").run(proposal.id);
+      }
+      return result;
+    }) as unknown as typeof db.batch;
+    await expect(saveSongVersion(db, {
+      ...input("Reviewed"), baseVersionId: proposal.id,
+      expectedRevision: proposal.revision, saveMode: "new-version",
+    }, "song", "admin", undefined, { publish: true })).rejects.toMatchObject({ status: 409 });
+    expect((await loadVersion(db, "song", proposal.id)).status).toBe("pending");
+  });
+
+  it.each(["reject", "delete"] as const)("preserves correction intent through %s and restore", async (action) => {
+    const first = await initial();
+    const proposal = await edit(first.id, "Suggestion", "other");
+    const closed = await changeVersionStatus(db, "song", proposal.id, "admin", action, proposal.revision);
+    const restored = await changeVersionStatus(db, "song", proposal.id, "admin", "restore", closed.revision);
+    expect(restored.submissionIntent).toBe("update-parent");
+    const accepted = await approveVersion(db, "song", proposal.id, "admin", { expectedRevision: restored.revision });
+    expect(accepted.id).toBe(first.id);
+  });
+
+  it("allows explicit maintenance, backfills legacy baselines and reinstates guards on failure", async () => {
+    const first = await initial();
+    await withVersionMaintenance(db, async () => {
+      await db.update(schema.song).set({ currentVersionId: null });
+      await db.delete(schema.songRevision);
+      await db.delete(schema.songVersion);
+      await db.insert(schema.songVersion).values({ ...first, revision: 4 });
+      await backfillRevisionBaselines(db);
+    });
+    expect(await db.query.songRevision.findMany()).toHaveLength(1);
+    expect((await db.query.songRevision.findFirst())?.number).toBe(4);
+    expect((await versionNumbers(db, ["song"])).get(first.id)).toBe(1);
+    await expect(withVersionMaintenance(db, async () => { throw new Error("restore failed"); })).rejects.toThrow("restore failed");
+    expect(() => sqlite.exec("DELETE FROM song_revision")).toThrow(/immutable/);
+    expect(() => sqlite.exec("UPDATE song_version SET title = 'unguarded'")).toThrow(/VERSION_CONFLICT/);
+  });
+
+  it("includes the previous snapshot for diffs across page boundaries", async () => {
+    const first = await initial();
+    for (let number = 2; number <= 28; number++) {
+      const base = await loadVersion(db, "song", first.id);
+      await reviseVersion(db, base, { chordpro: `Sheet ${number}` }, "owner");
+    }
+    const page = await retrieveRevisions(db, "song", first.id, "owner");
+    expect(page.revisions).toHaveLength(25);
+    expect(page.revisions.at(-1)?.previousContent?.chordpro).toBe("Sheet 3");
+    const older = await retrieveRevisions(
+      db,
+      "song",
+      first.id,
+      "owner",
+      page.nextOffset!,
+    );
+    expect(older.revisions.at(-1)?.previousContent).toBeNull();
+    expect(older.nextOffset).toBeNull();
+  });
+  it("backfills one honest baseline without changing legacy pins, official selection, or personal settings", () => {
+    const legacy = new DatabaseSync(":memory:");
+    try {
+      legacy.exec(versionHistoryFixture);
+      legacy.exec(`INSERT INTO user (id,name,email,email_verified,created_at,updated_at,last_login) VALUES ('legacy','Legacy','legacy@example.test',0,1,1,1);
+        INSERT INTO song (id,created_at,updated_at) VALUES ('legacy-song',1,1);
+        INSERT INTO song_version (id,song_id,status,title,artist,user_id,created_at,updated_at,chordpro) VALUES ('legacy-version','legacy-song','published','Legacy song','Artist','legacy',1,2,'Legacy sheet');
+        UPDATE song SET current_version_id='legacy-version';
+        INSERT INTO favorites (id,user_id,song_id,added_at,pinned_version_id,key_index,capo) VALUES (1,'legacy','legacy-song',1,'legacy-version',7,4);`);
+      legacy.exec(readFileSync("drizzle/0008_sturdy_morgan_stark.sql", "utf8"));
+      expect(
+        legacy.prepare("SELECT number, content FROM song_revision").get(),
+      ).toMatchObject({
+        number: 1,
+        content: expect.stringContaining("Legacy sheet"),
+      });
+      expect(
+        legacy
+          .prepare("SELECT pinned_version_id, key_index, capo FROM favorites")
+          .get(),
+      ).toMatchObject({
+        pinned_version_id: "legacy-version",
+        key_index: 7,
+        capo: 4,
+      });
+      expect(
+        legacy.prepare("SELECT current_version_id FROM song").get(),
+      ).toMatchObject({ current_version_id: "legacy-version" });
+    } finally {
+      legacy.close();
+    }
+  });
+  it("snapshots initial submissions, explicit corrections and restores while preserving IDs and provenance", async () => {
+    const first = await initial();
+    await db.insert(schema.userFavoriteSongs).values({
+      userId: "other",
+      songId: "song",
+      pinnedVersionId: first.id,
+      keyIndex: 2,
+      capo: 3,
+    });
+    const corrected = await edit(first.id, "[C]Hello there");
+    expect(corrected).toMatchObject({
+      id: first.id,
+      revision: 2,
+      userId: "owner",
+      parentId: null,
+    });
+    const restored = await restoreRevision(
+      db,
+      "song",
+      first.id,
+      1,
+      corrected.revision,
+      "owner",
+    );
+    expect(restored).toMatchObject({
+      id: first.id,
+      revision: 3,
+      chordpro: first.chordpro,
+    });
+    const history = await retrieveRevisions(db, "song", first.id, "owner");
+    expect(history.revisions.map((r) => r.number)).toEqual([3, 2, 1]);
+    expect(history.revisions[1].content.chordpro).toBe("[C]Hello there");
+    const favorite = await db.query.userFavoriteSongs.findFirst();
+    expect(favorite).toMatchObject({
+      pinnedVersionId: first.id,
+      keyIndex: 2,
+      capo: 3,
+    });
+    expect(() =>
+      sqlite.exec("UPDATE song_revision SET content = '{}'"),
+    ).toThrow(/immutable/);
+    expect(() => sqlite.exec("DELETE FROM song_revision")).toThrow(/immutable/);
+  });
+
+  it("does not snapshot no-op corrections or manufacture self-parentage", async () => {
+    const first = await initial();
+    const unchanged = await edit(first.id, first.chordpro);
+    expect(unchanged.revision).toBe(1);
+    expect(unchanged.parentId).toBeNull();
+    const unchangedSuggestion = await edit(
+      first.id,
+      first.chordpro,
+      "untrusted",
+    );
+    expect(unchangedSuggestion.id).toBe(first.id);
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
+    expect(
+      (await retrieveRevisions(db, "song", first.id, "owner")).revisions,
+    ).toHaveLength(1);
+  });
+
+  it("keeps history private to the owner and admins, including every earlier pending snapshot", async () => {
+    const first = await initial();
+    await expect(
+      retrieveRevisions(db, "song", first.id, "other"),
+    ).rejects.toMatchObject({ status: 403 });
+    await expect(
+      retrieveRevisions(db, "song", first.id, "admin"),
+    ).resolves.toHaveProperty("revisions");
+  });
+
+  it("allows intentional large corrections and distinct identical alternatives", async () => {
+    const first = await initial();
+    const corrected = await edit(
+      first.id,
+      "A completely different sheet with many new words\n{chorus}\n[D]New chorus",
+    );
+    expect(corrected.id).toBe(first.id);
+    const alternative = await edit(
+      first.id,
+      corrected.chordpro,
+      "owner",
+      "new-version",
+    );
+    expect(alternative.id).not.toBe(first.id);
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(first.id);
+    expect((await loadVersion(db, "song", first.id)).status).toBe("published");
+  });
+
+  it("keeps untrusted edits pending, then applies them as a revision without moving existing target pins", async () => {
+    const first = await initial();
+    const proposal = await edit(first.id, "[C]Suggested words", "untrusted");
+    expect(proposal).toMatchObject({
+      status: "pending",
+      submissionIntent: "update-parent",
+      parentId: first.id,
+      baseRevision: 1,
+    });
+    expect((await db.query.songSubmission.findFirst())?.versionId).toBe(
+      proposal.id,
+    );
+    expect(
+      sqlite
+        .prepare("PRAGMA table_info(song_version)")
+        .all()
+        .map((column) => column.name),
+    ).not.toContain("submission_intent");
+    expect((await loadVersion(db, "song", first.id)).chordpro).toBe(
+      first.chordpro,
+    );
+    await db.insert(schema.userFavoriteSongs).values({
+      userId: "untrusted",
+      songId: "song",
+      pinnedVersionId: proposal.id,
+      keyIndex: 5,
+      capo: 2,
+    });
+    const accepted = await approveVersion(db, "song", proposal.id, "admin", {
+      expectedRevision: proposal.revision,
+    });
+    expect(accepted).toMatchObject({
+      id: first.id,
+      revision: 2,
+      userId: "owner",
+      chordpro: proposal.chordpro,
+      approvedBy: "admin",
+    });
+    expect(await db.query.songSubmission.findMany()).toHaveLength(0);
+    expect(await loadVersion(db, "song", proposal.id)).toMatchObject({ status: "deleted", mergedIntoVersionId: first.id });
+    expect(await db.query.userFavoriteSongs.findFirst()).toMatchObject({
+      pinnedVersionId: first.id,
+      keyIndex: 5,
+      capo: 2,
+    });
+    await expect(
+      changeVersionStatus(db, "song", proposal.id, "admin", "restore", 2),
+    ).rejects.toMatchObject({ status: 400 });
+  });
+
+  it("flags stale proposals and permits a reviewed admin override, preserving both states", async () => {
+    const first = await initial();
+    const proposal = await edit(first.id, "Suggested", "other");
+    const current = await edit(first.id, "Intervening change");
+    await expect(
+      approveVersion(db, "song", proposal.id, "admin", { expectedRevision: 1 }),
+    ).rejects.toMatchObject({ status: 409 });
+    await expect(
+      approveVersion(db, "song", proposal.id, "other", {
+        expectedRevision: 1,
+        force: true,
+        expectedTargetRevision: current.revision,
+      }),
+    ).rejects.toMatchObject({ status: 403 });
+    const accepted = await approveVersion(db, "song", proposal.id, "admin", {
+      expectedRevision: 1,
+      force: true,
+      expectedTargetRevision: current.revision,
+    });
+    expect(accepted.chordpro).toBe("Suggested");
+    expect(
+      (await retrieveRevisions(db, "song", first.id, "admin")).revisions.map(
+        (r) => r.content.chordpro,
+      ),
+    ).toEqual(["Suggested", "Intervening change", first.chordpro]);
+  });
+
+  it("aborts coupled writes when a revision changes between reading and writing", async () => {
+    const first = await initial();
+    await edit(first.id, "Concurrent change");
+    await expect(
+      withVersionConflict(() =>
+        db.batch([
+          reviseVersion(db, first, { chordpro: "Stale overwrite" }, "owner"),
+          db
+            .update(schema.song)
+            .set({ currentVersionId: null })
+            .where(eq(schema.song.id, "song")),
+        ]),
+      ),
+    ).rejects.toMatchObject({ status: 409 });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(first.id);
+    expect((await loadVersion(db, "song", first.id)).chordpro).toBe(
+      "Concurrent change",
+    );
+  });
+
+  it("rolls back earlier content and snapshot writes when a later batch guard fails", async () => {
+    const first = await initial();
+    const proposal = await edit(first.id, "Proposed", "other");
+    await reviseVersion(db, proposal, { chordpro: "New proposal" }, "other");
+    await expect(
+      withVersionConflict(() =>
+        db.batch([
+          reviseVersion(db, first, { chordpro: "Would be copied" }, "admin"),
+          reviseVersion(db, proposal, { status: "archived" }, "admin"),
+        ]),
+      ),
+    ).rejects.toMatchObject({ status: 409 });
+    expect((await loadVersion(db, "song", first.id)).chordpro).toBe(
+      first.chordpro,
+    );
+    expect(
+      (await retrieveRevisions(db, "song", first.id, "owner")).revisions,
+    ).toHaveLength(1);
+  });
+
+  it("rejects cross-song and deleted pins and preserves settings when changing a valid pin", async () => {
+    const first = await initial();
+    await setSongbookEntry(db, "owner", "song", {
+      pinnedVersionId: first.id,
+      keyIndex: 3,
+      capo: 2,
+    });
+    await db.insert(schema.song).values({ id: "another" });
+    await expect(
+      setSongbookEntry(db, "owner", "another", { pinnedVersionId: first.id }),
+    ).rejects.toMatchObject({ status: 400 });
+    await setSongbookEntry(db, "owner", "song", { pinnedVersionId: null });
+    expect(await db.query.userFavoriteSongs.findFirst()).toMatchObject({
+      pinnedVersionId: null,
+      keyIndex: 3,
+      capo: 2,
+    });
+  });
+
+  it("publishes explicit replacements atomically and keeps archived sheets and snapshots", async () => {
+    const first = await initial();
+    const next = await saveSongVersion(
+      db,
+      {
+        ...input("Replacement"),
+        baseVersionId: first.id,
+        expectedRevision: 1,
+        saveMode: "new-version",
+        archivePreviousOnPublish: true,
+        makeOfficialOnPublish: true,
+      },
+      "song",
+      "owner",
+    );
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(next.id);
+    expect((await loadVersion(db, "song", first.id)).status).toBe("archived");
+    expect(
+      contentOf(
+        (await retrieveRevisions(db, "song", first.id, "owner")).revisions[1]
+          .content,
+      ).chordpro,
+    ).toBe(first.chordpro);
+  });
+
+  it.each([true, false])(
+    "lets admins override publication requests to %s",
+    async (requested) => {
+      const first = await initial();
+      // An untrusted owner can request a replacement but cannot publish it.
+      await db
+        .update(schema.user)
+        .set({ isTrusted: false })
+        .where(eq(schema.user.id, "owner"));
+      const proposal = await saveSongVersion(
+        db,
+        {
+          ...input("Replacement suggestion"),
+          baseVersionId: first.id,
+          expectedRevision: first.revision,
+          saveMode: "new-version",
+          makeOfficialOnPublish: requested,
+          archivePreviousOnPublish: requested,
+        },
+        "song",
+        "owner",
+      );
+      expect(proposal.status).toBe("pending");
+      await edit(first.id, "Newer official sheet", "admin");
+      // Removing both requests makes this an independent alternative, so it no
+      // longer needs to override the source's intervening edit.
+      await approveVersion(db, "song", proposal.id, "admin", {
+        expectedRevision: proposal.revision,
+        makeOfficial: !requested,
+        archivePrevious: !requested,
+        ...(!requested ? { force: true, expectedTargetRevision: 2 } : {}),
+      });
+      expect((await db.query.song.findFirst())?.currentVersionId).toBe(
+        requested ? first.id : proposal.id,
+      );
+      expect((await loadVersion(db, "song", first.id)).status).toBe(
+        requested ? "published" : "archived",
+      );
+      expect(await db.query.songSubmission.findFirst()).toBeUndefined();
+    },
+  );
+
+  it("reserves publication overrides for admins and requires an official replacement before archival", async () => {
+    const first = await initial();
+    const proposal = await edit(
+      first.id,
+      "Suggestion",
+      "untrusted",
+      "new-version",
+    );
+    await db
+      .update(schema.user)
+      .set({ isTrusted: true })
+      .where(eq(schema.user.id, "untrusted"));
+    await expect(
+      approveVersion(db, "song", proposal.id, "untrusted", {
+        expectedRevision: proposal.revision,
+        makeOfficial: true,
+      }),
+    ).rejects.toMatchObject({ status: 403 });
+    await expect(
+      approveVersion(db, "song", proposal.id, "admin", {
+        expectedRevision: proposal.revision,
+        makeOfficial: false,
+        archivePrevious: true,
+      }),
+    ).rejects.toMatchObject({ status: 400 });
+    expect((await loadVersion(db, "song", proposal.id)).status).toBe("pending");
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(first.id);
+  });
+
+  it("lets admins hide consumed proposals without losing history or allowing restoration", async () => {
+    const first = await initial();
+    const proposal = await edit(first.id, "Suggested correction", "other");
+    await approveVersion(db, "song", proposal.id, "admin", { expectedRevision: proposal.revision });
+    const consumed = await loadVersion(db, "song", proposal.id);
+    const deleted = await changeVersionStatus(db, "song", proposal.id, "admin", "delete", consumed.revision);
+    expect(deleted).toMatchObject({ status: "deleted", mergedIntoVersionId: first.id });
+    expect((await retrieveRevisions(db, "song", proposal.id, "admin")).revisions).toHaveLength(3);
+    expect((await loadVersion(db, "song", first.id)).status).toBe("published");
+    await expect(changeVersionStatus(db, "song", proposal.id, "admin", "restore", deleted.revision))
+      .rejects.toMatchObject({ status: 400 });
+  });
+
+  it("cannot publish or select a pending proposal through the wrong operation", async () => {
+    const first = await initial();
+    const proposal = await edit(first.id, "Suggestion", "other");
+    await expect(
+      setOfficialVersion(db, "song", proposal.id, "other", 1),
+    ).rejects.toMatchObject({ status: 400 });
+    await expect(
+      approveVersion(db, "song", proposal.id, "other", { expectedRevision: 1 }),
+    ).rejects.toMatchObject({ status: 403 });
+  });
+
+  it("changes official selection without changing either sheet's revision or history", async () => {
+    const first = await initial();
+    const alternative = await edit(first.id, "Alternate sheet", "owner", "new-version");
+    const selected = await setOfficialVersion(db, "song", alternative.id, "other", alternative.revision);
+    expect(selected.revision).toBe(alternative.revision);
+    expect((await loadVersion(db, "song", first.id)).revision).toBe(first.revision);
+    expect((await retrieveRevisions(db, "song", alternative.id, "owner")).revisions).toHaveLength(1);
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(alternative.id);
+    await expect(setOfficialVersion(db, "song", first.id, "other", first.revision + 1))
+      .rejects.toMatchObject({ status: 409 });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(alternative.id);
+  });
+
+  it("approves a content correction after official selection changes, preserving that selection", async () => {
+    const first = await initial();
+    const correction = await edit(first.id, "Corrected words", "other");
+    const alternative = await edit(first.id, "Alternate sheet", "owner", "new-version");
+    await setOfficialVersion(db, "song", alternative.id, "admin", alternative.revision);
+    const applied = await approveVersion(db, "song", correction.id, "admin", { expectedRevision: correction.revision });
+    expect(applied).toMatchObject({ id: first.id, chordpro: "Corrected words", revision: 2 });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(alternative.id);
+  });
+
+  it("still requires review when a replacement would override a changed official selection", async () => {
+    const first = await initial();
+    const replacement = await saveSongVersion(db, { ...input("Replacement"), baseVersionId: first.id,
+      expectedRevision: first.revision, saveMode: "new-version", makeOfficialOnPublish: true }, "song", "untrusted");
+    const alternative = await edit(first.id, "Alternate sheet", "owner", "new-version");
+    await setOfficialVersion(db, "song", alternative.id, "admin", alternative.revision);
+    await expect(approveVersion(db, "song", replacement.id, "admin", { expectedRevision: replacement.revision }))
+      .rejects.toMatchObject({ status: 409 });
+    await approveVersion(db, "song", replacement.id, "admin", { expectedRevision: replacement.revision,
+      force: true, expectedTargetRevision: first.revision });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(replacement.id);
+  });
+
+  it("merges an existing official version into an alternative, preserving links, both histories, and personal settings", async () => {
+    const first = await initial();
+    const target = await edit(
+      first.id,
+      "Alternate sheet",
+      "owner",
+      "new-version",
+    );
+    await db.insert(schema.userFavoriteSongs).values({
+      userId: "other",
+      songId: "song",
+      pinnedVersionId: first.id,
+      keyIndex: 7,
+      capo: 4,
+    });
+    await expect(
+      mergeVersion(
+        db,
+        "song",
+        first.id,
+        target.id,
+        "owner",
+        first.revision,
+        target.revision,
+      ),
+    ).rejects.toMatchObject({ status: 403 });
+    const merged = await mergeVersion(
+      db,
+      "song",
+      first.id,
+      target.id,
+      "admin",
+      first.revision,
+      target.revision,
+    );
+    expect(merged.chordpro).toBe(first.chordpro);
+    expect(await loadVersion(db, "song", first.id)).toMatchObject({
+      status: "deleted",
+      mergedIntoVersionId: target.id,
+    });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(target.id);
+    expect(await db.query.userFavoriteSongs.findFirst()).toMatchObject({
+      pinnedVersionId: target.id,
+      keyIndex: 7,
+      capo: 4,
+    });
+    expect(
+      (await retrieveRevisions(db, "song", first.id, "admin")).revisions,
+    ).toHaveLength(2);
+    expect(
+      (await retrieveRevisions(db, "song", target.id, "admin")).revisions,
+    ).toHaveLength(2);
+  });
+
+  it("reclassifies an official alternative into its parent atomically, keeping the parent's identity and name", async () => {
+    const parent = await saveSongVersion(db, { ...input("Original"), label: "Parent name", description: "Parent description" }, "song", "owner");
+    const mistaken = await saveSongVersion(db, { ...input("Corrected sheet"), label: "Mistaken alternative", description: "Other description",
+      baseVersionId: parent.id, expectedRevision: parent.revision, saveMode: "new-version",
+      archivePreviousOnPublish: true, makeOfficialOnPublish: true }, "song", "owner");
+    await setSongbookEntry(db, "other", "song", { pinnedVersionId: mistaken.id, keyIndex: 7, capo: 3 });
+    const archivedParent = await loadVersion(db, "song", parent.id);
+    const applied = await reclassifyVersion(db, "song", mistaken.id, "admin", mistaken.revision, archivedParent.revision);
+    expect(applied).toMatchObject({ id: parent.id, label: parent.label, description: parent.description,
+      userId: parent.userId, chordpro: "Corrected sheet", status: "published" });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(parent.id);
+    expect(await db.query.userFavoriteSongs.findFirst()).toMatchObject({ pinnedVersionId: parent.id, keyIndex: 7, capo: 3 });
+    expect(await loadVersion(db, "song", mistaken.id)).toMatchObject({ status: "deleted", mergedIntoVersionId: parent.id });
+    expect((await retrieveRevisions(db, "song", mistaken.id, "owner")).revisions).toHaveLength(2);
+  });
+
+  it("requires both the parent and source revisions reviewed during reclassification", async () => {
+    const parent = await initial();
+    const source = await edit(parent.id, "Separate version", "owner", "new-version");
+    await edit(parent.id, "Intervening correction");
+    await expect(reclassifyVersion(db, "song", source.id, "admin", source.revision, parent.revision))
+      .rejects.toMatchObject({ status: 409 });
+    expect((await loadVersion(db, "song", source.id)).status).toBe("published");
+    await expect(reclassifyVersion(db, "song", parent.id, "admin", 2, 1)).rejects.toMatchObject({ status: 400 });
+  });
+});

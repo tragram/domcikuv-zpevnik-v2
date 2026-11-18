@@ -1,3 +1,5 @@
+import { versionNumbers } from "./song-versions/numbering";
+import { withSubmission } from "src/lib/song-submission";
 import {
   and,
   BuildQueryResult,
@@ -7,7 +9,7 @@ import {
   gte,
   inArray,
   isNotNull,
-  ne,
+  isNull,
   or,
 } from "drizzle-orm";
 import * as schema from "src/lib/db/schema";
@@ -24,6 +26,7 @@ import {
 } from "src/lib/db/schema";
 import { songBaseId } from "src/lib/song-ids";
 import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
+import { saveSongVersion as createSongVersion } from "./song-versions/writes";
 import { AppDatabase } from "../api/utils";
 import { SongbookDataApi, SongDataApi } from "../api/api-types";
 
@@ -34,7 +37,7 @@ export type PopulatedSongDB = BuildQueryResult<
   TSchema["song"],
   {
     with: {
-      currentVersion: { with: { songImport: true } };
+      currentVersion: { with: { songImport: true, submission: true } };
       currentIllustration: true;
     };
   }
@@ -61,11 +64,31 @@ const customMetaOf = (
     customVersionAuthor: shown.user
       ? { id: shown.user.id, name: shown.user.nickname ?? shown.user.name }
       : undefined,
-    canonicalIsNewer: canonical
-      ? new Date(canonical.createdAt) > new Date(shown.createdAt)
-      : false,
+    canonicalIsNewer: !!canonical && canonical.id !== shown.id,
   };
 };
+
+// Ship actual choices with the offline catalog; never estimate them in the UI.
+export async function publishedVersionIds(db: AppDatabase, songIds?: string[]) {
+  const ids = new Map<string, string[]>();
+  // D1 allows 100 parameters; reserve one for the published status.
+  const batches: (string[] | undefined)[] = songIds === undefined ? [undefined] : [];
+  const uniqueIds = [...new Set(songIds)];
+  for (let i = 0; i < uniqueIds.length; i += 99) {
+    batches.push(uniqueIds.slice(i, i + 99));
+  }
+  for (const batch of batches) {
+    const rows = await db.select({ songId: songVersion.songId, id: songVersion.id })
+      .from(songVersion)
+      .where(and(eq(songVersion.status, "published"), isNull(songVersion.mergedIntoVersionId), batch ? inArray(songVersion.songId, batch) : undefined));
+    for (const row of rows) {
+      const versions = ids.get(row.songId) ?? [];
+      versions.push(row.id);
+      ids.set(row.songId, versions);
+    }
+  }
+  return ids;
+}
 
 // --- DTO Mapper ---
 const transformSongToApi = (
@@ -78,6 +101,18 @@ const transformSongToApi = (
     id: songItem.id,
     versionId: version?.id,
     versionStatus: version?.status,
+    versionRevision: version?.revision,
+    versionLabel: version?.label,
+    versionDescription: version?.description,
+    versionAuthorId: version?.userId,
+    versionParentId: version?.parentId,
+    versionCreatedAt: version?.createdAt,
+    versionUpdatedAt: version?.updatedAt,
+    isOfficial: version?.id === songItem.currentVersionId,
+    submissionIntent: version?.submission?.submissionIntent,
+    baseRevision: version?.submission?.baseRevision,
+    archivePreviousOnPublish: version?.submission?.archivePreviousOnPublish,
+    makeOfficialOnPublish: version?.submission?.makeOfficialOnPublish,
     hidden: songItem.hidden,
     title: version?.title ?? "Unknown title",
     artist: version?.artist ?? "Unknown artist",
@@ -161,12 +196,13 @@ export async function retrieveSongs(
     where: and(...conditions),
     with: {
       currentVersion: {
-        with: { songImport: true },
+        with: { songImport: true, submission: true },
       },
       currentIllustration: true,
     },
   });
-  return songsRaw.map((s) => transformSongToApi(s, updatedSince));
+  const choices = await publishedVersionIds(db, songsRaw.map((s) => s.id));
+  return songsRaw.map((s) => ({ ...transformSongToApi(s, updatedSince), publishedVersionIds: choices.get(s.id) ?? [] }));
 }
 
 /**
@@ -192,13 +228,13 @@ export const retrieveSingleSong = async (
     where: eq(song.id, songId),
     with: {
       currentVersion: {
-        with: { songImport: true },
+        with: { songImport: true, submission: true },
       },
       currentIllustration: true,
     },
   });
 
-  if (!songRaw) return null;
+  if (!songRaw || songRaw.deleted) return null;
 
   let customMeta: Pick<SongDataApi, "customVersionAuthor" | "canonicalIsNewer"> =
     {};
@@ -210,16 +246,23 @@ export const retrieveSingleSong = async (
         eq(songVersion.id, versionId),
         eq(songVersion.songId, songId),
       ),
-      with: { songImport: true, user: true },
+      with: { songImport: true, user: true, submission: true },
     });
-    if (!specificVersion) return null;
+    if (!specificVersion || specificVersion.status === "deleted") return null;
 
     const { user: author, ...version } = specificVersion;
     songRaw.currentVersion = version;
     customMeta = customMetaOf(canonical, { ...version, user: author });
   }
 
+  if (!songRaw.currentVersion) return null;
   const result = transformSongToApi(songRaw);
+  if (songRaw.currentVersion.parentId) {
+    const source = await db.query.songVersion.findFirst({ where: and(eq(songVersion.id, songRaw.currentVersion.parentId), eq(songVersion.songId, songId)), columns: { importId: true } });
+    result.versionParentIsImported = !!source?.importId;
+  }
+  result.versionNumber = (await versionNumbers(db, [songId])).get(result.versionId ?? "");
+  result.publishedVersionIds = (await publishedVersionIds(db, [songId])).get(songId) ?? [];
   Object.assign(result, customMeta);
   return result;
 };
@@ -246,10 +289,12 @@ export const resolveSongbookSongs = async (
   const songs = await db.query.song.findMany({
     where: and(inArray(song.id, songIds), eq(song.deleted, false)),
     with: {
-      currentVersion: { with: { songImport: true, user: true } },
+      currentVersion: { with: { songImport: true, user: true, submission: true } },
       currentIllustration: true,
     },
   });
+  const choices = await publishedVersionIds(db, songIds);
+  const numbers = await versionNumbers(db, songIds);
   const songById = new Map(songs.map((s) => [s.id, s]));
 
   // Pinned versions that differ from (or stand in for a missing) current version.
@@ -263,7 +308,7 @@ export const resolveSongbookSongs = async (
   const versions = pinnedIds.length
     ? await db.query.songVersion.findMany({
         where: inArray(songVersion.id, pinnedIds),
-        with: { songImport: true, user: true },
+        with: { songImport: true, user: true, submission: true },
       })
     : [];
   const versionById = new Map(versions.map((v) => [v.id, v]));
@@ -277,10 +322,12 @@ export const resolveSongbookSongs = async (
         ? versionById.get(entry.pinnedVersionId)
         : undefined;
     if (opts.onlyNonCanonical && !pinned) continue; // canonical → already in list
-    if (pinned) songRaw.currentVersion = pinned;
+    if (pinned && pinned.songId === entry.songId && pinned.status !== "deleted") songRaw.currentVersion = pinned;
     const shown = songRaw.currentVersion;
     if (!shown) continue; // nothing publishable to show
     const api = transformSongToApi(songRaw);
+    api.versionNumber = numbers.get(api.versionId ?? "");
+    api.publishedVersionIds = choices.get(entry.songId) ?? [];
     Object.assign(api, customMetaOf(canonical, shown));
     result.set(entry.songId, api);
   }
@@ -300,7 +347,7 @@ export const getSongPopulated = async (db: AppDatabase, songId: string) => {
   const result = await db.query.song.findFirst({
     where: eq(song.id, songId),
     with: {
-      currentVersion: { with: { songImport: true } },
+      currentVersion: { with: { songImport: true, submission: true } },
       currentIllustration: true,
     },
   });
@@ -312,7 +359,7 @@ export const findSongWithAllData = async (db: AppDatabase, songId: string) => {
   const completeSong = await db.query.song.findFirst({
     where: eq(song.id, songId),
     with: {
-      currentVersion: { with: { songImport: true } },
+      currentVersion: { with: { songImport: true, submission: true } },
       currentIllustration: true,
       version: { orderBy: [desc(songVersion.createdAt)] },
       illustration: { orderBy: [desc(songIllustration.createdAt)] },
@@ -359,10 +406,13 @@ export const getSongVersionsByUser = async (
   db: AppDatabase,
   userId: string,
 ): Promise<SongVersionDB[]> => {
-  return await db.query.songVersion.findMany({
+  const versions = await db.query.songVersion.findMany({
     where: eq(songVersion.userId, userId),
     orderBy: [desc(songVersion.createdAt)],
+    with: { submission: true, song: { columns: { currentVersionId: true } }, songImport: { columns: { sourceId: true } } },
   });
+  const numbers = await versionNumbers(db, [...new Set(versions.map(v => v.songId))]);
+  return versions.map(({ song, songImport, submission, ...version }) => ({ ...withSubmission(version, submission), versionNumber: numbers.get(version.id), importSourceId: songImport?.sourceId ?? null, isOfficial: song.currentVersionId === version.id }));
 };
 
 // --- Mutations ---
@@ -370,7 +420,6 @@ export const createSong = async (
   db: AppDatabase,
   submission: EditorSubmitSchema,
   userId: string,
-  isTrusted: boolean,
   importId?: string,
 ) => {
   const now = new Date();
@@ -384,7 +433,6 @@ export const createSong = async (
       createdAt: now,
       updatedAt: now,
       // newly added songs by untrusted users don't have to be hidden via this - they won't have currentVersionId and thus won't be shown automatically
-      // hidden: !isTrusted,
       currentVersionId: null,
     });
   }
@@ -394,7 +442,6 @@ export const createSong = async (
     submission,
     songId,
     userId,
-    isTrusted,
     importId,
   );
   const newSong = await getSongBase(db, songId);
@@ -402,170 +449,7 @@ export const createSong = async (
   return { newSong, newVersion };
 };
 
-export const createSongVersion = async (
-  db: AppDatabase,
-  submission: EditorSubmitSchema,
-  songId: string,
-  userId: string,
-  isTrusted: boolean,
-  importId?: string,
-  // Admin approval-from-editor controls. `isAdmin` lets the acting user approve
-  // someone else's pending submission in place; `editAsSubmitter` keeps the
-  // original submitter as the version's author (the admin stays the approver).
-  options?: { isAdmin?: boolean; editAsSubmitter?: boolean },
-) => {
-  const existingSong = await getSongBase(db, songId);
-  if (existingSong.deleted) {
-    // A previously-deleted song is revived as if brand new: drop the `deleted`
-    // flag and the stale current pointer so this submission re-enters the normal
-    // trust flow (untrusted manual -> pending & not shown until approved;
-    // trusted/import -> published). The pre-deletion version is archived so it
-    // doesn't linger as a second "published" version.
-    // NOTE: `hidden` is intentionally NOT reset here — hiding is sticky and must
-    // survive re-imports/edits; only an admin un-hides via the dashboard.
-    if (existingSong.currentVersionId) {
-      await db
-        .update(songVersion)
-        .set({ status: "archived" })
-        .where(eq(songVersion.id, existingSong.currentVersionId));
-    }
-    await db
-      .update(song)
-      .set({ deleted: false, currentVersionId: null })
-      .where(eq(song.id, songId));
-  }
-  const now = new Date();
-  // Resolve the edited-from version for lineage. The client sends a real version
-  // id (the current version's id when editing the canonical song). A parentId
-  // that doesn't resolve to a version of this song — e.g. a stale client value —
-  // is ignored so the edit forks fresh rather than failing the whole submission.
-  let parentVersion: schema.SongVersionDB | undefined = undefined;
-  if (submission.parentId) {
-    parentVersion = await db.query.songVersion.findFirst({
-      where: eq(songVersion.id, submission.parentId),
-    });
-    if (parentVersion && parentVersion.songId !== songId) {
-      parentVersion = undefined;
-    }
-  }
-
-  const shouldPublish = isTrusted;
-
-  // LOGIC BRANCH A: Approve/update a pending version in place (no fork).
-  // This covers two cases:
-  //  - The author editing their own pending draft (updates rather than spawning
-  //    a duplicate).
-  //  - An admin approving someone else's pending submission straight from the
-  //    editor — the submission is consumed in place instead of left dangling.
-  // The admin is always recorded as the approver; `editAsSubmitter` decides
-  // whether the version keeps its original author or is re-attributed to the
-  // admin.
-  const isOwnPending =
-    parentVersion?.status === "pending" && parentVersion.userId === userId;
-  const isAdminApprovingPending =
-    parentVersion?.status === "pending" &&
-    parentVersion.userId !== userId &&
-    !!options?.isAdmin;
-
-  if (parentVersion && (isOwnPending || isAdminApprovingPending)) {
-    // The version keeps its original author (the submitter for an admin approval,
-    // or themselves for an own-draft) unless an admin explicitly opts to claim
-    // authorship of the edit (`editAsSubmitter === false`).
-    const authorId =
-      isAdminApprovingPending && options?.editAsSubmitter === false
-        ? userId
-        : parentVersion.userId;
-    // An admin approving always publishes; a self-edit publishes only if trusted.
-    const publish = shouldPublish || isAdminApprovingPending;
-
-    const updatedVersion = await db
-      .update(songVersion)
-      .set({
-        ...submission,
-        userId: authorId,
-        updatedAt: now,
-        approvedBy: publish ? userId : null,
-        approvedAt: publish ? now : null,
-        importId: importId ?? null,
-      })
-      .where(eq(songVersion.id, parentVersion.id))
-      .returning();
-
-    if (publish)
-      await promoteVersionToCurrent(db, songId, parentVersion.id, userId);
-    return updatedVersion[0];
-  }
-
-  // LOGIC BRANCH B: Fork a new version.
-  // Any other unapproved parent (someone else's pending draft, or a
-  // draft/rejected version) is not part of the song's accessible lineage yet, so
-  // it is ignored and the edit forks a fresh version with no parent.
-  const parentIsApproved =
-    parentVersion?.status === "published" ||
-    parentVersion?.status === "archived";
-  const parentId = parentIsApproved ? parentVersion!.id : undefined;
-
-  const versionId = songId + "_" + now.getTime();
-
-  const newVersion = await db
-    .insert(songVersion)
-    .values({
-      ...submission,
-      id: versionId,
-      songId: songId,
-      parentId: parentId,
-      userId: userId,
-      approvedBy: shouldPublish ? userId : null,
-      approvedAt: shouldPublish ? now : null,
-      createdAt: now,
-      updatedAt: now,
-      importId: importId ?? null,
-    })
-    .returning();
-
-  if (shouldPublish)
-    await promoteVersionToCurrent(db, songId, versionId, userId);
-  return newVersion[0];
-};
-
-export const promoteVersionToCurrent = async (
-  db: AppDatabase,
-  songId: string,
-  versionId: string,
-  approverId: string,
-) => {
-  const now = new Date();
-  // Enforce the single-published-version invariant: archive EVERY other
-  // published version of this song (not just the tracked currentVersionId, in
-  // case stray published rows exist), publish the target, and repoint the song.
-  // D1 has no interactive transactions, so we run the three writes as one atomic
-  // batch — a partial failure can no longer leave two published versions.
-  await db.batch([
-    db
-      .update(songVersion)
-      .set({ status: "archived" })
-      .where(
-        and(
-          eq(songVersion.songId, songId),
-          eq(songVersion.status, "published"),
-          ne(songVersion.id, versionId),
-        ),
-      ),
-    db
-      .update(songVersion)
-      .set({
-        status: "published",
-        approvedBy: approverId,
-        approvedAt: now,
-        updatedAt: now,
-      })
-      .where(eq(songVersion.id, versionId)),
-    db
-      .update(song)
-      .set({ currentVersionId: versionId, updatedAt: now })
-      .where(eq(song.id, songId)),
-  ]);
-};
+export { saveSongVersion as createSongVersion } from "./song-versions/writes";
 
 export const songImportId = (
   sourceId: SongImportDB["sourceId"],

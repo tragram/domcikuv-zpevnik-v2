@@ -48,6 +48,8 @@ src/web/routeTree.gen.ts
 /*.sql
 
 *.sql
+!/drizzle/0008_sturdy_morgan_stark.sql
+!/drizzle/0009_living_snowbird.sql
 
 .claude/
 
@@ -56,3 +58,6 @@ src/web/routeTree.gen.ts
 # rollup-plugin-visualizer output (ANALYZE=1 pnpm build)
 bundle-stats.html
 bundle-stats.json
+
+!/drizzle/0010_delete_consumed_versions.sql
+!/drizzle/0011_preserve_imported_sources.sql

@@ -1,3 +1,4 @@
+import { withVersionMaintenance, backfillRevisionBaselines } from "./shared/version-maintenance";
 /**
  * Restores the newest production DB backup (the JSON that scripts/sync.ts
  * uploads to R2 nightly) into the LOCAL dev D1 database. Full-fidelity copy of
@@ -42,6 +43,8 @@ const INSERT_ORDER = [
   "songImport",
   "song",
   "songVersion",
+  "songSubmission",
+  "songRevision",
   "illustrationPrompt",
   "songIllustration",
   "userFavoriteSongs",
@@ -60,6 +63,8 @@ const DELETE_ORDER: SQLiteTable[] = [
   schema.userFavoriteSongs,
   schema.songIllustration,
   schema.illustrationPrompt,
+  schema.songRevision,
+  schema.songSubmission,
   schema.songVersion,
   schema.song,
   schema.songImport,
@@ -76,6 +81,8 @@ const TABLES: Record<TableName, SQLiteTable> = {
   songImport: schema.songImport,
   song: schema.song,
   songVersion: schema.songVersion,
+  songSubmission: schema.songSubmission,
+  songRevision: schema.songRevision,
   illustrationPrompt: schema.illustrationPrompt,
   songIllustration: schema.songIllustration,
   userFavoriteSongs: schema.userFavoriteSongs,
@@ -88,6 +95,12 @@ const FK_SPECS: Partial<
 > = {
   account: [{ column: "userId", ref: "user", required: true }],
   songImport: [{ column: "userId", ref: "user", required: true }],
+  songSubmission: [{ column: "versionId", ref: "songVersion", required: true }],
+  songRevision: [
+    { column: "versionId", ref: "songVersion", required: true },
+    { column: "userId", ref: "user", required: true },
+    { column: "approvedBy", ref: "user", required: false },
+  ],
   songVersion: [
     { column: "songId", ref: "song", required: true },
     { column: "userId", ref: "user", required: true },
@@ -214,6 +227,8 @@ async function restore(db: AppDatabase, backup: DBBackup) {
     );
   }
 
+  await db.update(schema.song).set({ currentVersionId: null, currentIllustrationId: null });
+  await db.update(schema.songVersion).set({ parentId: null, mergedIntoVersionId: null });
   console.log("Clearing local tables...");
   for (const table of DELETE_ORDER) {
     await db.delete(table);
@@ -227,6 +242,8 @@ async function restore(db: AppDatabase, backup: DBBackup) {
     songImport: new Set(),
     song: new Set(),
     songVersion: new Set(),
+    songSubmission: new Set(),
+    songRevision: new Set(),
     illustrationPrompt: new Set(),
     songIllustration: new Set(),
     userFavoriteSongs: new Set(),
@@ -240,7 +257,7 @@ async function restore(db: AppDatabase, backup: DBBackup) {
   }[] = [];
   // songVersion.parentId is self-referential, so a row can point at a version
   // that appears later in the backup — defer it too.
-  const versionParents: { id: string; parentId: unknown }[] = [];
+  const versionParents: { id: string; parentId: unknown; mergedIntoVersionId: unknown }[] = [];
 
   for (const tableName of INSERT_ORDER) {
     const rawRows = backup.tables[tableName] ?? [];
@@ -271,11 +288,11 @@ async function restore(db: AppDatabase, backup: DBBackup) {
 
     if (tableName === "songVersion") {
       for (const row of rows) {
-        if (row.parentId) {
-          versionParents.push({ id: row.id as string, parentId: row.parentId });
+        if (row.parentId || row.mergedIntoVersionId) {
+          versionParents.push({ id: row.id as string, parentId: row.parentId, mergedIntoVersionId: row.mergedIntoVersionId });
         }
       }
-      rows = rows.map((row) => ({ ...row, parentId: null }));
+      rows = rows.map((row) => ({ ...row, parentId: null, mergedIntoVersionId: null }));
     }
 
     // Drop rows with dangling required refs, null out dangling nullable ones.
@@ -338,10 +355,13 @@ async function restore(db: AppDatabase, backup: DBBackup) {
     `Patching parent pointers on ${versionParents.length} song versions...`,
   );
   for (const pointer of versionParents) {
-    if (!insertedIds.songVersion.has(pointer.parentId)) continue;
+
     await db
       .update(schema.songVersion)
-      .set({ parentId: pointer.parentId as string })
+      .set({
+        parentId: insertedIds.songVersion.has(pointer.parentId) ? pointer.parentId as string : null,
+        mergedIntoVersionId: insertedIds.songVersion.has(pointer.mergedIntoVersionId) ? pointer.mergedIntoVersionId as string : null,
+      })
       .where(eq(schema.songVersion.id, pointer.id));
   }
 }
@@ -371,7 +391,11 @@ async function main() {
   console.log("⚠️ This REPLACES all data in your local dev D1 database.");
 
   await D1Helper.get("DB").useLocalD1(async (db) => {
-    await restore(db as unknown as AppDatabase, backup);
+    const database = db as unknown as AppDatabase;
+    await withVersionMaintenance(database, async () => {
+      await restore(database, backup);
+      await backfillRevisionBaselines(database);
+    });
   });
 
   console.log("Bumping local songDB-version so clients skip stale incremental sync...");

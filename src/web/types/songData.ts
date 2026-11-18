@@ -27,6 +27,21 @@ export class SongData {
   id: string;
   versionId?: string;
   versionStatus?: SongDataApi["versionStatus"];
+  versionRevision?: number;
+  versionNumber?: number;
+  publishedVersionIds?: string[];
+  versionLabel?: string | null;
+  versionDescription?: string | null;
+  versionAuthorId?: string;
+  versionParentId?: string | null;
+  versionParentIsImported?: boolean;
+  versionCreatedAt?: Date | string;
+  versionUpdatedAt?: Date | string;
+  isOfficial?: boolean;
+  submissionIntent?: SongDataApi["submissionIntent"];
+  baseRevision?: number | null;
+  archivePreviousOnPublish?: boolean;
+  makeOfficialOnPublish?: boolean;
   title: string;
   artist: string;
   key?: Key;
@@ -60,9 +75,9 @@ export class SongData {
   previewUrl?: string;
   previewThumbnailURL?: string;
 
-  /** A custom (pending draft) version is being shown rather than the canonical one. */
+  /** A named alternative or draft is shown rather than the official default. */
   get isCustom(): boolean {
-    return !!this.customVersionAuthor;
+    return this.isOfficial === undefined ? !!this.customVersionAuthor : !this.isOfficial;
   }
 
   constructor(
@@ -73,6 +88,21 @@ export class SongData {
     this.id = songFromDB.id;
     this.versionId = songFromDB.versionId;
     this.versionStatus = songFromDB.versionStatus;
+    this.versionRevision = songFromDB.versionRevision;
+    this.versionNumber = songFromDB.versionNumber;
+    this.publishedVersionIds = songFromDB.publishedVersionIds;
+    this.versionLabel = songFromDB.versionLabel;
+    this.versionDescription = songFromDB.versionDescription;
+    this.versionAuthorId = songFromDB.versionAuthorId;
+    this.versionParentId = songFromDB.versionParentId;
+    this.versionParentIsImported = songFromDB.versionParentIsImported;
+    this.versionCreatedAt = songFromDB.versionCreatedAt;
+    this.versionUpdatedAt = songFromDB.versionUpdatedAt;
+    this.isOfficial = songFromDB.isOfficial;
+    this.submissionIntent = songFromDB.submissionIntent;
+    this.baseRevision = songFromDB.baseRevision;
+    this.archivePreviousOnPublish = songFromDB.archivePreviousOnPublish;
+    this.makeOfficialOnPublish = songFromDB.makeOfficialOnPublish;
     this.title = songFromDB.title;
     this.artist = songFromDB.artist;
     this.key = this.parseKey(songFromDB.key);
@@ -100,6 +130,9 @@ export class SongData {
   static fromEditor(data: EditorState): SongData {
     return new SongData({
       ...data,
+      versionId: undefined,
+      versionStatus: undefined,
+      versionRevision: undefined,
       id: SongData.baseId(data.title, data.artist),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -245,6 +278,23 @@ export class SongData {
   toJSON() {
     return {
       id: this.id,
+      versionId: this.versionId,
+      versionStatus: this.versionStatus,
+      versionRevision: this.versionRevision,
+      versionNumber: this.versionNumber,
+      publishedVersionIds: this.publishedVersionIds,
+      versionLabel: this.versionLabel,
+      versionDescription: this.versionDescription,
+      versionAuthorId: this.versionAuthorId,
+      versionParentId: this.versionParentId,
+      versionParentIsImported: this.versionParentIsImported,
+      versionCreatedAt: this.versionCreatedAt,
+      versionUpdatedAt: this.versionUpdatedAt,
+      isOfficial: this.isOfficial,
+      submissionIntent: this.submissionIntent,
+      baseRevision: this.baseRevision,
+      archivePreviousOnPublish: this.archivePreviousOnPublish,
+      makeOfficialOnPublish: this.makeOfficialOnPublish,
       title: this.title,
       artist: this.artist,
       key: this.key?.toString(),

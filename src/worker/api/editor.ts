@@ -1,5 +1,8 @@
-import { songVersion, SongVersionDB, user } from "../../lib/db/schema";
+import { songVersion, SongVersionDB } from "../../lib/db/schema";
 import { eq } from "drizzle-orm";
+import { z } from "zod";
+import { approveVersion, changeVersionStatus, setOfficialVersion } from "../helpers/song-versions/writes";
+import { retrieveRevisions, restoreRevision } from "../helpers/song-versions/revisions";
 import { buildApp } from "./utils";
 
 import {
@@ -159,14 +162,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     }
 
     const db = c.var.db;
-    const userProfile = await db
-      .select({ isTrusted: user.isTrusted })
-      .from(user)
-      .where(eq(user.id, userId))
-      .get();
-
-    const isTrusted = !!userProfile?.isTrusted;
-    const result = await createSong(db, submission, userId, isTrusted);
+    const result = await createSong(db, submission, userId);
     try {
       // Pin the author's songbook to their new version so it shows for them
       // regardless of approval status (also adds it to their favorites).
@@ -191,14 +187,6 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     }
 
     const db = c.var.db;
-    const userProfile = await db
-      .select({ isTrusted: user.isTrusted, isAdmin: user.isAdmin })
-      .from(user)
-      .where(eq(user.id, userId))
-      .get();
-
-    const isTrusted = !!userProfile?.isTrusted;
-    const isAdmin = !!userProfile?.isAdmin;
 
     // getSongPopulated will throw an error if the song is not found.
     const existingSong = await getSongBase(db, songId);
@@ -208,16 +196,15 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       submission,
       songId,
       userId,
-      isTrusted,
       undefined,
-      { isAdmin, editAsSubmitter },
+      { editAsSubmitter, publish: c.req.valid("json").publish },
     );
 
     // Pin the new version to the editor's songbook only when it's genuinely
     // theirs, so an in-progress edit sticks even if it's never approved. An admin
     // approving someone else's submission publishes it outright — there's nothing
     // to pin, and we don't want it in the admin's favorites.
-    if (versionResult.userId === userId) {
+    if (versionResult.userId === userId && versionResult.id !== (submission.baseVersionId ?? submission.parentId)) {
       try {
         await setSongbookEntry(db, userId, existingSong.id, {
           pinnedVersionId: versionResult.id,
@@ -243,7 +230,27 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     const versions = await getSongVersionsByUser(c.var.db, userId);
     return successJSend(c, versions as SongVersionDB[]);
   })
-  .delete("/versions/:id", async (c) => {
+  .get("/:songId/versions/:versionId/revisions", zValidatorJSend("query", z.object({ offset: z.coerce.number().int().min(0).default(0) })), async (c) => {
+    if (!c.var.USER) return failJSend(c, "Authentication required", 401);
+    const { songId, versionId } = c.req.param();
+    return successJSend(c, await retrieveRevisions(c.var.db, songId, versionId, c.var.USER.id, c.req.valid("query").offset));
+  })
+  .post("/:songId/versions/:versionId/revisions/:number/restore", zValidatorJSend("json", z.object({ expectedRevision: z.number().int().positive() })), async (c) => {
+    if (!c.var.USER) return failJSend(c, "Authentication required", 401);
+    const { songId, versionId, number } = c.req.param();
+    const revision = z.coerce.number().int().positive().parse(number);
+    return successJSend(c, await restoreRevision(c.var.db, songId, versionId, revision, c.req.valid("json").expectedRevision, c.var.USER.id));
+  })
+  .post("/:songId/versions/:versionId/:action", zValidatorJSend("json", z.object({ expectedRevision: z.number().int().positive() })), async (c) => {
+    if (!c.var.USER) return failJSend(c, "Authentication required", 401);
+    const { songId, versionId, action } = c.req.param();
+    const expected = c.req.valid("json").expectedRevision;
+    if (action === "official") return successJSend(c, await setOfficialVersion(c.var.db, songId, versionId, c.var.USER.id, expected));
+    if (action === "publish") return successJSend(c, await approveVersion(c.var.db, songId, versionId, c.var.USER.id, { expectedRevision: expected }));
+    if (action !== "archive" && action !== "restore") return failJSend(c, "Unknown action", 404);
+    return successJSend(c, await changeVersionStatus(c.var.db, songId, versionId, c.var.USER.id, action, expected));
+  })
+  .delete("/versions/:id", zValidatorJSend("json", z.object({ expectedRevision: z.number().int().positive() })), async (c) => {
     const userId = c.var.USER?.id;
     const versionId = c.req.param("id");
 
@@ -271,14 +278,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       );
     }
 
-    await db
-      .update(songVersion)
-      .set({
-        updatedAt: new Date(),
-        status: "deleted",
-      })
-      .where(eq(songVersion.id, versionId))
-      .returning();
+    await changeVersionStatus(db, version.songId, versionId, userId, "delete", c.req.valid("json").expectedRevision);
 
     return successJSend(c, { message: "Version deleted successfully" });
   });
