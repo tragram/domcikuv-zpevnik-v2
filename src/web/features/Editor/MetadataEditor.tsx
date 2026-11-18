@@ -174,6 +174,14 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
 
         <Separator className="my-4" />
 
+        <details className="rounded-lg border border-border p-3" open={!!(defaultMetadata.label || defaultMetadata.description || fieldErrors.label || fieldErrors.description)}>
+          <summary className="cursor-pointer text-sm font-medium">Version details <span className="font-normal text-muted-foreground">(optional)</span></summary>
+          <div className="mt-3 space-y-2">
+            <p className="text-tiny leading-tight text-muted-foreground">Only needed to distinguish different versions of the same song. Usually, leave these blank.</p>
+            <MetadataField label="Version name" value={metadata.label ?? ""} onChange={(value) => updateMetadata("label", value)} modified={defaultMetadata.label !== metadata.label} error={fieldErrors.label} description={String(20 - [...(metadata.label ?? "")].length) + " characters remaining"} />
+            <MetadataField label="Version description" value={metadata.description ?? ""} onChange={(value) => updateMetadata("description", value)} modified={defaultMetadata.description !== metadata.description} error={fieldErrors.description} description={String(120 - [...(metadata.description ?? "")].length) + " characters remaining"} />
+          </div>
+        </details>
         {/* Editor Settings Section */}
         <div className="mt-4">
           <EditorSettingsComponent

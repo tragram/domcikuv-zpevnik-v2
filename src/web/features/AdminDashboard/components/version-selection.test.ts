@@ -1,6 +1,21 @@
 import { describe, expect, it } from "vitest";
 
-import { getWorkingVersion } from "./version-selection";
+import { getWorkingVersion, getCorrectionParent } from "./version-selection";
+
+it("uses the recorded local parent, independently of which other versions are published", () => {
+  const source = { id: "source", songId: "song", parentId: "approved", status: "pending" };
+  const approved = { id: "approved", songId: "song", status: "published" };
+  const versions = [source, approved,
+    { id: "deleted", songId: "song", status: "deleted" },
+    { id: "foreign", songId: "other", status: "published" },
+    { id: "consumed", songId: "song", status: "archived", mergedIntoVersionId: "approved" },
+  ];
+  expect(getCorrectionParent(source, versions)).toEqual(approved);
+  expect(getCorrectionParent({ ...source, mergedIntoVersionId: "approved" }, versions)).toBeUndefined();
+  expect(getCorrectionParent({ ...source, parentId: null }, versions)).toBeUndefined();
+  expect(getCorrectionParent(source, [{ ...approved, importId: "raw-source" }])).toBeUndefined();
+  expect(getCorrectionParent(source, [{ ...approved, songId: "other" }])).toBeUndefined();
+});
 
 describe("getWorkingVersion", () => {
   it("uses the current version when one exists", () => {

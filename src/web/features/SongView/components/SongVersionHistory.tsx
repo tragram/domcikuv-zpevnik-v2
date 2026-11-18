@@ -113,7 +113,7 @@ export function SongVersionHistory({
             );
           })}
       </ul>
-      {(onUse || (canPreview && versions.length > 1)) && (
+      {(viewerId || onUse || (canPreview && versions.length > 1)) && (
         <div>
           <Separator />
             {(onUse || (canPreview && versions.length > 1)) && <p className="px-2 py-1.5 text-tiny leading-tight text-muted-foreground">
@@ -122,6 +122,9 @@ export function SongVersionHistory({
                 : viewerId
                   ? "View opens another version without changing this songbook."
                   : "You can view other versions without signing in. Sign in to save your own choice."}
+            </p>}
+            {viewerId && <p className="px-2 py-1.5 text-tiny leading-tight text-muted-foreground">
+              Restore your archived versions from <Link to="/submissions" className="text-primary underline underline-offset-2">Submissions</Link>.
             </p>}
         </div>
       )}

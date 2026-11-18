@@ -1,208 +1,185 @@
-import { refreshSongVersions } from "~/services/version-service";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { FilePenLine } from "lucide-react";
 import { useState } from "react";
-import DeletePrompt from "~/components/dialogs/delete-prompt";
+import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
-import { Checkbox } from "~/components/ui/checkbox";
-import { Label } from "~/components/ui/label";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "~/components/ui/table";
-import { makeApiRequest } from "~/services/api-service";
 import SongVersionStatusBadge from "~/components/SongVersionStatusBadge";
-import { SongVersionDB } from "src/lib/db/schema";
+import { makeApiRequest } from "~/services/api-service";
+import { refreshSongVersions, versionAction } from "~/services/version-service";
+import { versionLabel } from "src/lib/version-label";
+import type { SongVersionApi } from "src/worker/api/api-types";
+import { SongRevisionHistory } from "~/components/SongRevisionHistory";
+import { useIsOnline } from "~/hooks/use-is-online";
 
 export const Route = createFileRoute("/(auth)/submissions")({
   component: UserSubmissions,
-  // The (auth) guard already resolved `userData` through the query cache, which is
-  // offline-safe (falls back to the last persisted session + submissions). Just
-  // reuse it instead of re-fetching here.
-  loader: ({ context }) =>
-    (context.userData?.submissions ?? []) as SongVersionDB[],
+  loader: ({ context }) => context.userData?.submissions ?? [],
 });
 
 function UserSubmissions() {
-  const versions = Route.useLoaderData() as SongVersionDB[];
+  const versions = Route.useLoaderData();
   const context = Route.useRouteContext();
   const router = useRouter();
   const cache = useQueryClient();
-  const [showAllVersions, setShowAllVersions] = useState(false);
-
-  const deleteMutation = useMutation({
-    mutationFn: ({ id, revision }: Pick<SongVersionDB, "id" | "revision">) =>
-      makeApiRequest(() =>
-        context.api.editor.versions[":id"].$delete({
-          param: { id }, json: { expectedRevision: revision },
-        }),
-      ),
+  const online = useIsOnline();
+  const [filter, setFilter] = useState("active");
+  const mutation = useMutation({
+    mutationFn: async ({
+      version,
+      action,
+    }: {
+      version: SongVersionApi;
+      action: "archive" | "restore" | "official" | "delete" | "publish";
+    }) => {
+      if (action === "delete")
+        await makeApiRequest(() =>
+          context.api.editor.versions[":id"].$delete({
+            param: { id: version.id },
+            json: { expectedRevision: version.revision },
+          }),
+        );
+      else
+        await versionAction(
+          version.songId,
+          version.id,
+          action,
+          version.revision,
+        );
+    },
     onSuccess: async () => {
       await refreshSongVersions(cache);
       await router.invalidate();
     },
+    onError: (error) => toast.error(error.message),
   });
-
-  // Filter to show only the latest version per song, or organize by song if showing all
-  const displayedVersions = showAllVersions
-    ? versions?.sort((a, b) => {
-        // First sort by songId to group versions together
-        if (a.songId !== b.songId) {
-          return a.songId.localeCompare(b.songId);
-        }
-        // Then sort by date descending within each song group
-        const dateA = new Date(a.createdAt || 0).getTime();
-        const dateB = new Date(b.createdAt || 0).getTime();
-        return dateB - dateA;
-      })
-    : versions?.reduce((acc, version) => {
-        const existingIndex = acc.findIndex((v) => v.songId === version.songId);
-        if (existingIndex === -1) {
-          acc.push(version);
-        } else {
-          // Compare dates and keep the latest version
-          const existingDate = new Date(acc[existingIndex].createdAt || 0);
-          const currentDate = new Date(version.createdAt || 0);
-          if (currentDate > existingDate) {
-            acc[existingIndex] = version;
-          }
-        }
-        return acc;
-      }, [] as SongVersionDB[]);
-
+  const displayed = versions
+    .filter((v) =>
+      filter === "active"
+        ? ["published", "pending"].includes(v.status)
+        : filter === "closed"
+          ? ["rejected", "deleted"].includes(v.status) ||
+            v.mergedIntoVersionId
+          : v.status === "archived" && !v.mergedIntoVersionId,
+    )
+    .toSorted(
+      (a, b) =>
+        a.songId.localeCompare(b.songId) ||
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    );
+  const trusted =
+    context.userData?.profile.isTrusted || context.userData?.profile.isAdmin;
   return (
-    <div className="max-w-4xl mx-auto w-full">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold mb-2">My Contributions</h2>
-        <div className="flex items-center justify-between flex-wrap gap-2">
-          <p className="text-sm text-muted-foreground">
-            {showAllVersions
-              ? "Showing all submission versions"
-              : "Showing only the latest version of each song"}
-          </p>
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              id="show-all-versions"
-              checked={showAllVersions}
-              onCheckedChange={(checked) =>
-                setShowAllVersions(checked === true)
-              }
-            />
-            <Label
-              htmlFor="show-all-versions"
-              className="cursor-pointer text-sm"
+    <div className="mx-auto w-full max-w-5xl space-y-4 p-4">
+      <h2 className="text-2xl font-bold">My Contributions</h2>
+      <label className="flex min-w-0 items-center gap-2">
+        Show{" "}
+        <select
+          className="min-w-0 flex-1 rounded border bg-background p-2"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="active">Active versions and submissions</option>
+          <option value="archived">Archived versions</option>
+          <option value="closed">
+            Rejected, withdrawn and applied submissions
+          </option>
+        </select>
+      </label>
+      {displayed.map((version) => (
+        <article
+          key={version.id}
+          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border p-4"
+        >
+          <div className="min-w-0 space-y-1">
+            <Link
+              className="font-medium hover:underline"
+              to="/song/$songId"
+              params={{ songId: version.songId }}
+              search={{ version: version.id }}
             >
-              Show all versions
-            </Label>
-          </div>
-        </div>
-      </div>
-      <div className="rounded-md border shadow-sm">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Song</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="max-sm:hidden">Submitted On</TableHead>
-              <TableHead className="text-center">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {(displayedVersions ?? []).map((version, index) => {
-              // Determine if this is a new song group (for visual grouping when showing all versions)
-              const prevVersion =
-                index > 0 ? displayedVersions[index - 1] : null;
-              const isFirstInGroup =
-                showAllVersions &&
-                (!prevVersion || prevVersion.songId !== version.songId);
-              const nextVersion =
-                index < displayedVersions.length - 1
-                  ? displayedVersions[index + 1]
-                  : null;
-              const isLastInGroup =
-                showAllVersions &&
-                (!nextVersion || nextVersion.songId !== version.songId);
-
-              return (
-                <TableRow
-                  key={version.id}
-                  className={`
-                    ${isFirstInGroup ? "border-t-primary/20" : ""}
-                    ${showAllVersions && !isLastInGroup ? "border-b-0" : ""}
-                    ${showAllVersions && !isFirstInGroup ? "bg-muted/30" : ""}
-                  `}
-                >
-                  <TableCell className="font-medium whitespace-normal">
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={`flex flex-col ${showAllVersions && !isFirstInGroup ? "ml-4" : ""}`}
-                      >
-                        <Link
-                          to={"/song/$songId"}
-                          params={{ songId: version.songId }}
-                          search={{ version: version.id }}
-                          className="hover:underline text-base"
-                        >
-                          {version.title}
-                        </Link>
-                        <span className="text-sm text-muted-foreground">
-                          {version.artist}
-                        </span>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <SongVersionStatusBadge status={version.status} />
-                  </TableCell>
-                  <TableCell className="text-center max-sm:hidden">
-                    {version.createdAt
-                      ? new Date(version.createdAt).toLocaleDateString()
-                      : "N/A"}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex justify-end items-center gap-1">
-                      <Button asChild size="sm">
-                        <Link
-                          to="/edit/$songId"
-                          params={{ songId: version.songId }}
-                          search={{ version: version.id }}
-                        >
-                          <FilePenLine className="w-4 h-4" />
-                        </Link>
-                      </Button>
-
-                      {/* Disable delete for published/archived history to preserve lineage */}
-                      <DeletePrompt
-                        onDelete={() => deleteMutation.mutate(version)}
-                        title="Withdraw Submission?"
-                        description="Are you sure you want to delete this version? This cannot be undone."
-                        variant="ghost"
-                        size="sm"
-                        disabled={version.status !== "pending"}
-                      />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-            {displayedVersions && displayedVersions.length === 0 && (
-              <TableRow>
-                <TableCell
-                  colSpan={4}
-                  className="text-center py-8 text-muted-foreground"
-                >
-                  You haven't submitted any songs or edits yet.
-                </TableCell>
-              </TableRow>
+              {version.title} · {version.artist}
+            </Link>
+            <p>
+              {versionLabel(version)}{" "}
+              {version.isOfficial && (
+                <span className="text-sm text-primary">Official</span>
+              )}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Updated {new Date(version.updatedAt).toLocaleString()}
+            </p>
+            <SongVersionStatusBadge status={version.status} />{" "}
+            {version.mergedIntoVersionId && (
+              <span className="text-xs">Revision applied</span>
             )}
-          </TableBody>
-        </Table>
-      </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {!version.mergedIntoVersionId &&
+              ["pending", "published", "archived"].includes(version.status) && (
+                <Button asChild size="sm" variant="outline">
+                  <Link
+                    to="/edit/$songId"
+                    params={{ songId: version.songId }}
+                    search={{ version: version.id }}
+                  >
+                    Edit
+                  </Link>
+                </Button>
+              )}
+            <SongRevisionHistory
+              songId={version.songId}
+              versionId={version.id}
+              ownerId={version.userId}
+              currentRevision={version.revision}
+              status={version.status} merged={!!version.mergedIntoVersionId}
+            />
+            {(
+              [
+                ...(version.status === "published" && !version.isOfficial
+                  ? ["archive", ...(trusted ? ["official"] : [])]
+                  : []),
+                ...((version.status === "archived" &&
+                  !version.mergedIntoVersionId) ||
+                version.status === "rejected"
+                  ? ["restore"]
+                  : []),
+                ...(version.status === "pending"
+                  ? [
+                      "delete",
+                      ...(trusted &&
+                      version.submissionIntent !== "update-parent"
+                        ? ["publish"]
+                        : []),
+                    ]
+                  : []),
+              ] as ("archive" | "official" | "restore" | "delete" | "publish")[]
+            ).map((action) => (
+              <Button
+                key={action}
+                variant="outline"
+                size="sm"
+                disabled={!online || mutation.isPending}
+                onClick={() => mutation.mutate({ version, action })}
+              >
+                {
+                  {
+                    archive: "Archive",
+                    official: "Make official",
+                    restore: "Restore",
+                    delete: "Withdraw",
+                    publish: "Publish",
+                  }[action]
+                }
+              </Button>
+            ))}
+          </div>
+        </article>
+      ))}
+      {!displayed.length && (
+        <p className="p-6 text-muted-foreground">
+          No contributions in this view.
+        </p>
+      )}
     </div>
   );
 }

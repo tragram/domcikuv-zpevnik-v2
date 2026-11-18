@@ -1,3 +1,7 @@
+import { VersionActionButton } from "~/components/VersionActionButton";
+import { useQueryClient } from "@tanstack/react-query";
+import { useIsOnline } from "~/hooks/use-is-online";
+import { refreshSongVersions, versionAction, type VersionMutationInput } from "~/services/version-service";
 import { Link, useNavigate } from "@tanstack/react-router";
 import {
   Archive,
@@ -27,7 +31,7 @@ import {
 } from "lucide-react";
 import React, { useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { SongDataDB, SongVersionDB } from "src/lib/db/schema";
+import { SongDataDB, SongVersionWithSubmission as SongVersionDB } from "src/lib/db/schema";
 import { SONG_SOURCES } from "src/lib/contracts/song-sources";
 import type { SongVersionAdminApi } from "src/worker/api/api-types";
 import useLocalStorageState from "use-local-storage-state";
@@ -57,6 +61,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { AdminApi } from "~/../worker/api-client";
@@ -89,7 +94,13 @@ import { parseYoutubeId } from "src/lib/youtube";
 import YoutubeField from "~/features/Editor/components/YoutubeField";
 import { SongMaxWidth } from "./song-max-width";
 import { useSongLayoutPressures } from "./use-song-width-metrics";
-import { getWorkingVersion } from "./version-selection";
+import { SongRevisionHistory } from "~/components/SongRevisionHistory";
+import { versionLabel } from "src/lib/version-label";
+import { Description } from "~/components/ui/description";
+import { Checkbox } from "~/components/ui/checkbox";
+import { VersionReclassification } from "./version-reclassification";
+import { getWorkingVersion, getCorrectionParent } from "./version-selection";
+import { isCorrectionSubmission, publicationOptions, submissionReview } from "src/lib/song-version-policy";
 
 // --- TYPES & CONSTANTS ---
 
@@ -297,7 +308,7 @@ function DiffViewerModal({
         <DialogHeader className="px-6 py-4 border-b border-border/50 shrink-0 flex flex-row items-center justify-between space-y-0">
           <DialogTitle className="text-xl flex items-center gap-2">
             <GitCompare className="w-5 h-5 text-muted-foreground" />
-            Comparing "{diffView?.songTitle}"
+            Compare versions · {diffView?.songTitle}
           </DialogTitle>
 
           <div className="flex items-center space-x-2 mr-6">
@@ -316,14 +327,17 @@ function DiffViewerModal({
         </DialogHeader>
 
         <div className="min-h-0 min-w-0 flex-1 overflow-auto bg-background/50 p-4">
+          <p className="mb-3 text-sm text-muted-foreground">
+            Comparing the latest saved content of two different versions. To compare earlier edits of the same version, open Revision history.
+          </p>
           <div className="border border-border rounded-md bg-card min-h-full min-w-full w-full">
             {diffView && (
               <ReactDiffViewer
                 oldValue={formatChordpro(diffView.target.chordpro)}
                 newValue={formatChordpro(diffView.version.chordpro)}
                 splitView={isSplitView}
-                leftTitle={`${diffView.targetLabel} (Key: ${diffView.target.key || "N/A"})`}
-                rightTitle={`This Version (Key: ${diffView.version.key || "N/A"})`}
+                leftTitle={`${diffView.targetLabel}: ${versionLabel(diffView.target)} (Key: ${diffView.target.key || "N/A"})`}
+                rightTitle={`Selected version: ${versionLabel(diffView.version)} (Key: ${diffView.version.key || "N/A"})`}
                 hideLineNumbers={false}
                 useDarkTheme={isDark}
                 styles={{
@@ -353,14 +367,17 @@ function DiffViewerModal({
 
 // --- 2. SONG VERSION ITEM (Individual Version Logic) ---
 
+type ApprovalChoices = { force?: boolean; makeOfficial?: boolean; archivePrevious?: boolean; expectedTargetRevision?: number };
+
 interface SongVersionItemProps {
+  versions: SongVersionDB[];
   song: SortableSong;
   version: SongVersionDB;
   parentVersion: SongVersionDB | undefined | null;
   currentVersion: SongVersionDB | undefined | null;
   isCurrentActive: boolean;
   users: AdminUsers;
-  onApprove: () => void;
+  onApprove: (choices: ApprovalChoices) => void;
   onReject: () => void;
   onRestore: () => void;
   onDelete: () => void;
@@ -370,6 +387,7 @@ interface SongVersionItemProps {
 }
 
 function SongVersionItem({
+  versions,
   song,
   version,
   parentVersion,
@@ -384,6 +402,38 @@ function SongVersionItem({
   onDiff,
   isApprovePending,
 }: SongVersionItemProps) {
+  const cache = useQueryClient();
+  const online = useIsOnline();
+  const importedSource = !version.importId && !!parentVersion?.importId;
+  const review = submissionReview(version, !!parentVersion?.importId);
+  const isCorrection = isCorrectionSubmission(review);
+  const [archiving, setArchiving] = useState(false);
+  const [mergeOpen, setMergeOpen] = useState(false);
+  const canMerge = !isCorrection && !!getCorrectionParent(version, versions);
+  const compareTargets = [
+    ...(parentVersion && parentVersion.id !== version.id ? [{ version: parentVersion, label: "Source version" }] : []),
+    ...(currentVersion && currentVersion.id !== version.id && currentVersion.id !== parentVersion?.id ? [{ version: currentVersion, label: "Official version" }] : []),
+  ];
+  async function archive() {
+    setArchiving(true);
+    try { await versionAction(song.id, version.id, "archive", version.revision); await refreshSongVersions(cache); }
+    catch (error) { toast.error(error instanceof Error ? error.message : "Could not archive version"); }
+    finally { setArchiving(false); }
+  }
+  const reviewState = `${version.revision}:${parentVersion?.revision}:${song.currentVersionId}`;
+  const [overrideFor, setOverrideFor] = useState<string | null>(null);
+  const override = overrideFor === reviewState;
+  const [publication, setPublication] = useState<{ reviewState: string; makeOfficial: boolean; archivePrevious: boolean } | null>(null);
+  const { makeOfficial, archivePrevious } = publicationOptions({
+    makeOfficial: !song.currentVersionId || (publication?.reviewState === reviewState ? publication.makeOfficial : review?.publication.makeOfficial),
+    archivePrevious: publication?.reviewState === reviewState ? publication.archivePrevious : review?.publication.archivePrevious,
+  }, { imported: importedSource, official: parentVersion?.id === song.currentVersionId });
+  const canArchivePrevious = !!parentVersion && (parentVersion.id !== song.currentVersionId || makeOfficial);
+  const targetChanged = version.baseRevision !== parentVersion?.revision;
+  const officialChanged = version.baseOfficialVersionId !== song.currentVersionId;
+  const changesPublication = !isCorrection && (archivePrevious || makeOfficial);
+  const stale = version.status === "pending" && !!version.parentId && (isCorrection || changesPublication)
+    && (targetChanged || (changesPublication && officialChanged));
   const author = useMemo(() => {
     if (!users) return null;
     const user = users.users.find((u) => u.id == version.userId);
@@ -392,13 +442,13 @@ function SongVersionItem({
 
   return (
     <div
-      className={`flex items-center justify-between p-4 rounded-xl border transition-all ${
+      className={`flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl border transition-all ${
         isCurrentActive
           ? "border-primary shadow-md bg-primary/5"
           : "border-border hover:border-border/80 bg-card hover:bg-accent/40"
       }`}
     >
-      <div className="flex items-center gap-4 flex-1">
+      <div className="flex min-w-0 grow basis-80 items-center gap-4">
         <button
           onClick={onSetCurrent}
           disabled={isCurrentActive || isApprovePending || version.status !== "published"}
@@ -417,15 +467,17 @@ function SongVersionItem({
             className={`h-4 w-4 ${isCurrentActive ? "fill-primary" : ""}`}
           />
         </button>
-        <div className="flex flex-col gap-1.5">
-          <div className="flex items-center gap-3">
+        <div className="flex min-w-0 flex-col gap-1.5">
+          <div className="flex flex-wrap items-center gap-3">
             <span className="font-semibold text-foreground/90">
-              {version.title}
+              {versionLabel(version)}
             </span>
             <SongVersionStatusBadge status={version.status} />
+
+
           </div>
-          <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
-            <span>{new Date(version.createdAt).toLocaleDateString()}</span>
+          <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-muted-foreground">
+            <span>{new Date(version.updatedAt).toLocaleString()}</span>
             <span className="w-1 h-1 rounded-full bg-border"></span>
             {author && (
               <span className="bg-muted px-1.5 py-0.5 rounded">{author}</span>
@@ -453,28 +505,50 @@ function SongVersionItem({
         </div>
       </div>
 
-      <div className="flex items-center gap-2 bg-background p-1 px-2 rounded-lg border shadow-sm">
-        {parentVersion && (
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => onDiff(parentVersion, "Parent Version")}
-          >
-            <GitCompare className="w-4 h-4 mr-1" /> Diff Parent
-          </Button>
-        )}
+      {version.status === "pending" && <div className="w-full space-y-1 text-sm">
+        <p><span className="text-muted-foreground">Submitted as: </span><strong>{isCorrection ? "Revision" : (importedSource || version.submissionIntent === "new-version") ? "New version" : "Classification required"}</strong></p>
+        <Description>{isCorrection
+          ? <>Updates “{parentVersion ? versionLabel(parentVersion) : "the original version"}” and keeps its existing songbook choices.</>
+          : "Approval publishes a separately selectable version."}</Description>
+      </div>}
+      {version.status === "pending" && !isCorrection && <fieldset className="w-full min-w-0 space-y-3 rounded-lg border border-border bg-background/30 p-3 text-sm">
+        <legend className="px-1 text-xs font-semibold text-muted-foreground">Publication options</legend>
+        {(version.makeOfficialOnPublish || version.archivePreviousOnPublish) && <Description>Author requested: {[version.makeOfficialOnPublish && "make official", version.archivePreviousOnPublish && "archive previous version"].filter(Boolean).join(" · ")}.</Description>}
+        <label className="flex cursor-pointer items-start gap-3">
+          <Checkbox className="mt-0.5" aria-label="Make official" checked={makeOfficial} disabled={!song.currentVersionId || (importedSource && parentVersion?.id === song.currentVersionId)} onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial: checked === true, archivePrevious: parentVersion?.id === song.currentVersionId && !checked ? false : archivePrevious })} />
+          <div className="min-w-0 space-y-1">
+            <span className="font-medium">Make official</span>
+            <Description>{!song.currentVersionId ? "The first published version becomes official automatically." : "Use this version by default for this song."}</Description>
+          </div>
+        </label>
+        {parentVersion && <label className={`flex items-start gap-3 ${canArchivePrevious ? "cursor-pointer" : "opacity-50"}`}>
+          <Checkbox className="mt-0.5" aria-label={`Archive “${versionLabel(parentVersion)}”`} checked={archivePrevious && canArchivePrevious} disabled={importedSource || !canArchivePrevious} onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial, archivePrevious: checked === true })} />
+          <div className="min-w-0 space-y-1">
+            <span className="font-medium">Archive “{versionLabel(parentVersion)}”</span>
+            <Description>{importedSource ? "Imported source copies are always archived unchanged when the curated version is published." : canArchivePrevious ? "Hide the previous version from discovery. Saved songbook choices and links keep working." : "Select Make official before archiving the current official version."}</Description>
+          </div>
+        </label>}
+      </fieldset>}
+      {stale && <div className="w-full space-y-2 rounded-lg border border-amber-500/40 bg-amber-500/5 p-3 text-sm">
+        <p className="font-medium">{targetChanged ? "The target version changed after this suggestion was submitted." : "The official selection changed after this suggestion was submitted."}</p>
+        <p className="text-muted-foreground">{isCorrection ? "Approving will replace the current sheet with this suggestion. Compare the changes before continuing." : "Publishing will apply the requested official selection and archival changes. Review the current version first."}</p>
+        <label className="flex cursor-pointer items-start gap-3"><Checkbox className="mt-0.5" checked={override} onCheckedChange={(checked) => setOverrideFor(checked === true ? reviewState : null)} />I reviewed the current changes. Apply this suggestion anyway.</label>
+      </div>}
+      <div className="flex max-w-full flex-wrap items-center gap-2 [&>button]:h-8 [&>a]:h-8 [&>button]:min-w-8 [&>a]:min-w-8">
+        {compareTargets.length > 0 && <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <VersionActionButton><GitCompare className="size-4" /> Compare with… <ChevronDown className="size-4" /></VersionActionButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Latest content of another version</DropdownMenuLabel>
+            {compareTargets.map((target) => <DropdownMenuItem key={target.version.id} onSelect={() => onDiff(target.version, target.label)}>
+              <div className="min-w-0"><div>{target.label}</div><Description className="max-w-64 truncate">{versionLabel(target.version)}</Description></div>
+            </DropdownMenuItem>)}
+          </DropdownMenuContent>
+        </DropdownMenu>}
 
-        {currentVersion && currentVersion.id !== version.id && (
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={() => onDiff(currentVersion, "Current Active Version")}
-          >
-            <GitCompare className="w-4 h-4 mr-1" /> Diff Current
-          </Button>
-        )}
+        <SongRevisionHistory songId={song.id} versionId={version.id} ownerId={version.userId} currentRevision={version.revision} status={version.status} merged={!!version.mergedIntoVersionId} iconOnly />
 
-        <div className="w-px h-6 bg-border mx-2"></div>
 
         {version.status === "pending" && (
           <>
@@ -482,9 +556,9 @@ function SongVersionItem({
               size="sm"
               variant="outline"
               className="text-green-700 hover:text-green-800 hover:bg-green-50 border-green-200"
-              onClick={onApprove}
+              onClick={() => onApprove(isCorrection ? { force: override } : { force: override, makeOfficial, archivePrevious: archivePrevious && canArchivePrevious })} disabled={!review || isApprovePending || (stale && !override)}
             >
-              <CheckCircle2 className="w-4 h-4 mr-1.5" /> Approve
+              <CheckCircle2 className="w-4 h-4 mr-1.5" /> {isCorrection ? "Approve revision" : "Publish new version"}
             </Button>
             <Button
               size="sm"
@@ -496,40 +570,26 @@ function SongVersionItem({
             </Button>
           </>
         )}
-        {(version.status === "rejected" || version.status === "deleted") && (
-          <Button size="sm" variant="ghost" onClick={onRestore}>
-            <RotateCcw className="h-4 w-4 mr-1.5" /> Restore
-          </Button>
-        )}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-muted-foreground hover:text-primary"
-          onClick={() =>
-            window.open(`/song/${song.id}?version=${version.id}`, "_blank")
-          }
-        >
-          <ExternalLink className="h-4 w-4" />
+        {(canMerge || (version.status === "published" && !isCurrentActive) || (!version.mergedIntoVersionId && ["rejected", "deleted", "archived"].includes(version.status))) && <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <VersionActionButton>Manage <ChevronDown className="size-4" /></VersionActionButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {canMerge && <DropdownMenuItem disabled={!online} onSelect={() => setMergeOpen(true)}><GitCompare className="size-4" /> Reclassify as correction…</DropdownMenuItem>}
+            {version.status === "published" && !isCurrentActive && <DropdownMenuItem disabled={!online || archiving} onSelect={() => void archive()}><Archive className="size-4" /> Archive version</DropdownMenuItem>}
+            {!version.mergedIntoVersionId && ["rejected", "deleted", "archived"].includes(version.status) && <DropdownMenuItem disabled={!online} onSelect={onRestore}><RotateCcw className="size-4" /> Restore version</DropdownMenuItem>}
+          </DropdownMenuContent>
+        </DropdownMenu>}
+        <Button variant="ghost" size="sm" className="size-8 p-0" disabled={version.status === "deleted"} aria-label="View version" onClick={() => window.open(`/song/${song.id}?version=${version.id}`, "_blank", "noopener,noreferrer")}>
+          <ExternalLink className="size-4" />
         </Button>
+        {!version.mergedIntoVersionId && ["pending", "published", "archived"].includes(version.status) && <Button variant="ghost" size="sm" className="size-8 p-0" asChild>
+          <Link to="/edit/$songId" params={{ songId: song.id }} search={{ version: version.id }}><Edit className="size-4" /><span className="sr-only">Edit version</span></Link>
+        </Button>}
+        <DeletePrompt size="sm" title="Delete version?" description="This hides the version. Its revision history will be preserved." disabled={!online || isCurrentActive || version.status === "deleted"} onDelete={onDelete} />
 
-        <Button variant="ghost" size="icon" asChild>
-          <Link
-            to="/edit/$songId"
-            params={{ songId: song.id }}
-            search={{ version: version.id }}
-          >
-            <Edit className="h-4 w-4" />
-            <span className="sr-only">Edit version</span>
-          </Link>
-        </Button>
-        <DeletePrompt
-          title="Permanently Delete?"
-          description="This will remove the data entirely."
-          disabled={
-            version.id === song.currentVersionId || version.status === "deleted"
-          }
-          onDelete={onDelete}
-        />
+        <VersionReclassification source={version} versions={versions} officialId={song.currentVersionId} open={mergeOpen} onOpenChange={setMergeOpen} hideTrigger />
+
       </div>
     </div>
   );
@@ -542,11 +602,11 @@ interface VersionHistoryTimelineProps {
   songVersions: SongVersionDB[];
   showDeleted: boolean;
   users: AdminUsers;
-  onApproveVersion: (songId: string, versionId: string, expectedRevision: number) => void;
-  onRejectVersion: (songId: string, versionId: string, expectedRevision: number) => void;
-  onRestoreVersion: (songId: string, versionId: string, expectedRevision: number) => void;
-  onDeleteVersion: (songId: string, versionId: string, expectedRevision: number) => void;
-  onSetCurrentVersion: (songId: string, versionId: string, expectedRevision: number) => void;
+  onApproveVersion: (input: VersionMutationInput & ApprovalChoices) => void;
+  onRejectVersion: (input: VersionMutationInput) => void;
+  onRestoreVersion: (input: VersionMutationInput) => void;
+  onDeleteVersion: (input: VersionMutationInput) => void;
+  onSetCurrentVersion: (input: VersionMutationInput) => void;
   onDiff: (
     version: SongVersionDB,
     target: SongVersionDB,
@@ -574,7 +634,7 @@ function VersionHistoryTimeline({
       : songVersions.filter((v) => v.status !== "deleted")
   ).length;
 
-  const sortedFilteredVersions = songVersions
+  const sortedFilteredVersions = [...songVersions]
     .sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
@@ -602,6 +662,7 @@ function VersionHistoryTimeline({
 
           return (
             <SongVersionItem
+              versions={songVersions}
               key={version.id}
               song={song}
               version={version}
@@ -609,12 +670,13 @@ function VersionHistoryTimeline({
               currentVersion={currentVersion}
               isCurrentActive={isCurrentActive}
               users={users}
-              onApprove={() => onApproveVersion(song.id, version.id, version.revision)}
-              onReject={() => onRejectVersion(song.id, version.id, version.revision)}
-              onRestore={() => onRestoreVersion(song.id, version.id, version.revision)}
-              onDelete={() => onDeleteVersion(song.id, version.id, version.revision)}
+              onApprove={(choices) => onApproveVersion({ songId: song.id, versionId: version.id,
+                expectedRevision: version.revision, expectedTargetRevision: parentVersion?.revision, ...choices })}
+              onReject={() => onRejectVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
+              onRestore={() => onRestoreVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
+              onDelete={() => onDeleteVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
               onSetCurrent={() =>
-                !isCurrentActive && onSetCurrentVersion(song.id, version.id, version.revision)
+                !isCurrentActive && onSetCurrentVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })
               }
               onDiff={(target, label) => onDiff(version, target, label)}
               isApprovePending={isApprovePending}
@@ -634,7 +696,7 @@ interface SongTableRowProps extends VersionHistoryTimelineProps {
   onUpdateHidden: (songId: string, hidden: boolean) => void;
   onRestoreSong: (songId: string) => void;
   onDeleteSong: (songId: string) => void;
-  onUpdateYoutube: (songId: string, versionId: string, youtubeId: string, expectedRevision: number) => void;
+  onUpdateYoutube: (input: VersionMutationInput & { youtubeId: string }) => void;
   isYoutubeUpdatePending: boolean;
   hiddenColumns: readonly HideableColumn[];
   visibleColumnCount: number;
@@ -679,7 +741,7 @@ function YoutubeDialogForm({
             toast.error("Enter a valid YouTube link or video ID.");
             return;
           }
-          onUpdateYoutube(song.id, currentVersion.id, normalizedYoutubeId, currentVersion.revision);
+          onUpdateYoutube({ songId: song.id, versionId: currentVersion.id, expectedRevision: currentVersion.revision, youtubeId: normalizedYoutubeId });
           onClose();
         }}
         disabled={isUpdatePending || youtubeId === originalYoutubeId}
@@ -1152,7 +1214,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         artist: workingVersion?.artist || "N/A",
         lastModified: songVersions.reduce(
           (latest, v) =>
-            new Date(v.createdAt) > latest ? new Date(v.createdAt) : latest,
+            new Date(v.updatedAt) > latest ? new Date(v.updatedAt) : latest,
           new Date(0),
         ),
         status: song.deleted ? "deleted" : workingVersion?.status || "empty",
@@ -1283,11 +1345,11 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     setExpandedSongs(next);
   };
 
-  const handleApproveVersion = (songId: string, versionId: string, expectedRevision: number) => {
+  const handleApproveVersion = ({ songId, versionId, expectedRevision, ...choices }: VersionMutationInput & ApprovalChoices) => {
     const song = songs.find((s) => s.id === songId);
     const hasNoIllustration = !song?.currentIllustrationId;
     approveVersionMutation.mutate(
-      { songId, versionId, expectedRevision },
+      { songId, versionId, expectedRevision, ...choices },
       {
         onSuccess: () => {
           toast.success("Version approved and published");
@@ -1302,7 +1364,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
             });
           }
         },
-        onError: () => toast.error("Failed to approve version"),
+        onError: (error) => toast.error(error.message),
       },
     );
   };
@@ -1509,34 +1571,41 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                       })
                     }
                     onApproveVersion={handleApproveVersion}
-                    onRejectVersion={(songId, versionId, expectedRevision) =>
+                    onRejectVersion={(input) =>
                       rejectVersionMutation.mutate(
-                        { songId, versionId, expectedRevision },
+                        input,
                         { onSuccess: () => toast.success("Rejected") },
                       )
                     }
-                    onRestoreVersion={(songId, versionId, expectedRevision) =>
+                    onRestoreVersion={(input) =>
                       restoreVersionMutation.mutate(
-                        { songId, versionId, expectedRevision },
+                        input,
                         { onSuccess: () => toast.success("Version restored") },
                       )
                     }
-                    onDeleteVersion={(songId, versionId, expectedRevision) =>
+                    onDeleteVersion={(input) =>
                       deleteVersionMutation.mutate(
-                        { songId, versionId, expectedRevision },
-                        { onSuccess: () => toast.success("Permanently deleted") },
+                        input,
+                        {
+                          onSuccess: () => toast.success(
+                            showDeleted || isolate === "deleted"
+                              ? "Version deleted. It stays visible because deleted items are shown."
+                              : "Version deleted",
+                          ),
+                          onError: (error) => toast.error(error.message),
+                        },
                       )
                     }
-                    onSetCurrentVersion={(songId, versionId, expectedRevision) =>
+                    onSetCurrentVersion={(input) =>
                       approveVersionMutation.mutate(
-                        { songId, versionId, expectedRevision, official: true },
+                        { ...input, official: true },
                         {
                           onSuccess: () =>
                             toast.success("Set as current version"),
                         },
                       )
                     }
-                    onUpdateYoutube={(songId, versionId, youtubeId, expectedRevision) =>
+                    onUpdateYoutube={({ songId, versionId, expectedRevision, youtubeId }) =>
                       updateVersionMutation.mutate(
                         {
                           songId,

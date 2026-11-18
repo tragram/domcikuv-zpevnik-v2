@@ -44,6 +44,7 @@ import { UserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
 import { refreshSongVersions } from "~/services/version-service";
 import { OfflineToolbarBadge } from "~/components/OfflineIndicator";
+import { EditorSubmitDialog, type EditorSaveChoice } from "./EditorSubmitDialog";
 
 interface EditorToolbarProps {
   editorState: EditorState;
@@ -110,6 +111,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   const location = useLocation();
   const isOnline = useIsOnline();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmation, setConfirmation] = useState<{ publish: boolean } | null>(null);
   const queryClient = useQueryClient();
 
   const handleLoginRedirect = () => {
@@ -148,7 +150,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         toast.error("Failed to start illustration generation");
       });
   };
-  const handleSubmit = async () => {
+  const handleSubmit = async (publish = isApprovalMode, choice?: EditorSaveChoice) => {
     setIsSubmitting(true);
 
     const strippedChordpro = stripMetadataDirectives(editorState.chordpro);
@@ -163,7 +165,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       description: editorState.description,
       baseVersionId: versionId,
       expectedRevision: editorState.expectedRevision,
-      saveMode: editorState.saveMode,
+      saveMode: choice?.saveMode,
+      archivePreviousOnPublish: choice?.archivePreviousOnPublish,
+      makeOfficialOnPublish: choice?.makeOfficialOnPublish,
       chordpro: normalizeWhitespace(replaceRepetitions(strippedChordpro)),
     } as EditorState;
 
@@ -192,7 +196,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
     try {
       const response = await submitSongVersion(parsedState, songData?.id, {
-        editAsSubmitter: editorSettings.editAsSubmitter ?? true, publish: isApprovalMode,
+        editAsSubmitter: editorSettings.editAsSubmitter ?? true, publish,
       });
 
       const version = response.version;
@@ -201,7 +205,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         new Date(version.updatedAt).getTime();
 
       toast.success(
-        isApprovalMode
+        response.version.status === "pending" ? "Changes submitted for approval" : isApprovalMode
           ? "Changes approved and published!"
           : `Successfully ${
               isUpdate ? "updated" : "submitted"
@@ -249,6 +253,11 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const requestSubmit = (publish = isApprovalMode) => {
+    if (songData) setConfirmation({ publish });
+    else void handleSubmit(publish);
   };
 
   return (
@@ -322,14 +331,16 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       {/* "final" actions */}
       <div className="flex justify-center md:justify-end max-lg:flex-wrap max-xl:w-full editor-toolbar-submit">
         <DownloadButton editorState={editorState} />
+        {songData?.versionStatus === "pending" && !isApprovalMode && userData?.profile.isTrusted && (songData.submissionIntent !== "update-parent" || userData.submissions.some((v) => v.id === songData.versionParentId)) && <Button disabled={isSubmitting || !isOnline || validationErrors.length > 0} onClick={() => requestSubmit(true)}>Publish draft</Button>}
 
         {userData ? (
           <Tooltip>
             <TooltipTrigger asChild>
               <span tabIndex={0} onClick={() => onAttemptSubmit?.()}>
                 <Button
-                  className="bg-transparent"
-                  onClick={handleSubmit}
+                  isActive
+                  className="bg-primary text-primary-foreground"
+                  onClick={() => requestSubmit()}
                   disabled={!canBeSubmitted || isSubmitting || !isOnline}
                 >
                   {isApprovalMode
@@ -338,7 +349,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
                       : "Approve changes"
                     : isSubmitting
                       ? "Submitting..."
-                      : `Submit ${songData ? "edit" : "new song"}`}
+                      : songData ? "Submit changes" : "Submit new song"}
                   <CloudUpload />
                 </Button>
               </span>
@@ -387,6 +398,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
           </Tooltip>
         )}
       </div>
+      {confirmation && songData && userData && <EditorSubmitDialog song={songData} state={editorState}
+        actor={userData.profile} publishing={confirmation.publish} submitting={isSubmitting}
+        onClose={() => setConfirmation(null)} onConfirm={(choice) => void handleSubmit(confirmation.publish, choice)} />}
     </div>
   );
 };
