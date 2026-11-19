@@ -152,6 +152,8 @@ const SongHeading: React.FC<SongHeadingProps> = ({
             <FavoriteButton
               song={songData}
               userId={userData.profile.id}
+              showSavedVersionPrompt
+              canSaveDisplayedVersion={versionSelection?.source !== "songbook" && (!feedStatus?.enabled || feedStatus.isMaster)}
               personalization={songbookPersonalization}
               iconClassName="size-[2em] stroke-[1.5] max-w-14"
               className="self-center p-0"

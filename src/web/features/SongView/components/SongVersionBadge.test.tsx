@@ -78,6 +78,26 @@ it("offers the different official version while retaining the saved archived cho
   expect((await render(saved, viewer))?.textContent).toContain("Official version available");
 });
 
+it.each(["official", "alternative"])("fills the picker heart only on the pinned %s version", async (pinnedVersionId) => {
+  cache.setQueryDefaults(["favorites"], { staleTime: Infinity });
+  cache.setQueryData(["favorites", "viewer"], [{ songId: "song", pinnedVersionId, keyIndex: null, capo: null }]);
+  const historyKey = songVersionsQueryOptions("song", "viewer", "official").queryKey;
+  cache.setQueryDefaults(historyKey, { staleTime: Infinity });
+  cache.setQueryData(historyKey, [summary("official"), summary("alternative")]);
+
+  const trigger = await render(official, viewer);
+  await act(async () => (trigger as HTMLButtonElement).click());
+
+  const rows = document.querySelectorAll('ul[aria-label="Available song versions"] li');
+  expect(rows).toHaveLength(2);
+  const pinnedRow = pinnedVersionId === "official" ? rows[0] : rows[1];
+  expect(pinnedRow.querySelector('svg.fill-current')).not.toBeNull();
+  expect(document.querySelectorAll('ul[aria-label="Available song versions"] svg.fill-current')).toHaveLength(1);
+  const saveButton = rows[0].querySelector('button[aria-label^="Save "]');
+  expect(!!saveButton).toBe(pinnedVersionId === "alternative");
+  if (saveButton) expect(saveButton.querySelector("svg.lucide-heart")).not.toBeNull();
+});
+
 it("explains an unavailable saved version even with only one selectable sheet", async () => {
   expect(await render(official, undefined, { source: "saved", unavailable: true })).not.toBeNull();
 });

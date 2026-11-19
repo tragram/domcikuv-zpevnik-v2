@@ -1,6 +1,6 @@
 import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Check, History, Pencil } from "lucide-react";
+import { Check, Heart, History, Pencil } from "lucide-react";
 import { getCachedSongVersion } from "~/services/song-service";
 import type { SongVersionSummaryApi, SongDataApi } from "src/worker/api/api-types";
 import { Button } from "~/components/ui/button";
@@ -66,6 +66,7 @@ export function SongVersionHistory({
       <ul aria-label="Available song versions">
           {versions.map((version) => {
             const shown = version.id === shownVersionId;
+            const saved = version.id === savedVersionId;
             const downloaded = shown || !!getCachedSongVersion(cache, songId, version.id, savedSheet ? [savedSheet] : []);
             const title = versionLabel(version);
             const VersionIcon = version.isCurrent ? Check : version.status === "pending" ? Pencil : History;
@@ -79,25 +80,30 @@ export function SongVersionHistory({
                       <p className={cn(shown && "text-primary")}>{title}</p>
                       {version.isCurrent && <Badge variant="outline" className="border-primary/30 bg-primary/10 px-1.5 py-0 text-tiny font-normal text-primary">Official</Badge>}
                     </div>
-                    {!shown && version.id === savedVersionId && <p className="text-tiny text-primary">Saved in your songbook</p>}
                     <p className="text-tiny leading-tight text-muted-foreground break-words">{createdAt} · {version.author.id === viewerId ? "You" : version.author.name}</p>
                     <p className="text-tiny leading-tight text-muted-foreground">
                       Key {version.key ?? "—"}{version.capo != null && version.capo > 0 && ` · Capo ${version.capo}`}
                     </p>
                   </div>
-                  <div className="shrink-0 text-right">
-                  {version.id === savedVersionId && shown ? (
-                    <span className="inline-flex items-center gap-1 text-primary text-[0.65rem]"><Check className="size-3" />Saved</span>
-                  ) : shown && onUse ? (
+                  <div className="flex shrink-0 items-center gap-1">
+                  {saved && (
+                    <span className="inline-flex size-8 items-center justify-center text-primary" title="Saved in your songbook">
+                      <Heart aria-hidden="true" className="size-4 fill-current" />
+                      <span className="sr-only">Saved in your songbook</span>
+                    </span>
+                  )}
+                  {shown && saved ? null : shown && onUse ? (
                     <button
                       type="button"
                       disabled={saving || !isOnline}
-                      title={!isOnline ? "Connect to save your songbook choice" : undefined}
+                      title={isOnline ? "Save this version to your songbook" : "Connect to save your songbook choice"}
                       aria-busy={saving}
                       onClick={onUse}
                       aria-label={`Save ${title.toLowerCase()} from ${createdAt} to your songbook`}
-                      className="inline-flex rounded-full bg-control-surface px-2 py-1 text-xs text-primary hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50"
-                    >{saving ? "Saving…" : "Use"}</button>
+                      className="inline-flex size-8 items-center justify-center rounded-full bg-control-surface text-primary hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50"
+                    >
+                      <Heart aria-hidden="true" className={cn("size-4", saving && "animate-pulse")} />
+                    </button>
                   ) : shown ? (
                     <span className="inline-flex items-center gap-1 text-primary text-[0.65rem]"><Check className="size-3" />Viewing</span>
                   ) : canPreview && (isOnline || downloaded) ? (
@@ -120,7 +126,7 @@ export function SongVersionHistory({
           <Separator />
             {(onUse || (canPreview && versions.length > 1)) && <p className="px-2 py-1.5 text-tiny leading-tight text-muted-foreground">
               {onUse
-                ? "View previews a version. Use saves the displayed version to your songbook."
+                ? "View previews a version. Select the heart to save the displayed version to your songbook."
                 : viewerId
                   ? "View opens another version without changing this songbook."
                   : "You can view other versions without signing in. Sign in to save your own choice."}

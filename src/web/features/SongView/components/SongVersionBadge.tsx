@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { useNavigate, useRouter } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
 import { toast } from "sonner";
-import client from "src/worker/api-client";
 import { Description } from "~/components/ui/description";
 import { Badge } from "~/components/ui/badge";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { Separator } from "~/components/ui/separator";
-import { favoritesQueryOptions, useSongbookEntry, type UserData } from "~/hooks/use-user-data";
-import { makeApiRequest } from "~/services/api-service";
+import { useSongbookEntry, type UserData } from "~/hooks/use-user-data";
+import { useSaveSongbookVersion } from "~/hooks/use-save-songbook-version";
 import type { SongData } from "~/types/songData";
 import type { FeedStatus } from "../hooks/useSessionSync";
 import { getVersionDetails, type VersionSelection } from "../utils/versionDetails";
@@ -37,8 +36,9 @@ export function SongVersionBadge({
   feedStatus,
 }: SongVersionBadgeProps) {
   const [open, setOpen] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const navigate = useNavigate();
+  const [makingOfficial, setMakingOfficial] = useState(false);
+  const save = useSaveSongbookVersion(songData.id, userData?.profile.id);
+  const saving = makingOfficial || save.isPending;
   const queryClient = useQueryClient();
   const isOnline = useIsOnline();
   const router = useRouter();
@@ -68,43 +68,19 @@ export function SongVersionBadge({
 
   async function makeOfficial() {
     if (!songData.versionId || !shown?.revision) return;
-    setSaving(true);
+    setMakingOfficial(true);
     try {
       await versionAction(songData.id, songData.versionId, "official", shown.revision);
       await refreshSongVersions(queryClient, songData.id);
       await router.invalidate();
       toast.success("Official version selected");
     } catch (error) { toast.error(error instanceof Error ? error.message : "Could not select official version"); }
-    finally { setSaving(false); }
+    finally { setMakingOfficial(false); }
   }
 
-  async function saveVersion() {
+  function saveVersion() {
     if (!userData || !songData.versionId || saving || !isOnline) return;
-    setSaving(true);
-    try {
-      await makeApiRequest(() =>
-        client.api.favorites[":songId"].$patch({
-          param: { songId: songData.id },
-          json: { pinnedVersionId: songData.versionId },
-        }),
-      );
-      await queryClient.invalidateQueries({
-        queryKey: favoritesQueryOptions(userData.profile.id).queryKey,
-        refetchType: "all",
-      });
-      await navigate({
-        to: "/song/$songId",
-        params: { songId: songData.id },
-        search: {},
-      });
-      await router.invalidate();
-      toast.success("Version saved to your songbook");
-      setOpen(false);
-    } catch {
-      toast.error("Couldn't save your version preference. Please try again.");
-    } finally {
-      setSaving(false);
-    }
+    save.mutate(songData.versionId, { onSuccess: () => setOpen(false) });
   }
 
   // Unsaved editor previews and external search previews have no version yet.
@@ -142,7 +118,7 @@ export function SongVersionBadge({
           <div className="space-y-1 px-2 py-1.5">
             <p className="font-medium">{label}</p>
             {(shown?.description ?? songData.versionDescription) && <Description>{shown?.description ?? songData.versionDescription}</Description>}
-            {hasDifferentOfficial && <Description>A different version is official. View it below, then choose Use to update your songbook.</Description>}
+            {hasDifferentOfficial && <Description>A different version is official. View it below, then select the heart to update your songbook.</Description>}
           </div>
           <Separator />
           <dl className="space-y-2 px-2 py-1.5 text-xs [&_dt]:text-muted-foreground [&_dd]:break-words">
@@ -175,7 +151,7 @@ export function SongVersionBadge({
             savedSheet={entry?.song}
             savedVersionId={entry?.pinnedVersionId}
             saving={saving}
-            onUse={details.canChoose ? () => void saveVersion() : undefined}
+            onUse={details.canChoose ? saveVersion : undefined}
             canPreview={details.canPreview}
             history={history}
             isOnline={isOnline}
