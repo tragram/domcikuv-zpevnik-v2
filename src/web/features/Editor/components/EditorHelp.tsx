@@ -80,7 +80,7 @@ const EditorHelp: React.FC<EditorHelpProps> = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="hover:text-white bg-transparent">
+        <Button variant="toolbar">
           Help
           <HelpCircle className="w-4 h-4" />
         </Button>

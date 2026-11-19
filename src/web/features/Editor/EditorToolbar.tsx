@@ -263,13 +263,13 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   return (
     <div
       className={cn(
-        "flex flex-wrap w-auto mx-4 xl:mx-8 border-4 border-primary rounded-md max-md:justify-around md:justify-between [&>*]:bg-transparent [&>*]:rounded-none",
+        "flex flex-wrap w-auto mx-4 xl:mx-8 border-4 border-primary rounded-md max-md:justify-around md:justify-between",
         toolbarTop ? "mt-4 xl:mt-8" : "mb-4 xl:mb-8 ",
       )}
     >
       {/* links */}
-      <div className="flex editor-toolbar-links">
-        <Button className="hover:text-white bg-transparent" asChild>
+      <nav aria-label="Site navigation" className="flex editor-toolbar-links">
+        <Button variant="toolbar" asChild>
           <Link to="/">
             <Home />
             Home
@@ -277,36 +277,34 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
         </Button>
         {!userData ? (
           <Button
-            className="hover:text-white bg-transparent"
+            variant="toolbar"
             onClick={handleLoginRedirect}
           >
             <User />
             Login
           </Button>
         ) : (
-          <>
-            <Button className="hover:text-white bg-transparent" asChild>
-              <Link to="/submissions">
-                <User />
-                My edits
-              </Link>
-            </Button>
-          </>
+          <Button variant="toolbar" asChild>
+            <Link to="/submissions">
+              <User />
+              My edits
+            </Link>
+          </Button>
         )}
         <OfflineToolbarBadge className="self-center" />
-      </div>
+      </nav>
       {/* editor actions */}
       <div className="flex editor-toolbar-actions flex-wrap justify-center">
         <EditorHelp />
         <Button
-          className="hover:text-white bg-transparent"
+          variant="toolbar"
           onClick={onUploadClick}
         >
           Upload ChordPro
           <Upload />
         </Button>
         <Button
-          className="hover:text-white bg-transparent"
+          variant="toolbar"
           onClick={onBackupAndInitialize}
         >
           {songData ? (
@@ -320,7 +318,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
           )}
         </Button>
         <Button
-          className="hover:text-white bg-transparent"
+          variant="toolbar"
           onClick={onLoadBackup}
         >
           Undo {songData ? "reload" : "clear"}
@@ -331,7 +329,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       {/* "final" actions */}
       <div className="flex justify-center md:justify-end max-lg:flex-wrap max-xl:w-full editor-toolbar-submit">
         <DownloadButton editorState={editorState} />
-        {songData?.versionStatus === "pending" && !isApprovalMode && userData?.profile.isTrusted && (songData.submissionIntent !== "update-parent" || userData.submissions.some((v) => v.id === songData.versionParentId)) && <Button disabled={isSubmitting || !isOnline || validationErrors.length > 0} onClick={() => requestSubmit(true)}>Publish draft</Button>}
+        {songData?.versionStatus === "pending" && !isApprovalMode && userData?.profile.isTrusted && (songData.submissionIntent !== "update-parent" || userData.submissions.some((v) => v.id === songData.versionParentId)) && <Button variant="toolbar" disabled={isSubmitting || !isOnline || validationErrors.length > 0} onClick={() => requestSubmit(true)}>Publish draft</Button>}
 
         {userData ? (
           <Tooltip>
@@ -339,7 +337,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
               <span tabIndex={0} onClick={() => onAttemptSubmit?.()}>
                 <Button
                   isActive
-                  className="bg-primary text-primary-foreground"
+                  className="rounded-none font-semibold"
                   onClick={() => requestSubmit()}
                   disabled={!canBeSubmitted || isSubmitting || !isOnline}
                 >
@@ -386,7 +384,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
           <Tooltip>
             <TooltipTrigger asChild>
               <span tabIndex={0}>
-                <Button className="bg-transparent" disabled>
+                <Button variant="toolbar" disabled>
                   Log in to submit
                   <CloudUpload />
                 </Button>

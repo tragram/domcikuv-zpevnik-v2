@@ -20,6 +20,7 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        toolbar: "focus-visible:outline-2 focus-visible:-outline-offset-2",
         circular:
           "bg-primary text-primary-foreground rounded-full outline-2 shadow-md",
       },
@@ -35,6 +36,12 @@ const buttonVariants = cva(
           "bg-control-surface text-primary hover:bg-control-hover outline-control-border",
       },
     },
+    compoundVariants: [
+      {
+        variant: "toolbar",
+        className: "bg-transparent text-primary hover:bg-transparent hover:text-foreground",
+      },
+    ],
     defaultVariants: {
       isActive: false,
       variant: "default",

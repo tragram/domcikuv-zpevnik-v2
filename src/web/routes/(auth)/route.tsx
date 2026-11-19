@@ -70,42 +70,36 @@ function RouteComponent() {
       )}
     >
       <div className="w-full sm:w-fit flex flex-col gap-4 xl:gap-8">
-        <div
+        <nav
+          aria-label="Site navigation"
           className={cn(
-            "flex flex-wrap w-auto border-4 border-primary rounded-md max-md:justify-around md:justify-between [&>*]:bg-transparent [&>*]:rounded-none",
+            "flex w-full flex-wrap rounded-md border-4 border-primary profile-toolbar-links",
+            userData && "justify-between",
           )}
         >
-          {/* links */}
-          <div
-            className={cn(
-              "flex w-full profile-toolbar-links",
-              userData ? "justify-between" : "",
-            )}
-          >
-            <Button asChild>
-              <Link to="/">
-                <Home />
-                Home
+          <Button variant="toolbar" asChild>
+            <Link to="/">
+              <Home />
+              Home
+            </Link>
+          </Button>
+          {userData && (
+            <Button variant="toolbar" asChild>
+              <Link to="/submissions">
+                <CloudUpload />
+                Submissions
               </Link>
             </Button>
-            {userData && (
-              <Button asChild className="sm:w-auto">
-                <Link to="/submissions">
-                  <CloudUpload />
-                  Submissions
-                </Link>
-              </Button>
-            )}
-            {userData && userData.profile.isAdmin && (
-              <Button asChild className="sm:w-auto">
-                <Link to="/admin">
-                  <Shield />
-                  Admin
-                </Link>
-              </Button>
-            )}
-          </div>
-        </div>
+          )}
+          {userData && userData.profile.isAdmin && (
+            <Button variant="toolbar" asChild>
+              <Link to="/admin">
+                <Shield />
+                Admin
+              </Link>
+            </Button>
+          )}
+        </nav>
         <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-2 md:p-4 lg:p-8 w-full max-w-full sm:max-w-fit">
           <Outlet />
         </div>

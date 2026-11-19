@@ -52,7 +52,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({ editorState }) => {
   }, [handleDownload]);
 
   return (
-    <Button onClick={handleDownload} variant="default" className="bg-transparent">
+    <Button onClick={handleDownload} variant="toolbar">
       Download ChordPro
       <Download />
     </Button>

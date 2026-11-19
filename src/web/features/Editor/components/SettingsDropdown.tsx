@@ -19,7 +19,7 @@ const SettingsDropdown: React.FC = () => {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <Button className="bg-transparent">
+        <Button variant="toolbar">
           Settings
           <Settings2 size={32} />
         </Button>
