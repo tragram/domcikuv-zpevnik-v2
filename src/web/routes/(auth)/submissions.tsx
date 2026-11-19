@@ -46,8 +46,8 @@ function UserSubmissions() {
           version.revision,
         );
     },
-    onSuccess: async () => {
-      await refreshSongVersions(cache);
+    onSuccess: async (_, { version }) => {
+      await refreshSongVersions(cache, version.songId);
       await router.invalidate();
     },
     onError: (error) => toast.error(error.message),

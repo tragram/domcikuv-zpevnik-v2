@@ -61,3 +61,9 @@ it("selects a curated official before proposing archival of an imported official
   const imported = { ...root, status: "published", import_id: "external" };
   expect(buildImportArchival([imported, next], new Map([["song", "a"]]))[0]).toMatchObject({ previousOfficialId: "a", curatedId: "b" });
 });
+
+it("compares a self-parented legacy row with the other roots", () => {
+  const pairs = buildReviewPairs([{ ...root, parent_id: root.id }, { ...next, parent_id: null }]);
+  expect(pairs).toHaveLength(1);
+  expect(pairs[0]).toMatchObject({ beforeId: root.id, afterId: next.id, kind: "roots" });
+});

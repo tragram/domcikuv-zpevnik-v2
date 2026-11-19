@@ -8,7 +8,6 @@ import { ApiException } from "./api-service";
 import {
   favoritesQueryOptions,
   getSessionUserId,
-  normalizeSongbookEntries,
   sessionQueryOptions,
   songbookEntriesQueryOptions,
 } from "~/hooks/use-user-data";
@@ -79,7 +78,9 @@ const songLoader = async ({
   context,
   params,
   deps,
+  editing = false,
 }: {
+  editing?: boolean;
   context: SongLoaderContext;
   params: SongLoaderParams;
   deps: SongLoaderDeps;
@@ -87,41 +88,47 @@ const songLoader = async ({
   const queryClient = context.queryClient;
 
   const canonicalSongs = queryClient.getQueryData<SongDataApi[]>(songsQueryOptions().queryKey) ?? [];
-  // Ordinary navigation needs personal context; links and foreign books don't.
+  const official = canonicalSongs.find((song) => song.id === params.songId);
+  const localBrowse = !!official && !editing && !deps.version && !deps.songbook;
+  // Personal context can finish syncing in the background during ordinary browsing.
   // ensureQueryData reads restored data immediately, fetching only on a miss.
-  if (!deps.version && !deps.songbook) {
+  if (!localBrowse && !deps.version && !deps.songbook) {
     await queryClient.ensureQueryData(sessionQueryOptions());
   }
   const viewerId = getSessionUserId(queryClient);
   let favorites = viewerId
     ? queryClient.getQueryData<SongbookEntryApi[]>(favoritesQueryOptions(viewerId).queryKey)
     : undefined;
-  if (viewerId && !deps.version && (!deps.songbook || deps.songbook === viewerId)) {
+  if (!localBrowse && viewerId && !deps.version && (!deps.songbook || deps.songbook === viewerId)) {
     favorites = await queryClient.ensureQueryData(favoritesQueryOptions(viewerId)).catch(() => favorites);
   }
-  const ownEntry = normalizeSongbookEntries(favorites).find((entry) => entry.songId === params.songId);
+  const ownEntry = (favorites ?? []).find((entry) => entry.songId === params.songId);
   let songbook: Parameters<typeof selectSongVersion>[0]["songbook"];
   if (deps.songbook && !deps.version) {
     const entries = deps.songbook === viewerId ? favorites
       : await queryClient.ensureQueryData(songbookEntriesQueryOptions(deps.songbook));
     songbook = {
-      entry: normalizeSongbookEntries(entries).find((entry) => entry.songId === params.songId),
+      entry: entries?.find((entry) => entry.songId === params.songId),
       ownerName: queryClient.getQueryData<Songbook[]>(publicSongbooksQueryOptions().queryKey)
         ?.find((book) => book.user === deps.songbook)?.name,
     };
   }
   const selected = selectSongVersion({
-    official: canonicalSongs.find((song) => song.id === params.songId),
+    official,
     ownEntry, songbook, versionId: deps.version,
   });
   const pinnedId = selected.pinnedVersionId ?? undefined;
   const candidates = selected.sheet ? [selected.sheet] : [];
   const cachedPin = pinnedId ? getCachedSongVersion(queryClient, params.songId, pinnedId, candidates) : undefined;
-  const requestedId = deps.version ?? ((getIsOnline() || cachedPin) ? pinnedId : undefined);
-  const sheets = !getIsOnline() && pinnedId && !cachedPin ? canonicalSongs : candidates;
+  const missingOfflinePin = !getIsOnline() && !!pinnedId && !cachedPin;
+  const requestedId = deps.version ?? (missingOfflinePin ? undefined : pinnedId);
+  const sheets = missingOfflinePin ? canonicalSongs : candidates;
   let songData: SongData;
   try {
-    songData = await findOrFetchSong(sheets, params.songId, requestedId, queryClient);
+    const downloaded = !editing && !deps.version
+      ? (pinnedId ? (missingOfflinePin ? official : cachedPin) : selected.sheet) : undefined;
+    songData = downloaded ? (downloaded instanceof SongData ? downloaded : new SongData(downloaded))
+      : await findOrFetchSong(sheets, params.songId, requestedId, queryClient);
   } catch (error) {
     // Saved choices may have been withdrawn since the book was cached. Exact
     // links still fail honestly; personal/book navigation can show official.

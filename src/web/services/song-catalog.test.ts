@@ -8,13 +8,11 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-it("upgrades the catalog format through one normal sync request, then resumes incremental sync", async () => {
+it("downloads the catalog once after a cache reset, then resumes incremental sync", async () => {
   const song: SongDataApi = {
     id: "song", versionId: "official", title: "Song", artist: "Artist", chordpro: "Lyrics",
     externalSource: null, createdAt: "2026-01-01", updatedAt: "2026-01-01",
   };
-  queryClient.setQueryData(["songs"], [song]);
-  queryClient.setQueryData(["songs-meta"], { version: "v1", lastUpdate: "2026-01-01", appVersion: __APP_VERSION__ });
   const updated = { ...song, publishedVersionIds: ["official"] };
   const fetch = vi.fn<typeof globalThis.fetch>(async () => new Response(JSON.stringify({ status: "success", data: {
     songs: [updated], songDBVersion: "v1", lastUpdateAt: "2026-01-02", isIncremental: false,

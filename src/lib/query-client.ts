@@ -6,6 +6,7 @@ import {
   persistQueryClientSubscribe,
 } from "@tanstack/react-query-persist-client";
 import { del, get, set } from "idb-keyval";
+import { isSheetQuery, unavailableSheet, watchDownloadedRevisions } from "./offline-sheets";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +23,16 @@ export const queryClient = new QueryClient({
 export function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
   return {
     persistClient: async (client: PersistedClient) => {
-      await set(idbValidKey, client);
+      const queries = client.clientState.queries.map(query => {
+        const { state } = query;
+        if (!isSheetQuery(query.queryKey) || state.status !== "error") return query;
+        // Persist the download independently of the last network attempt.
+        // Keep a confirmed denial across restarts, without its old sheet.
+        const error = unavailableSheet(state.error) ? { status: state.error.status } : null;
+        return { ...query, state: { ...state, data: error ? undefined : state.data,
+          status: error ? "error" : "success", error, fetchFailureReason: null, fetchStatus: "idle" } };
+      });
+      await set(idbValidKey, { ...client, clientState: { ...client.clientState, queries } });
     },
     restoreClient: async () => {
       return await get<PersistedClient>(idbValidKey);
@@ -36,7 +46,8 @@ export function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
 export const queryPersister = createIDBPersister();
 
 // it invalidates everyone's offline cache - hand bump on changes
-const CACHE_BUSTER = "v1";
+// v2 requires structured songbook entries and explicit version metadata.
+const CACHE_BUSTER = "v2";
 
 const persistOptions = {
   queryClient,
@@ -59,15 +70,16 @@ async function setupPersistence() {
   // Subscribe to save only AFTER restoring, so an early save can't overwrite the
   // good persisted cache with a half-built one.
   if (persistenceCleared) return;
+  watchDownloadedRevisions(queryClient);
   stopPersisting = persistQueryClientSubscribe({
     ...persistOptions,
     dehydrateOptions: {
-      shouldDehydrateQuery: (query) =>
-        defaultShouldDehydrateQuery(query) &&
-        query.state.status === "success" &&
-        // Online-only search results, and SongData class instances would come
-        // back from the snapshot as method-less plain objects anyway.
-        query.queryKey[0] !== "externalSearch",
+      shouldDehydrateQuery: (query) => {
+        const [root, kind] = query.queryKey;
+        if (root === "externalSearch" || (root === "song" && kind === "feed")) return false;
+        return defaultShouldDehydrateQuery(query) || (isSheetQuery(query.queryKey) &&
+          query.state.status === "error" && (query.state.data !== undefined || unavailableSheet(query.state.error)));
+      },
     },
   });
 }

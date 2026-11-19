@@ -83,7 +83,7 @@ it("explains an unavailable saved version even with only one selectable sheet", 
 });
 
 it("doesn't reuse a book's alternatives after returning to the official context", async () => {
-  const bookSong = new SongData({ ...officialApi, versionId: "imported", versionStatus: "archived", customVersionAuthor: { id: "owner", name: "Anna" } });
+  const bookSong = new SongData({ ...officialApi, versionId: "imported", versionStatus: "archived", isOfficial: false, versionAuthor: { id: "owner", name: "Anna" } });
   cache.setQueryData(songVersionsQueryOptions("song", undefined, "imported").queryKey, [summary("official"), { ...summary("imported"), status: "archived" }]);
   cache.setQueryData(songVersionsQueryOptions("song", undefined, "official").queryKey, [summary("official")]);
   expect(await render(bookSong)).not.toBeNull();

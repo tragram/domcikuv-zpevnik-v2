@@ -3,22 +3,14 @@ import { describe, expect, it } from "vitest";
 import {
   favoritesQueryOptions,
   indexSongbookEntries,
-  normalizeSongbookEntries,
 } from "./use-user-data";
 
-describe("songbook entry cache normalization", () => {
-  it("upgrades legacy favorite ids to songbook entries", () => {
-    expect(normalizeSongbookEntries(["song-1"])).toEqual([
-      {
-        songId: "song-1",
-        pinnedVersionId: null,
-        keyIndex: null,
-        capo: null,
-      },
-    ]);
+describe("structured songbook entries", () => {
+  it("indexes an empty cache", () => {
+    expect(indexSongbookEntries(undefined).favoriteIds.size).toBe(0);
   });
 
-  it("indexes legacy and current entries by song id", () => {
+  it("indexes structured entries by song id", () => {
     const current = {
       songId: "song-2",
       pinnedVersionId: "version-2",
@@ -27,7 +19,7 @@ describe("songbook entry cache normalization", () => {
     };
 
     const { favoriteIds, songbookEntries } = indexSongbookEntries([
-      "song-1",
+      { songId: "song-1", pinnedVersionId: null, keyIndex: null, capo: null },
       current,
     ]);
 

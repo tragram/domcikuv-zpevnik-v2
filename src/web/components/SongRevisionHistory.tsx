@@ -70,7 +70,7 @@ export function SongRevisionHistory({
     setRestoring(true);
     try {
       await restoreSongRevision(songId, versionId, number, currentRevision);
-      await refreshSongVersions(cache);
+      await refreshSongVersions(cache, songId);
       await router.invalidate();
       toast.success("Content restored as a new revision");
       setOpen(false);

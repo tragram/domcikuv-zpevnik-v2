@@ -1,3 +1,4 @@
+import { ApiException } from "~/services/api-service";
 import { VersionActionButton } from "~/components/VersionActionButton";
 import { useQueryClient } from "@tanstack/react-query";
 import { useIsOnline } from "~/hooks/use-is-online";
@@ -367,7 +368,7 @@ function DiffViewerModal({
 
 // --- 2. SONG VERSION ITEM (Individual Version Logic) ---
 
-type ApprovalChoices = { force?: boolean; makeOfficial?: boolean; archivePrevious?: boolean; expectedTargetRevision?: number };
+type ApprovalChoices = { force?: boolean; makeOfficial?: boolean; archivePrevious?: boolean; expectedOfficialId?: string | null; expectedTargetRevision?: number };
 
 interface SongVersionItemProps {
   versions: SongVersionDB[];
@@ -416,7 +417,7 @@ function SongVersionItem({
   ];
   async function archive() {
     setArchiving(true);
-    try { await versionAction(song.id, version.id, "archive", version.revision); await refreshSongVersions(cache); }
+    try { await versionAction(song.id, version.id, "archive", version.revision); await refreshSongVersions(cache, song.id); }
     catch (error) { toast.error(error instanceof Error ? error.message : "Could not archive version"); }
     finally { setArchiving(false); }
   }
@@ -671,7 +672,7 @@ function VersionHistoryTimeline({
               isCurrentActive={isCurrentActive}
               users={users}
               onApprove={(choices) => onApproveVersion({ songId: song.id, versionId: version.id,
-                expectedRevision: version.revision, expectedTargetRevision: parentVersion?.revision, ...choices })}
+                expectedRevision: version.revision, expectedOfficialId: song.currentVersionId, expectedTargetRevision: parentVersion?.revision, ...choices })}
               onReject={() => onRejectVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
               onRestore={() => onRestoreVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
               onDelete={() => onDeleteVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
@@ -1162,6 +1163,16 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const rejectVersionMutation = useRejectVersion(adminApi);
   const deleteVersionMutation = useDeleteVersion(adminApi);
   const restoreVersionMutation = useRestoreVersion(adminApi);
+  const [legacyRestore, setLegacyRestore] = useState<VersionMutationInput | null>(null);
+  function restoreVersion(input: VersionMutationInput, fallbackStatus?: "published" | "archived" | "pending") {
+    restoreVersionMutation.mutate({ ...input, fallbackStatus }, {
+      onSuccess: () => { setLegacyRestore(null); toast.success("Version restored"); },
+      onError: (error) => {
+        if (error instanceof ApiException && error.status === 422) setLegacyRestore(input);
+        else { setLegacyRestore(null); toast.error(error.message); }
+      },
+    });
+  }
   const generateIllustrationMutation = useGenerateIllustration(adminApi);
 
   const usersById = useMemo(() => {
@@ -1467,6 +1478,18 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
 
   return (
     <div className="space-y-6 max-w-full pb-8">
+      <Dialog open={!!legacyRestore} onOpenChange={(open) => { if (!open) setLegacyRestore(null); }}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Restore deleted version</DialogTitle></DialogHeader>
+          <p>The earliest saved revision is already deleted. Choose how this version should return.</p>
+          {(["pending", "archived", "published"] as const).map(status => (
+            <Button key={status} disabled={restoreVersionMutation.isPending}
+              onClick={() => legacyRestore && restoreVersion(legacyRestore, status)}>
+              Restore as {status}
+            </Button>
+          ))}
+        </DialogContent>
+      </Dialog>
       <SongsTableSettingsBar
         searchTerm={searchTerm}
         onSearchChange={withPageReset(setSearchTerm)}
@@ -1577,12 +1600,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                         { onSuccess: () => toast.success("Rejected") },
                       )
                     }
-                    onRestoreVersion={(input) =>
-                      restoreVersionMutation.mutate(
-                        input,
-                        { onSuccess: () => toast.success("Version restored") },
-                      )
-                    }
+                    onRestoreVersion={restoreVersion}
                     onDeleteVersion={(input) =>
                       deleteVersionMutation.mutate(
                         input,

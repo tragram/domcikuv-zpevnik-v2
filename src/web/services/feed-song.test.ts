@@ -6,7 +6,7 @@ import { feedSongQueryOptions } from "./feed-song";
 it("refreshes an active follower query on a new revision and reuses it for transpose changes", async () => {
   const cache = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const sheet = (chordpro: string) => new Response(JSON.stringify({ status: "success", data: {
-    id: "song", versionId: "version", title: "Song", artist: "Artist", chordpro,
+    id: "song", versionId: "version", versionRevision: chordpro === "Original sheet" ? 1 : 2, title: "Song", artist: "Artist", chordpro,
     externalSource: null, createdAt: "2026-01-01", updatedAt: "2026-01-01",
   } }));
   const getSheet = vi.fn().mockResolvedValueOnce(sheet("Original sheet")).mockResolvedValueOnce(sheet("Corrected sheet"));
@@ -28,4 +28,14 @@ it("refreshes an active follower query on a new revision and reuses it for trans
     observer.setOptions(feedSongQueryOptions(api, transposed));
     expect(getSheet).toHaveBeenCalledTimes(2);
   } finally { unsubscribe(); cache.clear(); }
+});
+
+it("waits for the host when the live sheet has advanced", async () => {
+  const getSheet = async () => Response.json({ status: "success", data: { versionRevision: 4 } });
+  const api = { songs: { fetch: { ":songId": { ":versionId": { $get: getSheet } } } } } as unknown as API;
+  const cache = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  const options = feedSongQueryOptions(api, { songId: "song", versionId: "version", versionRevision: 3 });
+  await expect(cache.fetchQuery(options)).rejects.toThrow("Waiting for the host");
+  expect(cache.getQueryData(options.queryKey)).toBeUndefined();
+  cache.clear();
 });

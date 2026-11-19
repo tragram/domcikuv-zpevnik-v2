@@ -3,11 +3,9 @@ import { AppDatabase } from "../api/utils";
 import { song, songVersion, user, userFavoriteSongs } from "src/lib/db/schema";
 import { HTTPException } from "hono/http-exception";
 import { SongbookEntryApi } from "../api/api-types";
-import { resolveSongbookSongs } from "./song-helpers";
+import { getPinnedAlternatives } from "./song-helpers";
 
-// Raw songbook rows for a user (membership + their pin/key/capo), no song
-// resolution. Internal; callers use the `get*SongbookEntries` wrappers below.
-const getFavorites = async (
+export const getOwnSongbookEntries = async (
   db: AppDatabase,
   userId: string,
 ): Promise<SongbookEntryApi[]> => {
@@ -21,40 +19,13 @@ const getFavorites = async (
     .from(userFavoriteSongs)
     .where(eq(userFavoriteSongs.userId, userId));
 
-  return result;
+  if (!result.some(entry => entry.pinnedVersionId)) return result;
+  const alternatives = await getPinnedAlternatives(db, userId);
+  return result.map(entry => {
+    const sheet = entry.pinnedVersionId && alternatives.get(entry.pinnedVersionId);
+    return sheet && sheet.id === entry.songId ? { ...entry, song: sheet } : entry;
+  });
 };
-
-/**
- * Attaches a resolved `song` only to entries whose pinned version isn't the
- * canonical current one — i.e. drafts that aren't in the global song list (a
- * pending edit, or a foreign draft someone pinned). Canonical entries ship
- * without `song`: the client already has those from the global list (own
- * songbook) or resolves them from it (foreign songbook). So the payload only
- * grows by the handful of drafts, not the whole chordpro of every entry.
- */
-const withNonCanonicalSongs = async (
-  db: AppDatabase,
-  entries: SongbookEntryApi[],
-): Promise<SongbookEntryApi[]> => {
-  const pinned = entries.filter((e) => e.pinnedVersionId);
-  if (pinned.length === 0) return entries;
-  const songs = await resolveSongbookSongs(db, pinned, { onlyNonCanonical: true });
-  if (songs.size === 0) return entries;
-  return entries.map((e) =>
-    songs.has(e.songId) ? { ...e, song: songs.get(e.songId) } : e,
-  );
-};
-
-/**
- * The caller's own songbook entries. Pinned drafts carry a resolved `song` (see
- * `withNonCanonicalSongs`); this is the single source `buildSongDB` uses to
- * surface them.
- */
-export const getOwnSongbookEntries = async (
-  db: AppDatabase,
-  userId: string,
-): Promise<SongbookEntryApi[]> =>
-  withNonCanonicalSongs(db, await getFavorites(db, userId));
 
 /**
  * Another user's songbook entries, but only if they've made their songbook
@@ -73,7 +44,7 @@ export const getPublicSongbookEntries = async (
     .get();
   if (!owner) return [];
 
-  return withNonCanonicalSongs(db, await getFavorites(db, ownerId));
+  return getOwnSongbookEntries(db, ownerId);
 };
 
 /**

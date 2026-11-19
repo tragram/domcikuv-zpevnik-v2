@@ -13,10 +13,9 @@ export function getVersionDetails(
   resolvedStatus?: SongData["versionStatus"],
 ) {
   const following = !!feedStatus?.enabled && !feedStatus.isMaster;
-  const author = song.customVersionAuthor;
+  const author = song.versionAuthor;
   const isOwnVersion = !!author && author.id === userData?.profile.id;
-  const submission = userData?.submissions.find((s) => s.id === song.versionId);
-  const status = resolvedStatus ?? song.versionStatus ?? submission?.status;
+  const status = resolvedStatus ?? song.versionStatus;
   const label = song.isCustom
     ? (isOwnVersion ? "Your version" : "Custom version")
     : "Official version";

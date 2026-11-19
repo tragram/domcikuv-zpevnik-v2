@@ -2,14 +2,22 @@ import type { QueryClient } from "@tanstack/react-query";
 import client from "src/worker/api-client";
 import { makeApiRequest } from "./api-service";
 import { songQueryKeys, versionRefreshKeys } from "./song-query-keys";
+import { getSessionUserId } from "~/hooks/use-user-data";
 
 export type VersionMutationInput = { songId: string; versionId: string; expectedRevision: number };
 
-export async function refreshSongVersions(cache: QueryClient) {
+export async function refreshSongVersions(cache: QueryClient, songId: string) {
+  const viewerId = getSessionUserId(cache);
   await Promise.all(
-    versionRefreshKeys.map((queryKey) =>
-      cache.invalidateQueries({ queryKey, refetchType: "all" }),
-    ),
+    versionRefreshKeys(songId).map(queryKey => {
+      const personal = queryKey === songQueryKeys.favorites || queryKey === songQueryKeys.submissions;
+      if (personal && !viewerId) return;
+      return cache.invalidateQueries({
+        queryKey: personal ? [...queryKey, viewerId] : queryKey,
+        refetchType: queryKey.length > 1 || queryKey === songQueryKeys.songbooks ? "active" : "all",
+        predicate: query => !!(query.options.queryFn ?? cache.getQueryDefaults(query.queryKey).queryFn),
+      });
+    }),
   );
 }
 

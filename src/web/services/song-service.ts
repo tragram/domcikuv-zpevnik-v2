@@ -23,11 +23,12 @@ import {
   SongLanguage,
 } from "~/types/types";
 import { UserData } from "../hooks/use-user-data";
-import { ApiException, makeApiRequest } from "./api-service";
+import { makeApiRequest } from "./api-service";
 import { QueryClient, queryOptions } from "@tanstack/react-query";
 import { getIsOnline } from "~/hooks/use-is-online";
 import { songbookSheet } from "src/lib/song-selection";
 import { songQueryKeys } from "./song-query-keys";
+import { unavailableSheet } from "src/lib/offline-sheets";
 
 interface Timestamped {
   createdAt?: Date | string;
@@ -76,9 +77,8 @@ export const fetchSongs = async (): Promise<SongDataApi[]> => {
   // 2. Full fetch when there's no cache — or when the cache was written by a
   // different build. Incremental sync only patches changed songs, so rows kept
   // from an older build would otherwise retain that build's shape forever;
-  // one full fetch per deploy (or catalog format upgrade) re-normalizes everything.
-  if (!cached || !meta || meta.appVersion !== __APP_VERSION__ ||
-    cached.some((song) => !Array.isArray(song.publishedVersionIds))) {
+  // One full fetch per deploy updates the catalog. Cache format is handled centrally.
+  if (!cached || !meta || meta.appVersion !== __APP_VERSION__) {
     try {
       const data = await makeApiRequest(client.api.songs.$get);
       setSongsMeta(data);
@@ -179,12 +179,16 @@ export function getCachedSongVersion(
 ): SongData | SongDataApi | undefined {
   const exactState = cache.getQueryState(singleSongQueryOptions(songId, versionId).queryKey);
   // A confirmed removal/denial must not be resurrected by cache-first viewing.
-  if (exactState?.error instanceof ApiException && [403, 404].includes(exactState.error.status)) return undefined;
-  return cache.getQueryData<SongDataApi>(singleSongQueryOptions(songId, versionId).queryKey)
-    ?? songs.find((song) => song.id === songId && song.versionId === versionId)
-    ?? cache.getQueryData<SongDataApi[]>(songQueryKeys.catalog)?.find(
-      (song) => song.id === songId && song.versionId === versionId,
-    );
+  if (unavailableSheet(exactState?.error)) return undefined;
+  const catalog = cache.getQueryData<SongDataApi[]>(songQueryKeys.catalog);
+  const candidates = [exactState?.data as SongDataApi | undefined, ...songs,
+    catalog?.find(song => song.id === songId && song.versionId === versionId)];
+  let newest: SongData | SongDataApi | undefined;
+  for (const sheet of candidates) {
+    if (sheet?.id === songId && sheet.versionId === versionId &&
+      (!newest || (sheet.versionRevision ?? 0) > (newest.versionRevision ?? 0))) newest = sheet;
+  }
+  return newest;
 }
 
 export const findOrFetchSong = async (

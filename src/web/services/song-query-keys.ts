@@ -26,8 +26,8 @@ export const songQueryKeys = {
     ["song", "feed", songId, versionId, revision ?? null] as const,
 };
 
-export const versionRefreshKeys = [
-  songQueryKeys.catalog, songQueryKeys.sheets, songQueryKeys.versions, songQueryKeys.revisions,
+export const versionRefreshKeys = (songId: string) => [
+  songQueryKeys.catalog, songQueryKeys.sheet(songId), [...songQueryKeys.versions, songId], [...songQueryKeys.revisions, songId],
   songQueryKeys.favorites, songQueryKeys.songbooks, songQueryKeys.publicSongbooks,
   songQueryKeys.submissions, songQueryKeys.adminVersions, songQueryKeys.adminSongs, songQueryKeys.adminCatalog,
 ];

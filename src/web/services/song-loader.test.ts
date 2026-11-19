@@ -43,7 +43,7 @@ it("preserves the published version IDs through offline serialization", () => {
 const ownPin = {
   ...canonical,
   versionId: "viewer-pin",
-  customVersionAuthor: { id: "viewer", name: "Viewer" },
+  versionAuthor: { id: "viewer", name: "Viewer" },
 };
 let queryClient: QueryClient;
 
@@ -85,12 +85,12 @@ describe("song version selection", () => {
     expect((await load()).songData.versionId).toBe("official");
   });
 
-  it("fetches personal context on a cold cache without fetching the directory or contributions", async () => {
+  it("opens the catalog immediately while personal context is cold", async () => {
     queryClient.removeQueries({ queryKey: ["favorites"] });
     const fetchFavorites = vi.fn(async () => [{ songId: "song", pinnedVersionId: "viewer-pin", song: ownPin }]);
     queryClient.setQueryDefaults(["favorites", "viewer"], { queryFn: fetchFavorites });
-    expect((await load()).songData.versionId).toBe("viewer-pin");
-    expect(fetchFavorites).toHaveBeenCalledOnce();
+    expect((await load()).songData.versionId).toBe("official");
+    expect(fetchFavorites).not.toHaveBeenCalled();
   });
   it("does not leak the viewer's pin into another person's official songbook entry", async () => {
     queryClient.setQueryData(["songbookEntries", "owner"], [{
@@ -117,7 +117,7 @@ describe("song version selection", () => {
     const result = await load();
     expect(result.songData.versionId).toBe("viewer-pin");
     expect(result.versionSelection).toEqual({ source: "saved", unavailable: false });
-    expect(findOrFetchSong).toHaveBeenCalledWith([ownPin], "song", "viewer-pin", queryClient);
+    expect(findOrFetchSong).not.toHaveBeenCalled();
   });
 
   it("returns to the official sheet after leaving a foreign book for a guest", async () => {
@@ -139,29 +139,28 @@ describe("song version selection", () => {
     expect(result.versionSelection.source).toBe("songbook");
   });
 
-  it("explains a removed personal pin after revalidating it online", async () => {
-    queryClient.setQueryData(["favorites", "viewer"], [{ songId: "song", pinnedVersionId: "gone" }]);
-    vi.mocked(findOrFetchSong).mockRejectedValueOnce(new ApiException("Removed", 404));
+  it("downloads the saved sheet when only the official sheet is cached and the viewer is online", async () => {
+    queryClient.setQueryData(["favorites", "viewer"], [{ songId: "song", pinnedVersionId: "viewer-pin" }]);
+    vi.mocked(findOrFetchSong).mockResolvedValueOnce(new SongData(ownPin));
     const result = await load();
-    expect(result.songData.versionId).toBe("official");
-    expect(result.versionSelection).toEqual({ source: "saved", unavailable: true });
-    expect(findOrFetchSong).toHaveBeenNthCalledWith(1, [canonical], "song", "gone", queryClient);
-    expect(findOrFetchSong).toHaveBeenNthCalledWith(2, [canonical], "song", undefined, queryClient);
+    expect(result.songData.versionId).toBe("viewer-pin");
+    expect(result.versionSelection).toEqual({ source: "saved", unavailable: false });
+    expect(findOrFetchSong).toHaveBeenCalledWith([canonical], "song", "viewer-pin", queryClient);
   });
 
   it("keeps a saved formerly official ID when cached favorites have no inline sheet", async () => {
     queryClient.setQueryData(["favorites", "viewer"], [{ songId: "song", pinnedVersionId: "official" }]);
     queryClient.setQueryData(["songs"], [{ ...canonical, versionId: "new-official" }]);
-    vi.mocked(findOrFetchSong).mockResolvedValueOnce(new SongData(canonical));
+    queryClient.setQueryData(["song", "fetch", "song", "official"], canonical);
     expect((await load()).songData.versionId).toBe("official");
-    expect(findOrFetchSong).toHaveBeenCalledWith([{ ...canonical, versionId: "new-official" }], "song", "official", queryClient);
+    expect(findOrFetchSong).not.toHaveBeenCalled();
   });
 
   it("uses the downloaded official fallback offline when a saved sheet is unavailable", async () => {
     vi.mocked(getIsOnline).mockReturnValue(false);
     queryClient.setQueryData(["favorites", "viewer"], [{ songId: "song", pinnedVersionId: "gone" }]);
     expect((await load()).versionSelection.unavailable).toBe(true);
-    expect(findOrFetchSong).toHaveBeenCalledWith([canonical], "song", undefined, queryClient);
+    expect(findOrFetchSong).not.toHaveBeenCalled();
   });
 
   it("never substitutes official for an unavailable exact link", async () => {

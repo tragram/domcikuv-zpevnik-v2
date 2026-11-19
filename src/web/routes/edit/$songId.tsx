@@ -10,7 +10,7 @@ export const Route = createFileRoute("/edit/$songId")({
     version: z.string().optional(),
   }),
   loaderDeps: ({ search }) => ({ version: search.version }),
-  loader: songLoader,
+  loader: (args) => songLoader({ ...args, editing: true }),
   pendingMs: 200,
   pendingMinMs: 1000, // keep visible for at least 1s
   pendingComponent: () => (

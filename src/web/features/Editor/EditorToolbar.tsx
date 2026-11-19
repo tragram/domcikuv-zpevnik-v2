@@ -233,7 +233,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       // (favorites now carries the resolved pinned-draft song); submissions
       // feeds the editor's own drafts list. Without this, ensureQueryData hands
       // back the stale pre-edit version regardless of invalidation.
-      await refreshSongVersions(queryClient);
+      await refreshSongVersions(queryClient, response.song.id);
 
       if (userData && userData.profile.isAdmin) {
         await navigate({

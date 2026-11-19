@@ -59,10 +59,11 @@ export function SongVersionBadge({
   const details = getVersionDetails(songData, userData, selection, feedStatus, resolvedStatus);
   const notes = details.notes;
   const shown = versions?.find((version) => version.id === songData.versionId);
-  const label = versionLabel({ label: shown?.label ?? songData.versionLabel, importSourceId: songData.externalSource?.sourceId, isOfficial: shown?.isCurrent ?? songData.isOfficial ?? !songData.isCustom, versionNumber: shown?.versionNumber ?? songData.versionNumber, createdAt: songData.versionCreatedAt ?? songData.createdAt });
+  const isOfficial = shown?.isCurrent ?? songData.isOfficial === true;
+  const label = versionLabel({ label: shown?.label ?? songData.versionLabel, importSourceId: songData.externalSource?.sourceId, isOfficial: isOfficial, versionNumber: shown?.versionNumber ?? songData.versionNumber, createdAt: songData.versionCreatedAt ?? songData.createdAt });
 
-  const badgeLabel = versionBadgeLabel({ label, isOfficial: shown?.isCurrent ?? songData.isOfficial ?? !songData.isCustom });
-  const hasDifferentOfficial = !!entry?.pinnedVersionId && !(shown?.isCurrent ?? songData.isOfficial ?? !songData.isCustom);
+  const badgeLabel = versionBadgeLabel({ label, isOfficial: isOfficial });
+  const hasDifferentOfficial = !!entry?.pinnedVersionId && !isOfficial && (publishedIds ?? songData.publishedVersionIds ?? []).some(id => id !== songData.versionId);
   const displayLabel = hasDifferentOfficial ? `${badgeLabel} · Official version available` : badgeLabel;
 
   async function makeOfficial() {
@@ -70,7 +71,7 @@ export function SongVersionBadge({
     setSaving(true);
     try {
       await versionAction(songData.id, songData.versionId, "official", shown.revision);
-      await refreshSongVersions(queryClient);
+      await refreshSongVersions(queryClient, songData.id);
       await router.invalidate();
       toast.success("Official version selected");
     } catch (error) { toast.error(error instanceof Error ? error.message : "Could not select official version"); }
@@ -147,7 +148,7 @@ export function SongVersionBadge({
           <dl className="space-y-2 px-2 py-1.5 text-xs [&_dt]:text-muted-foreground [&_dd]:break-words">
             {(shown?.author || details.author) && <div className="flex flex-wrap items-baseline gap-x-1"><dt>Author:</dt><dd className="first-letter:uppercase">{shown?.author ? shown.author.id === userData?.profile.id ? "you" : shown.author.name : details.author}</dd></div>}
             <div className="flex flex-wrap items-baseline gap-x-1"><dt>Status:</dt>
-            <dd>{details.status ?? (!isOnline ? "Not downloaded" : statusPending ? "Loading…" : "Unavailable")}{(shown?.isCurrent ?? !songData.isCustom) && " · Official"}</dd></div>
+            <dd>{details.status ?? (!isOnline ? "Not downloaded" : statusPending ? "Loading…" : "Unavailable")}{isOfficial && " · Official"}</dd></div>
             <div className="space-y-0.5"><dt>Shown because</dt>
             <dd><Description>{details.reason}</Description></dd></div>
             {notes.length > 0 && <div className="space-y-0.5"><dt>Notes</dt><dd className="space-y-1">{notes.map((text) => <p key={text}>{text}</p>)}</dd></div>}
@@ -171,6 +172,7 @@ export function SongVersionBadge({
             songId={songData.id}
             shownVersionId={songData.versionId}
             viewerId={userData?.profile.id}
+            savedSheet={entry?.song}
             savedVersionId={entry?.pinnedVersionId}
             saving={saving}
             onUse={details.canChoose ? () => void saveVersion() : undefined}

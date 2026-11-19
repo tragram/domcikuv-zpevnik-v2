@@ -1,9 +1,10 @@
-import { and, eq, sql, desc } from "drizzle-orm";
+import { and, eq, ne, sql, desc } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import {
   song,
   songVersion,
   songSubmission,
+  songRevision,
   songImport,
   userFavoriteSongs,
 } from "src/lib/db/schema";
@@ -284,7 +285,7 @@ export async function saveSongVersion(
 
 export type ApprovalOptions = {
   expectedRevision: number;
-  expectedTargetRevision?: number;
+  expectedOfficialId?: string | null; expectedTargetRevision?: number;
   force?: boolean;
   makeOfficial?: boolean;
   archivePrevious?: boolean;
@@ -502,6 +503,9 @@ export async function approveVersion(
     );
     return loadVersion(db, songId, target.id);
   }
+  if (!correction && (archivePrevious || makeOfficial) &&
+      (options.force || options.expectedOfficialId !== undefined) &&
+      options.expectedOfficialId !== parent.currentVersionId) throw conflict();
   if (source && (archivePrevious || makeOfficial)) {
     const stale =
       source.revision !== proposal.baseRevision ||
@@ -612,6 +616,7 @@ export async function changeVersionStatus(
   userId: string,
   action: "archive" | "restore" | "reject" | "delete",
   expectedRevision: number,
+  fallbackStatus?: "published" | "archived" | "pending",
 ) {
   const [version, actor, parent] = await Promise.all([
     loadVersion(db, songId, versionId),
@@ -638,11 +643,26 @@ export async function changeVersionStatus(
       message: "Select another official version first.",
     });
   let status: SongVersionDB["status"];
-  if (action === "archive" && version.status === "published")
+  let explicitRestore = false;
+  if (action === "restore" && version.status === "deleted") {
+    const previous = await db.query.songRevision.findFirst({
+      where: and(eq(songRevision.versionId, versionId), ne(songRevision.status, "deleted")),
+      orderBy: [desc(songRevision.number)],
+      columns: { status: true },
+    });
+    const prior = previous?.status;
+    if (prior === "published" || prior === "archived" || prior === "pending" || prior === "rejected") {
+      status = prior;
+    } else {
+      if (!fallbackStatus) throw new HTTPException(422, { message: "Choose a restoration status. History begins after deletion." });
+      status = fallbackStatus;
+      explicitRestore = true;
+    }
+  } else if (action === "archive" && version.status === "published")
     status = "archived";
   else if (
     action === "restore" &&
-    ["archived", "rejected", "deleted"].includes(version.status)
+    ["archived", "rejected"].includes(version.status)
   )
     status =
       version.status === "archived" && version.approvedAt
@@ -658,7 +678,10 @@ export async function changeVersionStatus(
   else throw new HTTPException(400, { message: "Invalid version transition." });
   await withVersionConflict(() =>
     db.batch([
-      reviseVersion(db, version, { status }, userId, parent.currentVersionId),
+      reviseVersion(db, version, { status, ...(explicitRestore && status !== "pending" ? { approvedAt: new Date(), approvedBy: userId } : {}) }, userId, parent.currentVersionId),
+      ...(explicitRestore && status === "pending" && !version.submissionIntent
+        ? [db.insert(songSubmission).values({ versionId, submissionIntent: "new-version", baseOfficialVersionId: parent.currentVersionId }).onConflictDoUpdate({ target: songSubmission.versionId, set: { submissionIntent: "new-version" } })]
+        : []),
       ...(["pending", "rejected", "deleted"].includes(status)
         ? []
         : [

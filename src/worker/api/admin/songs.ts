@@ -60,6 +60,7 @@ const approvalSchema = versionStateSchema.extend({
   makeOfficial: z.boolean().optional(),
   archivePrevious: z.boolean().optional(),
   expectedTargetRevision: z.number().int().positive().optional(),
+  expectedOfficialId: z.string().nullable().optional(),
   force: z.boolean().optional(),
 });
 
@@ -257,7 +258,7 @@ export const songRoutes = buildApp()
   )
   .post(
     "/:songId/versions/:versionId/:action",
-    zValidatorJSend("json", versionStateSchema),
+    zValidatorJSend("json", versionStateSchema.extend({ fallbackStatus: z.enum(["published", "archived", "pending"]).optional() })),
     async (c) => {
       const { songId, versionId, action } = c.req.param();
       if (action !== "archive" && action !== "restore" && action !== "reject")
@@ -271,6 +272,7 @@ export const songRoutes = buildApp()
           c.var.USER!.id,
           action,
           c.req.valid("json").expectedRevision,
+          c.req.valid("json").fallbackStatus,
         ),
       );
     },

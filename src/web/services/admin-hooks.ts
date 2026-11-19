@@ -175,7 +175,7 @@ export const useUpdateVersion = (adminApi: AdminApi) => {
       versionId: string;
       version: ModifySongVersionSchema;
     }) => patchVersionAdmin(adminApi, songId, versionId, version),
-    onSuccess: () => refreshSongVersions(queryClient),
+    onSuccess: (_, { songId }) => refreshSongVersions(queryClient, songId),
   });
 };
 
@@ -187,7 +187,7 @@ export const useDeleteVersion = (adminApi: AdminApi) => {
       versionId,
       expectedRevision,
     }: VersionMutationInput) => deleteVersionAdmin(adminApi, songId, versionId, expectedRevision),
-    onSuccess: () => refreshSongVersions(queryClient),
+    onSuccess: (_, { songId }) => refreshSongVersions(queryClient, songId),
   });
 };
 
@@ -198,13 +198,14 @@ export const useRestoreVersion = (adminApi: AdminApi) => {
       songId,
       versionId,
       expectedRevision,
-    }: VersionMutationInput) => {
+      fallbackStatus,
+    }: VersionMutationInput & { fallbackStatus?: "published" | "archived" | "pending" }) => {
       return makeApiRequest(() =>
-        adminApi.songs[":songId"].versions[":versionId"][":action"].$post({ param: { songId, versionId, action: "restore" }, json: { expectedRevision },
+        adminApi.songs[":songId"].versions[":versionId"][":action"].$post({ param: { songId, versionId, action: "restore" }, json: { expectedRevision, fallbackStatus },
         }),
       );
     },
-    onSuccess: () => refreshSongVersions(queryClient),
+    onSuccess: (_, { songId }) => refreshSongVersions(queryClient, songId),
   });
 };
 
@@ -431,15 +432,15 @@ export const useGenerateIllustration = (adminApi: AdminApi) => {
 export const useApproveVersion = (adminApi: AdminApi) => {
   const cache = useQueryClient();
   return useMutation({
-    mutationFn: ({ songId, versionId, expectedRevision, official, force, expectedTargetRevision, makeOfficial, archivePrevious }: VersionMutationInput & {
-      official?: boolean; force?: boolean; expectedTargetRevision?: number; makeOfficial?: boolean; archivePrevious?: boolean;
+    mutationFn: ({ songId, versionId, expectedRevision, official, force, expectedOfficialId, expectedTargetRevision, makeOfficial, archivePrevious }: VersionMutationInput & {
+      official?: boolean; force?: boolean; expectedOfficialId?: string | null; expectedTargetRevision?: number; makeOfficial?: boolean; archivePrevious?: boolean;
     }) => {
       const route = adminApi.songs[":songId"].versions[":versionId"];
       return official
         ? makeApiRequest(() => route.official.$post({ param: { songId, versionId }, json: { expectedRevision } }))
-        : makeApiRequest(() => route.approve.$post({ param: { songId, versionId }, json: { expectedRevision, force, expectedTargetRevision, makeOfficial, archivePrevious } }));
+        : makeApiRequest(() => route.approve.$post({ param: { songId, versionId }, json: { expectedRevision, force, expectedOfficialId, expectedTargetRevision, makeOfficial, archivePrevious } }));
     },
-    onSuccess: () => refreshSongVersions(cache),
+    onSuccess: (_, { songId }) => refreshSongVersions(cache, songId),
   });
 };
 
@@ -456,7 +457,7 @@ export const useRejectVersion = (adminApi: AdminApi) => {
         }),
       );
     },
-    onSuccess: () => refreshSongVersions(queryClient),
+    onSuccess: (_, { songId }) => refreshSongVersions(queryClient, songId),
   });
 };
 

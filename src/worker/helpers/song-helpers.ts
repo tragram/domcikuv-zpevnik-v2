@@ -2,6 +2,8 @@ import { versionNumbers } from "./song-versions/numbering";
 import { withSubmission } from "src/lib/song-submission";
 import {
   and,
+  asc,
+  ne,
   BuildQueryResult,
   desc,
   eq,
@@ -42,12 +44,7 @@ export type PopulatedSongDB = BuildQueryResult<
     };
   }
 >;
-// Custom-payload metadata, derived purely from how the shown version relates to
-// the song's canonical (published current) one — the single definition of
-// "custom". When the shown version differs from canonical (or there is no
-// canonical yet), it's a draft: attribute it to its author, and flag whether the
-// published version has since moved past it so the UI can offer "switch to
-// official". A canonical version shown as-is yields no custom metadata.
+// Attribute a displayed alternative without inferring its official status.
 const customMetaOf = (
   canonical: { id: string; createdAt: Date | string } | null | undefined,
   shown:
@@ -58,13 +55,12 @@ const customMetaOf = (
       }
     | null
     | undefined,
-): Pick<SongDataApi, "customVersionAuthor" | "canonicalIsNewer"> => {
+): Pick<SongDataApi, "versionAuthor"> => {
   if (!shown || (canonical && shown.id === canonical.id)) return {};
   return {
-    customVersionAuthor: shown.user
+    versionAuthor: shown.user
       ? { id: shown.user.id, name: shown.user.nickname ?? shown.user.name }
       : undefined,
-    canonicalIsNewer: !!canonical && canonical.id !== shown.id,
   };
 };
 
@@ -236,7 +232,7 @@ export const retrieveSingleSong = async (
 
   if (!songRaw || songRaw.deleted) return null;
 
-  let customMeta: Pick<SongDataApi, "customVersionAuthor" | "canonicalIsNewer"> =
+  let customMeta: Pick<SongDataApi, "versionAuthor"> =
     {};
   if (versionId && songRaw.currentVersion?.id !== versionId) {
     // Capture the canonical current version before swapping in the requested one.
@@ -267,72 +263,47 @@ export const retrieveSingleSong = async (
   return result;
 };
 
-/**
- * Bulk-resolves a set of songbook entries to displayable songs: each entry shows
- * its pinned version when set (incl. pending songs that have no published
- * `currentVersion` yet), otherwise the song's current version. Done in a couple
- * of batched queries (not one `retrieveSingleSong` per entry) so a large
- * songbook stays within the Worker's subrequest budget. Returns a map keyed by
- * songId; songs that can't be shown (deleted, or no version at all) are omitted.
- */
-export const resolveSongbookSongs = async (
-  db: AppDatabase,
-  entries: { songId: string; pinnedVersionId: string | null }[],
-  // When set, skip entries whose pinned version is just the song's current one —
-  // the viewer already has those from the global list, so don't ship them again.
-  opts: { onlyNonCanonical?: boolean } = {},
-): Promise<Map<string, SongDataApi>> => {
-  const result = new Map<string, SongDataApi>();
-  const songIds = [...new Set(entries.map((e) => e.songId))];
-  if (songIds.length === 0) return result;
+/** Load only the sheets a songbook cannot get from the official catalog. */
+export async function getPinnedAlternatives(db: AppDatabase, ownerId: string) {
+  const pins = db.select({ id: userFavoriteSongs.pinnedVersionId })
+    .from(userFavoriteSongs)
+    .innerJoin(song, eq(song.id, userFavoriteSongs.songId))
+    .where(and(
+      eq(userFavoriteSongs.userId, ownerId),
+      eq(song.deleted, false),
+      or(isNull(song.currentVersionId), ne(userFavoriteSongs.pinnedVersionId, song.currentVersionId)),
+    ));
 
-  const songs = await db.query.song.findMany({
-    where: and(inArray(song.id, songIds), eq(song.deleted, false)),
+  const versions = await db.query.songVersion.findMany({
+    where: and(inArray(songVersion.id, pins), ne(songVersion.status, "deleted")),
     with: {
-      currentVersion: { with: { songImport: true, user: true, submission: true } },
-      currentIllustration: true,
+      songImport: true,
+      submission: true,
+      user: { columns: { id: true, name: true, nickname: true } },
+      song: { with: {
+        currentIllustration: true,
+        version: {
+          columns: { id: true, status: true, mergedIntoVersionId: true },
+          orderBy: [asc(songVersion.createdAt), asc(songVersion.id)],
+        },
+      } },
     },
   });
-  const choices = await publishedVersionIds(db, songIds);
-  const numbers = await versionNumbers(db, songIds);
-  const songById = new Map(songs.map((s) => [s.id, s]));
 
-  // Pinned versions that differ from (or stand in for a missing) current version.
-  const pinnedIds = [
-    ...new Set(
-      entries
-        .filter((e) => e.pinnedVersionId)
-        .map((e) => e.pinnedVersionId as string),
-    ),
-  ];
-  const versions = pinnedIds.length
-    ? await db.query.songVersion.findMany({
-        where: inArray(songVersion.id, pinnedIds),
-        with: { songImport: true, user: true, submission: true },
-      })
-    : [];
-  const versionById = new Map(versions.map((v) => [v.id, v]));
-
-  for (const entry of entries) {
-    const songRaw = songById.get(entry.songId);
-    if (!songRaw) continue; // deleted / missing
-    const canonical = songRaw.currentVersion;
-    const pinned =
-      entry.pinnedVersionId && entry.pinnedVersionId !== canonical?.id
-        ? versionById.get(entry.pinnedVersionId)
-        : undefined;
-    if (opts.onlyNonCanonical && !pinned) continue; // canonical → already in list
-    if (pinned && pinned.songId === entry.songId && pinned.status !== "deleted") songRaw.currentVersion = pinned;
-    const shown = songRaw.currentVersion;
-    if (!shown) continue; // nothing publishable to show
-    const api = transformSongToApi(songRaw);
-    api.versionNumber = numbers.get(api.versionId ?? "");
-    api.publishedVersionIds = choices.get(entry.songId) ?? [];
-    Object.assign(api, customMetaOf(canonical, shown));
-    result.set(entry.songId, api);
+  const sheets = new Map<string, SongDataApi>();
+  for (const { song: parent, ...version } of versions) {
+    if (parent.deleted || parent.currentVersionId === version.id) continue;
+    sheets.set(version.id, {
+      ...transformSongToApi({ ...parent, currentVersion: version }),
+      ...customMetaOf(null, version),
+      versionNumber: parent.version.findIndex(v => v.id === version.id) + 1,
+      publishedVersionIds: parent.version
+        .filter(v => v.status === "published" && !v.mergedIntoVersionId)
+        .map(v => v.id),
+    });
   }
-  return result;
-};
+  return sheets;
+}
 
 export const getSongBase = async (
   db: AppDatabase,

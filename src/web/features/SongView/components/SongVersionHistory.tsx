@@ -2,7 +2,7 @@ import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Check, History, Pencil } from "lucide-react";
 import { getCachedSongVersion } from "~/services/song-service";
-import type { SongVersionSummaryApi } from "src/worker/api/api-types";
+import type { SongVersionSummaryApi, SongDataApi } from "src/worker/api/api-types";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import { cn } from "~/lib/utils";
@@ -19,6 +19,7 @@ interface SongVersionHistoryProps {
   shownVersionId: string;
   viewerId?: string;
   canPreview: boolean;
+  savedSheet?: SongDataApi;
   savedVersionId?: string | null;
   saving: boolean;
   onUse?: () => void;
@@ -32,6 +33,7 @@ export function SongVersionHistory({
   shownVersionId,
   viewerId,
   canPreview,
+  savedSheet,
   savedVersionId,
   saving,
   onUse,
@@ -64,7 +66,7 @@ export function SongVersionHistory({
       <ul aria-label="Available song versions">
           {versions.map((version) => {
             const shown = version.id === shownVersionId;
-            const downloaded = shown || !!getCachedSongVersion(cache, songId, version.id);
+            const downloaded = shown || !!getCachedSongVersion(cache, songId, version.id, savedSheet ? [savedSheet] : []);
             const title = versionLabel(version);
             const VersionIcon = version.isCurrent ? Check : version.status === "pending" ? Pencil : History;
             const createdAt = versionDate.format(new Date(version.updatedAt ?? version.createdAt));

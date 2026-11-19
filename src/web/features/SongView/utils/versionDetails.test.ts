@@ -10,7 +10,7 @@ const custom = {
   ...official,
   versionId: "custom",
   isCustom: true,
-  customVersionAuthor: { id: "author", name: "Petr" },
+  versionAuthor: { id: "author", name: "Petr" },
 } as SongData;
 
 describe("song version details", () => {
@@ -94,7 +94,7 @@ describe("song version details", () => {
     expect(getVersionDetails(custom, user).label).toBe("Custom version");
     expect(getVersionDetails({
       ...custom,
-      customVersionAuthor: { id: "viewer", name: "Viewer" },
+      versionAuthor: { id: "viewer", name: "Viewer" },
     } as SongData, user).label).toBe("Your version");
   });
 });

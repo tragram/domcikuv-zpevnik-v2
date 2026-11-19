@@ -1,3 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
+import { singleSongQueryOptions } from "~/services/song-service";
+import { SongData } from "~/types/songData";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useUserData } from "src/web/hooks/use-user-data";
 import { z } from "zod";
@@ -58,9 +61,23 @@ function RouteComponent() {
       : undefined,
   });
 
+  // A host checks the live sheet on entry, reconnect, and during a long session.
+  const liveSheet = useQuery({
+    ...singleSongQueryOptions(songData.id, songData.versionId),
+    enabled: shouldShare && !!songData.versionId,
+    staleTime: 0,
+    refetchOnMount: "always",
+    refetchOnReconnect: "always",
+    refetchInterval: 10_000,
+    refetchIntervalInBackground: true,
+    select: (row) => new SongData(row),
+  });
+  const hostSheet = shouldShare && liveSheet.data?.versionId === songData.versionId
+    ? liveSheet.data : undefined;
+  const verified = !!hostSheet && liveSheet.isFetchedAfterMount && liveSheet.isSuccess;
   return (
     <SongView
-      songData={songData}
+      songData={hostSheet ?? songData}
       userData={userData}
       feedStatus={versionId ? undefined : feedStatus}
       versionSelection={versionSelection}
@@ -71,7 +88,7 @@ function RouteComponent() {
             }
           : undefined
       }
-      broadcast={{ shouldShare, updateSong }}
+      broadcast={{ shouldShare: verified, updateSong }}
     />
   );
 }

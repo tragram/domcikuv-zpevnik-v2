@@ -244,7 +244,11 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
         readMatchingLegacyDraft(songData?.id, versionId) ?? null,
     },
   );
-  const editorState = draft ?? defaultEditorState;
+  const obsoleteDraft = !!versionId && !!draft && draft.expectedRevision == null;
+  useEffect(() => {
+    if (obsoleteDraft) setDraft(null);
+  }, [obsoleteDraft, setDraft]);
+  const editorState = obsoleteDraft ? defaultEditorState : draft ?? defaultEditorState;
   const setEditorState = useCallback(
     (update: EditorState | ((prev: EditorState) => EditorState)) => {
       setDraft((prev) =>
@@ -334,9 +338,12 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
       true,
     );
     if (backup || legacyBackup) {
-      setEditorState(
-        backup ? (JSON.parse(backup) as EditorState) : legacyBackup!,
-      );
+      const restored = backup ? JSON.parse(backup) as EditorState : legacyBackup!;
+      if (versionId && restored.expectedRevision == null) {
+        localStorage.removeItem(getEditorBackupKey(editorStateKey));
+        return;
+      }
+      setEditorState(restored);
       setSubmitAttempted(false);
     }
   }, [editorStateKey, setEditorState, songData?.id, versionId]);

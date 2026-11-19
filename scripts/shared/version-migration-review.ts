@@ -21,7 +21,7 @@ export function buildReviewPairs(versions: ReviewVersion[], importSources: Reado
   };
   const pairs: { beforeId: string; afterId: string; kind: "parent" | "roots"; reason: string; proposed: "revision" | "review" | "separate" }[] = [];
   for (const child of versions) {
-    if (!child.parent_id) continue;
+    if (!child.parent_id || child.parent_id === child.id) continue;
     const parent = byId.get(child.parent_id);
     const result = parent && parent.song_id === child.song_id
       ? differentSources(parent, child)
@@ -34,7 +34,7 @@ export function buildReviewPairs(versions: ReviewVersion[], importSources: Reado
       : { decision: "review" as const, reason: "Missing or cross-song parent" };
     pairs.push({ beforeId: child.parent_id, afterId: child.id, kind: "parent", reason: result.reason, proposed: result.decision });
   }
-  for (const roots of Map.groupBy(versions.filter((v) => !v.parent_id), (v) => v.song_id).values()) {
+  for (const roots of Map.groupBy(versions.filter((v) => !v.parent_id || v.parent_id === v.id), (v) => v.song_id).values()) {
     roots.sort((a, b) => Number(a.created_at) - Number(b.created_at) || a.id.localeCompare(b.id));
     for (let i = 0; i < roots.length; i++) for (let j = i + 1; j < roots.length; j++) {
       const separate = differentSources(roots[i], roots[j]);

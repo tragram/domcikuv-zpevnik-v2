@@ -55,7 +55,7 @@ export function VersionReclassification({
         }),
       ),
     onSuccess: async () => {
-      await refreshSongVersions(cache);
+      await refreshSongVersions(cache, source.songId);
       await router.invalidate();
       setOpen(false);
       toast.success("Applied as a correction to the parent; both histories preserved");
