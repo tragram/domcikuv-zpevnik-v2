@@ -100,6 +100,7 @@ import { versionLabel } from "src/lib/version-label";
 import { Description } from "~/components/ui/description";
 import { Checkbox } from "~/components/ui/checkbox";
 import { VersionReclassification } from "./version-reclassification";
+import { VersionRename } from "./version-rename";
 import { getWorkingVersion, getCorrectionParent } from "./version-selection";
 import { isCorrectionSubmission, publicationOptions, submissionReview } from "src/lib/song-version-policy";
 
@@ -371,6 +372,7 @@ function DiffViewerModal({
 type ApprovalChoices = { force?: boolean; makeOfficial?: boolean; archivePrevious?: boolean; expectedOfficialId?: string | null; expectedTargetRevision?: number };
 
 interface SongVersionItemProps {
+  adminApi: AdminApi;
   versions: SongVersionDB[];
   song: SortableSong;
   version: SongVersionDB;
@@ -388,6 +390,7 @@ interface SongVersionItemProps {
 }
 
 function SongVersionItem({
+  adminApi,
   versions,
   song,
   version,
@@ -473,6 +476,9 @@ function SongVersionItem({
             <span className="font-semibold text-foreground/90">
               {versionLabel(version)}
             </span>
+            {!song.deleted && version.status !== "deleted" && !version.mergedIntoVersionId && (
+              <VersionRename adminApi={adminApi} version={version} online={online} />
+            )}
             <SongVersionStatusBadge status={version.status} />
 
 
@@ -599,6 +605,7 @@ function SongVersionItem({
 // --- 3. VERSION HISTORY TIMELINE ---
 
 interface VersionHistoryTimelineProps {
+  adminApi: AdminApi;
   song: SortableSong;
   songVersions: SongVersionDB[];
   showDeleted: boolean;
@@ -617,6 +624,7 @@ interface VersionHistoryTimelineProps {
 }
 
 function VersionHistoryTimeline({
+  adminApi,
   song,
   songVersions,
   showDeleted,
@@ -663,6 +671,7 @@ function VersionHistoryTimeline({
 
           return (
             <SongVersionItem
+              adminApi={adminApi}
               versions={songVersions}
               key={version.id}
               song={song}
@@ -754,6 +763,7 @@ function YoutubeDialogForm({
 }
 
 function SongTableRow({
+  adminApi,
   song,
   songVersions,
   isExpanded,
@@ -944,6 +954,7 @@ function SongTableRow({
         <TableRow className="bg-accent/20">
           <TableCell colSpan={visibleColumnCount} className="p-0">
             <VersionHistoryTimeline
+              adminApi={adminApi}
               song={song}
               songVersions={songVersions}
               showDeleted={showDeleted}
@@ -1573,6 +1584,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
               ) : (
                 paginatedSongs.map((song) => (
                   <SongTableRow
+                    adminApi={adminApi}
                     key={song.id}
                     song={song}
                     songVersions={versionsBySong[song.id] || []}

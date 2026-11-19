@@ -226,6 +226,36 @@ describe("submitted revision history", () => {
     expect(await loadVersion(db, "song", original.id)).toMatchObject({ youtubeId: null, status: "archived" });
   });
 
+  it.each(["local", "imported"] as const)("renames a %s version in place through the admin API", async (kind) => {
+    const original = kind === "imported" ? await importCopy("Source sheet", "untrusted") : await initial();
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      c.set("USER", { id: "admin" } as NonNullable<typeof c.var.USER>);
+      await next();
+    }).route("/", songRoutes);
+    const rename = (label: string, expectedRevision: number) =>
+      app.request(`/song/versions/${original.id}`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ label, expectedRevision }),
+      });
+
+    expect((await rename("x".repeat(21), original.revision)).status).toBe(400);
+    expect((await rename("  Acoustic   live  ", original.revision)).status).toBe(200);
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({
+      ...original,
+      label: "Acoustic live",
+      editedBy: "admin",
+      revision: original.revision + 1,
+      updatedAt: expect.any(Date),
+    });
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
+    expect((await rename("", original.revision)).status).toBe(409);
+    expect((await rename("", original.revision + 1)).status).toBe(200);
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({
+      label: null, revision: original.revision + 2,
+    });
+  });
+
   it("rejects imported merge sources so curation must create a new version instead", async () => {
     const original = await importCopy();
     const target = await saveSongVersion(db, input("Curated destination"), "song", "owner");

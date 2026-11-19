@@ -289,7 +289,9 @@ export const songRoutes = buildApp()
         return failJSend(c, "This version is closed", 400);
       if (sameContent(base, { ...base, ...changes }))
         return successJSend(c, base as SongVersionApi);
-      if (base.importId) return successJSend(c, await saveSongVersion(c.var.db, { ...contentOf(base), ...changes, baseVersionId: base.id, expectedRevision }, songId, c.var.USER!.id));
+      // A display name change uses the same version, including for imported sheets.
+      const labelOnly = changes.label !== undefined && Object.keys(changes).length === 1;
+      if (base.importId && !labelOnly) return successJSend(c, await saveSongVersion(c.var.db, { ...contentOf(base), ...changes, baseVersionId: base.id, expectedRevision }, songId, c.var.USER!.id));
       await withVersionConflict(() =>
         c.var.db.batch([
           reviseVersion(c.var.db, base, changes, c.var.USER!.id),

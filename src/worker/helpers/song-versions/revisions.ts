@@ -70,7 +70,7 @@ export function reviseVersion(
   officialId?: string | null,
   allowImportRefresh = false,
 ) {
-  if (base.importId && !allowImportRefresh && songContentFields.some((key) => changes[key] !== undefined && changes[key] !== base[key]))
+  if (base.importId && !allowImportRefresh && songContentFields.some((key) => key !== "label" && changes[key] !== undefined && changes[key] !== base[key]))
     throw new HTTPException(400, { message: "Imported sheets are source copies. Create a curated version to edit this content." });
   const songCondition = officialId === undefined
     ? and(eq(song.id, base.songId), eq(song.deleted, false))!
