@@ -99,6 +99,7 @@ import { SongRevisionHistory } from "~/components/SongRevisionHistory";
 import { versionLabel } from "src/lib/version-label";
 import { Description } from "~/components/ui/description";
 import { Checkbox } from "~/components/ui/checkbox";
+import { PublicationOption, VersionPublicationOptions } from "~/components/VersionPublicationOptions";
 import { VersionReclassification } from "./version-reclassification";
 import { VersionRename } from "./version-rename";
 import { getWorkingVersion, getCorrectionParent } from "./version-selection";
@@ -518,24 +519,23 @@ function SongVersionItem({
           ? <>Updates “{parentVersion ? versionLabel(parentVersion) : "the original version"}” and keeps its existing songbook choices.</>
           : "Approval publishes a separately selectable version."}</Description>
       </div>}
-      {version.status === "pending" && !isCorrection && <fieldset className="w-full min-w-0 space-y-3 rounded-lg border border-border bg-background/30 p-3 text-sm">
-        <legend className="px-1 text-xs font-semibold text-muted-foreground">Publication options</legend>
+      {version.status === "pending" && !isCorrection && <VersionPublicationOptions>
         {(version.makeOfficialOnPublish || version.archivePreviousOnPublish) && <Description>Author requested: {[version.makeOfficialOnPublish && "make official", version.archivePreviousOnPublish && "archive previous version"].filter(Boolean).join(" · ")}.</Description>}
-        <label className="flex cursor-pointer items-start gap-3">
-          <Checkbox className="mt-0.5" aria-label="Make official" checked={makeOfficial} disabled={!song.currentVersionId || (importedSource && parentVersion?.id === song.currentVersionId)} onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial: checked === true, archivePrevious: parentVersion?.id === song.currentVersionId && !checked ? false : archivePrevious })} />
-          <div className="min-w-0 space-y-1">
-            <span className="font-medium">Make official</span>
-            <Description>{!song.currentVersionId ? "The first published version becomes official automatically." : "Use this version by default for this song."}</Description>
-          </div>
-        </label>
-        {parentVersion && <label className={`flex items-start gap-3 ${canArchivePrevious ? "cursor-pointer" : "opacity-50"}`}>
-          <Checkbox className="mt-0.5" aria-label={`Archive “${versionLabel(parentVersion)}”`} checked={archivePrevious && canArchivePrevious} disabled={importedSource || !canArchivePrevious} onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial, archivePrevious: checked === true })} />
-          <div className="min-w-0 space-y-1">
-            <span className="font-medium">Archive “{versionLabel(parentVersion)}”</span>
-            <Description>{importedSource ? "Imported source copies are always archived unchanged when the curated version is published." : canArchivePrevious ? "Hide the previous version from discovery. Saved songbook choices and links keep working." : "Select Make official before archiving the current official version."}</Description>
-          </div>
-        </label>}
-      </fieldset>}
+        <PublicationOption
+          label="Make official"
+          description={!song.currentVersionId ? "The first published version becomes official automatically." : "Use this version by default for this song."}
+          checked={makeOfficial}
+          disabled={!song.currentVersionId || (importedSource && parentVersion?.id === song.currentVersionId)}
+          onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial: checked, archivePrevious: parentVersion?.id === song.currentVersionId && !checked ? false : archivePrevious })}
+        />
+        {parentVersion && <PublicationOption
+          label={`Archive “${versionLabel(parentVersion)}”`}
+          description={importedSource ? "Imported source copies are always archived unchanged when the curated version is published." : canArchivePrevious ? "Hide the previous version from discovery. Saved songbook choices and links keep working." : "Select Make official before archiving the current official version."}
+          checked={archivePrevious && canArchivePrevious}
+          disabled={importedSource || !canArchivePrevious}
+          onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial, archivePrevious: checked })}
+        />}
+      </VersionPublicationOptions>}
       {stale && <div className="w-full space-y-2 rounded-lg border border-amber-500/40 bg-amber-500/5 p-3 text-sm">
         <p className="font-medium">{targetChanged ? "The target version changed after this suggestion was submitted." : "The official selection changed after this suggestion was submitted."}</p>
         <p className="text-muted-foreground">{isCorrection ? "Approving will replace the current sheet with this suggestion. Compare the changes before continuing." : "Publishing will apply the requested official selection and archival changes. Review the current version first."}</p>

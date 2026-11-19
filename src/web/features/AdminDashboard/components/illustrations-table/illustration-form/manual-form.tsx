@@ -6,18 +6,10 @@ import { ImageDropzone } from "~/components/ImageDropzone";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
 import { Textarea } from "~/components/ui/textarea";
 import { cn } from "~/lib/utils";
 import type { IllustrationFormProps } from "./illustration-form";
-import { ActiveSwitch, SongIdField } from "./shared-form-fields";
+import { ActiveSwitch, ExistingPromptSelect, IllustrationPromptOptions, SongIdField } from "./shared-form-fields";
 
 interface ManualFormProps extends IllustrationFormProps {
   songPrompts: IllustrationPromptApi[];
@@ -130,77 +122,24 @@ export function ManualForm({
         mode="manual"
       />
 
-      <div className="space-y-4 border rounded-lg p-4 bg-muted/20">
-        <Label className="text-base font-semibold">Illustration Prompt</Label>
-
-        <RadioGroup
-          value={promptMode}
-          onValueChange={(v: "existing" | "new") => setPromptMode(v)}
-          className="flex flex-col gap-4 mt-2"
-        >
-          <div className="flex flex-col space-y-2">
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem
-                value="existing"
-                id="mode-existing"
-                disabled={songPrompts.length === 0}
-              />
-              <Label
-                htmlFor="mode-existing"
-                className={cn(
-                  songPrompts.length === 0 && "text-muted-foreground",
-                )}
-              >
-                Existing prompt ({songPrompts.length})
-              </Label>
-            </div>
-
-            {promptMode === "existing" && (
-              <div className="pl-6 space-y-2">
-                <Select
-                  disabled={!selectedPromptId}
-                  value={selectedPromptId}
-                  onValueChange={setSelectedPromptId}
-                >
-                  <SelectTrigger className="w-full bg-background">
-                    <SelectValue placeholder="Select a prompt..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {songPrompts.map((p) => (
-                      <SelectItem key={p.id} value={p.id}>
-                        <span className="font-mono text-xs text-muted-foreground mr-2">
-                          [{p.summaryModel}]
-                        </span>
-                        {p.text.length > 50
-                          ? p.text.substring(0, 50) + "..."
-                          : p.text}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-          </div>
-
-          <div className="flex flex-col space-y-2">
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="new" id="mode-new" />
-              <Label htmlFor="mode-new">Custom prompt</Label>
-            </div>
-            {promptMode === "new" && (
-              <div className="pl-6 space-y-3">
-                <Textarea
-                  placeholder="Enter prompt text..."
-                  value={newPromptText}
-                  onChange={(e) => setNewPromptText(e.target.value)}
-                  className="min-h-[100px] bg-background"
-                  required={promptMode === "new"}
-                />
-              </div>
-            )}
-          </div>
-        </RadioGroup>
-      </div>
+      <IllustrationPromptOptions promptCount={songPrompts.length} value={promptMode} onValueChange={setPromptMode}>
+        {promptMode === "existing" ? (
+          <ExistingPromptSelect
+            prompts={songPrompts}
+            value={selectedPromptId}
+            onValueChange={setSelectedPromptId}
+            disabled={!selectedPromptId}
+          />
+        ) : (
+          <Textarea
+            placeholder="Enter prompt text..."
+            value={newPromptText}
+            onChange={(e) => setNewPromptText(e.target.value)}
+            className="min-h-[100px] bg-background"
+            required
+          />
+        )}
+      </IllustrationPromptOptions>
 
       <div className="space-y-2">
         <Label htmlFor="manual-imageModel">Image Model</Label>

@@ -8,11 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { RadioGroup, RadioGroupOption } from "~/components/ui/radio-group";
 import { Textarea } from "~/components/ui/textarea";
 import { useSongPrompts } from "~/services/admin-hooks";
 import { useRouteContext } from "@tanstack/react-router";
-import { cn } from "~/lib/utils";
 
 interface SharedFormFieldsProps {
   songId: string;
@@ -94,12 +93,62 @@ export interface NewPromptData {
   version: string;
 }
 
+type PromptMode = "existing" | "new";
+
+export function IllustrationPromptOptions({
+  promptCount,
+  value,
+  onValueChange,
+  children,
+}: {
+  promptCount: number;
+  value: PromptMode;
+  onValueChange: (value: PromptMode) => void;
+  children: ReactNode;
+}) {
+  const headingId = useId();
+
+  return (
+    <div className="space-y-4 rounded-lg border bg-muted/20 p-4">
+      <p id={headingId} className="text-base font-semibold">Illustration Prompt</p>
+      <RadioGroup aria-labelledby={headingId} value={value} onValueChange={onValueChange}>
+        <RadioGroupOption value="existing" label={`Use an existing prompt (${promptCount})`} disabled={promptCount === 0} />
+        <RadioGroupOption value="new" label="Create a new prompt" />
+      </RadioGroup>
+      {children}
+    </div>
+  );
+}
+
+export function ExistingPromptSelect({ prompts, value, onValueChange, disabled }: {
+  prompts: IllustrationPromptApi[];
+  value?: string;
+  onValueChange: (value: string) => void;
+  disabled?: boolean;
+}) {
+  return (
+    <Select disabled={disabled} value={value} onValueChange={onValueChange}>
+      <SelectTrigger className="w-full bg-background" aria-label="Existing prompt">
+        <SelectValue placeholder="Select a prompt..." />
+      </SelectTrigger>
+      <SelectContent>
+        {prompts.map((prompt) => (
+          <SelectItem key={prompt.id} value={prompt.id}>
+            <span className="mr-2 font-mono text-xs text-muted-foreground">[{prompt.summaryModel}]</span>
+            {prompt.text.length > 50 ? prompt.text.substring(0, 50) + "..." : prompt.text}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
+
 interface PromptSelectorProps {
   songId: string;
   selectedPromptId: string;
   onPromptSelect: (id: string) => void;
-  promptMode: "existing" | "new";
-  onModeChange: (mode: "existing" | "new") => void;
+  promptMode: PromptMode;
+  onModeChange: (mode: PromptMode) => void;
   newPromptData: NewPromptData;
   onNewPromptChange: (data: NewPromptData) => void;
 }
@@ -117,100 +166,40 @@ export function PromptSelector({
   const { songPrompts } = useSongPrompts(adminApi, songId);
 
   return (
-    <div className="space-y-4 border rounded-lg p-4 bg-muted/20">
-      <Label className="text-base font-semibold">Illustration Prompt</Label>
-      <RadioGroup
-        value={promptMode}
-        onValueChange={onModeChange}
-        className="flex flex-col gap-4 mt-2"
-      >
-        <div className="flex flex-col space-y-2">
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem
-              value="existing"
-              id="mode-existing"
-              disabled={songPrompts.length === 0}
-            />
-            <Label
-              htmlFor="mode-existing"
-              className={cn(
-                songPrompts.length === 0 && "text-muted-foreground",
-              )}
-            >
-              Use an existing prompt ({songPrompts.length})
-            </Label>
-          </div>
-          {promptMode === "existing" && (
-            <div className="pl-6 space-y-2">
-              <Select value={selectedPromptId} onValueChange={onPromptSelect}>
-                <SelectTrigger className="w-full bg-background">
-                  <SelectValue placeholder="Select a prompt..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {songPrompts.map((p) => (
-                    <SelectItem key={p.id} value={p.id}>
-                      <span className="font-mono text-xs text-muted-foreground mr-2">
-                        [{p.summaryModel}]
-                      </span>
-                      {p.text.length > 50
-                        ? p.text.substring(0, 50) + "..."
-                        : p.text}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-        </div>
-
-        <div className="flex flex-col space-y-2">
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="new" id="mode-new" />
-            <Label htmlFor="mode-new">Create a new prompt</Label>
-          </div>
-          {promptMode === "new" && (
-            <div className="pl-6 space-y-3">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <Label className="text-xs">Model Label</Label>
-                  <Input
-                    value={newPromptData.model}
-                    onChange={(e) =>
-                      onNewPromptChange({
-                        ...newPromptData,
-                        model: e.target.value,
-                      })
-                    }
-                    className="bg-background h-8"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">Version Label</Label>
-                  <Input
-                    value={newPromptData.version}
-                    onChange={(e) =>
-                      onNewPromptChange({
-                        ...newPromptData,
-                        version: e.target.value,
-                      })
-                    }
-                    className="bg-background h-8"
-                  />
-                </div>
-              </div>
-              <Textarea
-                placeholder="Enter prompt text..."
-                value={newPromptData.text}
-                onChange={(e) =>
-                  onNewPromptChange({ ...newPromptData, text: e.target.value })
-                }
-                className="min-h-[100px] bg-background"
-                required={promptMode === "new"}
+    <IllustrationPromptOptions promptCount={songPrompts.length} value={promptMode} onValueChange={onModeChange}>
+      {promptMode === "existing" ? (
+        <ExistingPromptSelect prompts={songPrompts} value={selectedPromptId} onValueChange={onPromptSelect} />
+      ) : (
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <Label className="text-xs">Model Label</Label>
+              <Input
+                value={newPromptData.model}
+                onChange={(e) => onNewPromptChange({ ...newPromptData, model: e.target.value })}
+                className="bg-background h-8"
               />
             </div>
-          )}
+            <div className="space-y-1">
+              <Label className="text-xs">Version Label</Label>
+              <Input
+                value={newPromptData.version}
+                onChange={(e) => onNewPromptChange({ ...newPromptData, version: e.target.value })}
+                className="bg-background h-8"
+              />
+            </div>
+          </div>
+          <Textarea
+            placeholder="Enter prompt text..."
+            value={newPromptData.text}
+            onChange={(e) => onNewPromptChange({ ...newPromptData, text: e.target.value })}
+            className="min-h-[100px] bg-background"
+            required
+          />
         </div>
-      </RadioGroup>
-    </div>
+      )}
+    </IllustrationPromptOptions>
   );
 }
+import { useId, type ReactNode } from "react";
+import type { IllustrationPromptApi } from "src/worker/api/api-types";

@@ -1,9 +1,8 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import { analyzeSongEdit } from "src/lib/song-edit-analysis";
+import { PublicationOption, VersionPublicationOptions } from "~/components/VersionPublicationOptions";
 import { Button } from "~/components/ui/button";
-import { Checkbox } from "~/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "~/components/ui/dialog";
-import { Label } from "~/components/ui/label";
 import { RadioGroup, RadioGroupOption } from "~/components/ui/radio-group";
 import type { SongData } from "~/types/songData";
 import type { EditorState } from "~/types/types";
@@ -37,7 +36,6 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
   const canSelectMode = song.versionStatus !== "pending" || !!song.versionParentId;
   const showVersionDetails = canSelectMode && choice.canEdit && choice.saveMode === "new-version";
   const { fieldErrors } = useEditorValidation({ ...state, ...versionDetails });
-  const publicationId = useId();
   const archiveDisabled = choice.replacesImportedSource || (song.isOfficial && !choice.makeOfficialOnPublish);
   function selectMode(saveMode: string) {
     if (saveMode === "correction" || saveMode === "new-version") {
@@ -77,21 +75,21 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
           onChange={(field, value) => setVersionDetails((previous) => ({ ...previous, [field]: value }))}
         />
       </fieldset>}
-      {showVersionDetails && <fieldset className="grid min-w-0 gap-3 rounded-lg border border-border bg-background/30 px-3 pt-2 pb-3">
-        <legend className="px-1 text-xs font-semibold text-muted-foreground">Publication options</legend>
-        <div className="flex items-center gap-3">
-          <Checkbox id={`${publicationId}-official`} checked={choice.makeOfficialOnPublish}
-            disabled={submitting || (choice.isImported && song.isOfficial)}
-            onCheckedChange={(checked) => setChoice((previous) => ({ ...previous, makeOfficialOnPublish: checked === true,
-              archivePreviousOnPublish: song.isOfficial && checked !== true ? false : previous.archivePreviousOnPublish }))} />
-          <Label htmlFor={`${publicationId}-official`} className="cursor-pointer leading-snug">Make official when published</Label>
-        </div>
-        {(choice.canArchiveSource || choice.replacesImportedSource) && <div className="flex items-center gap-3">
-          <Checkbox id={`${publicationId}-archive`} checked={choice.archivePreviousOnPublish} disabled={submitting || archiveDisabled}
-            onCheckedChange={(checked) => setChoice((previous) => ({ ...previous, archivePreviousOnPublish: checked === true }))} />
-          <Label htmlFor={`${publicationId}-archive`} className="cursor-pointer leading-snug">Archive previous version when published</Label>
-        </div>}
-      </fieldset>}
+      {showVersionDetails && <VersionPublicationOptions>
+        <PublicationOption
+          label="Make official when published"
+          checked={choice.makeOfficialOnPublish}
+          disabled={submitting || (choice.isImported && song.isOfficial)}
+          onCheckedChange={(checked) => setChoice((previous) => ({ ...previous, makeOfficialOnPublish: checked,
+            archivePreviousOnPublish: song.isOfficial && !checked ? false : previous.archivePreviousOnPublish }))}
+        />
+        {(choice.canArchiveSource || choice.replacesImportedSource) && <PublicationOption
+          label="Archive previous version when published"
+          checked={choice.archivePreviousOnPublish}
+          disabled={submitting || archiveDisabled}
+          onCheckedChange={(checked) => setChoice((previous) => ({ ...previous, archivePreviousOnPublish: checked }))}
+        />}
+      </VersionPublicationOptions>}
       <DialogFooter>
         <Button variant="outline" disabled={submitting} onClick={onClose}>Cancel</Button>
         <Button disabled={submitting || !choice.canEdit || (showVersionDetails && !!(fieldErrors.label || fieldErrors.description))}
