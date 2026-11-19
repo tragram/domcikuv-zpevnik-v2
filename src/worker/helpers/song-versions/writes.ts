@@ -1,4 +1,4 @@
-import { and, eq, ne, sql, desc } from "drizzle-orm";
+import { and, eq, ne, sql, desc, asc } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import {
   song,
@@ -70,19 +70,18 @@ export async function saveSongVersion(
         ? (base?.description ?? null)
         : input.description,
   };
-  // Only this internal import path may refresh an existing source copy. Editor
-  // requests cannot supply importId; the content comes from the source fetch.
+  // Import fetches reuse the first source copy. Manual corrections use the
+  // normal revision path below and preserve the source provenance.
   if (importId) {
     const incoming = await db.query.songImport.findFirst({ where: eq(songImport.id, importId) });
     if (!incoming) throw new HTTPException(404, { message: "Import not found" });
-    const copies = await db.query.songVersion.findMany({ where: eq(songVersion.songId, songId), with: { songImport: true }, orderBy: [desc(songVersion.createdAt)] });
+    const copies = await db.query.songVersion.findMany({ where: eq(songVersion.songId, songId), with: { songImport: true }, orderBy: [asc(songVersion.createdAt), asc(songVersion.id)] });
     const copy = copies.find(v => v.status !== "deleted" && !v.mergedIntoVersionId && v.songImport?.sourceId === incoming.sourceId && v.songImport.url === incoming.url);
+    if (copy && !(trusted || (copy.status === "pending" && copy.userId === userId))) {
+      throw new HTTPException(409, { message: "This source is already imported. Edit the existing version instead." });
+    }
     if (copy && (trusted || (copy.status === "pending" && copy.userId === userId))) {
-      if (sameContent(copy, content)) return loadVersion(db, songId, copy.id);
-      await withVersionConflict(() => db.batch([
-        reviseVersion(db, copy, { ...content, importId }, userId, parent.currentVersionId, true),
-        db.update(song).set({ updatedAt: new Date() }).where(eq(song.id, songId)),
-      ]));
+      // Re-importing reuses the original identity; it must not overwrite later edits.
       return loadVersion(db, songId, copy.id);
     }
   }
@@ -99,10 +98,10 @@ export async function saveSongVersion(
       expectedRevision: base.revision + Number(changeAuthor),
     });
   }
-  const isDraft = base?.status === "pending" && !base.importId;
+  const isDraft = base?.status === "pending" && (!base.importId || owns || actor.isAdmin);
   const source = isDraft && base.parentId ? await loadVersion(db, songId, base.parentId) : base;
   const importedSource = !!source?.importId && !importId;
-  const mode = importedSource ? "new-version" : input.saveMode ?? "correction";
+  const mode = input.saveMode ?? "correction";
   const editPolicy = versionEditPolicy(base ? { pending: base.status === "pending", imported: !!base.importId,
     pendingCuration: isDraft && importedSource, official: base.id === parent.currentVersionId, ownerId: base.userId } : undefined, actor);
   if (!editPolicy.canEdit)
@@ -117,7 +116,7 @@ export async function saveSongVersion(
   const { archivePrevious: archive, makeOfficial } = publicationOptions({
     archivePrevious: input.archivePreviousOnPublish ?? (isDraft ? base.archivePreviousOnPublish : false),
     makeOfficial: input.makeOfficialOnPublish ?? (isDraft ? base.makeOfficialOnPublish : false),
-  }, { imported: importedSource, official: source?.id === parent.currentVersionId });
+  }, { imported: importedSource && mode === "new-version", official: source?.id === parent.currentVersionId });
   if (archive && source && !source.importId && source.userId !== userId && !actor.isAdmin)
     throw new HTTPException(403, {
       message: "You cannot archive another author's version.",
@@ -325,7 +324,6 @@ export async function mergeVersion(
     source.mergedIntoVersionId ||
     source.importId ||
     target.mergedIntoVersionId ||
-    target.importId ||
     !["pending", "published", "archived"].includes(source.status) ||
     !["published", "archived"].includes(target.status)
   )

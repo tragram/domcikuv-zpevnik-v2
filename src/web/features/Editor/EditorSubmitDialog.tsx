@@ -50,7 +50,7 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
         </label>
         <p className="text-sm text-muted-foreground">{choice.canCorrect ? analysis.reason : "This edit needs a separate version."}</p>
       </fieldset> : choice.canEdit ? <p>Your existing draft will be updated.</p> : null}
-      {choice.isImported && <p className="text-sm text-muted-foreground">Editing an import creates a curated version and preserves the source copy. Approving it unchanged publishes the original import.</p>}
+      {choice.isImported && <p className="text-sm text-muted-foreground">A revision keeps this version and preserves the original imported sheet in its history. Choose a separate version for an alternative arrangement.</p>}
       {canSelectMode && choice.canEdit && choice.saveMode === "new-version" && <div className="space-y-2">
         <label className="flex items-center gap-2"><input type="checkbox" checked={choice.makeOfficialOnPublish}
           disabled={choice.isImported && song.isOfficial}

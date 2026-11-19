@@ -12,8 +12,8 @@ export function versionEditPolicy(version: {
 } | undefined, actor?: { id: string; isAdmin?: boolean }) {
   const canManage = !!actor && (version?.ownerId === actor.id || !!actor.isAdmin);
   const canEdit = !version?.pending || version.imported || canManage;
-  const canCorrect = canEdit && !version?.imported && !version?.pendingCuration &&
-    (!version || version.pending || version.official || canManage);
+  const canCorrect = canEdit && (!version?.pending || canManage) &&
+    (!version || version.pending || version.imported || version.official || canManage);
   return { canEdit, canCorrect, canManage };
 }
 
@@ -46,7 +46,7 @@ export function submissionReview(version: {
   baseOfficialVersionId?: string | null;
   archivePreviousOnPublish?: boolean | null;
   makeOfficialOnPublish?: boolean | null;
-}, parentIsImported = false): SubmissionReview | null {
+}, _parentIsImported = false): SubmissionReview | null {
   const base = {
     baseOfficialVersionId: version.baseOfficialVersionId ?? null,
     publication: { archivePrevious: !!version.archivePreviousOnPublish, makeOfficial: !!version.makeOfficialOnPublish },
@@ -55,7 +55,7 @@ export function submissionReview(version: {
     return { ...base, kind: "alternative", sourceVersionId: version.parentId ?? null, baseRevision: version.baseRevision ?? null };
   }
   if (version.submissionIntent === "update-parent") {
-    if (!parentIsImported && version.parentId && version.baseRevision != null && Number.isSafeInteger(version.baseRevision) && version.baseRevision > 0) {
+    if (version.parentId && version.baseRevision != null && Number.isSafeInteger(version.baseRevision) && version.baseRevision > 0) {
       return { ...base, kind: "correction", targetVersionId: version.parentId, baseRevision: version.baseRevision };
     }
     return null;

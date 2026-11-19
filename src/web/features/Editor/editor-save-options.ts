@@ -22,8 +22,8 @@ export function editorSaveOptions(
     pending: isPending, imported: isImported, pendingCuration: isPending && !!song.versionParentIsImported,
     official: song.isOfficial !== false, ownerId: song.versionAuthorId,
   } : undefined, actor);
-  const recommendedMode = canCorrect && (!largeEdit || isPending) ? "correction" : "new-version";
-  const saveMode = replacesImportedSource ? "new-version" : state.saveMode ?? recommendedMode;
+  const recommendedMode = canCorrect && (!largeEdit || isPending || isImported) ? "correction" : "new-version";
+  const saveMode = state.saveMode ?? recommendedMode;
 
   let archivePreviousOnPublish = false;
   let makeOfficialOnPublish = false;

@@ -10,10 +10,10 @@ it("accepts only classified corrections or alternatives", () => {
   expect(isCorrectionSubmission(null)).toBe(false);
 });
 
-it("requires imported-parent corrections to be classified as alternatives", () => {
+it("classifies imported-parent corrections as revisions", () => {
   const review = submissionReview({ submissionIntent: "update-parent", parentId: "raw", baseRevision: 1 }, true);
-  expect(review).toBeNull();
-  expect(isCorrectionSubmission(review)).toBe(false);
+  expect(review).toMatchObject({ kind: "correction", targetVersionId: "raw" });
+  expect(isCorrectionSubmission(review)).toBe(true);
 });
 
 it("shares mandatory imported-source retirement and official-replacement rules", () => {
@@ -28,5 +28,5 @@ it("allows ordinary curated corrections but keeps other authors' local drafts re
   expect(versionEditPolicy(version, { id: "other" }).canCorrect).toBe(true);
   expect(versionEditPolicy({ ...version, pending: true }, { id: "other" })).toMatchObject({ canEdit: false, canCorrect: false });
   expect(versionEditPolicy({ ...version, pending: true }, { id: "owner" }).canCorrect).toBe(true);
-  expect(versionEditPolicy({ ...version, imported: true }, { id: "owner" }).canCorrect).toBe(false);
+  expect(versionEditPolicy({ ...version, imported: true }, { id: "owner" }).canCorrect).toBe(true);
 });

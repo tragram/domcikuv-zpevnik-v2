@@ -22,14 +22,14 @@ describe("import editing rules", () => {
       .toMatchObject({ saveMode: "new-version", archivePreviousOnPublish: false });
   });
 
-  it("preserves raw imports through a curated replacement", () => {
+  it("recommends a correction for an imported sheet", () => {
     expect(editorSaveOptions({ ...curated, externalSource: source }, {}, { id: "other" }, false))
-      .toMatchObject({ canCorrect: false, saveMode: "new-version", archivePreviousOnPublish: true, makeOfficialOnPublish: true });
+      .toMatchObject({ canCorrect: true, saveMode: "correction", archivePreviousOnPublish: false, makeOfficialOnPublish: false });
   });
 
-  it("retains the initial curation's publication requests while it is pending", () => {
+  it("keeps pending import corrections as corrections", () => {
     expect(editorSaveOptions({ ...curated, isOfficial: false, versionStatus: "pending", makeOfficialOnPublish: true }, {}, { id: "owner" }, false))
-      .toMatchObject({ replacesImportedSource: true, saveMode: "new-version", archivePreviousOnPublish: true, makeOfficialOnPublish: true });
+      .toMatchObject({ replacesImportedSource: true, saveMode: "correction", archivePreviousOnPublish: false, makeOfficialOnPublish: false });
   });
 
   it("requires a separate version when changing somebody else's non-official curation", () => {

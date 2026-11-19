@@ -85,6 +85,13 @@
       "when": 1794927933607,
       "tag": "0011_preserve_imported_sources",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1795089224339,
+      "tag": "0012_unique_import_copies",
+      "breakpoints": true
     }
   ]
 }

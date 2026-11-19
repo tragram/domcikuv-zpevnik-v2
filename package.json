@@ -152,7 +152,6 @@
     "db:studio:local": "tsx scripts/db-studio.ts",
     "db:studio:remote": "drizzle-kit studio",
     "yt:fetch": "tsx scripts/youtube-backfill/fetch.ts",
-    "versions:review": "tsx scripts/dev/review-version-migration.ts",
     "yt:review": "tsx scripts/youtube-backfill/server.ts",
     "yt:push": "tsx scripts/youtube-backfill/push.ts",
     "capo:backup": "tsx scripts/favorites-capo/backup.ts",

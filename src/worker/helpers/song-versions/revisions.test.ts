@@ -38,6 +38,7 @@ beforeEach(async () => {
   sqlite.exec(versionHistoryFixture);
   sqlite.exec(readFileSync("drizzle/0008_sturdy_morgan_stark.sql", "utf8"));
   sqlite.exec(readFileSync("drizzle/0009_living_snowbird.sql", "utf8"));
+  sqlite.exec(readFileSync("drizzle/0012_unique_import_copies.sql", "utf8"));
   sqlite.exec("PRAGMA foreign_keys = ON");
   const proxy = drizzle(
     async (query, params, method) => {
@@ -136,32 +137,55 @@ describe("submitted revision history", () => {
     return saveSongVersion(db, input(text), "song", actor, id);
   }
 
-  it("forks edits of an import and archives its unchanged source even when correction was requested", async () => {
+  it("reuses the original import ID on refresh and rejects duplicate imports by another untrusted user", async () => {
+    const original = await importCopy();
+    const refreshed = await importCopy("Updated source");
+    expect(refreshed.id).toBe(original.id);
+    expect(refreshed.chordpro).toBe(original.chordpro);
+    await expect(importCopy("Different content", "untrusted")).rejects.toMatchObject({ status: 409 });
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
+  });
+
+  it("rejects a second raw version for the same provider URL even when the caller bypasses the lookup", async () => {
+    const original = await importCopy();
+    const row = await loadVersion(db, "song", original.id);
+    await expect(db.insert(schema.songVersion).values({ ...row, id: "concurrent-copy" })).rejects.toThrow();
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
+  });
+
+  it("revises an import in place and retains the original sheet in revision history", async () => {
     const original = await importCopy();
     const curated = await saveSongVersion(db, { ...input("[D]Curated sheet"), baseVersionId: original.id, expectedRevision: original.revision, saveMode: "correction", archivePreviousOnPublish: false, makeOfficialOnPublish: false }, "song", "owner");
-    expect(curated).toMatchObject({ status: "published", importId: null, parentId: original.id });
-    expect(curated.id).not.toBe(original.id);
-    expect(await loadVersion(db, "song", original.id)).toMatchObject({ status: "archived", importId: original.importId, chordpro: original.chordpro, mergedIntoVersionId: null });
+    expect(curated).toMatchObject({ id: original.id, status: "published", importId: original.importId, parentId: null, revision: 2 });
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
+    expect((await retrieveRevisions(db, "song", original.id, "owner")).revisions.at(-1)?.content.chordpro).toBe(original.chordpro);
     expect((await db.query.song.findFirst())?.currentVersionId).toBe(curated.id);
   });
 
-  it("keeps untrusted import edits pending and applies mandatory archival on approval", async () => {
+  it("updates an owner's pending import without creating a second pending version", async () => {
+    const original = await importCopy("Original source", "untrusted");
+    const updated = await edit(original.id, "Corrected draft", "untrusted");
+    expect(updated).toMatchObject({ id: original.id, status: "pending", chordpro: "Corrected draft", revision: 2 });
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
+  });
+
+  it("keeps untrusted import corrections pending and applies approval to the original ID", async () => {
     const original = await importCopy();
     const draft = await saveSongVersion(db, { ...input("Suggested curation"), baseVersionId: original.id, expectedRevision: original.revision, saveMode: "correction" }, "song", "untrusted");
-    expect(draft).toMatchObject({ status: "pending", importId: null, submissionIntent: "new-version", archivePreviousOnPublish: true, makeOfficialOnPublish: true });
+    expect(draft).toMatchObject({ status: "pending", importId: null, submissionIntent: "update-parent", archivePreviousOnPublish: false, makeOfficialOnPublish: false });
     expect((await loadVersion(db, "song", original.id)).status).toBe("published");
     const published = await approveVersion(db, "song", draft.id, "admin", { expectedRevision: draft.revision, archivePrevious: false, makeOfficial: false });
-    expect(published.id).toBe(draft.id);
-    expect((await loadVersion(db, "song", original.id)).status).toBe("archived");
-    expect((await db.query.song.findFirst())?.currentVersionId).toBe(draft.id);
+    expect(published.id).toBe(original.id);
+    expect((await loadVersion(db, "song", original.id)).status).toBe("published");
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
   });
 
   it("corrects a published curation in place without retiring its imported ancestor again", async () => {
     const original = await importCopy();
     const curated = await edit(original.id, "Curated");
     const corrected = await edit(curated.id, "Corrected curation");
-    expect(corrected).toMatchObject({ id: curated.id, parentId: original.id, revision: 2, importId: null });
-    expect((await loadVersion(db, "song", original.id)).revision).toBe(2);
+    expect(corrected).toMatchObject({ id: original.id, parentId: null, revision: 3, importId: original.importId });
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
   });
 
   it.each([true, false])("approves an unchanged imported submission in place with submitter attribution %s", async (editAsSubmitter) => {
@@ -182,8 +206,8 @@ describe("submitted revision history", () => {
     const curated = await saveSongVersion(db, {
       ...input("Edited source"), baseVersionId: original.id, expectedRevision: original.revision,
     }, "song", "admin", undefined, { publish: true, editAsSubmitter: true });
-    expect(curated).toMatchObject({ userId: "untrusted", status: "published", importId: null, parentId: original.id });
-    expect((await loadVersion(db, "song", original.id)).status).toBe("archived");
+    expect(curated).toMatchObject({ id: original.id, userId: "untrusted", status: "published", importId: original.importId, parentId: null });
+    expect(await db.query.songVersion.findMany()).toHaveLength(1);
   });
 
   it("rejects approval of another user's import by a trusted non-admin", async () => {
@@ -194,21 +218,21 @@ describe("submitted revision history", () => {
     expect((await loadVersion(db, "song", original.id)).status).toBe("pending");
   });
 
-  it("refreshes only the same site's source copy and leaves its curated replacement alone", async () => {
+  it("reuses the imported identity without overwriting manual revisions", async () => {
     const original = await importCopy();
     const curated = await edit(original.id, "Curated sheet");
     const refreshed = await importCopy("Updated source sheet");
-    expect(refreshed).toMatchObject({ id: original.id, status: "archived", chordpro: "Updated source sheet" });
+    expect(refreshed).toMatchObject({ id: original.id, status: "published", chordpro: "Curated sheet" });
     expect((await loadVersion(db, "song", curated.id)).chordpro).toBe("Curated sheet");
     expect((await db.query.song.findFirst())?.currentVersionId).toBe(curated.id);
     expect((await importCopy("Updated source sheet")).revision).toBe(refreshed.revision);
     expect((await importCopy("Other site's sheet", "owner", "cifraclub")).id).not.toBe(original.id);
-    expect(() => reviseVersion(db, refreshed, { chordpro: "Manual overwrite" }, "admin")).toThrow(/source copies/);
-    await expect(restoreRevision(db, "song", original.id, 1, refreshed.revision, "owner")).rejects.toMatchObject({ status: 400 });
-    await expect(mergeVersion(db, "song", curated.id, original.id, "admin", curated.revision, refreshed.revision)).rejects.toMatchObject({ status: 400 });
+    const restored = await restoreRevision(db, "song", original.id, 1, refreshed.revision, "owner");
+    expect(restored.chordpro).toBe(original.chordpro);
+    await expect(mergeVersion(db, "song", restored.id, original.id, "admin", restored.revision, restored.revision)).rejects.toMatchObject({ status: 400 });
   });
 
-  it("forks Admin metadata patches rather than mutating imported content", async () => {
+  it("applies Admin metadata patches as revisions of the same imported version", async () => {
     const original = await importCopy();
     const app = buildApp().use("*", async (c, next) => {
       c.set("db", db);
@@ -221,9 +245,9 @@ describe("submitted revision history", () => {
     });
     expect(response.status).toBe(200);
     const { data } = await response.json() as { data: { id: string; importId: string | null; youtubeId: string } };
-    expect(data.id).not.toBe(original.id);
-    expect(data).toMatchObject({ importId: null, youtubeId: "abcdefghijk" });
-    expect(await loadVersion(db, "song", original.id)).toMatchObject({ youtubeId: null, status: "archived" });
+    expect(data.id).toBe(original.id);
+    expect(data).toMatchObject({ importId: original.importId, youtubeId: "abcdefghijk" });
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({ youtubeId: "abcdefghijk", status: "published" });
   });
 
   it.each(["local", "imported"] as const)("renames a %s version in place through the admin API", async (kind) => {
@@ -266,7 +290,7 @@ describe("submitted revision history", () => {
 
   it("migrates formerly consumed imports back to unchanged archived source copies", async () => {
     const original = await importCopy();
-    const curated = await edit(original.id, "Curated sheet");
+    const curated = await saveSongVersion(db, { ...input("Curated sheet"), baseVersionId: original.id, expectedRevision: original.revision, saveMode: "new-version" }, "song", "owner");
     const archived = await loadVersion(db, "song", original.id);
     await reviseVersion(db, archived, { status: "deleted", mergedIntoVersionId: curated.id }, "admin");
     sqlite.exec(readFileSync("drizzle/0011_preserve_imported_sources.sql", "utf8"));

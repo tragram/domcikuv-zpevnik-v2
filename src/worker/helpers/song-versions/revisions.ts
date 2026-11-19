@@ -68,10 +68,7 @@ export function reviseVersion(
   changes: VersionChanges,
   actorId: string,
   officialId?: string | null,
-  allowImportRefresh = false,
 ) {
-  if (base.importId && !allowImportRefresh && songContentFields.some((key) => key !== "label" && changes[key] !== undefined && changes[key] !== base[key]))
-    throw new HTTPException(400, { message: "Imported sheets are source copies. Create a curated version to edit this content." });
   const songCondition = officialId === undefined
     ? and(eq(song.id, base.songId), eq(song.deleted, false))!
     : officialCondition(base.songId, officialId);
@@ -92,6 +89,8 @@ export async function withVersionConflict<T>(
   } catch (error) {
     let cause: unknown = error;
     while (cause instanceof Error) {
+      if (cause.message.includes("Source already imported"))
+        throw new HTTPException(409, { message: "This source is already imported. Reload its existing version." });
       if (
         cause.message.includes("VERSION_CONFLICT") ||
         cause.message.includes("NOT NULL constraint failed: song_version.id")

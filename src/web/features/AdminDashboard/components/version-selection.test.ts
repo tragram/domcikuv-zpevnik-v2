@@ -13,7 +13,7 @@ it("uses the recorded local parent, independently of which other versions are pu
   expect(getCorrectionParent(source, versions)).toEqual(approved);
   expect(getCorrectionParent({ ...source, mergedIntoVersionId: "approved" }, versions)).toBeUndefined();
   expect(getCorrectionParent({ ...source, parentId: null }, versions)).toBeUndefined();
-  expect(getCorrectionParent(source, [{ ...approved, importId: "raw-source" }])).toBeUndefined();
+  expect(getCorrectionParent(source, [{ ...approved, importId: "raw-source" }])).toMatchObject({ id: approved.id });
   expect(getCorrectionParent(source, [{ ...approved, songId: "other" }])).toBeUndefined();
 });
 
