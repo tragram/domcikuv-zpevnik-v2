@@ -3,6 +3,7 @@ import { CircleIcon } from "lucide-react"
 import { RadioGroup as RadioGroupPrimitive } from "radix-ui"
 
 import { cn } from "~/lib/utils"
+import { Label } from "./label"
 
 function RadioGroup({
   className,
@@ -40,4 +41,29 @@ function RadioGroupItem({
   )
 }
 
-export { RadioGroup, RadioGroupItem }
+function RadioGroupOption({
+  value,
+  label,
+  description,
+}: {
+  value: string
+  label: string
+  description: string
+}) {
+  const id = React.useId()
+
+  return (
+    <Label
+      htmlFor={id}
+      className="cursor-pointer items-start gap-3 rounded-lg border border-border bg-background/30 p-3 leading-snug has-[[data-state=checked]]:border-primary/60 has-[[data-state=checked]]:bg-primary/10 has-disabled:cursor-not-allowed has-disabled:opacity-60"
+    >
+      <RadioGroupItem id={id} value={value} className="mt-0.5" aria-labelledby={`${id}-label`} aria-describedby={`${id}-description`} />
+      <span className="min-w-0 space-y-1">
+        <span id={`${id}-label`} className="block">{label}</span>
+        <span id={`${id}-description`} className="block font-normal text-muted-foreground">{description}</span>
+      </span>
+    </Label>
+  )
+}
+
+export { RadioGroup, RadioGroupItem, RadioGroupOption }

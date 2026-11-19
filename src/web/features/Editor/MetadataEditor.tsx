@@ -9,6 +9,7 @@ import { cn } from "~/lib/utils";
 import { EditorState } from "~/types/types";
 import { guessKey } from "../SongView/utils/songRendering";
 import MetadataField from "./components/MetadataField";
+import { VersionDetailsFields } from "./components/VersionDetailsFields";
 import YoutubeField from "./components/YoutubeField";
 import SmartFeatures from "./components/SmartFeatures"; // <-- Import the new component
 import type { EvaluatedFeature, SmartFeature } from "./Editor";
@@ -178,8 +179,7 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           <summary className="cursor-pointer text-sm font-medium">Version details <span className="font-normal text-muted-foreground">(optional)</span></summary>
           <div className="mt-3 space-y-2">
             <p className="text-tiny leading-tight text-muted-foreground">Only needed to distinguish different versions of the same song. Usually, leave these blank.</p>
-            <MetadataField label="Version name" value={metadata.label ?? ""} onChange={(value) => updateMetadata("label", value)} modified={defaultMetadata.label !== metadata.label} error={fieldErrors.label} description={String(20 - [...(metadata.label ?? "")].length) + " characters remaining"} />
-            <MetadataField label="Version description" value={metadata.description ?? ""} onChange={(value) => updateMetadata("description", value)} modified={defaultMetadata.description !== metadata.description} error={fieldErrors.description} description={String(120 - [...(metadata.description ?? "")].length) + " characters remaining"} />
+            <VersionDetailsFields details={metadata} defaults={defaultMetadata} errors={fieldErrors} onChange={updateMetadata} />
           </div>
         </details>
         {/* Editor Settings Section */}

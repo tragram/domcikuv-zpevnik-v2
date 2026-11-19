@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
@@ -35,6 +36,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   action,
   disabled = false,
 }) => {
+  const inputId = useId();
   const displayError = !!error;
 
   const innerInput = customInput ? (
@@ -49,6 +51,8 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   ) : (
     <div className="flex w-full flex-wrap items-center gap-2">
       <Input
+        id={inputId}
+        type="text"
         disabled={disabled}
         placeholder={value ? undefined : placeholder || label}
         value={value ?? ""}
@@ -92,7 +96,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
 
   return (
     <div className="w-full items-center space-y-0.5">
-      <Label className={cn("text-sm", disabled && "opacity-70")}>
+      <Label htmlFor={customInput ? undefined : inputId} className={cn("text-sm", disabled && "opacity-70")}>
         {label}
         {required && <span className="text-primary ml-1">*</span>}
       </Label>
