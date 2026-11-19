@@ -284,13 +284,15 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   // instead of the live version, so the user isn't silently editing stale
   // content without realizing a newer version exists.
   const draftToastKeyRef = useRef<string | null>(null);
+  const canReloadSong = Boolean(songData);
   useEffect(() => {
+    if (!canReloadSong) return;
     if (draftToastKeyRef.current === editorStateKey) return;
     draftToastKeyRef.current = editorStateKey;
     if (draft !== null) {
       toast.info("Loaded your unsaved draft. Use \"Reload song\" to load the current version.");
     }
-  }, [editorStateKey, draft]);
+  }, [canReloadSong, editorStateKey, draft]);
 
   const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
     const isTrusted = !!userData?.profile.isTrusted;
