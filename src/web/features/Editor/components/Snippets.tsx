@@ -147,7 +147,7 @@ export const SnippetButtonSection: React.FC<{
       )}
     >
       <div className="flex justify-center">{children}</div>
-      <div className="text-center font-medium text-white text-xs">{label}</div>
+      <div className="text-center font-medium text-foreground text-xs">{label}</div>
     </div>
   );
 };
@@ -171,7 +171,7 @@ export const SnippetButton: React.FC<SnippetButtonProps> = ({
           <button
             onClick={() => onInsert(snippetKey)}
             className={cn(
-              "text-base font-semibold py-1 px-2 text-white rounded-md hover:bg-background grow max-w-16",
+              "text-base font-semibold py-1 px-2 text-foreground rounded-md hover:bg-background grow max-w-16",
               className,
             )}
           >

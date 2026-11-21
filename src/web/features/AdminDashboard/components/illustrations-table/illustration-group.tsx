@@ -129,7 +129,7 @@ export function SongIllustrationsGroup({
         <div
           className={cn(
             "flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors gap-2",
-            someActive ? "" : "border-red-900 border-2",
+            someActive ? "" : "border-destructive border-2",
           )}
         >
           <CollapsibleTrigger className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0 text-left">
@@ -193,7 +193,7 @@ export function SongIllustrationsGroup({
             {!someActive && (
               <Badge
                 variant="secondary"
-                className="text-xs bg-red-900 px-1 sm:px-2"
+                className="text-xs bg-destructive text-destructive-foreground px-1 sm:px-2"
               >
                 <span className="hidden sm:inline">none active</span>
                 <span className="sm:hidden">inactive</span>
@@ -203,7 +203,7 @@ export function SongIllustrationsGroup({
               variant="secondary"
               className={cn(
                 "text-xs px-1 sm:px-2",
-                filteredIllustrations.length === 0 ? "bg-red-900" : "",
+                filteredIllustrations.length === 0 ? "bg-destructive text-destructive-foreground" : "",
               )}
             >
               <span className="hidden sm:inline">
@@ -215,7 +215,7 @@ export function SongIllustrationsGroup({
               trigger={
                 <Button
                   size="sm"
-                  className="h-8 w-8 p-0 bg-primary hover:bg-primary/90 text-white shadow-sm"
+                  className="h-8 w-8 p-0 bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm"
                   onClick={(e) => e.stopPropagation()}
                   disabled={isLoading}
                 >

@@ -138,9 +138,9 @@ export function UsersTable({ adminApi }: UsersTableProps) {
 
   if (error) {
     return (
-      <div className="space-y-4 p-8 text-center border-2 border-dashed border-red-200 bg-red-50 rounded-xl">
-        <h3 className="text-lg font-bold text-red-600">Failed to load users</h3>
-        <p className="text-red-500">
+      <div className="space-y-4 p-8 text-center border-2 border-dashed border-destructive/40 bg-destructive/10 rounded-xl">
+        <h3 className="text-lg font-bold text-destructive">Failed to load users</h3>
+        <p className="text-foreground">
           {error instanceof Error ? error.message : "Unknown error"}
         </p>
       </div>
@@ -187,7 +187,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
                 label: "Trusted",
                 value: usersData?.counts?.trusted ?? 0,
                 icon: ShieldCheck,
-                className: "text-blue-600",
+                className: "text-info",
                 onClick: () => toggleRole("trusted"),
                 active: roleFilter === "trusted",
               },
@@ -195,7 +195,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
                 label: "Verified",
                 value: usersData?.counts?.verified ?? 0,
                 icon: BadgeCheck,
-                className: "text-emerald-600",
+                className: "text-success",
                 onClick: () => toggleRole("verified"),
                 active: roleFilter === "verified",
               },
@@ -263,7 +263,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
                           variant={user.emailVerified ? "outline" : "secondary"}
                           className={
                             user.emailVerified
-                              ? "border-green-200 text-green-700 bg-green-50"
+                              ? "border-success/30 text-success bg-success/10"
                               : ""
                           }
                         >
@@ -280,7 +280,7 @@ export function UsersTable({ adminApi }: UsersTableProps) {
                         {user.isTrusted && (
                           <Badge
                             variant="secondary"
-                            className="bg-blue-50 text-blue-700 border-blue-200 border"
+                            className="bg-info/10 text-info border-info/30 border"
                           >
                             Trusted
                           </Badge>
@@ -497,7 +497,7 @@ function UserForm({
             />
           </Label>
           <Label className="flex items-center justify-between space-x-2 cursor-pointer p-2 hover:bg-muted/30 rounded-lg transition-colors">
-            <span className="font-medium text-blue-600">Trusted User</span>
+            <span className="font-medium text-info">Trusted User</span>
             <Switch
               checked={formData.isTrusted}
               onCheckedChange={(c) =>

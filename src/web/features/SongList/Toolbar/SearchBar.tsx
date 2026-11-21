@@ -83,14 +83,11 @@ function SearchBar() {
             type="button"
             variant="circular"
             size="icon"
+            isActive={!isExpanded && !!query}
             className={cn(
               "z-10 transition-all duration-300 ease-in-out",
-              isExpanded
-                ? "bg-background rounded-r-none text-primary dark:outline-primary"
-                : "",
-              query
-                ? "bg-primary text-white dark:bg-background dark:text-primary"
-                : "",
+              isExpanded &&
+                "rounded-r-none bg-transparent shadow-none outline-0 hover:bg-transparent",
             )}
             onClick={handleToggle}
             aria-label={isExpanded ? "Close search" : "Open search"}
@@ -102,9 +99,8 @@ function SearchBar() {
           </Button>
           <div
             className={cn(
-              "absolute left-0 top-0 flex h-full items-center overflow-hidden transition-all duration-300 ease-in-out outline-primary outline-2 bg-background",
+              "absolute left-0 top-0 flex h-full items-center overflow-hidden transition-all duration-300 ease-in-out outline-border outline-2 bg-control-surface",
               isExpanded ? "opacity-100 rounded-full" : "opacity-0",
-              query ? " outline-primary" : "",
             )}
             style={{ width: isExpanded ? `calc(100vw - 32px)` : "0" }}
           >
@@ -124,10 +120,7 @@ function SearchBar() {
               onChange={search}
               value={query}
               placeholder="Search..."
-              className={cn(
-                "pl-3 pr-7 text-base md:text-sm font-medium placeholder:font-normal border-none rounded-full rounded-l-none peer text-primary placeholder:text-primary dark:placeholder:text-primary/30 h-full",
-                query ? "" : "",
-              )}
+              className="pl-3 pr-7 text-base md:text-sm font-medium placeholder:font-normal border-none rounded-full rounded-l-none dark:bg-transparent text-primary placeholder:text-primary dark:placeholder:text-primary/30 h-full"
             />
             <ClearButton query={query} onClear={handleClear} />
           </div>
@@ -137,7 +130,7 @@ function SearchBar() {
       {/* Desktop Search */}
       <div
         className={cn(
-          "relative hidden min-[400px]:flex h-full items-center text-primary dark:text-primary/30 transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 outline-primary dark:outline-primary/30 outline-2",
+          "relative hidden min-[400px]:flex h-full items-center text-primary dark:text-primary/30 transition-all duration-300 ease-in-out shadow-md rounded-full flex-1 outline-border outline-2",
         )}
       >
         <Input
@@ -145,12 +138,7 @@ function SearchBar() {
           value={query}
           placeholder="Search..."
           id="search-desktop"
-          className={cn(
-            "pl-10 pr-7 text-sm h-[40px] font-medium placeholder:font-normal border-none rounded-full peer dark:bg-background focus:bg-background text-primary placeholder:text-primary dark:placeholder:text-primary/30",
-            query
-              ? "bg-background dark:bg-primary/30 focus:dark:bg-primary/30"
-              : "bg-white dark:bg-background",
-          )}
+          className="pl-10 pr-7 text-sm h-[40px] font-medium placeholder:font-normal border-none rounded-full peer bg-control-surface dark:bg-control-surface text-primary placeholder:text-primary dark:placeholder:text-primary/30"
         />
         <ClearButton query={query} onClear={handleClear} />
         <div

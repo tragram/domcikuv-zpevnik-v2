@@ -108,11 +108,10 @@ export const FeedStatusBar = ({ feedStatus }: FeedStatusBarProps) => {
         fixed bottom-0 left-0 right-0 h-fit w-full
         py-2 px-4
         flex justify-center items-center
-        text-center text-primary text-xs
-        bg-glass/30 dark:bg-glass/90
-        dark:text-white/70
+        text-center text-(--chord) text-xs
+        bg-glass/75 dark:bg-glass/50
         backdrop-blur-md
-        border-t-2 border-primary dark:border-primary/30
+        border-t-2 border-primary/60
         z-50
       `}
     >

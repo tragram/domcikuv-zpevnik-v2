@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
+import { buttonVariants } from "~/components/ui/button";
 
 export interface ConfirmationDialogProps {
   /** The trigger element (usually a button) */
@@ -27,7 +28,7 @@ export interface ConfirmationDialogProps {
   /** Callback when user cancels (optional) */
   onCancel?: () => void;
   /** Visual variant for the confirm button */
-  variant?: "default" | "destructive";
+  variant?: "default" | "destructive" | "destructive-outline";
   /** Whether the action is currently loading */
   isLoading?: boolean;
   /** Controlled open state (optional) */
@@ -102,7 +103,9 @@ function ConfirmationDialog({
             className={
               variant === "destructive"
                 ? "bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                : ""
+                : variant === "destructive-outline"
+                  ? buttonVariants({ variant, isActive: null })
+                  : ""
             }
           >
             {isLoading ? "Processing..." : confirmText}

@@ -139,7 +139,7 @@ const SongRow = memo(
     if (!song) {
       console.error("Invalid song provided to SongRow", song);
       return (
-        <div className="text-foreground container mx-auto flex h-[70px] max-w-3xl items-center bg-white px-2 sm:px-4">
+        <div className="text-foreground container mx-auto flex h-[70px] max-w-3xl items-center bg-background px-2 sm:px-4">
           Invalid song
         </div>
       );

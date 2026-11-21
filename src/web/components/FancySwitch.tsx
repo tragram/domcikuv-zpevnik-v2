@@ -44,9 +44,9 @@ export default function FancySwitch<T extends string | number>({
   const activeIndex = options.findIndex((o) => o.value === selectedOption);
   const isLeftRounded = roundedClass.includes("-l-");
   const isRightRounded = roundedClass.includes("-r-");
-  const appliedRoundedClass =
-    (isLeftRounded && activeIndex !== 0) ||
-    (isRightRounded && activeIndex !== options.length - 1)
+  const roundedClassForOption = (index: number) =>
+    (isLeftRounded && index !== 0) ||
+    (isRightRounded && index !== options.length - 1)
       ? ""
       : roundedClass;
 
@@ -87,7 +87,7 @@ export default function FancySwitch<T extends string | number>({
   return (
     <div
       className={cn(
-        "flex select-none rounded-full bg-control-surface font-bold shadow-xs outline-2 outline-control-border transition-all",
+        "flex select-none rounded-full bg-control-surface font-bold shadow-xs outline-2 outline-border transition-all",
         "overflow-hidden",
         vertical ? "min-h-[40px] flex-col w-fit" : "h-[40px] flex-row",
         full && !vertical ? "w-full justify-center" : "w-fit",
@@ -106,7 +106,7 @@ export default function FancySwitch<T extends string | number>({
             "absolute z-0 bg-primary h-full will-change-transform",
             // Clean, permanent transition. No hacky timeouts.
             "transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
-            appliedRoundedClass,
+            roundedClassForOption(activeIndex),
           )}
           style={{
             transform: `translate(${highlight.left}px, ${highlight.top}px)`,
@@ -115,7 +115,7 @@ export default function FancySwitch<T extends string | number>({
           }}
         />
 
-        {options.map((option) => {
+        {options.map((option, index) => {
           const isSelected = option.value === selectedOption;
 
           return (
@@ -127,7 +127,7 @@ export default function FancySwitch<T extends string | number>({
               className={cn(
                 "relative z-10 flex h-full shrink-0 transform-gpu items-center justify-center whitespace-nowrap outline-hidden transition-colors duration-200",
                 vertical ? "px-3" : "px-4",
-                roundedClass,
+                roundedClassForOption(index),
                 isSelected && showHighlight
                   ? "text-primary-foreground hover:bg-control-active-hover"
                   : "hover:bg-control-hover",

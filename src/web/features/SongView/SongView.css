@@ -159,7 +159,7 @@
 }
 
 .chord {
-    color: var(--primary);
+    color: var(--chord);
     font-weight: 800;
 }
 
@@ -170,7 +170,7 @@
 
 .chord-sheet .comment {
     font-style: italic;
-    color: var(--primary);
+    color: var(--chord);
     opacity: 80%;
     line-height: normal;
     white-space: pre;
@@ -222,7 +222,7 @@
 
 /* Section Titles */
 .section-title {
-    color: var(--primary);
+    color: var(--chord);
     font-weight: 700;
     margin-right: 0.2em;
 }
@@ -304,17 +304,17 @@
 .paragraph.chorus {
     font-weight: bold;
     border-left: solid 0.2em;
-    border-color: var(--primary);
+    border-color: var(--chord);
     padding-left: 1em;
 }
 
 .repetition-count {
-    color: var(--primary);
+    color: var(--chord);
     /* font-size: 0.8em; */
 }
 
 .repetition-count+.column {
-    color: var(--primary);
+    color: var(--chord);
     /* font-size: 0.8em; */
 }
 
@@ -323,7 +323,7 @@
 }
 
 .repetition {
-    color: var(--primary);
+    color: var(--chord);
     font-size: larger;
     font-weight: 100;
 }

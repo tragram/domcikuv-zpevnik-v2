@@ -109,7 +109,7 @@ export const LanguageFilter = ({
             <Button
               variant="circular"
               isActive={active}
-              className="outline-0 rounded-r-none font-bold"
+              className="outline-0 rounded-r-none font-bold shadow-none"
             >
               <Languages />
               {!iconOnly && "Languages"}

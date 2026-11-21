@@ -255,7 +255,7 @@ const SortMenu = (): JSX.Element => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                className="rounded-r-full hover:bg-transparent hover:text-primary hover:dark:bg-transparent"
+                className="rounded-r-full bg-transparent shadow-none hover:bg-transparent hover:text-primary"
                 onClick={() => setSortOrder(toggleSortOrder(sortOrder))}
               >
                 {activeCategory.sorting_icons[sortOrder]}

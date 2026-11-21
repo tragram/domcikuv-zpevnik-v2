@@ -82,7 +82,8 @@ const FilterControls = ({
         vocalRange[1] === maxRange)) &&
     !hideCapo &&
     !selectedSongbookId &&
-    !onlyFavorites;
+    !onlyFavorites &&
+    !showExternal;
   return {
     controls: (
       <>
@@ -162,26 +163,26 @@ const FilterControls = ({
             vocalRangeFilter={vocalRange}
             setVocalRangeFilter={setVocalRange}
             iconOnly={iconOnly}
-            roundedRight={isFilterInactive}
+            roundedRight={false}
           />
         )}
-        {!isFilterInactive && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="circular"
-                className="rounded-l-none font-bold shadow-none outline-0"
-                onClick={resetFilters}
-              >
-                <X />
-                {!iconOnly && "Reset"}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Reset all filters</p>
-            </TooltipContent>
-          </Tooltip>
-        )}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="circular"
+              className="rounded-l-none font-bold shadow-none outline-0 disabled:opacity-100 disabled:text-primary/50"
+              onClick={resetFilters}
+              disabled={isFilterInactive}
+              aria-label="Reset all filters"
+            >
+              <X />
+              {!iconOnly && "Reset"}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Reset all filters</p>
+          </TooltipContent>
+        </Tooltip>
       </>
     ),
     dropdownSections: (
@@ -224,15 +225,11 @@ const FilterControls = ({
               sectionOnly={true}
             />,
           )}
-        {!isFilterInactive && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={resetFilters}>
-              <X />
-              Reset all filters
-            </DropdownMenuItem>
-          </>
-        )}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={resetFilters} disabled={isFilterInactive}>
+          <X />
+          Reset all filters
+        </DropdownMenuItem>
       </>
     ),
     isFilterInactive,
@@ -258,7 +255,7 @@ const Filtering = ({
   return (
     <>
       {/* Desktop View */}
-      <div className="hidden lg:flex outline-primary dark:outline-primary/30 rounded-full outline-2">
+      <div className="hidden lg:flex outline-border rounded-full outline-2">
         {controls}
       </div>
 

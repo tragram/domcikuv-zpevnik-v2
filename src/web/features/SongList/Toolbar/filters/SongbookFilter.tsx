@@ -94,7 +94,7 @@ export const SongBookFilter = ({
             <Button
               variant="circular"
               isActive={active}
-              className="outline-0 rounded-none font-bold"
+              className="outline-0 rounded-none font-bold shadow-none"
             >
               <BookUser className="h-4 w-4" />
               {!iconOnly && <span>Songbook</span>}

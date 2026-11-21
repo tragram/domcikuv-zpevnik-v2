@@ -362,7 +362,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
               ) : validationErrors && validationErrors.length > 0 ? (
                 <ul className="list-disc pl-4 space-y-1">
                   {validationErrors.map((error, index) => (
-                    <li key={index} className="text-white font-medium">
+                    <li key={index} className="font-medium">
                       {error}
                     </li>
                   ))}

@@ -52,7 +52,7 @@ export function AdminSidebar({ activeTab, setActiveTab }: AdminSidebarProps) {
     <Sidebar collapsible="offcanvas">
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-2">
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground bg-primary">
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <Database className="size-4" />
           </div>
           <div className="flex flex-col gap-0.5 leading-none">

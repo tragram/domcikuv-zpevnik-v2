@@ -246,7 +246,7 @@ function SongList({
 
       {/* Playlist mode: selection / export action bar */}
       {playlistMode && (
-        <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background/95 shadow-lg backdrop-blur animate-in slide-in-from-bottom-4">
+        <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background shadow-lg backdrop-blur animate-in slide-in-from-bottom-4">
           <div className="container mx-auto flex max-w-3xl items-center gap-2 px-3 py-3">
             <Button
               variant="ghost"
@@ -360,7 +360,7 @@ function SongList({
             <div className="text-primary text-center text-xl font-bold sm:text-2xl border bg-muted/20 border-dashed p-8 rounded-lg m-6 w-[80%] max-w-[800px] items-center justify-center leading-[1.7] lg:p-16">
               <p>No songs fulfill all the filters set!</p>
               {hasTriggeredExternalSearch && !hasExternalResults && (
-                <p className="text-sm font-normal text-white/80">
+                <p className="text-sm font-normal text-muted-foreground">
                   No results found in external libraries either.
                 </p>
               )}

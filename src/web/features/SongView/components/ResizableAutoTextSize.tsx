@@ -171,7 +171,7 @@ export function ResizableAutoTextSize({
             className,
             chordSettingsClassNames(chords),
             layoutSettingsClassNames(layout),
-            "dark:text-white/95 h-fit max-w-full",
+            "dark:text-foreground h-fit max-w-full",
           )}
           style={{
             fontSize: `${layout.fontSize}px`,

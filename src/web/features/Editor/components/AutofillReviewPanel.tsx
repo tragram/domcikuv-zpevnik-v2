@@ -45,7 +45,7 @@ export const AutofillReviewPanel: React.FC<AutofillReviewPanelProps> = ({
             the result in the text area below — the diff updates live so you can
             spot any unintended changes to lyrics or existing chords.
           </p>
-          <div className="flex items-start gap-1.5 rounded-md bg-amber-50 border border-amber-200 px-2.5 py-2 text-xs text-amber-800">
+          <div className="flex items-start gap-1.5 rounded-md bg-warning/10 border border-warning/30 px-2.5 py-2 text-xs text-warning">
             <AlertTriangle className="size-3.5 shrink-0 mt-0.5" />
             <span>
               <strong>Check carefully:</strong> AI occasionally rewrites a word

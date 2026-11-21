@@ -67,7 +67,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
           "border-2 p-1 grow-999 basis-0",
           action && "min-w-32",
           displayError
-            ? "border-red-600"
+            ? "border-destructive"
             : "border-primary/50 dark:border-muted focus:border-primary focus:bg-primary/30",
           modified ? "!bg-primary/30" : "",
           disabled && "opacity-50 cursor-not-allowed bg-muted",
@@ -106,7 +106,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
           {description}
         </p>
       )}
-      {displayError && <p className="text-xs text-red-600">{error}</p>}
+      {displayError && <p className="text-xs text-destructive">{error}</p>}
     </div>
   );
 };

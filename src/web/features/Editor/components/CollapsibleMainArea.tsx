@@ -37,15 +37,15 @@ const CollapsibleMainArea: React.FC<CollapsibleMainAreaProps> = ({ title, classN
                 {children}
             </div>
             <h1
-                className="font-extrabold text-2xl md:text-3xl relative text-center text-white cursor-pointer bg-primary md:pt-2 md:pb-1 pb-2 pt-1"
+                className="font-extrabold text-2xl md:text-3xl relative text-center text-primary-foreground cursor-pointer bg-primary md:pt-2 md:pb-1 pb-2 pt-1"
                 onClick={() => setIsCollapsed(true)}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
                 <div className="flex items-center justify-center">
-                    <div className={cn("w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-white ml-2", isHovered ? "" : "opacity-0 select-none")}></div>
+                    <div className={cn("w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-primary-foreground ml-2", isHovered ? "" : "opacity-0 select-none")}></div>
                     <span className='mx-4'>{title}</span>
-                    <div className={cn("w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-white mr-2", isHovered ? "" : "opacity-0 select-none")}></div>
+                    <div className={cn("w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-primary-foreground mr-2", isHovered ? "" : "opacity-0 select-none")}></div>
                 </div>
             </h1>
             <div className="md:hidden overflow-y-auto flex-grow">

@@ -85,6 +85,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   );
   const [isYoutubeMiniPlayerOpen, setIsYoutubeMiniPlayerOpen] =
     useState(false);
+  const youtubeTitle = isYoutubeMiniPlayerOpen
+    ? "Close picture-in-picture"
+    : "Watch in picture-in-picture";
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
   const { songDB } = useSongDB(userData);
@@ -159,23 +162,19 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           resetKeyAndCapo={resetKeyAndCapo}
         />
 
-        {songData.youtubeId && (
-          <Button
-            size="icon"
-            variant="circular"
-            className="hidden lg:inline-flex"
-            isActive={isYoutubeMiniPlayerOpen}
-            onClick={() => setIsYoutubeMiniPlayerOpen((open) => !open)}
-            title={
-              isYoutubeMiniPlayerOpen
-                ? "Close picture-in-picture"
-                : "Watch in picture-in-picture"
-            }
-          >
-            <PictureInPicture2 />
-          </Button>
-        )}
-        
+        <Button
+          size="icon"
+          variant="circular"
+          className="hidden lg:inline-flex"
+          disabled={!songData.youtubeId}
+          isActive={!!songData.youtubeId && isYoutubeMiniPlayerOpen}
+          onClick={() => setIsYoutubeMiniPlayerOpen((open) => !open)}
+          aria-label={songData.youtubeId ? youtubeTitle : "No YouTube video"}
+          title={songData.youtubeId ? youtubeTitle : "No YouTube video"}
+        >
+          <PictureInPicture2 />
+        </Button>
+
         {!feedStatus || !feedStatus.enabled || feedStatus.isMaster ? (
           <RandomSong
             songs={songDB.songs}
@@ -269,8 +268,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               </DropdownMenuCheckboxItem>
             )}
 
-            {songData.youtubeId && (
-              <DropdownMenuItem className="lg:hidden">
+            <DropdownMenuItem
+              className="lg:hidden"
+              asChild={!!songData.youtubeId}
+              disabled={!songData.youtubeId}
+            >
+              {songData.youtubeId ? (
                 <a
                   className="w-full"
                   href={youtubeWatchUrl(songData.youtubeId)}
@@ -284,8 +287,15 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                     <CompactItem.Body title="Watch on YouTube" />
                   </CompactItem.Shell>
                 </a>
-              </DropdownMenuItem>
-            )}
+              ) : (
+                <CompactItem.Shell className="w-full">
+                  <CompactItem.Icon>
+                    <Play />
+                  </CompactItem.Icon>
+                  <CompactItem.Body title="Watch on YouTube" />
+                </CompactItem.Shell>
+              )}
+            </DropdownMenuItem>
 
             <ShareSongButton
               feedStatus={feedStatus}

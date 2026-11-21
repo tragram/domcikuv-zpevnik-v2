@@ -51,7 +51,7 @@ const Icon = ({
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-full bg-control-surface text-primary *:stroke-current! *:text-primary!",
+        "flex shrink-0 items-center justify-center rounded-full bg-control-surface text-primary *:stroke-current! *:text-primary! outline outline-border",
         `size-${size}`,
         innerSizeClass,
         className,

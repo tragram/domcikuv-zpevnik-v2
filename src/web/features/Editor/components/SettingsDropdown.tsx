@@ -1,12 +1,11 @@
 import { Settings2 } from "lucide-react";
 import React from "react";
+import { CompactItem } from "~/components/RichDropdown";
 import { Button } from "~/components/ui/button";
 import {
-  DropdownIconStart,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
@@ -25,21 +24,29 @@ const SettingsDropdown: React.FC = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 max-h-[85dvh] overflow-y-auto">
-        <DropdownMenuLabel>Contents</DropdownMenuLabel>
+        <CompactItem.Header>Contents</CompactItem.Header>
         <DropdownMenuSeparator />
-        {(["repeatParts", "repeatPartsChords"] as const).map((k) => (
-          <DropdownMenuCheckboxItem
-            key={k}
-            checked={layout[k] as boolean}
-            onCheckedChange={() =>
-              actions.setLayoutSettings({ [k]: !layout[k] })
-            }
-            onSelect={(e) => e.preventDefault()}
-          >
-            <DropdownIconStart icon={layoutSettingsValues[k].icon} />
-            {layoutSettingsValues[k].label}
-          </DropdownMenuCheckboxItem>
-        ))}
+        {(["repeatParts", "repeatPartsChords"] as const).map((key) => {
+          const setting = layoutSettingsValues[key];
+          return (
+            <DropdownMenuCheckboxItem
+              key={key}
+              checked={layout[key]}
+              onCheckedChange={(checked) =>
+                actions.setLayoutSettings({ [key]: checked })
+              }
+              onSelect={(event) => event.preventDefault()}
+            >
+              <CompactItem.Shell>
+                <CompactItem.Icon>{setting.icon}</CompactItem.Icon>
+                <CompactItem.Body
+                  title={setting.label}
+                  subtitle={setting.description || undefined}
+                />
+              </CompactItem.Shell>
+            </DropdownMenuCheckboxItem>
+          );
+        })}
         {React.Children.toArray(<ChordSettingsDropdownMenu />)}
       </DropdownMenuContent>
     </DropdownMenu>

@@ -172,13 +172,13 @@ export function SongRevisionHistory({
                                 {songContentLabels[key]}
                               </dt>
                               <dd>
-                                <del className="text-red-600">
+                                <del className="text-destructive">
                                   {String(
                                     revision.previousContent![key] ?? "Empty",
                                   )}
                                 </del>
                                 {" → "}
-                                <ins className="text-green-600 no-underline">
+                                <ins className="text-success no-underline">
                                   {String(revision.content[key] ?? "Empty")}
                                 </ins>
                               </dd>

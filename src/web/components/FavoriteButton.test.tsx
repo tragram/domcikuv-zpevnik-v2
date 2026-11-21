@@ -40,7 +40,7 @@ it.each([
       await router.load();
       root.render(<QueryClientProvider client={cache}><RouterProvider router={router} /></QueryClientProvider>);
     });
-    expect(!!container.querySelector("svg.lucide-heart.fill-primary")).toBe(filled);
+    expect(!!container.querySelector("svg.lucide-heart.fill-current")).toBe(filled);
     expect(!!container.querySelector("button svg.lucide-asterisk")).toBe(!!action);
     if (action) {
       const trigger = container.querySelector<HTMLButtonElement>('button[aria-haspopup="dialog"]')!;
@@ -70,7 +70,7 @@ it.each([
         const patch = fetch.mock.calls.find(([, init]) => init?.method === "PATCH");
         expect(JSON.parse(patch?.[1]?.body as string)).toEqual({ pinnedVersionId: "displayed" });
         expect(cache.getQueryData(["favorites", "viewer"])).toEqual([entry]);
-        expect(container.querySelector("svg.lucide-heart.fill-primary")).not.toBeNull();
+        expect(container.querySelector("svg.lucide-heart.fill-current")).not.toBeNull();
       }
       expect(document.querySelector('[aria-label="Saved songbook version"]')).toBeNull();
     }

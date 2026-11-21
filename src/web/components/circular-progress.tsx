@@ -22,7 +22,7 @@ export default function CircularProgress({
           cy="50"
           r="40"
           fill="transparent"
-          stroke={"#e5e7eb"}
+          stroke="var(--muted)"
           strokeWidth={strokeWidth}
         />
         <circle

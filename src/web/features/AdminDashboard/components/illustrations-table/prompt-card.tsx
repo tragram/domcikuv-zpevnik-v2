@@ -53,7 +53,7 @@ export function PromptCard({ prompt }: PromptCardProps) {
     <>
       <div
         className={cn(
-          "border-2 rounded-lg p-3 space-y-2 border-gray-200 transition-all duration-200 flex flex-col justify-between",
+          "border-2 rounded-lg p-3 space-y-2 border-border transition-all duration-200 flex flex-col justify-between",
           deleteMutation.isPending ? "opacity-50 pointer-events-none" : "",
         )}
       >

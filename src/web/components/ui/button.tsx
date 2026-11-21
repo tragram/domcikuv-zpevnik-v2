@@ -12,9 +12,11 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
         destructive:
-          "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
+        "destructive-outline":
+          "border border-destructive/60 bg-button-background text-destructive shadow-xs hover:bg-destructive/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive",
         outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          "border bg-button-background shadow-xs hover:bg-control-hover hover:text-accent-foreground dark:border-input",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
@@ -22,7 +24,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         toolbar: "focus-visible:outline-2 focus-visible:-outline-offset-2",
         circular:
-          "bg-primary text-primary-foreground rounded-full outline-2 shadow-md",
+          "bg-primary text-primary-foreground rounded-full outline-2 shadow-md" ,
       },
       size: {
         default: "h-10 px-4 py-2 has-[>svg]:px-3",
@@ -31,9 +33,9 @@ const buttonVariants = cva(
         icon: "size-10",
       },
       isActive: {
-        true: "bg-primary outline-control-border text-primary-foreground hover:bg-control-active-hover",
+        true: "bg-primary text-primary-foreground hover:bg-control-active-hover outline-background",
         false:
-          "bg-control-surface text-primary hover:bg-control-hover outline-control-border",
+          "bg-control-surface text-primary hover:bg-control-hover outline-border",
       },
     },
     compoundVariants: [
@@ -62,11 +64,16 @@ function Button({
     asChild?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
+  const activeState =
+    isActive === undefined && (variant === "destructive" || variant === "destructive-outline")
+      ? null
+      : isActive;
 
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, isActive, size, className }))}
+      data-active={isActive === true || undefined}
+      className={cn(buttonVariants({ variant, isActive: activeState, size, className }))}
       {...props}
     />
   );

@@ -190,8 +190,8 @@ function AIGeneratedForm({
             <div
               className={`flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full border ${
                 promptExists
-                  ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                  : "bg-amber-50 text-amber-600 border-amber-100"
+                  ? "bg-success/10 text-success border-success/30"
+                  : "bg-warning/10 text-warning border-warning/30"
               }`}
             >
               {promptExists ? (

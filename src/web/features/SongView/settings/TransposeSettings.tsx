@@ -90,7 +90,7 @@ const TransposeButtons: React.FC<TransposeButtonsProps> = ({
         type="button"
         onClick={onReset}
         disabled={!canResetKeyAndCapo}
-        className="relative z-10 flex size-10 shrink-0 items-center justify-center border-l border-control-border text-primary transition-colors hover:bg-control-hover disabled:cursor-not-allowed disabled:opacity-35"
+        className="relative z-10 flex size-10 shrink-0 items-center justify-center border-l border-border text-primary transition-colors hover:bg-control-hover disabled:cursor-not-allowed disabled:opacity-35"
         title={
           canResetKeyAndCapo
             ? "Reset key and capo to the original song settings"

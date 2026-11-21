@@ -114,10 +114,10 @@ export const transparentTheme = EditorView.theme({
   // Bulletproof selection highlight
   "&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection":
     {
-      backgroundColor: "rgba(130, 170, 255, 0.3) !important",
+      backgroundColor: "color-mix(in oklab, var(--primary) 30%, transparent) !important",
     },
   ".cm-selectionMatch": {
-    backgroundColor: "rgba(130, 170, 255, 0.2) !important",
+    backgroundColor: "color-mix(in oklab, var(--primary) 20%, transparent) !important",
   },
 });
 

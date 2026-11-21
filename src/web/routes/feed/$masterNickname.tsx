@@ -109,7 +109,7 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
         <div className="text-center space-y-2">
           <p className="text-lg">Connecting to feed...</p>
           {!feedStatus.isConnected && feedStatus.retryAttempt > 2 && (
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-muted-foreground">
               Having trouble connecting but I'll keep trying in the background.
               ;-)
             </p>
@@ -133,7 +133,7 @@ function FeedView({ liveState, masterNickname, userData, api }: FeedViewProps) {
               : `Waiting for ${masterNickname} to select a song...`}
           </p>
           {!feedStatus.isConnected && !isEnded && (
-            <p className="text-sm text-yellow-600">
+            <p className="text-sm text-warning">
               Connection lost - attempting to reconnect...
             </p>
           )}

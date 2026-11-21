@@ -195,8 +195,8 @@ export const FavoriteButton = ({
           iconClassName,
           isLoading && "animate-pulse",
           isFavorite
-            ? "fill-primary text-primary"
-            : "hover:text-primary text-white/70",
+            ? "fill-current text-primary"
+            : "text-primary dark:text-white/70 dark:hover:text-primary",
         )}
       />
     </button>

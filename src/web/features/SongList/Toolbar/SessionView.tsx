@@ -149,7 +149,7 @@ const SessionView = ({ isOnline }: SessionViewProps) => {
                     fallbackClassName="text-xs"
                   />
                   <div className="flex items-center gap-3 min-w-0 flex-1 justify-between">
-                    <div className="truncate text-sm w-[6rem] flex-shrink-0 dark:text-white">
+                    <div className="truncate text-sm w-[6rem] flex-shrink-0 text-foreground">
                       {session.nickname}
                     </div>
                     <div className="text-xs hidden xs:flex flex-col flex-1 min-w-0 text-center">

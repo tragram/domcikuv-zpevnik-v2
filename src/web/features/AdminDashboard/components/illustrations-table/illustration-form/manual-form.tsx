@@ -158,7 +158,7 @@ export function ManualForm({
             label={imageFile ? imageFile.name : "Upload or paste Image"}
             onFileSelect={handleImageSelection}
             previewUrl={imagePreview}
-            className={cn(imageFile && "border-green-500/50 bg-green-50/10")}
+            className={cn(imageFile && "border-success/50 bg-success/10")}
           />
           {imageFile && (
             <Button

@@ -184,28 +184,28 @@ const STATUS_CARDS: {
     label: "Pending",
     stat: "pending",
     icon: Clock,
-    className: "text-orange-600",
+    className: "text-warning",
   },
   {
     value: "published",
     label: "Published",
     stat: "published",
     icon: CheckCircle2,
-    className: "text-emerald-600",
+    className: "text-success",
   },
   {
     value: "archived",
     label: "Archived",
     stat: "archived",
     icon: Archive,
-    className: "text-amber-600",
+    className: "text-muted-foreground",
   },
   {
     value: "rejected",
     label: "Rejected",
     stat: "rejected",
     icon: Ban,
-    className: "text-rose-600",
+    className: "text-destructive",
   },
   {
     value: "noYoutube",
@@ -238,7 +238,7 @@ const ATTR_CARDS: {
     label: "External",
     stat: "external",
     icon: Globe,
-    className: "text-violet-600",
+    className: "text-info",
   },
   {
     value: "hidden",
@@ -252,7 +252,7 @@ const ATTR_CARDS: {
     label: "Deleted",
     stat: "deleted",
     icon: Trash2,
-    className: "text-red-600",
+    className: "text-destructive",
   },
 ];
 
@@ -278,6 +278,15 @@ type DiffViewState = {
 };
 
 // --- 1. MODALS & VIEWERS ---
+
+const diffColors = {
+  addedBackground: "color-mix(in oklab, var(--success) 15%, transparent)",
+  addedGutterBackground: "color-mix(in oklab, var(--success) 25%, transparent)",
+  wordAddedBackground: "color-mix(in oklab, var(--success) 35%, transparent)",
+  removedBackground: "color-mix(in oklab, var(--destructive) 15%, transparent)",
+  removedGutterBackground: "color-mix(in oklab, var(--destructive) 25%, transparent)",
+  wordRemovedBackground: "color-mix(in oklab, var(--destructive) 35%, transparent)",
+};
 
 function DiffViewerModal({
   diffView,
@@ -346,13 +355,11 @@ function DiffViewerModal({
                 styles={{
                   variables: {
                     dark: {
+                      ...diffColors,
                       diffViewerBackground: "transparent",
-                      addedBackground: "rgba(20, 70, 32, 0.4)",
-                      removedBackground: "rgba(80, 20, 20, 0.4)",
-                      wordAddedBackground: "rgba(30, 110, 45, 0.6)",
-                      wordRemovedBackground: "rgba(120, 30, 30, 0.6)",
                     },
                     light: {
+                      ...diffColors,
                       diffViewerBackground: "transparent",
                     },
                   },
@@ -536,7 +543,7 @@ function SongVersionItem({
           onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial, archivePrevious: checked })}
         />}
       </VersionPublicationOptions>}
-      {stale && <div className="w-full space-y-2 rounded-lg border border-amber-500/40 bg-amber-500/5 p-3 text-sm">
+      {stale && <div className="w-full space-y-2 rounded-lg border border-warning/40 bg-warning/5 p-3 text-sm">
         <p className="font-medium">{targetChanged ? "The target version changed after this suggestion was submitted." : "The official selection changed after this suggestion was submitted."}</p>
         <p className="text-muted-foreground">{isCorrection ? "Approving will replace the current sheet with this suggestion. Compare the changes before continuing." : "Publishing will apply the requested official selection and archival changes. Review the current version first."}</p>
         <label className="flex cursor-pointer items-start gap-3"><Checkbox className="mt-0.5" checked={override} onCheckedChange={(checked) => setOverrideFor(checked === true ? reviewState : null)} />I reviewed the current changes. Apply this suggestion anyway.</label>
@@ -562,7 +569,7 @@ function SongVersionItem({
             <Button
               size="sm"
               variant="outline"
-              className="text-green-700 hover:text-green-800 hover:bg-green-50 border-green-200"
+              className="text-success hover:text-success hover:bg-success/10 border-success/30 dark:hover:bg-success/20 dark:border-success/30"
               onClick={() => onApprove(isCorrection ? { force: override } : { force: override, makeOfficial, archivePrevious: archivePrevious && canArchivePrevious })} disabled={!review || isApprovePending || (stale && !override)}
             >
               <CheckCircle2 className="w-4 h-4 mr-1.5" /> {isCorrection ? "Approve revision" : "Publish new version"}
@@ -570,7 +577,7 @@ function SongVersionItem({
             <Button
               size="sm"
               variant="ghost"
-              className="text-red-700 hover:text-red-800 hover:bg-red-50"
+              className="text-destructive hover:text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/20"
               onClick={onReject}
             >
               Reject
@@ -840,7 +847,7 @@ function SongTableRow({
             {pendingCount > 0 && !song.deleted && song.status !== "pending" && (
               <Badge
                 variant="outline"
-                className="bg-orange-50 text-orange-700 border-orange-200 animate-pulse"
+                className="bg-warning/10 text-warning border-warning/30 animate-pulse"
               >
                 {pendingCount} Pending
               </Badge>
@@ -918,7 +925,7 @@ function SongTableRow({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-green-600 hover:text-green-700 hover:bg-green-50"
+                  className="text-success hover:text-success hover:bg-success/10 dark:hover:bg-success/20"
                   onClick={() => onRestoreSong(song.id)}
                 >
                   <RotateCcw className="h-4 w-4 mr-1" /> Restore
@@ -1056,7 +1063,7 @@ function SongsTableSettingsBar({
           <ConfirmationDialog
             trigger={
               <Button
-                variant="destructive"
+                variant="destructive-outline"
                 size="sm"
                 className="shadow-sm w-full sm:w-auto sm:ml-auto"
                 disabled={isResetPending}
@@ -1080,6 +1087,7 @@ function SongsTableSettingsBar({
               </div>
             }
             confirmText="Yes, Reset DB Version"
+            variant="destructive-outline"
             cancelText="Cancel"
             onConfirm={onResetDB}
             isLoading={isResetPending}

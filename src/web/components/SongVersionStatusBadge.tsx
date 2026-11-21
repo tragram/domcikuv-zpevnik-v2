@@ -5,7 +5,7 @@ const SongVersionStatusBadge = ({ status }: { status: string }) => {
   switch (status) {
     case "published":
       return (
-        <Badge className="bg-green-100 text-green-800 hover:bg-green-100 border-green-200">
+        <Badge className="bg-success/10 text-success hover:bg-success/10 border-success/30">
           <CheckCircle2 className="w-3 h-3 mr-1" /> Published
         </Badge>
       );
@@ -13,7 +13,7 @@ const SongVersionStatusBadge = ({ status }: { status: string }) => {
       return (
         <Badge
           variant="secondary"
-          className="bg-yellow-100 text-yellow-800 hover:bg-yellow-100 border-yellow-200"
+          className="bg-warning/10 text-warning hover:bg-warning/10 border-warning/30"
         >
           <Clock className="w-3 h-3 mr-1" /> Pending
         </Badge>
@@ -26,19 +26,13 @@ const SongVersionStatusBadge = ({ status }: { status: string }) => {
       );
     case "rejected":
       return (
-        <Badge
-          variant="destructive"
-          className="bg-red-100 text-white/90 hover:bg-red-100 border-red-200"
-        >
+        <Badge variant="destructive">
           <XCircle className="w-3 h-3 mr-1" /> Rejected
         </Badge>
       );
     case "deleted":
       return (
-        <Badge
-          variant="destructive"
-          className="bg-red-100 text-white/90 hover:bg-red-100 border-red-200"
-        >
+        <Badge variant="destructive">
           <Trash2 className="w-3 h-3 mr-1" /> Deleted
         </Badge>
       );

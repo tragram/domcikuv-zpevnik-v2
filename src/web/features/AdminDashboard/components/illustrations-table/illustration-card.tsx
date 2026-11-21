@@ -114,7 +114,7 @@ export function IllustrationCard({
       <div
         className={cn(
           "border-2 rounded-lg p-1 md:p-3 space-y-2 transition-all duration-200",
-          isActive ? "border-primary shadow-md" : "border-gray-200",
+          isActive ? "border-primary shadow-md" : "border-border",
           illustration.deleted ? "opacity-50" : "",
           updateMutation.isPending ? "opacity-70" : "",
         )}
@@ -187,7 +187,7 @@ export function IllustrationCard({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-7 w-7 p-0 text-green-600 hover:text-green-700 hover:bg-green-50"
+                  className="h-7 w-7 p-0 text-success hover:text-success hover:bg-success/10 dark:hover:bg-success/20"
                   disabled={restoreMutation.isPending}
                 >
                   <RotateCcw className="h-3 w-3" />
@@ -196,7 +196,7 @@ export function IllustrationCard({
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle className="flex items-center gap-2">
-                    <RotateCcw className="h-5 w-5 text-green-600" />
+                    <RotateCcw className="h-5 w-5 text-success" />
                     Restore Illustration
                   </AlertDialogTitle>
                   <AlertDialogDescription>
@@ -207,7 +207,7 @@ export function IllustrationCard({
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
                     onClick={handleRestoreIllustration}
-                    className="bg-green-600 text-white hover:bg-green-700"
+                    className="bg-success/15 text-success hover:bg-success/25"
                     disabled={restoreMutation.isPending}
                   >
                     {restoreMutation.isPending ? "Restoring..." : "Restore"}

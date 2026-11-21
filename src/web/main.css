@@ -20,125 +20,109 @@
 
 /* 1. STANDARD LIGHT THEME */
 :root {
-  --background: hsl(30 100% 95%);
-  --foreground: hsl(30 5% 10%);
-  --card: hsl(30 50% 90%);
-  --card-foreground: hsl(30 5% 15%);
-  --popover: hsl(30 100% 95%);
-  --popover-foreground: hsl(30 100% 10%);
-  --primary: hsl(30 88.6% 55.3%);
-  --primary-foreground: hsl(30 50% 10%);
-  --secondary: hsl(30 30% 70%);
-  --secondary-foreground: hsl(0 0% 0%);
-  --muted: hsl(-8 30% 85%);
-  --muted-foreground: hsl(30 5% 35%);
-  --accent: hsl(-8 30% 80%);
-  --accent-foreground: hsl(30 5% 15%);
-  --destructive: hsl(0 100% 30%);
-  --destructive-foreground: hsl(30 5% 90%);
-  --border: hsl(30 30% 50%);
-  --input: hsl(30 30% 26%);
-  --ring: hsl(30 88.6% 55.3%);
+  --background: hsl(30, 100%, 93%);
+  --button-background: hsl(40 47% 95%);
+  --foreground: hsl(30 5 15%);
+  --card: hsl(42.857 100% 98.627%);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: hsl(30, 89%, 55%);
+  --primary-foreground: var(--foreground);
+  --chord: hsl(30 89% 30%);
+  --secondary: color-mix(in oklab, var(--primary) 14%, var(--background));
+  --secondary-foreground: var(--foreground);
+  --muted: hsl(51.429 17.073% 91.961%);
+  --muted-foreground: hsl(30 14% 36%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--secondary-foreground);
+  --destructive: hsl(7.429 46.256% 55.49%);
+  --destructive-foreground: hsl(8.571 43.75% 6.275%);
+  --success: hsl(143.077 47.445% 26.863%);
+  --warning: hsl(35.798 83.217% 28.039%);
+  --info: hsl(213.882 45.946% 36.275%);
+  --border: color-mix(in oklab, var(--primary) 40%, transparent);
+  --input: var(--muted-foreground);
+  --ring: var(--primary);
   --radius: 0.5rem;
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--card-foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
 
-  --glass: hsl(80 0% 100%);
-  --glass-opacity: 70;
-  --control-tint: 18%;
+  --glass: var(--background);
+  --control-tint: 8%;
   --control-border-opacity: 30%;
 }
 
 /* 2. HIGH CONTRAST LIGHT THEME */
 .high-contrast {
   --background: hsl(0 0% 100%);
+  --button-background: hsl(0 0% 100%);
   --foreground: hsl(0 0% 0%);
-  --card: hsl(0 0% 100%);
-  --card-foreground: hsl(0 0% 0%);
-  --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(0 0% 0%);
+  --card: var(--background);
   --secondary: hsl(0 0% 90%);
-  --secondary-foreground: hsl(0 0% 0%);
-  --muted: hsl(0 0% 90%);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--secondary);
   --muted-foreground: hsl(0 0% 15%);
-  --accent: hsl(0 0% 90%);
-  --accent-foreground: hsl(0 0% 0%);
-  --border: hsl(0 0% 0%);
-  /* Pure black borders */
-  --input: hsl(0 0% 0%);
-  --ring: hsl(30 100% 40%);
+  --accent: var(--secondary);
+  --accent-foreground: var(--foreground);
+  --border: var(--foreground);
+  --input: var(--border);
+}
 
-  --glass: hsl(0 0% 100%);
-  --glass-opacity: 95;
-  /* Less transparent for readability */
+.high-contrast:not(.dark) {
+  --primary: var(--chord);
+  --primary-foreground: var(--card);
 }
 
 /* 3. STANDARD DARK THEME */
 .dark {
-  --background: hsl(30 50% 10%);
+  --chord: var(--primary);
+  --background: hsl(30, 50%, 10%);
+  --button-background: hsl(30 50% 5%);
   --foreground: hsl(30 5% 90%);
+  --primary-foreground: hsl(30, 50%, 5%);
   --card: hsl(30 50% 10%);
-  --card-foreground: hsl(30 5% 90%);
-  --popover: hsl(30 50% 5%);
-  --popover-foreground: hsl(30 5% 90%);
-  --secondary: hsl(30 30% 20%);
+  --popover: var(--background);
+  --secondary: hsl(31, 16%, 37%);
   --secondary-foreground: hsl(0 0% 100%);
   --muted: hsl(-8 30% 25%);
   --muted-foreground: hsl(30 5% 75%);
-  --accent: hsl(-8 30% 25%);
-  --accent-foreground: hsl(30 5% 90%);
-  --destructive: hsl(0 100% 30%);
+  --accent: hsl(30, 63%, 20%);
+  --accent-foreground: var(--foreground);
+  --destructive: hsl(355, 67%, 40%);
   --destructive-foreground: hsl(30 5% 90%);
-  --border: hsl(30 30% 26%);
-  --input: hsl(30 30% 26%);
-  --ring: hsl(30 88.6% 55.3%);
-  --sidebar: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --success: hsl(141.176 37.778% 64.706%);
+  --warning: hsl(39.375 74.419% 66.275%);
+  --info: hsl(215.556 64.8% 75.49%);
+  --input: var(--border);
 
-  --glass: hsl(179 100% 0%);
-  --glass-opacity: 70;
+  --glass: hsl(0 0% 0%);
   --control-tint: 18%;
-  --control-border-opacity: 30%;
 }
 
 /* 4. HIGH CONTRAST DARK THEME */
 .dark.high-contrast {
   --background: hsl(0 0% 0%);
+  --button-background: hsl(0 0% 0%);
   --foreground: hsl(0 0% 100%);
-  --card: hsl(0 0% 0%);
-  --card-foreground: hsl(0 0% 100%);
-  --popover: hsl(0 0% 0%);
-  --popover-foreground: hsl(0 0% 100%);
+  --card: var(--background);
   --secondary: hsl(0 0% 20%);
-  --secondary-foreground: hsl(0 0% 100%);
   --muted: hsl(0 0% 15%);
   --muted-foreground: hsl(0 0% 85%);
-  --accent: hsl(0 0% 20%);
-  --accent-foreground: hsl(0 0% 100%);
-  --border: hsl(0 0% 100%);
-  /* Pure white borders */
-  --input: hsl(0 0% 100%);
+  --accent: var(--secondary);
+  --border: var(--foreground);
   --ring: hsl(30 100% 60%);
-
-  --glass: hsl(0 0% 0%);
-  --glass-opacity: 95;
-  /* Less transparent for readability */
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-button-background: var(--button-background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -157,11 +141,9 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -176,9 +158,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --color-glass: var(--glass);
-  --color-control-surface: color-mix(in oklab, color-mix(in oklab, var(--primary) var(--control-tint), var(--background)) 90%, transparent);
-  --color-control-hover: color-mix(in oklab, color-mix(in oklab, var(--primary) 28%, var(--background)) 90%, transparent);
-  --color-control-active-hover: color-mix(in oklab, var(--primary) 90%, var(--background));
+  --color-control-surface: color-mix(in oklab, color-mix(in oklab, var(--primary) var(--control-tint), var(--button-background)) 90%, transparent);
+  --color-control-hover: color-mix(in oklab, color-mix(in oklab, var(--primary) 28%, var(--button-background)) 90%, transparent);
+  --color-control-active-hover: color-mix(in oklab, var(--primary) 90%, var(--button-background));
   --color-control-border: color-mix(in oklab, var(--primary) var(--control-border-opacity), transparent);
 }
 
@@ -194,6 +176,15 @@
 
 body {
   touch-action: pan-x pan-y;
+}
+
+:root:not(.dark, .high-contrast) #toolbar {
+  --primary-foreground: var(--card);
+}
+
+:root:not(.dark, .high-contrast) #toolbar button[data-slot="button"][data-active="true"] {
+  outline: 2px solid var(--primary-foreground);
+  outline-offset: -2px;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

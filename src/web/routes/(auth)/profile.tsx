@@ -383,7 +383,7 @@ function ProfilePictureSection({
           {(pendingAvatarFile || avatarToDelete) && (
             <div className="text-center space-y-1">
               <p
-                className={`text-sm font-medium ${avatarToDelete ? "text-red-600" : "text-blue-600"}`}
+                className={`text-sm font-medium ${avatarToDelete ? "text-destructive" : "text-info"}`}
               >
                 {avatarToDelete
                   ? "Avatar will be removed"
@@ -410,9 +410,9 @@ function ProfilePictureSection({
               </Button>
               {(currentAvatar || avatarPreview) && !avatarToDelete && (
                 <Button
-                  variant="ghost"
+                  variant="destructive-outline"
                   size="sm"
-                  className="text-destructive"
+                  className="text-foreground"
                   onClick={onRemoveAvatar}
                 >
                   Remove
@@ -489,7 +489,7 @@ function BasicInformationSection({
             <p className="text-sm text-destructive font-medium">{error}</p>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Used instead of your name on your songbook.
+              Used instead of your name on your songbook and your shared sessions.
             </p>
           )}
         </div>
@@ -566,7 +566,7 @@ function PrivacySection({
           <div className="space-y-2">
             <div
               className={cn(
-                "flex gap-2 transition-opacity",
+                "flex flex-wrap gap-2 transition-opacity sm:flex-nowrap",
                 !isFavoritesPublic && "opacity-50",
               )}
             >
@@ -574,26 +574,30 @@ function PrivacySection({
                 value={songbookUrl}
                 readOnly
                 disabled={!isFavoritesPublic}
-                className="font-mono text-sm"
+                className="h-10 basis-full font-mono text-sm sm:basis-auto"
               />
               <Button
                 variant="outline"
                 size="icon"
+                className="w-auto flex-1 px-2 sm:size-10 sm:flex-none sm:px-0"
                 onClick={handleCopyLink}
                 disabled={!isFavoritesPublic}
                 title="Copy link"
               >
                 <Copy className="h-4 w-4" />
+                <span className="sm:hidden">Copy link</span>
               </Button>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     size="icon"
+                    className="w-auto flex-1 px-2 sm:size-10 sm:flex-none sm:px-0"
                     disabled={!isFavoritesPublic}
                     title="Show QR code"
                   >
                     <QrCode className="h-4 w-4" />
+                    <span className="sm:hidden">QR code</span>
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto flex flex-col items-center gap-2">
@@ -610,7 +614,7 @@ function PrivacySection({
               </Popover>
             </div>
             {hasUnsavedChanges && (
-              <p className="text-sm text-amber-600">
+              <p className="text-sm text-warning">
                 {`Save changes for the link to ${isFavoritesPublic?"work":"stop working"}.`}
               </p>
             )}
@@ -642,9 +646,9 @@ function ActionButtons({
   return (
     <div className="flex flex-row flex-wrap-reverse gap-3 justify-between">
       <Button
-        variant="destructive"
+        variant="destructive-outline"
         onClick={onLogout}
-        className="sm:w-auto"
+        className="text-foreground sm:w-auto"
         disabled={!isOnline}
       >
         <LogOut className="mr-2 h-4 w-4" /> Logout
@@ -656,7 +660,7 @@ function ActionButtons({
       >
         {saving ? (
           <>
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-b-current mr-2" />
             Saving...
           </>
         ) : (

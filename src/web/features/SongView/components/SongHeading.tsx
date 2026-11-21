@@ -87,7 +87,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
     <div
       ref={containerRef}
       className={cn(
-        "flex w-full justify-between flex-wrap gap-4 text-primary dark:text-white rounded-2xl dark:rounded-none mb-4",
+        "flex w-full justify-between flex-wrap gap-4 text-(color:--chord) dark:text-foreground rounded-2xl dark:rounded-none mb-4",
         isWrapped && "justify-center gap-6",
       )}
     >
@@ -97,10 +97,10 @@ const SongHeading: React.FC<SongHeadingProps> = ({
           isWrapped ? "text-center" : "justify-start",
         )}
       >
-        <h2 className="font-semibold text-wrap uppercase dark:text-foreground select-text">
+        <h2 className="font-semibold text-wrap uppercase select-text">
           {songData.artist}
         </h2>
-        <h2 className="text-[1.125em] font-bold text-wrap dark:text-white select-text">
+        <h2 className="text-[1.125em] font-bold text-wrap select-text">
           {songData.title}
         </h2>
       </div>
@@ -120,7 +120,7 @@ const SongHeading: React.FC<SongHeadingProps> = ({
         <div className="flex items-center gap-4 md:gap-6">
           <div
             className={cn(
-              "flex shrink-0 flex-col justify-between items-end gap-y-[0.15em] text-right dark:text-white/70",
+              "flex shrink-0 flex-col justify-between items-end gap-y-[0.15em] text-right dark:text-muted-foreground",
               isWrapped && "gap-1",
             )}
           >
@@ -130,12 +130,12 @@ const SongHeading: React.FC<SongHeadingProps> = ({
                 setCapo={setCapo ?? (() => {})}
                 originalCapo={originalCapo}
                 editable={canEditCapo}
-                className="text-[0.6em] leading-tight text-nowrap"
+                className="text-[0.6em] leading-tight text-nowrap dark:text-muted-foreground"
               />
             )}
             {songData.externalSource ? (
               <Link
-                className="text-[0.55em] leading-tight dark:text-white/70"
+                className="text-[0.55em] leading-tight dark:text-muted-foreground"
                 to={songData.externalSource.url}
                 target="_blank"
               >

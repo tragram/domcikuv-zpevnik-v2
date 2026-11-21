@@ -59,8 +59,8 @@ export function SongVersionHistory({
       {isError && isOnline && <p className="px-2 text-xs text-muted-foreground" role="status">Couldn't refresh versions. Showing downloaded history.</p>}
       {!isOnline && <p className="px-2 text-xs text-muted-foreground">Offline · downloaded versions only</p>}
       <div className="flex items-center justify-between px-2 pt-1.5 pb-2">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-primary">Available versions</h3>
-        <span className="text-xs text-primary">{versions.length}</span>
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-(color:--chord)">Available versions</h3>
+        <span className="text-xs text-(color:--chord)">{versions.length}</span>
       </div>
       <Separator />
       <ul aria-label="Available song versions">
@@ -72,13 +72,13 @@ export function SongVersionHistory({
             const VersionIcon = version.isCurrent ? Check : version.status === "pending" ? Pencil : History;
             const createdAt = versionDate.format(new Date(version.updatedAt ?? version.createdAt));
             return (
-              <li key={version.id} className={cn("rounded-lg px-2 py-1.5", shown && "bg-primary/10")} aria-current={shown ? "true" : undefined}>
+              <li key={version.id} className={cn("rounded-lg px-2 py-1.5", shown && "bg-(color:--chord)/10")} aria-current={shown ? "true" : undefined}>
                 <CompactItem.Shell>
                   <CompactItem.Icon><VersionIcon aria-hidden="true" /></CompactItem.Icon>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
-                      <p className={cn(shown && "text-primary")}>{title}</p>
-                      {version.isCurrent && <Badge variant="outline" className="border-primary/30 bg-primary/10 px-1.5 py-0 text-tiny font-normal text-primary">Official</Badge>}
+                      <p className={cn(shown && "text-(color:--chord)")}>{title}</p>
+                      {version.isCurrent && <Badge variant="outline" className="border-(color:--chord)/30 bg-(color:--chord)/10 px-1.5 py-0 text-tiny font-normal text-(color:--chord)">Official</Badge>}
                     </div>
                     <p className="text-tiny leading-tight text-muted-foreground break-words">{createdAt} · {version.author.id === viewerId ? "You" : version.author.name}</p>
                     <p className="text-tiny leading-tight text-muted-foreground">
@@ -87,7 +87,7 @@ export function SongVersionHistory({
                   </div>
                   <div className="flex shrink-0 items-center gap-1">
                   {saved && (
-                    <span className="inline-flex size-8 items-center justify-center text-primary" title="Saved in your songbook">
+                    <span className="inline-flex size-8 items-center justify-center text-(color:--chord)" title="Saved in your songbook">
                       <Heart aria-hidden="true" className="size-4 fill-current" />
                       <span className="sr-only">Saved in your songbook</span>
                     </span>
@@ -100,19 +100,19 @@ export function SongVersionHistory({
                       aria-busy={saving}
                       onClick={onUse}
                       aria-label={`Save ${title.toLowerCase()} from ${createdAt} to your songbook`}
-                      className="inline-flex size-8 items-center justify-center rounded-full bg-control-surface text-primary hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50"
+                      className="inline-flex size-8 items-center justify-center rounded-full bg-control-surface text-(color:--chord) hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-(color:--chord) disabled:opacity-50"
                     >
                       <Heart aria-hidden="true" className={cn("size-4", saving && "animate-pulse")} />
                     </button>
                   ) : shown ? (
-                    <span className="inline-flex items-center gap-1 text-primary text-[0.65rem]"><Check className="size-3" />Viewing</span>
+                    <span className="inline-flex items-center gap-1 text-(color:--chord) text-[0.65rem]"><Check className="size-3" />Viewing</span>
                   ) : canPreview && (isOnline || downloaded) ? (
                     <Link
                       to="/song/$songId"
                       params={{ songId }}
                       search={{ version: version.id }}
                       aria-label={`View ${title.toLowerCase()} from ${createdAt}`}
-                      className="inline-flex rounded-full bg-control-surface px-2 py-1 text-xs text-primary hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-primary"
+                      className="inline-flex rounded-full bg-control-surface px-2 py-1 text-xs text-(color:--chord) hover:bg-control-hover focus-visible:outline-2 focus-visible:outline-(color:--chord)"
                     >View</Link>
                   ) : canPreview && !isOnline ? <span className="text-[0.65rem] text-muted-foreground">Not downloaded</span> : null}
                   </div>
@@ -132,7 +132,7 @@ export function SongVersionHistory({
                   : "You can view other versions without signing in. Sign in to save your own choice."}
             </p>}
             {viewerId && <p className="px-2 py-1.5 text-tiny leading-tight text-muted-foreground">
-              Restore your archived versions from <Link to="/submissions" className="text-primary underline underline-offset-2">Submissions</Link>.
+              Restore your archived versions from <Link to="/submissions" className="text-(color:--chord) underline underline-offset-2">Submissions</Link>.
             </p>}
         </div>
       )}

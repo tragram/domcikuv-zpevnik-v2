@@ -4,7 +4,7 @@ import {
   Outlet,
   redirect,
 } from "@tanstack/react-router";
-import { CloudUpload, Home, Shield } from "lucide-react";
+import { CloudUpload, Home, Shield, User } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import { redirectSearchSchema } from "~/types/types";
@@ -69,7 +69,7 @@ function RouteComponent() {
         userData ? "justify-start" : "justify-center",
       )}
     >
-      <div className="w-full sm:w-fit flex flex-col gap-4 xl:gap-8">
+      <div className="flex w-full flex-col gap-4 sm:w-fit xl:w-full xl:max-w-2xl xl:gap-8">
         <nav
           aria-label="Site navigation"
           className={cn(
@@ -83,6 +83,14 @@ function RouteComponent() {
               Home
             </Link>
           </Button>
+          {userData && (
+            <Button variant="toolbar" asChild>
+              <Link to="/profile">
+                <User />
+                Profile
+              </Link>
+            </Button>
+          )}
           {userData && (
             <Button variant="toolbar" asChild>
               <Link to="/submissions">
@@ -100,7 +108,7 @@ function RouteComponent() {
             </Button>
           )}
         </nav>
-        <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-2 md:p-4 lg:p-8 w-full max-w-full sm:max-w-fit">
+        <div className="flex flex-col gap-4 md:border-4 border-primary rounded-md p-2 md:p-4 lg:p-8 w-full max-w-full sm:max-w-fit xl:max-w-full">
           <Outlet />
         </div>
       </div>

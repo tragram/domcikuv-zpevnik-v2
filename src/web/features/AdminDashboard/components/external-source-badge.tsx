@@ -1,7 +1,6 @@
 import { ExternalLink, Globe } from "lucide-react";
 import { SONG_SOURCES, SONG_SOURCES_PRETTY } from "src/lib/contracts/song-sources";
 import { Badge } from "~/components/ui/badge";
-import { cn } from "~/lib/utils";
 
 interface ExternalSourceBadgeProps {
   sourceId: (typeof SONG_SOURCES)[number];
@@ -29,10 +28,7 @@ export function ExternalSourceBadge({
     >
       <Badge
         variant="outline"
-        className={cn(
-          "bg-violet-50 text-violet-700 border-violet-200 hover:bg-violet-100",
-          "dark:bg-violet-950/40 dark:text-violet-300 dark:border-violet-800",
-        )}
+        className="bg-info/10 text-info border-info/30 hover:bg-info/20"
       >
         <Globe className="w-3 h-3 mr-1" />
         {SONG_SOURCES_PRETTY[sourceId]}

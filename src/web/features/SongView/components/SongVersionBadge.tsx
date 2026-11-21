@@ -96,7 +96,7 @@ export function SongVersionBadge({
         <Badge
           asChild
           variant="outline"
-          className="max-w-full gap-[0.4em] rounded-full border-transparent bg-control-surface/50 px-[0.65em] py-[0.3em] text-[0.55em] leading-normal text-primary [&>svg]:size-[1em] cursor-pointer hover:bg-control-hover data-[state=open]:bg-control-hover focus-visible:outline-2 focus-visible:outline-primary"
+          className="max-w-full gap-[0.4em] rounded-full border-transparent bg-control-surface/50 px-[0.65em] py-[0.3em] text-[0.55em] leading-normal text-(color:--chord) [&>svg]:size-[1em] cursor-pointer hover:bg-control-hover data-[state=open]:bg-control-hover focus-visible:outline-2 focus-visible:outline-(color:--chord)"
         >
           <button type="button" aria-label={`Version details: ${displayLabel}`}>
             <span className="min-w-0 whitespace-normal break-words text-left" title={displayLabel}>{displayLabel}</span>
@@ -113,7 +113,7 @@ export function SongVersionBadge({
         className={`${songPanelClassName} w-80 max-[28rem]:w-[calc(100vw-2rem)] max-w-[calc(100vw-2rem)] max-h-[var(--radix-popover-content-available-height)] overflow-y-auto p-1 text-sm font-normal`}
       >
         <div className="space-y-1">
-          <h3 className="px-2 pt-1.5 pb-2 text-xs font-semibold uppercase tracking-wider text-primary">Version details</h3>
+          <h3 className="px-2 pt-1.5 pb-2 text-xs font-semibold uppercase tracking-wider text-(color:--chord)">Version details</h3>
           <Separator />
           <div className="space-y-1 px-2 py-1.5">
             <p className="font-medium">{label}</p>
@@ -136,7 +136,7 @@ export function SongVersionBadge({
                       href={songData.externalSource.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary underline underline-offset-2"
+                      className="text-(color:--chord) underline underline-offset-2"
                     >
                       {SONG_SOURCES_PRETTY[songData.externalSource.sourceId]}
                     </a>
@@ -156,7 +156,7 @@ export function SongVersionBadge({
             history={history}
             isOnline={isOnline}
           />
-          {shown?.status === "published" && !shown.isCurrent && (userData?.profile.isAdmin || userData?.profile.isTrusted) && <button className="m-2 text-xs text-primary underline" disabled={!isOnline || saving} onClick={() => void makeOfficial()}>Make official</button>}
+          {shown?.status === "published" && !shown.isCurrent && (userData?.profile.isAdmin || userData?.profile.isTrusted) && <button className="m-2 text-xs text-(color:--chord) underline" disabled={!isOnline || saving} onClick={() => void makeOfficial()}>Make official</button>}
 
         </div>
       </PopoverContent>

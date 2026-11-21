@@ -25,13 +25,13 @@
       background-color: transparent;
     }
     100% {
-      background-color: var(--color-red-300);
+      background-color: var(--accent);
     }
   }
 
   @keyframes fade-out {
     0% {
-      background-color: var(--color-red-300);
+      background-color: var(--accent);
     }
     100% {
       background-color: transparent;

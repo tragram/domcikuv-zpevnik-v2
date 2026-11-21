@@ -60,7 +60,7 @@ export function IllustrationEditForm({
             label={imageFile ? imageFile.name : "Replace image"}
             onFileSelect={handleImageSelection}
             previewUrl={imagePreview || illustration.imageURL}
-            className={cn(imageFile && "border-green-500/50 bg-green-50/10")}
+            className={cn(imageFile && "border-success/50 bg-success/10")}
           />
           {imageFile && (
             <Button
