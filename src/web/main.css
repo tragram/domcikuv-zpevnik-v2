@@ -71,7 +71,7 @@
   --muted-foreground: hsl(0 0% 15%);
   --accent: var(--secondary);
   --accent-foreground: var(--foreground);
-  --border: var(--foreground);
+  --border: var(--primary);
   --input: var(--border);
 }
 
@@ -116,7 +116,6 @@
   --muted: hsl(0 0% 15%);
   --muted-foreground: hsl(0 0% 85%);
   --accent: var(--secondary);
-  --border: var(--foreground);
   --ring: hsl(30 100% 60%);
 }
 
