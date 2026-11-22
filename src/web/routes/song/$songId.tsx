@@ -1,3 +1,5 @@
+import { assetLoadError } from "~/lib/asset-load-error";
+import { CustomError } from "~/components/CustomError";
 import { useQuery } from "@tanstack/react-query";
 import { singleSongQueryOptions } from "~/services/song-service";
 import { SongData } from "~/types/songData";
@@ -29,7 +31,7 @@ export const Route = createFileRoute("/song/$songId")({
   pendingMs: 200,
   pendingMinMs: 0, // A genuine cache miss should not add an artificial 1s delay.
   pendingComponent: SongPendingComponent,
-  errorComponent: () => <SongLoaderErrorComponent from="/song/$songId" />,
+  errorComponent: (props) => assetLoadError.test(props.error.message) ? <CustomError {...props} /> : <SongLoaderErrorComponent from="/song/$songId" />,
 });
 
 function RouteComponent() {

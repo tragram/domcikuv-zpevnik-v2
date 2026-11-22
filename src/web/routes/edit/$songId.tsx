@@ -1,3 +1,5 @@
+import { assetLoadError } from "~/lib/asset-load-error";
+import { CustomError } from "~/components/CustomError";
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import PendingComponent from "~/components/PendingComponent";
@@ -19,7 +21,7 @@ export const Route = createFileRoute("/edit/$songId")({
       text="Fetching the song from the DB..."
     />
   ),
-  errorComponent: () => <SongLoaderErrorComponent from="/edit/$songId" />,
+  errorComponent: (props) => assetLoadError.test(props.error.message) ? <CustomError {...props} /> : <SongLoaderErrorComponent from="/edit/$songId" />,
 });
 
 function RouteComponent() {

@@ -84,7 +84,7 @@ export default defineConfig(({ mode }) => {
             globDirectory: "dist/client/",
             globIgnores: ["screenshots/**", "songs/**"],
             globPatterns: [
-              "**/*.{js,css,html,ico,png,svg,woff,woff2}",
+              "**/*.{js,css,ico,png,svg,woff,woff2}",
               "site.webmanifest",
             ],
           },

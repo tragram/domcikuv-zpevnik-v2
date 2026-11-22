@@ -13,7 +13,7 @@ import {
   Upload,
   User,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { toast } from "sonner";
 import { normalizeWhitespace, replaceRepetitions } from "src/lib/chordpro";
 
@@ -42,7 +42,7 @@ import {
 } from "src/lib/contracts/image-generation";
 import { UserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
-import { hasPendingAppUpdate } from "~/services/app-updates";
+import { hasPendingAppUpdate, holdAppReload } from "~/services/app-updates";
 import { refreshSongVersions } from "~/services/version-service";
 import { OfflineToolbarBadge } from "~/components/OfflineIndicator";
 import { EditorSubmitDialog, type EditorSaveChoice } from "./EditorSubmitDialog";
@@ -113,6 +113,10 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   const isOnline = useIsOnline();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [confirmation, setConfirmation] = useState<{ publish: boolean } | null>(null);
+  // Save options in this dialog stay local until the user confirms them.
+  useLayoutEffect(() => {
+    if (confirmation) return holdAppReload();
+  }, [confirmation]);
   const queryClient = useQueryClient();
 
   const handleLoginRedirect = () => {
@@ -195,6 +199,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       parsedState.capo = Number(editorState.capo);
     }
 
+    const releaseReload = holdAppReload();
     let saved: { songId: string; pending: boolean } | undefined;
     try {
       const response = await submitSongVersion(parsedState, songData?.id, {
@@ -274,6 +279,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       });
     } finally {
       setIsSubmitting(false);
+      releaseReload();
     }
   };
 

@@ -10,6 +10,7 @@ import "./main.css";
 import { routeTree } from "./routeTree.gen";
 import { shouldRestoreSongScroll } from "./lib/scroll-restoration";
 
+import { assetLoadError } from "./lib/asset-load-error";
 import { startAppUpdates } from "./services/app-updates";
 
 if (import.meta.env.PROD) startAppUpdates();
@@ -19,19 +20,13 @@ export interface RouterContext {
   api: API;
 }
 
-// A deploy replaces the hashed chunk files while an already-open page still
-// references the old names (the service worker's autoUpdate also cleans the old
-// precache), so the next lazy route load fails with "Failed to fetch dynamically
-// imported module". A plain reload picks up the new build — do it automatically
-// instead of showing the error page. Rate-limited via sessionStorage so a
-// genuinely broken build degrades to the error page instead of a reload loop.
-const CHUNK_RELOAD_KEY = "app:lastChunkErrorReload";
-window.addEventListener("vite:preloadError", (event) => {
-  const last = Number(sessionStorage.getItem(CHUNK_RELOAD_KEY) ?? "0");
-  if (Date.now() - last < 60_000) return;
-  sessionStorage.setItem(CHUNK_RELOAD_KEY, String(Date.now()));
-  event.preventDefault();
-  window.location.reload();
+// Let the route error boundary offer recovery. TanStack Router recognizes the
+// browser's raw module-fetch error by its message prefix and otherwise reloads
+// the whole document, including when an editor is finishing a save.
+window.addEventListener("vite:preloadError", ({ payload }) => {
+  if (payload instanceof Error && assetLoadError.test(payload.message) && !payload.message.startsWith("Songbook asset: ")) {
+    payload.message = "Songbook asset: " + payload.message;
+  }
 });
 
 // Create the router

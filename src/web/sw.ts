@@ -1,16 +1,14 @@
 /// <reference lib="webworker" />
 declare let self: ServiceWorkerGlobalScope;
 
-import {
-  precacheAndRoute,
-  cleanupOutdatedCaches,
-  createHandlerBoundToURL,
-} from "workbox-precaching";
+import { precacheAndRoute, cleanupOutdatedCaches, getCacheKeyForURL, matchPrecache } from "workbox-precaching";
+// injectManifest bundles this worker after Vite has emitted the client.
+import appShell from "../../dist/client/index.html?raw";
 import { registerRoute, NavigationRoute } from "workbox-routing";
 import { CacheFirst, NetworkOnly } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
-import { clientsClaim } from "workbox-core";
+import { cacheNames, clientsClaim } from "workbox-core";
 
 
 const CACHE_NAMES = {
@@ -22,37 +20,101 @@ const CACHE_LIMITS = {
   IMAGES: { maxEntries: 300, maxAgeSeconds: 365 * 24 * 60 * 60 }, // 1 Year
 };
 
-precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
 
 clientsClaim();
 
-// A waiting worker activates naturally after all tabs close. For an explicit
-// restart, check the tabs here so every caller sees the same set of clients.
+// Current clients reload themselves, after any in-flight save. Older pages
+// need the worker to navigate them once the new release takes control.
+const tabsToReload = new Set<string>();
+function supportsCoordinatedReload(tab: Client): Promise<boolean> {
+  return new Promise(resolve => {
+    const channel = new MessageChannel();
+    const finish = (supported: boolean) => {
+      clearTimeout(timer);
+      channel.port1.close();
+      resolve(supported);
+    };
+    const timer = setTimeout(() => finish(false), 3000);
+    channel.port1.onmessage = event => finish(event.data === "reload-on-update");
+    try {
+      tab.postMessage({ type: "CHECK_UPDATE_RELOAD" }, [channel.port2]);
+    } catch {
+      finish(false);
+    }
+  });
+}
+
 self.addEventListener("message", (event) => {
   if (event.data?.type !== "RESTART_FOR_UPDATE") return;
   event.waitUntil((async () => {
     const tabs = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
-    const otherTabs = tabs.some((tab) => tab.url.startsWith(self.registration.scope)
+    const peers = tabs.filter(tab => tab.url.startsWith(self.registration.scope)
       && tab.id !== (event.source as Client | null)?.id);
-    if (otherTabs) {
-      event.ports[0]?.postMessage("other-tabs");
-      return;
-    }
+    const supported = await Promise.all(peers.map(supportsCoordinatedReload));
+    peers.forEach((tab, index) => {
+      if (!supported[index]) tabsToReload.add(tab.id);
+    });
     await self.skipWaiting();
   })());
 });
 
-// 1. Navigation Fallback
+self.addEventListener("activate", (event) => {
+  if (!tabsToReload.size) return;
+  event.waitUntil((async () => {
+    await self.clients.claim();
+    const windows = await self.clients.matchAll({ type: "window" });
+    for (const tab of windows) {
+      if (tabsToReload.has(tab.id)) {
+        // Start the navigation during activation. The fetch can wait for
+        // activation to finish, so don't await navigation inside this event.
+        void tab.navigate(tab.url).catch(console.warn);
+      }
+    }
+    tabsToReload.clear();
+  })());
+});
+
+// The shell is small and belongs to this exact worker. Returning a fresh HTML
+// Response also avoids replaying redirected or damaged cached navigations.
+const entryScript = appShell.match(/<script\b[^>]*\bsrc="([^"]+)"/)?.[1];
+const reconnectPage = `<!doctype html><html lang="en"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reopen the songbook</title><main><h1>Reconnect to open the songbook</h1>
+<p>The app files on this device are incomplete. Reconnect and try again.</p>
+<button onclick="location.reload()">Try again</button></main></html>`;
+const htmlResponse = (html: string, status = 200) => new Response(html, {
+  status, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
+});
+
 let allowlist: undefined | RegExp[];
 if (import.meta.env.DEV) allowlist = [/^\/$/];
 
 registerRoute(
-  new NavigationRoute(createHandlerBoundToURL("index.html"), {
+  new NavigationRoute(async ({ request }) => {
+    const entry = entryScript && await matchPrecache(entryScript).catch(() => undefined);
+    if (entry && entry.ok && /javascript/i.test(entry.headers.get("content-type") ?? "")) {
+      return htmlResponse(appShell);
+    }
+    if (entry && entryScript) {
+      // Otherwise a network-loaded document can request this same script and
+      // immediately hit the bad cached response again.
+      const key = getCacheKeyForURL(entryScript);
+      if (key) await caches.open(cacheNames.precache).then(c => c.delete(key)).catch(() => {});
+    }
+    // The browser can evict Cache Storage independently of the worker. Load
+    // the requested URL from the origin, which may already serve a newer build.
+    try {
+      return await fetch(request);
+    } catch {
+      return htmlResponse(reconnectPage, 503);
+    }
+  }, {
     allowlist,
-    denylist: [/^\/api\//, /^\/songs\//],
+    denylist: [/^\/(?:api|songs|assets|icons|screenshots)\//, /^\/site\.webmanifest(?:\?|$)/],
   }),
 );
+precacheAndRoute(self.__WB_MANIFEST);
 
 // 2. Heavy Media - CacheFirst
 registerRoute(

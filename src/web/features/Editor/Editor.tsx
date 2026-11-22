@@ -5,6 +5,7 @@ import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
 import React, {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -22,6 +23,7 @@ import { toast } from "sonner";
 import useLocalStorageState from "use-local-storage-state";
 import { convertToChordPro } from "src/lib/chords2chordpro";
 import { cn } from "~/lib/utils";
+import { holdAppReload } from "~/services/app-updates";
 import { autofillChordpro } from "~/services/editor-service";
 import { SongData } from "~/types/songData";
 import { EditorState } from "~/types/types";
@@ -239,13 +241,17 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   // own. Previously the hook seeded itself from `songData` once and froze that
   // snapshot — and re-persisted it to storage on clear — so after submitting an
   // edit, reopening the editor served the stale pre-edit version.
-  const [draft, setDraft] = useLocalStorageState<EditorState | null>(
+  const [draft, setDraft, { isPersistent }] = useLocalStorageState<EditorState | null>(
     editorStateKey,
     {
       defaultValue: () =>
         readMatchingLegacyDraft(songData?.id, versionId) ?? null,
     },
   );
+  const draftNeedsStorage = draft !== null && !isPersistent;
+  useLayoutEffect(() => {
+    if (draftNeedsStorage) return holdAppReload();
+  }, [draftNeedsStorage]);
   const obsoleteDraft = !!versionId && !!draft && draft.expectedRevision == null;
   useEffect(() => {
     if (obsoleteDraft) setDraft(null);
@@ -274,7 +280,9 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   } | null>(null);
   // Field errors stay hidden while the user is still editing; only surface
   // them (red borders) once they've tried to submit.
-  const [receipt, setReceipt] = useState<{ songId: string; pending: boolean; editorKey: string }>();
+  const [receipt, setReceipt] = useState<{ songId: string; pending: boolean; editorKey: string } | undefined>(
+    () => window.history.state?.editorReceipt,
+  );
   const [submitAttempted, setSubmitAttempted] = useState(false);
   // Editor doesn't unmount between songs (e.g. navigating from one song's
   // edit page straight to another's), so reset explicitly on identity change
@@ -624,7 +632,12 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   const finishSubmission = (savedHere?: { songId: string; pending: boolean }) => {
     setDraft(null);
     setSubmitAttempted(false);
-    if (savedHere) setReceipt({ ...savedHere, editorKey: editorStateKey });
+    if (savedHere) {
+      const confirmed = { ...savedHere, editorKey: editorStateKey };
+      // Keep confirmation on this history entry across the coordinated reload.
+      window.history.replaceState({ ...window.history.state, editorReceipt: confirmed }, "");
+      setReceipt(confirmed);
+    }
   };
 
   const canBeSubmitted =

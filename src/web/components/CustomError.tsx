@@ -7,7 +7,7 @@ import { retryAppLoad, updateLabels, useAppUpdate } from "~/services/app-updates
 import ConfirmationDialog from "./dialogs/confirmation-dialog";
 import { Button } from "./ui/button";
 
-const assetLoadError = /dynamically imported module|importing a module script failed|chunkloaderror|loading chunk .* failed|unable to preload css/i;
+import { assetLoadError } from "~/lib/asset-load-error";
 
 export function CustomError({ error }: ErrorComponentProps) {
   const online = useIsOnline();
@@ -61,7 +61,7 @@ export function CustomError({ error }: ErrorComponentProps) {
           {restarting || retrying ? "Trying again…" : online && update === "ready" ? updateLabels.ready : "Try again"}
         </Button>
         <Button variant="outline" asChild>
-          <Link to="/" reloadDocument>
+          <Link to="/">
             <House />
             Back to songbook
           </Link>
@@ -69,7 +69,7 @@ export function CustomError({ error }: ErrorComponentProps) {
       </div>
       {online && update === "otherTabs" && (
         <p role="status" className="text-sm text-muted-foreground">
-          Close any other songbook tabs, then try again to finish updating.
+          Another songbook tab didn’t respond. Open it and retry. If it’s running an older version, finish your work there and close it.
         </p>
       )}
       {downloading && <p role="status" className="text-sm text-muted-foreground">Downloading an app update…</p>}
