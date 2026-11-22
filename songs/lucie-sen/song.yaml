@@ -1,0 +1,27 @@
+songId: lucie-sen
+official: v1
+versions:
+  v1:
+    id: lucie-sen_1442181600000
+    createdAt: '2015-09-13T22:00:00.000Z'
+    updatedAt: '2026-07-15T15:52:36.000Z'
+    revision: 2
+    youtubeId: h4hvix14NBA
+prompts:
+  - id: lucie-sen_gpt-4o-mini_v1
+    songId: lucie-sen
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an ethereal scene depicting a twilight landscape where shadows of
+      dreams intertwine with glowing stars. Include a flowing river of
+      butterflies carrying cosmic dust, while a new moon casts a gentle light,
+      dispelling the dark shadows. Capture the essence of transformation and the
+      rhythm of nature in a dreamlike atmosphere.
+    createdAt: 2025-08-05T09:45:47.000Z
+    updatedAt: 2026-02-08T17:35:58.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

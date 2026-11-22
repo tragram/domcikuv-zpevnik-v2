@@ -10,7 +10,7 @@ let full: string;
 let thumb: string;
 beforeEach(() => {
   root = fs.mkdtempSync(path.join(os.tmpdir(), "webp-normalization-"));
-  full = path.join(root, "songs/illustrations/historical/prompt/full/image.webp");
+  full = path.join(root, "songs/historical/prompt/full/image.webp");
   thumb = full.replace(`${path.sep}full${path.sep}`, `${path.sep}thumbnail${path.sep}`);
   fs.mkdirSync(path.dirname(full), { recursive: true });
   fs.mkdirSync(path.dirname(thumb), { recursive: true });

@@ -1,0 +1,29 @@
+songId: wanastowy_vjecy-naha
+official: v1
+versions:
+  v1:
+    id: wanastowy_vjecy-naha_1436824800000
+    createdAt: '2015-07-13T22:00:00.000Z'
+    updatedAt: '2026-07-30T11:34:53.000Z'
+    revision: 2
+    youtubeId: PeJgYEglJos
+prompts:
+  - id: wanastowy_vjecy-naha_gpt-4o-mini_v1
+    songId: wanastowy_vjecy-naha
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create a whimsical and colorful illustration depicting a surreal
+      dreamscape where a butterfly floats above a shimmering body of water,
+      surrounded by vibrant colors and glowing fireflies. Include elements like
+      a magical fish swimming beneath the surface, angels lifting lanterns in
+      the dark, and playful creatures like a dog and a cat in a bucket of
+      bubbles. The scene should evoke a sense of freedom and enchantment,
+      capturing the essence of love and nature in a fantastical setting.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:38.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

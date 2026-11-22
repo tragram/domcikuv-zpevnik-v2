@@ -17,15 +17,15 @@ def main():
     parser.add_argument("--base-url", default="http://localhost:5173")
     parser.add_argument("--output", type=Path, default=Path(__file__).with_name("font-sizes.csv"))
     args = parser.parse_args()
-    songs = sorted((songs_path() / "chordpro").glob("*.pro"))
+    songs = sorted(path.parent.name for path in songs_path().glob("*/song.yaml"))
     if not songs:
-        raise RuntimeError("No songs/chordpro files found")
+        raise RuntimeError("No song manifests found")
     driver = webdriver.Chrome()
     results = []
     try:
         for song in songs:
-            result = {"song.id": song.stem}
-            driver.get(f"{args.base_url.rstrip('/')}/song/{quote(song.stem)}")
+            result = {"song.id": song}
+            driver.get(f"{args.base_url.rstrip('/')}/song/{quote(song)}")
             for device, size in {"Galaxy Tab S7": (800, 1280), "iPhone XR": (414, 896), "Galaxy Z Flip6": (540, 1320)}.items():
                 driver.set_window_size(*size)
                 for columns in ([1, 2] if device == "Galaxy Tab S7" else [1]):

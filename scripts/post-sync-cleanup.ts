@@ -6,6 +6,7 @@ import {
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 import * as schema from "../src/lib/db/schema";
+import { canonicalIllustrationPath } from "./shared/illustration-paths";
 import {
   archiveOriginal, promoteIllustration, referencesBucketSource, sha256, sourceKey,
   type ArchiveRecord, type CleanupResult, type CleanupStore,
@@ -33,8 +34,11 @@ const archiveRecordSchema = z.object({
   staticSha256: z.string().regex(/^[a-f0-9]{64}$/).optional(),
   promotedAt: z.iso.datetime(),
 }).superRefine((record, ctx) => {
-  const imageURL = `/${record.sourceKey}${record.sourceKey.endsWith(".webp") ? "" : ".webp"}`;
-  if (record.imageURL !== imageURL || record.thumbnailURL !== imageURL.replace("/full/", "/thumbnail/")) {
+  const imageURL = canonicalIllustrationPath(`/${record.sourceKey}${record.sourceKey.endsWith(".webp") ? "" : ".webp"}`);
+  if (
+    canonicalIllustrationPath(record.imageURL) !== imageURL ||
+    canonicalIllustrationPath(record.thumbnailURL) !== imageURL.replace(/\/full\/([^/]+)$/, "/thumbnail/$1")
+  ) {
     ctx.addIssue({ code: "custom", message: "Archive paths do not match the source key" });
   }
 });

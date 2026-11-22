@@ -1,0 +1,28 @@
+songId: zalman_spol-rana_v_trave
+official: v1
+versions:
+  v1:
+    id: zalman_spol-rana_v_trave_1436824800000
+    createdAt: '2015-07-13T22:00:00.000Z'
+    updatedAt: '2026-09-21T16:14:09.000Z'
+    revision: 2
+    youtubeId: Xq37DF8wBsA
+prompts:
+  - id: zalman_spol-rana_v_trave_gpt-4o-mini_v1
+    songId: zalman_spol-rana_v_trave
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a serene morning scene in the countryside,
+      featuring a man removing his shoes and dipping his feet in dewy grass. In
+      the background, depict a beautiful Moravian woman and a golden wine glass,
+      symbolizing love and celebration. Include a mystical well that seems to
+      whisper wisdom, surrounded by lush greenery, capturing the essence of
+      longing and reflection.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:49.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

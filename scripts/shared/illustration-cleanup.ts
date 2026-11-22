@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { normalizeWebp } from "../sync/images.mjs";
 import sharp from "sharp";
+import { canonicalIllustrationPath } from "./illustration-paths";
 
 export const ORIGINAL_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -101,10 +102,10 @@ export async function verifyProduction(
   baseURL: string,
   fetcher: typeof fetch = fetch,
 ): Promise<"ready" | "awaiting-deployment" | "content-mismatch"> {
-  const image = await productionImage(baseURL, record.imageURL, fetcher);
+  const image = await productionImage(baseURL, canonicalIllustrationPath(record.imageURL), fetcher);
   if (!image) return "awaiting-deployment";
   if (sha256(image) !== (record.staticSha256 ?? record.sha256)) return "content-mismatch";
-  const thumbnail = await productionImage(baseURL, record.thumbnailURL, fetcher);
+  const thumbnail = await productionImage(baseURL, canonicalIllustrationPath(record.thumbnailURL), fetcher);
   if (!thumbnail) return "awaiting-deployment";
   try {
     if ((await sharp(thumbnail).metadata()).format !== "webp") return "content-mismatch";
@@ -125,13 +126,13 @@ export async function promoteIllustration(
   const original = await store.readImage(key);
   const source = original ?? await store.readImage(`trash/${key}`);
   if (!source?.bytes.length) throw new Error(`R2 source and trash copy missing: ${key}`);
-  const imageURL = `/${key}${key.endsWith(".webp") ? "" : ".webp"}`;
+  const imageURL = canonicalIllustrationPath(`/${key}${key.endsWith(".webp") ? "" : ".webp"}`);
   const record: ArchiveRecord = {
     version: 1,
     illustrationId: illustration.id,
     sourceKey: key,
     imageURL,
-    thumbnailURL: imageURL.replace("/full/", "/thumbnail/"),
+    thumbnailURL: imageURL.replace(/\/full\/([^/]+)$/, "/thumbnail/$1"),
     sha256: sha256(source.bytes),
     staticSha256: sha256(await normalizeWebp(source.bytes)),
     promotedAt: options.now.toISOString(),
@@ -158,8 +159,10 @@ export async function archiveOriginal(
   }
   const current = await store.readIllustration(record.illustrationId);
   if (
-    !current || current.deleted || current.imageURL !== record.imageURL ||
-    current.thumbnailURL !== record.thumbnailURL || await store.referencesSource(record.sourceKey)
+    !current || current.deleted ||
+    canonicalIllustrationPath(current.imageURL) !== canonicalIllustrationPath(record.imageURL) ||
+    canonicalIllustrationPath(current.thumbnailURL) !== canonicalIllustrationPath(record.thumbnailURL) ||
+    await store.referencesSource(record.sourceKey)
   ) return "retained";
   const source = await store.readImage(record.sourceKey);
   if (source && sha256(source.bytes) !== record.sha256) return "changed";

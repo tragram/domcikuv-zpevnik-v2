@@ -15,6 +15,10 @@ def songs_path():
     return Path(__file__).resolve().parents[2] / "songs"
 
 
+def chordpro_files():
+    return sorted(songs_path().glob("*/*.pro"))
+
+
 def normalize_string(input_str):
     """Convert a string to ASCII and replace spaces with underscores."""
     # Convert to closest ASCII representation using unidecode

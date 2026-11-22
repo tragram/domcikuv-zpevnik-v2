@@ -1,0 +1,28 @@
+songId: dolly_partonmiley_cyrus-jolene
+official: v1
+versions:
+  v1:
+    id: dolly_partonmiley_cyrus-jolene_1499983200000
+    createdAt: '2017-07-13T22:00:00.000Z'
+    updatedAt: '2026-02-08T17:33:28.000Z'
+    revision: 1
+    youtubeId: f6H4r1kWqSM
+prompts:
+  - id: dolly_partonmiley_cyrus-jolene_gpt-4o-mini_v1
+    songId: dolly_partonmiley_cyrus-jolene
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an image of a heartbroken woman with long, flowing hair, standing
+      in a lush, vibrant field. In the background, depict a stunningly beautiful
+      woman with auburn hair and emerald green eyes, radiating confidence. The
+      scene should convey a sense of longing and desperation, with soft, dreamy
+      lighting that evokes a feeling of summer rain. Include elements that
+      symbolize love and rivalry, such as a wilting flower in the foreground.
+    createdAt: 2025-08-05T09:45:44.000Z
+    updatedAt: 2026-02-08T17:33:28.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -44,7 +44,7 @@ export async function normalizeStaticImages(root = process.cwd()) {
     }
   }
   // Inventory first, rejecting symlinks before any files are read or replaced.
-  await visit(path.join(root, "songs", "illustrations"));
+  await visit(path.join(root, "songs"));
   for (const target of fullImages) {
     const dir = path.dirname(target);
     const original = fs.readFileSync(target);

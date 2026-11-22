@@ -1,5 +1,4 @@
 import { withVersionMaintenance } from "./shared/version-maintenance";
-import { D1Helper, useProxyD1 as withProxyD1 } from "@nerdfolio/drizzle-d1-helpers";
 import { eq } from "drizzle-orm";
 import * as fs from "fs";
 import yaml from "js-yaml";
@@ -14,14 +13,15 @@ import {
   songSubmission,
   songImport,
 } from "../src/lib/db/schema/song.schema";
-import { AppDatabase } from "../src/worker/api/utils";
+import type { AppDatabase } from "../src/worker/api/utils";
 import { syncSession, userFavoriteSongs } from "../src/lib/db/schema";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { config } from "dotenv";
+import { parseSnapshotSheet, songManifestSchema } from "./shared/song-snapshot";
+import { defaultIllustrationId, promptFolder, sanitizePathSegment } from "../src/lib/song-ids";
 import { readD1Config } from "./shared/d1-config";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-config({ path: path.resolve(__dirname, "../.dev.vars") });
 
 const VERBOSE = false;
 const SYSTEM_EMAIL = "domho108@gmail.com";
@@ -31,22 +31,6 @@ const SYSTEM_EMAIL = "domho108@gmail.com";
 // ---------------------------------------------------------------------------
 
 type Environment = "dev" | "staging" | "prod";
-
-// Shape of songs/illustrations/<songId>/illustrations.yaml (written by scripts/sync.ts)
-type IllustrationsYaml = {
-  prompts: Array<{
-    id: string;
-    text: string;
-    summaryModel: string;
-    summaryPromptVersion: string;
-    createdAt: string;
-    illustrations: Array<{
-      imageModel: string;
-      filename: string;
-      createdAt: string;
-    }>;
-  }>;
-};
 
 function parseEnvironment(): Environment {
   const args = process.argv.slice(2);
@@ -61,55 +45,8 @@ function parseEnvironment(): Environment {
 }
 
 // ---------------------------------------------------------------------------
-// Core migration helpers (unchanged)
+// Snapshot seed
 // ---------------------------------------------------------------------------
-
-/**
- * Parses a chordpro file and extracts metadata and content
- */
-function parseChordproFile(content: string) {
-  const lines = content.split("\n");
-  const metadata: Record<string, string> = {};
-  let contentStartIndex = 0;
-
-  const allowedMetadataKeys = new Set([
-    "title",
-    "artist",
-    "key",
-    "capo",
-    "tempo",
-    "range",
-    "language",
-    "startMelody",
-    "createdAt",
-    "updatedAt",
-    "illustrationId",
-    "promptId",
-  ]);
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    const match = line.match(/^\{([^:]+):\s*(.+)\}$/);
-
-    if (match) {
-      const key = match[1].trim();
-
-      if (allowedMetadataKeys.has(key)) {
-        metadata[key] = match[2].trim();
-        contentStartIndex = i + 1;
-      } else {
-        break;
-      }
-    } else if (line !== "") {
-      break;
-    }
-  }
-
-  return {
-    metadata,
-    chordpro: lines.slice(contentStartIndex).join("\n").trim(),
-  };
-}
 
 /**
  * Creates or gets the system user for migrations
@@ -156,77 +93,34 @@ async function clearTables(db: AppDatabase) {
   });
 }
 
-/**
- * Uploads a single song's chordpro file and sets it as Published
- */
-async function uploadSong(
-  db: AppDatabase,
-  songId: string,
-  chordproPath: string,
-  systemUserId: string,
-  logger: (msg: string) => void,
-): Promise<string> {
-  logger(`\n▶️ Starting upload for: ${songId}`);
-  const { metadata, chordpro } = parseChordproFile(
-    fs.readFileSync(chordproPath, "utf-8"),
-  );
-
-  logger(
-    `  [DEBUG] Parsed metadata for ${songId}: ${JSON.stringify(metadata)}`,
-  );
-
-  const now = new Date();
-  const createdAt = metadata.createdAt
-    ? new Date(parseInt(metadata.createdAt))
-    : now;
-
-  logger(`  [DEBUG] Computed createdAt for ${songId}: ${createdAt}`);
-
-  logger(`  [DEBUG] 1. Inserting into 'song' table...`);
-  await db.insert(song).values({
-    id: songId,
-    createdAt,
-    updatedAt: now,
+function readSongFolder(folder: string, songId: string) {
+  const manifestPath = path.join(folder, "song.yaml");
+  if (!fs.existsSync(manifestPath)) {
+    if (fs.readdirSync(folder).some(file => file.endsWith(".pro"))) {
+      throw new Error("Missing song.yaml in " + folder);
+    }
+    return null;
+  }
+  const manifest = songManifestSchema.parse(yaml.load(fs.readFileSync(manifestPath, "utf8")));
+  if (manifest.songId !== songId) throw new Error("Song ID mismatch: " + manifestPath);
+  const expected = new Set(Object.keys(manifest.versions).map(name => `${name}.pro`));
+  if (fs.readdirSync(folder).some(file => file.endsWith(".pro") && !expected.has(file))) {
+    throw new Error("Unlisted sheet in " + folder);
+  }
+  const versions = Object.entries(manifest.versions).map(([name, version]) => {
+    const sheet = parseSnapshotSheet(fs.readFileSync(path.join(folder, `${name}.pro`), "utf8"));
+    return {
+      ...sheet, ...version, name,
+      createdAt: new Date(version.createdAt), updatedAt: new Date(version.updatedAt),
+    };
   });
-
-  const versionId = `${songId}_${createdAt.getTime()}`;
-  logger(
-    `  [DEBUG] 2. Inserting into 'songVersion' table with ID: ${versionId}...`,
-  );
-  await db.insert(songVersion).values({
-    id: versionId,
-    songId,
-    title: metadata.title,
-    artist: metadata.artist,
-    key: metadata.key || null,
-    language: metadata.language || "other",
-    capo: parseInt(metadata.capo) || 0,
-    tempo: metadata.tempo || null,
-    range: metadata.range || null,
-    startMelody: metadata.startMelody || null,
-    chordpro,
-    userId: systemUserId,
-    status: "published",
-    approvedBy: systemUserId,
-    approvedAt: createdAt,
-    createdAt: createdAt,
-    updatedAt: now,
-  });
-
-  logger(`  [DEBUG] 3. Updating 'song' with currentVersionId...`);
-  await db
-    .update(song)
-    .set({ currentVersionId: versionId })
-    .where(eq(song.id, songId));
-
-  logger(`  [DEBUG] 4. Inserting into 'userFavoriteSongs'...`);
-  await db.insert(userFavoriteSongs).values({
-    userId: systemUserId,
-    songId,
-  });
-
-  if (VERBOSE) logger(`  Uploaded: ${songId}`);
-  return metadata.illustrationId;
+  const official = versions.find(version => version.name === manifest.official)!;
+  const activeIllustration = official.metadata.illustrationId;
+  if (activeIllustration && !manifest.prompts.some(prompt => prompt.illustrations.some(ill =>
+    activeIllustration === `${prompt.id}_${ill.imageModel}` ||
+    activeIllustration === defaultIllustrationId(prompt.id, ill.imageModel),
+  ))) throw new Error("Unknown active illustration in " + manifestPath);
+  return { songId, official, versions, prompts: manifest.prompts };
 }
 
 /**
@@ -235,16 +129,13 @@ async function uploadSong(
 async function uploadIllustrations(
   db: AppDatabase,
   songId: string,
-  illustrationsYamlPath: string,
+  prompts: NonNullable<ReturnType<typeof readSongFolder>>["prompts"],
+  activeIllustration: string | undefined,
   baseFolder: string,
   logger: (msg: string) => void,
 ) {
   logger(`  [DEBUG] Reading illustrations YAML for ${songId}...`);
-  const data = yaml.load(
-    fs.readFileSync(illustrationsYamlPath, "utf-8"),
-  ) as IllustrationsYaml;
-
-  for (const prompt of data.prompts) {
+  for (const prompt of prompts) {
     logger(`  [DEBUG] Inserting 'illustrationPrompt' ID: ${prompt.id}`);
     await db.insert(illustrationPrompt).values({
       id: prompt.id,
@@ -252,12 +143,14 @@ async function uploadIllustrations(
       text: prompt.text,
       summaryModel: prompt.summaryModel,
       summaryPromptVersion: prompt.summaryPromptVersion,
-      createdAt: new Date(prompt.createdAt),
+      createdAt: prompt.createdAt instanceof Date ? prompt.createdAt : new Date(prompt.createdAt ?? 0),
     });
 
     for (const ill of prompt.illustrations) {
-      const illustrationId = `${prompt.id}_${ill.imageModel}`;
-      const shortPromptId = prompt.id.replace(`${songId}_`, "");
+      const illustrationId = activeIllustration === defaultIllustrationId(prompt.id, ill.imageModel)
+        ? activeIllustration
+        : `${prompt.id}_${ill.imageModel}`;
+      const shortPromptId = sanitizePathSegment(promptFolder(songId, prompt.id));
 
       logger(`  [DEBUG] Inserting 'songIllustration' ID: ${illustrationId}`);
       await db.insert(songIllustration).values({
@@ -265,9 +158,9 @@ async function uploadIllustrations(
         songId,
         promptId: prompt.id,
         imageModel: ill.imageModel,
-        imageURL: `${baseFolder}/illustrations/${songId}/${shortPromptId}/full/${ill.filename}`,
-        thumbnailURL: `${baseFolder}/illustrations/${songId}/${shortPromptId}/thumbnail/${ill.filename}`,
-        createdAt: new Date(ill.createdAt),
+        imageURL: `${baseFolder}/${songId}/${shortPromptId}/full/${ill.filename}`,
+        thumbnailURL: `${baseFolder}/${songId}/${shortPromptId}/thumbnail/${ill.filename}`,
+        createdAt: ill.createdAt instanceof Date ? ill.createdAt : new Date(ill.createdAt),
       });
     }
   }
@@ -276,69 +169,48 @@ async function uploadIllustrations(
 /**
  * Main Migration Logic
  */
-async function processAndMigrateSongs(
+export async function processAndMigrateSongs(
   db: AppDatabase,
   songsPath: string,
   clearExisting: boolean = true,
   baseFolder: string = "/songs",
 ) {
+  const catalog = fs.readdirSync(songsPath, { withFileTypes: true })
+    .filter(entry => entry.isDirectory())
+    .map(entry => readSongFolder(path.join(songsPath, entry.name), entry.name))
+    .filter(entry => entry !== null);
+  if (!catalog.length) throw new Error("Refusing to seed an empty snapshot");
+  const ids = catalog.flatMap(entry => entry.versions.map(version => version.id));
+  if (new Set(ids).size !== ids.length) throw new Error("Duplicate version ID in snapshot");
+
   const systemUserId = await ensureSystemUser(db);
   if (clearExisting) await clearTables(db);
 
-  const chordproDir = path.join(songsPath, "chordpro");
-  const illustrationsDir = path.join(songsPath, "illustrations");
-
-  const files = fs.readdirSync(chordproDir).filter((f) => f.endsWith(".pro"));
-  console.log(`Processing ${files.length} songs...`);
-
-  for (const filename of files) {
-    const songId = path.basename(filename, ".pro");
-    const logs: string[] = [];
-    const logger = (msg: string) => logs.push(msg);
-
-    try {
-      const illustrationId = await uploadSong(
-        db,
-        songId,
-        path.join(chordproDir, filename),
-        systemUserId,
-        logger,
-      );
-
-      const yamlPath = path.join(
-        illustrationsDir,
-        songId,
-        "illustrations.yaml",
-      );
-
-      if (fs.existsSync(yamlPath)) {
-        await uploadIllustrations(
-          db,
-          songId,
-          yamlPath,
-          baseFolder,
-          logger,
-        );
-
-        if (illustrationId) {
-          logger(
-            `  [DEBUG] 5. Updating 'song' with currentIllustrationId: ${illustrationId}...`,
-          );
-          await db
-            .update(song)
-            .set({ currentIllustrationId: illustrationId })
-            .where(eq(song.id, songId));
-        }
-      }
-
-      if (VERBOSE) {
-        console.log(`✅ Success: ${songId}`);
-      }
-    } catch (error) {
-      console.error(`\n❌ Failed: ${songId}`);
-      logs.forEach((log) => console.error(log));
-      console.error(error);
+  console.log("Processing " + catalog.length + " songs...");
+  for (const { songId, official, versions, prompts } of catalog) {
+    const logger = VERBOSE ? console.log : () => {};
+    await db.insert(song).values({
+      id: songId, createdAt: official.createdAt, updatedAt: official.updatedAt,
+    });
+    for (const { id, metadata, chordpro, createdAt, updatedAt, label, description, youtubeId, revision } of versions) {
+      await db.insert(songVersion).values({
+        id, songId, chordpro, createdAt, updatedAt,
+        title: metadata.title, artist: metadata.artist,
+        key: metadata.key || null, language: metadata.language || "other",
+        capo: parseInt(metadata.capo) || 0, tempo: metadata.tempo || null,
+        range: metadata.range || null, startMelody: metadata.startMelody || null,
+        label: label ?? null, description: description ?? null,
+        youtubeId: youtubeId ?? null, revision,
+        userId: systemUserId, approvedBy: systemUserId, approvedAt: createdAt,
+        status: "published",
+      });
     }
+    await uploadIllustrations(db, songId, prompts, official.metadata.illustrationId, baseFolder, logger);
+    await db.update(song).set({
+      currentVersionId: official.id,
+      currentIllustrationId: official.metadata.illustrationId || null,
+    }).where(eq(song.id, songId));
+    await db.insert(userFavoriteSongs).values({ userId: systemUserId, songId });
   }
   console.log("✅ Migration complete!");
 }
@@ -369,6 +241,7 @@ async function confirm(message: string, defaultYes: boolean): Promise<boolean> {
 
 async function runDev(songsPath: string) {
   console.log("🛠️  Running migration against LOCAL D1...");
+  const { D1Helper } = await import("@nerdfolio/drizzle-d1-helpers");
   await D1Helper.get("DB").useLocalD1((db) =>
     processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
   );
@@ -411,6 +284,7 @@ async function runStaging(songsPath: string) {
   }
 
   console.log("Running migration...");
+  const { useProxyD1: withProxyD1 } = await import("@nerdfolio/drizzle-d1-helpers");
   await withProxyD1({ accountId, token, databaseId }, async (db) =>
     processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
   );
@@ -441,6 +315,7 @@ async function runProd(songsPath: string) {
   }
 
   console.log("Running migration...");
+  const { useProxyD1: withProxyD1 } = await import("@nerdfolio/drizzle-d1-helpers");
   await withProxyD1({ accountId, token, databaseId }, async (db) =>
     processAndMigrateSongs(db as unknown as AppDatabase, songsPath),
   );
@@ -451,6 +326,7 @@ async function runProd(songsPath: string) {
 // ---------------------------------------------------------------------------
 
 async function main() {
+  config({ path: path.resolve(__dirname, "../.dev.vars") });
   const env = parseEnvironment();
   const songsPath = path.resolve(__dirname, "../songs");
 
@@ -466,4 +342,4 @@ async function main() {
   }
 }
 
-main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) void main();

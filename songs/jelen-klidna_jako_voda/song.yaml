@@ -1,0 +1,29 @@
+songId: jelen-klidna_jako_voda
+official: v1
+versions:
+  v1:
+    id: jelen-klidna_jako_voda_1476396000000
+    createdAt: '2016-10-13T22:00:00.000Z'
+    updatedAt: '2026-04-11T23:14:13.000Z'
+    revision: 2
+    youtubeId: Y8G6yobRbJQ
+prompts:
+  - id: jelen-klidna_jako_voda_gpt-4o-mini_v1
+    songId: jelen-klidna_jako_voda
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration depicting a serene, enchanting landscape where a
+      person dances barefoot on smooth stones by a flowing river, embodying both
+      calmness and strength. The scene should evoke feelings of love and
+      companionship, with elements of morning dew and fresh snow, symbolizing
+      purity and renewal. Include hints of a challenging journey, like distant
+      mountains and shadows, to represent life's struggles, while the overall
+      atmosphere remains hopeful and uplifting.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:55.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

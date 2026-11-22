@@ -1,0 +1,27 @@
+songId: zluty_pes-modra
+official: v1
+versions:
+  v1:
+    id: zluty_pes-modra_1247522400000
+    createdAt: '2009-07-13T22:00:00.000Z'
+    updatedAt: '2026-07-30T09:15:29.000Z'
+    revision: 2
+    youtubeId: 8NjJzaBQBqo
+prompts:
+  - id: zluty_pes-modra_gpt-4o-mini_v1
+    songId: zluty_pes-modra
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration featuring a vibrant blue planet with a sparkling
+      blue ocean and a clear blue sky. Include whimsical elements like a blue
+      cow, a blue grass field, a blue Arctic fox, and a blue military book.
+      Incorporate a sense of hope and love through various shades of blue,
+      evoking a joyful and nostalgic atmosphere.
+    createdAt: 2025-08-05T09:45:50.000Z
+    updatedAt: 2026-02-08T17:38:54.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

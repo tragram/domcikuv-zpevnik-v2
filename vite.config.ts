@@ -52,9 +52,11 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
       !isTest &&
         (copy({
+          flatten: false,
           targets: [
-            { src: "songs/*", dest: "dist/client/songs" },
-            { src: "src/assets/*", dest: "dist/client/assets" },
+            { src: "songs/*/*/{full,thumbnail}/*.webp", dest: "dist/client/songs" },
+            { src: "songs/*/*/thumbnail/*.webp", dest: "dist/client/songs/illustrations" }, // D1 cutover
+            { src: "src/assets/*", dest: "dist/client" },
           ],
           hook: "writeBundle",
         }) as PluginOption),
@@ -82,9 +84,7 @@ export default defineConfig(({ mode }) => {
             globDirectory: "dist/client/",
             globPatterns: [
               "**/*.{js,css,html,ico,png,svg,yaml,json}",
-              // "songs/chordpro/*.pro",
-              "songs/illustrations/*/*/thumbnail/*.webp",
-              // "songs/image_prompts/**/*.yaml",
+              "songs/*/*/thumbnail/*.webp",
               "site.webmanifest",
             ],
           },

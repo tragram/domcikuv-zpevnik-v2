@@ -1,0 +1,27 @@
+songId: chinaski-drobna_paralela
+official: v1
+versions:
+  v1:
+    id: chinaski-drobna_paralela_1436824800000
+    createdAt: '2015-07-13T22:00:00.000Z'
+    updatedAt: '2026-08-09T13:40:20.000Z'
+    revision: 2
+    youtubeId: 27gzH6DKH10
+prompts:
+  - id: chinaski-drobna_paralela_gpt-4o-mini_v1
+    songId: chinaski-drobna_paralela
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration that captures the essence of nostalgia and change,
+      featuring a vintage game board with faded colors, surrounded by symbols of
+      the past and present, like an hourglass, a vinyl record, and a modern
+      smartphone. The scene should evoke a sense of reflection and the passage
+      of time, blending elements from different eras in a dreamlike atmosphere.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-08T17:33:07.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

@@ -1,0 +1,27 @@
+songId: kabat-corrida
+official: v1
+versions:
+  v1:
+    id: kabat-corrida_1436824800000
+    createdAt: '2015-07-13T22:00:00.000Z'
+    updatedAt: '2026-02-08T17:35:09.000Z'
+    revision: 1
+    youtubeId: lz3MA-oU-84
+prompts:
+  - id: kabat-corrida_gpt-4o-mini_v1
+    songId: kabat-corrida
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration capturing the vibrant essence of a Spanish fiesta,
+      featuring a lively scene with castanets, flamenco dancers, and the sun
+      setting over Madrid. Include elements like wine glasses, roses, and a
+      bullfighter in traditional attire, all set against a backdrop of a
+      bustling street filled with music and celebration.
+    createdAt: 2025-08-05T09:45:46.000Z
+    updatedAt: 2026-02-08T17:35:10.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

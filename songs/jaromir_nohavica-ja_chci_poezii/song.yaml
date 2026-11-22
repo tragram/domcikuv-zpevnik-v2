@@ -1,0 +1,30 @@
+songId: jaromir_nohavica-ja_chci_poezii
+official: v1
+versions:
+  v1:
+    id: jaromir_nohavica-ja_chci_poezii_1534197600000
+    createdAt: '2018-08-13T22:00:00.000Z'
+    updatedAt: '2026-02-08T17:34:20.000Z'
+    revision: 1
+    youtubeId: ZnaHFXgzr2A
+prompts:
+  - id: jaromir_nohavica-ja_chci_poezii_gpt-4o-mini_v1
+    songId: jaromir_nohavica-ja_chci_poezii
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a weary poet standing in a bustling city,
+      surrounded by people demanding autographs and money. The poet gazes
+      longingly at a distant horizon where a whimsical caravan is being pulled
+      by horses, symbolizing freedom and escape. In the background, hints of
+      literary references like sonnets and a silhouette of Don Quixote can be
+      seen, blending with the urban landscape. The scene captures a contrast
+      between the chaos of modern life and the poet's desire for deeper
+      understanding and connection.
+    createdAt: 2025-08-05T09:45:45.000Z
+    updatedAt: 2026-02-08T17:34:20.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

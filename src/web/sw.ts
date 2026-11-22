@@ -40,9 +40,8 @@ registerRoute(
 
 // 2. Heavy Media - CacheFirst
 registerRoute(
-  ({ url }) =>
-    url.pathname.startsWith("/songs/illustrations/") &&
-    !url.pathname.includes("/thumbnail/"),
+  // R2 object paths have one more directory than static asset paths.
+  ({ url }) => /^\/songs\/(?:[\w-][\w.-]*\/){2,3}full\/[\w-][\w.-]*\.webp$/.test(url.pathname),
   new CacheFirst({
     cacheName: CACHE_NAMES.ILLUSTRATIONS,
     plugins: [

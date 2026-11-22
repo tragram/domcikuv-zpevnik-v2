@@ -1,0 +1,29 @@
+songId: petr_kalandra-nebeska_brana
+official: v1
+versions:
+  v1:
+    id: petr_kalandra-nebeska_brana_1784324001388
+    createdAt: '2026-07-17T21:33:21.000Z'
+    updatedAt: '2026-07-30T12:16:17.000Z'
+    revision: 4
+    youtubeId: TiQGgDgUlRE
+prompts:
+  - id: petr_kalandra-nebeska_brana_gpt-5.4-mini_v7
+    songId: petr_kalandra-nebeska_brana
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a lone weary man in a dark coat standing
+      before a towering glowing celestial gate in the distance, one hand raised
+      as if about to knock, his mother’s silhouette behind him placing a flower
+      on his coat while lowering a pistol to the ground; twilight storm clouds,
+      somber atmosphere, soft rim lighting from the heavenly gate, muted colors
+      with a single warm glow, minimal composition, no text, emotional farewell,
+      high detail, shallow depth of field, simple and legible at small sizes
+    createdAt: 2026-07-30T12:13:41.000Z
+    updatedAt: 2026-07-30T12:13:41.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1785487458000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

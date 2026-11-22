@@ -1,0 +1,49 @@
+songId: wabi_danek-rosa_na_kolejich
+official: v1
+versions:
+  v1:
+    id: wabi_danek-rosa_na_kolejich_1731538800000
+    createdAt: '2024-11-13T23:00:00.000Z'
+    updatedAt: '2026-02-08T17:38:33.000Z'
+    revision: 2
+    youtubeId: Epkxt9kmTjE
+  v2:
+    id: wabi_danek-rosa_na_kolejich_1790012531142
+    label: Jednodušší akordy
+    createdAt: '2026-09-21T17:42:11.000Z'
+    updatedAt: '2026-11-19T14:56:23.000Z'
+    revision: 2
+    youtubeId: Epkxt9kmTjE
+prompts:
+  - id: wabi_danek-rosa_na_kolejich_gpt-4o-mini_v1
+    songId: wabi_danek-rosa_na_kolejich
+    text: >-
+      Create an illustration of a nostalgic train station at dawn, with shadows
+      creeping along the tracks. A mysterious bird or cloud hovers above, while
+      a lone traveler wipes dew from the railway. Include elements like
+      telegraph wires and a sense of journey, capturing the essence of wandering
+      and the blues of life.
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    createdAt: 2025-08-05T09:45:50.000Z
+    illustrations:
+      - imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp
+        createdAt: 1754387142000
+  - id: wabi_danek-rosa_na_kolejich_gpt-5.4-mini_v7
+    songId: wabi_danek-rosa_na_kolejich
+    text: >-
+      cinematic photorealistic scene of an early morning railway station at
+      dawn, a solitary traveler standing by wet train tracks with bare feet
+      brushing away dew, carrying a small bundle and blanket, long telegraph
+      wires stretching into the distance under pale mist, shadowy shapes and a
+      strange bird-like cloud circling overhead, melancholic road-movie mood,
+      soft golden-blue lighting, subtle haze, minimal composition, no visible
+      text, highly legible at small size
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    createdAt: 2026-09-21T17:42:16.000Z
+    illustrations:
+      - imageModel: nano-banana-2
+        filename: nano-banana-2.webp
+        createdAt: 1790012546000

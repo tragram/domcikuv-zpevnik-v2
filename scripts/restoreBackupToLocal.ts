@@ -24,6 +24,7 @@ import { execSync } from "node:child_process";
 import { eq, getTableColumns } from "drizzle-orm";
 import type { SQLiteTable } from "drizzle-orm/sqlite-core";
 import * as schema from "../src/lib/db/schema";
+import { canonicalIllustrationPath } from "./shared/illustration-paths";
 import type { AppDatabase } from "../src/worker/api/utils";
 import { R2_BUCKET_NAME, s3 } from "./shared/r2";
 
@@ -268,6 +269,13 @@ async function restore(db: AppDatabase, backup: DBBackup) {
 
     const table = TABLES[tableName];
     let rows = rawRows.map((raw) => reviveRow(table, raw));
+    if (tableName === "songIllustration") {
+      for (const row of rows) {
+        for (const field of ["imageURL", "thumbnailURL"]) {
+          if (typeof row[field] === "string") row[field] = canonicalIllustrationPath(row[field]);
+        }
+      }
+    }
 
     if (tableName === "song") {
       for (const row of rows) {

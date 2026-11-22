@@ -2,13 +2,18 @@ import fs from "node:fs";
 import path from "node:path";
 import yaml from "js-yaml";
 import sharp from "sharp";
-import { z } from "zod";
+import { parseSnapshotSheet, reservedVersionsSchema, segment, songManifestSchema } from "../shared/song-snapshot";
 import { defaultIllustrationId, promptFolder, sanitizePathSegment } from "../../src/lib/song-ids";
 
-export const generatedPath = (file: string) =>
-  /^songs\/chordpro\/[a-zA-Z0-9._-]+\.pro$/.test(file) ||
-  /^songs\/illustrations\/[a-zA-Z0-9._-]+\/illustrations\.yaml$/.test(file) ||
-  /^songs\/illustrations\/[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+\/(full|thumbnail)\/[a-zA-Z0-9._-]+\.webp$/.test(file);
+const manifestPath = /^songs\/([^/]+)\/song\.yaml$/;
+const reservedPath = /^songs\/([^/]+)\/version-numbers\.yaml$/;
+const sheetPath = /^songs\/([^/]+)\/([^/]+\.pro)$/;
+const imagePath = /^songs\/([^/]+)\/([^/]+)\/(?:full|thumbnail)\/([^/]+\.webp)$/;
+
+export const generatedPath = (file: string) => {
+  const match = file.match(manifestPath) ?? file.match(reservedPath) ?? file.match(sheetPath) ?? file.match(imagePath);
+  return !!match && match.slice(1).every(part => segment.safeParse(part).success);
+};
 
 export function checkChanges(
   before: string[], after: string[], changed: string[],
@@ -20,9 +25,9 @@ export function checkChanges(
   const current = new Set(after);
   const report: Record<string, { before: number; after: number; deleted: number }> = {};
   const groups = {
-    songs: (p: string) => p.startsWith("songs/chordpro/") && p.endsWith(".pro"),
-    metadata: (p: string) => p.endsWith("/illustrations.yaml"),
-    images: (p: string) => p.startsWith("songs/illustrations/") && p.endsWith(".webp"),
+    songs: (p: string) => manifestPath.test(p),
+    sheets: (p: string) => sheetPath.test(p),
+    images: (p: string) => imagePath.test(p),
   };
   for (const [name, matches] of Object.entries(groups)) {
     const previous = before.filter(matches);
@@ -36,15 +41,6 @@ export function checkChanges(
   }
   return report;
 }
-
-const segment = z.string().regex(/^[a-zA-Z0-9._-]+$/).refine(s => s !== "." && s !== "..");
-const metadataSchema = z.object({
-  songId: segment,
-  prompts: z.array(z.object({
-    id: segment, songId: segment, text: z.string(),
-    illustrations: z.array(z.object({ imageModel: z.string().min(1), filename: segment })),
-  })),
-});
 
 export function inventory(root: string): string[] {
   const files: string[] = [];
@@ -78,20 +74,35 @@ export async function validateSnapshot(root: string, files: string[], changed: s
   const promptIds = new Set<string>();
   const illustrationIds = new Set<string>();
   const imagePaths = new Set<string>();
-  let songs = 0;
-  for (const file of files.filter(f => /^songs\/chordpro\/[^/]+\.pro$/.test(f))) {
-    songs++;
-    const songId = path.posix.basename(file, ".pro");
-    const chordpro = fs.readFileSync(path.join(root, file), "utf8");
-    for (const directive of ["title", "artist"]) {
-      if (!new RegExp(`^\\{${directive}:\\s*[^}\\r\\n]+\\}`, "m").test(chordpro)) {
-        throw new Error(`Missing ${directive}: ${file}`);
+  const sheetIds = new Set<string>();
+  const expectedSheets = new Set<string>();
+  const songIds = new Set<string>();
+  const manifests = files.filter(file => manifestPath.test(file));
+  for (const metadataFile of manifests) {
+    const [, songId] = manifestPath.exec(metadataFile)!;
+    if (!generatedPath(metadataFile) || songIds.has(songId.toLowerCase())) {
+      throw new Error(`Invalid or colliding song folder: ${metadataFile}`);
+    }
+    songIds.add(songId.toLowerCase());
+    const data = songManifestSchema.parse(yaml.load(fs.readFileSync(path.join(root, metadataFile), "utf8")));
+    if (data.songId !== songId) throw new Error(`Song ID mismatch: ${metadataFile}`);
+    let activeImage: string | undefined;
+    let activePrompt: string | undefined;
+    for (const [name, version] of Object.entries(data.versions)) {
+      const file = `songs/${songId}/${name}.pro`;
+      if (!fileSet.has(file)) throw new Error(`Missing sheet: ${file}`);
+      expectedSheets.add(file);
+      const { metadata } = parseSnapshotSheet(fs.readFileSync(path.join(root, file), "utf8"));
+      const id = version.id;
+      if (sheetIds.has(id)) throw new Error(`Duplicate version ID: ${id}`);
+      sheetIds.add(id);
+      if (name === data.official) {
+        activeImage = metadata.illustrationId;
+        activePrompt = metadata.promptId;
+      } else if (metadata.illustrationId || metadata.promptId) {
+        throw new Error(`Illustration metadata belongs on the official sheet: ${file}`);
       }
     }
-    const metadataFile = `songs/illustrations/${songId}/illustrations.yaml`;
-    if (!fileSet.has(metadataFile)) throw new Error(`Missing metadata: ${metadataFile}`);
-    const data = metadataSchema.parse(yaml.load(fs.readFileSync(path.join(root, metadataFile), "utf8")));
-    if (data.songId !== songId) throw new Error(`Song ID mismatch: ${metadataFile}`);
     const songIllustrations = new Set<string>();
     const songPrompts = new Set<string>();
     for (const prompt of data.prompts) {
@@ -106,7 +117,7 @@ export async function validateSnapshot(root: string, files: string[], changed: s
         songIllustrations.add(id);
         // Historical snapshots used unsanitized illustration IDs.
         songIllustrations.add(`${prompt.id}_${illustration.imageModel}`);
-        const full = `songs/illustrations/${songId}/${folder}/full/${illustration.filename}`;
+        const full = `songs/${songId}/${folder}/full/${illustration.filename}`;
         const thumb = full.replace("/full/", "/thumbnail/");
         for (const image of [full, thumb]) {
           if (!fileSet.has(image)) throw new Error(`Missing illustration asset: ${image}`);
@@ -115,14 +126,23 @@ export async function validateSnapshot(root: string, files: string[], changed: s
         }
       }
     }
-    const activeImage = chordpro.match(/^\{illustrationId:\s*([^}\r\n]+)\}/m)?.[1].trim();
-    const activePrompt = chordpro.match(/^\{promptId:\s*([^}\r\n]+)\}/m)?.[1].trim();
-    if (activeImage && !songIllustrations.has(activeImage)) throw new Error(`Unknown active illustration ${activeImage}: ${file}`);
-    if (activePrompt && !songPrompts.has(activePrompt)) throw new Error(`Unknown active prompt ${activePrompt}: ${file}`);
+    if (activeImage && !songIllustrations.has(activeImage)) throw new Error(`Unknown active illustration ${activeImage}: ${metadataFile}`);
+    if (activePrompt && !songPrompts.has(activePrompt)) throw new Error(`Unknown active prompt ${activePrompt}: ${metadataFile}`);
   }
-  if (!songs) throw new Error("Refusing an empty song export");
+  if (!manifests.length) throw new Error("Refusing an empty song export");
+  for (const file of files.filter(file => reservedPath.test(file))) {
+    const [, songId] = reservedPath.exec(file)!;
+    if (!generatedPath(file) || songIds.has(songId.toLowerCase())) {
+      throw new Error(`Invalid or conflicting reserved versions: ${file}`);
+    }
+    songIds.add(songId.toLowerCase());
+    const ids = Object.values(reservedVersionsSchema.parse(yaml.load(fs.readFileSync(path.join(root, file), "utf8"))));
+    if (!ids.length || new Set(ids).size !== ids.length) throw new Error(`Invalid reserved versions: ${file}`);
+  }
+  const orphan = files.find(file => sheetPath.test(file) && !expectedSheets.has(file));
+  if (orphan) throw new Error(`Orphaned sheet: ${orphan}`);
   // Include retained historical assets, even when absent from current metadata.
-  const images = files.filter(f => /^songs\/illustrations\/[^/]+\/[^/]+\/(full|thumbnail)\/[^/]+\.webp$/.test(f));
+  const images = files.filter(file => imagePath.test(file));
   for (const image of images) {
     const pair = image.includes("/full/") ? image.replace("/full/", "/thumbnail/") : image.replace("/thumbnail/", "/full/");
     if (!fileSet.has(pair)) throw new Error(`Missing image pair: ${pair}`);
@@ -137,7 +157,7 @@ export async function validateSnapshot(root: string, files: string[], changed: s
     }
     await decoder.resize(1, 1).raw().toBuffer();
   }
-  return { songs, prompts: promptIds.size, illustrations: illustrationIds.size, images: images.length, changedBytes };
+  return { songs: manifests.length, sheets: expectedSheets.size, prompts: promptIds.size, illustrations: illustrationIds.size, images: images.length, changedBytes };
 }
 
 export interface SyncActions {

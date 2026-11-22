@@ -1,11 +1,11 @@
-import os
+from hashlib import sha256
 import re
 from pathlib import Path
 from typing import Mapping
 
 import anthropic
 import yaml
-from utils import load_secrets, songs_path
+from utils import chordpro_files, load_secrets, songs_path
 
 secrets = load_secrets()
 client = anthropic.Anthropic(
@@ -34,8 +34,7 @@ batches_folder = Path(__file__).parent.resolve() / "batches"
 
 
 def antropic_id_sanitization(input_string):
-    sanitized = re.sub(r"[^a-zA-Z0-9_-]", "", input_string)
-    return sanitized[:64]
+    return sha256(input_string.encode("utf-8")).hexdigest()
 
 
 def generate_chords(chordpro_content: str):
@@ -76,12 +75,12 @@ def generate_chords_batch_api(chordpro_contents: Mapping[str, str]):
     return message_batch
 
 
-def find_incomplete_chordpro_files(folder_path, skipping, max_songs=10, batch_api=True):
+def find_incomplete_chordpro_files(skipping, max_songs=10, batch_api=True):
     """
     Finds all ChordPro files in a folder where some verses lack chords.
 
     Args:
-        folder_path (str): Path to the folder containing ChordPro files.
+        skipping: Relative paths already in the batch queue.
 
     Returns:
         list: List of file names with incomplete chords.
@@ -95,14 +94,14 @@ def find_incomplete_chordpro_files(folder_path, skipping, max_songs=10, batch_ap
     rec_label_pattern = re.compile(r":\s*rec\.", re.IGNORECASE)
 
     processed_songs = 0
-    for file_name in os.listdir(folder_path):
+    for file_path in chordpro_files():
+        file_name = file_path.relative_to(songs_path()).as_posix()
         if file_name in skipping:
             print(f"Skipping {file_name} - already in batch API queue...")
             continue
         if processed_songs >= max_songs:
             break
         if file_name.endswith(".pro") or file_name.endswith(".chordpro"):
-            file_path = os.path.join(folder_path, file_name)
 
             with open(file_path, "r", encoding="utf-8") as file:
                 content = file.read()
@@ -179,8 +178,11 @@ def check_all_past_batches():
                     match result.result.type:
                         case "succeeded":
                             song = find_song_with_id(songs, result.custom_id)
+                            target = songs_path() / song["file_name"]
+                            if target not in chordpro_files():
+                                raise ValueError(f"Batch refers to an outdated sheet: {target}")
                             with open(
-                                songs_path() / "chordpro" / song["file_name"],
+                                target,
                                 "w",
                                 encoding="utf-8",
                             ) as f:
@@ -210,12 +212,11 @@ def check_all_past_batches():
 
 if __name__ == "__main__":
     skipping = check_all_past_batches()
-    folder_path = songs_path() / "chordpro"
 
-    if not os.path.exists(folder_path):
+    if not chordpro_files():
         print("The specified folder does not exist.")
     else:
-        incomplete_files = find_incomplete_chordpro_files(folder_path, skipping)
+        incomplete_files = find_incomplete_chordpro_files(skipping)
 
         if incomplete_files:
             print(

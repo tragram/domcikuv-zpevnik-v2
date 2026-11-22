@@ -1,0 +1,30 @@
+songId: chuck_berry-johnny_b._goode
+official: v1
+versions:
+  v1:
+    id: chuck_berry-johnny_b._goode_1789897180279
+    createdAt: '2026-09-20T09:39:40.000Z'
+    updatedAt: '2026-09-20T09:55:45.000Z'
+    revision: 3
+    youtubeId: Y-9Y4CCIWnM
+prompts:
+  - id: chuck_berry-johnny_b._goode_gpt-5.4-mini_v7
+    songId: chuck_berry-johnny_b._goode
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      A cinematic 1950s rural Louisiana scene at golden hour: a young Black
+      country boy sitting beneath a large tree beside railroad tracks, casually
+      strumming a worn guitar from a gunny sack, with a simple log cabin and
+      pine woods in the background; passing train hinted in the distance, dust
+      in the warm air, neighbors pausing to listen from afar, nostalgic
+      Americana mood, hopeful and lively energy, soft sun flare, subtle motion
+      in the strings, realistic film still, rich earthy tones, no text except
+      perhaps a tiny distant marquee glow suggestion, highly legible composition
+    createdAt: 2026-11-15T14:34:39.000Z
+    updatedAt: 2026-11-15T14:34:39.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1794753290000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp

@@ -1,5 +1,6 @@
 import sharp from "sharp";
 import { normalizeWebp } from "../sync/images.mjs";
+import { canonicalIllustrationPath } from "./illustration-paths";
 import { describe, expect, it, vi } from "vitest";
 import {
   archiveOriginal, ORIGINAL_RETENTION_MS, promoteIllustration, referencesBucketSource, sha256, sourceKey,
@@ -31,7 +32,7 @@ function fixture() {
     readImage: vi.fn(async (name: string) => images.get(name) ?? null),
     saveRecord: vi.fn(async () => { events.push("record"); }),
     promote: vi.fn(async () => { events.push("promote"); return true; }),
-    readIllustration: vi.fn(async () => ({ ...illustration, ...record })),
+    readIllustration: vi.fn(async (): Promise<Illustration> => ({ ...illustration, ...record })),
     referencesSource: vi.fn(async () => false),
     copyToTrash: vi.fn(async () => { events.push("copy"); images.set(`trash/${key}`, original); }),
     sourceEtag: vi.fn(async () => original.etag),
@@ -62,7 +63,8 @@ describe("illustration promotion", () => {
     expect(f.events).toEqual(["record", "promote"]);
     expect(f.images.get(key)).toEqual(original);
     expect(f.store.saveRecord).toHaveBeenCalledWith(expect.objectContaining({
-      imageURL: record.imageURL, thumbnailURL: record.thumbnailURL, sha256: record.sha256,
+      imageURL: canonicalIllustrationPath(record.imageURL), thumbnailURL: canonicalIllustrationPath(record.thumbnailURL),
+      sha256: record.sha256,
       promotedAt: now.toISOString(),
     }));
   });
@@ -170,6 +172,15 @@ describe("illustration promotion", () => {
 });
 
 describe("delayed original archival", () => {
+  it("archives a legacy recovery record when D1 already uses canonical URLs", async () => {
+    const f = fixture();
+    const imageURL = canonicalIllustrationPath(record.imageURL);
+    const thumbnailURL = canonicalIllustrationPath(record.thumbnailURL);
+    f.store.readIllustration.mockResolvedValue({ ...illustration, imageURL, thumbnailURL });
+    expect(await archiveOriginal(record, f.store, options, f.fetcher)).toBe("archived");
+    expect(f.fetcher.mock.calls.map(([url]) => url)).toEqual([productionURL + imageURL, productionURL + thumbnailURL]);
+    expect(f.images.has(`trash/${key}`)).toBe(true);
+  });
   it("reconciles a legacy JPEG record after static normalization", async () => {
     const f = fixture();
     const jpeg = await sharp(bytes).jpeg().toBuffer();

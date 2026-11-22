@@ -1,8 +1,13 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { DatabaseSync } from "node:sqlite";
+import { drizzle } from "drizzle-orm/sqlite-proxy";
 import yaml from "js-yaml";
 import sharp from "sharp";
+import { assignSnapshotVersions, eligibleSnapshotVersion } from "../shared/song-snapshot";
+import type { AppDatabase } from "../../src/worker/api/utils";
+import { renderSnapshotSheet } from "./render-song";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   automaticSync, deploymentResult, checkChanges, inventory, validateSnapshot,
@@ -84,13 +89,13 @@ describe("Cloudflare deployment checks", () => {
 
 
 describe("snapshot change policy", () => {
-  const songs = Array.from({ length: 100 }, (_, i) => `songs/chordpro/song${i}.pro`);
+  const songs = Array.from({ length: 100 }, (_, i) => `songs/song${i}/song.yaml`);
   it("accepts normal additions, updates and deletions up to 5%", () => {
     expect(checkChanges(songs, songs.slice(5), songs.slice(0, 5)).songs.deleted).toBe(5);
-    expect(() => checkChanges(songs, [...songs, "songs/chordpro/new.pro"], ["songs/chordpro/new.pro"])).not.toThrow();
+    expect(() => checkChanges(songs, [...songs, "songs/new/song.yaml"], ["songs/new/song.yaml"])).not.toThrow();
   });
   it("blocks large deletions even if replacement songs hide the net count change", () => {
-    const replacement = songs.slice(0, 6).map(s => s.replace("song", "new"));
+    const replacement = songs.slice(0, 6).map(s => s.replace("/song", "/new"));
     expect(() => checkChanges(songs, [...songs.slice(6), ...replacement], songs.slice(0, 6))).toThrow("exceeds 5%");
   });
   it("allows intentional bulk deletion only with the explicit override", () => {
@@ -102,25 +107,26 @@ describe("snapshot change policy", () => {
   it.each([".dev.vars", "src/worker/index.ts", ".github/workflows/sync.yml", "songs/private.json", "songs/chordpro/../../secret.pro", "songs/illustrations/song/prompt/full/script.js", "songs/chordpro/example.pdf"])("rejects unexpected path %s even with override", file => {
     expect(() => checkChanges(songs, songs, [file], true)).toThrow("Unexpected export paths");
   });
-  it("independently guards against mass image and metadata deletion", () => {
-    for (const extra of [songs.map(s => s.replace("chordpro", "illustrations").replace(".pro", "/illustrations.yaml")), songs.map(s => s.replace("chordpro", "illustrations").replace(".pro", "/prompt/full/model.webp"))]) {
+  it("independently guards against mass image and sheet deletion", () => {
+    for (const extra of [songs.map(s => s.replace("song.yaml", "2026-01-01.pro")), songs.map(s => s.replace("song.yaml", "prompt/full/model.webp"))]) {
       expect(() => checkChanges([...songs, ...extra], [...songs, ...extra.slice(6)], extra.slice(0, 6))).toThrow("exceeds 5%");
     }
   });
 });
 
 let root: string;
-const full = "songs/illustrations/song/prompt/full/model.webp";
+const full = "songs/song/prompt/full/model.webp";
 const thumb = full.replace("/full/", "/thumbnail/");
-const pro = "songs/chordpro/song.pro";
-const meta = "songs/illustrations/song/illustrations.yaml";
+const pro = "songs/song/v1.pro";
+const officialVersion = { id: "official", revision: 1, createdAt: new Date(0).toISOString(), updatedAt: new Date(0).toISOString() };
+const meta = "songs/song/song.yaml";
 function write(file: string, bytes: string | Buffer) {
   fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true }); fs.writeFileSync(path.join(root, file), bytes);
 }
 beforeEach(async () => {
   root = fs.mkdtempSync(path.join(os.tmpdir(), "sync-validation-"));
   write(pro, "{title: Song}\n{artist: Artist}\n{illustrationId: song_prompt_model}\n{promptId: song_prompt}\n\nLyrics");
-  write(meta, yaml.dump({ songId: "song", prompts: [{ id: "song_prompt", songId: "song", text: "A scene", illustrations: [{ imageModel: "model", filename: "model.webp" }] }] }));
+  write(meta, yaml.dump({ songId: "song", official: "v1", versions: { v1: officialVersion }, prompts: [{ id: "song_prompt", songId: "song", text: "A scene", summaryModel: "model", summaryPromptVersion: "v1", createdAt: new Date(0), illustrations: [{ imageModel: "model", filename: "model.webp", createdAt: 0 }] }] }));
   const bytes = await sharp({ create: { width: 2, height: 2, channels: 3, background: "red" } }).webp().toBuffer();
   write(full, bytes); write(thumb, await sharp(bytes).resize(128).webp().toBuffer());
 });
@@ -153,7 +159,7 @@ describe("exported snapshot integrity", () => {
   });
   it("rejects malformed metadata and foreign song IDs", async () => {
     write(meta, "songId: [invalid\n"); await expect(validateSnapshot(root, inventory(root), [])).rejects.toThrow();
-    write(meta, yaml.dump({ songId: "other", prompts: [] }));
+    write(meta, yaml.dump({ songId: "other", official: "v1", versions: { v1: officialVersion }, prompts: [] }));
     await expect(validateSnapshot(root, inventory(root), [])).rejects.toThrow("Song ID mismatch");
   });
   it("rejects colliding illustration paths and IDs", async () => {
@@ -167,7 +173,90 @@ describe("exported snapshot integrity", () => {
   });
   it.skipIf(process.platform === "win32")("rejects symlinks before reading their targets", () => {
     // Linux CI exercises real symlinks; the Windows sandbox forbids their creation.
-    fs.symlinkSync(path.join(root, "songs/chordpro"), path.join(root, "songs/link"), "dir");
+    fs.symlinkSync(path.join(root, "songs/song"), path.join(root, "songs/link"), "dir");
     expect(() => inventory(root)).toThrow("Symlink in snapshot");
+  });
+});
+
+describe("parallel version snapshots", () => {
+  const alternate = "songs/song/v2.pro";
+  const sheet = "{title: Song}\n{artist: Artist}\n\n[C]Lyrics";
+
+  it("uses revision count for imports and still requires an available version", () => {
+    const raw = { status: "published", mergedIntoVersionId: null, importId: "source", revision: 1 };
+    expect(eligibleSnapshotVersion(raw)).toBe(false);
+    expect(eligibleSnapshotVersion({ ...raw, revision: 2 })).toBe(true);
+    expect(eligibleSnapshotVersion({ ...raw, importId: null })).toBe(true);
+    expect(eligibleSnapshotVersion({ ...raw, revision: 2, status: "archived" })).toBe(false);
+    expect(eligibleSnapshotVersion({ ...raw, revision: 2, mergedIntoVersionId: "other" })).toBe(false);
+  });
+
+  it("keeps version numbers across edits, archive, restoration, and new versions", () => {
+    const original = {
+      id: "original", createdAt: new Date(0), updatedAt: new Date(0),
+      label: null, description: null, revision: 1, youtubeId: null,
+    };
+    const alternate = { ...original, id: "alternate", createdAt: new Date(1000) };
+    expect(assignSnapshotVersions([alternate, original]).versions).toMatchObject({
+      v1: { id: "original" }, v2: { id: "alternate" },
+    });
+    const prior = { v1: "original", v2: "alternate", v3: "old" };
+    const edited = { ...alternate, label: "New label", revision: 2, updatedAt: new Date(2000) };
+    expect(assignSnapshotVersions([edited, { ...original, id: "new" }], prior)).toMatchObject({
+      versions: { v2: { id: "alternate", label: "New label", revision: 2 }, v4: { id: "new" } },
+      reserved: { v1: "original", v3: "old" },
+    });
+    expect(assignSnapshotVersions([original], { ...prior, v4: "new" })).toMatchObject({
+      versions: { v1: { id: "original" } },
+      reserved: { v2: "alternate", v3: "old", v4: "new" },
+    });
+  });
+
+  it("checks orphaned sheets and duplicate IDs, and counts songs separately", async () => {
+    write(alternate, sheet);
+    await expect(validateSnapshot(root, inventory(root), [alternate])).rejects.toThrow("Orphaned sheet");
+    const manifest = yaml.load(fs.readFileSync(path.join(root, meta), "utf8")) as { versions: Record<string, typeof officialVersion> };
+    manifest.versions.v2 = { ...officialVersion };
+    write(meta, yaml.dump(manifest));
+    await expect(validateSnapshot(root, inventory(root), [alternate])).rejects.toThrow("Duplicate version ID");
+    manifest.versions.v2.id = "alternate";
+    write(meta, yaml.dump(manifest));
+    await expect(validateSnapshot(root, inventory(root), [alternate])).resolves.toMatchObject({ songs: 1, sheets: 2 });
+  });
+
+  it("seeds official and alternate versions with their exported IDs and metadata", async () => {
+    const { processAndMigrateSongs } = await import("../staticData2DB");
+    const version = {
+      songId: "song", title: "Song", artist: "Artist", key: "C", chordpro: "[C]Lyrics",
+      createdAt: new Date("2026-10-01T01:00:00Z"), updatedAt: new Date("2026-10-01T02:00:00Z"),
+      language: "other", tempo: null, capo: 2, range: null, startMelody: null,
+      id: "alternate", label: "Jednodušší akordy", description: "A {simpler} sheet", youtubeId: "abcdefghijk", revision: 3,
+    };
+    write(alternate, renderSnapshotSheet(version));
+    const manifest = yaml.load(fs.readFileSync(path.join(root, meta), "utf8")) as {
+      versions: Record<string, typeof officialVersion>;
+    };
+    Object.assign(manifest.versions, assignSnapshotVersions([version], { v1: "official" }).versions);
+    write(meta, yaml.dump(manifest));
+
+    const sqlite = new DatabaseSync(":memory:");
+    try {
+      for (const file of fs.readdirSync("drizzle").filter(file => file.endsWith(".sql")).sort()) {
+        sqlite.exec(fs.readFileSync(path.join("drizzle", file), "utf8"));
+      }
+      const db = drizzle(async (sql, params, method) => {
+        const rows = sqlite.prepare(sql).all(...params).map(Object.values);
+        return { rows: method === "get" ? rows[0] : rows };
+      }) as unknown as AppDatabase;
+      await processAndMigrateSongs(db, path.join(root, "songs"));
+      expect(sqlite.prepare("SELECT current_version_id FROM song WHERE id = 'song'").get())
+        .toMatchObject({ current_version_id: "official" });
+      expect(sqlite.prepare("SELECT * FROM song_version WHERE id = 'alternate'").get()).toMatchObject({
+        song_id: "song", chordpro: "[C]Lyrics", label: version.label,
+        description: version.description, youtube_id: version.youtubeId, revision: version.revision, status: "published",
+      });
+    } finally {
+      sqlite.close();
+    }
   });
 });

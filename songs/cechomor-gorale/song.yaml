@@ -1,0 +1,28 @@
+songId: cechomor-gorale
+official: v1
+versions:
+  v1:
+    id: cechomor-gorale_1741906800000
+    createdAt: '2025-03-13T23:00:00.000Z'
+    updatedAt: '2026-02-08T17:32:57.000Z'
+    revision: 1
+    youtubeId: lUhf3VaaHH4
+prompts:
+  - id: cechomor-gorale_gpt-4o-mini_v1
+    songId: cechomor-gorale
+    summaryPromptVersion: v1
+    summaryModel: gpt-4o-mini
+    text: >-
+      Create an illustration of a picturesque mountainous landscape with two
+      traditional Polish highlanders (gorale) playfully fighting with wooden
+      ciupagas. In the foreground, include a highlander girl with two braids,
+      large eyes, and a big heart, symbolizing peace. The background should
+      feature lush forests and valleys, capturing the essence of a vibrant,
+      rural setting.
+    createdAt: 2025-08-05T09:45:43.000Z
+    updatedAt: 2026-02-08T17:32:57.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1754387142000
+        imageModel: FLUX.1-dev
+        filename: FLUX.1-dev.webp

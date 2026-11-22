@@ -343,9 +343,6 @@ export class SongData {
       )
       .map((d) => `{${d}: ${this[d]}}`);
 
-    preamble.push(`{createdAt: ${this.createdAt.getTime()}}`);
-    preamble.push(`{updatedAt: ${this.updatedAt.getTime()}}`);
-
     if (this.currentIllustration?.illustrationId) {
       preamble.push(
         `{illustrationId: ${this.currentIllustration.illustrationId}}`,
