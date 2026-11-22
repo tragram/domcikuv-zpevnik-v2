@@ -269,7 +269,7 @@ forever.
 Each feature owns its components, hooks, and utils together rather than
 splitting by technical layer:
 
-- **SongList** — browse/search (Fuse.js) + filter toolbar (language, capo,
+- **SongList** — browse/search (Fuse.js) + filter toolbar (language,
   vocal range, songbook) + sort.
 - **SongView** — the core rendering surface:
   - `utils/` — ChordPro → renderable structure, transpose math, column

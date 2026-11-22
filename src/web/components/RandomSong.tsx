@@ -150,7 +150,7 @@ function RandomSong({
     { defaultValue: [] },
   );
   const {
-    hideCapo,
+
     vocalRange,
     language,
     onlyFavorites,
@@ -195,7 +195,7 @@ function RandomSong({
       applyFilters(
         songs,
         {
-          hideCapo,
+
           vocalRange,
           language,
           onlyFavorites,
@@ -206,7 +206,7 @@ function RandomSong({
       ),
     [
       songs,
-      hideCapo,
+
       vocalRange,
       language,
       onlyFavorites,

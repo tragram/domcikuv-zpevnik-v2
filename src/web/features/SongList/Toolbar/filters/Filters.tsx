@@ -1,5 +1,4 @@
 import { Filter, Globe, Heart, X } from "lucide-react";
-import CapoIcon from "./capo_icon";
 import { JSX } from "react";
 import { Button } from "~/components/ui/button";
 import {
@@ -40,7 +39,6 @@ export type VocalRangeType = "all" | [number, number];
 export interface FilterSettings {
   language: SongLanguage;
   vocalRange: VocalRangeType;
-  hideCapo: boolean;
   onlyFavorites: boolean;
   showExternal: boolean;
 }
@@ -63,13 +61,11 @@ const FilterControls = ({
     language,
     selectedSongbookId,
     vocalRange,
-    hideCapo,
     showExternal,
     onlyFavorites,
     setLanguage,
     toggleSongbook,
     setVocalRange,
-    toggleHideCapo,
     toggleShowExternal,
     toggleFavorites,
     resetFilters,
@@ -80,7 +76,6 @@ const FilterControls = ({
       (Array.isArray(vocalRange) &&
         vocalRange[0] === 0 &&
         vocalRange[1] === maxRange)) &&
-    !hideCapo &&
     !selectedSongbookId &&
     !onlyFavorites &&
     !showExternal;
@@ -102,23 +97,6 @@ const FilterControls = ({
             sectionOnly={false}
           />
         )}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="circular"
-              isActive={hideCapo}
-              className="rounded-none font-bold shadow-none outline-0"
-              onClick={toggleHideCapo}
-            >
-              <CapoIcon />
-              {!iconOnly && "No capo"}
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Hide songs that need a capo</p>
-          </TooltipContent>
-        </Tooltip>
-
         {userData && (
           <Tooltip>
             <TooltipTrigger asChild>
@@ -196,13 +174,6 @@ const FilterControls = ({
             Show only favorites
           </DropdownMenuCheckboxItem>
         )}
-        <DropdownMenuCheckboxItem
-          onClick={toggleHideCapo}
-          onSelect={(e) => e.preventDefault()}
-          checked={hideCapo}
-        >
-          Hide capo songs
-        </DropdownMenuCheckboxItem>
         {userData && (
           <DropdownMenuCheckboxItem
             onClick={toggleShowExternal}

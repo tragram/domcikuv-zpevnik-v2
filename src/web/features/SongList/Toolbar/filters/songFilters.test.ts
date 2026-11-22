@@ -3,7 +3,6 @@ import type { SongData } from "~/types/songData";
 import type { LanguageCount, Songbook, SongLanguage } from "~/types/types";
 import {
   applyFilters,
-  filterCapo,
   filterExternal,
   filterFavorites,
   filterHidden,
@@ -73,20 +72,6 @@ describe("filterFavorites", () => {
     const fav = song({ id: "a", isFavorite: true });
     const notFav = song({ id: "b", isFavorite: false });
     expect(filterFavorites([fav, notFav], true, true)).toEqual([fav]);
-  });
-});
-
-describe("filterCapo", () => {
-  it("passes everything through when hideCapo is off", () => {
-    const songs = [song({ capo: 3 })];
-    expect(filterCapo(songs, false)).toEqual(songs);
-  });
-
-  it("keeps only songs with no capo or capo 0 when hideCapo is on", () => {
-    const none = song({ id: "a", capo: undefined });
-    const zero = song({ id: "b", capo: 0 });
-    const capoed = song({ id: "c", capo: 2 });
-    expect(filterCapo([none, zero, capoed], true)).toEqual([none, zero]);
   });
 });
 
@@ -183,7 +168,6 @@ describe("applyFilters", () => {
     const result = applyFilters(
       [visible, hidden, capoed],
       {
-        hideCapo: true,
         vocalRange: "all",
         language: "all",
         onlyFavorites: false,
@@ -193,7 +177,7 @@ describe("applyFilters", () => {
       { userData: null, availableSongbooks: [] },
     );
 
-    expect(result).toEqual([visible]);
+    expect(result).toEqual([visible, capoed]);
   });
 });
 

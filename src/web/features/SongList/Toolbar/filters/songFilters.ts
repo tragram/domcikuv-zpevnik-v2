@@ -45,13 +45,6 @@ export const filterFavorites = (
   return songs;
 };
 
-export const filterCapo = (songs: SongData[], hideCapo: boolean): SongData[] => {
-  if (!hideCapo) {
-    return songs;
-  }
-  return songs.filter((song) => song.capo === 0 || song.capo === undefined);
-};
-
 export const filterVocalRange = (
   songs: SongData[],
   vocalRange: VocalRangeType,
@@ -128,7 +121,6 @@ export const applyFilters = (
 ): SongData[] => {
   const loggedIn = !!ctx.userData;
   let result = filterHidden(songs);
-  result = filterCapo(result, filters.hideCapo);
   result = filterVocalRange(result, filters.vocalRange);
   if (ctx.languageCounts) {
     result = filterLanguage(result, filters.language, ctx.languageCounts);

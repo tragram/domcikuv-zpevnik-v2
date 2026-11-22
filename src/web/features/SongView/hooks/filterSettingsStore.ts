@@ -15,8 +15,6 @@ interface FilterSettingsState extends FilterSettings {
   /** Idempotently set (or clear) the selected songbook — used to apply a URL param on load. */
   setSelectedSongbook: (songbookId: string | null) => void;
   setVocalRange: (range: VocalRangeType) => void;
-  setHideCapo: (hideCapo: boolean) => void;
-  toggleHideCapo: () => void;
   toggleFavorites: () => void;
   toggleShowExternal: () => void;
   resetFilters: () => void;
@@ -26,7 +24,6 @@ const FILTER_DEFAULTS: FilterSettings & { selectedSongbookId: string | null } = 
   language: "all",
   vocalRange: "all",
   selectedSongbookId: null,
-  hideCapo: false,
   onlyFavorites: false,
   showExternal: false,
 };
@@ -46,8 +43,6 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
       setSelectedSongbook: (songbookId) =>
         set({ selectedSongbookId: songbookId }),
       setVocalRange: (range) => set({ vocalRange: range }),
-      setHideCapo: (hideCapo) => set({ hideCapo }),
-      toggleHideCapo: () => set((state) => ({ hideCapo: !state.hideCapo })),
       toggleFavorites: () =>
         set((state) => ({ onlyFavorites: !state.onlyFavorites })),
       toggleShowExternal: () =>
@@ -56,19 +51,12 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
     }),
     {
       name: "filter-settings-store",
-      version: 2,
-      // v0 stored `capo` meaning "allow capo songs" (default true, i.e. unfiltered);
-      // v1 renamed it to `hideCapo` (default false) to match other filter controls.
-      // v2 replaced multi-select `selectedSongbookIds` with single-select `selectedSongbookId`.
+      version: 3,
+      // v2 replaced multi-select songbooks; v3 removes the capo filter.
       migrate: (persistedState, version) => {
-        let state = persistedState as Record<string, unknown>;
-        if (version === 0) {
-          const { capo, ...rest } = state as { capo?: boolean } & Record<
-            string,
-            unknown
-          >;
-          state = { ...rest, hideCapo: capo === false };
-        }
+        const { capo: _capo, hideCapo: _hideCapo, ...rest } =
+          persistedState as Record<string, unknown>;
+        let state = rest;
         if (version <= 1) {
           const { selectedSongbookIds, ...rest } = state as {
             selectedSongbookIds?: string[];

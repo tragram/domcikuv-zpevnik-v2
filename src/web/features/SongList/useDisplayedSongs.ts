@@ -35,7 +35,7 @@ export function useDisplayedSongs(
 ): DisplayedSongs {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
   const { query, setQuery } = useQueryStore();
-  const { language, vocalRange, hideCapo, onlyFavorites, showExternal, selectedSongbookId } =
+  const { language, vocalRange, onlyFavorites, showExternal, selectedSongbookId } =
     useFilterSettingsStore();
 
   // Changing the sort clears an active search: search ignores sort entirely, so
@@ -100,7 +100,7 @@ export function useDisplayedSongs(
 
   const songs = useMemo(() => {
     // SEARCH MODE: an active query deliberately bypasses *every* filter-bar
-    // setting (capo, language, favorites, songbooks, show-external) plus the
+    // setting (language, favorites, songbooks, show-external) plus the
     // hidden-song filter. Search spans the whole local library — so it is the
     // only way to reach songs the browse list hides: external-origin songs (for
     // logged-out users) and admin-hidden songs (for everyone).
@@ -112,7 +112,7 @@ export function useDisplayedSongs(
     return sortSongs(
       applyFilters(
         baseSongs,
-        { language, vocalRange, hideCapo, onlyFavorites, showExternal, selectedSongbookId },
+        { language, vocalRange, onlyFavorites, showExternal, selectedSongbookId },
         {
           userData,
           availableSongbooks: songDB.songbooks,
@@ -130,7 +130,7 @@ export function useDisplayedSongs(
     userData,
     language,
     vocalRange,
-    hideCapo,
+
     onlyFavorites,
     showExternal,
     selectedSongbookId,
