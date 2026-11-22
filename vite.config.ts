@@ -82,9 +82,10 @@ export default defineConfig(({ mode }) => {
           manifest: false,
           injectManifest: {
             globDirectory: "dist/client/",
-            globIgnores: ["screenshots/**", "songs/**"],
+            globIgnores: ["screenshots/**"],
             globPatterns: [
               "**/*.{js,css,ico,png,svg,woff,woff2}",
+              "songs/*/*/thumbnail/*.webp",
               "site.webmanifest",
             ],
           },
