@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+import { Button } from "~/components/ui/button";
 import { Chord } from "chordsheetjs";
 import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
 import React, {
@@ -272,6 +274,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   } | null>(null);
   // Field errors stay hidden while the user is still editing; only surface
   // them (red borders) once they've tried to submit.
+  const [receipt, setReceipt] = useState<{ songId: string; pending: boolean; editorKey: string }>();
   const [submitAttempted, setSubmitAttempted] = useState(false);
   // Editor doesn't unmount between songs (e.g. navigating from one song's
   // edit page straight to another's), so reset explicitly on identity change
@@ -618,12 +621,28 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
     !!userData?.profile.isAdmin && songData?.versionStatus === "pending";
 
   const toolbarTop = true;
+  const finishSubmission = (savedHere?: { songId: string; pending: boolean }) => {
+    setDraft(null);
+    setSubmitAttempted(false);
+    if (savedHere) setReceipt({ ...savedHere, editorKey: editorStateKey });
+  };
 
   const canBeSubmitted =
     (isApprovingSubmission ||
       !editorStatesEqual(editorState, defaultEditorState)) &&
     isValid;
 
+  if (receipt?.editorKey === editorStateKey) {
+    return (
+      <main className="mx-auto flex min-h-svh max-w-md flex-col items-center justify-center gap-4 p-4 text-center">
+        <h1 className="text-2xl font-bold">{receipt.pending ? "Changes submitted for approval" : "Song saved"}</h1>
+        <p>You can safely close this tab.</p>
+        <Button asChild>{userData?.profile.isAdmin
+          ? <Link to="/song/$songId" params={{ songId: receipt.songId }}>View song</Link>
+          : <Link to="/submissions">View submissions</Link>}</Button>
+      </main>
+    );
+  }
   return (
     <div className="editor-root flex flex-col relative h-fit gap-4 xl:gap-8 min-w-62.5">
       {toolbarTop && (
@@ -637,10 +656,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           onBackupAndInitialize={handleBackupAndInitialize}
           validationErrors={validationErrors}
           onLoadBackup={loadBackupState}
-          onSubmitSuccess={() => {
-            setDraft(null);
-            setSubmitAttempted(false);
-          }}
+          onSubmitSuccess={finishSubmission}
           onAttemptSubmit={() => setSubmitAttempted(true)}
           userData={userData}
           onUploadClick={onUploadClick}
@@ -719,10 +735,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           onBackupAndInitialize={handleBackupAndInitialize}
           onLoadBackup={loadBackupState}
           onAttemptSubmit={() => setSubmitAttempted(true)}
-          onSubmitSuccess={() => {
-            setDraft(null);
-            setSubmitAttempted(false);
-          }}
+          onSubmitSuccess={finishSubmission}
           userData={userData}
           onUploadClick={onUploadClick}
           editorSettings={editorSettings}

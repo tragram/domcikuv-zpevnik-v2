@@ -15,6 +15,8 @@ import { isCorrectionSubmission, publicationOptions, submissionReview, versionEd
 import {
   conflict,
   contentOf,
+  firstSheetChange,
+  isFirstImportCuration,
   loadVersion,
   officialCondition,
   reviseVersion,
@@ -149,7 +151,8 @@ export async function saveSongVersion(
         message:
           "Create a separate version to change another author's alternative.",
       });
-    const author = attribution === false ? userId : base.userId;
+    const firstCuration = await isFirstImportCuration(db, base, content);
+    const author = firstCuration || attribution === false ? userId : base.userId;
     const changed =
       !sameContent(base, content) ||
       author !== base.userId ||
@@ -465,13 +468,23 @@ export async function approveVersion(
     if (stale && (!actor.isAdmin || !options.force)) throw conflict();
     if (options.force && options.expectedTargetRevision !== target.revision)
       throw conflict();
+    const content = contentOf(proposal);
+    const firstCuration = await isFirstImportCuration(db, target, content);
+    const curator = firstCuration
+      ? (await firstSheetChange(db, proposal.id, target))?.userId ?? proposal.userId
+      : undefined;
     await withVersionConflict(() =>
       db.batch([
         reviseVersion(
           db,
           target,
-          { ...contentOf(proposal), approvedBy: userId, approvedAt: now },
-          proposal.userId,
+          {
+            ...content,
+            ...(curator ? { userId: curator } : {}),
+            approvedBy: userId,
+            approvedAt: now,
+          },
+          curator ?? proposal.userId,
         ),
         reviseVersion(
           db,

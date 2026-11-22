@@ -42,6 +42,7 @@ import {
 } from "src/lib/contracts/image-generation";
 import { UserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
+import { hasPendingAppUpdate } from "~/services/app-updates";
 import { refreshSongVersions } from "~/services/version-service";
 import { OfflineToolbarBadge } from "~/components/OfflineIndicator";
 import { EditorSubmitDialog, type EditorSaveChoice } from "./EditorSubmitDialog";
@@ -58,7 +59,7 @@ interface EditorToolbarProps {
   validationErrors: string[]; // <-- Added validation errors prop
   onBackupAndInitialize: () => void;
   onLoadBackup: () => void;
-  onSubmitSuccess?: () => void;
+  onSubmitSuccess: (savedHere?: { songId: string; pending: boolean }) => void;
   onAttemptSubmit?: () => void;
   onUploadClick: () => void;
   userData: UserData;
@@ -194,6 +195,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       parsedState.capo = Number(editorState.capo);
     }
 
+    let saved: { songId: string; pending: boolean } | undefined;
     try {
       const response = await submitSongVersion(parsedState, songData?.id, {
         editAsPreviousAuthor: choice?.editAsPreviousAuthor,
@@ -202,6 +204,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       });
 
       const version = response.version;
+      saved = { songId: response.song.id, pending: version.status === "pending" };
       const isUpdate =
         new Date(version.createdAt).getTime() !==
         new Date(version.updatedAt).getTime();
@@ -235,7 +238,19 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       // (favorites now carries the resolved pinned-draft song); submissions
       // feeds the editor's own drafts list. Without this, ensureQueryData hands
       // back the stale pre-edit version regardless of invalidation.
+      // A second tab can stage an update while the editor remains open.
+      // Acknowledgement of the write must not depend on loading another route.
+      if (await hasPendingAppUpdate()) {
+        onSubmitSuccess(saved);
+        void refreshSongVersions(queryClient, response.song.id).catch((error) =>
+          console.warn("Could not refresh the saved song", error));
+        return;
+      }
       await refreshSongVersions(queryClient, response.song.id);
+      if (await hasPendingAppUpdate()) {
+        onSubmitSuccess(saved);
+        return;
+      }
 
       if (userData && userData.profile.isAdmin) {
         await navigate({
@@ -247,8 +262,13 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
       }
 
       // Clear the persisted draft only *after* navigating away
-      onSubmitSuccess?.();
+      onSubmitSuccess();
     } catch (e) {
+      if (saved) {
+        onSubmitSuccess(saved);
+        console.warn("Could not open the page after saving", e);
+        return;
+      }
       toast.error("Something went wrong during submission", {
         description: e instanceof Error ? e.message : String(e),
       });

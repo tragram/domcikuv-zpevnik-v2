@@ -1,4 +1,4 @@
-import { and, desc, eq, getTableColumns, isNull, sql } from "drizzle-orm";
+import { and, asc, desc, eq, getTableColumns, isNull, lt, or, sql } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import {
   song,
@@ -46,6 +46,40 @@ export function contentOf(version: SongRevisionContent): SongRevisionContent {
 
 export function sameContent(a: SongRevisionContent, b: SongRevisionContent) {
   return songContentFields.every((key) => a[key] === b[key]);
+}
+
+const curationFields = [
+  "title", "artist", "chordpro", "key", "language", "capo", "range", "startMelody", "tempo",
+] as const satisfies readonly (keyof SongRevisionContent)[];
+
+export function firstSheetChange(
+  db: AppDatabase,
+  versionId: string,
+  baseline: SongRevisionContent,
+  beforeRevision?: number,
+) {
+  return db.query.songRevision.findFirst({
+    columns: { userId: true },
+    where: and(
+      eq(songRevision.versionId, versionId),
+      beforeRevision === undefined ? undefined : lt(songRevision.number, beforeRevision),
+      or(...curationFields.map((field) =>
+        sql`json_extract(${songRevision.content}, ${`$.${field}`}) is not ${baseline[field]}`,
+      )),
+    ),
+    orderBy: asc(songRevision.number),
+  });
+}
+
+export async function isFirstImportCuration(
+  db: AppDatabase,
+  base: SongVersionDB,
+  next: SongRevisionContent,
+) {
+  if (!base.importId || curationFields.every((field) => base[field] === next[field])) return false;
+  // Lifecycle events and changes to version details or the video also create snapshots.
+  const priorSheet = await firstSheetChange(db, base.id, base, base.revision);
+  return !priorSheet;
 }
 
 export const officialCondition = (songId: string, officialId: string | null) =>

@@ -96,6 +96,9 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
       {choice.canEdit && <div className="space-y-3">
         {actor.isAdmin && <PublicationOption
           label="Edit as previous author"
+          description={choice.isImported && (choice.isPending || choice.saveMode === "correction")
+            ? "The first revision to an imported sheet is credited to its editor."
+            : undefined}
           checked={editAsPreviousAuthor === true}
           disabled={submitting || song.versionAuthorId === actor.id}
           onCheckedChange={setAttribution}
