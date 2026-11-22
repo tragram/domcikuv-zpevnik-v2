@@ -179,6 +179,18 @@ export const useUpdateVersion = (adminApi: AdminApi) => {
   });
 };
 
+export const useChangeVersionAuthor = (adminApi: AdminApi) => {
+  const cache = useQueryClient();
+  return useMutation({
+    mutationFn: ({ songId, versionId, expectedRevision, userId }: VersionMutationInput & { userId: string }) =>
+      makeApiRequest(() => adminApi.songs[":songId"].versions[":versionId"].author.$patch({
+        param: { songId, versionId },
+        json: { expectedRevision, userId },
+      })),
+    onSuccess: (_, { songId }) => refreshSongVersions(cache, songId),
+  });
+};
+
 export const useDeleteVersion = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({

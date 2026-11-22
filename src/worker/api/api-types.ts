@@ -105,6 +105,7 @@ export type SongDataAdminApi = SongDataDB &
 // A song version enriched with its import source (if it was imported), used by
 // the admin songs table to detect/badge external songs without an extra query.
 export type SongVersionAdminApi = SongVersionDB & {
+  authorName: string;
   versionNumber?: number;
   isOfficial?: boolean;
   importSourceId: SongImportDB["sourceId"] | null;

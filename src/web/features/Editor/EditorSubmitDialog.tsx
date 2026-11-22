@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { analyzeSongEdit } from "src/lib/song-edit-analysis";
 import { PublicationOption, VersionPublicationOptions } from "~/components/VersionPublicationOptions";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "~/components/ui/dialog";
@@ -10,7 +9,10 @@ import { VersionDetailsFields, type VersionDetails } from "./components/VersionD
 import { useEditorValidation } from "./components/use-editor-validation";
 import { editorSaveOptions } from "./editor-save-options";
 
-export type EditorSaveChoice = Pick<EditorState, "saveMode" | "archivePreviousOnPublish" | "makeOfficialOnPublish"> & VersionDetails;
+export type EditorSaveChoice = Pick<EditorState, "saveMode" | "archivePreviousOnPublish" | "makeOfficialOnPublish"> & VersionDetails & {
+  editAsPreviousAuthor?: boolean;
+  addToFavorites: boolean;
+};
 
 export function EditorSubmitDialog({ song, state, actor, publishing, submitting, onConfirm, onClose }: {
   song: SongData;
@@ -21,14 +23,16 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
   onConfirm: (choice: EditorSaveChoice) => void;
   onClose: () => void;
 }) {
-  // This component mounts only after Submit. Recommendation and user choices
-  // belong to this confirmation, never to the continuously edited local draft.
-  const [analysis] = useState(() => analyzeSongEdit(song.chordpro, state.chordpro));
   const [choice, setChoice] = useState(() => editorSaveOptions(song, {
     saveMode: song.versionStatus === "pending" ? state.saveMode : undefined,
     archivePreviousOnPublish: song.versionStatus === "pending" ? song.archivePreviousOnPublish : undefined,
     makeOfficialOnPublish: song.versionStatus === "pending" ? song.makeOfficialOnPublish : undefined,
-  }, actor, analysis.large));
+  }, actor));
+  const [attribution, setAttribution] = useState<boolean>();
+  const [addToFavorites, setAddToFavorites] = useState(true);
+  const editAsPreviousAuthor = actor.isAdmin
+    ? song.versionAuthorId === actor.id || (attribution ?? (choice.isPending || choice.saveMode === "correction"))
+    : undefined;
   const [versionDetails, setVersionDetails] = useState<VersionDetails>(() => ({
     label: state.label,
     description: state.description,
@@ -39,7 +43,7 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
   const archiveDisabled = choice.replacesImportedSource || (song.isOfficial && !choice.makeOfficialOnPublish);
   function selectMode(saveMode: string) {
     if (saveMode === "correction" || saveMode === "new-version") {
-      setChoice(editorSaveOptions(song, { saveMode }, actor, analysis.large));
+      setChoice(editorSaveOptions(song, { saveMode }, actor));
     }
   }
 
@@ -63,7 +67,6 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
             description="Create a separately selectable version."
           />
         </RadioGroup>
-        <p className="text-sm text-muted-foreground">{choice.canCorrect ? analysis.reason : "This edit needs a separate version."}</p>
       </div> : choice.canEdit ? <p>Your existing draft will be updated.</p> : null}
       {choice.isImported && <p className="text-sm text-muted-foreground">A revision keeps this version and preserves the original imported sheet in its history. Choose a separate version for an alternative arrangement.</p>}
       {showVersionDetails && <fieldset className="min-w-0 space-y-2" disabled={submitting}>
@@ -90,11 +93,26 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
           onCheckedChange={(checked) => setChoice((previous) => ({ ...previous, archivePreviousOnPublish: checked }))}
         />}
       </VersionPublicationOptions>}
+      {choice.canEdit && <div className="space-y-3">
+        {actor.isAdmin && <PublicationOption
+          label="Edit as previous author"
+          checked={editAsPreviousAuthor === true}
+          disabled={submitting || song.versionAuthorId === actor.id}
+          onCheckedChange={setAttribution}
+        />}
+        <PublicationOption
+          label="Add to your favorites"
+          checked={addToFavorites}
+          disabled={submitting}
+          onCheckedChange={setAddToFavorites}
+        />
+      </div>}
       <DialogFooter>
         <Button variant="outline" disabled={submitting} onClick={onClose}>Cancel</Button>
         <Button disabled={submitting || !choice.canEdit || (showVersionDetails && !!(fieldErrors.label || fieldErrors.description))}
           onClick={() => onConfirm({ saveMode: choice.saveMode,
             archivePreviousOnPublish: choice.archivePreviousOnPublish, makeOfficialOnPublish: choice.makeOfficialOnPublish,
+            editAsPreviousAuthor, addToFavorites,
             ...(showVersionDetails ? versionDetails : {}) })}>
           {submitting ? "Saving…" : publishing ? "Publish" : "Submit"}
         </Button>

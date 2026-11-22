@@ -31,6 +31,7 @@ import {
   songImport,
   songVersion,
   songSubmission,
+  user,
 } from "../../../lib/db/schema";
 import {
   SongDataAdminApi,
@@ -120,16 +121,24 @@ export const songRoutes = buildApp()
         ...getTableColumns(songVersion),
         ...getTableColumns(songSubmission),
         officialVersionId: song.currentVersionId,
+        authorName: user.name,
+        authorNickname: user.nickname,
         importSourceId: songImport.sourceId,
         importUrl: songImport.url,
       })
       .from(songVersion)
+      .innerJoin(user, eq(user.id, songVersion.userId))
       .leftJoin(song, eq(song.id, songVersion.songId))
       .leftJoin(songSubmission, eq(songSubmission.versionId, songVersion.id))
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(songVersion.updatedAt));
     const numbers = await versionNumbers(c.var.db);
-    return successJSend(c, records.map(({ officialVersionId, ...row }) => ({ ...row, isOfficial: row.id === officialVersionId, versionNumber: numbers.get(row.id) })) as SongVersionAdminApi[]);
+    return successJSend(c, records.map(({ officialVersionId, authorName, authorNickname, ...row }) => ({
+      ...row,
+      authorName: authorNickname || authorName,
+      isOfficial: row.id === officialVersionId,
+      versionNumber: numbers.get(row.id),
+    })) as SongVersionAdminApi[]);
   })
   .get("/:songId", async (c) => {
     try {
@@ -275,6 +284,29 @@ export const songRoutes = buildApp()
           c.req.valid("json").fallbackStatus,
         ),
       );
+    },
+  )
+  .patch(
+    "/:songId/versions/:versionId/author",
+    zValidatorJSend("json", versionStateSchema.extend({ userId: z.string().min(1) })),
+    async (c) => {
+      const { songId, versionId } = c.req.param();
+      const { expectedRevision, userId } = c.req.valid("json");
+      const db = c.var.db;
+      const [base, author] = await Promise.all([
+        loadVersion(db, songId, versionId),
+        db.query.user.findFirst({ where: eq(user.id, userId), columns: { id: true } }),
+      ]);
+      if (base.revision !== expectedRevision) throw conflict();
+      if (base.mergedIntoVersionId || base.status === "deleted")
+        return failJSend(c, "This version is closed", 400);
+      if (!author) return failJSend(c, "Author not found", 404);
+      if (base.userId === userId) return successJSend(c, base);
+      await withVersionConflict(() => db.batch([
+        reviseVersion(db, base, { userId }, c.var.USER!.id),
+        db.update(song).set({ updatedAt: new Date() }).where(eq(song.id, songId)),
+      ]));
+      return successJSend(c, await loadVersion(db, songId, versionId));
     },
   )
   .patch(

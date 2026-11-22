@@ -11,29 +11,29 @@ const curated = new SongData({
 
 describe("import editing rules", () => {
   it.each(["owner", "other"])("allows %s to suggest a normal correction to published curation", (id) => {
-    expect(editorSaveOptions(curated, {}, { id }, false)).toMatchObject({
+    expect(editorSaveOptions(curated, {}, { id })).toMatchObject({
       canCorrect: true, saveMode: "correction", replacesImportedSource: false,
       archivePreviousOnPublish: false,
     });
   });
 
   it("lets the owner keep both alternatives when replacing a published curation", () => {
-    expect(editorSaveOptions(curated, { saveMode: "new-version", archivePreviousOnPublish: false }, { id: "owner" }, true))
+    expect(editorSaveOptions(curated, { saveMode: "new-version", archivePreviousOnPublish: false }, { id: "owner" }))
       .toMatchObject({ saveMode: "new-version", archivePreviousOnPublish: false });
   });
 
   it("recommends a correction for an imported sheet", () => {
-    expect(editorSaveOptions({ ...curated, externalSource: source }, {}, { id: "other" }, false))
+    expect(editorSaveOptions({ ...curated, externalSource: source }, {}, { id: "other" }))
       .toMatchObject({ canCorrect: true, saveMode: "correction", archivePreviousOnPublish: false, makeOfficialOnPublish: false });
   });
 
   it("keeps pending import corrections as corrections", () => {
-    expect(editorSaveOptions({ ...curated, isOfficial: false, versionStatus: "pending", makeOfficialOnPublish: true }, {}, { id: "owner" }, false))
+    expect(editorSaveOptions({ ...curated, isOfficial: false, versionStatus: "pending", makeOfficialOnPublish: true }, {}, { id: "owner" }))
       .toMatchObject({ replacesImportedSource: true, saveMode: "correction", archivePreviousOnPublish: false, makeOfficialOnPublish: false });
   });
 
   it("requires a separate version when changing somebody else's non-official curation", () => {
-    expect(editorSaveOptions({ ...curated, isOfficial: false }, {}, { id: "other" }, false))
+    expect(editorSaveOptions({ ...curated, isOfficial: false }, {}, { id: "other" }))
       .toMatchObject({ canCorrect: false, saveMode: "new-version", archivePreviousOnPublish: false });
   });
 });

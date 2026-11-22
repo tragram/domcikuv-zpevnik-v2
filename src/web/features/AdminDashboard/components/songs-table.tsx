@@ -3,7 +3,7 @@ import { VersionActionButton } from "~/components/VersionActionButton";
 import { useQueryClient } from "@tanstack/react-query";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { refreshSongVersions, versionAction, type VersionMutationInput } from "~/services/version-service";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import {
   Archive,
   Ban,
@@ -81,7 +81,6 @@ import {
   useSongsAdmin,
   useUpdateSong,
   useUpdateVersion,
-  useUsersAdmin,
   useVersionsAdmin,
 } from "../../../services/admin-hooks";
 import { ActionButtons } from "./shared/action-buttons";
@@ -102,6 +101,7 @@ import { Checkbox } from "~/components/ui/checkbox";
 import { PublicationOption, VersionPublicationOptions } from "~/components/VersionPublicationOptions";
 import { VersionReclassification } from "./version-reclassification";
 import { VersionRename } from "./version-rename";
+import { VersionAuthor } from "./version-author";
 import { getWorkingVersion, getCorrectionParent } from "./version-selection";
 import { isCorrectionSubmission, publicationOptions, submissionReview } from "src/lib/song-version-policy";
 
@@ -114,7 +114,7 @@ const PAGE_SIZE = 25;
 const HIDEABLE_COLUMNS = [
   { id: "artist", label: "Artist" },
   { id: "status", label: "Status" },
-  { id: "submittedBy", label: "Submitted by" },
+  { id: "submittedBy", label: "Author" },
   { id: "lastModified", label: "Last modified" },
   { id: "maxRowWidth", label: "Max width" },
   { id: "visible", label: "Visible" },
@@ -126,12 +126,6 @@ type ExternalSource = {
   sourceId: (typeof SONG_SOURCES)[number];
   url: string;
 };
-
-/** Minimal shape of the admin users query needed to resolve version authors. */
-type AdminUsers =
-  | { users: { id: string; name?: string | null; nickname?: string | null }[] }
-  | null
-  | undefined;
 
 type SortableSong = SongDataDB & {
   title: string;
@@ -383,11 +377,10 @@ interface SongVersionItemProps {
   adminApi: AdminApi;
   versions: SongVersionDB[];
   song: SortableSong;
-  version: SongVersionDB;
+  version: SongVersionAdminApi;
   parentVersion: SongVersionDB | undefined | null;
   currentVersion: SongVersionDB | undefined | null;
   isCurrentActive: boolean;
-  users: AdminUsers;
   onApprove: (choices: ApprovalChoices) => void;
   onReject: () => void;
   onRestore: () => void;
@@ -405,7 +398,6 @@ function SongVersionItem({
   parentVersion,
   currentVersion,
   isCurrentActive,
-  users,
   onApprove,
   onReject,
   onRestore,
@@ -446,12 +438,6 @@ function SongVersionItem({
   const changesPublication = !isCorrection && (archivePrevious || makeOfficial);
   const stale = version.status === "pending" && !!version.parentId && (isCorrection || changesPublication)
     && (targetChanged || (changesPublication && officialChanged));
-  const author = useMemo(() => {
-    if (!users) return null;
-    const user = users.users.find((u) => u.id == version.userId);
-    return user?.nickname || user?.name;
-  }, [users, version.userId]);
-
   return (
     <div
       className={`flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl border transition-all ${
@@ -494,9 +480,7 @@ function SongVersionItem({
           <div className="flex flex-wrap items-center gap-3 text-xs font-medium text-muted-foreground">
             <span>{new Date(version.updatedAt).toLocaleString()}</span>
             <span className="w-1 h-1 rounded-full bg-border"></span>
-            {author && (
-              <span className="bg-muted px-1.5 py-0.5 rounded">{author}</span>
-            )}
+            <span className="bg-muted px-1.5 py-0.5 rounded">{version.authorName}</span>
             {version.key && (
               <span className="bg-muted px-1.5 py-0.5 rounded">
                 Key: {version.key}
@@ -549,6 +533,9 @@ function SongVersionItem({
         <label className="flex cursor-pointer items-start gap-3"><Checkbox className="mt-0.5" checked={override} onCheckedChange={(checked) => setOverrideFor(checked === true ? reviewState : null)} />I reviewed the current changes. Apply this suggestion anyway.</label>
       </div>}
       <div className="flex max-w-full flex-wrap items-center gap-2 [&>button]:h-8 [&>a]:h-8 [&>button]:min-w-8 [&>a]:min-w-8">
+        {!song.deleted && version.status !== "deleted" && !version.mergedIntoVersionId && (
+          <VersionAuthor adminApi={adminApi} version={version} online={online} />
+        )}
         {compareTargets.length > 0 && <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <VersionActionButton><GitCompare className="size-4" /> Compare with… <ChevronDown className="size-4" /></VersionActionButton>
@@ -614,9 +601,8 @@ function SongVersionItem({
 interface VersionHistoryTimelineProps {
   adminApi: AdminApi;
   song: SortableSong;
-  songVersions: SongVersionDB[];
+  songVersions: SongVersionAdminApi[];
   showDeleted: boolean;
-  users: AdminUsers;
   onApproveVersion: (input: VersionMutationInput & ApprovalChoices) => void;
   onRejectVersion: (input: VersionMutationInput) => void;
   onRestoreVersion: (input: VersionMutationInput) => void;
@@ -635,7 +621,6 @@ function VersionHistoryTimeline({
   song,
   songVersions,
   showDeleted,
-  users,
   onApproveVersion,
   onRejectVersion,
   onRestoreVersion,
@@ -686,7 +671,6 @@ function VersionHistoryTimeline({
               parentVersion={parentVersion}
               currentVersion={currentVersion}
               isCurrentActive={isCurrentActive}
-              users={users}
               onApprove={(choices) => onApproveVersion({ songId: song.id, versionId: version.id,
                 expectedRevision: version.revision, expectedOfficialId: song.currentVersionId, expectedTargetRevision: parentVersion?.revision, ...choices })}
               onReject={() => onRejectVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
@@ -775,7 +759,6 @@ function SongTableRow({
   songVersions,
   isExpanded,
   showDeleted,
-  users,
   onToggleExpand,
   onUpdateHidden,
   onRestoreSong,
@@ -792,12 +775,17 @@ function SongTableRow({
   hiddenColumns,
   visibleColumnCount,
 }: SongTableRowProps) {
-  const navigate = useNavigate({ from: "/admin" });
+  const router = useRouter();
   // TODO: Move YouTube metadata to `song` once it no longer needs to vary by version.
   const currentVersion = songVersions.find(
     (version) => version.id === song.currentVersionId,
   );
   const workingVersion = getWorkingVersion(song, songVersions);
+  const editLocation = !song.deleted && workingVersion ? {
+    to: "/edit/$songId" as const,
+    params: { songId: song.id },
+    search: { version: workingVersion.id },
+  } : null;
   const [isYoutubeDialogOpen, setIsYoutubeDialogOpen] = useState(false);
   const pendingCount = songVersions.filter(
     (v) => v.status === "pending",
@@ -811,7 +799,15 @@ function SongTableRow({
         className={`cursor-pointer hover:bg-accent/50 transition-colors ${
           isExpanded ? "bg-accent/30 border-b-transparent" : ""
         }`}
-        onClick={() => onToggleExpand(song.id)}
+        onClick={(event) => {
+          if (event.ctrlKey || event.metaKey) {
+            if (editLocation && !(event.target instanceof Element && event.target.closest("a, button"))) {
+              window.open(router.buildLocation(editLocation).publicHref, "_blank", "noopener,noreferrer");
+            }
+            return;
+          }
+          onToggleExpand(song.id);
+        }}
       >
         <TableCell className="text-center">
           <div className="flex items-center justify-center bg-background border shadow-sm w-6 h-6 rounded-md">
@@ -897,20 +893,17 @@ function SongTableRow({
         <TableCell onClick={(e) => e.stopPropagation()} className="pr-4">
           <div className="flex justify-end">
             <ActionButtons>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() =>
-                  navigate({
-                    to: "/edit/$songId",
-                    params: { songId: song.id },
-                    search: { version: workingVersion?.id },
-                  })
-                }
-                disabled={song.deleted || !workingVersion}
-              >
-                <Edit className="h-4 w-4" />
-              </Button>
+              {editLocation ? (
+                <Button variant="ghost" size="icon" asChild>
+                  <Link {...editLocation} aria-label="Edit song">
+                    <Edit className="h-4 w-4" />
+                  </Link>
+                </Button>
+              ) : (
+                <Button variant="ghost" size="icon" aria-label="Edit song" disabled>
+                  <Edit className="h-4 w-4" />
+                </Button>
+              )}
               <Button
                 variant="ghost"
                 size="icon"
@@ -965,7 +958,6 @@ function SongTableRow({
               song={song}
               songVersions={songVersions}
               showDeleted={showDeleted}
-              users={users}
               onApproveVersion={onApproveVersion}
               onRejectVersion={onRejectVersion}
               onRestoreVersion={onRestoreVersion}
@@ -1170,7 +1162,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const { data: songs, isLoading: songsLoading } = useSongsAdmin(adminApi);
   const { data: versions, isLoading: versionsLoading } =
     useVersionsAdmin(adminApi);
-  const { data: users } = useUsersAdmin(adminApi, { limit: 100, offset: 0 });
 
   // Mutations
   const updateSongMutation = useUpdateSong(adminApi);
@@ -1193,15 +1184,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     });
   }
   const generateIllustrationMutation = useGenerateIllustration(adminApi);
-
-  const usersById = useMemo(() => {
-    const map = new Map<
-      string,
-      { id: string; name?: string | null; nickname?: string | null }
-    >();
-    users?.users?.forEach((u) => map.set(u.id, u));
-    return map;
-  }, [users]);
 
   const versionsBySong = useMemo(() => {
     if (!versions) return {};
@@ -1235,9 +1217,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     return songs.map((song) => {
       const songVersions = versionsBySong[song.id] || [];
       const workingVersion = getWorkingVersion(song, songVersions);
-      const submitter = workingVersion
-        ? usersById.get(workingVersion.userId)
-        : undefined;
       return {
         ...song,
         title: workingVersion?.title || "N/A",
@@ -1256,13 +1235,13 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
               url: workingVersion.importUrl ?? "#",
             }
           : null,
-        submittedBy: submitter?.nickname || submitter?.name || null,
+        submittedBy: workingVersion?.authorName || null,
         maxRowWidth: workingVersion
           ? (layoutPressures.get(workingVersion.id)?.widestRowEm ?? null)
           : null,
       };
     });
-  }, [songs, versionsBySong, usersById, layoutPressures]);
+  }, [songs, versionsBySong, layoutPressures]);
 
   const stats = useMemo<SongStats>(() => {
     // Status counts follow the external/hidden toggles so the cards match the
@@ -1564,7 +1543,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                 )}
                 {!validHiddenColumns.includes("submittedBy") && (
                   <TableHead className="whitespace-nowrap">
-                    Submitted by
+                    Author
                   </TableHead>
                 )}
                 {!validHiddenColumns.includes("lastModified") &&
@@ -1598,7 +1577,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                     songVersions={versionsBySong[song.id] || []}
                     isExpanded={expandedSongs.has(song.id)}
                     showDeleted={showDeleted || isolate === "deleted"}
-                    users={users}
                     onToggleExpand={toggleSongExpansion}
                     onUpdateHidden={(songId, hidden) =>
                       updateSongMutation.mutate({ songId, song: { hidden } })

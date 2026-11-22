@@ -196,7 +196,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
 
     try {
       const response = await submitSongVersion(parsedState, songData?.id, {
-        editAsSubmitter: editorSettings.editAsSubmitter ?? true, publish,
+        editAsPreviousAuthor: choice?.editAsPreviousAuthor,
+        addToFavorites: choice?.addToFavorites,
+        publish,
       });
 
       const version = response.version;

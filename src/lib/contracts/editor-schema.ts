@@ -97,13 +97,13 @@ export const editorSubmitSchema = z.object({
     }),
 });
 
-// The PUT (edit existing song) route additionally accepts an admin-only flag.
 export const editorUpdateSchema = editorSubmitSchema.extend({
   publish: z.boolean().optional(),
-  // When an admin approves another user's pending submission from the editor,
-  // keep the original submitter as the version's author (the admin is still
-  // recorded as the approver). Ignored for non-admins and non-pending edits.
+  // Admins can choose attribution to the author of the version being edited.
+  editAsPreviousAuthor: z.boolean().optional(),
+  // Older clients only chose attribution for pending submissions.
   editAsSubmitter: z.boolean().optional(),
+  addToFavorites: z.boolean().optional(),
 });
 
 // Put undefined first: wrapping a transforming field in .partial() can turn an

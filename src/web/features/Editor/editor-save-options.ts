@@ -11,7 +11,6 @@ export function editorSaveOptions(
   song: EditableSong | undefined,
   state: Pick<EditorState, "saveMode" | "archivePreviousOnPublish" | "makeOfficialOnPublish">,
   actor: { id: string; isAdmin?: boolean } | undefined,
-  largeEdit: boolean,
 ) {
   const isPending = song?.versionStatus === "pending";
   const isImported = !!song?.externalSource;
@@ -22,7 +21,7 @@ export function editorSaveOptions(
     pending: isPending, imported: isImported, pendingCuration: isPending && !!song.versionParentIsImported,
     official: song.isOfficial !== false, ownerId: song.versionAuthorId,
   } : undefined, actor);
-  const recommendedMode = canCorrect && (!largeEdit || isPending || isImported) ? "correction" : "new-version";
+  const recommendedMode = canCorrect ? "correction" : "new-version";
   const saveMode = state.saveMode ?? recommendedMode;
 
   let archivePreviousOnPublish = false;

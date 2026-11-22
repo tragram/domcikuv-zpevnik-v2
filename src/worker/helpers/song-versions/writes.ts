@@ -29,7 +29,7 @@ export async function saveSongVersion(
   songId: string,
   userId: string,
   importId?: string,
-  options?: { editAsSubmitter?: boolean; publish?: boolean },
+  options?: { editAsPreviousAuthor?: boolean; editAsSubmitter?: boolean; publish?: boolean },
 ) {
   const [actor, parent] = await Promise.all([
     versionActor(db, userId),
@@ -53,6 +53,9 @@ export async function saveSongVersion(
     throw new HTTPException(403, { message: "Admin approval required." });
   const owns = base?.userId === userId;
   const canManage = owns || actor.isAdmin;
+  const attribution = actor.isAdmin
+    ? options?.editAsPreviousAuthor ?? (base?.status === "pending" ? options?.editAsSubmitter : undefined)
+    : undefined;
   const content: SongRevisionContent = {
     title: input.title,
     artist: input.artist,
@@ -88,7 +91,7 @@ export async function saveSongVersion(
   // Approving an untouched source copy is publication, not curation. Preserve
   // its ID, import marker and submitter just like the direct approval endpoint.
   if (base?.importId && base.status === "pending" && options?.publish && sameContent(base, content)) {
-    const changeAuthor = actor.isAdmin && options.editAsSubmitter === false && base.userId !== userId;
+    const changeAuthor = attribution === false && !owns;
     if (changeAuthor) {
       await withVersionConflict(() => db.batch([
         reviseVersion(db, base, { userId }, userId, parent.currentVersionId),
@@ -126,7 +129,7 @@ export async function saveSongVersion(
       message:
         "Select a replacement official version before archiving the current one.",
     });
-  if (base && !isDraft && mode === "correction" && sameContent(base, content))
+  if (base && !isDraft && mode === "correction" && sameContent(base, content) && (attribution !== false || owns))
     return base;
 
   if (base && (isDraft || (mode === "correction" && canManage && trusted))) {
@@ -146,10 +149,7 @@ export async function saveSongVersion(
         message:
           "Create a separate version to change another author's alternative.",
       });
-    const author =
-      isDraft && actor.isAdmin && options?.editAsSubmitter === false
-        ? userId
-        : base.userId;
+    const author = attribution === false ? userId : base.userId;
     const changed =
       !sameContent(base, content) ||
       author !== base.userId ||
@@ -224,7 +224,7 @@ export async function saveSongVersion(
     songId,
     parentId: base?.id ?? null,
     importId: importId ?? null,
-    userId: base?.status === "pending" && actor.isAdmin && options?.editAsSubmitter !== false
+    userId: base && (attribution === true || (base.status === "pending" && actor.isAdmin && attribution === undefined))
       ? base.userId : userId,
     editedBy: userId,
     status: published ? "published" : "pending",

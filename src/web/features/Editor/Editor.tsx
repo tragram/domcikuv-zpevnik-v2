@@ -679,7 +679,6 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
               userData={userData}
               fieldErrors={submitAttempted ? fieldErrors : {}}
               hasIllustration={hasIllustration}
-              canAttributeToSubmitter={isApprovingSubmission}
               features={evaluatedFeatures}
               isProcessing={isProcessing}
               onExecuteFeature={executeFeature}

@@ -24,19 +24,37 @@ afterEach(async () => {
   vi.unstubAllGlobals();
 });
 
-it("preselects based on the completed edit and submits the user's explicit choice", async () => {
+it("defaults substantial edits to a revision and lets users opt out of favorites", async () => {
   const confirm = vi.fn();
   const state = { ...song.toJSON(), chordpro: "Completely rewritten lyrics and a new arrangement" } as EditorState;
   await act(async () => root.render(<EditorSubmitDialog song={song} state={state} actor={{ id: "owner" }}
     publishing={false} submitting={false} onConfirm={confirm} onClose={vi.fn()} />));
   const dialog = document.querySelector('[role="dialog"]')!;
   const radios = dialog.querySelectorAll<HTMLButtonElement>('[role="radio"]');
-  expect(radios[1].getAttribute("aria-checked")).toBe("true");
+  expect(radios[0].getAttribute("aria-checked")).toBe("true");
+  const checkboxes = dialog.querySelectorAll<HTMLButtonElement>('[role="checkbox"]');
+  expect(checkboxes).toHaveLength(1);
+  expect(checkboxes[0].getAttribute("aria-checked")).toBe("true");
   expect(confirm).not.toHaveBeenCalled();
-  await act(async () => radios[0].click());
+  await act(async () => checkboxes[0].click());
   const submit = [...dialog.querySelectorAll("button")].find((button) => button.textContent === "Submit")!;
   await act(async () => submit.click());
-  expect(confirm).toHaveBeenCalledWith({ saveMode: "correction", archivePreviousOnPublish: false, makeOfficialOnPublish: false });
+  expect(confirm).toHaveBeenCalledWith(expect.objectContaining({ saveMode: "correction", addToFavorites: false }));
+});
+
+it("lets an admin choose attribution while approving an existing draft", async () => {
+  const confirm = vi.fn();
+  const pending = { ...song, versionStatus: "pending" as const, versionParentId: undefined } as SongData;
+  const state = { ...song.toJSON(), chordpro: song.chordpro } as EditorState;
+  await act(async () => root.render(<EditorSubmitDialog song={pending} state={state} actor={{ id: "admin", isAdmin: true }}
+    publishing submitting={false} onConfirm={confirm} onClose={vi.fn()} />));
+  const dialog = document.querySelector('[role="dialog"]')!;
+  const [attribution, favorites] = dialog.querySelectorAll<HTMLButtonElement>('[role="checkbox"]');
+  expect(attribution.getAttribute("aria-checked")).toBe("true");
+  expect(favorites.getAttribute("aria-checked")).toBe("true");
+  await act(async () => attribution.click());
+  await act(async () => [...dialog.querySelectorAll("button")].find((button) => button.textContent === "Publish")!.click());
+  expect(confirm).toHaveBeenCalledWith(expect.objectContaining({ editAsPreviousAuthor: false, addToFavorites: true }));
 });
 
 it("recommends a revision for a small edit and lets the user cancel without saving", async () => {

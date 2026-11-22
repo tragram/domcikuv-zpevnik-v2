@@ -28,6 +28,8 @@ import { getOwnSongbookEntries, setSongbookEntry } from "../favorite-helpers";
 import { publishedVersionIds } from "../song-helpers";
 import { buildApp } from "../../api/utils";
 import { songRoutes } from "../../api/admin/songs";
+import editorApp from "../../api/editor";
+import type { EditorSubmissionResponse } from "../../api/api-types";
 import { versionNumbers } from "./numbering";
 
 let sqlite: DatabaseSync;
@@ -205,7 +207,7 @@ describe("submitted revision history", () => {
     const original = await importCopy("Source", "untrusted");
     const curated = await saveSongVersion(db, {
       ...input("Edited source"), baseVersionId: original.id, expectedRevision: original.revision,
-    }, "song", "admin", undefined, { publish: true, editAsSubmitter: true });
+    }, "song", "admin", undefined, { publish: true, editAsPreviousAuthor: true });
     expect(curated).toMatchObject({ id: original.id, userId: "untrusted", status: "published", importId: original.importId, parentId: null });
     expect(await db.query.songVersion.findMany()).toHaveLength(1);
   });
@@ -248,6 +250,59 @@ describe("submitted revision history", () => {
     expect(data.id).toBe(original.id);
     expect(data).toMatchObject({ importId: original.importId, youtubeId: "abcdefghijk" });
     expect(await loadVersion(db, "song", original.id)).toMatchObject({ youtubeId: "abcdefghijk", status: "published" });
+  });
+
+  it("changes the author in place through the admin API and rejects stale updates", async () => {
+    const original = await importCopy();
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      c.set("USER", { id: "admin" } as NonNullable<typeof c.var.USER>);
+      await next();
+    }).route("/", songRoutes);
+    const changeAuthor = (userId: string, expectedRevision = original.revision) =>
+      app.request(`/song/versions/${original.id}/author`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, expectedRevision }),
+      });
+
+    expect((await changeAuthor("missing")).status).toBe(404);
+    expect((await changeAuthor("other")).status).toBe(200);
+    expect((await changeAuthor("owner")).status).toBe(409);
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({
+      id: original.id, importId: original.importId, chordpro: original.chordpro,
+      userId: "other", editedBy: "admin", revision: original.revision + 1,
+    });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
+  });
+
+  it("honors the editor's favorites choice when an admin saves on behalf of an author", async () => {
+    const original = await initial();
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      c.set("USER", { id: "admin" } as NonNullable<typeof c.var.USER>);
+      await next();
+    }).route("/", editorApp);
+    const save = (saveMode: string, addToFavorites: boolean, expectedRevision: number) =>
+      app.request("/song", {
+        method: "PUT", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: original.title, artist: original.artist, chordpro: "Reworked sheet",
+          baseVersionId: original.id, expectedRevision, saveMode, addToFavorites, editAsPreviousAuthor: true,
+        }),
+      });
+
+    expect((await save("correction", false, original.revision)).status).toBe(200);
+    expect(await getOwnSongbookEntries(db, "admin")).toEqual([]);
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({
+      chordpro: "Reworked sheet", userId: "owner", editedBy: "admin",
+    });
+    const response = await save("new-version", true, original.revision + 1);
+    expect(response.status).toBe(200);
+    const { data } = await response.json() as { data: EditorSubmissionResponse };
+    expect(data.version).toMatchObject({ userId: "owner", editedBy: "admin" });
+    expect(await db.query.userFavoriteSongs.findMany()).toMatchObject([
+      { userId: "admin", songId: "song", pinnedVersionId: data.version.id },
+    ]);
   });
 
   it.each(["local", "imported"] as const)("renames a %s version in place through the admin API", async (kind) => {

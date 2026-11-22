@@ -178,7 +178,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
     } as EditorSubmissionResponse);
   })
   .put("/:id", zValidatorJSend("json", editorUpdateSchema), async (c) => {
-    const { editAsSubmitter, ...submission } = c.req.valid("json");
+    const { editAsPreviousAuthor, editAsSubmitter, addToFavorites, publish, ...submission } = c.req.valid("json");
     const userId = c.var.USER?.id;
     const songId = c.req.param("id");
 
@@ -188,7 +188,6 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
 
     const db = c.var.db;
 
-    // getSongPopulated will throw an error if the song is not found.
     const existingSong = await getSongBase(db, songId);
 
     const versionResult = await createSongVersion(
@@ -197,18 +196,20 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       songId,
       userId,
       undefined,
-      { editAsSubmitter, publish: c.req.valid("json").publish },
+      { editAsPreviousAuthor, editAsSubmitter, publish },
     );
 
-    // Pin the new version to the editor's songbook only when it's genuinely
-    // theirs, so an in-progress edit sticks even if it's never approved. An admin
-    // approving someone else's submission publishes it outright — there's nothing
-    // to pin, and we don't want it in the admin's favorites.
-    if (versionResult.userId === userId && versionResult.id !== (submission.baseVersionId ?? submission.parentId)) {
+    const switchedVersion = versionResult.id !== (submission.baseVersionId ?? submission.parentId);
+    const ownsVersion = versionResult.userId === userId;
+    const legacyPin = switchedVersion && ownsVersion;
+    if (addToFavorites ?? legacyPin) {
+      // Pin separately selectable versions and the editor's own pending drafts.
+      // A revision to an existing sheet preserves the editor's current pin.
+      const pin = addToFavorites === undefined ? legacyPin
+        : (submission.saveMode === "new-version" && versionResult.status === "published")
+          || (ownsVersion && versionResult.status === "pending");
       try {
-        await setSongbookEntry(db, userId, existingSong.id, {
-          pinnedVersionId: versionResult.id,
-        });
+        await setSongbookEntry(db, userId, existingSong.id, pin ? { pinnedVersionId: versionResult.id } : {});
       } catch {
         /* non fatal */
       }
