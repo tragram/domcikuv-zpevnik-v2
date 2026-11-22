@@ -65,10 +65,20 @@ it("updates choices from the existing catalog without making a server request", 
 
 const viewer = { profile: { id: "viewer" }, submissions: [] } as unknown as NonNullable<UserData>;
 
-it("keeps details visible for a saved version that is also the only official choice", async () => {
+it("keeps the selector hidden when the only official version is saved", async () => {
   cache.setQueryDefaults(["favorites"], { staleTime: Infinity });
   cache.setQueryData(["favorites", "viewer"], [{ songId: "song", pinnedVersionId: "official", keyIndex: null, capo: null }]);
-  expect(await render(official, viewer)).not.toBeNull();
+  expect(await render(official, viewer)).toBeNull();
+});
+
+it("shows details after saving a pending version with no published choices", async () => {
+  cache.setQueryDefaults(["favorites"], { staleTime: Infinity });
+  cache.setQueryData(["favorites", "viewer"], []);
+  const pending = new SongData({ ...officialApi, versionId: "pending", versionStatus: "pending", publishedVersionIds: [] });
+  expect(await render(pending, viewer)).toBeNull();
+
+  cache.setQueryData(["favorites", "viewer"], [{ songId: "song", pinnedVersionId: "pending", keyIndex: null, capo: null }]);
+  expect(await render(pending, viewer)).not.toBeNull();
 });
 
 it("offers the different official version while retaining the saved archived choice", async () => {
@@ -85,7 +95,8 @@ it.each(["official", "alternative"])("fills the picker heart only on the pinned 
   cache.setQueryDefaults(historyKey, { staleTime: Infinity });
   cache.setQueryData(historyKey, [summary("official"), summary("alternative")]);
 
-  const trigger = await render(official, viewer);
+  const songWithAlternatives = new SongData({ ...officialApi, publishedVersionIds: ["official", "alternative"] });
+  const trigger = await render(songWithAlternatives, viewer);
   await act(async () => (trigger as HTMLButtonElement).click());
 
   const rows = document.querySelectorAll('ul[aria-label="Available song versions"] li');

@@ -88,7 +88,11 @@ export function SongVersionBadge({
     song: { ...songData, publishedVersionIds: publishedIds ?? songData.publishedVersionIds }, savedEntry: entry,
     submissions: userData?.submissions,
   }).size > 1;
-  if (!songData.versionId || (!hasChoices && !entry?.pinnedVersionId && !selection?.unavailable)) return null;
+  const savedStatus = entry?.pinnedVersionId === songData.versionId
+    ? resolvedStatus ?? songData.versionStatus
+    : entry?.song?.versionStatus;
+  const hasSavedUnpublishedVersion = savedStatus === "archived" || savedStatus === "pending" || savedStatus === "rejected";
+  if (!songData.versionId || (!hasChoices && !hasSavedUnpublishedVersion && !selection?.unavailable)) return null;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
