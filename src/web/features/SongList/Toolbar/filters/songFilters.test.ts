@@ -227,15 +227,20 @@ describe("sortSongs", () => {
     ]);
   });
 
-  it("sorts by range, treating missing range as lowest", () => {
-    const withRange = song({
-      id: "with",
+  it("hides songs without a range when sorting by range in either direction", () => {
+    const higher = song({
+      id: "higher",
       range: { semitones: 10 } as SongData["range"],
     });
+    const lower = song({
+      id: "lower",
+      range: { semitones: 0 } as SongData["range"],
+    });
     const withoutRange = song({ id: "without", range: undefined });
-    expect(sortSongs([withRange, withoutRange], "range", "ascending")).toEqual(
-      [withoutRange, withRange],
-    );
+    const songs = [higher, withoutRange, lower];
+    expect(sortSongs(songs, "range", "ascending")).toEqual([lower, higher]);
+    expect(sortSongs(songs, "range", "descending")).toEqual([higher, lower]);
+    expect(sortSongs(songs, "title", "ascending")).toContain(withoutRange);
   });
 
   it("does not mutate the input array", () => {

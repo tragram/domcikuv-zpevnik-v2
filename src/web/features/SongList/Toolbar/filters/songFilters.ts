@@ -167,4 +167,8 @@ export const sortSongs = (
   songs: SongData[],
   field: SortField,
   order: SortOrder,
-): SongData[] => songs.toSorted(getSortCompareFunction(field, order));
+): SongData[] =>
+  (field === "range"
+    ? songs.filter((song) => song.range?.semitones !== undefined)
+    : songs
+  ).toSorted(getSortCompareFunction(field, order));
