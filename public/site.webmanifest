@@ -2,7 +2,7 @@
   "name": "Domčíkův zpěvník v2",
   "id": "cz.hodandom.domcikuv-zpevnik-v2",
   "short_name": "Zpěvník",
-  "description": "Druhá verze mého báječného zpěvníku - nyní offline!",
+  "description": "Druhá verze mého báječného zpěvníku. Lze živě sdílet akordy, má volitelný kontrastní režim pro e-ink, automatické přizpůsobení velikosti textu a funguje offline!",
   "start_url": "/",
   "icons": [
     {
@@ -44,32 +44,32 @@
   ],
   "screenshots": [
     {
-      "src": "/screenshots/songlist_wide.png",
+      "src": "/screenshots/songlist_desktop.webp",
       "sizes": "2560x1600",
-      "type": "image/png",
+      "type": "image/webp",
       "form_factor": "wide",
-      "label": "Song list"
+      "label": "Song list on desktop"
     },
     {
-      "src": "/screenshots/songlist_iphone_xr.png",
-      "sizes": "828x1792",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Song list"
-    },
-    {
-      "src": "/screenshots/songview_wide.png",
-      "sizes": "2560x1600",
-      "type": "image/png",
+      "src": "/screenshots/songview_ipad.webp",
+      "sizes": "2752x2064",
+      "type": "image/webp",
       "form_factor": "wide",
-      "label": "Song view"
+      "label": "Song view on iPad in landscape"
     },
     {
-      "src": "/screenshots/songview_iphone_xr.png",
-      "sizes": "828x1792",
-      "type": "image/png",
+      "src": "/screenshots/songlist_ipad.webp",
+      "sizes": "1536x2048",
+      "type": "image/webp",
       "form_factor": "narrow",
-      "label": "Song view"
+      "label": "Song list on iPad in portrait"
+    },
+    {
+      "src": "/screenshots/songview_iphone.webp",
+      "sizes": "1179x2556",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Song view on iPhone"
     }
   ],
   "theme_color": "#F28C28",
