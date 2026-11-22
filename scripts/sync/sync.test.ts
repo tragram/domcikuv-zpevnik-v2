@@ -7,6 +7,7 @@ import yaml from "js-yaml";
 import sharp from "sharp";
 import { assignSnapshotVersions, eligibleSnapshotVersion } from "../shared/song-snapshot";
 import type { AppDatabase } from "../../src/worker/api/utils";
+import { versionHistoryFixture } from "../../src/worker/helpers/song-versions/history.test-fixture";
 import { renderSnapshotSheet } from "./render-song";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
@@ -241,7 +242,32 @@ describe("parallel version snapshots", () => {
 
     const sqlite = new DatabaseSync(":memory:");
     try {
-      for (const file of fs.readdirSync("drizzle").filter(file => file.endsWith(".sql")).sort()) {
+      // The checkout only tracks the additive migrations. Start from the same
+      // base schema as the version-history tests, plus the tables used by seeding.
+      sqlite.exec(versionHistoryFixture);
+      sqlite.exec(`
+        CREATE TABLE sync_session (
+          id INTEGER PRIMARY KEY, master_id TEXT NOT NULL REFERENCES user(id),
+          timestamp INTEGER NOT NULL, song_id TEXT REFERENCES song(id),
+          version_id TEXT REFERENCES song_version(id)
+        );
+        CREATE TABLE illustration_prompt (
+          id TEXT PRIMARY KEY NOT NULL, song_id TEXT NOT NULL REFERENCES song(id),
+          prompt_version TEXT NOT NULL, summary_model TEXT NOT NULL, text TEXT NOT NULL,
+          created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, deleted INTEGER NOT NULL DEFAULT 0
+        );
+        CREATE TABLE song_illustration (
+          id TEXT PRIMARY KEY NOT NULL, song_id TEXT NOT NULL REFERENCES song(id),
+          prompt_id TEXT NOT NULL REFERENCES illustration_prompt(id), image_model TEXT NOT NULL,
+          image_url TEXT NOT NULL, thumbnail_url TEXT NOT NULL,
+          created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, deleted INTEGER NOT NULL DEFAULT 0
+        );
+      `);
+      for (const file of [
+        "0008_sturdy_morgan_stark.sql",
+        "0009_living_snowbird.sql",
+        "0012_unique_import_copies.sql",
+      ]) {
         sqlite.exec(fs.readFileSync(path.join("drizzle", file), "utf8"));
       }
       const db = drizzle(async (sql, params, method) => {
