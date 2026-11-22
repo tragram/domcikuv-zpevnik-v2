@@ -1,9 +1,15 @@
-import { createFileRoute, redirect, Link } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  type ErrorComponentProps,
+} from "@tanstack/react-router";
 import { externalSearchResultSchema } from "src/lib/contracts/external-search-schema";
 import PendingComponent from "~/components/PendingComponent";
 import { Button } from "~/components/ui/button";
 import { ApiException, makeApiRequest } from "~/services/api-service";
 import { getIsOnline } from "~/hooks/use-is-online";
+import { useQueryStore } from "~/features/SongList/searchStore";
 
 class ImportError extends Error {
   songId?: string;
@@ -49,6 +55,7 @@ export const Route = createFileRoute("/import")({
         to: "/song/$songId",
         params: { songId: data.songId },
         search: { version: data.versionId },
+        state: { externalImportPreview: true },
       });
     } catch (error) {
       if (error instanceof Response) {
@@ -84,26 +91,36 @@ export const Route = createFileRoute("/import")({
       text="Please wait while the lyrics are being fetched..."
     />
   ),
-  errorComponent: ({ error }) => {
-    const songId = error instanceof ImportError ? error.songId : undefined;
+  errorComponent: ImportErrorComponent,
+});
 
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <div className="max-w-md w-full outline-primary outline-2 rounded-lg shadow-lg p-6">
-          <h1 className="text-2xl font-bold text-primary">Import Failed</h1>
-          <p className="text-700 mb-6">{error.message}</p>
+function ImportErrorComponent({ error }: ErrorComponentProps) {
+  const songId = error instanceof ImportError ? error.songId : undefined;
+  const canReturnToSearch = useQueryStore((state) => state.externalSearchTriggered);
 
-          <Button variant="outline" asChild>
-            {songId ? (
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="max-w-md w-full outline-primary outline-2 rounded-lg shadow-lg p-6">
+        <h1 className="text-2xl font-bold text-primary">Import Failed</h1>
+        <p className="text-700 mb-6">{error.message}</p>
+
+        <div className="flex flex-wrap gap-2">
+          {(canReturnToSearch || !songId) && (
+            <Button variant="outline" asChild>
+              <Link to="/" replace={canReturnToSearch}>
+                {canReturnToSearch ? "Back to search" : "Back to Home"}
+              </Link>
+            </Button>
+          )}
+          {songId && (
+            <Button variant="outline" asChild>
               <Link to="/song/$songId" params={{ songId }}>
                 Go to Existing Song
               </Link>
-            ) : (
-              <Link to="/">Back to Home</Link>
-            )}
-          </Button>
+            </Button>
+          )}
         </div>
       </div>
-    );
-  },
-});
+    </div>
+  );
+}

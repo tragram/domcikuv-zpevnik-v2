@@ -10,7 +10,7 @@ import { useDisplayedSongs } from "./useDisplayedSongs";
 
 vi.mock("src/lib/auth/client", () => ({ authClient: { getSession: vi.fn() } }));
 vi.mock("~/features/SongView/hooks/filterSettingsStore", () => ({ useFilterSettingsStore: () => ({ selectedSongbookId: "owner" }) }));
-vi.mock("./Toolbar/SearchBar", () => ({ useQueryStore: () => ({ query: "", setQuery: () => {} }) }));
+vi.mock("./searchStore", () => ({ useQueryStore: (select: (state: { query: string }) => string) => select({ query: "" }) }));
 vi.mock("./Toolbar/SortMenu", () => ({ useSortSettingsStore: () => ({}) }));
 vi.mock("./Toolbar/filters/songFilters", () => ({ applyFilters: (songs: SongData[]) => songs, sortSongs: (songs: SongData[]) => songs }));
 

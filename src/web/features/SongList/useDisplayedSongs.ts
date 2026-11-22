@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import Fuse from "fuse.js";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { to_ascii } from "src/lib/song-ids";
 import { SongData } from "~/types/songData";
 import type { SongDB } from "~/types/types";
 import { songbookEntriesQueryOptions, type UserData } from "~/hooks/use-user-data";
-import { useQueryStore } from "./Toolbar/SearchBar";
+import { useQueryStore } from "./searchStore";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
 import { applyFilters, sortSongs } from "./Toolbar/filters/songFilters";
 import { songsQueryOptions } from "~/hooks/use-songDB";
@@ -34,15 +34,9 @@ export function useDisplayedSongs(
   userData: UserData,
 ): DisplayedSongs {
   const { field: sortByField, order: sortOrder } = useSortSettingsStore();
-  const { query, setQuery } = useQueryStore();
+  const query = useQueryStore((state) => state.query);
   const { language, vocalRange, onlyFavorites, showExternal, selectedSongbookId } =
     useFilterSettingsStore();
-
-  // Changing the sort clears an active search: search ignores sort entirely, so
-  // this stops the two from implying contradictory orderings.
-  useEffect(() => {
-    setQuery("");
-  }, [sortByField, sortOrder, setQuery]);
 
   // When the list is narrowed to a single *other* user's songbook, fetch that
   // songbook's contents on demand and use it as the base list — including the

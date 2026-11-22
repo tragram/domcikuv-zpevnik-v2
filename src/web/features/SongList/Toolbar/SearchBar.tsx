@@ -3,17 +3,7 @@ import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
 import { Search as SearchIcon, XIcon } from "lucide-react";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
-import { create } from "zustand";
-
-interface QueryState {
-  query: string;
-  setQuery: (query: string) => void;
-}
-
-export const useQueryStore = create<QueryState>()((set) => ({
-  query: "",
-  setQuery: (query: string) => set({ query: query }),
-}));
+import { useQueryStore } from "../searchStore";
 
 const ClearButton = ({
   query,

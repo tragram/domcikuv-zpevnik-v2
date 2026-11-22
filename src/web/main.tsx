@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import { queryClient } from "../lib/query-client";
 import client, { API } from "../worker/api-client";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { trackExternalSearchNavigation } from "./features/SongList/searchStore";
 import "./main.css";
 import { routeTree } from "./routeTree.gen";
 import { shouldRestoreSongScroll } from "./lib/scroll-restoration";
@@ -40,6 +41,7 @@ const router = createRouter({
   // defaultPreloadStaleTime: 0,
   scrollRestoration: shouldRestoreSongScroll,
 });
+trackExternalSearchNavigation(router);
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {

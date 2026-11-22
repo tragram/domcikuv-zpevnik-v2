@@ -30,6 +30,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { SortField, SortOrder, SortSettings } from "~/types/types";
+import { useQueryStore } from "../searchStore";
 
 interface SortSettingsState extends SortSettings {
   setSortOrder: (sortOrder: SortOrder) => void;
@@ -38,17 +39,19 @@ interface SortSettingsState extends SortSettings {
 
 export const useSortSettingsStore = create<SortSettingsState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       order: "descending" as SortOrder,
       field: "dateAdded" as SortField,
-      setSortOrder: (sortOrder: SortOrder) =>
-        set({
-          order: sortOrder,
-        }),
-      setSortField: (sortField: SortField) =>
-        set({
-          field: sortField,
-        }),
+      setSortOrder: (sortOrder) => {
+        if (get().order === sortOrder) return;
+        useQueryStore.getState().setQuery("");
+        set({ order: sortOrder });
+      },
+      setSortField: (sortField) => {
+        if (get().field === sortField) return;
+        useQueryStore.getState().setQuery("");
+        set({ field: sortField });
+      },
     }),
     {
       name: "sort-settings-store",

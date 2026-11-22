@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import Fuse from "fuse.js";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { fetchExternalSearch } from "~/services/song-service";
 import type { UserData } from "~/hooks/use-user-data";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { SongData } from "~/types/songData";
 import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
-import { useQueryStore } from "./Toolbar/SearchBar";
+import { useQueryStore } from "./searchStore";
 
 // Stable identity so react-query only re-runs the select when the data changes.
 // The cache keeps the raw API rows; SongData is built on read because a class
@@ -24,16 +24,15 @@ const toSongData = (rows: ExternalSearchResult[]) =>
  *   search is only offered when local results are weak.
  */
 export function useExternalSearch(userData: UserData, bestLocalScore: number) {
-  const { query } = useQueryStore();
+  const { query, externalSearchTriggered, triggerExternalSearch } = useQueryStore();
   const isOnline = useIsOnline();
 
-  const [triggeredQuery, setTriggeredQuery] = useState<string | null>(null);
-  const hasTriggeredExternalSearch = query === triggeredQuery;
-
   // Offer online search only when the local results are poor (no near-exact
-  // match) or the query is long enough to be worth a network round-trip.
+  // match) or the query is long enough to be worth a network round-trip. Keep
+  // an active search visible if the import itself creates a close local match.
   const isQueryValidForExternal =
-    !!query && (bestLocalScore > 0.05 || query.trim().length >= 7);
+    !!query &&
+    (externalSearchTriggered || bestLocalScore > 0.05 || query.trim().length >= 7);
   // Online-only: the endpoint hits third-party libraries and importing a result
   // needs the network too, so hide the whole flow offline. The "show external"
   // browse filter only affects which *local* songs are displayed, not whether
@@ -41,13 +40,13 @@ export function useExternalSearch(userData: UserData, bestLocalScore: number) {
   // while actively searching (see useDisplayedSongs).
   const canSearchExternal =
     isOnline && !!userData && isQueryValidForExternal;
-  const shouldSearchExternal = canSearchExternal && hasTriggeredExternalSearch;
+  const hasTriggeredExternalSearch = canSearchExternal && externalSearchTriggered;
 
   const { data: externalSongData = [], isFetching: isLoadingExternal } = useQuery({
     queryKey: ["externalSearch", query],
     queryFn: () => fetchExternalSearch(query),
     select: toSongData,
-    enabled: shouldSearchExternal,
+    enabled: hasTriggeredExternalSearch,
     staleTime: 1000 * 60 * 5,
   });
 
@@ -67,8 +66,8 @@ export function useExternalSearch(userData: UserData, bestLocalScore: number) {
 
   return {
     externalSongs,
-    isLoadingExternal,
-    triggerExternalSearch: () => setTriggeredQuery(query),
+    isLoadingExternal: hasTriggeredExternalSearch && isLoadingExternal,
+    triggerExternalSearch,
     hasTriggeredExternalSearch,
     canSearchExternal,
   };
