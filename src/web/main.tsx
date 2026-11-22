@@ -10,6 +10,10 @@ import "./main.css";
 import { routeTree } from "./routeTree.gen";
 import { shouldRestoreSongScroll } from "./lib/scroll-restoration";
 
+import { startAppUpdates } from "./services/app-updates";
+
+if (import.meta.env.PROD) startAppUpdates();
+
 export interface RouterContext {
   queryClient: QueryClient;
   api: API;

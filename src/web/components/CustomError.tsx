@@ -1,89 +1,92 @@
-import { ErrorComponent, Link } from "@tanstack/react-router";
-import type { ErrorComponentProps } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link, type ErrorComponentProps } from "@tanstack/react-router";
+import { House, RefreshCcw } from "lucide-react";
+import { useEffect, useState } from "react";
 import { clearPersistedCache } from "src/lib/query-client";
+import { getIsOnline, useIsOnline } from "~/hooks/use-is-online";
+import { retryAppLoad, updateLabels, useAppUpdate } from "~/services/app-updates";
+import ConfirmationDialog from "./dialogs/confirmation-dialog";
 import { Button } from "./ui/button";
-import { RotateCcw, House, RefreshCcw } from "lucide-react";
 
-export const clearCacheAndReload = async () => {
-  try {
-    // The persisted query snapshot (IndexedDB) is the likeliest poison — clear
-    // it first, before anything below can fail.
-    await clearPersistedCache();
-
-    // Clear local cache (e.g., localStorage, sessionStorage)
-    localStorage.clear();
-    sessionStorage.clear();
-
-    // Clear Service Worker cache
-    if ("serviceWorker" in navigator) {
-      const registrations = await navigator.serviceWorker.getRegistrations();
-      for (const registration of registrations) {
-        await registration.unregister();
-      }
-    }
-
-    // Clear browser cache
-    if ("caches" in window) {
-      const keys = await caches.keys();
-      await Promise.all(keys.map((key) => caches.delete(key)));
-    }
-  } catch (err) {
-    console.error("Failed to clear cache:", err);
-  } finally {
-    // Reload even if some clearing step failed — a partial clear plus a fresh
-    // load still beats staying on the error page.
-    window.location.reload();
-  }
-};
-
-// Remembers, per error message, whether a plain reload was already tried for it -
-// keyed by message so a different, later error isn't stuck disabled because of an
-// older one. sessionStorage because it must survive the reload itself.
-const RELOAD_ATTEMPTED_KEY = "customError:reloadAttemptedFor";
+const assetLoadError = /dynamically imported module|importing a module script failed|chunkloaderror|loading chunk .* failed|unable to preload css/i;
 
 export function CustomError({ error }: ErrorComponentProps) {
-  const [reloadDidntHelp] = useState(
-    () => sessionStorage.getItem(RELOAD_ATTEMPTED_KEY) === error.message,
-  );
+  const online = useIsOnline();
+  const update = useAppUpdate();
+  const [retrying, setRetrying] = useState(false);
+  const [repairing, setRepairing] = useState(false);
+  const [repairFailed, setRepairFailed] = useState(false);
+  const message = typeof error?.message === "string" ? error.message : undefined;
+  const checkForNewBuild = assetLoadError.test(`${error?.name ?? ""} ${message ?? ""}`);
+  const downloading = online && checkForNewBuild && update === "downloading";
+  const restarting = update === "restarting";
+  const busy = retrying || restarting || repairing;
 
-  console.error("CustomError Error:", error);
+  useEffect(() => {
+    console.error("Songbook error:", error);
+  }, [error]);
+
+  async function retry() {
+    setRetrying(true);
+    try {
+      await retryAppLoad(checkForNewBuild);
+    } finally {
+      setRetrying(false);
+    }
+  }
+
+  async function repair() {
+    if (!getIsOnline()) return;
+    setRepairFailed(false);
+    setRepairing(true);
+    try {
+      await clearPersistedCache();
+      window.location.reload();
+    } catch (err) {
+      console.error("Songbook repair failed:", err);
+      setRepairFailed(true);
+      setRepairing(false);
+    }
+  }
 
   return (
-    <div className="min-w-0 flex-1 p-4 flex flex-col items-center justify-center gap-6">
-      <h1 className="text-2xl font-bold">Upsík dupsík!</h1>
-      <ErrorComponent error={error} />
-      <div className="flex gap-2 items-center flex-wrap">
-        <Button
-          variant="outline"
-          disabled={reloadDidntHelp}
-          title={reloadDidntHelp ? "Already tried - try a hard reload instead" : undefined}
-          onClick={() => {
-            sessionStorage.setItem(RELOAD_ATTEMPTED_KEY, error.message);
-            // A real reload, not router.invalidate(): the most common error here
-            // is a lazy chunk that vanished after a deploy, which only a fresh
-            // document (served by the updated service worker) can fix.
-            window.location.reload();
-          }}
-        >
+    <div className="min-w-0 flex-1 p-4 flex flex-col items-center justify-center gap-4 text-center">
+      <h1 className="text-2xl font-bold">Something went wrong</h1>
+      <p className="text-sm text-muted-foreground">
+        {online ? "We couldn’t open this page. Try again or return to the songbook."
+          : "You’re offline. Try opening the page again once you’re connected."}
+      </p>
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <Button onClick={retry} disabled={busy || downloading}>
           <RefreshCcw />
-          Reload
-        </Button>
-        <Button variant="outline" onClick={clearCacheAndReload}>
-          <RotateCcw />
-          Hard reload
+          {restarting || retrying ? "Trying again…" : online && update === "ready" ? updateLabels.ready : "Try again"}
         </Button>
         <Button variant="outline" asChild>
-          <Link to="/">
+          <Link to="/" reloadDocument>
             <House />
-            Go home
+            Back to songbook
           </Link>
         </Button>
       </div>
-      {reloadDidntHelp && (
-        <p className="text-sm text-muted-foreground max-w-sm text-center">
-          A plain reload didn't fix it. Try the hard reload. Note that this will delete any settings on your device and will redownload the whole database (a few MB). :-(
+      {online && update === "otherTabs" && (
+        <p role="status" className="text-sm text-muted-foreground">
+          Close any other songbook tabs, then try again to finish updating.
         </p>
+      )}
+      {downloading && <p role="status" className="text-sm text-muted-foreground">Downloading an app update…</p>}
+      {repairFailed && <p role="alert" className="text-sm text-muted-foreground">The repair couldn’t finish. Please try again.</p>}
+      <ConfirmationDialog
+        trigger={<Button variant="ghost" size="sm" disabled={!online || busy}>{repairing ? "Repairing…" : "Repair app"}</Button>}
+        title="Repair the songbook?"
+        description="Repair removes offline song data and reloads the app. Reopen any sheets you need while you’re online to save them again. Repair keeps your settings and saved drafts."
+        confirmText="Repair and reload"
+        variant="destructive"
+        onConfirm={repair}
+      />
+      {message && (
+        <details className="max-w-full text-sm text-muted-foreground">
+          <summary className="cursor-pointer">Technical details</summary>
+          <p className="mt-2 wrap-anywhere">{message}</p>
+        </details>
       )}
     </div>
   );

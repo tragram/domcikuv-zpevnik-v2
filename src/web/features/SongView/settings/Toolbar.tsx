@@ -35,6 +35,8 @@ import {
 import usePWAInstall from "~/components/usePWAInstall";
 import { useToggleFavorite } from "~/components/FavoriteButton";
 import { useSongDB } from "~/hooks/use-songDB";
+import { useAppUpdate, runUpdateAction, updateLabels } from "~/services/app-updates";
+import { useIsOnline } from "~/hooks/use-is-online";
 import { youtubeWatchUrl } from "src/lib/youtube";
 import { SongData } from "~/types/songData";
 import ShareSongButton from "../components/ShareSongButton";
@@ -91,6 +93,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const { layout, actions } = useViewSettingsStore();
   const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
   const { songDB } = useSongDB(userData);
+  const isOnline = useIsOnline();
   const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
   const nickname = userData?.profile.nickname ?? null;
   const { PWAInstallComponent, installItem } = usePWAInstall();
@@ -115,34 +118,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
   const { version: versionId } = useSearch({ strict: false });
 
-  const handleForceUpdate = async () => {
-    if ("serviceWorker" in navigator) {
-      try {
-        // 1. Unregister all existing service workers
-        const registrations = await navigator.serviceWorker.getRegistrations();
-        for (const registration of registrations) {
-          await registration.unregister();
-        }
-
-        // 2. Clear out the CacheStorage (where the SW keeps HTML/JS/CSS)
-        if ("caches" in window) {
-          const cacheKeys = await caches.keys();
-          await Promise.all(cacheKeys.map((key) => caches.delete(key)));
-        }
-
-        // 3. Reload the page to fetch fresh assets
-        window.location.reload();
-      } catch (error) {
-        console.error(
-          "Force update failed, falling back to standard reload:",
-          error,
-        );
-        window.location.reload();
-      }
-    } else {
-      window.location.reload();
-    }
-  };
+  const update = useAppUpdate();
 
   return (
     <div className="absolute top-0 w-full">
@@ -372,8 +348,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             <DropdownMenuSeparator />
 
             <DropdownMenuItem
-              onClick={handleForceUpdate}
-              disabled={!("serviceWorker" in navigator)}
+              onSelect={(event) => {
+                event.preventDefault();
+                void runUpdateAction();
+              }}
+              disabled={!isOnline || !import.meta.env.PROD || !("serviceWorker" in navigator) || ["checking", "downloading", "restarting"].includes(update)}
             >
               <CompactItem.Shell>
                 <CompactItem.Icon>
@@ -381,7 +360,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 </CompactItem.Icon>
                 <CompactItem.Body
                   title={`Currently on v${__APP_VERSION__}`}
-                  subtitle="Click to force update"
+                  subtitle={isOnline ? updateLabels[update] : "Reconnect to check for updates"}
                 />
               </CompactItem.Shell>
             </DropdownMenuItem>

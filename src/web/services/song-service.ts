@@ -58,15 +58,12 @@ export const parseDBDates = <T extends Timestamped>(o: T) => {
 type SongsMeta = {
   version: string;
   lastUpdate: string;
-  // Build that fetched the cache — see the full-fetch condition below.
-  appVersion?: string;
 };
 
 const setSongsMeta = (data: { songDBVersion: string; lastUpdateAt: string }) =>
   queryClient.setQueryData<SongsMeta>(songQueryKeys.catalogMeta, {
     version: data.songDBVersion,
     lastUpdate: data.lastUpdateAt,
-    appVersion: __APP_VERSION__,
   });
 
 export const fetchSongs = async (): Promise<SongDataApi[]> => {
@@ -74,11 +71,8 @@ export const fetchSongs = async (): Promise<SongDataApi[]> => {
   const cached = queryClient.getQueryData<SongDataApi[]>(songQueryKeys.catalog);
   const meta = queryClient.getQueryData<SongsMeta>(songQueryKeys.catalogMeta);
 
-  // 2. Full fetch when there's no cache — or when the cache was written by a
-  // different build. Incremental sync only patches changed songs, so rows kept
-  // from an older build would otherwise retain that build's shape forever;
-  // One full fetch per deploy updates the catalog. Cache format is handled centrally.
-  if (!cached || !meta || meta.appVersion !== __APP_VERSION__) {
+  // The admin-managed DB version determines when the server sends a replacement.
+  if (!cached || !meta?.version || !meta.lastUpdate) {
     try {
       const data = await makeApiRequest(client.api.songs.$get);
       setSongsMeta(data);

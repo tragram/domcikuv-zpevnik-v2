@@ -96,7 +96,7 @@ if (typeof window !== "undefined") {
   verify();
 }
 
-function subscribe(callback: () => void) {
+export function subscribeOnline(callback: () => void) {
   listeners.add(callback);
   return () => {
     listeners.delete(callback);
@@ -118,5 +118,5 @@ export function getIsOnline() {
 }
 
 export function useIsOnline() {
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore(subscribeOnline, getSnapshot, getServerSnapshot);
 }

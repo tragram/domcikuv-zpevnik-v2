@@ -23,7 +23,14 @@ it("downloads the catalog once after a cache reset, then resumes incremental syn
   expect(fetch).toHaveBeenCalledTimes(1);
   expect(String(fetch.mock.calls[0]?.[0])).not.toContain("incremental");
   queryClient.setQueryData(["songs"], songs);
+  // Existing devices persist the previous frontend build alongside the DB version.
+  queryClient.setQueryData(["songs-meta"], {
+    version: "v0", lastUpdate: "2026-01-01", appVersion: "previous-build",
+  });
   await fetchSongs();
   expect(fetch).toHaveBeenCalledTimes(2);
   expect(String(fetch.mock.calls[1]?.[0])).toContain("incremental");
+  expect(String(fetch.mock.calls[1]?.[0])).toContain("songDBVersion=v0");
+  await fetchSongs();
+  expect(String(fetch.mock.calls[2]?.[0])).toContain("songDBVersion=v1");
 });

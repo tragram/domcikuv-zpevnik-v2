@@ -11,7 +11,7 @@ import { CacheFirst, NetworkOnly } from "workbox-strategies";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
 import { clientsClaim } from "workbox-core";
-import type { SongDataApi } from "src/worker/api/api-types";
+
 
 const CACHE_NAMES = {
   THUMBNAILS: "thumbnail-cache",
@@ -24,8 +24,24 @@ const CACHE_LIMITS = {
 
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
-self.skipWaiting();
+
 clientsClaim();
+
+// A waiting worker activates naturally after all tabs close. For an explicit
+// restart, check the tabs here so every caller sees the same set of clients.
+self.addEventListener("message", (event) => {
+  if (event.data?.type !== "RESTART_FOR_UPDATE") return;
+  event.waitUntil((async () => {
+    const tabs = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    const otherTabs = tabs.some((tab) => tab.url.startsWith(self.registration.scope)
+      && tab.id !== (event.source as Client | null)?.id);
+    if (otherTabs) {
+      event.ports[0]?.postMessage("other-tabs");
+      return;
+    }
+    await self.skipWaiting();
+  })());
+});
 
 // 1. Navigation Fallback
 let allowlist: undefined | RegExp[];
@@ -64,49 +80,17 @@ registerRoute(
   }),
 );
 
-// 4. API Routes - Network Only (Let TanStack Query handle the offline caching)
-// We intercept /api/songs JUST to extract and cache the thumbnails in the background.
+// Keep thumbnails available after viewing them, including legacy CDN URLs.
 registerRoute(
-  ({ url }) => url.pathname === "/api/songs",
-  async ({ request }) => {
-    const response = await fetch(request);
-    // Clone response so we can return it to TanStack immediately while parsing JSON in background
-    const clone = response.clone();
-
-    clone
-      .json()
-      .then(async (unknownData: unknown) => {
-        // Assert the type here instead of in the parameter
-        const data = unknownData as { songs: SongDataApi[] };
-
-        if (!data?.songs) return;
-        const cache = await caches.open(CACHE_NAMES.THUMBNAILS);
-        const urlsToCache = new Set<string>();
-
-        for (const song of data.songs) {
-          const thumbUrl = song.currentIllustration?.thumbnailURL;
-          if (
-            typeof thumbUrl === "string" &&
-            thumbUrl.startsWith("/cdn-cgi/image/width=128/")
-          ) {
-            urlsToCache.add(thumbUrl);
-          }
-        }
-
-        if (urlsToCache.size > 0) {
-          console.debug("SW: Found URLs to cache:", urlsToCache);
-          await cache
-            .addAll(Array.from(urlsToCache))
-            .catch((e) => console.warn("Thumb cache partial fail", e));
-        }
-      })
-      .catch((err) =>
-        console.error("PWA: Failed to parse songs for thumbnails", err),
-      );
-
-    return response;
-  },
+  ({ url }) => url.origin === self.location.origin && (
+    url.pathname.startsWith("/cdn-cgi/image/width=128/") ||
+    (url.pathname.startsWith("/songs/") && url.pathname.includes("/thumbnail/"))
+  ),
+  new CacheFirst({
+    cacheName: CACHE_NAMES.THUMBNAILS,
+    plugins: [new CacheableResponsePlugin({ statuses: [200] }), new ExpirationPlugin(CACHE_LIMITS.IMAGES)],
+  }),
 );
 
-// All other API routes bypass the SW cache
+// TanStack Query persists the catalog in IndexedDB.
 registerRoute(({ url }) => url.pathname.startsWith("/api/"), new NetworkOnly());

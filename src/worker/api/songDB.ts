@@ -12,6 +12,8 @@ import { externalRoutes } from "./external";
 import { retrieveVersionSummaries } from "../helpers/song-versions/queries";
 import { IllustrationPromptApi, SongDataApi } from "./api-types";
 
+const initialDBVersion = "v0";
+
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
   lastUpdateAt: z.coerce.date(),
@@ -52,7 +54,7 @@ export const songDBRoutes = buildApp()
     // via search; the browse list filters them out client-side. Deleted songs
     // are still excluded entirely.
     const songs = await retrieveSongs(c.var.db, undefined, true, false);
-    const songDBVersion = (await c.env.KV.get("songDB-version")) ?? "v0";
+    const songDBVersion = (await c.env.KV.get("songDB-version")) ?? initialDBVersion;
     return successJSend(c, {
       songs,
       songDBVersion,
@@ -65,7 +67,7 @@ export const songDBRoutes = buildApp()
     zValidatorJSend("query", incrementalUpdateSchema),
     async (c) => {
       const { lastUpdateAt, songDBVersion } = c.req.valid("query");
-      const currentDBVersion = (await c.env.KV.get("songDB-version")) ?? "0";
+      const currentDBVersion = (await c.env.KV.get("songDB-version")) ?? initialDBVersion;
       const isIncremental = songDBVersion === currentDBVersion;
 
       const songs = await retrieveSongs(

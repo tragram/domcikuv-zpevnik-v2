@@ -75,16 +75,16 @@ export default defineConfig(({ mode }) => {
         }) as PluginOption),
       !isTest &&
         VitePWA({
-          registerType: "autoUpdate",
+          injectRegister: false,
           strategies: "injectManifest",
           srcDir: "src/web",
           filename: "sw.ts",
           manifest: false,
           injectManifest: {
             globDirectory: "dist/client/",
+            globIgnores: ["screenshots/**", "songs/**"],
             globPatterns: [
-              "**/*.{js,css,html,ico,png,svg,yaml,json}",
-              "songs/*/*/thumbnail/*.webp",
+              "**/*.{js,css,html,ico,png,svg,woff,woff2}",
               "site.webmanifest",
             ],
           },

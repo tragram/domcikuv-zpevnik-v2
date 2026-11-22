@@ -88,9 +88,7 @@ async function setupPersistence() {
  * Deletes the persisted offline snapshot and stops persisting for the rest of
  * this page's lifetime (so an in-flight query settling right before the reload
  * can't immediately re-save the state we just deleted). Used by the error
- * page's hard reload: the snapshot in IndexedDB is the one store that survives
- * localStorage/SW clearing, so leaving it in place would resurrect whatever
- * broken state sent the user here.
+ * page to rebuild offline song data on the next load.
  */
 export async function clearPersistedCache() {
   persistenceCleared = true;
