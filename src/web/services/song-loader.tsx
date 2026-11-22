@@ -120,12 +120,13 @@ const songLoader = async ({
   const pinnedId = selected.pinnedVersionId ?? undefined;
   const candidates = selected.sheet ? [selected.sheet] : [];
   const cachedPin = pinnedId ? getCachedSongVersion(queryClient, params.songId, pinnedId, candidates) : undefined;
-  const missingOfflinePin = !getIsOnline() && !!pinnedId && !cachedPin;
+  const online = getIsOnline();
+  const missingOfflinePin = !online && !!pinnedId && !cachedPin;
   const requestedId = deps.version ?? (missingOfflinePin ? undefined : pinnedId);
   const sheets = missingOfflinePin ? canonicalSongs : candidates;
   let songData: SongData;
   try {
-    const downloaded = !editing && !deps.version
+    const downloaded = !editing && !deps.version && !(import.meta.env.DEV && online)
       ? (pinnedId ? (missingOfflinePin ? official : cachedPin) : selected.sheet) : undefined;
     songData = downloaded ? (downloaded instanceof SongData ? downloaded : new SongData(downloaded))
       : await findOrFetchSong(sheets, params.songId, requestedId, queryClient);

@@ -47,9 +47,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       }
     }
 
-    // only block the route if the user has no songs cached
+    // Local D1 can change between reloads. Wait for its catalog in dev so
+    // loaders do not capture stale data restored from IndexedDB.
     const cachedSongs = context.queryClient.getQueryData(["songs"]);
-    if (!cachedSongs) {
+    if (!cachedSongs || import.meta.env.DEV) {
       await songsPromise;
     }
   },

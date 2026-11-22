@@ -1,5 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SongDataApi } from "src/worker/api/api-types";
 import { SongData } from "~/types/songData";
 import { findOrFetchSong } from "./song-service";
@@ -49,6 +49,7 @@ let queryClient: QueryClient;
 
 beforeEach(() => {
   vi.clearAllMocks();
+  vi.stubEnv("DEV", false);
   vi.mocked(getSessionUserId).mockReturnValue("viewer");
   vi.mocked(getIsOnline).mockReturnValue(true);
   queryClient = new QueryClient();
@@ -63,6 +64,7 @@ beforeEach(() => {
     return song instanceof SongData ? song : new SongData(song);
   });
 });
+afterEach(() => vi.unstubAllEnvs());
 
 function load(deps: { songbook?: string; version?: string } = {}) {
   return songLoader({ context: { queryClient }, params: { songId: "song" }, deps });
@@ -118,6 +120,22 @@ describe("song version selection", () => {
     expect(result.songData.versionId).toBe("viewer-pin");
     expect(result.versionSelection).toEqual({ source: "saved", unavailable: false });
     expect(findOrFetchSong).not.toHaveBeenCalled();
+  });
+
+  it("refreshes cached saved sheets against local D1 during development", async () => {
+    vi.stubEnv("DEV", true);
+    const currentIllustration = {
+      illustrationId: "image",
+      promptId: "prompt",
+      imageModel: "model",
+      imageURL: "/songs/song/prompt/full/model.webp",
+      thumbnailURL: "/songs/song/prompt/thumbnail/model.webp",
+      promptURL: "",
+    };
+    vi.mocked(findOrFetchSong).mockResolvedValueOnce(new SongData({ ...ownPin, currentIllustration }));
+
+    expect((await load()).songData.illustrationURL()).toBe(currentIllustration.imageURL);
+    expect(findOrFetchSong).toHaveBeenCalledWith([ownPin], "song", "viewer-pin", queryClient);
   });
 
   it("returns to the official sheet after leaving a foreign book for a guest", async () => {

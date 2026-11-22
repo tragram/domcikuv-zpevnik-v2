@@ -15,6 +15,7 @@ export const songsQueryOptions = () =>
   queryOptions({
     queryKey: songQueryKeys.catalog,
     queryFn: () => fetchSongs(),
+    ...(import.meta.env.DEV && { staleTime: 0 }),
   });
 
 export const publicSongbooksQueryOptions = () =>
