@@ -96,7 +96,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const isOnline = useIsOnline();
   const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
   const nickname = userData?.profile.nickname ?? null;
-  const { PWAInstallComponent, installItem } = usePWAInstall();
+  const installItem = usePWAInstall();
   const {
     request: wakeLockRequest,
     release: wakeLockRelease,
@@ -109,11 +109,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     { defaultValue: true },
   );
   useEffect(() => {
-    if (wakeLockSupported && wakeLockEnabled) {
-      wakeLockRequest();
-    } else {
-      wakeLockRelease();
-    }
+    if (!wakeLockSupported || !wakeLockEnabled) return;
+    const request = wakeLockRequest();
+    return () => {
+      void request.then(wakeLockRelease);
+    };
   }, [wakeLockSupported, wakeLockEnabled, wakeLockRequest, wakeLockRelease]);
 
   const { version: versionId } = useSearch({ strict: false });
@@ -367,7 +367,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           </DropdownMenuContent>
         </DropdownMenu>
       </ToolbarBase>
-      {PWAInstallComponent}
       <SetNicknameDialog
         open={nicknameDialogOpen}
         onOpenChange={setNicknameDialogOpen}
