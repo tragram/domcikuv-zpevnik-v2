@@ -1,5 +1,5 @@
 import type { EditorSubmitSchemaInput } from "src/lib/contracts/editor-schema";
-import z from "zod";
+import { z } from "zod/mini";
 import { Note } from "./musicTypes";
 import { SongData } from "./songData";
 // Import keywords from the source of truth
@@ -71,9 +71,8 @@ export type ChordPro = string;
 export type EditorState = EditorSubmitSchemaInput;
 
 export const redirectSearchSchema = z.object({
-  redirect: z
-    .string()
-    .refine((val) => val.startsWith("/") && !val.startsWith("//")) // Security check
-    .optional()
-    .catch(undefined), // Strip out bad URLs seamlessly
+  redirect: z.catch(
+    z.optional(z.string().check(z.refine((val) => val.startsWith("/") && !val.startsWith("//")))),
+    undefined,
+  ),
 });

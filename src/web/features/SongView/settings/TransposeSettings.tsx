@@ -38,7 +38,7 @@ const TransposeSettings: React.FC<TransposeSettingsProps> = ({
 }) => {
   return (
     <div className="flex items-center h-full">
-      <div className="hidden xl:block h-full">
+      <div className="hidden min-[1400px]:block h-full">
         <TransposeButtons
           selected={soundingKeyIndex}
           onChange={setSoundingKeyIndex}
@@ -47,7 +47,7 @@ const TransposeSettings: React.FC<TransposeSettingsProps> = ({
         />
       </div>
 
-      <div className="xl:hidden h-full">
+      <div className="min-[1400px]:hidden h-full">
         <TransposeDropdown
           selected={soundingKeyIndex}
           onChange={setSoundingKeyIndex}

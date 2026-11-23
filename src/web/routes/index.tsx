@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { z } from "zod";
+import { z } from "zod/mini";
 import SongList from "~/features/SongList/SongList";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { publicSongbooksQueryOptions, useSongDB } from "~/hooks/use-songDB";
@@ -14,7 +14,7 @@ import { useIsOnline } from "~/hooks/use-is-online";
 
 const indexSearchSchema = z.object({
   // Preselect a songbook by its owner's nickname slug, e.g. /?songbook=dominik.
-  songbook: z.string().optional(),
+  songbook: z.optional(z.string()),
 });
 
 export const Route = createFileRoute("/")({

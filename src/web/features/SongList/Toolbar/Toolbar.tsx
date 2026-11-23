@@ -326,7 +326,7 @@ function Toolbar({
           className="hidden min-[1400px]:flex h-6"
         />
 
-        <SessionView isOnline={isOnline} />
+        <SessionView isOnline={isOnline} songDB={songDB} userData={userData} />
 
         <RandomSong
           songs={songDB.songs}

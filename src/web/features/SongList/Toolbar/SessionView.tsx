@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useUserData } from "src/web/hooks/use-user-data";
+import type { UserData } from "~/hooks/use-user-data";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { useActiveSessions } from "~/hooks/use-active-sessions";
-import { useSongDB } from "~/hooks/use-songDB";
+import type { SongDB } from "~/types/types";
 import { Button } from "src/web/components/ui/button";
 import { AvatarWithFallback } from "src/web/components/ui/avatar";
 import { useEnableShareSessionAfterAuth } from "src/web/hooks/use-enable-share-session-after-auth";
@@ -25,14 +25,14 @@ import { SetNicknameDialog } from "src/web/features/SongView/components/SetNickn
 
 interface SessionViewProps {
   isOnline: boolean;
+  songDB: SongDB;
+  userData: UserData;
 }
 
-const SessionView = ({ isOnline }: SessionViewProps) => {
+const SessionView = ({ isOnline, songDB, userData }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
-  const { userData } = useUserData();
-  const { songDB } = useSongDB(userData);
   const { activeSessions, refetchIfStale, isPending } = useActiveSessions(songDB);
 
   const { shareSession, toggleShareSession } = useShareSessionToggle();

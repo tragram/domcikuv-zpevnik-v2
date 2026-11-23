@@ -1,12 +1,12 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getUserData } from "src/web/hooks/use-user-data";
-import { z } from "zod";
+import { z } from "zod/mini";
 import AdminDashboard from "~/features/AdminDashboard/AdminDashboard";
 import { OfflineNotice } from "~/components/OfflineIndicator";
 import { useIsOnline } from "~/hooks/use-is-online";
 export const Route = createFileRoute("/admin")({
   validateSearch: z.object({
-    tab: z.string().optional(),
+    tab: z.optional(z.string()),
   }),
   component: Home,
   beforeLoad: async ({ context }) => {

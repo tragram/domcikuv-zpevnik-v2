@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import Fuse from "fuse.js";
+import memoizeOne from "memoize-one";
 import { useMemo } from "react";
 
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { to_ascii } from "src/lib/song-ids";
 import { SongData } from "~/types/songData";
-import type { SongDB } from "~/types/types";
+import type { SongDB, SortSettings } from "~/types/types";
 import { songbookEntriesQueryOptions, type UserData } from "~/hooks/use-user-data";
 import { useQueryStore } from "./searchStore";
 import { useSortSettingsStore } from "./Toolbar/SortMenu";
-import { applyFilters, sortSongs } from "./Toolbar/filters/songFilters";
+import { applyFilters, sortSongs, type AppliedFilters } from "./Toolbar/filters/songFilters";
 import { songsQueryOptions } from "~/hooks/use-songDB";
 import { songbookSheet } from "src/lib/song-selection";
 
@@ -29,14 +30,31 @@ export interface DisplayedSongs {
   foreignSongbookOwner?: string;
 }
 
+// Reuse the ordinary browse order across a trip into SongView.
+const browseSongs = memoizeOne((
+  songs: SongData[],
+  songDB: SongDB,
+  userData: UserData,
+  filters: AppliedFilters,
+  sort: SortSettings,
+) => sortSongs(
+  applyFilters(songs, filters, {
+    userData,
+    availableSongbooks: songDB.songbooks,
+    languageCounts: songDB.languages,
+  }),
+  sort.field,
+  sort.order,
+));
+
 export function useDisplayedSongs(
   songDB: SongDB,
   userData: UserData,
 ): DisplayedSongs {
-  const { field: sortByField, order: sortOrder } = useSortSettingsStore();
+  const sort = useSortSettingsStore();
   const query = useQueryStore((state) => state.query);
-  const { language, vocalRange, onlyFavorites, showExternal, selectedSongbookId } =
-    useFilterSettingsStore();
+  const filters = useFilterSettingsStore();
+  const { selectedSongbookId } = filters;
 
   // When the list is narrowed to a single *other* user's songbook, fetch that
   // songbook's contents on demand and use it as the base list — including the
@@ -72,65 +90,26 @@ export function useDisplayedSongs(
   // songbook below shows its approved subset), then swap to the full set.
   const baseSongs = foreignOwner && ownerSongs ? ownerSongs : songDB.songs;
 
-  const fuse = useMemo(
-    () =>
-      new Fuse(baseSongs, {
-        includeScore: true,
-        keys: ["title_for_search", "artist_for_search"],
-        ignoreLocation: true,
-        threshold: 0.4,
-      }),
-    [baseSongs],
-  );
+  const fuse = useMemo(() => new Fuse(baseSongs, {
+    includeScore: true,
+    keys: ["title_for_search", "artist_for_search"],
+    ignoreLocation: true,
+    threshold: 0.4,
+  }), [baseSongs]);
 
-  const searchResults = useMemo(
-    () => (query ? fuse.search(to_ascii(query).toLowerCase()) : null),
-    [query, fuse],
-  );
+  // Search bypasses the browse filters, including the hidden-song filter.
+  const results = useMemo(() => {
+    if (!query) return null;
+    const matches = fuse.search(to_ascii(query).toLowerCase());
+    return {
+      songs: matches.map((match) => match.item),
+      bestLocalScore: matches[0]?.score ?? Infinity,
+    };
+  }, [fuse, query]);
 
-  const bestLocalScore = searchResults?.length
-    ? Math.min(...searchResults.map((r) => r.score as number))
-    : Infinity;
-
-  const songs = useMemo(() => {
-    // SEARCH MODE: an active query deliberately bypasses *every* filter-bar
-    // setting (language, favorites, songbooks, show-external) plus the
-    // hidden-song filter. Search spans the whole local library — so it is the
-    // only way to reach songs the browse list hides: external-origin songs (for
-    // logged-out users) and admin-hidden songs (for everyone).
-    if (query && searchResults) {
-      return searchResults.map((r) => r.item);
-    }
-    // BROWSE MODE: filter, then sort. For a foreign songbook the base is already
-    // that songbook's songs (the songbook filter below is then a harmless no-op).
-    return sortSongs(
-      applyFilters(
-        baseSongs,
-        { language, vocalRange, onlyFavorites, showExternal, selectedSongbookId },
-        {
-          userData,
-          availableSongbooks: songDB.songbooks,
-          languageCounts: songDB.languages,
-        },
-      ),
-      sortByField,
-      sortOrder,
-    );
-  }, [
-    query,
-    searchResults,
-    baseSongs,
-    songDB,
-    userData,
-    language,
-    vocalRange,
-
-    onlyFavorites,
-    showExternal,
-    selectedSongbookId,
-    sortByField,
-    sortOrder,
-  ]);
-
-  return { songs, bestLocalScore, foreignSongbookOwner: foreignOwner };
+  return {
+    songs: results?.songs ?? browseSongs(baseSongs, songDB, userData, filters, sort),
+    bestLocalScore: results?.bestLocalScore ?? Infinity,
+    foreignSongbookOwner: foreignOwner,
+  };
 }

@@ -1,5 +1,7 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+import memoizeOne from "memoize-one";
+import type { SongDataApi } from "src/worker/api/api-types";
+import type { Songbook } from "~/types/types";
 import {
   buildSongDB,
   fetchPublicSongbooks,
@@ -24,26 +26,22 @@ export const publicSongbooksQueryOptions = () =>
     queryFn: () => fetchPublicSongbooks(),
   });
 
+const emptyCatalog: SongDataApi[] = [];
+const emptySongbooks: Songbook[] = [];
+// SongView and SongList both use the same catalog and query snapshots.
+const deriveSongDB = memoizeOne(buildSongDB);
+
 export function useSongDB(
   userData: UserData,
 ) {
-  const { data: songs = [], isFetching: isSongsSyncing } =
+  const { data: songs = emptyCatalog, isFetching: isSongsSyncing } =
     useQuery(songsQueryOptions());
 
-  const { data: publicSongbooks = [], isFetched: songbooksFetched } = useQuery(
+  const { data: publicSongbooks = emptySongbooks, isFetched: songbooksFetched } = useQuery(
     publicSongbooksQueryOptions(),
   );
 
-  // Rebuild the DB whenever the base songs, songbooks, or user favorites change
-  const songDB = useMemo(
-    () =>
-      buildSongDB(
-        songs,
-        publicSongbooks,
-        userData,
-      ),
-    [songs, publicSongbooks, userData],
-  );
+  const songDB = deriveSongDB(songs, publicSongbooks, userData);
 
   return {
     songDB,

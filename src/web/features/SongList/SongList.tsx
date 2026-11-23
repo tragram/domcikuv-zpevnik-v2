@@ -8,7 +8,7 @@ import {
   X,
   Youtube,
 } from "lucide-react";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import { useQueryClient } from "@tanstack/react-query";
 import useLocalStorageState from "use-local-storage-state";
@@ -133,17 +133,27 @@ function SongList({
   );
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const latestOffset = useRef(scrollOffset);
+  const saveScrollOffset = useCallback(() => {
+    if (debounceRef.current === null) return;
+    clearTimeout(debounceRef.current);
+    debounceRef.current = null;
+    setScrollOffset(latestOffset.current);
+  }, [setScrollOffset]);
+  // Navigation can unmount the list before the scroll debounce expires.
+  useLayoutEffect(() => saveScrollOffset, [saveScrollOffset]);
 
   const virtualizer = useWindowVirtualizer({
     count: songs.length,
     estimateSize: () => 70,
     overscan: 10,
-    initialOffset: scrollOffset,
+    initialOffset: () => latestOffset.current,
     onChange: (instance) => {
+      const offset = instance.scrollOffset;
+      if (offset === null || latestOffset.current === offset) return;
+      latestOffset.current = offset;
       if (debounceRef.current) clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(() => {
-        setScrollOffset(instance.scrollOffset ?? 0);
-      }, 200);
+      debounceRef.current = setTimeout(saveScrollOffset, 200);
     },
   });
 

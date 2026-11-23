@@ -1,157 +1,71 @@
-import {
-  type FitScreenMode,
-  type LayoutSettings,
-  getFontSizeInRange,
-} from "../hooks/viewSettingsStore";
+import { getFontSizeInRange, type LayoutSettings } from "../hooks/viewSettingsStore";
 import { getElementFontSize, setElementFontSize } from "./fontSize";
 
-const HIGHER_COL_RATIO = 1.1; // How many times larger font size needs to be in more columns to justify the switch
-const IGNORE_DIFF_PX = 0.1; // due to text not scaling exactly, resize may lead to a different optimal font size and that could lead to an infinite loop --> ignore these tiny changes
-
-/**
- * Finds the optimal number of columns for content layout
- */
-export function setOptimalColumnCount(
-  content: HTMLElement | null,
-  container: HTMLElement | null,
-  layout: LayoutSettings,
-  minColumns: number = 1,
-  maxColumns: number = 4,
-  colElId: string = "#song-content-wrapper",
-): number {
-  let columnCount;
-  const child = content?.querySelector(colElId) as HTMLElement;
-  if (!child) {
-    throw Error("Song content wrapper not found!");
-  }
-
-  // Safety checks for null elements
-  if (!content || !container) {
-    columnCount = 1;
-  } else if (!layout.multiColumns || layout.fitScreenMode === "fitX") {
-    // fitX always has the optimal solution as one
-    columnCount = 1;
-  } else if (!layout.smartColumns) {
-    columnCount = 2;
-  } else if (layout.fitScreenMode === "none") {
-    return parseFloat(child.style.columnCount);
-  } else if (layout.fitScreenMode !== "fitXY") {
-    console.error("Error: Unknown fit screen mode!");
-    columnCount = 1;
-  } else {
-    let bestFontSize = 0;
-    let bestColumns = 1;
-
-    try {
-      // First measure single-column layout to establish baseline
-      child.style.columnCount = "1";
-      content.classList.add("measuring-container");
-
-      const singleColRect = content.getBoundingClientRect();
-      const baseWidth = singleColRect.width;
-      const baseHeight = singleColRect.height;
-      content.classList.remove("measuring-container");
-
-      // Skip further calculations if we have invalid measurements
-      if (baseWidth <= 0 || baseHeight <= 0) {
-        return 1;
-      }
-      const columnGap = parseFloat(
-        getComputedStyle(child).getPropertyValue("column-gap"),
-      );
-      const containerRect = container.getBoundingClientRect();
-
-      // Use approximation to estimate multi-column layouts
-      for (let cols = minColumns; cols <= maxColumns; cols++) {
-        // Approximate dimensions for this column count
-        // Width increases roughly linearly with column count (accounting for gaps)
-        const approxWidth = baseWidth * cols + columnGap * (cols - 1);
-
-        // Height decreases roughly proportionally with column count
-        // This approximation assumes content distributes fairly evenly
-        const approxHeight = Math.ceil(baseHeight / cols);
-
-        // Calculate font size based on approximated dimensions
-        const widthScale = containerRect.width / approxWidth;
-        const heightScale = containerRect.height / approxHeight;
-        const calculatedFontSize = getFontSizeInRange(
-          Math.min(widthScale, heightScale) * getElementFontSize(content),
-        );
-
-        // Update if this configuration allows a larger font size
-        if (calculatedFontSize > HIGHER_COL_RATIO * bestFontSize) {
-          bestFontSize = calculatedFontSize;
-          bestColumns = cols;
-        } else {
-          // If font size is decreasing, we've found the optimal column count
-          break;
-        }
-      }
-      columnCount = bestColumns;
-    } catch (error) {
-      console.error("Error calculating optimal column count:", error);
-      columnCount = 1; // Default to 1 column in case of error
-    }
-  }
-
-  child.style.columnCount = columnCount.toString();
-  return columnCount;
-}
-
-/**
- * Calculates font size based on content dimensions and container dimensions
- */
-function calculateFontSize(
-  contentRect: DOMRect,
-  containerRect: DOMRect,
-  fitMode: FitScreenMode,
+function chooseColumns(
+  single: DOMRect,
+  width: number,
+  height: number,
+  gap: number,
   fontSize: number,
-): number {
-  if (fitMode === "fitXY") {
-    const widthScale = (containerRect.width / contentRect.width) * fontSize;
-    const heightScale = (containerRect.height / contentRect.height) * fontSize;
-    return getFontSizeInRange(Math.min(widthScale, heightScale));
-  } else if (fitMode === "fitX") {
-    const widthScale = (containerRect.width / contentRect.width) * fontSize;
-    return getFontSizeInRange(widthScale);
+) {
+  let bestSize = 0;
+  let bestColumns = 1;
+  for (let columns = 1; columns <= 4; columns++) {
+    const scale = Math.min(
+      width / (single.width * columns + gap * (columns - 1)),
+      height / Math.ceil(single.height / columns),
+    );
+    const size = getFontSizeInRange(scale * fontSize);
+    if (size <= bestSize * 1.1) break;
+    bestSize = size;
+    bestColumns = columns;
   }
-  // no change for fitMode 'none'
-  return fontSize;
+  return bestColumns;
 }
 
-/**
- * Sets font size based on content and container dimensions for a specific fit mode
- */
-export function setFontSize(
-  content: HTMLElement | null,
-  container: HTMLElement | null,
-  fitMode: FitScreenMode,
-): number {
-  // Safety checks
-  if (!content || !container) {
-    return getElementFontSize(null);
+export function fitSong(
+  content: HTMLElement,
+  width: number,
+  height: number,
+  layout: LayoutSettings,
+) {
+  const sheet = content.querySelector<HTMLElement>("#song-content-wrapper");
+  if (!sheet || width <= 0) return;
+
+  const mode = layout.fitScreenMode;
+  const smart = layout.multiColumns && layout.smartColumns;
+  if (mode === "none") {
+    if (!smart) sheet.style.columnCount = layout.multiColumns ? "2" : "1";
+    return;
   }
+  if (mode === "fitXY" && height <= 0) return;
+
+  let fontSize = getElementFontSize(content);
   content.classList.add("measuring-container");
   try {
-    // Get precise content size for the selected column count
-    const contentRect = content.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
-    content.classList.remove("measuring-container");
-
-    // Calculate font size with precise measurements
-    const currentFontSize = getElementFontSize(content);
-    const newFontSize = calculateFontSize(
-      contentRect,
-      containerRect,
-      fitMode,
-      currentFontSize,
-    );
-    if (Math.abs(currentFontSize - newFontSize) > IGNORE_DIFF_PX) {
-      setElementFontSize(content, newFontSize);
+    sheet.style.columnCount = layout.multiColumns && !smart && mode === "fitXY" ? "2" : "1";
+    let bounds = content.getBoundingClientRect();
+    if (!bounds.width || !bounds.height) return;
+    if (smart && mode === "fitXY") {
+      const columns = chooseColumns(bounds, width, height, parseFloat(getComputedStyle(sheet).columnGap), fontSize);
+      if (columns > 1) {
+        sheet.style.columnCount = String(columns);
+        bounds = content.getBoundingClientRect();
+      }
     }
-    return newFontSize;
-  } catch (error) {
-    console.error("Error calculating precise font size:", error);
-    return getElementFontSize(null); // Default in case of error
+
+    // Fixed gaps and heading margins do not scale with the font. Correct the
+    // estimate once at its new size, without repeating the column search.
+    for (let pass = 0; pass < 2; pass++) {
+      const scale = mode === "fitX" ? width / bounds.width
+        : Math.min(width / bounds.width, height / bounds.height);
+      const size = getFontSizeInRange(scale * fontSize);
+      if (Math.abs(size - fontSize) <= 0.1) break;
+      setElementFontSize(content, size);
+      fontSize = size;
+      if (pass === 0) bounds = content.getBoundingClientRect();
+    }
+  } finally {
+    content.classList.remove("measuring-container");
   }
 }

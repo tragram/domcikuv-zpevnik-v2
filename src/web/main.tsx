@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import { queryClient } from "../lib/query-client";
 import client, { API } from "../worker/api-client";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { PWAInstaller } from "./components/PWAInstaller";
 import { trackExternalSearchNavigation } from "./features/SongList/searchStore";
 import "./main.css";
 import { routeTree } from "./routeTree.gen";
@@ -51,16 +52,22 @@ declare module "@tanstack/react-router" {
 }
 
 // The persisted (offline) cache is restored at module load in query-client.ts; the
-// root route awaits `cacheRestored` before its loaders run. Rendering itself is NOT
-// gated on the restore, so the app shell always paints immediately.
+// root route awaits `cacheRestored` before its loaders read the offline data.
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
+  // Fetch the song route's UI while the root route restores IndexedDB.
+  const { foundRoute } = router.getMatchedRoutes(router.latestLocation.pathname);
+  if (foundRoute?.id === "/song/$songId") {
+    void router.loadRouteChunk(foundRoute);
+  }
+
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Toaster />
+          <PWAInstaller />
           <RouterProvider router={router} />
         </ThemeProvider>
       </QueryClientProvider>

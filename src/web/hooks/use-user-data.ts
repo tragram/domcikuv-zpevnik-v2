@@ -1,5 +1,5 @@
 import { QueryClient, queryOptions, useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+import memoizeOne from "memoize-one";
 import { queryClient } from "src/lib/query-client";
 import client from "src/worker/api-client";
 import type { UserProfileDB } from "src/worker/api/userProfile";
@@ -173,6 +173,20 @@ export const getSessionUserId = (queryClient: QueryClient) =>
   queryClient.getQueryData<SessionData | null>(sessionQueryOptions().queryKey)
     ?.user?.id;
 
+// Keep the same derived data when navigating between consumers of the query cache.
+const deriveUserData = memoizeOne((
+  sessionData: SessionData | null | undefined,
+  favorites: SongbookEntryApi[] | undefined,
+  submissions: SongVersionApi[] | undefined,
+): UserData => {
+  const profile = sessionToProfile(sessionData);
+  return profile ? {
+    profile,
+    ...indexSongbookEntries(favorites),
+    submissions: submissions ?? [],
+  } : null;
+});
+
 export function useUserData() {
   const { data: sessionData, isPending: isAuthSyncing } = useQuery(
     sessionQueryOptions(),
@@ -193,20 +207,7 @@ export function useUserData() {
     enabled: isLoggedIn && !!userId,
   });
 
-  // Memoize so userData keeps a stable reference across renders (a fresh
-  // `new Set(...)` each render would otherwise rebuild the whole SongDB in
-  // useSongDB on every render).
-  const userData = useMemo<UserData>(
-    () =>
-      isLoggedIn
-        ? ({
-            profile: sessionToProfile(sessionData),
-            ...indexSongbookEntries(favorites),
-            submissions: submissions ?? [],
-          } as UserData)
-        : (null as UserData),
-    [isLoggedIn, sessionData, favorites, submissions],
-  );
+  const userData = deriveUserData(sessionData, favorites, submissions);
 
   return {
     userData,

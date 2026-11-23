@@ -5,7 +5,7 @@ import { singleSongQueryOptions } from "~/services/song-service";
 import { SongData } from "~/types/songData";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useUserData } from "src/web/hooks/use-user-data";
-import { z } from "zod";
+import { z } from "zod/mini";
 import SongView from "~/features/SongView/SongView";
 import { useSessionSync } from "~/features/SongView/hooks/useSessionSync";
 import { useViewSettingsStore } from "~/features/SongView/hooks/viewSettingsStore";
@@ -15,9 +15,9 @@ import songLoader, {
 } from "~/services/song-loader";
 
 const songSearchSchema = z.object({
-  version: z.string().optional(),
+  version: z.optional(z.string()),
   // Owner userId when opened from someone else's songbook.
-  songbook: z.string().optional(),
+  songbook: z.optional(z.string()),
 });
 
 export const Route = createFileRoute("/song/$songId")({

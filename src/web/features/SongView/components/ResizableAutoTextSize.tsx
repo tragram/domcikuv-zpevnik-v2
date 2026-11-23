@@ -1,6 +1,5 @@
 import { useGesture } from "@use-gesture/react";
 import {
-  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -12,13 +11,14 @@ import {
 } from "../hooks/viewSettingsStore";
 import React from "react";
 import { cn } from "~/lib/utils";
-import { setFontSize, setOptimalColumnCount } from "../utils/columnLayout";
+import { fitSong } from "../utils/columnLayout";
 import { getElementFontSize, setElementFontSize } from "../utils/fontSize";
 import { chordSettingsClassNames } from "../settings/ChordSettingsMenu";
 import { layoutSettingsClassNames } from "../settings/LayoutSettings";
 
 interface ResizableAutoTextSizeProps {
   children: React.ReactNode;
+  renderedSheet: string;
   gestureContainerRef: React.RefObject<HTMLDivElement | null>;
   className?: string;
   autoColumns?: boolean;
@@ -26,6 +26,7 @@ interface ResizableAutoTextSizeProps {
 
 export function ResizableAutoTextSize({
   children,
+  renderedSheet,
   gestureContainerRef,
   className,
 }: ResizableAutoTextSizeProps) {
@@ -36,40 +37,41 @@ export function ResizableAutoTextSize({
   // Refs
   const contentRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
-  const updateLayout = useCallback(() => {
-    if (!contentRef.current || !wrapperRef.current) return;
-
-    setOptimalColumnCount(contentRef.current, wrapperRef.current, layout);
-
-    if (layout.fitScreenMode !== "none") {
-      setFontSize(contentRef.current, wrapperRef.current, layout.fitScreenMode);
-    }
-    // chords actually indirectly change the layout --> need to be there
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layout, chords]);
-
-  // Initialize ResizeObserver
-  useEffect(() => {
-    if (!wrapperRef.current) return;
-    resizeObserverRef.current = new ResizeObserver(() => {
-      if (!pinching) {
-        updateLayout();
-      }
-    });
-    resizeObserverRef.current.observe(wrapperRef.current);
-    return () => {
-      if (resizeObserverRef.current) {
-        resizeObserverRef.current.disconnect();
-      }
-    };
-  }, [updateLayout, pinching]);
-
-  // Initial layout update
   useLayoutEffect(() => {
-    updateLayout();
-  }, [updateLayout]);
+    const content = contentRef.current;
+    const wrapper = wrapperRef.current;
+    if (!content || !wrapper || pinching) return;
+
+    let width = 0;
+    let height = 0;
+    const fit = () => {
+      if (!width) return;
+      if (document.fonts.status === "loading" && layout.fitScreenMode !== "none") {
+        content.style.opacity = "0";
+        return;
+      }
+      fitSong(content, width, height, layout);
+      content.style.removeProperty("opacity");
+    };
+    // The first observation is delivered before paint, with the actual size.
+    const observer = new ResizeObserver(([entry]) => {
+      const box = entry.contentRect;
+      // In width-only mode the fit itself changes the wrapper height.
+      const sameHeight = layout.fitScreenMode !== "fitXY" || box.height === height;
+      if (box.width === width && sameHeight) return;
+      width = box.width;
+      height = box.height;
+      fit();
+    });
+    observer.observe(wrapper);
+    document.fonts.addEventListener("loadingdone", fit);
+    return () => {
+      observer.disconnect();
+      document.fonts.removeEventListener("loadingdone", fit);
+      content.style.removeProperty("opacity");
+    };
+  }, [layout, chords, pinching, renderedSheet]);
 
   // --------------------------------------------------------------------------
   // 1. Manual Wheel Handler (Handles Ctrl + Wheel for Zoom)

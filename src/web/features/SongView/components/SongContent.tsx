@@ -45,6 +45,7 @@ export const SongContent = ({
       />
       <ResizableAutoTextSize
         key={songData.id} // force a complete rerender on song change
+        renderedSheet={parsedContent}
         gestureContainerRef={gestureContainerRef}
         className="text-foreground"
       >

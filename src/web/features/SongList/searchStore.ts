@@ -35,39 +35,62 @@ const IMPORT_PREVIEW_DURATION_MS = 60_000;
 
 export function trackExternalSearchNavigation(router: AnyRouter) {
   let awaitingImport = false;
-  let preview: { pathname: string; expiresAt: number } | undefined;
+  let preview: {
+    pathname: string;
+    expiresAt: number;
+    search: QueryState;
+    timer: ReturnType<typeof setTimeout>;
+  } | undefined;
 
-  router.subscribe("onBeforeLoad", ({ toLocation }) => {
-    const pathname = trimPathRight(toLocation.pathname);
-    const { endExternalSearch } = useQueryStore.getState();
+  const clearPreview = () => {
+    if (!preview) return;
+    clearTimeout(preview.timer);
+    preview = undefined;
+  };
 
-    // Check wall time before the list can mount, including after tab suspension.
-    if (preview && Date.now() >= preview.expiresAt) {
-      endExternalSearch();
-      preview = undefined;
+  const expirePreview = () => {
+    if (preview?.search === useQueryStore.getState()) {
+      preview.search.endExternalSearch();
     }
+    clearPreview();
+  };
+
+  const beforeLoad = router.subscribe("onBeforeLoad", ({ toLocation }) => {
+    const pathname = trimPathRight(toLocation.pathname);
+
+    // Check wall time before rendering in case the browser deferred the timer.
+    if (preview && Date.now() >= preview.expiresAt) expirePreview();
 
     if (pathname === "/" || pathname === "/import") {
-      // Time spent choosing another source is outside the preview window.
-      preview = undefined;
       awaitingImport = pathname === "/import";
     } else if (
       pathname !== preview?.pathname &&
       !(awaitingImport && toLocation.state.externalImportPreview)
     ) {
-      endExternalSearch();
-      preview = undefined;
+      useQueryStore.getState().endExternalSearch();
+      clearPreview();
       awaitingImport = false;
     }
   });
 
-  router.subscribe("onResolved", ({ toLocation }) => {
+  const onResolved = router.subscribe("onResolved", ({ toLocation }) => {
     if (!awaitingImport || !toLocation.state.externalImportPreview) return;
 
     awaitingImport = false;
+    clearPreview();
+    const search = useQueryStore.getState();
+    if (!search.externalSearchTriggered) return;
     preview = {
       pathname: trimPathRight(toLocation.pathname),
       expiresAt: Date.now() + IMPORT_PREVIEW_DURATION_MS,
+      search,
+      timer: setTimeout(expirePreview, IMPORT_PREVIEW_DURATION_MS),
     };
   });
+
+  return () => {
+    beforeLoad();
+    onResolved();
+    clearPreview();
+  };
 }

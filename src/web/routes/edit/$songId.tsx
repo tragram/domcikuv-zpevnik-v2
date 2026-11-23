@@ -1,7 +1,7 @@
 import { assetLoadError } from "~/lib/asset-load-error";
 import { CustomError } from "~/components/CustomError";
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
+import { z } from "zod/mini";
 import PendingComponent from "~/components/PendingComponent";
 import Editor from "~/features/Editor/Editor";
 import songLoader, { SongLoaderErrorComponent } from "~/services/song-loader";
@@ -9,7 +9,7 @@ import songLoader, { SongLoaderErrorComponent } from "~/services/song-loader";
 export const Route = createFileRoute("/edit/$songId")({
   component: RouteComponent,
   validateSearch: z.object({
-    version: z.string().optional(),
+    version: z.optional(z.string()),
   }),
   loaderDeps: ({ search }) => ({ version: search.version }),
   loader: (args) => songLoader({ ...args, editing: true }),

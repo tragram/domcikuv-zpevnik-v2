@@ -44,6 +44,7 @@ beforeEach(() => {
 
 afterEach(async () => {
   await act(async () => cleanups.splice(0).forEach((cleanup) => cleanup()));
+  vi.useRealTimers();
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
 });
@@ -96,11 +97,11 @@ async function setup({ searchOnline = true } = {}) {
     routeTree: rootRoute.addChildren([listRoute, importRoute, songRoute]),
     history: createMemoryHistory({ initialEntries: ["/"] }),
   });
-  trackExternalSearchNavigation(router);
+  const stopTracking = trackExternalSearchNavigation(router);
   const container = document.createElement("div");
   document.body.appendChild(container);
   const root = createRoot(container);
-  cleanups.push(() => { root.unmount(); container.remove(); queryClient.clear(); });
+  cleanups.push(() => { stopTracking(); root.unmount(); container.remove(); queryClient.clear(); });
   await act(async () => {
     await router.load();
     root.render(<QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider>);
@@ -169,6 +170,32 @@ it.each(["timeout", "different song"])("returns to the unfiltered song list afte
   expect(container.querySelector("input")?.value).toBe("");
   expect(container.querySelector("a")).toBeNull();
   expect(fetchExternalSearch).toHaveBeenCalledTimes(1);
+});
+
+it("clears the previous search at 60 seconds while the list is still open", async () => {
+  const { click, container } = await setup();
+  vi.useFakeTimers({ toFake: ["Date", "setTimeout", "clearTimeout"] });
+  await click("first");
+  await act(async () => { vi.advanceTimersByTime(59_999); });
+  await click("Back to songbook");
+  expect(container.textContent).toContain("second");
+
+  await act(async () => { vi.advanceTimersByTime(1); });
+  expect(container.querySelector("input")?.value).toBe("");
+  expect(container.querySelector("a")).toBeNull();
+});
+
+it("leaves a newer search intact when the previous search expires", async () => {
+  const { click, container } = await setup();
+  vi.useFakeTimers({ toFake: ["Date", "setTimeout", "clearTimeout"] });
+  await click("first");
+  await click("Back to songbook");
+  await act(async () => { useQueryStore.getState().setQuery("Another song"); });
+  await click("Search Online Services");
+  await act(async () => { await vi.advanceTimersByTimeAsync(60_000); });
+
+  expect(container.querySelector("input")?.value).toBe("Another song");
+  expect(useQueryStore.getState().externalSearchTriggered).toBe(true);
 });
 
 it("keeps an ordinary local search when opening a song and returning", async () => {
