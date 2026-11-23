@@ -3,9 +3,8 @@ import type { SongData } from "~/types/songData";
 import type { LanguageCount, Songbook, SongLanguage } from "~/types/types";
 import {
   applyFilters,
-  filterExternal,
+  filterBrowseSongs,
   filterFavorites,
-  filterHidden,
   filterLanguage,
   filterSongbook,
   filterVocalRange,
@@ -20,7 +19,6 @@ const song = (overrides: Partial<SongData> = {}): SongData =>
     title: "Title",
     artist: "Artist",
     createdAt: new Date("2024-01-01"),
-    hidden: false,
     isFavorite: false,
     language: undefined,
     capo: undefined,
@@ -125,53 +123,38 @@ describe("filterSongbook", () => {
   });
 });
 
-describe("filterExternal", () => {
-  const external = { sourceId: "cifraclub" } as SongData["externalSource"];
-
-  it("hides external songs when logged out, regardless of showExternal", () => {
-    const ext = song({ externalSource: external });
-    const own = song({ id: "b", externalSource: null });
-    expect(filterExternal([ext, own], false, true)).toEqual([own]);
+describe("filterBrowseSongs", () => {
+  it("shows official versions and the viewer’s pinned pending song", () => {
+    const official = song({ id: "official", officialVersionId: "published" });
+    const latest = song({ id: "latest", officialVersionId: null, versionId: "unofficial" });
+    const pending = song({ id: "pending", officialVersionId: null, versionId: "draft", versionStatus: "pending" });
+    const userData = { songbookEntries: new Map([[pending.id, { songId: pending.id, pinnedVersionId: pending.versionId }]]) } as Parameters<typeof filterBrowseSongs>[1];
+    expect(filterBrowseSongs([official, latest, pending], null)).toEqual([official]);
+    expect(filterBrowseSongs([official, latest, pending], userData)).toEqual([official, pending]);
   });
 
-  it("hides external songs when showExternal is off", () => {
-    const ext = song({ externalSource: external });
-    const own = song({ id: "b", externalSource: null });
-    expect(filterExternal([ext, own], true, false)).toEqual([own]);
-  });
-
-  it("shows external songs when logged in and showExternal is on", () => {
-    const songs = [song({ externalSource: external })];
-    expect(filterExternal(songs, true, true)).toEqual(songs);
-  });
-});
-
-describe("filterHidden", () => {
-  it("excludes hidden songs that aren't a favorite", () => {
-    const hidden = song({ hidden: true, isFavorite: false });
-    const visible = song({ id: "b", hidden: false });
-    expect(filterHidden([hidden, visible])).toEqual([visible]);
-  });
-
-  it("keeps hidden songs that are the user's own favorite", () => {
-    const hiddenFavorite = song({ hidden: true, isFavorite: true });
-    expect(filterHidden([hiddenFavorite])).toEqual([hiddenFavorite]);
+  it("shows official imports to everyone and unofficial imports to viewers who pinned them", () => {
+    const externalSource = { sourceId: "cifraclub", url: "https://example.test", originalContent: "" } as const;
+    const official = song({ id: "official", versionId: "source", officialVersionId: "source", externalSource });
+    const unofficial = song({ id: "unofficial", versionId: "copy", officialVersionId: null, externalSource });
+    const viewer = { songbookEntries: new Map([[unofficial.id, { songId: unofficial.id, pinnedVersionId: unofficial.versionId }]]) } as Parameters<typeof filterBrowseSongs>[1];
+    expect(filterBrowseSongs([official, unofficial], null)).toEqual([official]);
+    expect(filterBrowseSongs([official, unofficial], viewer)).toEqual([official, unofficial]);
   });
 });
 
 describe("applyFilters", () => {
   it("chains all filters together", () => {
-    const visible = song({ id: "keep", hidden: false, capo: undefined });
-    const hidden = song({ id: "hidden", hidden: true, isFavorite: false });
+    const visible = song({ id: "keep", capo: undefined });
+    const latest = song({ id: "latest", officialVersionId: null });
     const capoed = song({ id: "capoed", capo: 3 });
 
     const result = applyFilters(
-      [visible, hidden, capoed],
+      [visible, latest, capoed],
       {
         vocalRange: "all",
         language: "all",
         onlyFavorites: false,
-        showExternal: false,
         selectedSongbookId: null,
       },
       { userData: null, availableSongbooks: [] },

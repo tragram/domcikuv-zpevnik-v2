@@ -23,9 +23,9 @@ import {
   saveSongVersion,
   setOfficialVersion,
 } from "./writes";
-import { versionHistoryFixture } from "./history.test-fixture";
+import { songIllustrationFixture, versionHistoryFixture } from "./history.test-fixture";
 import { getOwnSongbookEntries, setSongbookEntry } from "../favorite-helpers";
-import { publishedVersionIds } from "../song-helpers";
+import { publishedVersionIds, retrieveSingleSong, retrieveSongs } from "../song-helpers";
 import { buildApp } from "../../api/utils";
 import { songRoutes } from "../../api/admin/songs";
 import editorApp from "../../api/editor";
@@ -38,6 +38,7 @@ let db: AppDatabase;
 beforeEach(async () => {
   sqlite = new DatabaseSync(":memory:");
   sqlite.exec(versionHistoryFixture);
+  sqlite.exec(songIllustrationFixture);
   sqlite.exec(readFileSync("drizzle/0008_sturdy_morgan_stark.sql", "utf8"));
   sqlite.exec(readFileSync("drizzle/0009_living_snowbird.sql", "utf8"));
   sqlite.exec(readFileSync("drizzle/0012_unique_import_copies.sql", "utf8"));
@@ -148,6 +149,83 @@ describe("submitted revision history", () => {
     expect(await db.query.songVersion.findMany()).toHaveLength(1);
   });
 
+  it("requires a revision before a trusted import can become official", async () => {
+    const original = await importCopy();
+    expect(original).toMatchObject({ status: "published", revision: 1 });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBeNull();
+
+    await expect(setOfficialVersion(db, "song", original.id, "owner", original.revision)).rejects.toMatchObject({ status: 400 });
+    const revised = await edit(original.id, "Reviewed sheet");
+    expect(revised.revision).toBe(2);
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
+    expect(await retrieveSongs(db)).toMatchObject([{ isOfficial: true, officialVersionId: original.id }]);
+  });
+
+  it("clears a legacy official import while preserving its sheet and pin", async () => {
+    const original = await importCopy();
+    await db.update(schema.song).set({ currentVersionId: original.id }).where(eq(schema.song.id, "song"));
+    await setSongbookEntry(db, "owner", "song", { pinnedVersionId: original.id });
+
+    sqlite.exec(readFileSync("drizzle/0014_clear_unrevised_import_official.sql", "utf8"));
+
+    expect(await retrieveSongs(db)).toMatchObject([{ versionId: original.id, isOfficial: false }]);
+    expect(await getOwnSongbookEntries(db, "owner")).toMatchObject([{ pinnedVersionId: original.id }]);
+    expect(await loadVersion(db, "song", original.id)).toMatchObject({ status: "published", revision: original.revision });
+  });
+
+  it("uses the latest published version for public discovery until an official one is selected", async () => {
+    const original = await importCopy();
+    const latest = await importCopy("Another published sheet", "owner", "cifraclub");
+    const first = await edit(original.id, "Revised sheet");
+    await db.insert(schema.songVersion).values({ ...input("Pending sheet"), songId: "song", id: "draft", userId: "untrusted", createdAt: new Date("2090-01-01") });
+    await db.update(schema.songVersion).set({ createdAt: new Date("2080-01-01"), revision: latest.revision + 1 }).where(eq(schema.songVersion.id, latest.id));
+    expect(await retrieveSongs(db)).toMatchObject([{ versionId: latest.id, isOfficial: false, officialVersionId: null }]);
+    expect(await retrieveSingleSong(db, "song")).toMatchObject({ versionId: latest.id, isOfficial: false });
+
+    await setOfficialVersion(db, "song", first.id, "owner", first.revision);
+    expect(await retrieveSongs(db)).toMatchObject([{ versionId: first.id, isOfficial: true }]);
+
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      c.set("USER", { id: "admin" } as NonNullable<typeof c.var.USER>);
+      await next();
+    }).route("/", songRoutes);
+    const clear = (expectedRevision: number) => app.request(`/song/versions/${first.id}/official`, {
+      method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ expectedRevision }),
+    });
+    expect((await clear(first.revision + 1)).status).toBe(409);
+    expect((await clear(first.revision)).status).toBe(200);
+    expect(await retrieveSingleSong(db, "song", first.id)).toMatchObject({ versionStatus: "published", versionRevision: first.revision, officialVersionId: null });
+    expect(await retrieveSongs(db, new Date(0), true)).toMatchObject([{ versionId: latest.id, officialVersionId: null }]);
+  });
+
+  it("omits pending-only songs from public discovery and evicts cached songs with no public version", async () => {
+    await importCopy("Pending source", "untrusted");
+    expect(await retrieveSongs(db)).toEqual([]);
+    expect(await retrieveSingleSong(db, "song")).toBeNull();
+
+    const published = await importCopy("Published source", "owner", "cifraclub");
+    await changeVersionStatus(db, "song", published.id, "owner", "archive", published.revision);
+    expect(await retrieveSongs(db)).toEqual([]);
+    expect(await retrieveSongs(db, new Date(0), true)).toMatchObject([{ id: "song", updateStatus: "deleted" }]);
+  });
+
+  it("makes the only published version official when an admin approves the import as-is", async () => {
+    const original = await importCopy("[C]Source sheet", "untrusted");
+    const published = await approveVersion(db, "song", original.id, "admin", {
+      expectedRevision: original.revision, makeOfficial: false,
+    });
+    expect(published).toMatchObject({ status: "published", chordpro: original.chordpro });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
+  });
+
+  it("keeps a first-revision import unofficial when its trusted owner saves it unchanged", async () => {
+    const original = await importCopy();
+    const saved = await edit(original.id, original.chordpro);
+    expect(saved.revision).toBe(original.revision);
+    expect((await db.query.song.findFirst())?.currentVersionId).toBeNull();
+  });
+
   it("rejects a second raw version for the same provider URL even when the caller bypasses the lookup", async () => {
     const original = await importCopy();
     const row = await loadVersion(db, "song", original.id);
@@ -164,6 +242,14 @@ describe("submitted revision history", () => {
     expect((await db.query.song.findFirst())?.currentVersionId).toBe(curated.id);
   });
 
+  it("leaves the official choice open when another published import exists", async () => {
+    const original = await importCopy();
+    const other = await importCopy("Another sheet", "untrusted", "cifraclub");
+    await approveVersion(db, "song", other.id, "admin", { expectedRevision: other.revision });
+    await edit(original.id, "Curated sheet");
+    expect((await db.query.song.findFirst())?.currentVersionId).toBeNull();
+  });
+
   it("updates an owner's pending import without creating a second pending version", async () => {
     const original = await importCopy("Original source", "untrusted");
     const updated = await edit(original.id, "Corrected draft", "untrusted");
@@ -176,6 +262,7 @@ describe("submitted revision history", () => {
     const draft = await saveSongVersion(db, { ...input("Suggested curation"), baseVersionId: original.id, expectedRevision: original.revision, saveMode: "correction" }, "song", "untrusted");
     expect(draft).toMatchObject({ status: "pending", importId: null, submissionIntent: "update-parent", archivePreviousOnPublish: false, makeOfficialOnPublish: false });
     expect((await loadVersion(db, "song", original.id)).status).toBe("published");
+    expect((await db.query.song.findFirst())?.currentVersionId).toBeNull();
     const published = await approveVersion(db, "song", draft.id, "admin", { expectedRevision: draft.revision, archivePrevious: false, makeOfficial: false });
     expect(published.id).toBe(original.id);
     expect(await loadVersion(db, "song", original.id)).toMatchObject({
@@ -226,6 +313,7 @@ describe("submitted revision history", () => {
     }, "song", "admin", undefined, { publish: true, editAsPreviousAuthor: true });
     expect(curated).toMatchObject({ id: original.id, userId: "admin", status: "published", importId: original.importId, parentId: null });
     expect(await db.query.songVersion.findMany()).toHaveLength(1);
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
   });
 
   it("rejects approval of another user's import by a trusted non-admin", async () => {
@@ -267,6 +355,7 @@ describe("submitted revision history", () => {
     expect(data).toMatchObject({ importId: original.importId, youtubeId: "abcdefghijk" });
     const withVideo = await loadVersion(db, "song", original.id);
     expect(withVideo).toMatchObject({ youtubeId: "abcdefghijk", status: "published", userId: "owner" });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
     const curated = await saveSongVersion(db, {
       ...contentOf(withVideo), chordpro: "Curated after the video was added",
       baseVersionId: original.id, expectedRevision: withVideo.revision,
@@ -275,7 +364,8 @@ describe("submitted revision history", () => {
   });
 
   it("changes the author in place through the admin API and rejects stale updates", async () => {
-    const original = await importCopy();
+    const imported = await importCopy();
+    const original = await edit(imported.id, "Revised sheet");
     const app = buildApp().use("*", async (c, next) => {
       c.set("db", db);
       c.set("USER", { id: "admin" } as NonNullable<typeof c.var.USER>);
@@ -362,7 +452,7 @@ describe("submitted revision history", () => {
     const target = await saveSongVersion(db, input("Curated destination"), "song", "owner");
     await expect(mergeVersion(db, "song", original.id, target.id, "admin", original.revision, target.revision)).rejects.toMatchObject({ status: 400 });
     expect(await loadVersion(db, "song", original.id)).toMatchObject({ status: "published", importId: original.importId, mergedIntoVersionId: null, chordpro: original.chordpro });
-    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(target.id);
   });
 
   it("migrates formerly consumed imports back to unchanged archived source copies", async () => {
@@ -461,10 +551,6 @@ describe("submitted revision history", () => {
   });
 
   it("loads alternative sheets for a large songbook in two statements", async () => {
-    sqlite.exec(`CREATE TABLE song_illustration (
-      id TEXT PRIMARY KEY, song_id TEXT, prompt_id TEXT, image_model TEXT, image_url TEXT,
-      thumbnail_url TEXT, created_at INTEGER, updated_at INTEGER, deleted INTEGER
-    )`);
     const first = await initial();
     const alternative = await edit(first.id, "Pinned sheet", "owner", "new-version");
     await setSongbookEntry(db, "owner", "song", { pinnedVersionId: alternative.id, capo: 3 });

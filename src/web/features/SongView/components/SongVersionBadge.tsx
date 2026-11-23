@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { requiresImportRevision } from "src/lib/song-version-policy";
 import { useRouter } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
@@ -63,7 +64,9 @@ export function SongVersionBadge({
   const label = versionLabel({ label: shown?.label ?? songData.versionLabel, importSourceId: songData.externalSource?.sourceId, isOfficial: isOfficial, versionNumber: shown?.versionNumber ?? songData.versionNumber, createdAt: songData.versionCreatedAt ?? songData.createdAt });
 
   const badgeLabel = versionBadgeLabel({ label, isOfficial: isOfficial });
-  const hasDifferentOfficial = !!entry?.pinnedVersionId && !isOfficial && (publishedIds ?? songData.publishedVersionIds ?? []).some(id => id !== songData.versionId);
+  const hasDifferentOfficial = !!entry?.pinnedVersionId && !isOfficial && (songData.officialVersionId === undefined
+    ? (publishedIds ?? songData.publishedVersionIds ?? []).some(id => id !== songData.versionId)
+    : !!songData.officialVersionId);
   const displayLabel = hasDifferentOfficial ? `${badgeLabel} · Official version available` : badgeLabel;
 
   async function makeOfficial() {
@@ -92,7 +95,9 @@ export function SongVersionBadge({
     ? resolvedStatus ?? songData.versionStatus
     : entry?.song?.versionStatus;
   const hasSavedUnpublishedVersion = savedStatus === "archived" || savedStatus === "pending" || savedStatus === "rejected";
-  if (!songData.versionId || (!hasChoices && !hasSavedUnpublishedVersion && !selection?.unavailable)) return null;
+  const canMakeOfficial = (userData?.profile.isAdmin || userData?.profile.isTrusted) && !isOfficial && songData.versionStatus === "published";
+  const needsRevision = requiresImportRevision(!!songData.externalSource, shown?.revision ?? songData.versionRevision);
+  if (!songData.versionId || (!hasChoices && !hasSavedUnpublishedVersion && !selection?.unavailable && !canMakeOfficial)) return null;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -160,7 +165,9 @@ export function SongVersionBadge({
             history={history}
             isOnline={isOnline}
           />
-          {shown?.status === "published" && !shown.isCurrent && (userData?.profile.isAdmin || userData?.profile.isTrusted) && <button className="m-2 text-xs text-(color:--chord) underline" disabled={!isOnline || saving} onClick={() => void makeOfficial()}>Make official</button>}
+          {canMakeOfficial && shown?.status === "published" && (needsRevision
+            ? <Description>Save a revision before making this import official.</Description>
+            : <button className="m-2 text-xs text-(color:--chord) underline" disabled={!isOnline || saving} onClick={() => void makeOfficial()}>Make official</button>)}
 
         </div>
       </PopoverContent>

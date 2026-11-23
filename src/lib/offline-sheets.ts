@@ -37,7 +37,9 @@ export function watchDownloadedRevisions(cache: QueryClient) {
       const next = sheet.versionId && newest.get(sheet.versionId);
       return next && next.id === sheet.id && next.versionRevision! > (sheet.versionRevision ?? 0)
         ? { ...next, publishedVersionIds: sheet.publishedVersionIds ?? next.publishedVersionIds,
-          currentIllustration: sheet.currentIllustration, hidden: sheet.hidden,
+          currentIllustration: sheet.currentIllustration,
+          officialVersionId: sheet.officialVersionId,
+          isOfficial: sheet.isOfficial,
           updateStatus: sheet.updateStatus } : sheet;
     }
     for (const q of sources) {

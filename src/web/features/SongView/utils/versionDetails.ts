@@ -34,6 +34,8 @@ export function getVersionDetails(
     reason = selection.unavailable
       ? "Your saved version could not be loaded."
       : "You saved this version in your songbook.";
+  } else if (selection?.source === "latest" || song.officialVersionId === null) {
+    reason = "Showing the latest published version.";
   } else {
     reason = song.isCustom
       ? "You are viewing a different version from the current official one."
@@ -42,7 +44,7 @@ export function getVersionDetails(
 
   const notes: string[] = [];
   if (selection?.unavailable) {
-    notes.push("Saved version unavailable; showing official.");
+    notes.push(song.officialVersionId === null ? "Saved version unavailable; showing the latest published version." : "Saved version unavailable; showing official.");
   }
 
   const canPreview = !following;

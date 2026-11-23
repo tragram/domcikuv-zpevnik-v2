@@ -1,4 +1,3 @@
-import { UserRoundPen } from "lucide-react";
 import { useId, useState } from "react";
 import { toast } from "sonner";
 import type { SongVersionAdminApi } from "src/worker/api/api-types";
@@ -11,7 +10,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -20,46 +18,38 @@ import { Pagination } from "./shared/pagination";
 
 const PAGE_SIZE = 10;
 
-export function VersionAuthor({ adminApi, version, online }: {
+export function VersionAuthor({ adminApi, version, online, onClose }: {
   adminApi: AdminApi;
   version: SongVersionAdminApi;
   online: boolean;
+  onClose: () => void;
 }) {
-  const [revision, setRevision] = useState<number | null>(null);
+  const [revision] = useState(version.revision);
   const changeAuthor = useChangeVersionAuthor(adminApi);
 
   return (
-    <Dialog open={revision !== null} onOpenChange={(open) => {
-      if (changeAuthor.isPending) return;
-      changeAuthor.reset();
-      setRevision(open ? version.revision : null);
+    <Dialog open onOpenChange={(open) => {
+      if (!open && !changeAuthor.isPending) onClose();
     }}>
-      <DialogTrigger asChild>
-        <Button type="button" size="sm" variant="outline" disabled={!online}>
-          <UserRoundPen className="size-4" /> Change author
-        </Button>
-      </DialogTrigger>
-      {revision !== null && (
-        <AuthorPicker
-          adminApi={adminApi}
-          version={version}
-          disabled={!online}
-          saving={changeAuthor.isPending}
-          error={changeAuthor.error?.message}
-          onCancel={() => setRevision(null)}
-          onSave={(userId) => changeAuthor.mutate({
-            songId: version.songId,
-            versionId: version.id,
-            expectedRevision: revision,
-            userId,
-          }, {
-            onSuccess: () => {
-              setRevision(null);
-              toast.success("Version author updated");
-            },
-          })}
-        />
-      )}
+      <AuthorPicker
+        adminApi={adminApi}
+        version={version}
+        disabled={!online}
+        saving={changeAuthor.isPending}
+        error={changeAuthor.error?.message}
+        onCancel={onClose}
+        onSave={(userId) => changeAuthor.mutate({
+          songId: version.songId,
+          versionId: version.id,
+          expectedRevision: revision,
+          userId,
+        }, {
+          onSuccess: () => {
+            onClose();
+            toast.success("Version author updated");
+          },
+        })}
+      />
     </Dialog>
   );
 }

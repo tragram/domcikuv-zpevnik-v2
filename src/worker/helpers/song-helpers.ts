@@ -10,7 +10,6 @@ import {
   ExtractTablesWithRelations,
   gte,
   inArray,
-  isNotNull,
   isNull,
   or,
 } from "drizzle-orm";
@@ -109,7 +108,7 @@ const transformSongToApi = (
     baseRevision: version?.submission?.baseRevision,
     archivePreviousOnPublish: version?.submission?.archivePreviousOnPublish,
     makeOfficialOnPublish: version?.submission?.makeOfficialOnPublish,
-    hidden: songItem.hidden,
+    officialVersionId: songItem.currentVersionId,
     title: version?.title ?? "Unknown title",
     artist: version?.artist ?? "Unknown artist",
     key: version?.key ?? undefined,
@@ -143,11 +142,8 @@ const transformSongToApi = (
         }
       : undefined,
 
-    // Only true deletions are removal signals. Hidden songs stay in the client
-    // cache (with `hidden: true`) so they remain reachable via search; the browse
-    // list filters them out client-side.
     updateStatus: updatedSince
-      ? songItem.deleted
+      ? songItem.deleted || !version
         ? "deleted"
         : new Date(songItem.createdAt) >= updatedSince
           ? "added"
@@ -161,16 +157,9 @@ const transformSongToApi = (
 export async function retrieveSongs(
   db: AppDatabase,
   updatedSince?: Date,
-  includeHidden = false,
   includeDeleted = false,
 ) {
-  const conditions = [isNotNull(song.currentVersionId)];
-
-  if (!includeHidden) {
-    if (includeDeleted)
-      conditions.push(or(eq(song.hidden, false), eq(song.deleted, true))!);
-    else conditions.push(eq(song.hidden, false));
-  }
+  const conditions = [];
   if (!includeDeleted) conditions.push(eq(song.deleted, false));
 
   if (updatedSince) {
@@ -188,17 +177,23 @@ export async function retrieveSongs(
     );
   }
 
-  const songsRaw = await db.query.song.findMany({
+  const rows = await db.query.song.findMany({
     where: and(...conditions),
     with: {
-      currentVersion: {
+      currentVersion: { with: { songImport: true, submission: true } },
+      version: {
+        where: and(eq(songVersion.status, "published"), isNull(songVersion.mergedIntoVersionId)),
+        orderBy: [desc(songVersion.createdAt), desc(songVersion.id)],
+        limit: 1,
         with: { songImport: true, submission: true },
       },
       currentIllustration: true,
     },
   });
-  const choices = await publishedVersionIds(db, songsRaw.map((s) => s.id));
-  return songsRaw.map((s) => ({ ...transformSongToApi(s, updatedSince), publishedVersionIds: choices.get(s.id) ?? [] }));
+  const catalog = rows.map(({ version, ...row }) => ({ ...row, currentVersion: row.currentVersion ?? version[0] ?? null }));
+  const visible = includeDeleted ? catalog : catalog.filter((row) => row.currentVersion);
+  const choices = await publishedVersionIds(db, visible.filter((row) => !row.deleted && row.currentVersion).map((row) => row.id));
+  return visible.map((row) => ({ ...transformSongToApi(row, updatedSince), publishedVersionIds: choices.get(row.id) ?? [] }));
 }
 
 /**
@@ -234,14 +229,15 @@ export const retrieveSingleSong = async (
 
   let customMeta: Pick<SongDataApi, "versionAuthor"> =
     {};
-  if (versionId && songRaw.currentVersion?.id !== versionId) {
+  if (!songRaw.currentVersion || (versionId && songRaw.currentVersion.id !== versionId)) {
     // Capture the canonical current version before swapping in the requested one.
     const canonical = songRaw.currentVersion;
     const specificVersion = await db.query.songVersion.findFirst({
       where: and(
-        eq(songVersion.id, versionId),
+        versionId ? eq(songVersion.id, versionId) : and(eq(songVersion.status, "published"), isNull(songVersion.mergedIntoVersionId)),
         eq(songVersion.songId, songId),
       ),
+      orderBy: [desc(songVersion.createdAt), desc(songVersion.id)],
       with: { songImport: true, user: true, submission: true },
     });
     if (!specificVersion || specificVersion.status === "deleted") return null;
@@ -403,7 +399,6 @@ export const createSong = async (
       id: songId,
       createdAt: now,
       updatedAt: now,
-      // newly added songs by untrusted users don't have to be hidden via this - they won't have currentVersionId and thus won't be shown automatically
       currentVersionId: null,
     });
   }

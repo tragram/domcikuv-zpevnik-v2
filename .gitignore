@@ -62,3 +62,5 @@ bundle-stats.json
 !/drizzle/0010_delete_consumed_versions.sql
 !/drizzle/0011_preserve_imported_sources.sql
 !/drizzle/0012_unique_import_copies.sql
+!/drizzle/0013_remove_song_hidden.sql
+!/drizzle/0014_clear_unrevised_import_official.sql

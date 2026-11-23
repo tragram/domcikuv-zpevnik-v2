@@ -57,7 +57,7 @@ export class SongData {
   chordpro: ChordPro;
   externalSource: ExternalSourceApi | null;
   /** Hidden from the browse list, but still searchable and directly accessible. */
-  hidden: boolean;
+  officialVersionId?: string | null;
 
   // UI-specific fields
   currentIllustration: CurrentIllustrationApi | undefined;
@@ -112,7 +112,7 @@ export class SongData {
     this.youtubeId = songFromDB.youtubeId || undefined;
     this.chordpro = songFromDB.chordpro;
     this.externalSource = songFromDB.externalSource;
-    this.hidden = songFromDB.hidden ?? false;
+    this.officialVersionId = songFromDB.officialVersionId;
 
     this.currentIllustration = songFromDB.currentIllustration;
     this.isFavorite = songFromDB.isFavoriteByCurrentUser ?? false;
@@ -284,6 +284,7 @@ export class SongData {
       versionCreatedAt: this.versionCreatedAt,
       versionUpdatedAt: this.versionUpdatedAt,
       isOfficial: this.isOfficial,
+      officialVersionId: this.officialVersionId,
       submissionIntent: this.submissionIntent,
       baseRevision: this.baseRevision,
       archivePreviousOnPublish: this.archivePreviousOnPublish,

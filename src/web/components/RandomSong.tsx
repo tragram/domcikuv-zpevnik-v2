@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/alert-dialog";
 import {
   applyFilters,
-  filterExternal,
+  filterBrowseSongs,
 } from "~/features/SongList/Toolbar/filters/songFilters";
 import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
 import { UserData } from "~/hooks/use-user-data";
@@ -154,7 +154,6 @@ function RandomSong({
     vocalRange,
     language,
     onlyFavorites,
-    showExternal,
     selectedSongbookId,
     resetFilters,
   } = useFilterSettingsStore();
@@ -180,12 +179,10 @@ function RandomSong({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSong]);
 
-  // Baseline for "are filters narrowing the pool" — excludes external songs
-  // when they wouldn't be shown anyway, so their default exclusion isn't
-  // mistaken for a user-applied filter.
+  // Count songs eligible for browse before applying the user's filters.
   const relevantSongCount = useMemo(
-    () => filterExternal(songs, !!userData, showExternal).length,
-    [songs, userData, showExternal],
+    () => filterBrowseSongs(songs, userData ?? null).length,
+    [songs, userData],
   );
 
   // Expensive filter pipeline — depends only on the filters, not the ban list,
@@ -199,7 +196,6 @@ function RandomSong({
           vocalRange,
           language,
           onlyFavorites,
-          showExternal,
           selectedSongbookId,
         },
         { userData: userData ?? null, languageCounts, availableSongbooks },
@@ -210,7 +206,6 @@ function RandomSong({
       vocalRange,
       language,
       onlyFavorites,
-      showExternal,
       selectedSongbookId,
       userData,
       languageCounts,

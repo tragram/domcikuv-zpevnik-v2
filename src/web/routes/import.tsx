@@ -10,6 +10,7 @@ import { Button } from "~/components/ui/button";
 import { ApiException, makeApiRequest } from "~/services/api-service";
 import { getIsOnline } from "~/hooks/use-is-online";
 import { useQueryStore } from "~/features/SongList/searchStore";
+import { songQueryKeys } from "~/services/song-query-keys";
 
 class ImportError extends Error {
   songId?: string;
@@ -46,10 +47,10 @@ export const Route = createFileRoute("/import")({
           }),
         "Failed to import song",
       );
-      // The songs cache is persisted with an infinite maxAge, so without this
-      // invalidation the imported song wouldn't show up in the list until an
-      // unrelated cache bust.
-      await context.queryClient.invalidateQueries({ queryKey: ["songs"] });
+      await Promise.all([
+        context.queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog }),
+        context.queryClient.invalidateQueries({ queryKey: songQueryKeys.favorites }),
+      ]);
 
       throw redirect({
         to: "/song/$songId",

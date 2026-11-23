@@ -37,11 +37,13 @@ const browseSongs = memoizeOne((
   userData: UserData,
   filters: AppliedFilters,
   sort: SortSettings,
+  scopedToSongbook: boolean,
 ) => sortSongs(
   applyFilters(songs, filters, {
     userData,
     availableSongbooks: songDB.songbooks,
     languageCounts: songDB.languages,
+    scopedToSongbook,
   }),
   sort.field,
   sort.order,
@@ -97,7 +99,7 @@ export function useDisplayedSongs(
     threshold: 0.4,
   }), [baseSongs]);
 
-  // Search bypasses the browse filters, including the hidden-song filter.
+  // Search includes published songs awaiting an official selection.
   const results = useMemo(() => {
     if (!query) return null;
     const matches = fuse.search(to_ascii(query).toLowerCase());
@@ -108,7 +110,7 @@ export function useDisplayedSongs(
   }, [fuse, query]);
 
   return {
-    songs: results?.songs ?? browseSongs(baseSongs, songDB, userData, filters, sort),
+    songs: results?.songs ?? browseSongs(baseSongs, songDB, userData, filters, sort, !!foreignOwner && !!ownerEntries),
     bestLocalScore: results?.bestLocalScore ?? Infinity,
     foreignSongbookOwner: foreignOwner,
   };

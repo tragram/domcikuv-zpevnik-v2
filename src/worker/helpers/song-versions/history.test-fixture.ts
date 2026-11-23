@@ -10,7 +10,7 @@ CREATE TABLE user (
 CREATE TABLE song (
  id TEXT PRIMARY KEY NOT NULL, current_version_id TEXT REFERENCES song_version(id),
  current_illustration_id TEXT, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL,
- hidden INTEGER DEFAULT 0 NOT NULL, deleted INTEGER DEFAULT 0 NOT NULL
+ deleted INTEGER DEFAULT 0 NOT NULL
 );
 CREATE TABLE song_import (
  id TEXT PRIMARY KEY NOT NULL, title TEXT NOT NULL, artist TEXT NOT NULL,
@@ -29,5 +29,13 @@ CREATE TABLE favorites (
  id INTEGER PRIMARY KEY NOT NULL, user_id TEXT NOT NULL REFERENCES user(id),
  song_id TEXT NOT NULL REFERENCES song(id), added_at INTEGER NOT NULL,
  pinned_version_id TEXT REFERENCES song_version(id), key_index INTEGER, capo INTEGER
+);
+`;
+
+export const songIllustrationFixture = `
+CREATE TABLE song_illustration (
+ id TEXT PRIMARY KEY NOT NULL, song_id TEXT NOT NULL REFERENCES song(id), prompt_id TEXT NOT NULL,
+ image_model TEXT NOT NULL, image_url TEXT NOT NULL, thumbnail_url TEXT NOT NULL,
+ created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, deleted INTEGER DEFAULT 0 NOT NULL
 );
 `;

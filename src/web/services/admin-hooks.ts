@@ -446,10 +446,14 @@ export const useGenerateIllustration = (adminApi: AdminApi) => {
 export const useApproveVersion = (adminApi: AdminApi) => {
   const cache = useQueryClient();
   return useMutation({
-    mutationFn: ({ songId, versionId, expectedRevision, official, force, expectedOfficialId, expectedTargetRevision, makeOfficial, archivePrevious }: VersionMutationInput & {
-      official?: boolean; force?: boolean; expectedOfficialId?: string | null; expectedTargetRevision?: number; makeOfficial?: boolean; archivePrevious?: boolean;
+    mutationFn: async ({ songId, versionId, expectedRevision, official, clearOfficial, force, expectedOfficialId, expectedTargetRevision, makeOfficial, archivePrevious }: VersionMutationInput & {
+      official?: boolean; clearOfficial?: boolean; force?: boolean; expectedOfficialId?: string | null; expectedTargetRevision?: number; makeOfficial?: boolean; archivePrevious?: boolean;
     }) => {
       const route = adminApi.songs[":songId"].versions[":versionId"];
+      if (clearOfficial) {
+        await makeApiRequest(() => route.official.$delete({ param: { songId, versionId }, json: { expectedRevision } }));
+        return;
+      }
       return official
         ? makeApiRequest(() => route.official.$post({ param: { songId, versionId }, json: { expectedRevision } }))
         : makeApiRequest(() => route.approve.$post({ param: { songId, versionId }, json: { expectedRevision, force, expectedOfficialId, expectedTargetRevision, makeOfficial, archivePrevious } }));

@@ -1,4 +1,4 @@
-import { and, eq, ne, sql, desc, asc } from "drizzle-orm";
+import { and, eq, ne, sql, desc, asc, exists, gt, isNull, notExists } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import {
   song,
@@ -11,7 +11,7 @@ import {
 import type { SongRevisionContent, SongVersionDB } from "src/lib/db/schema";
 import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import type { AppDatabase } from "../../api/utils";
-import { isCorrectionSubmission, publicationOptions, submissionReview, versionEditPolicy } from "src/lib/song-version-policy";
+import { isCorrectionSubmission, publicationOptions, requiresImportRevision, submissionReview, versionEditPolicy } from "src/lib/song-version-policy";
 import {
   conflict,
   contentOf,
@@ -24,6 +24,29 @@ import {
   versionActor,
   withVersionConflict,
 } from "./revisions";
+
+function selectOnlyPublishedVersion(db: AppDatabase, songId: string, versionId: string, expectedRevision?: number) {
+  const publishedVersions = and(
+    eq(songVersion.songId, songId),
+    eq(songVersion.status, "published"),
+    isNull(songVersion.mergedIntoVersionId),
+  );
+  const otherPublishedVersion = db.select({ id: songVersion.id }).from(songVersion).where(and(
+    publishedVersions,
+    ne(songVersion.id, versionId),
+  ));
+  const reviewedVersion = db.select({ id: songVersion.id }).from(songVersion).where(and(
+    publishedVersions,
+    eq(songVersion.id, versionId),
+    gt(songVersion.revision, 1),
+    expectedRevision === undefined ? undefined : eq(songVersion.revision, expectedRevision),
+  ));
+  return db.update(song).set({ currentVersionId: versionId }).where(and(
+    officialCondition(songId, null),
+    exists(reviewedVersion),
+    notExists(otherPublishedVersion),
+  ));
+}
 
 export async function saveSongVersion(
   db: AppDatabase,
@@ -131,8 +154,13 @@ export async function saveSongVersion(
       message:
         "Select a replacement official version before archiving the current one.",
     });
-  if (base && !isDraft && mode === "correction" && sameContent(base, content) && (attribution !== false || owns))
+  const selectReviewedImport = !importId && !!base?.importId && base.status === "published" &&
+    !parent.currentVersionId && mode === "correction" && canManage && trusted;
+  if (base && !isDraft && mode === "correction" && sameContent(base, content) && (attribution !== false || owns)) {
+    if (selectReviewedImport && !requiresImportRevision(true, base.revision))
+      await selectOnlyPublishedVersion(db, songId, base.id, base.revision);
     return base;
+  }
 
   if (base && (isDraft || (mode === "correction" && canManage && trusted))) {
     const intent = isDraft
@@ -202,6 +230,7 @@ export async function saveSongVersion(
             .update(song)
             .set({ updatedAt: new Date() })
             .where(eq(song.id, songId)),
+          ...(selectReviewedImport ? [selectOnlyPublishedVersion(db, songId, base.id)] : []),
         ]),
       );
     if (isDraft && options?.publish)
@@ -214,6 +243,9 @@ export async function saveSongVersion(
   const pendingCorrection = !!base && mode === "correction";
   const published = trusted && !pendingCorrection;
   const id = crypto.randomUUID();
+  const currentVersionId = published && !importId && (makeOfficial || !parent.currentVersionId)
+    ? id
+    : parent.currentVersionId;
   // A stale source or official pointer aborts creation, rather than leaving a
   // half-published replacement. IDs are NOT NULL in the existing SQLite schema.
   const sourceGuard = base
@@ -246,10 +278,7 @@ export async function saveSongVersion(
           .update(song)
           .set({
             updatedAt: now,
-            currentVersionId:
-              makeOfficial || !parent.currentVersionId
-                ? id
-                : parent.currentVersionId,
+            currentVersionId,
           })
           .where(eq(song.id, songId)),
       ]);
@@ -274,10 +303,7 @@ export async function saveSongVersion(
           .update(song)
           .set({
             updatedAt: now,
-            currentVersionId:
-              published && (makeOfficial || !parent.currentVersionId)
-                ? id
-                : parent.currentVersionId,
+            currentVersionId,
           })
           .where(eq(song.id, songId)),
       ]);
@@ -462,14 +488,14 @@ export async function approveVersion(
       throw new HTTPException(400, {
         message: "The target is no longer available.",
       });
-    // A correction changes only its target's content. Selecting a different
-    // official version does not change what this proposal is correcting.
+    // A correction always applies to the recorded target, even if the official selection has changed.
     const stale = target.revision !== review.baseRevision;
     if (stale && (!actor.isAdmin || !options.force)) throw conflict();
     if (options.force && options.expectedTargetRevision !== target.revision)
       throw conflict();
     const content = contentOf(proposal);
     const firstCuration = await isFirstImportCuration(db, target, content);
+    const selectReviewedImport = target.status === "published" && !!target.importId && !parent.currentVersionId;
     const curator = firstCuration
       ? (await firstSheetChange(db, proposal.id, target))?.userId ?? proposal.userId
       : undefined;
@@ -510,6 +536,7 @@ export async function approveVersion(
             ),
           ),
         db.update(song).set({ updatedAt: now }).where(eq(song.id, songId)),
+        ...(selectReviewedImport ? [selectOnlyPublishedVersion(db, songId, target.id)] : []),
       ]),
     );
     return loadVersion(db, songId, target.id);
@@ -548,14 +575,16 @@ export async function approveVersion(
     userId,
     parent.currentVersionId,
   );
+  const selectReviewedImport = !makeOfficial && !!proposal.importId && !parent.currentVersionId;
+  const selectImport = selectReviewedImport ? [selectOnlyPublishedVersion(db, songId, proposal.id)] : [];
   const select = db
     .update(song)
     .set({
       updatedAt: now,
       currentVersionId:
-        makeOfficial || !parent.currentVersionId
+        makeOfficial || (!proposal.importId && !parent.currentVersionId)
           ? proposal.id
-          : parent.currentVersionId,
+          : undefined,
     })
     .where(eq(song.id, songId));
   await withVersionConflict(async () => {
@@ -567,6 +596,7 @@ export async function approveVersion(
           .where(eq(songSubmission.versionId, proposal.id)),
         reviseVersion(db, source, { status: "archived" }, userId),
         select,
+        ...selectImport,
       ]);
     else
       await db.batch([
@@ -575,6 +605,7 @@ export async function approveVersion(
           .delete(songSubmission)
           .where(eq(songSubmission.versionId, proposal.id)),
         select,
+        ...selectImport,
       ]);
   });
   return loadVersion(db, songId, proposal.id);
@@ -604,6 +635,8 @@ export async function setOfficialVersion(
       message: "Select a published version of an available song.",
     });
   if (version.revision !== expectedRevision) throw conflict();
+  if (requiresImportRevision(!!version.importId, version.revision))
+    throw new HTTPException(400, { message: "Save a revision of this import before making it official." });
   if (parent.currentVersionId === versionId) return version;
   // Official selection belongs to the song, not to the sheet's revision
   // history. A single conditional write guards both the pointer and the sheet.
@@ -611,13 +644,30 @@ export async function setOfficialVersion(
     .set({ currentVersionId: versionId, updatedAt: new Date() })
     .where(and(
       officialCondition(songId, parent.currentVersionId),
-      sql`exists (select 1 from ${songVersion} where ${songVersion.id} = ${versionId}
-        and ${songVersion.songId} = ${songId} and ${songVersion.revision} = ${expectedRevision}
-        and ${songVersion.status} = 'published' and ${songVersion.mergedIntoVersionId} is null)`,
+      exists(db.select({ id: songVersion.id }).from(songVersion).where(and(
+        eq(songVersion.id, versionId), eq(songVersion.songId, songId), eq(songVersion.revision, expectedRevision),
+        eq(songVersion.status, "published"), isNull(songVersion.mergedIntoVersionId),
+      ))),
     ))
     .returning({ id: song.id }).get();
   if (!updated) throw conflict();
   return version;
+}
+
+export async function clearOfficialVersion(
+  db: AppDatabase, songId: string, versionId: string, userId: string, expectedRevision: number,
+) {
+  const actor = await versionActor(db, userId);
+  if (!actor.isAdmin) throw new HTTPException(403, { message: "Admin required." });
+  const reviewedVersion = db.select({ id: songVersion.id }).from(songVersion).where(and(
+    eq(songVersion.id, versionId),
+    eq(songVersion.songId, songId),
+    eq(songVersion.revision, expectedRevision),
+  ));
+  const updated = await db.update(song).set({ currentVersionId: null, updatedAt: new Date() })
+    .where(and(officialCondition(songId, versionId), exists(reviewedVersion))).returning().get();
+  if (!updated) throw conflict();
+  return updated;
 }
 
 export async function changeVersionStatus(

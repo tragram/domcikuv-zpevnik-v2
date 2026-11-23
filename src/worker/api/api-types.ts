@@ -95,7 +95,7 @@ export type SongDataApi = {
   currentIllustration?: CurrentIllustrationApi;
   updateStatus?: "added" | "modified" | "deleted";
   // Hidden from the browse list but still reachable via search / direct link.
-  hidden?: boolean;
+  officialVersionId?: string | null;
   // Attribution only; isOfficial determines the shown version's role.
   versionAuthor?: { id: string; name: string };
 };

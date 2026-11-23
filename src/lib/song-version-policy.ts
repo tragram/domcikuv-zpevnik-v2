@@ -66,3 +66,6 @@ export function submissionReview(version: {
 export function isCorrectionSubmission(review: SubmissionReview | null): review is CorrectionSubmission {
   return review?.kind === "correction";
 }
+export function requiresImportRevision(imported: boolean, revision: number | undefined) {
+  return imported && (revision ?? 1) <= 1;
+}

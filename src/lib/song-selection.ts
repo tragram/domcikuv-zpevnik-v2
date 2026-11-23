@@ -1,7 +1,7 @@
 import type { SongbookEntryApi, SongDataApi } from "src/worker/api/api-types";
 
 export type VersionSelection = {
-  source: "official" | "saved" | "songbook" | "link";
+  source: "official" | "latest" | "saved" | "songbook" | "link";
   ownerName?: string;
   unavailable?: boolean;
 };
@@ -10,7 +10,7 @@ export type VersionSelection = {
 export function songbookSheet(official: SongDataApi | undefined, entry?: SongbookEntryApi) {
   const sheet = entry?.song ?? official;
   return sheet && sheet !== official && official?.publishedVersionIds
-    ? { ...sheet, publishedVersionIds: official.publishedVersionIds } : sheet;
+    ? { ...sheet, publishedVersionIds: official.publishedVersionIds, officialVersionId: official.officialVersionId } : sheet;
 }
 
 /** Explicit links override a book; a selected book never inherits your own pin. */
@@ -22,7 +22,7 @@ export function selectSongVersion({ official, ownEntry, songbook, versionId }: {
 }) {
   const entry = songbook ? songbook.entry : ownEntry;
   const source: VersionSelection["source"] = versionId ? "link"
-    : songbook ? "songbook" : ownEntry?.pinnedVersionId ? "saved" : "official";
+    : songbook ? "songbook" : ownEntry?.pinnedVersionId ? "saved" : official?.isOfficial === false ? "latest" : "official";
   return {
     // On exact links this is only a cache candidate, never a fallback.
     sheet: versionId ? songbookSheet(official, ownEntry) : songbookSheet(official, entry),

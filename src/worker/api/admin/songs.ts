@@ -1,5 +1,5 @@
 import { versionNumbers } from "../../helpers/song-versions/numbering";
-import { and, desc, eq, getTableColumns, isNotNull } from "drizzle-orm";
+import { desc, eq, getTableColumns } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import {
   findSongWithAllData,
@@ -10,6 +10,7 @@ import {
   approveVersion,
   saveSongVersion,
   changeVersionStatus,
+  clearOfficialVersion,
   mergeVersion,
   reclassifyVersion,
   setOfficialVersion,
@@ -90,7 +91,6 @@ export const songRoutes = buildApp()
         importUrl: songImport.url,
       })
       .from(song)
-      .where(and(isNotNull(song.currentVersionId), eq(song.hidden, false)))
       .innerJoin(songVersion, eq(song.currentVersionId, songVersion.id))
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(song.updatedAt));
@@ -227,6 +227,14 @@ export const songRoutes = buildApp()
           c.req.valid("json").expectedRevision,
         ),
       );
+    },
+  )
+  .delete(
+    "/:songId/versions/:versionId/official",
+    zValidatorJSend("json", versionStateSchema),
+    async (c) => {
+      const { songId, versionId } = c.req.param();
+      return successJSend(c, await clearOfficialVersion(c.var.db, songId, versionId, c.var.USER!.id, c.req.valid("json").expectedRevision));
     },
   )
   .post(

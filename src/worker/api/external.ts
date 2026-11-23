@@ -12,11 +12,9 @@ import { addIllustrationFromURL } from "../helpers/illustration-helpers";
 import {
   createImportSong,
   createSong,
-  createSongVersion,
   getDeletedSongIds,
   retrieveSingleSong,
 } from "../helpers/song-helpers";
-import { SongDataApi } from "./api-types";
 import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import {
   errorJSend,
@@ -38,8 +36,7 @@ export const externalRoutes = buildApp()
 
     const results = await searchAllExternalServices(query, c.env);
     // Hide locally-deleted songs from external results so a deletion isn't
-    // trivially undone by re-importing the same song. (Hidden songs are still
-    // shown — only deleted ones are suppressed.)
+    // trivially undone by re-importing the same song.
     const deletedIds = await getDeletedSongIds(c.var.db);
     const visible = results.filter(
       (r) => !deletedIds.has(songBaseId(r.title, r.artist)),
@@ -58,17 +55,7 @@ export const externalRoutes = buildApp()
       if (!user)
         return failJSend(c, "Authentication required", 401, "AUTH_REQUIRED");
 
-      // Check if the song (by artist/title ID) already exists in the internal DB (allow multiple external versions)
       const newSongId = songBaseId(title, artist);
-
-      let existingSong: SongDataApi | null = null;
-
-      try {
-        existingSong = await retrieveSingleSong(db, newSongId);
-
-      } catch {
-        // Song doesn't exist yet, proceed
-      }
 
       const response = await fetch(url);
       if (!response.ok) return errorJSend(c, "Source fetch failed", 502);
@@ -147,12 +134,10 @@ export const externalRoutes = buildApp()
         youtubeId: null,
       };
 
-      const importedVersion = !existingSong
-        ? (await createSong(db, submission, user.id, importedSong.id)).newVersion
-        : await createSongVersion(db, submission, existingSong.id, user.id, importedSong.id);
+      const { newVersion: importedVersion } = await createSong(db, submission, user.id, importedSong.id);
       // Imports follow the same review policy. Resolve and pin the actual
       // imported sheet even when it is pending or a non-official alternative.
-      existingSong = await retrieveSingleSong(db, newSongId, importedVersion.id);
+      const existingSong = await retrieveSingleSong(db, newSongId, importedVersion.id);
       if (!existingSong) throw Error("Failed to create song!");
       await setSongbookEntry(db, user.id, existingSong.id, { pinnedVersionId: importedVersion.id });
 

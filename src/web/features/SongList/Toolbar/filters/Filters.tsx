@@ -1,4 +1,4 @@
-import { Filter, Globe, Heart, X } from "lucide-react";
+import { Filter, Heart, X } from "lucide-react";
 import { JSX } from "react";
 import { Button } from "~/components/ui/button";
 import {
@@ -40,7 +40,6 @@ export interface FilterSettings {
   language: SongLanguage;
   vocalRange: VocalRangeType;
   onlyFavorites: boolean;
-  showExternal: boolean;
 }
 
 // Common filter buttons used by both desktop and mobile views
@@ -61,12 +60,10 @@ const FilterControls = ({
     language,
     selectedSongbookId,
     vocalRange,
-    showExternal,
     onlyFavorites,
     setLanguage,
     toggleSongbook,
     setVocalRange,
-    toggleShowExternal,
     toggleFavorites,
     resetFilters,
   } = useFilterSettingsStore();
@@ -77,8 +74,7 @@ const FilterControls = ({
         vocalRange[0] === 0 &&
         vocalRange[1] === maxRange)) &&
     !selectedSongbookId &&
-    !onlyFavorites &&
-    !showExternal;
+    !onlyFavorites;
   return {
     controls: (
       <>
@@ -112,25 +108,6 @@ const FilterControls = ({
             </TooltipTrigger>
             <TooltipContent>
               <p>Favorites only</p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-
-        {userData && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="circular"
-                isActive={showExternal}
-                className="rounded-none font-bold shadow-none outline-0"
-                onClick={toggleShowExternal}
-              >
-                <Globe />
-                {!iconOnly && "Show external"}
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Show external songs</p>
             </TooltipContent>
           </Tooltip>
         )}
@@ -172,15 +149,6 @@ const FilterControls = ({
             checked={onlyFavorites}
           >
             Show only favorites
-          </DropdownMenuCheckboxItem>
-        )}
-        {userData && (
-          <DropdownMenuCheckboxItem
-            onClick={toggleShowExternal}
-            onSelect={(e) => e.preventDefault()}
-            checked={showExternal}
-          >
-            Show external songs
           </DropdownMenuCheckboxItem>
         )}
         {maxRange &&

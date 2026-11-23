@@ -1,4 +1,4 @@
-import { CheckCircle2, Clock, Archive, XCircle, Trash2 } from "lucide-react";
+import { CheckCircle2, Clock, Archive, Star, XCircle, Trash2 } from "lucide-react";
 import { Badge } from "./ui/badge";
 
 const SongVersionStatusBadge = ({ status }: { status: string }) => {
@@ -16,6 +16,12 @@ const SongVersionStatusBadge = ({ status }: { status: string }) => {
           className="bg-warning/10 text-warning hover:bg-warning/10 border-warning/30"
         >
           <Clock className="w-3 h-3 mr-1" /> Pending
+        </Badge>
+      );
+    case "unofficial":
+      return (
+        <Badge variant="outline" className="text-muted-foreground">
+          <Star className="w-3 h-3 mr-1" /> Unofficial
         </Badge>
       );
     case "archived":

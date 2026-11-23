@@ -16,7 +16,6 @@ interface FilterSettingsState extends FilterSettings {
   setSelectedSongbook: (songbookId: string | null) => void;
   setVocalRange: (range: VocalRangeType) => void;
   toggleFavorites: () => void;
-  toggleShowExternal: () => void;
   resetFilters: () => void;
 }
 
@@ -25,7 +24,6 @@ const FILTER_DEFAULTS: FilterSettings & { selectedSongbookId: string | null } = 
   vocalRange: "all",
   selectedSongbookId: null,
   onlyFavorites: false,
-  showExternal: false,
 };
 
 export const useFilterSettingsStore = create<FilterSettingsState>()(
@@ -45,16 +43,14 @@ export const useFilterSettingsStore = create<FilterSettingsState>()(
       setVocalRange: (range) => set({ vocalRange: range }),
       toggleFavorites: () =>
         set((state) => ({ onlyFavorites: !state.onlyFavorites })),
-      toggleShowExternal: () =>
-        set((state) => ({ showExternal: !state.showExternal })),
       resetFilters: () => set(FILTER_DEFAULTS),
     }),
     {
       name: "filter-settings-store",
-      version: 3,
-      // v2 replaced multi-select songbooks; v3 removes the capo filter.
+      version: 4,
+      // v2 replaced multi-select songbooks; v3 removes capo filtering and v4 removes the imported-song toggle.
       migrate: (persistedState, version) => {
-        const { capo: _capo, hideCapo: _hideCapo, ...rest } =
+        const { capo: _capo, hideCapo: _hideCapo, showExternal: _showExternal, ...rest } =
           persistedState as Record<string, unknown>;
         let state = rest;
         if (version <= 1) {

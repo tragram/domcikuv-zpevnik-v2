@@ -1,5 +1,6 @@
 import {
   AnySQLiteColumn,
+  index,
   integer,
   sqliteTable,
   text,
@@ -26,7 +27,6 @@ export const song = sqliteTable("song", {
   updatedAt: integer("updated_at", { mode: "timestamp" })
     .$defaultFn(() => new Date())
     .notNull(),
-  hidden: integer("hidden", { mode: "boolean" }).default(false).notNull(),
   deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
 });
 
@@ -91,7 +91,7 @@ export const songVersion = sqliteTable("song_version", {
     .notNull(),
 
   chordpro: text("chordpro").notNull(),
-});
+}, (table) => [index("song_version_song_status_created").on(table.songId, table.status, table.createdAt, table.id)]);
 
 export const songSubmission = sqliteTable("song_submission", {
   versionId: text("version_id")

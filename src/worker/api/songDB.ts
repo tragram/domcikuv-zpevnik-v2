@@ -13,6 +13,7 @@ import { retrieveVersionSummaries } from "../helpers/song-versions/queries";
 import { IllustrationPromptApi, SongDataApi } from "./api-types";
 
 const initialDBVersion = "v0";
+const catalogVersion = (version: string | null) => `${version ?? initialDBVersion}:official-revision`;
 
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),
@@ -50,15 +51,13 @@ export type BasicSongIllustrationResponseData = BasicSongIllustrationDB[];
 export const songDBRoutes = buildApp()
   .route("/external", externalRoutes)
   .get("/", async (c) => {
-    // includeHidden: hidden songs are shipped to clients so they stay reachable
-    // via search; the browse list filters them out client-side. Deleted songs
-    // are still excluded entirely.
-    const songs = await retrieveSongs(c.var.db, undefined, true, false);
-    const songDBVersion = (await c.env.KV.get("songDB-version")) ?? initialDBVersion;
+    const lastUpdateAt = new Date().toISOString();
+    const songs = await retrieveSongs(c.var.db);
+    const songDBVersion = catalogVersion(await c.env.KV.get("songDB-version"));
     return successJSend(c, {
       songs,
       songDBVersion,
-      lastUpdateAt: new Date().toISOString(),
+      lastUpdateAt,
       isIncremental: false,
     } as SongDBResponseData);
   })
@@ -66,24 +65,21 @@ export const songDBRoutes = buildApp()
     "/incremental",
     zValidatorJSend("query", incrementalUpdateSchema),
     async (c) => {
+      const nextUpdateAt = new Date().toISOString();
       const { lastUpdateAt, songDBVersion } = c.req.valid("query");
-      const currentDBVersion = (await c.env.KV.get("songDB-version")) ?? initialDBVersion;
+      const currentDBVersion = catalogVersion(await c.env.KV.get("songDB-version"));
       const isIncremental = songDBVersion === currentDBVersion;
 
       const songs = await retrieveSongs(
         c.var.db,
         isIncremental ? lastUpdateAt : undefined,
-        // Always include hidden songs (they live in the client cache, just
-        // filtered from browse). Include deleted only for incremental diffs so
-        // their removal propagates; a full reset omits them entirely.
-        true,
         isIncremental,
       );
 
       return successJSend(c, {
         songs,
         songDBVersion: currentDBVersion,
-        lastUpdateAt: new Date().toISOString(),
+        lastUpdateAt: nextUpdateAt,
         isIncremental,
       } as SongDBResponseData);
     },

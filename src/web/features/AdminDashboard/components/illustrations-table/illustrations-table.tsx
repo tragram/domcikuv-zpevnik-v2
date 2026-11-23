@@ -53,11 +53,11 @@ type ShowOnly = "external" | "deleted";
 
 const PAGE_SIZE = 20;
 
-// "Visible" = not deleted and not hidden. External songs are visible but are
+// External songs are
 // hidden from the default working view (they rarely need illustrations); the
 // External card reveals them, so coverage counts ignore them by default too.
 const isVisibleSong = (g: SongWithIllustrationsAndPrompts) =>
-  !g.song.deleted && !g.song.hidden;
+  !g.song.deleted;
 
 type SelectOption = { value: string; label: string };
 
@@ -239,7 +239,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [coverageFilter, setCoverageFilter] = useState<CoverageFilter>("all");
   // Visibility cards are show/hide toggles (single click) that also support
   // "show only" via double click (`isolate`). External and deleted are hidden
-  // by default; hidden songs are always excluded (no card reveals them).
+  // by default.
   const [showExternal, setShowExternal] = useLocalStorageState<boolean>(
     "admin/illustration-table/show-external",
     { defaultValue: false },
@@ -301,7 +301,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     }
 
     // Double-click "show only" isolates a category; otherwise the visibility
-    // toggles compose. Hidden songs are always excluded (no card reveals them).
+    // toggles compose.
     if (isolate === "deleted") {
       groups = groups.filter(([, group]) => group.song.deleted);
     } else if (isolate === "external") {
@@ -310,7 +310,6 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       );
     } else {
       groups = groups.filter(([, group]) => {
-        if (group.song.hidden) return false;
         if (!showDeleted && group.song.deleted) return false;
         if (!showExternal && group.song.externalSource) return false;
         return true;

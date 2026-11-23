@@ -77,25 +77,12 @@ export const filterSongbook = (
   return songs.filter((song) => songIds.has(song.id));
 };
 
-export const filterExternal = (
-  songs: SongData[],
-  loggedIn: boolean,
-  showExternal: boolean,
-): SongData[] => {
-  if (!loggedIn || !showExternal) {
-    return songs.filter((song) => !song.externalSource);
-  }
-  return songs;
-};
-
-/**
- * Hidden songs are excluded from the browse list, except the current user's own
- * favorites (so self-curated hidden songs stay in their songbook). Being an admin
- * grants no special pass — broad hidden-song management is the dashboard's job.
- * Search bypasses the whole filter pipeline, so hidden songs remain findable there.
- */
-export const filterHidden = (songs: SongData[]): SongData[] =>
-  songs.filter((song) => !song.hidden || song.isFavorite);
+export const filterBrowseSongs = (songs: SongData[], userData: UserData): SongData[] =>
+  songs.filter((song) => {
+    const hasOfficial = song.officialVersionId === undefined ? song.isOfficial !== false : !!song.officialVersionId;
+    const pin = userData?.songbookEntries?.get(song.id)?.pinnedVersionId;
+    return hasOfficial || (!!pin && pin === song.versionId);
+  });
 
 // --- Composed pipeline ----------------------------------------------------
 
@@ -106,6 +93,7 @@ export type AppliedFilters = FilterSettings & {
 export interface FilterContext {
   userData: UserData;
   availableSongbooks: Songbook[];
+  scopedToSongbook?: boolean;
   /** Needed only to resolve the "other" (rare) language bucket. */
   languageCounts?: LanguageCount;
 }
@@ -120,13 +108,12 @@ export const applyFilters = (
   ctx: FilterContext,
 ): SongData[] => {
   const loggedIn = !!ctx.userData;
-  let result = filterHidden(songs);
+  let result = ctx.scopedToSongbook ? songs : filterBrowseSongs(songs, ctx.userData);
   result = filterVocalRange(result, filters.vocalRange);
   if (ctx.languageCounts) {
     result = filterLanguage(result, filters.language, ctx.languageCounts);
   }
   result = filterFavorites(result, loggedIn, filters.onlyFavorites);
-  result = filterExternal(result, loggedIn, filters.showExternal);
   result = filterSongbook(result, ctx.availableSongbooks, filters.selectedSongbookId);
   return result;
 };

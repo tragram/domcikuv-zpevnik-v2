@@ -14,7 +14,6 @@ import {
   Columns3,
   Edit,
   ExternalLink,
-  EyeOff,
   FileX,
   Globe,
   Library,
@@ -27,6 +26,7 @@ import {
   Sparkles,
   Trash2,
   User,
+  UserRoundPen,
   GitCompare,
   Youtube,
 } from "lucide-react";
@@ -78,7 +78,6 @@ import {
   useRestoreSong,
   useRestoreVersion,
   useSongsAdmin,
-  useUpdateSong,
   useUpdateVersion,
   useVersionsAdmin,
 } from "../../../services/admin-hooks";
@@ -102,7 +101,7 @@ import { VersionReclassification } from "./version-reclassification";
 import { VersionRename } from "./version-rename";
 import { VersionAuthor } from "./version-author";
 import { getWorkingVersion, getCorrectionParent } from "./version-selection";
-import { isCorrectionSubmission, publicationOptions, submissionReview } from "src/lib/song-version-policy";
+import { isCorrectionSubmission, publicationOptions, requiresImportRevision, submissionReview } from "src/lib/song-version-policy";
 
 // --- TYPES & CONSTANTS ---
 
@@ -116,7 +115,6 @@ const HIDEABLE_COLUMNS = [
   { id: "submittedBy", label: "Author" },
   { id: "lastModified", label: "Last modified" },
   { id: "maxRowWidth", label: "Max width" },
-  { id: "visible", label: "Visible" },
 ] as const;
 
 type HideableColumn = (typeof HIDEABLE_COLUMNS)[number]["id"];
@@ -217,7 +215,7 @@ const STATUS_CARDS: {
 ];
 
 /** Independent visibility attributes, isolated via their own StatsBar cards. */
-type AttrIsolate = "external" | "hidden" | "deleted";
+type AttrIsolate = "external" | "unofficial" | "deleted";
 
 const ATTR_CARDS: {
   value: AttrIsolate;
@@ -234,10 +232,10 @@ const ATTR_CARDS: {
     className: "text-info",
   },
   {
-    value: "hidden",
-    label: "Hidden",
-    stat: "hidden",
-    icon: EyeOff,
+    value: "unofficial",
+    label: "Unofficial",
+    stat: "unofficial",
+    icon: Star,
     className: "text-muted-foreground",
   },
   {
@@ -258,7 +256,7 @@ type SongStats = {
   noYoutube: number;
   empty: number;
   external: number;
-  hidden: number;
+  unofficial: number;
   deleted: number;
 };
 
@@ -384,7 +382,7 @@ interface SongVersionItemProps {
   onReject: () => void;
   onRestore: () => void;
   onDelete: () => void;
-  onSetCurrent: () => void;
+  onToggleOfficial: () => void;
   onDiff: (target: SongVersionDB, label: string) => void;
   isApprovePending: boolean;
 }
@@ -401,7 +399,7 @@ function SongVersionItem({
   onReject,
   onRestore,
   onDelete,
-  onSetCurrent,
+  onToggleOfficial,
   onDiff,
   isApprovePending,
 }: SongVersionItemProps) {
@@ -412,6 +410,9 @@ function SongVersionItem({
   const isCorrection = isCorrectionSubmission(review);
   const [archiving, setArchiving] = useState(false);
   const [mergeOpen, setMergeOpen] = useState(false);
+  const [authorOpen, setAuthorOpen] = useState(false);
+  const canChangeAuthor = !song.deleted && version.status !== "deleted" && !version.mergedIntoVersionId;
+  const needsRevision = !isCurrentActive && requiresImportRevision(!!version.importId, version.revision);
   const canMerge = !isCorrection && !!getCorrectionParent(version, versions);
   const compareTargets = [
     ...(parentVersion && parentVersion.id !== version.id ? [{ version: parentVersion, label: "Source version" }] : []),
@@ -427,8 +428,9 @@ function SongVersionItem({
   const [overrideFor, setOverrideFor] = useState<string | null>(null);
   const override = overrideFor === reviewState;
   const [publication, setPublication] = useState<{ reviewState: string; makeOfficial: boolean; archivePrevious: boolean } | null>(null);
+  const automaticallyOfficial = !song.currentVersionId && !version.importId;
   const { makeOfficial, archivePrevious } = publicationOptions({
-    makeOfficial: !song.currentVersionId || (publication?.reviewState === reviewState ? publication.makeOfficial : review?.publication.makeOfficial),
+    makeOfficial: automaticallyOfficial || (publication?.reviewState === reviewState ? publication.makeOfficial : review?.publication.makeOfficial),
     archivePrevious: publication?.reviewState === reviewState ? publication.archivePrevious : review?.publication.archivePrevious,
   }, { imported: importedSource, official: parentVersion?.id === song.currentVersionId });
   const canArchivePrevious = !!parentVersion && (parentVersion.id !== song.currentVersionId || makeOfficial);
@@ -447,17 +449,16 @@ function SongVersionItem({
     >
       <div className="flex min-w-0 grow basis-80 items-center gap-4">
         <button
-          onClick={onSetCurrent}
-          disabled={isCurrentActive || isApprovePending || version.status !== "published"}
-          title={
+          type="button"
+          onClick={onToggleOfficial}
+          disabled={!online || song.deleted || isApprovePending || version.status !== "published" || needsRevision}
+          aria-label="Official version"
+          aria-pressed={isCurrentActive}
+          title={isCurrentActive ? "Clear official selection" : needsRevision ? "Save a revision before making this import official" : "Make official"}
+          className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors enabled:cursor-pointer ${
             isCurrentActive
-              ? "Current Active Version"
-              : "Set as Current Version"
-          }
-          className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors ${
-            isCurrentActive
-              ? "bg-primary/20 text-primary cursor-default"
-              : "bg-muted text-muted-foreground/30 hover:bg-primary/10 hover:text-primary cursor-pointer"
+              ? "bg-primary/20 text-primary enabled:hover:bg-primary/30"
+              : "bg-muted text-muted-foreground/30 enabled:hover:bg-primary/10 enabled:hover:text-primary"
           }`}
         >
           <Star
@@ -513,9 +514,13 @@ function SongVersionItem({
         {(version.makeOfficialOnPublish || version.archivePreviousOnPublish) && <Description>Author requested: {[version.makeOfficialOnPublish && "make official", version.archivePreviousOnPublish && "archive previous version"].filter(Boolean).join(" · ")}.</Description>}
         <PublicationOption
           label="Make official"
-          description={!song.currentVersionId ? "The first published version becomes official automatically." : "Use this version by default for this song."}
+          description={automaticallyOfficial
+            ? "The first published curated version becomes official automatically."
+            : version.importId && !song.currentVersionId
+              ? "Approval makes this import official if it is the only published version. You can also choose it explicitly."
+              : "Use this version by default for this song."}
           checked={makeOfficial}
-          disabled={!song.currentVersionId || (importedSource && parentVersion?.id === song.currentVersionId)}
+          disabled={automaticallyOfficial || (importedSource && parentVersion?.id === song.currentVersionId)}
           onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial: checked, archivePrevious: parentVersion?.id === song.currentVersionId && !checked ? false : archivePrevious })}
         />
         {parentVersion && <PublicationOption
@@ -532,9 +537,6 @@ function SongVersionItem({
         <label className="flex cursor-pointer items-start gap-3"><Checkbox className="mt-0.5" checked={override} onCheckedChange={(checked) => setOverrideFor(checked === true ? reviewState : null)} />I reviewed the current changes. Apply this suggestion anyway.</label>
       </div>}
       <div className="flex max-w-full flex-wrap items-center gap-2 [&>button]:h-8 [&>a]:h-8 [&>button]:min-w-8 [&>a]:min-w-8">
-        {!song.deleted && version.status !== "deleted" && !version.mergedIntoVersionId && (
-          <VersionAuthor adminApi={adminApi} version={version} online={online} />
-        )}
         {compareTargets.length > 0 && <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <VersionActionButton><GitCompare className="size-4" /> Compare with… <ChevronDown className="size-4" /></VersionActionButton>
@@ -570,16 +572,18 @@ function SongVersionItem({
             </Button>
           </>
         )}
-        {(canMerge || (version.status === "published" && !isCurrentActive) || (!version.mergedIntoVersionId && ["rejected", "deleted", "archived"].includes(version.status))) && <DropdownMenu>
+        {(canChangeAuthor || canMerge || (version.status === "published" && !isCurrentActive) || (!version.mergedIntoVersionId && ["rejected", "deleted", "archived"].includes(version.status))) && <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <VersionActionButton>Manage <ChevronDown className="size-4" /></VersionActionButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            {canChangeAuthor && <DropdownMenuItem disabled={!online} onSelect={() => setAuthorOpen(true)}><UserRoundPen className="size-4" /> Change author</DropdownMenuItem>}
             {canMerge && <DropdownMenuItem disabled={!online} onSelect={() => setMergeOpen(true)}><GitCompare className="size-4" /> Reclassify as correction…</DropdownMenuItem>}
             {version.status === "published" && !isCurrentActive && <DropdownMenuItem disabled={!online || archiving} onSelect={() => void archive()}><Archive className="size-4" /> Archive version</DropdownMenuItem>}
             {!version.mergedIntoVersionId && ["rejected", "deleted", "archived"].includes(version.status) && <DropdownMenuItem disabled={!online} onSelect={onRestore}><RotateCcw className="size-4" /> Restore version</DropdownMenuItem>}
           </DropdownMenuContent>
         </DropdownMenu>}
+        {authorOpen && canChangeAuthor && <VersionAuthor adminApi={adminApi} version={version} online={online} onClose={() => setAuthorOpen(false)} />}
         <Button variant="ghost" size="sm" className="size-8 p-0" disabled={version.status === "deleted"} aria-label="View version" onClick={() => window.open(`/song/${song.id}?version=${version.id}`, "_blank", "noopener,noreferrer")}>
           <ExternalLink className="size-4" />
         </Button>
@@ -606,7 +610,7 @@ interface VersionHistoryTimelineProps {
   onRejectVersion: (input: VersionMutationInput) => void;
   onRestoreVersion: (input: VersionMutationInput) => void;
   onDeleteVersion: (input: VersionMutationInput) => void;
-  onSetCurrentVersion: (input: VersionMutationInput) => void;
+  onSetCurrentVersion: (input: VersionMutationInput & { clearOfficial?: boolean }) => void;
   onDiff: (
     version: SongVersionDB,
     target: SongVersionDB,
@@ -675,9 +679,7 @@ function VersionHistoryTimeline({
               onReject={() => onRejectVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
               onRestore={() => onRestoreVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
               onDelete={() => onDeleteVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })}
-              onSetCurrent={() =>
-                !isCurrentActive && onSetCurrentVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision })
-              }
+              onToggleOfficial={() => onSetCurrentVersion({ songId: song.id, versionId: version.id, expectedRevision: version.revision, clearOfficial: isCurrentActive })}
               onDiff={(target, label) => onDiff(version, target, label)}
               isApprovePending={isApprovePending}
             />
@@ -693,7 +695,6 @@ function VersionHistoryTimeline({
 interface SongTableRowProps extends VersionHistoryTimelineProps {
   isExpanded: boolean;
   onToggleExpand: (id: string) => void;
-  onUpdateHidden: (songId: string, hidden: boolean) => void;
   onRestoreSong: (songId: string) => void;
   onDeleteSong: (songId: string) => void;
   onUpdateYoutube: (input: VersionMutationInput & { youtubeId: string }) => void;
@@ -759,7 +760,6 @@ function SongTableRow({
   isExpanded,
   showDeleted,
   onToggleExpand,
-  onUpdateHidden,
   onRestoreSong,
   onDeleteSong,
   onApproveVersion,
@@ -877,16 +877,6 @@ function SongTableRow({
           ) : (
             <span className="text-muted-foreground/40">â€”</span>
           )}
-          </TableCell>
-        )}
-        {isColumnVisible("visible") && (
-          <TableCell>
-          <Switch
-            checked={!song.hidden}
-            disabled={song.deleted}
-            onCheckedChange={(checked) => onUpdateHidden(song.id, !checked)}
-            onClick={(e) => e.stopPropagation()}
-          />
           </TableCell>
         )}
         <TableCell onClick={(e) => e.stopPropagation()} className="pr-4">
@@ -1096,18 +1086,18 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   // Visibility cards are show/hide toggles (single click) that also support
   // "show only" via double click (`isolate`). External is hidden by default
-  // since those songs are rarely the focus; hidden songs are shown by default.
+  // since those songs are rarely the focus.
   const [showExternal, setShowExternal] = useLocalStorageState<boolean>(
     "admin/songs-table/show-external",
     { defaultValue: false },
   );
-  const [showHidden, setShowHidden] = useLocalStorageState<boolean>(
-    "admin/songs-table/show-hidden",
-    { defaultValue: true },
-  );
   const [showDeleted, setShowDeleted] = useLocalStorageState<boolean>(
     "admin/songs-table/show-deleted",
     { defaultValue: false },
+  );
+  const [showUnofficial, setShowUnofficial] = useLocalStorageState<boolean>(
+    "admin/songs-table/show-unofficial",
+    { defaultValue: true },
   );
   const [hiddenColumns, setHiddenColumns] = useLocalStorageState<
     HideableColumn[]
@@ -1161,7 +1151,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     useVersionsAdmin(adminApi);
 
   // Mutations
-  const updateSongMutation = useUpdateSong(adminApi);
   const updateVersionMutation = useUpdateVersion(adminApi);
   const deleteSongMutation = useDeleteSong(adminApi);
   const restoreSongMutation = useRestoreSong(adminApi);
@@ -1214,6 +1203,9 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     return songs.map((song) => {
       const songVersions = versionsBySong[song.id] || [];
       const workingVersion = getWorkingVersion(song, songVersions);
+      const status = !song.currentVersionId && workingVersion?.status === "published"
+        ? "unofficial"
+        : workingVersion?.status ?? "empty";
       return {
         ...song,
         title: workingVersion?.title || "N/A",
@@ -1223,7 +1215,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
             new Date(v.updatedAt) > latest ? new Date(v.updatedAt) : latest,
           new Date(0),
         ),
-        status: song.deleted ? "deleted" : workingVersion?.status || "empty",
+        status: song.deleted ? "deleted" : status,
         hasPendingVersions: songVersions.some((v) => v.status === "pending"),
         hasYoutube: !!workingVersion?.youtubeId,
         externalSource: workingVersion?.importSourceId
@@ -1241,13 +1233,13 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   }, [songs, versionsBySong, layoutPressures]);
 
   const stats = useMemo<SongStats>(() => {
-    // Status counts follow the external/hidden toggles so the cards match the
+    // Status counts follow the visibility toggles so the cards match the
     // list; the visibility cards themselves show full category totals.
     const inScope = enrichedSongs.filter(
       (s) =>
         !s.deleted &&
         (showExternal || !s.externalSource) &&
-        (showHidden || !s.hidden),
+        (showUnofficial || s.status !== "unofficial"),
     );
     const byStatus = (status: string) =>
       inScope.filter((s) => s.status === status).length;
@@ -1261,10 +1253,10 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       empty: byStatus("empty"),
       external: enrichedSongs.filter((s) => s.externalSource && !s.deleted)
         .length,
-      hidden: enrichedSongs.filter((s) => s.hidden && !s.deleted).length,
+      unofficial: enrichedSongs.filter((s) => s.status === "unofficial").length,
       deleted: enrichedSongs.filter((s) => s.deleted).length,
     };
-  }, [enrichedSongs, showExternal, showHidden]);
+  }, [enrichedSongs, showExternal, showUnofficial]);
 
   const filteredSortedSongs = useMemo(() => {
     const term = searchTerm.toLowerCase();
@@ -1290,17 +1282,16 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         switch (isolate) {
           case "external":
             return !!song.externalSource && !song.deleted;
-          case "hidden":
-            return song.hidden && !song.deleted;
+          case "unofficial":
+            return song.status === "unofficial";
           case "deleted":
             return song.deleted;
         }
       }
 
-      // Otherwise the visibility toggles compose (default: external & deleted
-      // hidden, hidden songs shown).
+      // Apply the visibility toggles together.
       if (!showExternal && song.externalSource) return false;
-      if (!showHidden && song.hidden) return false;
+      if (!showUnofficial && song.status === "unofficial") return false;
       if (!showDeleted && song.deleted) return false;
       return true;
     });
@@ -1326,7 +1317,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     statusFilter,
     isolate,
     showExternal,
-    showHidden,
+    showUnofficial,
     showDeleted,
     sortConfig,
   ]);
@@ -1417,12 +1408,12 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
 
   const showByAttr: Record<AttrIsolate, boolean> = {
     external: showExternal,
-    hidden: showHidden,
+    unofficial: showUnofficial,
     deleted: showDeleted,
   };
   const setShowByAttr: Record<AttrIsolate, (v: boolean) => void> = {
     external: setShowExternal,
-    hidden: setShowHidden,
+    unofficial: setShowUnofficial,
     deleted: setShowDeleted,
   };
 
@@ -1544,9 +1535,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                   renderHeader("Last Modified", "lastModified")}
                 {!validHiddenColumns.includes("maxRowWidth") &&
                   renderHeader("Max width", "maxRowWidth")}
-                {!validHiddenColumns.includes("visible") && (
-                  <TableHead className="whitespace-nowrap">Visible</TableHead>
-                )}
                 <TableHead className="whitespace-nowrap text-right pr-6">
                   Actions
                 </TableHead>
@@ -1572,9 +1560,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                     isExpanded={expandedSongs.has(song.id)}
                     showDeleted={showDeleted || isolate === "deleted"}
                     onToggleExpand={toggleSongExpansion}
-                    onUpdateHidden={(songId, hidden) =>
-                      updateSongMutation.mutate({ songId, song: { hidden } })
-                    }
                     onRestoreSong={(songId) =>
                       restoreSongMutation.mutate(songId, {
                         onSuccess: () => toast.success("Song restored"),
@@ -1611,7 +1596,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                         { ...input, official: true },
                         {
                           onSuccess: () =>
-                            toast.success("Set as current version"),
+                            toast.success(input.clearOfficial ? "Official selection cleared" : "Set as current version"),
+                          onError: (error) => toast.error(error.message),
                         },
                       )
                     }
