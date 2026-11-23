@@ -4,8 +4,8 @@ versions:
   v1:
     id: traband-o_malem_rytiri_1780778229520
     createdAt: '2026-06-06T20:37:09.000Z'
-    updatedAt: '2026-07-14T19:50:14.000Z'
-    revision: 3
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 4
     youtubeId: RIkyrvmWZtI
 prompts:
   - id: traband-o_malem_rytiri_gpt-5.4-mini_v7

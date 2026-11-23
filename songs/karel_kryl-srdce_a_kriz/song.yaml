@@ -4,8 +4,8 @@ versions:
   v1:
     id: karel_kryl-srdce_a_kriz_1752444000000
     createdAt: '2025-07-13T22:00:00.000Z'
-    updatedAt: '2026-02-08T17:35:31.000Z'
-    revision: 1
+    updatedAt: '2026-11-23T10:58:59.000Z'
+    revision: 2
     youtubeId: q9d_uL89Q4Q
 prompts:
   - id: karel_kryl-srdce_a_kriz_gpt-4o-mini_v2

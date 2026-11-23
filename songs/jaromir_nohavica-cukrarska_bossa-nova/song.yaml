@@ -4,8 +4,8 @@ versions:
   v1:
     id: jaromir_nohavica-cukrarska_bossa-nova_1780425465350
     createdAt: '2026-06-02T18:37:45.000Z'
-    updatedAt: '2026-07-14T19:48:14.000Z'
-    revision: 3
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 4
 prompts:
   - id: jaromir_nohavica-cukrarska_bossa-nova_gpt-5.4-mini_v7
     songId: jaromir_nohavica-cukrarska_bossa-nova

@@ -8,9 +8,9 @@
 
 {start_of_verse}
 Ona má [C]antidepre[Emi]sivní rybi[F]čku
-vytetovanou na nejtajněšjím místě
-možná je pod srdcem a možná trochu níž
-ona muže všude prostě tam - kam si vymyslíš
+[C]vytetovanou na nej[Emi]tajněšjím mí[F]stě
+[C]možná je pod srd[Emi]cem a možná trochu [F]níž
+[C]ona muže všude pros[Emi]tě tam - kam si vy[F]myslíš
 {end_of_verse}
 
 {start_of_chorus}
@@ -20,34 +20,32 @@ A ona [C]plave [G]z orgánu do orgánu
 {end_of_chorus}
 
 {start_of_chorus}
-A ona plave z modřiny do modřiny
-a vygumuje
-je uplně všechny
-a tvoje vnitřní orgány
-tolerují tvoje rebelství hu!
+A ona [C]plave [G]z modřiny do modřiny
+žere [Ami]plevel [D]kterej po ránu
+[C]omotáva mozek a [G]kotníky na konci [Am]pelesti [D]hu!
 {end_of_chorus}
 
 {start_of_verse}
-Veze si antidepresivní rybičku
-městem, co má velkou spoustu pastí
-falešný městský strážník
-bary a zloději kol
-a nebo prostě každý
-koho si - ty - vymyslíš
+[C]Veze si antidepre[Emi]sivní rybi[F]čku
+[C]městem, co má vel[Emi]kou spoustu pas[F]tí
+[C]falešný městský stráž[Emi]ník
+[C]bary a zlodě[Emi]ji kol
+[C]a nebo prostě kaž[Emi]dý
+[C]koho si - ty - vy[Emi]myslíš
 {end_of_verse}
 
 {start_of_chorus}
-Ona je rebel, kouří i na zastávce.
-Jí to chutná v týhle válce
-a její vnitřní orgány
-tolerují její rebelství. (2x)
+𝄆 [C]Ona je [G]rebel, kouří i na zastávce.
+[Ami]Jí to chutná v [D]týhle válce
+[C]a její vnitřní [G]orgány
+[Ami]tolerují její [D]rebelství. 𝄇
 {end_of_chorus}
 
 {start_of_chorus}
-A potom přijde DJ Punk,
-bude to nejlepší herec a další
-a celej underground
-i ryba pod monopolem (2x)
+𝄆 [C]A potom [G]přijde DJ Punk,
+[Ami]bude to nejlepší [D]herec a další
+[C]a celej under[G]ground
+[Ami]i ryba pod mono[D]polem 𝄇
 {end_of_chorus}
 
 {start_of_verse}

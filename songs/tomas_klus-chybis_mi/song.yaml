@@ -4,8 +4,8 @@ versions:
   v1:
     id: tomas_klus-chybis_mi_1777122360211
     createdAt: '2026-04-25T13:06:00.000Z'
-    updatedAt: '2026-07-14T19:27:43.000Z'
-    revision: 5
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 6
     youtubeId: jKESwPGgJrk
 prompts:
   - id: tomas_klus-chybis_mi_gpt-5.4-mini_v7

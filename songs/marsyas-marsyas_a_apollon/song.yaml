@@ -4,8 +4,8 @@ versions:
   v1:
     id: marsyas-marsyas_a_apollon_1783535257029
     createdAt: '2026-07-08T18:27:37.000Z'
-    updatedAt: '2026-07-30T07:24:55.000Z'
-    revision: 3
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 4
     youtubeId: RYoVp8mV_8E
 prompts:
   - id: marsyas-marsyas_a_apollon_gpt-5.4-mini_v7

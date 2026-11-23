@@ -4,8 +4,8 @@ versions:
   v1:
     id: xavier_baumaxa-datamtuja_1774991198595
     createdAt: '2026-03-31T21:06:38.000Z'
-    updatedAt: '2026-07-12T12:41:05.000Z'
-    revision: 3
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 4
     youtubeId: 8HwVOLzA7Eo
 prompts:
   - id: xavier_baumaxa-datamtuja_gpt-5.4-mini_v7

@@ -46,6 +46,7 @@ And [D]now, we're ashes on the [C]ground
 I just wanted you to let [G]me in
 And instead of usin[Hm]g force
 I guess I should've let [C]you in
+
 I never meant to start [Em]a war
 I just wanted you to let [G]me in
 I guess I should've let [Hm]you in
@@ -53,5 +54,8 @@ I guess I should've let [Hm]you in
 [G]I will always want [C]you
 {end_of_bridge}
 
-{chorus}
+{start_of_variant: append_content}
 Yeah, [Em]you wrec[C]k me
+{end_of_variant}
+
+{chorus}

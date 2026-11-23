@@ -4,8 +4,8 @@ versions:
   v1:
     id: zalman-ho_ho_watanay_1775865538648
     createdAt: '2026-04-10T23:58:58.000Z'
-    updatedAt: '2026-07-13T07:48:10.000Z'
-    revision: 6
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 7
     youtubeId: RDM6BuIssTo
 prompts:
   - id: zalman-ho_ho_watanay_gpt-5.4-mini_v7

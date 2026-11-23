@@ -4,8 +4,8 @@ versions:
   v1:
     id: ewa_farna-mam_boky_jako_skrin_1783541632112
     createdAt: '2026-07-08T20:13:52.000Z'
-    updatedAt: '2026-07-27T21:23:54.000Z'
-    revision: 4
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 5
     youtubeId: 8PUfE24cf6k
 prompts:
   - id: ewa_farna-mam_boky_jako_skrin_gpt-5.4-mini_v7

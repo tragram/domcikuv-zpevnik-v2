@@ -4,8 +4,8 @@ versions:
   v1:
     id: michal_tucny-prodavac_1436824800000
     createdAt: '2015-07-13T22:00:00.000Z'
-    updatedAt: '2026-02-17T07:21:15.000Z'
-    revision: 1
+    updatedAt: '2026-11-22T19:49:26.000Z'
+    revision: 2
     youtubeId: cJOkJ6EPHAY
 prompts:
   - id: michal_tucny-prodavac_gpt-4o-mini_v1

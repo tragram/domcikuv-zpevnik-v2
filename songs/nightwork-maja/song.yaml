@@ -4,9 +4,9 @@ versions:
   v1:
     id: nightwork-maja_1442181600000
     createdAt: '2015-09-13T22:00:00.000Z'
-    updatedAt: '2026-07-11T20:48:58.000Z'
-    revision: 2
-    youtubeId: 1VkwUSv-hXA
+    updatedAt: '2026-11-22T11:20:21.000Z'
+    revision: 3
+    youtubeId: SsWFGOdAfXY
 prompts:
   - id: nightwork-maja_gpt-4o-mini_v1
     songId: nightwork-maja
