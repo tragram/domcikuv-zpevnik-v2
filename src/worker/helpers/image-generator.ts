@@ -111,18 +111,35 @@ class OpenAIImageProvider implements ImageProvider {
     model: string,
     config: GenerationConfig,
   ): Promise<ArrayBuffer> {
-    if (!config.openaiApiKey) throw new Error("OpenAI API key is required");
+    const apiKey = config.openaiApiKey;
+    if (!apiKey) throw new Error("OpenAI API key is required");
     const openai = new OpenAI({
-      apiKey: config.openaiApiKey,
+      apiKey,
       organization: config.openaiOrgId,
       project: config.openaiProjectId,
     });
 
-    const response = await openai.images.generate({
-      model: model,
-      prompt,
-      size: "1024x1024",
-    });
+    const response = await openai.images
+      .generate({ model, prompt, size: "1024x1024" })
+      .catch((error: unknown) => {
+        if (error instanceof OpenAI.APIError) {
+          console.error({
+            event: "openai_image_generation_failed",
+            model,
+            status: error.status,
+            code: error.code,
+            type: error.type,
+            param: error.param,
+            requestId: error.requestID,
+            message: error.message
+              .replaceAll(apiKey, "[redacted API key]")
+              .replace(/\bsk-[\w*-]+/g, "[redacted API key]")
+              .replaceAll(prompt, "[redacted prompt]")
+              .slice(0, 2000),
+          });
+        }
+        throw error;
+      });
 
     if (!response.data || response.data.length === 0) {
       throw new Error("No image data returned from OpenAI");
