@@ -10,16 +10,18 @@ import type {
 } from "src/worker/api/admin/songs";
 import type {
   IllustrationCreateSchema,
-  IllustrationGenerateSchema,
+  IllustrationGenerateInput,
   IllustrationModifySchema,
   IllustrationPromptApi,
   PromptGenerateSchema,
   SongIllustrationApi,
 } from "src/worker/api/api-types";
 import {
+  DEFAULT_ILLUSTRATION_MODELS,
   IMAGE_MODELS_API,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
+  type IllustrationDefaults,
 } from "src/lib/contracts/image-generation";
 import type {
   CreateUserSchema,
@@ -421,7 +423,7 @@ export const useCreateIllustration = (adminApi: AdminApi) => {
 export const useGenerateIllustration = (adminApi: AdminApi) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: IllustrationGenerateSchema) =>
+    mutationFn: (data: IllustrationGenerateInput) =>
       generateIllustration(adminApi, data),
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog });
@@ -647,7 +649,27 @@ export const useSongPrompts = (adminApi: AdminApi, songId?: string) => {
   return { songPrompts, isLoading };
 };
 
-export const useIllustrationOptions = () => {
+const illustrationDefaultsQueryKey = ["illustrationDefaults"];
+
+export const useIllustrationDefaults = (adminApi: AdminApi) =>
+  useQuery({
+    queryKey: illustrationDefaultsQueryKey,
+    queryFn: () => makeApiRequest(() => adminApi.illustrations.defaults.$get()),
+  });
+
+export const useSaveIllustrationDefaults = (adminApi: AdminApi) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (defaults: IllustrationDefaults) =>
+      makeApiRequest(() => adminApi.illustrations.defaults.$put({ json: defaults })),
+    onSuccess: (defaults) => {
+      queryClient.setQueryData(illustrationDefaultsQueryKey, defaults);
+    },
+  });
+};
+
+export const useIllustrationOptions = (adminApi: AdminApi) => {
+  const { data = DEFAULT_ILLUSTRATION_MODELS } = useIllustrationDefaults(adminApi);
   return useMemo(
     () => ({
       promptVersions: {
@@ -659,14 +681,14 @@ export const useIllustrationOptions = () => {
       },
       summaryModels: {
         data: SUMMARY_MODELS_API.map((smi) => ({ value: smi, label: smi })),
-        default: SUMMARY_MODELS_API[0],
+        default: data.summaryModel,
       },
       imageModels: {
         data: IMAGE_MODELS_API.map((im) => ({ value: im, label: im })),
-        default: IMAGE_MODELS_API[0],
+        default: data.imageModel,
       },
     }),
-    [],
+    [data],
   );
 };
 

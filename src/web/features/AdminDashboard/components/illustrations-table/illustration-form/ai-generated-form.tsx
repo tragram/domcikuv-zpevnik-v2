@@ -4,11 +4,7 @@ import type React from "react";
 import { useMemo, useState } from "react";
 import type { IllustrationPromptApi } from "src/worker/api/api-types";
 import type { IllustrationGenerateSchema } from "src/worker/api/api-types";
-import {
-  AvailableImageModel,
-  AvailableSummaryModel,
-  SummaryPromptVersion,
-} from "src/lib/contracts/image-generation";
+import type { AvailableImageModel } from "src/lib/contracts/image-generation";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import {
@@ -22,7 +18,6 @@ import {
   useIllustrationOptions,
   useIllustrationsAdmin,
 } from "~/services/admin-hooks";
-import { defaultPromptId } from "src/lib/song-ids";
 import type { IllustrationFormProps } from "./illustration-form";
 import {
   ActiveSwitch,
@@ -48,9 +43,6 @@ const pickValid = <T extends string>(
     ? (candidate as T)
     : fallback;
 
-const stored = (key: string) =>
-  typeof window === "undefined" ? null : sessionStorage.getItem(key);
-
 function AIGeneratedForm({
   illustration,
   activePromptId,
@@ -60,7 +52,7 @@ function AIGeneratedForm({
   songPrompts,
 }: AIGeneratedFormProps) {
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
-  const options = useIllustrationOptions();
+  const options = useIllustrationOptions(adminApi);
   const { data: allIllustrations } = useIllustrationsAdmin(adminApi);
 
   // Dynamically include legacy models/versions if they exist in the song's prompts
@@ -90,46 +82,54 @@ function AIGeneratedForm({
     ];
   }, [options.promptVersions.data, songPrompts]);
 
-  // Preselect the settings behind the song's currently active illustration,
-  // falling back to the last ones used in this session.
+  // Offer reuse of the active prompt when available.
   const activePrompt = songPrompts.find((p) => p.id === activePromptId);
 
-  const [formData, setFormData] = useState({
+  const [overrides, setOverrides] = useState<Partial<IllustrationGenerateSchema>>({});
+  const formData = {
     songId: illustration?.songId || "",
-    promptVersion: pickValid<SummaryPromptVersion>(
+    promptVersion: pickValid<string>(
       illustration?.summaryPromptVersion ?? activePrompt?.summaryPromptVersion,
       promptVersionOptions,
       options.promptVersions.default,
     ),
-    summaryModel: pickValid<AvailableSummaryModel>(
-      illustration?.summaryModel ??
-        activePrompt?.summaryModel ??
-        stored("admin-ai-summaryModel"),
+    summaryModel: pickValid<string>(
+      illustration?.summaryModel ?? activePrompt?.summaryModel,
       summaryModelOptions,
       options.summaryModels.default,
     ),
     imageModel: pickValid<AvailableImageModel>(
-      illustration?.imageModel ?? stored("admin-ai-imageModel"),
+      illustration?.imageModel,
       options.imageModels.data,
       options.imageModels.default,
     ),
     setAsActive: illustration?.isActive || false,
-  });
+    ...overrides,
+  };
 
   const promptExists = useMemo(() => {
     if (!formData.songId) return false;
-    const targetId = defaultPromptId(
-      formData.songId,
-      formData.summaryModel,
-      formData.promptVersion,
+    return songPrompts.some(
+      (prompt) =>
+        prompt.songId === formData.songId &&
+        prompt.summaryModel === formData.summaryModel &&
+        prompt.summaryPromptVersion === formData.promptVersion,
     );
-    return songPrompts.some((p) => p.id === targetId);
   }, [
     songPrompts,
     formData.songId,
     formData.summaryModel,
     formData.promptVersion,
   ]);
+
+  const canGeneratePrompt =
+    options.summaryModels.data.some(
+      ({ value }) => value === formData.summaryModel,
+    ) &&
+    options.promptVersions.data.some(
+      ({ value }) => value === formData.promptVersion,
+    );
+  const canUsePrompt = promptExists || canGeneratePrompt;
 
   const illustrationExists = useMemo(() => {
     return allIllustrations?.some((ill) => {
@@ -155,21 +155,16 @@ function AIGeneratedForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!canUsePrompt) return;
     onSave({
       mode: "ai",
-      illustrationData: formData as IllustrationGenerateSchema,
+      illustrationData: formData,
     });
     onSuccess?.();
   };
 
   const updateFormData = (updates: Partial<IllustrationGenerateSchema>) => {
-    if (updates.summaryModel) {
-      sessionStorage.setItem("admin-ai-summaryModel", updates.summaryModel);
-    }
-    if (updates.imageModel) {
-      sessionStorage.setItem("admin-ai-imageModel", updates.imageModel);
-    }
-    setFormData((prev) => ({ ...prev, ...updates }));
+    setOverrides((prev) => ({ ...prev, ...updates }));
   };
 
   return (
@@ -202,7 +197,9 @@ function AIGeneratedForm({
               ) : (
                 <>
                   <Sparkles className="w-3 h-3" />
-                  New Prompt Needed
+                  {canGeneratePrompt
+                    ? "New Prompt Needed"
+                    : "Choose a Supported Prompt"}
                 </>
               )}
             </div>
@@ -214,9 +211,7 @@ function AIGeneratedForm({
             <Label className="text-xs">Model</Label>
             <Select
               value={formData.summaryModel}
-              onValueChange={(v) =>
-                updateFormData({ summaryModel: v as AvailableSummaryModel })
-              }
+              onValueChange={(summaryModel) => updateFormData({ summaryModel })}
             >
               <SelectTrigger className="h-9">
                 <SelectValue placeholder="Model" />
@@ -235,9 +230,7 @@ function AIGeneratedForm({
             <Label className="text-xs">Version</Label>
             <Select
               value={formData.promptVersion}
-              onValueChange={(v) =>
-                updateFormData({ promptVersion: v as SummaryPromptVersion })
-              }
+              onValueChange={(promptVersion) => updateFormData({ promptVersion })}
             >
               <SelectTrigger className="h-9">
                 <SelectValue placeholder="Version" />
@@ -286,7 +279,9 @@ function AIGeneratedForm({
         <Button
           type="submit"
           className="w-full"
-          disabled={isLoading || illustrationExists || !formData.songId}
+          disabled={
+            isLoading || illustrationExists || !formData.songId || !canUsePrompt
+          }
         >
           {isLoading
             ? "Generating..."

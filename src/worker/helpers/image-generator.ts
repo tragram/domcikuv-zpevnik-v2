@@ -1,11 +1,18 @@
 import { InferenceClient } from "@huggingface/inference";
 import OpenAI from "openai";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel } from "@google/genai";
+import {
+  SUMMARY_MODELS_API,
+  SUMMARY_PROMPT_VERSIONS,
+} from "src/lib/contracts/image-generation";
 import type {
   AvailableImageModel,
-  AvailableSummaryModel,
   SummaryPromptVersion,
 } from "src/lib/contracts/image-generation";
+
+export function promptProvider(model: string): "google" | "openai" {
+  return model.startsWith("gemini-") ? "google" : "openai";
+}
 
 const PROMPTS: Record<SummaryPromptVersion, string> = {
   v1: "Based on the following song lyrics, create a prompt for an AI image generator that will be used as an illustration of the song. Try to be short",
@@ -39,13 +46,20 @@ const IMAGE_COMPOSITION_INSTRUCTIONS =
 
 export type ImageProviderType = "openai" | "huggingface" | "google";
 
+// Older image models can still be present in jobs queued before deployment.
+type QueuedImageModel =
+  | AvailableImageModel
+  | "gpt-image-1.5"
+  | "gpt-image-1-mini";
+
 // Easily map models to their respective providers
-export const MODEL_PROVIDERS: Record<AvailableImageModel, ImageProviderType> = {
+export const MODEL_PROVIDERS: Record<QueuedImageModel, ImageProviderType> = {
   "FLUX.1-dev": "huggingface",
   "FLUX.1-schnell": "huggingface",
   "FLUX.2-dev": "huggingface",
+  "gpt-image-2.6-sunburst": "openai",
+  "gpt-image-2.6-flare": "openai",
   "gpt-image-1.5": "openai",
-  "gpt-image-1": "openai",
   "gpt-image-1-mini": "openai",
   "nano-banana-pro": "google",
   "nano-banana-2": "google",
@@ -61,10 +75,10 @@ const PROVIDER_MODEL_NAMES: Partial<Record<AvailableImageModel, string>> = {
 };
 
 export interface GenerationConfig {
-  promptVersion: SummaryPromptVersion;
-  summaryModel: AvailableSummaryModel;
-  imageModel: AvailableImageModel;
-  openaiApiKey: string;
+  promptVersion: string;
+  summaryModel: string;
+  imageModel: QueuedImageModel;
+  openaiApiKey?: string;
   huggingFaceToken?: string;
   googleApiKey?: string;
   openaiOrgId?: string;
@@ -97,6 +111,7 @@ class OpenAIImageProvider implements ImageProvider {
     model: string,
     config: GenerationConfig,
   ): Promise<ArrayBuffer> {
+    if (!config.openaiApiKey) throw new Error("OpenAI API key is required");
     const openai = new OpenAI({
       apiKey: config.openaiApiKey,
       organization: config.openaiOrgId,
@@ -221,10 +236,39 @@ export class ImageGenerator {
    * Generate image prompt from lyrics using OpenAI
    */
   async generatePrompt(lyrics: string): Promise<string> {
+    const summaryModel = SUMMARY_MODELS_API.find(
+      (model) => model === this.config.summaryModel,
+    );
+    const promptVersion = SUMMARY_PROMPT_VERSIONS.find(
+      (version) => version === this.config.promptVersion,
+    );
+    if (!summaryModel || !promptVersion) {
+      throw new Error("This model and version can only reuse a saved prompt");
+    }
+
     if (lyrics.length < 100) {
       throw new Error("Lyrics too short for meaningful prompt generation");
     }
 
+    const instructions = PROMPTS[promptVersion];
+    if (promptProvider(summaryModel) === "google") {
+      if (!this.config.googleApiKey)
+        throw new Error("Google API key is required");
+      const google = new GoogleGenAI({ apiKey: this.config.googleApiKey });
+      const response = await google.models.generateContent({
+        model: summaryModel,
+        contents: lyrics,
+        config: {
+          systemInstruction: instructions,
+          thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL },
+        },
+      });
+      const prompt = response.text?.trim();
+      if (!prompt) throw new Error("Failed to generate prompt from Gemini");
+      return prompt;
+    }
+
+    if (!this.config.openaiApiKey) throw new Error("OpenAI API key is required");
     const openai = new OpenAI({
       apiKey: this.config.openaiApiKey,
       organization: this.config.openaiOrgId,
@@ -232,9 +276,10 @@ export class ImageGenerator {
     });
 
     const response = await openai.chat.completions.create({
-      model: this.config.summaryModel,
+      model: summaryModel,
+      ...(summaryModel === "gpt-6-luna" && { reasoning_effort: "none" }),
       messages: [
-        { role: "system", content: PROMPTS[this.config.promptVersion] },
+        { role: "system", content: instructions },
         { role: "user", content: lyrics },
       ],
     });

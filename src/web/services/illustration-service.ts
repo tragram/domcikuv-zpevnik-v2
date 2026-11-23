@@ -3,7 +3,7 @@ import client, { AdminApi } from "src/worker/api-client";
 import type {
   AdminIllustrationResponse,
   IllustrationCreateSchema,
-  IllustrationGenerateSchema,
+  IllustrationGenerateInput,
   IllustrationModifySchema,
   IllustrationPromptApi,
   IllustrationPromptCreateSchema,
@@ -59,7 +59,7 @@ export const createIllustrationPrompt = async (
 
 export const generateIllustration = async (
   adminApi: AdminApi,
-  illustrationData: IllustrationGenerateSchema,
+  illustrationData: IllustrationGenerateInput,
 ): Promise<AdminIllustrationResponse> => {
   const response = await makeApiRequest(() =>
     adminApi.illustrations.generate.$post({ json: illustrationData }),

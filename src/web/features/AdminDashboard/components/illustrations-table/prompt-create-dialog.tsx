@@ -41,7 +41,8 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
     { defaultValue: "manual" },
   );
 
-  const options = useIllustrationOptions();
+  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
+  const options = useIllustrationOptions(adminApi);
 
   // Manual State
   const [text, setText] = useState("");
@@ -50,14 +51,12 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
     useState<SummaryPromptVersion>(options.promptVersions.default);
 
   // AI State
-  const [aiSummaryModel, setAiSummaryModel] = useState<AvailableSummaryModel>(
-    options.summaryModels.default,
-  );
+  const [selectedSummaryModel, setAiSummaryModel] = useState<AvailableSummaryModel>();
+  const aiSummaryModel = selectedSummaryModel ?? options.summaryModels.default;
   const [aiPromptVersion, setAiPromptVersion] = useState<SummaryPromptVersion>(
     options.promptVersions.default,
   );
 
-  const adminApi = useRouteContext({ from: "/admin" }).api.admin;
   const createMutation = useCreatePrompt(adminApi);
   const generateMutation = useGeneratePrompt(adminApi);
 

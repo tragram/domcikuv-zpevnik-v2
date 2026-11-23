@@ -10,6 +10,7 @@ import { PopulatedSongDB } from "../helpers/song-helpers";
 import {
   illustrationCreateSchema,
   illustrationGenerateSchema,
+  illustrationGenerateRequestSchema,
   illustrationModifySchema,
 } from "./admin/illustrations";
 import {
@@ -202,6 +203,7 @@ export type IllustrationCreateSchema = z.infer<typeof illustrationCreateSchema>;
 export type IllustrationGenerateSchema = z.infer<
   typeof illustrationGenerateSchema
 >;
+export type IllustrationGenerateInput = z.input<typeof illustrationGenerateRequestSchema>;
 export type IllustrationModifySchema = z.infer<typeof illustrationModifySchema>;
 export type IllustrationPromptCreateSchema = z.infer<
   typeof illustrationPromptCreateSchema

@@ -20,6 +20,7 @@ import { Pagination } from "../shared/pagination";
 import { StatsBar } from "../stats-bar";
 import { ToggleCheckbox } from "../toggle-checkbox";
 import { SongIllustrationsGroup } from "./illustration-group";
+import { IllustrationDefaultsDialog } from "./illustration-defaults-dialog";
 import { SongIllustrationDB } from "src/lib/db/schema";
 import useLocalStorageState from "use-local-storage-state";
 import {
@@ -563,7 +564,8 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
             Manage AI illustrations and prompts for the song library.
           </p>
         </div>
-        <div className="flex gap-2 mt-4 sm:mt-0">
+        <div className="flex flex-wrap gap-2 mt-4 sm:mt-0">
+          <IllustrationDefaultsDialog adminApi={adminApi} />
           <Button
             variant="outline"
             size="sm"

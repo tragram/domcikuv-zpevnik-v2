@@ -2,12 +2,14 @@ import { eq } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { generateAndSavePrompt } from "src/worker/helpers/illustration-helpers";
 import {
+  IMAGE_MODELS_API,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
 } from "src/lib/contracts/image-generation";
 import {
   GenerationConfig,
   ImageGenerator,
+  promptProvider,
 } from "src/worker/helpers/image-generator";
 import { defaultPromptId } from "src/lib/song-ids";
 import {
@@ -135,14 +137,18 @@ export const illustrationPromptRoutes = buildApp()
         .get();
 
       if (existingPrompt) return errorJSend(c, "Prompt already exists", 409);
-      if (!c.env.OPENAI_API_KEY)
+      const apiKey = promptProvider(summaryModel) === "google"
+        ? c.env.GOOGLE_API_KEY
+        : c.env.OPENAI_API_KEY;
+      if (!apiKey)
         return errorJSend(c, "Missing API key!", 500, "MISSING_API_KEYS");
 
       const generationConfig: GenerationConfig = {
         promptVersion: summaryPromptVersion,
         summaryModel,
-        imageModel: "gpt-image-1", // Dummy value, we are only generating text here
+        imageModel: IMAGE_MODELS_API[0], // Only the prompt is generated here.
         openaiApiKey: c.env.OPENAI_API_KEY,
+        googleApiKey: c.env.GOOGLE_API_KEY,
         openaiOrgId: c.env.OPENAI_ORGANIZATION_ID,
         openaiProjectId: c.env.OPENAI_PROJECT_ID,
       };

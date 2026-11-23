@@ -73,7 +73,6 @@ import {
   useDeleteSong,
   useDeleteVersion,
   useGenerateIllustration,
-  useIllustrationOptions,
   useRejectVersion,
   useResetVersionDB,
   useRestoreSong,
@@ -1156,8 +1155,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       defaultValue: false,
     });
 
-  const backendDropdownOptions = useIllustrationOptions();
-
   // Queries
   const { data: songs, isLoading: songsLoading } = useSongsAdmin(adminApi);
   const { data: versions, isLoading: versionsLoading } =
@@ -1366,9 +1363,6 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
             toast.info("Auto-generating illustration...");
             generateIllustrationMutation.mutate({
               songId,
-              promptVersion: backendDropdownOptions.promptVersions.default,
-              summaryModel: backendDropdownOptions.summaryModels.default,
-              imageModel: backendDropdownOptions.imageModels.default,
               setAsActive: true,
             });
           }

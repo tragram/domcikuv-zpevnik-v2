@@ -22,11 +22,13 @@ import {
   uploadImageBuffer,
 } from "../../helpers/illustration-helpers";
 import {
+  DEFAULT_ILLUSTRATION_MODELS,
   IMAGE_MODELS_API,
   SUMMARY_MODELS_API,
   SUMMARY_PROMPT_VERSIONS,
+  type IllustrationDefaults,
 } from "src/lib/contracts/image-generation";
-import { ImageGenerator } from "../../helpers/image-generator";
+import { ImageGenerator, MODEL_PROVIDERS } from "../../helpers/image-generator";
 import {
   AdminIllustrationResponse,
   IllustrationGenerateSchema,
@@ -58,9 +60,55 @@ export const illustrationGenerateSchema = z.object({
     .union([z.string(), z.boolean()])
     .transform((val) => val === "true" || val === true),
   imageModel: z.enum(IMAGE_MODELS_API),
-  promptVersion: z.enum(SUMMARY_PROMPT_VERSIONS),
-  summaryModel: z.enum(SUMMARY_MODELS_API),
+  // Allow historical settings to identify saved prompts. The generator
+  // validates both fields before it creates a new prompt.
+  promptVersion: z.string().min(1),
+  summaryModel: z.string().min(1),
 });
+
+const illustrationDefaultsSchema = z.object({
+  summaryModel: z.enum(SUMMARY_MODELS_API),
+  imageModel: z.enum(IMAGE_MODELS_API),
+});
+
+export const illustrationGenerateRequestSchema = illustrationGenerateSchema
+  .partial({ imageModel: true, summaryModel: true })
+  .extend({
+    promptVersion: z.string().min(1).default(SUMMARY_PROMPT_VERSIONS[0]),
+  });
+
+const illustrationDefaultsKey = "illustration-default-models";
+
+async function getIllustrationDefaults(kv: KVNamespace): Promise<IllustrationDefaults> {
+  const stored = await kv.get<Partial<Record<keyof IllustrationDefaults, unknown>>>(
+    illustrationDefaultsKey,
+    "json",
+  );
+  const summaryModel = illustrationDefaultsSchema.shape.summaryModel.safeParse(
+    stored?.summaryModel,
+  );
+  const imageModel = illustrationDefaultsSchema.shape.imageModel.safeParse(
+    stored?.imageModel,
+  );
+  return {
+    summaryModel: summaryModel.data ?? DEFAULT_ILLUSTRATION_MODELS.summaryModel,
+    imageModel: imageModel.data ?? DEFAULT_ILLUSTRATION_MODELS.imageModel,
+  };
+}
+
+async function resolveGenerationModels(
+  kv: KVNamespace,
+  { summaryModel, imageModel, ...data }: z.output<typeof illustrationGenerateRequestSchema>,
+): Promise<IllustrationGenerateSchema> {
+  if (summaryModel && imageModel) return { ...data, summaryModel, imageModel };
+
+  const defaults = await getIllustrationDefaults(kv);
+  return {
+    ...data,
+    summaryModel: summaryModel ?? defaults.summaryModel,
+    imageModel: imageModel ?? defaults.imageModel,
+  };
+}
 
 export const illustrationModifySchema = z.object({
   imageModel: z.string().optional(),
@@ -86,8 +134,12 @@ export const coreGenerateIllustration = async (
     throw new Error("SONG_NOT_FOUND");
   }
 
-  // Included Google API Key check here to fix the potential crash!
-  if (!env.OPENAI_API_KEY || !env.HUGGING_FACE_TOKEN || !env.GOOGLE_API_KEY) {
+  const imageKeys = {
+    openai: env.OPENAI_API_KEY,
+    google: env.GOOGLE_API_KEY,
+    huggingface: env.HUGGING_FACE_TOKEN,
+  };
+  if (!imageKeys[MODEL_PROVIDERS[illustrationData.imageModel]]) {
     throw new Error("MISSING_API_KEYS");
   }
 
@@ -96,6 +148,8 @@ export const coreGenerateIllustration = async (
     summaryModel: illustrationData.summaryModel,
     imageModel: illustrationData.imageModel,
     openaiApiKey: env.OPENAI_API_KEY,
+    openaiOrgId: env.OPENAI_ORGANIZATION_ID,
+    openaiProjectId: env.OPENAI_PROJECT_ID,
     googleApiKey: env.GOOGLE_API_KEY,
     huggingFaceToken: env.HUGGING_FACE_TOKEN,
   });
@@ -167,6 +221,18 @@ export const illustrationRoutes = buildApp()
       c,
       (await c.var.db.select().from(songIllustration)) as SongIllustrationDB[],
     ),
+  )
+  .get("/defaults", async (c) =>
+    successJSend(c, await getIllustrationDefaults(c.env.KV)),
+  )
+  .put(
+    "/defaults",
+    zValidatorJSend("json", illustrationDefaultsSchema),
+    async (c) => {
+      const defaults = c.req.valid("json");
+      await c.env.KV.put(illustrationDefaultsKey, JSON.stringify(defaults));
+      return successJSend(c, defaults);
+    },
   )
   .post(
     "/create",
@@ -325,9 +391,9 @@ export const illustrationRoutes = buildApp()
   })
   .post(
     "/generate",
-    zValidatorJSend("json", illustrationGenerateSchema),
+    zValidatorJSend("json", illustrationGenerateRequestSchema),
     async (c) => {
-      const data = c.req.valid("json");
+      const data = await resolveGenerationModels(c.env.KV, c.req.valid("json"));
       // Synchronous execution for the Admin UI
       const result = await coreGenerateIllustration(c.env, c.var.db, data);
       return successJSend(c, result, 201);
@@ -388,9 +454,17 @@ export const illustrationRoutes = buildApp()
 // this function is available for trusted users too --> used in different endpoint than the one for admins
 export const trustedGenerateRoute = buildApp().post(
   "/generate",
-  zValidatorJSend("json", illustrationGenerateSchema),
+  zValidatorJSend(
+    "json",
+    illustrationGenerateRequestSchema.extend({
+      promptVersion: z
+        .enum(SUMMARY_PROMPT_VERSIONS)
+        .default(SUMMARY_PROMPT_VERSIONS[0]),
+      summaryModel: illustrationDefaultsSchema.shape.summaryModel.optional(),
+    }),
+  ),
   async (c) => {
-    const data = c.req.valid("json");
+    const data = await resolveGenerationModels(c.env.KV, c.req.valid("json"));
     await c.env.ILLUSTRATION_QUEUE.send(data);
     return successJSend(
       c,

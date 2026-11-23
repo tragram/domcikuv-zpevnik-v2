@@ -35,11 +35,6 @@ import EditorHelp from "./components/EditorHelp";
 import SettingsDropdown from "./components/SettingsDropdown";
 import { EditorSettings } from "./EditorSettings";
 
-import {
-  IMAGE_MODELS_API,
-  SUMMARY_MODELS_API,
-  SUMMARY_PROMPT_VERSIONS,
-} from "src/lib/contracts/image-generation";
 import { UserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
 import { hasPendingAppUpdate, holdAppReload } from "~/services/app-updates";
@@ -129,12 +124,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
   };
 
   const generateIllustrationInBackground = (songId: string) => {
-    generateSongIllustration(
-      songId,
-      IMAGE_MODELS_API[0], 
-      SUMMARY_PROMPT_VERSIONS[0],
-      SUMMARY_MODELS_API[0],
-    )
+    generateSongIllustration(songId)
       .then(async (response) => {
         if (response.ok) {
           console.log(`Illustration generation started for song ${songId}`);

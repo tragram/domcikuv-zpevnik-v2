@@ -51,18 +51,10 @@ export const submitSongVersion = async (
   );
 };
 
-export const generateSongIllustration = (
-  songId: string,
-  imageModel: string,
-  promptVersion: string,
-  summaryModel: string,
-) => {
+export const generateSongIllustration = (songId: string) => {
   const generationParams = {
     songId,
     setAsActive: true,
-    imageModel,
-    promptVersion,
-    summaryModel,
   };
 
   return fetch("/api/illustrations/generate", {
