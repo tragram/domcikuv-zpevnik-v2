@@ -45,7 +45,9 @@ async function publish() {
   };
   const latest = async () => {
     git("fetch", "origin", "main");
-    return git("rev-parse", "origin/main");
+    const sha = git("rev-parse", "refs/remotes/origin/main");
+    console.log(`Fetched origin/main at ${sha}.`);
+    return sha;
   };
 
   try {
@@ -85,7 +87,12 @@ async function publish() {
         git("commit", "-m", "chore: automated database and assets sync");
         return git("rev-parse", "HEAD");
       },
-      async push() { git("push", "origin", "HEAD:refs/heads/main"); },
+      async push() {
+        const [commit, parent] = git("rev-list", "--parents", "-n", "1", "HEAD").split(" ");
+        const remote = git("rev-parse", "refs/remotes/origin/main");
+        summary(`Pushing snapshot ${commit} (parent ${parent}) to refs/heads/main (last fetched at ${remote}).`);
+        git("push", "origin", `${commit}:refs/heads/main`);
+      },
       async discard() {
         // Only discard generated songs/ changes in this disposable checkout.
         const untracked = git("ls-files", "--others", "--exclude-standard", "-z").split("\0").filter(Boolean);
