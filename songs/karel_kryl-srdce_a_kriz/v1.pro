@@ -2,7 +2,8 @@
 {artist: Karel Kryl}
 {key: Am}
 {capo: 0}
-{language: other}
+{range: a1-e2}
+{language: czech}
 {illustrationId: karel_kryl-srdce_a_kriz_gpt-4o-mini_v2_flux.1-dev}
 {promptId: karel_kryl-srdce_a_kriz_gpt-4o-mini_v2}
 
@@ -12,11 +13,15 @@
 [Ami]pak se mi [G7]vzdala a [Dmi]noc byla [E7]skrýš,
 [Ami]polštářem [G7]svítání, [Dmi]peřinou [E7]stvoly.
 {end_of_verse}
+
 {start_of_chorus}
-[Ami]Nad horizontem dva paprsky slunce až [G7]zaplanou,
+[Ami]Nad horizontem dva paprsky
+slunce až [G7]zaplanou,
 [Dmi]na krku srdce a [E7]nad sebou kříž budu mít,
-potom [Ami]neplač, Kami[G7]lo, potom [Ami]neplač, Kami[Dmi]lo,
-[Ami]najdi si někoho, [E7]kdo tě snad nežli já [Ami]víc [E7]bude [Ami]chtít. [Dmi][Ami][E7]
+potom [Ami]neplač, Kami[G7]lo,
+potom [Ami]neplač, Kami[Dmi]lo,
+[Ami]najdi si někoho, [E7]kdo tě snad
+nežli já [Ami]víc [E7]bude [Ami]chtít. [Dmi][Ami][E7]
 {end_of_chorus}
 
 {start_of_verse}
@@ -27,6 +32,7 @@ potom [Ami]neplač, Kami[G7]lo, potom [Ami]neplač, Kami[Dmi]lo,
 {end_of_verse}
 
 {chorus}
+
 {start_of_verse}
 [Ami]Výložky zlatil jen [E7]zvířený [Ami]prach,
 [G7]písek byl cínový, [Dmi]než jsme ho [E7]přešli,

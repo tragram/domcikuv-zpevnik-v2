@@ -4,8 +4,8 @@ versions:
   v1:
     id: horkyze_slize-l.a.g._song_1774991452327
     createdAt: '2026-03-31T21:10:52.000Z'
-    updatedAt: '2026-07-27T16:41:32.000Z'
-    revision: 4
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 5
     youtubeId: 7IuiBEL-fv0
 prompts:
   - id: horkyze_slize-l.a.g._song_gpt-5.4-mini_v7

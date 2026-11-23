@@ -13,14 +13,18 @@
 {end_of_interlude}
 
 {start_of_verse}
-[Am]Když se snáší noc na střechy Petěrburgu, [F]padá [E]na mě [Am]žal,
-zatoulaný pes nevzal si ani kůrku [F]chleba, kterou [E]jsem mu [Am]dal
+[Am]Když se snáší noc na střechy Petěrburgu,
+[F]padá [E]na mě [Am]žal,
+zatoulaný pes nevzal si ani kůrku
+[F]chleba, kterou [E]jsem mu [Am]dal
 {end_of_verse}
 
 {start_of_chorus}
 𝄆 [C]Lásku moji [Dm]kníže I[E7]gor si bere,
-[F]nad sklenkou [F#dim]vodky [H7]hraju si s [E7]evolverem,
-[Am]havran usedá na střechy Petěrburgu, [F]čert a[E]by to [Am]spral. 𝄇
+[F]nad sklenkou [F#dim]vodky
+[H7]hraju si s [E7]revolverem,
+[Am]havran usedá na střechy Petěrburgu,
+[F]čert a[E]by to [Am]spral. 𝄇
 {end_of_chorus}
 
 {start_of_interlude}
@@ -35,8 +39,10 @@ moje duše, široširá stepi, [F]máš na [E]kahán[Am]ku.
 
 {start_of_chorus}
 𝄆 [C]Mému žalu na [Dm]světě [E7]není rovno,
-[F]vy jste tím [F#dim]vinna, [H7]Naděždo [E7]Ivanovno,
-[Am]vy jste tím vinna, až mě zítra najdou [F]s dírou [E]ve spán[Am]ku 𝄇
+[F]vy jste tím [F#dim]vinna,
+[H7]Naděždo [E7]Ivanovno,
+[Am]vy jste tím vinna, až mě zítra najdou
+[F]s dírou [E]ve spán[Am]ku 𝄇
 {end_of_chorus}
 
 {interlude}

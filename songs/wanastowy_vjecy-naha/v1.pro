@@ -58,6 +58,8 @@ letíš spirál[G]ou, [D]prstem v louži kroužíš.
 [C]tě má rád, [G]když jsi nah[C]á.
 {end_of_chorus}
 
+{comment: Mezihra na sloku}
+
 {chorus: R2}
 
 {start_of_chorus}

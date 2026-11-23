@@ -4,8 +4,8 @@ versions:
   v1:
     id: vypsana_fixa-antidepresivni_rybicka_1783710805588
     createdAt: '2026-07-10T19:13:25.000Z'
-    updatedAt: '2026-07-15T16:34:35.000Z'
-    revision: 4
+    updatedAt: '2026-11-22T19:42:16.000Z'
+    revision: 5
     youtubeId: dyzFmLE0Wmw
 prompts:
   - id: vypsana_fixa-antidepresivni_rybicka_gpt-5.4-mini_v7

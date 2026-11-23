@@ -22,14 +22,12 @@ a v [Ami]úsměvu [G]něha bez [Ami]jediné [F]hany,
 jen z [Ami]úst jako hadi mu [G]syčely [Ami]věty:
 {end_of_verse}
 
-{start_of_chorus: R1}
+{start_of_chorus}
 "Jen [C]nech si svou duši, ta k ničemu [G]není,
 vždyť [Ami]mnozí i [G]zdarma ji [Ami]upsali [E]čertu,
 však [Ami]hlas - to je [G]zboží, jež [Ami]dneska se [F]cení
 a [Ami]dobře se platí - to [G]beze všech [Ami]žertů!"
-{end_of_chorus}
 
-{start_of_chorus: R2}
 "Já [C]pro ten tvůj hlas jsem si [G]ohlávku uvil
 a [Ami]stráž mi ho [G]do klece [Ami]vsadí, [E]
 a [Ami]kdybys pak [G]stokrát i [Ami]andělsky [F]mluvil,
@@ -55,9 +53,7 @@ Mé [C]lůžko je měkké, však [G]propíjím noci,
 mám [Ami]z démantů [G]bazén a ze [Ami]zlata [E]ryby,
 mám [Ami]přebytek [G]všeho, i [Ami]pýchy, i [F]moci,
 mám v [Ami]paláci všechno, jen [G]lidé tu [Ami]chybí!
-{end_of_chorus}
 
-{start_of_chorus}
 Dnes [C]podruhé oko mé [G]Satana spatří,
 je [Ami]krásný, byť [G]s úsměvem [Ami]krysím, [E]
 vždyť [Ami]jemu dnes [G]s hlasem i [Ami]duše má [F]patří,

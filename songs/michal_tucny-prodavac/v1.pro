@@ -9,10 +9,15 @@
 {promptId: michal_tucny-prodavac_gpt-4o-mini_v1}
 
 {start_of_verse: Rec}
-[G]Pojďte všichni dovnitř, pozvěte si všechny známé,
-my vám dobrou radu dáme, neboť právě otvíráme,
-prodáváme, vyděláme, co kdo chcete, tak to máme,
-co nemáme, objednáme, všechno máme, všechno víme,
+[G]Pojďte všichni dovnitř,
+pozvěte si všechny známé,
+my vám dobrou radu dáme,
+neboť právě otvíráme,
+prodáváme, vyděláme,
+
+Co kdo chcete, tak to máme,
+co nemáme, objednáme,
+všechno máme, všechno víme,
 poradíme, posloužíme.
 {end_of_verse}
 
@@ -23,7 +28,8 @@ a [D7]bonbóny a sýr a sladký [G]mák, [D7]
 tam [G]chodíval jsem [G7]potají,
 tak [C]jak to kluci dělají,
 a [D7]ochutnával od okurek [G]lák [G7]
-a [C]pro mou duši nevinnou
+
+A [C]pro mou duši nevinnou
 pan [G]vedoucí byl hrdinou,
 když [A7]po obědě začal prodá[D]vat, [D7]
 měl [G]jazyk mrštný [G7]jako bič
@@ -36,7 +42,8 @@ a [D]toužil jsem se prodavačem [G]stát.
 [C]kilo chleba, kilo cukru, jeden rohlík, jedna veka,
 [D7]všechno máme, co kdo chcete,
 obchod kvete, jen si račte [G]říct, [D7]
-[G]čtyři kila, deset kilo, dvacet kilo, třicet kilo,
+
+[G]Čtyři kila, deset kilo, dvacet kilo, třicet kilo,
 [C]navážíme, zabalíme, klaníme se, to by bylo,
 [D7]prosím pěkně, mohu nechat o jedenáct deka [G]víc?
 {end_of_chorus}
@@ -48,7 +55,8 @@ a [D7]moh' být ze mě prodavačů [G]král, [D7]
 [G]jenomže, jak [G7]běžel čas,
 náhle [C]zaslechl jsem hudby hlas
 a [D7]znenadání na jevišti [G]stál, [G7]
-[C]i když nejsem králem zpěváků,
+
+[C]I když nejsem králem zpěváků,
 [G]teď zpívám s partou Fešáků
 a [A7]nikdo vlastně neví, co jsem [D]zač, [D7]
 mě [G]potlesk hřeje [G7]do uší
@@ -65,7 +73,8 @@ kdy [D7]nikdo neví, [G]co je chvat a shon. [D7]
 a [G]dětem líčí [G7]babička,
 [C]jak vypadala elpíčka
 a [D7]co byl vlastně starý gramo[G]fon, [G7]
-[C]i kdyby v roce dva tisíce
+
+[C]I kdyby v roce dva tisíce
 [G]byla veta po muzice,
 [A7]obchod je věc stále [D]kvetoucí, [D7]
 [G]už se vidím, [G7]je to krása,

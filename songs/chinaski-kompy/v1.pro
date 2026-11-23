@@ -32,9 +32,7 @@ Bloudí [F#mi]dál [H]dvojkovou [E]soustavou! [F#]
 [E]marně vzpomínám co bylo včera,
 [F#mi]snad diskety, [H]v paměti ještě [E]mám,
 vaše [E7]stříbrné rety.
-{end_of_chorus}
 
-{start_of_chorus}
 [F#mi]Kilo, mega, giga, tera,
 [E]marně vzpomínám co bylo včera,
 [F#mi]sbohem můj drahý [H]kompaktní disku
@@ -55,7 +53,9 @@ tak [E7]brzy jako oni.
 a [E7]tenčí než loni.
 {end_of_verse}
 
+{bridge}
 
+{chorus}
 
 {start_of_verse}
 [F#mi]Můj nový Mac, včera mi řek':
@@ -63,3 +63,7 @@ a [E7]tenčí než loni.
 [F#mi]Tak jsem mu na to [H]řek':
 "Tvůj [E]operační systém pozná [E7]středověk!"
 {end_of_verse}
+
+{bridge}
+
+{chorus}

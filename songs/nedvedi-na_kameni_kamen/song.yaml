@@ -4,8 +4,8 @@ versions:
   v1:
     id: nedvedi-na_kameni_kamen_1783553320387
     createdAt: '2026-07-08T23:28:40.000Z'
-    updatedAt: '2026-07-30T13:46:22.000Z'
-    revision: 3
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 4
     youtubeId: MEI_oOLTbJE
 prompts:
   - id: nedvedi-na_kameni_kamen_gpt-5.4-mini_v7

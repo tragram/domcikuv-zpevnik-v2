@@ -4,8 +4,8 @@ versions:
   v1:
     id: vladimir_misik-slunecny_hrob_1776286178266
     createdAt: '2026-04-15T20:49:38.000Z'
-    updatedAt: '2026-07-15T16:12:19.000Z'
-    revision: 3
+    updatedAt: '2026-11-22T11:32:12.000Z'
+    revision: 4
     youtubeId: ckNMjjxNWGk
 prompts:
   - id: vladimir_misik-slunecny_hrob_gpt-5.4-mini_v7

@@ -4,8 +4,8 @@ versions:
   v1:
     id: jaromir_nohavica-peterburg_1765293848000
     createdAt: '2025-12-09T15:24:08.000Z'
-    updatedAt: '2026-09-10T10:11:16.000Z'
-    revision: 2
+    updatedAt: '2026-11-22T11:13:57.000Z'
+    revision: 3
     youtubeId: 9caXpPcQH3M
 prompts:
   - id: jaromir_nohavica-peterburg_gpt-4o-mini_v2
