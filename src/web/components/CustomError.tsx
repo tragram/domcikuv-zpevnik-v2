@@ -3,7 +3,7 @@ import { House, RefreshCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { clearPersistedCache } from "src/lib/query-client";
 import { getIsOnline, useIsOnline } from "~/hooks/use-is-online";
-import { retryAppLoad, updateLabels, useAppUpdate } from "~/services/app-updates";
+import { resetAppAssets, retryAppLoad, updateLabels, useAppUpdate } from "~/services/app-updates";
 import ConfirmationDialog from "./dialogs/confirmation-dialog";
 import { Button } from "./ui/button";
 
@@ -39,7 +39,8 @@ export function CustomError({ error }: ErrorComponentProps) {
     setRepairFailed(false);
     setRepairing(true);
     try {
-      await clearPersistedCache();
+      if (checkForNewBuild) await resetAppAssets();
+      else await clearPersistedCache();
       window.location.reload();
     } catch (err) {
       console.error("Songbook repair failed:", err);
@@ -77,7 +78,9 @@ export function CustomError({ error }: ErrorComponentProps) {
       <ConfirmationDialog
         trigger={<Button variant="ghost" size="sm" disabled={!online || busy}>{repairing ? "Repairing…" : "Repair app"}</Button>}
         title="Repair the songbook?"
-        description="Repair removes offline song data and reloads the app. Reopen any sheets you need while you’re online to save them again. Repair keeps your settings and saved drafts."
+        description={checkForNewBuild
+          ? "Repair downloads fresh app files. Keep the songbook online while it reinstalls. Your songs, settings and saved drafts are kept."
+          : "Repair removes offline song data and reloads the app. Reopen any sheets you need while you’re online to save them again. Repair keeps your settings and saved drafts."}
         confirmText="Repair and reload"
         variant="destructive"
         onConfirm={repair}

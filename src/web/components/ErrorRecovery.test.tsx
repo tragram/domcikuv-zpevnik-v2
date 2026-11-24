@@ -99,3 +99,21 @@ it("keeps offline data available when disconnected", async () => {
   expect(button("Repair app").disabled).toBe(true);
   expect(clearPersistedCache).not.toHaveBeenCalled();
 });
+
+it("reinstalls the app files after a module failure and keeps the song cache", async () => {
+  const scope = new URL("/", window.location.href).href;
+  const unregister = vi.fn().mockResolvedValue(true);
+  const deleteCache = vi.fn().mockResolvedValue(true);
+  vi.stubGlobal("navigator", Object.assign(Object.create(navigator), {
+    serviceWorker: { getRegistration: vi.fn().mockResolvedValue({ scope, unregister }) },
+  }));
+  vi.stubGlobal("caches", { delete: deleteCache });
+  const reload = vi.spyOn(window.location, "reload").mockImplementation(() => {});
+  await renderError("Songbook asset: Failed to fetch dynamically imported module: /assets/index.js");
+  await act(async () => button("Repair app").click());
+  await act(async () => button("Repair and reload", document).click());
+  expect(unregister).toHaveBeenCalledOnce();
+  expect(deleteCache).toHaveBeenCalledExactlyOnceWith(`workbox-precache-v2-${scope}`);
+  expect(clearPersistedCache).not.toHaveBeenCalled();
+  expect(reload).toHaveBeenCalledOnce();
+});

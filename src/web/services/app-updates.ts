@@ -142,6 +142,16 @@ export async function retryAppLoad(checkForNewBuild: boolean) {
   window.location.reload();
 }
 
+/** Reinstall the offline app on the next navigation, including same-version repairs. */
+export async function resetAppAssets() {
+  const scope = new URL("/", window.location.href).href;
+  const reg = await navigator.serviceWorker?.getRegistration(scope);
+  if (reg?.scope === scope) await reg.unregister();
+  // Workbox's default precache name includes the registration scope. Cached
+  // responses survive unregister(), and a reinstall can otherwise reuse them.
+  await window.caches?.delete(`workbox-precache-v2-${scope}`);
+}
+
 export async function runUpdateAction() {
   if (!getIsOnline()) return;
   const worker = registration?.waiting;
