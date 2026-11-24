@@ -1352,10 +1352,10 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
           toast.success("Version approved and published");
           if (autoGenerateIllustration && hasNoIllustration) {
             toast.info("Auto-generating illustration...");
-            generateIllustrationMutation.mutate({
-              songId,
-              setAsActive: true,
-            });
+            generateIllustrationMutation.mutate(
+              { songId, setAsActive: true },
+              { onError: (error) => toast.error(error.message) },
+            );
           }
         },
         onError: (error) => toast.error(error.message),

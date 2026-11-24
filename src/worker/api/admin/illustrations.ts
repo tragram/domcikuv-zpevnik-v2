@@ -1,4 +1,5 @@
 import { and, eq } from "drizzle-orm";
+import OpenAI from "openai";
 import {
   getSongPopulated,
   PopulatedSongDB,
@@ -34,6 +35,7 @@ import {
   IllustrationGenerateSchema,
 } from "../api-types";
 import {
+  errorJSend,
   failJSend,
   itemNotFoundFail,
   successJSend,
@@ -395,8 +397,24 @@ export const illustrationRoutes = buildApp()
     async (c) => {
       const data = await resolveGenerationModels(c.env.KV, c.req.valid("json"));
       // Synchronous execution for the Admin UI
-      const result = await coreGenerateIllustration(c.env, c.var.db, data);
-      return successJSend(c, result, 201);
+      try {
+        const result = await coreGenerateIllustration(c.env, c.var.db, data);
+        return successJSend(c, result, 201);
+      } catch (error) {
+        if (!(error instanceof OpenAI.APIError)) throw error;
+
+        const code = error.code ?? "OPENAI_API_ERROR";
+        const blocked = code === "moderation_blocked";
+        const message = blocked
+          ? "OpenAI blocked the illustration"
+          : "OpenAI could not generate the illustration";
+        return errorJSend(
+          c,
+          `${message} (${code})`,
+          blocked ? 400 : 502,
+          code,
+        );
+      }
     },
   )
   .delete("/:id", async (c) => {
