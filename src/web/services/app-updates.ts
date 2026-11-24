@@ -130,14 +130,12 @@ export async function hasPendingAppUpdate() {
   return !!(reg?.waiting || (reg?.active && reg.installing));
 }
 
-export async function retryAppLoad(checkForNewBuild: boolean) {
+export async function retryAppLoad() {
   if (import.meta.env.PROD && getIsOnline() && "serviceWorker" in navigator) {
-    if (checkForNewBuild && !registration?.waiting) await checkForUpdate(true);
     if (registration?.waiting) {
       await runUpdateAction();
       return;
     }
-    if (checkForNewBuild && useAppUpdate.getState() === "downloading") return;
   }
   window.location.reload();
 }

@@ -5,7 +5,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { clearPersistedCache } from "src/lib/query-client";
 import { getEditorBackupKey, getEditorStateKey } from "~/features/Editor/editor-storage";
 import { getIsOnline, useIsOnline } from "~/hooks/use-is-online";
-import { retryAppLoad } from "~/services/app-updates";
+import { retryAppLoad, useAppUpdate } from "~/services/app-updates";
 import { CustomError } from "./CustomError";
 import { NotFound } from "./NotFound";
 
@@ -33,6 +33,7 @@ beforeEach(() => {
 
 afterEach(async () => {
   await act(async () => root.unmount());
+  useAppUpdate.setState("idle", true);
   container.remove();
   localStorage.clear();
   sessionStorage.clear();
@@ -56,14 +57,11 @@ it("offers a songbook link on the missing page without a reset", async () => {
   expect(container.querySelector("button")).toBeNull();
 });
 
-it.each([
-  ["Failed to fetch dynamically imported module: /assets/song.js", true],
-  ["Could not load song", false],
-])("passes the right recovery hint for %s", async (message, checkForNewBuild) => {
-  await renderError(message);
+it("retries a song load without clearing data", async () => {
+  await renderError("Could not load song");
   expect(container.querySelector("details")?.open).toBe(false);
   await act(async () => button("Try again").click());
-  expect(retryAppLoad).toHaveBeenCalledExactlyOnceWith(checkForNewBuild);
+  expect(retryAppLoad).toHaveBeenCalledOnce();
   expect(clearPersistedCache).not.toHaveBeenCalled();
 });
 
@@ -100,7 +98,8 @@ it("keeps offline data available when disconnected", async () => {
   expect(clearPersistedCache).not.toHaveBeenCalled();
 });
 
-it("reinstalls the app files after a module failure and keeps the song cache", async () => {
+it("opens the online app while an offline update is still downloading", async () => {
+  useAppUpdate.setState("downloading", true);
   const scope = new URL("/", window.location.href).href;
   const unregister = vi.fn().mockResolvedValue(true);
   const deleteCache = vi.fn().mockResolvedValue(true);
@@ -111,7 +110,7 @@ it("reinstalls the app files after a module failure and keeps the song cache", a
   const reload = vi.spyOn(window.location, "reload").mockImplementation(() => {});
   await renderError("Songbook asset: Failed to fetch dynamically imported module: /assets/index.js");
   await act(async () => button("Repair app").click());
-  await act(async () => button("Repair and reload", document).click());
+  expect(document.querySelector('[role="alertdialog"]')).toBeNull();
   expect(unregister).toHaveBeenCalledOnce();
   expect(deleteCache).toHaveBeenCalledExactlyOnceWith(`workbox-precache-v2-${scope}`);
   expect(clearPersistedCache).not.toHaveBeenCalled();

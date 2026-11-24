@@ -16,9 +16,9 @@ export function CustomError({ error }: ErrorComponentProps) {
   const [repairing, setRepairing] = useState(false);
   const [repairFailed, setRepairFailed] = useState(false);
   const message = typeof error?.message === "string" ? error.message : undefined;
-  const checkForNewBuild = assetLoadError.test(`${error?.name ?? ""} ${message ?? ""}`);
-  const downloading = online && checkForNewBuild && update === "downloading";
-  const restarting = update === "restarting";
+  const assetError = assetLoadError.test(`${error?.name ?? ""} ${message ?? ""}`);
+  const repairAssets = online && assetError;
+  const restarting = !repairAssets && update === "restarting";
   const busy = retrying || restarting || repairing;
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export function CustomError({ error }: ErrorComponentProps) {
   async function retry() {
     setRetrying(true);
     try {
-      await retryAppLoad(checkForNewBuild);
+      await retryAppLoad();
     } finally {
       setRetrying(false);
     }
@@ -39,7 +39,7 @@ export function CustomError({ error }: ErrorComponentProps) {
     setRepairFailed(false);
     setRepairing(true);
     try {
-      if (checkForNewBuild) await resetAppAssets();
+      if (assetError) await resetAppAssets();
       else await clearPersistedCache();
       window.location.reload();
     } catch (err) {
@@ -57,9 +57,9 @@ export function CustomError({ error }: ErrorComponentProps) {
           : "You’re offline. Try opening the page again once you’re connected."}
       </p>
       <div className="flex flex-wrap items-center justify-center gap-2">
-        <Button onClick={retry} disabled={busy || downloading}>
+        <Button onClick={repairAssets ? repair : retry} disabled={busy}>
           <RefreshCcw />
-          {restarting || retrying ? "Trying again…" : online && update === "ready" ? updateLabels.ready : "Try again"}
+          {repairAssets ? (repairing ? "Repairing…" : "Repair app") : restarting || retrying ? "Trying again…" : online && update === "ready" ? updateLabels.ready : "Try again"}
         </Button>
         <Button variant="outline" asChild>
           <Link to="/">
@@ -68,23 +68,22 @@ export function CustomError({ error }: ErrorComponentProps) {
           </Link>
         </Button>
       </div>
-      {online && update === "otherTabs" && (
+      {online && !assetError && update === "otherTabs" && (
         <p role="status" className="text-sm text-muted-foreground">
           Another songbook tab didn’t respond. Open it and retry. If it’s running an older version, finish your work there and close it.
         </p>
       )}
-      {downloading && <p role="status" className="text-sm text-muted-foreground">Downloading an app update…</p>}
       {repairFailed && <p role="alert" className="text-sm text-muted-foreground">The repair couldn’t finish. Please try again.</p>}
-      <ConfirmationDialog
-        trigger={<Button variant="ghost" size="sm" disabled={!online || busy}>{repairing ? "Repairing…" : "Repair app"}</Button>}
-        title="Repair the songbook?"
-        description={checkForNewBuild
-          ? "Repair downloads fresh app files. Keep the songbook online while it reinstalls. Your songs, settings and saved drafts are kept."
-          : "Repair removes offline song data and reloads the app. Reopen any sheets you need while you’re online to save them again. Repair keeps your settings and saved drafts."}
-        confirmText="Repair and reload"
-        variant="destructive"
-        onConfirm={repair}
-      />
+      {!assetError && (
+        <ConfirmationDialog
+          trigger={<Button variant="ghost" size="sm" disabled={!online || busy}>{repairing ? "Repairing…" : "Repair app"}</Button>}
+          title="Repair the songbook?"
+          description="Repair removes offline song data and reloads the app. Reopen any sheets you need while you’re online to save them again. Repair keeps your settings and saved drafts."
+          confirmText="Repair and reload"
+          variant="destructive"
+          onConfirm={repair}
+        />
+      )}
       {message && (
         <details className="max-w-full text-sm text-muted-foreground">
           <summary className="cursor-pointer">Technical details</summary>
