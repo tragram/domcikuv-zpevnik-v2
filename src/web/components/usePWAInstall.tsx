@@ -15,7 +15,10 @@ export default function usePWAInstall() {
       ? "How to install"
       : available
         ? "Install app"
-        : "Use Safari (iOS) or Chrome (otherwise) to install the app.";
+        : "Install";
+  const subtitle = !import.meta.env.DEV && !isApple && !available
+    ? "Use Safari (iOS) or Chrome (otherwise) to install the app."
+    : undefined;
 
   return (
     <DropdownMenuItem
@@ -29,7 +32,7 @@ export default function usePWAInstall() {
         <CompactItem.Icon>
           <Save />
         </CompactItem.Icon>
-        <CompactItem.Body title={title} />
+        <CompactItem.Body title={title} subtitle={subtitle} subtitleClass="line-clamp-none" />
       </CompactItem.Shell>
     </DropdownMenuItem>
   );

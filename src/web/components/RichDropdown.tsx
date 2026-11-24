@@ -84,15 +84,17 @@ const Body = ({
   title,
   subtitle,
   titleClass,
+  subtitleClass,
 }: {
   title: ReactNode;
   subtitle?: ReactNode;
   titleClass?: string;
+  subtitleClass?: string;
 }) => (
   <div className="flex flex-col flex-1 justify-center min-w-0">
     <span className={cn("truncate font-medium", titleClass)}>{title}</span>
     {subtitle && (
-      <Description className="line-clamp-2">
+      <Description className={cn("line-clamp-2", subtitleClass)}>
         {subtitle}
       </Description>
     )}
@@ -166,15 +168,18 @@ export const CompactItem = {
     title,
     subtitle,
     titleClass,
+    subtitleClass,
   }: {
     title: ReactNode;
     subtitle?: ReactNode;
     titleClass?: string;
+    subtitleClass?: string;
   }) => (
     <Body
       title={title}
       subtitle={subtitle}
       titleClass={cn("font-normal", titleClass)}
+      subtitleClass={subtitleClass}
     />
   ),
   Trailing,
