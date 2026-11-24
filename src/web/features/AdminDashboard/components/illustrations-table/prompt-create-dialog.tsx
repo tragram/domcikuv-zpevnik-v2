@@ -33,13 +33,23 @@ import {
   AvailableSummaryModel,
   SummaryPromptVersion,
 } from "src/lib/contracts/image-generation";
+import type { IllustrationPromptApi } from "src/worker/api/api-types";
 
-export function PromptCreateDialog({ songId }: { songId: string }) {
+type PromptTab = "ai" | "manual" | "saved";
+
+export function PromptCreateDialog({
+  songId,
+  songPrompts,
+}: {
+  songId: string;
+  songPrompts: IllustrationPromptApi[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useLocalStorageState<"ai" | "manual">(
+  const [preferredTab, setActiveTab] = useLocalStorageState<PromptTab>(
     "admin-prompt-form-activeTab",
     { defaultValue: "manual" },
   );
+  const activeTab = preferredTab === "saved" && !songPrompts.length ? "ai" : preferredTab;
 
   const adminApi = useRouteContext({ from: "/admin" }).api.admin;
   const options = useIllustrationOptions(adminApi);
@@ -56,6 +66,13 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
   const [aiPromptVersion, setAiPromptVersion] = useState<SummaryPromptVersion>(
     options.promptVersions.default,
   );
+
+  const handleAiSummaryModelChange = (model: AvailableSummaryModel) => {
+    setAiSummaryModel(model);
+    if (!songPrompts.some((prompt) => prompt.summaryModel === model)) {
+      setAiPromptVersion(options.promptVersions.default);
+    }
+  };
 
   const createMutation = useCreatePrompt(adminApi);
   const generateMutation = useGeneratePrompt(adminApi);
@@ -105,33 +122,49 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
           <Plus className="h-3 w-3 mr-1" /> Add Prompt
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-2xl">
+      <DialogContent
+        aria-describedby={undefined}
+        className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-2xl"
+      >
         <DialogHeader>
-          <DialogTitle>Add New Prompt</DialogTitle>
+          <DialogTitle>Song Prompts</DialogTitle>
         </DialogHeader>
 
         <Tabs
           value={activeTab}
-          onValueChange={(val) => setActiveTab(val as "ai" | "manual")}
+          onValueChange={(val) => setActiveTab(val as PromptTab)}
           className="w-full mt-4"
         >
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="ai">AI Generated</TabsTrigger>
-            <TabsTrigger value="manual">Manual</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="ai">Generate with AI</TabsTrigger>
+            <TabsTrigger value="manual">Write manually</TabsTrigger>
+            <TabsTrigger value="saved" disabled={!songPrompts.length}>Saved prompts</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="saved" className="space-y-4 py-4">
+            <ul className="max-h-64 divide-y overflow-y-auto rounded-md border">
+              {songPrompts.map((prompt) => (
+                <li key={prompt.id} className="px-3 py-2 text-sm wrap-break-word">
+                  {prompt.summaryModel} · {prompt.summaryPromptVersion}
+                </li>
+              ))}
+            </ul>
+            <DialogFooter>
+              <Button variant="outline" onClick={resetAndClose}>Close</Button>
+            </DialogFooter>
+          </TabsContent>
 
           {/* AI GENERATED TAB */}
           <TabsContent value="ai" className="space-y-4 py-4">
-            <div className="grid grid-cols-2 gap-4">
+            <fieldset className="grid min-w-0 grid-cols-2 gap-4 rounded-lg border bg-muted/20 p-3">
+              <legend className="px-1 text-sm font-medium">New prompt settings</legend>
               <div className="space-y-2">
                 <Label>Summary Model</Label>
                 <Select
                   value={aiSummaryModel}
-                  onValueChange={(model: AvailableSummaryModel) =>
-                    setAiSummaryModel(model)
-                  }
+                  onValueChange={handleAiSummaryModelChange}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -151,7 +184,7 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
                     setAiPromptVersion(promptVersion)
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -163,7 +196,7 @@ export function PromptCreateDialog({ songId }: { songId: string }) {
                   </SelectContent>
                 </Select>
               </div>
-            </div>
+            </fieldset>
             <DialogFooter className="pt-4">
               <Button variant="outline" onClick={resetAndClose}>
                 Cancel

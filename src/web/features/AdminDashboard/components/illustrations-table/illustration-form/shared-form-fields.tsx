@@ -1,3 +1,6 @@
+import { useRouteContext } from "@tanstack/react-router";
+import { useId, type ReactNode } from "react";
+import type { IllustrationPromptApi } from "src/worker/api/api-types";
 import { Label } from "~/components/ui/label";
 import { Input } from "~/components/ui/input";
 import { Switch } from "~/components/ui/switch";
@@ -11,7 +14,6 @@ import {
 import { RadioGroup, RadioGroupOption } from "~/components/ui/radio-group";
 import { Textarea } from "~/components/ui/textarea";
 import { useSongPrompts } from "~/services/admin-hooks";
-import { useRouteContext } from "@tanstack/react-router";
 
 interface SharedFormFieldsProps {
   songId: string;
@@ -93,17 +95,19 @@ export interface NewPromptData {
   version: string;
 }
 
-type PromptMode = "existing" | "new";
+export type PromptMode = "existing" | "new";
 
 export function IllustrationPromptOptions({
   promptCount,
   value,
   onValueChange,
+  newLabel = "Create a new prompt",
   children,
 }: {
   promptCount: number;
   value: PromptMode;
   onValueChange: (value: PromptMode) => void;
+  newLabel?: string;
   children: ReactNode;
 }) {
   const headingId = useId();
@@ -113,7 +117,7 @@ export function IllustrationPromptOptions({
       <p id={headingId} className="text-base font-semibold">Illustration Prompt</p>
       <RadioGroup aria-labelledby={headingId} value={value} onValueChange={onValueChange}>
         <RadioGroupOption value="existing" label={`Use an existing prompt (${promptCount})`} disabled={promptCount === 0} />
-        <RadioGroupOption value="new" label="Create a new prompt" />
+        <RadioGroupOption value="new" label={newLabel} />
       </RadioGroup>
       {children}
     </div>
@@ -128,14 +132,15 @@ export function ExistingPromptSelect({ prompts, value, onValueChange, disabled }
 }) {
   return (
     <Select disabled={disabled} value={value} onValueChange={onValueChange}>
-      <SelectTrigger className="w-full bg-background" aria-label="Existing prompt">
+      <SelectTrigger className="w-full min-w-0 bg-background" aria-label="Existing prompt">
         <SelectValue placeholder="Select a prompt..." />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="max-w-(--radix-select-trigger-width)">
         {prompts.map((prompt) => (
-          <SelectItem key={prompt.id} value={prompt.id}>
-            <span className="mr-2 font-mono text-xs text-muted-foreground">[{prompt.summaryModel}]</span>
-            {prompt.text.length > 50 ? prompt.text.substring(0, 50) + "..." : prompt.text}
+          <SelectItem key={prompt.id} value={prompt.id} className="*:[span]:last:min-w-0">
+            <span className="block min-w-0 truncate">
+              {prompt.summaryModel} · {prompt.summaryPromptVersion}
+            </span>
           </SelectItem>
         ))}
       </SelectContent>
@@ -201,5 +206,3 @@ export function PromptSelector({
     </IllustrationPromptOptions>
   );
 }
-import { useId, type ReactNode } from "react";
-import type { IllustrationPromptApi } from "src/worker/api/api-types";

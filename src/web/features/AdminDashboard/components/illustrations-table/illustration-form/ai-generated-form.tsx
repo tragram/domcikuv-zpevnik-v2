@@ -1,5 +1,5 @@
 import { useRouteContext } from "@tanstack/react-router";
-import { CheckCircle2, History, Sparkles } from "lucide-react";
+import { History } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
 import type { IllustrationPromptApi } from "src/worker/api/api-types";
@@ -22,6 +22,9 @@ import type { IllustrationFormProps } from "./illustration-form";
 import {
   ActiveSwitch,
   ImageModelSelect,
+  ExistingPromptSelect,
+  IllustrationPromptOptions,
+  type PromptMode,
   SongIdField,
 } from "./shared-form-fields";
 
@@ -31,8 +34,7 @@ interface AIGeneratedFormProps extends IllustrationFormProps {
 
 /**
  * A candidate model/version is only usable if the select offers it — a removed
- * one would render as an empty select and submit an invalid value. Note the
- * options may include legacy values outside the "Available" unions.
+ * one would render as an empty select and submit an invalid value.
  */
 const pickValid = <T extends string>(
   candidate: string | null | undefined,
@@ -55,83 +57,52 @@ function AIGeneratedForm({
   const options = useIllustrationOptions(adminApi);
   const { data: allIllustrations } = useIllustrationsAdmin(adminApi);
 
-  // Dynamically include legacy models/versions if they exist in the song's prompts
-  const summaryModelOptions = useMemo(() => {
-    const existing: Set<string> = new Set(
-      options.summaryModels.data.map((opt) => opt.value),
-    );
-    const historical = Array.from(
-      new Set(songPrompts.map((p) => p.summaryModel)),
-    ).filter((m) => m && !existing.has(m));
-    return [
-      ...options.summaryModels.data,
-      ...historical.map((m) => ({ value: m, label: `${m} (Legacy)` })),
-    ];
-  }, [options.summaryModels.data, songPrompts]);
-
-  const promptVersionOptions = useMemo(() => {
-    const existing: Set<string> = new Set(
-      options.promptVersions.data.map((opt) => opt.value),
-    );
-    const historical = Array.from(
-      new Set(songPrompts.map((p) => p.summaryPromptVersion)),
-    ).filter((v) => v && !existing.has(v));
-    return [
-      ...options.promptVersions.data,
-      ...historical.map((v) => ({ value: v, label: `${v} (Legacy)` })),
-    ];
-  }, [options.promptVersions.data, songPrompts]);
-
-  // Offer reuse of the active prompt when available.
-  const activePrompt = songPrompts.find((p) => p.id === activePromptId);
-
+  const [selectedMode, setSelectedMode] = useState<PromptMode>();
+  const [selectedPromptId, setSelectedPromptId] = useState<string>();
   const [overrides, setOverrides] = useState<Partial<IllustrationGenerateSchema>>({});
+  const promptMode = songPrompts.length ? selectedMode ?? "existing" : "new";
+  const savedPrompt =
+    songPrompts.find((prompt) => prompt.id === (selectedPromptId ?? illustration.promptId)) ??
+    songPrompts.find((prompt) =>
+      prompt.summaryModel === illustration.summaryModel &&
+      prompt.summaryPromptVersion === illustration.summaryPromptVersion,
+    ) ??
+    songPrompts.find((prompt) => prompt.id === activePromptId) ??
+    songPrompts[0];
+
+  const newSummaryModel = overrides.summaryModel ?? pickValid(
+    illustration.summaryModel,
+    options.summaryModels.data,
+    options.summaryModels.default,
+  );
+  const savedVersions = new Set(songPrompts
+    .filter((prompt) => prompt.summaryModel === newSummaryModel)
+    .map((prompt) => prompt.summaryPromptVersion));
+  const availableVersions = options.promptVersions.data.filter(
+    ({ value }) => !savedVersions.has(value),
+  );
+  const latestAvailableVersion = availableVersions[0]?.value ?? options.promptVersions.default;
+  const newPromptVersion = pickValid<string>(
+    overrides.promptVersion ?? (overrides.summaryModel ? undefined : illustration.summaryPromptVersion),
+    availableVersions,
+    latestAvailableVersion,
+  );
+
+  const usingExistingPrompt = promptMode === "existing";
   const formData = {
-    songId: illustration?.songId || "",
-    promptVersion: pickValid<string>(
-      illustration?.summaryPromptVersion ?? activePrompt?.summaryPromptVersion,
-      promptVersionOptions,
-      options.promptVersions.default,
-    ),
-    summaryModel: pickValid<string>(
-      illustration?.summaryModel ?? activePrompt?.summaryModel,
-      summaryModelOptions,
-      options.summaryModels.default,
-    ),
+    songId: overrides.songId ?? illustration.songId,
+    summaryModel: usingExistingPrompt && savedPrompt ? savedPrompt.summaryModel : newSummaryModel,
+    promptVersion: usingExistingPrompt && savedPrompt ? savedPrompt.summaryPromptVersion : newPromptVersion,
     imageModel: pickValid<AvailableImageModel>(
-      illustration?.imageModel,
+      overrides.imageModel ?? illustration.imageModel,
       options.imageModels.data,
       options.imageModels.default,
     ),
-    setAsActive: illustration?.isActive || false,
-    ...overrides,
+    setAsActive: overrides.setAsActive ?? illustration.isActive ?? false,
   };
 
-  const promptExists = useMemo(() => {
-    if (!formData.songId) return false;
-    return songPrompts.some(
-      (prompt) =>
-        prompt.songId === formData.songId &&
-        prompt.summaryModel === formData.summaryModel &&
-        prompt.summaryPromptVersion === formData.promptVersion,
-    );
-  }, [
-    songPrompts,
-    formData.songId,
-    formData.summaryModel,
-    formData.promptVersion,
-  ]);
-
-  const canGeneratePrompt =
-    options.summaryModels.data.some(
-      ({ value }) => value === formData.summaryModel,
-    ) &&
-    options.promptVersions.data.some(
-      ({ value }) => value === formData.promptVersion,
-    );
-  const canUsePrompt = promptExists || canGeneratePrompt;
-
   const illustrationExists = useMemo(() => {
+    if (!usingExistingPrompt) return false;
     return allIllustrations?.some((ill) => {
       const illPrompt = songPrompts.find(
         (prompt) => prompt.id === ill.promptId,
@@ -151,11 +122,15 @@ function AIGeneratedForm({
     formData.songId,
     formData.summaryModel,
     songPrompts,
+    usingExistingPrompt,
   ]);
+
+  const canUsePrompt = usingExistingPrompt ? Boolean(savedPrompt) : availableVersions.length > 0;
+  const canSubmit = !isLoading && !illustrationExists && Boolean(formData.songId) && canUsePrompt;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!canUsePrompt) return;
+    if (!canSubmit) return;
     onSave({
       mode: "ai",
       illustrationData: formData,
@@ -175,77 +150,67 @@ function AIGeneratedForm({
         mode="ai"
       />
 
-      {/* Prompt Configuration Group */}
-      <div className="space-y-4 pt-2">
-        <div className="flex items-center justify-between">
-          <Label className="text-xs font-bold uppercase tracking-tight text-muted-foreground">
-            LLM Prompt Settings
-          </Label>
-          {formData.songId && (
-            <div
-              className={`flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full border ${
-                promptExists
-                  ? "bg-success/10 text-success border-success/30"
-                  : "bg-warning/10 text-warning border-warning/30"
-              }`}
-            >
-              {promptExists ? (
-                <>
-                  <CheckCircle2 className="w-3 h-3" />
-                  Prompt Cached
-                </>
-              ) : (
-                <>
-                  <Sparkles className="w-3 h-3" />
-                  {canGeneratePrompt
-                    ? "New Prompt Needed"
-                    : "Choose a Supported Prompt"}
-                </>
-              )}
+      <IllustrationPromptOptions
+        promptCount={songPrompts.length}
+        value={promptMode}
+        onValueChange={setSelectedMode}
+        newLabel="Generate a new prompt"
+      >
+        {usingExistingPrompt ? (
+          <ExistingPromptSelect
+            prompts={songPrompts}
+            value={savedPrompt?.id}
+            onValueChange={setSelectedPromptId}
+          />
+        ) : (
+          <>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-xs">Summary Model</Label>
+                <Select
+                  value={newSummaryModel}
+                  onValueChange={(summaryModel) =>
+                    updateFormData({ summaryModel, promptVersion: undefined })
+                  }
+                >
+                  <SelectTrigger className="w-full" aria-label="Summary model">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {options.summaryModels.data.map(({ value, label }) => (
+                      <SelectItem key={value} value={value}>{label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs">Prompt Version</Label>
+                <Select
+                  value={availableVersions.length ? newPromptVersion : ""}
+                  disabled={availableVersions.length === 0}
+                  onValueChange={(promptVersion) => updateFormData({ promptVersion })}
+                >
+                  <SelectTrigger className="w-full" aria-label="Prompt version">
+                    <SelectValue placeholder="All versions saved" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {options.promptVersions.data.map(({ value, label }) => (
+                      <SelectItem key={value} value={value} disabled={savedVersions.has(value)}>
+                        {label}{savedVersions.has(value) && " · saved"}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label className="text-xs">Model</Label>
-            <Select
-              value={formData.summaryModel}
-              onValueChange={(summaryModel) => updateFormData({ summaryModel })}
-            >
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Model" />
-              </SelectTrigger>
-              <SelectContent>
-                {summaryModelOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-xs">Version</Label>
-            <Select
-              value={formData.promptVersion}
-              onValueChange={(promptVersion) => updateFormData({ promptVersion })}
-            >
-              <SelectTrigger className="h-9">
-                <SelectValue placeholder="Version" />
-              </SelectTrigger>
-              <SelectContent>
-                {promptVersionOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </div>
+            {availableVersions.length === 0 && (
+              <p className="text-sm text-muted-foreground">
+                Choose another model or use a saved prompt.
+              </p>
+            )}
+          </>
+        )}
+      </IllustrationPromptOptions>
 
       {/* Image Configuration Group */}
       <div className="space-y-4 border-t pt-4">
@@ -279,9 +244,7 @@ function AIGeneratedForm({
         <Button
           type="submit"
           className="w-full"
-          disabled={
-            isLoading || illustrationExists || !formData.songId || !canUsePrompt
-          }
+          disabled={!canSubmit}
         >
           {isLoading
             ? "Generating..."

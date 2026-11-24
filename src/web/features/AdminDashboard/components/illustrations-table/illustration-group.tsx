@@ -246,7 +246,7 @@ export function SongIllustrationsGroup({
                 <h5 className="text-sm font-semibold text-muted-foreground">
                   Prompts ({songPrompts.length})
                 </h5>
-                <PromptCreateDialog songId={song.id} />
+                <PromptCreateDialog songId={song.id} songPrompts={songPrompts} />
               </div>
 
               {songPrompts.length === 0 ? (
