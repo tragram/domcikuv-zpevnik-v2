@@ -8,7 +8,7 @@ export function publicationOptions(request: PublicationRequest, source: { import
 }
 
 export function versionEditPolicy(version: {
-  pending: boolean; imported: boolean; pendingCuration: boolean; official: boolean; ownerId?: string;
+  pending: boolean; imported: boolean; official: boolean; ownerId?: string;
 } | undefined, actor?: { id: string; isAdmin?: boolean }) {
   const canManage = !!actor && (version?.ownerId === actor.id || !!actor.isAdmin);
   const canEdit = !version?.pending || version.imported || canManage;
@@ -66,6 +66,6 @@ export function submissionReview(version: {
 export function isCorrectionSubmission(review: SubmissionReview | null): review is CorrectionSubmission {
   return review?.kind === "correction";
 }
-export function requiresImportRevision(imported: boolean, revision: number | undefined) {
+export function needsRevisionToBecomeOfficial(imported: boolean, revision: number | undefined) {
   return imported && (revision ?? 1) <= 1;
 }

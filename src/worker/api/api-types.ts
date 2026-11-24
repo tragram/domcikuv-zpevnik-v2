@@ -19,7 +19,7 @@ import {
   promptGenerateSchema,
 } from "./admin/illustration-prompts";
 
-export type ExternalSourceApi = {
+export type SourceAttributionApi = {
   sourceId: SongImportDB["sourceId"];
   originalContent: string;
   url: string;
@@ -91,7 +91,8 @@ export type SongDataApi = {
   range?: string;
   youtubeId?: string;
   chordpro: string;
-  externalSource: ExternalSourceApi | null;
+  /** Source attribution. Keep this response key for existing clients and offline data. */
+  externalSource: SourceAttributionApi | null;
   /** Original text retained for the editor when the sheet has been revised. */
   importOriginalContent?: string;
   currentIllustration?: CurrentIllustrationApi;
@@ -103,7 +104,7 @@ export type SongDataApi = {
 };
 
 export type SongDataAdminApi = SongDataDB &
-  SongVersionDB & { externalSource: ExternalSourceApi | null };
+  SongVersionDB & { externalSource: SourceAttributionApi | null };
 
 // A song version enriched with its import source (if it was imported), used by
 // the admin songs table to detect/badge external songs without an extra query.

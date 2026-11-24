@@ -11,12 +11,12 @@ import {
 import type { SongRevisionContent, SongVersionDB } from "src/lib/db/schema";
 import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import type { AppDatabase } from "../../api/utils";
-import { isCorrectionSubmission, publicationOptions, requiresImportRevision, submissionReview, versionEditPolicy } from "src/lib/song-version-policy";
+import { isCorrectionSubmission, publicationOptions, needsRevisionToBecomeOfficial, submissionReview, versionEditPolicy } from "src/lib/song-version-policy";
 import {
   conflict,
   contentOf,
   firstSheetChange,
-  isFirstImportCuration,
+  isFirstImportedSheetEdit,
   loadVersion,
   officialCondition,
   reviseVersion,
@@ -113,7 +113,7 @@ export async function saveSongVersion(
       return loadVersion(db, songId, copy.id);
     }
   }
-  // Approving an untouched source copy is publication, not curation. Preserve
+  // Approval of an unchanged import preserves its sheet. Keep
   // its ID, import marker and submitter just like the direct approval endpoint.
   if (base?.importId && base.status === "pending" && options?.publish && sameContent(base, content)) {
     const changeAuthor = attribution === false && !owns;
@@ -131,7 +131,7 @@ export async function saveSongVersion(
   const importedSource = !!source?.importId && !importId;
   const mode = input.saveMode ?? "correction";
   const editPolicy = versionEditPolicy(base ? { pending: base.status === "pending", imported: !!base.importId,
-    pendingCuration: isDraft && importedSource, official: base.id === parent.currentVersionId, ownerId: base.userId } : undefined, actor);
+    official: base.id === parent.currentVersionId, ownerId: base.userId } : undefined, actor);
   if (!editPolicy.canEdit)
     throw new HTTPException(403, {
       message: "You cannot edit another author's draft.",
@@ -157,7 +157,7 @@ export async function saveSongVersion(
   const selectReviewedImport = !importId && !!base?.importId && base.status === "published" &&
     !parent.currentVersionId && mode === "correction" && canManage && trusted;
   if (base && !isDraft && mode === "correction" && sameContent(base, content) && (attribution !== false || owns)) {
-    if (selectReviewedImport && !requiresImportRevision(true, base.revision))
+    if (selectReviewedImport && !needsRevisionToBecomeOfficial(true, base.revision))
       await selectOnlyPublishedVersion(db, songId, base.id, base.revision);
     return base;
   }
@@ -179,8 +179,8 @@ export async function saveSongVersion(
         message:
           "Create a separate version to change another author's alternative.",
       });
-    const firstCuration = await isFirstImportCuration(db, base, content);
-    const author = firstCuration || attribution === false ? userId : base.userId;
+    const firstImportedSheetEdit = await isFirstImportedSheetEdit(db, base, content);
+    const author = firstImportedSheetEdit || attribution === false ? userId : base.userId;
     const changed =
       !sameContent(base, content) ||
       author !== base.userId ||
@@ -494,9 +494,9 @@ export async function approveVersion(
     if (options.force && options.expectedTargetRevision !== target.revision)
       throw conflict();
     const content = contentOf(proposal);
-    const firstCuration = await isFirstImportCuration(db, target, content);
+    const firstImportedSheetEdit = await isFirstImportedSheetEdit(db, target, content);
     const selectReviewedImport = target.status === "published" && !!target.importId && !parent.currentVersionId;
-    const curator = firstCuration
+    const firstEditorId = firstImportedSheetEdit
       ? (await firstSheetChange(db, proposal.id, target))?.userId ?? proposal.userId
       : undefined;
     await withVersionConflict(() =>
@@ -506,11 +506,11 @@ export async function approveVersion(
           target,
           {
             ...content,
-            ...(curator ? { userId: curator } : {}),
+            ...(firstEditorId ? { userId: firstEditorId } : {}),
             approvedBy: userId,
             approvedAt: now,
           },
-          curator ?? proposal.userId,
+          firstEditorId ?? proposal.userId,
         ),
         reviseVersion(
           db,
@@ -635,7 +635,7 @@ export async function setOfficialVersion(
       message: "Select a published version of an available song.",
     });
   if (version.revision !== expectedRevision) throw conflict();
-  if (requiresImportRevision(!!version.importId, version.revision))
+  if (needsRevisionToBecomeOfficial(!!version.importId, version.revision))
     throw new HTTPException(400, { message: "Save a revision of this import before making it official." });
   if (parent.currentVersionId === versionId) return version;
   // Official selection belongs to the song, not to the sheet's revision

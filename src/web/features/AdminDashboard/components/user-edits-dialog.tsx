@@ -22,7 +22,7 @@ import {
 } from "~/components/ui/table";
 import { AdminApi } from "~/../worker/api-client";
 import { useVersionsAdmin } from "../../../services/admin-hooks";
-import { ExternalSourceBadge } from "./external-source-badge";
+import { ImportedSourceBadge } from "./imported-source-badge";
 
 interface UserEditsDialogProps {
   adminApi: AdminApi;
@@ -126,7 +126,7 @@ export function UserEditsDialog({
                       <div className="flex flex-wrap gap-1.5 items-center">
                         <SongVersionStatusBadge status={version.status} />
                         {version.importSourceId && (
-                          <ExternalSourceBadge
+                          <ImportedSourceBadge
                             sourceId={version.importSourceId}
                             url={version.importUrl ?? "#"}
                           />

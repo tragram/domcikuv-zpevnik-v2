@@ -49,13 +49,13 @@ type SortDirection = "asc" | "desc";
 /** Illustration-coverage filter (single-select); "all" is the reset. */
 type CoverageFilter = "all" | "illustrated" | "unillustrated" | "assets";
 /** Independent visibility focus, isolated via its own cards. */
-type ShowOnly = "external" | "deleted";
+type ShowOnly = "imported" | "deleted";
 
 const PAGE_SIZE = 20;
 
-// External songs are
+// Imported songs are
 // hidden from the default working view (they rarely need illustrations); the
-// External card reveals them, so coverage counts ignore them by default too.
+// Imported card reveals them, so coverage counts ignore them by default too.
 const isVisibleSong = (g: SongWithIllustrationsAndPrompts) =>
   !g.song.deleted;
 
@@ -238,9 +238,9 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [coverageFilter, setCoverageFilter] = useState<CoverageFilter>("all");
   // Visibility cards are show/hide toggles (single click) that also support
-  // "show only" via double click (`isolate`). External and deleted are hidden
+  // "show only" via double click (`isolate`). Imported and deleted are hidden
   // by default.
-  const [showExternal, setShowExternal] = useLocalStorageState<boolean>(
+  const [showImported, setShowImported] = useLocalStorageState<boolean>(
     "admin/illustration-table/show-external",
     { defaultValue: false },
   );
@@ -264,10 +264,10 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
       groupedData,
     ) as SongWithIllustrationsAndPrompts[];
     const visible = groups.filter(isVisibleSong);
-    // Coverage counts follow the external toggle so the cards match the list;
+    // Coverage counts follow the imported toggle so the cards match the list;
     // the visibility cards themselves show full category totals.
     const inScope = visible.filter(
-      (g) => showExternal || !g.song.externalSource,
+      (g) => showImported || !g.song.sourceAttribution,
     );
     return {
       songs: inScope.length,
@@ -278,10 +278,10 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
         (acc, g) => acc + g.illustrations.filter((i) => !i.deleted).length,
         0,
       ),
-      external: visible.filter((g) => g.song.externalSource).length,
+      imported: visible.filter((g) => g.song.sourceAttribution).length,
       deleted: groups.filter((g) => g.song.deleted).length,
     };
-  }, [groupedData, showExternal]);
+  }, [groupedData, showImported]);
 
   const filteredAndSortedGroups = useMemo(() => {
     let groups = Object.entries(groupedData) as [
@@ -304,14 +304,14 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     // toggles compose.
     if (isolate === "deleted") {
       groups = groups.filter(([, group]) => group.song.deleted);
-    } else if (isolate === "external") {
+    } else if (isolate === "imported") {
       groups = groups.filter(
-        ([, group]) => isVisibleSong(group) && !!group.song.externalSource,
+        ([, group]) => isVisibleSong(group) && !!group.song.sourceAttribution,
       );
     } else {
       groups = groups.filter(([, group]) => {
         if (!showDeleted && group.song.deleted) return false;
-        if (!showExternal && group.song.externalSource) return false;
+        if (!showImported && group.song.sourceAttribution) return false;
         return true;
       });
     }
@@ -409,7 +409,7 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
     groupedData,
     searchTerm,
     isolate,
-    showExternal,
+    showImported,
     showDeleted,
     coverageFilter,
     imageModelFilter,
@@ -507,11 +507,11 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
   };
 
   const showByAttr: Record<ShowOnly, boolean> = {
-    external: showExternal,
+    imported: showImported,
     deleted: showDeleted,
   };
   const setShowByAttr: Record<ShowOnly, (v: boolean) => void> = {
-    external: setShowExternal,
+    imported: setShowImported,
     deleted: setShowDeleted,
   };
 
@@ -635,12 +635,12 @@ export function IllustrationsTable({ adminApi }: IllustrationsTableProps) {
                 hint: "click show/hide · double-click = only",
                 items: [
                   {
-                    label: "External",
-                    value: stats.external,
+                    label: "Imported",
+                    value: stats.imported,
                     icon: Globe,
                     className: "text-info",
-                    onClick: () => onAttrClick("external"),
-                    ...attrCardState("external"),
+                    onClick: () => onAttrClick("imported"),
+                    ...attrCardState("imported"),
                   },
                   {
                     label: "Deleted",

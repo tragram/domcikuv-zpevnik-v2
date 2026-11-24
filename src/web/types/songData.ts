@@ -2,7 +2,7 @@ import { Key, SongRange } from "./musicTypes";
 import type { ChordPro, EditorState, int, SongLanguage } from "./types";
 import type {
   CurrentIllustrationApi,
-  ExternalSourceApi,
+  SourceAttributionApi,
   SongDataApi,
 } from "src/worker/api/api-types";
 import type { ExternalSearchResult } from "src/lib/contracts/external-search-schema";
@@ -55,7 +55,7 @@ export class SongData {
   /** Canonical 11-char YouTube video id, or undefined. See src/lib/youtube.ts. */
   youtubeId?: string;
   chordpro: ChordPro;
-  externalSource: ExternalSourceApi | null;
+  sourceAttribution: SourceAttributionApi | null;
   importOriginalContent?: string;
   /** Hidden from the browse list, but still searchable and directly accessible. */
   officialVersionId?: string | null;
@@ -112,7 +112,7 @@ export class SongData {
     this.range = this.parseRange(songFromDB.range);
     this.youtubeId = songFromDB.youtubeId || undefined;
     this.chordpro = songFromDB.chordpro;
-    this.externalSource = songFromDB.externalSource;
+    this.sourceAttribution = songFromDB.externalSource;
     this.importOriginalContent = songFromDB.importOriginalContent;
     this.officialVersionId = songFromDB.officialVersionId;
 
@@ -230,8 +230,8 @@ export class SongData {
   }
 
   /** Fallback logo for external sources without a generated illustration yet. */
-  private externalSourceFallbackLogo(): string | undefined {
-    switch (this.externalSource?.sourceId) {
+  private sourceFallbackLogo(): string | undefined {
+    switch (this.sourceAttribution?.sourceId) {
       case "pisnicky-akordy":
         return generateFallbackLogo("#7BAADF", "#578DC5");
       case "cifraclub":
@@ -247,7 +247,7 @@ export class SongData {
   thumbnailURL(): string | undefined {
     if (this.previewThumbnailURL) return this.previewThumbnailURL;
     if (!this.currentIllustration) {
-      const fallback = this.externalSourceFallbackLogo();
+      const fallback = this.sourceFallbackLogo();
       if (fallback) return fallback;
     }
     return (
@@ -259,7 +259,7 @@ export class SongData {
   illustrationURL(): string | undefined {
     if (this.previewThumbnailURL) return this.previewThumbnailURL;
     if (!this.currentIllustration) {
-      const fallback = this.externalSourceFallbackLogo();
+      const fallback = this.sourceFallbackLogo();
       if (fallback) return fallback;
     }
     return (
@@ -305,7 +305,7 @@ export class SongData {
       chordpro: this.chordpro,
       currentIllustration: this.currentIllustration,
       isFavorite: this.isFavorite,
-      externalSource: this.externalSource,
+      externalSource: this.sourceAttribution,
       importOriginalContent: this.importOriginalContent,
       url: this.url(),
       thumbnailURL: this.thumbnailURL(),

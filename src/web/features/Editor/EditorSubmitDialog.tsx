@@ -58,17 +58,17 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
         <RadioGroup aria-label="Save changes as" value={choice.saveMode} disabled={submitting} onValueChange={selectMode}>
           {choice.canCorrect && <RadioGroupOption
             value="correction"
-            label="Revision of this version"
+            label="Revise this version"
             description="Saved songbooks keep following this version."
           />}
           <RadioGroupOption
             value="new-version"
-            label="Replacement or alternative"
+            label="Create a new version"
             description="Create a separately selectable version."
           />
         </RadioGroup>
       </div> : choice.canEdit ? <p>Your existing draft will be updated.</p> : null}
-      {song.externalSource && <p className="text-sm text-muted-foreground">A revision keeps this version and preserves the original imported sheet in its history. Choose a separate version for an alternative arrangement.</p>}
+      {song.sourceAttribution && <p className="text-sm text-muted-foreground">A revision keeps this version and preserves the original imported sheet in its history. Choose a separate version for an alternative arrangement.</p>}
       {showVersionDetails && <fieldset className="min-w-0 space-y-2" disabled={submitting}>
         <legend className="text-sm font-medium">Version details <span className="font-normal text-muted-foreground">(optional)</span></legend>
         <VersionDetailsFields
@@ -96,7 +96,7 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
       {choice.canEdit && <div className="space-y-3">
         {actor.isAdmin && <PublicationOption
           label="Edit as previous author"
-          description={song.externalSource && (choice.isPending || choice.saveMode === "correction")
+          description={song.sourceAttribution && (choice.isPending || choice.saveMode === "correction")
             ? "The first revision to an imported sheet is credited to its editor."
             : undefined}
           checked={editAsPreviousAuthor === true}

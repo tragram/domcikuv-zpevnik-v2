@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { requiresImportRevision } from "src/lib/song-version-policy";
+import { needsRevisionToBecomeOfficial } from "src/lib/song-version-policy";
 import { useRouter } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
@@ -61,7 +61,7 @@ export function SongVersionBadge({
   const notes = details.notes;
   const shown = versions?.find((version) => version.id === songData.versionId);
   const isOfficial = shown?.isCurrent ?? songData.isOfficial === true;
-  const label = versionLabel({ label: shown?.label ?? songData.versionLabel, importSourceId: songData.externalSource?.sourceId, isOfficial: isOfficial, versionNumber: shown?.versionNumber ?? songData.versionNumber, createdAt: songData.versionCreatedAt ?? songData.createdAt });
+  const label = versionLabel({ label: shown?.label ?? songData.versionLabel, importSourceId: songData.sourceAttribution?.sourceId, isOfficial: isOfficial, versionNumber: shown?.versionNumber ?? songData.versionNumber, createdAt: songData.versionCreatedAt ?? songData.createdAt });
 
   const badgeLabel = versionBadgeLabel({ label, isOfficial: isOfficial });
   const hasDifferentOfficial = !!entry?.pinnedVersionId && !isOfficial && (songData.officialVersionId === undefined
@@ -96,7 +96,7 @@ export function SongVersionBadge({
     : entry?.song?.versionStatus;
   const hasSavedUnpublishedVersion = savedStatus === "archived" || savedStatus === "pending" || savedStatus === "rejected";
   const canMakeOfficial = (userData?.profile.isAdmin || userData?.profile.isTrusted) && !isOfficial && songData.versionStatus === "published";
-  const needsRevision = requiresImportRevision(!!songData.externalSource, shown?.revision ?? songData.versionRevision);
+  const needsRevision = needsRevisionToBecomeOfficial(!!songData.sourceAttribution, shown?.revision ?? songData.versionRevision);
   if (!songData.versionId || (!hasChoices && !hasSavedUnpublishedVersion && !selection?.unavailable && !canMakeOfficial)) return null;
 
   return (
@@ -137,17 +137,17 @@ export function SongVersionBadge({
             <div className="space-y-0.5"><dt>Shown because</dt>
             <dd><Description>{details.reason}</Description></dd></div>
             {notes.length > 0 && <div className="space-y-0.5"><dt>Notes</dt><dd className="space-y-1">{notes.map((text) => <p key={text}>{text}</p>)}</dd></div>}
-            {songData.externalSource && (
+            {songData.sourceAttribution && (
               <div className="flex flex-wrap items-baseline gap-x-1">
                 <dt>Source:</dt>
                 <dd>
                     <a
-                      href={songData.externalSource.url}
+                      href={songData.sourceAttribution.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-(color:--chord) underline underline-offset-2"
                     >
-                      {SONG_SOURCES_PRETTY[songData.externalSource.sourceId]}
+                      {SONG_SOURCES_PRETTY[songData.sourceAttribution.sourceId]}
                     </a>
                 </dd>
               </div>

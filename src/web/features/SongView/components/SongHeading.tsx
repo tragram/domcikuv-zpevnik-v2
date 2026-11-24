@@ -133,13 +133,13 @@ const SongHeading: React.FC<SongHeadingProps> = ({
                 className="text-[0.6em] leading-tight text-nowrap dark:text-muted-foreground"
               />
             )}
-            {songData.externalSource ? (
+            {songData.sourceAttribution ? (
               <Link
                 className="text-[0.55em] leading-tight dark:text-muted-foreground"
-                to={songData.externalSource.url}
+                to={songData.sourceAttribution.url}
                 target="_blank"
               >
-                {`Imported from ${SONG_SOURCES_PRETTY[songData.externalSource.sourceId]}`}
+                {`Imported from ${SONG_SOURCES_PRETTY[songData.sourceAttribution.sourceId]}`}
               </Link>
             ) : songData.range && (
               <h3 className="shrink-0 whitespace-nowrap text-[0.6em] leading-[1.8] sub-sup-container">

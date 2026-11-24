@@ -83,7 +83,7 @@ import {
 } from "../../../services/admin-hooks";
 import { ActionButtons } from "./shared/action-buttons";
 import { ControlPanel } from "./control-panel";
-import { ExternalSourceBadge } from "./external-source-badge";
+import { ImportedSourceBadge } from "./imported-source-badge";
 import { Pagination } from "./shared/pagination";
 import { StatsBar } from "./stats-bar";
 import { ToggleCheckbox } from "./toggle-checkbox";
@@ -101,7 +101,7 @@ import { VersionReclassification } from "./version-reclassification";
 import { VersionRename } from "./version-rename";
 import { VersionAuthor } from "./version-author";
 import { getWorkingVersion, getCorrectionParent } from "./version-selection";
-import { isCorrectionSubmission, publicationOptions, requiresImportRevision, submissionReview } from "src/lib/song-version-policy";
+import { isCorrectionSubmission, publicationOptions, needsRevisionToBecomeOfficial, submissionReview } from "src/lib/song-version-policy";
 
 // --- TYPES & CONSTANTS ---
 
@@ -119,7 +119,7 @@ const HIDEABLE_COLUMNS = [
 
 type HideableColumn = (typeof HIDEABLE_COLUMNS)[number]["id"];
 
-type ExternalSource = {
+type ImportAttribution = {
   sourceId: (typeof SONG_SOURCES)[number];
   url: string;
 };
@@ -131,7 +131,7 @@ type SortableSong = SongDataDB & {
   status: string;
   hasPendingVersions: boolean;
   hasYoutube: boolean;
-  externalSource: ExternalSource | null;
+  sourceAttribution: ImportAttribution | null;
   submittedBy: string | null;
   maxRowWidth: number | null;
 };
@@ -143,7 +143,7 @@ type SortConfig = {
     | "hasYoutube"
     | "currentVersionId"
     | "currentIllustrationId"
-    | "externalSource"
+    | "sourceAttribution"
     | "submittedBy"
   >;
   direction: "ascending" | "descending";
@@ -152,7 +152,7 @@ type SortConfig = {
 type StatusFilter =
   | "all"
   | "pending"
-  | "published"
+  | "official"
   | "archived"
   | "rejected"
   | "noYoutube"
@@ -178,9 +178,9 @@ const STATUS_CARDS: {
     className: "text-warning",
   },
   {
-    value: "published",
-    label: "Published",
-    stat: "published",
+    value: "official",
+    label: "Official",
+    stat: "official",
     icon: CheckCircle2,
     className: "text-success",
   },
@@ -215,7 +215,7 @@ const STATUS_CARDS: {
 ];
 
 /** Independent visibility attributes, isolated via their own StatsBar cards. */
-type AttrIsolate = "external" | "unofficial" | "deleted";
+type AttrIsolate = "imported" | "unofficial" | "deleted";
 
 const ATTR_CARDS: {
   value: AttrIsolate;
@@ -225,15 +225,15 @@ const ATTR_CARDS: {
   className?: string;
 }[] = [
   {
-    value: "external",
-    label: "External",
-    stat: "external",
+    value: "imported",
+    label: "Imported",
+    stat: "imported",
     icon: Globe,
     className: "text-info",
   },
   {
     value: "unofficial",
-    label: "Unofficial",
+    label: "No official version",
     stat: "unofficial",
     icon: Star,
     className: "text-muted-foreground",
@@ -250,12 +250,12 @@ const ATTR_CARDS: {
 type SongStats = {
   total: number;
   pending: number;
-  published: number;
+  official: number;
   archived: number;
   rejected: number;
   noYoutube: number;
   empty: number;
-  external: number;
+  imported: number;
   unofficial: number;
   deleted: number;
 };
@@ -412,7 +412,7 @@ function SongVersionItem({
   const [mergeOpen, setMergeOpen] = useState(false);
   const [authorOpen, setAuthorOpen] = useState(false);
   const canChangeAuthor = !song.deleted && version.status !== "deleted" && !version.mergedIntoVersionId;
-  const needsRevision = !isCurrentActive && requiresImportRevision(!!version.importId, version.revision);
+  const needsRevision = !isCurrentActive && needsRevisionToBecomeOfficial(!!version.importId, version.revision);
   const canMerge = !isCorrection && !!getCorrectionParent(version, versions);
   const compareTargets = [
     ...(parentVersion && parentVersion.id !== version.id ? [{ version: parentVersion, label: "Source version" }] : []),
@@ -515,7 +515,7 @@ function SongVersionItem({
         <PublicationOption
           label="Make official"
           description={automaticallyOfficial
-            ? "The first published curated version becomes official automatically."
+            ? "With no official version, publishing this local version makes it official."
             : version.importId && !song.currentVersionId
               ? "Approval makes this import official if it is the only published version. You can also choose it explicitly."
               : "Use this version by default for this song."}
@@ -525,7 +525,7 @@ function SongVersionItem({
         />
         {parentVersion && <PublicationOption
           label={`Archive “${versionLabel(parentVersion)}”`}
-          description={importedSource ? "Imported source copies are always archived unchanged when the curated version is published." : canArchivePrevious ? "Hide the previous version from discovery. Saved songbook choices and links keep working." : "Select Make official before archiving the current official version."}
+          description={importedSource ? "Publishing this replacement archives the imported source copy." : canArchivePrevious ? "Hide the previous version from discovery. Saved songbook choices and links keep working." : "Select Make official before archiving the current official version."}
           checked={archivePrevious && canArchivePrevious}
           disabled={importedSource || !canArchivePrevious}
           onCheckedChange={(checked) => setPublication({ reviewState, makeOfficial, archivePrevious: checked })}
@@ -560,7 +560,7 @@ function SongVersionItem({
               className="text-success hover:text-success hover:bg-success/10 border-success/30 dark:hover:bg-success/20 dark:border-success/30"
               onClick={() => onApprove(isCorrection ? { force: override } : { force: override, makeOfficial, archivePrevious: archivePrevious && canArchivePrevious })} disabled={!review || isApprovePending || (stale && !override)}
             >
-              <CheckCircle2 className="w-4 h-4 mr-1.5" /> {isCorrection ? "Approve revision" : "Publish new version"}
+              <CheckCircle2 className="w-4 h-4 mr-1.5" /> {isCorrection ? "Approve revision" : "Publish version"}
             </Button>
             <Button
               size="sm"
@@ -833,10 +833,10 @@ function SongTableRow({
           <TableCell>
           <div className="flex flex-wrap gap-2 items-center">
             <SongVersionStatusBadge status={song.status} />
-            {song.externalSource && (
-              <ExternalSourceBadge
-                sourceId={song.externalSource.sourceId}
-                url={song.externalSource.url}
+            {song.sourceAttribution && (
+              <ImportedSourceBadge
+                sourceId={song.sourceAttribution.sourceId}
+                url={song.sourceAttribution.url}
               />
             )}
             {pendingCount > 0 && !song.deleted && song.status !== "pending" && (
@@ -1085,9 +1085,9 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   // Visibility cards are show/hide toggles (single click) that also support
-  // "show only" via double click (`isolate`). External is hidden by default
+  // "show only" via double click (`isolate`). Imports are hidden by default
   // since those songs are rarely the focus.
-  const [showExternal, setShowExternal] = useLocalStorageState<boolean>(
+  const [showImported, setShowImported] = useLocalStorageState<boolean>(
     "admin/songs-table/show-external",
     { defaultValue: false },
   );
@@ -1203,8 +1203,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     return songs.map((song) => {
       const songVersions = versionsBySong[song.id] || [];
       const workingVersion = getWorkingVersion(song, songVersions);
-      const status = !song.currentVersionId && workingVersion?.status === "published"
-        ? "unofficial"
+      const status = workingVersion?.status === "published"
+        ? (song.currentVersionId ? "official" : "unofficial")
         : workingVersion?.status ?? "empty";
       return {
         ...song,
@@ -1218,7 +1218,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
         status: song.deleted ? "deleted" : status,
         hasPendingVersions: songVersions.some((v) => v.status === "pending"),
         hasYoutube: !!workingVersion?.youtubeId,
-        externalSource: workingVersion?.importSourceId
+        sourceAttribution: workingVersion?.importSourceId
           ? {
               sourceId: workingVersion.importSourceId,
               url: workingVersion.importUrl ?? "#",
@@ -1238,7 +1238,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     const inScope = enrichedSongs.filter(
       (s) =>
         !s.deleted &&
-        (showExternal || !s.externalSource) &&
+        (showImported || !s.sourceAttribution) &&
         (showUnofficial || s.status !== "unofficial"),
     );
     const byStatus = (status: string) =>
@@ -1246,17 +1246,17 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     return {
       total: inScope.length,
       pending: inScope.filter((s) => s.hasPendingVersions).length,
-      published: byStatus("published"),
+      official: byStatus("official"),
       archived: byStatus("archived"),
       rejected: byStatus("rejected"),
       noYoutube: inScope.filter((s) => !s.hasYoutube).length,
       empty: byStatus("empty"),
-      external: enrichedSongs.filter((s) => s.externalSource && !s.deleted)
+      imported: enrichedSongs.filter((s) => s.sourceAttribution && !s.deleted)
         .length,
       unofficial: enrichedSongs.filter((s) => s.status === "unofficial").length,
       deleted: enrichedSongs.filter((s) => s.deleted).length,
     };
-  }, [enrichedSongs, showExternal, showUnofficial]);
+  }, [enrichedSongs, showImported, showUnofficial]);
 
   const filteredSortedSongs = useMemo(() => {
     const term = searchTerm.toLowerCase();
@@ -1280,8 +1280,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       // Double-click "show only" overrides the toggles and isolates a category.
       if (isolate) {
         switch (isolate) {
-          case "external":
-            return !!song.externalSource && !song.deleted;
+          case "imported":
+            return !!song.sourceAttribution && !song.deleted;
           case "unofficial":
             return song.status === "unofficial";
           case "deleted":
@@ -1290,7 +1290,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
       }
 
       // Apply the visibility toggles together.
-      if (!showExternal && song.externalSource) return false;
+      if (!showImported && song.sourceAttribution) return false;
       if (!showUnofficial && song.status === "unofficial") return false;
       if (!showDeleted && song.deleted) return false;
       return true;
@@ -1316,7 +1316,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     searchTerm,
     statusFilter,
     isolate,
-    showExternal,
+    showImported,
     showUnofficial,
     showDeleted,
     sortConfig,
@@ -1407,12 +1407,12 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   };
 
   const showByAttr: Record<AttrIsolate, boolean> = {
-    external: showExternal,
+    imported: showImported,
     unofficial: showUnofficial,
     deleted: showDeleted,
   };
   const setShowByAttr: Record<AttrIsolate, (v: boolean) => void> = {
-    external: setShowExternal,
+    imported: setShowImported,
     unofficial: setShowUnofficial,
     deleted: setShowDeleted,
   };
@@ -1596,7 +1596,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                         { ...input, official: true },
                         {
                           onSuccess: () =>
-                            toast.success(input.clearOfficial ? "Official selection cleared" : "Set as current version"),
+                            toast.success(input.clearOfficial ? "Official selection cleared" : "Official version selected"),
                           onError: (error) => toast.error(error.message),
                         },
                       )

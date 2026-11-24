@@ -149,8 +149,12 @@ export const deleteIllustrationPrompt = async (
   );
 };
 
+export type IllustrationSong = Omit<SongDataAdminApi, "externalSource"> & {
+  sourceAttribution: SongDataAdminApi["externalSource"];
+};
+
 export type SongWithIllustrationsAndPrompts = {
-  song: SongDataAdminApi;
+  song: IllustrationSong;
   illustrations: SongIllustrationDB[];
   prompts: Record<string, IllustrationPromptDB>;
 };
@@ -161,9 +165,9 @@ export const songsWithIllustrationsAndPrompts = (
   prompts: IllustrationPromptDB[],
 ) => {
   const songIllustrationsPrompts = songs.reduce(
-    (acc, s) => {
-      acc[s.id] = {
-        song: s,
+    (acc, { externalSource, ...song }) => {
+      acc[song.id] = {
+        song: { ...song, sourceAttribution: externalSource },
         illustrations: [],
         prompts: {},
       } as SongWithIllustrationsAndPrompts;

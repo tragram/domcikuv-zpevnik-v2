@@ -23,7 +23,7 @@ const song = (overrides: Partial<SongData> = {}): SongData =>
     language: undefined,
     capo: undefined,
     range: undefined,
-    externalSource: null,
+    sourceAttribution: null,
     ...overrides,
   }) as SongData;
 
@@ -134,9 +134,9 @@ describe("filterBrowseSongs", () => {
   });
 
   it("shows official imports to everyone and unofficial imports to viewers who pinned them", () => {
-    const externalSource = { sourceId: "cifraclub", url: "https://example.test", originalContent: "" } as const;
-    const official = song({ id: "official", versionId: "source", officialVersionId: "source", externalSource });
-    const unofficial = song({ id: "unofficial", versionId: "copy", officialVersionId: null, externalSource });
+    const sourceAttribution = { sourceId: "cifraclub", url: "https://example.test", originalContent: "" } as const;
+    const official = song({ id: "official", versionId: "source", officialVersionId: "source", sourceAttribution });
+    const unofficial = song({ id: "unofficial", versionId: "copy", officialVersionId: null, sourceAttribution });
     const viewer = { songbookEntries: new Map([[unofficial.id, { songId: unofficial.id, pinnedVersionId: unofficial.versionId }]]) } as Parameters<typeof filterBrowseSongs>[1];
     expect(filterBrowseSongs([official, unofficial], null)).toEqual([official]);
     expect(filterBrowseSongs([official, unofficial], viewer)).toEqual([official, unofficial]);

@@ -63,7 +63,7 @@ async function setup({ searchOnline = true } = {}) {
       return (
         <>
           <input aria-label="Search" value={query} readOnly />
-          <button onClick={triggerExternalSearch}>Search Online Services</button>
+          <button onClick={triggerExternalSearch}>Search external sources</button>
           {hasTriggeredExternalSearch && externalSongs.map((song) => (
             <Link key={song.id} to="/import" search={sources.find((source) => source.id === song.id)!}>
               {song.id}
@@ -115,7 +115,7 @@ async function setup({ searchOnline = true } = {}) {
   }
 
   if (searchOnline) {
-    await click("Search Online Services");
+    await click("Search external sources");
     await act(async () => new Promise((resolve) => setTimeout(resolve, 0)));
     await vi.waitFor(() => expect(container.textContent).toContain("second"));
   }
@@ -191,7 +191,7 @@ it("leaves a newer search intact when the previous search expires", async () => 
   await click("first");
   await click("Back to songbook");
   await act(async () => { useQueryStore.getState().setQuery("Another song"); });
-  await click("Search Online Services");
+  await click("Search external sources");
   await act(async () => { await vi.advanceTimersByTimeAsync(60_000); });
 
   expect(container.querySelector("input")?.value).toBe("Another song");

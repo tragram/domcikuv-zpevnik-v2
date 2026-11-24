@@ -31,11 +31,12 @@ import {
   useUpdateIllustration,
 } from "../../../../services/admin-hooks";
 import DeletePrompt from "~/components/dialogs/delete-prompt";
-import type { IllustrationModifySchema, SongDataAdminApi } from "src/worker/api/api-types";
+import type { IllustrationSong } from "~/services/illustration-service";
+import type { IllustrationModifySchema } from "src/worker/api/api-types";
 import { ApiException } from "~/services/api-service";
 
 interface IllustrationCardProps {
-  song: SongDataAdminApi;
+  song: IllustrationSong;
   illustration: SongIllustrationDB;
   prompt: IllustrationPromptDB;
   onPreview: (imageUrl: string) => void;

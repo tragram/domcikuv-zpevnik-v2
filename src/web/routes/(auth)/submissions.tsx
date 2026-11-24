@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { requiresImportRevision } from "src/lib/song-version-policy";
+import { needsRevisionToBecomeOfficial } from "src/lib/song-version-policy";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -137,7 +137,7 @@ function UserSubmissions() {
             {(
               [
                 ...(version.status === "published" && !version.isOfficial
-                  ? ["archive", ...(trusted && !requiresImportRevision(!!version.importId, version.revision) ? ["official"] : [])]
+                  ? ["archive", ...(trusted && !needsRevisionToBecomeOfficial(!!version.importId, version.revision) ? ["official"] : [])]
                   : []),
                 ...((version.status === "archived" &&
                   !version.mergedIntoVersionId) ||

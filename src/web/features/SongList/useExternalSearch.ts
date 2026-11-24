@@ -34,10 +34,7 @@ export function useExternalSearch(userData: UserData, bestLocalScore: number) {
     !!query &&
     (externalSearchTriggered || bestLocalScore > 0.05 || query.trim().length >= 7);
   // Online-only: the endpoint hits third-party libraries and importing a result
-  // needs the network too, so hide the whole flow offline. The "show external"
-  // browse filter only affects which *local* songs are displayed, not whether
-  // online search is offered — same as every other browse filter being bypassed
-  // while actively searching (see useDisplayedSongs).
+  // needs the network too, so hide the whole flow offline.
   const canSearchExternal =
     isOnline && !!userData && isQueryValidForExternal;
   const hasTriggeredExternalSearch = canSearchExternal && externalSearchTriggered;

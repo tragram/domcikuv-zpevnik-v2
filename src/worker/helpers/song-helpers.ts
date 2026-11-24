@@ -1,5 +1,5 @@
 import { versionNumbers } from "./song-versions/numbering";
-import { curatedImportIds } from "./song-versions/revisions";
+import { importVersionIdsWithSheetChanges } from "./song-versions/revisions";
 import { withSubmission } from "src/lib/song-submission";
 import {
   and,
@@ -89,11 +89,11 @@ export async function publishedVersionIds(db: AppDatabase, songIds?: string[]) {
 // --- DTO Mapper ---
 const transformSongToApi = (
   songItem: PopulatedSongDB & { favorites?: { userId: string }[] },
-  curatedImports: ReadonlySet<string>,
+  editedImportVersionIds: ReadonlySet<string>,
   updatedSince?: Date,
 ): SongDataApi => {
   const version = songItem.currentVersion;
-  const curated = !!version && curatedImports.has(version.id);
+  const sheetChangedSinceImport = !!version && editedImportVersionIds.has(version.id);
 
   return {
     id: songItem.id,
@@ -125,8 +125,8 @@ const transformSongToApi = (
     youtubeId: version?.youtubeId ?? undefined,
     chordpro: version?.chordpro ?? "Not uploaded",
 
-    importOriginalContent: curated ? version?.songImport?.originalContent : undefined,
-    externalSource: !curated && version?.songImport
+    importOriginalContent: sheetChangedSinceImport ? version?.songImport?.originalContent : undefined,
+    externalSource: !sheetChangedSinceImport && version?.songImport
       ? {
           sourceId: version.songImport.sourceId,
           originalContent: version.songImport.originalContent,
@@ -196,11 +196,11 @@ export async function retrieveSongs(
   const catalog = rows.map(({ version, ...row }) => ({ ...row, currentVersion: row.currentVersion ?? version[0] ?? null }));
   const visible = includeDeleted ? catalog : catalog.filter((row) => row.currentVersion);
   const live = visible.filter((row) => !row.deleted && row.currentVersion);
-  const [choices, curated] = await Promise.all([
+  const [choices, editedImportVersionIds] = await Promise.all([
     publishedVersionIds(db, live.map((row) => row.id)),
-    curatedImportIds(db, live.flatMap((row) => row.currentVersion ?? [])),
+    importVersionIdsWithSheetChanges(db, live.flatMap((row) => row.currentVersion ?? [])),
   ]);
-  return visible.map((row) => ({ ...transformSongToApi(row, curated, updatedSince), publishedVersionIds: choices.get(row.id) ?? [] }));
+  return visible.map((row) => ({ ...transformSongToApi(row, editedImportVersionIds, updatedSince), publishedVersionIds: choices.get(row.id) ?? [] }));
 }
 
 /**
@@ -255,7 +255,7 @@ export const retrieveSingleSong = async (
   }
 
   if (!songRaw.currentVersion) return null;
-  const result = transformSongToApi(songRaw, await curatedImportIds(db, [songRaw.currentVersion]));
+  const result = transformSongToApi(songRaw, await importVersionIdsWithSheetChanges(db, [songRaw.currentVersion]));
   if (songRaw.currentVersion.parentId) {
     const source = await db.query.songVersion.findFirst({ where: and(eq(songVersion.id, songRaw.currentVersion.parentId), eq(songVersion.songId, songId)), columns: { importId: true } });
     result.versionParentIsImported = !!source?.importId;
@@ -293,12 +293,12 @@ export async function getPinnedAlternatives(db: AppDatabase, ownerId: string) {
     },
   });
 
-  const curated = await curatedImportIds(db, versions);
+  const editedImportVersionIds = await importVersionIdsWithSheetChanges(db, versions);
   const sheets = new Map<string, SongDataApi>();
   for (const { song: parent, ...version } of versions) {
     if (parent.deleted || parent.currentVersionId === version.id) continue;
     sheets.set(version.id, {
-      ...transformSongToApi({ ...parent, currentVersion: version }, curated),
+      ...transformSongToApi({ ...parent, currentVersion: version }, editedImportVersionIds),
       ...customMetaOf(null, version),
       versionNumber: parent.version.findIndex(v => v.id === version.id) + 1,
       publishedVersionIds: parent.version
@@ -386,11 +386,11 @@ export const getSongVersionsByUser = async (
     orderBy: [desc(songVersion.createdAt)],
     with: { submission: true, song: { columns: { currentVersionId: true } }, songImport: { columns: { sourceId: true } } },
   });
-  const [numbers, curated] = await Promise.all([
+  const [numbers, editedImportVersionIds] = await Promise.all([
     versionNumbers(db, [...new Set(versions.map(v => v.songId))]),
-    curatedImportIds(db, versions),
+    importVersionIdsWithSheetChanges(db, versions),
   ]);
-  return versions.map(({ song, songImport, submission, ...version }) => ({ ...withSubmission(version, submission), versionNumber: numbers.get(version.id), importSourceId: curated.has(version.id) ? null : songImport?.sourceId ?? null, isOfficial: song.currentVersionId === version.id }));
+  return versions.map(({ song, songImport, submission, ...version }) => ({ ...withSubmission(version, submission), versionNumber: numbers.get(version.id), importSourceId: editedImportVersionIds.has(version.id) ? null : songImport?.sourceId ?? null, isOfficial: song.currentVersionId === version.id }));
 };
 
 // --- Mutations ---

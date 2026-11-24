@@ -48,13 +48,13 @@ export function sameContent(a: SongRevisionContent, b: SongRevisionContent) {
   return songContentFields.every((key) => a[key] === b[key]);
 }
 
-const curationFields = [
+const sheetFields = [
   "title", "artist", "chordpro", "key", "language", "capo", "range", "startMelody", "tempo",
 ] as const satisfies readonly (keyof SongRevisionContent)[];
 
-export async function curatedImportIds(db: AppDatabase, versions: readonly Pick<SongVersionDB, "id" | "importId" | "revision">[]) {
+export async function importVersionIdsWithSheetChanges(db: AppDatabase, versions: readonly Pick<SongVersionDB, "id" | "importId" | "revision">[]) {
   const ids = versions.filter((version) => version.importId && version.revision > 1).map((version) => version.id);
-  const curated = new Set<string>();
+  const editedImportVersionIds = new Set<string>();
   for (let i = 0; i < ids.length; i += 99) {
     const snapshots = await db.select({ versionId: songRevision.versionId, number: songRevision.number, content: songRevision.content })
       .from(songRevision)
@@ -64,10 +64,10 @@ export async function curatedImportIds(db: AppDatabase, versions: readonly Pick<
     const originals = new Map(snapshots.filter((row) => row.number === 1).map((row) => [row.versionId, row.content]));
     for (const row of snapshots) {
       const original = originals.get(row.versionId);
-      if (original && curationFields.some((field) => original[field] !== row.content[field])) curated.add(row.versionId);
+      if (original && sheetFields.some((field) => original[field] !== row.content[field])) editedImportVersionIds.add(row.versionId);
     }
   }
-  return curated;
+  return editedImportVersionIds;
 }
 
 export function firstSheetChange(
@@ -81,7 +81,7 @@ export function firstSheetChange(
     where: and(
       eq(songRevision.versionId, versionId),
       beforeRevision === undefined ? undefined : lt(songRevision.number, beforeRevision),
-      or(...curationFields.map((field) =>
+      or(...sheetFields.map((field) =>
         sql`json_extract(${songRevision.content}, ${`$.${field}`}) is not ${baseline[field]}`,
       )),
     ),
@@ -89,12 +89,12 @@ export function firstSheetChange(
   });
 }
 
-export async function isFirstImportCuration(
+export async function isFirstImportedSheetEdit(
   db: AppDatabase,
   base: SongVersionDB,
   next: SongRevisionContent,
 ) {
-  if (!base.importId || curationFields.every((field) => base[field] === next[field])) return false;
+  if (!base.importId || sheetFields.every((field) => base[field] === next[field])) return false;
   // Lifecycle events and changes to version details or the video also create snapshots.
   const priorSheet = await firstSheetChange(db, base.id, base, base.revision);
   return !priorSheet;
@@ -200,6 +200,7 @@ export async function retrieveRevisions(
       .map((row, index) => ({
         ...row,
         previousContent: rows[index + 1]?.content ?? null,
+        previousStatus: rows[index + 1]?.status ?? null,
       })),
     nextOffset: rows.length > 25 ? offset + 25 : null,
   };

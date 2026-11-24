@@ -23,8 +23,8 @@ it("shares mandatory imported-source retirement and official-replacement rules",
     .toEqual({ archivePrevious: false, makeOfficial: false });
 });
 
-it("allows ordinary curated corrections but keeps other authors' local drafts read-only", () => {
-  const version = { pending: false, imported: false, pendingCuration: false, official: true, ownerId: "owner" };
+it("allows corrections to published versions but keeps other authors' local drafts read-only", () => {
+  const version = { pending: false, imported: false, official: true, ownerId: "owner" };
   expect(versionEditPolicy(version, { id: "other" }).canCorrect).toBe(true);
   expect(versionEditPolicy({ ...version, pending: true }, { id: "other" })).toMatchObject({ canEdit: false, canCorrect: false });
   expect(versionEditPolicy({ ...version, pending: true }, { id: "owner" }).canCorrect).toBe(true);

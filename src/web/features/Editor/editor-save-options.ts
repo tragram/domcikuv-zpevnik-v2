@@ -3,7 +3,7 @@ import type { EditorState } from "~/types/types";
 import { publicationOptions, versionEditPolicy } from "src/lib/song-version-policy";
 
 type EditableSong = Pick<SongData,
-  "externalSource" | "importOriginalContent" | "versionStatus" | "versionParentIsImported" |
+  "sourceAttribution" | "importOriginalContent" | "versionStatus" | "versionParentIsImported" |
   "versionAuthorId" | "isOfficial" | "archivePreviousOnPublish" | "makeOfficialOnPublish"
 >;
 
@@ -13,12 +13,12 @@ export function editorSaveOptions(
   actor: { id: string; isAdmin?: boolean } | undefined,
 ) {
   const isPending = song?.versionStatus === "pending";
-  const isImported = !!song?.externalSource || song?.importOriginalContent !== undefined;
-  // Once published, a curation is an ordinary local version. Its ancestry
+  const isImported = !!song?.sourceAttribution || song?.importOriginalContent !== undefined;
+  // A separate version derived from an import behaves like any other local version once published. Its ancestry
   // matters only while the initial replacement is awaiting publication.
   const replacesImportedSource = isImported || (isPending && !!song?.versionParentIsImported);
   const { canEdit, canCorrect, canManage: canArchiveSource } = versionEditPolicy(song ? {
-    pending: isPending, imported: isImported, pendingCuration: isPending && !!song.versionParentIsImported,
+    pending: isPending, imported: isImported,
     official: song.isOfficial !== false, ownerId: song.versionAuthorId,
   } : undefined, actor);
   const recommendedMode = canCorrect ? "correction" : "new-version";

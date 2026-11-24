@@ -115,7 +115,7 @@ const hasOriginalImportContent = (
   songData?: SongData,
   currentContent?: string,
 ): boolean => {
-  const original = songData?.importOriginalContent ?? songData?.externalSource?.originalContent;
+  const original = songData?.importOriginalContent ?? songData?.sourceAttribution?.originalContent;
   return !!original && currentContent !== original;
 };
 
@@ -423,7 +423,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
 
     try {
       if (featureId === "show_external_original") {
-        const original = songData?.importOriginalContent ?? songData?.externalSource?.originalContent;
+        const original = songData?.importOriginalContent ?? songData?.sourceAttribution?.originalContent;
         if (original === undefined) return;
         newContent = original;
         if (newContent !== editorState.chordpro) {

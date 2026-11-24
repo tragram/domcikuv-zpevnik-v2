@@ -21,7 +21,13 @@ const SongVersionStatusBadge = ({ status }: { status: string }) => {
     case "unofficial":
       return (
         <Badge variant="outline" className="text-muted-foreground">
-          <Star className="w-3 h-3 mr-1" /> Unofficial
+          <Star className="w-3 h-3 mr-1" /> No official version
+        </Badge>
+      );
+    case "official":
+      return (
+        <Badge className="bg-success/10 text-success hover:bg-success/10 border-success/30">
+          <Star className="w-3 h-3 mr-1 fill-current" /> Official
         </Badge>
       );
     case "archived":

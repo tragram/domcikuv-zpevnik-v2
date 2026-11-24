@@ -14,19 +14,20 @@ import {
   CollapsibleTrigger,
 } from "~/components/ui/collapsible";
 import { cn } from "~/lib/utils";
-import { ExternalSourceBadge } from "../external-source-badge";
+import { ImportedSourceBadge } from "../imported-source-badge";
 import { IllustrationCard, PendingIllustrationCard } from "./illustration-card";
 import {
   IllustrationForm,
   IllustrationSubmitData,
 } from "./illustration-form/illustration-form";
 import { PromptCreateDialog } from "./prompt-create-dialog";
-import type { IllustrationCreateSchema, IllustrationGenerateSchema, SongDataAdminApi } from "src/worker/api/api-types";
+import type { IllustrationSong } from "~/services/illustration-service";
+import type { IllustrationCreateSchema, IllustrationGenerateSchema } from "src/worker/api/api-types";
 import { PromptCard } from "./prompt-card";
 import { createIllustration, generateIllustration } from "~/services/illustration-service";
 
 interface SongIllustrationsGroupProps {
-  song: SongDataAdminApi;
+  song: IllustrationSong;
   illustrations: SongIllustrationDB[];
   prompts: Record<string, IllustrationPromptDB>;
   isExpanded: boolean;
@@ -146,10 +147,10 @@ export function SongIllustrationsGroup({
                 >
                   {song.title || "Unknown Song"}
                 </h4>
-                {song.externalSource && (
-                  <ExternalSourceBadge
-                    sourceId={song.externalSource.sourceId}
-                    url={song.externalSource.url}
+                {song.sourceAttribution && (
+                  <ImportedSourceBadge
+                    sourceId={song.sourceAttribution.sourceId}
+                    url={song.sourceAttribution.url}
                   />
                 )}
               </div>

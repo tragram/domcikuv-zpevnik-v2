@@ -22,6 +22,8 @@ import {
 } from "~/services/version-service";
 import { songContentLabels, songContentFields } from "src/lib/song-content";
 
+const formatStatus = (status: string) => status.charAt(0).toUpperCase() + status.slice(1);
+
 export function SongRevisionHistory({
   songId,
   versionId,
@@ -99,8 +101,8 @@ export function SongRevisionHistory({
             <DialogTitle>Revision history</DialogTitle>
           </DialogHeader>
           <p className="text-sm text-muted-foreground">
-            Each entry compares a saved revision with the immediately preceding
-            revision of this same version. Restoring content creates a new revision.
+            Each entry shows saved changes to this version’s sheet or status.
+            Restoring content creates a new revision.
           </p>
           {history.isError && (
             <p role="alert">
@@ -115,115 +117,113 @@ export function SongRevisionHistory({
                 : "Connect to load revision history."}
             </p>
           )}
-          {history.data?.revisions.map((revision) => (
-            <details
-              key={revision.id}
-              className="min-w-0 rounded-lg border p-3"
-              onToggle={(event) => {
-                const isOpen = event.currentTarget.open;
-                setExpanded((previous) => {
-                  const next = new Set(previous);
-                  if (isOpen) next.add(revision.id);
-                  else next.delete(revision.id);
-                  return next;
-                });
-              }}
-            >
-              <summary className="cursor-pointer">
-                {new Date(revision.createdAt).toLocaleString()} ·{" "}
-                {revision.contributorName}
-                {revision.number === currentRevision ? " · Current" : ""}
-              </summary>
-              {expanded.has(revision.id) && (
-                <div className="mt-3 space-y-3">
-                  {revision.previousContent ? (
-                    <>
+          {history.data?.revisions.map((revision) => {
+            const previous = revision.previousContent;
+            const sheetChanged = !!previous && previous.chordpro !== revision.content.chordpro;
+            const changedFields = previous ? songContentFields.filter((key) =>
+              key !== "chordpro" && previous[key] !== revision.content[key]) : [];
+            const statusChange = revision.previousStatus && revision.previousStatus !== revision.status
+              ? `Status changed from ${formatStatus(revision.previousStatus)} to ${formatStatus(revision.status)}`
+              : undefined;
+            return (
+              <details
+                key={revision.id}
+                className="min-w-0 rounded-lg border p-3"
+                onToggle={(event) => {
+                  const isOpen = event.currentTarget.open;
+                  setExpanded((previous) => {
+                    const next = new Set(previous);
+                    if (isOpen) next.add(revision.id);
+                    else next.delete(revision.id);
+                    return next;
+                  });
+                }}
+              >
+                <summary className="cursor-pointer">
+                  {new Date(revision.createdAt).toLocaleString()} ·{" "}
+                  {revision.contributorName}
+                  {revision.number === currentRevision ? " · Current" : ""}
+                  {statusChange && ` · ${statusChange}`}
+                </summary>
+                {expanded.has(revision.id) && (
+                  <div className="mt-3 space-y-3">
+                    {previous ? (
+                      <>
+                        {!sheetChanged && changedFields.length === 0 && !statusChange && (
+                          <p className="text-sm text-muted-foreground">No visible changes.</p>
+                        )}
+                        {sheetChanged && (
+                          <div className="min-w-0 overflow-x-auto">
+                            <ReactDiffViewer
+                              oldValue={previous.chordpro}
+                              newValue={revision.content.chordpro}
+                              splitView={false}
+                              useDarkTheme={resolvedTheme === "dark"}
+                              leftTitle="Previous revision"
+                              rightTitle="Selected revision"
+                            />
+                          </div>
+                        )}
+                        {changedFields.length > 0 && (
+                          <dl className="space-y-2 text-sm">
+                            {changedFields.map((key) => (
+                              <div key={key}>
+                                <dt className="font-medium">
+                                  {songContentLabels[key]}
+                                </dt>
+                                <dd>
+                                  <del className="text-destructive">
+                                    {String(previous[key] ?? "Empty")}
+                                  </del>
+                                  {" → "}
+                                  <ins className="text-success no-underline">
+                                    {String(revision.content[key] ?? "Empty")}
+                                  </ins>
+                                </dd>
+                              </div>
+                            ))}
+                          </dl>
+                        )}
+                      </>
+                    ) : (
                       <p className="text-sm text-muted-foreground">
-                        Changes from the previous revision of this version
+                        First saved revision.
                       </p>
-                      {revision.previousContent.chordpro !==
-                      revision.content.chordpro ? (
-                        <div className="min-w-0 overflow-x-auto">
-                          <ReactDiffViewer
-                            oldValue={revision.previousContent.chordpro}
-                            newValue={revision.content.chordpro}
-                            splitView={false}
-                            useDarkTheme={resolvedTheme === "dark"}
-                            leftTitle="Previous revision"
-                            rightTitle="Selected revision"
-                          />
-                        </div>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">
-                          The sheet is unchanged.
-                        </p>
-                      )}
-                      <dl className="space-y-2 text-sm">
+                    )}
+                    <details>
+                      <summary className="cursor-pointer text-sm">
+                        Full saved content
+                      </summary>
+                      <dl className="my-3 grid grid-cols-[auto_1fr] gap-x-4 text-sm">
                         {songContentFields
-                          .filter(
-                            (key) =>
-                              key !== "chordpro" &&
-                              revision.previousContent![key] !==
-                                revision.content[key],
-                          )
+                          .filter((key) => key !== "chordpro")
                           .map((key) => (
-                            <div key={key}>
-                              <dt className="font-medium">
+                            <div key={key} className="contents">
+                              <dt className="text-muted-foreground">
                                 {songContentLabels[key]}
                               </dt>
-                              <dd>
-                                <del className="text-destructive">
-                                  {String(
-                                    revision.previousContent![key] ?? "Empty",
-                                  )}
-                                </del>
-                                {" → "}
-                                <ins className="text-success no-underline">
-                                  {String(revision.content[key] ?? "Empty")}
-                                </ins>
-                              </dd>
+                              <dd>{String(revision.content[key] ?? "—")}</dd>
                             </div>
                           ))}
                       </dl>
-                    </>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">
-                      First saved submission.
-                    </p>
-                  )}
-                  <details>
-                    <summary className="cursor-pointer text-sm">
-                      Full saved content
-                    </summary>
-                    <dl className="my-3 grid grid-cols-[auto_1fr] gap-x-4 text-sm">
-                      {songContentFields
-                        .filter((key) => key !== "chordpro")
-                        .map((key) => (
-                          <div key={key} className="contents">
-                            <dt className="text-muted-foreground">
-                              {songContentLabels[key]}
-                            </dt>
-                            <dd>{String(revision.content[key] ?? "—")}</dd>
-                          </div>
-                        ))}
-                    </dl>
-                    <pre className="whitespace-pre-wrap break-words rounded bg-muted p-3 text-sm">
-                      {revision.content.chordpro}
-                    </pre>
-                  </details>
-                  {canRestore && revision.number !== currentRevision && (
-                    <Button
-                      className="mt-3"
-                      disabled={!online || restoring || !currentRevision}
-                      onClick={() => void restore(revision.number)}
-                    >
-                      Restore this content
-                    </Button>
-                  )}
-                </div>
-              )}
-            </details>
-          ))}
+                      <pre className="whitespace-pre-wrap break-words rounded bg-muted p-3 text-sm">
+                        {revision.content.chordpro}
+                      </pre>
+                    </details>
+                    {canRestore && revision.number !== currentRevision && (
+                      <Button
+                        className="mt-3"
+                        disabled={!online || restoring || !currentRevision}
+                        onClick={() => void restore(revision.number)}
+                      >
+                        Restore this content
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </details>
+            );
+          })}
           <div className="flex justify-between">
             <Button
               variant="outline"

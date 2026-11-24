@@ -2,7 +2,7 @@ import { ExternalLink, Globe } from "lucide-react";
 import { SONG_SOURCES, SONG_SOURCES_PRETTY } from "src/lib/contracts/song-sources";
 import { Badge } from "~/components/ui/badge";
 
-interface ExternalSourceBadgeProps {
+interface ImportedSourceBadgeProps {
   sourceId: (typeof SONG_SOURCES)[number];
   url: string;
   className?: string;
@@ -12,11 +12,11 @@ interface ExternalSourceBadgeProps {
  * Linked badge marking a song as imported from an external source. Stops click
  * propagation so it can live inside clickable/expandable table rows.
  */
-export function ExternalSourceBadge({
+export function ImportedSourceBadge({
   sourceId,
   url,
   className,
-}: ExternalSourceBadgeProps) {
+}: ImportedSourceBadgeProps) {
   return (
     <a
       href={url}

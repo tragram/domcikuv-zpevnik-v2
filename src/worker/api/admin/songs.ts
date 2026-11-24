@@ -17,7 +17,7 @@ import {
 } from "../../helpers/song-versions/writes";
 import {
   conflict,
-  curatedImportIds,
+  importVersionIdsWithSheetChanges,
   contentOf,
   loadVersion,
   reviseVersion,
@@ -96,7 +96,7 @@ export const songRoutes = buildApp()
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(song.updatedAt));
 
-    const curated = await curatedImportIds(c.var.db, records.flatMap((row) => row.officialVersionId
+    const editedImportVersionIds = await importVersionIdsWithSheetChanges(c.var.db, records.flatMap((row) => row.officialVersionId
       ? [{ ...row, id: row.officialVersionId }]
       : []));
     const songs = records.map((record) => {
@@ -107,7 +107,7 @@ export const songRoutes = buildApp()
       // Construct and return the typed object
       return {
         ...rest,
-        externalSource: importSourceId && !curated.has(record.officialVersionId ?? "")
+        externalSource: importSourceId && !editedImportVersionIds.has(record.officialVersionId ?? "")
           ? {
               sourceId: importSourceId,
               originalContent: importOriginalContent!,
@@ -136,14 +136,14 @@ export const songRoutes = buildApp()
       .leftJoin(songSubmission, eq(songSubmission.versionId, songVersion.id))
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(songVersion.updatedAt));
-    const [numbers, curated] = await Promise.all([
+    const [numbers, editedImportVersionIds] = await Promise.all([
       versionNumbers(c.var.db),
-      curatedImportIds(c.var.db, records),
+      importVersionIdsWithSheetChanges(c.var.db, records),
     ]);
     return successJSend(c, records.map(({ officialVersionId, authorName, authorNickname, ...row }) => ({
       ...row,
-      importSourceId: curated.has(row.id) ? null : row.importSourceId,
-      importUrl: curated.has(row.id) ? null : row.importUrl,
+      importSourceId: editedImportVersionIds.has(row.id) ? null : row.importSourceId,
+      importUrl: editedImportVersionIds.has(row.id) ? null : row.importUrl,
       authorName: authorNickname || authorName,
       isOfficial: row.id === officialVersionId,
       versionNumber: numbers.get(row.id),

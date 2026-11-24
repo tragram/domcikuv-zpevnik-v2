@@ -318,7 +318,7 @@ function SongList({
               <div className="h-px bg-border flex-1" />
               <div className="flex items-center gap-2 px-4 text-xs font-medium text-primary uppercase tracking-wider whitespace-nowrap">
                 <Globe className="w-3 h-3" />
-                External Results
+                External sources
               </div>
               <div className="h-px bg-border flex-1" />
             </div>
@@ -337,7 +337,7 @@ function SongList({
                 className="gap-2"
               >
                 <Globe className="w-4 h-4" />
-                Search Online Services
+                Search external sources
               </Button>
             </div>
           )}
@@ -346,7 +346,7 @@ function SongList({
             <div className="flex justify-center w-full py-8">
               <div className="flex flex-col items-center gap-2 animate-pulse text-muted-foreground">
                 <Search className="w-6 h-6 animate-bounce" />
-                <span className="text-sm">Searching external libraries...</span>
+                <span className="text-sm">Searching external sources…</span>
               </div>
             </div>
           )}
