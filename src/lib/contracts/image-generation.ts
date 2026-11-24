@@ -3,6 +3,7 @@
 // stays server-only; client code imports these lists to render pickers.
 
 export const SUMMARY_PROMPT_VERSIONS = [
+  "v8",
   "v7",
   "v6",
   "v5",

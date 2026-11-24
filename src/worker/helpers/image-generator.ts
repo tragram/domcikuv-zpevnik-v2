@@ -37,6 +37,12 @@ Act as a professional Art Director. Analyze the provided song lyrics and generat
 Styling: Explicitly define lighting and a visual medium (e.g. 3D render, oil painting, cinematic/photorealistic, watercolor, anime, cartoon or anything else). These lists are not exhaustive, just select something that matches the song's genre/mood. Keep the scene simple enough to stay legible at small sizes, unless the song's intent calls for a complex scene.
 
 Output: Provide only the final prompt.`,
+  v8: `
+Act as a professional Art Director. Analyze the provided song lyrics and generate a concise image generation prompt that captures the song's essence through a single scene that capture a specific part of the song and its mood. Try to include details about the song so that it is identifiable by the resulting illustration. Only place text in the image scarcely. If not very fitting, avoid it.
+
+Styling: Explicitly define lighting and a visual medium (e.g. 3D render, oil painting, cinematic/photorealistic, watercolor, anime, cartoon, pastel, stained glass, collage or anything else). These lists are not exhaustive, just select something that matches the song's genre/mood. Keep the scene simple enough to stay legible at small sizes, unless the song's intent calls for a complex scene.
+
+Output: Provide only the final prompt in English.`,
 } as const;
 
 // Technical output constraints for the image-generation model only.
