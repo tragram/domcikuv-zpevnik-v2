@@ -13,7 +13,7 @@ import { retrieveVersionSummaries } from "../helpers/song-versions/queries";
 import { IllustrationPromptApi, SongDataApi } from "./api-types";
 
 const initialDBVersion = "v0";
-const catalogVersion = (version: string | null) => `${version ?? initialDBVersion}:official-revision`;
+const catalogVersion = (version: string | null) => `${version ?? initialDBVersion}:source-display`;
 
 const incrementalUpdateSchema = z.object({
   songDBVersion: z.string(),

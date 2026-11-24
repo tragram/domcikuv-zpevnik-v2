@@ -1,4 +1,5 @@
 import { versionNumbers } from "./numbering";
+import { curatedImportIds } from "./revisions";
 import { and, desc, eq, isNull, or } from "drizzle-orm";
 import { song, songVersion } from "src/lib/db/schema";
 import type { SongVersionSummaryApi } from "../../api/api-types";
@@ -32,17 +33,17 @@ export async function retrieveVersionSummaries(
         ? or(approved, and(eq(songVersion.userId, viewerId), eq(songVersion.status, "pending")))
         : approved,
     ),
-    columns: { id: true, status: true, key: true, capo: true, createdAt: true, updatedAt: true, userId: true, label: true, description: true, revision: true },
+    columns: { id: true, status: true, key: true, capo: true, createdAt: true, updatedAt: true, userId: true, label: true, description: true, revision: true, importId: true },
     with: { user: { columns: { name: true, nickname: true } }, songImport: { columns: { sourceId: true } } },
     orderBy: [desc(songVersion.createdAt), desc(songVersion.id)],
   });
 
-  const numbers = await versionNumbers(db, [songId]);
-  return versions.map(({ user, userId, songImport, ...version }) => ({
+  const [numbers, curated] = await Promise.all([versionNumbers(db, [songId]), curatedImportIds(db, versions)]);
+  return versions.map(({ user, userId, songImport, importId: _importId, ...version }) => ({
     ...version,
     versionNumber: numbers.get(version.id),
     author: { id: userId, name: user.nickname ?? user.name },
     isCurrent: version.id === parent.currentVersionId,
-    importSourceId: songImport?.sourceId ?? null,
+    importSourceId: curated.has(version.id) ? null : songImport?.sourceId ?? null,
   }));
 }

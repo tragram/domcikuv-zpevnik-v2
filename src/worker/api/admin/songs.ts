@@ -17,6 +17,7 @@ import {
 } from "../../helpers/song-versions/writes";
 import {
   conflict,
+  curatedImportIds,
   contentOf,
   loadVersion,
   reviseVersion,
@@ -95,6 +96,9 @@ export const songRoutes = buildApp()
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(song.updatedAt));
 
+    const curated = await curatedImportIds(c.var.db, records.flatMap((row) => row.officialVersionId
+      ? [{ ...row, id: row.officialVersionId }]
+      : []));
     const songs = records.map((record) => {
       // Destructure the import fields out of the record
       const { importSourceId, importOriginalContent, importUrl, ...rest } =
@@ -103,7 +107,7 @@ export const songRoutes = buildApp()
       // Construct and return the typed object
       return {
         ...rest,
-        externalSource: importSourceId
+        externalSource: importSourceId && !curated.has(record.officialVersionId ?? "")
           ? {
               sourceId: importSourceId,
               originalContent: importOriginalContent!,
@@ -132,9 +136,14 @@ export const songRoutes = buildApp()
       .leftJoin(songSubmission, eq(songSubmission.versionId, songVersion.id))
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
       .orderBy(desc(songVersion.updatedAt));
-    const numbers = await versionNumbers(c.var.db);
+    const [numbers, curated] = await Promise.all([
+      versionNumbers(c.var.db),
+      curatedImportIds(c.var.db, records),
+    ]);
     return successJSend(c, records.map(({ officialVersionId, authorName, authorNickname, ...row }) => ({
       ...row,
+      importSourceId: curated.has(row.id) ? null : row.importSourceId,
+      importUrl: curated.has(row.id) ? null : row.importUrl,
       authorName: authorNickname || authorName,
       isOfficial: row.id === officialVersionId,
       versionNumber: numbers.get(row.id),

@@ -68,7 +68,7 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
           />
         </RadioGroup>
       </div> : choice.canEdit ? <p>Your existing draft will be updated.</p> : null}
-      {choice.isImported && <p className="text-sm text-muted-foreground">A revision keeps this version and preserves the original imported sheet in its history. Choose a separate version for an alternative arrangement.</p>}
+      {song.externalSource && <p className="text-sm text-muted-foreground">A revision keeps this version and preserves the original imported sheet in its history. Choose a separate version for an alternative arrangement.</p>}
       {showVersionDetails && <fieldset className="min-w-0 space-y-2" disabled={submitting}>
         <legend className="text-sm font-medium">Version details <span className="font-normal text-muted-foreground">(optional)</span></legend>
         <VersionDetailsFields
@@ -96,7 +96,7 @@ export function EditorSubmitDialog({ song, state, actor, publishing, submitting,
       {choice.canEdit && <div className="space-y-3">
         {actor.isAdmin && <PublicationOption
           label="Edit as previous author"
-          description={choice.isImported && (choice.isPending || choice.saveMode === "correction")
+          description={song.externalSource && (choice.isPending || choice.saveMode === "correction")
             ? "The first revision to an imported sheet is credited to its editor."
             : undefined}
           checked={editAsPreviousAuthor === true}

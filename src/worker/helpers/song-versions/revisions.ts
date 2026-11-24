@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, getTableColumns, isNull, lt, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, getTableColumns, inArray, isNull, lt, or, sql } from "drizzle-orm";
 import { HTTPException } from "hono/http-exception";
 import {
   song,
@@ -51,6 +51,24 @@ export function sameContent(a: SongRevisionContent, b: SongRevisionContent) {
 const curationFields = [
   "title", "artist", "chordpro", "key", "language", "capo", "range", "startMelody", "tempo",
 ] as const satisfies readonly (keyof SongRevisionContent)[];
+
+export async function curatedImportIds(db: AppDatabase, versions: readonly Pick<SongVersionDB, "id" | "importId" | "revision">[]) {
+  const ids = versions.filter((version) => version.importId && version.revision > 1).map((version) => version.id);
+  const curated = new Set<string>();
+  for (let i = 0; i < ids.length; i += 99) {
+    const snapshots = await db.select({ versionId: songRevision.versionId, number: songRevision.number, content: songRevision.content })
+      .from(songRevision)
+      .innerJoin(songVersion, eq(songVersion.id, songRevision.versionId))
+      .where(and(inArray(songRevision.versionId, ids.slice(i, i + 99)),
+        or(eq(songRevision.number, 1), eq(songRevision.number, songVersion.revision))));
+    const originals = new Map(snapshots.filter((row) => row.number === 1).map((row) => [row.versionId, row.content]));
+    for (const row of snapshots) {
+      const original = originals.get(row.versionId);
+      if (original && curationFields.some((field) => original[field] !== row.content[field])) curated.add(row.versionId);
+    }
+  }
+  return curated;
+}
 
 export function firstSheetChange(
   db: AppDatabase,

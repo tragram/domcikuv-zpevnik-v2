@@ -56,6 +56,7 @@ export class SongData {
   youtubeId?: string;
   chordpro: ChordPro;
   externalSource: ExternalSourceApi | null;
+  importOriginalContent?: string;
   /** Hidden from the browse list, but still searchable and directly accessible. */
   officialVersionId?: string | null;
 
@@ -112,6 +113,7 @@ export class SongData {
     this.youtubeId = songFromDB.youtubeId || undefined;
     this.chordpro = songFromDB.chordpro;
     this.externalSource = songFromDB.externalSource;
+    this.importOriginalContent = songFromDB.importOriginalContent;
     this.officialVersionId = songFromDB.officialVersionId;
 
     this.currentIllustration = songFromDB.currentIllustration;
@@ -304,6 +306,7 @@ export class SongData {
       currentIllustration: this.currentIllustration,
       isFavorite: this.isFavorite,
       externalSource: this.externalSource,
+      importOriginalContent: this.importOriginalContent,
       url: this.url(),
       thumbnailURL: this.thumbnailURL(),
       illustrationURL: this.illustrationURL(),

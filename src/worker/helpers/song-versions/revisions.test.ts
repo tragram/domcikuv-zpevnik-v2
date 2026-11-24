@@ -25,12 +25,13 @@ import {
 } from "./writes";
 import { songIllustrationFixture, versionHistoryFixture } from "./history.test-fixture";
 import { getOwnSongbookEntries, setSongbookEntry } from "../favorite-helpers";
-import { publishedVersionIds, retrieveSingleSong, retrieveSongs } from "../song-helpers";
+import { getSongVersionsByUser, publishedVersionIds, retrieveSingleSong, retrieveSongs } from "../song-helpers";
 import { buildApp } from "../../api/utils";
 import { songRoutes } from "../../api/admin/songs";
 import editorApp from "../../api/editor";
 import type { EditorSubmissionResponse } from "../../api/api-types";
 import { versionNumbers } from "./numbering";
+import { retrieveVersionSummaries } from "./queries";
 
 let sqlite: DatabaseSync;
 let db: AppDatabase;
@@ -45,10 +46,9 @@ beforeEach(async () => {
   sqlite.exec("PRAGMA foreign_keys = ON");
   const proxy = drizzle(
     async (query, params, method) => {
-      const rows = sqlite
-        .prepare(query)
-        .all(...params)
-        .map(Object.values);
+      const statement = sqlite.prepare(query);
+      statement.setReturnArrays(true);
+      const rows = statement.all(...params) as unknown as unknown[][];
       return { rows: method === "get" ? rows[0]! : rows };
     },
     { schema },
@@ -338,6 +338,23 @@ describe("submitted revision history", () => {
     await expect(mergeVersion(db, "song", restored.id, original.id, "admin", restored.revision, restored.revision)).rejects.toMatchObject({ status: 400 });
   });
 
+  it("hides the provider for a revised import across song and version views", async () => {
+    const original = await importCopy();
+    await edit(original.id, "Revised sheet");
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      await next();
+    }).route("/", songRoutes);
+    expect(await retrieveSongs(db)).toMatchObject([{ versionId: original.id, externalSource: null }]);
+    expect(await retrieveSingleSong(db, "song", original.id)).toMatchObject({
+      externalSource: null, importOriginalContent: original.chordpro,
+    });
+    expect(await retrieveVersionSummaries(db, "song")).toMatchObject([{ id: original.id, importSourceId: null }]);
+    expect(await getSongVersionsByUser(db, "owner")).toMatchObject([{ id: original.id, importSourceId: null, importId: original.importId }]);
+    expect(await (await app.request("/versions")).json()).toMatchObject({ data: [{ id: original.id, importSourceId: null, importUrl: null }] });
+    expect(await (await app.request("/withCurrentVersion")).json()).toMatchObject({ data: [{ id: "song", externalSource: null }] });
+  });
+
   it("applies Admin metadata patches as revisions of the same imported version", async () => {
     const original = await importCopy();
     const app = buildApp().use("*", async (c, next) => {
@@ -355,6 +372,7 @@ describe("submitted revision history", () => {
     expect(data).toMatchObject({ importId: original.importId, youtubeId: "abcdefghijk" });
     const withVideo = await loadVersion(db, "song", original.id);
     expect(withVideo).toMatchObject({ youtubeId: "abcdefghijk", status: "published", userId: "owner" });
+    expect(await retrieveSingleSong(db, "song", original.id)).toMatchObject({ externalSource: { sourceId: "pisnicky-akordy" } });
     expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
     const curated = await saveSongVersion(db, {
       ...contentOf(withVideo), chordpro: "Curated after the video was added",

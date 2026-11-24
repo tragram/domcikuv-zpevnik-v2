@@ -111,16 +111,12 @@ const isAutofillable = (text: string): boolean => {
   return false;
 };
 
-const hasExternalOriginalContent = (
+const hasOriginalImportContent = (
   songData?: SongData,
   currentContent?: string,
 ): boolean => {
-  if (!songData?.externalSource?.originalContent) return false;
-  return (
-    !currentContent ||
-    currentContent.trim() === "" ||
-    currentContent !== songData.externalSource.originalContent
-  );
+  const original = songData?.importOriginalContent ?? songData?.externalSource?.originalContent;
+  return !!original && currentContent !== original;
 };
 
 const isConvertibleFormat = (text: string): boolean => {
@@ -164,7 +160,7 @@ const SMART_FEATURES: SmartFeature[] = [
     loadingLabel: "Loading...",
     icon: ExternalLink,
     check: (content: string, user: UserData, songData?: SongData) =>
-      hasExternalOriginalContent(songData, content),
+      hasOriginalImportContent(songData, content),
     description: (
       <>Click to view the original content from the source website.</>
     ),
@@ -427,7 +423,9 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
 
     try {
       if (featureId === "show_external_original") {
-        newContent = songData!.externalSource!.originalContent!;
+        const original = songData?.importOriginalContent ?? songData?.externalSource?.originalContent;
+        if (original === undefined) return;
+        newContent = original;
         if (newContent !== editorState.chordpro) {
           contentEditorRef.current?.replaceContentWithUndo(newContent);
         }

@@ -92,6 +92,8 @@ export type SongDataApi = {
   youtubeId?: string;
   chordpro: string;
   externalSource: ExternalSourceApi | null;
+  /** Original text retained for the editor when the sheet has been revised. */
+  importOriginalContent?: string;
   currentIllustration?: CurrentIllustrationApi;
   updateStatus?: "added" | "modified" | "deleted";
   // Hidden from the browse list but still reachable via search / direct link.
