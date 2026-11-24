@@ -1,0 +1,1 @@
+CREATE INDEX `sync_session_timestamp` ON `sync_session` (`timestamp`);

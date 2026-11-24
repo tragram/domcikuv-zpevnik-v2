@@ -5,22 +5,25 @@ import {
   and,
   asc,
   ne,
-  BuildQueryResult,
   desc,
   eq,
-  ExtractTablesWithRelations,
   gte,
   inArray,
+  isNotNull,
   isNull,
   or,
+  sql,
 } from "drizzle-orm";
-import * as schema from "src/lib/db/schema";
+import { alias } from "drizzle-orm/sqlite-core";
 import {
   song,
   SongDataDB,
   songIllustration,
+  SongIllustrationDB,
   songImport,
   SongImportDB,
+  songSubmission,
+  SongSubmissionDB,
   songVersion,
   SongVersionDB,
   user,
@@ -32,18 +35,10 @@ import { saveSongVersion as createSongVersion } from "./song-versions/writes";
 import { AppDatabase } from "../api/utils";
 import { SongbookDataApi, SongDataApi } from "../api/api-types";
 
-type TSchema = ExtractTablesWithRelations<typeof schema>;
-
-export type PopulatedSongDB = BuildQueryResult<
-  TSchema,
-  TSchema["song"],
-  {
-    with: {
-      currentVersion: { with: { songImport: true, submission: true } };
-      currentIllustration: true;
-    };
-  }
->;
+export type PopulatedSongDB = SongDataDB & {
+  currentVersion: (SongVersionDB & { songImport: SongImportDB | null; submission: SongSubmissionDB | null }) | null;
+  currentIllustration: SongIllustrationDB | null;
+};
 // Attribute a displayed alternative without inferring its official status.
 const customMetaOf = (
   canonical: { id: string; createdAt: Date | string } | null | undefined,
@@ -180,24 +175,25 @@ export async function retrieveSongs(
     );
   }
 
-  const rows = await db.query.song.findMany({
-    where: and(...conditions),
-    with: {
-      currentVersion: { with: { songImport: true, submission: true } },
-      version: {
-        where: and(eq(songVersion.status, "published"), isNull(songVersion.mergedIntoVersionId)),
-        orderBy: [desc(songVersion.createdAt), desc(songVersion.id)],
-        limit: 1,
-        with: { songImport: true, submission: true },
-      },
-      currentIllustration: true,
-    },
-  });
-  const catalog = rows.map(({ version, ...row }) => ({ ...row, currentVersion: row.currentVersion ?? version[0] ?? null }));
+  const fallback = alias(songVersion, "fallback");
+  const latestPublished = db.select({ id: fallback.id }).from(fallback)
+    .where(and(eq(fallback.songId, song.id), eq(fallback.status, "published"), isNull(fallback.mergedIntoVersionId)))
+    .orderBy(desc(fallback.createdAt), desc(fallback.id)).limit(1);
+  const rows = await db.select({
+    song, version: songVersion, songImport, submission: songSubmission, currentIllustration: songIllustration,
+  }).from(song)
+    .leftJoin(songVersion, eq(songVersion.id, sql`coalesce(${song.currentVersionId}, ${latestPublished})`))
+    .leftJoin(songImport, eq(songImport.id, songVersion.importId))
+    .leftJoin(songSubmission, eq(songSubmission.versionId, songVersion.id))
+    .leftJoin(songIllustration, eq(songIllustration.id, song.currentIllustrationId))
+    .where(and(...conditions));
+  const catalog = rows.map(({ song, version, songImport, submission, currentIllustration }) => ({
+    ...song, currentIllustration, currentVersion: version && { ...version, songImport, submission },
+  }));
   const visible = includeDeleted ? catalog : catalog.filter((row) => row.currentVersion);
   const live = visible.filter((row) => !row.deleted && row.currentVersion);
   const [choices, editedImportVersionIds] = await Promise.all([
-    publishedVersionIds(db, live.map((row) => row.id)),
+    publishedVersionIds(db, updatedSince || includeDeleted ? live.map((row) => row.id) : undefined),
     importVersionIdsWithSheetChanges(db, live.flatMap((row) => row.currentVersion ?? [])),
   ]);
   return visible.map((row) => ({ ...transformSongToApi(row, editedImportVersionIds, updatedSince), publishedVersionIds: choices.get(row.id) ?? [] }));
@@ -260,11 +256,23 @@ export const retrieveSingleSong = async (
     const source = await db.query.songVersion.findFirst({ where: and(eq(songVersion.id, songRaw.currentVersion.parentId), eq(songVersion.songId, songId)), columns: { importId: true } });
     result.versionParentIsImported = !!source?.importId;
   }
-  result.versionNumber = (await versionNumbers(db, [songId])).get(result.versionId ?? "");
-  result.publishedVersionIds = (await publishedVersionIds(db, [songId])).get(songId) ?? [];
+  const versions = await db.select({
+    id: songVersion.id, status: songVersion.status, mergedIntoVersionId: songVersion.mergedIntoVersionId,
+  }).from(songVersion).where(eq(songVersion.songId, songId))
+    .orderBy(asc(songVersion.createdAt), asc(songVersion.id));
+  Object.assign(result, sheetVersionMetadata(versions, songRaw.currentVersion.id));
   Object.assign(result, customMeta);
   return result;
 };
+
+function sheetVersionMetadata(versions: Pick<SongVersionDB, "id" | "status" | "mergedIntoVersionId">[], versionId: string) {
+  const index = versions.findIndex(version => version.id === versionId);
+  return {
+    versionNumber: index >= 0 ? index + 1 : undefined,
+    publishedVersionIds: versions.filter(version => version.status === "published" && !version.mergedIntoVersionId)
+      .map(version => version.id),
+  };
+}
 
 /** Load only the sheets a songbook cannot get from the official catalog. */
 export async function getPinnedAlternatives(db: AppDatabase, ownerId: string) {
@@ -273,6 +281,7 @@ export async function getPinnedAlternatives(db: AppDatabase, ownerId: string) {
     .innerJoin(song, eq(song.id, userFavoriteSongs.songId))
     .where(and(
       eq(userFavoriteSongs.userId, ownerId),
+      isNotNull(userFavoriteSongs.pinnedVersionId),
       eq(song.deleted, false),
       or(isNull(song.currentVersionId), ne(userFavoriteSongs.pinnedVersionId, song.currentVersionId)),
     ));
@@ -300,10 +309,7 @@ export async function getPinnedAlternatives(db: AppDatabase, ownerId: string) {
     sheets.set(version.id, {
       ...transformSongToApi({ ...parent, currentVersion: version }, editedImportVersionIds),
       ...customMetaOf(null, version),
-      versionNumber: parent.version.findIndex(v => v.id === version.id) + 1,
-      publishedVersionIds: parent.version
-        .filter(v => v.status === "published" && !v.mergedIntoVersionId)
-        .map(v => v.id),
+      ...sheetVersionMetadata(parent.version, version.id),
     });
   }
   return sheets;

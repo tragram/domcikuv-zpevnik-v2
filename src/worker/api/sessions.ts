@@ -34,7 +34,7 @@ const sessionSyncApp = buildApp()
       .from(syncSession)
       .where(gte(syncSession.timestamp, latestLive))
       .leftJoin(user, eq(user.id, syncSession.masterId))
-      .orderBy(desc(syncSession.timestamp))
+      .orderBy(desc(syncSession.timestamp), desc(syncSession.id))
       .all();
 
     // Rows are newest-first, so the first row seen per master is its latest.

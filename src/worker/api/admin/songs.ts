@@ -1,5 +1,4 @@
-import { versionNumbers } from "../../helpers/song-versions/numbering";
-import { desc, eq, getTableColumns } from "drizzle-orm";
+import { asc, desc, eq, getTableColumns } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import {
   findSongWithAllData,
@@ -135,19 +134,24 @@ export const songRoutes = buildApp()
       .leftJoin(song, eq(song.id, songVersion.songId))
       .leftJoin(songSubmission, eq(songSubmission.versionId, songVersion.id))
       .leftJoin(songImport, eq(songVersion.importId, songImport.id))
-      .orderBy(desc(songVersion.updatedAt));
-    const [numbers, editedImportVersionIds] = await Promise.all([
-      versionNumbers(c.var.db),
-      importVersionIdsWithSheetChanges(c.var.db, records),
-    ]);
-    return successJSend(c, records.map(({ officialVersionId, authorName, authorNickname, ...row }) => ({
-      ...row,
-      importSourceId: editedImportVersionIds.has(row.id) ? null : row.importSourceId,
-      importUrl: editedImportVersionIds.has(row.id) ? null : row.importUrl,
-      authorName: authorNickname || authorName,
-      isOfficial: row.id === officialVersionId,
-      versionNumber: numbers.get(row.id),
-    })) as SongVersionAdminApi[]);
+      .orderBy(asc(songVersion.songId), asc(songVersion.createdAt), asc(songVersion.id));
+    const editedImportVersionIds = await importVersionIdsWithSheetChanges(c.var.db, records);
+    let previousSongId: string | undefined;
+    let versionNumber = 0;
+    const versions = records.map(({ officialVersionId, authorName, authorNickname, ...row }) => {
+      versionNumber = row.songId === previousSongId ? versionNumber + 1 : 1;
+      previousSongId = row.songId;
+      return {
+        ...row,
+        importSourceId: editedImportVersionIds.has(row.id) ? null : row.importSourceId,
+        importUrl: editedImportVersionIds.has(row.id) ? null : row.importUrl,
+        authorName: authorNickname || authorName,
+        isOfficial: row.id === officialVersionId,
+        versionNumber,
+      };
+    });
+    versions.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+    return successJSend(c, versions as SongVersionAdminApi[]);
   })
   .get("/:songId", async (c) => {
     try {

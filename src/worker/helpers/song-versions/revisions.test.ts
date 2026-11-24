@@ -507,6 +507,22 @@ describe("submitted revision history", () => {
     expect(await versionNumbers(db, [])).toEqual(new Map());
     expect(sqlite.prepare("SELECT name FROM sqlite_master WHERE name = 'song_version_number'").all()).toEqual([]);
   });
+  it("numbers admin versions within each song and lists recent edits first", async () => {
+    await db.insert(schema.song).values({ id: "second-song" });
+    const base = { ...input(), userId: "owner", createdAt: new Date(1000) };
+    await db.insert(schema.songVersion).values([
+      { ...base, id: "a", songId: "song", updatedAt: new Date(3000) },
+      { ...base, id: "b", songId: "song", updatedAt: new Date(5000) },
+      { ...base, id: "c", songId: "second-song", updatedAt: new Date(4000) },
+    ]);
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      await next();
+    }).route("/", songRoutes);
+    expect(await (await app.request("/versions")).json()).toMatchObject({ data: [
+      { id: "b", versionNumber: 2 }, { id: "c", versionNumber: 1 }, { id: "a", versionNumber: 1 },
+    ] });
+  });
   it.each(["merge", "approve", "reclassify"] as const)("deletes the consumed source through the Admin %s endpoint", async (action) => {
     const first = await initial();
     const proposal = await edit(first.id, "Reviewed sheet", "other");

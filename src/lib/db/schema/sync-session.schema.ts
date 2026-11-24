@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { user } from "./auth.schema";
 import { song, songVersion } from "./song.schema";
 
@@ -15,4 +15,4 @@ export const syncSession = sqliteTable("sync_session", {
   versionId: text("version_id").references(() => songVersion.id, {
     onDelete: "no action",
   }),
-});
+}, (table) => [index("sync_session_timestamp").on(table.timestamp)]);

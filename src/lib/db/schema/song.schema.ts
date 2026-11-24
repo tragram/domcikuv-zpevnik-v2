@@ -28,7 +28,10 @@ export const song = sqliteTable("song", {
     .$defaultFn(() => new Date())
     .notNull(),
   deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
-});
+}, (table) => [
+  index("song_updated").on(table.updatedAt),
+  index("song_current_illustration").on(table.currentIllustrationId),
+]);
 
 export type SongDataDB = typeof song.$inferSelect;
 
@@ -91,7 +94,10 @@ export const songVersion = sqliteTable("song_version", {
     .notNull(),
 
   chordpro: text("chordpro").notNull(),
-}, (table) => [index("song_version_song_status_created").on(table.songId, table.status, table.createdAt, table.id)]);
+}, (table) => [
+  index("song_version_song_status_created").on(table.songId, table.status, table.createdAt, table.id),
+  index("song_version_user_created").on(table.userId, table.createdAt),
+]);
 
 export const songSubmission = sqliteTable("song_submission", {
   versionId: text("version_id")
@@ -211,6 +217,9 @@ export const songIllustration = sqliteTable("song_illustration", {
     .$defaultFn(() => new Date())
     .notNull(),
   deleted: integer("deleted", { mode: "boolean" }).default(false).notNull(),
-});
+}, (table) => [
+  index("song_illustration_updated").on(table.updatedAt),
+  index("song_illustration_song_prompt_model").on(table.songId, table.promptId, table.imageModel),
+]);
 
 export type SongIllustrationDB = typeof songIllustration.$inferSelect;

@@ -1,4 +1,4 @@
-import { AnySQLiteColumn, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { AnySQLiteColumn, index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { user } from "./auth.schema";
 import { song, songVersion } from "./song.schema";
 
@@ -27,6 +27,6 @@ export const userFavoriteSongs = sqliteTable("favorites", {
   keyIndex: integer("key_index"),
   // Personal absolute capo fret. NULL = use the song's original capo.
   capo: integer("capo"),
-});
+}, (table) => [index("favorites_user_song").on(table.userId, table.songId)]);
 
 export type SongbookEntryDB = typeof userFavoriteSongs.$inferSelect;
