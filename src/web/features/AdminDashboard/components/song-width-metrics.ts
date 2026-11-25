@@ -1,3 +1,6 @@
+import { formatChordpro } from "~/lib/formatChordpro";
+import { formatChord } from "~/features/SongView/utils/chordNotation";
+
 export const LAYOUT_PRESSURE_BASE_FONT_SIZE = 16;
 
 export type LayoutPressureTextStyle =
@@ -17,23 +20,67 @@ export interface SongLayoutPressure {
   visibleRows: number;
   /** Original source line responsible for `widestRowEm`. */
   widestLine: string;
+  /** Estimated width reduction if the listed lines are shortened to targetWidthEm. */
+  widthOpportunity: {
+    reductionPercent: number;
+    targetWidthEm: number;
+    lines: { number: number; text: string }[];
+    /** Excess width above the target for comfortable reading, weighted by the possible reduction. */
+    priority: number | null;
+  } | null;
 }
 
 const SECTION_DIRECTIVES = new Set(["chorus", "bridge", "verse", "interlude"]);
-const METADATA_DIRECTIVES = new Set([
-  "artist",
-  "a",
-  "capo",
-  "key",
-  "language",
-  "range",
-  "startmelody",
-  "tempo",
-  "title",
-  "t",
-]);
-
 const CHORUS_PADDING_EM = 1.2;
+const BETWEEN_EMPTY_CHORDS_EM = 0.3;
+const INLINE_CHORD_MARGIN_EM = 0.06;
+const MAX_LINES_TO_SHORTEN = 8;
+const MIN_REDUCTION_PERCENT = 10;
+const ADDITIONAL_LINE_PERCENTAGE_POINTS = 4;
+const MIN_WIDTH_GAP_EM = 2;
+export const COMFORTABLE_ROW_WIDTH_EM = 24;
+
+interface MeasuredRow {
+  widthPx: number;
+  number: number;
+  text: string;
+}
+
+function findWidthOpportunity(
+  rows: MeasuredRow[],
+): SongLayoutPressure["widthOpportunity"] {
+  // Require a clear break in the widths and leave at least as many lines as we edit.
+  const limit = Math.min(MAX_LINES_TO_SHORTEN, Math.floor(rows.length / 2));
+  if (limit === 0) return null;
+
+  rows.sort((a, b) => b.widthPx - a.widthPx);
+  const widest = rows[0].widthPx;
+  const minimumGap = MIN_WIDTH_GAP_EM * LAYOUT_PRESSURE_BASE_FONT_SIZE;
+  let largestGap = 0;
+  let lineCount = 0;
+  for (let count = 1; count <= limit; count++) {
+    const targetWidth = rows[count].widthPx;
+    const gap = rows[count - 1].widthPx - targetWidth;
+    const minimumReduction =
+      MIN_REDUCTION_PERCENT + (count - 1) * ADDITIONAL_LINE_PERCENTAGE_POINTS;
+    if (gap < minimumGap || gap <= largestGap) continue;
+    if (100 * (widest - targetWidth) < widest * minimumReduction) continue;
+    largestGap = gap;
+    lineCount = count;
+  }
+  if (lineCount === 0) return null;
+
+  const targetWidth = rows[lineCount].widthPx;
+  const reduction = (widest - targetWidth) / widest;
+  const excessWidthEm =
+    widest / LAYOUT_PRESSURE_BASE_FONT_SIZE - COMFORTABLE_ROW_WIDTH_EM;
+  return {
+    reductionPercent: 100 * reduction,
+    targetWidthEm: targetWidth / LAYOUT_PRESSURE_BASE_FONT_SIZE,
+    lines: rows.slice(0, lineCount).map(({ number, text }) => ({ number, text })),
+    priority: excessWidthEm > 0 ? excessWidthEm * reduction : null,
+  };
+}
 
 interface ParsedDirective {
   name: string;
@@ -54,8 +101,7 @@ function stripInlineDirectives(line: string): string {
 }
 
 /**
- * Estimates the width of the flex cells produced by ChordSheetJS for one row.
- * Each `[chord]lyrics` cell is as wide as its wider child.
+ * Estimates a row in SongView's default inline chord mode.
  */
 function measureChordProRow(
   line: string,
@@ -75,10 +121,11 @@ function measureChordProRow(
     const lyricStart = chords[index].index! + chords[index][0].length;
     const lyricEnd = chords[index + 1]?.index ?? line.length;
     const lyric = line.slice(lyricStart, lyricEnd);
-    width += Math.max(
-      measureText(chord, "chord"),
-      measureText(lyric, lyricStyle),
-    );
+    width += measureText(chord, "chord") + measureText(lyric, lyricStyle);
+    if (chord) width += INLINE_CHORD_MARGIN_EM * LAYOUT_PRESSURE_BASE_FONT_SIZE;
+    if (!lyric && index < chords.length - 1) {
+      width += BETWEEN_EMPTY_CHORDS_EM * LAYOUT_PRESSURE_BASE_FONT_SIZE;
+    }
   }
 
   return width;
@@ -100,76 +147,87 @@ export function analyzeSongLayoutPressure(
   let pendingBlankSeparator = false;
   let activeSection: string | null = null;
   let inTab = false;
+  const measuredRows: MeasuredRow[] = [];
+  const sourceLines = chordpro.split(/\r?\n/);
+  let formattedLines = formatChordpro(chordpro).split(/\r?\n/);
+  if (formattedLines.length !== sourceLines.length) {
+    // A repeat marker can span multiple lines. Keep the editor line numbers
+    // usable even when formatting such a marker changes the line count.
+    formattedLines = sourceLines.map(formatChordpro);
+  }
 
-  const addRow = (sourceLine: string, widthPx: number) => {
+  const addRow = (lineIndex: number, widthPx: number) => {
     if (pendingBlankSeparator && hasVisibleRow) visibleRows += 1;
     pendingBlankSeparator = false;
     hasVisibleRow = true;
     visibleRows += 1;
 
+    if (widthPx <= 0) return;
+    const text = sourceLines[lineIndex].trim();
+    measuredRows.push({ widthPx, number: lineIndex + 1, text });
     if (widthPx > widestRowPx) {
       widestRowPx = widthPx;
-      widestLine = sourceLine.trim();
+      widestLine = text;
     }
   };
 
-  for (const sourceLine of chordpro.split(/\r?\n/)) {
-    const trimmed = sourceLine.trim();
+  for (const [lineIndex, line] of formattedLines.entries()) {
+    const trimmed = line.trim();
     if (!trimmed) {
       if (hasVisibleRow) pendingBlankSeparator = true;
       continue;
     }
 
-    const directive = parseDirective(sourceLine);
+    const directive = parseDirective(line);
     if (directive) {
-      if (directive.name === "start_of_tab") {
+      if (directive.name === "start_of_tab" || directive.name === "sot") {
         inTab = true;
         continue;
       }
-      if (directive.name === "end_of_tab") {
+      if (directive.name === "end_of_tab" || directive.name === "eot") {
         inTab = false;
         continue;
       }
 
-      const sectionStart = directive.name.match(/^start_of_(.+)$/)?.[1];
+      const sectionStart = directive.name === "soc"
+        ? "chorus"
+        : directive.name.match(/^start_of_(.+)$/)?.[1];
       if (sectionStart) {
         activeSection = sectionStart;
         continue;
       }
-      if (directive.name.startsWith("end_of_")) {
+      if (directive.name === "eoc" || directive.name.startsWith("end_of_")) {
         activeSection = null;
         continue;
       }
 
       if (directive.name === "comment" || directive.name === "c") {
         if (directive.value) {
-          // Comments wrap within the paragraph max-width, so they contribute
+          // Comments can scroll within the paragraph, so they contribute
           // height but do not establish the fitted content width.
-          addRow(sourceLine, 0);
+          addRow(lineIndex, 0);
         }
         continue;
       }
 
       if (SECTION_DIRECTIVES.has(directive.name)) {
-        // Collapsed recall labels are rendered through the same wrapping
-        // comment path.
-        addRow(sourceLine, 0);
+        addRow(lineIndex, 0);
         continue;
       }
 
-      if (METADATA_DIRECTIVES.has(directive.name)) continue;
       // Other standalone directives affect parsing or presentation but do not
       // provide a reliable source-level row to measure.
       continue;
     }
 
-    const content = stripInlineDirectives(sourceLine);
+    if (trimmed.startsWith("#")) continue;
+    const content = stripInlineDirectives(line);
     if (!content) continue;
 
     if (inTab) {
       // Tabs scroll horizontally in SongView, so their width does not constrain
       // the fitted font size. They still consume vertical space.
-      addRow(sourceLine, 0);
+      addRow(lineIndex, 0);
       continue;
     }
 
@@ -178,13 +236,14 @@ export function analyzeSongLayoutPressure(
     if (lyricStyle === "chorus") {
       widthPx += CHORUS_PADDING_EM * LAYOUT_PRESSURE_BASE_FONT_SIZE;
     }
-    addRow(sourceLine, widthPx);
+    addRow(lineIndex, widthPx);
   }
 
   return {
     widestRowEm: widestRowPx / LAYOUT_PRESSURE_BASE_FONT_SIZE,
     visibleRows,
     widestLine,
+    widthOpportunity: findWidthOpportunity(measuredRows),
   };
 }
 
@@ -193,6 +252,17 @@ const FONT_BY_STYLE: Record<LayoutPressureTextStyle, string> = {
   chorus: `700 ${LAYOUT_PRESSURE_BASE_FONT_SIZE}px Poppins, sans-serif`,
   chord: `800 ${LAYOUT_PRESSURE_BASE_FONT_SIZE}px Poppins, sans-serif`,
 };
+// Tailwind's base styles size superscripts at 75% of the parent font.
+const CHORD_SUPERSCRIPT_FONT = `800 ${LAYOUT_PRESSURE_BASE_FONT_SIZE * 0.75}px Poppins, sans-serif`;
+
+export async function loadLayoutPressureFonts() {
+  if (!document.fonts) return;
+  await Promise.allSettled(
+    Object.values(FONT_BY_STYLE).map((font) =>
+      document.fonts.load(font, "Příliš žluťoučký kůň úpěl ďábelské ódy"),
+    ),
+  );
+}
 
 /** Creates a browser text measurer using the same font families as SongView. */
 export function createCanvasLayoutPressureMeasurer(): LayoutPressureTextMeasurer | null {
@@ -207,8 +277,18 @@ export function createCanvasLayoutPressureMeasurer(): LayoutPressureTextMeasurer
     const cached = cache.get(key);
     if (cached !== undefined) return cached;
 
-    context.font = FONT_BY_STYLE[style];
-    const width = context.measureText(text).width;
+    let width = 0;
+    if (style === "chord") {
+      const parts = formatChord(text).split(/<sup>(.*?)<\/sup>/g);
+      for (const [index, part] of parts.entries()) {
+        if (!part) continue;
+        context.font = index % 2 === 0 ? FONT_BY_STYLE.chord : CHORD_SUPERSCRIPT_FONT;
+        width += context.measureText(part).width;
+      }
+    } else {
+      context.font = FONT_BY_STYLE[style];
+      width = context.measureText(text).width;
+    }
     // Bound memory for long-lived admin sessions. Common chord and lyric
     // fragments are still reused heavily between resets.
     if (cache.size >= 50_000) cache.clear();

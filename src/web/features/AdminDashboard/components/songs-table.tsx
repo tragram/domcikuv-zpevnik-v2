@@ -91,6 +91,7 @@ import { formatChordpro } from "~/lib/formatChordpro";
 import { parseYoutubeId } from "src/lib/youtube";
 import YoutubeField from "~/features/Editor/components/YoutubeField";
 import { SongMaxWidth } from "./song-max-width";
+import { COMFORTABLE_ROW_WIDTH_EM } from "./song-width-metrics";
 import { useSongLayoutPressures } from "./use-song-width-metrics";
 import { SongRevisionHistory } from "~/components/SongRevisionHistory";
 import { versionLabel } from "src/lib/version-label";
@@ -115,6 +116,7 @@ const HIDEABLE_COLUMNS = [
   { id: "submittedBy", label: "Author" },
   { id: "lastModified", label: "Last modified" },
   { id: "maxRowWidth", label: "Max width" },
+  { id: "widthOpportunity", label: "Width savings" },
 ] as const;
 
 type HideableColumn = (typeof HIDEABLE_COLUMNS)[number]["id"];
@@ -134,6 +136,7 @@ type SortableSong = SongDataDB & {
   sourceAttribution: ImportAttribution | null;
   submittedBy: string | null;
   maxRowWidth: number | null;
+  widthOpportunity: number | null;
 };
 
 type SortConfig = {
@@ -879,6 +882,17 @@ function SongTableRow({
           )}
           </TableCell>
         )}
+        {isColumnVisible("widthOpportunity") && (
+          <TableCell>
+            {workingVersion && (
+              <SongMaxWidth
+                versionId={workingVersion.id}
+                chordpro={workingVersion.chordpro}
+                metric="opportunity"
+              />
+            )}
+          </TableCell>
+        )}
         <TableCell onClick={(e) => e.stopPropagation()} className="pr-4">
           <div className="flex justify-end">
             <ActionButtons>
@@ -1123,7 +1137,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   const validHiddenColumns = HIDEABLE_COLUMNS.map((column) => column.id).filter(
     (column) => hiddenColumns.includes(column),
   );
-  const visibleColumnCount = 9 - validHiddenColumns.length;
+  const visibleColumnCount = 3 + HIDEABLE_COLUMNS.length - validHiddenColumns.length;
 
   const setColumnVisibility = (
     column: HideableColumn,
@@ -1203,6 +1217,7 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     return songs.map((song) => {
       const songVersions = versionsBySong[song.id] || [];
       const workingVersion = getWorkingVersion(song, songVersions);
+      const pressure = workingVersion && layoutPressures.get(workingVersion.id);
       const status = workingVersion?.status === "published"
         ? (song.currentVersionId ? "official" : "unofficial")
         : workingVersion?.status ?? "empty";
@@ -1225,9 +1240,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
             }
           : null,
         submittedBy: workingVersion?.authorName || null,
-        maxRowWidth: workingVersion
-          ? (layoutPressures.get(workingVersion.id)?.widestRowEm ?? null)
-          : null,
+        maxRowWidth: pressure?.widestRowEm ?? null,
+        widthOpportunity: pressure?.widthOpportunity?.priority ?? null,
       };
     });
   }, [songs, versionsBySong, layoutPressures]);
@@ -1297,8 +1311,10 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
     });
 
     filtered.sort((a, b) => {
-      if (a.hasPendingVersions && !b.hasPendingVersions) return -1;
-      if (!a.hasPendingVersions && b.hasPendingVersions) return 1;
+      if (sortConfig.key !== "widthOpportunity") {
+        if (a.hasPendingVersions && !b.hasPendingVersions) return -1;
+        if (!a.hasPendingVersions && b.hasPendingVersions) return 1;
+      }
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
       if (aValue === null && bValue === null) return 0;
@@ -1364,19 +1380,19 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
   };
 
   const requestSort = (key: SortConfig["key"]) => {
-    let direction: "ascending" | "descending" = "ascending";
-    if (
-      sortConfig &&
-      sortConfig.key === key &&
-      sortConfig.direction === "ascending"
-    )
-      direction = "descending";
+    const direction = sortConfig.key === key
+      ? (sortConfig.direction === "ascending" ? "descending" : "ascending")
+      : (key === "widthOpportunity" ? "descending" : "ascending");
     setSortConfig({ key, direction });
+    if (key === "widthOpportunity") setCurrentPage(0);
   };
 
   const renderHeader = (label: string, key: SortConfig["key"]) => (
     <TableHead
       onClick={() => requestSort(key)}
+      title={key === "widthOpportunity"
+        ? `Sort by width above ${COMFORTABLE_ROW_WIDTH_EM} em weighted by the percentage saved`
+        : undefined}
       className="cursor-pointer whitespace-nowrap hover:bg-muted/50 transition-colors"
     >
       <div className="flex items-center">
@@ -1535,6 +1551,8 @@ export default function SongsTable({ adminApi }: { adminApi: AdminApi }) {
                   renderHeader("Last Modified", "lastModified")}
                 {!validHiddenColumns.includes("maxRowWidth") &&
                   renderHeader("Max width", "maxRowWidth")}
+                {!validHiddenColumns.includes("widthOpportunity") &&
+                  renderHeader("Width savings", "widthOpportunity")}
                 <TableHead className="whitespace-nowrap text-right pr-6">
                   Actions
                 </TableHead>

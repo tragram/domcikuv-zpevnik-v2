@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   analyzeSongLayoutPressure,
   createCanvasLayoutPressureMeasurer,
+  loadLayoutPressureFonts,
   type LayoutPressureTextMeasurer,
   type SongLayoutPressure,
 } from "./song-width-metrics";
@@ -18,6 +19,7 @@ export interface SongLayoutPressureSource {
 
 const pressureCache = new Map<string, CachedPressure>();
 let sharedMeasurer: LayoutPressureTextMeasurer | null | undefined;
+let fontsReady: Promise<void> | undefined;
 
 function getMeasurer() {
   if (sharedMeasurer === undefined) {
@@ -96,7 +98,7 @@ export function useSongLayoutPressures(
       }
     };
 
-    const fontsReady = document.fonts?.ready ?? Promise.resolve();
+    fontsReady ??= loadLayoutPressureFonts();
     void fontsReady.then(() => {
       if (!disposed) cancelScheduled = scheduleWhenIdle(processBatch);
     });
@@ -144,7 +146,7 @@ export function useSongLayoutPressure(versionId: string, chordpro: string) {
       }
     };
 
-    const fontsReady = document.fonts?.ready ?? Promise.resolve();
+    fontsReady ??= loadLayoutPressureFonts();
     void fontsReady.then(() => {
       if (!disposed) cancelScheduled = scheduleWhenIdle(calculate);
     });
