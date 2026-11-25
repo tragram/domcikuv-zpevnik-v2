@@ -19,12 +19,6 @@
     flex-wrap: wrap;
 }
 
-/* The panel frame supplies the first four pixels above the first label. */
-.metadata-panel > details:first-child > summary {
-    height: calc(3rem - 4px);
-    padding-top: 0;
-}
-
 .metadata-panel .metadata-field-action {
     height: 1.5rem;
     padding: 0 0.25rem;
