@@ -127,7 +127,7 @@ export function ToolbarSettings({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         {...toolbarPanelPlacement}
-        className={`${songPanelClassName} w-80 max-w-[calc(100vw-2rem)] max-h-[min(85dvh,var(--radix-dropdown-menu-content-available-height))]`}
+        className={`${songPanelClassName} w-80 max-w-[calc(100vw-2rem)] max-h-[min(85dvh,var(--radix-dropdown-menu-content-available-height))] overscroll-y-contain`}
       >
         {compactMenuItems}
         {!appSettingsLast && appSettings}

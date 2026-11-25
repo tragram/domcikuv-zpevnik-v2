@@ -1,5 +1,5 @@
 import { useDrag } from "@use-gesture/react";
-import { useRef, useState } from "react";
+import { useRef, useState, type RefObject } from "react";
 
 // Dampened px of pull needed to trigger a refresh on release.
 const PULL_THRESHOLD = 70;
@@ -17,12 +17,13 @@ export type PullToRefreshState = {
 };
 
 /**
- * Window-level pull-to-refresh for touch devices. The gesture only arms when
- * it starts with the page scrolled to the very top; while pulling, touchmove
+ * Pull-to-refresh for touches starting in the target area. The gesture only
+ * arms with the page scrolled to the very top; while pulling, touchmove
  * is preventDefault-ed so the browser's own pull-to-refresh can't fire on top
  * of ours.
  */
 export function usePullToRefresh(
+  target: RefObject<HTMLElement | null>,
   onRefresh: () => Promise<unknown>,
   enabled: boolean,
 ): PullToRefreshState {
@@ -70,7 +71,7 @@ export function usePullToRefresh(
       return false;
     },
     {
-      target: typeof window === "undefined" ? undefined : window,
+      target,
       enabled,
       // Ignore mostly-horizontal swipes; desktop has the toolbar button, so
       // the gesture listens to touch only.

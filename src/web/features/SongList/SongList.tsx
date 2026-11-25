@@ -72,7 +72,12 @@ function SongList({
     () => refreshSongDB(queryClient),
     [queryClient],
   );
-  const { pullDistance, isReady } = usePullToRefresh(refreshSongs, isOnline);
+  const refreshTarget = useRef<HTMLDivElement>(null);
+  const { pullDistance, isReady } = usePullToRefresh(
+    refreshTarget,
+    refreshSongs,
+    isOnline,
+  );
 
   // --- Playlist mode ---
   // When active, rows show a checkbox and toggle selection instead of opening.
@@ -307,7 +312,10 @@ function SongList({
         </div>
       )}
 
-      <div className={cn("pt-[72px] sm:pt-20 pb-2", playlistMode && "pb-24")}>
+      <div
+        ref={refreshTarget}
+        className={cn("pt-[72px] sm:pt-20 pb-2", playlistMode && "pb-24")}
+      >
         {/* SECTION 1: Internal Songs */}
         {hasInternalResults && renderInternalSongs()}
 
