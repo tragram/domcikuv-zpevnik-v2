@@ -112,7 +112,7 @@
     --section-lyric-gap: 0.6em;
     --section-bar-fill: color-mix(in srgb, var(--section-bar-color) var(--section-bar-opacity), transparent);
 
-    line-height: 1.1;
+    line-height: 1;
     white-space: nowrap;
     display: flex;
     flex-direction: column;
@@ -319,6 +319,7 @@
 
 .chords-inline .chord {
     margin-bottom: 0.3em;
+    margin-top: 0.1em;
     /* Physically pushes the row taller ONLY when this chord exists */
     margin-left: 0.03em;
     margin-right: 0.03em;
@@ -477,24 +478,66 @@
     }
 }
 
+.section-repeat-heading {
+    padding-block-end: 0.2em;
+}
+
 .repetition-count {
+    display: inline-block;
+    align-self: center;
     color: var(--chord);
-    /* font-size: 0.8em; */
+    border: 2px solid currentColor;
+    border-radius: 0.4em;
+    padding: 0.08em 0.4em;
+    font-size: 0.85em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
 }
 
-.repetition-count+.column {
-    color: var(--chord);
-    /* font-size: 0.8em; */
+.section-marker + .repetition-count {
+    margin-inline-start: 0.45em;
 }
 
-.repetition-count::after {
-    content: "\00a0";
+.lyrics > .repetition-count {
+    /* Match the section marker's one-line grid without increasing the lyric line height. */
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    block-size: 1lh;
+    border: 0;
+    padding: 0 0.34em;
+    margin-inline: 0.1em 0.4em;
+    font-size: inherit;
+    line-height: inherit;
+    vertical-align: top;
+}
+
+.lyrics > .repetition-count::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin-block: auto;
+    block-size: 0.85em;
+    outline: 2px solid currentColor;
+    border-radius: 0.34em;
+}
+
+.lyrics .repetition-count-label {
+    font-size: 0.85em;
+    text-box: trim-both cap alphabetic;
+}
+
+@supports (top: anchor(top)) and (anchor-scope: --section-marker) {
+    .section-marker--single + .repetition-count {
+        margin-inline-start: 0;
+    }
 }
 
 .repetition {
     color: var(--chord);
-    font-size: larger;
+    font-size: inherit;
     font-weight: 100;
+    vertical-align: baseline;
 }
 
 .chord-sheet .literal {

@@ -1,8 +1,10 @@
 // @vitest-environment happy-dom
 import { ChordProParser, HtmlDivFormatter } from "chordsheetjs";
 import { describe, expect, it } from "vitest";
+import { formatChordpro } from "~/lib/formatChordpro";
+import { convertHTMLChordNotation } from "./chordNotation";
 import { compareChordLists, postProcessChordPro } from "./postProcessing";
-import { preparseDirectives } from "./preparseChordpro";
+import { czechToEnglish, preparseDirectives } from "./preparseChordpro";
 
 /**
  * Runs the render pipeline (preparse -> ChordSheetJS -> postprocess) and
@@ -25,7 +27,7 @@ function renderSections(chordpro: string) {
 function renderDocument(chordpro: string) {
   const song = new ChordProParser().parse(preparseDirectives(chordpro.trim()));
   const html = new HtmlDivFormatter().format(song);
-  const processed = postProcessChordPro(html);
+  const processed = postProcessChordPro(convertHTMLChordNotation(html, false));
   return new DOMParser().parseFromString(processed, "text/html");
 }
 
@@ -92,6 +94,126 @@ Another verse
   const badges = doc.querySelectorAll(".section-marker--horizontal.section-marker--one-character");
   expect(badges).toHaveLength(1);
   expect(badges[0].closest(".shorthand-section")).not.toBeNull();
+});
+
+it.each(["", "R1"])("shows the total count ahead of a chorus and beside its collapsed recall (%s)", (name) => {
+  const chorus = name ? `{chorus: ${name}}` : "{chorus}";
+  const doc = renderDocument(`
+${name ? `{start_of_chorus: ${name}}` : "{start_of_chorus}"}
+[C]First line
+[G]Second line
+{end_of_chorus}
+${chorus}
+${chorus}
+
+{start_of_verse}
+Another verse
+{end_of_verse}
+
+${chorus}
+${chorus}
+  `);
+
+  const definition = doc.querySelector(".chorus:not(.expanded-section, .shorthand-section)");
+  const expanded = doc.querySelector(".expanded-section");
+  for (const [section, count] of [[definition, "×3"], [expanded, "×2"]] as const) {
+    const heading = section?.querySelector(".section-repeat-heading");
+    expect(heading?.querySelector(".repetition-count")?.textContent).toBe(count);
+    const lyrics = heading?.nextElementSibling?.querySelectorAll(".lyrics") ?? [];
+    expect(Array.from(lyrics, (cell) => cell.textContent).join("")).toBe("First line");
+    expect(section?.querySelectorAll(".row:has(.lyrics)")).toHaveLength(2);
+  }
+
+  const collapsed = doc.querySelector(".shorthand-section");
+  expect(collapsed?.querySelector(".section-marker + .repetition-count")?.parentElement?.textContent).toBe(`${name || "R"}×2`);
+  expect(collapsed?.querySelector(".lyrics")).toBeNull();
+});
+
+it("shows a count even when the repeated section has no label", () => {
+  const doc = renderDocument(`
+{start_of_verse}
+Only line
+{end_of_verse}
+{verse}
+  `);
+
+  const heading = doc.querySelector(".verse .section-repeat-heading");
+  expect(heading?.querySelector(".repetition-count")?.textContent).toBe("×2");
+  expect(heading?.nextElementSibling?.querySelector(".lyrics")?.textContent).toBe("Only line");
+});
+
+it("styles the count before the opening sign of a multiline lyric repeat", () => {
+  const source = `
+{start_of_verse}
+𝄆 [D]Vysyp ten [A]popel, kamará[Em]de,
+do bílé [G]vody, vo[D]dy / Heja hej...
+Vyhasnul [A]kotel a náhoda
+[Emi]je štěstí od podko[G]vy. [G/F#][G] 𝄇 (3x)
+{end_of_verse}
+  `;
+  const doc = renderDocument(czechToEnglish(formatChordpro(source)));
+
+  const rows = doc.querySelectorAll(".verse > .row");
+  expect(rows).toHaveLength(4);
+  const opening = rows[0].querySelector(".lyrics > .repetition-count + .repetition");
+  expect(opening?.previousElementSibling?.textContent).toBe("×3");
+  expect(opening?.textContent).toBe("𝄆");
+  expect(rows[3].querySelector(".lyrics > .repetition")?.parentElement?.textContent).toBe("𝄇");
+  const chords = Array.from(rows[3].querySelectorAll(".chord"), (chord) => chord.textContent);
+  expect(chords.filter(Boolean)).toEqual(["Em", "G", "G/F♯", "G"]);
+});
+
+it.each(["3x 𝄆", "(3x) 𝄆", "3x |:"])("recognizes a leading count with %s in Na Hotelu v Olomouci", (start) => {
+  const end = start.endsWith("𝄆") ? "𝄇" : ":|";
+  const source = `
+{start_of_chorus}
+${start} [Em]Na, [Hm]na, na…[D][A] ${end}
+[Em]Na, na, [G]na… [D][A]
+{end_of_chorus}
+  `;
+  const doc = renderDocument(czechToEnglish(formatChordpro(source)));
+
+  const [repeated, following] = doc.querySelectorAll(".chorus > .row");
+  const opening = repeated.querySelector(".repetition-count + .repetition");
+  expect(opening?.parentElement?.textContent?.trim()).toBe("×3𝄆");
+  expect(repeated.querySelectorAll(".repetition")[1]?.textContent).toBe("𝄇");
+  const followingLyrics = Array.from(following.querySelectorAll(".lyrics"), (cell) => cell.textContent);
+  expect(followingLyrics.join("").trim()).toBe("Na, na, na…");
+  expect(following.querySelector(".repetition, .repetition-count")).toBeNull();
+});
+
+it.each(["x3", "3x", "(x3)", "×3"])("moves the trailing count %s to the opening repeat sign", (count) => {
+  const doc = renderDocument(`𝄆 [C]Sing 𝄇 ${count} then stop`);
+
+  expect(doc.querySelector(".repetition-count + .repetition")?.previousElementSibling?.textContent).toBe("×3");
+  expect(doc.body.textContent).toContain("𝄇 then stop");
+});
+
+it("keeps lyrics that start with a count-like word after a closing sign", () => {
+  const doc = renderDocument("𝄆 Sing 𝄇 x3rd 𝄆 play 𝄇 3xylophones");
+
+  expect(doc.querySelector(".repetition-count")).toBeNull();
+  expect(doc.body.textContent).toContain("𝄇 x3rd");
+  expect(doc.body.textContent).toContain("𝄇 3xylophones");
+});
+
+it("keeps explicit repeat counts scoped to their paired signs", () => {
+  const doc = renderDocument(`
+{start_of_verse}
+Before 𝄆 one 𝄇 (3x) between 𝄆 two 𝄇 (4×) after
+𝄆 No explicit count here 𝄇
+Unclosed 6x 𝄆
+{end_of_verse}
+{start_of_verse}
+Unmatched 𝄇 (5x)
+{end_of_verse}
+  `);
+
+  const openings = doc.querySelectorAll(".repetition-count + .repetition");
+  expect(Array.from(openings, (sign) => sign.previousElementSibling?.textContent)).toEqual(["×3", "×4"]);
+  expect(doc.body.textContent).toContain("𝄇 after");
+  expect(doc.body.textContent).toContain("Unclosed 6x 𝄆");
+  expect(doc.body.textContent).toContain("Unmatched 𝄇 (5x)");
 });
 
 describe("detectRepeatedChordPatterns (via postProcessChordPro)", () => {

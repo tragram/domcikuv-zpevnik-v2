@@ -353,6 +353,63 @@ function processExpandedSections(doc: Document): Document {
   mutations.forEach((mutate) => mutate());
   return doc;
 }
+
+function createRepetitionCount(doc: Document, count: string): HTMLSpanElement {
+  const badge = doc.createElement("span");
+  badge.className = "repetition-count";
+  const label = doc.createElement("span");
+  label.className = "repetition-count-label";
+  label.textContent = `×${count}`;
+  badge.appendChild(label);
+  return badge;
+}
+
+const REPEAT_COUNT_VALUE = String.raw`(?:[1-9]\d*\s*[x×]|[x×]\s*[1-9]\d*)`;
+const PARENTHESIZED_REPEAT_COUNT = String.raw`\(\s*${REPEAT_COUNT_VALUE}\s*\)`;
+const LEADING_REPEAT_COUNT = new RegExp(
+  String.raw`(^|\s)(?:${PARENTHESIZED_REPEAT_COUNT}|${REPEAT_COUNT_VALUE})\s*$`,
+  "iu",
+);
+const TRAILING_REPEAT_COUNT = new RegExp(
+  String.raw`^\s*(?:${PARENTHESIZED_REPEAT_COUNT}|${REPEAT_COUNT_VALUE}(?=$|[\s.,;:!?…]))`,
+  "iu",
+);
+
+function formatExplicitRepeatCounts(doc: Document): void {
+  for (const paragraph of doc.querySelectorAll(".paragraph")) {
+    const openings: Element[] = [];
+    for (const sign of paragraph.querySelectorAll(".lyrics > .repetition")) {
+      if (sign.textContent === "𝄆") {
+        openings.push(sign);
+        continue;
+      }
+      if (sign.textContent !== "𝄇") continue;
+
+      const opening = openings.pop();
+      if (!opening) continue;
+
+      const prefix = opening.previousSibling;
+      const suffix = sign.nextSibling;
+      const prefixText = prefix?.nodeType === Node.TEXT_NODE ? prefix.textContent ?? "" : "";
+      const suffixText = suffix?.nodeType === Node.TEXT_NODE ? suffix.textContent ?? "" : "";
+      const leading = prefixText.match(LEADING_REPEAT_COUNT);
+      const trailing = suffixText.match(TRAILING_REPEAT_COUNT);
+      const leadingCount = leading?.[0].match(/\d+/u)?.[0];
+      const trailingCount = trailing?.[0].match(/\d+/u)?.[0];
+      const count = leadingCount ?? trailingCount;
+      if (!count) continue;
+
+      opening.insertAdjacentElement("beforebegin", createRepetitionCount(doc, count));
+      if (prefix && leading) {
+        prefix.textContent = prefixText.slice(0, -leading[0].length) + leading[1];
+      }
+      if (suffix && trailing && trailingCount === count) {
+        suffix.textContent = suffixText.slice(trailing[0].length);
+      }
+    }
+  }
+}
+
 function processSectionTitles(doc: Document): void {
   for (const comment of Array.from(doc.querySelectorAll(".comment"))) {
     const label = comment.textContent?.match(/%\s*section_title:\s*(.*?)\s*%/)?.[1];
@@ -361,10 +418,9 @@ function processSectionTitles(doc: Document): void {
 
     const title = doc.createElement("div");
     title.className = "section-title";
-    const parsedTitle = label.match(/^(\(\d+x\)\s*)?(.+)$/u);
-    if (parsedTitle) {
-      const [, count, name] = parsedTitle;
-      title.textContent = count ?? "";
+    const repeatPrefix = label.match(/^\((\d+)x\)(?:\s+|$)/u);
+    const name = repeatPrefix ? label.slice(repeatPrefix[0].length) : label;
+    if (name) {
       const marker = doc.createElement("span");
       marker.className = "section-marker";
       const letter = doc.createElement("span");
@@ -372,8 +428,24 @@ function processSectionTitles(doc: Document): void {
       letter.textContent = name;
       marker.appendChild(letter);
       title.appendChild(marker);
-    } else {
+    } else if (!repeatPrefix) {
       title.textContent = label + ": ";
+    }
+
+    if (repeatPrefix) {
+      title.appendChild(createRepetitionCount(doc, repeatPrefix[1]));
+    }
+
+    const column = doc.createElement("div");
+    column.className = "column";
+    column.appendChild(title);
+
+    if (repeatPrefix && !commentRow.closest(".shorthand-section")) {
+      const heading = doc.createElement("div");
+      heading.className = "row section-repeat-heading";
+      heading.appendChild(column);
+      commentRow.replaceWith(heading);
+      continue;
     }
 
     let row = commentRow.nextElementSibling;
@@ -386,9 +458,6 @@ function processSectionTitles(doc: Document): void {
       commentRow.parentNode.insertBefore(row, commentRow.nextSibling);
     }
 
-    const column = doc.createElement("div");
-    column.className = "column";
-    column.appendChild(title);
     row.insertBefore(column, row.firstChild);
     commentRow.remove();
   }
@@ -423,7 +492,7 @@ function layOutSectionNames(doc: Document): void {
     const titleRow = titleColumn?.parentElement;
     const songRow = getInlineMarkerRow(paragraph, nameLength === 1 ? titleRow : undefined);
     if (songRow) {
-      if (titleColumn && titleRow !== songRow) {
+      if (titleColumn && titleRow !== songRow && !titleRow?.classList.contains("section-repeat-heading")) {
         songRow.insertBefore(titleColumn, songRow.firstChild);
         if (titleRow?.childElementCount === 0) titleRow.remove();
       }
@@ -512,5 +581,6 @@ export function postProcessChordPro(
   doc = markStandaloneComments(doc);
   doc = detectRepeatedChordPatterns(doc, classNames);
   layOutSectionNames(doc);
+  formatExplicitRepeatCounts(doc);
   return doc.body.innerHTML;
 }
