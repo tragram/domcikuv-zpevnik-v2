@@ -5,8 +5,8 @@
 {range: g1-c2}
 {language: czech}
 {startMelody: a}
-{illustrationId: karel_kryl-bacil_gpt-4o-mini_v1_flux.1-dev}
-{promptId: karel_kryl-bacil_gpt-4o-mini_v1}
+{illustrationId: karel_kryl-bacil_gpt-6.1-terra_v8_gpt-image-2.6-flare}
+{promptId: karel_kryl-bacil_gpt-6.1-terra_v8}
 
 {start_of_chorus}
 [Ami][G][C][E]

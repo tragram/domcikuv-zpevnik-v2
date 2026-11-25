@@ -27,3 +27,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: o-zone-dragostea_din_tei_gpt-6.1-terra_v7
+    songId: o-zone-dragostea_din_tei
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A vibrant early-2000s Eurodance album cover: a young man with a retro
+      mobile phone smiles wistfully beneath a flowering linden tree, its
+      blossoms drifting in the breeze. Golden-hour sunlight, saturated sky blue
+      and lime green, playful romantic nostalgia. Stylized cinematic
+      photography, bold simple composition, no text.
+    createdAt: 2026-11-24T09:17:50.000Z
+    updatedAt: 2026-11-24T09:17:50.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795511894000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

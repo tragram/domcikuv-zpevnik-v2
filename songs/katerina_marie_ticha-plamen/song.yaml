@@ -28,3 +28,34 @@ prompts:
       - createdAt: 1786285457000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+  - id: katerina_marie_ticha-plamen_gpt-6.1-terra_v7
+    songId: katerina_marie_ticha-plamen
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      Cinematic photograph of two lovers dancing close beside an open wood
+      stove, their faces nearly touching as sparks drift between them. Orange
+      firelight illuminates their silhouettes against the cool blue of
+      approaching dawn. Intimate, restless and fleeting, with deep shadows and a
+      simple composition. No text.
+    createdAt: 2026-11-23T17:44:33.000Z
+    updatedAt: 2026-11-23T17:44:33.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795469433000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp
+  - id: katerina_marie_ticha-plamen_gpt-6-luna_v7
+    songId: katerina_marie_ticha-plamen
+    summaryPromptVersion: v7
+    summaryModel: gpt-6-luna
+    text: >-
+      Intimate, feverish midnight scene: two lovers almost touching in a dim
+      room, their silhouettes lit by a small fire escaping a cast-iron stove,
+      its sparks curling around them like a dancing constellation. Sensual,
+      fleeting, and playfully reckless mood; cinematic photorealism, deep amber
+      firelight against cool blue shadows, uncluttered composition, no text.
+    createdAt: 2026-11-23T17:44:39.000Z
+    updatedAt: 2026-11-23T17:44:39.000Z
+    deleted: false
+    illustrations: []

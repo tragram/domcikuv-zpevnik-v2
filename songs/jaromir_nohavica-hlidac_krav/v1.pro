@@ -5,8 +5,8 @@
 {range: a1-a2}
 {language: czech}
 {startMelody: d}
-{illustrationId: jaromir_nohavica-hlidac_krav_gpt-4o-mini_v1_flux.1-dev}
-{promptId: jaromir_nohavica-hlidac_krav_gpt-4o-mini_v1}
+{illustrationId: jaromir_nohavica-hlidac_krav_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: jaromir_nohavica-hlidac_krav_gpt-6.1-terra_v7}
 
 {start_of_verse}
 Kdy[D]ž jsem byl malý, říkali mi naši:

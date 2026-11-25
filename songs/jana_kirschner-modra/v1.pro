@@ -3,8 +3,8 @@
 {key: G}
 {capo: 0}
 {language: slovak}
-{illustrationId: jana_kirschner-modra_gpt-5.4-mini_v7_nano-banana-2}
-{promptId: jana_kirschner-modra_gpt-5.4-mini_v7}
+{illustrationId: jana_kirschner-modra_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: jana_kirschner-modra_gpt-6.1-terra_v7}
 
 {start_of_interlude: Intro}
 [G][C add9][D][G]

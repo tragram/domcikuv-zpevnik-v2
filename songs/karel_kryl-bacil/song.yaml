@@ -28,3 +28,22 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: karel_kryl-bacil_gpt-6.1-terra_v8
+    songId: karel_kryl-bacil
+    summaryPromptVersion: v8
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A satirical 1980s Czechoslovak scene: exhausted Communist officials Gustav
+      Husák, in his distinctive glasses, and Vasil Biľak stand outside a gloomy
+      funeral home, defeated. Above them, a flock of sparrows sings from the
+      roof; one carries a tiny guitar, their music escaping beyond the reach of
+      censorship. Muted gray streets contrast with the lively birds. Soft
+      overcast lighting, hand-painted editorial illustration, wry and quietly
+      hopeful. No text.
+    createdAt: 2026-11-24T10:35:28.000Z
+    updatedAt: 2026-11-24T10:35:28.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795516574000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

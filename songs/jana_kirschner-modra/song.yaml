@@ -27,3 +27,34 @@ prompts:
       - createdAt: 1784132567000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+  - id: jana_kirschner-modra_gpt-6-luna_v7
+    songId: jana_kirschner-modra
+    summaryPromptVersion: v7
+    summaryModel: gpt-6-luna
+    text: >-
+      A dreamlike intimate night scene: a woman asleep beneath an old tree,
+      moonlight pooling around her as a beloved man appears like a tender dream
+      at her bedside; a small butterfly rests near his lips, suggesting quiet,
+      lasting love. Soft silver-blue moonlight with a faint warm glow at the
+      doorway, lyrical cinematic oil painting, delicate brushwork, romantic and
+      wistful, uncluttered composition, no text.
+    createdAt: 2026-11-23T17:39:22.000Z
+    updatedAt: 2026-11-23T17:39:22.000Z
+    deleted: false
+    illustrations: []
+  - id: jana_kirschner-modra_gpt-6.1-terra_v7
+    songId: jana_kirschner-modra
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A dreamlike watercolor painting of two adult lovers asleep close together,
+      a delicate butterfly resting on one lover’s lips. Through the window, an
+      oversized moon appears to sit among the branches of a tree. Soft
+      silver-blue moonlight, muted colors, tender and quietly surreal. No text.
+    createdAt: 2026-11-23T17:39:35.000Z
+    updatedAt: 2026-11-23T17:39:35.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795455737000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

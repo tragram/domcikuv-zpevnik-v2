@@ -25,3 +25,22 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: chinaski-drobna_paralela_gpt-6.1-terra_v8
+    songId: chinaski-drobna_paralela
+    summaryPromptVersion: v8
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A lone singer on the worn stage of an old dance hall, facing a few
+      silhouetted patrons; a dusty gramophone and a glowing smartphone sit side
+      by side on a table. Cigarette smoke curls through the room as cool dawn
+      light enters between faded velvet curtains, mingling with the last warm
+      spotlight. Bittersweet, wry nostalgia for a world that has changed.
+      Cinematic oil painting, muted amber and blue palette, simple composition,
+      no text.
+    createdAt: 2026-11-24T10:32:36.000Z
+    updatedAt: 2026-11-24T10:32:36.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795516482000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

@@ -5,8 +5,8 @@
 {range: d1-g2}
 {language: czech}
 {startMelody: e g}
-{illustrationId: chinaski-drobna_paralela_gpt-4o-mini_v1_flux.1-dev}
-{promptId: chinaski-drobna_paralela_gpt-4o-mini_v1}
+{illustrationId: chinaski-drobna_paralela_gpt-6.1-terra_v8_gpt-image-2.6-flare}
+{promptId: chinaski-drobna_paralela_gpt-6.1-terra_v8}
 
 {start_of_verse}
 Ta [C]stará [G]dobrá hra je [D]okoukaná.

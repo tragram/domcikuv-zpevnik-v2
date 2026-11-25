@@ -26,3 +26,21 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: chinaski-hlavolam_gpt-6-luna_v7
+    songId: chinaski-hlavolam
+    summaryPromptVersion: v7
+    summaryModel: gpt-6-luna
+    text: >-
+      A single intimate dawn scene: two lovers embracing in silhouette beside an
+      open window, foreheads touching, the first pale light spilling across a
+      quiet room while the world outside fades into mist. A mood of devotion,
+      longing, and finally finding one’s way home. Cinematic photorealism, soft
+      blue-gray dawn light warmed by a faint amber bedside glow, tender
+      restrained composition, uncluttered, no text.
+    createdAt: 2026-11-24T09:12:45.000Z
+    updatedAt: 2026-11-24T09:12:45.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795511587000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

@@ -4,8 +4,8 @@
 {capo: 0}
 {range: c1-c2}
 {language: czech}
-{illustrationId: wohnout-svaz_ceskych_bohemu_gpt-4o-mini_v1_flux.1-dev}
-{promptId: wohnout-svaz_ceskych_bohemu_gpt-4o-mini_v1}
+{illustrationId: wohnout-svaz_ceskych_bohemu_gpt-4o_v1_dalle3}
+{promptId: wohnout-svaz_ceskych_bohemu_gpt-4o_v1}
 
 {start_of_chorus}
 [G]Vracím se domů nad [Dmi]ránem,

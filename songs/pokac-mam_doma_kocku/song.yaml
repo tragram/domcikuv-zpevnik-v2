@@ -27,3 +27,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: pokac-mam_doma_kocku_gpt-6.1-terra_v7
+    songId: pokac-mam_doma_kocku
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A darkly comic illustrated scene in a small apartment at night: an
+      adorably innocent cat sits in an open window as snow blows in, while its
+      exhausted owner, wrapped in a blanket, reveals scratched hands beside a
+      shredded sofa. Warm lamplight contrasts with icy blue moonlight; playful,
+      expressive cartoon style. No text.
+    createdAt: 2026-11-24T09:14:19.000Z
+    updatedAt: 2026-11-24T09:14:19.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795511686000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

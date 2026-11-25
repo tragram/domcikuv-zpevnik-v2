@@ -28,3 +28,20 @@ prompts:
       - createdAt: 1785487517000
         imageModel: nano-banana-2
         filename: nano-banana-2.webp
+  - id: ewa_farna-mam_boky_jako_skrin_gpt-6.1-terra_v7
+    songId: ewa_farna-mam_boky_jako_skrin
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      Hravá popová ilustrace: sebevědomá žena s plnými křivkami tančí v uličce
+      supermarketu a jednou rukou vede vozík plný barevných sladkostí. Zářivý
+      úsměv, živý pohyb, bezstarostná atmosféra. Syté růžové a tyrkysové barvy,
+      měkké jasné osvětlení, stylizovaná digitální malba. Jednoduchá kompozice,
+      bez textu.
+    createdAt: 2026-11-24T09:36:59.000Z
+    updatedAt: 2026-11-24T09:36:59.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795513042000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

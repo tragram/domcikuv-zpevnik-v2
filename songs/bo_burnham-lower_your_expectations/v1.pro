@@ -5,8 +5,8 @@
 {range: h1-c#2}
 {language: english}
 {startMelody: e}
-{illustrationId: bo_burnham-lower_your_expectations_gpt-4o-mini_v1_flux.1-dev}
-{promptId: bo_burnham-lower_your_expectations_gpt-4o-mini_v1}
+{illustrationId: bo_burnham-lower_your_expectations_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: bo_burnham-lower_your_expectations_gpt-6.1-terra_v7}
 
 {start_of_verse}
 [E]You want a guy that's sweet, a guy that's tough

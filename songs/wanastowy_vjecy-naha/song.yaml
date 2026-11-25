@@ -27,3 +27,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: wanastowy_vjecy-naha_gpt-6-luna_v7
+    songId: wanastowy_vjecy-naha
+    summaryPromptVersion: v7
+    summaryModel: gpt-6-luna
+    text: >-
+      A dreamlike Czech psychedelic-folk scene: a lone, unclothed adult woman
+      seen modestly from behind, drifting above a moonlit river as a luminous
+      enchanted fish glides beneath her; tiny fireflies carry lanterns through a
+      surreal meadow, with flowers weaving into her hair and vivid colors
+      melting into the night sky. Whimsical, tender, liberated mood; simple,
+      legible composition. Richly textured psychedelic watercolor with soft
+      indigo twilight, warm lantern glow, and radiant jewel-toned accents. No
+      text.
+    createdAt: 2026-11-23T23:17:03.000Z
+    updatedAt: 2026-11-23T23:17:03.000Z
+    deleted: false
+    illustrations: []

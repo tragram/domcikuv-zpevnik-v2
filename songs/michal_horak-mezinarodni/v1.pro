@@ -4,8 +4,8 @@
 {capo: 0}
 {range: h1-d#2}
 {language: czech}
-{illustrationId: michal_horak-mezinarodni_gpt-4o-mini_v1_flux.1-dev}
-{promptId: michal_horak-mezinarodni_gpt-4o-mini_v1}
+{illustrationId: michal_horak-mezinarodni_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: michal_horak-mezinarodni_gpt-6.1-terra_v7}
 
 {start_of_verse}
 [Hmi]Každou sobotu [D]dole v hospodě

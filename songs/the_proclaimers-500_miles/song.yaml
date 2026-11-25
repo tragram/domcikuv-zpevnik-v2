@@ -27,3 +27,19 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: the_proclaimers-500_miles_gpt-6.1-terra_v7
+    songId: the_proclaimers-500_miles
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A weary traveler with scuffed boots sits laughing on a doorstep, reunited
+      with the person he loves. Behind him, a long winding road disappears into
+      the hills. Warm golden-hour light, joyful and tender mood, cinematic
+      photography, simple composition, no text.
+    createdAt: 2026-11-24T09:49:51.000Z
+    updatedAt: 2026-11-24T09:49:51.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795513817000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

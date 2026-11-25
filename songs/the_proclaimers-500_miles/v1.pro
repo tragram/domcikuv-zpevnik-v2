@@ -6,8 +6,8 @@
 {range: d1-g2}
 {language: english}
 {startMelody: f# g a h}
-{illustrationId: the_proclaimers-500_miles_gpt-4o-mini_v1_flux.1-dev}
-{promptId: the_proclaimers-500_miles_gpt-4o-mini_v1}
+{illustrationId: the_proclaimers-500_miles_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: the_proclaimers-500_miles_gpt-6.1-terra_v7}
 
 {start_of_verse}
 When I [D]wake up,

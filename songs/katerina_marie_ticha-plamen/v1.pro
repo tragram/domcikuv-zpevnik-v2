@@ -3,8 +3,8 @@
 {key: H}
 {capo: 0}
 {language: czech}
-{illustrationId: katerina_marie_ticha-plamen_gpt-5.4-mini_v7_nano-banana-2}
-{promptId: katerina_marie_ticha-plamen_gpt-5.4-mini_v7}
+{illustrationId: katerina_marie_ticha-plamen_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: katerina_marie_ticha-plamen_gpt-6.1-terra_v7}
 
 {start_of_interlude}
 [Hmi][G][D][Emi]

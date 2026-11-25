@@ -5,8 +5,8 @@
 {range: d1-d2}
 {language: english}
 {startMelody: e f# g}
-{illustrationId: elton_john-can_you_feel_the_love_tonight_gpt-4o-mini_v1_flux.1-dev}
-{promptId: elton_john-can_you_feel_the_love_tonight_gpt-4o-mini_v1}
+{illustrationId: elton_john-can_you_feel_the_love_tonight_gpt-6.1-terra_v8_gpt-image-2.6-flare}
+{promptId: elton_john-can_you_feel_the_love_tonight_gpt-6.1-terra_v8}
 
 {start_of_verse}
 [C]There's a calm sur[G]render

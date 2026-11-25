@@ -52,6 +52,7 @@ džípem si [E]pádí
 [A]Hmm, noc se [E]válí
 [H]Až vyroste strom [C#m]
 [D]a udeří do něj blesk a hrom
+
 [E]Narovná, rozdělí, podělí,
 poskládáš úterý ke kusům nedělí
 a půjdeš [A]dál... [E][F#m][D]

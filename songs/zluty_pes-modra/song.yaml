@@ -25,3 +25,41 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: zluty_pes-modra_gpt-6.1-terra_v7
+    songId: zluty_pes-modra
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A whimsical blue cow stands beside a calm blue lake, with a worn guitar
+      leaning against a fence nearby. Clear blue sky, gentle golden-hour light,
+      and a mood of easygoing optimism with a touch of bluesy nostalgia.
+      Hand-painted vintage rock album illustration, simple composition, no text.
+    createdAt: 2026-11-23T21:31:24.000Z
+    updatedAt: 2026-11-23T21:31:24.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795469677000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp
+  - id: zluty_pes-modra_gpt-6-luna_v7
+    songId: zluty_pes-modra
+    summaryPromptVersion: v7
+    summaryModel: gpt-6-luna
+    text: >-
+      A playful, nostalgic blue-themed rock poster: one relaxed young man in a
+      vivid blue jacket stands beneath a clear cobalt sky, holding a small blue
+      guitar as a blue cow grazes nearby; a few bold blue flowers and a tiny
+      white fox add whimsical touches. Warm, upbeat blues-rock mood, simple
+      iconic composition, rich saturated blues balanced with cream and sunshine
+      yellow, subtle vintage print texture, soft golden-hour lighting,
+      hand-painted screen-print illustration. No text.
+    createdAt: 2026-11-23T21:31:30.000Z
+    updatedAt: 2026-11-23T21:31:30.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795469556000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp
+      - createdAt: 1795469600000
+        imageModel: gpt-image-2.6-sunburst
+        filename: gpt-image-2.6-sunburst.webp
