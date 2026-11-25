@@ -154,15 +154,17 @@ export async function saveSongVersion(
       message:
         "Select a replacement official version before archiving the current one.",
     });
+  const publishesCorrection = trusted && mode === "correction" &&
+    (canManage || base?.status === "published");
   const selectReviewedImport = !importId && !!base?.importId && base.status === "published" &&
-    !parent.currentVersionId && mode === "correction" && canManage && trusted;
+    !parent.currentVersionId && publishesCorrection;
   if (base && !isDraft && mode === "correction" && sameContent(base, content) && (attribution !== false || owns)) {
-    if (selectReviewedImport && !needsRevisionToBecomeOfficial(true, base.revision))
+    if (canManage && selectReviewedImport && !needsRevisionToBecomeOfficial(true, base.revision))
       await selectOnlyPublishedVersion(db, songId, base.id, base.revision);
     return base;
   }
 
-  if (base && (isDraft || (mode === "correction" && canManage && trusted))) {
+  if (base && (isDraft || publishesCorrection)) {
     const intent = isDraft
       ? mode === "correction" && base.parentId
         ? "update-parent"

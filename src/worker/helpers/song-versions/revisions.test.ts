@@ -120,7 +120,7 @@ async function edit(
 describe("submitted revision history", () => {
   it("requires migration classification before approving incomplete submissions", async () => {
     const target = await initial();
-    const proposal = await edit(target.id, "Reviewed correction", "other");
+    const proposal = await edit(target.id, "Reviewed correction", "untrusted");
     await db.update(schema.songSubmission).set({ submissionIntent: null })
       .where(eq(schema.songSubmission.versionId, proposal.id));
     await expect(approveVersion(db, "song", proposal.id, "admin", {
@@ -565,7 +565,7 @@ describe("submitted revision history", () => {
   });
   it.each(["merge", "approve", "reclassify"] as const)("deletes the consumed source through the Admin %s endpoint", async (action) => {
     const first = await initial();
-    const proposal = await edit(first.id, "Reviewed sheet", "other");
+    const proposal = await edit(first.id, "Reviewed sheet", "untrusted");
     const app = buildApp().use("*", async (c, next) => {
       c.set("db", db);
       c.set("USER", { id: "admin" } as NonNullable<typeof c.var.USER>);
@@ -585,7 +585,7 @@ describe("submitted revision history", () => {
 
   it("migrates legacy merged archives to deleted records while preserving actual alternatives", async () => {
     const first = await initial();
-    const proposal = await edit(first.id, "Approved correction", "other");
+    const proposal = await edit(first.id, "Approved correction", "untrusted");
     await approveVersion(db, "song", proposal.id, "admin", { expectedRevision: proposal.revision });
     const consumed = await loadVersion(db, "song", proposal.id);
     await reviseVersion(db, consumed, { status: "archived" }, "admin");
@@ -696,7 +696,7 @@ describe("submitted revision history", () => {
 
   it.each(["reject", "delete"] as const)("preserves correction intent through %s and restore", async (action) => {
     const first = await initial();
-    const proposal = await edit(first.id, "Suggestion", "other");
+    const proposal = await edit(first.id, "Suggestion", "untrusted");
     const closed = await changeVersionStatus(db, "song", proposal.id, "admin", action, proposal.revision);
     const restored = await changeVersionStatus(db, "song", proposal.id, "admin", "restore", closed.revision);
     expect(restored.submissionIntent).toBe("update-parent");
@@ -911,15 +911,27 @@ describe("submitted revision history", () => {
     ).rejects.toMatchObject({ status: 400 });
   });
 
+  it("publishes a trusted non-owner's correction to the official sheet in place", async () => {
+    const original = await initial();
+    const corrected = await edit(original.id, "[D]New chords", "other");
+    expect(corrected).toMatchObject({
+      id: original.id, status: "published", userId: "owner", editedBy: "other",
+      approvedBy: "other", revision: original.revision + 1,
+    });
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
+    expect(await db.query.songSubmission.findMany()).toHaveLength(0);
+  });
+
   it("flags stale proposals and permits a reviewed admin override, preserving both states", async () => {
     const first = await initial();
-    const proposal = await edit(first.id, "Suggested", "other");
+    const proposal = await edit(first.id, "Suggested", "untrusted");
+    await db.update(schema.user).set({ isTrusted: true }).where(eq(schema.user.id, "untrusted"));
     const current = await edit(first.id, "Intervening change");
     await expect(
       approveVersion(db, "song", proposal.id, "admin", { expectedRevision: 1 }),
     ).rejects.toMatchObject({ status: 409 });
     await expect(
-      approveVersion(db, "song", proposal.id, "other", {
+      approveVersion(db, "song", proposal.id, "untrusted", {
         expectedRevision: 1,
         force: true,
         expectedTargetRevision: current.revision,
@@ -960,8 +972,8 @@ describe("submitted revision history", () => {
 
   it("rolls back earlier content and snapshot writes when a later batch guard fails", async () => {
     const first = await initial();
-    const proposal = await edit(first.id, "Proposed", "other");
-    await reviseVersion(db, proposal, { chordpro: "New proposal" }, "other");
+    const proposal = await edit(first.id, "Proposed", "untrusted");
+    await reviseVersion(db, proposal, { chordpro: "New proposal" }, "untrusted");
     await expect(
       withVersionConflict(() =>
         db.batch([
@@ -1095,7 +1107,7 @@ describe("submitted revision history", () => {
 
   it("lets admins hide consumed proposals without losing history or allowing restoration", async () => {
     const first = await initial();
-    const proposal = await edit(first.id, "Suggested correction", "other");
+    const proposal = await edit(first.id, "Suggested correction", "untrusted");
     await approveVersion(db, "song", proposal.id, "admin", { expectedRevision: proposal.revision });
     const consumed = await loadVersion(db, "song", proposal.id);
     const deleted = await changeVersionStatus(db, "song", proposal.id, "admin", "delete", consumed.revision);
@@ -1108,12 +1120,13 @@ describe("submitted revision history", () => {
 
   it("cannot publish or select a pending proposal through the wrong operation", async () => {
     const first = await initial();
-    const proposal = await edit(first.id, "Suggestion", "other");
+    const proposal = await edit(first.id, "Suggestion", "untrusted");
+    await db.update(schema.user).set({ isTrusted: true }).where(eq(schema.user.id, "untrusted"));
     await expect(
       setOfficialVersion(db, "song", proposal.id, "other", 1),
     ).rejects.toMatchObject({ status: 400 });
     await expect(
-      approveVersion(db, "song", proposal.id, "other", { expectedRevision: 1 }),
+      approveVersion(db, "song", proposal.id, "untrusted", { expectedRevision: 1 }),
     ).rejects.toMatchObject({ status: 403 });
   });
 
@@ -1132,7 +1145,7 @@ describe("submitted revision history", () => {
 
   it("approves a content correction after official selection changes, preserving that selection", async () => {
     const first = await initial();
-    const correction = await edit(first.id, "Corrected words", "other");
+    const correction = await edit(first.id, "Corrected words", "untrusted");
     const alternative = await edit(first.id, "Alternate sheet", "owner", "new-version");
     await setOfficialVersion(db, "song", alternative.id, "admin", alternative.revision);
     const applied = await approveVersion(db, "song", correction.id, "admin", { expectedRevision: correction.revision });
