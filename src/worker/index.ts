@@ -1,7 +1,6 @@
 /// <reference types="../../worker-configuration.d.ts" />
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { user } from "src/lib/db/schema/auth.schema";
 import { auth } from "../lib/auth/server";
 import adminApp, { adminOrTrustedMiddleware } from "./api/admin/admin";
 import {
@@ -24,6 +23,13 @@ import * as schema from "src/lib/db/schema";
 import { IllustrationGenerateSchema } from "./api/api-types"; // Or wherever your schema type lives
 
 const app = buildApp();
+
+const publicReadPaths = new Set([
+  "/api/songs",
+  "/api/songs/incremental",
+  "/api/songs/songbooks",
+  "/api/session",
+]);
 
 // 1. Centralized Error Handling
 // Catches all unhandled exceptions thrown in any downstream route
@@ -51,28 +57,25 @@ app.onError((err, c) => {
 export const route = app
   .basePath("/api")
   .use(async (c, next) => {
-    // Global DB Initialization and Injection
-    const db = drizzle(c.env.DB, { schema });
-    c.set("db", db);
+    c.set("db", drizzle(c.env.DB, { schema }));
+    return next();
+  })
+  .route("/auth", authApp)
+  .use(async (c, next) => {
+    if (c.req.method === "GET" && publicReadPaths.has(c.req.path)) return next();
 
-    const authInstance = auth(c.env, db);
+    const authInstance = auth(c.env, c.var.db);
     const session = await authInstance.api.getSession(c.req.raw);
     if (session?.session) {
       c.set("SESSION", session.session);
       c.set("USER", session.user);
-
-      // Fire and forget the login update
-      c.executionCtx.waitUntil(
-        db
-          .update(user)
-          .set({ lastLogin: new Date() })
-          .where(eq(user.id, session.user.id))
-          .execute(),
-      );
+      c.executionCtx.waitUntil(c.var.db.update(schema.user)
+        .set({ lastLogin: new Date() })
+        .where(eq(schema.user.id, session.user.id))
+        .execute());
     }
     return next();
   })
-  .route("/auth", authApp)
   .route("/songs", songDBRoutes)
   .route("/favorites", favoritesApp)
   .route("/editor", editorApp)

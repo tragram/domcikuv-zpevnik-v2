@@ -71,7 +71,9 @@ export function useToggleFavorite(
   });
 
   const removeFavorite = useMutation({
-    mutationFn: () => client.api.favorites.$delete({ json: { songId: song.id } }),
+    mutationFn: () => makeApiRequest(() =>
+      client.api.favorites.$delete({ json: { songId: song.id } }),
+    ),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey });
       const previous = queryClient.getQueryData<SongbookEntryApi[]>(queryKey);

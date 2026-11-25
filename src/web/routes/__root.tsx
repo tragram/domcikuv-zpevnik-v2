@@ -4,18 +4,11 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { cacheRestored } from "src/lib/query-client";
 import { CustomError } from "~/components/CustomError";
 import { NotFound } from "~/components/NotFound";
-import { activeSessionsQueryOptions } from "~/hooks/use-active-sessions";
-import {
-  publicSongbooksQueryOptions,
-  songsQueryOptions,
-} from "~/hooks/use-songDB";
-import { useFilterSettingsStore } from "~/features/SongView/hooks/filterSettingsStore";
+import { songsQueryOptions } from "~/hooks/use-songDB";
 import { RouterContext } from "~/main";
-import {
-  getSessionUserId,
-  sessionQueryOptions,
-  songbookEntriesQueryOptions,
-} from "../hooks/use-user-data";
+import { sessionQueryOptions } from "../hooks/use-user-data";
+
+let initialSessionCheckStarted = false;
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFound,
@@ -28,23 +21,10 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     await cacheRestored;
 
     const songsPromise = context.queryClient.prefetchQuery(songsQueryOptions());
-    context.queryClient.prefetchQuery(sessionQueryOptions());
-    context.queryClient.prefetchQuery(publicSongbooksQueryOptions());
-    context.queryClient.prefetchQuery(activeSessionsQueryOptions());
-
-    // Warm (and persist for offline) the foreign songbook the user is currently
-    // filtered to, so its contents — including the owner's pending songs that
-    // aren't in the global DB — survive into the next offline launch, the same
-    // way the songs DB above does. Skips the user's own songbook (served from
-    // buildSongDB, not this query).
-    const { selectedSongbookId } = useFilterSettingsStore.getState();
-    if (selectedSongbookId) {
-      const self = getSessionUserId(context.queryClient);
-      if (selectedSongbookId !== self) {
-        context.queryClient.prefetchQuery(
-          songbookEntriesQueryOptions(selectedSongbookId),
-        );
-      }
+    // OAuth returns via a full page load and can leave a different cached user.
+    if (!initialSessionCheckStarted) {
+      initialSessionCheckStarted = true;
+      void context.queryClient.prefetchQuery({ ...sessionQueryOptions(), staleTime: 0 });
     }
 
     // Local D1 can change between reloads. Wait for its catalog in dev so

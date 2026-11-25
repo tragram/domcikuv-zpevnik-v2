@@ -60,70 +60,30 @@ type SongsMeta = {
   lastUpdate: string;
 };
 
-const setSongsMeta = (data: { songDBVersion: string; lastUpdateAt: string }) =>
-  queryClient.setQueryData<SongsMeta>(songQueryKeys.catalogMeta, {
-    version: data.songDBVersion,
-    lastUpdate: data.lastUpdateAt,
-  });
-
-export const fetchSongs = async (): Promise<SongDataApi[]> => {
-  // 1. Get current cached state from TanStack/IndexedDB
-  const cached = queryClient.getQueryData<SongDataApi[]>(songQueryKeys.catalog);
-  const meta = queryClient.getQueryData<SongsMeta>(songQueryKeys.catalogMeta);
-
-  // The admin-managed DB version determines when the server sends a replacement.
-  if (!cached || !meta?.version || !meta.lastUpdate) {
-    try {
-      const data = await makeApiRequest(client.api.songs.$get);
-      setSongsMeta(data);
-      return data.songs;
-    } catch (error) {
-      // Never error the query while a cache exists (an errored query is dropped
-      // on persist, which would wipe the offline songs — see sessionQueryOptions
-      // for the same rule). The full fetch simply retries on a later launch.
-      if (cached) {
-        console.warn("Full song fetch failed, returning cache", error);
-        return cached;
-      }
-      throw error;
-    }
-  }
-
-  // 3. Try Incremental Update
-  try {
-    const data = await makeApiRequest(() =>
-      client.api.songs.incremental.$get({
+export const fetchSongs = async (cache = queryClient): Promise<SongDataApi[]> => {
+  const cached = cache.getQueryData<SongDataApi[]>(songQueryKeys.catalog);
+  const meta = cache.getQueryData<SongsMeta>(songQueryKeys.catalogMeta);
+  const data = cached && meta?.version && meta.lastUpdate
+    ? await makeApiRequest(() => client.api.songs.incremental.$get({
         query: { songDBVersion: meta.version, lastUpdateAt: meta.lastUpdate },
-      }),
-    );
-    // 4. Handle Full Reset (isIncremental: false)
-    if (!data.isIncremental) {
-      setSongsMeta(data);
-      return data.songs;
-    }
+      }))
+    : await makeApiRequest(client.api.songs.$get);
 
-    // 5. Apply Incremental Updates (matches your applyIncrementalUpdates)
-    if (data.songs.length > 0) {
-      const songMap = new Map(cached.map((s) => [s.id, s]));
-
-      for (const song of data.songs) {
-        if (song.updateStatus === "deleted") {
-          songMap.delete(song.id);
-        } else {
-          songMap.set(song.id, song);
-        }
-      }
-
-      setSongsMeta(data);
-      return Array.from(songMap.values());
-    }
-
-    // No updates needed
-    return cached;
-  } catch (error) {
-    console.warn("Incremental fetch failed, returning cache", error);
-    return cached;
+  if (!cached || !data.isIncremental || data.songs.length > 0) {
+    cache.setQueryData<SongsMeta>(songQueryKeys.catalogMeta, {
+      version: data.songDBVersion,
+      lastUpdate: data.lastUpdateAt,
+    });
   }
+  if (!cached || !data.isIncremental) return data.songs;
+  if (data.songs.length === 0) return cached;
+
+  const songMap = new Map(cached.map((song) => [song.id, song]));
+  for (const song of data.songs) {
+    if (song.updateStatus === "deleted") songMap.delete(song.id);
+    else songMap.set(song.id, song);
+  }
+  return Array.from(songMap.values());
 };
 
 export const singleSongQueryOptions = (songId: string, versionId?: string) =>

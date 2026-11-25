@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query-persist-client";
 import { del, get, set } from "idb-keyval";
 import { isSheetQuery, unavailableSheet, watchDownloadedRevisions } from "./offline-sheets";
+import { songQueryKeys } from "../web/services/song-query-keys";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,10 +26,11 @@ export function createIDBPersister(idbValidKey: IDBValidKey = "reactQuery") {
     persistClient: async (client: PersistedClient) => {
       const queries = client.clientState.queries.map(query => {
         const { state } = query;
-        if (!isSheetQuery(query.queryKey) || state.status !== "error") return query;
+        const isSheet = isSheetQuery(query.queryKey);
+        if (state.status !== "error" || (!isSheet && query.queryKey[0] !== songQueryKeys.catalog[0])) return query;
         // Persist the download independently of the last network attempt.
         // Keep a confirmed denial across restarts, without its old sheet.
-        const error = unavailableSheet(state.error) ? { status: state.error.status } : null;
+        const error = isSheet && unavailableSheet(state.error) ? { status: state.error.status } : null;
         return { ...query, state: { ...state, data: error ? undefined : state.data,
           status: error ? "error" : "success", error, fetchFailureReason: null, fetchStatus: "idle" } };
       });
@@ -77,6 +79,7 @@ async function setupPersistence() {
       shouldDehydrateQuery: (query) => {
         const [root, kind] = query.queryKey;
         if (root === "externalSearch" || (root === "song" && kind === "feed")) return false;
+        if (root === songQueryKeys.catalog[0] && query.state.data !== undefined) return true;
         return defaultShouldDehydrateQuery(query) || (isSheetQuery(query.queryKey) &&
           query.state.status === "error" && (query.state.data !== undefined || unavailableSheet(query.state.error)));
       },

@@ -34,9 +34,7 @@ export const indexSongbookEntries = (
 export const sessionQueryOptions = () =>
   queryOptions({
     queryKey: ["session"],
-    // Always revalidate so a just-completed login is picked up without a manual
-    // reload (the persisted copy is still shown instantly).
-    staleTime: 0,
+    staleTime: 15 * 60_000,
     queryFn: async (): Promise<SessionData | null> => {
       const { data, error } = await authClient.getSession();
       if (!error) return data;
@@ -53,17 +51,9 @@ export const sessionQueryOptions = () =>
     },
   });
 
-export const favoritesQueryOptions = (
-  userId?: string,
-  revalidateOnMount = false,
-) =>
+export const favoritesQueryOptions = (userId?: string) =>
   queryOptions({
     queryKey: songQueryKeys.userFavorites(userId),
-    // Only the top-level user-data subscription opts into this. Heart buttons
-    // share the query without refetching as virtualized rows mount.
-    ...(revalidateOnMount
-      ? { staleTime: 0, refetchOnMount: "always" as const }
-      : {}),
     queryFn: () => fetchFavorites(),
   });
 
@@ -195,10 +185,7 @@ export function useUserData() {
   const isLoggedIn = !!sessionData?.user;
   const userId = sessionData?.user?.id;
   const { data: favorites, isFetching: isFavoritesSyncing } = useQuery({
-    // An older fetch path could persist a transient failure as a successful
-    // empty list. Revalidate it once whenever the app's user context mounts;
-    // offline failures retain the cached data.
-    ...favoritesQueryOptions(userId, true),
+    ...favoritesQueryOptions(userId),
     enabled: isLoggedIn && !!userId,
   });
 
@@ -257,6 +244,6 @@ export async function getUserData(): Promise<UserData> {
  * throws — offline or failed fetches degrade to cached data / logged-out.
  */
 export async function refreshUserData(): Promise<UserData> {
-  await queryClient.fetchQuery(sessionQueryOptions()).catch(() => undefined);
+  await queryClient.fetchQuery({ ...sessionQueryOptions(), staleTime: 0 }).catch(() => undefined);
   return getUserData().catch(() => null);
 }

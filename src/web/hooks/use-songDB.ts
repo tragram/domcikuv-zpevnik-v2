@@ -16,8 +16,8 @@ import { favoritesQueryOptions, sessionQueryOptions, submissionsQueryOptions, se
 export const songsQueryOptions = () =>
   queryOptions({
     queryKey: songQueryKeys.catalog,
-    queryFn: () => fetchSongs(),
-    ...(import.meta.env.DEV && { staleTime: 0 }),
+    queryFn: ({ client }) => fetchSongs(client),
+    staleTime: import.meta.env.DEV ? 0 : 24 * 60 * 60_000,
   });
 
 export const publicSongbooksQueryOptions = () =>

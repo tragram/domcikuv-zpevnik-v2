@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, or, sql } from "drizzle-orm";
 import { AppDatabase } from "../api/utils";
 import { song, songVersion, user, userFavoriteSongs } from "src/lib/db/schema";
 import { HTTPException } from "hono/http-exception";
@@ -85,7 +85,14 @@ export const setSongbookEntry = async (
     await db
       .update(userFavoriteSongs)
       .set(patch)
-      .where(eq(userFavoriteSongs.id, existing.id));
+      .where(and(
+        eq(userFavoriteSongs.id, existing.id),
+        or(
+          patch.pinnedVersionId === undefined ? undefined : sql`${userFavoriteSongs.pinnedVersionId} IS NOT ${patch.pinnedVersionId}`,
+          patch.keyIndex === undefined ? undefined : sql`${userFavoriteSongs.keyIndex} IS NOT ${patch.keyIndex}`,
+          patch.capo === undefined ? undefined : sql`${userFavoriteSongs.capo} IS NOT ${patch.capo}`,
+        ),
+      ));
   } else {
     await db.insert(userFavoriteSongs).values({ userId, songId, ...patch });
   }

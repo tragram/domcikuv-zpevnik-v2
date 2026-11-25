@@ -1,11 +1,35 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { queryClient } from "src/lib/query-client";
+import { QueryClient } from "@tanstack/react-query";
+import { songsQueryOptions } from "~/hooks/use-songDB";
 import { fetchSongs } from "./song-service";
 import type { SongDataApi } from "src/worker/api/api-types";
 
 afterEach(() => {
   queryClient.clear();
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
+});
+
+it("reuses the downloaded catalog until it is 24 hours old", async () => {
+  vi.stubEnv("DEV", false);
+  const cache = new QueryClient();
+  const options = songsQueryOptions();
+  const fetch = vi.fn<typeof globalThis.fetch>(async () => Response.json({ status: "success", data: {
+    songs: [], songDBVersion: "v1", lastUpdateAt: "2026-01-02", isIncremental: true,
+  } }));
+  vi.stubGlobal("fetch", fetch);
+  cache.setQueryData(["songs-meta"], { version: "v1", lastUpdate: "2026-01-01" });
+  cache.setQueryData(options.queryKey, [], { updatedAt: Date.now() - 23 * 60 * 60_000 });
+
+  await cache.fetchQuery(options);
+  expect(fetch).not.toHaveBeenCalled();
+
+  cache.setQueryData(options.queryKey, [], { updatedAt: Date.now() - 24 * 60 * 60_000 });
+  await cache.fetchQuery(options);
+  await cache.fetchQuery(options);
+  expect(fetch).toHaveBeenCalledOnce();
+  expect(String(fetch.mock.lastCall?.[0])).toContain("/incremental");
 });
 
 it("downloads the catalog once after a cache reset, then resumes incremental sync", async () => {

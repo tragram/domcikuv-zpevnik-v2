@@ -110,3 +110,36 @@ it.each([true, false])("the heart pins the displayed ID when official=%s", async
     vi.unstubAllGlobals();
   }
 });
+
+it("restores the cached favorite when the server rejects removal", async () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const cache = new QueryClient({ defaultOptions: { queries: { staleTime: 60 * 60_000 } } });
+  const entry = { songId: "song", pinnedVersionId: "displayed", keyIndex: null, capo: null };
+  cache.setQueryData(["favorites", "viewer"], [entry]);
+  const song = new SongData({ id: "song", versionId: "displayed", title: "Song", artist: "Artist", chordpro: "Lyrics",
+    externalSource: null, createdAt: "2026-01-01", updatedAt: "2026-01-01" });
+  const fetch = vi.fn<typeof globalThis.fetch>(async () => Response.json({
+    status: "fail", failData: { message: "Sign in again" },
+  }, { status: 401 }));
+  vi.stubGlobal("fetch", fetch);
+  function Harness() {
+    const favorite = useToggleFavorite(song, "viewer");
+    return <button onClick={favorite.toggle}>{favorite.isFavorite ? "Saved" : "Save"}</button>;
+  }
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  try {
+    await act(async () => root.render(<QueryClientProvider client={cache}><Harness /></QueryClientProvider>));
+    await act(async () => {
+      container.querySelector("button")!.click();
+      await vi.waitFor(() => expect(cache.getMutationCache().getAll()[0]?.state.status).toBe("error"));
+    });
+    expect(fetch).toHaveBeenCalledOnce();
+    expect(cache.getQueryData(["favorites", "viewer"])).toEqual([entry]);
+    expect(container.textContent).toBe("Saved");
+  } finally {
+    await act(async () => root.unmount());
+    cache.clear();
+    vi.unstubAllGlobals();
+  }
+});

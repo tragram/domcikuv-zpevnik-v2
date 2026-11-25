@@ -70,8 +70,7 @@ function RouteComponent() {
     staleTime: 0,
     refetchOnMount: "always",
     refetchOnReconnect: "always",
-    refetchInterval: 10_000,
-    refetchIntervalInBackground: true,
+    refetchInterval: 60_000,
     select: (row) => new SongData(row),
   });
   const hostSheet = shouldShare && liveSheet.data?.versionId === songData.versionId

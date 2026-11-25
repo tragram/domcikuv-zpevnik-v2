@@ -1,8 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { QueryClient } from "@tanstack/react-query";
 
 import {
   favoritesQueryOptions,
   indexSongbookEntries,
+  sessionQueryOptions,
 } from "./use-user-data";
 
 describe("structured songbook entries", () => {
@@ -28,16 +30,22 @@ describe("structured songbook entries", () => {
     expect(songbookEntries.get("song-2")).toBe(current);
   });
 
-  it("always revalidates persisted favorites when the app mounts", () => {
-    const options = favoritesQueryOptions("user-1", true);
+  it("reuses a recent session and favorites across navigation", async () => {
+    const cache = new QueryClient({ defaultOptions: { queries: { staleTime: 60 * 60_000 } } });
+    const session = sessionQueryOptions();
+    const favorites = favoritesQueryOptions("user-1");
+    const fetchSession = vi.fn(async () => null);
+    const fetchFavorites = vi.fn(async () => []);
+    cache.setQueryData(session.queryKey, null);
+    cache.setQueryData(favorites.queryKey, []);
 
-    expect(options.staleTime).toBe(0);
-    expect(options.refetchOnMount).toBe("always");
-  });
+    await cache.fetchQuery({ ...session, queryFn: fetchSession });
+    await cache.fetchQuery({ ...favorites, queryFn: fetchFavorites });
+    expect(fetchSession).not.toHaveBeenCalled();
+    expect(fetchFavorites).not.toHaveBeenCalled();
 
-  it("does not make each favorite button refetch on mount", () => {
-    const options = favoritesQueryOptions("user-1");
-
-    expect(options.refetchOnMount).toBeUndefined();
+    await cache.invalidateQueries({ queryKey: favorites.queryKey });
+    await cache.fetchQuery({ ...favorites, queryFn: fetchFavorites });
+    expect(fetchFavorites).toHaveBeenCalledOnce();
   });
 });

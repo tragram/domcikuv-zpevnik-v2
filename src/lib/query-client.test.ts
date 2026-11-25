@@ -63,3 +63,24 @@ it.each(["v1", "v2"])("restores only the current persisted cache format (%s)", a
     expect(queryClient.getQueryData(["songs"])).toEqual([{ id: "downloaded-song" }]);
   }
 });
+
+it("keeps the downloaded catalog and its original timestamp after a failed sync", async () => {
+  vi.resetModules();
+  vi.stubGlobal("indexedDB", {});
+  storage.get.mockResolvedValue(undefined);
+  const { queryClient, cacheRestored } = await import("./query-client");
+  await cacheRestored;
+  const queryKey = ["songs"];
+  const songs = [{ id: "downloaded-song" }];
+  queryClient.setQueryData(queryKey, songs, { updatedAt: 123 });
+
+  await expect(queryClient.fetchQuery({ queryKey, retry: false, staleTime: 0,
+    queryFn: async () => { throw new Error("Disconnected"); },
+  })).rejects.toThrow("Disconnected");
+
+  const restored = new QueryClient();
+  hydrate(restored, storage.set.mock.calls.at(-1)![1].clientState);
+  expect(restored.getQueryState(queryKey)).toMatchObject({
+    status: "success", data: songs, dataUpdatedAt: 123,
+  });
+});

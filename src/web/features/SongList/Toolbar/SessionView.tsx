@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { CloudSync } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { UserData } from "~/hooks/use-user-data";
@@ -15,7 +16,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { useActiveSessions } from "~/hooks/use-active-sessions";
+import { activeSessionsQueryOptions } from "~/hooks/use-active-sessions";
 import type { SongDB } from "~/types/types";
 import { Button } from "src/web/components/ui/button";
 import { AvatarWithFallback } from "src/web/components/ui/avatar";
@@ -33,7 +34,16 @@ const SessionView = ({ isOnline, songDB, userData }: SessionViewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
-  const { activeSessions, refetchIfStale, isPending } = useActiveSessions(songDB);
+  const queryClient = useQueryClient();
+  const { data: sessions, isPending } = useQuery({
+    ...activeSessionsQueryOptions(),
+    enabled: isOnline,
+    refetchInterval: isOpen ? 60_000 : false,
+  });
+  const activeSessions = sessions?.map((session) => ({
+    ...session,
+    song: songDB.songs.find((song) => song.id === session.songId),
+  }));
 
   const { shareSession, toggleShareSession } = useShareSessionToggle();
 
@@ -51,23 +61,15 @@ const SessionView = ({ isOnline, songDB, userData }: SessionViewProps) => {
       setCurrentTime(Date.now());
     }, 1000);
 
-    // Network tick: polls the backend for new sessions every 10 seconds
-    const networkInterval = setInterval(() => {
-      refetchIfStale(10 / 60);
-    }, 5000);
-
-    return () => {
-      clearInterval(clockInterval);
-      clearInterval(networkInterval);
-    };
-  }, [isOpen, refetchIfStale]);
+    return () => clearInterval(clockInterval);
+  }, [isOpen]);
 
   // Handle the initial state updates when the user clicks the dropdown
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
     if (open) {
       setCurrentTime(Date.now());
-      refetchIfStale(0); // Fetch immediately on open
+      if (isOnline) void queryClient.prefetchQuery(activeSessionsQueryOptions());
     }
   };
 
