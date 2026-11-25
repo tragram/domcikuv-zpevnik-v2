@@ -5,8 +5,8 @@
 {range: c1-a1}
 {language: czech}
 {startMelody: e d c}
-{illustrationId: kabat-saman_gpt-4o-mini_v1_flux.1-dev}
-{promptId: kabat-saman_gpt-4o-mini_v1}
+{illustrationId: kabat-saman_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: kabat-saman_gpt-6.1-terra_v7}
 
 {start_of_verse}
 Poslou[C]chám jak v dáli [F]temný bonga [Ami]zní

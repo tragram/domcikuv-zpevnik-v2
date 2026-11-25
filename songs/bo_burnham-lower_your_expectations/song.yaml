@@ -31,3 +31,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: stable-diffusion-3.5-large
         filename: stable-diffusion-3.5-large.webp
+  - id: bo_burnham-lower_your_expectations_gpt-6.1-terra_v7
+    songId: bo_burnham-lower_your_expectations
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A gently satirical, cinematic photograph of an ordinary couple in
+      mismatched pajamas sharing takeout on a slightly messy couch, smiling at
+      each other. Two crumpled paper crowns lie forgotten on the floor. Warm
+      lamplight, soft shadows, intimate framing, imperfect and affectionate. No
+      text.
+    createdAt: 2026-11-24T09:11:25.000Z
+    updatedAt: 2026-11-24T09:11:25.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795511510000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

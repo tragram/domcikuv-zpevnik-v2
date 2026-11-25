@@ -5,8 +5,8 @@
 {range: g1-e2}
 {language: romanian}
 {startMelody: c a}
-{illustrationId: o-zone-dragostea_din_tei_gpt-4o-mini_v1_flux.1-dev}
-{promptId: o-zone-dragostea_din_tei_gpt-4o-mini_v1}
+{illustrationId: o-zone-dragostea_din_tei_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: o-zone-dragostea_din_tei_gpt-6.1-terra_v7}
 
 {start_of_bridge: Intro}
 𝄆 Ma-ia-[F]hii Ma-ia-[C]huu

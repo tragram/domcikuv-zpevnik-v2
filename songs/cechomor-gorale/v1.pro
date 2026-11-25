@@ -5,8 +5,8 @@
 {range: c#1-h1}
 {language: czech}
 {startMelody: d e f#}
-{illustrationId: cechomor-gorale_gpt-4o-mini_v1_flux.1-dev}
-{promptId: cechomor-gorale_gpt-4o-mini_v1}
+{illustrationId: cechomor-gorale_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: cechomor-gorale_gpt-6.1-terra_v7}
 
 {start_of_verse}
 [D]Za lasami [G]za gorami [A]za dolina[D]mi

@@ -4,8 +4,8 @@ versions:
   v1:
     id: aneta_langerova-hrisna_tela_kridla_motyli_1772895473452
     createdAt: '2026-03-07T14:57:53.000Z'
-    updatedAt: '2026-07-11T20:24:18.000Z'
-    revision: 6
+    updatedAt: '2026-11-25T11:17:05.000Z'
+    revision: 7
     youtubeId: Ra6xkNT4eCQ
 prompts:
   - id: aneta_langerova-hrisna_tela_kridla_motyli_manual-1772895473707

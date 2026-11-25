@@ -5,8 +5,8 @@
 {range: h1-h2}
 {language: czech}
 {startMelody: h c d}
-{illustrationId: jaroslav_samson_lenk-amazonka_gpt-4o-mini_v1_flux.1-dev}
-{promptId: jaroslav_samson_lenk-amazonka_gpt-4o-mini_v1}
+{illustrationId: jaroslav_samson_lenk-amazonka_gpt-6-luna_v7_gpt-image-2.6-flare}
+{promptId: jaroslav_samson_lenk-amazonka_gpt-6-luna_v7}
 
 {start_of_verse:Intro}
 [G][G6sus4][G]

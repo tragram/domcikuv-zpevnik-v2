@@ -5,8 +5,8 @@
 {range: a1-g2}
 {language: english}
 {startMelody: a a h}
-{illustrationId: tim_minchin-f_sharp_gpt-4o-mini_v1_flux.1-dev}
-{promptId: tim_minchin-f_sharp_gpt-4o-mini_v1}
+{illustrationId: tim_minchin-f_sharp_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: tim_minchin-f_sharp_gpt-6.1-terra_v7}
 
 {start_of_verse: Intro}
 I've been [B]having a little [A7]problem recent[Dm]ly

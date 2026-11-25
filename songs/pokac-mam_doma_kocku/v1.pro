@@ -5,8 +5,8 @@
 {range: e1-c2}
 {language: czech}
 {startMelody: g a}
-{illustrationId: pokac-mam_doma_kocku_gpt-4o-mini_v1_flux.1-dev}
-{promptId: pokac-mam_doma_kocku_gpt-4o-mini_v1}
+{illustrationId: pokac-mam_doma_kocku_gpt-6.1-terra_v7_gpt-image-2.6-flare}
+{promptId: pokac-mam_doma_kocku_gpt-6.1-terra_v7}
 
 {start_of_verse}
 [G]Jednou mi drahá říká:

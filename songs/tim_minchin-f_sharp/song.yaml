@@ -26,3 +26,21 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: tim_minchin-f_sharp_gpt-6.1-terra_v7
+    songId: tim_minchin-f_sharp
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A whimsical cabaret scene: a singer at a grand piano plays confidently
+      while his expression betrays the strain of singing slightly out of key. A
+      few musical notes drift from his mouth at an awkward angle to those rising
+      from the piano. Warm amber spotlight, deep shadows, rich theatrical reds;
+      stylized editorial illustration with playful, sophisticated humor. Simple
+      composition, no text.
+    createdAt: 2026-11-24T09:35:10.000Z
+    updatedAt: 2026-11-24T09:35:10.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795512931000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

@@ -26,3 +26,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: cechomor-gorale_gpt-6.1-terra_v7
+    songId: cechomor-gorale
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A playful Polish folk-art illustration: two Tatra highlanders in
+      traditional embroidered clothing face off with raised ciupaga walking
+      axes, while a smiling highland woman with two long braids steps between
+      them. Snow-capped mountains rise behind them under warm golden sunlight.
+      Bold shapes, vivid colors, and a mischievous, festive mood. No text.
+    createdAt: 2026-11-24T09:20:08.000Z
+    updatedAt: 2026-11-24T09:20:08.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795512057000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

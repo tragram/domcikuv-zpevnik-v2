@@ -5,8 +5,8 @@
 {range: e1-f2}
 {language: czech}
 {startMelody: e c d h}
-{illustrationId: vojtech_dyk-alkoholicka_gpt-4o-mini_v2_flux.1-dev}
-{promptId: vojtech_dyk-alkoholicka_gpt-4o-mini_v2}
+{illustrationId: vojtech_dyk-alkoholicka_gpt-6-luna_v7_gpt-image-2.6-flare}
+{promptId: vojtech_dyk-alkoholicka_gpt-6-luna_v7}
 
 {start_of_chorus}
 [Am]Calvados, víno, [E7]porto

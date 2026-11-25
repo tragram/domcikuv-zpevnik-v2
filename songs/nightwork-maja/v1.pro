@@ -5,8 +5,8 @@
 {range: f1-g2}
 {language: czech}
 {startMelody: c}
-{illustrationId: nightwork-maja_gpt-4o-mini_v1_flux.1-dev}
-{promptId: nightwork-maja_gpt-4o-mini_v1}
+{illustrationId: nightwork-maja_gpt-6-luna_v7_gpt-image-2.6-flare}
+{promptId: nightwork-maja_gpt-6-luna_v7}
 
 {start_of_verse}
 [Fm][D#][C#][C]

@@ -25,3 +25,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: nightwork-maja_gpt-6-luna_v7
+    songId: nightwork-maja
+    summaryPromptVersion: v7
+    summaryModel: gpt-6-luna
+    text: >-
+      A cheerful little bee bursting from a tiny beehive into a sunlit
+      wildflower meadow at dawn, wings shimmering as she darts toward the
+      viewer, playful and adventurous mood. Bright, saturated 1970s storybook
+      animation with soft hand-painted textures, warm golden light, simple clear
+      composition, no text.
+    createdAt: 2026-11-23T23:16:32.000Z
+    updatedAt: 2026-11-23T23:16:32.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795475803000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

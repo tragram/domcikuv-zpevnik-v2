@@ -5,8 +5,8 @@
 {range: g1-d1}
 {language: czech}
 {startMelody: h}
-{illustrationId: zluty_pes-modra_gpt-4o-mini_v1_flux.1-dev}
-{promptId: zluty_pes-modra_gpt-4o-mini_v1}
+{illustrationId: zluty_pes-modra_gpt-6-luna_v7_gpt-image-2.6-flare}
+{promptId: zluty_pes-modra_gpt-6-luna_v7}
 
 {start_of_verse}
 [G]Modrá je [D]planeta, kde [C]můžete [D]žít

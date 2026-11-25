@@ -27,3 +27,40 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: jaroslav_samson_lenk-amazonka_gpt-6.1-terra_v7
+    songId: jaroslav_samson_lenk-amazonka
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      Cinematic, photorealistic scene: a middle-aged man sits alone on a quiet
+      Czech riverbank, holding a faded tramping scarf. The blue sky reflects in
+      the water, recalling a lost love’s denim-blue eyes. Soft late-afternoon
+      light, muted natural colors, wistful and intimate mood, simple
+      composition. No text.
+    createdAt: 2026-11-24T09:42:45.000Z
+    updatedAt: 2026-11-24T09:42:45.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795513394000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp
+  - id: jaroslav_samson_lenk-amazonka_gpt-6-luna_v7
+    songId: jaroslav_samson_lenk-amazonka
+    summaryPromptVersion: v7
+    summaryModel: gpt-6-luna
+    text: >-
+      A wistful Czech riverside at blue hour: a middle-aged man sits alone on a
+      weathered wooden bench, holding an old tramping scarf, watching the river
+      reflect a vast blue sky; across the water, a faint translucent memory of a
+      young woman with denim-blue eyes and windblown hair, like a free-spirited
+      “Amazonka.” Quietly suggest lost youth and enduring tenderness, with a
+      subtle contrast of wild nature and distant apartment blocks. Cinematic,
+      photorealistic, muted autumn colors, soft cool light with a warm edge of
+      sunset, intimate composition, no text.
+    createdAt: 2026-11-24T09:43:30.000Z
+    updatedAt: 2026-11-24T09:43:30.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795513453000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

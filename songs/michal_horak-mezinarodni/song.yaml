@@ -26,3 +26,20 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: michal_horak-mezinarodni_gpt-6.1-terra_v7
+    songId: michal_horak-mezinarodni
+    summaryPromptVersion: v7
+    summaryModel: gpt-6.1-terra
+    text: >-
+      Útulná česká hospoda v sobotu večer: u baru sedí muž a žena nad dvěma
+      půllitry piva, vyměňují si pobavené, trochu nesmělé pohledy a snaží se
+      domluvit gesty. Hravá atmosféra nečekané romance navzdory jazykové
+      bariéře. Teplé jantarové světlo lamp, tlumené pozadí, jednoduchá
+      kompozice. Filmová ilustrace s jemnou nadsázkou, bez textu.
+    createdAt: 2026-11-24T09:15:22.000Z
+    updatedAt: 2026-11-24T09:15:22.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795511764000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp
