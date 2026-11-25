@@ -297,11 +297,11 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
   }, [canReloadSong, editorStateKey, draft]);
 
   const evaluatedFeatures: EvaluatedFeature[] = useMemo(() => {
-    const isTrusted = !!userData?.profile.isTrusted;
+    const canUseTrustedFeatures = userData?.profile.isTrusted || userData?.profile.isAdmin;
     return SMART_FEATURES.filter(
       // Trust-gated features are hidden from non-trusted users entirely
       // (rather than shown disabled), matching the server-side gate.
-      (f) => !f.requiresTrust || isTrusted,
+      (f) => !f.requiresTrust || canUseTrustedFeatures,
     ).map((f) => {
       const isEnabled = f.check(editorState.chordpro, userData, songData);
       // Autofill is an AI/server call — unavailable offline. Local features

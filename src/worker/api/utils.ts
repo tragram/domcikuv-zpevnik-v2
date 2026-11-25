@@ -47,7 +47,7 @@ export const trustedUserMiddleware = async (c: Context<AppEnv>, next: Next) => {
   }
 
   const userRecord = await db
-    .select({ isTrusted: user.isTrusted })
+    .select({ isTrusted: user.isTrusted, isAdmin: user.isAdmin })
     .from(user)
     .where(eq(user.id, userId))
     .get();
@@ -63,14 +63,14 @@ export const trustedUserMiddleware = async (c: Context<AppEnv>, next: Next) => {
     );
   }
 
-  if (import.meta.env.DEV || userRecord.isTrusted) {
+  if (import.meta.env.DEV || userRecord.isTrusted || userRecord.isAdmin) {
     return await next();
   }
 
   return c.json(
     {
       status: "error",
-      message: "Trusted user privileges required",
+      message: "Admin or trusted user privileges required",
       code: "INSUFFICIENT_PRIVILEGES",
     },
     403,
