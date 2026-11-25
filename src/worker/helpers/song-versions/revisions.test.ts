@@ -245,6 +245,45 @@ describe("submitted revision history", () => {
     expect((await db.query.song.findFirst())?.currentVersionId).toBe(revisedVersion.id);
   });
 
+  it("reports the first published sheet edit when a trusted non-owner corrects an import", async () => {
+    const original = await importCopy();
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      c.set("USER", { id: "other" } as NonNullable<typeof c.var.USER>);
+      await next();
+    }).route("/", editorApp);
+    const save = async (expectedRevision: number, chordpro: string, label?: string) => {
+      const response = await app.request("/song", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: "Song", artist: "Artist", chordpro, label,
+          baseVersionId: original.id, expectedRevision, saveMode: "correction" }),
+      });
+      expect(response.status).toBe(200);
+      const { data } = await response.json() as { data: EditorSubmissionResponse };
+      return data;
+    };
+
+    const unchanged = await save(original.revision, original.chordpro);
+    expect(unchanged.version.revision).toBe(original.revision);
+    expect(unchanged.firstImportedSheetEdit).toBeFalsy();
+
+    const details = await save(original.revision, original.chordpro, "Standard");
+    expect(details.version).toMatchObject({ status: "published", userId: "owner" });
+    expect(details.firstImportedSheetEdit).toBe(false);
+
+    const firstEdit = await save(details.version.revision, "[D]Revised sheet");
+    expect(firstEdit.version).toMatchObject({
+      id: original.id, status: "published", userId: "other", editedBy: "other", importId: original.importId,
+    });
+    expect(firstEdit.firstImportedSheetEdit).toBe(true);
+    expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
+
+    const secondEdit = await save(firstEdit.version.revision, "[E]Further revision");
+    expect(secondEdit.firstImportedSheetEdit).toBe(false);
+    expect(await db.query.songSubmission.findMany()).toHaveLength(0);
+  });
+
   it("leaves the official choice open when another published import exists", async () => {
     const original = await importCopy();
     const other = await importCopy("Another sheet", "untrusted", "cifraclub");

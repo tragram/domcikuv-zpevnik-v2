@@ -51,9 +51,10 @@ export const submitSongVersion = async (
   );
 };
 
-export const generateSongIllustration = (songId: string) => {
+export const generateSongIllustration = (songId: string, versionId?: string) => {
   const generationParams = {
     songId,
+    versionId,
     setAsActive: true,
   };
 

@@ -123,8 +123,8 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
     });
   };
 
-  const generateIllustrationInBackground = (songId: string) => {
-    generateSongIllustration(songId)
+  const generateIllustrationInBackground = (songId: string, versionId?: string) => {
+    generateSongIllustration(songId, versionId)
       .then(async (response) => {
         if (response.ok) {
           console.log(`Illustration generation started for song ${songId}`);
@@ -212,20 +212,17 @@ const EditorToolbar: React.FC<EditorToolbarProps> = ({
             } your version of the song!`,
       );
 
-      // Auto-generate illustration if enabled, the song has no illustration yet
-      // (covers brand new songs as well as imported songs without one), and
-      // the user is trusted. Approvals always count: approving a pending edit
-      // updates the version in place (createdAt !== updatedAt), so `!isUpdate`
-      // alone would never fire for them.
+      const firstImportedSheetEdit = response.firstImportedSheetEdit;
       if (
-        (!isUpdate || isApprovalMode) &&
-        !songData?.currentIllustration &&
+        version.status === "published" &&
+        (!versionId || version.id !== versionId || publish || firstImportedSheetEdit) &&
+        !response.song.currentIllustrationId &&
         userData &&
         // matches the server's adminOrTrustedMiddleware on /illustrations
         (userData.profile.isTrusted || userData.profile.isAdmin) &&
         editorSettings.autoGenerateIllustration
       ) {
-        generateIllustrationInBackground(response.song.id);
+        generateIllustrationInBackground(response.song.id, firstImportedSheetEdit ? version.id : undefined);
       }
 
       // Await + force a refetch (not just "active" queries) so the caches are

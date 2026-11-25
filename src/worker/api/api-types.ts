@@ -197,6 +197,7 @@ export type EditorSubmissionResponse = {
   song: SongDataDB;
   version: SongVersionDB;
   status?: string;
+  firstImportedSheetEdit?: boolean;
 };
 
 export type SongWithCurrentVersionDB = SongDataDB &

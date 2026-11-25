@@ -11,6 +11,7 @@ import {
   song,
   songIllustration,
   SongIllustrationDB,
+  songVersion,
 } from "../../../lib/db/schema";
 import {
   clearCurrentIllustration,
@@ -58,6 +59,7 @@ export const illustrationCreateSchema = z.object({
 
 export const illustrationGenerateSchema = z.object({
   songId: z.string(),
+  versionId: z.string().min(1).optional(),
   setAsActive: z
     .union([z.string(), z.boolean()])
     .transform((val) => val === "true" || val === true),
@@ -134,6 +136,19 @@ export const coreGenerateIllustration = async (
     illustrationSong = await getSongPopulated(db, illustrationData.songId);
   } catch {
     throw new Error("SONG_NOT_FOUND");
+  }
+
+  if (illustrationData.versionId) {
+    const version = await db.query.songVersion.findFirst({
+      where: and(
+        eq(songVersion.id, illustrationData.versionId),
+        eq(songVersion.songId, illustrationData.songId),
+        eq(songVersion.status, "published"),
+      ),
+      with: { songImport: true, submission: true },
+    });
+    if (!version || version.mergedIntoVersionId) throw new Error("SONG_NOT_FOUND");
+    illustrationSong.currentVersion = version;
   }
 
   const imageKeys = {

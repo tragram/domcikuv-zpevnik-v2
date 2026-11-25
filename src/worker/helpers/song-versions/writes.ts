@@ -8,7 +8,7 @@ import {
   songImport,
   userFavoriteSongs,
 } from "src/lib/db/schema";
-import type { SongRevisionContent, SongVersionDB } from "src/lib/db/schema";
+import type { SongRevisionContent, SongVersionDB, SongVersionWithSubmission } from "src/lib/db/schema";
 import type { EditorSubmitSchema } from "src/lib/contracts/editor-schema";
 import type { AppDatabase } from "../../api/utils";
 import { isCorrectionSubmission, publicationOptions, needsRevisionToBecomeOfficial, submissionReview, versionEditPolicy } from "src/lib/song-version-policy";
@@ -55,7 +55,7 @@ export async function saveSongVersion(
   userId: string,
   importId?: string,
   options?: { editAsPreviousAuthor?: boolean; editAsSubmitter?: boolean; publish?: boolean },
-) {
+): Promise<SongVersionWithSubmission & { firstImportedSheetEdit?: boolean }> {
   const [actor, parent] = await Promise.all([
     versionActor(db, userId),
     db.query.song.findFirst({ where: eq(song.id, songId) }),
@@ -235,11 +235,14 @@ export async function saveSongVersion(
           ...(selectReviewedImport ? [selectOnlyPublishedVersion(db, songId, base.id)] : []),
         ]),
       );
-    if (isDraft && options?.publish)
-      return approveVersion(db, songId, base.id, userId, {
+    if (isDraft && options?.publish) {
+      const published = await approveVersion(db, songId, base.id, userId, {
         expectedRevision: base.revision + Number(changed),
       });
-    return loadVersion(db, songId, base.id);
+      return { ...published, firstImportedSheetEdit };
+    }
+    const saved = await loadVersion(db, songId, base.id);
+    return { ...saved, firstImportedSheetEdit };
   }
 
   const pendingCorrection = !!base && mode === "correction";

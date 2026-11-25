@@ -190,7 +190,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
 
     const existingSong = await getSongBase(db, songId);
 
-    const versionResult = await createSongVersion(
+    const { firstImportedSheetEdit, ...versionResult } = await createSongVersion(
       db,
       submission,
       songId,
@@ -220,6 +220,7 @@ bonso[F]ir, mademoi[G]selle [Ami]Paris.
       song: existingSong,
       version: versionResult,
       status: versionResult.status,
+      firstImportedSheetEdit,
     } as EditorSubmissionResponse);
   })
   .get("/submissions", async (c) => {
