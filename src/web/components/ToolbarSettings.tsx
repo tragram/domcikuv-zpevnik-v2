@@ -1,4 +1,4 @@
-import { Coffee, Contrast, Menu, RefreshCw, Settings2 } from "lucide-react";
+import { Coffee, Contrast, RefreshCw, Settings2 } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { useWakeLock } from "react-screen-wake-lock";
 import useLocalStorageState from "use-local-storage-state";
@@ -41,7 +41,6 @@ export function ToolbarSettings({
   appSettingsLast = false,
   children,
 }: ToolbarSettingsProps) {
-  const SettingsIcon = compactMenuItems ? Menu : Settings2;
   const highContrast = useViewSettingsStore((state) => state.layout.highContrast);
   const setLayoutSettings = useViewSettingsStore((state) => state.actions.setLayoutSettings);
   const installItem = usePWAInstall();
@@ -122,7 +121,7 @@ export function ToolbarSettings({
           variant="circular"
           aria-label={compactMenuItems ? "Menu and settings" : "Settings"}
         >
-          <SettingsIcon />
+          <Settings2 />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
