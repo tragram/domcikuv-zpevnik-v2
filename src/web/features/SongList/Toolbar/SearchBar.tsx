@@ -89,28 +89,21 @@ function SearchBar() {
           </Button>
           <div
             className={cn(
-              "absolute left-0 top-0 flex h-full items-center overflow-hidden transition-all duration-300 ease-in-out outline-border outline-2 bg-control-surface",
-              isExpanded ? "opacity-100 rounded-full" : "opacity-0",
+              "absolute left-0 top-0 flex h-full items-center overflow-hidden transition-[width,opacity,box-shadow] duration-300 ease-in-out bg-control-surface-solid rounded-full",
+              isExpanded
+                ? "opacity-100 outline-border outline-2 shadow-[0_0_12px_8px_var(--color-control-surface-solid)]"
+                : "opacity-0",
             )}
             style={{ width: isExpanded ? `calc(100vw - 32px)` : "0" }}
           >
-            <Button
-              type="button"
-              variant="circular"
-              size="icon"
-              className="opacity-0"
-              tabIndex={-1}
-              aria-hidden="true"
-            >
-              <SearchIcon className="h-4 w-4" />
-            </Button>
+            <div className="h-full w-10 shrink-0 border-r-2 border-border" aria-hidden="true" />
             <Input
               ref={mobileInputRef}
               id="search-mobile"
               onChange={search}
               value={query}
               placeholder="Search..."
-              className="pl-3 pr-7 text-base md:text-sm font-medium placeholder:font-normal border-none rounded-full rounded-l-none dark:bg-transparent text-primary placeholder:text-primary dark:placeholder:text-primary/30 h-full"
+              className="pl-3 pr-7 text-base md:text-sm font-medium placeholder:font-normal border-none rounded-full rounded-l-none dark:bg-transparent text-primary placeholder:text-primary dark:placeholder:text-primary/30 h-full focus-visible:ring-0"
             />
             <ClearButton query={query} onClear={handleClear} />
           </div>
