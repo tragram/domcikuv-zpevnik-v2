@@ -3,25 +3,23 @@ import { useState } from "react";
 import {
   ImagesIcon,
   ListVideo,
-  Menu,
   Pencil,
   RefreshCw,
   Shield,
   User,
 } from "lucide-react";
+import { useMediaQuery } from "usehooks-ts";
 import RandomSong from "~/components/RandomSong";
 import { UserData } from "~/hooks/use-user-data";
 import { cn } from "~/lib/utils";
-import { RichItem } from "~/components/RichDropdown";
-import { DropdownThemeToggle, ThemeToggle } from "~/components/ThemeToggle";
+import { CompactItem } from "~/components/RichDropdown";
+import { ThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
+import { ToolbarSettings } from "~/components/ToolbarSettings";
 import { Button } from "~/components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import {
   Tooltip,
@@ -37,7 +35,7 @@ import SessionView from "./SessionView";
 import SortMenu from "./SortMenu";
 import { Separator } from "src/web/components/ui/separator";
 
-interface CombinedMenuProps {
+interface CompactMenuItemsProps {
   isOnline: boolean;
   profileAvailable: boolean;
   isAdmin: boolean;
@@ -46,101 +44,92 @@ interface CombinedMenuProps {
   onRefresh: () => void;
 }
 
-const CombinedMenu = ({
+const CompactMenuItems = ({
   isOnline,
   profileAvailable,
   isAdmin,
   playlistMode,
   onTogglePlaylistMode,
   onRefresh,
-}: CombinedMenuProps) => {
+}: CompactMenuItemsProps) => {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="circular">
-          <Menu />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="m-2 w-[calc(100dvw-1rem)] max-w-56 flex flex-col gap-1">
-        <RichItem.Header>Menu</RichItem.Header>
-        <DropdownMenuSeparator />
+    <>
+      <CompactItem.Header>Menu</CompactItem.Header>
+      <DropdownMenuSeparator />
 
-        <DropdownMenuItem
-          onClick={onRefresh}
-          disabled={!isOnline}
-          className="w-full cursor-pointer"
-        >
-          <RichItem.Shell>
-            <RichItem.Icon>
-              <RefreshCw />
-            </RichItem.Icon>
-            <RichItem.Body title="Refresh songs" />
-          </RichItem.Shell>
-        </DropdownMenuItem>
+      <DropdownMenuItem
+        onClick={onRefresh}
+        disabled={!isOnline}
+        className="w-full cursor-pointer"
+      >
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <RefreshCw />
+          </CompactItem.Icon>
+          <CompactItem.Body title="Refresh songs" />
+        </CompactItem.Shell>
+      </DropdownMenuItem>
 
-        <DropdownThemeToggle />
+      <DropdownMenuItem
+        onClick={onTogglePlaylistMode}
+        className="w-full cursor-pointer"
+      >
+        <CompactItem.Shell>
+          <CompactItem.Icon>
+            <ListVideo />
+          </CompactItem.Icon>
+          <CompactItem.Body
+            title={playlistMode ? "Exit playlist" : "YouTube playlist"}
+          />
+        </CompactItem.Shell>
+      </DropdownMenuItem>
 
-        <DropdownMenuItem
-          onClick={onTogglePlaylistMode}
-          className="w-full cursor-pointer"
-        >
-          <RichItem.Shell>
-            <RichItem.Icon>
-              <ListVideo />
-            </RichItem.Icon>
-            <RichItem.Body
-              title={playlistMode ? "Exit playlist" : "YouTube playlist"}
-            />
-          </RichItem.Shell>
-        </DropdownMenuItem>
+      <DropdownMenuItem asChild>
+        <Link to="/edit" className="w-full cursor-pointer">
+          <CompactItem.Shell>
+            <CompactItem.Icon>
+              <Pencil />
+            </CompactItem.Icon>
+            <CompactItem.Body title="Add song" />
+          </CompactItem.Shell>
+        </Link>
+      </DropdownMenuItem>
 
-        <DropdownMenuItem asChild>
-          <Link to="/edit" className="w-full cursor-pointer">
-            <RichItem.Shell>
-              <RichItem.Icon>
-                <Pencil />
-              </RichItem.Icon>
-              <RichItem.Body title="Add song" />
-            </RichItem.Shell>
+      <DropdownMenuItem asChild disabled={!profileAvailable}>
+        <Link to="/profile" className="w-full cursor-pointer">
+          <CompactItem.Shell>
+            <CompactItem.Icon>
+              <User />
+            </CompactItem.Icon>
+            <CompactItem.Body title="Profile" />
+          </CompactItem.Shell>
+        </Link>
+      </DropdownMenuItem>
+
+      {isAdmin && (
+        <DropdownMenuItem asChild disabled={!isOnline}>
+          <Link to="/admin" className="w-full cursor-pointer">
+            <CompactItem.Shell>
+              <CompactItem.Icon>
+                <Shield />
+              </CompactItem.Icon>
+              <CompactItem.Body title="Admin" />
+            </CompactItem.Shell>
           </Link>
         </DropdownMenuItem>
+      )}
 
-        <DropdownMenuItem asChild disabled={!profileAvailable}>
-          <Link to="/profile" className="w-full cursor-pointer">
-            <RichItem.Shell>
-              <RichItem.Icon>
-                <User />
-              </RichItem.Icon>
-              <RichItem.Body title="Profile" />
-            </RichItem.Shell>
-          </Link>
-        </DropdownMenuItem>
-
-        {isAdmin && (
-          <DropdownMenuItem asChild disabled={!isOnline}>
-            <Link to="/admin" className="w-full cursor-pointer">
-              <RichItem.Shell>
-                <RichItem.Icon>
-                  <Shield />
-                </RichItem.Icon>
-                <RichItem.Body title="Admin" />
-              </RichItem.Shell>
-            </Link>
-          </DropdownMenuItem>
-        )}
-
-        <DropdownMenuItem asChild>
-          <Link to="/gallery" className="w-full cursor-pointer">
-            <RichItem.Shell>
-              <RichItem.Icon>
-                <ImagesIcon />
-              </RichItem.Icon>
-              <RichItem.Body title="Gallery" />
-            </RichItem.Shell>
-          </Link>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      <DropdownMenuItem asChild>
+        <Link to="/gallery" className="w-full cursor-pointer">
+          <CompactItem.Shell>
+            <CompactItem.Icon>
+              <ImagesIcon />
+            </CompactItem.Icon>
+            <CompactItem.Body title="Gallery" />
+          </CompactItem.Shell>
+        </Link>
+      </DropdownMenuItem>
+    </>
   );
 };
 
@@ -166,6 +155,7 @@ function Toolbar({
   isSyncing,
 }: ToolbarProps) {
   const isOnline = useIsOnline();
+  const isWideToolbar = useMediaQuery("(min-width: 1400px)");
   // Logged-in users can open their (read-only) profile offline; logged-out users
   // only reach the login screen there, which needs the network — so offline +
   // logged-out leaves nothing to show.
@@ -353,16 +343,21 @@ function Toolbar({
           </TooltipContent>
         </Tooltip>
 
-        <div className="flex min-[1400px]:hidden">
-          <CombinedMenu
-            isOnline={isOnline}
-            profileAvailable={profileAvailable}
-            isAdmin={isAdmin}
-            playlistMode={playlistMode}
-            onTogglePlaylistMode={onTogglePlaylistMode}
-            onRefresh={onRefresh}
-          />
-        </div>
+        <ToolbarSettings
+          songs={songDB.songs}
+          compactMenuItems={
+            !isWideToolbar && (
+              <CompactMenuItems
+                isOnline={isOnline}
+                profileAvailable={profileAvailable}
+                isAdmin={isAdmin}
+                playlistMode={playlistMode}
+                onTogglePlaylistMode={onTogglePlaylistMode}
+                onRefresh={onRefresh}
+              />
+            )
+          }
+        />
       </TooltipProvider>
     </ToolbarBase>
   );

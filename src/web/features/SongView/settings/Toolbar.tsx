@@ -2,41 +2,25 @@ import { Link, useSearch } from "@tanstack/react-router";
 import {
   AtSign,
   CloudOff,
-  Coffee,
-  Contrast,
   Fullscreen,
   Heart,
   Pencil,
   PictureInPicture2,
-  RefreshCw,
-  Settings2,
   Undo2,
   Play,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useState, type FC } from "react";
 import type { FullScreenHandle } from "react-full-screen";
-import { useWakeLock } from "react-screen-wake-lock";
 
-import useLocalStorageState from "use-local-storage-state";
-import RandomSong, { ResetBanListDropdownItems } from "~/components/RandomSong";
+import RandomSong from "~/components/RandomSong";
 import { CompactItem } from "~/components/RichDropdown";
-import { DropdownThemeToggle } from "~/components/ThemeToggle";
 import ToolbarBase from "~/components/ToolbarBase";
+import { ToolbarSettings } from "~/components/ToolbarSettings";
 import { AvatarWithFallback } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import usePWAInstall from "~/components/usePWAInstall";
+import { DropdownMenuItem, DropdownMenuSeparator } from "~/components/ui/dropdown-menu";
 import { useToggleFavorite } from "~/components/FavoriteButton";
 import { useSongDB } from "~/hooks/use-songDB";
-import { useAppUpdate, runUpdateAction, updateLabels } from "~/services/app-updates";
-import { useIsOnline } from "~/hooks/use-is-online";
 import { youtubeWatchUrl } from "src/lib/youtube";
 import { SongData } from "~/types/songData";
 import ShareSongButton from "../components/ShareSongButton";
@@ -45,18 +29,11 @@ import { YoutubeMiniPlayer } from "../components/YoutubeMiniPlayer";
 import { useScrollHandler } from "../hooks/useScrollHandler";
 import { FeedStatus } from "../hooks/useSessionSync";
 import { useViewSettingsStore } from "../hooks/viewSettingsStore";
-import {
-  ChordSettingsButtons,
-  ChordSettingsDropdownMenu,
-} from "./ChordSettingsMenu";
-import {
-  LayoutSettingsDropdownSection,
-  LayoutSettingsToolbar,
-} from "./LayoutSettings";
+import { ChordSettingsButtons } from "./ChordSettingsMenu";
+import { LayoutSettingsToolbar } from "./LayoutSettings";
 import TransposeSettings from "./TransposeSettings";
 import { UserData } from "src/web/hooks/use-user-data";
 import { SongTranspose } from "../hooks/songTransposeMath";
-import { songPanelClassName, toolbarPanelPlacement } from "../components/songPanel";
 
 interface ToolbarProps {
   songData: SongData;
@@ -66,7 +43,7 @@ interface ToolbarProps {
   fullScreenHandle: FullScreenHandle;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({
+export const Toolbar: FC<ToolbarProps> = ({
   songData,
   userData,
   transpose,
@@ -90,35 +67,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const youtubeTitle = isYoutubeMiniPlayerOpen
     ? "Close picture-in-picture"
     : "Watch in picture-in-picture";
-  const { layout, actions } = useViewSettingsStore();
-  const { isToolbarVisible } = useScrollHandler(layout.fitScreenMode);
+  const fitScreenMode = useViewSettingsStore((state) => state.layout.fitScreenMode);
+  const { isToolbarVisible } = useScrollHandler(fitScreenMode);
   const { songDB } = useSongDB(userData);
-  const isOnline = useIsOnline();
   const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
   const nickname = userData?.profile.nickname ?? null;
-  const installItem = usePWAInstall();
-  const {
-    request: wakeLockRequest,
-    release: wakeLockRelease,
-    isSupported: wakeLockSupported,
-  } = useWakeLock({
-    reacquireOnPageVisible: true,
-  });
-  const [wakeLockEnabled, setWakeLockEnabled] = useLocalStorageState<boolean>(
-    "wakeLockEnabled",
-    { defaultValue: true },
-  );
-  useEffect(() => {
-    if (!wakeLockSupported || !wakeLockEnabled) return;
-    const request = wakeLockRequest();
-    return () => {
-      void request.then(wakeLockRelease);
-    };
-  }, [wakeLockSupported, wakeLockEnabled, wakeLockRequest, wakeLockRelease]);
 
   const { version: versionId } = useSearch({ strict: false });
-
-  const update = useAppUpdate();
 
   return (
     <div className="absolute top-0 w-full">
@@ -178,194 +133,121 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           </Button>
         )}
 
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="circular">
-              <Settings2 size={32} />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            {...toolbarPanelPlacement}
-            className={`${songPanelClassName} w-80 max-w-[calc(100vw-2rem)] max-h-[min(85dvh,var(--radix-dropdown-menu-content-available-height))] overflow-y-auto`}
+        <ToolbarSettings songs={songDB.songs} keepSongScreenAwake appSettingsLast>
+          <CompactItem.Header>Song actions</CompactItem.Header>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => {
+              fullScreenHandle.enter();
+            }}
           >
-            {React.Children.toArray(<LayoutSettingsDropdownSection />)}
-            {React.Children.toArray(<ChordSettingsDropdownMenu />)}
+            <CompactItem.Shell>
+              <CompactItem.Icon>
+                <Fullscreen />
+              </CompactItem.Icon>
+              <CompactItem.Body title="Enter fullscreen" />
+            </CompactItem.Shell>
+          </DropdownMenuItem>
 
-            <CompactItem.Header>Misc</CompactItem.Header>
-            <DropdownMenuSeparator />
-            <DropdownThemeToggle size={6} />
-
-            <DropdownMenuCheckboxItem
-              onSelect={(e) => e.preventDefault()}
-              checked={layout.highContrast}
-              onCheckedChange={() =>
-                actions.setLayoutSettings({
-                  highContrast: !layout.highContrast,
-                })
-              }
-            >
-              <CompactItem.Shell>
-                <CompactItem.Icon>
-                  <Contrast />
-                </CompactItem.Icon>
-                <CompactItem.Body title="High contrast" />
-              </CompactItem.Shell>
-            </DropdownMenuCheckboxItem>
-
-            <DropdownMenuItem
-              onClick={() => {
-                fullScreenHandle.enter();
-              }}
-            >
-              <CompactItem.Shell>
-                <CompactItem.Icon>
-                  <Fullscreen />
-                </CompactItem.Icon>
-                <CompactItem.Body title="Enter fullscreen" />
-              </CompactItem.Shell>
-            </DropdownMenuItem>
-
-            {React.Children.toArray(
-              <ResetBanListDropdownItems songs={songDB.songs} />,
-            )}
-
-            {wakeLockSupported && (
-              <DropdownMenuCheckboxItem
-                onSelect={(e) => e.preventDefault()}
-                checked={wakeLockEnabled}
-                onCheckedChange={() => setWakeLockEnabled(!wakeLockEnabled)}
+          <DropdownMenuItem
+            className="lg:hidden"
+            asChild={!!songData.youtubeId}
+            disabled={!songData.youtubeId}
+          >
+            {songData.youtubeId ? (
+              <a
+                className="w-full"
+                href={youtubeWatchUrl(songData.youtubeId)}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <CompactItem.Shell>
-                  <CompactItem.Icon>
-                    <Coffee />
-                  </CompactItem.Icon>
-                  <CompactItem.Body title="Keep screen on" />
-                </CompactItem.Shell>
-              </DropdownMenuCheckboxItem>
-            )}
-
-            <DropdownMenuItem
-              className="lg:hidden"
-              asChild={!!songData.youtubeId}
-              disabled={!songData.youtubeId}
-            >
-              {songData.youtubeId ? (
-                <a
-                  className="w-full"
-                  href={youtubeWatchUrl(songData.youtubeId)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <CompactItem.Shell className="cursor-pointer w-full">
-                    <CompactItem.Icon>
-                      <Play />
-                    </CompactItem.Icon>
-                    <CompactItem.Body title="Watch on YouTube" />
-                  </CompactItem.Shell>
-                </a>
-              ) : (
-                <CompactItem.Shell className="w-full">
+                <CompactItem.Shell className="cursor-pointer w-full">
                   <CompactItem.Icon>
                     <Play />
                   </CompactItem.Icon>
                   <CompactItem.Body title="Watch on YouTube" />
                 </CompactItem.Shell>
-              )}
-            </DropdownMenuItem>
-
-            <ShareSongButton
-              feedStatus={feedStatus}
-              userData={userData}
-              songId={songData.id}
-            />
-
-            {userData && (
-              <DropdownMenuItem
-                onSelect={(e) => {
-                  e.preventDefault();
-                  setNicknameDialogOpen(true);
-                }}
-              >
-                <CompactItem.Shell>
-                  <CompactItem.Icon>
-                    <AtSign />
-                  </CompactItem.Icon>
-                  <CompactItem.Body
-                    title={
-                      nickname
-                        ? "Change sharing nickname"
-                        : "Set a nickname to share"
-                    }
-                    subtitle={nickname ? `Sharing as ${nickname}` : undefined}
-                  />
-                </CompactItem.Shell>
-              </DropdownMenuItem>
+              </a>
+            ) : (
+              <CompactItem.Shell className="w-full">
+                <CompactItem.Icon>
+                  <Play />
+                </CompactItem.Icon>
+                <CompactItem.Body title="Watch on YouTube" />
+              </CompactItem.Shell>
             )}
+          </DropdownMenuItem>
 
-            {userData && (
-              <DropdownMenuItem
-                onSelect={(e) => {
-                  e.preventDefault();
-                  toggleFavorite();
-                }}
-              >
-                <CompactItem.Shell>
-                  <CompactItem.Icon>
-                    <Heart
-                      className={isFavorite ? "fill-primary text-primary" : ""}
-                    />
-                  </CompactItem.Icon>
-                  <CompactItem.Body
-                    title={isFavorite ? "In your songbook" : "Add to songbook"}
-                    subtitle={
-                      isFavorite
-                        ? "Your key & capo for this song are saved here"
-                        : "Adds song to your songbook and remembers the selected key & capo"
-                    }
-                  />
-                </CompactItem.Shell>
-              </DropdownMenuItem>
-            )}
+          <ShareSongButton
+            feedStatus={feedStatus}
+            userData={userData}
+            songId={songData.id}
+          />
 
-            <DropdownMenuItem>
-              <Link
-                className="w-full"
-                to="/edit/$songId"
-                params={{ songId: songData.id }}
-                search={{ version: versionId }}
-              >
-                <CompactItem.Shell className="cursor-pointer w-full">
-                  <CompactItem.Icon>
-                    <Pencil />
-                  </CompactItem.Icon>
-                  <CompactItem.Body title="View in Editor" />
-                </CompactItem.Shell>
-              </Link>
-            </DropdownMenuItem>
-
-            {installItem}
-
-            <DropdownMenuSeparator />
-
+          {userData && (
             <DropdownMenuItem
-              onSelect={(event) => {
-                event.preventDefault();
-                void runUpdateAction();
+              onSelect={(e) => {
+                e.preventDefault();
+                setNicknameDialogOpen(true);
               }}
-              disabled={!isOnline || !import.meta.env.PROD || !("serviceWorker" in navigator) || ["checking", "downloading", "restarting"].includes(update)}
             >
               <CompactItem.Shell>
                 <CompactItem.Icon>
-                  <RefreshCw />
+                  <AtSign />
                 </CompactItem.Icon>
                 <CompactItem.Body
-                  title={`Currently on v${__APP_VERSION__}`}
-                  subtitle={isOnline ? updateLabels[update] : "Reconnect to check for updates"}
+                  title={
+                    nickname
+                      ? "Change sharing nickname"
+                      : "Set a nickname to share"
+                  }
+                  subtitle={nickname ? `Sharing as ${nickname}` : undefined}
                 />
               </CompactItem.Shell>
             </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          )}
+
+          {userData && (
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+                toggleFavorite();
+              }}
+            >
+              <CompactItem.Shell>
+                <CompactItem.Icon>
+                  <Heart
+                    className={isFavorite ? "fill-primary text-primary" : ""}
+                  />
+                </CompactItem.Icon>
+                <CompactItem.Body
+                  title={isFavorite ? "In your songbook" : "Add to songbook"}
+                  subtitle={
+                    isFavorite
+                      ? "Your key & capo for this song are saved here"
+                      : "Adds song to your songbook and remembers the selected key & capo"
+                  }
+                />
+              </CompactItem.Shell>
+            </DropdownMenuItem>
+          )}
+
+          <DropdownMenuItem>
+            <Link
+              className="w-full"
+              to="/edit/$songId"
+              params={{ songId: songData.id }}
+              search={{ version: versionId }}
+            >
+              <CompactItem.Shell className="cursor-pointer w-full">
+                <CompactItem.Icon>
+                  <Pencil />
+                </CompactItem.Icon>
+                <CompactItem.Body title="View in Editor" />
+              </CompactItem.Shell>
+            </Link>
+          </DropdownMenuItem>
+        </ToolbarSettings>
       </ToolbarBase>
       <SetNicknameDialog
         open={nicknameDialogOpen}
