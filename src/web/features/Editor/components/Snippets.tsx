@@ -147,7 +147,7 @@ export const SnippetButtonSection: React.FC<{
       )}
     >
       <div className="flex justify-center">{children}</div>
-      <div className="text-center font-medium text-foreground text-xs">{label}</div>
+      <div className="text-center font-semibold text-background text-xs">{label}</div>
     </div>
   );
 };
@@ -171,14 +171,14 @@ export const SnippetButton: React.FC<SnippetButtonProps> = ({
           <button
             onClick={() => onInsert(snippetKey)}
             className={cn(
-              "text-base font-semibold py-1 px-2 text-foreground rounded-md hover:bg-background grow max-w-16",
+              "text-base font-bold py-1 px-2 text-background rounded-md hover:bg-background/20 grow max-w-16",
               className,
             )}
           >
             {snippet.letter}
           </button>
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent className="border border-background shadow-md">
           <p>{snippet.name}</p>
         </TooltipContent>
       </Tooltip>
