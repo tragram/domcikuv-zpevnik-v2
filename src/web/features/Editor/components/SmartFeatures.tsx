@@ -1,116 +1,57 @@
-import React from "react";
-import { Info, Minus, Plus } from "lucide-react";
+import { EditorInfo } from "./EditorInfo";
+import { Minus, Plus } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
-import { EvaluatedFeature, SmartFeature } from "../Editor";
-import { cn } from "~/lib/utils";
+import type { EvaluatedFeature, SmartFeature } from "../Editor";
 
-// --- Sub-component for individual features ---
 interface SmartFeatureItemProps {
   feature: EvaluatedFeature;
   isProcessing: boolean;
   onExecuteFeature: (feature: SmartFeature, payload?: number) => void;
 }
 
-const SmartFeatureItem: React.FC<SmartFeatureItemProps> = ({
-  feature,
-  isProcessing,
-  onExecuteFeature,
-}) => {
-  const isStepper = feature.actionType === "stepper";
+export function SmartFeatureItem({ feature, isProcessing, onExecuteFeature }: SmartFeatureItemProps) {
+  const disabled = !feature.isEnabled || isProcessing;
+  const label = isProcessing && feature.isEnabled ? feature.loadingLabel : feature.label;
+  const help = (
+    <EditorInfo label={feature.label}>
+      <div>{feature.description}</div>
+      {!feature.isEnabled && <p className="font-medium text-foreground">{feature.disabledReason}</p>}
+    </EditorInfo>
+  );
 
-  const triggerContent = isStepper ? (
-    <div tabIndex={0} className="flex-1 min-w-0 text-primary">
-      <div
-        className={cn(
-          "flex w-full items-stretch justify-between text-left text-xs font-medium border border-border dark:border-input shadow-xs rounded-md transition-all bg-transparent",
-          (!feature.isEnabled || isProcessing) &&
-          "opacity-50 pointer-events-none",
-        )}
-      >
-        <div className="flex flex-1 items-center gap-1.5 py-2 px-2.5 min-w-0">
-          <feature.icon className="size-4 shrink-0 self-center" />
-          <span className="leading-snug whitespace-normal">
-            {isProcessing && feature.isEnabled
-              ? feature.loadingLabel
-              : feature.label}
-          </span>
+  if (feature.actionType === "stepper") {
+    return (
+      <div role="group" aria-label={label} className="min-w-0 space-y-1.5">
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-xs font-semibold tracking-wide">{label}</span>
+          {help}
         </div>
-
-        <div className="flex items-stretch border-l border-border dark:border-input shrink-0">
-          <button
-            type="button"
-            disabled={!feature.isEnabled || isProcessing}
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={() => onExecuteFeature(feature, -1)}
-            className="px-3 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 transition-colors flex items-center justify-center disabled:opacity-50"
-          >
-            <Minus className="size-3" />
-          </button>
-          <div className="w-px bg-border dark:bg-input" />
-          <button
-            type="button"
-            disabled={!feature.isEnabled || isProcessing}
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={() => onExecuteFeature(feature, 1)}
-            className="px-3 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 transition-colors rounded-r-md flex items-center justify-center disabled:opacity-50"
-          >
-            <Plus className="size-3" />
-          </button>
+        <div className="grid h-10 grid-cols-2 overflow-hidden rounded-md border border-border bg-control-surface [&>button]:h-full">
+          <Button type="button" variant="ghost" size="sm" className="rounded-none border-r border-border shadow-none focus-visible:outline-2 focus-visible:-outline-offset-2" disabled={disabled} aria-label="Transpose down one semitone"
+            onMouseDown={event => event.preventDefault()} onClick={() => onExecuteFeature(feature, -1)}>
+            <Minus aria-hidden className="size-4" /> Down
+          </Button>
+          <Button type="button" variant="ghost" size="sm" className="rounded-none shadow-none focus-visible:outline-2 focus-visible:-outline-offset-2" disabled={disabled} aria-label="Transpose up one semitone"
+            onMouseDown={event => event.preventDefault()} onClick={() => onExecuteFeature(feature, 1)}>
+            <Plus aria-hidden className="size-4" /> Up
+          </Button>
         </div>
       </div>
-    </div>
-  ) : (
-    <div tabIndex={0} className="flex-1 min-w-0">
-      <Button
-        type="button"
-        variant="outline"
-        size="sm"
-        disabled={!feature.isEnabled || isProcessing}
-        onMouseDown={(e) => e.preventDefault()}
-        onClick={() => onExecuteFeature(feature)}
-        className="w-full h-auto py-2 px-2.5 justify-start text-left whitespace-normal text-xs bg-transparent"
-      >
-        <feature.icon className="size-4 shrink-0 self-center" />
-        <span className="leading-snug">
-          {isProcessing && feature.isEnabled
-            ? feature.loadingLabel
-            : feature.label}
-        </span>
-      </Button>
-    </div>
-  );
+    );
+  }
 
   return (
-    <div className="flex items-center gap-2 w-full">
-      <Tooltip>
-        <TooltipTrigger asChild>{triggerContent}</TooltipTrigger>
-        {!feature.isEnabled && (
-          <TooltipContent side="right" className="max-w-xs p-3">
-            <div className="text-sm font-semibold text-muted">Disabled</div>
-            <div className="text-xs text-muted">{feature.disabledReason}</div>
-          </TooltipContent>
-        )}
-      </Tooltip>
-
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Info className="size-4 cursor-help shrink-0 hover:text-primary transition-colors" />
-        </TooltipTrigger>
-        <TooltipContent side="left" className="max-w-xs p-3 border-primary/20">
-          <div className="text-sm">{feature.description}</div>
-        </TooltipContent>
-      </Tooltip>
+    <div className="flex items-center gap-1">
+      <Button type="button" variant="outline" size="sm" disabled={disabled}
+        onMouseDown={event => event.preventDefault()} onClick={() => onExecuteFeature(feature)}
+        className="h-auto min-w-0 flex-1 justify-start whitespace-normal py-2 text-left">
+        <feature.icon aria-hidden className="size-4" /> {label}
+      </Button>
+      {help}
     </div>
   );
-};
+}
 
-// --- Main export for the feature list ---
 interface SmartFeaturesProps {
   features: EvaluatedFeature[];
   isProcessing: boolean;
@@ -125,21 +66,11 @@ const SmartFeatures: React.FC<SmartFeaturesProps> = ({
   if (features.length === 0) return null;
 
   return (
-    <div className="space-y-2 mt-4">
-      <h3 className="text-sm font-medium">Smart Features</h3>
-      <div className="flex flex-col gap-2">
-        <TooltipProvider delayDuration={200}>
-          {features.map((feature) => (
-            <SmartFeatureItem
-              key={feature.id}
-              feature={feature}
-              isProcessing={isProcessing}
-              onExecuteFeature={onExecuteFeature}
-            />
-          ))}
-        </TooltipProvider>
-      </div>
-    </div>
+    <>
+      {features.map((feature) => (
+        <SmartFeatureItem key={feature.id} feature={feature} isProcessing={isProcessing} onExecuteFeature={onExecuteFeature} />
+      ))}
+    </>
   );
 };
 

@@ -17,7 +17,8 @@ export function VersionDetailsFields({ details, defaults, errors, onChange }: {
         onChange={(value) => onChange("label", value)}
         modified={defaults.label !== details.label}
         error={errors.label}
-        description={`${20 - [...(details.label ?? "")].length} characters remaining`}
+        description="Leave blank for the usual arrangement. Name a version to distinguish it from others."
+        counter={`${20 - [...(details.label ?? "")].length} characters remaining`}
       />
       <MetadataField
         label="Version description"
@@ -25,7 +26,7 @@ export function VersionDetailsFields({ details, defaults, errors, onChange }: {
         onChange={(value) => onChange("description", value)}
         modified={defaults.description !== details.description}
         error={errors.description}
-        description={`${120 - [...(details.description ?? "")].length} characters remaining`}
+        counter={`${120 - [...(details.description ?? "")].length} characters remaining`}
       />
     </>
   );

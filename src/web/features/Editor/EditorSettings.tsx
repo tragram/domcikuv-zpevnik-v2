@@ -1,13 +1,9 @@
-import React from "react";
+import React, { useId } from "react";
 import { Switch } from "~/components/ui/switch";
-import { Label } from "~/components/ui/label";
-import { Info } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { buttonVariants } from "~/components/ui/button";
+import { Image } from "lucide-react";
+import { cn } from "~/lib/utils";
+import { EditorInfo } from "./components/EditorInfo";
 import { UserData } from "src/web/hooks/use-user-data";
 
 export interface EditorSettings {
@@ -31,48 +27,31 @@ const EditorSettingsComponent: React.FC<EditorSettingsProps> = ({
   userData,
   hasIllustration = false,
 }) => {
+  const switchId = useId();
   // Admins may generate illustrations even without the trusted flag
   // (the server's adminOrTrustedMiddleware allows either).
   const isTrusted = !!userData?.profile.isTrusted || !!userData?.profile.isAdmin;
 
-  // Hide the whole component when there's nothing the current user can configure.
-  return isTrusted ? (
-    <div className="space-y-2">
-      <h3 className="text-sm font-medium">Editor Settings</h3>
+  if (!isTrusted) return null;
 
-      <div className="flex items-center justify-between relative space-x-2 w-full">
+  return (
+    <div className="flex items-center gap-1">
+      <label htmlFor={switchId} className={cn(
+        buttonVariants({ variant: "outline", size: "sm" }),
+        "h-auto min-w-0 flex-1 justify-start whitespace-normal py-2 text-left",
+        hasIllustration ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+      )}>
+        <Image aria-hidden className="size-4" />
+        <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">Auto-generate illustration</span>
         <Switch
-          id="auto-illustration"
+          id={switchId}
           disabled={hasIllustration}
           checked={settings.autoGenerateIllustration}
           onCheckedChange={(autoGenerateIllustration) => onSettingsChange({ autoGenerateIllustration })}
         />
-        <div className="flex items-center gap-2">
-          <Label htmlFor="auto-illustration" className="text-xs">
-            Auto-generate illustration on upload
-          </Label>
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Info className="size-4 text-muted-foreground cursor-help shrink-0 hover:text-primary transition-colors" />
-              </TooltipTrigger>
-              <TooltipContent
-                side="left"
-                className="max-w-xs p-3 border-primary/20"
-              >
-                <div className="text-sm">
-                  Automatically generate an AI illustration when submitting a
-                  new song. The illustration will be generated in the
-                  background and set as active.
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      </div>
+      </label>
+      <EditorInfo label="Auto-generate illustration">{hasIllustration ? "This song already has an illustration." : "Generate on upload and set as the active illustration."}</EditorInfo>
     </div>
-  ) : (
-    <></>
   );
 };
 

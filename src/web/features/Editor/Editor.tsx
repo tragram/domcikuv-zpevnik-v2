@@ -207,12 +207,7 @@ const SMART_FEATURES: SmartFeature[] = [
     icon: ArrowUpDown,
     actionType: "stepper",
     check: (content: string) => /\[[A-H][A-Za-z\d#b,\s/]*\]/.test(content),
-    description: (
-      <>
-        Use the <strong>-</strong> and <strong>+</strong> buttons to transpose
-        all chords in the editor up or down by semitones.
-      </>
-    ),
+    description: "Move all chords down or up one semitone per press.",
     disabledReason: "No chords detected to transpose.",
   },
 ];
@@ -694,7 +689,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
         >
           <CollapsibleMainArea
             title={"Metadata"}
-            className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}
+            className="basis-[20%] xl:basis-[24%] md:max-w-[28rem]"
           >
             <MetadataEditor
               editingSongId={songData?.id}

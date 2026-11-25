@@ -1,18 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import { useMemo, type FC } from "react";
+import { ChevronDown, Layers, Music2, Play, SlidersHorizontal, Wrench, type LucideIcon } from "lucide-react";
+import { useEffect, useMemo, useRef, type ReactNode, type FC } from "react";
 
 import { UserData } from "src/web/hooks/use-user-data";
 import SelectOrEditList from "~/components/SelectOrEditList";
 import { Button } from "~/components/ui/button";
-import { Separator } from "~/components/ui/separator";
 import { useSongDB } from "~/hooks/use-songDB";
-import { cn } from "~/lib/utils";
 import { EditorState } from "~/types/types";
 import { guessKey } from "../SongView/utils/songRendering";
 import MetadataField from "./components/MetadataField";
 import { VersionDetailsFields } from "./components/VersionDetailsFields";
 import YoutubeField from "./components/YoutubeField";
-import SmartFeatures from "./components/SmartFeatures"; // <-- Import the new component
+import SmartFeatures, { SmartFeatureItem } from "./components/SmartFeatures";
 import type { EvaluatedFeature, SmartFeature } from "./Editor";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
 import { indexEditorCatalog } from "./editor-catalog";
@@ -31,6 +30,34 @@ interface MetadataEditorProps {
   features: EvaluatedFeature[];
   isProcessing: boolean;
   onExecuteFeature: (feature: SmartFeature, payload?: number) => void;
+}
+
+function MetadataSection({ title, summary, icon: Icon, initiallyOpen = false, error, children }: {
+  title: string;
+  summary?: string;
+  icon: LucideIcon;
+  initiallyOpen?: boolean;
+  error?: string;
+  children: ReactNode;
+}) {
+  const section = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    if (error && section.current) section.current.open = true;
+  }, [error]);
+
+  return (
+    <details ref={section} open={initiallyOpen} className="group/section border-b border-primary/60">
+      <summary className="group/toggle flex h-12 cursor-pointer list-none items-center gap-2.5 px-3 py-1 text-foreground group-open/section:bg-primary group-open/section:text-primary-foreground focus-visible:outline-2 focus-visible:-outline-offset-4 [&::-webkit-details-marker]:hidden">
+        <Icon aria-hidden className="size-4 shrink-0" />
+        <span className="min-w-0 flex-1">
+          <span className="block text-[0.9375rem] font-semibold tracking-tight">{title}</span>
+          {summary && <span className="block truncate text-xs text-muted-foreground group-open/section:text-primary-foreground">{summary}</span>}
+        </span>
+        <ChevronDown aria-hidden className="size-4 shrink-0 motion-safe:transition-transform group-hover/toggle:translate-y-0.5 group-open/section:rotate-180 group-open/section:group-hover/toggle:-translate-y-0.5" />
+      </summary>
+      <div className="@container space-y-2 px-3 py-2.5">{children}</div>
+    </details>
+  );
 }
 
 const MetadataEditor: FC<MetadataEditorProps> = ({
@@ -62,10 +89,21 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
     () => versionTarget ? [] : catalogIndex.suggestTitles(metadata.artist, metadata.title, editingSongId),
     [catalogIndex, metadata.artist, metadata.title, editingSongId, versionTarget],
   );
+  const transpose = features.find(feature => feature.id === "transpose");
+  const otherFeatures = features.filter(feature => feature.id !== "transpose");
+  const musicSummary = [
+    metadata.key,
+    metadata.capo != null && `Capo ${metadata.capo}`,
+    metadata.tempo && `${metadata.tempo} BPM`,
+  ].filter(Boolean).join(" · ");
+
   return (
-    <div className="main-container space-y-4">
-      {/* Metadata Fields */}
-      <div className="space-y-2">
+    <div className="metadata-panel w-full">
+      <MetadataSection
+        title="Song details" icon={Music2}
+        summary={[metadata.title, metadata.artist].filter(Boolean).join(" · ")}
+        error={fieldErrors.artist || fieldErrors.title || fieldErrors.language}
+      >
         <MetadataField
           label="Artist"
           onChange={(value) => updateMetadata("artist", value)}
@@ -116,21 +154,12 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
           )}
         </div>
         <MetadataField
-          label="Capo"
-          onChange={(value) => updateMetadata("capo", value)}
-          placeholder="0"
-          value={metadata.capo?.toString()}
-          modified={defaultMetadata.capo !== metadata.capo}
-          error={fieldErrors.capo}
-          disabled={extractedMetadata.capo !== undefined}
-        />
-        <MetadataField
           label="Language"
+          description="Choose a language or add one. New languages may appear without a flag."
           onChange={(value) => updateMetadata("language", value)}
           placeholder="czech"
           value={metadata.language}
           modified={defaultMetadata.language !== metadata.language}
-          description="If language not already present in some other song, flag might not be shown."
           error={fieldErrors.language}
           disabled={extractedMetadata.language !== undefined}
           customInput={
@@ -142,22 +171,25 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
               placeholderSearch="Find or add language"
               noOptionsFoundText="No language found."
               addNewText="Add new language"
-              className={cn(
-                "border-2 border-primary/50 dark:border-muted",
-                defaultMetadata.language !== metadata.language
-                  ? "text-foreground !bg-primary/30"
-                  : "text-foreground/70 !bg-input/30",
-              )}
+              aria-label="Language"
+              disabled={extractedMetadata.language !== undefined}
+              className="h-10 rounded-lg border-input/50 bg-card px-3 text-foreground shadow-none"
             />
           }
         />
+      </MetadataSection>
+      <MetadataSection
+        title="Musical details" icon={SlidersHorizontal} summary={musicSummary}
+        initiallyOpen={!!editingSongId}
+        error={fieldErrors.key || fieldErrors.capo || fieldErrors.tempo || fieldErrors.range || fieldErrors.startMelody}
+      >
         <MetadataField
           label="Key"
+          description="Use a note name for major (F, Bb) or add m or mi for minor (Dm). Guess key reads the chords in the editor."
           onChange={(value) => updateMetadata("key", value)}
           placeholder="Dm"
           value={metadata.key}
           modified={defaultMetadata.key !== metadata.key}
-          description="Use note name (with #/b into denote sharp/flat) for major key and append 'm' or 'mi' to indicate minor key."
           error={fieldErrors.key}
           disabled={extractedMetadata.key !== undefined}
           action={
@@ -165,7 +197,7 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
               type="button"
               variant="outline"
               size="sm"
-              className="h-9 grow"
+              className="metadata-field-action"
               disabled={extractedMetadata.key !== undefined}
               onClick={() => {
                 const guessedKey = guessKey(metadata.chordpro);
@@ -174,40 +206,62 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
                 }
               }}
             >
-              Guess
+              Guess key
             </Button>
           }
         />
+        <div className="grid gap-2 @[10rem]:grid-cols-2">
+          <MetadataField
+            label="Capo"
+            description="Fret number. Use 0 for no capo."
+            onChange={(value) => updateMetadata("capo", value)}
+            inputMode="numeric"
+            placeholder="0"
+            value={metadata.capo?.toString()}
+            modified={defaultMetadata.capo !== metadata.capo}
+            error={fieldErrors.capo}
+            disabled={extractedMetadata.capo !== undefined}
+          />
+          <MetadataField
+            label="Tempo"
+            description="Song tempo in beats per minute."
+            onChange={(value) => updateMetadata("tempo", value)}
+            inputMode="numeric"
+            placeholder="96"
+            unit="BPM"
+            value={metadata.tempo?.toString()}
+            modified={defaultMetadata.tempo !== metadata.tempo}
+            error={fieldErrors.tempo}
+            disabled={extractedMetadata.tempo !== undefined}
+          />
+        </div>
+        <div className="grid gap-2 @[19rem]:grid-cols-2">
         <MetadataField
-          label="Range"
+          label="Vocal range"
+          description="Lowest and highest sung notes with octave numbers, e.g. c1-g2. Used by the vocal range filter."
           onChange={(value) => updateMetadata("range", value)}
           placeholder="e.g. c1-g2"
           value={metadata.range}
           modified={defaultMetadata.range !== metadata.range}
-          description="Also used for vocal range. See README. ;-)"
           error={fieldErrors.range}
           disabled={extractedMetadata.range !== undefined}
         />
         <MetadataField
-          label="Start Melody"
+          label="Start melody"
+          description="The opening notes in order, e.g. c# d e. This optional field has no fixed notation."
           onChange={(value) => updateMetadata("startMelody", value)}
           placeholder="c# d e"
           value={metadata.startMelody}
           modified={defaultMetadata.startMelody !== metadata.startMelody}
-          description="Currently not used so not very standardized across the songs."
           error={fieldErrors.startMelody}
           disabled={extractedMetadata.startMelody !== undefined}
         />
-        <MetadataField
-          label="Tempo"
-          onChange={(value) => updateMetadata("tempo", value)}
-          placeholder="123"
-          value={metadata.tempo?.toString()}
-          modified={defaultMetadata.tempo !== metadata.tempo}
-          description="In BPM. Currently not used and very few songs define it."
-          error={fieldErrors.tempo}
-          disabled={extractedMetadata.tempo !== undefined}
-        />
+        </div>
+        {transpose && (
+          <SmartFeatureItem feature={transpose} isProcessing={isProcessing} onExecuteFeature={onExecuteFeature} />
+        )}
+      </MetadataSection>
+      <MetadataSection title="Recording" icon={Play} summary={metadata.youtubeId || "No video linked"} error={fieldErrors.youtubeId}>
         <YoutubeField
           value={metadata.youtubeId}
           onChange={(value) => updateMetadata("youtubeId", value)}
@@ -216,38 +270,19 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
           modified={defaultMetadata.youtubeId !== metadata.youtubeId}
           error={fieldErrors.youtubeId}
         />
-
-        <Separator className="my-4" />
-
-        <details className="rounded-lg border border-border p-3" open={!!(defaultMetadata.label || defaultMetadata.description || fieldErrors.label || fieldErrors.description)}>
-          <summary className="cursor-pointer text-sm font-medium">Version details <span className="font-normal text-muted-foreground">(optional)</span></summary>
-          <div className="mt-3 space-y-2">
-            <p className="text-tiny leading-tight text-muted-foreground">Only needed to distinguish different versions of the same song. Usually, leave these blank.</p>
-            <VersionDetailsFields details={metadata} defaults={defaultMetadata} errors={fieldErrors} onChange={updateMetadata} />
-          </div>
-        </details>
-        {/* Editor Settings Section */}
-        <div className="mt-4">
-          <EditorSettingsComponent
-            settings={editorSettings}
-            onSettingsChange={onSettingsChange}
-            userData={userData}
-            hasIllustration={hasIllustration}
-          />
-        </div>
-
-        {/* Smart Features Section */}
-        {features.length > 0 && (
-          <>
-            <Separator className="my-4" />
-            <SmartFeatures
-              features={features}
-              isProcessing={isProcessing}
-              onExecuteFeature={onExecuteFeature}
-            />
-          </>
-        )}
-      </div>
+      </MetadataSection>
+      <MetadataSection
+        title="Version details" icon={Layers}
+        summary={metadata.label || metadata.description || "Add version name"}
+        initiallyOpen={!!(defaultMetadata.label || defaultMetadata.description)}
+        error={fieldErrors.label || fieldErrors.description}
+      >
+        <VersionDetailsFields details={metadata} defaults={defaultMetadata} errors={fieldErrors} onChange={updateMetadata} />
+      </MetadataSection>
+      <MetadataSection title="Editor tools" icon={Wrench}>
+        <SmartFeatures features={otherFeatures} isProcessing={isProcessing} onExecuteFeature={onExecuteFeature} />
+        <EditorSettingsComponent settings={editorSettings} onSettingsChange={onSettingsChange} userData={userData} hasIllustration={hasIllustration} />
+      </MetadataSection>
     </div>
   );
 };

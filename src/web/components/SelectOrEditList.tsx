@@ -26,6 +26,8 @@ interface SelectOrEditListProps {
   noOptionsFoundText?: string;
   addNewText?: string;
   className?: string;
+  disabled?: boolean;
+  "aria-label"?: string;
 }
 
 export default function SelectOrEditList({
@@ -37,6 +39,8 @@ export default function SelectOrEditList({
   noOptionsFoundText = "No options found.",
   addNewText = "Add new option",
   className,
+  disabled,
+  "aria-label": ariaLabel,
 }: SelectOrEditListProps) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState(initialOptions);
@@ -78,6 +82,8 @@ export default function SelectOrEditList({
         <Button
           variant="outline"
           role="combobox"
+          disabled={disabled}
+          aria-label={ariaLabel}
           aria-expanded={open}
           className={cn("w-full justify-between focus:outline-none", className)}
         >

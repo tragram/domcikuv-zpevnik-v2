@@ -1,24 +1,22 @@
 import { useId, useRef, useState } from "react";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
 import { cn } from "~/lib/utils";
+import { EditorInfo } from "./EditorInfo";
 
 interface MetadataFieldProps {
   label: string;
   value?: string;
   placeholder?: string;
   description?: string;
+  counter?: string;
   onChange: (value: string) => void;
   error?: string;
   required?: boolean;
   customInput?: React.ReactElement;
   modified: boolean;
+  unit?: string;
+  inputMode?: "numeric";
   action?: React.ReactNode;
   disabled?: boolean;
   suggestions?: string[];
@@ -29,12 +27,15 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   value,
   placeholder,
   description,
+  counter,
   onChange,
   error,
   required = false,
   customInput = null,
   modified,
   action,
+  unit,
+  inputMode,
   disabled = false,
   suggestions = [],
 }) => {
@@ -43,6 +44,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   const [suggestionsDismissed, setSuggestionsDismissed] = useState(false);
   const showSuggestions = !disabled && !suggestionsDismissed && suggestions.length > 0;
   const displayError = !!error;
+  const describedBy = [counter && `${inputId}-counter`, displayError && `${inputId}-error`].filter(Boolean).join(" ") || undefined;
 
   function dismissSuggestions() {
     inputRef.current?.focus();
@@ -59,52 +61,27 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
       {customInput}
     </div>
   ) : (
-    <div className="flex w-full flex-wrap items-center gap-2">
-      <Input
-        ref={inputRef}
-        id={inputId}
-        type="text"
-        disabled={disabled}
-        placeholder={value ? undefined : placeholder || label}
-        value={value ?? ""}
-        onFocus={() => setSuggestionsDismissed(false)}
-        onChange={(e) => {
-          setSuggestionsDismissed(false);
-          onChange(e.target.value);
-        }}
-        className={cn(
-          // grow-999 lets the input soak up the row so an inline action stays
-          // at its content width; once the row wraps, the action sits alone on
-          // its line and grows to full width. min-w-32 floors the input and is
-          // what forces the wrap on narrow panels (instead of collapsing it).
-          "border-2 p-1 grow-999 basis-0",
-          action && "min-w-32",
-          displayError
-            ? "border-destructive"
-            : "border-primary/50 dark:border-muted focus:border-primary focus:bg-primary/30",
-          modified ? "!bg-primary/30" : "",
-          disabled && "opacity-50 cursor-not-allowed bg-muted",
-        )}
-      />
-      {action}
-    </div>
-  );
-
-  const inputField = disabled ? (
-    <TooltipProvider delayDuration={200}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div tabIndex={0} className="w-full focus:outline-none cursor-help">
-            <div className="pointer-events-none">{innerInput}</div>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>This field is controlled by a directive in the text editor.</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
-  ) : (
-    innerInput
+      <div className="relative min-w-0">
+        <Input
+          ref={inputRef}
+          id={inputId}
+          type="text"
+          inputMode={inputMode}
+          aria-invalid={displayError}
+          aria-required={required}
+          aria-describedby={describedBy}
+          disabled={disabled}
+          placeholder={value ? undefined : placeholder || label}
+          value={value ?? ""}
+          onFocus={() => setSuggestionsDismissed(false)}
+          onChange={(e) => {
+            setSuggestionsDismissed(false);
+            onChange(e.target.value);
+          }}
+          className={cn("h-10 rounded-lg border-input/50 bg-card px-3 shadow-none hover:border-foreground/60 focus-visible:border-ring focus-visible:ring-2 dark:bg-card", unit && "pr-11")}
+        />
+        {unit && <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-xs text-muted-foreground">{unit}</span>}
+      </div>
   );
 
   return (
@@ -118,17 +95,20 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
         }
       }}
     >
-      <Label htmlFor={customInput ? undefined : inputId} className={cn("text-sm", disabled && "opacity-70")}>
+      <div className="flex min-h-6 flex-wrap items-center gap-x-1">
+      <Label htmlFor={customInput ? undefined : inputId} className={cn("gap-1.5 text-xs font-semibold tracking-wide", disabled && "opacity-70")}>
         {label}
-        {required && <span className="text-primary ml-1">*</span>}
+        {modified && <span className="size-1.5 rounded-full bg-primary" title="Modified"><span className="sr-only">Modified</span></span>}
       </Label>
-      {inputField}
-      {description && !disabled && (
-        <p className="text-xs text-primary/80 dark:text-primary/50">
-          {description}
-        </p>
-      )}
-      {displayError && <p className="text-xs text-destructive">{error}</p>}
+      {(description || disabled) && <EditorInfo label={label}>
+        {disabled && <span className="block font-medium">Edit the directive in the lyrics editor to change this value.</span>}
+        {description}
+      </EditorInfo>}
+      {action && <div className="ml-auto">{action}</div>}
+      </div>
+      {innerInput}
+      {counter && <p id={`${inputId}-counter`} className="text-right text-xs text-muted-foreground">{counter}</p>}
+      {displayError && <p id={`${inputId}-error`} className="text-xs text-destructive">{error}</p>}
       {showSuggestions && (
         <ul
           aria-label={`${label} suggestions`}
