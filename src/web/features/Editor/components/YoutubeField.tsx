@@ -92,8 +92,7 @@ const YoutubeField: React.FC<YoutubeFieldProps> = ({
             ) : (
               <Search className="size-4" />
             )}
-            {/* Icon-only on phones to keep the field compact; labelled on wider screens. */}
-            <span className="hidden sm:inline">Auto-search</span>
+            <span>Auto-search</span>
           </Button>
         }
       />
