@@ -353,59 +353,102 @@ function processExpandedSections(doc: Document): Document {
   mutations.forEach((mutate) => mutate());
   return doc;
 }
-function processSectionTitles(doc: Document): Document {
-  const commentElements = Array.from(doc.querySelectorAll(".comment"));
+function processSectionTitles(doc: Document): void {
+  for (const comment of Array.from(doc.querySelectorAll(".comment"))) {
+    const label = comment.textContent?.match(/%\s*section_title:\s*(.*?)\s*%/)?.[1];
+    const commentRow = comment.closest(".row");
+    if (label === undefined || !commentRow?.parentNode) continue;
 
-  // We execute these directly since creation and insertion is complex and doesn't heavily read the DOM
-  commentElements.forEach((element) => {
-    if (!element.textContent) return;
-    const commentText = element.textContent.trim();
-    const sectionTitlePattern = /%\s*section_title:\s*(.*?)\s*%/;
-    const match = commentText.match(sectionTitlePattern);
-
-    if (match) {
-      const commentRow = element.closest(".row");
-
-      let lyricsLineElement = commentRow?.nextElementSibling;
-      while (lyricsLineElement) {
-        if (
-          lyricsLineElement instanceof HTMLDivElement &&
-          lyricsLineElement.classList.contains("row")
-        )
-          break;
-        lyricsLineElement = lyricsLineElement.nextElementSibling;
-      }
-
-      // Create the section title div
-      const sectionTitleDiv = doc.createElement("div");
-      sectionTitleDiv.className = "section-title";
-      sectionTitleDiv.textContent = match[1] + ": ";
-
-      // Create the word div that will contain the section title
-      const wordDiv = doc.createElement("div");
-      wordDiv.className = "column";
-      wordDiv.appendChild(sectionTitleDiv);
-
-      if (lyricsLineElement && lyricsLineElement instanceof HTMLDivElement) {
-        // Insert the word div as the first child of the lyrics-line div
-        lyricsLineElement.insertBefore(wordDiv, lyricsLineElement.firstChild);
-      } else {
-        // If no lyrics-line div exists, create one
-        const newLyricsDiv = doc.createElement("div");
-        newLyricsDiv.className = "row";
-        // Add the word div containing the section title as its first child
-        newLyricsDiv.appendChild(wordDiv);
-        // Insert the new lyrics-line div after the comment
-
-        const parent = commentRow?.parentNode;
-        if (parent && commentRow)
-          parent.insertBefore(newLyricsDiv, commentRow.nextSibling);
-      }
-      commentRow?.remove();
+    const title = doc.createElement("div");
+    title.className = "section-title";
+    const parsedTitle = label.match(/^(\(\d+x\)\s*)?(.+)$/u);
+    if (parsedTitle) {
+      const [, count, name] = parsedTitle;
+      title.textContent = count ?? "";
+      const marker = doc.createElement("span");
+      marker.className = "section-marker";
+      const letter = doc.createElement("span");
+      letter.className = "section-marker-letter";
+      letter.textContent = name;
+      marker.appendChild(letter);
+      title.appendChild(marker);
+    } else {
+      title.textContent = label + ": ";
     }
-  });
 
-  return doc;
+    let row = commentRow.nextElementSibling;
+    while (row && !(row instanceof HTMLDivElement && row.matches(".row"))) {
+      row = row.nextElementSibling;
+    }
+    if (!row) {
+      row = doc.createElement("div");
+      row.className = "row";
+      commentRow.parentNode.insertBefore(row, commentRow.nextSibling);
+    }
+
+    const column = doc.createElement("div");
+    column.className = "column";
+    column.appendChild(title);
+    row.insertBefore(column, row.firstChild);
+    commentRow.remove();
+  }
+}
+
+function getInlineMarkerRow(paragraph: Element, markerOnlyRow?: Element | null): Element | undefined {
+  if (paragraph.querySelector(".tab")) return;
+  const rows = Array.from(paragraph.children).filter((row) =>
+    row.matches(".row") && Array.from(row.querySelectorAll(".lyrics, .chord")).some(
+      (cell) => cell.textContent?.trim(),
+    ),
+  );
+  if (rows.length === 0) return markerOnlyRow ?? undefined;
+  return rows.length === 1 ? rows[0] : undefined;
+}
+
+/** Choose each marker's layout once the chord rows and tabs are in place. */
+function layOutSectionNames(doc: Document): void {
+  for (const marker of Array.from(doc.querySelectorAll(".section-marker"))) {
+    const name = marker.textContent ?? "";
+    const nameLength = [...name.normalize("NFC")].length;
+    marker.classList.toggle("section-marker--one-character", nameLength === 1);
+    const singleLetter = /^\p{L}$/u.test(name);
+    const paragraph = marker.closest(".paragraph");
+    const isRecall = paragraph?.matches(".expanded-section, .shorthand-section");
+    if (!paragraph || (isRecall && !singleLetter)) {
+      marker.classList.add(singleLetter ? "section-marker--single" : "section-marker--horizontal");
+      continue;
+    }
+
+    const titleColumn = marker.closest(".column");
+    const titleRow = titleColumn?.parentElement;
+    const songRow = getInlineMarkerRow(paragraph, nameLength === 1 ? titleRow : undefined);
+    if (songRow) {
+      if (titleColumn && titleRow !== songRow) {
+        songRow.insertBefore(titleColumn, songRow.firstChild);
+        if (titleRow?.childElementCount === 0) titleRow.remove();
+      }
+      marker.classList.add("section-marker--horizontal");
+      continue;
+    }
+
+    if (singleLetter) {
+      marker.classList.add("section-marker--single");
+      continue;
+    }
+
+    marker.classList.add("section-marker--stacked");
+    if (nameLength >= 3) {
+      marker.classList.add("section-marker--sideways");
+    }
+    marker.remove();
+    if (!titleColumn?.textContent) titleColumn?.remove();
+
+    const content = doc.createElement("div");
+    content.className = "section-definition-content";
+    while (paragraph.firstChild) content.appendChild(paragraph.firstChild);
+    paragraph.appendChild(marker);
+    paragraph.appendChild(content);
+  }
 }
 
 /** Adds spacing only to comments that are outside a recognised song section. */
@@ -464,10 +507,10 @@ export function postProcessChordPro(
   let doc = parser.parseFromString(htmlString, "text/html");
 
   doc = processExpandedSections(doc);
-  doc = processSectionTitles(doc);
+  processSectionTitles(doc);
   doc = restoreNestedTabs(doc);
   doc = markStandaloneComments(doc);
-  const processedDoc = detectRepeatedChordPatterns(doc, classNames);
-
-  return processedDoc.body.innerHTML;
+  doc = detectRepeatedChordPatterns(doc, classNames);
+  layOutSectionNames(doc);
+  return doc.body.innerHTML;
 }

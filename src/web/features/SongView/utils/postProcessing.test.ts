@@ -29,6 +29,71 @@ function renderDocument(chordpro: string) {
   return new DOMParser().parseFromString(processed, "text/html");
 }
 
+it.each([
+  { name: "R1", sideways: false },
+  { name: "R12", sideways: true },
+  { name: "Sóló", sideways: true },
+])("lays out $name vertically at its definition and horizontally in both recall views", ({ name, sideways }) => {
+  const doc = renderDocument(`
+{start_of_chorus: ${name}}
+[C]First line
+[G]Second line
+{end_of_chorus}
+
+{start_of_verse}
+Another verse
+{end_of_verse}
+
+{chorus: ${name}}
+  `);
+
+  const definition = doc.querySelector(".chorus:has(> .section-marker--stacked)");
+  const definitionMarker = definition?.querySelector(".section-marker");
+  expect(definitionMarker?.textContent).toBe(name);
+  expect(definitionMarker?.classList.contains("section-marker--sideways")).toBe(sideways);
+  expect(definition?.querySelectorAll(".section-definition-content > .row")).toHaveLength(2);
+  for (const view of ["expanded", "shorthand"]) {
+    const marker = doc.querySelector(`.${view}-section .section-marker--horizontal`);
+    expect(marker?.textContent).toBe(name);
+    expect(marker?.closest(".row")).not.toBeNull();
+  }
+});
+
+it.each(["R", "1", "Outro"])("uses an inline %s pill for a single song line even with a comment", (name) => {
+  const doc = renderDocument(`
+{start_of_chorus: ${name}}
+{comment: Sing softly}
+[C]Only one line
+{end_of_chorus}
+  `);
+
+  const marker = doc.querySelector(".chorus .section-marker--horizontal");
+  expect(marker?.textContent).toBe(name);
+  expect(marker?.classList.contains("section-marker--one-character")).toBe(name.length === 1);
+  const cells = marker?.closest(".row")?.querySelectorAll(".lyrics") ?? [];
+  expect(Array.from(cells, (cell) => cell.textContent).join("")).toBe("Only one line");
+  expect(doc.querySelector(".section-definition-content")).toBeNull();
+});
+
+it("uses a circular badge for a collapsed chorus containing only its marker", () => {
+  const doc = renderDocument(`
+{start_of_chorus}
+[C]First line
+[G]Second line
+{end_of_chorus}
+
+{start_of_verse}
+Another verse
+{end_of_verse}
+
+{chorus}
+  `);
+
+  const badges = doc.querySelectorAll(".section-marker--horizontal.section-marker--one-character");
+  expect(badges).toHaveLength(1);
+  expect(badges[0].closest(".shorthand-section")).not.toBeNull();
+});
+
 describe("detectRepeatedChordPatterns (via postProcessChordPro)", () => {
   it("adds spacing only to comments outside sections", () => {
     const parse = (chordpro: string) => {
