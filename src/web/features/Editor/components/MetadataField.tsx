@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, useRef, useState } from "react";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import {
@@ -21,6 +21,7 @@ interface MetadataFieldProps {
   modified: boolean;
   action?: React.ReactNode;
   disabled?: boolean;
+  suggestions?: string[];
 }
 
 const MetadataField: React.FC<MetadataFieldProps> = ({
@@ -35,9 +36,18 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   modified,
   action,
   disabled = false,
+  suggestions = [],
 }) => {
   const inputId = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [suggestionsDismissed, setSuggestionsDismissed] = useState(false);
+  const showSuggestions = !disabled && !suggestionsDismissed && suggestions.length > 0;
   const displayError = !!error;
+
+  function dismissSuggestions() {
+    inputRef.current?.focus();
+    setSuggestionsDismissed(true);
+  }
 
   const innerInput = customInput ? (
     <div
@@ -51,12 +61,15 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   ) : (
     <div className="flex w-full flex-wrap items-center gap-2">
       <Input
+        ref={inputRef}
         id={inputId}
         type="text"
         disabled={disabled}
         placeholder={value ? undefined : placeholder || label}
         value={value ?? ""}
+        onFocus={() => setSuggestionsDismissed(false)}
         onChange={(e) => {
+          setSuggestionsDismissed(false);
           onChange(e.target.value);
         }}
         className={cn(
@@ -95,7 +108,16 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   );
 
   return (
-    <div className="w-full items-center space-y-0.5">
+    <div
+      className="group/metadata-field relative w-full items-center space-y-0.5"
+      onKeyDown={(event) => {
+        if (showSuggestions && event.key === "Escape") {
+          event.preventDefault();
+          event.stopPropagation();
+          dismissSuggestions();
+        }
+      }}
+    >
       <Label htmlFor={customInput ? undefined : inputId} className={cn("text-sm", disabled && "opacity-70")}>
         {label}
         {required && <span className="text-primary ml-1">*</span>}
@@ -107,6 +129,29 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
         </p>
       )}
       {displayError && <p className="text-xs text-destructive">{error}</p>}
+      {showSuggestions && (
+        <ul
+          aria-label={`${label} suggestions`}
+          className="absolute inset-x-0 top-full z-20 hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md group-focus-within/metadata-field:block"
+        >
+          {suggestions.map((suggestion) => (
+            <li key={suggestion}>
+              <button
+                type="button"
+                className="w-full rounded-sm px-2 py-1.5 text-left text-sm hover:bg-accent focus-visible:bg-accent focus-visible:outline-none"
+                // Keep the list open until the click selects the suggestion.
+                onPointerDown={(event) => event.preventDefault()}
+                onClick={() => {
+                  onChange(suggestion);
+                  dismissSuggestions();
+                }}
+              >
+                {suggestion}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

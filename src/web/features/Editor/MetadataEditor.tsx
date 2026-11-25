@@ -1,4 +1,5 @@
-import React from "react";
+import { Link } from "@tanstack/react-router";
+import { useMemo, type FC } from "react";
 
 import { UserData } from "src/web/hooks/use-user-data";
 import SelectOrEditList from "~/components/SelectOrEditList";
@@ -14,8 +15,10 @@ import YoutubeField from "./components/YoutubeField";
 import SmartFeatures from "./components/SmartFeatures"; // <-- Import the new component
 import type { EvaluatedFeature, SmartFeature } from "./Editor";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
+import { indexEditorCatalog } from "./editor-catalog";
 
 interface MetadataEditorProps {
+  editingSongId?: string;
   defaultMetadata: EditorState;
   metadata: EditorState;
   extractedMetadata: Partial<EditorState>;
@@ -30,7 +33,8 @@ interface MetadataEditorProps {
   onExecuteFeature: (feature: SmartFeature, payload?: number) => void;
 }
 
-const MetadataEditor: React.FC<MetadataEditorProps> = ({
+const MetadataEditor: FC<MetadataEditorProps> = ({
+  editingSongId,
   defaultMetadata,
   metadata,
   extractedMetadata,
@@ -44,21 +48,24 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
   isProcessing,
   onExecuteFeature,
 }) => {
-  const { songDB } = useSongDB(userData);
+  const { songDB, catalog } = useSongDB(userData);
+  const catalogIndex = useMemo(() => indexEditorCatalog(catalog), [catalog]);
+  const artistSuggestions = useMemo(
+    () => catalogIndex.suggestArtists(metadata.artist),
+    [catalogIndex, metadata.artist],
+  );
+  const { matches: matchingSongs, versionTarget } = useMemo(
+    () => catalogIndex.findMatches(metadata.artist, metadata.title, editingSongId),
+    [catalogIndex, metadata.artist, metadata.title, editingSongId],
+  );
+  const titleSuggestions = useMemo(
+    () => versionTarget ? [] : catalogIndex.suggestTitles(metadata.artist, metadata.title, editingSongId),
+    [catalogIndex, metadata.artist, metadata.title, editingSongId, versionTarget],
+  );
   return (
     <div className="main-container space-y-4">
       {/* Metadata Fields */}
       <div className="space-y-2">
-        <MetadataField
-          label="Title"
-          onChange={(value) => updateMetadata("title", value)}
-          placeholder="Apassionata v F"
-          value={metadata.title}
-          modified={defaultMetadata.title !== metadata.title}
-          error={fieldErrors.title}
-          required={true}
-          disabled={extractedMetadata.title !== undefined}
-        />
         <MetadataField
           label="Artist"
           onChange={(value) => updateMetadata("artist", value)}
@@ -68,7 +75,46 @@ const MetadataEditor: React.FC<MetadataEditorProps> = ({
           error={fieldErrors.artist}
           required={true}
           disabled={extractedMetadata.artist !== undefined}
+          suggestions={artistSuggestions}
         />
+        <MetadataField
+          label="Title"
+          onChange={(value) => updateMetadata("title", value)}
+          placeholder="Apassionata v F"
+          value={metadata.title}
+          modified={defaultMetadata.title !== metadata.title}
+          error={fieldErrors.title}
+          required={true}
+          disabled={extractedMetadata.title !== undefined}
+          suggestions={titleSuggestions}
+        />
+        <div role="status" className="empty:sr-only">
+          {matchingSongs.length > 0 && (
+            <div className="rounded-md border border-primary/50 bg-primary/10 p-2 text-sm">
+              <p>
+                {matchingSongs.length === 1
+                  ? "This song is already in the catalog."
+                  : "Matching songs are already in the catalog."}
+              </p>
+              <ul>
+                {matchingSongs.map((song) => (
+                  <li key={song.id}>
+                    <Link
+                      to="/song/$songId"
+                      params={{ songId: song.id }}
+                      className="font-medium underline underline-offset-2"
+                    >
+                      {song.artist} — {song.title}
+                    </Link>
+                    {song.id === versionTarget?.id && (
+                      <p>Submitting this draft will add a separate version of this song.</p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
         <MetadataField
           label="Capo"
           onChange={(value) => updateMetadata("capo", value)}

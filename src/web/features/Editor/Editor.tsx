@@ -697,6 +697,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
             className={"basis-[20%] 2xl:basis-[15%] md:max-w-[750px]"}
           >
             <MetadataEditor
+              editingSongId={songData?.id}
               defaultMetadata={defaultEditorState}
               metadata={editorState}
               extractedMetadata={extractedMetadata}

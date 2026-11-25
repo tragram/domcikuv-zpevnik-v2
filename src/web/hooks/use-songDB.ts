@@ -45,6 +45,7 @@ export function useSongDB(
 
   return {
     songDB,
+    catalog: songs,
     isSyncing: isSongsSyncing,
     // Whether the public-songbooks list has settled (resolved or errored) at least
     // once — distinct from `isSyncing`, which tracks only the songs query.

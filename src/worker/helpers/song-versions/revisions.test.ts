@@ -408,6 +408,46 @@ describe("submitted revision history", () => {
     expect((await db.query.song.findFirst())?.currentVersionId).toBe(original.id);
   });
 
+  it.each([
+    ["other", "published"],
+    ["untrusted", "pending"],
+  ] as const)("adds a separate version when %s submits a matching new draft", async (actor, status) => {
+    const app = buildApp().use("*", async (c, next) => {
+      c.set("db", db);
+      c.set("USER", { id: actor } as NonNullable<typeof c.var.USER>);
+      await next();
+    }).route("/", editorApp);
+    const songId = "cechomor-promeny";
+    await db.insert(schema.song).values({ id: songId });
+    const original = await saveSongVersion(db, editorSubmitSchema.parse({
+      title: "Proměny", artist: "Čechomor", chordpro: "[C]Original arrangement",
+    }), songId, "owner");
+
+    const response = await app.request("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: "Promeny", artist: "CECHOMOR", chordpro: "[D]New arrangement",
+      }),
+    });
+
+    expect(response.status).toBe(200);
+    const { data } = await response.json() as { data: EditorSubmissionResponse };
+    expect(data.song).toMatchObject({ id: songId, currentVersionId: original.id });
+    expect(data.version.id).not.toBe(original.id);
+    const added = await loadVersion(db, songId, data.version.id);
+    expect(added).toMatchObject({ status, parentId: null, chordpro: "[D]New arrangement" });
+    if (status === "pending") {
+      expect(added.submissionIntent).toBe("new-version");
+      const approved = await approveVersion(db, songId, added.id, "admin", { expectedRevision: added.revision });
+      expect(approved).toMatchObject({ id: added.id, status: "published" });
+    }
+    expect((await db.query.song.findFirst({ where: eq(schema.song.id, songId) }))?.currentVersionId).toBe(original.id);
+    expect(await loadVersion(db, songId, original.id)).toMatchObject({
+      status: "published", revision: original.revision, chordpro: "[C]Original arrangement",
+    });
+  });
+
   it("honors the editor's favorites choice when an admin saves on behalf of an author", async () => {
     const original = await initial();
     const app = buildApp().use("*", async (c, next) => {
