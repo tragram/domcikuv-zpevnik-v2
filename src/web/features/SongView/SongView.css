@@ -103,10 +103,10 @@
     --section-bar-width: 1.6em;
     --section-bar-radius: calc(var(--section-bar-width) / 2);
     --section-bar-color: var(--chord);
-    --section-bar-opacity: 25%;
+    --section-bar-opacity: 30%;
     --section-letter-size: 0.85em;
     --section-letter-color: var(--chord);
-    --section-stacked-letter-spacing: -0.5em;
+    --section-stacked-letter-spacing: -0.35em;
     --section-sideways-letter-spacing: 0.05em;
     --section-sideways-rotation: 180deg;
     --section-lyric-gap: 0.6em;
