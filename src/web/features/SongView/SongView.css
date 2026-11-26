@@ -340,7 +340,7 @@
     display: none;
 }
 
-.repeated-parts-hidden .expanded-section {
+.repeated-parts-hidden .paragraph.expanded-section {
     display: none;
 }
 

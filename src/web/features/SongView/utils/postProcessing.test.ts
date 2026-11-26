@@ -32,33 +32,35 @@ function renderDocument(chordpro: string) {
 }
 
 it.each([
-  { name: "R1", sideways: false },
-  { name: "R12", sideways: true },
-  { name: "Sóló", sideways: true },
-])("lays out $name vertically at its definition and horizontally in both recall views", ({ name, sideways }) => {
+  { directive: "bridge", name: "B1", sideways: false },
+  { directive: "chorus", name: "R1", sideways: false },
+  { directive: "chorus", name: "R12", sideways: true },
+  { directive: "chorus", name: "Sólo", sideways: true },
+])("lays out $name vertically when its full section is visible", ({ directive, name, sideways }) => {
   const doc = renderDocument(`
-{start_of_chorus: ${name}}
+{start_of_${directive}: ${name}}
 [C]First line
 [G]Second line
-{end_of_chorus}
+{end_of_${directive}}
 
 {start_of_verse}
 Another verse
 {end_of_verse}
 
-{chorus: ${name}}
+{${directive}: ${name}}
   `);
 
-  const definition = doc.querySelector(".chorus:has(> .section-marker--stacked)");
-  const definitionMarker = definition?.querySelector(".section-marker");
-  expect(definitionMarker?.textContent).toBe(name);
-  expect(definitionMarker?.classList.contains("section-marker--sideways")).toBe(sideways);
-  expect(definition?.querySelectorAll(".section-definition-content > .row")).toHaveLength(2);
-  for (const view of ["expanded", "shorthand"]) {
-    const marker = doc.querySelector(`.${view}-section .section-marker--horizontal`);
+  const definition = doc.querySelector(`.${directive}:not(.expanded-section, .shorthand-section)`);
+  const expanded = doc.querySelector(`.${directive}.expanded-section`);
+  for (const section of [definition, expanded]) {
+    const marker = section?.querySelector(":scope > .section-marker--stacked");
     expect(marker?.textContent).toBe(name);
-    expect(marker?.closest(".row")).not.toBeNull();
+    expect(marker?.classList.contains("section-marker--sideways")).toBe(sideways);
+    expect(section?.querySelectorAll(".section-definition-content > .row:has(.lyrics)")).toHaveLength(2);
   }
+  const shorthandMarker = doc.querySelector(".shorthand-section .section-marker--horizontal");
+  expect(shorthandMarker?.textContent).toBe(name);
+  expect(shorthandMarker?.closest(".row")).not.toBeNull();
 });
 
 it.each(["R", "1", "Outro"])("uses an inline %s pill for a single song line even with a comment", (name) => {

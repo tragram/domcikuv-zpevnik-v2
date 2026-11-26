@@ -482,8 +482,8 @@ function layOutSectionNames(doc: Document): void {
     marker.classList.toggle("section-marker--one-character", nameLength === 1);
     const singleLetter = /^\p{L}$/u.test(name);
     const paragraph = marker.closest(".paragraph");
-    const isRecall = paragraph?.matches(".expanded-section, .shorthand-section");
-    if (!paragraph || (isRecall && !singleLetter)) {
+    const isShorthand = paragraph?.classList.contains("shorthand-section");
+    if (!paragraph || (isShorthand && !singleLetter)) {
       marker.classList.add(singleLetter ? "section-marker--single" : "section-marker--horizontal");
       continue;
     }
