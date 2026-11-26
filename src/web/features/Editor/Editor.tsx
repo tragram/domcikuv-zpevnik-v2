@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "~/components/ui/button";
-import { Chord } from "chordsheetjs";
-import { ArrowUpDown, ExternalLink, FileInput, Sparkles } from "lucide-react";
+import { ExternalLink, FileInput, Sparkles } from "lucide-react";
 import React, {
   useCallback,
   useEffect,
@@ -15,7 +14,6 @@ import {
   parseChordPro,
   replaceRepetitions,
 } from "src/lib/chordpro";
-import { convertChordNotation } from "src/lib/utils";
 import { UserData, useUserData } from "src/web/hooks/use-user-data";
 import { useIsOnline } from "src/web/hooks/use-is-online";
 import { toast } from "sonner";
@@ -27,16 +25,15 @@ import { holdAppReload } from "~/services/app-updates";
 import { autofillChordpro } from "~/services/editor-service";
 import { SongData } from "~/types/songData";
 import { EditorState } from "~/types/types";
-import { Key, Note, SongRange } from "~/types/musicTypes";
 import "../SongView/SongView.css";
-import { guessKey } from "../SongView/utils/songRendering";
+import { transposeDraft } from "./transpose-draft";
 import CollapsibleMainArea from "./components/CollapsibleMainArea";
 import { useEditorValidation } from "./components/use-editor-validation";
 import ContentEditor, { ContentEditorRef } from "./ContentEditor";
 import "./Editor.css";
 import { DEFAULT_EDITOR_SETTINGS, EditorSettings } from "./EditorSettings";
 import EditorToolbar from "./EditorToolbar";
-import { editorStateFromSong } from "./editor-state";
+import { editorStateFromSong, parseMetadataFromChordPro } from "./editor-state";
 import MetadataEditor from "./MetadataEditor";
 import Preview from "./Preview";
 import {
@@ -58,34 +55,6 @@ const editorStatesEqual = (a: EditorState, b: EditorState): boolean => {
     const objValue2 = b[bKeys[index]];
     return objValue1 === objValue2;
   });
-};
-
-const parseMetadataFromChordPro = (content: string): Partial<EditorState> => {
-  const extracted: Partial<EditorState> = {};
-  const lines = content.split("\n");
-
-  for (const line of lines) {
-    const match = line.match(/^\s*\{(?<key>[a-zA-Z]+):\s*(?<value>.*)\}\s*$/);
-    if (match && match.groups) {
-      const key = match.groups.key.toLowerCase();
-      const value = match.groups.value.trim();
-
-      if (key === "title" || key === "t") extracted.title = value;
-      else if (key === "artist") extracted.artist = value;
-      else if (key === "capo") {
-        // Guard against NaN (e.g. while the user is mid-typing "{capo: }") so the
-        // metadata field doesn't flash "NaN".
-        const n = parseInt(value, 10);
-        if (!Number.isNaN(n)) extracted.capo = n;
-      }
-      else if (key === "key") extracted.key = value;
-      else if (key === "tempo") extracted.tempo = value;
-      else if (key === "language") extracted.language = value;
-      else if (key === "range") extracted.range = value;
-      else if (key === "startmelody") extracted.startMelody = value;
-    }
-  }
-  return extracted;
 };
 
 const isAutofillable = (text: string): boolean => {
@@ -142,7 +111,6 @@ export interface SmartFeature {
   icon: React.ElementType;
   description: React.ReactNode;
   disabledReason: React.ReactNode;
-  actionType?: "default" | "stepper"; // <-- Added actionType
   // When true, the feature is hidden entirely from non-trusted users rather
   // than shown disabled (matches the server-side trusted gate on its endpoint).
   requiresTrust?: boolean;
@@ -199,16 +167,6 @@ const SMART_FEATURES: SmartFeature[] = [
     check: (content: string) => isAutofillable(content),
     description: <>Use AI to generate chords in sections where they missing.</>,
     disabledReason: "No missing chords detected in lyrics sections.",
-  },
-  {
-    id: "transpose",
-    label: "Transpose Chords",
-    loadingLabel: "Transposing...",
-    icon: ArrowUpDown,
-    actionType: "stepper",
-    check: (content: string) => /\[[A-H][A-Za-z\d#b,\s/]*\]/.test(content),
-    description: "Move all chords down or up one semitone per press.",
-    disabledReason: "No chords detected to transpose.",
   },
 ];
 
@@ -410,8 +368,19 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
     }));
   };
 
-  // The payload carries the step count for stepper features (currently just transpose).
-  const executeFeature = async (feature: SmartFeature, payload?: number) => {
+  const transpose = (steps: -1 | 1) => {
+    try {
+      const next = transposeDraft(editorState, steps);
+      if (next.chordpro !== editorState.chordpro) {
+        contentEditorRef.current?.replaceContentWithUndo(next.chordpro);
+      }
+      setEditorState(next);
+    } catch (error) {
+      console.error("Transpose failed:", error);
+    }
+  };
+
+  const executeFeature = async (feature: SmartFeature) => {
     const featureId = feature.id;
     const previousContent = editorState.chordpro;
     let newContent = editorState.chordpro;
@@ -439,168 +408,6 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
           setPendingAutofill({
             originalContent: previousContent,
             newContent,
-          });
-        }
-      } else if (featureId === "transpose") {
-        const steps = payload ?? 0;
-
-        // 1. Try to guess the key from the current content. Fallback to 'C'.
-        let songKey = guessKey(editorState.chordpro);
-        if (!songKey) {
-          songKey = guessKey("[C]");
-        }
-
-        if (songKey) {
-          let transposedContent = editorState.chordpro;
-          const extractedBefore = parseMetadataFromChordPro(transposedContent);
-          const newKey = songKey.transposed(steps);
-
-          // 2. Update {key: ...} directive directly in text
-          const czechKey = convertChordNotation(newKey.toString());
-          transposedContent = transposedContent.replace(
-            /\{key:\s*([^}]+)\}/i,
-            `{key: ${czechKey}}`,
-          );
-
-          // 3. Update {capo: ...} directive directly in text
-          transposedContent = transposedContent.replace(
-            /\{capo:\s*([^}]+)\}/i,
-            (match, oldCapoStr) => {
-              const oldCapo = parseInt(oldCapoStr.trim(), 10);
-              if (!isNaN(oldCapo)) {
-                let newCapo = (oldCapo - steps) % 12;
-                if (newCapo < 0) newCapo += 12;
-                return `{capo: ${newCapo}}`;
-              }
-              return match;
-            }
-          );
-
-          // 4. Update {range: ...} directive directly in text
-          transposedContent = transposedContent.replace(
-            /\{range:\s*([^}]+)\}/i,
-            (match, rangeStr) => {
-              try {
-                const parsedRange = new SongRange(rangeStr);
-                if (parsedRange.min && parsedRange.max) {
-                  return `{range: ${parsedRange.toString(steps, false)}}`;
-                }
-              } catch {
-                // ignore invalid range
-              }
-              return match;
-            }
-          );
-
-          // 5. Update {startmelody: ...} directive directly in text
-          transposedContent = transposedContent.replace(
-            /\{startmelody:\s*([^}]+)\}/i,
-            (match, melodyStr) => {
-              const transposedMelody = melodyStr.replace(
-                /(^|[\s,]+)([a-hA-H][#b]?)([0-9]*)(?=[\s,]|$)/g,
-                (noteMatch: string, prefix: string, nStr: string, oct: string) => {
-                  try {
-                    const note = Note.parse(nStr, true);
-                    if (note) {
-                      const isUpper = nStr[0] === nStr[0].toUpperCase();
-                      const t = note.transposed(steps).toString("sharp", true);
-                      return prefix + (isUpper ? t : t.toLowerCase()) + oct;
-                    }
-                  } catch {
-                    // ignore invalid note
-                  }
-                  return noteMatch;
-                }
-              );
-              return `{startmelody: ${transposedMelody}}`;
-            }
-          );
-
-          // 6. Transpose all inline chords safely
-          transposedContent = transposedContent.replace(
-            /\[([^\]]+)\]/g,
-            (match, chord) => {
-              // Convert Czech to English purely for the parser
-              const engChord = chord.replace(/B/g, "Bb").replace(/H/g, "B");
-
-              // Parse the single chord using chordsheetjs
-              const parsedChord = Chord.parse(engChord);
-
-              if (parsedChord) {
-                // Transpose it
-                const transposed = parsedChord.transpose(steps);
-
-                // Format back to Czech notation, respecting bass notes
-                const czechOutput = transposed
-                  .normalize()
-                  .toString()
-                  .split("/")
-                  .map((part: string) => convertChordNotation(part))
-                  .join("/");
-
-                return `[${czechOutput}]`;
-              }
-
-              // Fallback if the parser doesn't understand the string
-              return match;
-            },
-          );
-
-          if (transposedContent !== editorState.chordpro) {
-            contentEditorRef.current?.replaceContentWithUndo(transposedContent);
-          }
-
-          setEditorState((prev) => {
-            const newState = { ...prev };
-
-            if (newState.key && extractedBefore.key === undefined) {
-              try {
-                const parsedKey = Key.parse(newState.key, true);
-                if (parsedKey) {
-                  newState.key = convertChordNotation(parsedKey.transposed(steps).toString());
-                }
-              } catch {
-                // ignore invalid key
-              }
-            }
-
-            if (newState.capo !== undefined && newState.capo !== null && newState.capo !== "" && extractedBefore.capo === undefined) {
-              let newCapo = (Number(newState.capo) - steps) % 12;
-              if (newCapo < 0) newCapo += 12;
-              newState.capo = newCapo;
-            }
-
-            if (newState.range && extractedBefore.range === undefined) {
-              try {
-                const parsedRange = new SongRange(newState.range);
-                if (parsedRange.min && parsedRange.max) {
-                  newState.range = parsedRange.toString(steps, false);
-                }
-              } catch {
-                // ignore invalid range
-              }
-            }
-
-            if (newState.startMelody && extractedBefore.startMelody === undefined) {
-              newState.startMelody = newState.startMelody.replace(
-                /(^|[\s,]+)([a-hA-H][#b]?)([0-9]*)(?=[\s,]|$)/g,
-                (noteMatch: string, prefix: string, nStr: string, oct: string) => {
-                  try {
-                    const note = Note.parse(nStr, true);
-                    if (note) {
-                      const isUpper = nStr[0] === nStr[0].toUpperCase();
-                      const t = note.transposed(steps).toString("sharp", true);
-                      return prefix + (isUpper ? t : t.toLowerCase()) + oct;
-                    }
-                  } catch {
-                    // ignore invalid note
-                  }
-                  return noteMatch;
-                }
-              );
-            }
-
-            return newState;
           });
         }
       }
@@ -704,6 +511,7 @@ const Editor: React.FC<EditorProps> = ({ songData, versionId }) => {
               hasIllustration={hasIllustration}
               features={evaluatedFeatures}
               isProcessing={isProcessing}
+              onTranspose={transpose}
               onExecuteFeature={executeFeature}
             />
           </CollapsibleMainArea>

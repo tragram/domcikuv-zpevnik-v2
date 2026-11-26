@@ -11,7 +11,8 @@ import { guessKey } from "../SongView/utils/songRendering";
 import MetadataField from "./components/MetadataField";
 import { VersionDetailsFields } from "./components/VersionDetailsFields";
 import YoutubeField from "./components/YoutubeField";
-import SmartFeatures, { SmartFeatureItem } from "./components/SmartFeatures";
+import TransposeControl from "./components/TransposeControl";
+import SmartFeatures from "./components/SmartFeatures";
 import type { EvaluatedFeature, SmartFeature } from "./Editor";
 import EditorSettingsComponent, { EditorSettings } from "./EditorSettings";
 import { indexEditorCatalog } from "./editor-catalog";
@@ -29,7 +30,8 @@ interface MetadataEditorProps {
   hasIllustration?: boolean;
   features: EvaluatedFeature[];
   isProcessing: boolean;
-  onExecuteFeature: (feature: SmartFeature, payload?: number) => void;
+  onTranspose: (steps: -1 | 1) => void;
+  onExecuteFeature: (feature: SmartFeature) => void;
 }
 
 function MetadataSection({ title, summary, icon: Icon, initiallyOpen = false, error, children }: {
@@ -74,6 +76,7 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
   features,
   isProcessing,
   onExecuteFeature,
+  onTranspose,
 }) => {
   const { songDB, catalog } = useSongDB(userData);
   const catalogIndex = useMemo(() => indexEditorCatalog(catalog), [catalog]);
@@ -89,8 +92,16 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
     () => versionTarget ? [] : catalogIndex.suggestTitles(metadata.artist, metadata.title, editingSongId),
     [catalogIndex, metadata.artist, metadata.title, editingSongId, versionTarget],
   );
-  const transpose = features.find(feature => feature.id === "transpose");
-  const otherFeatures = features.filter(feature => feature.id !== "transpose");
+  function fieldProps(field: keyof EditorState) {
+    return {
+      value: metadata[field]?.toString(),
+      onChange: (value: string) => updateMetadata(field, value),
+      modified: defaultMetadata[field] !== metadata[field],
+      error: fieldErrors[field],
+      disabled: extractedMetadata[field] !== undefined,
+    };
+  }
+
   const musicSummary = [
     metadata.key,
     metadata.capo != null && `Capo ${metadata.capo}`,
@@ -105,25 +116,17 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
         error={fieldErrors.artist || fieldErrors.title || fieldErrors.language}
       >
         <MetadataField
+          {...fieldProps("artist")}
           label="Artist"
-          onChange={(value) => updateMetadata("artist", value)}
           placeholder="František Omáčka"
-          value={metadata.artist}
-          modified={defaultMetadata.artist !== metadata.artist}
-          error={fieldErrors.artist}
-          required={true}
-          disabled={extractedMetadata.artist !== undefined}
+          required
           suggestions={artistSuggestions}
         />
         <MetadataField
+          {...fieldProps("title")}
           label="Title"
-          onChange={(value) => updateMetadata("title", value)}
           placeholder="Apassionata v F"
-          value={metadata.title}
-          modified={defaultMetadata.title !== metadata.title}
-          error={fieldErrors.title}
-          required={true}
-          disabled={extractedMetadata.title !== undefined}
+          required
           suggestions={titleSuggestions}
         />
         <div role="status" className="empty:sr-only">
@@ -154,28 +157,20 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
           )}
         </div>
         <MetadataField
+          {...fieldProps("language")}
           label="Language"
           description="Choose a language or add one. New languages may appear without a flag."
-          onChange={(value) => updateMetadata("language", value)}
-          placeholder="czech"
-          value={metadata.language}
-          modified={defaultMetadata.language !== metadata.language}
-          error={fieldErrors.language}
-          disabled={extractedMetadata.language !== undefined}
-          customInput={
+          renderInput={props => (
             <SelectOrEditList
+              {...props}
               options={Object.keys(songDB.languages)}
-              value={metadata.language}
-              onValueChange={(value) => updateMetadata("language", value)}
               placeholderCollapsed="Select language"
               placeholderSearch="Find or add language"
               noOptionsFoundText="No language found."
               addNewText="Add new language"
-              aria-label="Language"
-              disabled={extractedMetadata.language !== undefined}
               className="h-10 rounded-lg border-input/50 bg-card px-3 text-foreground shadow-none"
             />
-          }
+          )}
         />
       </MetadataSection>
       <MetadataSection
@@ -184,14 +179,10 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
         error={fieldErrors.key || fieldErrors.capo || fieldErrors.tempo || fieldErrors.range || fieldErrors.startMelody}
       >
         <MetadataField
+          {...fieldProps("key")}
           label="Key"
           description="Use a note name for major (F, Bb) or add m or mi for minor (Dm). Guess key reads the chords in the editor."
-          onChange={(value) => updateMetadata("key", value)}
           placeholder="Dm"
-          value={metadata.key}
-          modified={defaultMetadata.key !== metadata.key}
-          error={fieldErrors.key}
-          disabled={extractedMetadata.key !== undefined}
           action={
             <Button
               type="button"
@@ -212,54 +203,36 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
         />
         <div className="grid gap-2 @[10rem]:grid-cols-2">
           <MetadataField
+            {...fieldProps("capo")}
             label="Capo"
             description="Fret number. Use 0 for no capo."
-            onChange={(value) => updateMetadata("capo", value)}
             inputMode="numeric"
             placeholder="0"
-            value={metadata.capo?.toString()}
-            modified={defaultMetadata.capo !== metadata.capo}
-            error={fieldErrors.capo}
-            disabled={extractedMetadata.capo !== undefined}
           />
           <MetadataField
+            {...fieldProps("tempo")}
             label="Tempo"
             description="Song tempo in beats per minute."
-            onChange={(value) => updateMetadata("tempo", value)}
             inputMode="numeric"
             placeholder="96"
             unit="BPM"
-            value={metadata.tempo?.toString()}
-            modified={defaultMetadata.tempo !== metadata.tempo}
-            error={fieldErrors.tempo}
-            disabled={extractedMetadata.tempo !== undefined}
           />
         </div>
         <div className="grid gap-2 @[19rem]:grid-cols-2">
         <MetadataField
+          {...fieldProps("range")}
           label="Vocal range"
           description="Lowest and highest sung notes with octave numbers, e.g. c1-g2. Used by the vocal range filter."
-          onChange={(value) => updateMetadata("range", value)}
           placeholder="e.g. c1-g2"
-          value={metadata.range}
-          modified={defaultMetadata.range !== metadata.range}
-          error={fieldErrors.range}
-          disabled={extractedMetadata.range !== undefined}
         />
         <MetadataField
+          {...fieldProps("startMelody")}
           label="Start melody"
           description="The opening notes in order, e.g. c# d e. This optional field has no fixed notation."
-          onChange={(value) => updateMetadata("startMelody", value)}
           placeholder="c# d e"
-          value={metadata.startMelody}
-          modified={defaultMetadata.startMelody !== metadata.startMelody}
-          error={fieldErrors.startMelody}
-          disabled={extractedMetadata.startMelody !== undefined}
         />
         </div>
-        {transpose && (
-          <SmartFeatureItem feature={transpose} isProcessing={isProcessing} onExecuteFeature={onExecuteFeature} />
-        )}
+        <TransposeControl content={metadata.chordpro} isProcessing={isProcessing} onTranspose={onTranspose} />
       </MetadataSection>
       <MetadataSection title="Recording" icon={Play} summary={metadata.youtubeId || "No video linked"} error={fieldErrors.youtubeId}>
         <YoutubeField
@@ -280,7 +253,7 @@ const MetadataEditor: FC<MetadataEditorProps> = ({
         <VersionDetailsFields details={metadata} defaults={defaultMetadata} errors={fieldErrors} onChange={updateMetadata} />
       </MetadataSection>
       <MetadataSection title="Editor tools" icon={Wrench}>
-        <SmartFeatures features={otherFeatures} isProcessing={isProcessing} onExecuteFeature={onExecuteFeature} />
+        <SmartFeatures features={features} isProcessing={isProcessing} onExecuteFeature={onExecuteFeature} />
         <EditorSettingsComponent settings={editorSettings} onSettingsChange={onSettingsChange} userData={userData} hasIllustration={hasIllustration} />
       </MetadataSection>
     </div>

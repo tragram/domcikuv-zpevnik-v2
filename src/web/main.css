@@ -155,6 +155,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --color-glass: var(--glass);
+  --color-control-surface-solid: color-mix(in oklab, var(--primary) var(--control-tint), var(--button-background));
   --color-control-surface: color-mix(in oklab, color-mix(in oklab, var(--primary) var(--control-tint), var(--button-background)) 90%, transparent);
   --color-control-hover: color-mix(in oklab, color-mix(in oklab, var(--primary) 28%, var(--button-background)) 90%, transparent);
   --color-control-active-hover: color-mix(in oklab, var(--primary) 90%, var(--button-background));

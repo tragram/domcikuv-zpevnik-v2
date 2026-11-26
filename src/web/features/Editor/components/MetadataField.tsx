@@ -4,6 +4,12 @@ import { Label } from "~/components/ui/label";
 import { cn } from "~/lib/utils";
 import { EditorInfo } from "./EditorInfo";
 
+type FieldControlProps = Pick<React.ComponentProps<"input">,
+  "id" | "disabled" | "aria-invalid" | "aria-required" | "aria-describedby"> & {
+  value: string;
+  onValueChange: (value: string) => void;
+};
+
 interface MetadataFieldProps {
   label: string;
   value?: string;
@@ -13,7 +19,7 @@ interface MetadataFieldProps {
   onChange: (value: string) => void;
   error?: string;
   required?: boolean;
-  customInput?: React.ReactElement;
+  renderInput?: (props: FieldControlProps) => React.ReactNode;
   modified: boolean;
   unit?: string;
   inputMode?: "numeric";
@@ -31,7 +37,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
   onChange,
   error,
   required = false,
-  customInput = null,
+  renderInput,
   modified,
   action,
   unit,
@@ -51,28 +57,22 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
     setSuggestionsDismissed(true);
   }
 
-  const innerInput = customInput ? (
-    <div
-      className={cn(
-        "flex w-full",
-        disabled && "pointer-events-none opacity-50",
-      )}
-    >
-      {customInput}
-    </div>
-  ) : (
+  const controlProps = {
+    id: inputId,
+    value: value ?? "",
+    disabled,
+    "aria-invalid": displayError,
+    "aria-required": required,
+    "aria-describedby": describedBy,
+  };
+  const innerInput = renderInput ? renderInput({ ...controlProps, onValueChange: onChange }) : (
       <div className="relative min-w-0">
         <Input
           ref={inputRef}
-          id={inputId}
+          {...controlProps}
           type="text"
           inputMode={inputMode}
-          aria-invalid={displayError}
-          aria-required={required}
-          aria-describedby={describedBy}
-          disabled={disabled}
           placeholder={value ? undefined : placeholder || label}
-          value={value ?? ""}
           onFocus={() => setSuggestionsDismissed(false)}
           onChange={(e) => {
             setSuggestionsDismissed(false);
@@ -96,7 +96,7 @@ const MetadataField: React.FC<MetadataFieldProps> = ({
       }}
     >
       <div className="flex min-h-6 flex-wrap items-center gap-x-1">
-      <Label htmlFor={customInput ? undefined : inputId} className={cn("gap-1.5 text-xs font-semibold tracking-wide", disabled && "opacity-70")}>
+      <Label htmlFor={inputId} className={cn("gap-1.5 text-xs font-semibold tracking-wide", disabled && "opacity-70")}>
         {label}
         {modified && <span className="size-1.5 rounded-full bg-primary" title="Modified"><span className="sr-only">Modified</span></span>}
       </Label>
