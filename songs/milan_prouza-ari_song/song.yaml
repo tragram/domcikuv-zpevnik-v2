@@ -25,3 +25,21 @@ prompts:
       - createdAt: 1754387142000
         imageModel: FLUX.1-dev
         filename: FLUX.1-dev.webp
+  - id: milan_prouza-ari_song_gpt-6.1-terra_v9
+    songId: milan_prouza-ari_song
+    summaryPromptVersion: v9
+    summaryModel: gpt-6.1-terra
+    text: >-
+      A frazzled engineering student hunches over his laptop, surrounded by
+      crumpled notes, as his disappointed girlfriend leaves the room. An
+      untouched beer sits beside him; on the screen, a Simulink-like block
+      diagram and a diamond-shaped matrix hint at his endless MATLAB assignment.
+      Playful, slightly absurd editorial illustration, with expressive cartoon
+      figures, cool monitor glow and warm late-night lamplight. No text.
+    createdAt: 2026-11-26T12:29:33.000Z
+    updatedAt: 2026-11-26T12:29:33.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795696220000
+        imageModel: gpt-image-2.6-flare
+        filename: gpt-image-2.6-flare.webp

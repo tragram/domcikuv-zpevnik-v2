@@ -4,8 +4,8 @@ versions:
   v1:
     id: jelen-klidna_jako_voda_1476396000000
     createdAt: '2016-10-13T22:00:00.000Z'
-    updatedAt: '2026-04-11T23:14:13.000Z'
-    revision: 2
+    updatedAt: '2026-11-26T13:24:42.000Z'
+    revision: 3
     youtubeId: Y8G6yobRbJQ
 prompts:
   - id: jelen-klidna_jako_voda_gpt-4o-mini_v1

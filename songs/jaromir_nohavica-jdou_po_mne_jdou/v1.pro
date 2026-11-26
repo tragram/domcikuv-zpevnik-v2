@@ -26,7 +26,8 @@ zámek jde [F#mi]lehce a [Hmi]adresu [A7]znám,
 Jdou po mně, [D]jdou, [G]jdou, [D]jdou,
 na každém [F#mi]rohu [Hmi]mají fotku [A7]mou,
 [G]kdyby mě [D]chytli, [A]jó, byl by [Hmi]ring,
-[G]tma jako v [D]pytli je v [C]celách Sing-[G]sing. [A]Jé, [D]Jé... [G][D]
+[G]tma jako v [D]pytli je v [C]celách Sing-[G]sing.
+[A]Jé, [D]Jé... [G][D]
 {end_of_chorus}
 
 {start_of_verse}
@@ -56,5 +57,6 @@ pípu jsem [F#mi]utáh' a [Hmi]straním se [A7]žen,
 Jdou po mně [D]jdou, [G]jdou, [D]jdou,
 na nočních [F#mi]stolcích [Hmi]mají fotku [A7]mou,
 [G]kdyby mě [D]klofly, [A]jó, byl by [Hmi]ring,
-[G]žít pod pan[D]toflí je [C]hůř než v Sing-[G]sing. [A]Jé, [D]Jé... [G][D]
+[G]žít pod pan[D]toflí je [C]hůř než v Sing-[G]sing.
+[A]Jé, [D]Jé... [G][D]
 {end_of_chorus}

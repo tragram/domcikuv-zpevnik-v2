@@ -4,8 +4,8 @@ versions:
   v1:
     id: karel_plihal-nosorozec_1785416480440
     createdAt: '2026-07-30T13:01:20.000Z'
-    updatedAt: '2026-07-30T13:03:58.000Z'
-    revision: 3
+    updatedAt: '2026-11-26T13:13:24.000Z'
+    revision: 4
     youtubeId: w1lBJAsPRMA
 prompts:
   - id: karel_plihal-nosorozec_gpt-5.4-mini_v7

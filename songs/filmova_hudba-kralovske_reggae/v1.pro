@@ -5,8 +5,8 @@
 {range: f#1-e2}
 {language: czech}
 {startMelody: d}
-{illustrationId: filmova_hudba-kralovske_reggae_gpt-4o-mini_v1_flux.1-dev}
-{promptId: filmova_hudba-kralovske_reggae_gpt-4o-mini_v1}
+{illustrationId: filmova_hudba-kralovske_reggae_gpt-6.1-terra_v9_gpt-image-2.6-flare}
+{promptId: filmova_hudba-kralovske_reggae_gpt-6.1-terra_v9}
 
 {start_of_bridge: Umbaba}
 [D]Umbabau, umbabaumbaumba

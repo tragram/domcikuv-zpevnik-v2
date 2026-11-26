@@ -4,8 +4,8 @@ versions:
   v1:
     id: jaromir_nohavica-jdou_po_mne_jdou_1436824800000
     createdAt: '2015-07-13T22:00:00.000Z'
-    updatedAt: '2026-07-12T17:36:50.000Z'
-    revision: 2
+    updatedAt: '2026-11-26T13:23:37.000Z'
+    revision: 3
     youtubeId: lkAHxN4VUuI
 prompts:
   - id: jaromir_nohavica-jdou_po_mne_jdou_gpt-4o-mini_v1

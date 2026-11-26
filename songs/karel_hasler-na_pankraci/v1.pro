@@ -5,8 +5,8 @@
 {range: e1-d1}
 {language: czech}
 {startMelody: g g f e}
-{illustrationId: karel_hasler-na_pankraci_gpt-4o-mini_v2_flux.1-dev}
-{promptId: karel_hasler-na_pankraci_gpt-4o-mini_v2}
+{illustrationId: karel_hasler-na_pankraci_gpt-6.1-terra_v9_gpt-image-2.6-flare}
+{promptId: karel_hasler-na_pankraci_gpt-6.1-terra_v9}
 
 {start_of_verse}
 𝄆 [C]Na Pankráci na malém [F]vršíčku

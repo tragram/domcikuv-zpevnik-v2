@@ -5,8 +5,8 @@
 {range: d1-a2}
 {language: czech}
 {startMelody: f#}
-{illustrationId: milan_prouza-ari_song_gpt-4o-mini_v1_flux.1-dev}
-{promptId: milan_prouza-ari_song_gpt-4o-mini_v1}
+{illustrationId: milan_prouza-ari_song_gpt-6.1-terra_v9_gpt-image-2.6-flare}
+{promptId: milan_prouza-ari_song_gpt-6.1-terra_v9}
 
 {start_of_verse}
 [G]Přišla za mnou moje holka,

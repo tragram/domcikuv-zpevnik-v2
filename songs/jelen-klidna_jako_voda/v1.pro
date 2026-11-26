@@ -23,10 +23,15 @@ a to jsem [F]nešel tou [C]cestou, kudy [G]ty musíš [C]jít.
 {end_of_verse}
 
 {start_of_chorus}
-Buď [F]klidná jako [C]voda, ale [G]silná jako [C]proud,
-[F]skála se ti [C]poddá a [G]zbavíš se všech pout.
-[F]Svěží jako ranní [C]rosa a [E7]čistá jako [Ami]sníh.
-Když tan[F]číš po kamení [C]bosá, svět [G]máš na dlaní[C]ch.
+Buď [F]klidná jako [C]voda,
+ale [G]silná jako [C]proud,
+[F]skála se ti [C]poddá
+a [G]zbavíš se všech pout.
+
+[F]Svěží jako ranní [C]rosa
+a [E7]čistá jako [Ami]sníh.
+Když tan[F]číš po kamení [C]bosá,
+svět [G]máš na dlaní[C]ch.
 {end_of_chorus}
 
 {start_of_verse}
@@ -41,6 +46,8 @@ spolu [F]půjdem tou [C]cestou, kudy [G]ty musíš [C]jít.
 {chorus}
 
 {start_of_chorus}
-[F]Svěží jako ranní [C]rosa a [E7]čistá jako [Ami]sníh.
-Když [F]tančíš po kamení [C]bosá, svět [Dmi]máš na dla[C]ních.
+[F]Svěží jako ranní [C]rosa
+a [E7]čistá jako [Ami]sníh.
+Když [F]tančíš po kamení [C]bosá,
+svět [Dmi]máš na dla[C]ních.
 {end_of_chorus}

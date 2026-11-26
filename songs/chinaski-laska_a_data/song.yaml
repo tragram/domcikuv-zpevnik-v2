@@ -1,0 +1,28 @@
+songId: chinaski-laska_a_data
+official: v1
+versions:
+  v1:
+    id: 996a7a44-1452-4b29-a9df-217bc1cca0a4
+    createdAt: '2026-11-25T18:25:34.000Z'
+    updatedAt: '2026-11-25T18:25:34.000Z'
+    revision: 1
+    youtubeId: rHGV_bB12KU
+prompts:
+  - id: chinaski-laska_a_data_gpt-5.4-mini_v7
+    songId: chinaski-laska_a_data
+    summaryPromptVersion: v7
+    summaryModel: gpt-5.4-mini
+    text: >-
+      Cinematic photorealistic scene of a quiet empty train platform at night
+      after a breakup, one person standing alone under a cold streetlight while
+      a departing train fades into the distance, wet pavement reflecting pale
+      blue and amber light, subtle sense of relief and finality, lonely but
+      peaceful mood, minimal composition, no text, soft film grain, shallow
+      depth of field, dramatic yet restrained lighting
+    createdAt: 2026-11-25T18:26:24.000Z
+    updatedAt: 2026-11-25T18:26:24.000Z
+    deleted: false
+    illustrations:
+      - createdAt: 1795631194000
+        imageModel: nano-banana-2
+        filename: nano-banana-2.webp
