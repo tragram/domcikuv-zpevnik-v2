@@ -18,7 +18,7 @@ import { Input } from "~/components/ui/input";
 import "~/features/SongList/SongList.css";
 import { useIsOnline } from "~/hooks/use-is-online";
 import { usePullToRefresh } from "~/hooks/use-pull-to-refresh";
-import { refreshSongDB } from "~/hooks/use-songDB";
+import { refreshAll, refreshSongDB } from "~/hooks/use-songDB";
 import { useScrollDirection } from "~/hooks/use-scroll-direction";
 import { UserData } from "~/hooks/use-user-data";
 import { cn } from "~/lib/utils";
@@ -68,10 +68,15 @@ function SongList({
   // desktop). Feedback while it runs comes from the existing sync bubble, which
   // reacts to the queries' isFetching.
   const queryClient = useQueryClient();
-  const refreshSongs = useCallback(
-    () => refreshSongDB(queryClient),
-    [queryClient],
-  );
+  const userId = userData?.profile.id;
+  const lastRefresh = useRef(0);
+
+  const refreshSongs = useCallback(async () => {
+    // Cooldown: the spinner flashes but no queries fire.
+    if (Date.now() - lastRefresh.current < 30_000) return;
+    lastRefresh.current = Date.now();
+    await refreshAll(queryClient, userId);
+  }, [queryClient, userId]);
   const refreshTarget = useRef<HTMLDivElement>(null);
   const { pullDistance, isReady } = usePullToRefresh(
     refreshTarget,
@@ -133,7 +138,8 @@ function SongList({
   const [playlistName, setPlaylistName] = useState("");
   const defaultPlaylistName = `Domčíkův Zpěvník – ${new Date().toISOString().slice(0, 10)}`;
   const exportPlaylist = useCallback(
-    () => runExport(selectedVideoIds, { title: playlistName.trim() || undefined }),
+    () =>
+      runExport(selectedVideoIds, { title: playlistName.trim() || undefined }),
     [runExport, selectedVideoIds, playlistName],
   );
 
@@ -320,7 +326,12 @@ function SongList({
         {hasInternalResults && renderInternalSongs()}
 
         {/* SECTION 2: External Search Trigger & Results */}
-        <div className={cn("container mx-auto max-w-3xl flex flex-col gap-2 pb-2", !isOnline && "pb-11")}>
+        <div
+          className={cn(
+            "container mx-auto max-w-3xl flex flex-col gap-2 pb-2",
+            !isOnline && "pb-11",
+          )}
+        >
           {showExternalSeparator && (
             <div className="my-6 flex items-center gap-4">
               <div className="h-px bg-border flex-1" />

@@ -55,6 +55,8 @@ export const favoritesQueryOptions = (userId?: string) =>
   queryOptions({
     queryKey: songQueryKeys.userFavorites(userId),
     queryFn: () => fetchFavorites(),
+    staleTime: 10 * 60_000,
+    refetchOnWindowFocus: false,
   });
 
 // Another user's public songbook entries (their saved key/capo, and pinned
@@ -147,6 +149,8 @@ export const submissionsQueryOptions = (userId?: string) =>
   queryOptions({
     queryKey: songQueryKeys.userSubmissions(userId),
     queryFn: () => fetchSubmissions(),
+    staleTime: 10 * 60_000,
+    refetchOnWindowFocus: false,
   });
 
 type SessionData = NonNullable<

@@ -11,7 +11,13 @@ import { UserData } from "./use-user-data";
 import { songQueryKeys } from "~/services/song-query-keys";
 
 import { QueryClient } from "@tanstack/react-query";
-import { favoritesQueryOptions, sessionQueryOptions, submissionsQueryOptions, sessionToProfile, indexSongbookEntries } from "./use-user-data";
+import {
+  favoritesQueryOptions,
+  sessionQueryOptions,
+  submissionsQueryOptions,
+  sessionToProfile,
+  indexSongbookEntries,
+} from "./use-user-data";
 
 export const songsQueryOptions = () =>
   queryOptions({
@@ -24,6 +30,8 @@ export const publicSongbooksQueryOptions = () =>
   queryOptions({
     queryKey: songQueryKeys.publicSongbooks,
     queryFn: () => fetchPublicSongbooks(),
+    staleTime: 30 * 60_000,
+    refetchOnWindowFocus: false,
   });
 
 const emptyCatalog: SongDataApi[] = [];
@@ -31,15 +39,14 @@ const emptySongbooks: Songbook[] = [];
 // SongView and SongList both use the same catalog and query snapshots.
 const deriveSongDB = memoizeOne(buildSongDB);
 
-export function useSongDB(
-  userData: UserData,
-) {
+export function useSongDB(userData: UserData) {
   const { data: songs = emptyCatalog, isFetching: isSongsSyncing } =
     useQuery(songsQueryOptions());
 
-  const { data: publicSongbooks = emptySongbooks, isFetched: songbooksFetched } = useQuery(
-    publicSongbooksQueryOptions(),
-  );
+  const {
+    data: publicSongbooks = emptySongbooks,
+    isFetched: songbooksFetched,
+  } = useQuery(publicSongbooksQueryOptions());
 
   const songDB = deriveSongDB(songs, publicSongbooks, userData);
 
@@ -58,7 +65,10 @@ export function useSongDB(
 // Cheap: fetchSongs goes through the incremental-sync endpoint.
 export const refreshSongDB = (queryClient: QueryClient) =>
   Promise.all([
-    queryClient.invalidateQueries({ queryKey: songQueryKeys.catalog, refetchType: "all" }),
+    queryClient.invalidateQueries({
+      queryKey: songQueryKeys.catalog,
+      refetchType: "all",
+    }),
     queryClient.invalidateQueries({
       queryKey: songQueryKeys.publicSongbooks,
       refetchType: "all",
@@ -67,7 +77,9 @@ export const refreshSongDB = (queryClient: QueryClient) =>
 
 export const getSongDB = async (queryClient: QueryClient) => {
   const songs = await queryClient.ensureQueryData(songsQueryOptions());
-  const publicSongbooks = await queryClient.ensureQueryData(publicSongbooksQueryOptions());
+  const publicSongbooks = await queryClient.ensureQueryData(
+    publicSongbooksQueryOptions(),
+  );
 
   let userData: UserData | null = null;
   try {
@@ -91,3 +103,20 @@ export const getSongDB = async (queryClient: QueryClient) => {
 
   return buildSongDB(songs, publicSongbooks ?? [], userData);
 };
+
+export const refreshAll = (queryClient: QueryClient, userId?: string) =>
+  Promise.all([
+    refreshSongDB(queryClient),
+    ...(userId
+      ? [
+          queryClient.invalidateQueries({
+            queryKey: favoritesQueryOptions(userId).queryKey,
+            refetchType: "all",
+          }),
+          queryClient.invalidateQueries({
+            queryKey: submissionsQueryOptions(userId).queryKey,
+            refetchType: "all",
+          }),
+        ]
+      : []),
+  ]);
